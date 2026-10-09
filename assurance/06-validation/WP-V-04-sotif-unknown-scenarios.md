@@ -43,8 +43,8 @@ For an end-to-end ML driving model trained on data LionDriver cannot see, area 3
 | FCW event | `fcw` alert | SH-06 |
 | Model disagreement | Large divergence between action curvature and plan curvature; lead flicker rate above AIR-11 | AE-T |
 | Model uncertainty spike | Plan / lead std above the 99.9th percentile of the evaluation set | AE-O |
-| DM anomaly | Long periods of model uncertainty fallback; alert level 2–3 events; lockouts | Misuse |
-| System events | `steerSaturated`, `commIssue`, `modeldLagging`, soft disables, `excessiveActuation` latch | Internal degradation |
+| DM anomaly | Long periods of model uncertainty fallback; alert level 2–3 events; lockouts | SH-12 |
+| System events | `steerSaturated`, `commIssue`, `modeldLagging`, soft disables, `excessiveActuation` latch | SH-02, SH-06 (TC-23) |
 
 Thresholds are tuned on a held-out set (DSR-11 of [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md)) and reviewed after each block.
 
@@ -97,7 +97,7 @@ Block sizes are planning values; they are set against WP-V-02 targets and achiev
 
 ### 5.3 Acceptance for release
 
-The SOTIF release argument (WP-K-02) may claim acceptable residual risk from unknown scenarios only if all of the following hold:
+The SOTIF release argument (WP-K-02) may claim acceptable residual risk from unknown scenarios, and acceptance criterion AC-07 of [WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md#53-qualitative-acceptance-criteria) is met, only if all of the following hold:
 
 | # | Criterion |
 |---|---|

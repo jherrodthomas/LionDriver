@@ -208,7 +208,7 @@ Developer and debug modes (`JoystickDebugMode`, `LongitudinalManeuverMode`, `Lat
 
 ### 8.2 Public road (L5/L6) ODD restrictions
 
-Initial restricted ODD for L5 (to be widened only by a WP-V-04 block decision):
+Initial restricted ODD for L5 — a subset of ODD-H of [WP-C-02 §3.1](../02-concept/WP-C-02-odd-and-intended-functionality.md#31-odd-taxonomy) (to be widened only by a WP-V-04 block decision):
 
 | Attribute | L5 restriction |
 |---|---|
@@ -219,7 +219,7 @@ Initial restricted ODD for L5 (to be widened only by a WP-V-04 block decision):
 | Traffic | Light to moderate; avoid peak congestion until stop-and-go has been checked at L3 |
 | Excluded | Construction zones, toll plazas, school zones, lane-drop merges flagged on the route plan, tunnels, roads with pedestrians or cyclists, any area flagged in the route review |
 
-L6 uses the claimed ODD of [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) with the WP-V-04 block plan.
+L6 uses the claimed ODD of [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) (ODD-H; ODD-A only if confirmed, WP-C-02 OI-4) with the WP-V-04 block plan. Conditions WP-C-02 excludes (work zones, toll plazas, tunnels, low sun in the camera view, moderate/heavy rain, speeds above 120 km/h) remain abort criteria at every level.
 
 ### 8.3 Communication protocol
 

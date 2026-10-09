@@ -16,16 +16,17 @@
 
 This document lists the known hazardous scenarios for LD-SDA, the test method and pass criteria for each, and the record format for results. It implements the strategy of [WP-V-02](WP-V-02-sotif-vv-strategy.md) (methods M1–M9, validation targets VT-nn).
 
-Source of the scenarios. [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) (triggering conditions) was not available when this draft was written. The catalogue is therefore derived from:
+Source of the scenarios. The catalogue is derived from:
+- the triggering conditions TC-01…TC-31 and functional insufficiencies FI-01…FI-22 of [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) and the SOTIF hazards SH-01…SH-13 of [WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md);
 - `docs/LIMITATIONS.md:8-56` (upstream's own list of conditions that degrade ALC, ACC/FCW and DM);
 - the gap assessment (GAP-16, GAP-17, GAP-18, GAP-21, GAP-22);
 - the HARA situation catalogue OS-01…OS-11 and hazards H-01…H-08 ([WP-C-03](../02-concept/WP-C-03-hara.md));
 - AI error types AE-P/L/T/O/N/D ([WP-C-11 §5](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md#5-ai-related-error-types));
 - domain knowledge of camera-based L2 systems.
 
-When WP-C-06 is approved, each KS-nn is mapped to its TC-nn and missing TCs get new KS entries (OI-1).
+Every TC of WP-C-06 maps to at least one KS (coverage table in [WP-V-02 §6](WP-V-02-sotif-vv-strategy.md#6-coverage-of-triggering-conditions)). KS-06 and KS-08 have no TC yet; they are proposed to the WP-C-06 owner as new TCs (OI-1). TCs that WP-C-06 resolves by ODD exclusion ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md): work zones, fog/snow, tunnels) get an ODD-exit check instead of a performance test.
 
-Scope: reference configuration, Chill longitudinal mode. Experimental Mode scenarios (traffic lights, stop signs, e2e stops) are excluded (D-08); KS-24 only verifies that the exclusion holds.
+Scope: reference configuration, Chill longitudinal mode. Experimental Mode scenarios (traffic lights, stop signs, e2e stops) are excluded (FM-01, D-08); KS-24 only verifies that the exclusion holds. Scenarios run in ODD-H unless marked ODD-A.
 
 ## 2. General test conditions
 
@@ -54,8 +55,8 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 | KS-04 | Lane split, exit gore, lane merge, widening lane | SH-01 | TC-31 | Highway exit with and without exit desire; merge from 2 to 1 lane | M3, M9 | Vehicle follows the through lane without crossing the gore; no swerve > 0.5 m toward the exit | VT-01 |
 | KS-05 | Stationary vehicle in lane at highway approach | SH-06 (SH-04 if late hard braking) | TC-08, TC-17 | Soft target (radar-reflective) stationary; approach 40, 60, 80 km/h on CC (higher speeds by M5/M4 only); lateral offset 0 and ±0.5 m | M5, M8 (B2), M3 | Stop without contact; first deceleration at TTC ≥ 3.0 s **(TBC)**; FCW at TTC ≥ 2.0 s where braking above envelope is needed (AIR-06); not worse than stock DRCC (B2) | VT-06, VT-09 |
 | KS-06 | Narrow lane with adjacent truck or concrete barrier | SH-01 | — (proposed new TC: adjacent large vehicle / barrier in narrow lane; FI-01) | Lane width ≤ 3.3 m; adjacent large vehicle | M9, M3 | Lateral offset toward the obstacle ≤ 0.3 m; no move toward the obstacle | VT-01 |
-| KS-14 | Driver-initiated lane change (turn signal + nudge) | SH-10 | TC-28 | Adjacent lane free / occupied (target vehicle at 2–3 s gap on CC) | M8, M9 | Lane change starts only after the driver nudge; aborts / does not start when the driver releases the signal; driver can override at any point with ≤ the AOU-02 force | VT-01 |
-| KS-22 | Pedestrian or cyclist at the lane edge (urban secondary ODD) | SH-11, SH-01 | TC-12 | Dummy at 0.5 m and 1.0 m from the lane line, ego at 30 and 50 km/h | M8 | No lateral move toward the dummy > 0.2 m; driver can correct within the envelope | VT-01 |
+| KS-14 | Driver-initiated lane change (turn signal + nudge) | SH-10 | TC-28 | Adjacent lane free / occupied (target vehicle at 2–3 s gap on CC) | M8, M9 | Lane change starts only after the driver nudge; aborts / does not start when the driver releases the signal; driver can override at any point with ≤ the AOU-02 force | VT-13 |
+| KS-22 | Pedestrian or cyclist at the lane edge (ODD-A; VRU response is a driver task per WP-C-02) | SH-11, SH-01 | TC-12 | Dummy at 0.5 m and 1.0 m from the lane line, ego at 30 and 50 km/h | M8 | No lateral move toward the dummy > 0.2 m; driver can correct within the envelope | VT-01 |
 
 ### 3.2 Longitudinal scenarios
 
@@ -72,8 +73,8 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 
 | ID | Scenario | SH | TC (WP-C-06) | Parameters | Methods | Pass criteria | VT |
 |---|---|---|---|---|---|---|---|
-| KS-12 | Low sun, oncoming headlights, tunnel entry/exit | SH-01, SH-02, SH-06 | TC-01, TC-02, TC-18 | Sun elevation < 15° ahead; night with oncoming traffic; tunnel transitions | M3, M9 | AIR-01/03/05 metrics within thresholds in the stratum, **or** a monitor flag/alert precedes degradation (AIR-14). Otherwise the stratum is removed from the ODD | VT-01, VT-04, VT-06 |
-| KS-13 | Construction zone, temporary markings, cones | SH-13, SH-01 | TC-06 (outside ODD) | Recorded segments; CC with cones and conflicting tape lines | M3, M8, M9 | No crossing into a coned area; take-over alert or driver-ODD exit procedure observed (construction is outside the ODD per WP-C-02, to confirm) | VT-01, VT-02 |
+| KS-12 | Low sun, oncoming headlights, tunnel entry/exit | SH-01, SH-02, SH-06 | TC-01, TC-02, TC-18 | Sun elevation < 15° ahead (outside ODD when directly in view: ODD-exit check); night with oncoming traffic; tunnel transitions (excluded until validated: recorded data only) | M3, M9 | AIR-01/03/05 metrics within thresholds in the stratum, **or** a monitor flag/alert precedes degradation (AIR-14). Otherwise the stratum is removed from the ODD | VT-01, VT-04, VT-06 |
+| KS-13 | Construction zone, temporary markings, cones | SH-13, SH-01 | TC-06 (outside ODD) | Recorded segments; CC with cones and conflicting tape lines | M3, M8, M9 | Work zones are outside the ODD (WP-C-02 §3.1). Check: the safety driver procedure (WP-V-07 A-06) and user information lead to disengagement before the zone; if FM-08 adds detection, the item requests take-over before the first cone. Recorded segments also measure behaviour if the driver did not disengage (no credit) | VT-12 |
 | KS-15 | Light rain, wet road reflections (ODD edge) | SH-01, SH-04 | TC-03 (TC-04 outside ODD) | Light rain recorded; heavy rain = outside ODD | M3, M9 | Light rain: metrics within thresholds; heavy rain: driver procedure (WP-V-07 abort) | VT-01 |
 | KS-16 | Camera obstruction, dirty windscreen, mis-mount, calibration drift | SH-01, SH-02 | TC-19 | Masks 5–30 % on CC (stationary obstruction film); device tilted outside INS-25 tolerance | M3 (perturbation), M8 | Calibration outside limits blocks engagement (`calibrationInvalid`); obstruction → monitor flag or degraded but in-lane behaviour; no unannounced departure | VT-01, VT-02 |
 
@@ -91,7 +92,9 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 |---|---|---|---|---|---|---|---|
 | KS-20 | Stock PCS activation with the item installed | SH-08 | — (AOU-04R) | Soft target, stock PCS speeds (e.g., 20–40 km/h); LD-SDA engaged, disengaged and not installed | M8 (B2) | PCS warning and braking occur at the same TTC ± 0.2 s as without the item (VT-07). Shared with WP-V-01 VS-VAL for AOU-04 | VT-07 |
 | KS-21 | Internal degradation while engaged: model lag, frame drops, stale model output, process crash, soft-disable window | SH-01, SH-02, SH-06 | TC-21, TC-23 | Induced by CPU load, process kill, camera stream interruption (bench and CC only) | M1, M4, M8 (with WP-V-05 fault-injection rules) | Take-over alert within the SG-02 budget; actuation during the soft-disable window stays within the lane (GAP-16); no actuation on stale (> AIR-17 limit) model output | VT-02 |
-| KS-24 | Exclusion check: Experimental Mode and Chestnut not active | SH-09, SH-12, SH-13 | TC-13, TC-22, TC-26 | Fresh install, parameter dump, ignition cycles, settings UI | Inspection | `ExperimentalMode` off and not re-enabled by default; no big-model artefacts present (AIR-29, AIR-30) | — |
+| KS-24 | Exclusion check: Experimental Mode and Chestnut not active | SH-09, SH-12, SH-13 | TC-13, TC-22, TC-26 | Fresh install, parameter dump, ignition cycles, settings UI | Inspection | `ExperimentalMode` off and locked (FM-01); no big-model artefacts present (FM-02, AIR-30); debug, maneuver, joystick and DM demo modes cannot be set (FM-06) | AC-04 |
+| KS-25 | Speed above the ODD bound | SH-13 | TC-20 | Set speed and actual speed crossing 120 km/h (ODD-H) / 90 km/h (ODD-A) on CC where the site allows, otherwise by M1 replay with synthetic `carState` | M1, M8 | With FM-07: engagement refused / take-over requested at the bound in every trial. Baseline behaviour (warning only above ≈ 149 km/h, `events.py:989-996`) is recorded as a known failure until FM-07 exists | VT-12 |
+| KS-26 | PCM cruise stays active after an item disengagement | SH-05 | TC-30 | Injected `cruiseMismatch` condition on HIL, then CC | M1, M8 (WP-V-05 rules) | With FM-04: driver warned and cancel requested within the FSR-05.06 bound. Baseline (event without reaction, `events.py:458-460`) recorded as a known failure | VT-05 |
 
 ## 4. Scenario-to-requirement coverage
 
@@ -105,7 +108,11 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 | AIR-17, AIR-25, GAP-16 | KS-21 |
 | SG-05 / VT-05 | KS-19 |
 | SG-07 / VT-07 | KS-20 |
-| D-08, AIR-29, AIR-30 | KS-24 |
+| D-08, FM-01, FM-02, FM-06, AIR-29, AIR-30 | KS-24 |
+| FM-07, SH-13 | KS-13, KS-25 |
+| FM-04, SH-05 | KS-19, KS-26 |
+| SH-10, VT-13 | KS-14 |
+| SH-11 | KS-22, KS-23 |
 
 ## 5. Results
 
@@ -154,6 +161,8 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 | KS-22 | | | | | | | | | Not yet executed | |
 | KS-23 | | | | | | | | | Not yet executed | |
 | KS-24 | | | | | | | | | Not yet executed | |
+| KS-25 | | | | | | | | | Not yet executed | |
+| KS-26 | | | | | | | | | Not yet executed | |
 
 Verdict values: Pass / Fail / Insufficient trials / Not yet executed. A Fail opens a problem report ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)) and a WP-C-06 update; the decision (functional modification, ODD restriction, or accepted with rationale) is recorded here and in [WP-K-02](../10-safety-case/WP-K-02-sotif-release-argument.md).
 
@@ -165,8 +174,8 @@ The suite (or the affected scenarios) is re-run after any change listed in [WP-W
 
 | ID | Item |
 |---|---|
-| OI-1 | Map KS-nn to WP-C-06 TC-nn; add scenarios for unmapped TCs |
-| OI-2 | Confirm ODD membership of KS-13 (construction), KS-15 (rain), KS-22 (urban VRU) with WP-C-02 |
+| OI-1 | Propose to the WP-C-06 owner new TCs for KS-06 (narrow lane next to a large vehicle or barrier) and KS-08 (lead braking harder than the envelope allows) |
+| OI-2 | Confirm with WP-C-02 OI-4 whether ODD-A stays in the ODD; if dropped, KS-22 and the ODD-A parameter points are removed |
 | OI-3 | Select the closed-course site and soft-target equipment (radar-reflective target, trolley) and confirm speed limits per WP-V-07 |
 | OI-4 | Define how B2 runs restore the stock TSS2 functions (harness removal procedure and time per swap) |
 | OI-5 | Port the relevant `longitudinal_maneuvers` cases into LionDriver CI with traceability to KS-05, KS-07, KS-08, KS-23 |

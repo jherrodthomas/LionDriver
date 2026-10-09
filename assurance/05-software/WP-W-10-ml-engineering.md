@@ -6,7 +6,7 @@
 | Standard reference | ASPICE 4.0 MLE.1 (ML requirements analysis), MLE.2 (ML architecture), MLE.3 (ML training), MLE.4 (ML model testing), SUP.11 (ML data management); ISO/PAS 8800:2024 (data, AI V&V, deployment, operation); ISO 21448:2022 §7, §10 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | QM / SOTIF (AI-1, AI-2); AI-3 integrity pending [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) |
+| ASIL / scope | QM / SOTIF (AI-1, AI-2, AI-3; DM chain QM per the [WP-C-04 §7](../02-concept/WP-C-04-functional-safety-concept.md) proposal) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (AI safety lead) |
@@ -254,7 +254,7 @@ Upstream history shows why this matters: the big model was replaced and reverted
 | Data management | SUP.11 | Procedure defined (§5); **no data exists** | Storage, consent forms, label spec (WP-C-11 OI-6) |
 | Model testing | MLE.4 | Specification (§6); **none executed**. Upstream model replay runs only on comma infrastructure and is forced to pass in CI | Fork-owned replay, perturbation scripts, reference device |
 | Deployment integrity | — | **GAP-22 open**: no hashes, `pickle` loading | Implement AIR-19/20 (RM-1) |
-| Runtime monitors RM-1…RM-5 | — | Not implemented except partial DM fallback and AI-2 NaN check | Specify in WP-S-03 / TSR-6xx |
+| Runtime monitors RM-1…RM-5 | — | Not implemented except partial DM fallback and AI-2 NaN check | Decided as FM-09 (monitor), FM-05 (DM validity), FM-04 (non-finite) in [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md); technical requirements TSR-603, TSR-604, TSR-609, TSR-616 in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) |
 | Change control | SUP.10 | Defined (§8) | Exercise on the first model-related change |
 | Expected capability | — | MLE.1–4: CL0 today; target CL1 (T-12) | — |
 

@@ -25,7 +25,7 @@ This document specifies the verification of the integrated item **in the referen
 
 Verification versus validation: this document checks that the item meets its specified requirements and that the AoUs it relies on hold for the reference vehicle. Whether the safety goals are adequate and achieved at vehicle level for real drivers is validated in WP-V-01.
 
-**Requirement references.** [WP-S-02](WP-S-02-technical-safety-requirements.md) (TSRs) and [WP-S-01](WP-S-01-system-requirements.md) (system requirements) are being written in parallel. Cases trace to FSRs, AoUs and TSR blocks now; exact TSR and SYS IDs are added when those documents are published (OI-1).
+**Requirement references.** Cases trace to FSRs, AoUs and the TSRs of [WP-S-02](WP-S-02-technical-safety-requirements.md) (Draft v0.1). [WP-S-01](WP-S-01-system-requirements.md) (system requirements) has no published IDs yet; SYS IDs are added when it is published (OI-1).
 
 ## 2. Preconditions
 
@@ -62,53 +62,53 @@ Verification versus validation: this document checks that the item meets its spe
 
 | ID | Title | Trace | Procedure (summary) | Pass criteria |
 |---|---|---|---|---|
-| VS-SQ-01 | EPS LKA torque authority | AOU-01R, FSR-01.13; TSR-1xx (limit derivation input) | At standstill and at 30/60/90/110 km/h on a straight: command LKA torque steps up to the envelope maximum (1500 raw) with the release envelope; measure steering-wheel torque, rack response and lateral acceleration. Repeat across the range of raw values to obtain raw→Nm mapping | Mapping raw→Nm and max EPS-delivered torque recorded per speed; max ≤ T_EPS value required by AOU-01R; repeatability documented. Input to the physical limit derivation (GAP-04) |
-| VS-SQ-02 | EPS timeout and request-bit behaviour | AOU-01R, FSR-01.13; TSR-1xx | (a) While applying torque, stop `0x2E4` (test host build stops sending); (b) clear the steer-request bit with torque non-zero; (c) send implausible frames (bad checksum) | Time to LKA torque removal t_EPS measured for (a)–(c); fade profile recorded; EPS fault state reported on `EPS_STATUS`. Compare with the ≈1.5–2 s code comment (`opendbc_repo/opendbc/car/toyota/carstate.py:15-16`) |
-| VS-SQ-03 | Envelope-bounded worst case: lateral deviation | FSR-01.01, FSR-01.02; TSR-1xx; SG-01 | With the test host build, command the worst case allowed by the envelope (max torque at max rate, both directions) for the FTTI and beyond, at each speed, hands near but not on the wheel until the safety-driver intervention cue | Lateral deviation and lateral acceleration over time recorded per speed; within the values used to derive the limit and the FTTI (WP-S-04). Input to WP-V-01 controllability tests |
-| VS-SQ-04 | Brake override | AOU-03R, FSR-05.01, FSR-05.07; TSR-3xx | Engaged with positive accel commanded; driver applies brake at three pedal forces | Vehicle decelerates per pedal input regardless of `0x343`; envelope blocks actuation within ≤ 0.2 s of the brake frame; PCM drops ACC |
-| VS-SQ-05 | PCM ACC envelope and cancel | AOU-05R, FSR-03.06, FSR-04.03; TSR-2xx | Test host build with envelope bounds temporarily set wider **only in a closed-course test firmware** (documented, PC-05): command accel above +2.0 and below −3.5 m/s²; command inactive value from steady decel; set cancel bit | PCM clamp values measured; inactive value gives coasting without a deceleration step above the FSR-04.02 bound; cancel honoured within a measured time |
-| VS-SQ-06 | Stock PCS preserved | AOU-04R, FSR-07.01, FSR-07.04; TSR-7xx; SG-07 | Soft-target approach at PCS-relevant speeds in four states: item off (harness only), item on not engaged, engaged openpilot longitudinal, engaged with gas override | PCS warning and braking occur in all states with timing equal (within tolerance) to a baseline without harness; PCS messages on bus 0 identical to camera output (GC-2); `stockAeb`/`stockFcw` raised on the device (FSR-07.05) |
-| VS-SQ-07 | Cluster cruise indication independence | AOU-12, FSR-05.05 | Engage/disengage via stalk, brake, cancel; also inject `0x412` variations from the test host | Cluster cruise indicator follows PCM state only; not influenced by `0x412` content beyond the LKA HUD fields |
+| VS-SQ-01 | EPS LKA torque authority | AOU-01R, FSR-01.13; TSR-111; input to TSR-102 | At standstill and at 30/60/90/110 km/h on a straight: command LKA torque steps up to the envelope maximum (1500 raw) with the release envelope; measure steering-wheel torque, rack response and lateral acceleration. Repeat across the range of raw values to obtain raw→Nm mapping | Mapping raw→Nm and max EPS-delivered torque recorded per speed; max ≤ T_EPS value required by AOU-01R; repeatability documented. Input to the physical limit derivation (GAP-04) |
+| VS-SQ-02 | EPS timeout and request-bit behaviour | AOU-01R, FSR-01.13; TSR-111, TSR-109 | (a) While applying torque, stop `0x2E4` (test host build stops sending); (b) clear the steer-request bit with torque non-zero; (c) send implausible frames (bad checksum) | Time to LKA torque removal t_EPS measured for (a)–(c); fade profile recorded; EPS fault state reported on `EPS_STATUS`. Compare with the ≈1.5–2 s code comment (`opendbc_repo/opendbc/car/toyota/carstate.py:15-16`) |
+| VS-SQ-03 | Envelope-bounded worst case: lateral deviation | FSR-01.01, FSR-01.02; TSR-101, TSR-102, TSR-103; SG-01 | With the test host build, command the worst case allowed by the envelope (max torque at max rate, both directions) for the FTTI and beyond, at each speed, hands near but not on the wheel until the safety-driver intervention cue | Lateral deviation and lateral acceleration over time recorded per speed; within the values used to derive the limit and the FTTI (WP-S-04). Input to WP-V-01 controllability tests |
+| VS-SQ-04 | Brake override | AOU-03R, FSR-05.01, FSR-05.07; TSR-302, TSR-310 | Engaged with positive accel commanded; driver applies brake at three pedal forces | Vehicle decelerates per pedal input regardless of `0x343`; envelope blocks actuation within ≤ 0.2 s of the brake frame; PCM drops ACC |
+| VS-SQ-05 | PCM ACC envelope and cancel | AOU-05R, FSR-03.06, FSR-04.03; TSR-206, TSR-208 | Test host build with envelope bounds temporarily set wider **only in a closed-course test firmware** (documented, PC-05): command accel above +2.0 and below −3.5 m/s²; command inactive value from steady decel; set cancel bit | PCM clamp values measured; inactive value gives coasting without a deceleration step above the FSR-04.02 bound; cancel honoured within a measured time |
+| VS-SQ-06 | Stock PCS preserved | AOU-04R, FSR-07.01, FSR-07.04; TSR-704, TSR-708, TSR-709; SG-07 | Soft-target approach at PCS-relevant speeds in four states: item off (harness only), item on not engaged, engaged openpilot longitudinal, engaged with gas override | PCS warning and braking occur in all states with timing equal (within tolerance) to a baseline without harness; PCS messages on bus 0 identical to camera output (GC-2); `stockAeb`/`stockFcw` raised on the device (FSR-07.05) |
+| VS-SQ-07 | Cluster cruise indication independence | AOU-12, FSR-05.05; TSR-309 | Engage/disengage via stalk, brake, cancel; also inject `0x412` variations from the test host | Cluster cruise indicator follows PCM state only; not influenced by `0x412` content beyond the LKA HUD fields |
 
 ### 5.2 Item behaviour on the vehicle (TSRs)
 
 | ID | Title | Trace | Procedure (summary) | Pass criteria |
 |---|---|---|---|---|
-| VS-SQ-08 | Engagement and disengagement end-to-end | FSR-01.05, FSR-05.01, FSR-05.02, FSR-05.05; TSR-3xx | Engage with stalk at several speeds (incl. standstill per WP-C-01 OI-7); disengage by brake, cancel, main-switch off | Engagement only on PCM edge; release ≤ 0.2 s; device HMI, cluster and envelope state agree (no mode confusion) |
-| VS-SQ-09 | Gas override | FSR-04.04, FSR-05.04; TSR-2xx | Press gas while engaged during decel and during follow | Only inactive accel sent while gas pressed; lateral continues; on release, longitudinal resumes without a step above the jerk bound |
-| VS-SQ-10 | Steering override | FSR-05.03; TSR-3xx | Driver steers against commanded torque at three force levels | Commanded torque reduced to not oppose the driver within ≤ 0.2 s. **Expected to fail until GAP-02 is closed** |
-| VS-SQ-11 | Accel / decel limits and jerk on vehicle | FSR-03.01…03.03, FSR-04.01, FSR-04.02; TSR-2xx | Follow a lead target that brakes/accelerates; cut-out of the lead; test host build requests limit-exceeding values (envelope in release form) | Achieved vehicle accel within derived bounds; jerk within bound; GC-1 |
-| VS-SQ-12 | SoC loss while driving | FSR-01.07, FSR-02.05; TSR-4xx; SG-02 | On the straight and in a curve at 60 km/h: kill pandad (test build trigger), then freeze the SoC (SIGSTOP of all onroad processes) | Actuation removed within the SG-01 budget; panda acoustic warning within the SG-02 budget (≤ 1 s); driver retakes control without lateral deviation beyond the bound. **Expected to fail timing (GAP-06)** |
-| VS-SQ-13 | Fault-induced lateral safe-state transition in a curve | FSR-02.03, FSR-02.04; TSR-1xx, TSR-6xx; HE-02.1 | Constant-radius curve at speed: trigger (a) an "untrusted command" fault (immediate SS-L) and (b) a "planned" fault (soft disable ramp) via test host build | Warning precedes or coincides with torque reduction; (a) torque zero at once; (b) ramp per FSR-02.04; lateral deviation recorded; input to WP-C-08 §8 controllability |
-| VS-SQ-14 | Longitudinal safe-state transition | FSR-04.03, FSR-06.02; TSR-2xx, TSR-6xx | At 50/90 km/h in steady follow: trigger longitudinal fault; observe inactive value and cancel | Deceleration step ≤ jerk bound; warning ≤ 1 s; ACC cancelled |
-| VS-SQ-15 | Driver monitoring escalation and lockout | FSR-02.06…02.09 (QM); TSR-6xx | Closed course, safety driver simulates distraction per WP-C-08 scripts | Alerts at 5/8/13 s (vision) and wheel-touch fallback timings (`openpilot/selfdrive/monitoring/policy.py:31-36`); no-response force decel and lockout (`policy.py:39-44`) |
+| VS-SQ-08 | Engagement and disengagement end-to-end | FSR-01.05, FSR-05.01, FSR-05.02, FSR-05.05; TSR-301, TSR-302, TSR-303, TSR-309 | Engage with stalk at several speeds (incl. standstill per WP-C-01 OI-7); disengage by brake, cancel, main-switch off | Engagement only on PCM edge; release ≤ 0.2 s; device HMI, cluster and envelope state agree (no mode confusion) |
+| VS-SQ-09 | Gas override | FSR-04.04, FSR-05.04; TSR-203, TSR-305 | Press gas while engaged during decel and during follow | Only inactive accel sent while gas pressed; lateral continues; on release, longitudinal resumes without a step above the jerk bound |
+| VS-SQ-10 | Steering override | FSR-05.03; TSR-304 | Driver steers against commanded torque at three force levels | Commanded torque reduced to not oppose the driver within ≤ 0.2 s. **Expected to fail until GAP-02 is closed** |
+| VS-SQ-11 | Accel / decel limits and jerk on vehicle | FSR-03.01…03.03, FSR-04.01, FSR-04.02; TSR-201…TSR-205 | Follow a lead target that brakes/accelerates; cut-out of the lead; test host build requests limit-exceeding values (envelope in release form) | Achieved vehicle accel within derived bounds; jerk within bound; GC-1 |
+| VS-SQ-12 | SoC loss while driving | FSR-01.07, FSR-02.05; TSR-407, TSR-408, TSR-510, TSR-516; SG-02 | On the straight and in a curve at 60 km/h: kill pandad (test build trigger), then freeze the SoC (SIGSTOP of all onroad processes) | Authority revoked after > 0.3 s without heartbeat (TSR-407) or > 50 ms without `0x2E4` (TSR-408); panda acoustic warning ≤ 0.5 s after detection (TSR-516); driver retakes control without lateral deviation beyond the bound. **Expected to fail timing (GAP-06)** |
+| VS-SQ-13 | Fault-induced lateral safe-state transition in a curve | FSR-02.03, FSR-02.04; TSR-109, TSR-601, TSR-606; HE-02.1 | Constant-radius curve at speed: trigger (a) an "untrusted command" fault (immediate SS-L) and (b) a "planned" fault (soft disable ramp) via test host build | Warning precedes or coincides with torque reduction; (a) torque zero at once; (b) ramp per FSR-02.04; lateral deviation recorded; input to WP-C-08 §8 controllability |
+| VS-SQ-14 | Longitudinal safe-state transition | FSR-04.03, FSR-06.02; TSR-206, TSR-601, TSR-606 | At 50/90 km/h in steady follow: trigger longitudinal fault; observe inactive value and cancel | Deceleration step ≤ jerk bound; warning ≤ 1 s; ACC cancelled |
+| VS-SQ-15 | Driver monitoring escalation and lockout | FSR-02.06…02.09 (QM); TSR-608…TSR-612 | Closed course, safety driver simulates distraction per WP-C-08 scripts | Alerts at 5/8/13 s (vision) and wheel-touch fallback timings (`openpilot/selfdrive/monitoring/policy.py:31-36`); no-response force decel and lockout (`policy.py:39-44`) |
 
 ### 5.3 Regression on recorded data
 
 | ID | Title | Trace | Procedure (summary) | Pass criteria |
 |---|---|---|---|---|
-| VS-SQ-16 | Process replay regression | System requirements (WP-S-01); TSR-6xx | Run `test_processes.py` for controlsd, plannerd, radard, dmonitoringd, calibrationd, locationd, paramsd, torqued against fork-owned references of the previous release | No unexplained differences; each explained difference has an approved change request |
-| VS-SQ-17 | Safety replay of the full Corolla log set | FSR-01.xx…07.xx; TSR-1xx…4xx | Run `safety_replay/replay_drive.py` over all fork-owned logs with the release safety model | Zero TX violations from the release host; every `controls_allowed` transition explained by a PCM/brake event |
-| VS-SQ-18 | Controller margin to envelope | FSR-01.14; TSR-1xx, TSR-2xx; WP-A-03 DFI-08 | From the replay of VS-SQ-17, compute the distribution of commanded torque, torque rate and accel relative to the envelope limits | Commanded values stay below the margin target (e.g. ≤ 90 % of envelope bound) in ≥ 99.9 % of frames; time at the bound recorded. **Expected to fail today** (identical limits, `opendbc_repo/opendbc/car/toyota/values.py:20-21`) |
+| VS-SQ-16 | Process replay regression | System requirements (WP-S-01); TSR-601…TSR-618 (regression) | Run `test_processes.py` for controlsd, plannerd, radard, dmonitoringd, calibrationd, locationd, paramsd, torqued against fork-owned references of the previous release | No unexplained differences; each explained difference has an approved change request |
+| VS-SQ-17 | Safety replay of the full Corolla log set | FSR-01.xx…07.xx; TSR-101…TSR-110, TSR-201…TSR-207, TSR-301…TSR-311, TSR-401…TSR-406 | Run `safety_replay/replay_drive.py` over all fork-owned logs with the release safety model | Zero TX violations from the release host; every `controls_allowed` transition explained by a PCM/brake event |
+| VS-SQ-18 | Controller margin to envelope | FSR-01.14; TSR-605; WP-A-03 DFI-08 | From the replay of VS-SQ-17, compute the distribution of commanded torque, torque rate and accel relative to the envelope limits | Commanded values stay below the margin target (e.g. ≤ 90 % of envelope bound) in ≥ 99.9 % of frames; time at the bound recorded. **Expected to fail today** (identical limits, `opendbc_repo/opendbc/car/toyota/values.py:20-21`) |
 
 ### 5.4 Long-duration verification
 
 | ID | Title | Trace | Procedure (summary) | Pass criteria |
 |---|---|---|---|---|
-| VS-SQ-19 | Supervised endurance drive | All SG; TSR-1xx…7xx; system requirements | After G1, under WP-V-07: drive a defined mileage across the ODD with a safety driver; log everything | No GC-1/GC-2 violation; every disengagement and alert classified (driver-initiated, fault, ODD exit); no unexplained envelope intervention; no panda fault flags; problem reports for all anomalies. Mileage target set in [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) |
+| VS-SQ-19 | Supervised endurance drive | All SG; TSR-1xx…TSR-7xx (observation); system requirements | After G1, under WP-V-07: drive a defined mileage across the ODD with a safety driver; log everything | No GC-1/GC-2 violation; every disengagement and alert classified (driver-initiated, fault, ODD exit); no unexplained envelope intervention; no panda fault flags; problem reports for all anomalies. Mileage target set in [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) |
 
 ## 6. Coverage
 
 | Requirement group | Cases |
 |---|---|
 | AoU on external elements (AOU-01R…05R, AOU-12) | VS-SQ-01, -02, -04…-07 |
-| TSR-1xx lateral | VS-SQ-01…-03, -13, -17, -18 |
-| TSR-2xx longitudinal | VS-SQ-05, -09, -11, -14, -18 |
-| TSR-3xx engagement/override | VS-SQ-04, -08, -10 |
-| TSR-4xx communication | VS-SQ-12, -17 |
-| TSR-5xx MCU platform | Bench only (WP-S-08, WP-H-06); VS-SQ-19 observes fault flags |
-| TSR-6xx host monitoring | VS-SQ-13…-16 |
-| TSR-7xx PCS | VS-SQ-06 |
+| TSR-101…TSR-111 lateral | VS-SQ-01…-03, -13, -17, -18 |
+| TSR-201…TSR-208 longitudinal | VS-SQ-05, -09, -11, -14, -18 |
+| TSR-301…TSR-311 engagement/override | VS-SQ-04, -07, -08, -10 |
+| TSR-401…TSR-413 communication | VS-SQ-12, -17 |
+| TSR-501…TSR-516 MCU platform | Bench only (WP-S-08, WP-H-06, WP-V-05); VS-SQ-12 (TSR-510, -516); VS-SQ-19 observes fault flags |
+| TSR-601…TSR-618 host monitoring | VS-SQ-13…-16, -18 |
+| TSR-701…TSR-710 PCS / harness | VS-SQ-06 (TSR-704, -708, -709); others on the bench |
 | System requirements (WP-S-01) | VS-SQ-08, -15, -16, -19 (to be extended when WP-S-01 IDs exist) |
 
 ## 7. Report (template)
@@ -149,7 +149,7 @@ Summary (to complete after execution): AoU verdicts and their effect on HARA ⚠
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Add exact TSR IDs (WP-S-02) and SYS IDs (WP-S-01) to §5 and §6 | Safety engineer | G2 |
+| OI-1 | Add SYS IDs (WP-S-01) to §5 and §6; re-check TSR references when WP-S-02 leaves Draft | Safety engineer | G2 |
 | OI-2 | Define the closed-course test builds (host and panda) for VS-SQ-02, -03, -05, -12, -13 as configuration items, including how they are prevented from reaching public-road use | Maintainer | Before first closed-course session |
 | OI-3 | Specify course geometry and speeds per case from the FTTI derivation (WP-S-04) | Safety engineer | G2 |
 | OI-4 | Run VS-SQ-01, -02, -04, -05, -06 early (G1): they decide the HARA ⚠ ratings and the envelope strategy (WP-C-04 OI-2) | Safety engineer | G1 |
