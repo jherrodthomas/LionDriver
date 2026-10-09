@@ -39,6 +39,27 @@ The criteria below paraphrase what 8 §14 requires a PIU argument to establish. 
 | P6 | No observed safety-relevant failures in the evaluated period, or all analysed and resolved | Incident list with dispositions | Not available | No |
 | P7 | Candidate is used in the new item without modification, or modifications are analysed | Diff to the evaluated version | LionDriver plans envelope hardening (IWDG, fault reaction, mode lock, per gap assessment action 5), so the deployed version will differ from any upstream service history | No |
 
+### 3.1 Sources examined
+
+| Source | Location | What it shows | Limitation |
+|---|---|---|---|
+| Release notes | `RELEASES.md` | Version sequence and headline changes (e.g. 0.11.2 on 2026-08-12 with a new 880M-parameter driving model) | Not a change record with impact analysis; no safety content |
+| Git history | LionDriver repo (shallow, 50 commits) and submodule histories | Code changes to candidates | Shallow clone; no link to field operation |
+| Upstream safety policy | `docs/SAFETY.md` | Two informal safety requirements; rules for forks that modify `opendbc/safety` | Policy, not service data |
+| Upstream limitations | `docs/LIMITATIONS.md` | Known functional limitations | Qualitative |
+| Upstream test suites | `opendbc_repo/opendbc/safety/tests/`, `panda/tests/` | Verification practice | Verification evidence, not service history |
+| Public statements by comma.ai on fleet usage | comma.ai blog, talks, social media | Aggregate usage claims | Public claims, not verifiable by LionDriver; not per configuration; counting rules unknown |
+| Upstream issue tracker | `github.com/commaai/openpilot/issues` | Some user-reported problems | Not systematic; forks excluded; no root-cause dispositions |
+
+### 3.2 Candidate-specific notes
+
+| Candidate | Additional observation |
+|---|---|
+| PIU-C1 | The Toyota mode includes LTA, SecOC and stock-longitudinal branches not used by the reference configuration; usage of the LKA-torque + openpilot-longitudinal branch alone cannot be separated from upstream data |
+| PIU-C2 | Firmware runs on several board types (`panda/board/boards/`); hardware revision of the reference device is a separate configuration dimension. Known weaknesses (GAP-07, GAP-08, GAP-09) would be inherited by any PIU argument |
+| PIU-C3 | Fingerprint tables (`opendbc_repo/opendbc/car/toyota/fingerprints.py`) change frequently as new ECU firmware versions are added |
+| PIU-C4 | ML models are replaced in most releases; any service history applies to a superseded model. Out of scope for 8 §14 anyway as QM; handled under [WP-M-10](../01-management/WP-M-10-ai-safety-plan.md) |
+
 ## 4. Conclusion
 
 A proven-in-use argument is **not claimable** for any candidate (PIU-C1 to PIU-C4). Every criterion fails on lack of controlled configuration data, per-configuration service hours and field incident data, all of which belong to comma.ai and are not available to LionDriver (no development interface agreement, T-08 and [WP-M-11](../01-management/WP-M-11-upstream-and-supplier-management.md)). This supports T-06.
