@@ -138,7 +138,7 @@ Paths are under `panda/board/` unless prefixed otherwise. `safety.h` is
 | HWSR-505a | Supply degradation above the brown-out level but outside the safe operating range (programmable voltage detector) shall lead to the safe state before brown-out. | C | FSR-01.09 / TSR-505 | PWR PVD/AVD | CFG | T-HIL | **Not implemented.** `PVD_AVD_IRQHandler` exists only as a dispatch stub (`stm32h7/interrupt_handlers.h:7`); PVD is not enabled |
 | HWSR-505b | The vehicle supply voltage at the device input shall be measured and reported; an out-of-range value while the relay is driven shall lead to the safe state. Thresholds to be set from the device input rating. | B | TSR-505 | ADC on input divider | HW + CFG | T-HIL | **Partial.** Measured and reported only: `cuatro_read_voltage_mV` (ADC1 ch8 ×11, `boards/cuatro.h:28-30`), `red_read_voltage_mV` used by tres (ADC1 ch2 ×11, `boards/red.h:70-72`, `boards/tres.h:162`), reported in health (`main_comms.h:14`). Host uses it only for power management (`openpilot/system/hardware/power_monitoring.py`) |
 
-### 4.6 Memory protection (TSR-506 reserved for relay; MPU is TSR-507)
+### 4.6 Memory protection (TSR-507)
 
 | ID | Statement | ASIL | Parent | Alloc | Kind | Verif | Impl |
 |---|---|---|---|---|---|---|---|
