@@ -9,7 +9,7 @@
 | ASIL / scope | All (FuSa, SOTIF, CS, AI, process) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review of tailoring rationale by independent assessor (I3) |
-| Approver | Project maintainer (acting safety manager) |
+| Approver | Project maintainer (acting safety manager). Self-approval is an accepted interim limitation until a second person takes the safety manager or reviewer role ([WP-M-02](WP-M-02-safety-plan.md) OI-2) |
 | Baseline | `8b8c6ae` |
 
 ## 1. Purpose
@@ -29,7 +29,7 @@ The [safety plan (WP-M-02)](WP-M-02-safety-plan.md), [SOTIF plan (WP-M-08)](WP-M
 From the [baseline gap assessment](../00-assessment/gap-assessment.md):
 
 - LionDriver is upstream openpilot (≈ v0.11.2). The only change so far is to `README.md`. The safety-enforcement code (`opendbc_repo/opendbc/safety`, `panda/board`) comes in through git submodules that point at upstream `commaai` repositories.
-- The engineering practice is strong where it matters most: the opendbc safety layer has MISRA C:2012 checking, a 100% line-coverage gate, mutation testing and per-brand safety tests. The process work products are missing: there are no requirements, architecture, plans, traceability or review records. Most process areas are at ASPICE capability level 0.
+- The engineering practice is strong where it matters most: the opendbc safety layer has MISRA C:2012 checking, a 100% line-coverage gate, mutation testing and per-brand safety tests. **These run only in upstream opendbc CI (`opendbc_repo/.github/workflows/tests.yml`), not in LionDriver's CI, so today they produce no evidence under LionDriver control.** The process work products are missing: there are no requirements, architecture, plans, traceability or review records. Most process areas are at ASPICE capability level 0.
 - The hardware (comma 3X/four with an integrated STM32H7 "panda" safety MCU) is a commercial product. It was not developed to ISO 26262, and no supplier safety evidence is available.
 - All hardware-in-the-loop, on-road and model-replay verification runs on comma.ai's private Jenkins device farm. **The fork currently has no HIL or on-device verification capability.**
 - The driving behaviour comes from end-to-end ML models that comma.ai trained on data that is not available to LionDriver.
@@ -121,10 +121,10 @@ ISO 26262 assumes an OEM or supplier developing a series-production item. LionDr
 | T-06 | Proven in use | **Not claimed** for any element. The openpilot fleet history is evaluated in [WP-P-09](../07-supporting/WP-P-09-proven-in-use.md) as supporting evidence only | No controlled configuration history, field-problem data or service period data that meets 8 §14 |
 | T-07 | Production (Part 7) | Tailored to installation, provisioning and configuration control of the retrofit ([WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md)). LionDriver does not manufacture hardware | Production is comma's. LionDriver controls installation, firmware load and configuration |
 | T-08 | Distributed development | comma.ai is treated as an upstream supplier. No development interface agreement (DIA) is possible, so the "supplier" activities fall to LionDriver ([WP-M-11](WP-M-11-upstream-and-supplier-management.md)) | Upstream is under no contract |
-| T-09 | Independence | Verification reviews may be done by project members (I0/I1). Confirmation reviews of the HARA, safety plan and safety case, and the functional safety assessment, need an **external** assessor (I2/I3, depending on ASIL) | The project currently has one maintainer, so I2/I3 cannot be met internally |
+| T-09 | Independence | Verification reviews may be done by project members (I0/I1), but never by the author of the work product. While the project has a single maintainer, I1 review needs an external reviewer, and self-review is recorded as I0 and does not count as verification. Confirmation reviews of the HARA, safety plan and safety case, and the functional safety assessment, need an **external** assessor (I2/I3, depending on ASIL) | The project currently has one maintainer, so I2/I3 cannot be met internally |
 | T-10 | SOTIF scope | All of ISO 21448 applies. Of the standard's two areas, area 3 ("unknown unsafe") is the dominant one for an ML-driven function, so validation targets are a primary deliverable | End-to-end ML driving |
 | T-11 | Cybersecurity scope | ISO/SAE 21434 applies to the item and its update and remote-access ecosystem. comma's back end (connect, athena server) is outside LionDriver's control, so it is treated as an external entity with cybersecurity assumptions | No control over comma servers |
-| T-12 | ASPICE target | Target **CL2** for SYS.2–5, SWE.1–6, SUP.1, SUP.8–10 and MAN.3, and **CL1** for MLE.1–4 and HWE.1–4 (supplier-limited). Assessed by self-assessment first ([WP-M-13](WP-M-13-aspice-capability-baseline.md)) | Realistic for a small open project. HWE is supplier-limited |
+| T-12 | ASPICE target | Target **CL2** for SYS.1–5, SWE.1–6, SUP.1, SUP.8–10, MAN.3 and MAN.5, and **CL1** for MLE.1–4 and HWE.1–4 (supplier-limited). Assessed by self-assessment first ([WP-M-13](WP-M-13-aspice-capability-baseline.md)) | Realistic for a small open project. HWE is supplier-limited |
 | T-13 | Regulatory | US market. FMVSS self-certification does not cover aftermarket ADAS function. NHTSA Standing General Order crash reporting is used as the model for field monitoring ([WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md)). UNECE R79/R171 are informative benchmarks for HMI and DM requirements | No type approval applies to the aftermarket retrofit in the US |
 
 ## 6. How the standards fit together

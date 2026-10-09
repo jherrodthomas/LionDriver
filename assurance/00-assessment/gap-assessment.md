@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Document | Baseline gap assessment of the openpilot-derived LionDriver code and process |
+| Work product | Baseline gap assessment (supporting document, not a registered work product) |
 | Standard reference | ISO 26262:2018 parts 2–9; ISO 21448:2022; ISO/SAE 21434:2021; ISO/PAS 8800:2024; ASPICE PAM 4.0 |
 | Version | 0.1 |
 | Status | Draft |
@@ -131,7 +131,7 @@ The detailed rating is in [WP-M-13](../01-management/WP-M-13-aspice-capability-b
 ## 8. Existing strengths to build on
 
 - The envelope pattern itself: all actuation goes through the panda; there is a TX whitelist; relay-malfunction latching; engagement only on the PCM cruise edge; brake disengage; heartbeat-loss → SILENT.
-- opendbc safety verification: a 100% line coverage gate, MISRA C:2012 via cppcheck (`--check-level=exhaustive`), mutation testing in CI with a checker self-test, UBSan, a shared safety test suite (`common.py`, 1217 lines) and a Toyota suite (`test_toyota.py`, 397 lines), and drive-log safety replay.
+- opendbc safety verification (runs in upstream opendbc CI only; LionDriver must run it in its own CI to claim it as evidence, see D-03): a 100% line coverage gate, MISRA C:2012 via cppcheck (`--check-level=exhaustive`), mutation testing in CI with a checker self-test, UBSan, a shared safety test suite (`common.py`, 1217 lines) and a Toyota suite (`test_toyota.py`, 397 lines), and drive-log safety replay.
 - Process replay as a regression oracle across the main control processes.
 - A driver monitoring policy with escalation, wheel-touch fallback on model uncertainty, forced deceleration on no response, and lockout.
 - Excessive-actuation detection with a persistent latch.
