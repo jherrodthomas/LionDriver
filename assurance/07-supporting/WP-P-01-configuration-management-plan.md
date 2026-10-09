@@ -206,7 +206,7 @@ A baseline manifest (`baseline-manifest.yaml`, generated, stored with the tag's 
 | LFS objects | LionDriver-controlled LFS store (§6 step 6) plus offline copy of each released model |
 | CI results | GitHub Actions artifacts expire (default retention is limited). Release evidence is exported to the evidence package (see [WP-P-10 §5](WP-P-10-release-management.md)) |
 | Signing keys | Private release keys held offline (hardware token or encrypted offline storage), never in Git or CI secrets without a recorded decision. The committed debug key `panda/board/crypto/certs/debug` is not used for release builds (GAP-25) |
-| Retention | Release baselines and their evidence: at least the service life of the release plus 10 years (to be confirmed in [WP-M-02](../01-management/WP-M-02-safety-plan.md), OI-6) |
+| Retention | Per [WP-P-04 §10](WP-P-04-documentation-management.md#10-retention) |
 | Access | Write to protected branches: maintainers listed in CODEOWNERS only. 2FA required on the organization |
 
 ## 11. Configuration audits
@@ -234,6 +234,6 @@ A baseline manifest (`baseline-manifest.yaml`, generated, stored with the tag's 
 | OI-3 | Configure and record branch protection on `liondriver-dev`; current settings were not verified from the local checkout |
 | OI-4 | Change request for `LIONDRIVER_VERSION`, panda `BUILDER`, and identity replacements (GAP-35) |
 | OI-5 | Write the baseline manifest generator and add it to the release procedure |
-| OI-6 | Confirm the retention period in the safety plan |
+| OI-6 | Confirm that GitHub Actions artifact retention settings and the evidence export (WP-P-10 §5) together meet the retention in WP-P-04 §10 |
 | OI-7 | LionDriver CI only runs `tools/test_runner.py` on `openpilot/` (`tools/op.sh test`). The opendbc safety suite, MISRA and mutation jobs live in `opendbc_repo/.github/workflows/tests.yml` and do not run in LionDriver CI. Add them to fork CI (D-03) |
 | OI-8 | `tests.yaml` triggers on `push` to `master` and on `pull_request`; pushes to `liondriver-dev` are not tested. Add `liondriver-dev` to the push trigger |

@@ -98,7 +98,16 @@ A comment such as "LGTM" with no checklist reference is not accepted as a verifi
 
 ## 10. Retention
 
-Work products and their records are kept for every released baseline for at least the service life of that release plus 10 years (period to be confirmed in [WP-M-02](../01-management/WP-M-02-safety-plan.md); [WP-P-01 OI-6](WP-P-01-configuration-management-plan.md#13-open-items)). Git history is never rewritten on protected branches. Superseded documents remain retrievable through tags.
+This section sets the retention period that [WP-M-04](../01-management/WP-M-04-organization-competence-safety-culture.md) (OR-7) and [WP-P-01 §10](WP-P-01-configuration-management-plan.md#10-backup-retention-and-access) refer to.
+
+| Record | Retention |
+|---|---|
+| Work products, review, change and problem records of a released baseline | Until the last installation of that release is out of service, plus 15 years (proposed; OI-6) |
+| Evidence package of a released baseline ([WP-P-10 §5](WP-P-10-release-management.md#5-evidence-package)) | Same as above |
+| Records of unreleased baselines (gate baselines, RCs not released) | 5 years after the next release |
+| Vehicle test drive logs containing personal data | Per the privacy rules in [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md); safety-relevant extracts kept as above |
+
+Git history is never rewritten on protected branches. Superseded documents remain retrievable through tags.
 
 ## 11. Externally sourced documents
 
@@ -117,3 +126,4 @@ Work products and their records are kept for every released baseline for at leas
 | OI-3 | Script for the assessor export (§8), including GitHub PR/issue export |
 | OI-4 | Add the "Revision history" table to every WP at first approval |
 | OI-5 | Decide where non-redistributable reference documents are stored |
+| OI-6 | Confirm the retention periods in §10 with the safety manager and, for the US market, against any product-liability advice obtained |
