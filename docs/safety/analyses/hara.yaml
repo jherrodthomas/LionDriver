@@ -1,0 +1,489 @@
+# yaml-language-server: $schema=../schema/hara.schema.json
+#
+# Hazard analysis and risk assessment (ISO 26262-3 clause 6).
+# ASIL per ISO 26262-3 Table 4, checked by tools/safety/fmea_lint.py.
+# Hazards are derived from the System FMEA end effects (sfm_refs); the FMEA effects link back via `hazard`.
+schema_version: 1
+analysis:
+  id: HARA
+  type: hara
+  title: "HARA — LionDriver L2 ACC/ALC on 2020 Toyota Corolla LE (US)"
+  revision: "0.1"
+  status: draft
+  baseline: BL-001
+  scope: >-
+    Item as defined by the System FMEA structure (SFM-SE-001): lateral control, longitudinal control,
+    engagement management, driver override, driver monitoring, alerting, actuation limiting and stock
+    function preservation. A formal item definition is still owed (fmea-plan.md section 2); until it
+    exists, the System FMEA scope and the assumptions below stand in for it.
+  method: >-
+    Operational situations x hazards -> hazardous events, each rated S/E/C without credit for the
+    item's own safety mechanisms; ASIL from ISO 26262-3 Table 4; one or more safety goals per hazard.
+  team:
+    - name: Jherrod Thomas
+      role: Project maintainer, safety lead (reviewer/approver)
+    - name: Claude (AI assistant)
+      role: Drafting assistance; ratings require human review and confirmation review
+  references:
+    - docs/safety/analyses/system-fmea.yaml
+    - docs/safety/fmea-plan.md
+    - docs/SAFETY.md
+    - ISO 26262-3:2018 clause 6 and Annex B
+  updated: 2026-10-09
+
+assumptions:
+  - id: HA-001
+    text: >-
+      SAE Level 2. The driver is responsible for supervising and is expected to intervene. Controllability
+      is rated for a typical driver including foreseeable inattention; the item's driver monitoring is not credited.
+  - id: HA-002
+    text: >-
+      The item's own safety mechanisms (panda/opendbc safety model limits, excessive actuation check,
+      driver monitoring, event reactions) are not credited (ISO 26262-3 6.4.2).
+  - id: HA-003
+    text: >-
+      Actuation authority is bounded only by the vehicle's own ECUs (EPS acceptance of steering requests,
+      powertrain/brake acceptance of acceleration requests). These external bounds are not yet characterized
+      and are therefore not credited (OI-001, OI-002).
+  - id: HA-004
+    text: >-
+      Vehicle and configuration per BL-001 (TSS2, openpilot longitudinal). Used on US public roads of all
+      types; the item enforces no ODD restriction beyond what the vehicle and BL-001 software impose.
+  - id: HA-005
+    text: >-
+      Exposure is estimated from typical US passenger-car use and is rounded up where data is lacking.
+      No fleet data is used (OI-006).
+  - id: HA-006
+    text: >-
+      Hazards arise from E/E malfunctions of the item. The same vehicle-level hazards caused by performance
+      limitations without a fault are handled in the SOTIF analysis.
+
+operational_situations:
+  - id: OS-001
+    description: Highway driving with traffic in adjacent lanes, item engaged
+    road: highway
+    speed: 80-130 km/h
+    item_state: engaged
+    exposure: E4
+    exposure_rationale: Highway driving exceeds 10% of operating time for typical use; L2 use concentrates on highways.
+  - id: OS-002
+    description: Two-lane undivided road with oncoming traffic, item engaged
+    road: rural
+    speed: 50-100 km/h
+    item_state: engaged
+    exposure: E4
+    exposure_rationale: No ODD restriction excludes undivided roads; rated E4 conservatively (OI-006).
+  - id: OS-003
+    description: Urban or suburban road with pedestrians, cyclists and parked vehicles, item engaged
+    road: urban
+    speed: 0-60 km/h
+    item_state: engaged
+    exposure: E4
+    exposure_rationale: Urban driving exceeds 10% of operating time.
+  - id: OS-004
+    description: Stop-and-go traffic close behind a lead vehicle, item engaged
+    road: any
+    speed: 0-40 km/h
+    item_state: engaged
+    exposure: E3
+    exposure_rationale: Congested traffic is 1-10% of operating time for typical use.
+  - id: OS-005
+    description: Curve requiring lateral acceleration above 1 m/s², item engaged
+    road: any
+    speed: 50-120 km/h
+    item_state: engaged
+    exposure: E4
+    exposure_rationale: Curves occur on most trips; rated E4 conservatively (OI-006).
+  - id: OS-006
+    description: Manual driving at highway speed with adjacent traffic, item not engaged
+    road: highway
+    speed: 80-130 km/h
+    item_state: not_engaged
+    exposure: E4
+    exposure_rationale: The item is powered whenever the vehicle is on; manual highway driving exceeds 10% of operating time.
+  - id: OS-007
+    description: Driver incapacitated (medical event) while item engaged
+    road: any
+    speed: 0-130 km/h
+    item_state: engaged
+    exposure: E1
+    exposure_rationale: Driver incapacitation while driving is very rare.
+  - id: OS-008
+    description: Highway, item engaged, following vehicle within 2 s headway
+    road: highway
+    speed: 80-130 km/h
+    item_state: engaged
+    exposure: E4
+    exposure_rationale: Short headways from following traffic are common in normal highway traffic (OI-006).
+  - id: OS-009
+    description: Driver must steer evasively around an obstacle, item engaged
+    road: any
+    speed: 50-130 km/h
+    item_state: engaged
+    exposure: E2
+    exposure_rationale: Evasive maneuvers are rare (less than 1% of operating time, a few times per year).
+  - id: OS-010
+    description: Stopped or hard-braking lead vehicle requiring emergency braking
+    road: any
+    speed: 30-130 km/h
+    item_state: any
+    exposure: E2
+    exposure_rationale: Emergency-braking situations occur a few times per year.
+  - id: OS-011
+    description: Highway, item engaged, approaching a slower lead that requires moderate deceleration
+    road: highway
+    speed: 60-130 km/h
+    item_state: engaged
+    exposure: E4
+    exposure_rationale: Closing on slower traffic is routine in highway driving.
+  - id: OS-012
+    description: Driver brakes to slow or stop in normal traffic, item engaged
+    road: any
+    speed: 0-130 km/h
+    item_state: engaged
+    exposure: E4
+    exposure_rationale: Driver braking is the normal way to end or adjust an engagement.
+
+hazards:
+  - id: HZ-001
+    description: Unintended steering torque while the item is not engaged
+    functions: [SFM-FN-001]
+    sfm_refs: [SFM-001]
+  - id: HZ-002
+    description: Excessive steering intervention (torque or rate) while engaged
+    functions: [SFM-FN-001, SFM-FN-007]
+    sfm_refs: [SFM-002, SFM-014, SFM-016, SFM-029, SFM-030, SFM-032]
+  - id: HZ-003
+    description: Lateral control steers toward or across the lane boundary at normal intervention magnitude while engaged
+    functions: [SFM-FN-001]
+    sfm_refs: [SFM-003, SFM-006]
+  - id: HZ-004
+    description: Loss or reduction of lateral control while engaged without timely driver warning
+    functions: [SFM-FN-001, SFM-FN-003]
+    sfm_refs: [SFM-004, SFM-005, SFM-015]
+  - id: HZ-005
+    description: Unintended acceleration
+    functions: [SFM-FN-002, SFM-FN-007]
+    sfm_refs: [SFM-008, SFM-014, SFM-016, SFM-029, SFM-030, SFM-032]
+  - id: HZ-006
+    description: Unintended or excessive deceleration
+    functions: [SFM-FN-002, SFM-FN-004, SFM-FN-007]
+    sfm_refs: [SFM-009, SFM-014, SFM-020, SFM-029, SFM-030, SFM-032]
+  - id: HZ-007
+    description: Insufficient or late deceleration for a lead vehicle while engaged
+    functions: [SFM-FN-002]
+    sfm_refs: [SFM-010, SFM-011, SFM-012]
+  - id: HZ-008
+    description: Automated control not released when the driver brakes or cancels
+    functions: [SFM-FN-004]
+    sfm_refs: [SFM-017, SFM-019]
+  - id: HZ-009
+    description: Item resists driver steering input
+    functions: [SFM-FN-004]
+    sfm_refs: [SFM-018]
+  - id: HZ-010
+    description: Unintended engagement
+    functions: [SFM-FN-003]
+    sfm_refs: [SFM-013]
+  - id: HZ-011
+    description: Stock AEB/FCW unavailable or degraded while the item is installed
+    functions: [SFM-FN-008]
+    sfm_refs: [SFM-033, SFM-034]
+  - id: HZ-012
+    description: Driver misinformed about automation state (missing or late handback warning, wrong displayed state, stock cruise active unknowingly)
+    functions: [SFM-FN-006, SFM-FN-004]
+    sfm_refs: [SFM-021, SFM-026, SFM-027, SFM-028]
+  - id: HZ-013
+    description: Automated control continues with an inattentive or unresponsive driver
+    functions: [SFM-FN-005]
+    sfm_refs: [SFM-022, SFM-023, SFM-025]
+
+hazardous_events:
+  - id: HE-001
+    hazard: HZ-001
+    situation: OS-006
+    consequence: Vehicle steered into adjacent traffic or off the road during manual highway driving
+    severity: S3
+    severity_rationale: Side or run-off-road collision at 80-130 km/h; life-threatening injuries likely.
+    exposure_override: null
+    controllability: C2
+    controllability_rationale: >-
+      Driver is actively steering with hands on the wheel and can counter the torque, but is surprised and
+      the torque is bounded only by the EPS (HA-003). Normally controllable.
+    asil: C
+    sensitivity: If OI-001 shows the EPS bounds LKA torque low enough to be overpowered easily, C1 -> ASIL B.
+  - id: HE-002
+    hazard: HZ-002
+    situation: OS-001
+    consequence: Rapid lateral deviation into adjacent traffic or off the road at highway speed
+    severity: S3
+    severity_rationale: Collision with adjacent vehicle or roadside at highway speed.
+    exposure_override: null
+    controllability: C3
+    controllability_rationale: >-
+      An L2 driver may be hands-off or hands-light (HA-001). Without the item's limits (HA-002), deviation can
+      exceed 1 m before a typical reaction completes (SAFETY.md: 1 m within 0.9 s is the controllability boundary).
+    asil: D
+    sensitivity: If OI-001 shows the EPS itself bounds torque/rate, C2 -> ASIL C.
+  - id: HE-003
+    hazard: HZ-002
+    situation: OS-003
+    consequence: Vehicle steered into a pedestrian, cyclist or parked vehicle at urban speed
+    severity: S3
+    severity_rationale: Vulnerable road user struck at up to 60 km/h.
+    exposure_override: null
+    controllability: C2
+    controllability_rationale: Lower speed gives the driver more time and distance to correct.
+    asil: C
+  - id: HE-004
+    hazard: HZ-003
+    situation: OS-002
+    consequence: Vehicle drifts into the oncoming lane on an undivided road
+    severity: S3
+    severity_rationale: Frontal collision with combined speeds above 100 km/h.
+    exposure_override: null
+    controllability: C2
+    controllability_rationale: >-
+      Deviation at normal intervention magnitude develops over seconds; most drivers correct it, but foreseeable
+      inattention (HA-001) prevents C1.
+    asil: C
+  - id: HE-005
+    hazard: HZ-003
+    situation: OS-005
+    consequence: Vehicle leaves the lane in a curve; run-off-road or collision
+    severity: S3
+    severity_rationale: Run-off-road or collision at 50-120 km/h.
+    exposure_override: null
+    controllability: C2
+    controllability_rationale: As HE-004; the curve shortens the available reaction distance.
+    asil: C
+  - id: HE-006
+    hazard: HZ-004
+    situation: OS-005
+    consequence: Vehicle runs wide in a curve after lateral control is lost without warning
+    severity: S3
+    severity_rationale: Run-off-road or collision at 50-120 km/h.
+    exposure_override: null
+    controllability: C1
+    controllability_rationale: >-
+      Loss of assist torque is passive: the vehicle continues on its current curvature and departs gradually.
+      The change is felt at the wheel and seen; simply controllable for a supervising driver.
+    asil: B
+    sensitivity: If inattentive hands-off use is shown to be typical (OI-006), C2 -> ASIL C.
+  - id: HE-007
+    hazard: HZ-005
+    situation: OS-004
+    consequence: Low-speed rear-end collision with the lead vehicle in stop-and-go traffic
+    severity: S2
+    severity_rationale: Delta-v up to about 30 km/h; severe injuries possible, survival probable.
+    exposure_override: null
+    controllability: C2
+    controllability_rationale: Driver can brake; short gap leaves little time.
+    asil: A
+  - id: HE-008
+    hazard: HZ-005
+    situation: OS-011
+    consequence: Vehicle accelerates toward a slower lead at highway speed
+    severity: S3
+    severity_rationale: High-speed rear-end collision.
+    exposure_override: null
+    controllability: C2
+    controllability_rationale: Driver can brake (brake overrides acceleration in the vehicle); acceleration is noticeable.
+    asil: C
+    sensitivity: If OI-002 shows the powertrain limits requested acceleration to low values, C1 -> ASIL B.
+  - id: HE-009
+    hazard: HZ-006
+    situation: OS-008
+    consequence: Hard braking at highway speed causes a rear-end collision by the following vehicle
+    severity: S2
+    severity_rationale: Rear impact with moderate delta-v; occupants protected by rear structure and seats.
+    exposure_override: null
+    controllability: C2
+    controllability_rationale: Following driver must react; own driver can press the accelerator to override.
+    asil: B
+    sensitivity: If OI-002 shows the vehicle limits requested deceleration well below emergency levels, C1 -> ASIL A.
+  - id: HE-010
+    hazard: HZ-007
+    situation: OS-011
+    consequence: Vehicle closes on a slower lead without adequate braking
+    severity: S3
+    severity_rationale: High-speed rear-end collision if the driver does not intervene.
+    exposure_override: null
+    controllability: C1
+    controllability_rationale: Closing on a visible lead is gradual; a supervising driver brakes as in manual driving.
+    asil: B
+  - id: HE-011
+    hazard: HZ-007
+    situation: OS-010
+    consequence: Item does not brake enough for a stopped or hard-braking lead
+    severity: S3
+    severity_rationale: Rear-end collision at up to highway speed.
+    exposure_override: null
+    controllability: C2
+    controllability_rationale: Driver must recognize that the item is not braking and brake hard; time is short.
+    asil: A
+  - id: HE-012
+    hazard: HZ-008
+    situation: OS-012
+    consequence: Item keeps requesting acceleration or steering while the driver brakes
+    severity: S2
+    severity_rationale: Longer stopping distance; collision at reduced speed.
+    exposure_override: null
+    controllability: C1
+    controllability_rationale: Service brakes still act; driver can brake harder or use the cancel button.
+    asil: A
+  - id: HE-013
+    hazard: HZ-008
+    situation: OS-010
+    consequence: Emergency braking by the driver is weakened by continued acceleration request
+    severity: S3
+    severity_rationale: Collision at higher speed than with full driver braking.
+    exposure_override: null
+    controllability: C2
+    controllability_rationale: Brakes dominate engine torque, but the stopping distance in an emergency increases.
+    asil: A
+  - id: HE-014
+    hazard: HZ-009
+    situation: OS-009
+    consequence: Driver's evasive steering is resisted; obstacle hit or maneuver fails
+    severity: S3
+    severity_rationale: Collision with the obstacle at 50-130 km/h.
+    exposure_override: null
+    controllability: C3
+    controllability_rationale: Evasive maneuvers need full, fast steering input; any resisting torque lowers the success rate below 90%.
+    asil: B
+  - id: HE-015
+    hazard: HZ-010
+    situation: OS-006
+    consequence: Item engages unexpectedly during manual highway driving and changes speed or steering
+    severity: S3
+    severity_rationale: Unexpected speed change or steering at highway speed can lead to collision.
+    exposure_override: null
+    controllability: C1
+    controllability_rationale: Nominal engaged behavior is lane keeping and set-speed following; the driver overrides with brake or steering.
+    asil: B
+  - id: HE-016
+    hazard: HZ-011
+    situation: OS-010
+    consequence: Stock AEB does not act in a situation where the driver brakes too late
+    severity: S3
+    severity_rationale: Rear-end collision at speed.
+    exposure_override:
+      exposure: E2
+      rationale: Only the subset of emergency-braking situations where the driver is late; kept at E2 conservatively.
+    controllability: C3
+    controllability_rationale: By definition these are situations the driver did not control; AEB is the remaining barrier.
+    asil: B
+    sensitivity: Depends entirely on OI-003. If stock AEB is unaffected by the installation, HZ-011 has no hazardous event.
+  - id: HE-017
+    hazard: HZ-012
+    situation: OS-005
+    consequence: Driver believes the item is steering (or is not warned of handback) in a curve; vehicle runs wide
+    severity: S3
+    severity_rationale: Run-off-road or collision at 50-120 km/h.
+    exposure_override: null
+    controllability: C1
+    controllability_rationale: Same vehicle behavior as HE-006; the departure is gradual and visible.
+    asil: B
+  - id: HE-018
+    hazard: HZ-013
+    situation: OS-007
+    consequence: Vehicle continues under automation with no capable driver until it meets a situation outside its capability
+    severity: S3
+    severity_rationale: Eventual uncontrolled collision or road departure.
+    exposure_override: null
+    controllability: C3
+    controllability_rationale: No driver is available to control.
+    asil: A
+
+safety_goals:
+  - id: SG-001
+    statement: Avoid steering intervention that the driver cannot counteract or that produces a lateral deviation the driver cannot correct.
+    hazards: [HZ-001, HZ-002]
+    asil: D
+    safe_state: No steering request to the EPS (lateral control off) with driver warning.
+    ftti_ms: null
+    notes: >-
+      Driven by HE-002. The comma 3X SoC is not developed to ISO 26262; the FSC will need an ASIL
+      decomposition (e.g. an independent panda safety model) or a reduced rating via OI-001 (OI-008).
+  - id: SG-002
+    statement: Avoid lateral control steering the vehicle out of its lane while engaged.
+    hazards: [HZ-003]
+    asil: C
+    safe_state: Lateral control off with driver warning.
+    ftti_ms: null
+  - id: SG-003
+    statement: Avoid loss of lateral control, or misinformation about the automation state, without timely driver warning.
+    hazards: [HZ-004, HZ-012]
+    asil: B
+    safe_state: Lateral and longitudinal control off with audible and visual takeover warning.
+    ftti_ms: null
+  - id: SG-004
+    statement: Avoid unintended acceleration.
+    hazards: [HZ-005]
+    asil: C
+    safe_state: No positive acceleration request (longitudinal control off) with driver warning.
+    ftti_ms: null
+  - id: SG-005
+    statement: Avoid unintended or excessive deceleration.
+    hazards: [HZ-006]
+    asil: B
+    safe_state: Deceleration request limited to comfort levels or longitudinal control off with driver warning.
+    ftti_ms: null
+  - id: SG-006
+    statement: Avoid insufficient deceleration for a lead vehicle while engaged.
+    hazards: [HZ-007]
+    asil: B
+    safe_state: Longitudinal control off with takeover warning.
+    ftti_ms: null
+  - id: SG-007
+    statement: Release automated control when the driver brakes or cancels, and do not resist driver steering.
+    hazards: [HZ-008, HZ-009]
+    asil: B
+    safe_state: All actuation requests withdrawn.
+    ftti_ms: null
+  - id: SG-008
+    statement: Avoid unintended engagement.
+    hazards: [HZ-010]
+    asil: B
+    safe_state: Item remains disengaged.
+    ftti_ms: null
+  - id: SG-009
+    statement: Do not degrade the availability of stock AEB/FCW.
+    hazards: [HZ-011]
+    asil: B
+    safe_state: Stock ADAS camera messages pass through unmodified (relay closed to stock).
+    ftti_ms: null
+    notes: Rating depends on OI-003.
+  - id: SG-010
+    statement: Avoid continued automated control with an unresponsive driver.
+    hazards: [HZ-013]
+    asil: A
+    safe_state: To be decided (OI-005) — options are disengage with warning, or a controlled stop in lane.
+    ftti_ms: null
+
+open_items:
+  - id: OI-001
+    text: Characterize the Toyota EPS response to LKA torque requests (maximum accepted torque and rate, fault behavior). Determines whether the EPS can be credited as an external measure.
+    affects: [HE-001, HE-002, HE-003, SG-001]
+  - id: OI-002
+    text: Characterize powertrain and brake acceptance of acceleration requests (range, rate, override behavior).
+    affects: [HE-007, HE-008, HE-009, SG-004, SG-005]
+  - id: OI-003
+    text: Determine which stock TSS2 functions (AEB, FCW, lane assist) remain active with the harness installed and openpilot longitudinal enabled.
+    affects: [HE-016, SG-009]
+  - id: OI-004
+    text: Derive the FTTI for each safety goal from vehicle dynamics; start from the SAFETY.md lateral criterion (1 m in 0.9 s).
+    affects: [SG-001, SG-002, SG-003, SG-004, SG-005, SG-006, SG-007]
+  - id: OI-005
+    text: Decide the intended behavior when driver monitoring reaches its terminal state (System FMEA SFM-025); sets the safe state of SG-010.
+    affects: [SG-010]
+  - id: OI-006
+    text: Validate exposure and controllability assumptions with driving statistics and L2 usage studies.
+    affects: [OS-002, OS-005, OS-008, HE-006]
+  - id: OI-007
+    text: Independent confirmation review of the HARA (ISO 26262-2 Table 1, independence level I3).
+    affects: [SG-001, SG-002, SG-004]
+  - id: OI-008
+    text: Plan the ASIL D allocation for SG-001 given that the comma 3X SoC is not an ISO 26262 element (decomposition or OI-001 outcome).
+    affects: [SG-001]

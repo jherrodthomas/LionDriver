@@ -35,6 +35,10 @@ AP_TABLE = {
   (1, 1): ("LLLL", "LLLL", "LLLL", "LLLL", "LLLL"),
 }
 
+# ISO 26262-3 Table 4: for S1-S3, E1-E4, C1-C3 the ASIL depends only on S+E+C.
+ASIL_BY_SUM = {10: "D", 9: "C", 8: "B", 7: "A"}
+ASIL_ORDER = ("QM", "A", "B", "C", "D")
+
 FMEDA_TARGETS = {  # ASIL: (SPFM, LFM, PMHF FIT)
   "B": (0.90, 0.60, 100.0),
   "C": (0.97, 0.80, 100.0),
@@ -51,6 +55,20 @@ def compute_ap(s: int, o: int, d: int) -> str:
     if not 1 <= v <= 10:
       raise ValueError(f"rating out of range: {v}")
   return AP_TABLE[S_BANDS[_band(s, S_BANDS)]][_band(o, O_BANDS)][_band(d, D_BANDS)]
+
+
+def compute_asil(s: str, e: str, c: str) -> str:
+  """ASIL from 'S0'-'S3', 'E0'-'E4', 'C0'-'C3' per ISO 26262-3 Table 4."""
+  si, ei, ci = int(s[1]), int(e[1]), int(c[1])
+  if not (0 <= si <= 3 and 0 <= ei <= 4 and 0 <= ci <= 3):
+    raise ValueError(f"invalid S/E/C: {s} {e} {c}")
+  if 0 in (si, ei, ci):
+    return "QM"
+  return ASIL_BY_SUM.get(si + ei + ci, "QM")
+
+
+def max_asil(asils) -> str:
+  return max(asils, key=ASIL_ORDER.index, default="QM")
 
 
 @dataclass
@@ -141,6 +159,8 @@ def check_fmea(name, doc, ctx, res: Result):
 
     effect_sev = [e["severity"] for e in fm["effects"] if e.get("severity") is not None]
     for e in fm["effects"]:
+      if e.get("hazard") and ctx.hazards is not None and e["hazard"] not in ctx.hazards:
+        res.error(where, f"effect hazard {e['hazard']} not found in the HARA")
       if e.get("hazard") and e.get("severity") not in (None, 10):
         res.error(where, f"effect linked to {e['hazard']} must have severity 10 (rating-tables 1.1), got {e['severity']}")
     s = fm["severity"]
@@ -256,12 +276,80 @@ def check_fmeda(name, doc, ctx, res: Result):
       (res.error if doc["analysis"]["status"] == "released" else res.warn)(name, f"ASIL {asil} target missed: {miss}")
 
 
+def check_hara(name, doc, ctx, res: Result):
+  status = doc["analysis"]["status"]
+  situations = {s["id"]: s for s in doc["operational_situations"]}
+  hazards = {h["id"]: h for h in doc["hazards"]}
+  local_ids = set(situations) | set(hazards) | {x["id"] for k in ("assumptions", "hazardous_events", "safety_goals") for x in doc[k]}
+
+  hazard_asils: dict[str, list[str]] = {h: [] for h in hazards}
+  asil_counts = dict.fromkeys(ASIL_ORDER, 0)
+  for he in doc["hazardous_events"]:
+    where = f"{name} {he['id']}"
+    if he["hazard"] not in hazards:
+      res.error(where, f"hazard {he['hazard']} not found")
+      continue
+    if he["situation"] not in situations:
+      res.error(where, f"situation {he['situation']} not found")
+      continue
+    override = he["exposure_override"]
+    e = override["exposure"] if override else situations[he["situation"]]["exposure"]
+    expected = compute_asil(he["severity"], e, he["controllability"])
+    if he["asil"] != expected:
+      res.error(where, f"asil is {he['asil']}, ISO 26262-3 Table 4 gives {expected} for {he['severity']} {e} {he['controllability']}")
+    hazard_asils[he["hazard"]].append(expected)
+    asil_counts[expected] += 1
+
+  for hid, h in hazards.items():
+    where = f"{name} {hid}"
+    if not hazard_asils[hid]:
+      res.warn(where, "hazard has no hazardous event")
+    for f in h["functions"]:
+      if f not in ctx.functions:
+        res.error(where, f"function {f} not found in the System FMEA")
+    for ref in h["sfm_refs"]:
+      if ref not in ctx.failure_modes:
+        res.error(where, f"sfm_ref {ref} not found")
+      elif hid not in ctx.fm_hazards.get(ref, set()):
+        res.error(where, f"{ref} has no effect linked to {hid}")
+  for fm, hzs in ctx.fm_hazards.items():
+    for hid in hzs:
+      if hid in hazards and fm not in hazards[hid]["sfm_refs"]:
+        res.error(f"{name} {hid}", f"{fm} links an effect to {hid} but is not in its sfm_refs")
+
+  covered = set()
+  for sg in doc["safety_goals"]:
+    where = f"{name} {sg['id']}"
+    missing = [h for h in sg["hazards"] if h not in hazards]
+    for h in missing:
+      res.error(where, f"hazard {h} not found")
+    covered.update(sg["hazards"])
+    expected = max_asil(a for h in sg["hazards"] if h not in missing for a in hazard_asils[h])
+    if sg["asil"] != expected:
+      res.error(where, f"asil is {sg['asil']}, highest hazardous event of its hazards is {expected}")
+    if status == "released" and sg["ftti_ms"] is None:
+      res.error(where, "released HARA requires an FTTI for every safety goal")
+    res.report.append(f"{sg['id']} ASIL {sg['asil']}: {sg['statement']}")
+
+  for hid, asils in hazard_asils.items():
+    if max_asil(asils) != "QM" and hid not in covered:
+      res.error(f"{name} {hid}", f"ASIL {max_asil(asils)} hazard not covered by any safety goal")
+  for oi in doc["open_items"]:
+    for ref in oi["affects"]:
+      if ref not in local_ids:
+        res.error(f"{name} {oi['id']}", f"affects {ref}, which is not in the HARA")
+  res.report.insert(0, "hazardous events by ASIL: " + " ".join(f"{k}={v}" for k, v in asil_counts.items()))
+
+
 class Context:
   def __init__(self, root: Path):
     self.root = root
     self.empty_submodules = empty_submodules(root)
     self.failure_modes: set[str] = set()
     self.elements: set[str] = set()
+    self.functions: set[str] = set()
+    self.fm_hazards: dict[str, set[str]] = {}  # FMEA failure mode -> hazards its effects link to
+    self.hazards: set[str] | None = None  # None until a HARA file is loaded
     self.ap_counts = {"H": 0, "M": 0, "L": 0}
 
   def check_path(self, path, where, res: Result):
@@ -289,8 +377,7 @@ def lint(root: Path = ROOT) -> Result:
     res.error("baseline.yaml", "missing")
 
   rt = rating_tables_version(root)
-  fmea_schema = load_schema(root, "fmea.schema.json")
-  fmeda_schema = load_schema(root, "fmeda.schema.json")
+  schemas = {kind: load_schema(root, f"{kind}.schema.json") for kind in ("fmea", "fmeda", "hara")}
 
   docs = []
   seen_ids: dict[str, str] = {}
@@ -299,13 +386,13 @@ def lint(root: Path = ROOT) -> Result:
     doc = load_yaml(path.read_text())
     kind = (doc or {}).get("analysis", {}).get("type")
     n_before = len(res.errors)
-    schema_errors(doc, fmeda_schema if kind == "fmeda" else fmea_schema, name, res)
+    schema_errors(doc, schemas.get(kind, schemas["fmea"]), name, res)
     if len(res.errors) > n_before:
       continue  # semantic checks assume a schema-valid document
     hdr = doc["analysis"]
     if hdr["baseline"] not in baseline_ids:
       res.error(name, f"baseline {hdr['baseline']} not in baseline.yaml")
-    if hdr["rating_tables"] != rt:
+    if kind != "hara" and hdr["rating_tables"] != rt:
       res.error(name, f"rating_tables {hdr['rating_tables']} != current {rt}; re-rate against the current tables")
 
     # FMEA ids are global (cross-linked between files); FMEDA ids are per file (one FMEDA per safety goal).
@@ -314,12 +401,20 @@ def lint(root: Path = ROOT) -> Result:
       ids = [m["id"] for m in doc["safety_mechanisms"]]
       ids += [c["id"] for c in doc["components"]]
       ids += [fm["id"] for c in doc["components"] for fm in c["failure_modes"]]
+    elif kind == "hara":
+      scope = seen_ids
+      ids = [x["id"] for k in ("assumptions", "operational_situations", "hazards", "hazardous_events", "safety_goals", "open_items")
+             for x in doc[k]]
+      ctx.hazards = {h["id"] for h in doc["hazards"]}
     else:
       scope = seen_ids
       ids = [x["id"] for k in ("structure", "functions", "actions", "failure_modes") for x in doc[k]]
       ids += [c["id"] for fm in doc["failure_modes"] for c in fm["causes"]]
       ctx.failure_modes.update(fm["id"] for fm in doc["failure_modes"])
       ctx.elements.update(e["id"] for e in doc["structure"])
+      ctx.functions.update(f["id"] for f in doc["functions"])
+      for fm in doc["failure_modes"]:
+        ctx.fm_hazards[fm["id"]] = {e["hazard"] for e in fm["effects"] if e.get("hazard")}
     for i in ids:
       if i in scope:
         res.error(name, f"duplicate id {i} (also in {scope[i]})")
@@ -327,7 +422,7 @@ def lint(root: Path = ROOT) -> Result:
     docs.append((name, kind, doc))
 
   for name, kind, doc in docs:
-    (check_fmeda if kind == "fmeda" else check_fmea)(name, doc, ctx, res)
+    {"fmeda": check_fmeda, "hara": check_hara}.get(kind, check_fmea)(name, doc, ctx, res)
 
   res.report.insert(0, f"rated causes by AP: H={ctx.ap_counts['H']} M={ctx.ap_counts['M']} L={ctx.ap_counts['L']}")
   return res

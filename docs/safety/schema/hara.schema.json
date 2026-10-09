@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jherrodthomas/LionDriver/docs/safety/schema/hara.schema.json",
+  "title": "LionDriver HARA (ISO 26262-3 clause 6)",
+  "description": "Hazard analysis and risk assessment. ASIL is computed from S/E/C by the linter (ISO 26262-3 Table 4).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "analysis", "assumptions", "operational_situations", "hazards", "hazardous_events", "safety_goals", "open_items"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "title", "revision", "status", "baseline", "scope"],
+      "properties": {
+        "id": {"const": "HARA"},
+        "type": {"const": "hara"},
+        "title": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+        "status": {"enum": ["draft", "in_review", "released"]},
+        "baseline": {"type": "string"},
+        "scope": {"type": "string", "minLength": 1},
+        "method": {"type": "string"},
+        "team": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "role"],
+            "properties": {"name": {"type": "string"}, "role": {"type": "string"}}
+          }
+        },
+        "references": {"type": "array", "items": {"type": "string"}},
+        "updated": {"type": "string", "format": "date"}
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "text"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^HA-[0-9]{3,}$"},
+          "text": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "operational_situations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description", "road", "speed", "item_state", "exposure", "exposure_rationale"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^OS-[0-9]{3,}$"},
+          "description": {"type": "string", "minLength": 1},
+          "road": {"enum": ["highway", "rural", "urban", "parking", "any"]},
+          "speed": {"type": "string", "description": "Speed range, e.g. '80-130 km/h'"},
+          "item_state": {"enum": ["engaged", "not_engaged", "any"]},
+          "conditions": {"type": "string"},
+          "exposure": {"enum": ["E0", "E1", "E2", "E3", "E4"]},
+          "exposure_rationale": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "hazards": {
+      "description": "Malfunctioning behavior at vehicle level.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description", "functions", "sfm_refs"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^HZ-[0-9]{3,}$"},
+          "description": {"type": "string", "minLength": 1},
+          "functions": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^SFM-FN-[0-9]{3,}$"}},
+          "sfm_refs": {"type": "array", "items": {"type": "string", "pattern": "^SFM-[0-9]{3,}$"}}
+        }
+      }
+    },
+    "hazardous_events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "hazard", "situation", "consequence", "severity", "severity_rationale", "exposure_override", "controllability", "controllability_rationale", "asil"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^HE-[0-9]{3,}$"},
+          "hazard": {"type": "string", "pattern": "^HZ-[0-9]{3,}$"},
+          "situation": {"type": "string", "pattern": "^OS-[0-9]{3,}$"},
+          "consequence": {"type": "string", "minLength": 1},
+          "severity": {"enum": ["S0", "S1", "S2", "S3"]},
+          "severity_rationale": {"type": "string", "minLength": 1},
+          "exposure_override": {
+            "description": "null = use the situation's exposure. Set (with rationale) when the hazard only matters in part of the situation.",
+            "oneOf": [
+              {"type": "null"},
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["exposure", "rationale"],
+                "properties": {
+                  "exposure": {"enum": ["E0", "E1", "E2", "E3", "E4"]},
+                  "rationale": {"type": "string", "minLength": 1}
+                }
+              }
+            ]
+          },
+          "controllability": {"enum": ["C0", "C1", "C2", "C3"]},
+          "controllability_rationale": {"type": "string", "minLength": 1},
+          "asil": {"enum": ["QM", "A", "B", "C", "D"]},
+          "sensitivity": {"type": "string", "description": "Which assumption or open item would change the rating, and how."}
+        }
+      }
+    },
+    "safety_goals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "statement", "hazards", "asil", "safe_state", "ftti_ms"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^SG-[0-9]{3,}$"},
+          "statement": {"type": "string", "minLength": 1},
+          "hazards": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^HZ-[0-9]{3,}$"}},
+          "asil": {"enum": ["QM", "A", "B", "C", "D"]},
+          "safe_state": {"type": "string", "minLength": 1},
+          "ftti_ms": {"type": ["integer", "null"], "minimum": 1, "description": "Fault tolerant time interval; null until derived."},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "open_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "text", "affects"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^OI-[0-9]{3,}$"},
+          "text": {"type": "string", "minLength": 1},
+          "affects": {"type": "array", "items": {"type": "string", "pattern": "^(HE|SG|HZ|OS|HA)-[0-9]{3,}$"}}
+        }
+      }
+    }
+  }
+}

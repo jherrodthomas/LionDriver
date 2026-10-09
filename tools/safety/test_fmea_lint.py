@@ -74,6 +74,46 @@ FMEDA = {
 }
 
 
+SFM = yaml.safe_load(yaml.safe_dump(SWF).replace("SWF-", "SFM-").replace("value_high", "excessive"))
+SFM["analysis"].update(id="SFM", type="system_fmea")
+
+HARA = {
+  "schema_version": 1,
+  "analysis": {"id": "HARA", "type": "hara", "title": "test", "revision": "0.1", "status": "draft", "baseline": "BL-001", "scope": "test"},
+  "assumptions": [{"id": "HA-001", "text": "L2"}],
+  "operational_situations": [{
+    "id": "OS-001", "description": "highway", "road": "highway", "speed": "80-130 km/h", "item_state": "engaged",
+    "exposure": "E4", "exposure_rationale": "common",
+  }],
+  "hazards": [{"id": "HZ-001", "description": "excessive steering", "functions": ["SFM-FN-001"], "sfm_refs": ["SFM-001"]}],
+  "hazardous_events": [{
+    "id": "HE-001", "hazard": "HZ-001", "situation": "OS-001", "consequence": "lane departure",
+    "severity": "S3", "severity_rationale": "speed", "exposure_override": None,
+    "controllability": "C3", "controllability_rationale": "fast", "asil": "D",
+  }],
+  "safety_goals": [{"id": "SG-001", "statement": "avoid", "hazards": ["HZ-001"], "asil": "D", "safe_state": "off", "ftti_ms": None}],
+  "open_items": [{"id": "OI-001", "text": "x", "affects": ["HE-001"]}],
+}
+
+# ISO 26262-3 Table 4, written out: rows S1..S3 x E1..E4, columns C1..C3.
+ISO_TABLE_4 = {
+  ("S1", "E1"): ("QM", "QM", "QM"), ("S1", "E2"): ("QM", "QM", "QM"), ("S1", "E3"): ("QM", "QM", "A"), ("S1", "E4"): ("QM", "A", "B"),
+  ("S2", "E1"): ("QM", "QM", "QM"), ("S2", "E2"): ("QM", "QM", "A"), ("S2", "E3"): ("QM", "A", "B"), ("S2", "E4"): ("A", "B", "C"),
+  ("S3", "E1"): ("QM", "QM", "A"), ("S3", "E2"): ("QM", "A", "B"), ("S3", "E3"): ("A", "B", "C"), ("S3", "E4"): ("B", "C", "D"),
+}
+
+
+class TestAsil(unittest.TestCase):
+  def test_iso_table_4(self):
+    for (s, e), row in ISO_TABLE_4.items():
+      for c, asil in zip(("C1", "C2", "C3"), row, strict=True):
+        self.assertEqual(fmea_lint.compute_asil(s, e, c), asil, f"{s} {e} {c}")
+
+  def test_zero_classes_are_qm(self):
+    for s, e, c in (("S0", "E4", "C3"), ("S3", "E0", "C3"), ("S3", "E4", "C0")):
+      self.assertEqual(fmea_lint.compute_asil(s, e, c), "QM")
+
+
 class TestActionPriority(unittest.TestCase):
   def test_matches_markdown_table(self):
     md = ap_table_from_markdown()
@@ -213,6 +253,56 @@ class TestFmeaRules(LintFixture):
     doc = copy.deepcopy(SWF)
     doc["analysis"]["rating_tables"] = "RT-0"
     self.assertError(self.lint(swf=doc), "re-rate")
+
+
+class TestHara(LintFixture):
+  def lint_hara(self, hara=None, sfm=None):
+    return self.lint(sfm=sfm or SFM, hara=hara or HARA)
+
+  def test_valid(self):
+    res = self.lint_hara()
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("SG-001 ASIL D" in r for r in res.report))
+
+  def test_wrong_asil(self):
+    doc = copy.deepcopy(HARA)
+    doc["hazardous_events"][0]["asil"] = "C"
+    self.assertError(self.lint_hara(doc), "Table 4 gives D")
+
+  def test_exposure_override(self):
+    doc = copy.deepcopy(HARA)
+    doc["hazardous_events"][0]["exposure_override"] = {"exposure": "E2", "rationale": "subset"}
+    self.assertError(self.lint_hara(doc), "Table 4 gives B")
+
+  def test_safety_goal_asil_is_max(self):
+    doc = copy.deepcopy(HARA)
+    doc["safety_goals"][0]["asil"] = "B"
+    self.assertError(self.lint_hara(doc), "highest hazardous event of its hazards is D")
+
+  def test_uncovered_hazard(self):
+    doc = copy.deepcopy(HARA)
+    doc["safety_goals"] = []
+    self.assertError(self.lint_hara(doc), "not covered by any safety goal")
+
+  def test_back_link_required(self):
+    sfm = copy.deepcopy(SFM)
+    del sfm["failure_modes"][0]["effects"][0]["hazard"]
+    self.assertError(self.lint_hara(sfm=sfm), "SFM-001 has no effect linked to HZ-001")
+
+  def test_forward_link_required(self):
+    doc = copy.deepcopy(HARA)
+    doc["hazards"][0]["sfm_refs"] = []
+    self.assertError(self.lint_hara(doc), "not in its sfm_refs")
+
+  def test_fmea_hazard_must_exist(self):
+    sfm = copy.deepcopy(SFM)
+    sfm["failure_modes"][0]["effects"][0]["hazard"] = "HZ-999"
+    self.assertError(self.lint_hara(sfm=sfm), "HZ-999 not found in the HARA")
+
+  def test_released_requires_ftti(self):
+    doc = copy.deepcopy(HARA)
+    doc["analysis"]["status"] = "released"
+    self.assertError(self.lint_hara(doc), "requires an FTTI")
 
 
 class TestFmeda(LintFixture):

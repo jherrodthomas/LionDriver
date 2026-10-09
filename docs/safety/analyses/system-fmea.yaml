@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=../schema/fmea.schema.json
 #
 # System FMEA — AIAG-VDA steps 1-4 (scope, structure, function, failure analysis).
-# Ratings (step 5) are intentionally null: severity is derived from the HARA, which does not exist yet.
+# Severity is set from the HARA (rev 0.1): hazard-linked effects are 10 per RT-1 section 1.1.
+# Occurrence and detection (step 5) are still null.
 # Prevention/detection controls are also step 5 and are left empty. `safety_mechanisms` lists the
 # in-field mechanisms that exist in the BL-001 code today (design facts, not yet credited).
 #
@@ -12,7 +13,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.2"
+  revision: "0.3"
   status: draft
   baseline: BL-001
   rating_tables: RT-1
@@ -180,8 +181,8 @@ failure_modes:
     effects:
       - {level: local, description: "Torque request sent to EPS outside an active state"}
       - {level: next_higher, description: "Unexpected steering wheel motion and lateral deviation"}
-      - {level: end, description: "Driver surprised during manual driving; possible lane departure"}
-    severity: null
+      - {level: end, description: "Driver surprised during manual driving; possible lane departure", hazard: HZ-001, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: controlsd only sets latActive when selfdriveState is active and no EPS fault
         ref: openpilot/selfdrive/controls/controlsd.py
@@ -201,8 +202,8 @@ failure_modes:
     effects:
       - {level: local, description: "Torque request exceeds the limits in SAFETY.md / ISO 11270"}
       - {level: next_higher, description: "Lateral deviation faster than a driver can correct (> 1 m in 0.9 s)"}
-      - {level: end, description: "Lane departure or collision with adjacent traffic or roadside"}
-    severity: null
+      - {level: end, description: "Lane departure or collision with adjacent traffic or roadside", hazard: HZ-002, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: Panda/opendbc Toyota safety model limits steering torque magnitude and rate on TX
         ref: opendbc_repo
@@ -223,8 +224,8 @@ failure_modes:
     effects:
       - {level: local, description: "Torque request sign opposite to the required correction"}
       - {level: next_higher, description: "Vehicle steers toward lane boundary"}
-      - {level: end, description: "Lane departure into oncoming/adjacent traffic or off road"}
-    severity: null
+      - {level: end, description: "Lane departure into oncoming/adjacent traffic or off road", hazard: HZ-003, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: Safety model torque/rate limits bound the deviation rate (not the direction)
         ref: opendbc_repo
@@ -245,8 +246,8 @@ failure_modes:
     effects:
       - {level: local, description: "Achieved curvature below desired curvature"}
       - {level: next_higher, description: "Vehicle drifts to lane edge in curves"}
-      - {level: end, description: "Lane departure if the driver does not intervene"}
-    severity: null
+      - {level: end, description: "Lane departure if the driver does not intervene", hazard: HZ-004, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: steerSaturated warning when undershooting > 1.2x in a turn with saturated controller
         ref: openpilot/selfdrive/selfdrived/selfdrived.py
@@ -266,8 +267,8 @@ failure_modes:
     effects:
       - {level: local, description: "Steering requests stop or are ignored while the item shows engaged"}
       - {level: next_higher, description: "Vehicle no longer follows the lane"}
-      - {level: end, description: "Driver unaware of loss; lane departure"}
-    severity: null
+      - {level: end, description: "Driver unaware of loss; lane departure", hazard: HZ-004, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: steerUnavailable (IMMEDIATE_DISABLE) and steerTempUnavailable (SOFT_DISABLE) from EPS fault signals
         ref: openpilot/selfdrive/car/car_events.py
@@ -287,8 +288,8 @@ failure_modes:
     effects:
       - {level: local, description: "Same torque request repeated regardless of road geometry"}
       - {level: next_higher, description: "Vehicle holds a constant steering input"}
-      - {level: end, description: "Vehicle leaves the lane on a curve or straight"}
-    severity: null
+      - {level: end, description: "Vehicle leaves the lane on a curve or straight", hazard: HZ-003, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: Message liveness and frequency checks on inputs (sm.all_checks -> commIssue)
         ref: openpilot/selfdrive/selfdrived/selfdrived.py
@@ -308,8 +309,8 @@ failure_modes:
     effects:
       - {level: local, description: "Torque request oscillates"}
       - {level: next_higher, description: "Vehicle weaves within the lane"}
-      - {level: end, description: "Driver discomfort; possible over-correction by driver"}
-    severity: null
+      - {level: end, description: "Driver discomfort; possible over-correction by driver", severity: 7}
+    severity: 7
     safety_mechanisms: []
     causes:
       - {id: SFM-007.C1, element: SFM-SE-013, description: "Controller instability (gain, delay compensation, lagd estimate)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
@@ -324,8 +325,8 @@ failure_modes:
     effects:
       - {level: local, description: "Positive acceleration requested when not required or not engaged"}
       - {level: next_higher, description: "Vehicle accelerates unexpectedly"}
-      - {level: end, description: "Rear-end collision with lead vehicle or loss of control"}
-    severity: null
+      - {level: end, description: "Rear-end collision with lead vehicle or loss of control", hazard: HZ-005, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: Panda/opendbc safety model limits acceleration request range and blocks when not engaged
         ref: opendbc_repo
@@ -348,8 +349,8 @@ failure_modes:
     effects:
       - {level: local, description: "Strong deceleration requested without a real obstacle"}
       - {level: next_higher, description: "Vehicle brakes hard"}
-      - {level: end, description: "Rear-end collision by following vehicle; occupant injury"}
-    severity: null
+      - {level: end, description: "Rear-end collision by following vehicle; occupant injury", hazard: HZ-006, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: Safety model limits minimum acceleration request
         ref: opendbc_repo
@@ -371,8 +372,8 @@ failure_modes:
     effects:
       - {level: local, description: "Deceleration request below what the situation needs"}
       - {level: next_higher, description: "Closing distance to lead shrinks"}
-      - {level: end, description: "Rear-end collision if the driver does not brake"}
-    severity: null
+      - {level: end, description: "Rear-end collision if the driver does not brake", hazard: HZ-007, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: FCW from planner or model (ET.PERMANENT alert)
         ref: openpilot/selfdrive/selfdrived/selfdrived.py
@@ -392,8 +393,8 @@ failure_modes:
     effects:
       - {level: local, description: "Acceleration requests stop or are ignored while engaged"}
       - {level: next_higher, description: "Vehicle coasts or holds previous state"}
-      - {level: end, description: "Driver unaware; closing on lead"}
-    severity: null
+      - {level: end, description: "Driver unaware; closing on lead", hazard: HZ-007, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: accFaulted (IMMEDIATE_DISABLE), cruiseDisabled (IMMEDIATE_DISABLE)
         ref: openpilot/selfdrive/selfdrived/events.py
@@ -412,8 +413,8 @@ failure_modes:
     effects:
       - {level: local, description: "Deceleration request delayed"}
       - {level: next_higher, description: "Reduced time gap"}
-      - {level: end, description: "Rear-end collision or harsh late braking"}
-    severity: null
+      - {level: end, description: "Rear-end collision or harsh late braking", hazard: HZ-007, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: modeldLagging / selfdrivedLagging (SOFT_DISABLE), commIssueAvgFreq
         ref: openpilot/selfdrive/selfdrived/selfdrived.py
@@ -430,8 +431,8 @@ failure_modes:
     effects:
       - {level: local, description: "State machine enters enabled without ENABLE or despite NO_ENTRY"}
       - {level: next_higher, description: "Item starts actuating"}
-      - {level: end, description: "Unexpected steering/acceleration; driver surprised"}
-    severity: null
+      - {level: end, description: "Unexpected steering/acceleration; driver surprised", hazard: HZ-010, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: NO_ENTRY events block engagement (state.py)
         ref: openpilot/selfdrive/selfdrived/state.py
@@ -450,8 +451,10 @@ failure_modes:
     effects:
       - {level: local, description: "SOFT_DISABLE/IMMEDIATE_DISABLE event not acted on"}
       - {level: next_higher, description: "Item keeps actuating with a faulty input or actuator"}
-      - {level: end, description: "Any F1/F2 hazardous effect continues"}
-    severity: null
+      - {level: end, description: "Any F1/F2 hazardous effect continues", hazard: HZ-002, severity: 10}
+      - {level: end, description: "Contributes to HZ-005: Unintended acceleration", hazard: HZ-005, severity: 10}
+      - {level: end, description: "Contributes to HZ-006: Unintended or excessive deceleration", hazard: HZ-006, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: Panda heartbeat carries engaged = selfdriveState alive, valid and enabled; panda removes controls_allowed on heartbeat loss (firmware, to verify)
         ref: openpilot/selfdrive/pandad/pandad.cc
@@ -469,8 +472,8 @@ failure_modes:
     effects:
       - {level: local, description: "Item drops to disabled with no alert"}
       - {level: next_higher, description: "Steering assist and ACC stop"}
-      - {level: end, description: "Driver unaware of handback; lane departure or closing on lead"}
-    severity: null
+      - {level: end, description: "Driver unaware of handback; lane departure or closing on lead", hazard: HZ-004, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: Every disable transition appends an alert type (USER_DISABLE / IMMEDIATE_DISABLE / SOFT_DISABLE)
         ref: openpilot/selfdrive/selfdrived/state.py
@@ -487,8 +490,9 @@ failure_modes:
     effects:
       - {level: local, description: "SOFT_DISABLE (3 s) used where IMMEDIATE_DISABLE is needed"}
       - {level: next_higher, description: "Faulty actuation continues up to 3 s"}
-      - {level: end, description: "Lateral or longitudinal deviation during the soft-disable window"}
-    severity: null
+      - {level: end, description: "Lateral or longitudinal deviation during the soft-disable window", hazard: HZ-002, severity: 10}
+      - {level: end, description: "Contributes to HZ-005: Unintended acceleration", hazard: HZ-005, severity: 10}
+    severity: 10
     safety_mechanisms: []
     causes:
       - {id: SFM-016.C1, element: SFM-SE-014, description: "Reaction type for an event under-classified (soft instead of immediate)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
@@ -504,8 +508,8 @@ failure_modes:
     effects:
       - {level: local, description: "pedalPressed not raised or not acted on"}
       - {level: next_higher, description: "Item keeps requesting acceleration/steering during driver braking"}
-      - {level: end, description: "Driver cannot retake control as expected (SAFETY.md requirement 1 violated)"}
-    severity: null
+      - {level: end, description: "Driver cannot retake control as expected (SAFETY.md requirement 1 violated)", hazard: HZ-008, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: selfdrived raises pedalPressed (USER_DISABLE) on brake press
         ref: openpilot/selfdrive/selfdrived/selfdrived.py
@@ -524,8 +528,8 @@ failure_modes:
     effects:
       - {level: local, description: "steerOverride not detected; lateral torque continues"}
       - {level: next_higher, description: "Driver must overpower the item"}
-      - {level: end, description: "Delayed evasive maneuver or loss of control"}
-    severity: null
+      - {level: end, description: "Delayed evasive maneuver or loss of control", hazard: HZ-009, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: steerOverride -> OVERRIDE_LATERAL state
         ref: openpilot/selfdrive/car/car_events.py
@@ -544,8 +548,8 @@ failure_modes:
     effects:
       - {level: local, description: "buttonCancel not raised"}
       - {level: next_higher, description: "Item stays engaged"}
-      - {level: end, description: "Driver must use brake to disengage"}
-    severity: null
+      - {level: end, description: "Driver must use brake to disengage", hazard: HZ-008, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: buttonCancel (USER_DISABLE); brake remains as independent path
         ref: openpilot/selfdrive/car/car_events.py
@@ -560,8 +564,8 @@ failure_modes:
     effects:
       - {level: local, description: "gasPressedOverride not detected"}
       - {level: next_higher, description: "Item keeps braking while driver accelerates"}
-      - {level: end, description: "Driver cannot accelerate out of a situation (e.g. merging)"}
-    severity: null
+      - {level: end, description: "Driver cannot accelerate out of a situation (e.g. merging)", hazard: HZ-006, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: gasPressedOverride -> OVERRIDE_LONGITUDINAL; longActive false during override
         ref: openpilot/selfdrive/controls/controlsd.py
@@ -576,8 +580,8 @@ failure_modes:
     effects:
       - {level: local, description: "Cancel request not effective; PCM cruise enabled while item is disabled"}
       - {level: next_higher, description: "Vehicle continues under stock cruise"}
-      - {level: end, description: "Driver believes automation is off (mode confusion)"}
-    severity: null
+      - {level: end, description: "Driver believes automation is off (mode confusion)", hazard: HZ-012, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: controlsd sends cruiseControl.cancel when cruise enabled and item not enabled
         ref: openpilot/selfdrive/controls/controlsd.py
@@ -598,8 +602,8 @@ failure_modes:
     effects:
       - {level: local, description: "Awareness not decremented"}
       - {level: next_higher, description: "No distraction alerts"}
-      - {level: end, description: "Driver not available to handle F1/F2 failures or system limits"}
-    severity: null
+      - {level: end, description: "Driver not available to handle F1/F2 failures or system limits", hazard: HZ-013, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: Fallback from vision policy to wheel-touch policy when model is uncertain for 10 s
         ref: openpilot/selfdrive/monitoring/policy.py
@@ -619,8 +623,8 @@ failure_modes:
     effects:
       - {level: local, description: "Alert levels reached later than designed (5/8/13 s vision policy)"}
       - {level: next_higher, description: "Longer eyes-off-road while engaged"}
-      - {level: end, description: "Driver not ready when takeover needed"}
-    severity: null
+      - {level: end, description: "Driver not ready when takeover needed", hazard: HZ-013, severity: 10}
+    severity: 10
     safety_mechanisms: []
     causes:
       - {id: SFM-023.C1, element: SFM-SE-015, description: "Policy timers or recovery factor misconfigured", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
@@ -634,8 +638,8 @@ failure_modes:
     effects:
       - {level: local, description: "Alerts raised for an attentive driver"}
       - {level: next_higher, description: "Nuisance alerts; possible lockout"}
-      - {level: end, description: "Driver annoyance; may reduce trust or prompt disabling DM in a fork"}
-    severity: null
+      - {level: end, description: "Driver annoyance; may reduce trust or prompt disabling DM in a fork", severity: 4}
+    severity: 4
     safety_mechanisms: []
     causes:
       - {id: SFM-024.C1, element: SFM-SE-015, description: "DM model false positive (sunglasses, lighting)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
@@ -648,8 +652,8 @@ failure_modes:
     effects:
       - {level: local, description: "Alert level three shows \"DISENGAGE IMMEDIATELY\" but the item stays engaged"}
       - {level: next_higher, description: "Vehicle continues under automation with an unresponsive driver"}
-      - {level: end, description: "No fallback if the driver is incapacitated"}
-    severity: null
+      - {level: end, description: "No fallback if the driver is incapacitated", hazard: HZ-013, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: Lockout after repeated non-response prevents re-engagement (1/5/15/30 min)
         ref: openpilot/selfdrive/monitoring/policy.py
@@ -671,8 +675,8 @@ failure_modes:
     effects:
       - {level: local, description: "Alert selected by alertmanager but not shown or not played"}
       - {level: next_higher, description: "Driver not informed of state change"}
-      - {level: end, description: "Driver unaware of handback; delayed response"}
-    severity: null
+      - {level: end, description: "Driver unaware of handback; delayed response", hazard: HZ-012, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: Visual alert on device screen and audible alert through soundd (two channels)
         ref: openpilot/selfdrive/ui/soundd.py
@@ -690,8 +694,8 @@ failure_modes:
     effects:
       - {level: local, description: "Alert rendered/played after a delay"}
       - {level: next_higher, description: "Less time for driver response"}
-      - {level: end, description: "Reduced takeover margin"}
-    severity: null
+      - {level: end, description: "Reduced takeover margin", hazard: HZ-012, severity: 10}
+    severity: 10
     safety_mechanisms: []
     causes:
       - {id: SFM-027.C1, element: SFM-SE-018, description: "UI frame drops or audio buffering", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
@@ -705,8 +709,8 @@ failure_modes:
     effects:
       - {level: local, description: "UI shows engaged when disabled, or disabled when engaged"}
       - {level: next_higher, description: "Mode confusion"}
-      - {level: end, description: "Driver stops steering/braking believing automation is active, or is surprised by actuation"}
-    severity: null
+      - {level: end, description: "Driver stops steering/braking believing automation is active, or is surprised by actuation", hazard: HZ-012, severity: 10}
+    severity: 10
     safety_mechanisms: []
     causes:
       - {id: SFM-028.C1, element: SFM-SE-018, description: "UI renders stale selfdriveState", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
@@ -722,8 +726,10 @@ failure_modes:
     effects:
       - {level: local, description: "Out-of-limit steering or acceleration messages reach the vehicle"}
       - {level: next_higher, description: "Loss of the main protection against F1/F2 faults on the device"}
-      - {level: end, description: "Any upstream fault can produce SFM-002 / SFM-008 / SFM-009 effects"}
-    severity: null
+      - {level: end, description: "Any upstream fault can produce SFM-002 / SFM-008 / SFM-009 effects", hazard: HZ-002, severity: 10}
+      - {level: end, description: "Contributes to HZ-005: Unintended acceleration", hazard: HZ-005, severity: 10}
+      - {level: end, description: "Contributes to HZ-006: Unintended or excessive deceleration", hazard: HZ-006, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: controlsMismatch (IMMEDIATE_DISABLE) if panda safety model/param differ from CarParams, or safety RX checks invalid
         ref: openpilot/selfdrive/selfdrived/selfdrived.py
@@ -742,8 +748,10 @@ failure_modes:
     effects:
       - {level: local, description: "excessiveActuation not raised"}
       - {level: next_higher, description: "Item stays engaged during excessive motion"}
-      - {level: end, description: "SFM-002/008/009 effects persist"}
-    severity: null
+      - {level: end, description: "SFM-002/008/009 effects persist", hazard: HZ-002, severity: 10}
+      - {level: end, description: "Contributes to HZ-005: Unintended acceleration", hazard: HZ-005, severity: 10}
+      - {level: end, description: "Contributes to HZ-006: Unintended or excessive deceleration", hazard: HZ-006, severity: 10}
+    severity: 10
     safety_mechanisms: []
     causes:
       - {id: SFM-030.C1, element: SFM-SE-011, description: "Calibrated pose wrong (calibration or IMU fault)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
@@ -758,8 +766,8 @@ failure_modes:
     effects:
       - {level: local, description: "excessiveActuation raised without excessive motion"}
       - {level: next_higher, description: "Soft disable with alert"}
-      - {level: end, description: "Unneeded handback to the driver"}
-    severity: null
+      - {level: end, description: "Unneeded handback to the driver", severity: 8}
+    severity: 8
     safety_mechanisms: []
     causes:
       - {id: SFM-031.C1, element: SFM-SE-011, description: "IMU noise or bad mounting", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
@@ -772,8 +780,10 @@ failure_modes:
     effects:
       - {level: local, description: "CarParams, safety model and DBC for a different car"}
       - {level: next_higher, description: "Wrong limits, scaling and message layout"}
-      - {level: end, description: "Any F1/F2 effect; possible message conflicts with stock ECUs"}
-    severity: null
+      - {level: end, description: "Any F1/F2 effect; possible message conflicts with stock ECUs", hazard: HZ-002, severity: 10}
+      - {level: end, description: "Contributes to HZ-005: Unintended acceleration", hazard: HZ-005, severity: 10}
+      - {level: end, description: "Contributes to HZ-006: Unintended or excessive deceleration", hazard: HZ-006, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: carUnrecognized -> dashcam mode (no control)
         ref: openpilot/selfdrive/selfdrived/selfdrived.py
@@ -792,8 +802,8 @@ failure_modes:
     effects:
       - {level: local, description: "Stock ADAS camera messages blocked or replaced by the harness relay"}
       - {level: next_higher, description: "Stock AEB / FCW / lane assist not available as expected"}
-      - {level: end, description: "Driver relies on stock protections that are not present"}
-    severity: null
+      - {level: end, description: "Driver relies on stock protections that are not present", hazard: HZ-011, severity: 10}
+    severity: 10
     safety_mechanisms: []
     causes:
       - {id: SFM-033.C1, element: SFM-SE-004, description: "Relay intercepts stock camera messages the vehicle needs for AEB", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
@@ -811,8 +821,8 @@ failure_modes:
     effects:
       - {level: local, description: "Relay stuck or intermittent; stock camera and item both on bus, or neither"}
       - {level: next_higher, description: "Conflicting steering/ACC messages, or no camera messages"}
-      - {level: end, description: "Erratic stock or item behavior; stock functions lost"}
-    severity: null
+      - {level: end, description: "Erratic stock or item behavior; stock functions lost", hazard: HZ-011, severity: 10}
+    severity: 10
     safety_mechanisms:
       - description: relayMalfunction fault from panda -> IMMEDIATE_DISABLE
         ref: openpilot/selfdrive/selfdrived/selfdrived.py

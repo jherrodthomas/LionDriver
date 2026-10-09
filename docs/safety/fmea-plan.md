@@ -1,6 +1,6 @@
 # LionDriver — FMEA Program Plan
 
-**Status:** Draft v0.3 — Phase 0 complete; Phase 1 System FMEA draft (steps 1–4, unrated)
+**Status:** Draft v0.4 — Phase 0 complete; System FMEA draft with severities; HARA draft rev 0.1
 **Scope:** 2020 Toyota Corolla LE (U.S.), comma 3X (`system/hardware/tici`) with integrated panda, current LionDriver software baseline
 **Covers:** System FMEA, DFMEA, PFMEA, SW FMEA, FMEDA
 
@@ -42,7 +42,7 @@ PFMEA ─► Release / install control plan  (feeds "configuration as assured")
 | Prereq | Needed by | Status |
 |---|---|---|
 | Item definition & boundary (README roadmap item 2) | All | Not started |
-| HARA + safety goals | System FMEA severity, FMEDA | Not started |
+| HARA + safety goals | System FMEA severity, FMEDA | Draft rev 0.1 (`analyses/hara.yaml`): 13 hazards, 18 hazardous events, 10 safety goals (SG-001 ASIL D); 8 open items |
 | Functional / technical safety concept | DFMEA, SW FMEA, FMEDA | Not started |
 | HW/SW baseline frozen (commit SHA + submodule SHAs + AGNOS version) | All | BL-001 proposed in `baseline.yaml`; freeze at Phase 1 start |
 | Panda schematic + BOM (open hardware) | DFMEA, FMEDA | To collect |
@@ -135,8 +135,10 @@ docs/safety/
   schema/
     fmea.schema.json           (System FMEA, DFMEA, SW FMEA, PFMEA)
     fmeda.schema.json
+    hara.schema.json           (ASIL checked against ISO 26262-3 Table 4)
     baseline.schema.json
   analyses/
+    hara.yaml
     system-fmea.yaml
     dfmea.yaml
     sw-fmea.yaml
@@ -160,7 +162,7 @@ tools/safety/fmea_lint.py --report            # validate all analyses
 python3 -m unittest discover -s tools/safety  # linter tests
 ```
 
-The linter checks: schema; unique and resolvable ids; failure-mode severity = max effect severity; hazard-linked effects rated 10; stored AP = AP table; AP=H has an action or rationale; detection ≤ 8 names a `test` path that exists (warning only inside an uninitialized submodule); released analyses fully rated; FMEDA distributions sum to 1, mechanisms have DC, SPFM/LFM/λSPF+λRF against the ASIL target. Wiring it into CI is a follow-up.
+The linter checks: schema; unique and resolvable ids; failure-mode severity = max effect severity; hazard-linked effects rated 10; stored AP = AP table; AP=H has an action or rationale; detection ≤ 8 names a `test` path that exists (warning only inside an uninitialized submodule); released analyses fully rated; HARA ASIL = Table 4, safety-goal ASIL = highest hazardous event, every ASIL hazard covered by a goal, FMEA↔HARA links consistent both ways; FMEDA distributions sum to 1, mechanisms have DC, SPFM/LFM/λSPF+λRF against the ASIL target. Wiring it into CI is a follow-up.
 
 ---
 
@@ -171,7 +173,7 @@ The linter checks: schema; unique and resolvable ids; failure-mode severity = ma
 | 0 | This plan + rating tables + YAML schema + baseline SHAs | — |
 | 1 | System FMEA steps 1–4 (structure, functions, failure modes, effects, causes) — **draft rev 0.2 done** | Item definition draft |
 | 2 | SW FMEA P1 elements + DFMEA structure/function | Phase 1 |
-| 3 | HARA → apply severities; risk analysis & AP for System/SW/DFMEA | HARA |
+| 3 | HARA → apply severities (**HARA draft + System FMEA severities done**); risk analysis & AP for System/SW/DFMEA | HARA |
 | 4 | PFMEA + release/install control plan | Phase 0 |
 | 5 | FMEDA Phase A (panda) | Safety goals, TSC, panda BOM |
 | 6 | SW FMEA P2/P3, DFMEA comma 3X, FMEDA Phase B gap report | Phase 3 |
