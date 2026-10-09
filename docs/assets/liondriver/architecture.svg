@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="700" viewBox="0 0 1280 700" role="img" aria-labelledby="t d">
+  <title id="t">LionDriver doer / checker architecture</title>
+  <desc id="d">Sensors feed the openpilot stack, which proposes steering and acceleration commands over CAN. The panda safety layer checks every command against actuator limits and driver state and forwards only limit-compliant frames to the vehicle. The driver can override at all times. Cybersecurity spans every interface.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A0F1C"/>
+      <stop offset="1" stop-color="#121B31"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFD27A"/>
+      <stop offset="1" stop-color="#F29F1F"/>
+    </linearGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#C9D2E3"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#F5B83D"/>
+    </marker>
+    <style>
+      .h { font: 700 19px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #F7F8FB; }
+      .s { font: 500 14px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #C9D2E3; }
+      .m { font: 600 12.5px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+      .lbl { font: 600 13px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #DDE3EF; }
+      .cap { font: 800 13px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 2px; }
+      .card { fill: #FFFFFF; fill-opacity: 0.04; stroke: #FFFFFF; stroke-opacity: 0.14; }
+      .chip { fill: #FFFFFF; fill-opacity: 0.06; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="700" rx="18" fill="url(#bg)"/>
+
+  <text x="40" y="52" class="h" style="font-size:24px">Doer / checker architecture</text>
+  <text x="40" y="78" class="s">The driving software proposes. A small, deterministic safety layer decides what reaches the car.</text>
+
+  <!-- Sensors -->
+  <rect x="40" y="128" width="210" height="300" rx="14" class="card"/>
+  <text x="62" y="160" class="cap" fill="#8391AB">SENSORS</text>
+  <g class="lbl">
+    <rect x="58" y="180" width="174" height="44" rx="10" class="chip"/><text x="74" y="207">Road-facing cameras</text>
+    <rect x="58" y="236" width="174" height="44" rx="10" class="chip"/><text x="74" y="263">Driver-facing camera</text>
+    <rect x="58" y="292" width="174" height="44" rx="10" class="chip"/><text x="74" y="319">IMU · GNSS</text>
+    <rect x="58" y="348" width="174" height="44" rx="10" class="chip"/><text x="74" y="375">Vehicle CAN state</text>
+  </g>
+
+  <!-- openpilot stack: the doer -->
+  <rect x="300" y="110" width="330" height="336" rx="16" fill="#5CC8FF" fill-opacity="0.06" stroke="#5CC8FF" stroke-opacity="0.55" stroke-width="1.5"/>
+  <text x="322" y="142" class="cap" fill="#9FDDFF">THE DOER · OPENPILOT STACK</text>
+  <g class="lbl">
+    <rect x="320" y="160" width="290" height="52" rx="10" class="chip"/>
+    <text x="336" y="183">Perception</text><text x="336" y="202" class="s" style="font-size:12.5px">end-to-end vision model</text>
+    <rect x="320" y="222" width="290" height="52" rx="10" class="chip"/>
+    <text x="336" y="245">Planning</text><text x="336" y="264" class="s" style="font-size:12.5px">lateral path · longitudinal plan</text>
+    <rect x="320" y="284" width="290" height="52" rx="10" class="chip"/>
+    <text x="336" y="307">Control</text><text x="336" y="326" class="s" style="font-size:12.5px">brand car controller → CAN commands</text>
+    <rect x="320" y="346" width="290" height="52" rx="10" class="chip"/>
+    <text x="336" y="369">Driver monitoring</text><text x="336" y="388" class="s" style="font-size:12.5px">attention · alerts · disengagement</text>
+  </g>
+  <text x="322" y="430" class="m" fill="#9FDDFF">QM · ISO 21448 · ISO/PAS 8800 · UL 4600</text>
+
+  <!-- panda safety layer: the checker -->
+  <rect x="712" y="110" width="290" height="336" rx="16" fill="#F5B83D" fill-opacity="0.07" stroke="url(#gold)" stroke-width="2.5"/>
+  <text x="734" y="142" class="cap" fill="#FFD27A">THE CHECKER · PANDA</text>
+  <g class="lbl">
+    <rect x="732" y="160" width="250" height="52" rx="10" class="chip"/>
+    <text x="748" y="183">Actuator limits</text><text x="748" y="202" class="s" style="font-size:12.5px">torque · rate · angle · accel</text>
+    <rect x="732" y="222" width="250" height="52" rx="10" class="chip"/>
+    <text x="748" y="245">Engagement &amp; override</text><text x="748" y="264" class="s" style="font-size:12.5px">cruise · brake · gas edges</text>
+    <rect x="732" y="284" width="250" height="52" rx="10" class="chip"/>
+    <text x="748" y="307">Input validity</text><text x="748" y="326" class="s" style="font-size:12.5px">checksums · quality · timeouts</text>
+    <rect x="732" y="346" width="250" height="52" rx="10" class="chip"/>
+    <text x="748" y="369">Message whitelist</text><text x="748" y="388" class="s" style="font-size:12.5px">relay-malfunction latch</text>
+  </g>
+  <text x="734" y="430" class="m" fill="#FFD27A">ISO 26262 · ASIL target from HARA</text>
+
+  <!-- Vehicle -->
+  <rect x="1064" y="128" width="176" height="300" rx="14" class="card"/>
+  <text x="1084" y="160" class="cap" fill="#8391AB">VEHICLE</text>
+  <g class="lbl">
+    <rect x="1080" y="180" width="144" height="44" rx="10" class="chip"/><text x="1096" y="207">Steering (EPS)</text>
+    <rect x="1080" y="236" width="144" height="44" rx="10" class="chip"/><text x="1096" y="263">Powertrain</text>
+    <rect x="1080" y="292" width="144" height="44" rx="10" class="chip"/><text x="1096" y="319">Brakes</text>
+    <rect x="1080" y="348" width="144" height="44" rx="10" class="chip"/><text x="1096" y="375">Stock AEB</text>
+  </g>
+
+  <!-- flows -->
+  <path d="M250 278 H294" stroke="#C9D2E3" stroke-width="2" marker-end="url(#a)"/>
+  <path d="M630 250 H706" stroke="#C9D2E3" stroke-width="2" marker-end="url(#a)"/>
+  <text x="669" y="238" class="m" fill="#C9D2E3" text-anchor="middle" style="font-size:11.5px">commands</text>
+  <path d="M1002 250 H1058" stroke="#F5B83D" stroke-width="3" marker-end="url(#ag)"/>
+  <text x="1031" y="238" class="m" fill="#FFD27A" text-anchor="middle" style="font-size:11.5px">checked</text>
+  <path d="M1058 330 H1008" stroke="#C9D2E3" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#a)"/>
+  <text x="1031" y="352" class="m" fill="#8391AB" text-anchor="middle" style="font-size:11px">feedback</text>
+
+  <!-- driver -->
+  <rect x="712" y="482" width="528" height="70" rx="14" fill="#6EE7B7" fill-opacity="0.07" stroke="#6EE7B7" stroke-opacity="0.55"/>
+  <text x="734" y="512" class="h" style="font-size:17px">Driver — always in command</text>
+  <text x="734" y="536" class="s">Steering, brake or cancel ends control at once. The panda enforces it.</text>
+  <path d="M1152 482 V434" stroke="#6EE7B7" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- cybersecurity band -->
+  <rect x="40" y="590" width="1200" height="64" rx="14" fill="#FF7A90" fill-opacity="0.07" stroke="#FF7A90" stroke-opacity="0.5" stroke-dasharray="8 6"/>
+  <text x="62" y="619" class="cap" fill="#FFB0BD">ISO/SAE 21434 · CYBERSECURITY</text>
+  <text x="62" y="641" class="s">Every interface is an attack surface: vehicle CAN, USB to the panda, software updates, cloud and telemetry.</text>
+</svg>
