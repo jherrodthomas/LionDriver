@@ -74,7 +74,7 @@ Rationale is given for every rating. Ratings that depend on unverified AoUs are 
 | F-02 Longitudinal | more / inadvertent | Deceleration above intended, or braking with no reason | **H-04** Unintended or excessive deceleration |
 | F-02 Longitudinal | no / less | Deceleration demand lost or insufficient while engaged and following a lead, without warning | **H-06** Unannounced loss of longitudinal deceleration |
 | F-03 Engagement | no / too late | Control not released on driver brake, cancel, or steering intervention | **H-05** Driver unable to override or disengage |
-| F-03 / F-05 | wrong | System state shown to the driver differs from the actual state (mode confusion) | Contributes to H-02, H-06 (rated there). See [WP-C-08](WP-C-08-driver-hmi-misuse-analysis.md) |
+| F-03 / F-05 | wrong | System state shown to the driver differs from the actual state (mode confusion) | ID **H-07 is reserved** for this and not rated separately: it contributes to H-02, H-05 and H-06 and is rated there. See [WP-C-08](WP-C-08-driver-hmi-misuse-analysis.md) |
 | F-04 DM | no | Inattention not detected, or no warning | Not a vehicle-level hazard by itself. DM failure is a latent fault of a measure that the controllability of H-02 and H-06 relies on. Handled in the FSC (FSR on DM integrity) and in SOTIF misuse analysis |
 | F-05 HMI | no | Disengagement or take-over warning not given | Rated as part of H-02, H-06 |
 | F-06 FCW | no / inadvertent | FCW missing or false | Missing FCW: QM (the driver is responsible; stock PCS gives FCW). False FCW: startle effect, QM (rationale in §5.8) |
