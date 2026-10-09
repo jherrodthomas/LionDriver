@@ -13,7 +13,7 @@
 
 - id: AOU-02
   kind: aou
-  text: "A normal driver can override full LKA torque with steering force within ISO 11270-type limits (order of ≤ 50 N at the rim; to be specified)"
+  text: "A normal driver can override full LKA torque with steering force within the controllability criterion set by CA-01 in WP-C-08 §7 (ISO 11270-type limits; ≤ 50 N at the rim indicative)"
   credited_in: "HARA C-rating H-01, H-05"
   verification_approach: "Vehicle measurement with a steering force gauge"
   aou_status: "Unverified"

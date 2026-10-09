@@ -20,7 +20,7 @@ Scope: reference configuration of [WP-M-01 §3.1](../01-management/WP-M-01-assur
 
 Sequencing rule ([WP-M-08 §4.1](../01-management/WP-M-08-sotif-plan.md#41-sequencing-rules)): the targets in §4 are fixed and approved **before** evidence for them is collected.
 
-Inputs: SOTIF hazards SH-01…SH-13 and acceptance criteria ([WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md) §3, §5), functional insufficiencies FI-01…FI-22 and triggering conditions TC-01…TC-31 ([WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md)), functional modifications FM-01…FM-11 ([WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md)), ODD parts ODD-H and ODD-A ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md)), controllability assumptions CA-01…CA-07 and DM performance DMP-01…DMP-04 ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md)). [WP-C-05 §5.2](../02-concept/WP-C-05-sotif-hazard-identification.md#52-derivation-method-for-validation-targets-to-be-applied-in-wp-v-02) delegates the numeric targets to this document; §3 applies that method.
+Inputs: SOTIF hazards SH-01…SH-13 and acceptance criteria ([WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md) §3, §5), functional insufficiencies FI-01…FI-22 and triggering conditions TC-01…TC-33 ([WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md)), functional modifications FM-01…FM-11 ([WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md)), ODD parts ODD-H and ODD-A ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md)), controllability assumptions CA-01…CA-07 and DM performance DMP-01…DMP-04 ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md)). [WP-C-05 §5.2](../02-concept/WP-C-05-sotif-hazard-identification.md#52-derivation-method-for-validation-targets-to-be-applied-in-wp-v-02) delegates the numeric targets to this document; §3 applies that method.
 
 ## 2. Acceptance criteria (input)
 
@@ -162,6 +162,8 @@ Triggering conditions from [WP-C-06 §4](../02-concept/WP-C-06-sotif-insufficien
 | TC-29 | Gas override mistaken for disengagement | KS-19 | | | | | ● | ● |
 | TC-30 | PCM cruise stays active after disengagement | KS-26 | ● | | | | ● | |
 | TC-31 | Exit lane / lane split | KS-04 | | ● | | | | ● |
+| TC-32 | Narrow lane next to large vehicle / barrier | KS-06 | | ● | | | | ● |
+| TC-33 | Lead braking beyond the deceleration bound | KS-08 | | ○ | | ● | ● | |
 
 M1 process replay, M3 model evaluation, M4 simulation, M5 planner maneuver tests, M8 closed course, M9 public road. ● primary, ○ supporting. Every TC has at least one KS; AC-01 of WP-C-05 is checked against this table.
 

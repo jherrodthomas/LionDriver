@@ -6,7 +6,7 @@
 | Standard reference | ISO/PAS 8800:2024 (AI safety management, AI safety lifecycle, data, V&V, operation phase, assurance argument); ISO 21448:2022 §7, §10, §13 (interface); ASPICE 4.0 MLE.1–MLE.4, SUP.11 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | QM (FuSa) / SOTIF for driving models; safety-relevant for controllability (DM model, allocation per HARA) |
+| ASIL / scope | QM (FuSa) / SOTIF for driving models; safety-relevant for controllability (DM model, QM allocation proposed in WP-C-04 §7) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); route for pre-trained models (§5) confirmed by the external assessor |
 | Approver | Project maintainer (acting safety manager) |
@@ -39,7 +39,7 @@ Upstream history in the baseline window shows how often AI-2 changes: `4bcf732`,
 |---|---|---|---|
 | AI-1 | QM | Primary source of functional insufficiencies for lateral and longitudinal behaviour | Every command it produces passes through controlsd and then the panda safety envelope (`opendbc_repo/opendbc/safety/modes/toyota.h:173-210`). The FuSa argument does not depend on its correctness ([WP-M-01 §4](WP-M-01-assurance-strategy.md#4-safety-architecture-argument-the-central-strategy)) |
 | AI-2 | QM | As AI-1, plus a fallback transition that is itself a hazard source (GAP-17) | **Proposed exclusion from the reference configuration** (decision in [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md); gap action 8) |
-| AI-3 | To be decided in the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)) | Safety-relevant: it supports the controllability assumption (attentive driver) used by both HARA and SOTIF | If HARA allocates a safety goal or FSR to driver-attention enforcement, the DM function chain inherits integrity requirements. The ML model itself cannot be argued to an ASIL by development evidence, so the allocation must rest on architecture (wheel-touch fallback, timers in `policy.py`, independent checks) with the model as a QM contributor. This is a WP-C-04 decision |
+| AI-3 | QM proposed in the FSC ([WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §7), following HARA §6.1 obs. 3 ([WP-C-03](../02-concept/WP-C-03-hara.md)); confirmation at G1 | Safety-relevant: it supports the controllability assumption (attentive driver) used by both HARA and SOTIF | If HARA allocates a safety goal or FSR to driver-attention enforcement, the DM function chain inherits integrity requirements. The ML model itself cannot be argued to an ASIL by development evidence, so the allocation must rest on architecture (wheel-touch fallback, timers in `policy.py`, independent checks) with the model as a QM contributor. WP-C-04 §7 proposes no ASIL for DM (FSR-02.06…02.09 QM, managed under ISO 21448 as misuse measures) with required integrity-supporting attributes |
 
 ## 4. Roles
 
@@ -146,7 +146,7 @@ The AI argument is the G3 branch of the [safety case (WP-K-01)](../10-safety-cas
 |---|---|
 | OI-1 | Assessor confirmation that the acquired-model route (§5) is acceptable, and what additional evidence it requires |
 | OI-2 | Decide exclusion of AI-2 (Chestnut) from the reference configuration (WP-C-07, gap action 8) |
-| OI-3 | HARA decision on the integrity allocation of the DM function chain (AI-3) |
+| OI-3 | Confirm at G1 the QM allocation of the DM function chain (AI-3) proposed in WP-C-04 §7 |
 | OI-4 | Obtain LFS objects for the pinned models and record their hashes and sizes in the release manifest (this checkout holds pointers only) |
 | OI-5 | Define the LionDriver evaluation dataset specification and storage, including the policy on uploading to comma servers (§6.3) |
 | OI-6 | Decide a replacement for `pickle`-based model loading, or a verified-hash precondition (RM-1) |

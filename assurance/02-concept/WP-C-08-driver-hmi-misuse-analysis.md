@@ -99,8 +99,8 @@ These regulations are not binding in the US (WP-M-01 T-13). Values must be check
 
 | ID | Requirement (QM, SOTIF) | Verification |
 |---|---|---|
-| DMP-01 | Detect eyes-off-road ≥ 5 s with true-positive rate to be set in WP-V-02 for the reference driver population (incl. glasses, sunglasses, night) | DM clinic, §8 |
-| DMP-02 | Detect phone use and sleep states with rates to be set in WP-V-02 | DM clinic |
+| DMP-01 | Detect eyes-off-road ≥ 5 s with true-positive rate per [WP-C-11](WP-C-11-ai-system-definition-and-safety-requirements.md) AIR-07 (proposed, TBC), validated under [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) VT-08, for the reference driver population (incl. glasses, sunglasses, night) | DM clinic, §8 |
+| DMP-02 | Detect phone use and sleep states with rates per WP-C-11 AIR-08 (proposed, TBC), validated under WP-V-02 VT-08 | DM clinic |
 | DMP-03 | Detect a covered or blocked driver camera within 10 s and fall back to the stricter policy | Test; FM-05 |
 | DMP-04 | Wheel-touch fallback cannot be satisfied by periodic small inputs (FM-05) | Test |
 
@@ -153,7 +153,7 @@ Method notes (RESPONSE 3 Code of Practice, informative): use naive subjects repr
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
 | OI-1 | Confirm benchmark values (R79, R171, EU 2025/1899) against licensed texts and finalise §5.2 | HF specialist | G1 |
-| OI-2 | Set numeric DM performance targets (DMP-01/02) in WP-V-02 | SOTIF lead | G2 |
+| OI-2 | Confirm the numeric DM performance targets for DMP-01/02 proposed in WP-C-11 AIR-07/AIR-08 (TBC values; validation target VT-08 in WP-V-02) | SOTIF lead | G2 |
 | OI-3 | Agree controllability pass criteria and sample size (CA-01…CA-07) with the external assessor | Safety manager | G1 |
 | OI-4 | Decide `DisengageOnAccelerator` default for the reference build (MC-08) | Maintainer | G1 |
 | OI-5 | Check whether alert volume can be reduced below an audible floor (MC-12) | SW lead | G2 |

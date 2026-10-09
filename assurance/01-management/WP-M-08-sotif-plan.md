@@ -130,17 +130,17 @@ All tools below need classification under [WP-P-07](../07-supporting/WP-P-07-too
 
 ## 8. Candidate functional modifications (input to WP-C-07)
 
-These are candidates only. WP-C-07 decides each one with rationale.
+These are candidates only. WP-C-07 decides each one with rationale and owns the `FM-nn` IDs; the `CM-n` labels below are local to this plan and the last column maps each to the WP-C-07 modification(s) that took it up.
 
-| # | Candidate | Addresses |
-|---|---|---|
-| FM-1 | Restore Experimental Mode default to off (or remove the toggle) for the reference configuration | GAP-18, D-08 |
-| FM-2 | Exclude the Chestnut big-model path from the reference configuration, or remove the diagnostic suppression around fallback | GAP-17 |
-| FM-3 | Shorten or condition the soft-disable actuation window when the failed input is the one being acted on | GAP-16 |
-| FM-4 | Add a runtime monitor on model uncertainty / output plausibility that degrades to driver handover | GAP-22 |
-| FM-5 | Strengthen DM: do not fully reset awareness on any wheel/gas input; derive DM validity from model uncertainty | GAP-21 |
-| FM-6 | Narrow the ODD (e.g. road class, speed range, weather, daylight) to what validation can cover | §5.2 step 4 |
-| FM-7 | Add reactions where events have none (`cruiseMismatch`, `speedTooHigh`) and correct the `canError` HMI text | GAP-19 |
+| # | Candidate | Addresses | WP-C-07 ID |
+|---|---|---|---|
+| CM-1 | Restore Experimental Mode default to off (or remove the toggle) for the reference configuration | GAP-18, D-08 | FM-01 |
+| CM-2 | Exclude the Chestnut big-model path from the reference configuration, or remove the diagnostic suppression around fallback | GAP-17 | FM-02 |
+| CM-3 | Shorten or condition the soft-disable actuation window when the failed input is the one being acted on | GAP-16 | FM-03 |
+| CM-4 | Add a runtime monitor on model uncertainty / output plausibility that degrades to driver handover | GAP-22 | FM-09 |
+| CM-5 | Strengthen DM: do not fully reset awareness on any wheel/gas input; derive DM validity from model uncertainty | GAP-21 | FM-05 |
+| CM-6 | Narrow the ODD (e.g. road class, speed range, weather, daylight) to what validation can cover | §5.2 step 4 | FM-07, FM-08 |
+| CM-7 | Add reactions where events have none (`cruiseMismatch`, `speedTooHigh`) and correct the `canError` HMI text | GAP-19 | FM-04, FM-07 |
 
 ## 9. Change-triggered re-evaluation (including model changes)
 

@@ -17,14 +17,14 @@
 This document lists the known hazardous scenarios for LD-SDA, the test method and pass criteria for each, and the record format for results. It implements the strategy of [WP-V-02](WP-V-02-sotif-vv-strategy.md) (methods M1–M9, validation targets VT-nn).
 
 Source of the scenarios. The catalogue is derived from:
-- the triggering conditions TC-01…TC-31 and functional insufficiencies FI-01…FI-22 of [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) and the SOTIF hazards SH-01…SH-13 of [WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md);
+- the triggering conditions TC-01…TC-33 and functional insufficiencies FI-01…FI-22 of [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) and the SOTIF hazards SH-01…SH-13 of [WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md);
 - `docs/LIMITATIONS.md:8-56` (upstream's own list of conditions that degrade ALC, ACC/FCW and DM);
 - the gap assessment (GAP-16, GAP-17, GAP-18, GAP-21, GAP-22);
 - the HARA situation catalogue OS-01…OS-11 and hazards H-01…H-08 ([WP-C-03](../02-concept/WP-C-03-hara.md));
 - AI error types AE-P/L/T/O/N/D ([WP-C-11 §5](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md#5-ai-related-error-types));
 - domain knowledge of camera-based L2 systems.
 
-Every TC of WP-C-06 maps to at least one KS (coverage table in [WP-V-02 §6](WP-V-02-sotif-vv-strategy.md#6-coverage-of-triggering-conditions)). KS-06 and KS-08 have no TC yet; they are proposed to the WP-C-06 owner as new TCs (OI-1). TCs that WP-C-06 resolves by ODD exclusion ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md): work zones, fog/snow, tunnels) get an ODD-exit check instead of a performance test.
+Every TC of WP-C-06 maps to at least one KS (coverage table in [WP-V-02 §6](WP-V-02-sotif-vv-strategy.md#6-coverage-of-triggering-conditions)). KS-06 and KS-08 cover TC-32 and TC-33, added to WP-C-06 at this document's request (OI-1, closed). TCs that WP-C-06 resolves by ODD exclusion ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md): work zones, fog/snow, tunnels) get an ODD-exit check instead of a performance test.
 
 Scope: reference configuration, Chill longitudinal mode. Experimental Mode scenarios (traffic lights, stop signs, e2e stops) are excluded (FM-01, D-08); KS-24 only verifies that the exclusion holds. Scenarios run in ODD-H unless marked ODD-A.
 
@@ -54,7 +54,7 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 | KS-03 | Faded or missing lane markings, tar seams, repainted lines | SH-01, SH-02 | TC-05 | Marking visibility classes: good / faded / one side missing / ghost lines | M3, M8 (taped lines), M9 | No lane departure; if `laneLineProbs` < 0.5 on both sides for > 2 s, a take-over alert or no change of lateral offset > 0.3 m | VT-01, VT-02 |
 | KS-04 | Lane split, exit gore, lane merge, widening lane | SH-01 | TC-31 | Highway exit with and without exit desire; merge from 2 to 1 lane | M3, M9 | Vehicle follows the through lane without crossing the gore; no swerve > 0.5 m toward the exit | VT-01 |
 | KS-05 | Stationary vehicle in lane at highway approach | SH-06 (SH-04 if late hard braking) | TC-08, TC-17 | Soft target (radar-reflective) stationary; approach 40, 60, 80 km/h on CC (higher speeds by M5/M4 only); lateral offset 0 and ±0.5 m | M5, M8 (B2), M3 | Stop without contact; first deceleration at TTC ≥ 3.0 s **(TBC)**; FCW at TTC ≥ 2.0 s where braking above envelope is needed (AIR-06); not worse than stock DRCC (B2) | VT-06, VT-09 |
-| KS-06 | Narrow lane with adjacent truck or concrete barrier | SH-01 | — (proposed new TC: adjacent large vehicle / barrier in narrow lane; FI-01) | Lane width ≤ 3.3 m; adjacent large vehicle | M9, M3 | Lateral offset toward the obstacle ≤ 0.3 m; no move toward the obstacle | VT-01 |
+| KS-06 | Narrow lane with adjacent truck or concrete barrier | SH-01 | TC-32 (FI-01) | Lane width ≤ 3.3 m; adjacent large vehicle | M9, M3 | Lateral offset toward the obstacle ≤ 0.3 m; no move toward the obstacle | VT-01 |
 | KS-14 | Driver-initiated lane change (turn signal + nudge) | SH-10 | TC-28 | Adjacent lane free / occupied (target vehicle at 2–3 s gap on CC) | M8, M9 | Lane change starts only after the driver nudge; aborts / does not start when the driver releases the signal; driver can override at any point with ≤ the AOU-02 force | VT-13 |
 | KS-22 | Pedestrian or cyclist at the lane edge (ODD-A; VRU response is a driver task per WP-C-02) | SH-11, SH-01 | TC-12 | Dummy at 0.5 m and 1.0 m from the lane line, ego at 30 and 50 km/h | M8 | No lateral move toward the dummy > 0.2 m; driver can correct within the envelope | VT-01 |
 
@@ -63,7 +63,7 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 | ID | Scenario | SH | TC (WP-C-06) | Parameters | Methods | Pass criteria | VT |
 |---|---|---|---|---|---|---|---|
 | KS-07 | Close cut-in | SH-03, SH-06 | TC-07 | Target cuts in at 10, 15, 20 m ahead; Δv −10…0 km/h | M5 (`test_longitudinal.py:113`), M8 (B2) | No contact; no positive acceleration toward the target after it enters the lane; deceleration ≤ −3.5 m/s² envelope; not worse than stock (B2) | VT-03, VT-06, VT-09 |
-| KS-08 | Lead decelerating hard, slow lead at highway speed | SH-03, SH-06 | — (proposed new TC: lead braking harder than the envelope; FI-10) | Lead brakes at 3, 5, 7 m/s² from 50/80 km/h; time gap 1.5 s | M5, M8 (soft target on trolley, lower speeds), M3 | No contact where the envelope allows avoidance; FCW at TTC ≥ 2.0 s when required deceleration > 3.5 m/s²; no positive acceleration while the lead decelerates | VT-03, VT-06 |
+| KS-08 | Lead decelerating hard, slow lead at highway speed | SH-03, SH-06 | TC-33 (FI-10) | Lead brakes at 3, 5, 7 m/s² from 50/80 km/h; time gap 1.5 s | M5, M8 (soft target on trolley, lower speeds), M3 | No contact where the envelope allows avoidance; FCW at TTC ≥ 2.0 s when required deceleration > 3.5 m/s²; no positive acceleration while the lead decelerates | VT-03, VT-06 |
 | KS-09 | Cut-out revealing a stopped vehicle | SH-06 | TC-09 | Lead changes lane at 30–60 m from a stopped target, 50 km/h | M8 | As KS-05 | VT-06 |
 | KS-10 | Overpass, bridge shadow, overhead gantry | SH-04 | TC-10 | Recorded highway segments with overpasses | M3, M9 | No deceleration < −2.0 m/s² without a relevant object (AIR-05) | VT-04 |
 | KS-11 | Metal plates, toll plaza, roadside radar clutter, parked cars on a curve | SH-04 | TC-10, TC-11 | Recorded segments; CC metal plate | M3, M8, M9 | As KS-10 | VT-04 |
@@ -174,7 +174,7 @@ The suite (or the affected scenarios) is re-run after any change listed in [WP-W
 
 | ID | Item |
 |---|---|
-| OI-1 | Propose to the WP-C-06 owner new TCs for KS-06 (narrow lane next to a large vehicle or barrier) and KS-08 (lead braking harder than the envelope allows) |
+| OI-1 | Closed: WP-C-06 added TC-32 (KS-06, narrow lane next to a large vehicle or barrier) and TC-33 (KS-08, lead braking harder than the envelope allows) |
 | OI-2 | Confirm with WP-C-02 OI-4 whether ODD-A stays in the ODD; if dropped, KS-22 and the ODD-A parameter points are removed |
 | OI-3 | Select the closed-course site and soft-target equipment (radar-reflective target, trolley) and confirm speed limits per WP-V-07 |
 | OI-4 | Define how B2 runs restore the stock TSS2 functions (harness removal procedure and time per swap) |

@@ -30,10 +30,11 @@ The ASILs in this document are those proposed in the HARA. The HARA is not yet c
 
 | Element | Description | Integrity it can carry today | Notes |
 |---|---|---|---|
-| E-03 | Safety envelope: opendbc safety (Toyota mode) and the panda firmware paths it relies on, on the STM32H7 | Target ASIL B/C after hardening (§4) | The only path to the actuators. Single channel (GAP-11) |
+| E-03 | Safety envelope: opendbc safety (Toyota mode) and the panda firmware paths it relies on, on the STM32H7 | Target ASIL B after hardening (§4.2); SG-01 FSRs carry ASIL C until C1 is shown | The only path to the actuators. Single channel (GAP-11) |
 | E-01 | Application SoC software: openpilot processes (selfdrived, controlsd, plannerd, card, pandad, ...) | QM | Python, no partitioning, no WCET (GAP-23) |
 | E-02 | ML models: driving model, DM model | QM (SOTIF / PAS 8800 managed) | No uncertainty gating (GAP-22) |
 | E-01/DM | Driver monitoring chain: driver camera → dmonitoringmodeld → dmonitoringd → selfdrived | QM (see §7) | Source validity hard-coded (GAP-21) |
+| E-04 | Device hardware hosting E-01 and E-03: SoC, panda MCU, shared power supply, clocks, CAN transceivers (WP-C-01 E-04) | Shared platform; integrity of E-03 depends on it | The QM SoC controls the panda MCU reset and boot lines (`STM_RST_N`/`STM_BOOT0`) and can force the ROM bootloader or reflash the MCU (GAP-38); shared supply and PCB (dependent-failure analysis, [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md)) |
 | E-04/HMI | Device display and speaker (soundd/ui), panda buzzer ("siren"), cluster LKAS HUD (`0x412`) | QM, except the panda siren which is driven by E-03 | |
 | E-05 | Harness with intercept relay | Target ASIL B (SG-07) | Relay default state to be confirmed (OI-6) |
 | EXT-EPS | Toyota EPS (external measure) | Unknown; credited through AOU-01/02 only | No supplier evidence |

@@ -97,6 +97,8 @@ The driving model is a black box from LionDriver's point of view: training data 
 | TC-29 | Driver presses gas to override and believes the system disengaged | Driver / HMI | `params_keys.h:35` |
 | TC-30 | PCM cruise remains active after an item disengagement (cancel not effective) | Vehicle / system | `selfdrived.py:421`; GAP-19 |
 | TC-31 | Exit lane or lane split on a highway (path follows the wrong branch) | Infrastructure | domain |
+| TC-32 | Narrow lane (≤ 3.3 m) with an adjacent large vehicle or a concrete barrier close to the lane edge | Infrastructure / traffic | domain; proposed by [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md) KS-06 |
+| TC-33 | Lead vehicle braking harder than the item's deceleration bound (lead decel > 3.5 m/s²), incl. slow lead at highway speed | Traffic | `LIMITATIONS.md:38`; proposed by WP-V-03 KS-08 |
 
 ## 5. TC → FI → SH evaluation
 
@@ -131,6 +133,8 @@ The driving model is a black box from LionDriver's point of view: training data 
 | TC-29 | FI-21 | SH-05 | Override indication shown | Needs validation (HMI clinic) | WP-C-08 §8 |
 | TC-30 | FI-17 | SH-05 | Event without reaction | Needs modification | FM-04 |
 | TC-31 | FI-01, FI-03 | SH-01 | None | Needs validation | WP-V-03 |
+| TC-32 | FI-01 | SH-01 | None specific; lateral offset toward the obstacle not bounded | Needs validation | WP-V-03 KS-06 |
+| TC-33 | FI-10 | SH-03, SH-06 | Decel ≤ 3.5 m/s²; FCW | Needs validation (driver responsibility; user info) | WP-V-03 KS-08; WP-O-03 |
 
 ## 6. AI-specific error causes (ISO/PAS 8800 view, summary)
 
