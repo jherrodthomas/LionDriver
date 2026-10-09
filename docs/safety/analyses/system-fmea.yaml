@@ -1,19 +1,823 @@
 # yaml-language-server: $schema=../schema/fmea.schema.json
+#
+# System FMEA — AIAG-VDA steps 1-4 (scope, structure, function, failure analysis).
+# Ratings (step 5) are intentionally null: severity is derived from the HARA, which does not exist yet.
+# Prevention/detection controls are also step 5 and are left empty. `safety_mechanisms` lists the
+# in-field mechanisms that exist in the BL-001 code today (design facts, not yet credited).
+#
+# `notes` starting with "HARA input:" are candidate hazards for the HARA.
+# `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
 schema_version: 1
 analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.1"
+  revision: "0.2"
   status: draft
   baseline: BL-001
   rating_tables: RT-1
-  scope: "Item-level functions F1-F7 per fmea-plan.md section 3.1"
-  team: []
+  scope: >-
+    LionDriver as installed on a 2020 Toyota Corolla LE (US) with comma 3X and integrated panda,
+    software BL-001, while the vehicle is driven on public roads by a licensed driver.
+    Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are
+    preserved), added because the harness intercepts the stock ADAS camera.
+  out_of_scope:
+    - Internal failures of Toyota ECUs (EPS, ADAS camera, powertrain, brakes); analyzed only at their interface
+    - Performance limitations of the driving model under nominal hardware/software (SOTIF analysis)
+    - Malicious manipulation (TARA, ISO/SAE 21434)
+    - Offroad features (logging upload, navigation, settings, updates); updates are covered by the PFMEA
+  team:
+    - name: Jherrod Thomas
+      role: Project maintainer, safety lead (reviewer/approver)
+    - name: Claude (AI assistant)
+      role: Drafting assistance; content requires human review
   references:
     - docs/safety/fmea-plan.md
     - docs/safety/rating-tables.md
-structure: []
-functions: []
-failure_modes: []
+    - docs/SAFETY.md
+  updated: 2026-10-09
+
+# ---------------------------------------------------------------------------
+# Step 2 — Structure
+# ---------------------------------------------------------------------------
+structure:
+  - id: SFM-SE-001
+    name: LionDriver item (L2 ACC + ALC + driver monitoring)
+    kind: item
+    parent: null
+  - id: SFM-SE-002
+    name: comma 3X device
+    kind: system
+    parent: SFM-SE-001
+    description: SoC compute, road/wide/driver cameras, IMU, GNSS, display, speaker, power and thermal management
+    paths: [openpilot/system/hardware]
+  - id: SFM-SE-003
+    name: Integrated panda (CAN interface and safety model)
+    kind: subsystem
+    parent: SFM-SE-002
+    description: >-
+      MCU between the device and vehicle CAN. Forwards CAN, enforces the vehicle safety model on
+      transmitted messages, controls the harness relay. Firmware and safety model are in submodules.
+    paths: [openpilot/selfdrive/pandad, panda, opendbc_repo]
+  - id: SFM-SE-004
+    name: Harness (Toyota A connector, harness box, comma power v3)
+    kind: component
+    parent: SFM-SE-001
+    description: Intercepts the stock ADAS camera CAN at the windshield camera connector; supplies 12 V to the device
+  # Software subsystems running on the device (black boxes at this level; decomposed in the SW FMEA)
+  - id: SFM-SE-010
+    name: Perception (camerad, modeld)
+    kind: sw_element
+    parent: SFM-SE-002
+    paths: [openpilot/system/camerad, openpilot/selfdrive/modeld/modeld.py]
+  - id: SFM-SE-011
+    name: Localization and calibration (locationd, calibrationd, paramsd, torqued)
+    kind: sw_element
+    parent: SFM-SE-002
+    paths: [openpilot/selfdrive/locationd]
+  - id: SFM-SE-012
+    name: Planning (plannerd, radard)
+    kind: sw_element
+    parent: SFM-SE-002
+    paths: [openpilot/selfdrive/controls/plannerd.py, openpilot/selfdrive/controls/radard.py]
+  - id: SFM-SE-013
+    name: Control (controlsd, lateral/longitudinal controllers)
+    kind: sw_element
+    parent: SFM-SE-002
+    paths: [openpilot/selfdrive/controls/controlsd.py, openpilot/selfdrive/controls/lib]
+  - id: SFM-SE-014
+    name: Supervision (selfdrived state machine, events, alert manager)
+    kind: sw_element
+    parent: SFM-SE-002
+    paths: [openpilot/selfdrive/selfdrived]
+  - id: SFM-SE-015
+    name: Driver monitoring (dmonitoringmodeld, dmonitoringd)
+    kind: sw_element
+    parent: SFM-SE-002
+    paths: [openpilot/selfdrive/modeld/dmonitoringmodeld.py, openpilot/selfdrive/monitoring]
+  - id: SFM-SE-016
+    name: Car interface (card, car_events, opendbc Toyota port)
+    kind: sw_element
+    parent: SFM-SE-002
+    paths: [openpilot/selfdrive/car, opendbc_repo]
+  - id: SFM-SE-017
+    name: Panda daemon (pandad)
+    kind: sw_element
+    parent: SFM-SE-002
+    paths: [openpilot/selfdrive/pandad]
+  - id: SFM-SE-018
+    name: HMI (ui, soundd)
+    kind: sw_element
+    parent: SFM-SE-002
+    paths: [openpilot/selfdrive/ui/ui.py, openpilot/selfdrive/ui/soundd.py]
+  - id: SFM-SE-019
+    name: Platform (manager, messaging, hardwared, OS)
+    kind: sw_element
+    parent: SFM-SE-002
+    paths: [openpilot/system/manager, openpilot/cereal, openpilot/system/hardware/hardwared.py]
+  # External elements at the item boundary
+  - id: SFM-SE-030
+    name: Toyota EPS
+    kind: external
+    parent: null
+  - id: SFM-SE-031
+    name: Toyota powertrain and brake control (receives ACC acceleration requests)
+    kind: external
+    parent: null
+  - id: SFM-SE-032
+    name: Toyota stock ADAS camera (TSS2)
+    kind: external
+    parent: null
+  - id: SFM-SE-033
+    name: Vehicle CAN buses and 12 V supply
+    kind: external
+    parent: null
+  - id: SFM-SE-034
+    name: Driver
+    kind: external
+    parent: null
+
+# ---------------------------------------------------------------------------
+# Step 3 — Functions
+# ---------------------------------------------------------------------------
+functions:
+  - id: SFM-FN-001
+    element: SFM-SE-001
+    description: "F1 Lateral control: request steering torque from the EPS to keep the vehicle in its lane while engaged"
+  - id: SFM-FN-002
+    element: SFM-SE-001
+    description: "F2 Longitudinal control: request acceleration/deceleration to hold set speed and follow leads while engaged"
+  - id: SFM-FN-003
+    element: SFM-SE-001
+    description: "F3 Engagement management: engage only on driver request with entry conditions met; disengage per fault reaction (soft/immediate)"
+  - id: SFM-FN-004
+    element: SFM-SE-001
+    description: "F4 Driver override: release control on brake or cancel; yield lateral to steering input and longitudinal to accelerator"
+  - id: SFM-FN-005
+    element: SFM-SE-001
+    description: "F5 Driver monitoring: detect inattention and escalate alerts; lock out engagement after repeated non-response"
+  - id: SFM-FN-006
+    element: SFM-SE-001
+    description: "F6 Alerting: inform the driver of engagement state, takeover requests and faults (visual and audible)"
+  - id: SFM-FN-007
+    element: SFM-SE-001
+    description: "F7 Actuation limiting: bound actuator commands in magnitude and rate; detect excessive actuation"
+  - id: SFM-FN-008
+    element: SFM-SE-001
+    description: "F8 Stock function preservation: keep stock vehicle safety functions not replaced by the item available"
+
+# ---------------------------------------------------------------------------
+# Step 4 — Failure analysis
+# ---------------------------------------------------------------------------
+failure_modes:
+
+  # ----- F1 Lateral control -----
+  - id: SFM-001
+    element: SFM-SE-001
+    function: SFM-FN-001
+    failure_mode: Steering torque applied when not engaged
+    guideword: unintended
+    effects:
+      - {level: local, description: "Torque request sent to EPS outside an active state"}
+      - {level: next_higher, description: "Unexpected steering wheel motion and lateral deviation"}
+      - {level: end, description: "Driver surprised during manual driving; possible lane departure"}
+    severity: null
+    safety_mechanisms:
+      - description: controlsd only sets latActive when selfdriveState is active and no EPS fault
+        ref: openpilot/selfdrive/controls/controlsd.py
+      - description: Panda safety model blocks steering messages unless controls are allowed (heartbeat carries engaged state from selfdriveState)
+        ref: openpilot/selfdrive/pandad/pandad.cc
+    causes:
+      - {id: SFM-001.C1, element: SFM-SE-014, description: "State machine reports active while disabled", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-001.C2, element: SFM-SE-003, description: "Panda allows steering TX without valid engagement (controls_allowed set incorrectly)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-001.C3, element: SFM-SE-016, description: "Steering message packed with non-zero torque/request bit while latActive is false", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: unintended steering intervention during manual driving."
+
+  - id: SFM-002
+    element: SFM-SE-001
+    function: SFM-FN-001
+    failure_mode: Steering torque or torque rate above limits
+    guideword: excessive
+    effects:
+      - {level: local, description: "Torque request exceeds the limits in SAFETY.md / ISO 11270"}
+      - {level: next_higher, description: "Lateral deviation faster than a driver can correct (> 1 m in 0.9 s)"}
+      - {level: end, description: "Lane departure or collision with adjacent traffic or roadside"}
+    severity: null
+    safety_mechanisms:
+      - description: Panda/opendbc Toyota safety model limits steering torque magnitude and rate on TX
+        ref: opendbc_repo
+      - description: Excessive lateral acceleration check (> 2x ISO lateral accel for 0.25 s) raises excessiveActuation (SOFT_DISABLE)
+        ref: openpilot/selfdrive/selfdrived/helpers.py
+    causes:
+      - {id: SFM-002.C1, element: SFM-SE-013, description: "Lateral controller output too high (gain, torque model, saturation logic)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-002.C2, element: SFM-SE-010, description: "Model outputs excessive desired curvature", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-002.C3, element: SFM-SE-003, description: "Safety model torque/rate limits wrong for this vehicle or not enforced", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-002.C4, element: SFM-SE-011, description: "Wrong vehicle parameters (steer ratio, lateral accel factor, torque offsets) from online learners", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: excessive steering intervention while engaged."
+
+  - id: SFM-003
+    element: SFM-SE-001
+    function: SFM-FN-001
+    failure_mode: Steering in the wrong direction (away from lane center)
+    guideword: wrong_direction
+    effects:
+      - {level: local, description: "Torque request sign opposite to the required correction"}
+      - {level: next_higher, description: "Vehicle steers toward lane boundary"}
+      - {level: end, description: "Lane departure into oncoming/adjacent traffic or off road"}
+    severity: null
+    safety_mechanisms:
+      - description: Safety model torque/rate limits bound the deviation rate (not the direction)
+        ref: opendbc_repo
+      - description: Driver steering override yields lateral control (steerOverride -> OVERRIDE_LATERAL)
+        ref: openpilot/selfdrive/car/car_events.py
+    causes:
+      - {id: SFM-003.C1, element: SFM-SE-011, description: "Calibration (camera extrinsics) wrong or not converged", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-003.C2, element: SFM-SE-016, description: "Sign convention error in steering signal parse or pack for this car", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-003.C3, element: SFM-SE-010, description: "Model desired curvature has wrong sign (corrupted frame, wrong camera stream)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-003.C4, element: SFM-SE-002, description: "Device mount moved after calibration", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: steering away from lane while engaged."
+
+  - id: SFM-004
+    element: SFM-SE-001
+    function: SFM-FN-001
+    failure_mode: Insufficient lateral control (undershoot in curves, drift toward lane edge)
+    guideword: insufficient
+    effects:
+      - {level: local, description: "Achieved curvature below desired curvature"}
+      - {level: next_higher, description: "Vehicle drifts to lane edge in curves"}
+      - {level: end, description: "Lane departure if the driver does not intervene"}
+    severity: null
+    safety_mechanisms:
+      - description: steerSaturated warning when undershooting > 1.2x in a turn with saturated controller
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+      - description: ldw (lane departure warning) alert
+        ref: openpilot/selfdrive/controls/lib/ldw.py
+    causes:
+      - {id: SFM-004.C1, element: SFM-SE-003, description: "Safety model torque limit below what the curve requires (by design)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-004.C2, element: SFM-SE-030, description: "EPS limits or rejects torque request (EPS fault, torque limit, lockout)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-004.C3, element: SFM-SE-013, description: "Controller tuning or torque model too weak for vehicle state", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "Mostly a designed limitation: overlaps SOTIF. Kept here for the failure path (EPS/controller fault)."
+
+  - id: SFM-005
+    element: SFM-SE-001
+    function: SFM-FN-001
+    failure_mode: Loss of lateral control without driver alert
+    guideword: loss
+    effects:
+      - {level: local, description: "Steering requests stop or are ignored while the item shows engaged"}
+      - {level: next_higher, description: "Vehicle no longer follows the lane"}
+      - {level: end, description: "Driver unaware of loss; lane departure"}
+    severity: null
+    safety_mechanisms:
+      - description: steerUnavailable (IMMEDIATE_DISABLE) and steerTempUnavailable (SOFT_DISABLE) from EPS fault signals
+        ref: openpilot/selfdrive/car/car_events.py
+      - description: Process liveness/frequency checks raise commIssue / processNotRunning (SOFT_DISABLE)
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    causes:
+      - {id: SFM-005.C1, element: SFM-SE-030, description: "EPS stops accepting requests without a fault signal on CAN", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-005.C2, element: SFM-SE-017, description: "pandad stops forwarding TX without the state being reported", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-005.C3, element: SFM-SE-019, description: "Process crash or hang not detected by liveness checks", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "With a correct alert the effect is a controlled handback (S 8 per RT-1). Without one it is a HARA candidate."
+
+  - id: SFM-006
+    element: SFM-SE-001
+    function: SFM-FN-001
+    failure_mode: Lateral command frozen at last value
+    guideword: stuck
+    effects:
+      - {level: local, description: "Same torque request repeated regardless of road geometry"}
+      - {level: next_higher, description: "Vehicle holds a constant steering input"}
+      - {level: end, description: "Vehicle leaves the lane on a curve or straight"}
+    severity: null
+    safety_mechanisms:
+      - description: Message liveness and frequency checks on inputs (sm.all_checks -> commIssue)
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+      - description: Panda heartbeat loss removes controls_allowed (firmware, to verify in SW FMEA)
+        ref: panda
+    causes:
+      - {id: SFM-006.C1, element: SFM-SE-013, description: "controlsd hangs while card keeps sending the last carControl", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-006.C2, element: SFM-SE-010, description: "modeld output frozen (stale frame) but still published as valid", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-006.C3, element: SFM-SE-019, description: "Messaging delivers stale data with fresh timestamps", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: constant steering command not following road."
+
+  - id: SFM-007
+    element: SFM-SE-001
+    function: SFM-FN-001
+    failure_mode: Oscillating lateral control
+    guideword: degraded
+    effects:
+      - {level: local, description: "Torque request oscillates"}
+      - {level: next_higher, description: "Vehicle weaves within the lane"}
+      - {level: end, description: "Driver discomfort; possible over-correction by driver"}
+    severity: null
+    safety_mechanisms: []
+    causes:
+      - {id: SFM-007.C1, element: SFM-SE-013, description: "Controller instability (gain, delay compensation, lagd estimate)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-007.C2, element: SFM-SE-019, description: "Control loop timing jitter (CPU load, thermal throttling)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+
+  # ----- F2 Longitudinal control -----
+  - id: SFM-008
+    element: SFM-SE-001
+    function: SFM-FN-002
+    failure_mode: Unintended acceleration
+    guideword: unintended
+    effects:
+      - {level: local, description: "Positive acceleration requested when not required or not engaged"}
+      - {level: next_higher, description: "Vehicle accelerates unexpectedly"}
+      - {level: end, description: "Rear-end collision with lead vehicle or loss of control"}
+    severity: null
+    safety_mechanisms:
+      - description: Panda/opendbc safety model limits acceleration request range and blocks when not engaged
+        ref: opendbc_repo
+      - description: Excessive longitudinal acceleration check (> 2x ACCEL_MAX for 0.25 s) -> excessiveActuation
+        ref: openpilot/selfdrive/selfdrived/helpers.py
+      - description: Brake press -> pedalPressed (USER_DISABLE)
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    causes:
+      - {id: SFM-008.C1, element: SFM-SE-012, description: "Planner targets higher speed (missed lead, wrong set speed)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-008.C2, element: SFM-SE-013, description: "Longitudinal controller output too high", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-008.C3, element: SFM-SE-016, description: "Wrong scaling of acceleration request for this car", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-008.C4, element: SFM-SE-031, description: "Powertrain applies more acceleration than requested", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: unintended acceleration while engaged."
+
+  - id: SFM-009
+    element: SFM-SE-001
+    function: SFM-FN-002
+    failure_mode: Unintended or excessive deceleration (phantom braking)
+    guideword: excessive
+    effects:
+      - {level: local, description: "Strong deceleration requested without a real obstacle"}
+      - {level: next_higher, description: "Vehicle brakes hard"}
+      - {level: end, description: "Rear-end collision by following vehicle; occupant injury"}
+    severity: null
+    safety_mechanisms:
+      - description: Safety model limits minimum acceleration request
+        ref: opendbc_repo
+      - description: Excessive longitudinal deceleration check -> excessiveActuation
+        ref: openpilot/selfdrive/selfdrived/helpers.py
+      - description: Accelerator press -> gasPressedOverride (OVERRIDE_LONGITUDINAL)
+        ref: openpilot/selfdrive/car/car_events.py
+    causes:
+      - {id: SFM-009.C1, element: SFM-SE-012, description: "False lead (radar ghost, model false positive) or FCW false trigger", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-009.C2, element: SFM-SE-013, description: "Longitudinal controller overshoot", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-009.C3, element: SFM-SE-016, description: "Wrong vEgo/aEgo from CAN parse", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: unexpected hard braking. False-positive perception without a fault belongs to SOTIF."
+
+  - id: SFM-010
+    element: SFM-SE-001
+    function: SFM-FN-002
+    failure_mode: Insufficient deceleration for lead vehicle or stop
+    guideword: insufficient
+    effects:
+      - {level: local, description: "Deceleration request below what the situation needs"}
+      - {level: next_higher, description: "Closing distance to lead shrinks"}
+      - {level: end, description: "Rear-end collision if the driver does not brake"}
+    severity: null
+    safety_mechanisms:
+      - description: FCW from planner or model (ET.PERMANENT alert)
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+      - description: Radar faults raise radarFault / canError (SOFT_DISABLE / IMMEDIATE_DISABLE)
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    causes:
+      - {id: SFM-010.C1, element: SFM-SE-012, description: "Lead missed due to radar/vision fusion fault", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-010.C2, element: SFM-SE-003, description: "Safety model minimum accel limit prevents required braking (by design)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-010.C3, element: SFM-SE-031, description: "Brake system does not achieve requested deceleration", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: insufficient braking for lead while engaged."
+
+  - id: SFM-011
+    element: SFM-SE-001
+    function: SFM-FN-002
+    failure_mode: Loss of longitudinal control without driver alert
+    guideword: loss
+    effects:
+      - {level: local, description: "Acceleration requests stop or are ignored while engaged"}
+      - {level: next_higher, description: "Vehicle coasts or holds previous state"}
+      - {level: end, description: "Driver unaware; closing on lead"}
+    severity: null
+    safety_mechanisms:
+      - description: accFaulted (IMMEDIATE_DISABLE), cruiseDisabled (IMMEDIATE_DISABLE)
+        ref: openpilot/selfdrive/selfdrived/events.py
+      - description: canBusMissing (IMMEDIATE_DISABLE), canError
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    causes:
+      - {id: SFM-011.C1, element: SFM-SE-031, description: "Powertrain ignores requests without fault signal", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-011.C2, element: SFM-SE-017, description: "TX path to vehicle lost silently", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "With a correct alert, S 8 per RT-1. Without one, HARA candidate."
+
+  - id: SFM-012
+    element: SFM-SE-001
+    function: SFM-FN-002
+    failure_mode: Late reaction to lead vehicle braking
+    guideword: late
+    effects:
+      - {level: local, description: "Deceleration request delayed"}
+      - {level: next_higher, description: "Reduced time gap"}
+      - {level: end, description: "Rear-end collision or harsh late braking"}
+    severity: null
+    safety_mechanisms:
+      - description: modeldLagging / selfdrivedLagging (SOFT_DISABLE), commIssueAvgFreq
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    causes:
+      - {id: SFM-012.C1, element: SFM-SE-019, description: "Pipeline latency (CPU overload, thermal throttle, messaging delay)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-012.C2, element: SFM-SE-012, description: "Lead state filtered too slowly (radard)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+
+  # ----- F3 Engagement management -----
+  - id: SFM-013
+    element: SFM-SE-001
+    function: SFM-FN-003
+    failure_mode: Engagement without driver request or with entry conditions not met
+    guideword: unintended
+    effects:
+      - {level: local, description: "State machine enters enabled without ENABLE or despite NO_ENTRY"}
+      - {level: next_higher, description: "Item starts actuating"}
+      - {level: end, description: "Unexpected steering/acceleration; driver surprised"}
+    severity: null
+    safety_mechanisms:
+      - description: NO_ENTRY events block engagement (state.py)
+        ref: openpilot/selfdrive/selfdrived/state.py
+      - description: Toyota uses PCM cruise; engagement follows stock cruise main/set (cruise state in carState)
+        ref: openpilot/selfdrive/car/card.py
+    causes:
+      - {id: SFM-013.C1, element: SFM-SE-014, description: "State machine transition error", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-013.C2, element: SFM-SE-016, description: "Cruise state or button parsed incorrectly (spurious enable)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: unintended engagement."
+
+  - id: SFM-014
+    element: SFM-SE-001
+    function: SFM-FN-003
+    failure_mode: Fails to disengage when a fault requires it
+    guideword: loss
+    effects:
+      - {level: local, description: "SOFT_DISABLE/IMMEDIATE_DISABLE event not acted on"}
+      - {level: next_higher, description: "Item keeps actuating with a faulty input or actuator"}
+      - {level: end, description: "Any F1/F2 hazardous effect continues"}
+    severity: null
+    safety_mechanisms:
+      - description: Panda heartbeat carries engaged = selfdriveState alive, valid and enabled; panda removes controls_allowed on heartbeat loss (firmware, to verify)
+        ref: openpilot/selfdrive/pandad/pandad.cc
+    causes:
+      - {id: SFM-014.C1, element: SFM-SE-014, description: "Event missing for the fault (no detection)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-014.C2, element: SFM-SE-014, description: "Event mapped to wrong reaction type in events.py", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-014.C3, element: SFM-SE-014, description: "Catch-all commIssue suppressed by the no_system_errors logic while another event is active", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: continued actuation after fault detection."
+
+  - id: SFM-015
+    element: SFM-SE-001
+    function: SFM-FN-003
+    failure_mode: Abrupt disengagement without alert
+    guideword: unintended
+    effects:
+      - {level: local, description: "Item drops to disabled with no alert"}
+      - {level: next_higher, description: "Steering assist and ACC stop"}
+      - {level: end, description: "Driver unaware of handback; lane departure or closing on lead"}
+    severity: null
+    safety_mechanisms:
+      - description: Every disable transition appends an alert type (USER_DISABLE / IMMEDIATE_DISABLE / SOFT_DISABLE)
+        ref: openpilot/selfdrive/selfdrived/state.py
+    causes:
+      - {id: SFM-015.C1, element: SFM-SE-018, description: "Alert generated but not rendered or played (see SFM-026)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-015.C2, element: SFM-SE-003, description: "Panda drops controls_allowed on its own (e.g. safety violation) and selfdrived reacts late", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-015.C3, element: SFM-SE-033, description: "Device power loss (12 V interruption, harness connector)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+
+  - id: SFM-016
+    element: SFM-SE-001
+    function: SFM-FN-003
+    failure_mode: Disengagement later than required by the fault
+    guideword: late
+    effects:
+      - {level: local, description: "SOFT_DISABLE (3 s) used where IMMEDIATE_DISABLE is needed"}
+      - {level: next_higher, description: "Faulty actuation continues up to 3 s"}
+      - {level: end, description: "Lateral or longitudinal deviation during the soft-disable window"}
+    severity: null
+    safety_mechanisms: []
+    causes:
+      - {id: SFM-016.C1, element: SFM-SE-014, description: "Reaction type for an event under-classified (soft instead of immediate)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-016.C2, element: SFM-SE-014, description: "Debounce/counters too long (e.g. excessive actuation 0.25 s, mismatch counter 200 frames)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "Needs FTTI from the HARA/FSC to judge. Each SOFT_DISABLE event should be justified against FTTI."
+
+  # ----- F4 Driver override -----
+  - id: SFM-017
+    element: SFM-SE-001
+    function: SFM-FN-004
+    failure_mode: Brake press does not disengage
+    guideword: loss
+    effects:
+      - {level: local, description: "pedalPressed not raised or not acted on"}
+      - {level: next_higher, description: "Item keeps requesting acceleration/steering during driver braking"}
+      - {level: end, description: "Driver cannot retake control as expected (SAFETY.md requirement 1 violated)"}
+    severity: null
+    safety_mechanisms:
+      - description: selfdrived raises pedalPressed (USER_DISABLE) on brake press
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+      - description: Panda safety model independently drops controls_allowed on brake press (firmware, to verify)
+        ref: opendbc_repo
+    causes:
+      - {id: SFM-017.C1, element: SFM-SE-016, description: "brakePressed parsed wrong or CAN signal missing", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-017.C2, element: SFM-SE-014, description: "Car events ignored when canValid is false", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: driver brake does not cancel automation. Directly tied to SAFETY.md requirement 1."
+
+  - id: SFM-018
+    element: SFM-SE-001
+    function: SFM-FN-004
+    failure_mode: Item resists driver steering input
+    guideword: loss
+    effects:
+      - {level: local, description: "steerOverride not detected; lateral torque continues"}
+      - {level: next_higher, description: "Driver must overpower the item"}
+      - {level: end, description: "Delayed evasive maneuver or loss of control"}
+    severity: null
+    safety_mechanisms:
+      - description: steerOverride -> OVERRIDE_LATERAL state
+        ref: openpilot/selfdrive/car/car_events.py
+      - description: EPS torque limit allows driver to overpower the request
+        ref: opendbc_repo
+    causes:
+      - {id: SFM-018.C1, element: SFM-SE-016, description: "Driver torque threshold too high or signal parsed wrong", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-018.C2, element: SFM-SE-013, description: "Controller keeps commanding torque during override", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: automation resists evasive steering."
+
+  - id: SFM-019
+    element: SFM-SE-001
+    function: SFM-FN-004
+    failure_mode: Cancel button does not disengage
+    guideword: loss
+    effects:
+      - {level: local, description: "buttonCancel not raised"}
+      - {level: next_higher, description: "Item stays engaged"}
+      - {level: end, description: "Driver must use brake to disengage"}
+    severity: null
+    safety_mechanisms:
+      - description: buttonCancel (USER_DISABLE); brake remains as independent path
+        ref: openpilot/selfdrive/car/car_events.py
+    causes:
+      - {id: SFM-019.C1, element: SFM-SE-016, description: "Button message parsed wrong or missing", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+
+  - id: SFM-020
+    element: SFM-SE-001
+    function: SFM-FN-004
+    failure_mode: Accelerator override not honored
+    guideword: loss
+    effects:
+      - {level: local, description: "gasPressedOverride not detected"}
+      - {level: next_higher, description: "Item keeps braking while driver accelerates"}
+      - {level: end, description: "Driver cannot accelerate out of a situation (e.g. merging)"}
+    severity: null
+    safety_mechanisms:
+      - description: gasPressedOverride -> OVERRIDE_LONGITUDINAL; longActive false during override
+        ref: openpilot/selfdrive/controls/controlsd.py
+    causes:
+      - {id: SFM-020.C1, element: SFM-SE-016, description: "gasPressed parsed wrong or missing", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+
+  - id: SFM-021
+    element: SFM-SE-001
+    function: SFM-FN-004
+    failure_mode: Stock cruise stays engaged after LionDriver disengages
+    guideword: stuck
+    effects:
+      - {level: local, description: "Cancel request not effective; PCM cruise enabled while item is disabled"}
+      - {level: next_higher, description: "Vehicle continues under stock cruise"}
+      - {level: end, description: "Driver believes automation is off (mode confusion)"}
+    severity: null
+    safety_mechanisms:
+      - description: controlsd sends cruiseControl.cancel when cruise enabled and item not enabled
+        ref: openpilot/selfdrive/controls/controlsd.py
+    causes:
+      - {id: SFM-021.C1, element: SFM-SE-016, description: "Cancel message not packed/sent for this car", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-021.C2, element: SFM-SE-031, description: "PCM ignores cancel request", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: >-
+      Observation: selfdrived raises cruiseMismatch after 6 s of mismatch, but events.py maps
+      cruiseMismatch to no reaction (its ET.PERMANENT alert is commented out). Mismatch is logged, not
+      alerted. Confirm intended behavior in the SW FMEA.
+
+  # ----- F5 Driver monitoring -----
+  - id: SFM-022
+    element: SFM-SE-001
+    function: SFM-FN-005
+    failure_mode: Inattentive driver not detected
+    guideword: loss
+    effects:
+      - {level: local, description: "Awareness not decremented"}
+      - {level: next_higher, description: "No distraction alerts"}
+      - {level: end, description: "Driver not available to handle F1/F2 failures or system limits"}
+    severity: null
+    safety_mechanisms:
+      - description: Fallback from vision policy to wheel-touch policy when model is uncertain for 10 s
+        ref: openpilot/selfdrive/monitoring/policy.py
+      - description: Driver camera liveness in camera_packets -> cameraMalfunction (SOFT_DISABLE)
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    causes:
+      - {id: SFM-022.C1, element: SFM-SE-015, description: "DM model false negative (eyes off road classified attentive)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-022.C2, element: SFM-SE-015, description: "Pose thresholds/calibration wrong for driver or mount", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-022.C3, element: SFM-SE-002, description: "Driver camera or IR illumination degraded", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: loss of the driver as the fallback (L2 safety argument depends on it). DM model performance is also SOTIF/PAS 8800."
+
+  - id: SFM-023
+    element: SFM-SE-001
+    function: SFM-FN-005
+    failure_mode: Distraction escalation too slow
+    guideword: late
+    effects:
+      - {level: local, description: "Alert levels reached later than designed (5/8/13 s vision policy)"}
+      - {level: next_higher, description: "Longer eyes-off-road while engaged"}
+      - {level: end, description: "Driver not ready when takeover needed"}
+    severity: null
+    safety_mechanisms: []
+    causes:
+      - {id: SFM-023.C1, element: SFM-SE-015, description: "Policy timers or recovery factor misconfigured", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-023.C2, element: SFM-SE-015, description: "Low-speed or always-on exemption applied incorrectly", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+
+  - id: SFM-024
+    element: SFM-SE-001
+    function: SFM-FN-005
+    failure_mode: False distraction alerts
+    guideword: unintended
+    effects:
+      - {level: local, description: "Alerts raised for an attentive driver"}
+      - {level: next_higher, description: "Nuisance alerts; possible lockout"}
+      - {level: end, description: "Driver annoyance; may reduce trust or prompt disabling DM in a fork"}
+    severity: null
+    safety_mechanisms: []
+    causes:
+      - {id: SFM-024.C1, element: SFM-SE-015, description: "DM model false positive (sunglasses, lighting)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+
+  - id: SFM-025
+    element: SFM-SE-001
+    function: SFM-FN-005
+    failure_mode: Terminal driver-unresponsive state does not bring the item to a safe state
+    guideword: insufficient
+    effects:
+      - {level: local, description: "Alert level three shows \"DISENGAGE IMMEDIATELY\" but the item stays engaged"}
+      - {level: next_higher, description: "Vehicle continues under automation with an unresponsive driver"}
+      - {level: end, description: "No fallback if the driver is incapacitated"}
+    severity: null
+    safety_mechanisms:
+      - description: Lockout after repeated non-response prevents re-engagement (1/5/15/30 min)
+        ref: openpilot/selfdrive/monitoring/policy.py
+    causes:
+      - {id: SFM-025.C1, element: SFM-SE-014, description: "driverDistracted3 / driverUnresponsive3 mapped only to ET.PERMANENT (no disable reaction)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: >-
+      Observation: in BL-001, events.py maps driverDistracted3 and driverUnresponsive3 only to an
+      ET.PERMANENT alert; no SOFT_DISABLE/IMMEDIATE_DISABLE is attached, so reaching awareness 0 does not
+      by itself disengage. This may be a deliberate design choice (avoid dropping control on an
+      incapacitated driver). It needs an explicit safety-concept decision.
+      HARA input: driver incapacitated while engaged.
+
+  # ----- F6 Alerting -----
+  - id: SFM-026
+    element: SFM-SE-001
+    function: SFM-FN-006
+    failure_mode: Takeover or disengagement alert not presented
+    guideword: loss
+    effects:
+      - {level: local, description: "Alert selected by alertmanager but not shown or not played"}
+      - {level: next_higher, description: "Driver not informed of state change"}
+      - {level: end, description: "Driver unaware of handback; delayed response"}
+    severity: null
+    safety_mechanisms:
+      - description: Visual alert on device screen and audible alert through soundd (two channels)
+        ref: openpilot/selfdrive/ui/soundd.py
+    causes:
+      - {id: SFM-026.C1, element: SFM-SE-018, description: "UI process hung or display off", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-026.C2, element: SFM-SE-018, description: "soundd failure or volume too low for cabin noise", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-026.C3, element: SFM-SE-002, description: "Speaker or display hardware failure", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: failure to warn the driver of handback."
+
+  - id: SFM-027
+    element: SFM-SE-001
+    function: SFM-FN-006
+    failure_mode: Alert presented late
+    guideword: late
+    effects:
+      - {level: local, description: "Alert rendered/played after a delay"}
+      - {level: next_higher, description: "Less time for driver response"}
+      - {level: end, description: "Reduced takeover margin"}
+    severity: null
+    safety_mechanisms: []
+    causes:
+      - {id: SFM-027.C1, element: SFM-SE-018, description: "UI frame drops or audio buffering", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-027.C2, element: SFM-SE-014, description: "Alert creation_delay or priority hides a more urgent alert", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+
+  - id: SFM-028
+    element: SFM-SE-001
+    function: SFM-FN-006
+    failure_mode: Displayed engagement state differs from actual state
+    guideword: unintended
+    effects:
+      - {level: local, description: "UI shows engaged when disabled, or disabled when engaged"}
+      - {level: next_higher, description: "Mode confusion"}
+      - {level: end, description: "Driver stops steering/braking believing automation is active, or is surprised by actuation"}
+    severity: null
+    safety_mechanisms: []
+    causes:
+      - {id: SFM-028.C1, element: SFM-SE-018, description: "UI renders stale selfdriveState", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-028.C2, element: SFM-SE-016, description: "Stock dashboard (HUD) state from hudControl inconsistent with item state", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "HARA input: mode confusion."
+
+  # ----- F7 Actuation limiting -----
+  - id: SFM-029
+    element: SFM-SE-001
+    function: SFM-FN-007
+    failure_mode: Actuator command limits not enforced
+    guideword: loss
+    effects:
+      - {level: local, description: "Out-of-limit steering or acceleration messages reach the vehicle"}
+      - {level: next_higher, description: "Loss of the main protection against F1/F2 faults on the device"}
+      - {level: end, description: "Any upstream fault can produce SFM-002 / SFM-008 / SFM-009 effects"}
+    severity: null
+    safety_mechanisms:
+      - description: controlsMismatch (IMMEDIATE_DISABLE) if panda safety model/param differ from CarParams, or safety RX checks invalid
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    causes:
+      - {id: SFM-029.C1, element: SFM-SE-003, description: "Wrong safety model or parameter set for this car", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-029.C2, element: SFM-SE-003, description: "Safety model limit defect in firmware", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-029.C3, element: SFM-SE-003, description: "Panda MCU hardware fault (see DFMEA/FMEDA)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-029.C4, element: SFM-SE-004, description: "Harness allows the device to reach a bus without passing the panda filter", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "Latent-fault candidate: an unenforced limit has no effect until a second fault occurs. Key input for FMEDA LFM."
+
+  - id: SFM-030
+    element: SFM-SE-001
+    function: SFM-FN-007
+    failure_mode: Excessive actuation not detected
+    guideword: loss
+    effects:
+      - {level: local, description: "excessiveActuation not raised"}
+      - {level: next_higher, description: "Item stays engaged during excessive motion"}
+      - {level: end, description: "SFM-002/008/009 effects persist"}
+    severity: null
+    safety_mechanisms: []
+    causes:
+      - {id: SFM-030.C1, element: SFM-SE-011, description: "Calibrated pose wrong (calibration or IMU fault)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-030.C2, element: SFM-SE-014, description: "device_motion_valid gate blocks detection when aEgo and IMU disagree", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "Latent-fault candidate (secondary monitor)."
+
+  - id: SFM-031
+    element: SFM-SE-001
+    function: SFM-FN-007
+    failure_mode: False excessive-actuation detection
+    guideword: unintended
+    effects:
+      - {level: local, description: "excessiveActuation raised without excessive motion"}
+      - {level: next_higher, description: "Soft disable with alert"}
+      - {level: end, description: "Unneeded handback to the driver"}
+    severity: null
+    safety_mechanisms: []
+    causes:
+      - {id: SFM-031.C1, element: SFM-SE-011, description: "IMU noise or bad mounting", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+
+  - id: SFM-032
+    element: SFM-SE-001
+    function: SFM-FN-007
+    failure_mode: Wrong vehicle configuration active (fingerprint or car port)
+    guideword: unintended
+    effects:
+      - {level: local, description: "CarParams, safety model and DBC for a different car"}
+      - {level: next_higher, description: "Wrong limits, scaling and message layout"}
+      - {level: end, description: "Any F1/F2 effect; possible message conflicts with stock ECUs"}
+    severity: null
+    safety_mechanisms:
+      - description: carUnrecognized -> dashcam mode (no control)
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+      - description: controlsMismatch on safety model/param mismatch
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    causes:
+      - {id: SFM-032.C1, element: SFM-SE-016, description: "Fuzzy fingerprint matches a similar platform", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: "Also a PFMEA topic (car port selection, PFMEA scope item 6)."
+
+  # ----- F8 Stock function preservation -----
+  - id: SFM-033
+    element: SFM-SE-001
+    function: SFM-FN-008
+    failure_mode: Stock safety functions unavailable or degraded while the item is installed
+    guideword: loss
+    effects:
+      - {level: local, description: "Stock ADAS camera messages blocked or replaced by the harness relay"}
+      - {level: next_higher, description: "Stock AEB / FCW / lane assist not available as expected"}
+      - {level: end, description: "Driver relies on stock protections that are not present"}
+    severity: null
+    safety_mechanisms: []
+    causes:
+      - {id: SFM-033.C1, element: SFM-SE-004, description: "Relay intercepts stock camera messages the vehicle needs for AEB", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-033.C2, element: SFM-SE-016, description: "Item does not forward or reproduce stock safety messages", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+    notes: >-
+      Open question: which stock TSS2 functions remain on the 2020 Corolla with openpilot longitudinal
+      enabled. Must be established from the opendbc Toyota port and in-vehicle test before the HARA.
+      HARA input: loss of stock AEB/FCW.
+
+  - id: SFM-034
+    element: SFM-SE-001
+    function: SFM-FN-008
+    failure_mode: Harness relay fault
+    guideword: intermittent
+    effects:
+      - {level: local, description: "Relay stuck or intermittent; stock camera and item both on bus, or neither"}
+      - {level: next_higher, description: "Conflicting steering/ACC messages, or no camera messages"}
+      - {level: end, description: "Erratic stock or item behavior; stock functions lost"}
+    severity: null
+    safety_mechanisms:
+      - description: relayMalfunction fault from panda -> IMMEDIATE_DISABLE
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    causes:
+      - {id: SFM-034.C1, element: SFM-SE-004, description: "Relay contact wear or connector fault", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-034.C2, element: SFM-SE-003, description: "Relay drive output fault on panda", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+
 actions: []

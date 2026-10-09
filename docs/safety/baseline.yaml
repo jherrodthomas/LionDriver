@@ -16,7 +16,7 @@ baselines:
       market: US
       platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
     hardware:
-      device: "TBD: comma 3X per README/plan; docs/CARS.md lists comma four for this car"
+      device: comma 3X
       panda: integrated in device
       harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
     software:

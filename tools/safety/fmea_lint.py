@@ -82,6 +82,19 @@ def empty_submodules(root: Path) -> list[str]:
   return [p for p in paths if not (root / p).is_dir() or not any((root / p).iterdir())]
 
 
+class _Loader(yaml.SafeLoader):
+  """SafeLoader that keeps dates as strings, matching the schema's `format: date` strings."""
+
+
+_Loader.yaml_implicit_resolvers = {
+  k: [(tag, rx) for tag, rx in v if tag != "tag:yaml.org,2002:timestamp"] for k, v in yaml.SafeLoader.yaml_implicit_resolvers.items()
+}
+
+
+def load_yaml(text: str):
+  return yaml.load(text, Loader=_Loader)
+
+
 def load_schema(root: Path, name: str) -> dict:
   return json.loads((root / SAFETY_DIR / "schema" / name).read_text())
 
@@ -269,7 +282,7 @@ def lint(root: Path = ROOT) -> Result:
   baseline_ids = set()
   bl_path = safety / "baseline.yaml"
   if bl_path.exists():
-    bl = yaml.safe_load(bl_path.read_text())
+    bl = load_yaml(bl_path.read_text())
     schema_errors(bl, load_schema(root, "baseline.schema.json"), "baseline.yaml", res)
     baseline_ids = {b.get("id") for b in (bl or {}).get("baselines", [])}
   else:
@@ -283,7 +296,7 @@ def lint(root: Path = ROOT) -> Result:
   seen_ids: dict[str, str] = {}
   for path in sorted((safety / "analyses").glob("*.yaml")):
     name = path.relative_to(root).as_posix()
-    doc = yaml.safe_load(path.read_text())
+    doc = load_yaml(path.read_text())
     kind = (doc or {}).get("analysis", {}).get("type")
     n_before = len(res.errors)
     schema_errors(doc, fmeda_schema if kind == "fmeda" else fmea_schema, name, res)

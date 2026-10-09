@@ -1,6 +1,6 @@
 # LionDriver — FMEA Program Plan
 
-**Status:** Draft v0.2 — Phase 0 complete (rating tables, schema, baseline); no analyses performed yet
+**Status:** Draft v0.3 — Phase 0 complete; Phase 1 System FMEA draft (steps 1–4, unrated)
 **Scope:** 2020 Toyota Corolla LE (U.S.), comma 3X (`system/hardware/tici`) with integrated panda, current LionDriver software baseline
 **Covers:** System FMEA, DFMEA, PFMEA, SW FMEA, FMEDA
 
@@ -64,6 +64,7 @@ Functions under analysis (from `docs/SAFETY.md` and `selfdrived`/`controlsd`):
 - F5 Driver monitoring & escalation (`selfdrive/monitoring/`)
 - F6 Alerting (visual / audible) (`selfdrived/alertmanager.py`, soundd)
 - F7 Actuation limiting / excessive-actuation detection (`selfdrived/helpers.py`, opendbc safety)
+- F8 Stock function preservation — stock AEB/FCW/lane assist stay available with the harness installed (added in System FMEA rev 0.2)
 
 Failure modes per function: loss, unintended, too much, too little, too early/late, stuck, wrong direction.
 
@@ -168,7 +169,7 @@ The linter checks: schema; unique and resolvable ids; failure-mode severity = ma
 | Phase | Deliverable | Depends on |
 |---|---|---|
 | 0 | This plan + rating tables + YAML schema + baseline SHAs | — |
-| 1 | System FMEA steps 1–3 (structure, functions, failure modes) | Item definition draft |
+| 1 | System FMEA steps 1–4 (structure, functions, failure modes, effects, causes) — **draft rev 0.2 done** | Item definition draft |
 | 2 | SW FMEA P1 elements + DFMEA structure/function | Phase 1 |
 | 3 | HARA → apply severities; risk analysis & AP for System/SW/DFMEA | HARA |
 | 4 | PFMEA + release/install control plan | Phase 0 |
@@ -196,4 +197,4 @@ The linter checks: schema; unique and resolvable ids; failure-mode severity = ma
 | 3 | YAML source vs spreadsheets? | **YAML source**, xlsx generated |
 | 4 | PFMEA scope per §3.4? | **Confirmed** |
 
-Open: which device is the reference — comma 3X (README) or comma four (listed for Corolla 2020-22 in `docs/CARS.md`)? Recorded as TBD in BL-001.
+| 5 | Reference device | **comma 3X** (recorded in BL-001) |

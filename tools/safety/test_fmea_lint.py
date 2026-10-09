@@ -204,6 +204,11 @@ class TestFmeaRules(LintFixture):
     self.assertEqual(self.lint(swf=SWF, sfm=sfm).errors, [])
     self.assertError(self.lint(swf=SWF, swf2=SWF), "duplicate id SWF-001")
 
+  def test_unquoted_date_is_accepted(self):
+    text = yaml.safe_dump(SWF, sort_keys=False).replace("analysis:\n", "analysis:\n  updated: 2026-10-09\n", 1)
+    (self.tmp / "docs/safety/analyses/swf.yaml").write_text(text)
+    self.assertEqual(fmea_lint.lint(self.tmp).errors, [])
+
   def test_rating_tables_version(self):
     doc = copy.deepcopy(SWF)
     doc["analysis"]["rating_tables"] = "RT-0"
