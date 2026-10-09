@@ -62,7 +62,7 @@ Severity, exposure and controllability ratings, and the resulting integrity leve
 
 ## Next work products
 
-1. Safety plan (WP-MGT-01)
+1. Safety plan (WP-MGT-01): [draft 0.1](safety-plan/)
 2. Formal item definition workbook, from the outline above (WP-CON-01)
 3. HARA and safety goals (WP-CON-02)
 4. Assumptions register, completed and versioned (WP-CON-03)

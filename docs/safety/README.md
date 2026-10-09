@@ -33,7 +33,7 @@ Status key: ⚪ planned · 🟡 drafting · 🔵 in review · 🟢 released
 
 | ID | Work product | Clause | Location | Status |
 |---|---|---|---|---|
-| WP-MGT-01 | Safety plan | 26262-2 §6 | `platform/safety-plan` | 🟡 |
+| WP-MGT-01 | Safety plan | 26262-2 §6 | [`platform/safety-plan`](platform/safety-plan/) | 🟡 Draft 0.1 |
 | WP-MGT-02 | Cybersecurity plan | 21434 §6 | `platform/cybersecurity-plan` | ⚪ |
 | WP-MGT-03 | Standards application and tailoring | 26262-2 §6 | [`standards.md`](standards.md) | 🟡 |
 | WP-MGT-04 | Confirmation measures plan and records | 26262-2 §6 | `platform/confirmation` | ⚪ |
