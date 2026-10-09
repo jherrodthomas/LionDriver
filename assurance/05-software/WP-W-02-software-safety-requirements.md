@@ -163,12 +163,16 @@ Refines TSR-201…207. E-03a. Parent SGs: SG-03, SG-04, SG-05.
 | SWSR-509 | MCU die temperature outside the specified range shall be a fault under SWSR-502. | B | TSR-509 | U-PND-FLT | HIL | SS-S ≤ 1 s | Partial: reported only (`main_comms.h:51-52`) |
 | SWSR-510 | Heartbeat loss in a car safety mode shall lead to SILENT with relay released after ≤ 2 s regardless of the ignition reading. | B | TSR-510 | U-PND-MAIN | HIL | SILENT ≤ 2 s with ignition on and off | Not met: 5 s with ignition (`main.c:101-103, 193`) |
 | SWSR-511 | The bootstub shall execute the application only after verifying its signature with a current algorithm and key length against the release key; release bootstubs shall not accept the debug key. | B‡ (+ CS) | TSR-511 | `panda.bootstub` (U-PND-BOOT) | HIL, FI | Tampered image or debug-signed image not executed | Partial: RSA-1024/SHA-1 (`bootstub.c:47-72`); debug key only with `ALLOW_DEBUG` (`:67-72`) (GAP-24) |
-| SWSR-511a | Request `0xd1` (bootloader/softloader entry) shall be rejected while a car safety mode is active and in release builds. | B‡ (+ CS) | TSR-511 | U-PND-COMMS | UT, HIL | No reset into softloader from car mode | Not met: softloader allowed (`main_comms.h:176-180`) (GAP-24) |
+| SWSR-511a | Request `0xd1` param 1 (softloader entry) shall be rejected while a car safety mode is active or the ignition is on; `0xd1` param 0 shall stay debug-only. | B‡ (+ CS) | TSR-511 | U-PND-COMMS | UT, HIL | No reset into softloader from car mode | Not met: softloader allowed (`main_comms.h:176-180`) (GAP-24) |
 | SWSR-512 | In the reference release build, request `0xdc` shall accept only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73 (no flag bits); once TOYOTA is active only NOOUTPUT or SILENT shall be accepted; any other request shall be rejected and reported. | B‡ | TSR-512 | U-PND-COMMS, U-PND-MAIN | UT, HIL | All other (mode, param) pairs rejected, state unchanged | Not met: any mode/param any time (`main_comms.h:222-225`; `main.c:31-79`) (GAP-09, GAP-44); W-09 DVR-01/02 |
-| SWSR-513 | In release builds, requests `0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1` shall be rejected while a car safety mode is active. | B‡ | TSR-513 | U-PND-COMMS | UT, HIL | Each request has no effect in TOYOTA mode | Not met (`main_comms.h:144-147, 218-221, 233-276, 296-314`) (GAP-09, GAP-49) |
+| SWSR-513 | In release builds, requests `0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd8` and `0xdf` shall be rejected while a car safety mode is active (`0xd1` param 1: SWSR-511a). | B‡ | TSR-513 | U-PND-COMMS | UT, HIL | Each request has no effect in TOYOTA mode | Not met (`main_comms.h:144-147, 214-221, 233-276, 296-314`) (GAP-09, GAP-49); `0xdf` already refused in car modes (`:241-247`) |
+| SWSR-512a | In the reference release build, the alternative-experience word shall be fixed to the reference value; request `0xdf` shall not change it in any mode. | B‡ | TSR-512 | U-PND-COMMS | UT, HIL | `0xdf` in NOOUTPUT followed by TOYOTA leaves the reference value | Not met: settable outside car modes and carried into the next car mode (`main_comms.h:241-247`) |
 | SWSR-514 | Release firmware shall be built without `ALLOW_DEBUG`, and the version request `0xd6` shall report the build type. | B‡ (+ CS) | TSR-514 | build, U-PND-COMMS | R, HIL | Release image contains no ALLOUTPUT/debug modes (symbol check); build type readable | Not met by default (`panda/SConscript:12-20`; `safety.h:413-422`) (GAP-25) |
 | SWSR-514h | The host shall refuse engagement when the panda reports a non-release build. | QM (B-sup) | TSR-514, TSR-802 | `host.pandad`, `host.selfdrived` | UT | No engagement with debug FW | Not impl; W-09 DVR-05 |
 | SWSR-515 | Before first driving the relay after power-up, the firmware shall run start-up tests (image CRC, RAM test of safety data regions, watchdog reset path at the defined interval, relay drive/readback, siren path) and stay in SS-S on failure. | B‡ | TSR-515 | U-PND-PLAT, U-PND-MAIN | HIL, FI | Each injected start-up failure → no relay drive | Not impl |
+| SWSR-517 | The firmware shall read back its own transmitted actuation frames on the car-side bus (FDCAN TX event or loop-back reception) and compare them with the frame approved by the TX hook; a mismatch within 2 frames shall be a fault under SWSR-502. | B‡ | TSR-517 | U-PND-FDCAN, U-PND-FLT | FI, HIL | Injected corruption after the TX hook detected ≤ 2 frames | Not impl: XOR check before FIFO load only (`drivers/fdcan.h:100`) |
+| SWSR-518 | The TX hook shall reject frames of each whitelisted ID sent faster than its nominal period minus a tolerance, and shall revoke authority and report when the excess persists while authority is granted. | B‡ | TSR-518 | U-SAF-CORE, U-SAF-TOY | UT, HIL | `0x2E4` at 2× rate: excess frames rejected; persistent excess → revocation ≤ 0.1 s | Not impl (content checks only) |
+| SWSR-519 | The firmware shall assign an explicit NVIC priority to every enabled interrupt per the scheme of WP-W-03 §5.1/OI-4, and the measured worst-case latency of the periodic safety task under worst-case interrupt load shall meet the SWSR-401a/407/501 budgets. | B‡ | TSR-519 | U-PND-PLAT, U-PND-MAIN | A, HIL | Every enabled IRQ has a documented priority; measured latency within budget | Not impl: no `NVIC_SetPriority` in `panda/board` (all at default priority); RX hook in FDCAN ISR (`drivers/fdcan.h:221`), TX hook and dispatcher in SPI DMA ISR (`stm32h7/llspi.h:56-61`) (GAP-50) |
 | SWSR-516 | On heartbeat loss (SWSR-407) or a platform/RX fault revocation within 5 s after authority was granted, the firmware shall activate its siren within 0.5 s without SoC involvement. | B | TSR-516 | U-PND-MAIN, `panda.drivers.siren` (U-PND-HK) | HIL | Siren ≤ 0.5 s | Partial: 3 s siren after 5 s heartbeat loss (`main.c:169-171, 198-201`) |
 
 ## 8. SWSR-6xx Host software (SoC, QM)
@@ -197,6 +201,8 @@ Host requirements are QM. Those marked QM (B-sup) support an envelope SWSR; no A
 | SWSR-616 | Driving-model outputs shall be checked for non-finite values, range and age before use (AIR-16, AIR-17, AIR-25). | QM | TSR-616 | `host.modeld`, `host.controlsd` | UT | Injected invalid output → event | Partial (`modeld.py:210-211`) (GAP-22) |
 | SWSR-617 | Excessive-actuation detection (2× limits, 0.25 s) shall latch until offroad. | QM | TSR-617 | `host.selfdrived` | UT | Latch | Impl: `selfdrived/helpers.py:12, 30, 41`; `selfdrived.py:305-310` |
 | SWSR-618 | PCM ACC fault → immediate disable. | QM (B-sup) | TSR-618 | `host.selfdrived` | UT | Event | Impl: `events.py:908` |
+| SWSR-619 | `pandad` shall compare panda-reported safety model, parameter and alternative experience with the release-record values and block engagement with an alert on mismatch. | QM (B-sup) | TSR-619 | `host.pandad`, `host.selfdrived` | UT, IT | Mismatch → no engagement ≤ 1 s | Not impl (`selfdrive/pandad/panda_safety.cc:56-69`); host check vs CarParams only (`selfdrived.py:330-339`) |
+| SWSR-620 | The host shall request TOYOTA mode and allow engagement only when the ECU firmware versions read at start-up match the release record; otherwise it shall keep NOOUTPUT and inform the driver. | QM (B-sup) | TSR-620 | `host.card`, `host.pandad` | UT, VT | Mismatching FW set → NOOUTPUT | Not impl: fuzzy fingerprinting (`opendbc_repo/opendbc/car/car_helpers.py:86-87, 144, 164`); W-09 DVR-10 |
 
 ## 9. SWSR-7xx Stock PCS preservation (software part)
 
@@ -272,12 +278,14 @@ These SWSRs depend on a hardware resource. They refine the HSI of [WP-S-05](../0
 | TSR-204 | 204 | TSR-509 | 509 |
 | TSR-205 | 205 | TSR-510 | 510 |
 | TSR-206 | 206 | TSR-511 | 511, 511a |
-| TSR-207 | 207 | TSR-512 | 512, 104a |
+| TSR-207 | 207 | TSR-512 | 512, 512a, 104a |
 | TSR-301 | 301 | TSR-513 | 513 |
 | TSR-302 | 302 | TSR-514 | 514, 514h |
 | TSR-303 | 303h | TSR-515 | 515 |
 | TSR-304 | 304, 304a | TSR-516 | 516, 516a |
-| TSR-305 | 305 | TSR-601…618 | 601…618 (601a, 605a); 614 = 414h |
+| TSR-517 | 517 | TSR-518 | 518 |
+| TSR-519 | 519 | | |
+| TSR-305 | 305 | TSR-601…620 | 601…620 (601a, 605a); 614 = 414h |
 | TSR-306 | 306 | TSR-701 | 701, 701a |
 | TSR-307 | 307, 307h | TSR-704 | 704 |
 | TSR-308 | 308h | TSR-705 | 705 |
@@ -302,12 +310,12 @@ Every TSR allocated to P-SW or SoC in WP-S-02 has at least one SWSR. TSRs not re
 | 2xx | 8 | — |
 | 3xx | 9 | 3 (303h, 307h, 308h) |
 | 4xx | 18 | 3 (409h, 410h, 414h) |
-| 5xx | 31 (incl. HSI) | 1 (514h) |
-| 6xx | — | 20 |
+| 5xx | 35 (incl. HSI) | 1 (514h) |
+| 6xx | — | 22 |
 | 7xx | 7 (incl. 701a) | 1 (709h) |
-| **Total** | **89** | **28** |
+| **Total** | **93** | **30** |
 
-**Total SWSRs: 117.** Machine-readable records go to `assurance/trace/items/swsr.yaml` (OI-1).
+**Total SWSRs: 123.** Machine-readable records go to `assurance/trace/items/swsr.yaml` (OI-1).
 
 ### 13.3 SWSR → verification
 
@@ -318,8 +326,8 @@ Every TSR allocated to P-SW or SoC in WP-S-02 has at least one SWSR. TSRs not re
 | 301–311 | VS-UV-06 | VS-SWI-02, 10 | VS-SWQ-06, 07 |
 | 401–406 | VS-UV-09, 10 | VS-SWI-03, 04 | VS-SWQ-08, 09 |
 | 407–414h | VS-UV-14, 15 | VS-SWI-05…08, 11, 12 | VS-SWQ-10…12 |
-| 501–516 | VS-UV-13, 16, 21, 22 | VS-SWI-13…15 | VS-SWQ-14…19 |
-| 601–618 | host unit tests (WP-W-06 §4.7) | VS-SWI-16, 17 | VS-SWQ-20 |
+| 501–519 | VS-UV-13, 16, 21, 22 | VS-SWI-12…15 | VS-SWQ-14…19, 23, 25 |
+| 601–620 | host unit tests (WP-W-06 §4.7) | VS-SWI-16, 17 | VS-SWQ-20 |
 | 701–710 | VS-UV-11, 18 | VS-SWI-09 | VS-SWQ-21, 22 |
 
 ## 14. Open items
@@ -330,7 +338,7 @@ Every TSR allocated to P-SW or SoC in WP-S-02 has at least one SWSR. TSRs not re
 | OI-2 | Replace B‡ with the final ASIL after SG-01 re-rating (WP-S-02 OI-2) | Safety manager | G2 |
 | OI-3 | Decide frame ownership for SWSR-109/109a: envelope-generated `0x2E4` needs the counter/checksum layout from the DBC and must not conflict with SoC frames; alternative (b) of TSR-109 needs WP-S-04 M-02 | SW lead | G3 |
 | OI-4 | Set numeric values for j_up, j_down, T_ovr, t_ovr, t_frz, N_spi, driver allowance and tolerances of SWSR-405 (WP-S-02 OI-3, OI-5) | Safety engineer | G3 |
-| OI-5 | Decide whether `0xd8` (MCU reset), `0xc0` (comms reset), `0xb0`/`0xb1` and `0xf6` need gating in car modes; TSR-513 does not list them (see WP-W-04 SWF-24) | Safety engineer | G3 |
+| OI-5 | Decide whether `0xc0` (comms reset), `0xb0`/`0xb1` and `0xf6` need gating in car modes; TSR-513 does not list them (see WP-W-04 SWF-24) | Safety engineer | G3 |
 | OI-6 | Extend `struct lookup_t` beyond 3 breakpoints if the τ_max(v) table needs more (SWSR-102) | SW lead | G3 |
-| OI-7 | Re-check SWSR parents after WP-S-02 approval; WP-S-02 was still being edited (TSR-815…818 added) while this draft was written | Safety engineer | G3 |
+| OI-7 | Re-check SWSR parents after WP-S-02 approval; this draft follows WP-S-02 including TSR-517…519 and TSR-619/620 | Safety engineer | G3 |
 | OI-8 | Agree the reason-code field layout of SWSR-108a with WP-S-05 §4.2 and `cereal` `pandaStates` | SW lead | G3 |

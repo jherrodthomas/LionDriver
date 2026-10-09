@@ -74,12 +74,13 @@ Status of all: Specified, not implemented. Env: SWI step.
 | VS-SWI-09 | Forwarding and relay malfunction interplay | 704, 705, 707, 710, 506a | SWI-1, SWI-3 | `check_relay` messages on bus 0 before/after 1 s; `0xdc` after latch | Latch set; TX and forwarding blocked; latch survives mode change (target) |
 | VS-SWI-10 | Mode-set sequence SILENT → NOOUTPUT → ELM327 → TOYOTA/73, and lock | 311, 512, 104a | SWI-2, SWI-3 | Valid sequence; invalid modes/params; requests after TOYOTA | Valid sequence reaches TOYOTA with state reset; others rejected and reported |
 | VS-SWI-11 | Queue overflow | 707, 502b | SWI-2, SWI-3 | Flood `sendcan`; SoC stops reading `rx_q`; camera-side burst | Overflow counted and treated as fault per WP-W-05 §6.1; forwarded PCS frames not starved (measure) |
-| VS-SWI-12 | ISR load | 401a, 501, 502b | SWI-3 | CAN at 100 % bus load on 3 buses + max SPI rate | Safety task period held; interrupt-rate fault → SS-S; no watchdog reset under nominal worst case |
+| VS-SWI-12 | ISR load and priority scheme | 401a, 501, 502b, 519 | SWI-3 | CAN at 100 % bus load on 3 buses + max SPI rate | Safety task period held; interrupt-rate fault → SS-S; no watchdog reset under nominal worst case |
 | VS-SWI-13 | Fault reaction integration | 502, 502a, 503a, 516 | SWI-3 | Trigger each fault source of WP-W-05 §6.1 (debug build hooks) | SS-S ≤ 0.1 s; siren per SWSR-516 |
 | VS-SWI-14 | Control-request gating in car mode | 511a, 513 | SWI-2, SWI-3 | Every request of WP-W-05 UN-21 table in TOYOTA mode | Gated requests have no effect |
 | VS-SWI-15 | Resource usage | WP-W-03 §7 | SWI-3 | Map file, stack painting, `interrupt_load`, cycle counter around hooks | Stack margin ≥ 20 %; RAM within regions; hook WCET recorded; TX path latency recorded |
-| VS-SWI-16 | `pandad` ↔ firmware interface | 409h, 410h, 414h, 514h | SWI-4 | Normal traffic; delayed `sendcan`; debug firmware | Loop counter advancing; CRC/sequence accepted; old messages dropped at 20 ms; no engagement with debug FW |
+| VS-SWI-16 | `pandad` ↔ firmware interface | 409h, 410h, 414h, 514h, 619 | SWI-4 | Normal traffic; delayed `sendcan`; debug firmware | Loop counter advancing; CRC/sequence accepted; old messages dropped at 20 ms; no engagement with debug FW |
 | VS-SWI-17 | Host reaction chain: health → `pandaStates` → `selfdrived` | 307h, 601, 615, 606 | SWI-4 | Inject each panda flag/reason code | Immediate disable ≤ 0.2 s, alert class correct |
+| VS-SWI-19 | Per-ID TX rate supervision and TX read-back | 517, 518 | SWI-1, SWI-3 | `0x2E4` at 2× rate; corrupt frame after TX hook (debug hook) | Excess frames rejected, revocation on persistence; corruption detected ≤ 2 frames |
 | VS-SWI-18 | Replay of fork-owned reference drives through the release `libsafety` | 401–406, 101–207 | SWI-1 | `replay_drive.py` with mode TOYOTA, param 73 | Zero RX invalid and zero blocked `0x2E4`/`0x343` on nominal drives; expected detections on fault-injected copies |
 
 ## 6. Test environment
@@ -111,7 +112,7 @@ Configuration of every run (superproject, opendbc, panda commit, build type, too
 
 | VS ID | Step | Cases | Passed | Failed | Not run | Result | Evidence |
 |---|---|---|---|---|---|---|---|
-| VS-SWI-01 … VS-SWI-18 | — | — | — | — | — | Not yet executed | — |
+| VS-SWI-01 … VS-SWI-19 | — | — | — | — | — | Not yet executed | — |
 
 | Function / call coverage (SWI-1/2) | Not yet executed |
 |---|---|

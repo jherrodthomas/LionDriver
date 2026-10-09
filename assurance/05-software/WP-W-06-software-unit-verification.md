@@ -300,3 +300,5 @@ Static verification items (not tests):
 | OI-7 | Extend `panda/tests/libpanda` to host-test U-PND-MAIN/COMMS/SPI with coverage | Maintainer | G3 |
 | OI-8 | HIL bench (D-04) for ENV-T | Maintainer | G4 |
 | OI-9 | Fork-owned drive logs for `safety_replay/replay_drive.py` and `test_models.py` | Maintainer | G4 |
+
+> Note from the consistency pass: WP-W-03 defines additional panda units U-PND-USB, U-PND-PWR, U-PND-HK and U-PND-PLAT that are not yet in this unit list. Add them with their verification methods. "ASIL C provisional" in this document equals the B‡ notation used in WP-W-02 and WP-S-02.

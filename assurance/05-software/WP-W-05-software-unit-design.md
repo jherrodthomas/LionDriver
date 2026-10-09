@@ -193,9 +193,10 @@ One switch over the request byte. Safety-relevant cases and their gating:
 | `0xf3` | heartbeat | none | + loop counter (SWSR-409) |
 | `0xc5` | drive relay | none | SWSR-513 |
 | `0xd1` | bootloader (0, debug only) / softloader (1) | partial | SWSR-511a |
-| `0xd8` | MCU reset | none | WP-W-02 OI-5 |
+| `0xd8` | MCU reset | none | SWSR-513 |
 | `0xdb`, `0xde`, `0xe5`, `0xe6`, `0xe7`, `0xe8`, `0xf1`, `0xf9`, `0xfc` | CAN/clock/power config | none (`0xe8` no bound) | SWSR-513, 412a |
-| `0xdf`, `0xf8` | alt. experience, disable heartbeat | rejected in car modes | keep |
+| `0xdf` | alternative experience | rejected in car modes only | SWSR-512a, 513 |
+| `0xf8` | disable heartbeat | rejected in car modes | keep |
 | `0xd2` | health | — | add reason code (SWSR-108a) |
 
 ### UN-22 CAN stream packing
@@ -322,6 +323,9 @@ Gas pressed does not change the state; it gates longitudinal only (UN-12). This 
 | 503, 515 | UN-N5 | Start-up tests, image CRC |
 | 506, 506a | UN-28, UN-07 | Readback; latch not cleared by mode change |
 | 507 | UN-20 | MPU configuration |
+| 517 | UN-26, UN-N2 | TX read-back comparison |
+| 518 | UN-03 | Per-ID TX rate supervision |
+| 519 | UN-20, all ISRs | Explicit NVIC priorities; WCET measurement |
 | 511a, 513 | UN-21 | Gating in car modes |
 | 705 | UN-16 | Reduced whitelist |
 

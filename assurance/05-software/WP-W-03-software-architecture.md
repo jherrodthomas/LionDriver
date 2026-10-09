@@ -156,7 +156,7 @@ All envelope processing runs in **interrupt context**. The main loop (`main.c:33
 | TIM6 | 1 Hz | `interrupt_timer_handler` (`drivers/interrupts.h:50-72`) | rate statistics |
 | NMI / HardFault | exception | `early_init.h:73-81` | reset |
 
-**Priorities.** No `NVIC_SetPriority` call exists in `panda/board`, so all peripheral interrupts run at the reset-default priority. Equal priority means no preemption between them: each handler runs to completion and pending handlers are served in exception-number order. Consequences: (i) envelope state is never accessed concurrently, which makes the single-writer argument of §6.3 simple; (ii) a long handler (e.g. a CAN burst or `set_safety_mode` → `can_init_all`) delays every other handler, including the tick; (iii) the tick cannot preempt a hung handler, so only a hardware watchdog can detect it (SWSR-501). `ENTER_CRITICAL` masks all interrupts (`sys/sys.h:11-22`). This finding matches [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) FFI-SP-04.
+**Priorities.** No `NVIC_SetPriority` call exists in `panda/board`, so all peripheral interrupts run at the reset-default priority. Equal priority means no preemption between them: each handler runs to completion and pending handlers are served in exception-number order. Consequences: (i) envelope state is never accessed concurrently, which makes the single-writer argument of §6.3 simple; (ii) a long handler (e.g. a CAN burst or `set_safety_mode` → `can_init_all`) delays every other handler, including the tick; (iii) the tick cannot preempt a hung handler, so only a hardware watchdog can detect it (SWSR-501). `ENTER_CRITICAL` masks all interrupts (`sys/sys.h:11-22`). This finding matches [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) FFI-SP-04 and GAP-50; TSR-519 / SWSR-519 require an explicit priority and timing scheme.
 
 ### 5.2 Tick schedule (baseline)
 
@@ -268,7 +268,7 @@ ISO 26262-6 §7 lists design principles with recommendation levels per ASIL; the
 | Restricted size of interfaces | Hooks have narrow signatures, but much state is shared as globals (§6.3) | Partial | Accessor functions for authority |
 | Strong cohesion | Safety layer cohesive; `tick_handler` mixes housekeeping with safety supervision | Partial | Separate safety task (SWSR-401a) |
 | Loose coupling | Safety core coupled to all brand modes via compile-time inclusion | Partial | Build only required modes (OI-2) |
-| Appropriate scheduling properties | No periodic safety task; 1 Hz timeout evaluation; equal priorities | **No** | SWSR-401a, 501 |
+| Appropriate scheduling properties | No periodic safety task; 1 Hz timeout evaluation; equal priorities (GAP-50) | **No** | SWSR-401a, 501, 519 |
 | Restricted use of interrupts | Whole envelope runs in ISRs; no priorities | **No** (to be justified or changed) | Documented priority scheme (OI-4) |
 | Appropriate spatial isolation | No MPU | **No** | SWSR-507 |
 | Appropriate management of shared resources | Ring buffers protected; globals rely on equal priority | Partial | §6.3 |
@@ -280,7 +280,7 @@ ISO 26262-6 §7 lists design principles with recommendation levels per ASIL; the
 | OI-1 | Add U-PND-USB, U-PND-PWR, U-PND-HK, U-PND-PLAT to the WP-W-06 unit list | Safety engineer | G3 |
 | OI-2 | Remove unused brand modes from the reference firmware build or justify them (WP-A-02 OI-2) | SW lead | G3 |
 | OI-3 | Decide whether USB comms are disabled in the reference build | SW lead | G3 |
-| OI-4 | Define the NVIC priority scheme for the new safety task and re-assess §6.3 | SW architect | G3 |
+| OI-4 | Define the NVIC priority scheme for the new safety task (SWSR-519) and re-assess §6.3 | SW architect | G3 |
 | OI-5 | Check principle recommendation levels against the licensed ISO 26262-6 | Safety engineer | G3 |
 | OI-6 | Measure the resource estimates of §7 from the map file and on target | Maintainer | G4 |
 | OI-7 | Create `elements.yaml` from §3.1 and §4.1 (WP-P-06 OI-4) | Safety engineer | G3 |

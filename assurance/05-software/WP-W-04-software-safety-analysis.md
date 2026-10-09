@@ -62,15 +62,15 @@ The analysis was done by code reading at the baseline. It has not been reviewed.
 | SWF-21 | U-PND-SPI | Wrong value: corrupted control request passes 8-bit XOR | Wrong command executed, e.g. `0xdc`, `0xc5` (all) | XOR, NACK (`drivers/spi.h:97-138`) | P | SWSR-410 (GAP-10); refines SFMEA-18 |
 | SWF-22 | U-PND-SPI | Commission: header length > buffer → DMA overrun | Corruption of SRAM1/2 beyond `spi_buf_rx` (`spi_buf_tx`), then DMA error; effect on envelope state to be confirmed from map file | none (`drivers/spi.h:115-116, 233`) | N | SWSR-412 (GAP-47); refines SFMEA-19 |
 | SWF-23 | U-PND-COMMS | Commission: `0xe8` index out of range | Write outside `bus_config[]` | none (`main_comms.h:262-264`) | N | SWSR-412a (GAP-47) |
-| SWF-24 | U-PND-COMMS | Commission: configuration requests in car mode (`0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd1/1`, `0xd8`) | Relay/CAN config changed, softloader entry, MCU reset while driving (all; loss of function) | `0xdf`, `0xf8` gated; `0xb5`, `0xd1/0` debug-only | N | SWSR-511a, 513 (GAP-49); `0xd8`, `0xc0` → WP-W-02 OI-5 |
+| SWF-24 | U-PND-COMMS | Commission: configuration requests in car mode (`0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd1/1`, `0xd8`) | Relay/CAN config changed, softloader entry, MCU reset while driving (all; loss of function) | `0xdf`, `0xf8` gated; `0xb5`, `0xd1/0` debug-only | N | SWSR-511a, 512a, 513 (GAP-49); `0xc0` → WP-W-02 OI-5 |
 | SWF-25 | U-PND-COMMS | Stuck: SoC freezes but `pandad` keeps sending heartbeats with `engaged=1` | Envelope keeps authority while last frames repeat or stop (SG-01, SG-02) | Mismatch only if `engaged` drops | N | SWSR-408, 409, 409h (GAP-10); WP-A-02 FFI-CM-11 |
 | SWF-26 | U-PND-COMMS | Wrong value: repeated/old CAN-TX transfer | Stale command re-applied within limits | none | N | SWSR-410a, 411 |
 | SWF-27 | U-PND-COMMS reassembly | Wrong value: partial packet carried over after resync | Malformed frame to TX hook (rejected by whitelist/length unless it matches) | Whitelist + XOR (`drivers/fdcan.h:100`) | P | SWSR-412b |
 | SWF-28 | U-PND-MAIN heartbeat | Late: heartbeat loss detected after 4–5 s | Actuation continues on dead SoC (SG-01, SG-02) | 1 Hz counter | P | SWSR-407, 510 (GAP-06) |
-| SWF-29 | U-PND-MAIN tick | Omission: tick ISR not executed (starved by comms ISRs or hung handler) | No timeout or heartbeat supervision (all) | Interrupt-rate fault, report-only; software watchdog in the same ISR | N | SWSR-501, 502b (GAP-07); refines SFMEA-16 |
+| SWF-29 | U-PND-MAIN tick | Omission: tick ISR not executed (starved by comms ISRs or hung handler) | No timeout or heartbeat supervision (all) | Interrupt-rate fault, report-only; software watchdog in the same ISR | N | SWSR-501, 502b, 519 (GAP-07, GAP-50); refines SFMEA-16 |
 | SWF-30 | U-PND-PLAT | Stuck: any handler or `assert_fatal` loops | Relay stays driven, forwarding stops (SG-07), no TX (SG-02) | NMI/HardFault reset only | N | SWSR-501, 502a (GAP-43) |
 | SWF-31 | U-PND-FLT | Omission: detected faults (interrupt rate, register divergence, siren) produce no reaction | Fault persists while engaged (all) | report-only (`sys/faults.h:8-27`) | N | SWSR-502, 503a (GAP-08) |
-| SWF-32 | U-PND-FDCAN TX | Wrong value: frame altered after TX hook (queue RAM bit flip) | Approved frame changed (SG-01, SG-03) | Packet XOR before FIFO load (`drivers/fdcan.h:100`); message RAM not covered | P | SWSR-503b; HW measures (WP-H-03) |
+| SWF-32 | U-PND-FDCAN TX | Wrong value: frame altered after TX hook (queue RAM bit flip) | Approved frame changed (SG-01, SG-03) | Packet XOR before FIFO load (`drivers/fdcan.h:100`); message RAM not covered | P | SWSR-517 (TX read-back), SWSR-503b; HW measures (WP-H-03) |
 | SWF-33 | U-PND-FDCAN RX | Omission: RX FIFO overflow loses frames | Missed brake edge if `0x226` lost (SG-05) | `total_rx_lost_cnt` (`drivers/fdcan.h:168-171`) | P | Edge logic tolerates one loss only if brake stays pressed; SWSR-401 timeout; add overflow → fault (SWSR-502b) |
 | SWF-34 | U-PND-FDCAN RX ordering | Commission: frame forwarded before RX validation | Invalid camera frame forwarded (acceptable for PCS path) | Static block list | C (by design) | Documented (GAP-11) |
 | SWF-35 | U-PND-FDCAN bus-off | Omission: car-side bus-off while engaged | No actuation frames; EPS drop-out (SG-02) | counted, core reset (`drivers/fdcan.h:76-83`) | P | SWSR-508 |
@@ -111,10 +111,10 @@ Every N and P row has an SWSR in WP-W-02. Diagnostic-coverage targets in WP-S-03
 | ID | Coupling factor | Elements involved | Dependent failure | Measure today | Required |
 |---|---|---|---|---|---|
 | SDF-01 | Shared address space (no MPU) | comms handlers, USB/SPI drivers, envelope state | A defect in QM-like code (housekeeping, comms) corrupts `controls_allowed`, limits, mode, `relay_malfunction` | none | SWSR-507; WP-A-02 FFI-SP-01 |
-| SDF-02 | Shared execution time: all ISRs at one priority (§5.1 of WP-W-03) | CAN RX, SPI, USB, tick | Interrupt storm or long handler delays the tick → supervision late or absent | interrupt-rate fault, report-only | SWSR-401a, 501, 502b; WP-A-02 FFI-TM-01 |
+| SDF-02 | Shared execution time: all ISRs at one priority (§5.1 of WP-W-03) | CAN RX, SPI, USB, tick | Interrupt storm or long handler delays the tick → supervision late or absent | interrupt-rate fault, report-only | SWSR-401a, 501, 502b, 519 (GAP-50); WP-A-02 FFI-TM-01 |
 | SDF-03 | Busy-waits reachable from SoC commands (`while (harness.sbu_adc_lock)`, SPI drain loop) | `set_intercept_relay` via `0xdc`/`0xc5`; `llspi_mosi_dma` | A stuck flag hangs the SPI ISR and with it all processing | equal priority prevents the tick from holding the lock while SPI runs | Argue by priority scheme (WP-W-03 OI-4); bounded waits; SWSR-501 |
 | SDF-04 | Shared ring buffers (`can_rx_q`, `can_queues[]`) | TX path, forwarding, rejected-frame echo, SoC read | SoC not reading → `rx_q` full → only reporting lost; forwarding TX queue full → PCS frames dropped | overflow counters | SWSR-707; queue overflow → fault |
-| SDF-05 | Shared TX queue for forwarded and SoC frames on bus 0 | forwarding (camera→car) and SoC actuation on the same queue `can_queues[0]` | SoC flood (in-limit frames) delays forwarded PCS frames | whitelist and per-frame limits; no rate limit | Per-ID TX rate limit or separate queue (OI-2) |
+| SDF-05 | Shared TX queue for forwarded and SoC frames on bus 0 | forwarding (camera→car) and SoC actuation on the same queue `can_queues[0]` | SoC flood (in-limit frames) delays forwarded PCS frames | whitelist and per-frame limits; no rate limit | SWSR-518 (per-ID TX rate); separate forwarding queue (OI-2) |
 | SDF-06 | Shared global time base (TIM2 µs counter) | RT window, steer-request interval, RX timeouts, ISR load | One timer fault breaks all timing checks in the same way | none | SWSR-504 cross-check |
 | SDF-07 | Shared `set_safety_mode` path | mode change, heartbeat loss, harness re-init (`main.c:138`) | Re-init by harness flicker resets authority and limiter state, and (today) the relay latch | authority reset is safe direction | SWSR-506a |
 
@@ -144,7 +144,7 @@ Every N and P row has an SWSR in WP-W-02. Diagnostic-coverage targets in WP-S-03
 
 | To | Content |
 |---|---|
-| [WP-W-02](WP-W-02-software-safety-requirements.md) | All gaps above map to existing SWSRs; new items: queue overflow → fault (under SWSR-502b/707), per-ID TX rate limit (OI-2) |
+| [WP-W-02](WP-W-02-software-safety-requirements.md) | All gaps above map to existing SWSRs; new items: queue overflow → fault (under SWSR-502b/707); per-ID TX rate limit now SWSR-518 |
 | [WP-W-03](WP-W-03-software-architecture.md) | Priority scheme (OI-4), removal of unused modes and USB |
 | [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md), [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md) | SDF-01…14 |
 | [WP-S-03 §6](../03-system/WP-S-03-technical-safety-concept-architecture.md) | DC targets remain unconfirmed (WP-S-03 OI-1) |
@@ -155,7 +155,7 @@ Every N and P row has an SWSR in WP-W-02. Diagnostic-coverage targets in WP-S-03
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
 | OI-1 | Confirm the effect of the SPI DMA overrun (SWF-22) from the map file and the STM32H7 reference manual (memory beyond SRAM2) | SW lead | G3 |
-| OI-2 | Decide on a per-ID TX rate limit or separate forwarding queue (SDF-05) and add an SWSR if adopted | Safety engineer | G3 |
+| OI-2 | Decide whether a separate forwarding queue is needed in addition to SWSR-518 (SDF-05) | Safety engineer | G3 |
 | OI-3 | Repeat this analysis after the SWSRs are implemented (new failure modes of new mechanisms, e.g. autonomous zero-torque frames) | Safety engineer | G4 |
 | OI-4 | Independent (I2) review of this analysis | Safety manager | G3 |
 | OI-5 | Align SWF IDs with WP-A-04 SFMEA rows in the trace data | Safety engineer | G3 |
