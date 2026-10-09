@@ -140,7 +140,7 @@ CG6  The cybersecurity process was followed and independently assessed.
 
 ## 4. Evidence status
 
-**Available** = the evidence exists and is usable as is (executed result or approved work product). **Partial** = exists as a draft or covers only part of the claim. **Missing** = not yet produced. Status at baseline `8b8c6ae`.
+Evidence rule (shared by [WP-K-01 §6](WP-K-01-safety-case.md#6-evidence-status) and [WP-K-03 §4](WP-K-03-cybersecurity-case.md#4-evidence-status)): **Available** = the activity was performed and its result approved at a named baseline. **Partial** = for analysis or specification evidence, the work product is drafted (Draft status); also inherited results (upstream tests or code) that exist but have not been re-run or reviewed under LionDriver control. **Missing** = no artefact; for evidence that is a test, measurement or assessment **result**, a drafted specification alone counts as Missing, noted "spec drafted, not executed". Status at baseline `8b8c6ae`.
 
 | ID | Evidence | Work product / artefact | Supports | Status | Note |
 |---|---|---|---|---|---|
@@ -151,22 +151,22 @@ CG6  The cybersecurity process was followed and independently assessed.
 | CSn-05 | Residual-risk TARA iteration | WP-C-09 update | CG1.4, CG4.2 | Missing | WP-C-09 OI-5 |
 | CSn-10 | CS goals, claims, concept; detailed CSRs and architecture | [WP-C-10](../02-concept/WP-C-10-cybersecurity-goals-and-concept.md), [WP-S-07](../03-system/WP-S-07-cybersecurity-requirements-architecture.md) | CG2.x | Partial | Drafts; CAL proposals not agreed |
 | CSn-11 | Boot-chain and RDP architecture decisions CS-AD-01…04 | WP-S-07 §3.4 | CG2.2 | Missing | Decisions open (WP-S-07 OI-2, OI-4) |
-| CSn-12 | FFI analysis treating SoC attacker as common cause | [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md), [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md) | CG2.3 | Missing | — |
+| CSn-12 | FFI analysis treating SoC attacker as common cause | [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md), [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md) | CG2.3 | Partial | Drafts (WP-A-02, WP-A-03); SoC attacker as common cause to be checked against them |
 | CSn-13 | Reference-configuration remote-feature decision | WP-C-10 OI-2; WP-M-09 OI-2 | CG2.6 | Missing | — |
 | CSn-14 | Signed update design and implementation | WP-S-07 §3.6; CSR-121…126 | CG2.7, CG5.3 | Missing | GAP-26 |
-| CSn-20 | Secure coding, SAST results, per-CSR verification (VS-CS) | [WP-W-11](../05-software/WP-W-11-cybersecurity-implementation-verification.md) | CG2.x | Partial | Plan only; 0 of 64 CSRs verified |
+| CSn-20 | Secure coding, SAST results, per-CSR verification (VS-CS) | [WP-W-11](../05-software/WP-W-11-cybersecurity-implementation-verification.md) | CG2.x | Missing | spec drafted, not executed (WP-W-11 plan; 0 of 64 CSRs verified) |
 | CSn-21 | Safety-mode lock and command-gating tests (shared with TSR-512, TSR-513) | WP-W-06/WP-W-08 | CG2.1 | Missing | Mechanism not implemented (GAP-09) |
 | CSn-22 | Release build-config audit report (BA-01…BA-08) | WP-W-11 §7 | CG2.2, CG2.7 | Missing | `test_release_build.py` only checks compilation (GAP-41) |
-| CSn-23 | Envelope TX allow-list and relay-malfunction tests | `opendbc_repo/opendbc/safety/tests/test_toyota.py`, `common.py` (upstream) | CG2.5 | Partial | Exist upstream; not run in LionDriver CI (GAP-39); release config not tested (GAP-41) |
+| CSn-23 | Envelope TX allow-list and relay-malfunction tests | `opendbc_repo/opendbc/safety/tests/test_toyota.py`, `common.py` (upstream) | CG2.5 | Partial | Inherited upstream results; not run in LionDriver CI (GAP-39); release config not tested (GAP-41) |
 | CSn-24 | SBOM and vulnerability scan report for the release | WP-W-11 §5 | CG2.7, CG3.4, CG6.2 | Missing | Tooling not selected |
-| CSn-30 | Validation TC-01, TC-02 (command fuzzing, mode lock) | [WP-V-06](../06-validation/WP-V-06-cybersecurity-validation.md) | CG2.1, CG4.1 | Missing | Not yet executed |
-| CSn-31 | Validation TC-03…TC-05 (firmware, boot pins, option bytes) | WP-V-06 | CG2.2 | Missing | Not yet executed |
-| CSn-32 | Validation TC-06, TC-07 (params/IPC, envelope under SoC compromise) | WP-V-06 | CG2.3 | Missing | Not yet executed |
-| CSn-33 | Validation TC-08 (model artefacts) | WP-V-06 | CG2.4 | Missing | Not yet executed |
-| CSn-34 | Validation TC-09, TC-10 (CAN robustness) | WP-V-06 | CG2.5, CG3.1 | Missing | Not yet executed |
-| CSn-35 | Validation TC-11…TC-13 (remote surface, back-end independence) | WP-V-06 | CG2.6, CG3.2 | Missing | Not yet executed |
-| CSn-36 | Validation TC-14, TC-15 (updates, supply chain) | WP-V-06 | CG2.7 | Missing | Not yet executed |
-| CSn-37 | Validation TC-16, TC-17 (data at rest, decommissioning) | WP-V-06 | CG2.8, CG3.3 | Missing | Not yet executed; encryption at rest unknown (WP-C-09 OI-3) |
+| CSn-30 | Validation TC-01, TC-02 (command fuzzing, mode lock) | [WP-V-06](../06-validation/WP-V-06-cybersecurity-validation.md) | CG2.1, CG4.1 | Missing | spec drafted, not executed (WP-V-06) |
+| CSn-31 | Validation TC-03…TC-05 (firmware, boot pins, option bytes) | WP-V-06 | CG2.2 | Missing | spec drafted, not executed (WP-V-06) |
+| CSn-32 | Validation TC-06, TC-07 (params/IPC, envelope under SoC compromise) | WP-V-06 | CG2.3 | Missing | spec drafted, not executed (WP-V-06) |
+| CSn-33 | Validation TC-08 (model artefacts) | WP-V-06 | CG2.4 | Missing | spec drafted, not executed (WP-V-06) |
+| CSn-34 | Validation TC-09, TC-10 (CAN robustness) | WP-V-06 | CG2.5, CG3.1 | Missing | spec drafted, not executed (WP-V-06) |
+| CSn-35 | Validation TC-11…TC-13 (remote surface, back-end independence) | WP-V-06 | CG2.6, CG3.2 | Missing | spec drafted, not executed (WP-V-06) |
+| CSn-36 | Validation TC-14, TC-15 (updates, supply chain) | WP-V-06 | CG2.7 | Missing | spec drafted, not executed (WP-V-06) |
+| CSn-37 | Validation TC-16, TC-17 (data at rest, decommissioning) | WP-V-06 | CG2.8, CG3.3 | Missing | spec drafted, not executed (WP-V-06); encryption at rest unknown (WP-C-09 OI-3) |
 | CSn-40 | Physical-access assumption recorded in user information | [WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md) | CG3.1 | Partial | Draft user information |
 | CSn-41 | Onroad streaming block (inherited mechanism) | `openpilot/common/params_keys.h:62`, `openpilot/system/manager/process_config.py:119`, `openpilot/system/webrtc/helpers.py:28` | CG3.2 | Partial | Implemented in code; not verified (CSR-116) |
 | CSn-42 | eGPU exclusion in reference configuration | [WP-C-01](../02-concept/WP-C-01-item-definition.md) E-06 | CG3.5 | Partial | Draft |
@@ -182,7 +182,7 @@ CG6  The cybersecurity process was followed and independently assessed.
 | CSn-62 | Review records at required independence | PR reviews per [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) | CG6.3 | Missing | No I1 reviewer yet (T-09) |
 | CSn-63 | Cybersecurity assessment report | [WP-K-05](WP-K-05-cybersecurity-assessment.md) | CG6.4 | Missing | Skeleton |
 
-Summary: Available 0; Partial 16; Missing 21 (of 37 evidence items).
+Summary (evidence rule above): Available 0; Partial 16; Missing 21 (of 37 evidence items).
 
 ## 5. Residual risks and claims register (current view)
 

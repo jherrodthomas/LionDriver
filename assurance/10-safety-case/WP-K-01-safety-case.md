@@ -266,7 +266,7 @@ Status values are copied from [WP-C-01 §7](../02-concept/WP-C-01-item-definitio
 
 ## 6. Evidence status
 
-Status legend: **Available** = artefact exists, its activity was performed, and it was verified/approved at a named baseline; **Partial** = artefact exists as a draft, or inherited evidence exists that has not been produced or re-run under LionDriver control; **Missing** = no artefact.
+Evidence rule (shared by [WP-K-01 §6](WP-K-01-safety-case.md#6-evidence-status) and [WP-K-03 §4](WP-K-03-cybersecurity-case.md#4-evidence-status)): **Available** = the activity was performed and its result approved at a named baseline. **Partial** = for analysis or specification evidence, the work product is drafted (Draft status); also inherited results (upstream tests or code) that exist but have not been re-run or reviewed under LionDriver control. **Missing** = no artefact; for evidence that is a test, measurement or assessment **result**, a drafted specification alone counts as Missing, noted "spec drafted, not executed".
 
 | Sn | Evidence | Work product / source | Supports | Status | Note |
 |---|---|---|---|---|---|
@@ -279,22 +279,22 @@ Status legend: **Available** = artefact exists, its activity was performed, and 
 | Sn-07 | Hardware FMEDA | [WP-H-03](../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) | G1.9 | Partial | Draft qualitative FMEA; quantitative FMEDA is a template |
 | Sn-08 | Hardware architectural metrics | [WP-H-04](../04-hardware/WP-H-04-hardware-metrics.md) | G1.9 | Partial | Method and plan only; no metric computed |
 | Sn-09 | Random HW failure evaluation | [WP-H-05](../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) | G1.9 | Partial | Method and plan only; no value computed |
-| Sn-10 | opendbc safety unit tests (100% line coverage gate, MISRA, mutation, UBSan) | `opendbc_repo/opendbc/safety/tests/` (`test.sh:36-43`, `misra/test_misra.sh`, `mutation.py`); report in [WP-W-06](../05-software/WP-W-06-software-unit-verification.md) | G1.1.2, G1.1.3, G1.3, G1.5 | Partial | Inherited; not requirement-based; line coverage only; host x86 not target; results not yet produced in LionDriver-controlled CI at a recorded baseline (U-6) |
-| Sn-11 | HW component qualification | [WP-H-07](../04-hardware/WP-H-07-hardware-component-qualification.md) | G1.9 | Partial | Qualification plan only; no qualification performed |
-| Sn-12 | HIL tests of the envelope | [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) | G1.1.2, G1.3 | Partial | Specification in preparation; no HIL in the fork (GAP-30); not executed |
-| Sn-13 | Fault injection | [WP-V-05](../06-validation/WP-V-05-fault-injection.md) | G1.1.4, G1.2, G1.6 | Partial | Specification drafted; not executed |
+| Sn-10 | opendbc safety unit tests (100% line coverage gate, MISRA, mutation, UBSan) | `opendbc_repo/opendbc/safety/tests/` (`test.sh:36-43`, `misra/test_misra.sh`, `mutation.py`); report in [WP-W-06](../05-software/WP-W-06-software-unit-verification.md) | G1.1.2, G1.1.3, G1.3, G1.5 | Partial | Inherited results: not requirement-based; line coverage only; host x86 not target; not re-run in LionDriver-controlled CI at a recorded baseline (U-6, GAP-39) |
+| Sn-11 | HW component qualification | [WP-H-07](../04-hardware/WP-H-07-hardware-component-qualification.md) | G1.9 | Missing | spec drafted, not executed (WP-H-07 qualification plan; no qualification performed) |
+| Sn-12 | HIL tests of the envelope | [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) | G1.1.2, G1.3 | Missing | spec drafted, not executed (WP-W-08 in preparation; no HIL in the fork, GAP-30) |
+| Sn-13 | Fault injection | [WP-V-05](../06-validation/WP-V-05-fault-injection.md) | G1.1.4, G1.2, G1.6 | Missing | spec drafted, not executed (WP-V-05) |
 | Sn-14 | SW integration / process replay | [WP-W-07](../05-software/WP-W-07-software-integration-verification.md) | G1.2, G1.6 | Partial | Inherited process replay; references fetched from comma storage (GAP-30) |
-| Sn-20 | Vehicle controllability and EPS characterisation (AOU-01/02) | [WP-V-01](../06-validation/WP-V-01-safety-validation.md) | G1.1.1, G1.10 | Partial | Test specified (WP-V-01); not executed |
-| Sn-21 | PCM ACC envelope test (AOU-05) | WP-V-01 | G1.3, G1.4, G1.10 | Partial | Test specified (WP-V-01); not executed |
-| Sn-22 | Brake override test (AOU-03) | WP-V-01 | G1.5, G1.10 | Partial | Test specified (WP-V-01); not executed |
-| Sn-23 | Stock PCS target test (AOU-04) | WP-V-01 | G1.7 | Partial | Test specified (WP-V-01); not executed |
+| Sn-20 | Vehicle controllability and EPS characterisation (AOU-01/02) | [WP-V-01](../06-validation/WP-V-01-safety-validation.md) | G1.1.1, G1.10 | Missing | spec drafted, not executed (WP-V-01) |
+| Sn-21 | PCM ACC envelope test (AOU-05) | WP-V-01 | G1.3, G1.4, G1.10 | Missing | spec drafted, not executed (WP-V-01) |
+| Sn-22 | Brake override test (AOU-03) | WP-V-01 | G1.5, G1.10 | Missing | spec drafted, not executed (WP-V-01) |
+| Sn-23 | Stock PCS target test (AOU-04) | WP-V-01 | G1.7 | Missing | spec drafted, not executed (WP-V-01) |
 | Sn-30 | Installation and provisioning control; installation records | [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) | G1.7, G5.6 | Partial | Procedure drafted; no installation record yet |
-| Sn-31 | Model hash check at installation (INS-18) | WP-O-01 | G3.1 | Partial | Procedure only |
+| Sn-31 | Model hash check at installation (INS-18) | WP-O-01 | G3.1 | Missing | spec drafted, not executed (INS-18 procedure only) |
 | Sn-32 | Operation, service, decommissioning | [WP-O-02](../09-production-operation/WP-O-02-operation-service-decommissioning.md) | G5.6 | Partial | Draft |
 | Sn-40 | Insufficiencies and triggering conditions | [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) | G2.1 | Partial | Draft: FI-01…FI-22, TC-01…TC-33 |
 | Sn-41 | Functional modifications | [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md) | G2.1 | Partial | Draft: FM-01…FM-11 decided, none implemented |
-| Sn-42 | Known-scenario evaluation | [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md) | G2.1, G3.3 | Partial | Specification drafted (KS-01…KS-26); not executed |
-| Sn-43 | Unknown-scenario evaluation | [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) | G2.2 | Partial | Method drafted; not executed |
+| Sn-42 | Known-scenario evaluation | [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md) | G2.1, G3.3 | Missing | spec drafted, not executed (KS-01…KS-26) |
+| Sn-43 | Unknown-scenario evaluation | [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) | G2.2 | Missing | spec drafted, not executed (method drafted) |
 | Sn-44 | Field monitoring | [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) | G2.2, G5.6 | Partial | Process drafted; no LionDriver data path |
 | Sn-45 | Misuse analysis | [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) | G2.3 | Partial | Draft; controllability tests (CA-01…CA-07) not performed |
 | Sn-46 | DM performance tests | WP-V-03 / WP-W-10 | G2.3 | Partial | 13 inherited scenario tests (`selfdrive/monitoring/test_monitoring.py`); none for data loss (GAP-21) |
@@ -303,7 +303,7 @@ Status legend: **Available** = artefact exists, its activity was performed, and 
 | Sn-49 | Hazard analysis and risk assessment | [WP-C-03](../02-concept/WP-C-03-hara.md) | G0 (C4), G1 | Partial | Draft; ratings proposals; CR-02 (I3) not done |
 | Sn-50 | Model hashes in release record | [WP-K-06](WP-K-06-release-record.md) | G3.1 | Missing | Skeleton only |
 | Sn-51 | Dataset / ODD coverage analysis | [WP-W-10](../05-software/WP-W-10-ml-engineering.md) | G3.2 | Partial | Draft engineering plan; training data not available to LionDriver (DF-20) |
-| Sn-52 | Model test reports | WP-W-10 | G3.3 | Partial | Test specification (VS-ML-nn) drafted; not executed |
+| Sn-52 | Model test reports | WP-W-10 | G3.3 | Missing | spec drafted, not executed (VS-ML-nn) |
 | Sn-53 | AI runtime supervision design, AIR-nn | [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) | G3.4 | Partial | Draft AIR-nn; monitors not implemented (GAP-22) |
 | Sn-54 | AI safety plan | [WP-M-10](../01-management/WP-M-10-ai-safety-plan.md) | G3.5 | Partial | Draft |
 | Sn-55 | Item definition | [WP-C-01](../02-concept/WP-C-01-item-definition.md) | G0 (C1) | Partial | Draft; vehicle and device records missing (OI-1/OI-2) |
@@ -320,7 +320,7 @@ Status legend: **Available** = artefact exists, its activity was performed, and 
 | Sn-69 | Vehicle test operations and records | [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md) | G5.7 | Partial | Procedure drafted; no drive records yet |
 | Sn-70 | Cybersecurity case | [WP-K-03](WP-K-03-cybersecurity-case.md) | G4 | Partial | Draft argument; almost all CS evidence Missing or Partial |
 
-Summary at `8b8c6ae` (re-synced with the work-product files in the consistency pass): **Available 0, Partial 45, Missing 4** (49 evidence items). Most Partial items are drafts or specifications whose activity has not been performed; no work product is approved, so nothing is Available. No claim G1–G5 is supported.
+Summary at `8b8c6ae` (evidence rule above): **Available 0, Partial 34, Missing 15** (49 evidence items). Partial items are drafted analyses/specifications or inherited results; test, measurement and assessment results with only a drafted specification are Missing. No work product is approved, so nothing is Available. No claim G1–G5 is supported.
 
 ## 7. Defeaters (counter-evidence)
 
