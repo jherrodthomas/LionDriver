@@ -169,7 +169,7 @@ These are owned by the project maintainer. Until each one is decided, it stays o
 
 | ID | Decision | Recommendation |
 |---|---|---|
-| D-01 | Take configuration control of the safety code | Fork `commaai/opendbc` and `commaai/panda` into the LionDriver GitHub account. Point `.gitmodules` at the forks with absolute URLs. Pin tinygrad by commit, not `branch = master` |
+| D-01 | Take configuration control of the safety code | Fork `commaai/opendbc` and `commaai/panda` (and mirror `msgq`, `rednose`, `teleoprtc`, which also resolve to `commaai/*` through relative URLs) into the LionDriver GitHub account. Point `.gitmodules` at them with absolute URLs. Pin tinygrad by commit, not `branch = master` |
 | D-02 | Upstream synchronization policy | Freeze on the current baseline. Pull upstream only in deliberate "sync" change requests, each with an impact analysis against the safety-relevant file list ([WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md)) |
 | D-03 | CI for the fork | Disable or replace workflows that depend on comma infrastructure (`jenkins-pr-trigger`, `ui_preview`, `release`, `repo-maintenance`, `stale` auto-close). Generate fork-owned process-replay references. Enable opendbc safety tests, MISRA and mutation tests in fork CI |
 | D-04 | HIL capability | Build a minimal HIL bench (a comma device or a bare panda + CAN interface + replay of Corolla logs) to replace comma's device farm for envelope verification |
