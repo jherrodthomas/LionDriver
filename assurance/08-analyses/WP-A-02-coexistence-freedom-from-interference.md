@@ -153,7 +153,19 @@ Not QM-to-ASIL interference in the strict sense, but the same communication faul
 
 FFI must be shown before G2 for the envelope-only ASIL allocation of [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) to hold. Verification of the measures is specified in [WP-S-08](../03-system/WP-S-08-system-integration-test.md) and [WP-V-05](../06-validation/WP-V-05-fault-injection.md).
 
-## 9. Open items
+## 9. Mapping to WP-S-03 FFI claims
+
+| [WP-S-03 §7](../03-system/WP-S-03-technical-safety-concept-architecture.md#7-freedom-from-interference-and-independence) claim | Covered here by |
+|---|---|
+| FFI-1 QM SoC sends wrong or excessive commands | FFI-CM-01…-05 |
+| FFI-2 QM SoC reconfigures the safety element | FFI-CM-06…-11, -13, -14 |
+| FFI-3 QM SoC replaces MCU firmware | FFI-CM-12, FFI-SP-05 |
+| FFI-4 QM SoC corrupts MCU memory through malformed SPI transfers | FFI-SP-02, FFI-SP-03 |
+| FFI-5 QM SoC timing faults | FFI-TM-06, FFI-TM-07, FFI-CM-03 |
+| FFI-6 comms ISRs starve safety processing | FFI-TM-01…-05 |
+| (not in WP-S-03) vehicle RX faults, forwarding order | FFI-CM-15, FFI-CM-16 |
+
+## 10. Open items
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|

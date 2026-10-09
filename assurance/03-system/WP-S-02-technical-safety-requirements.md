@@ -225,6 +225,10 @@ Statements are summarised here; the full requirement text, rationale and links t
 | TSR-812 | User information and safety warnings shall be provided and acknowledged before first use | QM (B-sup) | AOU-06 | OPS | R | WP-O-03; INS-30 |
 | TSR-813 | Field monitoring and incident reporting shall be operated for every installed item | QM | SG-01…07 | OPS | R | [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) |
 | TSR-814 | Decommissioning shall restore the stock camera path, verify stock TSS functions and remove data and keys | B | SG-07 | OPS | T, R | DEC-01…DEC-11 |
+| TSR-815 | Only approved device/harness revisions with clean history shall be installed | B‡ | T-04 | OPS | R | INS-01…INS-04; ITS-03…ITS-05 |
+| TSR-816 | Installation by a trained installer; complete, second-person-checked installation record | B‡ | ISO 26262-7 §5 | OPS | R | WP-O-01 §5 |
+| TSR-817 | Item faults handled by replacement and quarantine, followed by full re-provisioning | B‡ | T-04 | OPS | R | ITS-01…ITS-05 |
+| TSR-818 | Users informed of end of support with a date after which the release must not be engaged | QM | ISO/SAE 21434 §14 | OPS | R | WP-O-02 §7.3 |
 
 ## 11. New findings raised by this document
 
@@ -302,7 +306,7 @@ These are code facts found while writing the TSRs. They are proposed for registr
 | TSR-708 | FSR-07.04 | SG-07 |
 | TSR-709 | FSR-07.05 | SG-07 |
 | TSR-710 | FSR-01.11 | SG-01, SG-07 |
-| TSR-801…814 | ISO 26262-4 §6 requirements for production/operation; AoUs as listed in §10 | all |
+| TSR-801…818 | ISO 26262-4 §6 requirements for production/operation; AoUs as listed in §10 | all |
 
 ### 12.2 FSR coverage check (FSR → TSR)
 

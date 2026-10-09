@@ -155,7 +155,7 @@ CG6  The cybersecurity process was followed and independently assessed.
 | CSn-13 | Reference-configuration remote-feature decision | WP-C-10 OI-2; WP-M-09 OI-2 | CG2.6 | Missing | — |
 | CSn-14 | Signed update design and implementation | WP-S-07 §3.6; CSR-121…126 | CG2.7, CG5.3 | Missing | GAP-26 |
 | CSn-20 | Secure coding, SAST results, per-CSR verification (VS-CS) | [WP-W-11](../05-software/WP-W-11-cybersecurity-implementation-verification.md) | CG2.x | Partial | Plan only; 0 of 64 CSRs verified |
-| CSn-21 | Safety-mode lock tests (shared with TSR-512) | WP-W-06/WP-W-08 | CG2.1 | Missing | Mechanism not implemented (GAP-09) |
+| CSn-21 | Safety-mode lock and command-gating tests (shared with TSR-512, TSR-513) | WP-W-06/WP-W-08 | CG2.1 | Missing | Mechanism not implemented (GAP-09) |
 | CSn-22 | Release build-config audit report (BA-01…BA-08) | WP-W-11 §7 | CG2.2, CG2.7 | Missing | `test_release_build.py` only checks compilation (GAP-41) |
 | CSn-23 | Envelope TX allow-list and relay-malfunction tests | `opendbc_repo/opendbc/safety/tests/test_toyota.py`, `common.py` (upstream) | CG2.5 | Partial | Exist upstream; not run in LionDriver CI (GAP-39); release config not tested (GAP-41) |
 | CSn-24 | SBOM and vulnerability scan report for the release | WP-W-11 §5 | CG2.7, CG3.4, CG6.2 | Missing | Tooling not selected |
