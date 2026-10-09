@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../schema/fmeda.schema.json
+# One FMEDA file per safety goal. safety_goal / asil_target stay null until the HARA is done.
+schema_version: 1
+analysis:
+  id: FMD
+  type: fmeda
+  title: "FMEDA — integrated panda safety path (Phase A)"
+  revision: "0.1"
+  status: draft
+  baseline: BL-001
+  rating_tables: RT-1
+  scope: "Panda MCU, CAN transceivers, relay, watchdog, power supervision per fmea-plan.md section 3.5"
+  safety_goal: null
+  asil_target: null
+  references:
+    - docs/safety/fmea-plan.md
+    - docs/safety/rating-tables.md
+safety_mechanisms: []
+components: []

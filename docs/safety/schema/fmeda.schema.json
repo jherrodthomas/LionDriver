@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jherrodthomas/LionDriver/docs/safety/schema/fmeda.schema.json",
+  "title": "LionDriver FMEDA",
+  "description": "ISO 26262-5 hardware metrics. One file per safety goal. See rating-tables.md section 6.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "analysis", "safety_mechanisms", "components"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "title", "revision", "status", "baseline", "rating_tables", "scope", "safety_goal", "asil_target"],
+      "properties": {
+        "id": {"const": "FMD"},
+        "type": {"const": "fmeda"},
+        "title": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+        "status": {"enum": ["draft", "in_review", "released"]},
+        "baseline": {"type": "string"},
+        "rating_tables": {"type": "string", "pattern": "^RT-[0-9]+$"},
+        "scope": {"type": "string", "minLength": 1},
+        "safety_goal": {"type": ["string", "null"], "pattern": "^SG-[0-9]{3,}$"},
+        "asil_target": {"enum": ["B", "C", "D", null]},
+        "mission_profile": {"type": "string", "description": "Temperature/operating profile used for failure rates."},
+        "out_of_scope": {"type": "array", "items": {"type": "string"}},
+        "references": {"type": "array", "items": {"type": "string"}},
+        "updated": {"type": "string", "format": "date"}
+      }
+    },
+    "safety_mechanisms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description", "dc_basis"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^FMD-SM-[0-9]{3,}$"},
+          "description": {"type": "string", "minLength": 1},
+          "dc_basis": {"type": "string", "description": "ISO 26262-5 Annex D table/row, or analysis/test evidence."},
+          "requirement": {"type": "string", "pattern": "^(TSR|HSR|SSR)-[0-9]{3,}$"},
+          "implementation": {"type": "string", "description": "Code path or HW reference."}
+        }
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "part", "failure_rate_fit", "failure_rate_source", "safety_related", "failure_modes"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^FMD-C-[0-9]{3,}$"},
+          "ref_des": {"type": "string"},
+          "part": {"type": "string", "minLength": 1},
+          "dfmea_element": {"type": "string", "pattern": "^DFM-SE-[0-9]{3,}$"},
+          "failure_rate_fit": {"type": ["number", "null"], "minimum": 0},
+          "failure_rate_source": {"type": "string", "description": "e.g. SN 29500-2, IEC 61709, IEC TR 62380, ISO 26262-11, supplier data"},
+          "safety_related": {"type": "boolean"},
+          "failure_modes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "mode", "distribution", "violates_sg_directly", "mpf_potential"],
+              "properties": {
+                "id": {"type": "string", "pattern": "^FMD-[0-9]{3,}$"},
+                "mode": {"type": "string", "minLength": 1},
+                "distribution": {"type": "number", "minimum": 0, "maximum": 1},
+                "dfmea_ref": {"type": "string", "pattern": "^DFM-[0-9]{3,}$"},
+                "violates_sg_directly": {"type": "boolean"},
+                "mpf_potential": {"type": "boolean", "description": "Can contribute to a SG violation in combination with another fault."},
+                "safety_mechanism_spf": {"type": "string", "pattern": "^FMD-SM-[0-9]{3,}$"},
+                "dc_spf": {"type": "number", "minimum": 0, "maximum": 1},
+                "safety_mechanism_lf": {"type": "string", "pattern": "^FMD-SM-[0-9]{3,}$"},
+                "dc_lf": {"type": "number", "minimum": 0, "maximum": 1},
+                "notes": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

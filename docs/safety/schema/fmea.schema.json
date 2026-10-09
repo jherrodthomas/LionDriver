@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jherrodthomas/LionDriver/docs/safety/schema/fmea.schema.json",
+  "title": "LionDriver FMEA (System FMEA, DFMEA, SW FMEA, PFMEA)",
+  "description": "AIAG-VDA 7-step FMEA. Ratings may be null while status is draft; see rating-tables.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "analysis", "structure", "functions", "failure_modes", "actions"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "analysis": {"$ref": "#/$defs/header"},
+    "structure": {"type": "array", "items": {"$ref": "#/$defs/structure_element"}},
+    "functions": {"type": "array", "items": {"$ref": "#/$defs/function"}},
+    "failure_modes": {"type": "array", "items": {"$ref": "#/$defs/failure_mode"}},
+    "actions": {"type": "array", "items": {"$ref": "#/$defs/action"}}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"analysis": {"properties": {"type": {"const": "system_fmea"}}}}},
+      "then": {"properties": {
+        "analysis": {"properties": {"id": {"const": "SFM"}}},
+        "failure_modes": {"items": {"properties": {"guideword": {"$ref": "#/$defs/guidewords/functional"}}}}
+      }}
+    },
+    {
+      "if": {"properties": {"analysis": {"properties": {"type": {"const": "dfmea"}}}}},
+      "then": {"properties": {
+        "analysis": {"properties": {"id": {"const": "DFM"}}},
+        "failure_modes": {"items": {"properties": {"guideword": {"$ref": "#/$defs/guidewords/hardware"}}}}
+      }}
+    },
+    {
+      "if": {"properties": {"analysis": {"properties": {"type": {"const": "sw_fmea"}}}}},
+      "then": {"properties": {
+        "analysis": {"properties": {"id": {"const": "SWF"}}},
+        "failure_modes": {"items": {"properties": {"guideword": {"$ref": "#/$defs/guidewords/software"}}}}
+      }}
+    },
+    {
+      "if": {"properties": {"analysis": {"properties": {"type": {"const": "pfmea"}}}}},
+      "then": {"properties": {
+        "analysis": {"properties": {"id": {"const": "PFM"}}},
+        "failure_modes": {"items": {"properties": {"guideword": {"$ref": "#/$defs/guidewords/process"}}}}
+      }}
+    }
+  ],
+  "$defs": {
+    "rating": {"type": ["integer", "null"], "minimum": 1, "maximum": 10},
+    "ap": {"enum": ["H", "M", "L", null]},
+    "external_id": {
+      "description": "Link to an artifact outside the FMEA files (HARA, safety concept, requirements).",
+      "type": "string",
+      "pattern": "^(HZ|HE|SG|FSR|TSR|HSR|SSR|REQ)-[0-9]{3,}$"
+    },
+    "fmea_ref": {
+      "description": "Link to a failure mode in any FMEA file.",
+      "type": "string",
+      "pattern": "^(SFM|DFM|SWF|PFM)-[0-9]{3,}$"
+    },
+    "repo_path": {
+      "description": "Path relative to the repository root.",
+      "type": "string",
+      "pattern": "^[^/].*$"
+    },
+    "header": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "title", "revision", "status", "baseline", "rating_tables", "scope"],
+      "properties": {
+        "id": {"enum": ["SFM", "DFM", "SWF", "PFM"]},
+        "type": {"enum": ["system_fmea", "dfmea", "sw_fmea", "pfmea"]},
+        "title": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+        "status": {"enum": ["draft", "in_review", "released"]},
+        "baseline": {"type": "string", "description": "id of an entry in baseline.yaml"},
+        "rating_tables": {"type": "string", "pattern": "^RT-[0-9]+$"},
+        "scope": {"type": "string", "minLength": 1},
+        "out_of_scope": {"type": "array", "items": {"type": "string"}},
+        "team": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "role"],
+            "properties": {"name": {"type": "string"}, "role": {"type": "string"}}
+          }
+        },
+        "references": {"type": "array", "items": {"type": "string"}},
+        "updated": {"type": "string", "format": "date"}
+      }
+    },
+    "structure_element": {
+      "description": "AIAG-VDA step 2. For PFMEA, elements are process items / steps / work elements.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "kind"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-SE-[0-9]{3,}$"},
+        "name": {"type": "string", "minLength": 1},
+        "kind": {"enum": [
+          "item", "system", "subsystem", "component", "interface", "external",
+          "sw_element", "sw_unit",
+          "process_item", "process_step", "work_element"
+        ]},
+        "parent": {"type": ["string", "null"], "pattern": "^(SFM|DFM|SWF|PFM)-SE-[0-9]{3,}$"},
+        "paths": {"type": "array", "items": {"$ref": "#/$defs/repo_path"}},
+        "description": {"type": "string"}
+      }
+    },
+    "function": {
+      "description": "AIAG-VDA step 3.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "element", "description"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-FN-[0-9]{3,}$"},
+        "element": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-SE-[0-9]{3,}$"},
+        "description": {"type": "string", "minLength": 1},
+        "requirements": {"type": "array", "items": {"$ref": "#/$defs/external_id"}}
+      }
+    },
+    "effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "description"],
+      "properties": {
+        "level": {"enum": ["local", "next_higher", "end"]},
+        "description": {"type": "string", "minLength": 1},
+        "hazard": {"$ref": "#/$defs/external_id"},
+        "severity": {"$ref": "#/$defs/rating"}
+      }
+    },
+    "control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["description"],
+      "properties": {
+        "description": {"type": "string", "minLength": 1},
+        "ref": {"type": "string", "description": "Evidence: doc, PR, report, or code path."},
+        "test": {"$ref": "#/$defs/repo_path"}
+      }
+    },
+    "cause": {
+      "description": "AIAG-VDA steps 4-5. One row of the risk analysis.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "description", "prevention_controls", "detection_controls", "occurrence", "detection", "ap"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-[0-9]{3,}\\.C[0-9]+$"},
+        "description": {"type": "string", "minLength": 1},
+        "element": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-SE-[0-9]{3,}$"},
+        "linked_failure_mode": {"$ref": "#/$defs/fmea_ref"},
+        "prevention_controls": {"type": "array", "items": {"$ref": "#/$defs/control"}},
+        "detection_controls": {"type": "array", "items": {"$ref": "#/$defs/control"}},
+        "occurrence": {"$ref": "#/$defs/rating"},
+        "detection": {"$ref": "#/$defs/rating"},
+        "ap": {"$ref": "#/$defs/ap"},
+        "actions": {"type": "array", "items": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-ACT-[0-9]{3,}$"}},
+        "rationale": {"type": "string", "description": "Why no action is taken (required for AP=H without actions)."}
+      }
+    },
+    "failure_mode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "element", "function", "failure_mode", "guideword", "effects", "severity", "causes"],
+      "properties": {
+        "id": {"$ref": "#/$defs/fmea_ref"},
+        "element": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-SE-[0-9]{3,}$"},
+        "function": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-FN-[0-9]{3,}$"},
+        "failure_mode": {"type": "string", "minLength": 1},
+        "guideword": {"type": "string"},
+        "effects": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/effect"}},
+        "severity": {"$ref": "#/$defs/rating"},
+        "safety_mechanisms": {
+          "description": "In-field detection/reaction designed into the item (not FMEA detection controls).",
+          "type": "array",
+          "items": {"$ref": "#/$defs/control"}
+        },
+        "causes": {"type": "array", "items": {"$ref": "#/$defs/cause"}},
+        "notes": {"type": "string"}
+      }
+    },
+    "action": {
+      "description": "AIAG-VDA step 6.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "description", "status"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-ACT-[0-9]{3,}$"},
+        "kind": {"enum": ["prevention", "detection", "design_change"]},
+        "description": {"type": "string", "minLength": 1},
+        "owner": {"type": "string"},
+        "due": {"type": "string", "format": "date"},
+        "status": {"enum": ["open", "decision_pending", "in_progress", "completed", "not_implemented"]},
+        "evidence": {"type": "string"},
+        "revised": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "severity": {"$ref": "#/$defs/rating"},
+            "occurrence": {"$ref": "#/$defs/rating"},
+            "detection": {"$ref": "#/$defs/rating"},
+            "ap": {"$ref": "#/$defs/ap"}
+          }
+        }
+      }
+    },
+    "guidewords": {
+      "functional": {"enum": [
+        "loss", "unintended", "excessive", "insufficient", "early", "late",
+        "stuck", "wrong_direction", "intermittent", "degraded"
+      ]},
+      "hardware": {"enum": [
+        "open", "short", "drift", "stuck", "intermittent", "degraded", "loss",
+        "excessive", "insufficient", "mechanical_damage", "thermal", "emc", "connection"
+      ]},
+      "software": {"enum": [
+        "omission", "commission", "early", "late", "value_high", "value_low",
+        "value_stale", "value_frozen", "corrupted", "out_of_sequence", "wrong_mode",
+        "crash", "hang", "resource_exhaustion"
+      ]},
+      "process": {"enum": [
+        "step_omitted", "wrong_step", "wrong_sequence", "wrong_version", "wrong_configuration",
+        "wrong_parameter", "incomplete", "unverified_artifact", "damage"
+      ]}
+    }
+  }
+}

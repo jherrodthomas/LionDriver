@@ -1,6 +1,6 @@
 # LionDriver — FMEA Program Plan
 
-**Status:** Draft v0.1 — planning baseline, no analyses performed yet
+**Status:** Draft v0.2 — Phase 0 complete (rating tables, schema, baseline); no analyses performed yet
 **Scope:** 2020 Toyota Corolla LE (U.S.), comma 3X (`system/hardware/tici`) with integrated panda, current LionDriver software baseline
 **Covers:** System FMEA, DFMEA, PFMEA, SW FMEA, FMEDA
 
@@ -44,7 +44,7 @@ PFMEA ─► Release / install control plan  (feeds "configuration as assured")
 | Item definition & boundary (README roadmap item 2) | All | Not started |
 | HARA + safety goals | System FMEA severity, FMEDA | Not started |
 | Functional / technical safety concept | DFMEA, SW FMEA, FMEDA | Not started |
-| HW/SW baseline frozen (commit SHA + submodule SHAs + AGNOS version) | All | Partial (submodules `panda`, `opendbc_repo` not vendored here) |
+| HW/SW baseline frozen (commit SHA + submodule SHAs + AGNOS version) | All | BL-001 proposed in `baseline.yaml`; freeze at Phase 1 start |
 | Panda schematic + BOM (open hardware) | DFMEA, FMEDA | To collect |
 | comma 3X schematic / SoC failure data | DFMEA, FMEDA | Likely unavailable — see §7 |
 
@@ -129,20 +129,37 @@ Output: a **release & install control plan** (checklist) — this is the practic
 ```
 docs/safety/
   fmea-plan.md                 (this document)
+  rating-tables.md             (S/O/D tables, AP table, FMEDA targets — version RT-n)
+  baseline.yaml                (analyzed configurations: vehicle, HW, repo + submodule SHAs, OS)
+  schema/
+    fmea.schema.json           (System FMEA, DFMEA, SW FMEA, PFMEA)
+    fmeda.schema.json
+    baseline.schema.json
   analyses/
     system-fmea.yaml
     dfmea.yaml
     sw-fmea.yaml
     pfmea.yaml
-    fmeda.yaml
-  rating-tables.md             (S/O/D tables, AP table)
+    fmeda-<scope>.yaml         (one FMEDA per safety goal / HW scope; Phase A = fmeda-panda.yaml)
   exports/                     (generated .xlsx for review; not hand-edited)
+tools/safety/
+  fmea_lint.py                 (validator)
+  test_fmea_lint.py
 ```
 
 - Source of truth is YAML (diffable, reviewable in PRs); spreadsheets are generated.
-- IDs: `SFM-###`, `DFM-###`, `SWF-###`, `PFM-###`, `FMD-###`; actions `ACT-###`.
-- Each row links upward (`hazard`, `safety_goal`, `fsr`/`tsr`) and downward (`code_path`, `test`).
-- A CI lint (later) checks: unique IDs, no dangling links, every AP=H row has an action, every detection control points to an existing test path.
+- IDs: `SFM-`, `DFM-`, `SWF-`, `PFM-` prefixes for structure (`-SE-###`), functions (`-FN-###`), failure modes (`-###`), causes (`-###.C#`), actions (`-ACT-###`). FMEA ids are unique across all files; FMEDA ids (`FMD-…`) only within their file.
+- Each row links upward (`hazard`, `requirements`) and downward (`paths`, `test`, `linked_failure_mode`).
+- Every analysis names its `baseline` (from `baseline.yaml`) and the `rating_tables` version it was rated against.
+
+**Validation** (needs `pip install pyyaml jsonschema`; not added to openpilot runtime deps):
+
+```
+tools/safety/fmea_lint.py --report            # validate all analyses
+python3 -m unittest discover -s tools/safety  # linter tests
+```
+
+The linter checks: schema; unique and resolvable ids; failure-mode severity = max effect severity; hazard-linked effects rated 10; stored AP = AP table; AP=H has an action or rationale; detection ≤ 8 names a `test` path that exists (warning only inside an uninitialized submodule); released analyses fully rated; FMEDA distributions sum to 1, mechanisms have DC, SPFM/LFM/λSPF+λRF against the ASIL target. Wiring it into CI is a follow-up.
 
 ---
 
@@ -170,9 +187,13 @@ docs/safety/
 
 ---
 
-## 8. Open decisions
+## 8. Decisions
 
-1. Start FMEAs in parallel with HARA (recommended) or strictly after?
-2. Vendor/pin the `panda` and `opendbc` submodules into the analyzed baseline?
-3. YAML-as-source with generated xlsx (recommended) vs spreadsheets as source?
-4. PFMEA scope as defined in §3.4 (build/release/install/OTA) — confirm.
+| # | Decision | Resolution |
+|---|---|---|
+| 1 | Start FMEAs in parallel with HARA? | **Yes** — steps 1–4 now; ratings after HARA |
+| 2 | Pin `panda` / `opendbc` into the analyzed baseline? | **Yes** — SHAs recorded in `baseline.yaml` (BL-001) |
+| 3 | YAML source vs spreadsheets? | **YAML source**, xlsx generated |
+| 4 | PFMEA scope per §3.4? | **Confirmed** |
+
+Open: which device is the reference — comma 3X (README) or comma four (listed for Corolla 2020-22 in `docs/CARS.md`)? Recorded as TBD in BL-001.

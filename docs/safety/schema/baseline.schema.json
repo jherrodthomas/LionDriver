@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jherrodthomas/LionDriver/docs/safety/schema/baseline.schema.json",
+  "title": "LionDriver analysis baselines",
+  "description": "Configurations that safety analyses are performed against. Analyses reference a baseline by id.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "baselines"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "baselines": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status", "vehicle", "hardware", "software"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^BL-[0-9]{3,}$"},
+          "status": {"enum": ["proposed", "frozen", "superseded"]},
+          "description": {"type": "string"},
+          "vehicle": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["make", "model", "model_year", "trim", "market"],
+            "properties": {
+              "make": {"type": "string"},
+              "model": {"type": "string"},
+              "model_year": {"type": "integer"},
+              "trim": {"type": "string"},
+              "market": {"type": "string"},
+              "platform_notes": {"type": "string"}
+            }
+          },
+          "hardware": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["device"],
+            "properties": {
+              "device": {"type": "string"},
+              "panda": {"type": "string"},
+              "harness": {"type": "string"}
+            }
+          },
+          "software": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["repo_commit", "submodules", "os"],
+            "properties": {
+              "repo_commit": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+              "submodules": {
+                "type": "object",
+                "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+              },
+              "os": {"type": "string"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

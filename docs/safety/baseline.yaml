@@ -1,0 +1,31 @@
+# Configurations that safety analyses are performed against. Schema: schema/baseline.schema.json
+# A baseline is "proposed" until Phase 1 of fmea-plan.md starts, then "frozen".
+# Changing any field of a frozen baseline requires a new BL id and an impact analysis.
+schema_version: 1
+baselines:
+  - id: BL-001
+    status: proposed
+    description: >-
+      Initial reference configuration. Software is upstream openpilot as imported into LionDriver,
+      before any LionDriver functional changes.
+    vehicle:
+      make: Toyota
+      model: Corolla
+      model_year: 2020
+      trim: LE
+      market: US
+      platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
+    hardware:
+      device: "TBD: comma 3X per README/plan; docs/CARS.md lists comma four for this car"
+      panda: integrated in device
+      harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
+    software:
+      repo_commit: 8b8c6aefc34ea1e3ca3cf0938927c08b6a35e85c
+      submodules:
+        panda: 92eb565169fd553f4dfaf508c1a3f8dbc14fbfbf
+        opendbc_repo: 229dc7062d8986b4f954c7c97875b4ffd0044d12
+        msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
+        rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
+        teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
+        tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
+      os: AGNOS 19.9 (launch_env.sh)
