@@ -22,7 +22,7 @@ Inputs:
 - [WP-C-04 FSC](../02-concept/WP-C-04-functional-safety-concept.md): §4 envelope strategy (recommended option (c): reduced authority + envelope hardened to ASIL B); §4.3 fallback decomposition; FSR-01.01…FSR-07.05.
 - [WP-A-03 DFA](WP-A-03-dependent-failure-analysis.md): dependent failure initiators and coupling factors between the envelope, the SoC, the EPS and the driver.
 - [WP-A-02 coexistence / FFI](WP-A-02-coexistence-freedom-from-interference.md): interference from QM elements into the envelope.
-- [WP-S-02 TSRs](../03-system/WP-S-02-technical-safety-requirements.md) (written in parallel): TSR-1xx…TSR-7xx blocks.
+- [WP-S-02 TSRs](../03-system/WP-S-02-technical-safety-requirements.md) (Draft v0.1): ASIL notation **B‡** = target B under option (c), C until SG-01 is re-rated, decomposition fallback otherwise (WP-S-02 §2.1). This document is consistent with that notation.
 
 ## 2. Summary decision
 
@@ -57,7 +57,7 @@ Observation: the ⚠ ratings mean that a failed AoU verification can raise SG-03
 
 | ID | Scheme | Element 1 (higher half) | Element 2 (lower half) | Requirement decomposed | Assessment |
 |---|---|---|---|---|---|
-| DEC-01 | C(C) = B(C) + A(C) | E-03 envelope on the panda STM32H7 (TSR-1xx, TSR-3xx, TSR-4xx, TSR-5xx) | **New element E-07 "independent actuation monitor" (IAM)**: a second MCU on the harness side that observes bus 0 TX/RX and can de-energise the intercept relay (stock path) | FSR-01.01 (magnitude), FSR-01.03 (measured tracking), FSR-01.04 (no torque when not engaged), FSR-01.05 (engagement only with PCM cruise active) | **Preferred fallback.** Both elements inside LionDriver's control; independence can be designed in; safe state of E-07 (relay open) is de-energise-to-safe |
+| DEC-01 | C(C) = B(C) + A(C) | E-03 envelope on the panda STM32H7 (TSR-101…TSR-110, TSR-301…TSR-311, TSR-401…TSR-413, TSR-501…TSR-516) | **New element E-07 "independent actuation monitor" (IAM)**: a second MCU on the harness side that observes bus 0 TX/RX and can de-energise the intercept relay (stock path) | FSR-01.01 (magnitude), FSR-01.03 (measured tracking), FSR-01.04 (no torque when not engaged), FSR-01.05 (engagement only with PCM cruise active) | **Preferred fallback.** Both elements inside LionDriver's control; independence can be designed in; safe state of E-07 (relay open) is de-energise-to-safe |
 | DEC-02 | C(C) = B(C) + A(C) | E-03 envelope | Second software channel on the **same** STM32H7 (diverse re-implementation of the limit checks) | Same as DEC-01 | **Rejected.** Shares clock, power, memory, CAN peripheral, compiler and the SoC-controlled reset/boot pins (GAP-38). The DFA cannot show sufficient independence on one die without MPU partitioning or lockstep (GAP-11). Kept only as a diagnostic-coverage measure inside E-03, not as decomposition |
 | DEC-03 | C(C) = B(C) + A(C) | E-03 envelope | Toyota EPS internal LKA torque limitation and timeout (EXT-EPS, AOU-01R) | FSR-01.01, FSR-01.13 | **Not recommended** (§5) |
 | DEC-04 | C(C) = A(C) + B(C) | QM-to-ASIL-A upgraded SoC monitor (e.g. controlsd plausibility) | E-03 envelope at B | — | **Rejected.** The SoC is Linux/Python with no partitioning or WCET (GAP-23), configures the envelope (GAP-09) and controls its boot pins (GAP-38). It cannot be shown independent of the failure it would monitor (it produces the command) |
@@ -97,7 +97,7 @@ These requirements must be met, and shown by the DFA ([WP-A-03](WP-A-03-dependen
 - E-03 keeps the ASIL B(C) requirements. Its development stays at ASIL B process rigour, but the hardware metrics for the SG-01 path are evaluated at the level of the original ASIL C goal as required by ISO 26262-9 §5 (the decomposition does not reduce hardware metric targets for random failures of the item as a whole). This must be checked against the licensed text during review (OI-4).
 - E-07 carries A(C) requirements, developed at ASIL A process rigour.
 - Integration, verification of the safety goal, confirmation measures and the DFA stay at ASIL C.
-- New TSRs would be needed in WP-S-02 (proposed: new TSR block in TSR-5xx or TSR-7xx, to be agreed with the WP-S-02 author) and a new element E-07 in [WP-C-01](../02-concept/WP-C-01-item-definition.md) and [WP-S-03](../03-system/WP-S-03-technical-safety-concept-architecture.md).
+- New TSRs would be needed in WP-S-02 for E-07 (no ID range is reserved yet; proposed: a TSR-52x sub-block, to be agreed with the WP-S-02 author) and a new element E-07 in [WP-C-01](../02-concept/WP-C-01-item-definition.md) and [WP-S-03](../03-system/WP-S-03-technical-safety-concept-architecture.md).
 
 ## 5. Why crediting the Toyota EPS (DEC-03) is not recommended
 
@@ -109,7 +109,7 @@ These requirements must be met, and shown by the DFA ([WP-A-03](WP-A-03-dependen
 | 4 | **Change outside LionDriver control.** A Toyota EPS reflash (dealer campaign) can change the behaviour without notice; no change notification exists | WP-M-11 (supplier management) |
 | 5 | **Assessor acceptance risk.** A decomposition that rests on an unverified, unowned element is unlikely to pass I3 confirmation review | WP-C-04 §4.2 rationale 3 |
 
-The EPS limitation is still **used** as an external measure (FSR-01.13, AOU-01R) in the controllability rating and as defence in depth. It is characterised by vehicle test ([WP-S-09](../03-system/WP-S-09-system-verification.md) VS-SQ-01, VS-SQ-02). Using it as an external measure that supports a controllability rating is different from crediting it with a decomposed ASIL.
+The EPS limitation is still **used** as an external measure (FSR-01.13, TSR-111, AOU-01R) in the controllability rating and as defence in depth. It is characterised by vehicle test ([WP-S-09](../03-system/WP-S-09-system-verification.md) VS-SQ-01, VS-SQ-02). Using it as an external measure that supports a controllability rating is different from crediting it with a decomposed ASIL.
 
 ## 6. Decomposition record template
 

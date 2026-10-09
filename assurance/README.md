@@ -57,6 +57,8 @@ structure follows UL 4600 principles where they apply to a supervised Level 2 sy
 | `FI-<nn>` | Functional insufficiency | `FI-07` |
 | `TS-<nn>` / `CSG-<nn>` / `CSR-<nn>` | Threat scenario / cybersecurity goal / cybersecurity requirement | `CSG-02` |
 | `AOU-<nn>` | Assumption of use (on the vehicle, driver or environment) | `AOU-05` |
+| `DVR-<nn>` / `DEV-<nn>` | Safety-related data verification requirement / coding-guideline deviation record | `DVR-04`, `DEV-02` |
+| `VS-<area>-<nn>` | Verification specification (test case) | `VS-UV-03` |
 | `GAP-<nn>` | Gap finding from an assessment | `GAP-17` |
 | `OI-<nn>` | Open item to resolve before the next gate (per document) | `OI-3` |
 

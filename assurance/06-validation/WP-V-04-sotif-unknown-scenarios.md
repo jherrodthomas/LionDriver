@@ -63,7 +63,7 @@ Each candidate event from U-1…U-7 goes through:
 3. **Severity estimate** for class U: worst credible outcome using HARA S-classes, assuming no driver intervention.
 4. **Record** in the discovery log (§6.2).
 
-A class U event with S3 potential triggers an immediate review of whether testing continues under the current ODD (WP-V-07 §9 stop rule).
+A class U event with S3 potential triggers an immediate review of whether testing continues under the current ODD (WP-V-07 §8.5 stop rule S-05).
 
 ## 4. Exploration plan
 

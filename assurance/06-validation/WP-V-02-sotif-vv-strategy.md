@@ -20,7 +20,7 @@ Scope: reference configuration of [WP-M-01 §3.1](../01-management/WP-M-01-assur
 
 Sequencing rule ([WP-M-08 §4.1](../01-management/WP-M-08-sotif-plan.md#41-sequencing-rules)): the targets in §4 are fixed and approved **before** evidence for them is collected.
 
-Dependencies not yet available when this draft was written: WP-C-05 (SH-nn and acceptance criteria), WP-C-06 (TC-nn). The SH numbering below follows the shared convention (SH-0x ↔ H-0x of [WP-C-03](../02-concept/WP-C-03-hara.md)). Triggering conditions are referred to by the provisional categories of §6 until WP-C-06 assigns TC IDs (OI-1).
+Inputs: SOTIF hazards SH-01…SH-13 and acceptance criteria ([WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md) §3, §5), functional insufficiencies FI-01…FI-22 and triggering conditions TC-01…TC-31 ([WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md)), functional modifications FM-01…FM-11 ([WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md)), ODD parts ODD-H and ODD-A ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md)), controllability assumptions CA-01…CA-07 and DM performance DMP-01…DMP-04 ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md)). [WP-C-05 §5.2](../02-concept/WP-C-05-sotif-hazard-identification.md#52-derivation-method-for-validation-targets-to-be-applied-in-wp-v-02) delegates the numeric targets to this document; §3 applies that method.
 
 ## 2. Acceptance criteria (input)
 
@@ -29,13 +29,13 @@ Dependencies not yet available when this draft was written: WP-C-05 (SH-nn and a
 | B1 human driver | Rate-level targets (per distance / per hour) | US crash, injury and fatality rates (NHTSA FARS, CRSS) filtered to the ODD road types |
 | B2 stock TSS2 | Scenario-level comparison: LD-SDA shall not perform worse than the same Corolla with stock Lane Tracing Assist / Dynamic Radar Cruise Control in any validated scenario | Comparative closed-course tests on the reference vehicle |
 
-The top-level acceptance criterion (AC-0, to be formalised in WP-C-05): the rate of harm attributable to LD-SDA hazardous behaviour within the ODD shall be no higher than a stated fraction of the B1 rate for the same ODD, and no validated scenario shall be worse than B2.
+The acceptance criteria are those of [WP-C-05 §5](../02-concept/WP-C-05-sotif-hazard-identification.md#5-acceptance-criteria): (1) per SH group, the rate of harm while engaged shall not exceed the human-driver rate for comparable conditions reduced by a factor for the stock-TSS2 baseline; (2) the qualitative criteria AC-01…AC-07. This document adds the B2 scenario comparison (VT-09).
 
 ## 3. Method for deriving validation targets
 
 For each SOTIF hazardous behaviour SH-nn:
 
-1. **Harm budget.** Allocate to SH-nn a share `k` of the B1 harm rate `λ_B1` for the relevant harm class (injury crash or fatality):  `λ_harm,SH ≤ k · λ_B1`.
+1. **Harm budget.** Allocate to each SH group of WP-C-05 §5.2 step 3 (lateral SH-01/02/10; longitudinal SH-03/04/06/11; mode and override SH-05/09; SH-08) a share `k` of the road-class-specific B1 harm rate `λ_B1` for the relevant harm class (injury crash or fatality), separately for ODD-H and ODD-A:  `λ_harm,SH ≤ k · λ_B1`.
 2. **Hazardous-behaviour rate.** Divide by the probability that the hazardous behaviour, once it occurs, leads to harm: `P(harm | HB) = P(E-situation) · P(not controlled) · P(severity class)`. Each factor needs evidence (HARA exposure, controllability tests in [WP-V-01](WP-V-01-safety-validation.md), crash statistics). A factor without evidence is set to 1.
    `λ_HB,SH ≤ k · λ_B1 / P(harm | HB)`
 3. **Demonstration size.** For a zero-failure demonstration at confidence C, the exposure needed is
@@ -91,10 +91,14 @@ Targets are **proposals**: numeric values are placeholders for the assessor revi
 | VT-05 | SH-05 override not effective | Release on brake / cancel / steering override | 100 % release within SG-05 budget in ≥ 299 trials per input type and speed band (p ≤ 1 % at 95 %) | Deterministic function, tested as a sample | CC, HIL (WP-V-05) | Yes |
 | VT-06 | SH-06 missed or late stationary/slow lead | Collision or required driver braking > 5 m/s² | p_s ≤ 1 % per approach-speed band in the ODD (KS-05, KS-08); FCW at TTC ≥ 2 s (AIR-06) | §3 step 5, case E; B2 comparison | CC with soft target, SIM | Yes for the bands tested |
 | VT-07 | SH-08 PCS suppression | Stock PCS activation with LD-SDA installed vs stock | Equivalent activation (same TTC ± 0.2 s) in every PCS soft-target test | B2 | CC (KS-20; VS-VAL in WP-V-01) | Yes |
-| VT-08 | Misuse (SH-09+, WP-C-05) via DM | Distraction detection | AIR-07/AIR-08 thresholds per DM stratum | Controllability basis | EVAL (VS-ML-06), CC | Yes |
+| VT-08 | SH-12 prolonged unsupervised operation (DM) | Distraction, phone, sleep detection; fallback on camera blockage | AIR-07/AIR-08 thresholds per DM stratum; DMP-01…DMP-04; AC-05 | WP-C-08 §5.3 | EVAL (VS-ML-06), CC (WP-C-08 §8 V-5) | Yes |
 | VT-09 | All | Comparative performance vs stock TSS2 (B2) | LD-SDA not worse than stock in any KS scenario run with both (metric per scenario in WP-V-03) | B2 | CC, PR (paired routes) | Yes for scenarios run |
 | VT-10 | All | Unknown-scenario discovery rate | Discovery rate of new hazardous scenario classes (WP-V-04 §5) decreasing over the last 3 exploration blocks, with no class of severity S3 found in the last block | 21448 §11 | PR, SIM exploration, log mining | Yes as a trend; not as a proof |
 | VT-11 | All | Field: harm-level events attributable to LD-SDA | Zero injury crashes; trigger thresholds for restriction defined in WP-O-04 | B1 (long-term) | Field monitoring | Long-term only |
+| VT-12 | SH-13 operation outside the ODD | Engaged operation above the ODD speed bound or in excluded conditions | Deterministic speed bound (FM-07): 100 % prevention/disengagement in ≥ 59 trials per speed threshold; other exits covered by user information and driver procedure (AC-04) | FM-07, FM-08 | CC, inspection | Yes for speed; not for other exits |
+| VT-13 | SH-10 assisted lane change into an occupied lane | Driver can abort a nudge-initiated lane change | Abort controllable in ≥ 20/20 subjects (CA-01 logic) | WP-C-06 TC-28 | CC (KS-14) | Yes |
+
+SH-09 (traffic-control non-compliance) has no target: Experimental Mode is off and locked (FM-01) and KS-24 verifies the exclusion. SH-11 (no VRU response) has no rate target: [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) resolves TC-12 by ODD restriction and user information; KS-22 and KS-23 only verify that the item does not move toward a VRU it cannot see.
 
 ## 5. Test methods
 
@@ -126,30 +130,44 @@ For each scenario family, the fidelity case shall compare MetaDrive results with
 
 ## 6. Coverage of triggering conditions
 
-Provisional TC categories (from `docs/LIMITATIONS.md`, the gap assessment and WP-C-11 §5) and the methods that cover them. Replace with WP-C-06 TC IDs (OI-1).
+Triggering conditions from [WP-C-06 §4](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md), the known scenarios that cover them ([WP-V-03](WP-V-03-sotif-known-scenarios.md)) and the methods used. TCs that WP-C-06 resolves by ODD exclusion are covered by an ODD-exit check rather than a performance test.
 
-| TC category (provisional) | Example | Known scenarios (WP-V-03) | M3 | M4 | M5 | M8 | M9 |
-|---|---|---|---|---|---|---|---|
-| Road geometry beyond capability | Sharp curves, ramps, banked roads (`LIMITATIONS.md:14, 16`) | KS-01, KS-02 | ● | ● | | ● | ● |
-| Lane marking degradation / ambiguity | Worn paint, tar seams, gore areas, construction (`:15`) | KS-03, KS-04, KS-13 | ● | ○ | | ● | ● |
-| Stationary / slow objects in lane | Stopped vehicle (`:37`) | KS-05, KS-08 | ● | ○ | ● | ● | ● |
-| Cut-ins and lead changes | Close cut-in (`:39`) | KS-07, KS-09 | ● | ○ | ● | ● | ● |
-| Radar / vision false objects | Overpass, metal plate, toll booth (`:33`) | KS-10, KS-11 | ● | | | ● | ● |
-| Illumination | Low sun, oncoming headlights, tunnels (`:18`) | KS-12, KS-17 | ● | | | ○ | ● |
-| Weather / optical path (ODD boundary) | Rain, dirty windscreen (`:10-12`) | KS-15, KS-16 | ● | | | ● | ○ |
-| Calibration / mounting | Mis-mount, drift (`:13`, AOU-08) | KS-16 | ● | ● | | ● | |
-| Driver state (DM) | Sunglasses, night, face out of view (`:53-56`) | KS-17, KS-18 | ● | | | ● | ● |
-| Driver interaction | Override in curve, lane-change nudge, gas override | KS-14, KS-19 | | | | ● | ● |
-| Internal degradation (system-level) | Frame drops, model lag, stale inputs during soft disable (GAP-16) | KS-21 | ● | ● | | ● | |
-| PCS interaction | Stock PCS event while installed | KS-20 | | | | ● | |
-| Vulnerable road users near the lane | Pedestrian or cyclist at the lane edge (`:34`) | KS-22 | ● | | | ● | ● |
-| Standstill and resume | Queue, pedestrian crossing in front of a stopped ego vehicle (HE-03.2) | KS-23 | | | ● | ● | ○ |
+| TC | Short name | KS | M1 | M3 | M4 | M5 | M8 | M9 |
+|---|---|---|---|---|---|---|---|---|
+| TC-01, TC-02 | Low sun, oncoming headlights | KS-12 | | ● | | | ○ | ● |
+| TC-03 | Rain, spray, wet reflections | KS-15 | | ● | | | ○ | ● |
+| TC-04 | Fog, snow (outside ODD) | KS-15 (ODD-exit check) | | | | | | ○ |
+| TC-05 | Faded / doubled markings, tar seams | KS-03 | | ● | ○ | | ● | ● |
+| TC-06 | Work zone (outside ODD) | KS-13 (ODD-exit check) | | ● | | | ● | ○ |
+| TC-07 | Close cut-in | KS-07 | | ● | ○ | ● | ● | ● |
+| TC-08 | Stationary vehicle in lane | KS-05 | | ● | ○ | ● | ● | ● |
+| TC-09 | Cut-out revealing stopped vehicle | KS-09 | | ● | | ● | ● | |
+| TC-10, TC-11 | Overhead structures, metal plates, radar emitters | KS-10, KS-11 | | ● | | | ● | ● |
+| TC-12 | VRU at road edge or crossing | KS-22 | | ● | | | ● | ○ |
+| TC-13 | Signals / stop signs (Experimental only) | KS-24 (exclusion check) | | | | | | |
+| TC-14 | Curve tighter than R_ODD, ramps | KS-01 | | ● | ● | | ● | ● |
+| TC-15, TC-16 | Banking, crown, cross-wind, grades | KS-02 | | ● | ○ | | ○ | ● |
+| TC-17 | Crest with limited sight distance | KS-05 (crest variant) | | ● | | ● | ○ | ● |
+| TC-18 | Tunnel (not validated, excluded) | KS-12 (ODD-exit check) | | ○ | | | | ○ |
+| TC-19 | Mount disturbed, dirty windscreen | KS-16 | | ● | | | ● | |
+| TC-20 | Speed above ODD | KS-25 | ● | | | | ● | |
+| TC-21 | Extreme ambient temperature | KS-21 (overheat path) | ● | | | | ○ | ○ |
+| TC-22 | Big model load/fail (excluded, FM-02) | KS-24 (exclusion check) | | | | | | |
+| TC-23 | Message delays / process restart | KS-21 | ● | | ● | | ● | |
+| TC-24 | Sunglasses, low light, face out of view | KS-17 | | ● | | | ● | ● |
+| TC-25 | Periodic small inputs while inattentive | KS-18 | | ● | | | ● | |
+| TC-26 | Debug / DM demo parameters | KS-24 (configuration check) | | | | | | |
+| TC-27 | Resume with pedestrian between ego and lead | KS-23 | | | | ● | ● | |
+| TC-28 | Lane-change nudge with vehicle in blind spot | KS-14 | | | | | ● | ○ |
+| TC-29 | Gas override mistaken for disengagement | KS-19 | | | | | ● | ● |
+| TC-30 | PCM cruise stays active after disengagement | KS-26 | ● | | | | ● | |
+| TC-31 | Exit lane / lane split | KS-04 | | ● | | | | ● |
 
-● primary, ○ supporting.
+M1 process replay, M3 model evaluation, M4 simulation, M5 planner maneuver tests, M8 closed course, M9 public road. ● primary, ○ supporting. Every TC has at least one KS; AC-01 of WP-C-05 is checked against this table.
 
 ## 7. Verification of SOTIF functional modifications
 
-Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md) (candidates FM-1…FM-7 in [WP-M-08 §8](../01-management/WP-M-08-sotif-plan.md#8-candidate-functional-modifications-input-to-wp-c-07)) gets a verification entry in [WP-S-09](../03-system/WP-S-09-system-verification.md) and is re-checked in the WP-V-03 scenarios it targets. A modification is credited in the residual-risk argument only after both.
+Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md) (FM-01…FM-11) gets a verification entry in [WP-S-09](../03-system/WP-S-09-system-verification.md) and is re-checked in the WP-V-03 scenarios it targets. A modification is credited in the residual-risk argument only after both.
 
 ## 8. Outputs
 
@@ -165,7 +183,7 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 
 | ID | Item |
 |---|---|
-| OI-1 | Replace provisional SH and TC references with WP-C-05 / WP-C-06 IDs |
+| OI-1 | Keep the §6 TC table in step with WP-C-06 revisions (new TCs need a KS entry) |
 | OI-2 | Select B1 data set and filter to the ODD; replace the illustrative rates of §3.1 (shared with WP-M-08 OI-1) |
 | OI-3 | Approve numeric targets VT-01…VT-11 with the assessor before collecting evidence |
 | OI-4 | Build the simulation fidelity case (§5.3) and decide which families get credit (WP-M-08 OI-3) |
