@@ -25,7 +25,7 @@ This document specifies the verification of the integrated item **in the referen
 
 Verification versus validation: this document checks that the item meets its specified requirements and that the AoUs it relies on hold for the reference vehicle. Whether the safety goals are adequate and achieved at vehicle level for real drivers is validated in WP-V-01.
 
-**Requirement references.** Cases trace to FSRs, AoUs and the TSRs of [WP-S-02](WP-S-02-technical-safety-requirements.md) (Draft v0.1). [WP-S-01](WP-S-01-system-requirements.md) (system requirements) has no published IDs yet; SYS IDs are added when it is published (OI-1).
+**Requirement references.** Cases trace to FSRs, AoUs and the TSRs of [WP-S-02](WP-S-02-technical-safety-requirements.md) (Draft v0.1). System requirements are those of [WP-S-01](WP-S-01-system-requirements.md) (Draft v0.1, SYS-nnn).
 
 ## 2. Preconditions
 
@@ -74,28 +74,28 @@ Verification versus validation: this document checks that the item meets its spe
 
 | ID | Title | Trace | Procedure (summary) | Pass criteria |
 |---|---|---|---|---|
-| VS-SQ-08 | Engagement and disengagement end-to-end | FSR-01.05, FSR-05.01, FSR-05.02, FSR-05.05; TSR-301, TSR-302, TSR-303, TSR-309 | Engage with stalk at several speeds (incl. standstill per WP-C-01 OI-7); disengage by brake, cancel, main-switch off | Engagement only on PCM edge; release ≤ 0.2 s; device HMI, cluster and envelope state agree (no mode confusion) |
-| VS-SQ-09 | Gas override | FSR-04.04, FSR-05.04; TSR-203, TSR-305 | Press gas while engaged during decel and during follow | Only inactive accel sent while gas pressed; lateral continues; on release, longitudinal resumes without a step above the jerk bound |
+| VS-SQ-08 | Engagement and disengagement end-to-end | FSR-01.05, FSR-05.01, FSR-05.02, FSR-05.05; TSR-301, TSR-302, TSR-303, TSR-309; SYS-040, SYS-041, SYS-042, SYS-080 | Engage with stalk at several speeds (incl. standstill per WP-C-01 OI-7); disengage by brake, cancel, main-switch off | Engagement only on PCM edge; release ≤ 0.2 s; device HMI, cluster and envelope state agree (no mode confusion) |
+| VS-SQ-09 | Gas override | FSR-04.04, FSR-05.04; TSR-203, TSR-305; SYS-042 | Press gas while engaged during decel and during follow | Only inactive accel sent while gas pressed; lateral continues; on release, longitudinal resumes without a step above the jerk bound |
 | VS-SQ-10 | Steering override | FSR-05.03; TSR-304 | Driver steers against commanded torque at three force levels | Commanded torque reduced to not oppose the driver within ≤ 0.2 s. **Expected to fail until GAP-02 is closed** |
-| VS-SQ-11 | Accel / decel limits and jerk on vehicle | FSR-03.01…03.03, FSR-04.01, FSR-04.02; TSR-201…TSR-205 | Follow a lead target that brakes/accelerates; cut-out of the lead; test host build requests limit-exceeding values (envelope in release form) | Achieved vehicle accel within derived bounds; jerk within bound; GC-1 |
+| VS-SQ-11 | Accel / decel limits and jerk on vehicle | FSR-03.01…03.03, FSR-04.01, FSR-04.02; TSR-201…TSR-205; SYS-022, SYS-024, SYS-026 | Follow a lead target that brakes/accelerates; cut-out of the lead; test host build requests limit-exceeding values (envelope in release form) | Achieved vehicle accel within derived bounds; jerk within bound; GC-1 |
 | VS-SQ-12 | SoC loss while driving | FSR-01.07, FSR-02.05; TSR-407, TSR-408, TSR-510, TSR-516; SG-02 | On the straight and in a curve at 60 km/h: kill pandad (test build trigger), then freeze the SoC (SIGSTOP of all onroad processes) | Authority revoked after > 0.3 s without heartbeat (TSR-407) or > 50 ms without `0x2E4` (TSR-408); panda acoustic warning ≤ 0.5 s after detection (TSR-516); driver retakes control without lateral deviation beyond the bound. **Expected to fail timing (GAP-06)** |
-| VS-SQ-13 | Fault-induced lateral safe-state transition in a curve | FSR-02.03, FSR-02.04; TSR-109, TSR-601, TSR-606; HE-02.1 | Constant-radius curve at speed: trigger (a) an "untrusted command" fault (immediate SS-L) and (b) a "planned" fault (soft disable ramp) via test host build | Warning precedes or coincides with torque reduction; (a) torque zero at once; (b) ramp per FSR-02.04; lateral deviation recorded; input to WP-C-08 §8 controllability |
-| VS-SQ-14 | Longitudinal safe-state transition | FSR-04.03, FSR-06.02; TSR-206, TSR-601, TSR-606 | At 50/90 km/h in steady follow: trigger longitudinal fault; observe inactive value and cancel | Deceleration step ≤ jerk bound; warning ≤ 1 s; ACC cancelled |
-| VS-SQ-15 | Driver monitoring escalation and lockout | FSR-02.06…02.09 (QM); TSR-608…TSR-612 | Closed course, safety driver simulates distraction per WP-C-08 scripts | Alerts at 5/8/13 s (vision) and wheel-touch fallback timings (`openpilot/selfdrive/monitoring/policy.py:31-36`); no-response force decel and lockout (`policy.py:39-44`) |
+| VS-SQ-13 | Fault-induced lateral safe-state transition in a curve | FSR-02.03, FSR-02.04; TSR-109, TSR-601, TSR-606; HE-02.1; SYS-081, SYS-082 | Constant-radius curve at speed: trigger (a) an "untrusted command" fault (immediate SS-L) and (b) a "planned" fault (soft disable ramp) via test host build | Warning precedes or coincides with torque reduction; (a) torque zero at once; (b) ramp per FSR-02.04; lateral deviation recorded; input to WP-C-08 §8 controllability |
+| VS-SQ-14 | Longitudinal safe-state transition | FSR-04.03, FSR-06.02; TSR-206, TSR-601, TSR-606; SYS-081 | At 50/90 km/h in steady follow: trigger longitudinal fault; observe inactive value and cancel | Deceleration step ≤ jerk bound; warning ≤ 1 s; ACC cancelled |
+| VS-SQ-15 | Driver monitoring escalation and lockout | FSR-02.06…02.09 (QM); TSR-608…TSR-612; SYS-060, SYS-062, SYS-063 | Closed course, safety driver simulates distraction per WP-C-08 scripts | Alerts at 5/8/13 s (vision) and wheel-touch fallback timings (`openpilot/selfdrive/monitoring/policy.py:31-36`); no-response force decel and lockout (`policy.py:39-44`) |
 
 ### 5.3 Regression on recorded data
 
 | ID | Title | Trace | Procedure (summary) | Pass criteria |
 |---|---|---|---|---|
-| VS-SQ-16 | Process replay regression | System requirements (WP-S-01); TSR-601…TSR-618 (regression) | Run `test_processes.py` for controlsd, plannerd, radard, dmonitoringd, calibrationd, locationd, paramsd, torqued against fork-owned references of the previous release | No unexplained differences; each explained difference has an approved change request |
+| VS-SQ-16 | Process replay regression | TSR-601…TSR-618 (regression); SYS-001…SYS-008, SYS-020…SYS-026 (regression) | Run `test_processes.py` for controlsd, plannerd, radard, dmonitoringd, calibrationd, locationd, paramsd, torqued against fork-owned references of the previous release | No unexplained differences; each explained difference has an approved change request |
 | VS-SQ-17 | Safety replay of the full Corolla log set | FSR-01.xx…07.xx; TSR-101…TSR-110, TSR-201…TSR-207, TSR-301…TSR-311, TSR-401…TSR-406 | Run `safety_replay/replay_drive.py` over all fork-owned logs with the release safety model | Zero TX violations from the release host; every `controls_allowed` transition explained by a PCM/brake event |
-| VS-SQ-18 | Controller margin to envelope | FSR-01.14; TSR-605; WP-A-03 DFI-08 | From the replay of VS-SQ-17, compute the distribution of commanded torque, torque rate and accel relative to the envelope limits | Commanded values stay below the margin target (e.g. ≤ 90 % of envelope bound) in ≥ 99.9 % of frames; time at the bound recorded. **Expected to fail today** (identical limits, `opendbc_repo/opendbc/car/toyota/values.py:20-21`) |
+| VS-SQ-18 | Controller margin to envelope | FSR-01.14; TSR-605; WP-A-03 DFI-08; SYS-120 | From the replay of VS-SQ-17, compute the distribution of commanded torque, torque rate and accel relative to the envelope limits | Commanded values stay below the margin target (e.g. ≤ 90 % of envelope bound) in ≥ 99.9 % of frames; time at the bound recorded. **Expected to fail today** (identical limits, `opendbc_repo/opendbc/car/toyota/values.py:20-21`) |
 
 ### 5.4 Long-duration verification
 
 | ID | Title | Trace | Procedure (summary) | Pass criteria |
 |---|---|---|---|---|
-| VS-SQ-19 | Supervised endurance drive | All SG; TSR-1xx…TSR-7xx (observation); system requirements | After G1, under WP-V-07: drive a defined mileage across the ODD with a safety driver; log everything | No GC-1/GC-2 violation; every disengagement and alert classified (driver-initiated, fault, ODD exit); no unexplained envelope intervention; no panda fault flags; problem reports for all anomalies. Mileage target set in [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) |
+| VS-SQ-19 | Supervised endurance drive | All SG; TSR-1xx…TSR-7xx (observation); SYS-001, SYS-003, SYS-004, SYS-008, SYS-020, SYS-022, SYS-081, SYS-120, SYS-140, SYS-141 | After G1, under WP-V-07: drive a defined mileage across the ODD with a safety driver; log everything | No GC-1/GC-2 violation; every disengagement and alert classified (driver-initiated, fault, ODD exit); no unexplained envelope intervention; no panda fault flags; problem reports for all anomalies. Mileage target set in [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) |
 
 ## 6. Coverage
 
@@ -109,7 +109,7 @@ Verification versus validation: this document checks that the item meets its spe
 | TSR-501…TSR-516 MCU platform | Bench only (WP-S-08, WP-H-06, WP-V-05); VS-SQ-12 (TSR-510, -516); VS-SQ-19 observes fault flags |
 | TSR-601…TSR-618 host monitoring | VS-SQ-13…-16, -18 |
 | TSR-701…TSR-710 PCS / harness | VS-SQ-06 (TSR-704, -708, -709); others on the bench |
-| System requirements (WP-S-01) | VS-SQ-08, -15, -16, -19 (to be extended when WP-S-01 IDs exist) |
+| System requirements (WP-S-01) | SYS-001…008: VS-SQ-16, -19; SYS-020…027: VS-SQ-11, -16, -19; SYS-040…043: VS-SQ-08, -09; SYS-060…063: VS-SQ-15; SYS-080…083: VS-SQ-08, -13, -14; SYS-120: VS-SQ-18, -19; SYS-140, -141: VS-SQ-19. Not covered here: SYS-005/006 (lane change), SYS-027, SYS-043, SYS-061, SYS-083, SYS-100…102, SYS-121, SYS-142…145 (OI-6) |
 
 ## 7. Report (template)
 
@@ -149,8 +149,9 @@ Summary (to complete after execution): AoU verdicts and their effect on HARA ⚠
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Add SYS IDs (WP-S-01) to §5 and §6; re-check TSR references when WP-S-02 leaves Draft | Safety engineer | G2 |
+| OI-1 | Re-check TSR and SYS references when WP-S-01/WP-S-02 leave Draft | Safety engineer | G2 |
 | OI-2 | Define the closed-course test builds (host and panda) for VS-SQ-02, -03, -05, -12, -13 as configuration items, including how they are prevented from reaching public-road use | Maintainer | Before first closed-course session |
 | OI-3 | Specify course geometry and speeds per case from the FTTI derivation (WP-S-04) | Safety engineer | G2 |
 | OI-4 | Run VS-SQ-01, -02, -04, -05, -06 early (G1): they decide the HARA ⚠ ratings and the envelope strategy (WP-C-04 OI-2) | Safety engineer | G1 |
-| OI-5 | Fix the margin target for VS-SQ-18 together with the derived limits | Safety engineer | G2 |
+| OI-5 | Fix the margin target for VS-SQ-18 together with the derived limits (TSR-605) | Safety engineer | G2 |
+| OI-6 | Add verification cases for the WP-S-01 requirements listed as not covered in §6, or allocate them to WP-S-08 / WP-V-03 | Test lead | G2 |
