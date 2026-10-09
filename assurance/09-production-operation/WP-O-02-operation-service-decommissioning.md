@@ -22,7 +22,7 @@ This document says what has to happen during the life of an installed LD-SDA so 
 - **Software updates** (§6), with the policy owned by [WP-O-05](WP-O-05-cybersecurity-incident-response-updates.md) and decision D-05.
 - **Decommissioning**: removing the item, restoring the stock vehicle, and wiping data and keys (§7).
 
-It applies to the reference configuration only ([WP-M-01 §3.1](../01-management/WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to)). The derived requirements belong in the TSR-8xx block of [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md), which does not exist yet (OI-1). The user-facing wording of the operating instructions is in [WP-O-03](WP-O-03-user-information-safety-warnings.md).
+It applies to the reference configuration only ([WP-M-01 §3.1](../01-management/WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to)). The derived requirements are the TSR-8xx block of [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) (Draft), which traces them to the OPS/SVC/UPD/DEC items here (OI-1). The user-facing wording of the operating instructions is in [WP-O-03](WP-O-03-user-information-safety-warnings.md).
 
 ## 2. Assumptions this document protects
 
@@ -168,7 +168,7 @@ Decommissioning applies when the item is removed from the vehicle permanently, w
 
 ### 7.3 End of support for a release
 
-When a release reaches end of support (no further security or safety fixes), every user is informed through the channel in [WP-O-03](WP-O-03-user-information-safety-warnings.md) §9, with the date after which the release must not be engaged. End of support is decided and announced under [WP-O-05](WP-O-05-cybersecurity-incident-response-updates.md) (21434 §14).
+When a release reaches end of support (no further security or safety fixes), every user is informed through the channel in [WP-O-03](WP-O-03-user-information-safety-warnings.md) §11, with the date after which the release must not be engaged. End of support is decided and announced under [WP-O-05](WP-O-05-cybersecurity-incident-response-updates.md) (21434 §14).
 
 ### 7.4 Records
 
@@ -189,7 +189,7 @@ A decommissioning record is added to the vehicle's installation record: date, pe
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Specify TSR-8xx operation, service and decommissioning requirements in [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) and trace OPS/SVC/UPD/DEC items to them | G2 |
+| OI-1 | Review the OPS/SVC/UPD/DEC → TSR-8xx trace in [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) (requirements now drafted) | G2 |
 | OI-2 | Decide whether the item should read selected vehicle DTC states itself (e.g. EPS, VSC) and block engagement, instead of relying on the driver's lamp check (OPS-01) | G2 |
 | OI-3 | Confirm periodic maintenance intervals (§4.3) from field data | G6 |
 | OI-4 | Test the inherited updater's connectivity-required lockout against a LionDriver update origin with automatic updates disabled | G4 |

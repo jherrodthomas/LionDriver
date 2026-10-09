@@ -175,7 +175,7 @@ CI integration (run on PRs touching `assurance/trace/**`, WP-C-01, WP-C-03 or SR
 | # | Inconsistency | Handling here | Owner |
 |---|---|---|---|
 | 1 | [`assurance/README.md`](../README.md) and WP-P-06 use `HS-<nn>` for hazardous events; WP-C-03 uses `HE-nn.n` | Data follows WP-C-03 (`HE-`); checker accepts both prefixes | Align README / WP-P-06 or WP-C-03 |
-| 2 | WP-P-06 §5.1 places functional modifications under the `SOTIF-` prefix; WP-C-05 refers to them as `FM-01`…`FM-06` | Both prefixes accepted by the checker | Align WP-P-06 / WP-C-05 / WP-C-07 |
+| 2 | WP-P-06 §5.1 placed functional modifications under the `SOTIF-` prefix; WP-C-05/WP-C-07 use `FM-01`…`FM-11` | Resolved: WP-P-06 §2 now uses `FM-` and lists the full prefix grammar (suffix letters, `VS-<AREA>-`, `DVR-`, `DEV-`, `MON-`, `KS-`, `AIR-`, `DSR-`, `MLR-`); the checker accepts all of them and still accepts `SOTIF-` | — |
 | 3 | WP-C-03 defines no H-07 (H-06 → H-08) | Recorded as a comment in `hazards.yaml`; no H-07 created | WP-C-03 |
 | 4 | WP-C-03 marks HE-01.3 and HE-01.4 ⚠ but states no alternative ASIL | `asil_if_aou_fails: null`, AoUs taken from the H-01 group | WP-C-03 |
 | 5 | WP-C-03 HE-04.2 credits AOU-10 in its rationale but is not ⚠-flagged | `aou_flag: false`, `aou_dependency: [AOU-10]` | WP-C-03 |

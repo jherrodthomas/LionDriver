@@ -45,7 +45,7 @@ Defines how LionDriver work products are written, identified, versioned, reviewe
 | Items inside a WP | ID prefixes from [`assurance/README.md`](../README.md#identifiers) (H-, SG-, FSR-, TSR-, ...). IDs never reused; withdrawn items keep their ID with status `Withdrawn` |
 | Open items | `OI-<n>`, unique per document |
 | Sections | Numbered headings; links use GitHub anchors |
-| Record files | Review records `RR-<YYYY>-<nnn>`; confirmation records under `10-safety-case/confirmation/` per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
+| Record files | Review records `RR-<YYYY>-<nnn>`; confirmation records under `10-safety-case/confirmation/` (folder to be created, WP-M-06 OI-6) per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 
 ## 5. Document control header and status
 
@@ -122,7 +122,7 @@ Git history is never rewritten on protected branches. Superseded documents remai
 | ID | Item |
 |---|---|
 | OI-1 | CI check that each WP header `Status`/`Version` matches the register |
-| OI-2 | Markdown link checker in CI for `assurance/**` (links to WPs not yet written will fail until they exist) |
+| OI-2 | Markdown link checker in CI for `assurance/**`. A prototype (relative links, anchors ignored) was run in the consistency pass: the only broken targets were software WPs still being drafted |
 | OI-3 | Script for the assessor export (§8), including GitHub PR/issue export |
 | OI-4 | Add the "Revision history" table to every WP at first approval |
 | OI-5 | Decide where non-redistributable reference documents are stored |

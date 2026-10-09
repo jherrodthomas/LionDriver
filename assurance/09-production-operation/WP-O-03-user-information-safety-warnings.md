@@ -204,33 +204,33 @@ This addendum applies until release (G5). It supplements, and does not replace, 
 
 ## 12. Traceability to hazards, safety goals, AoUs and misuse
 
-Misuse-case IDs are to be taken from [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) when it exists; the "Misuse / insufficiency addressed" column describes them in words until then (OI-2).
+Misuse-case IDs MC-01…MC-12 are those of [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §6; they are given in the "Misuse / insufficiency addressed" column where a row matches a misuse case, with the description kept in words. ODD: [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md).
 
 | UI item | Hazard / SG | AoU | Misuse / insufficiency addressed | Source |
 |---|---|---|---|---|
 | UI-01, UI-04 | H-01, H-02, H-03, H-06 / SG-01, SG-02, SG-03, SG-06 (controllability C2 basis) | AOU-06 | Over-reliance; treating L2 as self-driving | WP-C-03 §5; `docs/LIMITATIONS.md:4, 25` |
-| UI-02 | All | AOU-08, AOU-09 | Use on non-reference vehicle | WP-M-01 §3.1 |
+| UI-02 | All | AOU-08, AOU-09 | MC-11: Use on non-reference vehicle | WP-M-01 §3.1 |
 | UI-03, UI-21 | H-08 / SG-07 | AOU-04 | Reliance on AEB | WP-C-01 §2.2 |
-| UI-05 | H-01, H-02 / SG-01, SG-02 | AOU-02, AOU-06 | Hands-off driving (foreseeable; openpilot does not require hands on) | WP-C-03 HE-02.1; `docs/SAFETY.md:32` (0.9 s to 1 m) |
-| UI-06, UI-35 | H-06 / SG-06 (SOTIF SH-06) | AOU-06 | Reliance on light/sign detection; speed limits | `docs/LIMITATIONS.md:35-36`; GAP-18 |
+| UI-05 | H-01, H-02 / SG-01, SG-02 | AOU-02, AOU-06 | MC-01: Hands-off driving (foreseeable; openpilot does not require hands on) | WP-C-03 HE-02.1; `docs/SAFETY.md:32` (0.9 s to 1 m) |
+| UI-06, UI-35 | H-06 / SG-06 (SOTIF SH-06) | AOU-06 | MC-09: Reliance on light/sign detection; speed limits | `docs/LIMITATIONS.md:35-36`; GAP-18 |
 | UI-07 | All | AOU-06 | Impaired or unbriefed driver | AOU-06 |
-| UI-08 | H-01 | AOU-06 | Lane change without checking | `docs/LIMITATIONS.md:6` |
-| UI-09, UI-10 | H-01, H-02, H-04, H-06 (SOTIF triggering conditions) | AOU-06 | Use outside ODD | WP-C-02 (pending); `docs/LIMITATIONS.md:8-21, 27-43` |
-| UI-11 | H-03, H-04, H-06 | — | Unvalidated end-to-end longitudinal | D-08; GAP-18 |
+| UI-08 | H-01 | AOU-06 | MC-10: Lane change without checking | `docs/LIMITATIONS.md:6` |
+| UI-09, UI-10 | H-01, H-02, H-04, H-06 (SOTIF triggering conditions) | AOU-06 | MC-07: Use outside ODD | WP-C-02; `docs/LIMITATIONS.md:8-21, 27-43` |
+| UI-11 | H-03, H-04, H-06 | — | MC-09: Unvalidated end-to-end longitudinal | D-08; GAP-18 |
 | UI-12 | All | AOU-08, AOU-09, AOU-10 | Driving with faults or obstructed sensors | [WP-O-02](WP-O-02-operation-service-decommissioning.md) OPS-01…OPS-05 |
 | UI-13 | H-01, H-02 (SOTIF) | AOU-08 | Driving with stale calibration | `calibrationd.py:24-36` |
-| UI-14…UI-17 | H-05 / SG-05; mode confusion → H-02, H-06 | AOU-03 | Mode confusion; belief that gas disengages | WP-C-03 §4 (F-03/F-05), HE-05.3; `longitudinal.h:3-5`; `params_keys.h:35` |
-| UI-18, UI-19 | H-02, H-06 / SG-02, SG-06 | AOU-06 | Slow reaction to take-over request; waiting out soft disable | `events.py:161-182` (alert classes); GAP-16 |
+| UI-14…UI-17 | H-05 / SG-05; mode confusion → H-02, H-06 | AOU-03 | MC-08: Mode confusion; belief that gas disengages | WP-C-03 §4 (F-03/F-05), HE-05.3; `longitudinal.h:3-5`; `params_keys.h:35` |
+| UI-18, UI-19 | H-02, H-06 / SG-02, SG-06 | AOU-06 | MC-12: Slow reaction to take-over request; waiting out soft disable | `events.py:161-182` (alert classes); GAP-16 |
 | UI-20 | H-06 (SOTIF) | AOU-06 | Confusing FCW with automatic braking | `events.py:493-498`; F-06 |
 | UI-22, UI-23 | H-02 / SG-02 | AOU-06 | Reliance in sharp curves | `events.py:511-517, 619-625` |
 | UI-24 | — | — | Repeated attempts to engage under no-entry | `events.py:149-158` |
 | UI-25 | — (QM) | — | — | F-07; `selfdrive/controls/lib/ldw.py` |
 | UI-28 | H-01…H-06 | AOU-06 | Expecting an alert before every error | SOTIF residual insufficiency |
-| UI-29…UI-31 | H-02, H-06 (controllability) | AOU-06 | Inattention | `policy.py:28-44`; `events.py:519-565` |
-| UI-32, UI-33 | H-02, H-06 | AOU-06 | Over-trust in DM; DM defeat; DM demo mode (`IsDriverViewEnabled`) | `docs/LIMITATIONS.md:47-58`; GAP-20, GAP-21 |
+| UI-29…UI-31 | H-02, H-06 (controllability) | AOU-06 | MC-02, MC-03: Inattention | `policy.py:28-44`; `events.py:519-565` |
+| UI-32, UI-33 | H-02, H-06 | AOU-06 | MC-04, MC-05, MC-06: Over-trust in DM; DM defeat; DM demo mode (`IsDriverViewEnabled`) | `docs/LIMITATIONS.md:47-58`; GAP-20, GAP-21 |
 | UI-34 | H-01, H-02 | AOU-06, AOU-08 | — (functional insufficiency awareness) | `docs/LIMITATIONS.md:8-21` |
 | UI-35, UI-36 | H-03, H-04, H-06 | AOU-06 | Reliance on ACC for stationary vehicles; surprise at phantom braking | `docs/LIMITATIONS.md:27-43` |
-| UI-38 | All | AOU-06, AOU-09 | Deliberate misuse (inattention, DM defeat, modification, debug modes) | GAP-20; ISO 21448 Annex B categories |
+| UI-38 | All | AOU-06, AOU-09 | MC-05, MC-06, MC-11: Deliberate misuse (inattention, DM defeat, modification, debug modes) | GAP-20; ISO 21448 Annex B categories |
 | UI-39, UI-40 | — (field monitoring) | — | Under-reporting | [WP-O-04](WP-O-04-field-monitoring.md) |
 | UI-41, UI-42 | All | AOU-01…AOU-05, AOU-09 | Use after vehicle changes; use after stop-use notice | [WP-O-02](WP-O-02-operation-service-decommissioning.md) §4, §6 |
 | UI-43 | — (privacy, CS) | AOU-11 | — | [WP-O-04](WP-O-04-field-monitoring.md) §5 |
@@ -257,7 +257,7 @@ These affect the user text and should be fixed in the software rather than expla
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Merge the final ODD (WP-C-02), insufficiency list (WP-C-06) and misuse analysis (WP-C-08) into §4, §9, §10 and §12 | G1 |
-| OI-2 | Replace the misuse descriptions in §12 with WP-C-08 misuse-case IDs | G1 |
+| OI-2 | Review the MC-ID mapping in §12 with the WP-C-08 owner (first mapping done in this pass) | G1 |
 | OI-3 | Fix the accelerator behaviour statement (UI-16) after the HMI decision on `DisengageOnAccelerator` | G1 |
 | OI-4 | Complete UI-11 after decision D-08, UI-39/UI-43 after the WP-O-04 data path and privacy decisions | G1 |
 | OI-5 | Human-factors review and comprehension test of the draft text with drivers who are not project members | G5 |

@@ -211,7 +211,7 @@ Results (template — **Not yet executed**):
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
 | OI-1 | Confirm vehicle width, lane-margin design value and a_y,EPS (M-01) and recompute §3.1 | Safety engineer | G2 |
-| OI-2 | SG-02 at the ODD curve bound: physical time to departure (≈ 0.7 s) is shorter than driver reaction; HARA owner to review C rating of HE-02.1 or tighten R_ODD | HARA owner | G2 |
+| OI-2 | SG-02 at the ODD curve bound: physical time to departure (≈ 0.7 s) is shorter than driver reaction; HARA owner to review C rating of HE-02.1 or tighten R_ODD (tracked as WP-C-03 OI-7; noted in WP-C-04 §8) | HARA owner | G2 |
 | OI-3 | Check SG-03 standstill-launch distance assumptions with WP-C-08 | Safety engineer | G2 |
 | OI-4 | Obtain PCS message timing requirements to bound forwarding latency and relay transitions (TSR-707) | Safety engineer | G2 |
 | OI-5 | Execute M-01…M-11 and fill §6 results | Test lead | G4 |

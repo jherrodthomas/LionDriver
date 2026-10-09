@@ -117,7 +117,7 @@ A T3 event becomes T2 when its rate exceeds the threshold in §5 or a new patter
 
 ## 5. KPIs and thresholds
 
-Thresholds are placeholders until the SOTIF validation targets ([WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md)) and baseline rates from development driving exist (OI-5). A KPI breach is a problem report, not an automatic field action.
+Thresholds are placeholders until the SOTIF validation targets proposed in [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) §4 (VT-01…VT-13, Draft, not yet confirmed) are agreed and baseline rates from development driving exist (OI-5). A KPI breach is a problem report, not an automatic field action.
 
 | KPI | Definition | Initial threshold (placeholder) | Linked claim |
 |---|---|---|---|

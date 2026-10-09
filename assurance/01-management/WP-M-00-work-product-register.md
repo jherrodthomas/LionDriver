@@ -164,7 +164,7 @@ Legend for **ASPICE**: process IDs from ASPICE PAM 4.0, including the ML (MLE), 
 |---|---|---|---|---|---|---|---|---|
 | [WP-K-01](../10-safety-case/WP-K-01-safety-case.md) | Safety case (GSN, integrated FuSa, SOTIF and AI argument) | 2 §6 | §12 | | UL 4600, PAS 8800 (assurance argument) | — | G1→G5 (living) | D |
 | [WP-K-02](../10-safety-case/WP-K-02-sotif-release-argument.md) | SOTIF achievement evaluation and release recommendation | | §12 | | | — | G5 | S |
-| [WP-K-03](../10-safety-case/WP-K-03-cybersecurity-case.md) | Cybersecurity case | | | §6 | | — | G5 | S |
+| [WP-K-03](../10-safety-case/WP-K-03-cybersecurity-case.md) | Cybersecurity case | | | §6 | | — | G5 | D |
 | [WP-K-04](../10-safety-case/WP-K-04-functional-safety-assessment.md) | Functional safety assessment report (performed independently, I3) | 2 §6 | | | | — | G5 | S |
 | [WP-K-05](../10-safety-case/WP-K-05-cybersecurity-assessment.md) | Cybersecurity assessment report (performed independently) | | | §6 | | — | G5 | S |
 | [WP-K-06](../10-safety-case/WP-K-06-release-record.md) | Release for production / release record | 2 §6, 4 §9 | §12 | §6 | | SUP.8 | G5 | S |
@@ -181,8 +181,8 @@ Legend for **ASPICE**: process IDs from ASPICE PAM 4.0, including the ML (MLE), 
 |---|---|
 | Safety goals (26262-3 §6) | [WP-C-03 HARA §6](../02-concept/WP-C-03-hara.md) |
 | Verification review reports (26262-3 §6–7, 4 §6, etc.) | Pull request review records, logged through [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) |
-| Confirmation review reports (26262-2 §6) | Records under `10-safety-case/confirmation/`, created per [WP-M-06](WP-M-06-confirmation-measures-plan.md) |
-| Functional safety audit report (26262-2 §6) | [WP-M-06](WP-M-06-confirmation-measures-plan.md) §audit; record under `10-safety-case/confirmation/` |
+| Confirmation review reports (26262-2 §6) | Records under `10-safety-case/confirmation/` (folder to be created), created per [WP-M-06](WP-M-06-confirmation-measures-plan.md) |
+| Functional safety audit report (26262-2 §6) | [WP-M-06](WP-M-06-confirmation-measures-plan.md) §audit; record under `10-safety-case/confirmation/` (folder to be created) |
 | Safety analysis at HW level (26262-5 §7) | [WP-H-03](../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) |
 | Specification of requirements for production, operation, service, decommissioning (26262-4 §6) | [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) |
 | Cybersecurity claims (21434 §9.4) | [WP-C-10](../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) |

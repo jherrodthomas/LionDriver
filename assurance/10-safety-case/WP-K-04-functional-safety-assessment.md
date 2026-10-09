@@ -14,7 +14,7 @@
 
 ## 1. Purpose
 
-The functional safety assessment (FSA) judges whether the functional safety achieved by LD-SDA is adequate. It is performed by an assessor independent of the project at **I3** ([WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md); tailoring T-09). This file holds the plan (§2–§5) and the report template (§6–§9). Interim assessments FSA-I1 (G1) and FSA-I2 (G2) use the same template and are stored as `10-safety-case/confirmation/FSA-I1.md` and `FSA-I2.md`; the final FSA-F (G5) is written into this file.
+The functional safety assessment (FSA) judges whether the functional safety achieved by LD-SDA is adequate. It is performed by an assessor independent of the project at **I3** ([WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md); tailoring T-09). This file holds the plan (§2–§5) and the report template (§6–§9). Interim assessments FSA-I1 (G1) and FSA-I2 (G2) use the same template and are stored as `10-safety-case/confirmation/FSA-I1.md` and `FSA-I2.md` (folder to be created, [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) OI-6); the final FSA-F (G5) is written into this file.
 
 ## 2. Assessor and independence
 

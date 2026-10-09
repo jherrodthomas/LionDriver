@@ -22,7 +22,7 @@ Defines how safety, SOTIF, cybersecurity and system requirements are written, id
 
 | Attribute | YAML key | Mandatory | Content |
 |---|---|---|---|
-| Identifier | `id` | Yes | Prefix per [`assurance/README.md`](../README.md#identifiers): `SG-`, `FSR-`, `TSR-`, `SWSR-`, `HWSR-`, `CSG-`, `CSR-`, `SYS-` (non-safety system requirement, [WP-S-01](../03-system/WP-S-01-system-requirements.md)), `SOTIF-` (functional modification requirement, [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md)), `AIR-` (AI safety requirement, [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md)). Never reused |
+| Identifier | `id` | Yes | Prefix per [`assurance/README.md`](../README.md#identifiers): `SG-`, `FSR-`, `TSR-`, `SWSR-`, `HWSR-`, `CSG-`, `CSR-`, `SYS-` (non-safety system requirement, [WP-S-01](../03-system/WP-S-01-system-requirements.md)), `FM-` (functional modification, [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md); the earlier `SOTIF-` prefix is retired and still accepted by the checker), `AIR-`/`DSR-` (AI safety / dataset requirement, [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md)), `MLR-` (ML engineering requirement, [WP-W-10](../05-software/WP-W-10-ml-engineering.md)), `MON-` (runtime monitor), `DVR-`/`DEV-` (data verification requirement / coding-guideline deviation), `KS-` (known scenario, [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md)), `VS-<area>-` (verification specification, area in capitals, e.g. `VS-UV-03`). Grammar: `<PREFIX>-<nn or nnn>[.<nn>][a-z]`, e.g. `FSR-01.03`, `SWSR-101a` (a suffix letter marks an extra requirement refining the same parent, per the SWSR/HWSR numbering convention); `VS-<AREA>-<nn>[a-z]`. Never reused |
 | Title | `title` | Yes | ≤ 10 words |
 | Statement | `text` | Yes | "The <element> shall <behaviour> [condition] [within <time>]" |
 | Type | `type` | Yes | `functional`, `performance`, `timing`, `interface`, `safety-mechanism`, `constraint`, `production-operation` |
@@ -64,7 +64,7 @@ FuSa:   H / HS ──> SG ──> FSR ──> TSR ──┬──> SWSR ──> 
                                         ├──> HWSR ──> HW design ──> HW test
                                         └──> TSR ──> system test / HIL / vehicle test
         AOU <── FSR, TSR (assumptions on driver / vehicle ECUs)
-SOTIF:  SH ──> TC / FI ──> SOTIF- (functional modification) ──> SYS/TSR/AIR ──> V&V scenario (WP-V-03/04)
+SOTIF:  SH ──> TC / FI ──> FM- (functional modification) ──> SYS/TSR/AIR ──> V&V scenario (WP-V-03/04)
         SH shares HS rows with the HARA (one hazard log)
 AI:     FI ──> AIR ──> model / dataset requirement ──> model test (WP-W-10)
 CS:     TS ──> CSG ──> CSR ──> SWSR/HWSR or CSR(impl) ──> code ──> CS test / pen test (WP-V-06)
@@ -92,10 +92,10 @@ assurance/trace/
   schema/
     item.schema.json        # JSON Schema for all items (validated in CI)
   items/
-    hazards.yaml            # H-, HS-
+    hazards.yaml            # H-, HE- (hazardous events, WP-C-03)
     goals.yaml              # SG-, CSG-
     fsr.yaml  tsr.yaml  swsr.yaml  hwsr.yaml
-    sotif.yaml              # SH-, TC-, FI-, SOTIF-
+    sotif.yaml              # SH-, TC-, FI-, FM-
     ai.yaml                 # AIR-
     cs.yaml                 # TS-, CSR-
     sys.yaml                # SYS-
@@ -177,7 +177,7 @@ Run by `assurance/trace/tools/check_trace.py` in CI on every PR that touches `as
 | K9 | Requirements with `verification: hil` or `vehicle-test` have a linked procedure | Warning |
 | K10 | Every SR-A source file contains ≥ 1 `@req` tag (unreferenced safety code) | Warning until G3, then error |
 | K11 | Markdown requirement tables in WPs match YAML text (hash compare on `id` + `text`) | Error |
-| K12 | Each hazard HS- is linked to an SG or SH, or marked as not hazardous with reason | Error at G1 |
+| K12 | Each hazard H- (via its hazardous events HE-) is linked to an SG or SH, or marked as not hazardous with reason | Error at G1 |
 
 ## 8. Requirements change
 

@@ -225,7 +225,7 @@ It cannot show that AIRs are met. It is reused as VS-ML-12 (regression), with a 
 |---|---|---|
 | Pinning | Release manifest lists every model and warp artefact with SHA-256 (source and compiled) and the tinygrad commit and flags (AIR-21) | Not done. Only LFS pointers |
 | Installation check | [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) INS-18 compares on-device hashes with the release record | Procedure written; no hashes yet |
-| Integrity at load | Hash verified before deserialization (AIR-19); unsafe deserialization only after verification (AIR-20) | **GAP-22: models are loaded with `pickle` and no hash check** (`helpers.py:15-20`, `modeld.py:150, 158-159`, `dmonitoringmodeld.py:30-33, 47-48`) |
+| Integrity at load | Hash verified before deserialization (AIR-19); unsafe deserialization only after verification (AIR-20) | **GAP-22: models are loaded with `pickle` and no hash check** (`helpers.py:15-20`, `modeld.py:150, 159`, `dmonitoringmodeld.py:30-33, 47-48`) |
 | Runtime identity | Model identity in logs (AIR-23) | Only `modelV2.big` (`modeld.py:435`) |
 | Big model | Not in reference releases (AIR-30) | Excluded unless `INCLUDE_BIG_MODEL` |
 | On-device rebuild | SCons may recompile models on device if tinygrad files change (`SConscript:41-49`); release builds must ship pre-built artefacts whose hashes are in the manifest | To be enforced by release procedure ([WP-P-10](../07-supporting/WP-P-10-release-management.md)) |

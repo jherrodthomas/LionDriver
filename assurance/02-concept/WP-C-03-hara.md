@@ -192,3 +192,4 @@ Rationale is given for every rating. Ratings that depend on unverified AoUs are 
 | OI-4 | Decide the envelope strategy (harden / decompose / reduce authority) in [WP-C-04](WP-C-04-functional-safety-concept.md) | G1 |
 | OI-5 | Rate Experimental Mode specific hazardous events (red-light and stop-sign stopping, false stops) once the ODD decision (WP-C-01 OI-8) is made | G1 |
 | OI-6 | Independent confirmation review (I3) | G1 |
+| OI-7 | SG-02 at the ODD curve bound: [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) estimates ≈ 0.7 s to 0.6 m lateral drift, shorter than driver reaction (WP-S-04 OI-2). Review the C rating of HE-02.1 for curves at the bound, or tighten R_ODD in [WP-C-02](WP-C-02-odd-and-intended-functionality.md) | G2 |

@@ -180,7 +180,7 @@ Note on FSR-02.02: the detection of input loss lies in the QM stack. At ASIL B t
 | ID | Requirement | ASIL | Alloc | Verif | Impl / GAP |
 |---|---|---|---|---|---|
 | FSR-07.01 | The item shall forward all camera-side messages to the car side unchanged, except the defined set of intercepted control messages. | B | E-03 | T-SIL, T-HIL | Implemented: static block list (`safety.h:270-281`) |
-| FSR-07.02 | The item shall not originate any message that the stock PCS function uses (e.g. PRE_COLLISION `0x344`, PCS_HUD `0x411`, AEB `0x283` with content) in the reference configuration. | B | E-03 | R, T-SIL | **Not met:** the openpilot-longitudinal TX whitelist allows the SoC to send `0x344` and `0x411` on bus 0 with no content check; only `0x283` is content-checked (`modes/toyota.h:19-28, 251-257`). The reference configuration host does not send them (`carcontroller.py:294-295` only with `DISABLE_RADAR`), but a QM fault could. **New finding — no GAP ID yet (OI-5)** |
+| FSR-07.02 | The item shall not originate any message that the stock PCS function uses (e.g. PRE_COLLISION `0x344`, PCS_HUD `0x411`, AEB `0x283` with content) in the reference configuration. | B | E-03 | R, T-SIL | **Not met:** the openpilot-longitudinal TX whitelist allows the SoC to send `0x344` and `0x411` on bus 0 with no content check; only `0x283` is content-checked (`modes/toyota.h:19-28, 251-257`). The reference configuration host does not send them (`carcontroller.py:294-295` only with `DISABLE_RADAR`), but a QM fault could. (GAP-42) |
 | FSR-07.03 | On safety-MCU fault, loss of device power, or harness fault, the relay shall return to the stock camera-to-vehicle connection. | B | E-05, E-03 | A, T-HIL | Partial: SILENT/NO_OUTPUT release relay (`panda/board/main.c:45-54`); de-energised relay state and power-loss behaviour not confirmed (OI-6) |
 | FSR-07.04 | openpilot longitudinal commands shall not prevent PCS braking from taking priority in the PCM. (External measure, AOU-04R) | — (ext.) | EXT-PCM | T-VEH | Unverified |
 | FSR-07.05 | The item shall inform the driver when the stock system reports an AEB or FCW event. | QM | E-01 | T-SIL | Implemented: `stockAeb`, `stockFcw` (`selfdrive/car/car_events.py:120-123`, `events.py:480`) |
@@ -232,9 +232,11 @@ FTTIs are preliminary (HARA OI-3). Detailed timing belongs in [WP-S-04](../03-sy
 | SG-01 (MCU execution fault) | ≤ 0.5 s | ≤ 0.2 s (HW watchdog) | ≤ 0.1 s | No HW watchdog | GAP-07 |
 | SG-02, SG-06 (loss without warning) | ≤ 1 s to warning | ≤ 0.5 s | ≤ 0.5 s (warning) | Soft disable warns at once, but actuates on stale inputs up to ≈3.5 s | GAP-16 |
 | SG-03, SG-04 | ≤ 1 s | ≤ 0.5 s | ≤ 0.3 s | as SG-01 detection | GAP-06 |
-| SG-05 (driver brake/cancel) | ≤ 0.2 s | ≤ 1 brake message period (25 ms at 40 Hz) | ≤ 1 frame | Envelope reacts on the next RX frame | Verify on vehicle (T-VEH) |
+| SG-05 (driver brake/cancel) | ≤ 0.2 s | ≤ 1 brake message period (25 ms at 40 Hz) | ≤ 1 frame | Envelope revokes authority on the next RX frame, but a rejected `0x2E4` frame is dropped rather than replaced by zero torque, so the EPS may keep acting until its own timeout (TSR-109 in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md)) | GAP-46; verify on vehicle (T-VEH) |
 | SG-05 (steering override) | ≤ 0.2 s | — | — | Not in envelope | GAP-02 |
-| SG-07 | Continuous | n/a | n/a | Static forwarding | FSR-07.02 finding |
+| SG-07 | Continuous | n/a | n/a | Static forwarding | GAP-42 (FSR-07.02); GAP-49 (`0xe7` stops forwarding) |
+
+Note on SG-02 in curves: [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) §3.2 estimates ≈ 0.7 s to a 0.6 m lateral drift at the ODD curve bound, which is shorter than driver reaction. The SG-02 budget above (≤ 0.5 s detection + ≤ 0.5 s to warning) is sufficient on straight roads and gentle curves but not alone at the ODD curve bound; SG-02 there relies on immediate warning and on torque being ramped rather than cut (FSR-02.04). Resolution (re-rate C of HE-02.1 or tighten R_ODD) is open in WP-S-04 OI-2 and [WP-C-03](WP-C-03-hara.md) OI-7.
 
 ## 9. FSR → SG trace
 
@@ -317,7 +319,7 @@ There is no degraded "lateral-only" or "longitudinal-only" operating mode in the
 | OI-2 | Derive the speed-dependent torque limit and confirm C1 by controllability tests; then request HARA re-rating of SG-01 | Safety engineer | G2 |
 | OI-3 | I3 reviewer to confirm DM is not ASIL-attributed (§7) or trigger the alternative | Safety manager | G1 |
 | OI-4 | Confirm FTTIs (WP-S-04) and update §8 budgets | Safety engineer | G2 |
-| OI-5 | Register the FSR-07.02 finding (TX whitelist allows `0x344`/`0x411`) as a new GAP ID in the gap assessment | Safety engineer | G1 |
+| OI-5 | Closed: the FSR-07.02 finding (TX whitelist allows `0x344`/`0x411`) is registered as GAP-42 | Safety engineer | G1 |
 | OI-6 | Confirm relay de-energised state and power-loss behaviour (AOU-13) | HW lead | G2 |
 | OI-7 | Refine FSRs into TSR-1xx…7xx in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) and record FSR→TSR trace in `trace/` | Safety engineer | G2 |
 | OI-8 | HARA has no H-07 / SG for H-07; confirm the numbering gap is intentional | HARA owner | G1 |

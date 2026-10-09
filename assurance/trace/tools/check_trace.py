@@ -34,7 +34,8 @@ HARA_MD = ASSURANCE_DIR / "02-concept" / "WP-C-03-hara.md"
 ITEMDEF_MD = ASSURANCE_DIR / "02-concept" / "WP-C-01-item-definition.md"
 
 ID_RE = re.compile(
-  r"^(H|HE|HS|SG|FSR|TSR|SWSR|HWSR|SH|TC|FI|FM|SOTIF|AIR|DSR|TS|CSG|CSR|SYS|AOU)-[0-9]{2,3}(\.[0-9]{1,2})?[a-z]?$")
+  r"^((H|HE|HS|SG|FSR|TSR|SWSR|HWSR|SH|TC|FI|FM|SOTIF|AIR|DSR|MLR|MON|KS|DVR|DEV|TS|CSG|CSR|SYS|AOU)"
+  r"-[0-9]{2,3}(\.[0-9]{1,2})?[a-z]?|VS-[A-Z]{2,4}-[0-9]{2,3}[a-z]?)$")
 FUNC_RE = re.compile(r"^F-[0-9]{2}$")
 STATUS = {"proposed", "agreed", "implemented", "verified", "withdrawn"}
 ASIL_ORDER = {"QM": 0, "A": 1, "B": 2, "C": 3, "D": 4}

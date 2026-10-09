@@ -14,7 +14,7 @@
 
 ## 1. Purpose
 
-The cybersecurity assessment judges whether the cybersecurity of LD-SDA is adequate, based on the cybersecurity case ([WP-K-03](WP-K-03-cybersecurity-case.md)), the work products and the process evidence. Its recommendation (accept / conditionally accept / reject) is a precondition for release for post-development ([WP-M-09 §9](../01-management/WP-M-09-cybersecurity-plan.md); [WP-K-06](WP-K-06-release-record.md)). This file holds the plan (§2–§5) and the report template (§6–§9). The preliminary assessment at G1 (CSA-I1) uses the same template and is stored as `10-safety-case/confirmation/CSA-I1.md`; the final assessment (CSA-F, G5) is written into this file.
+The cybersecurity assessment judges whether the cybersecurity of LD-SDA is adequate, based on the cybersecurity case ([WP-K-03](WP-K-03-cybersecurity-case.md)), the work products and the process evidence. Its recommendation (accept / conditionally accept / reject) is a precondition for release for post-development ([WP-M-09 §9](../01-management/WP-M-09-cybersecurity-plan.md); [WP-K-06](WP-K-06-release-record.md)). This file holds the plan (§2–§5) and the report template (§6–§9). The preliminary assessment at G1 (CSA-I1) uses the same template and is stored as `10-safety-case/confirmation/CSA-I1.md` (folder to be created, OI-4); the final assessment (CSA-F, G5) is written into this file.
 
 ## 2. Assessor and independence
 

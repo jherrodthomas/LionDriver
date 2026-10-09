@@ -176,8 +176,8 @@ Training completion is recorded in the competence record (§4.4).
 | GitHub pull requests | Reviews and approvals of code and work products | Review comments are review records (WP-P-05) |
 | Private security channel | Vulnerability reports | To be defined in `SECURITY.md` (gap §9 action 9, GAP-28); currently upstream routes to comma.ai |
 | GitHub Discussions or equivalent | Questions from users and contributors | Not a record of decisions; decisions are moved to issues |
-| Gate review records | Gate decisions | `10-safety-case/gates/` (WP-M-02 §10) |
-| Assessor correspondence | Confirmation review requests and reports | Reports stored under `10-safety-case/confirmation/` |
+| Gate review records | Gate decisions | `10-safety-case/gates/` (WP-M-02 §10; folder to be created, WP-M-02 OI-5) |
+| Assessor correspondence | Confirmation review requests and reports | Reports stored under `10-safety-case/confirmation/` (folder to be created, WP-M-06 OI-6) |
 | Upstream (comma.ai) | Reporting safety or security issues found in upstream code | Best effort, no agreement; see WP-M-11 |
 | Safety ↔ SOTIF ↔ CS ↔ AI interface | Shared hazard log, TARA links, model changes | Cross-discipline items are labelled with all affected disciplines; joint review at each gate |
 

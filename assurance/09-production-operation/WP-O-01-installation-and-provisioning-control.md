@@ -24,7 +24,7 @@ LionDriver does not manufacture hardware. The comma device, its integrated panda
 
 Out of scope: manufacture and end-of-line test of the comma device and harness (comma.ai, upstream supplier per [WP-M-11](../01-management/WP-M-11-upstream-and-supplier-management.md)), and ISO 26262-7 production-process capability for those parts. The residual risk of unknown production quality is carried by hardware component qualification ([WP-H-07](../04-hardware/WP-H-07-hardware-component-qualification.md)) and by the incoming-inspection steps below.
 
-The requirements this procedure fulfils are the production and installation requirements (TSR-8xx block) that [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) is to specify. WP-S-06 does not exist yet; this document states the procedure and proposes the requirement content (OI-1).
+The requirements this procedure fulfils are the production and installation requirements (TSR-8xx block) specified in [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) (TSR-801…TSR-818, Draft); WP-S-06 §6 traces each TSR-8xx to the INS steps here. This document states the procedure.
 
 ## 2. Context
 
@@ -85,7 +85,7 @@ Each step has an ID (`INS-nn`), the check that proves it, and the record field i
 | ID | Step | Acceptance check | Record |
 |---|---|---|---|
 | INS-15 **[SC]** | Install the released LionDriver software: a tagged release `ld-vX.Y.Z` ([WP-P-01 §7](../07-supporting/WP-P-01-configuration-management-plan.md)), installed from the LionDriver release channel, not from comma.ai's default installer URL or a development branch | Installed commit equals the tag's commit in the release record ([WP-K-06](../10-safety-case/WP-K-06-release-record.md)); build is not dirty (build metadata shows a clean release build) | R-SW |
-| INS-16 | Confirm the AGNOS OS version equals the one pinned by the release (`AGNOS_VERSION`, `launch_env.sh:18-19`; images and hashes in `system/hardware/tici/agnos.json`) | Version matches release record | R-SW |
+| INS-16 | Confirm the AGNOS OS version equals the one pinned by the release (`AGNOS_VERSION`, `launch_env.sh:18-19`; images and hashes in `openpilot/system/hardware/comma/agnos.json` (path read by the updater, `openpilot/system/updated/updated.py:221`; symlink to `openpilot/common/hardware/comma/agnos.json`)) | Version matches release record | R-SW |
 | INS-17 **[SC]** | Panda firmware verification: let `pandad` run its signature check (`pandad.py:20-50`), then read version and signature (`Panda.get_version()`, `Panda.get_signature()`) | Version string is the LionDriver release build (`LD-<git8>-RELEASE` per WP-P-01 §7, once implemented); signature equals the value recorded in the release record; firmware is **not** a DEBUG build (GAP-25) | R-SW |
 | INS-18 | Confirm model weights: compute hashes of the files under `selfdrive/modeld/models/` that the release uses | Hashes equal those in the release record (D-05, GAP-22) | R-SW |
 | INS-19 | Set parameters to the reference configuration values from the release record. At this baseline that includes at least: `ExperimentalMode` per decision D-08 (recommended off), `DisengageOnAccelerator` per the HMI decision ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md)), `IsLdwEnabled` on, `SshEnabled` off, `JoystickDebugMode` / `LongitudinalManeuverMode` / `LateralManeuverMode` absent, `IsDriverViewEnabled` off, and `RecordFront` per the data-protection decision ([WP-O-04](WP-O-04-field-monitoring.md)) | Parameter dump equals the release record values | R-SW |
@@ -133,7 +133,7 @@ ISO 26262-7 §5 calls for special characteristics to be identified and controlle
 
 ## 5. Records
 
-One installation record per vehicle and per installation event (first install, reinstall, device swap). It is stored in the LionDriver repository under `assurance/09-production-operation/records/<VIN-last6>/<date>-install.md` (private storage if the record holds personal data; see OI-4). Records are kept for the life of the installation plus the retention period set in [WP-P-04](../07-supporting/WP-P-04-documentation-management.md).
+One installation record per vehicle and per installation event (first install, reinstall, device swap). It is stored in the LionDriver repository under `assurance/09-production-operation/records/<VIN-last6>/<date>-install.md` (folder created with the first record) (private storage if the record holds personal data; see OI-4). Records are kept for the life of the installation plus the retention period set in [WP-P-04](../07-supporting/WP-P-04-documentation-management.md).
 
 | Record block | Content |
 |---|---|
@@ -165,7 +165,7 @@ A template file is to be created with the first installation (OI-3). Automating 
 |---|---|---|
 | Software from an untrusted origin | Install only from the LionDriver release channel; verify commit against the signed tag | WP-P-01 §7; [WP-O-05](WP-O-05-cybersecurity-incident-response-updates.md); GAP-26 |
 | Panda firmware authenticity | INS-17 compares with the release record. Real authenticity needs a LionDriver signing key with a modern algorithm, RDP/WRP set, and no debug-key acceptance in release builds | GAP-24, GAP-25; [WP-S-07](../03-system/WP-S-07-cybersecurity-requirements-architecture.md) |
-| OS images | AGNOS images are fetched from comma's CDN (`system/hardware/tici/agnos.json`); hashes recorded in the release record | [WP-M-11](../01-management/WP-M-11-upstream-and-supplier-management.md) |
+| OS images | AGNOS images are fetched from comma's CDN (`openpilot/system/hardware/comma/agnos.json` (path read by the updater, `openpilot/system/updated/updated.py:221`; symlink to `openpilot/common/hardware/comma/agnos.json`)); hashes recorded in the release record | [WP-M-11](../01-management/WP-M-11-upstream-and-supplier-management.md) |
 | Debug access left enabled | INS-19 checks `SshEnabled` off and debug modes absent | GAP-20, GAP-27 |
 | Device identity keys | Device keys live in `/persist/comma/` (`openpilot/common/api.py:59-63`). A device reused from another vehicle keeps them; see decommissioning in [WP-O-02](WP-O-02-operation-service-decommissioning.md) | — |
 
@@ -185,7 +185,7 @@ A template file is to be created with the first installation (OI-3). Automating 
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Write the TSR-8xx production/installation requirements in [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) and trace each INS step to them | G2 |
+| OI-1 | Review the INS → TSR-8xx trace in [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) (requirements now drafted) and close any INS step without a parent | G2 |
 | OI-2 | Define the mount position tolerance and the calibration angle tolerance band (narrower than the `calibrationd` validity limits), based on the angles at which the driving model was validated | G4 |
 | OI-3 | Create the installation record template (§5) and fill it for the reference vehicle; this also closes WP-C-01 OI-1/OI-2 | G1 |
 | OI-4 | Decide where records holding VIN and driver identity are stored (privacy) | G1 |

@@ -165,7 +165,7 @@ The merged PR is the record when it contains: the checklist with answers; findin
 
 ### 7.2 Review record template (R3 inspections, confirmation reviews, reviews outside GitHub)
 
-Stored as `assurance/<folder>/reviews/RR-<YYYY>-<nnn>.md` (confirmation reviews under `10-safety-case/confirmation/`).
+Stored as `assurance/<folder>/reviews/RR-<YYYY>-<nnn>.md` (confirmation reviews under `10-safety-case/confirmation/`). Neither the per-folder `reviews/` folders nor `10-safety-case/confirmation/` exist yet; each is created with its first record (WP-M-06 OI-6).
 
 ```markdown
 # RR-<YYYY>-<nnn> Review record

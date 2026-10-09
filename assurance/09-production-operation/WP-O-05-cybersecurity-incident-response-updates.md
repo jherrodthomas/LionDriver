@@ -43,7 +43,7 @@ Backup: a named deputy with repository and key-access instructions is required b
 
 | ID | Source | What is watched | Method | Frequency |
 |---|---|---|---|---|
-| MS-01 | Upstream comma repositories: `commaai/openpilot`, `commaai/panda`, `commaai/opendbc`, `commaai/msgq`, `commaai/rednose`, `commaai/teleoprtc` | Published security advisories (GitHub Security Advisories), security-labelled issues/PRs, fixes touching CAL 3 paths (bootstub, `main_comms.h`, pandad flashing, updated, athenad, installer), reverts | Watch notifications + review per [WP-M-11 §6](../01-management/WP-M-11-upstream-and-supplier-management.md) | Immediately on notification; monthly review |
+| MS-01 | Upstream comma repositories: `commaai/openpilot`, `commaai/panda`, `commaai/opendbc`, `commaai/msgq`, `commaai/rednose`, `commaai/teleoprtc` | Published security advisories (GitHub Security Advisories), security-labelled issues/PRs, fixes touching CAL 3 paths (bootstub, `main_comms.h`, pandad flashing, updated, athenad, installer), reverts | Watch notifications + review per [WP-M-11 §6](../01-management/WP-M-11-upstream-and-supplier-management.md) | Immediately on notification; weekly automated watch (WP-W-11 SCAN-04); monthly manual review |
 | MS-02 | `tinygrad/tinygrad` | Advisories and fixes affecting model loading/compilation | Same as MS-01 | Same as MS-01 |
 | MS-03 | GitHub Advisory Database / OSV | Entries matching the release SBOM (`uv.lock` packages, submodules) | Automated scan (SCAN-03, [WP-W-11 §5.2](../05-software/WP-W-11-cybersecurity-implementation-verification.md)) | Weekly |
 | MS-04 | NVD / CVE feeds | CVEs for the `uv.lock` dependency set, the Linux kernel and userland in AGNOS, STM32H7 silicon/ROM bootloader, toolchain | Automated scan where the SBOM allows; manual search for OTS components | Weekly (automated); monthly (manual) |
@@ -275,5 +275,5 @@ end-of-support date of each release.
 | OI-3 | Adopt the proposed `SECURITY.md` (§8) through a change request; obtain a LionDriver-controlled security contact address |
 | OI-4 | Agree timelines (§4.3, §5.3) and the support period (§7) with the assessor and the SM |
 | OI-5 | Define the staged-rollout mechanism once signed updates exist (U5 needs per-installation release targeting) |
-| OI-6 | Align the monitoring frequency with WP-M-11 §6 (monthly manual review) and WP-W-11 SCAN-03 (weekly automated) — this document uses both |
+| OI-6 | Closed: monitoring cadence harmonised as weekly automated scan/watch (WP-W-11 SCAN-03/SCAN-04) plus monthly manual review (WP-M-11 §6, this document §2) |
 | OI-7 | Write the key-rotation manifest format (K4) together with the update manifest (WP-S-07 OI-4) |

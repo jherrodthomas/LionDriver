@@ -66,7 +66,7 @@ Integration, verification and validation plans and reports are not listed as sep
 2. Entry criteria: the work product is at least `Draft`, its verification review per WP-P-05 is complete, and its open items are listed.
 3. The reviewer evaluates compliance with ISO 26262 (and, for CR-03, with this project's tailoring) and adequacy for the safety argument.
 4. Outcome: `Confirmed`, `Confirmed with findings` (findings tracked as issues), or `Not confirmed`.
-5. Record stored as `10-safety-case/confirmation/CR-nn-<WP-ID>-v<version>.md`.
+5. Record stored as `10-safety-case/confirmation/CR-nn-<WP-ID>-v<version>.md` (folder to be created, OI-6).
 6. If the work product changes after confirmation in a way that the change impact analysis ([WP-P-02](../07-supporting/WP-P-02-change-management.md)) classifies as safety-relevant, the confirmation review is repeated or its scope is extended.
 
 ## 5. Functional safety audit

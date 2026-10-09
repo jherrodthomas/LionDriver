@@ -42,6 +42,7 @@ CAL 1–4 per ISO/SAE 21434 Annex, proposed from the risk value and the attack-v
 | 5, safety impact | local-to-safety-element or physical-fleet | CAL 3 |
 | 4, safety impact, remote/network-reachable | network or update | CAL 3 |
 | 4, safety impact, local/physical only | local/physical | CAL 2 |
+| 5, privacy impact only (no safety impact) | physical possession | CAL 2 (raise to CAL 3 if a remote vector reaches the same data) |
 | 4, privacy impact | physical/remote | CAL 2 |
 | 3 | any | CAL 1–2 |
 
@@ -60,7 +61,7 @@ Each goal traces to the TARA threat scenario(s) at risk ≥ 3 that it addresses.
 | **CSG-05** | The integrity and authenticity of safety-relevant vehicle-CAN messages (received plausibility inputs and transmitted actuation) shall be protected against injection consistent with the physical-access threat | TS-01 (4) | **CAL 2** | Physical access needed; no RX E2E today (GAP-01) |
 | **CSG-06** | Remote access and interactive access to the device shall be minimized and authenticated so that a compromised back end or network cannot reach safety functions or exfiltrate personal data | TS-07 (4), TS-08 (4), TS-13 (3) | **CAL 3** | Network-reachable; SSH/RPC can reach root and personal data (GAP-27, installer SSH) |
 | **CSG-07** | Software updates shall be installed only after their integrity and authenticity are verified end-to-end | TS-06 (4), TS-10 (4) | **CAL 3** | Network-reachable fleet vector; unsigned git-branch path and supply chain (GAP-26/29/34) |
-| **CSG-08** | Personal data (driver-facing video, cabin imagery, location/trajectory) and the device identity key shall be protected in confidentiality, in transit and at rest, including after loss or decommissioning | TS-11 (5), TS-07 (4) | **CAL 2** | Privacy-dominant; physical/remote vectors (DS-08/09/12) |
+| **CSG-08** | Personal data (driver-facing video, cabin imagery, location/trajectory) and the device identity key shall be protected in confidentiality, in transit and at rest, including after loss or decommissioning | TS-11 (5), TS-07 (4) | **CAL 2** | Privacy-dominant, no safety impact; TS-11 (risk 5) needs physical possession, so the §3 row "5, privacy impact only" gives CAL 2; the remote vector (TS-07, risk 4) is covered with CAL 3 by CSG-06 (DS-08/09/12) |
 
 ## 5. Cybersecurity claims (retained / shared risks)
 
@@ -104,7 +105,7 @@ These are concept-level requirements. [WP-S-07](../03-system/WP-S-07-cybersecuri
 | CSR-C-07 | Developer process-replacement modes (debug, maneuver, joystick) shall be absent or disabled in reference-configuration builds | CSG-03 | 2 | SoC | Build-config audit | Not implemented (GAP-20, `process_config.py:34-47`) |
 | CSR-C-08 | ML model artefacts shall be loaded without executing code from the artefact, and only after an integrity/authenticity check against a release manifest | CSG-04 | 2 | SoC (modeld, dmonitoringmodeld) | Review + test | Not implemented; `pickle` load, no hash check (GAP-22, `modeld.py:150,159`) |
 | CSR-C-09 | Received safety-relevant CAN messages and transmitted actuation shall carry freshness and integrity protection (counter + CRC) sufficient for the physical-access threat | CSG-05 | 2 | panda FW | Review + test | Not implemented; no RX E2E (GAP-01) |
-| CSR-C-10 | SSH shall be disabled by default and shall not ship with an embedded authorized key; if enabled, access shall use owner-managed keys | CSG-06 | 3 | SoC (installer, athenad) | Build-config audit + test | Not met; INTERNAL build pre-enables SSH with an embedded key (`installer.cc:204-223`) |
+| CSR-C-10 | SSH shall be disabled by default and shall not ship with an embedded authorized key; if enabled, access shall use owner-managed keys | CSG-06 | 3 | SoC (installer, athenad) | Build-config audit + test | Not met; INTERNAL build pre-enables SSH with an embedded key (`installer.cc:204-213`) |
 | CSR-C-11 | Remote RPCs in the reference configuration shall not permit arbitrary-URL upload, SSH tunnelling or authorized-key disclosure, and onroad camera streaming shall remain blocked | CSG-06 | 3 | SoC (athenad); back end | Review + test | Partially: onroad streaming blocked (`helpers.py:28`); RPCs otherwise unrestricted (GAP-27, `athenad.py:355-807`) |
 | CSR-C-12 | Software updates shall be installed only after end-to-end integrity and authenticity verification of the complete package, independent of the transport | CSG-07 | 3 | SoC (updated); back end (signing) | Review + test | Not implemented; git force-checkout, in-tree hashes (GAP-26, `updated.py:238,387-399`) |
 | CSR-C-13 | Safety-relevant source components shall be under LionDriver configuration control, pinned by commit, with an SBOM and dependency vulnerability scanning | CSG-07 | 3 | SoC build; user (process) | CM audit ([WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md)) | Not met; submodules resolve upstream, tinygrad tracks master (GAP-29, `.gitmodules`) |
@@ -137,5 +138,5 @@ Two cross-cutting dependencies: **safety-mode integrity** (CSG-01) and **firmwar
 | OI-3 | Confirm whether encryption at rest exists on AGNOS for personal data and the identity key (dimensions CSG-08/CSR-C-14) |
 | OI-4 | Agree the CAL proposals in §3–§4 with the independent assessor |
 | OI-5 | Decide the signed-update design (CSG-07/CSR-C-12), replacing the git-branch updater ([WP-M-09 OI-3](../01-management/WP-M-09-cybersecurity-plan.md)) |
-| OI-6 | Confirm the SG↔CSG mapping in §8 with the FSC author once [WP-C-04](WP-C-04-functional-safety-concept.md) exists; today it depends on the HARA only |
+| OI-6 | Confirm the SG↔CSG mapping in §8 against [WP-C-04](WP-C-04-functional-safety-concept.md) (now Draft; the mapping was written from the HARA only) with the FSC author |
 | OI-7 | Hand CSR-C-01…CSR-C-16 to [WP-S-07](../03-system/WP-S-07-cybersecurity-requirements-architecture.md) for refinement into CSR-nnn; keep the CAL and allocation attributes consistent |
