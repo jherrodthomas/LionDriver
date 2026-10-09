@@ -64,7 +64,7 @@
 | A01 | Major | No independent reviewers; ASIL D needs I3 confirmation reviews | Recruit reviewers (M05). Until then no review can close |
 | A02 | Minor | XZACT compiler silently miscompiled valid programs | No product impact as TCL1 evidence; blocks any product use of XZACT code |
 | A03 | Major | No development interface agreement with upstream | Qualify upstream as existing software; impact-analyze every pin update |
-| A04 | Minor | ASIL D is a pre-HARA assumption | Confirm or revise at M04 |
+| A04 | Minor | ASIL D is a pre-HARA assumption | Draft HARA supports it (five ASIL D goals); closes at the HARA's confirmation review |
 
 ## Schedule (proposed)
 
@@ -83,7 +83,9 @@ flowchart LR
 
     classDef wip fill:#FFF4DC,stroke:#F29F1F,color:#3A2A05
     classDef block fill:#FFE6EB,stroke:#E5486A,color:#4C0519
-    class M01,M02 wip
+    classDef done fill:#DCFCE9,stroke:#10B981,color:#064E3B
+    class M01,M02,M04 wip
+    class M03 done
     class M05 block
 ```
 

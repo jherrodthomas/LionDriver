@@ -42,8 +42,8 @@ Status key: ⚪ planned · 🟡 drafting · 🔵 in review · 🟢 released
 
 | ID | Work product | Clause | Location | Status |
 |---|---|---|---|---|
-| WP-CON-01 | Item definition and operating envelope | 26262-3 §5 · 21448 §5 | `platform/item-definition` | 🟡 |
-| WP-CON-02 | HARA and safety goals | 26262-3 §6 | `platform/hara` | 🟡 |
+| WP-CON-01 | Item definition and operating envelope | 26262-3 §5 · 21448 §5 | [`platform/item-definition`](platform/item-definition/) | 🟡 Draft 0.1 |
+| WP-CON-02 | HARA and safety goals | 26262-3 §6 | [`platform/hara`](platform/hara/) | 🟡 Draft 0.1: 9 safety goals, 5 at ASIL D |
 | WP-CON-03 | Assumptions register (SEooC) | 26262-10 §9 | `platform/assumptions` | 🟡 |
 | WP-CON-04 | SOTIF hazard identification and triggering conditions | 21448 §6–7 | `platform/sotif` | ⚪ |
 | WP-CON-05 | TARA and cybersecurity goals | 21434 §15, §9 | `platform/tara` | ⚪ |

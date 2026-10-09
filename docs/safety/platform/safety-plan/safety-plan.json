@@ -187,7 +187,7 @@
       "target_asil": "D",
       "planned_date": "2026-Q4",
       "actual_date": "",
-      "status": "In Progress"
+      "status": "Draft complete"
     },
     {
       "wp_id": "WP-CON-02",
@@ -197,7 +197,7 @@
       "target_asil": "D",
       "planned_date": "2026-Q4",
       "actual_date": "",
-      "status": "In Progress"
+      "status": "Draft complete"
     },
     {
       "wp_id": "WP-CON-03",
@@ -464,16 +464,16 @@
       "name": "Operating envelope decided",
       "target_date": "2026-Q4",
       "predecessors": "M01",
-      "status": "Not Started",
-      "notes": "Maintainer decision on the proposal in platform/README.md"
+      "status": "Completed",
+      "notes": "Envelope confirmed by the maintainer on 2026-10-09"
     },
     {
       "id": "M04",
       "name": "Item definition and HARA drafted",
       "target_date": "2026-Q4",
       "predecessors": "M03",
-      "status": "Not Started",
-      "notes": "Confirms or revises the provisional ASIL D target"
+      "status": "In Progress",
+      "notes": "Drafts 0.1 of LD-ITD-001 and LD-HARA-001 complete; awaiting review"
     },
     {
       "id": "M05",
@@ -564,7 +564,7 @@
       "severity": "Minor",
       "owner": "Jherrod Thomas",
       "status": "Open",
-      "resolution": "Confirm or revise when the HARA is complete (milestone M04); recompute review independence."
+      "resolution": "Draft HARA LD-HARA-001 0.1 yields five ASIL D safety goals (SG-001 to SG-005), consistent with the target. Closes when the HARA passes its confirmation review."
     }
   ],
   "resources": [

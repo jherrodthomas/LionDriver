@@ -146,7 +146,7 @@ The first link in the chain already has evidence behind it. The Toyota safety mo
 
 ```mermaid
 flowchart LR
-    H["Hazard<br/>unintended lateral motion"] --> SG["Safety goal<br/><i>draft, pending HARA</i>"]
+    H["Hazard H01<br/>unintended lateral motion"] --> SG["Safety goal SG-001 · ASIL D<br/><i>draft HARA</i>"]
     SG --> FSR["Safety requirement<br/>bound steering torque, rate<br/>and authority to override"]
     FSR --> IMPL["Implementation<br/>opendbc Toyota safety mode<br/>on the panda"]
     IMPL --> E1["Independent port in XZACT<br/>72/72 traces identical<br/>1.7 M events"]
@@ -171,7 +171,7 @@ flowchart LR
 | Phase | Work | Status |
 |---|---|---|
 | **0 · Foundations** | Governance, repository structure, standards mapping, documentation framework | 🟡 In progress |
-| **1 · Concept** | Safety plan · platform item definition · operating envelope · HARA and safety goals | 🟡 In progress |
+| **1 · Concept** | [Safety plan](docs/safety/platform/safety-plan/) · [item definition](docs/safety/platform/item-definition/) · operating envelope · [HARA: 9 safety goals](docs/safety/platform/hara/) | 🟡 Drafts complete, awaiting independent review |
 | **2 · Safety concepts** | Functional safety concept · SOTIF analysis · TARA and cybersecurity goals · AI safety requirements | ⚪ Planned |
 | **3 · Architecture** | Technical safety concept · assessment of existing openpilot software and hardware · gap analysis | ⚪ Planned |
 | **4 · Safety mechanisms** | Hardened safety layer · supporting hardware · driver-monitoring requirements | ⚪ Planned |

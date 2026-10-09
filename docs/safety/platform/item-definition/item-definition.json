@@ -1,0 +1,106 @@
+{
+  "item": {
+    "name": "LionDriver Level 2 Driver Assistance Platform",
+    "abbr": "LD-L2",
+    "project": "LionDriver",
+    "doc_id": "LD-ITD-001",
+    "revision": "0.1 (draft)",
+    "date": "2026-10-09",
+    "author": "Jherrod Thomas (FSM); drafted with Claude Code",
+    "approver": "Pending independent confirmation review (safety plan anomaly A01)",
+    "company": "LionDriver open-source project"
+  },
+  "scope_description": "LD-L2 is an aftermarket SAE Level 2 driver-assistance item. While an attentive driver supervises, it provides lane centering (lateral control) and adaptive cruise with stop and go (longitudinal control) by sending steering and acceleration commands onto the vehicle CAN bus. Commands are proposed by the openpilot software on the comma device and pass through the panda safety layer, which forwards only commands within actuator limits and only while the driver has engaged the system. The item includes the openpilot software, the panda firmware with the brand safety mode, and the vehicle harness with its relay. It does NOT include the vehicle's own ECUs (steering, powertrain, brakes, stock ADAS camera and radar), the vehicle CAN wiring beyond the harness, the driver, or comma.ai cloud services. The item is analyzed as a Safety Element out of Context (ISO 26262-10 §9): vehicle-dependent properties are recorded as assumptions and verified per vehicle configuration.",
+  "item_classification": "Vehicle system: aftermarket driver-assistance item, developed as a Safety Element out of Context",
+  "distinguishing_notes": "Unlike a factory lane-keeping or ACC system, LD-L2 is installed after manufacture and interposes on the vehicle's ADAS CAN bus through a harness, replacing the stock camera's actuator commands with its own. The stock ECUs remain responsible for executing actuator commands and for their own fault handling. LD-L2's safety argument rests on the doer/checker split: openpilot (doer) may be wrong; the panda (checker) bounds what any command can do to the vehicle.",
+  "functions": [
+    {"id": "F01", "name": "Lateral control (lane centering)", "description": "Computes and sends steering commands (torque or angle, per vehicle) that keep the vehicle centered in its lane. Commands are bounded by the brand safety mode's torque, rate and angle limits.", "criticality": "high"},
+    {"id": "F02", "name": "Longitudinal control (adaptive cruise, stop and go)", "description": "Computes and sends acceleration requests to follow the set speed and lead vehicle, including stopping and resuming. On vehicles configured for stock longitudinal control, only cruise-cancel requests are sent.", "criticality": "high"},
+    {"id": "F03", "name": "Engagement management", "description": "Allows control only after a deliberate driver action (rising edge of stock cruise engagement) and ends it on brake press, gas press (longitudinal), cruise cancel, disengagement by openpilot, loss of heartbeat, or a detected fault.", "criticality": "high"},
+    {"id": "F04", "name": "Driver monitoring", "description": "Estimates driver attention from the driver-facing camera, escalates visual and audible alerts when the driver is inattentive, and disengages if attention is not restored.", "criticality": "medium"},
+    {"id": "F05", "name": "Safety supervision", "description": "On every CAN frame: rejects commands outside actuator limits or sent without controls allowed, validates checksums, quality flags and timeliness of vehicle signals, detects relay malfunction, and blocks forwarding of stock commands the item replaces.", "criticality": "high"},
+    {"id": "F06", "name": "Driver information", "description": "Shows engagement state, planned path and alerts on the device display, with audible alerts for take-over requests.", "criticality": "low"}
+  ],
+  "non_functional_requirements": [
+    {"id": "NFR01", "category": "Performance", "requirement": "Lateral commands shall be limited so that, at maximum allowed actuation, the driver has at least 0.9 s to react before a 1 m lateral deviation.", "rationale": "Upstream openpilot design rule derived from ISO 11270 lateral limits (docs/SAFETY.md)."},
+    {"id": "NFR02", "category": "Performance", "requirement": "Longitudinal requests shall stay within -3.5 to +2.0 m/s² (vehicle-specific limits may be tighter).", "rationale": "Panda safety-mode limits; consistent with ISO 15622 ACC envelopes."},
+    {"id": "NFR03", "category": "Performance", "requirement": "A driver brake press shall end control on the next CAN frame processed by the panda.", "rationale": "Driver override must take effect within one frame of the pedal signal reaching the checker (rising-edge check in the safety layer)."},
+    {"id": "NFR04", "category": "Performance", "requirement": "If the comma device stops sending heartbeats for 5 s with ignition on, the panda shall stop all output and reconnect the stock systems.", "rationale": "Panda firmware behavior (SILENT mode on heartbeat loss)."},
+    {"id": "NFR05", "category": "Environmental", "requirement": "Operating temperature, vibration and EMC ranges for the comma device, panda and harness are to be specified.", "rationale": "Open: not yet characterized. Needed for the hardware safety requirements (WP-HW-01)."},
+    {"id": "NFR06", "category": "Regulatory", "requirement": "The item shall not disable or degrade stock safety functions required by FMVSS for the reference vehicle, except where a configuration documents the deviation and its mitigation.", "rationale": "Aftermarket modification must not remove legally required safety performance."},
+    {"id": "NFR07", "category": "Regulatory", "requirement": "Lateral and longitudinal behavior shall be assessed against ISO 11270, ISO 15622, UN R79 and UN R171 where applicable.", "rationale": "Recognized performance references for Level 2 driver assistance."},
+    {"id": "NFR08", "category": "Market", "requirement": "All software, analyses and evidence shall be published openly and reproducibly.", "rationale": "Project mission: an open, evidence-backed engineering reference."}
+  ],
+  "boundary": {
+    "notes": "The item boundary is the harness. Everything that can command an actuator on the vehicle passes through it, and the panda decides what crosses. The item reads vehicle signals from the CAN bus and sensors on the comma device; it writes only CAN frames whitelisted by the brand safety mode.",
+    "in_item": [
+      "openpilot software on the comma device (perception, planning, control, driver monitoring, user interface)",
+      "panda firmware, including the brand safety mode from opendbc",
+      "Vehicle harness and its relay (intercepts the stock ADAS camera's CAN bus)",
+      "comma device sensors: road-facing and driver-facing cameras, IMU, GNSS",
+      "comma device display and speaker"
+    ],
+    "out_item": [
+      "Electric power steering ECU",
+      "Engine, transmission and brake ECUs",
+      "Stock ADAS camera and radar, including stock emergency braking",
+      "Vehicle CAN wiring beyond the harness",
+      "The driver",
+      "comma.ai cloud services, logging upload and over-the-air update servers"
+    ],
+    "adjacent_systems": [
+      "Steering ECU: executes steering commands and reports steering torque and angle",
+      "Powertrain and brake ECUs: execute acceleration requests and report pedal and wheel-speed state",
+      "Stock ADAS camera: its actuator commands are replaced by the item's while the relay is closed",
+      "Instrument cluster: shows stock cruise state",
+      "Update and cloud services: in scope of the cybersecurity analysis (ISO/SAE 21434), not this safety item"
+    ]
+  },
+  "external_interfaces": [
+    {"id": "I01", "interface": "Vehicle CAN: vehicle state signals", "counterpart": "Steering, powertrain and brake ECUs", "direction": "In", "data": "Wheel speeds, steering torque and angle, brake and gas pedal state, stock cruise state", "integrity": "Brand-specific checksums and quality flags where the vehicle provides them; message timeout checks (1 s); whitelist by address, bus and length", "notes": "Integrity varies by brand; captured per configuration (assumption ASM-V-03)"},
+    {"id": "I02", "interface": "Vehicle CAN: actuator commands", "counterpart": "Steering ECU, powertrain ECU", "direction": "Out", "data": "Steering torque or angle commands, acceleration requests, cruise cancel", "integrity": "Every frame checked by the panda safety mode against limits and engagement state before transmission", "notes": "Only whitelisted addresses can be sent"},
+    {"id": "I03", "interface": "Stock ADAS camera bus (via harness relay)", "counterpart": "Stock ADAS camera", "direction": "Bidirectional", "data": "Forwarded stock traffic, with the commands the item replaces blocked", "integrity": "Relay-malfunction detection: a replaced command seen from the car latches a fault and stops all output", "notes": "Relay open (stock behavior restored) in SILENT and NOOUTPUT modes"},
+    {"id": "I04", "interface": "USB link: comma device to panda", "counterpart": "comma device (internal to the item)", "direction": "Bidirectional", "data": "CAN frames to send, received CAN frames, heartbeat with openpilot engagement state, safety-mode selection", "integrity": "Heartbeat supervision: 5 s loss with ignition on ends output; engagement mismatch for 3 s ends control", "notes": "Internal interface; also an attack surface for the TARA"},
+    {"id": "I05", "interface": "Road-facing cameras", "counterpart": "Outside scene", "direction": "In", "data": "Video for the driving model", "integrity": "Model-level plausibility; performance limits handled under ISO 21448", "notes": "Main SOTIF exposure"},
+    {"id": "I06", "interface": "Driver-facing camera", "counterpart": "Driver", "direction": "In", "data": "Video for driver monitoring", "integrity": "Model-level plausibility; performance limits handled under ISO 21448 and ISO/PAS 8800", "notes": ""},
+    {"id": "I07", "interface": "Driver controls (via vehicle CAN)", "counterpart": "Driver", "direction": "In", "data": "Steering input, brake, gas, cruise buttons", "integrity": "As I01", "notes": "Override path: brake and cancel end control in the panda itself"},
+    {"id": "I08", "interface": "Driver HMI", "counterpart": "Driver", "direction": "Out", "data": "Engagement state, alerts, take-over requests (visual and audible)", "integrity": "None beyond display and speaker health", "notes": "Panda siren on heartbeat loss while recently engaged"},
+    {"id": "I09", "interface": "Network: updates and cloud", "counterpart": "Update and cloud services", "direction": "Bidirectional", "data": "Software updates, log upload", "integrity": "Out of this item's safety scope; covered by the TARA (ISO/SAE 21434)", "notes": "A malicious update is a safety-relevant threat"}
+  ],
+  "operating_modes": [
+    {"id": "M01", "name": "Off", "entry_conditions": "Ignition off and device shut down", "exit_conditions": "Ignition on", "safety_relevant": false},
+    {"id": "M02", "name": "Silent (panda)", "entry_conditions": "Panda power-up; heartbeat lost for 5 s with ignition on; safety-mode set failure", "exit_conditions": "openpilot selects a car safety mode after recognizing the vehicle", "safety_relevant": true},
+    {"id": "M03", "name": "Standby", "entry_conditions": "Vehicle recognized; brand safety mode active; controls not allowed", "exit_conditions": "Driver engages stock cruise (rising edge) with no fault active", "safety_relevant": true},
+    {"id": "M04", "name": "Engaged", "entry_conditions": "Controls allowed: deliberate driver engagement, all checked vehicle signals valid and timely, heartbeat present", "exit_conditions": "Brake press, cruise cancel or disengagement, openpilot disengages, signal or heartbeat fault, relay malfunction", "safety_relevant": true},
+    {"id": "M05", "name": "Driver override (longitudinal)", "entry_conditions": "Gas pressed while engaged", "exit_conditions": "Gas released (longitudinal control resumes) or disengagement", "safety_relevant": true},
+    {"id": "M06", "name": "Fault", "entry_conditions": "Relay malfunction, invalid or lagging checked signal, safety-mode error", "exit_conditions": "Relay malfunction is latched until the safety mode is set again; signal faults clear when signals are valid, but re-engagement still needs a driver action", "safety_relevant": true}
+  ],
+  "allocations": [
+    {"function_id": "F01", "type": "Software (doer) + Software (checker) + vehicle actuator", "rationale": "Steering commands computed by openpilot; bounded by the panda safety mode; executed by the vehicle EPS (outside the item)"},
+    {"function_id": "F02", "type": "Software (doer) + Software (checker) + vehicle actuator", "rationale": "Acceleration requests computed by openpilot; bounded by the panda; executed by the vehicle powertrain and brakes"},
+    {"function_id": "F03", "type": "Software (checker)", "rationale": "Engagement and disengagement decided in the panda from vehicle signals, so openpilot cannot engage on its own"},
+    {"function_id": "F04", "type": "Software (doer)", "rationale": "Driver-monitoring model and alert policy run in openpilot"},
+    {"function_id": "F05", "type": "Software + Hardware (checker)", "rationale": "Safety mode in panda firmware; harness relay and microcontroller hardware"},
+    {"function_id": "F06", "type": "Software + Hardware (doer)", "rationale": "openpilot UI on the device display and speaker"}
+  ],
+  "assumptions": [
+    {"id": "A01", "category": "Vehicle", "assumption": "Passenger cars and light SUVs listed as supported by openpilot, used within the declared operating envelope (0–130 km/h; highways and marked urban and rural roads; daylight or night with headlights; dry or wet; no snow-covered lanes).", "rationale": "Operating envelope proposed in docs/safety/platform/README.md and confirmed by the maintainer."},
+    {"id": "A02", "category": "Vehicle", "assumption": "The vehicle meets platform assumptions ASM-V-01 to ASM-V-08 (EPS self-limiting, driver can overpower steering, pedal state on CAN, deliberate cruise engagement, speed signals with fault indication, all commands pass the harness, powertrain honors accel limits, stock emergency braking available).", "rationale": "SEooC assumptions; verified per vehicle configuration."},
+    {"id": "A03", "category": "Driver", "assumption": "A licensed driver who keeps attention on the road, keeps hands available to steer, and can take over at any time.", "rationale": "Level 2: the driver remains responsible. Controllability ratings in the HARA depend on it."},
+    {"id": "A04", "category": "Driver", "assumption": "Reasonably foreseeable misuse includes inattention, phone use, dozing and over-reliance on the system.", "rationale": "Driver monitoring (F04) must address it; foreseeable misuse is analyzed under ISO 21448."},
+    {"id": "A05", "category": "Market", "assumption": "U.S. market first; open-source distribution; installation by the vehicle owner.", "rationale": "Reference vehicle is U.S.-market. Self-installation means installation errors are foreseeable and must be detectable."},
+    {"id": "A06", "category": "Lifecycle", "assumption": "In scope: normal operation, installation and software updates. Out of scope for now: production, service and decommissioning (ISO 26262-7).", "rationale": "Research platform; see safety plan tailoring."},
+    {"id": "A07", "category": "Other items", "assumption": "Vehicle ECUs execute in-range commands correctly and handle their own faults per their manufacturer's safety case.", "rationale": "The vehicle ECUs are outside the item and are not analyzed."},
+    {"id": "A08", "category": "Cybersecurity", "assumption": "Cybersecurity threats are analyzed separately in the TARA (ISO/SAE 21434). Safety goals feed the TARA as damage scenarios.", "rationale": "Partition between this HARA and the TARA; see docs/safety/standards.md."}
+  ],
+  "references": [
+    {"id": "REF01", "title": "ISO 26262-3:2018", "version": "Concept phase (Clause 5: item definition)"},
+    {"id": "REF02", "title": "ISO 26262-10:2018", "version": "Guidelines (Clause 9: Safety Element out of Context)"},
+    {"id": "REF03", "title": "ISO 21448:2022", "version": "Safety of the intended functionality"},
+    {"id": "REF04", "title": "ISO 11270 · ISO 15622", "version": "Lane keeping assistance · Adaptive cruise control"},
+    {"id": "REF05", "title": "LD-SPL-001 Safety plan", "version": "0.1 draft (docs/safety/platform/safety-plan)"},
+    {"id": "REF06", "title": "LD-HARA-001 HARA and safety goals", "version": "0.1 draft (docs/safety/platform/hara)"},
+    {"id": "REF07", "title": "docs/SAFETY.md", "version": "Upstream openpilot safety principles"},
+    {"id": "REF08", "title": "panda board/main.c, opendbc safety modes", "version": "panda 92eb565, opendbc 229dc70"}
+  ]
+}

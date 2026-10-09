@@ -3,7 +3,7 @@
 The platform is LionDriver as it behaves on **any** supported vehicle. It is analyzed once, over a declared operating envelope, under worst-case assumptions about the vehicle. Whatever the platform needs from a car is written down as an assumption, and each [vehicle configuration](../configurations/) checks those assumptions against a real car (ISO 26262-10 §9).
 
 > [!WARNING]
-> **Draft.** Everything below is a working draft for review. The operating envelope in particular is a proposal awaiting a maintainer decision. Nothing on this page is released.
+> **Draft.** Everything below is a working draft for review. Nothing on this page is released. Formal versions: [item definition LD-ITD-001](item-definition/), [HARA LD-HARA-001](hara/), [safety plan LD-SPL-001](safety-plan/).
 
 ## Item definition (draft outline)
 
@@ -20,7 +20,7 @@ The platform is LionDriver as it behaves on **any** supported vehicle. It is ana
 **Inside the item:** openpilot software on the comma device, panda firmware, the vehicle harness and its relay, and the brand safety mode in `opendbc_repo/opendbc/safety/`.
 **Outside the item:** the vehicle's own ECUs (EPS, engine and brake control, stock ADAS camera and radar), vehicle CAN wiring beyond the harness, the driver, and comma's cloud services.
 
-## Operating envelope (proposal)
+## Operating envelope (confirmed by the maintainer, 2026-10-09)
 
 | Dimension | Proposed bound | Why it matters |
 |---|---|---|
@@ -45,9 +45,9 @@ Each configuration must show that its vehicle meets these. A failed assumption i
 | ASM-V-07 | The powertrain and brakes honor acceleration requests within the safety mode's limits | Bounds longitudinal authority |
 | ASM-V-08 | Stock emergency braking stays available while LionDriver is engaged, or its absence is declared | Residual protection against longitudinal hazards |
 
-## Hazards for the HARA (draft list)
+## Hazards
 
-Severity, exposure and controllability ratings, and the resulting integrity levels, come from the HARA itself. They are deliberately not guessed here.
+Rated in the [HARA](hara/), which turns them into nine safety goals (five at ASIL D).
 
 | ID | Hazard (vehicle level) | Linked functions |
 |---|---|---|
@@ -59,10 +59,12 @@ Severity, exposure and controllability ratings, and the resulting integrity leve
 | H06 | Control not released when the driver brakes, presses gas or cancels | F03, F05 |
 | H07 | Engagement without a deliberate driver action | F03 |
 | H08 | Driver inattention not detected or not escalated | F04 |
+| H09 | Driver unaware of the system state (mode confusion, missed take-over request) | F06 |
 
 ## Next work products
 
-1. Safety plan (WP-MGT-01): [draft 0.1](safety-plan/)
-2. Formal item definition workbook, from the outline above (WP-CON-01)
-3. HARA and safety goals (WP-CON-02)
+1. ~~Safety plan (WP-MGT-01)~~: [draft 0.1](safety-plan/)
+2. ~~Item definition (WP-CON-01)~~: [draft 0.1](item-definition/)
+3. ~~HARA and safety goals (WP-CON-02)~~: [draft 0.1](hara/)
 4. Assumptions register, completed and versioned (WP-CON-03)
+5. Functional safety concept (WP-CON-07), starting from the FSC hand-off tab of the HARA
