@@ -84,7 +84,7 @@ These requirements must be met, and shown by the DFA ([WP-A-03](WP-A-03-dependen
 | IR-01 | E-07 shall be supplied from a power path that a single fault in the comma device supply (12 V input stage, regulators) cannot take down together with a loss of E-03 function, or E-07 shall de-energise the relay on loss of its own supply | Shared power (WP-A-03 DFI-01) | Schematic review, HIL power-dip test |
 | IR-02 | E-07 shall use its own clock source, not derived from the STM32H7 or SoC clocks | Shared clock (DFI-02) | Schematic review |
 | IR-03 | E-07 shall receive bus 0 through its own CAN transceiver and controller, not through panda forwarding or panda-provided data | Shared communication path | Design review, HIL bus-fault test |
-| IR-04 | E-07 shall share no source code, compiled libraries, limit tables or code generators with opendbc safety or panda firmware; the limit values shall be derived and reviewed separately | Common software / toolchain (DFI-06), identical constants (DFI-08) | Code and build review |
+| IR-04 | E-07 shall share no source code, compiled libraries, limit tables or code generators with opendbc safety or panda firmware; the limit values shall be derived and reviewed separately | Common software, upstream source and toolchain (DFI-16, DFI-17), identical constants (DFI-08) | Code and build review |
 | IR-05 | E-07 shall be compiled with a different toolchain, or with the same toolchain plus a qualified independence argument (ISO 26262-8 §11) | Common compiler fault | Tool classification ([WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md)) |
 | IR-06 | Neither the SoC nor E-03 shall be able to configure, reset, reflash or put E-07 into a boot mode; E-07 shall have no command interface in release builds | Configuration of one element by the other (GAP-09, GAP-38 pattern) | Design review, penetration test ([WP-V-06](../06-validation/WP-V-06-cybersecurity-validation.md)) |
 | IR-07 | E-07 shall act through a de-energise-to-safe path (series switch on the relay coil). E-03 or the SoC shall not be able to override it | Common actuation path | Schematic review, HIL test |
@@ -126,7 +126,7 @@ One record per applied decomposition. Records live in this document, §7, and ar
 | Element 2 | Element ID, decomposed requirement IDs, ASIL x(Y) |
 | Redundancy argument | Why each element on its own satisfies the original safety requirement (not just part of it) |
 | Independence requirements | IR-nn list |
-| DFA reference | WP-A-03 DFI-/CF- IDs and verdict |
+| DFA reference | WP-A-03 DFI- and IC- IDs and verdict |
 | FFI reference | WP-A-02 interference IDs |
 | Safe state of each element and how they combine | |
 | Integration / verification at original ASIL | WP-S-08 / WP-S-09 spec IDs |

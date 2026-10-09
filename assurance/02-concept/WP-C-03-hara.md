@@ -89,8 +89,8 @@ Rationale is given for every rating. Ratings that depend on unverified AoUs are 
 |---|---|---|---|---|---|---|---|
 | HE-01.1 | OS-03 undivided road, oncoming traffic, 60–90 km/h | Departure into the oncoming lane; head-on collision | S3 | E4 | C2 ⚠ | **C** | S3: head-on at combined speeds > 100 km/h, life-threatening. E4: undivided roads make up a large share of driving. C2 ⚠: credits AOU-01/AOU-02 (EPS limits LKA torque to an overpowerable level). A supervising driver with hands near the wheel corrects a sustained limited-torque deviation within ~1 s in most cases (≥ 90%). **If AOU-01/02 are not verified: C3 → ASIL D** |
 | HE-01.2 | OS-01/OS-02 highway, adjacent traffic or barrier, 90–120 km/h | Lateral departure into an adjacent vehicle or barrier | S3 | E4 | C2 ⚠ | **C** | As HE-01.1. Lateral deviation at speed with adjacent traffic can trigger loss of control or secondary collisions |
-| HE-01.3 | OS-04 urban, pedestrians and cyclists near the lane edge, 30–60 km/h | Vehicle drifts into a vulnerable road user | S3 | E3 | C2 ⚠ | **B** | S3: VRU impact above 30 km/h. E3: urban VRU proximity within the ODD. C2: lower speed gives more time but less lateral margin |
-| HE-01.4 | Torque while not engaged, OS-01/OS-03, driver steering manually | Unexpected steering disturbance during manual driving | S3 | E4 | C2 ⚠ | **C** | Driver hands on the wheel (manual driving), so C2 rather than C3. Same S/E as HE-01.1 |
+| HE-01.3 | OS-04 urban, pedestrians and cyclists near the lane edge, 30–60 km/h | Vehicle drifts into a vulnerable road user | S3 | E3 | C2 ⚠ | **B** | S3: VRU impact above 30 km/h. E3: urban VRU proximity within the ODD. C2: lower speed gives more time but less lateral margin. If AOU-01/02 fail: C3 → ASIL C |
+| HE-01.4 | Torque while not engaged, OS-01/OS-03, driver steering manually | Unexpected steering disturbance during manual driving | S3 | E4 | C2 ⚠ | **C** | Driver hands on the wheel (manual driving), so C2 rather than C3. Same S/E as HE-01.1. If AOU-01/02 fail: C3 → ASIL D |
 
 ### 5.2 H-02 Unannounced loss or degradation of lateral control
 
@@ -113,7 +113,7 @@ Rationale is given for every rating. Ratings that depend on unverified AoUs are 
 | HE | Situation | Effect | S | E | C | ASIL | Rationale |
 |---|---|---|---|---|---|---|---|
 | HE-04.1 | OS-08 close following vehicle, 50–120 km/h | Rear-end impact by the following vehicle | S2 | E4 | C2 ⚠ | **B** | S2: rear impacts on a modern car are mostly S1–S2. Severe at large speed differences, but deceleration is limited by the PCM's ACC envelope (AOU-05). C2: the following driver and the ego driver (pressing gas overrides) can usually react. If the deceleration is unbounded (AOU-05 fails) → C3 → ASIL C |
-| HE-04.2 | OS-11 wet road, curve | Instability under unexpected braking | S3 | E3 | C1 | **A** | VSC available (AOU-10). Moderate ACC deceleration on wet roads is controllable for most drivers |
+| HE-04.2 | OS-11 wet road, curve | Instability under unexpected braking | S3 | E3 | C1 ⚠ | **A** | VSC available (AOU-10; if it fails: C2 → ASIL B). Moderate ACC deceleration on wet roads is controllable for most drivers |
 
 ### 5.5 H-05 Driver unable to override or disengage
 

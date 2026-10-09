@@ -46,12 +46,13 @@ structure follows UL 4600 principles where they apply to a supervised Level 2 sy
 |---|---|---|
 | `WP-<area>-<nn>` | Work product | `WP-C-03` (HARA) |
 | `H-<nn>` | Hazard (functional safety, HARA) | `H-01` |
-| `HS-<nn>` | Hazardous event / rated situation | `HS-01.2` |
+| `HE-<nn>.<n>` | Hazardous event (hazard in a rated situation) | `HE-01.2` |
 | `SG-<nn>` | Safety goal | `SG-01` |
-| `FSR-<nn>` | Functional safety requirement | `FSR-01.03` |
+| `FSR-<SG>.<nn>` | Functional safety requirement | `FSR-01.03` |
 | `TSR-<nn>` | Technical safety requirement | `TSR-014` |
 | `SWSR-<nn>` / `HWSR-<nn>` | Software / hardware safety requirement | `SWSR-031` |
 | `SH-<nn>` | SOTIF hazard (hazardous behaviour from insufficiency) | `SH-04` |
+| `FM-<nn>` | SOTIF functional modification | `FM-03` |
 | `TC-<nn>` | SOTIF triggering condition | `TC-12` |
 | `FI-<nn>` | Functional insufficiency | `FI-07` |
 | `TS-<nn>` / `CSG-<nn>` / `CSR-<nn>` | Threat scenario / cybersecurity goal / cybersecurity requirement | `CSG-02` |
