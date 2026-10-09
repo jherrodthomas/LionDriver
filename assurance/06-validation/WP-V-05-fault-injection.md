@@ -127,7 +127,7 @@ Columns: **Lvl** = level(s); **Mechanism** = safety mechanism expected to act (T
 | Analysis item | Fault-injection cases |
 |---|---|
 | WP-A-04 SPF-01 (limit values) | Not testable by fault injection; covered by limit derivation and WP-S-09 VS-SQ-03 |
-| WP-A-04 SPF-02 (post-hook frame corruption) | VS-FI-18 (TX queue RAM corruption via SWD); FDCAN message RAM injection only if supported (WP-A-04 OI-4) |
+| WP-A-04 SPF-02 (post-hook frame corruption) | VS-FI-18 (TX queue RAM corruption via SWD: expected detected by the packet XOR and dropped); FDCAN message RAM injection only if supported (WP-A-04 OI-4) |
 | WP-A-04 SPF-03 (SoC disables monitor) | VS-FI-11, VS-FI-23, VS-FI-29 |
 | WP-A-04 SPF-04 (shared RX path) | VS-FI-02, VS-FI-03, VS-FI-05 |
 | WP-A-04 SPF-05 (debug build) | VS-FI-29 |

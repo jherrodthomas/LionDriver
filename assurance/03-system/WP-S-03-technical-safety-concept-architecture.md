@@ -166,7 +166,7 @@ Required changes (WP-S-04 §5): heartbeat evaluated at ≥ 10 Hz with a 0.3 s ti
 | E-05 harness | 506 (relay), 701–703, 706 | B‡/B |
 | E-01 SoC (QM) | 303, 307(b), 308, 409 (content), 410/411 (sender side), 601–618, 709 | QM (B-sup) |
 | EXT | 111, 208, 310, 708 | AoU |
-| OPS | 801–814 | — |
+| OPS | 801–818 | — |
 
 Refinement: E-03 TSRs → SWSR in [WP-W-02](../05-software/WP-W-02-software-safety-requirements.md); E-04a/E-05 TSRs → HWSR in [WP-H-01](../04-hardware/WP-H-01-hardware-safety-requirements.md).
 

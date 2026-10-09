@@ -51,10 +51,10 @@ TE-01 Uncontrollable lateral motion / torque while not engaged                  
 │   │   │       │          G-SoC and BE-1.08]
 │   │   │       └── BE-1.09 Envelope firmware replaced via boot pins / softloader
 │   │   │                  (GAP-38, GAP-24) [FFI → FFI-CM-12; CCF → DFI-13]
-│   │   └── BE-1.10 Frame corrupted after safety_tx_hook (TX queue RAM, FDCAN
-│   │              message RAM, transceiver); no check after the hook
-│   │              (can_common.h:161-166, fdcan.h:100-101 checks only a packet XOR
-│   │              computed before queuing)                                             (SPF, random HW)
+│   │   └── BE-1.10 Frame corrupted after safety_tx_hook in a part not covered by
+│   │              the packet XOR: copy into FDCAN message RAM, message RAM itself,
+│   │              FDCAN core, transceiver (the 8-bit XOR checked before loading,
+│   │              fdcan.h:100, covers only the software TX queue)                      (SPF, random HW)
 │   └── UE-1.11 EPS does not limit LKA torque to an overpowerable level (AOU-01R fails)
 ├── G1.2 Torque while not engaged                                                       [OR]
 │   ├── G1.2.1 Authority falsely granted AND SoC commands torque                       [AND]
@@ -89,7 +89,7 @@ TE-01 Uncontrollable lateral motion / torque while not engaged                  
 | Cut set | Order | Events | Comment |
 |---|---|---|---|
 | MCS-01.1 | 1 + ext. | {BE-1.01, UE-1.11} | A wrong envelope limit is itself the failure; only the EPS (unverified) stands behind it. **Systematic single point** |
-| MCS-01.2 | 1 + ext. | {BE-1.10, UE-1.11} | Random corruption after the TX hook. No second check on the item side. **Random single point** |
+| MCS-01.2 | 1 + ext. | {BE-1.10, UE-1.11} | Random corruption after the TX hook, beyond the software queue. No second check on the item side. **Random single point** |
 | MCS-01.3 | 1 (effective) | {SoC fault that both commands torque and changes mode/param or reflashes the MCU} = {BE-1.02/1.04 + BE-1.08/1.09 from one cause} | Dual-point in form, single-point in cause (DFI-13) |
 | MCS-01.4 | 1 (effective) | {BE-1.13} | One stuck RX path feeds envelope and SoC; both "agree" the system is engaged (DFI-10) |
 | MCS-01.5 | 1 | {BE-1.18} | Configuration single point: a debug build has no envelope. Controlled only by the release process ([WP-P-10](../07-supporting/WP-P-10-release-management.md)) |
@@ -154,7 +154,7 @@ TE-03 Unintended acceleration                                                   
 | ID | Observation | SG | Type | Required measure | TSR / GAP |
 |---|---|---|---|---|---|
 | SPF-01 | **Limit values are a systematic single point.** Nothing in the item checks that the envelope limits are themselves controllable; the controller uses the same numbers (DFI-08) | SG-01, SG-03, SG-04 | Systematic | Physically derived limits with recorded rationale; controllability test; controller margin | TSR-102, TSR-103, TSR-201, TSR-202, TSR-204, TSR-205, TSR-605; GAP-04 |
-| SPF-02 | **No integrity check between the TX hook and the bus.** A random fault in TX queue RAM, FDCAN message RAM or the transceiver changes an already-approved frame | SG-01, SG-03, SG-04 | Random HW | RAM/FDCAN-RAM ECC enabled with reaction; option: TX read-back of own frames from the bus (FDCAN RX of own TX) compared with the approved frame | TSR-503 (RAM ECC) only; **no TSR for post-hook TX integrity** (OI-6); FMEDA WP-H-03 |
+| SPF-02 | **No integrity check between the FDCAN load and the bus.** The software TX queue is covered by the packet XOR checked before loading (`panda/board/drivers/fdcan.h:100`; a failed check drops the frame). A random fault in the copy into FDCAN message RAM, the message RAM, the FDCAN core or the transceiver changes an already-approved frame undetected | SG-01, SG-03, SG-04 | Random HW | RAM/FDCAN-RAM ECC enabled with reaction; option: TX read-back of own frames from the bus (FDCAN RX of own TX) compared with the approved frame | TSR-503 (RAM ECC) only; **no TSR for post-hook TX integrity** (OI-6); FMEDA WP-H-03 |
 | SPF-03 | **SoC can disable or replace its own monitor** (mode/param, boot pins, softloader). Any SoC fault (or compromise) is effectively a single point | All | Common cause / FFI | Safety-mode lock, command rejection in car modes, RDP/WRP, signature | TSR-511…TSR-514; GAP-09, GAP-24, GAP-38 |
 | SPF-04 | **Single RX path for both monitor and controller.** The SoC receives vehicle CAN through the panda; a stuck RX path or stuck vehicle frame misleads both | SG-01, SG-03, SG-05 | Common cause | E2E/plausibility on gating signals in the envelope | TSR-401…TSR-406; GAP-01 |
 | SPF-05 | **Debug build has no envelope** (ALLOUTPUT, debug key) | All | Configuration | Release-only firmware, build-type check at start-up reported to SoC and enforced | TSR-514, TSR-802; GAP-25 |
@@ -186,7 +186,7 @@ Severity of the vehicle effect is expressed by the affected SG. Detection = mech
 | SFMEA-14 | E-03 driver-torque handling | Driver steering override not detected in envelope | Torque opposes driver | SG-05 | Host only (`carcontroller.py:33, 83`) | EPS (assumed) | FSR-05.03 (TSR-304); GAP-02 |
 | SFMEA-15 | E-03 EPS status | EPS LKA fault not seen by envelope | Unannounced loss | SG-02 | Host only (`carstate.py:122-127`) | Host soft/immediate disable | FSR-02.01 (TSR-110); GAP-03 |
 | SFMEA-16 | E-03 tick / heartbeat | Tick ISR starved or stopped | No timeout detection, no siren | SG-01, SG-02 | Interrupt-rate fault (report-only) | None | IWDG (TSR-501); fault reaction (TSR-502); GAP-07, GAP-08 |
-| SFMEA-17 | E-03 TX path after hook | Frame bit flip in queue/message RAM | Approved frame altered | SG-01, SG-03, SG-04 | Packet XOR computed before queuing, checked at FDCAN load (`fdcan.h:100-101`) — does not cover FDCAN message RAM or transceiver | — | SPF-02 measures (TSR-503/5xx) |
+| SFMEA-17 | E-03 TX path after hook | Frame bit flip in queue or message RAM | Approved frame altered | SG-01, SG-03, SG-04 | Software queue: packet XOR (host-computed, carried through the hook) checked at FDCAN load (`fdcan.h:100`), frame dropped on mismatch. FDCAN message RAM, core, transceiver: none | Frame drop (queue only) | SPF-02 measures (TSR-503 partly; no TSR, OI-6) |
 | SFMEA-18 | E-03 SPI link | Corrupted command passes 8-bit XOR | Wrong CAN frame or wrong control command | All | XOR, NACK | TX hook limits (frames); none for control commands | CRC + counter (TSR-410, TSR-413); GAP-10 |
 | SFMEA-19 | E-03 SPI link | Length field above buffer size | DMA overrun into SRAM1/2 | All (potential) | None | Memory-bank separation (unconfirmed) | Length bound (TSR-412; WP-S-02 NF-04); WP-A-02 FFI-SP-02 |
 | SFMEA-20 | E-03 forwarding | Camera-side forwarding stops (power-save command, bus-2 fault) with relay energised | Stock PCS suppressed | SG-07 | None in envelope | — | Reject `0xe7` in car modes; forwarding supervision (TSR-513, TSR-707); WP-A-02 FFI-CM-08 |
