@@ -169,7 +169,7 @@ Performance targets are specified in [WP-S-01](../03-system/WP-S-01-system-requi
 | Lateral acceleration (controller) | ≤ 3.0 m/s² (roll-compensated); jerk ≤ 5 m/s³ | `controls/lib/drive_helpers.py:9-14` |
 | Acceleration command | −3.5 … +2.0 m/s² | `toyota.h:207-210` |
 | Minimum engagement speed | Toyota TSS2 with stop-and-go: from standstill (verify for Corolla LE, OI-7) | `car_events.py:59-72` |
-| Max control speed | ≈ 149 km/h warning (`MAX_CTRL_SPEED`), no disengage | `events.py:989-996` |
+| Max control speed | ≈ 149 km/h warning (`MAX_CTRL_SPEED`), no disengage | `selfdrive/car/car_events.py:126`; `selfdrived/events.py:989-996` |
 
 ## 9. Open items
 

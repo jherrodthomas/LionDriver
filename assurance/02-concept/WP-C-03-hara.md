@@ -179,7 +179,8 @@ Rationale is given for every rating. Ratings that depend on unverified AoUs are 
 | H-04 | SH-04 (phantom braking) | — | FSR-04.x |
 | H-05 | SH-05 (override detection limits) | Mode changes over `0xdc` | FSR-05.x |
 | H-06 | SH-06 (missed stationary lead) | — | FSR-06.x |
-| H-08 | SH-08 | Harness / firmware tamper | FSR-07.x |
+| H-08 | SH-08 | Harness / firmware tamper; SoC transmitting `0x344`/`0x411` (GAP-42) | FSR-07.x |
+| — | SOTIF-only hazards SH-09…SH-13 ([WP-C-05](WP-C-05-sotif-hazard-identification.md)); S and C ratings to be confirmed | — | — |
 
 ## 8. Open items
 
