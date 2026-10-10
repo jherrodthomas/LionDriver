@@ -1,0 +1,107 @@
+# Source: WP-K-01 Safety Case (§4.2). Machine-readable copy; WP-K-01 remains the reviewed document.
+# Format: assurance/case/README.md. Lifecycle and review fields are set only through recorded reviews.
+
+- id: G2
+  kind: claim
+  title: "SOTIF (ISO 21448)"
+  description: "Hazards from functional insufficiencies of the intended functionality and from reasonably foreseeable misuse are acceptably low."
+  parent: G0
+  argument: S0
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: [AOU-08]
+  evidence_refs: [Sn-48]
+  defeaters: []
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G2.1
+  kind: claim
+  title: "Known triggering conditions are treated"
+  description: "Known triggering conditions and insufficiencies are identified and each is acceptable, mitigated by a functional modification, or excluded from the ODD."
+  parent: G2
+  argument: S2
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-40, Sn-41, Sn-42]
+  defeaters: [DF-15, DF-08, DF-07]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G2.2
+  kind: claim
+  title: "Unknown-scenario residual risk below targets"
+  description: "The residual risk from unknown hazardous scenarios is below the validation targets."
+  parent: G2
+  argument: S2
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-43, Sn-44]
+  defeaters: [DF-16, DF-35, DF-41]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G2.3
+  kind: claim
+  title: "Foreseeable misuse is detected or prevented"
+  description: "Foreseeable misuse is detected or prevented to the extent the controllability ratings assume."
+  parent: G2
+  argument: S2
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: [AOU-06, AOU-07]
+  evidence_refs: [Sn-45, Sn-46, Sn-47]
+  defeaters: [DF-17, DF-18]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G2.4
+  kind: claim
+  title: "Actuation stays within a controllable envelope"
+  description: "Every actuation of the intended function stays within an envelope whose controllability is demonstrated (link to G1.1.1) [AC-02]."
+  parent: G2
+  argument: S2
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: []
+  defeaters: []
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"

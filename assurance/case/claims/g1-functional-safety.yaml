@@ -1,0 +1,317 @@
+# Source: WP-K-01 Safety Case (§4.1). Machine-readable copy; WP-K-01 remains the reviewed document.
+# Format: assurance/case/README.md. Lifecycle and review fields are set only through recorded reviews.
+
+- id: G1
+  kind: claim
+  title: "Functional safety (ISO 26262)"
+  description: "Hazards from E/E malfunctions of the item are reduced to a tolerable level: every safety goal SG-01…SG-07 is met with the integrity of its ASIL."
+  parent: G0
+  argument: S0
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: [SG-01, SG-02, SG-03, SG-04, SG-05, SG-06, SG-07]
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-49]
+  defeaters: []
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.1
+  kind: claim
+  title: "SG-01 lateral motion is met"
+  description: "SG-01 (lateral motion, ASIL C ⚠ / B if C1 shown under option c) is met."
+  parent: G1
+  argument: S1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: [SG-01]
+  related_requirements: []
+  related_assumptions: [AOU-01, AOU-02]
+  evidence_refs: []
+  defeaters: [DF-14]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.1.1
+  kind: claim
+  title: "Envelope limits are controllable"
+  description: "Envelope limits (torque magnitude, rate, measured tracking) are controllable by a typical driver (C1 basis)."
+  parent: G1.1
+  argument: S1.1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: [SG-01]
+  related_requirements: []
+  related_assumptions: [AOU-01, AOU-02]
+  evidence_refs: [Sn-01, Sn-20]
+  defeaters: [DF-28, DF-34]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.1.2
+  kind: claim
+  title: "Limits enforced on every TX frame"
+  description: "Limits are enforced on every TX frame by the Toyota safety mode."
+  parent: G1.1
+  argument: S1.1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: [SG-01]
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-02, Sn-03, Sn-10, Sn-12]
+  defeaters: [DF-03, DF-16, DF-27, DF-30]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.1.3
+  kind: claim
+  title: "No steering actuation while not engaged"
+  description: "No steering actuation while not engaged."
+  parent: G1.1
+  argument: S1.1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: [SG-01]
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-10, Sn-12]
+  defeaters: [DF-38]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.1.4
+  kind: claim
+  title: "Envelope faults reach the safe state in the FTTI"
+  description: "Envelope faults (MCU hang, SPI corruption, wrong safety mode, stale RX) reach the safe state within the FTTI."
+  parent: G1.1
+  argument: S1.1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: [SG-01]
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-04, Sn-13]
+  defeaters: [DF-01, DF-02, DF-03, DF-04, DF-05, DF-06, DF-29, DF-36, DF-40]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.2
+  kind: claim
+  title: "SG-02 lateral loss without warning is met"
+  description: "SG-02 (lateral loss without warning, B) is met."
+  parent: G1
+  argument: S1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: [SG-02]
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-01, Sn-02, Sn-14, Sn-13]
+  defeaters: [DF-07, DF-08, DF-36, DF-41]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.3
+  kind: claim
+  title: "SG-03 unintended acceleration is met"
+  description: "SG-03 (unintended acceleration, B ⚠) is met."
+  parent: G1
+  argument: S1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: [SG-03]
+  related_requirements: []
+  related_assumptions: [AOU-05]
+  evidence_refs: [Sn-01, Sn-02, Sn-10, Sn-12, Sn-21]
+  defeaters: [DF-14, DF-38]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.4
+  kind: claim
+  title: "SG-04 excessive deceleration is met"
+  description: "SG-04 (excessive deceleration, B ⚠) is met."
+  parent: G1
+  argument: S1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: [SG-04]
+  related_requirements: []
+  related_assumptions: [AOU-05, AOU-10]
+  evidence_refs: [Sn-01, Sn-02, Sn-21]
+  defeaters: [DF-09, DF-38]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.5
+  kind: claim
+  title: "SG-05 release on driver action is met"
+  description: "SG-05 (release on driver action, B ⚠) is met."
+  parent: G1
+  argument: S1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: [SG-05]
+  related_requirements: []
+  related_assumptions: [AOU-01, AOU-02, AOU-03]
+  evidence_refs: [Sn-01, Sn-02, Sn-10, Sn-22]
+  defeaters: [DF-10, DF-05, DF-14, DF-36]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.6
+  kind: claim
+  title: "SG-06 longitudinal loss without warning is met"
+  description: "SG-06 (longitudinal loss without warning, B) is met."
+  parent: G1
+  argument: S1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: [SG-06]
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-01, Sn-14, Sn-13]
+  defeaters: [DF-07, DF-41]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.7
+  kind: claim
+  title: "SG-07 stock PCS preserved is met"
+  description: "SG-07 (stock PCS preserved, B) is met."
+  parent: G1
+  argument: S1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: [SG-07]
+  related_requirements: []
+  related_assumptions: [AOU-04]
+  evidence_refs: [Sn-01, Sn-02, Sn-23, Sn-30]
+  defeaters: [DF-11, DF-12, DF-14, DF-32, DF-33, DF-38, DF-39]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.8
+  kind: claim
+  title: "QM SoC cannot interfere with the envelope"
+  description: "The QM SoC stack cannot interfere with the envelope (FFI)."
+  parent: G1
+  argument: S1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-05, Sn-06]
+  defeaters: [DF-03, DF-12, DF-06, DF-18, DF-22, DF-29, DF-32, DF-34, DF-37, DF-39, DF-40]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.9
+  kind: claim
+  title: "Random hardware failures are controlled"
+  description: "Random hardware failures of the panda MCU, relay, power and harness are sufficiently controlled for the target ASIL."
+  parent: G1
+  argument: S1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-07, Sn-08, Sn-09, Sn-11]
+  defeaters: [DF-04, DF-13, DF-01, DF-33]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G1.10
+  kind: claim
+  title: "Credited assumptions of use are verified"
+  description: "The assumptions credited in controllability (AOU-01/02/03/05) are verified."
+  parent: G1
+  argument: S1
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: [AOU-01, AOU-02, AOU-03, AOU-05]
+  evidence_refs: [Sn-20, Sn-21, Sn-22]
+  defeaters: [DF-14]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"

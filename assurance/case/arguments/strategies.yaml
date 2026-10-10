@@ -1,0 +1,68 @@
+# Source: WP-K-01 Safety Case (§3–§4, strategies). Machine-readable copy; WP-K-01 remains the reviewed document.
+# Format: assurance/case/README.md. Lifecycle and review fields are set only through recorded reviews.
+
+- id: S0
+  kind: argument
+  title: "Argue over each source of risk"
+  description: "Argue over each source of risk, one sub-claim per discipline"
+  claim: G0
+  subclaims: [G1, G2, G3, G4, G5]
+  lifecycle_status: draft
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: S1
+  kind: argument
+  title: "Argue per safety goal, then over shared properties"
+  description: "Argue per safety goal, then over the properties every SG depends on"
+  claim: G1
+  subclaims: [G1.1, G1.2, G1.3, G1.4, G1.5, G1.6, G1.7, G1.8, G1.9, G1.10]
+  lifecycle_status: draft
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: S1.1
+  kind: argument
+  title: "Argue over limits, enforcement integrity and fault reaction"
+  description: "Argue over (i) envelope limits keep any command controllable, (ii) the limits are enforced by an element of sufficient integrity, (iii) faults of the enforcing element are detected and reacted to in FTTI"
+  claim: G1.1
+  subclaims: [G1.1.1, G1.1.2, G1.1.3, G1.1.4]
+  lifecycle_status: draft
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: S2
+  kind: argument
+  title: "Argue over known scenarios, unknown scenarios and misuse"
+  description: "Argue over known hazardous scenarios, unknown hazardous scenarios, and misuse; then over residual risk against the acceptance criteria"
+  claim: G2
+  subclaims: [G2.1, G2.2, G2.3, G2.4]
+  lifecycle_status: draft
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: S3
+  kind: argument
+  title: "Argue over model identity, ODD fit, performance, supervision and change"
+  description: "Argue over model identity, input-space/ODD fit, performance evidence, runtime supervision, and change control"
+  claim: G3
+  subclaims: [G3.1, G3.2, G3.3, G3.4, G3.5]
+  lifecycle_status: draft
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: S5
+  kind: argument
+  title: "Argue over planning, control, review, competence, tools and operation"
+  description: "Argue over planning, configuration and change control, verification and review, competence and independence, confirmation measures, tools and reused components, and operation-phase processes"
+  claim: G5
+  subclaims: [G5.1, G5.2, G5.3, G5.4, G5.5, G5.6, G5.7]
+  lifecycle_status: draft
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"

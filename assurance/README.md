@@ -25,7 +25,7 @@ structure follows UL 4600 principles where they apply to a supervised Level 2 sy
 
 | Folder | Content | Primary standard clauses |
 |---|---|---|
-| `00-assessment/` | Baseline gap assessments | n/a |
+| `00-assessment/` | Baseline gap assessments; [reconciliation](00-assessment/docs-safety-reconciliation.md) of the earlier `docs/safety/` drafts | n/a |
 | `01-management/` | Plans, safety management, supplier and upstream management | 26262-2, 21434 §5–8, 21448 §4, MAN.3/5, ACQ.4 |
 | `02-concept/` | Item definition, HARA, FSC, SOTIF hazard and insufficiency analysis, TARA | 26262-3, 21448 §5–8, 21434 §9/§15, PAS 8800 |
 | `03-system/` | Technical safety requirements and concept, system architecture, HSI, system integration and qualification | 26262-4, SYS.1–5 |
@@ -37,6 +37,7 @@ structure follows UL 4600 principles where they apply to a supervised Level 2 sy
 | `09-production-operation/` | Installation, operation, field monitoring, incident response | 26262-7, 21448 §13, 21434 §12–14 |
 | `10-safety-case/` | Safety, SOTIF and cybersecurity cases; assessment and release records | 26262-2 §6, 21448 §12, 21434 §6, UL 4600 |
 | `trace/` | Machine-readable requirement and trace data | 26262-8 §6, ASPICE traceability BPs |
+| `case/` | Living Safety Case records (claims, evidence, defeaters, configurations, reviews), validator and dashboard generator | 26262-2 §6, UL 4600 |
 
 ## Conventions
 
