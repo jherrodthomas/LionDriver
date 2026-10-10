@@ -6,9 +6,9 @@
   kind: safety-goal
   text: "The item shall not cause lateral motion of the vehicle that exceeds what the driver can control, including any steering actuation while the item is not engaged"
   type: constraint
-  asil: C
-  asil_if_aou_fails: D
-  aou_dependency: [AOU-01, AOU-02]
+  asil: D
+  asil_if_aou_fails: null
+  aou_dependency: []
   parents: [HE-01.1, HE-01.2, HE-01.3, HE-01.4, HE-02.3]
   safe_state: "LKA torque request zero, steer request bit cleared; driver informed"
   ftti_ms: 500
@@ -34,9 +34,9 @@
   kind: safety-goal
   text: "The item shall not cause unintended vehicle acceleration"
   type: constraint
-  asil: B
-  asil_if_aou_fails: C
-  aou_dependency: [AOU-05]
+  asil: C
+  asil_if_aou_fails: null
+  aou_dependency: []
   parents: [HE-03.1, HE-03.2, HE-03.3]
   safe_state: "Acceleration request ≤ 0 (no positive acceleration); ACC cancelled to the PCM"
   ftti_ms: 1000
@@ -48,9 +48,9 @@
   kind: safety-goal
   text: "The item shall not cause deceleration that exceeds what following traffic and the driver can control"
   type: constraint
-  asil: B
-  asil_if_aou_fails: C
-  aou_dependency: [AOU-05]
+  asil: C
+  asil_if_aou_fails: null
+  aou_dependency: []
   parents: [HE-04.1, HE-04.2]
   safe_state: "Deceleration limited; transition to \"inactive\" (no ACC command; coast) with a bounded jerk"
   ftti_ms: 1000
@@ -62,9 +62,9 @@
   kind: safety-goal
   text: "The item shall release control immediately when the driver brakes, cancels, or overrides steering"
   type: constraint
-  asil: B
-  asil_if_aou_fails: C
-  aou_dependency: [AOU-01, AOU-02, AOU-03]
+  asil: C
+  asil_if_aou_fails: null
+  aou_dependency: []
   parents: [HE-05.1, HE-05.2, HE-05.3]
   safe_state: "Disengaged: no lateral or longitudinal actuation"
   ftti_ms: 200

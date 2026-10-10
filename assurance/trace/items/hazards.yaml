@@ -59,11 +59,12 @@
   effect: "Departure into the oncoming lane; head-on collision"
   s: 3
   e: 4
-  c: 2
-  asil: C
-  aou_flag: true
-  aou_dependency: [AOU-01, AOU-02]
-  asil_if_aou_fails: D
+  c: 3
+  asil: D
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "No controllability credit for OEM ECU behaviour (decision D-09); revision 0.1 credited the AoUs"
   status: proposed
   source: WP-C-03
 
@@ -74,11 +75,12 @@
   effect: "Lateral departure into an adjacent vehicle or barrier"
   s: 3
   e: 4
-  c: 2
-  asil: C
-  aou_flag: true
-  aou_dependency: [AOU-01, AOU-02]
-  asil_if_aou_fails: D
+  c: 3
+  asil: D
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "No controllability credit for OEM ECU behaviour (decision D-09); revision 0.1 credited the AoUs"
   status: proposed
   source: WP-C-03
 
@@ -89,12 +91,12 @@
   effect: "Vehicle drifts into a vulnerable road user"
   s: 3
   e: 3
-  c: 2
-  asil: B
-  aou_flag: true
-  aou_dependency: [AOU-01, AOU-02]
-  asil_if_aou_fails: C
-  notes: "WP-C-03 flags ⚠ but does not state the rating if the AoUs fail; AoUs taken from the H-01 group rationale (HE-01.1)"
+  c: 3
+  asil: C
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "No controllability credit for OEM ECU behaviour (decision D-09); revision 0.1 credited the AoUs"
   status: proposed
   source: WP-C-03
 
@@ -105,12 +107,12 @@
   effect: "Unexpected steering disturbance during manual driving"
   s: 3
   e: 4
-  c: 2
-  asil: C
-  aou_flag: true
-  aou_dependency: [AOU-01, AOU-02]
-  asil_if_aou_fails: D
-  notes: "WP-C-03 flags ⚠ but does not state the rating if the AoUs fail; AoUs taken from the H-01 group rationale (HE-01.1)"
+  c: 3
+  asil: D
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "No controllability credit for OEM ECU behaviour (decision D-09); revision 0.1 credited the AoUs"
   status: proposed
   source: WP-C-03
 
@@ -151,11 +153,12 @@
   effect: "Steering bias continues while the road changes"
   s: 3
   e: 3
-  c: 2
-  asil: B
-  aou_flag: true
-  aou_dependency: [AOU-01]
+  c: 3
+  asil: C
+  aou_flag: false
+  aou_dependency: []
   asil_if_aou_fails: null
+  notes: "No controllability credit for OEM ECU behaviour (decision D-09); revision 0.1 credited the AoUs"
   status: proposed
   source: WP-C-03
 
@@ -166,11 +169,12 @@
   effect: "Rear-end collision with the lead vehicle"
   s: 2
   e: 4
-  c: 2
-  asil: B
-  aou_flag: true
-  aou_dependency: [AOU-03, AOU-05]
-  asil_if_aou_fails: C
+  c: 3
+  asil: C
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "No controllability credit for OEM ECU behaviour (decision D-09); revision 0.1 credited the AoUs"
   status: proposed
   source: WP-C-03
 
@@ -211,11 +215,12 @@
   effect: "Rear-end impact by the following vehicle"
   s: 2
   e: 4
-  c: 2
-  asil: B
-  aou_flag: true
-  aou_dependency: [AOU-05]
-  asil_if_aou_fails: C
+  c: 3
+  asil: C
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "No controllability credit for OEM ECU behaviour (decision D-09); revision 0.1 credited the AoUs"
   status: proposed
   source: WP-C-03
 
@@ -226,12 +231,12 @@
   effect: "Instability under unexpected braking"
   s: 3
   e: 3
-  c: 1
-  asil: A
-  aou_flag: true
-  aou_dependency: [AOU-10]
-  asil_if_aou_fails: B
-  notes: "Credits AOU-10 (VSC available); C2 → ASIL B if it fails"
+  c: 2
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "No controllability credit for OEM ECU behaviour (decision D-09); revision 0.1 credited the AoUs"
   status: proposed
   source: WP-C-03
 
@@ -242,11 +247,12 @@
   effect: "Longer stopping distance; collision"
   s: 3
   e: 3
-  c: 2
-  asil: B
-  aou_flag: true
-  aou_dependency: [AOU-03]
-  asil_if_aou_fails: C
+  c: 3
+  asil: C
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "No controllability credit for OEM ECU behaviour (decision D-09); revision 0.1 credited the AoUs"
   status: proposed
   source: WP-C-03
 
@@ -257,11 +263,12 @@
   effect: "Evasive manoeuvre impaired; collision"
   s: 3
   e: 3
-  c: 2
-  asil: B
-  aou_flag: true
-  aou_dependency: [AOU-01, AOU-02]
-  asil_if_aou_fails: C
+  c: 3
+  asil: C
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "No controllability credit for OEM ECU behaviour (decision D-09); revision 0.1 credited the AoUs"
   status: proposed
   source: WP-C-03
 

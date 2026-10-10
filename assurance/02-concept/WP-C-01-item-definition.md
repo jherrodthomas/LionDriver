@@ -146,16 +146,16 @@ Each assumption needs verification evidence before it is credited in the HARA or
 
 | ID | Assumption | Credited in | Verification approach | Status |
 |---|---|---|---|---|
-| AOU-01 | The Toyota EPS limits the torque applied for LKA requests to a level a normal driver can overpower. It rejects or fades out implausible requests, and it ends LKA torque within a bounded time if LKA messages stop (a code comment suggests ≈1.5–2 s, `carstate.py:15-16`) | HARA controllability of H-01/H-05 | Bench and vehicle characterization: max LKA torque at the wheel, timeout behaviour, fault states | Unverified |
-| AOU-02 | A normal driver can override full LKA torque with steering force within the controllability criterion set by CA-01 in WP-C-08 §7 (ISO 11270-type limits; ≤ 50 N at the rim indicative) | HARA C-rating H-01, H-05 | Vehicle measurement with a steering force gauge | Unverified |
-| AOU-03 | Driver brake pedal application always produces braking regardless of ACC commands, and the PCM cancels ACC on brake application | HARA H-05 | Vehicle test | Unverified |
+| AOU-01 | The Toyota EPS limits the torque applied for LKA requests to a level a normal driver can overpower. It rejects or fades out implausible requests, and it ends LKA torque within a bounded time if LKA messages stop (a code comment suggests ≈1.5–2 s, `carstate.py:15-16`) | Not credited in the HARA (D-09); design input for FSC/TSC limits on H-01/H-05 | Bench and vehicle characterization: max LKA torque at the wheel, timeout behaviour, fault states | Unverified |
+| AOU-02 | A normal driver can override full LKA torque with steering force within the controllability criterion set by CA-01 in WP-C-08 §7 (ISO 11270-type limits; ≤ 50 N at the rim indicative) | Not credited in the HARA (D-09); design input for H-01/H-05 | Vehicle measurement with a steering force gauge | Unverified |
+| AOU-03 | Driver brake pedal application always produces braking regardless of ACC commands, and the PCM cancels ACC on brake application | Not credited in the HARA (D-09); design input for H-05 | Vehicle test | Unverified |
 | AOU-04 | The stock PCS/AEB keeps full function with the harness installed and openpilot longitudinal active | HARA H-08 | Review of forwarded and blocked messages; PCS target test (e.g. soft target) | Unverified |
-| AOU-05 | The PCM bounds ACC acceleration and deceleration requests to its own ACC envelope and honours the cancel bit | HARA H-03/H-04 | Vehicle test with injected out-of-range requests (on a closed course) | Unverified |
+| AOU-05 | The PCM bounds ACC acceleration and deceleration requests to its own ACC envelope and honours the cancel bit | Not credited in the HARA (D-09); design input for H-03/H-04 | Vehicle test with injected out-of-range requests (on a closed course) | Unverified |
 | AOU-06 | The driver is licensed, attentive, briefed according to [WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md), and keeps their eyes on the road | Controllability (all) | Enforced by F-04; misuse analysis [WP-C-08](WP-C-08-driver-hmi-misuse-analysis.md) | Assumption (SOTIF-managed) |
 | AOU-07 | During development, only trained safety drivers operate the item on public roads, under [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md) | All | Training records | Not started |
 | AOU-08 | The device is mounted and calibrated according to installation instructions | SOTIF | Calibration check (`calibrationd`) and installation checklist [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) | Partially (calibration check exists) |
 | AOU-09 | The vehicle is maintained, unmodified (suspension, tyres, steering), and has no active DTCs in the EPS, brake or powertrain systems | All | Pre-drive checklist | Not started |
-| AOU-10 | VSC/ABS are enabled and functional | H-01, H-04 | Pre-drive checklist; CAN status signal | Not started |
+| AOU-10 | VSC/ABS are enabled and functional | Not credited in the HARA (D-09); design input for H-01/H-04 | Pre-drive checklist; CAN status signal | Not started |
 | AOU-11 | The comma.ai back end and network are untrusted; no safety function depends on them | CS / FuSa | Architecture review | Design constraint |
 
 ## 8. Functional and non-functional performance (summary)

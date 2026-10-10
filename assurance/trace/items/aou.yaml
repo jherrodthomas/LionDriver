@@ -5,7 +5,7 @@
 - id: AOU-01
   kind: aou
   text: "The Toyota EPS limits the torque applied for LKA requests to a level a normal driver can overpower. It rejects or fades out implausible requests, and it ends LKA torque within a bounded time if LKA messages stop (a code comment suggests ≈1.5–2 s, `carstate.py:15-16`)"
-  credited_in: "HARA controllability of H-01/H-05"
+  credited_in: "Not credited in the HARA (D-09); design input for FSC/TSC limits on H-01/H-05"
   verification_approach: "Bench and vehicle characterization: max LKA torque at the wheel, timeout behaviour, fault states"
   aou_status: "Unverified"
   status: proposed
@@ -14,7 +14,7 @@
 - id: AOU-02
   kind: aou
   text: "A normal driver can override full LKA torque with steering force within the controllability criterion set by CA-01 in WP-C-08 §7 (ISO 11270-type limits; ≤ 50 N at the rim indicative)"
-  credited_in: "HARA C-rating H-01, H-05"
+  credited_in: "Not credited in the HARA (D-09); design input for H-01/H-05"
   verification_approach: "Vehicle measurement with a steering force gauge"
   aou_status: "Unverified"
   status: proposed
@@ -23,7 +23,7 @@
 - id: AOU-03
   kind: aou
   text: "Driver brake pedal application always produces braking regardless of ACC commands, and the PCM cancels ACC on brake application"
-  credited_in: "HARA H-05"
+  credited_in: "Not credited in the HARA (D-09); design input for H-05"
   verification_approach: "Vehicle test"
   aou_status: "Unverified"
   status: proposed
@@ -41,7 +41,7 @@
 - id: AOU-05
   kind: aou
   text: "The PCM bounds ACC acceleration and deceleration requests to its own ACC envelope and honours the cancel bit"
-  credited_in: "HARA H-03/H-04"
+  credited_in: "Not credited in the HARA (D-09); design input for H-03/H-04"
   verification_approach: "Vehicle test with injected out-of-range requests (on a closed course)"
   aou_status: "Unverified"
   status: proposed
@@ -86,7 +86,7 @@
 - id: AOU-10
   kind: aou
   text: "VSC/ABS are enabled and functional"
-  credited_in: "H-01, H-04"
+  credited_in: "Not credited in the HARA (D-09); design input for H-01/H-04"
   verification_approach: "Pre-drive checklist; CAN status signal"
   aou_status: "Not started"
   status: proposed

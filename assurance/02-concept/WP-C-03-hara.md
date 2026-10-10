@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-03 Hazard analysis and risk assessment, safety goals |
 | Standard reference | ISO 26262-3:2018 §6 (and Annex B for E/C classification guidance); shared hazard log with ISO 21448 §6 |
-| Version | 0.1 |
+| Version | 0.2 (D-09: no controllability credit for OEM ECU behaviour) |
 | Status | Draft — **ratings are proposals for review. They are not approved and must not be used to argue safety until the confirmation review (I3) passes** |
 | ASIL / scope | Item LD-SDA, reference configuration |
 | Author | Assurance team (initial draft) |
@@ -17,7 +17,7 @@
 - Item: [WP-C-01 item definition](WP-C-01-item-definition.md) (functions F-01…F-09, boundary, AOU-01…AOU-11).
 - ODD: [WP-C-02](WP-C-02-odd-and-intended-functionality.md).
 - The HARA rates **malfunctioning behaviour of the item** (E/E faults). Hazards caused by functional insufficiencies of the intended functionality (perception and ML performance limits) and by misuse use the same hazard list, but they are evaluated in [WP-C-05](WP-C-05-sotif-hazard-identification.md) under ISO 21448.
-- As ISO 26262-3 §6 requires, the item's own safety mechanisms (the panda envelope, selfdrived checks, DM) are **not** credited in the ratings. External measures and existing vehicle elements (the EPS's own LKA torque authority, the brake system, the PCM) are credited in controllability **only where an AoU states it**. If that AoU fails verification, the alternative rating shown applies.
+- As ISO 26262-3 §6 requires, the item's own safety mechanisms (the panda envelope, selfdrived checks, DM) are **not** credited in the ratings. External measures and existing vehicle elements (the EPS's own LKA torque authority, the brake system, the PCM, VSC) are **not credited in controllability** (decision D-09, 2026-10-10, [WP-M-07](../01-management/WP-M-07-risk-management.md) §5): their behaviour is not verified and cannot be obtained from the OEM (R-03). Revision 0.1 credited them through AOU-01/02/03/05/10 and flagged those ratings ⚠; revision 0.2 rates the same events without that credit. Vehicle characterization (OI-1) may later support a lower rating, which would be a HARA change with impact analysis.
 
 ## 2. Method
 
@@ -45,7 +45,7 @@
    Any class at 0 gives QM.
 5. **Safety goals:** one per hazard group, taking the highest ASIL of its hazardous events, with a safe state and a preliminary FTTI.
 
-Rationale is given for every rating. Ratings that depend on unverified AoUs are flagged ⚠.
+Rationale is given for every rating. Ratings that depend on unverified AoUs are flagged ⚠ (none in revision 0.2, after D-09).
 
 ## 3. Operational situation catalogue
 
@@ -87,10 +87,10 @@ Rationale is given for every rating. Ratings that depend on unverified AoUs are 
 
 | HE | Situation | Effect | S | E | C | ASIL | Rationale |
 |---|---|---|---|---|---|---|---|
-| HE-01.1 | OS-03 undivided road, oncoming traffic, 60–90 km/h | Departure into the oncoming lane; head-on collision | S3 | E4 | C2 ⚠ | **C** | S3: head-on at combined speeds > 100 km/h, life-threatening. E4: undivided roads make up a large share of driving. C2 ⚠: credits AOU-01/AOU-02 (EPS limits LKA torque to an overpowerable level). A supervising driver with hands near the wheel corrects a sustained limited-torque deviation within ~1 s in most cases (≥ 90%). **If AOU-01/02 are not verified: C3 → ASIL D** |
-| HE-01.2 | OS-01/OS-02 highway, adjacent traffic or barrier, 90–120 km/h | Lateral departure into an adjacent vehicle or barrier | S3 | E4 | C2 ⚠ | **C** | As HE-01.1. Lateral deviation at speed with adjacent traffic can trigger loss of control or secondary collisions |
-| HE-01.3 | OS-04 urban, pedestrians and cyclists near the lane edge, 30–60 km/h | Vehicle drifts into a vulnerable road user | S3 | E3 | C2 ⚠ | **B** | S3: VRU impact above 30 km/h. E3: urban VRU proximity within the ODD. C2: lower speed gives more time but less lateral margin. If AOU-01/02 fail: C3 → ASIL C |
-| HE-01.4 | Torque while not engaged, OS-01/OS-03, driver steering manually | Unexpected steering disturbance during manual driving | S3 | E4 | C2 ⚠ | **C** | Driver hands on the wheel (manual driving), so C2 rather than C3. Same S/E as HE-01.1. If AOU-01/02 fail: C3 → ASIL D |
+| HE-01.1 | OS-03 undivided road, oncoming traffic, 60–90 km/h | Departure into the oncoming lane; head-on collision | S3 | E4 | C3 | **D** | S3: head-on at combined speeds > 100 km/h, life-threatening. E4: undivided roads make up a large share of driving. C3: per decision D-09 ([WP-M-07](../01-management/WP-M-07-risk-management.md) §5) no controllability credit is taken for the EPS limiting LKA torque to an overpowerable level (AOU-01/02, unverified). The item does not require hands on the wheel, so fewer than 90% of drivers can be shown to correct the deviation before leaving the lane. Revision 0.1 rated C2 ⚠ (ASIL C) with that credit |
+| HE-01.2 | OS-01/OS-02 highway, adjacent traffic or barrier, 90–120 km/h | Lateral departure into an adjacent vehicle or barrier | S3 | E4 | C3 | **D** | As HE-01.1 (no EPS credit, D-09). Lateral deviation at speed with adjacent traffic can trigger loss of control or secondary collisions |
+| HE-01.3 | OS-04 urban, pedestrians and cyclists near the lane edge, 30–60 km/h | Vehicle drifts into a vulnerable road user | S3 | E3 | C3 | **C** | S3: VRU impact above 30 km/h. E3: urban VRU proximity within the ODD. C3: no EPS credit (D-09); lower speed gives more time but less lateral margin to the VRU |
+| HE-01.4 | Torque while not engaged, OS-01/OS-03, driver steering manually | Unexpected steering disturbance during manual driving | S3 | E4 | C3 | **D** | Same S/E as HE-01.1. The driver's hands are on the wheel, but the disturbance is unexpected and its magnitude is bounded only by the EPS, which is not credited (D-09) |
 
 ### 5.2 H-02 Unannounced loss or degradation of lateral control
 
@@ -98,13 +98,13 @@ Rationale is given for every rating. Ratings that depend on unverified AoUs are 
 |---|---|---|---|---|---|---|---|
 | HE-02.1 | OS-02 highway curve, driver supervising, possibly hands off (foreseeable: openpilot does not require hands on the wheel) | Vehicle goes straight in the curve and departs the lane | S3 | E3 | C2 | **B** | S3: departure at highway speed into a barrier or adjacent traffic. E3: curves of this radius at speed. C2: a supervising driver notices the drift and corrects it. Loss without warning delays the reaction; hands-off use is foreseeable |
 | HE-02.2 | OS-03 rural curve with oncoming traffic | Departure into the oncoming lane | S3 | E3 | C2 | **B** | As HE-02.1 |
-| HE-02.3 | Frozen (stuck) torque command at its last value | Steering bias continues while the road changes | S3 | E3 | C2 ⚠ | **B** | A stuck request is bounded by EPS authority (AOU-01). It behaves like HE-01 at reduced magnitude |
+| HE-02.3 | Frozen (stuck) torque command at its last value | Steering bias continues while the road changes | S3 | E3 | C3 | **C** | Without credit for the EPS authority limit (D-09) a stuck request is not shown to be bounded; it behaves like HE-01 |
 
 ### 5.3 H-03 Unintended acceleration
 
 | HE | Situation | Effect | S | E | C | ASIL | Rationale |
 |---|---|---|---|---|---|---|---|
-| HE-03.1 | OS-05 following a lead at a short gap | Rear-end collision with the lead vehicle | S2 | E4 | C2 ⚠ | **B** | S2: moderate speed difference in following. C2 credits AOU-03 (driver braking overrides) and AOU-05 (PCM bounds the ACC acceleration request). Without AOU-05, high-magnitude acceleration is possible → C3 → ASIL C |
+| HE-03.1 | OS-05 following a lead at a short gap | Rear-end collision with the lead vehicle | S2 | E4 | C3 | **C** | S2: moderate speed difference in following. C3: no credit for driver-brake override (AOU-03) or the PCM bounding the ACC request (AOU-05) (D-09), so high-magnitude acceleration is possible |
 | HE-03.2 | OS-06 standstill in a queue, pedestrian crossing in front | Vehicle moves off and hits a pedestrian | S3 | E3 | C2 | **B** | S3: VRU. E3: stop-and-go with crossing pedestrians. C2: the driver must brake immediately; a low-speed launch is limited |
 | HE-03.3 | OS-07 approaching a slower lead | Acceleration toward the lead instead of deceleration | S3 | E3 | C2 | **B** | High closing speed. The driver supervises and can brake |
 
@@ -112,15 +112,15 @@ Rationale is given for every rating. Ratings that depend on unverified AoUs are 
 
 | HE | Situation | Effect | S | E | C | ASIL | Rationale |
 |---|---|---|---|---|---|---|---|
-| HE-04.1 | OS-08 close following vehicle, 50–120 km/h | Rear-end impact by the following vehicle | S2 | E4 | C2 ⚠ | **B** | S2: rear impacts on a modern car are mostly S1–S2. Severe at large speed differences, but deceleration is limited by the PCM's ACC envelope (AOU-05). C2: the following driver and the ego driver (pressing gas overrides) can usually react. If the deceleration is unbounded (AOU-05 fails) → C3 → ASIL C |
-| HE-04.2 | OS-11 wet road, curve | Instability under unexpected braking | S3 | E3 | C1 ⚠ | **A** | VSC available (AOU-10; if it fails: C2 → ASIL B). Moderate ACC deceleration on wet roads is controllable for most drivers |
+| HE-04.1 | OS-08 close following vehicle, 50–120 km/h | Rear-end impact by the following vehicle | S2 | E4 | C3 | **C** | S2: rear impacts on a modern car are mostly S1–S2. C3: no credit for the PCM's ACC envelope (AOU-05, D-09), so the deceleration is not shown to be bounded and the following driver may not be able to react |
+| HE-04.2 | OS-11 wet road, curve | Instability under unexpected braking | S3 | E3 | C2 | **B** | C2: no credit for VSC (AOU-10, D-09). Unexpected braking on a wet curve is controllable for most, but not 99%, of drivers |
 
 ### 5.5 H-05 Driver unable to override or disengage
 
 | HE | Situation | Effect | S | E | C | ASIL | Rationale |
 |---|---|---|---|---|---|---|---|
-| HE-05.1 | OS-10 driver emergency braking while the system keeps commanding acceleration | Longer stopping distance; collision | S3 | E3 | C2 ⚠ | **B** | Credits AOU-03 (the brake system works mechanically and the PCM cancels ACC on brake). Without AOU-03 → C3 → ASIL C |
-| HE-05.2 | OS-10 driver evasive steering while the system keeps commanding counter-torque | Evasive manoeuvre impaired; collision | S3 | E3 | C2 ⚠ | **B** | Credits AOU-01/AOU-02 (driver can overpower the EPS LKA torque). Without them → C3 → ASIL C |
+| HE-05.1 | OS-10 driver emergency braking while the system keeps commanding acceleration | Longer stopping distance; collision | S3 | E3 | C3 | **C** | C3: no credit for the brake system overriding ACC or the PCM cancelling ACC on brake (AOU-03, D-09) |
+| HE-05.2 | OS-10 driver evasive steering while the system keeps commanding counter-torque | Evasive manoeuvre impaired; collision | S3 | E3 | C3 | **C** | C3: no credit for the driver overpowering the EPS LKA torque (AOU-01/02, D-09) |
 | HE-05.3 | Cancel or brake does not disengage; the system stays engaged when the driver believes it is off | Mode confusion, then unexpected actuation (leads to H-01 or H-03) | S3 | E3 | C2 | **B** | Rated with the effect hazards |
 
 ### 5.6 H-06 Unannounced loss of longitudinal deceleration
@@ -149,23 +149,23 @@ Rationale is given for every rating. Ratings that depend on unverified AoUs are 
 
 | ID | Safety goal | ASIL | Source HEs | Safe state | Preliminary FTTI | Notes |
 |---|---|---|---|---|---|---|
-| **SG-01** | The item shall not cause lateral motion of the vehicle that exceeds what the driver can control, including any steering actuation while the item is not engaged | **C** ⚠ (D if AOU-01/02 fail) | HE-01.1–01.4, HE-02.3 | LKA torque request zero, steer request bit cleared; driver informed | **≤ 0.5 s** (preliminary: `docs/SAFETY.md` cites 0.9 s to reach 1 m lateral deviation at maximum actuation; FTTI to be derived in [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md)) | The current envelope detection times (RX ≤ 2 s, heartbeat 3–5 s) are not consistent with this FTTI (GAP-06). The envelope's continuous limiting (magnitude, rate, measured tracking) does act within one frame |
+| **SG-01** | The item shall not cause lateral motion of the vehicle that exceeds what the driver can control, including any steering actuation while the item is not engaged | **D** | HE-01.1–01.4, HE-02.3 | LKA torque request zero, steer request bit cleared; driver informed | **≤ 0.5 s** (preliminary: `docs/SAFETY.md` cites 0.9 s to reach 1 m lateral deviation at maximum actuation; FTTI to be derived in [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md)) | The current envelope detection times (RX ≤ 2 s, heartbeat 3–5 s) are not consistent with this FTTI (GAP-06). The envelope's continuous limiting (magnitude, rate, measured tracking) does act within one frame |
 | **SG-02** | The item shall not lose or degrade lateral control while engaged without giving the driver an adequate take-over warning | **B** | HE-02.1, HE-02.2 | Driver warned (visual + acoustic) and lateral control handed back with a smooth torque ramp-down | ≤ 1 s from fault to warning (preliminary) | Mode awareness (HMI) and DM integrity contribute |
-| **SG-03** | The item shall not cause unintended vehicle acceleration | **B** ⚠ (C if AOU-05 fails) | HE-03.1–03.3 | Acceleration request ≤ 0 (no positive acceleration); ACC cancelled to the PCM | ≤ 1 s (preliminary) | |
-| **SG-04** | The item shall not cause deceleration that exceeds what following traffic and the driver can control | **B** ⚠ (C if AOU-05 fails) | HE-04.1, HE-04.2 | Deceleration limited; transition to "inactive" (no ACC command; coast) with a bounded jerk | ≤ 1 s (preliminary) | The envelope has no longitudinal jerk limit (GAP-04) |
-| **SG-05** | The item shall release control immediately when the driver brakes, cancels, or overrides steering | **B** ⚠ (C if AOU-01/02/03 fail) | HE-05.1–05.3 | Disengaged: no lateral or longitudinal actuation | ≤ 0.2 s from driver input to release (preliminary) | The envelope does not monitor driver steering torque on the LKA path (GAP-02) |
+| **SG-03** | The item shall not cause unintended vehicle acceleration | **C** | HE-03.1–03.3 | Acceleration request ≤ 0 (no positive acceleration); ACC cancelled to the PCM | ≤ 1 s (preliminary) | |
+| **SG-04** | The item shall not cause deceleration that exceeds what following traffic and the driver can control | **C** | HE-04.1, HE-04.2 | Deceleration limited; transition to "inactive" (no ACC command; coast) with a bounded jerk | ≤ 1 s (preliminary) | The envelope has no longitudinal jerk limit (GAP-04) |
+| **SG-05** | The item shall release control immediately when the driver brakes, cancels, or overrides steering | **C** | HE-05.1–05.3 | Disengaged: no lateral or longitudinal actuation | ≤ 0.2 s from driver input to release (preliminary) | The envelope does not monitor driver steering torque on the LKA path (GAP-02) |
 | **SG-06** | The item shall not lose longitudinal deceleration capability while engaged without giving the driver an adequate take-over warning | **B** | HE-06.1 | Driver warned; ACC cancelled so that the driver brakes | ≤ 1 s (preliminary) | |
 | **SG-07** | The item shall not suppress, delay or alter the vehicle's stock pre-collision (PCS/AEB) function | **B** | HE-08.1 | Camera PCS messages forwarded unchanged; if forwarding cannot be guaranteed (e.g. harness fault), relay released to restore the stock camera link | Continuous | Verification through AOU-04 and harness fault analysis |
 
 ### 6.1 Observations for the functional safety concept
 
-1. **SG-01 sets the ASIL for the envelope.** At ASIL C (or D if the EPS assumptions fail), a single-channel STM32H7 without a working watchdog, with report-only faults and no E2E counters (GAP-01, -07, -08, -11) cannot be argued as it stands. The FSC ([WP-C-04](WP-C-04-functional-safety-concept.md)) has to choose between:
-   - (a) hardening the envelope to ASIL C;
-   - (b) ASIL decomposition, e.g. C(C) = B(C) on the envelope + A(C) credited to the EPS-internal limitation, which is only valid if independence and AoU evidence exist;
+1. **SG-01 sets the ASIL for the envelope.** At ASIL D (D-09), a single-channel STM32H7 without a working watchdog, with report-only faults and no E2E counters (GAP-01, -07, -08, -11) cannot be argued as it stands. The FSC ([WP-C-04](WP-C-04-functional-safety-concept.md)) has to choose between:
+   - (a) hardening the envelope to ASIL D;
+   - (b) ASIL decomposition, e.g. D(D) = C(D) on the envelope + A(D) credited to the EPS-internal limitation, or B(D) + B(D) with a second independent limiter able to open the relay. Crediting the EPS is only valid once AOU-01/02 are verified;
    - (c) reducing the actuation authority (torque limit, rate) until controllability C1 can be shown, which lowers the ASIL.
 
    Option (c) combined with vehicle controllability testing is the most realistic route for an aftermarket item. It also matches the ISO 11270 reasoning already present in `docs/SAFETY.md`.
-2. **The ratings depend heavily on the vehicle AoUs** (AOU-01/02/03/05). Characterizing the vehicle (EPS torque authority and timeout, PCM ACC envelope, brake override) is therefore a G1 activity, not a later validation activity.
+2. **The vehicle AoUs (AOU-01/02/03/05/10) are no longer credited** (D-09). Characterizing the vehicle (EPS torque authority and timeout, PCM ACC envelope, brake override) remains a G1 activity: it is the only route to a lower rating, and the safety concept still relies on some of that behaviour as design input.
 3. **Driver monitoring underpins controllability** in H-02 and H-06 (and the C2 ratings generally). The FSC must give DM integrity an ASIL attribute (inherited from SG-02/SG-06) or justify why not. Today DM runs entirely on the QM SoC, with the validity flag hard-coded `True` at the source (GAP-21).
 4. **SG-07 has to hold even when LD-SDA is disengaged.** It covers the harness and relay hardware and the forwarding logic.
 
@@ -186,7 +186,7 @@ Rationale is given for every rating. Ratings that depend on unverified AoUs are 
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Verify AOU-01/02/03/05 by vehicle characterization, then confirm or revise the ⚠ ratings | G1 |
+| OI-1 | Verify AOU-01/02/03/05/10 by vehicle characterization. Ratings in revision 0.2 take no credit for them (D-09); measured evidence could support re-crediting them through a HARA change with impact analysis | G1 |
 | OI-2 | Confirm the exposure classes against real usage data (fork-owned drive logs, or published L2 usage statistics) | G1 |
 | OI-3 | Derive FTTIs from vehicle dynamics (lateral deviation vs time at envelope limits, per speed) in [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) | G2 |
 | OI-4 | Decide the envelope strategy (harden / decompose / reduce authority) in [WP-C-04](WP-C-04-functional-safety-concept.md) | G1 |
