@@ -42,7 +42,7 @@ PFMEA ─► Release / install control plan  (feeds "configuration as assured")
 | Prereq | Needed by | Status |
 |---|---|---|
 | Item definition & boundary (README roadmap item 2) | All | Not started |
-| HARA + safety goals | System FMEA severity, FMEDA | Draft rev 0.1 (`analyses/hara.yaml`): 13 hazards, 18 hazardous events, 10 safety goals (SG-001 ASIL D); 8 open items |
+| HARA + safety goals | System FMEA severity, FMEDA | Draft rev 0.2 (`analyses/hara.yaml`): 13 hazards, 15 situations, 19 hazardous events, 10 safety goals (SG-001 ASIL D); guide-word matrix and situation coverage complete; pre-checks in `reviews/` |
 | Functional / technical safety concept | DFMEA, SW FMEA, FMEDA | Not started |
 | HW/SW baseline frozen (commit SHA + submodule SHAs + AGNOS version) | All | BL-001 proposed in `baseline.yaml`; freeze at Phase 1 start |
 | Panda schematic + BOM (open hardware) | DFMEA, FMEDA | To collect |

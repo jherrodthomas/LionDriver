@@ -13,7 +13,9 @@
     "hazards",
     "hazardous_events",
     "safety_goals",
-    "open_items"
+    "open_items",
+    "guideword_analysis",
+    "situation_coverage"
   ],
   "properties": {
     "schema_version": {
@@ -432,7 +434,8 @@
         "required": [
           "id",
           "text",
-          "affects"
+          "affects",
+          "status"
         ],
         "properties": {
           "id": {
@@ -449,6 +452,143 @@
               "type": "string",
               "pattern": "^(HE|SG|HZ|OS|HA)-[0-9]{3,}$"
             }
+          },
+          "status": {
+            "enum": [
+              "open",
+              "closed"
+            ]
+          },
+          "resolution": {
+            "type": "string",
+            "description": "Required when closed: how and where the item was resolved"
+          }
+        }
+      }
+    },
+    "guideword_analysis": {
+      "description": "Function x malfunction guide word matrix (M01-M14). Every function of the System FMEA appears with all 14 guide words.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "function",
+          "guideword",
+          "classification",
+          "rationale"
+        ],
+        "properties": {
+          "function": {
+            "type": "string",
+            "pattern": "^SFM-FN-[0-9]{3,}$"
+          },
+          "guideword": {
+            "type": "string",
+            "pattern": "^M(0[1-9]|1[0-4])$"
+          },
+          "classification": {
+            "enum": [
+              "SC",
+              "NSC",
+              "NA"
+            ],
+            "description": "SC safety critical, NSC not safety critical, NA not applicable"
+          },
+          "hazards": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^HZ-[0-9]{3,}$"
+            }
+          },
+          "subsumed_by": {
+            "type": "string",
+            "pattern": "^M(0[1-9]|1[0-4])$",
+            "description": "Same system response as this guide word on the same function"
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "situation_coverage": {
+      "description": "Hazard x operational situation coverage. Every pair is rated, dominated (with an S/E/C estimate) or not relevant.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hazard",
+          "situation",
+          "status",
+          "rationale"
+        ],
+        "properties": {
+          "hazard": {
+            "type": "string",
+            "pattern": "^HZ-[0-9]{3,}$"
+          },
+          "situation": {
+            "type": "string",
+            "pattern": "^OS-[0-9]{3,}$"
+          },
+          "status": {
+            "enum": [
+              "rated",
+              "dominated",
+              "not_relevant"
+            ]
+          },
+          "he": {
+            "type": "string",
+            "pattern": "^HE-[0-9]{3,}$",
+            "description": "status rated: the hazardous event"
+          },
+          "by": {
+            "type": "string",
+            "pattern": "^HE-[0-9]{3,}$",
+            "description": "status dominated: the rated event whose ASIL is not exceeded"
+          },
+          "estimate": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "enum": [
+                  "S0",
+                  "S1",
+                  "S2",
+                  "S3"
+                ]
+              },
+              {
+                "enum": [
+                  "E0",
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4"
+                ]
+              },
+              {
+                "enum": [
+                  "C0",
+                  "C1",
+                  "C2",
+                  "C3"
+                ]
+              }
+            ],
+            "minItems": 3,
+            "maxItems": 3,
+            "items": false,
+            "description": "status dominated: [S, E, C] estimate for this pair"
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
           }
         }
       }

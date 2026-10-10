@@ -13,7 +13,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.3"
+  revision: "0.4"
   status: draft
   baseline: BL-001
   rating_tables: RT-1
@@ -822,6 +822,8 @@ failure_modes:
       - {level: local, description: "Relay stuck or intermittent; stock camera and item both on bus, or neither"}
       - {level: next_higher, description: "Conflicting steering/ACC messages, or no camera messages"}
       - {level: end, description: "Erratic stock or item behavior; stock functions lost", hazard: HZ-011, severity: 10}
+      - {level: end, description: "Contributes to HZ-002: stock LKA and item steering requests combine on the bus", hazard: HZ-002, severity: 10}
+      - {level: end, description: "Contributes to HZ-006: stock and item braking requests combine on the bus", hazard: HZ-006, severity: 10}
     severity: 10
     safety_mechanisms:
       - description: relayMalfunction fault from panda -> IMMEDIATE_DISABLE

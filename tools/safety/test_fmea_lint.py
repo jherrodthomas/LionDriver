@@ -92,7 +92,13 @@ HARA = {
     "controllability": "C3", "controllability_rationale": "fast", "asil": "D",
   }],
   "safety_goals": [{"id": "SG-001", "statement": "avoid", "hazards": ["HZ-001"], "asil": "D", "safe_state": "off", "ftti_ms": None}],
-  "open_items": [{"id": "OI-001", "text": "x", "affects": ["HE-001"]}],
+  "open_items": [{"id": "OI-001", "text": "x", "affects": ["HE-001"], "status": "open"}],
+  "guideword_analysis": [
+    {"function": "SFM-FN-001", "guideword": f"M{i:02d}", "classification": "SC" if i == 5 else "NSC",
+     **({"hazards": ["HZ-001"]} if i == 5 else {}), "rationale": "x"}
+    for i in range(1, 15)
+  ],
+  "situation_coverage": [{"hazard": "HZ-001", "situation": "OS-001", "status": "rated", "he": "HE-001", "rationale": "x"}],
 }
 
 # ISO 26262-3 Table 4, written out: rows S1..S3 x E1..E4, columns C1..C3.
@@ -298,6 +304,50 @@ class TestHara(LintFixture):
     sfm = copy.deepcopy(SFM)
     sfm["failure_modes"][0]["effects"][0]["hazard"] = "HZ-999"
     self.assertError(self.lint_hara(sfm=sfm), "HZ-999 not found in the HARA")
+
+  def test_guideword_matrix_complete(self):
+    doc = copy.deepcopy(HARA)
+    doc["guideword_analysis"].pop()
+    self.assertError(self.lint_hara(doc), "guide-word matrix missing SFM-FN-001 x M14")
+
+  def test_guideword_matrix_matches_hazard(self):
+    doc = copy.deepcopy(HARA)
+    doc["guideword_analysis"][2].update(classification="SC", hazards=["HZ-001"])
+    self.assertError(self.lint_hara(doc), "guidewords ['M05'] != guide-word matrix ['M03', 'M05']")
+
+  def test_sc_needs_hazard(self):
+    doc = copy.deepcopy(HARA)
+    del doc["guideword_analysis"][4]["hazards"]
+    self.assertError(self.lint_hara(doc), "SC entry must name at least one hazard")
+
+  def _two_situations(self):
+    doc = copy.deepcopy(HARA)
+    doc["operational_situations"].append(dict(doc["operational_situations"][0], id="OS-002", exposure="E2"))
+    return doc
+
+  def test_coverage_complete(self):
+    self.assertError(self.lint_hara(self._two_situations()), "situation coverage missing 1 pair(s): HZ-001/OS-002")
+
+  def test_dominated_estimate_checked(self):
+    doc = self._two_situations()
+    doc["hazardous_events"][0].update(controllability="C2", asil="C")
+    doc["safety_goals"][0]["asil"] = "C"
+    entry = {"hazard": "HZ-001", "situation": "OS-002", "status": "dominated", "by": "HE-001", "rationale": "x"}
+    doc["situation_coverage"].append(dict(entry, estimate=["S3", "E2", "C3"]))
+    self.assertEqual(self.lint_hara(doc).errors, [])
+    doc["situation_coverage"][-1]["estimate"] = ["S3", "E4", "C3"]
+    self.assertError(self.lint_hara(doc), "gives ASIL D, above HE-001 (C)")
+
+  def test_rated_entry_must_match_event(self):
+    doc = copy.deepcopy(HARA)
+    doc["situation_coverage"][0]["status"] = "not_relevant"
+    del doc["situation_coverage"][0]["he"]
+    self.assertError(self.lint_hara(doc), "appears 0 times as a rated coverage entry")
+
+  def test_closed_item_needs_resolution(self):
+    doc = copy.deepcopy(HARA)
+    doc["open_items"][0]["status"] = "closed"
+    self.assertError(self.lint_hara(doc), "needs a resolution")
 
   def test_released_requires_ftti(self):
     doc = copy.deepcopy(HARA)

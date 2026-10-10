@@ -149,7 +149,13 @@ def build(root: Path) -> Workbook:
   _rows(ws, r, [[f"S{s}-E{e}"] + [fmea_lint.compute_asil(f"S{s}", f"E{e}", f"C{c}") for c in (1, 2, 3)]
                 for s in (1, 2, 3) for e in (1, 2, 3, 4)])
 
-  ws, r = _sheet(wb, "11_Hazards", "Hazards (vehicle-level malfunctioning behavior)",
+  ws, r = _sheet(wb, "11_Function_x_Malfunction", "Function x Malfunction Safety-Criticality Filter",
+                 ["Function ID", "Function", "Malfunction ID", "Malfunction", "Classification", "Subsumed by", "Hazards", "Rationale"])
+  _rows(ws, r, [[g["function"], functions[g["function"]]["description"].split(":")[0], g["guideword"], MALFUNCTIONS[g["guideword"]][0],
+                 g["classification"], g.get("subsumed_by", ""), ", ".join(g.get("hazards", [])), g["rationale"]]
+                for g in hara["guideword_analysis"]])
+
+  ws, r = _sheet(wb, "11b_Hazards", "Hazards (vehicle-level malfunctioning behavior)",
                  ["Hazard ID", "Hazard", "Functions", "Guide words", "System FMEA refs", "Safety Goal"])
   _rows(ws, r, [[h["id"], h["description"], ", ".join(h["functions"]),
                  ", ".join(f"{g} {MALFUNCTIONS[g][0]}" for g in h["guidewords"]), ", ".join(h["sfm_refs"]),
@@ -180,6 +186,17 @@ def build(root: Path) -> Workbook:
     if asil in ASIL_FILL:
       ws.cell(r + i, asil_col).fill = PatternFill("solid", fgColor=ASIL_FILL[asil])
 
+  he_asil = {he["id"]: he["asil"] for he in hara["hazardous_events"]}
+  ws, r = _sheet(wb, "12b_Situation_Coverage", "Hazard x Operational Situation Coverage",
+                 ["Hazard ID", "Situation ID", "Coverage", "Event", "Estimate S/E/C", "Estimate ASIL", "Event ASIL", "Rationale"])
+  rows = []
+  for c in hara["situation_coverage"]:
+    est = c.get("estimate")
+    ref = c.get("he") or c.get("by") or ""
+    rows.append([c["hazard"], c["situation"], c["status"], ref, " ".join(est) if est else "",
+                 fmea_lint.compute_asil(*est) if est else "", he_asil.get(ref, ""), c["rationale"]])
+  _rows(ws, r, rows)
+
   ws, r = _sheet(wb, "13_Safety_Goals", "Safety Goals and Safe States",
                  ["SG_ID", "Function", "Hazard", "Worst-case ASIL", "Driving HARA IDs", "Safety Goal", "Safe State", "FTTI (ms)", "Notes"])
   for i, sg in enumerate(hara["safety_goals"]):
@@ -191,8 +208,8 @@ def build(root: Path) -> Workbook:
       sg["ftti_ms"] if sg["ftti_ms"] is not None else "TBD (OI-004)", sg.get("notes", ""),
     ]])
 
-  ws, r = _sheet(wb, "14_Open_Items", "Open Items", ["ID", "Open item", "Affects"])
-  _rows(ws, r, [[o["id"], o["text"], ", ".join(o["affects"])] for o in hara["open_items"]])
+  ws, r = _sheet(wb, "14_Open_Items", "Open Items", ["ID", "Status", "Open item", "Affects", "Resolution"])
+  _rows(ws, r, [[o["id"], o["status"], o["text"], ", ".join(o["affects"]), o.get("resolution", "")] for o in hara["open_items"]])
 
   ws, r = _sheet(wb, "15_References", "References", ["Reference"])
   _rows(ws, r, [[ref] for ref in hdr.get("references", [])])

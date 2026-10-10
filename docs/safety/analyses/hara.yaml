@@ -9,7 +9,7 @@ analysis:
   type: hara
   title: "HARA — LionDriver L2 ACC/ALC on 2020 Toyota Corolla LE (US)"
   doc_id: LD-HARA-001
-  revision: "0.1"
+  revision: "0.2"
   status: draft
   approver: Jherrod Thomas (pending)
   baseline: BL-001
@@ -31,9 +31,10 @@ analysis:
     - docs/safety/fmea-plan.md
     - docs/SAFETY.md
     - ISO 26262-3:2018 clause 6 and Annex B
-  updated: 2026-10-09
+  updated: 2026-10-10
   history:
     - {revision: "0.1", date: 2026-10-09, author: Claude (AI-assisted draft), change: Initial draft from System FMEA rev 0.2 end effects}
+    - {revision: "0.2", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Closed OI-009..OI-011 from pre-check: guide-word matrix, situation coverage, weather/night situations, HE-019"}
 
 assumptions:
   - id: HA-001
@@ -147,6 +148,27 @@ operational_situations:
     item_state: engaged
     exposure: E4
     exposure_rationale: Driver braking is the normal way to end or adjust an engagement.
+  - id: OS-013
+    description: Wet road surface
+    road: any
+    speed: 0-130 km/h
+    item_state: any
+    exposure: E3
+    exposure_rationale: Wet pavement is roughly 1-10% of operating time for typical US use (OI-006).
+  - id: OS-014
+    description: Snow- or ice-covered road
+    road: any
+    speed: 0-100 km/h
+    item_state: any
+    exposure: E2
+    exposure_rationale: Below 1% of operating time averaged over US use; higher in snow-belt regions (sensitivity on HE-019, OI-006).
+  - id: OS-015
+    description: Night driving with headlights
+    road: any
+    speed: 0-130 km/h
+    item_state: any
+    exposure: E4
+    exposure_rationale: More than 10% of driving takes place at night.
 
 hazards:
   - id: HZ-001
@@ -156,64 +178,179 @@ hazards:
     sfm_refs: [SFM-001]
   - id: HZ-002
     description: Excessive steering intervention (torque or rate) while engaged
-    guidewords: [M05]
-    functions: [SFM-FN-001, SFM-FN-007]
-    sfm_refs: [SFM-002, SFM-014, SFM-016, SFM-029, SFM-030, SFM-032]
+    guidewords: [M05, M01, M02, M03, M04, M06, M08, M09, M10, M11, M12, M13, M14]
+    functions: [SFM-FN-001, SFM-FN-003, SFM-FN-007, SFM-FN-008]
+    sfm_refs: [SFM-002, SFM-014, SFM-016, SFM-029, SFM-030, SFM-032, SFM-034]
   - id: HZ-003
     description: Lateral control steers toward or across the lane boundary at normal intervention magnitude while engaged
-    guidewords: [M12, M04]
-    functions: [SFM-FN-001]
+    guidewords: [M12, M04, M07, M10, M14]
+    functions: [SFM-FN-001, SFM-FN-003]
     sfm_refs: [SFM-003, SFM-006]
   - id: HZ-004
     description: Loss or reduction of lateral control while engaged without timely driver warning
-    guidewords: [M02, M06]
-    functions: [SFM-FN-001, SFM-FN-003]
+    guidewords: [M02, M01, M03, M04, M05, M06, M07, M08, M09, M10, M11, M13]
+    functions: [SFM-FN-001, SFM-FN-003, SFM-FN-004, SFM-FN-007]
     sfm_refs: [SFM-004, SFM-005, SFM-015]
   - id: HZ-005
     description: Unintended acceleration
-    guidewords: [M03, M05]
-    functions: [SFM-FN-002, SFM-FN-007]
+    guidewords: [M03, M01, M02, M04, M05, M06, M07, M08, M09, M10, M11, M12, M13]
+    functions: [SFM-FN-002, SFM-FN-003, SFM-FN-007]
     sfm_refs: [SFM-008, SFM-014, SFM-016, SFM-029, SFM-030, SFM-032]
   - id: HZ-006
     description: Unintended or excessive deceleration
-    guidewords: [M03, M05]
-    functions: [SFM-FN-002, SFM-FN-004, SFM-FN-007]
-    sfm_refs: [SFM-009, SFM-014, SFM-020, SFM-029, SFM-030, SFM-032]
+    guidewords: [M03, M01, M02, M04, M05, M06, M07, M08, M09, M10, M11, M12, M13]
+    functions: [SFM-FN-002, SFM-FN-007, SFM-FN-008]
+    sfm_refs: [SFM-009, SFM-014, SFM-020, SFM-029, SFM-030, SFM-032, SFM-034]
   - id: HZ-007
     description: Insufficient or late deceleration for a lead vehicle while engaged
-    guidewords: [M06, M11]
-    functions: [SFM-FN-002]
+    guidewords: [M06, M01, M02, M03, M04, M05, M08, M09, M10, M11]
+    functions: [SFM-FN-002, SFM-FN-007]
     sfm_refs: [SFM-010, SFM-011, SFM-012]
   - id: HZ-008
     description: Automated control not released when the driver brakes or cancels
-    guidewords: [M10]
-    functions: [SFM-FN-004]
+    guidewords: [M01, M02, M04, M06, M08, M11, M12]
+    functions: [SFM-FN-003, SFM-FN-004]
     sfm_refs: [SFM-017, SFM-019]
   - id: HZ-009
     description: Item resists driver steering input
-    guidewords: [M10]
+    guidewords: [M01, M02, M06, M08, M09, M11, M12, M13, M14]
     functions: [SFM-FN-004]
     sfm_refs: [SFM-018]
   - id: HZ-010
     description: Unintended engagement
-    guidewords: [M03]
+    guidewords: [M03, M07, M12]
     functions: [SFM-FN-003]
     sfm_refs: [SFM-013]
   - id: HZ-011
     description: Stock AEB/FCW unavailable or degraded while the item is installed
-    guidewords: [M01]
+    guidewords: [M01, M02, M04, M06, M08, M09, M11, M13]
     functions: [SFM-FN-008]
     sfm_refs: [SFM-033, SFM-034]
   - id: HZ-012
     description: Driver misinformed about automation state (missing or late handback warning, wrong displayed state, stock cruise active unknowingly)
-    guidewords: [M01, M08, M12]
-    functions: [SFM-FN-006, SFM-FN-004]
+    guidewords: [M01, M02, M04, M06, M08, M09, M10, M11, M12, M13]
+    functions: [SFM-FN-003, SFM-FN-004, SFM-FN-006]
     sfm_refs: [SFM-021, SFM-026, SFM-027, SFM-028]
   - id: HZ-013
     description: Automated control continues with an inattentive or unresponsive driver
-    guidewords: [M01, M11]
+    guidewords: [M01, M02, M04, M06, M08, M09, M11, M12, M14]
     functions: [SFM-FN-005]
     sfm_refs: [SFM-022, SFM-023, SFM-025]
+
+# Function x guide word matrix (closes OI-009). Hazard functions/guidewords above are derived from it; the linter checks both agree.
+guideword_analysis:
+  - {function: SFM-FN-001, guideword: M01, classification: SC, hazards: [HZ-004], rationale: "Engaged but no steering from the start; driver expects assist and the vehicle departs the lane."}
+  - {function: SFM-FN-001, guideword: M02, classification: SC, hazards: [HZ-004], rationale: "Steering assist stops mid-drive without warning (SFM-005)."}
+  - {function: SFM-FN-001, guideword: M03, classification: SC, hazards: [HZ-001], rationale: "Steering torque while not engaged (SFM-001)."}
+  - {function: SFM-FN-001, guideword: M04, classification: SC, hazards: [HZ-003], rationale: "Torque request frozen at last value; vehicle leaves the lane (SFM-006)."}
+  - {function: SFM-FN-001, guideword: M05, classification: SC, hazards: [HZ-002], rationale: "Torque or torque rate above what was commanded (SFM-002)."}
+  - {function: SFM-FN-001, guideword: M06, classification: SC, hazards: [HZ-004], rationale: "Assist below what the road geometry requires; drift to lane edge (SFM-004)."}
+  - {function: SFM-FN-001, guideword: M07, classification: SC, hazards: [HZ-003], rationale: "Premature lane change or curve entry; deviation at normal magnitude toward an occupied lane or the road edge."}
+  - {function: SFM-FN-001, guideword: M08, classification: SC, hazards: [HZ-004], rationale: "Correction applied after the vehicle is already drifting; equivalent to reduced lateral control."}
+  - {function: SFM-FN-001, guideword: M09, classification: SC, hazards: [HZ-004], subsumed_by: M06, rationale: "Torque pulses shorter than commanded give the same response as partial assist."}
+  - {function: SFM-FN-001, guideword: M10, classification: SC, hazards: [HZ-003], rationale: "Torque persists after curve exit; vehicle steers toward the opposite boundary."}
+  - {function: SFM-FN-001, guideword: M11, classification: SC, hazards: [HZ-004], subsumed_by: M08, rationale: "Latency beyond specification produces the same late correction as M08."}
+  - {function: SFM-FN-001, guideword: M12, classification: SC, hazards: [HZ-003], rationale: "Steering opposite to the required correction (SFM-003)."}
+  - {function: SFM-FN-001, guideword: M13, classification: SC, hazards: [HZ-002], rationale: "Oscillating torque; without crediting item limits (HA-002) the amplitude is bounded only by the EPS, so it is treated as excessive intervention."}
+  - {function: SFM-FN-001, guideword: M14, classification: SC, hazards: [HZ-003], rationale: "Asymmetric left/right response pulls the vehicle toward one boundary."}
+  - {function: SFM-FN-002, guideword: M01, classification: SC, hazards: [HZ-007], rationale: "Engaged but no braking for a lead from the start."}
+  - {function: SFM-FN-002, guideword: M02, classification: SC, hazards: [HZ-007], rationale: "Longitudinal control stops while engaged without warning (SFM-011)."}
+  - {function: SFM-FN-002, guideword: M03, classification: SC, hazards: [HZ-005, HZ-006], rationale: "Acceleration or braking not commanded by the planner (SFM-008, SFM-009)."}
+  - {function: SFM-FN-002, guideword: M04, classification: SC, hazards: [HZ-005, HZ-006, HZ-007], rationale: "Request frozen: positive value is unintended acceleration, negative is unintended braking, zero is no braking for a lead."}
+  - {function: SFM-FN-002, guideword: M05, classification: SC, hazards: [HZ-005, HZ-006], rationale: "Acceleration or deceleration magnitude above command."}
+  - {function: SFM-FN-002, guideword: M06, classification: SC, hazards: [HZ-007], rationale: "Deceleration below what the lead requires (SFM-010)."}
+  - {function: SFM-FN-002, guideword: M07, classification: SC, hazards: [HZ-005, HZ-006], rationale: "Resume from standstill before the lead moves (acceleration), or braking before it is needed (deceleration)."}
+  - {function: SFM-FN-002, guideword: M08, classification: SC, hazards: [HZ-007], rationale: "Late reaction to lead braking (SFM-012)."}
+  - {function: SFM-FN-002, guideword: M09, classification: SC, hazards: [HZ-007, HZ-005], rationale: "Braking released too early, including standstill hold releasing so the vehicle creeps into the lead."}
+  - {function: SFM-FN-002, guideword: M10, classification: SC, hazards: [HZ-005, HZ-006], rationale: "Acceleration or braking continues after it is no longer needed."}
+  - {function: SFM-FN-002, guideword: M11, classification: SC, hazards: [HZ-007], subsumed_by: M08, rationale: "Latency beyond specification produces the same late braking as M08."}
+  - {function: SFM-FN-002, guideword: M12, classification: SC, hazards: [HZ-005, HZ-006], rationale: "Acceleration when deceleration is required, or the reverse."}
+  - {function: SFM-FN-002, guideword: M13, classification: SC, hazards: [HZ-006, HZ-005], rationale: "Surging or jerky requests; braking surges risk rear-end collisions by following traffic."}
+  - {function: SFM-FN-002, guideword: M14, classification: NA, rationale: "The item requests a single longitudinal acceleration; per-wheel distribution is done by the vehicle brake system outside the item."}
+  - {function: SFM-FN-003, guideword: M01, classification: NSC, rationale: "Item never engages: unavailability with no engagement indication; the driver keeps driving manually."}
+  - {function: SFM-FN-003, guideword: M02, classification: SC, hazards: [HZ-008, HZ-002, HZ-005], rationale: "State machine stops evaluating events while engaged: driver brake and fault reactions are no longer processed (SFM-014)."}
+  - {function: SFM-FN-003, guideword: M03, classification: SC, hazards: [HZ-010], rationale: "Engagement without a driver request (SFM-013)."}
+  - {function: SFM-FN-003, guideword: M04, classification: SC, hazards: [HZ-008], rationale: "State stuck in engaged: driver cannot end the engagement."}
+  - {function: SFM-FN-003, guideword: M05, classification: NA, rationale: "Engagement is a discrete state; magnitude does not apply."}
+  - {function: SFM-FN-003, guideword: M06, classification: SC, hazards: [HZ-012], rationale: "Partial engagement (e.g. lateral active, longitudinal not) without matching indication."}
+  - {function: SFM-FN-003, guideword: M07, classification: SC, hazards: [HZ-010, HZ-003], rationale: "Engagement before entry conditions are met (e.g. calibration incomplete); lateral control runs on invalid inputs."}
+  - {function: SFM-FN-003, guideword: M08, classification: SC, hazards: [HZ-002, HZ-005], rationale: "Disengagement later than the fault requires; faulty actuation continues (SFM-016)."}
+  - {function: SFM-FN-003, guideword: M09, classification: SC, hazards: [HZ-004], rationale: "Engagement ends earlier than intended; hazardous only without warning (SFM-015)."}
+  - {function: SFM-FN-003, guideword: M10, classification: SC, hazards: [HZ-002, HZ-005], subsumed_by: M08, rationale: "Remaining engaged too long gives the same response as late disengagement."}
+  - {function: SFM-FN-003, guideword: M11, classification: SC, hazards: [HZ-002, HZ-005], subsumed_by: M08, rationale: "Latency in fault reaction gives the same response as M08."}
+  - {function: SFM-FN-003, guideword: M12, classification: SC, hazards: [HZ-010, HZ-008], rationale: "Engages on a cancel request or disengages on an engage request."}
+  - {function: SFM-FN-003, guideword: M13, classification: SC, hazards: [HZ-012, HZ-004], rationale: "Rapid engage/disengage toggling confuses the driver and interrupts lateral control."}
+  - {function: SFM-FN-003, guideword: M14, classification: NA, rationale: "Engagement is a discrete state; an uneven profile does not apply."}
+  - {function: SFM-FN-004, guideword: M01, classification: SC, hazards: [HZ-008, HZ-009], rationale: "Brake/cancel does not release and steering input is not yielded to (SFM-017, SFM-018, SFM-019)."}
+  - {function: SFM-FN-004, guideword: M02, classification: SC, hazards: [HZ-008, HZ-009], subsumed_by: M01, rationale: "Override handling that stops during a drive gives the same response as M01."}
+  - {function: SFM-FN-004, guideword: M03, classification: SC, hazards: [HZ-004], rationale: "Override detected without driver input; lateral control pauses, hazardous when not indicated."}
+  - {function: SFM-FN-004, guideword: M04, classification: SC, hazards: [HZ-004, HZ-012], rationale: "Override stuck active: lateral control stays paused while the driver may believe it is active."}
+  - {function: SFM-FN-004, guideword: M05, classification: SC, hazards: [HZ-004], subsumed_by: M03, rationale: "Over-sensitive override detection gives the same response as M03."}
+  - {function: SFM-FN-004, guideword: M06, classification: SC, hazards: [HZ-008, HZ-009], rationale: "Partial release: e.g. longitudinal released on brake but lateral torque continues, or steering torque reduced but not removed."}
+  - {function: SFM-FN-004, guideword: M07, classification: SC, hazards: [HZ-004], subsumed_by: M03, rationale: "Override detected before the driver intends gives the same response as M03."}
+  - {function: SFM-FN-004, guideword: M08, classification: SC, hazards: [HZ-008, HZ-009], rationale: "Release or yield delayed after the driver acts."}
+  - {function: SFM-FN-004, guideword: M09, classification: SC, hazards: [HZ-009], rationale: "Override ends while the driver is still steering; the item resumes against the driver."}
+  - {function: SFM-FN-004, guideword: M10, classification: SC, hazards: [HZ-004], rationale: "Override held after the driver lets go; lateral control does not resume and the driver may not notice."}
+  - {function: SFM-FN-004, guideword: M11, classification: SC, hazards: [HZ-008, HZ-009], subsumed_by: M08, rationale: "Latency gives the same response as M08."}
+  - {function: SFM-FN-004, guideword: M12, classification: SC, hazards: [HZ-009, HZ-008], rationale: "Item increases actuation when the driver intervenes."}
+  - {function: SFM-FN-004, guideword: M13, classification: SC, hazards: [HZ-009], rationale: "Override flickering switches torque on and off while the driver steers."}
+  - {function: SFM-FN-004, guideword: M14, classification: SC, hazards: [HZ-009], rationale: "Asymmetric override threshold; the item resists steering in one direction."}
+  - {function: SFM-FN-005, guideword: M01, classification: SC, hazards: [HZ-013], rationale: "Inattentive or unresponsive driver not detected (SFM-022)."}
+  - {function: SFM-FN-005, guideword: M02, classification: SC, hazards: [HZ-013], subsumed_by: M01, rationale: "Monitoring that stops during a drive gives the same response as M01."}
+  - {function: SFM-FN-005, guideword: M03, classification: NSC, rationale: "False distraction alerts: nuisance and possible lockout; the item becomes more conservative (SFM-024, S 4)."}
+  - {function: SFM-FN-005, guideword: M04, classification: SC, hazards: [HZ-013], subsumed_by: M01, rationale: "Awareness frozen at attentive gives the same response as M01."}
+  - {function: SFM-FN-005, guideword: M05, classification: NSC, subsumed_by: M03, rationale: "Over-sensitive monitoring gives the same response as M03."}
+  - {function: SFM-FN-005, guideword: M06, classification: SC, hazards: [HZ-013], rationale: "Only some distraction types detected (e.g. phone use missed)."}
+  - {function: SFM-FN-005, guideword: M07, classification: NSC, subsumed_by: M03, rationale: "Alert before the distraction threshold gives the same response as M03."}
+  - {function: SFM-FN-005, guideword: M08, classification: SC, hazards: [HZ-013], rationale: "Escalation slower than designed (SFM-023)."}
+  - {function: SFM-FN-005, guideword: M09, classification: SC, hazards: [HZ-013], rationale: "Alert ends before the driver can respond, so escalation is not noticed."}
+  - {function: SFM-FN-005, guideword: M10, classification: NSC, rationale: "Alert persists after the driver is attentive: nuisance only."}
+  - {function: SFM-FN-005, guideword: M11, classification: SC, hazards: [HZ-013], subsumed_by: M08, rationale: "Latency gives the same response as M08."}
+  - {function: SFM-FN-005, guideword: M12, classification: SC, hazards: [HZ-013], subsumed_by: M01, rationale: "Attentive and distracted swapped; the hazardous half is the same as M01, the other half is M03."}
+  - {function: SFM-FN-005, guideword: M13, classification: NSC, rationale: "Flickering alerts: nuisance and reduced trust; escalation still proceeds."}
+  - {function: SFM-FN-005, guideword: M14, classification: SC, hazards: [HZ-013], rationale: "Detection performance uneven across drivers, eyewear or lighting; overlaps SOTIF / ISO PAS 8800."}
+  - {function: SFM-FN-006, guideword: M01, classification: SC, hazards: [HZ-012], rationale: "Takeover or disengagement alert not presented (SFM-026)."}
+  - {function: SFM-FN-006, guideword: M02, classification: SC, hazards: [HZ-012], subsumed_by: M01, rationale: "Alerting that stops during a drive gives the same response as M01."}
+  - {function: SFM-FN-006, guideword: M03, classification: NSC, rationale: "Unneeded takeover alert prompts the driver to take control, which is the safe action; nuisance (S 4)."}
+  - {function: SFM-FN-006, guideword: M04, classification: SC, hazards: [HZ-012], rationale: "Display frozen on a stale state, e.g. still showing engaged."}
+  - {function: SFM-FN-006, guideword: M05, classification: NSC, rationale: "Alert louder or more prominent than needed: startle and annoyance only."}
+  - {function: SFM-FN-006, guideword: M06, classification: SC, hazards: [HZ-012], rationale: "Only one channel presented (e.g. visual without audible); a driver looking at the road misses it."}
+  - {function: SFM-FN-006, guideword: M07, classification: NSC, rationale: "Alert earlier than needed gives the driver more time."}
+  - {function: SFM-FN-006, guideword: M08, classification: SC, hazards: [HZ-012], rationale: "Alert presented late (SFM-027)."}
+  - {function: SFM-FN-006, guideword: M09, classification: SC, hazards: [HZ-012], rationale: "Alert too brief to be noticed."}
+  - {function: SFM-FN-006, guideword: M10, classification: SC, hazards: [HZ-012], subsumed_by: M04, rationale: "Alert persisting after the state changed gives the same response as a stale display."}
+  - {function: SFM-FN-006, guideword: M11, classification: SC, hazards: [HZ-012], subsumed_by: M08, rationale: "Latency gives the same response as M08."}
+  - {function: SFM-FN-006, guideword: M12, classification: SC, hazards: [HZ-012], rationale: "Displayed state opposite to the actual state (SFM-028)."}
+  - {function: SFM-FN-006, guideword: M13, classification: SC, hazards: [HZ-012], rationale: "Flickering alerts make the state unreadable."}
+  - {function: SFM-FN-006, guideword: M14, classification: NA, rationale: "Single display and speaker; no spatial distribution of alerts."}
+  - {function: SFM-FN-007, guideword: M01, classification: SC, hazards: [HZ-002, HZ-005, HZ-006], rationale: "Limits not enforced; latent until another fault produces an out-of-limit request (SFM-029)."}
+  - {function: SFM-FN-007, guideword: M02, classification: SC, hazards: [HZ-002, HZ-005, HZ-006], subsumed_by: M01, rationale: "Limiting that stops during a drive gives the same response as M01."}
+  - {function: SFM-FN-007, guideword: M03, classification: SC, hazards: [HZ-004, HZ-007], rationale: "Limits clamp nominal commands: reduced lateral assist or braking without warning."}
+  - {function: SFM-FN-007, guideword: M04, classification: SC, hazards: [HZ-002, HZ-005, HZ-006], subsumed_by: M01, rationale: "Limit stuck: high is M01, low is M03; the hazardous high case is analyzed under M01."}
+  - {function: SFM-FN-007, guideword: M05, classification: SC, hazards: [HZ-004, HZ-007], subsumed_by: M03, rationale: "Limits tighter than designed give the same response as M03."}
+  - {function: SFM-FN-007, guideword: M06, classification: SC, hazards: [HZ-002, HZ-005, HZ-006], subsumed_by: M01, rationale: "Limits looser than designed (partially enforced) give the same response as M01."}
+  - {function: SFM-FN-007, guideword: M07, classification: NSC, rationale: "Excessive-actuation detection triggering early causes a soft disable with alert (SFM-031, S 8)."}
+  - {function: SFM-FN-007, guideword: M08, classification: SC, hazards: [HZ-002, HZ-005, HZ-006], rationale: "Excessive actuation detected late (debounce longer than the FTTI allows)."}
+  - {function: SFM-FN-007, guideword: M09, classification: SC, hazards: [HZ-002, HZ-005, HZ-006], subsumed_by: M13, rationale: "Intermittent enforcement gives the same response as M13."}
+  - {function: SFM-FN-007, guideword: M10, classification: SC, hazards: [HZ-004, HZ-007], subsumed_by: M03, rationale: "Limit kept after the condition ends gives the same response as M03."}
+  - {function: SFM-FN-007, guideword: M11, classification: SC, hazards: [HZ-002, HZ-005, HZ-006], subsumed_by: M08, rationale: "Latency gives the same response as M08."}
+  - {function: SFM-FN-007, guideword: M12, classification: SC, hazards: [HZ-002, HZ-005, HZ-006], rationale: "Sign error: limit applied in the wrong direction, out-of-limit requests pass in the other."}
+  - {function: SFM-FN-007, guideword: M13, classification: SC, hazards: [HZ-002, HZ-005, HZ-006], rationale: "Limits toggle on and off; out-of-limit requests pass intermittently."}
+  - {function: SFM-FN-007, guideword: M14, classification: SC, hazards: [HZ-002], rationale: "Asymmetric lateral limits allow excessive torque in one direction."}
+  - {function: SFM-FN-008, guideword: M01, classification: SC, hazards: [HZ-011], rationale: "Stock AEB/FCW not available with the item installed (SFM-033)."}
+  - {function: SFM-FN-008, guideword: M02, classification: SC, hazards: [HZ-011], subsumed_by: M01, rationale: "Stock functions dropping out during a drive give the same response as M01."}
+  - {function: SFM-FN-008, guideword: M03, classification: SC, hazards: [HZ-002, HZ-006], rationale: "Stock function acting at the same time as the item (relay fault): stock and item steering or braking commands combine (SFM-034)."}
+  - {function: SFM-FN-008, guideword: M04, classification: SC, hazards: [HZ-011], subsumed_by: M01, rationale: "Relay stuck: blocking is M01, passing during engagement is M03."}
+  - {function: SFM-FN-008, guideword: M05, classification: NA, rationale: "The item does not set the magnitude of stock functions."}
+  - {function: SFM-FN-008, guideword: M06, classification: SC, hazards: [HZ-011], rationale: "Some stock functions preserved, others lost (e.g. FCW kept, AEB lost)."}
+  - {function: SFM-FN-008, guideword: M07, classification: NA, rationale: "The item does not trigger stock functions."}
+  - {function: SFM-FN-008, guideword: M08, classification: SC, hazards: [HZ-011], rationale: "Stock AEB delayed by message forwarding latency through the harness/panda."}
+  - {function: SFM-FN-008, guideword: M09, classification: SC, hazards: [HZ-011], rationale: "Stock AEB application cut short by item messages (e.g. cancel or ACC commands)."}
+  - {function: SFM-FN-008, guideword: M10, classification: NA, rationale: "The item does not extend stock function actuation."}
+  - {function: SFM-FN-008, guideword: M11, classification: SC, hazards: [HZ-011], subsumed_by: M08, rationale: "Latency gives the same response as M08."}
+  - {function: SFM-FN-008, guideword: M12, classification: NA, rationale: "The item does not set the direction of stock function actuation."}
+  - {function: SFM-FN-008, guideword: M13, classification: SC, hazards: [HZ-011], subsumed_by: M02, rationale: "Intermittent forwarding gives the same response as M02."}
+  - {function: SFM-FN-008, guideword: M14, classification: NA, rationale: "The item does not shape stock function actuation."}
 
 hazardous_events:
   - id: HE-001
@@ -412,6 +549,216 @@ hazardous_events:
     controllability: C3
     controllability_rationale: No driver is available to control.
     asil: A
+  - id: HE-019
+    hazard: HZ-006
+    situation: OS-014
+    consequence: Unexpected hard braking on snow or ice destabilizes the vehicle or causes a rear-end collision
+    severity: S3
+    severity_rationale: Loss of stability at speed on low friction can lead to a spin into other traffic.
+    exposure_override: null
+    controllability: C3
+    controllability_rationale: Low friction leaves little margin to recover from unexpected hard braking; following drivers are also on low friction.
+    asil: B
+    sensitivity: Where snow/ice exceeds 1% of operating time (snow-belt use), E3 -> ASIL C, which would raise SG-005 to C (OI-006).
+
+# Hazard x situation coverage (closes OI-010, OI-011). 'dominated' entries carry an [S, E, C] estimate;
+# the linter checks its ASIL does not exceed the ASIL of the event named in `by`.
+situation_coverage:
+  - {hazard: HZ-001, situation: OS-006, status: rated, he: HE-001, rationale: "Worst case: manual highway driving with adjacent traffic."}
+  - {hazard: HZ-001, situation: OS-001, status: not_relevant, rationale: "Hazard is defined for the item not engaged; with the item engaged the same behavior is HZ-002/HZ-003."}
+  - {hazard: HZ-001, situation: OS-002, status: not_relevant, rationale: "Hazard is defined for the item not engaged; with the item engaged the same behavior is HZ-002/HZ-003."}
+  - {hazard: HZ-001, situation: OS-003, status: not_relevant, rationale: "Hazard is defined for the item not engaged; with the item engaged the same behavior is HZ-002/HZ-003."}
+  - {hazard: HZ-001, situation: OS-004, status: not_relevant, rationale: "Hazard is defined for the item not engaged; with the item engaged the same behavior is HZ-002/HZ-003."}
+  - {hazard: HZ-001, situation: OS-005, status: not_relevant, rationale: "Hazard is defined for the item not engaged; with the item engaged the same behavior is HZ-002/HZ-003."}
+  - {hazard: HZ-001, situation: OS-007, status: not_relevant, rationale: "Hazard is defined for the item not engaged; with the item engaged the same behavior is HZ-002/HZ-003."}
+  - {hazard: HZ-001, situation: OS-008, status: not_relevant, rationale: "Hazard is defined for the item not engaged; with the item engaged the same behavior is HZ-002/HZ-003."}
+  - {hazard: HZ-001, situation: OS-009, status: not_relevant, rationale: "Hazard is defined for the item not engaged; with the item engaged the same behavior is HZ-002/HZ-003."}
+  - {hazard: HZ-001, situation: OS-011, status: not_relevant, rationale: "Hazard is defined for the item not engaged; with the item engaged the same behavior is HZ-002/HZ-003."}
+  - {hazard: HZ-001, situation: OS-012, status: not_relevant, rationale: "Hazard is defined for the item not engaged; with the item engaged the same behavior is HZ-002/HZ-003."}
+  - {hazard: HZ-001, situation: OS-010, status: dominated, by: HE-001, estimate: [S3, E2, C2], rationale: "Emergency braking is rarer than OS-006; same consequence."}
+  - {hazard: HZ-001, situation: OS-013, status: dominated, by: HE-001, estimate: [S3, E3, C2], rationale: "Wet road is rarer than OS-006; reduced grip does not change the driver's ability to counter-steer."}
+  - {hazard: HZ-001, situation: OS-014, status: dominated, by: HE-001, estimate: [S3, E2, C3], rationale: "Unexpected torque on snow/ice is harder to control, but the situation is E2."}
+  - {hazard: HZ-001, situation: OS-015, status: dominated, by: HE-001, estimate: [S3, E4, C2], rationale: "Night does not change counter-steering ability; equal to HE-001."}
+  - {hazard: HZ-002, situation: OS-001, status: rated, he: HE-002, rationale: "Worst case: highway speed, adjacent traffic, hands-light driver."}
+  - {hazard: HZ-002, situation: OS-002, status: dominated, by: HE-002, estimate: [S3, E4, C3], rationale: "Oncoming traffic on an undivided road; equal to HE-002."}
+  - {hazard: HZ-002, situation: OS-003, status: rated, he: HE-003, rationale: "Vulnerable road users at urban speed."}
+  - {hazard: HZ-002, situation: OS-004, status: dominated, by: HE-002, estimate: [S1, E3, C2], rationale: "Stop-and-go speeds limit the consequence to light injuries."}
+  - {hazard: HZ-002, situation: OS-005, status: dominated, by: HE-002, estimate: [S3, E4, C3], rationale: "Curves; equal to HE-002."}
+  - {hazard: HZ-002, situation: OS-006, status: not_relevant, rationale: "Situation has the item not engaged; with the item off this behavior cannot occur (HZ-001/HZ-010 cover the not-engaged state)."}
+  - {hazard: HZ-002, situation: OS-007, status: dominated, by: HE-002, estimate: [S3, E1, C3], rationale: "Incapacitated driver cannot react, but the situation is E1."}
+  - {hazard: HZ-002, situation: OS-008, status: dominated, by: HE-002, estimate: [S3, E4, C3], rationale: "Following traffic does not change the lateral consequence; equal to HE-002."}
+  - {hazard: HZ-002, situation: OS-009, status: dominated, by: HE-002, estimate: [S3, E2, C3], rationale: "Evasive maneuvers are E2."}
+  - {hazard: HZ-002, situation: OS-010, status: dominated, by: HE-002, estimate: [S3, E2, C3], rationale: "Emergency braking is E2."}
+  - {hazard: HZ-002, situation: OS-011, status: dominated, by: HE-002, estimate: [S3, E4, C3], rationale: "Equal to HE-002."}
+  - {hazard: HZ-002, situation: OS-012, status: dominated, by: HE-002, estimate: [S3, E4, C3], rationale: "Driver braking does not reduce the lateral consequence; equal to HE-002."}
+  - {hazard: HZ-002, situation: OS-013, status: dominated, by: HE-002, estimate: [S3, E3, C3], rationale: "Wet road is E3."}
+  - {hazard: HZ-002, situation: OS-014, status: dominated, by: HE-002, estimate: [S3, E2, C3], rationale: "Snow/ice is E2; loss of grip does not raise S or C above HE-002."}
+  - {hazard: HZ-002, situation: OS-015, status: dominated, by: HE-002, estimate: [S3, E4, C3], rationale: "Night; equal to HE-002."}
+  - {hazard: HZ-003, situation: OS-001, status: dominated, by: HE-004, estimate: [S3, E4, C2], rationale: "Adjacent traffic instead of oncoming; equal to HE-004."}
+  - {hazard: HZ-003, situation: OS-002, status: rated, he: HE-004, rationale: "Drift into the oncoming lane."}
+  - {hazard: HZ-003, situation: OS-003, status: dominated, by: HE-004, estimate: [S3, E4, C2], rationale: "Vulnerable road users at urban speed; equal to HE-004."}
+  - {hazard: HZ-003, situation: OS-004, status: dominated, by: HE-004, estimate: [S1, E3, C1], rationale: "Low speed and close traffic; light injuries at most."}
+  - {hazard: HZ-003, situation: OS-005, status: rated, he: HE-005, rationale: "Leaving the lane in a curve."}
+  - {hazard: HZ-003, situation: OS-006, status: not_relevant, rationale: "Situation has the item not engaged; with the item off this behavior cannot occur (HZ-001/HZ-010 cover the not-engaged state)."}
+  - {hazard: HZ-003, situation: OS-007, status: dominated, by: HE-004, estimate: [S3, E1, C3], rationale: "Incapacitated driver; E1."}
+  - {hazard: HZ-003, situation: OS-008, status: dominated, by: HE-004, estimate: [S3, E4, C2], rationale: "Equal to HE-004."}
+  - {hazard: HZ-003, situation: OS-009, status: dominated, by: HE-004, estimate: [S3, E2, C3], rationale: "Item steering toward a boundary during an evasive maneuver; E2."}
+  - {hazard: HZ-003, situation: OS-010, status: dominated, by: HE-004, estimate: [S3, E2, C2], rationale: "Emergency braking is E2."}
+  - {hazard: HZ-003, situation: OS-011, status: dominated, by: HE-004, estimate: [S3, E4, C2], rationale: "Equal to HE-004."}
+  - {hazard: HZ-003, situation: OS-012, status: dominated, by: HE-004, estimate: [S3, E4, C2], rationale: "Equal to HE-004."}
+  - {hazard: HZ-003, situation: OS-013, status: dominated, by: HE-004, estimate: [S3, E3, C2], rationale: "Wet road is E3."}
+  - {hazard: HZ-003, situation: OS-014, status: dominated, by: HE-004, estimate: [S3, E2, C3], rationale: "Correction on snow/ice is harder (C3) but the situation is E2."}
+  - {hazard: HZ-003, situation: OS-015, status: dominated, by: HE-004, estimate: [S3, E4, C2], rationale: "Lane markings remain visible under headlights; equal to HE-004."}
+  - {hazard: HZ-004, situation: OS-001, status: dominated, by: HE-006, estimate: [S3, E4, C1], rationale: "Straight highway: departure is slower than in a curve; equal to HE-006."}
+  - {hazard: HZ-004, situation: OS-002, status: dominated, by: HE-006, estimate: [S3, E4, C1], rationale: "Passive drift toward oncoming traffic; equal to HE-006."}
+  - {hazard: HZ-004, situation: OS-003, status: dominated, by: HE-006, estimate: [S3, E4, C1], rationale: "Equal to HE-006."}
+  - {hazard: HZ-004, situation: OS-004, status: dominated, by: HE-006, estimate: [S1, E3, C1], rationale: "Low speed; light injuries at most."}
+  - {hazard: HZ-004, situation: OS-005, status: rated, he: HE-006, rationale: "Running wide in a curve."}
+  - {hazard: HZ-004, situation: OS-006, status: not_relevant, rationale: "Situation has the item not engaged; with the item off this behavior cannot occur (HZ-001/HZ-010 cover the not-engaged state)."}
+  - {hazard: HZ-004, situation: OS-007, status: dominated, by: HE-006, estimate: [S3, E1, C3], rationale: "Incapacitated driver; E1."}
+  - {hazard: HZ-004, situation: OS-008, status: dominated, by: HE-006, estimate: [S3, E4, C1], rationale: "Equal to HE-006."}
+  - {hazard: HZ-004, situation: OS-009, status: not_relevant, rationale: "Driver is already steering during the evasive maneuver; loss of assist does not affect it."}
+  - {hazard: HZ-004, situation: OS-010, status: dominated, by: HE-006, estimate: [S3, E2, C1], rationale: "Emergency braking is E2."}
+  - {hazard: HZ-004, situation: OS-011, status: dominated, by: HE-006, estimate: [S3, E4, C1], rationale: "Equal to HE-006."}
+  - {hazard: HZ-004, situation: OS-012, status: not_relevant, rationale: "Driver braking disengages the item; lateral control returns to the driver by design."}
+  - {hazard: HZ-004, situation: OS-013, status: dominated, by: HE-006, estimate: [S3, E3, C1], rationale: "Wet road is E3."}
+  - {hazard: HZ-004, situation: OS-014, status: dominated, by: HE-006, estimate: [S3, E2, C2], rationale: "Snow/ice: harder correction (C2), E2."}
+  - {hazard: HZ-004, situation: OS-015, status: dominated, by: HE-006, estimate: [S3, E4, C1], rationale: "Loss of assist torque is felt at the wheel regardless of lighting; equal to HE-006."}
+  - {hazard: HZ-005, situation: OS-001, status: dominated, by: HE-008, estimate: [S3, E4, C2], rationale: "Equal to HE-008."}
+  - {hazard: HZ-005, situation: OS-002, status: dominated, by: HE-008, estimate: [S3, E4, C2], rationale: "Equal to HE-008."}
+  - {hazard: HZ-005, situation: OS-003, status: dominated, by: HE-008, estimate: [S3, E4, C2], rationale: "Acceleration toward vulnerable road users at urban speed; equal to HE-008."}
+  - {hazard: HZ-005, situation: OS-004, status: rated, he: HE-007, rationale: "Low-speed rear-end in stop-and-go."}
+  - {hazard: HZ-005, situation: OS-005, status: dominated, by: HE-008, estimate: [S3, E4, C2], rationale: "Acceleration in a curve; equal to HE-008."}
+  - {hazard: HZ-005, situation: OS-006, status: not_relevant, rationale: "Situation has the item not engaged; with the item off this behavior cannot occur (HZ-001/HZ-010 cover the not-engaged state)."}
+  - {hazard: HZ-005, situation: OS-007, status: dominated, by: HE-008, estimate: [S3, E1, C3], rationale: "Incapacitated driver; E1."}
+  - {hazard: HZ-005, situation: OS-008, status: dominated, by: HE-008, estimate: [S3, E4, C2], rationale: "Following traffic is not endangered by acceleration; lead-vehicle consequence equals HE-008."}
+  - {hazard: HZ-005, situation: OS-009, status: dominated, by: HE-008, estimate: [S3, E2, C3], rationale: "Acceleration during an evasive maneuver; E2."}
+  - {hazard: HZ-005, situation: OS-010, status: dominated, by: HE-008, estimate: [S3, E2, C3], rationale: "Acceleration during emergency braking; E2."}
+  - {hazard: HZ-005, situation: OS-011, status: rated, he: HE-008, rationale: "Acceleration toward a slower lead at highway speed."}
+  - {hazard: HZ-005, situation: OS-012, status: dominated, by: HE-008, estimate: [S2, E4, C1], rationale: "Brakes dominate engine torque while the driver brakes (see HZ-008)."}
+  - {hazard: HZ-005, situation: OS-013, status: dominated, by: HE-008, estimate: [S3, E3, C2], rationale: "Wet road is E3."}
+  - {hazard: HZ-005, situation: OS-014, status: dominated, by: HE-008, estimate: [S3, E2, C3], rationale: "Wheel spin on snow/ice is hard to control (C3) but E2."}
+  - {hazard: HZ-005, situation: OS-015, status: dominated, by: HE-008, estimate: [S3, E4, C2], rationale: "Equal to HE-008."}
+  - {hazard: HZ-006, situation: OS-001, status: dominated, by: HE-009, estimate: [S2, E4, C2], rationale: "Equal to HE-009."}
+  - {hazard: HZ-006, situation: OS-002, status: dominated, by: HE-009, estimate: [S2, E4, C2], rationale: "Equal to HE-009."}
+  - {hazard: HZ-006, situation: OS-003, status: dominated, by: HE-009, estimate: [S1, E4, C2], rationale: "Urban speeds limit rear impact severity."}
+  - {hazard: HZ-006, situation: OS-004, status: dominated, by: HE-009, estimate: [S1, E3, C1], rationale: "Low speed and short gaps are expected in stop-and-go."}
+  - {hazard: HZ-006, situation: OS-005, status: dominated, by: HE-009, estimate: [S2, E4, C2], rationale: "Braking in a curve on dry road; equal to HE-009."}
+  - {hazard: HZ-006, situation: OS-006, status: not_relevant, rationale: "Situation has the item not engaged; with the item off this behavior cannot occur (HZ-001/HZ-010 cover the not-engaged state)."}
+  - {hazard: HZ-006, situation: OS-007, status: dominated, by: HE-009, estimate: [S2, E1, C3], rationale: "Incapacitated driver; E1."}
+  - {hazard: HZ-006, situation: OS-008, status: rated, he: HE-009, rationale: "Rear-end collision by the following vehicle at highway speed."}
+  - {hazard: HZ-006, situation: OS-009, status: dominated, by: HE-009, estimate: [S3, E2, C2], rationale: "Braking during an evasive maneuver; E2."}
+  - {hazard: HZ-006, situation: OS-010, status: not_relevant, rationale: "Deceleration is the required response in an emergency-braking situation."}
+  - {hazard: HZ-006, situation: OS-011, status: dominated, by: HE-009, estimate: [S2, E4, C2], rationale: "Excessive braking while closing on a lead; following-vehicle consequence equals HE-009."}
+  - {hazard: HZ-006, situation: OS-012, status: not_relevant, rationale: "Driver is braking; additional deceleration is not hazardous."}
+  - {hazard: HZ-006, situation: OS-013, status: dominated, by: HE-009, estimate: [S2, E3, C2], rationale: "Wet road is E3."}
+  - {hazard: HZ-006, situation: OS-014, status: rated, he: HE-019, rationale: "Low friction: hard braking can destabilize the vehicle."}
+  - {hazard: HZ-006, situation: OS-015, status: dominated, by: HE-009, estimate: [S2, E4, C2], rationale: "Equal to HE-009."}
+  - {hazard: HZ-007, situation: OS-001, status: dominated, by: HE-010, estimate: [S3, E4, C1], rationale: "Closing on a lead in highway traffic is OS-011; equal to HE-010."}
+  - {hazard: HZ-007, situation: OS-002, status: dominated, by: HE-010, estimate: [S3, E4, C1], rationale: "Equal to HE-010."}
+  - {hazard: HZ-007, situation: OS-003, status: dominated, by: HE-010, estimate: [S2, E4, C1], rationale: "Urban speeds."}
+  - {hazard: HZ-007, situation: OS-004, status: dominated, by: HE-010, estimate: [S1, E3, C1], rationale: "Low speed; light injuries at most."}
+  - {hazard: HZ-007, situation: OS-005, status: dominated, by: HE-010, estimate: [S3, E4, C1], rationale: "Lead vehicle in a curve; equal to HE-010."}
+  - {hazard: HZ-007, situation: OS-006, status: not_relevant, rationale: "Situation has the item not engaged; with the item off this behavior cannot occur (HZ-001/HZ-010 cover the not-engaged state)."}
+  - {hazard: HZ-007, situation: OS-007, status: dominated, by: HE-010, estimate: [S3, E1, C3], rationale: "Incapacitated driver; E1."}
+  - {hazard: HZ-007, situation: OS-008, status: dominated, by: HE-010, estimate: [S3, E4, C1], rationale: "Equal to HE-010."}
+  - {hazard: HZ-007, situation: OS-009, status: not_relevant, rationale: "Driver is evading and controls braking."}
+  - {hazard: HZ-007, situation: OS-010, status: rated, he: HE-011, rationale: "Stopped or hard-braking lead."}
+  - {hazard: HZ-007, situation: OS-011, status: rated, he: HE-010, rationale: "Closing on a slower lead."}
+  - {hazard: HZ-007, situation: OS-012, status: not_relevant, rationale: "Driver is braking; the item's deceleration request is not relied on."}
+  - {hazard: HZ-007, situation: OS-013, status: dominated, by: HE-010, estimate: [S3, E3, C2], rationale: "Longer stopping distance on wet road (C2) but E3."}
+  - {hazard: HZ-007, situation: OS-014, status: dominated, by: HE-010, estimate: [S3, E2, C2], rationale: "Snow/ice is E2."}
+  - {hazard: HZ-007, situation: OS-015, status: dominated, by: HE-010, estimate: [S3, E4, C1], rationale: "Lead vehicle lights remain visible at night; equal to HE-010."}
+  - {hazard: HZ-008, situation: OS-001, status: dominated, by: HE-012, estimate: [S2, E4, C1], rationale: "Driver braking here is a subset of OS-012; service brakes still act."}
+  - {hazard: HZ-008, situation: OS-002, status: dominated, by: HE-012, estimate: [S2, E4, C1], rationale: "Driver braking here is a subset of OS-012; service brakes still act."}
+  - {hazard: HZ-008, situation: OS-003, status: dominated, by: HE-012, estimate: [S2, E4, C1], rationale: "Driver braking here is a subset of OS-012; service brakes still act."}
+  - {hazard: HZ-008, situation: OS-005, status: dominated, by: HE-012, estimate: [S2, E4, C1], rationale: "Driver braking here is a subset of OS-012; service brakes still act."}
+  - {hazard: HZ-008, situation: OS-008, status: dominated, by: HE-012, estimate: [S2, E4, C1], rationale: "Driver braking here is a subset of OS-012; service brakes still act."}
+  - {hazard: HZ-008, situation: OS-011, status: dominated, by: HE-012, estimate: [S2, E4, C1], rationale: "Driver braking here is a subset of OS-012; service brakes still act."}
+  - {hazard: HZ-008, situation: OS-004, status: dominated, by: HE-012, estimate: [S1, E3, C1], rationale: "Low speed."}
+  - {hazard: HZ-008, situation: OS-006, status: not_relevant, rationale: "Situation has the item not engaged; with the item off this behavior cannot occur (HZ-001/HZ-010 cover the not-engaged state)."}
+  - {hazard: HZ-008, situation: OS-007, status: not_relevant, rationale: "An incapacitated driver does not brake or cancel."}
+  - {hazard: HZ-008, situation: OS-009, status: dominated, by: HE-013, estimate: [S3, E2, C2], rationale: "Driver brakes while evading; same as HE-013."}
+  - {hazard: HZ-008, situation: OS-010, status: rated, he: HE-013, rationale: "Emergency braking weakened by continued acceleration request."}
+  - {hazard: HZ-008, situation: OS-012, status: rated, he: HE-012, rationale: "Normal driver braking."}
+  - {hazard: HZ-008, situation: OS-013, status: dominated, by: HE-012, estimate: [S2, E3, C1], rationale: "Wet road is E3."}
+  - {hazard: HZ-008, situation: OS-014, status: dominated, by: HE-013, estimate: [S3, E2, C2], rationale: "Braking on snow/ice with a continued acceleration request; same as HE-013."}
+  - {hazard: HZ-008, situation: OS-015, status: dominated, by: HE-012, estimate: [S2, E4, C1], rationale: "Equal to HE-012."}
+  - {hazard: HZ-009, situation: OS-001, status: dominated, by: HE-014, estimate: [S3, E4, C1], rationale: "Driver lane change against item torque; the driver overpowers it gradually."}
+  - {hazard: HZ-009, situation: OS-002, status: dominated, by: HE-014, estimate: [S3, E4, C1], rationale: "As OS-001."}
+  - {hazard: HZ-009, situation: OS-003, status: dominated, by: HE-014, estimate: [S2, E4, C1], rationale: "Urban speeds."}
+  - {hazard: HZ-009, situation: OS-004, status: dominated, by: HE-014, estimate: [S1, E3, C1], rationale: "Low speed."}
+  - {hazard: HZ-009, situation: OS-005, status: dominated, by: HE-014, estimate: [S3, E4, C1], rationale: "As OS-001."}
+  - {hazard: HZ-009, situation: OS-006, status: not_relevant, rationale: "Situation has the item not engaged; with the item off this behavior cannot occur (HZ-001/HZ-010 cover the not-engaged state)."}
+  - {hazard: HZ-009, situation: OS-007, status: not_relevant, rationale: "An incapacitated driver gives no steering input."}
+  - {hazard: HZ-009, situation: OS-008, status: dominated, by: HE-014, estimate: [S3, E4, C1], rationale: "As OS-001."}
+  - {hazard: HZ-009, situation: OS-009, status: rated, he: HE-014, rationale: "Evasive steering resisted."}
+  - {hazard: HZ-009, situation: OS-010, status: dominated, by: HE-014, estimate: [S3, E2, C2], rationale: "Steering while emergency braking; E2."}
+  - {hazard: HZ-009, situation: OS-011, status: dominated, by: HE-014, estimate: [S3, E4, C1], rationale: "As OS-001."}
+  - {hazard: HZ-009, situation: OS-012, status: dominated, by: HE-014, estimate: [S2, E4, C1], rationale: "Driver braking disengages the item; residual resistance is brief."}
+  - {hazard: HZ-009, situation: OS-013, status: dominated, by: HE-014, estimate: [S3, E3, C1], rationale: "Wet road is E3."}
+  - {hazard: HZ-009, situation: OS-014, status: dominated, by: HE-014, estimate: [S3, E2, C2], rationale: "Snow/ice is E2."}
+  - {hazard: HZ-009, situation: OS-015, status: dominated, by: HE-014, estimate: [S3, E4, C1], rationale: "As OS-001."}
+  - {hazard: HZ-010, situation: OS-001, status: not_relevant, rationale: "Item is already engaged in this situation."}
+  - {hazard: HZ-010, situation: OS-002, status: not_relevant, rationale: "Item is already engaged in this situation."}
+  - {hazard: HZ-010, situation: OS-003, status: not_relevant, rationale: "Item is already engaged in this situation."}
+  - {hazard: HZ-010, situation: OS-004, status: not_relevant, rationale: "Item is already engaged in this situation."}
+  - {hazard: HZ-010, situation: OS-005, status: not_relevant, rationale: "Item is already engaged in this situation."}
+  - {hazard: HZ-010, situation: OS-007, status: not_relevant, rationale: "Item is already engaged in this situation."}
+  - {hazard: HZ-010, situation: OS-008, status: not_relevant, rationale: "Item is already engaged in this situation."}
+  - {hazard: HZ-010, situation: OS-009, status: not_relevant, rationale: "Item is already engaged in this situation."}
+  - {hazard: HZ-010, situation: OS-011, status: not_relevant, rationale: "Item is already engaged in this situation."}
+  - {hazard: HZ-010, situation: OS-012, status: not_relevant, rationale: "Item is already engaged in this situation."}
+  - {hazard: HZ-010, situation: OS-006, status: rated, he: HE-015, rationale: "Manual highway driving."}
+  - {hazard: HZ-010, situation: OS-010, status: dominated, by: HE-015, estimate: [S3, E2, C2], rationale: "Engagement during emergency braking; E2."}
+  - {hazard: HZ-010, situation: OS-013, status: dominated, by: HE-015, estimate: [S3, E3, C1], rationale: "Wet road is E3."}
+  - {hazard: HZ-010, situation: OS-014, status: dominated, by: HE-015, estimate: [S3, E2, C2], rationale: "Snow/ice is E2."}
+  - {hazard: HZ-010, situation: OS-015, status: dominated, by: HE-015, estimate: [S3, E4, C1], rationale: "Equal to HE-015."}
+  - {hazard: HZ-011, situation: OS-001, status: not_relevant, rationale: "Stock AEB/FCW act only in emergency-braking situations (OS-010)."}
+  - {hazard: HZ-011, situation: OS-002, status: not_relevant, rationale: "Stock AEB/FCW act only in emergency-braking situations (OS-010)."}
+  - {hazard: HZ-011, situation: OS-003, status: not_relevant, rationale: "Stock AEB/FCW act only in emergency-braking situations (OS-010)."}
+  - {hazard: HZ-011, situation: OS-004, status: not_relevant, rationale: "Stock AEB/FCW act only in emergency-braking situations (OS-010)."}
+  - {hazard: HZ-011, situation: OS-005, status: not_relevant, rationale: "Stock AEB/FCW act only in emergency-braking situations (OS-010)."}
+  - {hazard: HZ-011, situation: OS-006, status: not_relevant, rationale: "Stock AEB/FCW act only in emergency-braking situations (OS-010)."}
+  - {hazard: HZ-011, situation: OS-007, status: not_relevant, rationale: "Stock AEB/FCW act only in emergency-braking situations (OS-010)."}
+  - {hazard: HZ-011, situation: OS-008, status: not_relevant, rationale: "Stock AEB/FCW act only in emergency-braking situations (OS-010)."}
+  - {hazard: HZ-011, situation: OS-009, status: not_relevant, rationale: "Stock AEB/FCW act only in emergency-braking situations (OS-010)."}
+  - {hazard: HZ-011, situation: OS-011, status: not_relevant, rationale: "Stock AEB/FCW act only in emergency-braking situations (OS-010)."}
+  - {hazard: HZ-011, situation: OS-012, status: not_relevant, rationale: "Stock AEB/FCW act only in emergency-braking situations (OS-010)."}
+  - {hazard: HZ-011, situation: OS-010, status: rated, he: HE-016, rationale: "Emergency braking where the driver is late."}
+  - {hazard: HZ-011, situation: OS-013, status: dominated, by: HE-016, estimate: [S3, E1, C3], rationale: "AEB-relevant emergency on a wet road is a rarer subset of OS-010."}
+  - {hazard: HZ-011, situation: OS-014, status: dominated, by: HE-016, estimate: [S3, E1, C3], rationale: "AEB-relevant emergency on snow/ice is a rarer subset of OS-010."}
+  - {hazard: HZ-011, situation: OS-015, status: dominated, by: HE-016, estimate: [S3, E2, C3], rationale: "AEB-relevant emergency at night; equal to HE-016."}
+  - {hazard: HZ-012, situation: OS-001, status: dominated, by: HE-017, estimate: [S3, E4, C1], rationale: "Equal to HE-017."}
+  - {hazard: HZ-012, situation: OS-002, status: dominated, by: HE-017, estimate: [S3, E4, C1], rationale: "Equal to HE-017."}
+  - {hazard: HZ-012, situation: OS-003, status: dominated, by: HE-017, estimate: [S2, E4, C1], rationale: "Urban speeds."}
+  - {hazard: HZ-012, situation: OS-004, status: dominated, by: HE-017, estimate: [S1, E3, C1], rationale: "Low speed."}
+  - {hazard: HZ-012, situation: OS-005, status: rated, he: HE-017, rationale: "Driver believes the item is steering in a curve."}
+  - {hazard: HZ-012, situation: OS-006, status: dominated, by: HE-017, estimate: [S3, E4, C1], rationale: "Item shown as engaged while it is not (SFM-028); equal to HE-017."}
+  - {hazard: HZ-012, situation: OS-007, status: not_relevant, rationale: "An incapacitated driver cannot act on state information."}
+  - {hazard: HZ-012, situation: OS-008, status: dominated, by: HE-017, estimate: [S3, E4, C1], rationale: "Equal to HE-017."}
+  - {hazard: HZ-012, situation: OS-009, status: not_relevant, rationale: "Driver is actively steering and braking; displayed state is not relied on."}
+  - {hazard: HZ-012, situation: OS-010, status: dominated, by: HE-017, estimate: [S3, E2, C2], rationale: "Driver expects the item to brake in an emergency; E2."}
+  - {hazard: HZ-012, situation: OS-011, status: dominated, by: HE-017, estimate: [S3, E4, C1], rationale: "Driver believes longitudinal control is active while closing on a lead; closing is gradual and visible."}
+  - {hazard: HZ-012, situation: OS-012, status: not_relevant, rationale: "Driver braking ends the engagement; the driver is in manual control."}
+  - {hazard: HZ-012, situation: OS-013, status: dominated, by: HE-017, estimate: [S3, E3, C1], rationale: "Wet road is E3."}
+  - {hazard: HZ-012, situation: OS-014, status: dominated, by: HE-017, estimate: [S3, E2, C2], rationale: "Snow/ice is E2."}
+  - {hazard: HZ-012, situation: OS-015, status: dominated, by: HE-017, estimate: [S3, E4, C1], rationale: "Equal to HE-017."}
+  - {hazard: HZ-013, situation: OS-001, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-002, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-003, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-004, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-005, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-008, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-009, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-010, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-011, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-012, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-013, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-014, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-015, status: not_relevant, rationale: "Foreseeable inattention is already assumed in the controllability of the other hazardous events (HA-001); the additional hazard of HZ-013 is driver incapacitation, OS-007."}
+  - {hazard: HZ-013, situation: OS-006, status: not_relevant, rationale: "Situation has the item not engaged; with the item off this behavior cannot occur (HZ-001/HZ-010 cover the not-engaged state)."}
+  - {hazard: HZ-013, situation: OS-007, status: rated, he: HE-018, rationale: "Driver incapacitated while engaged."}
 
 safety_goals:
   - id: SG-001
@@ -447,6 +794,7 @@ safety_goals:
     asil: B
     safe_state: Deceleration request limited to comfort levels or longitudinal control off with driver warning.
     ftti_ms: null
+    notes: Driven by HE-009 and HE-019 (snow/ice). Regional snow exposure could raise this goal to ASIL C (OI-006).
   - id: SG-006
     statement: Avoid insufficient deceleration for a lead vehicle while engaged.
     hazards: [HZ-007]
@@ -481,42 +829,59 @@ safety_goals:
 
 open_items:
   - id: OI-001
+    status: open
     text: Characterize the Toyota EPS response to LKA torque requests (maximum accepted torque and rate, fault behavior). Determines whether the EPS can be credited as an external measure.
     affects: [HE-001, HE-002, HE-003, SG-001]
   - id: OI-002
+    status: open
     text: Characterize powertrain and brake acceptance of acceleration requests (range, rate, override behavior).
     affects: [HE-007, HE-008, HE-009, SG-004, SG-005]
   - id: OI-003
+    status: open
     text: Determine which stock TSS2 functions (AEB, FCW, lane assist) remain active with the harness installed and openpilot longitudinal enabled.
     affects: [HE-016, SG-009]
   - id: OI-004
+    status: open
     text: Derive the FTTI for each safety goal from vehicle dynamics; start from the SAFETY.md lateral criterion (1 m in 0.9 s).
     affects: [SG-001, SG-002, SG-003, SG-004, SG-005, SG-006, SG-007]
   - id: OI-005
+    status: open
     text: Decide the intended behavior when driver monitoring reaches its terminal state (System FMEA SFM-025); sets the safe state of SG-010.
     affects: [SG-010]
   - id: OI-006
+    status: open
     text: Validate exposure and controllability assumptions with driving statistics and L2 usage studies.
-    affects: [OS-002, OS-005, OS-008, HE-006]
+    affects: [OS-002, OS-005, OS-008, OS-013, OS-014, HE-006, HE-019, SG-005]
   - id: OI-007
+    status: open
     text: Independent confirmation review of the HARA (ISO 26262-2 Table 1, independence level I3).
     affects: [SG-001, SG-002, SG-004]
   - id: OI-008
+    status: open
     text: Plan the ASIL D allocation for SG-001 given that the comma 3X SoC is not an ISO 26262 element (decomposition or OI-001 outcome).
     affects: [SG-001]
   - id: OI-009
+    status: closed
+    resolution: >-
+      Closed in rev 0.2: guideword_analysis records all 112 function x guide-word pairs (8 x 14) with classification and rationale; hazard functions and guide words are derived from it and checked by fmea_lint.py. No new hazards were needed; HZ-002 and HZ-006 gained a relay-fault cause (F8/M03, SFM-034).
     text: >-
       Guide-word completeness (pre-check finding FSA-6): only 7 of the 14 malfunction guide words appear, and
       function x guide-word pairs were not recorded systematically. Add a function x M01-M14 matrix (8 x 14)
       with SC/NSC/NA and rationale for every pair.
     affects: [HZ-001, HZ-002, HZ-003, HZ-004, HZ-005, HZ-006, HZ-007, HZ-008, HZ-009, HZ-010, HZ-011, HZ-012, HZ-013]
   - id: OI-010
+    status: closed
+    resolution: >-
+      Closed in rev 0.2: situation_coverage records all 195 hazard x situation pairs as rated, dominated (with an S/E/C estimate checked against the dominating event) or not relevant (with reason).
     text: >-
       Situation coverage (pre-check findings FSA-8, VA-33/33d): each hazard is rated in 1-2 worst-case situations
       only. Record a hazard x situation matrix stating for every pair: rated (HE id), dominated by a rated HE
       (with reason), or not relevant (with reason).
     affects: [OS-001, OS-002, OS-003, OS-004, OS-005, OS-006, OS-007, OS-008, OS-009, OS-010, OS-011, OS-012]
   - id: OI-011
+    status: closed
+    resolution: >-
+      Closed in rev 0.2: added OS-013 wet road, OS-014 snow/ice and OS-015 night, covered for every hazard. Weather does not raise any safety goal at US-average exposure; HE-019 (braking on snow/ice) is rated explicitly because regional exposure could raise SG-005 to ASIL C (OI-006).
     text: >-
       Weather and road surface are not differentiated (found during the pre-check; not flagged by the reviewer
       skill). Wet, snow/ice and night conditions can raise S or C for lateral and braking hazards. Add surface/

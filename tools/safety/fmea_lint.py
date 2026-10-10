@@ -338,7 +338,100 @@ def check_hara(name, doc, ctx, res: Result):
     for ref in oi["affects"]:
       if ref not in local_ids:
         res.error(f"{name} {oi['id']}", f"affects {ref}, which is not in the HARA")
+    if oi["status"] == "closed" and not oi.get("resolution"):
+      res.error(f"{name} {oi['id']}", "closed open item needs a resolution")
+  open_ois = [oi["id"] for oi in doc["open_items"] if oi["status"] == "open"]
+  if status == "released" and open_ois:
+    res.error(name, f"released HARA has open items: {', '.join(open_ois)}")
+
+  check_guidewords(name, doc, hazards, ctx, res)
+  check_coverage(name, doc, hazards, situations, ctx, res)
   res.report.insert(0, "hazardous events by ASIL: " + " ".join(f"{k}={v}" for k, v in asil_counts.items()))
+
+
+GUIDEWORDS = [f"M{i:02d}" for i in range(1, 15)]
+
+
+def check_guidewords(name, doc, hazards, ctx, res: Result):
+  """Function x guide-word matrix: complete, consistent with each hazard's functions and guidewords."""
+  entries = {}
+  for g in doc["guideword_analysis"]:
+    key = (g["function"], g["guideword"])
+    where = f"{name} {key[0]}/{key[1]}"
+    if key in entries:
+      res.error(where, "duplicate guide-word entry")
+    entries[key] = g
+    if g["function"] not in ctx.functions:
+      res.error(where, f"function {g['function']} not found in the System FMEA")
+    hzs = g.get("hazards", [])
+    if g["classification"] == "SC" and not hzs:
+      res.error(where, "SC entry must name at least one hazard")
+    if g["classification"] != "SC" and hzs:
+      res.error(where, f"{g['classification']} entry must not name hazards")
+    for h in hzs:
+      if h not in hazards:
+        res.error(where, f"hazard {h} not found")
+  for key, g in entries.items():
+    sub = g.get("subsumed_by")
+    if sub:
+      target = entries.get((key[0], sub))
+      if target is None or target.get("subsumed_by") == key[1]:
+        res.error(f"{name} {key[0]}/{key[1]}", f"subsumed_by {sub} must name another guide word of the same function")
+  for f in sorted(ctx.functions):
+    missing = [g for g in GUIDEWORDS if (f, g) not in entries]
+    if missing:
+      res.error(name, f"guide-word matrix missing {f} x {', '.join(missing)}")
+  for hid, h in hazards.items():
+    fns = {k[0] for k, g in entries.items() if hid in g.get("hazards", [])}
+    gws = {k[1] for k, g in entries.items() if hid in g.get("hazards", [])}
+    if not fns:
+      res.error(f"{name} {hid}", "hazard not derived from any SC guide-word entry")
+      continue
+    if set(h["functions"]) != fns:
+      res.error(f"{name} {hid}", f"functions {sorted(h['functions'])} != guide-word matrix {sorted(fns)}")
+    if set(h["guidewords"]) != gws:
+      res.error(f"{name} {hid}", f"guidewords {sorted(h['guidewords'])} != guide-word matrix {sorted(gws)}")
+
+
+def check_coverage(name, doc, hazards, situations, ctx, res: Result):
+  """Hazard x situation coverage: complete; rated pairs match events; dominated estimates do not exceed the dominating ASIL."""
+  hes = {he["id"]: he for he in doc["hazardous_events"]}
+  he_asil = {he["id"]: he["asil"] for he in hes.values()}
+  seen, rated = set(), {}
+  for c in doc["situation_coverage"]:
+    key = (c["hazard"], c["situation"])
+    where = f"{name} {key[0]}/{key[1]}"
+    if key in seen:
+      res.error(where, "duplicate coverage entry")
+    seen.add(key)
+    if c["hazard"] not in hazards or c["situation"] not in situations:
+      res.error(where, "unknown hazard or situation")
+      continue
+    st = c["status"]
+    if st == "rated":
+      he = hes.get(c.get("he", ""))
+      if he is None or (he["hazard"], he["situation"]) != key:
+        res.error(where, f"rated entry must name the hazardous event for this pair, got {c.get('he')}")
+      else:
+        rated[he["id"]] = rated.get(he["id"], 0) + 1
+    elif st == "dominated":
+      by = hes.get(c.get("by", ""))
+      if by is None or by["hazard"] != c["hazard"]:
+        res.error(where, f"dominated entry must name a rated event of {c['hazard']} in `by`, got {c.get('by')}")
+      elif "estimate" not in c:
+        res.error(where, "dominated entry needs an [S, E, C] estimate")
+      else:
+        est = compute_asil(*c["estimate"])
+        if ASIL_ORDER.index(est) > ASIL_ORDER.index(he_asil[by["id"]]):
+          res.error(where, f"estimate {' '.join(c['estimate'])} gives ASIL {est}, above {by['id']} ({he_asil[by['id']]}); rate this pair as its own event")
+    elif c.get("he") or c.get("by") or c.get("estimate"):
+      res.error(where, "not_relevant entry must not carry he/by/estimate")
+  missing = [f"{h}/{s}" for h in hazards for s in situations if (h, s) not in seen]
+  if missing:
+    res.error(name, f"situation coverage missing {len(missing)} pair(s): {', '.join(missing[:10])}{' ...' if len(missing) > 10 else ''}")
+  for hid in hes:
+    if rated.get(hid, 0) != 1:
+      res.error(f"{name} {hid}", f"hazardous event appears {rated.get(hid, 0)} times as a rated coverage entry, expected 1")
 
 
 class Context:
