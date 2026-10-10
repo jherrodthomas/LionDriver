@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="420" viewBox="0 0 1000 420" role="img" aria-labelledby="life-t life-d">
+  <title id="life-t">LionDriver assurance lifecycle areas</title>
+  <desc id="life-d">Safety Management: In Progress (11 evidence items, 10 drafted, 1 missing, 0 accepted); Hazard Analysis: In Progress (6 evidence items, 6 drafted, 0 missing, 0 accepted); Safety Concepts: In Progress (7 evidence items, 7 drafted, 0 missing, 0 accepted); Technical Implementation: In Progress (5 evidence items, 5 drafted, 0 missing, 0 accepted); Verification and Validation: In Progress (15 evidence items, 4 drafted, 11 missing, 0 accepted); Safety Case and Review: In Progress (5 evidence items, 2 drafted, 3 missing, 0 accepted)</desc>
+  <defs>
+    <linearGradient id="life-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0E1A31"/><stop offset="1" stop-color="#070D1A"/>
+    </linearGradient>
+    <linearGradient id="life-gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#A97A2A"/><stop offset="0.5" stop-color="#F6DC97"/><stop offset="1" stop-color="#A97A2A"/>
+    </linearGradient>
+  </defs>
+  <rect x="0.5" y="0.5" width="999" height="419" rx="22" fill="url(#life-bg)" stroke="#24345A"/>
+  <rect x="40" y="0" width="920" height="3" fill="url(#life-gold)"/>
+  <g font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <text x="40" y="56" font-size="15" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="3">LIFECYCLE AREAS</text>
+    <text x="40" y="94" font-size="28" font-weight="700" fill="#F4F6FA" text-anchor="start">Status by engineering area</text>
+    <text x="960" y="94" font-size="15" font-weight="400" fill="#93A1BC" text-anchor="end">Derived from evidence status and review state</text>
+    <rect x="40" y="124" width="296" height="130" rx="14" fill="#111E37" stroke="#24345A"/>
+    <text x="62" y="160" font-size="15" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="1">01</text>
+    <text x="96" y="160" font-size="18" font-weight="600" fill="#F4F6FA" text-anchor="start">Safety Management</text>
+    <rect x="62" y="176" width="115" height="28" rx="14.0" fill="#4EA8FF" fill-opacity="0.12" stroke="#4EA8FF"/>
+    <text x="119.5" y="191" font-size="12" font-weight="600" fill="#4EA8FF" text-anchor="middle" letter-spacing="1.2">IN PROGRESS</text>
+    <defs><clipPath id="bar62218"><rect x="62" y="218" width="252" height="8" rx="4.0"/></clipPath></defs>
+    <g clip-path="url(#bar62218)">
+    <rect x="62" y="218" width="252" height="8" rx="4.0" fill="#070D1A" stroke="#24345A"/>
+    <rect x="62.0" y="218" width="229.1" height="8" fill="#4EA8FF"/>
+    <rect x="291.1" y="218" width="22.9" height="8" fill="#5F6E8C"/>
+    </g>
+    <text x="62" y="244" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="start">10 drafted · 1 missing</text>
+    <text x="314" y="244" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="end">0 of 11 accepted</text>
+    <rect x="352" y="124" width="296" height="130" rx="14" fill="#111E37" stroke="#24345A"/>
+    <text x="374" y="160" font-size="15" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="1">02</text>
+    <text x="408" y="160" font-size="18" font-weight="600" fill="#F4F6FA" text-anchor="start">Hazard Analysis</text>
+    <rect x="374" y="176" width="115" height="28" rx="14.0" fill="#4EA8FF" fill-opacity="0.12" stroke="#4EA8FF"/>
+    <text x="431.5" y="191" font-size="12" font-weight="600" fill="#4EA8FF" text-anchor="middle" letter-spacing="1.2">IN PROGRESS</text>
+    <defs><clipPath id="bar374218"><rect x="374" y="218" width="252" height="8" rx="4.0"/></clipPath></defs>
+    <g clip-path="url(#bar374218)">
+    <rect x="374" y="218" width="252" height="8" rx="4.0" fill="#070D1A" stroke="#24345A"/>
+    <rect x="374.0" y="218" width="252.0" height="8" fill="#4EA8FF"/>
+    </g>
+    <text x="374" y="244" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="start">6 drafted · 0 missing</text>
+    <text x="626" y="244" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="end">0 of 6 accepted</text>
+    <rect x="664" y="124" width="296" height="130" rx="14" fill="#111E37" stroke="#24345A"/>
+    <text x="686" y="160" font-size="15" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="1">03</text>
+    <text x="720" y="160" font-size="18" font-weight="600" fill="#F4F6FA" text-anchor="start">Safety Concepts</text>
+    <rect x="686" y="176" width="115" height="28" rx="14.0" fill="#4EA8FF" fill-opacity="0.12" stroke="#4EA8FF"/>
+    <text x="743.5" y="191" font-size="12" font-weight="600" fill="#4EA8FF" text-anchor="middle" letter-spacing="1.2">IN PROGRESS</text>
+    <defs><clipPath id="bar686218"><rect x="686" y="218" width="252" height="8" rx="4.0"/></clipPath></defs>
+    <g clip-path="url(#bar686218)">
+    <rect x="686" y="218" width="252" height="8" rx="4.0" fill="#070D1A" stroke="#24345A"/>
+    <rect x="686.0" y="218" width="252.0" height="8" fill="#4EA8FF"/>
+    </g>
+    <text x="686" y="244" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="start">7 drafted · 0 missing</text>
+    <text x="938" y="244" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="end">0 of 7 accepted</text>
+    <rect x="40" y="270" width="296" height="130" rx="14" fill="#111E37" stroke="#24345A"/>
+    <text x="62" y="306" font-size="15" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="1">04</text>
+    <text x="96" y="306" font-size="18" font-weight="600" fill="#F4F6FA" text-anchor="start">Technical Implementation</text>
+    <rect x="62" y="322" width="115" height="28" rx="14.0" fill="#4EA8FF" fill-opacity="0.12" stroke="#4EA8FF"/>
+    <text x="119.5" y="337" font-size="12" font-weight="600" fill="#4EA8FF" text-anchor="middle" letter-spacing="1.2">IN PROGRESS</text>
+    <defs><clipPath id="bar62364"><rect x="62" y="364" width="252" height="8" rx="4.0"/></clipPath></defs>
+    <g clip-path="url(#bar62364)">
+    <rect x="62" y="364" width="252" height="8" rx="4.0" fill="#070D1A" stroke="#24345A"/>
+    <rect x="62.0" y="364" width="252.0" height="8" fill="#4EA8FF"/>
+    </g>
+    <text x="62" y="390" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="start">5 drafted · 0 missing</text>
+    <text x="314" y="390" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="end">0 of 5 accepted</text>
+    <rect x="352" y="270" width="296" height="130" rx="14" fill="#111E37" stroke="#24345A"/>
+    <text x="374" y="306" font-size="15" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="1">05</text>
+    <text x="408" y="306" font-size="18" font-weight="600" fill="#F4F6FA" text-anchor="start">Verification and Validation</text>
+    <rect x="374" y="322" width="115" height="28" rx="14.0" fill="#4EA8FF" fill-opacity="0.12" stroke="#4EA8FF"/>
+    <text x="431.5" y="337" font-size="12" font-weight="600" fill="#4EA8FF" text-anchor="middle" letter-spacing="1.2">IN PROGRESS</text>
+    <defs><clipPath id="bar374364"><rect x="374" y="364" width="252" height="8" rx="4.0"/></clipPath></defs>
+    <g clip-path="url(#bar374364)">
+    <rect x="374" y="364" width="252" height="8" rx="4.0" fill="#070D1A" stroke="#24345A"/>
+    <rect x="374.0" y="364" width="67.2" height="8" fill="#4EA8FF"/>
+    <rect x="441.2" y="364" width="184.8" height="8" fill="#5F6E8C"/>
+    </g>
+    <text x="374" y="390" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="start">4 drafted · 11 missing</text>
+    <text x="626" y="390" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="end">0 of 15 accepted</text>
+    <rect x="664" y="270" width="296" height="130" rx="14" fill="#111E37" stroke="#24345A"/>
+    <text x="686" y="306" font-size="15" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="1">06</text>
+    <text x="720" y="306" font-size="18" font-weight="600" fill="#F4F6FA" text-anchor="start">Safety Case and Review</text>
+    <rect x="686" y="322" width="115" height="28" rx="14.0" fill="#4EA8FF" fill-opacity="0.12" stroke="#4EA8FF"/>
+    <text x="743.5" y="337" font-size="12" font-weight="600" fill="#4EA8FF" text-anchor="middle" letter-spacing="1.2">IN PROGRESS</text>
+    <defs><clipPath id="bar686364"><rect x="686" y="364" width="252" height="8" rx="4.0"/></clipPath></defs>
+    <g clip-path="url(#bar686364)">
+    <rect x="686" y="364" width="252" height="8" rx="4.0" fill="#070D1A" stroke="#24345A"/>
+    <rect x="686.0" y="364" width="100.8" height="8" fill="#4EA8FF"/>
+    <rect x="786.8" y="364" width="151.2" height="8" fill="#5F6E8C"/>
+    </g>
+    <text x="686" y="390" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="start">2 drafted · 3 missing</text>
+    <text x="938" y="390" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="end">0 of 5 accepted</text>
+  </g>
+</svg>

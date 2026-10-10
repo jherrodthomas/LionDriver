@@ -1,0 +1,453 @@
+# Source: WP-K-01 Safety Case (§7, defeaters). Machine-readable copy; WP-K-01 remains the reviewed document.
+# Format: assurance/case/README.md. Lifecycle and review fields are set only through recorded reviews.
+
+- id: DF-01
+  kind: defeater
+  title: "Hardware watchdog (IWDG) never initialised; SW watchdog checked from the ISR it supervises"
+  description: "Closure route: TSR-5xx; WP-H-01"
+  lifecycle_status: open
+  gaps: [GAP-07]
+  related_claims: [G1.1.4, G1.9]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-02
+  kind: defeater
+  title: "Detection times (RX ≤ 2 s, heartbeat 3–5 s) exceed the preliminary SG-01 FTTI (≤ 0.5 s)"
+  description: "Closure route: WP-S-04, TSR-4xx/5xx"
+  lifecycle_status: open
+  gaps: [GAP-06]
+  related_claims: [G1.1.4]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-03
+  kind: defeater
+  title: "QM host sets the safety mode and parameter at any time, unauthenticated (`0xdc`)"
+  description: "Closure route: Safety-mode lock (TSR-5xx)"
+  lifecycle_status: open
+  gaps: [GAP-09]
+  related_claims: [G1.1.2, G1.1.4, G1.8]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-04
+  kind: defeater
+  title: "Faults are report-only (`PERMANENT_FAULTS = 0U`); no MPU, no RAM ECC handling"
+  description: "Closure route: TSR-5xx"
+  lifecycle_status: open
+  gaps: [GAP-08]
+  related_claims: [G1.1.4, G1.9]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-05
+  kind: defeater
+  title: "No E2E alive counters on any Toyota RX message; brake and wheel speed have no checksum"
+  description: "Closure route: TSR-4xx"
+  lifecycle_status: open
+  gaps: [GAP-01]
+  related_claims: [G1.1.4, G1.5]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-06
+  kind: defeater
+  title: "Weak SoC↔panda integrity (8-bit XOR, no sequence counter); heartbeat proves `pandad` alive, not the control loop"
+  description: "Closure route: TSR-4xx"
+  lifecycle_status: open
+  gaps: [GAP-10]
+  related_claims: [G1.1.4, G1.8]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-07
+  kind: defeater
+  title: "Soft disable keeps actuating up to 3 s on failed inputs (≈ 3.5 s with stale data)"
+  description: "Closure route: WP-C-07, TSR-6xx"
+  lifecycle_status: open
+  gaps: [GAP-16]
+  related_claims: [G1.2, G1.6, G2.1]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-08
+  kind: defeater
+  title: "Diagnostics masked during big-model fallback; cold model hot-switch while actuating"
+  description: "Closure route: Exclude Chestnut (WP-C-01 OI-4)"
+  lifecycle_status: open
+  gaps: [GAP-17]
+  related_claims: [G1.2, G2.1, G3.4]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-09
+  kind: defeater
+  title: "No longitudinal jerk limit in the envelope"
+  description: "Closure route: TSR-2xx"
+  lifecycle_status: open
+  gaps: [GAP-04]
+  related_claims: [G1.4]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-10
+  kind: defeater
+  title: "Envelope does not monitor driver steering torque; override relies on EPS + QM host"
+  description: "Closure route: FSR-05.x / TSR-3xx"
+  lifecycle_status: open
+  gaps: [GAP-02]
+  related_claims: [G1.5]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-11
+  kind: defeater
+  title: "Relay failure detected only by traffic observation, 1–2 s grace, no readback"
+  description: "Closure route: HWSR / TSR-7xx"
+  lifecycle_status: open
+  gaps: [GAP-12]
+  related_claims: [G1.7]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-12
+  kind: defeater
+  title: "Debug relay-drive command `0xc5` not gated in release builds"
+  description: "Closure route: Firmware change"
+  lifecycle_status: open
+  gaps: [GAP-09]
+  related_claims: [G1.7, G1.8]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-13
+  kind: defeater
+  title: "No FMEDA/SPFM/LFM/PMHF; no supplier safety data for the COTS device"
+  description: "Closure route: WP-H-03…H-07"
+  lifecycle_status: open
+  gaps: [GAP-15]
+  related_claims: [G1.9]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-14
+  kind: defeater
+  title: "All vehicle AoUs (AOU-01…05) unverified; ⚠ ratings may rise to ASIL C/D"
+  description: "Closure route: Vehicle characterisation"
+  lifecycle_status: open
+  gaps: [GAP-05]
+  related_claims: [G1.1, G1.3, G1.5, G1.7, G1.10]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-15
+  kind: defeater
+  title: "Experimental Mode (end-to-end longitudinal) on by default, without hazard assessment"
+  description: "Closure route: D-08; WP-C-07"
+  lifecycle_status: open
+  gaps: [GAP-18]
+  related_claims: [G2.1, G3]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-16
+  kind: defeater
+  title: "No fork-owned HIL, on-road or model-replay verification; replay references from comma"
+  description: "Closure route: D-04"
+  lifecycle_status: open
+  gaps: [GAP-30]
+  related_claims: [G1.1.2, G2.2, G3.3]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-17
+  kind: defeater
+  title: "DM validity hard-coded `True`; wheel-touch awareness reset by any input; no tests for DM data loss"
+  description: "Closure route: WP-C-08; TSR-6xx"
+  lifecycle_status: open
+  gaps: [GAP-21]
+  related_claims: [G2.3]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-18
+  kind: defeater
+  title: "Parameters and IPC can change safety behaviour unauthenticated (debug modes, DM demo mode, maneuver plan override)"
+  description: "Closure route: WP-A-02; configuration lock"
+  lifecycle_status: open
+  gaps: [GAP-20]
+  related_claims: [G1.8, G2.3]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-19
+  kind: defeater
+  title: "No model hash/signature check at load; models deserialised with `pickle`"
+  description: "Closure route: WP-W-10, WP-S-07"
+  lifecycle_status: open
+  gaps: [GAP-22]
+  related_claims: [G3.1, G4]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-20
+  kind: defeater
+  title: "Training data and its ODD are not available to LionDriver"
+  description: "Closure route: Argue via G2/G1 bounding; own test data"
+  lifecycle_status: open
+  gaps: [GAP-22]
+  related_claims: [G3.2]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-21
+  kind: defeater
+  title: "No uncertainty or OOD gating of the control action"
+  description: "Closure route: AIR-nn"
+  lifecycle_status: open
+  gaps: [GAP-22]
+  related_claims: [G3.4]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-22
+  kind: defeater
+  title: "Panda firmware signing RSA-1024/SHA-1; committed debug key; DEBUG default builds"
+  description: "Closure route: WP-S-07"
+  lifecycle_status: open
+  gaps: [GAP-24, GAP-25]
+  related_claims: [G1.8, G4]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-23
+  kind: defeater
+  title: "Unsigned git-based OTA; broad remote RPC surface"
+  description: "Closure route: WP-O-05"
+  lifecycle_status: open
+  gaps: [GAP-26, GAP-27]
+  related_claims: [G4]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-24
+  kind: defeater
+  title: "Safety code not under LionDriver CM (submodules resolve to upstream; tinygrad on master)"
+  description: "Closure route: D-01, D-02"
+  lifecycle_status: open
+  gaps: [GAP-29, GAP-37]
+  related_claims: [G5.2]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-25
+  kind: defeater
+  title: "No requirement IDs or traceability in code and tests"
+  description: "Closure route: WP-P-06"
+  lifecycle_status: open
+  gaps: [GAP-14]
+  related_claims: [G5.3]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-26
+  kind: defeater
+  title: "Single maintainer; no external assessor; no review records"
+  description: "Closure route: D-06; WP-M-02 roles"
+  lifecycle_status: open
+  gaps: [GAP-32, GAP-33]
+  related_claims: [G5.4]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-27
+  kind: defeater
+  title: "Verification is line coverage only on host builds; MISRA deviations unrecorded; bootstub not MISRA-checked"
+  description: "Closure route: WP-W-06"
+  lifecycle_status: open
+  gaps: [GAP-13]
+  related_claims: [G1.1.2]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-28
+  kind: defeater
+  title: "Controller limits equal envelope limits (zero margin); raw limits not traced to physical units"
+  description: "Closure route: WP-S-02"
+  lifecycle_status: open
+  gaps: [GAP-04]
+  related_claims: [G1.1.1]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-29
+  kind: defeater
+  title: "The QM SoC controls the panda MCU reset and boot pins; pandad recovery flashes a development bootstub"
+  description: "Closure route: TSR-511; HWSR-502c"
+  lifecycle_status: open
+  gaps: [GAP-38]
+  related_claims: [G1.1.4, G1.8, G4]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-30
+  kind: defeater
+  title: "Safety-code verification (coverage gate, MISRA, mutation) not run in LionDriver CI; unit tests built with `ALLOW_DEBUG`, release configuration untested"
+  description: "Closure route: WP-W-06, WP-P-01"
+  lifecycle_status: open
+  gaps: [GAP-39, GAP-41]
+  related_claims: [G1.1.2, G5.2]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-31
+  kind: defeater
+  title: "Model weights stored and served by comma's LFS host, outside LionDriver CM"
+  description: "Closure route: WP-P-01; release record model hashes"
+  lifecycle_status: open
+  gaps: [GAP-40]
+  related_claims: [G3.1, G5.2]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-32
+  kind: defeater
+  title: "SoC may transmit PCS messages (`0x344`, `0x411`) without content check; DSU-only IDs whitelisted"
+  description: "Closure route: TSR-705"
+  lifecycle_status: open
+  gaps: [GAP-42, GAP-49]
+  related_claims: [G1.7, G1.8]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-33
+  kind: defeater
+  title: "MCU hang leaves the relay in intercept: forwarding and stock PCS lost"
+  description: "Closure route: TSR-706, TSR-501"
+  lifecycle_status: open
+  gaps: [GAP-43]
+  related_claims: [G1.7, G1.9]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-34
+  kind: defeater
+  title: "Envelope accepts any EPS torque factor from the QM host"
+  description: "Closure route: TSR-512 (compiled-in parameter)"
+  lifecycle_status: open
+  gaps: [GAP-44]
+  related_claims: [G1.1.1, G1.8]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-35
+  kind: defeater
+  title: "Model replay cannot fail in CI; simulator driving test skipped"
+  description: "Closure route: WP-W-10, WP-V-02"
+  lifecycle_status: open
+  gaps: [GAP-45]
+  related_claims: [G2.2, G3.3]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-36
+  kind: defeater
+  title: "Rejected `0x2E4` frames are dropped, not replaced by zero torque; EPS may keep acting until its own timeout"
+  description: "Closure route: TSR-109"
+  lifecycle_status: open
+  gaps: [GAP-46]
+  related_claims: [G1.1.4, G1.2, G1.5]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-37
+  kind: defeater
+  title: "SPI length fields and control-request indices from the SoC not bounds-checked"
+  description: "Closure route: TSR-412"
+  lifecycle_status: open
+  gaps: [GAP-47]
+  related_claims: [G1.8, G4]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-38
+  kind: defeater
+  title: "Envelope checks incomplete (steer request while not engaged, ACC_CONTROL fields, relay latch cleared by mode change)"
+  description: "Closure route: TSR-105, TSR-207, TSR-506"
+  lifecycle_status: open
+  gaps: [GAP-48]
+  related_claims: [G1.1.3, G1.3, G1.4, G1.7]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-39
+  kind: defeater
+  title: "About nine configuration commands ungated in car modes; `0xe7` stops PCS forwarding with the relay energised (HIL confirmation pending)"
+  description: "Closure route: TSR-513"
+  lifecycle_status: open
+  gaps: [GAP-49]
+  related_claims: [G1.7, G1.8]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-40
+  kind: defeater
+  title: "No interrupt-priority scheme; safety hooks, CAN TX and command dispatch run in ISR context; timing unanalysed"
+  description: "Closure route: TSR-519"
+  lifecycle_status: open
+  gaps: [GAP-50]
+  related_claims: [G1.1.4, G1.8]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: DF-41
+  kind: defeater
+  title: "Fuzz testing excludes the safety-relevant host processes; simulator runs a Honda and bypasses the panda"
+  description: "Closure route: WP-V-02, WP-W-08"
+  lifecycle_status: open
+  gaps: [GAP-51]
+  related_claims: [G1.2, G1.6, G2.2]
+  baseline: BL-001
+  source: WP-K-01
+  source_revision: "8b8c6ae"

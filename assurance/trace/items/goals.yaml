@@ -1,0 +1,101 @@
+# Safety goals (SG-) from WP-C-03 §6. ASILs are WP-C-03 proposals, not approved.
+# Source of truth is WP-C-03; tools/check_trace.py compares text and ASIL with WP-C-03 §6 (check X1).
+# Schema: ../README.md §4.3. Cybersecurity goals (CSG-) will be added to this file per WP-P-06 §5.1.
+
+- id: SG-01
+  kind: safety-goal
+  text: "The item shall not cause lateral motion of the vehicle that exceeds what the driver can control, including any steering actuation while the item is not engaged"
+  type: constraint
+  asil: C
+  asil_if_aou_fails: D
+  aou_dependency: [AOU-01, AOU-02]
+  parents: [HE-01.1, HE-01.2, HE-01.3, HE-01.4, HE-02.3]
+  safe_state: "LKA torque request zero, steer request bit cleared; driver informed"
+  ftti_ms: 500
+  ftti_text: "≤ 0.5 s (preliminary)"
+  status: proposed
+  source: WP-C-03
+
+- id: SG-02
+  kind: safety-goal
+  text: "The item shall not lose or degrade lateral control while engaged without giving the driver an adequate take-over warning"
+  type: constraint
+  asil: B
+  asil_if_aou_fails: null
+  aou_dependency: []
+  parents: [HE-02.1, HE-02.2]
+  safe_state: "Driver warned (visual + acoustic) and lateral control handed back with a smooth torque ramp-down"
+  ftti_ms: 1000
+  ftti_text: "≤ 1 s from fault to warning (preliminary)"
+  status: proposed
+  source: WP-C-03
+
+- id: SG-03
+  kind: safety-goal
+  text: "The item shall not cause unintended vehicle acceleration"
+  type: constraint
+  asil: B
+  asil_if_aou_fails: C
+  aou_dependency: [AOU-05]
+  parents: [HE-03.1, HE-03.2, HE-03.3]
+  safe_state: "Acceleration request ≤ 0 (no positive acceleration); ACC cancelled to the PCM"
+  ftti_ms: 1000
+  ftti_text: "≤ 1 s (preliminary)"
+  status: proposed
+  source: WP-C-03
+
+- id: SG-04
+  kind: safety-goal
+  text: "The item shall not cause deceleration that exceeds what following traffic and the driver can control"
+  type: constraint
+  asil: B
+  asil_if_aou_fails: C
+  aou_dependency: [AOU-05]
+  parents: [HE-04.1, HE-04.2]
+  safe_state: "Deceleration limited; transition to \"inactive\" (no ACC command; coast) with a bounded jerk"
+  ftti_ms: 1000
+  ftti_text: "≤ 1 s (preliminary)"
+  status: proposed
+  source: WP-C-03
+
+- id: SG-05
+  kind: safety-goal
+  text: "The item shall release control immediately when the driver brakes, cancels, or overrides steering"
+  type: constraint
+  asil: B
+  asil_if_aou_fails: C
+  aou_dependency: [AOU-01, AOU-02, AOU-03]
+  parents: [HE-05.1, HE-05.2, HE-05.3]
+  safe_state: "Disengaged: no lateral or longitudinal actuation"
+  ftti_ms: 200
+  ftti_text: "≤ 0.2 s from driver input to release (preliminary)"
+  status: proposed
+  source: WP-C-03
+
+- id: SG-06
+  kind: safety-goal
+  text: "The item shall not lose longitudinal deceleration capability while engaged without giving the driver an adequate take-over warning"
+  type: constraint
+  asil: B
+  asil_if_aou_fails: null
+  aou_dependency: []
+  parents: [HE-06.1]
+  safe_state: "Driver warned; ACC cancelled so that the driver brakes"
+  ftti_ms: 1000
+  ftti_text: "≤ 1 s (preliminary)"
+  status: proposed
+  source: WP-C-03
+
+- id: SG-07
+  kind: safety-goal
+  text: "The item shall not suppress, delay or alter the vehicle's stock pre-collision (PCS/AEB) function"
+  type: constraint
+  asil: B
+  asil_if_aou_fails: null
+  aou_dependency: []
+  parents: [HE-08.1]
+  safe_state: "Camera PCS messages forwarded unchanged; if forwarding cannot be guaranteed (e.g. harness fault), relay released to restore the stock camera link"
+  ftti_ms: null
+  ftti_text: "Continuous"
+  status: proposed
+  source: WP-C-03

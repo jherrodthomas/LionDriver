@@ -1,0 +1,23 @@
+# Source: WP-K-01 Safety Case (§3). Machine-readable copy; WP-K-01 remains the reviewed document.
+# Format: assurance/case/README.md. Lifecycle and review fields are set only through recorded reviews.
+
+- id: G0
+  kind: claim
+  title: "Reference configuration poses no unreasonable risk"
+  description: "The LionDriver reference configuration, operated by an attentive driver within its ODD, does not pose unreasonable risk to vehicle occupants or other road users. The residual risk is no worse than manual driving of the same vehicle with its stock TSS 2.0 driver assistance."
+  parent: null
+  argument: null
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: [AOU-01, AOU-02, AOU-03, AOU-04, AOU-05, AOU-06, AOU-07, AOU-08, AOU-09, AOU-10, AOU-11]
+  evidence_refs: [Sn-49, Sn-55, Sn-56]
+  defeaters: []
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"

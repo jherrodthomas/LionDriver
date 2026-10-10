@@ -1,0 +1,23 @@
+# Vehicle configuration records. One file per configuration.
+# classification: upstream-compatible | liondriver-evaluated | assurance-supported (see assurance/case/README.md §5).
+# A configuration can be classified assurance-supported only when the validator finds at least one
+# accepted claim for it; acceptance needs a recorded review (reviews/).
+
+- id: CFG-001
+  kind: configuration
+  title: "2020 Toyota Corolla LE, Toyota Safety Sense 2.0 (reference configuration)"
+  description: "US-market 1.8 L ICE sedan with TSS 2.0, comma device with the integrated panda safety MCU and the Toyota TSS2 harness. The item analysed in the assurance work products."
+  classification: liondriver-evaluated
+  evaluation_state: in-progress
+  platform: TOYOTA_COROLLA_TSS2
+  brand_safety_mode: toyota
+  item_definition: WP-C-01
+  related_assumptions: [AOU-01, AOU-02, AOU-03, AOU-04, AOU-05, AOU-06, AOU-07, AOU-08, AOU-09, AOU-10, AOU-11]
+  related_claims: [G0]
+  baseline: BL-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-C-01
+  source_revision: "8b8c6ae"

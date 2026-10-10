@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - liondriver-dev
   pull_request:
   workflow_dispatch:
   workflow_call:
@@ -14,7 +15,7 @@ on:
         type: string
 
 concurrency:
-  group: tests-ci-run-${{ inputs.run_number }}-${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && github.run_id || github.head_ref || github.ref }}-${{ github.workflow }}-${{ github.event_name }}
+  group: tests-ci-run-${{ inputs.run_number }}-${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/liondriver-dev') && github.run_id || github.head_ref || github.ref }}-${{ github.workflow }}-${{ github.event_name }}
   cancel-in-progress: true
 
 env:
@@ -59,7 +60,7 @@ jobs:
       working-directory: ${{ env.STRIPPED_DIR }}
       run: tools/release/check-dirty.sh
     - name: Check submodules
-      if: github.repository == 'commaai/openpilot'
+      if: github.repository == 'commaai/openpilot' || github.repository == 'jherrodthomas/LionDriver'
       timeout-minutes: 3
       run: tools/release/check-submodules.sh
 
@@ -217,5 +218,5 @@ jobs:
       - name: Upload UI Report
         uses: actions/upload-artifact@v7
         with:
-          name: ui-report-${{ inputs.run_number || '1' }}-${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && 'master' || github.event.number }}
+          name: ui-report-${{ inputs.run_number || '1' }}-${{ github.event_name == 'push' && github.ref_name || github.event.number }}
           path: openpilot/selfdrive/ui/tests/diff/report

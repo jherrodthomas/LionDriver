@@ -1,0 +1,98 @@
+{
+  "actions_open": 5,
+  "assurance_state": "Development",
+  "baseline": {
+    "id": "BL-001",
+    "lifecycle_status": "under-development",
+    "source_revision": "8b8c6ae"
+  },
+  "claims": {
+    "accepted": 0,
+    "registered": 36,
+    "undeveloped": 1,
+    "with_accepted_evidence": 0
+  },
+  "configurations": {
+    "assurance_supported": 0,
+    "evaluated": 1,
+    "upstream_compatible": {
+      "listed_models": 335,
+      "makes": 26,
+      "source": "docs/CARS.md",
+      "stated_count": 335
+    }
+  },
+  "defeaters_open": 41,
+  "evidence": {
+    "accepted": 0,
+    "available": 0,
+    "awaiting_review": 34,
+    "missing": 15,
+    "partial": 34,
+    "registered": 49
+  },
+  "lifecycle_areas": [
+    {
+      "accepted": 0,
+      "available": 0,
+      "evidence": 11,
+      "id": "safety-management",
+      "missing": 1,
+      "partial": 10,
+      "status": "In Progress",
+      "title": "Safety Management"
+    },
+    {
+      "accepted": 0,
+      "available": 0,
+      "evidence": 6,
+      "id": "hazard-analysis",
+      "missing": 0,
+      "partial": 6,
+      "status": "In Progress",
+      "title": "Hazard Analysis"
+    },
+    {
+      "accepted": 0,
+      "available": 0,
+      "evidence": 7,
+      "id": "safety-concepts",
+      "missing": 0,
+      "partial": 7,
+      "status": "In Progress",
+      "title": "Safety Concepts"
+    },
+    {
+      "accepted": 0,
+      "available": 0,
+      "evidence": 5,
+      "id": "technical-implementation",
+      "missing": 0,
+      "partial": 5,
+      "status": "In Progress",
+      "title": "Technical Implementation"
+    },
+    {
+      "accepted": 0,
+      "available": 0,
+      "evidence": 15,
+      "id": "verification-validation",
+      "missing": 11,
+      "partial": 4,
+      "status": "In Progress",
+      "title": "Verification and Validation"
+    },
+    {
+      "accepted": 0,
+      "available": 0,
+      "evidence": 5,
+      "id": "safety-case-review",
+      "missing": 3,
+      "partial": 2,
+      "status": "In Progress",
+      "title": "Safety Case and Review"
+    }
+  ],
+  "records_digest": "a5a5287e4400",
+  "reviews": 0
+}
