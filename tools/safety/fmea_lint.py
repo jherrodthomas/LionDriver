@@ -582,6 +582,104 @@ def check_coverage(name, doc, hazards, situations, ctx, res: Result):
       res.error(f"{name} {hid}", f"hazardous event appears {rated.get(hid, 0)} times as a rated coverage entry, expected 1")
 
 
+def check_dfa(name, doc, ctx, res: Result):
+  fsc = ctx.fsc
+  if fsc is None:
+    res.error(name, "DFA requires an FSC")
+    return
+  if doc["analysis"]["fsc_revision"] != fsc["analysis"]["revision"]:
+    res.error(name, f"analyzed FSC rev {doc['analysis']['fsc_revision']}, current FSC is rev {fsc['analysis']['revision']}; update the DFA")
+  fsrs = {f["id"]: f for f in fsc["fsrs"]}
+  fsc_ids = {e["id"] for e in fsc["elements"]} | {x["id"] for x in fsc["external_measures"]}
+  parents = {f["id"]: f for f in fsc["fsrs"] if f.get("decomposition")}
+  cats = {c["id"]: c for c in doc["categories"]}
+  measures = {m["id"]: m for m in doc["measures"]}
+  dfis = {d["id"]: d for d in doc["dfis"]}
+  decs = {d["fsr"]: d for d in doc["decompositions"]}
+
+  for m in doc["measures"]:
+    for a in m.get("allocated_to", []):
+      if a != "process" and a not in fsc_ids:
+        res.error(f"{name} {m['id']}", f"allocated to {a}, not an FSC element or external measure")
+
+  for fid in parents:
+    if fid not in decs:
+      res.error(name, f"FSC decomposition {fid} not analyzed")
+  for fid, d in decs.items():
+    where = f"{name} {fid}"
+    if fid not in parents:
+      res.error(where, "not a decomposed FSR in the FSC")
+      continue
+    into = parents[fid]["decomposition"]["into"]
+    if sorted(c["fsr"] for c in d["channels"]) != sorted(into):
+      res.error(where, f"channels {[c['fsr'] for c in d['channels']]} != FSC decomposition {into}")
+    for c in d["channels"]:
+      child = fsrs.get(c["fsr"])
+      if child is None:
+        continue
+      els = {e for e in c["elements"] if e.startswith("EL-")}
+      if els != set(child["allocated_to"]):
+        res.error(where, f"channel {c['fsr']} elements {sorted(els)} != FSC allocation {sorted(child['allocated_to'])}")
+      for e in c["elements"]:
+        if e not in fsc_ids:
+          res.error(where, f"channel element {e} not in the FSC")
+
+  used_cats = set()
+  by_dec: dict[str, list[dict]] = {f: [] for f in decs}
+  for d in doc["dfis"]:
+    where = f"{name} {d['id']}"
+    if d["category"] not in cats:
+      res.error(where, f"category {d['category']} not defined")
+    else:
+      used_cats.add(d["category"])
+      if not cats[d["category"]]["applicable"]:
+        res.error(where, f"category {d['category']} is declared not applicable")
+    for f in d["decompositions"]:
+      if f not in decs:
+        res.error(where, f"decomposition {f} not in this DFA")
+      else:
+        by_dec[f].append(d)
+    for m in d["measures"]:
+      if m not in measures:
+        res.error(where, f"measure {m} not defined")
+    if d["assessment"] == "sufficient" and not any(measures.get(m, {}).get("status") == "existing" for m in d["measures"]):
+      res.error(where, "sufficient requires at least one existing (verified) measure")
+  for cid, c in cats.items():
+    if c["applicable"] and cid not in used_cats:
+      res.error(f"{name} {cid}", "applicable category has no DFI")
+
+  counts: dict[str, int] = {}
+  for fid, d in decs.items():
+    counts[d["status"]] = counts.get(d["status"], 0) + 1
+    if d["status"] == "not_assessable":
+      if by_dec[fid]:
+        res.error(f"{name} {fid}", "not_assessable decomposition must not carry DFIs")
+      if not any(fsrs.get(c["fsr"], {}).get("implementation", {}).get("status") == "gap" for c in d["channels"]):
+        res.error(f"{name} {fid}", "not_assessable only when a channel is not yet defined (implementation gap)")
+      continue
+    assessments = {x["assessment"] for x in by_dec[fid]}
+    expected = "not_accepted" if "insufficient" in assessments else "conditional" if "open" in assessments else "accepted"
+    if d["status"] != expected:
+      res.error(f"{name} {fid}", f"status {d['status']} but its DFIs give {expected}")
+  if doc["analysis"]["status"] == "released" and counts.get("not_accepted"):
+    res.error(name, "released DFA has decompositions that are not accepted")
+
+  ids = set(dfis) | set(measures) | set(fsrs) | {e["id"] for e in fsc["elements"]}
+  for oi in doc["open_items"]:
+    for ref in oi["affects"]:
+      if ref not in ids:
+        res.error(f"{name} {oi['id']}", f"affects {ref}, which is not in the DFA or FSC")
+    if oi["status"] == "closed" and not oi.get("resolution"):
+      res.error(f"{name} {oi['id']}", "closed open item needs a resolution")
+
+  a_counts: dict[str, int] = {}
+  for d in doc["dfis"]:
+    a_counts[d["assessment"]] = a_counts.get(d["assessment"], 0) + 1
+  res.report.append("DFA decompositions: " + " ".join(f"{k}={v}" for k, v in sorted(counts.items())))
+  res.report.append("DFA initiators: " + " ".join(f"{k}={v}" for k, v in sorted(a_counts.items()))
+                    + f"; required measures: {sum(1 for m in doc['measures'] if m['status'] == 'required')}")
+
+
 class Context:
   def __init__(self, root: Path):
     self.root = root
@@ -594,6 +692,7 @@ class Context:
     self.safety_goals: dict[str, dict] = {}
     self.hara_revision: str | None = None
     self.hara_open_items: set[str] = set()
+    self.fsc: dict | None = None
     self.ap_counts = {"H": 0, "M": 0, "L": 0}
 
   def check_path(self, path, where, res: Result):
@@ -621,7 +720,7 @@ def lint(root: Path = ROOT) -> Result:
     res.error("baseline.yaml", "missing")
 
   rt = rating_tables_version(root)
-  schemas = {kind: load_schema(root, f"{kind}.schema.json") for kind in ("fmea", "fmeda", "hara", "fsc")}
+  schemas = {kind: load_schema(root, f"{kind}.schema.json") for kind in ("fmea", "fmeda", "hara", "fsc", "dfa")}
 
   docs = []
   seen_ids: dict[str, str] = {}
@@ -636,7 +735,7 @@ def lint(root: Path = ROOT) -> Result:
     hdr = doc["analysis"]
     if hdr["baseline"] not in baseline_ids:
       res.error(name, f"baseline {hdr['baseline']} not in baseline.yaml")
-    if kind not in ("hara", "fsc") and hdr["rating_tables"] != rt:
+    if kind not in ("hara", "fsc", "dfa") and hdr["rating_tables"] != rt:
       res.error(name, f"rating_tables {hdr['rating_tables']} != current {rt}; re-rate against the current tables")
 
     # FMEA ids are global (cross-linked between files); FMEDA ids are per file (one FMEDA per safety goal).
@@ -653,8 +752,12 @@ def lint(root: Path = ROOT) -> Result:
       ctx.safety_goals = {sg["id"]: sg for sg in doc["safety_goals"]}
       ctx.hara_revision = hdr["revision"]
       ctx.hara_open_items = {oi["id"] for oi in doc["open_items"]}
+    elif kind == "dfa":
+      scope = seen_ids
+      ids = [x["id"] for k in ("categories", "dfis", "measures", "open_items") for x in doc[k]]
     elif kind == "fsc":
       scope = seen_ids
+      ctx.fsc = doc
       ids = [x["id"] for k in ("elements", "external_measures", "operating_modes", "warning_degradation", "fsrs", "open_items")
              for x in doc[k]]
     else:
@@ -673,7 +776,7 @@ def lint(root: Path = ROOT) -> Result:
     docs.append((name, kind, doc))
 
   for name, kind, doc in docs:
-    {"fmeda": check_fmeda, "hara": check_hara, "fsc": check_fsc}.get(kind, check_fmea)(name, doc, ctx, res)
+    {"fmeda": check_fmeda, "hara": check_hara, "fsc": check_fsc, "dfa": check_dfa}.get(kind, check_fmea)(name, doc, ctx, res)
 
   res.report.insert(0, f"rated causes by AP: H={ctx.ap_counts['H']} M={ctx.ap_counts['M']} L={ctx.ap_counts['L']}")
   return res

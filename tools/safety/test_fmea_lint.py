@@ -130,6 +130,22 @@ FSC = {
   "open_items": [],
 }
 
+DFA = {
+  "schema_version": 1,
+  "analysis": {"id": "DFA", "type": "dfa", "title": "test", "revision": "0.1", "status": "draft", "baseline": "BL-001",
+               "fsc_revision": "0.1", "scope": "test"},
+  "categories": [
+    {"id": "CAT-01", "name": "power", "applicable": True, "rationale": "x"},
+    {"id": "CAT-02", "name": "memory", "applicable": False, "rationale": "x"},
+  ],
+  "decompositions": [{"fsr": "FSR-001", "channels": [{"fsr": "FSR-002", "elements": ["EL-02"]}, {"fsr": "FSR-003", "elements": ["EL-01"]}],
+                      "status": "accepted", "rationale": "x"}],
+  "dfis": [{"id": "DFI-01", "category": "CAT-01", "kind": "common_cause", "description": "x", "decompositions": ["FSR-001"],
+            "effect": "x", "measures": ["DM-01"], "assessment": "sufficient", "rationale": "x"}],
+  "measures": [{"id": "DM-01", "description": "x", "status": "existing"}],
+  "open_items": [],
+}
+
 # ISO 26262-3 Table 4, written out: rows S1..S3 x E1..E4, columns C1..C3.
 ISO_TABLE_4 = {
   ("S1", "E1"): ("QM", "QM", "QM"), ("S1", "E2"): ("QM", "QM", "QM"), ("S1", "E3"): ("QM", "QM", "A"), ("S1", "E4"): ("QM", "A", "B"),
@@ -447,6 +463,49 @@ class TestFsc(LintFixture):
     doc = copy.deepcopy(FSC)
     doc["fsrs"][1]["fhti_ms"] = 1000
     self.assertError(self.lint_fsc(doc), "exceeds SG-001 FTTI 900 ms")
+
+
+class TestDfa(LintFixture):
+  def lint_dfa(self, dfa=None):
+    return self.lint(sfm=SFM, hara=HARA, fsc=FSC, dfa=dfa or DFA)
+
+  def test_valid(self):
+    self.assertEqual(self.lint_dfa().errors, [])
+
+  def test_status_derived_from_dfis(self):
+    doc = copy.deepcopy(DFA)
+    doc["dfis"][0]["assessment"] = "open"
+    self.assertError(self.lint_dfa(doc), "status accepted but its DFIs give conditional")
+    doc["dfis"][0]["assessment"] = "insufficient"
+    self.assertError(self.lint_dfa(doc), "its DFIs give not_accepted")
+
+  def test_sufficient_needs_verified_measure(self):
+    doc = copy.deepcopy(DFA)
+    doc["measures"][0]["status"] = "existing_unverified"
+    self.assertError(self.lint_dfa(doc), "requires at least one existing (verified) measure")
+
+  def test_every_fsc_decomposition_analyzed(self):
+    doc = copy.deepcopy(DFA)
+    doc["decompositions"], doc["dfis"] = [], []
+    self.assertError(self.lint_dfa(doc), "FSC decomposition FSR-001 not analyzed")
+
+  def test_channels_match_fsc(self):
+    doc = copy.deepcopy(DFA)
+    doc["decompositions"][0]["channels"][0]["elements"] = ["EL-01"]
+    self.assertError(self.lint_dfa(doc), "!= FSC allocation")
+
+  def test_category_coverage(self):
+    doc = copy.deepcopy(DFA)
+    doc["categories"][1]["applicable"] = True
+    self.assertError(self.lint_dfa(doc), "CAT-02: applicable category has no DFI")
+    doc = copy.deepcopy(DFA)
+    doc["dfis"][0]["category"] = "CAT-02"
+    self.assertError(self.lint_dfa(doc), "declared not applicable")
+
+  def test_fsc_revision_pinned(self):
+    doc = copy.deepcopy(DFA)
+    doc["analysis"]["fsc_revision"] = "0.0"
+    self.assertError(self.lint_dfa(doc), "update the DFA")
 
 
 class TestFmeda(LintFixture):
