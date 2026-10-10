@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Work product** | `docs/safety/analyses/hara.yaml` rev 0.2 (LD-HARA-001) |
+| **Work product** | `assurance/08-analyses/fmea/analyses/hara.yaml` rev 0.2 (LD-HARA-001) |
 | **Tool** | `hara-checklist-reviewer`, jherrodthomas/automotive-skills-suite @ `026bb63` |
 | **Date** | 2026-10-10 |
 | **Performed by** | Claude (AI assistant) |

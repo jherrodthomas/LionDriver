@@ -18,7 +18,7 @@ REPO = fmea_lint.ROOT
 
 def ap_table_from_markdown():
   """Parse the AP table in rating-tables.md section 5 into {(s_band, o_band): 'HHHM'}."""
-  text = (REPO / "docs/safety/rating-tables.md").read_text()
+  text = (REPO / "assurance/08-analyses/fmea/rating-tables.md").read_text()
   section = text.split("## 5. Action Priority")[1].split("\n## ")[0]
   rows = {}
   for m in re.finditer(r"^\| *([0-9–]+) *\| *([0-9–]+) *\| *([HML]) *\| *([HML]) *\| *([HML]) *\| *([HML]) *\|$", section, re.M):
@@ -196,11 +196,11 @@ class LintFixture(unittest.TestCase):
   def setUp(self):
     self.tmp = Path(tempfile.mkdtemp())
     self.addCleanup(shutil.rmtree, self.tmp)
-    for rel in ("docs/safety/schema", "docs/safety/rating-tables.md", "docs/safety/baseline.yaml"):
+    for rel in ("assurance/08-analyses/fmea/schema", "assurance/08-analyses/fmea/rating-tables.md", "assurance/08-analyses/fmea/baseline.yaml"):
       src, dst = REPO / rel, self.tmp / rel
       dst.parent.mkdir(parents=True, exist_ok=True)
       (shutil.copytree if src.is_dir() else shutil.copy)(src, dst)
-    (self.tmp / "docs/safety/analyses").mkdir()
+    (self.tmp / "assurance/08-analyses/fmea/analyses").mkdir()
     test = self.tmp / "openpilot/selfdrive/controls/tests/test_latcontrol.py"
     test.parent.mkdir(parents=True)
     test.touch()
@@ -209,7 +209,7 @@ class LintFixture(unittest.TestCase):
     (self.tmp / ".gitmodules").write_text('[submodule "panda"]\n  path = panda\n  url = x\n')
 
   def write(self, name, doc):
-    (self.tmp / "docs/safety/analyses" / name).write_text(yaml.safe_dump(doc, sort_keys=False))
+    (self.tmp / "assurance/08-analyses/fmea/analyses" / name).write_text(yaml.safe_dump(doc, sort_keys=False))
 
   def lint(self, **docs):
     for name, doc in docs.items():
@@ -297,7 +297,7 @@ class TestFmeaRules(LintFixture):
 
   def test_unquoted_date_is_accepted(self):
     text = yaml.safe_dump(SWF, sort_keys=False).replace("analysis:\n", "analysis:\n  updated: 2026-10-09\n", 1)
-    (self.tmp / "docs/safety/analyses/swf.yaml").write_text(text)
+    (self.tmp / "assurance/08-analyses/fmea/analyses/swf.yaml").write_text(text)
     self.assertEqual(fmea_lint.lint(self.tmp).errors, [])
 
   def test_rating_tables_version(self):
@@ -551,7 +551,7 @@ class TestHaraExport(unittest.TestCase):
   def test_export_matches_yaml(self):
     import export_hara_xlsx
     wb = export_hara_xlsx.build(REPO)
-    hara = fmea_lint.load_yaml((REPO / "docs/safety/analyses/hara.yaml").read_text())
+    hara = fmea_lint.load_yaml((REPO / "assurance/08-analyses/fmea/analyses/hara.yaml").read_text())
     self.assertIn("12_HARA_Worksheet", wb.sheetnames)
     self.assertIn("13_Safety_Goals", wb.sheetnames)
     ws = wb["12_HARA_Worksheet"]
@@ -568,7 +568,7 @@ class TestFscExport(unittest.TestCase):
   def test_export_matches_yaml(self):
     import export_fsc_xlsx
     wb = export_fsc_xlsx.build(REPO)
-    fsc = fmea_lint.load_yaml((REPO / "docs/safety/analyses/fsc.yaml").read_text())
+    fsc = fmea_lint.load_yaml((REPO / "assurance/08-analyses/fmea/analyses/fsc.yaml").read_text())
     ws = wb["05_FSR_Catalog"]
     header_row = next(r for r in range(1, 10) if ws.cell(r, 1).value == "FSR_ID")
     rows = [r for r in ws.iter_rows(min_row=header_row + 1, values_only=True) if r[0]]
@@ -596,10 +596,10 @@ class TestItemExport(unittest.TestCase):
     wb = export_item_xlsx.build(REPO)
     ids = [r[0] for r in wb["03_Functions"].iter_rows(min_row=2, values_only=True) if r[0]]
     self.assertEqual(ids, [f"F{i}" for i in range(1, 9)])
-    sfm = fmea_lint.load_yaml((REPO / "docs/safety/analyses/system-fmea.yaml").read_text())
+    sfm = fmea_lint.load_yaml((REPO / "assurance/08-analyses/fmea/analyses/system-fmea.yaml").read_text())
     self.assertEqual(len(ids), len(sfm["functions"]))  # item functions F1-F8 = System FMEA SFM-FN-001..008
     modes = [r[0] for r in wb["07_Operating_Modes"].iter_rows(min_row=2, values_only=True) if r[0]]
-    fsc = fmea_lint.load_yaml((REPO / "docs/safety/analyses/fsc.yaml").read_text())
+    fsc = fmea_lint.load_yaml((REPO / "assurance/08-analyses/fmea/analyses/fsc.yaml").read_text())
     self.assertEqual(modes, [m["id"] for m in fsc["operating_modes"]])
     self.assertEqual(wb["13_Vehicle_Catalog"].max_row - 1, 334)
 

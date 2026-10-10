@@ -1,6 +1,6 @@
 # Variant structure of the LionDriver item (LD-ITEM-001).
 # Members are exact "Make Model" strings from docs/CARS.md (footnote markers removed).
-# docs/safety/item/vehicle-catalog.md is generated from this file and docs/CARS.md by
+# assurance/08-analyses/fmea/item/vehicle-catalog.md is generated from this file and docs/CARS.md by
 # tools/safety/gen_vehicle_catalog.py; do not edit the catalog by hand.
 schema_version: 1
 platform:

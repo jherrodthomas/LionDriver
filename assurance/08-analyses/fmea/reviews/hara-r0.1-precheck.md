@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Work product** | `docs/safety/analyses/hara.yaml` rev 0.1 (LD-HARA-001), exported with `tools/safety/export_hara_xlsx.py` |
+| **Work product** | `assurance/08-analyses/fmea/analyses/hara.yaml` rev 0.1 (LD-HARA-001), exported with `tools/safety/export_hara_xlsx.py` |
 | **Tool** | `hara-checklist-reviewer`, jherrodthomas/automotive-skills-suite @ `026bb63` |
 | **Date** | 2026-10-10 |
 | **Performed by** | Claude (AI assistant) |
@@ -11,8 +11,8 @@
 ## How to reproduce
 
 ```
-tools/safety/export_hara_xlsx.py                         # -> docs/safety/exports/hara.xlsx (git-ignored)
-python3 <reviewer>/scripts/generate_checklist.py docs/safety/exports/hara.xlsx docs/safety/exports/hara-review-checklist.xlsx
+tools/safety/export_hara_xlsx.py                         # -> assurance/08-analyses/fmea/exports/hara.xlsx (git-ignored)
+python3 <reviewer>/scripts/generate_checklist.py assurance/08-analyses/fmea/exports/hara.xlsx assurance/08-analyses/fmea/exports/hara-review-checklist.xlsx
 ```
 
 The exporter renders the YAML in hara-builder's tab layout without adding or changing ratings, so the reviewer sees exactly the HARA under review. The reviewer probe read all content (8 functions, 12 situations, 18 hazardous events, 10 safety goals, 1 revision-history row).

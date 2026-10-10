@@ -1,18 +1,18 @@
 # yaml-language-server: $schema=../schema/fmea.schema.json
 schema_version: 1
 analysis:
-  id: DFM
-  type: dfmea
-  title: "DFMEA — device, integrated panda, harness, vehicle interfaces"
+  id: PFM
+  type: pfmea
+  title: "PFMEA — build, release, install, calibration, OTA"
   revision: "0.1"
   status: draft
   baseline: BL-001
   rating_tables: RT-1
-  scope: "Hardware per fmea-plan.md section 3.2"
+  scope: "Process steps per fmea-plan.md section 3.4"
   team: []
   references:
-    - docs/safety/fmea-plan.md
-    - docs/safety/rating-tables.md
+    - assurance/08-analyses/fmea/fmea-plan.md
+    - assurance/08-analyses/fmea/rating-tables.md
 structure: []
 functions: []
 failure_modes: []

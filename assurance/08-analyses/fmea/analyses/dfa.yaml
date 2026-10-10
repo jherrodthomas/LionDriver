@@ -26,9 +26,9 @@ analysis:
     - name: Claude (AI assistant)
       role: Drafting assistance; content requires human review
   references:
-    - docs/safety/analyses/fsc.yaml
+    - assurance/08-analyses/fmea/analyses/fsc.yaml
     - ISO 26262-9:2018 clause 7; ISO 26262-11:2018 clause 4.7
-    - docs/safety/design/panda-config-lock-and-fw-authenticity.md (LD-DES-001)
+    - assurance/08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md (LD-DES-001)
   updated: 2026-10-10
   history:
     - {revision: "0.1", date: 2026-10-10, author: Claude (AI-assisted draft), change: Initial draft against FSC rev 0.1}
@@ -360,7 +360,7 @@ open_items:
       panda firmware and pandad behavior, and they are the measures every panda/SoC decomposition depends on.
     affects: [DM-07, DM-08, DFI-07, DFI-09]
     status: closed
-    resolution: Designed in docs/safety/design/panda-config-lock-and-fw-authenticity.md (LD-DES-001 rev 0.1). Implementation tracked in DOI-007.
+    resolution: Designed in assurance/08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md (LD-DES-001 rev 0.1). Implementation tracked in DOI-007.
   - id: DOI-003
     text: Define the separate panda safety release gate (DM-09) in the PFMEA and release control plan; hand the malicious-update case to the TARA.
     affects: [DM-09, DFI-18]

@@ -144,7 +144,7 @@ The same modes apply to every vehicle. The FSC (OM-01…OM-08) allocates them.
 |---|---|---|
 | PF-01 | Commanded lateral acceleration ≤ 3.0 m/s² plus roll compensation (ISO 11270 basis) | `openpilot/selfdrive/controls/lib/drive_helpers.py:14`; opendbc `car/lateral.py:10` |
 | PF-02 | Lateral jerk ≤ 5.0 m/s³ (ISO 11270); angle/curvature ports limited to ~3.6 m/s³ | opendbc `car/lateral.py:11-18` |
-| PF-03 | Commanded longitudinal acceleration within −3.5 … +2.0 m/s² (platform); VF-001 SoC uses +1.5 m/s² | opendbc `car/interfaces.py:25-26`; `car/toyota/values.py:39-43` |
+| PF-03 | Commanded longitudinal acceleration within −3.5 … +2.0 m/s² (platform); VF-001 SoC also uses +2.0 m/s² (`RAISED_ACCEL_LIMIT`, set for every TSS2 car) | opendbc `car/interfaces.py:25-26`; `car/toyota/values.py:39-43` |
 | PF-04 | Excessive actuation (> 2× the above for 0.25 s) leads to soft disable | `openpilot/selfdrive/selfdrived/helpers.py` |
 | PF-05 | Soft-disable takeover window 3 s | `openpilot/selfdrive/selfdrived/state.py` |
 | PF-06 | Driver-monitoring escalation within 5 / 8 / 13 s (vision policy) | `openpilot/selfdrive/monitoring/policy.py` |
@@ -237,7 +237,7 @@ From the BL-001 catalog; all are on opendbc platform `TOYOTA_COROLLA_TSS2`.
 |---|---|---|
 | P1 | `SAFETY_TOYOTA`, safety parameter **73** (EPS scale; no ALT_BRAKE, LTA, SECOC or STOCK_LONGITUDINAL flags) | `car/toyota/interface.py:27-41,105-111`; `values.py:109-112,588` |
 | P2 | Torque steering. Panda: max torque 1500, rate up 15 / down 25 per frame, max torque error 350. SoC controller: the same values. | `safety/modes/toyota.h:172-177`; `car/toyota/values.py:20-50` |
-| P3 | openpilot longitudinal (TSS2, no radar-ACC flag). SoC accel limits +1.5 / −3.5 m/s²; panda +2.0 / −3.5 m/s². | `interface.py:105`; `values.py:39-43`; `toyota.h:207-210` |
+| P3 | openpilot longitudinal (TSS2, no radar-ACC flag). SoC accel limits +2.0 / −3.5 m/s² (`RAISED_ACCEL_LIMIT`, TSS2); panda +2.0 / −3.5 m/s². | `interface.py:105, 117-118`; `values.py:39-43`; `toyota.h:207-210` |
 | P4 | Toyota A camera-intercept harness with relay | `docs/CARS.md` |
 | P5 | **Unknown** which stock TSS2 functions remain with openpilot longitudinal | HARA OI-003 |
 | P6 | 0 mph engage (US members); 17 mph ACC floor for the South America hybrid (`min_enable_speed=7.5` m/s) | `values.py:201-211` |

@@ -98,4 +98,4 @@ build/
 .context/
 PLAN.md
 TASK.md
-docs/safety/exports/
+assurance/08-analyses/fmea/exports/

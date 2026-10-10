@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/jherrodthomas/LionDriver/docs/safety/schema/dfa.schema.json",
+  "$id": "https://github.com/jherrodthomas/LionDriver/assurance/08-analyses/fmea/schema/dfa.schema.json",
   "title": "LionDriver Dependent Failure Analysis (ISO 26262-9 clause 7)",
   "type": "object",
   "additionalProperties": false,

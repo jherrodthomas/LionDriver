@@ -4,7 +4,7 @@
 |---|---|
 | Work product | Reconciliation record (supporting document, not a registered work product) |
 | Standard reference | ISO 26262-8:2018 §7 (configuration management), §8 (change management) |
-| Version | 0.1 |
+| Version | 0.2 |
 | Status | Draft |
 | Author | Assurance team |
 | Reviewer(s) | TBD |
@@ -87,3 +87,38 @@ Decision rule proposed in LD-TSC-001: implement layer 1, design layer 2, then le
 | OI-2 | Confirm that rating uncommanded engagement, driver-monitoring failure and mode confusion inside other hazards (§3) does not lose a safety goal; record the review in WP-C-03 | Safety engineer | G1 |
 | OI-3 | Evaluate the relay supervisor (§5) as a mechanism for GAP-43 and TSR-502 in WP-S-03 and [WP-H-02](../04-hardware/WP-H-02-hardware-design.md) | HW lead | G2 |
 | OI-4 | Decide whether the multi-vehicle model (platform plus configurations checked against its assumptions) becomes the scope method in WP-M-01 and WP-M-12, or stays as described there today | Maintainer | G1 |
+
+## 7. Second set: AIAG-VDA analyses (`assurance/08-analyses/fmea/`)
+
+A third set of drafts was written on branch `claude/charming-knuth-b8nnqh`, also against BL-001 (`8b8c6ae`), before this tree was merged into it. It was kept in `docs/safety/` and was moved unchanged to [`08-analyses/fmea/`](../08-analyses/fmea/fmea-plan.md) when `liondriver-dev` was merged. It consists of:
+
+- YAML sources validated by JSON schemas and `tools/safety/fmea_lint.py`.
+- Rating tables RT-1.
+- The analyses:
+  - a System FMEA, a HARA (LD-HARA-001 rev 0.3) and an FSC (rev 0.2, 40 FSRs);
+  - a DFA of the panda/SoC decompositions (rev 0.4);
+  - a SW FMEA of the panda safety model (rev 0.3);
+  - stubs for the DFMEA, PFMEA and FMEDA.
+- An item definition for the platform (334 vehicles) with the Corolla E210 variant family (LD-ITEM-001).
+- A design for the panda configuration lock and firmware authenticity (LD-DES-001).
+
+`assurance/` stays the single source of truth. The second set is kept as supporting data:
+
+| Second-set item | Disposition | Where in `assurance/` |
+|---|---|---|
+| SW FMEA (`analyses/sw-fmea.yaml`) | Supporting data: AIAG-VDA S/O/D/AP ratings and test evidence | [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md) §3.5; new rows SWF-48, SWF-49; OI-6 |
+| System FMEA (`analyses/system-fmea.yaml`) | Supporting data; links to the SW FMEA | [WP-A-04](../08-analyses/WP-A-04-system-fta-fmea.md) stays the system analysis of record |
+| DFA (`analyses/dfa.yaml`) | Supporting data; no finding beyond WP-A-03 (its DM-05 correction matches DFI-10) | [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md) |
+| HARA, FSC, item definition | Parallel drafts, not adopted. The FMEAs link to them, so they are kept for the trace | [WP-C-01](../02-concept/WP-C-01-item-definition.md), [WP-C-03](../02-concept/WP-C-03-hara.md), [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) |
+| LD-DES-001 decisions D1–D4 | Decided as D-09…D-12 | [WP-M-01 §8](../01-management/WP-M-01-assurance-strategy.md#8-strategic-decisions-required), [WP-M-07 §5](../01-management/WP-M-07-risk-management.md) |
+| LD-ITEM-001 IOI-001 (Experimental Mode) | Decided as D-08 (Chill Mode) | WP-M-01 §8 |
+| Platform and variant model (`item/variants.yaml`, `item/vehicle-catalog.md`) | Input to OI-4 | [WP-M-12](../01-management/WP-M-12-impact-analysis.md) |
+
+Like LD-HARA-001, the second-set HARA rates the lateral goal ASIL D (SG-001), with C3 at motorway speed and no credit for the EPS limit. It is a second, independent argument for OI-1 and is not a new open item. Two code findings from the second set are corrected here:
+
+- The SoC accel limit on TSS2 is +2.0 m/s² (`RAISED_ACCEL_LIMIT`), equal to the envelope, not +1.5.
+- The safety and mutation tests are run in fork CI (CR-CI-05).
+
+| ID | Item | Owner | Needed by |
+|---|---|---|---|
+| OI-5 | Decide whether the second-set HARA, FSC and item definition are withdrawn once WP-C-01/03/04 settle OI-1, OI-2 and OI-4, and re-point the FMEA data at WP-C-03 hazard IDs | Safety engineer | G1 |

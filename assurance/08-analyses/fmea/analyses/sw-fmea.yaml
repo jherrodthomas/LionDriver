@@ -1,13 +1,16 @@
 # yaml-language-server: $schema=../schema/fmea.schema.json
 # Ratings per RT-1. Implementation-defect causes in the opendbc safety core: O=5 (MISRA, 100% line coverage, review, no
-# documented requirements), D=6 (tests killed 2705/2705 operator mutants at BL-001 in this workspace, but the suite is not run
-# by LionDriver CI and mutation does not cover constants or panda board code). Design gaps found in this review: O=8, D=9.
+# documented requirements), D=6 (tests killed 2705/2705 operator mutants at BL-001 in this workspace; mutation does not cover
+# constants or panda board code). Design gaps found in this review: O=8, D=9. Cause ratings are pre-action; SWF-ACT-001
+# (fork CI gate, completed in rev 0.3) records the revised D=3.
+# Rev 0.3: SWF-003.C1 corrected (the SoC also uses +2.0 m/s² on TSS2). Moved under assurance/; the narrative software
+# safety analysis is assurance/05-software/WP-W-04, which this file supports with AIAG-VDA ratings.
 schema_version: 1
 analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "0.2"
+  revision: "0.3"
   status: draft
   baseline: BL-001
   rating_tables: RT-1
@@ -16,10 +19,10 @@ analysis:
     - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
     - {name: Claude (AI assistant), role: "Drafting assistance; ratings require human review"}
   references:
-    - docs/safety/fmea-plan.md
-    - docs/safety/rating-tables.md
-    - docs/safety/analyses/fsc.yaml
-    - docs/safety/design/panda-config-lock-and-fw-authenticity.md
+    - assurance/08-analyses/fmea/fmea-plan.md
+    - assurance/08-analyses/fmea/rating-tables.md
+    - assurance/08-analyses/fmea/analyses/fsc.yaml
+    - assurance/08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md
   updated: 2026-10-10
 structure:
 - id: SWF-SE-001
@@ -230,7 +233,7 @@ failure_modes:
     detection_controls: &id002
     - description: 'opendbc safety test suite (3173 pass, 390 skipped at BL-001 in this workspace). Mutation run at BL-001 in this workspace: 2705 operator mutants
         across opendbc/safety (incl. modes/toyota.h, lateral.h, longitudinal.h, safety.h), 2705 killed, 0 survived. Mutation covers operators only, not constants
-        or deleted statements, and not panda board code. Not run by LionDriver CI'
+        or deleted statements, and not panda board code. Run by fork CI since CR-CI-05 (.github/workflows/safety.yaml); credited through SWF-ACT-001'
       test: opendbc_repo/opendbc/safety/tests/test_toyota.py
       ref: opendbc_repo/opendbc/safety/tests/mutation.py; opendbc .github/workflows/tests.yml:39-56
     occurrence: 5
@@ -301,10 +304,11 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-003.C1
-    description: Panda allows +2.0 m/s² while the SoC design limit for VF-001 is +1.5 m/s²; the panda bound is looser than the item design
+    description: Panda upper bound +2.0 m/s² equals the SoC limit (RAISED_ACCEL_LIMIT is set for every TSS2 car, values.py:39-43) and is not derived from a validated
+      Corolla envelope; no margin between controller and envelope
     element: SWF-SE-008
     prevention_controls:
-    - description: Panda limit taken from the platform maximum, not the vehicle envelope
+    - description: Panda limit taken from the platform maximum, not a vehicle envelope (assurance GAP-04, WP-A-03 DFI-08)
       ref: opendbc_repo/opendbc/safety/modes/toyota.h:207-210
     detection_controls:
     - description: No test targets this cause
@@ -770,7 +774,9 @@ actions:
   kind: detection
   description: Run the opendbc safety suite and the mutation tests as a blocking gate in LionDriver CI for every change and submodule bump
   owner: Jherrod Thomas
-  status: open
+  status: completed
+  evidence: '.github/workflows/safety.yaml (CR-CI-05, merged from liondriver-dev): safety tests with 100% line coverage, MISRA and mutation jobs on push and pull
+    request. Branch protection making them blocking is not verified here'
   revised:
     severity: 10
     occurrence: 5
@@ -778,7 +784,8 @@ actions:
     ap: H
 - id: SWF-ACT-002
   kind: prevention
-  description: Write technical safety requirements for the panda safety model (TSC) and requirements-based tests traced to them
+  description: Requirements-based tests for the panda safety model, traced to the draft TSRs and SWSRs (assurance WP-S-02, WP-W-02); the requirements exist as drafts,
+    the tests do not
   owner: Jherrod Thomas
   status: open
   revised:

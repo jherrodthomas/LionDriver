@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/jherrodthomas/LionDriver/docs/safety/schema/fsc.schema.json",
+  "$id": "https://github.com/jherrodthomas/LionDriver/assurance/08-analyses/fmea/schema/fsc.schema.json",
   "title": "LionDriver Functional Safety Concept (ISO 26262-3 clause 7)",
   "type": "object",
   "additionalProperties": false,

@@ -6,7 +6,7 @@ Usage: tools/safety/fmea_lint.py [--root REPO_ROOT] [--report]
 Requires PyYAML and jsonschema (not openpilot runtime deps):
   pip install pyyaml jsonschema
 
-Rules are documented in docs/safety/rating-tables.md.
+Rules are documented in assurance/08-analyses/fmea/rating-tables.md.
 """
 import argparse
 import configparser
@@ -20,7 +20,7 @@ import jsonschema
 import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
-SAFETY_DIR = Path("docs/safety")
+SAFETY_DIR = Path("assurance/08-analyses/fmea")
 FMEA_TYPES = ("system_fmea", "dfmea", "sw_fmea", "pfmea")
 
 # AIAG-VDA 2019 Action Priority. Rows: (severity band, occurrence band) -> AP for D bands (7-10, 5-6, 2-4, 1).

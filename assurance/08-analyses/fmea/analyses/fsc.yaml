@@ -27,9 +27,9 @@ analysis:
     - name: Claude (AI assistant)
       role: Drafting assistance; content requires human review
   references:
-    - docs/safety/item-definition.md
-    - docs/safety/analyses/hara.yaml
-    - docs/safety/analyses/system-fmea.yaml
+    - assurance/08-analyses/fmea/item-definition.md
+    - assurance/08-analyses/fmea/analyses/hara.yaml
+    - assurance/08-analyses/fmea/analyses/system-fmea.yaml
     - docs/SAFETY.md
     - ISO 26262-3:2018 clause 7, ISO 26262-9:2018 clauses 5 and 7
   updated: 2026-10-10
@@ -702,7 +702,7 @@ open_items:
       environment, vehicle CAN, and the OTA update path, which replaces SoC software and panda firmware together
       (one faulty update can defeat both channels). Until the DFA is done, no decomposition is accepted.
       Status: DFA LD-DFA-001 rev 0.1 accepts none of the 11 decompositions (10 not accepted, FSR-012 not
-      assessable); see docs/safety/analyses/dfa.yaml and DOI-001..DOI-006.
+      assessable); see assurance/08-analyses/fmea/analyses/dfa.yaml and DOI-001..DOI-006.
     affects: [FSR-001, FSR-004, FSR-009, FSR-012, FSR-015, FSR-018, FSR-021, FSR-025, FSR-028, FSR-031, FSR-034]
     status: open
   - id: FOI-003

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/jherrodthomas/LionDriver/docs/safety/schema/fmea.schema.json",
+  "$id": "https://github.com/jherrodthomas/LionDriver/assurance/08-analyses/fmea/schema/fmea.schema.json",
   "title": "LionDriver FMEA (System FMEA, DFMEA, SW FMEA, PFMEA)",
   "description": "AIAG-VDA 7-step FMEA. Ratings may be null while status is draft; see rating-tables.md.",
   "type": "object",

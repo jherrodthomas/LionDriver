@@ -33,7 +33,7 @@ structure follows UL 4600 principles where they apply to a supervised Level 2 sy
 | `05-software/` | Software requirements, architecture, units, verification, ML engineering | 26262-6, SWE.1–6, MLE.1–4, SUP.11 |
 | `06-validation/` | Safety validation, SOTIF known/unknown scenario evaluation, pen testing, vehicle test operations | 26262-4 §8, 21448 §9–11, 21434 §11, VAL.1 |
 | `07-supporting/` | CM, change, problem resolution, documentation, tool and software-component qualification | 26262-8, SUP.1/8/9/10 |
-| `08-analyses/` | ASIL decomposition, coexistence, DFA, system FTA/FMEA | 26262-9 |
+| `08-analyses/` | ASIL decomposition, coexistence, DFA, system FTA/FMEA; [`fmea/`](08-analyses/fmea/fmea-plan.md) holds the AIAG-VDA FMEA data (YAML, checked by `tools/safety/fmea_lint.py`) that supports them | 26262-9, AIAG-VDA FMEA 2019 |
 | `09-production-operation/` | Installation, operation, field monitoring, incident response | 26262-7, 21448 §13, 21434 §12–14 |
 | `10-safety-case/` | Safety, SOTIF and cybersecurity cases; assessment and release records | 26262-2 §6, 21448 §12, 21434 §6, UL 4600 |
 | `trace/` | Machine-readable requirement and trace data | 26262-8 §6, ASPICE traceability BPs |

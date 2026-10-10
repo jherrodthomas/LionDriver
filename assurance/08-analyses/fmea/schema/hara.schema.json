@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/jherrodthomas/LionDriver/docs/safety/schema/hara.schema.json",
+  "$id": "https://github.com/jherrodthomas/LionDriver/assurance/08-analyses/fmea/schema/hara.schema.json",
   "title": "LionDriver HARA (ISO 26262-3 clause 6)",
   "description": "Hazard analysis and risk assessment. ASIL is computed from S/E/C by the linter (ISO 26262-3 Table 4).",
   "type": "object",

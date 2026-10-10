@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/jherrodthomas/LionDriver/docs/safety/schema/fmeda.schema.json",
+  "$id": "https://github.com/jherrodthomas/LionDriver/assurance/08-analyses/fmea/schema/fmeda.schema.json",
   "title": "LionDriver FMEDA",
   "description": "ISO 26262-5 hardware metrics. One file per safety goal. See rating-tables.md section 6.",
   "type": "object",

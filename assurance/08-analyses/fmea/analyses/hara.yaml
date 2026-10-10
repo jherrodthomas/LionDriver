@@ -14,7 +14,7 @@ analysis:
   approver: Jherrod Thomas (pending)
   baseline: BL-001
   scope: >-
-    The item is defined in LD-ITEM-001 (docs/safety/item-definition.md). This HARA covers assured configuration
+    The item is defined in LD-ITEM-001 (assurance/08-analyses/fmea/item-definition.md). This HARA covers assured configuration
     AC-001: variant family VF-001 (Toyota Corolla E210), 2020 Corolla LE sedan, US market, comma 3X, baseline
     BL-001. Extension to other VF-001 members or other vehicles requires a variant impact analysis
     (LD-ITEM-001 section A.10, IOI-002, IOI-004).
@@ -27,9 +27,9 @@ analysis:
     - name: Claude (AI assistant)
       role: Drafting assistance; ratings require human review and confirmation review
   references:
-    - docs/safety/item-definition.md
-    - docs/safety/analyses/system-fmea.yaml
-    - docs/safety/fmea-plan.md
+    - assurance/08-analyses/fmea/item-definition.md
+    - assurance/08-analyses/fmea/analyses/system-fmea.yaml
+    - assurance/08-analyses/fmea/fmea-plan.md
     - docs/SAFETY.md
     - ISO 26262-3:2018 clause 6 and Annex B
   updated: 2026-10-10

@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Work product** | `docs/safety/analyses/fsc.yaml` rev 0.1 (LD-FSC-001), exported with `tools/safety/export_fsc_xlsx.py` |
+| **Work product** | `assurance/08-analyses/fmea/analyses/fsc.yaml` rev 0.1 (LD-FSC-001), exported with `tools/safety/export_fsc_xlsx.py` |
 | **Tool** | `fsc-checklist-reviewer`, jherrodthomas/automotive-skills-suite @ `026bb63` |
 | **Date** | 2026-10-10 |
 | **Performed by** | Claude (AI assistant) |
@@ -11,8 +11,8 @@
 ## How to reproduce
 
 ```
-tools/safety/export_fsc_xlsx.py                          # -> docs/safety/exports/fsc.xlsx (git-ignored)
-python3 <reviewer>/scripts/generate_checklist.py docs/safety/exports/fsc.xlsx docs/safety/exports/fsc-review-checklist.xlsx
+tools/safety/export_fsc_xlsx.py                          # -> assurance/08-analyses/fmea/exports/fsc.xlsx (git-ignored)
+python3 <reviewer>/scripts/generate_checklist.py assurance/08-analyses/fmea/exports/fsc.xlsx assurance/08-analyses/fmea/exports/fsc-review-checklist.xlsx
 ```
 
 The probe read 10 safety goals, 12 architecture nodes, 40 FSRs and 75 allocation rows. Architecture elements `EL-xx` appear as node IDs `Nxx` in the workbook because the reviewer only accepts node IDs starting with "N".

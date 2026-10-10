@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/jherrodthomas/LionDriver/docs/safety/schema/baseline.schema.json",
+  "$id": "https://github.com/jherrodthomas/LionDriver/assurance/08-analyses/fmea/schema/baseline.schema.json",
   "title": "LionDriver analysis baselines",
   "description": "Configurations that safety analyses are performed against. Analyses reference a baseline by id.",
   "type": "object",

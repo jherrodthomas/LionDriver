@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Work product** | `docs/safety/item-definition.md` rev 0.1 (LD-ITEM-001), exported with `tools/safety/export_item_xlsx.py` |
+| **Work product** | `assurance/08-analyses/fmea/item-definition.md` rev 0.1 (LD-ITEM-001), exported with `tools/safety/export_item_xlsx.py` |
 | **Tool** | `item-def-checklist-reviewer`, jherrodthomas/automotive-skills-suite @ `026bb63` |
 | **Date** | 2026-10-10 |
 | **Performed by** | Claude (AI assistant) |
@@ -11,8 +11,8 @@
 ## How to reproduce
 
 ```
-tools/safety/export_item_xlsx.py        # -> docs/safety/exports/item-definition.xlsx (git-ignored)
-python3 <reviewer>/scripts/generate_checklist.py docs/safety/exports/item-definition.xlsx docs/safety/exports/item-definition-review-checklist.xlsx
+tools/safety/export_item_xlsx.py        # -> assurance/08-analyses/fmea/exports/item-definition.xlsx (git-ignored)
+python3 <reviewer>/scripts/generate_checklist.py assurance/08-analyses/fmea/exports/item-definition.xlsx assurance/08-analyses/fmea/exports/item-definition-review-checklist.xlsx
 ```
 
 The exporter reads the markdown tables of LD-ITEM-001, `item/variants.yaml` and the generated vehicle catalog. A test checks that the exported functions match System FMEA F1–F8, the modes match FSC OM-01…OM-08, and the catalog has 334 vehicles.

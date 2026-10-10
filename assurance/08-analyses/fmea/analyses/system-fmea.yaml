@@ -33,8 +33,8 @@ analysis:
     - name: Claude (AI assistant)
       role: Drafting assistance; content requires human review
   references:
-    - docs/safety/fmea-plan.md
-    - docs/safety/rating-tables.md
+    - assurance/08-analyses/fmea/fmea-plan.md
+    - assurance/08-analyses/fmea/rating-tables.md
     - docs/SAFETY.md
   updated: 2026-10-09
 
