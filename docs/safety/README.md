@@ -54,7 +54,7 @@ Status key: ⚪ planned · 🟡 drafting · 🔵 in review · 🟢 released
 
 | ID | Work product | Clause | Location | Status |
 |---|---|---|---|---|
-| WP-SYS-01 | Technical safety concept | 26262-4 §6 | `platform/tsc` | ⚪ |
+| WP-SYS-01 | Technical safety concept | 26262-4 §6 | [`platform/tsc`](platform/tsc/) | 🟡 Draft 0.1: 44 TSRs, G1 design, first DFA |
 | WP-SYS-02 | Assessment of existing openpilot software and hardware | 26262-8 §12 | `platform/existing-assessment` | ⚪ |
 | WP-SW-01 | Software safety requirements (panda safety layer) | 26262-6 §6 | `platform/sw-safety-reqs` | ⚪ |
 | WP-SW-02 | Unit verification of the safety layer | 26262-6 §9 | `configurations/*/evidence` | 🟢 Toyota mode: first evidence |

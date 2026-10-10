@@ -172,7 +172,7 @@ LionDriver follows several principles:
 - [ ] Establish functional safety concept patterns: [functional safety concept](docs/safety/platform/fsc/) (draft 0.1)
 - [ ] Conduct SOTIF analyses
 - [ ] Establish cybersecurity engineering processes
-- [ ] Assess existing software and hardware architectures
+- [ ] Assess existing software and hardware architectures: [technical safety concept](docs/safety/platform/tsc/) (draft 0.1)
 - [ ] Define reusable safety mechanisms and interface contracts
 
 ### Phase 3 — Implementation and Verification

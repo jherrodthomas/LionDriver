@@ -125,4 +125,4 @@ The panda can bound *how hard* the car brakes, not *whether braking is warranted
 
 ## Next
 
-The technical safety concept (WP-SYS-01) takes each concrete requirement down to hardware and software, starting with G1 because it decides whether the panda hardware can carry ASIL D at all.
+The [technical safety concept LD-TSC-001](../tsc/) takes every requirement here down to hardware and software, and proposes the design for G1.

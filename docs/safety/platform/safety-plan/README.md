@@ -65,7 +65,7 @@
 | A02 | Minor | XZACT compiler silently miscompiled valid programs | No product impact as TCL1 evidence; blocks any product use of XZACT code |
 | A03 | Major | No development interface agreement with upstream | Qualify upstream as existing software; impact-analyze every pin update |
 | A04 | Minor | ASIL D is a pre-HARA assumption | Draft HARA supports it (five ASIL D goals); closes at the HARA's confirmation review |
-| A05 | Major | panda microcontroller fault detection insufficient for ASIL D (FSC gap G1) | Assess the MCU; external watchdog with relay cut-off and/or a monitoring MCU. Blocks the decomposition |
+| A05 | Major | panda microcontroller fault detection insufficient for ASIL D (FSC gap G1) | Design proposed in the [TSC](../tsc/#g1--panda-microcontroller-faults): firmware measures, a relay supervisor, and a monitoring MCU if the FMEDA needs it. Blocks the decomposition until verified |
 
 ## Schedule (proposed)
 
@@ -85,7 +85,7 @@ flowchart LR
     classDef wip fill:#FFF4DC,stroke:#F29F1F,color:#3A2A05
     classDef block fill:#FFE6EB,stroke:#E5486A,color:#4C0519
     classDef done fill:#DCFCE9,stroke:#10B981,color:#064E3B
-    class M01,M02,M04,M06 wip
+    class M01,M02,M04,M06,M07 wip
     class M03 done
     class M05 block
 ```
