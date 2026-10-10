@@ -8,8 +8,10 @@ analysis:
   id: HARA
   type: hara
   title: "HARA — LionDriver L2 ACC/ALC on 2020 Toyota Corolla LE (US)"
+  doc_id: LD-HARA-001
   revision: "0.1"
   status: draft
+  approver: Jherrod Thomas (pending)
   baseline: BL-001
   scope: >-
     Item as defined by the System FMEA structure (SFM-SE-001): lateral control, longitudinal control,
@@ -30,6 +32,8 @@ analysis:
     - docs/SAFETY.md
     - ISO 26262-3:2018 clause 6 and Annex B
   updated: 2026-10-09
+  history:
+    - {revision: "0.1", date: 2026-10-09, author: Claude (AI-assisted draft), change: Initial draft from System FMEA rev 0.2 end effects}
 
 assumptions:
   - id: HA-001
@@ -147,54 +151,67 @@ operational_situations:
 hazards:
   - id: HZ-001
     description: Unintended steering torque while the item is not engaged
+    guidewords: [M03]
     functions: [SFM-FN-001]
     sfm_refs: [SFM-001]
   - id: HZ-002
     description: Excessive steering intervention (torque or rate) while engaged
+    guidewords: [M05]
     functions: [SFM-FN-001, SFM-FN-007]
     sfm_refs: [SFM-002, SFM-014, SFM-016, SFM-029, SFM-030, SFM-032]
   - id: HZ-003
     description: Lateral control steers toward or across the lane boundary at normal intervention magnitude while engaged
+    guidewords: [M12, M04]
     functions: [SFM-FN-001]
     sfm_refs: [SFM-003, SFM-006]
   - id: HZ-004
     description: Loss or reduction of lateral control while engaged without timely driver warning
+    guidewords: [M02, M06]
     functions: [SFM-FN-001, SFM-FN-003]
     sfm_refs: [SFM-004, SFM-005, SFM-015]
   - id: HZ-005
     description: Unintended acceleration
+    guidewords: [M03, M05]
     functions: [SFM-FN-002, SFM-FN-007]
     sfm_refs: [SFM-008, SFM-014, SFM-016, SFM-029, SFM-030, SFM-032]
   - id: HZ-006
     description: Unintended or excessive deceleration
+    guidewords: [M03, M05]
     functions: [SFM-FN-002, SFM-FN-004, SFM-FN-007]
     sfm_refs: [SFM-009, SFM-014, SFM-020, SFM-029, SFM-030, SFM-032]
   - id: HZ-007
     description: Insufficient or late deceleration for a lead vehicle while engaged
+    guidewords: [M06, M11]
     functions: [SFM-FN-002]
     sfm_refs: [SFM-010, SFM-011, SFM-012]
   - id: HZ-008
     description: Automated control not released when the driver brakes or cancels
+    guidewords: [M10]
     functions: [SFM-FN-004]
     sfm_refs: [SFM-017, SFM-019]
   - id: HZ-009
     description: Item resists driver steering input
+    guidewords: [M10]
     functions: [SFM-FN-004]
     sfm_refs: [SFM-018]
   - id: HZ-010
     description: Unintended engagement
+    guidewords: [M03]
     functions: [SFM-FN-003]
     sfm_refs: [SFM-013]
   - id: HZ-011
     description: Stock AEB/FCW unavailable or degraded while the item is installed
+    guidewords: [M01]
     functions: [SFM-FN-008]
     sfm_refs: [SFM-033, SFM-034]
   - id: HZ-012
     description: Driver misinformed about automation state (missing or late handback warning, wrong displayed state, stock cruise active unknowingly)
+    guidewords: [M01, M08, M12]
     functions: [SFM-FN-006, SFM-FN-004]
     sfm_refs: [SFM-021, SFM-026, SFM-027, SFM-028]
   - id: HZ-013
     description: Automated control continues with an inattentive or unresponsive driver
+    guidewords: [M01, M11]
     functions: [SFM-FN-005]
     sfm_refs: [SFM-022, SFM-023, SFM-025]
 
@@ -487,3 +504,21 @@ open_items:
   - id: OI-008
     text: Plan the ASIL D allocation for SG-001 given that the comma 3X SoC is not an ISO 26262 element (decomposition or OI-001 outcome).
     affects: [SG-001]
+  - id: OI-009
+    text: >-
+      Guide-word completeness (pre-check finding FSA-6): only 7 of the 14 malfunction guide words appear, and
+      function x guide-word pairs were not recorded systematically. Add a function x M01-M14 matrix (8 x 14)
+      with SC/NSC/NA and rationale for every pair.
+    affects: [HZ-001, HZ-002, HZ-003, HZ-004, HZ-005, HZ-006, HZ-007, HZ-008, HZ-009, HZ-010, HZ-011, HZ-012, HZ-013]
+  - id: OI-010
+    text: >-
+      Situation coverage (pre-check findings FSA-8, VA-33/33d): each hazard is rated in 1-2 worst-case situations
+      only. Record a hazard x situation matrix stating for every pair: rated (HE id), dominated by a rated HE
+      (with reason), or not relevant (with reason).
+    affects: [OS-001, OS-002, OS-003, OS-004, OS-005, OS-006, OS-007, OS-008, OS-009, OS-010, OS-011, OS-012]
+  - id: OI-011
+    text: >-
+      Weather and road surface are not differentiated (found during the pre-check; not flagged by the reviewer
+      skill). Wet, snow/ice and night conditions can raise S or C for lateral and braking hazards. Add surface/
+      visibility to the situations or justify that dry conditions are worst case.
+    affects: [HE-002, HE-004, HE-005, HE-006, HE-009, HE-014]

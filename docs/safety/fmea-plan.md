@@ -144,11 +144,15 @@ docs/safety/
     sw-fmea.yaml
     pfmea.yaml
     fmeda-<scope>.yaml         (one FMEDA per safety goal / HW scope; Phase A = fmeda-panda.yaml)
-  exports/                     (generated .xlsx for review; not hand-edited)
+  exports/                     (generated .xlsx for review; git-ignored, regenerate)
+  reviews/                     (review records, e.g. hara-r0.1-precheck.md)
 tools/safety/
   fmea_lint.py                 (validator)
   test_fmea_lint.py
+  export_hara_xlsx.py          (HARA -> xlsx in hara-builder layout, for hara-checklist-reviewer)
 ```
+
+Review workbooks come from the builder/reviewer skills in jherrodthomas/automotive-skills-suite. Exports render the YAML as-is; the skills' heuristic ratings are never written back into the analyses.
 
 - Source of truth is YAML (diffable, reviewable in PRs); spreadsheets are generated.
 - IDs: `SFM-`, `DFM-`, `SWF-`, `PFM-` prefixes for structure (`-SE-###`), functions (`-FN-###`), failure modes (`-###`), causes (`-###.C#`), actions (`-ACT-###`). FMEA ids are unique across all files; FMEDA ids (`FMD-…`) only within their file.

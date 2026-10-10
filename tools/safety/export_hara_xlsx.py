@@ -1,0 +1,222 @@
+#!/usr/bin/env python3
+"""Export docs/safety/analyses/hara.yaml to an xlsx workbook for review.
+
+Usage: tools/safety/export_hara_xlsx.py [OUTPUT.xlsx] [--root REPO_ROOT]
+
+The workbook uses the tab names and column headers of hara-builder
+(jherrodthomas/automotive-skills-suite) so hara-checklist-reviewer can read it.
+It is a faithful rendering of hara.yaml: no ratings are suggested or added.
+YAML stays the source of truth; regenerate rather than editing the xlsx.
+
+Requires PyYAML, jsonschema and openpyxl.
+"""
+import argparse
+import sys
+from pathlib import Path
+
+from openpyxl import Workbook
+from openpyxl.styles import Alignment, Font, PatternFill
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import fmea_lint
+
+DEFAULT_OUT = Path("docs/safety/exports/hara.xlsx")
+
+# The 14-malfunction guide-word set used by hara-builder.
+MALFUNCTIONS = {
+  "M01": ("No Function", "Function never executes when commanded."),
+  "M02": ("Stops Functioning", "Function executes initially, then stops while still commanded."),
+  "M03": ("Unrequested Function", "Function executes without being commanded."),
+  "M04": ("Function Stuck", "Function holds last commanded value, ignores new commands."),
+  "M05": ("Excessive Function", "Function output magnitude exceeds command."),
+  "M06": ("Partial Function", "Function output magnitude is less than command, but non-zero."),
+  "M07": ("Functions Early", "Function executes before the trigger condition is met."),
+  "M08": ("Functions Late", "Function executes after the trigger condition has passed."),
+  "M09": ("Function Applies Too Short", "Output duration shorter than commanded."),
+  "M10": ("Function Applies Too Long", "Output duration longer than commanded."),
+  "M11": ("Function is Delayed", "Function eventually executes correctly but with latency beyond spec."),
+  "M12": ("Inverse Function", "Function executes in the opposite direction of the command."),
+  "M13": ("Erratic or Intermittent", "Function output oscillates or chatters around the command."),
+  "M14": ("Function is Uneven", "Function output has non-monotonic / asymmetric profile."),
+}
+
+ISO_EXPOSURE = [
+  ("E0", "Incredible", "Not considered further"),
+  ("E1", "Very low probability", "Not specified as share of operating time; rare situations"),
+  ("E2", "Low probability", "< 1% of average operating time"),
+  ("E3", "Medium probability", "1% to 10% of average operating time"),
+  ("E4", "High probability", "> 10% of average operating time"),
+]
+ISO_SEVERITY = [
+  ("S0", "No injuries"),
+  ("S1", "Light and moderate injuries"),
+  ("S2", "Severe and life-threatening injuries (survival probable)"),
+  ("S3", "Life-threatening injuries (survival uncertain), fatal injuries"),
+]
+ISO_CONTROLLABILITY = [
+  ("C0", "Controllable in general"),
+  ("C1", "Simply controllable (99% or more of drivers)"),
+  ("C2", "Normally controllable (90% or more of drivers)"),
+  ("C3", "Difficult to control or uncontrollable (less than 90% of drivers)"),
+]
+
+HEADER_FILL = PatternFill("solid", fgColor="1F3864")
+ASIL_FILL = {"A": "FFE699", "B": "F4B084", "C": "F8696B", "D": "C00000"}
+
+
+def _sheet(wb, name, title, headers=None, note=None):
+  ws = wb.create_sheet(name)
+  ws.cell(1, 1, title).font = Font(bold=True, size=14)
+  r = 2
+  if note:
+    ws.cell(r, 1, note).font = Font(italic=True, size=9)
+    r += 1
+  if headers:
+    r += 1
+    for c, h in enumerate(headers, 1):
+      cell = ws.cell(r, c, h)
+      cell.font = Font(bold=True, color="FFFFFF")
+      cell.fill = HEADER_FILL
+      ws.column_dimensions[cell.column_letter].width = max(12, min(60, len(h) + 30))
+    ws.freeze_panes = ws.cell(r + 1, 1)
+  return ws, r + 1
+
+
+def _rows(ws, start, rows):
+  for i, row in enumerate(rows):
+    for c, v in enumerate(row, 1):
+      ws.cell(start + i, c, v).alignment = Alignment(wrap_text=True, vertical="top")
+
+
+def build(root: Path) -> Workbook:
+  safety = root / fmea_lint.SAFETY_DIR
+  hara = fmea_lint.load_yaml((safety / "analyses/hara.yaml").read_text())
+  sfm = fmea_lint.load_yaml((safety / "analyses/system-fmea.yaml").read_text())
+  hdr = hara["analysis"]
+  functions = {f["id"]: f for f in sfm["functions"]}
+  situations = {s["id"]: s for s in hara["operational_situations"]}
+  hazards = {h["id"]: h for h in hara["hazards"]}
+  sg_by_hazard = {h: sg for sg in hara["safety_goals"] for h in sg["hazards"]}
+
+  wb = Workbook()
+  wb.remove(wb.active)
+
+  ws, r = _sheet(wb, "00_Title_Page", hdr["title"])
+  _rows(ws, r, [
+    ["Document Title", hdr["title"]],
+    ["Project", "LionDriver"],
+    ["Document ID", hdr.get("doc_id", "")],
+    ["Revision", hdr["revision"]],
+    ["Status", hdr["status"]],
+    ["Date", hdr.get("updated", "")],
+    ["Author", "; ".join(f"{t['name']} ({t['role']})" for t in hdr.get("team", []))],
+    ["Approver", hdr.get("approver", "")],
+    ["Baseline", hdr["baseline"]],
+    ["Source", "docs/safety/analyses/hara.yaml (generated by tools/safety/export_hara_xlsx.py; do not edit)"],
+  ])
+  ws.column_dimensions["A"].width = 18
+  ws.column_dimensions["B"].width = 100
+
+  ws, r = _sheet(wb, "01_Document_Control", "Document Control", ["Revision", "Date", "Author", "Change"])
+  _rows(ws, r, [[h["revision"], h["date"], h["author"], h["change"]] for h in hdr.get("history", [])])
+
+  ws, r = _sheet(wb, "02_Assumptions", "Assumptions", ["ID", "Category", "Assumption"])
+  _rows(ws, r, [[a["id"], "HARA", a["text"]] for a in hara["assumptions"]])
+
+  ws, r = _sheet(wb, "03_Architecture_Boundary", "Item Scope and Boundary", ["Interface", "Kind", "Description"])
+  ws.cell(2, 1, hdr["scope"]).alignment = Alignment(wrap_text=True)
+  _rows(ws, r, [[e["name"], e["kind"], e.get("description", "")] for e in sfm["structure"] if e["kind"] in ("external", "item", "system", "component")])
+
+  ws, r = _sheet(wb, "04_Functions", "Functions", ["Function ID", "Function Name", "Description"])
+  _rows(ws, r, [[fid, f["description"].split(":")[0], f["description"]] for fid, f in functions.items()])
+
+  ws, r = _sheet(wb, "05_Malfunctions", "Malfunction Guide Words", ["Malfunction ID", "Malfunction", "Definition"])
+  _rows(ws, r, [[k, n, d] for k, (n, d) in MALFUNCTIONS.items()])
+
+  ws, r = _sheet(wb, "06_Operating_Environment", "Operational Situations",
+                 ["Situation ID", "Location", "Speed band (km/h)", "Item state", "Description", "Exposure", "Exposure rationale"])
+  _rows(ws, r, [[s["id"], s["road"], s["speed"], s["item_state"], s["description"], s["exposure"], s["exposure_rationale"]]
+                for s in hara["operational_situations"]])
+
+  ws, r = _sheet(wb, "07_Severity_Reference", "Severity (ISO 26262-3 Table 1)", ["Class", "Description"])
+  _rows(ws, r, [list(t) for t in ISO_SEVERITY])
+  ws, r = _sheet(wb, "08_Exposure_Reference", "Exposure (ISO 26262-3 Table 2, Annex B duration)", ["Class", "Description", "Duration anchor"])
+  _rows(ws, r, [list(t) for t in ISO_EXPOSURE])
+  ws, r = _sheet(wb, "09_Controllability_Reference", "Controllability (ISO 26262-3 Table 3)", ["Class", "Description"])
+  _rows(ws, r, [list(t) for t in ISO_CONTROLLABILITY])
+
+  ws, r = _sheet(wb, "10_ASIL_Matrix", "ASIL Determination (ISO 26262-3 Table 4)", ["S-E", "C1", "C2", "C3"])
+  _rows(ws, r, [[f"S{s}-E{e}"] + [fmea_lint.compute_asil(f"S{s}", f"E{e}", f"C{c}") for c in (1, 2, 3)]
+                for s in (1, 2, 3) for e in (1, 2, 3, 4)])
+
+  ws, r = _sheet(wb, "11_Hazards", "Hazards (vehicle-level malfunctioning behavior)",
+                 ["Hazard ID", "Hazard", "Functions", "Guide words", "System FMEA refs", "Safety Goal"])
+  _rows(ws, r, [[h["id"], h["description"], ", ".join(h["functions"]),
+                 ", ".join(f"{g} {MALFUNCTIONS[g][0]}" for g in h["guidewords"]), ", ".join(h["sfm_refs"]),
+                 sg_by_hazard[h["id"]]["id"] if h["id"] in sg_by_hazard else ""] for h in hara["hazards"]])
+
+  headers = ["HARA ID", "Function", "Function ID", "Malfunction", "Malfunction ID", "Location", "Speed band (km/h)", "Weather",
+             "Hazardous Event", "S", "S Rationale", "E", "E Rationale", "C", "C Rationale", "ASIL", "Safe State",
+             "Hazard ID", "Situation ID", "Safety Goal", "Sensitivity"]
+  ws, r = _sheet(wb, "12_HARA_Worksheet", "HARA Worksheet", headers,
+                 note="Weather/surface is not differentiated in rev 0.1: situations are rated for the conditions in their description.")
+  asil_col = headers.index("ASIL") + 1
+  for i, he in enumerate(hara["hazardous_events"]):
+    hz, os_ = hazards[he["hazard"]], situations[he["situation"]]
+    fid = hz["functions"][0]
+    gw = hz["guidewords"][0]
+    ovr = he["exposure_override"]
+    e = ovr["exposure"] if ovr else os_["exposure"]
+    e_rat = f"{ovr['rationale']} (overrides {os_['exposure']}: {os_['exposure_rationale']})" if ovr else os_["exposure_rationale"]
+    asil = fmea_lint.compute_asil(he["severity"], e, he["controllability"])
+    sg = sg_by_hazard.get(hz["id"])
+    _rows(ws, r + i, [[
+      he["id"], functions[fid]["description"].split(":")[0], fid, MALFUNCTIONS[gw][0], gw,
+      f"{os_['road']}: {os_['description']}", os_["speed"], "Not differentiated",
+      f"{hz['description']} — {he['consequence']}",
+      he["severity"], he["severity_rationale"], e, e_rat, he["controllability"], he["controllability_rationale"],
+      asil, sg["safe_state"] if sg else "", hz["id"], os_["id"], sg["id"] if sg else "", he.get("sensitivity", ""),
+    ]])
+    if asil in ASIL_FILL:
+      ws.cell(r + i, asil_col).fill = PatternFill("solid", fgColor=ASIL_FILL[asil])
+
+  ws, r = _sheet(wb, "13_Safety_Goals", "Safety Goals and Safe States",
+                 ["SG_ID", "Function", "Hazard", "Worst-case ASIL", "Driving HARA IDs", "Safety Goal", "Safe State", "FTTI (ms)", "Notes"])
+  for i, sg in enumerate(hara["safety_goals"]):
+    hes = [he for he in hara["hazardous_events"] if he["hazard"] in sg["hazards"]]
+    fids = dict.fromkeys(f for h in sg["hazards"] for f in hazards[h]["functions"])
+    _rows(ws, r + i, [[
+      sg["id"], ", ".join(fids), "; ".join(f"{h} {hazards[h]['description']}" for h in sg["hazards"]), sg["asil"],
+      ", ".join(he["id"] for he in hes), sg["statement"], sg["safe_state"],
+      sg["ftti_ms"] if sg["ftti_ms"] is not None else "TBD (OI-004)", sg.get("notes", ""),
+    ]])
+
+  ws, r = _sheet(wb, "14_Open_Items", "Open Items", ["ID", "Open item", "Affects"])
+  _rows(ws, r, [[o["id"], o["text"], ", ".join(o["affects"])] for o in hara["open_items"]])
+
+  ws, r = _sheet(wb, "15_References", "References", ["Reference"])
+  _rows(ws, r, [[ref] for ref in hdr.get("references", [])])
+  return wb
+
+
+def main(argv=None) -> int:
+  ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+  ap.add_argument("output", nargs="?", type=Path)
+  ap.add_argument("--root", type=Path, default=fmea_lint.ROOT)
+  args = ap.parse_args(argv)
+  root = args.root.resolve()
+
+  res = fmea_lint.lint(root)
+  if res.errors:
+    print("\n".join(res.errors))
+    print("refusing to export: fix lint errors first")
+    return 1
+  out = args.output or root / DEFAULT_OUT
+  out.parent.mkdir(parents=True, exist_ok=True)
+  build(root).save(out)
+  print(f"wrote {out}")
+  return 0
+
+
+if __name__ == "__main__":
+  sys.exit(main())

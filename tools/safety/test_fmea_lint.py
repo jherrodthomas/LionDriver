@@ -85,7 +85,7 @@ HARA = {
     "id": "OS-001", "description": "highway", "road": "highway", "speed": "80-130 km/h", "item_state": "engaged",
     "exposure": "E4", "exposure_rationale": "common",
   }],
-  "hazards": [{"id": "HZ-001", "description": "excessive steering", "functions": ["SFM-FN-001"], "sfm_refs": ["SFM-001"]}],
+  "hazards": [{"id": "HZ-001", "description": "excessive steering", "guidewords": ["M05"], "functions": ["SFM-FN-001"], "sfm_refs": ["SFM-001"]}],
   "hazardous_events": [{
     "id": "HE-001", "hazard": "HZ-001", "situation": "OS-001", "consequence": "lane departure",
     "severity": "S3", "severity_rationale": "speed", "exposure_override": None,
@@ -335,6 +335,23 @@ class TestFmeda(LintFixture):
 
   def test_fmeda_ids_are_per_file(self):
     self.assertEqual(self.lint(fmd1=FMEDA, fmd2=FMEDA).errors, [])
+
+
+class TestHaraExport(unittest.TestCase):
+  def test_export_matches_yaml(self):
+    import export_hara_xlsx
+    wb = export_hara_xlsx.build(REPO)
+    hara = fmea_lint.load_yaml((REPO / "docs/safety/analyses/hara.yaml").read_text())
+    self.assertIn("12_HARA_Worksheet", wb.sheetnames)
+    self.assertIn("13_Safety_Goals", wb.sheetnames)
+    ws = wb["12_HARA_Worksheet"]
+    header_row = next(r for r in range(1, 10) if ws.cell(r, 1).value == "HARA ID")
+    headers = [c.value for c in ws[header_row]]
+    rows = [r for r in ws.iter_rows(min_row=header_row + 1, values_only=True) if r[0]]
+    self.assertEqual([r[0] for r in rows], [he["id"] for he in hara["hazardous_events"]])
+    for row, he in zip(rows, hara["hazardous_events"], strict=True):
+      self.assertEqual(row[headers.index("ASIL")], he["asil"])
+      self.assertEqual(row[headers.index("S")], he["severity"])
 
 
 if __name__ == "__main__":
