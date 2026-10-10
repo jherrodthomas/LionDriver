@@ -47,7 +47,7 @@ jobs:
   mutation:
     name: safety mutation tests
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    timeout-minutes: 45
     steps:
     - uses: actions/checkout@v7
     - name: Checkout opendbc submodule
