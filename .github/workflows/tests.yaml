@@ -60,7 +60,7 @@ jobs:
       working-directory: ${{ env.STRIPPED_DIR }}
       run: tools/release/check-dirty.sh
     - name: Check submodules
-      if: github.repository == 'commaai/openpilot'
+      if: github.repository == 'commaai/openpilot' || github.repository == 'jherrodthomas/LionDriver'
       timeout-minutes: 3
       run: tools/release/check-submodules.sh
 
