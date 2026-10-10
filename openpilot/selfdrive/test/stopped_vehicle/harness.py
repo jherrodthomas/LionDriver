@@ -22,6 +22,7 @@ from openpilot.selfdrive.controls.lib.longcontrol import LongCtrlState
 from openpilot.selfdrive.controls.lib.longitudinal_planner import LongitudinalPlanner
 from openpilot.selfdrive.controls.radard import RADAR_TO_CAMERA, RadarD
 from openpilot.selfdrive.modeld.constants import ModelConstants
+from openpilot.selfdrive.test.stopped_vehicle.emergency_brake import EmergencyBrake, EmergencyBrakeConfig
 from openpilot.selfdrive.test.stopped_vehicle.scenarios import Scenario
 
 REFERENCE_CAR = CAR.TOYOTA_COROLLA_TSS2
@@ -36,6 +37,7 @@ class Result:
   first_detection_gap: float | None  # gap when radarState.leadOne first became present
   fcw_ttc: float | None  # time-to-collision when the planner FCW first fired
   peak_decel: float  # most negative applied acceleration, m/s^2
+  emergency_triggered: bool = False
 
 
 class FakeSubMaster:
@@ -64,17 +66,20 @@ def lead_v3(lead, prob, gap, v_target, y_rel):
   lead.vStd = [1.]
 
 
-def run(scenario: Scenario) -> Result:
+def run(scenario: Scenario, emergency: EmergencyBrakeConfig | None = None) -> Result:
+  """Run a scenario. emergency adds the CA-004 study prototype (emergency_brake.py) on top of the planner."""
   CP = CarInterface.get_non_essential_params(REFERENCE_CAR)
   planner = LongitudinalPlanner(CP, init_v=scenario.v_ego)
   radard = RadarD(CP.radarDelay)
   sm = FakeSubMaster()
+  eb = EmergencyBrake(emergency) if emergency is not None else None
 
   delay_steps = max(1, round(CP.longitudinalActuatorDelay / DT_MDL))
   accel_queue = deque([0.] * delay_steps, maxlen=delay_steps)
 
   v_ego, a_ego, x_ego = scenario.v_ego, 0., 0.
   x_target = scenario.initial_gap
+  v_target = scenario.v_target
   first_detection_gap = fcw_ttc = None
   min_gap = scenario.initial_gap
   peak_decel = 0.
@@ -83,7 +88,9 @@ def run(scenario: Scenario) -> Result:
   for frame in range(int(scenario.duration / DT_MDL)):
     t = frame * DT_MDL
     gap = x_target - x_ego
-    closing = v_ego - scenario.v_target
+    if t >= scenario.target_brake_time:
+      v_target = max(0., v_target - scenario.target_decel * DT_MDL)
+    closing = v_ego - v_target
     observable = t >= scenario.reveal_time
     vision = observable and gap <= scenario.vision_range
     radar = observable and scenario.radar_range > 0 and gap <= scenario.radar_range
@@ -93,8 +100,8 @@ def run(scenario: Scenario) -> Result:
 
     model = log.ModelDataV2.new_message()
     leads = model.init('leadsV3', 2)
-    lead_v3(leads[0], 1. if vision else 0., gap, scenario.v_target, scenario.lateral_offset)
-    lead_v3(leads[1], 0., gap, scenario.v_target, scenario.lateral_offset)
+    lead_v3(leads[0], 1. if vision else 0., gap, v_target, scenario.lateral_offset)
+    lead_v3(leads[1], 0., gap, v_target, scenario.lateral_offset)
     model.velocity.x = [float(v_ego)] * len(ModelConstants.T_IDXS)
     model.position.x = [float(v_ego * t_idx) for t_idx in ModelConstants.T_IDXS]
     model.acceleration.x = [0.] * len(ModelConstants.T_IDXS)
@@ -106,7 +113,7 @@ def run(scenario: Scenario) -> Result:
       pts[0].trackId = 1
       pts[0].dRel = float(gap)
       pts[0].yRel = float(scenario.lateral_offset)
-      pts[0].vRel = float(scenario.v_target - v_ego)
+      pts[0].vRel = float(v_target - v_ego)
 
     sm.data = {'modelV2': model, 'carState': car_state}
     sm.recv_frame['carState'] = frame + 1
@@ -117,7 +124,7 @@ def run(scenario: Scenario) -> Result:
       first_detection_gap = gap
 
     controls_state = log.ControlsState.new_message(longControlState=LongCtrlState.pid)
-    selfdrive_state = log.SelfdriveState.new_message(personality=log.LongitudinalPersonality.standard)
+    selfdrive_state = log.SelfdriveState.new_message(personality=scenario.personality)
     planner.update({
       'radarState': radar_state,
       'carState': car_state,
@@ -131,25 +138,33 @@ def run(scenario: Scenario) -> Result:
     if planner.fcw and fcw_ttc is None:
       fcw_ttc = gap / closing if closing > 0 else float('inf')
 
+    a_cmd = float(planner.output_a_target)
+    if eb is not None:
+      a_emergency = eb.update(radar_state.leadOne, v_ego, a_cmd)
+      if a_emergency is not None:
+        a_cmd = min(a_cmd, a_emergency)
+
     # actuator: commanded accel takes effect after the actuator delay
     a_ego = accel_queue[0]
-    accel_queue.append(float(planner.output_a_target))
+    accel_queue.append(a_cmd)
     peak_decel = min(peak_decel, a_ego)
 
     v_ego = max(0., v_ego + a_ego * DT_MDL)
     if v_ego == 0.:
       a_ego = 0.
     x_ego += v_ego * DT_MDL
-    x_target += scenario.v_target * DT_MDL
+    x_target += v_target * DT_MDL
 
     gap = x_target - x_ego
     min_gap = min(min_gap, gap)
     if gap <= 0.:
-      return Result(scenario, True, v_ego - scenario.v_target, gap, first_detection_gap, fcw_ttc, peak_decel)
+      return Result(scenario, True, v_ego - v_target, gap, first_detection_gap, fcw_ttc, peak_decel,
+                    eb is not None and eb.triggered)
 
     # done once the ego has matched the target's speed for a second
-    stopped_frames = stopped_frames + 1 if v_ego <= scenario.v_target + 0.05 else 0
+    target_settled = scenario.target_decel == 0. or v_target == 0.
+    stopped_frames = stopped_frames + 1 if target_settled and v_ego <= v_target + 0.05 else 0
     if stopped_frames * DT_MDL >= 1.:
       break
 
-  return Result(scenario, False, 0., min_gap, first_detection_gap, fcw_ttc, peak_decel)
+  return Result(scenario, False, 0., min_gap, first_detection_gap, fcw_ttc, peak_decel, eb is not None and eb.triggered)

@@ -6,6 +6,8 @@ Distances are bumper-to-bumper gaps in meters, speeds in m/s.
 from dataclasses import dataclass, replace
 
 from opendbc.car.common.conversions import Conversions as CV
+from openpilot.cereal import log
+from openpilot.selfdrive.controls.lib.longitudinal_mpc_lib.long_mpc import STOP_DISTANCE, get_T_FOLLOW
 
 # openpilot braking authority (opendbc ACCEL_MIN, Toyota panda limit)
 BRAKE_LIMIT = 3.5
@@ -42,6 +44,10 @@ class Scenario:
   # time the target becomes observable, e.g. when a lead vehicle cuts out
   reveal_time: float = 0.
   lateral_offset: float = 0.
+  # the target brakes at this rate (m/s^2) from target_brake_time until it stops
+  target_decel: float = 0.
+  target_brake_time: float = 0.
+  personality: int = log.LongitudinalPersonality.standard
   duration: float = 40.
 
   def with_vision_range(self, vision_range: float) -> 'Scenario':
@@ -75,4 +81,15 @@ def radar_only(speed_kph: int) -> Scenario:
 VISIBLE_FROM_RANGE = [visible_from_range(s) for s in SPEEDS_KPH]
 SLOW_VEHICLE = [visible_from_range(s, slow=True) for s in SPEEDS_KPH]
 CUT_OUT = [cut_out(s, d) for s in SPEEDS_KPH for d in CUT_OUT_REVEAL_DISTANCES]
+def lead_braking(speed_kph: int, decel: float, personality: int = log.LongitudinalPersonality.standard) -> Scenario:
+  """Steady following at the personality's following distance, then the lead brakes to a stop."""
+  v = speed_kph * CV.KPH_TO_MS
+  label = {v: k for k, v in log.LongitudinalPersonality.schema.enumerants.items()}[personality]
+  return Scenario(f"lead brakes at {decel:.0f} m/s² from {speed_kph} km/h ({label})", v, v_target=v,
+                  initial_gap=get_T_FOLLOW(personality) * v + STOP_DISTANCE, target_decel=decel, target_brake_time=5.,
+                  personality=personality)
+
+
 RADAR_ONLY = [radar_only(s) for s in (40, 80, 120)]
+# lead decelerations 2-4 m/s^2 are ordinary hard braking; 6-8 m/s^2 is an emergency stop
+LEAD_BRAKING = [lead_braking(s, d) for s in (60, 100, 120) for d in (2., 3., 4., 6., 8.)]
