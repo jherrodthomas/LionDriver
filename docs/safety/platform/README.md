@@ -16,6 +16,7 @@ The platform is LionDriver as it behaves on **any** supported vehicle. It is ana
 | F03 | Engagement management: engage only on deliberate driver action, disengage on brake, gas, cancel or fault | panda, with openpilot state |
 | F04 | Driver monitoring: detect inattention, escalate alerts, disengage | openpilot driver-monitoring model |
 | F05 | Safety supervision: enforce actuator limits, input validity and relay integrity on every frame | panda |
+| F06 | Driver information: engagement state, planned path, alerts and audible take-over requests | openpilot UI, display and speaker |
 
 **Inside the item:** openpilot software on the comma device, panda firmware, the vehicle harness and its relay, and the brand safety mode in `opendbc_repo/opendbc/safety/`.
 **Outside the item:** the vehicle's own ECUs (EPS, engine and brake control, stock ADAS camera and radar), vehicle CAN wiring beyond the harness, the driver, and comma's cloud services.
