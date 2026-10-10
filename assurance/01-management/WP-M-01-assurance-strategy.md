@@ -184,7 +184,7 @@ These are owned by the project maintainer. Until each one is decided, it stays o
 |---|---|---|
 | No supplier evidence for the comma hardware | HW metrics and qualification cannot be completed. The ASIL claim on the envelope is limited | Derive the FMEDA from the published panda design and the STM32H7 safety manual. Argue conservatively. Consider an external, independent monitor if the metrics fall short |
 | OEM ECU behaviour is unverifiable | AoUs on the EPS and PCS stay assumptions | Characterize them by vehicle testing (torque limits, fault reactions). Restrict claims to what was measured |
-| Upstream velocity | The safety case goes stale with every sync | D-02 freeze plus a sync impact-analysis procedure |
+| Upstream velocity | The safety case goes stale with every sync | D-02 planned sync once per minor release, each with an impact analysis ([WP-M-11 §5](WP-M-11-upstream-and-supplier-management.md#5-upstream-synchronization-procedure-d-02)) |
 | ML insufficiencies are not quantifiable without data | SOTIF area 3 residual risk cannot be shown | Set validation targets. Use fork-owned drive logs, scenario simulation and field monitoring. Bound the ODD tightly |
 | Single maintainer | Independence and competence requirements are not met | External reviewers and assessor. Document competence ([WP-M-04](WP-M-04-organization-competence-safety-culture.md)) |
 | Public-road testing before the analyses are done | Harm to third parties | No LionDriver public-road operation beyond upstream behaviour until G1 and WP-V-07 are complete |

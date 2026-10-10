@@ -20,12 +20,14 @@ Interfaces: field data comes from [WP-O-04](../09-production-operation/WP-O-04-f
 
 ## 2. Current state
 
-| Item | Observation | Evidence |
-|---|---|---|
-| Issue templates | `bug_report.yml` and `pc_bug_report.yml` are upstream templates. `bug_report.yml` says "We cannot look into bug reports from forks" and asks for a route on `useradmin.comma.ai` | `.github/ISSUE_TEMPLATE/bug_report.yml` |
-| Contact links | Blank issues disabled; links point to `commaai/opendbc` issues, comma Discord and the comma wiki | `.github/ISSUE_TEMPLATE/config.yml` |
-| Security contact | `adeeb@comma.ai` and `security@comma.ai` | `SECURITY.md` |
-| Stale automation | Issues not touched by `stale.yaml` (`days-before-issue-stale: -1`), PRs are | `.github/workflows/stale.yaml` |
+State at `8b8c6ae` (gap assessment) and now:
+
+| Item | At `8b8c6ae` | Now | Evidence |
+|---|---|---|---|
+| Issue templates | Upstream `bug_report.yml` and `pc_bug_report.yml`; "We cannot look into bug reports from forks" | Replaced by LionDriver "Problem report" and "Field report" forms (#6, CR-CI-07) | `.github/ISSUE_TEMPLATE/` |
+| Contact links | Links to `commaai/opendbc` issues, comma Discord and the comma wiki | Private vulnerability report link and assurance documentation link | `.github/ISSUE_TEMPLATE/config.yml` |
+| Security contact | `adeeb@comma.ai` and `security@comma.ai` | LionDriver policy with a private reporting route (GitHub private vulnerability reporting, which must be enabled in the repository settings) | `SECURITY.md` |
+| Stale automation | `stale.yaml` closed inactive PRs | Deleted (#6, CR-CI-01) | — |
 
 No LionDriver problem record exists yet.
 
@@ -104,6 +106,8 @@ A second template, "Field report", carries the same fields plus incident date an
 | Process | `cat-process` | Process non-conformance (missing review, missing impact analysis) | WP-M-05 QA |
 
 A problem may carry more than one category. The highest-severity category drives the timeline.
+
+At triage, every problem in category FuSa, SOTIF, AI or Cybersecurity, and every Process problem that concerns a safety work product, also gets the `safety-anomaly` label. That label marks the safety anomalies of [WP-M-02 §9](../01-management/WP-M-02-safety-plan.md#9-safety-anomaly-handling); the gate and release rules query it.
 
 ### 4.2 Severity
 

@@ -195,7 +195,7 @@ An upstream security fix is pulled through a sync change (WP-P-02 CT-3) with imp
 
 ## 8. Proposed LionDriver `SECURITY.md` content
 
-The repository's current `SECURITY.md` routes all reports to comma.ai (`SECURITY.md:5`; GAP-28). This document does **not** edit it. The content below is proposed for the maintainer to adopt through a change request (OI-3). Placeholders in angle brackets must be filled.
+At `8b8c6ae` the repository's `SECURITY.md` routed all reports to comma.ai (GAP-28). The maintainer has since replaced it with a LionDriver cybersecurity statement, and the reporting part of the content below was added to the top of it (RR-2026-002 F-04). The e-mail alternative is not adopted until a LionDriver-controlled security address exists (OI-3).
 
 ```markdown
 # Security Policy
@@ -272,7 +272,7 @@ end-of-support date of each release.
 |---|---|
 | OI-1 | Name a deputy for the CSM/VMO roles with documented access, before supporting installations beyond the maintainer's own |
 | OI-2 | Set up private vulnerability reporting and the restricted register index |
-| OI-3 | Adopt the proposed `SECURITY.md` (§8) through a change request; obtain a LionDriver-controlled security contact address |
+| OI-3 | `SECURITY.md` reporting section adopted (GitHub private vulnerability reporting). Remaining: enable private vulnerability reporting in the repository settings; obtain a LionDriver-controlled security contact address |
 | OI-4 | Agree timelines (§4.3, §5.3) and the support period (§7) with the assessor and the SM |
 | OI-5 | Define the staged-rollout mechanism once signed updates exist (U5 needs per-installation release targeting) |
 | OI-6 | Closed: monitoring cadence harmonised as weekly automated scan/watch (WP-W-11 SCAN-03/SCAN-04) plus monthly manual review (WP-M-11 §6, this document §2) |
