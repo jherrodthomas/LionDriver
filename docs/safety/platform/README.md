@@ -3,7 +3,7 @@
 The platform is LionDriver as it behaves on **any** supported vehicle. It is analyzed once, over a declared operating envelope, under worst-case assumptions about the vehicle. Whatever the platform needs from a car is written down as an assumption, and each [vehicle configuration](../configurations/) checks those assumptions against a real car (ISO 26262-10 §9).
 
 > [!WARNING]
-> **Draft.** Everything below is a working draft for review. Nothing on this page is released. Formal versions: [item definition LD-ITD-001](item-definition/), [HARA LD-HARA-001](hara/), [safety plan LD-SPL-001](safety-plan/).
+> **Draft.** Everything below is a working draft for review. Nothing on this page is released. Formal versions: [item definition LD-ITD-001](item-definition/), [HARA LD-HARA-001](hara/), [safety plan LD-SPL-001](safety-plan/), [FSC LD-FSC-001](fsc/), [TSC LD-TSC-001](tsc/).
 
 ## Item definition (draft outline)
 
@@ -69,4 +69,5 @@ Rated in the [HARA](hara/), which turns them into nine safety goals (five at ASI
 3. ~~HARA and safety goals (WP-CON-02)~~: [draft 0.1](hara/)
 4. Assumptions register, completed and versioned (WP-CON-03)
 5. ~~Functional safety concept (WP-CON-07)~~: [draft 0.1](fsc/)
-6. Technical safety concept (WP-SYS-01), starting with the panda microcontroller gap (FSC G1)
+6. ~~Technical safety concept (WP-SYS-01)~~: [draft 0.1](tsc/), with the design for the panda microcontroller gap (G1)
+7. G1 layer 1 in the panda firmware, and the panda FMEDA (WP-HW-01)

@@ -257,7 +257,7 @@
       "target_asil": "D",
       "planned_date": "2027-Q2",
       "actual_date": "",
-      "status": "Not Started"
+      "status": "Draft complete"
     },
     {
       "wp_id": "WP-SYS-02",
@@ -496,8 +496,8 @@
       "name": "Technical safety concept and existing-software assessment",
       "target_date": "2027-Q2",
       "predecessors": "M06",
-      "status": "Not Started",
-      "notes": "Includes the doer/checker independence argument"
+      "status": "In Progress",
+      "notes": "TSC draft 0.1 complete (LD-TSC-001), including a first DFA of the doer/checker split; existing-software assessment not started"
     },
     {
       "id": "M08",
@@ -573,8 +573,8 @@
       "description": "panda microcontroller fault detection is insufficient for ASIL D: a software watchdog on the main loop and interrupt-rate monitoring only record faults; no lockstep core or independent hardware watchdog; no evidence that a recorded fault leads to a no-output state (FSC gap G1).",
       "severity": "Major",
       "owner": "Hardware Lead (vacant)",
-      "status": "Open",
-      "resolution": "Assess the STM32H7's safety mechanisms; decide on an external watchdog with relay cut-off and/or a second monitoring MCU in the TSC. Blocks the D(D) + QM(D) decomposition."
+      "status": "Open (design proposed)",
+      "resolution": "TSC LD-TSC-001 proposes layered measures: L1 firmware (escalate recorded faults to a latched no-output state, independent watchdog with program-flow checks, ECC reporting, inverted copies of safety state, code CRC), L2 relay supervisor with a toggling drive in the harness box, and L3 a diverse monitoring MCU if the FMEDA cannot reach ASIL D metrics. Still blocks the D(D) + QM(D) decomposition until implemented and verified."
     }
   ],
   "resources": [

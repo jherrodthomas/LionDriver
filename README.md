@@ -173,7 +173,7 @@ flowchart LR
 | **0 · Foundations** | Governance, repository structure, standards mapping, documentation framework | 🟡 In progress |
 | **1 · Concept** | [Safety plan](docs/safety/platform/safety-plan/) · [item definition](docs/safety/platform/item-definition/) · operating envelope · [HARA: 9 safety goals](docs/safety/platform/hara/) | 🟡 Drafts complete, awaiting independent review |
 | **2 · Safety concepts** | [Functional safety concept](docs/safety/platform/fsc/) · SOTIF analysis · TARA and cybersecurity goals · AI safety requirements | 🟡 FSC drafted |
-| **3 · Architecture** | Technical safety concept · assessment of existing openpilot software and hardware · gap analysis | ⚪ Planned |
+| **3 · Architecture** | [Technical safety concept](docs/safety/platform/tsc/) · assessment of existing openpilot software and hardware · gap analysis | 🟡 TSC drafted |
 | **4 · Safety mechanisms** | Hardened safety layer · supporting hardware · driver-monitoring requirements | ⚪ Planned |
 | **5 · Verification** | Requirements traceability · unit, equivalence and mutation testing · SIL and HIL · fault injection | 🟢 First evidence (Toyota safety mode) |
 | **6 · Validation** | Scenario-based validation · controlled track testing · first vehicle configuration | ⚪ Planned |

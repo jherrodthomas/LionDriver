@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="tsc-builder" modified="2026-04-28T00:00:00.000Z" agent="tsc-builder/1.0" version="22.0.0">
+  <diagram id="system_architecture" name="System Architecture">
+    <mxGraphModel dx="1422" dy="754" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="2" value="N01
+Vehicle CAN in: wheel speeds
+[comm_in]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D9E2F3;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="80" y="80" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="3" value="N02
+Vehicle CAN in: EPS torque and steering angle
+[comm_in]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D9E2F3;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="80" y="180" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="4" value="N03
+Vehicle CAN in: brake, gas and cruise state
+[comm_in]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D9E2F3;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="80" y="280" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="5" value="N04
+Road-facing cameras
+[sensor]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D9E2F3;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="80" y="80" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="6" value="N05
+Driver-facing camera
+[sensor]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D9E2F3;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="80" y="180" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="7" value="N06
+Vehicle 12 V supply through the harness
+[power_in]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D9E2F3;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="80" y="80" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="8" value="N07
+USB link: openpilot commands and heartbeat to the panda
+[comm_in]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D9E2F3;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="80" y="380" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="9" value="N10
+comma device processor
+[processor]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE699;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="600" y="80" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="10" value="N11
+openpilot driving software (doer)
+[software]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="600" y="80" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="11" value="N12
+Driver monitoring software
+[software]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="600" y="180" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="12" value="N13
+panda microcontroller (STM32H7)
+[processor]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE699;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="600" y="180" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="13" value="N14
+panda safety firmware: brand safety mode (checker)
+[software]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="600" y="280" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="14" value="N15
+panda safety mode and parameter selection
+[memory]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F2F2F2;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="600" y="80" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="15" value="N20
+Harness relay
+[driver]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4B084;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="1100" y="80" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="16" value="N21
+Vehicle CAN out: steering commands
+[comm_out]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4B084;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="1100" y="80" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="17" value="N22
+Vehicle CAN out: acceleration and cruise-cancel commands
+[comm_out]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4B084;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="1100" y="180" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="18" value="N23
+Device display and speaker
+[actuator]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4B084;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="1100" y="80" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="19" value="N24
+Vehicle EPS, powertrain and brakes
+[actuator]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4B084;strokeColor=#1F3864;fontSize=10;" vertex="1" parent="1"><mxGeometry x="1100" y="180" width="160" height="70" as="geometry"/></mxCell>
+        <mxCell id="20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="2" target="10"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="2" target="13"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="10"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="13"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4" target="10"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4" target="13"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="5" target="10"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="6" target="11"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="7" target="9"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="7" target="12"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="7" target="15"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="8" target="13"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="9" target="10"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="9" target="11"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="10" target="8"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="10" target="18"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="11" target="10"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="11" target="18"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="12" target="13"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="13" target="15"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="13" target="16"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="13" target="17"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="14" target="13"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="15" target="16"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="15" target="17"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="16" target="19"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="17" target="19"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
