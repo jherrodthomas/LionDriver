@@ -9,7 +9,7 @@ analysis:
   type: dfa
   doc_id: LD-DFA-001
   title: "Dependent Failure Analysis — panda/SoC decompositions (LD-FSC-001)"
-  revision: "0.1"
+  revision: "0.2"
   status: draft
   baseline: BL-001
   fsc_revision: "0.1"
@@ -28,9 +28,11 @@ analysis:
   references:
     - docs/safety/analyses/fsc.yaml
     - ISO 26262-9:2018 clause 7; ISO 26262-11:2018 clause 4.7
+    - docs/safety/design/panda-config-lock-and-fw-authenticity.md (LD-DES-001)
   updated: 2026-10-10
   history:
     - {revision: "0.1", date: 2026-10-10, author: Claude (AI-assisted draft), change: Initial draft against FSC rev 0.1}
+    - {revision: "0.2", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Evidence from panda 92eb565 / opendbc 229dc70 for DFI-07/08/09; DFI-08 open -> insufficient; DOI-002 closed by design LD-DES-001; DOI-007 added"}
 
 categories:
   - {id: CAT-01, name: Shared power supply, applicable: true, rationale: "Panda and SoC are on the same comma 3X board, powered from the same 12 V input."}
@@ -173,30 +175,42 @@ dfis:
       permissive model.
     decompositions: [FSR-001, FSR-004, FSR-009, FSR-015, FSR-018, FSR-021, FSR-025, FSR-028, FSR-031, FSR-034]
     effect: The panda enforces the limits the SoC chose, so the panda channel of every decomposition depends on the SoC being right.
-    evidence: openpilot/selfdrive/pandad/panda_safety.cc (set_safety_model, set_alternative_experience); openpilot/selfdrive/car/card.py sets alternativeExperience = 0
+    evidence: >-
+      openpilot/selfdrive/pandad/panda_safety.cc:68-69 sets alternative experience then the safety model;
+      panda main_comms.h:223 accepts any mode at any time; opendbc toyota.h:369-383 param selects brake signal,
+      longitudinal, LTA, SecOC and EPS torque factor; with ALLOW_DEBUG (LionDriver default build) opendbc
+      safety.h:413-421 adds SAFETY_ALLOUTPUT (LD-DES-001 F1-F4)
     measures: [DM-04, DM-07]
     assessment: insufficient
-    rationale: The only existing check (controlsMismatch, DM-04) runs on the SoC itself. A panda-side configuration lock (DM-07) is required.
+    rationale: >-
+      The only existing check (controlsMismatch, DM-04) runs on the SoC itself, and in the LionDriver debug build
+      one host command selects ALLOUTPUT. The panda-side configuration lock (DM-07) is designed in LD-DES-001
+      (DR-01..DR-07) but not implemented.
   - id: DFI-08
     category: CAT-06
     kind: cascading
     description: The SoC can put the panda in ELM327 (diagnostic) mode, used for fingerprinting at start-up, which allows diagnostic messages to vehicle ECUs.
     decompositions: [FSR-009]
     effect: Diagnostic traffic to EPS or ADAS ECUs while driving could reset them or drop assist (loss of function, HZ-004 type), not unintended actuation.
-    evidence: openpilot/selfdrive/pandad/panda_safety.cc (ELM327 before FirmwareQueryDone and on OBD multiplexing change)
+    evidence: openpilot/selfdrive/pandad/panda_safety.cc:23-36; opendbc modes/elm327.h:6-33 (LD-DES-001 F5)
     measures: [DM-12]
-    assessment: open
-    rationale: Whether the panda restricts ELM327 mode to safe conditions is not verified.
+    assessment: insufficient
+    rationale: Verified at BL-001 that the ELM327 TX hook has no ignition or motion condition. DR-05 in LD-DES-001 designs the restriction; not implemented.
   - id: DFI-09
     category: CAT-06
     kind: cascading
     description: The SoC flashes panda firmware from its own filesystem whenever the signature differs, and can enter the bootloader through BOOT0.
     decompositions: [FSR-001, FSR-004, FSR-009, FSR-015, FSR-018, FSR-021, FSR-025, FSR-028, FSR-031, FSR-034]
     effect: Whatever firmware image the SoC holds becomes the panda channel; a corrupted or wrong image defeats every decomposition.
-    evidence: openpilot/selfdrive/pandad/pandad.py (flash_panda, get_expected_signature)
+    evidence: >-
+      openpilot/selfdrive/pandad/pandad.py:20-48 (flash, development-bootloader fallback); panda bootstub.c:58-71
+      (release key, plus the debug key under ALLOW_DEBUG, whose private key is in the repo); no RDP/WRP option
+      bytes set; SoC drives BOOT0 (hardware.py:410) so ROM DFU can rewrite the bootstub (LD-DES-001 F6-F9)
     measures: [DM-08]
     assessment: insufficient
-    rationale: The signature comparison only detects a difference, not authenticity. Whether the panda bootloader enforces signed release firmware is unverified, and flashing is not restricted to offroad.
+    rationale: >-
+      A LionDriver source build ends up on a development bootstub that trusts a public key, and the ROM DFU path
+      bypasses the bootstub entirely. Firmware authenticity is designed in LD-DES-001 (DR-10..DR-16); not implemented.
   # --- CAT-07 timing
   - id: DFI-10
     category: CAT-07
@@ -209,7 +223,10 @@ dfis:
       outside these decompositions.
     measures: [DM-20]
     assessment: open
-    rationale: Holds once the envelope is enforced as claimed; the panda safety tests that would show it could not be inspected (DOI-001).
+    rationale: >-
+      Holds once the envelope is enforced as claimed; the panda safety tests that would show it are not yet run
+      (DOI-001). Note: the panda heartbeat timeout is 5 s and the engaged-mismatch drop ~3 s (panda main.c:102,184),
+      which matters for FSR-007 (FSC FOI-008, LD-DES-001 DR-20) but not for envelope enforcement.
   # --- CAT-08 environment
   - id: DFI-11
     category: CAT-08
@@ -310,12 +327,12 @@ measures:
   - {id: DM-04, description: "SoC compares the panda's reported safety model, parameter and alternative experience with CarParams (controlsMismatch).", status: existing, ref: openpilot/selfdrive/selfdrived/selfdrived.py, allocated_to: [EL-04]}
   - {id: DM-05, description: "Panda RX checks (checksum, counter, timing) on safety-relevant vehicle messages.", status: existing_unverified, ref: opendbc_repo, allocated_to: [EL-07]}
   - {id: DM-06, description: "Panda controls-allowed follows PCM cruise state, a signal path diverse from the brake switch.", status: existing_unverified, ref: opendbc_repo, allocated_to: [EL-07]}
-  - {id: DM-07, description: "Panda-side configuration lock: accept only the safety model and parameter provisioned for the installed vehicle, reject changes while onroad, force alternative experience to 0 in release builds.", status: required, allocated_to: [EL-07]}
-  - {id: DM-08, description: "Firmware authenticity: panda bootloader accepts only signed LionDriver release firmware, rejects downgrade, and flashing is allowed only offroad.", status: required, allocated_to: [EL-07]}
+  - {id: DM-07, description: "Panda-side configuration lock: accept only the safety model and parameter provisioned for the installed vehicle, reject changes while onroad, force alternative experience to 0 in release builds.", status: required, ref: "LD-DES-001 DR-01..DR-07", allocated_to: [EL-07]}
+  - {id: DM-08, description: "Firmware authenticity: panda bootloader accepts only signed LionDriver release firmware, rejects downgrade, and flashing is allowed only offroad.", status: required, ref: "LD-DES-001 DR-10..DR-16", allocated_to: [EL-07]}
   - {id: DM-09, description: "Separate release gate for panda firmware and safety model (safety test suite, HIL, independent review), versioned independently of SoC software.", status: required, allocated_to: [process]}
   - {id: DM-10, description: "Envelope derived from vehicle measurements independently of opendbc, with both channels' limits checked against it.", status: required, allocated_to: [process]}
   - {id: DM-11, description: "Panda blocks assist-active HUD and status bits when controls are not allowed.", status: required, allocated_to: [EL-07]}
-  - {id: DM-12, description: "Panda accepts diagnostic (ELM327) mode only offroad.", status: required, allocated_to: [EL-07]}
+  - {id: DM-12, description: "Panda accepts diagnostic (ELM327) mode only offroad.", status: required, ref: "LD-DES-001 DR-05", allocated_to: [EL-07]}
   - {id: DM-13, description: "EMC/ESD immunity testing of device and harness (ISO 7637-2, ISO 11452, ISO 10605).", status: required, allocated_to: [process]}
   - {id: DM-14, description: "Thermal characterization of the windshield-mounted device against panda MCU and regulator ratings.", status: required, allocated_to: [process]}
   - {id: DM-15, description: "Panda robustness against host input: protocol fuzzing and malformed-command tests.", status: required, allocated_to: [EL-07]}
@@ -335,7 +352,8 @@ open_items:
       Design the panda-side configuration lock (DM-07) and firmware authenticity (DM-08). These change upstream
       panda firmware and pandad behavior, and they are the measures every panda/SoC decomposition depends on.
     affects: [DM-07, DM-08, DFI-07, DFI-09]
-    status: open
+    status: closed
+    resolution: Designed in docs/safety/design/panda-config-lock-and-fw-authenticity.md (LD-DES-001 rev 0.1). Implementation tracked in DOI-007.
   - id: DOI-003
     text: Define the separate panda safety release gate (DM-09) in the PFMEA and release control plan; hand the malicious-update case to the TARA.
     affects: [DM-09, DFI-18]
@@ -351,4 +369,11 @@ open_items:
   - id: DOI-006
     text: Plan EMC/ESD immunity (DM-13), thermal characterization (DM-14) and host-input robustness testing (DM-15).
     affects: [DM-13, DM-14, DM-15]
+    status: open
+
+  - id: DOI-007
+    text: >-
+      Implement and verify LD-DES-001 (DR-01..DR-16) in LionDriver forks of panda and opendbc and in pandad/selfdrived,
+      after decisions D1-D4 in LD-DES-001 section 7. DM-07, DM-08 and DM-12 stay "required" until then.
+    affects: [DM-07, DM-08, DM-12, DFI-07, DFI-08, DFI-09]
     status: open

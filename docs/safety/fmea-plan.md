@@ -150,6 +150,7 @@ docs/safety/
     fmeda-<scope>.yaml         (one FMEDA per safety goal / HW scope; Phase A = fmeda-panda.yaml)
   exports/                     (generated .xlsx for review; git-ignored, regenerate)
   reviews/                     (review records, e.g. hara-r0.1-precheck.md)
+  design/                      (safety design specifications, e.g. LD-DES-001 panda configuration lock)
 tools/safety/
   fmea_lint.py                 (validator)
   test_fmea_lint.py

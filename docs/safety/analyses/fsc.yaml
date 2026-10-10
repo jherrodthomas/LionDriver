@@ -729,7 +729,11 @@ open_items:
     affects: [FSR-039, FSR-040, SG-010]
     status: open
   - id: FOI-008
-    text: Establish the panda heartbeat timeout and fault reaction timing (firmware in the panda submodule) and compare them with the SG-001 FTTI.
+    text: >-
+      Establish the panda heartbeat timeout and fault reaction timing and compare them with the SG-001 FTTI.
+      Found at BL-001 (panda 92eb565 main.c:102,184): heartbeat loss is checked at 1 Hz with a 5 s timeout
+      when ignition is on, and an engaged mismatch withdraws controls after ~3 s. Both exceed the 900 ms
+      preliminary FTTI; change proposed as LD-DES-001 DR-20.
     affects: [FSR-007]
     status: open
   - id: FOI-009
