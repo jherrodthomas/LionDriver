@@ -1,0 +1,125 @@
+name: Problem report
+description: Malfunction, unexpected behaviour or defect in LionDriver (WP-P-03 problem resolution)
+labels: ["problem", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for development, CI, review and vehicle-test findings.
+        **Security vulnerabilities:** do not open a public issue. Use the private report link on the
+        "New issue" page instead.
+        **Injury or property damage:** also follow the crash procedure in
+        `assurance/09-production-operation/WP-O-04-field-monitoring.md`.
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety triage
+      description: Tick every box that applies. Any ticked box means triage within 1 working day.
+      options:
+        - label: Unintended or excessive steering, acceleration or braking occurred
+        - label: The system did not release control when expected (brake, cancel, override)
+        - label: A warning, alert or driver-monitoring escalation was missing or late
+        - label: Someone was hurt or property was damaged
+
+  - type: dropdown
+    id: config
+    attributes:
+      label: Configuration
+      options:
+        - Reference configuration (2020 Toyota Corolla LE, TSS2)
+        - Other vehicle (outside the assured scope)
+        - PC / simulator / CI only
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: LionDriver version or commit
+      description: Release tag (ld-vX.Y.Z) or the full commit SHA.
+      placeholder: ld-v0.1.0 or 1f02c0c…
+    validations:
+      required: true
+
+  - type: input
+    id: hardware
+    attributes:
+      label: Device hardware and panda firmware
+      description: Device type and hardware revision, and the panda firmware version string.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened
+      description: What happened, what you expected, and the steps to reproduce it.
+    validations:
+      required: true
+
+  - type: input
+    id: log
+    attributes:
+      label: Drive log / route reference
+      description: Reference to the log in LionDriver-controlled storage. Do not paste location data.
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Driving mode
+      options:
+        - Not driving / not applicable
+        - Lateral only
+        - openpilot longitudinal (Chill)
+        - Experimental Mode
+
+  - type: markdown
+    attributes:
+      value: "### Triggering conditions (SOTIF, WP-C-06)"
+
+  - type: dropdown
+    id: road
+    attributes:
+      label: Road type
+      options: [Not applicable, Highway, Arterial / rural, Urban, Parking, Other]
+
+  - type: dropdown
+    id: lighting
+    attributes:
+      label: Lighting
+      options: [Not applicable, Day, Dusk / dawn, Night (lit), Night (unlit), Low sun / glare]
+
+  - type: dropdown
+    id: weather
+    attributes:
+      label: Weather / road surface
+      options: [Not applicable, Clear / dry, Rain, Snow, Fog, Wet road]
+
+  - type: textarea
+    id: geometry
+    attributes:
+      label: Lane markings and road geometry
+      description: For example a curve, merge, split, construction zone, faded markings.
+
+  - type: textarea
+    id: actors
+    attributes:
+      label: Other road users or objects involved
+      description: For example a lead vehicle, cut-in, pedestrian or cyclist, stationary object.
+
+  - type: input
+    id: speed
+    attributes:
+      label: Speed at onset
+      placeholder: e.g. 65 mph
+
+  - type: dropdown
+    id: driver
+    attributes:
+      label: Driver state
+      options: [Not applicable, Hands on and attentive, Hands off and attentive, Looking away]
+
+  - type: dropdown
+    id: ending
+    attributes:
+      label: How it ended
+      options: [Not applicable, Driver override, System disengaged, Alert only, No action needed]
