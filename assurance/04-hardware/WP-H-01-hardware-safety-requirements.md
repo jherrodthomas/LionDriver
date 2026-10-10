@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-5:2018 §6 (specification of hardware safety requirements); ISO 26262-4:2018 §6 (TSR and HSI inputs); ISO 26262-8:2018 §6 (requirement attributes), §13 (HW component qualification); ASPICE 4.0 HWE.1 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | ASIL B‡ (WP-S-02 notation: target B under FSC option (c), ASIL C until SG-01 is re-rated; [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §4.2) and ASIL B (SG-02…SG-07) |
+| ASIL / scope | ASIL B‡ (WP-S-02 notation: target B under FSC option (c), ASIL D until SG-01 is re-rated; [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §4.2), ASIL C (SG-03…SG-05) and ASIL B (SG-02, SG-06, SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer while the project has a single maintainer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |
@@ -43,7 +43,7 @@ LionDriver cannot change the PCB. HWSRs are therefore of three kinds:
 
 | Input | Status at writing | Used for |
 |---|---|---|
-| [WP-C-03 HARA](../02-concept/WP-C-03-hara.md) | Draft, not confirmed | SG-01 (C ⚠), SG-02…SG-06 (B), SG-07 (B) |
+| [WP-C-03 HARA](../02-concept/WP-C-03-hara.md) | Draft (revision 0.2), not confirmed | SG-01 (D), SG-03…SG-05 (C), SG-02, SG-06, SG-07 (B); no AoU credit (D-09) |
 | [WP-C-04 FSC](../02-concept/WP-C-04-functional-safety-concept.md) | Draft | Parent FSRs: FSR-01.07, 01.09, 01.10, 01.11, 02.05, 07.01, 07.03; AOU-13; FTTI budget §8 |
 | [WP-S-02 TSR](../03-system/WP-S-02-technical-safety-requirements.md) | Draft | Parent TSRs in the ranges TSR-5xx (safety-MCU platform) and TSR-7xx (PCS preservation / harness). Note: TSR-502 is the general fault reaction (incl. outputs safe during and after reset); relay-to-stock on reset or power loss is TSR-706 |
 | [WP-S-05 HSI](../03-system/WP-S-05-hsi-specification.md) | Draft | HSI candidate entries in §6 are proposed for WP-S-05 |
@@ -56,13 +56,13 @@ Numbering: `HWSR-5nn` refines the provisional `TSR-5nn` with the same number; `H
 
 | Hardware function | Serves SG | ASIL assigned here | Note |
 |---|---|---|---|
-| Safety-MCU platform integrity (execution, clock, supply, memory) | SG-01, SG-03, SG-04, SG-05 (all actuation passes through it) | **B‡** | Inherited from SG-01. FSC §4.2 recommends option (c), after which SG-01 is expected to be ASIL B. Requirements are written so that the ASIL attribute is the only thing that changes |
+| Safety-MCU platform integrity (execution, clock, supply, memory) | SG-01, SG-03, SG-04, SG-05 (all actuation passes through it) | **B‡** | Inherited from SG-01. FSC §4.2 recommends option (c), after which SG-01 is expected to be ASIL B; SG-03…SG-05 (ASIL C since D-09) then set ASIL C unless they are also re-rated. Requirements are written so that the ASIL attribute is the only thing that changes |
 | Relay drive, relay state detection, harness | SG-01 (blocks camera-originated actuation), SG-07 (stock PCS path) | **B‡** for the actuation-blocking function, **B** for PCS restoration | Same component, two functions |
 | SoC-independent acoustic warning (panda buzzer path) | SG-02, SG-06 | B | FSR-02.05 |
 | Ignition sensing | SG-07 (relay state on power transitions), availability | B | |
 | Temperature monitoring | All (operating-condition guard) | B | |
 
-**B‡** follows [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md): target ASIL B under FSC option (c); **ASIL C applies until the HARA re-rates SG-01 on controllability evidence**, and the hardware metric targets of §3 are then those of ASIL C. Earlier drafts of this document wrote these rows as "C (provisional)"; the meaning is unchanged.
+**B‡** follows [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md): target ASIL B under FSC option (c); **ASIL D applies until the HARA re-rates SG-01 on controllability evidence**, and the hardware metric targets of §3 are then those of ASIL D. Earlier drafts of this document wrote these rows as "C (provisional)"; since decision D-09 the fallback is ASIL D.
 
 ## 3. Hardware metric targets
 
@@ -72,7 +72,7 @@ hardware elements of the item that can violate that goal.
 
 | Metric | ASIL B | ASIL C | ASIL D | Applicable here |
 |---|---|---|---|---|
-| Single-point fault metric (SPFM) | ≥ 90 % | ≥ 97 % | ≥ 99 % | SG-01 (C provisional, B expected), SG-03…SG-07 (B) |
+| Single-point fault metric (SPFM) | ≥ 90 % | ≥ 97 % | ≥ 99 % | SG-01 (D provisional, B expected under option (c)), SG-03…SG-05 (C), SG-02, SG-06, SG-07 (B) |
 | Latent fault metric (LFM) | ≥ 60 % | ≥ 80 % | ≥ 90 % | as above |
 | PMHF (probabilistic metric for random hardware failures) | < 10⁻⁷ /h (100 FIT) | < 10⁻⁷ /h (100 FIT) | < 10⁻⁸ /h (10 FIT) | as above |
 
@@ -103,7 +103,7 @@ Paths are under `panda/board/` unless prefixed otherwise. `safety.h` is
 | HWSR-501a | The watchdog shall be serviced only from a point that proves completion of the safety-relevant periodic processing (tick handler and RX/TX safety checks), not from an ISR that keeps running when the main processing has stalled. | B‡ | FSR-01.09 / TSR-501 | Firmware + IWDG | CFG | R, FI | Not implemented (GAP-07) |
 | HWSR-501b | The watchdog shall operate in window mode, so that servicing too early (runaway loop) is detected as well as servicing too late. Window and timeout shall be chosen so that detection plus reset completes within the MCU-execution-fault detection budget (≤ 0.2 s, FSC §8). | B‡ | FSR-01.09 / TSR-501 | IWDG1 window register | CFG | A, T-HIL | Not implemented. STM32H7 IWDG has a window register (verify against RM0468) |
 | HWSR-501c | The watchdog shall be started by the bootstub (or by option byte hardware-start, if chosen) before the application runs and shall stay active in all modes in which the relay can be driven; it shall not be stoppable by the SoC. | B‡ | FSR-01.09, FSR-01.10 / TSR-501 | IWDG option bytes (IWDG_SW, freeze in stop/standby) | CFG | R, T-HIL | Not implemented. Interaction with stop mode (`main.c:353-356`, `sys/power_saving.h`) must be analysed: freezing IWDG in stop mode is acceptable only when the relay is released and TX is off |
-| HWSR-501d | An independent external supervisor (voltage supervisor with watchdog input, on its own clock) that can force the relay to its released state, independent of the MCU, should be added. | B‡ (if (a)/(b)); recommendation at B | FSR-01.09, FSR-07.03 / TSR-501 | External | ADD | A, T-HIL | Not present on the COTS PCB as far as observable. See [WP-H-02](WP-H-02-hardware-design.md) §6, DC-01. Needed for an ASIL C claim because IWDG shares supply and silicon with the CPU (GAP-11) |
+| HWSR-501d | An independent external supervisor (voltage supervisor with watchdog input, on its own clock) that can force the relay to its released state, independent of the MCU, should be added. | B‡ (if (a)/(b)); recommendation at B | FSR-01.09, FSR-07.03 / TSR-501 | External | ADD | A, T-HIL | Not present on the COTS PCB as far as observable. See [WP-H-02](WP-H-02-hardware-design.md) §6, DC-01. Needed for an ASIL C or D claim because IWDG shares supply and silicon with the CPU (GAP-11) |
 
 ### 4.2 Fault reaction and safe state on reset (TSR-502, TSR-706)
 

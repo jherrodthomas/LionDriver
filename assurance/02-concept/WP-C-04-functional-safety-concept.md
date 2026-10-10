@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-3:2018 §7; ISO 26262-9:2018 §5 (ASIL decomposition, by reference); ASPICE 4.0 SYS.2 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | Up to ASIL C (SG-01); ASIL B for SG-02…SG-07 |
+| ASIL / scope | Up to ASIL D (SG-01, until re-rated under option (c)); ASIL C for SG-03…SG-05; ASIL B for SG-02, SG-06, SG-07 |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); input to G1 confirmation review (I3) per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
@@ -24,21 +24,21 @@ Inputs:
 - [Gap assessment](../00-assessment/gap-assessment.md): GAP-01…GAP-37.
 - [WP-M-01 §4](../01-management/WP-M-01-assurance-strategy.md#4-safety-architecture-argument-the-central-strategy): safety envelope pattern.
 
-The ASILs in this document are those proposed in the HARA. The HARA is not yet confirmed (I3). If the confirmation review changes a rating, the FSR ASILs here change with it.
+The ASILs in this document are those proposed in the HARA (revision 0.2, which takes no controllability credit for OEM ECU behaviour, decision D-09 in [WP-M-07](../01-management/WP-M-07-risk-management.md) §5). The HARA is not yet confirmed (I3). If the confirmation review changes a rating, the FSR ASILs here change with it.
 
 ## 2. Architectural elements used for allocation
 
 | Element | Description | Integrity it can carry today | Notes |
 |---|---|---|---|
-| E-03 | Safety envelope: opendbc safety (Toyota mode) and the panda firmware paths it relies on, on the STM32H7 | Target ASIL B after hardening (§4.2); SG-01 FSRs carry ASIL C until C1 is shown | The only path to the actuators. Single channel (GAP-11) |
+| E-03 | Safety envelope: opendbc safety (Toyota mode) and the panda firmware paths it relies on, on the STM32H7 | Target ASIL B after hardening (§4.2); SG-01 FSRs carry ASIL D until C1 is shown; SG-03…SG-05 FSRs carry ASIL C | The only path to the actuators. Single channel (GAP-11) |
 | E-01 | Application SoC software: openpilot processes (selfdrived, controlsd, plannerd, card, pandad, ...) | QM | Python, no partitioning, no WCET (GAP-23) |
 | E-02 | ML models: driving model, DM model | QM (SOTIF / PAS 8800 managed) | No uncertainty gating (GAP-22) |
 | E-01/DM | Driver monitoring chain: driver camera → dmonitoringmodeld → dmonitoringd → selfdrived | QM (see §7) | Source validity hard-coded (GAP-21) |
 | E-04 | Device hardware hosting E-01 and E-03: SoC, panda MCU, shared power supply, clocks, CAN transceivers (WP-C-01 E-04) | Shared platform; integrity of E-03 depends on it | The QM SoC controls the panda MCU reset and boot lines (`STM_RST_N`/`STM_BOOT0`) and can force the ROM bootloader or reflash the MCU (GAP-38); shared supply and PCB (dependent-failure analysis, [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md)) |
 | E-04/HMI | Device display and speaker (soundd/ui), panda buzzer ("siren"), cluster LKAS HUD (`0x412`) | QM, except the panda siren which is driven by E-03 | |
 | E-05 | Harness with intercept relay | Target ASIL B (SG-07) | Relay default state to be confirmed (OI-6) |
-| EXT-EPS | Toyota EPS (external measure) | Unknown; credited through AOU-01/02 only | No supplier evidence |
-| EXT-PCM | Toyota ECM/PCM and brake actuator (external measure) | Unknown; credited through AOU-03/05 only | |
+| EXT-EPS | Toyota EPS (external measure) | Unknown; not credited in the HARA (D-09); AOU-01/02 remain design input | No supplier evidence |
+| EXT-PCM | Toyota ECM/PCM and brake actuator (external measure) | Unknown; not credited in the HARA (D-09); AOU-03/05 remain design input | |
 | EXT-CLU | Toyota instrument cluster cruise indicator (driven by the PCM) | Unknown; used as an independent mode indication | |
 | DRV | Driver | Not an E/E element; assumptions only (AOU-06, AOU-02) | |
 
@@ -46,24 +46,24 @@ The ASILs in this document are those proposed in the HARA. The HARA is not yet c
 
 | SG | Statement (short) | ASIL | Safe state | Preliminary FTTI |
 |---|---|---|---|---|
-| SG-01 | No uncontrollable lateral motion, no steering actuation while not engaged | C ⚠ (D if AOU-01/02 fail) | LKA torque 0, steer request cleared | ≤ 0.5 s |
+| SG-01 | No uncontrollable lateral motion, no steering actuation while not engaged | D | LKA torque 0, steer request cleared | ≤ 0.5 s |
 | SG-02 | No loss/degradation of lateral control without adequate take-over warning | B | Warning + torque ramp-down | ≤ 1 s to warning |
-| SG-03 | No unintended acceleration | B ⚠ | Accel ≤ 0; ACC cancelled | ≤ 1 s |
-| SG-04 | No deceleration beyond what following traffic and driver can control | B ⚠ | Inactive (no ACC command) with bounded jerk | ≤ 1 s |
-| SG-05 | Release on driver brake, cancel, steering override | B ⚠ | Disengaged | ≤ 0.2 s |
+| SG-03 | No unintended acceleration | C | Accel ≤ 0; ACC cancelled | ≤ 1 s |
+| SG-04 | No deceleration beyond what following traffic and driver can control | C | Inactive (no ACC command) with bounded jerk | ≤ 1 s |
+| SG-05 | Release on driver brake, cancel, steering override | C | Disengaged | ≤ 0.2 s |
 | SG-06 | No loss of longitudinal deceleration without take-over warning | B | Warning; ACC cancelled | ≤ 1 s |
 | SG-07 | No suppression, delay or alteration of stock PCS/AEB | B | Camera PCS messages forwarded; relay released if forwarding cannot be guaranteed | Continuous |
 
 ## 4. Envelope strategy decision (HARA §6.1, OI-4)
 
-SG-01 at ASIL C (D if the EPS assumptions fail) drives the integrity of the envelope. The HARA lists three options. This section evaluates them and recommends one. **The decision belongs to the maintainer (acting safety manager); this section is a recommendation.**
+SG-01 at ASIL D (no credit for the EPS assumptions, D-09) drives the integrity of the envelope. The HARA lists three options. This section evaluates them and recommends one. **The decision belongs to the maintainer (acting safety manager); this section is a recommendation.**
 
 ### 4.1 Evaluation
 
-| Criterion | (a) Harden the envelope to ASIL C | (b) ASIL decomposition C(C) = B(C) envelope + A(C) EPS | (c) Reduce actuation authority so controllability C1 can be shown, lowering SG-01 to ASIL B |
+| Criterion | (a) Harden the envelope to ASIL D | (b) ASIL decomposition D(D) = C(D) envelope + A(D) EPS, or B(D) + B(D) | (c) Reduce actuation authority so controllability C1 can be shown, lowering SG-01 to ASIL B |
 |---|---|---|---|
-| What it needs | ASIL C hardware metrics (SPFM/LFM/PMHF targets) on a COTS single-channel MCU; ASIL C software process (MC/DC, GAP-13); E2E with counters on all RX (GAP-01); IWDG and fault reaction (GAP-07/08); DFA of shared SoC/MCU power and clock | Two **independent** elements that each satisfy the safety goal on their own; DFA showing independence; evidence that the EPS implements an ASIL A(C) torque limitation | Vehicle characterization of the EPS torque authority (AOU-01/02); a physically derived, speed-dependent torque limit in the envelope; controllability tests (WP-C-08 §8) showing ≥ 99 % of drivers control envelope-bounded worst-case actuation |
-| Feasibility for an aftermarket retrofit | Low to medium. No supplier FMEDA data for the device; the shared PCB/power with the QM SoC makes the ASIL C hardware metrics hard to reach (WP-M-01 §9) | Low. Toyota provides no evidence of the EPS internal limitation, its ASIL or its independence. ISO 26262-9 §5 requires that independence be shown, not assumed. An external element cannot receive a decomposed ASIL without evidence of its development | Medium to high. Needs vehicle testing, which is needed anyway for AOU-01/02 (HARA OI-1). Matches the ISO 11270 reasoning in `docs/SAFETY.md` |
+| What it needs | ASIL D hardware metrics (SPFM/LFM/PMHF targets) on a COTS single-channel MCU; ASIL D software process (MC/DC, GAP-13); E2E with counters on all RX (GAP-01); IWDG and fault reaction (GAP-07/08); DFA of shared SoC/MCU power and clock | Two **independent** elements that each satisfy the safety goal on their own; DFA showing independence; evidence that the EPS implements an ASIL A(D) torque limitation (AOU-01/02 verified) | Vehicle characterization of the EPS torque authority (AOU-01/02); a physically derived, speed-dependent torque limit in the envelope; controllability tests (WP-C-08 §8) showing ≥ 99 % of drivers control envelope-bounded worst-case actuation |
+| Feasibility for an aftermarket retrofit | Low. No supplier FMEDA data for the device; the shared PCB/power with the QM SoC makes the ASIL D hardware metrics very hard to reach without an external supervisor or second channel (WP-M-01 §9) | Low. Toyota provides no evidence of the EPS internal limitation, its ASIL or its independence. ISO 26262-9 §5 requires that independence be shown, not assumed. An external element cannot receive a decomposed ASIL without evidence of its development | Medium to high. Needs vehicle testing, which is needed anyway for AOU-01/02 (HARA OI-1). Matches the ISO 11270 reasoning in `docs/SAFETY.md` |
 | Effect on availability | None | None | Less steering authority: some curves inside today's operating range can no longer be followed. Narrows the ODD (WP-C-02 §4.2) |
 | Residual dependence on unverified AoUs | Low for SG-01 (the envelope alone carries the goal) | High (EPS) | Medium (EPS limit still bounds the worst case; driver controllability is measured, not assumed) |
 | Effort | Highest | Medium, but blocked on evidence that LionDriver cannot obtain | Medium |
@@ -74,46 +74,46 @@ SG-01 at ASIL C (D if the EPS assumptions fail) drives the integrity of the enve
 
 Rationale:
 
-1. Option (c) attacks the risk at its source. The worst-case consequence of any E/E fault on the lateral path is bounded by what the envelope lets through. If that bound is chosen so that a typical driver controls it (C1), HE-01.1/01.2/01.4 become S3 E4 C1 = ASIL B, the same level as SG-02…SG-07. The whole envelope then has one target ASIL (B).
-2. ASIL B hardening is needed under every option (IWDG, fault → safe state, safety-mode lock, E2E counters, FTTI-consistent timeouts). Option (c) does not add hardware-metric targets that the COTS device is unlikely to meet.
-3. Option (b) requires evidence about the Toyota EPS that is not available. LionDriver cannot show the EPS was developed to ASIL A or that it is independent of the item (it consumes the item's command). A decomposition argument built on it would not survive an I3 review.
+1. Option (c) attacks the risk at its source. The worst-case consequence of any E/E fault on the lateral path is bounded by what the envelope lets through. If that bound is chosen so that a typical driver controls it (C1), HE-01.1/01.2/01.4 become S3 E4 C1 = ASIL B, the same level as SG-02, SG-06 and SG-07. A C2 showing (S3 E4 C2) would only reach ASIL C. Since D-09, SG-03…SG-05 are ASIL C, so mechanisms shared with the longitudinal path (FSR-03.04) need ASIL C unless those goals are also re-rated on measured vehicle behaviour (AOU-03/05).
+2. ASIL B hardening is needed under every option (IWDG, fault → safe state, safety-mode lock, E2E counters, FTTI-consistent timeouts). Option (c) does not add the ASIL D hardware-metric targets that the COTS device is unlikely to meet (the ASIL C targets of SG-03…SG-05 apply under every option since D-09).
+3. Option (b) requires evidence about the Toyota EPS that is not available. LionDriver cannot show the EPS was developed to ASIL A(D) or that it is independent of the item (it consumes the item's command). A decomposition argument built on it would not survive an I3 review.
 4. Option (a) remains possible later if hardware metrics turn out better than expected. Nothing in (c) prevents it.
 
 Conditions attached to the recommendation:
 
-- **Until the controllability evidence exists, SG-01 stays ASIL C** and the SG-01 FSRs below carry ASIL C. They are expected to drop to ASIL B once the HARA is re-rated on evidence. The HARA owner re-rates; this document does not.
+- **Until the controllability evidence exists, SG-01 stays ASIL D** and the SG-01 FSRs below carry ASIL D. They are expected to drop to ASIL B once the HARA is re-rated on evidence. The HARA owner re-rates; this document does not.
 - The reduced limit must be derived physically (torque at the wheel → lateral acceleration and lateral deviation over the FTTI, per speed), not tuned. That closes GAP-04 for the lateral path.
 - The controller (E-01) limits must sit below the envelope limits with margin, so that normal operation never runs at the enforcement boundary (gap assessment §3.1 notes zero margin today).
 
 ### 4.3 Fallback: ASIL decomposition (if C1 cannot be shown)
 
-If vehicle tests show that C1 cannot be reached at a torque level that keeps the function useful, the fallback is decomposition of SG-01:
+If vehicle tests show that C1 cannot be reached at a torque level that keeps the function useful, SG-01 stays ASIL D and the fallback is decomposition of SG-01:
 
-- **ASIL C(C) = ASIL B(C) on the envelope (E-03) + ASIL A(C) on a second, independent limiting element.**
+- **ASIL D(D) = ASIL B(D) on the envelope (E-03) + ASIL B(D) on a second, independent limiting element** (or C(D) + A(D)).
 - The second element should be inside LionDriver's control, not the Toyota EPS: for example an independent hardware torque/request monitor on the harness side, or a second MCU checking `0x2E4` against measured EPS torque and steering state, able to open the relay.
 - Independence requirements (to be analysed in [WP-A-01](../08-analyses/WP-A-01-asil-decomposition.md) and [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md)): separate power supply path or supervised supply, separate clock, separate CAN receive path, no shared software, no configuration of one element by the other, and a de-energise-to-safe actuation (relay open = stock path).
-- Crediting the EPS as the A(C) element is **not recommended** for the reasons in §4.1.
+- Crediting the EPS as the A(D) element is **not recommended** for the reasons in §4.1, and is only possible once AOU-01/02 are verified.
 
 ## 5. Functional safety requirements
 
 Attributes: ASIL as currently derived; **Alloc** = allocation; **Verif** = verification method (A = analysis, R = review, T-SIL = software test, T-HIL = hardware-in-the-loop test, T-VEH = vehicle test, FI = fault injection). **Impl** = what the baseline code already does (file:line) or the GAP that blocks it. Paths for E-03 are under `opendbc_repo/opendbc/safety/` unless prefixed `panda/`. Paths for E-01 are under `openpilot/`. All statuses are `Proposed`.
 
-### 5.1 SG-01 Lateral motion (ASIL C ⚠)
+### 5.1 SG-01 Lateral motion (ASIL D)
 
 | ID | Requirement | ASIL | Alloc | Verif | Impl / GAP |
 |---|---|---|---|---|---|
-| FSR-01.01 | The envelope shall limit the commanded LKA torque magnitude to a speed-dependent bound derived from driver controllability (lateral acceleration and lateral deviation reached within the FTTI). | C | E-03 | A, T-SIL, T-VEH | Partial: fixed 1500 raw (`modes/toyota.h:173`); not speed-dependent, no physical rationale (GAP-04) |
-| FSR-01.02 | The envelope shall limit the rate of change of the commanded LKA torque (rise, fall and real-time window) to bounds derived from controllability. | C | E-03 | A, T-SIL | Implemented without rationale: 15/25 raw per frame, 450 raw per 250 ms (`modes/toyota.h:174-177`, `lateral.h:49-57, 87-95`) (GAP-04) |
-| FSR-01.03 | The envelope shall limit the commanded LKA torque to within a bounded difference of the measured EPS motor torque. | C | E-03 | T-SIL | Implemented: 350 raw (`modes/toyota.h:176`, `lateral.h:10-23`) |
-| FSR-01.04 | The envelope shall block any non-zero LKA torque or set steer-request bit while lateral authority is not granted. | C | E-03 | T-SIL, T-HIL | Implemented (`lateral.h:98-101`) |
-| FSR-01.05 | The envelope shall grant actuation authority only on a driver engagement action confirmed by the vehicle (rising edge of PCM cruise active) and shall revoke it when PCM cruise becomes inactive. | C | E-03 | T-SIL, T-VEH | Implemented (`safety.h:518-527`); PCM_CRUISE has no counter (GAP-01) |
-| FSR-01.06 | The envelope shall detect loss, corruption, repetition and staleness of each RX signal it uses for gating or limiting (PCM cruise state, brake, gas, driver/EPS torque, wheel speed) and revoke actuation authority within the FTTI allocation of §8. | C | E-03 | T-SIL, FI | Partial: checksum on some messages, timeouts detected in ≤ ≈2 s (`safety.h:164-197, 321-344`); no counters, `0x226`/`0xAA` no checksum (`modes/toyota.h:40-46`) (GAP-01, GAP-06) |
-| FSR-01.07 | The envelope shall detect missing or stale control commands from the SoC and remove actuation within the FTTI allocation of §8. | C | E-03 | T-HIL, FI | Partial: heartbeat mismatch 3 s, loss 5 s (`panda/board/main.c:182-213`); too slow for SG-01 (GAP-06); heartbeat shows pandad liveness only (GAP-10) |
-| FSR-01.08 | The envelope shall detect corruption, loss and reordering of command frames received from the SoC and discard affected frames. | C | E-03 | T-HIL, FI | Partial: 8-bit XOR, no sequence counter (`panda/board/drivers/spi.h:97-138`, `can_comms.h:27`) (GAP-10) |
-| FSR-01.09 | The safety MCU shall detect its own execution faults (program-flow hang, clock failure, memory corruption, register corruption) and enter the safe state (no actuation TX, relay released) within the FTTI allocation of §8. | C | E-03 (HW+SW) | A (FMEDA), FI | Not implemented: IWDG never initialised (`panda/board/stm32h7/stm32h7_config.h:43`), software watchdog in same ISR (`main.c:301`), faults report-only, `PERMANENT_FAULTS = 0U` (`panda/board/sys/sys.h:50`) (GAP-07, GAP-08) |
-| FSR-01.10 | The safety mode and safety parameter for the reference configuration shall be fixed in the envelope and shall not be changeable by the SoC while a car safety mode is active; debug-only commands shall be unavailable in release builds. | C | E-03 | R, T-HIL | Not implemented: `0xdc` sets any mode at any time; `0xc5` relay drive not gated (`panda/board/main_comms.h:144-147, 222-225`) (GAP-09, GAP-25) |
-| FSR-01.11 | The envelope shall detect a harness relay malfunction (camera control messages seen on the car side) and inhibit all actuation TX. | C | E-03, E-05 | T-SIL, T-HIL | Implemented with 1–2 s grace and no contact readback (`safety.h:215-220, 372-380`) (GAP-12) |
-| FSR-01.12 | On any detected fault affecting lateral actuation, the envelope shall enter the lateral safe state (torque 0, steer request cleared) and keep it until a new valid engagement. | C | E-03 | T-SIL, FI | Partial: violating frames dropped and `controls_allowed` cleared on RX faults (`lateral.h:141-148`, `safety.h:112-121`); a TX violation alone does not revoke authority |
+| FSR-01.01 | The envelope shall limit the commanded LKA torque magnitude to a speed-dependent bound derived from driver controllability (lateral acceleration and lateral deviation reached within the FTTI). | D | E-03 | A, T-SIL, T-VEH | Partial: fixed 1500 raw (`modes/toyota.h:173`); not speed-dependent, no physical rationale (GAP-04) |
+| FSR-01.02 | The envelope shall limit the rate of change of the commanded LKA torque (rise, fall and real-time window) to bounds derived from controllability. | D | E-03 | A, T-SIL | Implemented without rationale: 15/25 raw per frame, 450 raw per 250 ms (`modes/toyota.h:174-177`, `lateral.h:49-57, 87-95`) (GAP-04) |
+| FSR-01.03 | The envelope shall limit the commanded LKA torque to within a bounded difference of the measured EPS motor torque. | D | E-03 | T-SIL | Implemented: 350 raw (`modes/toyota.h:176`, `lateral.h:10-23`) |
+| FSR-01.04 | The envelope shall block any non-zero LKA torque or set steer-request bit while lateral authority is not granted. | D | E-03 | T-SIL, T-HIL | Implemented (`lateral.h:98-101`) |
+| FSR-01.05 | The envelope shall grant actuation authority only on a driver engagement action confirmed by the vehicle (rising edge of PCM cruise active) and shall revoke it when PCM cruise becomes inactive. | D | E-03 | T-SIL, T-VEH | Implemented (`safety.h:518-527`); PCM_CRUISE has no counter (GAP-01) |
+| FSR-01.06 | The envelope shall detect loss, corruption, repetition and staleness of each RX signal it uses for gating or limiting (PCM cruise state, brake, gas, driver/EPS torque, wheel speed) and revoke actuation authority within the FTTI allocation of §8. | D | E-03 | T-SIL, FI | Partial: checksum on some messages, timeouts detected in ≤ ≈2 s (`safety.h:164-197, 321-344`); no counters, `0x226`/`0xAA` no checksum (`modes/toyota.h:40-46`) (GAP-01, GAP-06) |
+| FSR-01.07 | The envelope shall detect missing or stale control commands from the SoC and remove actuation within the FTTI allocation of §8. | D | E-03 | T-HIL, FI | Partial: heartbeat mismatch 3 s, loss 5 s (`panda/board/main.c:182-213`); too slow for SG-01 (GAP-06); heartbeat shows pandad liveness only (GAP-10) |
+| FSR-01.08 | The envelope shall detect corruption, loss and reordering of command frames received from the SoC and discard affected frames. | D | E-03 | T-HIL, FI | Partial: 8-bit XOR, no sequence counter (`panda/board/drivers/spi.h:97-138`, `can_comms.h:27`) (GAP-10) |
+| FSR-01.09 | The safety MCU shall detect its own execution faults (program-flow hang, clock failure, memory corruption, register corruption) and enter the safe state (no actuation TX, relay released) within the FTTI allocation of §8. | D | E-03 (HW+SW) | A (FMEDA), FI | Not implemented: IWDG never initialised (`panda/board/stm32h7/stm32h7_config.h:43`), software watchdog in same ISR (`main.c:301`), faults report-only, `PERMANENT_FAULTS = 0U` (`panda/board/sys/sys.h:50`) (GAP-07, GAP-08) |
+| FSR-01.10 | The safety mode and safety parameter for the reference configuration shall be fixed in the envelope and shall not be changeable by the SoC while a car safety mode is active; debug-only commands shall be unavailable in release builds. | D | E-03 | R, T-HIL | Not implemented: `0xdc` sets any mode at any time; `0xc5` relay drive not gated (`panda/board/main_comms.h:144-147, 222-225`) (GAP-09, GAP-25) |
+| FSR-01.11 | The envelope shall detect a harness relay malfunction (camera control messages seen on the car side) and inhibit all actuation TX. | D | E-03, E-05 | T-SIL, T-HIL | Implemented with 1–2 s grace and no contact readback (`safety.h:215-220, 372-380`) (GAP-12) |
+| FSR-01.12 | On any detected fault affecting lateral actuation, the envelope shall enter the lateral safe state (torque 0, steer request cleared) and keep it until a new valid engagement. | D | E-03 | T-SIL, FI | Partial: violating frames dropped and `controls_allowed` cleared on RX faults (`lateral.h:141-148`, `safety.h:112-121`); a TX violation alone does not revoke authority |
 | FSR-01.13 | The EPS shall limit LKA torque to an overpowerable level and shall end LKA torque within a bounded time after `0x2E4` stops or carries the request bit cleared. (External measure, AOU-01R) | — (ext.) | EXT-EPS | T-VEH | Unverified (GAP-05) |
 | FSR-01.14 | The SoC controller shall command lateral motion with a margin below every envelope limit (target: commanded lateral acceleration ≤ 3.0 m/s², jerk ≤ 5 m/s³, torque ≤ 90 % of the envelope bound). | QM | E-01 | T-SIL | Partial: 3.0 m/s², 5 m/s³ (`selfdrive/controls/lib/drive_helpers.py:9-14`); torque limits equal to envelope (`opendbc_repo/opendbc/car/toyota/values.py:20, 45-47`) |
 
@@ -133,36 +133,36 @@ Attributes: ASIL as currently derived; **Alloc** = allocation; **Verif** = verif
 
 Note on FSR-02.02: the detection of input loss lies in the QM stack. At ASIL B this is not acceptable on its own. The ASIL B argument for SG-02 rests on FSR-01.07 (envelope removes actuation on stale commands) + FSR-02.05 (independent acoustic warning), both on E-03, with tighter timing (§8). FSR-02.02/02.03 on E-01 are QM measures that give the earlier, better-explained warning in the common case.
 
-### 5.3 SG-03 Unintended acceleration (ASIL B ⚠)
+### 5.3 SG-03 Unintended acceleration (ASIL C)
 
 | ID | Requirement | ASIL | Alloc | Verif | Impl / GAP |
 |---|---|---|---|---|---|
-| FSR-03.01 | The envelope shall limit the commanded acceleration to an upper bound derived from controllability for the reference vehicle. | B | E-03 | A, T-SIL, T-VEH | Implemented without rationale: +2.0 m/s² (`modes/toyota.h:208`); `RAISED_ACCEL_LIMIT` not validated for Corolla (`opendbc_repo/opendbc/car/toyota/interface.py:117-118`) (GAP-04) |
-| FSR-03.02 | The envelope shall allow only the inactive acceleration value while longitudinal authority is not granted or while the driver presses the accelerator. | B | E-03 | T-SIL | Implemented (`longitudinal.h:3-12`) |
-| FSR-03.03 | The envelope shall limit the rate of increase of commanded acceleration (jerk). | B | E-03 | T-SIL | Not implemented (GAP-04) |
-| FSR-03.04 | FSR-01.05…01.12 apply to the longitudinal path (shared mechanisms; see trace §9). | B | E-03 | as referenced | as referenced |
-| FSR-03.05 | On a detected fault affecting longitudinal control, the item shall stop requesting positive acceleration and request ACC cancel from the PCM. | B | E-03 (inactive value), E-01 (cancel) | T-SIL, T-VEH | Partial: inactive value enforced; cancel bit set by host (`opendbc_repo/opendbc/car/toyota/carcontroller.py:253-254`) |
+| FSR-03.01 | The envelope shall limit the commanded acceleration to an upper bound derived from controllability for the reference vehicle. | C | E-03 | A, T-SIL, T-VEH | Implemented without rationale: +2.0 m/s² (`modes/toyota.h:208`); `RAISED_ACCEL_LIMIT` not validated for Corolla (`opendbc_repo/opendbc/car/toyota/interface.py:117-118`) (GAP-04) |
+| FSR-03.02 | The envelope shall allow only the inactive acceleration value while longitudinal authority is not granted or while the driver presses the accelerator. | C | E-03 | T-SIL | Implemented (`longitudinal.h:3-12`) |
+| FSR-03.03 | The envelope shall limit the rate of increase of commanded acceleration (jerk). | C | E-03 | T-SIL | Not implemented (GAP-04) |
+| FSR-03.04 | FSR-01.05…01.12 apply to the longitudinal path (shared mechanisms; see trace §9). | C | E-03 | as referenced | as referenced |
+| FSR-03.05 | On a detected fault affecting longitudinal control, the item shall stop requesting positive acceleration and request ACC cancel from the PCM. | C | E-03 (inactive value), E-01 (cancel) | T-SIL, T-VEH | Partial: inactive value enforced; cancel bit set by host (`opendbc_repo/opendbc/car/toyota/carcontroller.py:253-254`) |
 | FSR-03.06 | The PCM shall bound ACC acceleration requests to its own envelope and honour the cancel request. (External measure, AOU-05R) | — (ext.) | EXT-PCM | T-VEH | Unverified (GAP-05) |
 
-### 5.4 SG-04 Excessive deceleration (ASIL B ⚠)
+### 5.4 SG-04 Excessive deceleration (ASIL C)
 
 | ID | Requirement | ASIL | Alloc | Verif | Impl / GAP |
 |---|---|---|---|---|---|
-| FSR-04.01 | The envelope shall limit the commanded deceleration to a bound derived from following-traffic controllability. | B | E-03 | A, T-SIL | Implemented without rationale: −3.5 m/s² (`modes/toyota.h:209`) (GAP-04) |
-| FSR-04.02 | The envelope shall limit the onset rate of commanded deceleration (negative jerk). | B | E-03 | T-SIL | Not implemented (GAP-04) |
-| FSR-04.03 | The transition to the longitudinal safe state shall not create a deceleration step larger than the jerk bound of FSR-04.02. | B | E-01, E-03 | A, T-VEH | Not specified; depends on PCM behaviour on inactive value (AOU-05R) |
-| FSR-04.04 | Driver accelerator input shall override commanded deceleration. | B | E-03, EXT-PCM | T-SIL, T-VEH | Implemented in envelope (`longitudinal.h:3-5`); vehicle behaviour unverified |
+| FSR-04.01 | The envelope shall limit the commanded deceleration to a bound derived from following-traffic controllability. | C | E-03 | A, T-SIL | Implemented without rationale: −3.5 m/s² (`modes/toyota.h:209`) (GAP-04) |
+| FSR-04.02 | The envelope shall limit the onset rate of commanded deceleration (negative jerk). | C | E-03 | T-SIL | Not implemented (GAP-04) |
+| FSR-04.03 | The transition to the longitudinal safe state shall not create a deceleration step larger than the jerk bound of FSR-04.02. | C | E-01, E-03 | A, T-VEH | Not specified; depends on PCM behaviour on inactive value (AOU-05R) |
+| FSR-04.04 | Driver accelerator input shall override commanded deceleration. | C | E-03, EXT-PCM | T-SIL, T-VEH | Implemented in envelope (`longitudinal.h:3-5`); vehicle behaviour unverified |
 
-### 5.5 SG-05 Release on driver action (ASIL B ⚠)
+### 5.5 SG-05 Release on driver action (ASIL C)
 
 | ID | Requirement | ASIL | Alloc | Verif | Impl / GAP |
 |---|---|---|---|---|---|
-| FSR-05.01 | The envelope shall revoke all actuation authority on a driver brake press (rising edge, or pressed while moving) within the SG-05 FTTI. | B | E-03 | T-SIL, T-VEH | Implemented (`safety.h:354-356`); brake message `0x226` has no checksum or counter (GAP-01) |
-| FSR-05.02 | The envelope shall revoke all actuation authority when the PCM reports cruise inactive (cancel, main switch off). | B | E-03 | T-SIL, T-VEH | Implemented (`safety.h:520-521`) |
-| FSR-05.03 | The envelope shall detect driver steering override (driver torque above a threshold) and reduce the LKA torque so it does not oppose the driver. | B | E-03 | T-SIL, T-VEH | Not in envelope: host-only 500 raw check (`opendbc_repo/opendbc/car/toyota/carcontroller.py:33, 83`) (GAP-02) |
-| FSR-05.04 | The envelope shall block positive acceleration while the accelerator is pressed. | B | E-03 | T-SIL | Implemented (`longitudinal.h:3-5`) |
-| FSR-05.05 | The engagement state that the envelope enforces shall equal the PCM cruise state, so that the vehicle's own cruise indicator gives the driver an indication of engagement independent of the item's HMI. | B | E-03, EXT-CLU | A, T-VEH | Implemented by FSR-01.05 design; independence of the cluster indication to be confirmed by test |
-| FSR-05.06 | If PCM cruise is active while the item is not engaged (or the reverse) for longer than a bounded time, the item shall warn the driver and request cancel. | B | E-01, E-03 | T-SIL | Not met: `cruiseMismatch` raised after 6 s with no reaction (`selfdrive/selfdrived/selfdrived.py:421`, `events.py:458-460`) (GAP-19) |
+| FSR-05.01 | The envelope shall revoke all actuation authority on a driver brake press (rising edge, or pressed while moving) within the SG-05 FTTI. | C | E-03 | T-SIL, T-VEH | Implemented (`safety.h:354-356`); brake message `0x226` has no checksum or counter (GAP-01) |
+| FSR-05.02 | The envelope shall revoke all actuation authority when the PCM reports cruise inactive (cancel, main switch off). | C | E-03 | T-SIL, T-VEH | Implemented (`safety.h:520-521`) |
+| FSR-05.03 | The envelope shall detect driver steering override (driver torque above a threshold) and reduce the LKA torque so it does not oppose the driver. | C | E-03 | T-SIL, T-VEH | Not in envelope: host-only 500 raw check (`opendbc_repo/opendbc/car/toyota/carcontroller.py:33, 83`) (GAP-02) |
+| FSR-05.04 | The envelope shall block positive acceleration while the accelerator is pressed. | C | E-03 | T-SIL | Implemented (`longitudinal.h:3-5`) |
+| FSR-05.05 | The engagement state that the envelope enforces shall equal the PCM cruise state, so that the vehicle's own cruise indicator gives the driver an indication of engagement independent of the item's HMI. | C | E-03, EXT-CLU | A, T-VEH | Implemented by FSR-01.05 design; independence of the cluster indication to be confirmed by test |
+| FSR-05.06 | If PCM cruise is active while the item is not engaged (or the reverse) for longer than a bounded time, the item shall warn the driver and request cancel. | C | E-01, E-03 | T-SIL | Not met: `cruiseMismatch` raised after 6 s with no reaction (`selfdrive/selfdrived/selfdrived.py:421`, `events.py:458-460`) (GAP-19) |
 | FSR-05.07 | Driver brake input shall produce braking regardless of ACC commands. (External measure, AOU-03R) | — (ext.) | EXT-PCM | T-VEH | Unverified |
 
 ### 5.6 SG-06 Longitudinal loss without warning (ASIL B)
@@ -268,8 +268,8 @@ Every SG has at least one FSR allocated to E-03 (or to an external measure plus 
 
 | Element | FSRs | Highest ASIL |
 |---|---|---|
-| E-03 safety envelope | 01.01–01.12, 02.01 (detection), 02.04, 02.05, 03.01–03.05, 04.01–04.04, 05.01–05.06, 06.04, 07.01–07.03 | C (B after re-rating, §4.2) |
-| E-05 harness/relay | 01.11, 07.03 | C/B |
+| E-03 safety envelope | 01.01–01.12, 02.01 (detection), 02.04, 02.05, 03.01–03.05, 04.01–04.04, 05.01–05.06, 06.04, 07.01–07.03 | D (B after re-rating, §4.2; C for SG-03…SG-05) |
+| E-05 harness/relay | 01.11, 07.03 | D/B |
 | E-01 SoC (QM) | 01.14, 02.02, 02.03, 02.06–02.09, 03.05 (cancel), 05.06, 06.01–06.04, 07.05 | QM (ASIL-relevant items backed by E-03) |
 | HMI | 02.03, 02.05 (panda buzzer, via E-03) | QM / B for buzzer path |
 | EXT-EPS | 01.13 | AoU |

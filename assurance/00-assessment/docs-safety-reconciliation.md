@@ -55,7 +55,7 @@ The two HARAs rate the same functions but reach different results. Both are unre
 | Mode confusion | Separate goal SG-009 (ASIL B) | H-07 reserved and rated within H-02, H-05, H-06 (WP-C-08) |
 | Stock PCS/AEB suppression | Not a goal | SG-07 (ASIL B) |
 
-The decisive question is whether controllability credit for the OEM EPS and PCM limits holds. If it does not, SG-01 reaches ASIL D in WP-C-03 as well, and the two HARAs largely agree on the lateral goal.
+The decisive question is whether controllability credit for the OEM EPS and PCM limits holds. If it does not, SG-01 reaches ASIL D in WP-C-03 as well, and the two HARAs largely agree on the lateral goal. Decision D-09 ([WP-M-07](../01-management/WP-M-07-risk-management.md) §5, 2026-10-10) resolved this in favour of ASIL D for SG-01: WP-C-03 0.2 takes no controllability credit for OEM ECU behaviour.
 
 ## 4. Vehicle assumptions
 

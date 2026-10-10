@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-4:2018 §6 (technical safety concept, system architectural design, safety mechanisms, FFI/independence by reference to ISO 26262-9 §6–§7); ISO 21448:2022 §8 (architecture-level functional modifications, by reference); ASPICE 4.0 SYS.3 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | Up to ASIL C (SG-01, until re-rated); target ASIL B for the envelope (FSC option (c)) |
+| ASIL / scope | Up to ASIL D (SG-01, until re-rated under FSC option (c)); ASIL C (SG-03…SG-05); target ASIL B for the SG-01 part of the envelope (FSC option (c)) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); independent review (I2) of §5 and §7 |
 | Approver | Safety manager |

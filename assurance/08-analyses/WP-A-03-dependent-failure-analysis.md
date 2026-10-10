@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-9:2018 §7 (analysis of dependent failures); ISO 26262-9 §5 (independence for decomposition, by reference); ISO 26262-5:2018 §7 (hardware DFA input); ISO 26262-6:2018 §7 (software-level DFA input, detailed in [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md)) |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | SG-01 (ASIL C ⚠) and SG-02…SG-07 (ASIL B). Elements: E-03 envelope, E-01/E-02 SoC stack, E-04 device hardware, E-05 harness, EXT-EPS, EXT-PCM, EXT-CLU, driver |
+| ASIL / scope | SG-01 (ASIL D), SG-03…SG-05 (ASIL C) and SG-02, SG-06, SG-07 (ASIL B). Elements: E-03 envelope, E-01/E-02 SoC stack, E-04 device hardware, E-05 harness, EXT-EPS, EXT-PCM, EXT-CLU, driver |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); input to G2 confirmation review |
 | Approver | Safety manager |
@@ -23,7 +23,7 @@ The software-internal DFA of the panda firmware (shared memory, shared execution
 | ID | Claim | Who relies on it | Elements that must not fail together |
 |---|---|---|---|
 | IC-01 | A fault in the SoC command path is detected or bounded by the envelope | WP-C-04 §4.2 (envelope-only ASIL allocation); all SG | E-01/E-02 (command generator) vs E-03 (limiter/monitor) |
-| IC-02 | The EPS limits LKA torque and times out independently of the item | HARA C2 ratings HE-01.x, HE-05.2 (AOU-01R); FSR-01.13 | E-03 vs EXT-EPS |
+| IC-02 | The EPS limits LKA torque and times out independently of the item | FSR-01.13 and option (c) design input (AOU-01R). Not credited in the HARA ratings of HE-01.x, HE-05.2 since D-09 (revision 0.1 rated them C2 on it) | E-03 vs EXT-EPS |
 | IC-03 | The driver can control envelope-bounded worst-case actuation | All C ratings; option (c) strategy | E-03 + EXT-EPS vs driver (AOU-02R, AOU-06R) |
 | IC-04 | The vehicle's cruise indicator shows engagement independently of the item HMI | FSR-05.05, AOU-12 | E-01 HMI vs EXT-CLU |
 | IC-05 | The stock PCS keeps working with the item installed, engaged or not | SG-07, AOU-04R | E-03/E-05 vs stock camera/radar/PCM |

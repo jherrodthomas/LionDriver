@@ -120,7 +120,7 @@ Keys common to all kinds: `id`, `kind`, `status` (WP-P-06 enum), `source` (work 
 |---|---|
 | `text` | Verbatim goal statement |
 | `type` | `constraint` |
-| `asil`, `asil_if_aou_fails`, `aou_dependency` | As WP-C-03 §6 (e.g. SG-01: C, D if AOU-01/02 fail) |
+| `asil`, `asil_if_aou_fails`, `aou_dependency` | As WP-C-03 §6 (e.g. SG-01: D, `null`, `[]` since D-09; revision 0.1 had C, D if AOU-01/02 fail) |
 | `parents` | Source HEs |
 | `safe_state` | Verbatim |
 | `ftti_ms`, `ftti_text` | Preliminary FTTI in ms (`null` for "Continuous") and the original text |
@@ -181,8 +181,8 @@ CI integration (run on PRs touching `assurance/trace/**`, WP-C-01, WP-C-03 or SR
 | 1 | [`assurance/README.md`](../README.md) and WP-P-06 use `HS-<nn>` for hazardous events; WP-C-03 uses `HE-nn.n` | Data follows WP-C-03 (`HE-`); checker accepts both prefixes | Align README / WP-P-06 or WP-C-03 |
 | 2 | WP-P-06 §5.1 placed functional modifications under the `SOTIF-` prefix; WP-C-05/WP-C-07 use `FM-01`…`FM-11` | Resolved: WP-P-06 §2 now uses `FM-` and lists the full prefix grammar (suffix letters, `VS-<AREA>-`, `DVR-`, `DEV-`, `MON-`, `KS-`, `AIR-`, `DSR-`, `MLR-`); the checker accepts all of them and still accepts `SOTIF-` | — |
 | 3 | WP-C-03 defines no H-07 (H-06 → H-08) | Recorded as a comment in `hazards.yaml`; no H-07 created | WP-C-03 |
-| 4 | WP-C-03 marks HE-01.3 and HE-01.4 ⚠ but states no alternative ASIL | `asil_if_aou_fails: null`, AoUs taken from the H-01 group | WP-C-03 |
-| 5 | WP-C-03 HE-04.2 credits AOU-10 in its rationale but is not ⚠-flagged | `aou_flag: false`, `aou_dependency: [AOU-10]` | WP-C-03 |
+| 4 | WP-C-03 marks HE-01.3 and HE-01.4 ⚠ but states no alternative ASIL | Resolved by WP-C-03 0.2 (D-09): no ⚠ ratings remain; `aou_flag: false`, `asil_if_aou_fails: null`, `aou_dependency: []` | — |
+| 5 | WP-C-03 HE-04.2 credits AOU-10 in its rationale but is not ⚠-flagged | Resolved by WP-C-03 0.2 (D-09): AOU-10 is no longer credited; `aou_flag: false`, `aou_dependency: []` | — |
 | 6 | The requested file names (`hazards.yaml`, `safety_goals.yaml`, `aous.yaml` at the folder root, checker at the root) differ from WP-P-06 §5.1 (`items/hazards.yaml`, `items/goals.yaml`, `items/aou.yaml`, `tools/check_trace.py`) | WP-P-06 layout used | — |
 
 ## 8. Open items

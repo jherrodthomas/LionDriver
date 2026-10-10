@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-5:2018 §9 (evaluation of safety goal violations due to random hardware failures: probabilistic metric and evaluation of each cause), Annex C; ISO 26262-10:2018 (PMHF explanations, informative); ISO 26262-11:2018 (informative) |
 | Version | 0.1 |
 | Status | Draft (method and plan; no value computed) |
-| ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
+| ASIL / scope | ASIL D (provisional, SG-01, until re-rated under FSC option (c)) / ASIL C (SG-03…SG-05) / ASIL B (SG-02, SG-06, SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |
@@ -67,10 +67,10 @@ dual-point faults are normally evaluated; higher-order combinations are argued n
 
 | SG | ASIL | PMHF target | Note |
 |---|---|---|---|
-| SG-01 | C (provisional; B expected after FSC option (c)) | < 10⁻⁷ /h (100 FIT) | Commonly used value for ASIL B and C — **verify against licensed text** |
-| SG-02…SG-06 | B | < 10⁻⁷ /h (100 FIT) | as above |
+| SG-01 | D (provisional, D-09; B expected after FSC option (c)) | < 10⁻⁸ /h (10 FIT) | Commonly used value for ASIL D — **verify against licensed text**. Becomes < 10⁻⁷ /h (100 FIT) if SG-01 is re-rated to B or C |
+| SG-03…SG-05 | C (D-09) | < 10⁻⁷ /h (100 FIT) | Commonly used value for ASIL B and C — **verify against licensed text** |
+| SG-02, SG-06 | B | < 10⁻⁷ /h (100 FIT) | as above |
 | SG-07 | B | < 10⁻⁷ /h (100 FIT) | as above |
-| (reference) | D | < 10⁻⁸ /h (10 FIT) | not applicable unless AOU-01/02 fail (HARA) |
 
 The targets in the standard are reference values. They may be replaced by targets derived from
 field data of similar, trusted designs; LionDriver has no such data (T-06: proven in use not
@@ -123,7 +123,7 @@ Rules for using them:
 
 Provisional qualitative judgement: with the baseline firmware the MCU die is largely uncovered,
 so its failure rate enters PMHF almost entirely as λ_SPF. Whether that alone exceeds 100 FIT
-depends on the die rate, which is unknown. The SG-07 figure is dominated by the relay data,
+(or the 10 FIT ASIL D target of SG-01) depends on the die rate, which is unknown. The SG-07 figure is dominated by the relay data,
 also unknown. No conclusion on meeting the target is possible today; the evaluation must not be
 reported as "met" or "not met" until computed.
 
@@ -145,11 +145,11 @@ reported as "met" or "not met" until computed.
 
 | SG | ASIL | Variant | Σλ_SPF + Σλ_RF (FIT) | Dual-point contribution (FIT) | PMHF (FIT) | Target (FIT) | Met? | Dominant contributors |
 |---|---|---|---|---|---|---|---|---|
-| SG-01 | | With external measures | TBD — requires BOM | TBD | TBD | | Not yet computed | |
-| SG-01 | | Without external measures | TBD | TBD | TBD | | Not yet computed | |
+| SG-01 | D (prov.) | With external measures | TBD — requires BOM | TBD | TBD | 10 | Not yet computed | |
+| SG-01 | D (prov.) | Without external measures | TBD | TBD | TBD | 10 | Not yet computed | |
 | SG-02/SG-06 | B | — | TBD | TBD | TBD | 100 | Not yet computed | |
-| SG-03/SG-04 | B | With / without | TBD | TBD | TBD | 100 | Not yet computed | |
-| SG-05 | B | — | TBD | TBD | TBD | 100 | Not yet computed | |
+| SG-03/SG-04 | C | With / without | TBD | TBD | TBD | 100 | Not yet computed | |
+| SG-05 | C | — | TBD | TBD | TBD | 100 | Not yet computed | |
 | SG-07 | B | — | TBD | TBD | TBD | 100 | Not yet computed | |
 
 ## 9. Open items

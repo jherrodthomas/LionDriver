@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-4:2018 §8 (safety validation); ISO 26262-3:2018 §6 (controllability basis), §7 (external measures, AoU); ASPICE 4.0 VAL.1. Informative: RESPONSE 3 Code of Practice for ADAS controllability assessment; ISO 11270, ISO 15622 |
 | Version | 0.1 |
 | Status | Draft (plan and specification). Report section is a template: **Not yet executed** |
-| ASIL / scope | Up to ASIL C (SG-01), D if AOU-01/02 fail ([WP-C-03](../02-concept/WP-C-03-hara.md)) |
+| ASIL / scope | Up to ASIL D (SG-01; SG-03…SG-05 ASIL C) ([WP-C-03](../02-concept/WP-C-03-hara.md) 0.2, D-09) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); validation report reviewed as part of the functional safety assessment (I3) |
 | Approver | Project maintainer (acting safety manager) |
@@ -17,11 +17,11 @@
 Safety validation provides evidence, at vehicle level on the reference configuration, that:
 
 1. the safety goals SG-01…SG-07 are achieved by the integrated item;
-2. the controllability assumptions used in the HARA hold, in particular the assumptions of use on the vehicle (AOU-01, AOU-02, AOU-03, AOU-04, AOU-05) and the driver's ability to control the vehicle within the safety envelope;
+2. the controllability assumptions used in the HARA and in FSC option (c) hold, in particular the assumptions of use on the vehicle (AOU-01, AOU-02, AOU-03, AOU-04, AOU-05; design input, not credited in the HARA ratings since decision D-09) and the driver's ability to control the vehicle within the safety envelope;
 3. the safety mechanisms are effective in the vehicle;
-4. the external measures credited in the HARA and FSC (Toyota EPS LKA limiting, PCM ACC envelope, stock PCS) behave as assumed.
+4. the external measures used as design input in the FSC (Toyota EPS LKA limiting, PCM ACC envelope, stock PCS) behave as assumed.
 
-[WP-C-03 §6.1](../02-concept/WP-C-03-hara.md#61-observations-for-the-functional-safety-concept) notes that vehicle characterization of AOU-01/02/03/05 is a **G1** activity because the ASILs depend on it. Those test cases (§5.1) are therefore executed early, on the closed course, before the rest of the validation campaign (G5).
+[WP-C-03 §6.1](../02-concept/WP-C-03-hara.md#61-observations-for-the-functional-safety-concept) notes that vehicle characterization of AOU-01/02/03/05 is a **G1** activity: since D-09 the HARA takes no credit for them, and measured vehicle behaviour is the only route to a lower rating. Those test cases (§5.1) are therefore executed early, on the closed course, before the rest of the validation campaign (G5).
 
 Relation to the concept phase: the AoU characterization of §5.1 provides the evidence for the refined assumptions AOU-01R…AOU-05R and the external-measure requirements FSR-01.13, FSR-03.06, FSR-05.07 and FSR-07.04 of [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md); §5.2 executes the controllability validation plan of [WP-C-08 §8](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) (steps V-1…V-6) against its assumptions CA-01…CA-07. The recommended envelope strategy (WP-C-04 §4: reduced, speed-dependent authority aiming at C1 for HE-01.x, plus ASIL B hardening) makes VS-VAL-10 the test that decides the ASIL of SG-01.
 
@@ -169,7 +169,7 @@ Vehicle-level repetition of selected [WP-V-05](WP-V-05-fault-injection.md) cases
 | Item | Content |
 |---|---|
 | Safety goals validated | |
-| AoUs verified / failed (with consequence: rating change per WP-C-03 ⚠ alternatives) | |
+| AoUs verified / failed (with consequence: possible HARA re-rating per D-09, or design-input change) | |
 | Open issues | |
 | Recommendation to WP-K-01 / WP-K-04 | Not yet executed |
 

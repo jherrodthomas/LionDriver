@@ -91,7 +91,7 @@ WBS elements follow the phases and gates in [WP-M-01 §7](WP-M-01-assurance-stra
 
 - Estimates are rough-order magnitude, in person-weeks (pw) of competent effort (one pw ≈ 40 h). They are not based on historical data from this project, because none exists.
 - The person doing the work already has the competence in [WP-M-04](WP-M-04-organization-competence-safety-culture.md). Learning time is not included.
-- The HARA results in ASIL C or D for at least one safety goal on the envelope. A lower ASIL would reduce P3–P4 effort.
+- The HARA results in ASIL C or D for at least one safety goal on the envelope ([WP-C-03](../02-concept/WP-C-03-hara.md) 0.2: SG-01 ASIL D, SG-03…SG-05 ASIL C, decision D-09). A lower ASIL would reduce P3–P4 effort.
 - The comma device hardware is analysable from public information; no supplier evidence arrives (WP-M-01 §9).
 - External assessor and pen-test effort is listed separately and is not done by project staff.
 - Envelope hardening is a modest change set (hundreds, not thousands, of lines of C).

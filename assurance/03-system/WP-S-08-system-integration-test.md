@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-4:2018 §7 (item integration and testing); ISO 26262-4 §7 test methods and fault-injection guidance (verify table numbers against the licensed copy); ISO 26262-8:2018 §9 (verification); ASPICE 4.0 SYS.4 (system integration and integration verification) |
 | Version | 0.1 |
 | Status | Draft (specification). **Results: not yet executed** |
-| ASIL / scope | ASIL C (SG-01 until re-rated), ASIL B (SG-02…SG-07); reference configuration only |
+| ASIL / scope | ASIL D (SG-01, until re-rated under FSC option (c)), ASIL C (SG-03…SG-05), ASIL B (SG-02, SG-06, SG-07); reference configuration only |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); test specification review with independence per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |

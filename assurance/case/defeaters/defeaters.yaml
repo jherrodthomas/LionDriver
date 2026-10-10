@@ -146,7 +146,7 @@
 
 - id: DF-14
   kind: defeater
-  title: "All vehicle AoUs (AOU-01…05) unverified; ⚠ ratings may rise to ASIL C/D"
+  title: "All vehicle AoUs (AOU-01…05) unverified; not credited in the HARA since D-09, so ratings stay at ASIL D (SG-01) / C (SG-03…SG-05) until they are measured"
   description: "Closure route: Vehicle characterisation"
   lifecycle_status: open
   gaps: [GAP-05]

@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-2:2018 §6 (functional safety assessment, independence per Table 1); ISO 26262-2 §6 (confirmation measures); [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) §6 (FSA-I1, FSA-I2, FSA-F) |
 | Version | 0.1 |
 | Status | Skeleton — plan and report template. **No assessment has been performed and no assessor has been engaged (D-06 open).** All result sections are "Not yet executed" |
-| ASIL / scope | Item LD-SDA, up to ASIL C (SG-01) |
+| ASIL / scope | Item LD-SDA, up to ASIL D (SG-01) |
 | Author | Assurance team (initial draft); report to be authored by the assessor |
 | Reviewer(s) | n/a (the assessment is itself the independent confirmation measure) |
 | Approver | Assessor (report); safety manager acknowledges receipt |
@@ -23,7 +23,7 @@ The functional safety assessment (FSA) judges whether the functional safety achi
 | Assessor (person, organisation) | TBD (D-06) |
 | Independence level | I3: independent of the LionDriver project in management, resources and release authority |
 | Independence declaration | Template: "I have not authored, reviewed as verifier, or approved any work product in the scope of this assessment, and I have no reporting line to, or financial dependence on, the release decision." Signed and dated |
-| Competence evidence | Qualification and experience in ISO 26262 assessment at ASIL C or higher; familiarity with ISO 21448 and aftermarket/retrofit items preferred ([WP-M-04](../01-management/WP-M-04-organization-competence-safety-culture.md)) |
+| Competence evidence | Qualification and experience in ISO 26262 assessment at ASIL D; familiarity with ISO 21448 and aftermarket/retrofit items preferred ([WP-M-04](../01-management/WP-M-04-organization-competence-safety-culture.md)) |
 | Access | Read access to the repository at the assessed baseline; access to vehicle test records and installation records; interviews with role holders |
 
 ## 3. Scope

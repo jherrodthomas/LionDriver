@@ -6,7 +6,7 @@
 | Standard reference | ISO/SAE 21434:2021 §10 (product development: refinement of cybersecurity requirements, architectural design, cybersecurity controls); §9.5 (concept, as input); ASPICE 4.0 SEC.1, SYS.3 |
 | Version | 0.1 |
 | Status | Draft — requirements are proposals derived from code review and the concept; not verified, not approved |
-| ASIL / scope | CS (CAL 1–3); requirements with a safety relation reference their TSR in WP-S-02 (B‡: target ASIL B, ASIL C until SG-01 is re-rated) |
+| ASIL / scope | CS (CAL 1–3); requirements with a safety relation reference their TSR in WP-S-02 (B‡: target ASIL B, ASIL D until SG-01 is re-rated) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); CS assessor sampling per [WP-M-09 §8](../01-management/WP-M-09-cybersecurity-plan.md) |
 | Approver | Project maintainer (acting cybersecurity manager) |
@@ -355,7 +355,7 @@ Allocation totals: FW 20, SoC 31, ENV 16, USR 15 (a CSR may have more than one a
 
 ## 8. Relation to technical safety requirements
 
-[WP-S-02](WP-S-02-technical-safety-requirements.md) states the safety side of the mechanisms that this document also needs for cybersecurity. TSR-511 and TSR-514 are marked "B‡ (+ CS)" there and point to this document. ASIL notation **B‡** = target ASIL B under FSC option (c), ASIL C until SG-01 is re-rated ([WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md)).
+[WP-S-02](WP-S-02-technical-safety-requirements.md) states the safety side of the mechanisms that this document also needs for cybersecurity. TSR-511 and TSR-514 are marked "B‡ (+ CS)" there and point to this document. ASIL notation **B‡** = target ASIL B under FSC option (c), ASIL D until SG-01 is re-rated ([WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md)).
 
 | TSR (WP-S-02) | Topic | Upstream FSR / HWSR | CSRs that implement or support it |
 |---|---|---|---|

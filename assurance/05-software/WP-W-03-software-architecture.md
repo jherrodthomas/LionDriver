@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-6:2018 §7 (software architectural design: notation, design principles, static and dynamic aspects, ASIL attribution, resource usage); ISO 26262-9:2018 §6 (coexistence, by reference to WP-A-02); ASPICE 4.0 SWE.2 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | Envelope (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host (E-01): QM / QM (B-sup) |
+| ASIL / scope | Envelope (E-03a/E-03b): B‡ (ASIL D until SG-01 re-rating; C for SG-03…SG-05, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host (E-01): QM / QM (B-sup) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); I2 for §6 and §8 |
 | Approver | Project maintainer (acting safety manager) |

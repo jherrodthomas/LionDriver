@@ -50,7 +50,7 @@ LionDriver publishes its safety argument as it is built: the claims it makes, th
 | Open defeaters (known counter-evidence) | 41 |
 | Evaluated configurations | 1 |
 | Assurance-supported configurations | 0 |
-| Records digest | `a5a5287e4400` |
+| Records digest | `969fe9e9ba67` |
 
 | Lifecycle area | Status | Evidence (drafted / missing / accepted) |
 |---|---|---|

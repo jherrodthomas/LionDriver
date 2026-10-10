@@ -25,7 +25,7 @@
 - id: G1.1
   kind: claim
   title: "SG-01 lateral motion is met"
-  description: "SG-01 (lateral motion, ASIL C ⚠ / B if C1 shown under option c) is met."
+  description: "SG-01 (lateral motion, ASIL D / B if C1 shown under option c) is met."
   parent: G1
   argument: S1
   lifecycle_status: draft
@@ -151,7 +151,7 @@
 - id: G1.3
   kind: claim
   title: "SG-03 unintended acceleration is met"
-  description: "SG-03 (unintended acceleration, B ⚠) is met."
+  description: "SG-03 (unintended acceleration, C) is met."
   parent: G1
   argument: S1
   lifecycle_status: draft
@@ -172,7 +172,7 @@
 - id: G1.4
   kind: claim
   title: "SG-04 excessive deceleration is met"
-  description: "SG-04 (excessive deceleration, B ⚠) is met."
+  description: "SG-04 (excessive deceleration, C) is met."
   parent: G1
   argument: S1
   lifecycle_status: draft
@@ -193,7 +193,7 @@
 - id: G1.5
   kind: claim
   title: "SG-05 release on driver action is met"
-  description: "SG-05 (release on driver action, B ⚠) is met."
+  description: "SG-05 (release on driver action, C) is met."
   parent: G1
   argument: S1
   lifecycle_status: draft
@@ -297,8 +297,8 @@
 
 - id: G1.10
   kind: claim
-  title: "Credited assumptions of use are verified"
-  description: "The assumptions credited in controllability (AOU-01/02/03/05) are verified."
+  title: "Vehicle assumptions of use are verified"
+  description: "The vehicle assumptions used as design input (AOU-01/02/03/05; not credited in the HARA since D-09) are verified."
   parent: G1
   argument: S1
   lifecycle_status: draft

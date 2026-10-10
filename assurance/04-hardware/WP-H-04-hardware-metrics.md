@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-5:2018 §8 (evaluation of the hardware architectural metrics), Annex C (metric definitions, informative), Annex D (diagnostic coverage, informative); ISO 26262-11:2018 (semiconductors, informative) |
 | Version | 0.1 |
 | Status | Draft (method and plan; no metric computed) |
-| ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
+| ASIL / scope | ASIL D (provisional, SG-01, until re-rated under FSC option (c)) / ASIL C (SG-03…SG-05) / ASIL B (SG-02, SG-06, SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |
@@ -90,8 +90,9 @@ Applicable targets ([WP-H-01](WP-H-01-hardware-safety-requirements.md) §3):
 
 | SG | Current ASIL | Target set | Expected after FSC option (c) |
 |---|---|---|---|
-| SG-01 | C (provisional) | SPFM ≥ 97 %, LFM ≥ 80 % | B: SPFM ≥ 90 %, LFM ≥ 60 % |
-| SG-02…SG-06 | B | SPFM ≥ 90 %, LFM ≥ 60 % | unchanged |
+| SG-01 | D (provisional, D-09) | SPFM ≥ 99 %, LFM ≥ 90 % | B: SPFM ≥ 90 %, LFM ≥ 60 % |
+| SG-03…SG-05 | C (D-09) | SPFM ≥ 97 %, LFM ≥ 80 % | unchanged (C unless re-rated) |
+| SG-02, SG-06 | B | SPFM ≥ 90 %, LFM ≥ 60 % | unchanged |
 | SG-07 | B | SPFM ≥ 90 %, LFM ≥ 60 % | unchanged |
 
 ## 5. Current status
@@ -111,7 +112,7 @@ This is engineering judgement, not a metric. It is stated so the decisions in th
 made with eyes open.
 
 **Baseline hardware and firmware (`8b8c6ae`): the ASIL B targets are very likely not met for
-SG-01 or SG-07, and the ASIL C targets are not met.** Reasons:
+SG-01 or SG-07, and the ASIL C (SG-03…SG-05) and ASIL D (SG-01) targets are not met.** Reasons:
 
 1. The MCU die is the largest single contributor of failure rate among the safety-related parts
    *(expected; confirm with data)*. Today almost all of it is uncovered: no CPU self-test, no
@@ -129,8 +130,10 @@ SG-01 or SG-07, and the ASIL C targets are not met.** Reasons:
 **With the firmware-only changes of WP-H-02 §6 (DC-01, DC-04…DC-10):** SPFM ≥ 90 % for SG-01 looks
 *plausible but not certain*. The CPU core remains at "medium" coverage at best on a single
 non-lockstep core with a software test library; whether that is enough depends on the CPU's share
-of the total rate. ASIL C (97 %) is *unlikely* without DC-02 (external supervisor) or a second
-channel. This supports the FSC recommendation of option (c).
+of the total rate. ASIL C (97 %), which applies to SG-03…SG-05 on the same MCU since D-09, is *unlikely*
+without DC-02 (external supervisor) or a second channel. ASIL D (99 %) for SG-01 is even less likely:
+DC-02 and/or a second independent channel (monitoring MCU) become effectively required unless
+option (c) succeeds. This supports the FSC recommendation of option (c).
 
 **For SG-07:** ASIL B is *unlikely* to be met without relay readback (DC-03) unless the relay's
 "stuck intercepting" rate is shown to be small relative to the total, which needs part data.

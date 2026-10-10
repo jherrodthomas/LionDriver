@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-4:2018 §7 (integration and testing at vehicle level, verification of the technical safety requirements and of AoU on external measures); ISO 21448:2022 §10 (verification of the SOTIF-related functions, interface to WP-V-03); ASPICE 4.0 SYS.5 (system verification) |
 | Version | 0.1 |
 | Status | Draft (specification). **Results: not yet executed** |
-| ASIL / scope | ASIL C (SG-01 until re-rated), ASIL B (SG-02…SG-07); reference configuration (2020 Corolla LE, `TOYOTA_COROLLA_TSS2`) |
+| ASIL / scope | ASIL D (SG-01, until re-rated under FSC option (c)), ASIL C (SG-03…SG-05), ASIL B (SG-02, SG-06, SG-07); reference configuration (2020 Corolla LE, `TOYOTA_COROLLA_TSS2`) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); test specification review with independence per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
@@ -53,7 +53,7 @@ Verification versus validation: this document checks that the item meets its spe
 
 - **GC-1** (all cases): no actuation frame outside the envelope limits on bus 0 (from the CAN log).
 - **GC-2** (all cases): stock PCS frames forwarded unchanged when not intercepted by design.
-- Characterisation cases (VS-SQ-01, -02, -05) pass when the parameter is measured with stated uncertainty and the measured value satisfies the corresponding AoU. If it does not, the HARA rating marked ⚠ is revisited (WP-C-03 OI-1) — this is a result, not a test failure.
+- Characterisation cases (VS-SQ-01, -02, -05) pass when the parameter is measured with stated uncertainty and the measured value satisfies the corresponding AoU. If it does not, the AoU stays uncredited and the HARA rating stays as it is (D-09; WP-C-03 OI-1); the FSC design input is revisited — this is a result, not a test failure.
 - Timing criteria use the WP-C-04 §8 budget until [WP-S-04](WP-S-04-timing-ftti-budget.md) is approved.
 
 ## 5. Verification specification
@@ -143,7 +143,7 @@ Verification versus validation: this document checks that the item meets its spe
 | VS-SQ-18 | — | **Not yet executed** | — | — | — | — |
 | VS-SQ-19 | — | **Not yet executed** | — | — | — | — |
 
-Summary (to complete after execution): AoU verdicts and their effect on HARA ⚠ ratings; TSR coverage achieved; open problem reports; release recommendation input to [WP-K-06](../10-safety-case/WP-K-06-release-record.md).
+Summary (to complete after execution): AoU verdicts and whether they support a HARA re-rating (D-09); TSR coverage achieved; open problem reports; release recommendation input to [WP-K-06](../10-safety-case/WP-K-06-release-record.md).
 
 ## 8. Open items
 
@@ -152,6 +152,6 @@ Summary (to complete after execution): AoU verdicts and their effect on HARA ⚠
 | OI-1 | Re-check TSR and SYS references when WP-S-01/WP-S-02 leave Draft | Safety engineer | G2 |
 | OI-2 | Define the closed-course test builds (host and panda) for VS-SQ-02, -03, -05, -12, -13 as configuration items, including how they are prevented from reaching public-road use | Maintainer | Before first closed-course session |
 | OI-3 | Specify course geometry and speeds per case from the FTTI derivation (WP-S-04) | Safety engineer | G2 |
-| OI-4 | Run VS-SQ-01, -02, -04, -05, -06 early (G1): they decide the HARA ⚠ ratings and the envelope strategy (WP-C-04 OI-2) | Safety engineer | G1 |
+| OI-4 | Run VS-SQ-01, -02, -04, -05, -06 early (G1): they are the only route to a lower HARA rating (D-09) and decide the envelope strategy (WP-C-04 OI-2) | Safety engineer | G1 |
 | OI-5 | Fix the margin target for VS-SQ-18 together with the derived limits (TSR-605) | Safety engineer | G2 |
 | OI-6 | Add verification cases for the WP-S-01 requirements listed as not covered in §6, or allocate them to WP-S-08 / WP-V-03 | Test lead | G2 |

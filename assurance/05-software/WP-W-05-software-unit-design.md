@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-6:2018 §8 (software unit design and implementation: notation, design principles for unit design and implementation); ISO/SAE 21434:2021 §10 (by reference to WP-W-11); ASPICE 4.0 SWE.3 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | Envelope units (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating) |
+| ASIL / scope | Envelope units (E-03a/E-03b): B‡ (ASIL D until SG-01 re-rating; C for SG-03…SG-05) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |

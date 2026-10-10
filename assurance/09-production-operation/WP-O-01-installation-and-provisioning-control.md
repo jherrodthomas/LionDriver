@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-7:2018 §5 (planning for production, production control, special characteristics, records), tailored per T-07; ISO 26262-4:2018 §6 (requirements for production, by reference to WP-S-06); ISO/SAE 21434:2021 §12 (production) |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | Up to ASIL C (SG-01 elements: harness, relay, panda firmware, safety-mode configuration); CS (provisioning) |
+| ASIL / scope | Up to ASIL D (SG-01 elements: harness, relay, panda firmware, safety-mode configuration); CS (provisioning) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Safety manager |

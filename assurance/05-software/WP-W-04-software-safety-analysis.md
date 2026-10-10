@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-6:2018 §7 (safety analysis and DFA at the software architectural level; Annex E informative); ISO 26262-9:2018 §7 (dependent failures), §8 (safety analyses); ASPICE 4.0 SWE.2 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | Envelope software (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating); host components summarised |
+| ASIL / scope | Envelope software (E-03a/E-03b): B‡ (ASIL D until SG-01 re-rating; C for SG-03…SG-05); host components summarised |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); I2 per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Project maintainer (acting safety manager) |

@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-9:2018 §8 (safety analyses); ISO 26262-4:2018 §6 (safety analysis of the system architectural design, to support the TSC); ISO 21448:2022 §7 (input on insufficiencies, informative here); ASPICE 4.0 SYS.3 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | SG-01 (ASIL C ⚠) and SG-03 (ASIL B ⚠) fault trees; system FMEA covering SG-01…SG-07. Qualitative only |
+| ASIL / scope | SG-01 (ASIL D) and SG-03 (ASIL C) fault trees; system FMEA covering SG-01…SG-07. Qualitative only |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Safety manager |

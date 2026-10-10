@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-7:2018 §6 (operation, service and decommissioning: planning, instructions, records); ISO 26262-4:2018 §6 (requirements for operation and service, by reference to WP-S-06); ISO/SAE 21434:2021 §14 (end of cybersecurity support and decommissioning) |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | Up to ASIL C (actions that restore or preserve SG-01…SG-07 preconditions); SOTIF; CS |
+| ASIL / scope | Up to ASIL D (actions that restore or preserve SG-01…SG-07 preconditions); SOTIF; CS |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Safety manager |

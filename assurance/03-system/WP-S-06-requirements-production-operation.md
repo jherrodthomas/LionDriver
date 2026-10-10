@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-4:2018 §6 (specification of requirements for production, operation, service and decommissioning); ISO 26262-7:2018 §5–§6 (by reference); ISO 21448:2022 §13 (operation phase); ISO/SAE 21434:2021 §10, §12, §14 (production, operations, end of support, by reference); ASPICE 4.0 SYS.2 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | Up to ASIL C (SG-01, until re-rated; B‡ per [WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md)); SOTIF; CS overlaps |
+| ASIL / scope | Up to ASIL D (SG-01, until re-rated under FSC option (c); B‡ per [WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md)); SOTIF; CS overlaps |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Safety manager |

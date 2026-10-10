@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-6:2018 Annex C (software configuration; calibration data); ISO 26262-6:2018 §6, §9 (requirements on and verification of data); ISO 26262-8:2018 §7 (configuration management); ISO/PAS 8800:2024 (model as configuration item, informative); ASPICE 4.0 SWE.3 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | Up to ASIL C (data that configures or parameterises the envelope E-03); QM / SOTIF / PAS 8800 for host data |
+| ASIL / scope | Up to ASIL D (data that configures or parameterises the envelope E-03); QM / SOTIF / PAS 8800 for host data |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
@@ -31,7 +31,7 @@ Related work products: CM classes CI-3, CI-4, CI-5 in [WP-P-01 §3](../07-suppor
 | Type | **CFG** configuration data (selects variant/feature); **CAL** calibration data (numeric value adapting behaviour); **LRN** learned calibration (computed and stored at run time); **MDL** ML model weights |
 | Binding time | **Build** (compiled into firmware or committed source), **Fingerprint** (chosen at start-up from vehicle identification), **Install** (set during installation/provisioning), **User** (settings UI), **Runtime** (learned or written while driving) |
 | Consumer | E-03 (envelope, panda), E-01 (host), E-02 (models) |
-| ASIL | ASIL of the requirement the item parameterises. An item consumed by E-03 inherits the envelope ASIL (C provisional). An item produced by QM and consumed by E-03 is an FFI concern ([WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md)) |
+| ASIL | ASIL of the requirement the item parameterises. An item consumed by E-03 inherits the envelope ASIL (D provisional for SG-01, C for SG-03…SG-05). An item produced by QM and consumed by E-03 is an FFI concern ([WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md)) |
 | Owner | Role accountable for the value and its rationale |
 
 ## 3. Inventory summary

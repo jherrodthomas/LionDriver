@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-5:2018 §7 (hardware design: architectural and detailed design, safety-related HW elements); ISO 26262-8:2018 §13; ASPICE 4.0 HWE.2 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-07) |
+| ASIL / scope | ASIL D (provisional, SG-01, until re-rated under FSC option (c)) / ASIL C (SG-03…SG-05) / ASIL B (SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |
@@ -198,7 +198,7 @@ silicon (low cost) or add-ons in the harness path (LionDriver-controlled hardwar
 | ID | Change | Addresses | Kind | Impact | Recommendation |
 |---|---|---|---|---|---|
 | DC-01 | Enable IWDG1 in window mode from the bootstub; service it from the end of the 8 Hz tick processing and only if the main loop and CAN RX/TX safety processing reported progress; timeout ≤ 0.2 s minus reset time | GAP-07, HWSR-501–501c | Firmware config | Small code change in the panda fork; must be verified for stop mode, flashing and bootloader paths (an IWDG that cannot be stopped also runs during firmware update — the flasher must service it). Requires HIL (D-04) | **Do (G3)**. Needed at any ASIL |
-| DC-02 | External voltage supervisor + watchdog (separate clock) that holds MCU in reset and cuts the relay coil supply | GAP-07 residual (common cause with MCU), GAP-11, HWSR-501d | HW add-on in a LionDriver harness adapter | Requires a LionDriver-built adapter between harness and device; new component to qualify; changes the item (impact analysis per WP-M-12) | Needed if SG-01 stays ASIL C or decomposition (FSC §4.3) is chosen. Optional at ASIL B |
+| DC-02 | External voltage supervisor + watchdog (separate clock) that holds MCU in reset and cuts the relay coil supply | GAP-07 residual (common cause with MCU), GAP-11, HWSR-501d | HW add-on in a LionDriver harness adapter | Requires a LionDriver-built adapter between harness and device; new component to qualify; changes the item (impact analysis per WP-M-12) | Effectively required if SG-01 stays ASIL D or decomposition (FSC §4.3) is chosen; likely needed for the ASIL C targets of SG-03…SG-05 (WP-H-04 §5.1). Optional at ASIL B |
 | DC-03 | Relay readback: sense the camera-side and car-side bus continuity, or use a relay with auxiliary contact, wired to a spare MCU input (or to the DC-02 supervisor) | GAP-12, HWSR-506a | HW add-on (harness adapter) + firmware | Same adapter as DC-02; adds an input to the HSI; closes the "stuck intercepting" detection hole for SG-07 | **Recommended** for SG-07 at ASIL B; LFM benefit for the relay |
 | DC-04 | Fault reaction: make relay malfunction, register divergence, ECC double error, PVD, interrupt-rate faults and watchdog-loop faults permanent faults leading to SILENT (relay released, TX off) | GAP-08 | Firmware | Changes `PERMANENT_FAULTS` and adds a reaction in `fault_occurred()`; availability impact to be evaluated (false trips) | **Do (G3)** |
 | DC-05 | Enable RAMECC monitors and flash-ECC interrupts; periodic flash CRC | GAP-08, HWSR-503–503c | Firmware | Moderate code; needs fault-injection method (ECC error injection is limited on STM32H7 — verify) | **Do** |

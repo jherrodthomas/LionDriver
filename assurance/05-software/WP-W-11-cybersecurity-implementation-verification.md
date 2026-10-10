@@ -6,7 +6,7 @@
 | Standard reference | ISO/SAE 21434:2021 §10 (product development: implementation, integration and verification; weakness analysis), §6 (off-the-shelf and open-source components); ISO 26262-6:2018 §5 (coding guidelines, as shared base); ASPICE 4.0 SEC.2, SEC.3 |
 | Version | 0.1 |
 | Status | Draft — rules and plan proposed; no cybersecurity verification activity has been executed. The status column records code-review observations only |
-| ASIL / scope | CS (CAL 1–3); shared coding rules apply to the envelope code (B‡ per WP-S-02: ASIL C until SG-01 is re-rated) |
+| ASIL / scope | CS (CAL 1–3); shared coding rules apply to the envelope code (B‡ per WP-S-02: ASIL D until SG-01 is re-rated) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting cybersecurity manager) |

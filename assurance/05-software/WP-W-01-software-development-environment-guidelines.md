@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-6:2018 §5 (general topics for product development at the software level: development environment, modelling and coding guidelines); ISO 26262-8:2018 §11 (by reference to WP-P-07); ISO/SAE 21434:2021 §10 (secure coding); MISRA C:2012 (incl. amendments as supported by the analyser); ASPICE 4.0 SWE.3 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | Envelope (E-03): ASIL C provisional, ASIL B expected after SG-01 re-rating ([WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md)). Host stack (E-01, E-02): QM / SOTIF / CS |
+| ASIL / scope | Envelope (E-03): ASIL D provisional (SG-01, decision D-09), ASIL C for parts that serve SG-03…SG-05; ASIL B/C expected after SG-01 re-rating ([WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md)). Host stack (E-01, E-02): QM / SOTIF / CS |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
@@ -20,15 +20,15 @@ It also holds the **MISRA C:2012 deviation procedure and deviation register** (�
 
 The guidelines are written for code that LionDriver will own after the forks of opendbc and panda (D-01, [WP-P-01 §6](../07-supporting/WP-P-01-configuration-management-plan.md#6-submodule-control-d-01)). Until then they describe the inherited code and set the rules that LionDriver change requests must follow.
 
-ASIL handling: until the HARA is confirmed, the envelope is developed to the **ASIL C** column of the 26262-6 §5 topics. If SG-01 is re-rated to ASIL B (WP-C-04 OI-2), the ASIL B column applies and this document is re-issued. Recommendation levels per ASIL are taken from the licensed copy of ISO 26262-6; they are not reproduced here.
+ASIL handling: until the HARA is confirmed, the envelope is developed to the **ASIL D** column of the 26262-6 §5 topics (SG-01 is ASIL D in HARA 0.2, decision D-09). If SG-01 is re-rated to ASIL B (WP-C-04 OI-2), the ASIL C column still applies to parts that serve SG-03…SG-05 (ASIL C) and the ASIL B column to the rest, and this document is re-issued. Recommendation levels per ASIL are taken from the licensed copy of ISO 26262-6; they are not reproduced here.
 
 ## 2. Software elements and languages
 
 | Element | Allocation | Language / standard | Build | ASIL / class | Location |
 |---|---|---|---|---|---|
-| Envelope safety logic (opendbc safety) | E-03 | C (C11 with GNU extensions, `-std=gnu11`) | Included into panda firmware; host build `libsafety.so` for tests | ASIL C (prov.) | `opendbc_repo/opendbc/safety/{safety.h,lateral.h,longitudinal.h,helpers.h,declarations.h,can.h,ignition.h}`, `opendbc_repo/opendbc/safety/modes/toyota.h`, `modes/defaults.h` |
-| Envelope platform (panda firmware paths used by the envelope) | E-03 | C (`-std=gnu11`), ARM assembly (startup) | `panda/SConscript` with arm-none-eabi-gcc | ASIL C (prov.) | `panda/board/main.c`, `main_comms.h`, `can_comms.h`, `drivers/{fdcan,spi,harness,simple_watchdog,registers,interrupts}.h`, `sys/*`, `stm32h7/*`, `stm32h7/startup_stm32h7x5xx.s` |
-| panda bootstub | E-03 / CS | C, assembly | `panda/SConscript:106-114` (`-DBOOTSTUB`) | ASIL C (prov.) + CAL (boot integrity) | `panda/board/bootstub.c`, `crypto/{rsa,sha}.c`, `flasher.h`, `stm32h7/llflash.h` |
+| Envelope safety logic (opendbc safety) | E-03 | C (C11 with GNU extensions, `-std=gnu11`) | Included into panda firmware; host build `libsafety.so` for tests | ASIL D (prov.) | `opendbc_repo/opendbc/safety/{safety.h,lateral.h,longitudinal.h,helpers.h,declarations.h,can.h,ignition.h}`, `opendbc_repo/opendbc/safety/modes/toyota.h`, `modes/defaults.h` |
+| Envelope platform (panda firmware paths used by the envelope) | E-03 | C (`-std=gnu11`), ARM assembly (startup) | `panda/SConscript` with arm-none-eabi-gcc | ASIL D (prov.) | `panda/board/main.c`, `main_comms.h`, `can_comms.h`, `drivers/{fdcan,spi,harness,simple_watchdog,registers,interrupts}.h`, `sys/*`, `stm32h7/*`, `stm32h7/startup_stm32h7x5xx.s` |
+| panda bootstub | E-03 / CS | C, assembly | `panda/SConscript:106-114` (`-DBOOTSTUB`) | ASIL D (prov.) + CAL (boot integrity) | `panda/board/bootstub.c`, `crypto/{rsa,sha}.c`, `flasher.h`, `stm32h7/llflash.h` |
 | Host car interface (Toyota port, CAN parse/pack) | E-01 | Python 3.12 (`.python-version`), Cython/C++ for the CAN parser | uv, SCons | QM (SR-Q) | `opendbc_repo/opendbc/car/**`, `opendbc_repo/opendbc/can/**` |
 | Host stack daemons in Python | E-01 | Python 3.12 | — | QM (SR-Q) | `openpilot/selfdrive/{selfdrived,controls,monitoring,car,locationd,modeld}/**`, `openpilot/system/**` |
 | Host daemons in C++ | E-01 | C++17 (`-std=c++1z`, `SConstruct:143`) | SCons, clang on device (`SConstruct:179-180`) | QM (SR-Q for pandad) | `openpilot/selfdrive/pandad/*.cc` (5 files), `openpilot/system/camerad/**`, `openpilot/system/loggerd/**` |

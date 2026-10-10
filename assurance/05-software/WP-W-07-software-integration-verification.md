@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-6:2018 §10 (software integration and verification: integration steps, methods, test-case derivation, coverage at architectural level, test environment); ISO 26262-8:2018 §9; ASPICE 4.0 SWE.5 |
 | Version | 0.1 |
 | Status | Draft (specification); results section **Not yet executed** |
-| ASIL / scope | Envelope software (E-03): B‡ (ASIL C until SG-01 re-rating); host↔panda software interface: QM (B-sup) |
+| ASIL / scope | Envelope software (E-03): B‡ (ASIL D until SG-01 re-rating; C for SG-03…SG-05); host↔panda software interface: QM (B-sup) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |

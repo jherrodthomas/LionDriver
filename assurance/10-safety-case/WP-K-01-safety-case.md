@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-2:2018 §6 (safety case); ISO 21448:2022 §12 (via [WP-K-02](WP-K-02-sotif-release-argument.md)); ISO/PAS 8800:2024 (AI assurance argument); ISO/SAE 21434:2021 §6 (cybersecurity case, via [WP-K-03](WP-K-03-cybersecurity-case.md)); UL 4600 (informative only, see §8); GSN Community Standard (notation) |
 | Version | 0.1 |
 | Status | Draft — **living document. At this baseline the argument structure is defined; almost all evidence is missing or partial. This safety case does not support any release or public-road claim** |
-| ASIL / scope | Item LD-SDA, reference configuration; up to ASIL C (SG-01) |
+| ASIL / scope | Item LD-SDA, reference configuration; up to ASIL D (SG-01) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review CR-12 by external assessor (I3) per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
@@ -98,7 +98,7 @@ G1  Hazards from E/E malfunctions of the item are reduced to a tolerable level: 
  ⊙ C7   Envelope strategy: reduced authority (option c) + ASIL B hardening, recommended
         and pending maintainer decision [WP-C-04 §4]
  → S1   Argue per safety goal, then over the properties every SG depends on
-     → G1.1  SG-01 (lateral motion, ASIL C ⚠ / B if C1 shown under option c) is met
+     → G1.1  SG-01 (lateral motion, ASIL D / B if C1 shown under option c) is met
           → S1.1 Argue over (i) envelope limits keep any command controllable,
                  (ii) the limits are enforced by an element of sufficient integrity,
                  (iii) faults of the enforcing element are detected and reacted to in FTTI
@@ -121,12 +121,12 @@ G1  Hazards from E/E malfunctions of the item are reduced to a tolerable level: 
           → Sn-01 FSR-02.x; Sn-02 TSR-6xx; Sn-14 SW integration tests [WP-W-07];
             Sn-13 fault injection
           ⇐ DF-07 (soft-disable 3 s actuation), DF-08 (diagnostics masked)
-     → G1.3  SG-03 (unintended acceleration, B ⚠) is met
+     → G1.3  SG-03 (unintended acceleration, C) is met
           → Sn-01 FSR-03.x; Sn-02 TSR-2xx; Sn-10; Sn-12; Sn-21 PCM envelope test (AOU-05)
-     → G1.4  SG-04 (excessive deceleration, B ⚠) is met
+     → G1.4  SG-04 (excessive deceleration, C) is met
           → Sn-01 FSR-04.x; Sn-02 TSR-2xx; Sn-21
           ⇐ DF-09 (no jerk limit in envelope)
-     → G1.5  SG-05 (release on driver action, B ⚠) is met
+     → G1.5  SG-05 (release on driver action, C) is met
           → Sn-01 FSR-05.x; Sn-02 TSR-3xx; Sn-10 (brake/PCM tests, `common.py`);
             Sn-22 brake override test (AOU-03)
           ⇐ DF-10 (no driver-torque monitoring in envelope)
@@ -144,7 +144,8 @@ G1  Hazards from E/E malfunctions of the item are reduced to a tolerable level: 
           → Sn-07 FMEDA [WP-H-03]; Sn-08 metrics [WP-H-04]; Sn-09 PMHF/EEC [WP-H-05];
             Sn-11 HW component qualification [WP-H-07]
           ⇐ DF-04 (report-only faults), DF-13 (no FMEDA, no supplier data)
-     → G1.10 The assumptions credited in controllability (AOU-01/02/03/05) are verified
+     → G1.10 The vehicle assumptions used as design input (AOU-01/02/03/05; not credited in
+             the HARA since D-09) are verified
           → Sn-20, Sn-21, Sn-22 vehicle characterisation [WP-V-01]
           ⇐ DF-14 (all AoUs unverified)
 ```
@@ -250,16 +251,16 @@ G5  The work was done by competent people under controlled processes, was
 
 | ID | Assumption | Credited by | Status at baseline | Effect if false |
 |---|---|---|---|---|
-| AOU-01 | EPS limits LKA torque; ends torque on message loss | G1.1, G1.5, G1.10 | Unverified | HE-01.x C3 → SG-01 ASIL D; G1.1 fails as argued |
+| AOU-01 | EPS limits LKA torque; ends torque on message loss | G1.1, G1.5, G1.10 | Unverified | No rating change: not credited in the HARA since D-09 (SG-01 already ASIL D); G1.1 fails as argued |
 | AOU-02 | Driver can overpower full LKA torque | G1.1, G1.5 | Unverified | As AOU-01 |
-| AOU-03 | Brake always brakes; PCM cancels ACC on brake | G1.5 | Unverified | SG-05 ASIL C |
+| AOU-03 | Brake always brakes; PCM cancels ACC on brake | G1.5 | Unverified | No rating change: not credited since D-09 (SG-05 already ASIL C); G1.5 loses design input |
 | AOU-04 | Stock PCS keeps full function | G1.7 | Unverified | SG-07 violated by design |
-| AOU-05 | PCM bounds ACC requests | G1.3, G1.4 | Unverified | SG-03/SG-04 ASIL C |
+| AOU-05 | PCM bounds ACC requests | G1.3, G1.4 | Unverified | No rating change: not credited since D-09 (SG-03/SG-04 already ASIL C); G1.3/G1.4 lose design input |
 | AOU-06 | Attentive, briefed driver | G2.3, all C ratings | Assumption (SOTIF-managed) | Controllability basis of all ratings |
 | AOU-07 | Only trained safety drivers in development | G5.7 | Not started | Development testing not controlled |
 | AOU-08 | Device mounted and calibrated per instructions | G2 | Partial (calibration check exists) | SOTIF insufficiency |
 | AOU-09 | Vehicle maintained, unmodified, no DTCs | All | Not started | Any |
-| AOU-10 | VSC/ABS on and working | G1.4 | Not started | HE-04.2 rating |
+| AOU-10 | VSC/ABS on and working | G1.4 | Not started | No rating change: not credited since D-09 (HE-04.2 already ASIL B) |
 | AOU-11 | Back end untrusted; no safety function depends on it | G4 | Design constraint | — |
 
 Status values are copied from [WP-C-01 §7](../02-concept/WP-C-01-item-definition.md) (machine-readable copy: `trace/items/aou.yaml`).
@@ -341,7 +342,7 @@ Each defeater is a known fact that, while it stands, defeats the claim it is att
 | DF-11 | Relay failure detected only by traffic observation, 1–2 s grace, no readback | GAP-12 | G1.7 | HWSR / TSR-7xx |
 | DF-12 | Debug relay-drive command `0xc5` not gated in release builds | GAP-09 | G1.7, G1.8 | Firmware change |
 | DF-13 | No FMEDA/SPFM/LFM/PMHF; no supplier safety data for the COTS device | GAP-15 | G1.9 | WP-H-03…H-07 |
-| DF-14 | All vehicle AoUs (AOU-01…05) unverified; ⚠ ratings may rise to ASIL C/D | GAP-05 | G1.1, G1.3–G1.5, G1.7, G1.10 | Vehicle characterisation |
+| DF-14 | All vehicle AoUs (AOU-01…05) unverified; not credited in the HARA since D-09, so ratings stay at ASIL D (SG-01) / C (SG-03…SG-05) until they are measured | GAP-05 | G1.1, G1.3–G1.5, G1.7, G1.10 | Vehicle characterisation |
 | DF-15 | Experimental Mode (end-to-end longitudinal) on by default, without hazard assessment | GAP-18 | G2.1, G3 | D-08; WP-C-07 |
 | DF-16 | No fork-owned HIL, on-road or model-replay verification; replay references from comma | GAP-30 | G1.1.2, G2.2, G3.3 | D-04 |
 | DF-17 | DM validity hard-coded `True`; wheel-touch awareness reset by any input; no tests for DM data loss | GAP-21 | G2.3 | WP-C-08; TSR-6xx |

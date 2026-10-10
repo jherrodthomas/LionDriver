@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-4:2018 §7 (fault injection at system and vehicle level); ISO 26262-5:2018 §10 (hardware integration, fault injection for safety mechanisms); ISO 26262-6:2018 §10–§11 (fault injection at software integration and embedded software test); ASPICE 4.0 SYS.4, SWE.6 |
 | Version | 0.1 |
 | Status | Draft (specification). **Results: not yet executed** |
-| ASIL / scope | ASIL C (SG-01 until re-rated, WP-S-02 "B‡"), ASIL B (SG-02…SG-07); reference configuration |
+| ASIL / scope | ASIL D (SG-01 until re-rated, WP-S-02 "B‡"), ASIL C (SG-03…SG-05), ASIL B (SG-02, SG-06, SG-07); reference configuration |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); campaign plan reviewed with independence per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |

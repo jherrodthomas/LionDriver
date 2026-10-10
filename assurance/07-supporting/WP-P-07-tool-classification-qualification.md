@@ -16,7 +16,7 @@
 
 Classifies every software tool used to develop, build or verify LionDriver and plans qualification for tools that reach TCL2 or TCL3. Closes the planning side of GAP-34 ([gap assessment](../00-assessment/gap-assessment.md)). Tool versions are configuration items ([WP-P-01](WP-P-01-configuration-management-plan.md) CI-8).
 
-The envelope ASIL is not yet set (HARA [WP-C-03](../02-concept/WP-C-03-hara.md) is Draft). This plan assumes the envelope may reach ASIL C or D and plans qualification methods accordingly; it is re-checked once safety goals are approved (OI-1).
+The envelope ASIL is not yet approved (HARA [WP-C-03](../02-concept/WP-C-03-hara.md) is Draft; revision 0.2 rates SG-01 at ASIL D). This plan assumes the envelope may reach ASIL D and plans qualification methods accordingly; it is re-checked once safety goals are approved (OI-1).
 
 ## 2. Method
 

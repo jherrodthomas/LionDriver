@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-8:2018 §13 (qualification of hardware components); ISO 26262-5:2018 §7–§9 (for complex elements); ISO 26262-11:2018 (semiconductors, informative); ASPICE 4.0 — (no direct process; supports HWE.1–4 at CL1 per T-12) |
 | Version | 0.1 |
 | Status | Draft (qualification plan; no qualification performed) |
-| ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
+| ASIL / scope | ASIL D (provisional, SG-01, until re-rated under FSC option (c)) / ASIL C (SG-03…SG-05) / ASIL B (SG-02, SG-06, SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |

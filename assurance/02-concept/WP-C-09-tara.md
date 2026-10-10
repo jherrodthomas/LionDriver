@@ -63,7 +63,7 @@ Impact levels: **Severe / Major / Moderate / Negligible** per ISO/SAE 21434 §15
 
 | ID | Damage scenario | HARA link | S | F | O | P | Max level |
 |---|---|---|---|---|---|---|---|
-| DS-01 | Unintended/excessive lateral actuation induced by manipulation | H-01 (ASIL C/D) | Severe | Moderate | Major | Negligible | 4 |
+| DS-01 | Unintended/excessive lateral actuation induced by manipulation | H-01 (ASIL C/D; SG-01 ASIL D) | Severe | Moderate | Major | Negligible | 4 |
 | DS-02 | Lateral control silently lost or frozen | H-02 (ASIL B) | Severe | Moderate | Major | Negligible | 4 |
 | DS-03 | Unintended acceleration induced | H-03 (ASIL B/C) | Severe | Moderate | Major | Negligible | 4 |
 | DS-04 | Unintended/excessive deceleration induced | H-04 (ASIL B/C) | Major | Moderate | Major | Negligible | 3 |
@@ -77,7 +77,7 @@ Impact levels: **Severe / Major / Moderate / Negligible** per ISO/SAE 21434 §15
 | DS-12 | Data-at-rest exposure after device theft (video, location, keys) | — | Negligible | Moderate | Moderate | Severe | 4 |
 
 Notes:
-- Safety "Severe" tracks the S3/ASIL C hazards; "Major" tracks the S2/ASIL B rear-end hazards (H-04).
+- Safety "Severe" tracks the S3 hazards (up to ASIL D); "Major" tracks the S2 rear-end hazards (H-04, ASIL C since D-09).
 - Operational impact is "Major" for a loss of the driving function; "Severe" for DS-11 because a fleet event removes the function from many vehicles at once.
 - Privacy "Severe" for driver-facing video because it is biometric/cabin content; "Major" for location history.
 - Financial impact is held conservative (Moderate/Major) for a single-maintainer open-source retrofit with no commercial warranty exposure; it is not the dimensioning category for any scenario.

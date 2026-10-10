@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-9:2018 §6 (criteria for coexistence of elements); ISO 26262-6:2018 §7 and Annex D (freedom from interference between software elements: timing and execution, memory, exchange of information); ISO 26262-5:2018 Annex D (communication bus diagnostic measures, informative); ASPICE 4.0 SYS.3, SWE.2 |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | ASIL C (SG-01, until re-rated) / ASIL B (SG-02…SG-07) elements coexisting with QM elements, on the panda MCU and on the comma device |
+| ASIL / scope | ASIL D (SG-01, until re-rated under FSC option (c)) / ASIL C (SG-03…SG-05) / ASIL B (SG-02, SG-06, SG-07) elements coexisting with QM elements, on the panda MCU and on the comma device |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); input to G2 confirmation review |
 | Approver | Safety manager |
@@ -33,18 +33,18 @@ ISO 26262-9 §6 gives two options for a QM or lower-ASIL sub-element that coexis
 
 | Sub-element (panda firmware) | Source | Safety role | Decision | Rationale |
 |---|---|---|---|---|
-| opendbc safety core and Toyota mode (`safety_rx_hook`, `safety_tx_hook`, `safety_fwd_hook`, `safety_tick`, limit checks) | `opendbc_repo/opendbc/safety/safety.h`, `lateral.h`, `longitudinal.h`, `modes/toyota.h` | Implements FSR-01.xx…07.xx | **ASIL C (B after re-rating)** | Core envelope |
-| Tick handler: heartbeat timeout, controls-allowed mismatch, siren, `safety_tick` call | `panda/board/main.c:106-249` | FSR-01.07, FSR-02.05 | **ASIL C** | Safety supervision |
-| CAN driver RX/TX path (FDCAN ISR, `can_send`, queues) | `panda/board/drivers/fdcan.h`, `drivers/can_common.h:161-176` | Carries every actuation frame; invokes TX/RX hooks | **ASIL C** | Safety-related data path; a fault here bypasses the hooks |
-| Relay and harness drivers | `panda/board/drivers/harness.h` | FSR-01.11, FSR-07.03 | **ASIL C/B** | Actuation of the safe state |
-| `set_safety_mode` and mode bookkeeping | `panda/board/main.c:31-80` | Configures envelope | **ASIL C** | Configuration of the safety element |
-| Fault handling, exception handlers, early init | `panda/board/sys/faults.h`, `early_init.h:66-80` | FSR-01.09 | **ASIL C** | |
-| Host command dispatcher (`comms_control_handler`) | `panda/board/main_comms.h` | Receives commands from the QM SoC; some commands change safety-relevant state | **ASIL C for the commands that touch safety state; others shown non-interfering** | It is the interface through which QM interference arrives (§5) |
-| SPI/USB transport (`spi_rx_done`, DMA, USB ISR) | `panda/board/drivers/spi.h`, `stm32h7/llspi.h`, `stm32h7/llusb.h` | Moves host frames into `comms_can_write` | **ASIL C (integrity checks) / FFI for the rest** | Corruption here reaches `can_send` |
+| opendbc safety core and Toyota mode (`safety_rx_hook`, `safety_tx_hook`, `safety_fwd_hook`, `safety_tick`, limit checks) | `opendbc_repo/opendbc/safety/safety.h`, `lateral.h`, `longitudinal.h`, `modes/toyota.h` | Implements FSR-01.xx…07.xx | **ASIL D (B after SG-01 re-rating; C while SG-03…SG-05 are ASIL C)** | Core envelope |
+| Tick handler: heartbeat timeout, controls-allowed mismatch, siren, `safety_tick` call | `panda/board/main.c:106-249` | FSR-01.07, FSR-02.05 | **ASIL D** | Safety supervision |
+| CAN driver RX/TX path (FDCAN ISR, `can_send`, queues) | `panda/board/drivers/fdcan.h`, `drivers/can_common.h:161-176` | Carries every actuation frame; invokes TX/RX hooks | **ASIL D** | Safety-related data path; a fault here bypasses the hooks |
+| Relay and harness drivers | `panda/board/drivers/harness.h` | FSR-01.11, FSR-07.03 | **ASIL D/B** | Actuation of the safe state |
+| `set_safety_mode` and mode bookkeeping | `panda/board/main.c:31-80` | Configures envelope | **ASIL D** | Configuration of the safety element |
+| Fault handling, exception handlers, early init | `panda/board/sys/faults.h`, `early_init.h:66-80` | FSR-01.09 | **ASIL D** | |
+| Host command dispatcher (`comms_control_handler`) | `panda/board/main_comms.h` | Receives commands from the QM SoC; some commands change safety-relevant state | **ASIL D for the commands that touch safety state; others shown non-interfering** | It is the interface through which QM interference arrives (§5) |
+| SPI/USB transport (`spi_rx_done`, DMA, USB ISR) | `panda/board/drivers/spi.h`, `stm32h7/llspi.h`, `stm32h7/llusb.h` | Moves host frames into `comms_can_write` | **ASIL D (integrity checks) / FFI for the rest** | Corruption here reaches `can_send` |
 | Fan, sound, LED, IR, DTS/ADC housekeeping, debug print | `drivers/fan.h`, `stm32h7/sound.h`, `drivers/led.h`, `stm32h7/lldts.h` | None | **QM with FFI** | Must not block or corrupt the above |
-| Bootstub / softloader | `panda/board/bootstub.c`, `flasher.h` | Boot integrity (TSR-511) | **ASIL C for signature check and relay-safe start; cybersecurity scope** | GAP-24, GAP-38 |
+| Bootstub / softloader | `panda/board/bootstub.c`, `flasher.h` | Boot integrity (TSR-511) | **ASIL D for signature check and relay-safe start; cybersecurity scope** | GAP-24, GAP-38 |
 
-**Consequence:** because the panda firmware is one image without MPU partitioning (GAP-11), the "QM with FFI" decision for housekeeping code can only be supported by analysis plus the measures in §6. If those measures are not implemented, all code in the image has to be developed and verified to the highest ASIL (practically: ASIL B after re-rating). This is OI-2.
+**Consequence:** because the panda firmware is one image without MPU partitioning (GAP-11), the "QM with FFI" decision for housekeeping code can only be supported by analysis plus the measures in §6. If those measures are not implemented, all code in the image has to be developed and verified to the highest ASIL (practically: ASIL D until SG-01 is re-rated, then ASIL C while SG-03…SG-05 are ASIL C). This is OI-2.
 
 ## 3. Interference model
 

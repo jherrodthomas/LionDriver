@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-4:2018 §6 (fault tolerant time interval, fault detection and fault reaction time intervals, emergency operation); ISO 26262-3:2018 §7 (FTTI as FSC input); ISO 26262-1:2018 (definitions, by reference); ASPICE 4.0 SYS.3 |
 | Version | 0.1 |
 | Status | Draft — kinematic estimates only; no measurement has been performed |
-| ASIL / scope | SG-01 (C until re-rated, B‡), SG-02…SG-07 (B) |
+| ASIL / scope | SG-01 (D until re-rated, B‡), SG-03…SG-05 (C), SG-02, SG-06, SG-07 (B) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Safety manager |

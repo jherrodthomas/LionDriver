@@ -6,9 +6,9 @@
 | Standard reference | ISO 26262-6:2018 §9 (software unit verification; methods, test-case derivation and structural coverage tables of §9); ISO 26262-8:2018 §9 (verification), §11 (tools, by reference to WP-P-07); ISO/SAE 21434:2021 §10 (verification of implementation); ASPICE 4.0 SWE.4 |
 | Version | 0.1 |
 | Status | Draft (specification); results section **Not yet executed** |
-| ASIL / scope | Envelope (E-03) units: ASIL C provisional (B expected after SG-01 re-rating, [WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md)). Host (E-01) units: QM, summarised only |
+| ASIL / scope | Envelope (E-03) units: ASIL D provisional (SG-01, D-09; C for SG-03…SG-05; B or C expected after SG-01 re-rating, [WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md)). Host (E-01) units: QM, summarised only |
 | Author | Assurance team (initial draft) |
-| Reviewer(s) | TBD (I1); I2 for the ASIL C strategy per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
+| Reviewer(s) | TBD (I1); I2 for the ASIL D strategy per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Project maintainer (acting safety manager) |
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
@@ -48,14 +48,14 @@ Unit granularity: one C header/source module, verified through its public hooks.
 
 ### 3.1 Methods
 
-ISO 26262-6 §9 gives methods for unit verification with recommendation levels per ASIL. The table records LionDriver's **decision** for E-03 at ASIL C (provisional) and the fallback at ASIL B; the recommendation levels themselves are checked against the licensed copy (OI-1) and are not reproduced.
+ISO 26262-6 §9 gives methods for unit verification with recommendation levels per ASIL. The table records LionDriver's **decision** for E-03 at ASIL D (provisional) and the fallback at ASIL B (parts that serve SG-03…SG-05 stay at ASIL C); the recommendation levels themselves are checked against the licensed copy (OI-1) and are not reproduced.
 
-| Method | Decision for E-03 (ASIL C prov.) | At ASIL B | How applied | Exists today? |
+| Method | Decision for E-03 (ASIL D prov.) | At ASIL B | How applied | Exists today? |
 |---|---|---|---|---|
 | Walk-through | Not used alone | Allowed | — | No records |
 | Inspection (pair-review / Fagan-style with checklist) | **Applied** to every E-03 unit at G3 and to every SR-A PR | Applied | [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) checklist + WP-W-01 §5.4 | No (GAP-32) |
 | Semi-formal verification | Applied to engagement state machine (state table vs code) | Optional | State-transition table in WP-W-05; review | No |
-| Formal verification | Not applied; rationale: effort vs ASIL C recommendation level to be checked (OI-1) | Not applied | — | No |
+| Formal verification | Not applied; rationale: effort vs ASIL D recommendation level to be checked (OI-1) | Not applied | — | No |
 | Control-flow analysis | **Applied** | Applied | cppcheck `--check-level=exhaustive --safety`; review | Partial (tool only) |
 | Data-flow analysis | **Applied** | Applied | cppcheck; review of ISR shared data (WP-W-01 ENV-R-12) | Partial |
 | Static code analysis (MISRA) | **Applied**, zero unrecorded violations | Applied | `test_misra.sh` (opendbc and panda) | Yes, upstream CI only |
@@ -70,7 +70,7 @@ Test-case derivation methods applied to every requirements-based test: analysis 
 
 ### 3.2 Structural coverage
 
-| Metric | E-03 target (ASIL C prov.) | At ASIL B | Today | Tool |
+| Metric | E-03 target (ASIL D prov.) | At ASIL B | Today | Tool |
 |---|---|---|---|---|
 | Statement (line) coverage | 100 % of E-03 units in the release configuration, with justified exclusions | 100 % | 100 % **line** coverage gate over `opendbc/safety/**` excluding `libsafety` (`tests/test.sh:36`), in the `ALLOW_DEBUG` configuration | gcovr 8.6 (TL-05) |
 | Branch coverage | 100 % with justified exclusions | 100 % with justified exclusions | Not measured (GAP-13, WP-P-07 K-3) | gcovr `--fail-under-branch` |
@@ -228,7 +228,7 @@ The Toyota safety mode was re-implemented independently in [XZACT](https://githu
 
 | # | Gap | Effect | GAP | Closure |
 |---|---|---|---|---|
-| UV-G1 | Line coverage only; no branch, no MC/DC | ASIL C structural coverage not demonstrated | GAP-13 | Add branch gate; select and qualify MC/DC tool (OI-3) |
+| UV-G1 | Line coverage only; no branch, no MC/DC | ASIL D (prov.) structural coverage not demonstrated | GAP-13 | Add branch gate; select and qualify MC/DC tool (OI-3) |
 | UV-G2 | Tests run on x86/arm64 host, `-O0`; target Cortex-M7 `-Os` never tested by unit tests | Compiler (TL-01 TCL3) and target-specific defects undetected | GAP-13, GAP-30 | VS-UV-20 on HIL (D-04) |
 | UV-G3 | Tested configuration is `ALLOW_DEBUG`; release configuration only compiled | Tested ≠ shipped | GAP-41 | VS-UV-19 |
 | UV-G4 | Envelope verification not run in LionDriver CI | No evidence under LionDriver control | GAP-39 | OI-4 |
@@ -237,7 +237,7 @@ The Toyota safety mode was re-implemented independently in [XZACT](https://githu
 | UV-G7 | 3 accepted mutation survivors without justification; no mutation score | Weak evidence of test strength | GAP-13 | Justification records; mutation score in report |
 | UV-G8 | panda firmware units: no unit tests with coverage; HITL needs comma infrastructure | U-PND-* unverified at unit level | GAP-30 | Extend `tests/libpanda` host harness; HIL bench |
 | UV-G9 | No tests for behaviours that are not implemented yet (E2E counters, IWDG, safety-mode lock, driver-torque override, EPS fault, jerk limit) | Will be needed once implemented | GAP-01, -02, -03, -04, -07, -09 | VS-UV-08…18 specified now |
-| UV-G10 | No resource-usage (stack, execution time) evaluation | ASIL C method not applied | — | VS-UV-21 |
+| UV-G10 | No resource-usage (stack, execution time) evaluation | ASIL D (prov.) method not applied | — | VS-UV-21 |
 | UV-G11 | Tools unqualified (gcovr, cppcheck, mutation.py, harness) | Evidence confidence | GAP-34 | WP-P-07 TQR-04…07 |
 
 ## 6. Unit verification specification (VS-UV)
@@ -310,7 +310,7 @@ Static verification items (not tests):
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Check method and coverage recommendation levels for ASIL B and C against the licensed ISO 26262-6 §9 tables; adjust §3 decisions | Safety engineer | G3 |
+| OI-1 | Check method and coverage recommendation levels for ASIL B, C and D against the licensed ISO 26262-6 §9 tables; adjust §3 decisions | Safety engineer | G3 |
 | OI-2 | Select and classify (WP-P-07) an abstract-interpretation or bounded-model-checking tool for VS-UV-S3 | Maintainer | G3 |
 | OI-3 | Select and qualify an MC/DC measurement approach; add branch gate (`--fail-under-branch`) to `test.sh` in the opendbc fork | Maintainer | G3 |
 | OI-4 | Add the opendbc `safety`, `mutation` and MISRA jobs and the panda MISRA job to LionDriver CI, triggered on `liondriver-dev` (GAP-39, WP-P-01 OI-7/OI-8) | Maintainer | G3 |
@@ -321,4 +321,4 @@ Static verification items (not tests):
 | OI-9 | Fork-owned drive logs for `safety_replay/replay_drive.py` and `test_models.py` | Maintainer | G4 |
 | OI-10 | Make the XZACT equivalence check (§4.8) reproducible: pin the XZACT revision, store the trace generator and results with this WP, and classify XZACT under WP-P-07 as a verification tool | Maintainer | G3 |
 
-> Note from the consistency pass: WP-W-03 defines additional panda units U-PND-USB, U-PND-PWR, U-PND-HK and U-PND-PLAT that are not yet in this unit list. Add them with their verification methods. "ASIL C provisional" in this document equals the B‡ notation used in WP-W-02 and WP-S-02.
+> Note from the consistency pass: WP-W-03 defines additional panda units U-PND-USB, U-PND-PWR, U-PND-HK and U-PND-PLAT that are not yet in this unit list. Add them with their verification methods. "ASIL D provisional" in this document equals the B‡ notation used in WP-W-02 and WP-S-02.

@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-5:2018 §7 (safety analyses on HW design), §8 (metrics input), Annex D (diagnostic coverage of safety mechanisms, informative); ISO 26262-9:2018 §8 (safety analyses); ISO 26262-11:2018 (semiconductor failure modes, informative); ASPICE 4.0 HWE.2 |
 | Version | 0.1 |
 | Status | Draft (qualitative FMEA); quantitative FMEDA is a template |
-| ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
+| ASIL / scope | ASIL D (provisional, SG-01, until re-rated under FSC option (c)) / ASIL C (SG-03…SG-05) / ASIL B (SG-02, SG-06, SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |
@@ -212,7 +212,9 @@ verified.
    coverage**: CSS is the only hardware mechanism with a reaction today.
 4. **No credible "high" coverage for the CPU** without hardware redundancy. With a software self-test
    library plus IWDG plus the vehicle external measures, the argument relies on the ASIL B target
-   (FSC option (c)). An ASIL C claim for SG-01 would need DC-02 or a second channel (FSC §4.3).
+   (FSC option (c)). An ASIL D claim for SG-01 (its rating until re-rated) would effectively need DC-02
+   and/or a second independent channel (FSC §4.3); the ASIL C targets of SG-03…SG-05 are also unlikely
+   without DC-02 (WP-H-04 §5.1).
 
 ## 6. FMEDA template (quantitative, to be filled)
 

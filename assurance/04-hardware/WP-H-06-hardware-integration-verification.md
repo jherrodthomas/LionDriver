@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-5:2018 §10 (hardware integration and verification); ISO 26262-8:2018 §9 (verification), §13 (qualification tests of HW components); ASPICE 4.0 HWE.3, HWE.4 |
 | Version | 0.1 |
 | Status | Draft (specification); results section is a template — **Not yet executed** |
-| ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
+| ASIL / scope | ASIL D (provisional, SG-01, until re-rated under FSC option (c)) / ASIL C (SG-03…SG-05) / ASIL B (SG-02, SG-06, SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |

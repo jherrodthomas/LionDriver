@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-6:2018 §11 (testing of the embedded software: test environments, methods, test-case derivation); ISO 26262-8:2018 §9; ASPICE 4.0 SWE.6 |
 | Version | 0.1 |
 | Status | Draft (specification); results section **Not yet executed** |
-| ASIL / scope | Embedded envelope software on the STM32H7 (E-03): B‡ (ASIL C until SG-01 re-rating) |
+| ASIL / scope | Embedded envelope software on the STM32H7 (E-03): B‡ (ASIL D until SG-01 re-rating; C for SG-03…SG-05) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
