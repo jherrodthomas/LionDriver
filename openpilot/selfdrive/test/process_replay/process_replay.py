@@ -744,6 +744,10 @@ def generate_params_config(lr=None, CP=None, fingerprint=None, custom_params=Non
     params_dict["UbloxAvailable"] = has_ublox
     is_rhd = next((msg.driverMonitoringState.isRHD for msg in lr if msg.which() == "driverMonitoringState"), False)
     params_dict["IsRhdDetected"] = is_rhd
+    # replay with the personality the route was driven with, not the current default
+    personality = next((msg.selfdriveState.personality.raw for msg in lr if msg.which() == "selfdriveState"), None)
+    if personality is not None:
+      params_dict["LongitudinalPersonality"] = personality
 
   if CP is not None:
     if fingerprint is None:

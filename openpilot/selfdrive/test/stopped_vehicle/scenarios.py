@@ -81,6 +81,8 @@ def radar_only(speed_kph: int) -> Scenario:
 VISIBLE_FROM_RANGE = [visible_from_range(s) for s in SPEEDS_KPH]
 SLOW_VEHICLE = [visible_from_range(s, slow=True) for s in SPEEDS_KPH]
 CUT_OUT = [cut_out(s, d) for s in SPEEDS_KPH for d in CUT_OUT_REVEAL_DISTANCES]
+
+
 def lead_braking(speed_kph: int, decel: float, personality: int = log.LongitudinalPersonality.standard) -> Scenario:
   """Steady following at the personality's following distance, then the lead brakes to a stop."""
   v = speed_kph * CV.KPH_TO_MS

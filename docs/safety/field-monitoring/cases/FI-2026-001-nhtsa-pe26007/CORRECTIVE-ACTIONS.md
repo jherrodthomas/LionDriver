@@ -20,7 +20,7 @@ Each CA gets its own `CA-NNN.md` (from `templates/CORRECTIVE-ACTION.md`) when it
 | CA-008 | Assured-configuration identity and fork-parameter control | RC-05 | HZ-005 | 2 | Proposed |
 | CA-009 | Update limitations, operator briefing and test-driver protocol | RC-02, RC-04 | HZ-001, HZ-004 | 5 | Proposed |
 | CA-010 | Measure stock PCS on the 2020 Corolla in cut-out and lead-braking scenarios with openpilot longitudinal engaged | RC-02 | HZ-001, HZ-008 | V&V | Proposed (from CA-004) |
-| CA-011 | Relaxed following distance by default in the assured configuration | RC-02 | HZ-008 | 2 | Proposed (from CA-004) |
+| CA-011 | Relaxed following distance by default in the assured configuration | RC-02 | HZ-008 | 2 | **Implemented** (approved 2026-10-10); enforcement via CA-008 open |
 | CA-012 | Operating-domain speed cap for openpilot longitudinal, from the verified confirmation range | RC-02, RC-06 | HZ-001 | 2 | Proposed (from CA-004); waits on CA-003 |
 | PA-01 | Seed the first HARA from the hazard log | — | all | — | Proposed |
 | PA-02 | Create the SOTIF triggering-condition catalog (TC-01…TC-06) | — | HZ-001 | — | Proposed |
@@ -158,6 +158,29 @@ Full study: [`evidence/CA-004-BRAKING-AUTHORITY-STUDY.md`](evidence/CA-004-BRAKI
 - **Change:** in the LionDriver assured configuration, default the longitudinal personality to relaxed, and flag any change as out of assured scope (CA-008).
 - **New hazards:** more cut-ins into the larger gap (comfort and availability); no safety hazard identified.
 - **Acceptance criteria:** CA-004 S3 at the relaxed distance: no collision for lead braking ≤ 4 m/s² at ≤ 100 km/h. The setting is enforced and logged.
+
+### CA-011 implementation record (2026-10-10)
+
+- **Approval:** approved by the project maintainer on 2026-10-10. This covers CA-011 only; the rest of the CA-004 decision is still pending.
+- **Changes:**
+
+  | Change | File |
+  |---|---|
+  | `LongitudinalPersonality` defaults to relaxed. Devices with a saved setting keep it | `openpilot/common/params_keys.h` |
+  | `set_personality()` logs `following distance outside assured configuration` when the setting changes to anything other than relaxed: at startup, from settings, or from the distance button. The driver can still choose | `openpilot/selfdrive/selfdrived/selfdrived.py` |
+  | Settings text: "Relaxed is recommended". Translations of this string will show English until updated | `openpilot/selfdrive/ui/layouts/settings/toggles.py`, `openpilot/selfdrive/ui/mici/layouts/settings/toggles.py` |
+  | Process replay uses the personality each route was driven with, so the new default doesn't shift replay output | `openpilot/selfdrive/test/process_replay/process_replay.py` |
+
+- **Verification** (`openpilot/selfdrive/test/stopped_vehicle/test_following_distance.py`):
+  - the default reads back as relaxed;
+  - changes are logged on change only;
+  - acceptance criterion: at the relaxed distance, no collision for a lead braking at 2, 3 and 4 m/s² from 60 and 100 km/h. **Pass.**
+- **Not done:** "enforced" in the acceptance criterion means marking non-relaxed drives as out of assured scope, which is part of CA-008. For now the setting is only logged.
+- **Residual risk:**
+  - at 120 km/h a lead braking at 4 m/s² still leads to 4 km/h contact (CA-004 S3);
+  - lead emergency stops (≥ 6 m/s²) still collide.
+
+  HZ-008 stays open, with CA-010 and the option (b) candidate.
 
 ## CA-012 — Operating-domain speed cap for openpilot longitudinal
 

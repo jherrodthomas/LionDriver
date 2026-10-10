@@ -31,6 +31,8 @@ SIMULATION = "SIMULATION" in os.environ
 TESTING_CLOSET = "TESTING_CLOSET" in os.environ
 
 LONGITUDINAL_PERSONALITY_MAP = {v: k for k, v in log.LongitudinalPersonality.schema.enumerants.items()}
+# LionDriver CA-011: the assured configuration follows at the relaxed distance (FI-2026-001, HZ-008)
+ASSURED_PERSONALITY = log.LongitudinalPersonality.relaxed
 
 ThermalStatus = log.DeviceState.ThermalStatus
 State = log.SelfdriveState.OpenpilotState
@@ -126,7 +128,8 @@ class SelfdriveD:
     self.logged_comm_issue = None
     self.not_running_prev = None
     self.experimental_mode = False
-    self.personality = self.params.get("LongitudinalPersonality", return_default=True)
+    self.personality = ASSURED_PERSONALITY
+    self.set_personality(self.params.get("LongitudinalPersonality", return_default=True))
     self.recalibrating_seen = False
     self.dm_lockout_set = False
     self.dm_uncertain_alerted = False
@@ -460,7 +463,7 @@ class SelfdriveD:
     # Decrement personality on distance button press
     if self.CP.openpilotLongitudinalControl:
       if any(not be.pressed and be.type == ButtonType.gapAdjustCruise for be in CS.buttonEvents):
-        self.personality = (self.personality - 1) % 3
+        self.set_personality((self.personality - 1) % 3)
         self.params.put('LongitudinalPersonality', self.personality)
         self.events.add(EventName.personalityChanged)
 
@@ -565,13 +568,18 @@ class SelfdriveD:
 
     self.CS_prev = CS
 
+  def set_personality(self, personality):
+    if personality != self.personality and personality != ASSURED_PERSONALITY:
+      cloudlog.event("following distance outside assured configuration", personality=LONGITUDINAL_PERSONALITY_MAP.get(personality, personality))
+    self.personality = personality
+
   def params_thread(self, evt):
     while not evt.is_set():
       self.is_metric = self.params.get_bool("IsMetric")
       self.is_ldw_enabled = self.params.get_bool("IsLdwEnabled")
       self.disengage_on_accelerator = self.params.get_bool("DisengageOnAccelerator")
       self.experimental_mode = self.params.get_bool("ExperimentalMode") and self.CP.openpilotLongitudinalControl
-      self.personality = self.params.get("LongitudinalPersonality", return_default=True)
+      self.set_personality(self.params.get("LongitudinalPersonality", return_default=True))
       time.sleep(0.1)
 
   def run(self):
