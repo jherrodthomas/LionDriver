@@ -11,7 +11,7 @@
 | Source type | Regulator (NHTSA ODI), media |
 | Source links | [Electrek, 2026-09-24](https://electrek.co/2026/09/24/comma-ai-openpilot-nhtsa-investigation-crashes/) · [Repairer Driven News, 2026-09-29](https://www.repairerdrivennews.com/2026/09/29/nhtsa-investigating-deaths-injuries-linked-to-comma-ai-driving-system/) · [Self Drive News](https://selfdrivenews.com/nhtsa-comma-ai-openpilot-investigation/) · [Roic.ai](https://www.roic.ai/news/us-opens-safety-probe-into-commaai-driver-assistance-after-five-crashes-three-deaths-09-23-2026) · [Yahoo News](https://www.yahoo.com/news/us/articles/federal-probe-opens-aftermarket-self-152942156.html) |
 | Severity class | **A — Critical** (fatalities; regulatory defect investigation) |
-| Provisional category | PERF, ML, MIS, CFG, PROC (see RCA) |
+| Provisional category | PERF, ML, MISUSE, CFG, PROC (see RCA) |
 | Safety anomaly? | **Yes.** Collision with an in-lane obstacle while the system was engaged is a hazardous event for a longitudinal-control item. |
 | Status | RCA — complete at the code level; awaiting field logs and reproduction |
 | Safety manager | Project maintainer |
@@ -68,7 +68,7 @@
 |---|---|---|---|
 | **C-1.** No LionDriver public-road test with openpilot **longitudinal** control engaged above 40 km/h (25 mph) until CA-002 (stopped-vehicle scenario suite) shows the baseline meets its acceptance criteria, or a safety driver protocol per C-2 is in place. | Root cause is unconfirmed; the scenario is fatal at highway speed. Below ~40 km/h, the required stopping distance at -3.5 m/s² is short (≤ 24 m incl. latency) and radar low-speed override applies under 4 m/s. | 2026-10-10 | CA-002 passed **or** C-2 adopted |
 | **C-2.** Any longitudinal test above 40 km/h uses a trained safety driver, a no-secondary-task rule, a hand-near-brake rule, and a closed or low-traffic route without emergency scenes. | Puts back the human barrier that failed in the field. | 2026-10-10 | CA-002 and CA-004 verified |
-| **C-3.** The alpha-longitudinal toggle must not be enabled on any radar-ACC Toyota in LionDriver testing. | Enabling it silences the stock radar and sets PCS to off (RCA RC-01). | 2026-10-10 | CA-001 implemented (makes C-3 permanent in code) |
+| **C-3.** The alpha-longitudinal toggle must not be enabled on any radar-ACC Toyota in LionDriver testing. | Enabling it silences the stock radar and sets PCS to off (RCA RC-01). | 2026-10-10 | CA-001 implemented (makes C-3 permanent in code). **Now enforced in software by CA-001**; lifting fully waits on CA-001 AC-2/AC-3 |
 
 ## 6. Links
 

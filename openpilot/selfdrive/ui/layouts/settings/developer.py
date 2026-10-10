@@ -1,5 +1,6 @@
 from openpilot.common.params import Params
 from openpilot.selfdrive.ui.widgets.ssh_key import ssh_key_item
+from openpilot.selfdrive.car import stock_aeb_interlock
 from openpilot.selfdrive.ui.ui_state import ui_state
 from openpilot.system.ui.widgets import Widget
 from openpilot.system.ui.widgets.list_view import toggle_item
@@ -123,7 +124,8 @@ class DeveloperLayout(Widget):
     # CP gating
     if ui_state.CP is not None:
       alpha_avail = ui_state.CP.alphaLongitudinalAvailable
-      if not alpha_avail or self._is_release:
+      # LD-FSR-001: alpha longitudinal may disable stock AEB
+      if not alpha_avail or self._is_release or not stock_aeb_interlock.alpha_long_permitted():
         self._alpha_long_toggle.set_visible(False)
         self._params.remove("AlphaLongitudinalEnabled")
       else:
