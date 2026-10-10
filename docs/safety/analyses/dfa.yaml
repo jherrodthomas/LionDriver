@@ -9,7 +9,7 @@ analysis:
   type: dfa
   doc_id: LD-DFA-001
   title: "Dependent Failure Analysis — panda/SoC decompositions (LD-FSC-001)"
-  revision: "0.3"
+  revision: "0.4"
   status: draft
   baseline: BL-001
   fsc_revision: "0.2"
@@ -34,6 +34,7 @@ analysis:
     - {revision: "0.1", date: 2026-10-10, author: Claude (AI-assisted draft), change: Initial draft against FSC rev 0.1}
     - {revision: "0.2", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Evidence from panda 92eb565 / opendbc 229dc70 for DFI-07/08/09; DFI-08 open -> insufficient; DOI-002 closed by design LD-DES-001; DOI-007 added"}
     - {revision: "0.3", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Re-based on FSC rev 0.2; no DFI changes"}
+    - {revision: "0.4", date: 2026-10-10, author: Claude (AI-assisted draft), change: "SW FMEA rev 0.2 code review: DM-05 corrected (checksum on 0x1D2/0x260 only, no counters, BRAKE_MODULE timing only); DM-06 and DM-20 evidence recorded in DOI-001; statuses unchanged pending independent verification"}
 
 categories:
   - {id: CAT-01, name: Shared power supply, applicable: true, rationale: "Panda and SoC are on the same comma 3X board, powered from the same 12 V input."}
@@ -326,7 +327,7 @@ measures:
   - {id: DM-02, description: "Harness relay defaults to the stock camera path when the panda is unpowered or in reset.", status: existing_unverified, allocated_to: [EL-08]}
   - {id: DM-03, description: "Toyota EPS and powertrain end LKA/ACC when item messages stop (message timeout).", status: existing_unverified, allocated_to: [XM-02, XM-05]}
   - {id: DM-04, description: "SoC compares the panda's reported safety model, parameter and alternative experience with CarParams (controlsMismatch).", status: existing, ref: openpilot/selfdrive/selfdrived/selfdrived.py, allocated_to: [EL-04]}
-  - {id: DM-05, description: "Panda RX checks (checksum, counter, timing) on safety-relevant vehicle messages.", status: existing_unverified, ref: opendbc_repo, allocated_to: [EL-07]}
+  - {id: DM-05, description: "Panda RX checks on safety-relevant vehicle messages. At BL-001 (Toyota): checksum on PCM_CRUISE 0x1D2 and STEER_TORQUE_SENSOR 0x260 only; no counter checks; BRAKE_MODULE 0x226 timing only (SW FMEA SWF-005, SWF-006).", status: existing_unverified, ref: opendbc_repo, allocated_to: [EL-07]}
   - {id: DM-06, description: "Panda controls-allowed follows PCM cruise state, a signal path diverse from the brake switch.", status: existing_unverified, ref: opendbc_repo, allocated_to: [EL-07]}
   - {id: DM-07, description: "Panda-side configuration lock: accept only the safety model and parameter provisioned for the installed vehicle, reject changes while onroad, force alternative experience to 0 in release builds.", status: required, ref: "LD-DES-001 DR-01..DR-07", allocated_to: [EL-07]}
   - {id: DM-08, description: "Firmware authenticity: panda bootloader accepts only signed LionDriver release firmware, rejects downgrade, and flashing is allowed only offroad.", status: required, ref: "LD-DES-001 DR-10..DR-16", allocated_to: [EL-07]}
@@ -345,7 +346,12 @@ measures:
 
 open_items:
   - id: DOI-001
-    text: Verify the existing_unverified measures (DM-02, DM-03, DM-05, DM-06, DM-17, DM-18, DM-20) with the panda and opendbc submodules checked out, the comma 3X schematic, and HIL tests.
+    text: >-
+      Verify the existing_unverified measures (DM-02, DM-03, DM-05, DM-06, DM-17, DM-18, DM-20) with the panda and opendbc
+      submodules checked out, the comma 3X schematic, and HIL tests. Progress (SW FMEA rev 0.2, submodules at BL-001):
+      DM-05 narrower than claimed (see its description); DM-06 confirmed in code (controls_allowed follows CRUISE_ACTIVE,
+      0x1D2 checksum-checked); DM-20 run locally (3173 tests pass, 390 skipped; 2705/2705 operator mutants killed) but not
+      run by LionDriver CI (SWF-ACT-001). DM-02, DM-03, DM-17, DM-18 not yet examined.
     affects: [DM-02, DM-03, DM-05, DM-06, DM-17, DM-18, DM-20]
     status: open
   - id: DOI-002

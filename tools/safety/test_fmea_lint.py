@@ -350,6 +350,13 @@ class TestHara(LintFixture):
     sfm["failure_modes"][0]["effects"][0]["hazard"] = "HZ-999"
     self.assertError(self.lint_hara(sfm=sfm), "HZ-999 not found in the HARA")
 
+  def test_lower_level_fmea_hazard_not_traced_by_hara(self):
+    swf = copy.deepcopy(SWF)
+    for fm in swf["failure_modes"]:
+      for e in fm["effects"]:
+        e.update(hazard="HZ-001", severity=10)
+    self.assertEqual(self.lint(sfm=SFM, hara=HARA, swf=swf).errors, [])
+
   def test_guideword_matrix_complete(self):
     doc = copy.deepcopy(HARA)
     doc["guideword_analysis"].pop()

@@ -190,7 +190,7 @@ failure_modes:
         ref: openpilot/selfdrive/pandad/pandad.cc
     causes:
       - {id: SFM-001.C1, element: SFM-SE-014, description: "State machine reports active while disabled", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
-      - {id: SFM-001.C2, element: SFM-SE-003, description: "Panda allows steering TX without valid engagement (controls_allowed set incorrectly)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-001.C2, element: SFM-SE-003, linked_failure_mode: SWF-002, description: "Panda allows steering TX without valid engagement (controls_allowed set incorrectly)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
       - {id: SFM-001.C3, element: SFM-SE-016, description: "Steering message packed with non-zero torque/request bit while latActive is false", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
     notes: "HARA input: unintended steering intervention during manual driving."
 
@@ -212,7 +212,7 @@ failure_modes:
     causes:
       - {id: SFM-002.C1, element: SFM-SE-013, description: "Lateral controller output too high (gain, torque model, saturation logic)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
       - {id: SFM-002.C2, element: SFM-SE-010, description: "Model outputs excessive desired curvature", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
-      - {id: SFM-002.C3, element: SFM-SE-003, description: "Safety model torque/rate limits wrong for this vehicle or not enforced", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-002.C3, element: SFM-SE-003, linked_failure_mode: SWF-001, description: "Safety model torque/rate limits wrong for this vehicle or not enforced", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
       - {id: SFM-002.C4, element: SFM-SE-011, description: "Wrong vehicle parameters (steer ratio, lateral accel factor, torque offsets) from online learners", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
     notes: "HARA input: excessive steering intervention while engaged."
 
@@ -734,8 +734,8 @@ failure_modes:
       - description: controlsMismatch (IMMEDIATE_DISABLE) if panda safety model/param differ from CarParams, or safety RX checks invalid
         ref: openpilot/selfdrive/selfdrived/selfdrived.py
     causes:
-      - {id: SFM-029.C1, element: SFM-SE-003, description: "Wrong safety model or parameter set for this car", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
-      - {id: SFM-029.C2, element: SFM-SE-003, description: "Safety model limit defect in firmware", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-029.C1, element: SFM-SE-003, linked_failure_mode: SWF-013, description: "Wrong safety model or parameter set for this car", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
+      - {id: SFM-029.C2, element: SFM-SE-003, linked_failure_mode: SWF-001, description: "Safety model limit defect in firmware", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
       - {id: SFM-029.C3, element: SFM-SE-003, description: "Panda MCU hardware fault (see DFMEA/FMEDA)", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
       - {id: SFM-029.C4, element: SFM-SE-004, description: "Harness allows the device to reach a bus without passing the panda filter", prevention_controls: [], detection_controls: [], occurrence: null, detection: null, ap: null}
     notes: "Latent-fault candidate: an unenforced limit has no effect until a second fault occurs. Key input for FMEDA LFM."

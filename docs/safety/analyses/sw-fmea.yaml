@@ -1,19 +1,820 @@
 # yaml-language-server: $schema=../schema/fmea.schema.json
+# Ratings per RT-1. Implementation-defect causes in the opendbc safety core: O=5 (MISRA, 100% line coverage, review, no
+# documented requirements), D=6 (tests killed 2705/2705 operator mutants at BL-001 in this workspace, but the suite is not run
+# by LionDriver CI and mutation does not cover constants or panda board code). Design gaps found in this review: O=8, D=9.
 schema_version: 1
 analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "0.1"
+  revision: "0.2"
   status: draft
   baseline: BL-001
   rating_tables: RT-1
-  scope: "Software elements per fmea-plan.md section 3.3, P1 first"
-  team: []
+  scope: "P1 element: panda safety model (opendbc safety core, Toyota mode, panda firmware integration) for AC-001 at BL-001 (panda 92eb565, opendbc 229dc70). Other P1 elements (selfdrived, controlsd, pandad) follow."
+  team:
+    - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
+    - {name: Claude (AI assistant), role: "Drafting assistance; ratings require human review"}
   references:
     - docs/safety/fmea-plan.md
     - docs/safety/rating-tables.md
-structure: []
-functions: []
-failure_modes: []
-actions: []
+    - docs/safety/analyses/fsc.yaml
+    - docs/safety/design/panda-config-lock-and-fw-authenticity.md
+  updated: 2026-10-10
+structure:
+- id: SWF-SE-001
+  name: Panda safety model (opendbc safety + panda firmware integration)
+  kind: sw_element
+  parent: null
+  paths:
+  - opendbc_repo/opendbc/safety
+  - panda/board
+  description: FSC element EL-07 software; System FMEA SFM-SE-003
+- id: SWF-SE-002
+  name: RX validation and RX timing checks
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - opendbc_repo/opendbc/safety/safety.h
+  description: rx_msg_safety_check, is_msg_valid, safety_tick (safety.h:112-228, 321-344)
+- id: SWF-SE-003
+  name: TX whitelist and dispatch
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - opendbc_repo/opendbc/safety/safety.h
+  description: safety_tx_hook, tx_msg_safety_check (safety.h:230-253)
+- id: SWF-SE-004
+  name: Forwarding hook
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - opendbc_repo/opendbc/safety/safety.h
+  description: safety_fwd_hook, get_fwd_bus (safety.h:255-289)
+- id: SWF-SE-005
+  name: Controls-allowed logic
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - opendbc_repo/opendbc/safety/safety.h
+  description: generic_rx_checks, pcm_cruise_check (safety.h:350-370, 518-527)
+- id: SWF-SE-006
+  name: Steering torque checks
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - opendbc_repo/opendbc/safety/lateral.h
+  description: steer_torque_cmd_checks, dist_to_meas_check, rt_torque_rate_limit_check (lateral.h:10-150)
+- id: SWF-SE-007
+  name: Longitudinal checks
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - opendbc_repo/opendbc/safety/longitudinal.h
+  description: get_longitudinal_allowed, longitudinal_accel_checks (longitudinal.h:3-12)
+- id: SWF-SE-008
+  name: Toyota safety mode
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - opendbc_repo/opendbc/safety/modes/toyota.h
+  description: toyota_rx_hook, toyota_tx_hook, toyota_init, TX/RX check tables (toyota.h)
+- id: SWF-SE-009
+  name: Relay malfunction detection
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - opendbc_repo/opendbc/safety/safety.h
+  description: stock_ecu_check, relay_malfunction (safety.h:346, 372-385)
+- id: SWF-SE-010
+  name: Safety mode registry and initialization
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - opendbc_repo/opendbc/safety/safety.h
+  description: set_safety_hooks (safety.h:391-484)
+- id: SWF-SE-011
+  name: 'Panda main loop: safety mode and heartbeat'
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - panda/board/main.c
+  description: set_safety_mode, tick_handler heartbeat and mismatch logic (main.c:31-76, 101-230)
+- id: SWF-SE-012
+  name: Panda host command handler
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - panda/board/main_comms.h
+  description: 0xdc set safety mode, 0xdf alternative experience, 0xd1 bootloader, 0xf3 heartbeat (main_comms.h)
+- id: SWF-SE-013
+  name: Panda CAN send path
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - panda/board/drivers/can_common.h
+  - panda/board/can_comms.h
+  description: can_send with skip_tx_hook (can_common.h:161-176); host TX entry (can_comms.h:97,118)
+functions:
+- id: SWF-FN-001
+  element: SWF-SE-003
+  description: Transmit only whitelisted messages, each passed through the mode-specific check
+  requirements:
+  - FSR-002
+  - FSR-019
+  - FSR-022
+- id: SWF-FN-002
+  element: SWF-SE-006
+  description: Block steering requests outside torque magnitude, rate and measured-torque-error limits, and any torque while controls are not allowed
+  requirements:
+  - FSR-002
+  - FSR-005
+  - FSR-032
+- id: SWF-FN-003
+  element: SWF-SE-007
+  description: Block acceleration outside the range, and any non-inactive acceleration while controls are not allowed or the accelerator is pressed
+  requirements:
+  - FSR-019
+  - FSR-022
+  - FSR-024
+- id: SWF-FN-004
+  element: SWF-SE-005
+  description: Allow controls on rising edge of PCM cruise; withdraw on cruise off, brake press, invalid or lagging safety messages
+  requirements:
+  - FSR-005
+  - FSR-029
+  - FSR-035
+- id: SWF-FN-005
+  element: SWF-SE-002
+  description: Validate safety-relevant RX messages (checksum, counter, quality flag, timing)
+  requirements:
+  - FSR-005
+  - FSR-029
+- id: SWF-FN-006
+  element: SWF-SE-008
+  description: 'Decode Toyota vehicle state: EPS torque, cruise state, brake, accelerator, wheel speeds'
+  requirements:
+  - FSR-002
+  - FSR-029
+- id: SWF-FN-007
+  element: SWF-SE-004
+  description: Block stock-camera messages the item replaces; forward all others, including stock pre-collision messages
+  requirements:
+  - FSR-037
+  - FSR-038
+- id: SWF-FN-008
+  element: SWF-SE-009
+  description: Detect a relay malfunction and block all item transmission
+  requirements:
+  - FSR-008
+- id: SWF-FN-009
+  element: SWF-SE-010
+  description: Install only the safety model and parameter intended for the vehicle
+  requirements:
+  - FSR-010
+- id: SWF-FN-010
+  element: SWF-SE-011
+  description: Withdraw controls when the host heartbeat is lost or reports not engaged
+  requirements:
+  - FSR-007
+- id: SWF-FN-011
+  element: SWF-SE-012
+  description: Accept host configuration commands only when they cannot widen what is transmitted
+  requirements:
+  - FSR-010
+- id: SWF-FN-012
+  element: SWF-SE-013
+  description: Route every host transmission through the safety check
+  requirements:
+  - FSR-002
+failure_modes:
+- id: SWF-001
+  element: SWF-SE-006
+  function: SWF-FN-002
+  failure_mode: Steering request above the torque or torque-rate limit for the vehicle is passed
+  guideword: value_high
+  effects:
+  - level: local
+    description: Out-of-envelope torque request reaches the EPS
+  - level: next_higher
+    description: Lateral deviation faster than the driver can correct
+  - level: end
+    description: Uncontrollable steering intervention
+    hazard: HZ-002
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-001.C1
+    description: Panda torque limits (max 1500, rate up 15 / down 25, error 350) are the same constants as the SoC controller's and are not derived from a vehicle
+      envelope
+    element: SWF-SE-008
+    prevention_controls:
+    - description: Limits copied from upstream vehicle tuning; no independent envelope (FSC FOI-001, DFA DFI-14)
+      ref: opendbc_repo/opendbc/safety/modes/toyota.h:172-177; opendbc_repo/opendbc/car/toyota/values.py:20-50
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 6
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-003
+  - id: SWF-001.C2
+    description: Implementation defect in steer_torque_cmd_checks or dist_to_meas_check
+    element: SWF-SE-006
+    prevention_controls: &id001
+    - description: MISRA C:2012 checks on the safety code
+      ref: opendbc_repo/opendbc/safety/tests/misra
+    - description: 100% line coverage enforced by the safety test runner
+      ref: opendbc_repo/opendbc/safety/tests/test.sh
+    - description: Upstream code review; no documented safety requirements for the safety model (tests derived from implementation)
+    detection_controls: &id002
+    - description: 'opendbc safety test suite (3173 pass, 390 skipped at BL-001 in this workspace). Mutation run at BL-001 in this workspace: 2705 operator mutants
+        across opendbc/safety (incl. modes/toyota.h, lateral.h, longitudinal.h, safety.h), 2705 killed, 0 survived. Mutation covers operators only, not constants
+        or deleted statements, and not panda board code. Not run by LionDriver CI'
+      test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+      ref: opendbc_repo/opendbc/safety/tests/mutation.py; opendbc .github/workflows/tests.yml:39-56
+    occurrence: 5
+    detection: 6
+    ap: H
+    actions:
+    - SWF-ACT-001
+    - SWF-ACT-002
+  - id: SWF-001.C3
+    description: Wrong EPS torque factor in the host-supplied safety parameter scales measured torque, widening the measured-torque-error check
+    element: SWF-SE-012
+    prevention_controls:
+    - description: Safety parameter accepted from the host without check (toyota.h:383; main_comms.h:223)
+      ref: panda/board/main_comms.h
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 8
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-004
+- id: SWF-002
+  element: SWF-SE-006
+  function: SWF-FN-002
+  failure_mode: Steering torque passed while controls are not allowed
+  guideword: commission
+  effects:
+  - level: local
+    description: Torque request reaches the EPS outside an engagement
+  - level: next_higher
+    description: Unexpected steering input
+  - level: end
+    description: Unintended steering while not engaged
+    hazard: HZ-001
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-002.C1
+    description: Defect in the not-allowed torque check (lateral.h:111-114) or in controls_allowed bookkeeping
+    element: SWF-SE-006
+    prevention_controls: *id001
+    detection_controls: *id002
+    occurrence: 5
+    detection: 6
+    ap: H
+    actions:
+    - SWF-ACT-001
+    - SWF-ACT-002
+  notes: Depends on controls_allowed being correct; see SWF-007..SWF-009.
+- id: SWF-003
+  element: SWF-SE-007
+  function: SWF-FN-003
+  failure_mode: Acceleration request outside the intended envelope is passed
+  guideword: value_high
+  effects:
+  - level: local
+    description: Acceleration request beyond the item design reaches the powertrain
+  - level: next_higher
+    description: Vehicle accelerates or brakes harder than designed
+  - level: end
+    description: Unintended acceleration or excessive deceleration
+    hazard: HZ-005
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-003.C1
+    description: Panda allows +2.0 m/s² while the SoC design limit for VF-001 is +1.5 m/s²; the panda bound is looser than the item design
+    element: SWF-SE-008
+    prevention_controls:
+    - description: Panda limit taken from the platform maximum, not the vehicle envelope
+      ref: opendbc_repo/opendbc/safety/modes/toyota.h:207-210
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 6
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-003
+  - id: SWF-003.C2
+    description: Implementation defect in longitudinal_accel_checks
+    element: SWF-SE-007
+    prevention_controls: *id001
+    detection_controls: *id002
+    occurrence: 5
+    detection: 6
+    ap: H
+    actions:
+    - SWF-ACT-001
+    - SWF-ACT-002
+- id: SWF-004
+  element: SWF-SE-007
+  function: SWF-FN-003
+  failure_mode: Step change of deceleration request to the minimum is passed
+  guideword: early
+  effects:
+  - level: local
+    description: Request jumps from 0 to -3.5 m/s² in one frame
+  - level: next_higher
+    description: Hard braking without onset
+  - level: end
+    description: Unexpected hard braking; rear-end collision by following traffic
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-004.C1
+    description: longitudinal_accel_checks checks the range only; no rate or jerk limit on acceleration requests
+    element: SWF-SE-007
+    prevention_controls:
+    - description: Range check only (longitudinal.h:8-12); FSC FSR-021 asks for a jerk envelope
+      ref: opendbc_repo/opendbc/safety/longitudinal.h
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 8
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-005
+- id: SWF-005
+  element: SWF-SE-002
+  function: SWF-FN-005
+  failure_mode: Corrupted brake-pressed value accepted
+  guideword: corrupted
+  effects:
+  - level: local
+    description: Brake press read as released
+  - level: next_higher
+    description: Controls not withdrawn on driver braking
+  - level: end
+    description: Automation not released on brake
+    hazard: HZ-008
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-005.C1
+    description: BRAKE_MODULE (0x226) has no checksum or counter in the vehicle DBC; the RX check ignores checksum, counter and quality and checks timing only
+    element: SWF-SE-008
+    prevention_controls:
+    - description: CAN CRC protects the transport; the vehicle message itself has no end-to-end protection (toyota_nodsu_pt.dbc:18-21; toyota.h:46)
+      ref: opendbc_repo/opendbc/dbc/generator/toyota/toyota_nodsu_pt.dbc
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 3
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-006
+  notes: 'Diverse path: the PCM cancels cruise on its own brake input and the panda follows PCM_CRUISE (checksum-checked). That credit needs FSC FOI-006.'
+- id: SWF-006
+  element: SWF-SE-002
+  function: SWF-FN-005
+  failure_mode: Stale brake, cruise or EPS data used for up to about 2 s
+  guideword: value_stale
+  effects:
+  - level: local
+    description: Safety decisions based on old messages
+  - level: next_higher
+    description: Brake press or cruise-off not seen; torque measurement stale
+  - level: end
+    description: Automation not released, or limits computed from stale data
+    hazard: HZ-008
+    severity: 10
+  - level: end
+    description: Contributes to HZ-002
+    hazard: HZ-002
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-006.C1
+    description: safety_tick runs at 1 Hz and flags lag only after max(10 periods, 1 s), so up to ~2 s
+    element: SWF-SE-002
+    prevention_controls:
+    - description: Timing check designed against false triggers, not against an FTTI (safety.h:321-344)
+      ref: opendbc_repo/opendbc/safety/safety.h
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 8
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-007
+- id: SWF-007
+  element: SWF-SE-005
+  function: SWF-FN-004
+  failure_mode: Controls allowed without a driver engagement
+  guideword: commission
+  effects:
+  - level: local
+    description: controls_allowed true without a cruise rising edge
+  - level: next_higher
+    description: Item actuation permitted
+  - level: end
+    description: Unintended engagement
+    hazard: HZ-010
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-007.C1
+    description: Defect in pcm_cruise_check or PCM_CRUISE decoding (toyota.h rx hook, 0x1D2 bit 5)
+    element: SWF-SE-005
+    prevention_controls: *id001
+    detection_controls: *id002
+    occurrence: 5
+    detection: 6
+    ap: H
+    actions:
+    - SWF-ACT-001
+    - SWF-ACT-002
+- id: SWF-008
+  element: SWF-SE-005
+  function: SWF-FN-004
+  failure_mode: Controls not withdrawn on brake press
+  guideword: omission
+  effects:
+  - level: local
+    description: controls_allowed stays true while the driver brakes
+  - level: next_higher
+    description: Item keeps actuating
+  - level: end
+    description: Automation not released on brake
+    hazard: HZ-008
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-008.C1
+    description: Host-supplied safety parameter selects the wrong brake message (ALT_BRAKE flag), so brake presses are never seen
+    element: SWF-SE-012
+    prevention_controls:
+    - description: Parameter accepted from the host without check (toyota.h:380; main_comms.h:223)
+      ref: panda/board/main_comms.h
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 8
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-004
+  - id: SWF-008.C2
+    description: Defect in generic_rx_checks brake edge logic (safety.h:354-357)
+    element: SWF-SE-005
+    prevention_controls: *id001
+    detection_controls: *id002
+    occurrence: 5
+    detection: 6
+    ap: H
+    actions:
+    - SWF-ACT-001
+    - SWF-ACT-002
+- id: SWF-009
+  element: SWF-SE-005
+  function: SWF-FN-004
+  failure_mode: Controls not withdrawn when PCM cruise disengages
+  guideword: omission
+  effects:
+  - level: local
+    description: controls_allowed stays true after cruise off
+  - level: next_higher
+    description: Item keeps actuating after the driver cancels
+  - level: end
+    description: Automation not released on cancel
+    hazard: HZ-008
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-009.C1
+    description: Defect in pcm_cruise_check (safety.h:518-527)
+    element: SWF-SE-005
+    prevention_controls: *id001
+    detection_controls: *id002
+    occurrence: 5
+    detection: 6
+    ap: H
+    actions:
+    - SWF-ACT-001
+    - SWF-ACT-002
+- id: SWF-010
+  element: SWF-SE-004
+  function: SWF-FN-007
+  failure_mode: Stock camera steering or ACC messages forwarded while the item transmits
+  guideword: commission
+  effects:
+  - level: local
+    description: Stock and item commands both on the vehicle bus
+  - level: next_higher
+    description: Combined or alternating commands
+  - level: end
+    description: Erratic or excessive steering or braking
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-010.C1
+    description: check_relay flag missing for a replaced message in the TX table, or defect in safety_fwd_hook
+    element: SWF-SE-004
+    prevention_controls: *id001
+    detection_controls: *id002
+    occurrence: 5
+    detection: 6
+    ap: H
+    actions:
+    - SWF-ACT-001
+    - SWF-ACT-002
+- id: SWF-011
+  element: SWF-SE-004
+  function: SWF-FN-007
+  failure_mode: Stock pre-collision (AEB) messages blocked
+  guideword: omission
+  effects:
+  - level: local
+    description: PRE_COLLISION 0x283 / 0x344 from the stock camera do not reach the vehicle
+  - level: next_higher
+    description: Stock AEB cannot act
+  - level: end
+    description: Loss of stock AEB
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-011.C1
+    description: TX table change marks 0x283/0x344 check_relay, or a forwarding defect; at BL-001 both are check_relay=false and forwarded (toyota.h:22-23)
+    element: SWF-SE-004
+    prevention_controls: *id001
+    detection_controls: *id002
+    occurrence: 5
+    detection: 6
+    ap: H
+    actions:
+    - SWF-ACT-001
+    - SWF-ACT-002
+  notes: 'Partial answer to HARA OI-003: at BL-001 the panda does not block stock pre-collision messages. In-vehicle confirmation of stock AEB is still needed.'
+- id: SWF-012
+  element: SWF-SE-009
+  function: SWF-FN-008
+  failure_mode: Relay malfunction not detected
+  guideword: omission
+  effects:
+  - level: local
+    description: Stock camera stays on the bus while the item transmits
+  - level: next_higher
+    description: Conflicting steering commands
+  - level: end
+    description: Erratic or excessive steering
+    hazard: HZ-002
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-012.C1
+    description: Defect in stock_ecu_check, or a replaced message without check_relay; detection starts 1 s after a mode change (safety.h:372-380)
+    element: SWF-SE-009
+    prevention_controls: *id001
+    detection_controls: *id002
+    occurrence: 5
+    detection: 6
+    ap: H
+    actions:
+    - SWF-ACT-001
+    - SWF-ACT-002
+- id: SWF-013
+  element: SWF-SE-012
+  function: SWF-FN-011
+  failure_mode: Wrong or permissive safety mode accepted from the host
+  guideword: wrong_mode
+  effects:
+  - level: local
+    description: Panda enforces a different model or none (ALLOUTPUT)
+  - level: next_higher
+    description: Item messages unchecked or checked against wrong limits
+  - level: end
+    description: Any actuation hazard
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-013.C1
+    description: set_safety_mode accepts any mode and parameter at any time; debug builds include SAFETY_ALLOUTPUT
+    element: SWF-SE-012
+    prevention_controls:
+    - description: No allow-list (main_comms.h:223; safety.h:413-421)
+      ref: panda/board/main_comms.h
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 8
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-004
+- id: SWF-014
+  element: SWF-SE-011
+  function: SWF-FN-010
+  failure_mode: Controls withdrawn later than the FTTI after host loss
+  guideword: late
+  effects:
+  - level: local
+    description: controls_allowed persists several seconds without a valid heartbeat
+  - level: next_higher
+    description: Last SoC messages can keep passing if still sent
+  - level: end
+    description: Continued actuation without a supervising SoC
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-014.C1
+    description: Heartbeat checked at 1 Hz with a 5 s timeout (ignition on); engaged mismatch withdraws controls after 3 ticks (~3 s)
+    element: SWF-SE-011
+    prevention_controls:
+    - description: Timeouts not derived from the FTTI (main.c:102,184,191-212)
+      ref: panda/board/main.c
+    detection_controls:
+    - description: Panda HITL health and safety tests (hardware needed; not run here)
+      test: panda/tests/hitl/test_2_health.py
+    occurrence: 8
+    detection: 8
+    ap: H
+    actions:
+    - SWF-ACT-007
+- id: SWF-015
+  element: SWF-SE-012
+  function: SWF-FN-011
+  failure_mode: Diagnostic (ELM327) mode accepted while driving
+  guideword: wrong_mode
+  effects:
+  - level: local
+    description: Diagnostic frames allowed to vehicle ECUs
+  - level: next_higher
+    description: ECU reset or diagnostic session on EPS/ADAS
+  - level: end
+    description: Loss of assist or stock function while driving
+    hazard: HZ-004
+    severity: 10
+  - level: end
+    description: Contributes to HZ-011
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-015.C1
+    description: ELM327 TX hook allows any ISO 15765 diagnostic frame with no ignition or motion condition
+    element: SWF-SE-008
+    prevention_controls:
+    - description: No vehicle-state condition (elm327.h:6-33)
+      ref: opendbc_repo/opendbc/safety/modes/elm327.h
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 8
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-004
+- id: SWF-016
+  element: SWF-SE-013
+  function: SWF-FN-012
+  failure_mode: Host transmission bypasses the safety check
+  guideword: omission
+  effects:
+  - level: local
+    description: Host message sent without safety_tx_hook
+  - level: next_higher
+    description: Unchecked message on the bus
+  - level: end
+    description: Any actuation hazard
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-016.C1
+    description: A host TX path calls can_send with skip_tx_hook=true
+    element: SWF-SE-013
+    prevention_controls:
+    - description: Both host TX entries pass skip_tx_hook=false (can_comms.h:97,118); only forwarding and the body use skip=true
+      ref: panda/board/can_comms.h
+    - description: MISRA C checks on panda firmware
+      ref: panda/tests/misra
+    - description: Upstream code review; no coverage gate on panda board code
+    detection_controls:
+    - description: Panda HITL safety tests (hardware needed; not run here)
+      test: panda/tests/hitl/test_6_safety.py
+    occurrence: 3
+    detection: 8
+    ap: H
+    actions:
+    - SWF-ACT-008
+- id: SWF-017
+  element: SWF-SE-007
+  function: SWF-FN-003
+  failure_mode: Item deceleration passed while the driver presses the accelerator
+  guideword: commission
+  effects:
+  - level: local
+    description: Braking request passes during accelerator override
+  - level: next_higher
+    description: Item brakes against the driver
+  - level: end
+    description: Braking against driver input
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-017.C1
+    description: Defect in get_longitudinal_allowed (controls_allowed && !gas_pressed_prev) or GAS_RELEASED decoding (0x1D2 bit 4)
+    element: SWF-SE-007
+    prevention_controls: *id001
+    detection_controls: *id002
+    occurrence: 5
+    detection: 6
+    ap: H
+    actions:
+    - SWF-ACT-001
+    - SWF-ACT-002
+  notes: 'FSC FSR-024 is verified in code at BL-001: only the inactive acceleration passes while the accelerator is pressed.'
+actions:
+- id: SWF-ACT-001
+  kind: detection
+  description: Run the opendbc safety suite and the mutation tests as a blocking gate in LionDriver CI for every change and submodule bump
+  owner: Jherrod Thomas
+  status: open
+  revised:
+    severity: 10
+    occurrence: 5
+    detection: 3
+    ap: H
+- id: SWF-ACT-002
+  kind: prevention
+  description: Write technical safety requirements for the panda safety model (TSC) and requirements-based tests traced to them
+  owner: Jherrod Thomas
+  status: open
+  revised:
+    severity: 10
+    occurrence: 3
+    detection: 3
+    ap: L
+- id: SWF-ACT-003
+  kind: design_change
+  description: Derive steering and acceleration envelopes from vehicle measurements (FSC FOI-001, DFA DM-10) and set panda limits from them, independently of the
+    SoC limits
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-004
+  kind: design_change
+  description: Implement the panda configuration lock (LD-DES-001 DR-01..DR-07, DR-05 for ELM327)
+  owner: Jherrod Thomas
+  status: decision_pending
+- id: SWF-ACT-005
+  kind: design_change
+  description: Add an acceleration-rate (jerk) check to the panda longitudinal checks, or justify the absence with characterized powertrain rate limits (OI-002)
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-006
+  kind: detection
+  description: Verify on the vehicle that the PCM cancels cruise on brake (FSC FOI-006) so PCM_CRUISE can be credited as the diverse brake path; add a safety test
+    for brake-without-cruise-cancel
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-007
+  kind: design_change
+  description: Derive RX-lag and heartbeat timeouts from the FTTI and check them at 8 Hz or faster while controls are allowed (LD-DES-001 DR-20)
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-008
+  kind: detection
+  description: Add a unit or static check that every host TX path calls can_send with skip_tx_hook=false
+  owner: Jherrod Thomas
+  status: open

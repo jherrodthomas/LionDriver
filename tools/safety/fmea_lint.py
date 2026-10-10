@@ -766,9 +766,12 @@ def lint(root: Path = ROOT) -> Result:
       ids += [c["id"] for fm in doc["failure_modes"] for c in fm["causes"]]
       ctx.failure_modes.update(fm["id"] for fm in doc["failure_modes"])
       ctx.elements.update(e["id"] for e in doc["structure"])
-      ctx.functions.update(f["id"] for f in doc["functions"])
-      for fm in doc["failure_modes"]:
-        ctx.fm_hazards[fm["id"]] = {e["hazard"] for e in fm["effects"] if e.get("hazard")}
+      # The HARA traces to System FMEA functions and failure modes only; lower-level FMEAs may cite
+      # hazards in their effects without joining the guide-word matrix or the HARA sfm_refs back-links.
+      if kind == "system_fmea":
+        ctx.functions.update(f["id"] for f in doc["functions"])
+        for fm in doc["failure_modes"]:
+          ctx.fm_hazards[fm["id"]] = {e["hazard"] for e in fm["effects"] if e.get("hazard")}
     for i in ids:
       if i in scope:
         res.error(name, f"duplicate id {i} (also in {scope[i]})")

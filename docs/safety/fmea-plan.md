@@ -42,8 +42,8 @@ PFMEA ─► Release / install control plan  (feeds "configuration as assured")
 | Prereq | Needed by | Status |
 |---|---|---|
 | Item definition & boundary (README roadmap item 2) | All | Draft LD-ITEM-001 rev 0.1 (`item-definition.md`): platform (334 vehicles), variant family VF-001 Corolla E210, assured configuration AC-001 |
-| HARA + safety goals | System FMEA severity, FMEDA | Draft rev 0.2 (`analyses/hara.yaml`): 13 hazards, 15 situations, 19 hazardous events, 10 safety goals (SG-001 ASIL D); guide-word matrix and situation coverage complete; pre-checks in `reviews/` |
-| Functional / technical safety concept | DFMEA, SW FMEA, FMEDA | FSC draft rev 0.1 (`analyses/fsc.yaml`): 40 FSRs, 12 elements, 11 panda/SoC decompositions; DFA rev 0.1 accepts none of them yet (`analyses/dfa.yaml`); TSC not started |
+| HARA + safety goals | System FMEA severity, FMEDA | Draft rev 0.3 (`analyses/hara.yaml`): 13 hazards, 15 situations, 19 hazardous events, 10 safety goals (SG-001 ASIL D); guide-word matrix and situation coverage complete; pre-checks in `reviews/` |
+| Functional / technical safety concept | DFMEA, SW FMEA, FMEDA | FSC draft rev 0.2 (`analyses/fsc.yaml`): 40 FSRs, 12 elements, 11 panda/SoC decompositions; DFA rev 0.4 accepts none of them yet (`analyses/dfa.yaml`); TSC not started |
 | HW/SW baseline frozen (commit SHA + submodule SHAs + AGNOS version) | All | BL-001 proposed in `baseline.yaml`; freeze at Phase 1 start |
 | Panda schematic + BOM (open hardware) | DFMEA, FMEDA | To collect |
 | comma 3X schematic / SoC failure data | DFMEA, FMEDA | Likely unavailable — see §7 |
@@ -91,6 +91,8 @@ Prioritised by safety relevance (path from perception to actuator):
 | P3 | `modeld` (driving model — failure modes overlap SOTIF/ISO PAS 8800) | `openpilot/selfdrive/modeld/` |
 | P3 | `locationd`, calibration, `camerad`, `sensord` | various |
 | P3 | Messaging (`cereal`/msgq), `manager`, `updated` | `openpilot/cereal`, `openpilot/system/` |
+
+**Status (rev 0.2, `analyses/sw-fmea.yaml`):** panda safety model analyzed at BL-001 with the submodules checked out: 13 structure elements, 12 functions, 17 failure modes, 8 actions. All causes are AP H. Implementation defects in the opendbc core are rated O5/D6: the suite passes 3173 tests locally and kills 2705/2705 operator mutants, but there are no documented requirements and LionDriver CI does not run it. Ten design-gap causes are rated D8–D9 (no test targets them). They are: torque limits copied from the SoC; +2.0 vs +1.5 m/s²; no jerk check; BRAKE_MODULE RX check by timing only; ~2 s RX-lag detection; 5 s heartbeat; any mode or parameter accepted from the host, including a wrong EPS factor and a wrong brake-message flag; and unrestricted ELM327 diagnostics. SWF-ACT-001 (CI gate) and SWF-ACT-002 (TSC requirements and tests) are the actions that lower the rating.
 
 SW failure-mode guidewords: omission, commission, early, late, incorrect value (high/low/stale/frozen), corrupted, out-of-sequence, wrong mode.
 Model-level performance limitations go to the **SOTIF** analysis, not SW FMEA — SW FMEA covers the model as a software element (crash, stale output, wrong tensor shape, timeout).
@@ -186,7 +188,7 @@ The linter checks: schema; unique and resolvable ids; failure-mode severity = ma
 |---|---|---|
 | 0 | This plan + rating tables + YAML schema + baseline SHAs | — |
 | 1 | System FMEA steps 1–4 (structure, functions, failure modes, effects, causes) — **draft rev 0.2 done** | Item definition draft |
-| 2 | SW FMEA P1 elements + DFMEA structure/function | Phase 1 |
+| 2 | SW FMEA P1 elements + DFMEA structure/function — **SW FMEA rev 0.2: panda safety model done (17 failure modes, all rated); pandad, selfdrived, controlsd next** | Phase 1 |
 | 3 | HARA → apply severities (**HARA draft + System FMEA severities done**); risk analysis & AP for System/SW/DFMEA | HARA |
 | 4 | PFMEA + release/install control plan | Phase 0 |
 | 5 | FMEDA Phase A (panda) | Safety goals, TSC, panda BOM |
