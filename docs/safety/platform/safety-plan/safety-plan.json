@@ -247,7 +247,7 @@
       "target_asil": "D",
       "planned_date": "2027-Q1",
       "actual_date": "",
-      "status": "Not Started"
+      "status": "Draft complete"
     },
     {
       "wp_id": "WP-SYS-01",
@@ -488,8 +488,8 @@
       "name": "Functional safety concept, SOTIF and TARA drafted",
       "target_date": "2027-Q1",
       "predecessors": "M04",
-      "status": "Not Started",
-      "notes": ""
+      "status": "In Progress",
+      "notes": "FSC draft 0.1 complete; SOTIF and TARA not started"
     },
     {
       "id": "M07",
@@ -565,6 +565,16 @@
       "owner": "Jherrod Thomas",
       "status": "Open",
       "resolution": "Draft HARA LD-HARA-001 0.1 yields five ASIL D safety goals (SG-001 to SG-005), consistent with the target. Closes when the HARA passes its confirmation review."
+    },
+    {
+      "id": "A05",
+      "raised_by": "Claude Code (FSC)",
+      "date": "2026-10-10",
+      "description": "panda microcontroller fault detection is insufficient for ASIL D: a software watchdog on the main loop and interrupt-rate monitoring only record faults; no lockstep core or independent hardware watchdog; no evidence that a recorded fault leads to a no-output state (FSC gap G1).",
+      "severity": "Major",
+      "owner": "Hardware Lead (vacant)",
+      "status": "Open",
+      "resolution": "Assess the STM32H7's safety mechanisms; decide on an external watchdog with relay cut-off and/or a second monitoring MCU in the TSC. Blocks the D(D) + QM(D) decomposition."
     }
   ],
   "resources": [

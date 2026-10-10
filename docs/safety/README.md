@@ -48,7 +48,7 @@ Status key: ⚪ planned · 🟡 drafting · 🔵 in review · 🟢 released
 | WP-CON-04 | SOTIF hazard identification and triggering conditions | 21448 §6–7 | `platform/sotif` | ⚪ |
 | WP-CON-05 | TARA and cybersecurity goals | 21434 §15, §9 | `platform/tara` | ⚪ |
 | WP-CON-06 | AI safety requirements for learned components | 8800 | `platform/ai-safety` | ⚪ |
-| WP-CON-07 | Functional safety concept | 26262-3 §7 | `platform/fsc` | ⚪ |
+| WP-CON-07 | Functional safety concept | 26262-3 §7 | [`platform/fsc`](platform/fsc/) | 🟡 Draft 0.1: 29 concrete requirements, 5 gaps |
 
 ### System, hardware and software (ISO 26262-4, -5, -6)
 

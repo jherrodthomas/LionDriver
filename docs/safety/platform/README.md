@@ -67,4 +67,5 @@ Rated in the [HARA](hara/), which turns them into nine safety goals (five at ASI
 2. ~~Item definition (WP-CON-01)~~: [draft 0.1](item-definition/)
 3. ~~HARA and safety goals (WP-CON-02)~~: [draft 0.1](hara/)
 4. Assumptions register, completed and versioned (WP-CON-03)
-5. Functional safety concept (WP-CON-07), starting from the FSC hand-off tab of the HARA
+5. ~~Functional safety concept (WP-CON-07)~~: [draft 0.1](fsc/)
+6. Technical safety concept (WP-SYS-01), starting with the panda microcontroller gap (FSC G1)

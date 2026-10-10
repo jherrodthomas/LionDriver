@@ -65,6 +65,7 @@
 | A02 | Minor | XZACT compiler silently miscompiled valid programs | No product impact as TCL1 evidence; blocks any product use of XZACT code |
 | A03 | Major | No development interface agreement with upstream | Qualify upstream as existing software; impact-analyze every pin update |
 | A04 | Minor | ASIL D is a pre-HARA assumption | Draft HARA supports it (five ASIL D goals); closes at the HARA's confirmation review |
+| A05 | Major | panda microcontroller fault detection insufficient for ASIL D (FSC gap G1) | Assess the MCU; external watchdog with relay cut-off and/or a monitoring MCU. Blocks the decomposition |
 
 ## Schedule (proposed)
 
