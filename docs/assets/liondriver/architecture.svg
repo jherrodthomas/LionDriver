@@ -1,104 +1,105 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="700" viewBox="0 0 1280 700" role="img" aria-labelledby="t d">
-  <title id="t">LionDriver doer / checker architecture</title>
-  <desc id="d">Sensors feed the openpilot stack, which proposes steering and acceleration commands over CAN. The panda safety layer checks every command against actuator limits and driver state and forwards only limit-compliant frames to the vehicle. The driver can override at all times. Cybersecurity spans every interface.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="930" viewBox="0 0 1000 930" role="img" aria-labelledby="arch-t arch-d">
+  <title id="arch-t">LionDriver platform architecture</title>
+  <desc id="arch-d">Architecture diagram. Layer 1, Core Driving Platform inherited from openpilot: perception, prediction, planning, control, driver monitoring, human-machine interface. Layer 2, Safety Envelope in the panda safety firmware: limits, engagement and release checks (implemented); hardened envelope (proposed). Layer 3, Vehicle Integration in the opendbc car ports: vehicle interfaces, ECU compatibility, hardware configurations, calibration, diagnostics (implemented); vehicle operating assumptions (LionDriver draft). Layer 4, Supported Vehicle Ecosystem listed in docs/CARS.md: cars, SUVs and crossovers, minivans, pickups, commercial vans. A cross-cutting Safety and Assurance column of draft work products applies to every layer: functional safety, SOTIF, cybersecurity, AI safety, safety case, requirements traceability, verification and validation, change impact analysis.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0A0F1C"/>
-      <stop offset="1" stop-color="#121B31"/>
-    </linearGradient>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#FFD27A"/>
-      <stop offset="1" stop-color="#F29F1F"/>
-    </linearGradient>
-    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 Z" fill="#C9D2E3"/>
-    </marker>
-    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 Z" fill="#F5B83D"/>
-    </marker>
-    <style>
-      .h { font: 700 19px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #F7F8FB; }
-      .s { font: 500 14px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #C9D2E3; }
-      .m { font: 600 12.5px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
-      .lbl { font: 600 13px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #DDE3EF; }
-      .cap { font: 800 13px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 2px; }
-      .card { fill: #FFFFFF; fill-opacity: 0.04; stroke: #FFFFFF; stroke-opacity: 0.14; }
-      .chip { fill: #FFFFFF; fill-opacity: 0.06; }
-    </style>
+    <linearGradient id="arch-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0E1A31"/><stop offset="1" stop-color="#070D1A"/></linearGradient>
+    <linearGradient id="arch-gold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#A97A2A"/><stop offset="0.5" stop-color="#F6DC97"/><stop offset="1" stop-color="#A97A2A"/></linearGradient>
   </defs>
-
-  <rect width="1280" height="700" rx="18" fill="url(#bg)"/>
-
-  <text x="40" y="52" class="h" style="font-size:24px">Doer / checker architecture</text>
-  <text x="40" y="78" class="s">The driving software proposes. A small, deterministic safety layer decides what reaches the car.</text>
-
-  <!-- Sensors -->
-  <rect x="40" y="128" width="210" height="300" rx="14" class="card"/>
-  <text x="62" y="160" class="cap" fill="#8391AB">SENSORS</text>
-  <g class="lbl">
-    <rect x="58" y="180" width="174" height="44" rx="10" class="chip"/><text x="74" y="207">Road-facing cameras</text>
-    <rect x="58" y="236" width="174" height="44" rx="10" class="chip"/><text x="74" y="263">Driver-facing camera</text>
-    <rect x="58" y="292" width="174" height="44" rx="10" class="chip"/><text x="74" y="319">IMU · GNSS</text>
-    <rect x="58" y="348" width="174" height="44" rx="10" class="chip"/><text x="74" y="375">Vehicle CAN state</text>
+  <rect x="0.5" y="0.5" width="999" height="929" rx="22" fill="url(#arch-bg)" stroke="#24345A"/>
+  <rect x="40" y="0" width="920" height="3" fill="url(#arch-gold)"/>
+  <g font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <text x="40" y="56" font-size="15" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="3">PLATFORM ARCHITECTURE</text>
+    <text x="40" y="94" font-size="28" font-weight="700" fill="#F4F6FA" text-anchor="start">Driving stack, safety envelope and assurance, kept apart</text>
+    <rect x="40" y="124" width="640" height="190" rx="16" fill="#111E37" stroke="#24345A"/>
+    <text x="60" y="152" font-size="12" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="2">LAYER 1 · INHERITED FROM OPENPILOT</text>
+    <text x="60" y="176" font-size="19" font-weight="700" fill="#F4F6FA" text-anchor="start">Core Driving Platform</text>
+    <rect x="60" y="194" width="192" height="46" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="156.0" y="221.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">Perception</text>
+    <rect x="264" y="194" width="192" height="46" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="360.0" y="221.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">Prediction</text>
+    <rect x="468" y="194" width="192" height="46" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="564.0" y="221.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">Planning</text>
+    <rect x="60" y="252" width="192" height="46" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="156.0" y="279.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">Control</text>
+    <rect x="264" y="252" width="192" height="46" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="360.0" y="279.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">Driver Monitoring</text>
+    <rect x="468" y="252" width="192" height="46" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="564.0" y="279.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">Human-Machine Interface</text>
+    <line x1="360.0" y1="314" x2="360.0" y2="343" stroke="#93A1BC" stroke-width="1.6"/>
+    <polygon points="354.0,341 366.0,341 360.0,350" fill="#93A1BC"/>
+    <text x="374.0" y="337.0" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="start">actuation commands</text>
+    <rect x="40" y="350" width="640" height="132" rx="16" fill="#111E37" stroke="#24345A"/>
+    <text x="60" y="378" font-size="12" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="2">LAYER 2 · PANDA SAFETY FIRMWARE</text>
+    <text x="60" y="402" font-size="19" font-weight="700" fill="#F4F6FA" text-anchor="start">Safety Envelope</text>
+    <rect x="60" y="420" width="294" height="46" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="207.0" y="447.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">Limits, engagement and release checks</text>
+    <rect x="366" y="420" width="294" height="46" rx="9" fill="none" stroke="#93A1BC" stroke-dasharray="5 5"/>
+    <text x="513.0" y="447.9" font-size="14" font-weight="500" fill="#93A1BC" text-anchor="middle">Hardened envelope (planned TSRs)</text>
+    <line x1="360.0" y1="482" x2="360.0" y2="511" stroke="#93A1BC" stroke-width="1.6"/>
+    <polygon points="354.0,509 366.0,509 360.0,518" fill="#93A1BC"/>
+    <text x="374.0" y="505.0" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="start">checked CAN messages</text>
+    <rect x="40" y="518" width="640" height="190" rx="16" fill="#111E37" stroke="#24345A"/>
+    <text x="60" y="546" font-size="12" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="2">LAYER 3 · OPENDBC CAR PORTS</text>
+    <text x="60" y="570" font-size="19" font-weight="700" fill="#F4F6FA" text-anchor="start">Vehicle Integration</text>
+    <rect x="60" y="588" width="192" height="46" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="156.0" y="615.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">Vehicle Interfaces</text>
+    <rect x="264" y="588" width="192" height="46" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="360.0" y="615.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">ECU Compatibility</text>
+    <rect x="468" y="588" width="192" height="46" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="564.0" y="615.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">Hardware Configurations</text>
+    <rect x="60" y="646" width="192" height="46" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="156.0" y="673.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">Calibration</text>
+    <rect x="264" y="646" width="192" height="46" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="360.0" y="673.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">Diagnostics</text>
+    <rect x="468" y="646" width="192" height="46" rx="9" fill="#E2B85C" fill-opacity="0.10" stroke="#E2B85C" stroke-opacity="0.85"/>
+    <text x="564.0" y="673.9" font-size="14" font-weight="500" fill="#F4F6FA" text-anchor="middle">Operating Assumptions</text>
+    <rect x="40" y="736" width="640" height="132" rx="16" fill="#111E37" stroke="#24345A"/>
+    <text x="60" y="764" font-size="12" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="2">LAYER 4 · LISTED IN DOCS/CARS.MD</text>
+    <text x="60" y="788" font-size="19" font-weight="700" fill="#F4F6FA" text-anchor="start">Supported Vehicle Ecosystem</text>
+    <rect x="60" y="806" width="84" height="40" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="102.0" y="830.55" font-size="13" font-weight="500" fill="#F4F6FA" text-anchor="middle">Cars</text>
+    <rect x="154" y="806" width="164" height="40" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="236.0" y="830.55" font-size="13" font-weight="500" fill="#F4F6FA" text-anchor="middle">SUVs and crossovers</text>
+    <rect x="328" y="806" width="104" height="40" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="380.0" y="830.55" font-size="13" font-weight="500" fill="#F4F6FA" text-anchor="middle">Minivans</text>
+    <rect x="442" y="806" width="96" height="40" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="490.0" y="830.55" font-size="13" font-weight="500" fill="#F4F6FA" text-anchor="middle">Pickups</text>
+    <rect x="548" y="806" width="112" height="40" rx="9" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF" stroke-opacity="0.7"/>
+    <text x="604.0" y="830.55" font-size="13" font-weight="500" fill="#F4F6FA" text-anchor="middle">Commercial vans</text>
+    <rect x="704" y="124" width="256" height="744" rx="16" fill="#111E37" stroke="#24345A"/>
+    <text x="724" y="152" font-size="12" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="2">CROSS-CUTTING</text>
+    <text x="724" y="176" font-size="19" font-weight="700" fill="#F4F6FA" text-anchor="start">Safety and Assurance</text>
+    <rect x="724" y="194" width="216" height="48" rx="9" fill="#E2B85C" fill-opacity="0.10" stroke="#E2B85C" stroke-opacity="0.85"/>
+    <text x="832.0" y="223.25" font-size="15" font-weight="500" fill="#F4F6FA" text-anchor="middle">Functional Safety</text>
+    <rect x="724" y="256" width="216" height="48" rx="9" fill="#E2B85C" fill-opacity="0.10" stroke="#E2B85C" stroke-opacity="0.85"/>
+    <text x="832.0" y="285.25" font-size="15" font-weight="500" fill="#F4F6FA" text-anchor="middle">SOTIF</text>
+    <rect x="724" y="318" width="216" height="48" rx="9" fill="#E2B85C" fill-opacity="0.10" stroke="#E2B85C" stroke-opacity="0.85"/>
+    <text x="832.0" y="347.25" font-size="15" font-weight="500" fill="#F4F6FA" text-anchor="middle">Cybersecurity</text>
+    <rect x="724" y="380" width="216" height="48" rx="9" fill="#E2B85C" fill-opacity="0.10" stroke="#E2B85C" stroke-opacity="0.85"/>
+    <text x="832.0" y="409.25" font-size="15" font-weight="500" fill="#F4F6FA" text-anchor="middle">AI Safety</text>
+    <rect x="724" y="442" width="216" height="48" rx="9" fill="#E2B85C" fill-opacity="0.10" stroke="#E2B85C" stroke-opacity="0.85"/>
+    <text x="832.0" y="471.25" font-size="15" font-weight="500" fill="#F4F6FA" text-anchor="middle">Safety Case</text>
+    <rect x="724" y="504" width="216" height="48" rx="9" fill="#E2B85C" fill-opacity="0.10" stroke="#E2B85C" stroke-opacity="0.85"/>
+    <text x="832.0" y="533.25" font-size="15" font-weight="500" fill="#F4F6FA" text-anchor="middle">Requirements Traceability</text>
+    <rect x="724" y="566" width="216" height="48" rx="9" fill="#E2B85C" fill-opacity="0.10" stroke="#E2B85C" stroke-opacity="0.85"/>
+    <text x="832.0" y="595.25" font-size="15" font-weight="500" fill="#F4F6FA" text-anchor="middle">Verification and Validation</text>
+    <rect x="724" y="628" width="216" height="48" rx="9" fill="#E2B85C" fill-opacity="0.10" stroke="#E2B85C" stroke-opacity="0.85"/>
+    <text x="832.0" y="657.25" font-size="15" font-weight="500" fill="#F4F6FA" text-anchor="middle">Change Impact Analysis</text>
+    <text x="832.0" y="714" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="middle">Draft work products and records,</text>
+    <text x="832.0" y="734" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="middle">applied to every layer</text>
+    <line x1="680" y1="219" x2="704" y2="219" stroke="#E2B85C" stroke-opacity="0.55" stroke-dasharray="3 5"/>
+    <circle cx="704" cy="219" r="3.5" fill="#E2B85C"/>
+    <line x1="680" y1="445" x2="704" y2="445" stroke="#E2B85C" stroke-opacity="0.55" stroke-dasharray="3 5"/>
+    <circle cx="704" cy="445" r="3.5" fill="#E2B85C"/>
+    <line x1="680" y1="613" x2="704" y2="613" stroke="#E2B85C" stroke-opacity="0.55" stroke-dasharray="3 5"/>
+    <circle cx="704" cy="613" r="3.5" fill="#E2B85C"/>
+    <line x1="680" y1="791" x2="704" y2="791" stroke="#E2B85C" stroke-opacity="0.55" stroke-dasharray="3 5"/>
+    <circle cx="704" cy="791" r="3.5" fill="#E2B85C"/>
+    <rect x="40" y="887" width="26" height="16" rx="4" fill="#4EA8FF" fill-opacity="0.13" stroke="#4EA8FF"/>
+    <text x="76" y="900" font-size="14" font-weight="400" fill="#93A1BC" text-anchor="start">Implemented, inherited from upstream</text>
+    <rect x="370" y="887" width="26" height="16" rx="4" fill="#E2B85C" fill-opacity="0.10" stroke="#E2B85C"/>
+    <text x="406" y="900" font-size="14" font-weight="400" fill="#93A1BC" text-anchor="start">LionDriver draft (analysis, not yet reviewed)</text>
+    <rect x="730" y="887" width="26" height="16" rx="4" fill="none" stroke="#93A1BC" stroke-dasharray="4 3"/>
+    <text x="766" y="900" font-size="14" font-weight="400" fill="#93A1BC" text-anchor="start">Proposed, not implemented</text>
   </g>
-
-  <!-- openpilot stack: the doer -->
-  <rect x="300" y="110" width="330" height="336" rx="16" fill="#5CC8FF" fill-opacity="0.06" stroke="#5CC8FF" stroke-opacity="0.55" stroke-width="1.5"/>
-  <text x="322" y="142" class="cap" fill="#9FDDFF">THE DOER · OPENPILOT STACK</text>
-  <g class="lbl">
-    <rect x="320" y="160" width="290" height="52" rx="10" class="chip"/>
-    <text x="336" y="183">Perception</text><text x="336" y="202" class="s" style="font-size:12.5px">end-to-end vision model</text>
-    <rect x="320" y="222" width="290" height="52" rx="10" class="chip"/>
-    <text x="336" y="245">Planning</text><text x="336" y="264" class="s" style="font-size:12.5px">lateral path · longitudinal plan</text>
-    <rect x="320" y="284" width="290" height="52" rx="10" class="chip"/>
-    <text x="336" y="307">Control</text><text x="336" y="326" class="s" style="font-size:12.5px">brand car controller → CAN commands</text>
-    <rect x="320" y="346" width="290" height="52" rx="10" class="chip"/>
-    <text x="336" y="369">Driver monitoring</text><text x="336" y="388" class="s" style="font-size:12.5px">attention · alerts · disengagement</text>
-  </g>
-  <text x="322" y="430" class="m" fill="#9FDDFF">QM · ISO 21448 · ISO/PAS 8800 · UL 4600</text>
-
-  <!-- panda safety layer: the checker -->
-  <rect x="712" y="110" width="290" height="336" rx="16" fill="#F5B83D" fill-opacity="0.07" stroke="url(#gold)" stroke-width="2.5"/>
-  <text x="734" y="142" class="cap" fill="#FFD27A">THE CHECKER · PANDA</text>
-  <g class="lbl">
-    <rect x="732" y="160" width="250" height="52" rx="10" class="chip"/>
-    <text x="748" y="183">Actuator limits</text><text x="748" y="202" class="s" style="font-size:12.5px">torque · rate · angle · accel</text>
-    <rect x="732" y="222" width="250" height="52" rx="10" class="chip"/>
-    <text x="748" y="245">Engagement &amp; override</text><text x="748" y="264" class="s" style="font-size:12.5px">cruise · brake · gas edges</text>
-    <rect x="732" y="284" width="250" height="52" rx="10" class="chip"/>
-    <text x="748" y="307">Input validity</text><text x="748" y="326" class="s" style="font-size:12.5px">checksums · quality · timeouts</text>
-    <rect x="732" y="346" width="250" height="52" rx="10" class="chip"/>
-    <text x="748" y="369">Message whitelist</text><text x="748" y="388" class="s" style="font-size:12.5px">relay-malfunction latch</text>
-  </g>
-  <text x="734" y="430" class="m" fill="#FFD27A">ISO 26262 · ASIL target from HARA</text>
-
-  <!-- Vehicle -->
-  <rect x="1064" y="128" width="176" height="300" rx="14" class="card"/>
-  <text x="1084" y="160" class="cap" fill="#8391AB">VEHICLE</text>
-  <g class="lbl">
-    <rect x="1080" y="180" width="144" height="44" rx="10" class="chip"/><text x="1096" y="207">Steering (EPS)</text>
-    <rect x="1080" y="236" width="144" height="44" rx="10" class="chip"/><text x="1096" y="263">Powertrain</text>
-    <rect x="1080" y="292" width="144" height="44" rx="10" class="chip"/><text x="1096" y="319">Brakes</text>
-    <rect x="1080" y="348" width="144" height="44" rx="10" class="chip"/><text x="1096" y="375">Stock AEB</text>
-  </g>
-
-  <!-- flows -->
-  <path d="M250 278 H294" stroke="#C9D2E3" stroke-width="2" marker-end="url(#a)"/>
-  <path d="M630 250 H706" stroke="#C9D2E3" stroke-width="2" marker-end="url(#a)"/>
-  <text x="669" y="238" class="m" fill="#C9D2E3" text-anchor="middle" style="font-size:11.5px">commands</text>
-  <path d="M1002 250 H1058" stroke="#F5B83D" stroke-width="3" marker-end="url(#ag)"/>
-  <text x="1031" y="238" class="m" fill="#FFD27A" text-anchor="middle" style="font-size:11.5px">checked</text>
-  <path d="M1058 330 H1008" stroke="#C9D2E3" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#a)"/>
-  <text x="1031" y="352" class="m" fill="#8391AB" text-anchor="middle" style="font-size:11px">feedback</text>
-
-  <!-- driver -->
-  <rect x="712" y="482" width="528" height="70" rx="14" fill="#6EE7B7" fill-opacity="0.07" stroke="#6EE7B7" stroke-opacity="0.55"/>
-  <text x="734" y="512" class="h" style="font-size:17px">Driver — always in command</text>
-  <text x="734" y="536" class="s">Steering, brake or cancel ends control at once. The panda enforces it.</text>
-  <path d="M1152 482 V434" stroke="#6EE7B7" stroke-width="2" marker-end="url(#a)"/>
-
-  <!-- cybersecurity band -->
-  <rect x="40" y="590" width="1200" height="64" rx="14" fill="#FF7A90" fill-opacity="0.07" stroke="#FF7A90" stroke-opacity="0.5" stroke-dasharray="8 6"/>
-  <text x="62" y="619" class="cap" fill="#FFB0BD">ISO/SAE 21434 · CYBERSECURITY</text>
-  <text x="62" y="641" class="s">Every interface is an attack surface: vehicle CAN, USB to the panda, software updates, cloud and telemetry.</text>
 </svg>

@@ -1,0 +1,20 @@
+# Review records (WP-P-05 verification review procedure, WP-M-06 confirmation measures).
+#
+# No review has been performed at baseline BL-001, so this file holds no records.
+# A record looks like this, one per review:
+#
+# - id: REV-001
+#   kind: review
+#   title: "Verification review of WP-C-03 HARA"
+#   reviewed_objects: [Sn-49]
+#   reviewer: "Name"
+#   independence: I1
+#   review_date: "2026-01-31"
+#   outcome: accepted
+#   baseline: BL-001
+#   record: "Link to the review record (pull request or minutes)"
+#   source_revision: "<commit reviewed>"
+#
+# Only a review record can move a claim or evidence item to review_state: accepted, and the
+# validator rejects an accepted object whose review_ref does not point to an accepted review
+# that lists it. CI results and AI-generated reviews are not review records.

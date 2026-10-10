@@ -1,0 +1,838 @@
+# Source: WP-K-01 Safety Case (§6, evidence status). Machine-readable copy; WP-K-01 remains the reviewed document.
+# Format: assurance/case/README.md. Lifecycle and review fields are set only through recorded reviews.
+
+# evidence_status follows the WP-K-01 §6 rule: available = performed and approved at a named baseline;
+# partial = drafted analysis or specification, or inherited result; missing = not yet performed.
+
+- id: Sn-01
+  kind: evidence
+  title: "Functional safety requirements FSR-01.01…FSR-07.05"
+  description: "Draft; envelope strategy decision open"
+  evidence_status: partial
+  lifecycle_area: safety-concepts
+  location: "assurance/02-concept/WP-C-04-functional-safety-concept.md"
+  related_claims: [G1.1.1, G1.2, G1.3, G1.4, G1.5, G1.6, G1.7]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-02
+  kind: evidence
+  title: "Technical safety requirements"
+  description: "Draft: TSR-101…TSR-818 (incl. TSR-517…519, 619, 620 added in the consistency pass); not reviewed"
+  evidence_status: partial
+  lifecycle_area: safety-concepts
+  location: "assurance/03-system/WP-S-02-technical-safety-requirements.md"
+  related_claims: [G1.1.2, G1.2, G1.3, G1.4, G1.5, G1.7]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-03
+  kind: evidence
+  title: "Software safety requirements"
+  description: "Draft in preparation; not reviewed"
+  evidence_status: partial
+  lifecycle_area: technical-implementation
+  location: "assurance/05-software/WP-W-02-software-safety-requirements.md"
+  related_claims: [G1.1.2]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-04
+  kind: evidence
+  title: "FTTI and timing budget"
+  description: "Draft: kinematic estimates only, no measurement"
+  evidence_status: partial
+  lifecycle_area: safety-concepts
+  location: "assurance/03-system/WP-S-04-timing-ftti-budget.md"
+  related_claims: [G1.1.4]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-05
+  kind: evidence
+  title: "FFI analysis"
+  description: "Draft analysis; not reviewed"
+  evidence_status: partial
+  lifecycle_area: safety-concepts
+  location: "assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md"
+  related_claims: [G1.8]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-06
+  kind: evidence
+  title: "Dependent failure analysis"
+  description: "Draft analysis; audio-path independence (DFI-23) open"
+  evidence_status: partial
+  lifecycle_area: safety-concepts
+  location: "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md"
+  related_claims: [G1.8]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-07
+  kind: evidence
+  title: "Hardware FMEDA"
+  description: "Draft qualitative FMEA; quantitative FMEDA is a template"
+  evidence_status: partial
+  lifecycle_area: technical-implementation
+  location: "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md"
+  related_claims: [G1.9]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-08
+  kind: evidence
+  title: "Hardware architectural metrics"
+  description: "Method and plan only; no metric computed"
+  evidence_status: partial
+  lifecycle_area: technical-implementation
+  location: "assurance/04-hardware/WP-H-04-hardware-metrics.md"
+  related_claims: [G1.9]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-09
+  kind: evidence
+  title: "Random HW failure evaluation"
+  description: "Method and plan only; no value computed"
+  evidence_status: partial
+  lifecycle_area: technical-implementation
+  location: "assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md"
+  related_claims: [G1.9]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-10
+  kind: evidence
+  title: "opendbc safety unit tests (100% line coverage gate, MISRA, mutation, UBSan)"
+  description: "Inherited results: not requirement-based; line coverage only; host x86 not target; not re-run in LionDriver-controlled CI at a recorded baseline (U-6, GAP-39)"
+  evidence_status: partial
+  lifecycle_area: verification-validation
+  location: "assurance/05-software/WP-W-06-software-unit-verification.md"
+  related_claims: [G1.1.2, G1.1.3, G1.3, G1.5]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-11
+  kind: evidence
+  title: "HW component qualification"
+  description: "spec drafted, not executed (WP-H-07 qualification plan; no qualification performed)"
+  evidence_status: missing
+  lifecycle_area: verification-validation
+  location: "assurance/04-hardware/WP-H-07-hardware-component-qualification.md"
+  related_claims: [G1.9]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-12
+  kind: evidence
+  title: "HIL tests of the envelope"
+  description: "spec drafted, not executed (WP-W-08 in preparation; no HIL in the fork, GAP-30)"
+  evidence_status: missing
+  lifecycle_area: verification-validation
+  location: "assurance/05-software/WP-W-08-embedded-software-testing.md"
+  related_claims: [G1.1.2, G1.1.3, G1.3]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-13
+  kind: evidence
+  title: "Fault injection"
+  description: "spec drafted, not executed (WP-V-05)"
+  evidence_status: missing
+  lifecycle_area: verification-validation
+  location: "assurance/06-validation/WP-V-05-fault-injection.md"
+  related_claims: [G1.1.4, G1.2, G1.6]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-14
+  kind: evidence
+  title: "SW integration / process replay"
+  description: "Inherited process replay; references fetched from comma storage (GAP-30)"
+  evidence_status: partial
+  lifecycle_area: verification-validation
+  location: "assurance/05-software/WP-W-07-software-integration-verification.md"
+  related_claims: [G1.2, G1.6]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-20
+  kind: evidence
+  title: "Vehicle controllability and EPS characterisation (AOU-01/02)"
+  description: "spec drafted, not executed (WP-V-01)"
+  evidence_status: missing
+  lifecycle_area: verification-validation
+  location: "assurance/06-validation/WP-V-01-safety-validation.md"
+  related_claims: [G1.1.1, G1.10]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-21
+  kind: evidence
+  title: "PCM ACC envelope test (AOU-05)"
+  description: "spec drafted, not executed (WP-V-01)"
+  evidence_status: missing
+  lifecycle_area: verification-validation
+  location: "assurance/06-validation/WP-V-01-safety-validation.md"
+  related_claims: [G1.3, G1.4, G1.10]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-22
+  kind: evidence
+  title: "Brake override test (AOU-03)"
+  description: "spec drafted, not executed (WP-V-01)"
+  evidence_status: missing
+  lifecycle_area: verification-validation
+  location: "assurance/06-validation/WP-V-01-safety-validation.md"
+  related_claims: [G1.5, G1.10]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-23
+  kind: evidence
+  title: "Stock PCS target test (AOU-04)"
+  description: "spec drafted, not executed (WP-V-01)"
+  evidence_status: missing
+  lifecycle_area: verification-validation
+  location: "assurance/06-validation/WP-V-01-safety-validation.md"
+  related_claims: [G1.7]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-30
+  kind: evidence
+  title: "Installation and provisioning control; installation records"
+  description: "Procedure drafted; no installation record yet"
+  evidence_status: partial
+  lifecycle_area: safety-management
+  location: "assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md"
+  related_claims: [G1.7, G5.6]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-31
+  kind: evidence
+  title: "Model hash check at installation (INS-18)"
+  description: "spec drafted, not executed (INS-18 procedure only)"
+  evidence_status: missing
+  lifecycle_area: verification-validation
+  location: "assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md"
+  related_claims: [G3.1]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-32
+  kind: evidence
+  title: "Operation, service, decommissioning"
+  description: "Draft"
+  evidence_status: partial
+  lifecycle_area: safety-management
+  location: "assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md"
+  related_claims: [G5.6]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-40
+  kind: evidence
+  title: "Insufficiencies and triggering conditions"
+  description: "Draft: FI-01…FI-22, TC-01…TC-33"
+  evidence_status: partial
+  lifecycle_area: hazard-analysis
+  location: "assurance/02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md"
+  related_claims: [G2.1]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-41
+  kind: evidence
+  title: "Functional modifications"
+  description: "Draft: FM-01…FM-11 decided, none implemented"
+  evidence_status: partial
+  lifecycle_area: safety-concepts
+  location: "assurance/02-concept/WP-C-07-sotif-functional-modifications.md"
+  related_claims: [G2.1]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-42
+  kind: evidence
+  title: "Known-scenario evaluation"
+  description: "spec drafted, not executed (KS-01…KS-26)"
+  evidence_status: missing
+  lifecycle_area: verification-validation
+  location: "assurance/06-validation/WP-V-03-sotif-known-scenarios.md"
+  related_claims: [G2.1, G3.3]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-43
+  kind: evidence
+  title: "Unknown-scenario evaluation"
+  description: "spec drafted, not executed (method drafted)"
+  evidence_status: missing
+  lifecycle_area: verification-validation
+  location: "assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md"
+  related_claims: [G2.2]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-44
+  kind: evidence
+  title: "Field monitoring"
+  description: "Process drafted; no LionDriver data path"
+  evidence_status: partial
+  lifecycle_area: safety-case-review
+  location: "assurance/09-production-operation/WP-O-04-field-monitoring.md"
+  related_claims: [G2.2, G5.6]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-45
+  kind: evidence
+  title: "Misuse analysis"
+  description: "Draft; controllability tests (CA-01…CA-07) not performed"
+  evidence_status: partial
+  lifecycle_area: hazard-analysis
+  location: "assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md"
+  related_claims: [G2.3]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-46
+  kind: evidence
+  title: "DM performance tests"
+  description: "13 inherited scenario tests (`selfdrive/monitoring/test_monitoring.py`); none for data loss (GAP-21)"
+  evidence_status: partial
+  lifecycle_area: verification-validation
+  location: "assurance/06-validation/WP-V-03-sotif-known-scenarios.md"
+  related_claims: [G2.3]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-47
+  kind: evidence
+  title: "User information and briefing"
+  description: "Draft text; effectiveness not shown"
+  evidence_status: partial
+  lifecycle_area: safety-management
+  location: "assurance/09-production-operation/WP-O-03-user-information-safety-warnings.md"
+  related_claims: [G2.3, G5.6]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-48
+  kind: evidence
+  title: "SOTIF hazards and acceptance criteria"
+  description: "Draft"
+  evidence_status: partial
+  lifecycle_area: hazard-analysis
+  location: "assurance/02-concept/WP-C-05-sotif-hazard-identification.md"
+  related_claims: [G2]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-49
+  kind: evidence
+  title: "Hazard analysis and risk assessment"
+  description: "Draft; ratings proposals; CR-02 (I3) not done"
+  evidence_status: partial
+  lifecycle_area: hazard-analysis
+  location: "assurance/02-concept/WP-C-03-hara.md"
+  related_claims: [G0, G1]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-50
+  kind: evidence
+  title: "Model hashes in release record"
+  description: "Skeleton only"
+  evidence_status: missing
+  lifecycle_area: safety-case-review
+  location: "assurance/10-safety-case/WP-K-06-release-record.md"
+  related_claims: [G3.1]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-51
+  kind: evidence
+  title: "Dataset / ODD coverage analysis"
+  description: "Draft engineering plan; training data not available to LionDriver (DF-20)"
+  evidence_status: partial
+  lifecycle_area: technical-implementation
+  location: "assurance/05-software/WP-W-10-ml-engineering.md"
+  related_claims: [G3.2]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-52
+  kind: evidence
+  title: "Model test reports"
+  description: "spec drafted, not executed (VS-ML-nn)"
+  evidence_status: missing
+  lifecycle_area: verification-validation
+  location: "assurance/05-software/WP-W-10-ml-engineering.md"
+  related_claims: [G3.3]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-53
+  kind: evidence
+  title: "AI runtime supervision design, AIR-nn"
+  description: "Draft AIR-nn; monitors not implemented (GAP-22)"
+  evidence_status: partial
+  lifecycle_area: safety-concepts
+  location: "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md"
+  related_claims: [G3.4]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-54
+  kind: evidence
+  title: "AI safety plan"
+  description: "Draft"
+  evidence_status: partial
+  lifecycle_area: safety-management
+  location: "assurance/01-management/WP-M-10-ai-safety-plan.md"
+  related_claims: [G3.5]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-55
+  kind: evidence
+  title: "Item definition"
+  description: "Draft; vehicle and device records missing (OI-1/OI-2)"
+  evidence_status: partial
+  lifecycle_area: hazard-analysis
+  location: "assurance/02-concept/WP-C-01-item-definition.md"
+  related_claims: [G0]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-56
+  kind: evidence
+  title: "ODD specification"
+  description: "Draft"
+  evidence_status: partial
+  lifecycle_area: hazard-analysis
+  location: "assurance/02-concept/WP-C-02-odd-and-intended-functionality.md"
+  related_claims: [G0]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-60
+  kind: evidence
+  title: "Management plans"
+  description: "Drafts; not approved; CR-03 not done"
+  evidence_status: partial
+  lifecycle_area: safety-management
+  location: "assurance/01-management/"
+  related_claims: [G3.5, G5.1]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-61
+  kind: evidence
+  title: "CM and change management"
+  description: "Plans drafted; not implemented (no forks, tags, CODEOWNERS)"
+  evidence_status: partial
+  lifecycle_area: safety-management
+  location: "assurance/07-supporting/WP-P-01-configuration-management-plan.md"
+  related_claims: [G5.2]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-62
+  kind: evidence
+  title: "Baseline manifest"
+  description: "Generator not written"
+  evidence_status: missing
+  lifecycle_area: safety-management
+  location: "assurance/07-supporting/WP-P-01-configuration-management-plan.md"
+  related_claims: [G5.2]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-63
+  kind: evidence
+  title: "Traceability procedure and data, trace check report"
+  description: "Procedure drafted; trace data holds only hazards, SGs, AoUs"
+  evidence_status: partial
+  lifecycle_area: safety-management
+  location: "assurance/07-supporting/WP-P-06-requirements-management-traceability.md"
+  related_claims: [G5.3]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-64
+  kind: evidence
+  title: "Verification review records"
+  description: "No reviews performed"
+  evidence_status: missing
+  lifecycle_area: safety-case-review
+  location: "assurance/07-supporting/WP-P-05-verification-review-procedure.md"
+  related_claims: [G5.4]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-65
+  kind: evidence
+  title: "Confirmation reviews, audit, FSA"
+  description: "None performed; no assessor (D-06)"
+  evidence_status: missing
+  lifecycle_area: safety-case-review
+  location: "assurance/01-management/WP-M-06-confirmation-measures-plan.md"
+  related_claims: [G5.4]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-66
+  kind: evidence
+  title: "Tool qualification"
+  description: "Classification drafted"
+  evidence_status: partial
+  lifecycle_area: safety-management
+  location: "assurance/07-supporting/WP-P-07-tool-classification-qualification.md"
+  related_claims: [G5.5]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-67
+  kind: evidence
+  title: "SW component qualification"
+  description: "Draft"
+  evidence_status: partial
+  lifecycle_area: safety-management
+  location: "assurance/07-supporting/WP-P-08-software-component-qualification.md"
+  related_claims: [G5.5]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-68
+  kind: evidence
+  title: "CS incident response and updates"
+  description: "Process drafted; not running (GAP-28)"
+  evidence_status: partial
+  lifecycle_area: safety-management
+  location: "assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md"
+  related_claims: [G4, G5.6]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-69
+  kind: evidence
+  title: "Vehicle test operations and records"
+  description: "Procedure drafted; no drive records yet"
+  evidence_status: partial
+  lifecycle_area: verification-validation
+  location: "assurance/06-validation/WP-V-07-vehicle-test-operations.md"
+  related_claims: [G5.7]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: Sn-70
+  kind: evidence
+  title: "Cybersecurity case"
+  description: "Draft argument; almost all CS evidence Missing or Partial"
+  evidence_status: partial
+  lifecycle_area: safety-case-review
+  location: "assurance/10-safety-case/WP-K-03-cybersecurity-case.md"
+  related_claims: [G4]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"

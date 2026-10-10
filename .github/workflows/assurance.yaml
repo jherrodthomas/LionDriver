@@ -1,16 +1,32 @@
 name: assurance
 
+# Assurance data checks: trace consistency (WP-T-01), Living Safety Case records and dashboard
+# (assurance/case), and links in the assurance tree, README and LionDriver docs.
+# Read-only: the job never writes to the repository. Generated dashboard files are committed by
+# contributors (generate_dashboard.py) and this job fails if they are out of date.
+
 on:
   push:
     branches:
       - liondriver-dev
     paths:
       - 'assurance/**'
+      - 'README.md'
+      - 'docs/CARS.md'
+      - 'docs/liondriver/**'
+      - 'docs/assets/liondriver/**'
       - '.github/workflows/assurance.yaml'
   pull_request:
     paths:
       - 'assurance/**'
+      - 'README.md'
+      - 'docs/CARS.md'
+      - 'docs/liondriver/**'
+      - 'docs/assets/liondriver/**'
       - '.github/workflows/assurance.yaml'
+
+permissions:
+  contents: read
 
 concurrency:
   group: assurance-${{ github.event_name == 'push' && github.run_id || github.head_ref || github.ref }}
@@ -23,7 +39,26 @@ jobs:
     timeout-minutes: 5
     steps:
     - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
     - name: Trace consistency
       run: python3 assurance/trace/tools/check_trace.py
     - name: Relative links
       run: python3 assurance/trace/tools/check_links.py
+
+  safety-case:
+    name: living safety case
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Validate assurance case records
+      run: python3 assurance/case/tools/validate.py
+    - name: Validator self-tests
+      run: python3 assurance/case/tools/test_case.py
+    - name: Dashboard is in sync with the records
+      run: python3 assurance/case/tools/generate_dashboard.py --check
+    - name: README and documentation links
+      run: python3 assurance/case/tools/check_pages.py

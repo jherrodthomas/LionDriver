@@ -1,0 +1,74 @@
+# Source: WP-K-01 Safety Case (§10, open items). Machine-readable copy; WP-K-01 remains the reviewed document.
+# Format: assurance/case/README.md. Lifecycle and review fields are set only through recorded reviews.
+
+- id: ACT-001
+  kind: action
+  title: "Re-baseline G1.1 after the envelope strategy decision"
+  description: "Re-baseline G1.1 once the envelope strategy decision (WP-C-04 OI-1) is taken; if option (c), add the claim that the reduced authority gives C1 and record the resulting ASIL"
+  lifecycle_status: open
+  needed_by: G1
+  related_claims: [G1.1]
+  baseline: BL-001
+  source: WP-K-01
+  source_ref: OI-1
+  source_revision: "8b8c6ae"
+
+- id: ACT-002
+  kind: action
+  title: "Break down G1.x to TSR level and link trace IDs"
+  description: "Break down G1.x to TSR level now that WP-S-02 exists (Draft); link solutions to `trace/` IDs"
+  lifecycle_status: open
+  needed_by: G2
+  related_claims: [G1]
+  baseline: BL-001
+  source: WP-K-01
+  source_ref: OI-2
+  source_revision: "8b8c6ae"
+
+- id: ACT-003
+  kind: action
+  title: "Add the cybersecurity-to-safety links (CSG to SG)"
+  description: "Add the CS-to-safety links (CSG ↔ SG) from WP-C-10 (Draft) and WP-K-03"
+  lifecycle_status: open
+  needed_by: G1
+  related_claims: [G4]
+  baseline: BL-001
+  source: WP-K-01
+  source_ref: OI-3
+  source_revision: "8b8c6ae"
+
+- id: ACT-004
+  kind: action
+  title: "Decide whether to generate the GSN diagram from YAML"
+  description: "Decide whether to render the GSN with a tool (e.g. a generated diagram from a YAML source in `trace/`) to keep text and diagram consistent"
+  lifecycle_status: open
+  needed_by: G2
+  related_claims: []
+  baseline: BL-001
+  source: WP-K-01
+  source_ref: OI-4
+  source_revision: "8b8c6ae"
+
+- id: ACT-005
+  kind: action
+  title: "Interim assessment of the argument by an external assessor"
+  description: "Interim assessment of the argument structure by the external assessor (FSA-I1)"
+  lifecycle_status: open
+  needed_by: G1
+  related_claims: [G0]
+  baseline: BL-001
+  source: WP-K-01
+  source_ref: OI-5
+  source_revision: "8b8c6ae"
+
+- id: ACT-006
+  kind: action
+  title: "Record H-07 as reserved in WP-C-03"
+  description: "WP-C-03 §4 records H-07 as reserved (mode confusion, folded into H-02/H-05/H-06)"
+  lifecycle_status: closed
+  needed_by: G1
+  related_claims: []
+  baseline: BL-001
+  source: WP-K-01
+  source_ref: OI-6
+  source_revision: "8b8c6ae"

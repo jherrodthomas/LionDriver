@@ -1,0 +1,128 @@
+# Source: WP-K-01 Safety Case (§4.3). Machine-readable copy; WP-K-01 remains the reviewed document.
+# Format: assurance/case/README.md. Lifecycle and review fields are set only through recorded reviews.
+
+- id: G3
+  kind: claim
+  title: "AI safety (ISO/PAS 8800)"
+  description: "The ML components (driving model, DM model) are adequately specified, developed, validated and monitored for their role in the architecture."
+  parent: G0
+  argument: S0
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: []
+  defeaters: [DF-15]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G3.1
+  kind: claim
+  title: "Deployed models are the validated ones"
+  description: "The deployed models are exactly the validated ones."
+  parent: G3
+  argument: S3
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-50, Sn-31]
+  defeaters: [DF-19, DF-31]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G3.2
+  kind: claim
+  title: "Model input space covers the ODD"
+  description: "The models' input space covers the ODD."
+  parent: G3
+  argument: S3
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-51]
+  defeaters: [DF-20]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G3.3
+  kind: claim
+  title: "Model performance meets AIR targets"
+  description: "Model performance meets AIR targets in the ODD."
+  parent: G3
+  argument: S3
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-52, Sn-42]
+  defeaters: [DF-16, DF-35]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G3.4
+  kind: claim
+  title: "Degraded model behaviour is detected or bounded"
+  description: "Out-of-distribution or degraded model behaviour is detected or bounded."
+  parent: G3
+  argument: S3
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-53]
+  defeaters: [DF-21, DF-08]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G3.5
+  kind: claim
+  title: "Model changes are controlled"
+  description: "Model changes are controlled (D-05)."
+  parent: G3
+  argument: S3
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-60, Sn-54]
+  defeaters: []
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"

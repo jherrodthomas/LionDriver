@@ -16,4 +16,4 @@ openpilot/common/hardware/comma/updater filter=lfs diff=lfs merge=lfs -text
 
 # LionDriver artwork is stored in git, not LFS: the LFS server is upstream's,
 # and GitHub must be able to render these images in the README.
-docs/assets/liondriver/*.svg -filter -diff -merge text
+docs/assets/liondriver/**/*.svg -filter -diff -merge text

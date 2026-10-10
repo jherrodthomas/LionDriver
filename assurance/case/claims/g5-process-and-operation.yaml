@@ -1,0 +1,170 @@
+# Source: WP-K-01 Safety Case (§4.5). Machine-readable copy; WP-K-01 remains the reviewed document.
+# Format: assurance/case/README.md. Lifecycle and review fields are set only through recorded reviews.
+
+- id: G5
+  kind: claim
+  title: "Process, confirmation and operation"
+  description: "The work was done by competent people under controlled processes, was independently confirmed, and the claims stay valid in operation."
+  parent: G0
+  argument: S0
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: []
+  defeaters: []
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G5.1
+  kind: claim
+  title: "Plans exist and are followed"
+  description: "Plans exist and are followed."
+  parent: G5
+  argument: S5
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-60]
+  defeaters: []
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G5.2
+  kind: claim
+  title: "Safety-relevant code and evidence under CM"
+  description: "Safety-relevant code and evidence are under LionDriver configuration and change control."
+  parent: G5
+  argument: S5
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-61, Sn-62]
+  defeaters: [DF-24, DF-30, DF-31]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G5.3
+  kind: claim
+  title: "Requirements traceable from SG to code and test"
+  description: "Requirements are traceable from SG to code and test."
+  parent: G5
+  argument: S5
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-63]
+  defeaters: [DF-25]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G5.4
+  kind: claim
+  title: "Reviews and confirmation at required independence"
+  description: "Verification reviews and confirmation measures were performed at the required independence."
+  parent: G5
+  argument: S5
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-64, Sn-65]
+  defeaters: [DF-26]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G5.5
+  kind: claim
+  title: "Tools and reused components are qualified"
+  description: "Tools and reused software components are qualified."
+  parent: G5
+  argument: S5
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-66, Sn-67]
+  defeaters: []
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G5.6
+  kind: claim
+  title: "Operation keeps configuration and AoUs valid"
+  description: "Installation, operation, service, decommissioning and field monitoring keep the reference configuration and the AoUs valid."
+  parent: G5
+  argument: S5
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: []
+  evidence_refs: [Sn-30, Sn-32, Sn-47, Sn-44, Sn-68]
+  defeaters: []
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"
+
+- id: G5.7
+  kind: claim
+  title: "No public-road operation outside the test regime"
+  description: "No public-road operation happened outside the controlled test regime."
+  parent: G5
+  argument: S5
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: [AOU-07]
+  evidence_refs: [Sn-69]
+  defeaters: []
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"

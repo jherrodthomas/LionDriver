@@ -1,0 +1,11 @@
+# Engineering baselines the assurance records refer to. A baseline is frozen only by a tagged
+# configuration baseline under WP-P-01; until then it is under development.
+
+- id: BL-001
+  kind: baseline
+  title: "Initial assurance baseline"
+  description: "Repository state analysed by the draft work products. Submodules: opendbc 229dc70, panda 92eb565."
+  lifecycle_status: under-development
+  tag: null
+  source: WP-P-01
+  source_revision: "8b8c6ae"
