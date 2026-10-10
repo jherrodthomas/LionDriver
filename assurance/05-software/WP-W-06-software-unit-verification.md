@@ -89,6 +89,7 @@ Coverage exclusions (`GCOV_EXCL`, e.g. `modes/defaults.h:5-10, 18-24`) need a re
 | Undefined-behaviour sanitizer | Detects UB on the host build | UBSan run (`test.sh:11`, `libsafety_py.py:27-28`) |
 | Drive-log safety replay | Plausibility of the safety mode on real data | `tests/safety_replay/replay_drive.py` (needs logs; not fork-owned) |
 | Analyser self-test | Confidence in MISRA tool | `misra/test_mutation.py` (§4.3) |
+| Independent re-implementation with trace equivalence | Shows the unit tests fully determine the Toyota safety mode's behaviour, including at every limit boundary | XZACT port outside this repository (§4.8); not reproduced in LionDriver CI |
 
 ### 3.4 Test environment
 
@@ -205,6 +206,24 @@ Note: tests assert constants copied into the test classes (`test_toyota.py:139-1
 | DM unit tests | `selfdrive/monitoring/test_monitoring.py`: scenario tests; none for DM data loss | GAP-21 |
 | LionDriver CI | `.github/workflows/tests.yaml` runs on `push` to `master` and on PRs; not on `liondriver-dev` pushes | GAP-39 |
 
+### 4.8 Independent re-implementation of the Toyota safety mode (XZACT)
+
+The Toyota safety mode was re-implemented independently in [XZACT](https://github.com/jherrodthomas/XZACT-Lang/tree/claude/admiring-ritchie-hneag0/apps/openpilot_toyota_safety) and compared with the unmodified opendbc C at the pinned commit `229dc70`. Carried over from the earlier `docs/safety/` drafts ([reconciliation record](../00-assessment/docs-safety-reconciliation.md)).
+
+| Check | Result |
+|---|---|
+| Event traces byte-identical between the C original and the port (directed tests, exhaustive sweeps of wheel-speed rounding and angle-rate limits, 64 randomized drives over every mode-flag combination) | 72 / 72 traces, 1,703,142 events |
+| Reachable upstream lines of the Toyota mode executed (gcov) | 100 % |
+| Planted bugs detected by the traces | 30 / 30 |
+
+| Item | Note |
+|---|---|
+| What it shows | The safety mode's behaviour is fully determined by its tests, and an independent implementation reproduces it exactly |
+| What it does not show | That the limits are the right limits for the vehicle (WP-C-03, AOU-01…05), or anything about timing on the safety MCU |
+| Relation to §4.4 | The 30 planted bugs are a separate experiment from `tests/mutation.py`; they do not replace the mutation-score report (OI-5) |
+| Tool confidence | The XZACT compiler has silently miscompiled valid programs (earlier safety-plan anomaly A02). The port is used only as a test oracle, so a miscompilation can produce a false mismatch but cannot change the shipped C. No XZACT-generated code may be used in the product |
+| Status | Produced outside this repository, not reviewed, not reproducible from LionDriver CI (OI-10) |
+
 ## 5. Gaps against the strategy
 
 | # | Gap | Effect | GAP | Closure |
@@ -300,5 +319,6 @@ Static verification items (not tests):
 | OI-7 | Extend `panda/tests/libpanda` to host-test U-PND-MAIN/COMMS/SPI with coverage | Maintainer | G3 |
 | OI-8 | HIL bench (D-04) for ENV-T | Maintainer | G4 |
 | OI-9 | Fork-owned drive logs for `safety_replay/replay_drive.py` and `test_models.py` | Maintainer | G4 |
+| OI-10 | Make the XZACT equivalence check (§4.8) reproducible: pin the XZACT revision, store the trace generator and results with this WP, and classify XZACT under WP-P-07 as a verification tool | Maintainer | G3 |
 
 > Note from the consistency pass: WP-W-03 defines additional panda units U-PND-USB, U-PND-PWR, U-PND-HK and U-PND-PLAT that are not yet in this unit list. Add them with their verification methods. "ASIL C provisional" in this document equals the B‡ notation used in WP-W-02 and WP-S-02.

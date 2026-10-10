@@ -25,7 +25,7 @@ structure follows UL 4600 principles where they apply to a supervised Level 2 sy
 
 | Folder | Content | Primary standard clauses |
 |---|---|---|
-| `00-assessment/` | Baseline gap assessments | n/a |
+| `00-assessment/` | Baseline gap assessments; [reconciliation](00-assessment/docs-safety-reconciliation.md) of the earlier `docs/safety/` drafts | n/a |
 | `01-management/` | Plans, safety management, supplier and upstream management | 26262-2, 21434 §5–8, 21448 §4, MAN.3/5, ACQ.4 |
 | `02-concept/` | Item definition, HARA, FSC, SOTIF hazard and insufficiency analysis, TARA | 26262-3, 21448 §5–8, 21434 §9/§15, PAS 8800 |
 | `03-system/` | Technical safety requirements and concept, system architecture, HSI, system integration and qualification | 26262-4, SYS.1–5 |

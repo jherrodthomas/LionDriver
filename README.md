@@ -2,7 +2,7 @@
 
 **Open Driving. Engineered for Safety.**
 
-**[Safety framework](docs/safety/)** · **[How we use the standards](docs/safety/standards.md)** · **[Roadmap](#roadmap)** · **[Contributing](#contributing)**
+**[Assurance work products](assurance/)** · **[Assurance strategy](assurance/01-management/WP-M-01-assurance-strategy.md)** · **[Roadmap](#roadmap)** · **[Contributing](#contributing)**
 
 LionDriver is an open-source, safety-engineering-focused driving platform derived from [comma.ai/openpilot](https://github.com/commaai/openpilot).
 
@@ -48,9 +48,9 @@ The project seeks broad compatibility while progressively expanding its evidence
 
 ### One Platform, Many Configurations
 
-The platform is analyzed once, as a Safety Element out of Context (ISO 26262-10 §9), over a declared operating envelope. Everything that depends on the vehicle (actuator authority, stock safety systems, the brand safety mode) is recorded as an explicit assumption, which each vehicle configuration then checks. Adding a vehicle is a delta analysis against those assumptions, not a new safety program.
+The assurance work is carried out on one reference configuration: the 2020 Toyota Corolla LE with Toyota Safety Sense 2.0 ([item definition](assurance/02-concept/WP-C-01-item-definition.md)). Everything that depends on the vehicle (EPS and powertrain limits, stock safety systems, the brand safety mode) is recorded as an explicit assumption of use. Any other vehicle joins the claimed scope through an [impact analysis](assurance/01-management/WP-M-12-impact-analysis.md) against those assumptions, with its own evidence.
 
-The 2020 Toyota Corolla LE is the [first LionDriver-evaluated configuration](docs/safety/configurations/toyota-corolla-2020/): the first vehicle on which the platform assumptions are checked against real hardware. It is a starting point, not a restriction on the vehicles LionDriver supports.
+The Corolla is the first LionDriver-evaluated configuration. It is a starting point, not a restriction on the vehicles LionDriver supports.
 
 ## Engineering Framework
 
@@ -94,7 +94,7 @@ LionDriver integrates several complementary engineering disciplines.
 - AI component evaluation
 - Safety-related monitoring and assurance evidence
 
-All safety work products live in **[docs/safety/](docs/safety/)**, with the mapping of each standard in **[docs/safety/standards.md](docs/safety/standards.md)**.
+All assurance work products live in **[assurance/](assurance/)**, with the tailoring of each standard in the **[assurance strategy](assurance/01-management/WP-M-01-assurance-strategy.md)**.
 
 ### Safety Cases and Assurance
 
@@ -161,18 +161,18 @@ LionDriver follows several principles:
 ## Roadmap
 
 ### Phase 1 — Engineering Foundation
-- [ ] Establish project governance and [safety management plan](docs/safety/platform/safety-plan/) (draft 0.1)
-- [ ] Baseline upstream openpilot architecture and dependencies
-- [ ] Define platform-level system boundaries and assumptions: [item definition](docs/safety/platform/item-definition/) (draft 0.1)
-- [ ] Establish requirements, configuration management, and traceability
-- [ ] Create an initial living assurance-case structure
+- [ ] Establish project governance and [safety management plan](assurance/01-management/WP-M-02-safety-plan.md) (draft 0.1)
+- [ ] Baseline upstream openpilot architecture and dependencies: [gap assessment](assurance/00-assessment/gap-assessment.md) (draft 0.1)
+- [ ] Define platform-level system boundaries and assumptions: [item definition](assurance/02-concept/WP-C-01-item-definition.md) (draft 0.1)
+- [ ] Establish requirements, configuration management, and traceability: [configuration management](assurance/07-supporting/WP-P-01-configuration-management-plan.md), [traceability](assurance/07-supporting/WP-P-06-requirements-management-traceability.md), [trace data and checks](assurance/trace/) (draft 0.1)
+- [ ] Create an initial living assurance-case structure: [safety case](assurance/10-safety-case/WP-K-01-safety-case.md) (draft 0.1)
 
 ### Phase 2 — Safety Analysis and Architecture
-- [ ] Develop reusable hazard-analysis methods: [platform HARA, 9 safety goals](docs/safety/platform/hara/) (draft 0.1)
-- [ ] Establish functional safety concept patterns: [functional safety concept](docs/safety/platform/fsc/) (draft 0.1)
-- [ ] Conduct SOTIF analyses
-- [ ] Establish cybersecurity engineering processes
-- [ ] Assess existing software and hardware architectures: [technical safety concept](docs/safety/platform/tsc/) (draft 0.1)
+- [ ] Develop reusable hazard-analysis methods: [HARA, 7 safety goals](assurance/02-concept/WP-C-03-hara.md) (draft 0.1)
+- [ ] Establish functional safety concept patterns: [functional safety concept](assurance/02-concept/WP-C-04-functional-safety-concept.md) (draft 0.1)
+- [ ] Conduct SOTIF analyses: [hazards](assurance/02-concept/WP-C-05-sotif-hazard-identification.md), [insufficiencies and triggering conditions](assurance/02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) (draft 0.1)
+- [ ] Establish cybersecurity engineering processes: [cybersecurity plan](assurance/01-management/WP-M-09-cybersecurity-plan.md), [TARA](assurance/02-concept/WP-C-09-tara.md) (draft 0.1)
+- [ ] Assess existing software and hardware architectures: [technical safety concept](assurance/03-system/WP-S-03-technical-safety-concept-architecture.md) (draft 0.1)
 - [ ] Define reusable safety mechanisms and interface contracts
 
 ### Phase 3 — Implementation and Verification
@@ -223,6 +223,6 @@ Contributions are welcome in software engineering, functional safety, SOTIF, cyb
 
 Safety-relevant contributions should include appropriate rationale, impact analysis, and verification evidence.
 
-Changes that touch a safety-related element go through impact analysis and an independent safety review before merge; the workflow is described in **[docs/safety/README.md](docs/safety/README.md#change-workflow)**.
+Changes that touch a safety-related element go through impact analysis and an independent safety review before merge; the workflow is described in **[WP-P-02 change management](assurance/07-supporting/WP-P-02-change-management.md)**.
 
 Additional contribution and review guidelines will be established as the project matures.
