@@ -64,6 +64,7 @@ WBS elements follow the phases and gates in [WP-M-01 §7](WP-M-01-assurance-stra
 | 3.5 | SOTIF V&V strategy | WP-V-02 | |
 | 4 | P3 HW/SW development | | G3 |
 | 4.1 | Hardware safety | WP-H-01…H-05, H-07 | |
+| 4.0 | Part 6 activation | D-09; WP-M-14 Phase A gap assessment and Phase B infrastructure ([WP-M-14](WP-M-14-iso26262-6-implementation-specification.md)). Depends on WBS 1 (Part 2 plans, supporting procedures), 2.1–2.3 (Part 3) and 3.1–3.4 (Part 4) | |
 | 4.2 | Software safety requirements, architecture, analysis | WP-W-01…W-04 | |
 | 4.3 | Envelope hardening (code changes) | IWDG, fault → safe state, mode lock, gate `0xc5`, driver-torque and EPS-status monitoring, RX E2E strategy (gap §9 action 5) | |
 | 4.4 | Firmware security | LionDriver signing key, modern algorithm, RDP/WRP, release build without debug key (gap §9 action 6) | |

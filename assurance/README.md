@@ -30,7 +30,7 @@ structure follows UL 4600 principles where they apply to a supervised Level 2 sy
 | `02-concept/` | Item definition, HARA, FSC, SOTIF hazard and insufficiency analysis, TARA | 26262-3, 21448 §5–8, 21434 §9/§15, PAS 8800 |
 | `03-system/` | Technical safety requirements and concept, system architecture, HSI, system integration and qualification | 26262-4, SYS.1–5 |
 | `04-hardware/` | Hardware safety requirements, design, metrics, component qualification | 26262-5, 26262-8 §13, HWE.1–4 |
-| `05-software/` | Software requirements, architecture, units, verification, ML engineering | 26262-6, SWE.1–6, MLE.1–4, SUP.11 |
+| `05-software/` | Software requirements, architecture, units, verification, ML engineering. Pre-entry drafts; the controlled Part 6 lifecycle is specified in [WP-M-14](01-management/WP-M-14-iso26262-6-implementation-specification.md) and not yet started | 26262-6, SWE.1–6, MLE.1–4, SUP.11 |
 | `06-validation/` | Safety validation, SOTIF known/unknown scenario evaluation, pen testing, vehicle test operations | 26262-4 §8, 21448 §9–11, 21434 §11, VAL.1 |
 | `07-supporting/` | CM, change, problem resolution, documentation, tool and software-component qualification | 26262-8, SUP.1/8/9/10 |
 | `08-analyses/` | ASIL decomposition, coexistence, DFA, system FTA/FMEA | 26262-9 |

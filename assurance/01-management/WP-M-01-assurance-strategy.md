@@ -146,8 +146,8 @@ One shared **hazard log** (in [WP-C-03](../02-concept/WP-C-03-hara.md), with SOT
 | **P0 Governance** | G0 | M-00…M-13, P-01…P-06 | Fork opendbc and panda into LionDriver control (D-01). Freeze upstream sync (D-02). Fix CI for the fork (D-03). CODEOWNERS and branch protection |
 | **P1 Concept** | G1 | C-01…C-11, V-07, K-01 (initial argument) | No public-road testing until WP-V-07 is approved. HARA confirmation review by an external assessor |
 | **P2 System design** | G2 | S-01…S-07, A-01…A-04, V-02 | Envelope requirements back-filled from code. FFI and DFA analyses decide whether hardware changes are needed |
-| **P3 HW/SW development** | G3 | H-01…H-05, H-07, W-01…W-06, W-09…W-11, P-07…P-09 | Includes closing gaps found in P2, for example locking the safety mode and parameter |
-| **P4 Integration and verification** | G4 | S-08, S-09, H-06, W-07, W-08, V-03, V-05 | **Needs a LionDriver HIL bench** (panda + CAN simulation + Corolla DBC replay) and a fork-owned process-replay reference set |
+| **P3 HW/SW development** | G3 | H-01…H-05, H-07, W-01…W-06, W-09…W-11, P-07…P-09 | Includes closing gaps found in P2, for example locking the safety mode and parameter. The software-level lifecycle runs to [WP-M-14](WP-M-14-iso26262-6-implementation-specification.md) and starts only after D-09; its entry baseline needs the Part 2 plans (CR-03), the Part 3 concept (CR-02, CR-04), the Part 4 TSC, HSI and FTTI (CR-05), the system FFI and DFA, and approved CM, change, requirements and review procedures (WP-M-14 §3.1) |
+| **P4 Integration and verification** | G4 | S-08, S-09, H-06, W-07, W-08, V-03, V-05 | Software integration and embedded testing per WP-M-14 Phase E. **Needs a LionDriver HIL bench** (panda + CAN simulation + Corolla DBC replay) and a fork-owned process-replay reference set |
 | **P5 Validation and release** | G5 | V-01, V-04, V-06, K-02…K-06, O-01…O-03 | Validation driving under WP-V-07; SOTIF residual-risk acceptance; external FSA |
 | **P6 Operation** | G6 | O-04, O-05, P-03 | Field monitoring, incident response, controlled updates |
 
@@ -177,6 +177,7 @@ These are owned by the project maintainer. Until each one is decided, it stays o
 | D-06 | External assessor | Engage an independent functional safety assessor for the HARA confirmation review at G1 |
 | D-07 | Work product format | Markdown in the repository (docs-as-code), with machine-readable requirements in `trace/`. Reviewed through pull requests. Can be exported to an ALM tool later |
 | D-08 | Default enablement of Experimental Mode | Upstream commit `f21bfc3` turns on Experimental Mode by default without confirmation. For the reference configuration, decide whether this is in the ODD; recommendation: disabled until validated |
+| D-09 | Authorize the ISO 26262-6 software lifecycle | Do not start [WP-M-14](WP-M-14-iso26262-6-implementation-specification.md) Phase A until its entry criteria E-01…E-05 (safety plan, item definition, HARA, FSC, TSC) are at least in review; do not start Phase B until the full entry baseline (WP-M-14 §3.1) is approved or each exception is justified. **Status:** open. Snapshot at `3ed97c8`: no entry criterion met |
 
 ## 9. Top risks to the assurance path
 

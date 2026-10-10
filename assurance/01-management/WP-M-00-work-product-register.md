@@ -53,6 +53,7 @@ Legend for **ASPICE**: process IDs from ASPICE PAM 4.0, including the ML (MLE), 
 | [WP-M-11](WP-M-11-upstream-and-supplier-management.md) | Upstream (comma.ai) and supplier management, development interface agreements | 8 §5 | | §7 | | ACQ.4 | G0 | D |
 | [WP-M-12](WP-M-12-impact-analysis.md) | Impact analysis of the openpilot-derived baseline (modification of existing item) | 2 §6 (impact analysis), 8 §8 | | §6 (reuse analysis) | | SUP.10 | G0 | D |
 | [WP-M-13](WP-M-13-aspice-capability-baseline.md) | ASPICE capability baseline (self-assessment) | | | | | All in scope | G0 | D |
+| [WP-M-14](WP-M-14-iso26262-6-implementation-specification.md) | ISO 26262-6 software lifecycle implementation specification (future work; activation deferred, D-09) | 6 §5–11, Annex C; 8 §6–12 | | | | MAN.3, SWE.1–6 | G2 (activation), G3–G4 (use) | D |
 
 ### 3.2 Concept phase (`02-concept/`)
 
