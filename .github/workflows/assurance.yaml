@@ -1,0 +1,29 @@
+name: assurance
+
+on:
+  push:
+    branches:
+      - liondriver-dev
+    paths:
+      - 'assurance/**'
+      - '.github/workflows/assurance.yaml'
+  pull_request:
+    paths:
+      - 'assurance/**'
+      - '.github/workflows/assurance.yaml'
+
+concurrency:
+  group: assurance-${{ github.event_name == 'push' && github.run_id || github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: trace and link checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@v7
+    - name: Trace consistency
+      run: python3 assurance/trace/tools/check_trace.py
+    - name: Relative links
+      run: python3 assurance/trace/tools/check_links.py

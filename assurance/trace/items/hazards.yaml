@@ -1,0 +1,327 @@
+# Hazards (H-) and hazardous events (HE-) from WP-C-03 §4–§5 (HARA). Ratings are WP-C-03 proposals, not approved.
+# Source of truth is WP-C-03; tools/check_trace.py compares S/E/C/ASIL and the ⚠ flag with the WP-C-03 tables (check X1).
+# H-07 is not defined in WP-C-03 (numbering goes H-06 -> H-08).
+# Schema: ../README.md §4.2.
+
+- id: H-01
+  kind: hazard
+  title: "Unintended or excessive lateral motion"
+  functions: [F-01]
+  status: proposed
+  source: WP-C-03
+
+- id: H-02
+  kind: hazard
+  title: "Unannounced loss or degradation of lateral control"
+  functions: [F-01]
+  status: proposed
+  source: WP-C-03
+
+- id: H-03
+  kind: hazard
+  title: "Unintended acceleration"
+  functions: [F-02]
+  status: proposed
+  source: WP-C-03
+
+- id: H-04
+  kind: hazard
+  title: "Unintended or excessive deceleration"
+  functions: [F-02]
+  status: proposed
+  source: WP-C-03
+
+- id: H-05
+  kind: hazard
+  title: "Driver unable to override or disengage"
+  functions: [F-03]
+  status: proposed
+  source: WP-C-03
+
+- id: H-06
+  kind: hazard
+  title: "Unannounced loss of longitudinal deceleration"
+  functions: [F-02]
+  status: proposed
+  source: WP-C-03
+
+- id: H-08
+  kind: hazard
+  title: "Suppression of the vehicle's stock pre-collision braking"
+  functions: [F-08]
+  status: proposed
+  source: WP-C-03
+
+- id: HE-01.1
+  kind: hazardous-event
+  parents: [H-01]
+  situation: "OS-03 undivided road, oncoming traffic, 60–90 km/h"
+  effect: "Departure into the oncoming lane; head-on collision"
+  s: 3
+  e: 4
+  c: 2
+  asil: C
+  aou_flag: true
+  aou_dependency: [AOU-01, AOU-02]
+  asil_if_aou_fails: D
+  status: proposed
+  source: WP-C-03
+
+- id: HE-01.2
+  kind: hazardous-event
+  parents: [H-01]
+  situation: "OS-01/OS-02 highway, adjacent traffic or barrier, 90–120 km/h"
+  effect: "Lateral departure into an adjacent vehicle or barrier"
+  s: 3
+  e: 4
+  c: 2
+  asil: C
+  aou_flag: true
+  aou_dependency: [AOU-01, AOU-02]
+  asil_if_aou_fails: D
+  status: proposed
+  source: WP-C-03
+
+- id: HE-01.3
+  kind: hazardous-event
+  parents: [H-01]
+  situation: "OS-04 urban, pedestrians and cyclists near the lane edge, 30–60 km/h"
+  effect: "Vehicle drifts into a vulnerable road user"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: true
+  aou_dependency: [AOU-01, AOU-02]
+  asil_if_aou_fails: C
+  notes: "WP-C-03 flags ⚠ but does not state the rating if the AoUs fail; AoUs taken from the H-01 group rationale (HE-01.1)"
+  status: proposed
+  source: WP-C-03
+
+- id: HE-01.4
+  kind: hazardous-event
+  parents: [H-01]
+  situation: "Torque while not engaged, OS-01/OS-03, driver steering manually"
+  effect: "Unexpected steering disturbance during manual driving"
+  s: 3
+  e: 4
+  c: 2
+  asil: C
+  aou_flag: true
+  aou_dependency: [AOU-01, AOU-02]
+  asil_if_aou_fails: D
+  notes: "WP-C-03 flags ⚠ but does not state the rating if the AoUs fail; AoUs taken from the H-01 group rationale (HE-01.1)"
+  status: proposed
+  source: WP-C-03
+
+- id: HE-02.1
+  kind: hazardous-event
+  parents: [H-02]
+  situation: "OS-02 highway curve, driver supervising, possibly hands off (foreseeable: openpilot does not require hands on the wheel)"
+  effect: "Vehicle goes straight in the curve and departs the lane"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  status: proposed
+  source: WP-C-03
+
+- id: HE-02.2
+  kind: hazardous-event
+  parents: [H-02]
+  situation: "OS-03 rural curve with oncoming traffic"
+  effect: "Departure into the oncoming lane"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  status: proposed
+  source: WP-C-03
+
+- id: HE-02.3
+  kind: hazardous-event
+  parents: [H-02]
+  situation: "Frozen (stuck) torque command at its last value"
+  effect: "Steering bias continues while the road changes"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: true
+  aou_dependency: [AOU-01]
+  asil_if_aou_fails: null
+  status: proposed
+  source: WP-C-03
+
+- id: HE-03.1
+  kind: hazardous-event
+  parents: [H-03]
+  situation: "OS-05 following a lead at a short gap"
+  effect: "Rear-end collision with the lead vehicle"
+  s: 2
+  e: 4
+  c: 2
+  asil: B
+  aou_flag: true
+  aou_dependency: [AOU-03, AOU-05]
+  asil_if_aou_fails: C
+  status: proposed
+  source: WP-C-03
+
+- id: HE-03.2
+  kind: hazardous-event
+  parents: [H-03]
+  situation: "OS-06 standstill in a queue, pedestrian crossing in front"
+  effect: "Vehicle moves off and hits a pedestrian"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  status: proposed
+  source: WP-C-03
+
+- id: HE-03.3
+  kind: hazardous-event
+  parents: [H-03]
+  situation: "OS-07 approaching a slower lead"
+  effect: "Acceleration toward the lead instead of deceleration"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  status: proposed
+  source: WP-C-03
+
+- id: HE-04.1
+  kind: hazardous-event
+  parents: [H-04]
+  situation: "OS-08 close following vehicle, 50–120 km/h"
+  effect: "Rear-end impact by the following vehicle"
+  s: 2
+  e: 4
+  c: 2
+  asil: B
+  aou_flag: true
+  aou_dependency: [AOU-05]
+  asil_if_aou_fails: C
+  status: proposed
+  source: WP-C-03
+
+- id: HE-04.2
+  kind: hazardous-event
+  parents: [H-04]
+  situation: "OS-11 wet road, curve"
+  effect: "Instability under unexpected braking"
+  s: 3
+  e: 3
+  c: 1
+  asil: A
+  aou_flag: true
+  aou_dependency: [AOU-10]
+  asil_if_aou_fails: B
+  notes: "Credits AOU-10 (VSC available); C2 → ASIL B if it fails"
+  status: proposed
+  source: WP-C-03
+
+- id: HE-05.1
+  kind: hazardous-event
+  parents: [H-05]
+  situation: "OS-10 driver emergency braking while the system keeps commanding acceleration"
+  effect: "Longer stopping distance; collision"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: true
+  aou_dependency: [AOU-03]
+  asil_if_aou_fails: C
+  status: proposed
+  source: WP-C-03
+
+- id: HE-05.2
+  kind: hazardous-event
+  parents: [H-05]
+  situation: "OS-10 driver evasive steering while the system keeps commanding counter-torque"
+  effect: "Evasive manoeuvre impaired; collision"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: true
+  aou_dependency: [AOU-01, AOU-02]
+  asil_if_aou_fails: C
+  status: proposed
+  source: WP-C-03
+
+- id: HE-05.3
+  kind: hazardous-event
+  parents: [H-05]
+  situation: "Cancel or brake does not disengage; the system stays engaged when the driver believes it is off"
+  effect: "Mode confusion, then unexpected actuation (leads to H-01 or H-03)"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  status: proposed
+  source: WP-C-03
+
+- id: HE-06.1
+  kind: hazardous-event
+  parents: [H-06]
+  situation: "OS-07 approaching stationary or slow traffic at highway speed; the system silently stops decelerating (for example, a stale plan holds zero acceleration)"
+  effect: "High-speed rear-end collision"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  status: proposed
+  source: WP-C-03
+
+- id: HE-06.2
+  kind: hazardous-event
+  parents: [H-06]
+  situation: "OS-06 slow queue"
+  effect: "Low-speed rear-end collision"
+  s: 1
+  e: 3
+  c: 2
+  asil: QM
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  sg_exempt_reason: "Rated QM in WP-C-03 §5.6 (S1); no safety goal required"
+  status: proposed
+  source: WP-C-03
+
+- id: HE-08.1
+  kind: hazardous-event
+  parents: [H-08]
+  situation: "OS-09 imminent collision where the stock PCS would have braked (engaged or not engaged)"
+  effect: "Collision not mitigated"
+  s: 3
+  e: 2
+  c: 3
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  status: proposed
+  source: WP-C-03
