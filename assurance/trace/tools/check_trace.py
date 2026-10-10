@@ -35,7 +35,7 @@ ITEMDEF_MD = ASSURANCE_DIR / "02-concept" / "WP-C-01-item-definition.md"
 
 ID_RE = re.compile(
   r"^((H|HE|HS|SG|FSR|TSR|SWSR|HWSR|SH|TC|FI|FM|SOTIF|AIR|DSR|MLR|MON|KS|DVR|DEV|TS|CSG|CSR|SYS|AOU)"
-  r"-[0-9]{2,3}(\.[0-9]{1,2})?[a-z]?|VS-[A-Z]{2,4}-[0-9]{2,3}[a-z]?)$")
+  + r"-[0-9]{2,3}(\.[0-9]{1,2})?[a-z]?|VS-[A-Z]{2,4}-[0-9]{2,3}[a-z]?)$")
 FUNC_RE = re.compile(r"^F-[0-9]{2}$")
 STATUS = {"proposed", "agreed", "implemented", "verified", "withdrawn"}
 ASIL_ORDER = {"QM": 0, "A": 1, "B": 2, "C": 3, "D": 4}
@@ -277,7 +277,7 @@ def main(argv: list[str]) -> int:
   for f in files:
     try:
       data = load_yaml(f)
-    except Exception as exc:  # noqa: BLE001 - report any parse failure as K1
+    except Exception as exc:  # report any parse failure as K1
       rep.err("K1", f"{f.name}: {exc}")
       continue
     if not isinstance(data, list):

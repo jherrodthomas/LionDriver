@@ -26,6 +26,7 @@ The Markdown work products remain the documents that are reviewed and approved. 
 | `items/goals.yaml` | Safety goals SG-01…SG-07 with ASIL, safe state, FTTI, source HEs | [WP-C-03](../02-concept/WP-C-03-hara.md) §6 | 7 |
 | `items/aou.yaml` | Assumptions of use AOU-01…AOU-11 | [WP-C-01](../02-concept/WP-C-01-item-definition.md) §7 | 11 |
 | `tools/check_trace.py` | Consistency checker (§6) | — | — |
+| `tools/check_links.py` | Relative-link checker for all of `assurance/` (WP-P-04) | — | — |
 
 All items carry `status: proposed`: none of the source work products is approved. The HARA ratings are proposals pending the I3 confirmation review (CR-02).
 
@@ -34,7 +35,10 @@ Run the checker from the repository root:
 ```sh
 python3 assurance/trace/tools/check_trace.py          # all checks incl. comparison with WP-C-01/WP-C-03
 python3 assurance/trace/tools/check_trace.py --no-source-compare
+python3 assurance/trace/tools/check_links.py          # every relative link under assurance/ resolves
 ```
+
+Both checks run in CI (`.github/workflows/assurance.yaml`) on pull requests that touch `assurance/` and on pushes to `liondriver-dev`. Either one failing fails the job.
 
 Result at this baseline: `trace: 3 files, 43 items aou=11, hazard=7, hazardous-event=18, safety-goal=7` — `OK: all implemented checks passed`. The checker needs only the Python standard library. It uses PyYAML when available; PyYAML is **not** a direct dependency of LionDriver (`uv.lock` lists `pyyaml` only as an optional `autogen` extra of tinygrad), so a built-in parser for the YAML subset in §4.1 is used otherwise. Both paths were run and give the same result.
 
