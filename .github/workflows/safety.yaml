@@ -60,8 +60,11 @@ jobs:
       # cppcheck comes from opendbc's locked environment. scons and the ARM compiler are pinned
       # to the versions in LionDriver's uv.lock. panda's own setup.sh is not used because it runs
       # `uv sync --upgrade` without a lockfile and installs opendbc from upstream master.
+      # setup.sh must run from inside opendbc_repo: uv discovers the project from the working
+      # directory, and from the repo root it would resolve LionDriver's own workspace instead.
+      working-directory: opendbc_repo
       run: |
-        source opendbc_repo/setup.sh
+        source setup.sh
         uv pip install "scons==4.11.1" "comma-deps-gcc-arm-none-eabi==13.2.1.post103"
         echo "$GITHUB_WORKSPACE/opendbc_repo/.venv/bin" >> "$GITHUB_PATH"
     - name: Run panda MISRA analysis
