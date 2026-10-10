@@ -1,73 +1,75 @@
-# How to contribute
+# Contributing to LionDriver
 
-Our software is open source so you can solve your own problems without needing help from others. And if you solve a problem and are so kind, you can upstream it for the rest of the world to use. Check out our [post about externalization](https://blog.comma.ai/a-2020-theme-externalization/).
+**Help build the future of open-source, safety-engineered driving.**
 
-Development is coordinated through [Discord](https://discord.comma.ai) and GitHub.
+LionDriver is an open-source driving platform built upon [openpilot](https://github.com/commaai/openpilot), with a mission to advance functional safety, SOTIF, cybersecurity, AI safety, and transparent engineering assurance across a broad ecosystem of supported vehicles.
 
-### Getting Started
+We're bringing together developers, engineers, researchers, and organizations who believe open-source driving technology should be supported by rigorous engineering and publicly reviewable evidence.
 
-* Set up your [development environment](/tools/)
-* Join our [Discord](https://discord.comma.ai)
-* Docs are at https://docs.comma.ai and https://blog.comma.ai
+Whether you're fixing a bug, developing a safety mechanism, improving documentation, conducting safety analysis, or contributing verification infrastructure, your expertise can help move LionDriver forward.
 
-## What contributions are we looking for?
+## Join the LionDriver Team
 
-**openpilot's priorities are [safety](SAFETY.md), stability, quality, and features, in that order.**
-openpilot is part of comma's mission to *solve self-driving cars while delivering shippable intermediaries*, and all development is towards that goal.
+**We're looking for contributors and collaborators who want to help build LionDriver.**
 
-### What gets merged?
+Areas of interest include:
 
-The probability of a pull request being merged is a function of its value to the project and the effort it will take us to get it merged.
-If a PR offers *some* value but will take lots of time to get merged, it will be closed.
-Simple, well-tested bug fixes are the easiest to merge, and new features are the hardest to get merged.
+- Software development, embedded systems, and automotive controls
+- Functional safety and systems engineering
+- SOTIF, perception, and AI safety
+- Automotive cybersecurity
+- Hardware engineering and diagnostics
+- Simulation, testing, and verification
+- Safety cases, requirements, and engineering assurance
+- Technical documentation and open-source community development
 
-All of these are examples of good PRs:
-* typo fix: https://github.com/commaai/openpilot/pull/30678
-* removing unused code: https://github.com/commaai/openpilot/pull/30573
-* simple car model port: https://github.com/commaai/openpilot/pull/30245
-* car brand port: https://github.com/commaai/openpilot/pull/23331
+**Interested in joining the core team, contributing your expertise, or discussing a collaboration?**
 
-### What doesn't get merged?
+Visit **[jherrodthomas.com](https://jherrodthomas.com)** to get in touch.
 
-* **style changes**: code is art, and it's up to the author to make it beautiful
-* **500+ line PRs**: clean it up, break it up into smaller PRs, or both
-* **PRs without a clear goal**: every PR must have a singular and clear goal
-* **UI design**: we do not have a good review process for this yet
-* **New features**: We believe openpilot is mostly feature-complete, and the rest is a matter of refinement and fixing bugs. As a result of this, most feature PRs will be immediately closed, however the beauty of open source is that forks can and do offer features that upstream openpilot doesn't.
-* **Negative expected value**: This is a class of PRs that makes an improvement, but the risk or validation costs more than the improvement. The risk can be mitigated by first getting a failing test merged.
+## How to Contribute
 
-### First contribution
+We welcome contributions of all sizes.
 
-[Projects / openpilot bounties](https://github.com/orgs/commaai/projects/26/views/1?pane=info) is the best place to get started and goes in-depth on what's expected when working on a bounty.
-There are a lot of bounties that don't require a comma four or a car.
+1. **Explore the project.** Review the README, architecture, roadmap, and open issues.
+2. **Start a discussion.** Open a GitHub issue to propose a feature, engineering improvement, or research contribution.
+3. **Develop your contribution.** Create a branch and follow the existing development and testing guidance.
+4. **Submit a pull request.** Explain the changes, rationale, verification performed, and any safety or security implications.
+5. **Participate in review.** Work with maintainers to address feedback before integration.
 
-## Pull Requests
+Safety-relevant changes may require additional impact analysis, traceability, verification evidence, and independent review.
 
-Pull requests should be against the master branch.
+## Support LionDriver
 
-A good pull request has all of the following:
-* a clearly stated purpose
-* every line changed directly contributes to the stated purpose
-* verification, i.e. how did you test your PR?
-* justification
-  * if you've optimized something, post benchmarks to prove it's better
-  * if you've improved your car's tuning, post before and after plots
-* passes the CI tests
+Organizations and individuals can support LionDriver through:
 
-## Contributing without Code
+- Engineering and research contributions
+- Development and testing resources
+- Hardware and laboratory equipment
+- Simulation and validation infrastructure
+- Technical partnerships
+- Project sponsorship and financial support
 
-* Report bugs in GitHub issues.
-* Report driving issues in the `#driving-feedback` Discord channel.
-* Consider opting into cabin camera uploads to improve the driver monitoring model.
-* Connect your device to Wi-Fi regularly, so that we can pull data for training better driving models.
-* Run the `nightly` branch and report issues. This branch is like `master` but it's built just like a release.
-* Annotate images in the [comma10k dataset](https://github.com/commaai/comma10k).
+For sponsorship, partnerships, or other forms of support, please contact us through **[jherrodthomas.com](https://jherrodthomas.com)**.
 
-## Contributing Training Data
+## Security and Safety
 
-### A guide for forks
+Because LionDriver involves automotive driving technology, security and safety concerns must be handled responsibly.
 
-In order for your fork's data to be eligible for the training set:
-* **Your cereal messaging structs must be [compatible](../openpilot/cereal#custom-forks)**
-* **The definitions of all the stock messaging structs must not change**: Do not change how any of the fields are set, including everything from `selfdriveState.enabled` to `carState.steeringAngleDeg`. Instead, create your own structs and set them however you'd like.
-* **Do not include cars that are not supported in upstream platforms**: Instead, create new opendbc platforms for cars that you'd like to support outside of upstream, even if it's just a trim-level difference.
+**Do not publicly disclose an exploitable vulnerability or sensitive vehicle-control issue before coordinating with the maintainers.**
+
+Please review our [Security Policy](SECURITY.md) for reporting instructions.
+
+Contributors must not represent unverified features or configurations as safety-certified or suitable for unsupervised driving.
+
+## Upstream Contributions
+
+LionDriver builds upon the work of comma.ai and the openpilot community.
+
+Where improvements are broadly applicable to upstream openpilot, contributors are encouraged to consider contributing them upstream as well.
+
+We aim to preserve compatibility, respect upstream licensing, and maintain constructive collaboration with the broader open-source ecosystem.
+
+---
+
+**Open driving. Engineered for safety. Built together.**
