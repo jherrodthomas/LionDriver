@@ -608,7 +608,13 @@ struct PandaState @0xa7649e2575e4591e {
     interruptRateUart7 @24;
     sirenMalfunction @25;
     heartbeatLoopWatchdog @26;
-    # Update max fault type in boardd when adding faults
+    interruptRateSoundDma @27;
+    # LionDriver panda safety supervisor (docs/safety/platform/tsc, gap G1)
+    eccUncorrectable @28;
+    safetyStateCorrupt @29;
+    codeCrcMismatch @30;
+    startupRamTest @31;
+    # Update max fault type in pandad when adding faults
   }
 
   enum PandaType @0x8a58adf93e5b3751 {

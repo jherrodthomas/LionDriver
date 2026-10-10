@@ -45,6 +45,18 @@ MonitoringPolicy = log.DriverMonitoringState.MonitoringPolicy
 
 IGNORED_SAFETY_MODES = (SafetyModel.silent, SafetyModel.noOutput)
 
+# Faults the panda's safety supervisor escalates to a latched no-output state (panda
+# board/sys/safety_supervisor.h). Disengage and block engagement right away rather than waiting
+# for the controls mismatch to build up. LionDriver TSR-MCU-12; diagnostic only.
+FaultType = log.PandaState.FaultType
+PANDA_SUPERVISOR_FAULTS = (
+  FaultType.unusedInterruptHandled, FaultType.interruptRateCan1, FaultType.interruptRateCan2,
+  FaultType.interruptRateCan3, FaultType.interruptRateInterrupts, FaultType.interruptRateTick,
+  FaultType.interruptRateSpi, FaultType.interruptRateSpiDma, FaultType.registerDivergent,
+  FaultType.heartbeatLoopWatchdog, FaultType.eccUncorrectable, FaultType.safetyStateCorrupt,
+  FaultType.codeCrcMismatch, FaultType.startupRamTest,
+)
+
 
 class SelfdriveD:
   def __init__(self, CP=None):
@@ -340,6 +352,9 @@ class SelfdriveD:
 
       if log.PandaState.FaultType.relayMalfunction in pandaState.faults:
         self.events.add(EventName.relayMalfunction)
+
+      if any(f in pandaState.faults for f in PANDA_SUPERVISOR_FAULTS):
+        self.events.add(EventName.controlsMismatch)
 
     # Handle HW and system malfunctions
     # Order is very intentional here. Be careful when modifying this.
