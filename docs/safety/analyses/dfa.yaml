@@ -9,13 +9,13 @@ analysis:
   type: dfa
   doc_id: LD-DFA-001
   title: "Dependent Failure Analysis — panda/SoC decompositions (LD-FSC-001)"
-  revision: "0.2"
+  revision: "0.3"
   status: draft
   baseline: BL-001
-  fsc_revision: "0.1"
+  fsc_revision: "0.2"
   approver: Jherrod Thomas (pending)
   scope: >-
-    The 11 ASIL decompositions of LD-FSC-001 rev 0.1, each splitting a requirement between the panda safety
+    The 11 ASIL decompositions of LD-FSC-001 rev 0.2 (assured configuration AC-001), each splitting a requirement between the panda safety
     model (EL-07, with the harness relay EL-08) and SoC software (EL-03..EL-06), or between the SoC and the
     vehicle instrument cluster (XM-04). Common-cause and cascading failure initiators are taken from the
     BL-001 code and hardware as they exist; panda firmware behavior that could not be inspected (submodule
@@ -33,6 +33,7 @@ analysis:
   history:
     - {revision: "0.1", date: 2026-10-10, author: Claude (AI-assisted draft), change: Initial draft against FSC rev 0.1}
     - {revision: "0.2", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Evidence from panda 92eb565 / opendbc 229dc70 for DFI-07/08/09; DFI-08 open -> insufficient; DOI-002 closed by design LD-DES-001; DOI-007 added"}
+    - {revision: "0.3", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Re-based on FSC rev 0.2; no DFI changes"}
 
 categories:
   - {id: CAT-01, name: Shared power supply, applicable: true, rationale: "Panda and SoC are on the same comma 3X board, powered from the same 12 V input."}

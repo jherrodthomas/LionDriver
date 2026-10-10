@@ -1,0 +1,32 @@
+# Variant structure of the LionDriver item (LD-ITEM-001).
+# Members are exact "Make Model" strings from docs/CARS.md (footnote markers removed).
+# docs/safety/item/vehicle-catalog.md is generated from this file and docs/CARS.md by
+# tools/safety/gen_vehicle_catalog.py; do not edit the catalog by hand.
+schema_version: 1
+platform:
+  id: PL-001
+  name: LionDriver platform — all vehicles supported by BL-001
+  source: docs/CARS.md
+  status: not_assessed
+families:
+  - id: VF-001
+    name: Toyota Corolla E210 (12th generation)
+    opendbc_platform: TOYOTA_COROLLA_TSS2
+    status: in_assessment
+    members:
+      - Toyota Corolla 2020-22
+      - Toyota Corolla Hatchback 2019-22
+      - Toyota Corolla Hybrid 2020-22
+      - Toyota Corolla Hybrid (South America only) 2020-23
+    # Same opendbc platform, so same safety model, parameter and limits, but not E210 Corollas.
+    platform_siblings:
+      - Toyota Corolla Cross (Non-US only) 2020-23
+      - Toyota Corolla Cross Hybrid (Non-US only) 2020-22
+      - Lexus UX Hybrid 2019-24
+assured_configurations:
+  - id: AC-001
+    family: VF-001
+    member: Toyota Corolla 2020-22
+    description: 2020 Toyota Corolla LE sedan, US market, comma 3X, Toyota A harness
+    baseline: BL-001
+    status: in_assessment

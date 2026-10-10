@@ -571,5 +571,17 @@ class TestFscExport(unittest.TestCase):
     self.assertTrue(all(i.startswith("N") for i in ids))
 
 
+class TestVehicleCatalog(unittest.TestCase):
+  def test_catalog_up_to_date(self):
+    import gen_vehicle_catalog
+    self.assertEqual(gen_vehicle_catalog.main(["--check"]), 0)
+
+  def test_counts(self):
+    import gen_vehicle_catalog
+    cars = gen_vehicle_catalog.parse_cars((REPO / "docs/CARS.md").read_text())
+    self.assertEqual(len(cars), 334)  # 335 table rows minus the comma body robot
+    self.assertTrue(all(c["harness"] for c in cars))
+
+
 if __name__ == "__main__":
   unittest.main()

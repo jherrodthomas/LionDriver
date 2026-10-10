@@ -9,13 +9,14 @@ analysis:
   type: fsc
   doc_id: LD-FSC-001
   title: "Functional Safety Concept — LionDriver L2 ACC/ALC on 2020 Toyota Corolla LE (US)"
-  revision: "0.1"
+  revision: "0.2"
   status: draft
   baseline: BL-001
-  hara_revision: "0.2"
+  hara_revision: "0.3"
   approver: Jherrod Thomas (pending)
   scope: >-
-    Functional safety requirements for safety goals SG-001..SG-010 of LD-HARA-001 rev 0.2, allocated to the
+    Functional safety requirements for safety goals SG-001..SG-010 of LD-HARA-001 rev 0.3 (assured configuration
+    AC-001 of item LD-ITEM-001), allocated to the
     preliminary architecture below. The architecture is the BL-001 configuration as it exists: a comma 3X whose
     SoC software is not developed to ISO 26262 (treated as QM), with an integrated panda MCU running an
     independent safety model that filters every message sent to the vehicle. The concept states what each
@@ -26,6 +27,7 @@ analysis:
     - name: Claude (AI assistant)
       role: Drafting assistance; content requires human review
   references:
+    - docs/safety/item-definition.md
     - docs/safety/analyses/hara.yaml
     - docs/safety/analyses/system-fmea.yaml
     - docs/SAFETY.md
@@ -33,6 +35,7 @@ analysis:
   updated: 2026-10-10
   history:
     - {revision: "0.1", date: 2026-10-10, author: Claude (AI-assisted draft), change: Initial draft from HARA rev 0.2}
+    - {revision: "0.2", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Re-based on HARA rev 0.3 (item definition LD-ITEM-001, scope AC-001); FOI-008 heartbeat finding; no FSR changes"}
 
 # ---------------------------------------------------------------------------
 # Preliminary architecture

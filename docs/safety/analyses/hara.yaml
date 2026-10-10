@@ -9,15 +9,15 @@ analysis:
   type: hara
   title: "HARA — LionDriver L2 ACC/ALC on 2020 Toyota Corolla LE (US)"
   doc_id: LD-HARA-001
-  revision: "0.2"
+  revision: "0.3"
   status: draft
   approver: Jherrod Thomas (pending)
   baseline: BL-001
   scope: >-
-    Item as defined by the System FMEA structure (SFM-SE-001): lateral control, longitudinal control,
-    engagement management, driver override, driver monitoring, alerting, actuation limiting and stock
-    function preservation. A formal item definition is still owed (fmea-plan.md section 2); until it
-    exists, the System FMEA scope and the assumptions below stand in for it.
+    The item is defined in LD-ITEM-001 (docs/safety/item-definition.md). This HARA covers assured configuration
+    AC-001: variant family VF-001 (Toyota Corolla E210), 2020 Corolla LE sedan, US market, comma 3X, baseline
+    BL-001. Extension to other VF-001 members or other vehicles requires a variant impact analysis
+    (LD-ITEM-001 section A.10, IOI-002, IOI-004).
   method: >-
     Operational situations x hazards -> hazardous events, each rated S/E/C without credit for the
     item's own safety mechanisms; ASIL from ISO 26262-3 Table 4; one or more safety goals per hazard.
@@ -27,6 +27,7 @@ analysis:
     - name: Claude (AI assistant)
       role: Drafting assistance; ratings require human review and confirmation review
   references:
+    - docs/safety/item-definition.md
     - docs/safety/analyses/system-fmea.yaml
     - docs/safety/fmea-plan.md
     - docs/SAFETY.md
@@ -35,6 +36,7 @@ analysis:
   history:
     - {revision: "0.1", date: 2026-10-09, author: Claude (AI-assisted draft), change: Initial draft from System FMEA rev 0.2 end effects}
     - {revision: "0.2", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Closed OI-009..OI-011 from pre-check: guide-word matrix, situation coverage, weather/night situations, HE-019"}
+    - {revision: "0.3", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Scope references item definition LD-ITEM-001; HARA applies to assured configuration AC-001"}
 
 assumptions:
   - id: HA-001
