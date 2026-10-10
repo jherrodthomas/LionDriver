@@ -31,7 +31,7 @@
 | Interfaces (car port, panda safety, planner, DM, HMI) | |
 | **New hazards introduced by this change** | |
 | Cybersecurity impact | |
-| Verification artefacts invalidated | |
+| Verification artifacts invalidated | |
 
 ## 4. Acceptance criteria (fixed before implementation)
 

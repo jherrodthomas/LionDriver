@@ -5,7 +5,7 @@
 
 ## 1. Problem statement
 
-One sentence: *what* object, *what* defect or behaviour, *where*, *when*, *how big*.
+One sentence: *what* object, *what* defect or behavior, *where*, *when*, *how big*.
 
 ## 2. Sequence of events
 

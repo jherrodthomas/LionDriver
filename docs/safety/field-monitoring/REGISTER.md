@@ -7,7 +7,7 @@
 
 | FI ID | Title | Source | Received | Class | Category | Applicable? | Status | Containment | Hazards | Actions | Case |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| FI-2026-001 | NHTSA PE26007: openpilot strikes stopped/slow in-lane vehicles (5 crashes, 3 fatalities) | NHTSA ODI / press | 2026-10-10 | A | PERF, ML, MIS, CFG, PROC | Yes | RCA (awaiting logs and reproduction) | C-1, C-2, C-3 | HZ-001…007 | CA-001…009, PA-01/02, FA-01 | [case](cases/FI-2026-001-nhtsa-pe26007/REPORT.md) |
+| FI-2026-001 | NHTSA PE26007: openpilot strikes stopped/slow in-lane vehicles (5 crashes, 3 fatalities) | NHTSA ODI / press | 2026-10-10 | A | PERF, ML, MISUSE, CFG, PROC | Yes | RCA (awaiting logs and reproduction) | C-1, C-2, C-3 | HZ-001…007 | CA-001…009, PA-01/02, FA-01 | [case](cases/FI-2026-001-nhtsa-pe26007/REPORT.md) |
 
 ## Monitoring log
 

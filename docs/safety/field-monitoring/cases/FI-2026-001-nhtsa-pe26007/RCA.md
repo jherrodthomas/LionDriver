@@ -2,7 +2,7 @@
 
 **Method set:** Class A (PROCESS §5.5): timeline, barrier analysis, FTA, STPA, fishbone, 5-Why, SOTIF triggering conditions, escape-point analysis.
 
-**Baselines analysed:** LionDriver `8b8c6ae` (openpilot tree) and `opendbc_repo` `229dc70`.
+**Baselines analyzed:** LionDriver `8b8c6ae` (openpilot tree) and `opendbc_repo` `229dc70`.
 
 **Short file names used below:**
 
@@ -46,11 +46,11 @@ A collision needs **all three** independent layers to fail. Each layer has its o
 |---|---|---|---|
 | **L1 — openpilot longitudinal control** | Detect the in-lane obstacle and brake in time | (a) At speed, stationary objects depend on the **vision model**. Radar tracks are only used when they match a vision lead (`match_vision_to_track`), or when ego speed < **4 m/s** (`V_EGO_STATIONARY`, `potential_low_speed_lead`). (b) Braking authority is capped at **-3.5 m/s²** by both the car port and the panda safety mode, so detection must come about **twice as early** as for full braking (see §3.1). (c) The system has no AEB function of its own. The PRE_COLLISION message is blocked unless all zeros. | `radard.py:24, 98-100, 113-134, 156-171`; `toyota.h:208-209, 250-256` [Verified] |
 | **L2 — Driver** | Monitor the road and take over | (a) DM tolerates **5 s** of continuous visual distraction before the first alert, **8 s** before the second, **13 s** before the terminal alert. At 30 m/s that is 150 m / 240 m / 390 m travelled. (b) FCW only fires when the MPC predicts a crash with `modelProb > 0.9`, or when the model predicts hard braking. So the warning is tied to the same perception that missed or late-detected the obstacle (common cause with L1). (c) Over-trust from sustained good performance (automation complacency) is foreseeable misuse. | `policy.py:34-36, 196-198`; `long_mpc.py:338-340`; `selfdrived.py:442-445` [Verified]; complacency [Supported] |
-| **L3 — Stock OEM AEB / PCS** | Independent last-resort braking | On **radar-ACC Toyotas** (incl. the 2022 RAV4) with alpha longitudinal on, openpilot **silences the radar ECU** with UDS CommunicationControl (disable TX). It then transmits `PCS_HUD` with `PCS_OFF = 1` and the comment *"PCS turned off"*. The independent L3 barrier is then **removed by design**. On camera-ACC TSS2 cars (our Corolla), openpilot leaves the radar ECU and PCS in place. | `interface.py:93-106, 126-131`; `carcontroller.py:294-295`; `toyotacan.py:101-110` [Verified code behaviour]; effect on the vehicle's AEB [Supported — confirm on vehicle, CA-001] |
+| **L3 — Stock OEM AEB / PCS** | Independent last-resort braking | On **radar-ACC Toyotas** (incl. the 2022 RAV4) with alpha longitudinal on, openpilot **silences the radar ECU** with UDS CommunicationControl (disable TX). It then transmits `PCS_HUD` with `PCS_OFF = 1` and the comment *"PCS turned off"*. The independent L3 barrier is then **removed by design**. On camera-ACC TSS2 cars (our Corolla), openpilot leaves the radar ECU and PCS in place. | `interface.py:93-106, 126-131`; `carcontroller.py:294-295`; `toyotacan.py:101-110` [Verified code behavior]; effect on the vehicle's AEB [Supported — confirm on vehicle, CA-001] |
 
 ### 3.1 Braking-authority arithmetic [Verified, computed]
 
-Stopping distance to a stationary target = latency distance + v²/(2a). Assumptions: 0.5 s end-to-end latency, constant deceleration once reached, jerk limits ignored. These are idealised and favourable to the system.
+Stopping distance to a stationary target = latency distance + v²/(2a). Assumptions: 0.5 s end-to-end latency, constant deceleration once reached, jerk limits ignored. These are idealized and favorable to the system.
 
 | Ego speed | Distance at -3.5 m/s² (openpilot cap) | Distance at -8 m/s² (≈ full braking) | Time to impact at constant speed from the -3.5 distance |
 |---|---|---|---|
@@ -111,7 +111,7 @@ TOP: Engaged vehicle collides with a stationary/slow in-lane vehicle
 |---|---|
 | Perception | Stationary-object recall at long range; emergency-vehicle appearance (flashing lights, odd shapes, angled parking); night/glare; low-contrast or partially occluded targets |
 | Fusion & lead selection | Vision-gated radar use at speed; `lead_prob > 0.5` gate; sanity checks reject mismatched tracks; stationary radar returns treated as clutter |
-| Planning & control | -3.5 m/s² hard cap; jerk-limited ramp-up; MPC follow-distance personality; experimental (e2e) mode behaviour |
+| Planning & control | -3.5 m/s² hard cap; jerk-limited ramp-up; MPC follow-distance personality; experimental (e2e) mode behavior |
 | Actuation & vehicle | Stock PCS silenced on radar-ACC Toyotas under alpha long; actuator delay; hybrid vs ICE brake response |
 | Driver monitoring & HMI | 5/8/13 s vision-policy timings; FCW coupled to the same perception; wheel-touch fallback 5/15/25 s |
 | Driver & use | Automation complacency; secondary tasks; using the system outside its stated limitations |
@@ -162,7 +162,7 @@ TOP: Engaged vehicle collides with a stationary/slow in-lane vehicle
 | RC-01 | Alpha longitudinal on radar-ACC Toyotas silences the stock radar and declares PCS off, removing the independent AEB barrier with no replacement or interlock | CFG, SYS | **Verified** (code); vehicle effect **Supported** | `interface.py:93-106, 126-131`; `carcontroller.py:294-295`; `toyotacan.py:101-110` @ 229dc70 | Bench/vehicle: confirm PCS is unavailable with DISABLE_RADAR set (CA-001) |
 | RC-02 | No performance requirement for stationary/slow in-lane targets. Detection range plus the -3.5 m/s² cap can make avoidance impossible at highway speed; the hazard is handled only by documentation | PERF, ML, PROC | **Verified** (design); field contribution **Supported** | `radard.py:24, 98-100, 156-171`; `values.py:43`; `toyota.h:208-209`; `LIMITATIONS.md:37-38` | Stopped-vehicle scenario suite (CA-002) |
 | RC-03 | FCW is not independent of the primary perception (common-cause failure with L1) | SYS | **Verified** (design) | `long_mpc.py:338-340`; `selfdrived.py:442-445` | Scenario suite: measure FCW TTC distribution (CA-002/CA-005) |
-| RC-04 | DM escalation timings (5/8/13 s) are not derived from hazard timing; complacency is foreseeable | MIS, SYS | **Verified** (timings); complacency **Supported** | `policy.py:34-36` | DM timing analysis against closing scenarios (CA-006) |
+| RC-04 | DM escalation timings (5/8/13 s) are not derived from hazard timing; complacency is foreseeable | MISUSE, SYS | **Verified** (timings); complacency **Supported** | `policy.py:34-36` | DM timing analysis against closing scenarios (CA-006) |
 | RC-05 | Safety-relevant configuration can drift (forks, toggles), and the active configuration is not reliably recorded | CFG, PROC | **Supported** | Press reports of a FrogPilot-equipped vehicle; NHTSA scope extends to forks | Config-identity logging review (CA-008) |
 | RC-06 | Model recall on emergency vehicles and atypical stationary targets at range | ML, PERF | **Hypothesis** | Fatal case involved an emergency vehicle | Targeted replay / dataset evaluation (CA-003) |
 
@@ -173,7 +173,7 @@ TOP: Engaged vehicle collides with a stationary/slow in-lane vehicle
 | Lifecycle step | Should it have caught this? | Why not? | Preventive action |
 |---|---|---|---|
 | HARA | Yes — "collision with in-lane obstacle while ACC engaged" is a core hazardous event | LionDriver HARA not yet performed; upstream has none | PA-01: seed the HARA from `HAZARD-LOG.md` |
-| SOTIF analysis | Yes — stationary targets are a textbook triggering condition | Not yet performed | PA-02: SOTIF triggering-condition catalogue starting with TC-01…06 |
+| SOTIF analysis | Yes — stationary targets are a textbook triggering condition | Not yet performed | PA-02: SOTIF triggering-condition catalog starting with TC-01…06 |
 | Safety requirements | Yes — detection range / braking performance | None exist | CA-002, CA-004 create them |
 | Design / architecture | Yes — independence of L1/L2/L3 | Upstream architecture uses the driver as the only independent layer | CA-001, CA-005 |
 | Verification & validation | Yes — stopped-vehicle scenarios | Upstream regression is replay-based on typical drives; no stationary-target acceptance criteria | CA-002 |

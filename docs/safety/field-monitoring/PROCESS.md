@@ -36,9 +36,9 @@ Nothing is closed only because it "happened on a different car" or "happened on 
 
 | Term | Definition |
 |---|---|
-| **Field signal** | Any report, record or observation that may show unsafe or unexpected behaviour of openpilot-derived software or hardware anywhere (upstream, forks, or LionDriver). |
+| **Field signal** | Any report, record or observation that may show unsafe or unexpected behavior of openpilot-derived software or hardware anywhere (upstream, forks, or LionDriver). |
 | **Field issue (FI)** | A field signal accepted into the register for evaluation. ID format `FI-YYYY-NNN`. |
-| **Safety anomaly** | A field issue whose behaviour could contribute to a hazard: it violates or could violate a safety goal, or shows a hazard, triggering condition or misuse not covered by the current analyses. |
+| **Safety anomaly** | A field issue whose behavior could contribute to a hazard: it violates or could violate a safety goal, or shows a hazard, triggering condition or misuse not covered by the current analyses. |
 | **Containment** | An immediate, temporary measure that limits exposure while root cause is unknown. Example: suspending test drives of a configuration. |
 | **Root cause** | The deepest cause which, if removed, prevents recurrence. One event can have several root causes, one per independent protection layer that failed. |
 | **Escape point** | The step in *our* lifecycle (analysis, requirement, design, verification, process) where the issue should have been caught but was not. |
@@ -114,7 +114,7 @@ Triage is done within **2 business days** of intake.
 | `RHF` | Random hardware fault | ISO 26262-5 |
 | `PERF` | Performance limitation / functional insufficiency (works as designed, design not good enough) | ISO 21448 |
 | `ML` | Insufficiency of an ML element (training-data gap, out-of-distribution input) | ISO/PAS 8800, ISO 21448 |
-| `MIS` | Reasonably foreseeable misuse (inattention, over-trust, use outside the operating domain) | ISO 21448 / ISO 26262-3 |
+| `MISUSE` | Reasonably foreseeable misuse (inattention, over-trust, use outside the operating domain) | ISO 21448 / ISO 26262-3 |
 | `CFG` | Configuration / variant fault (wrong parameters, unsupported fork modifications, alpha features) | ISO 26262-8 |
 | `CYB` | Cybersecurity event | ISO/SAE 21434 |
 | `PROC` | Process escape (missing analysis, test or review) | ISO 26262-2 |
@@ -176,7 +176,7 @@ For each root cause, ask: *was this hazard, triggering condition, misuse or thre
 |---|---|
 | New hazard or hazardous event | New row in `HAZARD-LOG.md`, flagged `HARA-pending` until the HARA is reissued |
 | Known hazard, but S/E/C ratings or ASIL wrong given field data | Raise a HARA change request, citing the FI |
-| New SOTIF triggering condition or performance limitation | Add to the SOTIF triggering-condition catalogue and scenario database |
+| New SOTIF triggering condition or performance limitation | Add to the SOTIF triggering-condition catalog and scenario database |
 | New foreseeable misuse | Add to the misuse list; re-check controllability assumptions |
 | New threat or vulnerability | Add to the TARA |
 | Missing or ineffective safety mechanism | Raise a functional/technical safety requirement change |
@@ -211,7 +211,7 @@ Closure needs all of the following:
 
 - [ ] Root causes confirmed (no open hypotheses relied upon), or every credible hypothesis covered
 - [ ] Hazard log and analyses updated, or a change request raised and linked
-- [ ] All CAs/PAs verified, with the evidence linked
+- [ ] All corrective and preventive actions verified, with the evidence linked
 - [ ] Containment lifted, or made permanent with rationale
 - [ ] Regression test in place
 - [ ] Independent review signed (Class A/B)
@@ -229,7 +229,7 @@ Track these from our own test data. They are leading indicators: they move befor
 | SPI-03 | FCW events, with time-to-collision at alert onset | Warning timeliness |
 | SPI-04 | Stock AEB/PCS activations while engaged | Primary system missed something; second layer acted |
 | SPI-05 | Driver-distraction alerts reaching level 2/3, per hour engaged | Driver engagement |
-| SPI-06 | Phantom/unnecessary hard braking events | Monitors the side effects of braking-related CAs |
+| SPI-06 | Phantom/unnecessary hard braking events | Monitors the side effects of braking-related corrective actions |
 | SPI-07 | Open Class A/B field issues, and their age | Process health |
 
 ## 7. Records

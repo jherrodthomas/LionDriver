@@ -13,7 +13,7 @@
 | Source type | Regulator · Upstream · Fork · Media/community · Own test data · Security · OEM |
 | Source links | |
 | Severity class | A · B · C · D (per PROCESS §5.2) |
-| Provisional category | SYS · RHF · PERF · ML · MIS · CFG · CYB · PROC |
+| Provisional category | SYS · RHF · PERF · ML · MISUSE · CFG · CYB · PROC |
 | Safety anomaly? | Yes / No (rationale) |
 | Status | Open · Containment · RCA · CA · Verification · Awaiting independent review · Closed |
 | Safety manager | |
