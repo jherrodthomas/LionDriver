@@ -17,10 +17,10 @@ Each CA gets its own `CA-NNN.md` (from `templates/CORRECTIVE-ACTION.md`) when it
 | CA-005 | Independent forward-collision monitor (radar-based) for FCW | RC-03 | HZ-003 | 3 | Proposed |
 | CA-006 | Hazard-timed driver monitoring escalation | RC-04 | HZ-004 | 3 / 4 | Proposed |
 | CA-007 | Event data capture for safety-relevant events | RC-05 | HZ-005 | 3 | Proposed |
-| CA-008 | Assured-configuration identity and fork-parameter control | RC-05 | HZ-005 | 2 | Proposed |
+| CA-008 | Assured-configuration identity and fork-parameter control | RC-05 | HZ-005 | 2 | **Implemented** (identity, check, log); UI display open |
 | CA-009 | Update limitations, operator briefing and test-driver protocol | RC-02, RC-04 | HZ-001, HZ-004 | 5 | Proposed |
 | CA-010 | Measure stock PCS on the 2020 Corolla in cut-out and lead-braking scenarios with openpilot longitudinal engaged | RC-02 | HZ-001, HZ-008 | V&V | Proposed (from CA-004) |
-| CA-011 | Relaxed following distance by default in the assured configuration | RC-02 | HZ-008 | 2 | **Implemented** (approved 2026-10-10); enforcement via CA-008 open |
+| CA-011 | Relaxed following distance by default in the assured configuration | RC-02 | HZ-008 | 2 | **Implemented** (approved 2026-10-10); deviations flagged by CA-008 |
 | CA-012 | Operating-domain speed cap for openpilot longitudinal, from the verified confirmation range | RC-02, RC-06 | HZ-001 | 2 | Proposed (from CA-004); waits on CA-003 |
 | PA-01 | Seed the first HARA from the hazard log | — | all | — | Proposed |
 | PA-02 | Create the SOTIF triggering-condition catalog (TC-01…TC-06) | — | HZ-001 | — | Proposed |
@@ -213,6 +213,43 @@ Full study: [`evidence/CA-004-BRAKING-AUTHORITY-STUDY.md`](evidence/CA-004-BRAKI
 - **Root cause:** RC-05.
 - **Change:** define the LionDriver *assured configuration* (commit + platform + allowed params). Compute a configuration hash at startup, log it, and show it in the UI. Any deviation (fork, toggle, param) marks the drive as **out of assured scope** in the logs.
 - **Acceptance criteria:** changing any safety-relevant param flips the out-of-scope flag in a test.
+
+### CA-008 implementation record (2026-10-10)
+
+**What the assured configuration is** (`openpilot/selfdrive/selfdrived/assured_config.py`):
+
+| Element | Assured value | Why |
+|---|---|---|
+| Platform | `TOYOTA_COROLLA_TSS2` | The reference vehicle (README) |
+| `LongitudinalPersonality` | relaxed | CA-011 |
+| `ExperimentalMode` | off | End-to-end longitudinal was not modeled in CA-002 / CA-004 (see finding below) |
+| `AlphaLongitudinalEnabled` | off | CA-001 |
+| `JoystickDebugMode`, `LongitudinalManeuverMode`, `LateralManeuverMode` | off | Debug control modes |
+| Software origin | LionDriver repository | Forks are out of scope (RC-05) |
+| Local changes | none | An uncommitted build can't be identified |
+
+**How it works:**
+- selfdrived evaluates the configuration at startup and on each params poll (every 0.1 s).
+- When the result changes, it logs a `cloudlog` event `assured configuration` with `in_scope`, the list of deviations and a 16-hex `config_hash`. It also stores the same JSON in the new `AssuredConfiguration` param (cleared on manager start), which tools and a future UI can read.
+- The hash covers the platform, the values of the params above, the git commit, the origin and the dirty flag.
+- Deviations are allowed, not blocked: the driver can still choose. The point is that every drive can be identified afterwards as in or out of scope.
+
+**Verification** (`openpilot/selfdrive/selfdrived/tests/test_assured_config.py`):
+- the reference configuration is in scope;
+- each of the six params, a different platform, a fork origin and a dirty tree each flag exactly one deviation;
+- the hash is stable, and changes with the commit or a param;
+- selfdrived logs and stores on change only.
+
+**Pass.**
+
+**Finding: experimental mode is on by default.** Upstream defaults `ExperimentalMode` to on (`params_keys.h`), and the manager writes defaults at startup. So on a fresh 2020 Corolla, openpilot runs **experimental (end-to-end) longitudinal by default**, and the device is out of the assured configuration from the start.
+- What the CA-002 / CA-004 results still say: in experimental mode the planner takes the *minimum* of the MPC and end-to-end accelerations (`longitudinal_planner.py:142-147`). So braking for a lead is never weaker than simulated, and those results stay a valid lower bound.
+- What they don't cover: behavior specific to the end-to-end model, such as model-initiated stops and possible phantom braking (HZ-006). The harness can't represent that without the driving model's outputs.
+- **Decision needed:** either default `ExperimentalMode` off in LionDriver, or extend the analyses to experimental mode (needs logged model outputs or a rendering simulator). Until then the test records this as a known deviation.
+
+**Not done:**
+- Showing the configuration hash and scope in the UI (onroad or settings).
+- Extending the fingerprint beyond these params (for example the panda firmware version and the opendbc commit) is a candidate for a later revision.
 
 ## CA-009 — Limitations, operator briefing, test-driver protocol (tier 5)
 

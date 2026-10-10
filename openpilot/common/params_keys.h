@@ -12,6 +12,7 @@ inline static std::unordered_map<std::string, ParamKeyAttributes> keys = {
     {"ApiCache_Device", {PERSISTENT, STRING}},
     {"ApiCache_FirehoseStats", {PERSISTENT, JSON}},
     {"AssistNowToken", {PERSISTENT, STRING}},
+    {"AssuredConfiguration", {CLEAR_ON_MANAGER_START, JSON}},
     {"AthenadPid", {PERSISTENT, INT}},
     {"AthenadUploadQueue", {PERSISTENT, JSON}},
     {"AthenadRecentlyViewedRoutes", {PERSISTENT, STRING}},

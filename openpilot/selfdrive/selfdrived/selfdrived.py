@@ -22,6 +22,8 @@ from openpilot.selfdrive.selfdrived.events import Events, ET
 from openpilot.selfdrive.selfdrived.helpers import ExcessiveActuationCheck
 from openpilot.selfdrive.selfdrived.state import StateMachine
 from openpilot.selfdrive.selfdrived.alertmanager import AlertManager, set_offroad_alert
+from openpilot.selfdrive.selfdrived import assured_config
+from openpilot.selfdrive.selfdrived.assured_config import AssuredConfigStatus
 
 from openpilot.common.version import get_build_metadata
 from openpilot.common.hardware import HARDWARE
@@ -61,6 +63,11 @@ class SelfdriveD:
       cloudlog.info("selfdrived got CarParams")
     else:
       self.CP = CP
+
+    # LionDriver CA-008: identify drives outside the assured configuration
+    self.build_metadata = build_metadata
+    self.assured_config: AssuredConfigStatus | None = None
+    self.update_assured_config()
 
     self.car_events = CarEvents(self.CP)
 
@@ -573,6 +580,15 @@ class SelfdriveD:
       cloudlog.event("following distance outside assured configuration", personality=LONGITUDINAL_PERSONALITY_MAP.get(personality, personality))
     self.personality = personality
 
+  def update_assured_config(self):
+    op = self.build_metadata.openpilot
+    status = assured_config.evaluate(self.CP.carFingerprint, assured_config.read_params(self.params),
+                                     op.git_commit, op.git_origin, op.is_dirty)
+    if status != self.assured_config:
+      cloudlog.event("assured configuration", **status.to_dict())
+      self.params.put("AssuredConfiguration", status.to_dict(), block=True)
+      self.assured_config = status
+
   def params_thread(self, evt):
     while not evt.is_set():
       self.is_metric = self.params.get_bool("IsMetric")
@@ -580,6 +596,7 @@ class SelfdriveD:
       self.disengage_on_accelerator = self.params.get_bool("DisengageOnAccelerator")
       self.experimental_mode = self.params.get_bool("ExperimentalMode") and self.CP.openpilotLongitudinalControl
       self.set_personality(self.params.get("LongitudinalPersonality", return_default=True))
+      self.update_assured_config()
       time.sleep(0.1)
 
   def run(self):
