@@ -158,6 +158,8 @@ tools/safety/
   test_fmea_lint.py
   export_hara_xlsx.py          (HARA -> xlsx in hara-builder layout, for hara-checklist-reviewer)
   export_fsc_xlsx.py           (FSC -> xlsx in fsc-builder layout, for fsc-checklist-reviewer)
+  export_item_xlsx.py          (item definition -> xlsx in item-definition-builder layout, for item-def-checklist-reviewer)
+  gen_vehicle_catalog.py       (vehicle catalog from docs/CARS.md and item/variants.yaml)
 ```
 
 Review workbooks come from the builder/reviewer skills in jherrodthomas/automotive-skills-suite. Exports render the YAML as-is; the skills' heuristic ratings are never written back into the analyses.

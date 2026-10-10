@@ -31,9 +31,18 @@ This document defines the item at three levels:
 
 ### 1.2 What is claimed where
 
-- **Safety claims are made only for assured configurations.** Today that is AC-001 alone. HARA rev 0.2, FSC rev 0.1 and DFA rev 0.2 were performed for AC-001.
+- **Safety claims are made only for assured configurations.** Today that is AC-001 alone. HARA rev 0.3, FSC rev 0.2 and DFA rev 0.3 were performed for AC-001.
 - **Variant families are in assessment.** An extension from AC-001 to another member of the same family needs a variant impact analysis against the parameters in §A.10.
 - **Every other vehicle is "not assessed"** (327 of 334 in the catalog). LionDriver makes no safety claim for them, even though BL-001 software runs on them.
+
+### 1.3 Related items
+
+| Related item | How LionDriver differs |
+|---|---|
+| Stock Toyota Safety Sense 2.0 (Lane Tracing Assist, Dynamic Radar Cruise Control) | The stock camera's steering and ACC commands are replaced while the item is engaged; stock AEB/FCW are meant to stay (F8, HARA OI-003) |
+| Upstream openpilot (comma.ai) | Same software at BL-001; LionDriver adds the assurance lifecycle, a frozen baseline and, after LD-DES-001, its own signed panda firmware and vehicle lock |
+| Other openpilot forks | Not covered; LionDriver claims nothing for software outside its baselines |
+| Corolla Cross, Corolla Cross Hybrid, Lexus UX Hybrid | Share VF-001's opendbc platform but are separate vehicles outside the family (§B.3) |
 
 ---
 
@@ -89,35 +98,75 @@ The functions are the same on every vehicle. Their limits and interfaces are veh
 
 The System FMEA structure (SFM-SE-001…034) and the FSC elements (EL-01…EL-12) refine this boundary for AC-001.
 
+### Function allocation
+
+| Function | Hardware | Software | Mechanical / external actuator |
+|---|---|---|---|
+| F1 | comma 3X SoC, panda MCU, harness | modeld, locationd, controlsd (lateral controller), card, panda safety model | Vehicle EPS |
+| F2 | comma 3X SoC, panda MCU, harness | modeld, plannerd, radard, controlsd (longitudinal controller), card, panda safety model | Vehicle powertrain and brakes |
+| F3 | comma 3X SoC, panda MCU | selfdrived state machine, card (cruise state), panda controls-allowed | Vehicle cruise switches |
+| F4 | comma 3X SoC, panda MCU | card, car_events, selfdrived, panda brake/cruise checks | Brake and accelerator pedals, steering wheel |
+| F5 | comma 3X driver camera and IR | dmonitoringmodeld, dmonitoringd | — |
+| F6 | comma 3X display and speaker | selfdrived alert manager, ui, soundd | Vehicle cluster (indications from item messages) |
+| F7 | panda MCU (primary), comma 3X SoC | panda safety model (opendbc), controlsd limits, excessive-actuation check | — |
+| F8 | Harness relay, panda MCU | panda relay control, relay-malfunction detection | Stock ADAS camera |
+
 ## A.4 Interfaces
 
-| Interface | Direction | Platform-level description | Varies by vehicle |
-|---|---|---|---|
-| Vehicle CAN at the ADAS camera or gateway | in/out | Vehicle state in; steering, acceleration and HUD requests out, all filtered by the panda | Bus layout, messages, harness location, message authentication |
-| Relay (camera-intercept harnesses) | out | Switches the stock ADAS camera's control messages between the vehicle and the item | Present only on intercept harnesses |
-| 12 V supply | in | Through the harness or comma power | Connector |
-| Driver HMI | in/out | Device display and speaker; vehicle cruise buttons; steering, brake and accelerator inputs | Button mapping |
-| Cameras, IMU, GNSS | in | On the device | Mounting, calibration |
-| Cellular / Wi-Fi | in/out | OTA updates, logs | — |
+| ID | Interface | Counterpart | Direction | Data | Integrity measures (BL-001) | Varies by vehicle |
+|---|---|---|---|---|---|---|
+| IF-01 | Vehicle CAN at the ADAS camera or gateway | Vehicle ECUs (EPS, powertrain, brakes, ADAS, cluster) | in/out | Vehicle state in; steering, acceleration, cruise and HUD requests out | Panda safety model filters TX; panda RX checks (checksum, counter, timing); SoC canValid/canError | Bus layout, messages, harness location, message authentication |
+| IF-02 | Harness relay | Stock ADAS camera | out | Switches the stock camera's control messages between vehicle and item | Panda relay-malfunction detection | Present only on camera-intercept harnesses |
+| IF-03 | 12 V supply | Vehicle electrical system | in | Power | Device power management; loss of power is fail-silent (DFA DFI-01) | Connector |
+| IF-04 | Driver HMI (device) | Driver | in/out | Engagement state, alerts; settings | Two-channel alerts (visual, audible) | — |
+| IF-05 | Driver controls | Driver via vehicle (pedals, wheel, cruise buttons) | in | Brake, accelerator, steering torque, cruise/cancel buttons | Read over IF-01 by both SoC and panda | Button mapping |
+| IF-06 | Device sensors | Road environment, driver | in | Road and driver camera frames, IMU, GNSS | Liveness and frequency checks (cameraMalfunction, sensorDataInvalid) | Mounting, calibration |
+| IF-07 | Cellular / Wi-Fi | comma.ai and LionDriver servers | in/out | OTA updates, logs | Update verification per release process (PFMEA; DFA DFI-18) | — |
 
 ## A.5 Operating modes
 
-Off/offroad, start-up, disabled, engaged, overriding, soft disabling, driver-monitoring lockout, and dashcam (unrecognized vehicle). They are defined in FSC LD-FSC-001 (OM-01…OM-08) and apply to every vehicle.
+The same modes apply to every vehicle. The FSC (OM-01…OM-08) allocates them.
 
-## A.6 Operating conditions
+| ID | Mode | Entry | Exit | Safety relevant |
+|---|---|---|---|---|
+| OM-01 | Off / offroad | Ignition off or not onroad | Ignition on and onroad | No: panda in NO_OUTPUT, relay to stock |
+| OM-02 | Start-up | Ignition on | Vehicle identified and safety model confirmed by the panda | Yes: wrong vehicle configuration (FSR-009) |
+| OM-03 | Disabled (onroad) | Start-up complete; or any disengagement | Driver engages with no NO_ENTRY event | Yes: unintended engagement (SG-008) |
+| OM-04 | Engaged | Driver engagement through the vehicle cruise controls | Brake, cancel, or a SOFT_DISABLE / IMMEDIATE_DISABLE event | Yes: all actuation hazards |
+| OM-05 | Overriding | Driver steering or accelerator input while engaged | Driver input ends; or disengagement | Yes: override handling (SG-007) |
+| OM-06 | Soft disabling | SOFT_DISABLE event while engaged | Event clears (back to engaged) or 3 s elapse (disabled) | Yes: actuation continues for up to 3 s |
+| OM-07 | Driver-monitoring lockout | Repeated non-response to alerts | Lockout time (1/5/15/30 min) or ignition cycle | Yes: SG-010 |
+| OM-08 | Dashcam (car unrecognized) | Vehicle not identified | Never during the drive | No: no actuation |
+
+## A.6 Operating conditions and performance limits
+
+| ID | Limit (platform, BL-001) | Source |
+|---|---|---|
+| PF-01 | Commanded lateral acceleration ≤ 3.0 m/s² plus roll compensation (ISO 11270 basis) | `openpilot/selfdrive/controls/lib/drive_helpers.py:14`; opendbc `car/lateral.py:10` |
+| PF-02 | Lateral jerk ≤ 5.0 m/s³ (ISO 11270); angle/curvature ports limited to ~3.6 m/s³ | opendbc `car/lateral.py:11-18` |
+| PF-03 | Commanded longitudinal acceleration within −3.5 … +2.0 m/s² (platform); VF-001 SoC uses +1.5 m/s² | opendbc `car/interfaces.py:25-26`; `car/toyota/values.py:39-43` |
+| PF-04 | Excessive actuation (> 2× the above for 0.25 s) leads to soft disable | `openpilot/selfdrive/selfdrived/helpers.py` |
+| PF-05 | Soft-disable takeover window 3 s | `openpilot/selfdrive/selfdrived/state.py` |
+| PF-06 | Driver-monitoring escalation within 5 / 8 / 13 s (vision policy) | `openpilot/selfdrive/monitoring/policy.py` |
 
 - **Roads:** public roads of any type. The item does not geofence; per-vehicle speed floors are listed in the catalog.
 - **Driver:** licensed, attentive, able to take over at any time (L2).
 - **Environment:** no restriction is enforced by the item beyond what the vehicle's own ACC/LKA imposes. Weather and lighting are covered in the HARA situations (OS-013…015).
 
-## A.7 Assumptions on the vehicle
+## A.7 Assumptions
 
-| ID | Assumption |
-|---|---|
-| VA-01 | The vehicle has factory ACC and lane-keeping hardware with actuators that accept external requests |
-| VA-02 | Vehicle CAN messages used by the item are not cryptographically authenticated. Vehicles that need SecOC are dashcam-only in release builds (`opendbc/car/toyota/interface.py:34-37`) |
-| VA-03 | Vehicle ECUs behave as stock. The item does not modify ECU firmware, except that some ports disable stock radar/camera functions over diagnostics (port-specific, §A.10) |
-| VA-04 | The vehicle's own brake and steering systems remain fully functional with the item installed |
+| ID | Category | Assumption |
+|---|---|---|
+| VA-01 | Vehicle | The vehicle has factory ACC and lane-keeping hardware with actuators that accept external requests |
+| VA-02 | Vehicle | Vehicle CAN messages used by the item are not cryptographically authenticated. Vehicles that need SecOC are dashcam-only in release builds (`opendbc/car/toyota/interface.py:34-37`) |
+| VA-03 | Vehicle | Vehicle ECUs behave as stock. The item does not modify ECU firmware, except that some ports disable stock radar/camera functions over diagnostics (port-specific, §A.10) |
+| VA-04 | Vehicle | The vehicle's own brake and steering systems remain fully functional with the item installed |
+| DA-01 | Driver | A licensed driver supervises at all times and can take over immediately (SAE L2); foreseeable inattention is assumed (HARA HA-001) |
+| DA-02 | Driver | The driver has read the limitations (`docs/LIMITATIONS.md`) and engages the item only through the vehicle's cruise controls |
+| MA-01 | Market | Vehicles are used in the market listed for them in the catalog. AC-001 is US only; other markets need a legal and exposure review (§A.8, P11) |
+| LA-01 | Lifecycle | The owner installs the device and harness following the install instructions; installation errors are handled in the PFMEA |
+| LA-02 | Lifecycle | Software reaches the device only through the LionDriver release and OTA process; each release is a new baseline (`baseline.yaml`) |
+| LA-03 | Lifecycle | Vehicle service that changes ADAS hardware or ECU firmware (e.g. camera replacement, EPS reflash) invalidates the assured configuration until re-checked |
 
 ## A.8 Legal requirements and standards
 

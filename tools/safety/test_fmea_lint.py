@@ -583,5 +583,19 @@ class TestVehicleCatalog(unittest.TestCase):
     self.assertTrue(all(c["harness"] for c in cars))
 
 
+class TestItemExport(unittest.TestCase):
+  def test_export_reads_item_definition(self):
+    import export_item_xlsx
+    wb = export_item_xlsx.build(REPO)
+    ids = [r[0] for r in wb["03_Functions"].iter_rows(min_row=2, values_only=True) if r[0]]
+    self.assertEqual(ids, [f"F{i}" for i in range(1, 9)])
+    sfm = fmea_lint.load_yaml((REPO / "docs/safety/analyses/system-fmea.yaml").read_text())
+    self.assertEqual(len(ids), len(sfm["functions"]))  # item functions F1-F8 = System FMEA SFM-FN-001..008
+    modes = [r[0] for r in wb["07_Operating_Modes"].iter_rows(min_row=2, values_only=True) if r[0]]
+    fsc = fmea_lint.load_yaml((REPO / "docs/safety/analyses/fsc.yaml").read_text())
+    self.assertEqual(modes, [m["id"] for m in fsc["operating_modes"]])
+    self.assertEqual(wb["13_Vehicle_Catalog"].max_row - 1, 334)
+
+
 if __name__ == "__main__":
   unittest.main()
