@@ -13,12 +13,15 @@ Each CA gets its own `CA-NNN.md` (from `templates/CORRECTIVE-ACTION.md`) when it
 | CA-001 | Interlock: never disable stock PCS/AEB in an assured configuration | RC-01 | HZ-002 | 1 | **Implemented**: software verified; panda layer and vehicle check open |
 | CA-002 | Stopped / slow in-lane vehicle scenario suite with acceptance criteria | RC-02, RC-03, RC-06 | HZ-001, HZ-003 | 2 (V&V) | **Phase 1 done** (SIL, idealized perception); phase 2 open |
 | CA-003 | Perception evaluation on emergency vehicles and atypical stationary targets | RC-06 | HZ-001 | 2 | Proposed |
-| CA-004 | Stationary-target performance requirement and braking-authority study | RC-02 | HZ-001, HZ-006, HZ-007 | 2 | Proposed |
+| CA-004 | Stationary-target performance requirement and braking-authority study | RC-02 | HZ-001, HZ-006, HZ-007, HZ-008 | 2 | **Study complete**: decision pending approval |
 | CA-005 | Independent forward-collision monitor (radar-based) for FCW | RC-03 | HZ-003 | 3 | Proposed |
 | CA-006 | Hazard-timed driver monitoring escalation | RC-04 | HZ-004 | 3 / 4 | Proposed |
 | CA-007 | Event data capture for safety-relevant events | RC-05 | HZ-005 | 3 | Proposed |
 | CA-008 | Assured-configuration identity and fork-parameter control | RC-05 | HZ-005 | 2 | Proposed |
 | CA-009 | Update limitations, operator briefing and test-driver protocol | RC-02, RC-04 | HZ-001, HZ-004 | 5 | Proposed |
+| CA-010 | Measure stock PCS on the 2020 Corolla in cut-out and lead-braking scenarios with openpilot longitudinal engaged | RC-02 | HZ-001, HZ-008 | V&V | Proposed (from CA-004) |
+| CA-011 | Relaxed following distance by default in the assured configuration | RC-02 | HZ-008 | 2 | Proposed (from CA-004) |
+| CA-012 | Operating-domain speed cap for openpilot longitudinal, from the verified confirmation range | RC-02, RC-06 | HZ-001 | 2 | Proposed (from CA-004); waits on CA-003 |
 | PA-01 | Seed the first HARA from the hazard log | — | all | — | Proposed |
 | PA-02 | Create the SOTIF triggering-condition catalog (TC-01…TC-06) | — | HZ-001 | — | Proposed |
 | FA-01 | Retrieve the NHTSA ODI resume for PE26007 and update REPORT §2 | — | — | — | Open |
@@ -129,6 +132,38 @@ Process replay is unaffected: it builds the car interface itself and passes it t
      - (c) restrict the operating domain (speed cap) for longitudinal control.
      Option (b) changes panda safety limits (`toyota.h:208-209`) and the car port (`values.py:43`). It needs its own impact analysis because of **HZ-006 (phantom braking)** and **HZ-007 (rear-end collision)**, plus checks of Toyota actuator behavior and limits.
 - **Acceptance criteria:** decision recorded with a quantitative argument. Requirement baselined. CA-002 thresholds updated to match.
+
+### CA-004 study record (2026-10-10)
+
+Full study: [`evidence/CA-004-BRAKING-AUTHORITY-STUDY.md`](evidence/CA-004-BRAKING-AUTHORITY-STUDY.md).
+
+- **Result:** an emergency-only -8 m/s² layer (option b) halves the required confirmation range: 166 → 79 m at 120 km/h. It cuts cut-out collisions from 11 to 5 of 25. But it is blocked by four open unknowns:
+  - whether the Toyota ACC interface can actuate it (U1);
+  - false-trigger rate (U3);
+  - integrity and FMVSS 127-style expectations (U5);
+  - and it may duplicate the stock PCS, which has not been measured yet (U2).
+- **New finding:** at the standard following distance, a lead braking at 4 m/s² from ≥ 100 km/h out-brakes the -3.5 m/s² limit (TC-07, HZ-008).
+- **Proposed decision:** adopt LD-SOTIF-001 with the simulated D_req values. Add CA-010 (measure stock PCS), CA-011 (relaxed following by default) and CA-012 (speed cap once CA-003 reports). Keep option (b) as a candidate, to reopen if CA-010 shows stock PCS falls short.
+- **Approval:** pending, safety manager.
+
+## CA-010 — Measure stock PCS with openpilot longitudinal engaged
+
+- **Root cause / hazards:** RC-02 · HZ-001, HZ-008. Resolves CA-004 U2.
+- **Change:** closed-course tests on the 2020 Corolla (TSS2) with soft targets. Run the CA-002 / CA-004 cut-out (S2) and lead-braking (S3) scenarios, with openpilot longitudinal engaged and no driver braking. Record PCS warning time, PCS braking onset and peak deceleration, and impact speed.
+- **Acceptance criteria:** results tabulated against the S2/S3 simulation. A decision recorded on whether stock PCS covers the gap, or whether option (b) is reopened.
+
+## CA-011 — Relaxed following distance by default
+
+- **Root cause / hazard:** RC-02 · HZ-008 (TC-07).
+- **Change:** in the LionDriver assured configuration, default the longitudinal personality to relaxed, and flag any change as out of assured scope (CA-008).
+- **New hazards:** more cut-ins into the larger gap (comfort and availability); no safety hazard identified.
+- **Acceptance criteria:** CA-004 S3 at the relaxed distance: no collision for lead braking ≤ 4 m/s² at ≤ 100 km/h. The setting is enforced and logged.
+
+## CA-012 — Operating-domain speed cap for openpilot longitudinal
+
+- **Root causes / hazard:** RC-02, RC-06 · HZ-001.
+- **Change:** set the maximum speed for openpilot longitudinal in the assured configuration from CA-004 S4, using the confirmation range that CA-003 verifies for the worst target type and lighting in the operating domain.
+- **Acceptance criteria:** the cap is derived and documented. It is enforced in software, and CA-002 passes at the cap with the measured confirmation range.
 
 ## CA-005 — Independent forward-collision monitor for FCW
 

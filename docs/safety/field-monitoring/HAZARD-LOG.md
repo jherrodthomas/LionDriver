@@ -18,10 +18,12 @@ S/E/C below are **provisional field-informed estimates** (ISO 26262-3 scale) for
 | HZ-004 | Driver unavailable at the critical moment: distraction below DM threshold, slow escalation, automation complacency | Long engaged drives, high speed | FI-2026-001 | S3 | E4 | C3 | MISUSE, SYS | HARA-pending | CA-006, CA-009 |
 | HZ-005 | Safety-relevant configuration drifts outside the assured baseline (forks, toggles, params) and is not identifiable after an event | Any | FI-2026-001 | (per resulting hazard) | — | — | CFG, PROC | HARA-pending | CA-007, CA-008 |
 | HZ-006 | Unintended or phantom hard braking (e.g. a stationary-clutter false positive). A side effect risk of HZ-001 fixes | Highway with overpasses, signs, parked vehicles | FI-2026-001 (CA-004 impact analysis) | S2–S3 | E4 | C2 | PERF | HARA-pending | CA-004 impact analysis, SPI-06 |
-| HZ-007 | Rear-end collision by a following vehicle caused by strong automated braking | Dense traffic | FI-2026-001 (CA-004 impact analysis) | S2 | E3 | C2 | PERF | HARA-pending | CA-004 impact analysis |
+| HZ-007 | Rear-end collision by a following vehicle caused by strong automated braking | Dense traffic | FI-2026-001 (CA-004 impact analysis) | S2 | E3 | C2 | PERF | HARA-pending | CA-004 study S5 (up to ~52 km/h at -8 m/s², short headways) |
+| HZ-008 | Lead vehicle brakes harder than openpilot's braking authority (≥ 4 m/s² at ≥ 100 km/h at standard following distance) → rear-end collision into the lead | Highway following; lead hard or emergency braking | FI-2026-001 (CA-004 study S3) | S2–S3 | E3 | C2 | PERF | HARA-pending | CA-011, CA-010, CA-004 option (b) candidate |
 
 ## Revision history
 
 | Rev | Date | Author | Change |
 |---|---|---|---|
 | A | 2026-10-10 | LionDriver maintainers | Initial entries HZ-001…HZ-007 from FI-2026-001 |
+| B | 2026-10-10 | LionDriver maintainers | HZ-008 added from the CA-004 study |

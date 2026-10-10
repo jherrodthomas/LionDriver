@@ -154,6 +154,7 @@ TOP: Engaged vehicle collides with a stationary/slow in-lane vehicle
 | TC-04 | Queue tail on a highway after a curve or crest | Sight-distance limit | No |
 | TC-05 | Slow-moving vehicle (≪ ego speed, e.g. farm equipment, crash-damaged car) | Closing-speed estimation | No |
 | TC-06 | Partially-in-lane obstacle (lateral offset 0.5–1.5 m) | Lane assignment / `yRel` gating | No |
+| TC-07 | Lead vehicle brakes at ≥ 4 m/s² from ≥ 100 km/h at the standard following distance (found by CA-004) | Braking authority below the lead's deceleration; about 1.5 s to reach -3.5 m/s² | No; added 2026-10-10 |
 
 ## 9. Root-cause register
 
@@ -191,6 +192,7 @@ TOP: Engaged vehicle collides with a stationary/slow in-lane vehicle
 | Unassured configuration / fork parameter drift | HZ-005 | Safety plan, configuration management |
 | Unintended / phantom hard braking (side effect of fixes to HZ-001) | HZ-006 | HARA, SOTIF |
 | Rear-end collision by a following vehicle due to stronger braking | HZ-007 | HARA |
+| Lead vehicle out-brakes openpilot's braking authority (CA-004 finding) | HZ-008 | HARA, SOTIF |
 
 ## 12. Proposed actions
 
