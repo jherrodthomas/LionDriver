@@ -118,7 +118,7 @@ Range: `8377c40..655bfde` (48 upstream commits, 2026-09-22 … 2026-10-08), excl
 
 ### 6.3 Observations
 
-- In 17 days upstream changed the default driving mode, added a behaviour-learning acceleration term, changed model weights four times, bumped the model runtime, reverted a host–panda comms change, and bumped the safety-code submodule twice. This confirms GAP-37 and the need for the D-02 freeze.
+- In 17 days upstream changed the default driving mode, added a behaviour-learning acceleration term, changed model weights four times, bumped the model runtime, reverted a host–panda comms change, and bumped the safety-code submodule twice. This confirms GAP-37 and the need for D-02 (decided 2026-10-10: no tracking of upstream between planned syncs, one planned sync per minor release with an impact analysis).
 - Two of the safety-relevant changes were hidden behind unrelated titles (`d05c2d9` reverted `a0d47bc`; `948ad05` "fix offroad alert" extended diagnostic suppression).
 - No commit in the window touched `driving_supercombo.onnx` or `dmonitoring_model.onnx`.
 

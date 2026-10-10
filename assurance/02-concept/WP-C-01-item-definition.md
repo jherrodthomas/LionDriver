@@ -33,7 +33,7 @@ LD-SDA helps the driver by controlling steering (lane centring) and speed (adapt
 | ID | Function | Description | Main implementation |
 |---|---|---|---|
 | F-01 | Lateral control (lane centring) | Computes a desired path or curvature from the camera-based ML driving model and commands steering torque to the Toyota EPS over its LKA interface (`STEERING_LKA`, `0x2E4`). Lane changes are driver-initiated with the turn signal and assisted (desire input) | `selfdrive/modeld`, `selfdrive/controls/controlsd.py`, `selfdrive/controls/lib/latcontrol_torque.py`, `opendbc/car/toyota/carcontroller.py` |
-| F-02 | Longitudinal control (ACC with stop-and-go) | Holds the set speed or follows a lead vehicle. Commands acceleration and deceleration to the powertrain/brake ECUs through `ACC_CONTROL` (`0x343`), including permit-braking, standstill and cancel. Lead detection fuses the stock radar track and vision. In Experimental Mode the end-to-end model also proposes acceleration (stops for traffic lights and signs; see WP-C-02 for whether it is in scope) | `selfdrive/controls/plannerd.py`, `lib/longitudinal_planner.py`, `radard.py`, `carcontroller.py:179-254` |
+| F-02 | Longitudinal control (ACC with stop-and-go) | Holds the set speed or follows a lead vehicle. Commands acceleration and deceleration to the powertrain/brake ECUs through `ACC_CONTROL` (`0x343`), including permit-braking, standstill and cancel. Lead detection fuses the stock radar track and vision. In Experimental Mode the end-to-end model also proposes acceleration (stops for traffic lights and signs; see WP-C-02 for whether it is in scope) | `selfdrive/controls/plannerd.py`, `lib/longitudinal_planner.py`, `radard.py`, `carcontroller.py:174-254` |
 | F-03 | Engagement and mode management | Engagement through the stock cruise controls. The safety MCU grants control authority only on the rising edge of the PCM cruise-active signal. Disengages on brake, cancel or faults. Supports override (driver gas, driver steering) | `selfdrive/selfdrived/state.py`, `selfdrived.py`; `opendbc/safety/safety.h:518-527` |
 | F-04 | Driver monitoring | A driver-facing camera and ML model estimate attention. Escalating warnings (5/8/13 s on the vision policy), forced deceleration on no response, and lockout after repeated non-compliance | `selfdrive/modeld/dmonitoringmodeld.py`, `selfdrive/monitoring/policy.py` |
 | F-05 | Driver information and warnings | Device display and sounds (`soundd`), plus the instrument cluster LKA HUD (`LKAS_HUD`, `0x412`). Alerts follow the event classes (warning, soft disable, immediate disable, no-entry) | `selfdrive/selfdrived/events.py`, `alertmanager.py`, `selfdrive/ui` |
@@ -63,7 +63,7 @@ LD-SDA helps the driver by controlling steering (lane centring) and speed (adapt
 | E-03 Safety MCU firmware | panda firmware (`panda/board`) with the opendbc safety Toyota mode |
 | E-04 Device hardware | comma device: SoC, panda MCU, road and driver cameras, IMU, GNSS, display, speaker, power supply, CAN transceivers, enclosure, windscreen mount |
 | E-05 Harness | Toyota TSS2 harness with intercept relay between the forward camera and the vehicle CAN |
-| E-06 Optional external compute ("Chestnut" big-model eGPU over USB) | **Excluded from the reference configuration** pending analysis of GAP-17 (OI-4) |
+| E-06 Optional external compute ("Chestnut" big-model eGPU over USB) | **Proposed for exclusion** from the reference configuration pending analysis of GAP-17. Not part of the item until OI-4 is decided |
 
 ### 3.2 Elements outside the item (environment and existing vehicle elements)
 
@@ -97,23 +97,23 @@ LD-SDA helps the driver by controlling steering (lane centring) and speed (adapt
 
 ### 3.4 Interfaces
 
-| ID | Interface | Direction | Content (examples) | Safety relevance |
-|---|---|---|---|---|
-| IF-01 | Vehicle CAN, car side (panda bus 0) | TX | `0x2E4` STEERING_LKA (torque, steer request), `0x343` ACC_CONTROL (accel, permit braking, cancel), `0x412` LKAS_HUD, `0x1D2` PCM cancel (TX whitelist `toyota.h:6-32`) | Actuation path (SG-01, SG-03, SG-04) |
-| IF-02 | Vehicle CAN, car side | RX | `0xAA` wheel speeds, `0x260` steering torque sensor (driver and EPS torque), `0x1D2` PCM_CRUISE (cruise active, gas released), `0x226` brake module, EPS_STATUS, radar tracks | Engagement gating, override detection, limits |
-| IF-03 | Camera side CAN (panda bus 2) | RX/forward | Camera messages forwarded to the car, except intercepted control messages | PCS preservation (H-08) |
-| IF-04 | SoC ↔ panda | SPI | CAN TX/RX streams, heartbeat (`0xf3`), safety-mode set (`0xdc`), health | Freedom from interference ([WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md)) |
-| IF-05 | Road-facing cameras | In | Images for the driving model and calibration | SOTIF |
-| IF-06 | Driver-facing camera (IR) | In | Images for the DM model | Controllability basis |
-| IF-07 | HMI | Out/In | Display, sounds, device touchscreen settings (toggles, e.g. Experimental Mode), cluster HUD | Mode awareness, warnings |
-| IF-08 | Power | In | Vehicle 12 V via the harness; ignition detection | Availability, safe shutdown |
-| IF-09 | Network (Wi-Fi/LTE) | Bidirectional | Athena RPC, uploads, OTA updates, SSH | Cybersecurity ([WP-C-09](WP-C-09-tara.md)) |
+| ID | Interface | Counterpart | Direction | Content (examples) | Safety relevance |
+|---|---|---|---|---|---|
+| IF-01 | Vehicle CAN, car side (panda bus 0) | EPS (`0x2E4`, `0x191`); ECM/PCM and brake actuator via the PCM ACC interface (`0x343`, `0x1D2`); instrument cluster (`0x412`) | TX | `0x2E4` STEERING_LKA (torque, steer request), `0x343` ACC_CONTROL (accel, permit braking, cancel), `0x412` LKAS_HUD, `0x1D2` PCM cancel (TX whitelist `toyota.h:6-32`) | Actuation path (SG-01, SG-03, SG-04) |
+| IF-02 | Vehicle CAN, car side (panda bus 0); radar CAN (panda bus 1) | ABS/VSC (`0xAA`, `0x226`); EPS (`0x260`, `0x262`); ECM/PCM (`0x1D2`); forward radar (`0x180`–`0x19F`) | RX | `0xAA` wheel speeds, `0x260` steering torque sensor (driver and EPS torque), `0x1D2` PCM_CRUISE (cruise active, gas released), `0x226` brake module, `0x262` EPS_STATUS (LKA/LTA state; read by `carstate.py:122-126`, not monitored by the safety mode), radar tracks `0x180`–`0x19F` on bus 1 (`radar_interface.py:10-12`, `:23`) | Engagement gating, override detection, limits |
+| IF-03 | Camera side CAN (panda bus 2) | Toyota forward camera (and through it the car-side receivers of its forwarded messages) | RX/forward | Camera messages forwarded to the car, except intercepted control messages | PCS preservation (H-08) |
+| IF-04 | SoC ↔ panda | Internal (E-01 ↔ E-03) | SPI | CAN TX/RX streams, heartbeat (`0xf3`), safety-mode set (`0xdc`), health | Freedom from interference ([WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md)) |
+| IF-05 | Road-facing cameras | Road environment | In | Images for the driving model and calibration | SOTIF |
+| IF-06 | Driver-facing camera (IR) | Driver | In | Images for the DM model | Controllability basis |
+| IF-07 | HMI | Driver | Out/In | Display, sounds, device touchscreen settings (toggles, e.g. Experimental Mode), cluster HUD | Mode awareness, warnings |
+| IF-08 | Power | Vehicle 12 V supply and ignition (through E-05 harness) | In | Vehicle 12 V via the harness; ignition detection | Availability, safe shutdown |
+| IF-09 | Network (Wi-Fi/LTE) | comma.ai back end (athena, connect), update origin, SSH clients | Bidirectional | Athena RPC, uploads, OTA updates, SSH | Cybersecurity ([WP-C-09](WP-C-09-tara.md)) |
 
 ## 4. Operating modes and states
 
 | Mode | Description | Actuation |
 |---|---|---|
-| Off / offroad | Ignition off or device offroad. panda in `NO_OUTPUT` or `SILENT` (`pandad.cc:204-207`) | None |
+| Off / offroad | Ignition off or device offroad. pandad puts the panda in `NO_OUTPUT` (`pandad.cc:204-207`). A panda found in `SILENT` is also switched to `NO_OUTPUT` (`pandad.cc:195-196`) | None |
 | Onroad, disengaged | Car safety mode active, `controls_allowed = false` | None (non-zero torque or accel rejected, `lateral.h:98-101`) |
 | Pre-enabled / enabled | Engaged after the PCM cruise rising edge and no NO_ENTRY condition (`state.py:79-90`) | Lateral and longitudinal |
 | Overriding | Driver gas or steering input while engaged. Longitudinal blocked while gas pressed (`longitudinal.h:3-5`) | Lateral; no longitudinal |
@@ -130,7 +130,7 @@ LD-SDA helps the driver by controlling steering (lane centring) and speed (adapt
 | FMVSS (US) | The vehicle's FMVSS compliance must not be degraded (e.g. FMVSS 126 ESC, 135 brakes are unaffected by design — verify). No FMVSS covers L2 ADAS function |
 | NHTSA Standing General Order 2021-01 (as amended) | Crash reporting for L2 ADAS applies to manufacturers and operators. Used as the model for [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) |
 | State vehicle codes | Driver remains legally responsible. Some states regulate testing of automated driving; L2 is generally outside those rules (to be confirmed per test state, OI-6) |
-| ISO 11270 (LKAS), ISO 15622 (ACC), ISO 22179 (FSRA) | Performance and actuation limit references (`docs/SAFETY.md`) |
+| ISO 11270 (LKAS), ISO 15622 (ACC), ISO 22179 (FSRA) | Performance and actuation limit references. ISO 11270 and ISO 15622 are the references upstream cites (`docs/SAFETY.md:32`). ISO 22179 is added by LionDriver because the reference configuration uses full-speed range ACC with stop-and-go |
 | UNECE R79 (ACSF), R171 (DCAS), EU 2025/1899 DM reference | Not legally binding in the US. Used as benchmarks for HMI, DM and actuation limits |
 | ISO 26262, ISO 21448, ISO/SAE 21434, ISO/PAS 8800 | Applied voluntarily per [WP-M-01](../01-management/WP-M-01-assurance-strategy.md) |
 
@@ -166,7 +166,7 @@ Performance targets are specified in [WP-S-01](../03-system/WP-S-01-system-requi
 |---|---|---|
 | Max steering torque request | 1500 raw (physical value to be determined, GAP-04) | `toyota.h:173` |
 | Torque rate | +15 / −25 raw per 10 ms frame; ≤ 450 raw per 250 ms | `toyota.h:174-177` |
-| Lateral acceleration (controller) | ≤ 3.0 m/s² (roll-compensated); jerk ≤ 5 m/s³ | `controls/lib/drive_helpers.py:9-14` |
+| Lateral acceleration (controller) | ≤ 3.0 m/s² (roll-compensated); jerk ≤ 5 m/s³ | `controls/lib/drive_helpers.py:13-14` |
 | Acceleration command | −3.5 … +2.0 m/s² | `toyota.h:207-210` |
 | Minimum engagement speed | Toyota TSS2 with stop-and-go: from standstill (verify for Corolla LE, OI-7) | `car_events.py:59-72` |
 | Max control speed | ≈ 149 km/h warning (`MAX_CTRL_SPEED`), no disengage | `selfdrive/car/car_events.py:126`; `selfdrived/events.py:989-996` |

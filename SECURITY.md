@@ -1,3 +1,37 @@
+# Security Policy
+
+LionDriver is a driver-assistance software fork of openpilot. Security issues can affect vehicle safety, so please report them privately.
+
+## Reporting a vulnerability
+
+- Use GitHub private vulnerability reporting on this repository: **Security** tab → **Report a vulnerability** (or [open a report directly](https://github.com/jherrodthomas/LionDriver/security/advisories/new)).
+- Do not open public issues, pull requests or discussions for security problems.
+
+Please include the affected LionDriver release or commit, the device type, a description of the issue and its impact, and how you found it. Proof-of-concept material is welcome but not required. Do not send personal data of other people.
+
+### What to expect
+
+- Acknowledgement within 3 working days.
+- Initial assessment within 5 working days (2 if the issue may affect vehicle safety).
+- If the issue can affect safety, we may tell users to stop using the driving functions before a fix is ready. Such notices contain no technical detail.
+- We aim to release a fix and publish an advisory within 90 days, and we coordinate disclosure timing with you. We credit reporters who wish to be credited.
+
+### Scope
+
+In scope: this repository and its LionDriver-controlled submodules, LionDriver release builds, the panda firmware built by LionDriver, and the LionDriver update and release process.
+
+Out of scope here: comma.ai services and hardware, upstream openpilot, and third-party services. Report those to their owners (for comma.ai, see the upstream openpilot `SECURITY.md`). If you are unsure, report to us and we will route it.
+
+### Testing rules
+
+Test only on equipment you own. Never test on public roads or in a moving vehicle outside a closed course. Do not access other people's devices, data or accounts. Do not attack comma.ai or other third-party infrastructure.
+
+### Supported releases
+
+Only the latest LionDriver release receives security fixes.
+
+The process behind this policy is [WP-O-05](assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md).
+
 ## Automotive Cybersecurity Engineering — ISO/SAE 21434
 
 LionDriver aims to integrate cybersecurity engineering throughout the platform lifecycle, informed by **ISO/SAE 21434 — Road Vehicles: Cybersecurity Engineering**.

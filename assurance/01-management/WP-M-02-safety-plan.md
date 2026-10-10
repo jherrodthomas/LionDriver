@@ -93,7 +93,7 @@ Phases and gates are defined in [WP-M-01 §7](WP-M-01-assurance-strategy.md#7-ph
 
 | Phase | Safety activities | Responsible | Key outputs | Gate entry criteria |
 |---|---|---|---|---|
-| P0 Governance | Approve plans; assign roles; take configuration control of opendbc and panda (D-01); freeze upstream sync (D-02); make fork CI meaningful (D-03); set up review rules, CODEOWNERS, branch protection; impact analysis of the inherited baseline; engage an external assessor (D-06) | SM, PM | WP-M-00…M-13, WP-P-01…P-06 | — |
+| P0 Governance | Approve plans; assign roles; take configuration control of opendbc and panda (D-01, done #3); upstream sync once per minor release with impact analysis (D-02, done #4, [WP-M-11 §5](WP-M-11-upstream-and-supplier-management.md#5-upstream-synchronization-procedure-d-02)); make fork CI meaningful (D-03, done #6 except CR-CI-08); set up review rules, CODEOWNERS, branch protection; impact analysis of the inherited baseline; engage an external assessor (D-06) | SM, PM | WP-M-00…M-13, WP-P-01…P-06 | — |
 | P1 Concept | Item definition and AoUs on Toyota ECUs; ODD; HARA and safety goals; driver/HMI misuse analysis; FSC with FSR allocation; vehicle test procedures before any LionDriver-specific road test; initial safety case argument | SM (HARA, FSC), SL (SOTIF inputs), CSM (TARA link) | WP-C-01…C-11, WP-V-07, WP-K-01 v1 | G0 passed |
 | P2 System design | Back-fill TSRs from envelope code; TSC and architecture; FTTI and detection-time budget (GAP-06); HSI; FFI and DFA, including the SoC-configures-panda weakness (GAP-09); system FTA/FMEA; ASIL decomposition if needed | ENG, SM, HW | WP-S-01…S-07, WP-A-01…A-04, WP-V-02 | G1 passed incl. HARA confirmation review |
 | P3 HW/SW development | HW safety requirements, FMEDA, metrics and PMHF; component qualification of the comma device and STM32H7; SW safety requirements, architecture, safety analysis, unit design; envelope hardening (IWDG, fault → safe state, mode lock, E2E, driver-torque and EPS-status monitoring); unit verification incl. structural coverage beyond line coverage (GAP-13); tool and SW component qualification | ENG, HW, SM | WP-H-01…H-05, H-07, WP-W-01…W-06, W-09…W-11, WP-P-07…P-09 | G2 passed |
@@ -161,8 +161,8 @@ A safety anomaly is any observation that may indicate a safety goal violation, a
 
 | Step | Rule |
 |---|---|
-| Report | Anyone can report. Use the GitHub issue label `safety-anomaly` (or a private channel for security-sensitive reports, per [WP-M-09](WP-M-09-cybersecurity-plan.md)). No-blame reporting applies ([WP-M-04](WP-M-04-organization-competence-safety-culture.md)) |
-| Triage | Safety manager triages within 5 working days (target; not yet demonstrated). Classifies as: potential safety goal violation / work product error / process deviation / not safety-relevant |
+| Report | Anyone can report, through the GitHub issue forms "Problem report" or "Field report" ([WP-P-03 §3](../07-supporting/WP-P-03-problem-resolution.md#3-intake)), which open the issue with the `triage` label. Security-sensitive reports go through GitHub private vulnerability reporting instead (`SECURITY.md`, [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md)). No-blame reporting applies ([WP-M-04](WP-M-04-organization-competence-safety-culture.md)) |
+| Triage | Safety manager triages within 1 working day when any safety triage box on the form is ticked, otherwise within 10 working days ([WP-P-03 §3.3](../07-supporting/WP-P-03-problem-resolution.md#33-triage-time); targets not yet demonstrated). Classifies as: potential safety goal violation / work product error / process deviation / not safety-relevant, and sets the WP-P-03 category (`cat-*`) and severity (`sev-*`) labels. Every issue classified as anything other than not safety-relevant also gets the `safety-anomaly` label, which is what [WP-M-04](WP-M-04-organization-competence-safety-culture.md) and the release record ([WP-K-06](../10-safety-case/WP-K-06-release-record.md)) query |
 | Immediate action | A potential safety goal violation stops vehicle testing on the affected configuration until the safety manager releases it. Any test driver may stop testing at any time |
 | Resolution | Through [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md), with impact analysis through [WP-P-02](../07-supporting/WP-P-02-change-management.md) |
 | Closure | Closure needs verification evidence and, for safety goal violations, review by someone other than the person who fixed it |
@@ -173,7 +173,7 @@ A safety anomaly is any observation that may indicate a safety goal violation, a
 - Each gate G0…G6 has a GitHub milestone. Each work product and each gap action has an issue linked to its milestone ([WP-M-03 §8](WP-M-03-project-plan.md)).
 - The safety manager reviews progress against this plan at least monthly and records the result in the milestone tracking issue.
 - A gate review is held at the end of each phase. Inputs: WP-M-00 status, open anomalies, open risks (WP-M-07), confirmation measure results (WP-M-06), QA findings (WP-M-05), open items of the phase's work products.
-- Gate outcome: `Pass`, `Pass with conditions` (conditions tracked as issues with owners and due gate), or `Fail`. The record is stored under `10-safety-case/gates/` (folder to be created).
+- Gate outcome: `Pass`, `Pass with conditions` (conditions tracked as issues with owners and due gate), or `Fail`. The record is stored under [`10-safety-case/gates/`](../10-safety-case/gates/README.md), using the template there.
 - A gate cannot pass if a confirmation review that WP-M-06 assigns to it has not been performed, unless the safety manager and assessor agree a documented deferral.
 
 ## 11. Safety case planning
@@ -214,5 +214,5 @@ Upstream management and the absence of a DIA are handled in [WP-M-11](WP-M-11-up
 | OI-2 | The safety manager and the project maintainer are the same person, who also authors most work products. Define who approves work products the safety manager authored (proposal: approval after external confirmation review for I3 items; second reviewer for others) | PM | G0 |
 | OI-3 | Engage an external functional safety assessor (D-06) and agree scope and schedule | PM | G0 |
 | OI-4 | Confirm the anomaly triage target (5 working days) is achievable with current staffing | SM | G0 |
-| OI-5 | Create the `10-safety-case/gates/` and `10-safety-case/confirmation/` folders and the gate record template | SM | G0 |
+| OI-5 | Closed: [`gates/`](../10-safety-case/gates/README.md) (with the gate record template) and [`confirmation/`](../10-safety-case/confirmation/README.md) created | SM | G0 |
 | OI-6 | Revisit the ASIL D planning assumption once the HARA is approved; adjust independence and method selection | SM | G1 |
