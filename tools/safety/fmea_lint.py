@@ -351,6 +351,154 @@ def check_hara(name, doc, ctx, res: Result):
 
 GUIDEWORDS = [f"M{i:02d}" for i in range(1, 15)]
 
+# ISO 26262-9 Table 1: permitted decompositions, as sorted pairs of resulting ASILs.
+DECOMPOSITION_SCHEMES = {
+  "D": {("D", "QM"), ("C", "A"), ("B", "B")},
+  "C": {("C", "QM"), ("B", "A")},
+  "B": {("B", "QM"), ("A", "A")},
+  "A": {("A", "QM")},
+}
+
+
+def parse_asil(s: str) -> tuple[str, str | None]:
+  """'B(D)' -> ('B', 'D'); 'C' -> ('C', None)."""
+  if "(" in s:
+    base, orig = s[:-1].split("(")
+    return base, orig
+  return s, None
+
+
+def check_fsc(name, doc, ctx, res: Result):
+  status = doc["analysis"]["status"]
+  if ctx.hara_revision is None:
+    res.error(name, "FSC requires a HARA")
+    return
+  if doc["analysis"]["hara_revision"] != ctx.hara_revision:
+    res.error(name, f"derived from HARA rev {doc['analysis']['hara_revision']}, current HARA is rev {ctx.hara_revision}; update the FSC")
+  elements = {e["id"]: e for e in doc["elements"]}
+  fsrs = {f["id"]: f for f in doc["fsrs"]}
+  warnings = {w["id"] for w in doc["warning_degradation"]}
+  local_ids = set(elements) | set(fsrs) | {x["id"] for x in doc["external_measures"]} | set(ctx.safety_goals)
+  foi_ids = {o["id"] for o in doc["open_items"]}
+
+  for e in doc["elements"]:
+    where = f"{name} {e['id']}"
+    for ref in e.get("inputs", []) + e.get("outputs", []):
+      if ref not in elements:
+        res.error(where, f"connected element {ref} not found")
+    for ref in e["sfm_elements"]:
+      if ref not in ctx.elements:
+        res.error(where, f"System FMEA element {ref} not found")
+    for path in e.get("paths", []):
+      ctx.check_path(path, where, res)
+    if e["type"] == "external" and e["capability_status"] != "not_applicable":
+      res.error(where, "external elements carry no capability claim (capability_status: not_applicable)")
+  for xm in doc["external_measures"]:
+    oi = xm.get("open_item")
+    if oi and oi not in foi_ids and oi not in ctx.hara_open_items:
+      res.error(f"{name} {xm['id']}", f"open item {oi} not found in FSC or HARA")
+    if xm["credited"] and oi:
+      res.warn(f"{name} {xm['id']}", f"credited while open item {oi} is open")
+
+  timing = {}
+  for tm in doc["timing"]:
+    where = f"{name} timing {tm['safety_goal']}"
+    if tm["safety_goal"] not in ctx.safety_goals:
+      res.error(where, "safety goal not found in the HARA")
+      continue
+    if tm["safety_goal"] in timing:
+      res.error(where, "duplicate timing entry")
+    timing[tm["safety_goal"]] = tm
+    hara_ftti = ctx.safety_goals[tm["safety_goal"]]["ftti_ms"]
+    if hara_ftti is not None and (tm["ftti_ms"] != hara_ftti or tm["ftti_status"] != "confirmed"):
+      res.error(where, f"HARA sets FTTI {hara_ftti} ms; FSC must use it with status confirmed")
+    if (tm["ftti_ms"] is None) != (tm["ftti_status"] == "tbd"):
+      res.error(where, "ftti_status tbd if and only if ftti_ms is null")
+    if status == "released" and tm["ftti_status"] != "confirmed":
+      res.error(where, "released FSC requires a confirmed FTTI for every safety goal")
+  for sg in ctx.safety_goals:
+    if sg not in timing:
+      res.error(name, f"no timing entry for {sg}")
+
+  parent_of = {}
+  for f in doc["fsrs"]:
+    for child in f.get("decomposition", {}).get("into", []):
+      if child in parent_of:
+        res.error(f"{name} {child}", f"decomposed from both {parent_of[child]} and {f['id']}")
+      parent_of[child] = f["id"]
+
+  per_sg = dict.fromkeys(ctx.safety_goals, 0)
+  gaps, unproven = [], set()
+  for f in doc["fsrs"]:
+    where = f"{name} {f['id']}"
+    sg = ctx.safety_goals.get(f["safety_goal"])
+    if sg is None:
+      res.error(where, f"safety goal {f['safety_goal']} not found in the HARA")
+      continue
+    per_sg[f["safety_goal"]] += 1
+    base, orig = parse_asil(f["asil"])
+    if f["id"] in parent_of:
+      parent = fsrs.get(parent_of[f["id"]])
+      if parent and (orig != parent["asil"] or parent["safety_goal"] != f["safety_goal"]):
+        res.error(where, f"decomposed ASIL {f['asil']} must be written X({parent['asil']}) under the parent's safety goal")
+    elif orig is not None or base != sg["asil"]:
+      res.error(where, f"ASIL {f['asil']} must be inherited from {f['safety_goal']} ({sg['asil']}) unless decomposed from a parent FSR")
+    for el in f["allocated_to"]:
+      if el not in elements:
+        res.error(where, f"element {el} not found")
+      elif elements[el]["type"] == "external":
+        res.error(where, f"FSRs cannot be allocated to external element {el}; record it as an external measure")
+    if f.get("warning") and f["warning"] not in warnings:
+      res.error(where, f"warning concept {f['warning']} not found")
+    ftti = timing.get(f["safety_goal"], {}).get("ftti_ms")
+    if f.get("fhti_ms") is not None and ftti is not None and f["fhti_ms"] > ftti:
+      res.error(where, f"FHTI {f['fhti_ms']} ms exceeds {f['safety_goal']} FTTI {ftti} ms")
+    for v in f["verification"]:
+      if v.get("test"):
+        ctx.check_path(v["test"], where, res)
+
+    dec = f.get("decomposition")
+    if dec:
+      kids = [fsrs.get(k) for k in dec["into"]]
+      if None in kids:
+        res.error(where, f"decomposition target not found: {dec['into']}")
+        continue
+      pair = tuple(sorted((parse_asil(k["asil"])[0] for k in kids), key=lambda a: -ASIL_ORDER.index(a)))
+      if base not in DECOMPOSITION_SCHEMES or pair not in DECOMPOSITION_SCHEMES[base]:
+        res.error(where, f"decomposition {f['asil']} -> {' + '.join(k['asil'] for k in kids)} is not an ISO 26262-9 scheme")
+      union = {el for k in kids for el in k["allocated_to"]}
+      if set(f["allocated_to"]) != union:
+        res.error(where, f"allocated_to {sorted(f['allocated_to'])} must equal the union of its decomposed FSRs {sorted(union)}")
+      continue
+    for el in f["allocated_to"]:
+      e = elements.get(el)
+      if e is None or e["type"] == "external":
+        continue
+      if ASIL_ORDER.index(base) > ASIL_ORDER.index(e["asil_capability"]):
+        gaps.append(f"{f['id']} ({f['asil']}) on {el} (capability {e['asil_capability']})")
+      elif base != "QM" and e["capability_status"] == "unproven":
+        unproven.add(el)
+  for sg, n in per_sg.items():
+    if n == 0:
+      res.error(name, f"no FSR derived from {sg}")
+  for g in gaps:
+    (res.error if status == "released" else res.warn)(name, f"capability gap: {g}")
+
+  for oi in doc["open_items"]:
+    for ref in oi["affects"]:
+      if ref not in local_ids:
+        res.error(f"{name} {oi['id']}", f"affects {ref}, which is not in the FSC or HARA")
+    if oi["status"] == "closed" and not oi.get("resolution"):
+      res.error(f"{name} {oi['id']}", "closed open item needs a resolution")
+  if status == "released" and any(oi["status"] == "open" for oi in doc["open_items"]):
+    res.error(name, "released FSC has open items")
+
+  impl = {}
+  for f in doc["fsrs"]:
+    impl[f["implementation"]["status"]] = impl.get(f["implementation"]["status"], 0) + 1
+  res.report.append(f"FSC: {len(fsrs)} FSRs; implementation " + " ".join(f"{k}={v}" for k, v in sorted(impl.items())))
+  res.report.append(f"FSC: {len(gaps)} capability gap(s); ASIL allocations to unproven elements: {', '.join(sorted(unproven)) or 'none'}")
+
 
 def check_guidewords(name, doc, hazards, ctx, res: Result):
   """Function x guide-word matrix: complete, consistent with each hazard's functions and guidewords."""
@@ -443,6 +591,9 @@ class Context:
     self.functions: set[str] = set()
     self.fm_hazards: dict[str, set[str]] = {}  # FMEA failure mode -> hazards its effects link to
     self.hazards: set[str] | None = None  # None until a HARA file is loaded
+    self.safety_goals: dict[str, dict] = {}
+    self.hara_revision: str | None = None
+    self.hara_open_items: set[str] = set()
     self.ap_counts = {"H": 0, "M": 0, "L": 0}
 
   def check_path(self, path, where, res: Result):
@@ -470,7 +621,7 @@ def lint(root: Path = ROOT) -> Result:
     res.error("baseline.yaml", "missing")
 
   rt = rating_tables_version(root)
-  schemas = {kind: load_schema(root, f"{kind}.schema.json") for kind in ("fmea", "fmeda", "hara")}
+  schemas = {kind: load_schema(root, f"{kind}.schema.json") for kind in ("fmea", "fmeda", "hara", "fsc")}
 
   docs = []
   seen_ids: dict[str, str] = {}
@@ -485,7 +636,7 @@ def lint(root: Path = ROOT) -> Result:
     hdr = doc["analysis"]
     if hdr["baseline"] not in baseline_ids:
       res.error(name, f"baseline {hdr['baseline']} not in baseline.yaml")
-    if kind != "hara" and hdr["rating_tables"] != rt:
+    if kind not in ("hara", "fsc") and hdr["rating_tables"] != rt:
       res.error(name, f"rating_tables {hdr['rating_tables']} != current {rt}; re-rate against the current tables")
 
     # FMEA ids are global (cross-linked between files); FMEDA ids are per file (one FMEDA per safety goal).
@@ -499,6 +650,13 @@ def lint(root: Path = ROOT) -> Result:
       ids = [x["id"] for k in ("assumptions", "operational_situations", "hazards", "hazardous_events", "safety_goals", "open_items")
              for x in doc[k]]
       ctx.hazards = {h["id"] for h in doc["hazards"]}
+      ctx.safety_goals = {sg["id"]: sg for sg in doc["safety_goals"]}
+      ctx.hara_revision = hdr["revision"]
+      ctx.hara_open_items = {oi["id"] for oi in doc["open_items"]}
+    elif kind == "fsc":
+      scope = seen_ids
+      ids = [x["id"] for k in ("elements", "external_measures", "operating_modes", "warning_degradation", "fsrs", "open_items")
+             for x in doc[k]]
     else:
       scope = seen_ids
       ids = [x["id"] for k in ("structure", "functions", "actions", "failure_modes") for x in doc[k]]
@@ -515,7 +673,7 @@ def lint(root: Path = ROOT) -> Result:
     docs.append((name, kind, doc))
 
   for name, kind, doc in docs:
-    {"fmeda": check_fmeda, "hara": check_hara}.get(kind, check_fmea)(name, doc, ctx, res)
+    {"fmeda": check_fmeda, "hara": check_hara, "fsc": check_fsc}.get(kind, check_fmea)(name, doc, ctx, res)
 
   res.report.insert(0, f"rated causes by AP: H={ctx.ap_counts['H']} M={ctx.ap_counts['M']} L={ctx.ap_counts['L']}")
   return res

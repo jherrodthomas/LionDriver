@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jherrodthomas/LionDriver/docs/safety/schema/fsc.schema.json",
+  "title": "LionDriver Functional Safety Concept (ISO 26262-3 clause 7)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "analysis", "elements", "external_measures", "timing", "operating_modes", "warning_degradation", "fsrs", "open_items"],
+  "$defs": {
+    "asil": {
+      "description": "Plain ASIL, or decomposed form X(Y) where Y is the ASIL of the requirement before decomposition.",
+      "type": "string",
+      "pattern": "^(QM|A|B|C|D)(\\((A|B|C|D)\\))?$"
+    },
+    "element_id": {"type": "string", "pattern": "^EL-[0-9]{2,}$"},
+    "fsr_id": {"type": "string", "pattern": "^FSR-[0-9]{3,}$"}
+  },
+  "properties": {
+    "schema_version": {"const": 1},
+    "analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "title", "revision", "status", "baseline", "hara_revision", "scope"],
+      "properties": {
+        "id": {"const": "FSC"},
+        "type": {"const": "fsc"},
+        "doc_id": {"type": "string"},
+        "title": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+        "status": {"enum": ["draft", "in_review", "released"]},
+        "baseline": {"type": "string"},
+        "hara_revision": {"type": "string", "description": "HARA revision the FSC was derived from; must equal the current HARA revision"},
+        "scope": {"type": "string", "minLength": 1},
+        "approver": {"type": "string"},
+        "team": {
+          "type": "array",
+          "items": {"type": "object", "additionalProperties": false, "required": ["name", "role"],
+                    "properties": {"name": {"type": "string"}, "role": {"type": "string"}}}
+        },
+        "references": {"type": "array", "items": {"type": "string"}},
+        "updated": {"type": "string", "format": "date"},
+        "history": {
+          "type": "array",
+          "items": {"type": "object", "additionalProperties": false, "required": ["revision", "date", "author", "change"],
+                    "properties": {"revision": {"type": "string"}, "date": {"type": "string", "format": "date"},
+                                   "author": {"type": "string"}, "change": {"type": "string"}}}
+        }
+      }
+    },
+    "elements": {
+      "description": "Preliminary architecture elements that FSRs are allocated to.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "type", "asil_capability", "capability_status", "sfm_elements", "description"],
+        "properties": {
+          "id": {"$ref": "#/$defs/element_id"},
+          "name": {"type": "string", "minLength": 1},
+          "type": {"enum": ["sensor", "comm_in", "power_in", "processor", "software", "actuator", "hmi", "comm_out", "external"]},
+          "asil_capability": {"enum": ["QM", "A", "B", "C", "D"], "description": "Highest ASIL the element is intended to be developed to"},
+          "capability_status": {"enum": ["established", "unproven", "not_applicable"], "description": "Whether evidence for the capability exists"},
+          "inputs": {"type": "array", "items": {"$ref": "#/$defs/element_id"}},
+          "outputs": {"type": "array", "items": {"$ref": "#/$defs/element_id"}},
+          "shared_resources": {"type": "array", "items": {"type": "string"}, "description": "Common-cause vectors (power, board, bus, OS); input to DFA"},
+          "sfm_elements": {"type": "array", "items": {"type": "string", "pattern": "^SFM-SE-[0-9]{3,}$"}},
+          "paths": {"type": "array", "items": {"type": "string"}},
+          "description": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "external_measures": {
+      "description": "Measures outside the item relied on by the concept (ISO 26262-3 7.4.2.7).",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description", "credited", "evidence"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^XM-[0-9]{2,}$"},
+          "description": {"type": "string", "minLength": 1},
+          "credited": {"type": "boolean", "description": "true only when evidence exists"},
+          "evidence": {"type": "string", "minLength": 1},
+          "open_item": {"type": "string", "pattern": "^(OI|FOI)-[0-9]{3,}$"}
+        }
+      }
+    },
+    "timing": {
+      "description": "Per safety goal timing. FTTI from the HARA when set there; otherwise a preliminary value with basis, or null.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["safety_goal", "ftti_ms", "ftti_status", "basis"],
+        "properties": {
+          "safety_goal": {"type": "string", "pattern": "^SG-[0-9]{3,}$"},
+          "ftti_ms": {"type": ["integer", "null"], "minimum": 1},
+          "ftti_status": {"enum": ["preliminary", "confirmed", "tbd"]},
+          "basis": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "operating_modes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "description", "actuation"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^OM-[0-9]{2,}$"},
+          "name": {"type": "string"},
+          "description": {"type": "string"},
+          "actuation": {"enum": ["none", "lateral", "longitudinal", "both", "lateral_or_longitudinal"]},
+          "ref": {"type": "string"}
+        }
+      }
+    },
+    "warning_degradation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "trigger", "reaction", "driver_warning", "time_to_safe_state"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^WD-[0-9]{2,}$"},
+          "trigger": {"type": "string"},
+          "reaction": {"type": "string"},
+          "driver_warning": {"type": "string"},
+          "time_to_safe_state": {"type": "string"},
+          "ref": {"type": "string"}
+        }
+      }
+    },
+    "fsrs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "safety_goal", "asil", "kind", "statement", "allocated_to", "safe_state", "implementation", "verification"],
+        "properties": {
+          "id": {"$ref": "#/$defs/fsr_id"},
+          "safety_goal": {"type": "string", "pattern": "^SG-[0-9]{3,}$"},
+          "asil": {"$ref": "#/$defs/asil"},
+          "kind": {"enum": ["limitation", "prevention", "detection", "reaction", "warning", "arbitration", "configuration"]},
+          "statement": {"type": "string", "minLength": 1},
+          "allocated_to": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/element_id"}},
+          "safe_state": {"type": "string"},
+          "fhti_ms": {"type": ["integer", "null"], "minimum": 1, "description": "Fault handling time interval budget; must not exceed the safety goal FTTI"},
+          "warning": {"type": "string", "pattern": "^WD-[0-9]{2,}$"},
+          "decomposition": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["into", "independence"],
+            "properties": {
+              "into": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/fsr_id"}},
+              "independence": {"type": "string", "minLength": 1, "description": "Independence argument; DFA reference when available"}
+            }
+          },
+          "implementation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["status"],
+            "properties": {
+              "status": {"enum": ["existing", "existing_unverified", "partial", "gap"]},
+              "ref": {"type": "string", "description": "Code path or mechanism in BL-001"},
+              "note": {"type": "string"}
+            }
+          },
+          "verification": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["method"],
+              "properties": {
+                "method": {"enum": ["review", "analysis", "unit_test", "integration_test", "fault_injection", "hil_test", "vehicle_test", "simulation"]},
+                "test": {"type": "string", "description": "Existing test path"},
+                "planned": {"type": "string", "description": "What still has to be written"}
+              }
+            }
+          },
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "open_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "text", "affects", "status"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^FOI-[0-9]{3,}$"},
+          "text": {"type": "string", "minLength": 1},
+          "affects": {"type": "array", "items": {"type": "string", "pattern": "^(FSR|SG|EL|XM)-[0-9]{2,}$"}},
+          "status": {"enum": ["open", "closed"]},
+          "resolution": {"type": "string"}
+        }
+      }
+    }
+  }
+}

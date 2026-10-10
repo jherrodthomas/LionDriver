@@ -101,6 +101,35 @@ HARA = {
   "situation_coverage": [{"hazard": "HZ-001", "situation": "OS-001", "status": "rated", "he": "HE-001", "rationale": "x"}],
 }
 
+def _fsr(id_, asil, alloc, **kw):
+  return {"id": id_, "safety_goal": "SG-001", "asil": asil, "kind": "limitation", "statement": "x", "allocated_to": alloc,
+          "safe_state": "off", "implementation": {"status": "existing"}, "verification": [{"method": "review"}], **kw}
+
+
+FSC = {
+  "schema_version": 1,
+  "analysis": {"id": "FSC", "type": "fsc", "title": "test", "revision": "0.1", "status": "draft", "baseline": "BL-001",
+               "hara_revision": "0.1", "scope": "test"},
+  "elements": [
+    {"id": "EL-01", "name": "soc", "type": "software", "asil_capability": "QM", "capability_status": "not_applicable",
+     "sfm_elements": ["SFM-SE-001"], "description": "x"},
+    {"id": "EL-02", "name": "panda", "type": "processor", "asil_capability": "D", "capability_status": "unproven",
+     "sfm_elements": ["SFM-SE-001"], "description": "x"},
+    {"id": "EL-03", "name": "eps", "type": "external", "asil_capability": "QM", "capability_status": "not_applicable",
+     "sfm_elements": ["SFM-SE-001"], "description": "x"},
+  ],
+  "external_measures": [],
+  "timing": [{"safety_goal": "SG-001", "ftti_ms": 900, "ftti_status": "preliminary", "basis": "x"}],
+  "operating_modes": [],
+  "warning_degradation": [],
+  "fsrs": [
+    _fsr("FSR-001", "D", ["EL-01", "EL-02"], decomposition={"into": ["FSR-002", "FSR-003"], "independence": "x"}),
+    _fsr("FSR-002", "D(D)", ["EL-02"]),
+    _fsr("FSR-003", "QM(D)", ["EL-01"]),
+  ],
+  "open_items": [],
+}
+
 # ISO 26262-3 Table 4, written out: rows S1..S3 x E1..E4, columns C1..C3.
 ISO_TABLE_4 = {
   ("S1", "E1"): ("QM", "QM", "QM"), ("S1", "E2"): ("QM", "QM", "QM"), ("S1", "E3"): ("QM", "QM", "A"), ("S1", "E4"): ("QM", "A", "B"),
@@ -355,6 +384,71 @@ class TestHara(LintFixture):
     self.assertError(self.lint_hara(doc), "requires an FTTI")
 
 
+class TestFsc(LintFixture):
+  def lint_fsc(self, fsc=None):
+    return self.lint(sfm=SFM, hara=HARA, fsc=fsc or FSC)
+
+  def test_valid(self):
+    res = self.lint_fsc()
+    self.assertEqual(res.errors, [])
+    self.assertEqual(res.warnings, [])
+
+  def test_parse_asil(self):
+    self.assertEqual(fmea_lint.parse_asil("B(D)"), ("B", "D"))
+    self.assertEqual(fmea_lint.parse_asil("QM"), ("QM", None))
+
+  def test_inheritance(self):
+    doc = copy.deepcopy(FSC)
+    doc["fsrs"].append(_fsr("FSR-004", "B", ["EL-02"]))
+    self.assertError(self.lint_fsc(doc), "must be inherited from SG-001 (D)")
+
+  def test_decomposition_scheme(self):
+    doc = copy.deepcopy(FSC)
+    doc["fsrs"][2]["asil"] = "A(D)"
+    self.assertError(self.lint_fsc(doc), "is not an ISO 26262-9 scheme")
+
+  def test_decomposed_asil_names_parent(self):
+    doc = copy.deepcopy(FSC)
+    doc["fsrs"][1]["asil"] = "D(C)"
+    self.assertError(self.lint_fsc(doc), "must be written X(D)")
+
+  def test_allocation_union(self):
+    doc = copy.deepcopy(FSC)
+    doc["fsrs"][0]["allocated_to"] = ["EL-02"]
+    self.assertError(self.lint_fsc(doc), "must equal the union")
+
+  def test_no_external_allocation(self):
+    doc = copy.deepcopy(FSC)
+    doc["fsrs"][1]["allocated_to"] = ["EL-03"]
+    self.assertError(self.lint_fsc(doc), "cannot be allocated to external element EL-03")
+
+  def test_capability_gap(self):
+    doc = copy.deepcopy(FSC)
+    doc["fsrs"][2]["allocated_to"] = ["EL-01", "EL-02"]
+    doc["fsrs"][1]["allocated_to"] = ["EL-01"]
+    res = self.lint_fsc(doc)
+    self.assertTrue(any("capability gap: FSR-002 (D(D)) on EL-01" in w for w in res.warnings), res.warnings)
+    doc["analysis"]["status"] = "released"
+    self.assertError(self.lint_fsc(doc), "capability gap")
+
+  def test_hara_revision_must_match(self):
+    doc = copy.deepcopy(FSC)
+    doc["analysis"]["hara_revision"] = "0.0"
+    self.assertError(self.lint_fsc(doc), "update the FSC")
+
+  def test_every_goal_needs_fsr_and_timing(self):
+    doc = copy.deepcopy(FSC)
+    doc["fsrs"], doc["timing"] = [], []
+    res = self.lint_fsc(doc)
+    self.assertError(res, "no FSR derived from SG-001")
+    self.assertError(res, "no timing entry for SG-001")
+
+  def test_fhti_within_ftti(self):
+    doc = copy.deepcopy(FSC)
+    doc["fsrs"][1]["fhti_ms"] = 1000
+    self.assertError(self.lint_fsc(doc), "exceeds SG-001 FTTI 900 ms")
+
+
 class TestFmeda(LintFixture):
   def test_metrics(self):
     m = fmea_lint.fmeda_metrics(FMEDA)
@@ -402,6 +496,20 @@ class TestHaraExport(unittest.TestCase):
     for row, he in zip(rows, hara["hazardous_events"], strict=True):
       self.assertEqual(row[headers.index("ASIL")], he["asil"])
       self.assertEqual(row[headers.index("S")], he["severity"])
+
+
+class TestFscExport(unittest.TestCase):
+  def test_export_matches_yaml(self):
+    import export_fsc_xlsx
+    wb = export_fsc_xlsx.build(REPO)
+    fsc = fmea_lint.load_yaml((REPO / "docs/safety/analyses/fsc.yaml").read_text())
+    ws = wb["05_FSR_Catalog"]
+    header_row = next(r for r in range(1, 10) if ws.cell(r, 1).value == "FSR_ID")
+    rows = [r for r in ws.iter_rows(min_row=header_row + 1, values_only=True) if r[0]]
+    self.assertEqual([(r[0], r[2]) for r in rows], [(f["id"], f["asil"]) for f in fsc["fsrs"]])
+    nodes = wb["03_System_Block_Diagram"]
+    ids = [r[0] for r in nodes.iter_rows(min_row=header_row + 1, values_only=True) if r[0]]
+    self.assertTrue(all(i.startswith("N") for i in ids))
 
 
 if __name__ == "__main__":

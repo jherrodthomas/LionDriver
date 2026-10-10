@@ -1,0 +1,739 @@
+# yaml-language-server: $schema=../schema/fsc.schema.json
+#
+# Functional Safety Concept (ISO 26262-3 clause 7), derived from HARA rev 0.2.
+# FSR ASIL is inherited from its safety goal, or decomposed per ISO 26262-9 clause 5 as X(Y).
+# tools/safety/fmea_lint.py checks inheritance, decomposition schemes, allocation and element capability.
+schema_version: 1
+analysis:
+  id: FSC
+  type: fsc
+  doc_id: LD-FSC-001
+  title: "Functional Safety Concept — LionDriver L2 ACC/ALC on 2020 Toyota Corolla LE (US)"
+  revision: "0.1"
+  status: draft
+  baseline: BL-001
+  hara_revision: "0.2"
+  approver: Jherrod Thomas (pending)
+  scope: >-
+    Functional safety requirements for safety goals SG-001..SG-010 of LD-HARA-001 rev 0.2, allocated to the
+    preliminary architecture below. The architecture is the BL-001 configuration as it exists: a comma 3X whose
+    SoC software is not developed to ISO 26262 (treated as QM), with an integrated panda MCU running an
+    independent safety model that filters every message sent to the vehicle. The concept states what each
+    element must do; whether the elements can meet their allocated ASIL is recorded, not assumed.
+  team:
+    - name: Jherrod Thomas
+      role: Project maintainer, safety lead (reviewer/approver)
+    - name: Claude (AI assistant)
+      role: Drafting assistance; content requires human review
+  references:
+    - docs/safety/analyses/hara.yaml
+    - docs/safety/analyses/system-fmea.yaml
+    - docs/SAFETY.md
+    - ISO 26262-3:2018 clause 7, ISO 26262-9:2018 clauses 5 and 7
+  updated: 2026-10-10
+  history:
+    - {revision: "0.1", date: 2026-10-10, author: Claude (AI-assisted draft), change: Initial draft from HARA rev 0.2}
+
+# ---------------------------------------------------------------------------
+# Preliminary architecture
+# ---------------------------------------------------------------------------
+elements:
+  - id: EL-01
+    name: Vehicle CAN inputs
+    type: comm_in
+    asil_capability: QM
+    capability_status: not_applicable
+    outputs: [EL-03, EL-07]
+    shared_resources: [vehicle_can]
+    sfm_elements: [SFM-SE-033]
+    description: EPS status and driver torque, wheel speeds, pedals, cruise state and buttons, as sent by Toyota ECUs.
+  - id: EL-02
+    name: Device sensors (road/wide/driver cameras, IMU, GNSS)
+    type: sensor
+    asil_capability: QM
+    capability_status: not_applicable
+    outputs: [EL-03, EL-04]
+    shared_resources: [device_power, device_board, device_thermal]
+    sfm_elements: [SFM-SE-002]
+    description: Sensors on the comma 3X.
+  - id: EL-03
+    name: SoC driving software (perception, localization, planning, control, car interface)
+    type: software
+    asil_capability: QM
+    capability_status: not_applicable
+    inputs: [EL-01, EL-02]
+    outputs: [EL-06]
+    shared_resources: [soc, soc_os, device_power, device_board, device_thermal, ota_update]
+    sfm_elements: [SFM-SE-010, SFM-SE-011, SFM-SE-012, SFM-SE-013, SFM-SE-016]
+    paths: [openpilot/selfdrive/modeld, openpilot/selfdrive/locationd, openpilot/selfdrive/controls, openpilot/selfdrive/car]
+    description: openpilot processes modeld, locationd, plannerd, radard, controlsd, card on the SoC. Not developed to ISO 26262.
+  - id: EL-04
+    name: SoC supervision (selfdrived state machine and events, driver monitoring)
+    type: software
+    asil_capability: QM
+    capability_status: not_applicable
+    inputs: [EL-01, EL-02, EL-03]
+    outputs: [EL-03, EL-05, EL-06]
+    shared_resources: [soc, soc_os, device_power, device_board, device_thermal, ota_update]
+    sfm_elements: [SFM-SE-014, SFM-SE-015]
+    paths: [openpilot/selfdrive/selfdrived, openpilot/selfdrive/monitoring]
+    description: Engagement state machine, fault events and reactions, driver monitoring policy. Same SoC and OS as EL-03.
+  - id: EL-05
+    name: Device HMI (display, speaker, ui, soundd)
+    type: hmi
+    asil_capability: QM
+    capability_status: not_applicable
+    inputs: [EL-04]
+    shared_resources: [soc, soc_os, device_power, device_board]
+    sfm_elements: [SFM-SE-018]
+    paths: [openpilot/selfdrive/ui]
+    description: Visual and audible alerts on the comma 3X.
+  - id: EL-06
+    name: pandad and SoC-panda link (SPI, heartbeat)
+    type: software
+    asil_capability: QM
+    capability_status: not_applicable
+    inputs: [EL-03, EL-04]
+    outputs: [EL-07]
+    shared_resources: [soc, soc_os, device_power, device_board]
+    sfm_elements: [SFM-SE-017]
+    paths: [openpilot/selfdrive/pandad]
+    description: Forwards CAN to and from the panda, sets the safety model, sends a heartbeat carrying the engaged state.
+  - id: EL-07
+    name: Panda safety model (MCU firmware, opendbc safety)
+    type: processor
+    asil_capability: D
+    capability_status: unproven
+    inputs: [EL-01, EL-06]
+    outputs: [EL-08]
+    shared_resources: [device_power, device_board, device_thermal, vehicle_can, ota_update]
+    sfm_elements: [SFM-SE-003]
+    paths: [panda, opendbc_repo]
+    description: >-
+      Separate MCU on the comma 3X board. Checks every message the SoC asks to transmit against the vehicle's
+      safety model (limits, controls-allowed, RX checks) and controls the harness relay. Firmware in the panda
+      and opendbc submodules, written to MISRA C with a safety test suite, but not developed to ISO 26262.
+  - id: EL-08
+    name: Harness and relay
+    type: comm_out
+    asil_capability: D
+    capability_status: unproven
+    inputs: [EL-07]
+    outputs: [EL-09, EL-10, EL-11]
+    shared_resources: [vehicle_can, harness_power]
+    sfm_elements: [SFM-SE-004]
+    description: Intercepts the stock ADAS camera CAN; the relay switches between stock camera and item.
+  - id: EL-09
+    name: Toyota EPS
+    type: external
+    asil_capability: QM
+    capability_status: not_applicable
+    sfm_elements: [SFM-SE-030]
+    description: External. LionDriver makes no claim about its integrity; see XM-02.
+  - id: EL-10
+    name: Toyota powertrain and brakes
+    type: external
+    asil_capability: QM
+    capability_status: not_applicable
+    sfm_elements: [SFM-SE-031]
+    description: External. See XM-03 and XM-05.
+  - id: EL-11
+    name: Toyota instrument cluster
+    type: external
+    asil_capability: QM
+    capability_status: not_applicable
+    sfm_elements: [SFM-SE-033]
+    description: External. Shows stock cruise and lane-assist state; see XM-04.
+  - id: EL-12
+    name: Driver
+    type: external
+    asil_capability: QM
+    capability_status: not_applicable
+    sfm_elements: [SFM-SE-034]
+    description: External. See XM-01.
+
+external_measures:
+  - id: XM-01
+    description: The driver supervises the item and intervenes (L2).
+    credited: true
+    evidence: HARA HA-001; controllability ratings assume a typical driver with foreseeable inattention.
+  - id: XM-02
+    description: The Toyota EPS bounds and fault-handles LKA torque requests on its own.
+    credited: false
+    evidence: Not characterized.
+    open_item: OI-001
+  - id: XM-03
+    description: The Toyota PCM cancels cruise on brake press and on the cancel button, independently of the item.
+    credited: false
+    evidence: Expected stock behavior; not verified on the reference vehicle.
+    open_item: FOI-006
+  - id: XM-04
+    description: The instrument cluster shows cruise and lane-assist state, including loss of item messages, independently of the device display.
+    credited: false
+    evidence: Not verified on the reference vehicle.
+    open_item: FOI-005
+  - id: XM-05
+    description: Service brakes dominate engine torque (brake override) when the driver brakes.
+    credited: false
+    evidence: Assumed in HARA HE-008/HE-012 controllability; not verified on the reference vehicle.
+    open_item: OI-002
+
+timing:
+  - {safety_goal: SG-001, ftti_ms: 900, ftti_status: preliminary, basis: "SAFETY.md / ISO 11270: lateral limits sized so maximum actuation needs 0.9 s to reach 1 m deviation. Upper bound until derived (OI-004)."}
+  - {safety_goal: SG-002, ftti_ms: 900, ftti_status: preliminary, basis: "As SG-001; deviation at normal magnitude is slower, so 900 ms is conservative (OI-004)."}
+  - {safety_goal: SG-003, ftti_ms: null, ftti_status: tbd, basis: "Depends on lateral departure time after loss of assist (OI-004)."}
+  - {safety_goal: SG-004, ftti_ms: null, ftti_status: tbd, basis: "Depends on powertrain acceleration authority (OI-002, OI-004)."}
+  - {safety_goal: SG-005, ftti_ms: null, ftti_status: tbd, basis: "Depends on deceleration authority and following-vehicle headway (OI-002, OI-004)."}
+  - {safety_goal: SG-006, ftti_ms: null, ftti_status: tbd, basis: "Depends on closing speed and warning time (OI-004)."}
+  - {safety_goal: SG-007, ftti_ms: null, ftti_status: tbd, basis: "Depends on driver override timing (OI-004)."}
+  - {safety_goal: SG-008, ftti_ms: null, ftti_status: tbd, basis: "Engagement is prevented, not reacted to; FTTI applies only to detection of spurious enable (OI-004)."}
+  - {safety_goal: SG-009, ftti_ms: null, ftti_status: tbd, basis: "Depends on stock AEB timing (OI-003)."}
+  - {safety_goal: SG-010, ftti_ms: null, ftti_status: tbd, basis: "Depends on the SG-010 safe state decision (OI-005)."}
+
+operating_modes:
+  - {id: OM-01, name: Off / offroad, actuation: none, description: "Ignition off or not onroad: pandad sets NO_OUTPUT and the relay passes the stock camera.", ref: openpilot/selfdrive/pandad/pandad.cc}
+  - {id: OM-02, name: Start-up, actuation: none, description: "Vehicle identification and safety model setup; controlsMismatch is suppressed for 10 s while the panda confirms the model.", ref: openpilot/selfdrive/pandad/panda_safety.cc}
+  - {id: OM-03, name: Disabled (onroad), actuation: none, description: "Ready; NO_ENTRY events block engagement.", ref: openpilot/selfdrive/selfdrived/state.py}
+  - {id: OM-04, name: Engaged, actuation: both, description: "Lateral and longitudinal control active.", ref: openpilot/selfdrive/selfdrived/state.py}
+  - {id: OM-05, name: Overriding, actuation: lateral_or_longitudinal, description: "Driver steering or accelerator input; the overridden axis yields.", ref: openpilot/selfdrive/selfdrived/state.py}
+  - {id: OM-06, name: Soft disabling, actuation: both, description: "SOFT_DISABLE event: actuation continues up to 3 s with takeover warning, then disabled.", ref: openpilot/selfdrive/selfdrived/state.py}
+  - {id: OM-07, name: Driver-monitoring lockout, actuation: none, description: "After repeated non-response, engagement is blocked for 1/5/15/30 min.", ref: openpilot/selfdrive/monitoring/policy.py}
+  - {id: OM-08, name: Dashcam (car unrecognized), actuation: none, description: "No control; logging only.", ref: openpilot/selfdrive/selfdrived/selfdrived.py}
+
+warning_degradation:
+  - {id: WD-01, trigger: "SOFT_DISABLE event (e.g. sensor, calibration, process, thermal faults)", reaction: "Soft disabling, then disabled", driver_warning: "Takeover alert, visual and audible", time_to_safe_state: "3 s (SOFT_DISABLE_TIME); must be justified against FTTI per event (SFM-016)", ref: openpilot/selfdrive/selfdrived/state.py}
+  - {id: WD-02, trigger: "IMMEDIATE_DISABLE event (e.g. EPS unavailable, CAN missing, controls mismatch, relay malfunction)", reaction: "Disabled in the same control cycle", driver_warning: "Take control immediately alert, visual and audible", time_to_safe_state: "One 10 ms control cycle on the SoC, plus transmission", ref: openpilot/selfdrive/selfdrived/events.py}
+  - {id: WD-03, trigger: "Driver brake or cancel (USER_DISABLE)", reaction: "Disabled", driver_warning: "Disengage chime", time_to_safe_state: "One control cycle on the SoC; panda reacts independently (FSR-029)", ref: openpilot/selfdrive/selfdrived/selfdrived.py}
+  - {id: WD-04, trigger: "Engagement request with NO_ENTRY active", reaction: "Engagement refused", driver_warning: "No-entry alert", time_to_safe_state: "Not applicable", ref: openpilot/selfdrive/selfdrived/state.py}
+  - {id: WD-05, trigger: "Driver inattention", reaction: "Alert escalation, then lockout of re-engagement; no forced disengagement in BL-001 (SFM-025)", driver_warning: "Three escalating alerts", time_to_safe_state: "TBD (OI-005)", ref: openpilot/selfdrive/monitoring/policy.py}
+  - {id: WD-06, trigger: "Panda blocks output (safety violation, heartbeat loss, NO_OUTPUT)", reaction: "No item messages reach the vehicle", driver_warning: "Device alert via SoC if it is running; independent indication relies on the cluster (XM-04)", time_to_safe_state: "Panda firmware timing (FOI-008)", ref: panda}
+
+# ---------------------------------------------------------------------------
+# Functional safety requirements
+# ---------------------------------------------------------------------------
+fsrs:
+  # ----- SG-001 (ASIL D): steering the driver cannot counteract or correct -----
+  - id: FSR-001
+    safety_goal: SG-001
+    asil: D
+    kind: limitation
+    statement: Steering torque requests reaching the EPS shall stay within a magnitude and rate envelope that the driver can counteract and that keeps lateral deviation correctable.
+    allocated_to: [EL-03, EL-07]
+    safe_state: No steering request to the EPS.
+    decomposition:
+      into: [FSR-002, FSR-003]
+      independence: >-
+        The panda is a separate MCU with separate firmware and toolchain, and checks every transmitted message
+        without relying on the SoC. Shared: device power, board, thermal environment, vehicle CAN and the OTA
+        update path. A DFA is required before the decomposition can be accepted (FOI-002).
+    implementation: {status: existing_unverified, ref: "opendbc_repo (Toyota safety torque checks); openpilot/selfdrive/controls", note: "Envelope not yet defined numerically (FOI-001)."}
+    verification:
+      - {method: analysis, planned: "Envelope derivation from OI-001 and OI-004"}
+      - {method: fault_injection, planned: "Out-of-envelope requests injected at the SoC must not reach the bus"}
+  - id: FSR-002
+    safety_goal: SG-001
+    asil: D(D)
+    kind: limitation
+    statement: The panda safety model shall block every steering message whose torque request or torque rate is outside the envelope, independently of the SoC.
+    allocated_to: [EL-07]
+    safe_state: Message blocked; no steering request to the EPS.
+    implementation: {status: existing_unverified, ref: opendbc_repo, note: "Toyota torque and rate limits exist in opendbc safety; submodule not checked out in BL-001 workspace."}
+    verification:
+      - {method: unit_test, test: opendbc_repo/opendbc/safety/tests}
+      - {method: hil_test, planned: "Torque and rate limit violation on the reference vehicle harness"}
+  - id: FSR-003
+    safety_goal: SG-001
+    asil: QM(D)
+    kind: limitation
+    statement: The lateral controller shall generate steering torque requests within the envelope.
+    allocated_to: [EL-03]
+    safe_state: No steering request to the EPS.
+    implementation: {status: existing, ref: "openpilot/selfdrive/controls/lib/latcontrol_torque.py; opendbc car controller rate limits"}
+    verification:
+      - {method: unit_test, test: openpilot/selfdrive/controls/tests/test_latcontrol.py}
+  - id: FSR-004
+    safety_goal: SG-001
+    asil: D
+    kind: prevention
+    statement: Steering requests shall reach the EPS only while the item is engaged.
+    allocated_to: [EL-03, EL-07]
+    safe_state: No steering request to the EPS.
+    decomposition:
+      into: [FSR-005, FSR-006]
+      independence: As FSR-001 (FOI-002). The panda derives engagement from vehicle PCM cruise state on CAN in addition to the SoC heartbeat.
+    implementation: {status: existing_unverified, ref: "opendbc_repo controls_allowed; openpilot/selfdrive/controls/controlsd.py latActive"}
+    verification:
+      - {method: analysis, planned: "Show both channels independently prevent steering while not engaged"}
+  - id: FSR-005
+    safety_goal: SG-001
+    asil: D(D)
+    kind: prevention
+    statement: The panda shall block steering messages unless controls are allowed, and shall allow controls only while vehicle PCM cruise is engaged and the SoC heartbeat reports engaged.
+    allocated_to: [EL-07]
+    safe_state: Message blocked.
+    implementation: {status: existing_unverified, ref: "opendbc_repo controls_allowed; openpilot/selfdrive/pandad/pandad.cc heartbeat engaged flag"}
+    verification:
+      - {method: unit_test, test: opendbc_repo/opendbc/safety/tests}
+  - id: FSR-006
+    safety_goal: SG-001
+    asil: QM(D)
+    kind: prevention
+    statement: controlsd shall request lateral control only while selfdriveState is active and no EPS fault is reported.
+    allocated_to: [EL-03]
+    safe_state: latActive false.
+    implementation: {status: existing, ref: openpilot/selfdrive/controls/controlsd.py}
+    verification:
+      - {method: unit_test, planned: "latActive gating test for controlsd"}
+  - id: FSR-007
+    safety_goal: SG-001
+    asil: D
+    kind: reaction
+    statement: The panda shall withdraw controls-allowed when the SoC heartbeat is missing, stale or reports not engaged, within a timeout shorter than the SG-001 FTTI.
+    allocated_to: [EL-07]
+    safe_state: No item messages to the vehicle.
+    fhti_ms: null
+    implementation: {status: existing_unverified, ref: "panda firmware heartbeat handling; openpilot/selfdrive/pandad/pandad.cc", note: "Timeout value not established (FOI-008)."}
+    verification:
+      - {method: fault_injection, planned: "Stop pandad / SoC while engaged on HIL; measure time to no output"}
+  - id: FSR-008
+    safety_goal: SG-001
+    asil: D
+    kind: detection
+    statement: The panda shall detect a relay malfunction (stock camera steering messages present on the vehicle side while the item is active) and stop item steering output.
+    allocated_to: [EL-07, EL-08]
+    safe_state: No item steering output; relay to stock.
+    implementation: {status: existing_unverified, ref: "panda relayMalfunction fault; openpilot/selfdrive/selfdrived/selfdrived.py"}
+    verification:
+      - {method: hil_test, planned: "Relay stuck-closed injection"}
+  - id: FSR-009
+    safety_goal: SG-001
+    asil: D
+    kind: configuration
+    statement: The item shall actuate only with the safety model and parameters for the identified vehicle.
+    allocated_to: [EL-03, EL-04, EL-06, EL-07]
+    safe_state: Panda in NO_OUTPUT.
+    decomposition:
+      into: [FSR-010, FSR-011]
+      independence: As FSR-001 (FOI-002). The panda defaults to NO_OUTPUT without any SoC action.
+    implementation: {status: existing_unverified, ref: "openpilot/selfdrive/pandad/panda_safety.cc; controlsMismatch"}
+    verification:
+      - {method: analysis, planned: "Vehicle identification and safety model selection chain"}
+  - id: FSR-010
+    safety_goal: SG-001
+    asil: D(D)
+    kind: configuration
+    statement: The panda shall be in NO_OUTPUT at power-up, with ignition off and offroad, and shall transmit only according to the safety model set for the vehicle.
+    allocated_to: [EL-07]
+    safe_state: NO_OUTPUT.
+    implementation: {status: existing_unverified, ref: "openpilot/selfdrive/pandad/pandad.cc (NO_OUTPUT on ignition off, offroad, exit); panda firmware boot mode"}
+    verification:
+      - {method: unit_test, test: opendbc_repo/opendbc/safety/tests}
+      - {method: integration_test, test: openpilot/selfdrive/pandad/tests/test_pandad.py}
+  - id: FSR-011
+    safety_goal: SG-001
+    asil: QM(D)
+    kind: configuration
+    statement: The SoC shall identify the vehicle, set the matching safety model, and immediately disable if the panda reports a different model, parameter or invalid RX checks.
+    allocated_to: [EL-03, EL-04, EL-06]
+    safe_state: Disabled (WD-02).
+    warning: WD-02
+    implementation: {status: existing, ref: "openpilot/selfdrive/pandad/panda_safety.cc; controlsMismatch in openpilot/selfdrive/selfdrived/selfdrived.py"}
+    verification:
+      - {method: integration_test, test: openpilot/selfdrive/pandad/tests/test_pandad.py}
+
+  # ----- SG-002 (ASIL C): steering out of lane at normal magnitude -----
+  - id: FSR-012
+    safety_goal: SG-002
+    asil: C
+    kind: prevention
+    statement: Lateral control shall not steer the vehicle out of its lane while engaged.
+    allocated_to: [EL-03, EL-04, EL-07]
+    safe_state: Lateral control off with driver warning.
+    decomposition:
+      into: [FSR-013, FSR-014]
+      independence: >-
+        Requires a lane-departure monitor that does not share the SoC perception chain (FSR-014). Candidate: stock
+        TSS2 camera lane information on the camera bus, monitored by the panda (diverse sensor). Not yet assessed (FOI-004).
+    implementation: {status: partial, ref: openpilot/selfdrive/selfdrived/selfdrived.py}
+    verification:
+      - {method: analysis, planned: "Coverage of HZ-003 causes by FSR-013 and FSR-014"}
+  - id: FSR-013
+    safety_goal: SG-002
+    asil: QM(C)
+    kind: detection
+    statement: Lateral control shall not be active when its inputs are invalid (camera calibration incomplete or invalid, invalid pose, stale or lagging model output, invalid sensor data).
+    allocated_to: [EL-03, EL-04]
+    safe_state: Lateral control off with driver warning.
+    warning: WD-01
+    implementation: {status: existing, ref: "calibrationInvalid, posenetInvalid, modeldLagging, sensorDataInvalid events in openpilot/selfdrive/selfdrived/selfdrived.py"}
+    verification:
+      - {method: unit_test, test: openpilot/selfdrive/selfdrived/tests/test_state_machine.py}
+  - id: FSR-014
+    safety_goal: SG-002
+    asil: C(C)
+    kind: detection
+    statement: A lane departure caused by the item while engaged shall be detected independently of the SoC perception chain and lead to the lateral safe state.
+    allocated_to: [EL-07]
+    safe_state: No item steering output.
+    implementation: {status: gap, note: "No independent lane monitor exists in BL-001 (FOI-004)."}
+    verification:
+      - {method: analysis, planned: "Feasibility of stock camera lane signals as monitor input"}
+
+  # ----- SG-003 (ASIL B): loss of lateral control or misinformation without warning -----
+  - id: FSR-015
+    safety_goal: SG-003
+    asil: B
+    kind: warning
+    statement: Any end or loss of lateral or longitudinal control while engaged, and the current engagement state, shall be indicated to the driver on two independent channels.
+    allocated_to: [EL-03, EL-04, EL-05, EL-07]
+    safe_state: Lateral and longitudinal control off with audible and visual takeover warning.
+    decomposition:
+      into: [FSR-016, FSR-017]
+      independence: >-
+        Channel 1 is the device HMI driven by the SoC. Channel 2 is the vehicle instrument cluster, driven by stock
+        ECUs from PCM cruise state and the presence of item messages, which the panda controls (XM-04, FOI-005).
+    implementation: {status: partial, ref: openpilot/selfdrive/selfdrived/alertmanager.py}
+    verification:
+      - {method: vehicle_test, planned: "Cluster indication on each disengagement path"}
+  - id: FSR-016
+    safety_goal: SG-003
+    asil: QM(B)
+    kind: warning
+    statement: The SoC shall detect EPS faults and process failures, and present engagement state and every disengagement visually and audibly on the device; if the HMI cannot present alerts the item shall disengage.
+    allocated_to: [EL-03, EL-04, EL-05]
+    safe_state: Disabled with device alert.
+    warning: WD-01
+    implementation: {status: existing, ref: "steerUnavailable/steerTempUnavailable (car_events.py); processNotRunning; alertmanager; soundd"}
+    verification:
+      - {method: unit_test, test: openpilot/selfdrive/selfdrived/tests/test_alerts.py}
+      - {method: unit_test, test: openpilot/selfdrive/ui/tests/test_soundd.py}
+  - id: FSR-017
+    safety_goal: SG-003
+    asil: B(B)
+    kind: warning
+    statement: The panda shall allow actuation only while vehicle PCM cruise is engaged, and shall stop all item steering and ACC messages when control ends, so that the instrument cluster shows the true assist state.
+    allocated_to: [EL-07]
+    safe_state: No item messages; cluster shows assist off.
+    implementation: {status: existing_unverified, ref: "opendbc_repo controls_allowed from PCM cruise", note: "Cluster behavior unverified (XM-04, FOI-005)."}
+    verification:
+      - {method: vehicle_test, planned: "Cluster state on message timeout and NO_OUTPUT"}
+
+  # ----- SG-004 (ASIL C): unintended acceleration -----
+  - id: FSR-018
+    safety_goal: SG-004
+    asil: C
+    kind: limitation
+    statement: Acceleration requests reaching the powertrain shall stay within a range and rate envelope, and positive acceleration shall be requested only while engaged.
+    allocated_to: [EL-03, EL-04, EL-07]
+    safe_state: No positive acceleration request; longitudinal control off with driver warning.
+    decomposition:
+      into: [FSR-019, FSR-020]
+      independence: As FSR-001 (FOI-002).
+    implementation: {status: existing_unverified, ref: "opendbc_repo Toyota longitudinal limits; openpilot/selfdrive/controls/lib/longcontrol.py"}
+    verification:
+      - {method: analysis, planned: "Envelope from OI-002 (FOI-001)"}
+  - id: FSR-019
+    safety_goal: SG-004
+    asil: C(C)
+    kind: limitation
+    statement: The panda shall block acceleration messages outside the envelope, and positive acceleration while controls are not allowed.
+    allocated_to: [EL-07]
+    safe_state: Message blocked.
+    implementation: {status: existing_unverified, ref: opendbc_repo}
+    verification:
+      - {method: unit_test, test: opendbc_repo/opendbc/safety/tests}
+  - id: FSR-020
+    safety_goal: SG-004
+    asil: QM(C)
+    kind: limitation
+    statement: The longitudinal planner and controller shall request acceleration within the envelope, and the item shall soft-disable on excessive longitudinal acceleration.
+    allocated_to: [EL-03, EL-04]
+    safe_state: Longitudinal control off with driver warning.
+    warning: WD-01
+    implementation: {status: existing, ref: "openpilot/selfdrive/controls/lib/longcontrol.py; ExcessiveActuationCheck in openpilot/selfdrive/selfdrived/helpers.py"}
+    verification:
+      - {method: unit_test, test: openpilot/selfdrive/controls/tests/test_longcontrol.py}
+
+  # ----- SG-005 (ASIL B): unintended or excessive deceleration -----
+  - id: FSR-021
+    safety_goal: SG-005
+    asil: B
+    kind: limitation
+    statement: Deceleration requests shall stay within a minimum-acceleration and jerk envelope.
+    allocated_to: [EL-03, EL-07]
+    safe_state: Deceleration limited, or longitudinal control off with driver warning.
+    decomposition:
+      into: [FSR-022, FSR-023]
+      independence: As FSR-001 (FOI-002).
+    implementation: {status: existing_unverified, ref: "opendbc_repo; openpilot/selfdrive/controls/lib/longcontrol.py"}
+    verification:
+      - {method: analysis, planned: "Envelope from OI-002 (FOI-001)"}
+  - id: FSR-022
+    safety_goal: SG-005
+    asil: B(B)
+    kind: limitation
+    statement: The panda shall block deceleration requests below the envelope minimum.
+    allocated_to: [EL-07]
+    safe_state: Message blocked.
+    implementation: {status: existing_unverified, ref: opendbc_repo}
+    verification:
+      - {method: unit_test, test: opendbc_repo/opendbc/safety/tests}
+  - id: FSR-023
+    safety_goal: SG-005
+    asil: QM(B)
+    kind: limitation
+    statement: The planner shall request deceleration within the envelope and the item shall soft-disable on excessive longitudinal deceleration.
+    allocated_to: [EL-03]
+    safe_state: Longitudinal control off with driver warning.
+    implementation: {status: existing, ref: "openpilot/selfdrive/controls/lib/longitudinal_planner.py; ExcessiveActuationCheck"}
+    verification:
+      - {method: unit_test, test: openpilot/selfdrive/controls/tests/test_longcontrol.py}
+  - id: FSR-024
+    safety_goal: SG-005
+    asil: B
+    kind: arbitration
+    statement: Accelerator input by the driver shall suppress item deceleration requests.
+    allocated_to: [EL-07]
+    safe_state: No item deceleration while the accelerator is pressed.
+    implementation: {status: existing_unverified, ref: "gasPressedOverride (car_events.py) on the SoC; panda behavior on gas press not verified (FOI-006)"}
+    verification:
+      - {method: unit_test, test: opendbc_repo/opendbc/safety/tests}
+
+  # ----- SG-006 (ASIL B): insufficient deceleration -----
+  - id: FSR-025
+    safety_goal: SG-006
+    asil: B
+    kind: warning
+    statement: Loss of longitudinal control capability while engaged shall be indicated to the driver on two independent channels.
+    allocated_to: [EL-03, EL-04, EL-05, EL-07]
+    safe_state: Longitudinal control off with takeover warning.
+    decomposition:
+      into: [FSR-026, FSR-027]
+      independence: As FSR-015 (XM-04, FOI-005).
+    implementation: {status: partial, ref: openpilot/selfdrive/selfdrived/selfdrived.py}
+    verification:
+      - {method: vehicle_test, planned: "Cluster indication on ACC fault"}
+  - id: FSR-026
+    safety_goal: SG-006
+    asil: QM(B)
+    kind: detection
+    statement: The SoC shall detect ACC faults, radar faults, CAN errors and insufficient planned deceleration, and warn the driver (including FCW).
+    allocated_to: [EL-03, EL-04, EL-05]
+    safe_state: Disabled with device alert.
+    warning: WD-02
+    implementation: {status: existing, ref: "accFaulted, radarFault, canError, fcw events in openpilot/selfdrive/selfdrived/selfdrived.py"}
+    verification:
+      - {method: unit_test, test: openpilot/selfdrive/selfdrived/tests/test_alerts.py}
+  - id: FSR-027
+    safety_goal: SG-006
+    asil: B(B)
+    kind: warning
+    statement: The panda shall stop ACC messages when longitudinal control ends, so that the instrument cluster shows ACC unavailable.
+    allocated_to: [EL-07]
+    safe_state: No item ACC messages.
+    implementation: {status: existing_unverified, ref: opendbc_repo, note: "Cluster behavior unverified (FOI-005)."}
+    verification:
+      - {method: vehicle_test, planned: "Cluster state on ACC message stop"}
+
+  # ----- SG-007 (ASIL B): release on brake/cancel; do not resist driver steering -----
+  - id: FSR-028
+    safety_goal: SG-007
+    asil: B
+    kind: reaction
+    statement: Brake pedal press or the cancel button shall end all actuation requests.
+    allocated_to: [EL-03, EL-04, EL-07]
+    safe_state: All actuation requests withdrawn.
+    warning: WD-03
+    decomposition:
+      into: [FSR-029, FSR-030]
+      independence: >-
+        The panda observes brake and PCM cruise state on vehicle CAN directly; the SoC path goes through card and
+        selfdrived. The PCM cancelling cruise on brake (XM-03) gives a third, external path (FOI-006).
+    implementation: {status: existing_unverified, ref: "pedalPressed, buttonCancel; opendbc_repo brake disengage"}
+    verification:
+      - {method: hil_test, planned: "Brake and cancel on each engaged state"}
+  - id: FSR-029
+    safety_goal: SG-007
+    asil: B(B)
+    kind: reaction
+    statement: The panda shall withdraw controls-allowed on brake press and when PCM cruise disengages.
+    allocated_to: [EL-07]
+    safe_state: No item messages.
+    implementation: {status: existing_unverified, ref: opendbc_repo}
+    verification:
+      - {method: unit_test, test: opendbc_repo/opendbc/safety/tests}
+  - id: FSR-030
+    safety_goal: SG-007
+    asil: QM(B)
+    kind: reaction
+    statement: selfdrived shall disengage on brake press and on the cancel button (USER_DISABLE).
+    allocated_to: [EL-03, EL-04]
+    safe_state: Disabled.
+    warning: WD-03
+    implementation: {status: existing, ref: "pedalPressed in openpilot/selfdrive/selfdrived/selfdrived.py; buttonCancel in openpilot/selfdrive/car/car_events.py"}
+    verification:
+      - {method: unit_test, test: openpilot/selfdrive/selfdrived/tests/test_state_machine.py}
+  - id: FSR-031
+    safety_goal: SG-007
+    asil: B
+    kind: arbitration
+    statement: Steering torque requests shall stay below a level the driver can always overpower, and the item shall yield lateral control while the driver steers.
+    allocated_to: [EL-03, EL-04, EL-07]
+    safe_state: Lateral control yields to the driver.
+    decomposition:
+      into: [FSR-032, FSR-033]
+      independence: As FSR-001 (FOI-002).
+    implementation: {status: existing_unverified, ref: "opendbc_repo torque limits; steerOverride in car_events.py"}
+    verification:
+      - {method: vehicle_test, planned: "Driver override force measurement"}
+  - id: FSR-032
+    safety_goal: SG-007
+    asil: B(B)
+    kind: limitation
+    statement: The panda shall bound steering torque requests to a magnitude the driver can overpower.
+    allocated_to: [EL-07]
+    safe_state: Message blocked.
+    implementation: {status: existing_unverified, ref: opendbc_repo}
+    verification:
+      - {method: unit_test, test: opendbc_repo/opendbc/safety/tests}
+  - id: FSR-033
+    safety_goal: SG-007
+    asil: QM(B)
+    kind: arbitration
+    statement: The SoC shall enter the overriding state and stop commanding torque while driver steering input is detected.
+    allocated_to: [EL-03, EL-04]
+    safe_state: Overriding (lateral yielded).
+    implementation: {status: existing, ref: "steerOverride in openpilot/selfdrive/car/car_events.py; OVERRIDE_LATERAL in state.py"}
+    verification:
+      - {method: unit_test, test: openpilot/selfdrive/selfdrived/tests/test_state_machine.py}
+
+  # ----- SG-008 (ASIL B): unintended engagement -----
+  - id: FSR-034
+    safety_goal: SG-008
+    asil: B
+    kind: prevention
+    statement: Actuation shall start only after an explicit driver engagement action.
+    allocated_to: [EL-04, EL-07]
+    safe_state: Item remains disengaged.
+    decomposition:
+      into: [FSR-035, FSR-036]
+      independence: The panda requires PCM cruise engagement seen on vehicle CAN (driver action on the stock cruise switch); the SoC requires an ENABLE event without NO_ENTRY.
+    implementation: {status: existing_unverified, ref: "opendbc_repo controls_allowed; openpilot/selfdrive/selfdrived/state.py"}
+    verification:
+      - {method: analysis, planned: "Engagement chain from cruise switch to controls-allowed"}
+  - id: FSR-035
+    safety_goal: SG-008
+    asil: B(B)
+    kind: prevention
+    statement: The panda shall allow controls only on a driver-initiated PCM cruise engagement.
+    allocated_to: [EL-07]
+    safe_state: Controls not allowed.
+    implementation: {status: existing_unverified, ref: opendbc_repo}
+    verification:
+      - {method: unit_test, test: opendbc_repo/opendbc/safety/tests}
+  - id: FSR-036
+    safety_goal: SG-008
+    asil: QM(B)
+    kind: prevention
+    statement: selfdrived shall engage only on an ENABLE event with no NO_ENTRY event active.
+    allocated_to: [EL-04]
+    safe_state: Disabled.
+    warning: WD-04
+    implementation: {status: existing, ref: openpilot/selfdrive/selfdrived/state.py}
+    verification:
+      - {method: unit_test, test: openpilot/selfdrive/selfdrived/tests/test_state_machine.py}
+
+  # ----- SG-009 (ASIL B): stock AEB/FCW availability -----
+  - id: FSR-037
+    safety_goal: SG-009
+    asil: B
+    kind: prevention
+    statement: The installation shall not remove or delay stock AEB/FCW; messages the vehicle needs from the stock ADAS camera shall reach it unmodified, or the function shall remain on the stock path.
+    allocated_to: [EL-07, EL-08]
+    safe_state: Stock camera path restored (relay to stock).
+    implementation: {status: gap, note: "Which stock functions remain with the harness and openpilot longitudinal is unknown (OI-003)."}
+    verification:
+      - {method: vehicle_test, planned: "Stock AEB/FCW function check with the item installed (OI-003)"}
+  - id: FSR-038
+    safety_goal: SG-009
+    asil: B
+    kind: reaction
+    statement: On harness or relay fault, and whenever the item is not actuating, the stock camera path shall be restored.
+    allocated_to: [EL-07, EL-08]
+    safe_state: Relay to stock.
+    implementation: {status: existing_unverified, ref: "openpilot/selfdrive/pandad/pandad.cc (NO_OUTPUT closes relay); relayMalfunction"}
+    verification:
+      - {method: hil_test, planned: "Relay fault and offroad transitions"}
+
+  # ----- SG-010 (ASIL A): unresponsive driver -----
+  - id: FSR-039
+    safety_goal: SG-010
+    asil: A
+    kind: detection
+    statement: Driver unresponsiveness while engaged shall be detected and escalated within the policy times (vision 5/8/13 s, wheel-touch 5/15/25 s).
+    allocated_to: [EL-02, EL-04]
+    safe_state: To be decided (OI-005).
+    warning: WD-05
+    implementation: {status: existing, ref: openpilot/selfdrive/monitoring/policy.py}
+    verification:
+      - {method: unit_test, test: openpilot/selfdrive/monitoring/test_monitoring.py}
+  - id: FSR-040
+    safety_goal: SG-010
+    asil: A
+    kind: reaction
+    statement: When the driver remains unresponsive at the terminal alert, the item shall reach the SG-010 safe state.
+    allocated_to: [EL-04]
+    safe_state: To be decided (OI-005).
+    implementation: {status: gap, note: "Terminal alert has no disable reaction in BL-001 (SFM-025)."}
+    verification:
+      - {method: unit_test, planned: "After OI-005 decision"}
+
+open_items:
+  - id: FOI-001
+    text: Define the steering (torque, rate) and acceleration/deceleration envelopes numerically from OI-001, OI-002 and OI-004, and check the opendbc Toyota limits against them.
+    affects: [FSR-001, FSR-018, FSR-021, FSR-031]
+    status: open
+  - id: FOI-002
+    text: >-
+      Dependent failure analysis for every panda/SoC decomposition. Shared: device power, board, thermal
+      environment, vehicle CAN, and the OTA update path, which replaces SoC software and panda firmware together
+      (one faulty update can defeat both channels). Until the DFA is done, no decomposition is accepted.
+    affects: [FSR-001, FSR-004, FSR-009, FSR-012, FSR-015, FSR-018, FSR-021, FSR-025, FSR-028, FSR-031, FSR-034]
+    status: open
+  - id: FOI-003
+    text: >-
+      Establish the panda's capability for its D(D)/C(C)/B(B) allocations: hardware metrics (FMEDA phase A on an
+      MCU not developed to ISO 26262) and software process evidence for the safety model. If not achievable,
+      revise the allocation or the architecture.
+    affects: [EL-07, EL-08]
+    status: open
+  - id: FOI-004
+    text: Assess an independent lane-departure monitor for FSR-014, e.g. stock TSS2 camera lane signals on the camera bus monitored by the panda. Without it SG-002 has no path to ASIL C.
+    affects: [FSR-014, SG-002]
+    status: open
+  - id: FOI-005
+    text: Verify on the reference vehicle what the instrument cluster shows when item messages stop and when PCM cruise disengages (XM-04); basis for FSR-017 and FSR-027.
+    affects: [FSR-017, FSR-027, XM-04]
+    status: open
+  - id: FOI-006
+    text: Verify that the PCM cancels cruise on brake and cancel (XM-03), and the panda safety model behavior on brake and accelerator press (FSR-024, FSR-029).
+    affects: [FSR-024, FSR-029, XM-03]
+    status: open
+  - id: FOI-007
+    text: >-
+      SG-010 FSRs (ASIL A) are allocated to QM SoC software. Decide between developing the driver monitoring
+      decision path to ASIL A with freedom from interference on the SoC, or moving the decision to an independent
+      element. Depends on OI-005.
+    affects: [FSR-039, FSR-040, SG-010]
+    status: open
+  - id: FOI-008
+    text: Establish the panda heartbeat timeout and fault reaction timing (firmware in the panda submodule) and compare them with the SG-001 FTTI.
+    affects: [FSR-007]
+    status: open
+  - id: FOI-009
+    text: >-
+      Verify the FSC against the safety goals with a deductive analysis (FTA per safety goal, starting with SG-001,
+      SG-002 and SG-004) showing that the FSRs cover every cause path from the System FMEA. Raised by the
+      fsc-checklist-reviewer pre-check (FSA-11).
+    affects: [SG-001, SG-002, SG-004]
+    status: open

@@ -43,7 +43,7 @@ PFMEA ─► Release / install control plan  (feeds "configuration as assured")
 |---|---|---|
 | Item definition & boundary (README roadmap item 2) | All | Not started |
 | HARA + safety goals | System FMEA severity, FMEDA | Draft rev 0.2 (`analyses/hara.yaml`): 13 hazards, 15 situations, 19 hazardous events, 10 safety goals (SG-001 ASIL D); guide-word matrix and situation coverage complete; pre-checks in `reviews/` |
-| Functional / technical safety concept | DFMEA, SW FMEA, FMEDA | Not started |
+| Functional / technical safety concept | DFMEA, SW FMEA, FMEDA | FSC draft rev 0.1 (`analyses/fsc.yaml`): 40 FSRs, 12 elements, 11 panda/SoC decompositions (DFA pending); TSC not started |
 | HW/SW baseline frozen (commit SHA + submodule SHAs + AGNOS version) | All | BL-001 proposed in `baseline.yaml`; freeze at Phase 1 start |
 | Panda schematic + BOM (open hardware) | DFMEA, FMEDA | To collect |
 | comma 3X schematic / SoC failure data | DFMEA, FMEDA | Likely unavailable — see §7 |
@@ -136,9 +136,11 @@ docs/safety/
     fmea.schema.json           (System FMEA, DFMEA, SW FMEA, PFMEA)
     fmeda.schema.json
     hara.schema.json           (ASIL checked against ISO 26262-3 Table 4)
+    fsc.schema.json            (decompositions checked against ISO 26262-9 Table 1)
     baseline.schema.json
   analyses/
     hara.yaml
+    fsc.yaml
     system-fmea.yaml
     dfmea.yaml
     sw-fmea.yaml
@@ -150,6 +152,7 @@ tools/safety/
   fmea_lint.py                 (validator)
   test_fmea_lint.py
   export_hara_xlsx.py          (HARA -> xlsx in hara-builder layout, for hara-checklist-reviewer)
+  export_fsc_xlsx.py           (FSC -> xlsx in fsc-builder layout, for fsc-checklist-reviewer)
 ```
 
 Review workbooks come from the builder/reviewer skills in jherrodthomas/automotive-skills-suite. Exports render the YAML as-is; the skills' heuristic ratings are never written back into the analyses.
