@@ -5,6 +5,10 @@ This folder holds the impact analysis record for each upstream sync (change type
 under the sync procedure in [WP-M-11 §5](../../01-management/WP-M-11-upstream-and-supplier-management.md#5-upstream-synchronization-procedure-d-02)
 with the template in [WP-M-12 §7.3](../../01-management/WP-M-12-impact-analysis.md#73-template).
 
+## When syncs happen
+
+Syncs happen once per MINOR release, before the release-candidate freeze. The only out-of-cycle exception is a targeted security or safety fix. See [WP-M-11 §5](../../01-management/WP-M-11-upstream-and-supplier-management.md#5-upstream-synchronization-procedure-d-02) (D-02, decided 2026-10-10).
+
 ## Generating a report
 
 ```sh

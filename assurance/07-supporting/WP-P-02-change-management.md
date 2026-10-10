@@ -192,7 +192,7 @@ Matched safety-relevant paths (WP-P-01 §4):
 | Rule | Detail |
 |---|---|
 | Default | Frozen at `8b8c6ae` and the submodule pins in [WP-P-01 §2](WP-P-01-configuration-management-plan.md#2-current-state-as-found-at-8b8c6ae) |
-| Trigger | Planned sync (at most per MINOR release), or a targeted cherry-pick for a safety or security fix |
+| Trigger | **Once per MINOR release** (decided 2026-10-10, D-02): a planned sync of all forked submodules and the superproject before the release-candidate freeze. Only exception: an out-of-cycle targeted cherry-pick for a security advisory or a safety-relevant defect affecting the reference configuration ([WP-M-11 §5](../01-management/WP-M-11-upstream-and-supplier-management.md#5-upstream-synchronization-procedure-d-02)) |
 | Branch | `sync/upstream-<YYYYMMDD>` in the superproject and the affected forks |
 | Analysis | Diff against the safety-relevant file list; list each upstream commit touching SR-A/SR-Q paths with a disposition (take / reject / adapt); model and lockfile changes listed separately |
 | Verification | Full re-run of SR-A verification ([WP-W-06](../05-software/WP-W-06-software-unit-verification.md)); process replay against fork references; HIL once available |

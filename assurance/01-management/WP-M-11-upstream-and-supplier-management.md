@@ -113,7 +113,13 @@ Upstream is **frozen** at the baseline. Upstream code enters LionDriver only thr
 
 **Tooling.** `tools/sync/sync_report.py <repo> --to <upstream commit>` does steps 2 and 3. It fetches upstream history without file contents, lists every commit and changed file in the range, classifies each file against [`safety-relevant-paths.txt`](../07-supporting/safety-relevant-paths.txt), and writes a step-4 skeleton (the WP-M-12 §7.3 template) to [`07-supporting/impact/`](../07-supporting/impact/README.md). The generated report does not replace reading the diffs.
 
-**Sync triggers.** A sync is considered when (a) a security advisory affects a pinned component (§6), (b) a needed fix or feature exists upstream, or (c) the gap to upstream makes later syncs impractical. A sync is not performed just to stay current.
+**Sync cadence (D-02, decided 2026-10-10).**
+
+- **Planned sync: once per MINOR release** (`ld-vX.Y.0`). It is done before the release-candidate freeze ([WP-P-10](../07-supporting/WP-P-10-release-management.md)), so the sync's verification and work-product updates are part of that release's evidence.
+- **Planned sync scope:** every forked submodule and the superproject. Run `tools/sync/sync_report.py` for each against an exact upstream commit, then take, modify or reject each change according to steps 4–5 above.
+- **No change taken:** a planned sync may conclude that nothing is taken. The report is still recorded.
+- **Only out-of-cycle exception:** a targeted cherry-pick when a security advisory affects a pinned component (§6), or when upstream fixes a safety-relevant defect that affects the reference configuration. It follows the same procedure.
+- **Outside these:** no upstream code is pulled, including to stay current or to pick up features.
 
 **Initial proposal for the safety-relevant file classes** (authoritative list in WP-P-01): `opendbc_repo/opendbc/safety/**`, `opendbc_repo/opendbc/car/toyota/**`, `opendbc_repo/opendbc/car/{interfaces,lateral}.py`, `panda/board/**`, `openpilot/selfdrive/{selfdrived,controls,monitoring,modeld,pandad,car}/**`, `openpilot/common/params_keys.h`, `openpilot/cereal/log.capnp`, `openpilot/system/manager/process_config.py`, `openpilot/system/{updated,athena,webrtc}/**`, `openpilot/selfdrive/ui/soundd.py`, alert definitions (`openpilot/selfdrive/selfdrived/events.py`), model artefacts, `tinygrad_repo` pin, `uv.lock`, `openpilot/system/hardware/comma/agnos.json` (path read by the updater, `openpilot/system/updated/updated.py:221`; symlink to `openpilot/common/hardware/comma/agnos.json`), `launch_env.sh`, `.gitmodules`.
 
