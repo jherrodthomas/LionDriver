@@ -1,0 +1,59 @@
+name: safety
+
+# opendbc safety-layer verification (envelope code, WP-W-06): unit tests under UBSan with the
+# 100% line-coverage gate, MISRA C:2012 analysis, and mutation testing. Upstream runs these only
+# in opendbc's own CI; running them here keeps the evidence under LionDriver control (GAP-39).
+
+on:
+  push:
+    branches:
+      - liondriver-dev
+    paths:
+      - 'opendbc_repo'
+      - '.github/workflows/safety.yaml'
+  pull_request:
+    paths:
+      - 'opendbc_repo'
+      - '.github/workflows/safety.yaml'
+  workflow_dispatch:
+
+concurrency:
+  group: safety-${{ github.event_name == 'push' && github.run_id || github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  safety_tests:
+    name: safety tests and coverage
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v7
+    - name: Checkout opendbc submodule
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Run safety tests (UBSan, 100% line coverage)
+      run: ./opendbc_repo/opendbc/safety/tests/test.sh
+
+  misra:
+    name: safety MISRA C:2012
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v7
+    - name: Checkout opendbc submodule
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Run MISRA analysis
+      run: ./opendbc_repo/opendbc/safety/tests/misra/test_misra.sh
+
+  mutation:
+    name: safety mutation tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+    - uses: actions/checkout@v7
+    - name: Checkout opendbc submodule
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Run mutation tests
+      working-directory: opendbc_repo
+      run: |
+        source setup.sh
+        python opendbc/safety/tests/mutation.py
