@@ -1,8 +1,10 @@
 name: safety
 
-# opendbc safety-layer verification (envelope code, WP-W-06): unit tests under UBSan with the
-# 100% line-coverage gate, MISRA C:2012 analysis, and mutation testing. Upstream runs these only
-# in opendbc's own CI; running them here keeps the evidence under LionDriver control (GAP-39).
+# Safety-envelope verification (WP-W-06): opendbc safety unit tests under UBSan with the 100%
+# line-coverage gate, MISRA C:2012 for the opendbc safety code and the panda firmware, and
+# mutation testing. Upstream runs these only in opendbc's and panda's own CI; running them here
+# keeps the evidence under LionDriver control (GAP-39). Everything runs against the pinned
+# submodules: panda MISRA uses the pinned opendbc_repo, not panda's opendbc@master dependency.
 
 on:
   push:
@@ -10,10 +12,12 @@ on:
       - liondriver-dev
     paths:
       - 'opendbc_repo'
+      - 'panda'
       - '.github/workflows/safety.yaml'
   pull_request:
     paths:
       - 'opendbc_repo'
+      - 'panda'
       - '.github/workflows/safety.yaml'
   workflow_dispatch:
 
@@ -43,6 +47,27 @@ jobs:
       run: git submodule update --init --depth 1 opendbc_repo
     - name: Run MISRA analysis
       run: ./opendbc_repo/opendbc/safety/tests/misra/test_misra.sh
+
+  panda_misra:
+    name: panda MISRA C:2012
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v7
+    - name: Checkout opendbc and panda submodules
+      run: git submodule update --init --depth 1 opendbc_repo panda
+    - name: Set up pinned toolchain
+      # cppcheck comes from opendbc's locked environment. scons and the ARM compiler are pinned
+      # to the versions in LionDriver's uv.lock. panda's own setup.sh is not used because it runs
+      # `uv sync --upgrade` without a lockfile and installs opendbc from upstream master.
+      run: |
+        source opendbc_repo/setup.sh
+        uv pip install "scons==4.11.1" "comma-deps-gcc-arm-none-eabi==13.2.1.post103"
+        echo "$GITHUB_WORKSPACE/opendbc_repo/.venv/bin" >> "$GITHUB_PATH"
+    - name: Run panda MISRA analysis
+      env:
+        PYTHONPATH: ${{ github.workspace }}/opendbc_repo
+      run: panda/tests/misra/test_misra.sh
 
   mutation:
     name: safety mutation tests

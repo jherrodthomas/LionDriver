@@ -1,0 +1,105 @@
+name: Field report
+description: Report from operating a released LionDriver build (WP-O-04 field monitoring)
+labels: ["field-report", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for events seen while operating a released build.
+        **If anyone was hurt or property was damaged, ensure everyone is safe first.**
+        Then file this report and tick the last safety box.
+        **Security vulnerabilities:** do not report them here. Use the private report link on the
+        "New issue" page.
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety triage
+      options:
+        - label: Unintended or excessive steering, acceleration or braking occurred
+        - label: The system did not release control when expected (brake, cancel, override)
+        - label: A warning, alert or driver-monitoring escalation was missing or late
+        - label: Someone was hurt or property was damaged
+
+  - type: input
+    id: date
+    attributes:
+      label: Incident date
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true
+
+  - type: input
+    id: region
+    attributes:
+      label: Location region
+      description: State or region only. Do not give an exact location.
+      placeholder: e.g. Ohio, US
+
+  - type: dropdown
+    id: config
+    attributes:
+      label: Configuration
+      options:
+        - Reference configuration (2020 Toyota Corolla LE, TSS2)
+        - Other vehicle (outside the assured scope)
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: LionDriver version
+      placeholder: ld-v0.1.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened
+      description: What happened and what you expected.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Driving mode
+      options: [Lateral only, openpilot longitudinal (Chill), Experimental Mode, Not engaged]
+
+  - type: dropdown
+    id: road
+    attributes:
+      label: Road type
+      options: [Highway, Arterial / rural, Urban, Parking, Other]
+
+  - type: dropdown
+    id: lighting
+    attributes:
+      label: Lighting
+      options: [Day, Dusk / dawn, Night (lit), Night (unlit), Low sun / glare]
+
+  - type: dropdown
+    id: weather
+    attributes:
+      label: Weather / road surface
+      options: [Clear / dry, Rain, Snow, Fog, Wet road]
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Road geometry and other road users
+      description: For example a curve, merge or construction; a lead vehicle, cut-in or pedestrian.
+
+  - type: input
+    id: speed
+    attributes:
+      label: Speed at onset
+      placeholder: e.g. 65 mph
+
+  - type: dropdown
+    id: ending
+    attributes:
+      label: How it ended
+      options: [Driver override, System disengaged, Alert only, No action needed]

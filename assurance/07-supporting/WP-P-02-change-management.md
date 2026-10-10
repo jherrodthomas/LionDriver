@@ -201,7 +201,20 @@ Matched safety-relevant paths (WP-P-01 §4):
 
 ## 10. Proposed change requests for fork CI (D-03)
 
-These are recorded here as CRs to raise. This document does not change any workflow.
+These were raised as change requests under D-03. Status as of 2026-10-10:
+
+| CR | Status |
+|---|---|
+| CR-CI-01 | **Done:** `stale.yaml` deleted |
+| CR-CI-02 | **Done:** `jenkins-pr-trigger.yaml` deleted. `Jenkinsfile` is left in place; it is inert without comma's device farm |
+| CR-CI-03 | **Done:** `ui_preview.yaml` deleted. The fork-owned UI report runs in `tests.yaml` (`Create UI Report`) |
+| CR-CI-04 | **Done** for `liondriver-dev` (PR #2) and the submodule check (PR #3). `release/**` is not added; no release branches exist yet ([WP-P-10](WP-P-10-release-management.md)) |
+| CR-CI-05 | **Done:** `safety.yaml` runs the opendbc safety tests with the coverage gate, opendbc MISRA, mutation tests and panda MISRA, all against the pinned submodules |
+| CR-CI-06 | **Done:** `release.yaml` and `repo-maintenance.yaml` deleted |
+| CR-CI-07 | **Done:** `problem_report.yml` and `field_report.yml` replace comma's templates; `config.yml` routes vulnerabilities to private reporting |
+| CR-CI-08 | **Interim only:** process replay is pinned to comma's references for the baseline (`ref_commit`, PR #2). Fork-owned references are still open; they need LionDriver-controlled storage (GAP-30, GAP-40) |
+
+The table below keeps the original proposals.
 
 | CR | Workflow | Finding | Proposed change | Rationale |
 |---|---|---|---|---|

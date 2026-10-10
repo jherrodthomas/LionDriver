@@ -113,7 +113,7 @@ Each decision is tracked as a GitHub issue labelled `decision:D-nn`. A decision 
 |---|---|---|---|---|---|---|
 | D-01 | Take configuration control of the safety code | Fork opendbc and panda; absolute submodule URLs; pin tinygrad | **Done** 2026-10-10: panda, opendbc, msgq, rednose, teleoprtc forked to `jherrodthomas/*` and repointed (PR #3); tinygrad tracked by commit | PM | G0 | R-05 |
 | D-02 | Upstream synchronization policy | Freeze; sync only by change request with impact analysis | **Decided** 2026-10-10: planned sync once per MINOR release; out-of-cycle cherry-picks only for security or safety fixes; `tools/sync/sync_report.py` + `impact/` records (PR #4) | PM | G0 | R-04 |
-| D-03 | CI for the fork | Disable/replace comma-dependent workflows; fork-owned replay references; safety tests, MISRA and mutation in fork CI | Open | PM | G0 | R-05, R-25 |
+| D-03 | CI for the fork | Disable/replace comma-dependent workflows; fork-owned replay references; safety tests, MISRA and mutation in fork CI | **Mostly done** 2026-10-10 (PRs #2, #3, #5): comma-only workflows removed; safety tests, MISRA and mutation in fork CI; issue forms. Open: fork-owned replay references (CR-CI-08) | PM | G0 | R-05, R-25 |
 | D-04 | HIL capability | Build a minimal HIL bench | Open | PM | G2 (decision); G3 (bench) | R-06 |
 | D-05 | Model update policy | Pin weights per release; model change re-runs scenario evaluations | Open | PM / ML | G1 | R-24 |
 | D-06 | External assessor | Engage an independent FuSa assessor for the G1 HARA confirmation review | Open | PM | G0 | R-08, R-20 |

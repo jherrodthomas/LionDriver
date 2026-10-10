@@ -44,7 +44,7 @@ No LionDriver problem record exists yet.
 
 ### 3.2 Proposed issue templates
 
-Proposed to replace `.github/ISSUE_TEMPLATE/bug_report.yml` and `config.yml` through CR-CI-07 in [WP-P-02 §10](WP-P-02-change-management.md#10-proposed-change-requests-for-fork-ci-d-03). Content below is a field list for a GitHub issue form (YAML), shown in condensed form.
+**Implemented 2026-10-10 (CR-CI-07, D-03):** `.github/ISSUE_TEMPLATE/problem_report.yml`, `field_report.yml` and `config.yml` replace comma's templates. The field list below is the design they implement. Originally proposed to replace `.github/ISSUE_TEMPLATE/bug_report.yml` and `config.yml` through CR-CI-07 in [WP-P-02 §10](WP-P-02-change-management.md#10-proposed-change-requests-for-fork-ci-d-03). Content below is a field list for a GitHub issue form (YAML), shown in condensed form.
 
 ```yaml
 name: Problem report
