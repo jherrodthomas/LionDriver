@@ -40,6 +40,7 @@ Future vehicle configurations will require impact analysis and supporting eviden
 - [ ] Implement requirements traceability and verification
 - [ ] Develop and maintain a living safety case
 - [ ] Conduct independent reviews and applicable confirmation measures
+- [ ] Operate field monitoring, safety anomaly management and root cause analysis ([process](docs/safety/field-monitoring/README.md))
 
 ### Project Status
 
