@@ -11,7 +11,7 @@ Each CA gets its own `CA-NNN.md` (from `templates/CORRECTIVE-ACTION.md`) when it
 | ID | Title | RC | HZ | Tier | Status |
 |---|---|---|---|---|---|
 | CA-001 | Interlock: never disable stock PCS/AEB in an assured configuration | RC-01 | HZ-002 | 1 | **Implemented**: software verified; panda layer and vehicle check open |
-| CA-002 | Stopped / slow in-lane vehicle scenario suite with acceptance criteria | RC-02, RC-03, RC-06 | HZ-001, HZ-003 | 2 (V&V) | Proposed |
+| CA-002 | Stopped / slow in-lane vehicle scenario suite with acceptance criteria | RC-02, RC-03, RC-06 | HZ-001, HZ-003 | 2 (V&V) | **Phase 1 done** (SIL, idealized perception); phase 2 open |
 | CA-003 | Perception evaluation on emergency vehicles and atypical stationary targets | RC-06 | HZ-001 | 2 | Proposed |
 | CA-004 | Stationary-target performance requirement and braking-authority study | RC-02 | HZ-001, HZ-006, HZ-007 | 2 | Proposed |
 | CA-005 | Independent forward-collision monitor (radar-based) for FCW | RC-03 | HZ-003 | 3 | Proposed |
@@ -87,6 +87,30 @@ Process replay is unaffected: it builds the car interface itself and passes it t
   2. **Cut-out reveals:** FCW at TTC ≥ 2.0 s whenever physically possible. Impact-speed reduction recorded and trended.
   3. Every failure becomes a permanent regression case.
 - **SPIs:** SPI-02, SPI-03.
+
+### CA-002 phase 1 record (2026-10-10)
+
+**Delivered:** a closed-loop SIL suite in `openpilot/selfdrive/test/stopped_vehicle/`. It runs the real `RadarD` lead selection and the real `LongitudinalPlanner` / MPC for the 2020 Corolla (TSS2), and is collected by `tools/test_runner.py`. Results and limitations: [`evidence/CA-002-BASELINE-RESULTS.md`](evidence/CA-002-BASELINE-RESULTS.md).
+
+**AC-2 made precise:** an AC on a cut-out that cannot physically be avoided has to be about the warning, not the outcome. So: no collision when the reveal gap ≥ the required stopping distance. If a collision occurs, an FCW must fire, at TTC ≥ 2.0 s whenever the reveal leaves ≥ 2.5 s.
+
+| Grid item | Phase 1 (SIL, idealized perception) | Phase 2 |
+|---|---|---|
+| Ego speed 40–120 km/h | ✔ | ✔ |
+| Stopped / slow (20%) target | ✔ | Truck, emergency vehicle (needs perception, CA-003) |
+| Visible from range; cut-out at 120/80/50 m | ✔ | Cut-out from a real following state |
+| Radar-only stationary target | ✔ (`expectedFailure`, known gap) | — |
+| Lateral offset 0.5–1.5 m (TC-06) | — | Needs perception / simulator |
+| Day, night, glare, rain | — | Needs perception / simulator |
+| Detection latency and flicker; PID and brake ramp | — | Logged model outputs; HIL |
+
+**Results:** AC-1 and AC-2 pass with idealized perception, 36 tests passed and 1 expected failure. A mutation check with braking weakened to -2.5 m/s² makes 18 tests fail.
+
+**What the results mean for the RCA:**
+- RC-02 / FTA B3 (a radar-only stationary target is ignored above 4 m/s) moves from **Verified design** to **confirmed in SIL**.
+- Cut-out collisions happen exactly where the reveal gap is shorter than the stopping distance at -3.5 m/s². That gives CA-004 its quantitative case.
+
+**Remaining for closure:** phase 2 rows above, and the CA-004 requirement (which replaces the initial AC thresholds).
 
 ## CA-003 — Perception evaluation on emergency vehicles and atypical stationary targets
 

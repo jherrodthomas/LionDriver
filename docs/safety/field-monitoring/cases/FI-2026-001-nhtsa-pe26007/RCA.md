@@ -73,7 +73,7 @@ TOP: Engaged vehicle collides with a stationary/slow in-lane vehicle
     │       │       ├── B1 Vision model insufficiency on stationary targets at range
     │       │       │      (emergency vehicles, lighting, glare, night, occlusion)       [Hypothesis]
     │       │       ├── B2 Cut-out reveal leaves too little distance                     [Supported]
-    │       │       ├── B3 Radar track not used: no vision match, and v_ego ≥ 4 m/s      [Verified design]
+    │       │       ├── B3 Radar track not used: no vision match, and v_ego ≥ 4 m/s      [Verified, SIL: CA-002]
     │       │       └── B4 Partially-in-lane object assigned to adjacent lane            [Hypothesis]
     │       ├── G1.2 Detected, but required decel > -3.5 m/s² cap                        [Verified design]
     │       └── G1.3 Configuration altered (fork parameters, aggressive follow profile,

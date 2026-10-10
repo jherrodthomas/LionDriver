@@ -16,6 +16,7 @@ Record each scheduled source sweep (PROCESS §5.1), including sweeps that found 
 | Date | Sources checked | New signals | FI IDs raised | By |
 |---|---|---|---|---|
 | 2026-10-10 | NHTSA PE26007 press coverage | 1 | FI-2026-001 | Maintainer |
+| 2026-10-10 | CA-002 SIL baseline (own test data) | 0 new (FI-2026-001 B3 confirmed in SIL) | — | Maintainer |
 
 ## Lessons learned
 
