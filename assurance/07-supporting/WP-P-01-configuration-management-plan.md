@@ -134,6 +134,7 @@ assurance/trace/**                  # (future)
 
 Notes:
 
+- **Authoritative copy:** [`safety-relevant-paths.txt`](safety-relevant-paths.txt), which `tools/sync/sync_report.py` reads. The list above is kept for reading. If the two differ, the text file wins. The text file also classifies the contents of the `msgq`, `rednose` and `tinygrad` submodules, not only their pointer changes: `msgq_repo/msgq/**` and `rednose_repo/rednose/**` are SR-Q, and their build files and `tinygrad_repo/**` are SR-T. When patterns overlap, the most specific (longest) one wins, which implements the `panda/board/body/**` exception.
 - `opendbc_repo/opendbc/safety/tests/**` is included under SR-A because the tests are the unit verification evidence ([WP-W-06](../05-software/WP-W-06-software-unit-verification.md)).
 - A submodule bump changes every file in that submodule at once. It is classified by the highest class of any changed file inside the submodule diff.
 - The list is reviewed at every gate and whenever [WP-W-03](../05-software/WP-W-03-software-architecture.md) or [WP-S-03](../03-system/WP-S-03-technical-safety-concept-architecture.md) changes the allocation (OI-2).

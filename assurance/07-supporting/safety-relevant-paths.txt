@@ -1,0 +1,94 @@
+# Safety-relevant file list (WP-P-01 §4.2) — authoritative, machine-readable copy.
+#
+# Format: <class> <glob>   (comment after '#')
+#   SR-A  code or data in the ASIL path (envelope on the panda MCU)
+#   SR-Q  QM / SOTIF / CS element that feeds hazards, configures the envelope, or affects FFI
+#   SR-T  build, test, CI, toolchain or dependency configuration that changes evidence or binaries
+# Anything not matched is NSR (standard change route).
+#
+# Globs are repository-relative. '**' matches any number of path segments, '*' matches within
+# one segment. When several patterns match a path, the most specific (longest) pattern wins.
+# Used by tools/sync/sync_report.py; change it only through a change request (WP-P-02).
+
+# SR-A: envelope (opendbc safety + panda firmware)
+SR-A opendbc_repo/opendbc/safety/**
+SR-A panda/board/**
+SR-T panda/board/body/**                    # comma body, not in scope
+SR-A panda/SConscript
+SR-A panda/SConstruct
+
+# SR-Q: Toyota port and car abstraction
+SR-Q opendbc_repo/opendbc/car/toyota/**
+SR-Q opendbc_repo/opendbc/car/interfaces.py
+SR-Q opendbc_repo/opendbc/car/lateral.py
+SR-Q opendbc_repo/opendbc/car/structs.py
+SR-Q opendbc_repo/opendbc/car/car.capnp
+SR-Q opendbc_repo/opendbc/car/values.py
+SR-Q opendbc_repo/opendbc/car/car_helpers.py
+SR-Q opendbc_repo/opendbc/car/fingerprints.py
+SR-Q opendbc_repo/opendbc/car/fw_versions.py
+SR-Q opendbc_repo/opendbc/car/fw_query_definitions.py
+SR-Q opendbc_repo/opendbc/car/vehicle_model.py
+SR-Q opendbc_repo/opendbc/car/can_definitions.py
+SR-Q opendbc_repo/opendbc/car/common/**
+SR-Q opendbc_repo/opendbc/car/torque_data/**
+SR-Q opendbc_repo/opendbc/can/**
+SR-Q opendbc_repo/opendbc/dbc/toyota_*.dbc
+SR-Q opendbc_repo/opendbc/dbc/generator/toyota/**
+
+# SR-Q: onboard stack (QM / SOTIF-managed, FFI-relevant)
+SR-Q openpilot/selfdrive/selfdrived/**
+SR-Q openpilot/selfdrive/controls/**
+SR-Q openpilot/selfdrive/monitoring/**
+SR-Q openpilot/selfdrive/car/**
+SR-Q openpilot/selfdrive/pandad/**
+SR-Q openpilot/selfdrive/modeld/**             # includes models/** (LFS)
+SR-Q openpilot/selfdrive/locationd/**
+SR-Q openpilot/cereal/**
+SR-Q openpilot/common/params_keys.h
+SR-Q openpilot/common/realtime.py
+SR-Q openpilot/system/manager/process_config.py
+SR-Q openpilot/system/updated/**               # update path (CS)
+SR-Q openpilot/system/athena/**                # remote access (CS)
+SR-Q SECURITY.md
+SR-Q msgq_repo/msgq/**                         # IPC between processes (FFI)
+SR-Q rednose_repo/rednose/**                   # localization filter used by locationd
+
+# SR-T: configuration, toolchain, verification
+SR-T .gitmodules
+SR-T .gitattributes
+SR-T .lfsconfig
+SR-T uv.lock
+SR-T pyproject.toml
+SR-T opendbc_repo/uv.lock
+SR-T opendbc_repo/pyproject.toml
+SR-T SConstruct
+SR-T launch_env.sh
+SR-T .github/workflows/**
+SR-T opendbc_repo/.github/workflows/**
+SR-T Jenkinsfile
+SR-T panda/Jenkinsfile
+SR-T panda/tests/**
+SR-T openpilot/selfdrive/test/process_replay/**
+SR-T tools/op.sh
+SR-T tools/test_runner.py
+SR-T tools/release/**
+SR-T tools/sync/**
+SR-T .github/CODEOWNERS
+SR-T assurance/trace/**
+SR-T assurance/07-supporting/safety-relevant-paths.txt
+SR-T tinygrad_repo/**                          # model compiler/runtime (TCL, WP-P-07)
+SR-T msgq_repo/SConstruct                      # submodule build and packaging
+SR-T msgq_repo/SConscript
+SR-T msgq_repo/site_scons/**
+SR-T msgq_repo/pyproject.toml
+SR-T msgq_repo/setup.py
+SR-T rednose_repo/SConstruct
+SR-T rednose_repo/site_scons/**
+SR-T rednose_repo/pyproject.toml
+SR-T msgq_repo                                 # submodule pointer changes (gitlinks)
+SR-T rednose_repo
+SR-T teleoprtc_repo
+SR-T tinygrad_repo
+SR-T panda
+SR-T opendbc_repo

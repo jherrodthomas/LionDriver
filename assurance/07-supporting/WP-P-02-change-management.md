@@ -192,11 +192,11 @@ Matched safety-relevant paths (WP-P-01 §4):
 | Rule | Detail |
 |---|---|
 | Default | Frozen at `8b8c6ae` and the submodule pins in [WP-P-01 §2](WP-P-01-configuration-management-plan.md#2-current-state-as-found-at-8b8c6ae) |
-| Trigger | Planned sync (at most per MINOR release), or a targeted cherry-pick for a safety or security fix |
+| Trigger | **Once per MINOR release** (decided 2026-10-10, D-02): a planned sync of all forked submodules and the superproject before the release-candidate freeze. Only exception: an out-of-cycle targeted cherry-pick for a security advisory or a safety-relevant defect affecting the reference configuration ([WP-M-11 §5](../01-management/WP-M-11-upstream-and-supplier-management.md#5-upstream-synchronization-procedure-d-02)) |
 | Branch | `sync/upstream-<YYYYMMDD>` in the superproject and the affected forks |
 | Analysis | Diff against the safety-relevant file list; list each upstream commit touching SR-A/SR-Q paths with a disposition (take / reject / adapt); model and lockfile changes listed separately |
 | Verification | Full re-run of SR-A verification ([WP-W-06](../05-software/WP-W-06-software-unit-verification.md)); process replay against fork references; HIL once available |
-| Record | Impact analysis file (proposed `assurance/07-supporting/impact/sync-<date>.md`) + PR |
+| Record | Impact analysis file in [`impact/`](impact/README.md), generated with `tools/sync/sync_report.py` and then completed by hand, plus the PR |
 | Not allowed | Automatic dependency upgrades (upstream `repo-maintenance.yaml` runs `uv lock --upgrade` weekly; it is gated on `github.repository == 'commaai/openpilot'` and must stay inactive in the fork) |
 
 ## 10. Proposed change requests for fork CI (D-03)
@@ -230,5 +230,5 @@ Number of SR changes per month; median CR lead time; changes merged without requ
 | OI-2 | Implement automatic PR classification from the machine-readable file list |
 | OI-3 | Raise CR-CI-01 to CR-CI-08 as issues and implement |
 | OI-4 | Create `.github/CODEOWNERS` and `.github/pull_request_template.md` from §7.2 and §8 via a CR; create GitHub teams |
-| OI-5 | Decide where impact analysis files for syncs live (proposed `assurance/07-supporting/impact/`) and add the folder to the register |
+| OI-5 | ~~Decide where impact analysis files for syncs live~~ Closed: [`impact/`](impact/README.md) (D-02 tooling) |
 | OI-6 | Decide merge strategy (squash vs merge commit) so that review records remain linked to commits in submodule forks |

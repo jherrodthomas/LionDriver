@@ -11,6 +11,7 @@ on:
       - liondriver-dev
     paths:
       - 'assurance/**'
+      - 'tools/sync/**'
       - 'README.md'
       - 'docs/CARS.md'
       - 'docs/liondriver/**'
@@ -19,6 +20,7 @@ on:
   pull_request:
     paths:
       - 'assurance/**'
+      - 'tools/sync/**'
       - 'README.md'
       - 'docs/CARS.md'
       - 'docs/liondriver/**'
@@ -45,6 +47,8 @@ jobs:
       run: python3 assurance/trace/tools/check_trace.py
     - name: Relative links
       run: python3 assurance/trace/tools/check_links.py
+    - name: Sync report tool unit tests
+      run: python3 -m unittest tools.sync.test_sync_report -v
 
   safety-case:
     name: living safety case
