@@ -217,6 +217,27 @@ AGE_SAMPLE_MEAN_YEARS = 45
 AGES_YEARS = (50, 70, 80)
 
 
+# Elderly check (`--age`). Richards (2010) section 2.2.1.2, Ashton and Mackay data (GB, 1970s):
+# at 30 mph the risk of death is 47 % for pedestrians aged 60+ and 5 % for 15-59; table 4.1 gives
+# 14 % for all aged 15+. The odds ratio of 60+ against 15+ at 30 mph is applied to the Tefft
+# average (an age effect from Ashton and Mackay, a level from Tefft), assuming the ratio holds at
+# other speeds (age additive in the logit). It is set against the age-70 shift, as the 60+ group
+# centres on about 70 (assumed; the report gives no mean age).
+ASHTON_30MPH_ELDERLY, ASHTON_30MPH_ADULT, ASHTON_30MPH_15PLUS = 0.47, 0.05, 0.14
+
+
+def odds(p: float) -> float:
+  return p / (1 - p)
+
+
+def from_odds(o: float) -> float:
+  return o / (1 + o)
+
+
+def ashton_elderly_odds_ratio() -> float:
+  return odds(ASHTON_30MPH_ELDERLY) / odds(ASHTON_30MPH_15PLUS)
+
+
 def age_shift_mph(age_years: float, reference_years: float = AGE_REFERENCE_YEARS,
                   offset_70_30_mph: float = AGE_OFFSET_70_30_MPH) -> float:
   return max(0.0, (age_years - reference_years) * offset_70_30_mph / 40)
@@ -421,6 +442,17 @@ def main(argv: list[str] | None = None) -> int:
         cols = [sh, f"{v:.0f}", f"{pedestrian_fatality(v):.3f}"]
         cols += [f"{pedestrian_fatality(v, age_shift_mph(y, ref, a.age_offset_mph)):.3f}" for y in AGES_YEARS]
         print("| " + " | ".join(cols) + " |")
+    ratio = ashton_elderly_odds_ratio()
+    print(f"\nAshton and Mackay (Richards 2010), 60+ against 15+ at 30 mph: odds ratio {ratio:.2f}, applied to the average:\n")
+    print("| SH / situation | Average | 60+ (on the curve used) | 60+ (on the logistic fit) | Age 70 bound |")
+    print("|---|---|---|---|---|")
+    for sh, _label, v in vru_cases():
+      low = v * MPH_PER_KMH < PEDESTRIAN_ANCHORS_MPH[1][0]
+      base_fit = low_speed_check(v)["tefft_logistic"] if low else pedestrian_fatality(v)
+      bound = pedestrian_fatality(v, age_shift_mph(70, AGE_REFERENCE_YEARS, a.age_offset_mph))
+      cols = [sh, f"{pedestrian_fatality(v):.3f}", f"{from_odds(odds(pedestrian_fatality(v)) * ratio):.3f}",
+              f"{from_odds(odds(base_fit) * ratio):.3f}", f"{bound:.3f}"]
+      print("| " + " | ".join(cols) + " |")
     print("\nThe bound holds while the mean age of the standardisation population is above 30; the sample mean is 45.")
     print("Age 80 is extrapolated beyond the 30-70 comparison.")
     return 0

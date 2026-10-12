@@ -253,7 +253,17 @@ SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the 
       | Central (from age 45), OS-04 | | | 0.42 | 0.58 | 0.68 |
       | Central (from age 45), OS-06 | | | 0.05 | 0.08 | 0.09 |
 
-    - **Decision:** P(severity class) stays at the average. It enters a rate of harm over all the VRUs LionDriver may strike, and the average over struck persons is the quantity that rate needs. This holds only while LionDriver's VRU exposure has about the national age mix. The residual-risk statement (WP-K-02) reports the age-70 values beside the average, so that an older person's risk (about double in OS-04, 0.72 against 0.38) is stated, not averaged away.
+    - **Against the Richards elderly curve (checked 2026-10-12 against the report's text, section 2.2.1.2 and table 4.1; `risk_curve.py --age`).** In the Ashton and Mackay data (GB, 1970s), the risk of death at 30 mph is 47 % for pedestrians aged 60 and over, 5 % for 15–59 and 14 % for all aged 15 and over. The odds ratio of 60+ against 15+ is 5.45. Applied to the Tefft average (age effect from Ashton and Mackay, level from Tefft, ratio assumed constant over speed), with the 60+ group taken to centre on about 70:
+
+      | Case | Average (used) | 60+, Ashton and Mackay ratio | Age 70, Tefft shift 11.8 mph | Age 70, Tefft shift 15.4 mph (upper CI) |
+      |---|---|---|---|---|
+      | SH-11 OS-04, 60 km/h | 0.38 | 0.77 | 0.72 | 0.80 |
+      | SH-11 OS-06, 18 km/h | 0.05 | 0.21 (0.11 on the logistic fit) | 0.10 | 0.16 |
+
+      - **OS-04:** the 1970s age effect is stronger than the default Tefft shift but inside its confidence interval.
+      - **OS-06:** the ratio applied to the linear segment below 23 mph gives 0.21; applied to the logistic fit of the Tefft anchors it gives 0.11, close to the shift. The linear segment already overstates the risk there by a factor of 2–4 (low-speed check above), so 0.21 compounds two conservative steps.
+      - **Result:** the elderly values are stated as ranges built from both sources: **0.72–0.80 in OS-04 and 0.10–0.21 in OS-06** (WP-K-02 §5.1). The limits of the comparison: 1970s cars and medical care, the 60+ group's mean age not given, and one point per age group.
+    - **Decision:** P(severity class) stays at the average. It enters a rate of harm over all the VRUs LionDriver may strike, and the average over struck persons is the quantity that rate needs. This holds only while LionDriver's VRU exposure has about the national age mix. The residual-risk statement (WP-K-02) reports the elderly ranges beside the average, so that an older person's risk (about double in OS-04, 0.72–0.80 against 0.38) is stated, not averaged away.
     - **Not covered:** the age mix of LionDriver's own VRU encounters. A drive log with many encounters near schools, care homes or retirement areas would call for the age-shifted value in that stratum.
   - **Against the Richards pedestrian curves (checked 2026-10-12 against the report's text, section 2 and table 4.1; `risk_curve.py --pedestrian-compare`).** Richards (2010) fits three pedestrian datasets with one method, each weighted to national casualties (which the report says is likely to overestimate the risk). Ages 15 and over, to match Tefft:
 

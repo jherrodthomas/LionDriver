@@ -176,6 +176,16 @@ class RiskCurveTest(unittest.TestCase):
     self.assertIn("| SH-11 OS-04 | 60 | 0.382 | 0.451 | 0.241 | 0.182 |", out)
     self.assertIn("| SH-11 OS-06 | 18 | 0.048 | 0.002 | 0.005 | 0.004 |", out)
 
+  def test_ashton_elderly_odds_ratio(self):
+    # 47 % (60+) against 14 % (15+) at 30 mph
+    self.assertAlmostEqual(rc.ashton_elderly_odds_ratio(), (0.47 / 0.53) / (0.14 / 0.86))
+    with redirect_stdout(io.StringIO()) as buf:
+      self.assertEqual(rc.main(["--age"]), 0)
+    out = buf.getvalue()
+    # OS-04: between the default age-70 bound (0.72) and its upper confidence limit (0.80)
+    self.assertIn("| SH-11 OS-04 | 0.382 | 0.771 | 0.771 | 0.721 |", out)
+    self.assertIn("| SH-11 OS-06 | 0.048 | 0.214 | 0.114 | 0.099 |", out)
+
   def test_pedestrian_curve_is_monotone(self):
     risks = [rc.pedestrian_fatality(v) for v in range(0, 120, 5)]
     self.assertEqual(risks, sorted(risks))
