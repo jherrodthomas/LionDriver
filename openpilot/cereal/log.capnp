@@ -139,6 +139,9 @@ struct OnroadEvent @0xc4fa6047f024e718 {
     usbErrorDEPRECATED @78;
     audioFeedbackDEPRECATED @97;
     bigModelReadyDEPRECATED @101;
+
+    # LionDriver: the panda's last reset was caused by its hardware watchdog (TSR-501)
+    pandaWatchdogReset @105;
   }
 }
 

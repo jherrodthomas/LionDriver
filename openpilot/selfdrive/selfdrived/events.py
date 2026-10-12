@@ -971,6 +971,12 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
   # and the rest of the car is separated. When messages from the LKAS camera
   # are received on the car side this usually means the relay hasn't opened correctly
   # and this alert is thrown.
+  # LionDriver: the safety processor (panda) was last reset by its hardware watchdog after a hang (TSR-501). The relay
+  # was released and the panda restarted, so driving can continue, but the hang must be reported and investigated
+  EventName.pandaWatchdogReset: {
+    ET.PERMANENT: NormalPermanentAlert("Safety Processor Restarted", "Watchdog reset: report this drive"),
+  },
+
   EventName.relayMalfunction: {
     ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Harness Relay Malfunction"),
     ET.PERMANENT: NormalPermanentAlert("Harness Relay Malfunction", "Contact comma.ai/support"),
