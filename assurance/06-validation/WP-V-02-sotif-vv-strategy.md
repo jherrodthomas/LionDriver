@@ -187,6 +187,10 @@ SH-01 and SH-02 (lane departure) are split by collision, and each part counts as
 SH-10 (lane change into an occupied lane, HE-02.5) is deliberately **not** mapped to a curve:
 - **The curve would understate the risk.** The primary contact is a same-direction sideswipe: about 1 m/s sideways plus the small speed difference to the vehicle in the target lane. Its Δv is a few km/h, so a Δv curve would give almost no fatality risk. The S3 rating of HE-02.5 comes from what follows the contact (loss of control, or a spin into traffic or a barrier), which a Δv curve does not model. Using it would overstate the credit.
 - **The national ratio fits.** SH-10 uses the FARS/CRSS ratio for sideswipe-same-direction crashes (item 3). The condition of item 3 holds, because a lane change into an occupied lane is the typical cause of that crash type, and its statistics include the secondary outcomes. The value waits on the FARS/CRSS extraction (OI-8).
+- **Contact check (`risk_curve.py --sh10`).** This checks that an SH-10 contact belongs to the sideswipe class.
+  - **Set-up.** The lane change accelerates sideways at the controller's 3.0 m/s² limit over the whole distance to contact, with no S-curve easing. That distance is the two widest lane margins, 2 × 1.06 m (WP-S-04 §3.1). Ego speeds run from openpilot's lane-change minimum, 20 mph (`desire_helper.py`), to 120 km/h.
+  - **Result.** The lateral closing speed is at most 13 km/h, about 7 km/h of Δv per car. The contact angle is 6–12° at 60–120 km/h, and 22° at the 20 mph minimum.
+  - **Conclusion.** That is the low-angle, low-lateral-speed contact of a same-direction sideswipe, not the near-perpendicular impact coded as an angle crash. It supports item 3's condition, which the assessor is to accept (OI-3).
 
 SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the FARS/CRSS ratio to a curve:
 - **Why a curve.** There is no braking before impact, so the crash is worse than the average pedestrian crash (item 3).

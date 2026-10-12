@@ -47,6 +47,15 @@ controller's 3.0 m/s^2 limit and d = 4 m (lane margin plus shoulder, assumed), t
 are crash-tested (MASH test level 3, 100 km/h), so the impact is redirecting and the barrier
 ratio still applies. Its head-on in a rural curve (OS-16, HE-02.2) is the head-on case above.
 
+`--sh10` checks that an SH-10 contact belongs to the sideswipe class. The lane change
+accelerates sideways at the controller's 3.0 m/s^2 limit over the whole distance to contact,
+with no S-curve easing. That distance is the two widest lane margins, 2 x 1.06 m (WP-S-04). Speeds
+run from openpilot's lane-change minimum (20 mph, desire_helper.py) to 120 km/h. The lateral
+closing speed stays at or below 13 km/h, about 7 km/h of delta-v per car. The contact angle is
+6-12 degrees at 60-120 km/h and 22 degrees at the 20 mph minimum. That is the low-angle,
+low-lateral-speed contact of a same-direction sideswipe, not the near-perpendicular impact of
+an angle crash.
+
 SH-10 (lane change into an occupied lane) is deliberately not mapped to a curve. Its primary
 contact is a same-direction sideswipe with a delta-v of a few km/h, so a delta-v curve would
 give almost no risk. Its S3 rating (HE-02.5) comes from what follows: loss of control, or a
@@ -167,6 +176,21 @@ def curve_departure_angle_deg(speed_kmh: float, offset_m: float = BARRIER_OFFSET
   return math.degrees(math.sqrt(2 * offset_m / radius))
 
 
+LANE_CHANGE_SPEED_MIN_KMH = 20 * 1.609344  # desire_helper.py LANE_CHANGE_SPEED_MIN
+LANE_CHANGE_GAP_M = 2 * 1.06  # widest lane margins of ego and target-lane vehicle (WP-S-04 §3.1)
+SH10_SPEEDS_KMH = (LANE_CHANGE_SPEED_MIN_KMH, 60, 90, 120)
+
+
+def lane_change_contact(speed_kmh: float, gap_m: float = LANE_CHANGE_GAP_M, a_y: float = A_Y_CTRL,
+                        e: float = RESTITUTION) -> dict:
+  """SH-10 primary contact: lateral speed, contact angle and lateral delta-v (equal masses)."""
+  import math
+  v_lat = math.sqrt(2 * a_y * gap_m)  # m/s, accelerating laterally all the way (upper bound)
+  angle = math.degrees(math.atan2(v_lat, speed_kmh / 3.6))
+  return {"speed_kmh": speed_kmh, "v_lat_kmh": v_lat * 3.6, "angle_deg": angle,
+          "dv_lateral_kmh": (1 + e) * v_lat * 3.6 / 2}
+
+
 def cases() -> list[tuple[str, str, float]]:
   """(SH and situation, case label, closing speed in km/h) for the ODD speed bounds."""
   out = []
@@ -199,8 +223,15 @@ def main(argv: list[str] | None = None) -> int:
   ap.add_argument("--speed", type=float, action="append", help="closing speed in km/h (repeatable); default: the SH-06 and SH-03 cases")
   ap.add_argument("--restitution", type=float, default=RESTITUTION)
   ap.add_argument("--sensitivity", action="store_true", help="SH-04: print impact speed over follower reaction and braking")
+  ap.add_argument("--sh10", action="store_true", help="SH-10: print the lane-change contact angle and lateral speed")
   ap.add_argument("--sh02", action="store_true", help="SH-02: print the barrier impact angle of a departure in a curve")
   a = ap.parse_args(argv)
+  if a.sh10:
+    print("| Ego speed (km/h) | Lateral speed (km/h) | Contact angle (deg) | Lateral Δv per car (km/h) |\n|---|---|---|---|")
+    for v in SH10_SPEEDS_KMH:
+      c = lane_change_contact(v)
+      print(f"| {v:.0f} | {c['v_lat_kmh']:.1f} | {c['angle_deg']:.1f} | {c['dv_lateral_kmh']:.1f} |")
+    return 0
   if a.sh02:
     print("| Speed (km/h) | Radius at 3.0 m/s² (m) | Angle at 4 m (deg) | Below 25° test angle |\n|---|---|---|---|")
     for v in OS02_SPEEDS_KMH:

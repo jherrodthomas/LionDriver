@@ -106,6 +106,19 @@ class RiskCurveTest(unittest.TestCase):
       self.assertLess(rc.curve_departure_angle_deg(v), rc.BARRIER_TEST_ANGLE_DEG)
     self.assertGreater(rc.curve_departure_angle_deg(70), rc.curve_departure_angle_deg(110))
 
+  def test_sh10_contact_is_low_angle_and_low_lateral_speed(self):
+    import math
+    c = rc.lane_change_contact(90)
+    self.assertAlmostEqual(c["v_lat_kmh"], math.sqrt(2 * 3.0 * rc.LANE_CHANGE_GAP_M) * 3.6)
+    self.assertLess(c["v_lat_kmh"], 15)
+    self.assertLess(max(rc.lane_change_contact(v)["angle_deg"] for v in rc.SH10_SPEEDS_KMH), 25)
+    self.assertLess(rc.lane_change_contact(120)["angle_deg"], rc.lane_change_contact(60)["angle_deg"])
+
+  def test_sh10_cli(self):
+    with redirect_stdout(io.StringIO()) as buf:
+      self.assertEqual(rc.main(["--sh10"]), 0)
+    self.assertIn("| 120 |", buf.getvalue())
+
   def test_sensitivity_grid(self):
     with redirect_stdout(io.StringIO()) as buf:
       self.assertEqual(rc.main(["--sensitivity"]), 0)
