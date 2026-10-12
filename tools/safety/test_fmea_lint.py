@@ -631,5 +631,26 @@ class TestFmeaExport(unittest.TestCase):
     self.assertEqual(mod.generate("in.json", "out.xlsx"), "L")  # AIAG-VDA table, not the builders' S>=9 rule
 
 
+class TestFmedaExport(unittest.TestCase):
+  def test_repo_fmedas_compute_metrics(self):
+    for name in ("fmeda-sg001", "fmeda-sg009"):
+      doc = fmea_lint.load_yaml((REPO / f"assurance/08-analyses/fmea/analyses/{name}.yaml").read_text())
+      m = fmea_lint.fmeda_metrics(doc)
+      self.assertIsNotNone(m, name)
+      self.assertTrue(0 < m["spfm"] <= 1 and 0 < m["lfm"] <= 1)
+
+  def test_workbook_rows_and_labels(self):
+    import export_fmeda_xlsx
+    doc = fmea_lint.load_yaml((REPO / "assurance/08-analyses/fmea/analyses/fmeda-sg009.yaml").read_text())
+    ws = export_fmeda_xlsx.build(doc, "x.yaml")["06_FMEDA_Worksheet"]
+    ids = [ws.cell(r, export_fmeda_xlsx.C["Row ID"]).value for r in range(2, ws.max_row + 1)]
+    self.assertEqual(ids, [fm["id"] for c in doc["components"] for fm in c["failure_modes"]])
+    dist = [ws.cell(r, export_fmeda_xlsx.C["Distribution %"]).value for r in range(2, ws.max_row + 1)]
+    self.assertAlmostEqual(sum(dist), 100 * len(doc["components"]))
+    headers = [ws.cell(1, c).value.lower() for c in range(1, ws.max_column + 1)]
+    self.assertLess(headers.index("lambda s"), headers.index("lambda spf"))  # reviewer partial-match order
+
+
+
 if __name__ == "__main__":
   unittest.main()

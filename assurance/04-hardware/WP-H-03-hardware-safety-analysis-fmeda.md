@@ -5,7 +5,7 @@
 | Work product | WP-H-03 Hardware safety analysis (FMEA/FMEDA) |
 | Standard reference | ISO 26262-5:2018 §7 (safety analyses on HW design), §8 (metrics input), Annex D (diagnostic coverage of safety mechanisms, informative); ISO 26262-9:2018 §8 (safety analyses); ISO 26262-11:2018 (semiconductor failure modes, informative); ASPICE 4.0 HWE.2 |
 | Version | 0.1 |
-| Status | Draft (qualitative FMEA); quantitative FMEDA is a template |
+| Status | Draft (qualitative FMEA); quantitative FMEDA: generic-rate estimate in §6.3, part-level template TBD |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
@@ -251,6 +251,55 @@ All quantitative columns: **TBD — requires BOM** (WP-H-02 UK-02).
 | Package / pins | TBD | Open, short | Y | Per pin function | — | TBD |
 | Transient faults (all sequential logic) | TBD | Bit flips | Y | As per part | — | TBD |
 
+### 6.3 First quantitative estimate with generic failure rates (BL-002)
+
+§6.1 and §6.2 stay TBD until the BOM is known. Meanwhile a block-level FMEDA with **generic** failure rates is kept as YAML in [`../08-analyses/fmea/analyses/fmeda-sg001.yaml`](../08-analyses/fmea/analyses/fmeda-sg001.yaml) and [`fmeda-sg009.yaml`](../08-analyses/fmea/analyses/fmeda-sg009.yaml) (SG IDs of LD-HARA-001: SG-001 = SG-01 here, SG-009 = SG-07). The metrics are computed by `tools/safety/fmea_lint.py`, and the same formulas are used in the workbooks from `tools/safety/export_fmeda_xlsx.py`.
+
+The rates are order-of-magnitude estimates per part type, not values looked up for the actual parts. The results show where the architecture falls short. **They are not evidence of compliance.**
+
+| Goal | Target used | λ (FIT) | SPFM | LFM | λSPF + λRF (FIT) | Result |
+|---|---|---|---|---|---|---|
+| SG-01 lateral | ASIL D (LD-HARA-001); ASIL C here | 220 | 96.9 % | 87.7 % | 6.9 | Misses D on SPFM and LFM; misses C on SPFM (97 %) by 0.1 point |
+| SG-07 stock PCS | ASIL B | 242 | 86.8 % | 98.9 % | 32.0 | Misses B on SPFM |
+
+Largest contributors:
+- **SG-01:**
+  - wrong result of a CPU limit or authority check, fully latent (12.5 FIT λMPF,L);
+  - clock drift with no cross-check (5.0);
+  - supply in the brown-out zone (4.5 FIT λSPF).
+- **SG-07:**
+  - CAN transceiver faults with the relay driven (12.0 FIT λSPF);
+  - relay welded or driver stuck on (6.0);
+  - stock-path open in the relay box (3.0);
+  - intermittent relay contact (3.0).
+
+**Sensitivity.** About 90 of the 220 FIT are single-bit SRAM upsets that ECC corrects. They count as covered multiple-point faults and so raise SPFM. With the SRAM soft-error rate at 10, 100 and 500 FIT for the 64 KB considered, the results move as follows:
+
+| SRAM rate (FIT) | SG-01 SPFM | SG-07 SPFM |
+|---|---|---|
+| 10 | 95.3 % | 79.2 % |
+| 100 | 96.9 % | 86.8 % |
+| 500 | 98.4 % | 94.7 % |
+
+A real SER figure for the STM32H725 (OI-3) therefore matters as much as the part list.
+
+**With the planned measures**, using conservative DC values:
+- **SG-01**, measures added in this order:
+  - BOR/PVD reaction (DFM-ACT-005);
+  - RAMECC double-error reaction (DFM-ACT-002);
+  - clock cross-check (DFM-ACT-004);
+  - a low-coverage CPU self-test (DFM-ACT-001);
+  - TX read-back (TSR-517).
+
+  Result: SPFM 99.3 %, LFM 95.3 %, λSPF + λRF 1.5 FIT, which meets ASIL D on generic rates.
+- **SG-07**, measures added in this order:
+  - relay readback (DFM-ACT-007, DC-03);
+  - releasing the relay on a transceiver fault (DFM-ACT-006);
+  - a readback that also checks stock-path continuity.
+
+  Result: SPFM 96.0 %, λSPF + λRF 9.6 FIT, which meets ASIL B. Readback alone reaches 90.5 %.
+- **Caveat for SG-07:** a welded relay cannot be released. The readback can only warn that stock AEB is unavailable, so the safe state for that case has to be a warning (OI-9).
+
 ## 7. Open items
 
 | ID | Item | Needed by |
@@ -263,3 +312,5 @@ All quantitative columns: **TBD — requires BOM** (WP-H-02 UK-02).
 | OI-6 | Define fault-injection methods for each "planned" DC claim (WP-H-06) | G3 |
 | OI-7 | Analyse the harness relay design to confirm or refute FM-REL-02/04 plausibility (relay type, coil drive) | G2 |
 | OI-8 | Re-run the FMEA after each WP-H-02 §6 change is implemented | G3 |
+| OI-9 | SG-07: decide the safe state when relay readback finds the relay welded in the intercept position (it cannot be released): driver warning that stock AEB is unavailable, and whether that is acceptable under SG-07 | G2 |
+| OI-10 | Replace the generic rates of §6.3 with part-specific values (BOM, ST data, SER) and add the dual-point PMHF term | G3 |

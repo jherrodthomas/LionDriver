@@ -112,6 +112,12 @@ Prioritised by safety relevance (path from perception to actuator):
 
 **DFMEA (rev 0.2, `analyses/dfmea.yaml`):** 18 failure modes and 21 causes across 10 hardware elements of the comma 3X panda section, harness and relay box, based on WP-H-02/WP-H-03. Every row is S10, AP H, and most have no LionDriver hardware verification (D9–D10). The watchdog (DFM-004) is the only cause whose occurrence the BL-002 firmware lowers.
 
+**FMEDA (rev 0.2, `analyses/fmeda-sg001.yaml`, `fmeda-sg009.yaml`):** block-level, **generic failure rates**. Results:
+- SG-001: 220 FIT, SPFM 96.9 %, LFM 87.7 %, λSPF + λRF 6.9 FIT.
+- SG-009: 242 FIT, SPFM 86.8 %, LFM 98.9 %, λSPF + λRF 32 FIT.
+
+Neither meets its target yet. The effect of the planned DFMEA measures and the soft-error sensitivity are in WP-H-03 §6.3. Workbooks: `tools/safety/export_fmeda_xlsx.py <name>`.
+
 **Workbooks:** `tools/safety/export_fmea_xlsx.py sw|dfmea --generator <builder script>` writes `exports/sw-fmea.xlsx` and `exports/dfmea.xlsx` (git-ignored) with the sw-fmea-builder and dfmea-builder layouts. AP comes from the RT-1 table, not the builders' simplified rule.
 
 This file supports the narrative analysis in [WP-W-04](../../05-software/WP-W-04-software-safety-analysis.md) with AIAG-VDA ratings (WP-W-04 §3.5).
@@ -173,7 +179,7 @@ assurance/08-analyses/fmea/
     dfmea.yaml
     sw-fmea.yaml
     pfmea.yaml
-    fmeda-<scope>.yaml         (one FMEDA per safety goal / HW scope; Phase A = fmeda-panda.yaml)
+    fmeda-<goal>.yaml          (one FMEDA per safety goal: fmeda-sg001.yaml lateral, fmeda-sg009.yaml stock AEB)
   exports/                     (generated .xlsx for review; git-ignored, regenerate)
   reviews/                     (review records, e.g. hara-r0.1-precheck.md)
   design/                      (safety design specifications, e.g. LD-DES-001 panda configuration lock)
