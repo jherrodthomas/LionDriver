@@ -255,6 +255,18 @@ SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the 
 
     - **Decision:** P(severity class) stays at the average. It enters a rate of harm over all the VRUs LionDriver may strike, and the average over struck persons is the quantity that rate needs. This holds only while LionDriver's VRU exposure has about the national age mix. The residual-risk statement (WP-K-02) reports the age-70 values beside the average, so that an older person's risk (about double in OS-04, 0.72 against 0.38) is stated, not averaged away.
     - **Not covered:** the age mix of LionDriver's own VRU encounters. A drive log with many encounters near schools, care homes or retirement areas would call for the age-shifted value in that stratum.
+  - **Against the Richards pedestrian curves (checked 2026-10-12 against the report's text, section 2 and table 4.1; `risk_curve.py --pedestrian-compare`).** Richards (2010) fits three pedestrian datasets with one method, each weighted to national casualties (which the report says is likely to overestimate the risk). Ages 15 and over, to match Tefft:
+
+    | Impact | Tefft (used) | Ashton and Mackay, GB 1970s | OTS and police fatal files, GB 2000–09 | GIDAS (Rosén and Sander), DE 1999–2007 |
+    |---|---|---|---|---|
+    | 30 mph | 0.22 | 0.14 | 0.09 | 0.07 |
+    | 40 mph | 0.45 | 0.60 | 0.33 | 0.25 |
+    | SH-11 OS-04, 60 km/h | **0.38** | 0.45 | 0.24 | 0.18 |
+    | SH-11 OS-06, 18 km/h | **0.05** | 0.002 | 0.005 | 0.004 |
+
+    - The 30 and 40 mph rows are the report's values; the SH-11 rows use a logistic through them, extrapolated at 18 km/h.
+    - **Result:** Tefft is above both recent datasets in both SH-11 cases, by a factor of 1.6–2.1 in OS-04 and about 10 in OS-06. Only the 1970s data are higher in OS-04. The report attributes the fall since the 1970s to car design and medical care, and says the three curves lie within each other's confidence bands.
+    - **Decision:** Tefft stays the curve. It is conservative against the recent European data, and the 1970s fleet does not represent the cars LionDriver runs on. The report's age split (Ashton and Mackay, all ages: 47 % at 30 mph for elderly pedestrians against 5 % for adults) agrees in direction with the Tefft age check above.
   - **Corrected citation:** the anchors are from this 2011 report. The earlier citation named the journal version, Tefft (2013), *Accident Analysis and Prevention* 50, 871–878, which gives about 10 % near 24 mph and 50 % near 41 mph. With the journal values, SH-11 at the OS-04 bound would be about 0.40 instead of 0.38.
 
 ## 4. Validation targets

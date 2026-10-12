@@ -340,6 +340,24 @@ def richards_side(dv_kmh: float) -> float:
   return logistic(dv_kmh * MPH_PER_KMH, RICHARDS_SIDE_A, RICHARDS_SIDE_B_PER_MPH)
 
 
+# Pedestrian curves of Richards (2010), section 2 and table 4.1 (checked 2026-10-12 against the
+# report's text), for comparison with Tefft (`--pedestrian-compare`). Risk of death at 30 and
+# 40 mph impact speed, pedestrians aged 15 and over (Tefft's sample is also 15 and over); each
+# is weighted to national casualties, which the report says is likely to overestimate the risk.
+# A logistic through the two points stands in for each curve; outside 30-40 mph it extrapolates.
+RICHARDS_PEDESTRIAN_15PLUS = {
+  "Ashton and Mackay (GB, 1970s)": (0.14, 0.60),
+  "OTS and police fatal files (GB, 2000-09)": (0.09, 0.33),
+  "GIDAS, Rosén and Sander (DE, 1999-2007)": (0.07, 0.25),
+}
+
+
+def two_point_logistic_mph(mph: float, p30: float, p40: float) -> float:
+  import math
+  l30, l40 = math.log(p30 / (1 - p30)), math.log(p40 / (1 - p40))
+  return logistic(mph - 30.0, l30, (l40 - l30) / 10.0)
+
+
 def barrier_lateral_dv_kmh(speed_kmh: float, e: float = RESTITUTION) -> float:
   """Lateral delta-v of a departure into a barrier at the curve-departure angle (rigid barrier)."""
   import math
@@ -374,6 +392,8 @@ def main(argv: list[str] | None = None) -> int:
                   help="SH-01/SH-02: print the barrier impact angle of a lane departure at the controller limit")
   ap.add_argument("--low-speed", action="store_true",
                   help="SH-11: compare the linear pedestrian risk below 23 mph with two logistic curves")
+  ap.add_argument("--pedestrian-compare", action="store_true",
+                  help="SH-11: compare the Tefft curve with the Richards (2010) pedestrian curves")
   ap.add_argument("--age", action="store_true",
                   help="SH-11: print the VRU cases with the risk curve shifted for the struck person's age")
   ap.add_argument("--age-offset-mph", type=float, default=AGE_OFFSET_70_30_MPH,
@@ -381,6 +401,16 @@ def main(argv: list[str] | None = None) -> int:
   a = ap.parse_args(argv)
   JOKSCH_MPH = a.joksch_mph
   OCCUPANT_CURVE = a.curve
+  if a.pedestrian_compare:
+    rows = [("30 mph", 30 / MPH_PER_KMH), ("40 mph", 40 / MPH_PER_KMH)] + [(sh, v) for sh, _label, v in vru_cases()]
+    print("| Impact | km/h | Tefft (used) | " + " | ".join(RICHARDS_PEDESTRIAN_15PLUS) + " |")
+    print("|---|---|---|" + "---|" * len(RICHARDS_PEDESTRIAN_15PLUS))
+    for name, v in rows:
+      cols = [name, f"{v:.0f}", f"{pedestrian_fatality(v):.3f}"]
+      cols += [f"{two_point_logistic_mph(v * MPH_PER_KMH, *pts):.3f}" for pts in RICHARDS_PEDESTRIAN_15PLUS.values()]
+      print("| " + " | ".join(cols) + " |")
+    print("\nRichards (2010) table 4.1, ages 15+; logistic through the 30 and 40 mph values, extrapolated outside them.")
+    return 0
   if a.age:
     for ref, kind in ((AGE_REFERENCE_YEARS, "bound"), (AGE_SAMPLE_MEAN_YEARS, "central, sample mean")):
       ages = " | ".join(f"Age {y} (+{age_shift_mph(y, ref, a.age_offset_mph):.1f} mph)" for y in AGES_YEARS)

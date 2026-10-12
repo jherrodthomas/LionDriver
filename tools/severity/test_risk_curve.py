@@ -165,6 +165,17 @@ class RiskCurveTest(unittest.TestCase):
     self.assertLess(rc.lane_change_contact(120)["dv_lateral_kmh"], median_kmh)
     self.assertLess(rc.richards_side(rc.barrier_lateral_dv_kmh(120)), 0.005)
 
+  def test_pedestrian_compare_with_richards(self):
+    for p30, p40 in rc.RICHARDS_PEDESTRIAN_15PLUS.values():
+      self.assertAlmostEqual(rc.two_point_logistic_mph(30, p30, p40), p30)
+      self.assertAlmostEqual(rc.two_point_logistic_mph(40, p30, p40), p40)
+    with redirect_stdout(io.StringIO()) as buf:
+      self.assertEqual(rc.main(["--pedestrian-compare"]), 0)
+    out = buf.getvalue()
+    # Tefft is above both recent datasets at OS-04 and below only the 1970s data
+    self.assertIn("| SH-11 OS-04 | 60 | 0.382 | 0.451 | 0.241 | 0.182 |", out)
+    self.assertIn("| SH-11 OS-06 | 18 | 0.048 | 0.002 | 0.005 | 0.004 |", out)
+
   def test_pedestrian_curve_is_monotone(self):
     risks = [rc.pedestrian_fatality(v) for v in range(0, 120, 5)]
     self.assertEqual(risks, sorted(risks))
