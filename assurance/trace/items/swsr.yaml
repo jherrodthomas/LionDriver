@@ -223,7 +223,7 @@
   allocated_to: "U-SAF-TOY, U-SAF-CORE"
   verification: "UT, RP, VT"
   acceptance: "Revocation within 1 frame of a fault code; fault set confirmed on reference EPS logs"
-  baseline_impl: "Not impl: host only (`carstate.py:122-127`, codes `:19-22`); not in RX checks (`modes/toyota.h:39-46`) (GAP-03)"
+  baseline_impl: "Partial (opendbc `98404a4`): `0x262` in the reference RX set with checksum and timeout (`TOYOTA_REFERENCE_RX_CHECKS`, `modes/toyota.h`; test `test_reference_rx_checks`). Not impl: revocation on LKA_STATE fault codes (host only, `carstate.py:122-127`, codes `:19-22`) (GAP-03)"
   status: proposed
   source: WP-W-02
 
@@ -517,7 +517,7 @@
   allocated_to: "U-SAF-CORE"
   verification: "UT, HIL, FI"
   acceptance: "Detection ≤ 5 periods + one task period (≤ 0.2 s for 33 Hz `0x1D2`)"
-  baseline_impl: "Met for the four Toyota RX checks (opendbc `aff4033`; `safety.h` `rx_check_lagging()`, `modes/toyota.h`); not yet verified on hardware ([IA RX timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md))"
+  baseline_impl: "Met for the Toyota RX checks: the four common ones (opendbc `aff4033`) and, in the reference build, `0x262` and `0x1D3` (opendbc `98404a4`); `safety.h` `rx_check_lagging()`, `modes/toyota.h`; `0xB4` not added (no nominal rate); not yet verified on hardware ([IA RX timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md))"
   status: proposed
   source: WP-W-02
 
