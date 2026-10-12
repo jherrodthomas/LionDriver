@@ -322,4 +322,4 @@ There is no degraded "lateral-only" or "longitudinal-only" operating mode in the
 | OI-5 | Closed: the FSR-07.02 finding (TX whitelist allows `0x344`/`0x411`) is registered as GAP-42 | Safety engineer | G1 |
 | OI-6 | Confirm relay de-energised state and power-loss behaviour (AOU-13) | HW lead | G2 |
 | OI-7 | Refine FSRs into TSR-1xx…7xx in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) and record FSR→TSR trace in `trace/` | Safety engineer | G2 |
-| OI-8 | HARA has no H-07 / SG for H-07; confirm the numbering gap is intentional | HARA owner | G1 |
+| OI-8 | Closed: WP-C-03 v0.2 rates H-07 (HE-07.1…07.3, ASIL B) and assigns it to SG-02/SG-06. The FSRs for SG-02/SG-06 must cover the engagement indication and take-over alerts (WP-C-03 §6.1 obs. 5) | HARA owner | G1 |
