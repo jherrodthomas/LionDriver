@@ -13,13 +13,34 @@ flowchart LR
   G3["G3 HW/SW development<br/>18 activities modelled"]
   G4["G4 Integration and verification<br/>7 activities modelled"]
   G5["G5 Validation and release<br/>13 activities modelled"]
-  G6["G6 Operation<br/>not modelled yet"]
+  G6["G6 Operation<br/>2 activities modelled"]
   G0 --> G1 --> G2 --> G3 --> G4 --> G5 --> G6
   classDef modelled fill:#1f6feb,stroke:#0b3d91,color:#ffffff
   classDef pending fill:#f6f8fa,stroke:#8c959f,color:#57606a,stroke-dasharray: 4 3
-  class G1,G2,G3,G4,G5 modelled
-  class G0,G6 pending
+  class G1,G2,G3,G4,G5,G6 modelled
+  class G0 pending
 ```
+
+## Feedback into earlier phases
+
+Findings that a later phase routes back into work products of earlier phases (FB-nn, listed in the map of the phase that raises them). A finding that needs a change re-enters through problem resolution, change management and impact analysis.
+
+```mermaid
+flowchart LR
+  F_G6["G6 Operation"]
+  T_G1["G1 Concept"]
+  T_G2["G2 System design"]
+  T_G3["G3 HW/SW development"]
+  T_G4["G4 Integration and verification"]
+  T_G5["G5 Validation and release"]
+  F_G6 -. "FB-01, FB-02, FB-03, FB-04, FB-05, FB-06" .-> T_G1
+  F_G6 -. "FB-01" .-> T_G2
+  F_G6 -. "FB-04" .-> T_G3
+  F_G6 -. "FB-02" .-> T_G4
+  F_G6 -. "FB-02, FB-03" .-> T_G5
+```
+
+## Phases
 
 | Gate | Phase | Exit criterion (WP-M-00 §2) | Handbook chapters | Process map |
 |---|---|---|---|---|
@@ -29,4 +50,4 @@ flowchart LR
 | G3 | HW/SW development | HW and SW safety requirements, architecture, units and unit verification approved for every safety-relevant element | 7, 8 | [G3 map](g3-hw-sw-development.md) |
 | G4 | Integration and verification | SW, HW and system integration and qualification evidence complete; fault injection campaign closed | 9 | [G4 map](g4-integration-and-verification.md) |
 | G5 | Validation and release | Safety validation, SOTIF residual risk acceptance, CS validation, safety case, FSA and CS assessment complete; release record signed | 9 | [G5 map](g5-validation-and-release.md) |
-| G6 | Operation | Field monitoring, incident response and update processes running | 10 | Not modelled yet |
+| G6 | Operation | Field monitoring, incident response and update processes running | 10 | [G6 map](g6-operation.md) |

@@ -96,6 +96,20 @@ class ProcessModelTest(unittest.TestCase):
     for wp in ("WP-K-03", "WP-K-04", "WP-K-05", "WP-V-06"):
       self.assertNotIn(wp, line)
 
+  def test_feedback_into_a_later_phase(self):
+    self.assertFails("P9", lambda m: m.feedback["FB-01"].update(targets=["WP-O-05"]))
+
+  def test_feedback_anchor_missing(self):
+    self.assertFails("P9", lambda m: m.feedback["FB-03"].update(anchors=["WP-O-04:no such routing row"]))
+
+  def test_gate_without_measures_renders_without_empty_lane(self):
+    model = copy.deepcopy(self.base)
+    orders = pm.check(model, self.ctx)
+    g6 = pm.render_phase("G6", orders["G6"], model, self.ctx)
+    self.assertNotIn("L_assess", g6)
+    self.assertIn("none planned at this gate", g6)
+    self.assertNotRegex(g6, r"\n  class +review")
+
   def test_transitive_edges_removed(self):
     acts = {"A": {"inputs": []}, "B": {"inputs": ["a"]}, "C": {"inputs": ["a", "b"]}}
     self.assertEqual(pm.direct_deps(acts, {"a": "A", "b": "B"}), {"A": set(), "B": {"A"}, "C": {"B"}})

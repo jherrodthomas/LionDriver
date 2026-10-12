@@ -44,8 +44,9 @@ REQUIRED = {
   "activity": ["id", "kind", "phase", "lane", "name", "produces", "inputs", "handbook_wp"],
   "review": ["id", "kind", "phase", "name", "covers", "independence"],
   "interface": ["id", "kind", "phase", "between", "pattern", "topic", "anchors", "status", "open_item", "due"],
+  "feedback": ["id", "kind", "phase", "source", "targets", "finding", "anchors"],
 }
-LIST_FIELDS = {"handbook_chapters", "produces", "updates", "inputs", "handbook_wp", "covers", "between", "anchors"}
+LIST_FIELDS = {"handbook_chapters", "produces", "updates", "inputs", "handbook_wp", "covers", "between", "anchors", "targets"}
 
 
 # ---------------------------------------------------------------- sources
@@ -125,6 +126,7 @@ class Model:
   activities: dict[str, dict] = field(default_factory=dict)
   reviews: dict[str, dict] = field(default_factory=dict)
   interfaces: dict[str, dict] = field(default_factory=dict)
+  feedback: dict[str, dict] = field(default_factory=dict)
   errors: list[str] = field(default_factory=list)
 
   def err(self, check: str, where: str, msg: str) -> None:
@@ -133,7 +135,7 @@ class Model:
 
 def load_model(model_dir: Path = MODEL_DIR) -> Model:
   model = Model()
-  buckets = {"phase": model.phases, "lane": model.lanes, "activity": model.activities, "review": model.reviews, "interface": model.interfaces}
+  buckets = {"phase": model.phases, "lane": model.lanes, "activity": model.activities, "review": model.reviews, "interface": model.interfaces, "feedback": model.feedback}
   for path in sorted(model_dir.glob("*.yaml")):
     try:
       items = _load_subset(path.read_text(encoding="utf-8"))
@@ -314,16 +316,35 @@ def check(model: Model, ctx: Context) -> dict[str, list[str]]:
     for wp in ix["between"]:
       if wp not in producer:
         model.err("P7", iid, f"{wp} is not produced by any activity")
-    for anchor in ix["anchors"]:
-      wp, sep, needle = anchor.partition(":")
-      if not sep or wp not in reg:
-        model.err("P7", iid, f"anchor {anchor!r} must be WP-x-nn:text with a registered work product")
-        continue
-      if wp not in texts:
-        texts[wp] = reg[wp].path.read_text(encoding="utf-8") if reg[wp].path.exists() else ""
-      if needle not in texts[wp]:
-        model.err("P7", iid, f"anchor text {needle!r} not found in {wp}")
+    check_anchors(model, "P7", iid, ix["anchors"], reg, texts)
+
+  # P9 feedback: a finding of a later phase routed back to work products of earlier phases
+  phase_of = {wp: a["phase"] for a in model.activities.values() for wp in a["produces"]}
+  for fid, fb in model.feedback.items():
+    if fb["source"] not in phase_of:
+      model.err("P9", fid, f"source {fb['source']} is not produced by any activity")
+    elif phase_of[fb["source"]] != fb["phase"]:
+      model.err("P9", fid, f"source {fb['source']} is produced in {phase_of[fb['source']]}, not {fb['phase']}")
+    for wp in fb["targets"]:
+      if wp not in phase_of:
+        model.err("P9", fid, f"target {wp} is not produced by any activity")
+      elif fb["phase"] in GATES and GATES.index(phase_of[wp]) >= GATES.index(fb["phase"]):
+        model.err("P9", fid, f"target {wp} is produced in {phase_of[wp]}, not in an earlier phase")
+    check_anchors(model, "P9", fid, fb["anchors"], reg, texts)
   return orders
+
+
+def check_anchors(model: Model, check: str, where: str, anchors: list[str], reg: dict[str, RegisterRow], texts: dict[str, str]) -> None:
+  """Each anchor `WP-x-nn:text` must name a registered work product whose file contains the text."""
+  for anchor in anchors:
+    wp, sep, needle = anchor.partition(":")
+    if not sep or wp not in reg:
+      model.err(check, where, f"anchor {anchor!r} must be WP-x-nn:text with a registered work product")
+      continue
+    if wp not in texts:
+      texts[wp] = reg[wp].path.read_text(encoding="utf-8") if reg[wp].path.exists() else ""
+    if needle not in texts[wp]:
+      model.err(check, where, f"anchor text {needle!r} not found in {wp}")
 
 
 # ---------------------------------------------------------------- rendering
@@ -363,6 +384,11 @@ def render_lifecycle(model: Model, ctx: Context) -> str:
     detail = f"{n} activities modelled" if model.phases.get(g, {}).get("modelled") else "not modelled yet"
     lines.append(f"  {g}[{_q(f'{g} {name}<br/>{detail}')}]")
   lines.append("  " + " --> ".join(GATES))
+  phase_of = {wp: a["phase"] for a in model.activities.values() for wp in a["produces"]}
+  back: dict[tuple[str, str], list[str]] = {}
+  for fb in model.feedback.values():
+    for g in sorted({phase_of[w] for w in fb["targets"] if w in phase_of}):
+      back.setdefault((fb["phase"], g), []).append(fb["id"])
   lines.append("  classDef modelled fill:#1f6feb,stroke:#0b3d91,color:#ffffff")
   lines.append("  classDef pending fill:#f6f8fa,stroke:#8c959f,color:#57606a,stroke-dasharray: 4 3")
   mod = [g for g in GATES if model.phases.get(g, {}).get("modelled")]
@@ -371,7 +397,20 @@ def render_lifecycle(model: Model, ctx: Context) -> str:
   pend = [g for g in GATES if g not in mod]
   if pend:
     lines.append(f"  class {','.join(pend)} pending")
-  lines += ["```", "", "| Gate | Phase | Exit criterion (WP-M-00 §2) | Handbook chapters | Process map |", "|---|---|---|---|---|"]
+  lines.append("```")
+  if back:
+    lines += ["", "## Feedback into earlier phases", "",
+              "Findings that a later phase routes back into work products of earlier phases (FB-nn, listed in the map of the phase that raises them). A finding that needs a change re-enters through problem resolution, change management and impact analysis.",
+              "", "```mermaid", "flowchart LR"]
+    targets = sorted({dst for _, dst in back}, key=GATES.index)
+    for g in sorted({src for src, _ in back}, key=GATES.index):
+      lines.append(f"  F_{g}[{_q(g + ' ' + ctx.gates[g][0])}]")
+    for g in targets:
+      lines.append(f"  T_{g}[{_q(g + ' ' + ctx.gates[g][0])}]")
+    for (src, dst), ids in sorted(back.items(), key=lambda kv: (GATES.index(kv[0][0]), GATES.index(kv[0][1]))):
+      lines.append(f"  F_{src} -. {_q(', '.join(ids))} .-> T_{dst}")
+    lines.append("```")
+  lines += ["", "## Phases", "", "| Gate | Phase | Exit criterion (WP-M-00 §2) | Handbook chapters | Process map |", "|---|---|---|---|---|"]
   for g in GATES:
     name, exit_ = ctx.gates.get(g, ("?", "?"))
     ch = ", ".join(str(c) for c in model.phases.get(g, {}).get("handbook_chapters", []))
@@ -419,14 +458,16 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
       if a["lane"] == lid:
         out.append(f"    {_nid(a['id'])}[{_q(a['id'] + '<br/>' + a['name'] + '<br/>' + _outputs_label(a))}]")
     out.append("  end")
-  out.append(f"  subgraph L_assess[{_q(model.lanes['assess']['name'])}]")
-  out.append("    direction LR")
-  for a in acts:
-    if a["lane"] == "assess":
-      out.append(f"    {_nid(a['id'])}[{_q(a['id'] + '<br/>' + a['name'] + '<br/>' + _outputs_label(a))}]")
-  for r in reviews:
-    out.append(f"    {_nid(r['id'])}[{_q(r['id'] + '<br/>' + r['independence'])}]")
-  out.append("  end")
+  has_assess = bool(reviews) or any(a["lane"] == "assess" for a in acts)
+  if has_assess:
+    out.append(f"  subgraph L_assess[{_q(model.lanes['assess']['name'])}]")
+    out.append("    direction LR")
+    for a in acts:
+      if a["lane"] == "assess":
+        out.append(f"    {_nid(a['id'])}[{_q(a['id'] + '<br/>' + a['name'] + '<br/>' + _outputs_label(a))}]")
+    for r in reviews:
+      out.append(f"    {_nid(r['id'])}[{_q(r['id'] + '<br/>' + r['independence'])}]")
+    out.append("  end")
   out.append(f"  GATE{{{{{_q(gid + ' ' + name + ' gate')}}}}}")
   edges = direct_deps({a["id"]: a for a in acts}, producer)
   for a in acts:
@@ -436,12 +477,14 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
   for a in acts:
     if a["lane"] != "assess" and not any(w in consumed and producer.get(w) == a["id"] for w in outputs(a)):
       out.append(f"  {_nid(a['id'])} --> GATE")
-  out.append("  L_assess --> GATE")
+  if has_assess:
+    out.append("  L_assess --> GATE")
   joint = [_nid(a["id"]) for a in acts if a["lane"] == "joint"]
   if joint:
     out += ["  classDef joint fill:#dafbe1,stroke:#1a7f37,color:#0f3d1c", f"  class {','.join(joint)} joint"]
-  out += ["  classDef review fill:#fff8c5,stroke:#9a6700,color:#3d2c00", f"  class {','.join(_nid(r['id']) for r in reviews)} review",
-          "  classDef gate fill:#1f6feb,stroke:#0b3d91,color:#ffffff", "  class GATE gate", "```", ""]
+  if reviews:
+    out += ["  classDef review fill:#fff8c5,stroke:#9a6700,color:#3d2c00", f"  class {','.join(_nid(r['id']) for r in reviews)} review"]
+  out += ["  classDef gate fill:#1f6feb,stroke:#0b3d91,color:#ffffff", "  class GATE gate", "```", ""]
 
   # 1.1 interface map: one node per lane, one edge per lane pair listing its interfaces
   out += ["### 1.1 Interface map", "",
@@ -479,6 +522,17 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
     out.append(f"| {x['id']} | {x['pattern']} | {', '.join(_link(w, ctx) for w in x['between'])} ({lanes}) | {x['topic']} | {x['status'].capitalize()} | {x['open_item'] or '—'} | {x['due']} |")
   out.append("")
 
+  fbs = [f for f in model.feedback.values() if f["phase"] == gid]
+  if fbs:
+    phase_of = {wp: a["phase"] for a in model.activities.values() for wp in a["produces"]}
+    out += ["### 3.1 Feedback into earlier phases", "",
+            "Findings of this phase that re-open work products of earlier phases. Each row is anchored to the routing table of the source work product.", "",
+            "| ID | Finding | From | Back into |", "|---|---|---|---|"]
+    for f in fbs:
+      into = ", ".join(f"{_link(w, ctx)} ({phase_of.get(w, '?')})" for w in f["targets"])
+      out.append(f"| {f['id']} | {f['finding']} | {_link(f['source'], ctx)} | {into} |")
+    out.append("")
+
   # 4. clause coverage by standard
   out += ["## 4. Clause coverage by standard", "",
           "Which activity answers each clause reference listed in the register. One activity can answer several standards; that is the point of the integrated lifecycle.", ""]
@@ -500,11 +554,12 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
     counts[ctx.register[w].status] = counts.get(ctx.register[w].status, 0) + 1
   out.append("**Work products:** " + ", ".join(f"{n} {STATUS_NAMES.get(s, s)}" for s, n in sorted(counts.items())) + f" of {len(wps)}. Approval needs the verification review of [WP-P-05](../../07-supporting/WP-P-05-verification-review-procedure.md).")
   out += ["", "**Roles the lanes need (WP-M-02 §3.1):**", "", "| Lane | Role | Assigned to | Needed by |", "|---|---|---|---|"]
-  for lid in [*lane_ids, "assess"]:
+  used_lanes = [*lane_ids, "assess"] if (reviews or any(a["lane"] == "assess" for a in acts)) else lane_ids
+  for lid in used_lanes:
     role = model.lanes[lid]["role"]
     who, by = ctx.roles.get(role, ("?", "?"))
     out.append(f"| {model.lanes[lid]['name']} | {role} | {who} | {by} |")
-  lane_roles = {model.lanes[lid]["role"] for lid in [*lane_ids, "assess"]}
+  lane_roles = {model.lanes[lid]["role"] for lid in used_lanes}
   extra = []
   for role, (who, by) in ctx.roles.items():
     g = re.match(r"G\d", by)
@@ -516,7 +571,9 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
       extra.append(f"{role} ({who}; needed by {g.group(0)}, still unassigned)")
   if extra:
     out += ["", f"**Other roles WP-M-02 §3.1 needs by {gid}:** " + "; ".join(extra) + "."]
-  out += ["", "**Confirmation measures (WP-M-06 §9):**", "", "| Measure | Covers | Independence | Record |", "|---|---|---|---|"]
+  out += ["", "**Confirmation measures (WP-M-06 §9):**" + ("" if reviews else " none planned at this gate."), ""]
+  if reviews:
+    out += ["| Measure | Covers | Independence | Record |", "|---|---|---|---|"]
   for r in reviews:
     rec = record_path(r["id"])
     out.append(f"| {r['id']} {r['name']} | {', '.join(r['covers'])} | {r['independence']} | {'Performed' if rec.exists() else 'Not performed'} |")

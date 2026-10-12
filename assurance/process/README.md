@@ -5,7 +5,7 @@
 | Work product | WP-P-11 Integrated process model (machine-readable) and generated process maps |
 | Standard reference | ISO 26262-2:2018 §6 (safety lifecycle, planning of activities); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6 (cybersecurity activities and their tailoring); ISO/PAS 8800:2024 (AI safety lifecycle); ASPICE 4.0 MAN.3 (project lifecycle definition). Informative: Integrated Automotive Standards Handbook (ISH-2026-001) §3.3–3.4, Ch. 5, Ch. 13 |
 | Version | 0.1 |
-| Status | Draft (phases modelled: G1 concept to G5 validation and release; G0 and G6 not yet modelled) |
+| Status | Draft (phases modelled: G1 concept to G6 operation; G0 governance not yet modelled) |
 | ASIL / scope | Process (all disciplines) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
@@ -27,12 +27,13 @@ The model is data, so a checker keeps it consistent with the documents and a gen
 
 | Map | Content |
 |---|---|
-| [maps/lifecycle.md](maps/lifecycle.md) | L0: the seven phases G0…G6, their exit criteria and the handbook chapter each one corresponds to |
+| [maps/lifecycle.md](maps/lifecycle.md) | L0: the seven phases G0…G6, the feedback from operation into earlier phases, their exit criteria and the handbook chapter each one corresponds to |
 | [maps/g1-concept.md](maps/g1-concept.md) | L1 for the concept phase: swimlane map, interface map, activity table with clauses, clause coverage per standard, G1 readiness |
 | [maps/g2-system-design.md](maps/g2-system-design.md) | L1 for the system design phase, same sections, G2 readiness |
 | [maps/g3-hw-sw-development.md](maps/g3-hw-sw-development.md) | L1 for the hardware and software development phase, same sections, G3 readiness |
 | [maps/g4-integration-and-verification.md](maps/g4-integration-and-verification.md) | L1 for the integration and verification phase, same sections, G4 readiness |
 | [maps/g5-validation-and-release.md](maps/g5-validation-and-release.md) | L1 for the validation and release phase, same sections, G5 readiness |
+| [maps/g6-operation.md](maps/g6-operation.md) | L1 for the operation phase, same sections plus the feedback routes into earlier phases, G6 readiness |
 
 L2 (how to perform an activity) remains the procedures and plans the activities point to; it is not modelled here.
 
@@ -58,9 +59,10 @@ Records use the same flat YAML subset as [`case/`](../case/README.md): a top-lev
 |---|---|---|
 | `phase` | [`model/lifecycle.yaml`](model/lifecycle.yaml) | `id` (gate G0…G6), `handbook_chapters`, `modelled` |
 | `lane` | `model/lifecycle.yaml` | `id`, `name`, `role` (a role in WP-M-02 §3.1), `plan` (the plan that governs the lane) |
-| `activity` | [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml), [`model/development.yaml`](model/development.yaml), [`model/integration.yaml`](model/integration.yaml), [`model/release.yaml`](model/release.yaml) | `id` (`CON-nn` concept, `DES-nn` system design, `DEV-nn` HW/SW development, `INT-nn` integration and verification, `REL-nn` validation and release), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp`; optional `updates` |
+| `activity` | [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml), [`model/development.yaml`](model/development.yaml), [`model/integration.yaml`](model/integration.yaml), [`model/release.yaml`](model/release.yaml), [`model/operation.yaml`](model/operation.yaml) | `id` (`CON-nn` concept, `DES-nn` system design, `DEV-nn` HW/SW development, `INT-nn` integration and verification, `REL-nn` validation and release, `OPS-nn` operation), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp`; optional `updates` |
 | `review` | same files as the phase's activities | `id` (the WP-M-06 measure; `<measure>@<gate>` when WP-M-06 plans it at several gates, e.g. `CR-06@G2`), `phase`, `name`, `covers`, `independence` |
 | `interface` | [`model/interfaces.yaml`](model/interfaces.yaml) | `id` (`IX-nn`), `phase`, `between` (two work products), `pattern`, `topic`, `anchors`, `status`, `open_item`, `due` |
+| `feedback` | `model/operation.yaml` | `id` (`FB-nn`), `phase`, `source` (the work product that raises the finding), `targets` (work products of earlier phases it re-opens), `finding`, `anchors` |
 
 Rules the records follow:
 
@@ -85,6 +87,7 @@ Rules the records follow:
 | P6 | The phase's confirmation measures equal the WP-M-06 §9 row for its gate, are defined in WP-M-06, and cover registered work products |
 | P7 | Interfaces connect two work products produced by activities; anchors occur verbatim; `open_item` is set exactly when the status is `open`; an interface is not due before its own phase |
 | P8 | The committed maps equal what the model generates (`--check` only) |
+| P9 | Feedback comes from a work product produced in its own phase, goes only to work products of earlier phases, and its anchors occur verbatim |
 
 `tools/test_process_model.py` shows that the committed model passes and that each check rejects a broken copy.
 
@@ -142,11 +145,19 @@ These findings come from the generated maps. They are observations for the safet
 5. **Nothing opened before G5 has been closed.** Nine open interfaces are due by G5: all eight from G1–G4 plus IX-25. Any of them still open at G5 is a condition on the release.
 6. **The operation documents get no confirmation measure:** installation (WP-O-01), operation and service (WP-O-02), user information and warnings (WP-O-03), and release management (WP-P-10). The user warnings are a SOTIF misuse measure (ISO 21448 §6, §13 in the register).
 
+### 6.6 Operation phase ([G6 map](maps/g6-operation.md))
+
+1. **Field monitoring is needed five gates before it is gated.** WP-O-04 applies "from the first LionDriver public-road drive (development phase, under WP-V-07)", and the road-test hold point WP-V-07 is a G1 work product. The register gates WP-O-04 at G6. Either the register entry or the hold point needs a field-monitoring slice gated at G1.
+2. **The G6 exit criterion is "processes running", and none is.** WP-O-05 is "process defined; not running": no vulnerability intake (GAP-28), no SBOM or scanning, no upstream advisory watch, and no signed updates (GAP-26, IX-30).
+3. **Operation has no independent check.** WP-M-06 plans no confirmation measure at G6, so neither field monitoring nor incident response is confirmed by anyone other than its authors.
+4. **Every field finding re-opens a G1 work product.** All six feedback routes (FB-01…FB-06) end in the concept phase: HARA, item definition, SOTIF analyses, misuse analysis, AI requirements or the safety case. WP-M-06 §4 repeats a confirmation review when a confirmed work product changes in a safety-relevant way. So a single field finding can trigger I3 confirmation reviews again, and that needs the external assessor even after release.
+5. **Ten open interfaces are due by G6:** the nine from G1–G5 plus IX-28, the shared event signatures between pre-release exploration and field monitoring.
+
 ## 7. Open items
 
 | ID | Item | Owner | Gate |
 |---|---|---|---|
-| OI-1 | Model the remaining phases: G6 operation (handbook Ch. 10) and G0 governance (handbook Ch. 4) | Safety manager | G6 |
+| OI-1 | Model G0 governance (handbook Ch. 4): the plans the other phases read from | Safety manager | G0 |
 | OI-2 | Add an "agreed" interface status set only through a recorded review, and decide whether cross-domain interfaces become requirement items (`IFR-nn`) in `trace/` | Safety manager | G2 |
 | OI-3 | Generate the G1 gate-record skeleton (`10-safety-case/gates/`) from §5 of the G1 map | Safety manager | G1 |
 | OI-4 | Derive pull-request checklists from the model: which activities and interfaces a change to a work product re-opens | Configuration and change manager | G2 |

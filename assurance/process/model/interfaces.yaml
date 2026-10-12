@@ -274,3 +274,45 @@
   status: documented
   open_item: null
   due: G5
+
+# Operation (G6)
+- id: IX-27
+  kind: interface
+  phase: G6
+  between: [WP-O-04, WP-O-05]
+  pattern: "Safety-Security"
+  topic: "A field event may have a safety or a cyber cause: field monitoring passes possible cyber causes to incident response, which watches field data for tampering indicators"
+  anchors: ["WP-O-04:Events found here that may have a cybersecurity cause are passed to it", "WP-O-05:Indicators of tampering"]
+  status: documented
+  open_item: null
+  due: G6
+- id: IX-28
+  kind: interface
+  phase: G6
+  between: [WP-O-04, WP-V-04]
+  pattern: "Operation-SOTIF"
+  topic: "Pre-release exploration and field monitoring must use the same event signatures and thresholds, or the unknown-scenario statistics are not comparable"
+  anchors: ["WP-V-04:Agree with WP-O-04 the signature set and thresholds"]
+  status: open
+  open_item: "WP-V-04 OI-5"
+  due: G6
+- id: IX-29
+  kind: interface
+  phase: G6
+  between: [WP-O-04, WP-W-10]
+  pattern: "Operation-AI"
+  topic: "Field monitoring checks that the ML models behave as validated and stay inside their input space; anomalies go back to the model test set"
+  anchors: ["WP-O-04:Are the ML models behaving as validated"]
+  status: documented
+  open_item: null
+  due: G6
+- id: IX-30
+  kind: interface
+  phase: G6
+  between: [WP-O-05, WP-P-10]
+  pattern: "Security-Release"
+  topic: "Security fixes reach the field as releases, but updates are not signed (GAP-26), so the update path is itself an open security weakness"
+  anchors: ["WP-O-05:| Signed updates | Not available (GAP-26); manual updates only |", "WP-O-05:release management [WP-P-10]"]
+  status: documented
+  open_item: null
+  due: G6

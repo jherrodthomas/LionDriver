@@ -29,7 +29,7 @@
 - id: G6
   kind: phase
   handbook_chapters: [10]
-  modelled: false
+  modelled: true
 
 - id: joint
   kind: lane
