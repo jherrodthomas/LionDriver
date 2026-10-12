@@ -57,8 +57,8 @@
 <text x="566.0" y="565.0" class="id">G-ENV</text>
 <text x="566.0" y="578.5" class="d">Envelope does not clamp</text>
 <text x="566.0" y="591.0" class="n">as SG-01: BE-1.06…1.09</text>
-<rect x="521.5" y="597.0" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
-<text x="566.0" y="606.5" class="b" fill="#222">repeated, SG-01</text>
+<rect x="491.8" y="597.0" width="148.4" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="566.0" y="606.5" class="b" fill="#222">developed in SG-01 sheet 2</text>
 <path d="M566.0,615.0 L584.0,645.0 L548.0,645.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
 <rect x="684" y="344.5" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
 <text x="784.0" y="363.5" class="id">BE-3.03</text>

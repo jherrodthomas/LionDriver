@@ -29,6 +29,7 @@ HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parent / "WP-A-04-system-fta-fmea.md"
 
 MAX_LEAVES_PER_SHEET = 16
+SHEET_OF: dict[int, tuple[str, int]] = {}   # id(defining node) -> (goal, sheet), filled by build()
 
 ID_RE = r"(?:TE-\d+|G(?:-[A-Za-z]+|\d+(?:\.\d+)*(?:\.[a-z])?)|BE-\d+\.\d+|UE-\d+\.\d+)"
 SECTION_RE = re.compile(r"^## \d+\. FTA — (SG-\d+): (.+)$")
@@ -363,7 +364,11 @@ def make_box(node: Node, sheet_root: Node, expand: bool) -> Box:
   italic = [ln for note in node.notes for ln in wrap(note)]
   badges = list(node.badges)
   if node.ref_of is not None:
-    badges.append(("repeat", f"repeated, {node.ref_tree}" if node.ref_tree else "repeated"))
+    if node.kind == "transfer_in" and id(node.ref_of) in SHEET_OF:
+      goal, no = SHEET_OF[id(node.ref_of)]
+      badges.append(("repeat", f"developed in {goal} sheet {no}" if node.ref_tree else f"developed on sheet {no}"))
+    else:
+      badges.append(("repeat", f"repeated, {node.ref_tree}" if node.ref_tree else "repeated"))
   if node is not sheet_root and node.sheet_link is not None:
     badges.append(("sheet", f"continued on sheet {node.sheet_link}"))
   if node is sheet_root and node.sheet_from is not None:
@@ -599,8 +604,16 @@ def build() -> dict[str, str]:
     "| Goal | Top event | Sheets |",
     "|---|---|---|",
   ]
+  all_sheets = {tree.goal: paginate(tree) for tree in trees}
+  SHEET_OF.clear()
+  for goal, sheets in all_sheets.items():
+    for no, root in enumerate(sheets, 1):
+      SHEET_OF[id(root)] = (goal, no)
+      for n in _desc(root):
+        if n.sheet_link is None:
+          SHEET_OF.setdefault(id(n), (goal, no))
   for tree in trees:
-    sheets = paginate(tree)
+    sheets = all_sheets[tree.goal]
     names = []
     for no, root in enumerate(sheets, 1):
       name = f"fta-{tree.goal}-{no}.svg"

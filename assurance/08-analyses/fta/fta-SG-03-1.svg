@@ -1,18 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="3094" height="1021" viewBox="0 0 3094 1021" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="3312" height="1046" viewBox="0 0 3312 1046" font-family="Helvetica, Arial, sans-serif">
 <style>.id{font-size:11px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.n{font-size:9.5px;font-style:italic;text-anchor:middle;fill:#444}.b{font-size:8.6px;font-weight:600;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
 <rect width="100%" height="100%" fill="#fff"/>
 <text x="30" y="36" class="h">FTA SG-03 — unintended acceleration  (sheet 1 of 2)</text>
-<rect x="1365.25" y="70" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="2.2"/>
-<text x="1465.25" y="89" class="id">TE-03</text>
-<text x="1465.25" y="102.5" class="d">Unintended acceleration</text>
-<path d="M1447.25,144.5 Q1465.25,136.5 1483.25,144.5 Q1481.25,120.5 1465.25,110.5 Q1449.25,120.5 1447.25,144.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<line x1="1465.25" y1="144.5" x2="1465.25" y2="162.5" class="w"/>
-<line x1="130.0" y1="162.5" x2="2800.5" y2="162.5" class="w"/>
+<rect x="1474.25" y="70" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="2.2"/>
+<text x="1574.25" y="89" class="id">TE-03</text>
+<text x="1574.25" y="102.5" class="d">Unintended acceleration</text>
+<path d="M1556.25,144.5 Q1574.25,136.5 1592.25,144.5 Q1590.25,120.5 1574.25,110.5 Q1558.25,120.5 1556.25,144.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1574.25" y1="144.5" x2="1574.25" y2="162.5" class="w"/>
+<line x1="130.0" y1="162.5" x2="3018.5" y2="162.5" class="w"/>
 <line x1="130.0" y1="162.5" x2="130.0" y2="180.5" class="w"/>
 <line x1="566.0" y1="162.5" x2="566.0" y2="180.5" class="w"/>
-<line x1="1601.5" y1="162.5" x2="1601.5" y2="180.5" class="w"/>
-<line x1="2201.0" y1="162.5" x2="2201.0" y2="180.5" class="w"/>
-<line x1="2800.5" y1="162.5" x2="2800.5" y2="180.5" class="w"/>
+<line x1="1765.0" y1="162.5" x2="1765.0" y2="180.5" class="w"/>
+<line x1="2419.0" y1="162.5" x2="2419.0" y2="180.5" class="w"/>
+<line x1="3018.5" y1="162.5" x2="3018.5" y2="180.5" class="w"/>
 <rect x="30" y="180.5" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
 <text x="130.0" y="199.5" class="id">G3.1</text>
 <text x="130.0" y="213.0" class="d">Positive acceleration above</text>
@@ -50,26 +50,26 @@
 <text x="784.0" y="364.5" class="d">Driver does not brake in time</text>
 <text x="784.0" y="377.0" class="d">(controllability; AOU-06R)</text>
 <path d="M784.0,385.0 L804.0,400.0 L784.0,415.0 L764.0,400.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="1501.5" y="180.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="1601.5" y="199.5" class="id">G3.3</text>
-<text x="1601.5" y="213.0" class="d">Acceleration while not engaged or</text>
-<text x="1601.5" y="225.5" class="d">after driver brake</text>
-<path d="M1583.5,267.5 Q1601.5,259.5 1619.5,267.5 Q1617.5,243.5 1601.5,233.5 Q1585.5,243.5 1583.5,267.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<line x1="1601.5" y1="267.5" x2="1601.5" y2="285.5" class="w"/>
-<line x1="1329.0" y1="285.5" x2="1874.0" y2="285.5" class="w"/>
-<line x1="1329.0" y1="285.5" x2="1329.0" y2="332.0" class="w"/>
-<line x1="1874.0" y1="285.5" x2="1874.0" y2="332.0" class="w"/>
-<rect x="1229.0" y="332.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="1329.0" y="351.0" class="id">G3.3.1</text>
-<text x="1329.0" y="364.5" class="d">Authority falsely granted / not</text>
-<text x="1329.0" y="377.0" class="d">revoked</text>
-<path d="M1311.0,419.0 Q1329.0,411.0 1347.0,419.0 Q1345.0,395.0 1329.0,385.0 Q1313.0,395.0 1311.0,419.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<line x1="1329.0" y1="419.0" x2="1329.0" y2="437.0" class="w"/>
-<line x1="1002.0" y1="437.0" x2="1656.0" y2="437.0" class="w"/>
-<line x1="1002.0" y1="437.0" x2="1002.0" y2="517.5" class="w"/>
-<line x1="1220.0" y1="437.0" x2="1220.0" y2="517.5" class="w"/>
-<line x1="1438.0" y1="437.0" x2="1438.0" y2="517.5" class="w"/>
-<line x1="1656.0" y1="437.0" x2="1656.0" y2="517.5" class="w"/>
+<rect x="1665.0" y="180.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1765.0" y="199.5" class="id">G3.3</text>
+<text x="1765.0" y="213.0" class="d">Acceleration while not engaged or</text>
+<text x="1765.0" y="225.5" class="d">after driver brake</text>
+<path d="M1747.0,267.5 L1747.0,249.5 A18,16 0 0 1 1783.0,249.5 L1783.0,267.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1765.0" y1="267.5" x2="1765.0" y2="285.5" class="w"/>
+<line x1="1438.0" y1="285.5" x2="2092.0" y2="285.5" class="w"/>
+<line x1="1438.0" y1="285.5" x2="1438.0" y2="332.0" class="w"/>
+<line x1="2092.0" y1="285.5" x2="2092.0" y2="332.0" class="w"/>
+<rect x="1338.0" y="332.0" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1438.0" y="351.0" class="id">G3.3.1</text>
+<text x="1438.0" y="364.5" class="d">Inactive-value check not effective</text>
+<path d="M1420.0,406.5 Q1438.0,398.5 1456.0,406.5 Q1454.0,382.5 1438.0,372.5 Q1422.0,382.5 1420.0,406.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1438.0" y1="406.5" x2="1438.0" y2="424.5" class="w"/>
+<line x1="1002.0" y1="424.5" x2="1874.0" y2="424.5" class="w"/>
+<line x1="1002.0" y1="424.5" x2="1002.0" y2="517.5" class="w"/>
+<line x1="1220.0" y1="424.5" x2="1220.0" y2="517.5" class="w"/>
+<line x1="1438.0" y1="424.5" x2="1438.0" y2="517.5" class="w"/>
+<line x1="1656.0" y1="424.5" x2="1656.0" y2="517.5" class="w"/>
+<line x1="1874.0" y1="424.5" x2="1874.0" y2="517.5" class="w"/>
 <rect x="902" y="517.5" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
 <text x="1002.0" y="536.5" class="id">BE-1.12</text>
 <text x="1002.0" y="550.0" class="d">Corrupted/replayed 0x1D2 creates</text>
@@ -100,111 +100,123 @@
 <text x="1656.0" y="575.0" class="d">does not cancel ACC on brake</text>
 <text x="1656.0" y="587.5" class="d">(AOU-03R)</text>
 <circle cx="1656.0" cy="610.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="1774" y="332.0" width="200" height="106.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="1874.0" y="351.0" class="id">BE-3.10</text>
-<text x="1874.0" y="364.5" class="d">Inactive value check bypassed by</text>
-<text x="1874.0" y="377.0" class="d">mode/param change (e.g. param that</text>
-<text x="1874.0" y="389.5" class="d">selects another brake signal or</text>
-<text x="1874.0" y="402.0" class="d">stock-longitudinal branch,</text>
-<text x="1874.0" y="414.5" class="d">toyota.h:216-248)</text>
-<rect x="1845.7" y="420.5" width="56.6" height="13" rx="6.5" fill="#1a5fb4"/>
-<text x="1874.0" y="430.0" class="b" fill="#fff">FFI-CM-06</text>
-<circle cx="1874.0" cy="453.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="2101.0" y="180.5" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2201.0" y="199.5" class="id">G3.4</text>
-<text x="2201.0" y="213.0" class="d">Gas override misinterpreted</text>
-<path d="M2183.0,255.0 L2183.0,237.0 A18,16 0 0 1 2219.0,237.0 L2219.0,255.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<line x1="2201.0" y1="255.0" x2="2201.0" y2="273.0" class="w"/>
-<line x1="2092.0" y1="273.0" x2="2310.0" y2="273.0" class="w"/>
-<line x1="2092.0" y1="273.0" x2="2092.0" y2="332.0" class="w"/>
+<rect x="1774" y="517.5" width="200" height="106.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1874.0" y="536.5" class="id">BE-3.10</text>
+<text x="1874.0" y="550.0" class="d">Inactive value check bypassed by</text>
+<text x="1874.0" y="562.5" class="d">mode/param change (e.g. param that</text>
+<text x="1874.0" y="575.0" class="d">selects another brake signal or</text>
+<text x="1874.0" y="587.5" class="d">stock-longitudinal branch,</text>
+<text x="1874.0" y="600.0" class="d">toyota.h:216-248)</text>
+<rect x="1845.7" y="606.0" width="56.6" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="1874.0" y="615.5" class="b" fill="#fff">FFI-CM-06</text>
+<circle cx="1874.0" cy="639.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1992" y="332.0" width="200" height="94.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2092.0" y="351.0" class="id">BE-3.13</text>
+<text x="2092.0" y="364.5" class="d">SoC sends a positive acceleration</text>
+<text x="2092.0" y="377.0" class="d">while not engaged (QM; its</text>
+<text x="2092.0" y="389.5" class="d">engagement state is fed by the same</text>
+<text x="2092.0" y="402.0" class="d">CAN data)</text>
+<rect x="2061.0" y="408.0" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="2092.0" y="417.5" class="b" fill="#fff">CCF DFI-10</text>
+<circle cx="2092.0" cy="441.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2319.0" y="180.5" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2419.0" y="199.5" class="id">G3.4</text>
+<text x="2419.0" y="213.0" class="d">Gas override misinterpreted</text>
+<path d="M2401.0,255.0 L2401.0,237.0 A18,16 0 0 1 2437.0,237.0 L2437.0,255.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="2419.0" y1="255.0" x2="2419.0" y2="273.0" class="w"/>
+<line x1="2310.0" y1="273.0" x2="2528.0" y2="273.0" class="w"/>
 <line x1="2310.0" y1="273.0" x2="2310.0" y2="332.0" class="w"/>
-<rect x="1992" y="332.0" width="200" height="115.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2092.0" y="351.0" class="id">BE-3.11</text>
-<text x="2092.0" y="364.5" class="d">Gas-pressed signal</text>
-<text x="2092.0" y="377.0" class="d">(PCM_CRUISE.GAS_RELEASED) stuck</text>
-<text x="2092.0" y="389.5" class="d">"pressed": envelope then allows</text>
-<text x="2092.0" y="402.0" class="d">only inactive accel (safe</text>
-<text x="2092.0" y="414.5" class="d">direction) — or stuck "released"</text>
-<text x="2092.0" y="427.0" class="d">while the driver presses: envelope</text>
-<text x="2092.0" y="439.5" class="d">allows accel (longitudinal.h:3-5)</text>
-<circle cx="2092.0" cy="462.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="2210" y="332.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2310.0" y="351.0" class="id">UE-3.12</text>
-<text x="2310.0" y="364.5" class="d">PCM adds item accel on top of</text>
-<text x="2310.0" y="377.0" class="d">driver pedal (to verify, AOU-05R)</text>
-<path d="M2310.0,385.0 L2330.0,400.0 L2310.0,415.0 L2290.0,400.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="2700.5" y="180.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2800.5" y="199.5" class="id">G3.5</text>
-<text x="2800.5" y="213.0" class="d">Stale positive acceleration held</text>
-<text x="2800.5" y="225.5" class="d">beyond FTTI</text>
-<path d="M2782.5,267.5 L2782.5,249.5 A18,16 0 0 1 2818.5,249.5 L2818.5,267.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<line x1="2800.5" y1="267.5" x2="2800.5" y2="285.5" class="w"/>
-<line x1="2637.0" y1="285.5" x2="2964.0" y2="285.5" class="w"/>
-<line x1="2637.0" y1="285.5" x2="2637.0" y2="332.0" class="w"/>
-<line x1="2964.0" y1="285.5" x2="2964.0" y2="332.0" class="w"/>
-<rect x="2537.0" y="332.0" width="200" height="26.5" rx="2" fill="#f6f6f6" stroke="#111" stroke-width="1.1" stroke-dasharray="4 3"/>
-<text x="2637.0" y="350.5" class="d">Any of BE-1.19, BE-1.21</text>
-<path d="M2619.0,392.5 Q2637.0,384.5 2655.0,392.5 Q2653.0,368.5 2637.0,358.5 Q2621.0,368.5 2619.0,392.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<line x1="2637.0" y1="392.5" x2="2637.0" y2="410.5" class="w"/>
-<line x1="2528.0" y1="410.5" x2="2746.0" y2="410.5" class="w"/>
-<line x1="2528.0" y1="410.5" x2="2528.0" y2="517.5" class="w"/>
+<line x1="2528.0" y1="273.0" x2="2528.0" y2="332.0" class="w"/>
+<rect x="2210" y="332.0" width="200" height="115.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2310.0" y="351.0" class="id">BE-3.11</text>
+<text x="2310.0" y="364.5" class="d">Gas-pressed signal</text>
+<text x="2310.0" y="377.0" class="d">(PCM_CRUISE.GAS_RELEASED) stuck</text>
+<text x="2310.0" y="389.5" class="d">"pressed": envelope then allows</text>
+<text x="2310.0" y="402.0" class="d">only inactive accel (safe</text>
+<text x="2310.0" y="414.5" class="d">direction) — or stuck "released"</text>
+<text x="2310.0" y="427.0" class="d">while the driver presses: envelope</text>
+<text x="2310.0" y="439.5" class="d">allows accel (longitudinal.h:3-5)</text>
+<circle cx="2310.0" cy="462.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2428" y="332.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2528.0" y="351.0" class="id">UE-3.12</text>
+<text x="2528.0" y="364.5" class="d">PCM adds item accel on top of</text>
+<text x="2528.0" y="377.0" class="d">driver pedal (to verify, AOU-05R)</text>
+<path d="M2528.0,385.0 L2548.0,400.0 L2528.0,415.0 L2508.0,400.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2918.5" y="180.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="3018.5" y="199.5" class="id">G3.5</text>
+<text x="3018.5" y="213.0" class="d">Stale positive acceleration held</text>
+<text x="3018.5" y="225.5" class="d">beyond FTTI</text>
+<path d="M3000.5,267.5 L3000.5,249.5 A18,16 0 0 1 3036.5,249.5 L3036.5,267.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="3018.5" y1="267.5" x2="3018.5" y2="285.5" class="w"/>
+<line x1="2855.0" y1="285.5" x2="3182.0" y2="285.5" class="w"/>
+<line x1="2855.0" y1="285.5" x2="2855.0" y2="332.0" class="w"/>
+<line x1="3182.0" y1="285.5" x2="3182.0" y2="332.0" class="w"/>
+<rect x="2755.0" y="332.0" width="200" height="26.5" rx="2" fill="#f6f6f6" stroke="#111" stroke-width="1.1" stroke-dasharray="4 3"/>
+<text x="2855.0" y="350.5" class="d">Any of BE-1.19, BE-1.21</text>
+<path d="M2837.0,392.5 Q2855.0,384.5 2873.0,392.5 Q2871.0,368.5 2855.0,358.5 Q2839.0,368.5 2837.0,392.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="2855.0" y1="392.5" x2="2855.0" y2="410.5" class="w"/>
+<line x1="2746.0" y1="410.5" x2="2964.0" y2="410.5" class="w"/>
 <line x1="2746.0" y1="410.5" x2="2746.0" y2="517.5" class="w"/>
-<rect x="2428" y="517.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2528.0" y="536.5" class="id">BE-1.19</text>
-<text x="2528.0" y="550.0" class="d">controlsd hang / stale modelV2 used</text>
-<text x="2528.0" y="562.5" class="d">up to ≈3.5 s (GAP-16)</text>
-<rect x="2483.5" y="568.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
-<text x="2528.0" y="578.0" class="b" fill="#222">repeated, SG-01</text>
-<circle cx="2528.0" cy="601.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="2964.0" y1="410.5" x2="2964.0" y2="517.5" class="w"/>
 <rect x="2646" y="517.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2746.0" y="536.5" class="id">BE-1.21</text>
-<text x="2746.0" y="550.0" class="d">SoC replays an old command buffer</text>
-<text x="2746.0" y="562.5" class="d">(no sequence counter, GAP-10)</text>
+<text x="2746.0" y="536.5" class="id">BE-1.19</text>
+<text x="2746.0" y="550.0" class="d">controlsd hang / stale modelV2 used</text>
+<text x="2746.0" y="562.5" class="d">up to ≈3.5 s (GAP-16)</text>
 <rect x="2701.5" y="568.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
 <text x="2746.0" y="578.0" class="b" fill="#222">repeated, SG-01</text>
 <circle cx="2746.0" cy="601.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="2864" y="332.0" width="200" height="94.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2964.0" y="351.0" class="id">BE-1.22</text>
-<text x="2964.0" y="364.5" class="d">Heartbeat shows pandad liveness</text>
-<text x="2964.0" y="377.0" class="d">only; mismatch 3 s, loss 5 s</text>
-<text x="2964.0" y="389.5" class="d">(main.c:182-213; GAP-06, GAP-10)</text>
-<text x="2964.0" y="402.0" class="n">slow envelope detection</text>
-<rect x="2919.5" y="408.0" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
-<text x="2964.0" y="417.5" class="b" fill="#222">repeated, SG-01</text>
-<circle cx="2964.0" cy="441.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="30" y="687.0" class="h">Symbols (IEC 61025)</text>
-<rect x="32" y="701.0" width="36" height="22" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="96" y="716.0" class="l">Top / intermediate event</text>
-<path d="M32,769.0 Q50,761.0 68,769.0 Q66,745.0 50,735.0 Q34,745.0 32,769.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="754.0" class="l">OR gate</text>
-<path d="M32,807.0 L32,789.0 A18,16 0 0 1 68,789.0 L68,807.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="792.0" class="l">AND gate</text>
-<circle cx="50" cy="826.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="830.0" class="l">Basic event</text>
-<path d="M50,849.0 L70,864.0 L50,879.0 L30,864.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="868.0" class="l">Undeveloped event (outside the item or not developed)</text>
-<path d="M50,887.0 L68,917.0 L32,917.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="59" y1="902.0" x2="80" y2="902.0" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="906.0" class="l">Transfer: continued on another sheet</text>
-<path d="M50,925.0 L68,955.0 L32,955.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="944.0" class="l">Transfer in: gate developed elsewhere</text>
-<rect x="30" y="971.0" width="24.2" height="13" rx="6.5" fill="#b3261e"/>
-<text x="42.1" y="980.5" class="b" fill="#fff">SPF</text>
-<rect x="59.2" y="971.0" width="40.4" height="13" rx="6.5" fill="#5f6368"/>
-<text x="79.4" y="980.5" class="b" fill="#fff">latent</text>
-<rect x="104.60000000000001" y="971.0" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
-<text x="122.1" y="980.5" class="b" fill="#fff">SOTIF</text>
-<rect x="144.60000000000002" y="971.0" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
-<text x="175.6" y="980.5" class="b" fill="#fff">CCF DFI-nn</text>
-<rect x="211.60000000000002" y="971.0" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
-<text x="223.7" y="980.5" class="b" fill="#fff">FFI</text>
-<rect x="240.8" y="971.0" width="72.8" height="13" rx="6.5" fill="#3d6b3d"/>
-<text x="277.2" y="980.5" class="b" fill="#fff">outside item</text>
-<rect x="318.6" y="971.0" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
-<text x="344.2" y="980.5" class="b" fill="#222">repeated</text>
-<rect x="2634" y="675.0" width="430" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="2644" y="697.0" class="h" text-anchor="start">LionDriver — FTA SG-03</text>
-<text x="2644" y="713.0" class="l" text-anchor="start">unintended acceleration</text>
-<text x="2644" y="729.0" class="l" text-anchor="start">Sheet 1 of 2   ·   top of sheet: TE-03</text>
-<text x="2644" y="745.0" class="l" text-anchor="start">Source: WP-A-04 §3 (analysis of record)</text>
-<text x="2644" y="761.0" class="s" text-anchor="start">Generated by fta_diagrams.py — edit WP-A-04, not this file</text>
+<rect x="2864" y="517.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2964.0" y="536.5" class="id">BE-1.21</text>
+<text x="2964.0" y="550.0" class="d">SoC replays an old command buffer</text>
+<text x="2964.0" y="562.5" class="d">(no sequence counter, GAP-10)</text>
+<rect x="2919.5" y="568.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="2964.0" y="578.0" class="b" fill="#222">repeated, SG-01</text>
+<circle cx="2964.0" cy="601.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="3082" y="332.0" width="200" height="106.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="3182.0" y="351.0" class="id">BE-1.22</text>
+<text x="3182.0" y="364.5" class="d">Command freshness not supervised:</text>
+<text x="3182.0" y="377.0" class="d">heartbeat shows pandad liveness</text>
+<text x="3182.0" y="389.5" class="d">only; mismatch 3 s, loss 5 s</text>
+<text x="3182.0" y="402.0" class="d">(main.c:182-213; GAP-06, GAP-10)</text>
+<text x="3182.0" y="414.5" class="n">slow envelope detection</text>
+<rect x="3088.3" y="420.5" width="94.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="3135.5" y="430.0" class="b" fill="#fff">latent, baseline</text>
+<rect x="3186.7" y="420.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="3231.2" y="430.0" class="b" fill="#222">repeated, SG-01</text>
+<circle cx="3182.0" cy="453.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="30" y="712.0" class="h">Symbols (IEC 61025)</text>
+<rect x="32" y="726.0" width="36" height="22" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="96" y="741.0" class="l">Top / intermediate event</text>
+<path d="M32,794.0 Q50,786.0 68,794.0 Q66,770.0 50,760.0 Q34,770.0 32,794.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="779.0" class="l">OR gate</text>
+<path d="M32,832.0 L32,814.0 A18,16 0 0 1 68,814.0 L68,832.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="817.0" class="l">AND gate</text>
+<circle cx="50" cy="851.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="855.0" class="l">Basic event</text>
+<path d="M50,874.0 L70,889.0 L50,904.0 L30,889.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="893.0" class="l">Undeveloped event (outside the item or not developed)</text>
+<path d="M50,912.0 L68,942.0 L32,942.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="59" y1="927.0" x2="80" y2="927.0" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="931.0" class="l">Transfer: continued on another sheet</text>
+<path d="M50,950.0 L68,980.0 L32,980.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="969.0" class="l">Transfer in: gate developed elsewhere</text>
+<rect x="30" y="996.0" width="24.2" height="13" rx="6.5" fill="#b3261e"/>
+<text x="42.1" y="1005.5" class="b" fill="#fff">SPF</text>
+<rect x="59.2" y="996.0" width="40.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="79.4" y="1005.5" class="b" fill="#fff">latent</text>
+<rect x="104.60000000000001" y="996.0" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
+<text x="122.1" y="1005.5" class="b" fill="#fff">SOTIF</text>
+<rect x="144.60000000000002" y="996.0" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="175.6" y="1005.5" class="b" fill="#fff">CCF DFI-nn</text>
+<rect x="211.60000000000002" y="996.0" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="223.7" y="1005.5" class="b" fill="#fff">FFI</text>
+<rect x="240.8" y="996.0" width="72.8" height="13" rx="6.5" fill="#3d6b3d"/>
+<text x="277.2" y="1005.5" class="b" fill="#fff">outside item</text>
+<rect x="318.6" y="996.0" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="344.2" y="1005.5" class="b" fill="#222">repeated</text>
+<rect x="2852" y="700.0" width="430" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="2862" y="722.0" class="h" text-anchor="start">LionDriver — FTA SG-03</text>
+<text x="2862" y="738.0" class="l" text-anchor="start">unintended acceleration</text>
+<text x="2862" y="754.0" class="l" text-anchor="start">Sheet 1 of 2   ·   top of sheet: TE-03</text>
+<text x="2862" y="770.0" class="l" text-anchor="start">Source: WP-A-04 §3 (analysis of record)</text>
+<text x="2862" y="786.0" class="s" text-anchor="start">Generated by fta_diagrams.py — edit WP-A-04, not this file</text>
 </svg>
