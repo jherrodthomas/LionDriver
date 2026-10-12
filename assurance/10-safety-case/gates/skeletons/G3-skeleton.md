@@ -67,7 +67,6 @@ From the [process model](../../../process/README.md). Each one is a condition on
 
 | Interface | Topic | Open item | Due | Closed? |
 |---|---|---|---|---|
-| IX-05 | Driver-monitoring performance targets (DMP-01/02) are set as AI safety requirements AIR-07/08 with values still to be confirmed | WP-C-08 OI-2 | G2 | |
 | IX-06 | The reference ODD cannot be compared with the driving model's training-data ODD, which upstream has not published | WP-C-02 OI-6 | G2 | |
 | IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-11 must confirm; the targets are not yet approved | WP-V-02 OI-3 | G2 | |
 | IX-17 | One coding guideline for safety and security: the CERT C subset for security static analysis still has to be chosen and recorded next to MISRA C:2012 | WP-W-11 OI-2 | G3 | |

@@ -83,7 +83,7 @@ flowchart LR
   cs(["Cybersecurity (ISO/SAE 21434)"])
   cs -. "IX-01, IX-02" .- fusa
   fusa -. "IX-03, IX-04, IX-08" .- sotif
-  ai -. "IX-05 OPEN, IX-06 OPEN" .- sotif
+  ai -. "IX-05, IX-06 OPEN" .- sotif
   ai -. "IX-07" .- cs
 ```
 
@@ -117,7 +117,7 @@ Each interface is anchored to text in the work products; the checker fails if an
 | IX-02 | Safety-Security | [WP-C-04](../../02-concept/WP-C-04-functional-safety-concept.md), [WP-C-10](../../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) (Functional safety / Cybersecurity) | Cybersecurity goals protect the safety goals; the SG to CSG mapping was checked against the FSC allocation and corrected (WP-C-10 OI-6 closed), and the FSC now points back to it | Documented | — | G1 |
 | IX-03 | Safety-SOTIF | [WP-C-03](../../02-concept/WP-C-03-hara.md), [WP-C-05](../../02-concept/WP-C-05-sotif-hazard-identification.md) (Functional safety / SOTIF) | One hazard log: each HARA hazard cross-references the SOTIF hazards that can cause the same vehicle-level effect | Documented | — | G1 |
 | IX-04 | Safety-SOTIF | [WP-C-04](../../02-concept/WP-C-04-functional-safety-concept.md), [WP-C-08](../../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) (Functional safety / SOTIF) | Driver monitoring carries no ASIL and is managed as a SOTIF misuse measure, while the C2 controllability ratings assume a supervising driver (AOU-06R) | Documented | — | G1 |
-| IX-05 | SOTIF-AI | [WP-C-08](../../02-concept/WP-C-08-driver-hmi-misuse-analysis.md), [WP-C-11](../../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) (SOTIF / AI safety) | Driver-monitoring performance targets (DMP-01/02) are set as AI safety requirements AIR-07/08 with values still to be confirmed | Open | WP-C-08 OI-2 | G2 |
+| IX-05 | SOTIF-AI | [WP-C-08](../../02-concept/WP-C-08-driver-hmi-misuse-analysis.md), [WP-C-11](../../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) (SOTIF / AI safety) | Driver-monitoring performance targets (DMP-01/02) are AI safety requirements AIR-07/08; their values are confirmed, with the end-to-end alert time set at 6 s, and validated under VT-08 | Documented | — | G2 |
 | IX-06 | SOTIF-AI | [WP-C-02](../../02-concept/WP-C-02-odd-and-intended-functionality.md), [WP-C-11](../../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) (SOTIF / AI safety) | The reference ODD cannot be compared with the driving model's training-data ODD, which upstream has not published | Open | WP-C-02 OI-6 | G2 |
 | IX-07 | Security-AI | [WP-C-11](../../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md), [WP-C-09](../../02-concept/WP-C-09-tara.md) (AI safety / Cybersecurity) | Model artefacts load through pickle without a hash or signature: AI integrity requirements AIR-19/AIR-20 and threat scenario TS-09 address the same weakness (GAP-22) | Documented | — | G1 |
 | IX-08 | Safety-SOTIF | [WP-C-04](../../02-concept/WP-C-04-functional-safety-concept.md), [WP-C-07](../../02-concept/WP-C-07-sotif-functional-modifications.md) (Functional safety / SOTIF) | The FSC transition rule (untrusted command to immediate safe state, otherwise soft disable) is implemented by functional modification FM-03 | Documented | — | G1 |

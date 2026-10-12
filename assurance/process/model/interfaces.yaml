@@ -51,10 +51,10 @@
   phase: G1
   between: [WP-C-08, WP-C-11]
   pattern: "SOTIF-AI"
-  topic: "Driver-monitoring performance targets (DMP-01/02) are set as AI safety requirements AIR-07/08 with values still to be confirmed"
-  anchors: ["WP-C-08:Confirm the numeric DM performance targets", "WP-C-11:AIR-07"]
-  status: open
-  open_item: "WP-C-08 OI-2"
+  topic: "Driver-monitoring performance targets (DMP-01/02) are AI safety requirements AIR-07/08; their values are confirmed, with the end-to-end alert time set at 6 s, and validated under VT-08"
+  anchors: ["WP-C-08:Target confirmed 2026-10-12 (OI-2)", "WP-C-11:Values confirmed 2026-10-12 (WP-C-08 OI-2)"]
+  status: documented
+  open_item: null
   due: G2
 - id: IX-06
   kind: interface
