@@ -104,7 +104,8 @@ Check status (2026-10-12, from search summaries; the full text was not reachable
   rises from 0.33 to 0.59 and SH-04 from 0.043 to 0.076; the values of 1 are unchanged
   (`--joksch-mph 61.54`).
 - Still to check against the full text: the constant, and which impact directions the curve
-  was fitted to (the summaries say car-car collisions without naming a direction).
+  was fitted to (the summaries say car-car collisions without naming a direction). `--curve
+  richards` bounds the direction question with a frontal curve (see RICHARDS_FRONTAL_POINTS_MPH).
 - Rear impacts (checked 2026-10-12, search summaries): the curve is applied to rear-struck
   occupants (the ego in SH-04, which dominates its bound, and the lead in SH-06/SH-03). At the
   same delta-v, rear impacts are less injurious than frontal ones: MAIS3+ risk at 30 mph delta-v
@@ -299,21 +300,44 @@ def joksch(dv_kmh: float) -> float:
   return min(1.0, (dv_kmh * MPH_PER_KMH / JOKSCH_MPH) ** 4)
 
 
+# Impact directions (`--curve richards`). The Joksch summaries say car-car collisions without
+# naming the directions. Richards (2010), "Relationship between speed and risk of fatal injury:
+# pedestrians and car occupants", DfT Road Safety Web Publication 16, fits belted drivers by
+# direction on UK data: frontal 3/17/60 % at 30/40/50 mph delta-v, side 25/85 % at 30/40 mph
+# (checked 2026-10-12, search summaries). The logistic fit below goes through the three frontal
+# points. It is above Joksch from about 33 mph delta-v, so it is a sensitivity for the frontal
+# struck occupants of SH-03 and SH-06; applied to every occupant it also overstates the
+# rear-struck ones. No case here has a side impact.
+RICHARDS_FRONTAL_POINTS_MPH = ((30.0, 0.03), (40.0, 0.17), (50.0, 0.60))
+RICHARDS_FRONTAL_A, RICHARDS_FRONTAL_B_PER_MPH = -9.315, 0.19408
+OCCUPANT_CURVE = "joksch"
+
+
+def richards_frontal(dv_kmh: float) -> float:
+  return logistic(dv_kmh * MPH_PER_KMH, RICHARDS_FRONTAL_A, RICHARDS_FRONTAL_B_PER_MPH)
+
+
+def occupant_fatality(dv_kmh: float) -> float:
+  return richards_frontal(dv_kmh) if OCCUPANT_CURVE == "richards" else joksch(dv_kmh)
+
+
 def crash_fatal_ub(closing_kmh: float, ego: dict, lead: dict, e: float = RESTITUTION) -> dict:
   dv_e = delta_v(closing_kmh, ego["mass_kg"], lead["mass_kg"], e)
   dv_l = delta_v(closing_kmh, lead["mass_kg"], ego["mass_kg"], e)
-  p_e, p_l = joksch(dv_e), joksch(dv_l)
+  p_e, p_l = occupant_fatality(dv_e), occupant_fatality(dv_l)
   return {"closing_kmh": closing_kmh, "lead": lead["name"], "dv_ego_kmh": dv_e, "dv_lead_kmh": dv_l,
           "p_driver_ego": p_e, "p_driver_lead": p_l,
           "p_fatal_crash_ub": min(1.0, ego["occupants"] * p_e + lead["occupants"] * p_l)}
 
 
 def main(argv: list[str] | None = None) -> int:
-  global JOKSCH_MPH
+  global JOKSCH_MPH, OCCUPANT_CURVE
   ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
   ap.add_argument("--speed", type=float, action="append", help="closing speed in km/h (repeatable); default: the SH-06 and SH-03 cases")
   ap.add_argument("--restitution", type=float, default=RESTITUTION)
   ap.add_argument("--joksch-mph", type=float, default=JOKSCH_MPH_DEFAULT, help="Joksch reference delta-v in mph (sensitivity)")
+  ap.add_argument("--curve", choices=("joksch", "richards"), default="joksch",
+                  help="occupant curve: Joksch (default) or the Richards (2010) frontal fit (sensitivity)")
   ap.add_argument("--sensitivity", action="store_true", help="SH-04: print impact speed over follower reaction and braking")
   ap.add_argument("--sh10", action="store_true",
                   help="SH-10 (and the SH-01/02 sideswipe): print the contact angle and lateral speed")
@@ -327,6 +351,7 @@ def main(argv: list[str] | None = None) -> int:
                   help="speed offset between ages 70 and 30 for --age (sensitivity; 2011 report: 10.4, CI 5.4-15.4)")
   a = ap.parse_args(argv)
   JOKSCH_MPH = a.joksch_mph
+  OCCUPANT_CURVE = a.curve
   if a.age:
     for ref, kind in ((AGE_REFERENCE_YEARS, "bound"), (AGE_SAMPLE_MEAN_YEARS, "central, sample mean")):
       ages = " | ".join(f"Age {y} (+{age_shift_mph(y, ref, a.age_offset_mph):.1f} mph)" for y in AGES_YEARS)

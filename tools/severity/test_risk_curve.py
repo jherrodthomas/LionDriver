@@ -135,6 +135,23 @@ class RiskCurveTest(unittest.TestCase):
     self.assertIn("| SH-11 OS-06 | 18 | 0.048 | 0.081 | 0.156 | 0.220 |", buf.getvalue())
     self.assertLess(rc.AGE_OFFSET_70_30_2011_MPH, rc.AGE_OFFSET_70_30_MPH)
 
+  def test_richards_frontal_fit(self):
+    for mph, p in rc.RICHARDS_FRONTAL_POINTS_MPH:
+      self.assertAlmostEqual(rc.richards_frontal(mph / rc.MPH_PER_KMH), p, delta=0.01)
+    # below Joksch at low delta-v, above it from about 33 mph
+    self.assertLess(rc.richards_frontal(25 / rc.MPH_PER_KMH), rc.joksch(25 / rc.MPH_PER_KMH))
+    self.assertGreater(rc.richards_frontal(40 / rc.MPH_PER_KMH), rc.joksch(40 / rc.MPH_PER_KMH))
+
+  def test_richards_curve_sensitivity(self):
+    with redirect_stdout(io.StringIO()) as buf:
+      self.assertEqual(rc.main(["--curve", "richards"]), 0)
+    out = buf.getvalue()
+    self.assertIn("- SH-03 OS-05, ODD-H: 0.453", out)
+    self.assertIn("- SH-04 OS-08, ODD-H: 0.030", out)
+    with redirect_stdout(io.StringIO()) as buf:
+      rc.main([])
+    self.assertIn("- SH-03 OS-05, ODD-H: 0.334", buf.getvalue())
+
   def test_pedestrian_curve_is_monotone(self):
     risks = [rc.pedestrian_fatality(v) for v in range(0, 120, 5)]
     self.assertEqual(risks, sorted(risks))
