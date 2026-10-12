@@ -104,7 +104,8 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 | AIR-03, AIR-04, AIR-06, VT-06 | KS-05, KS-07…KS-09 |
 | AIR-05, VT-04 | KS-10, KS-11, KS-12 |
 | AIR-07, AIR-08, VT-08 | KS-17, KS-18 |
-| AIR-14 | KS-12, KS-13, KS-16 |
+| AIR-11, VT-14 | Steady segments of KS-01…KS-06; KS-07, KS-08, KS-10, KS-11 |
+| AIR-14, VT-15 | KS-12, KS-13, KS-16 |
 | AIR-17, AIR-25, GAP-16 | KS-21 |
 | SG-05 / VT-05 | KS-19 |
 | SG-07 / VT-07 | KS-20 |

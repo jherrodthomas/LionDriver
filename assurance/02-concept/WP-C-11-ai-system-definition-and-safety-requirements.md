@@ -256,7 +256,7 @@ Machine-readable entries go to [`trace/`](../trace/README.md) when WP-T-01 defin
 | ID | Item |
 |---|---|
 | OI-1 | Ask the WP-C-06 owner to reference AIR-nn from FI-01…FI-04, FI-18, FI-22, and the WP-C-07 owner to reference AIR-14/AIR-16/AIR-19 from FM-09/FM-04, so that the trace is bidirectional |
-| OI-2 | Confirm or replace every **(TBC)** value through the target derivation in WP-V-02 and the B2 stock-TSS2 comparison. The trace of each value to its target is [WP-V-02 §4.1](../06-validation/WP-V-02-sotif-vv-strategy.md#41-tbc-values-of-wp-c-11-and-the-targets-that-confirm-them): AIR-11 and AIR-14 have no target yet |
+| OI-2 | Confirm or replace every **(TBC)** value through the target derivation in WP-V-02 and the B2 stock-TSS2 comparison. The trace of each value to its target is [WP-V-02 §4.1](../06-validation/WP-V-02-sotif-vv-strategy.md#41-tbc-values-of-wp-c-11-and-the-targets-that-confirm-them). AIR-11 and AIR-14 are covered by VT-14 and VT-15; AIR-01, AIR-03 and AIR-04 still need a derivation |
 | OI-3 | Confirm at G1 the WP-C-04 §7 proposal that the DM chain is QM; if rejected, update AIR-07, AIR-08, AIR-15, AIR-27 and DSR-10 |
 | OI-4 | Decide the replacement for `pickle` loading (AIR-20) with the cybersecurity lead (WP-S-07) |
 | OI-5 | Obtain the LFS objects and record compiled-artefact hashes (AIR-21; WP-M-10 OI-4) |

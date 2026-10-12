@@ -119,8 +119,20 @@ Targets are **proposals**: numeric values are placeholders for the assessor revi
 | VT-11 | All | Field: harm-level events attributable to LD-SDA | Zero injury crashes; trigger thresholds for restriction defined in WP-O-04 | B1 (long-term) | Field monitoring | Long-term only |
 | VT-12 | SH-13 operation outside the ODD | Engaged operation above the ODD speed bound or in excluded conditions | Deterministic speed bound (FM-07): 100 % prevention/disengagement in ≥ 59 trials per speed threshold; other exits covered by user information and driver procedure (AC-04) | FM-07, FM-08 | CC, inspection | Yes for speed; not for other exits |
 | VT-13 | SH-10 assisted lane change into an occupied lane | Driver can abort a nudge-initiated lane change | Abort controllable in ≥ 20/20 subjects (CA-01 logic) | WP-C-06 TC-28 | CC (KS-14) | Yes |
+| VT-14 | SH-01, SH-04 plan stability (AIR-11) | Steady-scene instances in which the model output asks for more than the controller passes: `modelV2.action.desiredCurvature` changes faster than the jerk bound 5 m/s³ / v² (`MAX_LATERAL_JERK`, `selfdrive/controls/lib/drive_helpers.py:13, 29-31`; FSR-01.14), or the lead existence (`prob` crossing 0.5) toggles more than once in any 1 s window for a continuously visible lead | p_s ≤ 1 % per steady-scene instance at 95 % (≥ 299 instances per ODD stratum): straight and constant-curvature segments of KS-01…KS-06 for curvature; KS-07, KS-08, KS-10, KS-11 for lead toggling | §4.2; same p_max as VT-01 | REPLAY (VS-ML-07) on evaluation data; CC for the lead scenarios | Yes |
+| VT-15 | SH-01, SH-04, SH-06, SH-13 runtime monitor (AIR-14) | (a) Recall: share of instances in which the model alone fails (hazardous behaviour or AIR violation) that the monitor flags before the failure; (b) false flags per hour of nominal ODD driving | (a) ≥ 80 % per KS of the known-triggering-condition set (KS-12, KS-13, KS-16) at 95 %: ≥ 14 failing instances with no miss, or the Clopper–Pearson bound. A TC whose model-alone failure rate exceeds the §4.2 limit needs higher recall or an ODD restriction. (b) ≤ 1 false flag per hour at 95 % (χ² bound of §3 step 3), on drives disjoint from tuning data (DSR-11) | §4.2; nuisance budget equal to AIR-08 | REPLAY with KS segments; PR for false flags | Yes, after AIR-14 is implemented (GAP-22) |
 
 SH-09 (traffic-control non-compliance) has no target: Experimental Mode is off and locked (FM-01) and KS-24 verifies the exclusion. SH-11 (no VRU response) has no rate target: [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) resolves TC-12 by ODD restriction and user information; KS-22 and KS-23 only verify that the item does not move toward a VRU it cannot see.
+
+### 4.2 Derivation of VT-14 and VT-15
+
+**VT-14.** The SoC controller limits the commanded curvature rate to 5 m/s³ / v² (`clip_curvature`) and lateral acceleration to 3.0 m/s² (FSR-01.14). A model output that exceeds that rate in a steady scene is therefore cut by the controller, so the vehicle does not follow it. That makes it a sign of an unstable plan rather than a hazard in itself: repeated cuts, or a lead that appears and disappears, are what precede SH-01 (wrong lateral motion) and SH-04 (phantom braking). The target therefore counts scenario instances with any exceedance and gives them the same budget as VT-01: p_s ≤ 1 %. The thresholds are those of AIR-11.
+
+**VT-15.** A flag from the monitor turns a model failure into a take-over alert. The residual per instance of a triggering condition is then
+
+`p_s,res = p_s,model · [(1 − r) + r · P(not controlled | alert)]`
+
+where r is the monitor recall and P(not controlled | alert) is taken from the take-over test VS-VAL-12 under §3.3. With r = 0.8 and P(not controlled) = 0.14 (20 subjects, no failure), p_s,res ≤ 1 % holds only if the model alone fails in at most 3.2 % of instances. A triggering condition with a higher model-alone failure rate needs higher recall, a larger subject sample, or removal from the ODD (WP-C-02 §3.3). The 80 % recall in VT-15 is therefore a floor, and the per-condition recall follows from this formula once p_s,model is measured. Each false flag raises a take-over alert, so false flags are capped with the same nuisance budget the DM chain has (AIR-08: ≤ 1 false alert per hour). Together, nominal driving can produce at most two unnecessary alerts per hour.
 
 ### 4.1 (TBC) values of WP-C-11 and the targets that confirm them
 
@@ -139,8 +151,8 @@ SH-09 (traffic-control non-compliance) has no target: Experimental Mode is off a
 | AIR-04 | t_r = 1.0 s, a_lim = 3.0 m/s² | VT-06 (KS-05) | D | Record the basis; a_lim is inside the envelope minimum −3.5 m/s² (WP-C-02) |
 | AIR-05 | Phantom deceleration below −2.0 m/s² | VT-04 (−2.0 m/s²) | C | — |
 | AIR-06 | `hardBrakePredicted` at TTC ≥ 2.0 s | VT-06 (FCW at TTC ≥ 2 s) | C | — |
-| AIR-11 | Curvature rate from 5 m/s³ jerk; ≤ 1 lead toggle per second | none (surrogate AS-08 in [WP-V-04](WP-V-04-sotif-unknown-scenarios.md) only) | G | Add a scenario-level target for SH-01/SH-04 plan stability, or derive from VT-01 and VT-04 |
-| AIR-14 | Monitor recall ≥ 80 % on known triggering conditions; ≤ 1 false flag per hour | none (KS-12, KS-13, KS-16 of [WP-V-03](WP-V-03-sotif-known-scenarios.md) exercise it) | G | Add a target for the monitor: recall per KS and false-flag rate, consistent with the VT-01, VT-04 and VT-06 budgets |
+| AIR-11 | Curvature rate from 5 m/s³ jerk; ≤ 1 lead toggle per second | VT-14 (field surrogate AS-08 in [WP-V-04](WP-V-04-sotif-unknown-scenarios.md)) | C | — |
+| AIR-14 | Monitor recall ≥ 80 % on known triggering conditions; ≤ 1 false flag per hour | VT-15 (KS-12, KS-13, KS-16 of [WP-V-03](WP-V-03-sotif-known-scenarios.md)) | C | Per-condition recall may need to be higher (§4.2) |
 | AIR-10 | Partial lens occlusion ≤ 10 % | — | N | Input-space bound of WP-C-11 §3, verified by VS-ML-04 ([WP-W-10](../05-software/WP-W-10-ml-engineering.md)) |
 | AIR-13 | 90–98 % of samples within ±2σ | — | N | Calibration criterion of WP-W-10 (VS-ML-05); enables AIR-14 |
 | AIR-12, AIR-26 | 2 s warm-up before use or engagement | — | N | Timing; [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) |
@@ -148,7 +160,7 @@ SH-09 (traffic-control non-compliance) has no target: Experimental Mode is off a
 | AIR-27 | DM output invalid > 2 s | — | N | TSR-609 ([WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md)); fault injection VS-FI-25 |
 | DSR-07 | ≥ 10 % double annotation | — | N | Label specification (WP-W-10) |
 
-Result: three values are confirmed. Three need a derivation recorded against an existing target (D). Two need a target that does not exist yet (G). The remaining six take their value from timing, ML engineering or data documents, not from this one (N). The D and G rows are part of the target set the assessor approves (OI-3). Until then, every (TBC) in WP-C-11 stays (TBC).
+Result: five values are confirmed (C), AIR-11 and AIR-14 through VT-14 and VT-15. Three need a derivation recorded against an existing target (D). No value lacks a target (G). The remaining six take their value from timing, ML engineering or data documents, not from this one (N). The D rows are part of the target set the assessor approves (OI-3). Until then, every (TBC) in WP-C-11 stays (TBC).
 
 ## 5. Test methods
 
@@ -237,7 +249,7 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 |---|---|
 | OI-1 | Keep the §6 TC table in step with WP-C-06 revisions (new TCs need a KS entry) |
 | OI-2 | Select B1 data set and filter to the ODD; replace the illustrative rates of §3.1 (shared with WP-M-08 OI-1) |
-| OI-3 | Approve numeric targets VT-01…VT-13 with the assessor before collecting evidence, including the D and G rows of §4.1 |
+| OI-3 | Approve numeric targets VT-01…VT-15 with the assessor before collecting evidence, including the D rows of §4.1 |
 | OI-4 | Build the simulation fidelity case (§5.3) and decide which families get credit (WP-M-08 OI-3) |
 | OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
 | OI-6 | Decide the evidence route for P(E-situation) in step 2 (HARA OI-2). The route for P(not controlled) is §3.3 |
