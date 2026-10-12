@@ -311,7 +311,7 @@ Evidence rule (shared by [WP-K-01 §6](WP-K-01-safety-case.md#6-evidence-status)
 | Sn-60 | Management plans | WP-M-01…WP-M-13 | G5.1, G3.5 | Partial | Drafts; not approved; CR-03 not done |
 | Sn-61 | CM and change management | [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md), [WP-P-02](../07-supporting/WP-P-02-change-management.md) | G5.2 | Partial | Plans drafted; not implemented (no forks, tags, CODEOWNERS) |
 | Sn-62 | Baseline manifest | WP-P-01 §8 | G5.2 | Missing | Generator not written |
-| Sn-63 | Traceability procedure and data, trace check report | [WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md), [WP-T-01](../trace/README.md) | G5.3 | Partial | Procedure drafted; trace data holds only hazards, SGs, AoUs |
+| Sn-63 | Traceability procedure and data, trace check report | [WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md), [WP-T-01](../trace/README.md) | G5.3 | Partial | Procedure drafted; trace data holds hazards, SGs, AoUs, FSRs and TSRs (generated from WP-C-04, WP-S-02, WP-S-06); no SWSR/HWSR, code or test links yet |
 | Sn-64 | Verification review records | [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) | G5.4 | Missing | No reviews performed |
 | Sn-65 | Confirmation reviews, audit, FSA | [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md), [WP-K-04](WP-K-04-functional-safety-assessment.md) | G5.4 | Missing | None performed; no assessor (D-06) |
 | Sn-66 | Tool qualification | [WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md) | G5.5 | Partial | Classification drafted |
