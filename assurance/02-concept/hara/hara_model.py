@@ -21,6 +21,8 @@ Usage:
 # ruff: noqa: E501  (analyst data tables: one rating rule or rationale per line)
 from __future__ import annotations
 
+import csv
+import io
 import json
 import sys
 from collections import Counter, defaultdict
@@ -477,7 +479,7 @@ def build(experimental: bool) -> tuple[dict, list[dict]]:
           a = asil(S, E, C)
           a_fail = asil(S, E, C_UP[C]) if "⚠" in c_rat else a
           rows.append({"f": f_id, "m": m_id, "h": h, "os": os_row[0], "w": w_row[0], "S": S, "E": E, "C": C,
-                       "asil": a, "asil_aou_fail": a_fail})
+                       "asil": a, "asil_aou_fail": a_fail, "s_rat": s_rat, "e_rat": e_rat, "c_rat": c_rat})
   data = {
     "item": {"name": "LionDriver Supervised Driving Assistance", "abbr": "LD-SDA", "project": "LionDriver",
              "doc_id": "WP-C-03" + (" (Experimental Mode variant)" if experimental else ""),
@@ -513,6 +515,44 @@ def build(experimental: bool) -> tuple[dict, list[dict]]:
     "rating_overrides": overrides,
   }
   return data, rows
+
+
+def _csv(header, rows) -> str:
+  buf = io.StringIO()
+  w = csv.writer(buf, lineterminator="\n")
+  w.writerow(header)
+  w.writerows(rows)
+  return buf.getvalue()
+
+
+def events_csv(experimental: bool) -> str:
+  """Every hazardous-event row of the workbook (tab 12), one line each, for review on GitHub."""
+  fname = {f[0]: f[1] for f in FUNCTIONS + [EXPERIMENTAL_FUNCTION]}
+  mname = dict(MALFUNCTIONS)
+  osname = {o[0]: o[1] for o in SITUATIONS}
+  wname = {w[0]: w[1] for w in WEATHER}
+  out = []
+  for i, r in enumerate(build(experimental)[1], start=1):
+    out.append([f"{r['f']}/{r['m']}/{r['os']}/{r['w']}", f"H-{i:04d}", r["f"], fname[r["f"]], r["m"], mname[r["m"]],
+                f"{r['h']} {HAZARDS[r['h']]}", r["os"], osname[r["os"]], r["w"], wname[r["w"]],
+                r["S"], r["E"], r["C"], r["asil"], r["asil_aou_fail"], SG_MAP.get(r["h"], ""),
+                r["s_rat"], r["e_rat"], r["c_rat"]])
+  return _csv(["Key", "Workbook HARA ID", "Function", "Function name", "Guide word", "Guide word name", "Hazard", "Situation",
+               "Situation name", "Condition", "Condition name", "S", "E", "C", "ASIL", "ASIL if ⚠ AoUs fail",
+               "Safety goal", "S rationale", "E rationale", "C rationale"], out)
+
+
+def pairs_csv() -> str:
+  """The function × guide-word classification (tab 11) with the reason for every pair, including NSC and NA."""
+  fname = {f[0]: f[1] for f in FUNCTIONS + [EXPERIMENTAL_FUNCTION]}
+  out = []
+  for r in build(True)[0]["function_malfunction_ratings"]:
+    out.append([f"{r['function_id']}/{r['malfunction_id']}", r["function_id"], fname[r["function_id"]],
+                r["malfunction_id"], dict(MALFUNCTIONS)[r["malfunction_id"]], r["classification"],
+                r["subsumed_by"] or "", r["hazard_description"] if r["classification"] == SC else "", r["rationale"],
+                "Experimental variant only" if r["function_id"] == EXPERIMENTAL_FUNCTION[0] else ""])
+  return _csv(["Key", "Function", "Function name", "Guide word", "Guide word name", "Class", "Subsumed by",
+               "Hazard", "Rationale", "Scope"], out)
 
 
 ORDER = ["—", "QM", "A", "B", "C", "D"]
@@ -627,6 +667,9 @@ OUTPUTS = {
   "build/hara_input.json": lambda: json.dumps(build(False)[0], indent=1, ensure_ascii=False) + "\n",
   "build/hara_input_experimental.json": lambda: json.dumps(build(True)[0], indent=1, ensure_ascii=False) + "\n",
   "hara-cartesian-summary.md": lambda: summary(build(False)[1], build(True)[1]),
+  "hara-events.csv": lambda: events_csv(False),
+  "hara-events_experimental.csv": lambda: events_csv(True),
+  "hara-function-guideword.csv": pairs_csv,
 }
 
 # ---------------------------------------------------------------------------------------------

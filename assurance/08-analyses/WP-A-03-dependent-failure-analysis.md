@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-03 Dependent failure analysis (DFA), system level |
 | Standard reference | ISO 26262-9:2018 §7 (analysis of dependent failures); ISO 26262-9 §5 (independence for decomposition, by reference); ISO 26262-5:2018 §7 (hardware DFA input); ISO 26262-6:2018 §7 (software-level DFA input, detailed in [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md)) |
-| Version | 0.1 |
+| Version | 0.2 (§4.6 initiators from the FSC v0.2 completeness check, DFI-24…DFI-26, 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | SG-01 (ASIL C ⚠) and SG-02…SG-07 (ASIL B). Elements: E-03 envelope, E-01/E-02 SoC stack, E-04 device hardware, E-05 harness, EXT-EPS, EXT-PCM, EXT-CLU, driver |
 | Author | Assurance team (initial draft) |
@@ -89,16 +89,38 @@ Rating legend for evaluation: **C** controlled, **P** partly controlled, **N** n
 | DFI-21 | **Driver state and DM share the cause**: fatigue/distraction that degrades controllability is also what DM must detect; glare or sunglasses degrade both driver vision and DM (`docs/LIMITATIONS.md:53-56`) | Shared environment | DRV, E-01/DM (IC-03) | Controllability assumption fails when DM is least effective | DM wheel-touch fallback on high uncertainty (`openpilot/selfdrive/monitoring/policy.py:77-78`) | **P** | Handled under ISO 21448 (WP-C-04 §7, [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md)); not credited for ASIL |
 | DFI-22 | **Vehicle maintenance changes the EPS or PCM** (reflash, part swap) | Service | EXT-EPS, EXT-PCM (IC-02, IC-05) | AoU evidence becomes invalid without notice | Fingerprint lists include multiple EPS FW versions (`opendbc_repo/opendbc/car/toyota/fingerprints.py`) | **N** | Record ECU FW versions of the reference vehicle (WP-C-01 OI-1); verify ECU FW before engagement (TSR-803) and after service (TSR-808); an automatic refusal on unknown FW has no TSR yet (OI-7) |
 
+### 4.6 Initiators from the FSC v0.2 completeness check
+
+The fsc-builder completeness check of [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §14 tags every block-diagram node with the resources it shares ([`fsc/fsc_model.py`](../02-concept/fsc/fsc_model.py)). [RR-2026-004](../02-concept/reviews/RR-2026-004.md) F-07 asks that the DFA cover those paths. This table maps each shared-resource tag to the initiators above. All tags are covered; the new FSRs of WP-C-04 v0.2 add three initiators (DFI-24…DFI-26).
+
+| Shared resource (FSC tag) | FSC nodes that share it | Initiators |
+|---|---|---|
+| `vehicle_12v`, `harness` | N04…N08, N17, N18 | DFI-01, DFI-05, DFI-06, DFI-07 |
+| `device_supply` | N01…N03, N10…N14, N19, N20 | DFI-01, DFI-06 |
+| `device_pcb` | N01…N03, N09, N13, N14 | DFI-03, DFI-04, DFI-07 |
+| `spi` (SoC-to-panda command stream, N09) | N09 → N15 | DFI-13; interference in [WP-A-02](WP-A-02-coexistence-freedom-from-interference.md) §6.1, §6.2 |
+| SoC reset and boot lines (N13 → N14, GAP-38) | N13, N14 | DFI-13; WP-A-02 §6.2 |
+| `soc` | N10…N13, N19 | DFI-14, DFI-24, DFI-25, DFI-26 |
+| `mcu`, `mcu_clock` | N14…N16, N20 | DFI-02; on-die items go to WP-H-03 (OI-6) |
+| `can_bus0`, `can_bus1`, `can_bus2` | N04…N07, N18 | DFI-07, DFI-10 |
+| `windscreen_zone` | N01, N02 | DFI-04 |
+
+| ID | Initiator | Coupling factor | Elements reached | Effect | Existing measures | Eval | Required measure |
+|---|---|---|---|---|---|---|---|
+| DFI-24 | **Envelope-blocking detection uses the envelope's own report.** The SoC learns that the envelope does not grant authority from `pandaStates.controlsAllowed`, which `pandad` publishes from the panda health packet (FSR-02.10, TSR-621). A panda or SPI fault that blocks actuation and also freezes or misreports the health data leaves the SoC engaged and silent | Shared information input (the faulty element reports on itself) | E-03, E-01 HMI (IC-01, IC-06) | Lateral or longitudinal control lost while the SoC shows engaged, with no take-over request (SG-02, SG-06; HE-02.4) | `pandaStates` alive limit 1 s (WP-S-03 §9) → `commIssue`; `controlsMismatch` after ≈2 s (`selfdrive/selfdrived/selfdrived.py:338, 508-510`) | **P** | Treat stale or missing `pandaStates` as a mismatch within the TSR-621 budget; also detect blocking from vehicle-side evidence that does not come from the panda's own report (EPS-applied torque or actual acceleration not following the command while engaged). No TSR covers the vehicle-response check (OI-8) |
+| DFI-25 | **HMI hang removes warnings while actuation continues.** Unlike DFI-14 (SoC crash), a hung UI render loop or stalled audio stream leaves `controlsd` and the panda heartbeat running, so the envelope keeps authority and the siren does not sound | Shared resource (SoC scheduler, GPU, audio stack) | E-01 HMI vs E-01 control and E-03 siren (IC-06) | Take-over requests and announced decelerations are not perceived (SG-02, SG-06; H-07; FSR-02.11, FSR-04.05) | `processNotRunning` on a crashed `ui`/`soundd` only (`selfdrive/selfdrived/selfdrived.py:351-357`) | **N** | HMI liveness heartbeats with immediate disable and siren take-over (TSR-622, TSR-516); audible minimum (TSR-623); cluster cruise state as independent cue (TSR-309, AOU-12) |
+| DFI-26 | **FCW and longitudinal planning share the lead input.** A false lead (model or radar) raises a false FCW, which can trigger reflex braking, and makes the planner brake at the same time | Shared information input | E-01 FCW, E-01 planner, driver (IC-03) | Driver braking and item deceleration add up with a close follower (SG-04; HE-04.5) | Envelope deceleration bound −3.5 m/s² (SM-07); no jerk bound (GAP-04) | **P** | Deceleration and jerk bounds in the envelope, independent of the planner (TSR-202, TSR-205); FCW input freshness and false-rate target (TSR-625); false-positive lead validation under ISO 21448 ([WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md)) |
+
 ## 5. Evaluation per independence claim
 
 | Claim | Not controlled DFIs | Partly controlled DFIs | Verdict (current baseline) | Condition to accept |
 |---|---|---|---|---|
-| IC-01 envelope vs SoC | DFI-03, -08, -09, -10, -13, -17 | DFI-01, -02, -04, -07, -16, -18 | **Not independent** | WP-A-02 command lock and boot protection; fixed safety config; E2E/plausibility on RX; limits derived independently with margin; PVD/BOR; HIL target tests |
+| IC-01 envelope vs SoC | DFI-03, -08, -09, -10, -13, -17 | DFI-01, -02, -04, -07, -16, -18, -24 | **Not independent** | WP-A-02 command lock and boot protection; fixed safety config; E2E/plausibility on RX; limits derived independently with margin; PVD/BOR; HIL target tests |
 | IC-02 envelope vs EPS | DFI-22 | DFI-06, -11, -12 | **Partly**; EPS is an external measure, not an independent element (no ASIL credit, WP-A-01 §5) | AOU-01R verified for the recorded EPS FW; envelope limits not dependent on EPS feedback |
-| IC-03 envelope+EPS vs driver | DFI-08 | DFI-21 | **Open** until controllability tests | Envelope-bounded worst case shown controllable (C1 target) |
+| IC-03 envelope+EPS vs driver | DFI-08 | DFI-21, -26 | **Open** until controllability tests | Envelope-bounded worst case shown controllable (C1 target) |
 | IC-04 cluster indication | — | DFI-15 | **Partly** | AOU-12 verified |
 | IC-05 stock PCS | — | DFI-01, -05, -06, -20 plus WP-A-02 FFI-CM-05/08 | **Partly** | AOU-04R/AOU-13 verified; relay readback; reject `0xe7` in car modes; whitelist fix |
-| IC-06 buzzer vs SoC HMI | DFI-23 | DFI-14 | **Not independent** until the audio topology is known | FSR-02.05 timing met; siren path independent of SoC audio |
+| IC-06 buzzer vs SoC HMI | DFI-23, -25 | DFI-14, -24 | **Not independent** until the audio topology is known | FSR-02.05 timing met; siren path independent of SoC audio |
 | IC-07 (fallback E-07) | n/a | n/a | Not applicable unless DEC-01 activated | WP-A-01 IR-01…IR-10 |
 
 ## 6. Required measures (summary)
@@ -118,7 +140,10 @@ Rating legend for evaluation: **C** controlled, **P** partly controlled, **N** n
 | SoC-independent warning timing and audio path | DFI-14, DFI-23 | TSR-407, TSR-515, TSR-516 |
 | Tool qualification; HIL target tests | DFI-17 | — (WP-P-07, WP-S-08) |
 | External independent review | DFI-19 | — (WP-M-06) |
-| Installation check, ECU FW verification | DFI-20, -22 | TSR-803, TSR-805, TSR-808 |
+| Installation check, ECU FW verification | DFI-20, -22 | TSR-803, TSR-805, TSR-808, TSR-620 |
+| Envelope-blocking detection not only from the envelope's own report | DFI-24 | TSR-621 (partly); vehicle-response check: none (OI-8) |
+| HMI liveness supervision, audible minimum, independent cues | DFI-25 | TSR-622, TSR-623, TSR-516, TSR-309 |
+| Deceleration and jerk bounds independent of the planner; FCW input validity | DFI-26 | TSR-202, TSR-205, TSR-625 |
 
 ## 7. Mapping to WP-S-03 independence claims
 
@@ -130,6 +155,7 @@ Rating legend for evaluation: **C** controlled, **P** partly controlled, **N** n
 | DFA-4 driver and envelope both rely on PCM cruise state | DFI-10 (shared sensor inputs), DFI-15 |
 | IND-1 fallback second limiter | IC-07; [WP-A-01](WP-A-01-asil-decomposition.md) IR-01…IR-10 |
 | FFI-1…FFI-6 | [WP-A-02](WP-A-02-coexistence-freedom-from-interference.md) §9 |
+| Shared-resource paths of the FSC completeness check (WP-C-04 §14, RR-2026-004 F-07) | §4.6 |
 
 ## 8. Open items
 
@@ -141,4 +167,5 @@ Rating legend for evaluation: **C** controlled, **P** partly controlled, **N** n
 | OI-4 | Characterise EPS behaviour at low supply voltage and with misreported torque (DFI-06, DFI-11) as part of AOU-01R tests | Safety engineer | G2 |
 | OI-5 | Repeat this DFA for IC-07 if DEC-01 is activated | Safety engineer | G2 (conditional) |
 | OI-6 | Hand the on-die STM32H7 common-cause items (shared RAM, flash, clock tree, supply domain) to WP-H-03 | HW lead | G3 |
-| OI-7 | Report to the WP-S-02 author: no TSR makes the envelope refuse engagement when the vehicle ECU firmware differs from the verified record (DFI-22); TSR-803 is a procedural check only | Safety engineer | G2 |
+| OI-7 | Report to the WP-S-02 author: no TSR makes the envelope refuse engagement when the vehicle ECU firmware differs from the verified record (DFI-22); TSR-803 is a procedural check only. **Partly closed:** TSR-620 (WP-S-02) now prevents engagement on an unverified ECU firmware set, allocated to the QM SoC with B-sup from TSR-512 | Safety engineer | G2 |
+| OI-8 | Report to the WP-S-02 author: no TSR detects envelope blocking from vehicle-side evidence independent of the panda's own report (DFI-24) | Safety engineer | G2 |

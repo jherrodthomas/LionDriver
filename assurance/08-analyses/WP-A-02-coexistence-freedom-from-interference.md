@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-02 Coexistence of elements and freedom from interference |
 | Standard reference | ISO 26262-9:2018 §6 (criteria for coexistence of elements); ISO 26262-6:2018 §7 and Annex D (freedom from interference between software elements: timing and execution, memory, exchange of information); ISO 26262-5:2018 Annex D (communication bus diagnostic measures, informative); ASPICE 4.0 SYS.3, SWE.2 |
-| Version | 0.1 |
+| Version | 0.2 (§6.4 HMI and status-path interference from the FSC v0.2; TSR references updated to WP-S-02 v0.2, 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | ASIL C (SG-01, until re-rated) / ASIL B (SG-02…SG-07) elements coexisting with QM elements, on the panda MCU and on the comma device |
 | Author | Assurance team (initial draft) |
@@ -96,7 +96,7 @@ The SoC and MCU have physically separate memories. There is no shared RAM. Spati
 | FFI-CM-01 | Corruption of CAN TX frames on SPI | Corrupted actuation frame | SPI header + payload 8-bit XOR, NACK on mismatch (`drivers/spi.h:97-104, 122-138`); per-packet XOR checked at FDCAN TX (`can_comms.h`, `fdcan.h:100-101`); every frame passes `safety_tx_hook` limits (`can_common.h:162`) | 8-bit XOR has weak residual-error rate; no Hamming-distance argument (GAP-10) | CRC-16 or stronger over header and payload (TSR-410, HWSR-401); residual-error analysis per ISO 26262-5 Annex D |
 | FFI-CM-02 | Repetition / stale frames (SoC replays an old buffer) | Last command held; stale steering bias (HE-02.3) | `safety_tx_hook` rate and RT limits bound the change but accept a repeated in-limit value; pandad 1 s age filter is host-side (QM) | **No sequence counter or freshness** (`can_comms.h:27`) (GAP-10) | Sequence counter + freshness window on the SoC→panda command stream, checked by the envelope (TSR-410, TSR-411); stale → SS-L/SS-G |
 | FFI-CM-03 | Loss / delay | Actuation stops or is late | Heartbeat (5 s) | GAP-06 | As FFI-TM-06 (TSR-407, TSR-408) |
-| FFI-CM-04 | Insertion / babbling (SoC floods CAN TX) | Bus load, TX of in-limit but unintended frames | TX whitelist and limits per frame (`safety.h:230-253`); `test_spam_can_buses` (`opendbc_repo/opendbc/safety/tests/common.py:937`); TX queue overflow counted (`can_common.h:165`); SPI CAN NACK when not ready (`spi.h:159-167`) | No TX rate limit per message ID in the envelope; overflow report-only | TX rate supervision per actuation message ID (**no TSR covers SoC→CAN TX rate per ID**; TSR-403 covers RX only — OI-7); verification WP-S-08 VS-SI-11 |
+| FFI-CM-04 | Insertion / babbling (SoC floods CAN TX) | Bus load, TX of in-limit but unintended frames | TX whitelist and limits per frame (`safety.h:230-253`); `test_spam_can_buses` (`opendbc_repo/opendbc/safety/tests/common.py:937`); TX queue overflow counted (`can_common.h:165`); SPI CAN NACK when not ready (`spi.h:159-167`) | No TX rate limit per message ID in the envelope; overflow report-only | TX rate supervision per actuation message ID (TSR-518, added in WP-S-02 after OI-7); verification WP-S-08 VS-SI-11 |
 | FFI-CM-05 | Masquerade (SoC sends `0x344` PRE_COLLISION / `0x411` PCS_HUD on bus 0) | Alters stock PCS (SG-07) | `0x283` content-checked (`modes/toyota.h:251-257`) | `0x344`/`0x411` allowed with no content check (**GAP-42**; WP-S-02 NF-07 adds DSU-only IDs) | Remove from the reference-configuration whitelist or content-check (TSR-705) |
 
 ### 6.2 SoC → panda commands that change configuration or mode
@@ -124,6 +124,16 @@ Not QM-to-ASIL interference in the strict sense, but the same communication faul
 | FFI-CM-15 | Repetition / stuck frames on `0x1D2`, `0x226`, `0x260`, `0xAA` | Checksum on `0x1D2`, `0x260` (8-bit additive, `modes/toyota.h:65-72`); timeouts ≤ ≈2 s (`safety.h:321-344`) | No counters; `0x226`/`0xAA` no checksum (GAP-01); slow timeout (GAP-06) | E2E strategy for each gating/limiting signal (plausibility cross-checks where the OEM provides no counter: e.g. wheel speed vs EPS, brake vs decel), timeout ≤ 0.3 s (TSR-401…TSR-406, FSR-01.06) |
 | FFI-CM-16 | **Forwarding decided before RX validation** of the same frame (`drivers/fdcan.h:199` before `:221`) | Static forwarding block list (`safety.h:270-281`) | GAP-11 | Acceptable for camera→car PCS frames (forwarding must not depend on validation, SG-07); confirm no blocked/intercepted message can be forwarded (TSR-704, TSR-707); test WP-S-08 VS-SI-20 |
 
+### 6.4 Interference on the HMI and status path (from the FSC v0.2)
+
+[WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) v0.2 added FSR-02.10 (envelope blocking while engaged) and FSR-02.11 (HMI path failure). Both depend on SoC processes that share the SoC with non-safety processes. Everything here is QM, so this is not QM-to-ASIL interference; it matters because the SoC side of these FSRs is B-supported by the envelope (TSR-516 siren, TSR-309 cluster state), and that support works only if the SoC failure is detected or the SoC stops.
+
+| ID | Fault | Effect | Existing measures (code) | Gap | Required measure |
+|---|---|---|---|---|---|
+| FFI-CM-17 | Non-safety SoC processes (logging, encoding, upload, streaming, `manage_athenad`) starve `soundd` or the UI render loop of CPU, GPU or audio buffers | Take-over request late or not perceived while control continues (FSR-02.11, H-07) | `ui` runs with real-time priority `Priority.CTRL_HIGH` on core 0 (`openpilot/selfdrive/ui/ui.py:19`); `selfdrived` and `controlsd` likewise (`selfdrived.py:591`, `controlsd.py:237`). `soundd` sets no real-time priority (`openpilot/selfdrive/ui/soundd.py`; started from `process_config.py:90`) | No liveness supervision of the render loop or audio stream; `soundd` scheduled as a normal process | HMI liveness heartbeats with immediate disable and siren take-over (TSR-622); assign `soundd` a real-time priority or show by test that alert latency meets TSR-606 under worst-case load (WP-S-08) |
+| FFI-CM-18 | SoC software sets the alert volume too low (ambient-scaled volume; `MIN_VOLUME = 0.1`, `soundd.py:20, 159-160`) | Alert not audible (FSR-02.11) | Critical alerts ramp to maximum volume over 4 s (`ALERT_RAMP_TIME`, `soundd.py:21`) | No defined audible minimum; ramp time not tied to the warning budget | Audible minimum while the item can engage, else no-entry (TSR-623); ramp time within the SG-02/SG-06 warning budget |
+| FFI-CM-19 | `pandad` delays or freezes `pandaStates` while the panda keeps blocking authority | SoC does not see envelope blocking (FSR-02.10) | `pandaStates` alive limit 1 s (WP-S-03 §9); `controlsMismatch` ≈2 s | Detection depends on the envelope's own report ([WP-A-03](WP-A-03-dependent-failure-analysis.md) DFI-24) | Stale `pandaStates` treated as a mismatch within the TSR-621 budget; vehicle-response check (WP-A-03 OI-8) |
+
 ## 7. Summary of required measures
 
 | Measure | Interference addressed | TSR reference | GAP / finding |
@@ -134,12 +144,14 @@ Not QM-to-ASIL interference in the strict sense, but the same communication faul
 | RAM/flash ECC handling, run-time flash CRC | FFI-SP-01, -05 | TSR-503 | GAP-08 |
 | SPI length bounds | FFI-SP-02, -03 | TSR-412 | NF-04 (OI-3) |
 | CRC + sequence counter + freshness on SoC→panda stream; heartbeat bound to control loop | FFI-CM-01, -02, -11, FFI-TM-06 | TSR-409, TSR-410, TSR-411, TSR-614 | GAP-10 |
+| TX rate supervision per actuation message ID | FFI-CM-04 | TSR-518 | — |
 | FTTI-consistent command and RX timeouts | FFI-TM-06, FFI-CM-03, -15 | TSR-401, TSR-407, TSR-408 | GAP-06 |
 | Safety-mode/param lock; reject configuration commands (`0xdc`, `0xe7`, `0xe5`, `0xde`, `0xdb`, `0xe8`, `0xf1`, `0xd1`) in car modes; remove `0xc5` from release | FFI-CM-06…10 | TSR-512, TSR-513, TSR-506 | GAP-09, NF-05 (OI-4, OI-7) |
 | RDP/WRP, modern firmware signature, no dev bootstub in release recovery | FFI-CM-12, FFI-SP-05 | TSR-511, TSR-514 | GAP-24, GAP-38 |
 | Whitelist restriction for PCS messages | FFI-CM-05 | TSR-705 | GAP-42, NF-07 |
 | E2E / plausibility on vehicle RX | FFI-CM-15 | TSR-401…TSR-406 | GAP-01 |
-| NVIC priority scheme, ISR WCET | FFI-TM-01 | No TSR yet (OI-7); WP-S-04 | GAP-23 (host), new for MCU |
+| NVIC priority scheme, ISR WCET | FFI-TM-01 | TSR-519; WP-S-04 | GAP-23 (host), new for MCU |
+| HMI liveness, audible minimum, `pandaStates` freshness | FFI-CM-17…-19 | TSR-622, TSR-623, TSR-621 | WP-A-03 OI-8 |
 
 ## 8. FFI verdict (current baseline)
 
@@ -164,6 +176,16 @@ FFI must be shown before G2 for the envelope-only ASIL allocation of [WP-C-04](.
 | FFI-5 QM SoC timing faults | FFI-TM-06, FFI-TM-07, FFI-CM-03 |
 | FFI-6 comms ISRs starve safety processing | FFI-TM-01…-05 |
 | (not in WP-S-03) vehicle RX faults, forwarding order | FFI-CM-15, FFI-CM-16 |
+| (not in WP-S-03) SoC-internal interference on the HMI and status path | FFI-CM-17…-19 |
+
+Paths named by the FSC completeness check ([WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §14; [RR-2026-004](../02-concept/reviews/RR-2026-004.md) F-07):
+
+| FSC node / path | Covered here by | Common-cause part |
+|---|---|---|
+| N09 SoC-to-panda command stream (SPI) | §6.1 FFI-CM-01…-05; §6.2 FFI-CM-06…-14; FFI-SP-02, -03 | [WP-A-03](WP-A-03-dependent-failure-analysis.md) DFI-13 |
+| N13 → N14 SoC reset and boot lines (GAP-38) | FFI-CM-10, FFI-CM-12 | WP-A-03 DFI-13 |
+| N08, N13, N14 shared supply and PCB | Not interference; common cause | WP-A-03 DFI-01, DFI-03, DFI-04 (§4.6) |
+| N12 → N19 HMI path (FSR-02.11) | FFI-CM-17, FFI-CM-18 | WP-A-03 DFI-14, DFI-25 |
 
 ## 10. Open items
 
@@ -175,4 +197,5 @@ FFI must be shown before G2 for the envelope-only ASIL allocation of [WP-C-04](.
 | OI-4 | Register WP-S-02 NF-05 as a GAP and add the SG-07 consequence of `0xe7` (camera-side forwarding stops while the relay is energised, FFI-CM-08); confirm by HIL test (WP-S-08 VS-SI-08) | Safety engineer | G2 |
 | OI-5 | Establish the NVIC priority assignment actually in effect (default priorities assumed) and analyse ISR nesting and WCET | SW lead | G2 |
 | OI-6 | Analyse all busy-waits reachable from comms paths for termination (FFI-TM-03) | SW lead | G3 |
-| OI-7 | Report to the WP-S-02 author: TSR-513 list lacks `0xd1` param 1 (softloader) and `0xd8` (reset); no TSR for SoC→CAN TX rate supervision (FFI-CM-04) or for an NVIC priority / ISR timing scheme (FFI-TM-01) | Safety engineer | G2 |
+| OI-7 | ~~Report to the WP-S-02 author: TSR-513 list lacks `0xd1` param 1 (softloader) and `0xd8` (reset); no TSR for SoC→CAN TX rate supervision (FFI-CM-04) or for an NVIC priority / ISR timing scheme (FFI-TM-01)~~ **Closed:** TSR-513 now lists `0xd1` param 1 and `0xd8`; TSR-518 (TX rate) and TSR-519 (interrupt and timing scheme) added | Safety engineer | G2 |
+| OI-8 | Decide the `soundd` scheduling priority, or show by load test that alert latency meets TSR-606 (FFI-CM-17) | SW lead | G3 |
