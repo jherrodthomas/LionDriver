@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-02 Software safety requirements specification |
 | Standard reference | ISO 26262-6:2018 §6 (specification of software safety requirements, incl. HSI refinement); ISO 26262-8:2018 §6 (requirement attributes and management); ISO 26262-4:2018 §6 (HSI, by reference to WP-S-05); ASPICE 4.0 SWE.1 |
-| Version | 0.4 (status of SWSR-501, 512, 705 for panda `3859fa8`, opendbc `5b5a4ba`; 2026-10-12). 0.3: status updated for the integrated firmware changes |
+| Version | 0.5 (SWSR-407 implemented, panda `c2e5d93`; 2026-10-12). 0.4 (status of SWSR-501, 512, 705 for panda `3859fa8`, opendbc `5b5a4ba`; 2026-10-12). 0.3: status updated for the integrated firmware changes |
 | Status | Draft |
 | ASIL / scope | Envelope software (E-03a/E-03b): B‡ (ASIL C applies until SG-01 is re-rated, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host software (E-01): QM / QM (B-sup) |
 | Author | Assurance team (initial draft) |
@@ -129,7 +129,7 @@ Refines TSR-201…207. E-03a. Parent SGs: SG-03, SG-04, SG-05.
 
 | ID | Requirement | ASIL | Parent | Allocation | Verif | Acceptance | Baseline / GAP |
 |---|---|---|---|---|---|---|---|
-| SWSR-407 | In a car safety mode the envelope shall clear all authority when no heartbeat (`0xf3`) has been received for > 0.3 s. | B‡ | TSR-407 | U-PND-MAIN | HIL, FI | Clear ≤ 0.3 s + one task period | Not met: 1 Hz counter, SILENT after 5 s with ignition (`main.c:101-103, 153-162, 191-226`) (GAP-06) |
+| SWSR-407 | In a car safety mode the envelope shall clear all authority when no heartbeat (`0xf3`) has been received for > 0.3 s. | B‡ | TSR-407 | U-PND-MAIN | HIL, FI | Clear ≤ 0.3 s + one task period | Implemented (panda `c2e5d93`, `drivers/heartbeat_monitor.h`); host tests `tests/heartbeat_monitor`; not yet verified on hardware ([IA heartbeat](../07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md)) |
 | SWSR-408 | While lateral authority is granted, the envelope shall clear authority when no `0x2E4` frame has been accepted for > 50 ms; while longitudinal authority is granted, the same for `0x343` with > 100 ms. | B‡ | TSR-408 | U-PND-MAIN, U-SAF-CORE | HIL, FI | Clear at 50/100 ms + task period; SS-L via SWSR-109a | Not impl (GAP-10) |
 | SWSR-409 | The envelope shall treat a heartbeat whose control-loop counter has not advanced for > 0.3 s as missing (SWSR-407). | B‡ | TSR-409 | U-PND-COMMS, U-PND-MAIN | HIL, FI | Frozen counter with live heartbeat → revocation ≤ 0.3 s | Not impl: heartbeat carries only `engaged` (`main_comms.h:277-285`) |
 | SWSR-409h | `pandad` shall send in each heartbeat the frame counter of the latest `carControl` received by `card`/`pandad`. | QM | TSR-409 | `host.pandad` | UT, IT | Counter equals `carControl` frame | Not impl: `engaged` only (`selfdrive/pandad/pandad.cc:389-390`; `panda.cc:137-139`) (GAP-10) |

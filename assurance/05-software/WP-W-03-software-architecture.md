@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-03 Software architectural design |
 | Standard reference | ISO 26262-6:2018 §7 (software architectural design: notation, design principles, static and dynamic aspects, ASIL attribution, resource usage); ISO 26262-9:2018 §6 (coexistence, by reference to WP-A-02); ASPICE 4.0 SWE.2 |
-| Version | 0.1 |
+| Version | 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Envelope (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host (E-01): QM / QM (B-sup) |
 | Author | Assurance team (initial draft) |
@@ -152,7 +152,8 @@ All envelope processing runs in **interrupt context**. The main loop (`main.c:33
 | DMA2 Stream2 (SPI RX done) | end of MOSI DMA | `spi_rx_done` (`drivers/spi.h:106-223`) via `stm32h7/llspi.h:56-61` | via `comms_control_handler`: `set_safety_mode` → `set_safety_hooks`; via `comms_can_write`: `safety_tx_hook` |
 | DMA2 Stream3, SPI4 | MISO done | `spi_tx_done` | none |
 | USB OTG | USB transfer | `drivers/usb.h` | same comms handlers |
-| TIM12 tick | 8 Hz (`drivers/timers.h:30-31`) | `tick_handler` (`main.c:106-249`) | 1 Hz: heartbeat logic, `check_registers`, `safety_tick`; 8 Hz: harness, watchdog kick, siren |
+| TIM4 safety task (LionDriver) | 100 Hz (`drivers/timers.h` `safety_task_timer_init`) | `safety_task_handler` (`main.c`) | `safety_tick` (RX timeouts), heartbeat monitor (0.3 s, `drivers/heartbeat_monitor.h`), IWDG feed (`drivers/hw_watchdog.h`) |
+| TIM12 tick | 8 Hz (`drivers/timers.h:30-31`) | `tick_handler` (`main.c`) | 1 Hz: heartbeat counter and SILENT after 5 s, `heartbeat_engaged` mismatch, `check_registers`; 8 Hz: harness, software watchdog kick, siren |
 | TIM6 | 1 Hz | `interrupt_timer_handler` (`drivers/interrupts.h:50-72`) | rate statistics |
 | NMI / HardFault | exception | `early_init.h:73-81` | reset |
 
@@ -163,9 +164,10 @@ All envelope processing runs in **interrupt context**. The main loop (`main.c:33
 | Period | Activity | Lines |
 |---|---|---|
 | 125 ms | siren toggle, `fan_tick`, `harness_tick` (ADC orientation when relay not driven), `simple_watchdog_kick`, `sound_tick`, relay-fault reporting, harness re-init on change | `main.c:113-140` |
-| 1 s | LEDs, ignition, `bootkick_tick`, heartbeat counter, `heartbeat_engaged` mismatch (3 ticks), heartbeat loss → SILENT (5 s ign on / 2 s off), siren countdown, `check_registers`, CAN ignition timeout, counters, `safety_tick` (RX timeouts) | `main.c:143-243` |
+| 1 s | LEDs, ignition, `bootkick_tick`, heartbeat counter, `heartbeat_engaged` mismatch (3 ticks), heartbeat loss → SILENT (5 s ign on / 2 s off), siren countdown, `check_registers`, CAN ignition timeout, counters | `main.c` |
+| 10 ms (TIM4, LionDriver, panda `c2e5d93`) | `safety_tick` (RX timeouts, 5 periods for Toyota), heartbeat monitor (authority revoked after 0.3 s), IWDG feed (window mode) | `main.c` `safety_task_handler` |
 
-Required schedule (SWSR-401a, 501): a dedicated timer at ≥ 50 Hz running `safety_tick`, heartbeat, command freshness, SPI error rate, relay readback, platform monitors; IWDG serviced at its end. The 8 Hz/1 Hz tick keeps housekeeping only. The safety task's interrupt priority shall be higher than the comms interrupts, which requires the shared-data scheme of §6.3 to be revisited (OI-4).
+Required schedule (SWSR-401a, 501): a dedicated timer at ≥ 50 Hz running `safety_tick`, heartbeat, command freshness, SPI error rate, relay readback, platform monitors; IWDG serviced at its end. The 8 Hz/1 Hz tick keeps housekeeping only. **Status (panda `c2e5d93`):** the 100 Hz safety task exists and runs `safety_tick`, the heartbeat monitor and the IWDG feed; command freshness (TSR-408), SPI error rate, relay readback and platform monitors are not in it yet. It still runs at the same priority as every other interrupt; the proposed priority scheme is §5.4.
 
 ### 5.3 Message flow per control frame (lateral, 10 ms)
 
@@ -205,6 +207,70 @@ Required: start-up tests (SWSR-515) between steps 4 and 8; IWDG started in step 
 
 Required (SWSR-512): TOYOTA exits only to SILENT/NOOUTPUT; new fault state SS-S (= SILENT + latch) reachable from every state (SWSR-502).
 
+
+### 5.4 Interrupt priority scheme (proposed, SWSR-519, OI-4)
+
+**Status: proposal for review; not implemented.** Analysis at panda `c2e5d93`, opendbc `5b5a4ba`. The timing claims below are design targets until measured on the target (§5.4.5).
+
+#### 5.4.1 Why equal priority is not enough
+
+With every interrupt at the reset priority, the safety task waits behind whichever handler is running. Its entry latency is bounded only by the longest handler or critical section anywhere in the firmware. Candidates for long ones are `set_safety_mode` (it calls `set_safety_hooks` and `can_init_all`, which wait for the FDCAN init handshake), a burst of CAN frames on three buses (each `can_rx` runs the forward and RX hooks per frame), and SPI control requests. None of these has a measured WCET.
+
+Two budgets depend on that latency:
+
+- **TSR-401 / TSR-407 detection times.** RX timeout ≤ 0.2 s and heartbeat ≤ 0.3 s each include one task period (10 ms). A delayed task run adds its delay directly.
+- **IWDG window mode (HWSR-501b).** A feed is rejected, and the MCU reset, if it comes less than about 5 ms after the previous feed (WINR 679 of RLR 719; 4.5–5.6 ms over the assumed ±10 % LSI range). The task timer runs on a fixed period, so if one run is delayed by *d* and the next is not, the two feeds are 10 ms − *d* apart. **Entry-latency jitter above about 4.4 ms therefore causes a spurious watchdog reset.** The window that guards against a runaway task also makes the safety task's jitter a reset cause.
+
+#### 5.4.2 Proposed priorities
+
+The Cortex-M7 in the STM32H725 implements 4 priority bits (`__NVIC_PRIO_BITS` = 4; 16 levels, 0 highest). With the default grouping all bits are preemption bits. Proposed assignment, set explicitly for every enabled interrupt in one table at init (`NVIC_SetPriority`):
+
+| Priority | Interrupts | Rationale |
+|---|---|---|
+| 2 | TIM4 safety task | Must preempt all comms so that RX-timeout, heartbeat and IWDG timing hold under any bus or host load |
+| 4 | FDCAN1–3 IT0 (RX: forward hook, RX hook), FDCAN1–3 IT1 (TX completion) | RX hook revokes authority on invalid input; it must not wait behind host commands |
+| 6 | DMA2 Stream2/3, SPI4 (host commands, TX hook), USB OTG | Host-side path; a busy or misbehaving host must not delay CAN reception or the safety task |
+| 8 | TIM12 tick (8 Hz/1 Hz housekeeping, 5 s SILENT path), TIM6 interrupt-rate timer | Housekeeping; their timing needs are in seconds |
+| 10 | BDMA/DMA1 sound, EXTI2 fan tachometer | Not safety-related |
+
+Levels 0–1 stay free for a possible future high-priority supervisor, and odd levels for insertion. NMI and HardFault keep their fixed priorities.
+
+#### 5.4.3 Race analysis under the proposed scheme
+
+Preemption creates the concurrent access that equal priority prevented (§5.1 consequence (i)). Each shared item of §6.3 under the proposal:
+
+| # | Shared data | Access under the proposal | Hazard | Required measure |
+|---|---|---|---|---|
+| R-1 | `current_safety_config`, `current_hooks`, `current_safety_mode/param` | Written by `set_safety_hooks` (SPI ISR via `0xdc`, priority 6; tick via 5 s heartbeat loss, priority 8). Read by `safety_tick` (safety task, priority 2), which iterates `rx_checks[0..rx_checks_len)` | **Out-of-bounds read.** If the safety task preempts `set_safety_hooks` between the copy of `rx_checks` and of `rx_checks_len`, it can index a new pointer with the old length, or the reverse. This hazard does not exist today | `set_safety_hooks` and the whole of `set_safety_mode` run with the safety task masked (BASEPRI at 2, or `ENTER_CRITICAL`); bounded and measured (§5.4.5) |
+| R-2 | `controls_allowed` | Granted only in the RX path (`pcm_cruise_check`, priority 4). Revoked by the RX path, the safety task (priority 2) and the tick (priority 8) | **Lost revocation.** If the safety task preempts the grant between `rx_checks_allow_engagement()` and the store of `true`, its revocation is overwritten. All safety-task revocations are condition-based and re-evaluated every period, so the loss lasts at most one period (10 ms) | Make the grant a single critical section (check and store with the safety task masked), or accept and record a 10 ms bound. The single-writer API of §6.3 (`safety_revoke`) remains the target |
+| R-3 | `rx_checks[i].status` fields | Written by the RX hook (priority 4); read by `safety_tick` (priority 2) | Torn **set** of fields: the task may see a frame's new timestamp with its old checksum result. Each field is a single aligned 8/16/32-bit store and is atomic | Accept: at most one period of stale evaluation, then consistent. No measure |
+| R-4 | `heartbeat_age_ticks` (heartbeat monitor) | Reset by `0xf3` (SPI ISR, priority 6); read-modify-written by the safety task (priority 2) | A reset preempted by the task (single store) cannot tear. The task's increment cannot be preempted by the lower-priority SPI ISR | None |
+| R-5 | TX hook state (`desired_torque_last`, `rt_torque_last`, …) and `controls_allowed` read in the TX hook | TX hook runs in SPI ISR (priority 6); safety task (2) and RX hook (4) can preempt it | **One frame after revocation.** The TX hook reads `controls_allowed` as true, is preempted by a revocation, then passes the frame. Bounded to one frame per revocation (≤ 10 ms of `0x2E4`), inside the TSR-406 reaction time of 0.1 s | Accept and record, or re-check `controls_allowed` with interrupts masked just before the FDCAN TX load |
+| R-6 | `can_rx_q`, `can_queues[]` | RX ISR, SPI ISR, FDCAN IT1 | Already protected by `ENTER_CRITICAL` (`drivers/can_common.h`) | None. These sections now delay the safety task too; include them in the measurement |
+| R-7 | `hw_watchdog_main_loop_ran` | Set by the main loop (thread mode); read and cleared by the safety task | Single byte; atomic | None |
+| R-8 | `faults`, `fault_status` | Bit-OR from any ISR | Read-modify-write of `faults` can lose a bit when preempted by another ISR that sets a different bit. **New** under the proposal: at equal priority one ISR cannot preempt another | Set fault bits with interrupts masked (one-line critical section in `fault_occurred`) |
+
+#### 5.4.4 Changes needed before the scheme can be enabled
+
+1. Mask the safety task during `set_safety_mode` / `set_safety_hooks` (R-1). This is mandatory: without it the proposal introduces an out-of-bounds read.
+2. Make the grant in `pcm_cruise_check` atomic with respect to the safety task (R-2), or record the 10 ms bound in WP-W-04.
+3. Make `fault_occurred` atomic (R-8).
+4. Add the priority table and set it before the first `NVIC_EnableIRQ` (`REGISTER_INTERRUPT` call sites, §5.1).
+5. Host tests cannot show any of this; it needs the target measurement below.
+
+#### 5.4.5 Measurement plan (target, HIL bench D-04)
+
+| Measurement | Method | Acceptance |
+|---|---|---|
+| Safety-task entry latency and jitter | GPIO toggled at entry and exit of `safety_task_handler`, scope or logic analyser, 10 min per load case | Jitter < 4 ms (IWDG window margin, §5.4.1); worst-case latency < 1 ms with the proposed priorities |
+| Load cases | (a) idle; (b) three CAN buses at maximum bus load from the jungle; (c) host SPI at maximum rate with control requests; (d) repeated `0xdc` mode changes; (e) all at once | All cases meet the acceptance above |
+| Longest masked section | GPIO around `set_safety_mode` and every `ENTER_CRITICAL` site, under load case (e) | Below the jitter budget, with the result recorded |
+| Equal-priority baseline | The same measurements at panda `c2e5d93` (no priorities) | Gives the evidence for or against keeping equal priority (§5.4.6) |
+
+#### 5.4.6 Alternative: keep equal priority
+
+If the baseline measurement shows that the longest handler or critical section stays well below 4 ms under load case (e), equal priority can be kept and R-1…R-8 do not arise. The argument then rests on measured WCET of every handler, which has to be re-measured on every change to any ISR. The proposal in §5.4.2 instead bounds the safety task's latency by construction, at the cost of the measures in §5.4.4. Recommendation: measure the baseline first; adopt §5.4.2 with the §5.4.4 measures unless the baseline margin is large.
+
 ## 6. Partitioning and freedom from interference at software level
 
 ### 6.1 Mechanisms present
@@ -233,13 +299,13 @@ Required (SWSR-512): TOYOTA exits only to SILENT/NOOUTPUT; new fault state SS-S 
 
 | Data | Writers (context) | Readers | Protection today | Required |
 |---|---|---|---|---|
-| `controls_allowed` | RX ISR (`pcm_cruise_check`, `generic_rx_checks`, `is_msg_valid`), tick ISR (`safety_tick`, `main.c:185`), SPI ISR via `set_safety_hooks` | TX hook (SPI ISR), health | Equal priority (no preemption) | Single writer API `safety_revoke(reason)` / grant only in RX path; keep under any new priority scheme |
-| `heartbeat_engaged`, `heartbeat_counter`, `heartbeat_lost` | SPI ISR (`0xf3`), tick ISR | tick ISR | Equal priority | As above; counter in safety task |
-| `current_safety_mode/param`, `current_hooks`, `current_safety_config` | SPI ISR (`0xdc`), tick ISR (heartbeat loss) | all hooks | Equal priority | MPU-protected after lock (SWSR-507, 512) |
+| `controls_allowed` | RX ISR (`pcm_cruise_check`, `generic_rx_checks`, `is_msg_valid`), safety task (`safety_tick`, heartbeat monitor), tick ISR (heartbeat mismatch), SPI ISR via `set_safety_hooks` | TX hook (SPI ISR), health | Equal priority (no preemption) | Single writer API `safety_revoke(reason)` / grant only in RX path; under §5.4 the grant must be atomic w.r.t. the safety task (R-2), and the TX hook may pass one frame after a revocation (R-5) |
+| `heartbeat_engaged`, `heartbeat_counter`, `heartbeat_lost`, `heartbeat_age_ticks` | SPI ISR (`0xf3`), tick ISR, safety task (`heartbeat_age_ticks`) | tick ISR, safety task | Equal priority | Fast counter now in the safety task (TSR-407, panda `c2e5d93`); safe under §5.4 (R-4) |
+| `current_safety_mode/param`, `current_hooks`, `current_safety_config` | SPI ISR (`0xdc`), tick ISR (heartbeat loss) | all hooks, safety task (`safety_tick`) | Equal priority | MPU-protected after lock (SWSR-507, 512); under §5.4 the safety task must be masked during `set_safety_mode` (R-1, mandatory) |
 | `relay_malfunction` | RX ISR, `set_safety_hooks` | TX hook, fwd hook, tick | Equal priority | Latch not clearable by `0xdc` (SWSR-506a) |
 | `torque_meas`, `torque_driver`, `vehicle_speed`, `desired_torque_last`, `rt_torque_last` | RX ISR / TX path | TX path | Equal priority | — |
 | `can_rx_q`, `can_queues[]` | RX ISR, TX path, SPI ISR | SPI ISR, FDCAN IT1 | Critical sections | Overflow → fault (SWSR-707) |
-| `faults`, `fault_status` | any ISR | health | none (bit OR) | Fault reaction (SWSR-502) |
+| `faults`, `fault_status` | any ISR | health | none (bit OR) | Fault reaction (SWSR-502); under §5.4 set bits atomically (R-8) |
 | `spi_buf_rx/tx` | DMA, SPI ISR | SPI ISR | state machine | Length bounds (SWSR-412) |
 
 ## 7. Resource usage (estimates, to be measured)
@@ -280,7 +346,7 @@ ISO 26262-6 §7 lists design principles with recommendation levels per ASIL; the
 | OI-1 | Add U-PND-USB, U-PND-PWR, U-PND-HK, U-PND-PLAT to the WP-W-06 unit list | Safety engineer | G3 |
 | OI-2 | Remove unused brand modes from the reference firmware build or justify them (WP-A-02 OI-2) | SW lead | G3 |
 | OI-3 | Decide whether USB comms are disabled in the reference build | SW lead | G3 |
-| OI-4 | Define the NVIC priority scheme for the new safety task (SWSR-519) and re-assess §6.3 | SW architect | G3 |
+| OI-4 | Define the NVIC priority scheme for the new safety task (SWSR-519) and re-assess §6.3. **Proposed in §5.4 (2026-10-12, AI draft, I0)**; still needed: review, the §5.4.4 code changes, and the §5.4.5 measurements on the target | SW architect | G3 |
 | OI-5 | Check principle recommendation levels against the licensed ISO 26262-6 | Safety engineer | G3 |
 | OI-6 | Measure the resource estimates of §7 from the map file and on target | Maintainer | G4 |
 | OI-7 | Create `elements.yaml` from §3.1 and §4.1 (WP-P-06 OI-4) | Safety engineer | G3 |
