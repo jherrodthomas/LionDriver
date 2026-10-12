@@ -32,12 +32,12 @@
 | [WP-W-01](../../../05-software/WP-W-01-software-development-environment-guidelines.md) SW development environment, languages and coding guidelines | DEV-01 | Draft | 12 | |
 | [WP-P-07](../../../07-supporting/WP-P-07-tool-classification-qualification.md) Software tool classification and qualification | DEV-02 | Draft | 7 | |
 | [WP-H-02](../../../04-hardware/WP-H-02-hardware-design.md) Hardware architectural and detailed design (device, panda MCU, harness, relay) | DEV-03 | Draft | 6 | |
-| [WP-H-01](../../../04-hardware/WP-H-01-hardware-safety-requirements.md) Hardware safety requirements specification | DEV-04 | Draft | 7 | |
+| [WP-H-01](../../../04-hardware/WP-H-01-hardware-safety-requirements.md) Hardware safety requirements specification | DEV-04 | Draft | 6 | |
 | [WP-H-03](../../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) Hardware safety analysis (FMEA/FMEDA) | DEV-05 | Draft | 8 | |
 | [WP-H-07](../../../04-hardware/WP-H-07-hardware-component-qualification.md) Qualification of hardware components (comma device, STM32H7, harness) | DEV-06 | Draft | 6 | |
 | [WP-H-04](../../../04-hardware/WP-H-04-hardware-metrics.md) Hardware architectural metrics (SPFM, LFM) | DEV-07 | Draft | 5 | |
 | [WP-H-05](../../../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) Evaluation of safety goal violations due to random HW failures (PMHF) | DEV-08 | Draft | 5 | |
-| [WP-W-02](../../../05-software/WP-W-02-software-safety-requirements.md) Software safety requirements specification | DEV-09 | Draft | 8 | |
+| [WP-W-02](../../../05-software/WP-W-02-software-safety-requirements.md) Software safety requirements specification | DEV-09 | Draft | 9 | |
 | [WP-W-03](../../../05-software/WP-W-03-software-architecture.md) Software architectural design | DEV-10 | Draft | 7 | |
 | [WP-W-04](../../../05-software/WP-W-04-software-safety-analysis.md) Software safety analysis and software-level DFA | DEV-11 | Draft | 5 | |
 | [WP-W-05](../../../05-software/WP-W-05-software-unit-design.md) Software unit design and implementation | DEV-12 | Draft | 4 | |
