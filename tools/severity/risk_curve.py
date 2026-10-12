@@ -101,7 +101,7 @@ Check status (2026-10-12, from search summaries; the full text was not reachable
 - The fourth power is confirmed.
 - One secondary source states the constant as 31.74 m/s, which is 71.0 mph, matching the value
   here. Another quotes it in a garbled form that reads like 61.54. With 61.54, SH-03 following
-  rises from 0.33 to 0.59 and SH-04 from 0.043 to 0.076; the values of 1 are unchanged
+  rises from 0.41 to 0.73 and SH-04 from 0.053 to 0.094; the values of 1 are unchanged
   (`--joksch-mph 61.54`).
 - Still to check against the full text: the constant, and which impact directions the curve
   was fitted to (the summaries say car-car collisions without naming a direction). `--curve
@@ -114,8 +114,8 @@ Check status (2026-10-12, from search summaries; the full text was not reachable
   head-on and right-angle crashes. A car-car or frontal curve therefore overstates the
   rear-struck risk, and no credit is taken for that. Not covered: rear-seat occupants with
   intrusion from a heavy follower.
-- The masses, occupancies and restitution below are assumptions. Check the masses against the
-  reference vehicle record.
+- The masses, occupancies and restitution below are checked by `--vehicles` (see VEHICLE_GRID):
+  the defaults are the worst corner of the credible range.
 
 There is no injury curve here. At the delta-v of SH-06, a police-reported injury is near
 certain, so for an injury-crash budget P(severity class) = 1.
@@ -134,10 +134,10 @@ JOKSCH_MPH_DEFAULT = 71.0  # 31.74 m/s per a secondary source; full text not yet
 JOKSCH_MPH = JOKSCH_MPH_DEFAULT
 RESTITUTION = 0.1  # assumed; small at high impact speed
 
-EGO = {"name": "Corolla (reference vehicle)", "mass_kg": 1400, "occupants": 5}  # mass to confirm (WP-C-01)
+EGO = {"name": "Corolla (reference vehicle)", "mass_kg": 1320, "occupants": 5}  # lowest 2020 LE curb weight (see VEHICLE_GRID)
 LEADS = [
   {"name": "passenger car", "mass_kg": 1500, "occupants": 5},
-  {"name": "heavy truck", "mass_kg": 15000, "occupants": 2},
+  {"name": "heavy truck", "mass_kg": 36300, "occupants": 2},  # US 80,000 lb gross limit (see VEHICLE_GRID)
 ]
 ODD_SPEEDS_KMH = {"ODD-H": 120, "ODD-A": 90}  # speed bounds of WP-C-02 §3.1; closing speed for a stationary lead
 ACCEL_MAX = 2.0  # m/s^2, envelope maximum (WP-C-02 §2, ACCEL_MAX)
@@ -413,6 +413,33 @@ def crash_fatal_ub(closing_kmh: float, ego: dict, lead: dict, e: float = RESTITU
           "p_fatal_crash_ub": min(1.0, ego["occupants"] * p_e + lead["occupants"] * p_l)}
 
 
+# Reference-vehicle check (`--vehicles`, 2026-10-12). Ego mass: 2020 Corolla LE curb weight
+# 2,910-2,955 lb (1,320-1,340 kg; TrueDelta and AutoPadre listings, search summaries; Toyota's
+# own sheet not reached); opendbc's TOYOTA_COROLLA_TSS2 CarSpecs gives 3,060 lb (1,388 kg) for
+# the whole platform, hybrids included; with five 80 kg occupants about 1,720 kg. Seats: 5.
+# Width 1,781 mm (the 1.78 m used in WP-S-04). Other vehicles: a small car of 1,100 kg and a
+# large pickup of 2,700 kg around the 1,500 kg car; a truck of 15 t and one at the US 80,000 lb
+# gross limit (36.3 t). Restitution: about 0.1 at closing speeds of 15 mph and above (low-speed
+# test fits, search summary), so 0.1 holds for every case here (SH-04 closes at 27-35 km/h).
+VEHICLE_GRID = {
+  "ego_kg": (1320, 1388, 1400, 1720),
+  "car_kg": (1100, 1500, 2700),
+  "truck_kg": (15000, 36300),
+}
+
+
+def worst_vehicle_cases(ego_kg: float, car_kg: float, truck_kg: float, e: float = RESTITUTION) -> dict:
+  """Worst P(fatal crash) bound per vehicle case for one set of masses."""
+  ego = dict(EGO, mass_kg=ego_kg)
+  others = [dict(LEADS[0], mass_kg=car_kg), dict(LEADS[1], mass_kg=truck_kg)]
+  worst: dict = {}
+  for sh, label, v in cases():
+    key = (sh, label.split()[0])
+    for other in others:
+      worst[key] = max(worst.get(key, 0.0), crash_fatal_ub(v, ego, other, e)["p_fatal_crash_ub"])
+  return worst
+
+
 def main(argv: list[str] | None = None) -> int:
   global JOKSCH_MPH, OCCUPANT_CURVE
   ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
@@ -430,6 +457,8 @@ def main(argv: list[str] | None = None) -> int:
                   help="SH-11: compare the linear pedestrian risk below 23 mph with two logistic curves")
   ap.add_argument("--pedestrian-compare", action="store_true",
                   help="SH-11: compare the Tefft curve with the Richards (2010) pedestrian curves")
+  ap.add_argument("--vehicles", action="store_true",
+                  help="print the vehicle cases over the reference-vehicle and other-vehicle mass grid")
   ap.add_argument("--age", action="store_true",
                   help="SH-11: print the VRU cases with the risk curve shifted for the struck person's age")
   ap.add_argument("--age-offset-mph", type=float, default=AGE_OFFSET_70_30_MPH,
@@ -437,6 +466,20 @@ def main(argv: list[str] | None = None) -> int:
   a = ap.parse_args(argv)
   JOKSCH_MPH = a.joksch_mph
   OCCUPANT_CURVE = a.curve
+  if a.vehicles:
+    import itertools
+    keys = [k for k in worst_vehicle_cases(1400, 1500, 15000) if not k[0].startswith("SH-06") and not k[0].startswith("SH-01")]
+    print("| Ego (kg) | Car (kg) | Truck (t) | " + " | ".join(f"{sh} {odd}" for sh, odd in keys) + " |")
+    print("|---|---|---|" + "---|" * len(keys))
+    top = dict.fromkeys(keys, 0.0)
+    for ego_kg, car_kg, truck_kg in itertools.product(*VEHICLE_GRID.values()):
+      w = worst_vehicle_cases(ego_kg, car_kg, truck_kg, a.restitution)
+      for k in keys:
+        top[k] = max(top[k], w[k])
+      print(f"| {ego_kg} | {car_kg} | {truck_kg / 1000:g} | " + " | ".join(f"{w[k]:.3f}" for k in keys) + " |")
+    print("| **max** | | | " + " | ".join(f"**{top[k]:.3f}**" for k in keys) + " |")
+    print("\nSH-06, SH-03 OS-07 and the SH-01/02 head-on are 1 at every point of the grid.")
+    return 0
   if a.pedestrian_compare:
     rows = [("30 mph", 30 / MPH_PER_KMH), ("40 mph", 40 / MPH_PER_KMH)] + [(sh, v) for sh, _label, v in vru_cases()]
     print("| Impact | km/h | Tefft (used) | " + " | ".join(RICHARDS_PEDESTRIAN_15PLUS) + " |")

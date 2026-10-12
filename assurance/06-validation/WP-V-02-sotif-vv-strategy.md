@@ -158,24 +158,24 @@ SH-06 is mapped to an injury-risk curve (`tools/severity/risk_curve.py`):
 - **Driver risk** is p = (Δv / 71 mph)⁴, the Joksch (1993) rule of thumb.
 - **Crash risk** is bounded over the occupants of both vehicles with the union bound, because FARS counts any death.
 
-The worst credible lead in the ODD is a stationary heavy truck. Hitting it at the ODD speed bound (120 km/h in ODD-H, 90 km/h in ODD-A) gives a fatal-crash bound of 1. Car-to-car it is also 1 at 120 km/h, and 0.36 at 90 km/h. P(severity class) for SH-06 is therefore 1 for either budget. Its target rests on P(E-situation), P(not controlled) and the lead detection of AIR-03 and AIR-04. The curve constant, masses and occupancies are written from memory or assumed, and must be checked before this result is recorded as evidence. The check does not change the conclusion unless the truck case drops below 1.
+The worst credible lead in the ODD is a stationary heavy truck. Hitting it at the ODD speed bound (120 km/h in ODD-H, 90 km/h in ODD-A) gives a fatal-crash bound of 1. Car-to-car it is also 1 at 120 km/h, and 0.36 at 90 km/h. P(severity class) for SH-06 is therefore 1 for either budget. Its target rests on P(E-situation), P(not controlled) and the lead detection of AIR-03 and AIR-04. The curve constant is checked below; the masses and occupancies are checked under the reference-vehicle check below. Neither changes this conclusion, because the truck case stays at 1.
 
 SH-03 uses the same curve, separately for its two situations:
 - **Approaching slower traffic (OS-07, HE-03.3).** The acceleration only adds to the closing speed of SH-06, so the SH-06 value applies: 1.
 - **Following at a short gap (OS-05, HE-03.1).**
   - Impact speed: the lead holds its speed, and the ego accelerates at the envelope maximum (+2.0 m/s²) over the planner's following gap (t_follow · v + 6 m, `long_mpc.py`). That gives v = √(2 · a · gap): 53–58 km/h at 120 km/h, and 47–51 km/h at 90 km/h.
-  - Fatal-crash bound: worst case a heavy truck ahead at the relaxed gap gives **0.33 in ODD-H and 0.20 in ODD-A**. Car-to-car it is 0.06 and 0.04.
-  - So SH-03 earns severity credit in the following situation only, and at most a factor of about 3–5. The same unverified-input caveat applies.
+  - Fatal-crash bound: worst case a fully loaded heavy truck ahead at the relaxed gap gives **0.41 in ODD-H and 0.25 in ODD-A**. Car-to-car it is 0.06 and 0.04.
+  - So SH-03 earns severity credit in the following situation only, and at most a factor of about 2–4. The same unverified-input caveat applies.
 
 SH-04 (struck from behind after phantom braking, OS-08, HE-04.1) is simulated:
 - **The ego** brakes at the envelope minimum (−3.5 m/s²) to a stop, because it is not controlled.
 - **The follower** at a time gap of 0.5–1.5 s holds its speed for its reaction time and then brakes. The worst credible follower is taken as reacting after 2.0 s and braking at 3.0 m/s², below the ego's deceleration. These two values are assumptions; `risk_curve.py --sensitivity` shows how the impact speed depends on them.
-- **The result** is impacts at 27–35 km/h relative speed and a fatal-crash bound of **0.043 in ODD-H and 0.032 in ODD-A**, with a heavy truck behind (0.008 and 0.006 car-to-car). This is a factor of about 25–30 of credit, matching the HARA's S2 rating of HE-04.1.
+- **The result** is impacts at 27–35 km/h relative speed and a fatal-crash bound of **0.053 in ODD-H and 0.040 in ODD-A**, with a fully loaded heavy truck behind (0.008 and 0.006 car-to-car). This is a factor of about 19–25 of credit, matching the HARA's S2 rating of HE-04.1.
 - **Not covered:** a follower that never brakes before impact is outside this bound. Whether it is credible within OS-08 is for the assessor to decide (OI-3).
-- **Rear impacts:** the SH-04 bound is driven by the ego's own occupants, struck from behind (with a heavy truck behind, 0.009 per ego occupant against 0.000 for the truck driver). The Joksch curve's use for rear-struck occupants is checked under the curve-constant check below and is conservative.
+- **Rear impacts:** the SH-04 bound is driven by the ego's own occupants, struck from behind (with a heavy truck behind, 0.011 per ego occupant against 0.000 for the truck driver). The Joksch curve's use for rear-struck occupants is checked under the curve-constant check below and is conservative.
 
 SH-01 and SH-02 (lane departure) are split by collision, and each part counts as its own situation in step 2:
-- **Head-on in ODD-A (OS-03, HE-01.1, HE-02.2): curve.** The car drifts into the oncoming lane with no reaction, so the closing speed is the sum of both speeds at the ODD-A bound, 90 + 90 = 180 km/h. That is worse than the average head-on crash (item 3). The Corolla's Δv is about 100 km/h car-to-car, giving a driver risk of 0.65. With the occupant union bound, the fatal-crash bound is **1**, and it is also 1 against a truck. The head-on part of SH-01/02 therefore earns no severity credit.
+- **Head-on in ODD-A (OS-03, HE-01.1, HE-02.2): curve.** The car drifts into the oncoming lane with no reaction, so the closing speed is the sum of both speeds at the ODD-A bound, 90 + 90 = 180 km/h. That is worse than the average head-on crash (item 3). The Corolla's Δv is about 105 km/h car-to-car, giving a driver risk of 0.72. With the occupant union bound, the fatal-crash bound is **1**, and it is also 1 against a truck. The head-on part of SH-01/02 therefore earns no severity credit.
 - **Sideswipe and barrier impact (OS-01, OS-02): FARS/CRSS ratio.** A drift meets the adjacent vehicle or the barrier at a shallow angle, which is no worse than the average crash of those types, so item 3's condition holds. The values wait on OI-8.
 - **ODD-H has no head-on case.** It is divided highway, so there only the ratio applies.
 - **SH-02 departs in a curve, which is steeper than a drift.** The car goes straight while the road bends (HE-02.1).
@@ -204,7 +204,7 @@ SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the 
 **Curve-constant check (2026-10-12).** Both curves were checked against search summaries of their sources. The full texts were not reachable from the project's cloud environment, so each check stops short of the primary text.
 - **Joksch (1993), *Accident Analysis and Prevention* 25(1), 103–104.**
   - **Confirmed:** the citation; car-car collisions with the risk of occupant death (summaries name NASS 1980–1986, and one names its predecessor NCSS); and the fourth power.
-  - **Constant:** one secondary source gives (Δv / 31.74 m/s)⁴, which is 71.0 mph, the value used here. Another quotes the constant garbled, as what reads like 61.54. With 61.54, SH-03 following rises from 0.33 to 0.59 (ODD-H) and from 0.20 to 0.35 (ODD-A), and SH-04 from 0.043 to 0.076 and from 0.032 to 0.057. The values of 1 do not change (`risk_curve.py --joksch-mph 61.54`).
+  - **Constant:** one secondary source gives (Δv / 31.74 m/s)⁴, which is 71.0 mph, the value used here. Another quotes the constant garbled, as what reads like 61.54. With 61.54, SH-03 following rises from 0.41 to 0.73 (ODD-H) and from 0.25 to 0.44 (ODD-A), and SH-04 from 0.053 to 0.094 and from 0.040 to 0.070. The values of 1 do not change (`risk_curve.py --joksch-mph 61.54`).
   - **Rear impacts (checked 2026-10-12, search summaries).** The summaries say car-car collisions but not which impact directions the curve was fitted to. The curve is applied to rear-struck occupants: the ego in SH-04, whose occupants drive its bound, and the lead in SH-06 and SH-03. Studies that split by direction put rear impacts below frontal ones at the same speed:
     - A NASS-CDS and CIREN regression (PMC3217552, "Characteristics of crashes that increase the risk of serious injuries"): MAIS3+ risk at 30 mph Δv is 19.9 % in rear impacts against 38.9 % in frontal ones.
     - Jurewicz et al. (2016), *Transportation Research Procedia* 14: 10 % MAIS3+ at an impact speed of about 55 km/h in rear-end crashes, against about 30 km/h in head-on and right-angle crashes.
@@ -224,8 +224,8 @@ SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the 
       - **SH-10 lane change (`--sh10`):** lateral Δv 7 km/h per car at every speed; side curve 0.0002.
       - **SH-01/02 barrier impact (`--sh01`/`--sh02`):** lateral Δv (1 + e) · v · sin θ, which is close to (1 + e) · √(2 · d · a) and so about 19 km/h (12 mph) at every speed, for a rigid barrier; side curve 0.002. A deforming guardrail lowers it.
       - **Conclusion:** both primary contacts are well below the 24 mph median of the side-impact deaths, so a side curve on them would credit away nearly all the risk. The deaths in these crash types come from secondary impacts, such as a spin into the side of another vehicle at highway speed, which the FARS/CRSS ratio includes and no primary-contact curve does. This confirms keeping them on the ratio.
-    - **Effect (`risk_curve.py --curve richards`, the frontal fit for every occupant):** SH-03 following rises from 0.33 to 0.45 in ODD-H (ego Δv up to 58 km/h, 36 mph, into a heavy truck) and stays at 0.20 in ODD-A. SH-04 falls from 0.043 to 0.030, because its rear-struck occupants are below 33 mph. The values of 1 do not change.
-    - **Decision:** Joksch stays the curve. The frontal-fit values are within the sensitivity of the lower Joksch constant (61.54 mph: SH-03 following 0.59 in ODD-H), which is already reported, so the reported range for SH-03 following, 0.20–0.33 and up to 0.59, covers both questions.
+    - **Effect (`risk_curve.py --curve richards`, the frontal fit for every occupant):** SH-03 following rises from 0.41 to 0.64 in ODD-H (ego Δv up to 61 km/h, 38 mph, into a heavy truck) and from 0.25 to 0.28 in ODD-A. SH-04 falls from 0.053 to 0.037, because its rear-struck occupants are below 33 mph. The values of 1 do not change.
+    - **Decision:** Joksch stays the curve. The frontal-fit values are within the sensitivity of the lower Joksch constant (61.54 mph: SH-03 following 0.73 in ODD-H), which is already reported, so the reported range for SH-03 following, 0.25–0.41 and up to 0.73, covers both questions.
   - **Open:** the constant itself, and the impact directions in the curve's data, are to be confirmed from the full text.
 - **Tefft (2011), AAA Foundation for Traffic Safety, "Impact Speed and a Pedestrian's Risk of Severe Injury or Death".**
   - **Confirmed:** the anchors 10/25/50/75/90 % at 23/32/42/50/58 mph. The data are US pedestrians struck by a forward-moving car, light truck, van or SUV, 1994–1998, weighted for oversampling. Cyclists are not covered.
@@ -281,6 +281,21 @@ SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the 
     - **Result:** Tefft is above both recent datasets in both SH-11 cases, by a factor of 1.6–2.1 in OS-04 and about 10 in OS-06. Only the 1970s data are higher in OS-04. The report attributes the fall since the 1970s to car design and medical care, and says the three curves lie within each other's confidence bands.
     - **Decision:** Tefft stays the curve. It is conservative against the recent European data, and the 1970s fleet does not represent the cars LionDriver runs on. The report's age split (Ashton and Mackay, all ages: 47 % at 30 mph for elderly pedestrians against 5 % for adults) agrees in direction with the Tefft age check above.
   - **Corrected citation:** the anchors are from this 2011 report. The earlier citation named the journal version, Tefft (2013), *Accident Analysis and Prevention* 50, 871–878, which gives about 10 % near 24 mph and 50 % near 41 mph. With the journal values, SH-11 at the OS-04 bound would be about 0.40 instead of 0.38.
+
+
+**Reference-vehicle check (2026-10-12, `risk_curve.py --vehicles`).** The masses, occupancies and restitution of the vehicle cases were checked and set to the worst corner of their credible range:
+
+| Input | Was | Evidence | Now |
+|---|---|---|---|
+| Ego mass | 1,400 kg (unchecked) | 2020 Corolla LE curb weight 2,910–2,955 lb (1,320–1,340 kg; TrueDelta and AutoPadre listings, search summaries; Toyota's own sheet not reached). opendbc `TOYOTA_COROLLA_TSS2` CarSpecs: 3,060 lb (1,388 kg) for the whole platform, hybrids included. With five occupants about 1,720 kg | **1,320 kg**: the lightest ego has the largest Δv, and the ego's occupants drive every SH-03 and SH-04 bound |
+| Ego occupants | 5 | The 2020 Corolla LE seats 5 | 5 (confirmed) |
+| Ego width | 1.78 m (WP-S-04) | 1,781 mm | Confirmed |
+| Passenger car | 1,500 kg, 5 occupants | Grid 1,100–2,700 kg | Kept: the car never sets a worst case (the truck does) |
+| Heavy truck | 15 t, 2 occupants | Up to the US gross limit of 80,000 lb (36.3 t) | **36.3 t**: a heavier truck gives the ego a larger Δv |
+| Restitution | 0.1 | About 0.1 at closing speeds of 15 mph and above in low-speed test fits (search summary); every case here closes at 27 km/h or more | 0.1 (kept) |
+
+- **Effect:** over the grid (ego 1,320/1,388/1,400/1,720 kg, car 1,100/1,500/2,700 kg, truck 15/36.3 t), the new defaults give the largest bound in every case. SH-03 following rises from 0.33 to **0.41** (ODD-H) and from 0.20 to **0.25** (ODD-A); SH-04 from 0.043 to **0.053** and from 0.032 to **0.040**. The truck mass causes most of the rise. The values of 1 (SH-06, SH-03 approaching, the head-on) do not change, and car-to-car values change by less than 0.003.
+- **Not covered:** the occupancy of the other vehicle (2 truck occupants, 5 car occupants) does not matter here, because the other vehicle's Δv is small in every worst case.
 
 ## 4. Validation targets
 

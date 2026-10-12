@@ -146,11 +146,11 @@ class RiskCurveTest(unittest.TestCase):
     with redirect_stdout(io.StringIO()) as buf:
       self.assertEqual(rc.main(["--curve", "richards"]), 0)
     out = buf.getvalue()
-    self.assertIn("- SH-03 OS-05, ODD-H: 0.453", out)
-    self.assertIn("- SH-04 OS-08, ODD-H: 0.030", out)
+    self.assertIn("- SH-03 OS-05, ODD-H: 0.638", out)
+    self.assertIn("- SH-04 OS-08, ODD-H: 0.037", out)
     with redirect_stdout(io.StringIO()) as buf:
       rc.main([])
-    self.assertIn("- SH-03 OS-05, ODD-H: 0.334", buf.getvalue())
+    self.assertIn("- SH-03 OS-05, ODD-H: 0.414", buf.getvalue())
 
   def test_richards_side_fit_and_primary_contacts(self):
     for mph, p in rc.RICHARDS_SIDE_POINTS_MPH:
@@ -195,6 +195,20 @@ class RiskCurveTest(unittest.TestCase):
     out = buf.getvalue()
     self.assertIn("| SH-11 OS-04 | 0.382 | 0.137 | 0.224 |", out)
     self.assertIn("| SH-11 OS-06 | 0.048 | 0.013 | 0.023 |", out)
+
+  def test_vehicle_grid_defaults_are_the_worst_corner(self):
+    import itertools
+    defaults = rc.worst_vehicle_cases(rc.EGO["mass_kg"], rc.LEADS[0]["mass_kg"], rc.LEADS[1]["mass_kg"])
+    for masses in itertools.product(*rc.VEHICLE_GRID.values()):
+      w = rc.worst_vehicle_cases(*masses)
+      for key in ("SH-03 OS-05", "SH-04 OS-08"):
+        for odd in ("ODD-H", "ODD-A"):
+          self.assertLessEqual(w[(key, odd)], defaults[(key, odd)] + 1e-12)
+    self.assertAlmostEqual(defaults[("SH-03 OS-05", "ODD-H")], 0.414, places=3)
+    self.assertAlmostEqual(defaults[("SH-04 OS-08", "ODD-A")], 0.040, places=3)
+    with redirect_stdout(io.StringIO()) as buf:
+      self.assertEqual(rc.main(["--vehicles"]), 0)
+    self.assertIn("| **max** | | | **0.414** | **0.053** | **0.248** | **0.040** |", buf.getvalue())
 
   def test_pedestrian_curve_is_monotone(self):
     risks = [rc.pedestrian_fatality(v) for v in range(0, 120, 5)]
@@ -241,7 +255,7 @@ class RiskCurveTest(unittest.TestCase):
     try:
       with redirect_stdout(io.StringIO()) as buf:
         self.assertEqual(rc.main(["--joksch-mph", "61.54"]), 0)
-      self.assertIn("SH-03 OS-05, ODD-H: 0.592", buf.getvalue())
+      self.assertIn("SH-03 OS-05, ODD-H: 0.734", buf.getvalue())
     finally:
       rc.JOKSCH_MPH = rc.JOKSCH_MPH_DEFAULT
     self.assertAlmostEqual(rc.JOKSCH_MPH_DEFAULT * 0.44704, 31.74, places=2)
