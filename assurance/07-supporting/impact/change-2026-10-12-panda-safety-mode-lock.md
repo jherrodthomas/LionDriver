@@ -7,7 +7,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Analysis | IA-2026-<nn> (assign on review) |
 | Status | **Draft: proposed change, not integrated.** The LionDriver `panda` pin is unchanged |
 | Change request | [jherrodthomas/panda#4](https://github.com/jherrodthomas/panda/pull/4), stacked on panda#3 and panda#1 |
-| Range | panda `a35d1c6..d0fbeec` (branch `claude/safety-mode-lock`) |
+| Range | panda `a35d1c6..7e2d148` (branch `claude/safety-mode-lock`) |
 | Reference configuration affected | Yes, in the reference build only (`LIONDRIVER_REFERENCE=1`); other builds are unchanged |
 | Author / reviewer (independence) | Claude (AI-assisted draft) / TBD; an AI draft is not a review (WP-M-06) |
 
@@ -15,7 +15,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 
 | Commit(s) | Files | Summary of behaviour change | FuSa | SOTIF | AI | CS | Hazards / findings affected | WPs affected | Verification to re-run | Decision |
 |---|---|---|---|---|---|---|---|---|---|---|
-| `d0fbeec` | `SConscript`, `board/reference_lock.h` (new), `board/main_comms.h`, `board/main.c`, `tests/misra/test_misra.sh`, `tests/misra/checkers.txt`, `tests/reference_lock/` (new) | With `LIONDRIVER_REFERENCE=1`, host request `0xdc` accepts only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73; in TOYOTA only NOOUTPUT or SILENT. `0xdf` is refused in every mode (alternative experience stays 0). `0xc5`, `0xd8`, `0xdb`, `0xde`, `0xe5`, `0xe6`, `0xe7`, `0xe8`, `0xf1`, `0xf9`, `0xfc` are refused in a car mode. A rejected request has no effect and is printed to the debug console. Internal mode changes are not gated | Yes | No | No | Yes (a compromised SoC can no longer select another mode or parameter, or reconfigure CAN in a car mode) | FSR-01.10; GAP-09, GAP-44, GAP-49; SG-01, SG-07 | WP-S-02 (TSR-512, TSR-513 Impl), WP-W-02 (SWSR-512, 512a, 513), WP-C-01 (new AoU, §3), gap assessment (GAP-09, GAP-49), WP-W-06 (new unit tests), WP-V-05 (request injection in TOYOTA mode), TARA | Builds (reference debug and release); MISRA, both variants; host unit tests; HIL: each refused request in TOYOTA mode, ignition-off power save sequence | Take with panda#1 and #3 after review and HIL evidence |
+| `d0fbeec`, `7e2d148` | `SConscript`, `board/reference_lock.h` (new), `board/main_comms.h`, `board/main.c`, `tests/misra/test_misra.sh`, `tests/misra/checkers.txt`, `tests/reference_lock/` (new) | With `LIONDRIVER_REFERENCE=1`, host request `0xdc` accepts only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73; in TOYOTA only NOOUTPUT or SILENT. `0xdf` is refused in every mode (alternative experience stays 0). `0xc5`, `0xd8`, `0xdb`, `0xde`, `0xe5`, `0xe6`, `0xe7`, `0xe8`, `0xf1`, `0xf9`, `0xfc` are refused in a car mode. A rejected request has no effect and is printed to the debug console. Internal mode changes are not gated | Yes | No | No | Yes (a compromised SoC can no longer select another mode or parameter, or reconfigure CAN in a car mode) | FSR-01.10; GAP-09, GAP-44, GAP-49; SG-01, SG-07 | WP-S-02 (TSR-512, TSR-513 Impl), WP-W-02 (SWSR-512, 512a, 513), WP-C-01 (new AoU, §3), gap assessment (GAP-09, GAP-49), WP-W-06 (new unit tests), WP-V-05 (request injection in TOYOTA mode), TARA | Builds (reference debug and release); MISRA, both variants; host unit tests; HIL: each refused request in TOYOTA mode, ignition-off power save sequence | Take with panda#1 and #3 after review and HIL evidence |
 
 ## 2. Effect on the requirements
 
@@ -23,7 +23,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 |---|---|---|
 | TSR-512 / SWSR-512 (mode and parameter lock) | Met in the reference build | "Rejected **and reported**": only the debug console. Reporting to the host needs a health packet field (OI-1) |
 | SWSR-512a (alternative experience fixed) | Met in the reference build (reset value 0) | — |
-| TSR-513 / SWSR-513 (requests refused in a car mode) | Met for the SWSR-513 list | `0xd1` param 1 (SWSR-511a); `0xc0`, `0xb0`, `0xb1`, `0xf6` still to be confirmed (WP-W-02 OI-5) |
+| TSR-513 / SWSR-513 (requests refused in a car mode) | Met for the SWSR-513 list, and `0xd1` param 1 (softloader entry, SWSR-511a; `7e2d148`) | `0xc0`, `0xb0`, `0xb1`, `0xf6` still to be confirmed (WP-W-02 OI-5) |
 | "In release builds" | The lock is tied to `LIONDRIVER_REFERENCE`, not to `RELEASE`. The reference release build is `RELEASE=1 LIONDRIVER_REFERENCE=1` | Release procedure must build with both flags (OI-2) |
 
 ## 3. Behaviour changes to watch
@@ -51,4 +51,4 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | OI-1 | Report rejected requests to the host (health packet field; changes `HEALTH_PACKET_VERSION` and needs the matching host change) | Release |
 | OI-2 | Release procedure: build the reference release with `RELEASE=1 LIONDRIVER_REFERENCE=1`; record it in WP-P-01 (configuration management) | Release |
 | OI-3 | Add the alternative-experience AoU to WP-C-01 and decide the host-side guard | Integration |
-| OI-4 | Confirm `0xc0`, `0xb0`, `0xb1`, `0xf6` (WP-W-02 OI-5) and gate `0xd1` param 1 (SWSR-511a) | Later change |
+| OI-4 | Confirm `0xc0`, `0xb0`, `0xb1`, `0xf6` (WP-W-02 OI-5). `0xd1` param 1 is gated in a car mode since `7e2d148` | Later change |
