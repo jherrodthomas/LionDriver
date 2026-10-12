@@ -4,10 +4,10 @@
 |---|---|
 | Work product | WP-W-10 ML engineering: model requirements, data management, training route, testing, deployment |
 | Standard reference | ASPICE 4.0 MLE.1 (ML requirements analysis), MLE.2 (ML architecture), MLE.3 (ML training), MLE.4 (ML model testing), SUP.11 (ML data management); ISO/PAS 8800:2024 (data, AI V&V, deployment, operation); ISO 21448:2022 §7, §10 |
-| Version | 0.1 |
+| Version | 0.2 (RR-2026-008 F-31: owner and needed-by columns; F-28: author; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM / SOTIF (AI-1, AI-2, AI-3; DM chain QM per the [WP-C-04 §7](../02-concept/WP-C-04-functional-safety-concept.md) proposal) |
-| Author | Assurance team (initial draft) |
+| Author | Assurance team (AI-assisted draft, Claude) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (AI safety lead) |
 | Baseline | `8b8c6ae` (tinygrad submodule pin `d3f09c9`, not initialized in this checkout) |
@@ -260,11 +260,13 @@ Upstream history shows why this matters: the big model was replaced and reverted
 
 ## Open items
 
-| ID | Item |
-|---|---|
-| OI-1 | Fetch the LFS objects, compile on the reference device and record source and compiled hashes (first application of §4) |
-| OI-2 | Select and classify the independent ONNX reference runtime and the perturbation tools (WP-P-07) |
-| OI-3 | Build fork-owned model replay (route set, LionDriver storage, CI that fails on unexplained differences) |
-| OI-4 | Write the label specification and consent forms for DS-EVAL-DM |
-| OI-5 | Decide the replacement for `pickle` loading or the verified-hash precondition (shared with WP-C-11 OI-4) |
-| OI-6 | Define the FP16 error budget for VS-ML-01 tolerances |
+Owners and gates are proposals added in [RR-2026-008](reviews/RR-2026-008.md) F-31; confirm them at the next review.
+
+| ID | Item | Owner | Needed by |
+|---|---|---|---|
+| OI-1 | Fetch the LFS objects, compile on the reference device and record source and compiled hashes (first application of §4) | Maintainer | G3 |
+| OI-2 | Select and classify the independent ONNX reference runtime and the perturbation tools (WP-P-07) | Maintainer | G3 |
+| OI-3 | Build fork-owned model replay (route set, LionDriver storage, CI that fails on unexplained differences) | Maintainer | G4 |
+| OI-4 | Write the label specification and consent forms for DS-EVAL-DM | Safety engineer | G4 |
+| OI-5 | Decide the replacement for `pickle` loading or the verified-hash precondition (shared with WP-C-11 OI-4) | Maintainer | G3 |
+| OI-6 | Define the FP16 error budget for VS-ML-01 tolerances | ML owner | G4 |

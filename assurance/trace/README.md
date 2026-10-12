@@ -147,9 +147,13 @@ Keys common to all kinds: `id`, `kind`, `status` (WP-P-06 enum), `source` (work 
 | `baseline_impl` | fsr, tsr, swsr, hwsr | Baseline column verbatim: what the code does at `8b8c6ae`, or at a later pin or in the reference build where the cell names one (WP-W-02 §2.2); not verification evidence |
 | `text`, `asil`, `allocated_to`, `verification` | swsr, hwsr | As for tsr, from the WP-W-02 / WP-H-01 columns (Allocation or Alloc, Verif) |
 | `parents`, `parent_text`, `other_parents` | swsr, hwsr | As for tsr. Parenthetical notes are dropped and `FSR … / TSR …` is read as a list (`TSR-307(a)` → TSR-307). SWSR parents are TSRs; HWSR parents are TSRs, FSRs or AoUs |
-| `acceptance` | swsr | Acceptance criterion cell verbatim |
+| `acceptance` | swsr | Acceptance criterion cell verbatim (§11 rows included since WP-W-02 v0.14) |
+| `applies_to` | swsr | Configuration applicability from WP-W-02 §2.4; `CFG-001` unless the §2.4 table narrows it (WP-M-14 §7) |
+| `proposed_by` | swsr | Drafting origin from WP-W-02 §2.4 ("ai-assisted (Claude), not reviewed") |
+| `status` | swsr | `withdrawn` when the requirement text starts with "Withdrawn"; otherwise `proposed` |
+| (links) | all | Markdown links in copied cells are rewritten as `text (repository-relative path)`, because relative links do not resolve from `trace/items/` |
 | `hw_kind` | hwsr | WP-H-01 Kind cell (HW, CFG, HW/CFG) |
-| (§11 rows) | swsr | WP-W-02 §11 SW-HW interface rows have no ASIL or parent column: the parent is the TSR of the same number and the ASIL is copied from that TSR; `parent_text` says so |
+| (§11 rows) | swsr | WP-W-02 §11 SW-HW interface rows have no ASIL or parent column (they do have Verif and Acceptance): the parent is the TSR of the same number and the ASIL is copied from that TSR; `parent_text` says so |
 
 ### 4.4 Assumption of use **[ext]**
 

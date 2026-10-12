@@ -39,3 +39,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 |---|---|---|
 | OI-1 | HIL: stop the heartbeat in TOYOTA mode and time the drop of `controls_allowed` | Release |
 | OI-2 | Report a heartbeat-caused revocation to the host with its own reason (TSR-406 fault-specific reason codes) | Later change |
+
+## Addendum: further work products affected (2026-10-12)
+
+The software alignment audit ([RR-2026-008](../../05-software/reviews/RR-2026-008.md) F-30) found that this change also affects: WP-W-05 (UN-07, UN-18, UN-19), WP-W-09 (CD-03 heartbeat timing). These were updated in the RR-2026-008 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.

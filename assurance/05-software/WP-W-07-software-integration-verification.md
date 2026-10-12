@@ -7,7 +7,7 @@
 | Version | 0.2 (alignment pass: expected outcomes rechecked against the WP-W-02 baseline column at opendbc `7993399`, panda `8aa8671`; explicit SWSR lists; case order; report template per [WP-M-14 §8.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#83-evidence-binding); 2026-10-12). 0.1 |
 | Status | Draft (specification); results section **Not yet executed** |
 | ASIL / scope | Envelope software (E-03): B‡ (ASIL C until SG-01 re-rating); host↔panda software interface: QM (B-sup) |
-| Author | Assurance team (initial draft) |
+| Author | Assurance team (AI-assisted draft, Claude) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`); expected outcomes in §5 and §7 rechecked at `682f184` (opendbc `7993399`, panda `8aa8671`) |

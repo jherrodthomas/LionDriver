@@ -50,3 +50,7 @@ Revoking when the driver switches main off is consistent with the host, which di
 |---|---|---|
 | OI-1 | Confirm the 150 ms tolerance on reference logs: longest CRUISE_ACTIVE/MAIN_ON disagreement when the driver switches main off | Integration |
 | OI-2 | Establish the meaning of `0x1D3` BRAKE_PRESSED on reference logs (driver pedal vs ACC braking) and implement TSR-405(b) | Later change |
+
+## Addendum: further work products affected (2026-10-12)
+
+The software alignment audit ([RR-2026-008](../../05-software/reviews/RR-2026-008.md) F-30) found that this change also affects: WP-W-05 (cruise-main check unit), WP-W-09 (150 ms tolerance). These were updated in the RR-2026-008 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.

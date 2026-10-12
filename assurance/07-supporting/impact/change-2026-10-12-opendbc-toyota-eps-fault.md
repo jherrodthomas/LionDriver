@@ -71,3 +71,7 @@ The set is `TEMP_STEER_FAULTS ∪ PERM_STEER_FAULTS` of `opendbc/car/toyota/cars
 | LionDriver | `openpilot/cereal/log.capnp`, `openpilot/selfdrive/pandad/pandad.cc` | `pandaState.epsFault` (field 44) set from the flag; `pandad` logs each change (error on onset, warning on clearing). No alert or engagement logic changes | No (QM host) | No | No | No | TSR-110 (report) | WP-S-05 (S-12) | Unit tests, process replay | This change |
 
 Verification: opendbc safety suite OK in both variants with 100 % line coverage, MISRA clean; panda builds, MISRA and host tests pass; `log.capnp` loads with the new field. HIL tests 12 and 13 **not run** (D-04).
+
+## Addendum: further work products affected (2026-10-12)
+
+The software alignment audit ([RR-2026-008](../../05-software/reviews/RR-2026-008.md) F-30) found that this change also affects: WP-W-05 (EPS-fault gate unit), WP-W-09 (LKA_STATE fault set as calibration data). These were updated in the RR-2026-008 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.

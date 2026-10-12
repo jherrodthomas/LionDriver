@@ -35,7 +35,7 @@ A generated report covers procedure steps 2–3 (range, commits, classification)
 step 4. Before it becomes a record:
 
 1. Read every diff in an SR-A or SR-Q file. Commit titles are not enough.
-2. Fill in FuSa / SOTIF / AI / CS, the affected hazards and work products, and the decision
+2. Fill in FuSa / SOTIF / AI / CS, the affected hazards and work products (every work product that describes the changed behaviour, not only the requirement documents: check at least WP-W-01, WP-W-03, WP-W-05, WP-W-09, WP-W-11 and the cybersecurity work products, [RR-2026-008](../../05-software/reviews/RR-2026-008.md) F-30), and the decision
    (take / modify / reject) for every safety-relevant commit.
 3. Assign the `IA-<yyyy>-<nn>` number, link the change request, and record the author and
    reviewer with their independence level.

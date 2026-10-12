@@ -4,10 +4,10 @@
 |---|---|
 | Work product | WP-W-01 SW development environment, languages and coding guidelines |
 | Standard reference | ISO 26262-6:2018 §5 (general topics for product development at the software level: development environment, modelling and coding guidelines); ISO 26262-8:2018 §11 (by reference to WP-P-07); ISO/SAE 21434:2021 §10 (secure coding); MISRA C:2012 (incl. amendments as supported by the analyser); ASPICE 4.0 SWE.3 |
-| Version | 0.1 |
+| Version | 0.2 ([RR-2026-008](reviews/RR-2026-008.md) F-17: `LIONDRIVER_REFERENCE` in §7 and CF-01, K-2, ENV-R-08; F-18: build manifest and tool versions in CI; F-28: author; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope (E-03): ASIL C provisional, ASIL B expected after SG-01 re-rating ([WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md)). Host stack (E-01, E-02): QM / SOTIF / CS |
-| Author | Assurance team (initial draft) |
+| Author | Assurance team (AI-assisted draft, Claude) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
@@ -72,7 +72,7 @@ The tools, their versions and their tool confidence levels are owned by [WP-P-07
 | Host compilation of envelope for tests | host `cc` (TL-02) | `opendbc_repo/opendbc/safety/tests/libsafety/libsafety_py.py:19-39` | 2 | gcc on Linux, clang on macOS; unpinned (WP-P-07 K-8) |
 | Host compilation of E-01 C/C++ | clang/clang++ (TL-02) | `SConstruct:128-143, 179-180` | QM | |
 | Build orchestration | SCons 4.11.1 (TL-03) | `SConstruct`, `panda/SConscript` | 2 | |
-| MISRA and static analysis (E-03) | cppcheck 2.21.0 + MISRA addon (TL-04) | `opendbc_repo/opendbc/safety/tests/misra/test_misra.sh`, `panda/tests/misra/test_misra.sh` | 2 | Two different packagings (K-2) |
+| MISRA and static analysis (E-03) | cppcheck 2.21.0 + MISRA addon (TL-04) | `opendbc_repo/opendbc/safety/tests/misra/test_misra.sh`, `panda/tests/misra/test_misra.sh` | 2 | In LionDriver CI both MISRA jobs use the cppcheck of opendbc's locked environment (`.github/workflows/safety.yaml`, `panda_misra` job). Local panda runs can still use a different packaging (K-2) |
 | Structural coverage | gcov + gcovr 8.6 (TL-05) | `opendbc_repo/opendbc/safety/tests/test.sh:36` | 2 | Line coverage only today (K-3) |
 | Mutation analysis | `mutation.py` (TL-06) | `opendbc_repo/opendbc/safety/tests/mutation.py` | 3 | In-house |
 | Unit test execution | `unittest`, `unittest-parallel`, cffi harness (TL-07) | `test.sh`, `opendbc_repo/lefthook.yml` | 2 | |
@@ -82,7 +82,7 @@ The tools, their versions and their tool confidence levels are owned by [WP-P-07
 | Code generators (QM) | capnp (TL-10), acados (TL-11), rednose/sympy (TL-12), Cython (TL-13), DBC generator (TL-14), tinygrad (TL-09) | per tool | QM | §11 |
 | Firmware signing | `panda/board/crypto/sign.py` (TL-15) | `panda/SConscript:117-125` | 2 | Release key handling in [WP-P-10](../07-supporting/WP-P-10-release-management.md) |
 | Dependency resolution | uv + `uv.lock` (TL-16) | `uv.lock`, `opendbc_repo/uv.lock` | 1 | uv itself unpinned |
-| CI | GitHub Actions (TL-18) | `.github/workflows/tests.yaml`, `.github/workflows/safety.yaml` | 1 | `safety.yaml` (since D-03) runs the opendbc safety tests (release and reference-build variants), opendbc and panda MISRA and mutation on `liondriver-dev` and PRs; tool versions are not printed (ENV-01) |
+| CI | GitHub Actions (TL-18) | `.github/workflows/tests.yaml`, `.github/workflows/safety.yaml` | 1 | `safety.yaml` (since D-03) runs the opendbc safety tests (release and reference-build variants), opendbc and panda MISRA and mutation on `liondriver-dev` and PRs; each job writes a build manifest with the submodule commits, build flags and tool versions on PATH and uploads it as an artifact (`tools/ci/build_manifest.py`, F-18; first CI run pending) (ENV-01) |
 
 Environment rules:
 
@@ -150,7 +150,7 @@ These principles apply to the software unit design ([WP-W-05](WP-W-05-software-u
 | ENV-R-05 | No implicit type conversions; no unions for type punning in safety logic | Partial: 19.2 (unions) globally suppressed (DEV-04) | §9 |
 | ENV-R-06 | No hidden data flow or control flow: no function pointers except the brand hook table selected at mode init | Hook table `safety_hooks` selected in `set_safety_hooks` (`safety.h:391-460`); acceptable if the table is constant and integrity-protected (link to FSR-01.10) | WP-W-03 |
 | ENV-R-07 | Low complexity: functions ≤ 60 logical lines and cyclomatic complexity ≤ 15 unless justified | Not measured at baseline | OI-5 (tool) |
-| ENV-R-08 | Every value received from the SoC (mode, parameter, CAN frame content) and from the vehicle bus shall be range-checked before use | **No** for the safety parameter: `toyota_dbc_eps_torque_factor = param & 0xFF` accepts any 0–255 (`modes/toyota.h:369-383`); no check that it equals the reference value 73 | GAP-09; TSR-512 in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md); [WP-W-09](WP-W-09-configuration-calibration-data.md) CD-01 |
+| ENV-R-08 | Every value received from the SoC (mode, parameter, CAN frame content) and from the vehicle bus shall be range-checked before use | **Partial** for the safety parameter: in the reference build the panda lock admits TOYOTA only with parameter 73 (panda `8aa8671`, `board/reference_lock.h`); `toyota_init` itself still accepts any 0–255 (`toyota_dbc_eps_torque_factor = param & TOYOTA_EPS_FACTOR`, opendbc `7993399`, `modes/toyota.h:492`), so builds without `LIONDRIVER_REFERENCE` have no check | GAP-09; TSR-512 in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md); [WP-W-09](WP-W-09-configuration-calibration-data.md) CD-01 |
 | ENV-R-09 | Plausibility checks on received data (checksum, counter, timeout, signal range) | Partial: no counters on Toyota RX; `0x226`, `0xAA` without checksum (`modes/toyota.h:39-46`) | GAP-01 |
 | ENV-R-10 | Fail-silent default: unknown or unsupported states lead to no actuation (SILENT/NO_OUTPUT) | Yes for unknown mode (`panda/board/main.c:33-40`) and default `controls_allowed = false` (`safety.h:57`) | — |
 | ENV-R-11 | Detected faults shall drive a defined reaction, not only a report | **No**: faults are report-only, `PERMANENT_FAULTS = 0U` (`panda/board/sys/sys.h:50`) | GAP-08 |
@@ -168,7 +168,7 @@ From `panda/SConscript`:
 | Flag group | Flags | Line |
 |---|---|---|
 | CPU / ABI | `-mcpu=cortex-m7 -mhard-float -mfpu=fpv5-d16 -mlittle-endian -mthumb` | 75-76, 133-140 |
-| Defines | `-DSTM32H7 -DSTM32H725xx`; `-DALLOW_DEBUG` unless `RELEASE` is set; `-DBOOTSTUB` for the bootstub; packet version hashes | 12-20, 108-109, 135-137, 165 |
+| Defines | `-DSTM32H7 -DSTM32H725xx`; `-DALLOW_DEBUG` unless `RELEASE` is set; `-DLIONDRIVER_REFERENCE` when the `LIONDRIVER_REFERENCE` environment variable is set (panda `8aa8671`, `SConscript:22-26`); `-DBOOTSTUB` for the bootstub; packet version hashes | 12-26, 108-109, 135-137, 165 (line numbers at `92eb565` except the reference define) |
 | Warnings | `-Wall -Wextra -Wstrict-prototypes -Werror -fmax-errors=1` | 71-74, 80 |
 | Language | `-std=gnu11 -nostdlib -fno-builtin` | 77-79 |
 | Numerics | `-fsingle-precision-constant` | 82 |
@@ -177,13 +177,13 @@ From `panda/SConscript`:
 
 Rules:
 
-- **CF-01** The qualified option set (TL-01 qualification, WP-P-07 §5) is exactly the RELEASE configuration above. Changing any flag is an SR-T change ([WP-P-01 §4](../07-supporting/WP-P-01-configuration-management-plan.md#4-safety-relevant-file-list)).
+- **CF-01** The qualified option set (TL-01 qualification, WP-P-07 §5) is exactly the reference release configuration: `RELEASE=1 LIONDRIVER_REFERENCE=1`. A build without `LIONDRIVER_REFERENCE` lacks the safety-mode lock, the reduced TX whitelist and the TX rate supervision and is not the verified configuration. `tools/release/build_release.sh` does not set it yet ([RR-2026-008](reviews/RR-2026-008.md) F-33). Changing any flag is an SR-T change ([WP-P-01 §4](../07-supporting/WP-P-01-configuration-management-plan.md#4-safety-relevant-file-list)).
 - **CF-02** Add `-Wconversion -Wsign-conversion -Wcast-align -Wshadow -Wundef` to the target build after the existing warnings are resolved (OI-8). Not present at baseline.
 - **CF-03** Add `-fstack-usage` and a link map review for ENV-R-14 (OI-7).
 
 ### 7.2 Host build of the envelope for unit tests
 
-From `opendbc_repo/opendbc/safety/tests/libsafety/libsafety_py.py:19-39`: `cc -fPIC -Wall -Wextra -Werror -nostdlib -fno-builtin -std=gnu11 -Wfatal-errors -Wno-pointer-to-int-cast -g -O0 -fno-omit-frame-pointer`, plus either coverage (`-fprofile-arcs -ftest-coverage`) or UBSan (`-fsanitize=undefined -fno-sanitize-recover=undefined`), plus `-DALLOW_DEBUG` unless `release=True`.
+From `opendbc_repo/opendbc/safety/tests/libsafety/libsafety_py.py:19-39`: `cc -fPIC -Wall -Wextra -Werror -nostdlib -fno-builtin -std=gnu11 -Wfatal-errors -Wno-pointer-to-int-cast -g -O0 -fno-omit-frame-pointer`, plus `-DLIONDRIVER_REFERENCE` when `LIONDRIVER_REFERENCE=1` is set (opendbc `7993399`, `libsafety_py.py:33-34`; CI runs the suite in both variants, `safety.yaml`), plus either coverage (`-fprofile-arcs -ftest-coverage`) or UBSan (`-fsanitize=undefined -fno-sanitize-recover=undefined`), plus `-DALLOW_DEBUG` unless `release=True`.
 
 ### 7.3 Representativeness of the host test build
 
@@ -333,7 +333,7 @@ LionDriver does not use model-based development for production code. Models appe
 | Use | Notation | Rules |
 |---|---|---|
 | Architecture (system, software) | Block diagrams as Markdown tables plus ASCII or Mermaid diagrams; one viewpoint per diagram | Every block has an element ID from the element catalogue (`assurance/trace/elements.yaml`, WP-P-06 OI-4); every arrow names the interface (IF-xx) |
-| State machines (engagement, safety modes, selfdrived) | State-transition tables (state, event, guard, action, next state) | Tables are normative; diagrams are illustrative. Guards reference code lines |
+| State machines (engagement, safety modes, selfdrived) | YAML records in [`state-machines/`](state-machines/) (state, event, guard, action, next state, build, SWSR, code citation) | The records are normative. The WP-W-05 §5 tables and Mermaid diagrams are generated from them by `assurance/trace/tools/check_state_machines.py` and checked in CI (S1–S4 errors; S5/S6 findings). Implementation status comes from the WP-W-02 Baseline column, not from the record ([RR-2026-008](reviews/RR-2026-008.md) F-16). `selfdrived` is not yet recorded |
 | Data flow | Table of producer → service/message → consumer with rate and timeout | Rates from `cereal/services.py` |
 | Requirements | YAML per [WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md) | Markdown tables must match YAML (WP-P-06 K11) |
 | Timing | Tables in [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md); units in ms | |
@@ -354,7 +354,7 @@ LionDriver does not use model-based development for production code. Models appe
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Closed 2026-10-12 by `.github/workflows/safety.yaml` (opendbc and panda MISRA on `liondriver-dev` and PRs, D-03). Remaining: print tool versions in the job log (ENV-01) | Maintainer | G3 |
+| OI-1 | Closed 2026-10-12 by `.github/workflows/safety.yaml` (opendbc and panda MISRA on `liondriver-dev` and PRs, D-03). Tool versions and a build manifest are recorded per job since F-18 (`tools/ci/build_manifest.py`); a tool installed inside a job script (cppcheck in `test_misra.sh`) is reported only if it is on PATH | Maintainer | G3 |
 | OI-2 | Confirm MISRA rule categories in §9 against the licensed MISRA C:2012 document; complete all "RATIONALE TBD" entries and get them approved | Safety engineer | G3 |
 | OI-3 | Write a MISRA compliance summary (rules and directives) for the release configuration | Safety engineer | G3 |
 | OI-4 | Review E-03 for single-exit and bounded-loop conformance (ENV-R-03, ENV-R-04) | Reviewer | G3 |

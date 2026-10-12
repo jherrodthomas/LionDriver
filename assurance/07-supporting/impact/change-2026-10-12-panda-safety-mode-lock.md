@@ -52,3 +52,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | OI-2 | Release procedure: build the reference release with `RELEASE=1 LIONDRIVER_REFERENCE=1`; record it in WP-P-01 (configuration management) | Release |
 | OI-3 | Add the alternative-experience AoU to WP-C-01 and decide the host-side guard | Integration |
 | OI-4 | Confirm `0xc0`, `0xb0`, `0xb1`, `0xf6` (WP-W-02 OI-5). `0xd1` param 1 is gated in a car mode since `7e2d148` | Later change |
+
+## Addendum: further work products affected (2026-10-12)
+
+The software alignment audit ([RR-2026-008](../../05-software/reviews/RR-2026-008.md) F-30) found that this change also affects: WP-W-01 (ENV-R-08, CF-01 build flag), WP-W-05 (UN-21 request gating), WP-W-09 (CD-01, DVR-01/02, `LIONDRIVER_REFERENCE` configuration item), WP-W-11 (CSR-011…015), WP-S-07 (cybersecurity requirements of the lock). These were updated in the RR-2026-008 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.

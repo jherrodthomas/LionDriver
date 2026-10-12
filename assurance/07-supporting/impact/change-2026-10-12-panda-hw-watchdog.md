@@ -91,3 +91,7 @@ Verification of panda#3 (host only):
 | `python3 -m unittest tests.hw_watchdog.test_hw_watchdog` | 8/8 pass. New: window configured, first tick after start skipped, window open before the next feed is due and long enough to catch a task that runs too fast (LSI ±10 %), timeout below 0.1 s |
 | Mutation check | Two planted defects (no skipped first tick; window not set) each fail a test |
 | HIL / device | **Not run** (GAP-30). Do not flash a car device before bench evidence |
+
+## Addendum: further work products affected (2026-10-12)
+
+The software alignment audit ([RR-2026-008](../../05-software/reviews/RR-2026-008.md) F-30) found that this change also affects: WP-W-01 (§7 build configuration), WP-W-05 (watchdog unit), WP-W-09 (CD-03 IWDG timing). These were updated in the RR-2026-008 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.

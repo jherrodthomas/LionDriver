@@ -41,3 +41,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 |---|---|---|
 | OI-1 | Measure the worst-case critical-section and handler lengths on the target (WP-W-03 §5.4.5) before adopting the §5.4.2 levels | Priority scheme |
 | OI-2 | HIL: read back NVIC IPR registers after start-up and compare with `irq_priorities.h` | Release |
+
+## Addendum: further work products affected (2026-10-12)
+
+The software alignment audit ([RR-2026-008](../../05-software/reviews/RR-2026-008.md) F-30) found that this change also affects: WP-W-05 (interrupt units), WP-W-09 (CD-03 if priority values are treated as configuration). These were updated in the RR-2026-008 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.

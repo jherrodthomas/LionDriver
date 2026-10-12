@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-W-11 Cybersecurity implementation and verification |
 | Standard reference | ISO/SAE 21434:2021 §10 (product development: implementation, integration and verification; weakness analysis), §6 (off-the-shelf and open-source components); ISO 26262-6:2018 §5 (coding guidelines, as shared base); ASPICE 4.0 SEC.2, SEC.3 |
-| Version | 0.1 |
-| Status | Draft — rules and plan proposed; no cybersecurity verification activity has been executed. The status column records code-review observations only |
+| Version | 0.2 (RR-2026-008 F-20: §8 CSR status and summary counts at `682f184`, BA-01 reference-build check, CSR-136 citation resolved in WP-S-07; F-28: author and baseline; 2026-10-12) |
+| Status | Draft — rules and plan proposed; no verification activity of this plan (VS-CS-nnn, BA, SAST, FZ, PT) has been executed. The §8 status column records code review at `682f184` and, for CSR-011…CSR-015 and CSR-024, the host unit-test runs recorded in the change records (UT executed, not reviewed); nothing is verified on hardware |
 | ASIL / scope | CS (CAL 1–3); shared coding rules apply to the envelope code (B‡ per WP-S-02: ASIL C until SG-01 is re-rated) |
-| Author | Assurance team (initial draft) |
+| Author | Assurance team (AI-assisted draft, Claude) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting cybersecurity manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `682f184` (opendbc `7993399`, panda `8aa8671`) |
 
 > [!NOTE]
 > **Status at `682f184` (opendbc `7993399`, panda `8aa8671`).** This document describes the code at `8b8c6ae` unless a statement names a later pin. Safety mechanisms integrated since then (hardware watchdog and 100 Hz safety task, RX timeout, TX whitelist, safety-mode lock, 0.3 s heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are recorded in the [WP-W-02](WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md). The sections of this document that still describe the earlier behaviour are listed in [RR-2026-008](reviews/RR-2026-008.md) and are to be updated ([WP-M-14 §2.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#23-pre-entry-engineering-track) P-03).
@@ -150,7 +150,7 @@ A scripted check run on every release build; it produces a signed-off report in 
 
 | Check | Requirement | Method |
 |---|---|---|
-| BA-01 panda built with `RELEASE` and LionDriver cert; `ALLOW_DEBUG` not defined in any object | CSR-021 | Build log + symbol/string check of the image |
+| BA-01 panda built with `RELEASE` and LionDriver cert; `ALLOW_DEBUG` not defined in any object; the reference release built with `LIONDRIVER_REFERENCE=1` (so `-DLIONDRIVER_REFERENCE` is in the compile flags and the reference lock `board/reference_lock.h` is compiled in) | CSR-021; CSR-011…CSR-015, CSR-024, CSR-092 (reference-build only) | Build log (environment and compile flags) + symbol/string check of the image (e.g. the reference-lock rejection message, panda `8aa8671`, `board/reference_lock.h:57`) |
 | BA-02 Release bootstub contains only the LionDriver public key | CSR-022 | Compare embedded key header with the release-record key ID |
 | BA-03 Debug commands absent | CSR-023 | Static check of the release command table |
 | BA-04 Installer built without `INTERNAL`; no embedded key | CSR-101 | Build flags + binary string check for authorized-key format |
@@ -161,22 +161,24 @@ A scripted check run on every release build; it produces a signed-off report in 
 
 The existing `opendbc_repo/opendbc/safety/tests/test_release_build.py` only checks that a release build compiles; it does not check BA-01…BA-03 (GAP-41).
 
+Where `LIONDRIVER_REFERENCE` is set (BA-01): only from the build environment. `panda/SConscript:22-26` (panda `8aa8671`) adds `-DLIONDRIVER_REFERENCE` when the variable is set and names the reference release build as `RELEASE=1 LIONDRIVER_REFERENCE=1`; it is independent of `RELEASE`. The release script `tools/release/build_release.sh:56` (`682f184`) builds panda with `CERT=… RELEASE=1 scons panda/` and does not set it, so a release built by that script would not contain the reference lock, the reduced Toyota TX allow-list or the TX rate supervision. BA-01 would therefore fail on that script today; the release procedure is open in the [safety-mode-lock change record](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md) OI-2 (OI-9). In LionDriver CI the flag is set only for the opendbc safety test variant (`.github/workflows/safety.yaml:39-43`) and in the panda MISRA run (`panda/tests/misra/test_misra.sh:68`).
+
 ## 8. Verification specification per CSR
 
-Verification specs use IDs `VS-CS-nnn` matching the CSR number. Status at baseline is from code review only; **no verification has been executed**. Legend for *Status*: **Not met** (code review shows the requirement is not implemented); **Partial**; **Implemented, not verified**; **Process** (depends on a procedure not yet run); **Open** (needs a decision or investigation first).
+Verification specs use IDs `VS-CS-nnn` matching the CSR number. Status is at `682f184` (opendbc `7993399`, panda `8aa8671`), from code review, the [WP-W-02](WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md); **no VS-CS verification has been executed and nothing is verified on hardware**. Where the status depends on the reference build it says so; the reference build is `LIONDRIVER_REFERENCE=1` (§7 BA-01). Test-evidence wording: *UT executed, not reviewed* = a run is recorded in a change record but the test and its result are not independently reviewed; *UT exists, run not recorded* = no run is recorded. Legend for *Status*: **Not met** (code review shows the requirement is not implemented); **Partial**; **Implemented, not verified**; **Process** (depends on a procedure not yet run); **Open** (needs a decision or investigation first).
 
 | CSR | CAL | VS | Method | Pass criterion (summary) | Status |
 |---|---|---|---|---|---|
-| CSR-011 | 3 | VS-CS-011 | UT (libpanda) + HIL | Every non-locked mode/param/alt-exp request rejected; locked config accepted | Not met |
-| CSR-012 | 3 | VS-CS-012 | UT + HIL | After rejection: non-actuating mode, fault bit set in health | Not met |
-| CSR-013 | 3 | VS-CS-013 | UT | SILENT/NOOUTPUT reachable from locked mode | Implemented, not verified |
-| CSR-014 | 3 | VS-CS-014 | R + UT + FZ (bench) | Commands outside allow-list rejected in car mode; fuzzing of the command handler finds no crash, hang or state change outside the allow-list | Not met |
-| CSR-015 | 3 | VS-CS-015 | UT | Alt-exp unchanged across any mode sequence | Partial |
+| CSR-011 | 3 | VS-CS-011 | UT (libpanda) + HIL | Every non-locked mode/param/alt-exp request rejected; locked config accepted | Implemented, not verified — `LIONDRIVER_REFERENCE=1` build only (BA-01): `0xdc` accepts only SILENT, NOOUTPUT, ELM327 and TOYOTA with param 73, and from TOYOTA only NOOUTPUT/SILENT (panda `8aa8671`, `board/reference_lock.h:14, 22-29`); `0xdf` refused in every mode (`:30-32`); a refused request is mapped to `0x00`, which has no handler (`board/main_comms.h:74-79, 336-340`). Locked values are compile-time constants, not read from the release record. UT exists (`panda/tests/reference_lock/test_reference_lock.py`), executed per the change records ([mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md) §4, [IRQ priorities](../07-supporting/impact/change-2026-10-12-panda-irq-priorities.md) §3: pass), not reviewed; not run in LionDriver CI. Other builds: not met (`main_comms.h:243-245`) |
+| CSR-012 | 3 | VS-CS-012 | UT + HIL | After rejection: non-actuating mode, fault bit set in health | Partial — `LIONDRIVER_REFERENCE=1` build only (BA-01): a refused request has no effect, so the panda stays in its previous mode, which is TOYOTA (actuating) when the request came in TOYOTA (`board/reference_lock.h:22-24`, `board/main_comms.h:76-78`); it does not go to a non-actuating mode. The refusal is reported as a saturating counter `requests_rejected_pkt` in the health packet (`board/reference_lock.h:15-16, 53-56`; `board/main_comms.h:27-31`; `board/health.h:16, 40`), not as a fault bit; pandad publishes it and logs increases (`682f184`, `openpilot/selfdrive/pandad/pandad.cc:137, 185-193`) with no alert. UT exists (`panda/tests/reference_lock/test_reference_lock.py`), executed per the change records ([mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md) §4, [IRQ priorities](../07-supporting/impact/change-2026-10-12-panda-irq-priorities.md) §3: pass), not reviewed; not run in LionDriver CI |
+| CSR-013 | 3 | VS-CS-013 | UT | SILENT/NOOUTPUT reachable from locked mode | Implemented, not verified — `LIONDRIVER_REFERENCE=1` build only (BA-01): allowed from TOYOTA (panda `8aa8671`, `board/reference_lock.h:23-24`); other builds: `set_safety_mode` accepts any mode (`board/main_comms.h:243-245`). UT exists (`panda/tests/reference_lock/test_reference_lock.py`), executed per the change records ([mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md) §4, [IRQ priorities](../07-supporting/impact/change-2026-10-12-panda-irq-priorities.md) §3: pass), not reviewed; not run in LionDriver CI |
+| CSR-014 | 3 | VS-CS-014 | R + UT + FZ (bench) | Commands outside allow-list rejected in car mode; fuzzing of the command handler finds no crash, hang or state change outside the allow-list | Partial — `LIONDRIVER_REFERENCE=1` build only (BA-01): the gate is a deny-list, not an allow-list: in a car mode it refuses `0xc5`, `0xd8`, `0xdb`, `0xde`, `0xe5`, `0xe6`, `0xe7`, `0xe8`, `0xf1`, `0xf9`, `0xfc` (panda `8aa8671`, `board/reference_lock.h:37-49`), `0xdf` and `0xd1` param 1 (`:30-36`); every other request passes (`:50-51`); `0xc0`, `0xb0`, `0xb1`, `0xf6` still to be confirmed (mode-lock change record OI-4). Request IDs without a handler fall to `default` with no effect (`board/main_comms.h:336-340`). No fuzzing done. UT exists (`panda/tests/reference_lock/test_reference_lock.py`), executed per the change records ([mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md) §4, [IRQ priorities](../07-supporting/impact/change-2026-10-12-panda-irq-priorities.md) §3: pass), not reviewed; not run in LionDriver CI |
+| CSR-015 | 3 | VS-CS-015 | UT | Alt-exp unchanged across any mode sequence | Implemented, not verified — `LIONDRIVER_REFERENCE=1` build only (BA-01): `0xdf` refused in every mode (panda `8aa8671`, `board/reference_lock.h:30-32`), so `alternative_experience` keeps its reset value 0 (opendbc `7993399`, `safety.h:101`; the only writer is `board/main_comms.h:262-267`). UT exists (`panda/tests/reference_lock/test_reference_lock.py`), executed per the change records ([mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md) §4, [IRQ priorities](../07-supporting/impact/change-2026-10-12-panda-irq-priorities.md) §3: pass), not reviewed; not run in LionDriver CI. Other builds: partial, settable in a non-car mode (`main_comms.h:262-267`) |
 | CSR-016 | 2* | VS-CS-016 | UT + HIL | Mismatch blocks engagement and alerts | Not met |
 | CSR-021 | 3 | VS-CS-021 | BA-01 | Release build refuses `ALLOW_DEBUG` | Not met |
 | CSR-022 | 3 | VS-CS-022 | BA-02 + HIL | Debug-signed and tampered images rejected on bench | Partial (conditional on CSR-021) |
 | CSR-023 | 3 | VS-CS-023 | BA-03 + FZ | No debug command effective in release image | Partial |
-| CSR-024 | 3 | VS-CS-024 | UT + HIL | Softloader entry refused in car mode / ignition on | Not met |
+| CSR-024 | 3 | VS-CS-024 | UT + HIL | Softloader entry refused in car mode / ignition on | Partial — `LIONDRIVER_REFERENCE=1` build only (BA-01): `0xd1` param 1 refused in a car mode (panda `8aa8671`, `board/reference_lock.h:33-35`); there is no ignition condition, so entry is still accepted in a non-car mode with the ignition on (GAP-24; WP-S-07 OI-1). UT exists (`panda/tests/reference_lock/test_reference_lock.py`), executed per the change records ([mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md) §4, [IRQ priorities](../07-supporting/impact/change-2026-10-12-panda-irq-priorities.md) §3: pass), not reviewed; not run in LionDriver CI. Other builds: accepted at any time (`board/main_comms.h:196-199`) |
 | CSR-031 | 3 | VS-CS-031 | R + HIL | Bootstub verifies with selected scheme; known-answer tests pass; invalid signatures rejected | Not met |
 | CSR-032 | 3 | VS-CS-032 | CM + PR | Key ceremony record; key absent from repo/CI | Not met |
 | CSR-033 | 3 | VS-CS-033 | UT + HIL | Lower-version signed image rejected | Partial |
@@ -199,7 +201,7 @@ Verification specs use IDs `VS-CS-nnn` matching the CSR number. Status at baseli
 | CSR-082 | 2 | VS-CS-082 | UT + HIL | Modified artefact → process refuses, engagement blocked | Not met |
 | CSR-083 | 2 | VS-CS-083 | CM | LFS store under LionDriver control; hashes in release record | Not met |
 | CSR-091 | 2 | VS-CS-091 | R + UT + HIL | Checksum/counter checks where available; plausibility for the rest | Partial |
-| CSR-092 | 2 | VS-CS-092 | R + UT | TX outside allow-list blocked; PCS forwarding unaltered | Partial (envelope tests exist upstream, `opendbc_repo/opendbc/safety/tests/test_toyota.py`; run in LionDriver CI since D-03 (`safety.yaml`); reference-build whitelist reduced, SWSR-705) |
+| CSR-092 | 2 | VS-CS-092 | R + UT | TX outside allow-list blocked; PCS forwarding unaltered | Partial — TX allow-list reduced: `0x344` and the DSU bus-0/bus-1 sets removed in every build, `0x411` PCS_HUD also removed in the `LIONDRIVER_REFERENCE=1` build (opendbc `7993399`, `opendbc/safety/modes/toyota.h:19-39`; SWSR-705, [TX whitelist change record](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md)). UT exists (`opendbc/safety/tests/test_toyota.py`) and runs in LionDriver CI in the standard and reference variants (`.github/workflows/safety.yaml:37-43`); no CI run result is cited here (UT exists, run not recorded in this document). PCS forwarding unaltered: not verified |
 | CSR-093 | 2 | VS-CS-093 | UT + HIL | Foreign actuation ID on car side → inhibit | Partial |
 | CSR-101 | 3 | VS-CS-101 | BA-04 | No embedded key; `INTERNAL` undefined | Not met for INTERNAL builds |
 | CSR-102 | 3 | VS-CS-102 | PR | INS-19 record shows `SshEnabled` off | Process |
@@ -234,7 +236,7 @@ Verification specs use IDs `VS-CS-nnn` matching the CSR number. Status at baseli
 
 \* CSR-016 and CSR-053 inherit CAL 3 from their parents but are SoC-side detection measures (defence in depth); they are verified at CAL 2 rigour because they are not credited as the protection for CSG-01/CSG-02 (WP-S-07 §3.2). This deviation from the parent CAL needs assessor agreement (OI-7).
 
-Summary at baseline: of 64 CSRs, 0 verified; 3 implemented but not verified; 10 partial; 5 process-dependent; 9 open; 37 not met.
+Summary at `682f184` (opendbc `7993399`, panda `8aa8671`): of 64 CSRs, 0 verified; 5 implemented but not verified (CSR-011, CSR-015 in the reference build only); 12 partial; 5 process-dependent; 9 open; 33 not met. At `8b8c6ae`: 3 implemented but not verified; 10 partial; 5 process-dependent; 9 open; 37 not met. CSR-136, cited in WP-S-07 v0.1 §3.2, was not defined and is not counted (resolved in WP-S-07 v0.2).
 
 ## 9. Integration and weakness analysis
 
@@ -254,3 +256,4 @@ Summary at baseline: of 64 CSRs, 0 verified; 3 implemented but not verified; 10 
 | OI-6 | Run a full-history secret scan once and record the result (SAST-05, §6) |
 | OI-7 | Agree with the assessor the CAL-2 rigour for SoC-side defence-in-depth CSRs (CSR-016, CSR-053) |
 | OI-8 | Write the VS-CS-nnn test procedures and add them to `trace/` once WP-S-07 is approved |
+| OI-9 | Release procedure and BA-01: the reference release must be built with `RELEASE=1 LIONDRIVER_REFERENCE=1`; `tools/release/build_release.sh:56` does not set `LIONDRIVER_REFERENCE` (§7). Also run `panda/tests/reference_lock` in LionDriver CI (today not in `.github/workflows/*.yaml`) |

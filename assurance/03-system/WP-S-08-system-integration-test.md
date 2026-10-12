@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-08 System integration and test strategy, specification and report |
 | Standard reference | ISO 26262-4:2018 §7 (item integration and testing); ISO 26262-4 §7 test methods and fault-injection guidance (verify table numbers against the licensed copy); ISO 26262-8:2018 §9 (verification); ASPICE 4.0 SYS.4 (system integration and integration verification) |
-| Version | 0.1 |
+| Version | 0.2 (VS-SI-25 added from WP-W-08 VS-SWQ-20, RR-2026-008 F-24; 2026-10-12). 0.1 |
 | Status | Draft (specification). **Results: not yet executed** |
 | ASIL / scope | ASIL C (SG-01 until re-rated), ASIL B (SG-02…SG-07); reference configuration only |
 | Author | Assurance team (initial draft) |
@@ -146,6 +146,7 @@ Columns: **Trace** = FSR / TSR block / interface; **Step** = integration step; *
 | VS-SI-22 | Soft disable on stale inputs | FSR-02.02, FSR-02.03, FSR-06.02; TSR-601, TSR-602, TSR-606 | I-2, I-3 | Engaged, curve scenario (I-3) | Stop `modelV2` (pause modeld) | Visual + acoustic warning ≤ 1 s; no actuation on inputs that are no longer valid (command untrusted → immediate SS-L/SS-G per WP-C-04 §6) | **Fail (known GAP-16)**: up to ≈3.5 s actuation on stale inputs |
 | VS-SI-23 | SoC process kill / hang | FSR-01.07, FSR-02.05; TSR-407, TSR-408, TSR-516, TSR-601 | I-2 | Engaged | Kill (SIGKILL) and stop (SIGSTOP) in turn: controlsd, card, pandad, selfdrived, ui, soundd; detailed in WP-V-05 VS-FI-09 | Envelope safe state within FTTI budget when the command path stops; warning within 1 s from SoC or panda siren | Host `processNotRunning`/`commIssue` soft disable; panda 3–5 s (GAP-06); siren timing (GAP-06) |
 | VS-SI-24 | Cruise mismatch reaction | FSR-05.06; TSR-307 (b), TSR-308 | I-2 | — | Plant holds PCM cruise active while selfdrived is disengaged (and reverse) | Warning and cancel request within 1 s (TSR-308) | **Fail (known GAP-19)**: event only after 6 s, no reaction (`selfdrived.py:421`, `events.py:458-460`) |
+| VS-SI-25 | Host reaction to envelope reports | TSR-307, TSR-514, TSR-601, TSR-606, TSR-615, TSR-619, TSR-620; SWSR-307h, 514h, 601, 606, 615, 619, 620; IF-04 | I-2 | Engaged | Make the envelope report each revocation cause and fault flag in turn (bench or debug hook; reported causes per WP-W-08 VS-SWQ-20) | `selfdrived` disables immediately (≤ 0.2 s) and the HMI gives a take-over request naming the fault class ≤ 1 s | Not run. Moved here from WP-W-08 VS-SWQ-20 ([RR-2026-008](../05-software/reviews/RR-2026-008.md) F-24) |
 | VS-SI-25 | MCU reset during engagement | FSR-01.09, FSR-07.03; TSR-311, TSR-706 | I-1, I-2 | Engaged | `0xd8` reset; NRST from the SoC GPIO (`openpilot/common/hardware/comma/hardware.py:401-408`) | No TX and relay released during reset; after restart SILENT, re-engagement needs a new PCM rising edge; host immediate disable with warning | Expected to meet (start in SILENT, `main.c:295`); relay reset state unconfirmed (AOU-13) |
 
 ### 6.7 Back-to-back

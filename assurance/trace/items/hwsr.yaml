@@ -69,7 +69,7 @@
   allocated_to: "External"
   hw_kind: "ADD"
   verification: "A, T-HIL"
-  baseline_impl: "Not present on the COTS PCB as far as observable. See [WP-H-02](WP-H-02-hardware-design.md) §6, DC-01. Needed for an ASIL C claim because IWDG shares supply and silicon with the CPU (GAP-11)"
+  baseline_impl: "Not present on the COTS PCB as far as observable. See WP-H-02 (assurance/04-hardware/WP-H-02-hardware-design.md) §6, DC-01. Needed for an ASIL C claim because IWDG shares supply and silicon with the CPU (GAP-11)"
   status: proposed
   source: WP-H-01
 
@@ -363,7 +363,7 @@
   allocated_to: "Relay part"
   hw_kind: "HW"
   verification: "A (datasheet)"
-  baseline_impl: "Part number unknown ([WP-H-07](WP-H-07-hardware-component-qualification.md) QE-05)"
+  baseline_impl: "Part number unknown (WP-H-07 (assurance/04-hardware/WP-H-07-hardware-component-qualification.md) QE-05)"
   status: proposed
   source: WP-H-01
 
@@ -461,7 +461,7 @@
   allocated_to: "Analysis"
   hw_kind: "HW"
   verification: "A"
-  baseline_impl: "Not analysed ([WP-H-03](WP-H-03-hardware-safety-analysis-fmeda.md) FM-IGN-*)"
+  baseline_impl: "Not analysed (WP-H-03 (assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) FM-IGN-*)"
   status: proposed
   source: WP-H-01
 

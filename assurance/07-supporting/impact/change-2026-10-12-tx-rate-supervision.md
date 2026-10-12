@@ -47,3 +47,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | OI-1 | Confirm the budgets on reference logs: peak frame count per 250 ms per TX ID, and the largest catch-up burst (DN-01 §9) | Release |
 | OI-2 | HIL test 14 on the bench (D-04) | Release |
 | OI-3 | Separate forwarding queue (WP-W-04 OI-2, SDF-05) still open | Later change |
+
+## Addendum: further work products affected (2026-10-12)
+
+The software alignment audit ([RR-2026-008](../../05-software/reviews/RR-2026-008.md) F-30) found that this change also affects: WP-W-09 (TX-rate budgets, window and burst values), WP-W-11 (SoC TX flooding as a cybersecurity threat, if a CSR applies). These were updated in the RR-2026-008 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.

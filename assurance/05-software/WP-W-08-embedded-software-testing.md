@@ -4,10 +4,10 @@
 |---|---|
 | Work product | WP-W-08 Testing of the embedded software (software qualification, HIL) |
 | Standard reference | ISO 26262-6:2018 §11 (testing of the embedded software: test environments, methods, test-case derivation); ISO 26262-8:2018 §9; ASPICE 4.0 SWE.6 |
-| Version | 0.2 (alignment pass: expected outcomes rechecked against the WP-W-02 baseline column at opendbc `7993399`, panda `8aa8671`; §6 coverage table rebuilt from §5; HIL tests in the pins listed; report template per [WP-M-14 §8.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#83-evidence-binding); 2026-10-12). 0.1 |
+| Version | 0.3 ([RR-2026-008](reviews/RR-2026-008.md) F-24: host reaction moved from VS-SWQ-20 to WP-S-08 VS-SI-25; F-25: deviation D-1 recorded in §4; F-28: author; 2026-10-12). 0.2 (alignment pass: expected outcomes rechecked against the WP-W-02 baseline column at opendbc `7993399`, panda `8aa8671`; §6 coverage table rebuilt from §5; HIL tests in the pins listed; report template per [WP-M-14 §8.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#83-evidence-binding); 2026-10-12). 0.1 |
 | Status | Draft (specification); results section **Not yet executed** |
 | ASIL / scope | Embedded envelope software on the STM32H7 (E-03): B‡ (ASIL C until SG-01 re-rating) |
-| Author | Assurance team (initial draft) |
+| Author | Assurance team (AI-assisted draft, Claude) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`); expected outcomes in §5 rechecked at `682f184` (opendbc `7993399`, panda `8aa8671`) |
@@ -54,6 +54,7 @@ The staged build plan, parts list and the first bench test (hardware watchdog) a
 - A case passes only with the release image. A case that needs a debug hook is marked and repeated with the release image wherever the hook is not needed.
 - Timing results report the worst observed value over ≥ 100 repetitions with randomised phase relative to the tick.
 - Cases expected to fail at the baseline are run and recorded as failures with problem reports.
+- **Deviation D-1 (watchdog reset time).** SWSR-501 and VS-SWQ-14 require an MCU reset ≤ 0.1 s after a stall (SG-07 FDTI). Deviation D-1 of the [watchdog change record](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) accepts ≤ 0.2 s (SG-01 bound) as interim. The bench reports every watchdog result against both bounds: 0.2 s decides pass/fail while D-1 stands, and 0.1 s is reported so the shortfall is measured. D-1 is a maintainer decision, not a review (WP-M-06).
 
 ## 5. Test specification (VS-SWQ)
 
@@ -80,7 +81,7 @@ Status of all: Specified, not implemented.
 | VS-SWQ-17 | Configuration lock and request gating | 511a, 512, 512a, 513, 514 | All control requests in TOYOTA mode; non-reference `0xdc`; `0xd6` build type | Rejected as specified; build type "release" |
 | VS-SWQ-18 | Bootstub signature | 511 | Tampered, debug-signed, truncated images | Tampered image never runs; soft flasher entered |
 | VS-SWQ-19 | Relay readback, orientation, relay latch | 506, 506a, 506b, 701, 701a, 706, 710 | Relay stuck open/closed (simulated); harness flip/unplug while driven; `0xdc` after latch | Detection ≤ 0.3 s; SS-S; latch persists |
-| VS-SWQ-20 | Host reaction to envelope reports (with `pandad` and `selfdrived`) | 307h, 514h, 601, 606, 615, 619, 620 | Each envelope reason code and flag | Immediate disable ≤ 0.2 s, take-over request ≤ 1 s |
+| VS-SWQ-20 | Envelope reports every revocation cause and fault in the health packet | 108a | Trigger each revocation cause and fault of SWSR-108a on the bench; read `0xd2` health | Each cause produces its distinct code or flag within one health period (SWSR-108a). The host reaction to these reports is WP-S-08 VS-SI-25 |
 | VS-SWQ-21 | Forwarding and PCS message rules | 704, 705, 707 | Camera-side traffic at full load; SoC sends PCS/DSU IDs | Forwarding latency ≤ bound (TSR-707); PCS/DSU IDs not transmitted from SoC |
 | VS-SWQ-22 | Relay malfunction detection by traffic | 710 | `check_relay` IDs on car side | Latch and TX/forward block |
 | VS-SWQ-23 | Resource usage and timing on target | WP-W-03 §7; 401a | Worst-case bus + SPI load | Stack margin ≥ 20 %; safety task period ≤ 20 ms; hook WCET and TX latency within WP-S-04 budgets |
@@ -98,7 +99,7 @@ Status of all: Specified, not implemented.
 | 407–413 | 10–12 |
 | 501–519 | 14–17, 19 (506, 506a, 506b), 23, 25, 10 (510, 516). No case: 503c, 504a, 505a, 507, 507a, 508a, 516a, 516b |
 | 701–711 | 19 (701, 701a, 706, 710), 21, 22. No case: 711, 711a |
-| Host (SWSR-6xx, h-suffix) | 20 (others by host tests and WP-S-08) |
+| Host (SWSR-6xx, h-suffix) | None here; host reaction to envelope reports is WP-S-08 VS-SI-25, other host SWSRs by host tests and WP-S-08 |
 
 SWSRs without a case are listed in OI-6; this table is derived from §5 and is the one to keep in step with WP-W-02 §13.3.
 
@@ -137,5 +138,5 @@ SWSRs whose only verification is review or analysis (e.g. SWSR-102a, 605a) are n
 | OI-2 | Decide release-image-compatible fault-injection methods (SWD vs debug build) and document the representativeness argument | SW lead | G4 |
 | OI-3 | Port `panda/tests/hitl` to the LionDriver bench without comma jigs. Jungle-based tests run at bench stage B1 ([hil-bench/](hil-bench/README.md) §5.4) | Maintainer | G4 |
 | OI-4 | Fork-owned Corolla log set for VS-SWQ-24 and plant parameter identification | Maintainer | G4 |
-| OI-5 | Agree split of cases with WP-S-08 (I-1) and WP-V-05 to avoid duplication. VS-SWQ-20 (host reaction, take-over request) reaches into system integration and may belong in WP-S-08 | Safety engineer | G4 |
+| OI-5 | Agree split of cases with WP-S-08 (I-1) and WP-V-05 to avoid duplication (VS-SWQ-20 host part moved to WP-S-08 VS-SI-25) | Safety engineer | G4 |
 | OI-6 | Specify cases for SWSR-108a, 503c, 504a, 505a, 507, 507a, 508a, 516a, 516b, 711, 711a, or record why HIL is not the method | Safety engineer | G4 |

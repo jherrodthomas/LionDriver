@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-07 Cybersecurity requirements and architectural design |
 | Standard reference | ISO/SAE 21434:2021 §10 (product development: refinement of cybersecurity requirements, architectural design, cybersecurity controls); §9.5 (concept, as input); ASPICE 4.0 SEC.1, SYS.3 |
-| Version | 0.1 |
+| Version | 0.2 (RR-2026-008 F-20: CSR-136 was cited in §3.2 TB-3 and TB-6 but defined nowhere and its intent is not clear from the context; the citations are replaced by the nearest existing CSR (TB-3: CSR-131…CSR-135; TB-6: CSR-135, signing material); CSR-136 stays unused; 2026-10-12) |
 | Status | Draft — requirements are proposals derived from code review and the concept; not verified, not approved |
 | ASIL / scope | CS (CAL 1–3); requirements with a safety relation reference their TSR in WP-S-02 (B‡: target ASIL B, ASIL C until SG-01 is re-rated) |
 | Author | Assurance team (initial draft) |
@@ -88,10 +88,10 @@ Paths are relative to the repository root. `safety.h` is `opendbc_repo/opendbc/s
 |---|---|---|---|---|
 | TB-1 | Z2 → Z1 command channel (SPI/USB) | Safety mode/param `0xdc`, alternative experience `0xdf`, bus config `0xdb`/`0xde`, relay debug `0xc5`, softloader `0xd1`, CAN TX frames | TS-02, TS-05, TS-12 | CSR-011…CSR-016, CSR-021…CSR-024, CSR-061 |
 | TB-2 | Z2 → Z1 boot control (GPIO) | `STM_BOOT0`, `STM_RST_N` (`openpilot/common/hardware/comma/hardware.py:401-419`) | TS-03 | CSR-041…CSR-043, CSR-051…CSR-054 |
-| TB-3 | Z4 ↔ Z3 network | athena RPCs, uploads, SSH, git updates, AGNOS images, LFS objects | TS-06, TS-07, TS-08, TS-10 | CSR-101…CSR-104, CSR-111…CSR-117, CSR-121…CSR-126, CSR-131…CSR-136 |
+| TB-3 | Z4 ↔ Z3 network | athena RPCs, uploads, SSH, git updates, AGNOS images, LFS objects | TS-06, TS-07, TS-08, TS-10 | CSR-101…CSR-104, CSR-111…CSR-117, CSR-121…CSR-126, CSR-131…CSR-135 |
 | TB-4 | Z3 → Z2 local integrity | Params, msgq, model files, filesystem | TS-04, TS-09, TS-12 | CSR-062…CSR-064, CSR-071…CSR-073, CSR-081…CSR-083 |
 | TB-5 | Z1 ↔ Z5 vehicle CAN | RX plausibility inputs, TX actuation, PCS forwarding | TS-01 | CSR-091…CSR-093 |
-| TB-6 | Z6 → device | Signed images and manifests; release key material never crosses | TS-05, TS-06, TS-10 | CSR-031…CSR-034, CSR-121, CSR-126, CSR-136 |
+| TB-6 | Z6 → device | Signed images and manifests; release key material never crosses | TS-05, TS-06, TS-10 | CSR-031…CSR-034, CSR-121, CSR-126, CSR-135 |
 | TB-7 | Z7 physical | Data and keys at rest | TS-11, TS-13 | CSR-141…CSR-144, CSR-151, CSR-152 |
 
 **Architectural principle (from the safety envelope pattern).** Every safety-relevant protection is placed at Z1 or below it in the trust order, so that the safety argument does not depend on the SoC being uncompromised. SoC-side controls (Z2/Z3) reduce the likelihood of SoC compromise and protect privacy; they are not credited as the last line of defence for any safety goal. The single exception, which is not yet resolved, is SoC control of the boot pins (TB-2, §3.4).
