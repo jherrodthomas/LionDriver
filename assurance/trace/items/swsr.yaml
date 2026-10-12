@@ -1161,7 +1161,7 @@
   allocated_to: "U-PND-MAIN, `panda.drivers.siren` (U-PND-HK)"
   verification: "UT, HIL"
   acceptance: "Siren ≤ 0.5 s for each trigger; no siren on a brake press or PCM cancel alone"
-  baseline_impl: "Partial: 3 s siren after 5 s heartbeat loss only (`main.c:169-171, 198-201`)"
+  baseline_impl: "Partial: 3 s siren after 5 s heartbeat loss (`main.c:169-171, 198-201`); EPS fault (SWSR-110) persisting 1 s while authority is granted → siren ≥ 3 s (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run). Other (b) triggers and (c) not impl"
   status: proposed
   source: WP-W-02
 
