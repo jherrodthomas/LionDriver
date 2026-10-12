@@ -259,7 +259,7 @@
   phase: G5
   between: [WP-V-01, WP-V-02]
   pattern: "Safety-SOTIF"
-  topic: "The SOTIF validation targets take P(not controlled) from the subject controllability tests of the safety validation: WP-V-02 §3.3 maps each SH to a WP-V-01 test and uses the one-sided 95 % upper bound at the least favourable tested condition; untested SHs and speeds above the highest tested use 1. P(E-situation) stays open under WP-V-02 OI-6 / HARA OI-2"
+  topic: "The SOTIF validation targets take P(not controlled) from the subject controllability tests of the safety validation: WP-V-02 §3.3 maps each SH to a WP-V-01 test and uses the one-sided 95 % upper bound at the least favourable tested condition; untested SHs and speeds above the highest tested use 1. P(E-situation) has its own route in WP-V-02 §3.4"
   anchors: ["WP-V-02:Evidence for P(not controlled)", "WP-V-02:Step 2 takes P(not controlled) only from driver controllability tests with test subjects", "WP-V-01:also supply P(not controlled) to the SOTIF validation targets"]
   status: documented
   open_item: null

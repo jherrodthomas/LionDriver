@@ -36,7 +36,7 @@ The acceptance criteria are those of [WP-C-05 §5](../02-concept/WP-C-05-sotif-h
 For each SOTIF hazardous behaviour SH-nn:
 
 1. **Harm budget.** Allocate to each SH group of WP-C-05 §5.2 step 3 (lateral SH-01/02/10; longitudinal SH-03/04/06/11; mode and override SH-05/09; SH-08) a share `k` of the road-class-specific B1 harm rate `λ_B1` for the relevant harm class (injury crash or fatality), separately for ODD-H and ODD-A:  `λ_harm,SH ≤ k · λ_B1`.
-2. **Hazardous-behaviour rate.** Divide by the probability that the hazardous behaviour, once it occurs, leads to harm: `P(harm | HB) = P(E-situation) · P(not controlled) · P(severity class)`. Each factor needs evidence (HARA exposure, controllability tests in [WP-V-01](WP-V-01-safety-validation.md), crash statistics). A factor without evidence is set to 1.
+2. **Hazardous-behaviour rate.** Divide by the probability that the hazardous behaviour, once it occurs, leads to harm: `P(harm | HB) = P(E-situation) · P(not controlled) · P(severity class)`. Each factor needs evidence: P(E-situation) from LionDriver drive logs (§3.4), P(not controlled) from the controllability tests in [WP-V-01](WP-V-01-safety-validation.md) (§3.3), and P(severity class) from crash statistics. A factor without evidence is set to 1.
    `λ_HB,SH ≤ k · λ_B1 / P(harm | HB)`
 3. **Demonstration size.** For a zero-failure demonstration at confidence C, the exposure needed is
    `n = −ln(1 − C) / λ_HB`
@@ -99,6 +99,28 @@ Step 2 takes P(not controlled) only from driver controllability tests with test 
 4. **Validity.** The value holds for the release whose envelope limits and alert timing were tested. A change to either needs a re-run, or a recorded argument that the tested behaviour bounds the new one, in the impact analysis ([WP-P-02](../07-supporting/WP-P-02-change-management.md)).
 
 What this gives: 20 valid subjects with no failure bound P(not controlled) at 0.14, not the 0.1 assumed in case D of §3.1. Reaching 0.1 needs at least 29 subjects with no failure, and 0.01 needs 299. The sample size per condition is agreed with the assessor together with the controllability pass criteria ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) OI-3).
+
+### 3.4 Evidence for P(E-situation)
+
+P(E-situation) is the probability that, when the hazardous behaviour occurs, a situation in which it can cause harm is present. Step 2 takes it only from LionDriver's own drive logs. It is never taken from the HARA exposure class: E4 only says "> 10 %", and it is a share of all driving time, not of the moments when the hazardous behaviour occurs. The rule:
+
+1. **Situation.** Each SH group uses the operational situation of the [HARA](../02-concept/WP-C-03-hara.md) in which its hazardous behaviour leads to harm, measured from log signals:
+
+   | SH | Harm-enabling situation (HARA) | Measured as | Signal |
+   |---|---|---|---|
+   | SH-01, SH-02 | Vehicle or barrier on the departure side (OS-01, OS-02); oncoming lane on that side in ODD-A (OS-03) | A vehicle in the adjacent lane within ±2 s longitudinally, a barrier or an undivided road edge on either side | `radarTracks` (lateral position) where the reference radar provides tracks; otherwise offline annotation of `fcamera`. Road type and barrier from the DSR-03 tags |
+   | SH-03 | Lead vehicle at a short gap (OS-05) | Lead in the ego lane within a 3 s time gap | `radarState.leadOne` |
+   | SH-06 | Approaching slower or stationary traffic (OS-07) | Lead closing within the AIR-03 range (80 m) | `radarState.leadOne` (distance, relative speed) |
+   | SH-04 | Close following vehicle behind (OS-08) | Following vehicle within a 1.5 s time gap | None on the device: needs a rear-facing camera on the test vehicle (OI-7). Until then P(E-situation) = 1 |
+   | SH-10 | Vehicle in the target lane (OS-01) | Vehicle in the target lane within ±2 s during a lane change | As SH-01, on instances where `modelV2.meta.laneChangeState` is active |
+   | SH-05, SH-08, SH-09, SH-11, SH-12, SH-13 | — | not measured | P(E-situation) = 1 |
+
+2. **Unit and value.** The unit is the 60 s engaged instance of §4.3. An instance counts as exposed if the situation is present at any time in it, which is conservative. P(E-situation) is the one-sided 95 % upper confidence bound (Clopper–Pearson) on the share of exposed instances. It is computed per ODD stratum (DSR-03), and the least favourable stratum of the claimed ODD is used unless the target is set per stratum.
+3. **Matched to the triggering condition.** The hazardous behaviour and the situation can be correlated: phantom braking happens at overpasses, and drift happens in curves. So the share is measured on instances that carry a triggering condition of the SH ([WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) TC tag, or a [WP-V-04](WP-V-04-sotif-unknown-scenarios.md) signature) wherever at least 59 such instances exist. Below that, the ODD-wide share may be used only with a recorded argument that the situation is independent of the triggering condition; otherwise P(E-situation) = 1.
+4. **Data and validity.** The data comes from engaged public-road blocks (WP-V-04 B1–B3, public-road level L5 of [WP-V-07](WP-V-07-vehicle-test-operations.md)). Exposure is recorded as in [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) §2.2. The value is re-measured on field data after release (WP-O-04). A field share above the bound used here re-opens step 2 for that SH.
+5. **HARA.** The same measurements confirm or correct the HARA exposure classes of the situations above (HARA OI-2). A measured time share below 10 % for an E4 situation is reported to the HARA owner.
+
+What this gives: the HARA rates every one of these situations E3 or E4, so P(E-situation) is expected to be between about 0.1 and 1. At best it earns one order of magnitude in step 2, and only with enough matched instances. For SH-04 it earns nothing until the rear camera exists.
 
 ## 4. Validation targets
 
@@ -278,4 +300,4 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 | OI-3 | Approve numeric targets VT-01…VT-15 with the assessor before collecting evidence, together with the derivations of §4.2 and §4.3 |
 | OI-4 | Build the simulation fidelity case (§5.3) and decide which families get credit (WP-M-08 OI-3) |
 | OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
-| OI-6 | Decide the evidence route for P(E-situation) in step 2 (HARA OI-2). The route for P(not controlled) is §3.3 |
+| OI-7 | Add a rear-facing camera to the test-vehicle instrumentation ([WP-V-01](WP-V-01-safety-validation.md) §2), so that P(E-situation) for SH-04 (following vehicle, OS-08) can be measured (§3.4) |
