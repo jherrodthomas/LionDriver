@@ -8,7 +8,7 @@
 | Status | Draft: plan only. No bench exists, no part has been bought, no test has been run on hardware |
 | Author | Assurance team (AI-assisted draft) |
 | Reviewer(s) | TBD |
-| Baseline | LionDriver `212fc4d`; panda pin `9f60e17`, opendbc pin `aff4033` (panda#1, #3, #4 and opendbc#1, #2, #3 integrated 2026-10-12) |
+| Baseline | LionDriver `4aca58b`; panda pin `3859fa8`, opendbc pin `5b5a4ba` (panda#1, #3, #4, #5, #6 and opendbc#1, #2, #3 integrated 2026-10-12) |
 
 ## 1. Purpose
 
@@ -82,7 +82,7 @@ From a LionDriver checkout, with the panda submodule at its pin:
 
 ```bash
 cd panda
-git checkout 9f60e17   # the LionDriver pin; contains panda#1, #3 and #4 with the fault injection and HIL test
+git checkout 3859fa8   # the LionDriver pin; panda#1, #3, #4, #5, #6 with the fault injection and HIL tests
 pip install -e .[dev]                                               # panda python lib, pytest, libusb1, pycapnp
 export PYTHONPATH=$PWD/../opendbc_repo:$PWD/..
 ```
@@ -195,6 +195,6 @@ Results go in the record as observed. A failed or skipped case is recorded as su
 | ID | Action | Owner | Needed by |
 |---|---|---|---|
 | A-1 | Confirm which of P-1, P-2, P-11 are owned or can be bought | Maintainer | B1 |
-| A-2 | Build B1 and run §5.4 on the pinned panda `9f60e17`; attach the output to the change record | Maintainer | Before any release image for a car |
+| A-2 | Build B1 and run §5.4 on the pinned panda; attach the output to the change record | Maintainer | Before any release image for a car |
 | A-3 | Add the GPIO start marker (R-3) and run the §6 campaign | Maintainer (firmware: assistant draft) | Release |
 | A-4 | Injection mode for an SPI interrupt hang, on the reference device | Assistant draft, maintainer review | Release |
