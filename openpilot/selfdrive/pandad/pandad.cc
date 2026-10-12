@@ -133,6 +133,8 @@ void fill_panda_state(cereal::PandaState::Builder &ps, cereal::PandaState::Panda
   ps.setSbu1Voltage(health.sbu1_voltage_mV / 1000.0f);
   ps.setSbu2Voltage(health.sbu2_voltage_mV / 1000.0f);
   ps.setSoundOutputLevel(health.sound_output_level_pkt);
+  ps.setWatchdogReset((health.flags_pkt & HEALTH_FLAG_WATCHDOG_RESET) != 0U);
+  ps.setRequestsRejected(health.requests_rejected_pkt);
 }
 
 void fill_panda_can_state(cereal::PandaState::PandaCanState::Builder &cs, const can_health_t &can_health) {
@@ -175,6 +177,20 @@ std::optional<bool> send_panda_states(PubMaster *pm, Panda *panda, bool is_onroa
   }
 
   health_t health = *health_opt;
+
+  // LionDriver: make a panda watchdog reset and requests refused by the reference lock visible in the logs
+  static uint16_t prev_requests_rejected = 0U;
+  static bool watchdog_reset_logged = false;
+  if (health.requests_rejected_pkt != prev_requests_rejected) {
+    LOGE("panda refused %u control request(s) (reference build lock), %u since panda reset",
+         (unsigned)(uint16_t)(health.requests_rejected_pkt - prev_requests_rejected), (unsigned)health.requests_rejected_pkt);
+    prev_requests_rejected = health.requests_rejected_pkt;
+  }
+  bool watchdog_reset = (health.flags_pkt & HEALTH_FLAG_WATCHDOG_RESET) != 0U;
+  if (watchdog_reset && !watchdog_reset_logged) {
+    LOGE("panda was reset by its hardware watchdog");
+  }
+  watchdog_reset_logged = watchdog_reset;
 
   std::array<can_health_t, PANDA_CAN_CNT> can_health{};
   for (uint32_t i = 0; i < PANDA_CAN_CNT; i++) {

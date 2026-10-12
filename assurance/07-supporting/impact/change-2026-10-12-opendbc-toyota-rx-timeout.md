@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Integrated 2026-10-12: LionDriver pins panda `9f60e17`, opendbc `aff4033` (merge commits on the forks' `master`); not yet verified on hardware (HIL bench D-04); not reviewed independently.** |
+| Status | **Integrated 2026-10-12: LionDriver pins panda `9f60e17`, opendbc `aff4033`; follow-ups at panda `3859fa8`, opendbc `5b5a4ba` (merge commits on the forks' `master`); not yet verified on hardware (HIL bench D-04); not reviewed independently.** |
 | Change request | [jherrodthomas/opendbc#1](https://github.com/jherrodthomas/opendbc/pull/1); follow-on [jherrodthomas/opendbc#3](https://github.com/jherrodthomas/opendbc/pull/3) for TSR-306, stacked on #1 (§7) |
 | Range | opendbc `229dc70..0edef9b` (branch `claude/toyota-rx-timeout`; `0edef9b` adds a test only); LionDriver pin stays at `229dc70` until the change is merged to the fork's `master` |
 | Depends on | [jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3) (100 Hz safety task, SWSR-401a). Without it `safety_tick()` runs at 1 Hz and detection stays ≥ 1 s. Integrate both in the same pin update |
