@@ -7,7 +7,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Analysis | IA-2026-<nn> (assign on review) |
 | Status | **Draft: proposed change, not integrated.** The LionDriver `panda` pin is unchanged. Deviations D-1 and D-2 accepted as interim by the maintainer on 2026-10-12 (§2). Follow-on change panda#3 proposes to resolve D-1 and D-3 (§7) |
 | Change request | [jherrodthomas/panda#1](https://github.com/jherrodthomas/panda/pull/1) (draft); follow-on [jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3), stacked on panda#1 (§7) |
-| Range | panda `92eb565..b8d046b` (branch `liondriver/hw-watchdog`; `b8d046b` adds debug-only fault-injection hooks and the HIL test, no change to release-image behaviour. panda#3 branches from `361c7a2` and does not contain `b8d046b` yet); LionDriver pin stays at `92eb565` until panda#1 is merged to the fork's `master` |
+| Range | panda `92eb565..16cd27a` (branch `liondriver/hw-watchdog`; `b8d046b` and `16cd27a` add debug-only fault-injection hooks and the HIL test, no change to release-image behaviour. panda#3 contains them through merge `b9596ed`); LionDriver pin stays at `92eb565` until panda#1 is merged to the fork's `master` |
 | Reference configuration affected | Yes: the panda firmware runs on the reference device |
 | Author / reviewer (independence) | Claude (AI-assisted draft) / TBD; an AI draft is not a review (WP-M-06) |
 
@@ -61,13 +61,13 @@ None are changed yet, because the change is not integrated. When panda#1 is merg
 |---|---|---|
 | OI-1 | Closed 2026-10-12: the maintainer accepted D-1 and D-2 as interim (§2); the TSR-501 and HWSR-501c amendments for D-2 are drafted (WP-S-02 v0.4, WP-H-01 v0.3). D-3 accepted as interim (2026-10-12). Still needed: review of the amendments, and recording D-1 and D-3 as residuals in WP-K-01 on integration | Integration |
 | OI-2 | Confirm the STM32H725 LSI tolerance and the timeout at both ends. With panda#3 this matters more: at an LSI 10 % slow the 90 ms nominal timeout reaches about 100 ms, the TSR-501 limit (§7) | Integration |
-| OI-3 | HIL fault-injection evidence (needs the D-04 HIL bench). Test written: `tests/hitl/test_10_hw_watchdog.py` with a debug-only fault-injection build (`b8d046b`); bench plan in [hil-bench/](../../05-software/hil-bench/README.md) | Release |
+| OI-3 | HIL fault-injection evidence (needs the D-04 HIL bench). Test written: `tests/hitl/test_10_hw_watchdog.py` with a debug-only fault-injection build (`b8d046b`, `16cd27a`; on panda#3 also safety-task hang and early-feed window violation, `b9596ed`); bench plan in [hil-bench/](../../05-software/hil-bench/README.md) | Release |
 | OI-4 | Report watchdog resets to the host | G3 |
 | OI-5 | Review panda#3 (§7). If accepted, D-1 and D-3 close and the WP-K-01 residuals for them are not needed | Integration |
 
 ## 7. Follow-on change: 100 Hz safety task and window mode (panda#3)
 
-[jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3) is stacked on panda#1 (branch `claude/safety-task-100hz`, `361c7a2..a35d1c6`). It is integrated with panda#1, not separately: the pin moves once both are merged to the fork's `master` with merge commits.
+[jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3) is stacked on panda#1 (branch `claude/safety-task-100hz`, `361c7a2..b9596ed`; `b9596ed` merges in the fault injection and HIL test from panda#1). It is integrated with panda#1, not separately: the pin moves once both are merged to the fork's `master` with merge commits.
 
 | Commit(s) | Files | Summary of behaviour change | FuSa | SOTIF | AI | CS | Hazards / findings affected | WPs affected | Verification to re-run | Decision |
 |---|---|---|---|---|---|---|---|---|---|---|
