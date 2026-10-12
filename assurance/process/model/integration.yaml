@@ -2,7 +2,7 @@
 # Clause references are read from the WP-M-00 register row of each produced work product.
 # Every G4 work product is a specification today; no result has been recorded. Hardware, embedded
 # software and system integration all run on the LionDriver HIL bench defined in WP-H-06 §2
-# (decision D-04), which does not exist yet (IX-20).
+# (decision D-04, one bench agreed in IX-20), which does not exist yet and is due by G3.
 
 - id: INT-01
   kind: activity

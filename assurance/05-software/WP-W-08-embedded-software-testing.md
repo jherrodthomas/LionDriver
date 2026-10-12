@@ -31,6 +31,8 @@ This document specifies tests that show the embedded software, as built for rele
 
 ## 3. Test environment (HIL bench, D-04)
 
+There is one HIL bench for hardware, software and system integration testing: the bench defined in [WP-H-06](../04-hardware/WP-H-06-hardware-integration-verification.md) §2. It is built under [WP-M-03](../01-management/WP-M-03-project-plan.md) task 5.1 and must be ready by G3, because WP-M-03 phase P4 depends on "G3; HIL bench ready". The table below lists what the software qualification tests need from that bench, in addition to WP-H-06 §2.1; it does not define a second bench.
+
 | Item | Description | Representativeness argument |
 |---|---|---|
 | DUT | Reference device (SoC + panda) or bare panda, release firmware | Same MCU, clocks, peripherals, firmware image |
@@ -122,7 +124,7 @@ SWSRs whose only verification is review or analysis (e.g. SWSR-102a, 309, 605a) 
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Build the HIL bench (D-04), including fault-injecting SPI host and plant model | Maintainer | G4 |
+| OI-1 | Build the HIL bench (D-04), including fault-injecting SPI host and plant model. One bench with WP-H-06 §2; tracked as WP-H-06 OI-1 and WP-M-03 task 5.1 | Maintainer | G3 |
 | OI-2 | Decide release-image-compatible fault-injection methods (SWD vs debug build) and document the representativeness argument | SW lead | G4 |
 | OI-3 | Port `panda/tests/hitl` to the LionDriver bench without comma jigs | Maintainer | G4 |
 | OI-4 | Fork-owned Corolla log set for VS-SWQ-24 and plant parameter identification | Maintainer | G4 |

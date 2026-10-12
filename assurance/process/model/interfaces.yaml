@@ -207,10 +207,10 @@
   phase: G4
   between: [WP-H-06, WP-W-08]
   pattern: "Hardware-Software"
-  topic: "Hardware, embedded-software and system integration share one HIL bench (D-04) that does not exist; WP-H-06 plans it for G3 and WP-W-08 for G4"
-  anchors: ["WP-H-06:Test environment: HIL bench (decision D-04)", "WP-W-08:LionDriver has no HIL bench (GAP-30)", "WP-H-06:Build and characterize the HIL bench (D-04", "WP-W-08:Build the HIL bench (D-04)"]
-  status: open
-  open_item: "WP-H-06 OI-1 / WP-W-08 OI-1 (D-04)"
+  topic: "Hardware, embedded-software and system integration share one HIL bench (D-04): WP-W-08 §3 uses the WP-H-06 §2 bench and adds its software needs; both plan it ready by G3 as WP-M-03 phase P4 requires. Building it stays open as WP-H-06 OI-1 / WP-W-08 OI-1 / WP-M-03 task 5.1"
+  anchors: ["WP-H-06:Test environment: HIL bench (decision D-04)", "WP-W-08:it does not define a second bench", "WP-H-06:Build and characterize the HIL bench (D-04", "WP-W-08:One bench with WP-H-06 §2; tracked as WP-H-06 OI-1 and WP-M-03 task 5.1"]
+  status: documented
+  open_item: null
   due: G4
 - id: IX-21
   kind: interface

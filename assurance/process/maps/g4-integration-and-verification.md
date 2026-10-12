@@ -62,7 +62,7 @@ flowchart LR
   sw(["Software (ISO 26262-6)"])
   sotif(["SOTIF (ISO 21448)"])
   ai(["AI safety (ISO/PAS 8800)"])
-  hw -. "IX-20 OPEN" .- sw
+  hw -. "IX-20" .- sw
   fusa -. "IX-21 OPEN" .- sw
   fusa -. "IX-22" .- sotif
   ai -. "IX-23" .- sotif
@@ -88,7 +88,7 @@ Each interface is anchored to text in the work products; the checker fails if an
 
 | ID | Pattern | Between | Topic | Status | Open item | Due |
 |---|---|---|---|---|---|---|
-| IX-20 | Hardware-Software | [WP-H-06](../../04-hardware/WP-H-06-hardware-integration-verification.md), [WP-W-08](../../05-software/WP-W-08-embedded-software-testing.md) (Hardware / Software) | Hardware, embedded-software and system integration share one HIL bench (D-04) that does not exist; WP-H-06 plans it for G3 and WP-W-08 for G4 | Open | WP-H-06 OI-1 / WP-W-08 OI-1 (D-04) | G4 |
+| IX-20 | Hardware-Software | [WP-H-06](../../04-hardware/WP-H-06-hardware-integration-verification.md), [WP-W-08](../../05-software/WP-W-08-embedded-software-testing.md) (Hardware / Software) | Hardware, embedded-software and system integration share one HIL bench (D-04): WP-W-08 §3 uses the WP-H-06 §2 bench and adds its software needs; both plan it ready by G3 as WP-M-03 phase P4 requires. Building it stays open as WP-H-06 OI-1 / WP-W-08 OI-1 / WP-M-03 task 5.1 | Documented | — | G4 |
 | IX-21 | Software-System | [WP-W-08](../../05-software/WP-W-08-embedded-software-testing.md), [WP-V-05](../../06-validation/WP-V-05-fault-injection.md) (Software / Functional safety) | Embedded-software qualification, system integration and the fault-injection campaign overlap; the split of test cases is not agreed | Open | WP-W-08 OI-5 | G4 |
 | IX-22 | Safety-SOTIF | [WP-V-05](../../06-validation/WP-V-05-fault-injection.md), [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md) (Functional safety / SOTIF) | Faults (malfunctions) are injected under WP-V-05 and triggering conditions are tested under WP-V-03; scenarios that need an induced fault reuse the WP-V-05 rules | Documented | — | G4 |
 | IX-23 | SOTIF-AI | [WP-V-03](../../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) (SOTIF / AI safety) | Known-scenario evaluation reuses the ML test cases (e.g. VS-ML-06 for driver monitoring) and is re-run after every model change listed in WP-W-10 | Documented | — | G4 |
@@ -130,4 +130,4 @@ Which activity answers each clause reference listed in the register. One activit
 
 **Work products with no confirmation measure at this gate** (verification review only): WP-H-06, WP-W-07, WP-W-08, WP-V-05, WP-S-08, WP-V-03, WP-S-09.
 
-**Open interfaces due by this gate** (from this or an earlier phase): IX-06 (WP-C-02 OI-6), IX-13 (WP-V-02 OI-3), IX-20 (WP-H-06 OI-1 / WP-W-08 OI-1 (D-04)), IX-21 (WP-W-08 OI-5).
+**Open interfaces due by this gate** (from this or an earlier phase): IX-06 (WP-C-02 OI-6), IX-13 (WP-V-02 OI-3), IX-21 (WP-W-08 OI-5).

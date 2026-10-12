@@ -53,7 +53,6 @@ From the [process model](../../../process/README.md). Each one is a condition on
 |---|---|---|---|---|
 | IX-06 | The reference ODD cannot be compared with the driving model's training-data ODD, which upstream has not published | WP-C-02 OI-6 | G2 | |
 | IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-11 must confirm; the targets are not yet approved | WP-V-02 OI-3 | G2 | |
-| IX-20 | Hardware, embedded-software and system integration share one HIL bench (D-04) that does not exist; WP-H-06 plans it for G3 and WP-W-08 for G4 | WP-H-06 OI-1 / WP-W-08 OI-1 (D-04) | G4 | |
 | IX-21 | Embedded-software qualification, system integration and the fault-injection campaign overlap; the split of test cases is not agreed | WP-W-08 OI-5 | G4 | |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
