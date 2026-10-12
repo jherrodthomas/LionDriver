@@ -66,7 +66,7 @@ Integration, verification and validation plans and reports are not listed as sep
 2. Entry criteria: the work product is at least `Draft`, its verification review per WP-P-05 is complete, and its open items are listed.
 3. The reviewer evaluates compliance with ISO 26262 (and, for CR-03, with this project's tailoring) and adequacy for the safety argument.
 4. Outcome: `Confirmed`, `Confirmed with findings` (findings tracked as issues), or `Not confirmed`.
-5. Record stored as `10-safety-case/confirmation/CR-nn-<WP-ID>-v<version>.md` (folder to be created, OI-6).
+5. Record stored as `10-safety-case/confirmation/CR-nn-<WP-ID>-v<version>.md` (folder and naming rules: [`confirmation/README.md`](../10-safety-case/confirmation/README.md)).
 6. If the work product changes after confirmation in a way that the change impact analysis ([WP-P-02](../07-supporting/WP-P-02-change-management.md)) classifies as safety-relevant, the confirmation review is repeated or its scope is extended.
 
 ## 5. Functional safety audit
@@ -77,7 +77,7 @@ Integration, verification and validation plans and reports are not listed as sep
 |---|---|
 | Independence | I3 planned (ASIL D assumption). Performed by the external FuSa assessor or an auditor of equivalent independence |
 | Timing | AUD-1 after G2 entry (process in use for concept and system design); AUD-2 before G4 (development, verification, tool use). Additional audit if a major process change occurs |
-| Scope | Implementation of WP-M-02 and the supporting procedures WP-P-01…P-10; change control on safety-relevant files; review independence actually achieved; anomaly handling; tool use vs. WP-P-07; adherence to the upstream sync freeze (D-02) |
+| Scope | Implementation of WP-M-02 and the supporting procedures WP-P-01…P-10; change control on safety-relevant files; review independence actually achieved; anomaly handling; tool use vs. WP-P-07; adherence to the upstream sync procedure (D-02: planned sync once per minor release, out-of-cycle only for security or safety fixes) |
 | Inputs | WP-M-02, WP-M-05 QA reports, sample of PRs and issues, CI records, gate records |
 | Output | Audit report with findings; findings handled through WP-P-03 |
 | Record | `10-safety-case/confirmation/AUD-<n>.md` |
@@ -158,4 +158,4 @@ All confirmation records are stored in `assurance/10-safety-case/confirmation/` 
 | OI-3 | Engage the external FuSa assessor (D-06) and agree whether SOTIF/AI reviews (§7) are in their scope | PM | G0 |
 | OI-4 | Identify a cybersecurity assessor and a pen tester; agree independence statement | CSM | G1 |
 | OI-5 | CR-01 and CR-03 are due at G0 but no assessor is engaged; decide whether G0 can pass with them scheduled rather than performed | SM | G0 |
-| OI-6 | Create `10-safety-case/confirmation/` and a record template | SM | G0 |
+| OI-6 | Closed: `10-safety-case/confirmation/` created with naming rules; the record template is WP-P-05 §7.2 | SM | G0 |

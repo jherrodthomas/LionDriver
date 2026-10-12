@@ -34,7 +34,7 @@ This folder holds the structured records behind the README's Living Safety Case 
 | [`tools/`](tools/) | — | — | Validator, generator and their self-tests |
 | `status.json` | — | — | Generated summary (do not edit) |
 
-Hazards, hazardous events, safety goals and assumptions of use are not duplicated here. Records reference them by ID, and the validator resolves those IDs against [`assurance/trace/items/`](../trace/items/), the machine-readable hazard log ([WP-T-01](../trace/README.md)). Requirements (FSR, TSR, …) will be referenced the same way once they are added to `trace/`.
+Hazards, hazardous events, safety goals and assumptions of use are not duplicated here. Records reference them by ID, and the validator resolves those IDs against [`assurance/trace/items/`](../trace/items/), the machine-readable hazard log ([WP-T-01](../trace/README.md)). Requirements are referenced the same way: FSRs and TSRs are in `trace/items/fsr.yaml` and `tsr.yaml`, generated from WP-C-04, WP-S-02 and WP-S-06.
 
 ## 3. Record format
 
@@ -120,6 +120,6 @@ When WP-K-01 changes, update the matching records in the same pull request; chec
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Add the requirement IDs (FSR, TSR) to `related_requirements` once `trace/items/fsr.yaml` and `tsr.yaml` exist (WP-T-01 OI-2) | G2 |
+| OI-1 | Partly closed: G1.1…G1.7 list their FSRs (FSR-0k.xx for SG-0k). Still open: the G1.1.x sub-claims and the TSR level (WP-K-01 OI-2) | G2 |
 | OI-2 | Add a configuration-independent claim layer once a second configuration is evaluated, so platform evidence can be reused across configurations | G4 |
 | OI-3 | Generate the WP-K-01 GSN diagrams from these records (WP-K-01 OI-4) | G2 |

@@ -56,8 +56,8 @@ Rules:
 | SG-02, SG-06 | ≤ 1 s to warning | Panda siren ≤ 0.5 s after detection; SoC take-over request ≤ 1 s | TSR-516, TSR-606 |
 | SG-03, SG-04 | ≤ 1 s | Detection ≤ 0.5 s, reaction ≤ 0.3 s | WP-C-04 §8 |
 | SG-05 | ≤ 0.2 s | One brake message period + one frame | TSR-302 |
-| SG-07 | Continuous | Relay to stock path ≤ 0.1 s after fault reaction | TSR-706 |
-| MCU execution faults | ≤ 0.5 s (SG-01) | Detection ≤ 0.2 s (watchdog), reaction ≤ 0.1 s | TSR-501, TSR-502 |
+| SG-07 | ≤ 0.2 s (forwarding loss, preliminary) | Detect ≤ 0.1 s (TSR-711, TSR-501), relay to stock path ≤ 0.1 s (TSR-706) | TSR-501, TSR-706, TSR-711 |
+| MCU execution faults | ≤ 0.5 s (SG-01); ≤ 0.2 s (SG-07 forwarding) | Detection ≤ 0.1 s (watchdog), reaction ≤ 0.1 s | TSR-501, TSR-502 |
 
 ## 5. Fault list and test specification
 
@@ -141,7 +141,7 @@ Columns: **Lvl** = level(s); **Mechanism** = safety mechanism expected to act (T
 | WP-A-03 DFI-09 (shared `CarParams`) | VS-FI-23 |
 | WP-A-03 DFI-14 (SoC crash removes warning) | VS-FI-09, VS-FI-10 |
 
-Every SFMEA row of WP-A-04 §5 with a named mechanism maps to at least one case above; rows whose mechanism is "none" are run to confirm the baseline expectation and to record the gap.
+Every SFMEA row of WP-A-04 §10 up to SFMEA-32 with a named mechanism maps to at least one case above (SFMEA-33…-40, added in WP-A-04 v0.2, still need cases: OI-6); rows whose mechanism is "none" are run to confirm the baseline expectation and to record the gap.
 
 ## 7. Campaign execution order
 
@@ -204,3 +204,4 @@ Summary (to complete after execution): cases passed / failed / known GAP / block
 | OI-3 | Extend `test_fuzzy.py` to the excluded safety-relevant processes, or document why each cannot be fuzzed | SW lead | G3 |
 | OI-4 | Confirm FTTI and budgets (WP-S-04) and update §4 | Safety engineer | G2 |
 | OI-5 | Decide whether VS-FI-07 (SPI overflow) may be run on the reference device or only on a spare | Test lead | G4 |
+| OI-6 | Add fault-injection cases for WP-A-04 v0.2 rows SFMEA-33…-40 (envelope blocking with stale `pandaStates`, hung UI render loop, stalled or muted audio, unannounced deceleration, stale FCW inputs, TX burst, camera-side bus fault, block-list entry) | Test lead | G4 |

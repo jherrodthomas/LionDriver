@@ -64,7 +64,7 @@
 - id: ACT-006
   kind: action
   title: "Record H-07 as reserved in WP-C-03"
-  description: "WP-C-03 §4 records H-07 as reserved (mode confusion, folded into H-02/H-05/H-06)"
+  description: "WP-C-03 v0.1 recorded H-07 as reserved; v0.2 rates it (HE-07.1…07.3) under SG-02/SG-06"
   lifecycle_status: closed
   needed_by: G1
   related_claims: []

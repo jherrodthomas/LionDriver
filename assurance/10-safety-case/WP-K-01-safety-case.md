@@ -51,7 +51,7 @@ flowchart TD
   C2(["C2 ODD WP-C-02"]) --- G0
   C3(["C3 Reference configuration WP-M-01 §3.1"]) --- G0
   C4(["C4 Hazard log WP-C-03 + WP-C-05"]) --- G0
-  A1(["A1 AOU-01…AOU-11 WP-C-01 §7"]) --- G0
+  A1(["A1 AOU-01…AOU-13 WP-C-01 §7"]) --- G0
   S0[/"S0: Argue over the risk sources: E/E malfunction, intended-function insufficiency and misuse, ML, cyber, process and lifecycle"/]
   G0 --> S0
   S0 --> G1["G1 FuSa (ISO 26262)"]
@@ -79,7 +79,7 @@ G0  The LionDriver reference configuration, operated by an attentive driver with
  ⊙ C5   Safety envelope architecture pattern: QM SoC stack bounded by the opendbc safety
         mode on the panda MCU [WP-M-01 §4.1]
  ⊙ C6   Tailoring T-01…T-13 [WP-M-01 §5]
- ⊙ A1   AOU-01…AOU-11 hold [WP-C-01 §7] — see §5 for status
+ ⊙ A1   AOU-01…AOU-13 hold [WP-C-01 §7] — see §5 for status
  ⊙ J0   "No worse than manual driving with stock TSS 2.0" is the acceptance principle
         because LD-SDA replaces stock LTA and DRCC; the comparison baseline is what the
         driver would otherwise have. Quantified in WP-C-05 §5 and WP-V-02
@@ -261,6 +261,8 @@ G5  The work was done by competent people under controlled processes, was
 | AOU-09 | Vehicle maintained, unmodified, no DTCs | All | Not started | Any |
 | AOU-10 | VSC/ABS on and working | G1.4 | Not started | HE-04.2 rating |
 | AOU-11 | Back end untrusted; no safety function depends on it | G4 | Design constraint | — |
+| AOU-12 | Cluster cruise indicator driven by PCM state, not by item TX other than `0x412` | G1.2, G1.6 | Unverified | Independent cue for SG-02/SG-06 (TSR-303, TSR-309) |
+| AOU-13 | De-energised harness relay restores the stock camera-to-car path | G1.7 | Unverified | SG-07 safe state |
 
 Status values are copied from [WP-C-01 §7](../02-concept/WP-C-01-item-definition.md) (machine-readable copy: `trace/items/aou.yaml`).
 
@@ -311,7 +313,7 @@ Evidence rule (shared by [WP-K-01 §6](WP-K-01-safety-case.md#6-evidence-status)
 | Sn-60 | Management plans | WP-M-01…WP-M-13 | G5.1, G3.5 | Partial | Drafts; not approved; CR-03 not done |
 | Sn-61 | CM and change management | [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md), [WP-P-02](../07-supporting/WP-P-02-change-management.md) | G5.2 | Partial | Plans drafted; not implemented (no forks, tags, CODEOWNERS) |
 | Sn-62 | Baseline manifest | WP-P-01 §8 | G5.2 | Missing | Generator not written |
-| Sn-63 | Traceability procedure and data, trace check report | [WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md), [WP-T-01](../trace/README.md) | G5.3 | Partial | Procedure drafted; trace data holds only hazards, SGs, AoUs |
+| Sn-63 | Traceability procedure and data, trace check report | [WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md), [WP-T-01](../trace/README.md) | G5.3 | Partial | Procedure drafted; trace data holds hazards, SGs, AoUs, FSRs and TSRs (generated from WP-C-04, WP-S-02, WP-S-06); no SWSR/HWSR, code or test links yet |
 | Sn-64 | Verification review records | [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) | G5.4 | Missing | No reviews performed |
 | Sn-65 | Confirmation reviews, audit, FSA | [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md), [WP-K-04](WP-K-04-functional-safety-assessment.md) | G5.4 | Missing | None performed; no assessor (D-06) |
 | Sn-66 | Tool qualification | [WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md) | G5.5 | Partial | Classification drafted |
@@ -398,4 +400,4 @@ UL 4600 addresses products without a human driver and LionDriver makes **no conf
 | OI-3 | Add the CS-to-safety links (CSG ↔ SG) from WP-C-10 (Draft) and WP-K-03 | G1 |
 | OI-4 | Decide whether to render the GSN with a tool (e.g. a generated diagram from a YAML source in `trace/`) to keep text and diagram consistent | G2 |
 | OI-5 | Interim assessment of the argument structure by the external assessor (FSA-I1) | G1 |
-| OI-6 | Closed: WP-C-03 §4 records H-07 as reserved (mode confusion, folded into H-02/H-05/H-06) | G1 |
+| OI-6 | Closed: WP-C-03 v0.1 recorded H-07 as reserved; v0.2 rates it (HE-07.1…07.3) under SG-02/SG-06 | G1 |
