@@ -126,6 +126,7 @@
   name: "Final functional safety assessment (report WP-K-04)"
   covers: [WP-K-01, WP-V-01, WP-V-05]
   independence: I3
+  record_wp: WP-K-04
 - id: SR-03
   kind: review
   phase: G5

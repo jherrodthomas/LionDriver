@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import fnmatch
 import sys
 import unittest
 from pathlib import Path
@@ -121,6 +122,31 @@ class ProcessModelTest(unittest.TestCase):
     self.assertTrue(any(c.startswith("SOTIF lead:") for c in pm.role_disagreements(ctx, self.base)))
     ctx.roles["SOTIF lead"] = ("B. Person", "G1")
     self.assertFalse(any(c.startswith("SOTIF lead:") for c in pm.role_disagreements(ctx, self.base)))
+
+  def test_record_patterns_follow_confirmation_readme(self):
+    self.assertEqual(pm.record_pattern("CR-02"), "CR-02-*.md")
+    self.assertEqual(pm.record_pattern("CR-06@G2"), "CR-06-*.md")
+    self.assertEqual(pm.record_pattern("SR-04@G3"), "SR-04-G3.md")
+    self.assertEqual(pm.record_pattern("FSA-I1"), "FSA-I1.md")
+    self.assertTrue(fnmatch.fnmatch("CR-02-WP-C-03-v1.0.md", pm.record_pattern("CR-02")))
+
+  def test_record_wp_counts_only_when_approved(self):
+    fsa = self.base.reviews["FSA-F"]
+    self.assertFalse(pm.record_present(fsa, self.ctx.register))
+    reg = copy.deepcopy(self.ctx.register)
+    reg["WP-K-04"].status = "A"
+    self.assertTrue(pm.record_present(fsa, reg))
+
+  def test_gate_skeleton_is_marked_and_complete(self):
+    model = copy.deepcopy(self.base)
+    orders = pm.check(model, self.ctx)
+    for gid in pm.GATES:
+      sk = pm.render_gate_skeleton(gid, orders[gid], model, self.ctx)
+      self.assertIn("Generated skeleton, not a gate review record", sk)
+      for heading in ("## Inputs (WP-M-02 §10)", "## Exit criteria (WP-M-00 §2)", "## Outcome"):
+        self.assertIn(heading, sk)
+      participants = next(ln for ln in sk.splitlines() if ln.startswith("| Participants |"))
+      self.assertEqual(participants.count("Safety manager ("), 1)
 
   def test_transitive_edges_removed(self):
     acts = {"A": {"inputs": []}, "B": {"inputs": ["a"]}, "C": {"inputs": ["a", "b"]}}

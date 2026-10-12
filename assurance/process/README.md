@@ -27,6 +27,7 @@ The model is data, so a checker keeps it consistent with the documents and a gen
 
 | Map | Content |
 |---|---|
+| [`10-safety-case/gates/skeletons/`](../10-safety-case/gates/skeletons/) | One pre-filled gate review skeleton per gate, following the gate record template ([gates README](../10-safety-case/gates/README.md)) |
 | [maps/lifecycle.md](maps/lifecycle.md) | L0: the seven phases G0…G6, the feedback from operation into earlier phases, their exit criteria and the handbook chapter each one corresponds to |
 | [maps/g0-governance.md](maps/g0-governance.md) | L1 for the governance phase: the plans and procedures the later phases read from, G0 readiness including role records that disagree |
 | [maps/g1-concept.md](maps/g1-concept.md) | L1 for the concept phase: swimlane map, interface map, activity table with clauses, clause coverage per standard, G1 readiness |
@@ -48,7 +49,7 @@ The model holds only what no other document holds: the activities, their lanes, 
 | Clause references, ASPICE process, gate and status of each work product | WP-M-00 §3 (the row of each produced work product) |
 | Who holds each lane's role, and by which gate | WP-M-02 §3.1 |
 | Which confirmation measures a gate needs | WP-M-06 §9 |
-| Whether a confirmation measure has been performed | Existence of `10-safety-case/confirmation/<measure>.md`, or `<measure>-<gate>.md` for a measure planned at several gates (WP-M-06 §10) |
+| Whether a confirmation measure has been performed | A record in `10-safety-case/confirmation/` named as its README requires: `CR-<nn>-<WP-ID>-v<version>.md` for a confirmation review, `SR-<nn>-<gate>.md` for a per-gate SOTIF/AI review, `<measure>.md` otherwise. A CR planned at several gates (CR-03, CR-06) cannot be told apart by file name, so any record of it counts at each of its gates |
 
 A change to the register, the safety plan or the confirmation plan therefore shows up in the maps on the next run, and `--check` fails in CI until the maps are regenerated.
 
@@ -61,7 +62,7 @@ Records use the same flat YAML subset as [`case/`](../case/README.md): a top-lev
 | `phase` | [`model/lifecycle.yaml`](model/lifecycle.yaml) | `id` (gate G0…G6), `handbook_chapters`, `modelled` |
 | `lane` | `model/lifecycle.yaml` | `id`, `name`, `role` (a role in WP-M-02 §3.1), `plan` (the plan that governs the lane) |
 | `activity` | [`model/governance.yaml`](model/governance.yaml), [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml), [`model/development.yaml`](model/development.yaml), [`model/integration.yaml`](model/integration.yaml), [`model/release.yaml`](model/release.yaml), [`model/operation.yaml`](model/operation.yaml) | `id` (`GOV-nn` governance, `CON-nn` concept, `DES-nn` system design, `DEV-nn` HW/SW development, `INT-nn` integration and verification, `REL-nn` validation and release, `OPS-nn` operation), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp`; optional `updates` |
-| `review` | same files as the phase's activities | `id` (the WP-M-06 measure; `<measure>@<gate>` when WP-M-06 plans it at several gates, e.g. `CR-06@G2`), `phase`, `name`, `covers`, `independence` |
+| `review` | same files as the phase's activities | `id` (the WP-M-06 measure; `<measure>@<gate>` when WP-M-06 plans it at several gates, e.g. `CR-06@G2`), `phase`, `name`, `covers`, `independence`; optional `record_wp` when the measure's record is itself a work product (FSA-F → WP-K-04), which then counts as performed once approved |
 | `interface` | [`model/interfaces.yaml`](model/interfaces.yaml) | `id` (`IX-nn`), `phase`, `between` (two work products), `pattern`, `topic`, `anchors`, `status`, `open_item`, `due` |
 | `feedback` | `model/operation.yaml` | `id` (`FB-nn`), `phase`, `source` (the work product that raises the finding), `targets` (work products of earlier phases it re-opens), `finding`, `anchors` |
 
@@ -87,7 +88,7 @@ Rules the records follow:
 | P5 | Each input is produced by an earlier activity of the same phase or gated at an earlier gate |
 | P6 | The phase's confirmation measures equal the WP-M-06 §9 row for its gate, are defined in WP-M-06, and cover registered work products |
 | P7 | Interfaces connect two work products produced by activities; anchors occur verbatim; `open_item` is set exactly when the status is `open`; an interface is not due before its own phase |
-| P8 | The committed maps equal what the model generates (`--check` only) |
+| P8 | The committed maps and gate skeletons equal what the model generates (`--check` only) |
 | P9 | Feedback comes from a work product produced in its own phase, goes only to work products of earlier phases, and its anchors occur verbatim |
 
 `tools/test_process_model.py` shows that the committed model passes and that each check rejects a broken copy.
@@ -170,5 +171,5 @@ These findings come from the generated maps. They are observations for the safet
 |---|---|---|---|
 | OI-1 | Closed: all phases G0–G6 are modelled | Safety manager | — |
 | OI-2 | Add an "agreed" interface status set only through a recorded review, and decide whether cross-domain interfaces become requirement items (`IFR-nn`) in `trace/` | Safety manager | G2 |
-| OI-3 | Generate the G1 gate-record skeleton (`10-safety-case/gates/`) from §5 of the G1 map | Safety manager | G1 |
+| OI-3 | Closed: gate review skeletons for G0–G6 are generated in `10-safety-case/gates/skeletons/` | Safety manager | — |
 | OI-4 | Derive pull-request checklists from the model: which activities and interfaces a change to a work product re-opens | Configuration and change manager | G2 |
