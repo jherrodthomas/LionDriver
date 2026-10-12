@@ -183,4 +183,6 @@ Contributions are welcome in software, functional safety, SOTIF, cybersecurity, 
 
 **Jherrod Thomas** maintains LionDriver as an open engineering initiative: a public demonstration of safety-lifecycle development, systems engineering and assurance practice on a real automotive software platform.
 
-LionDriver is derived from [openpilot](https://github.com/commaai/openpilot) by [comma.ai](https://comma.ai) and its contributors, and builds on their work. openpilot is released under the [MIT license](LICENSE); its copyright, licence and attribution notices continue to apply. LionDriver is an independent project and is not affiliated with or endorsed by comma.ai.
+LionDriver is derived from [openpilot](https://github.com/commaai/openpilot) by [comma.ai](https://comma.ai) and its contributors, and builds on their work. LionDriver is distributed under the [MIT license](LICENSE), which keeps comma.ai's copyright notice alongside LionDriver's; third-party components keep their own licences. LionDriver is an independent project and is not affiliated with or endorsed by comma.ai.
+
+Open-source licensing does not establish automotive safety certification, regulatory approval, or suitability for unsupervised vehicle operation.
