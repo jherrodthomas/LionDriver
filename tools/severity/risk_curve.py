@@ -187,8 +187,8 @@ def pedestrian_fatality(speed_kmh: float, age_shift_mph: float = 0.0) -> float:
 
 
 # Age (`--age`). Tefft (2013, journal version): the risk of death of a 70-year-old struck at any
-# speed is about that of a 30-year-old struck 11.8 mph faster; the 2011 report gives 10 mph for
-# severe injury or death. With logit p = a + b * speed + c * age that is a constant speed shift
+# speed is about that of a 30-year-old struck 11.8 mph faster (the 2011 report's 25 vs 35 mph
+# example is for severe injury or death). With logit p = a + b * speed + c * age that is a constant speed shift
 # of 11.8 / 40 mph per year of age. The Tefft anchors are for the average struck pedestrian, so
 # the shift is taken from age 30, which overstates it while that average is older than 30.
 # Age mix (checked 2026-10-12, search summaries): the sample is 422 pedestrians aged 15 and over
@@ -196,14 +196,21 @@ def pedestrian_fatality(speed_kmh: float, age_shift_mph: float = 0.0) -> float:
 # sample)"); the published curve is standardised to the age mix of all US pedestrians struck in
 # 2007-2009, whose mean was not found. The shift from 45 is printed as a central estimate; the
 # bound from 30 stays the reported value until that mean is known.
-AGE_SHIFT_MPH_PER_YEAR = 11.8 / 40
+# The 2011 report's own offset for death, the version of the anchors used here, is 10.4 mph
+# (95 % CI 5.4-15.4 mph); its age-by-speed tables were not reachable (checked 2026-10-12). The
+# journal's 11.8 mph is kept as the default because it is the larger point estimate;
+# `--age-offset-mph 15.4` gives the upper confidence limit.
+AGE_OFFSET_70_30_MPH = 11.8
+AGE_OFFSET_70_30_2011_MPH, AGE_OFFSET_70_30_2011_CI_MPH = 10.4, (5.4, 15.4)
+AGE_SHIFT_MPH_PER_YEAR = AGE_OFFSET_70_30_MPH / 40
 AGE_REFERENCE_YEARS = 30
 AGE_SAMPLE_MEAN_YEARS = 45
 AGES_YEARS = (50, 70, 80)
 
 
-def age_shift_mph(age_years: float, reference_years: float = AGE_REFERENCE_YEARS) -> float:
-  return max(0.0, (age_years - reference_years) * AGE_SHIFT_MPH_PER_YEAR)
+def age_shift_mph(age_years: float, reference_years: float = AGE_REFERENCE_YEARS,
+                  offset_70_30_mph: float = AGE_OFFSET_70_30_MPH) -> float:
+  return max(0.0, (age_years - reference_years) * offset_70_30_mph / 40)
 
 
 # Low-speed check of the linear segment from 0 to 23 mph (`--low-speed`). Two logistic curves,
@@ -308,17 +315,19 @@ def main(argv: list[str] | None = None) -> int:
                   help="SH-11: compare the linear pedestrian risk below 23 mph with two logistic curves")
   ap.add_argument("--age", action="store_true",
                   help="SH-11: print the VRU cases with the risk curve shifted for the struck person's age")
+  ap.add_argument("--age-offset-mph", type=float, default=AGE_OFFSET_70_30_MPH,
+                  help="speed offset between ages 70 and 30 for --age (sensitivity; 2011 report: 10.4, CI 5.4-15.4)")
   a = ap.parse_args(argv)
   JOKSCH_MPH = a.joksch_mph
   if a.age:
     for ref, kind in ((AGE_REFERENCE_YEARS, "bound"), (AGE_SAMPLE_MEAN_YEARS, "central, sample mean")):
-      ages = " | ".join(f"Age {y} (+{age_shift_mph(y, ref):.1f} mph)" for y in AGES_YEARS)
+      ages = " | ".join(f"Age {y} (+{age_shift_mph(y, ref, a.age_offset_mph):.1f} mph)" for y in AGES_YEARS)
       print(f"\nShift from age {ref} ({kind}):\n")
       print("| SH / situation | Impact (km/h) | Average | " + ages + " |")
       print("|---|---|---|" + "---|" * len(AGES_YEARS))
       for sh, _label, v in vru_cases():
         cols = [sh, f"{v:.0f}", f"{pedestrian_fatality(v):.3f}"]
-        cols += [f"{pedestrian_fatality(v, age_shift_mph(y, ref)):.3f}" for y in AGES_YEARS]
+        cols += [f"{pedestrian_fatality(v, age_shift_mph(y, ref, a.age_offset_mph)):.3f}" for y in AGES_YEARS]
         print("| " + " | ".join(cols) + " |")
     print("\nThe bound holds while the mean age of the standardisation population is above 30; the sample mean is 45.")
     print("Age 80 is extrapolated beyond the 30-70 comparison.")

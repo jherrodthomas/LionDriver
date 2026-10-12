@@ -127,6 +127,14 @@ class RiskCurveTest(unittest.TestCase):
     self.assertIn("Shift from age 45", out)
     self.assertIn("| SH-11 OS-04 | 60 | 0.382 | 0.419 | 0.583 | 0.675 |", out)
 
+  def test_age_offset_sensitivity(self):
+    # the 2011 report's upper confidence limit of 15.4 mph raises SH-11 at age 70 to 0.80 (OS-04) and 0.16 (OS-06)
+    with redirect_stdout(io.StringIO()) as buf:
+      self.assertEqual(rc.main(["--age", "--age-offset-mph", "15.4"]), 0)
+    self.assertIn("| SH-11 OS-04 | 60 | 0.382 | 0.593 | 0.800 | 0.872 |", buf.getvalue())
+    self.assertIn("| SH-11 OS-06 | 18 | 0.048 | 0.081 | 0.156 | 0.220 |", buf.getvalue())
+    self.assertLess(rc.AGE_OFFSET_70_30_2011_MPH, rc.AGE_OFFSET_70_30_MPH)
+
   def test_pedestrian_curve_is_monotone(self):
     risks = [rc.pedestrian_fatality(v) for v in range(0, 120, 5)]
     self.assertEqual(risks, sorted(risks))
