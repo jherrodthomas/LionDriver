@@ -47,7 +47,7 @@
 
 - id: HWSR-501c
   kind: hwsr
-  text: "The watchdog shall be started by the bootstub (or by option byte hardware-start, if chosen) before the application runs and shall stay active in all modes in which the relay can be driven; it shall not be stoppable by the SoC."
+  text: "The watchdog shall be started no later than the first time the harness relay is energised after a reset, on every path that energises it (by the application, the bootstub, or option-byte hardware start, if chosen), and shall then stay active in all modes until the next reset; it shall not be stoppable by the SoC. (Amended in v0.3 with TSR-501 v0.4.)"
   asil: "B‡"
   parents: [FSR-01.09, FSR-01.10, TSR-501]
   parent_text: "FSR-01.09, FSR-01.10 / TSR-501"

@@ -62,4 +62,4 @@ Impact analyses for changes LionDriver makes itself to safety-relevant code (cha
 
 | File | Change | Highest class | Status |
 |---|---|---|---|
-| [change-2026-10-12-panda-hw-watchdog.md](change-2026-10-12-panda-hw-watchdog.md) | panda: independent hardware watchdog, [jherrodthomas/panda#1](https://github.com/jherrodthomas/panda/pull/1) | SR-A | Draft: proposed, not integrated; TSR-501 deviations accepted as interim (2026-10-12) |
+| [change-2026-10-12-panda-hw-watchdog.md](change-2026-10-12-panda-hw-watchdog.md) | panda: independent hardware watchdog, [jherrodthomas/panda#1](https://github.com/jherrodthomas/panda/pull/1) | SR-A | Draft: proposed, not integrated; D-1, D-2, D-3 accepted as interim and TSR-501 amended for D-2 (2026-10-12) |
