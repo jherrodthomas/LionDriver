@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-02 Coexistence of elements and freedom from interference |
 | Standard reference | ISO 26262-9:2018 §6 (criteria for coexistence of elements); ISO 26262-6:2018 §7 and Annex D (freedom from interference between software elements: timing and execution, memory, exchange of information); ISO 26262-5:2018 Annex D (communication bus diagnostic measures, informative); ASPICE 4.0 SYS.3, SWE.2 |
-| Version | 0.2 (§6.4 HMI and status-path interference from the FSC v0.2; TSR references updated to WP-S-02 v0.2, 2026-10-12) |
+| Version | 0.3 (TSR-626, TSR-627 for FFI-CM-17/19; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | ASIL C (SG-01, until re-rated) / ASIL B (SG-02…SG-07) elements coexisting with QM elements, on the panda MCU and on the comma device |
 | Author | Assurance team (initial draft) |
@@ -130,9 +130,9 @@ Not QM-to-ASIL interference in the strict sense, but the same communication faul
 
 | ID | Fault | Effect | Existing measures (code) | Gap | Required measure |
 |---|---|---|---|---|---|
-| FFI-CM-17 | Non-safety SoC processes (logging, encoding, upload, streaming, `manage_athenad`) starve `soundd` or the UI render loop of CPU, GPU or audio buffers | Take-over request late or not perceived while control continues (FSR-02.11, H-07) | `ui` runs with real-time priority `Priority.CTRL_HIGH` on core 0 (`openpilot/selfdrive/ui/ui.py:19`); `selfdrived` and `controlsd` likewise (`selfdrived.py:591`, `controlsd.py:237`). `soundd` sets no real-time priority (`openpilot/selfdrive/ui/soundd.py`; started from `process_config.py:90`) | No liveness supervision of the render loop or audio stream; `soundd` scheduled as a normal process | HMI liveness heartbeats with immediate disable and siren take-over (TSR-622); assign `soundd` a real-time priority or show by test that alert latency meets TSR-606 under worst-case load (WP-S-08) |
+| FFI-CM-17 | Non-safety SoC processes (logging, encoding, upload, streaming, `manage_athenad`) starve `soundd` or the UI render loop of CPU, GPU or audio buffers | Take-over request late or not perceived while control continues (FSR-02.11, H-07) | `ui` runs with real-time priority `Priority.CTRL_HIGH` on core 0 (`openpilot/selfdrive/ui/ui.py:19`); `selfdrived` and `controlsd` likewise (`selfdrived.py:591`, `controlsd.py:237`). `soundd` sets no real-time priority (`openpilot/selfdrive/ui/soundd.py`; started from `process_config.py:90`) | No liveness supervision of the render loop or audio stream; `soundd` scheduled as a normal process | HMI liveness heartbeats with immediate disable and siren take-over (TSR-622); `soundd` real-time priority or a worst-case load test (TSR-627) |
 | FFI-CM-18 | SoC software sets the alert volume too low (ambient-scaled volume; `MIN_VOLUME = 0.1`, `soundd.py:20, 159-160`) | Alert not audible (FSR-02.11) | Critical alerts ramp to maximum volume over 4 s (`ALERT_RAMP_TIME`, `soundd.py:21`) | No defined audible minimum; ramp time not tied to the warning budget | Audible minimum while the item can engage, else no-entry (TSR-623); ramp time within the SG-02/SG-06 warning budget |
-| FFI-CM-19 | `pandad` delays or freezes `pandaStates` while the panda keeps blocking authority | SoC does not see envelope blocking (FSR-02.10) | `pandaStates` alive limit 1 s (WP-S-03 §9); `controlsMismatch` ≈2 s | Detection depends on the envelope's own report ([WP-A-03](WP-A-03-dependent-failure-analysis.md) DFI-24) | Stale `pandaStates` treated as a mismatch within the TSR-621 budget; vehicle-response check (WP-A-03 OI-8) |
+| FFI-CM-19 | `pandad` delays or freezes `pandaStates` while the panda keeps blocking authority | SoC does not see envelope blocking (FSR-02.10) | `pandaStates` alive limit 1 s (WP-S-03 §9); `controlsMismatch` ≈2 s | Detection depends on the envelope's own report ([WP-A-03](WP-A-03-dependent-failure-analysis.md) DFI-24) | Stale `pandaStates` treated as a mismatch, and a vehicle-response check (TSR-626) |
 
 ## 7. Summary of required measures
 
@@ -151,7 +151,7 @@ Not QM-to-ASIL interference in the strict sense, but the same communication faul
 | Whitelist restriction for PCS messages | FFI-CM-05 | TSR-705 | GAP-42, NF-07 |
 | E2E / plausibility on vehicle RX | FFI-CM-15 | TSR-401…TSR-406 | GAP-01 |
 | NVIC priority scheme, ISR WCET | FFI-TM-01 | TSR-519; WP-S-04 | GAP-23 (host), new for MCU |
-| HMI liveness, audible minimum, `pandaStates` freshness | FFI-CM-17…-19 | TSR-622, TSR-623, TSR-621 | WP-A-03 OI-8 |
+| HMI liveness, audible minimum, `pandaStates` freshness | FFI-CM-17…-19 | TSR-622, TSR-623, TSR-627, TSR-621, TSR-626 | — |
 
 ## 8. FFI verdict (current baseline)
 
@@ -198,4 +198,4 @@ Paths named by the FSC completeness check ([WP-C-04](../02-concept/WP-C-04-funct
 | OI-5 | Establish the NVIC priority assignment actually in effect (default priorities assumed) and analyse ISR nesting and WCET | SW lead | G2 |
 | OI-6 | Analyse all busy-waits reachable from comms paths for termination (FFI-TM-03) | SW lead | G3 |
 | OI-7 | ~~Report to the WP-S-02 author: TSR-513 list lacks `0xd1` param 1 (softloader) and `0xd8` (reset); no TSR for SoC→CAN TX rate supervision (FFI-CM-04) or for an NVIC priority / ISR timing scheme (FFI-TM-01)~~ **Closed:** TSR-513 now lists `0xd1` param 1 and `0xd8`; TSR-518 (TX rate) and TSR-519 (interrupt and timing scheme) added | Safety engineer | G2 |
-| OI-8 | Decide the `soundd` scheduling priority, or show by load test that alert latency meets TSR-606 (FFI-CM-17) | SW lead | G3 |
+| OI-8 | ~~Decide the `soundd` scheduling priority, or show by load test that alert latency meets TSR-606 (FFI-CM-17)~~ **Closed** as a requirement: TSR-627 (WP-S-02 v0.3); the decision itself is part of implementing TSR-627 | SW lead | G3 |

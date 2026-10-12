@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-04 Functional safety concept (FSRs, allocation, AoUs) |
 | Standard reference | ISO 26262-3:2018 §7; ISO 26262-9:2018 §5 (ASIL decomposition, by reference); ASPICE 4.0 SYS.2 |
-| Version | 0.2 (HARA v0.2 alignment and fsc-builder completeness check, 2026-10-12) |
+| Version | 0.3 (preliminary SG-07 FTTI from WP-S-04 §3.6; watchdog budget; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01); ASIL B for SG-02…SG-07 |
 | Author | Assurance team (initial draft) |
@@ -52,7 +52,7 @@ The ASILs in this document are those proposed in the HARA. The HARA is not yet c
 | SG-04 | No deceleration beyond what following traffic and driver can control | B ⚠ | Inactive (no ACC command) with bounded jerk | ≤ 1 s |
 | SG-05 | Release on driver brake, cancel, steering override | B ⚠ | Disengaged | ≤ 0.2 s |
 | SG-06 | No loss of longitudinal deceleration without take-over warning | B | Warning; ACC cancelled | ≤ 1 s |
-| SG-07 | No suppression, delay or alteration of stock PCS/AEB | B | Camera PCS messages forwarded; relay released if forwarding cannot be guaranteed | Continuous |
+| SG-07 | No suppression, delay or alteration of stock PCS/AEB | B | Camera PCS messages forwarded; relay released if forwarding cannot be guaranteed | ≤ 0.2 s for forwarding loss (preliminary, WP-S-04 §3.6); content: per frame |
 
 ## 4. Envelope strategy decision (HARA §6.1, OI-4)
 
@@ -235,12 +235,13 @@ FTTIs are preliminary (HARA OI-3). Detailed timing belongs in [WP-S-04](../03-sy
 | SG-01 (continuous limiting) | ≤ 0.5 s | 0 (per-frame check) | ≤ 1 frame (10 ms) | Per-frame limits act within one frame | — |
 | SG-01 (RX loss/corruption) | ≤ 0.5 s | ≤ 0.3 s | ≤ 0.1 s | RX timeout up to ≈2 s (`safety.h:321-344`) | GAP-06, GAP-01 |
 | SG-01 (SoC command loss) | ≤ 0.5 s | ≤ 0.3 s | ≤ 0.1 s | 3 s mismatch / 5 s loss (`main.c:182-213`) | GAP-06 |
-| SG-01 (MCU execution fault) | ≤ 0.5 s | ≤ 0.2 s (HW watchdog) | ≤ 0.1 s | No HW watchdog | GAP-07 |
+| SG-01 (MCU execution fault) | ≤ 0.5 s | ≤ 0.1 s (HW watchdog; set by SG-07) | ≤ 0.1 s | No HW watchdog | GAP-07 |
 | SG-02, SG-06 (loss without warning) | ≤ 1 s to warning | ≤ 0.5 s | ≤ 0.5 s (warning) | Soft disable warns at once, but actuates on stale inputs up to ≈3.5 s | GAP-16 |
 | SG-03, SG-04 | ≤ 1 s | ≤ 0.5 s | ≤ 0.3 s | as SG-01 detection | GAP-06 |
 | SG-05 (driver brake/cancel) | ≤ 0.2 s | ≤ 1 brake message period (25 ms at 40 Hz) | ≤ 1 frame | Envelope revokes authority on the next RX frame, but a rejected `0x2E4` frame is dropped rather than replaced by zero torque, so the EPS may keep acting until its own timeout (TSR-109 in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md)) | GAP-46; verify on vehicle (T-VEH) |
 | SG-05 (steering override) | ≤ 0.2 s | — | — | Not in envelope | GAP-02 |
-| SG-07 | Continuous | n/a | n/a | Static forwarding | GAP-42 (FSR-07.02); GAP-49 (`0xe7` stops forwarding) |
+| SG-07 (forwarding loss) | ≤ 0.2 s (preliminary, WP-S-04 §3.6) | ≤ 0.1 s | ≤ 0.1 s (relay release) | No forwarding supervision; no IWDG | GAP-43, GAP-49 (`0xe7` stops forwarding); TSR-711 |
+| SG-07 (content) | per frame | 0 | — | Static forwarding; PCS IDs in the TX whitelist | GAP-42 (FSR-07.02) |
 
 Note on SG-02 in curves: [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) §3.2 estimates ≈ 0.7 s to a 0.6 m lateral drift at the ODD curve bound, which is shorter than driver reaction. The SG-02 budget above (≤ 0.5 s detection + ≤ 0.5 s to warning) is sufficient on straight roads and gentle curves but not alone at the ODD curve bound; SG-02 there relies on immediate warning and on torque being ramped rather than cut (FSR-02.04). Resolution (re-rate C of HE-02.1 or tighten R_ODD) is open in WP-S-04 OI-2 and [WP-C-03](WP-C-03-hara.md) OI-7.
 

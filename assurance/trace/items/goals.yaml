@@ -95,7 +95,7 @@
   aou_dependency: []
   parents: [HE-08.1]
   safe_state: "Camera PCS messages forwarded unchanged; if forwarding cannot be guaranteed (e.g. harness fault), relay released to restore the stock camera link"
-  ftti_ms: null
-  ftti_text: "Continuous"
+  ftti_ms: 200
+  ftti_text: "≤ 0.2 s for loss or delay of forwarding (preliminary, WP-S-04 §3.6); content: per frame"
   status: proposed
   source: WP-C-03

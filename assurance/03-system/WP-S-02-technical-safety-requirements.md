@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-02 Technical safety requirements specification |
 | Standard reference | ISO 26262-4:2018 §6 (specification of technical safety requirements, safety mechanisms, requirements for production/operation by reference); ISO 26262-8:2018 §6 (requirement attributes); ISO 26262-9:2018 §5–§7 (by reference); ASPICE 4.0 SYS.2 |
-| Version | 0.2 (TSRs for the WP-C-04 v0.2 FSRs, 2026-10-12) |
+| Version | 0.3 (RR-2026-005 follow-up: TSR-516 trigger set, TSR-303 scope, TSR-501 timeout, TSR-626, TSR-627, TSR-711; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01, until re-rated); target ASIL B for the whole envelope under FSC option (c) |
 | Author | Assurance team (initial draft) |
@@ -97,7 +97,7 @@ Paths: `safety.h`, `lateral.h`, `longitudinal.h`, `helpers.h`, `declarations.h`,
 |---|---|---|---|---|---|---|---|---|
 | TSR-301 | The envelope shall grant actuation authority only on the rising edge of PCM_CRUISE (`0x1D2`) CRUISE_ACTIVE and shall revoke it in the same frame in which CRUISE_ACTIVE is received false (cancel, main switch off, PCM-internal drop). | B‡ | FSR-01.05, FSR-05.02 | P-SW | GATE | detect ≤ 1 period (30 ms at 33 Hz) / same frame | T-SIL, T-VEH | Implemented: `safety.h:518-527`; `modes/toyota.h:143-146`. `0x1D2` has a checksum but no counter (GAP-01) → TSR-402…405 |
 | TSR-302 | The envelope shall revoke all actuation authority when a driver brake press is received (rising edge, or pressed while the vehicle is moving). | B | FSR-05.01 | P-SW | GATE | detect ≤ 1 period (25 ms at 40 Hz) / same frame; SS-L via TSR-109 | T-SIL, T-VEH | Implemented: `safety.h:350-356`; BRAKE_MODULE (`0x226`) bit 37 `modes/toyota.h:148-150`; `vehicle_moving` from wheel speeds `modes/toyota.h:157-168`. `0x226` has no checksum and no counter (`modes/toyota.h:46`, GAP-01) → TSR-405(b) |
-| TSR-303 | On every fault-induced disengagement with openpilot longitudinal active, the SoC shall set CANCEL_REQ so that the PCM drops ACC. | QM (B-sup: TSR-203, TSR-301) | FSR-03.05 | SoC | FR | ≤ 0.1 s after disengagement | T-SIL, T-VEH | Implemented on host: `carcontroller.py:253-254` (cancel in ACC_CONTROL) |
+| TSR-303 | On every fault-induced disengagement, with or without openpilot longitudinal, the SoC shall set CANCEL_REQ so that the PCM drops ACC. The PCM cruise state then changes, which changes the cluster cruise indication (TSR-309, AOU-12) and makes the envelope revoke (TSR-301); a cancel without effect is caught by TSR-516(c). | QM (B-sup: TSR-203, TSR-301, TSR-516) | FSR-03.05, FSR-02.03, FSR-06.02 | SoC | FR | ≤ 0.1 s after disengagement | T-SIL, T-VEH | Implemented on host: cancel whenever PCM cruise is on and the item is not enabled (`openpilot/selfdrive/controls/controlsd.py:162`), sent in ACC_CONTROL in both longitudinal modes (`opendbc_repo/opendbc/car/toyota/carcontroller.py:253-254, 269-273`). The host replaces the PCM's own fault sound on a forced cancel with its own UI sound (`carcontroller.py:283-287`); whether the PCM sound is an independent cue is part of AOU-12 |
 | TSR-304 | The envelope shall monitor STEER_TORQUE_DRIVER (`0x260`) on the LKA path and (a) reject `0x2E4` frames that increase torque opposing the driver beyond a driver allowance (driver-limited check in addition to the measured-torque check of TSR-104), and (b) when the driver torque exceeds T_ovr for longer than t_ovr, revoke lateral authority or force the commanded torque to zero at the Δ_down rate. T_ovr, t_ovr and the allowance shall be derived from the override behaviour accepted in [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) and from the EPS override threshold (AOU-02R). | B (SG-05); B‡ (SG-01, HE-05.2) | FSR-05.03 | P-SW | PLB, GATE | detect ≤ 2 frames of `0x260` (40 ms) / torque decreasing next frame, zero ≤ 0.2 s | T-SIL, T-VEH | **Not implemented on the LKA path** (GAP-02). Driver torque is sampled (`modes/toyota.h:113-116`) but used only for LTA (`modes/toyota.h:294-298`). A driver-limited check exists (`lateral.h:26-46`, `TorqueDriverLimited`) but the Toyota mode is motor-limited (`modes/toyota.h:178`). Host-only: `MAX_USER_TORQUE` 500 (`carcontroller.py:33, 83`) |
 | TSR-305 | While the accelerator is pressed (PCM_CRUISE GAS_RELEASED = 0), the envelope shall withdraw longitudinal authority (inactive value only, TSR-203). The accelerator shall not revoke lateral authority in the reference configuration unless the HMI decision in WP-C-08 changes `DisengageOnAccelerator`. | B | FSR-04.04, FSR-05.04 | P-SW | GATE | detect ≤ 1 period / same frame | T-SIL | Implemented: `modes/toyota.h:146`; `longitudinal.h:3-5`. `DisengageOnAccelerator` default `0` (`common/params_keys.h:35`) |
 | TSR-306 | The envelope shall not grant actuation authority while any RX check of TSR-401…405 is failed, including timeouts not yet evaluated by the periodic check. | B‡ | FSR-01.05, FSR-01.06 | P-SW | GATE | per frame | T-SIL | Partial: the mode RX hook runs only for valid, whitelisted frames (`safety.h:202-206`) and an invalid frame clears authority (`safety.h:112-121`), but timeouts are evaluated only in the 1 Hz `safety_tick` (`safety.h:321-344`), so a rising edge can grant authority while another message is already lagging (GAP-06) |
@@ -148,7 +148,7 @@ Numbering is aligned with the provisional TSR parents in [WP-H-01](../04-hardwar
 
 | ID | Requirement | ASIL | Parent | Alloc | SM | Timing | Verif | Impl (baseline) / GAP |
 |---|---|---|---|---|---|---|---|---|
-| TSR-501 | The safety MCU shall be supervised by an independent hardware watchdog (IWDG1, LSI-clocked) that is started before the application runs, cannot be stopped by the SoC, is serviced only after the periodic safety processing has completed, and resets the MCU within ≤ 0.2 s of a stall. | B‡ | FSR-01.09 | P-HW (cfg), P-SW | WDG | detect ≤ 0.2 s / reset → SS-S | R, T-HIL, FI | **Not implemented.** `IND_WDG` defined (`stm32h7/stm32h7_config.h:43`), never used; software watchdog checked inside the tick ISR it supervises (`drivers/simple_watchdog.h`, `main.c:119, 301`) (GAP-07). HWSR-501…501d |
+| TSR-501 | The safety MCU shall be supervised by an independent hardware watchdog (IWDG1, LSI-clocked) that is started before the application runs, cannot be stopped by the SoC, is serviced only after the periodic safety processing has completed, and resets the MCU within ≤ 0.1 s of a stall (SG-07 FDTI, [WP-S-04](WP-S-04-timing-ftti-budget.md) §3.6; ≤ 0.2 s would meet SG-01 only). | B‡ | FSR-01.09 | P-HW (cfg), P-SW | WDG | detect ≤ 0.1 s / reset → SS-S | R, T-HIL, FI | **Not implemented.** `IND_WDG` defined (`stm32h7/stm32h7_config.h:43`), never used; software watchdog checked inside the tick ISR it supervises (`drivers/simple_watchdog.h`, `main.c:119, 301`) (GAP-07). HWSR-501…501d |
 | TSR-502 | Every detected MCU fault (watchdog, interrupt-rate, register divergence, memory ECC, clock, supply, temperature, SPI/DMA, siren, relay) shall lead to SS-S within ≤ 0.1 s of detection. Faults shall be classified as latching until power cycle or as recoverable, by documented rationale. During and after any reset the outputs shall be in SS-S until a valid safety mode is set. | B‡ | FSR-01.09, FSR-07.03 | P-SW, P-HW | FR | react ≤ 0.1 s | R, FI | **Not implemented.** Faults are report-only (`sys/faults.h:8-27`); `PERMANENT_FAULTS 0U` (`sys/sys.h:50`); only relay malfunction blocks TX (GAP-08). Start state SILENT (`main.c:295`). A hang (default handlers, `assert_fatal`, no IWDG) leaves the relay in its last state (GAP-43). HWSR-502…502c |
 | TSR-503 | Memory faults that can corrupt actuation decisions shall be detected: RAM ECC with double-error reaction, flash image CRC at start-up and periodically, and periodic check of safety-critical configuration registers, each leading to TSR-502. | B‡ | FSR-01.09 | P-HW (cfg), P-SW | ST, PLB | ≤ 0.2 s for RAM/register faults; flash: start-up + background | R, FI | Partial: register divergence check at 1 Hz, report-only (`drivers/registers.h:56-70`, `main.c:228-229`); no ECC handling, no runtime CRC (GAP-08). HWSR-503…503d |
 | TSR-504 | Loss or drift of the MCU clock that would invalidate timing checks or CAN bit timing shall be detected and lead to TSR-502. | B‡ | FSR-01.09 | P-HW (cfg), P-SW | PLB | ≤ 0.2 s | FI | Partial: HSE clock security system per WP-H-01 HWSR-504; no frequency cross-check |
@@ -163,7 +163,7 @@ Numbering is aligned with the provisional TSR parents in [WP-H-01](../04-hardwar
 | TSR-513 | In release builds, control requests that can change actuation, relay, CAN configuration or comms state shall be rejected while a car safety mode is active: at least `0xc5` (relay drive), `0xe5` (CAN loopback), `0xde`/`0xf9`/`0xfc`/`0xe8` (bit rate and CAN-FD configuration), `0xdb` (OBD multiplexing), `0xe6` (clock source), `0xe7` (power save; in car mode it stops camera-side forwarding with the relay energised, SG-07, WP-A-04 SPF-08), `0xf1` (queue clear), `0xd1` param 1 (softloader entry, see also TSR-511), `0xd8` (MCU reset without fault reporting), `0xdf` (alternative experience, see TSR-512). Also `0xc0` (comms reset), `0xb0`/`0xb1` and `0xf6` (to be confirmed per WP-W-02 OI-5). | B‡ | FSR-01.10 | P-SW | CFG | per request | R, T-HIL | **Not met:** none of these is gated by mode or `ALLOW_DEBUG` (`main_comms.h:144-147, 218-221, 233-276, 296-314`) (GAP-09). `0xb5` and bootloader entry `0xd1/0` are already debug-only (`main_comms.h:92-98, 168-175`); `0xf8` is already refused in car modes (`main_comms.h:290-295`). `0xd1` param 1 and `0xd8` are accepted in release builds (`main_comms.h:176-180, 215-216`); `0xdf` is refused only while a car mode is active (`main_comms.h:242-247`). `0xe7` effect: CAN interrupts and transceivers disabled (`sys/power_saving.h:23-54`) while the relay stays driven (`main.c:71`) — GAP-49 |
 | TSR-514 | Release firmware shall be built without `ALLOW_DEBUG`, with the LionDriver release key, and shall not contain the ALLOUTPUT mode, debug-only safety modes or debug-key acceptance; the build type shall be readable through the version request and recorded in the release record. | B‡ (+ CS) | FSR-01.10 | P-SW (build) | CFG | — | R | Not met by default: DEBUG + `ALLOW_DEBUG` unless `RELEASE` and `CERT` are set (`panda/SConscript:12-20`); debug modes `safety.h:413-422`; debug key `bootstub.c:66-71` (GAP-25) |
 | TSR-515 | At every power-up, before the relay is first driven, the safety MCU shall run start-up tests of its safety mechanisms (flash CRC, RAM test of safety data regions, watchdog reset path at a defined interval, relay drive and readback, siren path) and stay in SS-S and report if any test fails. | B‡ | FSR-01.09, FSR-01.11, FSR-02.05 | P-SW, P-HW | ST | once per drive cycle | T-HIL, FI | Not implemented (latent-fault handling absent) |
-| TSR-516 | If the SoC heartbeat is lost (TSR-407) or the envelope revokes authority for an RX or platform fault while authority was granted within the last 5 s, the safety MCU shall sound its own acoustic warning within ≤ 0.5 s of detection, without depending on SoC software. | B | FSR-02.05, FSR-06.05 | P-SW, P-HW | WRN | ≤ 0.5 s after detection | T-HIL | Partial: siren for 3 s after 5 s heartbeat loss (`main.c:169-171, 198-201`); siren path via codec over I2C on some boards, malfunction reported only (`drivers/fake_siren.h:38-52`); shared speaker with SoC audio to be analysed in DFA ([WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md)) |
+| TSR-516 | The safety MCU shall sound its own acoustic warning within ≤ 0.5 s of detection, without depending on SoC software, when (a) the SoC heartbeat is lost (TSR-407) while authority was granted within the last 5 s; (b) the envelope revokes authority while it is granted for any reason other than a driver action that the envelope itself observes (brake press, TSR-302; PCM cruise inactive, TSR-301), that is on an RX fault (TSR-406), an EPS fault state (TSR-110), a rejected command (TSR-108), a car-side TX failure or bus-off (TSR-508), a platform fault (TSR-502) or a heartbeat "not engaged" (TSR-307(a)); or (c) PCM cruise is still active more than 0.5 s after the SoC heartbeat first reported "not engaged" (a fault-induced disengagement whose ACC cancel, TSR-303, had no effect). | B | FSR-02.05, FSR-06.05 | P-SW, P-HW | WRN | ≤ 0.5 s after detection | T-HIL | Partial: siren for 3 s after 5 s heartbeat loss (`main.c:169-171, 198-201`); siren path via codec over I2C on some boards, malfunction reported only (`drivers/fake_siren.h:38-52`); shared speaker with SoC audio to be analysed in DFA ([WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md)) |
 | TSR-517 | Corruption of an approved actuation frame after the TX hook (copy into FDCAN message RAM, message RAM, FDCAN core, transceiver) shall be detected, e.g. by reading back the safety MCU's own transmitted frames on the car-side bus and comparing them with the approved frame, and a mismatch shall lead to TSR-502. | B‡ | FSR-01.09 | P-SW, P-HW | PLB | ≤ 2 frames / react per TSR-502 | A, FI | **Not implemented.** Packet XOR checked before the FDCAN load only (`drivers/fdcan.h:100`); no read-back after load (WP-A-04 SPF-02, SFMEA-17) |
 | TSR-518 | The envelope shall supervise the transmit rate of each actuation message ID (`0x2E4`, `0x343`, `0x412`, and any other TX-whitelisted ID) against its nominal period and reject frames sent faster than the nominal rate plus a defined tolerance; persistent excess while authority is granted shall revoke authority and be reported. | B‡ | FSR-01.08, FSR-01.12 | P-SW | TMO | per frame; revoke ≤ 0.1 s | T-SIL, T-HIL | **Not implemented:** the TX hook checks content only; no per-ID TX rate check (`opendbc_repo/opendbc/safety/modes/toyota.h` TX hook; RX rate is TSR-403) |
 | TSR-519 | The safety MCU shall have a documented interrupt-priority and execution-timing scheme: priorities assigned explicitly for every enabled interrupt; safety hooks, CAN TX and SoC command dispatch either moved out of interrupt context or bounded by measured WCET; and the worst-case latency of the periodic safety processing (timeouts, heartbeat, watchdog service) shown to meet the TSR-401/407/501 budgets under worst-case interrupt load. | B‡ | FSR-01.09, FSR-01.07 | P-SW, P-HW (cfg) | ISO | analysis; WCET measured on target | A, T-HIL | **Not implemented:** no `NVIC_SetPriority` outside the CMSIS header (all IRQs at priority 0); RX hook in the FDCAN interrupt (`drivers/fdcan.h:221, 245-252`); TX hook and control-request dispatch in the SPI DMA interrupt (`stm32h7/llspi.h:56-60`, `drivers/spi.h:143, 162`, `can_comms.h:97, 118`) (GAP-50) |
@@ -199,6 +199,8 @@ All TSR-6xx are allocated to the QM SoC. Those marked QM (B-sup) support an ASIL
 | TSR-623 | Alert sound output shall not be muted or set below a defined audible minimum while the item can engage; if the minimum cannot be guaranteed, engagement shall be prevented with a no-entry alert. | QM (B-sup: TSR-516) | FSR-02.11 | SoC (HMI) | CFG | — | R, T-SIL | Not assessed at the baseline (WP-C-08 MC-12) |
 | TSR-624 | The SoC shall command deceleration that is not caused by traffic (driver-monitoring no-response, fault-induced force deceleration) only after a visual and acoustic alert announcing it has been given, and shall ramp the request within the envelope bounds a_min (TSR-202) and j_down (TSR-205). | QM (B-sup: TSR-202, TSR-205) | FSR-04.05 | SoC | WRN | alert ≥ 1 s before decel onset (proposed) | T-SIL, T-VEH | Partial: DM escalation alerts precede the no-response deceleration (`selfdrive/monitoring/policy.py`); soft-disable force deceleration is announced at its start (`selfdrive/controls/lib/longitudinal_planner.py:84-85`); jerk not bounded (GAP-04) |
 | TSR-625 | Forward collision warnings shall be raised only from fresh and valid inputs (`modelV2` and `longitudinalPlan` within 2 nominal periods, validity flags set), and the false-FCW rate per driving hour in the ODD shall meet a target set in [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md). | A (open: WP-C-04 OI-9; allocated to the QM SoC) | FSR-04.06 | SoC | PLB | ≤ 2 periods | T-SIL, LOG | Partial: model FCW from `hardBrakePredicted` and planner FCW (`selfdrive/selfdrived/selfdrived.py:440-445`); no explicit freshness gate on FCW inputs; no false-rate target |
+| TSR-626 | While engaged, the SoC shall detect that the envelope does not actuate from evidence other than the envelope's own status report: (a) `pandaStates` older than 2 nominal periods (0.2 s) is treated as a controls mismatch (TSR-621); (b) with lateral control active, the EPS-applied torque (STEER_TORQUE_EPS in `0x260`) not following a commanded torque above a threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration not following the requested acceleration beyond a tolerance for longer than t_blk. Each leads to immediate disable with a take-over request. Threshold, tolerance and t_blk (≤ 0.5 s) shall be set from fork-owned drive logs so that no false detection occurs in the reference log set. | QM (B-sup: TSR-516) | FSR-02.10 | SoC | PLB | (a) 0.2 s; (b), (c) ≤ t_blk ≤ 0.5 s | LOG, T-SIL, FI | Not implemented. (a): `pandaStates` alive limit is 1 s (WP-S-03 §9). The vehicle-side signals come through the panda RX stream, which is separate from the health report but not independent of the MCU ([WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md) DFI-24) |
+| TSR-627 | The alert sound path (`soundd`) shall run with a real-time scheduling priority not lower than that of `ui`, or a worst-case load test (maximum logging, encoding and upload) shall show that alert sound output starts within the TSR-606 budget. | QM (B-sup: TSR-516) | FSR-02.11, FSR-02.03 | SoC (HMI) | TMO | within TSR-606 | T-SIL (load), T-HIL | Not met: `soundd` sets no real-time priority (`openpilot/selfdrive/ui/soundd.py`); `ui` runs at `Priority.CTRL_HIGH` (`openpilot/selfdrive/ui/ui.py:19`). [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) FFI-CM-17 |
 
 ## 9. TSR-7xx Stock PCS preservation and harness (SG-07, SG-01)
 
@@ -214,6 +216,7 @@ All TSR-6xx are allocated to the QM SoC. Those marked QM (B-sup) support an ASIL
 | TSR-708 | PCS/AEB braking shall have priority over `0x343` requests in the PCM, and PCS shall work with the harness installed. (External measure.) | ext | FSR-07.04 | EXT | EXTM | — | T-VEH | Unverified (AOU-04R) |
 | TSR-709 | The SoC shall inform the driver when the stock system reports an AEB or FCW event. | QM | FSR-07.05 | SoC | WRN | ≤ 0.2 s | T-SIL | Implemented: `stockAeb`, `stockFcw` (`selfdrive/car/car_events.py:120-123`) |
 | TSR-710 | The envelope shall detect a relay malfunction (any `check_relay` control message seen on the car side after the relay transition window) and inhibit all actuation TX and forwarding. | B‡ | FSR-01.11 | P-SW | PLB, FR | detect: first offending frame after ≤ 1–2 s window / same frame | T-SIL, T-HIL | Implemented: `safety.h:211-220, 252, 268, 372-380`; reported `main.c:122-129`; host immediate disable `selfdrive/selfdrived/selfdrived.py:341-342`. Latching and readback per TSR-506 |
+| TSR-711 | While the relay intercepts, the envelope shall supervise forwarding from the camera side to the car side and release the relay (TSR-706) when forwarding has stopped: no camera-side frame received or none forwarded for longer than t_fwd while the camera-side bus was active before, camera-side bus-off or error-passive, or forwarding queue overflow. t_fwd shall be set from the measured camera-side message periods so that detection stays within the SG-07 FDTI of ≤ 0.1 s. | B | FSR-07.01, FSR-07.03 | P-SW | TMO, FR | detect ≤ 0.1 s / release ≤ 0.1 s (SG-07, WP-S-04 §3.6) | T-HIL, FI | Not implemented: queue overflow is counted only (`drivers/can_common.h:165`); no supervision of camera-side reception releases the relay (WP-A-04 SPF-13, SFMEA-39) |
 
 ## 10. TSR-8xx Production, operation, service and decommissioning
 
@@ -278,7 +281,7 @@ These are code facts found while writing the TSRs. They are registered in the [g
 | TSR-208 | FSR-03.06, 04.03 | SG-03, SG-04 |
 | TSR-301 | FSR-01.05, 05.02 | SG-01, SG-03, SG-04, SG-05 |
 | TSR-302 | FSR-05.01 | SG-05 |
-| TSR-303 | FSR-03.05 | SG-03 |
+| TSR-303 | FSR-03.05, 02.03, 06.02 | SG-03, SG-02, SG-06 |
 | TSR-304 | FSR-05.03 | SG-05, SG-01 |
 | TSR-305 | FSR-04.04, 05.04 | SG-04, SG-05 |
 | TSR-306 | FSR-01.05, 01.06 | SG-01, SG-03, SG-04 |
@@ -317,12 +320,15 @@ These are code facts found while writing the TSRs. They are registered in the [g
 | TSR-622, 623 | FSR-02.11 | SG-02, SG-06 |
 | TSR-624 | FSR-04.05 | SG-04 |
 | TSR-625 | FSR-04.06 | SG-04 |
+| TSR-626 | FSR-02.10 | SG-02, SG-06 |
+| TSR-627 | FSR-02.11, 02.03 | SG-02, SG-06 |
 | TSR-701, 702, 703, 706 | FSR-07.03 | SG-07 |
 | TSR-704, 707 | FSR-07.01 | SG-07 |
 | TSR-705 | FSR-07.02 | SG-07 |
 | TSR-708 | FSR-07.04 | SG-07 |
 | TSR-709 | FSR-07.05 | SG-07 |
 | TSR-710 | FSR-01.11 | SG-01, SG-07 |
+| TSR-711 | FSR-07.01, 07.03 | SG-07 |
 | TSR-801…818 | ISO 26262-4 §6 requirements for production/operation; AoUs as listed in §10 | all |
 
 ### 12.2 FSR coverage check (FSR → TSR)
@@ -345,15 +351,15 @@ These are code facts found while writing the TSRs. They are registered in the [g
 | FSR-01.14 | 605, 613, 617 | FSR-05.04 | 203, 305 |
 | FSR-02.01 | 110, 607 | FSR-05.05 | 309 |
 | FSR-02.02 | 601, 602, 603, 616 | FSR-05.06 | 307, 308 |
-| FSR-02.03 | 606, 615 | FSR-05.07 | 310 |
+| FSR-02.03 | 606, 615, 303, 627 | FSR-05.07 | 310 |
 | FSR-02.04 | 109, 601 | FSR-06.01 | 602, 603, 616 |
-| FSR-02.05 | 516, 515 | FSR-06.02 | 601, 606 |
+| FSR-02.05 | 516, 515 | FSR-06.02 | 601, 606, 303 |
 | FSR-02.06 | 608 | FSR-06.03 | 618 |
 | FSR-02.07 | 609, 612 | FSR-06.04 | 604, 617 |
 | FSR-02.08 | 610, 613 | FSR-06.05 | 516, 608–611 |
-| FSR-02.09 | 611 | FSR-07.01 | 704, 707 |
+| FSR-02.09 | 611 | FSR-07.01 | 704, 707, 711 |
 | | | FSR-07.02 | 705 |
-| | | FSR-07.03 | 502, 506, 510, 701, 702, 703, 706 |
+| | | FSR-07.03 | 502, 506, 510, 701, 702, 703, 706, 711 |
 | | | FSR-07.04 | 708 |
 | | | FSR-07.05 | 709 |
 
@@ -361,8 +367,8 @@ FSRs added in WP-C-04 v0.2:
 
 | FSR | TSRs |
 |---|---|
-| FSR-02.10 | 621 (backstop 108, 516) |
-| FSR-02.11 | 622, 623 (backstop 516) |
+| FSR-02.10 | 621, 626 (backstop 108, 516) |
+| FSR-02.11 | 622, 623, 627 (backstop 516) |
 | FSR-04.05 | 624 (backstop 202, 205) |
 | FSR-04.06 | 625 |
 
@@ -381,7 +387,7 @@ Every FSR has at least one TSR. Machine-readable entries go to [`trace/`](../tra
 | 6 | TSR-102, 204, 205 | Speed-dependent torque limit; jerk limits | GAP-04 |
 | 7 | TSR-403…405 | RX plausibility for counter-less messages | GAP-01 |
 | 8 | TSR-410…412 | SPI CRC, sequence counter, bounds checks | GAP-10, NF-04 |
-| 9 | TSR-705, 706 | Remove PCS/DSU messages from the TX whitelist; relay released on MCU hang | GAP-42, GAP-43, NF-07 |
+| 9 | TSR-705, 706, 711 | Remove PCS/DSU messages from the TX whitelist; relay released on MCU hang; forwarding supervision with relay release | GAP-42, GAP-43, NF-07 |
 | 10 | TSR-601…603 | Fault classification, freshness, no masking | GAP-16, GAP-17 |
 
 ## 13. Open items

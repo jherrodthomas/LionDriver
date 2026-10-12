@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-03 Dependent failure analysis (DFA), system level |
 | Standard reference | ISO 26262-9:2018 §7 (analysis of dependent failures); ISO 26262-9 §5 (independence for decomposition, by reference); ISO 26262-5:2018 §7 (hardware DFA input); ISO 26262-6:2018 §7 (software-level DFA input, detailed in [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md)) |
-| Version | 0.2 (§4.6 initiators from the FSC v0.2 completeness check, DFI-24…DFI-26, 2026-10-12) |
+| Version | 0.3 (DFI-24 measure TSR-626; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | SG-01 (ASIL C ⚠) and SG-02…SG-07 (ASIL B). Elements: E-03 envelope, E-01/E-02 SoC stack, E-04 device hardware, E-05 harness, EXT-EPS, EXT-PCM, EXT-CLU, driver |
 | Author | Assurance team (initial draft) |
@@ -107,7 +107,7 @@ The fsc-builder completeness check of [WP-C-04](../02-concept/WP-C-04-functional
 
 | ID | Initiator | Coupling factor | Elements reached | Effect | Existing measures | Eval | Required measure |
 |---|---|---|---|---|---|---|---|
-| DFI-24 | **Envelope-blocking detection uses the envelope's own report.** The SoC learns that the envelope does not grant authority from `pandaStates.controlsAllowed`, which `pandad` publishes from the panda health packet (FSR-02.10, TSR-621). A panda or SPI fault that blocks actuation and also freezes or misreports the health data leaves the SoC engaged and silent | Shared information input (the faulty element reports on itself) | E-03, E-01 HMI (IC-01, IC-06) | Lateral or longitudinal control lost while the SoC shows engaged, with no take-over request (SG-02, SG-06; HE-02.4) | `pandaStates` alive limit 1 s (WP-S-03 §9) → `commIssue`; `controlsMismatch` after ≈2 s (`selfdrive/selfdrived/selfdrived.py:338, 508-510`) | **P** | Treat stale or missing `pandaStates` as a mismatch within the TSR-621 budget; also detect blocking from vehicle-side evidence that does not come from the panda's own report (EPS-applied torque or actual acceleration not following the command while engaged). No TSR covers the vehicle-response check (OI-8) |
+| DFI-24 | **Envelope-blocking detection uses the envelope's own report.** The SoC learns that the envelope does not grant authority from `pandaStates.controlsAllowed`, which `pandad` publishes from the panda health packet (FSR-02.10, TSR-621). A panda or SPI fault that blocks actuation and also freezes or misreports the health data leaves the SoC engaged and silent | Shared information input (the faulty element reports on itself) | E-03, E-01 HMI (IC-01, IC-06) | Lateral or longitudinal control lost while the SoC shows engaged, with no take-over request (SG-02, SG-06; HE-02.4) | `pandaStates` alive limit 1 s (WP-S-03 §9) → `commIssue`; `controlsMismatch` after ≈2 s (`selfdrive/selfdrived/selfdrived.py:338, 508-510`) | **P** | Treat stale or missing `pandaStates` as a mismatch within the TSR-621 budget; also detect blocking from vehicle-side evidence that does not come from the panda's own report (EPS-applied torque or actual acceleration not following the command while engaged). Vehicle-response check: TSR-626 (WP-S-02 v0.3) |
 | DFI-25 | **HMI hang removes warnings while actuation continues.** Unlike DFI-14 (SoC crash), a hung UI render loop or stalled audio stream leaves `controlsd` and the panda heartbeat running, so the envelope keeps authority and the siren does not sound | Shared resource (SoC scheduler, GPU, audio stack) | E-01 HMI vs E-01 control and E-03 siren (IC-06) | Take-over requests and announced decelerations are not perceived (SG-02, SG-06; H-07; FSR-02.11, FSR-04.05) | `processNotRunning` on a crashed `ui`/`soundd` only (`selfdrive/selfdrived/selfdrived.py:351-357`) | **N** | HMI liveness heartbeats with immediate disable and siren take-over (TSR-622, TSR-516); audible minimum (TSR-623); cluster cruise state as independent cue (TSR-309, AOU-12) |
 | DFI-26 | **FCW and longitudinal planning share the lead input.** A false lead (model or radar) raises a false FCW, which can trigger reflex braking, and makes the planner brake at the same time | Shared information input | E-01 FCW, E-01 planner, driver (IC-03) | Driver braking and item deceleration add up with a close follower (SG-04; HE-04.5) | Envelope deceleration bound −3.5 m/s² (SM-07); no jerk bound (GAP-04) | **P** | Deceleration and jerk bounds in the envelope, independent of the planner (TSR-202, TSR-205); FCW input freshness and false-rate target (TSR-625); false-positive lead validation under ISO 21448 ([WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md)) |
 
@@ -141,7 +141,7 @@ The fsc-builder completeness check of [WP-C-04](../02-concept/WP-C-04-functional
 | Tool qualification; HIL target tests | DFI-17 | — (WP-P-07, WP-S-08) |
 | External independent review | DFI-19 | — (WP-M-06) |
 | Installation check, ECU FW verification | DFI-20, -22 | TSR-803, TSR-805, TSR-808, TSR-620 |
-| Envelope-blocking detection not only from the envelope's own report | DFI-24 | TSR-621 (partly); vehicle-response check: none (OI-8) |
+| Envelope-blocking detection not only from the envelope's own report | DFI-24 | TSR-621, TSR-626 |
 | HMI liveness supervision, audible minimum, independent cues | DFI-25 | TSR-622, TSR-623, TSR-516, TSR-309 |
 | Deceleration and jerk bounds independent of the planner; FCW input validity | DFI-26 | TSR-202, TSR-205, TSR-625 |
 
@@ -168,4 +168,4 @@ The fsc-builder completeness check of [WP-C-04](../02-concept/WP-C-04-functional
 | OI-5 | Repeat this DFA for IC-07 if DEC-01 is activated | Safety engineer | G2 (conditional) |
 | OI-6 | Hand the on-die STM32H7 common-cause items (shared RAM, flash, clock tree, supply domain) to WP-H-03 | HW lead | G3 |
 | OI-7 | Report to the WP-S-02 author: no TSR makes the envelope refuse engagement when the vehicle ECU firmware differs from the verified record (DFI-22); TSR-803 is a procedural check only. **Partly closed:** TSR-620 (WP-S-02) now prevents engagement on an unverified ECU firmware set, allocated to the QM SoC with B-sup from TSR-512 | Safety engineer | G2 |
-| OI-8 | Report to the WP-S-02 author: no TSR detects envelope blocking from vehicle-side evidence independent of the panda's own report (DFI-24) | Safety engineer | G2 |
+| OI-8 | ~~Report to the WP-S-02 author: no TSR detects envelope blocking from vehicle-side evidence independent of the panda's own report (DFI-24)~~ **Closed:** TSR-626 (WP-S-02 v0.3) | Safety engineer | G2 |

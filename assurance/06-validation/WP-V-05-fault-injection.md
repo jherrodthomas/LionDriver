@@ -56,8 +56,8 @@ Rules:
 | SG-02, SG-06 | ≤ 1 s to warning | Panda siren ≤ 0.5 s after detection; SoC take-over request ≤ 1 s | TSR-516, TSR-606 |
 | SG-03, SG-04 | ≤ 1 s | Detection ≤ 0.5 s, reaction ≤ 0.3 s | WP-C-04 §8 |
 | SG-05 | ≤ 0.2 s | One brake message period + one frame | TSR-302 |
-| SG-07 | Continuous | Relay to stock path ≤ 0.1 s after fault reaction | TSR-706 |
-| MCU execution faults | ≤ 0.5 s (SG-01) | Detection ≤ 0.2 s (watchdog), reaction ≤ 0.1 s | TSR-501, TSR-502 |
+| SG-07 | ≤ 0.2 s (forwarding loss, preliminary) | Detect ≤ 0.1 s (TSR-711, TSR-501), relay to stock path ≤ 0.1 s (TSR-706) | TSR-501, TSR-706, TSR-711 |
+| MCU execution faults | ≤ 0.5 s (SG-01); ≤ 0.2 s (SG-07 forwarding) | Detection ≤ 0.1 s (watchdog), reaction ≤ 0.1 s | TSR-501, TSR-502 |
 
 ## 5. Fault list and test specification
 

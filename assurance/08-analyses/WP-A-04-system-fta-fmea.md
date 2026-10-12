@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-04 System-level safety analyses (FTA, FMEA) |
 | Standard reference | ISO 26262-9:2018 §8 (safety analyses); ISO 26262-4:2018 §6 (safety analysis of the system architectural design, to support the TSC); ISO 21448:2022 §7 (input on insufficiencies, informative here); ASPICE 4.0 SYS.3 |
-| Version | 0.2 (fault trees for SG-02, SG-04, SG-05, SG-06, SG-07; FMEA rows for the WP-C-04 v0.2 FSRs; 2026-10-12) |
+| Version | 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Fault trees for all seven safety goals: SG-01 (ASIL C ⚠), SG-02…SG-07 (ASIL B); system FMEA covering SG-01…SG-07. Qualitative only |
 | Author | Assurance team (initial draft) |
@@ -19,7 +19,7 @@ This document provides the system-level deductive (FTA) and inductive (FMEA) saf
 - Qualitative only. Quantitative evaluation of random hardware failures belongs to [WP-H-04](../04-hardware/WP-H-04-hardware-metrics.md) and [WP-H-05](../04-hardware/WP-H-05-random-hardware-failures-pmhf.md).
 - Functional insufficiencies of the ML stack (SOTIF) appear as basic events labelled **[SOTIF]** so the trees are complete. They are evaluated in [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md), not here.
 - Dependent failures (common cause) are marked **[CCF → DFI-nn]** and refer to [WP-A-03](WP-A-03-dependent-failure-analysis.md). Interference from QM elements is marked **[FFI → id]** and refers to [WP-A-02](WP-A-02-coexistence-freedom-from-interference.md).
-- TSR references are to [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) (Draft v0.2); where no TSR covers a measure this is stated.
+- TSR references are to [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) (Draft v0.3); where no TSR covers a measure this is stated.
 - Basic events are reused across trees by ID (e.g. BE-1.13 in SG-03, SG-04 and SG-05). The fault trees use the block diagram of the FSC completeness check ([WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §14) as a check that every node is considered for every goal.
 
 Notation: `[OR]`, `[AND]` gates; `BE-` basic event; `UE-` undeveloped event (outside the item or analysed elsewhere); `(SPF)` marks an event that alone leads to the top event in the baseline design.
@@ -186,22 +186,23 @@ TE-02 Loss of lateral control without take-over request within ≤ 1 s          
     │   ├── BE-2.13 Alert volume not audible (no defined minimum; FFI-CM-18)
     │   └── BE-2.05 (the SoC crash that removes control also removes its warning)
     └── G2.2.2 SoC-independent cue missing or late                                      [OR]
-        ├── BE-2.14 Siren not triggered: it fires on heartbeat loss (after 5 s, for
-        │          3 s; main.c:193-205) and, per TSR-516, on envelope-detected RX or
-        │          platform faults; not on EPS faults or SoC-side input loss
+        ├── BE-2.14 Siren not triggered: at the baseline only on heartbeat loss (after
+        │          5 s, for 3 s; main.c:193-205). TSR-516 v0.3 adds every envelope
+        │          revocation that is not a driver action (incl. EPS fault, TSR-110)
+        │          and a fault-induced disengagement whose ACC cancel had no effect
         ├── BE-2.15 Siren silenced with the SoC audio (shared codec or amplifier,
         │          unknown topology)                                   [CCF → DFI-23]
-        └── BE-2.16 Cluster cruise indicator unchanged (lateral loss alone does not
-                   drop PCM cruise) or not independent (AOU-12)        [CCF → DFI-15]
+        └── BE-2.16 Cluster cruise indicator unchanged (no ACC cancel on the fault,
+                   TSR-303) or not independent (AOU-12)                [CCF → DFI-15]
 ```
 
 ### 4.1 SG-02 minimal cut sets (qualitative)
 
 | Cut set | Order | Events | Comment |
 |---|---|---|---|
-| MCS-02.1 | 2 (effective 1 + latent) | {BE-2.01, BE-2.08, BE-2.14} | BE-2.14 is permanently true for EPS faults, so an EPS fault plus the host hysteresis violates the ≤ 1 s budget. Removed by TSR-110 (envelope EPS monitor) plus a siren trigger on its revocation, and TSR-607 hysteresis within budget |
+| MCS-02.1 | 2 (effective 1 + latent at the baseline) | {BE-2.01, BE-2.08, BE-2.14} | At the baseline BE-2.14 is permanently true for EPS faults, so an EPS fault plus the host hysteresis violates the ≤ 1 s budget. With TSR-110 and TSR-516(b) the envelope revokes and sounds the siren, so the cut set becomes {BE-2.01, BE-2.08, siren failure}: dual |
 | MCS-02.2 | 2 | {BE-2.02, BE-2.09} | Envelope blocking with slow or self-reported detection. TSR-621; vehicle-response check has no TSR (WP-A-03 OI-8) |
-| MCS-02.3 | 2 (effective 1 + latent) | {BE-2.03, BE-2.10, BE-2.14} | Stale input with soft disable. TSR-601, TSR-602 |
+| MCS-02.3 | 2 (effective 1 + latent at the baseline) | {BE-2.03, BE-2.10, BE-2.14} | Stale input with soft disable. TSR-601, TSR-602. With TSR-303 the disengagement cancels ACC, so the cluster changes (BE-2.16 must also occur); a cancel without effect triggers the siren (TSR-516(c)) |
 | MCS-02.4 | 1 (effective) | {BE-2.04} | BE-2.11 is always true at the baseline: the loss is silent. TSR-604 (GAP-19) |
 | MCS-02.5 | 1 (effective) | {BE-2.05} | One cause removes control and the SoC warning; the siren comes after 5 s. TSR-407, TSR-516 timing |
 | MCS-02.6 | 2 | {any G2.1 event, BE-2.12 or BE-2.13} | HMI hang or mute. TSR-622, TSR-623 |
@@ -350,7 +351,7 @@ TE-06 Loss of longitudinal deceleration without take-over request               
 
 ## 8. FTA — SG-07: suppression, delay or alteration of the stock PCS/AEB
 
-Top event **TE-07**: a stock PCS or AEB intervention of the Toyota system is prevented, delayed or altered because of the item. SG-07 has no numeric FTTI ("Continuous", WP-C-04 §3). The tree therefore treats any loss of the camera-to-car path while the relay intercepts as the top event, and Obs-03 records the missing time budget.
+Top event **TE-07**: a stock PCS or AEB intervention of the Toyota system is prevented, delayed or altered because of the item. The preliminary FTTI for loss of forwarding is 0.2 s ([WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) §3.6), and content alteration is a per-frame property. The tree treats any loss of the camera-to-car path while the relay intercepts, for longer than the FTTI, as the top event.
 
 ```
 TE-07 Stock PCS/AEB suppressed, delayed or altered                                     [OR]
@@ -389,7 +390,7 @@ TE-07 Stock PCS/AEB suppressed, delayed or altered                              
 | MCS-07.3 | 1 | {BE-7.03} | As MCS-07.2 |
 | MCS-07.4 | 1 | {BE-7.04} | Needs the forwarding timing analysis and overflow reaction (TSR-707) |
 | MCS-07.5 | 1 | {BE-7.05} | Systematic; verified by T-HIL of the forwarding set (TSR-704) |
-| MCS-07.6 | 1 | {BE-7.06} | Random single point; no forwarding supervision with relay release (SPF-13) |
+| MCS-07.6 | 1 | {BE-7.06} | Random single point at the baseline; forwarding supervision with relay release (TSR-711) makes it dual with the supervision |
 | MCS-07.7 | 1 (effective) | {BE-7.08} | BE-7.07 is a permanent latent condition at the baseline. TSR-705 |
 | MCS-07.8 | 2 | {BE-7.09, BE-7.10} | TSR-506 readback |
 | MCS-07.9 | 1 | {BE-7.11} | Installation and harness design (TSR-701, TSR-703, TSR-805) |
@@ -407,14 +408,14 @@ TE-07 Stock PCS/AEB suppressed, delayed or altered                              
 | SPF-06 | **MCU hang leaves the relay energised** (GAP-43) with no hardware watchdog. Torque stops (EPS timeout, AOU-01R), but the stock PCS path stays cut if forwarding stops | SG-07 (and SG-02 without warning) | Random HW | IWDG (TSR-501); fault reaction (TSR-502); relay to stock path on fault/reset (TSR-706) | GAP-07, GAP-43 |
 | SPF-07 | **Relay welded in intercept position** is not detected (no readback) | SG-07 | Random HW | Relay readback (TSR-506) | GAP-12 |
 | SPF-08 | **QM command `0xe7` (power save) in car mode** stops camera-side forwarding with the relay energised (by code reading, WP-A-02 FFI-CM-08) | SG-07 | FFI | Reject in car modes | TSR-513; WP-S-02 NF-05 |
-| SPF-09 | **SG-02/SG-06 warnings for SoC-detected faults rest on the QM SoC alone.** The siren (TSR-516) fires on heartbeat loss and on envelope-detected RX or platform faults. TSR-516 does not say whether a revocation on an EPS fault (TSR-110) or on a SoC-reported mismatch triggers it, and SoC-side input loss never does. The cluster does not change for a lateral loss | SG-02, SG-06 | Common cause / design | Siren on every envelope revocation while engaged, including TSR-110; keep the SoC warning within budget (TSR-601, TSR-606, TSR-607) | TSR-516 trigger set to be clarified (OI-7) |
+| SPF-09 | **SG-02/SG-06 warnings for SoC-detected faults rested on the QM SoC alone.** At v0.2 TSR-516 named only heartbeat loss and envelope-detected RX or platform faults. **Addressed at requirement level in WP-S-02 v0.3:** TSR-516(b) sounds the siren on every envelope revocation that is not a driver action, including an EPS fault (TSR-110); TSR-303 makes every fault-induced disengagement cancel ACC, so the cluster cruise state changes; TSR-516(c) sounds the siren when that cancel has no effect. Not implemented; the cluster cue rests on AOU-12 | SG-02, SG-06 | Common cause / design | As stated; vehicle check of the cluster and PCM cues on a forced cancel (AOU-12) | TSR-516, TSR-303 (OI-7 closed) |
 | SPF-10 | **Non-finite actuator command is replaced by 0 silently** | SG-02, SG-06 | Systematic (design) | Treat as a fault with take-over request | TSR-604; GAP-19 |
 | SPF-11 | **SoC crash removes control and the SoC warning together**; the independent siren comes after 5 s | SG-02, SG-06 | Common cause (DFI-14) | Heartbeat timeout and siren within the warning budget | TSR-407, TSR-516; GAP-06 |
 | SPF-12 | **No driver steering override check in the envelope** on the LKA path; release rests on the QM host check and the EPS (AOU-02R) | SG-05 | Design | Driver-override check and torque reduction in the envelope | TSR-304; GAP-02 |
-| SPF-13 | **Camera-to-car forwarding is single-channel with no supervision that releases the relay.** An MCU hang, a camera-side bus fault, a QM configuration command or queue overflow stops PCS forwarding while the relay intercepts | SG-07 | Random HW / FFI | IWDG and relay release on fault; reject configuration commands in car modes; forwarding supervision with relay release | TSR-501, TSR-502, TSR-513, TSR-706, TSR-707 |
+| SPF-13 | **Camera-to-car forwarding is single-channel with no supervision that releases the relay.** An MCU hang, a camera-side bus fault, a QM configuration command or queue overflow stops PCS forwarding while the relay intercepts | SG-07 | Random HW / FFI | IWDG (≤ 0.1 s) and relay release on fault; reject configuration commands in car modes; forwarding supervision with relay release within the SG-07 budget | TSR-501, TSR-502, TSR-513, TSR-706, TSR-707, TSR-711 (added in WP-S-02 v0.3) |
 | Obs-01 | MCS-01.6 is the only truly dual-point cut set that the envelope pattern intends. It stays dual only if MCU faults (BE-1.07) are detected; today there is no IWDG, MPU or ECC reaction, so latent MCU faults can accumulate | SG-01 | Latent | Latent-fault diagnostics at start-up and run time | TSR-501, TSR-503, TSR-507 |
 | Obs-02 | Every SG-01, SG-03 and SG-04 path ends in an EPS or PCM AND-input (UE-1.11, UE-3.05, UE-4.04). These are unverified AoUs. The trees must not be read as "dual" until AOU-01R/AOU-05R are verified | SG-01, SG-03, SG-04 | AoU | Vehicle characterisation (WP-S-09) | GAP-05 |
-| Obs-03 | SG-07 has no numeric FTTI. The forwarding latency (TSR-707, ≤ 1 ms TBD) and the relay release time (TSR-706, ≤ 0.1 s after the fault reaction) cannot be checked against a goal-level budget | SG-07 | Timing | Derive the SG-07 FTTI from the PCS intervention timing ([WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md)) | RR-2026-004 F-04 |
+| Obs-03 | SG-07 had no numeric FTTI. [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) v0.2 §3.6 sets a preliminary 0.2 s for loss of forwarding (FDTI ≤ 0.1 s, FRTI ≤ 0.1 s, zero margin), which tightened the watchdog timeout (TSR-501) to ≤ 0.1 s and added forwarding supervision (TSR-711) | SG-07 | Timing | Measure the PCS timing and confirm the FTTI (WP-S-04 OI-4, OI-7) | RR-2026-004 F-04; RR-2026-005 F-02 |
 | Obs-04 | Many SG-02 and SG-06 cut sets are order 2 in form but contain a condition that is always true at the baseline (BE-2.14, BE-2.11). They are marked "effective 1 + latent": removing the latent condition is what makes them dual | SG-02, SG-06 | Latent | As SPF-09, SPF-10 | — |
 
 ## 10. System FMEA
@@ -484,5 +485,5 @@ Severity of the vehicle effect is expressed by the affected SG. Detection = mech
 | OI-4 | Confirm whether STM32H7 FDCAN message RAM has ECC and whether it is enabled (SPF-02) | HW lead | G2 |
 | OI-5 | Confirm by HIL test that an MCU hang leaves the relay energised (SPF-06) and that `0xe7` stops forwarding (SPF-08) | Test lead | G4 |
 | OI-6 | ~~Report to the WP-S-02 author: no TSR covers frame integrity between `safety_tx_hook` and the bus (SPF-02)~~ **Closed:** TSR-517 | Safety engineer | G2 |
-| OI-7 | Report to the WP-S-02 author: TSR-516 should name its triggers so that every envelope revocation while engaged, including an EPS-fault revocation (TSR-110), sounds the siren (SPF-09) | Safety engineer | G2 |
+| OI-7 | ~~Report to the WP-S-02 author: TSR-516 should name its triggers so that every envelope revocation while engaged, including an EPS-fault revocation (TSR-110), sounds the siren (SPF-09)~~ **Closed:** WP-S-02 v0.3 TSR-516(a)…(c), TSR-303 | Safety engineer | G2 |
 | OI-8 | Confirm by HIL test that a camera-side bus fault stops forwarding with the relay energised (SFMEA-39) | Test lead | G4 |

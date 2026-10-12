@@ -101,7 +101,7 @@ Paths are under `panda/board/` unless prefixed otherwise. `safety.h` is
 |---|---|---|---|---|---|---|---|
 | HWSR-501 | The safety MCU shall be supervised by a watchdog whose clock source and counter are independent of the CPU core clock tree and of the software it supervises, and whose expiry forces an MCU reset. | B‡ | FSR-01.09 / TSR-501 | STM32H7 IWDG1 | CFG | R, T-HIL, FI | **Not implemented.** `IND_WDG` defined as `IWDG1` (`stm32h7/stm32h7_config.h:43`) and never used. The only watchdog is a software timestamp check called from the 8 Hz tick ISR it is meant to supervise (`drivers/simple_watchdog.h:7-17`, `main.c:119, 301`) and only raises a report-only fault (GAP-07) |
 | HWSR-501a | The watchdog shall be serviced only from a point that proves completion of the safety-relevant periodic processing (tick handler and RX/TX safety checks), not from an ISR that keeps running when the main processing has stalled. | B‡ | FSR-01.09 / TSR-501 | Firmware + IWDG | CFG | R, FI | Not implemented (GAP-07) |
-| HWSR-501b | The watchdog shall operate in window mode, so that servicing too early (runaway loop) is detected as well as servicing too late. Window and timeout shall be chosen so that detection plus reset completes within the MCU-execution-fault detection budget (≤ 0.2 s, FSC §8). | B‡ | FSR-01.09 / TSR-501 | IWDG1 window register | CFG | A, T-HIL | Not implemented. STM32H7 IWDG has a window register (verify against RM0468) |
+| HWSR-501b | The watchdog shall operate in window mode, so that servicing too early (runaway loop) is detected as well as servicing too late. Window and timeout shall be chosen so that detection plus reset completes within the MCU-execution-fault detection budget (≤ 0.1 s, set by the SG-07 FDTI, WP-S-04 §3.6). | B‡ | FSR-01.09 / TSR-501 | IWDG1 window register | CFG | A, T-HIL | Not implemented. STM32H7 IWDG has a window register (verify against RM0468) |
 | HWSR-501c | The watchdog shall be started by the bootstub (or by option byte hardware-start, if chosen) before the application runs and shall stay active in all modes in which the relay can be driven; it shall not be stoppable by the SoC. | B‡ | FSR-01.09, FSR-01.10 / TSR-501 | IWDG option bytes (IWDG_SW, freeze in stop/standby) | CFG | R, T-HIL | Not implemented. Interaction with stop mode (`main.c:353-356`, `sys/power_saving.h`) must be analysed: freezing IWDG in stop mode is acceptable only when the relay is released and TX is off |
 | HWSR-501d | An independent external supervisor (voltage supervisor with watchdog input, on its own clock) that can force the relay to its released state, independent of the MCU, should be added. | B‡ (if (a)/(b)); recommendation at B | FSR-01.09, FSR-07.03 / TSR-501 | External | ADD | A, T-HIL | Not present on the COTS PCB as far as observable. See [WP-H-02](WP-H-02-hardware-design.md) §6, DC-01. Needed for an ASIL C claim because IWDG shares supply and silicon with the CPU (GAP-11) |
 
@@ -197,9 +197,9 @@ Paths are under `panda/board/` unless prefixed otherwise. `safety.h` is
 
 | SG / fault class | Detection budget (FSC §8) | HWSRs that must meet it |
 |---|---|---|
-| SG-01 MCU execution fault | ≤ 0.2 s (HW watchdog) + ≤ 0.1 s reaction | HWSR-501, -501b, -502, -502b |
+| SG-01 MCU execution fault | ≤ 0.1 s (HW watchdog, set by SG-07) + ≤ 0.1 s reaction | HWSR-501, -501b, -502, -502b |
 | SG-01 relay stuck released | ≤ 0.3 s (proposed) | HWSR-506a (today 1–2 s, GAP-12) |
-| SG-07 relay stuck intercepting with MCU silent | Continuous | HWSR-506a, HWSR-702 |
+| SG-07 relay stuck intercepting with MCU silent | ≤ 0.2 s (forwarding loss, preliminary, WP-S-04 §3.6) | HWSR-506a, HWSR-702 |
 | All: memory, clock, supply | ≤ 0.2 s for faults that can corrupt actuation; latent checks once per drive cycle | HWSR-503…505 |
 
 ## 6. HSI candidate entries for WP-S-05

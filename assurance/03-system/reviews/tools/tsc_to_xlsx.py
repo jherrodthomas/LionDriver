@@ -63,7 +63,7 @@ for hdr, rows in all_tables(fsc):
       if m and m.group(1) == m.group(3):
         for k in range(int(m.group(2)), int(m.group(4)) + 1):
           fsr_sg.setdefault(f"FSR-{m.group(1)}.{k:02d}", sgs[0] if sgs else "")
-ftti = {"SG-01": 500, "SG-02": 1000, "SG-03": 1000, "SG-04": 1000, "SG-05": 200, "SG-06": 1000, "SG-07": "Continuous"}  # WP-C-04 §3
+ftti = {"SG-01": 500, "SG-02": 1000, "SG-03": 1000, "SG-04": 1000, "SG-05": 200, "SG-06": 1000, "SG-07": 200}  # WP-C-04 §3
 
 fsrs = []
 for hdr, rows in all_tables(fsc):
@@ -159,12 +159,13 @@ wb.remove(wb.active)
 ws = wb.create_sheet("00_Title_Page")
 for k, v in [("Title", "Technical Safety Concept (TSC): WP-S-02 TSRs, WP-S-03 architecture, WP-S-04 timing, WP-S-05 HSI, WP-A-03 DFA, WP-A-04 FMEA"),
              ("Project", "LionDriver"), ("TSC Document ID", "WP-S-02 / WP-S-03 (with WP-S-04, WP-S-05, WP-A-03, WP-A-04)"),
-             ("Revision", "WP-S-02 0.2; WP-S-03 0.2; WP-A-03/04 0.2; WP-S-04/05 0.1"), ("Status", "Draft"),
-             ("Author", "Assurance team (initial draft)"), ("Approver", "Safety manager"), ("Linked FSC", "WP-C-04 v0.2")]:
+             ("Revision", "WP-S-02 0.3; WP-S-03 0.3; WP-S-04 0.2; WP-S-05 0.2; WP-A-02/03/04 0.3"), ("Status", "Draft"),
+             ("Author", "Assurance team (initial draft)"), ("Approver", "Safety manager"), ("Linked FSC", "WP-C-04 v0.3")]:
   ws.append(["", k, v])
 sheet(wb, "01_Document_Control", ["Revision", "Date", "Change", "Author"], [
   ("0.1", "2026-10-11", "Initial TSC set: WP-S-02…05, WP-A-03/04 at baseline 8b8c6ae", "Assurance team"),
-  ("0.2", "2026-10-12", "WP-S-02 TSR-621…625; WP-S-03 SM-29…SM-42; WP-A-03 DFI-24…26; WP-A-04 FTAs for SG-02, 04, 05, 06, 07", "Assurance team")])
+  ("0.2", "2026-10-12", "WP-S-02 TSR-621…625; WP-S-03 SM-29…SM-42; WP-A-03 DFI-24…26; WP-A-04 FTAs for SG-02, 04, 05, 06, 07", "Assurance team"),
+  ("0.3", "2026-10-12", "RR-2026-005 follow-up: TSR-516 triggers, TSR-303, TSR-501 0.1 s, TSR-626, 627, 711; SG-07 FTTI; WP-S-05 signal catalogue", "Assurance team")])
 sheet(wb, "02_FSRs_From_FSC", ["FSR_ID", "SG_ID", "ASIL", "Branch", "Linked Node", "Functional Safety Requirement", "FTTI (ms)"], fsrs)
 sheet(wb, "03_System_Architecture", ["Component ID", "Name", "Part / hosted on", "Allocated nodes", "Power domain / OS", "Clock domain / integrity"], arch)
 sheet(wb, "04_Safety_Mechanism_Catalog", ["FSR_ID", "Allocated ASIL", "Branch", "Linked Node", "Mechanism ID", "Mechanism Name", "DC target", "Detection time", "Selection"], mechs)
