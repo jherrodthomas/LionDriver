@@ -41,16 +41,16 @@ LionDriver publishes its safety argument as it is built: the claims it makes, th
 | Indicator | Recorded value |
 |---|---|
 | Assurance state | Development |
-| Engineering baseline | `BL-001` at `8b8c6ae` (under development) |
+| Engineering baseline | `BL-002` at `bf6ce8c` (under development) |
 | Registered safety claims | 36 |
 | Claims with accepted supporting evidence | 0 |
-| Registered evidence items | 49 (0 available, 34 drafted, 15 not yet performed) |
-| Evidence requiring review | 34 |
+| Registered evidence items | 50 (0 available, 35 drafted, 15 not yet performed) |
+| Evidence requiring review | 35 |
 | Open assurance actions | 5 |
 | Open defeaters (known counter-evidence) | 41 |
 | Evaluated configurations | 1 |
 | Assurance-supported configurations | 0 |
-| Records digest | `2a24d9a68daf` |
+| Records digest | `cdddff959fea` |
 
 | Lifecycle area | Status | Evidence (drafted / missing / accepted) |
 |---|---|---|
@@ -58,7 +58,7 @@ LionDriver publishes its safety argument as it is built: the claims it makes, th
 | Hazard Analysis | In Progress | 6 (6 / 0 / 0) |
 | Safety Concepts | In Progress | 7 (7 / 0 / 0) |
 | Technical Implementation | In Progress | 5 (5 / 0 / 0) |
-| Verification and Validation | In Progress | 15 (4 / 11 / 0) |
+| Verification and Validation | In Progress | 16 (5 / 11 / 0) |
 | Safety Case and Review | In Progress | 5 (2 / 3 / 0) |
 
 <!-- END GENERATED: assurance-summary -->

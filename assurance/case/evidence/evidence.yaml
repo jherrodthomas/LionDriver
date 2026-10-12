@@ -24,7 +24,7 @@
 - id: Sn-02
   kind: evidence
   title: "Technical safety requirements"
-  description: "Draft: TSR-101…TSR-818 (incl. TSR-517…519, 619, 620 added in the consistency pass); not reviewed"
+  description: "Draft v0.14: TSR-101…TSR-818 (incl. TSR-517…519, 619, 620 added in the consistency pass); not reviewed"
   evidence_status: partial
   lifecycle_area: safety-concepts
   location: "assurance/03-system/WP-S-02-technical-safety-requirements.md"
@@ -36,12 +36,12 @@
   review_date: null
   review_ref: null
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: Sn-03
   kind: evidence
   title: "Software safety requirements"
-  description: "Draft in preparation; not reviewed"
+  description: "Draft v0.14; not reviewed"
   evidence_status: partial
   lifecycle_area: technical-implementation
   location: "assurance/05-software/WP-W-02-software-safety-requirements.md"
@@ -53,7 +53,7 @@
   review_date: null
   review_ref: null
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: Sn-04
   kind: evidence
@@ -160,7 +160,7 @@
 - id: Sn-10
   kind: evidence
   title: "opendbc safety unit tests (100% line coverage gate, MISRA, mutation, UBSan)"
-  description: "Inherited results: not requirement-based; line coverage only; host x86 not target; not re-run in LionDriver-controlled CI at a recorded baseline (U-6, GAP-39)"
+  description: "LionDriver CI runs the suite (UBSan, 100 % line coverage, MISRA, mutation incl. the reference variant) in the default and `LIONDRIVER_REFERENCE` variants; LionDriver tests for TSR-110/306/401/405(c)/518/705; not requirement-traced; line coverage only; host x86 not target; not reviewed"
   evidence_status: partial
   lifecycle_area: verification-validation
   location: "assurance/05-software/WP-W-06-software-unit-verification.md"
@@ -172,7 +172,7 @@
   review_date: null
   review_ref: null
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: Sn-11
   kind: evidence
@@ -194,7 +194,7 @@
 - id: Sn-12
   kind: evidence
   title: "HIL tests of the envelope"
-  description: "spec drafted, not executed (WP-W-08 in preparation; no HIL in the fork, GAP-30)"
+  description: "spec and scripts drafted (panda `tests/hitl/test_10`…`test_14`), not executed: no bench (D-04)"
   evidence_status: missing
   lifecycle_area: verification-validation
   location: "assurance/05-software/WP-W-08-embedded-software-testing.md"
@@ -206,12 +206,12 @@
   review_date: null
   review_ref: null
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: Sn-13
   kind: evidence
   title: "Fault injection"
-  description: "spec drafted, not executed (WP-V-05)"
+  description: "spec and scripts drafted (WP-V-05; panda `tests/hitl/test_10`…`test_14`), not executed: no bench (D-04)"
   evidence_status: missing
   lifecycle_area: verification-validation
   location: "assurance/06-validation/WP-V-05-fault-injection.md"
@@ -223,7 +223,7 @@
   review_date: null
   review_ref: null
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: Sn-14
   kind: evidence
@@ -241,6 +241,23 @@
   review_ref: null
   source: WP-K-01
   source_revision: "8b8c6ae"
+
+- id: Sn-15
+  kind: evidence
+  title: "panda firmware host unit tests (watchdog, heartbeat monitor, reference lock, IRQ priorities, EPS-fault siren)"
+  description: "LionDriver-written tests `tests/hw_watchdog`, `heartbeat_monitor`, `reference_lock`, `irq_priorities`, `eps_fault_siren`; added to LionDriver CI 2026-10-12, no run recorded as evidence yet; host x86 not target; not reviewed"
+  evidence_status: partial
+  lifecycle_area: verification-validation
+  location: "panda/tests"
+  related_claims: [G1.1.4, G1.7, G1.8]
+  baseline: BL-001
+  configuration: CFG-001
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "bf6ce8c"
 
 - id: Sn-20
   kind: evidence

@@ -1727,7 +1727,7 @@
 
 - id: SWSR-501b
   kind: swsr
-  text: "The bootstub shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) before jumping to the application; no software path shall be able to stop it."
+  text: "The firmware shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on every path that energises it, and no software path shall be able to stop it afterwards. (Amended in v0.14 to the TSR-501 v0.4 / HWSR-501c start condition; it previously required a start in the bootstub.)"
   asil: "B‡"
   parents: [TSR-501]
   parent_text: "TSR-501 (WP-W-02 §11; ASIL taken from TSR-501)"
@@ -1735,7 +1735,7 @@
   allocated_to: "IWDG1, LSI"
   verification: ""
   acceptance: ""
-  baseline_impl: "Not impl"
+  baseline_impl: "**Implemented, not verified on hardware:** `hw_watchdog_start()` from `set_intercept_relay()` (`drivers/harness.h`), panda `3859fa8`/`9f60e17`; 90 ms nominal, window mode"
   status: proposed
   source: WP-W-02
 

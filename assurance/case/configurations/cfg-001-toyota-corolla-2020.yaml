@@ -12,7 +12,7 @@
   platform: TOYOTA_COROLLA_TSS2
   brand_safety_mode: toyota
   item_definition: WP-C-01
-  related_assumptions: [AOU-01, AOU-02, AOU-03, AOU-04, AOU-05, AOU-06, AOU-07, AOU-08, AOU-09, AOU-10, AOU-11]
+  related_assumptions: [AOU-01, AOU-02, AOU-03, AOU-04, AOU-05, AOU-06, AOU-07, AOU-08, AOU-09, AOU-10, AOU-11, AOU-12, AOU-13, AOU-14]
   related_claims: [G0]
   baseline: BL-001
   review_state: not-reviewed
