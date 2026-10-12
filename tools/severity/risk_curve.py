@@ -103,8 +103,16 @@ Check status (2026-10-12, from search summaries; the full text was not reachable
   here. Another quotes it in a garbled form that reads like 61.54. With 61.54, SH-03 following
   rises from 0.33 to 0.59 and SH-04 from 0.043 to 0.076; the values of 1 are unchanged
   (`--joksch-mph 61.54`).
-- Still to check against the full text: the constant, and whether the curve covers rear
-  impacts (SH-04).
+- Still to check against the full text: the constant, and which impact directions the curve
+  was fitted to (the summaries say car-car collisions without naming a direction).
+- Rear impacts (checked 2026-10-12, search summaries): the curve is applied to rear-struck
+  occupants (the ego in SH-04, which dominates its bound, and the lead in SH-06/SH-03). At the
+  same delta-v, rear impacts are less injurious than frontal ones: MAIS3+ risk at 30 mph delta-v
+  is 19.9 % rear against 38.9 % frontal (NASS-CDS/CIREN regression, PMC3217552), and Jurewicz et
+  al. (2016) put the 10 % MAIS3+ impact speed at 55 km/h for rear-end against 30 km/h for
+  head-on and right-angle crashes. A car-car or frontal curve therefore overstates the
+  rear-struck risk, and no credit is taken for that. Not covered: rear-seat occupants with
+  intrusion from a heavy follower.
 - The masses, occupancies and restitution below are assumptions. Check the masses against the
   reference vehicle record.
 
