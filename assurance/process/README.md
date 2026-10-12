@@ -5,7 +5,7 @@
 | Work product | WP-P-11 Integrated process model (machine-readable) and generated process maps |
 | Standard reference | ISO 26262-2:2018 §6 (safety lifecycle, planning of activities); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6 (cybersecurity activities and their tailoring); ISO/PAS 8800:2024 (AI safety lifecycle); ASPICE 4.0 MAN.3 (project lifecycle definition). Informative: Integrated Automotive Standards Handbook (ISH-2026-001) §3.3–3.4, Ch. 5, Ch. 13 |
 | Version | 0.1 |
-| Status | Draft (phases modelled: G1 concept, G2 system design) |
+| Status | Draft (phases modelled: G1 concept, G2 system design, G3 HW/SW development) |
 | ASIL / scope | Process (all disciplines) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
@@ -30,6 +30,7 @@ The model is data, so a checker keeps it consistent with the documents and a gen
 | [maps/lifecycle.md](maps/lifecycle.md) | L0: the seven phases G0…G6, their exit criteria and the handbook chapter each one corresponds to |
 | [maps/g1-concept.md](maps/g1-concept.md) | L1 for the concept phase: swimlane map, interface map, activity table with clauses, clause coverage per standard, G1 readiness |
 | [maps/g2-system-design.md](maps/g2-system-design.md) | L1 for the system design phase, same sections, G2 readiness |
+| [maps/g3-hw-sw-development.md](maps/g3-hw-sw-development.md) | L1 for the hardware and software development phase, same sections, G3 readiness |
 
 L2 (how to perform an activity) remains the procedures and plans the activities point to; it is not modelled here.
 
@@ -55,7 +56,7 @@ Records use the same flat YAML subset as [`case/`](../case/README.md): a top-lev
 |---|---|---|
 | `phase` | [`model/lifecycle.yaml`](model/lifecycle.yaml) | `id` (gate G0…G6), `handbook_chapters`, `modelled` |
 | `lane` | `model/lifecycle.yaml` | `id`, `name`, `role` (a role in WP-M-02 §3.1), `plan` (the plan that governs the lane) |
-| `activity` | [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml) | `id` (`CON-nn` concept, `DES-nn` system design), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp` |
+| `activity` | [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml), [`model/development.yaml`](model/development.yaml) | `id` (`CON-nn` concept, `DES-nn` system design, `DEV-nn` HW/SW development), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp` |
 | `review` | same files as the phase's activities | `id` (the WP-M-06 measure; `<measure>@<gate>` when WP-M-06 plans it at several gates, e.g. `CR-06@G2`), `phase`, `name`, `covers`, `independence` |
 | `interface` | [`model/interfaces.yaml`](model/interfaces.yaml) | `id` (`IX-nn`), `phase`, `between` (two work products), `pattern`, `topic`, `anchors`, `status`, `open_item`, `due` |
 
@@ -111,11 +112,19 @@ These findings come from the generated maps. They are observations for the safet
 4. **Three G2 work products have no confirmation measure at G2:** WP-S-01, WP-S-06, WP-S-07. WP-S-07 (cybersecurity requirements and architecture) names assessor sampling per WP-M-09 §8 in its header. WP-M-06 plans no independent cybersecurity review between the G1 interim review (CS-I1) and the final assessment at G5.
 5. **Safety and security meet in three places in the architecture:** overlapping boot and mode-lock requirements (IX-09), the BOOT0/NRST trust boundary that the FFI claim FFI-3 depends on (IX-10), and unauthenticated SoC messaging (IX-11). Each is one design decision seen from two standards, so the safety architecture and the security architecture cannot be reviewed separately.
 
+### 6.3 Hardware and software development phase ([G3 map](maps/g3-hw-sw-development.md))
+
+1. **Hardware design comes before hardware requirements.** The device is COTS, so its design (DEV-03, WP-H-02) is recovered from firmware and documentation before the hardware safety requirements refine the TSRs onto it (DEV-04). Several HWSRs stay open until the device schematic is obtained (WP-H-01 OI-3). The hardware lane's owner is TBD (likely external) and was needed by G2.
+2. **Tool qualification is a shared dependency.** One joint activity (DEV-02, WP-P-07) feeds software unit verification, ML engineering and cybersecurity verification. Its open items sit on the lane boundaries: the ONNX reference runtime for back-to-back testing of the ML compiler (IX-18) and the security static-analysis tools (WP-W-11 OI-1).
+3. **One coding guideline must serve safety and security.** MISRA C:2012 is in place for the envelope; the CERT C subset for security static analysis has not been chosen (IX-17).
+4. **Ten of the 18 G3 work products get only verification review at G3:** hardware requirements and design, software requirements, architecture, units and unit verification, configuration data, cybersecurity implementation and proven-in-use. For WP-P-09 this is deliberate: CR-11 is not planned while no proven-in-use claim is made (tailoring T-06). For the others, WP-M-06 plans no confirmation measure, so their independent check rests on the verification reviewer that WP-P-05 requires. WP-M-02 still lists that role as TBD.
+5. **Six open interfaces are due by G3:** IX-02 (overdue since G1), IX-05, IX-06 and IX-13 (overdue since G2), plus IX-17 and IX-18.
+
 ## 7. Open items
 
 | ID | Item | Owner | Gate |
 |---|---|---|---|
-| OI-1 | Model the remaining phases, next G3 hardware and software development (handbook Ch. 7–8) | Safety manager | G3 |
+| OI-1 | Model the remaining phases, next G4 integration and verification (handbook Ch. 9) | Safety manager | G4 |
 | OI-2 | Add an "agreed" interface status set only through a recorded review, and decide whether cross-domain interfaces become requirement items (`IFR-nn`) in `trace/` | Safety manager | G2 |
 | OI-3 | Generate the G1 gate-record skeleton (`10-safety-case/gates/`) from §5 of the G1 map | Safety manager | G1 |
 | OI-4 | Derive pull-request checklists from the model: which activities and interfaces a change to a work product re-opens | Configuration and change manager | G2 |

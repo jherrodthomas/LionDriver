@@ -68,6 +68,14 @@ class ProcessModelTest(unittest.TestCase):
   def test_mermaid_node_ids_are_plain(self):
     self.assertEqual(pm._nid("CR-06@G2"), "CR_06_G2")
 
+  def test_roles_of_lanes_idle_in_a_phase_are_still_listed(self):
+    # The hardware lane has no G2 activity, but WP-M-02 needs its role by G2.
+    model = copy.deepcopy(self.base)
+    orders = pm.check(model, self.ctx)
+    g2 = pm.render_phase("G2", orders["G2"], model, self.ctx)
+    self.assertIn("needs by G2:** ", g2)
+    self.assertIn("Hardware safety engineer", g2.split("needs by G2:** ")[1].splitlines()[0])
+
   def test_transitive_edges_removed(self):
     acts = {"A": {"inputs": []}, "B": {"inputs": ["a"]}, "C": {"inputs": ["a", "b"]}}
     self.assertEqual(pm.direct_deps(acts, {"a": "A", "b": "B"}), {"A": set(), "B": {"A"}, "C": {"B"}})

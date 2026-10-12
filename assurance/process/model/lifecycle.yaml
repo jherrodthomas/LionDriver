@@ -17,7 +17,7 @@
 - id: G3
   kind: phase
   handbook_chapters: [7, 8]
-  modelled: false
+  modelled: true
 - id: G4
   kind: phase
   handbook_chapters: [9]
@@ -40,6 +40,16 @@
   kind: lane
   name: "Functional safety (ISO 26262)"
   role: "Safety manager"
+  plan: WP-M-02
+- id: hw
+  kind: lane
+  name: "Hardware (ISO 26262-5)"
+  role: "Hardware safety engineer"
+  plan: WP-M-02
+- id: sw
+  kind: lane
+  name: "Software (ISO 26262-6)"
+  role: "Envelope software engineer(s)"
   plan: WP-M-02
 - id: sotif
   kind: lane

@@ -470,7 +470,7 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
     role = model.lanes[lid]["role"]
     who, by = ctx.roles.get(role, ("?", "?"))
     out.append(f"| {model.lanes[lid]['name']} | {role} | {who} | {by} |")
-  lane_roles = {model.lanes[lid]["role"] for lid in model.lanes}
+  lane_roles = {model.lanes[lid]["role"] for lid in [*lane_ids, "assess"]}
   extra = [(role, who) for role, (who, by) in ctx.roles.items() if role not in lane_roles and gid in by]
   if extra:
     out += ["", f"**Other roles WP-M-02 §3.1 needs by {gid}:** " + "; ".join(f"{role} ({who})" for role, who in extra) + "."]

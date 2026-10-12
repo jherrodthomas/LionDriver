@@ -148,3 +148,55 @@
   status: documented
   open_item: null
   due: G2
+
+# Hardware and software development (G3)
+- id: IX-15
+  kind: interface
+  phase: G3
+  between: [WP-W-02, WP-H-01]
+  pattern: "Hardware-Software"
+  topic: "Software safety requirements that depend on a hardware resource refine the HSI and pair with the hardware safety requirements"
+  anchors: ["WP-W-02:pair with the HWSRs of [WP-H-01]", "WP-W-02:These SWSRs depend on a hardware resource"]
+  status: documented
+  open_item: null
+  due: G3
+- id: IX-16
+  kind: interface
+  phase: G3
+  between: [WP-H-01, WP-S-07]
+  pattern: "Safety-Security"
+  topic: "The SoC's control of the MCU boot and reset lines is a hardware safety requirement (HWSR-502c) and an input to the security architecture"
+  anchors: ["WP-H-01:The SoC's control of the MCU reset (`STM_RST_N`) and boot-mode (`STM_BOOT0`) lines", "WP-S-07:HWSR-502c (boot pins)"]
+  status: documented
+  open_item: null
+  due: G3
+- id: IX-17
+  kind: interface
+  phase: G3
+  between: [WP-W-11, WP-W-01]
+  pattern: "Safety-Security"
+  topic: "One coding guideline for safety and security: the CERT C subset for security static analysis still has to be chosen and recorded next to MISRA C:2012"
+  anchors: ["WP-W-11:Choose the CERT C rule subset for SAST-02 and record it in [WP-W-01]", "WP-W-11:Base: **MISRA C:2012**"]
+  status: open
+  open_item: "WP-W-11 OI-2"
+  due: G3
+- id: IX-18
+  kind: interface
+  phase: G3
+  between: [WP-W-10, WP-P-07]
+  pattern: "AI-Tools"
+  topic: "The ML compiler (tinygrad) is a QM tool whose confidence comes from back-to-back comparison against an independent ONNX reference runtime, which is not yet selected"
+  anchors: ["WP-W-10:Select and classify the independent ONNX reference runtime", "WP-P-07:for tinygrad a back-to-back comparison of compiled-model outputs"]
+  status: open
+  open_item: "WP-W-10 OI-2"
+  due: G3
+- id: IX-19
+  kind: interface
+  phase: G3
+  between: [WP-W-09, WP-W-10]
+  pattern: "Safety-AI"
+  topic: "Model weights are safety-related configuration data: which model runs depends on file presence and device detection"
+  anchors: ["WP-W-09:Model selection depends on file presence and USB device detection"]
+  status: documented
+  open_item: null
+  due: G3
