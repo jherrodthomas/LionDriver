@@ -110,6 +110,18 @@ class ProcessModelTest(unittest.TestCase):
     self.assertIn("none planned at this gate", g6)
     self.assertNotRegex(g6, r"\n  class +review")
 
+  def test_plan_role_table_is_parsed(self):
+    roles = pm.load_plan_roles("x\n| Role | Holder (today) | Duty |\n|---|---|---|\n| SOTIF lead | A. Person | x |\n\nafter")
+    self.assertEqual(roles, {"SOTIF lead": "A. Person"})
+
+  def test_role_disagreement_is_reported(self):
+    ctx = copy.deepcopy(self.ctx)
+    ctx.roles["SOTIF lead"] = ("TBD", "G1")
+    ctx.plan_roles["WP-M-08"] = {"SOTIF lead": "A. Person"}
+    self.assertTrue(any(c.startswith("SOTIF lead:") for c in pm.role_disagreements(ctx, self.base)))
+    ctx.roles["SOTIF lead"] = ("B. Person", "G1")
+    self.assertFalse(any(c.startswith("SOTIF lead:") for c in pm.role_disagreements(ctx, self.base)))
+
   def test_transitive_edges_removed(self):
     acts = {"A": {"inputs": []}, "B": {"inputs": ["a"]}, "C": {"inputs": ["a", "b"]}}
     self.assertEqual(pm.direct_deps(acts, {"a": "A", "b": "B"}), {"A": set(), "B": {"A"}, "C": {"B"}})

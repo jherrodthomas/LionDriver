@@ -38,7 +38,7 @@ flowchart LR
   subgraph L_assess["Independent confirmation"]
     direction LR
     CR_02["CR-02<br/>I3"]
-    CR_03["CR-03<br/>I3"]
+    CR_03_G1["CR-03@G1<br/>I3"]
     CR_04["CR-04<br/>I3"]
     FSA_I1["FSA-I1<br/>I3"]
     SR_01["SR-01<br/>I3-equivalent"]
@@ -66,7 +66,7 @@ flowchart LR
   classDef joint fill:#dafbe1,stroke:#1a7f37,color:#0f3d1c
   class CON_01,CON_12,CON_13 joint
   classDef review fill:#fff8c5,stroke:#9a6700,color:#3d2c00
-  class CR_02,CR_03,CR_04,FSA_I1,SR_01,CS_I1 review
+  class CR_02,CR_03_G1,CR_04,FSA_I1,SR_01,CS_I1 review
   classDef gate fill:#1f6feb,stroke:#0b3d91,color:#ffffff
   class GATE gate
 ```
@@ -156,7 +156,7 @@ Which activity answers each clause reference listed in the register. One activit
 | Measure | Covers | Independence | Record |
 |---|---|---|---|
 | CR-02 Confirmation review of the HARA | WP-C-03, WP-C-01, WP-C-08 | I3 | Not performed |
-| CR-03 Confirmation review of the safety plan (re-confirm after HARA) | WP-M-02, WP-M-01, WP-M-06 | I3 | Not performed |
+| CR-03@G1 Confirmation review of the safety plan (re-confirm after HARA) | WP-M-02, WP-M-01, WP-M-06 | I3 | Not performed |
 | CR-04 Confirmation review of the functional safety concept | WP-C-04 | I3 | Not performed |
 | FSA-I1 Interim functional safety assessment | WP-C-01, WP-C-03, WP-C-04 | I3 | Not performed |
 | SR-01 Review of SOTIF hazard identification and acceptance criteria | WP-C-05, WP-C-06, WP-C-08 | I3-equivalent | Not performed |
@@ -164,4 +164,4 @@ Which activity answers each clause reference listed in the register. One activit
 
 **Work products with no confirmation measure at this gate** (verification review only): WP-C-02, WP-C-07, WP-C-11, WP-V-07, WP-T-01, WP-K-01.
 
-**Open interfaces due by this gate** (from this or an earlier phase): IX-02 (WP-C-10 OI-6).
+**Open interfaces due by this gate** (from this or an earlier phase): IX-02 (WP-C-10 OI-6), IX-33 (WP-M-10 OI-7).

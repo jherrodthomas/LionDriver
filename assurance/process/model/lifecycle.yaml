@@ -5,7 +5,7 @@
 - id: G0
   kind: phase
   handbook_chapters: [4]
-  modelled: false
+  modelled: true
 - id: G1
   kind: phase
   handbook_chapters: [5]

@@ -5,7 +5,7 @@
 | Work product | WP-P-11 Integrated process model (machine-readable) and generated process maps |
 | Standard reference | ISO 26262-2:2018 §6 (safety lifecycle, planning of activities); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6 (cybersecurity activities and their tailoring); ISO/PAS 8800:2024 (AI safety lifecycle); ASPICE 4.0 MAN.3 (project lifecycle definition). Informative: Integrated Automotive Standards Handbook (ISH-2026-001) §3.3–3.4, Ch. 5, Ch. 13 |
 | Version | 0.1 |
-| Status | Draft (phases modelled: G1 concept to G6 operation; G0 governance not yet modelled) |
+| Status | Draft (all phases G0 governance to G6 operation modelled) |
 | ASIL / scope | Process (all disciplines) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
@@ -28,6 +28,7 @@ The model is data, so a checker keeps it consistent with the documents and a gen
 | Map | Content |
 |---|---|
 | [maps/lifecycle.md](maps/lifecycle.md) | L0: the seven phases G0…G6, the feedback from operation into earlier phases, their exit criteria and the handbook chapter each one corresponds to |
+| [maps/g0-governance.md](maps/g0-governance.md) | L1 for the governance phase: the plans and procedures the later phases read from, G0 readiness including role records that disagree |
 | [maps/g1-concept.md](maps/g1-concept.md) | L1 for the concept phase: swimlane map, interface map, activity table with clauses, clause coverage per standard, G1 readiness |
 | [maps/g2-system-design.md](maps/g2-system-design.md) | L1 for the system design phase, same sections, G2 readiness |
 | [maps/g3-hw-sw-development.md](maps/g3-hw-sw-development.md) | L1 for the hardware and software development phase, same sections, G3 readiness |
@@ -59,7 +60,7 @@ Records use the same flat YAML subset as [`case/`](../case/README.md): a top-lev
 |---|---|---|
 | `phase` | [`model/lifecycle.yaml`](model/lifecycle.yaml) | `id` (gate G0…G6), `handbook_chapters`, `modelled` |
 | `lane` | `model/lifecycle.yaml` | `id`, `name`, `role` (a role in WP-M-02 §3.1), `plan` (the plan that governs the lane) |
-| `activity` | [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml), [`model/development.yaml`](model/development.yaml), [`model/integration.yaml`](model/integration.yaml), [`model/release.yaml`](model/release.yaml), [`model/operation.yaml`](model/operation.yaml) | `id` (`CON-nn` concept, `DES-nn` system design, `DEV-nn` HW/SW development, `INT-nn` integration and verification, `REL-nn` validation and release, `OPS-nn` operation), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp`; optional `updates` |
+| `activity` | [`model/governance.yaml`](model/governance.yaml), [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml), [`model/development.yaml`](model/development.yaml), [`model/integration.yaml`](model/integration.yaml), [`model/release.yaml`](model/release.yaml), [`model/operation.yaml`](model/operation.yaml) | `id` (`GOV-nn` governance, `CON-nn` concept, `DES-nn` system design, `DEV-nn` HW/SW development, `INT-nn` integration and verification, `REL-nn` validation and release, `OPS-nn` operation), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp`; optional `updates` |
 | `review` | same files as the phase's activities | `id` (the WP-M-06 measure; `<measure>@<gate>` when WP-M-06 plans it at several gates, e.g. `CR-06@G2`), `phase`, `name`, `covers`, `independence` |
 | `interface` | [`model/interfaces.yaml`](model/interfaces.yaml) | `id` (`IX-nn`), `phase`, `between` (two work products), `pattern`, `topic`, `anchors`, `status`, `open_item`, `due` |
 | `feedback` | `model/operation.yaml` | `id` (`FB-nn`), `phase`, `source` (the work product that raises the finding), `targets` (work products of earlier phases it re-opens), `finding`, `anchors` |
@@ -102,6 +103,16 @@ A new or renamed work product goes into WP-M-00 first; the model then refers to 
 ## 6. What the model shows
 
 These findings come from the generated maps. They are observations for the safety manager, not decisions.
+
+### 6.0 Governance phase ([G0 map](maps/g0-governance.md))
+
+1. **"Roles assigned" is part of the G0 exit criterion, and it is not met.** WP-M-02 still lists the verification reviewer, QA and the external functional safety assessor as TBD (WP-M-02 OI-1 and OI-3, both due at G0). Every later gate inherits these gaps: they appear in every readiness section from G1 to G6.
+2. **The role records disagree.** The SOTIF plan (WP-M-08) and the AI safety plan (WP-M-10) name the maintainer as SOTIF lead and AI safety lead; WP-M-02 §3.1 lists both roles as TBD. The readiness sections read WP-M-02, so they show these roles as unassigned. The model reports the disagreement; it cannot tell which record is right.
+3. **One person holds almost every role.** Safety manager, project maintainer, configuration and change manager, cybersecurity manager, envelope software engineer, and (per WP-M-08 and WP-M-10) SOTIF lead and AI safety lead. WP-M-02 OI-2 asks who approves what the safety manager authors. Until that is answered, independent checking rests on the two G0 confirmation measures and the external assessor, and the assessor is not engaged.
+4. **Only the impact analysis and the safety plan are confirmed independently at G0** (CR-01, CR-03@G0). The SOTIF, cybersecurity and AI plans are not. WP-M-09 does require the assessor's agreement to each cybersecurity tailoring entry before G1, but WP-M-06 §9 plans no measure for it.
+5. **The handbook's eight integrated work products stop at the plans.** None of the Chapter 13 work products covers governance, so `handbook_wp` is empty for G0. The handbook treats the plans in Chapter 4 only.
+6. **The process model is itself a G0 work product.** GOV-21 produces WP-P-11 from the register, the safety plan and the confirmation plan, so this model can only be as current as those three documents.
+7. **One plan-level interface is open:** IX-33. Whether comma.ai can provide a model card or training-data description is still to be asked (WP-M-10 OI-7). The AI argument's limits at G3 and G5 depend on the answer.
 
 ### 6.1 Concept phase ([G1 map](maps/g1-concept.md))
 
@@ -157,7 +168,7 @@ These findings come from the generated maps. They are observations for the safet
 
 | ID | Item | Owner | Gate |
 |---|---|---|---|
-| OI-1 | Model G0 governance (handbook Ch. 4): the plans the other phases read from | Safety manager | G0 |
+| OI-1 | Closed: all phases G0–G6 are modelled | Safety manager | — |
 | OI-2 | Add an "agreed" interface status set only through a recorded review, and decide whether cross-domain interfaces become requirement items (`IFR-nn`) in `trace/` | Safety manager | G2 |
 | OI-3 | Generate the G1 gate-record skeleton (`10-safety-case/gates/`) from §5 of the G1 map | Safety manager | G1 |
 | OI-4 | Derive pull-request checklists from the model: which activities and interfaces a change to a work product re-opens | Configuration and change manager | G2 |

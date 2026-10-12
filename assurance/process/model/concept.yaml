@@ -120,7 +120,7 @@
   name: "Confirmation review of the HARA"
   covers: [WP-C-03, WP-C-01, WP-C-08]
   independence: I3
-- id: CR-03
+- id: CR-03@G1
   kind: review
   phase: G1
   name: "Confirmation review of the safety plan (re-confirm after HARA)"

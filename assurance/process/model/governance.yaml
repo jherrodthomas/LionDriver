@@ -1,0 +1,191 @@
+# Governance phase (gate G0). Format: assurance/process/README.md §3.
+# G0 produces the plans and procedures that every later phase reads from: each lane's `plan`
+# (lifecycle.yaml) is a G0 work product, and this process model (WP-P-11) itself reads WP-M-00,
+# WP-M-02 and WP-M-06. The plans reference one another densely; the order below follows how they
+# describe themselves: impact analysis of the inherited baseline, then the assurance strategy, the
+# safety plan, the discipline plans, the supporting procedures and finally the register.
+# The handbook's eight integrated work products (Ch. 13) do not cover plans, so `handbook_wp` is
+# empty here; the handbook treats governance in Ch. 4.
+
+- id: GOV-01
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Impact analysis of the openpilot-derived baseline"
+  produces: [WP-M-12]
+  inputs: []
+  handbook_wp: []
+- id: GOV-02
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Assurance strategy and lifecycle tailoring"
+  produces: [WP-M-01]
+  inputs: [WP-M-12]
+  handbook_wp: []
+- id: GOV-03
+  kind: activity
+  phase: G0
+  lane: fusa
+  name: "Functional safety plan"
+  produces: [WP-M-02]
+  inputs: [WP-M-01]
+  handbook_wp: []
+- id: GOV-04
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Organization rules, safety culture and competence"
+  produces: [WP-M-04]
+  inputs: [WP-M-02]
+  handbook_wp: []
+- id: GOV-05
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Quality management and QA plan"
+  produces: [WP-M-05]
+  inputs: [WP-M-02, WP-M-04]
+  handbook_wp: []
+- id: GOV-06
+  kind: activity
+  phase: G0
+  lane: fusa
+  name: "Confirmation measures plan"
+  produces: [WP-M-06]
+  inputs: [WP-M-01, WP-M-02, WP-M-05]
+  handbook_wp: []
+- id: GOV-07
+  kind: activity
+  phase: G0
+  lane: sotif
+  name: "SOTIF plan"
+  produces: [WP-M-08]
+  inputs: [WP-M-01, WP-M-02, WP-M-06]
+  handbook_wp: []
+- id: GOV-08
+  kind: activity
+  phase: G0
+  lane: cs
+  name: "Cybersecurity plan"
+  produces: [WP-M-09]
+  inputs: [WP-M-01, WP-M-04, WP-M-12]
+  handbook_wp: []
+- id: GOV-09
+  kind: activity
+  phase: G0
+  lane: ai
+  name: "AI safety management plan"
+  produces: [WP-M-10]
+  inputs: [WP-M-01, WP-M-08, WP-M-09, WP-M-12]
+  handbook_wp: []
+- id: GOV-10
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Upstream and supplier management"
+  produces: [WP-M-11]
+  inputs: [WP-M-01, WP-M-09, WP-M-10, WP-M-12]
+  handbook_wp: []
+- id: GOV-11
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Project plan (scope, WBS, schedule, resources)"
+  produces: [WP-M-03]
+  inputs: [WP-M-01, WP-M-02]
+  handbook_wp: []
+- id: GOV-12
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Project risk management"
+  produces: [WP-M-07]
+  inputs: [WP-M-01, WP-M-03]
+  handbook_wp: []
+- id: GOV-13
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Requirements management and traceability procedure"
+  produces: [WP-P-06]
+  inputs: [WP-M-02]
+  handbook_wp: []
+- id: GOV-14
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Verification and review procedure"
+  produces: [WP-P-05]
+  inputs: [WP-M-06, WP-P-06]
+  handbook_wp: []
+- id: GOV-15
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Configuration management plan"
+  produces: [WP-P-01]
+  inputs: [WP-M-01, WP-M-05]
+  handbook_wp: []
+- id: GOV-16
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Documentation management"
+  produces: [WP-P-04]
+  inputs: [WP-P-01, WP-P-05]
+  handbook_wp: []
+- id: GOV-17
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Problem resolution management"
+  produces: [WP-P-03]
+  inputs: [WP-M-02, WP-M-05]
+  handbook_wp: []
+- id: GOV-18
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Change management"
+  produces: [WP-P-02]
+  inputs: [WP-P-01, WP-P-03, WP-P-05]
+  handbook_wp: []
+- id: GOV-19
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "ASPICE capability baseline (self-assessment)"
+  produces: [WP-M-13]
+  inputs: [WP-M-01, WP-M-05, WP-P-01, WP-P-02, WP-P-03, WP-P-04, WP-P-05, WP-P-06]
+  handbook_wp: []
+- id: GOV-20
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Work product register"
+  produces: [WP-M-00]
+  inputs: [WP-M-01, WP-M-02, WP-M-06]
+  handbook_wp: []
+- id: GOV-21
+  kind: activity
+  phase: G0
+  lane: joint
+  name: "Integrated process model and maps (this model)"
+  produces: [WP-P-11]
+  inputs: [WP-M-00, WP-M-02, WP-M-06]
+  handbook_wp: []
+
+# Confirmation measures planned for G0 (WP-M-06 §9). CR-03 is planned again at G1 (re-confirm).
+- id: CR-01
+  kind: review
+  phase: G0
+  name: "Confirmation review of the impact analysis"
+  covers: [WP-M-12]
+  independence: I3
+- id: CR-03@G0
+  kind: review
+  phase: G0
+  name: "Confirmation review of the safety plan and tailoring"
+  covers: [WP-M-02, WP-M-01, WP-M-06]
+  independence: I3

@@ -316,3 +316,35 @@
   status: documented
   open_item: null
   due: G6
+
+# Governance (G0)
+- id: IX-31
+  kind: interface
+  phase: G0
+  between: [WP-M-02, WP-M-09]
+  pattern: "Safety-Security"
+  topic: "The cybersecurity manager carries the interface to safety on safety-relevant threats; the G1 cybersecurity review is combined with the FuSa confirmation review where one assessor has both competences"
+  anchors: ["WP-M-02:interface to safety on safety-relevant threats", "WP-M-09:combined with the functional safety confirmation review where the assessor has both competences"]
+  status: documented
+  open_item: null
+  due: G0
+- id: IX-32
+  kind: interface
+  phase: G0
+  between: [WP-M-08, WP-M-10]
+  pattern: "SOTIF-AI"
+  topic: "The AI safety lead supplies model-related insufficiencies to the SOTIF lead, who records them in the SOTIF analysis"
+  anchors: ["WP-M-08:Supplies model-related insufficiencies and evaluation data", "WP-M-10:Receives AI-related FI-nn into WP-C-06"]
+  status: documented
+  open_item: null
+  due: G0
+- id: IX-33
+  kind: interface
+  phase: G0
+  between: [WP-M-10, WP-M-11]
+  pattern: "Supplier-AI"
+  topic: "The ML models are supplier artefacts of comma.ai; whether a model card, training-data description or evaluation report can be obtained is still to be asked and recorded in upstream management"
+  anchors: ["WP-M-10:Ask upstream whether any model card", "WP-M-11:comma.ai **model artefacts**"]
+  status: open
+  open_item: "WP-M-10 OI-7"
+  due: G0

@@ -7,7 +7,7 @@ Gate names and exit criteria come from [WP-M-00 §2](../../01-management/WP-M-00
 
 ```mermaid
 flowchart LR
-  G0["G0 Governance<br/>not modelled yet"]
+  G0["G0 Governance<br/>21 activities modelled"]
   G1["G1 Concept<br/>13 activities modelled"]
   G2["G2 System design<br/>12 activities modelled"]
   G3["G3 HW/SW development<br/>18 activities modelled"]
@@ -17,8 +17,7 @@ flowchart LR
   G0 --> G1 --> G2 --> G3 --> G4 --> G5 --> G6
   classDef modelled fill:#1f6feb,stroke:#0b3d91,color:#ffffff
   classDef pending fill:#f6f8fa,stroke:#8c959f,color:#57606a,stroke-dasharray: 4 3
-  class G1,G2,G3,G4,G5,G6 modelled
-  class G0 pending
+  class G0,G1,G2,G3,G4,G5,G6 modelled
 ```
 
 ## Feedback into earlier phases
@@ -44,7 +43,7 @@ flowchart LR
 
 | Gate | Phase | Exit criterion (WP-M-00 §2) | Handbook chapters | Process map |
 |---|---|---|---|---|
-| G0 | Governance | Plans approved; roles assigned; CM and change control running | 4 | Not modelled yet |
+| G0 | Governance | Plans approved; roles assigned; CM and change control running | 4 | [G0 map](g0-governance.md) |
 | G1 | Concept | Item definition, HARA, FSC, SOTIF hazard and insufficiency analysis, TARA and CS concept approved; confirmation review of HARA (I3) passed | 5 | [G1 map](g1-concept.md) |
 | G2 | System design | TSC, system architecture, HSI and system-level safety analyses approved | 6 | [G2 map](g2-system-design.md) |
 | G3 | HW/SW development | HW and SW safety requirements, architecture, units and unit verification approved for every safety-relevant element | 7, 8 | [G3 map](g3-hw-sw-development.md) |

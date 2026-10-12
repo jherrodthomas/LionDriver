@@ -138,7 +138,7 @@ Legend for **ASPICE**: process IDs from ASPICE PAM 4.0, including the ML (MLE), 
 | [WP-P-08](../07-supporting/WP-P-08-software-component-qualification.md) | Qualification of software components (third-party and upstream software) | 8 §12 | | §10 (reuse, OSS) | | — | G3 | D |
 | [WP-P-09](../07-supporting/WP-P-09-proven-in-use.md) | Proven-in-use argument evaluation | 8 §14 | | | | — | G3 | D |
 | [WP-P-10](../07-supporting/WP-P-10-release-management.md) | Release management and baseline procedure | 2 §6 (release), 8 §7 | | §6 (release for post-development) | | SUP.8 | G5 | D |
-| [WP-P-11](../process/README.md) | Integrated process model and generated process maps (phases G1–G6 modelled) | 2 §6 | §4 | §6 | PAS 8800 (AI safety lifecycle) | MAN.3 | G0 | D |
+| [WP-P-11](../process/README.md) | Integrated process model and generated process maps (all phases G0–G6 modelled) | 2 §6 | §4 | §6 | PAS 8800 (AI safety lifecycle) | MAN.3 | G0 | D |
 
 ### 3.8 Safety analyses (`08-analyses/`)
 

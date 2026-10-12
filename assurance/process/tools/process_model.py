@@ -106,6 +106,46 @@ def load_roles(text: str) -> dict[str, tuple[str, str]]:
   return roles
 
 
+def load_plan_roles(text: str) -> dict[str, str]:
+  """Role table of a discipline plan (`| Role | Holder (today) | ...`): role -> holder."""
+  roles: dict[str, str] = {}
+  in_table = False
+  for line in text.splitlines():
+    if re.match(r"^\| Role \| Holder( \(today\)| today)? \|", line):
+      in_table = True
+      continue
+    if in_table:
+      if not line.startswith("|"):
+        break
+      c = _cells(line)
+      if len(c) >= 2 and not c[0].startswith("---"):
+        roles[c[0]] = c[1]
+  return roles
+
+
+def _role_key(role: str) -> str:
+  return re.sub(r"\s+", " ", role.lower().replace("(acting)", "").replace("ai/ml", "ai")).strip()
+
+
+def _unassigned(holder: str) -> bool:
+  h = holder.lower()
+  return h.startswith(("tbd", "to be appointed", "external, tbd"))
+
+
+def role_disagreements(ctx: Context, model: Model) -> list[str]:
+  """Roles that WP-M-02 §3.1 and a lane's plan record differently (assigned in one, TBD in the other)."""
+  safety_plan = {_role_key(r): (r, who) for r, (who, _) in ctx.roles.items()}
+  out = []
+  for plan in sorted({lane["plan"] for lane in model.lanes.values()} - {"WP-M-02"}):
+    for role, holder in ctx.plan_roles.get(plan, {}).items():
+      key = _role_key(role)
+      if key in safety_plan:
+        name, who = safety_plan[key]
+        if _unassigned(who) != _unassigned(holder):
+          out.append(f"{name}: WP-M-02 §3.1 says \"{who}\", {plan} says \"{holder}\"")
+  return out
+
+
 def load_gate_measures(text: str) -> dict[str, list[str]]:
   """Confirmation measures per gate from the WP-M-06 §9 summary table."""
   out: dict[str, list[str]] = {}
@@ -208,12 +248,15 @@ class Context:
   gates: dict[str, tuple[str, str]]
   roles: dict[str, tuple[str, str]]
   gate_measures: dict[str, list[str]]
+  plan_roles: dict[str, dict[str, str]] = field(default_factory=dict)
 
 
 def load_context() -> Context:
   register, gates = load_register(REGISTER_MD.read_text(encoding="utf-8"))
+  plan_roles = {wp: load_plan_roles(row.path.read_text(encoding="utf-8"))
+                for wp, row in register.items() if wp.startswith("WP-M-") and row.path.exists()}
   return Context(register, gates, load_roles(SAFETY_PLAN_MD.read_text(encoding="utf-8")),
-                 load_gate_measures(CONFIRMATION_MD.read_text(encoding="utf-8")))
+                 load_gate_measures(CONFIRMATION_MD.read_text(encoding="utf-8")), plan_roles)
 
 
 def check(model: Model, ctx: Context) -> dict[str, list[str]]:
@@ -571,6 +614,10 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
       extra.append(f"{role} ({who}; needed by {g.group(0)}, still unassigned)")
   if extra:
     out += ["", f"**Other roles WP-M-02 §3.1 needs by {gid}:** " + "; ".join(extra) + "."]
+  if gid == "G0":
+    clash = role_disagreements(ctx, model)
+    out += ["", "**Role records that disagree** (the readiness tables read WP-M-02 §3.1; a discipline plan records the same role differently): "
+            + ("; ".join(clash) if clash else "none") + "."]
   out += ["", "**Confirmation measures (WP-M-06 §9):**" + ("" if reviews else " none planned at this gate."), ""]
   if reviews:
     out += ["| Measure | Covers | Independence | Record |", "|---|---|---|---|"]
