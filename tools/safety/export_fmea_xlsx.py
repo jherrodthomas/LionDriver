@@ -18,6 +18,7 @@ Two deviations from running the builders directly, both so the workbook matches 
 Requires PyYAML, jsonschema and openpyxl.
 """
 import argparse
+import copy
 import importlib.util
 import json
 import sys
@@ -79,6 +80,41 @@ def _join(controls: list[dict]) -> str:
   return "; ".join(c["description"] + (f" [{c['test']}]" if c.get("test") else "") for c in controls)
 
 
+STATUS = {"open": "Open", "decision_pending": "Decision pending", "in_progress": "In progress", "completed": "Completed",
+          "not_implemented": "Not implemented"}
+
+
+def _row_status(acts: list[dict]) -> str:
+  if not acts:
+    return "No action"
+  if all(a["status"] == "completed" for a in acts):
+    return "Completed"
+  return ", ".join(dict.fromkeys(STATUS[a["status"]] for a in acts if a["status"] != "completed"))
+
+
+def postprocess(out: Path, kind: str, hdr: dict, statuses: dict[str, str]) -> None:
+  """Fill what the builders leave out but the checklist reviewers read: FMEA ID, status and project on the title
+  page, and the per-row action status in the worksheet (the DFMEA builder leaves it blank, the SW builder writes
+  "Open" for every row)."""
+  from openpyxl import load_workbook
+  wb = load_workbook(out)
+  ws = wb["00_Title_Page"]
+  row = ws.max_row + 1
+  for label, value in (("FMEA ID", f"LD-{hdr['id']}-001"), ("Status", hdr["status"].replace("_", " ").title()),
+                       ("Project", "LionDriver: openpilot fork, reference configuration 2020 Toyota Corolla LE (AC-001)")):
+    ws.cell(row=row, column=2, value=label).font = copy.copy(ws.cell(row=row - 1, column=2).font)
+    ws.cell(row=row, column=3, value=value)
+    row += 1
+  ws = wb["05_SW_FMEA_Worksheet" if kind == "sw" else "05_DFMEA_Worksheet"]
+  headers = {ws.cell(3, c).value: c for c in range(1, ws.max_column + 1)}
+  col = headers["Status"]
+  for r in range(4, ws.max_row + 1):
+    rid = ws.cell(r, 1).value
+    if rid in statuses:
+      ws.cell(r, col, value=statuses[rid])
+  wb.save(out)
+
+
 def _asil(fsr_asils: list[str]) -> str:
   order = ["QM", "A", "B", "C", "D"]
   letters = [a.split("(")[0] for a in fsr_asils]
@@ -134,6 +170,7 @@ def to_builder_json(kind: str, doc: dict, fsc: dict | None) -> dict:
         "prevention_control": _join(c["prevention_controls"]), "detection_control": _join(c["detection_controls"]),
         "recommended_action": "; ".join(f"{a['id']} ({a['status']}): {a['description']}" for a in acts) or c.get("rationale", ""),
         "owner": ", ".join(dict.fromkeys(a.get("owner", "") for a in acts)), "target_date": "",
+        "_status": _row_status(acts),
       }
       if kind == "sw":
         row.update(element_id=c.get("element", fm["element"]), guide_word=SW_GUIDEWORDS.get(fm["guideword"], fm["guideword"]),
@@ -214,6 +251,7 @@ def main(argv=None) -> int:
   fsc = fmea_lint.load_yaml(fsc_path.read_text()) if fsc_path.exists() else None
   data = to_builder_json(args.kind, doc, fsc)
   history = data.pop("_history")
+  statuses = {r["id"]: r.pop("_status") for r in data["failure_modes"]}
   extras = {"refs": data.pop("_refs"), "crossref": data.pop("_crossref"), "sc": data.pop("_sc")}
 
   out = args.output or (root / DEFAULT_OUT[args.kind])
@@ -223,6 +261,7 @@ def main(argv=None) -> int:
     json.dump(data, f)
   result = mod.generate(f.name, str(out))
   Path(f.name).unlink()
+  postprocess(out, args.kind, doc["analysis"], statuses)
   print(json.dumps(result, indent=2))
   return 0
 
