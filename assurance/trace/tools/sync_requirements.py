@@ -2,10 +2,12 @@
 """Copy the functional and technical safety requirements from their work products into trace items.
 
 Sources (the work products stay the reviewed documents; the YAML files are generated copies):
-  FSR  WP-C-04 §5 requirement tables; SG parents from the WP-C-04 §9 FSR -> SG matrix
-  TSR  WP-S-02 §3-§9 requirement tables (TSR-1xx...7xx); WP-S-06 tables (TSR-8xx, full text)
+  FSR   WP-C-04 §5 requirement tables; SG parents from the WP-C-04 §9 FSR -> SG matrix
+  TSR   WP-S-02 §3-§9 requirement tables (TSR-1xx...7xx); WP-S-06 tables (TSR-8xx, full text)
+  SWSR  WP-W-02 §3-§9 requirement tables; §11 SW-HW interface rows (parent = the TSR of the same number)
+  HWSR  WP-H-01 §4 requirement tables
 
-Outputs: assurance/trace/items/fsr.yaml, assurance/trace/items/tsr.yaml
+Outputs: assurance/trace/items/fsr.yaml, tsr.yaml, swsr.yaml, hwsr.yaml
 
 Usage:
   python3 assurance/trace/tools/sync_requirements.py           # regenerate the YAML files
@@ -28,6 +30,8 @@ ITEMS_DIR = TRACE_DIR / "items"
 FSC_MD = ASSURANCE_DIR / "02-concept" / "WP-C-04-functional-safety-concept.md"
 TSR_MD = ASSURANCE_DIR / "03-system" / "WP-S-02-technical-safety-requirements.md"
 TSR8_MD = ASSURANCE_DIR / "03-system" / "WP-S-06-requirements-production-operation.md"
+SWSR_MD = ASSURANCE_DIR / "05-software" / "WP-W-02-software-safety-requirements.md"
+HWSR_MD = ASSURANCE_DIR / "04-hardware" / "WP-H-01-hardware-safety-requirements.md"
 
 ITEM_PREFIXES = {"FSR", "TSR", "SG", "AOU", "H", "HE", "GAP"}
 
@@ -161,10 +165,73 @@ def _tsr(tid, req, asil, parent, source, **kw) -> dict:
           "other_parents": bool(other), **kw, "status": "proposed", "source": source}
 
 
+# ---------------------------------------------------------------- SWSR, HWSR
+
+def _parent_cell(text: str) -> str:
+  """Normalise a SWSR/HWSR parent cell for expand_refs: 'FSR-01.09 / TSR-501 (note)' -> 'FSR-01.09, TSR-501';
+  'TSR-307(a)' -> 'TSR-307'."""
+  return re.sub(r"\s*\([^)]*\)", "", text).replace(" / ", ", ")
+
+
+def swsr_items() -> list[dict]:
+  items = []
+  tsr_asil = {t["id"]: t["asil"] for t in tsr_items()}
+  for line in SWSR_MD.read_text(encoding="utf-8").splitlines():
+    if not re.match(r"^\| SWSR-[0-9]{3}[a-z]? \|", line):
+      continue
+    c = cells(line)
+    if len(c) == 8:
+      sid, req, asil, parent, alloc, verif, accept, impl = c
+      ids, other = expand_refs(_parent_cell(parent))
+      items.append({"id": sid, "kind": "swsr", "text": req, "asil": asil, "parents": ids, "parent_text": parent,
+                    "other_parents": bool(other), "allocated_to": alloc, "verification": verif, "acceptance": accept,
+                    "baseline_impl": impl, "status": "proposed", "source": "WP-W-02"})
+    elif len(c) == 6:  # §11 SW-HW interface requirement: parent is the TSR of the same number
+      sid, req, hw, hsi, hwsr, impl = c
+      tid = "TSR-" + re.match(r"SWSR-([0-9]{3})", sid).group(1)
+      items.append({"id": sid, "kind": "swsr", "text": req, "asil": tsr_asil.get(tid, ""), "parents": [tid],
+                    "parent_text": f"{tid} (WP-W-02 §11; ASIL taken from {tid})", "other_parents": False,
+                    "allocated_to": hw, "verification": "", "acceptance": "", "baseline_impl": impl,
+                    "status": "proposed", "source": "WP-W-02"})
+    else:
+      raise ValueError(f"WP-W-02: unexpected column count {len(c)} in {c[0]}")
+  return items
+
+
+def hwsr_items() -> list[dict]:
+  items = []
+  for line in HWSR_MD.read_text(encoding="utf-8").splitlines():
+    if not re.match(r"^\| HWSR-[0-9]{3}[a-z]? \|", line):
+      continue
+    c = cells(line)
+    if len(c) != 8:
+      raise ValueError(f"WP-H-01: unexpected column count {len(c)} in {c[0]}")
+    hid, req, asil, parent, alloc, kind, verif, impl = c
+    ids, other = expand_refs(_parent_cell(parent))
+    items.append({"id": hid, "kind": "hwsr", "text": req, "asil": asil, "parents": ids, "parent_text": parent,
+                  "other_parents": bool(other), "allocated_to": alloc, "hw_kind": kind, "verification": verif,
+                  "baseline_impl": impl, "status": "proposed", "source": "WP-H-01"})
+  return items
+
+
+def not_refined(md: Path, heading: str) -> list[str]:
+  """TSR IDs listed in a work product's 'TSRs not refined into ...' table (first column)."""
+  text = md.read_text(encoding="utf-8")
+  if heading not in text:
+    return []
+  sec = text.split(heading, 1)[1].split("\n## ", 1)[0]
+  out: list[str] = []
+  for line in sec.splitlines():
+    c = cells(line) if line.startswith("|") else []
+    if c and c[0].startswith("TSR-"):
+      out += expand_refs(c[0])[0]
+  return out
+
+
 # ---------------------------------------------------------------- output
 
 FIELD_ORDER = ["id", "kind", "text", "asil", "parents", "parent_text", "other_parents", "allocated_to", "mechanism",
-               "timing", "verification", "baseline_impl", "status", "source"]
+               "timing", "hw_kind", "verification", "acceptance", "baseline_impl", "status", "source"]
 
 
 def render(items: list[dict], header: str) -> str:
@@ -200,12 +267,29 @@ TSR_HEADER = """# TSR items: technical safety requirements from WP-S-02 §3-§9 
 # Schema: see ../README.md §4.5."""
 
 
+SWSR_HEADER = """# SWSR items: software safety requirements from WP-W-02 §3-§9 and the §11 SW-HW interface rows.
+# GENERATED by tools/sync_requirements.py from the work product, which stays the source of truth.
+# Do not edit by hand: change WP-W-02 and regenerate. CI fails if this file is out of date.
+# Schema: see ../README.md §4.5."""
+
+HWSR_HEADER = """# HWSR items: hardware safety requirements from WP-H-01 §4.
+# GENERATED by tools/sync_requirements.py from the work product, which stays the source of truth.
+# Do not edit by hand: change WP-H-01 and regenerate. CI fails if this file is out of date.
+# Schema: see ../README.md §4.5."""
+
+
+def expected_outputs() -> dict[str, str]:
+  return {
+    "fsr.yaml": render(fsr_items(), FSR_HEADER),
+    "tsr.yaml": render(tsr_items(), TSR_HEADER),
+    "swsr.yaml": render(swsr_items(), SWSR_HEADER),
+    "hwsr.yaml": render(hwsr_items(), HWSR_HEADER),
+  }
+
+
 def main(argv: list[str]) -> int:
   check = "--check" in argv
-  outputs = {
-    ITEMS_DIR / "fsr.yaml": render(fsr_items(), FSR_HEADER),
-    ITEMS_DIR / "tsr.yaml": render(tsr_items(), TSR_HEADER),
-  }
+  outputs = {ITEMS_DIR / name: content for name, content in expected_outputs().items()}
   stale = []
   for path, content in outputs.items():
     current = path.read_text(encoding="utf-8") if path.exists() else None
@@ -217,7 +301,7 @@ def main(argv: list[str]) -> int:
       path.write_text(content, encoding="utf-8")
       print(f"wrote {path.relative_to(ASSURANCE_DIR.parent).as_posix()}")
   if stale:
-    print(f"FAIL: {', '.join(stale)} out of date with WP-C-04 / WP-S-02 / WP-S-06; run assurance/trace/tools/sync_requirements.py")
+    print(f"FAIL: {', '.join(stale)} out of date with WP-C-04 / WP-S-02 / WP-S-06 / WP-W-02 / WP-H-01; run assurance/trace/tools/sync_requirements.py")
     return 1
   print("OK: requirement items match the work products" if check else "OK: requirement items generated")
   return 0

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-02 Software safety requirements specification |
 | Standard reference | ISO 26262-6:2018 §6 (specification of software safety requirements, incl. HSI refinement); ISO 26262-8:2018 §6 (requirement attributes and management); ISO 26262-4:2018 §6 (HSI, by reference to WP-S-05); ASPICE 4.0 SWE.1 |
-| Version | 0.1 |
+| Version | 0.2 (SWSRs for WP-S-02 v0.3: TSR-303, 516, 621…627, 711; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Envelope software (E-03a/E-03b): B‡ (ASIL C applies until SG-01 is re-rated, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host software (E-01): QM / QM (B-sup) |
 | Author | Assurance team (initial draft) |
@@ -100,7 +100,7 @@ Refines TSR-201…207. E-03a. Parent SGs: SG-03, SG-04, SG-05.
 |---|---|---|---|---|---|---|---|
 | SWSR-301 | The envelope shall set authority only on a rising edge of PCM_CRUISE (`0x1D2`) CRUISE_ACTIVE (bit 5) and clear it in the RX call in which CRUISE_ACTIVE = 0 is received. | B‡ | TSR-301 | U-SAF-CORE, U-SAF-TOY | UT, HIL | State table of WP-W-05 §5.2 fully covered | Impl: `safety.h:518-527`; `modes/toyota.h:143-146` |
 | SWSR-302 | The envelope shall clear authority when BRAKE_PRESSED (`0x226` bit 37) rises, or is set while any wheel speed is non-zero. | B | TSR-302 | U-SAF-CORE, U-SAF-TOY | UT, HIL | Clear in the same RX call | Impl: `safety.h:350-357`; `modes/toyota.h:148-150, 157-168`. `0x226` without checksum (GAP-01) → SWSR-405 |
-| SWSR-303h | `card`/Toyota carcontroller shall set CANCEL_REQ in ACC_CONTROL on every fault-induced disengagement with openpilot longitudinal. | QM (B-sup) | TSR-303 | `host.card` | UT, VT | CANCEL_REQ = 1 within 0.1 s | Impl: `carcontroller.py:253-254` |
+| SWSR-303h | `controlsd` and the Toyota carcontroller shall set CANCEL_REQ in ACC_CONTROL on every fault-induced disengagement while PCM cruise is on, with or without openpilot longitudinal. | QM (B-sup) | TSR-303 | `host.controlsd`, `host.card` | UT, VT | CANCEL_REQ = 1 within 0.1 s of disengagement, in both longitudinal modes | Impl: `controlsd.py:162`; `carcontroller.py:253-254, 269-273` |
 | SWSR-304 | The lateral check shall reject `0x2E4` frames that increase torque opposing a driver torque beyond the driver allowance, using the last 6 STEER_TORQUE_DRIVER samples of `0x260`. | B (SG-05); B‡ | TSR-304 | U-SAF-LAT, U-SAF-TOY | UT, VT | Boundary at allowance ± 1 raw | Not impl on LKA path: Toyota uses `TorqueMotorLimited` (`modes/toyota.h:178`); driver samples used for LTA only (`:113-116, 294-298`); `driver_limit_check` exists (`lateral.h:26-46`) (GAP-02) |
 | SWSR-304a | When \|driver torque\| exceeds T_ovr for longer than t_ovr while lateral authority is granted, the envelope shall clear lateral authority (via `steering_disengage`). | B (SG-05); B‡ | TSR-304 | U-SAF-TOY, U-SAF-CORE | UT, VT | Clear at t_ovr + 1 frame; values from WP-C-08 | Not impl: `steering_disengage` edge handling exists (`safety.h:365-369`), not set by Toyota (GAP-02) |
 | SWSR-305 | While GAS_RELEASED (`0x1D2` bit 4) = 0 the envelope shall treat longitudinal authority as not granted and shall not clear lateral authority. | B | TSR-305 | U-SAF-TOY, U-SAF-LONG | UT | Lateral accepted, `0x343` non-inactive rejected while gas pressed | Impl: `modes/toyota.h:146`; `longitudinal.h:3-5` |
@@ -173,7 +173,8 @@ Refines TSR-201…207. E-03a. Parent SGs: SG-03, SG-04, SG-05.
 | SWSR-517 | The firmware shall read back its own transmitted actuation frames on the car-side bus (FDCAN TX event or loop-back reception) and compare them with the frame approved by the TX hook; a mismatch within 2 frames shall be a fault under SWSR-502. | B‡ | TSR-517 | U-PND-FDCAN, U-PND-FLT | FI, HIL | Injected corruption after the TX hook detected ≤ 2 frames | Not impl: XOR check before FIFO load only (`drivers/fdcan.h:100`) |
 | SWSR-518 | The TX hook shall reject frames of each whitelisted ID sent faster than its nominal period minus a tolerance, and shall revoke authority and report when the excess persists while authority is granted. | B‡ | TSR-518 | U-SAF-CORE, U-SAF-TOY | UT, HIL | `0x2E4` at 2× rate: excess frames rejected; persistent excess → revocation ≤ 0.1 s | Not impl (content checks only) |
 | SWSR-519 | The firmware shall assign an explicit NVIC priority to every enabled interrupt per the scheme of WP-W-03 §5.1/OI-4, and the measured worst-case latency of the periodic safety task under worst-case interrupt load shall meet the SWSR-401a/407/501 budgets. | B‡ | TSR-519 | U-PND-PLAT, U-PND-MAIN | A, HIL | Every enabled IRQ has a documented priority; measured latency within budget | Not impl: no `NVIC_SetPriority` in `panda/board` (all at default priority); RX hook in FDCAN ISR (`drivers/fdcan.h:221`), TX hook and dispatcher in SPI DMA ISR (`stm32h7/llspi.h:56-61`) (GAP-50) |
-| SWSR-516 | On heartbeat loss (SWSR-407) or a platform/RX fault revocation within 5 s after authority was granted, the firmware shall activate its siren within 0.5 s without SoC involvement. | B | TSR-516 | U-PND-MAIN, `panda.drivers.siren` (U-PND-HK) | HIL | Siren ≤ 0.5 s | Partial: 3 s siren after 5 s heartbeat loss (`main.c:169-171, 198-201`) |
+| SWSR-516 | The firmware shall activate its siren within 0.5 s, without SoC involvement, when (a) the heartbeat is lost (SWSR-407) while authority was granted within the last 5 s; (b) authority is cleared while granted for any reason other than a brake press (SWSR-302) or PCM cruise inactive (SWSR-301): RX fault (SWSR-406), EPS fault (SWSR-110), rejected command (SWSR-108), TX failure or bus-off (SWSR-508), platform fault (SWSR-502) or heartbeat "not engaged" (SWSR-307); (c) SWSR-516b fires. | B | TSR-516 | U-PND-MAIN, `panda.drivers.siren` (U-PND-HK) | UT, HIL | Siren ≤ 0.5 s for each trigger; no siren on a brake press or PCM cancel alone | Partial: 3 s siren after 5 s heartbeat loss only (`main.c:169-171, 198-201`) |
+| SWSR-516b | The envelope shall record the time at which the heartbeat first reports "not engaged" and shall flag a failed cancel when PCM_CRUISE CRUISE_ACTIVE is still 1 more than 0.5 s later. | B | TSR-516 | U-SAF-CORE | UT, HIL | Flag at 0.5 s ± one RX period; not set when cruise drops within 0.5 s | Not impl |
 
 ## 8. SWSR-6xx Host software (SoC, QM)
 
@@ -203,6 +204,14 @@ Host requirements are QM. Those marked QM (B-sup) support an envelope SWSR; no A
 | SWSR-618 | PCM ACC fault → immediate disable. | QM (B-sup) | TSR-618 | `host.selfdrived` | UT | Event | Impl: `events.py:908` |
 | SWSR-619 | `pandad` shall compare panda-reported safety model, parameter and alternative experience with the release-record values and block engagement with an alert on mismatch. | QM (B-sup) | TSR-619 | `host.pandad`, `host.selfdrived` | UT, IT | Mismatch → no engagement ≤ 1 s | Not impl (`selfdrive/pandad/panda_safety.cc:56-69`); host check vs CarParams only (`selfdrived.py:330-339`) |
 | SWSR-620 | The host shall request TOYOTA mode and allow engagement only when the ECU firmware versions read at start-up match the release record; otherwise it shall keep NOOUTPUT and inform the driver. | QM (B-sup) | TSR-620 | `host.card`, `host.pandad` | UT, VT | Mismatching FW set → NOOUTPUT | Not impl: fuzzy fingerprinting (`opendbc_repo/opendbc/car/car_helpers.py:86-87, 144, 164`); W-09 DVR-10 |
+| SWSR-621 | `selfdrived` shall raise `controlsMismatch` (immediate disable) when, while engaged, any panda in a car safety mode reports `controlsAllowed` false for 2 consecutive `pandaStates` samples, and in any case within 0.5 s of the first such sample. | QM (B-sup) | TSR-621 | `host.selfdrived` | UT, FI | Event ≤ 0.5 s; no event on single-sample skew in the reference log set | Partial: 200 samples ≈ 2 s (`selfdrived.py:338, 508-510`) |
+| SWSR-622 | `ui` and `soundd` shall each publish a liveness counter that advances only when a frame is rendered or an audio buffer is written; `selfdrived` shall raise an immediate disable when either counter has not advanced for more than 1 s while the item can engage. | QM (B-sup) | TSR-622 | `host.hmi`, `host.selfdrived` | UT, FI | Disable ≤ 1.2 s after a render or audio stall (SIGSTOP of the process) | Not impl: only `processNotRunning` on a crash (`selfdrived.py:351-357`) |
+| SWSR-622a | The siren and the cluster cruise indication carry the take-over request in the SWSR-622 case; `selfdrived` shall also request ACC cancel (SWSR-303h). | QM (B-sup) | TSR-622 | `host.selfdrived` | IT | Cancel sent on the HMI-stall disable | Partial: cancel follows from disable (`controlsd.py:162`) |
+| SWSR-623 | `soundd` shall not output alerts below a defined audible minimum volume while the item can engage; if it cannot guarantee the minimum, `selfdrived` shall raise a no-entry event. | QM (B-sup) | TSR-623 | `host.hmi`, `host.selfdrived` | UT, R | Output gain ≥ minimum for every alert while engageable | Not assessed: ambient-scaled volume with `MIN_VOLUME = 0.1` (`selfdrive/ui/soundd.py:20, 159-160`) |
+| SWSR-624 | Deceleration that `controlsd` or the planner requests for a reason other than traffic (driver-monitoring no-response, fault soft disable) shall start only after the alert announcing it has been active for ≥ 1 s, and its rate shall not exceed j_down (TSR-205). | QM (B-sup) | TSR-624 | `host.controlsd`, `host.plannerd`, `host.dm` | UT, VT | Alert-to-onset ≥ 1 s; jerk ≤ j_down in replay | Partial: soft-disable force deceleration starts with its alert (`longitudinal_planner.py:84-85`); no jerk bound |
+| SWSR-625 | `selfdrived` shall raise FCW only when `modelV2` and `longitudinalPlan` are each within 2 nominal periods and valid; it shall log every FCW with its trigger source so that the false-FCW rate per driving hour can be measured against the WP-V-02 target. | A (open: WP-C-04 OI-9) | TSR-625 | `host.selfdrived` | UT, LOG | No FCW from a stale or invalid input; rate measurable from logs | Partial: no freshness gate (`selfdrived.py:440-445`) |
+| SWSR-626 | While engaged, `selfdrived` shall raise an immediate disable when (a) `pandaStates` is older than 0.2 s; (b) with lateral control active, STEER_TORQUE_EPS does not follow a commanded torque above the threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration does not follow the request beyond the tolerance for longer than t_blk. | QM (B-sup) | TSR-626 | `host.selfdrived`, `host.card` | UT, RP, FI | (a) ≤ 0.2 s; (b), (c) ≤ t_blk ≤ 0.5 s; no false event in the reference log set | Not impl: `pandaStates` alive limit 1 s |
+| SWSR-627 | `soundd` shall run with a real-time scheduling priority not lower than `ui`, or WP-W-07 shall contain a worst-case load test showing alert output within the SWSR-606 latency. | QM (B-sup) | TSR-627 | `host.hmi` | R, IT (load) | Priority set, or load test passed | Not met: no real-time priority for `soundd`; `ui` at `Priority.CTRL_HIGH` (`selfdrive/ui/ui.py:19`) |
 
 ## 9. SWSR-7xx Stock PCS preservation (software part)
 
@@ -213,6 +222,8 @@ Host requirements are QM. Those marked QM (B-sup) support an envelope SWSR; no A
 | SWSR-705 | The reference Toyota TX whitelist shall not contain `0x344`, `0x411`, `0x2E6`, `0x2E7`, `0x33E`, `0x365`, `0x366`, `0x4CB` or the bus-1 DSU set; `0x283` shall pass only with zero payload. | B | TSR-705 | U-SAF-TOY | UT, R | Each ID rejected; `0x283` non-zero rejected | Not met (`modes/toyota.h:19-32`); `0x283` impl `:251-257` (GAP-42, GAP-49) |
 | SWSR-706 | Every entry to SILENT/NOOUTPUT and every fault reaction shall release the relay before returning. | B | TSR-706 | U-PND-MAIN, U-PND-HARN | UT, HIL | Relay output released after each path | Partial: `main.c:44-54`; hang path → SWSR-501/502a (GAP-43) |
 | SWSR-707 | Forwarding latency camera → car shall be ≤ 1 ms (TBD) under worst-case load, and TX queue overflow on the forwarding path shall be a reported fault. | B | TSR-707 | U-PND-FDCAN | HIL, A | Measured p100 latency ≤ bound | Not verified; overflow counted (`drivers/can_common.h:165`) |
+| SWSR-711 | While the relay is driven, the firmware shall release the relay (SWSR-706) and clear all authority when camera-side forwarding has stopped: no frame received on the camera-side bus for longer than t_fwd after frames were received there, camera-side FDCAN bus-off or error-passive, or forwarding queue overflow. | B | TSR-711 | U-PND-FDCAN, U-PND-MAIN | UT, HIL, FI | Relay released ≤ 0.1 s after the condition (SG-07 FRTI); detection ≤ 0.1 s | Not impl: overflow counted only (`drivers/can_common.h:165`) |
+| SWSR-711a | t_fwd shall be a named constant set from the measured camera-side message periods (WP-S-05 OI-7), and the SWSR-711 check shall run at ≥ 50 Hz (SWSR-401a) so that detection fits the SG-07 FDTI of 0.1 s. | B | TSR-711 | U-PND-MAIN | R, HIL | Constant traced to the measurement; check period ≤ 20 ms | Not impl: periodic checks run in the 1 Hz tick |
 | SWSR-710 | The envelope shall latch relay malfunction when a `check_relay` message is seen on the car side more than 1 s after the last mode change, and then block all TX and forwarding. | B‡ | TSR-710 | U-SAF-CORE | UT, HIL | Latch, TX and forwarding blocked | Impl: `safety.h:211-220, 252, 268, 372-380` |
 | SWSR-709h | The HMI shall inform the driver of stock AEB/FCW events. | QM | TSR-709 | `host.card` | UT | Event | Impl: `selfdrive/car/car_events.py:120-123` |
 
@@ -282,9 +293,10 @@ These SWSRs depend on a hardware resource. They refine the HSI of [WP-S-05](../0
 | TSR-301 | 301 | TSR-513 | 513 |
 | TSR-302 | 302 | TSR-514 | 514, 514h |
 | TSR-303 | 303h | TSR-515 | 515 |
-| TSR-304 | 304, 304a | TSR-516 | 516, 516a |
+| TSR-304 | 304, 304a | TSR-516 | 516, 516a, 516b |
 | TSR-517 | 517 | TSR-518 | 518 |
 | TSR-519 | 519 | | |
+| TSR-621…627 | 621, 622, 622a, 623, 624, 625, 626, 627 | TSR-711 | 711, 711a |
 | TSR-305 | 305 | TSR-601…620 | 601…620 (601a, 605a); 614 = 414h |
 | TSR-306 | 306 | TSR-701 | 701, 701a |
 | TSR-307 | 307, 307h | TSR-704 | 704 |
@@ -310,12 +322,12 @@ Every TSR allocated to P-SW or SoC in WP-S-02 has at least one SWSR. TSRs not re
 | 2xx | 8 | — |
 | 3xx | 9 | 3 (303h, 307h, 308h) |
 | 4xx | 18 | 3 (409h, 410h, 414h) |
-| 5xx | 35 (incl. HSI) | 1 (514h) |
-| 6xx | — | 22 |
-| 7xx | 7 (incl. 701a) | 1 (709h) |
-| **Total** | **93** | **30** |
+| 5xx | 36 (incl. HSI) | 1 (514h) |
+| 6xx | — | 30 |
+| 7xx | 9 (incl. 701a) | 1 (709h) |
+| **Total** | **96** | **38** |
 
-**Total SWSRs: 123.** Machine-readable records go to `assurance/trace/items/swsr.yaml` (OI-1).
+**Total SWSRs: 134.** [`trace/items/swsr.yaml`](../trace/items/swsr.yaml) is generated from this document by `trace/tools/sync_requirements.py`; CI checks that it is current and that every software-allocated TSR has an SWSR or is listed in §10.
 
 ### 13.3 SWSR → verification
 
@@ -327,18 +339,19 @@ Every TSR allocated to P-SW or SoC in WP-S-02 has at least one SWSR. TSRs not re
 | 401–406 | VS-UV-09, 10 | VS-SWI-03, 04 | VS-SWQ-08, 09 |
 | 407–414h | VS-UV-14, 15 | VS-SWI-05…08, 11, 12 | VS-SWQ-10…12 |
 | 501–519 | VS-UV-13, 16, 21, 22 | VS-SWI-12…15 | VS-SWQ-14…19, 23, 25 |
-| 601–620 | host unit tests (WP-W-06 §4.7) | VS-SWI-16, 17 | VS-SWQ-20 |
-| 701–710 | VS-UV-11, 18 | VS-SWI-09 | VS-SWQ-21, 22 |
+| 601–627 | host unit tests (WP-W-06 §4.7) | VS-SWI-16, 17 | VS-SWQ-20 |
+| 701–711a | VS-UV-11, 18 | VS-SWI-09 | VS-SWQ-21, 22 (711: new case needed, OI-9) |
 
 ## 14. Open items
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Create `trace/items/swsr.yaml` from this document; add `@req` tags in the forks (D-01) | Safety engineer | G3 |
+| OI-1 | ~~Create `trace/items/swsr.yaml` from this document~~ (done: generated, checked in CI); add `@req` tags in the forks (D-01) | Safety engineer | G3 |
 | OI-2 | Replace B‡ with the final ASIL after SG-01 re-rating (WP-S-02 OI-2) | Safety manager | G2 |
 | OI-3 | Decide frame ownership for SWSR-109/109a: envelope-generated `0x2E4` needs the counter/checksum layout from the DBC and must not conflict with SoC frames; alternative (b) of TSR-109 needs WP-S-04 M-02 | SW lead | G3 |
 | OI-4 | Set numeric values for j_up, j_down, T_ovr, t_ovr, t_frz, N_spi, driver allowance and tolerances of SWSR-405 (WP-S-02 OI-3, OI-5) | Safety engineer | G3 |
 | OI-5 | Decide whether `0xc0` (comms reset), `0xb0`/`0xb1` and `0xf6` need gating in car modes; TSR-513 does not list them (see WP-W-04 SWF-24) | Safety engineer | G3 |
 | OI-6 | Extend `struct lookup_t` beyond 3 breakpoints if the τ_max(v) table needs more (SWSR-102) | SW lead | G3 |
-| OI-7 | Re-check SWSR parents after WP-S-02 approval; this draft follows WP-S-02 including TSR-517…519 and TSR-619/620 | Safety engineer | G3 |
+| OI-7 | Re-check SWSR parents after WP-S-02 approval; this draft follows WP-S-02 v0.3 including TSR-517…519, TSR-619…627 and TSR-711 | Safety engineer | G3 |
+| OI-9 | Add verification cases for SWSR-516b, 621…627 and 711/711a to WP-W-06…08 | Test lead | G3 |
 | OI-8 | Agree the reason-code field layout of SWSR-108a with WP-S-05 §4.2 and `cereal` `pandaStates` | SW lead | G3 |

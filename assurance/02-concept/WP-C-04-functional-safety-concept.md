@@ -18,7 +18,7 @@ This document derives functional safety requirements (FSRs) from the safety goal
 
 Inputs:
 
-- [WP-C-01](WP-C-01-item-definition.md): functions F-01…F-09, elements E-01…E-06, interfaces IF-01…IF-09, AOU-01…AOU-11.
+- [WP-C-01](WP-C-01-item-definition.md): functions F-01…F-09, elements E-01…E-06, interfaces IF-01…IF-09, AOU-01…AOU-11 (AOU-12 and AOU-13, defined in §11, were added to WP-C-01 in its v0.2).
 - [WP-C-03](WP-C-03-hara.md) v0.2 (Cartesian HARA): hazards H-01…H-08; SG-01…SG-07 with ASIL, safe states and preliminary FTTIs; the new hazardous-event sources of WP-C-03 §6.1 obs. 5.
 - [WP-C-02](WP-C-02-odd-and-intended-functionality.md): ODD and intended functionality.
 - [Gap assessment](../00-assessment/gap-assessment.md): GAP-01…GAP-37.
@@ -297,8 +297,8 @@ Every SG has at least one FSR allocated to E-03 (or to an external measure plus 
 | AOU-04R | AOU-04 | PCS/AEB braking has priority over `0x343` requests in the PCM, and PCS works with the harness installed | FSR-07.04 | Message review + PCS target test | Unverified |
 | AOU-05R | AOU-05 | The PCM clamps ACC requests to its own envelope and honours the cancel bit; the inactive value produces coasting without a deceleration step | FSR-03.06, 04.03 | Vehicle test with injected requests | Unverified |
 | AOU-06R | AOU-06 | The driver supervises continuously, keeps hands near the wheel and is able to respond within the reaction times assumed in WP-C-08 §7 | All C2 ratings | WP-C-08 | Assumption |
-| AOU-12 | new | The cluster cruise indicator is driven by PCM state and is not influenced by item TX messages other than `0x412` LKAS_HUD | FSR-05.05 | Vehicle test | Unverified |
-| AOU-13 | new | The de-energised harness relay connects the forward camera to the vehicle CAN (stock path) | FSR-07.03 | Harness inspection / test (WP-H-02) | Unverified |
+| AOU-12 | WP-C-01 AOU-12 | The cluster cruise indicator is driven by PCM state and is not influenced by item TX messages other than `0x412` LKAS_HUD | FSR-05.05 | Vehicle test | Unverified |
+| AOU-13 | WP-C-01 AOU-13 | The de-energised harness relay connects the forward camera to the vehicle CAN (stock path) | FSR-07.03 | Harness inspection / test (WP-H-02) | Unverified |
 
 ## 12. Warning and degradation concept
 

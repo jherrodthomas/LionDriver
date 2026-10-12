@@ -24,12 +24,14 @@ The Markdown work products remain the documents that are reviewed and approved. 
 |---|---|---|---|
 | `items/hazards.yaml` | Hazards H-01…H-08; hazardous events HE-01.1…HE-08.1 with S/E/C/ASIL | [WP-C-03](../02-concept/WP-C-03-hara.md) §4–§5 | 8 + 30 |
 | `items/goals.yaml` | Safety goals SG-01…SG-07 with ASIL, safe state, FTTI, source HEs | [WP-C-03](../02-concept/WP-C-03-hara.md) §6 | 7 |
-| `items/aou.yaml` | Assumptions of use AOU-01…AOU-11 | [WP-C-01](../02-concept/WP-C-01-item-definition.md) §7 | 11 |
+| `items/aou.yaml` | Assumptions of use AOU-01…AOU-13 | [WP-C-01](../02-concept/WP-C-01-item-definition.md) §7 | 13 |
 | `items/fsr.yaml` | Functional safety requirements FSR-01.01…FSR-07.05 with ASIL, parent SGs, allocation, verification | [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §5, parents from §9. **Generated** | 54 |
 | `items/tsr.yaml` | Technical safety requirements TSR-101…TSR-818 with ASIL, parents, allocation, mechanism, timing, verification | [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) §3–§9, [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) (TSR-8xx). **Generated** | 118 |
+| `items/swsr.yaml` | Software safety requirements SWSR-101…SWSR-711a with ASIL, parent TSRs, allocation, verification, acceptance | [WP-W-02](../05-software/WP-W-02-software-safety-requirements.md) §3–§9 and §11. **Generated** | 134 |
+| `items/hwsr.yaml` | Hardware safety requirements HWSR-401…HWSR-711a with ASIL, parent FSRs/TSRs, allocation, kind, verification | [WP-H-01](../04-hardware/WP-H-01-hardware-safety-requirements.md) §4. **Generated** | 45 |
 | `tools/check_trace.py` | Consistency checker (§6) | — | — |
 | `tools/check_links.py` | Relative-link checker for all of `assurance/` (WP-P-04) | — | — |
-| `tools/sync_requirements.py` | Regenerates `fsr.yaml` and `tsr.yaml` from the work products; `--check` reports drift | — | — |
+| `tools/sync_requirements.py` | Regenerates `fsr.yaml`, `tsr.yaml`, `swsr.yaml` and `hwsr.yaml` from the work products; `--check` reports drift | — | — |
 
 All items carry `status: proposed`: none of the source work products is approved. The HARA ratings are proposals pending the I3 confirmation review (CR-02).
 
@@ -43,7 +45,7 @@ python3 assurance/trace/tools/check_links.py          # every relative link unde
 
 Both checks run in CI (`.github/workflows/assurance.yaml`) on pull requests that touch `assurance/` and on pushes to `liondriver-dev`. Either one failing fails the job.
 
-Result at this baseline: `trace: 5 files, 228 items aou=11, fsr=54, hazard=8, hazardous-event=30, safety-goal=7, tsr=118` — `OK: all implemented checks passed`. The checker needs only the Python standard library. It uses PyYAML when available; PyYAML is **not** a direct dependency of LionDriver (`uv.lock` lists `pyyaml` only as an optional `autogen` extra of tinygrad), so a built-in parser for the YAML subset in §4.1 is used otherwise. Both paths were run and give the same result.
+Result at this baseline: `trace: 7 files, 409 items aou=13, fsr=54, hazard=8, hazardous-event=30, hwsr=45, safety-goal=7, swsr=134, tsr=118` — `OK: all implemented checks passed`. The checker needs only the Python standard library. It uses PyYAML when available; PyYAML is **not** a direct dependency of LionDriver (`uv.lock` lists `pyyaml` only as an optional `autogen` extra of tinygrad), so a built-in parser for the YAML subset in §4.1 is used otherwise. Both paths were run and give the same result.
 
 ## 3. Trace data model
 
@@ -56,7 +58,7 @@ Result at this baseline: `trace: 5 files, 228 items aou=11, fsr=54, hazard=8, ha
 | Safety goal | `SG-` | WP-C-03 | `items/goals.yaml` | Yes |
 | Functional safety requirement | `FSR-<SG>.<nn>` | [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) | `items/fsr.yaml` | Yes (generated) |
 | Technical safety requirement | `TSR-<nnn>` (blocks 1xx…8xx) | [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md), [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) | `items/tsr.yaml` | Yes (generated) |
-| SW / HW safety requirement | `SWSR-<nnn>[a]`, `HWSR-<nnn>[a]` | [WP-W-02](../05-software/WP-W-02-software-safety-requirements.md), [WP-H-01](../04-hardware/WP-H-01-hardware-safety-requirements.md) | `items/swsr.yaml`, `items/hwsr.yaml` | No |
+| SW / HW safety requirement | `SWSR-<nnn>[a]`, `HWSR-<nnn>[a]` | [WP-W-02](../05-software/WP-W-02-software-safety-requirements.md), [WP-H-01](../04-hardware/WP-H-01-hardware-safety-requirements.md) | `items/swsr.yaml`, `items/hwsr.yaml` | Yes (generated) |
 | SOTIF hazard | `SH-` | [WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md) | `items/sotif.yaml` | No |
 | Triggering condition / functional insufficiency | `TC-`, `FI-` | [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) | `items/sotif.yaml` | No |
 | Functional modification | `FM-` (WP-C-05 usage) / `SOTIF-` (WP-P-06 usage), see §7 | [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md) | `items/sotif.yaml` | No |
@@ -128,9 +130,9 @@ Keys common to all kinds: `id`, `kind`, `status` (WP-P-06 enum), `source` (work 
 | `safe_state` | Verbatim |
 | `ftti_ms`, `ftti_text` | Preliminary FTTI in ms (`null` for "Continuous") and the original text |
 
-### 4.5 Functional and technical safety requirements
+### 4.5 Safety requirements (FSR, TSR, SWSR, HWSR)
 
-`fsr.yaml` and `tsr.yaml` are **generated** by `tools/sync_requirements.py` from the requirement tables of WP-C-04, WP-S-02 and WP-S-06; never edit them by hand. Each value is copied verbatim from its table cell, so the keys follow the work-product columns rather than the full WP-P-06 §2 attribute list (see §7 #7).
+`fsr.yaml`, `tsr.yaml`, `swsr.yaml` and `hwsr.yaml` are **generated** by `tools/sync_requirements.py` from the requirement tables of WP-C-04, WP-S-02, WP-S-06, WP-W-02 and WP-H-01; never edit them by hand. Each value is copied verbatim from its table cell, so the keys follow the work-product columns rather than the full WP-P-06 §2 attribute list (see §7 #7).
 
 | Key | Kind | Content |
 |---|---|---|
@@ -142,7 +144,12 @@ Keys common to all kinds: `id`, `kind`, `status` (WP-P-06 enum), `source` (work 
 | `allocated_to` | fsr, tsr | Allocation cell verbatim (`E-03`, `P-SW`, `SoC`, …); element IDs come with `elements.yaml` (WP-P-06 OI-4). TSR-8xx: `OPS` |
 | `mechanism`, `timing` | tsr | Safety-mechanism type and detect/react timing (WP-S-02 §2.2); empty for TSR-8xx |
 | `verification` | fsr, tsr | Verification-method cell verbatim |
-| `baseline_impl` | fsr, tsr | What the baseline implements, or the GAP; not verification evidence |
+| `baseline_impl` | fsr, tsr, swsr, hwsr | What the baseline implements, or the GAP; not verification evidence |
+| `text`, `asil`, `allocated_to`, `verification` | swsr, hwsr | As for tsr, from the WP-W-02 / WP-H-01 columns (Allocation or Alloc, Verif) |
+| `parents`, `parent_text`, `other_parents` | swsr, hwsr | As for tsr. Parenthetical notes are dropped and `FSR … / TSR …` is read as a list (`TSR-307(a)` → TSR-307). SWSR parents are TSRs; HWSR parents are TSRs, FSRs or AoUs |
+| `acceptance` | swsr | Acceptance criterion cell verbatim |
+| `hw_kind` | hwsr | WP-H-01 Kind cell (HW, CFG, HW/CFG) |
+| (§11 rows) | swsr | WP-W-02 §11 SW-HW interface rows have no ASIL or parent column: the parent is the TSR of the same number and the ASIL is copied from that TSR; `parent_text` says so |
 
 ### 4.4 Assumption of use **[ext]**
 
@@ -172,7 +179,7 @@ Only IDs of kind requirement (FSR, TSR, SWSR, HWSR, CSR, AIR, SYS, FM/SOTIF-) ma
 | K1 | Files parse; mandatory keys per kind present; status in enum | WP-P-06 §7 | Yes (key list per kind; JSON Schema file not yet written) |
 | K2 | IDs unique and match the pattern | WP-P-06 §7 | Yes (uniqueness within the current baseline; "no ID removed vs. previous baseline" not yet) |
 | K3 | `parents`, `aou_dependency` resolve, and to the right kind (FSR → SG; TSR → FSR, TSR, SG, AOU; GAP parents must exist in the gap assessment) | WP-P-06 §7 | Yes (`allocated_to` pending `elements.yaml`) |
-| K4 | Every SG ≥ 1 FSR; every FSR ≥ 1 TSR; every SW/HW-allocated TSR ≥ 1 SWSR/HWSR | WP-P-06 §7 | Partly: SG → FSR and FSR → TSR (an FSR that only applies other FSRs, like FSR-03.04, is covered through their TSRs); SWSR/HWSR not yet |
+| K4 | Every SG ≥ 1 FSR; every FSR ≥ 1 TSR; every SW/HW-allocated TSR ≥ 1 SWSR/HWSR | WP-P-06 §7 | Yes: SG → FSR; FSR → TSR (an FSR that only applies other FSRs, like FSR-03.04, is covered through their TSRs); TSR → SWSR for every TSR whose allocation names `P-SW` or `SoC`, TSR → HWSR for every TSR whose allocation names `P-HW` or `HAR`, except those listed in WP-W-02 §10 ("TSRs not refined into software") or a WP-H-01 "TSRs not refined into hardware" table |
 | K5 | Child ASIL ≥ parent ASIL unless decomposition notation | WP-P-06 §7 | No |
 | K6 | Every `@req` tag refers to an existing, non-withdrawn ID | WP-P-06 §7 | No |
 | K7 | Every `verified` TSR/SWSR/HWSR has a passing linked test at the baseline | WP-P-06 §7 | No |
@@ -187,7 +194,7 @@ Only IDs of kind requirement (FSR, TSR, SWSR, HWSR, CSR, AIR, SYS, FM/SOTIF-) ma
 | R4 **[ext]** | Every hazard has ≥ 1 hazardous event | — | Yes |
 | X1 **[ext]** | HE situation/effect/S/E/C/ASIL/⚠ and SG text/ASIL/alternative ASIL/source HEs/safe state/FTTI match WP-C-03 tables | — | Yes |
 | X2 **[ext]** | AOU text, credited-in, verification approach and status match WP-C-01 table | — | Yes |
-| X3 **[ext]** | `fsr.yaml` and `tsr.yaml` equal a fresh extraction from WP-C-04, WP-S-02 and WP-S-06 | — | Yes |
+| X3 **[ext]** | `fsr.yaml`, `tsr.yaml`, `swsr.yaml` and `hwsr.yaml` equal a fresh extraction from WP-C-04, WP-S-02, WP-S-06, WP-W-02 and WP-H-01 | — | Yes |
 | Planned | Every AOU with status `Unverified` that is credited by an SG is listed as an open assumption in WP-K-01 §5 | WP-K-01 | No |
 | Planned | Every GAP referenced as `parents` exists in the gap assessment | gap assessment | No |
 | Planned | Requirement IDs fall in the allocated TSR block ranges (1xx…8xx) | shared ID allocation | No |
@@ -212,7 +219,7 @@ CI integration (run on PRs touching `assurance/trace/**`, WP-C-01, WP-C-03 or SR
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Add the [ext] kinds and keys (§3.2, §4.2, §4.4) and checks R1–R4, X1–X2 to WP-P-06 | G1 |
-| OI-2 | Closed: `fsr.yaml` and `tsr.yaml` generated from WP-C-04, WP-S-02 and WP-S-06, with checks K3, K4 (partly) and X3 | G1 |
+| OI-2 | Closed: `fsr.yaml`, `tsr.yaml`, `swsr.yaml` and `hwsr.yaml` generated from WP-C-04, WP-S-02, WP-S-06, WP-W-02 and WP-H-01, with checks K3, K4 and X3 | G1 |
 | OI-3 | Write `schema/item.schema.json` (WP-P-06 §5.1); validate with the standard library or add a pinned dependency | G1 |
 | OI-4 | Closed: `.github/workflows/assurance.yaml` runs the checker on every relevant pull request | G1 |
 | OI-5 | Add `sotif.yaml` (SH-01…SH-13 from WP-C-05) with `shares_event` links | G1 |

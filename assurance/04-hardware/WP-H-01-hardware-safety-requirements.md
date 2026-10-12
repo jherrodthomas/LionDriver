@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-01 Hardware safety requirements specification |
 | Standard reference | ISO 26262-5:2018 §6 (specification of hardware safety requirements); ISO 26262-4:2018 §6 (TSR and HSI inputs); ISO 26262-8:2018 §6 (requirement attributes), §13 (HW component qualification); ASPICE 4.0 HWE.1 |
-| Version | 0.1 |
+| Version | 0.2 (HWSR-711, 711a for SG-07 forwarding supervision; HWSR-516…516b siren path; HWSR-517, HWSR-519; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | ASIL B‡ (WP-S-02 notation: target B under FSC option (c), ASIL C until SG-01 is re-rated; [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §4.2) and ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -104,6 +104,7 @@ Paths are under `panda/board/` unless prefixed otherwise. `safety.h` is
 | HWSR-501b | The watchdog shall operate in window mode, so that servicing too early (runaway loop) is detected as well as servicing too late. Window and timeout shall be chosen so that detection plus reset completes within the MCU-execution-fault detection budget (≤ 0.1 s, set by the SG-07 FDTI, WP-S-04 §3.6). | B‡ | FSR-01.09 / TSR-501 | IWDG1 window register | CFG | A, T-HIL | Not implemented. STM32H7 IWDG has a window register (verify against RM0468) |
 | HWSR-501c | The watchdog shall be started by the bootstub (or by option byte hardware-start, if chosen) before the application runs and shall stay active in all modes in which the relay can be driven; it shall not be stoppable by the SoC. | B‡ | FSR-01.09, FSR-01.10 / TSR-501 | IWDG option bytes (IWDG_SW, freeze in stop/standby) | CFG | R, T-HIL | Not implemented. Interaction with stop mode (`main.c:353-356`, `sys/power_saving.h`) must be analysed: freezing IWDG in stop mode is acceptable only when the relay is released and TX is off |
 | HWSR-501d | An independent external supervisor (voltage supervisor with watchdog input, on its own clock) that can force the relay to its released state, independent of the MCU, should be added. | B‡ (if (a)/(b)); recommendation at B | FSR-01.09, FSR-07.03 / TSR-501 | External | ADD | A, T-HIL | Not present on the COTS PCB as far as observable. See [WP-H-02](WP-H-02-hardware-design.md) §6, DC-01. Needed for an ASIL C claim because IWDG shares supply and silicon with the CPU (GAP-11) |
+| HWSR-519 | Every enabled interrupt shall have an explicitly configured NVIC priority, and a cycle counter independent of the interrupt load (Cortex-M7 DWT `CYCCNT`) shall be available to measure the execution time of the safety processing, so that the TSR-519 timing scheme can be configured and shown. | B‡ | FSR-01.09 / TSR-519 | NVIC, DWT | CFG | R, T-HIL (timing measurement) | Partial: default NVIC priorities assumed (WP-A-02 OI-5); DWT present on the core, not used |
 
 ### 4.2 Fault reaction and safe state on reset (TSR-502, TSR-706)
 
@@ -163,6 +164,7 @@ Paths are under `panda/board/` unless prefixed otherwise. `safety.h` is
 | HWSR-508a | A transceiver failure that produces a dominant-stuck or babbling bus shall not prevent the stock camera-to-vehicle path from working once the relay is released. | B | FSR-07.03 / TSR-508, TSR-702 | Transceivers, relay topology | HW | A (schematic) | Unknown: depends on whether the panda transceivers stay attached to the car-side bus when the relay is released |
 | HWSR-508b | Bus-off, error-passive and persistent TX failure on the car-side bus while engaged shall be detected and lead to the actuation safe state and a driver warning. | B | FSR-01.12 / TSR-508 | FDCAN status | CFG | T-HIL, FI | **Partial.** Bus-off and error counters read into `can_health` (`drivers/fdcan.h:44-63`); on bus-off the core is reset (`drivers/fdcan.h:76-84`, `can_clear_send` rate-limited to 10 Hz, `:23-34`). No safety reaction in firmware; the host raises `canError` (gap assessment GAP-19 for wrong text) |
 | HWSR-508c | CAN controller interrupt storms shall be detected and lead to the safe state. | B | TSR-508 | Interrupt-rate monitor | CFG | FI | Detected, report-only (`drivers/fdcan.h:257-262`, `drivers/interrupts.h:34-37`) (GAP-08) |
+| HWSR-517 | The MCU shall be able to receive the actuation frames it transmits on the car-side bus as they appear on the bus (for example through a second FDCAN instance or the transceiver's receive line on that bus), so that the read-back of TSR-517 covers FDCAN message RAM, FDCAN core and transceiver and not only the internal TX path. | B‡ | FSR-01.09 / TSR-517 | Car-side FDCAN instance, transceiver RX path | HW/CFG | A, FI | Unknown: whether own frames can be received from the bus on this board is to be shown in WP-H-02 (the FDCAN TX event FIFO reflects internal state only) |
 
 ### 4.9 Ignition sensing (TSR-510)
 
@@ -192,6 +194,16 @@ Paths are under `panda/board/` unless prefixed otherwise. `safety.h` is
 | HWSR-701a | A change of detected orientation or loss of harness while the relay is driven shall be detected and lead to the safe state. | B | TSR-701 | Firmware | CFG | T-HIL, FI | Partial: orientation change re-inits CAN and the safety mode (`main.c:132-140`), but detection is suspended while the relay is driven, so harness disconnection is seen only through CAN/heartbeat effects |
 | HWSR-702 | In the de-energised relay state the harness shall connect the forward camera to the vehicle CAN without any active component in the path (stock PCS path). | B | FSR-07.03, AOU-13 / TSR-702 | Harness relay | HW | A (inspection), T-HIL | Unverified (AOU-13, FSC OI-6). Code comment "keep buses connected by default" (`drivers/harness.h:106`) supports this but is not evidence |
 | HWSR-703 | Harness connectors shall be keyed/latched so that partial insertion is detected (NC status) or cannot occur. | B | TSR-703 | Connectors | HW | A, inspection | Unknown |
+| HWSR-711 | The camera-side FDCAN controller's error state (error-passive, bus-off) and its reception activity shall be observable by the firmware, so that a loss of camera-side forwarding can be detected within the SG-07 FDTI (≤ 0.1 s). | B | FSR-07.01, FSR-07.03 / TSR-711 | FDCAN (camera-side instance), transceiver | CFG | T-HIL, FI | Partial: FDCAN error counters and bus-off status are read (`drivers/fdcan.h:76-84`); no supervision acts on them for the camera side |
+| HWSR-711a | From the moment the relay drive is released, the intercept relay shall restore the stock camera-to-vehicle path within ≤ 20 ms (drop-out time including contact bounce), so that the relay part of the SG-07 FRTI (≤ 0.1 s) holds with margin. | B | FSR-07.03 / TSR-706, TSR-711 | Relay part | HW | A (datasheet), T-HIL | Part number unknown (WP-H-02); assumption A-PCS-2 of WP-S-04 §3.6 |
+
+### 4.13 SoC-independent acoustic warning (TSR-516)
+
+| ID | Statement | ASIL | Parent | Alloc | Kind | Verif | Impl |
+|---|---|---|---|---|---|---|---|
+| HWSR-516 | The siren path (MCU output, codec or amplifier, speaker) shall produce the warning when commanded by the MCU with the SoC hung or powered down, and shall not depend on any part that the SoC can disable. | B | FSR-02.05, FSR-06.05 / TSR-516 | DAC/DMA and codec over I2C5 (tres) or SAI4 amplifier (cuatro); speaker | HW | A (schematic), T-HIL | Unknown: whether codec, amplifier and speaker are shared with SoC audio (WP-H-02 HE-17; WP-A-03 DFI-23) |
+| HWSR-516a | The siren shall be audible at the driver's position over cabin noise at the highest ODD speed; the sound level shall be set in WP-C-08. | B | FSR-02.05 / TSR-516 | Speaker, amplifier | HW | T-VEH | Not assessed |
+| HWSR-516b | A failure of the siren path (codec not responding, amplifier fault) shall be detectable by the firmware at start-up (TSR-515). | B | TSR-515, TSR-516 | Codec I2C acknowledge or amplifier fault output | CFG | T-HIL, FI | Partial: codec I2C failure reported only (`drivers/fake_siren.h:38-52`) |
 
 ## 5. Requirements on the hardware that the FSC FTTI budget implies
 
@@ -200,6 +212,7 @@ Paths are under `panda/board/` unless prefixed otherwise. `safety.h` is
 | SG-01 MCU execution fault | ≤ 0.1 s (HW watchdog, set by SG-07) + ≤ 0.1 s reaction | HWSR-501, -501b, -502, -502b |
 | SG-01 relay stuck released | ≤ 0.3 s (proposed) | HWSR-506a (today 1–2 s, GAP-12) |
 | SG-07 relay stuck intercepting with MCU silent | ≤ 0.2 s (forwarding loss, preliminary, WP-S-04 §3.6) | HWSR-506a, HWSR-702 |
+| SG-07 forwarding loss with MCU running | FDTI ≤ 0.1 s, FRTI ≤ 0.1 s (WP-S-04 §3.6) | HWSR-711, HWSR-711a, HWSR-501 (hang) |
 | All: memory, clock, supply | ≤ 0.2 s for faults that can corrupt actuation; latent checks once per drive cycle | HWSR-503…505 |
 
 ## 6. HSI candidate entries for WP-S-05
@@ -231,23 +244,24 @@ must be confirmed against the schematic (WP-H-02 §5).
 | FSR (WP-C-04) | HWSRs |
 |---|---|
 | FSR-01.08 | 401 |
-| FSR-01.09 | 501, 501a–d, 502, 502b, 503, 503a–d, 504, 504a, 505, 505a, 507 |
+| FSR-01.09 | 501, 501a–d, 502, 502b, 503, 503a–d, 504, 504a, 505, 505a, 507, 517, 519 |
 | FSR-01.10 | 501c, 502c, 506c, 507 |
 | FSR-01.11 | 506a, 506b |
 | FSR-01.12 | 508b |
-| FSR-07.03 | 501d, 502, 502a, 506, 506a, 508a, 510, 701, 702 |
-| FSR-02.05 (buzzer path) | none yet — the panda buzzer ("siren") hardware path is analysed in WP-H-03 (FM-SIR-01); add an HWSR if the analysis needs one (OI-5) |
+| FSR-07.01 | 711 |
+| FSR-07.03 | 501d, 502, 502a, 506, 506a, 508a, 510, 701, 702, 711, 711a |
+| FSR-02.05, FSR-06.05 (buzzer path) | 516, 516a, 516b |
 
-Machine-readable trace entries go to `trace/` per [WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md) (WP-S-02 now exists; TSR/HWSR trace files are WP-S-02 OI-6).
+[`trace/items/hwsr.yaml`](../trace/items/hwsr.yaml) is generated from §4 by `trace/tools/sync_requirements.py`; CI checks that it is current and that every TSR allocated to hardware (`P-HW`, `HAR`) has an HWSR.
 
 ## 8. Open items
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Check HWSR parents against the TSR-5xx/7xx now defined in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) (HWSR-502/502a re-parented to TSR-706 in the consistency pass; new TSR-517 and TSR-519 may need HWSRs) and against the HSI IDs of WP-S-05 | G2 |
+| OI-1 | Check HWSR parents against the TSR-5xx/7xx now defined in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) (HWSR-502/502a re-parented to TSR-706 in the consistency pass; TSR-517 and TSR-519 now have HWSR-517 and HWSR-519) and against the HSI IDs of WP-S-05 | G2 |
 | OI-2 | Record the adopted SPFM/LFM/PMHF targets (§3) as a decision in WP-M-01 §8; verify values against the licensed ISO 26262-5 | G2 |
 | OI-3 | Obtain the device schematic (or reverse-engineer the relay driver, transceiver enables and supply supervision) to close HWSR-502, -502a, -505, -506, -508, -508a ([WP-H-02](WP-H-02-hardware-design.md) OI-1) | G2 |
 | OI-4 | Update the ASIL attribute of all `C` HWSRs when the HARA re-rates SG-01 (FSC OI-2) | G2 |
-| OI-5 | Decide whether the panda buzzer hardware path (FSR-02.05) needs its own HWSR after the WP-H-03 analysis | G3 |
+| OI-5 | ~~Decide whether the panda buzzer hardware path (FSR-02.05) needs its own HWSR after the WP-H-03 analysis~~ **Closed:** HWSR-516…516b added because TSR-516 v0.3 makes the siren the SoC-independent cue for SG-02/SG-06; the WP-H-03 analysis (FM-SIR-01) still confirms the topology | G3 |
 | OI-6 | Decide on HWSR-501d (external supervisor) and HWSR-506a (relay readback): both need hardware change outside comma's design; see WP-H-02 §6 | G2 |
 | OI-7 | Confirm that the reference device type (comma 3X "tres" board vs comma four "cuatro" board) is fixed in WP-C-01; requirements cover both today | G1 |
