@@ -317,6 +317,28 @@ def richards_frontal(dv_kmh: float) -> float:
   return logistic(dv_kmh * MPH_PER_KMH, RICHARDS_FRONTAL_A, RICHARDS_FRONTAL_B_PER_MPH)
 
 
+# Side impacts (checked 2026-10-12, search summaries of the report): belted drivers on the struck
+# side, one significant side impact from another car; about 25 % at 30 mph and 85 % at 40 mph
+# delta-v, and half of the drivers killed had a delta-v of 24 mph or less. The logistic below
+# goes through the two points; below 30 mph it is an extrapolation. It is printed next to the
+# primary-contact lateral delta-v of `--sh10` and `--sh02` to show why those collisions stay on
+# the FARS/CRSS ratio: the primary contact is far below the side curve's lethal range, and the
+# harm comes from the secondary impacts the ratio includes.
+RICHARDS_SIDE_POINTS_MPH = ((30.0, 0.25), (40.0, 0.85))
+RICHARDS_SIDE_A, RICHARDS_SIDE_B_PER_MPH = -9.598, 0.28332
+RICHARDS_SIDE_MEDIAN_FATAL_DV_MPH = 24.0
+
+
+def richards_side(dv_kmh: float) -> float:
+  return logistic(dv_kmh * MPH_PER_KMH, RICHARDS_SIDE_A, RICHARDS_SIDE_B_PER_MPH)
+
+
+def barrier_lateral_dv_kmh(speed_kmh: float, e: float = RESTITUTION) -> float:
+  """Lateral delta-v of a departure into a barrier at the curve-departure angle (rigid barrier)."""
+  import math
+  return (1 + e) * speed_kmh * math.sin(math.radians(curve_departure_angle_deg(speed_kmh)))
+
+
 def occupant_fatality(dv_kmh: float) -> float:
   return richards_frontal(dv_kmh) if OCCUPANT_CURVE == "richards" else joksch(dv_kmh)
 
@@ -380,16 +402,25 @@ def main(argv: list[str] | None = None) -> int:
         print(f"\n{sh} ({label}, {v:.0f} km/h): {values}.")
     return 0
   if a.sh10:
-    print("| Ego speed (km/h) | Lateral speed (km/h) | Contact angle (deg) | Lateral Δv per car (km/h) |\n|---|---|---|---|")
+    print("| Ego speed (km/h) | Lateral speed (km/h) | Contact angle (deg) | Lateral Δv per car (km/h) | Side curve |")
+    print("|---|---|---|---|---|")
     for v in SH10_SPEEDS_KMH:
       c = lane_change_contact(v)
-      print(f"| {v:.0f} | {c['v_lat_kmh']:.1f} | {c['angle_deg']:.1f} | {c['dv_lateral_kmh']:.1f} |")
+      cols = [f"{v:.0f}", f"{c['v_lat_kmh']:.1f}", f"{c['angle_deg']:.1f}", f"{c['dv_lateral_kmh']:.1f}",
+              f"{richards_side(c['dv_lateral_kmh']):.5f}"]
+      print("| " + " | ".join(cols) + " |")
+    print("\nSide curve: Richards (2010), belted driver on the struck side, extrapolated below 30 mph.")
     return 0
   if a.sh02:
-    print("| Speed (km/h) | Radius at 3.0 m/s² (m) | Angle at 4 m (deg) | Below 25° test angle |\n|---|---|---|---|")
+    print("| Speed (km/h) | Radius at 3.0 m/s² (m) | Angle at 4 m (deg) | Below 25° test angle | Lateral Δv (km/h) | Side curve |")
+    print("|---|---|---|---|---|---|")
     for v in DEPARTURE_SPEEDS_KMH:
       ang = curve_departure_angle_deg(v)
-      print(f"| {v} | {(v / 3.6) ** 2 / A_Y_CTRL:.0f} | {ang:.1f} | {'yes' if ang < BARRIER_TEST_ANGLE_DEG else 'no'} |")
+      dv = barrier_lateral_dv_kmh(v)
+      cols = [f"{v}", f"{(v / 3.6) ** 2 / A_Y_CTRL:.0f}", f"{ang:.1f}", "yes" if ang < BARRIER_TEST_ANGLE_DEG else "no",
+              f"{dv:.1f}", f"{richards_side(dv):.4f}"]
+      print("| " + " | ".join(cols) + " |")
+    print("\nSide curve: Richards (2010), belted driver on the struck side (car-to-car data), extrapolated below 30 mph.")
     return 0
   if a.sensitivity:
     print("| Speed (km/h) | Gap (s) | " + " | ".join(f"t_r {tr} s, a_f {af}" for tr in (1.0, 1.5, 2.0) for af in (3.0, 4.0, 6.0)) + " |")

@@ -152,6 +152,19 @@ class RiskCurveTest(unittest.TestCase):
       rc.main([])
     self.assertIn("- SH-03 OS-05, ODD-H: 0.334", buf.getvalue())
 
+  def test_richards_side_fit_and_primary_contacts(self):
+    for mph, p in rc.RICHARDS_SIDE_POINTS_MPH:
+      self.assertAlmostEqual(rc.richards_side(mph / rc.MPH_PER_KMH), p, delta=0.001)
+    # the barrier lateral delta-v is about (1 + e) * sqrt(2 * d * a_y), nearly the same at every speed
+    import math
+    for v in rc.DEPARTURE_SPEEDS_KMH:
+      self.assertAlmostEqual(rc.barrier_lateral_dv_kmh(v), 1.1 * math.sqrt(2 * 4.0 * 3.0) * 3.6, delta=0.5)
+    # both primary contacts are below the 24 mph median delta-v of the drivers killed in side impacts
+    median_kmh = rc.RICHARDS_SIDE_MEDIAN_FATAL_DV_MPH / rc.MPH_PER_KMH
+    self.assertLess(rc.barrier_lateral_dv_kmh(120), median_kmh)
+    self.assertLess(rc.lane_change_contact(120)["dv_lateral_kmh"], median_kmh)
+    self.assertLess(rc.richards_side(rc.barrier_lateral_dv_kmh(120)), 0.005)
+
   def test_pedestrian_curve_is_monotone(self):
     risks = [rc.pedestrian_fatality(v) for v in range(0, 120, 5)]
     self.assertEqual(risks, sorted(risks))
