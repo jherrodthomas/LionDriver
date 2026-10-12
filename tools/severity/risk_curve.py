@@ -34,8 +34,11 @@ oversampling. The journal version (Tefft 2013, Accident Analysis and Prevention 
 doi:10.1016/j.aap.2012.07.022) gives about 10 % near 24 mph and 50 % near 41 mph. At the
 OS-04 bound of 37 mph that is about 0.40 instead of 0.38. Between anchors
 the risk is interpolated linearly; above 58 mph it is 1, and below 23 mph it falls linearly
-to 0 at 0 mph (an assumption). One VRU is struck. The same curve is used for cyclists, which
-also needs checking.
+to 0 at 0 mph (an assumption). One VRU is struck. The same curve is used for cyclists. This is
+conservative: cyclist curves put the risk at or below the pedestrian's at the same speed (Nie,
+Li and Yang 2015: 50 % at 67.6 km/h for cyclists and 65.4 km/h for pedestrians; Lubbe, Wu and
+Jeppsson 2022: 10 % serious injury at 44 and 29 km/h), checked from search summaries
+(2026-10-12). See WP-V-02 section 3.5.
 
 SH-01 and SH-02 (lane departure) are split by collision. A head-on in ODD-A (OS-03, HE-01.1,
 HE-02.2) is a drift into the oncoming lane with no reaction, so the closing speed is the sum
@@ -166,7 +169,7 @@ OS04_SPEED_KMH = 60  # HARA OS-04 upper bound
 
 
 def pedestrian_fatality(speed_kmh: float) -> float:
-  """Risk of death of a pedestrian struck at this impact speed (Tefft 2013 anchors, linear between)."""
+  """Risk of death of a pedestrian struck at this impact speed (Tefft 2011 anchors, linear between)."""
   mph = speed_kmh * MPH_PER_KMH
   if mph > PEDESTRIAN_ANCHORS_MPH[-1][0] + 1e-9:
     return 1.0

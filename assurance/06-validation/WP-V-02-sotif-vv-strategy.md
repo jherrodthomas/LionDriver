@@ -198,7 +198,7 @@ SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the 
 - **Why a curve.** There is no braking before impact, so the crash is worse than the average pedestrian crash (item 3).
 - **Which curve.** The struck person is unprotected, so the Joksch rule does not apply. The curve is the pedestrian fatality risk of Tefft (2011, AAA Foundation for Traffic Safety): 10/25/50/75/90 % at 23/32/42/50/58 mph impact speed, interpolated linearly, and 1 above 58 mph.
 - **Results.** P(severity class) is **0.38 in OS-04**, a VRU struck at the 60 km/h bound of the urban situation. It is **0.05 in OS-06**, a VRU struck after a launch from a queue at +2.0 m/s² over the 6 m standstill gap, which gives 18 km/h.
-- **Not covered.** The anchor points are checked (see the curve-constant check below). The curve covers pedestrians struck by a forward-moving car, light truck, van or SUV. Applying it to cyclists, and the linear risk below 23 mph, are assumptions to be checked.
+- **Not covered.** The anchor points are checked (see the curve-constant check below). The curve covers pedestrians struck by a forward-moving car, light truck, van or SUV. Its use for cyclists is checked below and is conservative. The linear risk below 23 mph is an assumption still to be checked.
 - **Use.** SH-11 has no rate target (§4), so these values inform the residual-risk statement of WP-K-02 rather than a target.
 
 **Curve-constant check (2026-10-12).** Both curves were checked against search summaries of their sources. The full texts were not reachable from the project's cloud environment, so each check stops short of the primary text.
@@ -208,6 +208,11 @@ SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the 
   - **Open:** the constant itself, and whether the curve covers rear impacts (SH-04), are to be confirmed from the full text.
 - **Tefft (2011), AAA Foundation for Traffic Safety, "Impact Speed and a Pedestrian's Risk of Severe Injury or Death".**
   - **Confirmed:** the anchors 10/25/50/75/90 % at 23/32/42/50/58 mph. The data are US pedestrians struck by a forward-moving car, light truck, van or SUV, 1994–1998, weighted for oversampling. Cyclists are not covered.
+  - **Cyclists (checked 2026-10-12, from search summaries).** Tefft has no cyclist data, so its use for cyclists was checked against cyclist curves. Each one puts the cyclist's risk at or below the pedestrian's at the same speed:
+    - Nie, Li and Yang (2015), *Traffic Injury Prevention*, Chinese in-depth data, 371 pedestrians and 67 cyclists: 50 % fatality risk at 65.4 km/h for pedestrians and 67.6 km/h for cyclists.
+    - Rosén (2013) puts 10 % fatality risk for cyclists at 67 km/h, and Jeppsson and Lubbe (2020) at 60 km/h. Tefft puts 10 % for pedestrians at 23 mph (37 km/h).
+    - Lubbe, Wu and Jeppsson (2022), *Traffic Safety Research* 2, GIDAS, closing speed: 10 % risk of at least serious injury at 29 km/h for pedestrians and 44 km/h for cyclists.
+    - **Conclusion:** the pedestrian curve overstates the cyclist's risk, so using it for cyclists in SH-11 is conservative. A cyclist near the lane edge in OS-04 (HE-01.3) rides in the ego's direction, so the closing speed is below the ego's speed, and using the ego's speed is conservative too. A wrong-way cyclist is outside the case; its closing speed would add the cyclist's speed. The cyclist curves are from Chinese and German data, not US data, so the check is of the ordering, not of the values.
   - **Corrected citation:** the anchors are from this 2011 report. The earlier citation named the journal version, Tefft (2013), *Accident Analysis and Prevention* 50, 871–878, which gives about 10 % near 24 mph and 50 % near 41 mph. With the journal values, SH-11 at the OS-04 bound would be about 0.40 instead of 0.38.
 
 ## 4. Validation targets
