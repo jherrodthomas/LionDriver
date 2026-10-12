@@ -71,7 +71,7 @@ Software-level engineering is already under way before activation. At `682f184`:
 - safety mechanisms derived from proposed TSRs and SWSRs (hardware watchdog, RX timeout, TX whitelist, safety-mode lock, heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are integrated in the reference build. Each has a CT-1 change record in [`07-supporting/impact/`](../07-supporting/impact/README.md), and none is verified on hardware or independently reviewed;
 - a design note ([DN-01](../05-software/design-notes/DN-01-tx-rate-supervision.md)) and a HIL bench plan ([`hil-bench/`](../05-software/hil-bench/README.md), D-04) exist.
 
-This work is legitimate engineering, and it is what makes activation possible. It is governed by these rules until D-09:
+This work is legitimate engineering, and it is what makes activation possible. It is governed by these rules until D-09. The project maintainer confirmed them as written on 2026-10-12 ([RR-2026-008](../05-software/reviews/RR-2026-008.md) POL-1, decided by delegation "go with your recommendation"):
 
 | Rule | Consequence |
 |---|---|

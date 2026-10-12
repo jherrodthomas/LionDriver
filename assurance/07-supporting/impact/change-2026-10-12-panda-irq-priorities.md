@@ -45,3 +45,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 ## Addendum: further work products affected (2026-10-12)
 
 The software alignment audit ([RR-2026-008](../../05-software/reviews/RR-2026-008.md) F-30) found that this change also affects: WP-W-05 (interrupt units), WP-W-09 (CD-03 if priority values are treated as configuration). These were updated in the RR-2026-008 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.
+
+## Addendum: interrupt count (2026-10-12)
+
+The row above says "each of the 21 enabled interrupts". A code reading at panda `8aa8671` finds 20, and every one has an explicit priority: the 17 registered with `REGISTER_INTERRUPT` in the panda firmware and the three wake-up lines `EXTI1`, `EXTI4`, `EXTI9_5` enabled in `sys/power_saving.h:153-155`, against 20 `NVIC_SetPriority` calls in `drivers/irq_priorities.h`. `TIM8_UP_TIM13` is registered only by the comma body firmware (`board/body/main.c:99`), which is out of scope. The "21" is a miscount; no interrupt lacks a priority ([RR-2026-008](../../05-software/reviews/RR-2026-008.md) F-42).

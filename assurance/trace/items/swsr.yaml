@@ -1189,7 +1189,7 @@
 
 - id: SWSR-513
   kind: swsr
-  text: "In release builds, requests `0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd8` and `0xdf` shall be rejected while a car safety mode is active (`0xd1` param 1: SWSR-511a)."
+  text: "In the reference release build (`RELEASE=1 LIONDRIVER_REFERENCE=1`), requests `0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd8` and `0xdf` shall be rejected while a car safety mode is active (`0xd1` param 1: SWSR-511a)."
   asil: "B‡"
   parents: [TSR-513]
   parent_text: "TSR-513"
@@ -1935,7 +1935,7 @@
   acceptance: "Constant traced to the measurement; check period ≤ 20 ms"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl: periodic checks run in the 1 Hz tick"
+  baseline_impl: "Not impl: no SWSR-711 check exists. The 100 Hz safety task that could run it exists since panda `9f60e17` (SWSR-401a)"
   status: proposed
   source: WP-W-02
 

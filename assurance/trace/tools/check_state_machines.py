@@ -13,7 +13,7 @@ Checks:
   S5  (warning) code citation and WP-W-02 Baseline disagree: "not implemented" here but implemented there,
       or the other way round
   S6  (warning, authority machines only) an envelope SWSR whose text requires clearing or revoking authority
-      is not realised by any transition
+      is not realised by any transition (a record may list reasoned exceptions under s6_exempt)
 
 S1-S4 are errors (exit 1). S5 and S6 are findings for the engineer and do not fail the run.
 
@@ -198,7 +198,9 @@ def check(sm: dict, sw: dict) -> tuple[list[str], list[str]]:
     for sid, rec in sw.items():
       if rec["withdrawn"] or sid.endswith("h") or sid.startswith("SWSR-6"):
         continue
-      if re.search(r"clear (all |lateral |longitudinal )?authority|revoke", rec["text"]) and sid not in cited:
+      exempt = {e["swsr"] for e in sm.get("s6_exempt", [])}
+      if re.search(r"clear (all |lateral |longitudinal )?authority|revoke", rec["text"]) and sid not in cited \
+         and sid not in exempt:
         nr = [n for n in sm.get("non_revoking", []) if sid in n.get("swsr", [])]
         note = f" (the code only does: {nr[0]['reaction']})" if nr else ""
         warnings.append(f"S6 {name}: {sid} requires clearing authority but no transition realises it{note}")

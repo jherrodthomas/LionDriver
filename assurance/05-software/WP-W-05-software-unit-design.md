@@ -462,6 +462,10 @@ Generated from [`state-machines/sm-toy-auth.yaml`](state-machines/sm-toy-auth.ya
 | T10d | ALLOWED | platform fault | — | clear, SS-S | NOT_ALLOWED | all | 502 | Not implemented | not implemented: faults are reported only |
 | T10e | ALLOWED | driver steering override | — | clear, reason | NOT_ALLOWED | all | 304 | Not implemented | not implemented for Toyota LKA |
 | T11 | ALLOWED | TX frame over the per-ID rate budget | 3 rejected frames in one 125 ms half-window | clear, report txRateExceeded | NOT_ALLOWED | reference | 518 | Implemented | opendbc safety.h:264-272 (tx_rate_check) |
+| T12 | ALLOWED | safety task: driver torque check | \|driver torque\| > T_ovr for > t_ovr | clear (steering_disengage) | NOT_ALLOWED | all | 304a | Not implemented | not implemented for Toyota LKA |
+| T13 | ALLOWED | SPI error | more than N_spi errors within 100 ms | clear, report | NOT_ALLOWED | all | 413 | Partial | not implemented: errors are counted only (panda drivers/spi.h) |
+| T14 | ALLOWED | car-side CAN bus-off or persistent TX failure | — | clear, report | NOT_ALLOWED | all | 508 | Partial | not implemented: counted only (panda drivers/fdcan.h) |
+| T15 | ALLOWED | safety task: forwarding supervision | relay driven and no camera-side frame for > t_fwd, or camera-side bus-off | clear all, release relay | NOT_ALLOWED | all | 711 | Not implemented | not implemented |
 
 Reactions that do **not** change the state:
 
@@ -488,6 +492,10 @@ stateDiagram-v2
   ALLOWED --> NOT_ALLOWED: T10d
   ALLOWED --> NOT_ALLOWED: T10e
   ALLOWED --> NOT_ALLOWED: T11
+  ALLOWED --> NOT_ALLOWED: T12
+  ALLOWED --> NOT_ALLOWED: T13
+  ALLOWED --> NOT_ALLOWED: T14
+  ALLOWED --> NOT_ALLOWED: T15
 ```
 <!-- END GENERATED: sm-toy-auth -->
 

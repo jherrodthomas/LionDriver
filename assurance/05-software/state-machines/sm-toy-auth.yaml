@@ -26,6 +26,13 @@ transitions:
   - {id: T10d, from: ALLOWED, event: "platform fault", guard: "", action: "clear, SS-S", to: NOT_ALLOWED, build: all, swsr: [SWSR-502], code: "not implemented: faults are reported only"}
   - {id: T10e, from: ALLOWED, event: "driver steering override", guard: "", action: "clear, reason", to: NOT_ALLOWED, build: all, swsr: [SWSR-304], code: "not implemented for Toyota LKA"}
   - {id: T11, from: ALLOWED, event: "TX frame over the per-ID rate budget", guard: "3 rejected frames in one 125 ms half-window", action: "clear, report txRateExceeded", to: NOT_ALLOWED, build: reference, swsr: [SWSR-518], code: "opendbc safety.h:264-272 (tx_rate_check)"}
+  - {id: T12, from: ALLOWED, event: "safety task: driver torque check", guard: "|driver torque| > T_ovr for > t_ovr", action: "clear (steering_disengage)", to: NOT_ALLOWED, build: all, swsr: [SWSR-304a], code: "not implemented for Toyota LKA"}
+  - {id: T13, from: ALLOWED, event: "SPI error", guard: "more than N_spi errors within 100 ms", action: "clear, report", to: NOT_ALLOWED, build: all, swsr: [SWSR-413], code: "not implemented: errors are counted only (panda drivers/spi.h)"}
+  - {id: T14, from: ALLOWED, event: "car-side CAN bus-off or persistent TX failure", guard: "", action: "clear, report", to: NOT_ALLOWED, build: all, swsr: [SWSR-508], code: "not implemented: counted only (panda drivers/fdcan.h)"}
+  - {id: T15, from: ALLOWED, event: "safety task: forwarding supervision", guard: "relay driven and no camera-side frame for > t_fwd, or camera-side bus-off", action: "clear all, release relay", to: NOT_ALLOWED, build: all, swsr: [SWSR-711], code: "not implemented"}
+s6_exempt:
+  - {swsr: SWSR-109a, reason: "acts after a revocation (autonomous zero-torque frames); it does not itself clear authority"}
+  - {swsr: SWSR-305, reason: "the text says the envelope shall NOT clear lateral authority; gas only blocks longitudinal (see non_revoking)"}
 non_revoking:
   - {event: "EPS reports a fault (LKA_STATE in the fault set)", reaction: "lateral frames with torque or steer request refused; authority kept", build: reference, swsr: [SWSR-110], code: "opendbc modes/toyota.h:425-432"}
   - {event: "gas pressed", reaction: "longitudinal actuation blocked; authority kept", build: all, swsr: [SWSR-305], code: "opendbc longitudinal.h (UN-12)"}
