@@ -8,7 +8,7 @@
 | Status | Draft: plan only. No bench exists, no part has been bought, no test has been run on hardware |
 | Author | Assurance team (AI-assisted draft) |
 | Reviewer(s) | TBD |
-| Baseline | LionDriver `2619539`; panda pin `92eb565`; panda branch `liondriver/hw-watchdog` at `b8d046b` |
+| Baseline | LionDriver `2619539`; panda pin `92eb565`; panda branch `liondriver/hw-watchdog` at `16cd27a`; panda#3 branch `claude/safety-task-100hz` at `b9596ed` |
 
 ## 1. Purpose
 
@@ -80,7 +80,8 @@ From a LionDriver checkout with the panda submodule on the fork branch:
 
 ```bash
 cd panda
-git fetch origin liondriver/hw-watchdog && git checkout b8d046b   # bench only; the LionDriver pin stays at 92eb565
+git fetch origin liondriver/hw-watchdog && git checkout 16cd27a   # bench only; the LionDriver pin stays at 92eb565
+# for panda#3: git fetch origin claude/safety-task-100hz && git checkout b9596ed
 pip install -e .[dev]                                               # panda python lib, pytest, libusb1, pycapnp
 export PYTHONPATH=$PWD/../opendbc_repo:$PWD/..
 ```
@@ -145,22 +146,26 @@ WP-W-08 §4 asks for the worst value over ≥ 100 repetitions with random phase 
 
 | Bench test | WP-W-08 / WP-V-05 case | Requirement | Stage | State |
 |---|---|---|---|---|
-| `tests/hitl/test_10_hw_watchdog.py` modes 1–3 | VS-SWQ-14 (hang part), VS-FI-17 (main-loop and tick hang; interrupts disabled) | TSR-501, HWSR-501, HWSR-501c | B1 | Implemented on `liondriver/hw-watchdog`, not run |
+| `tests/hitl/test_10_hw_watchdog.py` modes 1–3 (tick hang budget includes one tick period) | VS-SWQ-14 (hang part), VS-FI-17 (main-loop and tick hang; interrupts disabled) | TSR-501, HWSR-501, HWSR-501c | B1 | Implemented on `liondriver/hw-watchdog` and panda#3, not run |
 | `test_no_reset_without_fault` | VS-SWQ-14 (no false trip) | TSR-501 | B1 | Implemented, not run |
 | Timing campaign (§6) | VS-SWQ-14 timing, VS-FI-17 pass criterion | TSR-501, SG-01 budget | B2 | Planned |
-| SPI interrupt hang | VS-FI-17 (SPI ISR) | TSR-501, TSR-502 | B4 (reference device: SPI) | Planned: needs a fourth injection mode and the SPI path |
-| Window violation (early feed) | VS-SWQ-14 / HWSR-501b | HWSR-501b | B1 | Not testable on panda#1 (no window mode, D-3). panda#3 adds window mode: needs a new injection mode that feeds too early |
+| Safety-task hang | VS-FI-17 | TSR-501 | B1 | panda#3 only: `test_safety_task_hang` (mode 4), implemented, not run |
+| SPI interrupt hang | VS-FI-17 (SPI ISR) | TSR-501, TSR-502 | B4 (reference device: SPI) | Planned: needs another injection mode and the SPI path |
+| Window violation (early feed) | VS-SWQ-14 / HWSR-501b | HWSR-501b | B1 | panda#3 only: `test_early_feed_window_violation` (mode 5), implemented, not run. Not testable on panda#1 (no window mode, D-3) |
 | Upstream `tests/hitl/test_1…9` | Regression | — | B1 | Existing, not run on LionDriver hardware |
 | Corolla log replay, limit and timeout cases | VS-SWQ-01…, VS-FI-01…04 | TSR-1xx, TSR-401…406 | B3 | Planned |
 | Power dips, resets, SWD memory faults, heartbeat and SPI faults | VS-FI-06…08, -10, -11, -15, -16, -18 | TSR-407…413, TSR-505, TSR-503, TSR-706 | B4 | Planned |
 
 ### 7.1 With panda#3
 
-[jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3) (100 Hz safety task, window mode, 90 ms nominal) is stacked on panda#1 but branches from `361c7a2`, before the fault-injection commit `b8d046b`, and the two conflict in `board/main.c`. Before the bench runs on panda#3:
+[jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3) (100 Hz safety task, window mode, 90 ms nominal) is stacked on panda#1 and contains its fault injection and HIL test (merge `b9596ed`). On panda#3 the same test file adds:
 
-- merge `liondriver/hw-watchdog` into the panda#3 branch and resolve `board/main.c`;
-- re-check that mode 2 (tick hang) still means something once the feed moves to the TIM4 task, and add a mode that hangs the safety task;
-- run with `WATCHDOG_RESET_BUDGET_S` tightened toward 0.1 s, the TSR-501 limit panda#3 targets.
+| Test | Injection | Checks |
+|---|---|---|
+| `test_safety_task_hang` | 4: the 100 Hz safety task spins forever | Release within the budget plus one task period (10 ms) |
+| `test_early_feed_window_violation` | 5: two feeds back to back, the second inside the closed window | Release within the budget plus one task period (HWSR-501b) |
+
+The default budget on panda#3 is 0.12 s (TSR-501's 0.1 s plus 20 ms for relay release and USB polling) instead of 0.25 s. The tick-hang case adds one 8 Hz tick period on both branches, because the hang only starts at the next tick.
 
 ## 8. Risks and open questions
 
@@ -189,4 +194,4 @@ Results go in the record as observed. A failed or skipped case is recorded as su
 | A-1 | Confirm which of P-1, P-2, P-11 are owned or can be bought | Maintainer | B1 |
 | A-2 | Build B1 and run §5.4; attach the output to panda#1 and the change record | Maintainer | panda#1 merge |
 | A-3 | Add the GPIO start marker (R-3) and run the §6 campaign | Maintainer (firmware: assistant draft) | Release |
-| A-4 | Fourth injection mode for an SPI interrupt hang, on the reference device | Assistant draft, maintainer review | Release |
+| A-4 | Injection mode for an SPI interrupt hang, on the reference device | Assistant draft, maintainer review | Release |
