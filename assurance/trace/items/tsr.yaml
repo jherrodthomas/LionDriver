@@ -650,7 +650,7 @@
 
 - id: TSR-501
   kind: tsr
-  text: "The safety MCU shall be supervised by an independent hardware watchdog (IWDG1, LSI-clocked) that is started before the application runs, cannot be stopped by the SoC, is serviced only after the periodic safety processing has completed, and resets the MCU within ≤ 0.1 s of a stall (SG-07 FDTI, [WP-S-04](WP-S-04-timing-ftti-budget.md) §3.6; ≤ 0.2 s would meet SG-01 only)."
+  text: "The safety MCU shall be supervised by an independent hardware watchdog (IWDG1, LSI-clocked) that is started no later than the first time the harness relay is energised after a reset, by any path (safety-mode change or configuration/debug command), and then stays active until the next reset; that cannot be stopped by the SoC; that is serviced only after the periodic safety processing has completed; and that resets the MCU within ≤ 0.1 s of a stall (SG-07 FDTI, [WP-S-04](WP-S-04-timing-ftti-budget.md) §3.6; ≤ 0.2 s would meet SG-01 only). Rationale for the start condition (amended in v0.4): until the relay is first energised after a reset, the stock camera-to-vehicle path is intact and no actuation frame reaches the vehicle, so a stall cannot violate SG-01 or SG-07; an idle device keeps its power-save and stop modes."
   asil: "B‡"
   parents: [FSR-01.09]
   parent_text: "FSR-01.09"
