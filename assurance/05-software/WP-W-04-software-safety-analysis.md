@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-04 Software safety analysis and software-level DFA |
 | Standard reference | ISO 26262-6:2018 §7 (safety analysis and DFA at the software architectural level; Annex E informative); ISO 26262-9:2018 §7 (dependent failures), §8 (safety analyses); ASPICE 4.0 SWE.2 |
-| Version | 0.2 |
+| Version | 0.2 (§3.2 SWF-48: lost revocation during a grant, bounded at one task period; SWF-49, SWF-50; §3.5 AIAG-VDA cross-reference; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope software (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating); host components summarised |
 | Author | Assurance team (initial draft) |
@@ -53,8 +53,8 @@ The analysis was done by code reading at the baseline. It has not been reviewed.
 | SWF-17 | U-SAF-CORE relay | Omission: relay malfunction latch cleared by `0xdc` | Camera and item commands both reach the car (SG-01), PCS cut (SG-07) | none | N | SWSR-506a (GAP-48) |
 | SWF-18 | U-SAF-CORE forwarding | Late/omission: forwarding of camera frames stops or is delayed (queue full, power save) | Stock PCS frames lost while relay driven (SG-07) | overflow counted (`drivers/can_common.h:165`) | N | SWSR-707, 513 (`0xe7`) |
 | SWF-19 | U-SAF-CORE EPS status | Omission: EPS fault not seen by envelope | Unannounced loss of steering assist (SG-02) | host only | N | SWSR-110 (GAP-03) |
-| SWF-48 | U-SAF-CORE mode (ELM327) | Commission: in ELM327 mode `elm327_tx_hook` passes any 8-byte ISO 15765 frame to `0x7xx`, `0x18DAxxF1` or `0x18DB33F1`, whatever the service, ignition or vehicle motion (`opendbc_repo/opendbc/safety/modes/elm327.h:6-35`) | SoC can send UDS ECUReset, CommunicationControl or routine requests to the EPS, PCM or radar while the vehicle moves: loss of assist or of stock PCS (SG-02, SG-07) | Relay released in ELM327 (`panda/board/main.c:55-56`); SWSR-512 blocks a switch to ELM327 once TOYOTA is active | P | Residual before engagement (fingerprinting, radar disable) has no SWSR: OI-6 |
-| SWF-49 | U-SAF-CORE TX entry | Commission: a host TX path calls `can_send` with `skip_tx_hook=true` and bypasses the envelope | Unchecked frame on the car bus (all) | Both host TX entries pass `false` (`panda/board/can_comms.h:97, 118`); only forwarding uses `true` | P | No test pins this; static check proposed (AIAG SWF-ACT-008); OI-6 |
+| SWF-49 | U-SAF-CORE mode (ELM327) | Commission: in ELM327 mode `elm327_tx_hook` passes any 8-byte ISO 15765 frame to `0x7xx`, `0x18DAxxF1` or `0x18DB33F1`, whatever the service, ignition or vehicle motion (`opendbc_repo/opendbc/safety/modes/elm327.h:6-35`) | SoC can send UDS ECUReset, CommunicationControl or routine requests to the EPS, PCM or radar while the vehicle moves: loss of assist or of stock PCS (SG-02, SG-07) | Relay released in ELM327 (`panda/board/main.c:55-56`); SWSR-512 blocks a switch to ELM327 once TOYOTA is active | P | Residual before engagement (fingerprinting, radar disable) has no SWSR: OI-6 |
+| SWF-50 | U-SAF-CORE TX entry | Commission: a host TX path calls `can_send` with `skip_tx_hook=true` and bypasses the envelope | Unchecked frame on the car bus (all) | Both host TX entries pass `false` (`panda/board/can_comms.h:97, 118`); only forwarding uses `true` | P | No test pins this; static check proposed (AIAG SWF-ACT-008); OI-6 |
 | SWF-20 | U-SAF-HELP | Wrong value: macro side effects / overflow in `SAFETY_ABS(INT_MIN)`, float rounding in `safety_interpolate` | Wrong limit | UBSan on host; review | P | VS-UV-01, VS-UV-S3 |
 
 ### 3.2 Panda platform (E-03b)
@@ -83,6 +83,7 @@ The analysis was done by code reading at the baseline. It has not been reviewed.
 | SWF-40 | U-PND-BOOT | Commission: non-release image executed | Unverified envelope (all) | RSA-1024/SHA-1; debug key in debug builds | P | SWSR-511, 514 (GAP-24, GAP-25) |
 | SWF-41 | U-PND-PLAT clock | Wrong value: clock drift → timers wrong | Timeouts and RT windows wrong (SG-01) | CSS on HSE loss only | P | SWSR-504 |
 | SWF-42 | U-PND-PLAT memory | Wrong value: RAM bit flip in `controls_allowed`, limits, mode | Authority/limit wrong (all) | none | N | SWSR-503b, 507; WP-A-04 SFMEA-23 |
+| SWF-48 | U-SAF grant (`pcm_cruise_check`) | Wrong value: under the WP-W-03 §5.4.2 priority scheme, the safety task preempts the grant between `rx_checks_allow_engagement()` and the store of `controls_allowed = true`; its revocation is overwritten (WP-W-03 §5.4.3 R-2) | Authority held while a revocation condition holds (SG-01, SG-02) | Every safety-task revocation (RX timeout, heartbeat) is condition-based and re-evaluated each period, so the loss lasts at most one task period (10 ms) plus its jitter. Not reachable at equal priority (panda `52cad44`) | P (bounded) | Accepted bound: 10 ms, within the TSR-401/407 budgets; single-writer `safety_revoke` (WP-W-03 §6.3) remains the target; re-assess when the priority scheme is adopted |
 
 ### 3.3 Host components (summary, QM)
 
@@ -98,15 +99,15 @@ Host failure modes are analysed at system level in [WP-A-04](../08-analyses/WP-A
 
 ### 3.4 Coverage summary
 
-| Rating | Count (SWF-01…42) |
+| Rating | Count (SWF-01…42, SWF-48) |
 |---|---|
 | C | 3 |
-| P | 16 |
+| P | 17 |
 | N | 23 |
 
-SWF-48 and SWF-49 (added in v0.2) are both P and are not in these counts.
+SWF-49 and SWF-50 (added in v0.2) are both P and are not in these counts; they have no SWSR yet (OI-6).
 
-Every N and P row has an SWSR in WP-W-02. Diagnostic-coverage targets in WP-S-03 §6 cannot be claimed until those SWSRs are implemented and verified.
+Every other N and P row has an SWSR in WP-W-02 (SWF-48: SWSR-519 and an accepted 10 ms bound). Diagnostic-coverage targets in WP-S-03 §6 cannot be claimed until those SWSRs are implemented and verified.
 
 ### 3.5 AIAG-VDA ratings and test evidence
 
@@ -128,8 +129,8 @@ A second SW FMEA of the safety layer, with AIAG-VDA 2019 severity, occurrence, d
 | SWF-012 | Relay malfunction not detected | SWF-17, SWF-37 | C1 10/5/3 H |
 | SWF-013 | Wrong or permissive safety mode accepted from the host | SWF-16, SWF-24 | C1 10/3/4 L; C2 10/8/9 H |
 | SWF-014 | Controls withdrawn later than the FTTI after host loss | SWF-25, SWF-28 | C1 10/3/4 L; C2 10/8/8 H |
-| SWF-015 | Diagnostic (ELM327) mode accepted while driving | SWF-48 | C1 10/5/9 H |
-| SWF-016 | Host transmission bypasses the safety check | SWF-49 | C1 10/3/8 H |
+| SWF-015 | Diagnostic (ELM327) mode accepted while driving | SWF-49 | C1 10/5/9 H |
+| SWF-016 | Host transmission bypasses the safety check | SWF-50 | C1 10/3/8 H |
 | SWF-017 | Item deceleration passed while the driver presses the accelerator | — (gas override verified in code, `get_longitudinal_allowed`) | C1 10/5/3 H |
 | SWF-018 | Safety checks stop running while the relay is driven | SWF-29, SWF-30 (GAP-43, closed in part by the BL-002 watchdog) | C1 10/4/7 H |
 | SWF-019 | Spurious MCU reset while engaged | — (new failure mode of the BL-002 watchdog; OI-3) | C1 10/5/8 H |
@@ -196,4 +197,4 @@ Evidence recorded with the AIAG-VDA data (not yet reviewed, I1 pending):
 | OI-3 | Repeat this analysis after the SWSRs are implemented (new failure modes of new mechanisms, e.g. autonomous zero-torque frames) | Safety engineer | G4 |
 | OI-4 | Independent (I2) review of this analysis | Safety manager | G3 |
 | OI-5 | Align SWF IDs with WP-A-04 SFMEA rows in the trace data; the AIAG-VDA IDs (`SWF-0nn`, three digits) map to this document through §3.5 | Safety engineer | G3 |
-| OI-6 | Add SWSRs for SWF-48 (restrict ELM327 TX to the services fingerprinting and radar disable need, and refuse it above standstill) and SWF-49 (a test or static check that every host TX path uses the TX hook) in WP-W-02 | Safety engineer | G3 |
+| OI-6 | Add SWSRs for SWF-49 (restrict ELM327 TX to the services fingerprinting and radar disable need, and refuse it above standstill) and SWF-50 (a test or static check that every host TX path uses the TX hook) in WP-W-02 | Safety engineer | G3 |

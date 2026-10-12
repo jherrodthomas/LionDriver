@@ -929,7 +929,7 @@
   mechanism: "ISO"
   timing: "analysis; WCET measured on target"
   verification: "A, T-HIL"
-  baseline_impl: "**Not implemented:** no `NVIC_SetPriority` outside the CMSIS header (all IRQs at priority 0); RX hook in the FDCAN interrupt (`drivers/fdcan.h:221, 245-252`); TX hook and control-request dispatch in the SPI DMA interrupt (`stm32h7/llspi.h:56-60`, `drivers/spi.h:143, 162`, `can_comms.h:97, 118`) (GAP-50)"
+  baseline_impl: "**Partial** (panda `52cad44`): every enabled interrupt has an explicit priority, all at one level until the WP-W-03 §5.4.2 scheme is adopted; R-1 and R-8 races closed, R-2 bounded at 10 ms. **Not implemented:** WCET and latency measurement (WP-W-03 §5.4.5); RX hook in the FDCAN interrupt (`drivers/fdcan.h:221, 245-252`); TX hook and control-request dispatch in the SPI DMA interrupt (`stm32h7/llspi.h:56-60`, `drivers/spi.h:143, 162`, `can_comms.h:97, 118`) (GAP-50)"
   status: proposed
   source: WP-S-02
 

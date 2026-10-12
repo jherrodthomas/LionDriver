@@ -1147,7 +1147,7 @@
   allocated_to: "U-PND-PLAT, U-PND-MAIN"
   verification: "A, HIL"
   acceptance: "Every enabled IRQ has a documented priority; measured latency within budget"
-  baseline_impl: "Not impl: no `NVIC_SetPriority` in `panda/board` (all at default priority); RX hook in FDCAN ISR (`drivers/fdcan.h:221`), TX hook and dispatcher in SPI DMA ISR (`stm32h7/llspi.h:56-61`) (GAP-50)"
+  baseline_impl: "Partial (panda `52cad44`): every enabled IRQ has an explicit priority (`board/drivers/irq_priorities.h`, host test `tests/irq_priorities`), all at one level until the WP-W-03 §5.4.2 scheme is adopted. Latency not measured (WP-W-03 §5.4.5, D-04); RX hook in FDCAN ISR, TX hook and dispatcher in SPI DMA ISR (GAP-50)"
   status: proposed
   source: WP-W-02
 
