@@ -587,7 +587,7 @@
   allocated_to: "U-SAF-CORE, U-SAF-TOY"
   verification: "UT, RP, FI"
   acceptance: "Each disagreement detected ≤ 0.2 s; no false detection on reference logs"
-  baseline_impl: "Not impl: `speed_mismatch_check` exists, unused (`safety.h:529-537`) (GAP-01)"
+  baseline_impl: "Partial (reference build, opendbc `875e325`): (c) implemented (`toyota_cruise_main_check`, `modes/toyota.h`; test `test_cruise_active_with_main_off`; tolerance 150 ms). Not impl: (a) (`speed_mismatch_check` exists, unused, `safety.h:529-537`); (b) pending the `0x1D3` BRAKE_PRESSED semantics on reference logs; (d) (GAP-01)"
   status: proposed
   source: WP-W-02
 
