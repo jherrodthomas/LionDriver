@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Draft: proposed change, not integrated.** The LionDriver `panda` pin is unchanged. Deviations D-1 and D-2 accepted as interim by the maintainer on 2026-10-12 (§2). Follow-on change panda#3 proposes to resolve D-1 and D-3 (§7) |
+| Status | **Integrated 2026-10-12: LionDriver pins panda `9f60e17`, opendbc `aff4033` (merge commits on the forks' `master`); not yet verified on hardware (HIL bench D-04); not reviewed independently.** Deviations D-1 and D-2 accepted as interim by the maintainer on 2026-10-12 (§2). Follow-on change panda#3 proposes to resolve D-1 and D-3 (§7) |
 | Change request | [jherrodthomas/panda#1](https://github.com/jherrodthomas/panda/pull/1) (draft); follow-on [jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3), stacked on panda#1 (§7) |
 | Range | panda `92eb565..16cd27a` (branch `liondriver/hw-watchdog`; `b8d046b` and `16cd27a` add debug-only fault-injection hooks and the HIL test, no change to release-image behaviour. panda#3 contains them through merge `b9596ed`); LionDriver pin stays at `92eb565` until panda#1 is merged to the fork's `master` |
 | Reference configuration affected | Yes: the panda firmware runs on the reference device |
