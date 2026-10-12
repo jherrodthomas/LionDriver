@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2469" height="1012" viewBox="0 0 2469 1012" font-family="Helvetica, Arial, sans-serif">
+<style>.g{fill:#fff;stroke:#111;stroke-width:1.4}.ctx{fill:#f4f4f4;stroke:#111;stroke-width:1.1}.id{font-size:11.5px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.sid{font-size:10.5px;font-weight:700;text-anchor:middle}.cid{font-size:10px;font-weight:700;text-anchor:middle}.cs{font-size:9.5px;text-anchor:middle;fill:#333}.aj{font-size:11px;font-weight:700;text-anchor:end}.df{font-size:9.5px;font-weight:700;fill:#b3261e;text-anchor:middle}.dfl{font-size:9.5px;font-weight:700;fill:#b3261e}.sh{font-size:9.5px;font-weight:600;fill:#444;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">Safety case — argument from G5  (sheet 6 of 6)</text>
+<rect x="1019.0" y="70" width="230" height="95.0" class="g"/>
+<text x="1134.0" y="89" class="id">G5</text>
+<text x="1134.0" y="102.5" class="d">The work was done by competent people</text>
+<text x="1134.0" y="115.0" class="d">under controlled processes, was</text>
+<text x="1134.0" y="127.5" class="d">independently confirmed, and the</text>
+<text x="1134.0" y="140.0" class="d">claims stay valid in operation.</text>
+<text x="1134.0" y="154.0" class="sh">from sheet 1</text>
+<line x1="1134.0" y1="165.0" x2="1134.0" y2="184.0" class="w"/>
+<line x1="1134.0" y1="184.0" x2="1134.0" y2="184.0" class="w"/>
+<line x1="1134.0" y1="184.0" x2="1134.0" y2="210.0" class="w"/><path d="M1134.0,210.0 L1130.5,201.7 L1137.5,201.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<path d="M1023.0,211.0 L1259.0,211.0 L1245.0,316.0 L1009.0,316.0 Z" class="g"/>
+<text x="1134.0" y="230.0" class="id">S5</text>
+<text x="1134.0" y="243.5" class="d">Argue over planning, configuration</text>
+<text x="1134.0" y="256.0" class="d">and change control, verification and</text>
+<text x="1134.0" y="268.5" class="d">review, competence and independence,</text>
+<text x="1134.0" y="281.0" class="d">confirmation measures, tools and</text>
+<text x="1134.0" y="293.5" class="d">reused components, and</text>
+<text x="1134.0" y="306.0" class="d">operation-phase processes</text>
+<line x1="1134.0" y1="316.0" x2="1134.0" y2="335.0" class="w"/>
+<line x1="145.0" y1="335.0" x2="2123.0" y2="335.0" class="w"/>
+<line x1="145.0" y1="335.0" x2="145.0" y2="361.0" class="w"/><path d="M145.0,361.0 L141.5,352.7 L148.5,352.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="405.0" y1="335.0" x2="405.0" y2="361.0" class="w"/><path d="M405.0,361.0 L401.5,352.7 L408.5,352.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="665.0" y1="335.0" x2="665.0" y2="361.0" class="w"/><path d="M665.0,361.0 L661.5,352.7 L668.5,352.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="925.0" y1="335.0" x2="925.0" y2="361.0" class="w"/><path d="M925.0,361.0 L921.5,352.7 L928.5,352.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1193.0" y1="335.0" x2="1193.0" y2="361.0" class="w"/><path d="M1193.0,361.0 L1189.5,352.7 L1196.5,352.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1662.0" y1="335.0" x2="1662.0" y2="361.0" class="w"/><path d="M1662.0,361.0 L1658.5,352.7 L1665.5,352.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2123.0" y1="335.0" x2="2123.0" y2="361.0" class="w"/><path d="M2123.0,361.0 L2119.5,352.7 L2126.5,352.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<rect x="30" y="362.0" width="230" height="42.5" class="g"/>
+<text x="145.0" y="381.0" class="id">G5.1</text>
+<text x="145.0" y="394.5" class="d">Plans exist and are followed.</text>
+<line x1="145.0" y1="404.5" x2="145.0" y2="423.5" class="w"/>
+<line x1="86.0" y1="423.5" x2="145.0" y2="423.5" class="w"/>
+<line x1="86.0" y1="423.5" x2="86.0" y2="489.5" class="w"/><path d="M86.0,489.5 L82.5,481.2 L89.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="86.0" cy="513.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86.0" y="517.5" class="sid" fill="#111">Sn-60</text>
+<text x="86.0" y="551.0" class="cs">Management plans</text>
+<rect x="290.0" y="362.0" width="230" height="82.5" class="g"/>
+<text x="405.0" y="381.0" class="id">G5.2</text>
+<text x="405.0" y="394.5" class="d">Safety-relevant code and evidence are</text>
+<text x="405.0" y="407.0" class="d">under LionDriver configuration and</text>
+<text x="405.0" y="419.5" class="d">change control.</text>
+<text x="405.0" y="433.5" class="df">defeaters: DF-24, DF-30, DF-31</text>
+<line x1="405.0" y1="444.5" x2="405.0" y2="463.5" class="w"/>
+<line x1="338.0" y1="463.5" x2="472.0" y2="463.5" class="w"/>
+<line x1="338.0" y1="463.5" x2="338.0" y2="489.5" class="w"/><path d="M338.0,489.5 L334.5,481.2 L341.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="472.0" y1="463.5" x2="472.0" y2="489.5" class="w"/><path d="M472.0,489.5 L468.5,481.2 L475.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="338.0" cy="513.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="338.0" y="517.5" class="sid" fill="#111">Sn-61</text>
+<text x="338.0" y="551.0" class="cs">CM and change</text>
+<text x="338.0" y="563.5" class="cs">management</text>
+<circle cx="472.0" cy="513.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="472.0" y="517.5" class="sid" fill="#111">Sn-62</text>
+<text x="472.0" y="551.0" class="cs">Baseline manifest</text>
+<rect x="550" y="362.0" width="230" height="70.0" class="g"/>
+<text x="665.0" y="381.0" class="id">G5.3</text>
+<text x="665.0" y="394.5" class="d">Requirements are traceable from SG to</text>
+<text x="665.0" y="407.0" class="d">code and test.</text>
+<text x="665.0" y="421.0" class="df">defeaters: DF-25</text>
+<line x1="665.0" y1="432.0" x2="665.0" y2="451.0" class="w"/>
+<line x1="606.0" y1="451.0" x2="665.0" y2="451.0" class="w"/>
+<line x1="606.0" y1="451.0" x2="606.0" y2="489.5" class="w"/><path d="M606.0,489.5 L602.5,481.2 L609.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="606.0" cy="513.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="606.0" y="517.5" class="sid" fill="#111">Sn-63</text>
+<text x="606.0" y="551.0" class="cs">Traceability</text>
+<text x="606.0" y="563.5" class="cs">procedure and data,</text>
+<text x="606.0" y="576.0" class="cs">trace check report</text>
+<rect x="810.0" y="362.0" width="230" height="82.5" class="g"/>
+<text x="925.0" y="381.0" class="id">G5.4</text>
+<text x="925.0" y="394.5" class="d">Verification reviews and confirmation</text>
+<text x="925.0" y="407.0" class="d">measures were performed at the</text>
+<text x="925.0" y="419.5" class="d">required independence.</text>
+<text x="925.0" y="433.5" class="df">defeaters: DF-26</text>
+<line x1="925.0" y1="444.5" x2="925.0" y2="463.5" class="w"/>
+<line x1="858.0" y1="463.5" x2="992.0" y2="463.5" class="w"/>
+<line x1="858.0" y1="463.5" x2="858.0" y2="489.5" class="w"/><path d="M858.0,489.5 L854.5,481.2 L861.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="992.0" y1="463.5" x2="992.0" y2="489.5" class="w"/><path d="M992.0,489.5 L988.5,481.2 L995.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="858.0" cy="513.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="858.0" y="517.5" class="sid" fill="#111">Sn-64</text>
+<text x="858.0" y="551.0" class="cs">Verification review</text>
+<text x="858.0" y="563.5" class="cs">records</text>
+<circle cx="992.0" cy="513.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="992.0" y="517.5" class="sid" fill="#111">Sn-65</text>
+<text x="992.0" y="551.0" class="cs">Confirmation</text>
+<text x="992.0" y="563.5" class="cs">reviews, audit, FSA</text>
+<rect x="1078.0" y="362.0" width="230" height="55.0" class="g"/>
+<text x="1193.0" y="381.0" class="id">G5.5</text>
+<text x="1193.0" y="394.5" class="d">Tools and reused software components</text>
+<text x="1193.0" y="407.0" class="d">are qualified.</text>
+<line x1="1193.0" y1="417.0" x2="1193.0" y2="436.0" class="w"/>
+<line x1="1126.0" y1="436.0" x2="1260.0" y2="436.0" class="w"/>
+<line x1="1126.0" y1="436.0" x2="1126.0" y2="489.5" class="w"/><path d="M1126.0,489.5 L1122.5,481.2 L1129.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1260.0" y1="436.0" x2="1260.0" y2="489.5" class="w"/><path d="M1260.0,489.5 L1256.5,481.2 L1263.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="1126.0" cy="513.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1126.0" y="517.5" class="sid" fill="#111">Sn-66</text>
+<text x="1126.0" y="551.0" class="cs">Tool qualification</text>
+<circle cx="1260.0" cy="513.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1260.0" y="517.5" class="sid" fill="#111">Sn-67</text>
+<text x="1260.0" y="551.0" class="cs">SW component</text>
+<text x="1260.0" y="563.5" class="cs">qualification</text>
+<rect x="1547.0" y="362.0" width="230" height="80.0" class="g"/>
+<text x="1662.0" y="381.0" class="id">G5.6</text>
+<text x="1662.0" y="394.5" class="d">Installation, operation, service,</text>
+<text x="1662.0" y="407.0" class="d">decommissioning and field monitoring</text>
+<text x="1662.0" y="419.5" class="d">keep the reference configuration and</text>
+<text x="1662.0" y="432.0" class="d">the AoUs valid.</text>
+<line x1="1662.0" y1="442.0" x2="1662.0" y2="461.0" class="w"/>
+<line x1="1394.0" y1="461.0" x2="1930.0" y2="461.0" class="w"/>
+<line x1="1394.0" y1="461.0" x2="1394.0" y2="489.5" class="w"/><path d="M1394.0,489.5 L1390.5,481.2 L1397.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1528.0" y1="461.0" x2="1528.0" y2="489.5" class="w"/><path d="M1528.0,489.5 L1524.5,481.2 L1531.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1662.0" y1="461.0" x2="1662.0" y2="489.5" class="w"/><path d="M1662.0,489.5 L1658.5,481.2 L1665.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1796.0" y1="461.0" x2="1796.0" y2="489.5" class="w"/><path d="M1796.0,489.5 L1792.5,481.2 L1799.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1930.0" y1="461.0" x2="1930.0" y2="489.5" class="w"/><path d="M1930.0,489.5 L1926.5,481.2 L1933.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="1394.0" cy="513.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1394.0" y="517.5" class="sid" fill="#111">Sn-30</text>
+<text x="1394.0" y="551.0" class="cs">Installation and</text>
+<text x="1394.0" y="563.5" class="cs">provisioning</text>
+<text x="1394.0" y="576.0" class="cs">control;</text>
+<text x="1394.0" y="588.5" class="cs">installation records</text>
+<circle cx="1528.0" cy="513.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1528.0" y="517.5" class="sid" fill="#111">Sn-32</text>
+<text x="1528.0" y="551.0" class="cs">Operation, service,</text>
+<text x="1528.0" y="563.5" class="cs">decommissioning</text>
+<circle cx="1662.0" cy="513.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1662.0" y="517.5" class="sid" fill="#111">Sn-47</text>
+<text x="1662.0" y="551.0" class="cs">User information and</text>
+<text x="1662.0" y="563.5" class="cs">briefing</text>
+<circle cx="1796.0" cy="513.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1796.0" y="517.5" class="sid" fill="#111">Sn-44</text>
+<text x="1796.0" y="551.0" class="cs">Field monitoring</text>
+<circle cx="1930.0" cy="513.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1930.0" y="517.5" class="sid" fill="#111">Sn-68</text>
+<text x="1930.0" y="551.0" class="cs">CS incident response</text>
+<text x="1930.0" y="563.5" class="cs">and updates</text>
+<rect x="2008" y="362.0" width="230" height="55.0" class="g"/>
+<text x="2123.0" y="381.0" class="id">G5.7</text>
+<text x="2123.0" y="394.5" class="d">No public-road operation happened</text>
+<text x="2123.0" y="407.0" class="d">outside the controlled test regime.</text>
+<ellipse cx="2344.0" cy="382.75" rx="95.0" ry="24.75" class="ctx"/>
+<text x="2435.0" y="409.5" class="aj">A</text>
+<text x="2344.0" y="380.0" class="cid">Assumption</text>
+<text x="2344.0" y="392.5" class="cs">AOU-07 hold (WP-K-01 §5)</text>
+<line x1="2238" y1="382.0" x2="2242" y2="382.0" class="w"/>
+<line x1="2242" y1="382.0" x2="2242" y2="382.75" class="w"/>
+<line x1="2242.0" y1="382.8" x2="2248.0" y2="382.8" class="w"/><path d="M2248.0,382.8 L2239.7,386.3 L2239.7,379.2 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="2123.0" y1="417.0" x2="2123.0" y2="436.0" class="w"/>
+<line x1="2064.0" y1="436.0" x2="2123.0" y2="436.0" class="w"/>
+<line x1="2064.0" y1="436.0" x2="2064.0" y2="489.5" class="w"/><path d="M2064.0,489.5 L2060.5,481.2 L2067.5,481.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="2064.0" cy="513.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="2064.0" y="517.5" class="sid" fill="#111">Sn-69</text>
+<text x="2064.0" y="551.0" class="cs">Vehicle test</text>
+<text x="2064.0" y="563.5" class="cs">operations and</text>
+<text x="2064.0" y="576.0" class="cs">records</text>
+<text x="30" y="644.5" class="h">Notation (GSN Community Standard v3)</text>
+<rect x="30" y="658.5" width="40" height="22" class="g"/>
+<text x="86" y="673.5" class="l">Goal (claim)</text>
+<path d="M37,688.5 L70,688.5 L63,710.5 L30,710.5 Z" class="g"/>
+<text x="86" y="703.5" class="l">Strategy (argument)</text>
+<circle cx="50" cy="729.5" r="11" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.6"/>
+<text x="86" y="733.5" class="l">Solution: evidence available</text>
+<circle cx="50" cy="759.5" r="11" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86" y="763.5" class="l">Solution: evidence partial</text>
+<circle cx="50" cy="789.5" r="11" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="86" y="793.5" class="l">Solution: evidence missing</text>
+<rect x="30" y="808.5" width="40" height="22" rx="10" class="ctx"/>
+<text x="86" y="823.5" class="l">Context</text>
+<ellipse cx="50" cy="849.5" rx="20" ry="11" class="ctx"/>
+<text x="86" y="853.5" class="l">Assumption (A) / justification (J)</text>
+<path d="M50,870.5 L59,879.5 L50,888.5 L41,879.5 Z" fill="#fff" stroke="#111" stroke-width="1.2"/>
+<text x="86" y="883.5" class="l">Undeveloped goal</text>
+<line x1="30.0" y1="909.5" x2="70.0" y2="909.5" class="w"/><path d="M70.0,909.5 L61.7,913.0 L61.7,906.0 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<text x="86" y="913.5" class="l">SupportedBy</text>
+<line x1="30.0" y1="939.5" x2="70.0" y2="939.5" class="w"/><path d="M70.0,939.5 L61.7,943.0 L61.7,936.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<text x="86" y="943.5" class="l">InContextOf</text>
+<text x="30" y="968.5" class="dfl">defeaters: DF-nn</text>
+<text x="140" y="968.5" class="l">open counter-evidence on the goal (WP-K-01 §7)</text>
+<rect x="1999.0" y="632.5" width="440" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="2009.0" y="654.5" class="h">LionDriver — Safety case (GSN)</text>
+<text x="2009.0" y="670.5" class="l">Argument from G5</text>
+<text x="2009.0" y="686.5" class="l">Sheet 6 of 6</text>
+<text x="2009.0" y="702.5" class="l">Source: case records (assurance/case/) and WP-K-01 contexts</text>
+<text x="2009.0" y="718.5" class="s">Generated by gsn_diagrams.py — edit the records or WP-K-01, not this file</text>
+</svg>

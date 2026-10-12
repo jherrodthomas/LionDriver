@@ -31,7 +31,7 @@ This folder holds the structured records behind the README's Living Safety Case 
 | [`baselines/`](baselines/) | `baseline` | `BL-001`, … | Engineering baselines the records refer to |
 | [`reviews/`](reviews/reviews.yaml) | `review` | `REV-001`, … | Review records; none at `BL-001` |
 | [`schema/case-schema.json`](schema/case-schema.json) | — | — | Fields, types, enumerations and reference rules per kind |
-| [`tools/`](tools/) | — | — | Validator, generator and their self-tests |
+| [`tools/`](tools/) | — | — | Validator, dashboard and GSN diagram generators, and their self-tests |
 | `status.json` | — | — | Generated summary (do not edit) |
 
 Hazards, hazardous events, safety goals and assumptions of use are not duplicated here. Records reference them by ID, and the validator resolves those IDs against [`assurance/trace/items/`](../trace/items/), the machine-readable hazard log ([WP-T-01](../trace/README.md)). Requirements are referenced the same way: FSRs and TSRs are in `trace/items/fsr.yaml` and `tsr.yaml`, generated from WP-C-04, WP-S-02 and WP-S-06.
@@ -112,6 +112,8 @@ Lifecycle-area status, from the evidence items assigned to the area (`lifecycle_
 python3 assurance/case/tools/validate.py              # check the records
 python3 assurance/case/tools/generate_dashboard.py    # regenerate status.json, the SVG cards and the README table
 python3 assurance/case/tools/test_case.py             # self-tests of the validator rules
+python3 assurance/case/tools/gsn_diagrams.py          # regenerate the GSN diagrams in assurance/10-safety-case/gsn/
+python3 assurance/case/tools/test_gsn.py              # tests of the GSN generator
 ```
 
 When WP-K-01 changes, update the matching records in the same pull request; check X3 fails otherwise.

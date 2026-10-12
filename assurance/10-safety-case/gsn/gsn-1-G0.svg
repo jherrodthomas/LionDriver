@@ -1,0 +1,234 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2512" height="1636" viewBox="0 0 2512 1636" font-family="Helvetica, Arial, sans-serif">
+<style>.g{fill:#fff;stroke:#111;stroke-width:1.4}.ctx{fill:#f4f4f4;stroke:#111;stroke-width:1.1}.id{font-size:11.5px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.sid{font-size:10.5px;font-weight:700;text-anchor:middle}.cid{font-size:10px;font-weight:700;text-anchor:middle}.cs{font-size:9.5px;text-anchor:middle;fill:#333}.aj{font-size:11px;font-weight:700;text-anchor:end}.df{font-size:9.5px;font-weight:700;fill:#b3261e;text-anchor:middle}.dfl{font-size:9.5px;font-weight:700;fill:#b3261e}.sh{font-size:9.5px;font-weight:600;fill:#444;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">Safety case — argument from G0  (sheet 1 of 6)</text>
+<rect x="1625.5" y="70" width="230" height="130.0" class="g"/>
+<text x="1740.5" y="89" class="id">G0</text>
+<text x="1740.5" y="102.5" class="d">The LionDriver reference</text>
+<text x="1740.5" y="115.0" class="d">configuration, operated by an</text>
+<text x="1740.5" y="127.5" class="d">attentive driver within its ODD, does</text>
+<text x="1740.5" y="140.0" class="d">not pose unreasonable risk to vehicle</text>
+<text x="1740.5" y="152.5" class="d">occupants or other road users. The</text>
+<text x="1740.5" y="165.0" class="d">residual risk is no worse than manual</text>
+<text x="1740.5" y="177.5" class="d">driving of the same vehicle with its</text>
+<text x="1740.5" y="190.0" class="d">stock TSS 2.0 driver assistance.</text>
+<rect x="1866.5" y="70" width="190" height="79.0" rx="14" class="ctx"/>
+<text x="1961.5" y="88" class="cid">C1</text>
+<text x="1961.5" y="100.5" class="cs">Item definition: functions</text>
+<text x="1961.5" y="113.0" class="cs">F-01…F-09, elements E-01…E-06,</text>
+<text x="1961.5" y="125.5" class="cs">interfaces IF-01…IF-09</text>
+<text x="1961.5" y="138.0" class="cs">[WP-C-01]</text>
+<rect x="1866.5" y="157.0" width="190" height="54.0" rx="14" class="ctx"/>
+<text x="1961.5" y="175.0" class="cid">C2</text>
+<text x="1961.5" y="187.5" class="cs">ODD and intended functionality</text>
+<text x="1961.5" y="200.0" class="cs">[WP-C-02]</text>
+<rect x="1866.5" y="219.0" width="190" height="104.0" rx="14" class="ctx"/>
+<text x="1961.5" y="237.0" class="cid">C3</text>
+<text x="1961.5" y="249.5" class="cs">Reference configuration: 2020</text>
+<text x="1961.5" y="262.0" class="cs">Corolla LE ICE TSS2</text>
+<text x="1961.5" y="274.5" class="cs">(TOYOTA_COROLLA_TSS2), one</text>
+<text x="1961.5" y="287.0" class="cs">recorded device revision +</text>
+<text x="1961.5" y="299.5" class="cs">Toyota harness, tagged</text>
+<text x="1961.5" y="312.0" class="cs">LionDriver release [WP-M-01…</text>
+<rect x="1866.5" y="331.0" width="190" height="91.5" rx="14" class="ctx"/>
+<text x="1961.5" y="349.0" class="cid">C4</text>
+<text x="1961.5" y="361.5" class="cs">Hazard log: H-01…H-06, H-08;</text>
+<text x="1961.5" y="374.0" class="cs">HE-01.1…HE-08.1; SG-01…SG-07</text>
+<text x="1961.5" y="386.5" class="cs">[WP-C-03]; SH-01…SH-13</text>
+<text x="1961.5" y="399.0" class="cs">[WP-C-05]; TARA damage</text>
+<text x="1961.5" y="411.5" class="cs">scenarios [WP-C-09]</text>
+<rect x="1866.5" y="430.5" width="190" height="79.0" rx="14" class="ctx"/>
+<text x="1961.5" y="448.5" class="cid">C5</text>
+<text x="1961.5" y="461.0" class="cs">Safety envelope architecture</text>
+<text x="1961.5" y="473.5" class="cs">pattern: QM SoC stack bounded</text>
+<text x="1961.5" y="486.0" class="cs">by the opendbc safety mode on</text>
+<text x="1961.5" y="498.5" class="cs">the panda MCU [WP-M-01 §4.1]</text>
+<rect x="1866.5" y="517.5" width="190" height="54.0" rx="14" class="ctx"/>
+<text x="1961.5" y="535.5" class="cid">C6</text>
+<text x="1961.5" y="548.0" class="cs">Tailoring T-01…T-13 [WP-M-01</text>
+<text x="1961.5" y="560.5" class="cs">§5]</text>
+<ellipse cx="1961.5" cy="606.5" rx="95.0" ry="31.0" class="ctx"/>
+<text x="2052.5" y="639.5" class="aj">A</text>
+<text x="1961.5" y="597.5" class="cid">A1</text>
+<text x="1961.5" y="610.0" class="cs">AOU-01…AOU-13 hold [WP-C-01</text>
+<text x="1961.5" y="622.5" class="cs">§7] — see §5 for status</text>
+<ellipse cx="1961.5" cy="693.5" rx="95.0" ry="56.0" class="ctx"/>
+<text x="2052.5" y="751.5" class="aj">J</text>
+<text x="1961.5" y="659.5" class="cid">J0</text>
+<text x="1961.5" y="672.0" class="cs">"No worse than manual driving</text>
+<text x="1961.5" y="684.5" class="cs">with stock TSS 2.0" is the</text>
+<text x="1961.5" y="697.0" class="cs">acceptance principle because</text>
+<text x="1961.5" y="709.5" class="cs">LD-SDA replaces stock LTA and</text>
+<text x="1961.5" y="722.0" class="cs">DRCC; the comparison baseline</text>
+<text x="1961.5" y="734.5" class="cs">is what the driver would…</text>
+<line x1="1855.5" y1="90" x2="1859.5" y2="90" class="w"/>
+<line x1="1859.5" y1="90" x2="1859.5" y2="693.5" class="w"/>
+<line x1="1859.5" y1="109.5" x2="1865.5" y2="109.5" class="w"/><path d="M1865.5,109.5 L1857.2,113.0 L1857.2,106.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1859.5" y1="184.0" x2="1865.5" y2="184.0" class="w"/><path d="M1865.5,184.0 L1857.2,187.5 L1857.2,180.5 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1859.5" y1="271.0" x2="1865.5" y2="271.0" class="w"/><path d="M1865.5,271.0 L1857.2,274.5 L1857.2,267.5 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1859.5" y1="376.8" x2="1865.5" y2="376.8" class="w"/><path d="M1865.5,376.8 L1857.2,380.3 L1857.2,373.2 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1859.5" y1="470.0" x2="1865.5" y2="470.0" class="w"/><path d="M1865.5,470.0 L1857.2,473.5 L1857.2,466.5 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1859.5" y1="544.5" x2="1865.5" y2="544.5" class="w"/><path d="M1865.5,544.5 L1857.2,548.0 L1857.2,541.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1859.5" y1="606.5" x2="1865.5" y2="606.5" class="w"/><path d="M1865.5,606.5 L1857.2,610.0 L1857.2,603.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1859.5" y1="693.5" x2="1865.5" y2="693.5" class="w"/><path d="M1865.5,693.5 L1857.2,697.0 L1857.2,690.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1740.5" y1="200.0" x2="1740.5" y2="219.0" class="w"/>
+<line x1="1055.0" y1="219.0" x2="2426.0" y2="219.0" class="w"/>
+<line x1="1055.0" y1="219.0" x2="1055.0" y2="790.5" class="w"/><path d="M1055.0,790.5 L1051.5,782.2 L1058.5,782.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2158.0" y1="219.0" x2="2158.0" y2="790.5" class="w"/><path d="M2158.0,790.5 L2154.5,782.2 L2161.5,782.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2292.0" y1="219.0" x2="2292.0" y2="790.5" class="w"/><path d="M2292.0,790.5 L2288.5,782.2 L2295.5,782.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2426.0" y1="219.0" x2="2426.0" y2="790.5" class="w"/><path d="M2426.0,790.5 L2422.5,782.2 L2429.5,782.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<path d="M944.0,791.5 L1180.0,791.5 L1166.0,846.5 L930.0,846.5 Z" class="g"/>
+<text x="1055.0" y="810.5" class="id">S0</text>
+<text x="1055.0" y="824.0" class="d">Argue over each source of risk, one</text>
+<text x="1055.0" y="836.5" class="d">sub-claim per discipline</text>
+<line x1="1055.0" y1="846.5" x2="1055.0" y2="865.5" class="w"/>
+<line x1="145.0" y1="865.5" x2="1965.0" y2="865.5" class="w"/>
+<line x1="145.0" y1="865.5" x2="145.0" y2="913.5" class="w"/><path d="M145.0,913.5 L141.5,905.2 L148.5,905.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="598.0" y1="865.5" x2="598.0" y2="913.5" class="w"/><path d="M598.0,913.5 L594.5,905.2 L601.5,905.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1051.0" y1="865.5" x2="1051.0" y2="913.5" class="w"/><path d="M1051.0,913.5 L1047.5,905.2 L1054.5,905.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1512.0" y1="865.5" x2="1512.0" y2="913.5" class="w"/><path d="M1512.0,913.5 L1508.5,905.2 L1515.5,905.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1965.0" y1="865.5" x2="1965.0" y2="913.5" class="w"/><path d="M1965.0,913.5 L1961.5,905.2 L1968.5,905.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<rect x="30" y="914.5" width="230" height="95.0" class="g"/>
+<text x="145.0" y="933.5" class="id">G1</text>
+<text x="145.0" y="947.0" class="d">Hazards from E/E malfunctions of the</text>
+<text x="145.0" y="959.5" class="d">item are reduced to a tolerable level:</text>
+<text x="145.0" y="972.0" class="d">every safety goal SG-01…SG-07 is met</text>
+<text x="145.0" y="984.5" class="d">with the integrity of its ASIL.</text>
+<text x="145.0" y="998.5" class="sh">developed on sheet 2</text>
+<rect x="271.0" y="914.5" width="190" height="54.0" rx="14" class="ctx"/>
+<text x="366.0" y="932.5" class="cid">C4</text>
+<text x="366.0" y="945.0" class="cs">(safety goals and ASILs,</text>
+<text x="366.0" y="957.5" class="cs">WP-C-03 §6)</text>
+<rect x="271.0" y="976.5" width="190" height="91.5" rx="14" class="ctx"/>
+<text x="366.0" y="994.5" class="cid">C7</text>
+<text x="366.0" y="1007.0" class="cs">Envelope strategy: reduced</text>
+<text x="366.0" y="1019.5" class="cs">authority (option c) + ASIL B</text>
+<text x="366.0" y="1032.0" class="cs">hardening, recommended and</text>
+<text x="366.0" y="1044.5" class="cs">pending maintainer decision</text>
+<text x="366.0" y="1057.0" class="cs">[WP-C-04 §4]</text>
+<line x1="260" y1="934.5" x2="264" y2="934.5" class="w"/>
+<line x1="264" y1="934.5" x2="264" y2="1022.25" class="w"/>
+<line x1="264.0" y1="941.5" x2="270.0" y2="941.5" class="w"/><path d="M270.0,941.5 L261.7,945.0 L261.7,938.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="264.0" y1="1022.2" x2="270.0" y2="1022.2" class="w"/><path d="M270.0,1022.2 L261.7,1025.8 L261.7,1018.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<rect x="483.0" y="914.5" width="230" height="95.0" class="g"/>
+<text x="598.0" y="933.5" class="id">G2</text>
+<text x="598.0" y="947.0" class="d">Hazards from functional</text>
+<text x="598.0" y="959.5" class="d">insufficiencies of the intended</text>
+<text x="598.0" y="972.0" class="d">functionality and from reasonably</text>
+<text x="598.0" y="984.5" class="d">foreseeable misuse are acceptably low.</text>
+<text x="598.0" y="998.5" class="sh">developed on sheet 4</text>
+<rect x="724.0" y="914.5" width="190" height="66.5" rx="14" class="ctx"/>
+<text x="819.0" y="932.5" class="cid">C8</text>
+<text x="819.0" y="945.0" class="cs">SOTIF hazards SH-01…SH-13,</text>
+<text x="819.0" y="957.5" class="cs">acceptance criteria</text>
+<text x="819.0" y="970.0" class="cs">AC-01…AC-06 [WP-C-05]</text>
+<rect x="724.0" y="989.0" width="190" height="41.5" rx="14" class="ctx"/>
+<text x="819.0" y="1007.0" class="cid">C9</text>
+<text x="819.0" y="1019.5" class="cs">Validation targets [WP-V-02]</text>
+<ellipse cx="819.0" cy="1059.25" rx="95.0" ry="24.75" class="ctx"/>
+<text x="910.0" y="1086.0" class="aj">A</text>
+<text x="819.0" y="1056.5" class="cid">Assumption</text>
+<text x="819.0" y="1069.0" class="cs">AOU-08 hold (WP-K-01 §5)</text>
+<line x1="713.0" y1="934.5" x2="717.0" y2="934.5" class="w"/>
+<line x1="717.0" y1="934.5" x2="717.0" y2="1059.25" class="w"/>
+<line x1="717.0" y1="947.8" x2="723.0" y2="947.8" class="w"/><path d="M723.0,947.8 L714.7,951.3 L714.7,944.2 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="717.0" y1="1009.8" x2="723.0" y2="1009.8" class="w"/><path d="M723.0,1009.8 L714.7,1013.3 L714.7,1006.2 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="717.0" y1="1059.2" x2="723.0" y2="1059.2" class="w"/><path d="M723.0,1059.2 L714.7,1062.8 L714.7,1055.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<rect x="936.0" y="914.5" width="230" height="110.0" class="g"/>
+<text x="1051.0" y="933.5" class="id">G3</text>
+<text x="1051.0" y="947.0" class="d">The ML components (driving model, DM</text>
+<text x="1051.0" y="959.5" class="d">model) are adequately specified,</text>
+<text x="1051.0" y="972.0" class="d">developed, validated and monitored for</text>
+<text x="1051.0" y="984.5" class="d">their role in the architecture.</text>
+<text x="1051.0" y="998.5" class="df">defeaters: DF-15</text>
+<text x="1051.0" y="1013.5" class="sh">developed on sheet 5</text>
+<rect x="1177.0" y="914.5" width="190" height="66.5" rx="14" class="ctx"/>
+<text x="1272.0" y="932.5" class="cid">C10</text>
+<text x="1272.0" y="945.0" class="cs">AI system definition and AI</text>
+<text x="1272.0" y="957.5" class="cs">safety requirements AIR-nn</text>
+<text x="1272.0" y="970.0" class="cs">[WP-C-11]</text>
+<ellipse cx="1272.0" cy="1041.0" rx="95.0" ry="56.0" class="ctx"/>
+<text x="1363.0" y="1099.0" class="aj">J</text>
+<text x="1272.0" y="1007.0" class="cid">J3</text>
+<text x="1272.0" y="1019.5" class="cs">Models are QM components</text>
+<text x="1272.0" y="1032.0" class="cs">inside the envelope; their</text>
+<text x="1272.0" y="1044.5" class="cs">errors are SOTIF</text>
+<text x="1272.0" y="1057.0" class="cs">insufficiencies (G2) and their</text>
+<text x="1272.0" y="1069.5" class="cs">worst-case actuation is</text>
+<text x="1272.0" y="1082.0" class="cs">bounded by G1.1</text>
+<line x1="1166.0" y1="934.5" x2="1170.0" y2="934.5" class="w"/>
+<line x1="1170.0" y1="934.5" x2="1170.0" y2="1041.0" class="w"/>
+<line x1="1170.0" y1="947.8" x2="1176.0" y2="947.8" class="w"/><path d="M1176.0,947.8 L1167.7,951.3 L1167.7,944.2 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1170.0" y1="1041.0" x2="1176.0" y2="1041.0" class="w"/><path d="M1176.0,1041.0 L1167.7,1044.5 L1167.7,1037.5 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<rect x="1397.0" y="914.5" width="230" height="95.0" class="g"/>
+<text x="1512.0" y="933.5" class="id">G4</text>
+<text x="1512.0" y="947.0" class="d">Cybersecurity risks that can affect</text>
+<text x="1512.0" y="959.5" class="d">safety (and privacy) are treated.</text>
+<text x="1512.0" y="972.0" class="d">Developed in the cybersecurity case</text>
+<text x="1512.0" y="984.5" class="d">WP-K-03.</text>
+<text x="1512.0" y="998.5" class="df">defeaters: DF-22, DF-23, DF-19, DF-29, DF-37</text>
+<ellipse cx="1733.0" cy="935.25" rx="95.0" ry="24.75" class="ctx"/>
+<text x="1824.0" y="962.0" class="aj">A</text>
+<text x="1733.0" y="932.5" class="cid">Assumption</text>
+<text x="1733.0" y="945.0" class="cs">AOU-11 hold (WP-K-01 §5)</text>
+<line x1="1627.0" y1="934.5" x2="1631.0" y2="934.5" class="w"/>
+<line x1="1631.0" y1="934.5" x2="1631.0" y2="935.25" class="w"/>
+<line x1="1631.0" y1="935.2" x2="1637.0" y2="935.2" class="w"/><path d="M1637.0,935.2 L1628.7,938.8 L1628.7,931.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1512.0" y1="1009.5" x2="1512.0" y2="1028.5" class="w"/>
+<line x1="1445.0" y1="1028.5" x2="1579.0" y2="1028.5" class="w"/>
+<line x1="1445.0" y1="1028.5" x2="1445.0" y2="1138.0" class="w"/><path d="M1445.0,1138.0 L1441.5,1129.7 L1448.5,1129.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1579.0" y1="1028.5" x2="1579.0" y2="1138.0" class="w"/><path d="M1579.0,1138.0 L1575.5,1129.7 L1582.5,1129.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="1445.0" cy="1162.0" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1445.0" y="1166.0" class="sid" fill="#111">Sn-68</text>
+<text x="1445.0" y="1199.5" class="cs">CS incident response</text>
+<text x="1445.0" y="1212.0" class="cs">and updates</text>
+<circle cx="1579.0" cy="1162.0" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1579.0" y="1166.0" class="sid" fill="#111">Sn-70</text>
+<text x="1579.0" y="1199.5" class="cs">Cybersecurity case</text>
+<rect x="1850.0" y="914.5" width="230" height="95.0" class="g"/>
+<text x="1965.0" y="933.5" class="id">G5</text>
+<text x="1965.0" y="947.0" class="d">The work was done by competent people</text>
+<text x="1965.0" y="959.5" class="d">under controlled processes, was</text>
+<text x="1965.0" y="972.0" class="d">independently confirmed, and the</text>
+<text x="1965.0" y="984.5" class="d">claims stay valid in operation.</text>
+<text x="1965.0" y="998.5" class="sh">developed on sheet 6</text>
+<circle cx="2158.0" cy="814.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="2158.0" y="818.5" class="sid" fill="#111">Sn-49</text>
+<text x="2158.0" y="852.0" class="cs">Hazard analysis and</text>
+<text x="2158.0" y="864.5" class="cs">risk assessment</text>
+<circle cx="2292.0" cy="814.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="2292.0" y="818.5" class="sid" fill="#111">Sn-55</text>
+<text x="2292.0" y="852.0" class="cs">Item definition</text>
+<circle cx="2426.0" cy="814.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="2426.0" y="818.5" class="sid" fill="#111">Sn-56</text>
+<text x="2426.0" y="852.0" class="cs">ODD specification</text>
+<text x="30" y="1268.0" class="h">Notation (GSN Community Standard v3)</text>
+<rect x="30" y="1282.0" width="40" height="22" class="g"/>
+<text x="86" y="1297.0" class="l">Goal (claim)</text>
+<path d="M37,1312.0 L70,1312.0 L63,1334.0 L30,1334.0 Z" class="g"/>
+<text x="86" y="1327.0" class="l">Strategy (argument)</text>
+<circle cx="50" cy="1353.0" r="11" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.6"/>
+<text x="86" y="1357.0" class="l">Solution: evidence available</text>
+<circle cx="50" cy="1383.0" r="11" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86" y="1387.0" class="l">Solution: evidence partial</text>
+<circle cx="50" cy="1413.0" r="11" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="86" y="1417.0" class="l">Solution: evidence missing</text>
+<rect x="30" y="1432.0" width="40" height="22" rx="10" class="ctx"/>
+<text x="86" y="1447.0" class="l">Context</text>
+<ellipse cx="50" cy="1473.0" rx="20" ry="11" class="ctx"/>
+<text x="86" y="1477.0" class="l">Assumption (A) / justification (J)</text>
+<path d="M50,1494.0 L59,1503.0 L50,1512.0 L41,1503.0 Z" fill="#fff" stroke="#111" stroke-width="1.2"/>
+<text x="86" y="1507.0" class="l">Undeveloped goal</text>
+<line x1="30.0" y1="1533.0" x2="70.0" y2="1533.0" class="w"/><path d="M70.0,1533.0 L61.7,1536.5 L61.7,1529.5 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<text x="86" y="1537.0" class="l">SupportedBy</text>
+<line x1="30.0" y1="1563.0" x2="70.0" y2="1563.0" class="w"/><path d="M70.0,1563.0 L61.7,1566.5 L61.7,1559.5 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<text x="86" y="1567.0" class="l">InContextOf</text>
+<text x="30" y="1592.0" class="dfl">defeaters: DF-nn</text>
+<text x="140" y="1592.0" class="l">open counter-evidence on the goal (WP-K-01 §7)</text>
+<rect x="2042.0" y="1256.0" width="440" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="2052.0" y="1278.0" class="h">LionDriver — Safety case (GSN)</text>
+<text x="2052.0" y="1294.0" class="l">Argument from G0</text>
+<text x="2052.0" y="1310.0" class="l">Sheet 1 of 6</text>
+<text x="2052.0" y="1326.0" class="l">Source: case records (assurance/case/) and WP-K-01 contexts</text>
+<text x="2052.0" y="1342.0" class="s">Generated by gsn_diagrams.py — edit the records or WP-K-01, not this file</text>
+</svg>
