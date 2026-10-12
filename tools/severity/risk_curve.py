@@ -238,6 +238,21 @@ def ashton_elderly_odds_ratio() -> float:
   return odds(ASHTON_30MPH_ELDERLY) / odds(ASHTON_30MPH_15PLUS)
 
 
+# Child check (`--age`). Same source: 4 % at 30 mph for children (0-14). Tefft's sample is 15 and
+# over, so children are outside it; the report finds the child risk at or below the adult risk
+# at the same impact speed in every dataset that has children. Its odds ratio against 15+ is
+# applied to the Tefft average as for the elderly. The reference vehicle is a passenger car; a
+# high-fronted SUV or light truck raises a child's odds of death by about 1.8 times (2.3 under
+# age 10; LSHTM and Imperial College meta-analysis, Injury Prevention 2025, search summary),
+# which this does not cover.
+ASHTON_30MPH_CHILD = 0.04
+LTV_CHILD_ODDS_RATIO = 1.82
+
+
+def ashton_child_odds_ratio() -> float:
+  return odds(ASHTON_30MPH_CHILD) / odds(ASHTON_30MPH_15PLUS)
+
+
 def age_shift_mph(age_years: float, reference_years: float = AGE_REFERENCE_YEARS,
                   offset_70_30_mph: float = AGE_OFFSET_70_30_MPH) -> float:
   return max(0.0, (age_years - reference_years) * offset_70_30_mph / 40)
@@ -453,6 +468,14 @@ def main(argv: list[str] | None = None) -> int:
       cols = [sh, f"{pedestrian_fatality(v):.3f}", f"{from_odds(odds(pedestrian_fatality(v)) * ratio):.3f}",
               f"{from_odds(odds(base_fit) * ratio):.3f}", f"{bound:.3f}"]
       print("| " + " | ".join(cols) + " |")
+    child = ashton_child_odds_ratio()
+    print(f"\nAshton and Mackay (Richards 2010), children (0-14) against 15+ at 30 mph: odds ratio {child:.2f}, applied to the average:\n")
+    print(f"| SH / situation | Average | Child (passenger car) | Child, SUV or light truck (x {LTV_CHILD_ODDS_RATIO} odds) |")
+    print("|---|---|---|---|")
+    for sh, _label, v in vru_cases():
+      p_child = from_odds(odds(pedestrian_fatality(v)) * child)
+      p_ltv = from_odds(odds(p_child) * LTV_CHILD_ODDS_RATIO)
+      print(f"| {sh} | {pedestrian_fatality(v):.3f} | {p_child:.3f} | {p_ltv:.3f} |")
     print("\nThe bound holds while the mean age of the standardisation population is above 30; the sample mean is 45.")
     print("Age 80 is extrapolated beyond the 30-70 comparison.")
     return 0

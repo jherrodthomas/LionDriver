@@ -186,6 +186,16 @@ class RiskCurveTest(unittest.TestCase):
     self.assertIn("| SH-11 OS-04 | 0.382 | 0.771 | 0.771 | 0.721 |", out)
     self.assertIn("| SH-11 OS-06 | 0.048 | 0.214 | 0.114 | 0.099 |", out)
 
+  def test_ashton_child_odds_ratio(self):
+    # 4 % (0-14) against 14 % (15+) at 30 mph: children are below the 15+ curve
+    self.assertAlmostEqual(rc.ashton_child_odds_ratio(), (0.04 / 0.96) / (0.14 / 0.86))
+    self.assertLess(rc.ashton_child_odds_ratio(), 1.0)
+    with redirect_stdout(io.StringIO()) as buf:
+      self.assertEqual(rc.main(["--age"]), 0)
+    out = buf.getvalue()
+    self.assertIn("| SH-11 OS-04 | 0.382 | 0.137 | 0.224 |", out)
+    self.assertIn("| SH-11 OS-06 | 0.048 | 0.013 | 0.023 |", out)
+
   def test_pedestrian_curve_is_monotone(self):
     risks = [rc.pedestrian_fatality(v) for v in range(0, 120, 5)]
     self.assertEqual(risks, sorted(risks))
