@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-04 System-level safety analyses (FTA, FMEA) |
 | Standard reference | ISO 26262-9:2018 §8 (safety analyses); ISO 26262-4:2018 §6 (safety analysis of the system architectural design, to support the TSC); ISO 21448:2022 §7 (input on insufficiencies, informative here); ASPICE 4.0 SYS.3 |
-| Version | 0.3.1 (fault tree diagrams, [fta/](fta/README.md), generated from the trees below; no content change). 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
+| Version | 0.4 (§9.1 computed minimal cut sets and findings CS-01…CS-07; BE-2.14 tagged latent at the baseline, as §4 states; fault tree diagrams in [fta/](fta/README.md); OI-9; 2026-10-12). 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Fault trees for all seven safety goals: SG-01 (ASIL C ⚠), SG-02…SG-07 (ASIL B); system FMEA covering SG-01…SG-07. Qualitative only |
 | Author | Assurance team (initial draft) |
@@ -198,6 +198,7 @@ TE-02 Loss of lateral control without take-over request within ≤ 1 s          
         │          5 s, for 3 s; main.c:193-205). TSR-516 v0.3 adds every envelope
         │          revocation that is not a driver action (incl. EPS fault, TSR-110)
         │          and a fault-induced disengagement whose ACC cancel had no effect
+        │          (latent, baseline)
         ├── BE-2.15 Siren silenced with the SoC audio (shared codec or amplifier,
         │          unknown topology)                                   [CCF → DFI-23]
         └── BE-2.16 Cluster cruise indicator unchanged (no ACC cancel on the fault,
@@ -434,6 +435,32 @@ TE-07 Stock PCS/AEB suppressed, delayed or altered                              
 | Obs-03 | SG-07 had no numeric FTTI. [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) v0.2 §3.6 sets a preliminary 0.2 s for loss of forwarding (FDTI ≤ 0.1 s, FRTI ≤ 0.1 s, zero margin), which tightened the watchdog timeout (TSR-501) to ≤ 0.1 s and added forwarding supervision (TSR-711) | SG-07 | Timing | Measure the PCS timing and confirm the FTTI (WP-S-04 OI-4, OI-7) | RR-2026-004 F-04; RR-2026-005 F-02 |
 | Obs-04 | Many SG-02 and SG-06 cut sets are order 2 in form but contain a condition that is always true at the baseline (BE-2.14, BE-2.11). They are marked "effective 1 + latent": removing the latent condition is what makes them dual | SG-02, SG-06 | Latent | As SPF-09, SPF-10 | — |
 
+### 9.1 Computed minimal cut sets (check of the tables)
+
+The cut-set tables in §2…§8 were written by hand. [`fta/fta_cutsets.py`](fta/fta_cutsets.py) computes the minimal cut sets of each tree from its gate logic as written (OR = union, AND = product, absorption; transfers expanded, repeated events one variable) and checks every table row against them. The full result is [`fta/cut-sets.md`](fta/cut-sets.md); CI keeps it current. An event tagged `(latent, …)` or described as "by design" is taken as present at the baseline, so a row that omits only such events is accepted as an *effective* order.
+
+| Goal | Computed cut sets | Effective order ≤ 1 | Table rows matching or effective | Rows needing attention |
+|---|---|---|---|---|
+| SG-01 | 30 | 8 | 5 of 8 | MCS-01.4 (argued, DFI-10), MCS-01.6 (MCS-01.3 in words) |
+| SG-02 | 111 | 1 | 4 of 7 | MCS-02.4 (argued), MCS-02.6, MCS-02.7 |
+| SG-03 | 16 | 10 | 6 of 7 | — (MCS-03.5 in words) |
+| SG-04 | 17 | 6 | 8 of 8 | — |
+| SG-05 | 6 | 5 | 5 of 7 | MCS-05.1 (DFI-10 note), MCS-05.2 |
+| SG-06 | 93 | 1 | 4 of 6 | MCS-06.4 (argued), MCS-06.6 |
+| SG-07 | 11 | 10 | 10 of 10 | — |
+
+Findings. None of them changes a requirement; each needs an analyst decision on the tree or the table (OI-9).
+
+| ID | Finding | Goal | Proposed resolution |
+|---|---|---|---|
+| CS-01 | **`BE-1.16` and `BE-1.17` are single-event cut sets of TE-01** (G1.2.2 is a direct OR input, with no AND on the SoC commanding torque), but they are in neither the table nor the SPF list. Physically the SoC reads the same frames (DFI-10), so it keeps commanding torque: the single point is plausible | SG-01 | Either AND G1.2.2 with BE-1.15 and argue effective order 1 through DFI-10 (as MCS-01.4), or add both as single points under SPF-04. Measure: TSR-401…TSR-406 |
+| CS-02 | **G1.3.2 is always true at the baseline**: its OR input BE-1.23 (rate limits accept a constant in-limit value) is by design. A stale SoC command (BE-1.19, BE-1.20 or BE-1.21) alone therefore holds torque beyond the FTTI. MCS-01.8 states order 2 with BE-1.22 and misses this | SG-01 | BE-1.23 explains why only freshness detection (BE-1.22) can catch a stale value; make it a condition, not an OR alternative, or record the effective single point as an SPF. Measure: TSR-407…TSR-409, TSR-411 |
+| CS-03 | **MCS-01.6 omits UE-1.11** (the EPS limit is an AND input to G1.1), so its order is "2 + ext.", as Obs-02 says in words. The table also lists only BE-1.02/BE-1.03 against BE-1.06/BE-1.07; the tree gives the same pattern for BE-1.04 and BE-1.05 (DFI-09) and for BE-1.08/BE-1.09 (MCS-01.3). SG-03 and SG-04 have the same G-ENV pairs (BE-3.02, BE-4.02 × BE-1.06…BE-1.09) with no table row | SG-01, SG-03, SG-04 | Correct the order and list the G-ENV pattern once per goal |
+| CS-04 | **SG-03 and SG-04 model "not engaged" differently.** In SG-03, false authority (BE-1.12, BE-1.13, BE-1.14) and a mode or param bypass (BE-3.10) are single-event cut sets of TE-03 (G3.3 has no AND on the SoC sending acceleration). SG-04 G4.6 ANDs the same events with BE-4.13. Also missing from the tables: {BE-3.11, UE-3.12} (gas signal stuck "released" and the PCM adds the item's acceleration) and {BE-3.10, BE-4.13} | SG-03, SG-04 | Model both goals alike (AND with an SoC command event, effective order argued through DFI-10/DFI-13), then add the rows. Measures: TSR-401…TSR-406, TSR-513 |
+| CS-05 | **The SG-02 and SG-06 trees AND two independent OR branches**, but most warning failures in G2.2.1/G6.2.1 belong to one loss cause only (BE-2.08 to an EPS fault, BE-2.10 to input loss, BE-2.11 to a non-finite command). The logic therefore yields 111 and 93 cut sets, most of them meaningless (e.g. {BE-2.01, BE-2.11, BE-2.14}). Obs-04 treats BE-2.11 as always true; in this structure that would make every lateral loss a single point, which overstates the gap. BE-2.07 (power loss) removes every warning itself, which the tree does not show (MCS-02.7) | SG-02, SG-06 | Restructure per cause: each loss cause ANDed with its own warning-failure branch, and BE-2.05/BE-2.07 linked to the warning branch as common causes. Only BE-2.14 is tagged latent in this version |
+| CS-06 | **`BE-5.03` alone is a cut set of TE-05** through G5.2 (no release on cancel or main switch off), so MCS-05.2 {BE-5.01, BE-5.03} is not minimal and the single point is missing. MCS-05.1 and MCS-06.6 name events that are not in their trees (BE-1.13 through the DFI-10 note; BE-1.22, while the SG-06 tree has no envelope-detection leg for BE-6.05) | SG-05, SG-06 | Add {BE-5.03} under SPF-04 (TSR-401…TSR-406); add the detection leg to G6.1 or drop BE-1.22 from MCS-06.6 |
+| CS-07 | **`BE-7.12` (passive camera-to-car path broken in the harness) is a single-event cut set** of TE-07 with no table row | SG-07 | Add the row; measure TSR-702 |
+
 ## 10. System FMEA
 
 Severity of the vehicle effect is expressed by the affected SG. Detection = mechanism that detects the failure mode in the item today. Columns: **Mech.** = safety mechanism that reaches the safe state; **Gap** = what is missing.
@@ -503,3 +530,4 @@ Severity of the vehicle effect is expressed by the affected SG. Detection = mech
 | OI-6 | ~~Report to the WP-S-02 author: no TSR covers frame integrity between `safety_tx_hook` and the bus (SPF-02)~~ **Closed:** TSR-517 | Safety engineer | G2 |
 | OI-7 | ~~Report to the WP-S-02 author: TSR-516 should name its triggers so that every envelope revocation while engaged, including an EPS-fault revocation (TSR-110), sounds the siren (SPF-09)~~ **Closed:** WP-S-02 v0.3 TSR-516(a)…(c), TSR-303 | Safety engineer | G2 |
 | OI-8 | Confirm by HIL test that a camera-side bus fault stops forwarding with the relay energised (SFMEA-39) | Test lead | G4 |
+| OI-9 | Resolve CS-01…CS-07 (§9.1): decide the tree structure for G1.2.2, G1.3.2, G3.3 and SG-02/SG-06, then update the trees and tables and rerun `fta/fta_cutsets.py` | Safety engineer | G2 |

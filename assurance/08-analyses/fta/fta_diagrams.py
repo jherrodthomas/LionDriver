@@ -38,7 +38,7 @@ MULTI_REF_RE = re.compile(rf"^({ID_RE}(?:\s*[,/]\s*{ID_RE})+)\s*(.*)$")
 TAG_RULES = [
   # (regex, badge kind, label function)
   (re.compile(r"\((SPF[^)]*)\)"), "spf", lambda m: m.group(1)),
-  (re.compile(r"\(latent, design\)"), "latent", lambda m: "latent, design"),
+  (re.compile(r"\(latent, ([^)]*)\)"), "latent", lambda m: "latent, " + m.group(1)),
   (re.compile(r"\[SOTIF\](?:/QM)?"), "sotif", lambda m: m.group(0).strip("[]").replace("]", "")),
   (re.compile(r"\[CCF → (DFI-\d+)\]"), "ccf", lambda m: "CCF " + m.group(1)),
   (re.compile(r"\[FFI → ([\w-]+)\]"), "ffi", lambda m: m.group(1)),
@@ -610,7 +610,9 @@ def build() -> dict[str, str]:
   index += ["", "Symbols follow IEC 61025: rectangle = top or intermediate event; OR / AND gate beneath it; " +
             "circle = basic event; diamond = undeveloped event; triangle = transfer. " +
             "Tags: SPF (single point in the baseline design), latent, SOTIF, CCF (→ WP-A-03 DFI), " +
-            "FFI (→ WP-A-02), repeated (event drawn again; defined where first shown).", ""]
+            "FFI (→ WP-A-02), repeated (event drawn again; defined where first shown).", "",
+            "Minimal cut sets computed from the same trees, and the check of the WP-A-04 tables: " +
+            "[cut-sets.md](cut-sets.md) (`fta_cutsets.py`).", ""]
   outputs["README.md"] = "\n".join(index)
   return outputs
 

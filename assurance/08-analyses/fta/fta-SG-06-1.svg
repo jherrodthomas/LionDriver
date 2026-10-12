@@ -172,8 +172,10 @@
 <text x="2964.0" y="637.5" class="d">fault, TSR-110) and a fault-induced</text>
 <text x="2964.0" y="650.0" class="d">disengagement whose ACC cancel had</text>
 <text x="2964.0" y="662.5" class="d">no effect</text>
-<rect x="2919.5" y="668.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
-<text x="2964.0" y="678.0" class="b" fill="#222">repeated, SG-02</text>
+<rect x="2870.3" y="668.5" width="94.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="2917.5" y="678.0" class="b" fill="#fff">latent, baseline</text>
+<rect x="2968.7" y="668.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="3013.2" y="678.0" class="b" fill="#222">repeated, SG-02</text>
 <circle cx="2964.0" cy="701.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
 <rect x="3082" y="530.0" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
 <text x="3182.0" y="549.0" class="id">BE-2.15</text>

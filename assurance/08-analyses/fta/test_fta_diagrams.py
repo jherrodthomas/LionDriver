@@ -6,7 +6,8 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import fta_diagrams as fd  # noqa: E402
+import fta_cutsets as fc
+import fta_diagrams as fd
 
 
 def parse(md: str):
@@ -84,8 +85,8 @@ class TestParser(unittest.TestCase):
 
   def test_multi_reference_under_and_becomes_or(self):
     md = TREE.replace("└── BE-1.03 Other [CCF → DFI-10]",
-                      "└── G1.2 Again                                 [AND]\n"
-                      "    ├── BE-1.01 / UE-1.02\n"
+                      "└── G1.2 Again                                 [AND]\n" +
+                      "    ├── BE-1.01 / UE-1.02\n" +
                       "    └── BE-1.03 New")
     (t,) = parse(md)
     g12 = t.root.children[1]
@@ -107,6 +108,72 @@ class TestParser(unittest.TestCase):
     for t in trees:
       for root in fd.paginate(t):
         self.assertLessEqual(fd.leaves(root), fd.MAX_LEAVES_PER_SHEET, f"{t.goal} {root.ident}")
+
+
+CS_DOC = """## 2. FTA — SG-01: test goal
+
+```
+TE-01 Top                                                   [OR]
+├── G1.1 Both                                               [AND]
+│   ├── G1.1.1 Either                                       [OR]
+│   │   ├── BE-1.01 First
+│   │   └── BE-1.02 Second
+│   └── UE-1.03 Outside the item
+├── G1.2 Pair                                               [AND]
+│   ├── BE-1.04 Cause
+│   └── BE-1.05 Always so at the baseline (latent, baseline)
+└── BE-1.06 Single
+```
+
+### 2.1 SG-01 minimal cut sets (qualitative)
+
+| Cut set | Order | Events | Comment |
+|---|---|---|---|
+| MCS-01.1 | 1 + ext. | {BE-1.01 or BE-1.02, UE-1.03} | exact |
+| MCS-01.2 | 1 (effective) | {BE-1.04} | latent omitted |
+| MCS-01.3 | 1 | {BE-1.01} | omits the UE |
+| MCS-01.4 | 2 | {BE-1.06, BE-1.04} | not minimal |
+| MCS-01.5 | 1 | {BE-1.09} | not in the tree |
+| MCS-01.6 | 1 | {whatever in words} | prose |
+
+## 3. Next
+"""
+
+
+class TestCutSets(unittest.TestCase):
+  def setUp(self):
+    self.trees = fd.parse_document(CS_DOC)
+    fd.resolve(self.trees)
+    self.solver = fc.Solver(self.trees)
+    self.solver.finish()
+    self.computed = self.solver.cut_sets(self.trees[0].root)
+
+  def test_boolean_reduction(self):
+    self.assertEqual(set(self.computed), {
+      frozenset({"BE-1.06"}), frozenset({"BE-1.04", "BE-1.05"}),
+      frozenset({"BE-1.01", "UE-1.03"}), frozenset({"BE-1.02", "UE-1.03"})})
+
+  def test_absorption(self):
+    self.assertEqual(fc.minimise([frozenset("ab"), frozenset("a"), frozenset("abc")]), [frozenset("a")])
+
+  def test_row_classification(self):
+    rows = fc.parse_tables(CS_DOC, self.solver)["SG-01"]
+    events = {e for c in self.computed for e in c}
+    for r in rows:
+      fc.classify(r, self.computed, self.solver, events)
+    self.assertEqual([r.status for r in rows],
+                     ["match", "effective", "reduced", "not minimal", "outside tree", "in words"])
+
+  def test_real_document_parses_and_report_current(self):
+    self.assertEqual(fc.OUTPUT.read_text(encoding="utf-8"), fc.build())
+
+  def test_transfer_expanded(self):
+    trees = fd.parse_document(fd.SOURCE.read_text(encoding="utf-8"))
+    fd.resolve(trees)
+    solver = fc.Solver(trees)
+    sg03 = next(t for t in trees if t.goal == "SG-03")
+    sets = solver.cut_sets(sg03.root)
+    self.assertIn(frozenset({"BE-1.06", "BE-3.02", "UE-3.05"}), sets)
 
 
 if __name__ == "__main__":

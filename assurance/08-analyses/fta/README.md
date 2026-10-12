@@ -13,3 +13,5 @@ Generated from the text trees in [WP-A-04](../WP-A-04-system-fta-fmea.md) by `ft
 | SG-07 | TE-07 suppression, delay or alteration of the stock PCS/AEB | [1: TE-07](fta-SG-07-1.svg) |
 
 Symbols follow IEC 61025: rectangle = top or intermediate event; OR / AND gate beneath it; circle = basic event; diamond = undeveloped event; triangle = transfer. Tags: SPF (single point in the baseline design), latent, SOTIF, CCF (→ WP-A-03 DFI), FFI (→ WP-A-02), repeated (event drawn again; defined where first shown).
+
+Minimal cut sets computed from the same trees, and the check of the WP-A-04 tables: [cut-sets.md](cut-sets.md) (`fta_cutsets.py`).

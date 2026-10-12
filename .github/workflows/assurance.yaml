@@ -51,10 +51,11 @@ jobs:
       run: python3 assurance/02-concept/hara/hara_model.py --check
     - name: FSC completeness (every SG x node basic event mapped to WP-C-04 FSRs)
       run: python3 assurance/02-concept/fsc/fsc_model.py --check
-    - name: Fault tree diagrams match WP-A-04 (and their tests)
+    - name: Fault tree diagrams and cut sets match WP-A-04 (and their tests)
       run: |
         python3 assurance/08-analyses/fta/fta_diagrams.py --check
         python3 assurance/08-analyses/fta/test_fta_diagrams.py
+        python3 assurance/08-analyses/fta/fta_cutsets.py --check
     - name: Sync report tool unit tests
       run: python3 -m unittest tools.sync.test_sync_report -v
     - name: CAN gap scan unit tests
