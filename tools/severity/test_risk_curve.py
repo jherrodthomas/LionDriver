@@ -123,6 +123,9 @@ class RiskCurveTest(unittest.TestCase):
     out = buf.getvalue()
     self.assertIn("| SH-11 OS-04 | 60 | 0.382 | 0.537 | 0.721 | 0.788 |", out)
     self.assertIn("| SH-11 OS-06 | 18 | 0.048 | 0.073 | 0.099 | 0.145 |", out)
+    # central estimate, shifted from the sample mean age of 45
+    self.assertIn("Shift from age 45", out)
+    self.assertIn("| SH-11 OS-04 | 60 | 0.382 | 0.419 | 0.583 | 0.675 |", out)
 
   def test_pedestrian_curve_is_monotone(self):
     risks = [rc.pedestrian_fatality(v) for v in range(0, 120, 5)]

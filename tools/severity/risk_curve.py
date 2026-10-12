@@ -190,15 +190,20 @@ def pedestrian_fatality(speed_kmh: float, age_shift_mph: float = 0.0) -> float:
 # speed is about that of a 30-year-old struck 11.8 mph faster; the 2011 report gives 10 mph for
 # severe injury or death. With logit p = a + b * speed + c * age that is a constant speed shift
 # of 11.8 / 40 mph per year of age. The Tefft anchors are for the average struck pedestrian, so
-# the shift is taken from age 30, which overstates it while that average is older than 30
-# (the age mix of the Tefft sample was not reachable to confirm).
+# the shift is taken from age 30, which overstates it while that average is older than 30.
+# Age mix (checked 2026-10-12, search summaries): the sample is 422 pedestrians aged 15 and over
+# with a mean age of 45 (the 2011 report adjusts its risks to "age = 45 years (mean age in
+# sample)"); the published curve is standardised to the age mix of all US pedestrians struck in
+# 2007-2009, whose mean was not found. The shift from 45 is printed as a central estimate; the
+# bound from 30 stays the reported value until that mean is known.
 AGE_SHIFT_MPH_PER_YEAR = 11.8 / 40
 AGE_REFERENCE_YEARS = 30
+AGE_SAMPLE_MEAN_YEARS = 45
 AGES_YEARS = (50, 70, 80)
 
 
-def age_shift_mph(age_years: float) -> float:
-  return max(0.0, (age_years - AGE_REFERENCE_YEARS) * AGE_SHIFT_MPH_PER_YEAR)
+def age_shift_mph(age_years: float, reference_years: float = AGE_REFERENCE_YEARS) -> float:
+  return max(0.0, (age_years - reference_years) * AGE_SHIFT_MPH_PER_YEAR)
 
 
 # Low-speed check of the linear segment from 0 to 23 mph (`--low-speed`). Two logistic curves,
@@ -306,14 +311,16 @@ def main(argv: list[str] | None = None) -> int:
   a = ap.parse_args(argv)
   JOKSCH_MPH = a.joksch_mph
   if a.age:
-    ages = " | ".join(f"Age {y} (≤ +{age_shift_mph(y):.1f} mph)" for y in AGES_YEARS)
-    print("| SH / situation | Impact (km/h) | Average | " + ages + " |")
-    print("|---|---|---|" + "---|" * len(AGES_YEARS))
-    for sh, _label, v in vru_cases():
-      cols = [sh, f"{v:.0f}", f"{pedestrian_fatality(v):.3f}"]
-      cols += [f"{pedestrian_fatality(v, age_shift_mph(y)):.3f}" for y in AGES_YEARS]
-      print("| " + " | ".join(cols) + " |")
-    print("\nShifts are taken from age 30. They are upper bounds while the average struck pedestrian is older than 30.")
+    for ref, kind in ((AGE_REFERENCE_YEARS, "bound"), (AGE_SAMPLE_MEAN_YEARS, "central, sample mean")):
+      ages = " | ".join(f"Age {y} (+{age_shift_mph(y, ref):.1f} mph)" for y in AGES_YEARS)
+      print(f"\nShift from age {ref} ({kind}):\n")
+      print("| SH / situation | Impact (km/h) | Average | " + ages + " |")
+      print("|---|---|---|" + "---|" * len(AGES_YEARS))
+      for sh, _label, v in vru_cases():
+        cols = [sh, f"{v:.0f}", f"{pedestrian_fatality(v):.3f}"]
+        cols += [f"{pedestrian_fatality(v, age_shift_mph(y, ref)):.3f}" for y in AGES_YEARS]
+        print("| " + " | ".join(cols) + " |")
+    print("\nThe bound holds while the mean age of the standardisation population is above 30; the sample mean is 45.")
     print("Age 80 is extrapolated beyond the 30-70 comparison.")
     return 0
   if a.low_speed:
