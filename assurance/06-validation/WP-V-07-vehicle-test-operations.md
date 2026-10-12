@@ -163,6 +163,7 @@ Done before every session; recorded on the drive sheet (§10). A failed check me
 | PD-23 | Emergency kit: first-aid kit, fire extinguisher, warning triangle, hi-vis vests, charged phone, incident form |
 | PD-24 | L3 only: passenger abort switch fitted and function-tested (switching it removes power from the device so the panda releases control and the harness relay restores the stock camera path; verify before first use, OI-5); RSO present where required; independent CAN logger running |
 | PD-25 | Data-handling settings per §11 (upload to comma disabled or as approved) |
+| PD-26 | L5/L6 only: rear-facing camera ([WP-V-01](WP-V-01-safety-validation.md) §2) recording, time-synchronised with the CAN logger, view of the lane behind unobstructed |
 
 ## 7. Software and configuration control for testing
 
@@ -320,7 +321,7 @@ Drive sheets are retained with the validation records ([WP-P-04](../07-supportin
 | Retrieval | After each session, logs copied over a local connection to LionDriver storage; SHA-256 manifest created; drive sheet ID linked |
 | Retention on device | Not deleted until the copy is verified (OPS-11) |
 | Storage | Access limited to named project members; encrypted at rest; backups |
-| Privacy | Consent forms for crew and test subjects (cabin video, voice if recorded); third-party faces and plates not published, blurred in reports; location traces treated as personal data |
+| Privacy | Consent forms for crew and test subjects (cabin video, voice if recorded); third-party faces and plates not published, blurred in reports, including the plates of following vehicles in the rear-facing camera recordings; location traces treated as personal data |
 | Retention period | Evaluation datasets and incident data: until the release they support is withdrawn plus 5 years **(TBC)**; other raw video: 24 months **(TBC)**; deletion on request where not needed for an incident |
 | Incident data | Preserved unchanged (write-protected copy) until the incident is closed |
 

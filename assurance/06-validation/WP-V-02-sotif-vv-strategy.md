@@ -111,7 +111,7 @@ P(E-situation) is the probability that, when the hazardous behaviour occurs, a s
    | SH-01, SH-02 | Vehicle or barrier on the departure side (OS-01, OS-02); oncoming lane on that side in ODD-A (OS-03) | A vehicle in the adjacent lane within ±2 s longitudinally, a barrier or an undivided road edge on either side | `radarTracks` (lateral position) where the reference radar provides tracks; otherwise offline annotation of `fcamera`. Road type and barrier from the DSR-03 tags |
    | SH-03 | Lead vehicle at a short gap (OS-05) | Lead in the ego lane within a 3 s time gap | `radarState.leadOne` |
    | SH-06 | Approaching slower or stationary traffic (OS-07) | Lead closing within the AIR-03 range (80 m) | `radarState.leadOne` (distance, relative speed) |
-   | SH-04 | Close following vehicle behind (OS-08) | Following vehicle within a 1.5 s time gap | None on the device: needs a rear-facing camera on the test vehicle (OI-7). Until then P(E-situation) = 1 |
+   | SH-04 | Close following vehicle behind (OS-08) | Following vehicle within a 1.5 s time gap | None on the device: offline annotation of the rear-facing camera of the test vehicle ([WP-V-01](WP-V-01-safety-validation.md) §2 equipment). Until it is fitted (OI-7), P(E-situation) = 1 |
    | SH-10 | Vehicle in the target lane (OS-01) | Vehicle in the target lane within ±2 s during a lane change | As SH-01, on instances where `modelV2.meta.laneChangeState` is active |
    | SH-05, SH-08, SH-09, SH-11, SH-12, SH-13 | — | not measured | P(E-situation) = 1 |
 
@@ -331,5 +331,5 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 | OI-3 | Approve numeric targets VT-01…VT-15 with the assessor before collecting evidence, together with the derivations of §4.2 and §4.3 |
 | OI-4 | Build the simulation fidelity case (§5.3) and decide which families get credit (WP-M-08 OI-3) |
 | OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
-| OI-7 | Add a rear-facing camera to the test-vehicle instrumentation ([WP-V-01](WP-V-01-safety-validation.md) §2), so that P(E-situation) for SH-04 (following vehicle, OS-08) can be measured (§3.4) |
+| OI-7 | Fit the rear-facing camera now listed in the [WP-V-01](WP-V-01-safety-validation.md) §2 equipment (procurement: WP-V-01 OI-6), and annotate following vehicles from its recordings, so that P(E-situation) for SH-04 (following vehicle, OS-08) is measured (§3.4). Blocks driven before it is fitted give no SH-04 data |
 | OI-8 | Extract P(severity class) per SH from FARS/CRSS (and injury-risk curves where §3.5 item 3 requires them) for the selected B1 data set (OI-2); record the values and bounds per §3.5 item 4 |
