@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-04 Software safety analysis and software-level DFA |
 | Standard reference | ISO 26262-6:2018 §7 (safety analysis and DFA at the software architectural level; Annex E informative); ISO 26262-9:2018 §7 (dependent failures), §8 (safety analyses); ASPICE 4.0 SWE.2 |
-| Version | 0.1 |
+| Version | 0.2 (§3.2 SWF-48: lost revocation during a grant, bounded at one task period; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope software (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating); host components summarised |
 | Author | Assurance team (initial draft) |
@@ -81,6 +81,7 @@ The analysis was done by code reading at the baseline. It has not been reviewed.
 | SWF-40 | U-PND-BOOT | Commission: non-release image executed | Unverified envelope (all) | RSA-1024/SHA-1; debug key in debug builds | P | SWSR-511, 514 (GAP-24, GAP-25) |
 | SWF-41 | U-PND-PLAT clock | Wrong value: clock drift → timers wrong | Timeouts and RT windows wrong (SG-01) | CSS on HSE loss only | P | SWSR-504 |
 | SWF-42 | U-PND-PLAT memory | Wrong value: RAM bit flip in `controls_allowed`, limits, mode | Authority/limit wrong (all) | none | N | SWSR-503b, 507; WP-A-04 SFMEA-23 |
+| SWF-48 | U-SAF grant (`pcm_cruise_check`) | Wrong value: under the WP-W-03 §5.4.2 priority scheme, the safety task preempts the grant between `rx_checks_allow_engagement()` and the store of `controls_allowed = true`; its revocation is overwritten (WP-W-03 §5.4.3 R-2) | Authority held while a revocation condition holds (SG-01, SG-02) | Every safety-task revocation (RX timeout, heartbeat) is condition-based and re-evaluated each period, so the loss lasts at most one task period (10 ms) plus its jitter. Not reachable at equal priority (panda `52cad44`) | P (bounded) | Accepted bound: 10 ms, within the TSR-401/407 budgets; single-writer `safety_revoke` (WP-W-03 §6.3) remains the target; re-assess when the priority scheme is adopted |
 
 ### 3.3 Host components (summary, QM)
 
@@ -96,13 +97,13 @@ Host failure modes are analysed at system level in [WP-A-04](../08-analyses/WP-A
 
 ### 3.4 Coverage summary
 
-| Rating | Count (SWF-01…42) |
+| Rating | Count (SWF-01…42, SWF-48) |
 |---|---|
 | C | 3 |
-| P | 16 |
+| P | 17 |
 | N | 23 |
 
-Every N and P row has an SWSR in WP-W-02. Diagnostic-coverage targets in WP-S-03 §6 cannot be claimed until those SWSRs are implemented and verified.
+Every N and P row has an SWSR in WP-W-02 (SWF-48: SWSR-519 and an accepted 10 ms bound). Diagnostic-coverage targets in WP-S-03 §6 cannot be claimed until those SWSRs are implemented and verified.
 
 ## 4. Software-level dependent failure analysis
 

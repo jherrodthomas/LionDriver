@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-03 Software architectural design |
 | Standard reference | ISO 26262-6:2018 §7 (software architectural design: notation, design principles, static and dynamic aspects, ASIL attribution, resource usage); ISO 26262-9:2018 §6 (coexistence, by reference to WP-A-02); ASPICE 4.0 SWE.2 |
-| Version | 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
+| Version | 0.3 (§5.4.4 prerequisites implemented, panda `52cad44`: explicit priority table, atomic safety-config switch and fault word; R-2 recorded as a 10 ms bound; 2026-10-12). 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Envelope (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host (E-01): QM / QM (B-sup) |
 | Author | Assurance team (initial draft) |
@@ -252,11 +252,15 @@ Preemption creates the concurrent access that equal priority prevented (§5.1 co
 
 #### 5.4.4 Changes needed before the scheme can be enabled
 
-1. Mask the safety task during `set_safety_mode` / `set_safety_hooks` (R-1). This is mandatory: without it the proposal introduces an out-of-bounds read.
-2. Make the grant in `pcm_cruise_check` atomic with respect to the safety task (R-2), or record the 10 ms bound in WP-W-04.
-3. Make `fault_occurred` atomic (R-8).
-4. Add the priority table and set it before the first `NVIC_EnableIRQ` (`REGISTER_INTERRUPT` call sites, §5.1).
-5. Host tests cannot show any of this; it needs the target measurement below.
+| # | Change | Status (panda `52cad44`, [jherrodthomas/panda#10](https://github.com/jherrodthomas/panda/pull/10)) |
+|---|---|---|
+| 1 | Mask the safety task during `set_safety_mode` / `set_safety_hooks` (R-1). Mandatory: without it the proposal introduces an out-of-bounds read | **Done:** both `set_safety_hooks` calls in `set_safety_mode` run in `ENTER_CRITICAL`/`EXIT_CRITICAL` |
+| 2 | Make the grant in `pcm_cruise_check` atomic with respect to the safety task (R-2), or record the 10 ms bound in WP-W-04 | **Bound recorded** ([WP-W-04](WP-W-04-software-safety-analysis.md) SWF-48): opendbc has no critical-section primitive, and every safety-task revocation is re-evaluated each period, so a lost revocation lasts at most one task period (10 ms) plus its jitter. The single-writer `safety_revoke` API (§6.3) remains the target |
+| 3 | Make `fault_occurred` atomic (R-8) | **Done:** `fault_occurred` and `fault_recovered` run in a critical section |
+| 4 | Add the priority table and set it before the first `NVIC_EnableIRQ` (§5.1) | **Done:** `board/drivers/irq_priorities.h`, `interrupt_priorities_init()` before `clock_init()`. All classes at level 8, so behaviour is unchanged until the scheme is adopted. Host test `tests/irq_priorities` checks that every `NVIC_EnableIRQ` site has an entry and that the classes are still equal |
+| 5 | Host tests cannot show the timing; it needs the target measurement below | Open (D-04) |
+
+Adopting §5.4.2 is now a change of the five `IRQ_PRIO_*` values and of the `test_classes_equal_until_scheme_adopted` host test, after the §5.4.5 measurements.
 
 #### 5.4.5 Measurement plan (target, HIL bench D-04)
 
@@ -346,7 +350,7 @@ ISO 26262-6 §7 lists design principles with recommendation levels per ASIL; the
 | OI-1 | Add U-PND-USB, U-PND-PWR, U-PND-HK, U-PND-PLAT to the WP-W-06 unit list | Safety engineer | G3 |
 | OI-2 | Remove unused brand modes from the reference firmware build or justify them (WP-A-02 OI-2) | SW lead | G3 |
 | OI-3 | Decide whether USB comms are disabled in the reference build | SW lead | G3 |
-| OI-4 | Define the NVIC priority scheme for the new safety task (SWSR-519) and re-assess §6.3. **Proposed in §5.4 (2026-10-12, AI draft, I0)**; still needed: review, the §5.4.4 code changes, and the §5.4.5 measurements on the target | SW architect | G3 |
+| OI-4 | Define the NVIC priority scheme for the new safety task (SWSR-519) and re-assess §6.3. **Proposed in §5.4 (2026-10-12, AI draft, I0)**; §5.4.4 code changes done (panda `52cad44`); still needed: review and the §5.4.5 measurements on the target | SW architect | G3 |
 | OI-5 | Check principle recommendation levels against the licensed ISO 26262-6 | Safety engineer | G3 |
 | OI-6 | Measure the resource estimates of §7 from the map file and on target | Maintainer | G4 |
 | OI-7 | Create `elements.yaml` from §3.1 and §4.1 (WP-P-06 OI-4) | Safety engineer | G3 |
