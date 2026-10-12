@@ -1,20 +1,25 @@
 # yaml-language-server: $schema=../schema/fmea.schema.json
-# Ratings per RT-1. Implementation-defect causes in the opendbc safety core: O=5 (MISRA, 100% line coverage, review, no
-# documented requirements), D=6 (tests killed 2705/2705 operator mutants at BL-001 in this workspace; mutation does not cover
-# constants or panda board code). Design gaps found in this review: O=8, D=9. Cause ratings are pre-action; SWF-ACT-001
-# (fork CI gate, completed in rev 0.3) records the revised D=3.
-# Rev 0.3: SWF-003.C1 corrected (the SoC also uses +2.0 m/s² on TSS2). Moved under assurance/; the narrative software
-# safety analysis is assurance/05-software/WP-W-04, which this file supports with AIAG-VDA ratings.
+# Ratings per RT-1, against BL-002 (panda 9f60e17, opendbc aff4033).
+# - Implementation defects in the opendbc safety core: O=5 (MISRA, 100% line coverage, review, no documented requirements),
+#   D=3 (the suite, coverage gate and mutation tests run in fork CI on every change: proven, early, test-to-fail).
+# - LionDriver reference-build lock (panda#4): O=3, D=4 (host unit tests in panda CI, not on target). The lock is compiled
+#   only with LIONDRIVER_REFERENCE=1, which no build path sets yet (SWF-013.C2, O=8 D=9).
+# - Design gaps with no targeted test: O=6-8, D=9. New watchdog failure modes SWF-018/019: HIL test not run (D=7-8).
+# Severity is 10 for every row (hazard-linked effects, RT-1 §1.1). Three causes drop to AP L (S10 O3 D4: wrong mode,
+# wrong parameter, wrong brake flag) because the reference lock prevents them, but only in a reference build; the build
+# itself is SWF-013.C2 (AP H).
+# History: rev 0.2 first rating at BL-001; rev 0.3 SWF-003.C1 corrected and moved under assurance/; rev 0.4 re-rated at
+# BL-002 (this revision). The narrative analysis of record is assurance/05-software/WP-W-04.
 schema_version: 1
 analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "0.3"
+  revision: "0.4"
   status: draft
-  baseline: BL-001
+  baseline: BL-002
   rating_tables: RT-1
-  scope: "P1 element: panda safety model (opendbc safety core, Toyota mode, panda firmware integration) for AC-001 at BL-001 (panda 92eb565, opendbc 229dc70). Other P1 elements (selfdrived, controlsd, pandad) follow."
+  scope: "P1 element: panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog) for AC-001 at BL-002 (panda 9f60e17, opendbc aff4033). Other P1 elements (selfdrived, controlsd, pandad) follow."
   team:
     - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
     - {name: Claude (AI assistant), role: "Drafting assistance; ratings require human review"}
@@ -23,7 +28,12 @@ analysis:
     - assurance/08-analyses/fmea/rating-tables.md
     - assurance/08-analyses/fmea/analyses/fsc.yaml
     - assurance/08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md
-  updated: 2026-10-10
+    - assurance/05-software/WP-W-04-software-safety-analysis.md
+    - assurance/07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md
+    - assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md
+    - assurance/07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md
+    - assurance/07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md
+  updated: 2026-10-12
 structure:
 - id: SWF-SE-001
   name: Panda safety model (opendbc safety + panda firmware integration)
@@ -118,6 +128,15 @@ structure:
   - panda/board/drivers/can_common.h
   - panda/board/can_comms.h
   description: can_send with skip_tx_hook (can_common.h:161-176); host TX entry (can_comms.h:97,118)
+- id: SWF-SE-014
+  name: Panda hardware watchdog and 100 Hz safety task
+  kind: sw_unit
+  parent: SWF-SE-001
+  paths:
+  - panda/board/drivers/hw_watchdog.h
+  - panda/board/main.c
+  description: 'IWDG start on first relay drive, window-mode feed from the safety task only after main-loop progress (hw_watchdog.h; main.c safety_task_handler);
+    added in BL-002 (panda#1, #3)'
 functions:
 - id: SWF-FN-001
   element: SWF-SE-003
@@ -190,6 +209,12 @@ functions:
   description: Route every host transmission through the safety check
   requirements:
   - FSR-002
+- id: SWF-FN-013
+  element: SWF-SE-014
+  description: Reset the MCU, which releases the relay, within 0.1 s when the safety task or main loop stops; never reset while both run normally
+  requirements:
+  - FSR-002
+  - FSR-038
 failure_modes:
 - id: SWF-001
   element: SWF-SE-006
@@ -231,30 +256,38 @@ failure_modes:
       ref: opendbc_repo/opendbc/safety/tests/test.sh
     - description: Upstream code review; no documented safety requirements for the safety model (tests derived from implementation)
     detection_controls: &id002
-    - description: 'opendbc safety test suite (3173 pass, 390 skipped at BL-001 in this workspace). Mutation run at BL-001 in this workspace: 2705 operator mutants
-        across opendbc/safety (incl. modes/toyota.h, lateral.h, longitudinal.h, safety.h), 2705 killed, 0 survived. Mutation covers operators only, not constants
-        or deleted statements, and not panda board code. Run by fork CI since CR-CI-05 (.github/workflows/safety.yaml); credited through SWF-ACT-001'
+    - description: opendbc safety suite with 100% line coverage and mutation tests, run by fork CI on every change (.github/workflows/safety.yaml, CR-CI-05). At BL-002
+        the Toyota tests pass locally (287, 34 skipped); mutation was last run locally at BL-001 (2705/2705 killed). Tests are derived from the implementation, not
+        from requirements
       test: opendbc_repo/opendbc/safety/tests/test_toyota.py
-      ref: opendbc_repo/opendbc/safety/tests/mutation.py; opendbc .github/workflows/tests.yml:39-56
+      ref: opendbc_repo/opendbc/safety/tests/mutation.py; .github/workflows/safety.yaml
     occurrence: 5
-    detection: 6
+    detection: 3
     ap: H
     actions:
-    - SWF-ACT-001
     - SWF-ACT-002
   - id: SWF-001.C3
     description: Wrong EPS torque factor in the host-supplied safety parameter scales measured torque, widening the measured-torque-error check
     element: SWF-SE-012
     prevention_controls:
-    - description: Safety parameter accepted from the host without check (toyota.h:383; main_comms.h:223)
-      ref: panda/board/main_comms.h
-    detection_controls:
-    - description: No test targets this cause
-    occurrence: 8
-    detection: 9
-    ap: H
+    - description: 'Reference-build lock: 0xdc accepts TOYOTA only with parameter 73 (no flags) and, once TOYOTA is active, only NOOUTPUT or SILENT; 0xdf refused
+        (reference_lock.h, panda#4, TSR-512/513). Effective only in a LIONDRIVER_REFERENCE build, see SWF-013.C2'
+      ref: panda/board/reference_lock.h
+    detection_controls: &id003
+    - &id004
+      description: 'Host unit tests compiled against the real firmware headers, run by panda CI (test.sh): reference_lock and hw_watchdog, 14 tests, pass at BL-002
+        locally. Not on target hardware'
+      test: panda/tests/reference_lock/test_reference_lock.py
+      ref: panda/tests/hw_watchdog/test_hw_watchdog.py
+    occurrence: 3
+    detection: 4
+    ap: L
     actions:
-    - SWF-ACT-004
+    - SWF-ACT-009
+  safety_mechanisms:
+  - description: Panda torque magnitude, rate and measured-torque-error checks block the frame
+    ref: opendbc_repo/opendbc/safety/lateral.h
+  - description: EPS limits LKA torque itself (external measure, AOU-01, unverified)
 - id: SWF-002
   element: SWF-SE-006
   function: SWF-FN-002
@@ -277,12 +310,14 @@ failure_modes:
     prevention_controls: *id001
     detection_controls: *id002
     occurrence: 5
-    detection: 6
+    detection: 3
     ap: H
     actions:
-    - SWF-ACT-001
     - SWF-ACT-002
   notes: Depends on controls_allowed being correct; see SWF-007..SWF-009.
+  safety_mechanisms:
+  - description: Panda blocks non-zero torque and the steer-request bit while controls are not allowed
+    ref: opendbc_repo/opendbc/safety/lateral.h
 - id: SWF-003
   element: SWF-SE-007
   function: SWF-FN-003
@@ -323,11 +358,14 @@ failure_modes:
     prevention_controls: *id001
     detection_controls: *id002
     occurrence: 5
-    detection: 6
+    detection: 3
     ap: H
     actions:
-    - SWF-ACT-001
     - SWF-ACT-002
+  safety_mechanisms:
+  - description: Panda acceleration range check blocks the frame
+    ref: opendbc_repo/opendbc/safety/longitudinal.h
+  - description: PCM limits requested acceleration (external measure, AOU-05, unverified)
 - id: SWF-004
   element: SWF-SE-007
   function: SWF-FN-003
@@ -357,6 +395,8 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-005
+  safety_mechanisms:
+  - description: None in the panda (no rate or jerk check); PCM rate limiting assumed, not characterised (OI-002)
 - id: SWF-005
   element: SWF-SE-002
   function: SWF-FN-005
@@ -387,10 +427,13 @@ failure_modes:
     actions:
     - SWF-ACT-006
   notes: 'Diverse path: the PCM cancels cruise on its own brake input and the panda follows PCM_CRUISE (checksum-checked). That credit needs FSC FOI-006.'
+  safety_mechanisms:
+  - description: PCM cancels cruise on its own brake input and the panda follows PCM_CRUISE (checksum-checked); credit needs FSC FOI-006
+    ref: opendbc_repo/opendbc/safety/safety.h
 - id: SWF-006
   element: SWF-SE-002
   function: SWF-FN-005
-  failure_mode: Stale brake, cruise or EPS data used for up to about 2 s
+  failure_mode: Stale brake, cruise or EPS data used beyond the detection budget
   guideword: value_stale
   effects:
   - level: local
@@ -408,18 +451,23 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-006.C1
-    description: safety_tick runs at 1 Hz and flags lag only after max(10 periods, 1 s), so up to ~2 s
+    description: An RX check lags only after 5 nominal periods plus one 10 ms safety-task period (0x1D2 about 0.16 s, 0x226 about 0.14 s, 0x260 0.11 s, 0xAA about
+      0.07 s); the budget is not yet confirmed against an FTTI (HARA OI-004) or against real inter-frame gaps (tools/can_gaps)
     element: SWF-SE-002
     prevention_controls:
-    - description: Timing check designed against false triggers, not against an FTTI (safety.h:321-344)
+    - description: Toyota rx_timeout_periods = 5 (TSR-401, opendbc#1); safety_tick moved to a 100 Hz safety task (panda#3, SWSR-401a)
       ref: opendbc_repo/opendbc/safety/safety.h
     detection_controls:
-    - description: No test targets this cause
-    occurrence: 8
-    detection: 9
+    - description: Per-message 5-period timeout test for every Toyota RX check, in the CI safety suite
+      test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+    occurrence: 4
+    detection: 3
     ap: H
     actions:
     - SWF-ACT-007
+  safety_mechanisms:
+  - description: RX timeout after 5 periods withdraws controls (TSR-401); SoC alerts on panda state
+    ref: opendbc_repo/opendbc/safety/safety.h
 - id: SWF-007
   element: SWF-SE-005
   function: SWF-FN-004
@@ -442,11 +490,14 @@ failure_modes:
     prevention_controls: *id001
     detection_controls: *id002
     occurrence: 5
-    detection: 6
+    detection: 3
     ap: H
     actions:
-    - SWF-ACT-001
     - SWF-ACT-002
+  notes: 'BL-002: a cruise rising edge grants controls only if every RX check is valid and not lagging at that moment (rx_checks_allow_engagement, TSR-306, opendbc#3).'
+  safety_mechanisms:
+  - description: Controls granted only on a PCM cruise rising edge with every RX check valid (TSR-306)
+    ref: opendbc_repo/opendbc/safety/safety.h
 - id: SWF-008
   element: SWF-SE-005
   function: SWF-FN-004
@@ -467,26 +518,28 @@ failure_modes:
     description: Host-supplied safety parameter selects the wrong brake message (ALT_BRAKE flag), so brake presses are never seen
     element: SWF-SE-012
     prevention_controls:
-    - description: Parameter accepted from the host without check (toyota.h:380; main_comms.h:223)
-      ref: panda/board/main_comms.h
-    detection_controls:
-    - description: No test targets this cause
-    occurrence: 8
-    detection: 9
-    ap: H
+    - description: 'Reference-build lock: 0xdc accepts TOYOTA only with parameter 73 (no flags) and, once TOYOTA is active, only NOOUTPUT or SILENT; 0xdf refused
+        (reference_lock.h, panda#4, TSR-512/513). Effective only in a LIONDRIVER_REFERENCE build, see SWF-013.C2'
+      ref: panda/board/reference_lock.h
+    detection_controls: *id003
+    occurrence: 3
+    detection: 4
+    ap: L
     actions:
-    - SWF-ACT-004
+    - SWF-ACT-009
   - id: SWF-008.C2
     description: Defect in generic_rx_checks brake edge logic (safety.h:354-357)
     element: SWF-SE-005
     prevention_controls: *id001
     detection_controls: *id002
     occurrence: 5
-    detection: 6
+    detection: 3
     ap: H
     actions:
-    - SWF-ACT-001
     - SWF-ACT-002
+  safety_mechanisms:
+  - description: Brake rising edge withdraws controls; PCM cruise cancel as diverse path
+    ref: opendbc_repo/opendbc/safety/safety.h
 - id: SWF-009
   element: SWF-SE-005
   function: SWF-FN-004
@@ -509,11 +562,13 @@ failure_modes:
     prevention_controls: *id001
     detection_controls: *id002
     occurrence: 5
-    detection: 6
+    detection: 3
     ap: H
     actions:
-    - SWF-ACT-001
     - SWF-ACT-002
+  safety_mechanisms:
+  - description: Cruise off withdraws controls in pcm_cruise_check
+    ref: opendbc_repo/opendbc/safety/safety.h
 - id: SWF-010
   element: SWF-SE-004
   function: SWF-FN-007
@@ -540,11 +595,13 @@ failure_modes:
     prevention_controls: *id001
     detection_controls: *id002
     occurrence: 5
-    detection: 6
+    detection: 3
     ap: H
     actions:
-    - SWF-ACT-001
     - SWF-ACT-002
+  safety_mechanisms:
+  - description: check_relay entries block forwarding of every message the item replaces
+    ref: opendbc_repo/opendbc/safety/safety.h
 - id: SWF-011
   element: SWF-SE-004
   function: SWF-FN-007
@@ -567,12 +624,16 @@ failure_modes:
     prevention_controls: *id001
     detection_controls: *id002
     occurrence: 5
-    detection: 6
+    detection: 3
     ap: H
     actions:
-    - SWF-ACT-001
     - SWF-ACT-002
-  notes: 'Partial answer to HARA OI-003: at BL-001 the panda does not block stock pre-collision messages. In-vehicle confirmation of stock AEB is still needed.'
+  notes: 'Partial answer to HARA OI-003: the panda does not block stock pre-collision messages from the camera. BL-002 removes 0x344 and the DSU messages from the
+    TX whitelist (TSR-705, opendbc#2), so the SoC can no longer send them; 0x283 is allowed with a zero payload only. Forwarding is unchanged. In-vehicle confirmation
+    of stock AEB is still needed.'
+  safety_mechanisms:
+  - description: Only messages the item replaces are blocked; 0x283/0x344 are forwarded
+    ref: opendbc_repo/opendbc/safety/safety.h
 - id: SWF-012
   element: SWF-SE-009
   function: SWF-FN-008
@@ -595,11 +656,13 @@ failure_modes:
     prevention_controls: *id001
     detection_controls: *id002
     occurrence: 5
-    detection: 6
+    detection: 3
     ap: H
     actions:
-    - SWF-ACT-001
     - SWF-ACT-002
+  safety_mechanisms:
+  - description: Relay malfunction detection blocks all TX after a stock message appears on the car side
+    ref: opendbc_repo/opendbc/safety/safety.h
 - id: SWF-013
   element: SWF-SE-012
   function: SWF-FN-011
@@ -625,18 +688,35 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-013.C1
-    description: set_safety_mode accepts any mode and parameter at any time; debug builds include SAFETY_ALLOUTPUT
+    description: Defect in the reference-build allow-list for 0xdc/0xdf and the car-mode request gate
     element: SWF-SE-012
     prevention_controls:
-    - description: No allow-list (main_comms.h:223; safety.h:413-421)
-      ref: panda/board/main_comms.h
+    - description: 'Reference-build lock: 0xdc accepts TOYOTA only with parameter 73 (no flags) and, once TOYOTA is active, only NOOUTPUT or SILENT; 0xdf refused
+        (reference_lock.h, panda#4, TSR-512/513). Effective only in a LIONDRIVER_REFERENCE build, see SWF-013.C2'
+      ref: panda/board/reference_lock.h
+    detection_controls: *id003
+    occurrence: 3
+    detection: 4
+    ap: L
+    actions:
+    - SWF-ACT-004
+  - id: SWF-013.C2
+    description: 'Firmware built without LIONDRIVER_REFERENCE: no build path sets it (openpilot panda build, release procedure), so set_safety_mode accepts any mode
+      and parameter and debug builds include SAFETY_ALLOUTPUT'
+    element: SWF-SE-012
+    prevention_controls:
+    - description: Lock is opt-in at build time (panda/SConscript:21-26); release procedure not yet defined (IA mode lock OI-2)
+      ref: panda/SConscript
     detection_controls:
     - description: No test targets this cause
     occurrence: 8
     detection: 9
     ap: H
     actions:
-    - SWF-ACT-004
+    - SWF-ACT-009
+  safety_mechanisms:
+  - description: Reference-build mode and parameter lock (panda#4); SoC cross-checks the panda mode after 10 s (QM)
+    ref: panda/board/reference_lock.h
 - id: SWF-014
   element: SWF-SE-011
   function: SWF-FN-010
@@ -671,6 +751,9 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-007
+  safety_mechanisms:
+  - description: 'Heartbeat: SILENT after 5 s, controls withdrawn after a 3 s engaged mismatch; siren for 3 s if engaged'
+    ref: panda/board/main.c
 - id: SWF-015
   element: SWF-SE-012
   function: SWF-FN-011
@@ -692,18 +775,22 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-015.C1
-    description: ELM327 TX hook allows any ISO 15765 diagnostic frame with no ignition or motion condition
+    description: ELM327 TX hook allows any ISO 15765 diagnostic frame with no service, ignition or motion condition. In a reference build ELM327 can no longer be
+      selected while TOYOTA is active, but before engagement (fingerprinting, radar disable) the content is unrestricted
     element: SWF-SE-008
     prevention_controls:
-    - description: No vehicle-state condition (elm327.h:6-33)
+    - description: No vehicle-state or service condition (elm327.h:6-35); reference lock limits the phase only
       ref: opendbc_repo/opendbc/safety/modes/elm327.h
     detection_controls:
     - description: No test targets this cause
-    occurrence: 8
+    occurrence: 5
     detection: 9
     ap: H
     actions:
-    - SWF-ACT-004
+    - SWF-ACT-010
+  safety_mechanisms:
+  - description: None for frame content; the reference lock only blocks ELM327 while TOYOTA is active
+    ref: panda/board/reference_lock.h
 - id: SWF-016
   element: SWF-SE-013
   function: SWF-FN-012
@@ -741,6 +828,9 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-008
+  safety_mechanisms:
+  - description: None at run time; correctness of the two host TX entries by inspection
+    ref: panda/board/can_comms.h
 - id: SWF-017
   element: SWF-SE-007
   function: SWF-FN-003
@@ -763,12 +853,92 @@ failure_modes:
     prevention_controls: *id001
     detection_controls: *id002
     occurrence: 5
-    detection: 6
+    detection: 3
     ap: H
     actions:
-    - SWF-ACT-001
     - SWF-ACT-002
   notes: 'FSC FSR-024 is verified in code at BL-001: only the inactive acceleration passes while the accelerator is pressed.'
+  safety_mechanisms:
+  - description: Non-inactive acceleration refused while the accelerator is pressed (get_longitudinal_allowed)
+    ref: opendbc_repo/opendbc/safety/longitudinal.h
+- id: SWF-018
+  element: SWF-SE-014
+  function: SWF-FN-013
+  failure_mode: Safety checks stop running while the relay is driven
+  guideword: omission
+  effects:
+  - level: local
+    description: RX timeout, heartbeat and TX checks no longer evaluated; relay held energised
+  - level: next_higher
+    description: Stale authority kept; stock camera path stays cut
+  - level: end
+    description: Continued actuation without supervision; stock AEB unavailable
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-011
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-018.C1
+    description: Main loop or safety task hangs or is starved (defect, interrupt storm, peripheral lock-up) after the relay has been driven
+    element: SWF-SE-014
+    prevention_controls:
+    - description: 'IWDG from LSI, 90 ms nominal timeout, window mode (5 ms closed), fed only from the 100 Hz safety task after main-loop progress; started on every
+        path that drives the relay (TSR-501/502, HWSR-501b, panda#1, #3). A reset floats the relay GPIO'
+      ref: panda/board/drivers/hw_watchdog.h
+    detection_controls:
+    - *id004
+    - &id005
+      description: HIL test of the watchdog with injected hangs (FAULT_INJECTION debug build); not run, no HIL bench yet (D-04)
+      test: panda/tests/hitl/test_10_hw_watchdog.py
+    occurrence: 4
+    detection: 7
+    ap: H
+    actions:
+    - SWF-ACT-011
+  notes: New in BL-002. Before BL-002 a hang left the relay driven with no reset (assurance GAP-43).
+  safety_mechanisms:
+  - description: IWDG window watchdog resets the MCU within about 90 ms; reset releases the relay
+    ref: panda/board/drivers/hw_watchdog.h
+- id: SWF-019
+  element: SWF-SE-014
+  function: SWF-FN-013
+  failure_mode: Spurious MCU reset while engaged
+  guideword: commission
+  effects:
+  - level: local
+    description: Panda resets and restarts in SILENT; relay drops
+  - level: next_higher
+    description: Item steering and ACC end abruptly; stock camera path returns
+  - level: end
+    description: Loss of lateral and longitudinal control without the item's own handback warning
+    hazard: HZ-004
+    severity: 10
+  - level: end
+    description: Contributes to HZ-012
+    hazard: HZ-012
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-019.C1
+    description: LSI frequency outside the range assumed for the 5 ms closed window and the 90 ms timeout, or safety-task jitter, makes a normal feed early or late
+    element: SWF-SE-014
+    prevention_controls:
+    - description: Timing chosen with margin at nominal f_LSI = 32 kHz; the LSI range is still to be confirmed from the STM32H725 datasheet (IA watchdog open item)
+      ref: panda/board/drivers/hw_watchdog.h
+    detection_controls:
+    - *id004
+    - *id005
+    occurrence: 5
+    detection: 8
+    ap: H
+    actions:
+    - SWF-ACT-011
+  notes: New failure mode introduced by the watchdog (WP-W-04 OI-3). The SoC's own disengagement alert depends on it noticing the panda reset.
+  safety_mechanisms:
+  - description: None in the panda; the SoC raises an alert when it loses the panda (QM)
 actions:
 - id: SWF-ACT-001
   kind: detection
@@ -803,7 +973,8 @@ actions:
   kind: design_change
   description: Implement the panda configuration lock (LD-DES-001 DR-01..DR-07, DR-05 for ELM327)
   owner: Jherrod Thomas
-  status: decision_pending
+  status: in_progress
+  evidence: Implemented for the reference build in panda#4 (9f60e17); D-12 decided. Build flag and release procedure open (SWF-ACT-009)
 - id: SWF-ACT-005
   kind: design_change
   description: Add an acceleration-rate (jerk) check to the panda longitudinal checks, or justify the absence with characterized powertrain rate limits (OI-002)
@@ -819,9 +990,27 @@ actions:
   kind: design_change
   description: Derive RX-lag and heartbeat timeouts from the FTTI and check them at 8 Hz or faster while controls are allowed (LD-DES-001 DR-20)
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'RX lag: 5 periods at 100 Hz in BL-002 (opendbc#1, panda#3). Heartbeat: unchanged (5 s, 1 Hz). FTTI derivation open'
 - id: SWF-ACT-008
   kind: detection
   description: Add a unit or static check that every host TX path calls can_send with skip_tx_hook=false
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-009
+  kind: design_change
+  description: 'Make LIONDRIVER_REFERENCE=1 (with RELEASE=1) the only firmware build used for the reference configuration: set it in openpilot''s panda build and
+    the release procedure, and have the host check it (e.g. a version or health flag) before engaging'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-010
+  kind: design_change
+  description: Restrict ELM327 TX to the UDS services fingerprinting and radar disable need, and refuse it above standstill (WP-W-04 OI-6)
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-011
+  kind: detection
+  description: Confirm the LSI range from the STM32H725 datasheet and run the watchdog HIL test (test_10_hw_watchdog) on the bench, including a long soak for spurious
+    resets (D-04)
   owner: Jherrod Thomas
   status: open

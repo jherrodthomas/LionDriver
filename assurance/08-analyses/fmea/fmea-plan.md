@@ -94,16 +94,25 @@ Prioritised by safety relevance (path from perception to actuator):
 | P3 | `locationd`, calibration, `camerad`, `sensord` | various |
 | P3 | Messaging (`cereal`/msgq), `manager`, `updated` | `openpilot/cereal`, `openpilot/system/` |
 
-**Status (rev 0.3, `analyses/sw-fmea.yaml`):** the panda safety model was analyzed at BL-001 with the submodules checked out. The analysis has 13 structure elements, 12 functions, 17 failure modes and 8 actions, and all causes are AP H.
+**Status (rev 0.4, `analyses/sw-fmea.yaml`):** the panda safety model was re-rated at BL-002 (panda `9f60e17`, opendbc `aff4033`). It has 19 failure modes, 24 causes (21 AP H, 3 AP L) and 11 actions.
 
-- **Implementation defects** in the opendbc core are rated O5/D6 before action. The suite passes 3173 tests locally and kills 2705/2705 operator mutants. Fork CI has run it since CR-CI-05, so SWF-ACT-001 is completed and gives a revised D3; there are still no requirements-based tests (SWF-ACT-002).
-- **Design gaps:** ten causes are rated D8–D9 because no test targets them. They are:
-  - torque and acceleration limits equal to the SoC limits and not derived from a vehicle envelope;
+- **Firmware changes credited:**
+  - RX timeout after 5 periods at 100 Hz (SWF-006: O4/D3);
+  - grant-time RX check (SWF-007);
+  - reference-build mode lock (SWF-001.C3, SWF-008.C1, SWF-013.C1: AP L);
+  - hardware watchdog (new SWF-018, plus SWF-019 for spurious resets).
+- **Still open:**
+  - the lock is only in a `LIONDRIVER_REFERENCE=1` build, and nothing builds that yet (SWF-013.C2, AP H);
+  - limits equal to the SoC limits;
   - no jerk check;
-  - BRAKE_MODULE RX check by timing only;
-  - ~2 s RX-lag detection and a 5 s heartbeat;
-  - any mode or parameter accepted from the host, including a wrong EPS factor and a wrong brake-message flag;
-  - unrestricted ELM327 diagnostics.
+  - BRAKE_MODULE without end-to-end protection;
+  - 5 s heartbeat;
+  - unrestricted ELM327 content.
+- **Implementation defects** in the opendbc core are O5/D3 (CI gate with mutation tests).
+
+**DFMEA (rev 0.2, `analyses/dfmea.yaml`):** 18 failure modes and 21 causes across 10 hardware elements of the comma 3X panda section, harness and relay box, based on WP-H-02/WP-H-03. Every row is S10, AP H, and most have no LionDriver hardware verification (D9–D10). The watchdog (DFM-004) is the only cause whose occurrence the BL-002 firmware lowers.
+
+**Workbooks:** `tools/safety/export_fmea_xlsx.py sw|dfmea --generator <builder script>` writes `exports/sw-fmea.xlsx` and `exports/dfmea.xlsx` (git-ignored) with the sw-fmea-builder and dfmea-builder layouts. AP comes from the RT-1 table, not the builders' simplified rule.
 
 This file supports the narrative analysis in [WP-W-04](../../05-software/WP-W-04-software-safety-analysis.md) with AIAG-VDA ratings (WP-W-04 §3.5).
 

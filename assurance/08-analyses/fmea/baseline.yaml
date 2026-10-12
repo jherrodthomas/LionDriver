@@ -29,3 +29,31 @@ baselines:
         teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
         tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
       os: AGNOS 19.9 (launch_env.sh)
+  - id: BL-002
+    status: proposed
+    description: >-
+      BL-001 plus the first LionDriver firmware changes, as pinned on liondriver-dev (PR #28): panda hardware
+      watchdog, 100 Hz safety task and reference-build mode lock (jherrodthomas/panda#1, #3, #4); opendbc Toyota
+      5-period RX timeout, grant-time RX check and TX whitelist reduction (jherrodthomas/opendbc#1, #2, #3).
+      The mode lock is compiled only with LIONDRIVER_REFERENCE=1.
+    vehicle:
+      make: Toyota
+      model: Corolla
+      model_year: 2020
+      trim: LE
+      market: US
+      platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
+    hardware:
+      device: comma 3X
+      panda: integrated in device
+      harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
+    software:
+      repo_commit: 73652bb718dda6c3047bbe0c6228f3ec22d58b02
+      submodules:
+        panda: 9f60e1745e815afe5bf71ffa1ccd24dda27fe160
+        opendbc_repo: aff4033237d0f72e48236898c7f06c2d358a58f6
+        msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
+        rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
+        teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
+        tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
+      os: AGNOS 19.9 (launch_env.sh)

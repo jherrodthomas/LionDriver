@@ -604,5 +604,32 @@ class TestItemExport(unittest.TestCase):
     self.assertEqual(wb["13_Vehicle_Catalog"].max_row - 1, 334)
 
 
+class TestFmeaExport(unittest.TestCase):
+  def _doc(self, name):
+    return fmea_lint.load_yaml((REPO / f"assurance/08-analyses/fmea/analyses/{name}.yaml").read_text())
+
+  def test_one_row_per_cause(self):
+    import export_fmea_xlsx
+    fsc = self._doc("fsc")
+    for kind, name, elem_key in (("sw", "sw-fmea", "element_id"), ("dfmea", "dfmea", "focus_element_id")):
+      doc = self._doc(name)
+      data = export_fmea_xlsx.to_builder_json(kind, doc, fsc)
+      causes = {c["id"]: c for fm in doc["failure_modes"] for c in fm["causes"]}
+      self.assertEqual([r["id"] for r in data["failure_modes"]], list(causes))
+      for r in data["failure_modes"]:
+        self.assertEqual((r["occurrence"], r["detection"]), (causes[r["id"]]["occurrence"], causes[r["id"]]["detection"]))
+        self.assertTrue(r[elem_key])
+
+  def test_builder_uses_rating_table_ap(self):
+    import export_fmea_xlsx
+    gen = Path(tempfile.mkdtemp()) / "fake_generator.py"
+    self.addCleanup(shutil.rmtree, gen.parent)
+    gen.write_text("\n".join(["def compute_ap(s, o, d):", "  return 'H' if s >= 9 else 'L'",
+                              "def generate(i, o):", "  return compute_ap(10, 3, 4)",
+                              "def build_catalog(wb):", "  pass", ""]))
+    mod = export_fmea_xlsx.load_generator(gen, [], {"refs": [], "crossref": [], "sc": None})
+    self.assertEqual(mod.generate("in.json", "out.xlsx"), "L")  # AIAG-VDA table, not the builders' S>=9 rule
+
+
 if __name__ == "__main__":
   unittest.main()

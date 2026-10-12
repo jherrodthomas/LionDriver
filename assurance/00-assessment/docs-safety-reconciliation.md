@@ -108,6 +108,7 @@ A third set of drafts was written on branch `claude/charming-knuth-b8nnqh`, also
 |---|---|---|
 | SW FMEA (`analyses/sw-fmea.yaml`) | Supporting data: AIAG-VDA S/O/D/AP ratings and test evidence | [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md) §3.5; new rows SWF-48, SWF-49; OI-6 |
 | System FMEA (`analyses/system-fmea.yaml`) | Supporting data; links to the SW FMEA | [WP-A-04](../08-analyses/WP-A-04-system-fta-fmea.md) stays the system analysis of record |
+| DFMEA (`analyses/dfmea.yaml`, rev 0.2 at BL-002) | Supporting data: AIAG-VDA rating of the WP-H-03 block-level failure modes, with candidate special characteristics | [WP-H-03](../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) stays the hardware analysis of record |
 | DFA (`analyses/dfa.yaml`) | Supporting data; no finding beyond WP-A-03 (its DM-05 correction matches DFI-10) | [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md) |
 | HARA, FSC, item definition | Parallel drafts, not adopted. The FMEAs link to them, so they are kept for the trace | [WP-C-01](../02-concept/WP-C-01-item-definition.md), [WP-C-03](../02-concept/WP-C-03-hara.md), [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) |
 | LD-DES-001 decisions D1–D4 | Decided as D-09…D-12 | [WP-M-01 §8](../01-management/WP-M-01-assurance-strategy.md#8-strategic-decisions-required), [WP-M-07 §5](../01-management/WP-M-07-risk-management.md) |

@@ -110,32 +110,35 @@ Every N and P row has an SWSR in WP-W-02. Diagnostic-coverage targets in WP-S-03
 
 ### 3.5 AIAG-VDA ratings and test evidence
 
-A second SW FMEA of the safety layer, with AIAG-VDA 2019 severity, occurrence, detection and action priority, is kept as machine-readable data in [`../08-analyses/fmea/analyses/sw-fmea.yaml`](../08-analyses/fmea/analyses/sw-fmea.yaml) (rev 0.3; rating tables in [`rating-tables.md`](../08-analyses/fmea/rating-tables.md), checked by `tools/safety/fmea_lint.py`). It was written separately from this document against the same baseline. This section is the cross-reference; the rows above stay the analysis of record.
+A second SW FMEA of the safety layer, with AIAG-VDA 2019 severity, occurrence, detection and action priority, is kept as machine-readable data in [`../08-analyses/fmea/analyses/sw-fmea.yaml`](../08-analyses/fmea/analyses/sw-fmea.yaml) (rev 0.4, re-rated at BL-002: panda `9f60e17`, opendbc `aff4033`; rating tables in [`rating-tables.md`](../08-analyses/fmea/rating-tables.md), checked by `tools/safety/fmea_lint.py`). It was first written separately from this document against the same baseline (BL-001) and was re-rated at BL-002; the rows above are still at BL-001. This section is the cross-reference; the rows above stay the analysis of record.
 
-| AIAG-VDA row | Failure mode | This document | Ratings (S/O/D, AP) |
+| AIAG-VDA row | Failure mode | This document | Ratings at BL-002 (S/O/D AP per cause) |
 |---|---|---|---|
-| SWF-001 | Steering above torque or rate limit passed | SWF-01, SWF-05, SWF-06; SDF-08 | 10/6/9 H (limits equal to host); 10/5/6 H (defect); 10/8/9 H (wrong EPS factor) |
-| SWF-002 | Torque passed while not allowed | SWF-03 | 10/5/6 H |
-| SWF-003 | Acceleration outside envelope passed | SWF-08; SDF-08, WP-A-04 BE-3.01 | 10/6/9 H (+2.0 equals host limit); 10/5/6 H (defect) |
-| SWF-004 | Step change of acceleration passed | SWF-09 | 10/8/9 H |
-| SWF-005 | Corrupted brake value accepted | SWF-13 | 10/3/9 H |
-| SWF-006 | Stale RX data used up to ≈2 s | SWF-14 | 10/8/9 H |
-| SWF-007 | Authority without driver engagement | SWF-12; WP-A-04 BE-1.12 | 10/5/6 H |
-| SWF-008 | Authority not revoked on brake | SWF-13, SWF-16 (brake flag in the param) | 10/8/9 H (param); 10/5/6 H (defect) |
-| SWF-009 | Authority not revoked on cruise cancel | SWF-13 | 10/5/6 H |
-| SWF-010 | Stock steering/ACC frames forwarded while item transmits | SWF-34 | 10/5/6 H |
-| SWF-011 | Stock PCS frames blocked | SWF-11, SWF-18 | 10/5/6 H |
-| SWF-012 | Relay malfunction not detected | SWF-17, SWF-37 | 10/5/6 H |
-| SWF-013 | Wrong or permissive mode accepted | SWF-16, SWF-24 | 10/8/9 H |
-| SWF-014 | Authority kept after host loss beyond FTTI | SWF-25, SWF-28 | 10/8/8 H |
-| SWF-015 | ELM327 diagnostics while driving | SWF-48 | 10/8/9 H |
-| SWF-016 | Host TX bypasses the TX hook | SWF-49 | 10/3/8 H |
-| SWF-017 | Deceleration passed during accelerator override | — (gas override verified in code, `get_longitudinal_allowed`) | 10/5/6 H |
+| SWF-001 | Steering request above the torque or torque-rate limit for the vehicle is passed | SWF-01, SWF-05, SWF-06; SDF-08 | C1 10/6/9 H; C2 10/5/3 H; C3 10/3/4 L |
+| SWF-002 | Steering torque passed while controls are not allowed | SWF-03 | C1 10/5/3 H |
+| SWF-003 | Acceleration request outside the intended envelope is passed | SWF-08; SDF-08, WP-A-04 BE-3.01 | C1 10/6/9 H; C2 10/5/3 H |
+| SWF-004 | Step change of deceleration request to the minimum is passed | SWF-09 | C1 10/8/9 H |
+| SWF-005 | Corrupted brake-pressed value accepted | SWF-13 | C1 10/3/9 H |
+| SWF-006 | Stale brake, cruise or EPS data used beyond the detection budget | SWF-14 | C1 10/4/3 H |
+| SWF-007 | Controls allowed without a driver engagement | SWF-12; WP-A-04 BE-1.12 | C1 10/5/3 H |
+| SWF-008 | Controls not withdrawn on brake press | SWF-13, SWF-16 (brake flag in the param) | C1 10/3/4 L; C2 10/5/3 H |
+| SWF-009 | Controls not withdrawn when PCM cruise disengages | SWF-13 | C1 10/5/3 H |
+| SWF-010 | Stock camera steering or ACC messages forwarded while the item transmits | SWF-34 | C1 10/5/3 H |
+| SWF-011 | Stock pre-collision (AEB) messages blocked | SWF-11, SWF-18 | C1 10/5/3 H |
+| SWF-012 | Relay malfunction not detected | SWF-17, SWF-37 | C1 10/5/3 H |
+| SWF-013 | Wrong or permissive safety mode accepted from the host | SWF-16, SWF-24 | C1 10/3/4 L; C2 10/8/9 H |
+| SWF-014 | Controls withdrawn later than the FTTI after host loss | SWF-25, SWF-28 | C1 10/8/8 H |
+| SWF-015 | Diagnostic (ELM327) mode accepted while driving | SWF-48 | C1 10/5/9 H |
+| SWF-016 | Host transmission bypasses the safety check | SWF-49 | C1 10/3/8 H |
+| SWF-017 | Item deceleration passed while the driver presses the accelerator | — (gas override verified in code, `get_longitudinal_allowed`) | C1 10/5/3 H |
+| SWF-018 | Safety checks stop running while the relay is driven | SWF-29, SWF-30 (GAP-43, closed in part by the BL-002 watchdog) | C1 10/4/7 H |
+| SWF-019 | Spurious MCU reset while engaged | — (new failure mode of the BL-002 watchdog; OI-3) | C1 10/5/8 H |
 
 Evidence recorded with the AIAG-VDA data (not yet reviewed, I1 pending):
 
 - The opendbc safety suite passed at the baseline (3173 tests, 390 skipped) in a local run.
 - `mutation.py` killed 2705 of 2705 operator mutants across `opendbc/safety` (66 build-incompatible mutants pruned), including the three `known_survivors`. Mutation changes operators only, not constants or statements, and does not reach panda board code (heartbeat, mode handling, bootstub). It therefore says nothing about wrong limit values (SDF-08, SDF-09).
+- At BL-002 the Toyota tests pass locally (287, 34 skipped) and the panda host tests for the mode lock and the watchdog pass (14). The mode lock is compiled only with `LIONDRIVER_REFERENCE=1`, which no build path sets yet (AIAG SWF-013.C2, AP H); the three causes it prevents are AP L only for a reference build.
 - These jobs now run in fork CI (`.github/workflows/safety.yaml`, CR-CI-05). This is the basis for the revised detection rating D3 for implementation defects (AIAG SWF-ACT-001). The rows above stay **P** for test adequacy until requirements-based tests exist (WP-W-06).
 
 ## 4. Software-level dependent failure analysis
