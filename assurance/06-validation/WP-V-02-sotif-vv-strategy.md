@@ -36,7 +36,7 @@ The acceptance criteria are those of [WP-C-05 §5](../02-concept/WP-C-05-sotif-h
 For each SOTIF hazardous behaviour SH-nn:
 
 1. **Harm budget.** Allocate to each SH group of WP-C-05 §5.2 step 3 (lateral SH-01/02/10; longitudinal SH-03/04/06/11; mode and override SH-05/09; SH-08) a share `k` of the road-class-specific B1 harm rate `λ_B1` for the relevant harm class (injury crash or fatality), separately for ODD-H and ODD-A:  `λ_harm,SH ≤ k · λ_B1`.
-2. **Hazardous-behaviour rate.** Divide by the probability that the hazardous behaviour, once it occurs, leads to harm: `P(harm | HB) = P(E-situation) · P(not controlled) · P(severity class)`. Each factor needs evidence: P(E-situation) from LionDriver drive logs (§3.4), P(not controlled) from the controllability tests in [WP-V-01](WP-V-01-safety-validation.md) (§3.3), and P(severity class) from crash statistics. A factor without evidence is set to 1.
+2. **Hazardous-behaviour rate.** Divide by the probability that the hazardous behaviour, once it occurs, leads to harm: `P(harm | HB) = P(E-situation) · P(not controlled) · P(severity class)`. Each factor needs evidence: P(E-situation) from LionDriver drive logs (§3.4), P(not controlled) from the controllability tests in [WP-V-01](WP-V-01-safety-validation.md) (§3.3), and P(severity class) from crash statistics (§3.5). A factor without evidence is set to 1.
    `λ_HB,SH ≤ k · λ_B1 / P(harm | HB)`
 3. **Demonstration size.** For a zero-failure demonstration at confidence C, the exposure needed is
    `n = −ln(1 − C) / λ_HB`
@@ -121,6 +121,37 @@ P(E-situation) is the probability that, when the hazardous behaviour occurs, a s
 5. **HARA.** The same measurements confirm or correct the HARA exposure classes of the situations above (HARA OI-2). A measured time share below 10 % for an E4 situation is reported to the HARA owner.
 
 What this gives: the HARA rates every one of these situations E3 or E4, so P(E-situation) is expected to be between about 0.1 and 1. At best it earns one order of magnitude in step 2, and only with enough matched instances. For SH-04 it earns nothing until the rear camera exists.
+
+### 3.5 Evidence for P(severity class)
+
+P(severity class) is the probability that a collision caused by the uncontrolled hazardous behaviour reaches the harm class budgeted in step 1 (injury crash or fatality). The rule:
+
+1. **Same definition as the budget.** The harm class and its definition are those of λ_B1 in step 1. If the budget is fatalities from FARS, P(severity class) is P(fatality | collision). If the budget is injury crashes from CRSS, it is P(police-reported injury | collision). A ratio from a source with another injury definition (for example MAIS3+) is not combined with that budget.
+2. **Collision type and impact speed per SH.** Each SH group uses the collision of its HARA hazardous events, at the worst credible impact speed in the claimed ODD. Because the factor applies after P(not controlled), no braking or steering by the driver is credited before impact:
+
+   | SH | Collision (HARA) | Worst credible impact |
+   |---|---|---|
+   | SH-01, SH-02 | Sideswipe or barrier impact at 90–120 km/h (HE-01.2, HE-02.1); head-on in ODD-A at combined speeds > 100 km/h (HE-01.1, HE-02.2) | Travel speed; closing speed for head-on |
+   | SH-03 | Rear-end into the lead: moderate speed difference (HE-03.1), high closing speed (HE-03.3) | Speed difference reached with the envelope's +2.0 m/s² from the OS-05 / OS-07 gap |
+   | SH-04 | Struck from behind (HE-04.1) | Speed loss at the envelope's −3.5 m/s² before the follower reacts |
+   | SH-06 | Rear-end into slow or stationary traffic (HE-06.1, HE-06.3) | Full closing speed, up to the ODD speed bound for a stationary lead |
+   | SH-10 | Sideswipe in the target lane (HE-02.5) | Lateral contact at travel speed |
+   | SH-11 | VRU impact, ODD-A only (HE-01.3, HE-03.2) | Travel speed |
+   | SH-05, SH-08, SH-09, SH-12, SH-13 | — | P(severity class) = 1 |
+
+3. **Source, in order of preference:**
+   - **National ratio.** Use the ratio of FARS to CRSS counts for the same manner of collision (rear-end, sideswipe same direction, head-on, angle, pedestrian) and the ODD road class and speed-limit band. These are the databases λ_B1 is filtered from (§2). The one-sided 95 % upper bound is taken, using the CRSS standard errors. This applies only where the LD-SDA collision is argued to be no more severe than the average crash of that type and band.
+   - **Injury-risk curve.** Where the LD-SDA collision is more severe than the average crash of its type (for example SH-06 with no braking before impact), use a published injury-risk curve for the collision type, read at the worst credible impact speed of item 2. The curve is from NHTSA crash-investigation data (NASS-CDS, CISS), or GIDAS for European data, with its harm definition matching item 1.
+   - **Otherwise.** If neither source fits, P(severity class) = 1.
+4. **Record.** For every value, record:
+   - the database and its release year, the filters and the counts;
+   - the curve and the impact speed used;
+   - the upper bound.
+
+   The values are part of the target set the assessor approves (OI-3).
+5. **Consistency with the HARA.** A value that implies low severity for a hazardous event rated S3 is reported to the HARA owner and explained before it is used.
+
+What this gives: for the S2 collisions (sideswipe; rear impacts at moderate speed difference, struck from behind), fatal crashes are well under 1 % of police-reported crashes of these types, so the factor can earn about two orders of magnitude for a fatality budget. For an injury-crash budget it earns little. For the S3 collisions at highway speed (head-on, high-speed rear-end into stationary traffic, barrier impact), the factor is close to 1 for either budget. Their targets therefore rest on P(E-situation) and P(not controlled), or on narrowing the ODD. No value has been extracted yet (OI-8).
 
 ## 4. Validation targets
 
@@ -301,3 +332,4 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 | OI-4 | Build the simulation fidelity case (§5.3) and decide which families get credit (WP-M-08 OI-3) |
 | OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
 | OI-7 | Add a rear-facing camera to the test-vehicle instrumentation ([WP-V-01](WP-V-01-safety-validation.md) §2), so that P(E-situation) for SH-04 (following vehicle, OS-08) can be measured (§3.4) |
+| OI-8 | Extract P(severity class) per SH from FARS/CRSS (and injury-risk curves where §3.5 item 3 requires them) for the selected B1 data set (OI-2); record the values and bounds per §3.5 item 4 |
