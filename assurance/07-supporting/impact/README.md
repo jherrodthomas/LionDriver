@@ -55,3 +55,11 @@ a sync decision.
 
 On 2026-10-10, upstream `panda`, `opendbc`, `rednose` and `teleoprtc` `master` were identical
 to the LionDriver pins, so no report was generated for them.
+
+## LionDriver change records
+
+Impact analyses for changes LionDriver makes itself to safety-relevant code (change type CT-1, [WP-P-02](../WP-P-02-change-management.md)), using the same template.
+
+| File | Change | Highest class | Status |
+|---|---|---|---|
+| [change-2026-10-12-panda-hw-watchdog.md](change-2026-10-12-panda-hw-watchdog.md) | panda: independent hardware watchdog, [jherrodthomas/panda#1](https://github.com/jherrodthomas/panda/pull/1) | SR-A | Draft: proposed, not integrated; TSR-501 deviations accepted as interim (2026-10-12) |
