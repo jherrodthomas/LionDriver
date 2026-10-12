@@ -76,6 +76,9 @@ class ProcessModelTest(unittest.TestCase):
     self.assertIn("needs by G2:** ", g2)
     self.assertIn("Hardware safety engineer", g2.split("needs by G2:** ")[1].splitlines()[0])
 
+  def test_interface_due_before_its_phase(self):
+    self.assertFails("P7", lambda m: m.interfaces["IX-20"].update(due="G3"))
+
   def test_transitive_edges_removed(self):
     acts = {"A": {"inputs": []}, "B": {"inputs": ["a"]}, "C": {"inputs": ["a", "b"]}}
     self.assertEqual(pm.direct_deps(acts, {"a": "A", "b": "B"}), {"A": set(), "B": {"A"}, "C": {"B"}})

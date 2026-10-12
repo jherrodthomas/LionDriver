@@ -5,7 +5,7 @@
 | Work product | WP-P-11 Integrated process model (machine-readable) and generated process maps |
 | Standard reference | ISO 26262-2:2018 §6 (safety lifecycle, planning of activities); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6 (cybersecurity activities and their tailoring); ISO/PAS 8800:2024 (AI safety lifecycle); ASPICE 4.0 MAN.3 (project lifecycle definition). Informative: Integrated Automotive Standards Handbook (ISH-2026-001) §3.3–3.4, Ch. 5, Ch. 13 |
 | Version | 0.1 |
-| Status | Draft (phases modelled: G1 concept, G2 system design, G3 HW/SW development) |
+| Status | Draft (phases modelled: G1 concept, G2 system design, G3 HW/SW development, G4 integration and verification) |
 | ASIL / scope | Process (all disciplines) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
@@ -31,6 +31,7 @@ The model is data, so a checker keeps it consistent with the documents and a gen
 | [maps/g1-concept.md](maps/g1-concept.md) | L1 for the concept phase: swimlane map, interface map, activity table with clauses, clause coverage per standard, G1 readiness |
 | [maps/g2-system-design.md](maps/g2-system-design.md) | L1 for the system design phase, same sections, G2 readiness |
 | [maps/g3-hw-sw-development.md](maps/g3-hw-sw-development.md) | L1 for the hardware and software development phase, same sections, G3 readiness |
+| [maps/g4-integration-and-verification.md](maps/g4-integration-and-verification.md) | L1 for the integration and verification phase, same sections, G4 readiness |
 
 L2 (how to perform an activity) remains the procedures and plans the activities point to; it is not modelled here.
 
@@ -56,7 +57,7 @@ Records use the same flat YAML subset as [`case/`](../case/README.md): a top-lev
 |---|---|---|
 | `phase` | [`model/lifecycle.yaml`](model/lifecycle.yaml) | `id` (gate G0…G6), `handbook_chapters`, `modelled` |
 | `lane` | `model/lifecycle.yaml` | `id`, `name`, `role` (a role in WP-M-02 §3.1), `plan` (the plan that governs the lane) |
-| `activity` | [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml), [`model/development.yaml`](model/development.yaml) | `id` (`CON-nn` concept, `DES-nn` system design, `DEV-nn` HW/SW development), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp` |
+| `activity` | [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml), [`model/development.yaml`](model/development.yaml), [`model/integration.yaml`](model/integration.yaml) | `id` (`CON-nn` concept, `DES-nn` system design, `DEV-nn` HW/SW development, `INT-nn` integration and verification), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp` |
 | `review` | same files as the phase's activities | `id` (the WP-M-06 measure; `<measure>@<gate>` when WP-M-06 plans it at several gates, e.g. `CR-06@G2`), `phase`, `name`, `covers`, `independence` |
 | `interface` | [`model/interfaces.yaml`](model/interfaces.yaml) | `id` (`IX-nn`), `phase`, `between` (two work products), `pattern`, `topic`, `anchors`, `status`, `open_item`, `due` |
 
@@ -79,7 +80,7 @@ Rules the records follow:
 | P4 | In a modelled phase, every work product WP-M-00 gates there is produced by an activity |
 | P5 | Each input is produced by an earlier activity of the same phase or gated at an earlier gate |
 | P6 | The phase's confirmation measures equal the WP-M-06 §9 row for its gate, are defined in WP-M-06, and cover registered work products |
-| P7 | Interfaces connect two work products produced by activities; anchors occur verbatim; `open_item` is set exactly when the status is `open` |
+| P7 | Interfaces connect two work products produced by activities; anchors occur verbatim; `open_item` is set exactly when the status is `open`; an interface is not due before its own phase |
 | P8 | The committed maps equal what the model generates (`--check` only) |
 
 `tools/test_process_model.py` shows that the committed model passes and that each check rejects a broken copy.
@@ -120,11 +121,20 @@ These findings come from the generated maps. They are observations for the safet
 4. **Ten of the 18 G3 work products get only verification review at G3:** hardware requirements and design, software requirements, architecture, units and unit verification, configuration data, cybersecurity implementation and proven-in-use. For WP-P-09 this is deliberate: CR-11 is not planned while no proven-in-use claim is made (tailoring T-06). For the others, WP-M-06 plans no confirmation measure, so their independent check rests on the verification reviewer that WP-P-05 requires. WP-M-02 still lists that role as TBD.
 5. **Six open interfaces are due by G3:** IX-02 (overdue since G1), IX-05, IX-06 and IX-13 (overdue since G2), plus IX-17 and IX-18.
 
+### 6.4 Integration and verification phase ([G4 map](maps/g4-integration-and-verification.md))
+
+1. **The phase cannot start: there is no test bench.** All seven G4 work products are specifications with no recorded result. Four of the seven activities (INT-01, INT-03, INT-04, INT-05) need the LionDriver HIL bench of decision D-04, which does not exist. The HIL bench owner is unassigned, although WP-M-02 needs that role by G3.
+2. **Two work products disagree on when the bench is due.** WP-H-06 OI-1 plans it for G3; WP-W-08 OI-1 plans it for G4 (IX-20). One date has to be chosen, and it decides whether G3 or G4 slips.
+3. **Test campaigns overlap without an agreed split.** Embedded-software qualification, bench system integration and the fault-injection campaign each cover faults on the same interfaces; WP-W-08 OI-5 asks for the split (IX-21). Malfunctions and SOTIF triggering conditions are already split cleanly between WP-V-05 and WP-V-03 (IX-22).
+4. **G4 has no independent check of its results.** The only measure WP-M-06 plans at G4 is the process audit AUD-2. None of the seven test specifications or reports gets a confirmation measure before the final assessment at G5. Until then their independent check rests on the verification reviewer, still TBD.
+5. **The integrated item is not tested against attacks at G4.** Security verification at G3 is implementation-level (WP-W-11). The G4 fault-injection campaign treats configuration tampering as a fault, not an attack. Penetration testing (WP-V-06) is gated at G5, so the first attack test of the integrated item happens at the release gate.
+6. **Eight open interfaces are due by G4:** IX-02, IX-05, IX-06, IX-13, IX-17, IX-18 from earlier phases, plus IX-20 and IX-21.
+
 ## 7. Open items
 
 | ID | Item | Owner | Gate |
 |---|---|---|---|
-| OI-1 | Model the remaining phases, next G4 integration and verification (handbook Ch. 9) | Safety manager | G4 |
+| OI-1 | Model the remaining phases, next G5 validation and release (handbook Ch. 9) | Safety manager | G5 |
 | OI-2 | Add an "agreed" interface status set only through a recorded review, and decide whether cross-domain interfaces become requirement items (`IFR-nn`) in `trace/` | Safety manager | G2 |
 | OI-3 | Generate the G1 gate-record skeleton (`10-safety-case/gates/`) from §5 of the G1 map | Safety manager | G1 |
 | OI-4 | Derive pull-request checklists from the model: which activities and interfaces a change to a work product re-opens | Configuration and change manager | G2 |

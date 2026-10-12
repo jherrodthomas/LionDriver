@@ -200,3 +200,45 @@
   status: documented
   open_item: null
   due: G3
+
+# Integration and verification (G4)
+- id: IX-20
+  kind: interface
+  phase: G4
+  between: [WP-H-06, WP-W-08]
+  pattern: "Hardware-Software"
+  topic: "Hardware, embedded-software and system integration share one HIL bench (D-04) that does not exist; WP-H-06 plans it for G3 and WP-W-08 for G4"
+  anchors: ["WP-H-06:Test environment: HIL bench (decision D-04)", "WP-W-08:LionDriver has no HIL bench (GAP-30)", "WP-H-06:Build and characterize the HIL bench (D-04", "WP-W-08:Build the HIL bench (D-04)"]
+  status: open
+  open_item: "WP-H-06 OI-1 / WP-W-08 OI-1 (D-04)"
+  due: G4
+- id: IX-21
+  kind: interface
+  phase: G4
+  between: [WP-W-08, WP-V-05]
+  pattern: "Software-System"
+  topic: "Embedded-software qualification, system integration and the fault-injection campaign overlap; the split of test cases is not agreed"
+  anchors: ["WP-W-08:Agree split of cases with WP-S-08 (I-1) and WP-V-05 to avoid duplication"]
+  status: open
+  open_item: "WP-W-08 OI-5"
+  due: G4
+- id: IX-22
+  kind: interface
+  phase: G4
+  between: [WP-V-05, WP-V-03]
+  pattern: "Safety-SOTIF"
+  topic: "Faults (malfunctions) are injected under WP-V-05 and triggering conditions are tested under WP-V-03; scenarios that need an induced fault reuse the WP-V-05 rules"
+  anchors: ["WP-V-05:SOTIF triggering-condition testing ([WP-V-03]", "WP-V-03:(WP-V-05 rules)"]
+  status: documented
+  open_item: null
+  due: G4
+- id: IX-23
+  kind: interface
+  phase: G4
+  between: [WP-V-03, WP-W-10]
+  pattern: "SOTIF-AI"
+  topic: "Known-scenario evaluation reuses the ML test cases (e.g. VS-ML-06 for driver monitoring) and is re-run after every model change listed in WP-W-10"
+  anchors: ["WP-V-03:WP-W-10 VS-ML-06", "WP-V-03:is re-run after any change listed in [WP-W-10 §8]"]
+  status: documented
+  open_item: null
+  due: G4

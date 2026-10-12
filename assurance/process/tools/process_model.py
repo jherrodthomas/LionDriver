@@ -283,6 +283,8 @@ def check(model: Model, ctx: Context) -> dict[str, list[str]]:
       model.err("P7", iid, "open_item is required exactly when status is open")
     if ix["due"] not in GATES:
       model.err("P7", iid, f"unknown gate {ix['due']}")
+    elif ix["phase"] in GATES and GATES.index(ix["due"]) < GATES.index(ix["phase"]):
+      model.err("P7", iid, f"due {ix['due']} is before its phase {ix['phase']}")
     if len(ix["between"]) != 2:
       model.err("P7", iid, "between must name two work products")
     for wp in ix["between"]:
@@ -471,9 +473,17 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
     who, by = ctx.roles.get(role, ("?", "?"))
     out.append(f"| {model.lanes[lid]['name']} | {role} | {who} | {by} |")
   lane_roles = {model.lanes[lid]["role"] for lid in [*lane_ids, "assess"]}
-  extra = [(role, who) for role, (who, by) in ctx.roles.items() if role not in lane_roles and gid in by]
+  extra = []
+  for role, (who, by) in ctx.roles.items():
+    g = re.match(r"G\d", by)
+    if role in lane_roles or not g or GATES.index(g.group(0)) > GATES.index(gid):
+      continue
+    if g.group(0) == gid:
+      extra.append(f"{role} ({who})")
+    elif who.startswith("TBD"):
+      extra.append(f"{role} ({who}; needed by {g.group(0)}, still unassigned)")
   if extra:
-    out += ["", f"**Other roles WP-M-02 §3.1 needs by {gid}:** " + "; ".join(f"{role} ({who})" for role, who in extra) + "."]
+    out += ["", f"**Other roles WP-M-02 §3.1 needs by {gid}:** " + "; ".join(extra) + "."]
   out += ["", "**Confirmation measures (WP-M-06 §9):**", "", "| Measure | Covers | Independence | Record |", "|---|---|---|---|"]
   for r in reviews:
     rec = record_path(r["id"])

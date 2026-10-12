@@ -21,7 +21,7 @@
 - id: G4
   kind: phase
   handbook_chapters: [9]
-  modelled: false
+  modelled: true
 - id: G5
   kind: phase
   handbook_chapters: [9]

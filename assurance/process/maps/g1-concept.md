@@ -149,7 +149,7 @@ Which activity answers each clause reference listed in the register. One activit
 | Cybersecurity (ISO/SAE 21434) | Cybersecurity manager | Jherrod Thomas (acting); permanent holder TBD | G1 |
 | Independent confirmation | External functional safety assessor | TBD (D-06) | G1 |
 
-**Other roles WP-M-02 §3.1 needs by G1:** Test / safety driver(s) (TBD (trained per WP-M-04)).
+**Other roles WP-M-02 §3.1 needs by G1:** Verification reviewer(s) (TBD (at least one person other than the author); needed by G0, still unassigned); Quality assurance (TBD (independent of the author); needed by G0, still unassigned); Test / safety driver(s) (TBD (trained per WP-M-04)).
 
 **Confirmation measures (WP-M-06 §9):**
 
