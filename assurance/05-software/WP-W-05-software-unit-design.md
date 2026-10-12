@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-05 Software unit design and implementation |
 | Standard reference | ISO 26262-6:2018 §8 (software unit design and implementation: notation, design principles for unit design and implementation); ISO/SAE 21434:2021 §10 (by reference to WP-W-11); ASPICE 4.0 SWE.3 |
-| Version | 0.1 |
+| Version | 0.2 (UN-03: TX rate supervision design proposal DN-01; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope units (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating) |
 | Author | Assurance team (initial draft) |
@@ -104,7 +104,7 @@ The design is back-filled from code (T-03). The code is the implementation; this
 | Outputs | true = transmit |
 | Algorithm | whitelist by (addr, bus, length) → brand TX hook → AND with `!relay_malfunction`; ALLOUTPUT and ELM327 bypass the whitelist |
 | Error handling | caller (`can_send`) counts rejection and echoes frame with `rejected=1` |
-| Change | On rejection of a lateral frame while engaged: revoke and request substitute frame (SWSR-108, 109) |
+| Change | On rejection of a lateral frame while engaged: revoke and request substitute frame (SWSR-108, 109). Per-ID TX rate supervision (SWSR-518): proposed in [DN-01](design-notes/DN-01-tx-rate-supervision.md) |
 
 ### UN-04 `safety_fwd_hook`
 

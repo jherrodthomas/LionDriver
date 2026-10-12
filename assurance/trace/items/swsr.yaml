@@ -1133,7 +1133,7 @@
   allocated_to: "U-SAF-CORE, U-SAF-TOY"
   verification: "UT, HIL"
   acceptance: "`0x2E4` at 2× rate: excess frames rejected; persistent excess → revocation ≤ 0.1 s"
-  baseline_impl: "Not impl (content checks only)"
+  baseline_impl: "Not impl (content checks only); design proposed in [DN-01](design-notes/DN-01-tx-rate-supervision.md) (windowed count per ID, decisions D-1…D-6 open)"
   status: proposed
   source: WP-W-02
 
