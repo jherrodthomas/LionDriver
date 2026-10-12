@@ -109,6 +109,21 @@ class RiskCurveTest(unittest.TestCase):
     self.assertIn("SH-11 OS-06", out)
     self.assertIn("linear 0.048, Tefft logistic fit 0.023, Hussain 2019 0.013", out)
 
+  def test_age_shift(self):
+    # 70 vs 30 is the published 11.8 mph; no shift at or below the reference age
+    self.assertAlmostEqual(rc.age_shift_mph(70), 11.8)
+    self.assertEqual(rc.age_shift_mph(20), 0.0)
+    self.assertEqual(rc.pedestrian_fatality(60, 0.0), rc.pedestrian_fatality(60))
+    # the shift moves the curve along the speed axis: 42 mph - 11.8 mph at age 70 gives the 50 % anchor
+    self.assertAlmostEqual(rc.pedestrian_fatality((42 - 11.8) / rc.MPH_PER_KMH, rc.age_shift_mph(70)), 0.5)
+
+  def test_age_cli_reports_sh11_cases(self):
+    with redirect_stdout(io.StringIO()) as buf:
+      self.assertEqual(rc.main(["--age"]), 0)
+    out = buf.getvalue()
+    self.assertIn("| SH-11 OS-04 | 60 | 0.382 | 0.537 | 0.721 | 0.788 |", out)
+    self.assertIn("| SH-11 OS-06 | 18 | 0.048 | 0.073 | 0.099 | 0.145 |", out)
+
   def test_pedestrian_curve_is_monotone(self):
     risks = [rc.pedestrian_fatality(v) for v in range(0, 120, 5)]
     self.assertEqual(risks, sorted(risks))

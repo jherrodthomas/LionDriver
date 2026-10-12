@@ -198,7 +198,7 @@ SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the 
 - **Why a curve.** There is no braking before impact, so the crash is worse than the average pedestrian crash (item 3).
 - **Which curve.** The struck person is unprotected, so the Joksch rule does not apply. The curve is the pedestrian fatality risk of Tefft (2011, AAA Foundation for Traffic Safety): 10/25/50/75/90 % at 23/32/42/50/58 mph impact speed, interpolated linearly, and 1 above 58 mph.
 - **Results.** P(severity class) is **0.38 in OS-04**, a VRU struck at the 60 km/h bound of the urban situation. It is **0.05 in OS-06**, a VRU struck after a launch from a queue at +2.0 m/s² over the 6 m standstill gap, which gives 18 km/h.
-- **Not covered.** The anchor points are checked (see the curve-constant check below). The curve covers pedestrians struck by a forward-moving car, light truck, van or SUV. Its use for cyclists and its linear risk below 23 mph are checked below, and both are conservative. The variation with the struck person's age is not modelled.
+- **Not covered.** The anchor points are checked (see the curve-constant check below). The curve covers pedestrians struck by a forward-moving car, light truck, van or SUV. Its use for cyclists and its linear risk below 23 mph are checked below, and both are conservative. It is the average over struck persons; the age check below gives the values for older persons.
 - **Use.** SH-11 has no rate target (§4), so these values inform the residual-risk statement of WP-K-02 rather than a target.
 
 **Curve-constant check (2026-10-12).** Both curves were checked against search summaries of their sources. The full texts were not reachable from the project's cloud environment, so each check stops short of the primary text.
@@ -217,7 +217,17 @@ SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the 
     - a least-squares logistic fit to the five Tefft anchors (logit p = −5.108 + 0.1246 · v, v in mph), which reproduces them within 0.04. It is fitted here, because Tefft's own coefficients were not reachable;
     - Hussain et al. (2019), *Accident Analysis and Prevention* 129, 241–249, a meta-analysis of 20 studies: odds ratio 1.11 per km/h, 5 % at 30 km/h and 50 % at 59 km/h.
     - **Result:** from 2 mph to 23 mph the linear risk is above both curves. Below 2 mph it is at most 0.006 under the Tefft fit, whose non-zero risk at a standstill is an artefact of the logistic form. The only SH-11 case below 23 mph is OS-06 at 18 km/h (11 mph): linear 0.048, Tefft fit 0.023, Hussain 0.013. The linear value overstates the risk there by a factor of 2–4, so it is conservative.
-    - **Limit:** both curves are for the average struck person. Tefft reports that a 70-year-old struck at 25 mph has about the risk of a 30-year-old at 35 mph. Age is not modelled at any speed, which is the gap named under "Not covered" above.
+    - **Limit:** both curves are for the average struck person; age is checked next.
+  - **Age (checked 2026-10-12, `risk_curve.py --age`).** Tefft's anchors are the average over US pedestrians aged 15 and older, standardised to those struck in 2007–2009. The journal version (Tefft 2013) states that a 70-year-old struck at any speed has about the death risk of a 30-year-old struck 11.8 mph faster; the 2011 report gives 10 mph for severe injury or death. The age-by-speed tables of the report were not reachable.
+    - **Model:** with age additive in the logistic model, age moves the curve along the speed axis by 11.8 / 40 = 0.295 mph per year. The shift is taken from age 30, so it is an upper bound as long as the average struck pedestrian is older than 30 (not confirmed). Age 80 is extrapolated beyond the published 30–70 comparison.
+
+      | Case | Impact | Average (used) | Age 50 | Age 70 | Age 80 |
+      |---|---|---|---|---|---|
+      | SH-11 OS-04 | 60 km/h | 0.38 | ≤ 0.54 | ≤ 0.72 | ≤ 0.79 |
+      | SH-11 OS-06 | 18 km/h | 0.05 | ≤ 0.07 | ≤ 0.10 | ≤ 0.15 |
+
+    - **Decision:** P(severity class) stays at the average. It enters a rate of harm over all the VRUs LionDriver may strike, and the average over struck persons is the quantity that rate needs. This holds only while LionDriver's VRU exposure has about the national age mix. The residual-risk statement (WP-K-02) reports the age-70 values beside the average, so that an older person's risk (about double in OS-04, 0.72 against 0.38) is stated, not averaged away.
+    - **Not covered:** the age mix of LionDriver's own VRU encounters. A drive log with many encounters near schools, care homes or retirement areas would call for the age-shifted value in that stratum.
   - **Corrected citation:** the anchors are from this 2011 report. The earlier citation named the journal version, Tefft (2013), *Accident Analysis and Prevention* 50, 871–878, which gives about 10 % near 24 mph and 50 % near 41 mph. With the journal values, SH-11 at the OS-04 bound would be about 0.40 instead of 0.38.
 
 ## 4. Validation targets

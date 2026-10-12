@@ -96,6 +96,8 @@ G2   Hazards from functional insufficiencies and reasonably foreseeable misuse a
 
 Template: "At baseline `<tag>`, the residual risk from SOTIF hazards SH-01…SH-13 in the ODD of WP-C-02 is estimated as `<value / qualitative statement>` against the validation targets `<VT-nn>` with `<confidence>`. Known limitations communicated to users: `<list>`."
 
+The statement also gives, for SH-11, the P(severity class) of an older struck person beside the average: the age-70 values of WP-V-02 §3.5 (≤ 0.72 in OS-04 and ≤ 0.10 in OS-06, against the averages of 0.38 and 0.05).
+
 ### 5.2 Conditions for release — Not yet executed
 
 | # | Condition | Owner | Verification |

@@ -37,7 +37,8 @@ the risk is interpolated linearly; above 58 mph it is 1, and below 23 mph it fal
 to 0 at 0 mph. `--low-speed` checks that segment against a logistic fit to the Tefft anchors
 and the Hussain et al. (2019) meta-analysis: the linear risk is the higher of the three from
 2 mph to 23 mph, and below 2 mph it is at most 0.006 under the logistic fit, whose non-zero
-risk at 0 mph is an artefact of the logistic form. One VRU is struck. The same curve is used for cyclists. This is
+risk at 0 mph is an artefact of the logistic form. `--age` shifts the curve for the struck
+person's age (AGE_SHIFT_MPH_PER_YEAR). One VRU is struck. The same curve is used for cyclists. This is
 conservative: cyclist curves put the risk at or below the pedestrian's at the same speed (Nie,
 Li and Yang 2015: 50 % at 67.6 km/h for cyclists and 65.4 km/h for pedestrians; Lubbe, Wu and
 Jeppsson 2022: 10 % serious injury at 44 and 29 km/h), checked from search summaries
@@ -171,15 +172,33 @@ PEDESTRIAN_ANCHORS_MPH = [(0.0, 0.0), (23.0, 0.10), (32.0, 0.25), (42.0, 0.50), 
 OS04_SPEED_KMH = 60  # HARA OS-04 upper bound
 
 
-def pedestrian_fatality(speed_kmh: float) -> float:
-  """Risk of death of a pedestrian struck at this impact speed (Tefft 2011 anchors, linear between)."""
-  mph = speed_kmh * MPH_PER_KMH
+def pedestrian_fatality(speed_kmh: float, age_shift_mph: float = 0.0) -> float:
+  """Risk of death of a pedestrian struck at this impact speed (Tefft 2011 anchors, linear between).
+
+  age_shift_mph adds the speed by which an older person's risk curve leads the reference curve
+  (see AGE_SHIFT_MPH_PER_YEAR)."""
+  mph = speed_kmh * MPH_PER_KMH + age_shift_mph
   if mph > PEDESTRIAN_ANCHORS_MPH[-1][0] + 1e-9:
     return 1.0
   for (x0, y0), (x1, y1) in zip(PEDESTRIAN_ANCHORS_MPH, PEDESTRIAN_ANCHORS_MPH[1:], strict=False):
     if mph <= x1:
       return y0 + (y1 - y0) * (mph - x0) / (x1 - x0)
   return 1.0
+
+
+# Age (`--age`). Tefft (2013, journal version): the risk of death of a 70-year-old struck at any
+# speed is about that of a 30-year-old struck 11.8 mph faster; the 2011 report gives 10 mph for
+# severe injury or death. With logit p = a + b * speed + c * age that is a constant speed shift
+# of 11.8 / 40 mph per year of age. The Tefft anchors are for the average struck pedestrian, so
+# the shift is taken from age 30, which overstates it while that average is older than 30
+# (the age mix of the Tefft sample was not reachable to confirm).
+AGE_SHIFT_MPH_PER_YEAR = 11.8 / 40
+AGE_REFERENCE_YEARS = 30
+AGES_YEARS = (50, 70, 80)
+
+
+def age_shift_mph(age_years: float) -> float:
+  return max(0.0, (age_years - AGE_REFERENCE_YEARS) * AGE_SHIFT_MPH_PER_YEAR)
 
 
 # Low-speed check of the linear segment from 0 to 23 mph (`--low-speed`). Two logistic curves,
@@ -282,8 +301,21 @@ def main(argv: list[str] | None = None) -> int:
                   help="SH-01/SH-02: print the barrier impact angle of a lane departure at the controller limit")
   ap.add_argument("--low-speed", action="store_true",
                   help="SH-11: compare the linear pedestrian risk below 23 mph with two logistic curves")
+  ap.add_argument("--age", action="store_true",
+                  help="SH-11: print the VRU cases with the risk curve shifted for the struck person's age")
   a = ap.parse_args(argv)
   JOKSCH_MPH = a.joksch_mph
+  if a.age:
+    ages = " | ".join(f"Age {y} (≤ +{age_shift_mph(y):.1f} mph)" for y in AGES_YEARS)
+    print("| SH / situation | Impact (km/h) | Average | " + ages + " |")
+    print("|---|---|---|" + "---|" * len(AGES_YEARS))
+    for sh, _label, v in vru_cases():
+      cols = [sh, f"{v:.0f}", f"{pedestrian_fatality(v):.3f}"]
+      cols += [f"{pedestrian_fatality(v, age_shift_mph(y)):.3f}" for y in AGES_YEARS]
+      print("| " + " | ".join(cols) + " |")
+    print("\nShifts are taken from age 30. They are upper bounds while the average struck pedestrian is older than 30.")
+    print("Age 80 is extrapolated beyond the 30-70 comparison.")
+    return 0
   if a.low_speed:
     print("| Impact (mph) | Impact (km/h) | Linear | Tefft logistic fit | Hussain 2019 | Linear covers both |\n|---|---|---|---|---|---|")
     for mph in LOW_SPEED_MPH:
