@@ -102,6 +102,36 @@ Status of all: Specified, not implemented.
 
 SWSRs whose only verification is review or analysis (e.g. SWSR-102a, 309, 605a) are not tested here.
 
+### 6.1 Split with WP-S-08 and WP-V-05
+
+Three documents test the same envelope faults on the same bench: this one (VS-SWQ, against SWSRs), [WP-S-08](../03-system/WP-S-08-system-integration-test.md) (VS-SI, against TSRs and interfaces) and [WP-V-05](../06-validation/WP-V-05-fault-injection.md) (VS-FI, against the safety mechanisms of the safety analyses). WP-S-08 step I-1 uses the setup of this document: release firmware on the reference device MCU with a scripted host instead of openpilot. Each case is run once per setup and credited to every document that needs it:
+
+1. **Procedure.** WP-V-05 is the only source of fault-injection procedures: fault model, injection method and fault-injection builds. A VS-SWQ or VS-SI case that injects a fault cites the VS-FI case and does not restate the procedure.
+2. **Run at I-1.** A case in the table below is run and reported once, here, in the WP-W-08 report (§7). The VS-SI case at step I-1 and the H-level release-firmware VS-FI case cite that report entry and are not re-run. The credit holds only when the run used the reference device, not a bare panda (§2).
+3. **Pass criteria.** A shared run is judged against every mapped criterion: the SWSR here, the TSR, GC-1 and GC-2 of WP-S-08 §5, and the FTTI budget of WP-V-05 §4. A run that meets one and fails another is a failure in all three.
+4. **What the others add.** WP-S-08 runs only the steps that need more than the scripted host: I-2 (openpilot on the SoC), I-3 (plant model) and I-4 (vehicle). WP-V-05 runs its U, S and V levels, its fault-injection-firmware cases (§7 step 4) and H-level cases with no VS-SWQ counterpart.
+
+| Fault or behaviour | Run at I-1, reported here | WP-S-08 adds | WP-V-05 procedure |
+|---|---|---|---|
+| Out-of-limit lateral and longitudinal commands | VS-SWQ-01…05 | VS-SI-15, -16 at I-3 | VS-FI-14 (also U and V) |
+| Engagement, brake and gas, driver override | VS-SWQ-06, -07 | VS-SI-01, -02, -03 at I-2, I-3 or I-4; VS-SI-04 covered at I-1 | — (not a fault) |
+| RX timeout | VS-SWQ-08 | VS-SI-12 at I-3 | VS-FI-04 |
+| RX corruption, stuck, replayed and implausible frames | VS-SWQ-09 | VS-SI-13 at I-3; VS-SI-14 covered at I-1 | VS-FI-01, -02, -03, -05 |
+| Heartbeat loss and mismatch | VS-SWQ-07, -10 | VS-SI-05 at I-2; VS-SI-06 covered at I-1 | VS-FI-10 |
+| Command stall and stale command stream | VS-SWQ-11 | VS-SI-10 covered at I-1 | VS-FI-08 |
+| SPI corruption and bounds | VS-SWQ-12 | VS-SI-09 at I-2 (real `pandad`) | VS-FI-06, -07 |
+| Configuration commands in car mode | VS-SWQ-17 | VS-SI-07, -08 covered at I-1 | VS-FI-11 |
+| TX flooding and per-ID TX rate | VS-SWQ-25 | VS-SI-11 covered at I-1 | VS-FI-19 |
+| Relay faults, harness orientation and relay latch | VS-SWQ-19, -22 | VS-SI-19 covered at I-1 | VS-FI-21, -28 |
+| PCS forwarding and masquerade | VS-SWQ-21 | VS-SI-20 at I-2 and I-4; VS-SI-21 covered at I-1 | VS-FI-24 |
+| Host reaction to envelope reports and SoC process faults | VS-SWQ-20 | VS-SI-17, -22, -23 at I-2 and I-3 | VS-FI-09, -12, -13 (S level) |
+| Watchdog and hang | VS-SWQ-14 | — | VS-FI-17 (fault-injection firmware) |
+| MCU fault reactions (memory, interrupt storm, clock, supply, bus-off, temperature) | VS-SWQ-15 | — | VS-FI-15, -18, -19, -20, -22, -26 |
+| Image integrity and bootstub | VS-SWQ-16, -18 | — | VS-FI-29 |
+| MCU reset during engagement; relay state per mode | — | VS-SI-25, VS-SI-18 at I-1 and later steps (run there) | VS-FI-16 |
+
+Hardware integration cases of [WP-H-06](../04-hardware/WP-H-06-hardware-integration-verification.md) (VS-HW) are outside this split; WP-V-05 already cites them as assets.
+
 ## 7. Test report (template)
 
 **Status: Not yet executed.**
@@ -117,6 +147,8 @@ SWSRs whose only verification is review or analysis (e.g. SWSR-102a, 309, 605a) 
 |---|---|---|---|---|---|---|---|
 | VS-SWQ-01 … VS-SWQ-25 | — | — | — | — | — | Not yet executed | — |
 
+Each row also names the VS-SI and VS-FI cases it is credited to (§6.1).
+
 | Deviations from specification | Not yet executed |
 |---|---|
 | Problem reports | Not yet executed |
@@ -130,4 +162,3 @@ SWSRs whose only verification is review or analysis (e.g. SWSR-102a, 309, 605a) 
 | OI-2 | Decide release-image-compatible fault-injection methods (SWD vs debug build) and document the representativeness argument | SW lead | G4 |
 | OI-3 | Port `panda/tests/hitl` to the LionDriver bench without comma jigs. Jungle-based tests run at bench stage B1 ([hil-bench/](hil-bench/README.md) §5.4) | Maintainer | G4 |
 | OI-4 | Fork-owned Corolla log set for VS-SWQ-24 and plant parameter identification | Maintainer | G4 |
-| OI-5 | Agree split of cases with WP-S-08 (I-1) and WP-V-05 to avoid duplication | Safety engineer | G4 |

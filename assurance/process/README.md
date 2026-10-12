@@ -143,10 +143,10 @@ These findings come from the generated maps. They are observations for the safet
 
 1. **The phase cannot start: there is no test bench.** All seven G4 work products are specifications with no recorded result. Four of the seven activities (INT-01, INT-03, INT-04, INT-05) need the LionDriver HIL bench of decision D-04, which does not exist. The HIL bench owner is unassigned, although WP-M-02 needs that role by G3.
 2. **One bench, due by G3 (IX-20, closed).** WP-W-08 planned its own bench for G4 while WP-H-06 planned it for G3. WP-W-08 §3 now uses the WP-H-06 §2 bench and lists only its additional software needs, and WP-W-08 OI-1 is due at G3. G3 is the date WP-M-03 already requires: phase P4 depends on "G3; HIL bench ready". Building the bench is still open (WP-H-06 OI-1, WP-W-08 OI-1, WP-M-03 task 5.1, WP-P-07 OI-2). The staged build plan (05-software/hil-bench, stages B1–B4) now states the same bench and the same G3 date. Finding 1 stands, and a late bench now slips G3.
-3. **Test campaigns overlap without an agreed split.** Embedded-software qualification, bench system integration and the fault-injection campaign each cover faults on the same interfaces; WP-W-08 OI-5 asks for the split (IX-21). Malfunctions and SOTIF triggering conditions are already split cleanly between WP-V-05 and WP-V-03 (IX-22).
+3. **Test campaigns overlapped; the split is now recorded (IX-21, closed).** Embedded-software qualification, bench system integration and the fault-injection campaign covered the same faults, and WP-S-08 step I-1 is the WP-W-08 setup. WP-W-08 §6.1 assigns them. WP-V-05 is the only source of injection procedures. Each I-1 case runs once and is reported in WP-W-08, then cited by WP-S-08 and WP-V-05 against all their pass criteria. WP-S-08 adds only steps I-2 to I-4. The split saves bench time but does not create any result: no case has run. Malfunctions and SOTIF triggering conditions are already split cleanly between WP-V-05 and WP-V-03 (IX-22).
 4. **G4 has no independent check of its results.** The only measure WP-M-06 plans at G4 is the process audit AUD-2. None of the seven test specifications or reports gets a confirmation measure before the final assessment at G5. Until then their independent check rests on the verification reviewer, still TBD.
 5. **The integrated item is not tested against attacks at G4.** Security verification at G3 is implementation-level (WP-W-11). The G4 fault-injection campaign treats configuration tampering as a fault, not an attack. Penetration testing (WP-V-06) is gated at G5, so the first attack test of the integrated item happens at the release gate.
-6. **Three open interfaces are due by G4:** IX-06 and IX-13 from earlier phases, plus IX-21. IX-20 has been closed.
+6. **Two open interfaces are due by G4:** IX-06 and IX-13, both from G2. IX-20 and IX-21 have been closed, so no G4 interface is open.
 
 ### 6.5 Validation and release phase ([G5 map](maps/g5-validation-and-release.md))
 
@@ -154,7 +154,7 @@ These findings come from the generated maps. They are observations for the safet
 2. **Four of the 14 G5 work products are still skeletons:** the SOTIF release argument (WP-K-02), both assessment reports (WP-K-04, WP-K-05) and the release record (WP-K-06). The other ten are drafts; none of the validation activities has been run.
 3. **The three arguments meet once.** Safety validation, the SOTIF release recommendation and the cybersecurity case come together only in REL-10, where the safety case is completed (IX-24 links its cybersecurity branch to WP-K-03). The FSA and the release record then depend on that single step.
 4. **The SOTIF release argument waits on evidence from other lanes.** It needs P(not controlled) from the controllability tests of the safety validation, but the evidence route is undecided (IX-25). It also needs the model evaluation report from ML engineering, which is missing (IX-26).
-5. **Most of what was opened before G5 is still open.** IX-02, IX-05, IX-17, IX-18, IX-20 and IX-33 have been closed. Four open interfaces are due by G5: the three due by G4 plus IX-25. Any of them still open at G5 is a condition on the release.
+5. **Most of what was opened before G5 is still open.** IX-02, IX-05, IX-17, IX-18, IX-20, IX-21 and IX-33 have been closed. Three open interfaces are due by G5: the two due by G4 plus IX-25. Any of them still open at G5 is a condition on the release.
 6. **The operation documents get no confirmation measure:** installation (WP-O-01), operation and service (WP-O-02), user information and warnings (WP-O-03), and release management (WP-P-10). The user warnings are a SOTIF misuse measure (ISO 21448 §6, §13 in the register).
 
 ### 6.6 Operation phase ([G6 map](maps/g6-operation.md))
@@ -163,7 +163,7 @@ These findings come from the generated maps. They are observations for the safet
 2. **The G6 exit criterion is "processes running", and none is.** WP-O-05 is "process defined; not running": no vulnerability intake (GAP-28), no SBOM or scanning, no upstream advisory watch, and no signed updates (GAP-26, IX-30).
 3. **Operation has no independent check.** WP-M-06 plans no confirmation measure at G6, so neither field monitoring nor incident response is confirmed by anyone other than its authors.
 4. **Every field finding re-opens a G1 work product.** All six feedback routes (FB-01…FB-06) end in the concept phase: HARA, item definition, SOTIF analyses, misuse analysis, AI requirements or the safety case. WP-M-06 §4 repeats a confirmation review when a confirmed work product changes in a safety-relevant way. So a single field finding can trigger I3 confirmation reviews again, and that needs the external assessor even after release.
-5. **Five open interfaces are due by G6:** the four due by G5 plus IX-28, the shared event signatures between pre-release exploration and field monitoring.
+5. **Four open interfaces are due by G6:** the three due by G5 plus IX-28, the shared event signatures between pre-release exploration and field monitoring.
 
 ## 7. Open items
 

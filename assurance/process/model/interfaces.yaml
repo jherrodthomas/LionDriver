@@ -217,10 +217,10 @@
   phase: G4
   between: [WP-W-08, WP-V-05]
   pattern: "Software-System"
-  topic: "Embedded-software qualification, system integration and the fault-injection campaign overlap; the split of test cases is not agreed"
-  anchors: ["WP-W-08:Agree split of cases with WP-S-08 (I-1) and WP-V-05 to avoid duplication"]
-  status: open
-  open_item: "WP-W-08 OI-5"
+  topic: "Embedded-software qualification, system integration and the fault-injection campaign test the same faults on one bench. WP-W-08 §6.1 splits them: WP-V-05 owns every injection procedure; a case at WP-S-08 step I-1 runs once under WP-W-08 and is cited by WP-S-08 and WP-V-05; WP-S-08 adds steps I-2 to I-4"
+  anchors: ["WP-W-08:Split with WP-S-08 and WP-V-05", "WP-W-08:WP-V-05 is the only source of fault-injection procedures", "WP-V-05:this document cites that entry and does not re-run it", "WP-S-08:is not re-run here: its I-1 result is the WP-W-08 report entry"]
+  status: documented
+  open_item: null
   due: G4
 - id: IX-22
   kind: interface
