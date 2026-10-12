@@ -130,7 +130,7 @@ Vehicle-level repetition of selected [WP-V-05](WP-V-05-fault-injection.md) cases
 
 | Group | Gate | Depends on |
 |---|---|---|
-| §5.1 VS-VAL-01, -03, -04, -06, -07, -08 | G1 | WP-V-07 approved; closed-course site; instrumented wheel; independent IMU and CAN logger on one clock (VS-VAL-08) |
+| §5.1 VS-VAL-01, -03, -04, -06, -07, -08 | G1 | WP-V-07 approved; closed-course site; instrumented wheel; independent IMU and CAN logger on one clock (VS-VAL-08). VS-VAL-01, -03, -04, -06 and -08 are entry criteria for public-road level L5 (WP-V-07 §4) |
 | §5.1 VS-VAL-02, -05 | G1 (target) | Fault-injection/characterization build process (configuration control), WP-V-05 rules |
 | §5.2 | G4–G5 | §5.1 results; envelope parameters fixed (WP-S-02); ethics/consent forms |
 | §5.3 | G4 | HIL results from WP-V-05; breakout box |
