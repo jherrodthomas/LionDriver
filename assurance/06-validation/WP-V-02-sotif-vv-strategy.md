@@ -151,7 +151,14 @@ P(severity class) is the probability that a collision caused by the uncontrolled
    The values are part of the target set the assessor approves (OI-3).
 5. **Consistency with the HARA.** A value that implies low severity for a hazardous event rated S3 is reported to the HARA owner and explained before it is used.
 
-What this gives: for the S2 collisions (sideswipe; rear impacts at moderate speed difference, struck from behind), fatal crashes are well under 1 % of police-reported crashes of these types, so the factor can earn about two orders of magnitude for a fatality budget. For an injury-crash budget it earns little. For the S3 collisions at highway speed (head-on, high-speed rear-end into stationary traffic, barrier impact), the factor is close to 1 for either budget. Their targets therefore rest on P(E-situation) and P(not controlled), or on narrowing the ODD. No value has been extracted yet (OI-8). The FARS/CRSS ratios are computed by [`tools/severity/`](../../tools/severity/README.md).
+What this gives: for the S2 collisions (sideswipe; rear impacts at moderate speed difference, struck from behind), fatal crashes are well under 1 % of police-reported crashes of these types, so the factor can earn about two orders of magnitude for a fatality budget. For an injury-crash budget it earns little. For the S3 collisions at highway speed (head-on, high-speed rear-end into stationary traffic, barrier impact), the factor is close to 1 for either budget. Their targets therefore rest on P(E-situation) and P(not controlled), or on narrowing the ODD. No FARS/CRSS value has been extracted yet (OI-8). The ratios are computed by [`tools/severity/`](../../tools/severity/README.md).
+
+SH-06 is mapped to an injury-risk curve (`tools/severity/risk_curve.py`):
+- **Δv** of each vehicle comes from the closing speed by conservation of momentum.
+- **Driver risk** is p = (Δv / 71 mph)⁴, the Joksch (1993) rule of thumb.
+- **Crash risk** is bounded over the occupants of both vehicles with the union bound, because FARS counts any death.
+
+The worst credible lead in the ODD is a stationary heavy truck. Hitting it at the ODD speed bound (120 km/h in ODD-H, 90 km/h in ODD-A) gives a fatal-crash bound of 1. Car-to-car it is also 1 at 120 km/h, and 0.36 at 90 km/h. P(severity class) for SH-06 is therefore 1 for either budget. Its target rests on P(E-situation), P(not controlled) and the lead detection of AIR-03 and AIR-04. The curve constant, masses and occupancies are written from memory or assumed, and must be checked before this result is recorded as evidence. The check does not change the conclusion unless the truck case drops below 1.
 
 ## 4. Validation targets
 

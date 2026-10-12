@@ -22,6 +22,22 @@ tools/severity/severity_ratio.py --fars FARS2022NationalCSV/ --crss CRSS2022CSV/
 
 It prints two Markdown tables, per cell and per SH, and `--json` writes both together with the codes and design variables used.
 
+## Injury-risk curve for SH-06
+
+`risk_curve.py` covers the case the ratio cannot: SH-06, a rear-end into slow or stationary traffic with no braking before impact (WP-V-02 §3.5 item 3).
+- **Δv:** from the closing speed by conservation of momentum, with a small restitution.
+- **Driver risk:** the Joksch (1993) rule of thumb, p = (Δv / 71 mph)⁴.
+- **Crash risk:** bounded over all occupants of both vehicles with the union bound. The curve is per driver, but FARS counts a crash as fatal if anyone dies.
+
+```bash
+tools/severity/risk_curve.py              # ODD speed bounds: 120 km/h (ODD-H), 90 km/h (ODD-A)
+tools/severity/risk_curve.py --speed 60   # another closing speed
+```
+
+At both ODD speed bounds the worst credible lead gives P(fatal crash) = 1. That lead is a stationary heavy truck, which the ODD includes. The Corolla's Δv is then almost the full closing speed. Even car-to-car at 120 km/h reaches 1 once all occupants are counted. So SH-06 earns no severity credit, and its target rests on P(E-situation), P(not controlled) and the lead-detection requirements (AIR-03, AIR-04). There is no injury curve: at these Δv an injury is near certain, so for an injury-crash budget the value is 1.
+
+The curve constant (71 mph), its scope (impact directions, which occupants), the masses, the occupancies and the restitution are written from memory or assumed. Check them before the result is recorded as evidence.
+
 ## Before the first run
 
 The variable names and codes in `CODES` and `DESIGN` were written from memory of the FARS and CRSS analytical user's manuals. They have **not** been checked against a release. Check each one against the manual of the year you load and correct the script where it differs. Record the check with the result (WP-V-02 §3.5 item 4).

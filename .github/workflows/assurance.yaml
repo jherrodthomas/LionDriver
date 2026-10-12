@@ -62,7 +62,7 @@ jobs:
     - name: CAN gap scan unit tests
       run: python3 -m unittest tools.can_gaps.test_can_gap_scan -v
     - name: Severity ratio tool unit tests
-      run: python3 -m unittest tools.severity.test_severity_ratio -v
+      run: python3 -m unittest tools.severity.test_severity_ratio tools.severity.test_risk_curve -v
 
   safety-case:
     name: living safety case
