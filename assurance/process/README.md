@@ -5,7 +5,7 @@
 | Work product | WP-P-11 Integrated process model (machine-readable) and generated process maps |
 | Standard reference | ISO 26262-2:2018 §6 (safety lifecycle, planning of activities); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6 (cybersecurity activities and their tailoring); ISO/PAS 8800:2024 (AI safety lifecycle); ASPICE 4.0 MAN.3 (project lifecycle definition). Informative: Integrated Automotive Standards Handbook (ISH-2026-001) §3.3–3.4, Ch. 5, Ch. 13 |
 | Version | 0.1 |
-| Status | Draft (pilot: concept phase G1 only) |
+| Status | Draft (phases modelled: G1 concept, G2 system design) |
 | ASIL / scope | Process (all disciplines) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
@@ -29,6 +29,7 @@ The model is data, so a checker keeps it consistent with the documents and a gen
 |---|---|
 | [maps/lifecycle.md](maps/lifecycle.md) | L0: the seven phases G0…G6, their exit criteria and the handbook chapter each one corresponds to |
 | [maps/g1-concept.md](maps/g1-concept.md) | L1 for the concept phase: swimlane map, interface map, activity table with clauses, clause coverage per standard, G1 readiness |
+| [maps/g2-system-design.md](maps/g2-system-design.md) | L1 for the system design phase, same sections, G2 readiness |
 
 L2 (how to perform an activity) remains the procedures and plans the activities point to; it is not modelled here.
 
@@ -42,7 +43,7 @@ The model holds only what no other document holds: the activities, their lanes, 
 | Clause references, ASPICE process, gate and status of each work product | WP-M-00 §3 (the row of each produced work product) |
 | Who holds each lane's role, and by which gate | WP-M-02 §3.1 |
 | Which confirmation measures a gate needs | WP-M-06 §9 |
-| Whether a confirmation measure has been performed | Existence of `10-safety-case/confirmation/<id>.md` (WP-M-06 §10) |
+| Whether a confirmation measure has been performed | Existence of `10-safety-case/confirmation/<measure>.md`, or `<measure>-<gate>.md` for a measure planned at several gates (WP-M-06 §10) |
 
 A change to the register, the safety plan or the confirmation plan therefore shows up in the maps on the next run, and `--check` fails in CI until the maps are regenerated.
 
@@ -54,8 +55,8 @@ Records use the same flat YAML subset as [`case/`](../case/README.md): a top-lev
 |---|---|---|
 | `phase` | [`model/lifecycle.yaml`](model/lifecycle.yaml) | `id` (gate G0…G6), `handbook_chapters`, `modelled` |
 | `lane` | `model/lifecycle.yaml` | `id`, `name`, `role` (a role in WP-M-02 §3.1), `plan` (the plan that governs the lane) |
-| `activity` | [`model/concept.yaml`](model/concept.yaml) | `id` (`CON-nn` in the concept phase), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp` |
-| `review` | `model/concept.yaml` | `id` (as in WP-M-06), `phase`, `name`, `covers`, `independence` |
+| `activity` | [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml) | `id` (`CON-nn` concept, `DES-nn` system design), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp` |
+| `review` | same files as the phase's activities | `id` (the WP-M-06 measure; `<measure>@<gate>` when WP-M-06 plans it at several gates, e.g. `CR-06@G2`), `phase`, `name`, `covers`, `independence` |
 | `interface` | [`model/interfaces.yaml`](model/interfaces.yaml) | `id` (`IX-nn`), `phase`, `between` (two work products), `pattern`, `topic`, `anchors`, `status`, `open_item`, `due` |
 
 Rules the records follow:
@@ -90,20 +91,31 @@ Rules the records follow:
 
 A new or renamed work product goes into WP-M-00 first; the model then refers to it. Modelling another phase means adding its activities and reviews, then setting `modelled: true` on its phase record. P4 and P6 then require the phase to be complete.
 
-## 6. What the concept pilot shows
+## 6. What the model shows
 
-These findings come from the generated [G1 map](maps/g1-concept.md). They are observations for the safety manager, not decisions:
+These findings come from the generated maps. They are observations for the safety manager, not decisions.
+
+### 6.1 Concept phase ([G1 map](maps/g1-concept.md))
+
 
 1. **One open interface blocks G1.** IX-02: the mapping from safety goals to cybersecurity goals was written from the HARA and has not been checked against the FSC (WP-C-10 OI-6). The other two open interfaces (IX-05 and IX-06, both SOTIF to AI) are due at G2.
 2. **Six G1 work products have no confirmation measure at G1:** WP-C-02, WP-C-07, WP-C-11, WP-V-07, WP-T-01, WP-K-01. They are reviewed only through verification review (WP-P-05). This is allowed. It matters most for WP-C-11 (AI safety requirements), whose independent review SR-04 is planned for G3.
 3. **Three of the five lane roles are unassigned:** SOTIF lead, AI/ML safety lead, and the external functional safety assessor (D-06). WP-M-02 needs all three by G1, and every G1 confirmation measure depends on the assessor.
 4. **The SOTIF lane both feeds and consumes the HARA.** The ODD and misuse analysis (CON-02, CON-03) are HARA inputs; the SOTIF hazard and insufficiency analyses (CON-06…CON-08) depend on it. SOTIF and functional safety cannot run as sequential silos; the process has to interleave them.
 
+### 6.2 System design phase ([G2 map](maps/g2-system-design.md))
+
+1. **The critical path is one serial chain in one lane.** Functional safety carries 8 of the 12 activities. Timing, TSRs, architecture, FFI, DFA, then decomposition and FTA (DES-02 → DES-03 → DES-05 → DES-07 → DES-08 → DES-09/DES-10) run one after another. WP-M-02 assigns the safety manager and envelope engineer roles to the same person today.
+2. **No AI-lane work product is gated at G2.** AI concerns reach system design only through the SOTIF V&V strategy (IX-13: validation targets for the AI performance values) and the FFI analysis (IX-14: ML outputs contained by the envelope). Whether PAS 8800 needs an AI architecture view at G2 is a planning decision for WP-M-10.
+3. **Four open interfaces are due by G2.** IX-02 (overdue from G1), IX-05, IX-06 and IX-13. Three of them are SOTIF–AI and concern unconfirmed numeric AI performance values. Those values are the main cross-domain blocker for G2.
+4. **Three G2 work products have no confirmation measure at G2:** WP-S-01, WP-S-06, WP-S-07. WP-S-07 (cybersecurity requirements and architecture) names assessor sampling per WP-M-09 §8 in its header. WP-M-06 plans no independent cybersecurity review between the G1 interim review (CS-I1) and the final assessment at G5.
+5. **Safety and security meet in three places in the architecture:** overlapping boot and mode-lock requirements (IX-09), the BOOT0/NRST trust boundary that the FFI claim FFI-3 depends on (IX-10), and unauthenticated SoC messaging (IX-11). Each is one design decision seen from two standards, so the safety architecture and the security architecture cannot be reviewed separately.
+
 ## 7. Open items
 
 | ID | Item | Owner | Gate |
 |---|---|---|---|
-| OI-1 | Model the remaining phases, starting with G2 system design (handbook Ch. 6) | Safety manager | G2 |
+| OI-1 | Model the remaining phases, next G3 hardware and software development (handbook Ch. 7–8) | Safety manager | G3 |
 | OI-2 | Add an "agreed" interface status set only through a recorded review, and decide whether cross-domain interfaces become requirement items (`IFR-nn`) in `trace/` | Safety manager | G2 |
 | OI-3 | Generate the G1 gate-record skeleton (`10-safety-case/gates/`) from §5 of the G1 map | Safety manager | G1 |
 | OI-4 | Derive pull-request checklists from the model: which activities and interfaces a change to a work product re-opens | Configuration and change manager | G2 |

@@ -86,3 +86,65 @@
   status: documented
   open_item: null
   due: G1
+
+# System design (G2)
+- id: IX-09
+  kind: interface
+  phase: G2
+  between: [WP-S-02, WP-S-07]
+  pattern: "Safety-Security"
+  topic: "Boot integrity, safety-mode lock and command gating are both safety and security requirements: TSR-511…514 overlap the CSRs that refine them"
+  anchors: ["WP-S-02:Cybersecurity requirements that overlap TSR-511…514", "WP-S-07:TSR-402…405"]
+  status: documented
+  open_item: null
+  due: G2
+- id: IX-10
+  kind: interface
+  phase: G2
+  between: [WP-S-03, WP-S-07]
+  pattern: "Safety-Security"
+  topic: "The FFI claim that the QM SoC cannot replace the safety MCU firmware (FFI-3, not met) depends on the trust boundary TB-2 over the BOOT0/NRST lines"
+  anchors: ["WP-S-03:QM SoC replaces MCU firmware via BOOT0/NRST or softloader", "WP-S-07:TB-2 | Z2 → Z1 boot control (GPIO)"]
+  status: documented
+  open_item: null
+  due: G2
+- id: IX-11
+  kind: interface
+  phase: G2
+  between: [WP-S-03, WP-S-07]
+  pattern: "Safety-Security"
+  topic: "Unauthenticated SoC messaging (GAP-20) is both an interference path into safety-relevant processes and an attack surface; CSR-062/063 restrict writers and publishers"
+  anchors: ["WP-S-03:This is a cybersecurity and FFI matter handled in WP-S-07 and WP-A-02", "WP-S-07:msgq shared memory has no publisher authentication (GAP-20)"]
+  status: documented
+  open_item: null
+  due: G2
+- id: IX-12
+  kind: interface
+  phase: G2
+  between: [WP-A-04, WP-C-06]
+  pattern: "Safety-SOTIF"
+  topic: "The system fault trees include ML functional insufficiencies as [SOTIF] basic events so they are complete; their evaluation stays in the SOTIF analysis"
+  anchors: ["WP-A-04:appear as basic events labelled **[SOTIF]**", "WP-A-04:They are evaluated in [WP-C-06]"]
+  status: documented
+  open_item: null
+  due: G2
+- id: IX-13
+  kind: interface
+  phase: G2
+  between: [WP-V-02, WP-C-11]
+  pattern: "SOTIF-AI"
+  topic: "The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-11 must confirm; the targets are not yet approved"
+  anchors: ["WP-C-11:are proposals that [WP-V-02]", "WP-V-02:Approve numeric targets VT-01…VT-11 with the assessor"]
+  status: open
+  open_item: "WP-V-02 OI-3"
+  due: G2
+- id: IX-14
+  kind: interface
+  phase: G2
+  between: [WP-A-02, WP-C-11]
+  pattern: "Safety-AI"
+  topic: "The QM ML models may reach the actuators only through the envelope and may not alter its limits (AIR-28); the FFI analysis is where that containment is shown"
+  anchors: ["WP-C-11:no AI-derived signal shall alter envelope limits or the safety mode", "WP-A-02:E-02 ML models"]
+  status: documented
+  open_item: null
+  due: G2

@@ -1,0 +1,134 @@
+# System design phase (gate G2) process model. Format: assurance/process/README.md §3.
+# Clause references are read from the WP-M-00 register row of each produced work product.
+# Inputs follow the "Inputs" lists and cross-references of each work product; work that iterates
+# within the functional safety lane (architecture <-> FFI/DFA <-> FTA) is ordered by first draft.
+
+- id: DES-01
+  kind: activity
+  phase: G2
+  lane: joint
+  name: "Specify system requirements"
+  produces: [WP-S-01]
+  inputs: [WP-C-01, WP-C-02, WP-C-08]
+  handbook_wp: [WP-4]
+- id: DES-02
+  kind: activity
+  phase: G2
+  lane: fusa
+  name: "Derive FTTI, detection and reaction budgets"
+  produces: [WP-S-04]
+  inputs: [WP-C-02, WP-C-03, WP-C-04, WP-C-08]
+  handbook_wp: [WP-5]
+- id: DES-03
+  kind: activity
+  phase: G2
+  lane: fusa
+  name: "Specify technical safety requirements"
+  produces: [WP-S-02]
+  inputs: [WP-C-04, WP-C-08, WP-S-04]
+  handbook_wp: [WP-4]
+- id: DES-04
+  kind: activity
+  phase: G2
+  lane: cs
+  name: "Specify cybersecurity requirements and architecture"
+  produces: [WP-S-07]
+  inputs: [WP-C-04, WP-C-09, WP-C-10, WP-S-02]
+  handbook_wp: [WP-4, WP-5]
+- id: DES-05
+  kind: activity
+  phase: G2
+  lane: fusa
+  name: "Technical safety concept and system architecture"
+  produces: [WP-S-03]
+  inputs: [WP-C-04, WP-S-02]
+  handbook_wp: [WP-5]
+- id: DES-06
+  kind: activity
+  phase: G2
+  lane: fusa
+  name: "Specify the hardware-software interface"
+  produces: [WP-S-05]
+  inputs: [WP-C-01, WP-S-02, WP-S-03, WP-S-04]
+  handbook_wp: [WP-5]
+- id: DES-07
+  kind: activity
+  phase: G2
+  lane: fusa
+  name: "Analyse coexistence and freedom from interference"
+  produces: [WP-A-02]
+  inputs: [WP-C-04, WP-S-02, WP-S-03]
+  handbook_wp: [WP-5]
+- id: DES-08
+  kind: activity
+  phase: G2
+  lane: fusa
+  name: "Dependent failure analysis"
+  produces: [WP-A-03]
+  inputs: [WP-C-04, WP-S-02, WP-S-03, WP-A-02]
+  handbook_wp: [WP-5]
+- id: DES-09
+  kind: activity
+  phase: G2
+  lane: fusa
+  name: "Decide on ASIL decomposition"
+  produces: [WP-A-01]
+  inputs: [WP-C-03, WP-C-04, WP-S-02, WP-A-02, WP-A-03]
+  handbook_wp: [WP-3]
+- id: DES-10
+  kind: activity
+  phase: G2
+  lane: fusa
+  name: "System FTA and FMEA"
+  produces: [WP-A-04]
+  inputs: [WP-C-01, WP-C-04, WP-C-06, WP-S-02, WP-A-02, WP-A-03]
+  handbook_wp: [WP-2]
+- id: DES-11
+  kind: activity
+  phase: G2
+  lane: sotif
+  name: "SOTIF V&V strategy and validation targets"
+  produces: [WP-V-02]
+  inputs: [WP-C-02, WP-C-05, WP-C-06, WP-C-07, WP-C-11]
+  handbook_wp: [WP-6]
+- id: DES-12
+  kind: activity
+  phase: G2
+  lane: joint
+  name: "Requirements for production, operation, service and decommissioning"
+  produces: [WP-S-06]
+  inputs: [WP-C-01, WP-S-02, WP-S-07]
+  handbook_wp: [WP-4]
+
+# Confirmation measures planned for G2 (WP-M-06 §9). A measure planned at several gates gets one
+# record per gate, with the id `<measure>@<gate>`.
+- id: CR-05
+  kind: review
+  phase: G2
+  name: "Confirmation review of the technical safety concept"
+  covers: [WP-S-02, WP-S-03, WP-S-04, WP-S-05]
+  independence: I3
+- id: CR-06@G2
+  kind: review
+  phase: G2
+  name: "Confirmation review of the system-level safety analyses"
+  covers: [WP-A-01, WP-A-02, WP-A-03, WP-A-04]
+  independence: I3
+- id: FSA-I2
+  kind: review
+  phase: G2
+  name: "Interim functional safety assessment (TSC, FFI/DFA, hardware route)"
+  covers: [WP-S-02, WP-S-03, WP-A-02, WP-A-03]
+  independence: I3
+- id: AUD-1
+  kind: review
+  phase: G2
+  name: "Functional safety audit (process in use for concept and system design)"
+  covers: [WP-M-02, WP-M-05]
+  independence: I3
+- id: SR-02
+  kind: review
+  phase: G2
+  name: "Review of V&V strategy and validation targets"
+  covers: [WP-V-02]
+  independence: "I3-equivalent"

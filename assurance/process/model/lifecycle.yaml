@@ -13,7 +13,7 @@
 - id: G2
   kind: phase
   handbook_chapters: [6]
-  modelled: false
+  modelled: true
 - id: G3
   kind: phase
   handbook_chapters: [7, 8]

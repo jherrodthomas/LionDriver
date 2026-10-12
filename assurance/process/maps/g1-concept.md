@@ -109,7 +109,7 @@ Clause references and status are read from the [register (WP-M-00)](../../01-man
 
 ## 3. Cross-domain interfaces
 
-Each interface is anchored to text in both work products; the checker fails if an anchor disappears. *Documented* means the documents reference each other but nobody has reviewed the agreement yet.
+Each interface is anchored to text in the work products; the checker fails if an anchor disappears. *Documented* means the documents reference each other but nobody has reviewed the agreement yet.
 
 | ID | Pattern | Between | Topic | Status | Open item | Due |
 |---|---|---|---|---|---|---|
@@ -149,6 +149,8 @@ Which activity answers each clause reference listed in the register. One activit
 | Cybersecurity (ISO/SAE 21434) | Cybersecurity manager | Jherrod Thomas (acting); permanent holder TBD | G1 |
 | Independent confirmation | External functional safety assessor | TBD (D-06) | G1 |
 
+**Other roles WP-M-02 §3.1 needs by G1:** Test / safety driver(s) (TBD (trained per WP-M-04)).
+
 **Confirmation measures (WP-M-06 §9):**
 
 | Measure | Covers | Independence | Record |
@@ -162,4 +164,4 @@ Which activity answers each clause reference listed in the register. One activit
 
 **Work products with no confirmation measure at this gate** (verification review only): WP-C-02, WP-C-07, WP-C-11, WP-V-07, WP-T-01, WP-K-01.
 
-**Open interfaces due at this gate:** IX-02 (WP-C-10 OI-6).
+**Open interfaces due by this gate** (from this or an earlier phase): IX-02 (WP-C-10 OI-6).

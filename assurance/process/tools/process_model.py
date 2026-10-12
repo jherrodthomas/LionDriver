@@ -162,6 +162,16 @@ def load_model(model_dir: Path = MODEL_DIR) -> Model:
   return model
 
 
+def measure_id(review_id: str) -> str:
+  """WP-M-06 measure of a review record: `CR-06@G2` is measure CR-06 as performed at G2."""
+  return review_id.split("@", 1)[0]
+
+
+def record_path(review_id: str) -> Path:
+  """Confirmation record (WP-M-06 §10): `<measure>.md`, or `<measure>-<gate>.md` for a per-gate record."""
+  return CONFIRMATION_DIR / (review_id.replace("@", "-") + ".md")
+
+
 def direct_deps(acts: dict[str, dict], producer: dict[str, str]) -> dict[str, set[str]]:
   """Activity -> activities whose outputs it consumes, with transitive dependencies removed (map edges)."""
   deps = {a: {producer[w] for w in act["inputs"] if producer.get(w) in acts and producer[w] != a} for a, act in acts.items()}
@@ -250,7 +260,7 @@ def check(model: Model, ctx: Context) -> dict[str, list[str]]:
     orders[gid] = sorted(acts)
     # P6 confirmation measures equal the WP-M-06 §9 row for the gate
     planned = set(ctx.gate_measures.get(gid, []))
-    modelled = {r for r, x in model.reviews.items() if x["phase"] == gid}
+    modelled = {measure_id(r) for r, x in model.reviews.items() if x["phase"] == gid}
     if planned != modelled:
       model.err("P6", gid, f"confirmation measures differ from WP-M-06 §9: missing {sorted(planned - modelled)}, extra {sorted(modelled - planned)}")
 
@@ -259,8 +269,10 @@ def check(model: Model, ctx: Context) -> dict[str, list[str]]:
     for wp in rv["covers"]:
       if wp not in reg:
         model.err("P6", rid, f"covers {wp}, which is not in WP-M-00")
-    if not re.search(rf"\b{re.escape(rid)}\b", conf_text):
+    if not re.search(rf"\b{re.escape(measure_id(rid))}\b", conf_text):
       model.err("P6", rid, "not defined in WP-M-06")
+    if "@" in rid and rid.split("@", 1)[1] != rv["phase"]:
+      model.err("P6", rid, f"gate suffix does not match phase {rv['phase']}")
 
   # P7 interfaces: both ends produced by an activity, anchors present verbatim
   texts: dict[str, str] = {}
@@ -299,7 +311,8 @@ def _q(text: str) -> str:
 
 
 def _nid(item_id: str) -> str:
-  return item_id.replace("-", "_")
+  """Mermaid node id: letters, digits and underscores only."""
+  return re.sub(r"[^A-Za-z0-9_]", "_", item_id)
 
 
 def _link(wp: str, ctx: Context) -> str:
@@ -354,6 +367,7 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
   name, exit_ = ctx.gates[gid]
   acts = [model.activities[a] for a in order]
   producer = {wp: a["id"] for a in acts for wp in a["produces"]}
+  lane_of = {wp: a["lane"] for a in model.activities.values() for wp in a["produces"]}
   reviews = [r for r in model.reviews.values() if r["phase"] == gid]
   ixs = [x for x in model.interfaces.values() if x["phase"] == gid]
   lane_ids = [lid for lid in model.lanes if lid != "assess" and any(a["lane"] == lid for a in acts)]
@@ -402,7 +416,7 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
           "```mermaid", "flowchart LR"]
   pairs: dict[tuple[str, str], list[str]] = {}
   for x in ixs:
-    la, lb = sorted(model.activities[producer[w]]["lane"] for w in x["between"])
+    la, lb = sorted(lane_of[w] for w in x["between"])
     pairs.setdefault((la, lb), []).append(x["id"] + (" OPEN" if x["status"] == "open" else ""))
   used = sorted({ln for p in pairs for ln in p}, key=list(model.lanes).index)
   for ln in used:
@@ -424,10 +438,10 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
 
   # 3. interfaces
   out += ["## 3. Cross-domain interfaces", "",
-          "Each interface is anchored to text in both work products; the checker fails if an anchor disappears. *Documented* means the documents reference each other but nobody has reviewed the agreement yet.", "",
+          "Each interface is anchored to text in the work products; the checker fails if an anchor disappears. *Documented* means the documents reference each other but nobody has reviewed the agreement yet.", "",
           "| ID | Pattern | Between | Topic | Status | Open item | Due |", "|---|---|---|---|---|---|---|"]
   for x in ixs:
-    lanes = " / ".join(model.lanes[model.activities[producer[w]]["lane"]]["name"].split(" (")[0] for w in x["between"])
+    lanes = " / ".join(model.lanes[lane_of[w]]["name"].split(" (")[0] for w in x["between"])
     out.append(f"| {x['id']} | {x['pattern']} | {', '.join(_link(w, ctx) for w in x['between'])} ({lanes}) | {x['topic']} | {x['status'].capitalize()} | {x['open_item'] or '—'} | {x['due']} |")
   out.append("")
 
@@ -456,15 +470,20 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
     role = model.lanes[lid]["role"]
     who, by = ctx.roles.get(role, ("?", "?"))
     out.append(f"| {model.lanes[lid]['name']} | {role} | {who} | {by} |")
+  lane_roles = {model.lanes[lid]["role"] for lid in model.lanes}
+  extra = [(role, who) for role, (who, by) in ctx.roles.items() if role not in lane_roles and gid in by]
+  if extra:
+    out += ["", f"**Other roles WP-M-02 §3.1 needs by {gid}:** " + "; ".join(f"{role} ({who})" for role, who in extra) + "."]
   out += ["", "**Confirmation measures (WP-M-06 §9):**", "", "| Measure | Covers | Independence | Record |", "|---|---|---|---|"]
   for r in reviews:
-    rec = CONFIRMATION_DIR / f"{r['id']}.md"
+    rec = record_path(r["id"])
     out.append(f"| {r['id']} {r['name']} | {', '.join(r['covers'])} | {r['independence']} | {'Performed' if rec.exists() else 'Not performed'} |")
   covered = {w for r in reviews for w in r["covers"]}
   uncovered = [w for w in wps if w not in covered]
   out += ["", "**Work products with no confirmation measure at this gate** (verification review only): " + (", ".join(uncovered) if uncovered else "none") + ".", ""]
-  due = [x for x in ixs if x["status"] == "open" and GATES.index(x["due"]) <= GATES.index(gid)]
-  out.append("**Open interfaces due at this gate:** " + (", ".join(f"{x['id']} ({x['open_item']})" for x in due) if due else "none") + ".")
+  due = [x for x in model.interfaces.values() if x["status"] == "open" and GATES.index(x["due"]) <= GATES.index(gid)
+         and GATES.index(x["phase"]) <= GATES.index(gid)]
+  out.append("**Open interfaces due by this gate** (from this or an earlier phase): " + (", ".join(f"{x['id']} ({x['open_item']})" for x in due) if due else "none") + ".")
   return "\n".join(out) + "\n"
 
 

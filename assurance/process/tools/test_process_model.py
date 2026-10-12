@@ -62,6 +62,12 @@ class ProcessModelTest(unittest.TestCase):
   def test_open_interface_needs_open_item(self):
     self.assertFails("P7", lambda m: m.interfaces["IX-02"].update(open_item=None))
 
+  def test_review_gate_suffix_matches_phase(self):
+    self.assertFails("P6", lambda m: m.reviews["CR-06@G2"].update(phase="G1"))
+
+  def test_mermaid_node_ids_are_plain(self):
+    self.assertEqual(pm._nid("CR-06@G2"), "CR_06_G2")
+
   def test_transitive_edges_removed(self):
     acts = {"A": {"inputs": []}, "B": {"inputs": ["a"]}, "C": {"inputs": ["a", "b"]}}
     self.assertEqual(pm.direct_deps(acts, {"a": "A", "b": "B"}), {"A": set(), "B": {"A"}, "C": {"B"}})
