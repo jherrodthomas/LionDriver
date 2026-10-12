@@ -60,7 +60,7 @@ None are changed yet, because the change is not integrated. When panda#1 is merg
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Closed 2026-10-12: the maintainer accepted D-1 and D-2 as interim (§2); the TSR-501 and HWSR-501c amendments for D-2 are drafted (WP-S-02 v0.4, WP-H-01 v0.3). D-3 accepted as interim (2026-10-12). Still needed: review of the amendments, and recording D-1 and D-3 as residuals in WP-K-01 on integration | Integration |
-| OI-2 | Confirm the STM32H725 LSI tolerance and the timeout at both ends. With panda#3 this matters more: at an LSI 10 % slow the 90 ms nominal timeout reaches about 100 ms, the TSR-501 limit (§7) | Integration |
+| OI-2 | Confirm the STM32H725 LSI tolerance and the timeout at both ends. With panda#3 this matters more: at an LSI 10 % slow the 90 ms nominal timeout reaches about 100 ms, the TSR-501 limit (§7). 2026-10-12: the STM32H725 datasheet could not be retrieved from the development environment; the LSI min/max still has to be read from it | Integration |
 | OI-3 | HIL fault-injection evidence (needs the D-04 HIL bench). Test written: `tests/hitl/test_10_hw_watchdog.py` with a debug-only fault-injection build (`b8d046b`, `16cd27a`; on panda#3 also safety-task hang and early-feed window violation, `b9596ed`); bench plan in [hil-bench/](../../05-software/hil-bench/README.md) | Release |
 | OI-4 | Report watchdog resets to the host | G3 |
 | OI-5 | Review panda#3 (§7). If accepted, D-1 and D-3 close and the WP-K-01 residuals for them are not needed | Integration |

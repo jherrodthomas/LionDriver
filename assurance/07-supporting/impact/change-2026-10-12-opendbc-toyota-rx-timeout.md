@@ -7,7 +7,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Analysis | IA-2026-<nn> (assign on review) |
 | Status | **Draft: proposed change, not integrated.** The LionDriver `opendbc_repo` pin is unchanged |
 | Change request | [jherrodthomas/opendbc#1](https://github.com/jherrodthomas/opendbc/pull/1); follow-on [jherrodthomas/opendbc#3](https://github.com/jherrodthomas/opendbc/pull/3) for TSR-306, stacked on #1 (§7) |
-| Range | opendbc `229dc70..de80b63` (branch `claude/toyota-rx-timeout`); LionDriver pin stays at `229dc70` until the change is merged to the fork's `master` |
+| Range | opendbc `229dc70..0edef9b` (branch `claude/toyota-rx-timeout`; `0edef9b` adds a test only); LionDriver pin stays at `229dc70` until the change is merged to the fork's `master` |
 | Depends on | [jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3) (100 Hz safety task, SWSR-401a). Without it `safety_tick()` runs at 1 Hz and detection stays ≥ 1 s. Integrate both in the same pin update |
 | Reference configuration affected | Yes: the Toyota safety mode runs on the reference device |
 | Author / reviewer (independence) | Claude (AI-assisted draft) / TBD; an AI draft is not a review (WP-M-06) |
@@ -43,7 +43,8 @@ Not covered by opendbc#1: TSR-306. Authority can still be granted on a PCM risin
 | Safety unit tests (`python -m unittest discover` in `opendbc/safety/tests`) | 3180 tests, OK |
 | Line coverage (gcovr, `--fail-under-line=100`, the `test.sh` gate) | 100 % |
 | New test `test_rx_timeout_5_periods` (every Toyota test class) | Pass. Checks that the config is valid at exactly 5 periods of `0xAA` and invalid, with controls cleared, 1 µs later |
-| Mutation check | Toyota threshold 5 → 6 fails 7 tests |
+| Test `test_rx_timeout_5_periods_each_msg` (`0edef9b`, every Toyota test class) | Pass. For every RX check (SecOC `0x176`, `0x116`, `0x101` included), that message alone stops while the others keep arriving: valid at exactly 5 of its nominal periods, invalid with controls cleared 1 µs later. Ported from jherrodthomas/opendbc#4, closed as a duplicate of opendbc#1 |
+| Mutation check | Toyota threshold 5 → 6 fails 7 tests. A wrong nominal rate on `0x1D2` (33 → 34 Hz) passes `test_rx_timeout_5_periods` and fails `test_rx_timeout_5_periods_each_msg` |
 | opendbc MISRA (cppcheck step of `tests/misra/test_misra.sh`) | Clean |
 | panda `tests/misra/test_misra.sh` built against this tree | Clean |
 | `test.sh` and the MISRA script as-is | **Not run as-is**: their `setup.sh` fetches a dataset the session proxy blocks; the steps were run directly |
@@ -71,7 +72,7 @@ None are changed yet, because the change is not integrated. When opendbc#1 and p
 
 ## 7. Follow-on change: engagement gated on the RX checks (opendbc#3)
 
-[jherrodthomas/opendbc#3](https://github.com/jherrodthomas/opendbc/pull/3) is stacked on opendbc#1 (branch `claude/toyota-rx-grant-check`, `de80b63..00a51b5`) and integrated with it.
+[jherrodthomas/opendbc#3](https://github.com/jherrodthomas/opendbc/pull/3) is stacked on opendbc#1 (branch `claude/toyota-rx-grant-check`, `de80b63..7d97fbf`; `7d97fbf` merges in `0edef9b`) and integrated with it.
 
 | Commit(s) | Files | Summary of behaviour change | FuSa | SOTIF | AI | CS | Hazards / findings affected | WPs affected | Verification to re-run | Decision |
 |---|---|---|---|---|---|---|---|---|---|---|
