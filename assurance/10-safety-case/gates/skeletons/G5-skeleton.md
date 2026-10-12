@@ -63,7 +63,6 @@ From the [process model](../../../process/README.md). Each one is a condition on
 |---|---|---|---|---|
 | IX-06 | The reference ODD cannot be compared with the driving model's training-data ODD, which upstream has not published | WP-C-02 OI-6 | G2 | |
 | IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-11 must confirm; the targets are not yet approved | WP-V-02 OI-3 | G2 | |
-| IX-25 | The SOTIF validation targets need P(not controlled) from the controllability tests of the safety validation; the evidence route is not decided | WP-V-02 OI-6 | G5 | |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 

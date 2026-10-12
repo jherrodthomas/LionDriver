@@ -78,13 +78,35 @@ The figures below are **illustrative orders of magnitude** to show feasibility; 
 
 The residual uncertainty that cannot be closed this way is stated in WP-K-02, not hidden.
 
+### 3.3 Evidence for P(not controlled)
+
+Step 2 takes P(not controlled) only from driver controllability tests with test subjects. It is never taken from the HARA controllability class or from literature. The rule:
+
+1. **Source.** Each SH group uses the subject test that reproduces its worst envelope-bounded hazardous behaviour:
+
+   | SH | Controllability test | Parent |
+   |---|---|---|
+   | SH-01 | [WP-V-01](WP-V-01-safety-validation.md) VS-VAL-10 | CA-01 |
+   | SH-02 | WP-V-01 VS-VAL-12 | CA-02 |
+   | SH-03 | WP-V-01 VS-VAL-13 | CA-03 |
+   | SH-04 | WP-V-01 VS-VAL-14 | CA-04 |
+   | SH-06 | WP-V-01 VS-VAL-16 | CA-03 |
+   | SH-10 | [WP-V-03](WP-V-03-sotif-known-scenarios.md) KS-14 abort trials (VT-13) | CA-01 logic |
+   | SH-05, SH-08, SH-09, SH-11, SH-12, SH-13 | none | P(not controlled) = 1 |
+
+2. **Value.** P(not controlled) is the one-sided 95 % upper confidence bound on the share of valid subjects who did not control the event, taken at the least favourable tested condition (speed, direction, hands-on or hands-off). With n valid subjects and no failure, the bound is `1 − 0.05^(1/n)`. With failures, it is the Clopper–Pearson bound. The point estimate is not used.
+3. **Range.** The value applies only up to the highest speed tested. For the part of the ODD above it, P(not controlled) = 1. VS-VAL-10 runs up to 90 km/h, and 110 km/h only after a separate risk review, while ODD-H extends to 120 km/h ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md)).
+4. **Validity.** The value holds for the release whose envelope limits and alert timing were tested. A change to either needs a re-run, or a recorded argument that the tested behaviour bounds the new one, in the impact analysis ([WP-P-02](../07-supporting/WP-P-02-change-management.md)).
+
+What this gives: 20 valid subjects with no failure bound P(not controlled) at 0.14, not the 0.1 assumed in case D of §3.1. Reaching 0.1 needs at least 29 subjects with no failure, and 0.01 needs 299. The sample size per condition is agreed with the assessor together with the controllability pass criteria ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) OI-3).
+
 ## 4. Validation targets
 
 Targets are **proposals**: numeric values are placeholders for the assessor review and WP-C-05 acceptance criteria (OI-3). "Demonstration" names the primary method; §5 defines the methods.
 
 | ID | SH | Quantity | Proposed target | Derivation | Demonstration | Achievable? |
 |---|---|---|---|---|---|---|
-| VT-01 | SH-01 excessive / wrong lateral motion | Unrequested lane departures (AIR-02) per engaged hour | Rate-level: ≤ 5 × 10⁻⁶ /mi (case D). Scenario-level: p_s ≤ 1 % per scenario in KS-01…KS-06, KS-14 at 95 % | §3 steps 1–5; P(not controlled) from VS-VAL controllability tests | Scenario-level by SIM + CC + REPLAY; rate-level surrogate on public road | Scenario-level yes; rate-level no (reported as surrogate with upper bound) |
+| VT-01 | SH-01 excessive / wrong lateral motion | Unrequested lane departures (AIR-02) per engaged hour | Rate-level: ≤ 5 × 10⁻⁶ /mi (case D). Scenario-level: p_s ≤ 1 % per scenario in KS-01…KS-06, KS-14 at 95 % | §3 steps 1–5; P(not controlled) per §3.3 (VS-VAL-10) | Scenario-level by SIM + CC + REPLAY; rate-level surrogate on public road | Scenario-level yes; rate-level no (reported as surrogate with upper bound) |
 | VT-02 | SH-02 unannounced loss of lateral control | Lateral drift > 0.5 m without a take-over alert within 1 s | p_s ≤ 1 % per curve/marking scenario; zero occurrences in all CC trials | SG-02 budget (≤ 1 s to warning) | CC (KS-01, KS-03), SIM, REPLAY | Scenario-level yes |
 | VT-03 | SH-03 unintended acceleration | Positive acceleration toward a slower or stopped lead inside the time gap | Zero occurrences in KS-07…KS-09 trials (≥ 59 per scenario) | §3 step 5, case F | SIM (`longitudinal_maneuvers` + MetaDrive), CC | Yes |
 | VT-04 | SH-04 phantom braking | Decelerations < −2.0 m/s² without a relevant object (AIR-05) | Surrogate on public road: ≤ 1 per 1000 km with 95 % upper bound reported; scenario-level p_s ≤ 1 % for bridges/overpasses, metal plates, shadows (KS-10, KS-11) | §3 step 5 | REPLAY of recorded drives, PR | Partially (upper bound limited by mileage) |
@@ -190,4 +212,4 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 | OI-3 | Approve numeric targets VT-01…VT-11 with the assessor before collecting evidence |
 | OI-4 | Build the simulation fidelity case (§5.3) and decide which families get credit (WP-M-08 OI-3) |
 | OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
-| OI-6 | Decide the evidence route for P(not controlled) in step 2 (WP-V-01 controllability tests) and for P(E-situation) (HARA OI-2) |
+| OI-6 | Decide the evidence route for P(E-situation) in step 2 (HARA OI-2). The route for P(not controlled) is §3.3 |

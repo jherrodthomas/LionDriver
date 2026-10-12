@@ -80,6 +80,8 @@ Timing values are the preliminary FTTI allocation of [WP-C-04 §8](../02-concept
 
 Test subjects: licensed drivers who are not project members and have not driven LD-SDA before, briefed only with the user information ([WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md)). The safety driver sits in the front passenger seat with the abort switch; the test operator in the rear. Twenty valid subjects per test condition, unless the worst-case condition is shown on a smaller set first (speed escalation: a condition is run only after the slower one passed). Ethics: informed consent, right to stop, debrief.
 
+VS-VAL-10, -12, -13, -14 and -16 also supply P(not controlled) to the SOTIF validation targets ([WP-V-02](WP-V-02-sotif-vv-strategy.md) §3.3). Their result row therefore reports, per tested speed and condition, the number of valid subjects, the number who did not control the event and the one-sided 95 % upper bound on that share.
+
 | ID | Purpose | Parent | Procedure (summary) | Pass criterion |
 |---|---|---|---|---|
 | VS-VAL-10 | Worst-case lateral disturbance inside the envelope | SG-01, CA-01; WP-C-08 V-3 | Unannounced, during engaged driving in a coned lane (3.5 m) at 30, 50, 70, 90 km/h (110 km/h only after a separate risk review): test operator triggers a torque disturbance at maximum envelope rate up to maximum envelope torque, left or right, on straight and gentle curve | ≥ 20/20 subjects keep all wheels inside the lane boundary + 0.5 m margin **(TBC)**; record reaction time, peak lateral deviation, peak steering force. Results set the C-class for HE-01.x |

@@ -76,7 +76,7 @@ flowchart LR
   ai(["AI safety (ISO/PAS 8800)"])
   cs(["Cybersecurity (ISO/SAE 21434)"])
   cs -. "IX-24" .- joint
-  fusa -. "IX-25 OPEN" .- sotif
+  fusa -. "IX-25" .- sotif
   ai -. "IX-26" .- sotif
 ```
 
@@ -107,7 +107,7 @@ Each interface is anchored to text in the work products; the checker fails if an
 | ID | Pattern | Between | Topic | Status | Open item | Due |
 |---|---|---|---|---|---|---|
 | IX-24 | Safety-Security | [WP-K-01](../../10-safety-case/WP-K-01-safety-case.md), [WP-K-03](../../10-safety-case/WP-K-03-cybersecurity-case.md) (Joint / Cybersecurity) | The safety case delegates its cybersecurity branch (G4) to the cybersecurity case, which argues against the same reference configuration | Documented | — | G5 |
-| IX-25 | Safety-SOTIF | [WP-V-01](../../06-validation/WP-V-01-safety-validation.md), [WP-V-02](../../06-validation/WP-V-02-sotif-vv-strategy.md) (Functional safety / SOTIF) | The SOTIF validation targets need P(not controlled) from the controllability tests of the safety validation; the evidence route is not decided | Open | WP-V-02 OI-6 | G5 |
+| IX-25 | Safety-SOTIF | [WP-V-01](../../06-validation/WP-V-01-safety-validation.md), [WP-V-02](../../06-validation/WP-V-02-sotif-vv-strategy.md) (Functional safety / SOTIF) | The SOTIF validation targets take P(not controlled) from the subject controllability tests of the safety validation: WP-V-02 §3.3 maps each SH to a WP-V-01 test and uses the one-sided 95 % upper bound at the least favourable tested condition; untested SHs and speeds above the highest tested use 1. P(E-situation) stays open under WP-V-02 OI-6 / HARA OI-2 | Documented | — | G5 |
 | IX-26 | SOTIF-AI | [WP-K-02](../../10-safety-case/WP-K-02-sotif-release-argument.md), [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) (SOTIF / AI safety) | The SOTIF release argument needs the model evaluation report and hash-identified models from ML engineering; the report is missing | Documented | — | G5 |
 
 ## 4. Clause coverage by standard
@@ -149,4 +149,4 @@ Which activity answers each clause reference listed in the register. One activit
 
 **Work products with no confirmation measure at this gate** (verification review only): WP-O-01, WP-O-03, WP-O-02, WP-P-10, WP-T-01, WP-K-06.
 
-**Open interfaces due by this gate** (from this or an earlier phase): IX-06 (WP-C-02 OI-6), IX-13 (WP-V-02 OI-3), IX-25 (WP-V-02 OI-6).
+**Open interfaces due by this gate** (from this or an earlier phase): IX-06 (WP-C-02 OI-6), IX-13 (WP-V-02 OI-3).
