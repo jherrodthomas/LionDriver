@@ -151,7 +151,7 @@ P(severity class) is the probability that a collision caused by the uncontrolled
    The values are part of the target set the assessor approves (OI-3).
 5. **Consistency with the HARA.** A value that implies low severity for a hazardous event rated S3 is reported to the HARA owner and explained before it is used.
 
-What this gives: for the S2 collisions (sideswipe; rear impacts at moderate speed difference, struck from behind), fatal crashes are well under 1 % of police-reported crashes of these types, so the factor can earn about two orders of magnitude for a fatality budget. For an injury-crash budget it earns little. For the S3 collisions at highway speed (head-on, high-speed rear-end into stationary traffic, barrier impact), the factor is close to 1 for either budget. Their targets therefore rest on P(E-situation) and P(not controlled), or on narrowing the ODD. No value has been extracted yet (OI-8).
+What this gives: for the S2 collisions (sideswipe; rear impacts at moderate speed difference, struck from behind), fatal crashes are well under 1 % of police-reported crashes of these types, so the factor can earn about two orders of magnitude for a fatality budget. For an injury-crash budget it earns little. For the S3 collisions at highway speed (head-on, high-speed rear-end into stationary traffic, barrier impact), the factor is close to 1 for either budget. Their targets therefore rest on P(E-situation) and P(not controlled), or on narrowing the ODD. No value has been extracted yet (OI-8). The FARS/CRSS ratios are computed by [`tools/severity/`](../../tools/severity/README.md).
 
 ## 4. Validation targets
 
@@ -332,4 +332,4 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 | OI-4 | Build the simulation fidelity case (§5.3) and decide which families get credit (WP-M-08 OI-3) |
 | OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
 | OI-7 | Fit the rear-facing camera now listed in the [WP-V-01](WP-V-01-safety-validation.md) §2 equipment (procurement: WP-V-01 OI-6), and annotate following vehicles from its recordings, so that P(E-situation) for SH-04 (following vehicle, OS-08) is measured (§3.4). Blocks driven before it is fitted give no SH-04 data |
-| OI-8 | Extract P(severity class) per SH from FARS/CRSS (and injury-risk curves where §3.5 item 3 requires them) for the selected B1 data set (OI-2); record the values and bounds per §3.5 item 4 |
+| OI-8 | Extract P(severity class) per SH from FARS/CRSS (and injury-risk curves where §3.5 item 3 requires them) for the selected B1 data set (OI-2); record the values and bounds per §3.5 item 4. The extraction tool is [`tools/severity/`](../../tools/severity/README.md); its variable codes must be checked against the NHTSA manual of the release year first. Not run yet: the NHTSA download hosts are not reachable from the project's cloud environment |
