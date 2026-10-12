@@ -433,7 +433,7 @@
   allocated_to: "U-SAF-CORE"
   verification: "UT, FI"
   acceptance: "Rising edge ignored while any message lags > 5 periods"
-  baseline_impl: "Partial: timeouts only evaluated in 1 Hz `safety_tick` (`safety.h:321-344`) (GAP-06)"
+  baseline_impl: "Partial (opendbc `aff4033`): rising edge gated on seen, checksum, counter, quality and timeout for Toyota (`rx_checks_allow_engagement()`); frozen-value and cross-checks do not exist yet ([IA RX timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md) §7)"
   status: proposed
   source: WP-W-02
 
@@ -517,7 +517,7 @@
   allocated_to: "U-SAF-CORE"
   verification: "UT, HIL, FI"
   acceptance: "Detection ≤ 5 periods + one task period (≤ 0.2 s for 33 Hz `0x1D2`)"
-  baseline_impl: "Not met: max(10 periods, 1 s) (`safety.h:322, 332`)"
+  baseline_impl: "Met for the four Toyota RX checks (opendbc `aff4033`; `safety.h` `rx_check_lagging()`, `modes/toyota.h`); not yet verified on hardware ([IA RX timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md))"
   status: proposed
   source: WP-W-02
 
@@ -531,7 +531,7 @@
   allocated_to: "`panda.main.safety_task` (U-PND-MAIN)"
   verification: "HIL, A"
   acceptance: "Measured period ≤ 20 ms, jitter recorded"
-  baseline_impl: "Not met: `safety_tick` called at 1 Hz from the 8 Hz tick ISR (`main.c:142-143, 241-242`) (GAP-06); [WP-S-04 §5](../03-system/WP-S-04-timing-ftti-budget.md)"
+  baseline_impl: "Implemented (panda `9f60e17`): TIM4 100 Hz safety task runs `safety_tick()` and feeds the IWDG (`main.c` `safety_task_handler`), rate fault at 110 Hz. Period and jitter not yet measured ([IA watchdog](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) §7)"
   status: proposed
   source: WP-W-02
 
@@ -797,7 +797,7 @@
   allocated_to: "U-PND-MAIN, `panda.sys.faults` (U-PND-FLT)"
   verification: "R, HIL, FI"
   acceptance: "Stall of task, comms ISR storm or main-loop hang → reset ≤ 0.1 s"
-  baseline_impl: "Not impl: `IND_WDG` unused (`stm32h7/stm32h7_config.h:43`); software watchdog kicked in the ISR it supervises (`main.c:119`, `drivers/simple_watchdog.h`) (GAP-07)"
+  baseline_impl: "Implemented (panda `9f60e17`, `drivers/hw_watchdog.h`): IWDG1, 90 ms nominal, window mode, fed from the 100 Hz safety task after main-loop progress; not yet verified on hardware ([IA watchdog](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md))"
   status: proposed
   source: WP-W-02
 
@@ -1021,7 +1021,7 @@
   allocated_to: "U-PND-COMMS"
   verification: "UT, HIL"
   acceptance: "No reset into softloader from car mode"
-  baseline_impl: "Not met: softloader allowed (`main_comms.h:176-180`) (GAP-24)"
+  baseline_impl: "Partial: softloader entry (`0xd1` param 1) refused in a car mode in the reference build (panda `9f60e17`); still allowed outside a car mode (GAP-24) ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
@@ -1035,7 +1035,7 @@
   allocated_to: "U-PND-COMMS, U-PND-MAIN"
   verification: "UT, HIL"
   acceptance: "All other (mode, param) pairs rejected, state unchanged"
-  baseline_impl: "Not met: any mode/param any time (`main_comms.h:222-225`; `main.c:31-79`) (GAP-09, GAP-44); W-09 DVR-01/02"
+  baseline_impl: "Met in the reference build (`LIONDRIVER_REFERENCE=1`, panda `9f60e17`, `board/reference_lock.h`); host tests `tests/reference_lock`. Rejection not reported to the host ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
@@ -1049,7 +1049,7 @@
   allocated_to: "U-PND-COMMS"
   verification: "UT, HIL"
   acceptance: "Each request has no effect in TOYOTA mode"
-  baseline_impl: "Not met (`main_comms.h:144-147, 214-221, 233-276, 296-314`) (GAP-09, GAP-49); `0xdf` already refused in car modes (`:241-247`)"
+  baseline_impl: "Met in the reference build for the listed requests (panda `9f60e17`, `board/reference_lock.h`) ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
@@ -1063,7 +1063,7 @@
   allocated_to: "U-PND-COMMS"
   verification: "UT, HIL"
   acceptance: "`0xdf` in NOOUTPUT followed by TOYOTA leaves the reference value"
-  baseline_impl: "Not met: settable outside car modes and carried into the next car mode (`main_comms.h:241-247`)"
+  baseline_impl: "Met in the reference build (panda `9f60e17`): `0xdf` refused in every mode; AOU-14 ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
@@ -1637,7 +1637,7 @@
   allocated_to: "U-SAF-TOY"
   verification: "UT, R"
   acceptance: "Each ID rejected; `0x283` non-zero rejected"
-  baseline_impl: "Not met (`modes/toyota.h:19-32`); `0x283` impl `:251-257` (GAP-42, GAP-49)"
+  baseline_impl: "Met except `0x411` (open decision D-1) (opendbc `aff4033`, `modes/toyota.h`; test `test_pcs_and_dsu_messages_blocked`) ([IA TX whitelist](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md))"
   status: proposed
   source: WP-W-02
 

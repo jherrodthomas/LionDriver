@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Draft: proposed change, not integrated.** The LionDriver `opendbc_repo` pin is unchanged. Decision D-1 (§2) is open |
+| Status | **Integrated 2026-10-12: LionDriver pins panda `9f60e17`, opendbc `aff4033` (merge commits on the forks' `master`); not yet verified on hardware (HIL bench D-04); not reviewed independently.** Decision D-1 (§2) is open |
 | Change request | [jherrodthomas/opendbc#2](https://github.com/jherrodthomas/opendbc/pull/2) |
 | Range | opendbc `229dc70..e089e85` (branch `claude/toyota-tx-whitelist`); independent of opendbc#1 |
 | Reference configuration affected | Yes: the Toyota safety mode with openpilot longitudinal control runs on the reference device |
