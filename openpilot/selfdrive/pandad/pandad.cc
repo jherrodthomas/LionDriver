@@ -136,6 +136,7 @@ void fill_panda_state(cereal::PandaState::Builder &ps, cereal::PandaState::Panda
   ps.setWatchdogReset((health.flags_pkt & HEALTH_FLAG_WATCHDOG_RESET) != 0U);
   ps.setRequestsRejected(health.requests_rejected_pkt);
   ps.setEpsFault((health.flags_pkt & HEALTH_FLAG_EPS_FAULT) != 0U);
+  ps.setTxRateExceeded((health.flags_pkt & HEALTH_FLAG_TX_RATE_EXCEEDED) != 0U);
   ps.setReferenceBuild((health.flags_pkt & HEALTH_FLAG_REFERENCE_BUILD) != 0U);
 }
 
@@ -185,6 +186,7 @@ std::optional<bool> send_panda_states(PubMaster *pm, Panda *panda, bool is_onroa
   static uint16_t prev_requests_rejected = 0U;
   static bool watchdog_reset_logged = false;
   static bool eps_fault_prev = false;
+  static bool tx_rate_exceeded_prev = false;
   if (health.requests_rejected_pkt != prev_requests_rejected) {
     LOGE("panda refused %u control request(s) (reference build lock), %u since panda reset",
          (unsigned)(uint16_t)(health.requests_rejected_pkt - prev_requests_rejected), (unsigned)health.requests_rejected_pkt);
@@ -204,6 +206,11 @@ std::optional<bool> send_panda_states(PubMaster *pm, Panda *panda, bool is_onroa
     }
   }
   eps_fault_prev = eps_fault;
+  bool tx_rate_exceeded = (health.flags_pkt & HEALTH_FLAG_TX_RATE_EXCEEDED) != 0U;
+  if (tx_rate_exceeded && !tx_rate_exceeded_prev) {
+    LOGE("panda revoked authority: the SoC exceeded a CAN TX rate budget (TSR-518)");
+  }
+  tx_rate_exceeded_prev = tx_rate_exceeded;
 
   std::array<can_health_t, PANDA_CAN_CNT> can_health{};
   for (uint32_t i = 0; i < PANDA_CAN_CNT; i++) {

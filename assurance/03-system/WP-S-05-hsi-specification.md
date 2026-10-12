@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-05 Hardware-software interface specification |
 | Standard reference | ISO 26262-4:2018 §6 (HSI specification); ISO 26262-5:2018 §6 and ISO 26262-6:2018 §6 (HSI refinement, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.7 (S-21: reference-build flag in the health packet, required by `pandad`; panda `f3539b3`; 2026-10-12). 0.6 (S-13: MAIN_ON cross-check implemented in the reference build, opendbc `875e325`; 2026-10-12). 0.5 (S-12: EPS fault reported to the host as `pandaState.epsFault`, panda `877730e`, opendbc `adcb7c2`; 2026-10-12). 0.4 (S-12: EPS fault codes evaluated by the envelope in the reference build, opendbc `242d63d`; 2026-10-12). 0.3 (S-12, S-13: `0x262` and `0x1D3` supervised in the reference build, opendbc `98404a4`; 2026-10-12). 0.2 (§11 signal catalogue, RR-2026-005 F-06; watchdog ≤ 0.1 s; 2026-10-12) |
+| Version | 0.7 (S-21: reference-build flag in the health packet, required by `pandad`; panda `14f8f15`; 2026-10-12). 0.6 (S-13: MAIN_ON cross-check implemented in the reference build, opendbc `875e325`; 2026-10-12). 0.5 (S-12: EPS fault reported to the host as `pandaState.epsFault`, panda `877730e`, opendbc `adcb7c2`; 2026-10-12). 0.4 (S-12: EPS fault codes evaluated by the envelope in the reference build, opendbc `242d63d`; 2026-10-12). 0.3 (S-12, S-13: `0x262` and `0x1D3` supervised in the reference build, opendbc `98404a4`; 2026-10-12). 0.2 (§11 signal catalogue, RR-2026-005 F-06; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Safety MCU (STM32H7 "panda") and its interfaces: B‡ (see [WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md)) |
 | Author | Assurance team (initial draft) |
