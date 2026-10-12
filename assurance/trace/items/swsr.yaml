@@ -797,7 +797,7 @@
   allocated_to: "U-PND-MAIN, `panda.sys.faults` (U-PND-FLT)"
   verification: "R, HIL, FI"
   acceptance: "Stall of task, comms ISR storm or main-loop hang → reset ≤ 0.1 s"
-  baseline_impl: "Implemented (panda `9f60e17`, `drivers/hw_watchdog.h`): IWDG1, 90 ms nominal, window mode, fed from the 100 Hz safety task after main-loop progress; not yet verified on hardware ([IA watchdog](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md))"
+  baseline_impl: "Implemented (panda `3859fa8`, `drivers/hw_watchdog.h`; watchdog reset reported as `pandaState.watchdogReset`): IWDG1, 90 ms nominal, window mode, fed from the 100 Hz safety task after main-loop progress; not yet verified on hardware ([IA watchdog](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md))"
   status: proposed
   source: WP-W-02
 
@@ -1035,7 +1035,7 @@
   allocated_to: "U-PND-COMMS, U-PND-MAIN"
   verification: "UT, HIL"
   acceptance: "All other (mode, param) pairs rejected, state unchanged"
-  baseline_impl: "Met in the reference build (`LIONDRIVER_REFERENCE=1`, panda `9f60e17`, `board/reference_lock.h`); host tests `tests/reference_lock`. Rejection not reported to the host ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
+  baseline_impl: "Met in the reference build (`LIONDRIVER_REFERENCE=1`, panda `3859fa8`, `board/reference_lock.h`); host tests `tests/reference_lock`. Refused requests reported as `pandaState.requestsRejected` ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
@@ -1637,7 +1637,7 @@
   allocated_to: "U-SAF-TOY"
   verification: "UT, R"
   acceptance: "Each ID rejected; `0x283` non-zero rejected"
-  baseline_impl: "Met except `0x411` (open decision D-1) (opendbc `aff4033`, `modes/toyota.h`; test `test_pcs_and_dsu_messages_blocked`) ([IA TX whitelist](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md))"
+  baseline_impl: "Met in the reference build; `0x411` refused there by decision D-1 (opendbc `5b5a4ba`, `modes/toyota.h`; test `test_pcs_and_dsu_messages_blocked`) ([IA TX whitelist](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md))"
   status: proposed
   source: WP-W-02
 

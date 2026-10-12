@@ -341,6 +341,10 @@ class SelfdriveD:
       if log.PandaState.FaultType.relayMalfunction in pandaState.faults:
         self.events.add(EventName.relayMalfunction)
 
+      # LionDriver (TSR-501): non-blocking warning after a panda reset by its hardware watchdog
+      if pandaState.watchdogReset:
+        self.events.add(EventName.pandaWatchdogReset)
+
     # Handle HW and system malfunctions
     # Order is very intentional here. Be careful when modifying this.
     # All events here should at least have NO_ENTRY and SOFT_DISABLE.

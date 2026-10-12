@@ -36,6 +36,11 @@ jobs:
       run: git submodule update --init --depth 1 opendbc_repo
     - name: Run safety tests (UBSan, 100% line coverage)
       run: ./opendbc_repo/opendbc/safety/tests/test.sh
+    - name: Run safety tests, LionDriver reference build variant (TSR-705 D-1)
+      # libsafety is compiled with -DLIONDRIVER_REFERENCE, as the panda reference build compiles opendbc
+      env:
+        LIONDRIVER_REFERENCE: "1"
+      run: ./opendbc_repo/opendbc/safety/tests/test.sh
 
   misra:
     name: safety MISRA C:2012
