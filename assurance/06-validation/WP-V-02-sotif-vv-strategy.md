@@ -196,10 +196,19 @@ SH-10 (lane change into an occupied lane, HE-02.5) is deliberately **not** mappe
 
 SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the FARS/CRSS ratio to a curve:
 - **Why a curve.** There is no braking before impact, so the crash is worse than the average pedestrian crash (item 3).
-- **Which curve.** The struck person is unprotected, so the Joksch rule does not apply. The curve is the pedestrian fatality risk of Tefft (2013): 10/25/50/75/90 % at 23/32/42/50/58 mph impact speed, interpolated linearly, and 1 above 58 mph.
+- **Which curve.** The struck person is unprotected, so the Joksch rule does not apply. The curve is the pedestrian fatality risk of Tefft (2011, AAA Foundation for Traffic Safety): 10/25/50/75/90 % at 23/32/42/50/58 mph impact speed, interpolated linearly, and 1 above 58 mph.
 - **Results.** P(severity class) is **0.38 in OS-04**, a VRU struck at the 60 km/h bound of the urban situation. It is **0.05 in OS-06**, a VRU struck after a launch from a queue at +2.0 m/s² over the 6 m standstill gap, which gives 18 km/h.
-- **Not covered.** The anchor points are quoted from memory. Applying the curve to cyclists, and the linear risk below 23 mph, are assumptions; all three are to be checked.
+- **Not covered.** The anchor points are checked (see the curve-constant check below). The curve covers pedestrians struck by a forward-moving car, light truck, van or SUV. Applying it to cyclists, and the linear risk below 23 mph, are assumptions to be checked.
 - **Use.** SH-11 has no rate target (§4), so these values inform the residual-risk statement of WP-K-02 rather than a target.
+
+**Curve-constant check (2026-10-12).** Both curves were checked against search summaries of their sources. The full texts were not reachable from the project's cloud environment, so each check stops short of the primary text.
+- **Joksch (1993), *Accident Analysis and Prevention* 25(1), 103–104.**
+  - **Confirmed:** the citation; car-car collisions with the risk of occupant death (summaries name NASS 1980–1986, and one names its predecessor NCSS); and the fourth power.
+  - **Constant:** one secondary source gives (Δv / 31.74 m/s)⁴, which is 71.0 mph, the value used here. Another quotes the constant garbled, as what reads like 61.54. With 61.54, SH-03 following rises from 0.33 to 0.59 (ODD-H) and from 0.20 to 0.35 (ODD-A), and SH-04 from 0.043 to 0.076 and from 0.032 to 0.057. The values of 1 do not change (`risk_curve.py --joksch-mph 61.54`).
+  - **Open:** the constant itself, and whether the curve covers rear impacts (SH-04), are to be confirmed from the full text.
+- **Tefft (2011), AAA Foundation for Traffic Safety, "Impact Speed and a Pedestrian's Risk of Severe Injury or Death".**
+  - **Confirmed:** the anchors 10/25/50/75/90 % at 23/32/42/50/58 mph. The data are US pedestrians struck by a forward-moving car, light truck, van or SUV, 1994–1998, weighted for oversampling. Cyclists are not covered.
+  - **Corrected citation:** the anchors are from this 2011 report. The earlier citation named the journal version, Tefft (2013), *Accident Analysis and Prevention* 50, 871–878, which gives about 10 % near 24 mph and 50 % near 41 mph. With the journal values, SH-11 at the OS-04 bound would be about 0.40 instead of 0.38.
 
 ## 4. Validation targets
 

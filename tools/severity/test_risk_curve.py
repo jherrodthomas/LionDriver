@@ -128,6 +128,15 @@ class RiskCurveTest(unittest.TestCase):
       self.assertEqual(rc.main(["--sh01"]), 0)
     self.assertIn("| 120 |", buf.getvalue())
 
+  def test_joksch_constant_sensitivity_flag(self):
+    try:
+      with redirect_stdout(io.StringIO()) as buf:
+        self.assertEqual(rc.main(["--joksch-mph", "61.54"]), 0)
+      self.assertIn("SH-03 OS-05, ODD-H: 0.592", buf.getvalue())
+    finally:
+      rc.JOKSCH_MPH = rc.JOKSCH_MPH_DEFAULT
+    self.assertAlmostEqual(rc.JOKSCH_MPH_DEFAULT * 0.44704, 31.74, places=2)
+
   def test_sensitivity_grid(self):
     with redirect_stdout(io.StringIO()) as buf:
       self.assertEqual(rc.main(["--sensitivity"]), 0)

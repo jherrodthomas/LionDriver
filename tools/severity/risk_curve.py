@@ -25,9 +25,14 @@ SH-11 (no reaction to a pedestrian or cyclist, OS-04 and OS-06) uses a pedestria
 Joksch: the person struck is unprotected and the ego's delta-v is irrelevant. Impact speed
 is the travel speed with no braking: the OS-04 bound (60 km/h), and for OS-06 a launch from a
 queue at the envelope maximum over the standstill gap, v = sqrt(2 * a * STOP_DISTANCE).
-Curve: Tefft, B. C. (2013), "Impact speed and a pedestrian's risk of severe injury or
-death", Accident Analysis and Prevention 50, 871-878. Risk of death 10/25/50/75/90 % at
-23/32/42/50/58 mph impact speed (anchor points quoted from memory; verify). Between anchors
+Curve: Tefft, B. C. (2011), "Impact Speed and a Pedestrian's Risk of Severe Injury or
+Death", AAA Foundation for Traffic Safety, September 2011. Risk of death 10/25/50/75/90 % at
+23/32/42/50/58 mph impact speed. These anchors were checked against search summaries of the
+report (2026-10-12); the full text was not reachable from this environment. The data are US
+pedestrians struck by a forward-moving car, light truck, van or SUV, 1994-1998, weighted for
+oversampling. The journal version (Tefft 2013, Accident Analysis and Prevention 50, 871-878,
+doi:10.1016/j.aap.2012.07.022) gives about 10 % near 24 mph and 50 % near 41 mph. At the
+OS-04 bound of 37 mph that is about 0.40 instead of 0.38. Between anchors
 the risk is interpolated linearly; above 58 mph it is 1, and below 23 mph it falls linearly
 to 0 at 0 mph (an assumption). One VRU is struck. The same curve is used for cyclists, which
 also needs checking.
@@ -82,10 +87,19 @@ crash-level probability is bounded with the union bound, which holds whatever th
 correlation between occupants:
   P(fatal crash) <= min(1, n_ego * p(dv_ego) + n_other * p(dv_other))
 
-VERIFY BEFORE USE. The curve's form and its 71 mph constant are quoted from memory of the
-paper, and the masses, occupancies and restitution below are assumptions. Check the curve
-against the paper (including which impact directions and occupants it covers) and the
-masses against the reference vehicle record, and record the check with the result.
+Check status (2026-10-12, from search summaries; the full text was not reachable):
+- The citation is confirmed.
+- The data are car-car collisions with the risk of occupant death; summaries name NASS
+  1980-1986, and one names its predecessor NCSS.
+- The fourth power is confirmed.
+- One secondary source states the constant as 31.74 m/s, which is 71.0 mph, matching the value
+  here. Another quotes it in a garbled form that reads like 61.54. With 61.54, SH-03 following
+  rises from 0.33 to 0.59 and SH-04 from 0.043 to 0.076; the values of 1 are unchanged
+  (`--joksch-mph 61.54`).
+- Still to check against the full text: the constant, and whether the curve covers rear
+  impacts (SH-04).
+- The masses, occupancies and restitution below are assumptions. Check the masses against the
+  reference vehicle record.
 
 There is no injury curve here. At the delta-v of SH-06, a police-reported injury is near
 certain, so for an injury-crash budget P(severity class) = 1.
@@ -100,7 +114,8 @@ import argparse
 import sys
 
 MPH_PER_KMH = 1 / 1.609344
-JOKSCH_MPH = 71.0  # verify against the paper
+JOKSCH_MPH_DEFAULT = 71.0  # 31.74 m/s per a secondary source; full text not yet checked
+JOKSCH_MPH = JOKSCH_MPH_DEFAULT
 RESTITUTION = 0.1  # assumed; small at high impact speed
 
 EGO = {"name": "Corolla (reference vehicle)", "mass_kg": 1400, "occupants": 5}  # mass to confirm (WP-C-01)
@@ -146,7 +161,7 @@ def rear_impact_kmh(speed_kmh: float, gap_s: float, reaction_s: float = FOLLOWER
   return 0.0
 
 
-PEDESTRIAN_ANCHORS_MPH = [(0.0, 0.0), (23.0, 0.10), (32.0, 0.25), (42.0, 0.50), (50.0, 0.75), (58.0, 0.90)]  # Tefft 2013; verify
+PEDESTRIAN_ANCHORS_MPH = [(0.0, 0.0), (23.0, 0.10), (32.0, 0.25), (42.0, 0.50), (50.0, 0.75), (58.0, 0.90)]  # Tefft 2011 (AAA Foundation)
 OS04_SPEED_KMH = 60  # HARA OS-04 upper bound
 
 
@@ -224,15 +239,18 @@ def crash_fatal_ub(closing_kmh: float, ego: dict, lead: dict, e: float = RESTITU
 
 
 def main(argv: list[str] | None = None) -> int:
+  global JOKSCH_MPH
   ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
   ap.add_argument("--speed", type=float, action="append", help="closing speed in km/h (repeatable); default: the SH-06 and SH-03 cases")
   ap.add_argument("--restitution", type=float, default=RESTITUTION)
+  ap.add_argument("--joksch-mph", type=float, default=JOKSCH_MPH_DEFAULT, help="Joksch reference delta-v in mph (sensitivity)")
   ap.add_argument("--sensitivity", action="store_true", help="SH-04: print impact speed over follower reaction and braking")
   ap.add_argument("--sh10", action="store_true",
                   help="SH-10 (and the SH-01/02 sideswipe): print the contact angle and lateral speed")
   ap.add_argument("--sh02", "--sh01", dest="sh02", action="store_true",
                   help="SH-01/SH-02: print the barrier impact angle of a lane departure at the controller limit")
   a = ap.parse_args(argv)
+  JOKSCH_MPH = a.joksch_mph
   if a.sh10:
     print("| Ego speed (km/h) | Lateral speed (km/h) | Contact angle (deg) | Lateral Δv per car (km/h) |\n|---|---|---|---|")
     for v in SH10_SPEEDS_KMH:
