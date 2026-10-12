@@ -141,7 +141,7 @@ Columns: **Lvl** = level(s); **Mechanism** = safety mechanism expected to act (T
 | WP-A-03 DFI-09 (shared `CarParams`) | VS-FI-23 |
 | WP-A-03 DFI-14 (SoC crash removes warning) | VS-FI-09, VS-FI-10 |
 
-Every SFMEA row of WP-A-04 §5 with a named mechanism maps to at least one case above; rows whose mechanism is "none" are run to confirm the baseline expectation and to record the gap.
+Every SFMEA row of WP-A-04 §10 up to SFMEA-32 with a named mechanism maps to at least one case above (SFMEA-33…-40, added in WP-A-04 v0.2, still need cases: OI-6); rows whose mechanism is "none" are run to confirm the baseline expectation and to record the gap.
 
 ## 7. Campaign execution order
 
@@ -204,3 +204,4 @@ Summary (to complete after execution): cases passed / failed / known GAP / block
 | OI-3 | Extend `test_fuzzy.py` to the excluded safety-relevant processes, or document why each cannot be fuzzed | SW lead | G3 |
 | OI-4 | Confirm FTTI and budgets (WP-S-04) and update §4 | Safety engineer | G2 |
 | OI-5 | Decide whether VS-FI-07 (SPI overflow) may be run on the reference device or only on a spare | Test lead | G4 |
+| OI-6 | Add fault-injection cases for WP-A-04 v0.2 rows SFMEA-33…-40 (envelope blocking with stale `pandaStates`, hung UI render loop, stalled or muted audio, unannounced deceleration, stale FCW inputs, TX burst, camera-side bus fault, block-list entry) | Test lead | G4 |

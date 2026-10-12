@@ -21,7 +21,7 @@
 
 ## 2. Method
 
-The HARA uses a **Cartesian (matrix) method**, generated with the hara-builder tool. The full matrix is in [`hara/WP-C-03-hara-cartesian.xlsx`](hara/WP-C-03-hara-cartesian.xlsx). Every analyst input is held as readable data in [`hara/hara_model.py`](hara/hara_model.py), and the step counts are in [`hara/hara-cartesian-summary.md`](hara/hara-cartesian-summary.md).
+The HARA uses a **Cartesian (matrix) method**, generated with the hara-builder tool. The full matrix is in [`hara/WP-C-03-hara-cartesian.xlsx`](hara/WP-C-03-hara-cartesian.xlsx). Every analyst input is held as readable data in [`hara/hara_model.py`](hara/hara_model.py), and the step counts are in [`hara/hara-cartesian-summary.md`](hara/hara-cartesian-summary.md). For review, every hazardous-event row is also in [`hara/hara-events.csv`](hara/hara-events.csv) (one line per row, with rationale), and the function × guide-word classification is in [`hara/hara-function-guideword.csv`](hara/hara-function-guideword.csv).
 
 1. **Functions** F-01…F-09 are taken from [WP-C-01 §2.1](WP-C-01-item-definition.md).
 2. **Malfunction identification.** All 14 guide words (M01 No function, M02 Stops functioning, M03 Unrequested, M04 Stuck, M05 Excessive, M06 Partial, M07 Early, M08 Late, M09 Too short, M10 Too long, M11 Delayed, M12 Inverse, M13 Erratic, M14 Uneven) are applied to every function: 9 × 14 = 126 pairs.
