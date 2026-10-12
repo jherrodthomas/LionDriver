@@ -615,7 +615,7 @@
   allocated_to: "U-PND-MAIN"
   verification: "HIL, FI"
   acceptance: "Clear ≤ 0.3 s + one task period"
-  baseline_impl: "Not met: 1 Hz counter, SILENT after 5 s with ignition (`main.c:101-103, 153-162, 191-226`) (GAP-06)"
+  baseline_impl: "Implemented (panda `c2e5d93`, `drivers/heartbeat_monitor.h`); host tests `tests/heartbeat_monitor`; not yet verified on hardware ([IA heartbeat](../07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md))"
   status: proposed
   source: WP-W-02
 
