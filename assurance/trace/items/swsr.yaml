@@ -797,7 +797,7 @@
   allocated_to: "U-PND-MAIN, `panda.sys.faults` (U-PND-FLT)"
   verification: "R, HIL, FI"
   acceptance: "Stall of task, comms ISR storm or main-loop hang → reset ≤ 0.1 s"
-  baseline_impl: "Not impl: `IND_WDG` unused (`stm32h7/stm32h7_config.h:43`); software watchdog kicked in the ISR it supervises (`main.c:119`, `drivers/simple_watchdog.h`) (GAP-07)"
+  baseline_impl: "**Partial since panda `8edae63`** (`board/stm32h7/lliwdg.h`, `board/main.c`): IWDG1 started on entry to a relay-driving mode, fed from the 8 Hz tick only when the main loop has progressed, timeout 300 ms; ≤ 0.1 s needs the ≥ 50 Hz safety task (SWSR-401a); not started by the bootstub; no window mode; not tested on hardware. At panda `92eb565`: Not impl: `IND_WDG` unused (`stm32h7/stm32h7_config.h:43`); software watchdog kicked in the ISR it supervises (`main.c:119`, `drivers/simple_watchdog.h`) (GAP-07)"
   status: proposed
   source: WP-W-02
 
@@ -1735,7 +1735,7 @@
   allocated_to: "IWDG1, LSI"
   verification: ""
   acceptance: ""
-  baseline_impl: "Not impl"
+  baseline_impl: "Not impl: IWDG1 is started by the application on entry to a relay-driving mode (panda `8edae63`), not by the bootstub"
   status: proposed
   source: WP-W-02
 

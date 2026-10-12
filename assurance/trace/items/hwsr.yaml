@@ -13,7 +13,7 @@
   allocated_to: "STM32H7 IWDG1"
   hw_kind: "CFG"
   verification: "R, T-HIL, FI"
-  baseline_impl: "**Not implemented.** `IND_WDG` defined as `IWDG1` (`stm32h7/stm32h7_config.h:43`) and never used. The only watchdog is a software timestamp check called from the 8 Hz tick ISR it is meant to supervise (`drivers/simple_watchdog.h:7-17`, `main.c:119, 301`) and only raises a report-only fault (GAP-07)"
+  baseline_impl: "**Partial since panda `8edae63`** (`board/stm32h7/lliwdg.h`, `board/main.c`): IWDG1 started on entry to a relay-driving mode, fed from the 8 Hz tick only when the main loop has progressed, timeout 300 ms; ≤ 0.1 s needs the ≥ 50 Hz safety task (SWSR-401a); not started by the bootstub; no window mode; not tested on hardware. At panda `92eb565`: **Not implemented.** `IND_WDG` defined as `IWDG1` (`stm32h7/stm32h7_config.h:43`) and never used. The only watchdog is a software timestamp check called from the 8 Hz tick ISR it is meant to supervise (`drivers/simple_watchdog.h:7-17`, `main.c:119, 301`) and only raises a report-only fault (GAP-07)"
   status: proposed
   source: WP-H-01
 
@@ -27,7 +27,7 @@
   allocated_to: "Firmware + IWDG"
   hw_kind: "CFG"
   verification: "R, FI"
-  baseline_impl: "Not implemented (GAP-07)"
+  baseline_impl: "Partial since panda `8edae63`: fed from the tick only when the main loop has progressed since the previous tick; the RX/TX safety checks are not yet a separate periodic task (SWSR-401a)"
   status: proposed
   source: WP-H-01
 
@@ -55,7 +55,7 @@
   allocated_to: "IWDG option bytes (IWDG_SW, freeze in stop/standby)"
   hw_kind: "CFG"
   verification: "R, T-HIL"
-  baseline_impl: "Not implemented. Interaction with stop mode (`main.c:353-356`, `sys/power_saving.h`) must be analysed: freezing IWDG in stop mode is acceptable only when the relay is released and TX is off"
+  baseline_impl: "Partial since panda `8edae63`: started by the application when it first drives the relay (all relay-driving modes), not by the bootstub; cannot be stopped until reset. Stop mode: the firmware resets before entering stop mode if IWDG1 is running, so stop mode is only entered from a boot without it"
   status: proposed
   source: WP-H-01
 

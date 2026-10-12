@@ -659,7 +659,7 @@
   mechanism: "WDG"
   timing: "detect ≤ 0.1 s / reset → SS-S"
   verification: "R, T-HIL, FI"
-  baseline_impl: "**Not implemented.** `IND_WDG` defined (`stm32h7/stm32h7_config.h:43`), never used; software watchdog checked inside the tick ISR it supervises (`drivers/simple_watchdog.h`, `main.c:119, 301`) (GAP-07). HWSR-501…501d"
+  baseline_impl: "**Partial since panda `8edae63`** (`board/stm32h7/lliwdg.h`, `board/main.c`): IWDG1 started on entry to a relay-driving mode, fed from the 8 Hz tick only when the main loop has progressed, timeout 300 ms; ≤ 0.1 s needs the ≥ 50 Hz safety task (SWSR-401a); not started by the bootstub; no window mode; not tested on hardware. At panda `92eb565`: **Not implemented.** `IND_WDG` defined (`stm32h7/stm32h7_config.h:43`), never used; software watchdog checked inside the tick ISR it supervises (`drivers/simple_watchdog.h`, `main.c:119, 301`) (GAP-07). HWSR-501…501d"
   status: proposed
   source: WP-S-02
 

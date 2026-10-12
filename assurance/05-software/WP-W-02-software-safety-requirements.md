@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-02 Software safety requirements specification |
 | Standard reference | ISO 26262-6:2018 §6 (specification of software safety requirements, incl. HSI refinement); ISO 26262-8:2018 §6 (requirement attributes and management); ISO 26262-4:2018 §6 (HSI, by reference to WP-S-05); ASPICE 4.0 SWE.1 |
-| Version | 0.2 (SWSRs for WP-S-02 v0.3: TSR-303, 516, 621…627, 711; 2026-10-12) |
+| Version | 0.3 (SWSR-501, 501b status after panda `8edae63`; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Envelope software (E-03a/E-03b): B‡ (ASIL C applies until SG-01 is re-rated, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host software (E-01): QM / QM (B-sup) |
 | Author | Assurance team (initial draft) |
@@ -147,7 +147,7 @@ Refines TSR-201…207. E-03a. Parent SGs: SG-03, SG-04, SG-05.
 
 | ID | Requirement | ASIL | Parent | Allocation | Verif | Acceptance | Baseline / GAP |
 |---|---|---|---|---|---|---|---|
-| SWSR-501 | The firmware shall service the independent watchdog only at the end of a periodic safety task cycle in which all periodic checks completed (logical checkpoint), never from a comms ISR. | B‡ | TSR-501 | U-PND-MAIN, `panda.sys.faults` (U-PND-FLT) | R, HIL, FI | Stall of task, comms ISR storm or main-loop hang → reset ≤ 0.1 s | Not impl: `IND_WDG` unused (`stm32h7/stm32h7_config.h:43`); software watchdog kicked in the ISR it supervises (`main.c:119`, `drivers/simple_watchdog.h`) (GAP-07) |
+| SWSR-501 | The firmware shall service the independent watchdog only at the end of a periodic safety task cycle in which all periodic checks completed (logical checkpoint), never from a comms ISR. | B‡ | TSR-501 | U-PND-MAIN, `panda.sys.faults` (U-PND-FLT) | R, HIL, FI | Stall of task, comms ISR storm or main-loop hang → reset ≤ 0.1 s | **Partial since panda `8edae63`** (`board/stm32h7/lliwdg.h`, `board/main.c`): IWDG1 started on entry to a relay-driving mode, fed from the 8 Hz tick only when the main loop has progressed, timeout 300 ms; ≤ 0.1 s needs the ≥ 50 Hz safety task (SWSR-401a); not started by the bootstub; no window mode; not tested on hardware. At panda `92eb565`: Not impl: `IND_WDG` unused (`stm32h7/stm32h7_config.h:43`); software watchdog kicked in the ISR it supervises (`main.c:119`, `drivers/simple_watchdog.h`) (GAP-07) |
 | SWSR-502 | Every detected fault in the fault table of WP-W-05 §6.1 shall lead to SS-S (SILENT, relay released, CAN TX disabled) within 0.1 s, latched until power cycle or recovered per its documented class. | B‡ | TSR-502 | U-PND-FLT, U-PND-MAIN | R, FI | Each fault injected → SS-S ≤ 0.1 s | Not impl: report-only (`sys/faults.h:8-27`), `PERMANENT_FAULTS 0U` (`sys/sys.h:50`) (GAP-08) |
 | SWSR-502a | Every exception handler (HardFault, NMI, MemManage, BusFault, UsageFault), the unused-interrupt handler and `assert_fatal` shall end in an MCU reset or in SS-S; none shall loop forever with the relay driven. | B‡ | TSR-502 | `panda.platform` (U-PND-PLAT) | R, FI | Each path injected → reset or SS-S | Partial: NMI/HardFault reset (`early_init.h:73-81`); unused IRQ report-only (`drivers/interrupts.h:5-9`); `assert_fatal` hangs (`main.c:39, 354-356`) (GAP-43) |
 | SWSR-502b | Interrupt-rate violations of the CAN, SPI and tick interrupts shall be classified as faults under SWSR-502 when authority is granted. | B‡ | TSR-502, TSR-508 | U-PND-FLT | FI | ISR storm → SS-S | Partial: detected, report-only (`drivers/interrupts.h:35-37`) |
@@ -241,7 +241,7 @@ These SWSRs depend on a hardware resource. They refine the HSI of [WP-S-05](../0
 
 | ID | Requirement | HW resource | HSI ([WP-S-05](../03-system/WP-S-05-hsi-specification.md)) | HWSR | Baseline |
 |---|---|---|---|---|---|
-| SWSR-501b | The bootstub shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) before jumping to the application; no software path shall be able to stop it. | IWDG1, LSI | §7 (HSI-08…12) | HWSR-501, 501b, 501c | Not impl |
+| SWSR-501b | The bootstub shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) before jumping to the application; no software path shall be able to stop it. | IWDG1, LSI | §7 (HSI-08…12) | HWSR-501, 501b, 501c | Not impl: IWDG1 is started by the application on entry to a relay-driving mode (panda `8edae63`), not by the bootstub |
 | SWSR-502c | The first actions after reset shall put both relay drive outputs in the released level and leave the car-side transceivers disabled until a car mode is set. | GPIO (relay SBU1/SBU2), transceiver enable | §6, §7 | HWSR-502, 508 | Partial: relay released in `harness_init` (`drivers/harness.h:96-107`) after clock/peripheral init (`main.c:259-282`); transceivers enabled after SILENT (`main.c:295-298`) |
 | SWSR-503c | The firmware shall enable RAMECC monitoring of all SRAM regions holding safety data and route uncorrectable-error events to SWSR-502. | RAMECC, flash ECC | §8 | HWSR-503, 503a, 503b | Not impl |
 | SWSR-504a | The clock cross-check of SWSR-504 shall use an oscillator independent of HSE. | LSI/HSI, timers | §7 | HWSR-504, 504a | Not impl |
