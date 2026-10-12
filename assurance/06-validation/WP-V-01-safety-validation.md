@@ -75,6 +75,7 @@ Timing values are the preliminary FTTI allocation of [WP-C-04 §8](../02-concept
 | VS-VAL-05 | PCM ACC envelope and cancel (AOU-05) | AOU-05R, FSR-03.06, FSR-04.03; WP-C-08 V-1 | Characterization build sends `ACC_CONTROL` (`0x343`) accel requests beyond the panda envelope (e.g., +3, +4, −5, −7 m/s²) — only with a closed-course firmware build whose identity is logged; speeds ≤ 60 km/h; also test the cancel bit | Achieved acceleration recorded per request; PCM limits recorded; cancel honoured within a recorded time. Result decides whether AOU-05 holds (ratings of HE-03.1, HE-04.1) | CC, fault-injection rules |
 | VS-VAL-06 | Stock PCS preservation (AOU-04) | AOU-04R, FSR-07.04; SG-07; AC-06 | Soft-target approach tests at stock PCS speeds with (a) harness removed, (b) item installed and disengaged, (c) item engaged. Shared with [WP-V-03](WP-V-03-sotif-known-scenarios.md) KS-20 | PCS warning and brake onset at the same TTC within ±0.2 s in (a), (b), (c); camera PCS messages present on car-side CAN in (b) and (c) | CC |
 | VS-VAL-07 | VSC/ABS status visibility (AOU-10) | HE-01, HE-04 | Switch VSC off; check `espDisabled` event and engagement behaviour (`car_events.py:116-117`) | Engagement blocked or alerting as specified in WP-C-04 | Stationary/CC |
+| VS-VAL-08 | PCM ACC response onset (planning-to-actuation time) | [WP-V-02 §4.3](WP-V-02-sotif-vv-strategy.md#43-derivation-of-the-air-01-air-03-and-air-04-values) (AIR-04 t_r, AIR-03 latency); AOU-05R | Release build, engaged, no lead, straight level track at 30 and 60 km/h, and at 90 km/h if the site allows (OI-1). `tools/longitudinal_maneuvers` (`maneuversd.py`) steps `longitudinalPlan.aTarget` from 0 to −1.0, −2.0, −3.0 (a_lim) and −3.5 m/s² (envelope minimum) and to +1.0 m/s², ≥ 10 repetitions per step and speed, at random phase. Time stamps: (1) the `longitudinalPlan` message with the new target (rlog); (2) the first `ACC_CONTROL` (`0x343`) frame carrying it on the car-side bus (independent CAN logger); (3) onset of the vehicle response, the first time the independent IMU's longitudinal acceleration (filtered, logged on the same clock as the CAN logger) has moved 10 % of the step from its pre-step value; (4) 90 % of the step | Characterisation. Reported per step and speed: (1)→(2) software time, (2)→(3) PCM onset time, (1)→(3) planning-to-actuation time, (2)→(4) rise time, each as the worst observed value. The 0.5 s share for planning to actuation assumed in WP-V-02 §4.3 holds if the worst (1)→(3) is ≤ 0.5 s for the braking steps; otherwise AIR-04 t_r and the AIR-03 latency are re-derived from the measured value | CC |
 
 ### 5.2 Driver controllability tests
 
@@ -129,7 +130,7 @@ Vehicle-level repetition of selected [WP-V-05](WP-V-05-fault-injection.md) cases
 
 | Group | Gate | Depends on |
 |---|---|---|
-| §5.1 VS-VAL-01, -03, -04, -06, -07 | G1 | WP-V-07 approved; closed-course site; instrumented wheel |
+| §5.1 VS-VAL-01, -03, -04, -06, -07, -08 | G1 | WP-V-07 approved; closed-course site; instrumented wheel; independent IMU and CAN logger on one clock (VS-VAL-08) |
 | §5.1 VS-VAL-02, -05 | G1 (target) | Fault-injection/characterization build process (configuration control), WP-V-05 rules |
 | §5.2 | G4–G5 | §5.1 results; envelope parameters fixed (WP-S-02); ethics/consent forms |
 | §5.3 | G4 | HIL results from WP-V-05; breakout box |
@@ -162,6 +163,7 @@ Vehicle-level repetition of selected [WP-V-05](WP-V-05-fault-injection.md) cases
 | VS-VAL-05 | | | Not yet executed | | | |
 | VS-VAL-06 | | | Not yet executed | | | |
 | VS-VAL-07 | | | Not yet executed | | | |
+| VS-VAL-08 | | | Not yet executed | | | |
 | VS-VAL-10…18 | | | Not yet executed | | | |
 | VS-VAL-20…26 | | | Not yet executed | | | |
 | VS-VAL-40…43 | | | Not yet executed | | | |
