@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-02 Technical safety requirements specification |
 | Standard reference | ISO 26262-4:2018 §6 (specification of technical safety requirements, safety mechanisms, requirements for production/operation by reference); ISO 26262-8:2018 §6 (requirement attributes); ISO 26262-9:2018 §5–§7 (by reference); ASPICE 4.0 SYS.2 |
-| Version | 0.1 |
+| Version | 0.2 (TSRs for the WP-C-04 v0.2 FSRs, 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01, until re-rated); target ASIL B for the whole envelope under FSC option (c) |
 | Author | Assurance team (initial draft) |
@@ -194,6 +194,11 @@ All TSR-6xx are allocated to the QM SoC. Those marked QM (B-sup) support an ASIL
 | TSR-618 | A PCM-reported ACC fault shall cause immediate disable with a take-over request. | QM (B-sup) | FSR-06.03 | SoC | FR | ≤ 0.2 s | T-SIL | Implemented: `accFaulted` IMMEDIATE_DISABLE (`selfdrive/selfdrived/events.py:908`) |
 | TSR-619 | `pandad` shall compare the panda-reported safety model, safety parameter and alternative experience with the release-record values and shall prevent engagement and raise an alert on mismatch (refines CSR-016 of [WP-S-07](WP-S-07-cybersecurity-requirements-architecture.md)). | QM (B-sup: TSR-512) | FSR-01.10 | SoC | PLB | before engagement; ≤ 1 s | T-SIL, T-HIL | Not implemented: `pandad` sets the values from `CarParams` and does not compare them with a reference (`selfdrive/pandad/panda_safety.cc:56-69`) |
 | TSR-620 | The item shall not request the TOYOTA safety mode or allow engagement unless the ECU firmware versions read at start-up (EPS, engine, ABS, radar, camera) match the release record of the reference configuration; an unverified or mismatching firmware set shall keep the safety MCU in NOOUTPUT and inform the driver. The envelope cannot read ECU firmware itself, so the refusal rests on the SoC query plus the mode lock of TSR-512. | QM (B-sup: TSR-512, TSR-803) | FSR-01.10 | SoC | CFG | at start-up | T-SIL, T-VEH | Not implemented: fingerprinting accepts a fuzzy match and can be forced or skipped by environment (`opendbc_repo/opendbc/car/car_helpers.py:86-87, 144, 164`); no comparison with a release record (WP-A-03 ECU-FW row; TSR-803 is the procedural counterpart) |
+| TSR-621 | While engaged, `selfdrived` shall raise an immediate disable with a take-over request when any panda in a car safety mode reports `controlsAllowed` false, after at most 2 consecutive mismatched samples to absorb transport skew between the CAN and `pandaStates` sockets, and in any case within ≤ 0.5 s of the first mismatched sample. | QM (B-sup: TSR-108, TSR-516) | FSR-02.10 | SoC | PLB | ≤ 0.5 s / ≤ 0.5 s to warning | T-SIL, FI | Partial: `controlsMismatch` after 200 samples ≈ 2 s (`selfdrive/selfdrived/selfdrived.py:338, 508-510`); exceeds the SG-02 budget |
+| TSR-622 | While the item can engage, the SoC shall supervise the liveness of the HMI path (UI render loop and sound output stream, each with a heartbeat) and treat a missing heartbeat for > 1 s as a fault: immediate disable, with the take-over request carried by the panda siren (TSR-516) and the cluster cruise state (TSR-309, FSR-05.05). | QM (B-sup: TSR-516) | FSR-02.11 | SoC (HMI) | TMO | ≤ 1 s / ≤ 0.2 s | T-SIL, FI | Partial: a crashed `ui`/`soundd` raises `processNotRunning` (`selfdrive/selfdrived/selfdrived.py:351-357`); a hung render loop or stalled audio stream is not detected |
+| TSR-623 | Alert sound output shall not be muted or set below a defined audible minimum while the item can engage; if the minimum cannot be guaranteed, engagement shall be prevented with a no-entry alert. | QM (B-sup: TSR-516) | FSR-02.11 | SoC (HMI) | CFG | — | R, T-SIL | Not assessed at the baseline (WP-C-08 MC-12) |
+| TSR-624 | The SoC shall command deceleration that is not caused by traffic (driver-monitoring no-response, fault-induced force deceleration) only after a visual and acoustic alert announcing it has been given, and shall ramp the request within the envelope bounds a_min (TSR-202) and j_down (TSR-205). | QM (B-sup: TSR-202, TSR-205) | FSR-04.05 | SoC | WRN | alert ≥ 1 s before decel onset (proposed) | T-SIL, T-VEH | Partial: DM escalation alerts precede the no-response deceleration (`selfdrive/monitoring/policy.py`); soft-disable force deceleration is announced at its start (`selfdrive/controls/lib/longitudinal_planner.py:84-85`); jerk not bounded (GAP-04) |
+| TSR-625 | Forward collision warnings shall be raised only from fresh and valid inputs (`modelV2` and `longitudinalPlan` within 2 nominal periods, validity flags set), and the false-FCW rate per driving hour in the ODD shall meet a target set in [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md). | A (open: WP-C-04 OI-9; allocated to the QM SoC) | FSR-04.06 | SoC | PLB | ≤ 2 periods | T-SIL, LOG | Partial: model FCW from `hardBrakePredicted` and planner FCW (`selfdrive/selfdrived/selfdrived.py:440-445`); no explicit freshness gate on FCW inputs; no false-rate target |
 
 ## 9. TSR-7xx Stock PCS preservation and harness (SG-07, SG-01)
 
@@ -308,6 +313,10 @@ These are code facts found while writing the TSRs. They are registered in the [g
 | TSR-617 | FSR-01.14, 06.04 | SG-01, SG-03, SG-04 |
 | TSR-618 | FSR-06.03 | SG-06 |
 | TSR-619, 620 | FSR-01.10 | SG-01, SG-03, SG-04, SG-05, SG-07 |
+| TSR-621 | FSR-02.10 | SG-02, SG-06 |
+| TSR-622, 623 | FSR-02.11 | SG-02, SG-06 |
+| TSR-624 | FSR-04.05 | SG-04 |
+| TSR-625 | FSR-04.06 | SG-04 |
 | TSR-701, 702, 703, 706 | FSR-07.03 | SG-07 |
 | TSR-704, 707 | FSR-07.01 | SG-07 |
 | TSR-705 | FSR-07.02 | SG-07 |
@@ -347,6 +356,15 @@ These are code facts found while writing the TSRs. They are registered in the [g
 | | | FSR-07.03 | 502, 506, 510, 701, 702, 703, 706 |
 | | | FSR-07.04 | 708 |
 | | | FSR-07.05 | 709 |
+
+FSRs added in WP-C-04 v0.2:
+
+| FSR | TSRs |
+|---|---|
+| FSR-02.10 | 621 (backstop 108, 516) |
+| FSR-02.11 | 622, 623 (backstop 516) |
+| FSR-04.05 | 624 (backstop 202, 205) |
+| FSR-04.06 | 625 |
 
 Every FSR has at least one TSR. Machine-readable entries go to [`trace/`](../trace/) per [WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md) (OI-6).
 

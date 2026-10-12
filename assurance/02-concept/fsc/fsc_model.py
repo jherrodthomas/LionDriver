@@ -173,7 +173,7 @@ def block_diagram() -> dict:
     except ValueError:
       sg_over[g["id"]] = {}
   return {
-    "fsc_metadata": {"doc_id": "WP-C-04 (completeness check)", "revision": "0.2", "author": "Assurance team (draft)", "approver": "Safety manager"},
+    "fsc_metadata": {"project": "LionDriver", "doc_id": "WP-C-04 (completeness check)", "revision": "0.2", "date": "2026-10-12", "author": "Assurance team (draft)", "approver": "Safety manager", "linked_hara": "assurance/02-concept/hara/WP-C-03-hara-cartesian.xlsx (tab 13 replaced by SG-01…SG-07, see README)"},
     "block_diagram": {"nodes": [{"id": n[0], "name": n[1], "type": n[2], "asil_relevant": n[3], "inputs": n[4], "outputs": n[5],
                "redundancy_group": n[6], "shared_resources": n[7], "notes": f"{n[8]}: {n[9]}"} for n in NODES]},
     "safety_goal_overrides": sg_over,
@@ -255,6 +255,9 @@ def postprocess(path: Path) -> None:
   from openpyxl import load_workbook
   from openpyxl.styles import Alignment, Font
   wb = load_workbook(path)
+  ws = wb["00_Title_Page"]
+  ws.cell(row=15, column=2, value="Status").font = Font(bold=True)
+  ws.cell(row=15, column=3, value="Draft: completeness check of WP-C-04 v0.2; not approved (WP-C-04 header)")
   ws = wb.create_sheet("09_LionDriver_Coverage")
   ws.append(["Generated FSR rows (tab 05) are template wording per basic event. LionDriver's FSRs are in WP-C-04; this tab maps every basic event onto them (fsc_model.py)."])
   ws.append([])
