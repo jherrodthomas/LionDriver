@@ -92,7 +92,7 @@ Consequences:
 
 - The source of the driving models' training data is now known in kind: drives uploaded by openpilot users, selected by comma.ai. Its coverage of the reference ODD, its labelling and its bias are still unknown. [WP-C-11 §7](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) keeps its position: no argument relies on training-data coverage.
 - Because uploads from "particular forks" may be used for training, evaluation data that LionDriver collects is independent of future training data only if it is not uploaded to comma.ai (WP-C-11 DSR-05).
-- The comparison of the training-data ODD with the reference ODD ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) OI-6) cannot be made from public information.
+- The comparison of the training-data ODD with the reference ODD cannot be made from public information. By the maintainer's decision it is replaced by LionDriver's own per-stratum evaluation evidence ([WP-C-02 §3.3](../02-concept/WP-C-02-odd-and-intended-functionality.md#33-relation-to-the-driving-models-training-data)).
 
 ## 4. Why no DIA is possible, and what replaces it
 

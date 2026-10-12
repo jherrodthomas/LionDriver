@@ -61,10 +61,10 @@
   phase: G1
   between: [WP-C-02, WP-C-11]
   pattern: "SOTIF-AI"
-  topic: "The reference ODD cannot be compared with the driving model's training-data ODD, which upstream has not published"
-  anchors: ["WP-C-02:Specify the training-data ODD of the driving model", "WP-C-11:makes no claim about training data"]
-  status: open
-  open_item: "WP-C-02 OI-6"
+  topic: "The driving model's training-data ODD is unpublished, so by the maintainer's decision it is not compared with the reference ODD. WP-C-02 §3.3: a stratum is claimed only where LionDriver evaluation data covers it and meets AIR-09 (DSR-03/04/05); AIR-14 is the runtime backstop; the residual stays as defeater DF-20"
+  anchors: ["WP-C-02:Relation to the driving model's training data", "WP-C-02:A stratum of §3.1 is part of the claimed ODD only if LionDriver evaluation data covers it", "WP-C-11:makes no claim about training data", "WP-C-11:The reference ODD is therefore not compared with the training-data ODD"]
+  status: documented
+  open_item: null
   due: G2
 - id: IX-07
   kind: interface
