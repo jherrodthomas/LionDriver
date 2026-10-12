@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-05 Hardware-software interface specification |
 | Standard reference | ISO 26262-4:2018 §6 (HSI specification); ISO 26262-5:2018 §6 and ISO 26262-6:2018 §6 (HSI refinement, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.7 (S-12: siren on a persistent EPS fault, panda `b790fca`; 2026-10-12). 0.6 (S-13: MAIN_ON cross-check implemented in the reference build, opendbc `875e325`; 2026-10-12). 0.5 (S-12: EPS fault reported to the host as `pandaState.epsFault`, panda `877730e`, opendbc `adcb7c2`; 2026-10-12). 0.4 (S-12: EPS fault codes evaluated by the envelope in the reference build, opendbc `242d63d`; 2026-10-12). 0.3 (S-12, S-13: `0x262` and `0x1D3` supervised in the reference build, opendbc `98404a4`; 2026-10-12). 0.2 (§11 signal catalogue, RR-2026-005 F-06; watchdog ≤ 0.1 s; 2026-10-12) |
+| Version | 0.8 (HSI-09: IWDG1 now used, per TSR-501 v0.4; RR-2026-008; 2026-10-12). 0.7 (S-12: siren on a persistent EPS fault, panda `b790fca`; 2026-10-12). 0.6 (S-13: MAIN_ON cross-check implemented in the reference build, opendbc `875e325`; 2026-10-12). 0.5 (S-12: EPS fault reported to the host as `pandaState.epsFault`, panda `877730e`, opendbc `adcb7c2`; 2026-10-12). 0.4 (S-12: EPS fault codes evaluated by the envelope in the reference build, opendbc `242d63d`; 2026-10-12). 0.3 (S-12, S-13: `0x262` and `0x1D3` supervised in the reference build, opendbc `98404a4`; 2026-10-12). 0.2 (§11 signal catalogue, RR-2026-005 F-06; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Safety MCU (STM32H7 "panda") and its interfaces: B‡ (see [WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md)) |
 | Author | Assurance team (initial draft) |
@@ -39,7 +39,7 @@ Paths are under `panda/board/` unless prefixed. HSI IDs (HSI-nn) are referenced 
 | HSI-06 | Harness orientation sense | ADC1 ch4/ch17 on SBU1/SBU2 | `drivers/harness.h` | CAN routing, relay pin mapping | B | TSR-701; HWSR-701 |
 | HSI-07 | Ignition line | SBU GPIO input | `drivers/harness.h:35-52` | Heartbeat timeout selection, power states | B | TSR-510; HWSR-510 |
 | HSI-08 | Reset / boot pins from SoC | SoC GPIO → MCU NRST, BOOT0 | `openpilot/common/hardware/comma/hardware.py:400-419` | Firmware substitution; safe state on reset | B‡ (+CS) | TSR-502, 511; HWSR-502c |
-| HSI-09 | Watchdog | IWDG1 (unused), software timestamp check | `stm32h7/stm32h7_config.h:43`, `drivers/simple_watchdog.h` | MCU hang detection | B‡ | TSR-501; HWSR-501 |
+| HSI-09 | Watchdog | IWDG1 (window mode, 90 ms nominal, started at the first relay energisation; panda `3859fa8`), software timestamp check | `stm32h7/stm32h7_config.h:43`, `drivers/hw_watchdog.h`, `drivers/harness.h`, `drivers/simple_watchdog.h` | MCU hang detection | B‡ | TSR-501; HWSR-501 |
 | HSI-10 | Fault / health monitors | NVIC, RCC CSS, DTS, ADC, interrupt-rate counters | `sys/faults.h`, `drivers/interrupts.h`, `drivers/registers.h`, `stm32h7/lldts.h` | Platform fault detection | B‡ | TSR-502…505, 509 |
 | HSI-11 | Siren | DAC/DMA + codec over I2C5 (board-dependent) | `drivers/fake_siren.h`, `boards/*.h` | SoC-independent warning | B | TSR-516 |
 | HSI-12 | Flash and bootstub | Flash bank 1, sector 0 bootstub, app at `0x08020000` | `bootstub.c`, `flasher.h`, `stm32h7/llflash.h` | Firmware integrity | B‡ (+CS) | TSR-503, 511, 514 |

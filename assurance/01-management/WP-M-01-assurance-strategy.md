@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-M-01 Assurance strategy and lifecycle tailoring |
 | Standard reference | ISO 26262-2:2018 §6 (tailoring, safety plan inputs); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6; ISO/PAS 8800:2024 (AI safety management, assurance argument); ASPICE 4.0 MAN.3; UL 4600 (informative, safety case structure) |
-| Version | 0.1 |
+| Version | 0.2 (status update for the integrated envelope changes: P0 sync policy per D-02, D-09 added; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (FuSa, SOTIF, CS, AI, process) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review of tailoring rationale by independent assessor (I3) |
 | Approver | Project maintainer (acting safety manager). Self-approval is an accepted interim limitation until a second person takes the safety manager or reviewer role ([WP-M-02](WP-M-02-safety-plan.md) OI-2) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose
 
@@ -143,7 +143,7 @@ One shared **hazard log** (in [WP-C-03](../02-concept/WP-C-03-hara.md), with SOT
 
 | Phase | Gate | Key work products | Prerequisites and notes |
 |---|---|---|---|
-| **P0 Governance** | G0 | M-00…M-13, P-01…P-06 | Fork opendbc and panda into LionDriver control (D-01). Freeze upstream sync (D-02). Fix CI for the fork (D-03). CODEOWNERS and branch protection |
+| **P0 Governance** | G0 | M-00…M-13, P-01…P-06 | Fork opendbc and panda into LionDriver control (D-01). Planned sync once per minor release (D-02, decided 2026-10-10). Fix CI for the fork (D-03). CODEOWNERS and branch protection |
 | **P1 Concept** | G1 | C-01…C-11, V-07, K-01 (initial argument) | No public-road testing until WP-V-07 is approved. HARA confirmation review by an external assessor |
 | **P2 System design** | G2 | S-01…S-07, A-01…A-04, V-02 | Envelope requirements back-filled from code. FFI and DFA analyses decide whether hardware changes are needed |
 | **P3 HW/SW development** | G3 | H-01…H-05, H-07, W-01…W-06, W-09…W-11, P-07…P-09 | Includes closing gaps found in P2, for example locking the safety mode and parameter |
@@ -177,6 +177,7 @@ These are owned by the project maintainer. Until each one is decided, it stays o
 | D-06 | External assessor | Engage an independent functional safety assessor for the HARA confirmation review at G1 |
 | D-07 | Work product format | Markdown in the repository (docs-as-code), with machine-readable requirements in `trace/`. Reviewed through pull requests. Can be exported to an ALM tool later |
 | D-08 | Default enablement of Experimental Mode | Upstream commit `f21bfc3` turns on Experimental Mode by default without confirmation. For the reference configuration, decide whether this is in the ODD; recommendation: disabled until validated |
+| D-09 | Envelope strategy ([WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md#42-recommendation), OI-1) | Option (c): reduce actuation authority so that controllability C1 can be shown, lowering SG-01 to ASIL B, combined with ASIL B hardening of the envelope; option (b) kept as fallback. **Status:** pending maintainer decision (tracked in [WP-M-07](WP-M-07-risk-management.md) §5) |
 
 ## 9. Top risks to the assurance path
 

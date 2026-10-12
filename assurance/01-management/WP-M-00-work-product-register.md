@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-M-00 Work product register |
 | Standard reference | ISO 26262-2:2018 §6 (safety plan, work product list); ASPICE 4.0 MAN.3 (BP: define work products), SUP.8 (configuration items) |
-| Version | 0.1 |
+| Version | 0.2 (status update for the integrated envelope changes: design notes, change records, HIL plan, review records, confirmation folder; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Safety manager |
-| Baseline | `8b8c6ae` (openpilot-derived baseline, 2026-10-09) |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose
 
@@ -181,12 +181,16 @@ Legend for **ASPICE**: process IDs from ASPICE PAM 4.0, including the ML (MLE), 
 |---|---|
 | Safety goals (26262-3 §6) | [WP-C-03 HARA §6](../02-concept/WP-C-03-hara.md) |
 | Verification review reports (26262-3 §6–7, 4 §6, etc.) | Pull request review records, logged through [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) |
-| Confirmation review reports (26262-2 §6) | Records under `10-safety-case/confirmation/` (folder to be created), created per [WP-M-06](WP-M-06-confirmation-measures-plan.md) |
-| Functional safety audit report (26262-2 §6) | [WP-M-06](WP-M-06-confirmation-measures-plan.md) §audit; record under `10-safety-case/confirmation/` (folder to be created) |
+| Confirmation review reports (26262-2 §6) | Records under [`10-safety-case/confirmation/`](../10-safety-case/confirmation/README.md), created per [WP-M-06](WP-M-06-confirmation-measures-plan.md) |
+| Functional safety audit report (26262-2 §6) | [WP-M-06](WP-M-06-confirmation-measures-plan.md) §audit; record under [`10-safety-case/confirmation/`](../10-safety-case/confirmation/README.md) |
 | Safety analysis at HW level (26262-5 §7) | [WP-H-03](../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) |
 | Specification of requirements for production, operation, service, decommissioning (26262-4 §6) | [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) |
 | Cybersecurity claims (21434 §9.4) | [WP-C-10](../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) |
 | Vulnerability analysis and management (21434 §8) | [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) |
+| Design notes (DN-nn), supporting WP-W-03 / WP-W-05 | [`05-software/design-notes/`](../05-software/design-notes/DN-01-tx-rate-supervision.md) (DN-01 TX rate supervision, v0.2, 2026-10-12) |
+| Change impact analysis records (26262-8 §8) | [`07-supporting/impact/`](../07-supporting/impact/README.md) per [WP-M-12](WP-M-12-impact-analysis.md) §7 (index: `impact/README.md`) |
+| HIL bench plan (D-04) | [`05-software/hil-bench/README.md`](../05-software/hil-bench/README.md) (Draft, plan only) |
+| Verification review records | `*/reviews/RR-yyyy-nnn.md` (e.g. [RR-2026-002](reviews/RR-2026-002.md)) and pull request reviews ([WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md)) |
 
 ## 5. Not applicable
 

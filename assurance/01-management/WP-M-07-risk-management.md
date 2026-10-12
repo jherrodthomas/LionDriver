@@ -4,17 +4,17 @@
 |---|---|
 | Work product | WP-M-07 Project risk management plan and register |
 | Standard reference | ASPICE 4.0 MAN.5 (risk management); ISO 26262-2 §6 (planning and progress, by reference to WP-M-02) |
-| Version | 0.1 |
+| Version | 0.2 (status update for the integrated envelope changes: R-05 closed, R-10 and R-11 re-scored, R-26…R-29 added, D-04 status, D-09 added; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (project risk; not product hazard analysis) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose and scope
 
-This document defines how LionDriver identifies, analyses, treats and monitors **project risks**: events that could stop the project from achieving the assurance path in [WP-M-01](WP-M-01-assurance-strategy.md) on its planned scope, effort and quality. It also tracks the open strategic decisions D-01…D-08 from [WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required).
+This document defines how LionDriver identifies, analyses, treats and monitors **project risks**: events that could stop the project from achieving the assurance path in [WP-M-01](WP-M-01-assurance-strategy.md) on its planned scope, effort and quality. It also tracks the open strategic decisions D-01…D-09 from [WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required).
 
 Product risks (hazards to road users, threats to the vehicle) are **not** managed here. They belong to the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)), the SOTIF analyses ([WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md)) and the TARA ([WP-C-09](../02-concept/WP-C-09-tara.md)). Where a project risk would weaken a product safety argument, the register says so and links the affected work product.
 
@@ -65,7 +65,7 @@ Each High and Medium risk has an owner, a treatment action with a due gate, and 
 
 ## 4. Risk register (initial)
 
-P/I/E = probability / impact / exposure. Status at baseline: all **Open**; no treatment has been carried out yet.
+P/I/E = probability / impact / exposure. Status at baseline: all **Open**; no treatment had been carried out. Status 2026-10-12: R-05 closed; R-10, R-11 reduced; others open. R-26…R-29 added 2026-10-12.
 
 | ID | Risk (cause → effect) | Source | P | I | E | Treatment | Owner | Trigger / indicator | Due |
 |---|---|---|---|---|---|---|---|---|---|
@@ -73,13 +73,13 @@ P/I/E = probability / impact / exposure. Status at baseline: all **Open**; no tr
 | R-02 | No supplier evidence for the comma device / STM32H7 → FMEDA, metrics and component qualification incomplete; ASIL claim on the envelope limited | WP-M-01 §9; T-04; GAP-15 | 4 | 5 | 20 | Mitigate: derive FMEDA from published panda design and STM32H7 safety manual; conservative assumptions; decide early (G2) whether an external monitor is needed. Accept residual limitation in the safety case if needed | SM / HW | Schematic-level data unavailable at P3 start | G2 |
 | R-03 | OEM ECU behaviour (EPS limiting and fault reaction, PCM, PCS availability) cannot be verified from Toyota → AoUs remain assumptions; controllability and envelope arguments weakened | WP-M-01 §9; GAP-05 | 4 | 4 | 16 | Mitigate: characterise by vehicle test under WP-V-07; restrict claims to what was measured | SM | Tests cannot reproduce EPS fault reactions safely | G1–G4 |
 | R-04 | Upstream velocity and sync pressure → safety case stale; unreviewed safety changes enter | WP-M-01 §9; GAP-37 | 4 | 4 | 16 | Avoid/mitigate: planned sync once per minor release (D-02); sync only by change request with impact analysis; track upstream security fixes as anomalies | PM | Sync PR merged without impact analysis | G0 |
-| R-05 | Safety code not under LionDriver configuration control (submodules resolve to `commaai/*`, tinygrad on `master`) → cannot change or baseline the envelope | GAP-29; D-01 | 5 | 4 | 20 | Mitigate: fork opendbc and panda, absolute URLs, pin tinygrad (B-02) | PM | Not done by G0 | G0 |
+| R-05 | Safety code not under LionDriver configuration control (submodules resolve to `commaai/*`, tinygrad on `master`) → cannot change or baseline the envelope | GAP-29; D-01 | 5 | 4 | 20 | Mitigate: fork opendbc and panda, absolute URLs, pin tinygrad (B-02). **Closed** 2026-10-10 (D-01, PR #3) | PM | Not done by G0 | G0 |
 | R-06 | No HIL or on-device verification in the fork → no target-level evidence for P4; fault injection impossible | GAP-30; D-04 | 5 | 4 | 20 | Mitigate: build HIL bench (WBS 5.1) starting in P2; self-hosted runner | HIL owner | Bench parts not procured by end of P2 | G3 |
 | R-07 | ML insufficiencies cannot be quantified without training data → SOTIF unknown-scenario residual risk cannot be shown | WP-M-01 §9; T-10; GAP-22 | 4 | 5 | 20 | Mitigate: tight ODD; validation targets; fork-owned drive logs; scenario simulation; field monitoring; envelope bounds | SL | Validation targets need more driving than resources allow | G2 |
 | R-08 | No external assessor engaged, or none affordable → HARA confirmation review (I3) cannot be done; G1 blocked | D-06; T-09 | 3 | 5 | 15 | Mitigate: approach assessors in P0 (B-09); budget decision (WP-M-03 OI-2) | PM | No quote by end of P0 | G0 |
 | R-09 | Single-channel panda MCU sharing power, clock and board with the SoC → DFA shows insufficient independence for the HARA ASIL | WP-M-01 §4.2.3; GAP-11 | 3 | 5 | 15 | Mitigate: early DFA (P2); options: ASIL decomposition with vehicle-side measures, or external monitor (scope change) | ENG / HW | DFA identifies unmitigated common-cause initiators | G2 |
-| R-10 | Safety mode and parameter set by the QM SoC (`0xdc`), debug relay `0xc5` not gated → FFI argument fails | GAP-09 | 4 | 4 | 16 | Mitigate: lock safety mode for the reference configuration in panda firmware; gate `0xc5` (WBS 4.3) | ENG | Lock not feasible without breaking upstream interfaces | G3 |
-| R-11 | Envelope fault handling weak (IWDG not initialised, faults report-only, no E2E counters) → required hardening larger than estimated | GAP-01, GAP-07, GAP-08 | 3 | 4 | 12 | Mitigate: scope hardening in P2 from TSRs; prototype IWDG and safe-state early | ENG | P3 estimate exceeded by > 25 % | G3 |
+| R-10 | Safety mode and parameter set by the QM SoC (`0xdc`), debug relay `0xc5` not gated → FFI argument fails | GAP-09 | 2 | 4 | 8 | Mitigate: lock safety mode for the reference configuration in panda firmware; gate `0xc5` (WBS 4.3). Re-scored 2026-10-12 (was P4 I4 E16): mitigated in the reference build (panda mode lock TSR-512/513, `0xc5` and `0xdf` refused); open: HIL evidence, review | ENG | Lock not feasible without breaking upstream interfaces | G3 |
+| R-11 | Envelope fault handling weak (IWDG not initialised, faults report-only, no E2E counters) → required hardening larger than estimated | GAP-01, GAP-07, GAP-08 | 2 | 4 | 8 | Mitigate: scope hardening in P2 from TSRs; prototype IWDG and safe-state early. Re-scored 2026-10-12 (was P3 I4 E12): IWDG (TSR-501), health flags, RX timeout 5 periods, heartbeat 0.3 s implemented in the reference build, not verified on hardware; open: TSR-405(a)(b)(d), GAP-46, driver-torque monitoring | ENG | P3 estimate exceeded by > 25 % | G3 |
 | R-12 | comma.ai bans LionDriver devices from its servers (fork policy) or changes server APIs → users lose services; update and upload paths break | `docs/SAFETY.md`; WP-M-04 §2.3; T-11 | 3 | 3 | 9 | Avoid: no safety function depends on comma servers; comply with the fork policy (keep safety tests, no trademark); plan fork-owned update path | CSM | Ban notice or API change | G1 |
 | R-13 | Tool qualification for arm-none-eabi-gcc, cppcheck/MISRA, coverage and mutation tools is harder than planned (comma-packaged binaries, mutable branches) | GAP-34 | 3 | 3 | 9 | Mitigate: pin tool versions; qualify by validation and increased confidence from use where justified; consider alternative builds | ENG | TCL3 tool without feasible qualification route | G3 |
 | R-14 | Structural coverage beyond line coverage (branch, MC/DC) and target-level testing require new tooling and test effort | GAP-13 | 3 | 3 | 9 | Mitigate: evaluate coverage tools in P2; run tests on Cortex-M7 via HIL | ENG | No MC/DC-capable tool selected by G2 | G2 |
@@ -94,16 +94,21 @@ P/I/E = probability / impact / exposure. Status at baseline: all **Open**; no tr
 | R-23 | Licensed standards not available to the team → clause references and Table 1 values cannot be checked; audit findings | WP-M-03 OI-3; WP-M-06 OI-1 | 3 | 3 | 9 | Mitigate: obtain licensed copies before G0 confirmation reviews | PM | Not available at G0 | G0 |
 | R-24 | Upstream model swaps or tinygrad changes alter driving behaviour silently → scenario evaluations invalid | D-05; GAP-22 | 3 | 4 | 12 | Avoid: pin weights and tinygrad per release; any model change triggers SOTIF re-evaluation | ML | Model hash differs from release record | G3 |
 | R-25 | Hosted CI logs and artefacts expire → verification evidence lost | WP-M-05 §9 | 3 | 2 | 6 | Mitigate: archive release-relevant CI results with the release record | PM | Evidence link broken at audit | G3 |
+| R-26 | SR-A changes merged without independent review (9 change records in `07-supporting/impact/`, DN-01, maintainer decisions) → review debt; rework found at I1/I3 reviews | WP-M-12 §7.2 deviation; WP-M-02 OI-1 | 5 | 4 | 20 | Mitigate: recruit a reviewer (B-11); batch I1 review of the records and DN-01 (B-13) before G3; no credit taken before review | PM | Records still unreviewed at G2 | G3 |
+| R-27 | Timing parameters chosen without measurement (0.3 s heartbeat, 5-period RX timeout, 150 ms cruise tolerance, 1 s EPS siren persistence, TX rate budgets) → false disengagements or missed faults; no reference logs to check them | Change records 2026-10-12; DN-01 | 4 | 3 | 12 | Mitigate: fork-owned reference drive logs (B-16); HIL bench (D-04) | ENG | False disengagements in first logged drives | G3 |
+| R-28 | Envelope mechanisms active only in the reference build (`LIONDRIVER_REFERENCE`) → a non-reference binary is flashed, or evidence is taken from the wrong variant | WP-M-12 M-11 | 2 | 5 | 10 | Mitigate: release check for the reference-build flag and reference-variant evidence ([WP-P-10](../07-supporting/WP-P-10-release-management.md)) | PM | Release record without variant identification | G5 |
+| R-29 | LionDriver changes in the opendbc and panda forks diverge from upstream → each sync costly and error-prone | D-02; `impact/` | 4 | 3 | 12 | Mitigate: sync once per MINOR release (D-02) with sync report and impact analysis; keep LionDriver changes small and behind `LIONDRIVER_REFERENCE` | PM | Sync effort exceeds one week | Each sync |
 
-Summary at baseline: 25 risks — High 11, Medium 13, Low 1 (§4.1).
+Summary at baseline: 25 risks — High 11, Medium 13, Low 1. Summary 2026-10-12: 29 risks, 1 closed; open: High 10, Medium 17, Low 1 (§4.1).
 
 ### 4.1 Exposure summary
 
 | Band | Risks |
 |---|---|
-| High (≥ 15) | R-01, R-02, R-03, R-04, R-05, R-06, R-07, R-08, R-09, R-10, R-20 |
-| Medium (8–14) | R-11, R-12, R-13, R-14, R-15, R-16, R-17, R-18, R-19, R-21, R-22, R-23, R-24 |
+| High (≥ 15) | R-01, R-02, R-03, R-04, R-06, R-07, R-08, R-09, R-20, R-26 |
+| Medium (8–14) | R-10, R-11, R-12, R-13, R-14, R-15, R-16, R-17, R-18, R-19, R-21, R-22, R-23, R-24, R-27, R-28, R-29 |
 | Low (≤ 7) | R-25 |
+| Closed | R-05 (2026-10-10) |
 
 ## 5. Decision log (strategic decisions from WP-M-01 §8)
 
@@ -114,11 +119,12 @@ Each decision is tracked as a GitHub issue labelled `decision:D-nn`. A decision 
 | D-01 | Take configuration control of the safety code | Fork opendbc and panda; absolute submodule URLs; pin tinygrad | **Done** 2026-10-10: panda, opendbc, msgq, rednose, teleoprtc forked to `jherrodthomas/*` and repointed (PR #3); tinygrad tracked by commit | PM | G0 | R-05 |
 | D-02 | Upstream synchronization policy | Freeze; sync only by change request with impact analysis | **Decided** 2026-10-10: planned sync once per MINOR release; out-of-cycle cherry-picks only for security or safety fixes; `tools/sync/sync_report.py` + `impact/` records (PR #4) | PM | G0 | R-04 |
 | D-03 | CI for the fork | Disable/replace comma-dependent workflows; fork-owned replay references; safety tests, MISRA and mutation in fork CI | **Mostly done** 2026-10-10 (PRs #2, #3, #6): comma-only workflows removed; safety tests, MISRA and mutation in fork CI; issue forms. Open: fork-owned replay references (CR-CI-08) | PM | G0 | R-05, R-25 |
-| D-04 | HIL capability | Build a minimal HIL bench | Open | PM | G2 (decision); G3 (bench) | R-06 |
+| D-04 | HIL capability | Build a minimal HIL bench | Open: plan drafted ([`hil-bench/README.md`](../05-software/hil-bench/README.md)); HIL tests `test_10…test_14` written, not run; no parts bought | PM | G2 (decision); G3 (bench) | R-06 |
 | D-05 | Model update policy | Pin weights per release; model change re-runs scenario evaluations | Open | PM / ML | G1 | R-24 |
 | D-06 | External assessor | Engage an independent FuSa assessor for the G1 HARA confirmation review | Open | PM | G0 | R-08, R-20 |
 | D-07 | Work product format | Markdown docs-as-code; machine-readable requirements in `trace/`; PR review | Open (de facto in use; not formally decided) | PM | G0 | — |
 | D-08 | Default enablement of Experimental Mode | Disabled for the reference configuration until validated | Open | PM / SL | G1 | R-17 |
+| D-09 | Envelope strategy ([WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §4.2, OI-1) | Option (c): reduce actuation authority so C1 can be shown (SG-01 to ASIL B), with ASIL B hardening of the envelope; (b) as fallback | **Pending maintainer** | PM / SM | G1 | R-09, R-02 |
 
 ## 6. Records
 

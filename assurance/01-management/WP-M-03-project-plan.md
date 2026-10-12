@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-M-03 Project plan (scope, WBS, schedule, resources) |
 | Standard reference | ASPICE 4.0 MAN.3 (project management); ISO 26262-2 §6 (planning of safety activities, by reference to WP-M-02) |
-| Version | 0.1 |
+| Version | 0.2 (status update for the integrated envelope changes: WBS 4.3, resources, backlog B-13…B-17; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (project management) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose
 
@@ -65,7 +65,7 @@ WBS elements follow the phases and gates in [WP-M-01 §7](WP-M-01-assurance-stra
 | 4 | P3 HW/SW development | | G3 |
 | 4.1 | Hardware safety | WP-H-01…H-05, H-07 | |
 | 4.2 | Software safety requirements, architecture, analysis | WP-W-01…W-04 | |
-| 4.3 | Envelope hardening (code changes) | IWDG, fault → safe state, mode lock, gate `0xc5`, driver-torque and EPS-status monitoring, RX E2E strategy (gap §9 action 5) | |
+| 4.3 | Envelope hardening (code changes) | IWDG, fault → safe state, mode lock, gate `0xc5`, driver-torque and EPS-status monitoring, RX E2E strategy (gap §9 action 5). Status 2026-10-12 (reference build, not verified, not reviewed): done: IWDG and window mode, mode lock, `0xc5` refused in car mode, EPS-status monitoring and report (TSR-110), RX timeout and engagement gate, heartbeat 0.3 s, TX whitelist and `0x411`, per-ID TX rate supervision (TSR-518, DN-01), IRQ priorities (TSR-519, priority scheme not adopted). Partial: RX cross-checks (TSR-405(c) only), siren (TSR-516(b) EPS fault only). Open: driver-torque monitoring, TSR-405(a)(b)(d), GAP-46. Records: [`impact/`](../07-supporting/impact/README.md) | |
 | 4.4 | Firmware security | LionDriver signing key, modern algorithm, RDP/WRP, release build without debug key (gap §9 action 6) | |
 | 4.5 | Onboard stack fixes | Soft disable and Chestnut masking (gap §9 action 8) | |
 | 4.6 | Unit design and verification | WP-W-05, W-06 (structural coverage beyond line, MISRA deviation records) | |
@@ -151,8 +151,8 @@ Long-lead items to start early: assessor engagement (P0), HIL bench parts (P2), 
 | External CS assessor, pen tester | P4–P5 | TBD |
 | Test vehicle | 2020 Toyota Corolla LE, US, ICE, TSS2; insurance and registration that cover test use | TBD; ownership and insurance status not recorded |
 | comma device(s) | At least two of the identified revision (one in vehicle, one on HIL), plus Toyota harness | TBD |
-| HIL bench | Bare panda or comma device, CAN interfaces (≥ 3 buses), host PC running Corolla DBC log replay and plant model, power supply with fault injection, relay/harness break-out, debug probe for STM32H7 | Not built (D-04, GAP-30) |
-| Drive logs | Fork-owned Corolla logs for process replay and scenario evaluation | None yet |
+| HIL bench | Bare panda or comma device, CAN interfaces (≥ 3 buses), host PC running Corolla DBC log replay and plant model, power supply with fault injection, relay/harness break-out, debug probe for STM32H7 | Not built (D-04, GAP-30); plan drafted ([`hil-bench/README.md`](../05-software/hil-bench/README.md)); HIL tests `panda/tests/hitl/test_10…test_14` written, not run |
+| Drive logs | Fork-owned Corolla logs for process replay and scenario evaluation | None yet; needed to confirm the TSR-401 rates and the TSR-405(b), TSR-516(b) and TSR-518 parameters |
 | CI compute | GitHub Actions (hosted runners); optionally a self-hosted runner attached to the HIL bench | Hosted runners available; self-hosted TBD |
 | Tools | Toolchain as pinned in `uv.lock` and submodules; cppcheck; coverage tools; requirements data in `trace/` | Available; qualification pending (WP-P-07) |
 | Licensed standards | ISO 26262:2018, ISO 21448:2022, ISO/SAE 21434:2021, ISO/PAS 8800:2024, ASPICE PAM 4.0 | Availability not recorded (OI-3) |
@@ -188,7 +188,7 @@ Derived from [gap assessment §9](../00-assessment/gap-assessment.md#9-priority-
 
 | # | Item | Gap / decision | Output | Owner |
 |---|---|---|---|---|
-| B-01 | Create milestones G0–G6, labels, and issues for every WP-M/WP-P work product and gap §9 action | — | GitHub tracking set up | PM |
+| B-01 | Open (2026-10-12: no milestones or `risk`/`decision` labels created yet). Create milestones G0–G6, labels, and issues for every WP-M/WP-P work product and gap §9 action | — | GitHub tracking set up | PM |
 | B-02 | **Done (#3).** Fork `commaai/opendbc` and `commaai/panda` into the LionDriver account; switch `.gitmodules` to absolute URLs; pin tinygrad by commit; adjust or replace `check-submodules.sh` | GAP-29, D-01 | Submodules under LionDriver control | PM |
 | B-03 | **Done (#4).** Record the upstream sync procedure (D-02: once per minor release) | GAP-37, D-02 | WP-P-01, WP-P-02 drafts | PM |
 | B-04 | **Done (#2, #6)** except CR-CI-08. Disable `jenkins-pr-trigger`, `ui_preview`, `stale`; review `release` and `repo-maintenance`; add a workflow that runs opendbc safety tests, MISRA and mutation in the LionDriver repo | GAP-31, D-03 | Fork CI that produces safety-test evidence | PM |
@@ -200,6 +200,11 @@ Derived from [gap assessment §9](../00-assessment/gap-assessment.md#9-priority-
 | B-10 | **Done (#2).** Complete drafts of WP-M-08…M-13 and WP-P-01…P-06 | GAP-33 | G0 work products in Draft | SM |
 | B-11 | Recruit at least one verification reviewer and one QA person independent of the author | R-01 | Names in WP-M-02 §3.1 | PM |
 | B-12 | Record the reference vehicle's VIN, ECU firmware versions and device revision | — | Input to WP-C-01 | PM |
+| B-13 | Independent I1 review of the change impact records in [`impact/`](../07-supporting/impact/README.md) and of DN-01 | R-26 | Review records | PM |
+| B-14 | Merge LionDriver PR #45 (panda `b790fca`, TSR-516(b)) | — | Pin on `liondriver-dev` | PM |
+| B-15 | Maintainer decision D-09 (FSC envelope strategy, option (c)) | WP-C-04 OI-1, D-09 | Decision record in WP-M-01 §8 and WP-M-07 §5 | PM |
+| B-16 | Fork-owned reference drive logs | R-27 | Logs | PM |
+| B-17 | Run the panda host tests and the reference-variant mutation tests in LionDriver CI (mutation: proposed in PR #44, not merged) | GAP-39 | CI jobs | ENG |
 
 ## 10. Open items
 
