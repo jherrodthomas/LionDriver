@@ -645,6 +645,9 @@ def postprocess(path: Path) -> None:
   from openpyxl import load_workbook
   from openpyxl.styles import Alignment, Font
   wb = load_workbook(path)
+  ws = wb["00_Title_Page"]
+  ws.cell(row=15, column=2, value="Status").font = Font(bold=True)
+  ws.cell(row=15, column=3, value="Draft: ratings are proposals for review; not approved until the I3 confirmation review (WP-C-03 header)")
   ws = wb["08_Exposure_Reference"]
   for i, (e, p, anchor) in enumerate(ISO_E, start=6):
     ws.cell(row=i, column=1, value=e)
