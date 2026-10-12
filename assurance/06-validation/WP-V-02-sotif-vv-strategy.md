@@ -122,6 +122,34 @@ Targets are **proposals**: numeric values are placeholders for the assessor revi
 
 SH-09 (traffic-control non-compliance) has no target: Experimental Mode is off and locked (FM-01) and KS-24 verifies the exclusion. SH-11 (no VRU response) has no rate target: [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) resolves TC-12 by ODD restriction and user information; KS-22 and KS-23 only verify that the item does not move toward a VRU it cannot see.
 
+### 4.1 (TBC) values of WP-C-11 and the targets that confirm them
+
+[WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) marks the performance values of its AI safety requirements **(TBC)**. Its OI-2 says each is to be confirmed or replaced through the target derivation here. The table records, for each (TBC) value, which target confirms it. **Kind** is one of:
+
+- **C:** a target here states the same value.
+- **D:** a target here covers the quantity, but the value is not yet derived from it.
+- **G:** a SOTIF target should cover it, and none does.
+- **N:** the value does not come from a SOTIF target; the source document is named.
+
+| Requirement | (TBC) value | Target | Kind | Action |
+|---|---|---|---|---|
+| AIR-01 | Lateral offset ±0.5 m | VT-02 (drift > 0.5 m) | C | — |
+| AIR-01 | ≥ 99.5 % of engaged time within ±0.5 m | VT-01 (departures per hour) | D | Derive the time share from the VT-01 departure rate, or replace it with the VT-01 surrogate |
+| AIR-03 | Lead detection range 80 m, latency 0.5 s, distance error max(2 m, 10 %) | VT-06 (p_s per approach-speed band) | D | Derive from the VT-06 approach bands with the AIR-04 stopping-distance relation |
+| AIR-04 | t_r = 1.0 s, a_lim = 3.0 m/s² | VT-06 (KS-05) | D | Record the basis; a_lim is inside the envelope minimum −3.5 m/s² (WP-C-02) |
+| AIR-05 | Phantom deceleration below −2.0 m/s² | VT-04 (−2.0 m/s²) | C | — |
+| AIR-06 | `hardBrakePredicted` at TTC ≥ 2.0 s | VT-06 (FCW at TTC ≥ 2 s) | C | — |
+| AIR-11 | Curvature rate from 5 m/s³ jerk; ≤ 1 lead toggle per second | none (surrogate AS-08 in [WP-V-04](WP-V-04-sotif-unknown-scenarios.md) only) | G | Add a scenario-level target for SH-01/SH-04 plan stability, or derive from VT-01 and VT-04 |
+| AIR-14 | Monitor recall ≥ 80 % on known triggering conditions; ≤ 1 false flag per hour | none (KS-12, KS-13, KS-16 of [WP-V-03](WP-V-03-sotif-known-scenarios.md) exercise it) | G | Add a target for the monitor: recall per KS and false-flag rate, consistent with the VT-01, VT-04 and VT-06 budgets |
+| AIR-10 | Partial lens occlusion ≤ 10 % | — | N | Input-space bound of WP-C-11 §3, verified by VS-ML-04 ([WP-W-10](../05-software/WP-W-10-ml-engineering.md)) |
+| AIR-13 | 90–98 % of samples within ±2σ | — | N | Calibration criterion of WP-W-10 (VS-ML-05); enables AIR-14 |
+| AIR-12, AIR-26 | 2 s warm-up before use or engagement | — | N | Timing; [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) |
+| AIR-17 | Inference ≤ 50 ms, output age ≤ 100 ms | — | N | Timing; WP-S-04, TSR-602, TSR-616 |
+| AIR-27 | DM output invalid > 2 s | — | N | TSR-609 ([WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md)); fault injection VS-FI-25 |
+| DSR-07 | ≥ 10 % double annotation | — | N | Label specification (WP-W-10) |
+
+Result: three values are confirmed. Three need a derivation recorded against an existing target (D). Two need a target that does not exist yet (G). The remaining six take their value from timing, ML engineering or data documents, not from this one (N). The D and G rows are part of the target set the assessor approves (OI-3). Until then, every (TBC) in WP-C-11 stays (TBC).
+
 ## 5. Test methods
 
 ### 5.1 Methods matrix
@@ -209,7 +237,7 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 |---|---|
 | OI-1 | Keep the §6 TC table in step with WP-C-06 revisions (new TCs need a KS entry) |
 | OI-2 | Select B1 data set and filter to the ODD; replace the illustrative rates of §3.1 (shared with WP-M-08 OI-1) |
-| OI-3 | Approve numeric targets VT-01…VT-11 with the assessor before collecting evidence |
+| OI-3 | Approve numeric targets VT-01…VT-13 with the assessor before collecting evidence, including the D and G rows of §4.1 |
 | OI-4 | Build the simulation fidelity case (§5.3) and decide which families get credit (WP-M-08 OI-3) |
 | OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
 | OI-6 | Decide the evidence route for P(E-situation) in step 2 (HARA OI-2). The route for P(not controlled) is §3.3 |
