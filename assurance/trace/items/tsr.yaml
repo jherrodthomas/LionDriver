@@ -524,7 +524,7 @@
   mechanism: "PLB (cross-channel)"
   timing: "detect ≤ 0.2 s"
   verification: "LOG, T-SIL, FI"
-  baseline_impl: "Not implemented (GAP-01). A speed cross-check helper exists but is unused by the Toyota mode (`safety.h:529-537`). Candidate signals: `0xB4` SPEED/ENCODER (`opendbc_repo/opendbc/dbc/generator/toyota/_toyota_2017.dbc:77-80`), `0x1D3` BRAKE_PRESSED (`_toyota_2017.dbc:110-111`)"
+  baseline_impl: "**Partial** (reference build, opendbc `875e325`, [IA cruise/main](../07-supporting/impact/change-2026-10-12-opendbc-toyota-cruise-main.md)): (c) CRUISE_ACTIVE with `0x1D3` MAIN_ON = 0 refuses engagement at once and revokes authority after a 150 ms disagreement. **Not implemented:** (a) speed cross-check (`0xB4` not in the RX set, no nominal rate); (b) BRAKE_PRESSED cross-check, pending the meaning of the `0x1D3` bit (driver pedal or any braking, ACC included) from reference logs; (d) EPS-response check (GAP-01). A speed cross-check helper exists but is unused by the Toyota mode (`safety.h:529-537`). Candidate signals: `0xB4` SPEED/ENCODER (`opendbc_repo/opendbc/dbc/generator/toyota/_toyota_2017.dbc:77-80`), `0x1D3` BRAKE_PRESSED (`_toyota_2017.dbc:110-111`)"
   status: proposed
   source: WP-S-02
 
