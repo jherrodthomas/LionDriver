@@ -4,17 +4,17 @@
 |---|---|
 | Work product | WP-M-14 ISO 26262-6 software lifecycle implementation specification (future work) |
 | Standard reference | ISO 26262-6:2018 Clauses 5–11 and Annex C; interfaces to ISO 26262-2, -3, -4, -8, -9. Informative links to ISO 21448:2022, ISO/SAE 21434:2021, ISO/PAS 8800:2024, UL 4600 |
-| Version | 0.1 |
+| Version | 0.2 (aligned with the software work products at `682f184`: pre-entry track §2.3, readiness snapshot §3.2, SWSR field mapping §4.2, trace engine state §8.2, rules §16, review findings §17; 2026-10-12). 0.1 |
 | Status | Draft — **implementation deferred.** This is a plan. It does not authorize, start or evidence any Part 6 activity |
 | Activation | Not authorized. Needs decision D-09 ([WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required)) and an approved entry baseline (§3) |
 | ASIL / scope | Software of the item. Highest proposed ASIL is C (SG-01, [WP-C-03](../02-concept/WP-C-03-hara.md)); ratings are unconfirmed until CR-02 |
 | Author | Project maintainer (specification). Adapted to this repository with AI assistance (Claude Code); the adaptation is AI-generated and has not been reviewed |
 | Reviewer(s) | TBD (I1, external while the project has a single maintainer; [WP-M-01 T-09](WP-M-01-assurance-strategy.md#5-tailoring)) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `3ed97c8` (repository state inspected for §3.2) |
+| Baseline | `682f184` (opendbc `7993399`, panda `8aa8671`): repository state inspected for §3.2 and §17 |
 
 > [!IMPORTANT]
-> This document describes **how** the software-level lifecycle will be implemented once its prerequisites are mature. It records no completed activity. Nothing here is evidence of ISO 26262-6 conformity, ASIL capability or safety. The drafts that already exist in [`05-software/`](../05-software/) are pre-entry drafts (§2.3), not Part 6 execution.
+> This document describes **how** the software-level lifecycle will be implemented once its prerequisites are mature. It records no completed activity. Nothing here is evidence of ISO 26262-6 conformity, ASIL capability or safety. The drafts in [`05-software/`](../05-software/), and the safety-mechanism changes integrated under change records, are pre-entry engineering (§2.3), not Part 6 execution.
 
 ## 1. Purpose and scope
 
@@ -63,13 +63,23 @@ The specification calls for more statuses than the current work product conventi
 
 Allowed transitions are checked by tooling (§12). Leaving out a state is not allowed. For example, a record cannot go from `Draft` to `Verified`.
 
-### 2.3 Treatment of the existing WP-W drafts
+### 2.3 Pre-entry engineering track
 
-WP-W-01…WP-W-11 were written before the system-level inputs were approved. When Part 6 is activated:
+Software-level engineering is already under way before activation. At `682f184`:
 
-- they stay at `Draft` and act as **inputs** to Phase A (§15), not as completed Clause 5–11 outputs;
-- every SWSR in [WP-W-02](../05-software/WP-W-02-software-safety-requirements.md) keeps its ID, but stays `proposed` until its parent TSR is approved (CR-05) and the SWSR itself is reviewed;
-- statements about the code at `8b8c6ae` are rechecked against the entry baseline before they are reused.
+- WP-W-01…WP-W-11 are written, and WP-W-02 holds 134 SWSRs that refine the WP-S-02 TSRs. They are mirrored in [`trace/items/swsr.yaml`](../trace/items/swsr.yaml) and checked in CI (K3, K4, X3; [`trace/README.md` §6](../trace/README.md#6-consistency-checks));
+- safety mechanisms derived from proposed TSRs and SWSRs (hardware watchdog, RX timeout, TX whitelist, safety-mode lock, heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are integrated in the reference build. Each has a CT-1 change record in [`07-supporting/impact/`](../07-supporting/impact/README.md), and none is verified on hardware or independently reviewed;
+- a design note ([DN-01](../05-software/design-notes/DN-01-tx-rate-supervision.md)) and a HIL bench plan ([`hil-bench/`](../05-software/hil-bench/README.md), D-04) exist.
+
+This work is legitimate engineering, and it is what makes activation possible. It is governed by these rules until D-09:
+
+| Rule | Consequence |
+|---|---|
+| P-01 | Every SWSR keeps `status: proposed` until its parent TSR is approved (CR-05) **and** the SWSR has a recorded review. Being implemented in a build is shown in the `Baseline` column (`Impl`, `Partial`, `Not impl`), not by moving `status` to `implemented` |
+| P-02 | A code change in an SR-A or SR-Q path needs a CT-1 change record with an impact analysis ([WP-P-02](../07-supporting/WP-P-02-change-management.md)), whether or not Part 6 is active |
+| P-03 | Text describing behaviour names the pins it was read from. When a change is integrated, the work products that describe the old behaviour are updated in the same pull request or carry an open item that names the change |
+| P-04 | Work products and change records do not describe pre-entry work as Part 6 completion, verification or approval |
+| P-05 | At Phase A, every pre-entry artifact is rechecked against the entry baseline and becomes an **input** to Clauses 6–11. Nothing carries over as completed evidence |
 
 ### 2.4 Upstream compatibility
 
@@ -113,27 +123,29 @@ Part 6 implementation (Phases B–F, §15) starts only when the project maintain
 
 Missing upstream inputs are **not** to be filled in by the software lifecycle. If a TSR, ASIL or allocation is missing, the gap is recorded as an open action against the system-level owner. No SWSR is invented to cover it.
 
-### 3.2 Readiness snapshot at `3ed97c8`
+### 3.2 Readiness snapshot at `682f184`
 
 This is an inventory of what exists. It is **not** the Phase A gap assessment, and it rates nothing as adequate.
 
 | Prerequisite | Present | Current status | Observation |
 |---|---|---|---|
 | Item definition, HARA, safety goals | Yes | Draft | 7 safety goals (SG-01 ASIL C, SG-02…SG-07 ASIL B) are proposals. CR-02 not held |
-| FSC / FSRs | Yes | Draft | FSRs are not yet in `trace/` (WP-T-01 OI-2) |
-| TSRs, TSC, system architecture | Yes | Draft | All TSRs `Proposed`; not in `trace/` |
+| FSC / FSRs | Yes | Draft | 54 FSRs in `trace/`, all `proposed` |
+| TSRs, TSC, system architecture | Yes | Draft | 118 TSRs in `trace/`, all `proposed`. CR-05 not held |
 | Timing / FTTI | Yes | Draft | Kinematic estimates only; nothing measured |
 | HSI | Yes | Draft | — |
 | ASIL decomposition, FFI, DFA (system) | Yes | Draft | — |
-| Safety plan, CM, change, requirements management, review procedure | Yes | Draft | Single maintainer; I1 needs an external reviewer (T-09) |
+| Safety plan, CM, change, requirements management, review procedure | Yes | Draft | CT-1 change records are in use (9 records), so change control runs in practice. Single maintainer; I1 needs an external reviewer (T-09) |
 | Tool classification | Yes | Draft | GAP-34: no tool qualified |
-| Existing software architecture description | Yes ([WP-W-03](../05-software/WP-W-03-software-architecture.md)) | Draft | Back-filled from code |
-| Existing software tests | Yes, upstream assets | Not reviewed as evidence | Safety tests, MISRA and mutation run in fork CI ([`safety.yaml`](../../.github/workflows/safety.yaml)); line coverage only (GAP-13); host builds, not target (GAP-13, GAP-41); no HIL (GAP-30) |
-| Existing software safety analyses | Yes ([WP-W-04](../05-software/WP-W-04-software-safety-analysis.md)) | Draft | — |
-| Machine-readable trace data | Partial | Draft | Hazards, hazardous events, goals, AoUs only (43 items). No FSR, TSR, SWSR or verification records |
+| Software safety requirements | Yes ([WP-W-02](../05-software/WP-W-02-software-safety-requirements.md)) | Draft, v0.12 | 134 SWSRs, all `proposed`; TSR → SWSR coverage checked (K4). Field gaps against §4.2 listed there |
+| Software architecture, analysis, unit design | Yes (WP-W-03…05, DN-01) | Draft | Partly updated for the integrated changes; see §17 |
+| Software verification specifications | Yes (WP-W-06…08) | Draft (specification); not executed | 96 of 134 SWSRs are cited by a `VS-SWI` or `VS-SWQ` case; the other 38 are mostly QM host requirements (§17) |
+| Existing software tests | Yes, upstream assets plus LionDriver tests in the opendbc and panda forks | Not reviewed as evidence | Safety tests, MISRA and mutation run in fork CI ([`safety.yaml`](../../.github/workflows/safety.yaml)); line coverage only (GAP-13); host builds, not target (GAP-13, GAP-41) |
+| Target test environment | Plan only ([`hil-bench/`](../05-software/hil-bench/README.md)) | Draft | No bench exists (D-04, GAP-30) |
+| Review records | No | — | `case/reviews/` holds no record |
 | Living Safety Case | Yes ([`case/`](../case/README.md)) | Development | No claim has accepted evidence |
 
-Conclusion of the snapshot: **no entry criterion is met.** Every prerequisite exists as a draft and none has been approved or confirmed. Part 6 stays deferred.
+Conclusion of the snapshot: **no entry criterion is met.** All the prerequisites exist as drafts, and the requirement chain from FSR to SWSR is populated and checked. None is approved or confirmed and no review record exists. Part 6 stays deferred, and the pre-entry track (§2.3) continues.
 
 ## 4. Lifecycle specification, Clauses 5–11
 
@@ -198,6 +210,20 @@ Phase A must inspect the actual toolchain (compiler versions and flags, the `ALL
 | `version`, `baseline` | Yes | |
 | `review_ref`, `approved_by`, `approved_date` | When approved | Must point to a review record |
 | `proposed_by` | When tool-generated | `tool` or `ai`; blocks approval until a human review is recorded |
+
+**Current state.** `swsr.yaml` at `682f184` is generated from WP-W-02 by `trace/tools/sync_requirements.py` and carries `id`, `text`, `asil`, `parents`, `allocated_to`, `verification`, `acceptance`, `baseline_impl`, `status` and `source`. Compared with the table above:
+
+| Field | State |
+|---|---|
+| `id`, `text`, `parents`, `asil`, `allocated_to`, `status` | Present |
+| `verification_method`, `acceptance_criteria` | Present in §3–§9 tables. **Empty for the 11 SW-HW interface SWSRs of WP-W-02 §11**, whose table has no such columns |
+| `title`, `rationale`, `category` | Missing; rationale is only in WP-S-02 for the parent TSR |
+| `applies_to` | Missing. All SWSRs implicitly concern CFG-001; shared code (e.g. `lateral.h`) is not marked |
+| `version`, `baseline` | Missing per record; the WP-W-02 header carries one version for all |
+| `review_ref`, `approved_by`, `approved_date` | Missing; no review records exist |
+| `proposed_by` | Missing. Every commit that wrote WP-W-02 carries a Claude co-author trailer, so all 134 SWSRs are AI-assisted drafts. Record this per requirement before any review |
+
+Adding the missing fields is Phase B work. It does not block pre-entry engineering.
 
 ### 4.3 Clause 7 — Software architectural design
 
@@ -375,9 +401,11 @@ Builds on [`trace/tools/check_trace.py`](../trace/tools/check_trace.py) (checks 
 
 | Capability | Basis | State |
 |---|---|---|
-| Missing-link and broken-reference detection | K3 | Exists for current kinds; extend to new kinds |
-| Orphan detection (SWSR without TSR, unit without SWSR) | New | Planned |
-| Unverified requirement detection | New | Planned |
+| Missing-link and broken-reference detection | K3 | Exists for SG, FSR, TSR, SWSR, HWSR; `allocated_to` not yet checked |
+| Coverage (every SW-allocated TSR has an SWSR) | K4 | Exists |
+| Markdown ↔ YAML equality | X1, X2, X3 | Exists |
+| Orphan detection (unit without SWSR, architecture element without SWSR) | New | Planned; needs unit and element records |
+| Unverified requirement detection (SWSR not cited by any verification case) | New | Planned; a one-off count is in §17 |
 | Stale evidence (result older than the last change to its subject) | New, uses git history of linked paths | Planned |
 | Change impact analysis | Extends `tools/sync/sync_report.py` and [WP-M-12](WP-M-12-impact-analysis.md) | Planned |
 | Configuration applicability analysis | `applies_to` (§7) | Planned |
@@ -505,7 +533,7 @@ Phases advance on approved outputs, never because templates or scripts exist. Ph
 Until D-09 is recorded:
 
 1. This document is kept and maintained as the Part 6 implementation specification.
-2. No new software safety requirements, architecture records, analyses, verification results or approvals are created to look like Part 6 progress. Corrections to the existing WP-W drafts are allowed and stay `Draft`.
+2. Pre-entry engineering (§2.3) continues under rules P-01…P-05. No verification results or approvals are recorded except from work that was actually performed and reviewed, and no pre-entry artifact is presented as Part 6 progress.
 3. Application code is not restructured for Part 6.
 4. Upstream-tracking branches and submodule pins are not changed for Part 6 (sync follows [WP-M-11 §5](WP-M-11-upstream-and-supplier-management.md)).
 5. Work on the prerequisites (§3.1) proceeds normally and is what brings activation closer.
