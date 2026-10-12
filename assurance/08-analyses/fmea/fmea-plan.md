@@ -94,19 +94,20 @@ Prioritised by safety relevance (path from perception to actuator):
 | P3 | `locationd`, calibration, `camerad`, `sensord` | various |
 | P3 | Messaging (`cereal`/msgq), `manager`, `updated` | `openpilot/cereal`, `openpilot/system/` |
 
-**Status (rev 0.4, `analyses/sw-fmea.yaml`):** the panda safety model was re-rated at BL-002 (panda `9f60e17`, opendbc `aff4033`). It has 19 failure modes, 24 causes (21 AP H, 3 AP L) and 11 actions.
+**Status (rev 0.5, `analyses/sw-fmea.yaml`):** the panda safety model was re-rated at BL-003 (panda `c2e5d93`, opendbc `5b5a4ba`). It has 19 failure modes, 25 causes (21 AP H, 4 AP L) and 11 actions.
 
 - **Firmware changes credited:**
   - RX timeout after 5 periods at 100 Hz (SWF-006: O4/D3);
   - grant-time RX check (SWF-007);
   - reference-build mode lock (SWF-001.C3, SWF-008.C1, SWF-013.C1: AP L);
-  - hardware watchdog (new SWF-018, plus SWF-019 for spurious resets).
+  - hardware watchdog (new SWF-018, plus SWF-019 for spurious resets);
+  - heartbeat loss revoked in 0.3 s (SWF-014.C1: AP L).
 - **Still open:**
   - the lock is only in a `LIONDRIVER_REFERENCE=1` build, and nothing builds that yet (SWF-013.C2, AP H);
   - limits equal to the SoC limits;
   - no jerk check;
   - BRAKE_MODULE without end-to-end protection;
-  - 5 s heartbeat;
+  - a control-loop stall behind a live heartbeat, caught only by the 3 s engaged mismatch (SWF-014.C2);
   - unrestricted ELM327 content.
 - **Implementation defects** in the opendbc core are O5/D3 (CI gate with mutation tests).
 

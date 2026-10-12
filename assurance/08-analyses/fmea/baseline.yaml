@@ -57,3 +57,30 @@ baselines:
         teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
         tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
       os: AGNOS 19.9 (launch_env.sh)
+  - id: BL-003
+    status: proposed
+    description: >-
+      BL-002 plus liondriver-dev #30-#32: watchdog-reset and refused-request reporting to openpilot (panda#6), 0x411
+      refused in the reference build (opendbc#5), HIL tests for the lock and RX timeout (panda#5), and authority revoked
+      after 0.3 s without a heartbeat (panda#7).
+    vehicle:
+      make: Toyota
+      model: Corolla
+      model_year: 2020
+      trim: LE
+      market: US
+      platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
+    hardware:
+      device: comma 3X
+      panda: integrated in device
+      harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
+    software:
+      repo_commit: 9881895550ba8ed218c29d18ffbc9bdf96f6b387
+      submodules:
+        panda: c2e5d93e2d35f628b278b09349410abbad226146
+        opendbc_repo: 5b5a4baa1c88dd9df05f7ee8b4c5470e4daffd28
+        msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
+        rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
+        teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
+        tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
+      os: AGNOS 19.9 (launch_env.sh)

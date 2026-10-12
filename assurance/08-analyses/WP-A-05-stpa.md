@@ -10,7 +10,7 @@
 | Author | Claude (AI-assisted draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Safety manager |
-| Baseline | BL-002 code (panda `3859fa8`, opendbc `5b5a4ba`, LionDriver `liondriver-dev` #30). The control structure is the same as at `8b8c6ae` |
+| Baseline | BL-003 code (panda `c2e5d93`, opendbc `5b5a4ba`, LionDriver `liondriver-dev` #32). The control structure is the same as at `8b8c6ae` |
 
 ## 1. Purpose and scope
 
@@ -209,7 +209,7 @@ Priority: UCAs that the component-failure analyses do not already cover, and UCA
 | LS-02 | UCA-04 | The driver applies corrective torque below the 100-raw threshold. No override is detected, so the item neither yields nor shows anything; the driver concludes it has yielded or will yield. Above the threshold `steerOverride` exists but has no HMI indication (WP-C-08 §4) | Flawed process model (driver) via missing feedback | WP-C-08 (steerOverride row, no indication) | **New:** the sub-threshold case cannot be indicated at all (CC-1, CC-2) |
 | LS-03 | UCA-06 | The driver has used Experimental Mode before (it was the upstream default), or reads upstream docs, and expects stops at lights; the reference configuration runs Chill Mode (D-08) | Flawed process model | WP-C-08 MC-09; D-08, B-06 | Covered; depends on B-06 and user information (CC-7) |
 | LS-04 | UCA-35 | The panda watchdog resets the MCU while engaged (SW FMEA SWF-019). Steering and ACC stop. The MCU restarts in SILENT with its engagement memory cleared, so the SoC-independent siren of TSR-516(b) is unlikely to sound; only the SoC alert added in #30 (`watchdogReset`) remains | Feedback missing after the controller restarts | TSR-516, SWF-019, panda#6 | **New:** TSR-516(b) cannot be met across an MCU reset as designed; confirm on the bench (OI-3) |
-| LS-05 | UCA-32, UCA-13 | `controlsd` stalls but `pandad` keeps sending heartbeats with `engaged=1`; the last frames repeat or stop; the panda keeps authority until the heartbeat logic sees a mismatch (3 s) or loss (5 s) | Feedback (process model of C3 not updated) | WP-W-04 SWF-25, SWF-28; SW FMEA SWF-014 | Covered as a gap (SWSR-408/409) |
+| LS-05 | UCA-32, UCA-13 | `controlsd` stalls but `pandad` keeps sending heartbeats with `engaged=1`; the last frames repeat or stop; the panda keeps authority until the heartbeat logic sees an engaged mismatch (about 3 s). Heartbeat loss itself is caught in 0.3 s since panda#7, but the heartbeat only shows that pandad is alive | Feedback (process model of C3 not updated) | WP-W-04 SWF-25, SWF-28; SW FMEA SWF-014.C2 | Covered as a gap (TSR-307a, SWSR-408/409) |
 | LS-06 | UCA-19 | The driver presses SET while openpilot is not ready; the PCM engages cruise but openpilot stays disengaged. With openpilot longitudinal the stock ACC commands are blocked, so the PCM shows cruise on with no acceleration command until `cruiseMismatch` after 6 s (`selfdrived.py:423-426`) | Conflicting controllers | FSR-05.06, TSR-308 (≤ 1 s) | Known gap: TSR-308 not met (GAP-19); PCM behaviour without `0x343` unknown (OI-4) |
 | LS-07 | UCA-33 | The panda hangs with the relay driven; stock PCS frames no longer reach the car | Component failure (control action not executed) | DFMEA DFM-004, watchdog at BL-002 | Covered (watchdog); relay drive-circuit behaviour unconfirmed (DFM-ACT-003) |
 | LS-08 | UCA-42 | The stock camera receives no feedback for its blocked LKA/ACC messages and sets a fault that also disables PCS | Unsafe behaviour of an external controller | AOU-04, HARA SG-07 | Open: needs a vehicle test (OI-5) |

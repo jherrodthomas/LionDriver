@@ -110,9 +110,9 @@ Every N and P row has an SWSR in WP-W-02. Diagnostic-coverage targets in WP-S-03
 
 ### 3.5 AIAG-VDA ratings and test evidence
 
-A second SW FMEA of the safety layer, with AIAG-VDA 2019 severity, occurrence, detection and action priority, is kept as machine-readable data in [`../08-analyses/fmea/analyses/sw-fmea.yaml`](../08-analyses/fmea/analyses/sw-fmea.yaml) (rev 0.4, re-rated at BL-002: panda `9f60e17`, opendbc `aff4033`; rating tables in [`rating-tables.md`](../08-analyses/fmea/rating-tables.md), checked by `tools/safety/fmea_lint.py`). It was first written separately from this document against the same baseline (BL-001) and was re-rated at BL-002; the rows above are still at BL-001. This section is the cross-reference; the rows above stay the analysis of record.
+A second SW FMEA of the safety layer, with AIAG-VDA 2019 severity, occurrence, detection and action priority, is kept as machine-readable data in [`../08-analyses/fmea/analyses/sw-fmea.yaml`](../08-analyses/fmea/analyses/sw-fmea.yaml) (rev 0.5, re-rated at BL-003: panda `c2e5d93`, opendbc `5b5a4ba`; rating tables in [`rating-tables.md`](../08-analyses/fmea/rating-tables.md), checked by `tools/safety/fmea_lint.py`). It was first written separately from this document against the same baseline (BL-001) and was re-rated at BL-002 and BL-003; the rows above are still at BL-001. This section is the cross-reference; the rows above stay the analysis of record.
 
-| AIAG-VDA row | Failure mode | This document | Ratings at BL-002 (S/O/D AP per cause) |
+| AIAG-VDA row | Failure mode | This document | Ratings at BL-003 (S/O/D AP per cause) |
 |---|---|---|---|
 | SWF-001 | Steering request above the torque or torque-rate limit for the vehicle is passed | SWF-01, SWF-05, SWF-06; SDF-08 | C1 10/6/9 H; C2 10/5/3 H; C3 10/3/4 L |
 | SWF-002 | Steering torque passed while controls are not allowed | SWF-03 | C1 10/5/3 H |
@@ -127,7 +127,7 @@ A second SW FMEA of the safety layer, with AIAG-VDA 2019 severity, occurrence, d
 | SWF-011 | Stock pre-collision (AEB) messages blocked | SWF-11, SWF-18 | C1 10/5/3 H |
 | SWF-012 | Relay malfunction not detected | SWF-17, SWF-37 | C1 10/5/3 H |
 | SWF-013 | Wrong or permissive safety mode accepted from the host | SWF-16, SWF-24 | C1 10/3/4 L; C2 10/8/9 H |
-| SWF-014 | Controls withdrawn later than the FTTI after host loss | SWF-25, SWF-28 | C1 10/8/8 H |
+| SWF-014 | Controls withdrawn later than the FTTI after host loss | SWF-25, SWF-28 | C1 10/3/4 L; C2 10/8/8 H |
 | SWF-015 | Diagnostic (ELM327) mode accepted while driving | SWF-48 | C1 10/5/9 H |
 | SWF-016 | Host transmission bypasses the safety check | SWF-49 | C1 10/3/8 H |
 | SWF-017 | Item deceleration passed while the driver presses the accelerator | — (gas override verified in code, `get_longitudinal_allowed`) | C1 10/5/3 H |

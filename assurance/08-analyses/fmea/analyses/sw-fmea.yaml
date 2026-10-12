@@ -1,25 +1,25 @@
 # yaml-language-server: $schema=../schema/fmea.schema.json
-# Ratings per RT-1, against BL-002 (panda 9f60e17, opendbc aff4033).
+# Ratings per RT-1, against BL-003 (panda c2e5d93, opendbc 5b5a4ba).
 # - Implementation defects in the opendbc safety core: O=5 (MISRA, 100% line coverage, review, no documented requirements),
 #   D=3 (the suite, coverage gate and mutation tests run in fork CI on every change: proven, early, test-to-fail).
 # - LionDriver reference-build lock (panda#4): O=3, D=4 (host unit tests in panda CI, not on target). The lock is compiled
 #   only with LIONDRIVER_REFERENCE=1, which no build path sets yet (SWF-013.C2, O=8 D=9).
 # - Design gaps with no targeted test: O=6-8, D=9. New watchdog failure modes SWF-018/019: HIL test not run (D=7-8).
-# Severity is 10 for every row (hazard-linked effects, RT-1 §1.1). Three causes drop to AP L (S10 O3 D4: wrong mode,
-# wrong parameter, wrong brake flag) because the reference lock prevents them, but only in a reference build; the build
-# itself is SWF-013.C2 (AP H).
+# Severity is 10 for every row (hazard-linked effects, RT-1 §1.1). Four causes are AP L (S10 O3 D4): wrong mode, wrong
+# parameter and wrong brake flag, which the reference lock prevents only in a reference build (the build itself is
+# SWF-013.C2, AP H), and heartbeat loss, revoked after 0.3 s since panda#7.
 # History: rev 0.2 first rating at BL-001; rev 0.3 SWF-003.C1 corrected and moved under assurance/; rev 0.4 re-rated at
-# BL-002 (this revision). The narrative analysis of record is assurance/05-software/WP-W-04.
+# BL-002; rev 0.5 at BL-003: SWF-014 split into heartbeat loss (0.3 s, panda#7) and control-loop stall (this revision). The narrative analysis of record is assurance/05-software/WP-W-04.
 schema_version: 1
 analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "0.4"
+  revision: "0.5"
   status: draft
-  baseline: BL-002
+  baseline: BL-003
   rating_tables: RT-1
-  scope: "P1 element: panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog) for AC-001 at BL-002 (panda 9f60e17, opendbc aff4033). Other P1 elements (selfdrived, controlsd, pandad) follow."
+  scope: "P1 element: panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog) for AC-001 at BL-003 (panda c2e5d93, opendbc 5b5a4ba). Other P1 elements (selfdrived, controlsd, pandad) follow."
   team:
     - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
     - {name: Claude (AI assistant), role: "Drafting assistance; ratings require human review"}
@@ -738,10 +738,25 @@ failure_modes:
   severity: 10
   causes:
   - id: SWF-014.C1
-    description: Heartbeat checked at 1 Hz with a 5 s timeout (ignition on); engaged mismatch withdraws controls after 3 ticks (~3 s)
+    description: 'Heartbeat from pandad missing (pandad, SPI or SoC down): authority revoked after 0.3 s, checked at 100 Hz (TSR-407, panda#7)'
     element: SWF-SE-011
     prevention_controls:
-    - description: Timeouts not derived from the FTTI (main.c:102,184,191-212)
+    - description: 'heartbeat_monitor: no 0xf3 for > 0.3 s in a car mode clears controls_allowed (panda c2e5d93); SILENT after 5 s unchanged (TSR-510)'
+      ref: panda/board/drivers/heartbeat_monitor.h
+    detection_controls:
+    - description: Host unit test of the heartbeat monitor in panda CI (test.sh); HITL RX/heartbeat test not run (no bench, D-04)
+      test: panda/tests/heartbeat_monitor/test_heartbeat_monitor.py
+    occurrence: 3
+    detection: 4
+    ap: L
+    actions:
+    - SWF-ACT-007
+  - id: SWF-014.C2
+    description: 'controlsd or selfdrived stalls while pandad keeps sending heartbeats with engaged=1: the heartbeat shows pandad liveness only; authority is withdrawn
+      only by the engaged-mismatch counter after 3 ticks at 1 Hz (about 3 s), and only if engaged drops'
+    element: SWF-SE-011
+    prevention_controls:
+    - description: Heartbeat carries no freshness of the control loop (TSR-307a asks for 0.3 s on mismatch; TSR-408/409 for command freshness)
       ref: panda/board/main.c
     detection_controls:
     - description: Panda HITL health and safety tests (hardware needed; not run here)
@@ -752,7 +767,7 @@ failure_modes:
     actions:
     - SWF-ACT-007
   safety_mechanisms:
-  - description: 'Heartbeat: SILENT after 5 s, controls withdrawn after a 3 s engaged mismatch; siren for 3 s if engaged'
+  - description: 'Heartbeat loss: authority revoked after 0.3 s (TSR-407); SILENT after 5 s; engaged mismatch after about 3 s; siren for 3 s if engaged'
     ref: panda/board/main.c
 - id: SWF-015
   element: SWF-SE-012
@@ -991,7 +1006,8 @@ actions:
   description: Derive RX-lag and heartbeat timeouts from the FTTI and check them at 8 Hz or faster while controls are allowed (LD-DES-001 DR-20)
   owner: Jherrod Thomas
   status: in_progress
-  evidence: 'RX lag: 5 periods at 100 Hz in BL-002 (opendbc#1, panda#3). Heartbeat: unchanged (5 s, 1 Hz). FTTI derivation open'
+  evidence: 'RX lag: 5 periods at 100 Hz (opendbc#1, panda#3). Heartbeat loss: 0.3 s at 100 Hz (panda#7, BL-003). Engaged mismatch still about 3 s at 1 Hz; FTTI derivation
+    open'
 - id: SWF-ACT-008
   kind: detection
   description: Add a unit or static check that every host TX path calls can_send with skip_tx_hook=false
