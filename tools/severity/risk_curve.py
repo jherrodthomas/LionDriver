@@ -59,7 +59,7 @@ run from openpilot's lane-change minimum (20 mph, desire_helper.py) to 120 km/h.
 closing speed stays at or below 13 km/h, about 7 km/h of delta-v per car. The contact angle is
 6-12 degrees at 60-120 km/h and 22 degrees at the 20 mph minimum. That is the low-angle,
 low-lateral-speed contact of a same-direction sideswipe, not the near-perpendicular impact of
-an angle crash.
+an angle crash. The same bound covers an SH-01/02 drift into a vehicle in the adjacent lane.
 
 SH-10 (lane change into an occupied lane) is deliberately not mapped to a curve. Its primary
 contact is a same-direction sideswipe with a delta-v of a few km/h, so a delta-v curve would
@@ -228,7 +228,8 @@ def main(argv: list[str] | None = None) -> int:
   ap.add_argument("--speed", type=float, action="append", help="closing speed in km/h (repeatable); default: the SH-06 and SH-03 cases")
   ap.add_argument("--restitution", type=float, default=RESTITUTION)
   ap.add_argument("--sensitivity", action="store_true", help="SH-04: print impact speed over follower reaction and braking")
-  ap.add_argument("--sh10", action="store_true", help="SH-10: print the lane-change contact angle and lateral speed")
+  ap.add_argument("--sh10", action="store_true",
+                  help="SH-10 (and the SH-01/02 sideswipe): print the contact angle and lateral speed")
   ap.add_argument("--sh02", "--sh01", dest="sh02", action="store_true",
                   help="SH-01/SH-02: print the barrier impact angle of a lane departure at the controller limit")
   a = ap.parse_args(argv)
