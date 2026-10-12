@@ -303,11 +303,17 @@ def joksch(dv_kmh: float) -> float:
 # Impact directions (`--curve richards`). The Joksch summaries say car-car collisions without
 # naming the directions. Richards (2010), "Relationship between speed and risk of fatal injury:
 # pedestrians and car occupants", DfT Road Safety Web Publication 16, fits belted drivers by
-# direction on UK data: frontal 3/17/60 % at 30/40/50 mph delta-v, side 25/85 % at 30/40 mph
-# (checked 2026-10-12, search summaries). The logistic fit below goes through the three frontal
-# points. It is above Joksch from about 33 mph delta-v, so it is a sensitivity for the frontal
-# struck occupants of SH-03 and SH-06; applied to every occupant it also overstates the
-# rear-struck ones. No case here has a side impact.
+# direction on UK data: frontal 3/17/60 % at 30/40/50 mph delta-v, side 25/85 % at 30/40 mph.
+# Checked 2026-10-12 against the report's text (section 3): the values are read off its fitted
+# curves ("approximately"); the driver-curve coefficients are not published, so the logistic
+# fit below goes through the three frontal points (within 0.005). Sample: belted drivers, one
+# significant impact with another car, no rollover; OTS 2000-09 and CCIS 1983-2010 (cars under
+# eight years old); 620 frontal (66 fatal) and 118 side (21 fatal); weighted to STATS19, which
+# the report says is likely to overestimate the risk. Its delta-v is the momentum delta-v used
+# here (two identical cars, one stationary, struck at 30 mph: 15 mph each). Half of the frontal
+# deaths had a delta-v of 34 mph or less. The fit is above Joksch from about 33 mph delta-v, so
+# it is a sensitivity for the frontal struck occupants of SH-03 and SH-06; applied to every
+# occupant it also overstates the rear-struck ones. No case here has a side impact.
 RICHARDS_FRONTAL_POINTS_MPH = ((30.0, 0.03), (40.0, 0.17), (50.0, 0.60))
 RICHARDS_FRONTAL_A, RICHARDS_FRONTAL_B_PER_MPH = -9.315, 0.19408
 OCCUPANT_CURVE = "joksch"
@@ -317,7 +323,7 @@ def richards_frontal(dv_kmh: float) -> float:
   return logistic(dv_kmh * MPH_PER_KMH, RICHARDS_FRONTAL_A, RICHARDS_FRONTAL_B_PER_MPH)
 
 
-# Side impacts (checked 2026-10-12, search summaries of the report): belted drivers on the struck
+# Side impacts (checked 2026-10-12 against the report's text): belted drivers on the struck
 # side, one significant side impact from another car; about 25 % at 30 mph and 85 % at 40 mph
 # delta-v, and half of the drivers killed had a delta-v of 24 mph or less. The logistic below
 # goes through the two points; below 30 mph it is an extrapolation. It is printed next to the
@@ -327,6 +333,7 @@ def richards_frontal(dv_kmh: float) -> float:
 RICHARDS_SIDE_POINTS_MPH = ((30.0, 0.25), (40.0, 0.85))
 RICHARDS_SIDE_A, RICHARDS_SIDE_B_PER_MPH = -9.598, 0.28332
 RICHARDS_SIDE_MEDIAN_FATAL_DV_MPH = 24.0
+RICHARDS_FRONTAL_MEDIAN_FATAL_DV_MPH = 34.0
 
 
 def richards_side(dv_kmh: float) -> float:
