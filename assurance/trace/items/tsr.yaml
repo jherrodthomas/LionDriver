@@ -374,7 +374,7 @@
   mechanism: "GATE"
   timing: "per frame"
   verification: "T-SIL"
-  baseline_impl: "Partial: the mode RX hook runs only for valid, whitelisted frames (`safety.h:202-206`) and an invalid frame clears authority (`safety.h:112-121`), but timeouts are evaluated only in the 1 Hz `safety_tick` (`safety.h:321-344`), so a rising edge can grant authority while another message is already lagging (GAP-06)"
+  baseline_impl: "**Met for the existing checks** (opendbc `aff4033`): for Toyota, a PCM rising edge grants authority only if every RX check is seen, valid and not lagging at that moment (`rx_checks_allow_engagement()` in `safety.h`). Frozen-value and cross-checks do not exist yet ([IA RX timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md) §7)"
   status: proposed
   source: WP-S-02
 
@@ -464,7 +464,7 @@
   mechanism: "TMO"
   timing: "detect ≤ 0.2 s / react ≤ 0.1 s"
   verification: "T-SIL, T-HIL, FI"
-  baseline_impl: "Not met: threshold max(10 periods, 1 s) evaluated in the 1 Hz `safety_tick` → 1–2 s (`safety.h:321-344`, called from `main.c:241-242`) (GAP-06)"
+  baseline_impl: "**Met for the four Toyota RX checks, not yet verified on hardware** (opendbc `aff4033`, panda `9f60e17`): lag after 5 nominal periods (`safety_config.rx_timeout_periods`, `modes/toyota.h`), evaluated at 100 Hz in the panda safety task, so detection ≤ 0.16 s. `0x262`, `0x1D3` and `0xB4` are not in the RX set yet ([IA RX timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md))"
   status: proposed
   source: WP-S-02
 
@@ -659,7 +659,7 @@
   mechanism: "WDG"
   timing: "detect ≤ 0.1 s / reset → SS-S"
   verification: "R, T-HIL, FI"
-  baseline_impl: "**Not implemented.** `IND_WDG` defined (`stm32h7/stm32h7_config.h:43`), never used; software watchdog checked inside the tick ISR it supervises (`drivers/simple_watchdog.h`, `main.c:119, 301`) (GAP-07). HWSR-501…501d"
+  baseline_impl: "**Implemented, not yet verified on hardware** (panda `9f60e17`): IWDG1 started the first time the relay is energised, on any path (`drivers/harness.h`); fed from the 100 Hz safety task only after main-loop progress (`drivers/hw_watchdog.h`, `main.c`); 90 ms nominal; window mode, about 5 ms minimum feed interval (HWSR-501b). Open: LSI range at both ends, HIL evidence, reporting a watchdog reset to the host ([IA watchdog](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md))"
   status: proposed
   source: WP-S-02
 
@@ -824,7 +824,7 @@
   mechanism: "CFG"
   timing: "per request"
   verification: "R, T-HIL"
-  baseline_impl: "**Not met.** `0xdc` sets any mode and parameter at any time without check (`main_comms.h:222-225`; `main.c:31-79`); the parameter comes from the unauthenticated params store (`selfdrive/pandad/panda_safety.cc:56-69`) (GAP-09). `0xdf` sets `alternative_experience` freely in any non-car mode, and the value persists into the next car mode (`main_comms.h:242-247`)"
+  baseline_impl: "**Partial, reference build only** (`LIONDRIVER_REFERENCE=1`, panda `9f60e17`): `0xdc` accepts only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73; in TOYOTA only NOOUTPUT or SILENT; `0xdf` refused, alternative experience stays 0 (`board/reference_lock.h`). Rejections are reported on the debug console only, not to the host; AOU-14 ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-S-02
 
@@ -839,7 +839,7 @@
   mechanism: "CFG"
   timing: "per request"
   verification: "R, T-HIL"
-  baseline_impl: "**Not met:** none of these is gated by mode or `ALLOW_DEBUG` (`main_comms.h:144-147, 218-221, 233-276, 296-314`) (GAP-09). `0xb5` and bootloader entry `0xd1/0` are already debug-only (`main_comms.h:92-98, 168-175`); `0xf8` is already refused in car modes (`main_comms.h:290-295`). `0xd1` param 1 and `0xd8` are accepted in release builds (`main_comms.h:176-180, 215-216`); `0xdf` is refused only while a car mode is active (`main_comms.h:242-247`). `0xe7` effect: CAN interrupts and transceivers disabled (`sys/power_saving.h:23-54`) while the relay stays driven (`main.c:71`) — GAP-49"
+  baseline_impl: "**Partial, reference build only** (panda `9f60e17`): `0xc5`, `0xd8`, `0xdb`, `0xde`, `0xe5`, `0xe6`, `0xe7`, `0xe8`, `0xf1`, `0xf9`, `0xfc` and `0xd1` param 1 refused in a car mode (`board/reference_lock.h`). `0xc0`, `0xb0`, `0xb1`, `0xf6` still to be confirmed (WP-W-02 OI-5) ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-S-02
 
@@ -1409,7 +1409,7 @@
   mechanism: "GATE"
   timing: "per frame"
   verification: "R, T-SIL"
-  baseline_impl: "**Not met:** all are in the openpilot-longitudinal TX whitelist (`modes/toyota.h:19-32`); only `0x283` is content-checked (`modes/toyota.h:250-257`). Signal content of `0x344` (`_toyota_adas_standard.dbc:38-45`) includes PCS brake triggers. **GAP-42** (FSC FSR-07.02 finding). The DSU-only messages are an extension found here (NF-07)"
+  baseline_impl: "**Partial** (opendbc `aff4033`): `0x344`, the DSU bus-0 messages and the DSU bus-1 set removed from the Toyota TX whitelist; `0x283` passes with zero payload only (`modes/toyota.h`). `0x411` PCS_HUD still accepted: open decision D-1 ([IA TX whitelist](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md))"
   status: proposed
   source: WP-S-02
 

@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Draft: proposed change, not integrated.** The LionDriver `panda` pin is unchanged |
+| Status | **Integrated 2026-10-12: LionDriver pins panda `9f60e17`, opendbc `aff4033` (merge commits on the forks' `master`); not yet verified on hardware (HIL bench D-04); not reviewed independently.** |
 | Change request | [jherrodthomas/panda#4](https://github.com/jherrodthomas/panda/pull/4), stacked on panda#3 and panda#1 |
 | Range | panda `a35d1c6..7e2d148` (branch `claude/safety-mode-lock`) |
 | Reference configuration affected | Yes, in the reference build only (`LIONDRIVER_REFERENCE=1`); other builds are unchanged |
