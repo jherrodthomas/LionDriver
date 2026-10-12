@@ -42,7 +42,9 @@ SH-04 (struck from behind after phantom braking, OS-08) is simulated:
 - **Impact:** at 27–35 km/h relative speed.
 - **Bound:** 0.043 in ODD-H and 0.032 in ODD-A, with a heavy truck behind.
 
-`--sensitivity` prints the impact speed over reaction times of 1.0–2.0 s and follower braking of 3–6 m/s². A follower that never brakes before impact is outside this bound. There is no injury curve: at these Δv an injury is near certain, so for an injury-crash budget the value is 1.
+`--sensitivity` prints the impact speed over reaction times of 1.0–2.0 s and follower braking of 3–6 m/s². A follower that never brakes before impact is outside this bound.
+
+SH-10 (lane change into an occupied lane) is not on a curve. Its primary contact is a sideswipe with a Δv of a few km/h, so a curve would credit almost all of its risk away. Its S3 rating comes from the loss of control and secondary impacts that follow, which the curve does not model. It uses the sideswipe-same-direction ratio of `severity_ratio.py`, whose crashes are typically lane changes and include those secondary outcomes. There is no injury curve: at these Δv an injury is near certain, so for an injury-crash budget the value is 1.
 
 The curve constant (71 mph), its scope (impact directions, which occupants), the masses, the occupancies and the restitution are written from memory or assumed. Check them before the result is recorded as evidence.
 

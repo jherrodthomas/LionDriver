@@ -21,6 +21,14 @@ Impact (closing) speed:
     follower reacts after FOLLOWER_REACTION_S and brakes at FOLLOWER_DECEL; a follower that
     never brakes is outside this bound. `--sensitivity` prints the grid around it.
 
+SH-10 (lane change into an occupied lane) is deliberately not mapped to a curve. Its primary
+contact is a same-direction sideswipe with a delta-v of a few km/h, so a delta-v curve would
+give almost no risk. Its S3 rating (HE-02.5) comes from what follows: loss of control, or a
+spin into traffic or a barrier. The curve does not model that, and would overstate the credit.
+SH-10 uses the FARS/CRSS sideswipe-same-direction ratio of severity_ratio.py instead. That
+crash type is typically caused by a lane change, and its statistics include the secondary
+outcomes.
+
 Delta-v from the closing speed v, by conservation of momentum with restitution e:
   dv_ego   = (1 + e) * v * m_other / (m_ego + m_other)
   dv_other = (1 + e) * v * m_ego   / (m_ego + m_other)

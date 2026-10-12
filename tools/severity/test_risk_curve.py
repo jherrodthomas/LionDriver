@@ -66,6 +66,11 @@ class RiskCurveTest(unittest.TestCase):
                 for sh, _, v in rc.cases() if sh == "SH-04 OS-08" for o in rc.LEADS)
     self.assertTrue(0.01 < worst < 0.1)
 
+  def test_sh10_stays_on_the_national_ratio(self):
+    from tools.severity import severity_ratio as sr
+    self.assertFalse(any("SH-10" in sh for sh, _, _ in rc.cases()))
+    self.assertEqual(sr.SH_COLLISIONS["SH-10"], ["sideswipe_same"])
+
   def test_sensitivity_grid(self):
     with redirect_stdout(io.StringIO()) as buf:
       self.assertEqual(rc.main(["--sensitivity"]), 0)

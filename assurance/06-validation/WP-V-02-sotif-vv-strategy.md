@@ -174,6 +174,10 @@ SH-04 (struck from behind after phantom braking, OS-08, HE-04.1) is simulated:
 - **Not covered:** a follower that never brakes before impact is outside this bound. Whether it is credible within OS-08 is for the assessor to decide (OI-3).
 - **Rear impacts:** the Joksch curve's coverage of rear impacts is among the inputs to check.
 
+SH-10 (lane change into an occupied lane, HE-02.5) is deliberately **not** mapped to a curve:
+- **The curve would understate the risk.** The primary contact is a same-direction sideswipe: about 1 m/s sideways plus the small speed difference to the vehicle in the target lane. Its Δv is a few km/h, so a Δv curve would give almost no fatality risk. The S3 rating of HE-02.5 comes from what follows the contact (loss of control, or a spin into traffic or a barrier), which a Δv curve does not model. Using it would overstate the credit.
+- **The national ratio fits.** SH-10 uses the FARS/CRSS ratio for sideswipe-same-direction crashes (item 3). The condition of item 3 holds, because a lane change into an occupied lane is the typical cause of that crash type, and its statistics include the secondary outcomes. The value waits on the FARS/CRSS extraction (OI-8).
+
 ## 4. Validation targets
 
 Targets are **proposals**: numeric values are placeholders for the assessor review and WP-C-05 acceptance criteria (OI-3). "Demonstration" names the primary method; §5 defines the methods.
