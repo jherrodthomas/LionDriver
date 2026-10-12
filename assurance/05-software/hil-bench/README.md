@@ -8,11 +8,11 @@
 | Status | Draft: plan only. No bench exists, no part has been bought, no test has been run on hardware |
 | Author | Assurance team (AI-assisted draft) |
 | Reviewer(s) | TBD |
-| Baseline | LionDriver `2619539`; panda pin `92eb565`; panda branch `liondriver/hw-watchdog` at `16cd27a`; panda#3 branch `claude/safety-task-100hz` at `b9596ed` |
+| Baseline | LionDriver `212fc4d`; panda pin `9f60e17`, opendbc pin `aff4033` (panda#1, #3, #4 and opendbc#1, #2, #3 integrated 2026-10-12) |
 
 ## 1. Purpose
 
-LionDriver has no HIL bench (GAP-30), so no firmware test in [WP-W-08](../WP-W-08-embedded-software-testing.md) or hardware fault-injection case in [WP-V-05](../../06-validation/WP-V-05-fault-injection.md) can run. The first change waiting on one is the hardware watchdog ([jherrodthomas/panda#1](https://github.com/jherrodthomas/panda/pull/1), [change record](../../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) OI-3). It must not merge before HIL evidence exists.
+LionDriver has no HIL bench (GAP-30), so no firmware test in [WP-W-08](../WP-W-08-embedded-software-testing.md) or hardware fault-injection case in [WP-V-05](../../06-validation/WP-V-05-fault-injection.md) can run. The hardware watchdog, the 100 Hz safety task and the 5-period RX timeout were integrated on 2026-10-12 (panda `9f60e17`, opendbc `aff4033`) **without hardware verification** ([watchdog change record](../../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) OI-3). The bench now produces the missing evidence for code that is already pinned; until it runs, these pins have no hardware evidence (WP-W-08 §4).
 
 This plan builds the bench in stages, so the watchdog evidence comes from the smallest useful setup and the rest of WP-W-08 follows on the same hardware. The bench is test level L1 of [WP-V-07](../../06-validation/WP-V-07-vehicle-test-operations.md): no vehicle, no road.
 
@@ -23,7 +23,7 @@ This plan builds the bench in stages, so the watchdog evidence comes from the sm
 
 | Stage | Goal | Adds | Unblocks |
 |---|---|---|---|
-| **B1: watchdog bench** | Run the existing HIL tests and the watchdog fault-injection test on a real STM32H7 panda | DUT panda, panda jungle, host PC | panda#1 merge (VS-FI-17, VS-SWQ-14 in its debug-build form); OI-3 of WP-W-08 for the jungle-based upstream tests |
+| **B1: watchdog bench** | Run the existing HIL tests and the watchdog fault-injection test on a real STM32H7 panda | DUT panda, panda jungle, host PC Hardware evidence for the integrated watchdog and safety task (VS-FI-17, VS-SWQ-14 in its debug-build form); OI-3 of WP-W-08 for the jungle-based upstream tests |
 | **B2: timing evidence** | Measure relay release independently of USB polling, ≥ 100 repetitions (WP-W-08 §4) | Oscilloscope or logic analyser on the SBU lines | Timing results usable as evidence for TSR-501 and D-1 |
 | **B3: vehicle bus** | Replay Corolla CAN traffic and inject bus faults. A candump capture of bus 0 also feeds the inter-frame gap scan ([`tools/can_gaps/`](../../../tools/can_gaps/README.md)) | 2–3 USB CAN interfaces, harness-equivalent wiring, 120 Ω terminations | VS-SWQ-01… (limits, timeouts), VS-FI-01…04, VS-FI-22 |
 | **B4: full WP-W-08 bench** | Supply, debug and SoC-side faults | Programmable supply, SWD probe, reference comma device, audio capture | VS-FI-06…08, -10, -11, -15, -16, -18; release-image repeats |
@@ -76,12 +76,11 @@ The relay itself is not on the DUT: the panda drives the harness relay through t
 
 ### 5.2 Software
 
-From a LionDriver checkout with the panda submodule on the fork branch:
+From a LionDriver checkout, with the panda submodule at its pin:
 
 ```bash
 cd panda
-git fetch origin liondriver/hw-watchdog && git checkout 16cd27a   # bench only; the LionDriver pin stays at 92eb565
-# for panda#3: git fetch origin claude/safety-task-100hz && git checkout b9596ed
+git checkout 9f60e17   # the LionDriver pin; contains panda#1, #3 and #4 with the fault injection and HIL test
 pip install -e .[dev]                                               # panda python lib, pytest, libusb1, pycapnp
 export PYTHONPATH=$PWD/../opendbc_repo:$PWD/..
 ```
@@ -109,9 +108,11 @@ HITL=1 FAULT_INJECTION=1 python -m pytest -v tests/hitl/test_10_hw_watchdog.py
 
 | Test | Injection (control request `0xa9`) | Checks |
 |---|---|---|
-| `test_main_loop_hang` | 1: main loop spins forever | Relay drive released within `WATCHDOG_RESET_BUDGET_S` (default 0.25 s); DUT restarts in SILENT with uptime < 5 s |
-| `test_tick_hang` | 2: tick interrupt spins forever | As above |
+| `test_main_loop_hang` | 1: main loop spins forever | Relay drive released within `WATCHDOG_RESET_BUDGET_S` (default 0.12 s at the pin; 0.25 s on panda#1 alone); DUT restarts in SILENT with uptime < 5 s |
+| `test_tick_hang` | 2: tick interrupt spins forever | As above, plus one 125 ms tick period for the hang to start |
 | `test_hang_with_interrupts_disabled` | 3: interrupts off, then spin | As above |
+| `test_safety_task_hang` | 4: the 100 Hz safety task spins forever | As above, plus one 10 ms task period |
+| `test_early_feed_window_violation` | 5: two feeds back to back, the second inside the closed window (HWSR-501b) | As above, plus one 10 ms task period |
 | `test_no_reset_without_fault` | none, relay driven for several seconds | No reset (uptime keeps rising), relay stays driven: the watchdog does not fire in normal running |
 
 Then run the upstream HIL tests on the same bench to show the change breaks nothing else:
@@ -149,16 +150,16 @@ WP-W-08 §4 asks for the worst value over ≥ 100 repetitions with random phase 
 | `tests/hitl/test_10_hw_watchdog.py` modes 1–3 (tick hang budget includes one tick period) | VS-SWQ-14 (hang part), VS-FI-17 (main-loop and tick hang; interrupts disabled) | TSR-501, HWSR-501, HWSR-501c | B1 | Implemented on `liondriver/hw-watchdog` and panda#3, not run |
 | `test_no_reset_without_fault` | VS-SWQ-14 (no false trip) | TSR-501 | B1 | Implemented, not run |
 | Timing campaign (§6) | VS-SWQ-14 timing, VS-FI-17 pass criterion | TSR-501, SG-01 budget | B2 | Planned |
-| Safety-task hang | VS-FI-17 | TSR-501 | B1 | panda#3 only: `test_safety_task_hang` (mode 4), implemented, not run |
+| Safety-task hang | VS-FI-17 | TSR-501 | B1 | `test_safety_task_hang` (mode 4, panda#3; in the pin), implemented, not run |
 | SPI interrupt hang | VS-FI-17 (SPI ISR) | TSR-501, TSR-502 | B4 (reference device: SPI) | Planned: needs another injection mode and the SPI path |
-| Window violation (early feed) | VS-SWQ-14 / HWSR-501b | HWSR-501b | B1 | panda#3 only: `test_early_feed_window_violation` (mode 5), implemented, not run. Not testable on panda#1 (no window mode, D-3) |
+| Window violation (early feed) | VS-SWQ-14 / HWSR-501b | HWSR-501b | B1 | `test_early_feed_window_violation` (mode 5, panda#3; in the pin), implemented, not run |
 | Upstream `tests/hitl/test_1…9` | Regression | — | B1 | Existing, not run on LionDriver hardware |
 | Corolla log replay, limit and timeout cases | VS-SWQ-01…, VS-FI-01…04 | TSR-1xx, TSR-401…406 | B3 | Planned |
 | Power dips, resets, SWD memory faults, heartbeat and SPI faults | VS-FI-06…08, -10, -11, -15, -16, -18 | TSR-407…413, TSR-505, TSR-503, TSR-706 | B4 | Planned |
 
 ### 7.1 With panda#3
 
-[jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3) (100 Hz safety task, window mode, 90 ms nominal) is stacked on panda#1 and contains its fault injection and HIL test (merge `b9596ed`). On panda#3 the same test file adds:
+[jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3) (100 Hz safety task, window mode, 90 ms nominal) is stacked on panda#1 and contains its fault injection and HIL test (merge `b9596ed`); both are in the pin `9f60e17`. On panda#3 the same test file adds:
 
 | Test | Injection | Checks |
 |---|---|---|
@@ -172,7 +173,7 @@ The default budget on panda#3 is 0.12 s (TSR-501's 0.1 s plus 20 ms for relay re
 | ID | Item | Effect | Handling |
 |---|---|---|---|
 | R-1 | No panda jungle available | The watchdog test cannot see the relay drive; `NO_JUNGLE=1` runs only the DUT side | Fallback: probe the DUT SBU pins directly with the scope (B2 parts) and check the reset through uptime and SILENT after reconnect. Weaker: no harness emulation, so confirm the relay is driven at all without a harness detected |
-| R-2 | Red panda board differs from the reference device panda | Relay drive circuit and harness detection may differ | Repeat the watchdog cases on the reference device (B4) before release; B1 evidence is enough for the merge decision on panda#1 only if the reviewer accepts it |
+| R-2 | Red panda board differs from the reference device panda | Relay drive circuit and harness detection may differ | Repeat the watchdog cases on the reference device (B4) before release; B1 evidence covers the integrated pin only if the reviewer accepts the red panda as representative |
 | R-3 | No hardware start marker for timing | B2 timing is from the USB request, which adds host latency | Add a GPIO toggle to the fault-injection hook (debug build only) |
 | R-4 | Debug bootstub on the DUT | A DUT with the debug bootstub must not go into a car | Label the bench DUT; never use it in the vehicle |
 | R-5 | Fault injection only in a debug build | Evidence is for a different image than the release one (WP-W-08 §4) | Repeat with SWD halt on the release image when P-10 exists (WP-W-08 OI-2) |
@@ -192,6 +193,6 @@ Results go in the record as observed. A failed or skipped case is recorded as su
 | ID | Action | Owner | Needed by |
 |---|---|---|---|
 | A-1 | Confirm which of P-1, P-2, P-11 are owned or can be bought | Maintainer | B1 |
-| A-2 | Build B1 and run §5.4; attach the output to panda#1 and the change record | Maintainer | panda#1 merge |
+| A-2 | Build B1 and run §5.4 on the pinned panda `9f60e17`; attach the output to the change record | Maintainer | Before any release image for a car |
 | A-3 | Add the GPIO start marker (R-3) and run the §6 campaign | Maintainer (firmware: assistant draft) | Release |
 | A-4 | Injection mode for an SPI interrupt hang, on the reference device | Assistant draft, maintainer review | Release |
