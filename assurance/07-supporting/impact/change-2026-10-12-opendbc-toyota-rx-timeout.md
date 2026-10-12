@@ -6,7 +6,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
 | Status | **Draft: proposed change, not integrated.** The LionDriver `opendbc_repo` pin is unchanged |
-| Change request | [jherrodthomas/opendbc#1](https://github.com/jherrodthomas/opendbc/pull/1) |
+| Change request | [jherrodthomas/opendbc#1](https://github.com/jherrodthomas/opendbc/pull/1); follow-on [jherrodthomas/opendbc#3](https://github.com/jherrodthomas/opendbc/pull/3) for TSR-306, stacked on #1 (§7) |
 | Range | opendbc `229dc70..de80b63` (branch `claude/toyota-rx-timeout`); LionDriver pin stays at `229dc70` until the change is merged to the fork's `master` |
 | Depends on | [jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3) (100 Hz safety task, SWSR-401a). Without it `safety_tick()` runs at 1 Hz and detection stays ≥ 1 s. Integrate both in the same pin update |
 | Reference configuration affected | Yes: the Toyota safety mode runs on the reference device |
@@ -26,7 +26,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Evaluated at ≥ 50 Hz | 100 Hz (panda#3) | Measured period and jitter on the device (SWSR-401a, HIL) |
 | Worst-case detection ≤ 0.2 s | ≤ 0.16 s (`0x1D2`, 33 Hz) | Confirm the nominal rates against the measured ones (WP-S-05 OI-7) |
 
-Not covered: TSR-306. Authority can still be granted on a PCM rising edge between two ticks while a message is lagging, for at most one task period (10 ms).
+Not covered by opendbc#1: TSR-306. Authority can still be granted on a PCM rising edge between two ticks while a message is lagging, for at most one task period (10 ms). opendbc#3 proposes to close this (§7).
 
 ## 3. Behaviour changes to watch
 
@@ -68,3 +68,15 @@ None are changed yet, because the change is not integrated. When opendbc#1 and p
 | OI-2 | Confirm the declared RX rates against measured rates (WP-S-05 OI-7) | Integration |
 | OI-3 | Add `0x262`, `0x1D3` and `0xB4` to the RX check set (TSR-110, TSR-401) | Later change |
 | OI-4 | HIL fault injection: remove each RX message and measure the time to revocation | Release |
+
+## 7. Follow-on change: engagement gated on the RX checks (opendbc#3)
+
+[jherrodthomas/opendbc#3](https://github.com/jherrodthomas/opendbc/pull/3) is stacked on opendbc#1 (branch `claude/toyota-rx-grant-check`, `de80b63..00a51b5`) and integrated with it.
+
+| Commit(s) | Files | Summary of behaviour change | FuSa | SOTIF | AI | CS | Hazards / findings affected | WPs affected | Verification to re-run | Decision |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `00a51b5` | `opendbc/safety/safety.h`, `opendbc/safety/tests/test_toyota.py` | For modes with `rx_timeout_periods` (Toyota), the PCM rising edge grants controls only if every RX check is seen, valid and not lagging at that moment. The lag computation is shared with `safety_tick()` (`rx_check_lagging()`). Other modes are unchanged | Yes | Yes (engagement refused more often if a message is late at the moment of engagement) | No | No | SG-01, SG-02; FSR-01.05, FSR-01.06; GAP-06 | WP-S-02 (TSR-306 Impl), WP-W-02 (SWSR-306 status), WP-W-06 (new unit test), WP-V-05 | As §1, plus engagement with a missing message on the HIL bench | Take with opendbc#1 after review |
+
+Effect (proposed; pending review): TSR-306 / SWSR-306 met for the checks the envelope has today (seen, checksum, counter, quality flag, timeout) on the four Toyota RX checks. The frozen-value and cross-checks that SWSR-306 also names do not exist yet, so SWSR-306 stays partial. A late message at the moment of a PCM rising edge leaves openpilot not engaged, and the driver has to engage again once the message is back. That is the safe direction; its frequency belongs to the false-timeout check of OI-1.
+
+Verification of opendbc#3 (host only): full safety suite OK; 100 % line coverage; new test `test_no_engagement_with_invalid_rx_checks` (both sides of the threshold, and a message never received); mutation (gate always allows) fails 14 tests; opendbc and panda MISRA clean. The Toyota tests now receive every checked message in `setUp`, as on a live bus; the common tests are unchanged.
