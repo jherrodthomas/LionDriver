@@ -133,7 +133,7 @@
   phase: G2
   between: [WP-V-02, WP-C-11]
   pattern: "SOTIF-AI"
-  topic: "The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-15 must confirm. WP-V-02 §4.1 traces each value: 5 confirmed (AIR-11 and AIR-14 through VT-14 and VT-15); 3 need a derivation; 6 come from other documents. The targets are not yet approved by the assessor"
+  topic: "The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-15 must confirm. WP-V-02 §4.1 traces each value: 8 confirmed or replaced (AIR-11 and AIR-14 through VT-14 and VT-15; AIR-01, AIR-03 and AIR-04 derived in §4.3); 6 come from other documents. The targets are not yet approved by the assessor"
   anchors: ["WP-C-11:are proposals that [WP-V-02]", "WP-V-02:Approve numeric targets VT-01…VT-15 with the assessor", "WP-V-02:(TBC) values of WP-C-11 and the targets that confirm them", "WP-C-11:AIR-11 and AIR-14 are covered by VT-14 and VT-15"]
   status: open
   open_item: "WP-V-02 OI-3"

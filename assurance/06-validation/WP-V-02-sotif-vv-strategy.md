@@ -134,6 +134,32 @@ SH-09 (traffic-control non-compliance) has no target: Experimental Mode is off a
 
 where r is the monitor recall and P(not controlled | alert) is taken from the take-over test VS-VAL-12 under §3.3. With r = 0.8 and P(not controlled) = 0.14 (20 subjects, no failure), p_s,res ≤ 1 % holds only if the model alone fails in at most 3.2 % of instances. A triggering condition with a higher model-alone failure rate needs higher recall, a larger subject sample, or removal from the ODD (WP-C-02 §3.3). The 80 % recall in VT-15 is therefore a floor, and the per-condition recall follows from this formula once p_s,model is measured. Each false flag raises a take-over alert, so false flags are capped with the same nuisance budget the DM chain has (AIR-08: ≤ 1 false alert per hour). Together, nominal driving can produce at most two unnecessary alerts per hour.
 
+### 4.3 Derivation of the AIR-01, AIR-03 and AIR-04 values
+
+**AIR-01 (lateral offset).** The lateral margin from lane centre to the lane boundary is (lane width − vehicle width)/2. With the ODD lane widths of 2.9–3.9 m and the Corolla at ≈ 1.78 m, it is 0.56–1.06 m ([WP-S-04 §3.1](../03-system/WP-S-04-timing-ftti-budget.md)). An offset within ±0.5 m therefore stays inside the lane in every ODD lane width, with at least 0.06 m to spare in the narrowest. This is also the drift threshold of VT-02. The ±0.5 m value is confirmed.
+
+The time share (≥ 99.5 % of engaged time) cannot be derived from VT-01. VT-01 counts departures per scenario instance, and a time share depends on how long each excursion lasts. The time share is therefore **replaced** by an instance criterion with the VT-01 budget:
+
+- **Pass condition:** |offset| stays ≤ 0.5 m throughout a 60 s nominal lane-keeping instance.
+- **Target:** the share of failing instances is p ≤ 1 % at 95 %, which needs ≥ 299 instances (≈ 5 h) per ODD stratum.
+- **Instance length:** 60 s keeps that sample within the public-road capacity of §3.2, and is long enough to include curvature changes.
+
+The time share is still reported, as a KPI without a pass value.
+
+**AIR-03 (lead detection).** All three values follow from the longitudinal plan and the envelope:
+
+- **Range 80 m.** At the ODD speed bound (120 km/h, 33.3 m/s), the planner follows a lead at t_follow · v + 6 m. That is 54 m with the standard personality and 64 m with the relaxed one (`selfdrive/controls/lib/longitudinal_mpc_lib/long_mpc.py`: T_FOLLOW 1.45 / 1.75 s, STOP_DISTANCE 6 m). 80 m covers both gaps, with the 10 % distance error added.
+  For a lead closing at Δv, the distance needed to react and brake is Δv · t_r + Δv² / (2 · a_lim), using t_r and a_lim from AIR-04. With 80 m, this covers closing speeds up to 19 m/s (≈ 69 km/h). Faster closing (stationary or much slower leads) is covered by AIR-04, applied with the closing speed in place of v.
+- **Latency 0.5 s.** This is half of the AIR-04 reaction time t_r = 1.0 s. The other half is for planning (20 Hz), control and the PCM's response onset. VS-VAL-05 of [WP-V-01](WP-V-01-safety-validation.md) characterises the PCM response to acceleration requests, but no test yet records the onset time, so this share is an assumption until one does.
+- **Distance error max(2 m, 10 %).** The plan brakes at a_lim = 3.0 m/s². If the lead is ε closer than reported, the deceleration actually needed is a_lim · (1 + ε). With ε = 10 % that is 3.3 m/s², inside the envelope minimum of −3.5 m/s² (`ACCEL_MIN`, [WP-C-02 §2](../02-concept/WP-C-02-odd-and-intended-functionality.md)). The limit would be ε ≤ 16.7 %. At short range, the 2 m floor leaves 4 m of the 6 m standstill gap.
+
+**AIR-04 (stationary lead).**
+
+- **a_lim = 3.0 m/s².** This sits between the planner's comfort braking (COMFORT_BRAKE 2.5 m/s²) and the envelope minimum (3.5 m/s²). The 0.5 m/s² left before the envelope minimum covers the AIR-03 distance error above.
+- **t_r = 1.0 s.** This is the AIR-03 detection latency (0.5 s) plus the planning-to-actuation share (0.5 s), as above.
+
+At the ODD speed bound, the required report distance is 33.3 + 33.3² / 6 ≈ 218 m. The 180 m given as an example in AIR-04 is for 30 m/s. Both values are confirmed. They remain proposals until the assessor approves them (OI-3).
+
 ### 4.1 (TBC) values of WP-C-11 and the targets that confirm them
 
 [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) marks the performance values of its AI safety requirements **(TBC)**. Its OI-2 says each is to be confirmed or replaced through the target derivation here. The table records, for each (TBC) value, which target confirms it. **Kind** is one of:
@@ -146,9 +172,9 @@ where r is the monitor recall and P(not controlled | alert) is taken from the ta
 | Requirement | (TBC) value | Target | Kind | Action |
 |---|---|---|---|---|
 | AIR-01 | Lateral offset ±0.5 m | VT-02 (drift > 0.5 m) | C | — |
-| AIR-01 | ≥ 99.5 % of engaged time within ±0.5 m | VT-01 (departures per hour) | D | Derive the time share from the VT-01 departure rate, or replace it with the VT-01 surrogate |
-| AIR-03 | Lead detection range 80 m, latency 0.5 s, distance error max(2 m, 10 %) | VT-06 (p_s per approach-speed band) | D | Derive from the VT-06 approach bands with the AIR-04 stopping-distance relation |
-| AIR-04 | t_r = 1.0 s, a_lim = 3.0 m/s² | VT-06 (KS-05) | D | Record the basis; a_lim is inside the envelope minimum −3.5 m/s² (WP-C-02) |
+| AIR-01 | ≥ 99.5 % of engaged time within ±0.5 m | VT-01 (instance budget p ≤ 1 %) | C | Replaced by the instance criterion of §4.3; the time share is reported as a KPI |
+| AIR-03 | Lead detection range 80 m, latency 0.5 s, distance error max(2 m, 10 %) | VT-06 (p_s per approach-speed band) | C | Derived in §4.3 |
+| AIR-04 | t_r = 1.0 s, a_lim = 3.0 m/s² | VT-06 (KS-05) | C | Derived in §4.3 |
 | AIR-05 | Phantom deceleration below −2.0 m/s² | VT-04 (−2.0 m/s²) | C | — |
 | AIR-06 | `hardBrakePredicted` at TTC ≥ 2.0 s | VT-06 (FCW at TTC ≥ 2 s) | C | — |
 | AIR-11 | Curvature rate from 5 m/s³ jerk; ≤ 1 lead toggle per second | VT-14 (field surrogate AS-08 in [WP-V-04](WP-V-04-sotif-unknown-scenarios.md)) | C | — |
@@ -160,7 +186,7 @@ where r is the monitor recall and P(not controlled | alert) is taken from the ta
 | AIR-27 | DM output invalid > 2 s | — | N | TSR-609 ([WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md)); fault injection VS-FI-25 |
 | DSR-07 | ≥ 10 % double annotation | — | N | Label specification (WP-W-10) |
 
-Result: five values are confirmed (C), AIR-11 and AIR-14 through VT-14 and VT-15. Three need a derivation recorded against an existing target (D). No value lacks a target (G). The remaining six take their value from timing, ML engineering or data documents, not from this one (N). The D rows are part of the target set the assessor approves (OI-3). Until then, every (TBC) in WP-C-11 stays (TBC).
+Result: eight values are confirmed or replaced (C). AIR-11 and AIR-14 are confirmed through VT-14 and VT-15, and AIR-01, AIR-03 and AIR-04 through the derivation of §4.3. No value is left at D or G. The remaining six take their value from timing, ML engineering or data documents, not from this one (N). Until then, every (TBC) in WP-C-11 stays (TBC).
 
 ## 5. Test methods
 
@@ -249,7 +275,7 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 |---|---|
 | OI-1 | Keep the §6 TC table in step with WP-C-06 revisions (new TCs need a KS entry) |
 | OI-2 | Select B1 data set and filter to the ODD; replace the illustrative rates of §3.1 (shared with WP-M-08 OI-1) |
-| OI-3 | Approve numeric targets VT-01…VT-15 with the assessor before collecting evidence, including the D rows of §4.1 |
+| OI-3 | Approve numeric targets VT-01…VT-15 with the assessor before collecting evidence, together with the derivations of §4.2 and §4.3 |
 | OI-4 | Build the simulation fidelity case (§5.3) and decide which families get credit (WP-M-08 OI-3) |
 | OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
 | OI-6 | Decide the evidence route for P(E-situation) in step 2 (HARA OI-2). The route for P(not controlled) is §3.3 |
