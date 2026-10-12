@@ -118,3 +118,12 @@
   aou_status: "Unverified"
   status: proposed
   source: WP-C-01
+
+- id: AOU-14
+  kind: aou
+  text: "The reference build (`LIONDRIVER_REFERENCE=1`) is used with openpilot's default alternative experience; no setting that sets alternative-experience bits is enabled. The firmware fixes the value at 0; a different host value leads to a controls mismatch"
+  credited_in: "WP-S-02 TSR-512 (SWSR-512a)"
+  verification_approach: "Installation checklist; host-side guard to be decided (IA mode lock OI-3)"
+  aou_status: "Unverified"
+  status: proposed
+  source: WP-C-01
