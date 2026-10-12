@@ -223,7 +223,7 @@
   allocated_to: "U-SAF-TOY, U-SAF-CORE"
   verification: "UT, RP, VT"
   acceptance: "Revocation within 1 frame of a fault code; fault set confirmed on reference EPS logs"
-  baseline_impl: "Partial (opendbc `98404a4`): `0x262` in the reference RX set with checksum and timeout (`TOYOTA_REFERENCE_RX_CHECKS`, `modes/toyota.h`; test `test_reference_rx_checks`). Not impl: revocation on LKA_STATE fault codes (host only, `carstate.py:122-127`, codes `:19-22`) (GAP-03)"
+  baseline_impl: "Partial (reference build): `0x262` in the RX set with checksum and timeout (opendbc `98404a4`, test `test_reference_rx_checks`); lateral actuation refused while LKA_STATE is in the host's fault set (opendbc `242d63d`; `toyota_lka_state_is_fault`, `modes/toyota.h`; test `test_eps_fault_blocks_lka`, every code 0…127). The frame that reports the fault removes authority for the next STEERING_LKA frame. Open: fault set confirmed on reference EPS logs (verification criterion) (GAP-03)"
   status: proposed
   source: WP-W-02
 
