@@ -34,7 +34,10 @@ oversampling. The journal version (Tefft 2013, Accident Analysis and Prevention 
 doi:10.1016/j.aap.2012.07.022) gives about 10 % near 24 mph and 50 % near 41 mph. At the
 OS-04 bound of 37 mph that is about 0.40 instead of 0.38. Between anchors
 the risk is interpolated linearly; above 58 mph it is 1, and below 23 mph it falls linearly
-to 0 at 0 mph (an assumption). One VRU is struck. The same curve is used for cyclists. This is
+to 0 at 0 mph. `--low-speed` checks that segment against a logistic fit to the Tefft anchors
+and the Hussain et al. (2019) meta-analysis: the linear risk is the higher of the three from
+2 mph to 23 mph, and below 2 mph it is at most 0.006 under the logistic fit, whose non-zero
+risk at 0 mph is an artefact of the logistic form. One VRU is struck. The same curve is used for cyclists. This is
 conservative: cyclist curves put the risk at or below the pedestrian's at the same speed (Nie,
 Li and Yang 2015: 50 % at 67.6 km/h for cyclists and 65.4 km/h for pedestrians; Lubbe, Wu and
 Jeppsson 2022: 10 % serious injury at 44 and 29 km/h), checked from search summaries
@@ -179,6 +182,31 @@ def pedestrian_fatality(speed_kmh: float) -> float:
   return 1.0
 
 
+# Low-speed check of the linear segment from 0 to 23 mph (`--low-speed`). Two logistic curves,
+# p = 1 / (1 + exp(-(a + b * v))), stand in for the risk below the first anchor:
+# - the least-squares fit of logit(p) to the five Tefft anchors (fitted here, not Tefft's own
+#   coefficients, which were not reachable);
+# - Hussain et al. (2019), Accident Analysis and Prevention 129, 241-249, a meta-analysis of 20
+#   studies: odds ratio 1.11 per km/h and 50 % at 59 km/h (5 % at 30 km/h, 10 % at 37 km/h).
+TEFFT_LOGIT_A, TEFFT_LOGIT_B_PER_MPH = -5.108, 0.1246
+HUSSAIN_OR_PER_KMH, HUSSAIN_P50_KMH = 1.11, 59.0
+LOW_SPEED_MPH = tuple(range(24))
+
+
+def logistic(x: float, a: float, b: float) -> float:
+  import math
+  return 1 / (1 + math.exp(-(a + b * x)))
+
+
+def low_speed_check(speed_kmh: float) -> dict:
+  """Linear segment against the two logistic curves at an impact speed below 23 mph."""
+  import math
+  b = math.log(HUSSAIN_OR_PER_KMH)
+  return {"linear": pedestrian_fatality(speed_kmh),
+          "tefft_logistic": logistic(speed_kmh * MPH_PER_KMH, TEFFT_LOGIT_A, TEFFT_LOGIT_B_PER_MPH),
+          "hussain_logistic": logistic(speed_kmh, -b * HUSSAIN_P50_KMH, b)}
+
+
 def vru_cases() -> list[tuple[str, str, float]]:
   """(SH and situation, case label, impact speed in km/h) for SH-11."""
   launch = (2 * ACCEL_MAX * STOP_DISTANCE_M) ** 0.5 * 3.6
@@ -252,8 +280,24 @@ def main(argv: list[str] | None = None) -> int:
                   help="SH-10 (and the SH-01/02 sideswipe): print the contact angle and lateral speed")
   ap.add_argument("--sh02", "--sh01", dest="sh02", action="store_true",
                   help="SH-01/SH-02: print the barrier impact angle of a lane departure at the controller limit")
+  ap.add_argument("--low-speed", action="store_true",
+                  help="SH-11: compare the linear pedestrian risk below 23 mph with two logistic curves")
   a = ap.parse_args(argv)
   JOKSCH_MPH = a.joksch_mph
+  if a.low_speed:
+    print("| Impact (mph) | Impact (km/h) | Linear | Tefft logistic fit | Hussain 2019 | Linear covers both |\n|---|---|---|---|---|---|")
+    for mph in LOW_SPEED_MPH:
+      c = low_speed_check(mph / MPH_PER_KMH)
+      ok = c["linear"] >= max(c["tefft_logistic"], c["hussain_logistic"])
+      cols = [f"{mph}", f"{mph / MPH_PER_KMH:.0f}", f"{c['linear']:.4f}", f"{c['tefft_logistic']:.4f}",
+              f"{c['hussain_logistic']:.4f}", "yes" if ok else "no"]
+      print("| " + " | ".join(cols) + " |")
+    for sh, label, v in vru_cases():
+      if v * MPH_PER_KMH < PEDESTRIAN_ANCHORS_MPH[1][0]:
+        c = low_speed_check(v)
+        values = f"linear {c['linear']:.3f}, Tefft logistic fit {c['tefft_logistic']:.3f}, Hussain 2019 {c['hussain_logistic']:.3f}"
+        print(f"\n{sh} ({label}, {v:.0f} km/h): {values}.")
+    return 0
   if a.sh10:
     print("| Ego speed (km/h) | Lateral speed (km/h) | Contact angle (deg) | Lateral Δv per car (km/h) |\n|---|---|---|---|")
     for v in SH10_SPEEDS_KMH:

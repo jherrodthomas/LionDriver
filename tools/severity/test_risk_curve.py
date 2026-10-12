@@ -87,6 +87,28 @@ class RiskCurveTest(unittest.TestCase):
     self.assertEqual(rc.pedestrian_fatality(100), 1.0)
     self.assertAlmostEqual(rc.pedestrian_fatality(37 / rc.MPH_PER_KMH), 0.375)
 
+  def test_low_speed_logistic_fits(self):
+    # the Tefft fit reproduces its anchors within 0.04, Hussain gives 5 % at 30 km/h and 50 % at 59 km/h
+    for mph, p in rc.PEDESTRIAN_ANCHORS_MPH[1:]:
+      self.assertAlmostEqual(rc.low_speed_check(mph / rc.MPH_PER_KMH)["tefft_logistic"], p, delta=0.04)
+    self.assertAlmostEqual(rc.low_speed_check(30)["hussain_logistic"], 0.05, delta=0.005)
+    self.assertAlmostEqual(rc.low_speed_check(59)["hussain_logistic"], 0.5, places=6)
+
+  def test_linear_segment_covers_logistic_curves_above_2_mph(self):
+    for tenth in range(20, 231):
+      c = rc.low_speed_check(tenth / 10 / rc.MPH_PER_KMH)
+      self.assertGreaterEqual(c["linear"], max(c["tefft_logistic"], c["hussain_logistic"]))
+    for tenth in range(20):
+      c = rc.low_speed_check(tenth / 10 / rc.MPH_PER_KMH)
+      self.assertLess(c["tefft_logistic"] - c["linear"], 0.0065)
+
+  def test_low_speed_cli_reports_os06(self):
+    with redirect_stdout(io.StringIO()) as buf:
+      self.assertEqual(rc.main(["--low-speed"]), 0)
+    out = buf.getvalue()
+    self.assertIn("SH-11 OS-06", out)
+    self.assertIn("linear 0.048, Tefft logistic fit 0.023, Hussain 2019 0.013", out)
+
   def test_pedestrian_curve_is_monotone(self):
     risks = [rc.pedestrian_fatality(v) for v in range(0, 120, 5)]
     self.assertEqual(risks, sorted(risks))
