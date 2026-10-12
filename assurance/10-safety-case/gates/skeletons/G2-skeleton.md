@@ -11,7 +11,7 @@
 | Date | YYYY-MM-DD |
 | Baseline | <commit SHA or tag> |
 | Chair | Safety manager (Jherrod Thomas (acting)) |
-| Participants | Safety manager (Jherrod Thomas (acting)); SOTIF lead (TBD); Cybersecurity manager (Jherrod Thomas (acting); permanent holder TBD); External functional safety assessor (TBD (D-06)) |
+| Participants | Safety manager (Jherrod Thomas (acting)); SOTIF lead (Jherrod Thomas (acting); permanent holder TBD); Cybersecurity manager (Jherrod Thomas (acting); permanent holder TBD); External functional safety assessor (TBD (D-06)) |
 | Assessor informed | Yes / No (name) |
 
 ## Inputs (WP-M-02 §10)
@@ -70,8 +70,6 @@ From the [process model](../../../process/README.md). Each one is a condition on
 
 | Role | Assigned to | Needed by |
 |---|---|---|
-| SOTIF lead | TBD | G1 |
-| AI/ML safety lead | TBD | G1 |
 | Hardware safety engineer | TBD (likely external) | G2 |
 | Verification reviewer(s) | TBD (at least one person other than the author) | G0 |
 | Quality assurance | TBD (independent of the author) | G0 |

@@ -134,11 +134,11 @@ Which activity answers each clause reference listed in the register. One activit
 |---|---|---|---|
 | Joint (all disciplines) | Safety manager | Jherrod Thomas (acting) | G0 |
 | Functional safety (ISO 26262) | Safety manager | Jherrod Thomas (acting) | G0 |
-| SOTIF (ISO 21448) | SOTIF lead | TBD | G1 |
+| SOTIF (ISO 21448) | SOTIF lead | Jherrod Thomas (acting); permanent holder TBD | G1 |
 | Cybersecurity (ISO/SAE 21434) | Cybersecurity manager | Jherrod Thomas (acting); permanent holder TBD | G1 |
 | Independent confirmation | External functional safety assessor | TBD (D-06) | G1 |
 
-**Other roles WP-M-02 §3.1 needs by G2:** AI/ML safety lead (TBD; needed by G1, still unassigned); Envelope software engineer(s) (Jherrod Thomas; additional contributors TBD); Hardware safety engineer (TBD (likely external)); Verification reviewer(s) (TBD (at least one person other than the author); needed by G0, still unassigned); Quality assurance (TBD (independent of the author); needed by G0, still unassigned); Test / safety driver(s) (TBD (trained per WP-M-04); needed by G1, still unassigned).
+**Other roles WP-M-02 §3.1 needs by G2:** Envelope software engineer(s) (Jherrod Thomas; additional contributors TBD); Hardware safety engineer (TBD (likely external)); Verification reviewer(s) (TBD (at least one person other than the author); needed by G0, still unassigned); Quality assurance (TBD (independent of the author); needed by G0, still unassigned); Test / safety driver(s) (TBD (trained per WP-M-04); needed by G1, still unassigned).
 
 **Confirmation measures (WP-M-06 §9):**
 

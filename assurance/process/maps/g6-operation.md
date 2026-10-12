@@ -95,7 +95,7 @@ Which activity answers each clause reference listed in the register. One activit
 | Joint (all disciplines) | Safety manager | Jherrod Thomas (acting) | G0 |
 | Cybersecurity (ISO/SAE 21434) | Cybersecurity manager | Jherrod Thomas (acting); permanent holder TBD | G1 |
 
-**Other roles WP-M-02 §3.1 needs by G6:** SOTIF lead (TBD; needed by G1, still unassigned); AI/ML safety lead (TBD; needed by G1, still unassigned); Hardware safety engineer (TBD (likely external); needed by G2, still unassigned); Verification reviewer(s) (TBD (at least one person other than the author); needed by G0, still unassigned); Quality assurance (TBD (independent of the author); needed by G0, still unassigned); HIL bench owner (TBD; needed by G3, still unassigned); Test / safety driver(s) (TBD (trained per WP-M-04); needed by G1, still unassigned); External functional safety assessor (TBD (D-06); needed by G1, still unassigned); External cybersecurity assessor (TBD; needed by G5, still unassigned).
+**Other roles WP-M-02 §3.1 needs by G6:** Hardware safety engineer (TBD (likely external); needed by G2, still unassigned); Verification reviewer(s) (TBD (at least one person other than the author); needed by G0, still unassigned); Quality assurance (TBD (independent of the author); needed by G0, still unassigned); HIL bench owner (TBD; needed by G3, still unassigned); Test / safety driver(s) (TBD (trained per WP-M-04); needed by G1, still unassigned); External functional safety assessor (TBD (D-06); needed by G1, still unassigned); External cybersecurity assessor (TBD; needed by G5, still unassigned).
 
 **Confirmation measures (WP-M-06 §9):** none planned at this gate.
 

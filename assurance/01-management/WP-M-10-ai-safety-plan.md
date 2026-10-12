@@ -45,8 +45,8 @@ Upstream history in the baseline window shows how often AI-2 changes: `4bcf732`,
 
 | Role | Holder (today) | Responsibility |
 |---|---|---|
-| AI safety lead | Jherrod Thomas (maintainer) | Owns this plan, WP-C-11, WP-W-10; signs model change impact analyses |
-| SOTIF lead | Jherrod Thomas | Receives AI-related FI-nn into WP-C-06 ([WP-M-08](WP-M-08-sotif-plan.md)) |
+| AI safety lead | Jherrod Thomas (maintainer, acting; permanent holder TBD per [WP-M-02 §3.1](WP-M-02-safety-plan.md)) | Owns this plan, WP-C-11, WP-W-10; signs model change impact analyses |
+| SOTIF lead | Jherrod Thomas (acting) | Receives AI-related FI-nn into WP-C-06 ([WP-M-08](WP-M-08-sotif-plan.md)) |
 | Data steward | Jherrod Thomas | LionDriver evaluation datasets (§6.3) |
 | Independent reviewer / assessor | External, TBD (D-06) | Confirms the acquired-model route and the limits of the AI argument |
 

@@ -54,8 +54,6 @@ From the [process model](../../../process/README.md). Each one is a condition on
 
 | Role | Assigned to | Needed by |
 |---|---|---|
-| SOTIF lead | TBD | G1 |
-| AI/ML safety lead | TBD | G1 |
 | Hardware safety engineer | TBD (likely external) | G2 |
 | Verification reviewer(s) | TBD (at least one person other than the author) | G0 |
 | Quality assurance | TBD (independent of the author) | G0 |

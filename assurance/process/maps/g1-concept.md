@@ -144,8 +144,8 @@ Which activity answers each clause reference listed in the register. One activit
 |---|---|---|---|
 | Joint (all disciplines) | Safety manager | Jherrod Thomas (acting) | G0 |
 | Functional safety (ISO 26262) | Safety manager | Jherrod Thomas (acting) | G0 |
-| SOTIF (ISO 21448) | SOTIF lead | TBD | G1 |
-| AI safety (ISO/PAS 8800) | AI/ML safety lead | TBD | G1 |
+| SOTIF (ISO 21448) | SOTIF lead | Jherrod Thomas (acting); permanent holder TBD | G1 |
+| AI safety (ISO/PAS 8800) | AI/ML safety lead | Jherrod Thomas (acting); permanent holder TBD | G1 |
 | Cybersecurity (ISO/SAE 21434) | Cybersecurity manager | Jherrod Thomas (acting); permanent holder TBD | G1 |
 | Independent confirmation | External functional safety assessor | TBD (D-06) | G1 |
 

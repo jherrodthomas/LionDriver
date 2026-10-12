@@ -164,14 +164,14 @@ Which activity answers each clause reference listed in the register. One activit
 |---|---|---|---|
 | Joint (all disciplines) | Safety manager | Jherrod Thomas (acting) | G0 |
 | Functional safety (ISO 26262) | Safety manager | Jherrod Thomas (acting) | G0 |
-| SOTIF (ISO 21448) | SOTIF lead | TBD | G1 |
-| AI safety (ISO/PAS 8800) | AI/ML safety lead | TBD | G1 |
+| SOTIF (ISO 21448) | SOTIF lead | Jherrod Thomas (acting); permanent holder TBD | G1 |
+| AI safety (ISO/PAS 8800) | AI/ML safety lead | Jherrod Thomas (acting); permanent holder TBD | G1 |
 | Cybersecurity (ISO/SAE 21434) | Cybersecurity manager | Jherrod Thomas (acting); permanent holder TBD | G1 |
 | Independent confirmation | External functional safety assessor | TBD (D-06) | G1 |
 
 **Other roles WP-M-02 §3.1 needs by G0:** Project maintainer (Jherrod Thomas); Configuration and change manager (Jherrod Thomas (acting)); Verification reviewer(s) (TBD (at least one person other than the author)); Quality assurance (TBD (independent of the author)).
 
-**Role records that disagree** (the readiness tables read WP-M-02 §3.1; a discipline plan records the same role differently): SOTIF lead: WP-M-02 §3.1 says "TBD", WP-M-08 says "Jherrod Thomas (maintainer)"; AI/ML safety lead: WP-M-02 §3.1 says "TBD", WP-M-08 says "Jherrod Thomas"; AI/ML safety lead: WP-M-02 §3.1 says "TBD", WP-M-10 says "Jherrod Thomas (maintainer)"; SOTIF lead: WP-M-02 §3.1 says "TBD", WP-M-10 says "Jherrod Thomas".
+**Role records that disagree** (the readiness tables read WP-M-02 §3.1; a discipline plan records the same role differently): none.
 
 **Confirmation measures (WP-M-06 §9):**
 
