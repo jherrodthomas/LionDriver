@@ -554,7 +554,7 @@
   mechanism: "TMO"
   timing: "detect ≤ 0.3 s / react ≤ 0.1 s"
   verification: "T-HIL, FI"
-  baseline_impl: "Not met: heartbeat counter incremented at 1 Hz, SILENT after 5 s with ignition (`main.c:101-103, 153-162, 191-226`). Heartbeat sent at 10 Hz (`selfdrive/pandad/pandad.cc:385-394`; `selfdrive/pandad/panda.cc:137-139`) (GAP-06)"
+  baseline_impl: "**Partial, not yet verified on hardware** (panda `c2e5d93`): in a car mode the 100 Hz safety task revokes all authority once no heartbeat has arrived for 0.3 s (`drivers/heartbeat_monitor.h`); the host sends it at 10 Hz. SILENT still follows after 5 s (TSR-510). Open: safety-task latency under load (WP-W-03 §5.4), HIL ([IA heartbeat](../07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md))"
   status: proposed
   source: WP-S-02
 
