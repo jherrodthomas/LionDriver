@@ -581,6 +581,11 @@ struct PandaState @0xa7649e2575e4591e {
   # safety-mode lock of the reference build since the last panda reset (TSR-512)
   watchdogReset @42 :Bool;
   requestsRejected @43 :UInt16;
+  # LionDriver: the panda refuses lateral actuation because the car's EPS reports a fault (TSR-110)
+  epsFault @44 :Bool;
+  # LionDriver: the panda revoked authority because the SoC exceeded a TX rate budget (TSR-518); latched until the
+  # next safety mode change
+  txRateExceeded @45 :Bool;
 
   enum FaultStatus {
     none @0;

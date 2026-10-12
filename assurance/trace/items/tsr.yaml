@@ -149,7 +149,7 @@
   mechanism: "PLB, TMO"
   timing: "detect ≤ 0.3 s / react ≤ 0.1 s"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Host-only: `carstate.py:122-127` (fault codes `carstate.py:19-22`, reverse-engineered) → `steerFaultTemporary/Permanent` (`selfdrive/controls/controlsd.py:100-101`). Not in the envelope RX set (`modes/toyota.h:39-46`). GAP-03"
+  baseline_impl: "**Partial** (reference build; not yet verified on the vehicle): `0x262` is an envelope RX check (checksum, 5-period timeout at a nominal 25 Hz, gates engagement via TSR-306; opendbc `98404a4`), and while LKA_STATE is in the host's fault set {0, 3, 9, 11, 17, 21, 25} STEERING_LKA frames with torque or a steer request are refused (opendbc `242d63d`, [IA EPS fault](../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md)). The cause is reported to the host: health flag `HEALTH_FLAG_EPS_FAULT` → `pandaState.epsFault`, logged by `pandad` on each change (panda `877730e`, opendbc `adcb7c2`). **Open:** confirmation of the fault code set for the reference EPS firmware. GAP-03"
   status: proposed
   source: WP-S-02
 
@@ -464,7 +464,7 @@
   mechanism: "TMO"
   timing: "detect ≤ 0.2 s / react ≤ 0.1 s"
   verification: "T-SIL, T-HIL, FI"
-  baseline_impl: "**Met for the four Toyota RX checks, not yet verified on hardware** (opendbc `aff4033`, panda `9f60e17`): lag after 5 nominal periods (`safety_config.rx_timeout_periods`, `modes/toyota.h`), evaluated at 100 Hz in the panda safety task, so detection ≤ 0.16 s. `0x262`, `0x1D3` and `0xB4` are not in the RX set yet ([IA RX timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md))"
+  baseline_impl: "**Met for the four Toyota RX checks, not yet verified on hardware** (opendbc `aff4033`, panda `9f60e17`): lag after 5 nominal periods (`safety_config.rx_timeout_periods`, `modes/toyota.h`), evaluated at 100 Hz in the panda safety task, so detection ≤ 0.16 s. In the reference build `0x262` (25 Hz) and `0x1D3` (33 Hz) are also RX checks (opendbc `98404a4`; nominal rates from openpilot's former CAN parser minimums, to be measured, WP-S-05 OI-7). `0xB4` is not in the RX set: no nominal rate known ([IA RX timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md) §8)"
   status: proposed
   source: WP-S-02
 
@@ -524,7 +524,7 @@
   mechanism: "PLB (cross-channel)"
   timing: "detect ≤ 0.2 s"
   verification: "LOG, T-SIL, FI"
-  baseline_impl: "Not implemented (GAP-01). A speed cross-check helper exists but is unused by the Toyota mode (`safety.h:529-537`). Candidate signals: `0xB4` SPEED/ENCODER (`opendbc_repo/opendbc/dbc/generator/toyota/_toyota_2017.dbc:77-80`), `0x1D3` BRAKE_PRESSED (`_toyota_2017.dbc:110-111`)"
+  baseline_impl: "**Partial** (reference build, opendbc `875e325`, [IA cruise/main](../07-supporting/impact/change-2026-10-12-opendbc-toyota-cruise-main.md)): (c) CRUISE_ACTIVE with `0x1D3` MAIN_ON = 0 refuses engagement at once and revokes authority after a 150 ms disagreement. **Not implemented:** (a) speed cross-check (`0xB4` not in the RX set, no nominal rate); (b) BRAKE_PRESSED cross-check, pending the meaning of the `0x1D3` bit (driver pedal or any braking, ACC included) from reference logs; (d) EPS-response check (GAP-01). A speed cross-check helper exists but is unused by the Toyota mode (`safety.h:529-537`). Candidate signals: `0xB4` SPEED/ENCODER (`opendbc_repo/opendbc/dbc/generator/toyota/_toyota_2017.dbc:77-80`), `0x1D3` BRAKE_PRESSED (`_toyota_2017.dbc:110-111`)"
   status: proposed
   source: WP-S-02
 
@@ -912,9 +912,9 @@
   other_parents: false
   allocated_to: "P-SW"
   mechanism: "TMO"
-  timing: "per frame; revoke ≤ 0.1 s"
+  timing: "per frame; revoke ≤ 0.1 s after the first rejected frame ([DN-01](../05-software/design-notes/DN-01-tx-rate-supervision.md) D-6; ≤ 0.2 s from the onset of a flood at 2× the nominal rate)"
   verification: "T-SIL, T-HIL"
-  baseline_impl: "**Not implemented:** the TX hook checks content only; no per-ID TX rate check (`opendbc_repo/opendbc/safety/modes/toyota.h` TX hook; RX rate is TSR-403)"
+  baseline_impl: "**Met in the reference build, not yet verified on hardware** (opendbc `7993399`, panda `8aa8671`, [IA TX rate](../07-supporting/impact/change-2026-10-12-tx-rate-supervision.md)): per-ID count over a sliding 250 ms window with budgets for every TX-whitelisted ID; frames beyond the budget rejected before the content checks; 3 rejections in a half-window while authority is granted revoke it, reported as `pandaState.txRateExceeded`. Budgets to be confirmed on reference logs (DN-01 §9). RX rate is TSR-403"
   status: proposed
   source: WP-S-02
 
