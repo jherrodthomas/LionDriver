@@ -79,6 +79,23 @@ class ProcessModelTest(unittest.TestCase):
   def test_interface_due_before_its_phase(self):
     self.assertFails("P7", lambda m: m.interfaces["IX-20"].update(due="G3"))
 
+  def test_update_of_non_living_work_product(self):
+    self.assertFails("P3", lambda m: m.activities["REL-10"].update(updates=["WP-K-01", "WP-C-03"]))
+
+  def test_update_outside_living_range(self):
+    self.assertFails("P3", lambda m: m.activities["CON-13"].update(updates=["WP-K-01"]))
+
+  def test_input_from_later_update(self):
+    self.assertFails("P5", lambda m: m.activities["REL-09"]["inputs"].append("WP-K-01"))
+
+  def test_assessor_report_counts_as_confirmation_of_its_inputs(self):
+    model = copy.deepcopy(self.base)
+    orders = pm.check(model, self.ctx)
+    g5 = pm.render_phase("G5", orders["G5"], model, self.ctx)
+    line = next(ln for ln in g5.splitlines() if ln.startswith("**Work products with no confirmation measure"))
+    for wp in ("WP-K-03", "WP-K-04", "WP-K-05", "WP-V-06"):
+      self.assertNotIn(wp, line)
+
   def test_transitive_edges_removed(self):
     acts = {"A": {"inputs": []}, "B": {"inputs": ["a"]}, "C": {"inputs": ["a", "b"]}}
     self.assertEqual(pm.direct_deps(acts, {"a": "A", "b": "B"}), {"A": set(), "B": {"A"}, "C": {"B"}})

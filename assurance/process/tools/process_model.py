@@ -45,7 +45,7 @@ REQUIRED = {
   "review": ["id", "kind", "phase", "name", "covers", "independence"],
   "interface": ["id", "kind", "phase", "between", "pattern", "topic", "anchors", "status", "open_item", "due"],
 }
-LIST_FIELDS = {"handbook_chapters", "produces", "inputs", "handbook_wp", "covers", "between", "anchors"}
+LIST_FIELDS = {"handbook_chapters", "produces", "updates", "inputs", "handbook_wp", "covers", "between", "anchors"}
 
 
 # ---------------------------------------------------------------- sources
@@ -172,6 +172,20 @@ def record_path(review_id: str) -> Path:
   return CONFIRMATION_DIR / (review_id.replace("@", "-") + ".md")
 
 
+def outputs(act: dict) -> list[str]:
+  """Work products an activity produces or (for living work products) updates."""
+  return act["produces"] + act.get("updates", [])
+
+
+def phase_suppliers(acts: dict[str, dict]) -> dict[str, list[str]]:
+  """Work product -> activities of the phase that produce or update it, in ID order."""
+  out: dict[str, list[str]] = {}
+  for aid in sorted(acts):
+    for wp in outputs(acts[aid]):
+      out.setdefault(wp, []).append(aid)
+  return out
+
+
 def direct_deps(acts: dict[str, dict], producer: dict[str, str]) -> dict[str, set[str]]:
   """Activity -> activities whose outputs it consumes, with transitive dependencies removed (map edges)."""
   deps = {a: {producer[w] for w in act["inputs"] if producer.get(w) in acts and producer[w] != a} for a, act in acts.items()}
@@ -220,8 +234,8 @@ def check(model: Model, ctx: Context) -> dict[str, list[str]]:
     # P3 activity references
     if act["phase"] not in model.phases:
       model.err("P3", aid, f"unknown phase {act['phase']}")
-    if act["lane"] not in model.lanes or act["lane"] == "assess":
-      model.err("P3", aid, f"lane {act['lane']!r} is not a work lane")
+    if act["lane"] not in model.lanes:
+      model.err("P3", aid, f"unknown lane {act['lane']!r}")
     for hb in act["handbook_wp"]:
       if hb not in HANDBOOK_WPS:
         model.err("P3", aid, f"unknown handbook work product {hb}")
@@ -236,6 +250,13 @@ def check(model: Model, ctx: Context) -> dict[str, list[str]]:
         model.err("P3", aid, f"{wp} is gated {reg[wp].gate} in WP-M-00, activity is in {act['phase']}")
       if not reg[wp].path.exists():
         model.err("P3", aid, f"{wp} file {reg[wp].path} does not exist")
+    # living work products (gate "G1→G5"): produced once, then updated in a later phase of their range
+    for wp in act.get("updates", []):
+      gates = re.findall(r"G\d", reg[wp].gate) if wp in reg else []
+      if len(gates) < 2:
+        model.err("P3", aid, f"updates {wp}, which is not a living work product in WP-M-00")
+      elif act["phase"] in GATES and not GATES.index(gates[0]) < GATES.index(act["phase"]) <= GATES.index(gates[-1]):
+        model.err("P3", aid, f"updates {wp} in {act['phase']}, outside its gate range {reg[wp].gate}")
 
   orders: dict[str, list[str]] = {}
   for gid, phase in model.phases.items():
@@ -248,13 +269,16 @@ def check(model: Model, ctx: Context) -> dict[str, list[str]]:
         model.err("P4", gid, f"{wp} ({row.name}) is gated {row.gate} but no activity produces it")
     # P5 inputs: produced by an activity with a lower ID in this phase (so the ID order is a valid
     # execution order and the inputs cannot form a cycle), or by a work product of an earlier gate
+    suppliers = phase_suppliers(acts)
     for aid, act in acts.items():
       for wp in act["inputs"]:
+        late = [s for s in suppliers.get(wp, []) if s >= aid and s != aid]
         if wp not in reg:
           model.err("P5", aid, f"input {wp} not in WP-M-00")
-        elif producer.get(wp) in acts:
-          if producer[wp] >= aid:
-            model.err("P5", aid, f"input {wp} comes from {producer[wp]}, which is not earlier; renumber, or model the iteration as an interface")
+        elif late:
+          model.err("P5", aid, f"input {wp} comes from {late[0]}, which is not earlier; renumber, or model the iteration as an interface")
+        elif wp in suppliers:
+          continue
         elif GATES.index(reg[wp].first_gate or "G6") >= GATES.index(gid):
           model.err("P5", aid, f"input {wp} is gated {reg[wp].gate} and not produced in {gid}")
     orders[gid] = sorted(acts)
@@ -317,6 +341,10 @@ def _nid(item_id: str) -> str:
   return re.sub(r"[^A-Za-z0-9_]", "_", item_id)
 
 
+def _outputs_label(act: dict) -> str:
+  return ", ".join(act["produces"] + [f"{w} (update)" for w in act.get("updates", [])])
+
+
 def _link(wp: str, ctx: Context) -> str:
   row = ctx.register.get(wp)
   if not row:
@@ -368,7 +396,7 @@ def _clause_cell(wps: list[str], ctx: Context, std: str) -> str:
 def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
   name, exit_ = ctx.gates[gid]
   acts = [model.activities[a] for a in order]
-  producer = {wp: a["id"] for a in acts for wp in a["produces"]}
+  producer = {wp: ids[-1] for wp, ids in phase_suppliers({a["id"]: a for a in acts}).items()}
   lane_of = {wp: a["lane"] for a in model.activities.values() for wp in a["produces"]}
   reviews = [r for r in model.reviews.values() if r["phase"] == gid]
   ixs = [x for x in model.interfaces.values() if x["phase"] == gid]
@@ -383,16 +411,19 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
   # box spanning both ends would pull the flow backwards.
   for a in acts:
     if a["lane"] == "joint":
-      out.append(f"  {_nid(a['id'])}[{_q(a['id'] + '<br/>' + a['name'] + '<br/>' + ', '.join(a['produces']))}]")
+      out.append(f"  {_nid(a['id'])}[{_q(a['id'] + '<br/>' + a['name'] + '<br/>' + _outputs_label(a))}]")
   for lid in [x for x in lane_ids if x != "joint"]:
     out.append(f"  subgraph L_{lid}[{_q(model.lanes[lid]['name'])}]")
     out.append("    direction LR")
     for a in acts:
       if a["lane"] == lid:
-        out.append(f"    {_nid(a['id'])}[{_q(a['id'] + '<br/>' + a['name'] + '<br/>' + ', '.join(a['produces']))}]")
+        out.append(f"    {_nid(a['id'])}[{_q(a['id'] + '<br/>' + a['name'] + '<br/>' + _outputs_label(a))}]")
     out.append("  end")
   out.append(f"  subgraph L_assess[{_q(model.lanes['assess']['name'])}]")
   out.append("    direction LR")
+  for a in acts:
+    if a["lane"] == "assess":
+      out.append(f"    {_nid(a['id'])}[{_q(a['id'] + '<br/>' + a['name'] + '<br/>' + _outputs_label(a))}]")
   for r in reviews:
     out.append(f"    {_nid(r['id'])}[{_q(r['id'] + '<br/>' + r['independence'])}]")
   out.append("  end")
@@ -403,7 +434,7 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
       out.append(f"  {_nid(src)} --> {_nid(a['id'])}")
   consumed = {w for a in acts for w in a["inputs"]}
   for a in acts:
-    if not any(w in consumed for w in a["produces"]):
+    if a["lane"] != "assess" and not any(w in consumed and producer.get(w) == a["id"] for w in outputs(a)):
       out.append(f"  {_nid(a['id'])} --> GATE")
   out.append("  L_assess --> GATE")
   joint = [_nid(a["id"]) for a in acts if a["lane"] == "joint"]
@@ -429,13 +460,14 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
 
   # 2. activities
   out += ["## 2. Activities", "",
-          "Clause references and status are read from the [register (WP-M-00)](../../01-management/WP-M-00-work-product-register.md) row of each work product the activity produces.", "",
+          "Clause references and status are read from the [register (WP-M-00)](../../01-management/WP-M-00-work-product-register.md) row of each work product the activity produces or, for a living work product, updates (marked *update*).", "",
           "| Activity | Lane | Produces | Inputs | ISO 26262 | ISO 21448 | ISO/SAE 21434 | Other | ASPICE | Handbook WP | Status |",
           "|---|---|---|---|---|---|---|---|---|---|---|"]
   for a in acts:
-    status = ", ".join(sorted({STATUS_NAMES.get(ctx.register[w].status, ctx.register[w].status) for w in a["produces"]}))
-    out.append(f"| {a['id']} {a['name']} | {model.lanes[a['lane']]['name']} | {', '.join(_link(w, ctx) for w in a['produces'])} | {', '.join(a['inputs'])} | "
-               + " | ".join(_clause_cell(a["produces"], ctx, k) for k, _ in STANDARDS) + f" | {', '.join(a['handbook_wp'])} | {status} |")
+    status = ", ".join(sorted({STATUS_NAMES.get(ctx.register[w].status, ctx.register[w].status) for w in outputs(a)}))
+    made = [_link(w, ctx) for w in a["produces"]] + [f"{_link(w, ctx)} *update*" for w in a.get("updates", [])]
+    out.append(f"| {a['id']} {a['name']} | {model.lanes[a['lane']]['name']} | {', '.join(made)} | {', '.join(a['inputs'])} | "
+               + " | ".join(_clause_cell(outputs(a), ctx, k) for k, _ in STANDARDS) + f" | {', '.join(a['handbook_wp'])} | {status} |")
   out.append("")
 
   # 3. interfaces
@@ -453,7 +485,7 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
   for key, title in STANDARDS:
     by_clause: dict[str, list[str]] = {}
     for a in acts:
-      for wp in a["produces"]:
+      for wp in outputs(a):
         c = ctx.register[wp].clauses[key]
         if c and c != "—" and a["id"] not in by_clause.setdefault(c, []):
           by_clause[c].append(a["id"])
@@ -462,7 +494,7 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
 
   # 5. gate readiness
   out += [f"## 5. {gid} readiness", "", f"**Exit criterion (WP-M-00 §2):** {exit_}", ""]
-  wps = [w for a in acts for w in a["produces"]]
+  wps = [w for a in acts for w in outputs(a)]
   counts: dict[str, int] = {}
   for w in wps:
     counts[ctx.register[w].status] = counts.get(ctx.register[w].status, 0) + 1
@@ -488,7 +520,10 @@ def render_phase(gid: str, order: list[str], model: Model, ctx: Context) -> str:
   for r in reviews:
     rec = record_path(r["id"])
     out.append(f"| {r['id']} {r['name']} | {', '.join(r['covers'])} | {r['independence']} | {'Performed' if rec.exists() else 'Not performed'} |")
-  covered = {w for r in reviews for w in r["covers"]}
+  # An activity in the confirmation lane is itself an independent assessment: it checks its inputs,
+  # and its own report is not something that needs a further confirmation measure.
+  assessments = [a for a in acts if a["lane"] == "assess"]
+  covered = {w for r in reviews for w in r["covers"]} | {w for a in assessments for w in a["inputs"] + outputs(a)}
   uncovered = [w for w in wps if w not in covered]
   out += ["", "**Work products with no confirmation measure at this gate** (verification review only): " + (", ".join(uncovered) if uncovered else "none") + ".", ""]
   due = [x for x in model.interfaces.values() if x["status"] == "open" and GATES.index(x["due"]) <= GATES.index(gid)

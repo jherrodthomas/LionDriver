@@ -5,7 +5,7 @@
 | Work product | WP-P-11 Integrated process model (machine-readable) and generated process maps |
 | Standard reference | ISO 26262-2:2018 §6 (safety lifecycle, planning of activities); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6 (cybersecurity activities and their tailoring); ISO/PAS 8800:2024 (AI safety lifecycle); ASPICE 4.0 MAN.3 (project lifecycle definition). Informative: Integrated Automotive Standards Handbook (ISH-2026-001) §3.3–3.4, Ch. 5, Ch. 13 |
 | Version | 0.1 |
-| Status | Draft (phases modelled: G1 concept, G2 system design, G3 HW/SW development, G4 integration and verification) |
+| Status | Draft (phases modelled: G1 concept to G5 validation and release; G0 and G6 not yet modelled) |
 | ASIL / scope | Process (all disciplines) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
@@ -32,6 +32,7 @@ The model is data, so a checker keeps it consistent with the documents and a gen
 | [maps/g2-system-design.md](maps/g2-system-design.md) | L1 for the system design phase, same sections, G2 readiness |
 | [maps/g3-hw-sw-development.md](maps/g3-hw-sw-development.md) | L1 for the hardware and software development phase, same sections, G3 readiness |
 | [maps/g4-integration-and-verification.md](maps/g4-integration-and-verification.md) | L1 for the integration and verification phase, same sections, G4 readiness |
+| [maps/g5-validation-and-release.md](maps/g5-validation-and-release.md) | L1 for the validation and release phase, same sections, G5 readiness |
 
 L2 (how to perform an activity) remains the procedures and plans the activities point to; it is not modelled here.
 
@@ -57,12 +58,14 @@ Records use the same flat YAML subset as [`case/`](../case/README.md): a top-lev
 |---|---|---|
 | `phase` | [`model/lifecycle.yaml`](model/lifecycle.yaml) | `id` (gate G0…G6), `handbook_chapters`, `modelled` |
 | `lane` | `model/lifecycle.yaml` | `id`, `name`, `role` (a role in WP-M-02 §3.1), `plan` (the plan that governs the lane) |
-| `activity` | [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml), [`model/development.yaml`](model/development.yaml), [`model/integration.yaml`](model/integration.yaml) | `id` (`CON-nn` concept, `DES-nn` system design, `DEV-nn` HW/SW development, `INT-nn` integration and verification), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp` |
+| `activity` | [`model/concept.yaml`](model/concept.yaml), [`model/design.yaml`](model/design.yaml), [`model/development.yaml`](model/development.yaml), [`model/integration.yaml`](model/integration.yaml), [`model/release.yaml`](model/release.yaml) | `id` (`CON-nn` concept, `DES-nn` system design, `DEV-nn` HW/SW development, `INT-nn` integration and verification, `REL-nn` validation and release), `phase`, `lane`, `name`, `produces`, `inputs`, `handbook_wp`; optional `updates` |
 | `review` | same files as the phase's activities | `id` (the WP-M-06 measure; `<measure>@<gate>` when WP-M-06 plans it at several gates, e.g. `CR-06@G2`), `phase`, `name`, `covers`, `independence` |
 | `interface` | [`model/interfaces.yaml`](model/interfaces.yaml) | `id` (`IX-nn`), `phase`, `between` (two work products), `pattern`, `topic`, `anchors`, `status`, `open_item`, `due` |
 
 Rules the records follow:
 
+- **Living work products are produced once and updated later.** A work product whose WP-M-00 gate is a range (`G1→G5`) is produced by one activity in its first phase. Activities of later phases in the range list it under `updates`. Inputs and map edges in a phase use the latest activity of that phase that produces or updates the work product.
+- **Independent assessments are activities in the confirmation lane** when they produce a work product of their own (the FSA report WP-K-04, the cybersecurity assessment WP-K-05). Readiness counts such an activity as checking its inputs.
 - **Activity IDs follow execution order.** An activity's inputs from the same phase come from activities with lower IDs. Work that goes back and forth between disciplines is an interface, not an input, so the input graph has no cycles.
 - **Interfaces are anchored.** Each anchor `WP-x-nn:text` names text that occurs verbatim in that work product. If the documents stop making the link, the check fails.
 - **Interface status** is `documented` (both documents refer to each other; nobody has reviewed the agreement yet) or `open` (a recorded open item still has to settle it, named in `open_item`). There is no "agreed" status yet. It will come from a recorded review, as in `case/`.
@@ -76,7 +79,7 @@ Rules the records follow:
 |---|---|
 | P1 | Records parse; required fields present; list fields are lists; IDs unique |
 | P2 | Every gate G0…G6 has a phase record and a WP-M-00 §2 entry; every lane's role exists in WP-M-02 §3.1 and its plan in WP-M-00 |
-| P3 | Each activity's phase and lane exist; each produced work product is registered, has exactly one producing activity, is gated in the activity's phase and exists on disk |
+| P3 | Each activity's phase and lane exist; each produced work product is registered, has exactly one producing activity, is gated in the activity's phase and exists on disk; an updated work product is living and the phase lies within its gate range |
 | P4 | In a modelled phase, every work product WP-M-00 gates there is produced by an activity |
 | P5 | Each input is produced by an earlier activity of the same phase or gated at an earlier gate |
 | P6 | The phase's confirmation measures equal the WP-M-06 §9 row for its gate, are defined in WP-M-06, and cover registered work products |
@@ -130,11 +133,20 @@ These findings come from the generated maps. They are observations for the safet
 5. **The integrated item is not tested against attacks at G4.** Security verification at G3 is implementation-level (WP-W-11). The G4 fault-injection campaign treats configuration tampering as a fault, not an attack. Penetration testing (WP-V-06) is gated at G5, so the first attack test of the integrated item happens at the release gate.
 6. **Eight open interfaces are due by G4:** IX-02, IX-05, IX-06, IX-13, IX-17, IX-18 from earlier phases, plus IX-20 and IX-21.
 
+### 6.5 Validation and release phase ([G5 map](maps/g5-validation-and-release.md))
+
+1. **Release depends on parties nobody has engaged yet.** The final functional safety assessment (FSA-F, report WP-K-04) and the safety case review CR-12 need the external FuSa assessor (D-06). The cybersecurity assessment (WP-K-05) needs the external cybersecurity assessor. Penetration testing (WP-V-06) needs a tester: "no tester is engaged". The SOTIF and AI reviews (SR-03, SR-04) need an external reviewer with SOTIF or ML competence, who may be the FuSa assessor (WP-M-06 §7). None of them is engaged today.
+2. **Four of the 14 G5 work products are still skeletons:** the SOTIF release argument (WP-K-02), both assessment reports (WP-K-04, WP-K-05) and the release record (WP-K-06). The other ten are drafts; none of the validation activities has been run.
+3. **The three arguments meet once.** Safety validation, the SOTIF release recommendation and the cybersecurity case come together only in REL-10, where the safety case is completed (IX-24 links its cybersecurity branch to WP-K-03). The FSA and the release record then depend on that single step.
+4. **The SOTIF release argument waits on evidence from other lanes.** It needs P(not controlled) from the controllability tests of the safety validation, but the evidence route is undecided (IX-25). It also needs the model evaluation report from ML engineering, which is missing (IX-26).
+5. **Nothing opened before G5 has been closed.** Nine open interfaces are due by G5: all eight from G1–G4 plus IX-25. Any of them still open at G5 is a condition on the release.
+6. **The operation documents get no confirmation measure:** installation (WP-O-01), operation and service (WP-O-02), user information and warnings (WP-O-03), and release management (WP-P-10). The user warnings are a SOTIF misuse measure (ISO 21448 §6, §13 in the register).
+
 ## 7. Open items
 
 | ID | Item | Owner | Gate |
 |---|---|---|---|
-| OI-1 | Model the remaining phases, next G5 validation and release (handbook Ch. 9) | Safety manager | G5 |
+| OI-1 | Model the remaining phases: G6 operation (handbook Ch. 10) and G0 governance (handbook Ch. 4) | Safety manager | G6 |
 | OI-2 | Add an "agreed" interface status set only through a recorded review, and decide whether cross-domain interfaces become requirement items (`IFR-nn`) in `trace/` | Safety manager | G2 |
 | OI-3 | Generate the G1 gate-record skeleton (`10-safety-case/gates/`) from §5 of the G1 map | Safety manager | G1 |
 | OI-4 | Derive pull-request checklists from the model: which activities and interfaces a change to a work product re-opens | Configuration and change manager | G2 |

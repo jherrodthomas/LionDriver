@@ -25,7 +25,7 @@
 - id: G5
   kind: phase
   handbook_chapters: [9]
-  modelled: false
+  modelled: true
 - id: G6
   kind: phase
   handbook_chapters: [10]

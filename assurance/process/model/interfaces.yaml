@@ -242,3 +242,35 @@
   status: documented
   open_item: null
   due: G4
+
+# Validation and release (G5)
+- id: IX-24
+  kind: interface
+  phase: G5
+  between: [WP-K-01, WP-K-03]
+  pattern: "Safety-Security"
+  topic: "The safety case delegates its cybersecurity branch (G4) to the cybersecurity case, which argues against the same reference configuration"
+  anchors: ["WP-K-01:G4 Cybersecurity (ISO/SAE 21434) — WP-K-03", "WP-K-03:interface to the safety case G4"]
+  status: documented
+  open_item: null
+  due: G5
+- id: IX-25
+  kind: interface
+  phase: G5
+  between: [WP-V-01, WP-V-02]
+  pattern: "Safety-SOTIF"
+  topic: "The SOTIF validation targets need P(not controlled) from the controllability tests of the safety validation; the evidence route is not decided"
+  anchors: ["WP-V-02:Decide the evidence route for P(not controlled) in step 2 (WP-V-01 controllability tests)"]
+  status: open
+  open_item: "WP-V-02 OI-6"
+  due: G5
+- id: IX-26
+  kind: interface
+  phase: G5
+  between: [WP-K-02, WP-W-10]
+  pattern: "SOTIF-AI"
+  topic: "The SOTIF release argument needs the model evaluation report and hash-identified models from ML engineering; the report is missing"
+  anchors: ["WP-K-02:ML models identified by hash in the release", "WP-K-02:| E-15 | Model evaluation report | WP-W-10 | Missing"]
+  status: documented
+  open_item: null
+  due: G5
