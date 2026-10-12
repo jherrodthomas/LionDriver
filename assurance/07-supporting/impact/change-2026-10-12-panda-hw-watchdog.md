@@ -23,9 +23,9 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 |---|---|---|---|---|
 | D-1 | Reset within ≤ 0.1 s of a stall (SG-07 forwarding FDTI, [WP-S-04](../../03-system/WP-S-04-timing-ftti-budget.md) §3.6) | Nominal 175 ms | Meets the SG-01 bound (≤ 0.2 s; SG-01 FTTI 0.5 s). Does not meet SG-07: stock PCS forwarding may be lost for up to about 0.175 s plus relay drop-out before the stock path returns | Feed the IWDG from the ≥ 50 Hz periodic safety task of TSR-401/TSR-519 once it exists, then shorten the timeout to ≤ 0.1 s. Until then, record the SG-07 shortfall as a residual in WP-K-01 (DF-33 stays open) |
 | D-2 | Started before the application runs | Started when the relay is first driven | Hangs in SILENT, NOOUTPUT or ELM327 are not detected. In those modes the relay is not energised, so the stock path is intact and SG-01/SG-07 are not affected | Resolved by amendment (draft, pending review): TSR-501 in WP-S-02 v0.4 and HWSR-501c in WP-H-01 v0.3 now require the start no later than the first relay energisation after a reset, on every path |
-| D-3 | Window mode (HWSR-501b), so that servicing too early is also detected | Normal (non-window) mode | A runaway loop that keeps setting the main-loop flag and lets the tick run is not detected by the watchdog | **Open, not yet decided.** Add the window when the feed moves to the ≥ 50 Hz safety task (D-1), or accept with rationale |
+| D-3 | Window mode (HWSR-501b), so that servicing too early is also detected | Normal (non-window) mode | A runaway loop that keeps setting the main-loop flag and lets the tick run is not detected by the watchdog | **Accepted as interim by the maintainer on 2026-10-12.** Add the window when the feed moves to the ≥ 50 Hz safety task (D-1); until then a recorded residual |
 
-Decision (2026-10-12, project maintainer): **D-1 and D-2 accepted as an interim step.** D-3 was found afterwards and is not decided. D-1 stays a recorded residual (SG-07 forwarding not covered within 0.1 s) until the watchdog is fed from the ≥ 50 Hz safety task. D-2 is to be resolved by amending TSR-501. This is a maintainer decision, not an independent review (WP-M-06); the change still needs review and HIL evidence before release.
+Decision (2026-10-12, project maintainer): **D-1 and D-2 accepted as an interim step.** D-3, found afterwards, was also accepted as interim the same day: it stays a residual until window mode is added with the ≥ 50 Hz feed. D-1 stays a recorded residual (SG-07 forwarding not covered within 0.1 s) until the watchdog is fed from the ≥ 50 Hz safety task. D-2 is to be resolved by amending TSR-501. This is a maintainer decision, not an independent review (WP-M-06); the change still needs review and HIL evidence before release.
 
 ## 3. Behaviour changes to watch
 
@@ -59,7 +59,7 @@ None are changed yet, because the change is not integrated. When panda#1 is merg
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Closed 2026-10-12: the maintainer accepted D-1 and D-2 as interim (§2); the TSR-501 and HWSR-501c amendments for D-2 are drafted (WP-S-02 v0.4, WP-H-01 v0.3). Still needed: their review, a decision on D-3, and recording D-1 as a residual in WP-K-01 on integration | Integration |
+| OI-1 | Closed 2026-10-12: the maintainer accepted D-1 and D-2 as interim (§2); the TSR-501 and HWSR-501c amendments for D-2 are drafted (WP-S-02 v0.4, WP-H-01 v0.3). D-3 accepted as interim (2026-10-12). Still needed: review of the amendments, and recording D-1 and D-3 as residuals in WP-K-01 on integration | Integration |
 | OI-2 | Confirm the STM32H725 LSI tolerance and the timeout at both ends | Integration |
 | OI-3 | HIL fault-injection evidence (needs the D-04 HIL bench) | Release |
 | OI-4 | Report watchdog resets to the host | G3 |
