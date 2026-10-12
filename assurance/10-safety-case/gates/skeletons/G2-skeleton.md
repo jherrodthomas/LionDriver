@@ -63,7 +63,6 @@ From the [process model](../../../process/README.md). Each one is a condition on
 | IX-05 | Driver-monitoring performance targets (DMP-01/02) are set as AI safety requirements AIR-07/08 with values still to be confirmed | WP-C-08 OI-2 | G2 | |
 | IX-06 | The reference ODD cannot be compared with the driving model's training-data ODD, which upstream has not published | WP-C-02 OI-6 | G2 | |
 | IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-11 must confirm; the targets are not yet approved | WP-V-02 OI-3 | G2 | |
-| IX-33 | The ML models are supplier artefacts of comma.ai; whether a model card, training-data description or evaluation report can be obtained is still to be asked and recorded in upstream management | WP-M-10 OI-7 | G0 | |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 

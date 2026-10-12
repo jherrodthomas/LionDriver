@@ -69,7 +69,6 @@ From the [process model](../../../process/README.md). Each one is a condition on
 | IX-20 | Hardware, embedded-software and system integration share one HIL bench (D-04) that does not exist; WP-H-06 plans it for G3 and WP-W-08 for G4 | WP-H-06 OI-1 / WP-W-08 OI-1 (D-04) | G4 | |
 | IX-21 | Embedded-software qualification, system integration and the fault-injection campaign overlap; the split of test cases is not agreed | WP-W-08 OI-5 | G4 | |
 | IX-25 | The SOTIF validation targets need P(not controlled) from the controllability tests of the safety validation; the evidence route is not decided | WP-V-02 OI-6 | G5 | |
-| IX-33 | The ML models are supplier artefacts of comma.ai; whether a model card, training-data description or evaluation report can be obtained is still to be asked and recorded in upstream management | WP-M-10 OI-7 | G0 | |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 

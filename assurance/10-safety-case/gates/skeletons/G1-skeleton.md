@@ -61,9 +61,7 @@ A gate cannot pass if a confirmation review WP-M-06 assigns to it has not been p
 
 From the [process model](../../../process/README.md). Each one is a condition on the gate unless it is closed before the review.
 
-| Interface | Topic | Open item | Due | Closed? |
-|---|---|---|---|---|
-| IX-33 | The ML models are supplier artefacts of comma.ai; whether a model card, training-data description or evaluation report can be obtained is still to be asked and recorded in upstream management | WP-M-10 OI-7 | G0 | |
+None.
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 

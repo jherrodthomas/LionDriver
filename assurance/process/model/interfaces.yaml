@@ -343,8 +343,8 @@
   phase: G0
   between: [WP-M-10, WP-M-11]
   pattern: "Supplier-AI"
-  topic: "The ML models are supplier artefacts of comma.ai; whether a model card, training-data description or evaluation report can be obtained is still to be asked and recorded in upstream management"
-  anchors: ["WP-M-10:Ask upstream whether any model card", "WP-M-11:comma.ai **model artefacts**"]
-  status: open
-  open_item: "WP-M-10 OI-7"
+  topic: "The ML models are supplier artefacts of comma.ai; what comma.ai publishes about their training data and evaluation is recorded in upstream management (no model card, dataset description or evaluation report exists) and bounds the AI plan's claims"
+  anchors: ["WP-M-10:answered from comma.ai's public statements", "WP-M-11:Public information on the ML models (WP-M-10 OI-7)"]
+  status: documented
+  open_item: null
   due: G0

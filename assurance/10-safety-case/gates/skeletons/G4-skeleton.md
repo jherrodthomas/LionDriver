@@ -58,7 +58,6 @@ From the [process model](../../../process/README.md). Each one is a condition on
 | IX-18 | The ML compiler (tinygrad) is a QM tool whose confidence comes from back-to-back comparison against an independent ONNX reference runtime, which is not yet selected | WP-W-10 OI-2 | G3 | |
 | IX-20 | Hardware, embedded-software and system integration share one HIL bench (D-04) that does not exist; WP-H-06 plans it for G3 and WP-W-08 for G4 | WP-H-06 OI-1 / WP-W-08 OI-1 (D-04) | G4 | |
 | IX-21 | Embedded-software qualification, system integration and the fault-injection campaign overlap; the split of test cases is not agreed | WP-W-08 OI-5 | G4 | |
-| IX-33 | The ML models are supplier artefacts of comma.ai; whether a model card, training-data description or evaluation report can be obtained is still to be asked and recorded in upstream management | WP-M-10 OI-7 | G0 | |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
 

@@ -101,7 +101,7 @@ flowchart LR
   cs(["Cybersecurity (ISO/SAE 21434)"])
   cs -. "IX-31" .- fusa
   ai -. "IX-32" .- sotif
-  ai -. "IX-33 OPEN" .- joint
+  ai -. "IX-33" .- joint
 ```
 
 ## 2. Activities
@@ -140,7 +140,7 @@ Each interface is anchored to text in the work products; the checker fails if an
 |---|---|---|---|---|---|---|
 | IX-31 | Safety-Security | [WP-M-02](../../01-management/WP-M-02-safety-plan.md), [WP-M-09](../../01-management/WP-M-09-cybersecurity-plan.md) (Functional safety / Cybersecurity) | The cybersecurity manager carries the interface to safety on safety-relevant threats; the G1 cybersecurity review is combined with the FuSa confirmation review where one assessor has both competences | Documented | — | G0 |
 | IX-32 | SOTIF-AI | [WP-M-08](../../01-management/WP-M-08-sotif-plan.md), [WP-M-10](../../01-management/WP-M-10-ai-safety-plan.md) (SOTIF / AI safety) | The AI safety lead supplies model-related insufficiencies to the SOTIF lead, who records them in the SOTIF analysis | Documented | — | G0 |
-| IX-33 | Supplier-AI | [WP-M-10](../../01-management/WP-M-10-ai-safety-plan.md), [WP-M-11](../../01-management/WP-M-11-upstream-and-supplier-management.md) (AI safety / Joint) | The ML models are supplier artefacts of comma.ai; whether a model card, training-data description or evaluation report can be obtained is still to be asked and recorded in upstream management | Open | WP-M-10 OI-7 | G0 |
+| IX-33 | Supplier-AI | [WP-M-10](../../01-management/WP-M-10-ai-safety-plan.md), [WP-M-11](../../01-management/WP-M-11-upstream-and-supplier-management.md) (AI safety / Joint) | The ML models are supplier artefacts of comma.ai; what comma.ai publishes about their training data and evaluation is recorded in upstream management (no model card, dataset description or evaluation report exists) and bounds the AI plan's claims | Documented | — | G0 |
 
 ## 4. Clause coverage by standard
 
@@ -182,4 +182,4 @@ Which activity answers each clause reference listed in the register. One activit
 
 **Work products with no confirmation measure at this gate** (verification review only): WP-M-04, WP-M-05, WP-M-08, WP-M-09, WP-M-10, WP-M-11, WP-M-03, WP-M-07, WP-P-06, WP-P-05, WP-P-01, WP-P-04, WP-P-03, WP-P-02, WP-M-13, WP-M-00, WP-P-11.
 
-**Open interfaces due by this gate** (from this or an earlier phase): IX-33 (WP-M-10 OI-7).
+**Open interfaces due by this gate** (from this or an earlier phase): none.

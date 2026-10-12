@@ -150,4 +150,4 @@ The AI argument is the G3 branch of the [safety case (WP-K-01)](../10-safety-cas
 | OI-4 | Obtain LFS objects for the pinned models and record their hashes and sizes in the release manifest (this checkout holds pointers only) |
 | OI-5 | Define the LionDriver evaluation dataset specification and storage, including the policy on uploading to comma servers (§6.3) |
 | OI-6 | Decide a replacement for `pickle`-based model loading, or a verified-hash precondition (RM-1) |
-| OI-7 | Ask upstream whether any model card, training-data description or evaluation report can be published; record the answer in WP-M-11 |
+| OI-7 | Closed (2026-10-12): no request was sent. By decision of the maintainer the question is answered from comma.ai's public statements, recorded in [WP-M-11 §3.5](WP-M-11-upstream-and-supplier-management.md#35-public-information-on-the-ml-models-wp-m-10-oi-7). Training-data source is known in kind (uploaded user drives); no model card, dataset description or evaluation report is published |
