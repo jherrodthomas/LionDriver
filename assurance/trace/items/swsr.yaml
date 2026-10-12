@@ -629,7 +629,7 @@
   allocated_to: "U-PND-MAIN, U-SAF-CORE"
   verification: "HIL, FI"
   acceptance: "Clear at 50/100 ms + task period; SS-L via SWSR-109a"
-  baseline_impl: "Not impl (GAP-10)"
+  baseline_impl: "Impl in the reference build (opendbc `31e890d`): `tx_arrival_checks` (`safety.h`), Toyota table (`modes/toyota.h`); unit tests `test_tx_arrival_*`; HIL, FI open"
   status: proposed
   source: WP-W-02
 

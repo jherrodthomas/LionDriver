@@ -569,7 +569,7 @@
   mechanism: "TMO"
   timing: "detect ≤ 50 / 100 ms / react ≤ 0.1 s"
   verification: "T-HIL, FI"
-  baseline_impl: "Not implemented. The heartbeat shows only that `pandad` is alive (GAP-10); `card` stops sending when `carControl` is not alive within 0.1 s (`selfdrive/car/card.py:234-238`), after which only the EPS drop-out behaviour (AOU-01R) removes torque"
+  baseline_impl: "**Implemented in the reference build, not yet verified on hardware** (opendbc `31e890d`, opendbc#11): while authority is granted, the 100 Hz safety task revokes it when `0x2E4` has not reached the TX hook for > 50 ms or, with openpilot longitudinal, `0x343` for > 100 ms (`safety.h` `tx_arrival_ok`, `modes/toyota.h`). SS-L follows from the revocation (TSR-109). Open: thresholds on reference logs, HIL ([IA TX arrival](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-arrival.md))"
   status: proposed
   source: WP-S-02
 
