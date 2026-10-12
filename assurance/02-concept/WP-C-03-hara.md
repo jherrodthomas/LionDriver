@@ -255,7 +255,7 @@ Rated in [`hara/WP-C-03-hara-cartesian_experimental.xlsx`](hara/WP-C-03-hara-car
 3. **Driver monitoring underpins controllability** in H-02 and H-06 (and the C2 ratings generally). The FSC must give DM integrity an ASIL attribute (inherited from SG-02/SG-06) or justify why not. Today DM runs entirely on the QM SoC, with the validity flag hard-coded `True` at the source (GAP-21).
 4. **SG-07 has to hold even when LD-SDA is disengaged.** It covers the harness and relay hardware and the forwarding logic.
 5. **New sources found by the Cartesian method (version 0.2).** None changes a safety goal ASIL, but each needs coverage in the FSC:
-   - Driver monitoring commanding forced deceleration while the driver is attentive (HE-04.3). DM is a source of H-04 as well as a controllability measure, so the DM-to-deceleration path inherits SG-04 (ASIL B).
+   - Driver monitoring commanding forced deceleration while the driver is attentive (HE-04.3). DM is a source of H-04 as well as a controllability measure. SG-04 therefore applies to the DM-initiated deceleration; WP-C-04 covers it with FSR-04.05 and the envelope bounds FSR-04.01/04.02, so the DM chain itself can stay QM (WP-C-04 §7).
    - The envelope stuck in a blocking state while the SoC shows "engaged" (F-08 M04, HE-02.4). SG-02 then requires that a block by the envelope is detected and announced to the driver within the SG-02 time.
    - Braking commanded while not engaged (HE-04.4). This adds to HE-01.4 (torque while not engaged): the engagement gating carries SG-01 and SG-04.
    - Mode confusion (H-07), now rated, is covered by SG-02 and SG-06. The HMI path that shows the engagement state and gives take-over alerts carries ASIL B.

@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-C-04 Functional safety concept (FSRs, allocation, AoUs) |
 | Standard reference | ISO 26262-3:2018 §7; ISO 26262-9:2018 §5 (ASIL decomposition, by reference); ASPICE 4.0 SYS.2 |
-| Version | 0.1 |
+| Version | 0.2 (HARA v0.2 alignment and fsc-builder completeness check, 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01); ASIL B for SG-02…SG-07 |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); input to G1 confirmation review (I3) per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `d17aac4` (opendbc `229dc70`, panda `92eb565`; code unchanged since `8b8c6ae` apart from `process_replay/ref_commit`) |
 
 ## 1. Purpose and inputs
 
@@ -19,7 +19,7 @@ This document derives functional safety requirements (FSRs) from the safety goal
 Inputs:
 
 - [WP-C-01](WP-C-01-item-definition.md): functions F-01…F-09, elements E-01…E-06, interfaces IF-01…IF-09, AOU-01…AOU-11.
-- [WP-C-03](WP-C-03-hara.md): hazards H-01…H-06, H-08; SG-01…SG-07 with ASIL, safe states and preliminary FTTIs.
+- [WP-C-03](WP-C-03-hara.md) v0.2 (Cartesian HARA): hazards H-01…H-08; SG-01…SG-07 with ASIL, safe states and preliminary FTTIs; the new hazardous-event sources of WP-C-03 §6.1 obs. 5.
 - [WP-C-02](WP-C-02-odd-and-intended-functionality.md): ODD and intended functionality.
 - [Gap assessment](../00-assessment/gap-assessment.md): GAP-01…GAP-37.
 - [WP-M-01 §4](../01-management/WP-M-01-assurance-strategy.md#4-safety-architecture-argument-the-central-strategy): safety envelope pattern.
@@ -111,7 +111,7 @@ Attributes: ASIL as currently derived; **Alloc** = allocation; **Verif** = verif
 | FSR-01.07 | The envelope shall detect missing or stale control commands from the SoC and remove actuation within the FTTI allocation of §8. | C | E-03 | T-HIL, FI | Partial: heartbeat mismatch 3 s, loss 5 s (`panda/board/main.c:182-213`); too slow for SG-01 (GAP-06); heartbeat shows pandad liveness only (GAP-10) |
 | FSR-01.08 | The envelope shall detect corruption, loss and reordering of command frames received from the SoC and discard affected frames. | C | E-03 | T-HIL, FI | Partial: 8-bit XOR, no sequence counter (`panda/board/drivers/spi.h:97-138`, `can_comms.h:27`) (GAP-10) |
 | FSR-01.09 | The safety MCU shall detect its own execution faults (program-flow hang, clock failure, memory corruption, register corruption) and enter the safe state (no actuation TX, relay released) within the FTTI allocation of §8. | C | E-03 (HW+SW) | A (FMEDA), FI | Not implemented: IWDG never initialised (`panda/board/stm32h7/stm32h7_config.h:43`), software watchdog in same ISR (`main.c:301`), faults report-only, `PERMANENT_FAULTS = 0U` (`panda/board/sys/sys.h:50`) (GAP-07, GAP-08) |
-| FSR-01.10 | The safety mode and safety parameter for the reference configuration shall be fixed in the envelope and shall not be changeable by the SoC while a car safety mode is active; debug-only commands shall be unavailable in release builds. | C | E-03 | R, T-HIL | Not implemented: `0xdc` sets any mode at any time; `0xc5` relay drive not gated (`panda/board/main_comms.h:144-147, 222-225`) (GAP-09, GAP-25) |
+| FSR-01.10 | The safety mode and safety parameter for the reference configuration shall be fixed in the envelope and shall not be changeable by the SoC while a car safety mode is active; debug-only commands shall be unavailable in release builds; and the SoC shall not be able to make the safety MCU run non-release code or drive the relay outside the envelope through its reset and boot lines (GAP-38, refined by TSR-511). | C | E-03 | R, T-HIL | Not implemented: `0xdc` sets any mode at any time; `0xc5` relay drive not gated (`panda/board/main_comms.h:144-147, 222-225`) (GAP-09, GAP-25) |
 | FSR-01.11 | The envelope shall detect a harness relay malfunction (camera control messages seen on the car side) and inhibit all actuation TX. | C | E-03, E-05 | T-SIL, T-HIL | Implemented with 1–2 s grace and no contact readback (`safety.h:215-220, 372-380`) (GAP-12) |
 | FSR-01.12 | On any detected fault affecting lateral actuation, the envelope shall enter the lateral safe state (torque 0, steer request cleared) and keep it until a new valid engagement. | C | E-03 | T-SIL, FI | Partial: violating frames dropped and `controls_allowed` cleared on RX faults (`lateral.h:141-148`, `safety.h:112-121`); a TX violation alone does not revoke authority |
 | FSR-01.13 | The EPS shall limit LKA torque to an overpowerable level and shall end LKA torque within a bounded time after `0x2E4` stops or carries the request bit cleared. (External measure, AOU-01R) | — (ext.) | EXT-EPS | T-VEH | Unverified (GAP-05) |
@@ -130,6 +130,8 @@ Attributes: ASIL as currently derived; **Alloc** = allocation; **Verif** = verif
 | FSR-02.07 | Driver monitoring shall detect its own invalidity (no driver image, camera blocked, model output missing or not credible) and fall back to a policy that is no less strict than the active policy. | QM (see §7) | E-01/DM | T-SIL, FI | Partial: high-uncertainty → wheel-touch fallback (`policy.py:77-78`); source validity hard-coded `True` (`selfdrive/modeld/dmonitoringmodeld.py:99`); wheel-touch awareness reset by any steer/gas input (`policy.py:334-335`) (GAP-21) |
 | FSR-02.08 | Driver monitoring shall not be disabled, put into demo mode or replaced by synthetic inputs while the item can engage. | QM (see §7) | E-01/DM | R, T-SIL | Not met: `IsDriverViewEnabled` demo mode (`selfdrive/monitoring/dmonitoringd.py:26-27`, `policy.py:428-437`) (GAP-20) |
 | FSR-02.09 | If the driver does not respond to the highest DM warning, the item shall decelerate the vehicle, disengage and prevent re-engagement for a lockout period. | QM (see §7) | E-01/DM | T-SIL, T-VEH | Implemented: no-response force decel and lockout 1/5/15/30 min (`policy.py:39-44, 398`; `selfdrive/controls/controlsd.py:203-204`) |
+| FSR-02.10 | The item shall detect that the envelope does not grant actuation authority while the SoC is engaged (envelope blocking, stuck authority, safety-mode mismatch) and give a take-over request within the SG-02/SG-06 warning budget (§8). | B | E-01 (detection, alert), E-03 (reports authority state) | T-SIL, FI | Partial: `controlsMismatch` raised after 200 frames ≈ 2 s (`selfdrive/selfdrived/selfdrived.py:338, 508-510`), longer than the ≤ 1 s budget. New in v0.2 (HE-02.4) |
+| FSR-02.11 | The item shall detect failure of the HMI path that shows the engagement state and gives take-over requests (display, sound) and treat it as a fault leading to disengagement with the SoC-independent indications (FSR-02.05 buzzer, FSR-05.05 cluster cruise state). | B | E-01/HMI, E-03 | T-SIL, FI | Partial: a crashed `ui`/`soundd` raises `processNotRunning` (`selfdrive/selfdrived/selfdrived.py:351-357`); a hung but running UI, a frozen indication or muted audio is not detected. New in v0.2 (H-07, HE-07.x) |
 
 Note on FSR-02.02: the detection of input loss lies in the QM stack. At ASIL B this is not acceptable on its own. The ASIL B argument for SG-02 rests on FSR-01.07 (envelope removes actuation on stale commands) + FSR-02.05 (independent acoustic warning), both on E-03, with tighter timing (§8). FSR-02.02/02.03 on E-01 are QM measures that give the earlier, better-explained warning in the common case.
 
@@ -152,6 +154,8 @@ Note on FSR-02.02: the detection of input loss lies in the QM stack. At ASIL B t
 | FSR-04.02 | The envelope shall limit the onset rate of commanded deceleration (negative jerk). | B | E-03 | T-SIL | Not implemented (GAP-04) |
 | FSR-04.03 | The transition to the longitudinal safe state shall not create a deceleration step larger than the jerk bound of FSR-04.02. | B | E-01, E-03 | A, T-VEH | Not specified; depends on PCM behaviour on inactive value (AOU-05R) |
 | FSR-04.04 | Driver accelerator input shall override commanded deceleration. | B | E-03, EXT-PCM | T-SIL, T-VEH | Implemented in envelope (`longitudinal.h:3-5`); vehicle behaviour unverified |
+| FSR-04.05 | Deceleration that the item initiates for a reason other than following traffic (driver-monitoring no-response, fault soft disable) shall be preceded by a visual and acoustic alert and shall stay within the bounds of FSR-04.01/04.02. | B | E-01 (alert), E-03 (bounds) | T-SIL, T-VEH | Partial: DM escalation alerts precede force deceleration (`selfdrive/monitoring/policy.py`); bounds as FSR-04.01, jerk not bounded (GAP-04). New in v0.2 (HE-04.3): DM is a source of H-04, and the deceleration path is bounded by the envelope, so DM itself stays QM (§7) |
+| FSR-04.06 | Forward collision warnings shall be raised only from valid, fresh inputs, and the false-warning rate in the ODD shall be bounded so that driver reflex braking with a close follower is not a credible consequence. | A | E-01 | T-SIL, validation (WP-V-02) | Partial: FCW from model hard-brake prediction or planner (`selfdrive/selfdrived/selfdrived.py:440-445`); no false-rate target. **ASIL A on a QM element (E-01):** see OI-9. New in v0.2 (HE-04.5) |
 
 ### 5.5 SG-05 Release on driver action (ASIL B ⚠)
 
@@ -218,6 +222,8 @@ Integrity-supporting attributes (QM, but required):
 | Liveness gating | Engagement is not possible, and an engaged system soft-disables, when DM output is missing | Implemented: `dmonitoringd` invalid → `commIssue` (onboard review; `selfdrive/monitoring/dmonitoringd.py:25-33`) |
 | Performance | Detection performance is validated against misuse scenarios | WP-C-08 §8, [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) |
 
+**HARA v0.2 (HE-04.3):** DM is also a *source* of unintended deceleration (forced deceleration on an attentive driver). That path is covered by FSR-04.05 and the envelope bounds FSR-04.01/04.02 on E-03, which apply whatever requests the deceleration. So the conclusion above holds and the DM chain itself stays QM.
+
 **Condition:** the I3 confirmation review must agree that the HARA C2 ratings do not depend on DM. If the assessor disagrees, the alternative is to re-rate HE-02.1/HE-06.1 under the assumption of a distracted driver (likely C3 → ASIL C) and then decide between an ASIL-capable DM supervisor and an ODD/authority restriction. This is OI-3.
 
 ## 8. FTTI allocation (preliminary)
@@ -254,11 +260,14 @@ Note on SG-02 in curves: [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) �
 | FSR-01.13 | ● | | | | ● | | |
 | FSR-01.14 | ● | | | | | | |
 | FSR-02.01–02.05 | | ● | | | | | |
-| FSR-02.06–02.09 | | ● | | | | ● | |
-| FSR-03.01–03.06 | | | ● | | | | |
-| FSR-04.01–04.04 | | | | ● | | | |
+| FSR-02.06–02.08 | | ● | | | | ● | |
+| FSR-02.09 | | ● | | ● | | ● | |
+| FSR-02.10–02.11 | | ● | | | | ● | |
+| FSR-03.01, 03.03–03.06 | | | ● | | | | |
+| FSR-03.02 | | | ● | ● | | | |
+| FSR-04.01–04.06 | | | | ● | | | |
 | FSR-05.01–05.04, 05.07 | | | | | ● | | |
-| FSR-05.05–05.06 | | ● | | | ● | | |
+| FSR-05.05–05.06 | | ● | | | ● | ● | |
 | FSR-06.01–06.05 | | | | | | ● | |
 | FSR-07.01–07.05 | | | | | | | ● |
 
@@ -268,9 +277,9 @@ Every SG has at least one FSR allocated to E-03 (or to an external measure plus 
 
 | Element | FSRs | Highest ASIL |
 |---|---|---|
-| E-03 safety envelope | 01.01–01.12, 02.01 (detection), 02.04, 02.05, 03.01–03.05, 04.01–04.04, 05.01–05.06, 06.04, 07.01–07.03 | C (B after re-rating, §4.2) |
+| E-03 safety envelope | 01.01–01.12, 02.01 (detection), 02.04, 02.05, 02.10 (authority state), 03.01–03.05, 04.01–04.05, 05.01–05.06, 06.04, 07.01–07.03 | C (B after re-rating, §4.2) |
 | E-05 harness/relay | 01.11, 07.03 | C/B |
-| E-01 SoC (QM) | 01.14, 02.02, 02.03, 02.06–02.09, 03.05 (cancel), 05.06, 06.01–06.04, 07.05 | QM (ASIL-relevant items backed by E-03) |
+| E-01 SoC (QM) | 01.14, 02.02, 02.03, 02.06–02.11, 03.05 (cancel), 04.05 (alert), 04.06, 05.06, 06.01–06.04, 07.05 | QM (ASIL-relevant items backed by E-03); FSR-04.06 ASIL A open (OI-9) |
 | HMI | 02.03, 02.05 (panda buzzer, via E-03) | QM / B for buzzer path |
 | EXT-EPS | 01.13 | AoU |
 | EXT-PCM | 03.06, 05.07, 07.04 | AoU |
@@ -323,3 +332,31 @@ There is no degraded "lateral-only" or "longitudinal-only" operating mode in the
 | OI-6 | Confirm relay de-energised state and power-loss behaviour (AOU-13) | HW lead | G2 |
 | OI-7 | Refine FSRs into TSR-1xx…7xx in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) and record FSR→TSR trace in `trace/` | Safety engineer | G2 |
 | OI-8 | Closed: WP-C-03 v0.2 rates H-07 (HE-07.1…07.3, ASIL B) and assigns it to SG-02/SG-06. The FSRs for SG-02/SG-06 must cover the engagement indication and take-over alerts (WP-C-03 §6.1 obs. 5) | HARA owner | G1 |
+| OI-9 | FSR-04.06 (false FCW) carries ASIL A on the QM SoC. Either develop the FCW trigger path to ASIL A, show by SOTIF validation that the false-warning consequence is not credible (re-rating HE-04.5), or move the warning to an ASIL-capable element | Safety engineer | G2 |
+| OI-10 | Tighten `controlsMismatch` detection (FSR-02.10) and add HMI liveness supervision (FSR-02.11); refine both into TSRs in WP-S-02 | SW lead | G2 |
+
+## 14. Completeness check (fsc-builder method)
+
+The FSRs above were written by hand from the safety goals. Their completeness is checked with the fsc-builder method. Each safety goal is expanded into a fault tree, OR(input failure, process failure, output failure), over a block diagram of the item: 20 ASIL-relevant nodes plus 5 external nodes for context. That gives one basic event per (safety goal, node), 140 in all.
+
+[`fsc/fsc_model.py`](fsc/fsc_model.py) records, for every basic event, the FSRs that address it, or why the node cannot violate that goal. The result is [`fsc/fsc-coverage.md`](fsc/fsc-coverage.md), and the generated workbook with the mapping in tab 09 is [`fsc/WP-C-04-fsc-completeness.xlsx`](fsc/WP-C-04-fsc-completeness.xlsx).
+
+CI runs `fsc_model.py --check`. It fails if:
+
+- a basic event has neither an FSR nor a reason;
+- a cited FSR does not exist here;
+- an FSR here is not cited by any basic event;
+- the coverage table is stale.
+
+The template FSR wording in the generated workbook (tab 05) is not the requirement set; the FSRs in §5 are.
+
+The check found the following:
+
+- **SoC reset and boot control of the MCU (node N13, GAP-38):** handled at TSR level (TSR-511) but not stated at FSR level. FSR-01.10 now includes it.
+- **New FSRs for the new HARA v0.2 sources:** FSR-02.10 (envelope blocking while the SoC shows engaged, HE-02.4), FSR-02.11 (HMI path failure, H-07), FSR-04.05 (item-initiated deceleration, HE-04.3) and FSR-04.06 (false FCW, HE-04.5).
+- **Trace extensions:**
+  - FSR-03.02 now also serves SG-04 (no braking without authority, HE-04.4).
+  - FSR-05.05/05.06 now also serve SG-06 (longitudinal mode confusion, HE-07.3).
+  - FSR-02.09 now also serves SG-04 (DM forced deceleration).
+- **Loss of the 12 V supply (node N08):** the item cannot warn. The driver is informed only by the cluster cruise indicator (FSR-05.05) and the EPS ending LKA torque (FSR-01.13), which rests on AOU-01R and AOU-12.
+- **No ASIL decomposition is proposed.** No two nodes are redundant peers with disjoint shared resources. The SoC and the MCU share the device supply and PCB, and the envelope takes the SoC command stream as an input. This matches §4: the SoC is QM and the envelope is the safety mechanism, with freedom from interference argued in [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md).
