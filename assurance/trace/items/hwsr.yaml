@@ -83,7 +83,7 @@
   allocated_to: "NVIC, DWT"
   hw_kind: "CFG"
   verification: "R, T-HIL (timing measurement)"
-  baseline_impl: "Partial: default NVIC priorities assumed (WP-A-02 OI-5); DWT present on the core, not used"
+  baseline_impl: "Partial: explicit NVIC priority for every enabled interrupt (panda `52cad44`, `board/drivers/irq_priorities.h`); DWT present on the core, not used"
   status: proposed
   source: WP-H-01
 
