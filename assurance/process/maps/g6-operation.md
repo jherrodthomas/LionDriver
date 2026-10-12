@@ -35,7 +35,7 @@ flowchart LR
   ai(["AI safety (ISO/PAS 8800)"])
   cs(["Cybersecurity (ISO/SAE 21434)"])
   cs -. "IX-27, IX-30" .- joint
-  joint -. "IX-28 OPEN" .- sotif
+  joint -. "IX-28" .- sotif
   ai -. "IX-29" .- joint
 ```
 
@@ -55,7 +55,7 @@ Each interface is anchored to text in the work products; the checker fails if an
 | ID | Pattern | Between | Topic | Status | Open item | Due |
 |---|---|---|---|---|---|---|
 | IX-27 | Safety-Security | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md), [WP-O-05](../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) (Joint / Cybersecurity) | A field event may have a safety or a cyber cause: field monitoring passes possible cyber causes to incident response, which watches field data for tampering indicators | Documented | — | G6 |
-| IX-28 | Operation-SOTIF | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md), [WP-V-04](../../06-validation/WP-V-04-sotif-unknown-scenarios.md) (Joint / SOTIF) | Pre-release exploration and field monitoring must use the same event signatures and thresholds, or the unknown-scenario statistics are not comparable | Open | WP-V-04 OI-5 | G6 |
+| IX-28 | Operation-SOTIF | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md), [WP-V-04](../../06-validation/WP-V-04-sotif-unknown-scenarios.md) (Joint / SOTIF) | Pre-release exploration and field monitoring use one signature set: WP-V-04 §2.1 defines AS-01…AS-11 with thresholds and maps each to a WP-O-04 MON event (MON-17 added for the three without one); one extractor and signature-set version, thresholds frozen per version, and the same ODD denominator and discovery-rate definition. Numeric thresholds are still to be tuned (WP-O-04 OI-5) | Documented | — | G6 |
 | IX-29 | Operation-AI | [WP-O-04](../../09-production-operation/WP-O-04-field-monitoring.md), [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) (Joint / AI safety) | Field monitoring checks that the ML models behave as validated and stay inside their input space; anomalies go back to the model test set | Documented | — | G6 |
 | IX-30 | Security-Release | [WP-O-05](../../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md), [WP-P-10](../../07-supporting/WP-P-10-release-management.md) (Cybersecurity / Joint) | Security fixes reach the field as releases, but updates are not signed (GAP-26), so the update path is itself an open security weakness | Documented | — | G6 |
 
@@ -102,4 +102,4 @@ Which activity answers each clause reference listed in the register. One activit
 
 **Work products with no confirmation measure at this gate** (verification review only): WP-O-04, WP-O-05.
 
-**Open interfaces due by this gate** (from this or an earlier phase): IX-06 (WP-C-02 OI-6), IX-13 (WP-V-02 OI-3), IX-28 (WP-V-04 OI-5).
+**Open interfaces due by this gate** (from this or an earlier phase): IX-06 (WP-C-02 OI-6), IX-13 (WP-V-02 OI-3).

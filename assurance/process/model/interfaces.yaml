@@ -291,10 +291,10 @@
   phase: G6
   between: [WP-O-04, WP-V-04]
   pattern: "Operation-SOTIF"
-  topic: "Pre-release exploration and field monitoring must use the same event signatures and thresholds, or the unknown-scenario statistics are not comparable"
-  anchors: ["WP-V-04:Agree with WP-O-04 the signature set and thresholds"]
-  status: open
-  open_item: "WP-V-04 OI-5"
+  topic: "Pre-release exploration and field monitoring use one signature set: WP-V-04 §2.1 defines AS-01…AS-11 with thresholds and maps each to a WP-O-04 MON event (MON-17 added for the three without one); one extractor and signature-set version, thresholds frozen per version, and the same ODD denominator and discovery-rate definition. Numeric thresholds are still to be tuned (WP-O-04 OI-5)"
+  anchors: ["WP-V-04:One signature set before and after release", "WP-V-04:This table is the only definition of AS-01…AS-11", "WP-O-04:are defined only in WP-V-04 §2.1", "WP-O-04:SOTIF anomaly signatures with no other field event"]
+  status: documented
+  open_item: null
   due: G6
 - id: IX-29
   kind: interface

@@ -48,6 +48,9 @@ Each event class has an ID (`MON-nn`), its source signal in the logs, and the sa
 | MON-14 | Crash or near-miss reported by the driver, or detected (high deceleration in IMU / `carState.aEgo`, airbag-related CAN signals if available, flag button) | `userBookmark`; `accelerometer`; `carState`; driver report | `system/loggerd/loggerd.cc:198-285` (bookmark preserves segment) | Safety goal violation evidence; SGO-style reporting (§8) |
 | MON-15 | Use outside the ODD (speed, road type, weather, night) while engaged | `carState.vEgo`, GPS, model road-edge and lane outputs, time of day; `speedTooHigh` event | `events.py:989-996` | Misuse frequency (AOU-06, [WP-O-03](WP-O-03-user-information-safety-warnings.md) UI-10) |
 | MON-16 | Configuration drift: software commit, panda firmware signature, model hashes, parameters, `carFw`, fingerprint fuzzy flag | `initData`, `carParams`, `pandaStates`, params snapshot | `selfdrive/car/card.py:141-150, 195-201` | Field units must equal the released reference configuration ([WP-O-01](WP-O-01-installation-and-provisioning-control.md) SPC-04…SPC-07) |
+| MON-17 | SOTIF anomaly signatures with no other field event: AS-03 gas override during deceleration, AS-05 lane-line proximity, AS-06 phantom deceleration ([WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) §2.1) | `carState`, `longitudinalPlan`, `modelV2`, `radarState` | Definitions and thresholds in WP-V-04 §2.1 | Near-miss indicators for SH-01 and SH-04; keeps the field statistics comparable with pre-release exploration |
+
+The SOTIF anomaly signatures AS-01…AS-11 are defined only in WP-V-04 §2.1 (one set before and after release, WP-V-04 §2.1.1). This document extracts them unchanged with the same script and signature-set version, and records the version with each KPI report. MON-01, -02, -05…-10, -13 and -17 contain them.
 
 ### 2.2 Exposure data (denominators)
 
@@ -99,7 +102,7 @@ Minimum data set retrieved for every engaged route: `qlog` and `rlog` for all se
 ### 4.1 Pipeline
 
 1. **Ingest**: copy, checksum, register route ID, vehicle, software baseline (from `initData` / `carParams`).
-2. **Automatic event extraction**: script scans `qlog`/`rlog` for MON-01…MON-16 and writes an event table (route, time, event, context signals). Not written yet (OI-4).
+2. **Automatic event extraction**: script scans `qlog`/`rlog` for MON-01…MON-17 and writes an event table (route, time, event, context signals). Not written yet (OI-4).
 3. **Configuration check**: compare MON-16 with the release record; a mismatch is an event in itself.
 4. **Review**: the safety manager (or delegate) reviews every event in the triage classes below within the stated time.
 5. **Problem report**: open an issue under [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md) with category and severity, linking route and time.
@@ -111,7 +114,7 @@ Minimum data set retrieved for every engaged route: `qlog` and `rlog` for all se
 |---|---|---|---|
 | T1 Immediate | Crash or near-miss while engaged or within 30 s after disengagement (MON-14); excessive actuation (MON-05); `controlsMismatch` (MON-03); `relayMalfunction` (MON-04); configuration drift on a safety-relevant item (MON-16) | Same day | S-1 until analysed |
 | T2 Priority | Envelope TX blocks while engaged (MON-06); stock AEB activations while engaged (MON-08); DM no-response or lockout (MON-07); fault disengagements (MON-02); model non-finite outputs (MON-13) | 5 working days | S-2 until analysed |
-| T3 Statistical | Driver disengagements, FCW, steering saturation, DM level 1–2, calibration changes, out-of-ODD use, timing faults | Monthly trend review | S-3/S-4, or none if within expected rates |
+| T3 Statistical | Driver disengagements, FCW, steering saturation, DM level 1–2, calibration changes, out-of-ODD use, timing faults, SOTIF anomaly signatures (MON-17) | Monthly trend review | S-3/S-4, or none if within expected rates |
 
 A T3 event becomes T2 when its rate exceeds the threshold in §5 or a new pattern (location, condition, software baseline) appears.
 
@@ -146,7 +149,7 @@ Thresholds are placeholders until the SOTIF validation targets proposed in [WP-V
 | Possible cyber cause | [WP-O-05](WP-O-05-cybersecurity-incident-response-updates.md) | Incident response |
 | Counter-evidence to the safety case | [WP-K-01](../10-safety-case/WP-K-01-safety-case.md) defeater list | Add or update defeater |
 
-The SOTIF "unknown scenario" discovery rate (new scenarios per 1,000 engaged km) is reported to WP-V-04 monthly as an input to the residual-risk argument.
+The SOTIF "unknown scenario" discovery rate (new class-U scenario classes per 1,000 engaged km inside the ODD, as defined in WP-V-04 §2.1.1) is reported to WP-V-04 monthly as an input to the residual-risk argument.
 
 ## 7. Reviews and reporting inside the project
 
@@ -208,7 +211,7 @@ Every field action is recorded with: trigger, affected releases and installation
 | OI-1 | Decide how comma upload and athena are disabled for LionDriver installations (unpaired device, configuration change, or code change) and verify no data leaves the device unintentionally | G1 (before LionDriver public-road testing) |
 | OI-2 | Decide the post-release data path (manual vs. LionDriver endpoint) | G5 |
 | OI-3 | Privacy and consent review (data categories, consent text, retention) | G1 |
-| OI-4 | Write the event-extraction script for MON-01…MON-16 over qlog/rlog | G1 (for development driving) |
+| OI-4 | Write the event-extraction script for MON-01…MON-17 over qlog/rlog; it also scores the WP-V-04 signatures AS-01…AS-11 for development drives | G1 (for development driving) |
 | OI-5 | Set KPI thresholds from validation targets and development-drive baselines | G4 |
 | OI-6 | Legal review of SGO and Part 573 applicability | G5 |
 | OI-7 | Establish a field-action notification channel with confirmed receipt | G5 |

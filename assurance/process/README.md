@@ -163,7 +163,7 @@ These findings come from the generated maps. They are observations for the safet
 2. **The G6 exit criterion is "processes running", and none is.** WP-O-05 is "process defined; not running": no vulnerability intake (GAP-28), no SBOM or scanning, no upstream advisory watch, and no signed updates (GAP-26, IX-30).
 3. **Operation has no independent check.** WP-M-06 plans no confirmation measure at G6, so neither field monitoring nor incident response is confirmed by anyone other than its authors.
 4. **Every field finding re-opens a G1 work product.** All six feedback routes (FB-01…FB-06) end in the concept phase: HARA, item definition, SOTIF analyses, misuse analysis, AI requirements or the safety case. WP-M-06 §4 repeats a confirmation review when a confirmed work product changes in a safety-relevant way. So a single field finding can trigger I3 confirmation reviews again, and that needs the external assessor even after release.
-5. **Three open interfaces are due by G6:** the two due by G5 plus IX-28, the shared event signatures between pre-release exploration and field monitoring.
+5. **Two open interfaces are due by G6:** IX-06 and IX-13, both from G2. IX-28 has been closed: WP-V-04 §2.1 now defines one signature set, AS-01…AS-11. Each signature maps to a WP-O-04 field event; MON-17 was added for the three that had none. Both documents share one extractor, frozen thresholds per signature-set version, and the same ODD denominator and discovery-rate definition. The numeric thresholds are still placeholders (WP-O-04 OI-5).
 
 ## 7. Open items
 
