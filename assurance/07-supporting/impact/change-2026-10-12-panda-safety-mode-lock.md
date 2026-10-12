@@ -8,7 +8,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Status | **Integrated 2026-10-12: LionDriver pins panda `9f60e17`, opendbc `aff4033`; follow-ups at panda `3859fa8`, opendbc `5b5a4ba` (merge commits on the forks' `master`); not yet verified on hardware (HIL bench D-04); not reviewed independently.** |
 | Change request | [jherrodthomas/panda#4](https://github.com/jherrodthomas/panda/pull/4), stacked on panda#3 and panda#1 |
 | Range | panda `a35d1c6..7e2d148` (branch `claude/safety-mode-lock`) |
-| Reference configuration affected | Yes, in the reference build only (`LIONDRIVER_REFERENCE=1`); other builds are unchanged |
+| Reference configuration affected | Yes, in the reference build only (`LIONDRIVER_REFERENCE=1`). Since the follow-up below, openpilot's own build (`SConstruct`) builds the panda firmware with the flag by default; opt-out is `LIONDRIVER_REFERENCE=` (empty) |
 | Author / reviewer (independence) | Claude (AI-assisted draft) / TBD; an AI draft is not a review (WP-M-06) |
 
 ## 1. Change
@@ -49,6 +49,18 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Closed 2026-10-12: refused requests are counted in the health packet (`requests_rejected_pkt`, saturating) and published as `pandaState.requestsRejected`; `pandad` logs every increase ([jherrodthomas/panda#6](https://github.com/jherrodthomas/panda/pull/6), panda `3859fa8`). No driver-facing alert yet | — |
-| OI-2 | Release procedure: build the reference release with `RELEASE=1 LIONDRIVER_REFERENCE=1`; record it in WP-P-01 (configuration management) | Release |
+| OI-2 | Partly closed: the top-level `SConstruct` sets `LIONDRIVER_REFERENCE=1` for the panda firmware unless the variable is set (follow-up §6), so every openpilot build, including on the device, has the lock. Still open: `RELEASE=1` with the LionDriver key (D-09) and recording the flag in WP-P-01 | Release |
 | OI-3 | Add the alternative-experience AoU to WP-C-01 and decide the host-side guard | Integration |
 | OI-4 | Confirm `0xc0`, `0xb0`, `0xb1`, `0xf6` (WP-W-02 OI-5). `0xd1` param 1 is gated in a car mode since `7e2d148` | Later change |
+
+## 6. Follow-up: reference build by default (SW FMEA SWF-ACT-009, PFMEA PFM-ACT-001)
+
+| Item | Detail |
+|---|---|
+| Change | Top-level `SConstruct`: around `SConscript(['panda/SConscript'])`, `LIONDRIVER_REFERENCE` is set to `1` unless already set, and removed again afterwards if it was unset |
+| Why | The lock was compiled only when someone set the variable. No build path did, so the firmware that `pandad` flashes on the device had no lock, and the host could still select any safety mode and parameter |
+| Effect | Device firmware built from LionDriver accepts only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73 (D-12: LionDriver-only devices for the reference configuration). A vehicle other than the reference configuration stays in ELM327 and cannot engage. `0xdf` is refused; openpilot always sends alternative experience 0 (`card.py:111`), so there is no mismatch (AOU-14). The comma body firmware (`body_h7`) also gets the flag; the body is out of scope |
+| Opt-out | `LIONDRIVER_REFERENCE=` (empty) for development on other vehicles; such firmware is outside the safety claims |
+| Not affected | opendbc `libsafety` for the tests reads the variable at import time in the test process, not during the build, so openpilot's car-model tests are unchanged. The variable is restored after the panda SConscript |
+| Verification | The exact `SConstruct` block, run in front of the real `panda/SConscript` with scons 4.11.1 and arm-none-eabi-gcc 13.2.1 (the pins of the fork CI): unset → `-DLIONDRIVER_REFERENCE` on every firmware compile; empty → absent. Real compile of `panda_h7` with `-Werror` passes; the signed image contains the reference-lock code. The full openpilot build was not run locally (it needs acados and other device dependencies); CI builds it |
+| Open | Host-side check that the running panda firmware is a reference build (version or health flag) before engagement; RELEASE build with the LionDriver key (D-09) |
