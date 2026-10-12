@@ -51,7 +51,7 @@ flowchart TD
   C2(["C2 ODD WP-C-02"]) --- G0
   C3(["C3 Reference configuration WP-M-01 §3.1"]) --- G0
   C4(["C4 Hazard log WP-C-03 + WP-C-05"]) --- G0
-  A1(["A1 AOU-01…AOU-11 WP-C-01 §7"]) --- G0
+  A1(["A1 AOU-01…AOU-13 WP-C-01 §7"]) --- G0
   S0[/"S0: Argue over the risk sources: E/E malfunction, intended-function insufficiency and misuse, ML, cyber, process and lifecycle"/]
   G0 --> S0
   S0 --> G1["G1 FuSa (ISO 26262)"]
@@ -79,7 +79,7 @@ G0  The LionDriver reference configuration, operated by an attentive driver with
  ⊙ C5   Safety envelope architecture pattern: QM SoC stack bounded by the opendbc safety
         mode on the panda MCU [WP-M-01 §4.1]
  ⊙ C6   Tailoring T-01…T-13 [WP-M-01 §5]
- ⊙ A1   AOU-01…AOU-11 hold [WP-C-01 §7] — see §5 for status
+ ⊙ A1   AOU-01…AOU-13 hold [WP-C-01 §7] — see §5 for status
  ⊙ J0   "No worse than manual driving with stock TSS 2.0" is the acceptance principle
         because LD-SDA replaces stock LTA and DRCC; the comparison baseline is what the
         driver would otherwise have. Quantified in WP-C-05 §5 and WP-V-02
@@ -261,6 +261,8 @@ G5  The work was done by competent people under controlled processes, was
 | AOU-09 | Vehicle maintained, unmodified, no DTCs | All | Not started | Any |
 | AOU-10 | VSC/ABS on and working | G1.4 | Not started | HE-04.2 rating |
 | AOU-11 | Back end untrusted; no safety function depends on it | G4 | Design constraint | — |
+| AOU-12 | Cluster cruise indicator driven by PCM state, not by item TX other than `0x412` | G1.2, G1.6 | Unverified | Independent cue for SG-02/SG-06 (TSR-303, TSR-309) |
+| AOU-13 | De-energised harness relay restores the stock camera-to-car path | G1.7 | Unverified | SG-07 safe state |
 
 Status values are copied from [WP-C-01 §7](../02-concept/WP-C-01-item-definition.md) (machine-readable copy: `trace/items/aou.yaml`).
 
