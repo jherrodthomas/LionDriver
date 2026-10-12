@@ -39,6 +39,13 @@ head-on crash, so it is on the curve. Sideswipes and barrier impacts from a drif
 other vehicle or the barrier at a shallow angle, no worse than the average crash of their
 type, so they stay on the FARS/CRSS ratio of severity_ratio.py. ODD-H is divided, so it has no
 head-on case.
+SH-02 departs in a curve (the car goes straight while the road bends, HE-02.1), so its
+barrier impact is steeper than a drift. A car leaving a curve of radius R is at an angle
+theta = sqrt(2 * d / R) by the time it is d metres off the curve (`--sh02`). With R at the
+controller's 3.0 m/s^2 limit and d = 4 m (lane margin plus shoulder, assumed), theta is about
+9-14 degrees at the OS-02 speeds of 70-110 km/h. That is below the 25 degrees at which barriers
+are crash-tested (MASH test level 3, 100 km/h), so the impact is redirecting and the barrier
+ratio still applies. Its head-on in a rural curve (OS-16, HE-02.2) is the head-on case above.
 
 SH-10 (lane change into an occupied lane) is deliberately not mapped to a curve. Its primary
 contact is a same-direction sideswipe with a delta-v of a few km/h, so a delta-v curve would
@@ -147,6 +154,19 @@ def vru_cases() -> list[tuple[str, str, float]]:
           ("SH-11 OS-06", f"VRU struck after launch from a queue over {STOP_DISTANCE_M:g} m", launch)]
 
 
+A_Y_CTRL = 3.0  # m/s^2, controller lateral limit (drive_helpers.py MAX_LATERAL_ACCEL_NO_ROLL)
+BARRIER_OFFSET_M = 4.0  # assumed lateral distance from the curve path to the barrier
+BARRIER_TEST_ANGLE_DEG = 25.0  # MASH test level 3 impact angle
+OS02_SPEEDS_KMH = (70, 90, 110)  # HARA OS-02 speed range
+
+
+def curve_departure_angle_deg(speed_kmh: float, offset_m: float = BARRIER_OFFSET_M, a_y: float = A_Y_CTRL) -> float:
+  """Angle to the road edge when a car leaving a curve (radius v^2 / a_y) reaches offset_m."""
+  import math
+  radius = (speed_kmh / 3.6) ** 2 / a_y
+  return math.degrees(math.sqrt(2 * offset_m / radius))
+
+
 def cases() -> list[tuple[str, str, float]]:
   """(SH and situation, case label, closing speed in km/h) for the ODD speed bounds."""
   out = []
@@ -157,7 +177,7 @@ def cases() -> list[tuple[str, str, float]]:
     for h in OS08_GAPS_S:
       out.append(("SH-04 OS-08", f"{odd} struck from behind at {v} km/h, follower gap {h} s", rear_impact_kmh(v, h)))
   v_a = ODD_SPEEDS_KMH["ODD-A"]
-  out.append(("SH-01/02 OS-03", f"ODD-A head-on, both at {v_a} km/h", 2 * v_a))
+  out.append(("SH-01/02 OS-03/OS-16", f"ODD-A head-on, both at {v_a} km/h", 2 * v_a))
   return out
 
 
@@ -179,7 +199,14 @@ def main(argv: list[str] | None = None) -> int:
   ap.add_argument("--speed", type=float, action="append", help="closing speed in km/h (repeatable); default: the SH-06 and SH-03 cases")
   ap.add_argument("--restitution", type=float, default=RESTITUTION)
   ap.add_argument("--sensitivity", action="store_true", help="SH-04: print impact speed over follower reaction and braking")
+  ap.add_argument("--sh02", action="store_true", help="SH-02: print the barrier impact angle of a departure in a curve")
   a = ap.parse_args(argv)
+  if a.sh02:
+    print("| Speed (km/h) | Radius at 3.0 m/s² (m) | Angle at 4 m (deg) | Below 25° test angle |\n|---|---|---|---|")
+    for v in OS02_SPEEDS_KMH:
+      ang = curve_departure_angle_deg(v)
+      print(f"| {v} | {(v / 3.6) ** 2 / A_Y_CTRL:.0f} | {ang:.1f} | {'yes' if ang < BARRIER_TEST_ANGLE_DEG else 'no'} |")
+    return 0
   if a.sensitivity:
     print("| Speed (km/h) | Gap (s) | " + " | ".join(f"t_r {tr} s, a_f {af}" for tr in (1.0, 1.5, 2.0) for af in (3.0, 4.0, 6.0)) + " |")
     print("|---|---|" + "---|" * 9)

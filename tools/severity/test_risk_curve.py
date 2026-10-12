@@ -50,11 +50,11 @@ class RiskCurveTest(unittest.TestCase):
 
   def test_cases_cover_all_mapped_situations(self):
     labels = {sh for sh, _, _ in rc.cases()}
-    self.assertEqual(labels, {"SH-06; SH-03 OS-07", "SH-03 OS-05", "SH-04 OS-08", "SH-01/02 OS-03"})
+    self.assertEqual(labels, {"SH-06; SH-03 OS-07", "SH-03 OS-05", "SH-04 OS-08", "SH-01/02 OS-03/OS-16"})
 
   def test_sh01_head_on_uses_combined_speed_and_has_no_credit(self):
     from tools.severity import severity_ratio as sr
-    head_on = [v for sh, _, v in rc.cases() if sh == "SH-01/02 OS-03"]
+    head_on = [v for sh, _, v in rc.cases() if sh == "SH-01/02 OS-03/OS-16"]
     self.assertEqual(head_on, [2 * rc.ODD_SPEEDS_KMH["ODD-A"]])
     for lead in rc.LEADS:
       self.assertEqual(rc.crash_fatal_ub(head_on[0], rc.EGO, lead)["p_fatal_crash_ub"], 1.0)
@@ -97,6 +97,14 @@ class RiskCurveTest(unittest.TestCase):
     self.assertEqual(cases["SH-11 OS-04"], 60)
     self.assertAlmostEqual(cases["SH-11 OS-06"], (2 * 2.0 * 6.0) ** 0.5 * 3.6)
     self.assertNotIn("SH-11", sr.SH_COLLISIONS)
+
+  def test_sh02_curve_departure_angle(self):
+    # 90 km/h at 3 m/s^2: R = 625 / 3 m; theta = sqrt(2 * 4 / R)
+    import math
+    self.assertAlmostEqual(rc.curve_departure_angle_deg(90), math.degrees(math.sqrt(8 * 3 / 625)))
+    for v in rc.OS02_SPEEDS_KMH:
+      self.assertLess(rc.curve_departure_angle_deg(v), rc.BARRIER_TEST_ANGLE_DEG)
+    self.assertGreater(rc.curve_departure_angle_deg(70), rc.curve_departure_angle_deg(110))
 
   def test_sensitivity_grid(self):
     with redirect_stdout(io.StringIO()) as buf:
