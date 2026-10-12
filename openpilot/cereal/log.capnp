@@ -574,6 +574,11 @@ struct PandaState @0xa7649e2575e4591e {
   nmiReset @40 :Bool;
   hardfaultReset @41 :Bool;
 
+  # LionDriver: last panda reset caused by the hardware watchdog (TSR-501), and control requests refused by the
+  # safety-mode lock of the reference build since the last panda reset (TSR-512)
+  watchdogReset @42 :Bool;
+  requestsRejected @43 :UInt16;
+
   enum FaultStatus {
     none @0;
     faultTemp @1;

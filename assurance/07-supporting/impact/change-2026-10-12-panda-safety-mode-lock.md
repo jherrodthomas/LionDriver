@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Integrated 2026-10-12: LionDriver pins panda `9f60e17`, opendbc `aff4033` (merge commits on the forks' `master`); not yet verified on hardware (HIL bench D-04); not reviewed independently.** |
+| Status | **Integrated 2026-10-12: LionDriver pins panda `9f60e17`, opendbc `aff4033`; follow-ups at panda `3859fa8`, opendbc `5b5a4ba` (merge commits on the forks' `master`); not yet verified on hardware (HIL bench D-04); not reviewed independently.** |
 | Change request | [jherrodthomas/panda#4](https://github.com/jherrodthomas/panda/pull/4), stacked on panda#3 and panda#1 |
 | Range | panda `a35d1c6..7e2d148` (branch `claude/safety-mode-lock`) |
 | Reference configuration affected | Yes, in the reference build only (`LIONDRIVER_REFERENCE=1`); other builds are unchanged |
@@ -48,7 +48,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Report rejected requests to the host (health packet field; changes `HEALTH_PACKET_VERSION` and needs the matching host change) | Release |
+| OI-1 | Closed 2026-10-12: refused requests are counted in the health packet (`requests_rejected_pkt`, saturating) and published as `pandaState.requestsRejected`; `pandad` logs every increase ([jherrodthomas/panda#6](https://github.com/jherrodthomas/panda/pull/6), panda `3859fa8`). No driver-facing alert yet | — |
 | OI-2 | Release procedure: build the reference release with `RELEASE=1 LIONDRIVER_REFERENCE=1`; record it in WP-P-01 (configuration management) | Release |
 | OI-3 | Add the alternative-experience AoU to WP-C-01 and decide the host-side guard | Integration |
 | OI-4 | Confirm `0xc0`, `0xb0`, `0xb1`, `0xf6` (WP-W-02 OI-5). `0xd1` param 1 is gated in a car mode since `7e2d148` | Later change |
