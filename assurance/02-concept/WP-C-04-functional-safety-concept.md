@@ -333,7 +333,7 @@ There is no degraded "lateral-only" or "longitudinal-only" operating mode in the
 | OI-7 | Refine FSRs into TSR-1xx…7xx in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) and record FSR→TSR trace in `trace/` | Safety engineer | G2 |
 | OI-8 | Closed: WP-C-03 v0.2 rates H-07 (HE-07.1…07.3, ASIL B) and assigns it to SG-02/SG-06. The FSRs for SG-02/SG-06 must cover the engagement indication and take-over alerts (WP-C-03 §6.1 obs. 5) | HARA owner | G1 |
 | OI-9 | FSR-04.06 (false FCW) carries ASIL A on the QM SoC. Either develop the FCW trigger path to ASIL A, show by SOTIF validation that the false-warning consequence is not credible (re-rating HE-04.5), or move the warning to an ASIL-capable element | Safety engineer | G2 |
-| OI-10 | Tighten `controlsMismatch` detection (FSR-02.10) and add HMI liveness supervision (FSR-02.11); refine both into TSRs in WP-S-02 | SW lead | G2 |
+| OI-10 | Implement TSR-621 (`controlsMismatch` within ≤ 0.5 s) and TSR-622/623 (HMI liveness, audible minimum) drafted in WP-S-02 v0.2 for FSR-02.10/02.11; TSR-624/625 cover FSR-04.05/04.06 | SW lead | G2 |
 
 ## 14. Completeness check (fsc-builder method)
 
