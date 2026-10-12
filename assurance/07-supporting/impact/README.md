@@ -55,3 +55,14 @@ a sync decision.
 
 On 2026-10-10, upstream `panda`, `opendbc`, `rednose` and `teleoprtc` `master` were identical
 to the LionDriver pins, so no report was generated for them.
+
+## LionDriver change records
+
+Impact analyses for changes LionDriver makes itself to safety-relevant code (change type CT-1, [WP-P-02](../WP-P-02-change-management.md)), using the same template.
+
+| File | Change | Highest class | Status |
+|---|---|---|---|
+| [change-2026-10-12-panda-hw-watchdog.md](change-2026-10-12-panda-hw-watchdog.md) | panda: independent hardware watchdog, [jherrodthomas/panda#1](https://github.com/jherrodthomas/panda/pull/1); 100 Hz safety task and window mode, [jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3); watchdog reset reporting, [jherrodthomas/panda#6](https://github.com/jherrodthomas/panda/pull/6) | SR-A | Integrated 2026-10-12 (panda `9f60e17`, opendbc `aff4033`; follow-ups panda `3859fa8`, opendbc `5b5a4ba`); not verified on hardware; not reviewed independently; D-1, D-2, D-3 accepted as interim |
+| [change-2026-10-12-opendbc-toyota-rx-timeout.md](change-2026-10-12-opendbc-toyota-rx-timeout.md) | opendbc: Toyota RX timeout after 5 periods, [jherrodthomas/opendbc#1](https://github.com/jherrodthomas/opendbc/pull/1); engagement gated on the RX checks, [jherrodthomas/opendbc#3](https://github.com/jherrodthomas/opendbc/pull/3) | SR-A | Integrated 2026-10-12 (panda `9f60e17`, opendbc `aff4033`; follow-ups panda `3859fa8`, opendbc `5b5a4ba`); not verified on hardware; not reviewed independently |
+| [change-2026-10-12-opendbc-toyota-tx-whitelist.md](change-2026-10-12-opendbc-toyota-tx-whitelist.md) | opendbc: PCS and DSU messages removed from the Toyota TX whitelist, [jherrodthomas/opendbc#2](https://github.com/jherrodthomas/opendbc/pull/2) | SR-A | Integrated 2026-10-12 (panda `9f60e17`, opendbc `aff4033`; follow-ups panda `3859fa8`, opendbc `5b5a4ba`); not verified on hardware; not reviewed independently |
+| [change-2026-10-12-panda-safety-mode-lock.md](change-2026-10-12-panda-safety-mode-lock.md) | panda: safety-mode lock in the reference build, [jherrodthomas/panda#4](https://github.com/jherrodthomas/panda/pull/4) | SR-A | Integrated 2026-10-12 (panda `9f60e17`, opendbc `aff4033`; follow-ups panda `3859fa8`, opendbc `5b5a4ba`); not verified on hardware; not reviewed independently |

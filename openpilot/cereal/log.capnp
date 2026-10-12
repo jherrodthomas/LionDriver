@@ -139,6 +139,9 @@ struct OnroadEvent @0xc4fa6047f024e718 {
     usbErrorDEPRECATED @78;
     audioFeedbackDEPRECATED @97;
     bigModelReadyDEPRECATED @101;
+
+    # LionDriver: the panda's last reset was caused by its hardware watchdog (TSR-501)
+    pandaWatchdogReset @105;
   }
 }
 
@@ -573,6 +576,16 @@ struct PandaState @0xa7649e2575e4591e {
 
   nmiReset @40 :Bool;
   hardfaultReset @41 :Bool;
+
+  # LionDriver: last panda reset caused by the hardware watchdog (TSR-501), and control requests refused by the
+  # safety-mode lock of the reference build since the last panda reset (TSR-512)
+  watchdogReset @42 :Bool;
+  requestsRejected @43 :UInt16;
+  # LionDriver: the panda refuses lateral actuation because the car's EPS reports a fault (TSR-110)
+  epsFault @44 :Bool;
+  # LionDriver: the panda revoked authority because the SoC exceeded a TX rate budget (TSR-518); latched until the
+  # next safety mode change
+  txRateExceeded @45 :Bool;
 
   enum FaultStatus {
     none @0;

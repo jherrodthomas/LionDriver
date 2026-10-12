@@ -32,7 +32,7 @@
   baseline: BL-001
   configuration: CFG-001
   related_hazards: [SG-01]
-  related_requirements: []
+  related_requirements: [FSR-01.01, FSR-01.02, FSR-01.03, FSR-01.04, FSR-01.05, FSR-01.06, FSR-01.07, FSR-01.08, FSR-01.09, FSR-01.10, FSR-01.11, FSR-01.12, FSR-01.13, FSR-01.14]
   related_assumptions: [AOU-01, AOU-02]
   evidence_refs: []
   defeaters: [DF-14]
@@ -137,7 +137,7 @@
   baseline: BL-001
   configuration: CFG-001
   related_hazards: [SG-02]
-  related_requirements: []
+  related_requirements: [FSR-02.01, FSR-02.02, FSR-02.03, FSR-02.04, FSR-02.05, FSR-02.06, FSR-02.07, FSR-02.08, FSR-02.09, FSR-02.10, FSR-02.11]
   related_assumptions: []
   evidence_refs: [Sn-01, Sn-02, Sn-14, Sn-13]
   defeaters: [DF-07, DF-08, DF-36, DF-41]
@@ -158,7 +158,7 @@
   baseline: BL-001
   configuration: CFG-001
   related_hazards: [SG-03]
-  related_requirements: []
+  related_requirements: [FSR-03.01, FSR-03.02, FSR-03.03, FSR-03.04, FSR-03.05, FSR-03.06]
   related_assumptions: [AOU-05]
   evidence_refs: [Sn-01, Sn-02, Sn-10, Sn-12, Sn-21]
   defeaters: [DF-14, DF-38]
@@ -179,7 +179,7 @@
   baseline: BL-001
   configuration: CFG-001
   related_hazards: [SG-04]
-  related_requirements: []
+  related_requirements: [FSR-04.01, FSR-04.02, FSR-04.03, FSR-04.04, FSR-04.05, FSR-04.06]
   related_assumptions: [AOU-05, AOU-10]
   evidence_refs: [Sn-01, Sn-02, Sn-21]
   defeaters: [DF-09, DF-38]
@@ -200,7 +200,7 @@
   baseline: BL-001
   configuration: CFG-001
   related_hazards: [SG-05]
-  related_requirements: []
+  related_requirements: [FSR-05.01, FSR-05.02, FSR-05.03, FSR-05.04, FSR-05.05, FSR-05.06, FSR-05.07]
   related_assumptions: [AOU-01, AOU-02, AOU-03]
   evidence_refs: [Sn-01, Sn-02, Sn-10, Sn-22]
   defeaters: [DF-10, DF-05, DF-14, DF-36]
@@ -221,7 +221,7 @@
   baseline: BL-001
   configuration: CFG-001
   related_hazards: [SG-06]
-  related_requirements: []
+  related_requirements: [FSR-06.01, FSR-06.02, FSR-06.03, FSR-06.04, FSR-06.05]
   related_assumptions: []
   evidence_refs: [Sn-01, Sn-14, Sn-13]
   defeaters: [DF-07, DF-41]
@@ -242,7 +242,7 @@
   baseline: BL-001
   configuration: CFG-001
   related_hazards: [SG-07]
-  related_requirements: []
+  related_requirements: [FSR-07.01, FSR-07.02, FSR-07.03, FSR-07.04, FSR-07.05]
   related_assumptions: [AOU-04]
   evidence_refs: [Sn-01, Sn-02, Sn-23, Sn-30]
   defeaters: [DF-11, DF-12, DF-14, DF-32, DF-33, DF-38, DF-39]

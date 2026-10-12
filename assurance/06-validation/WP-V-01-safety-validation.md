@@ -177,7 +177,7 @@ Vehicle-level repetition of selected [WP-V-05](WP-V-05-fault-injection.md) cases
 
 | ID | Item |
 |---|---|
-| OI-1 | Choose the closed-course site and confirm it allows the speeds of VS-VAL-03, -10, -14 |
+| OI-1 | Choose the closed-course site and confirm it allows the speeds of VS-VAL-03, -10, -14. Site requirements and candidates: [test-sites/](test-sites/README.md) |
 | OI-2 | Replace preliminary SG timing values with WP-S-04 FTTIs |
 | OI-3 | Fix the AOU-02R force limit and the CA-01 lateral margin with the WP-C-04 / WP-C-08 owners before §5.2 starts |
 | OI-4 | Define the configuration-control procedure for characterization and fault-injection builds (VS-VAL-02, -05, §5.3) with WP-P-01 |

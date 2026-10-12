@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-05 Hardware-software interface specification |
 | Standard reference | ISO 26262-4:2018 §6 (HSI specification); ISO 26262-5:2018 §6 and ISO 26262-6:2018 §6 (HSI refinement, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.1 |
+| Version | 0.6 (S-13: MAIN_ON cross-check implemented in the reference build, opendbc `875e325`; 2026-10-12). 0.5 (S-12: EPS fault reported to the host as `pandaState.epsFault`, panda `877730e`, opendbc `adcb7c2`; 2026-10-12). 0.4 (S-12: EPS fault codes evaluated by the envelope in the reference build, opendbc `242d63d`; 2026-10-12). 0.3 (S-12, S-13: `0x262` and `0x1D3` supervised in the reference build, opendbc `98404a4`; 2026-10-12). 0.2 (§11 signal catalogue, RR-2026-005 F-06; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Safety MCU (STM32H7 "panda") and its interfaces: B‡ (see [WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md)) |
 | Author | Assurance team (initial draft) |
@@ -145,7 +145,8 @@ Reference-configuration RX set used by the envelope (`opendbc_repo/opendbc/safet
 | `0x260` | STEER_TORQUE_SENSOR | 50 Hz | yes | no | EPS torque (tracking), driver torque (LTA only today) |
 | `0x1D2` | PCM_CRUISE | 33 Hz | yes | no | engagement edge, gas |
 | `0x226` | BRAKE_MODULE | 40 Hz | no | no | brake |
-| `0x262`, `0x1D3`, `0xB4` | EPS_STATUS, PCM_CRUISE_2, SPEED | TBD | yes (DBC) | no | proposed (TSR-110, 405) |
+| `0x262`, `0x1D3` | EPS_STATUS, PCM_CRUISE_2 | 25 / 33 Hz nominal (former openpilot parser minimums; to be measured, OI-7) | yes (DBC) | no | RX check (checksum, timeout) in the reference build, opendbc `98404a4`; contents not used yet (TSR-110, 405) |
+| `0xB4` | SPEED | TBD | yes (DBC) | no | proposed (TSR-404, 405); not added until its rate is known |
 
 TX set: see [WP-S-02 §3–§4, TSR-705](WP-S-02-technical-safety-requirements.md).
 
@@ -171,7 +172,7 @@ Behaviour:
 |---|---|---|---|
 | `STM_RST_N`, `STM_BOOT0` driven by SoC GPIOs | `reset_internal_panda` pulses reset with BOOT0 low; `recover_internal_panda` pulses reset with BOOT0 high → ST ROM bootloader (`openpilot/common/hardware/comma/hardware.py:400-419`); used by `pandad.py:34-39` to flash a development bootstub | ROM bootloader entry must not give access to flash (RDP), application/bootstub write-protected (WRP); release `pandad` without development recovery path; MCU outputs safe (relay released, transceivers off) during reset and in ROM bootloader | 502, 511 |
 | Bootstub | verifies SHA-1 + RSA-1024 signature of the app against the release key; debug key accepted with `ALLOW_DEBUG` (`bootstub.c:40-80`); soft flasher on failure; flasher erases sectors 1–7 only (`stm32h7/llflash.h:12-20`, `flasher.h:20-45`) | modern signature; no debug key; RDP/WRP | 511, 514 |
-| IWDG1 | defined as `IND_WDG` (`stm32h7/stm32h7_config.h:43`), not initialised | started before app, window mode, serviced after safety task completion, timeout ≤ 0.2 s | 501 |
+| IWDG1 | defined as `IND_WDG` (`stm32h7/stm32h7_config.h:43`), not initialised | started before app, window mode, serviced after safety task completion, timeout ≤ 0.1 s (SG-07, WP-S-04 §3.6) | 501 |
 | Software watchdog | timestamp check from 8 Hz tick, threshold 375 ms, report-only (`main.c:301`, `drivers/simple_watchdog.h`) | keep as diagnostic only | 501 |
 | Fault flags | `fault_occurred()` sets bits, `PERMANENT_FAULTS 0U`, report-only (`sys/faults.h`, `sys/sys.h:28-50`); reported in health (`main_comms.h:38-39`) | fault → SS-S per classification | 502 |
 | NMI / HardFault | set a cookie, reset; reported as reset flags (`main.c:319-325`) | keep; ensure all other vectors reset (HWSR-502b) | 502 |
@@ -210,6 +211,58 @@ From `stm32h7/stm32h7x5_flash.ld:60-80`:
 
 Device-level states (offroad/onroad, engaged, soft-disabling, lockout) are in [WP-C-01 §4](../02-concept/WP-C-01-item-definition.md) and [WP-S-03 §4](WP-S-03-technical-safety-concept-architecture.md).
 
+## 11. Signal catalogue
+
+Added in v0.2 ([RR-2026-005](reviews/RR-2026-005.md) F-06). §2 lists the interfaces; this section lists the safety-relevant signals that cross them, one row each. CAN signal layouts are from the opendbc DBC files (`opendbc_repo/opendbc/dbc/generator/toyota/`): `_toyota_2017.dbc` for `0x2E4`, `0x1D2`, `0x1D3`, `0x260`, `0xAA`, `0xB4`, `0x412`; `_toyota_adas_standard.dbc` for `0x343`; `toyota_nodsu_pt.dbc` for `0x226` and `0x262`. Envelope limits are from `opendbc_repo/opendbc/safety/modes/toyota.h`. "Required" values come from the TSRs of [WP-S-02](WP-S-02-technical-safety-requirements.md) and are not met at the baseline where the TSR says so.
+
+Columns: **Dir** = direction across the item boundary or the HW/SW boundary. **Owner** = the hardware part and the software module responsible for the signal. **Integrity** = protection that exists in the signal itself. **Validity / liveness** = how the receiver knows the value is current. **Rate / max age** = nominal rate, then the maximum age the receiver accepts (required). **Tests** = cases in [WP-S-08](WP-S-08-system-integration-test.md) (VS-SI), [WP-H-06](../04-hardware/WP-H-06-hardware-integration-verification.md) (VS-HW) and [WP-V-05](../06-validation/WP-V-05-fault-injection.md) (VS-FI).
+
+### 11.1 Vehicle CAN signals (HSI-04)
+
+| ID | Signal | Dir | Owner (HW / SW) | Type / bits | Range, scale, units | Integrity | Validity / liveness | Rate / max age | Failure reaction | TSR | ASIL | Tests |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| S-01 | STEER_REQUEST, `0x2E4` STEERING_LKA bit 0 | MCU → EPS (TX, bus 0) | SW: E-03a envelope (`modes/toyota.h`) checks; host `card` packs | bool, 1 bit | 0 / 1 | 8-bit CHECKSUM (byte 4) | 6-bit COUNTER (checked by the EPS, not by the item) | 100 Hz (host, every control frame, `carcontroller.py:130-134`) | Frame rejected by the envelope → SS-L, authority revoked (TSR-108, 109) | 105, 108, 109 | B‡ | VS-SI-15, VS-FI-14 |
+| S-02 | STEER_TORQUE_CMD, `0x2E4` | MCU → EPS | SW: E-03a envelope (`modes/toyota.h`) checks; host `card` packs | int16, signed | raw, \|cmd\| ≤ 1500; Δ ≤ 15 up / 25 down per frame; ≤ 350 above measured EPS torque (`toyota.h:173-177`) | as S-01 | as S-01 | as S-01 | as S-01 | 101…104, 108, 109 | B‡ | VS-SI-15, VS-FI-14 |
+| S-03 | ACCEL_CMD, `0x343` ACC_CONTROL | MCU → PCM | SW: E-03a envelope (`modes/toyota.h`) checks; host `card` packs | int16, signed | 0.001 m/s² per bit; −3.5 … +2.0 m/s² (`toyota.h:208-209`); inactive value 0 | 8-bit CHECKSUM (byte 7) | none | 33 Hz (host, every third frame) | Frame rejected → inactive value; authority revoked on violation (TSR-108 analogue for longitudinal, TSR-203) | 201…207 | B‡ | VS-SI-16, VS-FI-14 |
+| S-04 | CANCEL_REQ, `0x343` bit 24 | MCU → PCM | SW: host `controlsd`/`card` (E-01) | bool | 0 / 1 | as S-03 | none | with S-03 | Cancel without effect → siren (TSR-516(c)) | 303 | QM (B-sup) | VS-SI-02, VS-SI-24 |
+| S-05 | LKAS_HUD `0x412` (cluster lane and alert display) | MCU → cluster | SW: host `card` (E-01) | 8-byte frame | DBC enumerations | none | none | 1 Hz, or at once on an alert change (`carcontroller.py:289`) | — (QM display); must not create a false engagement indication (DFI-15) | 309 (AOU-12) | QM | VS-SI-24 |
+| S-06 | WHEEL_SPEED_FR/FL/RR/RL, `0xAA` | vehicle → MCU (RX, bus 0) | SW: E-03a envelope RX hook (`modes/toyota.h`) | 4 × 15-bit unsigned | 0.01 km/h, offset −67.67 | none | none (no checksum, no counter, `toyota.h:40`) | 83 Hz / required ≤ 5 periods (≤ 0.2 s, TSR-401) | RX fault → revoke all authority (TSR-406); frozen-payload and cross-checks (TSR-404, 405(a)) | 401, 404, 405, 406 | B‡ | VS-SI-12, VS-SI-13, VS-FI-02, VS-FI-04, VS-FI-05 |
+| S-07 | STEER_TORQUE_DRIVER, `0x260` | vehicle → MCU | SW: E-03a envelope RX hook (`modes/toyota.h`) | int16, signed | raw | 8-bit additive CHECKSUM | none (no counter, `toyota.h:41`) | 50 Hz / ≤ 0.2 s | Driver override → torque reduction or revoke (TSR-304); RX fault → TSR-406 | 304, 401…406 | B‡ | VS-SI-03, VS-SI-14, VS-FI-02 |
+| S-08 | STEER_TORQUE_EPS, `0x260` | vehicle → MCU | SW: E-03a envelope RX hook; host `selfdrived` (TSR-626) | int16, signed | raw (EPS scale param 73) | as S-07 | as S-07 | 50 Hz / ≤ 0.2 s | Measured-torque tracking (TSR-104); EPS not following command → SoC disable (TSR-626(b)) | 104, 405(d), 626 | B‡ | VS-SI-15, VS-FI-05 |
+| S-09 | CRUISE_ACTIVE, `0x1D2` PCM_CRUISE bit 5 | vehicle → MCU | SW: E-03a envelope RX hook (`modes/toyota.h`) | bool | 0 / 1 | 8-bit CHECKSUM | none (no counter) | 33 Hz / ≤ 0.2 s | Rising edge grants, low revokes (TSR-301); RX fault → TSR-406 | 301, 401…406 | B‡ | VS-SI-01, VS-SI-02, VS-SI-13 |
+| S-10 | GAS_RELEASED, `0x1D2` bit 4 | vehicle → MCU | SW: E-03a envelope RX hook (`modes/toyota.h`) | bool | 0 / 1 | as S-09 | as S-09 | as S-09 | Gas pressed → only the inactive acceleration (TSR-305) | 305 | B‡ | VS-SI-04 |
+| S-11 | BRAKE_PRESSED, `0x226` BRAKE_MODULE bit 37 | vehicle → MCU | SW: E-03a envelope RX hook (`modes/toyota.h`) | bool | 0 / 1 | none (`toyota.h:46`, checksum ignored) | none | 40 Hz / ≤ 0.2 s | Brake → revoke (TSR-302); disagreement with S-13 → assume pressed (TSR-405(b)) | 302, 405 | B‡ | VS-SI-02, VS-SI-13, VS-FI-05 |
+| S-12 | LKA_STATE, `0x262` EPS_STATUS | vehicle → MCU (reference build, opendbc `242d63d`) / SoC | SW: E-03a (presence, checksum, timeout; fault codes refuse LKA actuation); host `card` (fault codes, alert) | 7-bit unsigned | EPS state codes (`carstate.py:19-22`) | 8-bit CHECKSUM | none | 25 Hz nominal (to be measured) / ≤ 0.3 s | EPS fault → envelope refuses LKA torque and steer request and reports it (`pandaState.epsFault`) (TSR-110, implemented in the reference build); siren (TSR-516(b)) not implemented | 110, 607 | B (SG-02) | VS-SI-17 |
+| S-13 | BRAKE_PRESSED, MAIN_ON, ACC_FAULTED, `0x1D3` PCM_CRUISE_2 | vehicle → MCU (reference build: RX check only, opendbc `98404a4`) / SoC | SW: E-03a (presence, checksum, timeout; MAIN_ON vs CRUISE_ACTIVE, opendbc `875e325`; BRAKE_PRESSED cross-check open); host `card` | bool | 0 / 1 | 8-bit CHECKSUM | none | 33 Hz nominal (to be measured) / ≤ 0.2 s | MAIN_ON = 0 with CRUISE_ACTIVE: no engagement, revoke after 150 ms (TSR-405(c), implemented); BRAKE_PRESSED vs S-11 (TSR-405(b), open: bit semantics unknown); ACC fault → SoC disable (TSR-618) | 405, 618 | B‡ / QM | VS-SI-13, VS-FI-05 |
+| S-14 | SPEED, ENCODER, `0xB4` | vehicle → MCU (proposed) | SW: E-03a envelope RX hook (`modes/toyota.h`) | 16-bit unsigned; 8-bit | 0.01 km/h; counts | 8-bit CHECKSUM | ENCODER changes while moving | TBD / ≤ 0.2 s | Cross-check with S-06 (TSR-405(a)); frozen ENCODER (TSR-404) | 404, 405 | B‡ | VS-FI-02, VS-FI-05 |
+| S-15 | Camera-side frames incl. PRE_COLLISION `0x283`, PRE_COLLISION_2 `0x344`, PCS_HUD `0x411` | camera → MCU → vehicle (forwarded bus 2 → bus 0) | SW: E-03b forwarding (`drivers/fdcan.h`); HW: FDCAN, transceivers | CAN frames | unchanged | CAN CRC; OEM checksums where defined | camera-side reception supervised (TSR-711) | OEM rate (to be measured, WP-S-04 OI-4) / forwarding latency ≤ 1 ms; loss detected ≤ 0.1 s | Forwarding stopped → relay released (TSR-711, TSR-706); SoC frames with these IDs refused (TSR-705) | 704, 705, 707, 711 | B | VS-SI-20, VS-SI-21, VS-FI-24 |
+
+### 11.2 SoC ↔ safety MCU signals (HSI-01…03)
+
+| ID | Signal | Dir | Owner (HW / SW) | Type / bits | Range, scale, units | Integrity | Validity / liveness | Rate / max age | Failure reaction | TSR | ASIL | Tests |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| S-16 | SPI transfer (header, payload) | SoC ↔ MCU | SW: E-03b `drivers/spi.h`; host `pandad`; HW: SPI4, DMA2 | 7-byte header + payload ≤ 4096 B | lengths bounded by the buffer | 8-bit XOR, seed `0xAB` (§4.1); required CRC (TSR-410) | none; required sequence counter (TSR-411) | ≈ 100 Hz (pandad loop) / required ≤ 2 control periods for commands (TSR-411, TSR-614) | NACK; required: stale or corrupt command → SS-L / SS-G (TSR-410…413) | 410…413 | B‡ | VS-SI-09, VS-SI-10, VS-FI-06, VS-FI-07, VS-FI-08 |
+| S-17 | CAN TX packet from SoC (endpoint 3) | SoC → MCU | SW: E-03b `can_comms.h`; host `pandad` | 6-byte header + ≤ 8 B payload | DLC, bus, address | 8-bit XOR per packet, checked at FDCAN load (§4.3) | none | per control frame | Rejected by the TX hook → returned with `rejected = 1`; violation → revoke (TSR-108) | 108, 410, 517, 518 | B‡ | VS-SI-11, VS-SI-15, VS-FI-14 |
+| S-18 | Heartbeat `0xf3`, param1 = engaged | SoC → MCU | SW: E-03b `main_comms.h`; host `pandad` | control request, uint16 param | 0 / 1 | as S-16 | heartbeat counter | 10 Hz, sent with each `pandaStates` cycle (`openpilot/selfdrive/pandad/pandad.cc:278`), checked in the 1 Hz MCU tick / required ≤ 0.3 s loss detection (TSR-407) | Loss → SS-S and siren (TSR-407, TSR-516(a)); "not engaged" → revoke (TSR-307(a)) | 307, 407, 409 | B‡ | VS-SI-05, VS-SI-06, VS-FI-10 |
+| S-19 | Safety mode and param `0xdc` | SoC → MCU | SW: E-03b `main_comms.h`; host `pandad` | control request, 2 × uint16 | TOYOTA mode; param 73 (EPS scale) | as S-16 | — (configuration) | at start-up | Required: any other value in a car mode refused (TSR-512) | 512, 619 | B‡ | VS-SI-07, VS-FI-11 |
+| S-20 | Configuration and debug requests (`0xc5`, `0xd1`, `0xd8`, `0xdb`, `0xde`, `0xe5`…`0xe8`, `0xf1`, `0xf9`, `0xfc`) | SoC → MCU | SW: E-03b `main_comms.h`; host `pandad` | control requests | §4.2 | as S-16 | — | on request | Required: refused in a car safety mode (TSR-513) | 511, 513 | B‡ | VS-SI-08, VS-HW-05, VS-FI-11 |
+| S-21 | Health packet `0xd2` (`health_t`: controls allowed, faults, safety mode and param, TX blocked and RX invalid counts, harness status, voltage, temperature) | MCU → SoC | SW: E-03b `main_comms.h`; host `pandad`, `selfdrived` | packed struct (`panda/board/health.h`) | per field | as S-16 | `pandaStates` alive check | 10 Hz `pandaStates` / required ≤ 0.2 s (TSR-626(a)) | SoC immediate disable on fault flags or mismatch (TSR-615, 621, 626) | 615, 621, 626 | QM (B-sup) | VS-SI-06, VS-SI-17, VS-SI-23 |
+
+### 11.3 Safety MCU hardware signals (HSI-05…14)
+
+| ID | Signal | Dir | Owner (HW / SW) | Type / bits | Range, scale, units | Integrity | Validity / liveness | Rate / max age | Failure reaction | TSR | ASIL | Tests |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| S-22 | Relay drive (tres PA8 / cuatro PA9; PA3) | MCU → harness relay | HW: relay driver and coil (E-05); SW: E-03b `drivers/harness.h` | GPIO, open-drain | low = energised (intercept); high or reset = released | none | none at the baseline; required contact readback (TSR-506) | static / readback mismatch ≤ 0.3 s | Released on SS-S, MCU fault, reset, power loss (TSR-706); forwarding loss (TSR-711) | 506, 706, 710, 711 | B | VS-HW-01…04, VS-SI-18, VS-SI-19, VS-FI-21 |
+| S-23 | SBU1 / SBU2 sense (PC4 / ADC1 ch4, PA1 / ADC1 ch17) | harness → MCU | HW: SBU divider, ADC1; SW: E-03b `drivers/harness.h` | ADC, mV (reported in `health_t`) | orientation: below avdd/2 | none | evaluated only while the relay is not driven | 8 Hz | Orientation change → CAN re-init and mode re-apply (§6); not connected → no relay drive (TSR-701) | 701 | B | VS-HW-13, VS-FI-28 |
+| S-24 | Ignition line | harness → MCU | HW: ignition input; SW: E-03b `drivers/harness.h` | digital | on / off | none | — | 1 Hz (`panda/board/main.c:156`) | Heartbeat loss → SS-S within ≤ 2 s regardless of ignition (TSR-510) | 510 | B | VS-HW-14 |
+| S-25 | `STM_RST_N`, `STM_BOOT0` | SoC → MCU | HW: SoC GPIO to NRST/BOOT0; SW: host `hardware.py` | GPIO | reset / ROM bootloader | none | — | on event | MCU reset → relay released (TSR-502, HWSR-502c); boot protection (TSR-511) | 502, 511 | B‡ (+CS) | VS-HW-19, VS-FI-16 |
+| S-26 | Independent watchdog IWDG1 | MCU internal | HW: IWDG1 (E-04a); SW: E-03b bootstub and tick | timer | timeout ≤ 0.1 s (§7) | — | serviced after the safety task completes | — | Reset → SS-S (TSR-501, 502) | 501, 502 | B‡ | VS-HW-06, VS-HW-07, VS-FI-17 |
+| S-27 | Siren output (DAC/DMA and codec over I2C5, or SAI4 amplifier) | MCU → speaker | HW: codec or amplifier, speaker; SW: E-03b `drivers/fake_siren.h` | audio | 4 Hz pattern | none | required start-up test (TSR-515) | ≤ 0.5 s after trigger | Triggers per TSR-516(a)…(c) | 515, 516 | B | VS-HW-21 |
+| S-28 | Supply voltage (ADC1 input divider) | supply → MCU | HW: input divider, ADC1, BOR/PVD; SW: E-03b | ADC, mV (`health_t.voltage_pkt`) | operating range per HWSR-505 | none | — | on each health request (10 Hz) | Required: out of range → SS-S (TSR-505); BOR / PVD | 505 | B‡ | VS-HW-09, VS-HW-10, VS-FI-15 |
+| S-29 | Die temperature (DTS) | MCU internal | HW: DTS (E-04a); SW: E-03b | °C (`health_t.temperature_pkt`) | specified MCU range | none | — | on each health request (10 Hz) | Required: out of range → SS-S (TSR-509) | 509 | B | VS-HW-15, VS-FI-26 |
+
+S-12 and S-13 are envelope RX checks in the reference build since opendbc `98404a4` (presence, checksum, timeout); the fault-code revocation (TSR-110) and cross-checks (TSR-405) that use their content are not implemented. S-14 is a proposed addition. All three rates are to be measured on the reference vehicle (WP-S-04 measurement plan, OI-7).
+
 ## 10. Open items
 
 | ID | Item | Owner | Needed by |
@@ -220,3 +273,4 @@ Device-level states (offroad/onroad, engaged, soft-disabling, lockout) are in [W
 | OI-4 | Define the MPU region map so SPI/USB DMA buffers cannot overlap safety state | SW lead | G3 |
 | OI-5 | Align host and MCU SPI buffer sizes or document why they differ | SW lead | G3 |
 | OI-6 | Fix the reference board variant (tres/cuatro) and drop the other column | Maintainer | G1 |
+| OI-7 | Measure the rates of `0x262`, `0x1D3`, `0xB4` and the camera-side PCS messages on the reference vehicle and fill §11 (S-12…S-15) | Test lead | G2 |

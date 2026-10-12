@@ -47,7 +47,19 @@ REQUIRED = {
   "safety-goal": ["id", "kind", "text", "type", "asil", "asil_if_aou_fails", "aou_dependency",
                   "parents", "safe_state", "ftti_ms", "ftti_text", "status", "source"],
   "aou": ["id", "kind", "text", "credited_in", "verification_approach", "aou_status", "status", "source"],
+  "fsr": ["id", "kind", "text", "asil", "parents", "allocated_to", "verification", "baseline_impl", "status", "source"],
+  "tsr": ["id", "kind", "text", "asil", "parents", "parent_text", "other_parents", "allocated_to", "verification",
+          "baseline_impl", "status", "source"],
+  "swsr": ["id", "kind", "text", "asil", "parents", "parent_text", "other_parents", "allocated_to", "verification",
+           "acceptance", "baseline_impl", "status", "source"],
+  "hwsr": ["id", "kind", "text", "asil", "parents", "parent_text", "other_parents", "allocated_to", "hw_kind",
+           "verification", "baseline_impl", "status", "source"],
 }
+GAP_MD = ASSURANCE_DIR / "00-assessment" / "gap-assessment.md"
+PARENT_KINDS = {"fsr": {"safety-goal"}, "tsr": {"fsr", "tsr", "safety-goal", "aou"}, "swsr": {"tsr"},
+                "hwsr": {"tsr", "fsr", "aou"}}
+SW_ALLOC = ("P-SW", "SoC")  # WP-S-02 allocation cells that put a TSR (also) on software
+HW_ALLOC = ("P-HW", "HAR")  # ... and (also) on hardware
 
 
 # ---------------------------------------------------------------- YAML loading
@@ -162,11 +174,18 @@ def check_items(items: list[dict], rep: Report) -> dict[str, dict]:
 
 
 def check_links(by_id: dict[str, dict], rep: Report) -> None:
+  gaps = set(re.findall(r"\b(GAP-[0-9]{2})\b", GAP_MD.read_text(encoding="utf-8")))
   for iid, it in by_id.items():
     for key in ("parents", "aou_dependency"):
       for ref in it.get(key) or []:
+        if key == "parents" and ref.startswith("GAP-"):
+          if ref not in gaps:
+            rep.err("K3", f"{iid}: parent {ref} is not in the gap assessment")
+          continue
         if ref not in by_id:
           rep.err("K3", f"{iid}: {key} reference {ref} does not resolve")
+        elif key == "parents" and it["kind"] in PARENT_KINDS and by_id[ref]["kind"] not in PARENT_KINDS[it["kind"]]:
+          rep.err("K3", f"{iid}: parent {ref} is a {by_id[ref]['kind']}, not one of {sorted(PARENT_KINDS[it['kind']])}")
         elif key == "aou_dependency" and by_id[ref]["kind"] != "aou":
           rep.err("K3", f"{iid}: aou_dependency {ref} is not an AOU")
     for f in it.get("functions") or []:
@@ -200,6 +219,9 @@ def check_links(by_id: dict[str, dict], rep: Report) -> None:
       if ASIL_ORDER.get(alt, -1) < ASIL_ORDER.get(it.get("asil"), 99):
         rep.err("R3", f"{iid}: asil_if_aou_fails {alt} lower than asil {it.get('asil')}")
 
+  check_requirement_coverage(by_id, rep)
+  check_sw_hw_coverage(by_id, rep)
+
   for iid, sg in sgs.items():
     parents = [p for p in sg.get("parents") or [] if p in hes]
     if not parents:
@@ -208,6 +230,70 @@ def check_links(by_id: dict[str, dict], rep: Report) -> None:
     top = max((hes[p]["asil"] for p in parents), key=lambda a: ASIL_ORDER[a])
     if sg["asil"] != top:
       rep.err("R2", f"{iid}: asil {sg['asil']} but highest source HE ASIL is {top}")
+
+
+def check_requirement_coverage(by_id: dict[str, dict], rep: Report) -> None:
+  """K3/K4 for requirements: every SG has an FSR, every FSR has a TSR (directly, or through the FSRs it shares)."""
+  fsrs = {i: x for i, x in by_id.items() if x["kind"] == "fsr"}
+  tsrs = {i: x for i, x in by_id.items() if x["kind"] == "tsr"}
+  if not fsrs:
+    return
+  for iid, sg in by_id.items():
+    if sg["kind"] == "safety-goal" and not any(iid in (f.get("parents") or []) for f in fsrs.values()):
+      rep.err("K4", f"{iid}: no FSR")
+  for iid, f in fsrs.items():
+    if not f.get("parents"):
+      rep.err("K3", f"{iid}: no parent safety goal")
+  for iid, t in tsrs.items():
+    if not t.get("parents") and not t.get("other_parents"):
+      rep.err("K3", f"{iid}: no parent")
+  covered = {p for t in tsrs.values() for p in t.get("parents") or []}
+  for iid, f in fsrs.items():
+    if iid in covered:
+      continue
+    shared = [r for r in expand_fsr_refs(f.get("text", "")) if r != iid]
+    if shared and all(r in covered for r in shared):
+      continue
+    rep.err("K4", f"{iid}: no TSR, directly or through the FSRs it references")
+
+
+def check_sw_hw_coverage(by_id: dict[str, dict], rep: Report) -> None:
+  """K4 for the last level: every TSR allocated to software has an SWSR and every TSR allocated to hardware has an
+  HWSR, unless the work product lists it as not refined into that discipline (WP-W-02 §10, WP-H-01 §4.0)."""
+  import sync_requirements as sync
+  tsrs = {i: x for i, x in by_id.items() if x["kind"] == "tsr"}
+  for kind, alloc_tags, md, heading in (
+      ("swsr", SW_ALLOC, sync.SWSR_MD, "## 10. TSRs not refined into software"),
+      ("hwsr", HW_ALLOC, sync.HWSR_MD, "### 4.0 TSRs not refined into hardware")):
+    children = [x for x in by_id.values() if x["kind"] == kind]
+    if not children:
+      continue
+    covered = {p for x in children for p in x.get("parents") or []}
+    exempt = set(sync.not_refined(md, heading))
+    for iid, t in sorted(tsrs.items()):
+      alloc = t.get("allocated_to", "")
+      if any(tag in alloc for tag in alloc_tags) and iid not in covered and iid not in exempt:
+        rep.err("K4", f"{iid}: allocated to {alloc!r} but has no {kind.upper()} and is not listed as not refined")
+
+
+def expand_fsr_refs(text: str) -> list[str]:
+  out = []
+  for m in re.finditer(r"FSR-([0-9]{2})\.([0-9]{2})(?:\s*…\s*([0-9]{2})\.([0-9]{2}))?", text):
+    major, lo, major2, hi = m.groups()
+    if hi is None:
+      out.append(f"FSR-{major}.{lo}")
+    else:
+      out += [f"FSR-{major}.{n:02d}" for n in range(int(lo), int(hi) + 1)]
+  return out
+
+
+def check_requirements_in_sync(rep: Report) -> None:
+  """X3: fsr/tsr/swsr/hwsr.yaml equal a fresh extraction from WP-C-04, WP-S-02, WP-S-06, WP-W-02 and WP-H-01."""
+  import sync_requirements as sync
+  for name, content in sync.expected_outputs().items():
+    path = ITEMS_DIR / name
+    if not path.exists() or path.read_text(encoding="utf-8") != content:
+      rep.err("X3", f"{name} differs from the work products; run tools/sync_requirements.py")
 
 
 def check_against_hara(by_id: dict[str, dict], rep: Report) -> None:
@@ -289,6 +375,7 @@ def main(argv: list[str]) -> int:
   if "--no-source-compare" not in argv:
     check_against_hara(by_id, rep)
     check_against_itemdef(by_id, rep)
+    check_requirements_in_sync(rep)
 
   kinds: dict[str, int] = {}
   for it in by_id.values():
