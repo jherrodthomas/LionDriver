@@ -65,8 +65,8 @@ None are changed yet, because the change is not integrated. When opendbc#1 and p
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Run safety replay on Toyota routes (reference vehicle first) and record any false timeouts | Integration |
-| OI-2 | Confirm the declared RX rates against measured rates (WP-S-05 OI-7) | Integration |
+| OI-1 | Run safety replay on Toyota routes (reference vehicle first) and record any false timeouts. Tool for the gap part: [`tools/can_gaps/can_gap_scan.py`](../../../tools/can_gaps/README.md) reports the longest inter-frame gap of each RX message in rlogs or candump captures against the timeout; not yet run (no drive data in the development environment) | Integration |
+| OI-2 | Confirm the declared RX rates against measured rates (WP-S-05 OI-7). The gap scan also reports each message's observed rate | Integration |
 | OI-3 | Add `0x262`, `0x1D3` and `0xB4` to the RX check set (TSR-110, TSR-401) | Later change |
 | OI-4 | HIL fault injection: remove each RX message and measure the time to revocation | Release |
 
