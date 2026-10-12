@@ -47,6 +47,8 @@ There is one HIL bench for hardware, software and system integration testing: th
 
 Existing upstream assets usable after porting: `panda/tests/hitl/test_*.py` (health, SPI bad header/checksum, CAN loopback, harness) — they need comma jigs today.
 
+The staged build plan, parts list and the first bench test (hardware watchdog) are in [hil-bench/](hil-bench/README.md).
+
 ## 4. Pass/fail rules
 
 - A case passes only with the release image. A case that needs a debug hook is marked and repeated with the release image wherever the hook is not needed.
@@ -124,8 +126,8 @@ SWSRs whose only verification is review or analysis (e.g. SWSR-102a, 309, 605a) 
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Build the HIL bench (D-04), including fault-injecting SPI host and plant model. One bench with WP-H-06 §2; tracked as WP-H-06 OI-1 and WP-M-03 task 5.1 | Maintainer | G3 |
+| OI-1 | Build the HIL bench (D-04), including fault-injecting SPI host and plant model. One bench with WP-H-06 §2; tracked as WP-H-06 OI-1 and WP-M-03 task 5.1. Plan: [hil-bench/](hil-bench/README.md) (draft) | Maintainer | G3 |
 | OI-2 | Decide release-image-compatible fault-injection methods (SWD vs debug build) and document the representativeness argument | SW lead | G4 |
-| OI-3 | Port `panda/tests/hitl` to the LionDriver bench without comma jigs | Maintainer | G4 |
+| OI-3 | Port `panda/tests/hitl` to the LionDriver bench without comma jigs. Jungle-based tests run at bench stage B1 ([hil-bench/](hil-bench/README.md) §5.4) | Maintainer | G4 |
 | OI-4 | Fork-owned Corolla log set for VS-SWQ-24 and plant parameter identification | Maintainer | G4 |
 | OI-5 | Agree split of cases with WP-S-08 (I-1) and WP-V-05 to avoid duplication | Safety engineer | G4 |
