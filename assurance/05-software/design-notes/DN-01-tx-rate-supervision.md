@@ -3,8 +3,8 @@
 | Field | Value |
 |---|---|
 | Note | DN-01 |
-| Version | 0.1 (proposal, 2026-10-12) |
-| Status | **Proposal for decision.** No code yet; implementation follows the decisions in §8 |
+| Version | 0.2 (decisions recorded and implemented, 2026-10-12). 0.1: proposal |
+| Status | **Decided and implemented** in the reference build (opendbc `7993399`, panda `8aa8671`; §10). Not yet verified on hardware; budgets not yet confirmed on logs |
 | Requirements | [TSR-518](../../03-system/WP-S-02-technical-safety-requirements.md), [SWSR-518](../WP-W-02-software-safety-requirements.md) |
 | Analyses | [WP-A-02](../../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) FFI-CM-04 (SoC floods CAN TX); [WP-W-04](../WP-W-04-software-safety-analysis.md) SDF-05 (shared TX queue delays forwarded PCS frames), OI-2 |
 | Units | [WP-W-05](../WP-W-05-software-unit-design.md) UN-03 `safety_tx_hook`, UN-15 `toyota_tx_hook` |
@@ -167,3 +167,16 @@ Mutation targets: budget formula, window roll, the persistent-excess threshold, 
 
 - Reference drive logs. For every TX ID: the peak frame count per 250 ms, and the largest catch-up burst seen after a `card`/`pandad` stall. The tool [`tools/can_gaps/can_gap_scan.py`](../../../tools/can_gaps/README.md) reports gaps. A small extension would also report peak counts per window.
 - HIL (D-04): flood each ID from the SoC side and measure the time to revocation.
+
+## 10. Decisions and implementation
+
+Decision (2026-10-12, project maintainer): **all recommendations of §8 accepted** (D-1 option C; D-2 budgets as proposed; D-3 threshold 3; D-4 health flag; D-5 reference build only; D-6 reaction time from the first rejected frame, TSR-518 amended). A maintainer decision, not an independent review (WP-M-06).
+
+Implementation ([IA TX rate](../../07-supporting/impact/change-2026-10-12-tx-rate-supervision.md)):
+
+| Part | Where | Deviation from the proposal |
+|---|---|---|
+| Rate check | opendbc `opendbc/safety/safety.h` `tx_rate_check`, compiled only with `LIONDRIVER_REFERENCE` | When a whole window has passed without frames, the previous half-window is cleared too, so host catch-up after a short stall is not counted against stale frames |
+| Budgets | opendbc `modes/toyota.h`, non-SecOC configurations | `0x750` included (5 Hz, burst 2) |
+| Reporting | panda health flag bit 11; LionDriver `pandaState.txRateExceeded`, `pandad` log | Flag latched until the next safety mode change |
+| Tests | opendbc `test_toyota.py` `test_tx_rate_*`; panda `tests/hitl/test_14_tx_rate.py` | The §5 fallback was used: content tests clear the rate windows through a libsafety-only helper (`reset_tx_rate_state`), because the torque real-time tests set the timer themselves |
