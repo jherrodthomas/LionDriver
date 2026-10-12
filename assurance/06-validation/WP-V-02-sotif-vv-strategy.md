@@ -174,6 +174,11 @@ SH-04 (struck from behind after phantom braking, OS-08, HE-04.1) is simulated:
 - **Not covered:** a follower that never brakes before impact is outside this bound. Whether it is credible within OS-08 is for the assessor to decide (OI-3).
 - **Rear impacts:** the Joksch curve's coverage of rear impacts is among the inputs to check.
 
+SH-01 and SH-02 (lane departure) are split by collision, and each part counts as its own situation in step 2:
+- **Head-on in ODD-A (OS-03, HE-01.1, HE-02.2): curve.** The car drifts into the oncoming lane with no reaction, so the closing speed is the sum of both speeds at the ODD-A bound, 90 + 90 = 180 km/h. That is worse than the average head-on crash (item 3). The Corolla's Δv is about 100 km/h car-to-car, giving a driver risk of 0.65. With the occupant union bound, the fatal-crash bound is **1**, and it is also 1 against a truck. The head-on part of SH-01/02 therefore earns no severity credit.
+- **Sideswipe and barrier impact (OS-01, OS-02): FARS/CRSS ratio.** A drift meets the adjacent vehicle or the barrier at a shallow angle, which is no worse than the average crash of those types, so item 3's condition holds. The values wait on OI-8.
+- **ODD-H has no head-on case.** It is divided highway, so there only the ratio applies.
+
 SH-10 (lane change into an occupied lane, HE-02.5) is deliberately **not** mapped to a curve:
 - **The curve would understate the risk.** The primary contact is a same-direction sideswipe: about 1 m/s sideways plus the small speed difference to the vehicle in the target lane. Its Δv is a few km/h, so a Δv curve would give almost no fatality risk. The S3 rating of HE-02.5 comes from what follows the contact (loss of control, or a spin into traffic or a barrier), which a Δv curve does not model. Using it would overstate the credit.
 - **The national ratio fits.** SH-10 uses the FARS/CRSS ratio for sideswipe-same-direction crashes (item 3). The condition of item 3 holds, because a lane change into an occupied lane is the typical cause of that crash type, and its statistics include the secondary outcomes. The value waits on the FARS/CRSS extraction (OI-8).

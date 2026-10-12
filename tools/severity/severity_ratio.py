@@ -74,8 +74,9 @@ ODD = {
 
 # Collisions per SH (WP-V-02 §3.5 item 2).
 SH_COLLISIONS = {
-  "SH-01": ["sideswipe_same", "head_on", "barrier"],
-  "SH-02": ["sideswipe_same", "head_on", "barrier"],
+  # SH-01/02 head-on (OS-03, no reaction, full closing speed) is on the curve of risk_curve.py
+  "SH-01": ["sideswipe_same", "barrier"],
+  "SH-02": ["sideswipe_same", "barrier"],
   "SH-03": ["rear_end"],
   "SH-04": ["rear_end"],
   "SH-06": ["rear_end"],

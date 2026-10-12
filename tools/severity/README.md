@@ -22,7 +22,7 @@ tools/severity/severity_ratio.py --fars FARS2022NationalCSV/ --crss CRSS2022CSV/
 
 It prints two Markdown tables, per cell and per SH, and `--json` writes both together with the codes and design variables used.
 
-## Injury-risk curves for SH-06, SH-03, SH-04 and SH-11
+## Injury-risk curves for SH-06, SH-03, SH-04, SH-11 and the SH-01/02 head-on
 
 `risk_curve.py` covers the case the ratio cannot: SH-06, a rear-end into slow or stationary traffic with no braking before impact (WP-V-02 §3.5 item 3).
 - **Δv:** from the closing speed by conservation of momentum, with a small restitution.
@@ -45,6 +45,8 @@ SH-04 (struck from behind after phantom braking, OS-08) is simulated:
 `--sensitivity` prints the impact speed over reaction times of 1.0–2.0 s and follower braking of 3–6 m/s². A follower that never brakes before impact is outside this bound.
 
 SH-11 (no reaction to a pedestrian or cyclist) uses the pedestrian fatality curve of Tefft (2013): 10/25/50/75/90 % at 23/32/42/50/58 mph, interpolated linearly, and 1 above 58 mph. There is no braking before impact. The result is 0.38 at the OS-04 bound (60 km/h) and 0.05 after a launch from a queue (OS-06, 18 km/h). Its pedestrian and pedalcyclist ratio cells are still printed by `severity_ratio.py`, but no per-SH value is taken from them. The anchor points, their use for cyclists and the linear risk below 23 mph need checking.
+
+SH-01 and SH-02 are split. The ODD-A head-on (drift into the oncoming lane, no reaction, 90 + 90 km/h closing) is on the curve and gives 1. Sideswipe and barrier impacts from a drift happen at a shallow angle, no worse than the average crash of their type, so they stay on the sideswipe-same-direction and barrier ratios of `severity_ratio.py`.
 
 SH-10 (lane change into an occupied lane) is not on a curve. Its primary contact is a sideswipe with a Δv of a few km/h, so a curve would credit almost all of its risk away. Its S3 rating comes from the loss of control and secondary impacts that follow, which the curve does not model. It uses the sideswipe-same-direction ratio of `severity_ratio.py`, whose crashes are typically lane changes and include those secondary outcomes. There is no injury curve: at these Δv an injury is near certain, so for an injury-crash budget the value is 1.
 

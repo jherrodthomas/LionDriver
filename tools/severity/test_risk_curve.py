@@ -50,7 +50,17 @@ class RiskCurveTest(unittest.TestCase):
 
   def test_cases_cover_all_mapped_situations(self):
     labels = {sh for sh, _, _ in rc.cases()}
-    self.assertEqual(labels, {"SH-06; SH-03 OS-07", "SH-03 OS-05", "SH-04 OS-08"})
+    self.assertEqual(labels, {"SH-06; SH-03 OS-07", "SH-03 OS-05", "SH-04 OS-08", "SH-01/02 OS-03"})
+
+  def test_sh01_head_on_uses_combined_speed_and_has_no_credit(self):
+    from tools.severity import severity_ratio as sr
+    head_on = [v for sh, _, v in rc.cases() if sh == "SH-01/02 OS-03"]
+    self.assertEqual(head_on, [2 * rc.ODD_SPEEDS_KMH["ODD-A"]])
+    for lead in rc.LEADS:
+      self.assertEqual(rc.crash_fatal_ub(head_on[0], rc.EGO, lead)["p_fatal_crash_ub"], 1.0)
+    for sh in ("SH-01", "SH-02"):
+      self.assertNotIn("head_on", sr.SH_COLLISIONS[sh])
+      self.assertEqual(set(sr.SH_COLLISIONS[sh]), {"sideswipe_same", "barrier"})
 
   def test_sh04_follower_that_brakes_harder_early_stops_short(self):
     self.assertEqual(rc.rear_impact_kmh(120, 1.5, reaction_s=1.0, follower_decel=6.0), 0.0)

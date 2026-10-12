@@ -32,6 +32,14 @@ the risk is interpolated linearly; above 58 mph it is 1, and below 23 mph it fal
 to 0 at 0 mph (an assumption). One VRU is struck. The same curve is used for cyclists, which
 also needs checking.
 
+SH-01 and SH-02 (lane departure) are split by collision. A head-on in ODD-A (OS-03, HE-01.1,
+HE-02.2) is a drift into the oncoming lane with no reaction, so the closing speed is the sum
+of both vehicles' speeds at the ODD-A bound (90 + 90 km/h). That is worse than the average
+head-on crash, so it is on the curve. Sideswipes and barrier impacts from a drift meet the
+other vehicle or the barrier at a shallow angle, no worse than the average crash of their
+type, so they stay on the FARS/CRSS ratio of severity_ratio.py. ODD-H is divided, so it has no
+head-on case.
+
 SH-10 (lane change into an occupied lane) is deliberately not mapped to a curve. Its primary
 contact is a same-direction sideswipe with a delta-v of a few km/h, so a delta-v curve would
 give almost no risk. Its S3 rating (HE-02.5) comes from what follows: loss of control, or a
@@ -148,6 +156,8 @@ def cases() -> list[tuple[str, str, float]]:
       out.append(("SH-03 OS-05", f"{odd} following at {v} km/h, {name} gap", following_impact_kmh(v, t)))
     for h in OS08_GAPS_S:
       out.append(("SH-04 OS-08", f"{odd} struck from behind at {v} km/h, follower gap {h} s", rear_impact_kmh(v, h)))
+  v_a = ODD_SPEEDS_KMH["ODD-A"]
+  out.append(("SH-01/02 OS-03", f"ODD-A head-on, both at {v_a} km/h", 2 * v_a))
   return out
 
 
