@@ -149,7 +149,7 @@
   mechanism: "PLB, TMO"
   timing: "detect ≤ 0.3 s / react ≤ 0.1 s"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "**Partial** (reference build; not yet verified on the vehicle): `0x262` is an envelope RX check (checksum, 5-period timeout at a nominal 25 Hz, gates engagement via TSR-306; opendbc `98404a4`), and while LKA_STATE is in the host's fault set {0, 3, 9, 11, 17, 21, 25} STEERING_LKA frames with torque or a steer request are refused (opendbc `242d63d`, [IA EPS fault](../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md)). **Open:** confirmation of the fault code set for the reference EPS firmware; reporting the cause (only `safety_tx_blocked` counts the refused frames). GAP-03"
+  baseline_impl: "**Partial** (reference build; not yet verified on the vehicle): `0x262` is an envelope RX check (checksum, 5-period timeout at a nominal 25 Hz, gates engagement via TSR-306; opendbc `98404a4`), and while LKA_STATE is in the host's fault set {0, 3, 9, 11, 17, 21, 25} STEERING_LKA frames with torque or a steer request are refused (opendbc `242d63d`, [IA EPS fault](../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md)). The cause is reported to the host: health flag `HEALTH_FLAG_EPS_FAULT` → `pandaState.epsFault`, logged by `pandad` on each change (panda `877730e`, opendbc `adcb7c2`). **Open:** confirmation of the fault code set for the reference EPS firmware. GAP-03"
   status: proposed
   source: WP-S-02
 
