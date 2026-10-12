@@ -43,7 +43,7 @@ WBS elements follow the phases and gates in [WP-M-01 §7](WP-M-01-assurance-stra
 | 1 | P0 Governance | | G0 |
 | 1.1 | Plans | WP-M-00…M-13 | |
 | 1.2 | Supporting procedures | WP-P-01…P-06 | |
-| 1.3 | Configuration control | Fork `opendbc` and `panda` into LionDriver; absolute submodule URLs; pin tinygrad; freeze sync (D-01, D-02; GAP-29, GAP-37) | |
+| 1.3 | Configuration control | Fork `opendbc` and `panda` into LionDriver; absolute submodule URLs; pin tinygrad; planned sync once per minor release (D-01, D-02; GAP-29, GAP-37). Done: #3, #4 | |
 | 1.4 | Fork CI and review controls | Disable comma-only workflows and stale auto-close; CODEOWNERS; PR template with safety-impact checklist; branch protection; run opendbc safety tests, MISRA and mutation in LionDriver-controlled CI (D-03; GAP-31, GAP-32) | |
 | 1.5 | Impact analysis of baseline | WP-M-12 | |
 | 1.6 | External assessor engagement | Select, contract, schedule (D-06) | |
@@ -189,15 +189,15 @@ Derived from [gap assessment §9](../00-assessment/gap-assessment.md#9-priority-
 | # | Item | Gap / decision | Output | Owner |
 |---|---|---|---|---|
 | B-01 | Create milestones G0–G6, labels, and issues for every WP-M/WP-P work product and gap §9 action | — | GitHub tracking set up | PM |
-| B-02 | Fork `commaai/opendbc` and `commaai/panda` into the LionDriver account; switch `.gitmodules` to absolute URLs; pin tinygrad by commit; adjust or replace `check-submodules.sh` | GAP-29, D-01 | Submodules under LionDriver control | PM |
-| B-03 | Record the upstream freeze and the sync procedure | GAP-37, D-02 | WP-P-01, WP-P-02 drafts | PM |
-| B-04 | Disable `jenkins-pr-trigger`, `ui_preview`, `stale`; review `release` and `repo-maintenance`; add a workflow that runs opendbc safety tests, MISRA and mutation in the LionDriver repo | GAP-31, D-03 | Fork CI that produces safety-test evidence | PM |
+| B-02 | **Done (#3).** Fork `commaai/opendbc` and `commaai/panda` into the LionDriver account; switch `.gitmodules` to absolute URLs; pin tinygrad by commit; adjust or replace `check-submodules.sh` | GAP-29, D-01 | Submodules under LionDriver control | PM |
+| B-03 | **Done (#4).** Record the upstream sync procedure (D-02: once per minor release) | GAP-37, D-02 | WP-P-01, WP-P-02 drafts | PM |
+| B-04 | **Done (#2, #6)** except CR-CI-08. Disable `jenkins-pr-trigger`, `ui_preview`, `stale`; review `release` and `repo-maintenance`; add a workflow that runs opendbc safety tests, MISRA and mutation in the LionDriver repo | GAP-31, D-03 | Fork CI that produces safety-test evidence | PM |
 | B-05 | Add CODEOWNERS, PR template with safety-impact checklist, branch protection on `liondriver-dev` (and the release branch once defined) | GAP-32 | Review controls active | PM |
 | B-06 | Turn the Experimental Mode default off for the reference configuration pending SOTIF assessment (change request with impact analysis) | GAP-18, D-08 | CR merged or decision recorded | PM / SL |
-| B-07 | Add a LionDriver `SECURITY.md` and vulnerability intake; reroute issue templates away from comma.ai | GAP-28 | Intake channel | CSM |
+| B-07 | **Done (#6 and the RR-2026-002 fixes)** except enabling private vulnerability reporting in the repository settings. Add a LionDriver `SECURITY.md` and vulnerability intake; reroute issue templates away from comma.ai | GAP-28 | Intake channel | CSM |
 | B-08 | Record the "no LionDriver public-road operation until G1 and WP-V-07" rule in README and WP-V-07 | Gap §9 action 10 | Rule published | SM |
 | B-09 | Contact candidate external FuSa assessors; agree scope of G0/G1 confirmation reviews | D-06 | Shortlist and quote | PM |
-| B-10 | Complete drafts of WP-M-08…M-13 and WP-P-01…P-06 | GAP-33 | G0 work products in Draft | SM |
+| B-10 | **Done (#2).** Complete drafts of WP-M-08…M-13 and WP-P-01…P-06 | GAP-33 | G0 work products in Draft | SM |
 | B-11 | Recruit at least one verification reviewer and one QA person independent of the author | R-01 | Names in WP-M-02 §3.1 | PM |
 | B-12 | Record the reference vehicle's VIN, ECU firmware versions and device revision | — | Input to WP-C-01 | PM |
 

@@ -398,4 +398,4 @@ UL 4600 addresses products without a human driver and LionDriver makes **no conf
 | OI-3 | Add the CS-to-safety links (CSG ↔ SG) from WP-C-10 (Draft) and WP-K-03 | G1 |
 | OI-4 | Decide whether to render the GSN with a tool (e.g. a generated diagram from a YAML source in `trace/`) to keep text and diagram consistent | G2 |
 | OI-5 | Interim assessment of the argument structure by the external assessor (FSA-I1) | G1 |
-| OI-6 | Closed: WP-C-03 §4 records H-07 as reserved (mode confusion, folded into H-02/H-05/H-06) | G1 |
+| OI-6 | Closed: WP-C-03 v0.1 recorded H-07 as reserved; v0.2 rates it (HE-07.1…07.3) under SG-02/SG-06 | G1 |

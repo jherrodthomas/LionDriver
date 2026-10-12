@@ -1,6 +1,6 @@
 # Hazards (H-) and hazardous events (HE-) from WP-C-03 §4–§5 (HARA). Ratings are WP-C-03 proposals, not approved.
 # Source of truth is WP-C-03; tools/check_trace.py compares S/E/C/ASIL and the ⚠ flag with the WP-C-03 tables (check X1).
-# H-07 is not defined in WP-C-03 (numbering goes H-06 -> H-08).
+# H-07 (mode confusion) was reserved in WP-C-03 v0.1 and is rated from v0.2 (Cartesian method).
 # Schema: ../README.md §4.2.
 
 - id: H-01
@@ -42,6 +42,13 @@
   kind: hazard
   title: "Unannounced loss of longitudinal deceleration"
   functions: [F-02]
+  status: proposed
+  source: WP-C-03
+
+- id: H-07
+  kind: hazard
+  title: "Displayed system state differs from actual state (mode confusion)"
+  functions: [F-05, F-03]
   status: proposed
   source: WP-C-03
 
@@ -132,7 +139,7 @@
 - id: HE-02.2
   kind: hazardous-event
   parents: [H-02]
-  situation: "OS-03 rural curve with oncoming traffic"
+  situation: "OS-16 rural curve with oncoming traffic"
   effect: "Departure into the oncoming lane"
   s: 3
   e: 3
@@ -156,6 +163,39 @@
   aou_flag: true
   aou_dependency: [AOU-01]
   asil_if_aou_fails: null
+  status: proposed
+  source: WP-C-03
+
+- id: HE-02.4
+  kind: hazardous-event
+  parents: [H-02]
+  situation: "OS-01 highway, straight or gentle curve, 90–120 km/h; lateral control silently lost (F-01 M01/M02/M04/M06/M11, F-03 M02 unannounced disengagement, F-08 M04 envelope stuck blocking)"
+  effect: "Slow drift out of the lane at highway speed"
+  s: 3
+  e: 4
+  c: 1
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
+  status: proposed
+  source: WP-C-03
+
+
+- id: HE-02.5
+  kind: hazardous-event
+  parents: [H-02]
+  situation: "OS-12 driver-initiated assisted lane change"
+  effect: "Lateral control lost mid-manoeuvre; vehicle straddles lanes next to traffic"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
   status: proposed
   source: WP-C-03
 
@@ -198,9 +238,42 @@
   e: 3
   c: 2
   asil: B
-  aou_flag: false
-  aou_dependency: []
-  asil_if_aou_fails: null
+  aou_flag: true
+  aou_dependency: [AOU-03, AOU-05]
+  asil_if_aou_fails: C
+  status: proposed
+  source: WP-C-03
+
+- id: HE-03.4
+  kind: hazardous-event
+  parents: [H-03]
+  situation: "OS-02 highway curve or OS-16 rural curve (F-02 M04 stuck positive, M05 excessive, M12 inverse)"
+  effect: "Speed rises in the curve beyond the lateral limit; run-off or into the oncoming lane"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: true
+  aou_dependency: [AOU-03, AOU-05]
+  asil_if_aou_fails: C
+  notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
+  status: proposed
+  source: WP-C-03
+
+
+- id: HE-03.5
+  kind: hazardous-event
+  parents: [H-03]
+  situation: "OS-01 highway free flow (F-02 M04/M05/M12)"
+  effect: "Speed rises above the set speed; moderate impacts if traffic slows"
+  s: 2
+  e: 4
+  c: 1
+  asil: A
+  aou_flag: true
+  aou_dependency: [AOU-03]
+  asil_if_aou_fails: B
+  notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
   status: proposed
   source: WP-C-03
 
@@ -222,7 +295,7 @@
 - id: HE-04.2
   kind: hazardous-event
   parents: [H-04]
-  situation: "OS-11 wet road, curve"
+  situation: "OS-02/OS-16 curve on a wet road (W02)"
   effect: "Instability under unexpected braking"
   s: 3
   e: 3
@@ -232,6 +305,56 @@
   aou_dependency: [AOU-10]
   asil_if_aou_fails: B
   notes: "Credits AOU-10 (VSC available); C2 → ASIL B if it fails"
+  status: proposed
+  source: WP-C-03
+
+- id: HE-04.3
+  kind: hazardous-event
+  parents: [H-04]
+  situation: "OS-08 close follower; driver monitoring escalates to forced deceleration although the driver is attentive (F-04 M03)"
+  effect: "Rear impact by the following vehicle"
+  s: 2
+  e: 4
+  c: 2
+  asil: B
+  aou_flag: true
+  aou_dependency: [AOU-05]
+  asil_if_aou_fails: C
+  notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
+  status: proposed
+  source: WP-C-03
+
+
+- id: HE-04.4
+  kind: hazardous-event
+  parents: [H-04]
+  situation: "OS-13 manual driving, item not engaged; the item commands braking (F-02 M03)"
+  effect: "Rear impact by the following vehicle during manual driving"
+  s: 2
+  e: 4
+  c: 2
+  asil: B
+  aou_flag: true
+  aou_dependency: [AOU-05]
+  asil_if_aou_fails: C
+  notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
+  status: proposed
+  source: WP-C-03
+
+
+- id: HE-04.5
+  kind: hazardous-event
+  parents: [H-04]
+  situation: "OS-08 close follower; false FCW provokes driver reflex braking (F-06 M03)"
+  effect: "Rear impact by the following vehicle"
+  s: 2
+  e: 4
+  c: 1
+  asil: A
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
   status: proposed
   source: WP-C-03
 
@@ -280,6 +403,22 @@
   status: proposed
   source: WP-C-03
 
+- id: HE-05.4
+  kind: hazardous-event
+  parents: [H-05]
+  situation: "OS-10 brake or cancel releases one axis only (F-03 M06 partial disengagement)"
+  effect: "Continued lateral or longitudinal actuation during the driver's emergency action"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: true
+  aou_dependency: [AOU-01, AOU-02, AOU-03]
+  asil_if_aou_fails: C
+  notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
+  status: proposed
+  source: WP-C-03
+
 - id: HE-06.1
   kind: hazardous-event
   parents: [H-06]
@@ -308,6 +447,72 @@
   aou_dependency: []
   asil_if_aou_fails: null
   sg_exempt_reason: "Rated QM in WP-C-03 §5.6 (S1); no safety goal required"
+  status: proposed
+  source: WP-C-03
+
+- id: HE-06.3
+  kind: hazardous-event
+  parents: [H-06]
+  situation: "OS-05 following a lead at a short gap; the lead brakes and the deceleration is silently lost (F-02 M01/M02/M06/M11)"
+  effect: "Rear-end collision at moderate speed difference"
+  s: 2
+  e: 4
+  c: 2
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
+  status: proposed
+  source: WP-C-03
+
+- id: HE-07.1
+  kind: hazardous-event
+  parents: [H-07]
+  situation: "OS-02 highway curve or OS-16 rural curve; the system has disengaged but still shows engaged, or the take-over alert is missing (F-05 M01/M04)"
+  effect: "The driver believes the system steers; departure in the curve"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
+  status: proposed
+  source: WP-C-03
+
+
+- id: HE-07.2
+  kind: hazardous-event
+  parents: [H-07]
+  situation: "OS-01 highway, straight or gentle curve"
+  effect: "The driver believes the system steers; slow lane departure"
+  s: 3
+  e: 4
+  c: 1
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
+  status: proposed
+  source: WP-C-03
+
+
+- id: HE-07.3
+  kind: hazardous-event
+  parents: [H-07]
+  situation: "OS-07 approaching slower or stationary traffic; the driver believes ACC is active"
+  effect: "The driver expects the vehicle to slow; high closing speed"
+  s: 3
+  e: 3
+  c: 2
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
   status: proposed
   source: WP-C-03
 
