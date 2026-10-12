@@ -1,0 +1,228 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3530" height="1108" viewBox="0 0 3530 1108" font-family="Helvetica, Arial, sans-serif">
+<style>.id{font-size:11px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.n{font-size:9.5px;font-style:italic;text-anchor:middle;fill:#444}.b{font-size:8.6px;font-weight:600;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">FTA SG-06 — loss of longitudinal deceleration without take-over warning</text>
+<rect x="1637.75" y="70" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="2.2"/>
+<text x="1737.75" y="89" class="id">TE-06</text>
+<text x="1737.75" y="102.5" class="d">Loss of longitudinal deceleration</text>
+<text x="1737.75" y="115.0" class="d">without take-over request</text>
+<path d="M1719.75,157.0 L1719.75,139.0 A18,16 0 0 1 1755.75,139.0 L1755.75,157.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1737.75" y1="157.0" x2="1737.75" y2="175.0" class="w"/>
+<line x1="784.0" y1="175.0" x2="2691.5" y2="175.0" class="w"/>
+<line x1="784.0" y1="175.0" x2="784.0" y2="193.0" class="w"/>
+<line x1="2691.5" y1="175.0" x2="2691.5" y2="193.0" class="w"/>
+<rect x="684.0" y="193.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="784.0" y="212.0" class="id">G6.1</text>
+<text x="784.0" y="225.5" class="d">Deceleration not commanded or not</text>
+<text x="784.0" y="238.0" class="d">executed while needed</text>
+<path d="M766.0,280.0 Q784.0,272.0 802.0,280.0 Q800.0,256.0 784.0,246.0 Q768.0,256.0 766.0,280.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="784.0" y1="280.0" x2="784.0" y2="298.0" class="w"/>
+<line x1="130.0" y1="298.0" x2="1438.0" y2="298.0" class="w"/>
+<line x1="130.0" y1="298.0" x2="130.0" y2="316.0" class="w"/>
+<line x1="348.0" y1="298.0" x2="348.0" y2="316.0" class="w"/>
+<line x1="566.0" y1="298.0" x2="566.0" y2="316.0" class="w"/>
+<line x1="784.0" y1="298.0" x2="784.0" y2="316.0" class="w"/>
+<line x1="1002.0" y1="298.0" x2="1002.0" y2="316.0" class="w"/>
+<line x1="1220.0" y1="298.0" x2="1220.0" y2="316.0" class="w"/>
+<line x1="1438.0" y1="298.0" x2="1438.0" y2="316.0" class="w"/>
+<rect x="30" y="316.0" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="130.0" y="335.0" class="id">BE-6.01</text>
+<text x="130.0" y="348.5" class="d">Plan, lead or model input lost or</text>
+<text x="130.0" y="361.0" class="d">stale (radarFault, commIssue;</text>
+<text x="130.0" y="373.5" class="d">GAP-16)</text>
+<circle cx="130.0" cy="396.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="248" y="316.0" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="348.0" y="335.0" class="id">BE-6.02</text>
+<text x="348.0" y="348.5" class="d">Envelope blocks longitudinal</text>
+<text x="348.0" y="361.0" class="d">authority while the SoC shows</text>
+<text x="348.0" y="373.5" class="d">engaged</text>
+<circle cx="348.0" cy="396.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="466" y="316.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="566.0" y="335.0" class="id">BE-6.03</text>
+<text x="566.0" y="348.5" class="d">PCM does not execute ACC (ACC or</text>
+<text x="566.0" y="361.0" class="d">cruise fault)</text>
+<circle cx="566.0" cy="384.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="684" y="316.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="784.0" y="335.0" class="id">BE-6.04</text>
+<text x="784.0" y="348.5" class="d">Non-finite accel clamped to 0</text>
+<text x="784.0" y="361.0" class="d">without a fault (GAP-19)</text>
+<circle cx="784.0" cy="384.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="902" y="316.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1002.0" y="335.0" class="id">BE-6.05</text>
+<text x="1002.0" y="348.5" class="d">Stale zero or positive accel held</text>
+<text x="1002.0" y="361.0" class="d">(BE-1.19, BE-1.21)</text>
+<circle cx="1002.0" cy="384.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1120" y="316.0" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1220.0" y="335.0" class="id">BE-2.05</text>
+<text x="1220.0" y="348.5" class="d">SoC crash or hang (whole SoC)</text>
+<text x="1220.0" y="361.0" class="n">SoC crash or hang</text>
+<rect x="1142.5" y="367.0" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="1173.5" y="376.5" class="b" fill="#fff">CCF DFI-14</text>
+<rect x="1208.5" y="367.0" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="1253.0" y="376.5" class="b" fill="#222">repeated, SG-02</text>
+<circle cx="1220.0" cy="400.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1338" y="316.0" width="200" height="144.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1438.0" y="335.0" class="id">BE-2.06</text>
+<text x="1438.0" y="348.5" class="d">Actuation frames stop reaching the</text>
+<text x="1438.0" y="361.0" class="d">bus: SoC configuration command</text>
+<text x="1438.0" y="373.5" class="d">(0xe5, 0xde, 0xf1; FFI-CM-09), MCU</text>
+<text x="1438.0" y="386.0" class="d">hang (SFMEA-22), car-side bus-off</text>
+<text x="1438.0" y="398.5" class="d">(SFMEA-26)</text>
+<text x="1438.0" y="411.0" class="n">Actuation frames stop</text>
+<text x="1438.0" y="423.5" class="n">(configuration command, MCU hang,</text>
+<text x="1438.0" y="436.0" class="n">bus-off</text>
+<rect x="1363.2" y="442.0" width="56.6" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="1391.5" y="451.5" class="b" fill="#fff">FFI-CM-09</text>
+<rect x="1423.8" y="442.0" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="1468.3" y="451.5" class="b" fill="#222">repeated, SG-02</text>
+<circle cx="1438.0" cy="475.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2591.5" y="193.0" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2691.5" y="212.0" class="id">G6.2</text>
+<text x="2691.5" y="225.5" class="d">No adequate take-over request</text>
+<path d="M2673.5,267.5 L2673.5,249.5 A18,16 0 0 1 2709.5,249.5 L2709.5,267.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="2691.5" y1="267.5" x2="2691.5" y2="285.5" class="w"/>
+<line x1="2201.0" y1="285.5" x2="3182.0" y2="285.5" class="w"/>
+<line x1="2201.0" y1="285.5" x2="2201.0" y2="316.0" class="w"/>
+<line x1="3182.0" y1="285.5" x2="3182.0" y2="316.0" class="w"/>
+<rect x="2101.0" y="316.0" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2201.0" y="335.0" class="id">G6.2.1</text>
+<text x="2201.0" y="348.5" class="d">SoC warning missing or late</text>
+<path d="M2183.0,390.5 Q2201.0,382.5 2219.0,390.5 Q2217.0,366.5 2201.0,356.5 Q2185.0,366.5 2183.0,390.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="2201.0" y1="390.5" x2="2201.0" y2="408.5" class="w"/>
+<line x1="1656.0" y1="408.5" x2="2746.0" y2="408.5" class="w"/>
+<line x1="1656.0" y1="408.5" x2="1656.0" y2="530.0" class="w"/>
+<line x1="1874.0" y1="408.5" x2="1874.0" y2="530.0" class="w"/>
+<line x1="2092.0" y1="408.5" x2="2092.0" y2="530.0" class="w"/>
+<line x1="2310.0" y1="408.5" x2="2310.0" y2="530.0" class="w"/>
+<line x1="2528.0" y1="408.5" x2="2528.0" y2="530.0" class="w"/>
+<line x1="2746.0" y1="408.5" x2="2746.0" y2="530.0" class="w"/>
+<rect x="1556" y="530.0" width="200" height="106.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1656.0" y="549.0" class="id">BE-2.09</text>
+<text x="1656.0" y="562.5" class="d">Envelope blocking detected by</text>
+<text x="1656.0" y="575.0" class="d">controlsMismatch after ≈2 s</text>
+<text x="1656.0" y="587.5" class="d">(selfdrived.py:338, 508-510) or not</text>
+<text x="1656.0" y="600.0" class="d">at all if pandaStates is stale with</text>
+<text x="1656.0" y="612.5" class="d">authority shown</text>
+<rect x="1578.5" y="618.5" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="1609.5" y="628.0" class="b" fill="#fff">CCF DFI-24</text>
+<rect x="1644.5" y="618.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="1689.0" y="628.0" class="b" fill="#222">repeated, SG-02</text>
+<circle cx="1656.0" cy="651.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1774" y="530.0" width="200" height="94.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1874.0" y="549.0" class="id">BE-2.10</text>
+<text x="1874.0" y="562.5" class="d">Input loss handled as soft disable:</text>
+<text x="1874.0" y="575.0" class="d">actuation continues ≈3 s</text>
+<text x="1874.0" y="587.5" class="d">(events.py:853-856, state.py:7-8;</text>
+<text x="1874.0" y="600.0" class="d">GAP-16)</text>
+<rect x="1829.5" y="606.0" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="1874.0" y="615.5" class="b" fill="#222">repeated, SG-02</text>
+<circle cx="1874.0" cy="639.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1992" y="530.0" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2092.0" y="549.0" class="id">BE-2.11</text>
+<text x="2092.0" y="562.5" class="d">Non-finite command logged only</text>
+<text x="2092.0" y="575.0" class="d">(GAP-19)</text>
+<rect x="2047.5" y="581.0" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="2092.0" y="590.5" class="b" fill="#222">repeated, SG-02</text>
+<circle cx="2092.0" cy="614.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2210" y="530.0" width="200" height="94.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2310.0" y="549.0" class="id">BE-2.12</text>
+<text x="2310.0" y="562.5" class="d">HMI hang: render loop or audio</text>
+<text x="2310.0" y="575.0" class="d">stream stalled while processes stay</text>
+<text x="2310.0" y="587.5" class="d">alive (processNotRunning covers</text>
+<text x="2310.0" y="600.0" class="d">crashes only)</text>
+<rect x="2232.5" y="606.0" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="2263.5" y="615.5" class="b" fill="#fff">CCF DFI-25</text>
+<rect x="2298.5" y="606.0" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="2343.0" y="615.5" class="b" fill="#222">repeated, SG-02</text>
+<circle cx="2310.0" cy="639.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2428" y="530.0" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2528.0" y="549.0" class="id">BE-2.13</text>
+<text x="2528.0" y="562.5" class="d">Alert volume not audible (no</text>
+<text x="2528.0" y="575.0" class="d">defined minimum; FFI-CM-18)</text>
+<rect x="2450.5" y="581.0" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="2481.5" y="590.5" class="b" fill="#fff">CCF DFI-25</text>
+<rect x="2516.5" y="581.0" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="2561.0" y="590.5" class="b" fill="#222">repeated, SG-02</text>
+<circle cx="2528.0" cy="614.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2646" y="530.0" width="200" height="56.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2746.0" y="549.0" class="id">BE-2.05</text>
+<text x="2746.0" y="562.5" class="d">SoC crash or hang (whole SoC)</text>
+<rect x="2668.5" y="568.5" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="2699.5" y="578.0" class="b" fill="#fff">CCF DFI-14</text>
+<rect x="2734.5" y="568.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="2779.0" y="578.0" class="b" fill="#222">repeated, SG-02</text>
+<circle cx="2746.0" cy="601.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="3082.0" y="316.0" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="3182.0" y="335.0" class="id">G6.2.2</text>
+<text x="3182.0" y="348.5" class="d">SoC-independent cue missing or late</text>
+<path d="M3164.0,390.5 Q3182.0,382.5 3200.0,390.5 Q3198.0,366.5 3182.0,356.5 Q3166.0,366.5 3164.0,390.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="3182.0" y1="390.5" x2="3182.0" y2="408.5" class="w"/>
+<line x1="2964.0" y1="408.5" x2="3400.0" y2="408.5" class="w"/>
+<line x1="2964.0" y1="408.5" x2="2964.0" y2="530.0" class="w"/>
+<line x1="3182.0" y1="408.5" x2="3182.0" y2="530.0" class="w"/>
+<line x1="3400.0" y1="408.5" x2="3400.0" y2="530.0" class="w"/>
+<rect x="2864" y="530.0" width="200" height="156.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2964.0" y="549.0" class="id">BE-2.14</text>
+<text x="2964.0" y="562.5" class="d">Siren not triggered: at the</text>
+<text x="2964.0" y="575.0" class="d">baseline only on heartbeat loss</text>
+<text x="2964.0" y="587.5" class="d">(after 5 s, for 3 s;</text>
+<text x="2964.0" y="600.0" class="d">main.c:193-205). TSR-516 v0.3 adds</text>
+<text x="2964.0" y="612.5" class="d">every envelope revocation that is</text>
+<text x="2964.0" y="625.0" class="d">not a driver action (incl. EPS</text>
+<text x="2964.0" y="637.5" class="d">fault, TSR-110) and a fault-induced</text>
+<text x="2964.0" y="650.0" class="d">disengagement whose ACC cancel had</text>
+<text x="2964.0" y="662.5" class="d">no effect</text>
+<rect x="2919.5" y="668.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="2964.0" y="678.0" class="b" fill="#222">repeated, SG-02</text>
+<circle cx="2964.0" cy="701.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="3082" y="530.0" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="3182.0" y="549.0" class="id">BE-2.15</text>
+<text x="3182.0" y="562.5" class="d">Siren silenced with the SoC audio</text>
+<text x="3182.0" y="575.0" class="d">(shared codec or amplifier, unknown</text>
+<text x="3182.0" y="587.5" class="d">topology)</text>
+<rect x="3104.5" y="593.5" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="3135.5" y="603.0" class="b" fill="#fff">CCF DFI-23</text>
+<rect x="3170.5" y="593.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="3215.0" y="603.0" class="b" fill="#222">repeated, SG-02</text>
+<circle cx="3182.0" cy="626.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="3300" y="530.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="3400.0" y="549.0" class="id">BE-6.06</text>
+<text x="3400.0" y="562.5" class="d">PCM cruise stays active, so the</text>
+<text x="3400.0" y="575.0" class="d">cluster shows no change</text>
+<circle cx="3400.0" cy="598.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="30" y="774.5" class="h">Symbols (IEC 61025)</text>
+<rect x="32" y="788.5" width="36" height="22" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="96" y="803.5" class="l">Top / intermediate event</text>
+<path d="M32,856.5 Q50,848.5 68,856.5 Q66,832.5 50,822.5 Q34,832.5 32,856.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="841.5" class="l">OR gate</text>
+<path d="M32,894.5 L32,876.5 A18,16 0 0 1 68,876.5 L68,894.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="879.5" class="l">AND gate</text>
+<circle cx="50" cy="913.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="917.5" class="l">Basic event</text>
+<path d="M50,936.5 L70,951.5 L50,966.5 L30,951.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="955.5" class="l">Undeveloped event (outside the item or not developed)</text>
+<path d="M50,974.5 L68,1004.5 L32,1004.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="59" y1="989.5" x2="80" y2="989.5" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="993.5" class="l">Transfer: continued on another sheet</text>
+<path d="M50,1012.5 L68,1042.5 L32,1042.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="1031.5" class="l">Transfer in: gate developed elsewhere</text>
+<rect x="30" y="1058.5" width="24.2" height="13" rx="6.5" fill="#b3261e"/>
+<text x="42.1" y="1068.0" class="b" fill="#fff">SPF</text>
+<rect x="59.2" y="1058.5" width="40.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="79.4" y="1068.0" class="b" fill="#fff">latent</text>
+<rect x="104.60000000000001" y="1058.5" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
+<text x="122.1" y="1068.0" class="b" fill="#fff">SOTIF</text>
+<rect x="144.60000000000002" y="1058.5" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="175.6" y="1068.0" class="b" fill="#fff">CCF DFI-nn</text>
+<rect x="211.60000000000002" y="1058.5" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="223.7" y="1068.0" class="b" fill="#fff">FFI</text>
+<rect x="240.8" y="1058.5" width="72.8" height="13" rx="6.5" fill="#3d6b3d"/>
+<text x="277.2" y="1068.0" class="b" fill="#fff">outside item</text>
+<rect x="318.6" y="1058.5" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="344.2" y="1068.0" class="b" fill="#222">repeated</text>
+<rect x="3070" y="762.5" width="430" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="3080" y="784.5" class="h" text-anchor="start">LionDriver — FTA SG-06</text>
+<text x="3080" y="800.5" class="l" text-anchor="start">loss of longitudinal deceleration without take-over warning</text>
+<text x="3080" y="816.5" class="l" text-anchor="start">Sheet 1 of 1   ·   top of sheet: TE-06</text>
+<text x="3080" y="832.5" class="l" text-anchor="start">Source: WP-A-04 §7 (analysis of record)</text>
+<text x="3080" y="848.5" class="s" text-anchor="start">Generated by fta_diagrams.py — edit WP-A-04, not this file</text>
+</svg>

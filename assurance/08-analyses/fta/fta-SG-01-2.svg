@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2440" height="1169" viewBox="0 0 2440 1169" font-family="Helvetica, Arial, sans-serif">
+<style>.id{font-size:11px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.n{font-size:9.5px;font-style:italic;text-anchor:middle;fill:#444}.b{font-size:8.6px;font-weight:600;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">FTA SG-01 — uncontrollable lateral motion, or steering actuation while not engaged  (sheet 2 of 2)</text>
+<rect x="1610.5" y="70" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1710.5" y="89" class="id">G1.1</text>
+<text x="1710.5" y="102.5" class="d">Torque above the controllable bound</text>
+<text x="1710.5" y="115.0" class="d">reaches the wheel while engaged</text>
+<rect x="1674.1" y="121.0" width="72.8" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="1710.5" y="130.5" class="b" fill="#222">from sheet 1</text>
+<path d="M1692.5,173.0 L1692.5,155.0 A18,16 0 0 1 1728.5,155.0 L1728.5,173.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1710.5" y1="173.0" x2="1710.5" y2="191.0" class="w"/>
+<line x1="1111.0" y1="191.0" x2="2310.0" y2="191.0" class="w"/>
+<line x1="1111.0" y1="191.0" x2="1111.0" y2="209.0" class="w"/>
+<line x1="2310.0" y1="191.0" x2="2310.0" y2="209.0" class="w"/>
+<rect x="1011.0" y="209.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1111.0" y="228.0" class="id">G1.1.1</text>
+<text x="1111.0" y="241.5" class="d">Command above controllable bound</text>
+<text x="1111.0" y="254.0" class="d">transmitted on bus 0 (0x2E4)</text>
+<path d="M1093.0,296.0 Q1111.0,288.0 1129.0,296.0 Q1127.0,272.0 1111.0,262.0 Q1095.0,272.0 1093.0,296.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1111.0" y1="296.0" x2="1111.0" y2="314.0" class="w"/>
+<line x1="130.0" y1="314.0" x2="2092.0" y2="314.0" class="w"/>
+<line x1="130.0" y1="314.0" x2="130.0" y2="332.0" class="w"/>
+<line x1="1111.0" y1="314.0" x2="1111.0" y2="332.0" class="w"/>
+<line x1="2092.0" y1="314.0" x2="2092.0" y2="332.0" class="w"/>
+<rect x="30" y="332.0" width="200" height="106.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="130.0" y="351.0" class="id">BE-1.01</text>
+<text x="130.0" y="364.5" class="d">Envelope torque limits set above</text>
+<text x="130.0" y="377.0" class="d">the controllable bound (raw</text>
+<text x="130.0" y="389.5" class="d">1500/15/25/450 not derived, GAP-04;</text>
+<text x="130.0" y="402.0" class="d">identical in controller, CCF →</text>
+<text x="130.0" y="414.5" class="d">DFI-08)</text>
+<rect x="85.5" y="420.5" width="89.0" height="13" rx="6.5" fill="#b3261e"/>
+<text x="130.0" y="430.0" class="b" fill="#fff">SPF, systematic</text>
+<circle cx="130.0" cy="453.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1011.0" y="332.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1111.0" y="351.0" class="id">G1.1.1.a</text>
+<text x="1111.0" y="364.5" class="d">SoC commands excessive torque AND</text>
+<text x="1111.0" y="377.0" class="d">envelope fails to clamp</text>
+<path d="M1093.0,419.0 L1093.0,401.0 A18,16 0 0 1 1129.0,401.0 L1129.0,419.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1111.0" y1="419.0" x2="1111.0" y2="437.0" class="w"/>
+<line x1="675.0" y1="437.0" x2="1547.0" y2="437.0" class="w"/>
+<line x1="675.0" y1="437.0" x2="675.0" y2="546.0" class="w"/>
+<line x1="1547.0" y1="437.0" x2="1547.0" y2="546.0" class="w"/>
+<rect x="575.0" y="546.0" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="675.0" y="565.0" class="id">G-SoC</text>
+<text x="675.0" y="578.5" class="d">SoC command excessive or wrong</text>
+<path d="M657.0,620.5 Q675.0,612.5 693.0,620.5 Q691.0,596.5 675.0,586.5 Q659.0,596.5 657.0,620.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="675.0" y1="620.5" x2="675.0" y2="638.5" class="w"/>
+<line x1="348.0" y1="638.5" x2="1002.0" y2="638.5" class="w"/>
+<line x1="348.0" y1="638.5" x2="348.0" y2="656.5" class="w"/>
+<line x1="566.0" y1="638.5" x2="566.0" y2="656.5" class="w"/>
+<line x1="784.0" y1="638.5" x2="784.0" y2="656.5" class="w"/>
+<line x1="1002.0" y1="638.5" x2="1002.0" y2="656.5" class="w"/>
+<rect x="248" y="656.5" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="348.0" y="675.5" class="id">BE-1.02</text>
+<text x="348.0" y="689.0" class="d">controlsd/card software fault (QM)</text>
+<circle cx="348.0" cy="712.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="466" y="656.5" width="200" height="56.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="566.0" y="675.5" class="id">BE-1.03</text>
+<text x="566.0" y="689.0" class="d">Wrong desired curvature from model</text>
+<rect x="548.5" y="695.0" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
+<text x="566.0" y="704.5" class="b" fill="#fff">SOTIF</text>
+<circle cx="566.0" cy="728.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="684" y="656.5" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="784.0" y="675.5" class="id">BE-1.04</text>
+<text x="784.0" y="689.0" class="d">Debug/maneuver process replaces</text>
+<text x="784.0" y="701.5" class="d">controller</text>
+<text x="784.0" y="714.0" class="d">(process_config.py:34-47, GAP-20)</text>
+<circle cx="784.0" cy="737.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="902" y="656.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1002.0" y="675.5" class="id">BE-1.05</text>
+<text x="1002.0" y="689.0" class="d">Wrong CarParams / fingerprint (CCF</text>
+<text x="1002.0" y="701.5" class="d">→ DFI-09)</text>
+<circle cx="1002.0" cy="724.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1447.0" y="546.0" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1547.0" y="565.0" class="id">G-ENV</text>
+<text x="1547.0" y="578.5" class="d">Envelope does not clamp</text>
+<path d="M1529.0,620.5 Q1547.0,612.5 1565.0,620.5 Q1563.0,596.5 1547.0,586.5 Q1531.0,596.5 1529.0,620.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1547.0" y1="620.5" x2="1547.0" y2="638.5" class="w"/>
+<line x1="1220.0" y1="638.5" x2="1874.0" y2="638.5" class="w"/>
+<line x1="1220.0" y1="638.5" x2="1220.0" y2="656.5" class="w"/>
+<line x1="1438.0" y1="638.5" x2="1438.0" y2="656.5" class="w"/>
+<line x1="1656.0" y1="638.5" x2="1656.0" y2="656.5" class="w"/>
+<line x1="1874.0" y1="638.5" x2="1874.0" y2="656.5" class="w"/>
+<rect x="1120" y="656.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1220.0" y="675.5" class="id">BE-1.06</text>
+<text x="1220.0" y="689.0" class="d">Envelope software defect in lateral</text>
+<text x="1220.0" y="701.5" class="d">checks (lateral.h:60-151)</text>
+<circle cx="1220.0" cy="724.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1338" y="656.5" width="200" height="90.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1438.0" y="675.5" class="id">BE-1.07</text>
+<text x="1438.0" y="689.0" class="d">MCU execution fault</text>
+<text x="1438.0" y="701.5" class="d">(RAM/register/CPU) corrupts limit</text>
+<text x="1438.0" y="714.0" class="d">or check, not detected (no MPU, no</text>
+<text x="1438.0" y="726.5" class="d">ECC handling, faults report-only;</text>
+<text x="1438.0" y="739.0" class="d">GAP-08)</text>
+<circle cx="1438.0" cy="762.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1556" y="656.5" width="200" height="78.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1656.0" y="675.5" class="id">BE-1.08</text>
+<text x="1656.0" y="689.0" class="d">Safety mode/param changed by SoC</text>
+<text x="1656.0" y="701.5" class="d">(0xdc, GAP-09) [FFI → FFI-CM-06;</text>
+<text x="1656.0" y="714.0" class="d">CCF → DFI-13: same SoC fault can</text>
+<text x="1656.0" y="726.5" class="d">cause G-SoC and BE-1.08]</text>
+<circle cx="1656.0" cy="749.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1774" y="656.5" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1874.0" y="675.5" class="id">BE-1.09</text>
+<text x="1874.0" y="689.0" class="d">Envelope firmware replaced via boot</text>
+<text x="1874.0" y="701.5" class="d">pins / softloader (GAP-38, GAP-24)</text>
+<text x="1874.0" y="714.0" class="d">[FFI → FFI-CM-12; CCF → DFI-13]</text>
+<circle cx="1874.0" cy="737.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1992" y="332.0" width="200" height="144.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2092.0" y="351.0" class="id">BE-1.10</text>
+<text x="2092.0" y="364.5" class="d">Frame corrupted after</text>
+<text x="2092.0" y="377.0" class="d">safety_tx_hook in a part not</text>
+<text x="2092.0" y="389.5" class="d">covered by the packet XOR: copy</text>
+<text x="2092.0" y="402.0" class="d">into FDCAN message RAM, message RAM</text>
+<text x="2092.0" y="414.5" class="d">itself, FDCAN core, transceiver</text>
+<text x="2092.0" y="427.0" class="d">(the 8-bit XOR checked before</text>
+<text x="2092.0" y="439.5" class="d">loading, fdcan.h:100, covers only</text>
+<text x="2092.0" y="452.0" class="d">the software TX queue)</text>
+<rect x="2050.2" y="458.0" width="83.6" height="13" rx="6.5" fill="#b3261e"/>
+<text x="2092.0" y="467.5" class="b" fill="#fff">SPF, random HW</text>
+<circle cx="2092.0" cy="491.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2210" y="209.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2310.0" y="228.0" class="id">UE-1.11</text>
+<text x="2310.0" y="241.5" class="d">EPS does not limit LKA torque to an</text>
+<text x="2310.0" y="254.0" class="d">overpowerable level (AOU-01R fails)</text>
+<path d="M2310.0,262.0 L2330.0,277.0 L2310.0,292.0 L2290.0,277.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="30" y="835.0" class="h">Symbols (IEC 61025)</text>
+<rect x="32" y="849.0" width="36" height="22" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="96" y="864.0" class="l">Top / intermediate event</text>
+<path d="M32,917.0 Q50,909.0 68,917.0 Q66,893.0 50,883.0 Q34,893.0 32,917.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="902.0" class="l">OR gate</text>
+<path d="M32,955.0 L32,937.0 A18,16 0 0 1 68,937.0 L68,955.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="940.0" class="l">AND gate</text>
+<circle cx="50" cy="974.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="978.0" class="l">Basic event</text>
+<path d="M50,997.0 L70,1012.0 L50,1027.0 L30,1012.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="1016.0" class="l">Undeveloped event (outside the item or not developed)</text>
+<path d="M50,1035.0 L68,1065.0 L32,1065.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="59" y1="1050.0" x2="80" y2="1050.0" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="1054.0" class="l">Transfer: continued on another sheet</text>
+<path d="M50,1073.0 L68,1103.0 L32,1103.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="1092.0" class="l">Transfer in: gate developed elsewhere</text>
+<rect x="30" y="1119.0" width="24.2" height="13" rx="6.5" fill="#b3261e"/>
+<text x="42.1" y="1128.5" class="b" fill="#fff">SPF</text>
+<rect x="59.2" y="1119.0" width="40.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="79.4" y="1128.5" class="b" fill="#fff">latent</text>
+<rect x="104.60000000000001" y="1119.0" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
+<text x="122.1" y="1128.5" class="b" fill="#fff">SOTIF</text>
+<rect x="144.60000000000002" y="1119.0" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="175.6" y="1128.5" class="b" fill="#fff">CCF DFI-nn</text>
+<rect x="211.60000000000002" y="1119.0" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="223.7" y="1128.5" class="b" fill="#fff">FFI</text>
+<rect x="240.8" y="1119.0" width="72.8" height="13" rx="6.5" fill="#3d6b3d"/>
+<text x="277.2" y="1128.5" class="b" fill="#fff">outside item</text>
+<rect x="318.6" y="1119.0" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="344.2" y="1128.5" class="b" fill="#222">repeated</text>
+<rect x="1980" y="823.0" width="430" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="1990" y="845.0" class="h" text-anchor="start">LionDriver — FTA SG-01</text>
+<text x="1990" y="861.0" class="l" text-anchor="start">uncontrollable lateral motion, or steering actuation while not engaged</text>
+<text x="1990" y="877.0" class="l" text-anchor="start">Sheet 2 of 2   ·   top of sheet: G1.1</text>
+<text x="1990" y="893.0" class="l" text-anchor="start">Source: WP-A-04 §2 (analysis of record)</text>
+<text x="1990" y="909.0" class="s" text-anchor="start">Generated by fta_diagrams.py — edit WP-A-04, not this file</text>
+</svg>

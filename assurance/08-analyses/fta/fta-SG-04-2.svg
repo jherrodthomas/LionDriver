@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1132" height="974" viewBox="0 0 1132 974" font-family="Helvetica, Arial, sans-serif">
+<style>.id{font-size:11px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.n{font-size:9.5px;font-style:italic;text-anchor:middle;fill:#444}.b{font-size:8.6px;font-weight:600;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">FTA SG-04 — deceleration beyond what following traffic and the driver can control  (sheet 2 of 3)</text>
+<rect x="629.5" y="70" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="729.5" y="89" class="id">G4.1</text>
+<text x="729.5" y="102.5" class="d">Deceleration above the controllable</text>
+<text x="729.5" y="115.0" class="d">bound executed while engaged</text>
+<rect x="693.1" y="121.0" width="72.8" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="729.5" y="130.5" class="b" fill="#222">from sheet 1</text>
+<path d="M711.5,173.0 L711.5,155.0 A18,16 0 0 1 747.5,155.0 L747.5,173.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="729.5" y1="173.0" x2="729.5" y2="191.0" class="w"/>
+<line x1="457.0" y1="191.0" x2="1002.0" y2="191.0" class="w"/>
+<line x1="457.0" y1="191.0" x2="457.0" y2="209.0" class="w"/>
+<line x1="1002.0" y1="191.0" x2="1002.0" y2="209.0" class="w"/>
+<rect x="357.0" y="209.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="457.0" y="228.0" class="id">G4.1.1</text>
+<text x="457.0" y="241.5" class="d">0x343 accel below the controllable</text>
+<text x="457.0" y="254.0" class="d">bound on bus 0</text>
+<path d="M439.0,296.0 Q457.0,288.0 475.0,296.0 Q473.0,272.0 457.0,262.0 Q441.0,272.0 439.0,296.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="457.0" y1="296.0" x2="457.0" y2="314.0" class="w"/>
+<line x1="130.0" y1="314.0" x2="784.0" y2="314.0" class="w"/>
+<line x1="130.0" y1="314.0" x2="130.0" y2="332.0" class="w"/>
+<line x1="457.0" y1="314.0" x2="457.0" y2="332.0" class="w"/>
+<line x1="784.0" y1="314.0" x2="784.0" y2="332.0" class="w"/>
+<rect x="30" y="332.0" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="130.0" y="351.0" class="id">BE-4.01</text>
+<text x="130.0" y="364.5" class="d">Envelope bound −3.5 m/s²</text>
+<text x="130.0" y="377.0" class="d">(toyota.h:209) not derived (GAP-04;</text>
+<text x="130.0" y="389.5" class="d">CCF → DFI-08)</text>
+<rect x="85.5" y="395.5" width="89.0" height="13" rx="6.5" fill="#b3261e"/>
+<text x="130.0" y="405.0" class="b" fill="#fff">SPF, systematic</text>
+<circle cx="130.0" cy="428.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="357.0" y="332.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="457.0" y="351.0" class="id">G4.1.1.a</text>
+<text x="457.0" y="364.5" class="d">SoC excessive deceleration AND</text>
+<text x="457.0" y="377.0" class="d">envelope fails to clamp</text>
+<path d="M439.0,419.0 L439.0,401.0 A18,16 0 0 1 475.0,401.0 L475.0,419.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="457.0" y1="419.0" x2="457.0" y2="437.0" class="w"/>
+<line x1="348.0" y1="437.0" x2="566.0" y2="437.0" class="w"/>
+<line x1="348.0" y1="437.0" x2="348.0" y2="483.5" class="w"/>
+<line x1="566.0" y1="437.0" x2="566.0" y2="483.5" class="w"/>
+<rect x="248" y="483.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="348.0" y="502.5" class="id">BE-4.02</text>
+<text x="348.0" y="516.0" class="d">Planner or controller fault (QM),</text>
+<text x="348.0" y="528.5" class="d">false lead</text>
+<rect x="330.5" y="534.5" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
+<text x="348.0" y="544.0" class="b" fill="#fff">SOTIF</text>
+<circle cx="348.0" cy="567.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="466" y="483.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="566.0" y="502.5" class="id">G-ENV</text>
+<text x="566.0" y="516.0" class="d">Envelope does not clamp</text>
+<text x="566.0" y="528.5" class="n">as SG-01: BE-1.06…1.09</text>
+<rect x="521.5" y="534.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="566.0" y="544.0" class="b" fill="#222">repeated, SG-01</text>
+<path d="M566.0,552.5 L584.0,582.5 L548.0,582.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="684" y="332.0" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="784.0" y="351.0" class="id">BE-4.03</text>
+<text x="784.0" y="364.5" class="d">Frame corrupted after the TX hook</text>
+<text x="784.0" y="377.0" class="d">(as BE-1.10; TSR-517)</text>
+<rect x="742.2" y="383.0" width="83.6" height="13" rx="6.5" fill="#b3261e"/>
+<text x="784.0" y="392.5" class="b" fill="#fff">SPF, random HW</text>
+<circle cx="784.0" cy="416.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="902" y="209.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1002.0" y="228.0" class="id">UE-4.04</text>
+<text x="1002.0" y="241.5" class="d">PCM executes the request without</text>
+<text x="1002.0" y="254.0" class="d">its own bound (AOU-05R fails)</text>
+<path d="M1002.0,262.0 L1022.0,277.0 L1002.0,292.0 L982.0,277.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="30" y="640.5" class="h">Symbols (IEC 61025)</text>
+<rect x="32" y="654.5" width="36" height="22" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="96" y="669.5" class="l">Top / intermediate event</text>
+<path d="M32,722.5 Q50,714.5 68,722.5 Q66,698.5 50,688.5 Q34,698.5 32,722.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="707.5" class="l">OR gate</text>
+<path d="M32,760.5 L32,742.5 A18,16 0 0 1 68,742.5 L68,760.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="745.5" class="l">AND gate</text>
+<circle cx="50" cy="779.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="783.5" class="l">Basic event</text>
+<path d="M50,802.5 L70,817.5 L50,832.5 L30,817.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="821.5" class="l">Undeveloped event (outside the item or not developed)</text>
+<path d="M50,840.5 L68,870.5 L32,870.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="59" y1="855.5" x2="80" y2="855.5" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="859.5" class="l">Transfer: continued on another sheet</text>
+<path d="M50,878.5 L68,908.5 L32,908.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="897.5" class="l">Transfer in: gate developed elsewhere</text>
+<rect x="30" y="924.5" width="24.2" height="13" rx="6.5" fill="#b3261e"/>
+<text x="42.1" y="934.0" class="b" fill="#fff">SPF</text>
+<rect x="59.2" y="924.5" width="40.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="79.4" y="934.0" class="b" fill="#fff">latent</text>
+<rect x="104.60000000000001" y="924.5" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
+<text x="122.1" y="934.0" class="b" fill="#fff">SOTIF</text>
+<rect x="144.60000000000002" y="924.5" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="175.6" y="934.0" class="b" fill="#fff">CCF DFI-nn</text>
+<rect x="211.60000000000002" y="924.5" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="223.7" y="934.0" class="b" fill="#fff">FFI</text>
+<rect x="240.8" y="924.5" width="72.8" height="13" rx="6.5" fill="#3d6b3d"/>
+<text x="277.2" y="934.0" class="b" fill="#fff">outside item</text>
+<rect x="318.6" y="924.5" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="344.2" y="934.0" class="b" fill="#222">repeated</text>
+<rect x="672" y="628.5" width="430" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="682" y="650.5" class="h" text-anchor="start">LionDriver — FTA SG-04</text>
+<text x="682" y="666.5" class="l" text-anchor="start">deceleration beyond what following traffic and the driver can control</text>
+<text x="682" y="682.5" class="l" text-anchor="start">Sheet 2 of 3   ·   top of sheet: G4.1</text>
+<text x="682" y="698.5" class="l" text-anchor="start">Source: WP-A-04 §5 (analysis of record)</text>
+<text x="682" y="714.5" class="s" text-anchor="start">Generated by fta_diagrams.py — edit WP-A-04, not this file</text>
+</svg>

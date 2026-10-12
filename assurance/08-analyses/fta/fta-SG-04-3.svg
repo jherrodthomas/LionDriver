@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1132" height="873" viewBox="0 0 1132 873" font-family="Helvetica, Arial, sans-serif">
+<style>.id{font-size:11px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.n{font-size:9.5px;font-style:italic;text-anchor:middle;fill:#444}.b{font-size:8.6px;font-weight:600;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">FTA SG-04 — deceleration beyond what following traffic and the driver can control  (sheet 3 of 3)</text>
+<rect x="629.5" y="70" width="200" height="56.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="729.5" y="89" class="id">G4.6</text>
+<text x="729.5" y="102.5" class="d">Braking while not engaged (HE-04.4)</text>
+<rect x="693.1" y="108.5" width="72.8" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="729.5" y="118.0" class="b" fill="#222">from sheet 1</text>
+<path d="M711.5,160.5 L711.5,142.5 A18,16 0 0 1 747.5,142.5 L747.5,160.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="729.5" y1="160.5" x2="729.5" y2="178.5" class="w"/>
+<line x1="457.0" y1="178.5" x2="1002.0" y2="178.5" class="w"/>
+<line x1="457.0" y1="178.5" x2="457.0" y2="196.5" class="w"/>
+<line x1="1002.0" y1="178.5" x2="1002.0" y2="196.5" class="w"/>
+<rect x="357.0" y="196.5" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="457.0" y="215.5" class="id">G4.6.1</text>
+<text x="457.0" y="229.0" class="d">Inactive-value check not effective</text>
+<path d="M439.0,271.0 Q457.0,263.0 475.0,271.0 Q473.0,247.0 457.0,237.0 Q441.0,247.0 439.0,271.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="457.0" y1="271.0" x2="457.0" y2="289.0" class="w"/>
+<line x1="130.0" y1="289.0" x2="784.0" y2="289.0" class="w"/>
+<line x1="130.0" y1="289.0" x2="130.0" y2="319.5" class="w"/>
+<line x1="348.0" y1="289.0" x2="348.0" y2="319.5" class="w"/>
+<line x1="566.0" y1="289.0" x2="566.0" y2="319.5" class="w"/>
+<line x1="784.0" y1="289.0" x2="784.0" y2="319.5" class="w"/>
+<rect x="30" y="319.5" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="130.0" y="338.5" class="id">BE-1.12</text>
+<text x="130.0" y="352.0" class="d">Corrupted/replayed 0x1D2 creates</text>
+<text x="130.0" y="364.5" class="d">false cruise rising edge with valid</text>
+<text x="130.0" y="377.0" class="d">8-bit checksum (no counter, GAP-01)</text>
+<rect x="85.5" y="383.0" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="130.0" y="392.5" class="b" fill="#222">repeated, SG-01</text>
+<circle cx="130.0" cy="416.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="248" y="319.5" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="348.0" y="338.5" class="id">BE-1.13</text>
+<text x="348.0" y="352.0" class="d">Panda RX path delivers stale/stuck</text>
+<text x="348.0" y="364.5" class="d">cruise frame to both envelope and</text>
+<text x="348.0" y="377.0" class="d">SoC (single RX path; CCF → DFI-10)</text>
+<rect x="303.5" y="383.0" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="348.0" y="392.5" class="b" fill="#222">repeated, SG-01</text>
+<circle cx="348.0" cy="416.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="466" y="319.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="566.0" y="338.5" class="id">BE-1.14</text>
+<text x="566.0" y="352.0" class="d">MCU fault sets controls_allowed</text>
+<text x="566.0" y="364.5" class="d">(BE-1.07 class)</text>
+<rect x="521.5" y="370.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="566.0" y="380.0" class="b" fill="#222">repeated, SG-01</text>
+<circle cx="566.0" cy="403.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="684" y="319.5" width="200" height="131.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="784.0" y="338.5" class="id">BE-3.10</text>
+<text x="784.0" y="352.0" class="d">Inactive value check bypassed by</text>
+<text x="784.0" y="364.5" class="d">mode/param change (e.g. param that</text>
+<text x="784.0" y="377.0" class="d">selects another brake signal or</text>
+<text x="784.0" y="389.5" class="d">stock-longitudinal branch,</text>
+<text x="784.0" y="402.0" class="d">toyota.h:216-248)</text>
+<text x="784.0" y="414.5" class="n">mode or param change bypasses the</text>
+<text x="784.0" y="427.0" class="n">check</text>
+<rect x="709.2" y="433.0" width="56.6" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="737.5" y="442.5" class="b" fill="#fff">FFI-CM-06</text>
+<rect x="769.8" y="433.0" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="814.3" y="442.5" class="b" fill="#222">repeated, SG-03</text>
+<circle cx="784.0" cy="466.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="902" y="196.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1002.0" y="215.5" class="id">BE-4.13</text>
+<text x="1002.0" y="229.0" class="d">SoC sends a negative acceleration</text>
+<text x="1002.0" y="241.5" class="d">while not engaged (QM)</text>
+<circle cx="1002.0" cy="264.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="30" y="539.0" class="h">Symbols (IEC 61025)</text>
+<rect x="32" y="553.0" width="36" height="22" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="96" y="568.0" class="l">Top / intermediate event</text>
+<path d="M32,621.0 Q50,613.0 68,621.0 Q66,597.0 50,587.0 Q34,597.0 32,621.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="606.0" class="l">OR gate</text>
+<path d="M32,659.0 L32,641.0 A18,16 0 0 1 68,641.0 L68,659.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="644.0" class="l">AND gate</text>
+<circle cx="50" cy="678.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="682.0" class="l">Basic event</text>
+<path d="M50,701.0 L70,716.0 L50,731.0 L30,716.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="720.0" class="l">Undeveloped event (outside the item or not developed)</text>
+<path d="M50,739.0 L68,769.0 L32,769.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="59" y1="754.0" x2="80" y2="754.0" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="758.0" class="l">Transfer: continued on another sheet</text>
+<path d="M50,777.0 L68,807.0 L32,807.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="796.0" class="l">Transfer in: gate developed elsewhere</text>
+<rect x="30" y="823.0" width="24.2" height="13" rx="6.5" fill="#b3261e"/>
+<text x="42.1" y="832.5" class="b" fill="#fff">SPF</text>
+<rect x="59.2" y="823.0" width="40.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="79.4" y="832.5" class="b" fill="#fff">latent</text>
+<rect x="104.60000000000001" y="823.0" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
+<text x="122.1" y="832.5" class="b" fill="#fff">SOTIF</text>
+<rect x="144.60000000000002" y="823.0" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="175.6" y="832.5" class="b" fill="#fff">CCF DFI-nn</text>
+<rect x="211.60000000000002" y="823.0" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="223.7" y="832.5" class="b" fill="#fff">FFI</text>
+<rect x="240.8" y="823.0" width="72.8" height="13" rx="6.5" fill="#3d6b3d"/>
+<text x="277.2" y="832.5" class="b" fill="#fff">outside item</text>
+<rect x="318.6" y="823.0" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="344.2" y="832.5" class="b" fill="#222">repeated</text>
+<rect x="672" y="527.0" width="430" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="682" y="549.0" class="h" text-anchor="start">LionDriver — FTA SG-04</text>
+<text x="682" y="565.0" class="l" text-anchor="start">deceleration beyond what following traffic and the driver can control</text>
+<text x="682" y="581.0" class="l" text-anchor="start">Sheet 3 of 3   ·   top of sheet: G4.6</text>
+<text x="682" y="597.0" class="l" text-anchor="start">Source: WP-A-04 §5 (analysis of record)</text>
+<text x="682" y="613.0" class="s" text-anchor="start">Generated by fta_diagrams.py — edit WP-A-04, not this file</text>
+</svg>

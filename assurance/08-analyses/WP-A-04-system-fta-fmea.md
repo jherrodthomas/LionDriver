@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-04 System-level safety analyses (FTA, FMEA) |
 | Standard reference | ISO 26262-9:2018 §8 (safety analyses); ISO 26262-4:2018 §6 (safety analysis of the system architectural design, to support the TSC); ISO 21448:2022 §7 (input on insufficiencies, informative here); ASPICE 4.0 SYS.3 |
-| Version | 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
+| Version | 0.3.1 (fault tree diagrams, [fta/](fta/README.md), generated from the trees below; no content change). 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Fault trees for all seven safety goals: SG-01 (ASIL C ⚠), SG-02…SG-07 (ASIL B); system FMEA covering SG-01…SG-07. Qualitative only |
 | Author | Assurance team (initial draft) |
@@ -22,9 +22,13 @@ This document provides the system-level deductive (FTA) and inductive (FMEA) saf
 - TSR references are to [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) (Draft v0.3); where no TSR covers a measure this is stated.
 - Basic events are reused across trees by ID (e.g. BE-1.13 in SG-03, SG-04 and SG-05). The fault trees use the block diagram of the FSC completeness check ([WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §14) as a check that every node is considered for every goal.
 
+Diagrams: every tree below is also drawn as a conventional fault tree (IEC 61025 symbols) in [fta/](fta/README.md). The diagrams are generated from the text trees in this document by `fta/fta_diagrams.py`, and CI fails if they are out of date; the text stays the analysis of record.
+
 Notation: `[OR]`, `[AND]` gates; `BE-` basic event; `UE-` undeveloped event (outside the item or analysed elsewhere); `(SPF)` marks an event that alone leads to the top event in the baseline design.
 
 ## 2. FTA — SG-01: uncontrollable lateral motion, or steering actuation while not engaged
+
+Diagram: [SG-01 sheet 1](fta/fta-SG-01-1.svg) (all sheets: [fta/](fta/README.md)).
 
 Top event **TE-01**: LKA torque applied at the steering wheel that exceeds what the driver can control, or any LKA torque while the item is not engaged.
 
@@ -100,6 +104,8 @@ TE-01 Uncontrollable lateral motion / torque while not engaged                  
 
 ## 3. FTA — SG-03: unintended acceleration
 
+Diagram: [SG-03 sheet 1](fta/fta-SG-03-1.svg) (all sheets: [fta/](fta/README.md)).
+
 Top event **TE-03**: vehicle acceleration that the driver did not intend (positive acceleration request executed beyond the intended value, while not engaged, or after the driver brakes).
 
 ```
@@ -151,6 +157,8 @@ TE-03 Unintended acceleration                                                   
 | MCS-03.7 | 2 | {BE-1.19/1.21, BE-1.22} | Freshness timing |
 
 ## 4. FTA — SG-02: loss or degradation of lateral control without adequate take-over warning
+
+Diagram: [SG-02 sheet 1](fta/fta-SG-02-1.svg) (all sheets: [fta/](fta/README.md)).
 
 Top event **TE-02**: lateral control is lost or degraded while the item is engaged, and the driver gets no perceivable take-over request within the SG-02 budget (≤ 1 s to warning, [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §3).
 
@@ -210,6 +218,8 @@ TE-02 Loss of lateral control without take-over request within ≤ 1 s          
 
 ## 5. FTA — SG-04: deceleration beyond what following traffic and the driver can control
 
+Diagram: [SG-04 sheet 1](fta/fta-SG-04-1.svg) (all sheets: [fta/](fta/README.md)).
+
 Top event **TE-04**: vehicle deceleration that a following driver cannot avoid, or that the driver of the reference vehicle cannot override in time: excessive magnitude, step onset, unwarranted braking, unannounced item-initiated braking, or braking while not engaged.
 
 ```
@@ -268,6 +278,8 @@ TE-04 Uncontrollable deceleration                                               
 
 ## 6. FTA — SG-05: no release on driver brake, cancel or steering override
 
+Diagram: [SG-05 sheet 1](fta/fta-SG-05-1.svg) (all sheets: [fta/](fta/README.md)).
+
 Top event **TE-05**: the item keeps actuating, or opposes the driver, longer than the SG-05 FTTI (≤ 0.2 s) after a driver brake press, a cancel or main-switch-off, a steering override or an accelerator press; or the driver believes the item is disengaged while it actuates (mode confusion, H-07).
 
 ```
@@ -315,6 +327,8 @@ TE-05 Item does not release on driver action                                    
 
 ## 7. FTA — SG-06: loss of longitudinal deceleration without take-over warning
 
+Diagram: [SG-06 sheet 1](fta/fta-SG-06-1.svg) (all sheets: [fta/](fta/README.md)).
+
 Top event **TE-06**: the item stops decelerating while engaged when the situation needs it (lead ahead, stop), and the driver gets no take-over request within ≤ 1 s.
 
 ```
@@ -350,6 +364,8 @@ TE-06 Loss of longitudinal deceleration without take-over request               
 | MCS-06.6 | 2 | {BE-6.05, BE-1.22} | As MCS-01.8 for the longitudinal path |
 
 ## 8. FTA — SG-07: suppression, delay or alteration of the stock PCS/AEB
+
+Diagram: [SG-07 sheet 1](fta/fta-SG-07-1.svg) (all sheets: [fta/](fta/README.md)).
 
 Top event **TE-07**: a stock PCS or AEB intervention of the Toyota system is prevented, delayed or altered because of the item. The preliminary FTTI for loss of forwarding is 0.2 s ([WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) §3.6), and content alteration is a per-frame property. The tree treats any loss of the camera-to-car path while the relay intercepts, for longer than the FTTI, as the top event.
 
