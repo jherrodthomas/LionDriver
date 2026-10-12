@@ -46,6 +46,11 @@ controller's 3.0 m/s^2 limit and d = 4 m (lane margin plus shoulder, assumed), t
 9-14 degrees at the OS-02 speeds of 70-110 km/h. That is below the 25 degrees at which barriers
 are crash-tested (MASH test level 3, 100 km/h), so the impact is redirecting and the barrier
 ratio still applies. Its head-on in a rural curve (OS-16, HE-02.2) is the head-on case above.
+The same angle holds for an SH-01 departure on a straight road: with lateral acceleration a,
+theta = sqrt(2 * d * a) / v, which equals sqrt(2 * d / R) for R = v^2 / a. At SH-01's 120 km/h
+it is 8 degrees (`--sh01`). The SH-01 barrier impact is not put on a curve either: its primary
+delta-v is a few km/h sideways, and its harm comes from the rebound, spin or rollover that
+follows, which the barrier ratio includes and a delta-v curve does not.
 
 `--sh10` checks that an SH-10 contact belongs to the sideswipe class. The lane change
 accelerates sideways at the controller's 3.0 m/s^2 limit over the whole distance to contact,
@@ -166,7 +171,7 @@ def vru_cases() -> list[tuple[str, str, float]]:
 A_Y_CTRL = 3.0  # m/s^2, controller lateral limit (drive_helpers.py MAX_LATERAL_ACCEL_NO_ROLL)
 BARRIER_OFFSET_M = 4.0  # assumed lateral distance from the curve path to the barrier
 BARRIER_TEST_ANGLE_DEG = 25.0  # MASH test level 3 impact angle
-OS02_SPEEDS_KMH = (70, 90, 110)  # HARA OS-02 speed range
+DEPARTURE_SPEEDS_KMH = (70, 90, 110, 120)  # HARA OS-02 (SH-02) 70-110 and OS-01 (SH-01) 90-120 km/h
 
 
 def curve_departure_angle_deg(speed_kmh: float, offset_m: float = BARRIER_OFFSET_M, a_y: float = A_Y_CTRL) -> float:
@@ -224,7 +229,8 @@ def main(argv: list[str] | None = None) -> int:
   ap.add_argument("--restitution", type=float, default=RESTITUTION)
   ap.add_argument("--sensitivity", action="store_true", help="SH-04: print impact speed over follower reaction and braking")
   ap.add_argument("--sh10", action="store_true", help="SH-10: print the lane-change contact angle and lateral speed")
-  ap.add_argument("--sh02", action="store_true", help="SH-02: print the barrier impact angle of a departure in a curve")
+  ap.add_argument("--sh02", "--sh01", dest="sh02", action="store_true",
+                  help="SH-01/SH-02: print the barrier impact angle of a lane departure at the controller limit")
   a = ap.parse_args(argv)
   if a.sh10:
     print("| Ego speed (km/h) | Lateral speed (km/h) | Contact angle (deg) | Lateral Δv per car (km/h) |\n|---|---|---|---|")
@@ -234,7 +240,7 @@ def main(argv: list[str] | None = None) -> int:
     return 0
   if a.sh02:
     print("| Speed (km/h) | Radius at 3.0 m/s² (m) | Angle at 4 m (deg) | Below 25° test angle |\n|---|---|---|---|")
-    for v in OS02_SPEEDS_KMH:
+    for v in DEPARTURE_SPEEDS_KMH:
       ang = curve_departure_angle_deg(v)
       print(f"| {v} | {(v / 3.6) ** 2 / A_Y_CTRL:.0f} | {ang:.1f} | {'yes' if ang < BARRIER_TEST_ANGLE_DEG else 'no'} |")
     return 0

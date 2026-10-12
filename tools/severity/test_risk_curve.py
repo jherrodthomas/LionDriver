@@ -102,7 +102,7 @@ class RiskCurveTest(unittest.TestCase):
     # 90 km/h at 3 m/s^2: R = 625 / 3 m; theta = sqrt(2 * 4 / R)
     import math
     self.assertAlmostEqual(rc.curve_departure_angle_deg(90), math.degrees(math.sqrt(8 * 3 / 625)))
-    for v in rc.OS02_SPEEDS_KMH:
+    for v in rc.DEPARTURE_SPEEDS_KMH:
       self.assertLess(rc.curve_departure_angle_deg(v), rc.BARRIER_TEST_ANGLE_DEG)
     self.assertGreater(rc.curve_departure_angle_deg(70), rc.curve_departure_angle_deg(110))
 
@@ -117,6 +117,15 @@ class RiskCurveTest(unittest.TestCase):
   def test_sh10_cli(self):
     with redirect_stdout(io.StringIO()) as buf:
       self.assertEqual(rc.main(["--sh10"]), 0)
+    self.assertIn("| 120 |", buf.getvalue())
+
+  def test_sh01_straight_road_departure_matches_curve_formula(self):
+    import math
+    v, a_y, d = 120, 3.0, 4.0
+    straight = math.degrees(math.atan(math.sqrt(2 * d * a_y) / (v / 3.6)))
+    self.assertAlmostEqual(rc.curve_departure_angle_deg(v, d, a_y), straight, delta=0.1)
+    with redirect_stdout(io.StringIO()) as buf:
+      self.assertEqual(rc.main(["--sh01"]), 0)
     self.assertIn("| 120 |", buf.getvalue())
 
   def test_sensitivity_grid(self):
