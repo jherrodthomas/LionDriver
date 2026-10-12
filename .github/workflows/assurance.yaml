@@ -75,7 +75,7 @@ jobs:
       run: python3 assurance/case/tools/test_case.py
     - name: Dashboard is in sync with the records
       run: python3 assurance/case/tools/generate_dashboard.py --check
-    - name: GSN diagrams are in sync with the records and WP-K-01
+    - name: GSN diagrams are in sync with the records, WP-K-01 and WP-K-03
       run: |
         python3 assurance/case/tools/gsn_diagrams.py --check
         python3 assurance/case/tools/test_gsn.py

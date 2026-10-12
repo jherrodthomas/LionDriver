@@ -54,6 +54,28 @@ class TestGsn(unittest.TestCase):
     sheets = gd.paginate(gd.build_tree())
     self.assertEqual([s.ident for s in sheets], ["G0", "G1", "G1.1", "G2", "G3", "G5"])
 
+  def test_cyber_case_structure(self):
+    root = gd.build_cyber_tree()
+    nodes = {n.ident: n for n in walk(root)}
+    self.assertEqual(root.ident, "CG0")
+    self.assertEqual([c.ident for c in nodes["CS1"].children], ["CG1", "CG2", "CG3", "CG4", "CG5", "CG6"])
+    self.assertEqual([c.ident for c in nodes["CG2.2"].children], ["CSn-10", "CSn-11", "CSn-20", "CSn-22", "CSn-31"])
+    self.assertEqual(nodes["CG2.2"].defeaters, ["CDF-01", "CDF-02", "CDF-03"])
+    self.assertEqual([c.ident for c in nodes["CG4.1"].children], [f"CSn-{k}" for k in range(30, 38)])
+    self.assertEqual([cid for _, cid, _ in root.sides], ["CC1", "CC2", "CC3", "CA-01…CA-05"])
+    self.assertIn("Requirements", [cid for _, cid, _ in nodes["CG2.1"].sides])
+    self.assertEqual(nodes["CSn-04"].status, "missing")
+
+  def test_cyber_defeater_register_must_match_trees(self):
+    md = gd.CYBER_MD.read_text(encoding="utf-8").replace("        ⇐ CDF-10\n", "", 1)
+    with self.assertRaises(gd.GsnError):
+      gd.build_cyber_tree(md)
+
+  def test_cyber_unknown_evidence_rejected(self):
+    md = gd.CYBER_MD.read_text(encoding="utf-8").replace("→ CSn-54", "→ CSn-99", 1)
+    with self.assertRaises(gd.GsnError):
+      gd.build_cyber_tree(md)
+
   def test_outputs_current(self):
     for name, content in gd.build().items():
       self.assertEqual((gd.OUT_DIR / name).read_text(encoding="utf-8"), content, name)

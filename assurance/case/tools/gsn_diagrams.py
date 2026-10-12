@@ -153,16 +153,142 @@ def build_tree() -> Node:
   return goal(roots[0]["id"])
 
 
+# ---------------------------------------------------------------- cybersecurity case (WP-K-03)
+
+CYBER_MD = ASSURANCE_DIR / "10-safety-case" / "WP-K-03-cybersecurity-case.md"
+CY_ELEM_RE = re.compile(r"^(CG\d+(?:\.\d+)*|CS\d+(?:\.\d+)*)\b\s*(.*)$")
+CY_CTX_RE = re.compile(r"^⊙\s+(CC\d+|CA-[0-9]+(?:…CA-[0-9]+)?|CJ\d+)\s+(.*)$")
+CSN_RE = re.compile(r"CSn-(\d+)(?:…CSn-(\d+))?")
+
+
+def _table(md: str, heading_prefix: str) -> list[list[str]]:
+  rows, on = [], False
+  for line in md.splitlines():
+    if line.startswith("## "):
+      on = line.startswith(heading_prefix)
+      continue
+    if on and line.startswith("| ") and not line.startswith("| ID") and not line.startswith("|---"):
+      rows.append([c.strip() for c in line.strip().strip("|").split("|")])
+  return rows
+
+
+def build_cyber_tree(md: str | None = None) -> Node:
+  """Goal structure of WP-K-03 §2–§3 (text trees), with evidence status from §4 and defeaters from §6."""
+  md = md if md is not None else CYBER_MD.read_text(encoding="utf-8")
+  evidence = {r[0]: r for r in _table(md, "## 4.")}
+  status_of = {"Available": "available", "Partial": "partial", "Missing": "missing"}
+  nodes: dict[str, Node] = {}
+  root: Node | None = None
+
+  def solutions(text: str, owner: Node) -> None:
+    for m in CSN_RE.finditer(text):
+      lo = int(m.group(1))
+      hi = int(m.group(2) or lo)
+      for k in range(lo, hi + 1):
+        sid = f"CSn-{k:02d}"
+        if sid not in evidence:
+          if m.group(2):
+            continue
+          raise GsnError(f"{owner.ident}: evidence {sid} is not in the WP-K-03 §4 table")
+        row = evidence[sid]
+        if not any(c.ident == sid for c in owner.children):
+          owner.children.append(Node(sid, "solution", row[1], status=status_of.get(row[4].split()[0], "missing")))
+
+  in_block = False
+  stack: list[tuple[int, Node]] = []
+  last: tuple[int, Node] | None = None
+  for line in md.splitlines():
+    if line.startswith("```"):
+      in_block = not in_block
+      stack, last = [], None
+      continue
+    if not in_block or not line.strip():
+      continue
+    indent = len(line) - len(line.lstrip())
+    body = line.strip()
+    owners = [n for i, n in stack if i < indent]
+    if body.startswith("⊙"):
+      m = CY_CTX_RE.match(body)
+      if not m or not owners:
+        raise GsnError(f"WP-K-03: cannot attach context line {body!r}")
+      cid = m.group(1)
+      kind = {"CC": "C", "CA": "A", "CJ": "J"}[cid[:2]]
+      owners[-1].sides.append([kind, cid, m.group(2).strip()])  # type: ignore[arg-type]
+      last = (indent, owners[-1].sides[-1])  # type: ignore[assignment]
+      continue
+    if body.startswith("⇐"):
+      if not owners:
+        raise GsnError(f"WP-K-03: defeater line without a goal: {body!r}")
+      owners[-1].defeaters.extend(d for d in re.findall(r"CDF-\d+", body) if d not in owners[-1].defeaters)
+      continue
+    arrow = body.startswith("→")
+    rest = body[1:].strip() if arrow else body
+    m = CY_ELEM_RE.match(rest)
+    if m:
+      ident, text = m.group(1), m.group(2)
+      text, _, tail = text.partition("→")
+      node = nodes.get(ident)
+      if node is None:
+        node = Node(ident, "strategy" if ident.startswith("CS") else "goal", "")
+        nodes[ident] = node
+      text = re.sub(r"\s+", " ", text).strip()
+      if len(text) > len(node.text):
+        node.text = text
+      if arrow:
+        if not owners:
+          raise GsnError(f"WP-K-03: {ident} has no parent")
+        parent = owners[-1]
+        if node not in parent.children:
+          parent.children.append(node)
+      elif root is None:
+        root = node
+      solutions(tail, node)
+      stack = [(i, n) for i, n in stack if i < indent] + [(indent, node)]
+      last = (indent, node)
+      continue
+    if arrow and rest.startswith("CSR"):
+      reqs, _, tail = rest.partition("→")
+      owners[-1].sides.append(["C", "Requirements", re.sub(r"\s+", " ", reqs).strip()])  # type: ignore[arg-type]
+      solutions(tail, owners[-1])
+      continue
+    if arrow and rest.startswith("CSn"):
+      solutions(rest, owners[-1])
+      continue
+    if last is not None and indent > last[0]:
+      text, _, tail = body.partition("→")
+      target = last[1]
+      if isinstance(target, Node):
+        target.text = (target.text + " " + text.strip()).strip()
+        solutions(tail, target)
+      else:
+        target[2] = (target[2] + " " + text.strip()).strip()
+      continue
+    raise GsnError(f"WP-K-03: cannot read line {body!r}")
+  if root is None:
+    raise GsnError("WP-K-03: no argument found")
+  # The trees (⇐) and the §6 register must name the same defeater-goal pairs.
+  register = {(row[0], gid) for row in _table(md, "## 6.") for gid in re.findall(r"CG\d+(?:\.\d+)*", row[3])}
+  in_trees = {(d, n.ident) for n in nodes.values() for d in n.defeaters}
+  if register != in_trees:
+    diff = sorted(register ^ in_trees)
+    raise GsnError(f"WP-K-03: §3 trees and §6 register disagree on defeaters: {diff}")
+  for n in nodes.values():
+    n.sides = [tuple(sd) for sd in n.sides]  # type: ignore[misc]
+    n.undeveloped = n.kind == "goal" and not n.children
+  return root
+
+
 # ---------------------------------------------------------------- sheets
 
 def paginate(root: Node) -> list[Node]:
-  """One sheet per sub-argument: every goal below the top that has a strategy starts a sheet
-  (the layout of WP-K-01 §3 and §4.1…§4.5). Sheets are numbered in depth-first order."""
+  """One sheet per sub-argument: every goal below the top that is developed further (by a
+  strategy or sub-goals) starts a sheet, the layout of WP-K-01 §3–§4 and WP-K-03 §2–§3.
+  Sheets are numbered in depth-first order."""
   sheets: list[Node] = []
 
   def visit(node: Node, sheet_no: int) -> None:
     for c in node.children:
-      if c.kind == "goal" and any(k.kind == "strategy" for k in c.children):
+      if c.kind == "goal" and any(k.kind != "solution" for k in c.children):
         sheets.append(c)
         c.sheet_link = len(sheets)
         c.sheet_from = sheet_no
@@ -425,11 +551,11 @@ def legend(x: float, y: float) -> tuple[list[str], float]:
     out.append(f'<text x="{x + 56}" y="{cy + 15}" class="l">{escape(label)}</text>')
     cy += 30
   out.append(f'<text x="{x}" y="{cy + 10}" class="dfl">defeaters: DF-nn</text>')
-  out.append(f'<text x="{x + 110}" y="{cy + 10}" class="l">open counter-evidence on the goal (WP-K-01 §7)</text>')
+  out.append(f'<text x="{x + 110}" y="{cy + 10}" class="l">open counter-evidence on the goal (WP-K-01 §7, WP-K-03 §6)</text>')
   return out, cy + 24 - y
 
 
-def render_sheet(root: Node, no: int, total: int) -> str:
+def render_sheet(root: Node, no: int, total: int, case: str = "Safety case", source: str = "") -> str:
   box = make_box(root, root)
   width, height = layout(box)
   width = max(width, 1100)
@@ -440,11 +566,11 @@ def render_sheet(root: Node, no: int, total: int) -> str:
   tb_w, tb_h = 440, 92
   tb_x = width - MARGIN - tb_w
   rows = [
-    ("h", "LionDriver — Safety case (GSN)"),
+    ("h", f"LionDriver — {case} (GSN)"),
     ("l", f"Argument from {root.ident}"),
     ("l", f"Sheet {no} of {total}"),
-    ("l", "Source: case records (assurance/case/) and WP-K-01 contexts"),
-    ("s", "Generated by gsn_diagrams.py — edit the records or WP-K-01, not this file"),
+    ("l", f"Source: {source or 'case records (assurance/case/) and WP-K-01 contexts'}"),
+    ("s", "Generated by gsn_diagrams.py — edit the source, not this file"),
   ]
   foot = [f'<rect x="{tb_x}" y="{fy}" width="{tb_w}" height="{tb_h}" fill="#fff" stroke="#111" stroke-width="1.4"/>']
   ry = fy + 6
@@ -469,36 +595,51 @@ def render_sheet(root: Node, no: int, total: int) -> str:
           '.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}' +
           '.w{stroke:#111;stroke-width:1.1}' +
           '</style>\n<rect width="100%" height="100%" fill="#fff"/>\n' +
-          f'<text x="{MARGIN}" y="{MARGIN + 6}" class="h">Safety case — argument from {escape(root.ident)}' +
+          f'<text x="{MARGIN}" y="{MARGIN + 6}" class="h">{escape(case)} — argument from {escape(root.ident)}' +
           f'{"" if total == 1 else f"  (sheet {no} of {total})"}</text>\n')
   return head + "\n".join(body + leg + foot) + "\n</svg>\n"
 
 
+CASES = [
+  # (prefix, case name, source label, tree builder, document)
+  ("gsn", "Safety case", "case records (assurance/case/) and WP-K-01 contexts", build_tree,
+   "[WP-K-01](../WP-K-01-safety-case.md)"),
+  ("gsn-cs", "Cybersecurity case", "WP-K-03 §2–§4, §6 (text trees and tables)", build_cyber_tree,
+   "[WP-K-03](../WP-K-03-cybersecurity-case.md)"),
+]
+
+
 def build() -> dict[str, str]:
-  root = build_tree()
-  sheets = paginate(root)
   outputs: dict[str, str] = {}
   index = [
-    "# Safety case diagrams (GSN)",
+    "# Safety and cybersecurity case diagrams (GSN)",
     "",
-    "Generated from the case records in [`assurance/case/`](../../case/README.md) and the contexts of " +
-    "[WP-K-01](../WP-K-01-safety-case.md) by `assurance/case/tools/gsn_diagrams.py`. WP-K-01 stays the reviewed " +
-    "document; edit it or the records and regenerate (CI runs `--check`).",
+    "Generated by `assurance/case/tools/gsn_diagrams.py` (CI runs `--check`). The documents stay the reviewed " +
+    "arguments; edit them, or the case records, and regenerate.",
     "",
-    "| Sheet | Argument from | Goals | Solutions |",
-    "|---|---|---|---|",
+    "- **Safety case** ([WP-K-01](../WP-K-01-safety-case.md)): structure from the case records in " +
+    "[`assurance/case/`](../../case/README.md), contexts from WP-K-01 §3–§4.",
+    "- **Cybersecurity case** ([WP-K-03](../WP-K-03-cybersecurity-case.md)): structure from the text trees of " +
+    "§2–§3, evidence status from §4, defeaters from §6. It supports G4 of the safety case.",
+    "",
+    "| Case | Sheet | Argument from | Goals | Solutions |",
+    "|---|---|---|---|---|",
   ]
-  for no, root_node in enumerate(sheets, 1):
-    name = f"gsn-{no}-{root_node.ident}.svg"
-    outputs[name] = render_sheet(root_node, no, len(sheets))
-    box = make_box(root_node, root_node)
-    goals = sum(1 for b in _walk(box) if b.node.kind == "goal")
-    sols = sum(1 for b in _walk(box) if b.node.kind == "solution")
-    index.append(f"| [{no}]({name}) | {root_node.ident} | {goals} | {sols} |")
+  for prefix, case, source, builder, doc in CASES:
+    sheets = paginate(builder())
+    for no, root_node in enumerate(sheets, 1):
+      name = f"{prefix}-{no}-{root_node.ident}.svg"
+      outputs[name] = render_sheet(root_node, no, len(sheets), case, source)
+      box = make_box(root_node, root_node)
+      goals = sum(1 for b in _walk(box) if b.node.kind == "goal")
+      sols = sum(1 for b in _walk(box) if b.node.kind == "solution")
+      index.append(f"| {doc} | [{no}]({name}) | {root_node.ident} | {goals} | {sols} |")
   index += ["", "Notation: goal = rectangle; strategy = parallelogram; solution = circle (green available, " +
             "amber partial, white dashed missing); context = rounded box; assumption / justification = oval " +
             "(A / J); diamond = undeveloped goal. Solid arrows are SupportedBy, hollow arrows InContextOf. " +
-            "Defeaters (open counter-evidence, WP-K-01 §7) are listed in red on the goal they undermine.", ""]
+            "Defeaters (open counter-evidence, WP-K-01 §7, WP-K-03 §6) are listed in red on the goal they " +
+            "undermine. In the cybersecurity case the requirements that refine a goal (CSR-nnn) are shown as " +
+            "a context.", ""]
   outputs["README.md"] = "\n".join(index)
   return outputs
 

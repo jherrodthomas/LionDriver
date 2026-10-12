@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="922" viewBox="0 0 1100 922" font-family="Helvetica, Arial, sans-serif">
+<style>.g{fill:#fff;stroke:#111;stroke-width:1.4}.ctx{fill:#f4f4f4;stroke:#111;stroke-width:1.1}.id{font-size:11.5px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.sid{font-size:10.5px;font-weight:700;text-anchor:middle}.cid{font-size:10px;font-weight:700;text-anchor:middle}.cs{font-size:9.5px;text-anchor:middle;fill:#333}.aj{font-size:11px;font-weight:700;text-anchor:end}.df{font-size:9.5px;font-weight:700;fill:#b3261e;text-anchor:middle}.dfl{font-size:9.5px;font-weight:700;fill:#b3261e}.sh{font-size:9.5px;font-weight:600;fill:#444;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">Cybersecurity case — argument from CG1  (sheet 2 of 7)</text>
+<rect x="428.0" y="70" width="230" height="70.0" class="g"/>
+<text x="543.0" y="89" class="id">CG1</text>
+<text x="543.0" y="102.5" class="d">Risks are identified and rated</text>
+<text x="543.0" y="115.0" class="d">completely and correctly.</text>
+<text x="543.0" y="129.0" class="sh">from sheet 1</text>
+<ellipse cx="764.0" cy="103.25" rx="95.0" ry="37.25" class="ctx"/>
+<text x="855.0" y="142.5" class="aj">J</text>
+<text x="764.0" y="88" class="cid">CJ1</text>
+<text x="764.0" y="100.5" class="cs">Open source: knowledge of the</text>
+<text x="764.0" y="113.0" class="cs">item rated "public" for every</text>
+<text x="764.0" y="125.5" class="cs">path (WP-C-09 §6)</text>
+<line x1="658.0" y1="90" x2="662.0" y2="90" class="w"/>
+<line x1="662.0" y1="90" x2="662.0" y2="103.25" class="w"/>
+<line x1="662.0" y1="103.2" x2="668.0" y2="103.2" class="w"/><path d="M668.0,103.2 L659.7,106.8 L659.7,99.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="543.0" y1="140.0" x2="543.0" y2="159.0" class="w"/>
+<line x1="543.0" y1="159.0" x2="543.0" y2="159.0" class="w"/>
+<line x1="543.0" y1="159.0" x2="543.0" y2="185.0" class="w"/><path d="M543.0,185.0 L539.5,176.7 L546.5,176.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<path d="M432.0,186.0 L668.0,186.0 L654.0,241.0 L418.0,241.0 Z" class="g"/>
+<text x="543.0" y="205.0" class="id">CS1.1</text>
+<text x="543.0" y="218.5" class="d">Argue over TARA method, inputs and</text>
+<text x="543.0" y="231.0" class="d">review</text>
+<line x1="543.0" y1="241.0" x2="543.0" y2="260.0" class="w"/>
+<line x1="153.0" y1="260.0" x2="933.0" y2="260.0" class="w"/>
+<line x1="153.0" y1="260.0" x2="153.0" y2="286.0" class="w"/><path d="M153.0,286.0 L149.5,277.7 L156.5,277.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="421.0" y1="260.0" x2="421.0" y2="286.0" class="w"/><path d="M421.0,286.0 L417.5,277.7 L424.5,277.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="681.0" y1="260.0" x2="681.0" y2="286.0" class="w"/><path d="M681.0,286.0 L677.5,277.7 L684.5,277.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="933.0" y1="260.0" x2="933.0" y2="286.0" class="w"/><path d="M933.0,286.0 L929.5,277.7 L936.5,277.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<rect x="38.0" y="287.0" width="230" height="67.5" class="g"/>
+<text x="153.0" y="306.0" class="id">CG1.1</text>
+<text x="153.0" y="319.5" class="d">Assets, threat scenarios, damage</text>
+<text x="153.0" y="332.0" class="d">scenarios and attack paths cover all</text>
+<text x="153.0" y="344.5" class="d">interfaces IF-01…IF-09 and TB-1…TB-7</text>
+<line x1="153.0" y1="354.5" x2="153.0" y2="373.5" class="w"/>
+<line x1="86.0" y1="373.5" x2="220.0" y2="373.5" class="w"/>
+<line x1="86.0" y1="373.5" x2="86.0" y2="399.5" class="w"/><path d="M86.0,399.5 L82.5,391.2 L89.5,391.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="220.0" y1="373.5" x2="220.0" y2="399.5" class="w"/><path d="M220.0,399.5 L216.5,391.2 L223.5,391.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="86.0" cy="423.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86.0" y="427.5" class="sid" fill="#111">CSn-01</text>
+<text x="86.0" y="461.0" class="cs">TARA (assets,</text>
+<text x="86.0" y="473.5" class="cs">damage, threats,</text>
+<text x="86.0" y="486.0" class="cs">attack paths,</text>
+<text x="86.0" y="498.5" class="cs">feasibility, risk)</text>
+<circle cx="220.0" cy="423.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="220.0" y="427.5" class="sid" fill="#111">CSn-02</text>
+<text x="220.0" y="461.0" class="cs">Item definition, CS</text>
+<text x="220.0" y="473.5" class="cs">view</text>
+<rect x="306.0" y="287.0" width="230" height="55.0" class="g"/>
+<text x="421.0" y="306.0" class="id">CG1.2</text>
+<text x="421.0" y="319.5" class="d">Safety impact is anchored to HARA</text>
+<text x="421.0" y="332.0" class="d">hazards</text>
+<line x1="421.0" y1="342.0" x2="421.0" y2="361.0" class="w"/>
+<line x1="354.0" y1="361.0" x2="488.0" y2="361.0" class="w"/>
+<line x1="354.0" y1="361.0" x2="354.0" y2="399.5" class="w"/><path d="M354.0,399.5 L350.5,391.2 L357.5,391.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="488.0" y1="361.0" x2="488.0" y2="399.5" class="w"/><path d="M488.0,399.5 L484.5,391.2 L491.5,391.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="354.0" cy="423.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="354.0" y="427.5" class="sid" fill="#111">CSn-01</text>
+<text x="354.0" y="461.0" class="cs">TARA (assets,</text>
+<text x="354.0" y="473.5" class="cs">damage, threats,</text>
+<text x="354.0" y="486.0" class="cs">attack paths,</text>
+<text x="354.0" y="498.5" class="cs">feasibility, risk)</text>
+<circle cx="488.0" cy="423.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="488.0" y="427.5" class="sid" fill="#111">CSn-03</text>
+<text x="488.0" y="461.0" class="cs">HARA</text>
+<rect x="566" y="287.0" width="230" height="55.0" class="g"/>
+<text x="681.0" y="306.0" class="id">CG1.3</text>
+<text x="681.0" y="319.5" class="d">Ratings reviewed and preliminarily</text>
+<text x="681.0" y="332.0" class="d">assessed</text>
+<line x1="681.0" y1="342.0" x2="681.0" y2="361.0" class="w"/>
+<line x1="622.0" y1="361.0" x2="681.0" y2="361.0" class="w"/>
+<line x1="622.0" y1="361.0" x2="622.0" y2="399.5" class="w"/><path d="M622.0,399.5 L618.5,391.2 L625.5,391.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="622.0" cy="423.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="622.0" y="427.5" class="sid" fill="#111">CSn-04</text>
+<text x="622.0" y="461.0" class="cs">Preliminary CS</text>
+<text x="622.0" y="473.5" class="cs">assessment of</text>
+<text x="622.0" y="486.0" class="cs">TARA/concept (G1)</text>
+<rect x="818" y="287.0" width="230" height="55.0" class="g"/>
+<text x="933.0" y="306.0" class="id">CG1.4</text>
+<text x="933.0" y="319.5" class="d">TARA re-iterated after controls</text>
+<text x="933.0" y="332.0" class="d">(residual)</text>
+<line x1="933.0" y1="342.0" x2="933.0" y2="361.0" class="w"/>
+<line x1="874.0" y1="361.0" x2="933.0" y2="361.0" class="w"/>
+<line x1="874.0" y1="361.0" x2="874.0" y2="399.5" class="w"/><path d="M874.0,399.5 L870.5,391.2 L877.5,391.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="874.0" cy="423.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="874.0" y="427.5" class="sid" fill="#111">CSn-05</text>
+<text x="874.0" y="461.0" class="cs">Residual-risk TARA</text>
+<text x="874.0" y="473.5" class="cs">iteration</text>
+<text x="30" y="554.5" class="h">Notation (GSN Community Standard v3)</text>
+<rect x="30" y="568.5" width="40" height="22" class="g"/>
+<text x="86" y="583.5" class="l">Goal (claim)</text>
+<path d="M37,598.5 L70,598.5 L63,620.5 L30,620.5 Z" class="g"/>
+<text x="86" y="613.5" class="l">Strategy (argument)</text>
+<circle cx="50" cy="639.5" r="11" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.6"/>
+<text x="86" y="643.5" class="l">Solution: evidence available</text>
+<circle cx="50" cy="669.5" r="11" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86" y="673.5" class="l">Solution: evidence partial</text>
+<circle cx="50" cy="699.5" r="11" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="86" y="703.5" class="l">Solution: evidence missing</text>
+<rect x="30" y="718.5" width="40" height="22" rx="10" class="ctx"/>
+<text x="86" y="733.5" class="l">Context</text>
+<ellipse cx="50" cy="759.5" rx="20" ry="11" class="ctx"/>
+<text x="86" y="763.5" class="l">Assumption (A) / justification (J)</text>
+<path d="M50,780.5 L59,789.5 L50,798.5 L41,789.5 Z" fill="#fff" stroke="#111" stroke-width="1.2"/>
+<text x="86" y="793.5" class="l">Undeveloped goal</text>
+<line x1="30.0" y1="819.5" x2="70.0" y2="819.5" class="w"/><path d="M70.0,819.5 L61.7,823.0 L61.7,816.0 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<text x="86" y="823.5" class="l">SupportedBy</text>
+<line x1="30.0" y1="849.5" x2="70.0" y2="849.5" class="w"/><path d="M70.0,849.5 L61.7,853.0 L61.7,846.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<text x="86" y="853.5" class="l">InContextOf</text>
+<text x="30" y="878.5" class="dfl">defeaters: DF-nn</text>
+<text x="140" y="878.5" class="l">open counter-evidence on the goal (WP-K-01 §7, WP-K-03 §6)</text>
+<rect x="630" y="542.5" width="440" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="640" y="564.5" class="h">LionDriver — Cybersecurity case (GSN)</text>
+<text x="640" y="580.5" class="l">Argument from CG1</text>
+<text x="640" y="596.5" class="l">Sheet 2 of 7</text>
+<text x="640" y="612.5" class="l">Source: WP-K-03 §2–§4, §6 (text trees and tables)</text>
+<text x="640" y="628.5" class="s">Generated by gsn_diagrams.py — edit the source, not this file</text>
+</svg>
