@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-03 Technical safety concept and system architectural design |
 | Standard reference | ISO 26262-4:2018 §6 (technical safety concept, system architectural design, safety mechanisms, FFI/independence by reference to ISO 26262-9 §6–§7); ISO 21448:2022 §8 (architecture-level functional modifications, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.2 (§6 safety mechanisms for the WP-C-04 v0.2 FSRs and the uncatalogued TSRs, SM-29…SM-42, 2026-10-12) |
+| Version | 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01, until re-rated); target ASIL B for the envelope (FSC option (c)) |
 | Author | Assurance team (initial draft) |
@@ -135,7 +135,7 @@ After revocation the envelope rejects further actuation frames. Under TSR-109 it
 | SoC heartbeat lost | E-03 tick | 4–5 s → ≤ 0.3 s (TSR-407) | SILENT + siren → revoke at 0.3 s, SILENT after ≤ 2 s, siren (TSR-516) |
 | SoC control loop frozen, pandad alive | none → TSR-408/409 | — → ≤ 50 ms | EPS drop-out only → SS-L |
 | Host/panda engaged mismatch | E-03 tick; selfdrived | 2–3 s / 2 s → ≤ 0.3 s (TSR-307) | revoke / immediate disable |
-| MCU hang | none (GAP-07) → IWDG | — → ≤ 0.2 s (TSR-501) | relay stays in last state (GAP-43) → reset → SS-S |
+| MCU hang | none (GAP-07) → IWDG | — → ≤ 0.1 s (TSR-501) | relay stays in last state (GAP-43) → reset → SS-S |
 | MCU fault (ECC, clock, interrupt rate…) | report-only → TSR-502/503 | various → ≤ 0.2 s | none (GAP-08) → SS-S |
 | Relay stuck released | E-03 `stock_ecu_check` | 1–2 s window | block TX/fwd; host immediate disable |
 | Relay stuck intercepting | none → TSR-506 readback | — → ≤ 0.3 s | — → SS-S + warning (GAP-43) |
@@ -198,19 +198,19 @@ Diagnostic coverage (DC) values are **targets** for the FMEDA ([WP-H-03](../04-h
 | SM-20 | Relay readback and latch | relay stuck either way | E-04a/E-05 | 506, 710 | Partial (one direction, indirect) | high (with readback) | relay test at start-up (TSR-515) |
 | SM-21 | MPU isolation | comms handler corrupting safety data | E-04a | 507 | New | medium | — |
 | SM-22 | Configuration lock and command gating | SoC selects wrong mode/param; debug commands | E-03b | 511–514, 619, 620 | New | high | release-build check (TSR-514), INS-17/23 |
-| SM-23 | SoC-independent siren | warning when SoC is lost | E-03b/E-04a | 516 | Partial | — (warning) | siren test at start-up (TSR-515) |
+| SM-23 | SoC-independent siren | warning when the SoC is lost, on every envelope revocation that is not a driver action, and when a fault-induced ACC cancel has no effect | E-03b/E-04a | 516 | Partial | — (warning) | siren test at start-up (TSR-515) |
 | SM-24 | Relay malfunction detection (traffic-based) | relay stuck released / camera on car bus | E-03a | 710 | Impl | medium | INS-27 |
 | SM-25 | Host fault classification and freshness | stale/invalid inputs on SoC | E-01 | 601–604, 606, 615, 616 | Partial | QM | T-SIL |
 | SM-26 | Driver monitoring | inattention (misuse) | E-01/E-02 | 608–612 | Partial | QM (SOTIF) | DM validity (TSR-609) |
 | SM-27 | Excessive-actuation detector | vehicle response beyond 2× limits | E-01 | 617 | Impl | QM | — |
 | SM-28 | Controller margin | operation at envelope boundary | E-01 | 605 | Partial | QM | — |
 | SM-29 | Engagement follows PCM cruise; revoke on SoC "not engaged" | engagement state of the envelope differs from the PCM or from the SoC | E-03a/E-03b | 307(a), 309 | Impl (309) / Partial (307(a): 2–3 s) | high | T-SIL; T-VEH (cluster indication, AOU-12) |
-| SM-30 | Engagement and authority mismatch detection (SoC side) | envelope blocks or never grants authority while engaged; PCM cruise differs from the item's state | E-01 | 307(b), 308, 621 | Partial (2 s; `cruiseMismatch` 6 s, no reaction) | QM (B-sup: SM-08, SM-23) | T-SIL, FI |
-| SM-31 | HMI path liveness and audible minimum | hung render loop, stalled or muted audio, so the take-over request is not perceived | E-01 (HMI) | 622, 623 | Partial (crash only) | QM (B-sup: SM-23 siren, SM-29 cluster) | FI; volume check at engagement |
+| SM-30 | Engagement and authority mismatch detection (SoC side) | envelope blocks or never grants authority while engaged; PCM cruise differs from the item's state | E-01 | 307(b), 308, 621, 626 | Partial (2 s; `cruiseMismatch` 6 s, no reaction) | QM (B-sup: SM-08, SM-23) | T-SIL, FI |
+| SM-31 | HMI path liveness and audible minimum | hung render loop, stalled or muted audio, so the take-over request is not perceived | E-01 (HMI) | 622, 623, 627 | Partial (crash only) | QM (B-sup: SM-23 siren, SM-29 cluster) | FI; volume check at engagement |
 | SM-32 | Announced, bounded item-initiated deceleration | deceleration not caused by traffic (DM no-response, soft disable) applied without warning or as a step | E-01 | 624 | Partial | QM (B-sup: SM-07) | T-SIL |
 | SM-33 | FCW input freshness and false-alarm rate | FCW from stale or invalid inputs; false FCW causing reflex braking | E-01 | 625 | Partial | ASIL A on QM element (open, WP-C-04 OI-9) | T-SIL; LOG fleet false-rate monitoring |
 | SM-34 | PCM ACC-fault reaction | PCM does not execute ACC (ACC or cruise fault) | E-01 | 618 | Impl | QM (B-sup: SM-29) | T-SIL |
-| SM-35 | Forwarding with fixed block list and forwarding supervision | camera-side frames lost, delayed or altered; block list wrong | E-03a/E-03b | 704, 707 | Impl (704) / Not verified (707) | high (block list, design); medium (overflow counting) | T-HIL each release |
+| SM-35 | Forwarding with fixed block list and forwarding supervision | camera-side frames lost, delayed or altered; block list wrong | E-03a/E-03b | 704, 707, 711 | Impl (704) / Not verified (707) / Not impl (711) | high (block list, design); medium (overflow counting) | T-HIL each release |
 | SM-36 | PCS and DSU message TX gate | item originates or alters frames used by the stock PCS | E-03a | 705 | **Not met** (GAP-42) | high (when implemented) | T-SIL |
 | SM-37 | Stock AEB/FCW event indication | driver not told that the stock system intervened | E-01 | 709 | Impl | QM | — |
 | SM-38 | Post-load TX read-back | approved actuation frame altered in FDCAN message RAM, FDCAN core or transceiver | E-03b/E-04a | 517 | New | high | FI each release |
@@ -218,10 +218,11 @@ Diagnostic coverage (DC) values are **targets** for the FMEDA ([WP-H-03](../04-h
 | SM-40 | Car-side transceiver supervision | transceiver transmitting from reset; bus-off or persistent TX failure while authority is granted | E-04a/E-03b | 508 | Partial | medium | start-up check (TSR-515) |
 | SM-41 | MCU die-temperature monitor | MCU outside its specified temperature range | E-04a/E-03b | 509 | Partial (report only) | medium | start-up check |
 | SM-42 | Harness orientation and connection detection | harness flipped, not connected or partly inserted; wrong CAN routing or relay pin | E-04a/E-05 | 701 | Partial | medium | before the relay is first driven (TSR-515) |
+| SM-43 | ACC cancel on every fault-induced disengagement | driver not told by an independent cue that the item disengaged on a fault | E-01 | 303 | Impl (host) | QM (B-sup: SM-23 via TSR-516(c), SM-29) | T-VEH (cluster and PCM cue, AOU-12) |
 
 Notes:
 
-- **FSRs without an item safety mechanism, by design.** FSR-03.06, FSR-05.07 and FSR-07.04 are external measures of the PCM (TSR-208, TSR-310, TSR-708, AOU-03R/04R/05R); they are verified by vehicle tests (WP-S-09), not covered by an item mechanism. FSR-03.04 refers to the shared mechanisms of FSR-01.05…01.12 (SM-04, SM-09…SM-17). With SM-29…SM-42 every other FSR of [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) v0.2 has at least one catalogued mechanism ([RR-2026-005](reviews/RR-2026-005.md) F-03).
+- **FSRs without an item safety mechanism, by design.** FSR-03.06, FSR-05.07 and FSR-07.04 are external measures of the PCM (TSR-208, TSR-310, TSR-708, AOU-03R/04R/05R); they are verified by vehicle tests (WP-S-09), not covered by an item mechanism. FSR-03.04 refers to the shared mechanisms of FSR-01.05…01.12 (SM-04, SM-09…SM-17). With SM-29…SM-43 every other FSR of [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) v0.2 has at least one catalogued mechanism ([RR-2026-005](reviews/RR-2026-005.md) F-03).
 - **TSRs that are not safety mechanisms.** TSR-111 (EPS, external), TSR-311 (initial state), TSR-515 (start-up tests; they appear in the latent-fault column), TSR-519 (interrupt and timing scheme), TSR-613 (build configuration), TSR-702 and TSR-703 (harness design) and the OPS block 801–818 are design, configuration or verification constraints. They are allocated in §5 but not listed here.
 - SM-01…SM-08 act within one frame and are not limited by detection times. SM-09…SM-14 are bounded by the timing of [WP-S-04](WP-S-04-timing-ftti-budget.md).
 - The combined RX strategy (SM-09/10/11) cannot reach "high" coverage without vehicle-side counters. The residual is argued in [WP-A-04](../08-analyses/WP-A-04-system-fta-fmea.md), with the driver and the PCM cruise drop on brake (AOU-03R) as independent paths.

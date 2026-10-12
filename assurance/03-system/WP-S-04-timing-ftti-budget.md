@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-04 Timing analysis: FTTI, fault detection and reaction budget |
 | Standard reference | ISO 26262-4:2018 §6 (fault tolerant time interval, fault detection and fault reaction time intervals, emergency operation); ISO 26262-3:2018 §7 (FTTI as FSC input); ISO 26262-1:2018 (definitions, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.1 |
+| Version | 0.2 (§3.6 preliminary SG-07 FTTI and budget, RR-2026-005 F-02; 2026-10-12) |
 | Status | Draft — kinematic estimates only; no measurement has been performed |
 | ASIL / scope | SG-01 (C until re-rated, B‡), SG-02…SG-07 (B) |
 | Author | Assurance team (initial draft) |
@@ -106,7 +106,31 @@ Requirement-based: the driver expects release within the time of their own actio
 
 ### 3.6 SG-07 PCS preservation
 
-Continuous. Forwarding latency (TSR-707) and relay state on MCU hang (GAP-43) matter; there is no detection budget, only a design requirement that the stock path is never interrupted for longer than the PCS can tolerate (TBD with the PCS message timing, OI-4).
+SG-07 has two parts with different timing.
+
+- **Content.** The item must not originate or alter a PCS-relevant frame. This is a per-frame property of the TX gate (TSR-705) and the forwarding block list (TSR-704). It has no detection budget: a wrong frame is either never sent or the design is wrong.
+- **Forwarding loss or delay.** While the relay intercepts, the stock camera frames that carry the PCS request reach the car only through the safety MCU. If forwarding stops (MCU hang, camera-side bus fault, a QM configuration command, queue overflow; WP-A-04 §8), the PCS braking request is delayed until the fault is detected and the relay returns the stock path. This part needs an FTTI.
+
+Hazard: the stock PCS brakes later than it would without the item, so less speed is removed before impact. If braking starts d seconds late and would otherwise have continued until impact, the speed reduction lost is at most a_PCS · d.
+
+| Item | Value | Basis |
+|---|---|---|
+| PCS braking deceleration a_PCS | ≈ 6 m/s² (assumed full PCS braking on dry road) | assumption A-PCS-1, to be measured (§6) |
+| Speed reduction lost for d = 0.2 s | 6 × 0.2 = 1.2 m/s ≈ 4.3 km/h | kinematics |
+| Speed reduction lost for d = 0.5 s | 3.0 m/s ≈ 10.8 km/h | kinematics |
+| PCS message period on the camera-side bus | not known | to be measured from drive logs (§6, OI-4) |
+| Relay drop-out time after the coil is released | ≈ 10–20 ms for typical automotive relays | assumption A-PCS-2; datasheet (WP-H-02) |
+
+**Preliminary FTTI(SG-07, forwarding loss) = 0.2 s.** A delay of 0.2 s removes at most about 4 km/h of the speed reduction the stock PCS would achieve, which is small next to the reductions an AEB function is designed for. A delay of 0.5 s or more (10 km/h or more) is not. This is engineering judgement on assumed values, recorded so the budget can be checked. It is replaced once the PCS braking profile and message timing are measured on the reference vehicle and the acceptable loss is agreed in the HARA review.
+
+Budget: **FDTI ≤ 0.1 s** to detect that forwarding has stopped (forwarding supervision, TSR-711; MCU hang through the hardware watchdog, TSR-501) and **FRTI ≤ 0.1 s** to release the relay (TSR-706) including relay drop-out.
+
+Consequences for the TSRs:
+
+- TSR-501 set the watchdog timeout to ≤ 0.2 s, which fits SG-01 (0.5 s) but not the SG-07 FDTI of 0.1 s. WP-S-02 v0.3 tightens it to ≤ 0.1 s. The alternative, releasing the relay by another path on an MCU hang, is open in WP-H-01 (HWSR-502).
+- TSR-706 releases the relay ≤ 0.1 s after the fault reaction. That fits the FRTI.
+- TSR-707 (forwarding latency ≤ 1 ms in normal operation) is far inside the budget.
+- No TSR detected that forwarding has stopped. TSR-711 is added in [WP-S-02](WP-S-02-technical-safety-requirements.md) v0.3.
 
 ### 3.7 Summary of FTTIs and budgets
 
@@ -116,12 +140,14 @@ Continuous. Forwarding latency (TSR-707) and relay state on MCU hang (GAP-43) ma
 | SG-01 RX loss/corruption | 0.5 s | ≤ 0.2 s (TSR-401) | ≤ 0.1 s | ≥ 0.2 s |
 | SG-01 SoC heartbeat loss | 0.5 s | ≤ 0.3 s (TSR-407) | ≤ 0.1 s | ≥ 0.1 s |
 | SG-01 SoC command stall | 0.5 s | ≤ 0.05 s (TSR-408) | ≤ 0.1 s | ≥ 0.35 s |
-| SG-01 MCU execution fault | 0.5 s | ≤ 0.2 s (TSR-501) | ≤ 0.1 s (reset + relay release) | ≥ 0.2 s |
+| SG-01 MCU execution fault | 0.5 s | ≤ 0.1 s (TSR-501; set by SG-07) | ≤ 0.1 s (reset + relay release) | ≥ 0.3 s |
 | SG-01 relay stuck | 0.5 s | ≤ 0.3 s (TSR-506) | ≤ 0.1 s | ≥ 0.1 s |
 | SG-02/06 loss without warning | 1 s to warning | ≤ 0.5 s | ≤ 0.5 s | — (see §3.2) |
 | SG-03/04 | 1 s | ≤ 0.5 s | ≤ 0.3 s | ≥ 0.2 s |
 | SG-05 brake/cancel | 0.2 s | ≤ 30 ms | ≤ 10 ms + EPS/PCM | TBD |
 | SG-05 steering override | 0.2 s | ≤ 40 ms + t_ovr | ≤ 0.1 s | TBD |
+| SG-07 content (TX gate, block list) | per frame | 0 | — | — |
+| SG-07 forwarding loss | 0.2 s (preliminary, §3.6) | ≤ 0.1 s (TSR-711; MCU hang: TSR-501 ≤ 0.1 s) | ≤ 0.1 s (TSR-706, incl. relay drop-out) | 0 |
 
 ## 4. Current detection and reaction times (code-derived)
 
@@ -162,7 +188,7 @@ Continuous. Forwarding latency (TSR-707) and relay state on MCU hang (GAP-43) ma
 | SoC heartbeat loss | ≤ 0.3 s | 4–5 s (T-06) | **Not met** | evaluate at ≥ 10 Hz; revoke at 0.3 s; SILENT ≤ 2 s | TSR-407, 510 |
 | Host/panda mismatch | ≤ 0.3 s | 2–3 s (T-05), 2 s (T-17) | **Not met** | 0.3 s both sides | TSR-307 |
 | SoC command stall | ≤ 0.05 s | 0.1 s at host (T-13), then EPS ≈ 2 s (T-23) | **Not met** | command-frame freshness in the MCU + active zero frame | TSR-408, 109 |
-| MCU hang | ≤ 0.2 s | not detected (T-09) | **Not met** | IWDG | TSR-501 |
+| MCU hang | ≤ 0.1 s | not detected (T-09) | **Not met** | IWDG | TSR-501 |
 | Relay stuck released | ≤ 0.3 s | 1–2 s window (T-08) | **Not met** | readback | TSR-506 |
 | Brake / cancel | ≤ 30 ms | 25–30 ms (T-04) | Met (envelope side) | verify EPS/PCM response; TSR-109 | TSR-302, 109 |
 | Steering override | ≤ 0.2 s | not in envelope | **Not met** | driver-torque monitor | TSR-304 |
@@ -213,6 +239,7 @@ Results (template — **Not yet executed**):
 | OI-1 | Confirm vehicle width, lane-margin design value and a_y,EPS (M-01) and recompute §3.1 | Safety engineer | G2 |
 | OI-2 | SG-02 at the ODD curve bound: physical time to departure (≈ 0.7 s) is shorter than driver reaction; HARA owner to review C rating of HE-02.1 or tighten R_ODD (tracked as WP-C-03 OI-7; noted in WP-C-04 §8) | HARA owner | G2 |
 | OI-3 | Check SG-03 standstill-launch distance assumptions with WP-C-08 | Safety engineer | G2 |
-| OI-4 | Obtain PCS message timing requirements to bound forwarding latency and relay transitions (TSR-707) | Safety engineer | G2 |
+| OI-4 | Measure the PCS message period and braking profile on the reference vehicle (A-PCS-1, A-PCS-2) and confirm or replace the preliminary SG-07 FTTI of §3.6; agree the acceptable speed-reduction loss in the HARA review | Safety engineer | G2 |
+| OI-7 | SG-07 forwarding loss has zero margin (FDTI + FRTI = FTTI). Decide whether to shorten the watchdog and forwarding-supervision times below 0.1 s once the PCS timing is measured | Safety engineer | G2 |
 | OI-5 | Execute M-01…M-11 and fill §6 results | Test lead | G4 |
 | OI-6 | Update FSC §8 budgets after this document is approved (FSC OI-4) | Safety engineer | G2 |

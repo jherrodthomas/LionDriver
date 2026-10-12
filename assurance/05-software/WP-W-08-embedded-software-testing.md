@@ -70,7 +70,7 @@ Status of all: Specified, not implemented.
 | VS-SWQ-11 | Command stall | 408, 109a | Stop `0x2E4`/`0x343` with heartbeat alive | Revocation 50/100 ms; zero frames |
 | VS-SWQ-12 | SPI integrity and bounds on target (also HWSR-401) | 410, 410a, 410b, 411, 412, 412a, 412b, 413 | Corrupted, replayed, reordered, oversized transfers via fault-injecting SPI host | No effect from corrupted transfer; no memory corruption (stack/guard canaries via SWD); error burst revokes |
 | VS-SWQ-13 | EPS status monitoring | 110 | Plant reports LKA_STATE fault codes; `0x262` loss | Lateral revocation within one frame / timeout |
-| VS-SWQ-14 | Watchdog and hang | 501, 501b, 502a | Halt main/tick/comms ISR via SWD; infinite loop in a handler; `assert_fatal` | MCU reset ≤ 0.2 s; relay released; CAN TX silent |
+| VS-SWQ-14 | Watchdog and hang | 501, 501b, 502a | Halt main/tick/comms ISR via SWD; infinite loop in a handler; `assert_fatal` | MCU reset ≤ 0.1 s; relay released; CAN TX silent |
 | VS-SWQ-15 | Fault reaction | 502, 502b, 503a, 503b, 504, 505, 508, 509 | Interrupt storm, register divergence, ECC event (if injectable), clock drift, supply ramp, bus-off, temperature | SS-S ≤ 0.1 s after detection, latch class per WP-W-05 §6.1 |
 | VS-SWQ-16 | Start-up tests and image integrity | 503, 515, 502c | Corrupted image byte; failing relay readback; power-up observation of relay and transceivers | Relay never driven on failure; outputs safe from reset |
 | VS-SWQ-17 | Configuration lock and request gating | 511a, 512, 512a, 513, 514 | All control requests in TOYOTA mode; non-reference `0xdc`; `0xd6` build type | Rejected as specified; build type "release" |
