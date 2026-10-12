@@ -175,10 +175,10 @@
   phase: G3
   between: [WP-W-11, WP-W-01]
   pattern: "Safety-Security"
-  topic: "One coding guideline for safety and security: the CERT C subset for security static analysis still has to be chosen and recorded next to MISRA C:2012"
-  anchors: ["WP-W-11:Choose the CERT C rule subset for SAST-02 and record it in [WP-W-01]", "WP-W-11:Base: **MISRA C:2012**"]
-  status: open
-  open_item: "WP-W-11 OI-2"
+  topic: "One coding guideline for safety and security: the CERT C subset for security static analysis is recorded next to MISRA C:2012, with each rule mapped to the cppcheck or MISRA checker that covers it or to review (the pinned cppcheck has no CERT addon)"
+  anchors: ["WP-W-11:CERT C subset of WP-W-01 §5.5", "WP-W-01:Security coding rules: CERT C subset (SAST-02)"]
+  status: documented
+  open_item: null
   due: G3
 - id: IX-18
   kind: interface

@@ -63,7 +63,6 @@ From the [process model](../../../process/README.md). Each one is a condition on
 |---|---|---|---|---|
 | IX-06 | The reference ODD cannot be compared with the driving model's training-data ODD, which upstream has not published | WP-C-02 OI-6 | G2 | |
 | IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-11 must confirm; the targets are not yet approved | WP-V-02 OI-3 | G2 | |
-| IX-17 | One coding guideline for safety and security: the CERT C subset for security static analysis still has to be chosen and recorded next to MISRA C:2012 | WP-W-11 OI-2 | G3 | |
 | IX-18 | The ML compiler (tinygrad) is a QM tool whose confidence comes from back-to-back comparison against an independent ONNX reference runtime, which is not yet selected | WP-W-10 OI-2 | G3 | |
 | IX-20 | Hardware, embedded-software and system integration share one HIL bench (D-04) that does not exist; WP-H-06 plans it for G3 and WP-W-08 for G4 | WP-H-06 OI-1 / WP-W-08 OI-1 (D-04) | G4 | |
 | IX-21 | Embedded-software qualification, system integration and the fault-injection campaign overlap; the split of test cases is not agreed | WP-W-08 OI-5 | G4 | |

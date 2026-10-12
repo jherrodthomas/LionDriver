@@ -29,7 +29,7 @@
 
 | Work product | Activity | Status in WP-M-00 | Open items | Verification review (WP-P-05) |
 |---|---|---|---|---|
-| [WP-W-01](../../../05-software/WP-W-01-software-development-environment-guidelines.md) SW development environment, languages and coding guidelines | DEV-01 | Draft | 12 | |
+| [WP-W-01](../../../05-software/WP-W-01-software-development-environment-guidelines.md) SW development environment, languages and coding guidelines | DEV-01 | Draft | 13 | |
 | [WP-P-07](../../../07-supporting/WP-P-07-tool-classification-qualification.md) Software tool classification and qualification | DEV-02 | Draft | 7 | |
 | [WP-H-02](../../../04-hardware/WP-H-02-hardware-design.md) Hardware architectural and detailed design (device, panda MCU, harness, relay) | DEV-03 | Draft | 6 | |
 | [WP-H-01](../../../04-hardware/WP-H-01-hardware-safety-requirements.md) Hardware safety requirements specification | DEV-04 | Draft | 6 | |
@@ -44,7 +44,7 @@
 | [WP-W-06](../../../05-software/WP-W-06-software-unit-verification.md) Software unit verification specification and report (static analysis, MISRA, coverage, mutation) | DEV-13 | Draft | 10 | |
 | [WP-W-09](../../../05-software/WP-W-09-configuration-calibration-data.md) Safety-related configuration and calibration data (car params, fingerprints, limits, model weights) | DEV-14 | Draft | 7 | |
 | [WP-W-10](../../../05-software/WP-W-10-ml-engineering.md) ML engineering: model requirements, data management, training, testing, deployment | DEV-15 | Draft | 6 | |
-| [WP-W-11](../../../05-software/WP-W-11-cybersecurity-implementation-verification.md) Cybersecurity implementation and verification | DEV-16 | Draft | 8 | |
+| [WP-W-11](../../../05-software/WP-W-11-cybersecurity-implementation-verification.md) Cybersecurity implementation and verification | DEV-16 | Draft | 7 | |
 | [WP-P-08](../../../07-supporting/WP-P-08-software-component-qualification.md) Qualification of software components (third-party and upstream software) | DEV-17 | Draft | 6 | |
 | [WP-P-09](../../../07-supporting/WP-P-09-proven-in-use.md) Proven-in-use argument evaluation | DEV-18 | Draft | 3 | |
 
@@ -69,7 +69,6 @@ From the [process model](../../../process/README.md). Each one is a condition on
 |---|---|---|---|---|
 | IX-06 | The reference ODD cannot be compared with the driving model's training-data ODD, which upstream has not published | WP-C-02 OI-6 | G2 | |
 | IX-13 | The AI safety requirements carry (TBC) performance values that the SOTIF validation targets VT-01…VT-11 must confirm; the targets are not yet approved | WP-V-02 OI-3 | G2 | |
-| IX-17 | One coding guideline for safety and security: the CERT C subset for security static analysis still has to be chosen and recorded next to MISRA C:2012 | WP-W-11 OI-2 | G3 | |
 | IX-18 | The ML compiler (tinygrad) is a QM tool whose confidence comes from back-to-back comparison against an independent ONNX reference runtime, which is not yet selected | WP-W-10 OI-2 | G3 | |
 
 ### Roles WP-M-02 §3.1 needs by this gate that are not assigned
