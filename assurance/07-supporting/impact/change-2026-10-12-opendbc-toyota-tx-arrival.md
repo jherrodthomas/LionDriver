@@ -5,9 +5,9 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Proposed 2026-10-12: LionDriver pins opendbc `31e890d` (branch `claude/tx-arrival-supervision`) until opendbc#11 is merged; not yet verified on the vehicle or on hardware (HIL bench D-04); not reviewed independently** |
+| Status | **Proposed 2026-10-12: LionDriver pins opendbc `00ea632` (branch `claude/tx-arrival-supervision`) until opendbc#11 is merged; not yet verified on the vehicle or on hardware (HIL bench D-04); not reviewed independently** |
 | Change request | [jherrodthomas/opendbc#11](https://github.com/jherrodthomas/opendbc/pull/11) |
-| Range | opendbc `875e325..31e890d` |
+| Range | opendbc `875e325..31e890d`, merged with the fork's master (`7993399`, TX rate supervision TSR-518) in `00ea632` |
 | Reference configuration affected | Yes, in the reference build only (`LIONDRIVER_REFERENCE`, Toyota LKA torque control without SecOC); other builds and configurations are unchanged |
 | Author / reviewer (independence) | Claude (AI-assisted draft) / TBD; an AI draft is not a review (WP-M-06) |
 
@@ -15,7 +15,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 
 | Commit(s) | Files | Summary of behaviour change | FuSa | SOTIF | AI | CS | Hazards / findings affected | WPs affected | Verification to re-run | Decision |
 |---|---|---|---|---|---|---|---|---|---|---|
-| `31e890d` | `opendbc/safety/safety.h`, `declarations.h`, `modes/defaults.h`, `modes/toyota.h`, `tests/test_toyota.py` | While authority is granted, STEERING_LKA (`0x2E4`, 100 Hz) must reach the TX hook at least every 50 ms and, with openpilot longitudinal, ACC_CONTROL (`0x343`, 33 Hz) at least every 100 ms; otherwise the 100 Hz safety task revokes authority. Supervision starts when authority is granted. Generic mechanism (`safety_config.tx_arrival_checks`), compiled only with `LIONDRIVER_REFERENCE` | Yes | No | Yes (a stalled ML control loop ends in a stalled `controlsd`) | No | SG-01, SG-03, SG-06; HE-02.3; WP-A-04 SPF-14 (stale SoC command held), BE-1.19, BE-6.05; GAP-10 | WP-S-02 (TSR-408), WP-W-02 (SWSR-408), WP-W-06 (unit test), WP-V-05 (FI), WP-A-04 (SPF-14) | Safety unit tests (both variants, 100 % line coverage); mutation of the new code; opendbc and panda MISRA; replay of reference logs (TX gaps while engaged); HIL; vehicle test | Pending (opendbc#11) |
+| `31e890d` (merge `00ea632`) | `opendbc/safety/safety.h`, `declarations.h`, `modes/defaults.h`, `modes/toyota.h`, `tests/test_toyota.py` | While authority is granted, STEERING_LKA (`0x2E4`, 100 Hz) must reach the TX hook at least every 50 ms and, with openpilot longitudinal, ACC_CONTROL (`0x343`, 33 Hz) at least every 100 ms; otherwise the 100 Hz safety task revokes authority. Supervision starts when authority is granted. Generic mechanism (`safety_config.tx_arrival_checks`), compiled only with `LIONDRIVER_REFERENCE` | Yes | No | Yes (a stalled ML control loop ends in a stalled `controlsd`) | No | SG-01, SG-03, SG-06; HE-02.3; WP-A-04 SPF-14 (stale SoC command held), BE-1.19, BE-6.05; GAP-10 | WP-S-02 (TSR-408), WP-W-02 (SWSR-408), WP-W-06 (unit test), WP-V-05 (FI), WP-A-04 (SPF-14) | Safety unit tests (both variants, 100 % line coverage); mutation of the new code; opendbc and panda MISRA; replay of reference logs (TX gaps while engaged); HIL; vehicle test | Pending (opendbc#11) |
 
 ## 2. What it detects
 
@@ -37,6 +37,10 @@ The driver sees the revocation as "Controls Mismatch" (the panda withdraws autho
 | `0x343` ACC_CONTROL | 30 ms | 100 ms (TSR-408) | 2 |
 
 A host stall longer than the timeout now ends the engagement. That is the intended reaction to a stalled control loop, but a stall that occurs in normal driving (CPU load, `card` or `pandad` scheduling) would be a nuisance disengagement. The values come from TSR-408 and are **not yet confirmed on reference drive logs** (OI-1).
+
+### 3.1 Interaction with TX rate supervision (TSR-518)
+
+TSR-518 (opendbc#10, merged before this change) bounds how *often* the SoC may send each ID; this change bounds how *rarely*. Both run in the TX hook of the reference build. A whitelisted frame counts as an arrival even when the rate check rejects it, because it shows that the control loop is still running; a SoC that floods `0x2E4` is caught by TSR-518 (authority revoked after 3 rejected frames), not by this check. The two checks share no state and revoke authority independently.
 
 ## 4. Verification results
 
