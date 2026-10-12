@@ -36,7 +36,7 @@ The acceptance criteria are those of [WP-C-05 §5](../02-concept/WP-C-05-sotif-h
 For each SOTIF hazardous behaviour SH-nn:
 
 1. **Harm budget.** Allocate to each SH group of WP-C-05 §5.2 step 3 (lateral SH-01/02/10; longitudinal SH-03/04/06/11; mode and override SH-05/09; SH-08) a share `k` of the road-class-specific B1 harm rate `λ_B1` for the relevant harm class (injury crash or fatality), separately for ODD-H and ODD-A:  `λ_harm,SH ≤ k · λ_B1`.
-2. **Hazardous-behaviour rate.** Divide by the probability that the hazardous behaviour, once it occurs, leads to harm: `P(harm | HB) = P(E-situation) · P(not controlled) · P(severity class)`. Each factor needs evidence: P(E-situation) from LionDriver drive logs (§3.4), P(not controlled) from the controllability tests in [WP-V-01](WP-V-01-safety-validation.md) (§3.3), and P(severity class) from crash statistics (§3.5). A factor without evidence is set to 1.
+2. **Hazardous-behaviour rate.** Divide by the probability that the hazardous behaviour, once it occurs, leads to harm: `P(harm | HB) = P(E-situation) · P(not controlled) · P(severity class)`. Each factor needs evidence: P(E-situation) from LionDriver drive logs (§3.4), P(not controlled) from the controllability tests in [WP-V-01](WP-V-01-safety-validation.md) (§3.3), and P(severity class) from crash statistics (§3.5). A factor without evidence is set to 1. Some SHs cause harm in more than one situation s with different severity, such as SH-03 following (OS-05) and approaching (OS-07). For those, the probability is summed over the situations: `P(harm | HB) = Σ_s P(E_s) · P(not controlled)_s · P(severity class)_s`.
    `λ_HB,SH ≤ k · λ_B1 / P(harm | HB)`
 3. **Demonstration size.** For a zero-failure demonstration at confidence C, the exposure needed is
    `n = −ln(1 − C) / λ_HB`
@@ -109,7 +109,7 @@ P(E-situation) is the probability that, when the hazardous behaviour occurs, a s
    | SH | Harm-enabling situation (HARA) | Measured as | Signal |
    |---|---|---|---|
    | SH-01, SH-02 | Vehicle or barrier on the departure side (OS-01, OS-02); oncoming lane on that side in ODD-A (OS-03) | A vehicle in the adjacent lane within ±2 s longitudinally, a barrier or an undivided road edge on either side | `radarTracks` (lateral position) where the reference radar provides tracks; otherwise offline annotation of `fcamera`. Road type and barrier from the DSR-03 tags |
-   | SH-03 | Lead vehicle at a short gap (OS-05) | Lead in the ego lane within a 3 s time gap | `radarState.leadOne` |
+   | SH-03 | Lead vehicle at a short gap (OS-05); approaching slower traffic (OS-07) | OS-05: lead in the ego lane within a 3 s time gap. OS-07: as SH-06. The two are measured and used separately (§3.5) | `radarState.leadOne` |
    | SH-06 | Approaching slower or stationary traffic (OS-07) | Lead closing within the AIR-03 range (80 m) | `radarState.leadOne` (distance, relative speed) |
    | SH-04 | Close following vehicle behind (OS-08) | Following vehicle within a 1.5 s time gap | None on the device: offline annotation of the rear-facing camera of the test vehicle ([WP-V-01](WP-V-01-safety-validation.md) §2 equipment). Until it is fitted (OI-7), P(E-situation) = 1 |
    | SH-10 | Vehicle in the target lane (OS-01) | Vehicle in the target lane within ±2 s during a lane change | As SH-01, on instances where `modelV2.meta.laneChangeState` is active |
@@ -159,6 +159,13 @@ SH-06 is mapped to an injury-risk curve (`tools/severity/risk_curve.py`):
 - **Crash risk** is bounded over the occupants of both vehicles with the union bound, because FARS counts any death.
 
 The worst credible lead in the ODD is a stationary heavy truck. Hitting it at the ODD speed bound (120 km/h in ODD-H, 90 km/h in ODD-A) gives a fatal-crash bound of 1. Car-to-car it is also 1 at 120 km/h, and 0.36 at 90 km/h. P(severity class) for SH-06 is therefore 1 for either budget. Its target rests on P(E-situation), P(not controlled) and the lead detection of AIR-03 and AIR-04. The curve constant, masses and occupancies are written from memory or assumed, and must be checked before this result is recorded as evidence. The check does not change the conclusion unless the truck case drops below 1.
+
+SH-03 uses the same curve, separately for its two situations:
+- **Approaching slower traffic (OS-07, HE-03.3).** The acceleration only adds to the closing speed of SH-06, so the SH-06 value applies: 1.
+- **Following at a short gap (OS-05, HE-03.1).**
+  - Impact speed: the lead holds its speed, and the ego accelerates at the envelope maximum (+2.0 m/s²) over the planner's following gap (t_follow · v + 6 m, `long_mpc.py`). That gives v = √(2 · a · gap): 53–58 km/h at 120 km/h, and 47–51 km/h at 90 km/h.
+  - Fatal-crash bound: worst case a heavy truck ahead at the relaxed gap gives **0.33 in ODD-H and 0.20 in ODD-A**. Car-to-car it is 0.06 and 0.04.
+  - So SH-03 earns severity credit in the following situation only, and at most a factor of about 3–5. The same unverified-input caveat applies.
 
 ## 4. Validation targets
 

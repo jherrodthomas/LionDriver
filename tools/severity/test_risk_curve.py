@@ -41,7 +41,24 @@ class RiskCurveTest(unittest.TestCase):
   def test_main_prints_table(self):
     with redirect_stdout(io.StringIO()) as buf:
       self.assertEqual(rc.main(["--speed", "50"]), 0)
-    self.assertIn("| 50 km/h | 50 | heavy truck |", buf.getvalue())
+    self.assertIn("| custom | 50 km/h | 50 | heavy truck |", buf.getvalue())
+
+  def test_sh03_following_impact_speed(self):
+    # 90 km/h, 1.45 s gap: d = 1.45 * 25 + 6 = 42.25 m; v = sqrt(2 * 2 * 42.25) = 13 m/s
+    self.assertAlmostEqual(rc.following_impact_kmh(90, 1.45), 13 * 3.6)
+    self.assertGreater(rc.following_impact_kmh(120, 1.75), rc.following_impact_kmh(120, 1.45))
+
+  def test_sh03_cases_cover_both_situations(self):
+    labels = {sh for sh, _, _ in rc.cases()}
+    self.assertEqual(labels, {"SH-06; SH-03 OS-07", "SH-03 OS-05"})
+
+  def test_sh03_following_earns_credit_but_approaching_does_not(self):
+    for sh, _, v in rc.cases():
+      worst = max(rc.crash_fatal_ub(v, rc.EGO, lead)["p_fatal_crash_ub"] for lead in rc.LEADS)
+      if sh == "SH-03 OS-05":
+        self.assertLess(worst, 0.5)
+      else:
+        self.assertEqual(worst, 1.0)
 
 
 if __name__ == "__main__":
