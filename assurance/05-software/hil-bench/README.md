@@ -23,7 +23,7 @@ This plan builds the bench in stages, so the watchdog evidence comes from the sm
 
 | Stage | Goal | Adds | Unblocks |
 |---|---|---|---|
-| **B1: watchdog bench** | Run the existing HIL tests and the watchdog fault-injection test on a real STM32H7 panda | DUT panda, panda jungle, host PC Hardware evidence for the integrated watchdog and safety task (VS-FI-17, VS-SWQ-14 in its debug-build form); OI-3 of WP-W-08 for the jungle-based upstream tests |
+| **B1: watchdog bench** | Run the existing HIL tests and the watchdog fault-injection test on a real STM32H7 panda | DUT panda, panda jungle, host PC | Hardware evidence for the integrated watchdog and safety task (VS-FI-17, VS-SWQ-14 in its debug-build form); OI-3 of WP-W-08 for the jungle-based upstream tests |
 | **B2: timing evidence** | Measure relay release independently of USB polling, ≥ 100 repetitions (WP-W-08 §4) | Oscilloscope or logic analyser on the SBU lines | Timing results usable as evidence for TSR-501 and D-1 |
 | **B3: vehicle bus** | Replay Corolla CAN traffic and inject bus faults. A candump capture of bus 0 also feeds the inter-frame gap scan ([`tools/can_gaps/`](../../../tools/can_gaps/README.md)) | 2–3 USB CAN interfaces, harness-equivalent wiring, 120 Ω terminations | VS-SWQ-01… (limits, timeouts), VS-FI-01…04, VS-FI-22 |
 | **B4: full WP-W-08 bench** | Supply, debug and SoC-side faults | Programmable supply, SWD probe, reference comma device, audio capture | VS-FI-06…08, -10, -11, -15, -16, -18; release-image repeats |
