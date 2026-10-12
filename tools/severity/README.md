@@ -22,7 +22,7 @@ tools/severity/severity_ratio.py --fars FARS2022NationalCSV/ --crss CRSS2022CSV/
 
 It prints two Markdown tables, per cell and per SH, and `--json` writes both together with the codes and design variables used.
 
-## Injury-risk curve for SH-06 and SH-03
+## Injury-risk curve for SH-06, SH-03 and SH-04
 
 `risk_curve.py` covers the case the ratio cannot: SH-06, a rear-end into slow or stationary traffic with no braking before impact (WP-V-02 §3.5 item 3).
 - **Δv:** from the closing speed by conservation of momentum, with a small restitution.
@@ -34,7 +34,15 @@ tools/severity/risk_curve.py              # ODD speed bounds: 120 km/h (ODD-H), 
 tools/severity/risk_curve.py --speed 60   # another closing speed
 ```
 
-At both ODD speed bounds the worst credible lead gives P(fatal crash) = 1. That lead is a stationary heavy truck, which the ODD includes. The Corolla's Δv is then almost the full closing speed. Even car-to-car at 120 km/h reaches 1 once all occupants are counted. So SH-06 earns no severity credit, and its target rests on P(E-situation), P(not controlled) and the lead-detection requirements (AIR-03, AIR-04). SH-03 approaching slower traffic (OS-07) is at least as severe and is also 1. SH-03 following at a short gap (OS-05) accelerates at +2.0 m/s² over the planner's following gap. That gives impacts of about 50 km/h and bounds of 0.33 in ODD-H and 0.20 in ODD-A, the only severity credit the curve gives. There is no injury curve: at these Δv an injury is near certain, so for an injury-crash budget the value is 1.
+At both ODD speed bounds the worst credible lead gives P(fatal crash) = 1. That lead is a stationary heavy truck, which the ODD includes. The Corolla's Δv is then almost the full closing speed. Even car-to-car at 120 km/h reaches 1 once all occupants are counted. So SH-06 earns no severity credit, and its target rests on P(E-situation), P(not controlled) and the lead-detection requirements (AIR-03, AIR-04). SH-03 approaching slower traffic (OS-07) is at least as severe and is also 1. SH-03 following at a short gap (OS-05) accelerates at +2.0 m/s² over the planner's following gap. That gives impacts of about 50 km/h and bounds of 0.33 in ODD-H and 0.20 in ODD-A.
+
+SH-04 (struck from behind after phantom braking, OS-08) is simulated:
+- **Ego:** brakes at the envelope minimum (−3.5 m/s²) to a stop.
+- **Follower:** at a time gap of 0.5, 1.0 or 1.5 s, holds its speed for 2.0 s, then brakes at 3.0 m/s². Those are the assumed worst credible reaction time and deceleration.
+- **Impact:** at 27–35 km/h relative speed.
+- **Bound:** 0.043 in ODD-H and 0.032 in ODD-A, with a heavy truck behind.
+
+`--sensitivity` prints the impact speed over reaction times of 1.0–2.0 s and follower braking of 3–6 m/s². A follower that never brakes before impact is outside this bound. There is no injury curve: at these Δv an injury is near certain, so for an injury-crash budget the value is 1.
 
 The curve constant (71 mph), its scope (impact directions, which occupants), the masses, the occupancies and the restitution are written from memory or assumed. Check them before the result is recorded as evidence.
 

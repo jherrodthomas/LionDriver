@@ -167,6 +167,13 @@ SH-03 uses the same curve, separately for its two situations:
   - Fatal-crash bound: worst case a heavy truck ahead at the relaxed gap gives **0.33 in ODD-H and 0.20 in ODD-A**. Car-to-car it is 0.06 and 0.04.
   - So SH-03 earns severity credit in the following situation only, and at most a factor of about 3–5. The same unverified-input caveat applies.
 
+SH-04 (struck from behind after phantom braking, OS-08, HE-04.1) is simulated:
+- **The ego** brakes at the envelope minimum (−3.5 m/s²) to a stop, because it is not controlled.
+- **The follower** at a time gap of 0.5–1.5 s holds its speed for its reaction time and then brakes. The worst credible follower is taken as reacting after 2.0 s and braking at 3.0 m/s², below the ego's deceleration. These two values are assumptions; `risk_curve.py --sensitivity` shows how the impact speed depends on them.
+- **The result** is impacts at 27–35 km/h relative speed and a fatal-crash bound of **0.043 in ODD-H and 0.032 in ODD-A**, with a heavy truck behind (0.008 and 0.006 car-to-car). This is a factor of about 25–30 of credit, matching the HARA's S2 rating of HE-04.1.
+- **Not covered:** a follower that never brakes before impact is outside this bound. Whether it is credible within OS-08 is for the assessor to decide (OI-3).
+- **Rear impacts:** the Joksch curve's coverage of rear impacts is among the inputs to check.
+
 ## 4. Validation targets
 
 Targets are **proposals**: numeric values are placeholders for the assessor review and WP-C-05 acceptance criteria (OI-3). "Demonstration" names the primary method; §5 defines the methods.

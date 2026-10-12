@@ -15,6 +15,11 @@ Impact (closing) speed:
   SH-03 following (OS-05): the lead holds its speed; the ego starts at the same speed and
     accelerates at the envelope maximum a over the planner's following gap d:
       v_impact = sqrt(2 * a * d),  d = t_follow * v + STOP_DISTANCE
+  SH-04 (OS-08, struck from behind): the ego brakes at the envelope minimum to a stop (not
+    controlled); a follower at the same speed and time gap h holds its speed for its reaction
+    time, then brakes. The relative speed at contact is the closing speed. The worst credible
+    follower reacts after FOLLOWER_REACTION_S and brakes at FOLLOWER_DECEL; a follower that
+    never brakes is outside this bound. `--sensitivity` prints the grid around it.
 
 Delta-v from the closing speed v, by conservation of momentum with restitution e:
   dv_ego   = (1 + e) * v * m_other / (m_ego + m_other)
@@ -59,6 +64,10 @@ ODD_SPEEDS_KMH = {"ODD-H": 120, "ODD-A": 90}  # speed bounds of WP-C-02 §3.1; c
 ACCEL_MAX = 2.0  # m/s^2, envelope maximum (WP-C-02 §2, ACCEL_MAX)
 T_FOLLOW_S = {"standard": 1.45, "relaxed": 1.75}  # long_mpc.py get_T_FOLLOW
 STOP_DISTANCE_M = 6.0  # long_mpc.py
+ACCEL_MIN = 3.5  # m/s^2, envelope minimum magnitude (WP-C-02 §2, ACCEL_MIN)
+OS08_GAPS_S = (0.5, 1.0, 1.5)  # follower time gaps inside OS-08 (< 1.5 s)
+FOLLOWER_REACTION_S = 2.0  # assumed worst credible follower reaction time
+FOLLOWER_DECEL = 3.0  # m/s^2, assumed worst credible follower braking (below the ego's 3.5)
 
 
 def delta_v(closing_kmh: float, m_self: float, m_other: float, e: float = RESTITUTION) -> float:
@@ -72,6 +81,23 @@ def following_impact_kmh(speed_kmh: float, t_follow_s: float, accel: float = ACC
   return (2 * accel * gap_m) ** 0.5 * 3.6
 
 
+def rear_impact_kmh(speed_kmh: float, gap_s: float, reaction_s: float = FOLLOWER_REACTION_S,
+                    follower_decel: float = FOLLOWER_DECEL, ego_decel: float = ACCEL_MIN, dt: float = 0.001) -> float:
+  """SH-04: relative speed (km/h) at which the follower strikes the braking ego; 0 if it stops short."""
+  v = speed_kmh / 3.6
+  x_ego, v_ego, x_f, v_f, t = v * gap_s, v, 0.0, v, 0.0
+  while v_f > 0:
+    v_ego = max(0.0, v_ego - ego_decel * dt)
+    if t >= reaction_s:
+      v_f = max(0.0, v_f - follower_decel * dt)
+    x_ego += v_ego * dt
+    x_f += v_f * dt
+    t += dt
+    if x_f >= x_ego:
+      return (v_f - v_ego) * 3.6
+  return 0.0
+
+
 def cases() -> list[tuple[str, str, float]]:
   """(SH and situation, case label, closing speed in km/h) for the ODD speed bounds."""
   out = []
@@ -79,6 +105,8 @@ def cases() -> list[tuple[str, str, float]]:
     out.append(("SH-06; SH-03 OS-07", f"{odd} stationary lead at {v} km/h", v))
     for name, t in T_FOLLOW_S.items():
       out.append(("SH-03 OS-05", f"{odd} following at {v} km/h, {name} gap", following_impact_kmh(v, t)))
+    for h in OS08_GAPS_S:
+      out.append(("SH-04 OS-08", f"{odd} struck from behind at {v} km/h, follower gap {h} s", rear_impact_kmh(v, h)))
   return out
 
 
@@ -99,9 +127,19 @@ def main(argv: list[str] | None = None) -> int:
   ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
   ap.add_argument("--speed", type=float, action="append", help="closing speed in km/h (repeatable); default: the SH-06 and SH-03 cases")
   ap.add_argument("--restitution", type=float, default=RESTITUTION)
+  ap.add_argument("--sensitivity", action="store_true", help="SH-04: print impact speed over follower reaction and braking")
   a = ap.parse_args(argv)
+  if a.sensitivity:
+    print("| Speed (km/h) | Gap (s) | " + " | ".join(f"t_r {tr} s, a_f {af}" for tr in (1.0, 1.5, 2.0) for af in (3.0, 4.0, 6.0)) + " |")
+    print("|---|---|" + "---|" * 9)
+    for v in ODD_SPEEDS_KMH.values():
+      for h in OS08_GAPS_S:
+        cells = [f"{rear_impact_kmh(v, h, tr, af):.0f}" for tr in (1.0, 1.5, 2.0) for af in (3.0, 4.0, 6.0)]
+        print(f"| {v} | {h} | " + " | ".join(cells) + " |")
+    print("\nRelative impact speed in km/h; 0 = the follower stops short.")
+    return 0
   rows = [("custom", f"{v:g} km/h", v) for v in a.speed] if a.speed else cases()
-  print("| SH / situation | Case | Closing (km/h) | Lead | Δv ego (km/h) | Δv lead (km/h) | p driver ego | p driver lead | P(fatal crash) UB |")
+  print("| SH / situation | Case | Closing (km/h) | Other vehicle | Δv ego (km/h) | Δv other (km/h) | p driver ego | p driver other | P(fatal crash) UB |")
   print("|---|---|---|---|---|---|---|---|---|")
   worst: dict = {}
   for sh, label, v in rows:

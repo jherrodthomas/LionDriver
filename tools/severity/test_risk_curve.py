@@ -48,14 +48,33 @@ class RiskCurveTest(unittest.TestCase):
     self.assertAlmostEqual(rc.following_impact_kmh(90, 1.45), 13 * 3.6)
     self.assertGreater(rc.following_impact_kmh(120, 1.75), rc.following_impact_kmh(120, 1.45))
 
-  def test_sh03_cases_cover_both_situations(self):
+  def test_cases_cover_all_mapped_situations(self):
     labels = {sh for sh, _, _ in rc.cases()}
-    self.assertEqual(labels, {"SH-06; SH-03 OS-07", "SH-03 OS-05"})
+    self.assertEqual(labels, {"SH-06; SH-03 OS-07", "SH-03 OS-05", "SH-04 OS-08"})
+
+  def test_sh04_follower_that_brakes_harder_early_stops_short(self):
+    self.assertEqual(rc.rear_impact_kmh(120, 1.5, reaction_s=1.0, follower_decel=6.0), 0.0)
+
+  def test_sh04_rear_impact_matches_kinematics(self):
+    # Gap 0 and no follower braking: contact at once, relative speed 0; after t the gap is 1.75 t^2
+    self.assertAlmostEqual(rc.rear_impact_kmh(100, 0.0, reaction_s=99, follower_decel=0.0), 0.0, places=1)
+    # Slower or later follower braking strikes harder
+    self.assertGreater(rc.rear_impact_kmh(120, 1.0, 2.0, 3.0), rc.rear_impact_kmh(120, 1.0, 1.5, 3.0))
+
+  def test_sh04_bound_is_small_but_not_zero(self):
+    worst = max(rc.crash_fatal_ub(v, rc.EGO, o)["p_fatal_crash_ub"]
+                for sh, _, v in rc.cases() if sh == "SH-04 OS-08" for o in rc.LEADS)
+    self.assertTrue(0.01 < worst < 0.1)
+
+  def test_sensitivity_grid(self):
+    with redirect_stdout(io.StringIO()) as buf:
+      self.assertEqual(rc.main(["--sensitivity"]), 0)
+    self.assertIn("| 120 | 1.5 |", buf.getvalue())
 
   def test_sh03_following_earns_credit_but_approaching_does_not(self):
     for sh, _, v in rc.cases():
       worst = max(rc.crash_fatal_ub(v, rc.EGO, lead)["p_fatal_crash_ub"] for lead in rc.LEADS)
-      if sh == "SH-03 OS-05":
+      if sh in ("SH-03 OS-05", "SH-04 OS-08"):
         self.assertLess(worst, 0.5)
       else:
         self.assertEqual(worst, 1.0)
