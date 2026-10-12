@@ -99,7 +99,7 @@ flowchart LR
   hw -. "IX-15" .- sw
   cs -. "IX-16" .- hw
   cs -. "IX-17" .- sw
-  ai -. "IX-18 OPEN" .- joint
+  ai -. "IX-18" .- joint
   ai -. "IX-19" .- sw
 ```
 
@@ -137,7 +137,7 @@ Each interface is anchored to text in the work products; the checker fails if an
 | IX-15 | Hardware-Software | [WP-W-02](../../05-software/WP-W-02-software-safety-requirements.md), [WP-H-01](../../04-hardware/WP-H-01-hardware-safety-requirements.md) (Software / Hardware) | Software safety requirements that depend on a hardware resource refine the HSI and pair with the hardware safety requirements | Documented | — | G3 |
 | IX-16 | Safety-Security | [WP-H-01](../../04-hardware/WP-H-01-hardware-safety-requirements.md), [WP-S-07](../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) (Hardware / Cybersecurity) | The SoC's control of the MCU boot and reset lines is a hardware safety requirement (HWSR-502c) and an input to the security architecture | Documented | — | G3 |
 | IX-17 | Safety-Security | [WP-W-11](../../05-software/WP-W-11-cybersecurity-implementation-verification.md), [WP-W-01](../../05-software/WP-W-01-software-development-environment-guidelines.md) (Cybersecurity / Software) | One coding guideline for safety and security: the CERT C subset for security static analysis is recorded next to MISRA C:2012, with each rule mapped to the cppcheck or MISRA checker that covers it or to review (the pinned cppcheck has no CERT addon) | Documented | — | G3 |
-| IX-18 | AI-Tools | [WP-W-10](../../05-software/WP-W-10-ml-engineering.md), [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) (AI safety / Joint) | The ML compiler (tinygrad) is a QM tool whose confidence comes from back-to-back comparison against an independent ONNX reference runtime, which is not yet selected | Open | WP-W-10 OI-2 | G3 |
+| IX-18 | AI-Tools | [WP-W-10](../../05-software/WP-W-10-ml-engineering.md), [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) (AI safety / Joint) | The ML compiler (tinygrad) is a QM tool whose confidence comes from back-to-back comparison against an independent reference: ONNX Runtime 1.24.1 on CPU (TL-23), with a seeded difference that the comparison must catch | Documented | — | G3 |
 | IX-19 | Safety-AI | [WP-W-09](../../05-software/WP-W-09-configuration-calibration-data.md), [WP-W-10](../../05-software/WP-W-10-ml-engineering.md) (Software / AI safety) | Model weights are safety-related configuration data: which model runs depends on file presence and device detection | Documented | — | G3 |
 
 ## 4. Clause coverage by standard
@@ -182,4 +182,4 @@ Which activity answers each clause reference listed in the register. One activit
 
 **Work products with no confirmation measure at this gate** (verification review only): WP-W-01, WP-H-02, WP-H-01, WP-W-02, WP-W-03, WP-W-05, WP-W-06, WP-W-09, WP-W-11, WP-P-09.
 
-**Open interfaces due by this gate** (from this or an earlier phase): IX-06 (WP-C-02 OI-6), IX-13 (WP-V-02 OI-3), IX-18 (WP-W-10 OI-2).
+**Open interfaces due by this gate** (from this or an earlier phase): IX-06 (WP-C-02 OI-6), IX-13 (WP-V-02 OI-3).
