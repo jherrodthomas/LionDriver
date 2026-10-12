@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Draft: proposed change, not integrated.** The LionDriver `panda` pin is unchanged |
+| Status | **Draft: proposed change, not integrated.** The LionDriver `panda` pin is unchanged. Deviations D-1 and D-2 accepted as interim by the maintainer on 2026-10-12 (§2) |
 | Change request | [jherrodthomas/panda#1](https://github.com/jherrodthomas/panda/pull/1) (draft) |
 | Range | panda `92eb565..32b8fd9` (branch `liondriver/hw-watchdog`); LionDriver pin stays at `92eb565` until panda#1 is merged to the fork's `master` |
 | Reference configuration affected | Yes: the panda firmware runs on the reference device |
@@ -23,6 +23,8 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 |---|---|---|---|---|
 | D-1 | Reset within ≤ 0.1 s of a stall (SG-07 forwarding FDTI, [WP-S-04](../../03-system/WP-S-04-timing-ftti-budget.md) §3.6) | Nominal 175 ms | Meets the SG-01 bound (≤ 0.2 s; SG-01 FTTI 0.5 s). Does not meet SG-07: stock PCS forwarding may be lost for up to about 0.175 s plus relay drop-out before the stock path returns | Feed the IWDG from the ≥ 50 Hz periodic safety task of TSR-401/TSR-519 once it exists, then shorten the timeout to ≤ 0.1 s. Until then, record the SG-07 shortfall as a residual in WP-K-01 (DF-33 stays open) |
 | D-2 | Started before the application runs | Started when the relay is first driven | Hangs in SILENT, NOOUTPUT or ELM327 are not detected. In those modes the relay is not energised, so the stock path is intact and SG-01/SG-07 are not affected | Accept, and amend TSR-501 to "started before the relay is first driven", or start at boot and redesign the power-save and stop-mode handling |
+
+Decision (2026-10-12, project maintainer): **D-1 and D-2 accepted as an interim step.** D-1 stays a recorded residual (SG-07 forwarding not covered within 0.1 s) until the watchdog is fed from the ≥ 50 Hz safety task. D-2 is to be resolved by amending TSR-501. This is a maintainer decision, not an independent review (WP-M-06); the change still needs review and HIL evidence before release.
 
 ## 3. Behaviour changes to watch
 
@@ -56,7 +58,7 @@ None are changed yet, because the change is not integrated. When panda#1 is merg
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Decide D-1 and D-2 (accept as an interim with a residual, or block the change) | Integration |
+| OI-1 | Closed 2026-10-12: the maintainer accepted D-1 and D-2 as interim (§2). Still needed: amend TSR-501 for D-2, and record D-1 as a residual in WP-K-01 on integration | Integration |
 | OI-2 | Confirm the STM32H725 LSI tolerance and the timeout at both ends | Integration |
 | OI-3 | HIL fault-injection evidence (needs the D-04 HIL bench) | Release |
 | OI-4 | Report watchdog resets to the host | G3 |
