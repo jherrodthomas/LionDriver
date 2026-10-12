@@ -100,3 +100,21 @@
   aou_status: "Design constraint"
   status: proposed
   source: WP-C-01
+
+- id: AOU-12
+  kind: aou
+  text: "The cluster cruise indicator is driven by PCM state and is not influenced by item TX messages other than `0x412` LKAS_HUD"
+  credited_in: "FSC FSR-05.05; independent cue for SG-02/SG-06 (WP-S-02 TSR-303, TSR-309)"
+  verification_approach: "Vehicle test (WP-S-09 VS-SQ-07)"
+  aou_status: "Unverified"
+  status: proposed
+  source: WP-C-01
+
+- id: AOU-13
+  kind: aou
+  text: "The de-energised harness relay connects the forward camera to the vehicle CAN (stock path) without any active component in the path"
+  credited_in: "FSC FSR-07.03; SG-07 safe state"
+  verification_approach: "Harness inspection and test (WP-H-02 UK-03; WP-S-08 VS-SI-18)"
+  aou_status: "Unverified"
+  status: proposed
+  source: WP-C-01
