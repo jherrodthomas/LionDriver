@@ -97,6 +97,10 @@ class SeverityRatioTest(unittest.TestCase):
     self.assertEqual(sr.collision_type({"MAN_COLL": "0", "HARM_EV": "8"}), "pedestrian")
     self.assertEqual(sr.collision_type({"MAN_COLL": "2", "HARM_EV": "12"}), "head_on")
     self.assertIsNone(sr.collision_type({"MAN_COLL": "0", "HARM_EV": "42"}))
+    for code in ("20", "23", "24", "25", "26", "52", "57"):
+      self.assertEqual(sr.collision_type({"MAN_COLL": "0", "HARM_EV": code}), "barrier")
+    # a barrier struck after a collision with another vehicle is classified by the first event
+    self.assertEqual(sr.collision_type({"MAN_COLL": "7", "HARM_EV": "12"}), "sideswipe_same")
     self.assertEqual(sr.band_of(55), (50, 55))
     self.assertIsNone(sr.band_of(None))
 
@@ -121,6 +125,16 @@ class SeverityRatioTest(unittest.TestCase):
     # only the 60-65 mph band has data; the 70-85 band is missing, so the bound is 1
     self.assertEqual(h["missing_cells"], 1)
     self.assertEqual(h["p_fatal_ub"], 1.0)
+
+  def test_barrier_is_part_of_lateral_hazards(self):
+    fars(self.f, [(i, 0, 25, 1, 65) for i in range(3)])
+    rows = [(n, 0, 25, 1, 0, s, p, 100, 65) for n, (s, p) in enumerate(
+      [(s, p) for s, ps in (("1", ("A", "B")), ("2", ("C", "D"))) for p in ps for _ in range(10)])]
+    crss(self.c, rows)
+    r = self.results()[("barrier", True, (60, 65))]
+    self.assertAlmostEqual(r["p_fatal"], 3 / 4000)
+    self.assertIn("barrier", sr.SH_COLLISIONS["SH-01"])
+    self.assertNotIn("barrier", sr.SH_COLLISIONS["SH-10"])
 
   def test_main_writes_json(self):
     fars(self.f, [(i, 1, 12, 1, 65) for i in range(8)])

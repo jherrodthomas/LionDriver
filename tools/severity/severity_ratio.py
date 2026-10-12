@@ -49,6 +49,10 @@ CODES = {
     # Not a collision with a motor vehicle: identified by the first harmful event
     "pedestrian": {"MAN_COLL": {0}, "HARM_EV": {8}},
     "pedalcyclist": {"MAN_COLL": {0}, "HARM_EV": {9}},
+    # Roadside barrier as first harmful event (lane departure into a barrier, HE-01.2):
+    # 20 impact attenuator/crash cushion, 23 bridge rail, 24 guardrail face, 25 concrete traffic
+    # barrier, 26 other traffic barrier, 52 guardrail end, 57 cable barrier
+    "barrier": {"MAN_COLL": {0}, "HARM_EV": {20, 23, 24, 25, 26, 52, 57}},
   },
   # Interstate flag: FARS ROUTE (1 = Interstate); CRSS INT_HWY (1 = yes)
   "interstate": {"FARS": ("ROUTE", {1}), "CRSS": ("INT_HWY", {1})},
@@ -68,10 +72,10 @@ ODD = {
   "ODD-A": {"interstate": False, "bands": [(40, 45), (50, 55)]},
 }
 
-# Collisions per SH (WP-V-02 §3.5 item 2). Barrier impacts are not separated here (see README).
+# Collisions per SH (WP-V-02 §3.5 item 2).
 SH_COLLISIONS = {
-  "SH-01": ["sideswipe_same", "head_on"],
-  "SH-02": ["sideswipe_same", "head_on"],
+  "SH-01": ["sideswipe_same", "head_on", "barrier"],
+  "SH-02": ["sideswipe_same", "head_on", "barrier"],
   "SH-03": ["rear_end"],
   "SH-04": ["rear_end"],
   "SH-06": ["rear_end"],

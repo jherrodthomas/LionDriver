@@ -29,7 +29,7 @@ The variable names and codes in `CODES` and `DESIGN` were written from memory of
 | Item | Used as | Check in the manual |
 |---|---|---|
 | `MAN_COLL` codes | 1 rear-end, 2 head-on, 6 angle, 7 sideswipe same direction, 8 sideswipe opposite | Manner of collision codes for the year |
-| `HARM_EV` codes | 8 pedestrian, 9 pedalcyclist, with `MAN_COLL` 0 | First harmful event codes |
+| `HARM_EV` codes | 8 pedestrian, 9 pedalcyclist; barrier 20 impact attenuator, 23 bridge rail, 24 guardrail face, 25 concrete traffic barrier, 26 other traffic barrier, 52 guardrail end, 57 cable barrier; all with `MAN_COLL` 0 | First harmful event codes; the barrier list must hold every barrier type of the year's code list and nothing else |
 | `ROUTE` (FARS), `INT_HWY` (CRSS) | 1 = Interstate | Route signing / Interstate flag; the two must define the same road class |
 | `MAX_SEV` (CRSS) | 1–5 injury, 4 fatal; 6 excluded | Maximum injury severity in crash |
 | `VSPD_LIM` | Posted limit in mph per vehicle; 0, 98 and 99 unknown | Speed limit codes; the crash takes the highest known limit |
@@ -37,7 +37,7 @@ The variable names and codes in `CODES` and `DESIGN` were written from memory of
 
 ## Limits
 
-- **Barrier impacts are not separated.** SH-01 and SH-02 include barrier impacts (HE-01.2), but the script groups only collisions with a motor vehicle in transport, plus pedestrians and cyclists. A barrier class needs the fixed-object harmful-event codes. Until it has them, the SH-01 and SH-02 values cover sideswipe and head-on only.
+- **Barrier by first harmful event.** A crash is a barrier crash when its first harmful event is a barrier (lane departure into it, HE-01.2). A crash that starts with another vehicle and then hits a barrier counts under its first event. A departure that first strikes something else, such as a curb, a ditch or a tree, is not in the barrier class. Those objects are not among the SH-01/SH-02 collisions of WP-V-02 §3.5 item 2. If the HARA adds them, extend the class.
 - **Average crash, not the LD-SDA crash.** The ratio is valid only where the LD-SDA collision is argued to be no more severe than the average crash of that type and band (WP-V-02 §3.5 item 3). SH-06 with no braking before impact is not; it needs an injury-risk curve at the impact speed.
 - **Same year for both.** FARS and CRSS of different years must not be mixed.
 - **Upper bounds use a normal approximation** (`--z`, default 1.645 for 95 % one-sided).
