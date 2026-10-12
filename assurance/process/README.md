@@ -118,7 +118,7 @@ These findings come from the generated maps. They are observations for the safet
 ### 6.1 Concept phase ([G1 map](maps/g1-concept.md))
 
 
-1. **One open interface blocks G1.** IX-02: the mapping from safety goals to cybersecurity goals was written from the HARA and has not been checked against the FSC (WP-C-10 OI-6). The other two open interfaces (IX-05 and IX-06, both SOTIF to AI) are due at G2.
+1. **The interface that blocked G1 is closed.** IX-02: the mapping from safety goals to cybersecurity goals had been written from the HARA only. It was checked against the FSC allocation and corrected: CSG-01 and CSG-02 now protect every safety goal, and the SoC-dependent warning goals SG-02 and SG-06 gained the SoC entry-path goals. WP-C-04 now points to the mapping. The check was made by the author of both documents, so its independent confirmation is CS-I1 at G1. IX-05 and IX-06 (both SOTIF to AI) remain open and are due at G2.
 2. **Six G1 work products have no confirmation measure at G1:** WP-C-02, WP-C-07, WP-C-11, WP-V-07, WP-T-01, WP-K-01. They are reviewed only through verification review (WP-P-05). This is allowed. It matters most for WP-C-11 (AI safety requirements), whose independent review SR-04 is planned for G3.
 3. **The independent lane has no one in it.** The SOTIF lead and AI/ML safety lead are held by the maintainer on an acting basis, so every work lane is staffed by the same person. The external functional safety assessor (D-06) is unassigned, and every G1 confirmation measure depends on the assessor.
 4. **The SOTIF lane both feeds and consumes the HARA.** The ODD and misuse analysis (CON-02, CON-03) are HARA inputs; the SOTIF hazard and insufficiency analyses (CON-06…CON-08) depend on it. SOTIF and functional safety cannot run as sequential silos; the process has to interleave them.
@@ -127,7 +127,7 @@ These findings come from the generated maps. They are observations for the safet
 
 1. **The critical path is one serial chain in one lane.** Functional safety carries 8 of the 12 activities. Timing, TSRs, architecture, FFI, DFA, then decomposition and FTA (DES-02 → DES-03 → DES-05 → DES-07 → DES-08 → DES-09/DES-10) run one after another. WP-M-02 assigns the safety manager and envelope engineer roles to the same person today.
 2. **No AI-lane work product is gated at G2.** AI concerns reach system design only through the SOTIF V&V strategy (IX-13: validation targets for the AI performance values) and the FFI analysis (IX-14: ML outputs contained by the envelope). Whether PAS 8800 needs an AI architecture view at G2 is a planning decision for WP-M-10.
-3. **Four open interfaces are due by G2.** IX-02 (overdue from G1), IX-05, IX-06 and IX-13. Three of them are SOTIF–AI and concern unconfirmed numeric AI performance values. Those values are the main cross-domain blocker for G2.
+3. **Four open interfaces are due by G2.** IX-33 (overdue from G0), IX-05, IX-06 and IX-13. Three of them are SOTIF–AI and concern unconfirmed numeric AI performance values. Those values are the main cross-domain blocker for G2.
 4. **Three G2 work products have no confirmation measure at G2:** WP-S-01, WP-S-06, WP-S-07. WP-S-07 (cybersecurity requirements and architecture) names assessor sampling per WP-M-09 §8 in its header. WP-M-06 plans no independent cybersecurity review between the G1 interim review (CS-I1) and the final assessment at G5.
 5. **Safety and security meet in three places in the architecture:** overlapping boot and mode-lock requirements (IX-09), the BOOT0/NRST trust boundary that the FFI claim FFI-3 depends on (IX-10), and unauthenticated SoC messaging (IX-11). Each is one design decision seen from two standards, so the safety architecture and the security architecture cannot be reviewed separately.
 
@@ -137,7 +137,7 @@ These findings come from the generated maps. They are observations for the safet
 2. **Tool qualification is a shared dependency.** One joint activity (DEV-02, WP-P-07) feeds software unit verification, ML engineering and cybersecurity verification. Its open items sit on the lane boundaries: the ONNX reference runtime for back-to-back testing of the ML compiler (IX-18) and the security static-analysis tools (WP-W-11 OI-1).
 3. **One coding guideline must serve safety and security.** MISRA C:2012 is in place for the envelope; the CERT C subset for security static analysis has not been chosen (IX-17).
 4. **Ten of the 18 G3 work products get only verification review at G3:** hardware requirements and design, software requirements, architecture, units and unit verification, configuration data, cybersecurity implementation and proven-in-use. For WP-P-09 this is deliberate: CR-11 is not planned while no proven-in-use claim is made (tailoring T-06). For the others, WP-M-06 plans no confirmation measure, so their independent check rests on the verification reviewer that WP-P-05 requires. WP-M-02 still lists that role as TBD.
-5. **Six open interfaces are due by G3:** IX-02 (overdue since G1), IX-05, IX-06 and IX-13 (overdue since G2), plus IX-17 and IX-18.
+5. **Six open interfaces are due by G3:** IX-33 (overdue since G0), IX-05, IX-06 and IX-13 (overdue since G2), plus IX-17 and IX-18.
 
 ### 6.4 Integration and verification phase ([G4 map](maps/g4-integration-and-verification.md))
 
@@ -146,7 +146,7 @@ These findings come from the generated maps. They are observations for the safet
 3. **Test campaigns overlap without an agreed split.** Embedded-software qualification, bench system integration and the fault-injection campaign each cover faults on the same interfaces; WP-W-08 OI-5 asks for the split (IX-21). Malfunctions and SOTIF triggering conditions are already split cleanly between WP-V-05 and WP-V-03 (IX-22).
 4. **G4 has no independent check of its results.** The only measure WP-M-06 plans at G4 is the process audit AUD-2. None of the seven test specifications or reports gets a confirmation measure before the final assessment at G5. Until then their independent check rests on the verification reviewer, still TBD.
 5. **The integrated item is not tested against attacks at G4.** Security verification at G3 is implementation-level (WP-W-11). The G4 fault-injection campaign treats configuration tampering as a fault, not an attack. Penetration testing (WP-V-06) is gated at G5, so the first attack test of the integrated item happens at the release gate.
-6. **Eight open interfaces are due by G4:** IX-02, IX-05, IX-06, IX-13, IX-17, IX-18 from earlier phases, plus IX-20 and IX-21.
+6. **Eight open interfaces are due by G4:** IX-33, IX-05, IX-06, IX-13, IX-17, IX-18 from earlier phases, plus IX-20 and IX-21.
 
 ### 6.5 Validation and release phase ([G5 map](maps/g5-validation-and-release.md))
 
@@ -154,7 +154,7 @@ These findings come from the generated maps. They are observations for the safet
 2. **Four of the 14 G5 work products are still skeletons:** the SOTIF release argument (WP-K-02), both assessment reports (WP-K-04, WP-K-05) and the release record (WP-K-06). The other ten are drafts; none of the validation activities has been run.
 3. **The three arguments meet once.** Safety validation, the SOTIF release recommendation and the cybersecurity case come together only in REL-10, where the safety case is completed (IX-24 links its cybersecurity branch to WP-K-03). The FSA and the release record then depend on that single step.
 4. **The SOTIF release argument waits on evidence from other lanes.** It needs P(not controlled) from the controllability tests of the safety validation, but the evidence route is undecided (IX-25). It also needs the model evaluation report from ML engineering, which is missing (IX-26).
-5. **Nothing opened before G5 has been closed.** Nine open interfaces are due by G5: all eight from G1–G4 plus IX-25. Any of them still open at G5 is a condition on the release.
+5. **Most of what was opened before G5 is still open.** Only IX-02 has been closed. Nine open interfaces are due by G5: the eight due by G4 plus IX-25. Any of them still open at G5 is a condition on the release.
 6. **The operation documents get no confirmation measure:** installation (WP-O-01), operation and service (WP-O-02), user information and warnings (WP-O-03), and release management (WP-P-10). The user warnings are a SOTIF misuse measure (ISO 21448 §6, §13 in the register).
 
 ### 6.6 Operation phase ([G6 map](maps/g6-operation.md))
@@ -163,7 +163,7 @@ These findings come from the generated maps. They are observations for the safet
 2. **The G6 exit criterion is "processes running", and none is.** WP-O-05 is "process defined; not running": no vulnerability intake (GAP-28), no SBOM or scanning, no upstream advisory watch, and no signed updates (GAP-26, IX-30).
 3. **Operation has no independent check.** WP-M-06 plans no confirmation measure at G6, so neither field monitoring nor incident response is confirmed by anyone other than its authors.
 4. **Every field finding re-opens a G1 work product.** All six feedback routes (FB-01…FB-06) end in the concept phase: HARA, item definition, SOTIF analyses, misuse analysis, AI requirements or the safety case. WP-M-06 §4 repeats a confirmation review when a confirmed work product changes in a safety-relevant way. So a single field finding can trigger I3 confirmation reviews again, and that needs the external assessor even after release.
-5. **Ten open interfaces are due by G6:** the nine from G1–G5 plus IX-28, the shared event signatures between pre-release exploration and field monitoring.
+5. **Ten open interfaces are due by G6:** the nine due by G5 plus IX-28, the shared event signatures between pre-release exploration and field monitoring.
 
 ## 7. Open items
 

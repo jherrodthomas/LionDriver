@@ -149,4 +149,4 @@ Which activity answers each clause reference listed in the register. One activit
 
 **Work products with no confirmation measure at this gate** (verification review only): WP-O-01, WP-O-03, WP-O-02, WP-P-10, WP-T-01, WP-K-06.
 
-**Open interfaces due by this gate** (from this or an earlier phase): IX-02 (WP-C-10 OI-6), IX-05 (WP-C-08 OI-2), IX-06 (WP-C-02 OI-6), IX-13 (WP-V-02 OI-3), IX-17 (WP-W-11 OI-2), IX-18 (WP-W-10 OI-2), IX-20 (WP-H-06 OI-1 / WP-W-08 OI-1 (D-04)), IX-21 (WP-W-08 OI-5), IX-25 (WP-V-02 OI-6), IX-33 (WP-M-10 OI-7).
+**Open interfaces due by this gate** (from this or an earlier phase): IX-05 (WP-C-08 OI-2), IX-06 (WP-C-02 OI-6), IX-13 (WP-V-02 OI-3), IX-17 (WP-W-11 OI-2), IX-18 (WP-W-10 OI-2), IX-20 (WP-H-06 OI-1 / WP-W-08 OI-1 (D-04)), IX-21 (WP-W-08 OI-5), IX-25 (WP-V-02 OI-6), IX-33 (WP-M-10 OI-7).

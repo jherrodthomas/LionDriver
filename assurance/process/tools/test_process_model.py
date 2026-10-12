@@ -61,7 +61,7 @@ class ProcessModelTest(unittest.TestCase):
     self.assertFails("P7", lambda m: m.interfaces["IX-01"].update(anchors=["WP-C-03:text that is not in the HARA"]))
 
   def test_open_interface_needs_open_item(self):
-    self.assertFails("P7", lambda m: m.interfaces["IX-02"].update(open_item=None))
+    self.assertFails("P7", lambda m: m.interfaces["IX-05"].update(open_item=None))
 
   def test_review_gate_suffix_matches_phase(self):
     self.assertFails("P6", lambda m: m.reviews["CR-06@G2"].update(phase="G1"))

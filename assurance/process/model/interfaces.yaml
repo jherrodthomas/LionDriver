@@ -21,10 +21,10 @@
   phase: G1
   between: [WP-C-04, WP-C-10]
   pattern: "Safety-Security"
-  topic: "Cybersecurity goals protect the safety goals; the SG to CSG mapping was written from the HARA and is not yet checked against the FSC"
-  anchors: ["WP-C-10:Cybersecurity goals protect the HARA safety goals", "WP-C-10:Confirm the SG↔CSG mapping"]
-  status: open
-  open_item: "WP-C-10 OI-6"
+  topic: "Cybersecurity goals protect the safety goals; the SG to CSG mapping was checked against the FSC allocation and corrected (WP-C-10 OI-6 closed), and the FSC now points back to it"
+  anchors: ["WP-C-10:Checked against the functional safety concept", "WP-C-04:Interface to cybersecurity (ISO/SAE 21434 §9.5)"]
+  status: documented
+  open_item: null
   due: G1
 - id: IX-03
   kind: interface
