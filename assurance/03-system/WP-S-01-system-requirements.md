@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-S-01 System requirements specification (functional, non-safety) |
 | Standard reference | ASPICE 4.0 SYS.2; ISO 21448:2022 §5 (specification of the intended functionality); ISO 15622, ISO 22179, ISO 11270 as informative performance references |
-| Version | 0.1 |
+| Version | 0.2 (status update 2026-10-12: SYS-120 metric excludes frames refused by design in the reference build; SYS-121 evidence lists the health fields added at `bf6ce8c`). History: 0.1 |
 | Status | Draft |
 | ASIL / scope | QM / SOTIF (safety requirements are in [WP-S-02](WP-S-02-technical-safety-requirements.md)) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`). Originally `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 ## 1. Purpose and scope
 
@@ -96,8 +96,8 @@ The safety requirements of F-08 are TSR-1xx…7xx in [WP-S-02](WP-S-02-technical
 
 | ID | Requirement | Type | Target / criterion | Verif | Current implementation |
 |---|---|---|---|---|---|
-| SYS-120 | In normal operation inside the ODD, the envelope shall not reject any command produced by the SoC controller (no false interventions). | P | `safetyTxBlocked` increments per hour of engaged driving = 0 (excluding intentional tests) | LOG | Reported in `pandaStates` (`panda/board/main_comms.h:27`) |
-| SYS-121 | The envelope shall report its mode, parameter, authority state, fault flags and counters to the SoC at ≥ 10 Hz. | I | as stated | T-HIL | health packet `panda/board/main_comms.h:9-55`; pandad 10 Hz (`selfdrive/pandad/pandad.cc:385-394`) |
+| SYS-120 | In normal operation inside the ODD, the envelope shall not reject any command produced by the SoC controller (no false interventions). | P | `safetyTxBlocked` increments per hour of engaged driving = 0 (excluding intentional tests, and excluding frames refused by design: STEERING_LKA frames refused by the EPS-fault gate at fault onset (TSR-110) and frames rejected by the TX rate supervision (TSR-518), reference build, added 2026-10-12) | LOG | Reported in `pandaStates` (`panda/board/main_comms.h:27`) |
+| SYS-121 | The envelope shall report its mode, parameter, authority state, fault flags and counters to the SoC at ≥ 10 Hz. | I | as stated | T-HIL | health packet `panda/board/main_comms.h:9-55`; pandad 10 Hz (`selfdrive/pandad/pandad.cc:385-394`). 2026-10-12 (`bf6ce8c`): health flags and counter added and published in `pandaState`: `watchdogReset` (TSR-501), `requestsRejected` (counter, TSR-512/513), `epsFault` (TSR-110), `txRateExceeded` (TSR-518); not verified on hardware |
 
 ## 9. F-09 Logging, upload, remote access, update
 

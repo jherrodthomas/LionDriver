@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-01 Item definition |
 | Standard reference | ISO 26262-3:2018 §5; ISO 21448:2022 §5 (specification of the functionality and system); ISO/SAE 21434:2021 §9.3; ASPICE SYS.1 |
-| Version | 0.3 (AOU-14 added for the reference build's fixed alternative experience; 2026-10-12) |
+| Version | 0.4 (AOU-15 added: reference build used on camera-ACC configurations only, `0x411` refused (TSR-705 D-1); 2026-10-12). History: 0.3 (AOU-14 added for the reference build's fixed alternative experience; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Item level (ASIL determined in [WP-C-03](WP-C-03-hara.md)) |
 | Author | Assurance team (initial draft) |
@@ -160,6 +160,7 @@ Each assumption needs verification evidence before it is credited in the HARA or
 | AOU-12 | The cluster cruise indicator is driven by PCM state and is not influenced by item TX messages other than `0x412` LKAS_HUD | FSC FSR-05.05; independent cue for SG-02/SG-06 (WP-S-02 TSR-303, TSR-309) | Vehicle test (WP-S-09 VS-SQ-07) | Unverified |
 | AOU-13 | The de-energised harness relay connects the forward camera to the vehicle CAN (stock path) without any active component in the path | FSC FSR-07.03; SG-07 safe state | Harness inspection and test (WP-H-02 UK-03; WP-S-08 VS-SI-18) | Unverified |
 | AOU-14 | The reference build (`LIONDRIVER_REFERENCE=1`) is used with openpilot's default alternative experience; no setting that sets alternative-experience bits is enabled. The firmware fixes the value at 0; a different host value leads to a controls mismatch | WP-S-02 TSR-512 (SWSR-512a) | Installation checklist; host-side guard to be decided (IA mode lock OI-3) | Unverified |
+| AOU-15 | The reference build (`LIONDRIVER_REFERENCE=1`) is used only on camera-ACC configurations. It refuses PCS_HUD `0x411` from the SoC, so on radar-ACC cars with openpilot longitudinal (`DISABLE_RADAR`) the FCW HUD indication is lost | WP-S-02 TSR-705 (decision D-1) | Installation checklist (reference vehicle is camera-ACC); release record of the supported configurations | Unverified |
 
 ## 8. Functional and non-functional performance (summary)
 
