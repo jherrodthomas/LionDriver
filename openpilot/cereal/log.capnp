@@ -583,6 +583,8 @@ struct PandaState @0xa7649e2575e4591e {
   requestsRejected @43 :UInt16;
   # LionDriver: the panda refuses lateral actuation because the car's EPS reports a fault (TSR-110)
   epsFault @44 :Bool;
+  # LionDriver: the panda firmware is a reference build with the safety-mode lock (TSR-514, TSR-619)
+  referenceBuild @45 :Bool;
 
   enum FaultStatus {
     none @0;
