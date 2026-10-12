@@ -1,0 +1,88 @@
+# Cross-domain interfaces of the concept phase. Format: assurance/process/README.md §3.
+# An interface is a point where one discipline's analysis depends on another's (Integrated
+# Automotive Standards Handbook §3.3, "explicit domain interfaces"). Each one is anchored to text
+# that already exists in the work products: an anchor `WP-x-nn:text` must occur verbatim in that
+# work product, so the model cannot claim a link the documents do not make.
+# status: documented = both sides reference each other, not yet reviewed;
+#         open = a recorded open item still has to settle it (named in open_item).
+
+- id: IX-01
+  kind: interface
+  phase: G1
+  between: [WP-C-03, WP-C-09]
+  pattern: "Safety-Security"
+  topic: "Cyber-induced effects map onto the HARA hazards; TARA safety impact is rated against those hazards and their ASILs"
+  anchors: ["WP-C-03:Cyber-induced effects are analysed in the TARA", "WP-C-09:Safety impact is anchored to the HARA hazards"]
+  status: documented
+  open_item: null
+  due: G1
+- id: IX-02
+  kind: interface
+  phase: G1
+  between: [WP-C-04, WP-C-10]
+  pattern: "Safety-Security"
+  topic: "Cybersecurity goals protect the safety goals; the SG to CSG mapping was written from the HARA and is not yet checked against the FSC"
+  anchors: ["WP-C-10:Cybersecurity goals protect the HARA safety goals", "WP-C-10:Confirm the SG↔CSG mapping"]
+  status: open
+  open_item: "WP-C-10 OI-6"
+  due: G1
+- id: IX-03
+  kind: interface
+  phase: G1
+  between: [WP-C-03, WP-C-05]
+  pattern: "Safety-SOTIF"
+  topic: "One hazard log: each HARA hazard cross-references the SOTIF hazards that can cause the same vehicle-level effect"
+  anchors: ["WP-C-03:Hazard log cross-references", "WP-C-03:SH-01 (model-induced lateral error)"]
+  status: documented
+  open_item: null
+  due: G1
+- id: IX-04
+  kind: interface
+  phase: G1
+  between: [WP-C-04, WP-C-08]
+  pattern: "Safety-SOTIF"
+  topic: "Driver monitoring carries no ASIL and is managed as a SOTIF misuse measure, while the C2 controllability ratings assume a supervising driver (AOU-06R)"
+  anchors: ["WP-C-04:DM is not assigned an ASIL", "WP-C-04:AOU-06R"]
+  status: documented
+  open_item: null
+  due: G1
+- id: IX-05
+  kind: interface
+  phase: G1
+  between: [WP-C-08, WP-C-11]
+  pattern: "SOTIF-AI"
+  topic: "Driver-monitoring performance targets (DMP-01/02) are set as AI safety requirements AIR-07/08 with values still to be confirmed"
+  anchors: ["WP-C-08:Confirm the numeric DM performance targets", "WP-C-11:AIR-07"]
+  status: open
+  open_item: "WP-C-08 OI-2"
+  due: G2
+- id: IX-06
+  kind: interface
+  phase: G1
+  between: [WP-C-02, WP-C-11]
+  pattern: "SOTIF-AI"
+  topic: "The reference ODD cannot be compared with the driving model's training-data ODD, which upstream has not published"
+  anchors: ["WP-C-02:Specify the training-data ODD of the driving model", "WP-C-11:makes no claim about training data"]
+  status: open
+  open_item: "WP-C-02 OI-6"
+  due: G2
+- id: IX-07
+  kind: interface
+  phase: G1
+  between: [WP-C-11, WP-C-09]
+  pattern: "Security-AI"
+  topic: "Model artefacts load through pickle without a hash or signature: AI integrity requirements AIR-19/AIR-20 and threat scenario TS-09 address the same weakness (GAP-22)"
+  anchors: ["WP-C-11:AIR-20 | No deserialization mechanism capable of executing code", "WP-C-09:Tampered ML model artefact executes code on load"]
+  status: documented
+  open_item: null
+  due: G1
+- id: IX-08
+  kind: interface
+  phase: G1
+  between: [WP-C-04, WP-C-07]
+  pattern: "Safety-SOTIF"
+  topic: "The FSC transition rule (untrusted command to immediate safe state, otherwise soft disable) is implemented by functional modification FM-03"
+  anchors: ["WP-C-04:FM-03 in [WP-C-07]", "WP-C-07:No actuation on stale or failed inputs during soft disable"]
+  status: documented
+  open_item: null
+  due: G1

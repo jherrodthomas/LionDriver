@@ -1,7 +1,7 @@
 name: assurance
 
-# Assurance data checks: trace consistency (WP-T-01), Living Safety Case records and dashboard
-# (assurance/case), and links in the assurance tree, README and LionDriver docs.
+# Assurance data checks: trace consistency (WP-T-01), integrated process model (WP-P-11), Living
+# Safety Case records and dashboard (assurance/case), and links in the assurance tree, README and LionDriver docs.
 # Read-only: the job never writes to the repository. Generated dashboard files are committed by
 # contributors (generate_dashboard.py) and this job fails if they are out of date.
 
@@ -51,6 +51,10 @@ jobs:
       run: python3 assurance/02-concept/hara/hara_model.py --check
     - name: FSC completeness (every SG x node basic event mapped to WP-C-04 FSRs)
       run: python3 assurance/02-concept/fsc/fsc_model.py --check
+    - name: Integrated process model and maps (WP-P-11)
+      run: python3 assurance/process/tools/process_model.py --check
+    - name: Process model self-tests
+      run: python3 assurance/process/tools/test_process_model.py
     - name: Sync report tool unit tests
       run: python3 -m unittest tools.sync.test_sync_report -v
 

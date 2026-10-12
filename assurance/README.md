@@ -36,6 +36,7 @@ structure follows UL 4600 principles where they apply to a supervised Level 2 sy
 | `08-analyses/` | ASIL decomposition, coexistence, DFA, system FTA/FMEA | 26262-9 |
 | `09-production-operation/` | Installation, operation, field monitoring, incident response | 26262-7, 21448 §13, 21434 §12–14 |
 | `10-safety-case/` | Safety, SOTIF and cybersecurity cases; assessment and release records | 26262-2 §6, 21448 §12, 21434 §6, UL 4600 |
+| `process/` | [Integrated process model](process/README.md): activities, lanes, cross-domain interfaces and gates as data; generated Mermaid process maps | 26262-2 §6, 21434 §6, MAN.3 |
 | `trace/` | Machine-readable requirement and trace data | 26262-8 §6, ASPICE traceability BPs |
 | `case/` | Living Safety Case records (claims, evidence, defeaters, configurations, reviews), validator and dashboard generator | 26262-2 §6, UL 4600 |
 
