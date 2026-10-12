@@ -71,6 +71,23 @@ class RiskCurveTest(unittest.TestCase):
     self.assertFalse(any("SH-10" in sh for sh, _, _ in rc.cases()))
     self.assertEqual(sr.SH_COLLISIONS["SH-10"], ["sideswipe_same"])
 
+  def test_pedestrian_curve_hits_its_anchors(self):
+    for mph, risk in rc.PEDESTRIAN_ANCHORS_MPH[1:]:
+      self.assertAlmostEqual(rc.pedestrian_fatality(mph / rc.MPH_PER_KMH), risk)
+    self.assertEqual(rc.pedestrian_fatality(100), 1.0)
+    self.assertAlmostEqual(rc.pedestrian_fatality(37 / rc.MPH_PER_KMH), 0.375)
+
+  def test_pedestrian_curve_is_monotone(self):
+    risks = [rc.pedestrian_fatality(v) for v in range(0, 120, 5)]
+    self.assertEqual(risks, sorted(risks))
+
+  def test_sh11_cases_and_mapping(self):
+    from tools.severity import severity_ratio as sr
+    cases = {sh: v for sh, _, v in rc.vru_cases()}
+    self.assertEqual(cases["SH-11 OS-04"], 60)
+    self.assertAlmostEqual(cases["SH-11 OS-06"], (2 * 2.0 * 6.0) ** 0.5 * 3.6)
+    self.assertNotIn("SH-11", sr.SH_COLLISIONS)
+
   def test_sensitivity_grid(self):
     with redirect_stdout(io.StringIO()) as buf:
       self.assertEqual(rc.main(["--sensitivity"]), 0)

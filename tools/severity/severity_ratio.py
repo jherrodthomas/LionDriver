@@ -80,7 +80,8 @@ SH_COLLISIONS = {
   "SH-04": ["rear_end"],
   "SH-06": ["rear_end"],
   "SH-10": ["sideswipe_same"],
-  "SH-11": ["pedestrian", "pedalcyclist"],
+  # SH-11 (VRU, no braking) is on the pedestrian curve of risk_curve.py, not this ratio
+  # (WP-V-02 §3.5 item 3); its pedestrian and pedalcyclist cells are still reported.
 }
 
 MIN_CASES = 30  # unweighted CRSS cases per cell below which the bound falls back to 1

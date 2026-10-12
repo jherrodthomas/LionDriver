@@ -21,6 +21,17 @@ Impact (closing) speed:
     follower reacts after FOLLOWER_REACTION_S and brakes at FOLLOWER_DECEL; a follower that
     never brakes is outside this bound. `--sensitivity` prints the grid around it.
 
+SH-11 (no reaction to a pedestrian or cyclist, OS-04 and OS-06) uses a pedestrian curve, not
+Joksch: the person struck is unprotected and the ego's delta-v is irrelevant. Impact speed
+is the travel speed with no braking: the OS-04 bound (60 km/h), and for OS-06 a launch from a
+queue at the envelope maximum over the standstill gap, v = sqrt(2 * a * STOP_DISTANCE).
+Curve: Tefft, B. C. (2013), "Impact speed and a pedestrian's risk of severe injury or
+death", Accident Analysis and Prevention 50, 871-878. Risk of death 10/25/50/75/90 % at
+23/32/42/50/58 mph impact speed (anchor points quoted from memory; verify). Between anchors
+the risk is interpolated linearly; above 58 mph it is 1, and below 23 mph it falls linearly
+to 0 at 0 mph (an assumption). One VRU is struck. The same curve is used for cyclists, which
+also needs checking.
+
 SH-10 (lane change into an occupied lane) is deliberately not mapped to a curve. Its primary
 contact is a same-direction sideswipe with a delta-v of a few km/h, so a delta-v curve would
 give almost no risk. Its S3 rating (HE-02.5) comes from what follows: loss of control, or a
@@ -106,6 +117,28 @@ def rear_impact_kmh(speed_kmh: float, gap_s: float, reaction_s: float = FOLLOWER
   return 0.0
 
 
+PEDESTRIAN_ANCHORS_MPH = [(0.0, 0.0), (23.0, 0.10), (32.0, 0.25), (42.0, 0.50), (50.0, 0.75), (58.0, 0.90)]  # Tefft 2013; verify
+OS04_SPEED_KMH = 60  # HARA OS-04 upper bound
+
+
+def pedestrian_fatality(speed_kmh: float) -> float:
+  """Risk of death of a pedestrian struck at this impact speed (Tefft 2013 anchors, linear between)."""
+  mph = speed_kmh * MPH_PER_KMH
+  if mph > PEDESTRIAN_ANCHORS_MPH[-1][0] + 1e-9:
+    return 1.0
+  for (x0, y0), (x1, y1) in zip(PEDESTRIAN_ANCHORS_MPH, PEDESTRIAN_ANCHORS_MPH[1:], strict=False):
+    if mph <= x1:
+      return y0 + (y1 - y0) * (mph - x0) / (x1 - x0)
+  return 1.0
+
+
+def vru_cases() -> list[tuple[str, str, float]]:
+  """(SH and situation, case label, impact speed in km/h) for SH-11."""
+  launch = (2 * ACCEL_MAX * STOP_DISTANCE_M) ** 0.5 * 3.6
+  return [("SH-11 OS-04", f"VRU struck at {OS04_SPEED_KMH} km/h (OS-04 bound)", OS04_SPEED_KMH),
+          ("SH-11 OS-06", f"VRU struck after launch from a queue over {STOP_DISTANCE_M:g} m", launch)]
+
+
 def cases() -> list[tuple[str, str, float]]:
   """(SH and situation, case label, closing speed in km/h) for the ODD speed bounds."""
   out = []
@@ -158,6 +191,12 @@ def main(argv: list[str] | None = None) -> int:
       cols = [sh, label, f"{v:.0f}", lead["name"], f"{r['dv_ego_kmh']:.0f}", f"{r['dv_lead_kmh']:.0f}",
               f"{r['p_driver_ego']:.3f}", f"{r['p_driver_lead']:.3f}", f"{r['p_fatal_crash_ub']:.3f}"]
       print("| " + " | ".join(cols) + " |")
+  if not a.speed:
+    print("\n| SH / situation | Case | Impact (km/h) | P(fatal), one VRU |\n|---|---|---|---|")
+    for sh, label, v in vru_cases():
+      p_vru = pedestrian_fatality(v)
+      worst[(sh, "ODD-A")] = p_vru
+      print(f"| {sh} | {label} | {v:.0f} | {p_vru:.3f} |")
   print("\nP(severity class), worst credible lead and gap:")
   for (sh, odd), w in worst.items():
     print(f"- {sh}, {odd}: {w:.3f}")

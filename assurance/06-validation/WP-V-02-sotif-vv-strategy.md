@@ -178,6 +178,13 @@ SH-10 (lane change into an occupied lane, HE-02.5) is deliberately **not** mappe
 - **The curve would understate the risk.** The primary contact is a same-direction sideswipe: about 1 m/s sideways plus the small speed difference to the vehicle in the target lane. Its Δv is a few km/h, so a Δv curve would give almost no fatality risk. The S3 rating of HE-02.5 comes from what follows the contact (loss of control, or a spin into traffic or a barrier), which a Δv curve does not model. Using it would overstate the credit.
 - **The national ratio fits.** SH-10 uses the FARS/CRSS ratio for sideswipe-same-direction crashes (item 3). The condition of item 3 holds, because a lane change into an occupied lane is the typical cause of that crash type, and its statistics include the secondary outcomes. The value waits on the FARS/CRSS extraction (OI-8).
 
+SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the FARS/CRSS ratio to a curve:
+- **Why a curve.** There is no braking before impact, so the crash is worse than the average pedestrian crash (item 3).
+- **Which curve.** The struck person is unprotected, so the Joksch rule does not apply. The curve is the pedestrian fatality risk of Tefft (2013): 10/25/50/75/90 % at 23/32/42/50/58 mph impact speed, interpolated linearly, and 1 above 58 mph.
+- **Results.** P(severity class) is **0.38 in OS-04**, a VRU struck at the 60 km/h bound of the urban situation. It is **0.05 in OS-06**, a VRU struck after a launch from a queue at +2.0 m/s² over the 6 m standstill gap, which gives 18 km/h.
+- **Not covered.** The anchor points are quoted from memory. Applying the curve to cyclists, and the linear risk below 23 mph, are assumptions; all three are to be checked.
+- **Use.** SH-11 has no rate target (§4), so these values inform the residual-risk statement of WP-K-02 rather than a target.
+
 ## 4. Validation targets
 
 Targets are **proposals**: numeric values are placeholders for the assessor review and WP-C-05 acceptance criteria (OI-3). "Demonstration" names the primary method; §5 defines the methods.
