@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-02 Functional safety plan |
 | Standard reference | ISO 26262-2:2018 §6 (project-dependent safety management: roles, planning, tailoring, safety case, confirmation measures); ISO 26262-2 §5 (anomaly handling, interfaces to overall safety management); ISO 26262-8 §5–§12 (supporting processes, by reference); ASPICE 4.0 MAN.3 |
-| Version | 0.2 (early-implementation rule §4.1, AI-assisted authoring §3.3, impact records and design notes in §7, OI-4 corrected, OI-7…OI-9 added; audit [RR-2026-008](reviews/RR-2026-008.md); 2026-10-12). 0.1 (initial draft) |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (early-implementation rule §4.1, AI-assisted authoring §3.3, impact records and design notes in §7, OI-4 corrected, OI-7…OI-9 added; audit [RR-2026-008](reviews/RR-2026-008.md); 2026-10-12). 0.1 (initial draft) |
 | Status | Draft |
 | ASIL / scope | All. Planned to ASIL D until the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)) is approved |
 | Author | Assurance team (initial draft) |
@@ -14,7 +14,7 @@
 
 ## 1. Purpose and scope
 
-This plan sets out how functional safety is managed for the LionDriver reference configuration defined in [WP-M-01 §3.1](WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to): 2020 Toyota Corolla LE (US, ICE, TSS 2.0, `TOYOTA_COROLLA_TSS2`), one identified comma device revision with panda safety MCU, and a tagged LionDriver release.
+This plan sets out how functional safety is managed for the LionDriver reference configuration defined in [WP-M-01 §3.1](WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to): Toyota Corolla, 12th generation (E210), TSS 2.0 (US, ICE, `TOYOTA_COROLLA_TSS2`), one identified comma device revision with panda safety MCU, and a tagged LionDriver release.
 
 It implements the [assurance strategy (WP-M-01)](WP-M-01-assurance-strategy.md) for ISO 26262. It does not repeat the strategy. The companion plans cover the other disciplines:
 

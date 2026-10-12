@@ -4,7 +4,7 @@
 |---|---|
 | Work product | Reconciliation record (supporting document, not a registered work product) |
 | Standard reference | ISO 26262-8:2018 §7 (configuration management), §8 (change management) |
-| Version | 0.2 (status of the layer-1 measures after the firmware changes integrated 2026-10-12: TSR-501 IWDG implemented, not verified; layer 2 and OI-3 re-scoped; TSR-306, TSR-405 added to ASM-V-03…05; 2026-10-12). 0.1: initial reconciliation |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status of the layer-1 measures after the firmware changes integrated 2026-10-12: TSR-501 IWDG implemented, not verified; layer 2 and OI-3 re-scoped; TSR-306, TSR-405 added to ASM-V-03…05; 2026-10-12). 0.1: initial reconciliation |
 | Status | Draft |
 | Author | Assurance team |
 | Reviewer(s) | TBD |
@@ -14,7 +14,7 @@
 
 Two sets of safety drafts were written in parallel:
 
-- `docs/safety/` on branch `claude/safety-framework-docs`: safety plan LD-SPL-001, item definition LD-ITD-001, HARA LD-HARA-001, functional safety concept LD-FSC-001 and technical safety concept LD-TSC-001, each as a JSON source, a generator script and an xlsx workbook; plus a `configurations/` folder for the 2020 Corolla.
+- `docs/safety/` on branch `claude/safety-framework-docs`: safety plan LD-SPL-001, item definition LD-ITD-001, HARA LD-HARA-001, functional safety concept LD-FSC-001 and technical safety concept LD-TSC-001, each as a JSON source, a generator script and an xlsx workbook; plus a `configurations/` folder for the Corolla reference configuration.
 - `assurance/` (this tree), merged to `liondriver-dev` in pull request #2.
 
 `assurance/` is the single source of truth. `docs/safety/` has been removed from the working tree. Its files can be recovered from commit `14e18b3` (`git show 14e18b3:docs/safety/<path>`).
@@ -47,7 +47,7 @@ The two HARAs rate the same functions but reach different results. Both are unre
 
 | Topic | LD-HARA-001 (`docs/safety/`) | WP-C-03 (`assurance/`) |
 |---|---|---|
-| Scope | Platform as a Safety Element out of Context over a declared operating envelope; each vehicle checks the platform's assumptions | The reference configuration (2020 Corolla LE, TSS2) as the item; other vehicles join through impact analysis ([WP-M-12](../01-management/WP-M-12-impact-analysis.md)) |
+| Scope | Platform as a Safety Element out of Context over a declared operating envelope; each vehicle checks the platform's assumptions | The reference configuration (E210 Corolla, TSS2) as the item; other vehicles join through impact analysis ([WP-M-12](../01-management/WP-M-12-impact-analysis.md)) |
 | Highest ASIL | **D**, for five goals (lateral motion, acceleration, deceleration, failure to release, uncommanded engagement), all from one cell: motorway, dry, daylight, S3 E4 C3 | **C** for SG-01 (lateral motion), B for the rest; each ⚠ goal rises one level if the EPS, brake or PCM assumptions (AOU-01/02/03/05) fail |
 | Main source of the difference | Controllability C3 at motorway speed, with no credit for OEM ECU limiting | Controllability C2, crediting the EPS and PCM limits as assumptions of use (AOU-01, AOU-02, AOU-05) |
 | Uncommanded engagement | Separate goal SG-005 (ASIL D) | Rated inside H-01 (torque while not engaged) and H-03 (acceleration when not intended) |

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-06 Cybersecurity validation and penetration testing (plan, specification, report) |
 | Standard reference | ISO/SAE 21434:2021 §11 (cybersecurity validation of the item at vehicle level), §10 (verification inputs), §15 (TARA as basis); UN R155 (informative); ASPICE 4.0 SEC.4 |
-| Version | 0.1 |
+| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft — plan and specification written; **no validation or penetration test has been executed and no tester is engaged** ([WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-6). All result sections are "Not yet executed" |
 | ASIL / scope | CS (CAL 1–3); safety relation to SG-01…SG-07 |
 | Author | Assurance team (initial draft); report to be authored by the penetration tester |
@@ -28,7 +28,7 @@ Cybersecurity validation confirms, on the integrated item in its reference confi
 | comma device (SoC + AGNOS + LionDriver release) and panda STM32H7 firmware of the release candidate | comma.ai back-end services, GitHub, AGNOS CDN (external entities, CT-2; tested only as the device sees them) |
 | Interfaces TB-1…TB-7 ([WP-S-07 §3.2](../03-system/WP-S-07-cybersecurity-requirements-architecture.md)) | Toyota ECU internals (CA-03) |
 | Update path, provisioning and decommissioning procedures | Attacks on public infrastructure or third-party systems |
-| Reference vehicle (2020 Corolla LE) on bench or closed course for CAN-level tests | Any test on public roads |
+| Reference vehicle (E210 Corolla) on bench or closed course for CAN-level tests | Any test on public roads |
 | Release build configuration only (GAP-41) | DEBUG builds, except as the negative control on the bench |
 
 Configuration under test: the release candidate identified by tag, panda image hash, AGNOS version and model hashes ([WP-P-10](../07-supporting/WP-P-10-release-management.md)); parameters per [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) INS-19/20.

@@ -50,7 +50,7 @@ LionDriver publishes its safety argument as it is built: the claims it makes, th
 | Open defeaters (known counter-evidence) | 41 |
 | Evaluated configurations | 1 |
 | Assurance-supported configurations | 0 |
-| Records digest | `095453860c3d` |
+| Records digest | `a08f42e912d0` |
 
 | Lifecycle area | Status | Evidence (drafted / missing / accepted) |
 |---|---|---|
@@ -106,7 +106,7 @@ LionDriver is built on openpilot's vehicle support and keeps every upstream car 
 | **LionDriver Evaluated** | Undergoing or completed documented engineering evaluation |
 | **Assurance Supported** | Defined configuration with accepted evidence for specific safety claims |
 
-The first evaluated configuration is the 2020 Toyota Corolla LE with Toyota Safety Sense 2.0, the reference vehicle for the assurance work. It is a starting point, not a limit: further vehicles join through a documented impact analysis against the assumptions the analysis makes about the car. No configuration is assurance-supported yet. See [vehicle compatibility](docs/liondriver/compatibility.md).
+The first evaluated configuration is the Toyota Corolla, 12th generation (E210), with Toyota Safety Sense 2.0, the reference vehicle for the assurance work. It is a starting point, not a limit: further vehicles join through a documented impact analysis against the assumptions the analysis makes about the car. No configuration is assurance-supported yet. See [vehicle compatibility](docs/liondriver/compatibility.md).
 
 ## Standards and Engineering Framework
 

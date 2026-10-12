@@ -23,13 +23,13 @@ The counts on this page and in the README are generated from those sources by [`
 
 | ID | Configuration | Classification | State |
 |---|---|---|---|
-| [CFG-001](../../assurance/case/configurations/cfg-001-toyota-corolla-2020.yaml) | 2020 Toyota Corolla LE, Toyota Safety Sense 2.0 | LionDriver Evaluated | Evaluation in progress; no accepted claims |
+| [CFG-001](../../assurance/case/configurations/cfg-001-toyota-corolla-e210.yaml) | Toyota Corolla, 12th generation (E210), Toyota Safety Sense 2.0 | LionDriver Evaluated | Evaluation in progress; no accepted claims |
 
 The Corolla is the reference configuration for the first assurance work. It is a starting point, not a limit on the vehicles LionDriver supports.
 
 ## Adding a configuration
 
-1. Copy [`cfg-001-toyota-corolla-2020.yaml`](../../assurance/case/configurations/cfg-001-toyota-corolla-2020.yaml) to a new `CFG-nnn` record with `classification: liondriver-evaluated` and `evaluation_state: in-progress`.
+1. Copy [`cfg-001-toyota-corolla-e210.yaml`](../../assurance/case/configurations/cfg-001-toyota-corolla-e210.yaml) to a new `CFG-nnn` record with `classification: liondriver-evaluated` and `evaluation_state: in-progress`.
 2. Record the configuration baseline: car platform, brand safety mode and parameters, each with its source in the pinned upstream code.
 3. Write the [impact analysis](../../assurance/01-management/WP-M-12-impact-analysis.md): which assumptions of use hold for this vehicle, which differ, and what evidence each needs.
 4. Run `python3 assurance/case/tools/validate.py` and `python3 assurance/case/tools/generate_dashboard.py`, then open a pull request.

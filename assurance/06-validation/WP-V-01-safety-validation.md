@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-01 Safety validation plan, specification and report |
 | Standard reference | ISO 26262-4:2018 §8 (safety validation); ISO 26262-3:2018 §6 (controllability basis), §7 (external measures, AoU); ASPICE 4.0 VAL.1. Informative: RESPONSE 3 Code of Practice for ADAS controllability assessment; ISO 11270, ISO 15622 |
-| Version | 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (plan and specification). Report section is a template: **Not yet executed** |
 | ASIL / scope | Up to ASIL C (SG-01), D if AOU-01/02 fail ([WP-C-03](../02-concept/WP-C-03-hara.md)) |
 | Author | Assurance team (initial draft) |
@@ -31,7 +31,7 @@ Out of scope: SOTIF validation of functional insufficiencies ([WP-V-02](WP-V-02-
 
 | Item | Configuration |
 |---|---|
-| Vehicle | Reference 2020 Corolla LE (VIN and ECU firmware per [WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-1); [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) INS-01…INS-30 passed |
+| Vehicle | Reference Toyota Corolla, 12th generation (E210), TSS 2.0 (VIN and ECU firmware per [WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-1); [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) INS-01…INS-30 passed |
 | Item | Released LionDriver tag (or release candidate) with pinned models and panda firmware; parameters per INS-19 |
 | Test builds | Fault-injection and characterization builds (§5.1 VS-VAL-02, -05; §5.3) are separately identified builds with their own tag, used **only** on the closed course and removed afterwards; their use is logged in the drive sheet ([WP-V-07](WP-V-07-vehicle-test-operations.md) §7.4) |
 | Equipment | Steering-wheel torque/angle sensor (instrumented wheel or clamp-on), rim force gauge, accelerometer/IMU independent of the device, GNSS/RTK or video lane-position measurement, CAN logger independent of the panda (second interface on the vehicle CAN), cabin sound level meter, soft target (radar-reflective) with propulsion or trolley, passenger-side abort switch (WP-V-07 §6.3) |

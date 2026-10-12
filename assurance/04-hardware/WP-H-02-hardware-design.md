@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay) |
 | Standard reference | ISO 26262-5:2018 §7 (hardware design: architectural and detailed design, safety-related HW elements); ISO 26262-8:2018 §13; ASPICE 4.0 HWE.2 |
-| Version | 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
 | Status | Draft |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-07) |
 | Author | Assurance team (initial draft) |
@@ -43,7 +43,7 @@ this document covers both boards (WP-H-01 OI-7).
 ### 3.1 Block diagram
 
 ```
-                     Vehicle (2020 Corolla TSS2)
+                     Vehicle (E210 Corolla TSS2)
    Forward camera (LKA/ACC/PCS)                 Vehicle CAN (EPS, ECM/PCM, ABS, ...)
           │ camera-side CAN                                │ car-side CAN
           │                                                │

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-O-03 User information and safety warnings |
 | Standard reference | ISO 26262-7:2018 §6 (user manual / information for operation); ISO 21448:2022 §6 and Annex B (reasonably foreseeable misuse), §13 (information to users in operation); ISO 26262-3:2018 §6 (controllability assumptions) |
-| Version | 0.1 |
+| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Controllability basis for SG-01…SG-06 (AOU-06, AOU-07); SOTIF misuse measures |
 | Author | Assurance team (initial draft) |
@@ -32,7 +32,7 @@ The on-device alert texts are inherited from upstream and say "openpilot". The u
 
 **UI-01.** LD-SDA (LionDriver Supervised Driving Assistance) is a **driver assistance system**. It can steer to keep the car centred in its lane and control speed to follow the car ahead, including stopping and starting in traffic. It is SAE Level 2: **you are driving the car at all times.** LD-SDA does not make the car self-driving.
 
-**UI-02.** LD-SDA is approved for use only on this combination: a 2020 Toyota Corolla LE (US, non-hybrid) with Toyota Safety Sense 2.0, the specific comma device and Toyota harness installed and checked by an approved installer, and a released LionDriver software version. Do not move the device to another car.
+**UI-02.** LD-SDA is approved for use only on this combination: a Toyota Corolla, 12th generation (E210) (US, non-hybrid) with Toyota Safety Sense 2.0, the specific comma device and Toyota harness installed and checked by an approved installer, and a released LionDriver software version. Do not move the device to another car.
 
 **UI-03.** LD-SDA replaces two Toyota functions while installed: Lane Tracing Assist (steering) and Dynamic Radar Cruise Control (speed). Toyota's Pre-Collision System (automatic emergency braking) is intended to keep working, but you must never rely on any automatic braking.
 

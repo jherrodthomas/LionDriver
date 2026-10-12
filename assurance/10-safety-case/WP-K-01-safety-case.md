@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-K-01 Safety case (integrated functional safety, SOTIF and AI argument; links to the cybersecurity case) |
 | Standard reference | ISO 26262-2:2018 §6 (safety case); ISO 21448:2022 §12 (via [WP-K-02](WP-K-02-sotif-release-argument.md)); ISO/PAS 8800:2024 (AI assurance argument); ISO/SAE 21434:2021 §6 (cybersecurity case, via [WP-K-03](WP-K-03-cybersecurity-case.md)); UL 4600 (informative only, see §8); GSN Community Standard (notation) |
-| Version | 0.2 (status at BL-002 `bf6ce8c` after the firmware changes integrated 2026-10-12: defeaters DF-01…03, 05, 12, 30, 32…34, 39, 40 restated (all still open); evidence Sn-02, 03, 10, 12, 13 updated (WP-S-02 v0.14, WP-W-02 v0.14), Sn-15 added; AOU-14 added; 2026-10-12). 0.1: initial draft |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status at BL-002 `bf6ce8c` after the firmware changes integrated 2026-10-12: defeaters DF-01…03, 05, 12, 30, 32…34, 39, 40 restated (all still open); evidence Sn-02, 03, 10, 12, 13 updated (WP-S-02 v0.14, WP-W-02 v0.14), Sn-15 added; AOU-14 added; 2026-10-12). 0.1: initial draft |
 | Status | Draft — **living document. At this baseline the argument structure is defined; almost all evidence is missing or partial. This safety case does not support any release or public-road claim** |
 | ASIL / scope | Item LD-SDA, reference configuration; up to ASIL C (SG-01) |
 | Author | Assurance team (initial draft) |
@@ -71,7 +71,7 @@ G0  The LionDriver reference configuration, operated by an attentive driver with
  ⊙ C1   Item definition: functions F-01…F-09, elements E-01…E-06, interfaces IF-01…IF-09
         [WP-C-01]
  ⊙ C2   ODD and intended functionality [WP-C-02]
- ⊙ C3   Reference configuration: 2020 Corolla LE ICE TSS2 (TOYOTA_COROLLA_TSS2), one
+ ⊙ C3   Reference configuration: E210 Corolla ICE TSS2 (TOYOTA_COROLLA_TSS2), one
         recorded device revision + Toyota harness, tagged LionDriver release
         [WP-M-01 §3.1; WP-O-01 SPC-04…SPC-07]
  ⊙ C4   Hazard log: H-01…H-06, H-08; HE-01.1…HE-08.1; SG-01…SG-07 [WP-C-03];

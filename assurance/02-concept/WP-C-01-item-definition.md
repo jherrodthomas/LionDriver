@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-01 Item definition |
 | Standard reference | ISO 26262-3:2018 §5; ISO 21448:2022 §5 (specification of the functionality and system); ISO/SAE 21434:2021 §9.3; ASPICE SYS.1 |
-| Version | 0.4 (AOU-15 added: reference build used on camera-ACC configurations only, `0x411` refused (TSR-705 D-1); 2026-10-12). History: 0.3 (AOU-14 added for the reference build's fixed alternative experience; 2026-10-12) |
+| Version | 0.5 (reference configuration named by generation, E210; OI-9 added; 2026-10-12). History: 0.4 (AOU-15 added: reference build used on camera-ACC configurations only, `0x411` refused (TSR-705 D-1); 2026-10-12). 0.3 (AOU-14 added for the reference build's fixed alternative experience; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Item level (ASIL determined in [WP-C-03](WP-C-03-hara.md)) |
 | Author | Assurance team (initial draft) |
@@ -18,7 +18,7 @@
 |---|---|
 | Item name | LionDriver Supervised Driving Assistance (LD-SDA) |
 | Item type | Aftermarket retrofit, supervised SAE Level 2 driving automation feature (lateral and longitudinal control at the same time, driver supervising) |
-| Reference vehicle | 2020 Toyota Corolla LE sedan, US market, 1.8 L ICE (non-hybrid), Toyota Safety Sense 2.0 |
+| Reference vehicle | Toyota Corolla, 12th generation (E210), sedan, US market, 1.8 L ICE (non-hybrid), Toyota Safety Sense 2.0. Scope is the generation, not one model year or trim (OI-9) |
 | openpilot platform | `TOYOTA_COROLLA_TSS2` (`opendbc_repo/opendbc/car/toyota/values.py:201`), flags `TSS2 \| NO_DSU` |
 | Reference vehicle record | VIN, build date, ECU firmware versions (engine `0x700`/`0x7e0`, EPS `0x7a1`, ABS `0x7b0`, radar `0x750/0xf`, camera `0x750/0x6d`), options and tyre size: **to be recorded** (OI-1) |
 | Device | comma device (comma 3X or comma four) with integrated "panda" safety MCU (STM32H7) and Toyota TSS2 harness. Exact hardware revision, panda serial and harness type **to be recorded** (OI-2) |
@@ -172,7 +172,7 @@ Performance targets are specified in [WP-S-01](../03-system/WP-S-01-system-requi
 | Torque rate | +15 / −25 raw per 10 ms frame; ≤ 450 raw per 250 ms | `toyota.h:174-177` |
 | Lateral acceleration (controller) | ≤ 3.0 m/s² (roll-compensated); jerk ≤ 5 m/s³ | `controls/lib/drive_helpers.py:13-14` |
 | Acceleration command | −3.5 … +2.0 m/s² | `toyota.h:207-210` |
-| Minimum engagement speed | Toyota TSS2 with stop-and-go: from standstill (verify for Corolla LE, OI-7) | `car_events.py:59-72` |
+| Minimum engagement speed | Toyota TSS2 with stop-and-go: from standstill (verify across the trims in scope, OI-7) | `car_events.py:59-72` |
 | Max control speed | ≈ 149 km/h warning (`MAX_CTRL_SPEED`), no disengage | `selfdrive/car/car_events.py:126`; `selfdrived/events.py:989-996` |
 
 ## 9. Open items
@@ -185,5 +185,6 @@ Performance targets are specified in [WP-S-01](../03-system/WP-S-01-system-requi
 | OI-4 | Decide whether to exclude Chestnut/eGPU from the reference configuration (recommended: exclude) | Maintainer | G1 |
 | OI-5 | Define how debug, maneuver and joystick modes are disabled in reference-configuration builds | SW lead | G2 |
 | OI-6 | Confirm the legal status of L2 development testing in the state(s) where vehicle testing will take place | Maintainer | Before vehicle testing |
-| OI-7 | Confirm the minimum engagement speed and stop-and-go behaviour for the Corolla LE | SW lead | G1 |
+| OI-7 | Confirm the minimum engagement speed and stop-and-go behaviour across the trims in scope | SW lead | G1 |
 | OI-8 | Decide whether Experimental Mode (end-to-end longitudinal, traffic light stopping) is in the reference ODD | Maintainer | G1 |
+| OI-9 | Scope is the E210 generation (decision 2026-10-12). Confirm that ECU firmware (EPS, ADAS camera, ECM) and equipment (e.g. blind-spot monitoring) across the model years and trims covered do not change the envelope assumptions; record the firmware versions per model year in the fingerprint data ([WP-W-09](../05-software/WP-W-09-configuration-calibration-data.md)) | SM | G1 |

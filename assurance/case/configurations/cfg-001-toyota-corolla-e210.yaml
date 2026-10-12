@@ -5,7 +5,7 @@
 
 - id: CFG-001
   kind: configuration
-  title: "2020 Toyota Corolla LE, Toyota Safety Sense 2.0 (reference configuration)"
+  title: "Toyota Corolla, 12th generation (E210), Toyota Safety Sense 2.0 (reference configuration)"
   description: "US-market 1.8 L ICE sedan with TSS 2.0, comma device with the integrated panda safety MCU and the Toyota TSS2 harness. The item analysed in the assurance work products."
   classification: liondriver-evaluated
   evaluation_state: in-progress

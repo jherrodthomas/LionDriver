@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-03 Project plan (scope, WBS, schedule, resources) |
 | Standard reference | ASPICE 4.0 MAN.3 (project management); ISO 26262-2 §6 (planning of safety activities, by reference to WP-M-02) |
-| Version | 0.2 (status update for the integrated envelope changes: WBS 4.3, resources, backlog B-13…B-17; 2026-10-12). 0.1 |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: WBS 4.3, resources, backlog B-13…B-17; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (project management) |
 | Author | Assurance team (initial draft) |
@@ -20,7 +20,7 @@ This plan defines the scope, work breakdown, effort, schedule logic, resources, 
 
 ### 2.1 In scope
 
-- The reference configuration of [WP-M-01 §3.1](WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to): 2020 Toyota Corolla LE (US, ICE, TSS2), one comma device revision with panda safety MCU, one tagged LionDriver release.
+- The reference configuration of [WP-M-01 §3.1](WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to): Toyota Corolla, 12th generation (E210), TSS 2.0 (US, ICE), one comma device revision with panda safety MCU, one tagged LionDriver release.
 - All work products in the [register (WP-M-00)](WP-M-00-work-product-register.md), gates G0…G6.
 - Engineering changes needed to close gaps in the safety envelope, the onboard stack and the cybersecurity posture ([gap assessment](../00-assessment/gap-assessment.md) GAP-01…GAP-37).
 - Infrastructure LionDriver needs and does not have: forks of opendbc and panda, fork CI, HIL bench, process-replay reference set, a test vehicle.
@@ -149,7 +149,7 @@ Long-lead items to start early: assessor engagement (P0), HIL bench parts (P2), 
 | Additional engineers and reviewers | See §4.3 | TBD |
 | External FuSa assessor | From P0 (engagement), G1 onward | TBD (D-06) |
 | External CS assessor, pen tester | P4–P5 | TBD |
-| Test vehicle | 2020 Toyota Corolla LE, US, ICE, TSS2; insurance and registration that cover test use | TBD; ownership and insurance status not recorded |
+| Test vehicle | E210 Corolla TSS 2.0, US, ICE; insurance and registration that cover test use | TBD; ownership and insurance status not recorded |
 | comma device(s) | At least two of the identified revision (one in vehicle, one on HIL), plus Toyota harness | TBD |
 | HIL bench | Bare panda or comma device, CAN interfaces (≥ 3 buses), host PC running Corolla DBC log replay and plant model, power supply with fault injection, relay/harness break-out, debug probe for STM32H7 | Not built (D-04, GAP-30); plan drafted ([`hil-bench/README.md`](../05-software/hil-bench/README.md)); HIL tests `panda/tests/hitl/test_10…test_14` written, not run |
 | Drive logs | Fork-owned Corolla logs for process replay and scenario evaluation | None yet; needed to confirm the TSR-401 rates and the TSR-405(b), TSR-516(b) and TSR-518 parameters |

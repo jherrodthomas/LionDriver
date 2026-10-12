@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-09 Safety-related configuration and calibration data (car params, fingerprints, limits, model weights) |
 | Standard reference | ISO 26262-6:2018 Annex C (software configuration; calibration data); ISO 26262-6:2018 §6, §9 (requirements on and verification of data); ISO 26262-8:2018 §7 (configuration management); ISO/PAS 8800:2024 (model as configuration item, informative); ASPICE 4.0 SWE.3 |
-| Version | 0.2 (status update 2026-10-12: CD-01, CD-03, CD-04 and §5 updated to the integrated LionDriver changes at panda `b790fca`, opendbc `7993399`; DVR-01/02 status. Nothing verified on hardware). 0.1: initial draft |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: CD-01, CD-03, CD-04 and §5 updated to the integrated LionDriver changes at panda `b790fca`, opendbc `7993399`; DVR-01/02 status. Nothing verified on hardware). 0.1: initial draft |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (data that configures or parameterises the envelope E-03); QM / SOTIF / PAS 8800 for host data |
 | Author | Assurance team (initial draft) |
@@ -16,7 +16,7 @@
 
 ISO 26262-6 Annex C treats configuration data (selecting a variant or behaviour of the software) and calibration data (adapting the software's behaviour by values) as part of the software that must be specified, verified and controlled with the same rigour as code of the same ASIL. This document:
 
-1. lists every data item that can change the safety-relevant behaviour of the LionDriver reference configuration (2020 Corolla LE, `TOYOTA_COROLLA_TSS2`, openpilot longitudinal, comma device with panda);
+1. lists every data item that can change the safety-relevant behaviour of the LionDriver reference configuration (Toyota Corolla, 12th generation (E210), TSS 2.0, `TOYOTA_COROLLA_TSS2`, openpilot longitudinal, comma device with panda);
 2. classifies each item, assigns an owner and ASIL, and records how it is verified, protected and changed today;
 3. states requirements for data verification and protection (DVR-nn, §6).
 

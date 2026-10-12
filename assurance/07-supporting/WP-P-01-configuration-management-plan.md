@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-01 Configuration management plan (incl. safety-relevant file list, baselines, submodules) |
 | Standard reference | ISO 26262-8:2018 §7; ISO 26262-2:2018 §6 (release, baselines); ISO/SAE 21434:2021 §5 (configuration management); ASPICE 4.0 SUP.8 |
-| Version | 0.2 (status update for the integrated envelope changes: §2 marked historical, current pins, build variant in CI-6, OI-1/OI-2/OI-7 status; 2026-10-12). 0.1 |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: §2 marked historical, current pins, build variant in CI-6, OI-1/OI-2/OI-7 status; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (highest: ASIL of the envelope as set by WP-C-03) |
 | Author | Assurance team (initial draft) |
@@ -16,7 +16,7 @@
 
 This plan defines how LionDriver identifies, controls, records and audits its configuration items (CIs). It closes the planning part of GAP-29, GAP-35 and GAP-37 in the [gap assessment](../00-assessment/gap-assessment.md) and carries out decisions D-01, D-02 and D-07 of [WP-M-01 §8](../01-management/WP-M-01-assurance-strategy.md#8-strategic-decisions-required).
 
-Scope: everything needed to rebuild, re-verify and re-argue a LionDriver release for the reference configuration (2020 Corolla LE, `TOYOTA_COROLLA_TSS2`, comma device with panda safety MCU). Change control is in [WP-P-02](WP-P-02-change-management.md); release baselines are in [WP-P-10](WP-P-10-release-management.md).
+Scope: everything needed to rebuild, re-verify and re-argue a LionDriver release for the reference configuration (Toyota Corolla, 12th generation (E210), TSS 2.0, `TOYOTA_COROLLA_TSS2`, comma device with panda safety MCU). Change control is in [WP-P-02](WP-P-02-change-management.md); release baselines are in [WP-P-10](WP-P-10-release-management.md).
 
 ## 2. State as found at `8b8c6ae` (historical)
 

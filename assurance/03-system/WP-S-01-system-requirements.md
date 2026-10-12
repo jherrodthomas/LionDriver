@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-01 System requirements specification (functional, non-safety) |
 | Standard reference | ASPICE 4.0 SYS.2; ISO 21448:2022 §5 (specification of the intended functionality); ISO 15622, ISO 22179, ISO 11270 as informative performance references |
-| Version | 0.2 (status update 2026-10-12: SYS-120 metric excludes frames refused by design in the reference build; SYS-121 evidence lists the health fields added at `bf6ce8c`). History: 0.1 |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). History: 0.2 (status update 2026-10-12: SYS-120 metric excludes frames refused by design in the reference build; SYS-121 evidence lists the health fields added at `bf6ce8c`). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM / SOTIF (safety requirements are in [WP-S-02](WP-S-02-technical-safety-requirements.md)) |
 | Author | Assurance team (initial draft) |
@@ -60,7 +60,7 @@ Paths are under `openpilot/` unless prefixed.
 | ID | Requirement | Type | Target / criterion | Verif | Current implementation | Rationale for TBD |
 |---|---|---|---|---|---|---|
 | SYS-040 | Engagement shall be possible only through the stock cruise controls and only when no no-entry condition is present. | F | as stated | T-SIL, T-VEH | `selfdrive/selfdrived/state.py:79-90` | — |
-| SYS-041 | The system shall engage from standstill up to the ODD speed bound. | F | as stated | T-VEH | `minEnableSpeed = -1` (`opendbc_repo/opendbc/car/toyota/interface.py:115`) | Confirm for Corolla LE (WP-C-01 OI-7) |
+| SYS-041 | The system shall engage from standstill up to the ODD speed bound. | F | as stated | T-VEH | `minEnableSpeed = -1` (`opendbc_repo/opendbc/car/toyota/interface.py:115`) | Confirm across the trims in scope (WP-C-01 OI-7) |
 | SYS-042 | A brake press or cancel shall disengage; the accelerator shall override longitudinal control without disengaging (reference setting). | F | as stated | T-VEH | `selfdrived.py:253-256`; `DisengageOnAccelerator` default 0 (`common/params_keys.h:35`) | HMI decision in WP-C-08 |
 | SYS-043 | After start-up, the system shall be ready to engage within **TBD** s of ignition on. | P | proposed ≤ 30 s | T-VEH | init waits for checks or 6 s (`selfdrived.py:474-475`) | Device boot time varies (`common/hardware/comma/hardware.py` `booted`) |
 

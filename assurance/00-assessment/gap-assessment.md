@@ -4,7 +4,7 @@
 |---|---|
 | Work product | Baseline gap assessment (supporting document, not a registered work product) |
 | Standard reference | ISO 26262:2018 parts 2–9; ISO 21448:2022; ISO/SAE 21434:2021; ISO/PAS 8800:2024; ASPICE PAM 4.0 |
-| Version | 0.2 (status notes for the LionDriver firmware changes integrated 2026-10-12, panda `b790fca`, opendbc `7993399`; findings remain as found at `8b8c6ae`). 0.1: initial assessment |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status notes for the LionDriver firmware changes integrated 2026-10-12, panda `b790fca`, opendbc `7993399`; findings remain as found at `8b8c6ae`). 0.1: initial assessment |
 | Status | Draft |
 | Author | Assurance team (initial review, assisted by static code review) |
 | Reviewer(s) | TBD |
@@ -18,7 +18,7 @@ This was a static review of the repository at the baseline above. No code was ex
   1. the safety-enforcement layer: `opendbc_repo/opendbc/safety`, `panda/board`, and the Toyota port in `opendbc_repo/opendbc/car/toyota`;
   2. the onboard application stack: `openpilot/selfdrive`, `openpilot/system`;
   3. development process and CI evidence.
-- **Configuration:** findings are stated for the reference configuration, a 2020 Corolla LE (`TOYOTA_COROLLA_TSS2`, ICE, openpilot longitudinal).
+- **Configuration:** findings are stated for the reference configuration, a Toyota Corolla, 12th generation (E210), TSS 2.0 (`TOYOTA_COROLLA_TSS2`, ICE, openpilot longitudinal).
 - **Not reviewed:** the msgq, rednose, teleoprtc and tinygrad submodules were not initialized. The ML model weights are Git LFS pointers in this checkout.
 - **Verification:** the most severe findings (marked ✔) were re-checked directly in the source.
 - **Numbering:** IDs run GAP-01…GAP-51 and are grouped by area, not in numeric order. GAP-01…GAP-37 come from the first review; GAP-38…GAP-51 were added by later re-checks and by findings raised in the work products (e.g. WP-S-02 §11 NF-01…NF-07 → GAP-46…GAP-49, WP-A-04 SPF-08 → GAP-49, ISR/priority and test-coverage findings → GAP-50, GAP-51). IDs are never reused.

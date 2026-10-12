@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-07 Cybersecurity requirements and architectural design |
 | Standard reference | ISO/SAE 21434:2021 §10 (product development: refinement of cybersecurity requirements, architectural design, cybersecurity controls); §9.5 (concept, as input); ASPICE 4.0 SEC.1, SYS.3 |
-| Version | 0.2 (status update 2026-10-12: evidence of CSR-011, -012, -014, -015, -016, -024, -092 for the reference build at `bf6ce8c`; §3.5 status; §8 differences 2 and 3 resolved by WP-S-02 (TSR-512, TSR-619); not verified on hardware, not reviewed independently). History: 0.1 |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). History: 0.2 (status update 2026-10-12: evidence of CSR-011, -012, -014, -015, -016, -024, -092 for the reference build at `bf6ce8c`; §3.5 status; §8 differences 2 and 3 resolved by WP-S-02 (TSR-512, TSR-619); not verified on hardware, not reviewed independently). 0.1 |
 | Status | Draft — requirements are proposals derived from code review and the concept; not verified, not approved |
 | ASIL / scope | CS (CAL 1–3); requirements with a safety relation reference their TSR in WP-S-02 (B‡: target ASIL B, ASIL C until SG-01 is re-rated) |
 | Author | Assurance team (initial draft) |
@@ -161,7 +161,7 @@ Target: a LionDriver release manifest (release ID, git tree commit including sub
 
 The params store is unauthenticated flat files and msgq shared memory has no publisher authentication (GAP-20). The architecture does **not** try to make SoC-local IPC secure against a root attacker; it (a) makes the envelope independent of params/IPC (CSR-061), (b) restricts who can write safety-relevant keys and publish safety-relevant topics against non-root compromise of network-facing processes (CSR-062…CSR-064), and (c) removes developer modes from release builds (CSR-071…CSR-073).
 
-Safety-relevant keys (initial list; maintained with [WP-W-09](../05-software/WP-W-09-configuration-calibration-data.md)): `CarParams`, `CarParamsCache`, `ExperimentalMode` (default "1", `params_keys.h:43`, GAP-18), `DisengageOnAccelerator`, `IsDriverViewEnabled`, `JoystickDebugMode`, `LongitudinalManeuverMode`, `LateralManeuverMode`, `DisableUpdates`, `UpdaterTargetBranch`, `SshEnabled`, `GithubSshKeys`. `SecOCKey` (`params_keys.h:120`) is not used on the 2020 Corolla (no SecOC flag) and is out of scope for the reference configuration.
+Safety-relevant keys (initial list; maintained with [WP-W-09](../05-software/WP-W-09-configuration-calibration-data.md)): `CarParams`, `CarParamsCache`, `ExperimentalMode` (default "1", `params_keys.h:43`, GAP-18), `DisengageOnAccelerator`, `IsDriverViewEnabled`, `JoystickDebugMode`, `LongitudinalManeuverMode`, `LateralManeuverMode`, `DisableUpdates`, `UpdaterTargetBranch`, `SshEnabled`, `GithubSshKeys`. `SecOCKey` (`params_keys.h:120`) is not used on the Toyota Corolla, 12th generation (E210), TSS 2.0 (`TOYOTA_COROLLA_TSS2` has no SecOC flag) and is out of scope for the reference configuration.
 
 ## 4. Detailed cybersecurity requirements
 
