@@ -149,10 +149,18 @@ WP-W-08 §4 asks for the worst value over ≥ 100 repetitions with random phase 
 | `test_no_reset_without_fault` | VS-SWQ-14 (no false trip) | TSR-501 | B1 | Implemented, not run |
 | Timing campaign (§6) | VS-SWQ-14 timing, VS-FI-17 pass criterion | TSR-501, SG-01 budget | B2 | Planned |
 | SPI interrupt hang | VS-FI-17 (SPI ISR) | TSR-501, TSR-502 | B4 (reference device: SPI) | Planned: needs a fourth injection mode and the SPI path |
-| Window violation (early feed) | VS-SWQ-14 / HWSR-501b | HWSR-501b | — | Not testable: window mode not implemented (D-3) |
+| Window violation (early feed) | VS-SWQ-14 / HWSR-501b | HWSR-501b | B1 | Not testable on panda#1 (no window mode, D-3). panda#3 adds window mode: needs a new injection mode that feeds too early |
 | Upstream `tests/hitl/test_1…9` | Regression | — | B1 | Existing, not run on LionDriver hardware |
 | Corolla log replay, limit and timeout cases | VS-SWQ-01…, VS-FI-01…04 | TSR-1xx, TSR-401…406 | B3 | Planned |
 | Power dips, resets, SWD memory faults, heartbeat and SPI faults | VS-FI-06…08, -10, -11, -15, -16, -18 | TSR-407…413, TSR-505, TSR-503, TSR-706 | B4 | Planned |
+
+### 7.1 With panda#3
+
+[jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3) (100 Hz safety task, window mode, 90 ms nominal) is stacked on panda#1 but branches from `361c7a2`, before the fault-injection commit `b8d046b`, and the two conflict in `board/main.c`. Before the bench runs on panda#3:
+
+- merge `liondriver/hw-watchdog` into the panda#3 branch and resolve `board/main.c`;
+- re-check that mode 2 (tick hang) still means something once the feed moves to the TIM4 task, and add a mode that hangs the safety task;
+- run with `WATCHDOG_RESET_BUDGET_S` tightened toward 0.1 s, the TSR-501 limit panda#3 targets.
 
 ## 8. Risks and open questions
 
