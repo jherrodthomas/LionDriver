@@ -704,7 +704,7 @@
 - id: Sn-63
   kind: evidence
   title: "Traceability procedure and data, trace check report"
-  description: "Procedure drafted; trace data holds only hazards, SGs, AoUs"
+  description: "Procedure drafted; trace data holds hazards, SGs, AoUs, FSRs and TSRs (generated from WP-C-04, WP-S-02, WP-S-06); no SWSR/HWSR, code or test links yet"
   evidence_status: partial
   lifecycle_area: safety-management
   location: "assurance/07-supporting/WP-P-06-requirements-management-traceability.md"
