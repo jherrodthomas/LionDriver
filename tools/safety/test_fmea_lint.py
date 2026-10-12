@@ -631,6 +631,48 @@ class TestFmeaExport(unittest.TestCase):
     self.assertEqual(mod.generate("in.json", "out.xlsx"), "L")  # AIAG-VDA table, not the builders' S>=9 rule
 
 
+class TestPfmeaAndSystemExport(unittest.TestCase):
+  def _doc(self, name):
+    return fmea_lint.load_yaml((REPO / f"assurance/08-analyses/fmea/analyses/{name}.yaml").read_text())
+
+  def test_pfmea_rows(self):
+    import export_pfmea_xlsx
+    doc = self._doc("pfmea")
+    data = export_pfmea_xlsx.to_pfmea_json(doc, None)
+    causes = [c["id"] for fm in doc["failure_modes"] for c in fm["causes"]]
+    self.assertEqual([r["failure_cause"].split("]")[0][1:] for r in data["failure_modes"]], causes)
+    steps = {e["id"] for e in doc["structure"] if e["kind"] == "process_step"}
+    self.assertEqual({f["step_id"] for f in data["process_flow"]}, steps)
+    self.assertEqual(set(export_pfmea_xlsx.CONTROL_STEPS), {fm["id"] for fm in doc["failure_modes"]})
+
+  def test_system_fmea_unrated_rows_have_no_ap(self):
+    import export_fmea_xlsx
+    gen = Path(tempfile.mkdtemp()) / "fake_generator.py"
+    self.addCleanup(shutil.rmtree, gen.parent)
+    gen.write_text("\n".join(["def compute_ap(s, o, d):", "  return 'H'", "def generate(i, o):", "  return compute_ap(10, None, None)",
+                              "def build_catalog(wb):", "  pass", ""]))
+    mod = export_fmea_xlsx.load_generator(gen, [], {"refs": [], "crossref": [], "sc": None})
+    self.assertEqual(mod.generate("in.json", "out.xlsx"), export_fmea_xlsx.NOT_RATED)
+
+
+class TestPfmeaDetectionRule(LintFixture):
+  def test_pfmea_detection_accepts_procedure_ref(self):
+    doc = fmea_lint.load_yaml((REPO / "assurance/08-analyses/fmea/analyses/pfmea.yaml").read_text())
+    doc["analysis"]["baseline"] = "BL-001"
+    for fm in doc["failure_modes"]:
+      for e in fm["effects"]:
+        e.pop("hazard", None)
+      for c in fm["causes"]:
+        c.pop("linked_failure_mode", None)
+        for ctl in c["prevention_controls"] + c["detection_controls"]:
+          ctl.pop("test", None)
+    res = self.lint(pfm=doc)
+    self.assertFalse([e for e in res.errors if "detection" in e], res.errors)
+    c = doc["failure_modes"][0]["causes"][0]
+    c["detection_controls"] = [{"description": "inspection"}]
+    self.assertError(self.lint(pfm=doc), "must name a `test` path or a `ref`")
+
+
 class TestFmedaExport(unittest.TestCase):
   def test_repo_fmedas_compute_metrics(self):
     for name in ("fmeda-sg001", "fmeda-sg009"):

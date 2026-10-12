@@ -119,7 +119,24 @@ Prioritised by safety relevance (path from perception to actuator):
 
 Neither meets its target yet. The effect of the planned DFMEA measures and the soft-error sensitivity are in WP-H-03 §6.3. Workbooks: `tools/safety/export_fmeda_xlsx.py <name>`.
 
-**Workbooks:** `tools/safety/export_fmea_xlsx.py sw|dfmea --generator <builder script>` writes `exports/sw-fmea.xlsx` and `exports/dfmea.xlsx` (git-ignored) with the sw-fmea-builder and dfmea-builder layouts. AP comes from the RT-1 table, not the builders' simplified rule.
+**PFMEA (rev 0.2, `analyses/pfmea.yaml`):** 17 failure modes over 11 process steps:
+- release: freeze, build, verification, publication (WP-P-10);
+- installation and provisioning: WP-O-01 INS-01..30;
+- update and rollback.
+
+16 causes are AP H and 1 is AP L. The procedures are drafts not yet in use, so prevention is rated as documented-but-unpractised (O7–O8) and detection mostly as unproven human checks (D7–D8). Special characteristics SPC-01..09 come from WP-O-01 §4, and the workbook links each row to its control-plan step.
+
+**Workbooks** (git-ignored, regenerate from the YAML):
+
+| Analysis | Command | Builder layout |
+|---|---|---|
+| System FMEA | `tools/safety/export_fmea_xlsx.py system --generator <dfmea-builder>/scripts/generate_dfmea.py` | dfmea-builder; unrated rows show "Not rated" |
+| DFMEA | `tools/safety/export_fmea_xlsx.py dfmea --generator <dfmea-builder>/scripts/generate_dfmea.py` | dfmea-builder |
+| SW FMEA | `tools/safety/export_fmea_xlsx.py sw --generator <sw-fmea-builder>/scripts/generate_sw_fmea.py` | sw-fmea-builder |
+| PFMEA | `tools/safety/export_pfmea_xlsx.py --generator <pfmea-builder>/scripts/generate_pfmea.py` | pfmea-builder |
+| FMEDA | `tools/safety/export_fmeda_xlsx.py fmeda-sg001` (and `fmeda-sg009`) | own formulas, fmeda-builder tab names |
+
+AP always comes from the RT-1 table. The builders' own AP rules disagree with it, and the pfmea-builder's rule is inverted on detection.
 
 This file supports the narrative analysis in [WP-W-04](../../05-software/WP-W-04-software-safety-analysis.md) with AIAG-VDA ratings (WP-W-04 §3.5).
 
@@ -219,7 +236,7 @@ The linter checks: schema; unique and resolvable ids; failure-mode severity = ma
 | 1 | System FMEA steps 1–4 (structure, functions, failure modes, effects, causes) — **draft rev 0.2 done** | Item definition draft |
 | 2 | SW FMEA P1 elements + DFMEA structure/function — **SW FMEA rev 0.2: panda safety model done (17 failure modes, all rated); pandad, selfdrived, controlsd next** | Phase 1 |
 | 3 | HARA → apply severities (**HARA draft + System FMEA severities done**); risk analysis & AP for System/SW/DFMEA | HARA |
-| 4 | PFMEA + release/install control plan | Phase 0 |
+| 4 | PFMEA + release/install control plan — **PFMEA rev 0.2 done; control plan = WP-O-01 §3–§4** | Phase 0 |
 | 5 | FMEDA Phase A (panda) | Safety goals, TSC, panda BOM |
 | 6 | SW FMEA P2/P3, DFMEA comma 3X, FMEDA Phase B gap report | Phase 3 |
 | 7 | Independent review (checklist), action closure, feed safety case | All |

@@ -179,7 +179,11 @@ def check_fmea(name, doc, ctx, res: Result):
         if ctl.get("test"):
           ctx.check_path(ctl["test"], cwhere, res)
       if c["detection"] is not None and c["detection"] <= 8:
-        if not any(ctl.get("test") for ctl in c["detection_controls"]):
+        if doc["analysis"]["type"] == "pfmea":
+          # process detection is often an inspection or checklist step: its evidence is the procedure (ref), not a test file
+          if not any(ctl.get("test") or ctl.get("ref") for ctl in c["detection_controls"]):
+            res.error(cwhere, f"detection {c['detection']} claims a detection control; it must name a `test` path or a `ref`")
+        elif not any(ctl.get("test") for ctl in c["detection_controls"]):
           res.error(cwhere, f"detection {c['detection']} claims a targeted test; a detection control must name a `test` path")
       for a in c.get("actions", []):
         referenced_actions.add(a)

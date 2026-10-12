@@ -30,8 +30,9 @@ import fmea_lint
 
 ANALYSES = Path("assurance/08-analyses/fmea/analyses")
 EXPORTS = Path("assurance/08-analyses/fmea/exports")
-SOURCES = {"sw": ANALYSES / "sw-fmea.yaml", "dfmea": ANALYSES / "dfmea.yaml"}
-DEFAULT_OUT = {"sw": EXPORTS / "sw-fmea.xlsx", "dfmea": EXPORTS / "dfmea.xlsx"}
+SOURCES = {"sw": ANALYSES / "sw-fmea.yaml", "dfmea": ANALYSES / "dfmea.yaml", "system": ANALYSES / "system-fmea.yaml"}
+DEFAULT_OUT = {"sw": EXPORTS / "sw-fmea.xlsx", "dfmea": EXPORTS / "dfmea.xlsx", "system": EXPORTS / "system-fmea.xlsx"}
+NOT_RATED = "Not rated"
 
 SW_GUIDEWORDS = {
   "omission": "Omitted Function", "commission": "Unintended Function", "early": "Function Too Early",
@@ -61,6 +62,13 @@ CROSSREF = {
     ("assurance WP-H-02 hardware design", "All rows", "Observable design facts and unknowns UK-01..UK-09", "No schematic or BOM available"),
     ("assurance WP-A-03 DFA", "DFM-007, 012, 017, 018", "Common-cause initiators shared with the SoC, EPS and PCM", "DFI-01, -04, -06, -20, -23"),
     ("SW FMEA SWF-018/019", "DFM-004, DFM-006", "Watchdog failure modes seen from the software side", "sw-fmea.xlsx"),
+  ],
+  "system": [
+    ("assurance WP-A-04 (system FTA/FMEA of record)", "All rows", "This workbook is the AIAG-VDA view; WP-A-04 is the analysis of record",
+     "Reconciliation record §7"),
+    ("LD-HARA-001 (hara.yaml)", "Rows with an end effect linked to HZ-xxx", "Severity 10 for hazard-linked effects (RT-1 §1.1)",
+     "Guide-word matrix in hara.yaml"),
+    ("SW FMEA and DFMEA", "Causes with a linked failure mode", "Lower-level analysis of the cause", "linked_failure_mode in the YAML"),
   ],
 }
 
@@ -97,6 +105,7 @@ def postprocess(out: Path, kind: str, hdr: dict, statuses: dict[str, str]) -> No
   page, and the per-row action status in the worksheet (the DFMEA builder leaves it blank, the SW builder writes
   "Open" for every row)."""
   from openpyxl import load_workbook
+  from openpyxl.styles import PatternFill
   wb = load_workbook(out)
   ws = wb["00_Title_Page"]
   row = ws.max_row + 1
@@ -108,10 +117,15 @@ def postprocess(out: Path, kind: str, hdr: dict, statuses: dict[str, str]) -> No
   ws = wb["05_SW_FMEA_Worksheet" if kind == "sw" else "05_DFMEA_Worksheet"]
   headers = {ws.cell(3, c).value: c for c in range(1, ws.max_column + 1)}
   col = headers["Status"]
+  ap_col = headers["Action Priority"]
   for r in range(4, ws.max_row + 1):
     rid = ws.cell(r, 1).value
     if rid in statuses:
       ws.cell(r, col, value=statuses[rid])
+    if ws.cell(r, ap_col).value == NOT_RATED:
+      # the builders colour every non-H/M AP green; an unrated row must not look low-risk
+      ws.cell(r, ap_col).fill = PatternFill(fill_type=None)
+      ws.cell(r, col, value="Not rated (AIAG-VDA step 5 open)")
   wb.save(out)
 
 
@@ -142,6 +156,9 @@ def to_builder_json(kind: str, doc: dict, fsc: dict | None) -> dict:
   if kind == "sw":
     program.update(item_name="Panda safety model (opendbc safety + panda firmware)", item_id=hdr["id"], asil="D (FSC; see HARA OI-1)",
                    safety_goal="SG-001..SG-010 (LD-HARA-001)", sw_owner="Jherrod Thomas")
+  elif kind == "system":
+    program.update(part_name="LionDriver L2 ACC/ALC item (comma 3X, harness, vehicle interfaces)", part_number="AC-001: 2020 Toyota Corolla LE",
+                   design_owner="Jherrod Thomas", design_responsibility="LionDriver (integration); comma.ai and Toyota (components)")
   else:
     program.update(part_name="comma 3X panda section, Toyota harness and relay box", part_number="comma 3X / Toyota A harness",
                    design_owner="Jherrod Thomas (integrator; comma.ai design)", design_responsibility="comma.ai (COTS)")
@@ -183,18 +200,20 @@ def to_builder_json(kind: str, doc: dict, fsc: dict | None) -> dict:
                    failure_effect_user=ends + (f". In-field mechanism: {mechanisms}" if mechanisms else ""))
       rows.append(row)
   refs = [("AIAG-VDA FMEA Handbook 2019", "Method; Action Priority per the table in rating-tables.md"),
-          ("ISO 26262-6:2018 §7, ISO 26262-9:2018 §8" if kind == "sw" else "ISO 26262-5:2018 §7, ISO 26262-9:2018 §7-8", "Safety analyses")]
+          ({"sw": "ISO 26262-6:2018 §7, ISO 26262-9:2018 §8", "dfmea": "ISO 26262-5:2018 §7, ISO 26262-9:2018 §7-8",
+            "system": "ISO 26262-4:2018 §6, ISO 26262-9:2018 §8"}[kind], "Safety analyses")]
   refs += [(r, "Project document") for r in hdr.get("references", [])]
   refs.append((str(SOURCES[kind]), "Source of truth for this workbook (YAML); checked by tools/safety/fmea_lint.py"))
   return {"program": program, "structure": structure, "functions": functions, "failure_modes": rows, "_history": _history(hdr, doc),
-          "_refs": refs, "_crossref": CROSSREF[kind], "_sc": SPECIAL_CHARACTERISTICS if kind == "dfmea" else None}
+          "_refs": refs, "_crossref": CROSSREF[kind], "_sc": {"dfmea": SPECIAL_CHARACTERISTICS,
+                  "system": [("None designated at system level", "—", "—", "Candidate characteristics are in the DFMEA (dfmea.xlsx)")]}.get(kind)}
 
 
 def load_generator(path: Path, history: list[tuple], extras: dict):
   spec = importlib.util.spec_from_file_location("fmea_builder", path)
   mod = importlib.util.module_from_spec(spec)
   spec.loader.exec_module(mod)
-  mod.compute_ap = fmea_lint.compute_ap
+  mod.compute_ap = lambda s, o, d: NOT_RATED if None in (s, o, d) else fmea_lint.compute_ap(s, o, d)
 
   def build_doc_control(wb):
     ws = wb.create_sheet("01_Document_Control")
@@ -239,7 +258,7 @@ def load_generator(path: Path, history: list[tuple], extras: dict):
 
 def main(argv=None) -> int:
   ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-  ap.add_argument("kind", choices=["sw", "dfmea"])
+  ap.add_argument("kind", choices=["sw", "dfmea", "system"], help="system uses the dfmea-builder layout")
   ap.add_argument("output", nargs="?", type=Path)
   ap.add_argument("--generator", type=Path, required=True, help="path to generate_sw_fmea.py or generate_dfmea.py")
   ap.add_argument("--root", type=Path, default=Path("."))
