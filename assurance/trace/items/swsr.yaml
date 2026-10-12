@@ -531,13 +531,13 @@
   allocated_to: "`panda.main.safety_task` (U-PND-MAIN)"
   verification: "HIL, A"
   acceptance: "Measured period ≤ 20 ms, jitter recorded"
-  baseline_impl: "Implemented (panda `9f60e17`): TIM4 100 Hz safety task runs `safety_tick()` and feeds the IWDG (`main.c` `safety_task_handler`), rate fault at 110 Hz. Period and jitter not yet measured ([IA watchdog](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) §7)"
+  baseline_impl: "Partial (panda `9f60e17`): TIM4 100 Hz safety task runs `safety_tick()` (RX timeout), the heartbeat monitor (SWSR-407) and feeds the IWDG; the checks of SWSR-307, 403, 404, 405, 408, 413 and 506 do not run in it (`main.c` `safety_task_handler`), rate fault at 110 Hz. Period and jitter not yet measured ([IA watchdog](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) §7)"
   status: proposed
   source: WP-W-02
 
 - id: SWSR-402
   kind: swsr
-  text: "The envelope shall verify the Toyota additive checksum and length of `0x260` and `0x1D2` (and `0x262`, `0x1D3`, `0xB4` once added) on every frame and treat one failure as an RX fault."
+  text: "The envelope shall verify the Toyota additive checksum and length of `0x260` and `0x1D2` (and `0x262`, `0x1D3`, which are in the reference-build RX set since opendbc `98404a4`; `0xB4` once added) on every frame and treat one failure as an RX fault."
   asil: "B‡"
   parents: [TSR-402]
   parent_text: "TSR-402"
@@ -1035,7 +1035,7 @@
   allocated_to: "U-PND-COMMS, U-PND-MAIN"
   verification: "UT, HIL"
   acceptance: "All other (mode, param) pairs rejected, state unchanged"
-  baseline_impl: "Met in the reference build (`LIONDRIVER_REFERENCE=1`, panda `3859fa8`, `board/reference_lock.h`); host tests `tests/reference_lock`. Refused requests reported as `pandaState.requestsRejected` ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
+  baseline_impl: "Met in the reference build (`LIONDRIVER_REFERENCE=1`, panda `3859fa8`, `board/reference_lock.h`); host tests `tests/reference_lock`; not verified on hardware. Refused requests reported as `pandaState.requestsRejected` ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
@@ -1049,7 +1049,7 @@
   allocated_to: "U-PND-COMMS"
   verification: "UT, HIL"
   acceptance: "Each request has no effect in TOYOTA mode"
-  baseline_impl: "Met in the reference build for the listed requests (panda `9f60e17`, `board/reference_lock.h`) ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
+  baseline_impl: "Met in the reference build for the listed requests (panda `9f60e17`, `board/reference_lock.h`); not verified on hardware ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
@@ -1063,7 +1063,7 @@
   allocated_to: "U-PND-COMMS"
   verification: "UT, HIL"
   acceptance: "`0xdf` in NOOUTPUT followed by TOYOTA leaves the reference value"
-  baseline_impl: "Met in the reference build (panda `9f60e17`): `0xdf` refused in every mode; AOU-14 ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
+  baseline_impl: "Met in the reference build (panda `9f60e17`): `0xdf` refused in every mode; AOU-14; not verified on hardware ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
@@ -1637,7 +1637,7 @@
   allocated_to: "U-SAF-TOY"
   verification: "UT, R"
   acceptance: "Each ID rejected; `0x283` non-zero rejected"
-  baseline_impl: "Met in the reference build; `0x411` refused there by decision D-1 (opendbc `5b5a4ba`, `modes/toyota.h`; test `test_pcs_and_dsu_messages_blocked`) ([IA TX whitelist](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md))"
+  baseline_impl: "Met in the reference build; not verified on hardware; `0x411` refused there by decision D-1 of the TX-whitelist change record (opendbc `5b5a4ba`, `modes/toyota.h`; test `test_pcs_and_dsu_messages_blocked`) ([IA TX whitelist](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md))"
   status: proposed
   source: WP-W-02
 

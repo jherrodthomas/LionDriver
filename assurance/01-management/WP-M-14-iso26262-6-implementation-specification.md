@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-14 ISO 26262-6 software lifecycle implementation specification (future work) |
 | Standard reference | ISO 26262-6:2018 Clauses 5–11 and Annex C; interfaces to ISO 26262-2, -3, -4, -8, -9. Informative links to ISO 21448:2022, ISO/SAE 21434:2021, ISO/PAS 8800:2024, UL 4600 |
-| Version | 0.2 (aligned with the software work products at `682f184`: pre-entry track §2.3, readiness snapshot §3.2, SWSR field mapping §4.2, trace engine state §8.2, rules §16, review findings §17; 2026-10-12). 0.1 |
+| Version | 0.2 (aligned with the software work products at `682f184`: pre-entry track §2.3, readiness snapshot §3.2, SWSR field mapping §4.2, trace engine state §8.2, rules §16, alignment audit RR-2026-008 (OI-6); 2026-10-12). 0.1 |
 | Status | Draft — **implementation deferred.** This is a plan. It does not authorize, start or evidence any Part 6 activity |
 | Activation | Not authorized. Needs decision D-09 ([WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required)) and an approved entry baseline (§3) |
 | ASIL / scope | Software of the item. Highest proposed ASIL is C (SG-01, [WP-C-03](../02-concept/WP-C-03-hara.md)); ratings are unconfirmed until CR-02 |
@@ -83,7 +83,7 @@ This work is legitimate engineering, and it is what makes activation possible. I
 
 ### 2.4 Upstream compatibility
 
-LionDriver keeps upstream openpilot behaviour and the upstream vehicle list unless a safety requirement forces a change. Part 6 work must not restructure application code for documentation convenience. Code changes come only from approved software safety requirements, through [WP-P-02](../07-supporting/WP-P-02-change-management.md) change requests. Each change records its effect on upstream functionality and on configurations outside the claimed scope. Supporting a vehicle is not the same as having assurance evidence for it (§7).
+LionDriver keeps upstream openpilot behaviour and the upstream vehicle list unless a safety requirement forces a change. Part 6 work must not restructure application code for documentation convenience. After activation, code changes come only from approved software safety requirements, through [WP-P-02](../07-supporting/WP-P-02-change-management.md) change requests. Before activation they follow the pre-entry rules of §2.3 (CT-1 change record with impact analysis). Each change records its effect on upstream functionality and on configurations outside the claimed scope. Supporting a vehicle is not the same as having assurance evidence for it (§7).
 
 ### 2.5 Human-controlled decisions
 
@@ -138,7 +138,7 @@ This is an inventory of what exists. It is **not** the Phase A gap assessment, a
 | Safety plan, CM, change, requirements management, review procedure | Yes | Draft | CT-1 change records are in use (9 records), so change control runs in practice. Single maintainer; I1 needs an external reviewer (T-09) |
 | Tool classification | Yes | Draft | GAP-34: no tool qualified |
 | Software safety requirements | Yes ([WP-W-02](../05-software/WP-W-02-software-safety-requirements.md)) | Draft, v0.12 | 134 SWSRs, all `proposed`; TSR → SWSR coverage checked (K4). Field gaps against §4.2 listed there |
-| Software architecture, analysis, unit design | Yes (WP-W-03…05, DN-01) | Draft | Partly updated for the integrated changes; see §17 |
+| Software architecture, analysis, unit design | Yes (WP-W-03…05, DN-01) | Draft | Partly updated for the integrated changes; stale sections marked and listed in [RR-2026-008](../05-software/reviews/RR-2026-008.md) |
 | Software verification specifications | Yes (WP-W-06…08) | Draft (specification); not executed | 96 of 134 SWSRs are cited by a `VS-SWI` or `VS-SWQ` case; the other 38 are mostly QM host requirements (§17) |
 | Existing software tests | Yes, upstream assets plus LionDriver tests in the opendbc and panda forks | Not reviewed as evidence | Safety tests, MISRA and mutation run in fork CI ([`safety.yaml`](../../.github/workflows/safety.yaml)); line coverage only (GAP-13); host builds, not target (GAP-13, GAP-41) |
 | Target test environment | Plan only ([`hil-bench/`](../05-software/hil-bench/README.md)) | Draft | No bench exists (D-04, GAP-30) |
@@ -166,7 +166,7 @@ Existing homes are given so nothing is duplicated. "Exists at baseline" says wha
 | Supporting | Software lifecycle definition and development procedures | WP-W-01 + this document §15 | Partial |
 | Supporting | Language selection rationale (C for the safety MCU; Python, C++ for the QM host) | WP-W-01 §2 | Draft |
 | Supporting | Coding guidelines (MISRA C:2012 for envelope C; Python and C++ host guidance) and design guidelines | WP-W-01 §5–6, §10–12 | Draft |
-| Supporting | Deviation register | WP-W-01 §9 (`DEV-` IDs) | Draft; 6 global MISRA suppressions without records (GAP-13) |
+| Supporting | Deviation register | WP-W-01 §9 (`DEV-` IDs) | Draft; DEV-01…DEV-06 records exist for the global MISRA suppressions, rationale still TBD (WP-W-01 OI-2) |
 | Supporting | Toolchain inventory, compiler and build configuration records | WP-W-01 §7; [WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md) | Draft |
 | Supporting | Software dependency inventory (SBOM) | [WP-W-11 §5](../05-software/WP-W-11-cybersecurity-implementation-verification.md); submodule pins in [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md) | Planned |
 | Supporting | Static analysis configuration | `opendbc_repo/opendbc/safety/tests/misra/`, `panda/tests/misra/` | Upstream config, under fork CI |
@@ -241,7 +241,7 @@ Adding the missing fields is Phase B work. It does not block pre-entry engineeri
 | Supporting | Software FMEA, software FTA where useful | WP-W-04 §3; FTA links to [WP-A-04](../08-analyses/WP-A-04-system-fta-fmea.md) |
 | Supporting | Design rationale; architectural verification and review records | WP-W-03 §8; `case/reviews/` |
 
-The architecture describes the code as it is: the opendbc safety layer and panda firmware (E-03) and the host stack (E-01). An element is safety-related only through an allocated SWSR or an interference path found by the FFI analysis. Target-state changes (for example IWDG initialization, GAP-07) are recorded as change requests against approved SWSRs, never as current architecture. Every architecture change is assessed for its effect on upstream functionality and on all supported platforms that share the changed code (for example `opendbc/safety/lateral.h` is shared across brands).
+The architecture describes the code as it is: the opendbc safety layer and panda firmware (E-03) and the host stack (E-01). An element is safety-related only through an allocated SWSR or an interference path found by the FFI analysis. Target-state changes (for example the fault → safe-state reaction, GAP-08) are recorded as change requests against approved SWSRs, never as current architecture. Every architecture change is assessed for its effect on upstream functionality and on all supported platforms that share the changed code (for example `opendbc/safety/lateral.h` is shared across brands).
 
 ### 4.4 Clause 8 — Software unit design and implementation
 
@@ -547,3 +547,4 @@ Until D-09 is recorded:
 | OI-3 | Decide whether to adopt the §2.2 status extension (Planned, Verified, Superseded) project-wide or for Part 6 records only | Project maintainer |
 | OI-4 | Decide the store for raw verification results (CI artifacts with retention vs a committed results folder) | Project maintainer |
 | OI-5 | Independent (I1) review of this specification | External reviewer |
+| OI-6 | Close the judgement findings F-01…F-32 of the software alignment audit [RR-2026-008](../05-software/reviews/RR-2026-008.md), in particular F-11, F-14, F-16, F-19, F-20 (documents still describing `8b8c6ae`) | Safety engineer, SW lead |

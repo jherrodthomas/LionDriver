@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-W-07 Software integration and verification specification and report |
 | Standard reference | ISO 26262-6:2018 §10 (software integration and verification: integration steps, methods, test-case derivation, coverage at architectural level, test environment); ISO 26262-8:2018 §9; ASPICE 4.0 SWE.5 |
-| Version | 0.1 |
+| Version | 0.2 (alignment pass: expected outcomes rechecked against the WP-W-02 baseline column at opendbc `7993399`, panda `8aa8671`; explicit SWSR lists; case order; report template per [WP-M-14 §8.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#83-evidence-binding); 2026-10-12). 0.1 |
 | Status | Draft (specification); results section **Not yet executed** |
 | ASIL / scope | Envelope software (E-03): B‡ (ASIL C until SG-01 re-rating); host↔panda software interface: QM (B-sup) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`); expected outcomes in §5 and §7 rechecked at `682f184` (opendbc `7993399`, panda `8aa8671`) |
 
 ## 1. Purpose and scope
 
@@ -35,7 +35,7 @@ Integration approach: bottom-up along the call tree of WP-W-03 §5.3. Stubs: mic
 
 | Method | Applied to | Notes |
 |---|---|---|
-| Requirements-based test | every envelope SWSR with IT in its verification column | `@req` tags (WP-P-06 §6) |
+| Requirements-based test | the SWSRs listed per case in §5 (WP-W-02 marks only a few SWSRs with IT; aligning the verification columns is WP-W-02 work, OI-6) | `@req` tags (WP-P-06 §6) |
 | Interface test | SI-01…SI-13 of WP-W-03 §3.3 | all parameters at boundaries |
 | Fault injection test | SPI corruption, length overrun, queue overflow, ISR load, stale/replayed transfers, mode commands | SW level; HW-level FI in WP-W-08 and [WP-V-05](../06-validation/WP-V-05-fault-injection.md) |
 | Resource usage evaluation | stack, RAM, CPU load, ISR latency | target only (SWI-3) |
@@ -44,7 +44,7 @@ Integration approach: bottom-up along the call tree of WP-W-03 §5.3. Stubs: mic
 
 Derivation: analysis of requirements and interfaces, equivalence classes, boundary values, error guessing from [WP-W-04](WP-W-04-software-safety-analysis.md) SWF/SDF rows.
 
-Architectural coverage target: **100 % function coverage** of the E-03 units in the release image and **100 % call coverage** of the interfaces SI-01…SI-12, measured on SWI-1/SWI-2 with gcov; any uncovered function needs a justification (dead code from other brand modes is listed separately, WP-W-03 OI-2).
+Architectural coverage target: **100 % function coverage** of the E-03 units in the release image and **100 % call coverage** of the interfaces SI-01…SI-13, measured on SWI-1/SWI-2 with gcov; any uncovered function needs a justification (dead code from other brand modes is listed separately, WP-W-03 OI-2).
 
 ## 4. Existing assets
 
@@ -63,11 +63,11 @@ Status of all: Specified, not implemented. Env: SWI step.
 
 | ID | Objective | SWSRs | Env | Method / injected condition | Pass criterion |
 |---|---|---|---|---|---|
-| VS-SWI-01 | Actuation path across units: SoC frame → TX hook → limits → accept/reject; lateral and longitudinal; substitute zero-torque frame after rejection | 101–109, 201–207 | SWI-1, SWI-2 | Sequences at limit ± 1 through `can_send`; check queue content | Accepted frames unchanged in queue; rejected frames not in queue; substitute frame present (once implemented); authority revoked on violation |
-| VS-SWI-02 | Engagement chain: RX frames (`0x1D2`, `0x226`, `0xAA`, `0x260`) → authority → TX acceptance | 301–306, 311 | SWI-1 | All transitions of WP-W-05 §5.2 driven through RX hook, TX checked after each | Every transition observable in TX acceptance in the next call |
+| VS-SWI-01 | Actuation path across units: SoC frame → TX hook → limits → accept/reject; lateral and longitudinal; substitute zero-torque frame after rejection | 101–109, 201–207 | SWI-1, SWI-2 | Sequences at limit ± 1 through `can_send`; check queue content | Accepted frames unchanged in queue; rejected frames not in queue; substitute frame present (SWSR-109 not implemented: expected to **fail**); authority revoked on violation |
+| VS-SWI-02 | Engagement chain: RX frames (`0x1D2`, `0x226`, `0xAA`, `0x260`) → authority → TX acceptance | 301, 302, 304, 305, 306, 311 | SWI-1 | All transitions of WP-W-05 §5.2 driven through RX hook, TX checked after each | Every transition observable in TX acceptance in the next call |
 | VS-SWI-03 | RX check integration: forwarding before RX validation, checksum failure, quality flag, whitelisting | 402, 406, 704 | SWI-2, SWI-3 | Corrupted frames on bus 0 and 2 | Corrupted frame forwarded per rules but no authority; reason reported |
-| VS-SWI-04 | RX timeout through the periodic task | 401, 401a, 306 | SWI-1 (timer stub), SWI-3 | Stop each RX message at random phase | Detection ≤ 5 periods + task period; today expected to **fail** |
-| VS-SWI-05 | Heartbeat path `0xf3` → tick/safety task | 307, 407, 409, 510 | SWI-2, SWI-3 | Stop heartbeat; send `engaged=0`; frozen loop counter | Revocation ≤ 0.3 s; SILENT ≤ 2 s; today expected to fail |
+| VS-SWI-04 | RX timeout through the periodic task | 401, 401a, 306 | SWI-1 (timer stub), SWI-3 | Stop each RX message at random phase | Detection ≤ 5 periods + one 10 ms task period (SWSR-401 met for the Toyota RX checks, opendbc `aff4033`, `98404a4`) |
+| VS-SWI-05 | Heartbeat path `0xf3` → tick/safety task | 307, 407, 409, 510 | SWI-2, SWI-3 | Stop heartbeat; send `engaged=0`; frozen loop counter | Revocation ≤ 0.3 s (SWSR-407 implemented, panda `c2e5d93`); mismatch clearing (307), loop counter (409) and SILENT ≤ 2 s (510) not implemented, expected to **fail** |
 | VS-SWI-06 | Command freshness | 408, 109a | SWI-3 | Stop `0x2E4`/`0x343` while heartbeat continues | Revocation at 50/100 ms; zero frames emitted |
 | VS-SWI-07 | SPI corruption | 410, 410a, 410b, 413 | SWI-2, SWI-3 | Bit flips in header, data, CAN packets; replayed, dropped and reordered transfers; DMA error flags | Every corrupted transfer NACKed/discarded; no frame from a corrupted transfer reaches the TX hook; error burst revokes |
 | VS-SWI-08 | SPI length and index bounds (fuzz) | 412, 412a, 412b | SWI-2, SWI-3 | Header lengths 0…65535; `0xe8` param 0…65535; random CAN streams | No write outside buffers (canary/guard check on target, ASan on host); NACK for out-of-range |
@@ -80,8 +80,8 @@ Status of all: Specified, not implemented. Env: SWI step.
 | VS-SWI-15 | Resource usage | WP-W-03 §7 | SWI-3 | Map file, stack painting, `interrupt_load`, cycle counter around hooks | Stack margin ≥ 20 %; RAM within regions; hook WCET recorded; TX path latency recorded |
 | VS-SWI-16 | `pandad` ↔ firmware interface | 409h, 410h, 414h, 514h, 619 | SWI-4 | Normal traffic; delayed `sendcan`; debug firmware | Loop counter advancing; CRC/sequence accepted; old messages dropped at 20 ms; no engagement with debug FW |
 | VS-SWI-17 | Host reaction chain: health → `pandaStates` → `selfdrived` | 307h, 601, 615, 606 | SWI-4 | Inject each panda flag/reason code | Immediate disable ≤ 0.2 s, alert class correct |
+| VS-SWI-18 | Replay of fork-owned reference drives through the release `libsafety` | 401–406, 101–110, 201–207 | SWI-1 | `replay_drive.py` with mode TOYOTA, param 73 | Zero RX invalid and zero blocked `0x2E4`/`0x343` on nominal drives; expected detections on fault-injected copies |
 | VS-SWI-19 | Per-ID TX rate supervision and TX read-back | 517, 518 | SWI-1, SWI-3 | `0x2E4` at 2× rate; corrupt frame after TX hook (debug hook) | Excess frames rejected, revocation on persistence; corruption detected ≤ 2 frames |
-| VS-SWI-18 | Replay of fork-owned reference drives through the release `libsafety` | 401–406, 101–207 | SWI-1 | `replay_drive.py` with mode TOYOTA, param 73 | Zero RX invalid and zero blocked `0x2E4`/`0x343` on nominal drives; expected detections on fault-injected copies |
 
 ## 6. Test environment
 
@@ -97,7 +97,7 @@ Configuration of every run (superproject, opendbc, panda commit, build type, too
 
 - All VS-SWI on the release configuration; a debug build is used only to inject faults that cannot be injected otherwise, and the test record states it.
 - Any SR-A change re-runs SWI-1/SWI-2 in CI; SWI-3/SWI-4 at each release candidate.
-- Failures expected at the baseline (VS-SWI-04, 05, 06, 08, 13, 14) are tracked as problem reports ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)), not waived.
+- Failures expected at `682f184` from the WP-W-02 baseline column (VS-SWI-01 for SWSR-109, 05, 06, 07, 08, 09, 13, 14, 19) are tracked as problem reports ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)), not waived.
 
 ## 8. Integration and verification report (template)
 
@@ -109,10 +109,15 @@ Configuration of every run (superproject, opendbc, panda commit, build type, too
 | Build type and image hash | Not yet executed |
 | Environments used | Not yet executed |
 | Tool versions | Not yet executed |
+| Build manifest ID | Not yet executed |
+| Vehicle configuration ID (e.g. CFG-001) | Not yet executed |
+| Test environment IDs (SWI-1…SWI-4, bench record) | Not yet executed |
+| Execution date, raw artifact location | Not yet executed |
+| Reviewer, independence, review state | Not yet executed |
 
-| VS ID | Step | Cases | Passed | Failed | Not run | Result | Evidence |
-|---|---|---|---|---|---|---|---|
-| VS-SWI-01 … VS-SWI-19 | — | — | — | — | — | Not yet executed | — |
+| VS ID | SWSR IDs | Step | Cases | Passed | Failed | Not run | Result | Anomalies | Evidence |
+|---|---|---|---|---|---|---|---|---|---|
+| VS-SWI-01 … VS-SWI-19 | — | — | — | — | — | — | Not yet executed | — | — |
 
 | Function / call coverage (SWI-1/2) | Not yet executed |
 |---|---|
@@ -130,3 +135,4 @@ Configuration of every run (superproject, opendbc, panda commit, build type, too
 | OI-3 | Provide fork-owned Corolla drive logs for VS-SWI-18 | Maintainer | G4 |
 | OI-4 | Define fault-injection hooks for SWI-3 that do not exist in the release image (debug-probe based preferred) | SW lead | G4 |
 | OI-5 | Align VS-SWI with WP-S-08 I-1/I-2 to avoid duplicate cases | Safety engineer | G4 |
+| OI-6 | WP-W-02 marks IT on about 6 SWSRs while §5 cites about 50; align the WP-W-02 verification columns with §5 | Safety engineer | G3 |

@@ -4,13 +4,16 @@
 |---|---|
 | Work product | WP-W-03 Software architectural design |
 | Standard reference | ISO 26262-6:2018 §7 (software architectural design: notation, design principles, static and dynamic aspects, ASIL attribution, resource usage); ISO 26262-9:2018 §6 (coexistence, by reference to WP-A-02); ASPICE 4.0 SWE.2 |
-| Version | 0.3 (§5.4.4 prerequisites implemented, panda `52cad44`: explicit priority table, atomic safety-config switch and fault word; R-2 recorded as a 10 ms bound; 2026-10-12). 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
+| Version | 0.4 (alignment pass, [RR-2026-008](reviews/RR-2026-008.md): sections renumbered so §5.4 is only the interrupt-priority scheme, start-up is §5.5 and the safety-mode state machine §5.6; §5.1 priority note updated to panda `52cad44`; status note on stale sections; 2026-10-12). 0.3 (§5.4.4 prerequisites implemented, panda `52cad44`: explicit priority table, atomic safety-config switch and fault word; R-2 recorded as a 10 ms bound; 2026-10-12). 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Envelope (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host (E-01): QM / QM (B-sup) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); I2 for §6 and §8 |
 | Approver | Project maintainer (acting safety manager) |
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+
+> [!NOTE]
+> **Status at `682f184` (opendbc `7993399`, panda `8aa8671`).** This document describes the code at `8b8c6ae` unless a statement names a later pin. Safety mechanisms integrated since then (hardware watchdog and 100 Hz safety task, RX timeout, TX whitelist, safety-mode lock, 0.3 s heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are recorded in the [WP-W-02](WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md). The sections of this document that still describe the earlier behaviour are listed in [RR-2026-008](reviews/RR-2026-008.md) and are to be updated ([WP-M-14 §2.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#23-pre-entry-engineering-track) P-03).
 
 ## 1. Purpose and scope
 
@@ -157,7 +160,7 @@ All envelope processing runs in **interrupt context**. The main loop (`main.c:33
 | TIM6 | 1 Hz | `interrupt_timer_handler` (`drivers/interrupts.h:50-72`) | rate statistics |
 | NMI / HardFault | exception | `early_init.h:73-81` | reset |
 
-**Priorities.** No `NVIC_SetPriority` call exists in `panda/board`, so all peripheral interrupts run at the reset-default priority. Equal priority means no preemption between them: each handler runs to completion and pending handlers are served in exception-number order. Consequences: (i) envelope state is never accessed concurrently, which makes the single-writer argument of §6.3 simple; (ii) a long handler (e.g. a CAN burst or `set_safety_mode` → `can_init_all`) delays every other handler, including the tick; (iii) the tick cannot preempt a hung handler, so only a hardware watchdog can detect it (SWSR-501). `ENTER_CRITICAL` masks all interrupts (`sys/sys.h:11-22`). This finding matches [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) FFI-SP-04 and GAP-50; TSR-519 / SWSR-519 require an explicit priority and timing scheme.
+**Priorities.** At `8b8c6ae` no `NVIC_SetPriority` call existed in `panda/board`. Since panda `52cad44` every enabled IRQ gets an explicit priority (`board/drivers/irq_priorities.h`), all at one level until the §5.4.2 scheme is adopted (§5.4.4), so the behaviour described here still holds: Equal priority means no preemption between them: each handler runs to completion and pending handlers are served in exception-number order. Consequences: (i) envelope state is never accessed concurrently, which makes the single-writer argument of §6.3 simple; (ii) a long handler (e.g. a CAN burst or `set_safety_mode` → `can_init_all`) delays every other handler, including the tick; (iii) the tick cannot preempt a hung handler, so only a hardware watchdog can detect it (SWSR-501). `ENTER_CRITICAL` masks all interrupts (`sys/sys.h:11-22`). This finding matches [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) FFI-SP-04 and GAP-50; TSR-519 / SWSR-519 require an explicit priority and timing scheme.
 
 ### 5.2 Tick schedule (baseline)
 
@@ -179,34 +182,6 @@ Required schedule (SWSR-401a, 501): a dedicated timer at ≥ 50 Hz running `safe
 6. EPS answers on `0x260` at 50 Hz → FDCAN RX ISR → forwarded to bus 2 → `safety_rx_hook` updates `torque_meas` used by the next check.
 
 Worst-case latency step 2→5 is to be measured (VS-SWI-15, VS-SWQ-23).
-
-### 5.4 Start-up and mode-set sequence
-
-| Step | Actor | Action | Lines |
-|---|---|---|---|
-| 1 | bootstub | length, SHA-1, RSA-1024 check, jump or soft flasher | `bootstub.c:33-82` |
-| 2 | main | interrupt table, clocks, peripherals, board detect, ADC, DTS | `main.c:253-267` |
-| 3 | main | board init, `harness_init` (relay released) | `main.c:280-282` |
-| 4 | main | `set_safety_mode(SILENT)`; CAN transceivers on; software watchdog; tick timer; USB; SPI | `main.c:295-313` |
-| 5 | main | interrupts enabled; idle loop | `main.c:328-362` |
-| 6 | pandad | SILENT → NOOUTPUT; onroad → ELM327 (fingerprinting) | `selfdrive/pandad/panda_safety.cc:23-34` |
-| 7 | card / pandad | CarParams → `0xdc` TOYOTA, param 73 | `panda_safety.cc:56-69` |
-| 8 | panda | `set_safety_hooks` resets state; relay driven; CAN re-init | `main.c:70-78`; `safety.h:391-482` |
-| 9 | PCM | CRUISE_ACTIVE rising edge → `controls_allowed = true` | `safety.h:518-527` |
-
-Required: start-up tests (SWSR-515) between steps 4 and 8; IWDG started in step 1 (SWSR-501b); step 7 restricted by the mode lock (SWSR-512).
-
-### 5.5 Safety-mode state machine (panda)
-
-| State | Relay | CAN | Entry | Exit |
-|---|---|---|---|---|
-| SILENT | released | silent | reset, heartbeat loss, failed mode set | `0xdc` any mode |
-| NOOUTPUT | released | normal, TX hook rejects all | `0xdc` | `0xdc` |
-| ELM327 | released | OBD mux per param | `0xdc` | `0xdc` |
-| TOYOTA | driven | normal | `0xdc` 2/73 | `0xdc` (any, today); heartbeat loss → SILENT |
-
-Required (SWSR-512): TOYOTA exits only to SILENT/NOOUTPUT; new fault state SS-S (= SILENT + latch) reachable from every state (SWSR-502).
-
 
 ### 5.4 Interrupt priority scheme (proposed, SWSR-519, OI-4)
 
@@ -274,6 +249,34 @@ Adopting §5.4.2 is now a change of the five `IRQ_PRIO_*` values and of the `tes
 #### 5.4.6 Alternative: keep equal priority
 
 If the baseline measurement shows that the longest handler or critical section stays well below 4 ms under load case (e), equal priority can be kept and R-1…R-8 do not arise. The argument then rests on measured WCET of every handler, which has to be re-measured on every change to any ISR. The proposal in §5.4.2 instead bounds the safety task's latency by construction, at the cost of the measures in §5.4.4. Recommendation: measure the baseline first; adopt §5.4.2 with the §5.4.4 measures unless the baseline margin is large.
+
+### 5.5 Start-up and mode-set sequence
+
+| Step | Actor | Action | Lines |
+|---|---|---|---|
+| 1 | bootstub | length, SHA-1, RSA-1024 check, jump or soft flasher | `bootstub.c:33-82` |
+| 2 | main | interrupt table, clocks, peripherals, board detect, ADC, DTS | `main.c:253-267` |
+| 3 | main | board init, `harness_init` (relay released) | `main.c:280-282` |
+| 4 | main | `set_safety_mode(SILENT)`; CAN transceivers on; software watchdog; tick timer; USB; SPI | `main.c:295-313` |
+| 5 | main | interrupts enabled; idle loop | `main.c:328-362` |
+| 6 | pandad | SILENT → NOOUTPUT; onroad → ELM327 (fingerprinting) | `selfdrive/pandad/panda_safety.cc:23-34` |
+| 7 | card / pandad | CarParams → `0xdc` TOYOTA, param 73 | `panda_safety.cc:56-69` |
+| 8 | panda | `set_safety_hooks` resets state; relay driven; CAN re-init | `main.c:70-78`; `safety.h:391-482` |
+| 9 | PCM | CRUISE_ACTIVE rising edge → `controls_allowed = true` | `safety.h:518-527` |
+
+Required: start-up tests (SWSR-515) between steps 4 and 8; IWDG started in step 1 (SWSR-501b); step 7 restricted by the mode lock (SWSR-512).
+
+### 5.6 Safety-mode state machine (panda)
+
+| State | Relay | CAN | Entry | Exit |
+|---|---|---|---|---|
+| SILENT | released | silent | reset, heartbeat loss, failed mode set | `0xdc` any mode |
+| NOOUTPUT | released | normal, TX hook rejects all | `0xdc` | `0xdc` |
+| ELM327 | released | OBD mux per param | `0xdc` | `0xdc` |
+| TOYOTA | driven | normal | `0xdc` 2/73 | `0xdc` (any, today); heartbeat loss → SILENT |
+
+Required (SWSR-512): TOYOTA exits only to SILENT/NOOUTPUT; new fault state SS-S (= SILENT + latch) reachable from every state (SWSR-502).
+
 
 ## 6. Partitioning and freedom from interference at software level
 
@@ -347,7 +350,7 @@ ISO 26262-6 §7 lists design principles with recommendation levels per ASIL; the
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Add U-PND-USB, U-PND-PWR, U-PND-HK, U-PND-PLAT to the WP-W-06 unit list | Safety engineer | G3 |
+| OI-1 | Add U-PND-USB to the WP-W-06 unit list (U-PND-PWR, U-PND-HK and U-PND-PLAT added in WP-W-06 v0.2) | Safety engineer | G3 |
 | OI-2 | Remove unused brand modes from the reference firmware build or justify them (WP-A-02 OI-2) | SW lead | G3 |
 | OI-3 | Decide whether USB comms are disabled in the reference build | SW lead | G3 |
 | OI-4 | Define the NVIC priority scheme for the new safety task (SWSR-519) and re-assess §6.3. **Proposed in §5.4 (2026-10-12, AI draft, I0)**; §5.4.4 code changes done (panda `52cad44`); still needed: review and the §5.4.5 measurements on the target | SW architect | G3 |

@@ -12,6 +12,9 @@
 | Approver | Safety manager |
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
+> [!NOTE]
+> **Status at `682f184` (opendbc `7993399`, panda `8aa8671`).** This document describes the code at `8b8c6ae` unless a statement names a later pin. Safety mechanisms integrated since then (hardware watchdog and 100 Hz safety task, RX timeout, TX whitelist, safety-mode lock, 0.3 s heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are recorded in the [WP-W-02](../05-software/WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md). The sections of this document that still describe the earlier behaviour are listed in [RR-2026-008](../05-software/reviews/RR-2026-008.md) and are to be updated ([WP-M-14 §2.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#23-pre-entry-engineering-track) P-03).
+
 ## 1. Purpose and scope
 
 This document specifies the fault-injection campaign that shows each safety mechanism of LD-SDA detects the faults it is designed for and reaches the safe state within the fault-tolerant time interval. It covers faults on the vehicle CAN, the SoC↔panda link, the SoC software, the panda MCU and the harness, and tampering with configuration data. It is the detailed procedure source for the fault-injection cases referenced from [WP-S-08](../03-system/WP-S-08-system-integration-test.md) (VS-SI-nn), [WP-S-09](../03-system/WP-S-09-system-verification.md) (VS-SQ-nn) and [WP-H-06](../04-hardware/WP-H-06-hardware-integration-verification.md) (VS-HW-nn).

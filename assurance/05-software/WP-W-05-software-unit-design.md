@@ -12,6 +12,9 @@
 | Approver | Project maintainer (acting safety manager) |
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
+> [!NOTE]
+> **Status at `682f184` (opendbc `7993399`, panda `8aa8671`).** This document describes the code at `8b8c6ae` unless a statement names a later pin. Safety mechanisms integrated since then (hardware watchdog and 100 Hz safety task, RX timeout, TX whitelist, safety-mode lock, 0.3 s heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are recorded in the [WP-W-02](WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md). The sections of this document that still describe the earlier behaviour are listed in [RR-2026-008](reviews/RR-2026-008.md) and are to be updated ([WP-M-14 §2.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#23-pre-entry-engineering-track) P-03).
+
 ## 1. Purpose and scope
 
 This document describes the software units of the safety envelope as implemented at the baseline: purpose, inputs, outputs, state, algorithm, limits and error handling. It records compliance with the unit design principles of [WP-W-01 §6](WP-W-01-software-development-environment-guidelines.md) (ENV-R-01…15) and lists the changes each SWSR of [WP-W-02](WP-W-02-software-safety-requirements.md) requires. Units belong to the components of [WP-W-03 §3.1](WP-W-03-software-architecture.md); unit verification is in [WP-W-06](WP-W-06-software-unit-verification.md).
@@ -305,29 +308,31 @@ Gas pressed does not change the state; it gates longitudinal only (UN-12). This 
 
 ## 8. Required changes per SWSR (implementation backlog)
 
-| SWSR | Unit(s) | Change |
-|---|---|---|
-| 102, 102a | UN-10, UN-16, build | Speed table for Toyota; build-time check; extend `lookup_t` if needed |
-| 104a, 512 | UN-16, UN-21, UN-18 | Compiled reference configuration; reject other `0xdc` |
-| 105 | UN-10 | Reject `steer_req` without authority |
-| 108, 108a | UN-10/UN-03, UN-N2, UN-21 | Revoke on TX violation; reason codes in health |
-| 109, 109a | UN-N3, UN-27, UN-N1 | Substitute and autonomous zero-torque frames |
-| 110, 405 | UN-02, UN-14, UN-N4 | Add `0x262`, `0x1D3`, `0xB4`; cross-checks |
-| 204–207 | UN-12, UN-15 | Jerk, wind-down, field checks |
-| 304, 304a | UN-10, UN-14 | Driver-torque checks |
-| 306, 401, 401a, 403, 404, 407, 408, 413 | UN-N1, UN-05, UN-N4 | Periodic safety task ≥ 50 Hz |
-| 409, 410, 410a, 411 | UN-21, UN-22, UN-N6 | Loop counter, CRC, sequence |
-| 412, 412a, 412b | UN-23, UN-21, UN-22 | Bounds checks |
-| 501, 501b | UN-N1, UN-35 | IWDG |
-| 502, 502a, 502b, 503a | UN-29…34, UN-N2 | Fault reaction |
-| 503, 515 | UN-N5 | Start-up tests, image CRC |
-| 506, 506a | UN-28, UN-07 | Readback; latch not cleared by mode change |
-| 507 | UN-20 | MPU configuration |
-| 517 | UN-26, UN-N2 | TX read-back comparison |
-| 518 | UN-03 | Per-ID TX rate supervision |
-| 519 | UN-20, all ISRs | Explicit NVIC priorities; WCET measurement |
-| 511a, 513 | UN-21 | Gating in car modes |
-| 705 | UN-16 | Reduced whitelist |
+The status column is copied from the WP-W-02 Baseline column at `682f184` (opendbc `7993399`, panda `8aa8671`). "Implemented" or "Met" means the code was changed and host tests pass; nothing here is verified on hardware or reviewed. The "Change" column is the original backlog text at `8b8c6ae`.
+
+| SWSR | Unit(s) | Change | Status at `682f184` (WP-W-02 Baseline column) |
+|---|---|---|---|
+| 102, 102a | UN-10, UN-16, build | Speed table for Toyota; build-time check; extend `lookup_t` if needed | 102: Not impl; 102a: Not impl |
+| 104a, 512 | UN-16, UN-21, UN-18 | Compiled reference configuration; reject other `0xdc` | 104a: Not impl; 512: Met (ref. build) |
+| 105 | UN-10 | Reject `steer_req` without authority | 105: Partial |
+| 108, 108a | UN-10/UN-03, UN-N2, UN-21 | Revoke on TX violation; reason codes in health | 108: Not impl; 108a: Not impl |
+| 109, 109a | UN-N3, UN-27, UN-N1 | Substitute and autonomous zero-torque frames | 109: Not impl; 109a: Not impl |
+| 110, 405 | UN-02, UN-14, UN-N4 | Add `0x262`, `0x1D3`, `0xB4`; cross-checks | 110: Partial (ref. build); 405: Partial (ref. build) |
+| 204–207 | UN-12, UN-15 | Jerk, wind-down, field checks | 204: Not impl; 205: Not impl; 206: Not impl; 207: Partial |
+| 304, 304a | UN-10, UN-14 | Driver-torque checks | 304: Not impl; 304a: Not impl |
+| 306, 401, 401a, 403, 404, 407, 408, 413 | UN-N1, UN-05, UN-N4 | Periodic safety task ≥ 50 Hz | 306: Partial; 401: Met; 401a: Partial; 403: Not impl; 404: Not impl; 407: Implemented; 408: Not impl; 413: Partial |
+| 409, 410, 410a, 411 | UN-21, UN-22, UN-N6 | Loop counter, CRC, sequence | 409: Not impl; 410: Not met; 410a: Not impl; 411: Not impl |
+| 412, 412a, 412b | UN-23, UN-21, UN-22 | Bounds checks | 412: Not met; 412a: Not met; 412b: Partial |
+| 501, 501b | UN-N1, UN-35 | IWDG | 501: Implemented; 501b: Not impl |
+| 502, 502a, 502b, 503a | UN-29…34, UN-N2 | Fault reaction | 502: Not impl; 502a: Partial; 502b: Partial; 503a: Partial |
+| 503, 515 | UN-N5 | Start-up tests, image CRC | 503: Not impl; 515: Not impl |
+| 506, 506a | UN-28, UN-07 | Readback; latch not cleared by mode change | 506: Not impl; 506a: Not met |
+| 507 | UN-20 | MPU configuration | 507: Not impl |
+| 517 | UN-26, UN-N2 | TX read-back comparison | 517: Not impl |
+| 518 | UN-03 | Per-ID TX rate supervision | 518: Implemented (ref. build) |
+| 519 | UN-20, all ISRs | Explicit NVIC priorities; WCET measurement | 519: Partial |
+| 511a, 513 | UN-21 | Gating in car modes | 511a: Partial; 513: Met (ref. build) |
+| 705 | UN-16 | Reduced whitelist | 705: Met (ref. build) |
 
 ## 9. Open items
 

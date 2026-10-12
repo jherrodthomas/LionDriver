@@ -12,6 +12,9 @@
 | Approver | Project maintainer (acting safety manager) |
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
+> [!NOTE]
+> **Status at `682f184` (opendbc `7993399`, panda `8aa8671`).** This document describes the code at `8b8c6ae` unless a statement names a later pin. Safety mechanisms integrated since then (hardware watchdog and 100 Hz safety task, RX timeout, TX whitelist, safety-mode lock, 0.3 s heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are recorded in the [WP-W-02](WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md). The sections of this document that still describe the earlier behaviour are listed in [RR-2026-008](reviews/RR-2026-008.md) and are to be updated ([WP-M-14 §2.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#23-pre-entry-engineering-track) P-03).
+
 ## 1. Purpose and scope
 
 ISO 26262-6 Annex C treats configuration data (selecting a variant or behaviour of the software) and calibration data (adapting the software's behaviour by values) as part of the software that must be specified, verified and controlled with the same rigour as code of the same ASIL. This document:
@@ -312,10 +315,10 @@ Requirement IDs `DVR-nn` are local to this work product until they are migrated 
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Migrate DVR-01…DVR-21 into WP-W-02 (SWSR) or WP-S-01/WP-C-07 as appropriate and into `assurance/trace/`; `DVR` is not a registered prefix in the README | Safety engineer | G3 |
+| OI-1 | Migrate DVR-01…DVR-22 into WP-W-02 (SWSR) or WP-S-01/WP-C-07 as appropriate and into `assurance/trace/`; `DVR` is not a registered prefix in the README | Safety engineer | G3 |
 | OI-2 | Re-check TSR parents when WP-S-02 is approved | Safety engineer | G2 |
 | OI-3 | Record the reference vehicle's VIN-specific FW versions in WP-C-01 (input to DVR-07, DVR-10) | Maintainer | G1 |
 | OI-4 | Decide whether learned parameters should be disabled (fixed offline values) for the reference configuration during validation, to make results reproducible | Safety engineer | G2 |
 | OI-5 | Review `torqued` offset bounds and `lagd` restore logic in full (only constants and the lines cited were reviewed) | Controls owner | G3 |
 | OI-6 | Confirm whether `CarParamsCache` can bypass fingerprinting on a different vehicle with the same device (VIN check) | Vehicle port owner | G2 |
-| OI-7 | New finding for the gap assessment: envelope accepts any EPS scale factor in `safetyParam` (no range check, `toyota.h:383`); propose a GAP ID (related to GAP-09) | Safety engineer | G1 |
+| OI-7 | Closed: recorded as GAP-44 in the [gap assessment](../00-assessment/gap-assessment.md). In the reference build the panda lock accepts only parameter 73 (SWSR-512); `toyota_init` itself still has no range check (SWSR-104a) | Safety engineer | G1 |

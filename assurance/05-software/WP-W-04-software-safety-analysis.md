@@ -12,6 +12,9 @@
 | Approver | Project maintainer (acting safety manager) |
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
+> [!NOTE]
+> **Status at `682f184` (opendbc `7993399`, panda `8aa8671`).** This document describes the code at `8b8c6ae` unless a statement names a later pin. Safety mechanisms integrated since then (hardware watchdog and 100 Hz safety task, RX timeout, TX whitelist, safety-mode lock, 0.3 s heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are recorded in the [WP-W-02](WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md). The sections of this document that still describe the earlier behaviour are listed in [RR-2026-008](reviews/RR-2026-008.md) and are to be updated ([WP-M-14 §2.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#23-pre-entry-engineering-track) P-03).
+
 ## 1. Purpose and scope
 
 This analysis examines the software architecture of [WP-W-03](WP-W-03-software-architecture.md) for failure modes that can violate the safety goals (SG-01…SG-07, [WP-C-03](../02-concept/WP-C-03-hara.md)), checks which existing mechanisms cover them, and derives SWSRs for the gaps. It also analyses dependent failures inside the software (shared state, interrupts, buffers, common-mode between controller and envelope).
@@ -103,7 +106,7 @@ Host failure modes are analysed at system level in [WP-A-04](../08-analyses/WP-A
 | P | 17 |
 | N | 23 |
 
-Every N and P row has an SWSR in WP-W-02 (SWF-48: SWSR-519 and an accepted 10 ms bound). Diagnostic-coverage targets in WP-S-03 §6 cannot be claimed until those SWSRs are implemented and verified.
+Every N and P row except SWF-20 (which maps to VS-UV only) has an SWSR in WP-W-02 (SWF-48: SWSR-519 and a 10 ms bound proposed by the author; not yet accepted in a review record, [RR-2026-008](reviews/RR-2026-008.md)). Diagnostic-coverage targets in WP-S-03 §6 cannot be claimed until those SWSRs are implemented and verified.
 
 ## 4. Software-level dependent failure analysis
 

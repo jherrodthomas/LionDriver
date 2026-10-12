@@ -2,13 +2,17 @@
 
 | Field | Value |
 |---|---|
-| Note | DN-01 |
+| Work product | DN-01 Design note: per-ID TX rate supervision (supports [WP-W-03](../WP-W-03-software-architecture.md) and [WP-W-05](../WP-W-05-software-unit-design.md) UN-03) |
+| Standard reference | ISO 26262-6:2018 §7, §8 |
+| ASIL / scope | B‡ (SWSR-518) |
 | Version | 0.2 (decisions recorded and implemented, 2026-10-12). 0.1: proposal |
-| Status | **Decided and implemented** in the reference build (opendbc `7993399`, panda `8aa8671`; §10). Not yet verified on hardware; budgets not yet confirmed on logs |
+| Status | Draft — design decisions recorded; implemented in the reference build (opendbc `7993399`, panda `8aa8671`; §10). Not yet verified on hardware; budgets not yet confirmed on logs |
 | Requirements | [TSR-518](../../03-system/WP-S-02-technical-safety-requirements.md), [SWSR-518](../WP-W-02-software-safety-requirements.md) |
 | Analyses | [WP-A-02](../../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) FFI-CM-04 (SoC floods CAN TX); [WP-W-04](../WP-W-04-software-safety-analysis.md) SDF-05 (shared TX queue delays forwarded PCS frames), OI-2 |
 | Units | [WP-W-05](../WP-W-05-software-unit-design.md) UN-03 `safety_tx_hook`, UN-15 `toyota_tx_hook` |
 | Author / reviewer | Claude (AI-assisted draft) / TBD; an AI draft is not a review (WP-M-06) |
+| Approver | Project maintainer (acting safety manager) |
+| Baseline | `682f184` (opendbc `7993399`, panda `8aa8671`) for §10; §1–§8 written before implementation |
 
 ## 1. Problem
 

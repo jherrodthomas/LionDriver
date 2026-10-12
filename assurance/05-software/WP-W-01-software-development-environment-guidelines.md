@@ -12,6 +12,9 @@
 | Approver | Project maintainer (acting safety manager) |
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
+> [!NOTE]
+> **Status at `682f184` (opendbc `7993399`, panda `8aa8671`).** This document describes the code at `8b8c6ae` unless a statement names a later pin. Safety mechanisms integrated since then (hardware watchdog and 100 Hz safety task, RX timeout, TX whitelist, safety-mode lock, 0.3 s heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are recorded in the [WP-W-02](WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md). The sections of this document that still describe the earlier behaviour are listed in [RR-2026-008](reviews/RR-2026-008.md) and are to be updated ([WP-M-14 §2.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#23-pre-entry-engineering-track) P-03).
+
 ## 1. Purpose and scope
 
 This document fixes, for each software element of LionDriver, the programming language, language subset, coding and modelling guidelines, compiler configuration, static analysis and the tool environment. It is the reference that code reviews ([WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md)) and unit verification ([WP-W-06](WP-W-06-software-unit-verification.md)) check against.
@@ -79,7 +82,7 @@ The tools, their versions and their tool confidence levels are owned by [WP-P-07
 | Code generators (QM) | capnp (TL-10), acados (TL-11), rednose/sympy (TL-12), Cython (TL-13), DBC generator (TL-14), tinygrad (TL-09) | per tool | QM | §11 |
 | Firmware signing | `panda/board/crypto/sign.py` (TL-15) | `panda/SConscript:117-125` | 2 | Release key handling in [WP-P-10](../07-supporting/WP-P-10-release-management.md) |
 | Dependency resolution | uv + `uv.lock` (TL-16) | `uv.lock`, `opendbc_repo/uv.lock` | 1 | uv itself unpinned |
-| CI | GitHub Actions (TL-18) | `.github/workflows/tests.yaml` | 1 | Does not run the envelope verification today (GAP-39) |
+| CI | GitHub Actions (TL-18) | `.github/workflows/tests.yaml`, `.github/workflows/safety.yaml` | 1 | `safety.yaml` (since D-03) runs the opendbc safety tests (release and reference-build variants), opendbc and panda MISRA and mutation on `liondriver-dev` and PRs; tool versions are not printed (ENV-01) |
 
 Environment rules:
 
@@ -345,18 +348,18 @@ LionDriver does not use model-based development for production code. Models appe
 | Release build used in tests | Only compiled, not tested (`test_release_build.py`) | GAP-41 |
 | Defensive checks on SoC-provided configuration | Missing | GAP-09 |
 | Coding guideline document | This document (new) | — |
-| LionDriver CI enforcement | None for E-03 | GAP-39, OI-1 |
+| LionDriver CI enforcement | `safety.yaml` runs E-03 safety tests, MISRA and mutation (D-03); results not yet archived as evidence | GAP-39 (mitigated), OI-1 |
 
 ## 16. Open items
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Add the opendbc safety MISRA job (and panda MISRA job) to LionDriver CI on `liondriver-dev` (D-03, GAP-39) | Maintainer | G3 |
+| OI-1 | Closed 2026-10-12 by `.github/workflows/safety.yaml` (opendbc and panda MISRA on `liondriver-dev` and PRs, D-03). Remaining: print tool versions in the job log (ENV-01) | Maintainer | G3 |
 | OI-2 | Confirm MISRA rule categories in §9 against the licensed MISRA C:2012 document; complete all "RATIONALE TBD" entries and get them approved | Safety engineer | G3 |
 | OI-3 | Write a MISRA compliance summary (rules and directives) for the release configuration | Safety engineer | G3 |
 | OI-4 | Review E-03 for single-exit and bounded-loop conformance (ENV-R-03, ENV-R-04) | Reviewer | G3 |
 | OI-5 | Select a complexity metric tool (e.g. lizard or pmccabe) and classify it in WP-P-07 | Maintainer | G3 |
-| OI-6 | Document ISR/main-loop shared data (ENV-R-12) in WP-W-03 | SW architect | G3 |
+| OI-6 | Done in draft: [WP-W-03 §6.3](WP-W-03-software-architecture.md) lists ISR/main-loop shared data (ENV-R-12); review pending | SW architect | G3 |
 | OI-7 | Stack-usage analysis with `-fstack-usage` and call graph (ENV-R-14) | Maintainer | G3 |
 | OI-8 | Extend target warnings (CF-02) and fix findings | Maintainer | G3 |
 | OI-9 | Decide whether to replace the GNU statement-expression macros with typed inline functions to remove DEV-09/DEV-10/DEV-12/DEV-13 | Maintainer | G3 |

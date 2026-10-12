@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-W-08 Testing of the embedded software (software qualification, HIL) |
 | Standard reference | ISO 26262-6:2018 §11 (testing of the embedded software: test environments, methods, test-case derivation); ISO 26262-8:2018 §9; ASPICE 4.0 SWE.6 |
-| Version | 0.1 |
+| Version | 0.2 (alignment pass: expected outcomes rechecked against the WP-W-02 baseline column at opendbc `7993399`, panda `8aa8671`; §6 coverage table rebuilt from §5; HIL tests in the pins listed; report template per [WP-M-14 §8.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#83-evidence-binding); 2026-10-12). 0.1 |
 | Status | Draft (specification); results section **Not yet executed** |
 | ASIL / scope | Embedded envelope software on the STM32H7 (E-03): B‡ (ASIL C until SG-01 re-rating) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`); expected outcomes in §5 rechecked at `682f184` (opendbc `7993399`, panda `8aa8671`) |
 
 ## 1. Purpose and scope
 
@@ -27,7 +27,7 @@ This document specifies tests that show the embedded software, as built for rele
 | Environment | HIL bench (§3), representative for CAN traffic, supply and timing; vehicle not included |
 | Methods | Requirements-based test; fault injection; resource and timing measurement; back-to-back against the host model (VS-UV-20) |
 | Derivation | Requirements analysis, equivalence classes, boundary values (limit ± 1 raw, timing thresholds ± one task period), error guessing from [WP-W-04](WP-W-04-software-safety-analysis.md) |
-| Coverage | Every envelope SWSR with HIL in its verification column has ≥ 1 VS-SWQ case (§5, §6) |
+| Coverage | Target: every envelope SWSR with HIL in its verification column has ≥ 1 VS-SWQ case (§5, §6). Not yet met: SWSR-108a, 516b, 711 and 711a have no case (OI-6) |
 
 ## 3. Test environment (HIL bench, D-04)
 
@@ -44,6 +44,8 @@ This document specifies tests that show the embedded software, as built for rele
 | Thermal | Thermal chamber or heat gun for DTS tests (optional) | |
 
 Existing upstream assets usable after porting: `panda/tests/hitl/test_*.py` (health, SPI bad header/checksum, CAN loopback, harness) — they need comma jigs today.
+
+LionDriver HIL tests in the panda pin (written, **not run on hardware**; [hil-bench/](hil-bench/README.md) §7): `test_10_hw_watchdog.py` (VS-SWQ-14), `test_12_rx_timeout.py` (VS-SWQ-08), `test_13_eps_fault.py` (VS-SWQ-13), `test_14_tx_rate.py` (VS-SWQ-25). Source: the change records in [`07-supporting/impact/`](../07-supporting/impact/README.md).
 
 The staged build plan, parts list and the first bench test (hardware watchdog) are in [hil-bench/](hil-bench/README.md).
 
@@ -66,39 +68,41 @@ Status of all: Specified, not implemented.
 | VS-SWQ-05 | Longitudinal limits and fields | 201–207 | Accel boundaries, steps, field variations, gas pressed | As per SWSRs; jerk and field checks expected to fail today |
 | VS-SWQ-06 | Engagement and brake/gas | 301–306, 309, 311 | PCM edges, brake at standstill/moving, gas | Authority transitions per WP-W-05 §5.2 within the RX frame |
 | VS-SWQ-07 | Driver override and heartbeat mismatch | 304, 304a, 307 | Plant driver torque; heartbeat `engaged=0` | Revocation timing per SWSRs (0.3 s for 307; expected fail today: ≈3 s) |
-| VS-SWQ-08 | RX timeouts | 401, 401a, 406 | Remove each RX message at random phase | Detection ≤ 5 periods + task period; today 1–2 s (expected fail) |
+| VS-SWQ-08 | RX timeouts | 401, 401a, 406 | Remove each RX message at random phase | Detection ≤ 5 periods + one 10 ms task period (SWSR-401 met for the Toyota RX checks, opendbc `aff4033`, `98404a4`; not verified on hardware) |
 | VS-SWQ-09 | RX plausibility | 402–405 | Corrupted checksums, 1.5× rate, frozen payload, disagreeing cross-signals | Each detected within its bound |
-| VS-SWQ-10 | Heartbeat loss, SILENT, siren | 407, 409, 510, 516 | Stop heartbeat with ignition on/off; frozen loop counter | Revocation ≤ 0.3 s; SILENT ≤ 2 s; siren ≤ 0.5 s; today 3–5 s (expected fail) |
+| VS-SWQ-10 | Heartbeat loss, SILENT, siren | 407, 409, 510, 516 | Stop heartbeat with ignition on/off; frozen loop counter | Revocation ≤ 0.3 s (SWSR-407 implemented, panda `c2e5d93`); SILENT ≤ 2 s (510) and siren ≤ 0.5 s (516) not implemented, expected to **fail** |
 | VS-SWQ-11 | Command stall | 408, 109a | Stop `0x2E4`/`0x343` with heartbeat alive | Revocation 50/100 ms; zero frames |
 | VS-SWQ-12 | SPI integrity and bounds on target (also HWSR-401) | 410, 410a, 410b, 411, 412, 412a, 412b, 413 | Corrupted, replayed, reordered, oversized transfers via fault-injecting SPI host | No effect from corrupted transfer; no memory corruption (stack/guard canaries via SWD); error burst revokes |
 | VS-SWQ-13 | EPS status monitoring | 110 | Plant reports LKA_STATE fault codes; `0x262` loss | Lateral revocation within one frame / timeout |
-| VS-SWQ-14 | Watchdog and hang | 501, 501b, 502a | Halt main/tick/comms ISR via SWD; infinite loop in a handler; `assert_fatal` | MCU reset ≤ 0.1 s; relay released; CAN TX silent |
+| VS-SWQ-14 | Watchdog and hang | 501, 501b, 502a | Halt main/tick/comms ISR via SWD; infinite loop in a handler; `assert_fatal` | MCU reset ≤ 0.1 s (0.2 s accepted as interim, deviation D-1 of the [watchdog change record](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md)); relay released; CAN TX silent |
 | VS-SWQ-15 | Fault reaction | 502, 502b, 503a, 503b, 504, 505, 508, 509 | Interrupt storm, register divergence, ECC event (if injectable), clock drift, supply ramp, bus-off, temperature | SS-S ≤ 0.1 s after detection, latch class per WP-W-05 §6.1 |
 | VS-SWQ-16 | Start-up tests and image integrity | 503, 515, 502c | Corrupted image byte; failing relay readback; power-up observation of relay and transceivers | Relay never driven on failure; outputs safe from reset |
 | VS-SWQ-17 | Configuration lock and request gating | 511a, 512, 512a, 513, 514 | All control requests in TOYOTA mode; non-reference `0xdc`; `0xd6` build type | Rejected as specified; build type "release" |
-| VS-SWQ-18 | Bootstub signature | 511 | Tampered, debug-signed, truncated images | Not executed; soft flasher entered |
+| VS-SWQ-18 | Bootstub signature | 511 | Tampered, debug-signed, truncated images | Tampered image never runs; soft flasher entered |
 | VS-SWQ-19 | Relay readback, orientation, relay latch | 506, 506a, 506b, 701, 701a, 706, 710 | Relay stuck open/closed (simulated); harness flip/unplug while driven; `0xdc` after latch | Detection ≤ 0.3 s; SS-S; latch persists |
 | VS-SWQ-20 | Host reaction to envelope reports (with `pandad` and `selfdrived`) | 307h, 514h, 601, 606, 615, 619, 620 | Each envelope reason code and flag | Immediate disable ≤ 0.2 s, take-over request ≤ 1 s |
 | VS-SWQ-21 | Forwarding and PCS message rules | 704, 705, 707 | Camera-side traffic at full load; SoC sends PCS/DSU IDs | Forwarding latency ≤ bound (TSR-707); PCS/DSU IDs not transmitted from SoC |
 | VS-SWQ-22 | Relay malfunction detection by traffic | 710 | `check_relay` IDs on car side | Latch and TX/forward block |
 | VS-SWQ-23 | Resource usage and timing on target | WP-W-03 §7; 401a | Worst-case bus + SPI load | Stack margin ≥ 20 %; safety task period ≤ 20 ms; hook WCET and TX latency within WP-S-04 budgets |
-| VS-SWQ-25 | TX read-back, per-ID TX rate, priority scheme | 517, 518, 519 | Corruption between TX hook and bus (SWD); SoC TX at 2× rate; worst-case IRQ load | Mismatch → SS-S ≤ 2 frames; excess rejected and revoked; safety-task latency within budget |
 | VS-SWQ-24 | Endurance replay | all envelope | ≥ 10 h of fork-owned Corolla logs at real time, nominal | No false revocation, no watchdog reset, no fault flag |
+| VS-SWQ-25 | TX read-back, per-ID TX rate, priority scheme | 517, 518, 519 | Corruption between TX hook and bus (SWD); SoC TX at 2× rate; worst-case IRQ load | Mismatch → SS-S ≤ 2 frames; excess rejected and revoked; safety-task latency within budget |
 
 ## 6. SWSR coverage
 
 | SWSR block | VS-SWQ |
 |---|---|
-| 101–110 | 01–04, 13 |
+| 101–110 | 01–04, 13. No case: 108a |
 | 201–207 | 05 |
-| 301–311 | 06, 07 |
+| 301, 302, 304–307, 309, 311 | 06, 07 |
 | 401–406 | 08, 09 |
 | 407–413 | 10–12 |
-| 501–519 | 14–18, 23, 25, 10 (510, 516) |
-| 701–710 | 19, 21, 22 |
+| 501–519 | 14–17, 19 (506, 506a, 506b), 23, 25, 10 (510, 516). No case: 503c, 504a, 505a, 507, 507a, 508a, 516a, 516b |
+| 701–711 | 19 (701, 701a, 706, 710), 21, 22. No case: 711, 711a |
 | Host (SWSR-6xx, h-suffix) | 20 (others by host tests and WP-S-08) |
 
-SWSRs whose only verification is review or analysis (e.g. SWSR-102a, 309, 605a) are not tested here.
+SWSRs without a case are listed in OI-6; this table is derived from §5 and is the one to keep in step with WP-W-02 §13.3.
+
+SWSRs whose only verification is review or analysis (e.g. SWSR-102a, 605a) are not tested here. SWSR-309 (R, A) is exercised by VS-SWQ-06 as additional cover.
 
 ## 7. Test report (template)
 
@@ -110,10 +114,15 @@ SWSRs whose only verification is review or analysis (e.g. SWSR-102a, 309, 605a) 
 | Baseline (superproject / opendbc / panda) | Not yet executed |
 | Bench configuration and calibration | Not yet executed |
 | Tool and script versions | Not yet executed |
+| Build manifest ID | Not yet executed |
+| Vehicle configuration ID (e.g. CFG-001) | Not yet executed |
+| Bench record ID (D-04 stage, calibration) | Not yet executed |
+| Execution date, raw artifact location | Not yet executed |
+| Reviewer, independence, review state | Not yet executed |
 
-| VS ID | Cases | Passed | Failed | Not run | Worst-case timing | Result | Evidence |
-|---|---|---|---|---|---|---|---|
-| VS-SWQ-01 … VS-SWQ-25 | — | — | — | — | — | Not yet executed | — |
+| VS ID | SWSR IDs | Cases | Passed | Failed | Not run | Worst-case timing | Result | Anomalies | Evidence |
+|---|---|---|---|---|---|---|---|---|---|
+| VS-SWQ-01 … VS-SWQ-25 | — | — | — | — | — | — | Not yet executed | — | — |
 
 | Deviations from specification | Not yet executed |
 |---|---|
@@ -128,4 +137,5 @@ SWSRs whose only verification is review or analysis (e.g. SWSR-102a, 309, 605a) 
 | OI-2 | Decide release-image-compatible fault-injection methods (SWD vs debug build) and document the representativeness argument | SW lead | G4 |
 | OI-3 | Port `panda/tests/hitl` to the LionDriver bench without comma jigs. Jungle-based tests run at bench stage B1 ([hil-bench/](hil-bench/README.md) §5.4) | Maintainer | G4 |
 | OI-4 | Fork-owned Corolla log set for VS-SWQ-24 and plant parameter identification | Maintainer | G4 |
-| OI-5 | Agree split of cases with WP-S-08 (I-1) and WP-V-05 to avoid duplication | Safety engineer | G4 |
+| OI-5 | Agree split of cases with WP-S-08 (I-1) and WP-V-05 to avoid duplication. VS-SWQ-20 (host reaction, take-over request) reaches into system integration and may belong in WP-S-08 | Safety engineer | G4 |
+| OI-6 | Specify cases for SWSR-108a, 503c, 504a, 505a, 507, 507a, 508a, 516a, 516b, 711, 711a, or record why HIL is not the method | Safety engineer | G4 |

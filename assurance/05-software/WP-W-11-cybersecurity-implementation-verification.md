@@ -12,6 +12,9 @@
 | Approver | Project maintainer (acting cybersecurity manager) |
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
+> [!NOTE]
+> **Status at `682f184` (opendbc `7993399`, panda `8aa8671`).** This document describes the code at `8b8c6ae` unless a statement names a later pin. Safety mechanisms integrated since then (hardware watchdog and 100 Hz safety task, RX timeout, TX whitelist, safety-mode lock, 0.3 s heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are recorded in the [WP-W-02](WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md). The sections of this document that still describe the earlier behaviour are listed in [RR-2026-008](reviews/RR-2026-008.md) and are to be updated ([WP-M-14 §2.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#23-pre-entry-engineering-track) P-03).
+
 > Defensive engineering document. It defines coding rules, analysis tooling and verification
 > of protection mechanisms. It contains no exploitation detail and reproduces no key material.
 
@@ -53,7 +56,7 @@ Base: **MISRA C:2012** as already used for the envelope (`panda/tests/misra/test
 | SC-C-03 | No unbounded copies; `memcpy` sizes derived from validated lengths only | CERT C STR31-C, ARR38-C | FW | — |
 | SC-C-04 | Integer conversions and arithmetic on externally supplied values checked for wrap and truncation | CERT C INT30-C, INT31-C, INT32-C | FW, opendbc | Command parameters are 16-bit and cast |
 | SC-C-05 | Every `switch` over a host command has an explicit `default` that rejects, and every command is listed in the per-mode allow-list (CSR-014) | MISRA 16.4, CSR-014 | `main_comms.h` | Undocumented commands are attack surface |
-| SC-C-06 | Debug-only code is enclosed in `#ifdef ALLOW_DEBUG` (or removed); no debug path is reachable in a release build | Project rule; CSR-021, CSR-023 | FW, opendbc | GAP-09 (`0xc5` ungated), GAP-25 |
+| SC-C-06 | Debug-only code is enclosed in `#ifdef ALLOW_DEBUG` (or removed); no debug path is reachable in a release build | Project rule; CSR-021, CSR-023 | FW, opendbc | GAP-09 (`0xc5` ungated at `8b8c6ae`; gated in the reference build since panda `9f60e17`, SWSR-513), GAP-25 |
 | SC-C-07 | Signature and hash verification uses one reviewed library; comparison of digests and signatures does not short-circuit on secret-dependent data where timing could leak (verify-only use still reviewed) | CERT C MSC (crypto), project rule | bootstub | CSR-031 |
 | SC-C-08 | No use of uninitialised memory; all security-relevant state has a defined value at reset | CERT C EXP33-C | FW | Safe state after reset (HWSR-502) |
 | SC-C-09 | Compiler warnings treated as errors for release builds; release build configuration verified by the build-config audit (§7) | Project rule | FW | GAP-41 (tested ≠ shipped config) |
@@ -90,7 +93,7 @@ The checklist becomes part of the PR template proposed in [WP-P-02 §8](../07-su
 
 | ID | Tool class | Target | Configuration | Gate | Status at baseline |
 |---|---|---|---|---|---|
-| SAST-01 | cppcheck with MISRA addon | `panda/board/**`, `opendbc_repo/opendbc/safety/**` | Existing MISRA scripts; add bootstub and command handler; record deviations | CAL 3 paths: zero unjustified findings | Exists for panda/opendbc envelope; not in LionDriver CI (GAP-39); cppcheck from a mutable branch (`uv.lock:586`, GAP-34) |
+| SAST-01 | cppcheck with MISRA addon | `panda/board/**`, `opendbc_repo/opendbc/safety/**` | Existing MISRA scripts; add bootstub and command handler; record deviations | CAL 3 paths: zero unjustified findings | Exists for panda/opendbc envelope; in LionDriver CI since D-03 (`safety.yaml`; GAP-39 mitigated); cppcheck from a mutable branch (`uv.lock:586`, GAP-34) |
 | SAST-02 | C security rule set (cppcheck CERT addon or clang-tidy `cert-*`/`bugprone-*` checks) | Same as SAST-01 + pandad, installer | Selected CERT C rules from §3.1 | CAL 3: zero unjustified findings | Not configured |
 | SAST-03 | Python security lint (ruff `S` rules, flake8-bandit equivalent) | `openpilot/**` | Enable `S` rule family; per-file ignores with rationale for tests | CAL 2–3 paths: no new findings | Not enabled: current ruff selection has no `S` rules (`pyproject.toml:114-125`) |
 | SAST-04 | Semantic code scanning (e.g. CodeQL or Semgrep) for C/C++ and Python | Whole tree | Default security queries + custom queries for `pickle.load`, `shell=True`, unvalidated `os.path.join` with RPC input | Findings triaged per release | Not configured |
@@ -196,7 +199,7 @@ Verification specs use IDs `VS-CS-nnn` matching the CSR number. Status at baseli
 | CSR-082 | 2 | VS-CS-082 | UT + HIL | Modified artefact → process refuses, engagement blocked | Not met |
 | CSR-083 | 2 | VS-CS-083 | CM | LFS store under LionDriver control; hashes in release record | Not met |
 | CSR-091 | 2 | VS-CS-091 | R + UT + HIL | Checksum/counter checks where available; plausibility for the rest | Partial |
-| CSR-092 | 2 | VS-CS-092 | R + UT | TX outside allow-list blocked; PCS forwarding unaltered | Partial (envelope tests exist upstream, `opendbc_repo/opendbc/safety/tests/test_toyota.py`; not run in LionDriver CI, GAP-39) |
+| CSR-092 | 2 | VS-CS-092 | R + UT | TX outside allow-list blocked; PCS forwarding unaltered | Partial (envelope tests exist upstream, `opendbc_repo/opendbc/safety/tests/test_toyota.py`; run in LionDriver CI since D-03 (`safety.yaml`); reference-build whitelist reduced, SWSR-705) |
 | CSR-093 | 2 | VS-CS-093 | UT + HIL | Foreign actuation ID on car side → inhibit | Partial |
 | CSR-101 | 3 | VS-CS-101 | BA-04 | No embedded key; `INTERNAL` undefined | Not met for INTERNAL builds |
 | CSR-102 | 3 | VS-CS-102 | PR | INS-19 record shows `SshEnabled` off | Process |

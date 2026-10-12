@@ -4,11 +4,12 @@
 |---|---|
 | Work product | Hardware-in-the-loop bench plan (decision D-04 of [WP-M-01](../../01-management/WP-M-01-assurance-strategy.md); test environment of [WP-W-08](../WP-W-08-embedded-software-testing.md) §3) |
 | Standard reference | ISO 26262-6:2018 §11.4.2 (test environments); ISO 26262-8:2018 §9.4.3 (verification environment); ASPICE 4.0 SWE.6 |
-| Version | 0.1 |
+| Version | 0.2 (alignment pass: baseline and pins consistent; mapping for `test_12`…`test_14`; 2026-10-12). 0.1 |
 | Status | Draft: plan only. No bench exists, no part has been bought, no test has been run on hardware |
 | Author | Assurance team (AI-assisted draft) |
 | Reviewer(s) | TBD |
-| Baseline | LionDriver `4aca58b`; panda pin `3859fa8`, opendbc pin `5b5a4ba` (panda#1, #3, #4, #5, #6 and opendbc#1, #2, #3 integrated 2026-10-12) |
+| Approver | Project maintainer (acting safety manager) |
+| Baseline | Written at LionDriver `4aca58b` (panda `3859fa8`, opendbc `5b5a4ba`). Current pins at `682f184`: panda `8aa8671`, opendbc `7993399`. Use the current pins; §5 commands name `3859fa8` only as the commit that added the watchdog tests |
 
 ## 1. Purpose
 
@@ -28,7 +29,7 @@ This plan builds the bench in stages, so the watchdog evidence comes from the sm
 | **B3: vehicle bus** | Replay Corolla CAN traffic and inject bus faults. A candump capture of bus 0 also feeds the inter-frame gap scan ([`tools/can_gaps/`](../../../tools/can_gaps/README.md)) | 2–3 USB CAN interfaces, harness-equivalent wiring, 120 Ω terminations | VS-SWQ-01… (limits, timeouts), VS-FI-01…04, VS-FI-22 |
 | **B4: full WP-W-08 bench** | Supply, debug and SoC-side faults | Programmable supply, SWD probe, reference comma device, audio capture | VS-FI-06…08, -10, -11, -15, -16, -18; release-image repeats |
 
-Build B1 first. B2 is cheap and turns B1 results into evidence. B3 and B4 follow when the ≥ 50 Hz safety task and the RX integrity work start.
+Build B1 first. B2 is cheap and turns B1 results into evidence. B3 and B4 follow; the 100 Hz safety task and the RX timeout are already integrated (§1), so they are waiting only on hardware.
 
 ## 3. Architecture
 
@@ -80,7 +81,7 @@ From a LionDriver checkout, with the panda submodule at its pin:
 
 ```bash
 cd panda
-git checkout 3859fa8   # the LionDriver pin; panda#1, #3, #4, #5, #6 with the fault injection and HIL tests
+git checkout 8aa8671   # the current LionDriver pin (contains the watchdog tests added at 3859fa8 and test_12…test_14)
 pip install -e .[dev]                                               # panda python lib, pytest, libusb1, pycapnp
 export PYTHONPATH=$PWD/../opendbc_repo:$PWD/..
 ```
@@ -154,6 +155,9 @@ WP-W-08 §4 asks for the worst value over ≥ 100 repetitions with random phase 
 | SPI interrupt hang | VS-FI-17 (SPI ISR) | TSR-501, TSR-502 | B4 (reference device: SPI) | Planned: needs another injection mode and the SPI path |
 | Window violation (early feed) | VS-SWQ-14 / HWSR-501b | HWSR-501b | B1 | `test_early_feed_window_violation` (mode 5, panda#3; in the pin), implemented, not run |
 | Upstream `tests/hitl/test_1…9` | Regression | — | B1 | Existing, not run on LionDriver hardware |
+| `tests/hitl/test_12_rx_timeout.py` | VS-SWQ-08 | TSR-401 | Not assigned | Implemented, not run ([RX timeout](../../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md), [EPS fault](../../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md) change records) |
+| `tests/hitl/test_13_eps_fault.py` | VS-SWQ-13 | TSR-110 | Not assigned | Implemented, not run ([EPS fault change record](../../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md)) |
+| `tests/hitl/test_14_tx_rate.py` | VS-SWQ-25 (rate part) | TSR-518 | Not assigned | Implemented, not run ([TX rate change record](../../07-supporting/impact/change-2026-10-12-tx-rate-supervision.md)) |
 | Corolla log replay, limit and timeout cases | VS-SWQ-01…, VS-FI-01…04 | TSR-1xx, TSR-401…406 | B3 | Planned |
 | Power dips, resets, SWD memory faults, heartbeat and SPI faults | VS-FI-06…08, -10, -11, -15, -16, -18 | TSR-407…413, TSR-505, TSR-503, TSR-706 | B4 | Planned |
 
