@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-07 Software tool classification and qualification |
 | Standard reference | ISO 26262-8:2018 §11; ISO/SAE 21434:2021 §5 (tool management); ISO/PAS 8800:2024 (tools for AI development, informative) |
-| Version | 0.1 |
+| Version | 0.2 (TL-23 GNU Octave; OI-8, OI-9; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (qualification effort driven by the envelope ASIL from WP-C-03) |
 | Author | Assurance team (initial draft) |
@@ -57,6 +57,7 @@ Versions are taken from `uv.lock` (openpilot) and `opendbc_repo/uv.lock` (opendb
 | TL-20 | coverage (Python) | 7.16.0 | Informational line coverage of openpilot | QM | TI1 | — | TCL1 | No threshold, no credit (GAP-36) |
 | TL-21 | UBSan | via host compiler | Undefined-behaviour detection in safety tests | Envelope verification | TI1 | — | TCL1 | Additional measure; no credit claimed beyond TL-02 TD rationale |
 | TL-22 | Jenkins (`Jenkinsfile`, `panda/Jenkinsfile`) | comma infrastructure | HIL, on-device tests | — | — | — | N/A | Not available to the fork (GAP-30) |
+| TL-23 | GNU Octave (open-source MATLAB) with gnuplot | Octave 8.4.0, gnuplot 6.0.0 (Ubuntu 24.04 packages `octave` 8.4.0-1build5, `gnuplot`), installed by `apt-get` in CI, **unpinned** | Models of envelope logic for design exploration and plots ([`assurance/models/octave/`](../models/octave/README.md)); constants read from the pinned opendbc source | None (design support) | TI1 | — | TCL1 | No verification or design credit is taken from its output; the models are not the C code. If a model result is ever used as evidence, re-classify (TI2) and pin the version |
 
 ## 4. Known issues affecting the classification
 
@@ -108,3 +109,5 @@ QM tools (TL-08 to TL-14) get confidence measures under SOTIF/PAS 8800 instead: 
 | OI-5 | Add branch coverage and an MC/DC strategy (K-3) |
 | OI-6 | Pin host compiler, uv and CI runner images (K-8) |
 | OI-7 | Determine the `comma-deps-cppcheck` version used by panda (no panda lockfile in tree) |
+| OI-8 | Classify the in-house assurance checkers (`check_trace.py`, `sync_requirements.py`, `check_state_machines.py`, `check_links.py`) and `tools/ci/build_manifest.py`: they produce consistency evidence and generate normative tables |
+| OI-9 | Compare the open-source modelling tools (GNU Octave, Scilab/Xcos, OpenModelica, Python) for the planned uses (plant model, further state machines) before any of them is used for evidence |
