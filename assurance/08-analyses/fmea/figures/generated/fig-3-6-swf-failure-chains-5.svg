@@ -81,7 +81,7 @@
   <text x="885" y="170.1" font-size="10.5" fill="#0F172A">engagement) with a panda reporting controlsAllowed false; the</text>
   <text x="885" y="184.2" font-size="10.5" fill="#0F172A">comment says two samples (selfdrived.py:338, 504-514). TSR-621…</text>
   <text x="885" y="197.3" font-size="9.8" fill="#475569" font-weight="600">O8 · D10 · in SWF-SE-032</text>
-  <rect x="885" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 open</text>
+  <rect x="885" y="203.3" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="214.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 in progress</text>
   <rect x="876" y="234.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="253.8" font-size="12" fill="#0F172A" font-weight="700">SWF-034.C2</text>
   <rect x="1194.5" y="242.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="253.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
@@ -89,7 +89,7 @@
   <text x="885" y="282.5" font-size="10.5" fill="#0F172A">ignored for the first 10 s after selfdrived starts</text>
   <text x="885" y="296.6" font-size="10.5" fill="#0F172A">(sm.frame*DT_CTRL &gt; 10, selfdrived.py:338), so an engagement i…</text>
   <text x="885" y="309.7" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in SWF-SE-032 · → SWF-013</text>
-  <rect x="885" y="315.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="326.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 open</text>
+  <rect x="885" y="315.7" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="326.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 in progress</text>
   <rect x="876" y="346.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="366.2" font-size="12" fill="#0F172A" font-weight="700">SWF-034.C3</text>
   <rect x="1194.5" y="355.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="366.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
@@ -97,7 +97,7 @@
   <text x="885" y="394.8" font-size="10.5" fill="#0F172A">controlsAllowed true, is reused, so the mismatch counter does not</text>
   <text x="885" y="408.9" font-size="10.5" fill="#0F172A">count; only commIssue after the 1 s alive window (10 Hz service)…</text>
   <text x="885" y="422" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SWF-SE-032</text>
-  <rect x="885" y="428" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="438.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 open</text>
+  <rect x="885" y="428" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="438.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 in progress</text>
   <rect x="250" y="482.6" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="259" y="502.1" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-038</text>
   <text x="259" y="516.7" font-size="10.5" fill="#0F172A">Detect PCM cruise active while not</text>
@@ -120,7 +120,7 @@
   <text x="885" y="517.2" font-size="10.5" fill="#0F172A">commented out) and is raised only after 6 s (selfdrived.py:421-426);</text>
   <text x="885" y="531.2" font-size="10.5" fill="#0F172A">it covers the case where the cancel request from controlsd…</text>
   <text x="885" y="544.4" font-size="9.8" fill="#475569" font-weight="600">O8 · D9 · in SWF-SE-033</text>
-  <rect x="885" y="550.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="561.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-034 open</text>
+  <rect x="885" y="550.4" width="135.3" height="15" rx="7.5" fill="#2E9E6A"/><text x="952.7" y="561.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-034 completed</text>
   <rect x="40" y="671.4" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="49" y="690.9" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-033</text>
   <text x="49" y="705.5" font-size="10.5" fill="#0F172A" font-weight="600">Event catalogue and reaction</text>
@@ -153,7 +153,7 @@
   <text x="885" y="651.5" font-size="10.5" fill="#0F172A">selfdrived: heartbeatLost, safetyTxBlocked, txRateExceeded</text>
   <text x="885" y="665.6" font-size="10.5" fill="#0F172A">(LionDriver #43) and every fault other than relayMalfunction…</text>
   <text x="885" y="678.7" font-size="9.8" fill="#475569" font-weight="600">O8 · D10 · in SWF-SE-032</text>
-  <rect x="885" y="684.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="695.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 open</text>
+  <rect x="885" y="684.7" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="695.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 in progress</text>
   <rect x="876" y="715.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="735.2" font-size="12" fill="#0F172A" font-weight="700">SWF-032.C2</text>
   <rect x="1194.5" y="724.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="735.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
@@ -303,8 +303,8 @@
   <text x="885" y="1526.4" font-size="10.5" fill="#0F172A">age check (controlsd.py:96-102); the SubMaster keeps the last</text>
   <text x="885" y="1540.4" font-size="10.5" fill="#0F172A">message and the poll only bounds the wait to 15 ms…</text>
   <text x="885" y="1553.6" font-size="9.8" fill="#475569" font-weight="600">O7 · D10 · in SWF-SE-041</text>
-  <rect x="885" y="1559.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1570.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 open</text>
-  <rect x="997.9" y="1559.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="1570.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-047 open</text>
+  <rect x="885" y="1559.6" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="1570.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 in progress</text>
+  <rect x="1029" y="1559.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1083.4" y="1570.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-047 open</text>
   <line x1="40" y1="1611" x2="1240" y2="1611" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="1633" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
   <rect x="96" y="1622" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="1633" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
@@ -312,7 +312,9 @@
   <rect x="179.4" y="1622" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1633" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
   <text x="223.9" y="1633" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
   <rect x="455.4" y="1622" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1633" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
-  <text x="522.7" y="1633" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <rect x="518.7" y="1622" width="90.4" height="15" rx="7.5" fill="#D97706"/><text x="563.9" y="1633" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT in progress</text>
+  <rect x="613.1" y="1622" width="85.7" height="15" rx="7.5" fill="#2E9E6A"/><text x="655.9" y="1633" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT completed</text>
+  <text x="706.7" y="1633" font-size="10.5" fill="#0F172A">action status (step 6)</text>
   <text x="40" y="1653" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
   <text x="40" y="1671" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>
