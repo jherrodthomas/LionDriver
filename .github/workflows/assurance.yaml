@@ -49,6 +49,10 @@ jobs:
       run: python3 assurance/trace/tools/check_trace.py
     - name: Relative links
       run: python3 assurance/trace/tools/check_links.py
+    - name: ASPICE traceability map matches the trace data and test specifications (and its tests)
+      run: |
+        python3 assurance/trace/tools/trace_map.py --check
+        python3 assurance/trace/tools/test_trace_map.py
     - name: Markdown tables (every row has the header's number of cells)
       run: |
         python3 assurance/trace/tools/check_tables.py
