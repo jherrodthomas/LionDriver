@@ -485,7 +485,7 @@ def build(experimental: bool) -> tuple[dict, list[dict]]:
              "doc_id": "WP-C-03" + (" (Experimental Mode variant)" if experimental else ""),
              "revision": "0.2 (Cartesian)", "date": "2026-10-12", "author": "Assurance team (draft)",
              "approver": "Safety manager", "company": "LionDriver"},
-    "scope_description": "Aftermarket supervised SAE Level 2 feature on the 2020 Toyota Corolla LE TSS2 (reference configuration, WP-C-01). Lateral (LKA torque) and longitudinal (ACC) control with driver monitoring; the panda safety MCU envelope bounds actuation. Experimental Mode is "
+    "scope_description": "Aftermarket supervised SAE Level 2 feature on the Toyota Corolla, 12th generation (E210), TSS 2.0 (reference configuration, WP-C-01). Lateral (LKA torque) and longitudinal (ACC) control with driver monitoring; the panda safety MCU envelope bounds actuation. Experimental Mode is "
                          + ("INCLUDED in this variant (D-08 option B)." if experimental else "EXCLUDED (D-08 option A, recommended)."),
     "boundary_diagram_notes": "See WP-C-01 §3.3. Vehicle ECUs (EPS, PCM, ABS/VSC, camera, radar) are outside the item, with AoUs.",
     "assumptions": [

@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 9-1. Attack paths of the risk-5 threat scenarios (WP-C-09 §5, §9)</title>
+  <desc id="d">For the five risk-5 threat scenarios of §9, the figure traces entry point, attack path, asset reached and the damage scenarios each can cause. Code execution on the SoC (AS-05) is the entry point of AP-02 (to AS-02, TS-02), AP-03 (to AS-03 and AS-04, TS-03), AP-14 (to AS-01 and AS-15, TS-14) and AP-04 (to AS-06 and AS-07, TS-04); AP-08 (TS-08, risk 4) is drawn as the foothold that §5 states yields root on the SoC. Physical possession of the device is the entry point of AP-11 (to AS-11, AS-12, AS-13, TS-11). TS-02 and TS-03 lead to DS-01 to DS-07, TS-14 to DS-01, DS-03, DS-04 and DS-07, TS-04 to DS-01 to DS-06, and TS-11 to DS-08, DS-09, DS-10 and DS-12. All five have feasibility High and impact 4. Treatments for TS-02 and TS-14 are implemented in the reference build only and not verified.</desc>
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7C3AED"/></marker>
+    <marker id="aY" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#A16207"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+      .ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .chip{fill:#F8FAFC;stroke:#CBD5E1;stroke-width:1}
+      .tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+    </style>
+  </defs>
+
+  <rect width="1280" height="820" fill="#FFFFFF"/>
+  <text x="40" y="44" class="t b" font-size="20">Figure 9-1 · Attack paths of the risk-5 threat scenarios</text>
+  <text x="40" y="66" class="m" font-size="12.5">Entry point → attack path summary → asset → damage scenarios, for ranks 1–5 of §9 · abstraction level of §5, no procedural detail</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">WP-C-09 §5, §9</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">assets §2 · damage §3–§4 · ratings §6, §8</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+  <text x="40" y="112" class="t b" font-size="12">Foothold</text>
+  <text x="206" y="112" class="t b" font-size="12">Entry point</text>
+  <text x="400" y="112" class="t b" font-size="12">Attack path → threat scenario</text>
+  <text x="760" y="112" class="t b" font-size="12">Asset reached (§2)</text>
+  <text x="40" y="127" class="m xs">risk-4 precursor</text>
+  <text x="206" y="127" class="m xs">as named in §5</text>
+  <text x="400" y="127" class="m xs">§5 summary · feasibility §6 · risk §8</text>
+  <text x="760" y="127" class="m xs">property violated: §2, §4</text>
+  <text x="1059.5" y="112" class="t b" font-size="10.5" text-anchor="middle">Safety DS (HARA)</text>
+  <text x="1185.0" y="112" class="t b" font-size="10.5" text-anchor="middle">Privacy · ID</text>
+  <line x1="988" y1="118" x2="1131" y2="118" stroke="#C2410C" stroke-width="2"/>
+  <line x1="1145" y1="118" x2="1225" y2="118" stroke="#475569" stroke-width="2"/>
+  <text x="1000.0" y="166" class="t sb" font-size="10" text-anchor="start" transform="rotate(-90 1000.0 166)">DS-01</text>
+  <text x="996.5" y="184" class="m sb" font-size="10" text-anchor="middle">4</text>
+  <text x="1021.0" y="166" class="t sb" font-size="10" text-anchor="start" transform="rotate(-90 1021.0 166)">DS-02</text>
+  <text x="1017.5" y="184" class="m sb" font-size="10" text-anchor="middle">4</text>
+  <text x="1042.0" y="166" class="t sb" font-size="10" text-anchor="start" transform="rotate(-90 1042.0 166)">DS-03</text>
+  <text x="1038.5" y="184" class="m sb" font-size="10" text-anchor="middle">4</text>
+  <text x="1063.0" y="166" class="t sb" font-size="10" text-anchor="start" transform="rotate(-90 1063.0 166)">DS-04</text>
+  <text x="1059.5" y="184" class="m sb" font-size="10" text-anchor="middle">3</text>
+  <text x="1084.0" y="166" class="t sb" font-size="10" text-anchor="start" transform="rotate(-90 1084.0 166)">DS-05</text>
+  <text x="1080.5" y="184" class="m sb" font-size="10" text-anchor="middle">4</text>
+  <text x="1105.0" y="166" class="t sb" font-size="10" text-anchor="start" transform="rotate(-90 1105.0 166)">DS-06</text>
+  <text x="1101.5" y="184" class="m sb" font-size="10" text-anchor="middle">4</text>
+  <text x="1126.0" y="166" class="t sb" font-size="10" text-anchor="start" transform="rotate(-90 1126.0 166)">DS-07</text>
+  <text x="1122.5" y="184" class="m sb" font-size="10" text-anchor="middle">4</text>
+  <text x="1157.0" y="166" class="t sb" font-size="10" text-anchor="start" transform="rotate(-90 1157.0 166)">DS-08</text>
+  <text x="1153.5" y="184" class="m sb" font-size="10" text-anchor="middle">4</text>
+  <text x="1178.0" y="166" class="t sb" font-size="10" text-anchor="start" transform="rotate(-90 1178.0 166)">DS-09</text>
+  <text x="1174.5" y="184" class="m sb" font-size="10" text-anchor="middle">3</text>
+  <text x="1199.0" y="166" class="t sb" font-size="10" text-anchor="start" transform="rotate(-90 1199.0 166)">DS-10</text>
+  <text x="1195.5" y="184" class="m sb" font-size="10" text-anchor="middle">3</text>
+  <text x="1220.0" y="166" class="t sb" font-size="10" text-anchor="start" transform="rotate(-90 1220.0 166)">DS-12</text>
+  <text x="1216.5" y="184" class="m sb" font-size="10" text-anchor="middle">4</text>
+  <text x="980" y="184" class="m" font-size="9.5" text-anchor="end">impact</text>
+  <rect x="388" y="192" width="845" height="92" rx="10" fill="#F8FAFC"/>
+  <rect x="388" y="286" width="845" height="92" rx="10" fill="#F8FAFC"/>
+  <rect x="388" y="380" width="845" height="92" rx="10" fill="#F8FAFC"/>
+  <rect x="388" y="474" width="845" height="92" rx="10" fill="#F8FAFC"/>
+  <rect x="388" y="588" width="845" height="92" rx="10" fill="#F8FAFC"/>
+  <line x1="996.5" y1="192" x2="996.5" y2="680" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="1017.5" y1="192" x2="1017.5" y2="680" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="1038.5" y1="192" x2="1038.5" y2="680" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="1059.5" y1="192" x2="1059.5" y2="680" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="1080.5" y1="192" x2="1080.5" y2="680" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="1101.5" y1="192" x2="1101.5" y2="680" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="1122.5" y1="192" x2="1122.5" y2="680" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="1153.5" y1="192" x2="1153.5" y2="680" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="1174.5" y1="192" x2="1174.5" y2="680" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="1195.5" y1="192" x2="1195.5" y2="680" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="1216.5" y1="192" x2="1216.5" y2="680" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="206" y="196" width="160" height="366" rx="10" fill="#FAF5FF" stroke="#7C3AED" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="218" y="218" class="t b" font-size="12.5">Code execution</text>
+  <text x="218" y="234" class="t b" font-size="12.5">on the SoC</text>
+  <text x="218" y="252" class="m xs">QM user space;</text>
+  <text x="218" y="265" class="m xs">AS-05 integrity lost</text>
+  <text x="218" y="340" class="t xs" font-weight="600">AP-02, AP-03, AP-14:</text>
+  <text x="218" y="353" class="m xs">root on SoC</text>
+  <text x="218" y="514" class="t xs" font-weight="600">AP-04: root or any</text>
+  <text x="218" y="527" class="m xs">local process on SoC</text>
+  <rect x="206" y="592" width="160" height="84" rx="10" fill="#FAF5FF" stroke="#7C3AED" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="218" y="616" class="t b" font-size="12.5">Physical possession</text>
+  <text x="218" y="634" class="m xs">of a stolen or lost</text>
+  <text x="218" y="647" class="m xs">device</text>
+  <rect x="40" y="300" width="140" height="170" rx="10" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="50" y="320" class="t b" font-size="12">AP-08</text>
+  <rect x="50" y="328" width="92" height="18" rx="9.0" fill="#9A3412"/><text x="96.0" y="340.6" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">TS-08 · risk 4</text>
+  <text x="50" y="366" class="m xs">network reachability +</text>
+  <text x="50" y="379" class="m xs">valid SSH key; INTERNAL</text>
+  <text x="50" y="392" class="m xs">builds pre-enable SSH</text>
+  <text x="50" y="405" class="m xs">and install a key</text>
+  <text x="50" y="418" class="t xs" font-weight="600">→ root on the SoC</text>
+  <text x="50" y="440" class="m xs">feasibility Medium</text>
+  <text x="50" y="453" class="m xs">(§6: High if shipped)</text>
+  <path d="M180 385.0 H204" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
+  <rect x="400" y="196" width="330" height="84" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="412" y="216" class="t b" font-size="12.5">AP-02</text>
+  <text x="456" y="216" class="m xs">feasibility High · impact 4</text>
+  <rect x="626" y="204" width="94" height="18" rx="9.0" fill="#C2410C"/><text x="673.0" y="216.6" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">TS-02 · risk 5</text>
+  <text x="412" y="235" class="t" font-size="10.5">Host→panda 0xdc sets a permissive or non-Toyota</text>
+  <text x="412" y="249" class="t" font-size="10.5">safety mode or parameter; no authentication</text>
+  <circle cx="416" cy="266" r="4" fill="#D97706"/>
+  <text x="425" y="269.5" font-size="10" font-weight="600" fill="#B45309">mode lock implemented (reference build), not verified</text>
+  <path d="M366 238.0 H398" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
+  <path d="M730 238.0 H758" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
+  <rect x="760" y="221.0" width="196" height="34" rx="6" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+  <text x="770" y="242.0" class="t b" font-size="10.5">AS-02</text>
+  <text x="812" y="242.0" class="t" font-size="10.5">Safety mode / parameter</text>
+  <circle cx="996.5" cy="238.0" r="6" fill="#C2410C"/>
+  <circle cx="1017.5" cy="238.0" r="6" fill="#C2410C"/>
+  <circle cx="1038.5" cy="238.0" r="6" fill="#C2410C"/>
+  <circle cx="1059.5" cy="238.0" r="6" fill="#C2410C"/>
+  <circle cx="1080.5" cy="238.0" r="6" fill="#C2410C"/>
+  <circle cx="1101.5" cy="238.0" r="6" fill="#C2410C"/>
+  <circle cx="1122.5" cy="238.0" r="6" fill="#C2410C"/>
+  <line x1="956" y1="238.0" x2="984" y2="238.0" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="2 3"/>
+  <rect x="400" y="290" width="330" height="84" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="412" y="310" class="t b" font-size="12.5">AP-03</text>
+  <text x="456" y="310" class="m xs">feasibility High · impact 4</text>
+  <rect x="626" y="298" width="94" height="18" rx="9.0" fill="#C2410C"/><text x="673.0" y="310.6" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">TS-03 · risk 5</text>
+  <text x="412" y="329" class="t" font-size="10.5">Toggle boot pins → ROM bootloader → pandad recovery</text>
+  <text x="412" y="343" class="t" font-size="10.5">flashes a development bootstub (no RDP/WRP)</text>
+  <path d="M366 332.0 H398" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
+  <path d="M730 332.0 H758" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
+  <rect x="760" y="295.0" width="196" height="34" rx="6" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+  <text x="770" y="316.0" class="t b" font-size="10.5">AS-03</text>
+  <text x="812" y="316.0" class="t" font-size="10.5">Panda firmware image</text>
+  <rect x="760" y="335.0" width="196" height="34" rx="6" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+  <text x="770" y="356.0" class="t b" font-size="10.5">AS-04</text>
+  <text x="812" y="356.0" class="t" font-size="10.5">Panda boot chain, boot pins</text>
+  <circle cx="996.5" cy="332.0" r="6" fill="#C2410C"/>
+  <circle cx="1017.5" cy="332.0" r="6" fill="#C2410C"/>
+  <circle cx="1038.5" cy="332.0" r="6" fill="#C2410C"/>
+  <circle cx="1059.5" cy="332.0" r="6" fill="#C2410C"/>
+  <circle cx="1080.5" cy="332.0" r="6" fill="#C2410C"/>
+  <circle cx="1101.5" cy="332.0" r="6" fill="#C2410C"/>
+  <circle cx="1122.5" cy="332.0" r="6" fill="#C2410C"/>
+  <line x1="956" y1="332.0" x2="984" y2="332.0" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="2 3"/>
+  <rect x="400" y="384" width="330" height="84" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="412" y="404" class="t b" font-size="12.5">AP-14</text>
+  <text x="456" y="404" class="m xs">feasibility High · impact 4</text>
+  <rect x="626" y="392" width="94" height="18" rx="9.0" fill="#C2410C"/><text x="673.0" y="404.6" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">TS-14 · risk 5</text>
+  <text x="412" y="423" class="t" font-size="10.5">Host CAN TX: PCS/DSU IDs pass the TX whitelist with no</text>
+  <text x="412" y="437" class="t" font-size="10.5">content check; actuation IDs sent above nominal rate</text>
+  <circle cx="416" cy="454" r="4" fill="#D97706"/>
+  <text x="425" y="457.5" font-size="10" font-weight="600" fill="#B45309">TSR-705, TSR-518 in reference build, not verified on HW</text>
+  <path d="M366 426.0 H398" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
+  <path d="M730 426.0 H758" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
+  <rect x="760" y="389.0" width="196" height="34" rx="6" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+  <text x="770" y="410.0" class="t b" font-size="10.5">AS-01</text>
+  <text x="812" y="410.0" class="t" font-size="10.5">CAN actuation commands</text>
+  <rect x="760" y="429.0" width="196" height="34" rx="6" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+  <text x="770" y="450.0" class="t b" font-size="10.5">AS-15</text>
+  <text x="812" y="450.0" class="t" font-size="10.5">Stock PCS/AEB forwarding</text>
+  <circle cx="996.5" cy="426.0" r="6" fill="#C2410C"/>
+  <circle cx="1038.5" cy="426.0" r="6" fill="#C2410C"/>
+  <circle cx="1059.5" cy="426.0" r="6" fill="#C2410C"/>
+  <circle cx="1122.5" cy="426.0" r="6" fill="#C2410C"/>
+  <line x1="956" y1="426.0" x2="984" y2="426.0" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="2 3"/>
+  <rect x="400" y="478" width="330" height="84" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="412" y="498" class="t b" font-size="12.5">AP-04</text>
+  <text x="456" y="498" class="m xs">feasibility High · impact 4</text>
+  <rect x="626" y="486" width="94" height="18" rx="9.0" fill="#C2410C"/><text x="673.0" y="498.6" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">TS-04 · risk 5</text>
+  <text x="412" y="517" class="t" font-size="10.5">Write safety-relevant params or publish forged msgq</text>
+  <text x="412" y="531" class="t" font-size="10.5">messages consumed by control / DM</text>
+  <path d="M366 520.0 H398" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
+  <path d="M730 520.0 H758" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
+  <rect x="760" y="483.0" width="196" height="34" rx="6" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+  <text x="770" y="504.0" class="t b" font-size="10.5">AS-06</text>
+  <text x="812" y="504.0" class="t" font-size="10.5">Parameter store</text>
+  <rect x="760" y="523.0" width="196" height="34" rx="6" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+  <text x="770" y="544.0" class="t b" font-size="10.5">AS-07</text>
+  <text x="812" y="544.0" class="t" font-size="10.5">IPC (msgq) messages</text>
+  <circle cx="996.5" cy="520.0" r="6" fill="#C2410C"/>
+  <circle cx="1017.5" cy="520.0" r="6" fill="#C2410C"/>
+  <circle cx="1038.5" cy="520.0" r="6" fill="#C2410C"/>
+  <circle cx="1059.5" cy="520.0" r="6" fill="#C2410C"/>
+  <circle cx="1080.5" cy="520.0" r="6" fill="#C2410C"/>
+  <circle cx="1101.5" cy="520.0" r="6" fill="#C2410C"/>
+  <line x1="956" y1="520.0" x2="984" y2="520.0" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="2 3"/>
+  <rect x="400" y="592" width="330" height="84" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="412" y="612" class="t b" font-size="12.5">AP-11</text>
+  <text x="456" y="612" class="m xs">feasibility High · impact 4</text>
+  <rect x="626" y="600" width="94" height="18" rx="9.0" fill="#C2410C"/><text x="673.0" y="612.6" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">TS-11 · risk 5</text>
+  <text x="412" y="631" class="t" font-size="10.5">Read persisted video, location logs and the identity</text>
+  <text x="412" y="645" class="t" font-size="10.5">key from storage at rest</text>
+  <path d="M366 634.0 H398" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
+  <path d="M730 634.0 H758" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
+  <rect x="760" y="594.0" width="196" height="24" rx="6" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+  <text x="770" y="610.0" class="t b" font-size="10.5">AS-11</text>
+  <text x="812" y="610.0" class="t" font-size="10.5">Device identity key</text>
+  <rect x="760" y="622.0" width="196" height="24" rx="6" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+  <text x="770" y="638.0" class="t b" font-size="10.5">AS-12</text>
+  <text x="812" y="638.0" class="t" font-size="10.5">Cabin video</text>
+  <rect x="760" y="650.0" width="196" height="24" rx="6" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+  <text x="770" y="666.0" class="t b" font-size="10.5">AS-13</text>
+  <text x="812" y="666.0" class="t" font-size="10.5">Location / trajectory</text>
+  <circle cx="1153.5" cy="634.0" r="6" fill="#475569"/>
+  <circle cx="1174.5" cy="634.0" r="6" fill="#475569"/>
+  <circle cx="1195.5" cy="634.0" r="6" fill="#475569"/>
+  <circle cx="1216.5" cy="634.0" r="6" fill="#475569"/>
+  <line x1="956" y1="634.0" x2="984" y2="634.0" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="2 3"/>
+  <text x="40" y="710" class="m" font-size="11.5">Shown: ranks 1–5 of §9 (all impact 4, feasibility High, risk 5). AP-08 is the one foothold that §5 states leads to root on the SoC; the risk-4 and risk-3 paths are listed in §5 and not drawn.</text>
+  <text x="40" y="728" class="m" font-size="11.5">Damage dots follow the “Damage” column of §4; the impact row is the maximum level of §3. Amber: treatment status of 2026-10-12; ratings are of the shipped baseline 8b8c6ae, not re-rated (OI-5).</text>
+  <line x1="40" y1="750" x2="1240" y2="750" stroke="#E2E8F0"/>
+  <g transform="translate(40,774)" font-size="10.5">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4"/><text x="36" y="4" class="t">Attack path step</text>
+    <rect x="150" y="-8" width="28" height="16" rx="4" fill="#FAF5FF" stroke="#7C3AED" stroke-dasharray="5 3"/><text x="186" y="4" class="t">Entry point / foothold</text>
+    <rect x="330" y="-9" width="64" height="18" rx="9" fill="#C2410C"/><text x="362" y="4" fill="#FFFFFF" font-size="9.5" font-weight="700" text-anchor="middle">TS · risk</text><text x="402" y="4" class="t">Threat scenario and risk value (§8)</text>
+    <circle cx="610" cy="0" r="6" fill="#C2410C"/><text x="622" y="4" class="t">Safety damage (HARA-linked DS)</text>
+    <circle cx="815" cy="0" r="6" fill="#475569"/><text x="827" y="4" class="t">Privacy / identity damage</text>
+    <circle cx="990" cy="0" r="4" fill="#D97706"/><text x="1000" y="4" class="t">Treatment implemented, not verified</text>
+  </g>
+</svg>

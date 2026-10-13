@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-C-09 Threat analysis and risk assessment (TARA) |
 | Standard reference | ISO/SAE 21434:2021 §15 (threat analysis and risk assessment methods); §9.3 (item definition, CS view); UN R155 Annex 5 (informative threat catalogue); ASPICE 4.0 SEC.1 |
-| Version | 0.1 |
+| Version | 0.3 (§8 risk matrix drawn as Figure 8-1 and §9 top-risk attack paths as Figure 9-1; no rating changed; 2026-10-13). 0.2 (status update 2026-10-12: treatment status of AP-02/TS-02 at `bf6ce8c`; new TS-14/AP-14 (SoC injects PCS/DSU frames or floods whitelisted actuation IDs), rated at the shipped baseline; ratings unapproved). History: 0.1 |
 | Status | Draft — ratings are engineering proposals for review, not approved. They must not be used to argue cybersecurity until the preliminary assessment ([WP-M-09 §8](../01-management/WP-M-09-cybersecurity-plan.md)) passes |
 | ASIL / scope | CS (cybersecurity); safety impact traced to the HARA ASILs |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); preliminary cybersecurity assessment by an independent assessor |
 | Approver | Project maintainer (acting cybersecurity manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`). Ratings reflect `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) as shipped (§1.2); treatment status notes are dated |
 
 > This is a defensive risk-assessment document. It describes threats at the abstraction a
 > TARA needs (entry point → affected asset → violated property → feasibility rating). It
@@ -99,6 +99,7 @@ Notes:
 | TS-11 | Physical theft / possession of the device exposes stored video, location and keys | Info disclosure | AS-11, AS-12, AS-13 | Confidentiality | DS-08, DS-09, DS-10, DS-12 | — |
 | TS-12 | Denial of service against safety-relevant SoC processes (resource exhaustion, IPC flooding) | DoS | AS-05, AS-07 | Availability | DS-02, DS-06 | GAP-20/23 |
 | TS-13 | Repudiation of device-originated data (no non-repudiation beyond device JWT; key reuse) | Repudiation | AS-11 | Non-repudiation | DS-10 | — |
+| TS-14 | Compromised SoC injects PCS/DSU frames or floods whitelisted actuation IDs through the panda (added 2026-10-12) | Tampering, DoS | AS-01, AS-15, AS-05 | Integrity, Availability | DS-01, DS-03, DS-04, DS-07 | GAP-42 |
 
 ## 5. Attack path summaries
 
@@ -119,6 +120,7 @@ One line each: **entry point → path summary → asset reached**. No procedural
 | AP-11 | Physical possession of a stolen/lost device | Read persisted video, location logs and the identity key from storage at rest | AS-11, AS-12, AS-13 | TS-11 |
 | AP-12 | Local process or crafted input on SoC | Exhaust CPU/IPC so safety-relevant processes miss deadlines (soft-disable keeps actuating ~3 s) | AS-05, AS-07 | TS-12 |
 | AP-13 | Possession of the device identity key | Sign data/requests indistinguishably from the genuine device | AS-11 | TS-13 |
+| AP-14 | Root on SoC (QM user space) | Host CAN TX stream: PCS/DSU IDs accepted by the TX whitelist without content check, or whitelisted actuation IDs sent far above their nominal rate (no per-ID rate check, shared TX queue) | AS-01, AS-15 | TS-14 |
 
 ## 6. Attack feasibility rating (attack-potential approach)
 
@@ -127,7 +129,7 @@ Factors scored per ISO/SAE 21434 §15.7 Annex (attack-potential): **ET** elapsed
 | AP | ET | Ex | KoI | WoO | Eq | Feasibility | Rationale (summary) |
 |---|---|---|---|---|---|---|---|
 | AP-01 | Days | Proficient | Public | Limited (physical) | Specialized | **Medium** | Needs physical bus access and tooling; no RX authentication once connected (GAP-01) |
-| AP-02 | Hours | Proficient | Public | Moderate | Standard | **High** | Given SoC code execution, the `0xdc` path has no authentication or cross-check |
+| AP-02 | Hours | Proficient | Public | Moderate | Standard | **High** | Given SoC code execution, the `0xdc` path has no authentication or cross-check. Treatment status 2026-10-12: firmware lock implemented (reference build), not verified; feasibility not re-rated (OI-5) |
 | AP-03 | Days | Expert | Public | Moderate | Standard | **High** | Given SoC root; no RDP/WRP, recovery path flashes a dev bootstub |
 | AP-04 | Hours | Proficient | Public | Moderate | Standard | **High** | Given local access; params and IPC are unauthenticated |
 | AP-05 | Weeks | Expert | Public | Moderate | Standard | **Medium** | Debug-key/softloader route is easy; forging the weak signature is harder but RSA-1024/SHA-1 is obsolete |
@@ -139,6 +141,7 @@ Factors scored per ISO/SAE 21434 §15.7 Annex (attack-potential): **ET** elapsed
 | AP-11 | Hours | Proficient | Public | Limited (theft) | Standard | **High** | Physical possession; data and key at rest are not shown to be encrypted |
 | AP-12 | Days | Proficient | Public | Moderate | Standard | **Medium** | Needs a foothold or crafted input; no temporal partitioning (GAP-23) |
 | AP-13 | Hours | Proficient | Public | Limited | Standard | **Medium** | Trivial once the key is obtained (AP-07/AP-11); value is impersonation/forgery |
+| AP-14 | Hours | Proficient | Public | Moderate | Standard | **High** | Given SoC code execution (as AP-02); at the shipped baseline the whitelist accepts `0x344`, `0x411` and the DSU IDs and no per-ID TX rate is supervised |
 
 A threat scenario's feasibility is the **highest** feasibility among its attack paths.
 
@@ -159,7 +162,7 @@ Risk value = f(impact level, feasibility), per ISO/SAE 21434 §15.8. Impact leve
 
 | TS | Max impact | Feasibility | **Risk** | Treatment | Rationale / direction (to WP-C-10, WP-S-07) |
 |---|---|---|---|---|---|
-| TS-02 | 4 | High | **5** | **Reduce** | Lock safety mode/param in panda FW for the reference config or add an independent cross-check (GAP-09); drives CSG |
+| TS-02 | 4 | High | **5** | **Reduce** | Lock safety mode/param in panda FW for the reference config or add an independent cross-check (GAP-09); drives CSG. **Treatment status 2026-10-12:** firmware lock implemented (reference build, `board/reference_lock.h`, TSR-512/513), not verified; not re-rated (OI-5) |
 | TS-03 | 4 | High | **5** | **Reduce** | Enable RDP/WRP, remove dev-bootstub recovery in release, authenticate boot-pin use (GAP-38) |
 | TS-08 | 4 | Medium | **4** | **Reduce / Avoid** | Remove INTERNAL SSH key path from LionDriver builds; disable SSH by default; if retained, key-managed access only |
 | TS-06 | 4 | Medium | **4** | **Reduce** | Replace git-branch updater with a signed update mechanism (GAP-26); drives CSG |
@@ -171,7 +174,12 @@ Risk value = f(impact level, feasibility), per ISO/SAE 21434 §15.8. Impact leve
 | TS-10 | 4 | Medium | **4** | **Reduce** | Fork safety repos, pin by commit, SBOM + vulnerability scanning (D-01, GAP-29/34) |
 | TS-07 | 4 | Medium | **4** | **Reduce / Avoid** | Disable or constrain athena RPCs in the reference config (CT-4); if retained, restrict RPC scope and upload targets |
 | TS-12 | 4 | Medium | **4** | **Reduce** | Temporal/spatial partitioning or envelope independence from SoC liveness; freshness checks (GAP-23/16) |
+| TS-14 | 4 | High | **5** | **Reduce** | Remove PCS/DSU IDs from the TX whitelist (TSR-705) and supervise the TX rate per actuation ID (TSR-518); CSG-05 / CSR-092. **Treatment status 2026-10-12:** both implemented in the reference build (`0x411` refused only there), not verified on hardware. Residual (not re-rated, OI-5): in-limit actuation within the rate budget, bounded by the envelope limits |
 | TS-13 | 3 | Medium | **3** | **Reduce / Retain** | Per-device key hygiene; non-repudiation improvements are lower priority; retainable with rationale if key theft (TS-11) is treated |
+
+![Figure 8-1: risk value matrix of §7, impact level 4 to 1 against feasibility High to Very low, with TS-02, TS-03, TS-04, TS-11 and TS-14 at risk 5, TS-01, TS-05 to TS-10 and TS-12 at risk 4, TS-13 at risk 3, and the risk-3 treatment threshold](figures/fig-c09-8-1-risk-matrix.svg)
+
+*Figure 8-1.* The §7 risk matrix with each threat scenario placed by its maximum impact and feasibility from the table above; the outlined cells are at or above the treatment threshold (risk ≥ 3). An amber mark (TS-02, TS-14) means the treatment is implemented in the reference build only, not verified, and the scenario is not re-rated (OI-5). Drawn from §7 and the §8 table. Source: [`figures/fig-c09-8-1-risk-matrix.svg`](figures/fig-c09-8-1-risk-matrix.svg); change it together with §3, §6, §7 and §8.
 
 All safety-impacting threat scenarios reach risk 4–5 because the item currently exposes the safety envelope to an unauthenticated QM SoC (GAP-09/20/38) and ships weak firmware authenticity (GAP-24/25). These are the dimensioning risks for the cybersecurity concept.
 
@@ -183,15 +191,20 @@ All safety-impacting threat scenarios reach risk 4–5 because the item currentl
 | 2 | TS-03 | **5** | SoC drives panda boot pins and flashes a dev bootstub; no RDP/WRP protects the MCU |
 | 3 | TS-04 | **5** | Unauthenticated params/IPC override control, model curvature or DM behaviour |
 | 4 | TS-11 | **5** | Stolen/lost device exposes driver video, location history and the identity key at rest |
-| 5 | TS-05 | **4** | Panda firmware authenticity rests on RSA-1024/SHA-1 with a committed debug key |
-| 6 | TS-06 | **4** | OTA is a force-checkout from a configurable branch, unsigned beyond TLS and in-tree hashes |
-| 7 | TS-08 | **4** | INTERNAL installer builds pre-enable SSH with an embedded key → root on the SoC |
-| 8 | TS-01 | **4** | CAN/OBD injection; no E2E counters on RX plausibility (brake, wheel-speed unchecked) |
-| 9 | TS-09 | **4** | Tampered ML model executes code on `pickle` load; no artefact integrity check |
-| 10 | TS-07 | **4** | Server-directed athena RPCs enable upload, SSH tunnel and key read |
-| 11 | TS-10 | **4** | Supply-chain injection via upstream submodules and mutable tool/model branches |
-| 12 | TS-12 | **4** | DoS on SoC processes with ~3 s stale-data actuation during soft-disable |
-| 13 | TS-13 | **3** | Device-origin data repudiation / identity-key reuse |
+| 5 | TS-14 | **5** | Compromised SoC injects PCS/DSU frames or floods whitelisted actuation IDs (added 2026-10-12) |
+| 6 | TS-05 | **4** | Panda firmware authenticity rests on RSA-1024/SHA-1 with a committed debug key |
+| 7 | TS-06 | **4** | OTA is a force-checkout from a configurable branch, unsigned beyond TLS and in-tree hashes |
+| 8 | TS-08 | **4** | INTERNAL installer builds pre-enable SSH with an embedded key → root on the SoC |
+| 9 | TS-01 | **4** | CAN/OBD injection; no E2E counters on RX plausibility (brake, wheel-speed unchecked) |
+| 10 | TS-09 | **4** | Tampered ML model executes code on `pickle` load; no artefact integrity check |
+| 11 | TS-07 | **4** | Server-directed athena RPCs enable upload, SSH tunnel and key read |
+| 12 | TS-10 | **4** | Supply-chain injection via upstream submodules and mutable tool/model branches |
+| 13 | TS-12 | **4** | DoS on SoC processes with ~3 s stale-data actuation during soft-disable |
+| 14 | TS-13 | **3** | Device-origin data repudiation / identity-key reuse |
+
+![Figure 9-1: attack paths of the five risk-5 threat scenarios: code execution on the SoC via AP-02, AP-03, AP-14 and AP-04 (with AP-08 as foothold) and physical possession via AP-11, to assets AS-01 to AS-07 and AS-11 to AS-15 and damage scenarios DS-01 to DS-12](figures/fig-c09-9-1-top-risk-attack-paths.svg)
+
+*Figure 9-1.* Attack paths of ranks 1–5 above (all risk 5): entry point → attack path → asset reached → damage scenarios, at the abstraction level of §5. AP-08 (TS-08, risk 4) is drawn only as the foothold that §5 says yields root on the SoC. Drawn from §2, §3, the “Damage” column of §4, §5, §6 and §8. Source: [`figures/fig-c09-9-1-top-risk-attack-paths.svg`](figures/fig-c09-9-1-top-risk-attack-paths.svg); change it together with those sections.
 
 ## Open items
 

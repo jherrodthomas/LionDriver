@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-11 AI system definition and AI safety requirements |
 | Standard reference | ISO/PAS 8800:2024 (AI system definition, input space, AI safety requirements, data requirements); ISO 21448:2022 §5, §7; ASPICE 4.0 MLE.1, SUP.11 (data requirements) |
-| Version | 0.1 |
+| Version | 0.2 (§2.2 AI system boundary diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM (FuSa) / SOTIF for AI-1 and AI-2; AI-3 / DM chain QM per the [WP-C-04 §7](WP-C-04-functional-safety-concept.md) proposal (SOTIF misuse measure) |
 | Author | Assurance team (initial draft) |
@@ -38,6 +38,12 @@ The full SHA-256 values are in the LFS pointer files. They identify the source a
 
 The **AI system** for this document is the chain from the camera frame buffers to the published model messages, including the pre- and post-processing that LionDriver can inspect:
 
+![Figure 2-1: AI system boundary from camerad frames through warp kernels, the AI-1/AI-2 and AI-3 networks, parsers and post-processing to modelV2, drivingModelData, cameraOdometry and driverStateV2, with consumers outside](figures/fig-c11-2-1-ai-boundary.svg)
+
+*Figure 2-1.* The dashed boundary is the AI system; the inputs of §2.3 enter from the sides and the consumers of §2.4 sit below it. Build tools and code references are in monospace. Source: [`figures/fig-c11-2-1-ai-boundary.svg`](figures/fig-c11-2-1-ai-boundary.svg); change it together with §2.1, §2.3 and §2.4.
+
+<details><summary>Text version of Figure 2-1</summary>
+
 ```
  camerad (VisionIPC NV12 frames)
    │  narrow road + wide road (AI-1/AI-2)       cabin (AI-3)
@@ -53,6 +59,8 @@ The **AI system** for this document is the chain from the camera frame buffers t
    ▼
  modelV2, drivingModelData, cameraOdometry
 ```
+
+</details>
 
 Outside the AI system but consuming its outputs: `controlsd`, `plannerd`, `radard`, `locationd`, `selfdrived`, `dmonitoringd` / `policy.py`, and ultimately the panda safety envelope. The runtime monitors required here (§6.4) are conventional QM software placed around the AI system, not part of the network.
 

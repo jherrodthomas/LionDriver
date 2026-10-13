@@ -1,0 +1,313 @@
+# yaml-language-server: $schema=../schema/fmeda.schema.json
+# FMEDA for SG-009 (stock AEB availability) at BL-002 with GENERIC failure rates (no BOM, no supplier data). The metrics show where the
+# architecture falls short; they are not evidence of compliance. Classification per rating-tables §6.1; DC per §6.2.
+schema_version: 1
+analysis:
+  id: FMD
+  type: fmeda
+  title: FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates
+  revision: '0.2'
+  status: draft
+  baseline: BL-002
+  rating_tables: RT-1
+  scope: Random hardware faults of the panda section and harness that can keep the stock camera's PCS messages from reaching the car (LD-HARA-001 SG-009, ASIL B;
+    assurance WP-C-03 SG-07, ASIL B). Reference device at BL-002
+  safety_goal: SG-009
+  asil_target: B
+  mission_profile: 'Passenger car, windscreen-mounted device: ambient up to +85 °C in the sun-loaded enclosure, Tj up to about +105 °C; about 500 operating h/year
+    for 15 years (7,500 h). Failure rates in FIT (1e-9/h); transient (soft-error) rates included where noted. PMHF here is only λSPF + λRF; the dual-point term is
+    not computed (rating-tables §6.3)'
+  out_of_scope:
+  - SoC and its software (QM; their faults are the first fault of a dual-point pair)
+  - 'Vehicle ECUs (EPS, PCM, stock camera): external measures'
+  - Faults that only stop item actuation (they do not touch the stock path)
+  references:
+  - assurance/04-hardware/WP-H-02-hardware-design.md
+  - assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
+  - assurance/08-analyses/fmea/analyses/dfmea.yaml
+  - assurance/08-analyses/fmea/rating-tables.md
+  - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
+  updated: '2026-10-12'
+safety_mechanisms:
+- id: FMD-SM-001
+  description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
+  dc_basis: 'ISO 26262-5 Annex D, Table D.6 (memory): ECC, high for single-bit faults'
+  implementation: STM32H7 flash ECC (RM0468); always on
+- id: FMD-SM-002
+  description: SRAM ECC (single-error correction in silicon); double errors flagged but not handled at BL-002
+  dc_basis: 'ISO 26262-5 Annex D, Table D.6: ECC, high for single-bit faults; double errors not credited'
+  implementation: STM32H7 RAM ECC (RM0468); RAMECC monitors not configured
+  requirement: TSR-503
+- id: FMD-SM-003
+  description: Bootstub signature check of the application image at every power-up
+  dc_basis: 'Annex D, Table D.6: memory signature at start-up; credited for latent permanent faults only (once per drive cycle)'
+  implementation: panda/board/bootstub.c
+- id: FMD-SM-005
+  description: 'Clock security system on HSE loss: NMI and reset'
+  dc_basis: 'Annex D, Table D.9 (clock): CSS for clock loss, high for stop; does not detect drift'
+  implementation: panda/board/stm32h7/clock.h
+  requirement: TSR-504
+- id: FMD-SM-007
+  description: Independent window watchdog (IWDG from LSI), 90 ms, fed only after safety-task and main-loop progress; reset releases the relay
+  dc_basis: 'Annex D, Table D.10 (processing units): watchdog with separate time base and time window, medium; HIL not run'
+  implementation: panda/board/drivers/hw_watchdog.h
+  requirement: TSR-501
+components:
+- id: FMD-C-001
+  part: STM32H725 CPU core, bus matrix, interrupt controller and peripherals
+  dfmea_element: DFM-SE-002
+  failure_rate_fit: 50
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-001
+    mode: Hang or unexpected exception with the relay driven (forwarding stops)
+    distribution: 0.4
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-004
+    safety_mechanism_spf: FMD-SM-007
+    dc_spf: 0.9
+    notes: Watchdog reset releases the relay (if the drive circuit is de-energise-to-safe, UK-06)
+  - id: FMD-002
+    mode: Wrong forwarding decision (stock PCS frame dropped while forwarding runs)
+    distribution: 0.05
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-001
+    notes: No mechanism compares forwarded with received frames
+  - id: FMD-003
+    mode: Other faults without effect on forwarding
+    distribution: 0.55
+    violates_sg_directly: false
+    mpf_potential: false
+- id: FMD-C-002
+  part: Embedded flash 1 MB
+  dfmea_element: DFM-SE-002
+  failure_rate_fit: 20
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-004
+    mode: Single-bit error
+    distribution: 0.8
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-002
+    safety_mechanism_lf: FMD-SM-001
+    dc_lf: 0.99
+  - id: FMD-005
+    mode: Multi-bit error causing a hang with the relay driven
+    distribution: 0.1
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-002
+    safety_mechanism_spf: FMD-SM-007
+    dc_spf: 0.9
+  - id: FMD-006
+    mode: Multi-bit error in the forwarding table or code
+    distribution: 0.1
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-002
+    safety_mechanism_lf: FMD-SM-003
+    dc_lf: 0.9
+    notes: Wrong blocking of a PCS message; boot signature finds permanent faults at the next power-up
+- id: FMD-C-003
+  part: SRAM regions holding forwarding state and CAN queues (about 64 KB)
+  dfmea_element: DFM-SE-002
+  failure_rate_fit: 100
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-007
+    mode: Single-bit upset
+    distribution: 0.9
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-003
+    safety_mechanism_lf: FMD-SM-002
+    dc_lf: 0.99
+  - id: FMD-008
+    mode: Multi-bit upset leading to a hang with the relay driven
+    distribution: 0.05
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-003
+    safety_mechanism_spf: FMD-SM-007
+    dc_spf: 0.9
+  - id: FMD-009
+    mode: Multi-bit upset elsewhere (single dropped frame)
+    distribution: 0.05
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-003
+    notes: PCS messages repeat; one lost frame is tolerated
+- id: FMD-C-004
+  part: 'Clock: 25 MHz HSE crystal and PLL'
+  dfmea_element: DFM-SE-003
+  failure_rate_fit: 10
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-010
+    mode: Oscillation stops
+    distribution: 0.5
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-005
+    safety_mechanism_lf: FMD-SM-005
+    dc_lf: 0.99
+    notes: CSS reset releases the relay
+  - id: FMD-011
+    mode: Frequency drift beyond CAN bit-timing tolerance (forwarding fails with the relay driven)
+    distribution: 0.1
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-005
+  - id: FMD-012
+    mode: Small drift without effect
+    distribution: 0.4
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-005
+- id: FMD-C-005
+  part: MCU supply
+  dfmea_element: DFM-SE-004
+  failure_rate_fit: 15
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-013
+    mode: Loss of supply
+    distribution: 0.5
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-007
+    notes: Relay de-energises (stock path restored), if de-energise-to-safe (UK-03)
+  - id: FMD-014
+    mode: Brown-out zone or over-voltage with the relay driven
+    distribution: 0.3
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-007
+    safety_mechanism_spf: FMD-SM-007
+    dc_spf: 0.6
+    notes: Watchdog catches a resulting hang, not wrong forwarding
+  - id: FMD-015
+    mode: Ripple or noise
+    distribution: 0.2
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-007
+- id: FMD-C-006
+  part: Camera-side and car-side CAN transceivers (XCVR3, XCVR1)
+  dfmea_element: DFM-SE-005
+  failure_rate_fit: 20
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-016
+    mode: TX stuck dominant (blocks the joined bus when the relay is released)
+    distribution: 0.3
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-008
+    notes: No mechanism; a stuck transceiver also disturbs the stock path (WP-H-03 FM-CAN-03)
+  - id: FMD-017
+    mode: RX open (camera frames not received for forwarding)
+    distribution: 0.3
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-009
+    notes: With the relay driven, camera messages are lost; RX checks cover car-side messages only
+  - id: FMD-018
+    mode: Other
+    distribution: 0.4
+    violates_sg_directly: false
+    mpf_potential: false
+- id: FMD-C-007
+  part: Intercept relay and relay driver
+  dfmea_element: DFM-SE-006
+  failure_rate_fit: 15
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-019
+    mode: Contacts welded in the intercept position
+    distribution: 0.25
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-010
+    notes: No relay readback (TSR-506, DFM-ACT-007)
+  - id: FMD-020
+    mode: Driver transistor or MCU pin stuck on
+    distribution: 0.15
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-010
+    notes: No readback; a watchdog reset does not release a shorted driver
+  - id: FMD-021
+    mode: Stuck released or coil open
+    distribution: 0.4
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-011
+    notes: 'Stock path stays connected: safe for SG-009'
+  - id: FMD-022
+    mode: Intermittent contact
+    distribution: 0.2
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-011
+- id: FMD-C-008
+  part: Harness connector and relay-box stock path
+  dfmea_element: DFM-SE-007
+  failure_rate_fit: 10
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-023
+    mode: Open in the stock camera path
+    distribution: 0.3
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-013
+    notes: Installation check only (DFM-ACT-008)
+  - id: FMD-024
+    mode: Connector loose (whole device off the bus)
+    distribution: 0.7
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-012
+    notes: Relay de-energises; stock path restored
+- id: FMD-C-009
+  part: 'Independent watchdog: LSI oscillator and IWDG'
+  dfmea_element: DFM-SE-003
+  failure_rate_fit: 2
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-025
+    mode: Watchdog does not expire (LSI stopped, IWDG fault)
+    distribution: 0.5
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-006
+    notes: Latent until a hang occurs; no periodic proof of the reset path
+  - id: FMD-026
+    mode: Spurious early reset
+    distribution: 0.5
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-006
+    notes: 'Releases the relay: safe for SG-009 (SG-003 effect, SW FMEA SWF-019)'

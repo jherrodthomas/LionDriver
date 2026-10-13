@@ -1,10 +1,11 @@
 # Toyota authority state machine (controls_allowed). Normative source of WP-W-05 §5.2, which is
 # generated from this file by assurance/trace/tools/check_state_machines.py (do not edit §5.2 by hand).
-# Describes the code at opendbc 7993399 / panda 8aa8671 (superproject 682f184). Every transition cites the
+# Describes the code at opendbc 7993399 / panda 8aa8671 (superproject 682f184); T10a (siren) and T10b were updated
+# at the merge with the base to panda c33343b / opendbc 273f44e. Every transition cites the
 # code that implements it; "swsr" lists the requirements it realises or is meant to realise. Implementation
 # state is NOT stored here: the checker reads it from the WP-W-02 Baseline column (trace/items/swsr.yaml).
 # build: all = every build; reference = only with LIONDRIVER_REFERENCE=1.
-# Drafting origin: ai-assisted (Claude), not reviewed (RR-2026-008 F-16).
+# Drafting origin: ai-assisted (Claude), not reviewed (RR-2026-009 F-16).
 machine: SM-TOY-AUTH
 title: Toyota authority (controls_allowed)
 units: [U-SAF-CORE, U-SAF-TOY, U-PND-MAIN]
@@ -20,8 +21,8 @@ transitions:
   - {id: T6, from: ALLOWED, event: "1 Hz tick", guard: "heartbeat engaged=0 for 3 consecutive ticks", action: clear, to: NOT_ALLOWED, build: all, swsr: [SWSR-307], code: "panda main.c:225-229"}
   - {id: T7, from: any, event: "safety mode set (0xdc, heartbeat loss, harness change)", guard: "", action: clear, to: NOT_ALLOWED, build: all, swsr: [SWSR-311], code: "opendbc safety.h:534 (set_safety_hooks)"}
   - {id: T9, from: ALLOWED, event: "TX frame rejected by a content check", guard: "", action: "clear, reason", to: NOT_ALLOWED, build: all, swsr: [SWSR-108], code: "not implemented: the frame is dropped, authority kept (opendbc safety.h safety_tx_hook)"}
-  - {id: T10a, from: ALLOWED, event: "safety task: heartbeat check", guard: "no SoC heartbeat for > 0.3 s in a car mode", action: clear, to: NOT_ALLOWED, build: all, swsr: [SWSR-407], code: "panda main.c:135-137 (heartbeat_monitor_tick)"}
-  - {id: T10b, from: ALLOWED, event: "safety task: command freshness check", guard: "no accepted 0x2E4/0x343 for 50/100 ms", action: "clear, reason", to: NOT_ALLOWED, build: all, swsr: [SWSR-408], code: "not implemented"}
+  - {id: T10a, from: ALLOWED, event: "safety task: heartbeat check", guard: "no SoC heartbeat for > 0.3 s in a car mode", action: "clear; siren 3 s when authority was granted (panda c33343b)", to: NOT_ALLOWED, build: all, swsr: [SWSR-407, SWSR-516], code: "panda main.c:135-137 (heartbeat_monitor_tick); heartbeat_siren.h at panda c33343b"}
+  - {id: T10b, from: ALLOWED, event: "safety task: command freshness check", guard: "no accepted 0x2E4/0x343 for 50/100 ms", action: "clear, reason", to: NOT_ALLOWED, build: reference, swsr: [SWSR-408], code: "opendbc 273f44e safety.h (tx_arrival_checks; merged from the base, lines not re-read)"}
   - {id: T10c, from: ALLOWED, event: "0x1D2 / 0x1D3", guard: "CRUISE_ACTIVE while MAIN_ON is off for > 150 ms", action: clear, to: NOT_ALLOWED, build: reference, swsr: [SWSR-405], code: "opendbc modes/toyota.h:126-143 (toyota_cruise_main_check)"}
   - {id: T10d, from: ALLOWED, event: "platform fault", guard: "", action: "clear, SS-S", to: NOT_ALLOWED, build: all, swsr: [SWSR-502], code: "not implemented: faults are reported only"}
   - {id: T10e, from: ALLOWED, event: "driver steering override", guard: "", action: "clear, reason", to: NOT_ALLOWED, build: all, swsr: [SWSR-304], code: "not implemented for Toyota LKA"}

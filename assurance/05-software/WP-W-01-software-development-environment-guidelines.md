@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-01 SW development environment, languages and coding guidelines |
 | Standard reference | ISO 26262-6:2018 §5 (general topics for product development at the software level: development environment, modelling and coding guidelines); ISO 26262-8:2018 §11 (by reference to WP-P-07); ISO/SAE 21434:2021 §10 (secure coding); MISRA C:2012 (incl. amendments as supported by the analyser); ASPICE 4.0 SWE.3 |
-| Version | 0.2 ([RR-2026-008](reviews/RR-2026-008.md) F-17: `LIONDRIVER_REFERENCE` in §7 and CF-01, K-2, ENV-R-08; F-18: build manifest and tool versions in CI; F-28: author; 2026-10-12). 0.1 |
+| Version | 0.3 (merge of PR #47 software alignment with the base: CI row lists the base's `mutation_reference` and `panda_host_tests` jobs; 2026-10-13). 0.2 ([RR-2026-009](reviews/RR-2026-009.md) F-17: `LIONDRIVER_REFERENCE` in §7 and CF-01, K-2, ENV-R-08; F-18: build manifest and tool versions in CI; F-28: author; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope (E-03): ASIL C provisional, ASIL B expected after SG-01 re-rating ([WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md)). Host stack (E-01, E-02): QM / SOTIF / CS |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -13,7 +13,7 @@
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 > [!NOTE]
-> **Status at `682f184` (opendbc `7993399`, panda `8aa8671`).** This document describes the code at `8b8c6ae` unless a statement names a later pin. Safety mechanisms integrated since then (hardware watchdog and 100 Hz safety task, RX timeout, TX whitelist, safety-mode lock, 0.3 s heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are recorded in the [WP-W-02](WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md). The sections of this document that still describe the earlier behaviour are listed in [RR-2026-008](reviews/RR-2026-008.md) and are to be updated ([WP-M-14 §2.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#23-pre-entry-engineering-track) P-03).
+> **Status at `682f184` (opendbc `7993399`, panda `8aa8671`).** This document describes the code at `8b8c6ae` unless a statement names a later pin. Safety mechanisms integrated since then (hardware watchdog and 100 Hz safety task, RX timeout, TX whitelist, safety-mode lock, 0.3 s heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are recorded in the [WP-W-02](WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md). The sections of this document that still describe the earlier behaviour are listed in [RR-2026-009](reviews/RR-2026-009.md) and are to be updated ([WP-M-14 §2.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#23-pre-entry-engineering-track) P-03).
 
 ## 1. Purpose and scope
 
@@ -82,7 +82,7 @@ The tools, their versions and their tool confidence levels are owned by [WP-P-07
 | Code generators (QM) | capnp (TL-10), acados (TL-11), rednose/sympy (TL-12), Cython (TL-13), DBC generator (TL-14), tinygrad (TL-09) | per tool | QM | §11 |
 | Firmware signing | `panda/board/crypto/sign.py` (TL-15) | `panda/SConscript:117-125` | 2 | Release key handling in [WP-P-10](../07-supporting/WP-P-10-release-management.md) |
 | Dependency resolution | uv + `uv.lock` (TL-16) | `uv.lock`, `opendbc_repo/uv.lock` | 1 | uv itself unpinned |
-| CI | GitHub Actions (TL-18) | `.github/workflows/tests.yaml`, `.github/workflows/safety.yaml` | 1 | `safety.yaml` (since D-03) runs the opendbc safety tests (release and reference-build variants), opendbc and panda MISRA and mutation on `liondriver-dev` and PRs; each job writes a build manifest with the submodule commits, build flags and tool versions on PATH and uploads it as an artifact (`tools/ci/build_manifest.py`, F-18; first CI run pending) (ENV-01) |
+| CI | GitHub Actions (TL-18) | `.github/workflows/tests.yaml`, `.github/workflows/safety.yaml` | 1 | `safety.yaml` (since D-03) runs the opendbc safety tests (release and reference-build variants), opendbc and panda MISRA, mutation (standard and reference variants, `mutation_reference`) and the panda host unit tests (`panda_host_tests`: `hw_watchdog`, `heartbeat_monitor`, `heartbeat_siren`, `reference_lock`, `irq_priorities`, `eps_fault_siren`) on `liondriver-dev` and PRs; each job writes a build manifest with the submodule commits, build flags and tool versions on PATH and uploads it as an artifact (`tools/ci/build_manifest.py`, F-18; first CI run pending) (ENV-01) |
 
 Environment rules:
 
@@ -177,7 +177,7 @@ From `panda/SConscript`:
 
 Rules:
 
-- **CF-01** The qualified option set (TL-01 qualification, WP-P-07 §5) is exactly the reference release configuration: `RELEASE=1 LIONDRIVER_REFERENCE=1`. A build without `LIONDRIVER_REFERENCE` lacks the safety-mode lock, the reduced TX whitelist and the TX rate supervision and is not the verified configuration. `tools/release/build_release.sh` does not set it yet ([RR-2026-008](reviews/RR-2026-008.md) F-33). Changing any flag is an SR-T change ([WP-P-01 §4](../07-supporting/WP-P-01-configuration-management-plan.md#4-safety-relevant-file-list)).
+- **CF-01** The qualified option set (TL-01 qualification, WP-P-07 §5) is exactly the reference release configuration: `RELEASE=1 LIONDRIVER_REFERENCE=1`. A build without `LIONDRIVER_REFERENCE` lacks the safety-mode lock, the reduced TX whitelist and the TX rate supervision and is not the verified configuration. `tools/release/build_release.sh` does not set it yet ([RR-2026-009](reviews/RR-2026-009.md) F-33). Changing any flag is an SR-T change ([WP-P-01 §4](../07-supporting/WP-P-01-configuration-management-plan.md#4-safety-relevant-file-list)).
 - **CF-02** Add `-Wconversion -Wsign-conversion -Wcast-align -Wshadow -Wundef` to the target build after the existing warnings are resolved (OI-8). Not present at baseline.
 - **CF-03** Add `-fstack-usage` and a link map review for ENV-R-14 (OI-7).
 
@@ -333,7 +333,7 @@ LionDriver does not use model-based development for production code. Models appe
 | Use | Notation | Rules |
 |---|---|---|
 | Architecture (system, software) | Block diagrams as Markdown tables plus ASCII or Mermaid diagrams; one viewpoint per diagram | Every block has an element ID from the element catalogue (`assurance/trace/elements.yaml`, WP-P-06 OI-4); every arrow names the interface (IF-xx) |
-| State machines (engagement, safety modes, selfdrived) | YAML records in [`state-machines/`](state-machines/) (state, event, guard, action, next state, build, SWSR, code citation) | The records are normative. The WP-W-05 §5 tables and Mermaid diagrams are generated from them by `assurance/trace/tools/check_state_machines.py` and checked in CI (S1–S4 errors; S5/S6 findings). Implementation status comes from the WP-W-02 Baseline column, not from the record ([RR-2026-008](reviews/RR-2026-008.md) F-16). `selfdrived` is not yet recorded |
+| State machines (engagement, safety modes, selfdrived) | YAML records in [`state-machines/`](state-machines/) (state, event, guard, action, next state, build, SWSR, code citation) | The records are normative. The WP-W-05 §5 tables and Mermaid diagrams are generated from them by `assurance/trace/tools/check_state_machines.py` and checked in CI (S1–S4 errors; S5/S6 findings). Implementation status comes from the WP-W-02 Baseline column, not from the record ([RR-2026-009](reviews/RR-2026-009.md) F-16). `selfdrived` is not yet recorded |
 | Data flow | Table of producer → service/message → consumer with rate and timeout | Rates from `cereal/services.py` |
 | Requirements | YAML per [WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md) | Markdown tables must match YAML (WP-P-06 K11) |
 | Timing | Tables in [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md); units in ms | |

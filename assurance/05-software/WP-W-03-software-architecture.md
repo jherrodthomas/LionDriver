@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-W-03 Software architectural design |
 | Standard reference | ISO 26262-6:2018 §7 (software architectural design: notation, design principles, static and dynamic aspects, ASIL attribution, resource usage); ISO 26262-9:2018 §6 (coexistence, by reference to WP-A-02); ASPICE 4.0 SWE.2 |
-| Version | 0.5 (RR-2026-008 F-11: §2, §3, §5.1–§5.2, §5.5–§5.6, §6, §7 and §8 rewritten from a code reading at `682f184` (opendbc `7993399`, panda `8aa8671`), new modules added to the catalogue, reference-build-only elements marked; F-12: TX-hook revocation (SWSR-518) added to §6.3 and to the §5.4.3 race analysis; F-13: every target-state entry moved to the new §10; F-28: Author field; status note removed; 2026-10-12). 0.4 (alignment pass, [RR-2026-008](reviews/RR-2026-008.md): sections renumbered so §5.4 is only the interrupt-priority scheme, start-up is §5.5 and the safety-mode state machine §5.6; §5.1 priority note updated to panda `52cad44`; status note on stale sections; 2026-10-12). 0.3 (§5.4.4 prerequisites implemented, panda `52cad44`: explicit priority table, atomic safety-config switch and fault word; R-2 recorded as a 10 ms bound; 2026-10-12). 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
+| Version | 0.7 (merge of PR #47 software alignment with the base; 2026-10-13: Figure 3-1 kept with the text version of §3.2 rewritten from the code reading; heartbeat-loss siren (panda `c33343b`) and EPS-fault siren (panda `b790fca`) added to §3.1, §3.2, §5.1 and §5.2; host supervision (TSR-308/602/615/621) noted in §4.2 and §10). It carries PR #47's drafts, numbered 0.4–0.5 there: 0.5 (RR-2026-009 F-11: §2, §3, §5.1–§5.2, §5.5–§5.6, §6, §7 and §8 rewritten from a code reading at `682f184` (opendbc `7993399`, panda `8aa8671`), new modules added to the catalogue, reference-build-only elements marked; F-12: TX-hook revocation (SWSR-518) added to §6.3 and to the §5.4.3 race analysis; F-13: every target-state entry moved to the new §10; F-28: Author field; status note removed; 2026-10-12). 0.4 (alignment pass, [RR-2026-009](reviews/RR-2026-009.md): sections renumbered so §5.4 is only the interrupt-priority scheme, start-up is §5.5 and the safety-mode state machine §5.6; §5.1 priority note updated to panda `52cad44`; status note on stale sections; 2026-10-12). History on the base: 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3.2 block diagram redrawn as Figure 3-1 with unit IDs and SI interface tags; text version kept; 2026-10-13). 0.4 (status update 2026-10-12: §2, §3 and §4.2 aligned with the 100 Hz TIM4 safety task and 0.3 s heartbeat of §5.1; new units in §3.1 (heartbeat monitor, IWDG, IRQ priority table, reference lock, EPS-fault siren in panda `b790fca`, LionDriver PR #45, not merged; TX rate check in `safety_tx_hook`); §5.1 priorities, §5.4 start-up, §5.4 status, §6.2 and §8 ratings updated. Nothing verified on hardware). 0.3 (§5.4.4 prerequisites implemented, panda `52cad44`: explicit priority table, atomic safety-config switch and fault word; R-2 recorded as a 10 ms bound; 2026-10-12). 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Envelope (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host (E-01): QM / QM (B-sup) |
 | Author | Assurance team (AI-assisted draft, Claude) |
 | Reviewer(s) | TBD (I1); I2 for §6 and §8 |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `682f184` (opendbc `7993399`, panda `8aa8671`) |
+| Baseline | `682f184` (opendbc `7993399`, panda `8aa8671`); facts merged from the base at panda `b790fca`/`c33343b` (EPS-fault and heartbeat-loss sirens) name their pin. Current pins: panda `c33343b`, opendbc `273f44e` (not re-read in full). Earlier: `bf6ce8c` (status update 2026-10-12; panda `b790fca`, opendbc `7993399`); `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 ## 1. Purpose and scope
 
@@ -39,7 +39,7 @@ Notation (WP-W-01 §14): component tables, ASCII block diagrams, state-transitio
 
 ### 3.1 Component catalogue
 
-Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PND-USB, U-PND-PWR, U-PND-HK and U-PND-PLAT are new here (OI-1). Pins: panda `8aa8671`, opendbc `7993399`.
+Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PND-USB, U-PND-PWR, U-PND-HK and U-PND-PLAT are new here (OI-1). Pins: panda `8aa8671`, opendbc `7993399`; the two siren rows were added from panda `b790fca` and `c33343b`.
 
 | Element name | Unit | Files | Responsibility at the baseline | Build | ASIL attribution |
 |---|---|---|---|---|---|
@@ -58,8 +58,10 @@ Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PN
 | `panda.safety.ignition` | U-SAF-IGN | `ignition.h` | CAN ignition detection | both | B (feeds heartbeat timeout choice, TSR-510) |
 | `panda.safety.other_modes` | — | `modes/*.h` other brands, included at `safety.h:10-33`, registered at `:468-498` | Linked in both builds. Standard build: selectable via `0xdc`. Reference build: not selectable by the host (`reference_lock.h:22-29`), so dead code (OI-2) | both | Interference source (standard build); dead code to be removed or justified (reference build, OI-2) |
 | `panda.main` | U-PND-MAIN | `board/main.c` | Start-up (`main` `:292-383`), `set_safety_mode` (`:38-93`, both `set_safety_hooks` calls in `ENTER_CRITICAL` `:43-45, 49-51`), 8 Hz tick (`tick_handler` `:147-290`: harness, software watchdog kick, siren; 1 Hz: heartbeat counter, `heartbeat_engaged` mismatch, SILENT after 5 s/2 s heartbeat loss, `check_registers`), main loop (`:386-420`) | both | B‡ |
-| `panda.main.safety_task` | U-PND-MAIN | `board/main.c:130-144`; timer `board/drivers/timers.h:30-38`; `board/stm32h7/stm32h7_config.h:39-41` | TIM4 safety task at `SAFETY_TASK_FREQ` = 100 Hz: `safety_tick` (`:133`), heartbeat monitor with revocation in car modes (`:135-137`), IWDG feed (`:138`). Rate supervision at 110 calls/s (`main.c:352`) (SWSR-401a partial) | both | B‡ |
+| `panda.main.safety_task` | U-PND-MAIN | `board/main.c:130-144`; timer `board/drivers/timers.h:30-38`; `board/stm32h7/stm32h7_config.h:39-41` | TIM4 safety task at `SAFETY_TASK_FREQ` = 100 Hz: `safety_tick` (`:133`), heartbeat monitor with revocation in car modes (`:135-137`), IWDG feed (`:138`). Rate supervision at 110 calls/s (`main.c:352`) (SWSR-401a partial). Since panda `b790fca` / `c33343b` it also runs the EPS-fault siren and the heartbeat-loss siren (rows below) | both | B‡ |
 | `panda.drivers.heartbeat_monitor` | U-PND-MAIN | `board/drivers/heartbeat_monitor.h` | `heartbeat_age_ticks` reset on `0xf3` (`:20-22`, called from `main_comms.h:301`); incremented in the safety task, returns true at ≥ 30 ticks = 0.3 s (`:15, 25-30`) (SWSR-407) | both | B‡ |
+| `panda.drivers.heartbeat_siren` | U-PND-HK | `board/drivers/heartbeat_siren.h` (panda `c33343b`) | When the heartbeat monitor revokes authority in a car mode while `controls_allowed` was set, the safety task requests the siren at once and holds it 3 s (`HEARTBEAT_SIREN_HOLD_TICKS` 300); reset on every mode change. Audible ≈ 0.56 s after the last heartbeat worst case (odd 8 Hz ticks) (SWSR-516 (a)) | both | B |
+| `panda.drivers.eps_fault_siren` | U-PND-HK | `board/drivers/eps_fault_siren.h` (panda `b790fca`) | Once `safety_eps_fault` has been set for 1 s while `controls_allowed`, siren for at least 3 s, re-triggered while the fault persists; reset on every mode change. Worst case ≈ 1.26 s after the fault onset (SWSR-516 (b), EPS fault). Compiled in every build; only the reference build sets `safety_eps_fault` | both | B |
 | `panda.drivers.hw_watchdog` | U-PND-FLT | `board/drivers/hw_watchdog.h` | IWDG1, prescaler /4, RLR 719, window 679 (`:35-37`); started on the first relay drive by `set_intercept_relay` (`drivers/harness.h:16-21`), not at boot (`:45-58`); fed from the safety task only if the main loop has run since the last feed (`:61-76`); first tick after start skipped. A watchdog reset is reported as `HEALTH_FLAG_WATCHDOG_RESET` (`main.c:377-380`) (SWSR-501) | both | B‡ |
 | `panda.drivers.irq_priorities` | U-PND-PLAT | `board/drivers/irq_priorities.h` | `interrupt_priorities_init` (`:21-46`, called at `main.c:300` before any `NVIC_EnableIRQ`) sets an explicit priority for every enabled IRQ; five classes, all at level 8 (`:15-19`) (SWSR-519 partial) | both | B‡ |
 | `panda.reference_lock` | U-PND-COMMS | `board/reference_lock.h:13-63`, called at `board/main_comms.h:74-79` | `reference_request_allowed`: `0xdc` limited to SILENT, NOOUTPUT, ELM327 and TOYOTA param 73, and from TOYOTA only to NOOUTPUT/SILENT (`:22-29`); `0xdf` always refused (`:30-32`); `0xd1` softloader refused in car modes (`:33-36`); `0xc5, 0xd8, 0xdb, 0xde, 0xe5–0xe8, 0xf1, 0xf9, 0xfc` refused in car modes (`:37-49`); refused requests counted in `reference_requests_rejected` (health) | **[ref]** | B‡ |
@@ -79,6 +81,12 @@ Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PN
 ### 3.2 Block diagram
 
 Pins: panda `8aa8671`, opendbc `7993399`. **[ref]** = reference build only. All interrupts at NVIC level 8 (§5.1).
+
+![Figure 3-1: software architecture of the panda firmware, with the QM host stack (host.pandad) and the safety envelope units U-PND-SPI, U-PND-COMMS, U-PND-MAIN, U-PND-HARN, U-PND-FDCAN, U-SAF-CORE, U-SAF-TOY, U-SAF-LAT and U-SAF-LONG, interfaces SI-01 to SI-10 and the execution contexts](figures/fig-w03-3-2-panda-software-architecture.svg)
+
+*Figure 3-1.* The QM host stack (left) reaches the panda envelope (B‡) through SPI4 (USB, not used by the reference device, is not drawn). Inside the panda, boxes are the units of §3.1 with their functions as chips; U-PND-FDCAN spans the TX and RX chips (dashed region). Orange lines are the command and actuation path, teal lines CAN reception, forwarding and data back to the SoC, grey lines control requests and internal calls; each tag is an interface ID of §3.3. The bridge on the TX line marks a crossing without a connection. Source: [`figures/fig-w03-3-2-panda-software-architecture.svg`](figures/fig-w03-3-2-panda-software-architecture.svg); change it together with §3.1, §3.3 and §5.1. The text version below is the more detailed one (pins as stated); the figure does not show the **[ref]** marks.
+
+<details><summary>Text version of Figure 3-1</summary>
 
 ```
           SoC (pandad)                       panda STM32H7 (one address space, no MPU)
@@ -104,6 +112,7 @@ Pins: panda `8aa8671`, opendbc `7993399`. **[ref]** = reference build only. All 
                                   │            can_push(rx_q) ─▶ comms_can_read ─▶ SPI to SoC        │
                                   │  TIM4 safety task 100 Hz: safety_tick (RX timeout), heartbeat    │
                                   │     monitor (0.3 s → revoke), hw_watchdog_tick (IWDG1 feed)      │
+                                  │     EPS-fault siren (b790fca), heartbeat-loss siren (c33343b)    │
                                   │  TIM12 tick 8 Hz: harness, simple_watchdog_kick, siren           │
                                   │     └ 1 Hz: heartbeat counter → SILENT, engaged mismatch,        │
                                   │             check_registers                                       │
@@ -111,6 +120,8 @@ Pins: panda `8aa8671`, opendbc `7993399`. **[ref]** = reference build only. All 
                                   │  main loop: hw_watchdog_main_loop_alive, LED fade / WFI          │
                                   └──────────────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ### 3.3 Interfaces between components
 
@@ -167,7 +178,7 @@ Rates from `cereal/services.py` (`682f184`, `openpilot/cereal/services.py:33-73`
 | controlsd → `carControl` → card | 100 Hz | actuator request | card sends only if alive (`selfdrive/car/card.py:234-238`) |
 | card → `sendcan` → pandad → SPI → panda | 100 Hz | CAN frames | pandad drops > 1 s (`selfdrive/pandad/pandad.cc:78-79`); panda: **[ref]** TX rate budget per ID, no freshness check |
 | pandad → `0xf3` heartbeat → panda | 10 Hz (host rate not confirmed) | engaged flag | panda: authority revoked after 0.3 s without heartbeat in a car mode (safety task, `heartbeat_monitor.h:15`); SILENT after 5 s (ignition on) / 2 s (off) (1 Hz tick, `main.c:116-117, 235-270`) |
-| panda → health → pandad → `pandaStates` → selfdrived | 10 Hz | authority, faults | mismatch 2 s |
+| panda → health → pandad → `pandaStates` → selfdrived | 10 Hz | authority, faults | mismatch 2 s at `682f184`; on the base (host supervision change, 2026-10-13): `controlsMismatch` after 2 consecutive samples, ≤ 0.5 s (SWSR-621); heartbeat-lost, TX-rate and rising `safetyTxBlocked` flags disable at once (SWSR-615, partly) |
 
 ## 5. Dynamic behaviour
 
@@ -182,7 +193,7 @@ Pin: panda `8aa8671` (opendbc `7993399` for the hooks). All envelope processing 
 | DMA2 Stream2 (SPI RX done) | end of MOSI DMA | 8 (`IRQ_PRIO_HOST`) | `spi_rx_done` (`drivers/spi.h:106`) via `stm32h7/llspi.h:56-61` | via `comms_control_handler` (`spi.h:143`): **[ref]** `reference_request_allowed`, `set_safety_mode` → `set_safety_hooks`, heartbeat; via `comms_can_write` (`spi.h:162`) → `can_send` (`can_comms.h:97, 118`) → `safety_tx_hook` (`can_common.h:162`), incl. **[ref]** `tx_rate_check` revocation |
 | DMA2 Stream3, SPI4 | MISO done | 8 (`IRQ_PRIO_HOST`) | `DMA2_Stream3_IRQ_Handler`, `spi_tx_done` (`llspi.h:64-83`) | none |
 | USB OTG_HS | USB transfer | 8 (`IRQ_PRIO_HOST`) | `drivers/usb.h` | same comms handlers (`usb.h:616` → `comms_can_write`) |
-| TIM4 safety task | 100 Hz (`drivers/timers.h:30-38`, `SAFETY_TASK_FREQ` `stm32h7_config.h:41`) | 8 (`IRQ_PRIO_SAFETY_TASK`) | `safety_task_handler` (`main.c:130-144`) | `safety_tick` (RX timeout and validity), heartbeat monitor (revokes after 0.3 s in a car mode), `hw_watchdog_tick` (IWDG feed) |
+| TIM4 safety task | 100 Hz (`drivers/timers.h:30-38`, `SAFETY_TASK_FREQ` `stm32h7_config.h:41`) | 8 (`IRQ_PRIO_SAFETY_TASK`) | `safety_task_handler` (`main.c:130-144`) | `safety_tick` (RX timeout and validity), heartbeat monitor (revokes after 0.3 s in a car mode), EPS-fault siren (`drivers/eps_fault_siren.h`, panda `b790fca`), heartbeat-loss siren (`drivers/heartbeat_siren.h`, panda `c33343b`), `hw_watchdog_tick` (IWDG feed) |
 | TIM12 tick | 8 Hz (`drivers/timers.h:40-43`) | 8 (`IRQ_PRIO_HOUSEKEEPING`) | `tick_handler` (`main.c:147-290`) | 8 Hz: harness, software watchdog kick, siren, `set_safety_mode` on harness change (`:176-184`); 1 Hz: heartbeat counter and SILENT after 5 s/2 s, `heartbeat_engaged` mismatch revocation (`:226-233`), `check_registers` |
 | TIM6 | interrupt-rate timer (`drivers/timers.h:20-28`) | 8 (`IRQ_PRIO_HOUSEKEEPING`) | `interrupt_timer_handler` (`drivers/interrupts.h:50`) | rate statistics |
 | Thread mode | main loop | lowest | `main.c:386-420` | none (writes only `hw_watchdog_main_loop_ran`) |
@@ -196,12 +207,12 @@ Pin: panda `8aa8671`. At `8b8c6ae` (panda `92eb565`) RX timeouts were evaluated 
 
 | Period | Context | Activity | Lines |
 |---|---|---|---|
-| 10 ms | TIM4 safety task | `safety_tick` (RX timeout: Toyota 5 nominal periods, `modes/toyota.h:83`; validity; minimum frequency), heartbeat monitor (authority revoked after 0.3 s in a car mode), IWDG feed if the main loop has run | `main.c:130-144` |
+| 10 ms | TIM4 safety task | `safety_tick` (RX timeout: Toyota 5 nominal periods, `modes/toyota.h:83`; validity; minimum frequency), heartbeat monitor (authority revoked after 0.3 s in a car mode), EPS-fault siren (1 s persistence, 3 s hold; panda `b790fca`), heartbeat-loss siren (3 s hold from that revocation if authority was granted; panda `c33343b`), IWDG feed if the main loop has run | `main.c:130-144` (at `8aa8671`) |
 | 125 ms | TIM12 tick | siren toggle, `fan_tick`, `harness_tick`, `simple_watchdog_kick`, `sound_tick`, relay-fault reporting, harness re-init and `set_safety_mode` on harness change | `main.c:154-184` |
 | 1 s | TIM12 tick (every 8th) | LEDs, ignition, `bootkick_tick`, heartbeat counter, `heartbeat_engaged` mismatch (3 ticks) → revoke, heartbeat loss → SILENT (5 s ign on / 2 s off), siren countdown, `check_registers`, CAN ignition timeout, counters | `main.c:187-284` |
 | main loop | thread mode | `hw_watchdog_main_loop_alive` on every iteration and every LED fade step | `main.c:121-126, 386-409` |
 
-The safety task does not yet run command freshness (TSR-408), SPI error rate, relay readback or the platform monitors; these are target-state items (§10, ATC-01).
+At `8aa8671` the safety task does not yet run command freshness (TSR-408; implemented in the reference build at opendbc `273f44e`, WP-W-02 SWSR-408), SPI error rate, relay readback or the platform monitors; these are target-state items (§10, ATC-01).
 
 ### 5.3 Message flow per control frame (lateral, 10 ms)
 
@@ -428,7 +439,7 @@ Changes that the SWSRs or the analyses of this document still require. None is a
 
 | ID | Item | Required change | SWSR | Change request / GAP | Status at the baseline |
 |---|---|---|---|---|---|
-| ATC-01 | Safety-task contents | Run command freshness (TSR-408), SPI error rate, relay readback, platform monitors and the periodic checks of SWSR-307, 403, 404, 405, 408, 413, 506 in the safety task; keep only housekeeping in the 8 Hz/1 Hz tick | 401a | GAP-50 | Partial: task runs `safety_tick`, heartbeat monitor and IWDG feed only (`main.c:130-144`) |
+| ATC-01 | Safety-task contents | Run command freshness (TSR-408), SPI error rate, relay readback, platform monitors and the periodic checks of SWSR-307, 403, 404, 405, 408, 413, 506 in the safety task; keep only housekeeping in the 8 Hz/1 Hz tick | 401a | GAP-50 | Partial: task runs `safety_tick`, heartbeat monitor and IWDG feed only (`main.c:130-144`, panda `8aa8671`); the EPS-fault and heartbeat-loss sirens were added later (panda `b790fca`, `c33343b`), and TSR-408 arrival supervision (`tx_arrival_checks`) is implemented in the reference build at opendbc `273f44e` (WP-W-02 SWSR-408; where it runs not re-read here) |
 | ATC-02 | IWDG start | Start IWDG1 in window mode in the bootstub before the jump to the application | 501b | GAP-07, GAP-43 | Not impl: started on first relay drive (`harness.h:16-21`) |
 | ATC-03 | Start-up tests | Start-up tests between steps 4 and 8 of §5.5 | 515 | — | Not impl (none in `main.c:292-383`) |
 | ATC-04 | Priority scheme | Adopt §5.4.2 levels after the §5.4.5 measurements, or justify equal priority by measurement (§5.4.6) | 519, 401a | GAP-50, OI-4 | Proposed; all classes at level 8 (`irq_priorities.h:15-19`) |
@@ -442,13 +453,13 @@ Changes that the SWSRs or the analyses of this document still require. None is a
 | ATC-12 | Request classification | Split control requests into safety-relevant and QM groups | 513 | GAP-49 | Partial: **[ref]** car-mode refusal list (`reference_lock.h:37-49`) |
 | ATC-13 | Queue overflow | Queue overflow → fault reaction | 707 | — | Not impl: overflow counted only (`can_common.h:165`) |
 | ATC-14 | Heartbeat content | Heartbeat carries a control-loop counter; frozen counter treated as missing | 409 | — | Not impl: `0xf3` carries only `engaged` (`main_comms.h:298-305`) |
-| ATC-15 | Host freshness | `modelV2` ≤ 100 ms (SWSR-602), `longitudinalPlan` ≤ 100 ms, `carState` ≤ 20 ms, `sendcan` ≤ 20 ms (SWSR-414h), `pandaStates` 0.3 s (SWSR-307h) | 602, 414h, 307h | — | Not impl (§4.2 values) |
+| ATC-15 | Host freshness | `modelV2` ≤ 100 ms (SWSR-602), `longitudinalPlan` ≤ 100 ms, `carState` ≤ 20 ms, `sendcan` ≤ 20 ms (SWSR-414h), `pandaStates` 0.3 s (SWSR-307h) | 602, 414h, 307h | — | Partly on the base (host supervision change, 2026-10-13): `controlsd` input freshness at 10 nominal periods, not 2 (SWSR-602); `controlsMismatch` ≤ 0.5 s (SWSR-621). Others not impl (§4.2 values) |
 | ATC-16 | EPS fault revocation | Revoke `controls_allowed` (not only refuse frames) on an EPS fault code | 110 | — | Partial: **[ref]** frames refused (`modes/toyota.h:428-430`), authority not cleared |
 | ATC-17 | Complexity | Complexity metric (WP-W-01 OI-5); split `tick_handler` and `comms_control_handler` | — | — | Not started |
 | ATC-18 | TX after revocation | Optional under §5.4.2: re-check `controls_allowed` with interrupts masked just before the FDCAN TX load (R-5) | 406 | — | Not decided |
-| ATC-19 | Reference release build | Build the release firmware as `RELEASE=1 LIONDRIVER_REFERENCE=1` through an explicit reference-release variant of `tools/release/build_release.sh` (the upstream variant stays available); add a CI job that builds the reference firmware; mark the build in the version string so the host can tell which firmware is installed | 512, 513, 518, 705 | RR-2026-008 F-33 | Not impl: the script builds `RELEASE=1` only (`tools/release/build_release.sh:56`) |
-| ATC-20 | Re-engagement after TX-rate revocation | Do not grant authority on a PCM rising edge while `safety_tx_rate_exceeded` is set; clear the flag only after one full 250 ms window within budget | 518 (amendment proposed, WP-W-02 OI-11) | RR-2026-008 F-34 | Not impl: `rx_checks_allow_engagement()` ignores the flag (opendbc `safety.h:390-401`) |
-| ATC-21 | Refused host request while engaged | In the reference build, a refused request while authority is granted also clears `controls_allowed` and is reported (CSR-012 intent: suspected compromised host → no actuation) | 512, 513 (CSR-012) | RR-2026-008 F-36 | Not impl: the request is mapped to `0x00` and ignored (panda `main_comms.h:74-78`) |
-| ATC-22 | Request allow-list in car modes | Replace the deny-list of `reference_request_allowed()` with an allow-list of the requests the reference host needs in a car mode | 513 (CSR-014, SC-C-05) | RR-2026-008 F-37 | Not impl: deny-list; `0xb0`, `0xb1`, `0xc0`, `0xf6` pass (panda `board/reference_lock.h:50-51`) |
-| ATC-23 | Alternative experience from the host | `pandad` does not send `0xdf` when the reference build is installed (or the lock accepts `0xdf` with the reference value without counting it), so `requests_rejected_pkt` counts only real refusals | 512a | RR-2026-008 F-39 | Not impl: `openpilot/selfdrive/pandad/panda_safety.cc:67` sends it on every mode set |
-| ATC-24 | Safety-task rate fault code | Give the 100 Hz safety-task rate fault its own fault code | 401a, 502 | RR-2026-008 F-40 | Not impl: shares `FAULT_INTERRUPT_RATE_TICK` with the 8 Hz tick (panda `main.c:348, 352`) |
+| ATC-19 | Reference release build | Build the release firmware as `RELEASE=1 LIONDRIVER_REFERENCE=1` through an explicit reference-release variant of `tools/release/build_release.sh` (the upstream variant stays available); add a CI job that builds the reference firmware; mark the build in the version string so the host can tell which firmware is installed | 512, 513, 518, 705 | RR-2026-009 F-33 | Not impl: the script builds `RELEASE=1` only (`tools/release/build_release.sh:56`) |
+| ATC-20 | Re-engagement after TX-rate revocation | Do not grant authority on a PCM rising edge while `safety_tx_rate_exceeded` is set; clear the flag only after one full 250 ms window within budget | 518 (amendment proposed, WP-W-02 OI-11) | RR-2026-009 F-34 | Not impl: `rx_checks_allow_engagement()` ignores the flag (opendbc `safety.h:390-401`) |
+| ATC-21 | Refused host request while engaged | In the reference build, a refused request while authority is granted also clears `controls_allowed` and is reported (CSR-012 intent: suspected compromised host → no actuation) | 512, 513 (CSR-012) | RR-2026-009 F-36 | Not impl: the request is mapped to `0x00` and ignored (panda `main_comms.h:74-78`) |
+| ATC-22 | Request allow-list in car modes | Replace the deny-list of `reference_request_allowed()` with an allow-list of the requests the reference host needs in a car mode | 513 (CSR-014, SC-C-05) | RR-2026-009 F-37 | Not impl: deny-list; `0xb0`, `0xb1`, `0xc0`, `0xf6` pass (panda `board/reference_lock.h:50-51`) |
+| ATC-23 | Alternative experience from the host | `pandad` does not send `0xdf` when the reference build is installed (or the lock accepts `0xdf` with the reference value without counting it), so `requests_rejected_pkt` counts only real refusals | 512a | RR-2026-009 F-39 | Not impl: `openpilot/selfdrive/pandad/panda_safety.cc:67` sends it on every mode set |
+| ATC-24 | Safety-task rate fault code | Give the 100 Hz safety-task rate fault its own fault code | 401a, 502 | RR-2026-009 F-40 | Not impl: shares `FAULT_INTERRUPT_RATE_TICK` with the 8 Hz tick (panda `main.c:348, 352`) |

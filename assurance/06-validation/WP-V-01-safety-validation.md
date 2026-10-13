@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-V-01 Safety validation plan, specification and report |
 | Standard reference | ISO 26262-4:2018 §8 (safety validation); ISO 26262-3:2018 §6 (controllability basis), §7 (external measures, AoU); ASPICE 4.0 VAL.1. Informative: RESPONSE 3 Code of Practice for ADAS controllability assessment; ISO 11270, ISO 15622 |
-| Version | 0.1 |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (plan and specification). Report section is a template: **Not yet executed** |
 | ASIL / scope | Up to ASIL C (SG-01), D if AOU-01/02 fail ([WP-C-03](../02-concept/WP-C-03-hara.md)) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); validation report reviewed as part of the functional safety assessment (I3) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`) |
 
 ## 1. Purpose and scope
 
@@ -31,7 +31,7 @@ Out of scope: SOTIF validation of functional insufficiencies ([WP-V-02](WP-V-02-
 
 | Item | Configuration |
 |---|---|
-| Vehicle | Reference 2020 Corolla LE (VIN and ECU firmware per [WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-1); [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) INS-01…INS-30 passed |
+| Vehicle | Reference Toyota Corolla, 12th generation (E210), TSS 2.0 (VIN and ECU firmware per [WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-1); [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) INS-01…INS-30 passed |
 | Item | Released LionDriver tag (or release candidate) with pinned models and panda firmware; parameters per INS-19 |
 | Test builds | Fault-injection and characterization builds (§5.1 VS-VAL-02, -05; §5.3) are separately identified builds with their own tag, used **only** on the closed course and removed afterwards; their use is logged in the drive sheet ([WP-V-07](WP-V-07-vehicle-test-operations.md) §7.4) |
 | Equipment | Steering-wheel torque/angle sensor (instrumented wheel or clamp-on), rim force gauge, accelerometer/IMU independent of the device, GNSS/RTK or video lane-position measurement, CAN logger independent of the panda (second interface on the vehicle CAN), cabin sound level meter, soft target (radar-reflective) with propulsion or trolley, passenger-side abort switch (WP-V-07 §6.3) |
@@ -98,12 +98,12 @@ Vehicle-level repetition of selected [WP-V-05](WP-V-05-fault-injection.md) cases
 
 | ID | Mechanism | Injection | Pass criterion |
 |---|---|---|---|
-| VS-VAL-20 | Heartbeat supervision | Stop `pandad` / SPI heartbeat while engaged at 50 km/h | Actuation removed; time measured against the FTTI (current 3–5 s timers `panda/board/main.c:182-193` are expected to fail SG-01 FTTI, GAP-06) |
-| VS-VAL-21 | RX checks | Disconnect / block wheel-speed or PCM message on the harness (breakout box) | `controls_allowed` cleared; release time recorded (current ≤ ≈ 2 s, GAP-06) |
+| VS-VAL-20 | Heartbeat supervision | Stop `pandad` / SPI heartbeat while engaged at 50 km/h | Actuation removed; time measured against the FTTI. Since 2026-10-12 authority is revoked after 0.3 s without heartbeat in all builds (`panda/board/drivers/heartbeat_monitor.h`, not verified on hardware); the SILENT timers (3–5 s) are unchanged and SILENT timing is still expected to fail (GAP-06). Since 2026-10-13 the siren sounds at the revocation, ≈ 0.56 s after the last heartbeat, in all builds (panda `c33343b`; WP-S-04 T-07a; not verified on hardware) |
+| VS-VAL-21 | RX checks | Disconnect / block wheel-speed or PCM message on the harness (breakout box) | `controls_allowed` cleared; release time recorded (since 2026-10-12: after 5 nominal periods, ≤ 0.16 s, opendbc `7993399`; not verified on hardware) |
 | VS-VAL-22 | Torque and accel limits | Test build on SoC requests torque > 1500 raw and rates above limits; accel outside −3.5…+2.0 | Panda blocks over-limit frames (no actuation above limits on the independent CAN logger) |
 | VS-VAL-23 | Engagement gating | SoC commands torque while not engaged | No torque frame on the car side |
 | VS-VAL-24 | Relay malfunction | Inject camera-side LKA message on the car side (breakout box) | `relayMalfunction` detected, immediate disable |
-| VS-VAL-25 | Safety-mode integrity | Send `0xdc` with a different mode while onroad | Detected (`controlsMismatch`), immediate disable; after GAP-09 closure: rejected by firmware |
+| VS-VAL-25 | Safety-mode integrity | Send `0xdc` with a different mode while onroad | Reference build (`LIONDRIVER_REFERENCE=1`): rejected by the firmware (TSR-512, `panda/board/reference_lock.h`; not verified on hardware). Default build: detected (`controlsMismatch`), immediate disable |
 | VS-VAL-26 | Host fault reactions | Kill `modeld`, `controlsd`; CPU overload | Alert and disengagement within SG-02 budget; GAP-16 3 s soft-disable behaviour measured |
 
 ### 5.4 Validation of external measures

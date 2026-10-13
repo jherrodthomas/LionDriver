@@ -1,0 +1,348 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1000" viewBox="0 0 1280 1000" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 4-4. Heartbeat and timeout chain (WP-S-03 §4.4)</title>
+<desc id="d">Top: the command path controlsd (100 Hz) to card (100 Hz) to the pandad send thread to the MCU safety_tx_hook to EPS/PCM, with its freshness gates: card sends only while carControl is alive (0.1 s), pandad drops sendcan older than 1 s (required 20 ms, TSR-614), and the MCU has no command-freshness check (required 50 ms, TSR-408). The heartbeat path runs from selfdrived (100 Hz) through pandad main (10 Hz, 0xf3 with engaged = alive and valid and enabled) to the MCU heartbeat counter on the 1 Hz tick. Bottom: timing on a common axis from -0.5 s to 6 s. Scenario 1, heartbeat lost at t = 0: at the baseline the 1 Hz counter reaches 5 ticks and the MCU goes SILENT after 4 to 5 s; the reference build revokes authority at 0.3 s (at most 0.31 s), meeting TSR-407, and since panda c33343b (2026-10-13, all builds) sounds the siren at that revocation when authority was granted, about 0.56 s after the last heartbeat (WP-S-04 T-07a), while SILENT still comes after 4 to 5 s against a required 2 s. Scenario 2, engaged mismatch from t = 0: three 1 Hz ticks give a revoke after 2 to 3 s against the required 0.3 s of TSR-307.</desc>
+<defs>
+<marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+<marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+<marker id="bk" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F172A"/></marker>
+<pattern id="unc" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2.5"/></pattern>
+<style>
+.t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+.box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+.ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+.ml{font-size:10.5px;font-weight:600}
+.h{paint-order:stroke;stroke:#FFFFFF;stroke-width:4px;stroke-linejoin:round}
+.ref{font-size:9.5px;fill:#475569;font-family:'JetBrains Mono',Consolas,Menlo,monospace}
+.tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+</style>
+</defs>
+<rect width="1280" height="1000" fill="#FFFFFF"/>
+<text x="40" y="44" class="t b" font-size="20">Figure 4-4 · Heartbeat and timeout chain</text>
+<text x="40" y="66" class="m" font-size="12.5">Command and heartbeat paths with their freshness limits (top) · heartbeat-loss and engaged-mismatch timing on one time axis (bottom)</text>
+<text x="1240" y="44" class="m s" text-anchor="end">WP-S-03 §4.4</text>
+<text x="1240" y="62" class="m s" text-anchor="end">budgets: WP-S-04 §4–§5 (T-05, T-06, T-10, T-11, T-13)</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+<text x="40" y="106" class="t b" font-size="13">A · Paths and freshness gates</text>
+<text x="250" y="106" class="m s">baseline 8b8c6ae; red = required change (§4.4, WP-S-04 §5)</text>
+<text x="40" y="126" class="m" font-size="9.5" font-weight="700" letter-spacing=".06em">COMMAND PATH</text>
+<rect x="40" y="134" width="160" height="40" rx="8" class="box"/>
+<text x="120.0" y="151" class="t sb" font-size="12" text-anchor="middle">controlsd</text>
+<text x="120.0" y="165" class="m xs" text-anchor="middle">100 Hz</text>
+<rect x="300" y="134" width="160" height="40" rx="8" class="box"/>
+<text x="380.0" y="151" class="t sb" font-size="12" text-anchor="middle">card</text>
+<text x="380.0" y="165" class="m xs" text-anchor="middle">100 Hz</text>
+<rect x="560" y="134" width="160" height="40" rx="8" class="box"/>
+<text x="640.0" y="151" class="t sb" font-size="12" text-anchor="middle">pandad send thread</text>
+<text x="640.0" y="165" class="m xs" text-anchor="middle">sendcan → SPI</text>
+<rect x="820" y="134" width="160" height="40" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<text x="900.0" y="151" class="t sb" font-size="12" text-anchor="middle">MCU safety_tx_hook</text>
+<text x="900.0" y="165" class="m xs" text-anchor="middle">E-03a · B‡</text>
+<rect x="1080" y="134" width="160" height="40" rx="8" class="ext"/>
+<text x="1160.0" y="151" class="t sb" font-size="12" text-anchor="middle">EPS / PCM</text>
+<text x="1160.0" y="165" class="m xs" text-anchor="middle">outside the item</text>
+<path d="M200 154 H298" fill="none" stroke="#475569" stroke-width="1.6" marker-end="url(#aG)"/>
+<text x="250.0" y="148" class="ml h" fill="#475569" text-anchor="middle">carControl</text>
+<path d="M460 154 H558" fill="none" stroke="#475569" stroke-width="1.6" marker-end="url(#aG)"/>
+<text x="510.0" y="148" class="ml h" fill="#475569" text-anchor="middle">sendcan</text>
+<path d="M720 154 H818" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+<text x="770.0" y="148" class="ml h" fill="#C2410C" text-anchor="middle">SPI</text>
+<text x="770.0" y="168" class="ml h" fill="#C2410C" text-anchor="middle">IF-04</text>
+<path d="M980 154 H1078" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+<text x="1030.0" y="148" class="ml h" fill="#C2410C" text-anchor="middle">CAN</text>
+<text x="1030.0" y="168" class="ml h" fill="#C2410C" text-anchor="middle">IF-01</text>
+<line x1="380.0" y1="174" x2="380.0" y2="184" stroke="#CBD5E1" stroke-dasharray="2 2"/>
+<line x1="640.0" y1="174" x2="640.0" y2="184" stroke="#CBD5E1" stroke-dasharray="2 2"/>
+<line x1="900.0" y1="174" x2="900.0" y2="184" stroke="#CBD5E1" stroke-dasharray="2 2"/>
+<rect x="300" y="184" width="160" height="58" rx="7" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="310" y="200" class="t" font-size="10">sends only if carControl alive</text>
+<text x="310" y="213.5" class="t" font-size="10">alive limit 0.1 s</text>
+<text x="310" y="227.0" class="ref">card.py:234</text>
+<rect x="560" y="184" width="160" height="58" rx="7" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="570" y="200" class="t" font-size="10">drops sendcan older than 1 s</text>
+<text x="570" y="213.5" class="ref">pandad.cc:79</text>
+<text x="570" y="227.0" font-size="10" font-weight="700" fill="#D2553F">required ≤ 20 ms · TSR-614</text>
+<rect x="820" y="184" width="160" height="58" rx="7" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="830" y="200" class="t" font-size="10">no command-freshness check</text>
+<text x="830" y="213.5" class="t" font-size="10">today</text>
+<text x="830" y="227.0" font-size="10" font-weight="700" fill="#D2553F">required ≤ 50 ms · TSR-408</text>
+<text x="40" y="200" class="m xs">"alive" = 10 × the service period</text>
+<text x="40" y="214" class="m xs">(§9): 0.1 s for 100 Hz services</text>
+<text x="40" y="266" class="m" font-size="9.5" font-weight="700" letter-spacing=".06em">HEARTBEAT PATH</text>
+<rect x="40" y="274" width="160" height="40" rx="8" class="box"/>
+<text x="120.0" y="291" class="t sb" font-size="12" text-anchor="middle">selfdrived</text>
+<text x="120.0" y="305" class="m xs" text-anchor="middle">100 Hz</text>
+<rect x="560" y="274" width="160" height="40" rx="8" class="box"/>
+<text x="640.0" y="291" class="t sb" font-size="12" text-anchor="middle">pandad main</text>
+<text x="640.0" y="305" class="m xs" text-anchor="middle">10 Hz</text>
+<rect x="820" y="274" width="160" height="40" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+<text x="900.0" y="291" class="t sb" font-size="12" text-anchor="middle">MCU heartbeat_counter</text>
+<text x="900.0" y="305" class="m xs" text-anchor="middle">1 Hz tick · E-03b</text>
+<path d="M200 294 H558" fill="none" stroke="#475569" stroke-width="1.6" marker-end="url(#aG)"/>
+<text x="380.0" y="288" class="ml h" fill="#475569" text-anchor="middle">selfdriveState</text>
+<path d="M720 294 H818" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+<text x="770.0" y="288" class="ml h" fill="#C2410C" text-anchor="middle">0xf3 engaged</text>
+<text x="770.0" y="308" class="ml h" fill="#C2410C" text-anchor="middle">IF-04</text>
+<line x1="640.0" y1="314" x2="640.0" y2="324" stroke="#CBD5E1" stroke-dasharray="2 2"/>
+<line x1="900.0" y1="314" x2="900.0" y2="324" stroke="#CBD5E1" stroke-dasharray="2 2"/>
+<rect x="560" y="324" width="160" height="58" rx="7" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="570" y="340" class="t" font-size="10">engaged = alive &amp;&amp; valid</text>
+<text x="570" y="353.5" class="t" font-size="10">&amp;&amp; enabled</text>
+<text x="570" y="367.0" class="ref">pandad.cc:389</text>
+<rect x="820" y="324" width="160" height="70" rx="7" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="830" y="340" class="t" font-size="10">mismatch 3 ticks → revoke</text>
+<text x="830" y="353.5" class="ref">main.c:182-186</text>
+<text x="830" y="367.0" class="t" font-size="10">5 ticks w/o 0xf3 → SILENT</text>
+<text x="830" y="380.5" class="ref">main.c:193</text>
+<rect x="1080" y="274" width="160" height="147" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="1090" y="291" font-size="10.5" font-weight="700" fill="#D2553F">Required (WP-S-04 §5)</text>
+<text x="1090" y="304" class="t" font-size="10">evaluate ≥ 10 Hz, revoke</text>
+<text x="1090" y="317" class="t" font-size="10">at 0.3 s, control-loop</text>
+<text x="1090" y="330" class="t" font-size="10">evidence</text>
+<text x="1090" y="343" font-size="10" font-weight="700" fill="#D2553F">TSR-407, TSR-409</text>
+<text x="1090" y="360" font-size="10.5" font-weight="700" fill="#2E9E6A">Ref. build 2026-10-12</text>
+<text x="1090" y="373" class="t" font-size="10">100 Hz safety task revokes</text>
+<text x="1090" y="386" class="t" font-size="10">0.3 s after the last 0xf3</text>
+<text x="1090" y="399" class="ref">heartbeat_monitor.h</text>
+<text x="1090" y="412" class="t" font-size="10">1 Hz paths unchanged</text>
+<line x1="40" y1="441" x2="1240" y2="441" stroke="#E2E8F0"/>
+<text x="40" y="465" class="t b" font-size="13">B · Timing on one axis</text>
+<text x="210" y="465" class="m s">t = 0 is the fault in each scenario · the phase of the 1 Hz tick is arbitrary; ticks drawn at t = 0.6 s + n · 1 s as an example</text>
+<line x1="381.8" y1="513" x2="381.8" y2="715" stroke="#0F172A" stroke-width="1.4"/>
+<line x1="381.8" y1="759" x2="381.8" y2="909" stroke="#0F172A" stroke-width="1.4"/>
+<line x1="521.5" y1="513" x2="521.5" y2="909" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="661.2" y1="513" x2="661.2" y2="909" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="800.9" y1="513" x2="800.9" y2="909" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="940.6" y1="513" x2="940.6" y2="909" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1080.3" y1="513" x2="1080.3" y2="909" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1220.0" y1="513" x2="1220.0" y2="909" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="423.8" y1="519" x2="423.8" y2="715" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="5 3"/>
+<line x1="661.2" y1="519" x2="661.2" y2="715" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="5 3"/>
+<line x1="423.8" y1="765" x2="423.8" y2="909" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="5 3"/>
+<rect x="40" y="485" width="1200" height="22" rx="6" fill="#F1F5F9"/>
+<text x="52" y="500" class="t b" font-size="11" letter-spacing=".03em">SCENARIO 1 · HEARTBEAT LOST: pandad stops sending 0xf3 at t = 0 (SoC hang, pandad dead)</text>
+<text x="40" y="543" font-size="11" font-weight="600" fill="#0F172A">0xf3 heartbeat</text>
+<text x="40" y="557" class="m xs">pandad main, 10 Hz (100 ms)</text>
+<line x1="312" y1="561" x2="1220" y2="561" stroke="#F1F5F9"/>
+<line x1="312.0" y1="553" x2="312.0" y2="539" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
+<line x1="326.0" y1="553" x2="326.0" y2="539" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
+<line x1="339.9" y1="553" x2="339.9" y2="539" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
+<line x1="353.9" y1="553" x2="353.9" y2="539" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
+<line x1="367.9" y1="553" x2="367.9" y2="539" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
+<line x1="381.8" y1="553" x2="381.8" y2="539" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
+<text x="389.8" y="549" class="m xs h">last 0xf3 · none after</text>
+<text x="40" y="587" font-size="11" font-weight="600" fill="#0F172A">MCU 1 Hz tick</text>
+<text x="40" y="601" class="m xs">heartbeat_counter</text>
+<line x1="312" y1="605" x2="1220" y2="605" stroke="#F1F5F9"/>
+<path d="M326.0 580 L331.0 587 L326.0 594 L321.0 587Z" fill="#475569"/>
+<text x="326.0" y="576" font-size="10" font-weight="700" fill="#475569" text-anchor="middle">0</text>
+<path d="M465.7 580 L470.7 587 L465.7 594 L460.7 587Z" fill="#475569"/>
+<text x="465.7" y="576" font-size="10" font-weight="700" fill="#475569" text-anchor="middle">1</text>
+<path d="M605.4 580 L610.4 587 L605.4 594 L600.4 587Z" fill="#475569"/>
+<text x="605.4" y="576" font-size="10" font-weight="700" fill="#475569" text-anchor="middle">2</text>
+<path d="M745.0 580 L750.0 587 L745.0 594 L740.0 587Z" fill="#475569"/>
+<text x="745.0" y="576" font-size="10" font-weight="700" fill="#475569" text-anchor="middle">3</text>
+<path d="M884.7 580 L889.7 587 L884.7 594 L879.7 587Z" fill="#475569"/>
+<text x="884.7" y="576" font-size="10" font-weight="700" fill="#475569" text-anchor="middle">4</text>
+<path d="M1024.4 580 L1029.4 587 L1024.4 594 L1019.4 587Z" fill="#475569"/>
+<text x="1024.4" y="576" font-size="10" font-weight="700" fill="#475569" text-anchor="middle">5</text>
+<text x="1034.4" y="591" font-size="10" font-weight="700" fill="#0F172A" class="h">≥ 5 → SILENT</text>
+<text x="40" y="637" font-size="11" font-weight="600" fill="#0F172A">Baseline 8b8c6ae</text>
+<text x="40" y="651" class="m xs">MCU safety mode</text>
+<line x1="312" y1="655" x2="1220" y2="655" stroke="#F1F5F9"/>
+<rect x="312.0" y="629" width="712.4" height="20" rx="4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="619.3" y="643" font-size="10.5" font-weight="700" fill="#9A3412" text-anchor="middle" class="h">TOYOTA (car mode) · actuation accepted</text>
+<rect x="1024.4" y="629" width="195.6" height="20" rx="4" fill="#E2E8F0" stroke="#64748B" stroke-width="1.2"/>
+<text x="1122.2" y="643" font-size="10.5" font-weight="700" fill="#334155" text-anchor="middle">SILENT + siren</text>
+<path d="M381.8 627 V623 H1024.4 V627" fill="none" stroke="#0F172A" stroke-width="1.2"/>
+<text x="703.1" y="619" font-size="10.5" font-weight="700" fill="#0F172A" text-anchor="middle" class="h">4–5 s (T-06)</text>
+<rect x="940.6" y="619.0" width="139.7" height="8" fill="url(#unc)" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="40" y="687" font-size="11" font-weight="600" fill="#0F172A">Ref. build 2026-10-12</text>
+<text x="40" y="701" class="m xs">controls_allowed (car mode)</text>
+<line x1="312" y1="705" x2="1220" y2="705" stroke="#F1F5F9"/>
+<path d="M312.0 681 L423.8 681 L423.8 697 L1220.0 697" fill="none" stroke="#C2410C" stroke-width="2.2" stroke-linejoin="round"/>
+<line x1="423.8" y1="681" x2="423.8" y2="697" stroke="#C2410C" stroke-width="2.2"/>
+<text x="433.8" y="693" font-size="10" font-weight="700" fill="#2E9E6A" class="h">revoked at 0.3 s (≤ 0.31 s, T-06a) · siren ≤ 0.56 s if engaged (T-07a, 2026-10-13) · SILENT still after 4–5 s (T-06b)</text>
+<path d="M381.8 677 V673 H423.8 V677" fill="none" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="402.8" y="669" font-size="10.5" font-weight="700" fill="#2E9E6A" text-anchor="middle" class="h">0.3 s</text>
+<text x="428.8" y="531" font-size="10" font-weight="700" fill="#D2553F" text-anchor="start" class="h">TSR-407 revoke ≤ 0.3 s</text>
+<text x="666.2" y="531" font-size="10" font-weight="700" fill="#D2553F" text-anchor="start" class="h">SILENT ≤ 2 s (TSR-510, §4.3)</text>
+<rect x="40" y="731" width="1200" height="22" rx="6" fill="#F1F5F9"/>
+<text x="52" y="746" class="t b" font-size="11" letter-spacing=".03em">SCENARIO 2 · ENGAGED MISMATCH: 0xf3 continues with engaged = 0 from t = 0 while the MCU grants authority</text>
+<text x="40" y="789" font-size="11" font-weight="600" fill="#0F172A">0xf3 engaged flag</text>
+<text x="40" y="803" class="m xs">pandad main, 10 Hz</text>
+<line x1="312" y1="807" x2="1220" y2="807" stroke="#F1F5F9"/>
+<line x1="312.0" y1="799" x2="312.0" y2="785" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
+<line x1="326.0" y1="799" x2="326.0" y2="785" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
+<line x1="339.9" y1="799" x2="339.9" y2="785" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
+<line x1="353.9" y1="799" x2="353.9" y2="785" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
+<line x1="367.9" y1="799" x2="367.9" y2="785" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
+<line x1="381.8" y1="799" x2="381.8" y2="785" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/>
+<line x1="395.8" y1="799" x2="395.8" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="409.8" y1="799" x2="409.8" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="423.8" y1="799" x2="423.8" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="437.7" y1="799" x2="437.7" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="451.7" y1="799" x2="451.7" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="465.7" y1="799" x2="465.7" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="479.6" y1="799" x2="479.6" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="493.6" y1="799" x2="493.6" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="507.6" y1="799" x2="507.6" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="521.5" y1="799" x2="521.5" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="535.5" y1="799" x2="535.5" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="549.5" y1="799" x2="549.5" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="563.4" y1="799" x2="563.4" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="577.4" y1="799" x2="577.4" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="591.4" y1="799" x2="591.4" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="605.4" y1="799" x2="605.4" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="619.3" y1="799" x2="619.3" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="633.3" y1="799" x2="633.3" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="647.3" y1="799" x2="647.3" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="661.2" y1="799" x2="661.2" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="675.2" y1="799" x2="675.2" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="689.2" y1="799" x2="689.2" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="703.1" y1="799" x2="703.1" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="717.1" y1="799" x2="717.1" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="731.1" y1="799" x2="731.1" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="745.0" y1="799" x2="745.0" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="759.0" y1="799" x2="759.0" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="773.0" y1="799" x2="773.0" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="787.0" y1="799" x2="787.0" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="800.9" y1="799" x2="800.9" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="814.9" y1="799" x2="814.9" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="828.9" y1="799" x2="828.9" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="842.8" y1="799" x2="842.8" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="856.8" y1="799" x2="856.8" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="870.8" y1="799" x2="870.8" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="884.7" y1="799" x2="884.7" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="898.7" y1="799" x2="898.7" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="912.7" y1="799" x2="912.7" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="926.6" y1="799" x2="926.6" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="940.6" y1="799" x2="940.6" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="954.6" y1="799" x2="954.6" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="968.6" y1="799" x2="968.6" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="982.5" y1="799" x2="982.5" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="996.5" y1="799" x2="996.5" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1010.5" y1="799" x2="1010.5" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1024.4" y1="799" x2="1024.4" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1038.4" y1="799" x2="1038.4" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1052.4" y1="799" x2="1052.4" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1066.3" y1="799" x2="1066.3" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1080.3" y1="799" x2="1080.3" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1094.3" y1="799" x2="1094.3" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1108.2" y1="799" x2="1108.2" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1122.2" y1="799" x2="1122.2" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1136.2" y1="799" x2="1136.2" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1150.2" y1="799" x2="1150.2" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1164.1" y1="799" x2="1164.1" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1178.1" y1="799" x2="1178.1" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1192.1" y1="799" x2="1192.1" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<line x1="1206.0" y1="799" x2="1206.0" y2="791" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+<text x="346.9" y="781" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle">engaged=1</text>
+<text x="535.5" y="781" font-size="9.5" font-weight="700" fill="#64748B">engaged = 0 (frames still arrive)</text>
+<text x="40" y="833" font-size="11" font-weight="600" fill="#0F172A">MCU 1 Hz tick</text>
+<text x="40" y="847" class="m xs">mismatch counter</text>
+<line x1="312" y1="851" x2="1220" y2="851" stroke="#F1F5F9"/>
+<path d="M465.7 826 L470.7 833 L465.7 840 L460.7 833Z" fill="#475569"/>
+<text x="465.7" y="822" font-size="10" font-weight="700" fill="#475569" text-anchor="middle">1</text>
+<path d="M605.4 826 L610.4 833 L605.4 840 L600.4 833Z" fill="#475569"/>
+<text x="605.4" y="822" font-size="10" font-weight="700" fill="#475569" text-anchor="middle">2</text>
+<path d="M745.0 826 L750.0 833 L745.0 840 L740.0 833Z" fill="#475569"/>
+<text x="745.0" y="822" font-size="10" font-weight="700" fill="#475569" text-anchor="middle">3</text>
+<text x="755.0" y="837" font-size="10" font-weight="700" fill="#0F172A" class="h">3 → revoke</text>
+<text x="40" y="883" font-size="11" font-weight="600" fill="#0F172A">controls_allowed</text>
+<text x="40" y="897" class="m xs">baseline = ref. build</text>
+<line x1="312" y1="901" x2="1220" y2="901" stroke="#F1F5F9"/>
+<path d="M312.0 877 L745.0 877 L745.0 893 L1220.0 893" fill="none" stroke="#C2410C" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M381.8 873 V869 H745.0 V873" fill="none" stroke="#0F172A" stroke-width="1.2"/>
+<text x="563.4" y="865" font-size="10.5" font-weight="700" fill="#0F172A" text-anchor="middle" class="h">2–3 s (T-05)</text>
+<rect x="661.2" y="865.0" width="139.7" height="8" fill="url(#unc)" stroke="#94A3B8" stroke-dasharray="3 2"/>
+<text x="755.0" y="889" font-size="10" font-weight="700" fill="#475569" class="h">revoked · unchanged in the ref. build</text>
+<text x="428.8" y="777" font-size="10" font-weight="700" fill="#D2553F" text-anchor="start" class="h">TSR-307 ≤ 0.3 s</text>
+<text x="381.8" y="531" font-size="10" font-weight="700" fill="#0F172A" text-anchor="end" class="h">fault  </text>
+<line x1="312" y1="925" x2="1220" y2="925" stroke="#0F172A" stroke-width="1.2"/>
+<line x1="312.0" y1="925" x2="312.0" y2="928" stroke="#0F172A"/>
+<text x="312.0" y="943" font-size="10.5" fill="#0F172A" text-anchor="middle">−0.5 s</text>
+<line x1="326.0" y1="925" x2="326.0" y2="928" stroke="#0F172A"/>
+<line x1="339.9" y1="925" x2="339.9" y2="928" stroke="#0F172A"/>
+<line x1="353.9" y1="925" x2="353.9" y2="928" stroke="#0F172A"/>
+<line x1="367.9" y1="925" x2="367.9" y2="928" stroke="#0F172A"/>
+<line x1="381.8" y1="925" x2="381.8" y2="931" stroke="#0F172A"/>
+<text x="381.8" y="943" font-size="10.5" fill="#0F172A" text-anchor="middle">0 s</text>
+<line x1="395.8" y1="925" x2="395.8" y2="928" stroke="#0F172A"/>
+<line x1="409.8" y1="925" x2="409.8" y2="928" stroke="#0F172A"/>
+<line x1="423.8" y1="925" x2="423.8" y2="928" stroke="#0F172A"/>
+<line x1="437.7" y1="925" x2="437.7" y2="928" stroke="#0F172A"/>
+<line x1="451.7" y1="925" x2="451.7" y2="928" stroke="#0F172A"/>
+<line x1="465.7" y1="925" x2="465.7" y2="928" stroke="#0F172A"/>
+<line x1="479.6" y1="925" x2="479.6" y2="928" stroke="#0F172A"/>
+<line x1="493.6" y1="925" x2="493.6" y2="928" stroke="#0F172A"/>
+<line x1="507.6" y1="925" x2="507.6" y2="928" stroke="#0F172A"/>
+<line x1="521.5" y1="925" x2="521.5" y2="931" stroke="#0F172A"/>
+<text x="521.5" y="943" font-size="10.5" fill="#0F172A" text-anchor="middle">1 s</text>
+<line x1="535.5" y1="925" x2="535.5" y2="928" stroke="#0F172A"/>
+<line x1="549.5" y1="925" x2="549.5" y2="928" stroke="#0F172A"/>
+<line x1="563.4" y1="925" x2="563.4" y2="928" stroke="#0F172A"/>
+<line x1="577.4" y1="925" x2="577.4" y2="928" stroke="#0F172A"/>
+<line x1="591.4" y1="925" x2="591.4" y2="928" stroke="#0F172A"/>
+<line x1="605.4" y1="925" x2="605.4" y2="928" stroke="#0F172A"/>
+<line x1="619.3" y1="925" x2="619.3" y2="928" stroke="#0F172A"/>
+<line x1="633.3" y1="925" x2="633.3" y2="928" stroke="#0F172A"/>
+<line x1="647.3" y1="925" x2="647.3" y2="928" stroke="#0F172A"/>
+<line x1="661.2" y1="925" x2="661.2" y2="931" stroke="#0F172A"/>
+<text x="661.2" y="943" font-size="10.5" fill="#0F172A" text-anchor="middle">2 s</text>
+<line x1="675.2" y1="925" x2="675.2" y2="928" stroke="#0F172A"/>
+<line x1="689.2" y1="925" x2="689.2" y2="928" stroke="#0F172A"/>
+<line x1="703.1" y1="925" x2="703.1" y2="928" stroke="#0F172A"/>
+<line x1="717.1" y1="925" x2="717.1" y2="928" stroke="#0F172A"/>
+<line x1="731.1" y1="925" x2="731.1" y2="928" stroke="#0F172A"/>
+<line x1="745.0" y1="925" x2="745.0" y2="928" stroke="#0F172A"/>
+<line x1="759.0" y1="925" x2="759.0" y2="928" stroke="#0F172A"/>
+<line x1="773.0" y1="925" x2="773.0" y2="928" stroke="#0F172A"/>
+<line x1="787.0" y1="925" x2="787.0" y2="928" stroke="#0F172A"/>
+<line x1="800.9" y1="925" x2="800.9" y2="931" stroke="#0F172A"/>
+<text x="800.9" y="943" font-size="10.5" fill="#0F172A" text-anchor="middle">3 s</text>
+<line x1="814.9" y1="925" x2="814.9" y2="928" stroke="#0F172A"/>
+<line x1="828.9" y1="925" x2="828.9" y2="928" stroke="#0F172A"/>
+<line x1="842.8" y1="925" x2="842.8" y2="928" stroke="#0F172A"/>
+<line x1="856.8" y1="925" x2="856.8" y2="928" stroke="#0F172A"/>
+<line x1="870.8" y1="925" x2="870.8" y2="928" stroke="#0F172A"/>
+<line x1="884.7" y1="925" x2="884.7" y2="928" stroke="#0F172A"/>
+<line x1="898.7" y1="925" x2="898.7" y2="928" stroke="#0F172A"/>
+<line x1="912.7" y1="925" x2="912.7" y2="928" stroke="#0F172A"/>
+<line x1="926.6" y1="925" x2="926.6" y2="928" stroke="#0F172A"/>
+<line x1="940.6" y1="925" x2="940.6" y2="931" stroke="#0F172A"/>
+<text x="940.6" y="943" font-size="10.5" fill="#0F172A" text-anchor="middle">4 s</text>
+<line x1="954.6" y1="925" x2="954.6" y2="928" stroke="#0F172A"/>
+<line x1="968.6" y1="925" x2="968.6" y2="928" stroke="#0F172A"/>
+<line x1="982.5" y1="925" x2="982.5" y2="928" stroke="#0F172A"/>
+<line x1="996.5" y1="925" x2="996.5" y2="928" stroke="#0F172A"/>
+<line x1="1010.5" y1="925" x2="1010.5" y2="928" stroke="#0F172A"/>
+<line x1="1024.4" y1="925" x2="1024.4" y2="928" stroke="#0F172A"/>
+<line x1="1038.4" y1="925" x2="1038.4" y2="928" stroke="#0F172A"/>
+<line x1="1052.4" y1="925" x2="1052.4" y2="928" stroke="#0F172A"/>
+<line x1="1066.3" y1="925" x2="1066.3" y2="928" stroke="#0F172A"/>
+<line x1="1080.3" y1="925" x2="1080.3" y2="931" stroke="#0F172A"/>
+<text x="1080.3" y="943" font-size="10.5" fill="#0F172A" text-anchor="middle">5 s</text>
+<line x1="1094.3" y1="925" x2="1094.3" y2="928" stroke="#0F172A"/>
+<line x1="1108.2" y1="925" x2="1108.2" y2="928" stroke="#0F172A"/>
+<line x1="1122.2" y1="925" x2="1122.2" y2="928" stroke="#0F172A"/>
+<line x1="1136.2" y1="925" x2="1136.2" y2="928" stroke="#0F172A"/>
+<line x1="1150.2" y1="925" x2="1150.2" y2="928" stroke="#0F172A"/>
+<line x1="1164.1" y1="925" x2="1164.1" y2="928" stroke="#0F172A"/>
+<line x1="1178.1" y1="925" x2="1178.1" y2="928" stroke="#0F172A"/>
+<line x1="1192.1" y1="925" x2="1192.1" y2="928" stroke="#0F172A"/>
+<line x1="1206.0" y1="925" x2="1206.0" y2="928" stroke="#0F172A"/>
+<line x1="1220.0" y1="925" x2="1220.0" y2="931" stroke="#0F172A"/>
+<text x="1220.0" y="943" font-size="10.5" fill="#0F172A" text-anchor="middle">6 s</text>
+<text x="423.8" y="943" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">0.3</text>
+<text x="40" y="943" class="m xs">time since the fault (minor ticks 100 ms)</text>
+<line x1="40" y1="953" x2="1240" y2="953" stroke="#E2E8F0"/>
+<g transform="translate(40,971)" font-size="10.5">
+<line x1="0" y1="6" x2="0" y2="-8" stroke="#C2410C" stroke-width="2"/><line x1="10" y1="6" x2="10" y2="-8" stroke="#C2410C" stroke-width="2"/><text x="20" y="4" class="t">0xf3 frame (engaged = 1)</text>
+<path d="M180 -6 L185 1 L180 8 L175 1Z" fill="#475569"/><text x="194" y="4" class="t">1 Hz tick (count)</text>
+<path d="M312 -6 H332 V6 H352" fill="none" stroke="#C2410C" stroke-width="2.2"/><text x="360" y="4" class="t">authority (high = granted)</text>
+<rect x="530" y="-7" width="28" height="14" fill="url(#unc)" stroke="#94A3B8" stroke-dasharray="3 2"/><text x="566" y="4" class="t">range set by the tick phase</text>
+<line x1="740" y1="-8" x2="740" y2="8" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="5 3"/><text x="750" y="4" class="t">required limit</text>
+<rect x="850" y="-7" width="28" height="14" rx="3" fill="#E2E8F0" stroke="#64748B"/><text x="886" y="4" class="t">SILENT</text>
+<text x="1200" y="4" class="m" text-anchor="end">T-xx: WP-S-04 §4 rows</text>
+</g>
+</svg>

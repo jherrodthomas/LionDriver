@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-10 ML engineering: model requirements, data management, training route, testing, deployment |
 | Standard reference | ASPICE 4.0 MLE.1 (ML requirements analysis), MLE.2 (ML architecture), MLE.3 (ML training), MLE.4 (ML model testing), SUP.11 (ML data management); ISO/PAS 8800:2024 (data, AI V&V, deployment, operation); ISO 21448:2022 §7, §10 |
-| Version | 0.2 (RR-2026-008 F-31: owner and needed-by columns; F-28: author; 2026-10-12). 0.1 |
+| Version | 0.3 (merge of PR #47 software alignment with the base; carries PR #47's draft 0.2: RR-2026-009 F-31: owner and needed-by columns; F-28: author; 2026-10-13). 0.2 (§3.1 and §3.5 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM / SOTIF (AI-1, AI-2, AI-3; DM chain QM per the [WP-C-04 §7](../02-concept/WP-C-04-functional-safety-concept.md) proposal) |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -46,6 +46,12 @@ The AI safety requirements AIR-01…AIR-30 and dataset requirements DSR-01…DSR
 
 ### 3.1 Data flow
 
+![Figure 3-1: data flow of the driving model (AI-1) and the driver-monitoring model (AI-3) from VisionIPC frames through warp kernel, model, output parsing and post-processing to modelV2, drivingModelData, cameraOdometry and driverStateV2](figures/fig-w10-3-1-ml-data-flow.svg)
+
+*Figure 3-1.* Two parallel pipelines, one row per stage: camera frames, compiled warp kernel, model artefact, output parsing, post-processing and published cereal messages. Side inputs enter the model from the right; the recurrent state is marked separately. Source: [`figures/fig-w10-3-1-ml-data-flow.svg`](figures/fig-w10-3-1-ml-data-flow.svg); change it together with §3.2, §3.3 and §3.4.
+
+<details><summary>Text version of Figure 3-1</summary>
+
 ```
  VisionIPC NV12 (narrow + wide road)                  VisionIPC NV12 (cabin)
         │ 2 frames, calib warp matrix                         │ dm warp matrix (fixed intrinsics)
@@ -61,6 +67,8 @@ The AI safety requirements AIR-01…AIR-30 and dataset requirements DSR-01…DSR
         ▼                                                     ▼
  modelV2, drivingModelData, cameraOdometry            driverStateV2
 ```
+
+</details>
 
 ### 3.2 Model inputs and outputs
 
@@ -101,6 +109,12 @@ Detailed in [WP-C-11 §2.3–2.4](../02-concept/WP-C-11-ai-system-definition-and
 
 ### 3.5 Compile and load chain
 
+![Figure 3-2: compile and load chain from driving_supercombo.onnx through compile_onnx.py and driving_tinygrad.pkl to GPU execution in modeld, with the identity recorded at each stage and the excluded big model](figures/fig-w10-3-5-compile-load-chain.svg)
+
+*Figure 3-2.* The driving-model chain runs top to bottom; the cards beside each stage repeat the "Identity recorded today" and "Issue" columns of the table below (green: identity recorded, red: gap). The big model (AI-2) has no compile step and is excluded. Source: [`figures/fig-w10-3-5-compile-load-chain.svg`](figures/fig-w10-3-5-compile-load-chain.svg); change it together with the table below and §4.
+
+<details><summary>Text version of Figure 3-2</summary>
+
 ```
  driving_supercombo.onnx (Git LFS)                      big_driving_tinygrad.pkl (Git LFS, pre-compiled by comma)
         │ scons: tinygrad_repo/examples/openpilot/compile_onnx.py
@@ -113,6 +127,8 @@ Detailed in [WP-C-11 §2.3–2.4](../02-concept/WP-C-11-ai-system-definition-and
         ▼
  GPU execution in modeld
 ```
+
+</details>
 
 | Stage | Tool / input | Identity recorded today | Issue |
 |---|---|---|---|
@@ -260,7 +276,7 @@ Upstream history shows why this matters: the big model was replaced and reverted
 
 ## Open items
 
-Owners and gates are proposals added in [RR-2026-008](reviews/RR-2026-008.md) F-31; confirm them at the next review.
+Owners and gates are proposals added in [RR-2026-009](reviews/RR-2026-009.md) F-31; confirm them at the next review.
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|

@@ -53,4 +53,4 @@ Decision (2026-10-12, project maintainer): **(a) for the reference build.** Impl
 
 ## Addendum: further work products affected (2026-10-12)
 
-The software alignment audit ([RR-2026-008](../../05-software/reviews/RR-2026-008.md) F-30) found that this change also affects: WP-W-05 (UN-15 TX whitelist), WP-W-09 (CD-04 TX table), WP-W-11 (CSR-092). These were updated in the RR-2026-008 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.
+The software alignment audit ([RR-2026-009](../../05-software/reviews/RR-2026-009.md) F-30) found that this change also affects: WP-W-05 (UN-15 TX whitelist), WP-W-09 (CD-04 TX table), WP-W-11 (CSR-092). These were updated in the RR-2026-009 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.

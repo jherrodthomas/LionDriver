@@ -4,34 +4,38 @@
 |---|---|
 | Work product | Living Safety Case data (machine-readable copy of [WP-K-01](../10-safety-case/WP-K-01-safety-case.md)), validator and dashboard generator |
 | Standard reference | ISO 26262-2:2018 §6.4.8 (safety case); ISO 26262-8:2018 §10 (documentation management); UL 4600 principles (living safety case, defeaters) |
-| Version | 0.1 |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (Figure 1 added; the full Living Safety Case moved to the assurance README, the front-page README keeps a generated status strip; 2026-10-13). 0.2 (baseline `BL-002` added for the firmware changes integrated 2026-10-12; evidence Sn-15 added; records restated for the 2026-10-12 state carry `source_revision: "bf6ce8c"` and stay on `baseline: BL-001` until they are re-baselined; 2026-10-12). 0.1: initial records |
 | Status | Draft |
 | Author | Assurance team |
 | Reviewer(s) | TBD (I1) |
-| Baseline | `BL-001` (`8b8c6ae`) |
+| Baseline | `BL-001` (`8b8c6ae`); `BL-002` (`bf6ce8c`; opendbc `7993399`, panda `b790fca`; now pinned at opendbc `273f44e` and panda `c33343b` (contains `6dee6fa`; 2026-10-13), which contain them), under development |
 
 ## 1. Purpose
 
-This folder holds the structured records behind the README's Living Safety Case dashboard: the claims, arguments, evidence, defeaters, open actions, vehicle configurations, baselines and reviews of the LionDriver safety case. A validator checks them, and a generator turns them into the dashboard, so every published figure comes from a record that can be read, reviewed and diffed.
+This folder holds the structured records behind the [Living Safety Case](../README.md#living-safety-case) (the full view is in the assurance README; the front-page README shows the status strip): the claims, arguments, evidence, defeaters, open actions, vehicle configurations, baselines and reviews of the LionDriver safety case. A validator checks them, and a generator turns them into the dashboard, so every published figure comes from a record that can be read, reviewed and diffed.
 
 [WP-K-01](../10-safety-case/WP-K-01-safety-case.md) stays the reviewed document. The records are a copy of it, and the validator fails if the two disagree on the evidence, defeater or open-item tables (check X3).
+
+![Figure 1: records in assurance/case are checked by validate.py (and against WP-K-01, check X3); only valid records reach generate_dashboard.py and gsn_diagrams.py, which write the status cards, the README status strip, the Living Safety Case table, status.json and the GSN diagrams; CI checks all of it](figures/fig-case-1-how-it-works.svg)
+
+*Figure 1.* How the records, the validator and the generators produce every published figure, with the acceptance rule of §4 and the CI gate. Source: [`figures/fig-case-1-how-it-works.svg`](figures/fig-case-1-how-it-works.svg); change it together with §2, §4 and §5.
 
 > **Assurance status represents recorded engineering evidence and review state. It does not constitute certification or approval for unsupervised operation.**
 
 ## 2. Layout
 
-| Folder | Kind | IDs | Content at `BL-001` |
+| Folder | Kind | IDs | Content at `BL-002` |
 |---|---|---|---|
 | [`claims/`](claims/) | `claim` | `G0`, `G1.1.4`, … (GSN goals) | 36 claims from WP-K-01 §3–§4, one file per top-level branch |
 | [`arguments/`](arguments/) | `argument` | `S0`, `S1.1`, … (GSN strategies) | 6 strategies |
-| [`evidence/`](evidence/) | `evidence` | `Sn-01`, … (GSN solutions) | 49 evidence items from WP-K-01 §6 |
+| [`evidence/`](evidence/) | `evidence` | `Sn-01`, … (GSN solutions) | 50 evidence items from WP-K-01 §6 |
 | [`defeaters/`](defeaters/) | `defeater` | `DF-01`, … | 41 open defeaters from WP-K-01 §7 |
 | [`actions/`](actions/) | `action` | `ACT-001`, … | Open items of WP-K-01 §10 |
 | [`configurations/`](configurations/) | `configuration` | `CFG-001`, … | One record per evaluated vehicle configuration |
-| [`baselines/`](baselines/) | `baseline` | `BL-001`, … | Engineering baselines the records refer to |
-| [`reviews/`](reviews/reviews.yaml) | `review` | `REV-001`, … | Review records; none at `BL-001` |
+| [`baselines/`](baselines/) | `baseline` | `BL-001`, … | Engineering baselines the records refer to: `BL-001` (`8b8c6ae`), `BL-002` (`bf6ce8c`) |
+| [`reviews/`](reviews/reviews.yaml) | `review` | `REV-001`, … | Review records; none at `BL-001` or `BL-002` |
 | [`schema/case-schema.json`](schema/case-schema.json) | — | — | Fields, types, enumerations and reference rules per kind |
-| [`tools/`](tools/) | — | — | Validator, generator and their self-tests |
+| [`tools/`](tools/) | — | — | Validator, dashboard and GSN diagram generators, and their self-tests |
 | `status.json` | — | — | Generated summary (do not edit) |
 
 Hazards, hazardous events, safety goals and assumptions of use are not duplicated here. Records reference them by ID, and the validator resolves those IDs against [`assurance/trace/items/`](../trace/items/), the machine-readable hazard log ([WP-T-01](../trace/README.md)). Requirements are referenced the same way: FSRs and TSRs are in `trace/items/fsr.yaml` and `tsr.yaml`, generated from WP-C-04, WP-S-02 and WP-S-06.
@@ -81,7 +85,7 @@ A change to safety-relevant code must come with an impact analysis ([WP-M-12](..
 
 ## 5. Dashboard figures
 
-[`tools/generate_dashboard.py`](tools/generate_dashboard.py) computes every figure from the records and writes `status.json`, the three SVG cards under [`docs/assets/liondriver/assurance/`](../../docs/assets/liondriver/assurance/) and the text table between the `assurance-summary` markers in the [README](../../README.md). `--check` fails if any of them is out of date. The output is deterministic: it carries a digest of the record files instead of a timestamp, so it changes only when the records change.
+[`tools/generate_dashboard.py`](tools/generate_dashboard.py) computes every figure from the records and writes `status.json`, the three SVG cards under [`docs/assets/liondriver/assurance/`](../../docs/assets/liondriver/assurance/), the text table between the `assurance-summary` markers in the [assurance README](../README.md#living-safety-case) and the one-line status strip between the `assurance-headline` markers in the [front-page README](../../README.md#living-safety-case). `--check` fails if any of them is out of date. The output is deterministic: it carries a digest of the record files instead of a timestamp, so it changes only when the records change.
 
 | Figure | Definition |
 |---|---|
@@ -110,8 +114,10 @@ Lifecycle-area status, from the evidence items assigned to the area (`lifecycle_
 
 ```sh
 python3 assurance/case/tools/validate.py              # check the records
-python3 assurance/case/tools/generate_dashboard.py    # regenerate status.json, the SVG cards and the README table
+python3 assurance/case/tools/generate_dashboard.py    # regenerate status.json, the SVG cards, the README strip and the assurance README table
 python3 assurance/case/tools/test_case.py             # self-tests of the validator rules
+python3 assurance/case/tools/gsn_diagrams.py          # regenerate the GSN diagrams in assurance/10-safety-case/gsn/
+python3 assurance/case/tools/test_gsn.py              # tests of the GSN generator
 ```
 
 When WP-K-01 changes, update the matching records in the same pull request; check X3 fails otherwise.

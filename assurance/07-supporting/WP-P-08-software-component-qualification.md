@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-08 Qualification of software components (third-party and upstream software) |
 | Standard reference | ISO 26262-8:2018 §12; ISO 26262-6:2018 §7 (reuse in architecture); ISO 26262-9:2018 §6 (coexistence); ISO/SAE 21434:2021 §10 (reuse, off-the-shelf and open-source components) |
-| Version | 0.2 (RR-2026-008 F-29: reuse-assessment records per WP-M-14 §6 (§4.5), inherited/LionDriver-authored split; pins updated to `682f184`; F-28: Author, baseline; 2026-10-12). 0.1 |
+| Version | 0.3 (merge of PR #47 software alignment with the base: SC-01/SC-02 name the current pins opendbc `273f44e` and panda `c33343b`; reference vehicle named by generation (E210); 2026-10-13). 0.2 (RR-2026-009 F-29: reuse-assessment records per WP-M-14 §6 (§4.5), inherited/LionDriver-authored split; pins updated to `682f184`; F-28: Author, baseline; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM components and the boundary to the ASIL path; reuse assessment of the ASIL-path components |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -35,8 +35,8 @@ Pins from the gitlinks of superproject `682f184` (`git ls-tree 682f184`) and fro
 
 | ID | Component | Version / pin | Origin | Where used | Category |
 |---|---|---|---|---|---|
-| SC-01 | opendbc safety (`opendbc_repo/opendbc/safety/**`) | `7993399` (at `8b8c6ae`: `229dc70`) | jherrodthomas/opendbc, fork of commaai/opendbc at `229dc70`; LionDriver changes in `229dc70..7993399` | Panda firmware safety modes (Toyota) | **ASIL** (T-03) |
-| SC-02 | panda firmware (`panda/board/**`) | `8aa8671` (at `8b8c6ae`: `92eb565`) | jherrodthomas/panda, fork of commaai/panda at `92eb565`; LionDriver changes in `92eb565..8aa8671` | STM32H7 main loop, CAN/SPI drivers, heartbeat, relay, faults, bootstub, IWDG, safety task, reference lock | **ASIL** (T-03) for safety paths; rest analysed for FFI inside the MCU |
+| SC-01 | opendbc safety (`opendbc_repo/opendbc/safety/**`) | `273f44e` (current pin; this document read `7993399`; at `8b8c6ae`: `229dc70`) | jherrodthomas/opendbc, fork of commaai/opendbc at `229dc70`; LionDriver changes in `229dc70..273f44e` (`7993399..273f44e`: TX arrival supervision, TSR-408) | Panda firmware safety modes (Toyota) | **ASIL** (T-03) |
+| SC-02 | panda firmware (`panda/board/**`) | `c33343b` (current pin; this document read `8aa8671`; at `8b8c6ae`: `92eb565`) | jherrodthomas/panda, fork of commaai/panda at `92eb565`; LionDriver changes in `92eb565..c33343b` (`8aa8671..c33343b`: EPS-fault siren, reference-build health flag, heartbeat-loss siren) | STM32H7 main loop, CAN/SPI drivers, heartbeat, relay, faults, bootstub, IWDG, safety task, reference lock | **ASIL** (T-03) for safety paths; rest analysed for FFI inside the MCU |
 | SC-03 | STM32H7 CMSIS / device headers (`panda/board/stm32h7/inc/`) | in panda `8aa8671` | ST / ARM (vendored in upstream panda) | Register definitions | **ASIL** (reviewed with SC-02; vendor headers checked against reference manual) |
 | SC-04 | opendbc car port (`opendbc_repo/opendbc/car/**`, Toyota) | `7993399` (no LionDriver change since `229dc70`) | commaai/opendbc via the fork | Host: CAN parse, state, control commands | QM-SR |
 | SC-05 | opendbc CAN parser/packer (`opendbc_repo/opendbc/can/**`) | `7993399` (no LionDriver change since `229dc70`) | commaai/opendbc via the fork | Host | QM-SR |
@@ -118,7 +118,7 @@ One record per safety-relevant software component, with the fields of [WP-M-14 �
 | Origin split | Modified by LionDriver: `toyota_rx_hook`, `toyota_tx_hook`, `toyota_init`, TX/RX tables. LionDriver-authored: `toyota_lka_state_is_fault`, `toyota_cruise_main_check`. Inherited: checksum and quality helpers (WP-W-05 UN-14…UN-17, UN-38, UN-39) |
 | Existing development evidence | As RA-01; change records for RX timeout, TX whitelist, EPS fault, cruise-main check, TX rate supervision ([`impact/`](impact/README.md)) |
 | Existing verification evidence | `opendbc/safety/tests/test_toyota.py` (31 `def test_` definitions at `7993399`, inherited and LionDriver-added), run as RA-01 in both build variants. HIL tests `panda/tests/hitl/test_12_rx_timeout.py`, `test_13_eps_fault.py`, `test_14_tx_rate.py` exist, not run |
-| Operational assumptions | Reference car 2020 Corolla LE TSS2, non-SecOC, LKA torque control, BRAKE_MODULE `0x226`, parameter 73; DBC signal layout of `toyota_nodsu_pt_generated.dbc`; EPS LKA_STATE fault codes reverse-engineered (to be confirmed); nominal rates of `0x262`/`0x1D3` and TX budgets not yet confirmed on reference logs (WP-S-05 OI-7) |
+| Operational assumptions | Reference car Toyota Corolla, 12th generation (E210), TSS 2.0, non-SecOC, LKA torque control, BRAKE_MODULE `0x226`, parameter 73; DBC signal layout of `toyota_nodsu_pt_generated.dbc`; EPS LKA_STATE fault codes reverse-engineered (to be confirmed); nominal rates of `0x262`/`0x1D3` and TX budgets not yet confirmed on reference logs (WP-S-05 OI-7) |
 | Known defects and limitations | GAP-01, GAP-02, GAP-03 (EPS status, partly addressed), GAP-04, GAP-44 (EPS factor unchecked outside the reference build), GAP-48 |
 | Dependencies | RA-01; panda reference lock (RA-03) for the parameter |
 | Gaps | Requirements: signal semantics from reverse-engineered DBC. Verification: no vehicle or HIL evidence; fault set and rates unconfirmed |
@@ -131,7 +131,7 @@ One record per safety-relevant software component, with the fields of [WP-M-14 �
 | Field | Content |
 |---|---|
 | Component, source, owner | `panda/board/`: `main.c`, `main_comms.h`, `can_comms.h`, `drivers/{spi,fdcan,can_common,harness,interrupts,registers,simple_watchdog}.h`, `stm32h7/llspi.h`, `sys/{faults,power_saving}.h`, `early_init.h`, `bootstub.c`, `health.h`, and the LionDriver modules `reference_lock.h`, `drivers/{hw_watchdog,heartbeat_monitor,irq_priorities}.h`; upstream commaai/panda; fork jherrodthomas/panda |
-| Version and baseline | panda `8aa8671`; upstream base `92eb565` |
+| Version and baseline | panda `8aa8671` (read); current pin `c33343b` adds `drivers/eps_fault_siren.h` (`b790fca`), the reference-build health flag (`6dee6fa`) and `drivers/heartbeat_siren.h` (`c33343b`), all LionDriver-authored; upstream base `92eb565` |
 | Intended function; safety relevance | Execution platform of the envelope: CAN RX/TX and forwarding, host command handling and reference lock, 100 Hz safety task, heartbeat supervision, IWDG, relay control, fault recording, IRQ priorities, boot signature check. ASIL B‡ for the safety paths. SWSRs allocated to U-PND-* (307, 401a, 407–413, 501–519, 701–711) |
 | Origin split | LionDriver-authored: `reference_lock.h`, `hw_watchdog.h`, `heartbeat_monitor.h`, `irq_priorities.h`, `fault_injection.h` (debug only), `safety_task_handler`, `safety_task_timer_init`, `main_loop_progress`. Modified: `set_safety_mode`, `tick_handler`, `main`, `comms_control_handler`, `get_health_pkt`, `set_intercept_relay`, `fault_occurred/recovered`, `enter_stop_mode`. Inherited: SPI, FDCAN, CAN queues, interrupts, registers, bootstub (WP-W-05 UN-18…UN-35, UN-40…UN-44, UN-N1) |
 | Existing development evidence | Upstream: none found. LionDriver: WP-W-03, WP-W-05, change records (watchdog, safety-mode lock, fast heartbeat, IRQ priorities); none reviewed |
