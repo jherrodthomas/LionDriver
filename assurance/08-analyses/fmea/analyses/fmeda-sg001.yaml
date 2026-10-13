@@ -83,7 +83,7 @@ components:
     distribution: 0.05
     violates_sg_directly: true
     mpf_potential: false
-    dfmea_ref: DFM-001
+    dfmea_ref: DFM-019
     safety_mechanism_spf: FMD-SM-004
     dc_spf: 0.6
     notes: Only the software-queue part is covered by the XOR; the FDCAN copy and message RAM are not (TSR-517)
@@ -161,7 +161,7 @@ components:
     distribution: 0.02
     violates_sg_directly: true
     mpf_potential: false
-    dfmea_ref: DFM-003
+    dfmea_ref: DFM-019
     safety_mechanism_spf: FMD-SM-004
     dc_spf: 0.6
   - id: FMD-011
