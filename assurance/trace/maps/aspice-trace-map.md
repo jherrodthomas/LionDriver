@@ -13,6 +13,12 @@
 
 Specification on the left, verification on the right. Each verification process sits opposite the process whose work products it verifies (ASPICE 4.0). Every box names its process, its work products and the items it holds; `*` marks kinds defined in the work products but not yet in the trace data; "from SG: 7/7" counts the parents with at least one child in the trace data. The work products of each process are listed in §2. Arrows down the left follow the decomposition; arrows across the V are verification links, labelled with how many items of the paired level at least one test case names.
 
+![Figure 1: ASPICE 4.0 V-model with item counts per process and verification coverage across the V](fig-1-aspice-v-model.svg)
+
+*Figure 1.* Generated SVG, drawn from the same data as the tables below. Source: [`fig-1-aspice-v-model.svg`](fig-1-aspice-v-model.svg); the Mermaid version follows as a text alternative.
+
+<details><summary>Mermaid version of Figure 1</summary>
+
 ```mermaid
 block-beta
   columns 13
@@ -125,7 +131,7 @@ block-beta
   MLE4 -. "AIR 23/30 · DSR 1/13" .-> MLE1
   SWE5 -. "SWSR 70/134" .-> SWE2
   HWE3 -. "HWSR 18/45" .-> HWE2
-  SWE4 -. "TSR 1/94" .-> SWE3
+  SWE4 -. "SWSR 70/134" .-> SWE3
   style VAL1 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
   style SYS5 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
   style SYS4 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
@@ -145,6 +151,8 @@ block-beta
   style HWE2 fill:#F1F5F9,stroke:#94A3B8,stroke-dasharray:4 3
   style SWE3 fill:#F1F5F9,stroke:#94A3B8,stroke-dasharray:4 3
 ```
+
+</details>
 
 Verification boxes: green when every item of the paired level is named by a case, amber when some are, red when none is. Specification boxes: solid blue when all their item kinds are in the trace data, dashed blue when some are, dashed grey when none are or the level holds no item kind yet.
 
@@ -262,7 +270,7 @@ Parents with at least one child in the trace data (WP-T-01 checks K4, K12).
 
 ## 5. Verification coverage (across the V)
 
-Items named by at least one case of the paired test specification. A case names an item by its ID, by a range (`TSR-101…105`), by `FSR-01.xx…07.xx`, or by a bare number in a column headed with the kind (`SWSRs`). Bare ranges include only IDs without a letter suffix. TSRs allocated to operation (`OPS`, WP-S-06) are left out, and SWE.4 counts only TSRs allocated to software (`P-SW`, `SoC`).
+Items named by at least one case of the paired test specification. A case names an item by its ID, by a range (`TSR-101…105`), by `FSR-01.xx…07.xx`, or by a bare number in a column headed with the kind (`SWSRs`). Bare ranges include only IDs without a letter suffix. TSRs allocated to operation (`OPS`, WP-S-06) are left out.
 
 | Pair | Test specification | Kind | Named | Status | Not named |
 |---|---|---|---|---|---|
@@ -278,16 +286,11 @@ Items named by at least one case of the paired test specification. A case names 
 | MLE.1 ↔ MLE.4 | VS-ML | DSR | 1/13 | partial | DSR-01, DSR-02, DSR-03, DSR-05, DSR-06, DSR-07, DSR-08, DSR-09, DSR-10, DSR-11, DSR-12, DSR-13 |
 | SWE.2 ↔ SWE.5 | VS-SWI | SWSR | 70/134 | partial | SWSR-101a, SWSR-102a, SWSR-103a, SWSR-108a, SWSR-201a, SWSR-303h, SWSR-304a, SWSR-308h, SWSR-309, SWSR-411, SWSR-501b, SWSR-502c, SWSR-503, SWSR-503b, SWSR-503c, SWSR-504, SWSR-504a, SWSR-505, SWSR-505a, SWSR-506, SWSR-506b, SWSR-507, SWSR-507a, SWSR-508, SWSR-508a, SWSR-509, SWSR-511, SWSR-512a, SWSR-514, SWSR-515, SWSR-516a, SWSR-516b, SWSR-601a, SWSR-602, SWSR-603, SWSR-604, SWSR-605, SWSR-605a, SWSR-607, SWSR-608 … (+24) |
 | HWE.2 ↔ HWE.3 | VS-HW | HWSR | 18/45 | partial | HWSR-401, HWSR-501a, HWSR-501b, HWSR-501d, HWSR-502c, HWSR-503a, HWSR-503b, HWSR-503c, HWSR-504a, HWSR-505a, HWSR-506, HWSR-506b, HWSR-506d, HWSR-508b, HWSR-508c, HWSR-509a, HWSR-510a, HWSR-516, HWSR-516a, HWSR-516b, HWSR-517, HWSR-519, HWSR-701a, HWSR-702, HWSR-703, HWSR-711, HWSR-711a |
-| SWE.3 ↔ SWE.4 | VS-UV | TSR | 1/94 | partial | TSR-101, TSR-102, TSR-103, TSR-104, TSR-105, TSR-106, TSR-107, TSR-108, TSR-109, TSR-110, TSR-201, TSR-202, TSR-203, TSR-204, TSR-205, TSR-206, TSR-207, TSR-301, TSR-302, TSR-303, TSR-304, TSR-305, TSR-306, TSR-307, TSR-308, TSR-309, TSR-311, TSR-402, TSR-403, TSR-404, TSR-405, TSR-406, TSR-407, TSR-408, TSR-409, TSR-410, TSR-411, TSR-412, TSR-413, TSR-501 … (+53) |
+| SWE.3 ↔ SWE.4 | VS-UV | SWSR | 70/134 | partial | SWSR-109, SWSR-109a, SWSR-206, SWSR-303h, SWSR-307h, SWSR-308h, SWSR-309, SWSR-408, SWSR-409h, SWSR-410h, SWSR-414h, SWSR-504, SWSR-504a, SWSR-505, SWSR-505a, SWSR-506, SWSR-506a, SWSR-506b, SWSR-507, SWSR-507a, SWSR-508, SWSR-508a, SWSR-509, SWSR-514h, SWSR-515, SWSR-517, SWSR-519, SWSR-601, SWSR-601a, SWSR-602, SWSR-603, SWSR-604, SWSR-605, SWSR-605a, SWSR-606, SWSR-607, SWSR-608, SWSR-609, SWSR-610, SWSR-611 … (+24) |
 
 ## 6. Test cases naming unknown IDs
 
-Each ID below is named by a case but defined neither in the trace data nor in its work product.
-
-| Case | Unknown IDs |
-|---|---|
-| VS-VAL-07 | HE-01, HE-04 |
-| VS-VAL-10 | HE-01 |
+None.
 
 ## 7. Not yet traced
 
