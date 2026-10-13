@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — AI-assisted (Claude), not reviewed. Not a verification result (tool not classified; [TE-01](../../../07-supporting/tool-evaluations/TE-01-modelling-tools.md) TL-24) |
+| Status | Draft — AI-assisted (Claude), not reviewed. Not a verification result (tool not classified; [TE-01](../../../07-supporting/tool-evaluations/TE-01-modelling-tools.md) TL-27) |
 | Purpose | Close part of the common-cause gap of the back-to-back run: there, the model and the C both get frames packed from the same DBC, so a DBC error that the C shares would go unnoticed ([B2B-TOY-AUTH-2026-10-13](B2B-TOY-AUTH-2026-10-13.md) §5) |
 | Code under test | opendbc `7993399` (libsafety, both build variants); DBC `toyota_nodsu_pt_generated` |
 | Tool | [`layout_check.py`](../layout_check.py) SHA-256 `bd045f1a…77c6`; same environment as the back-to-back run (CPython 3.12.13, gcc 13.3.0) |
@@ -62,4 +62,4 @@ Editing WP-S-05 S-11 to bit 38 made L0 fail. The document was restored afterward
 | Signals | MAIN_ON (`0x1D3`, S-13: no bit given). WHEEL_SPEED_FR/FL/RR/RL and their fault bits (`0xAA`, S-06: width, scale and offset only; the fault bits are not mentioned). LKA_STATE (`0x262`, S-12: width only). STEER_ANGLE_INITIALIZING, the quality flag of `0x260` (not in §11.1; WP-W-05 UN-17 gives bit 3 from the code) |
 | Effect | For these signals the DBC is the only source of the layout, so the back-to-back run cannot detect a DBC error that the C shares. B2B-02 (wheel-speed sign) also depends on the `0xAA` layout |
 | Proposal | Add bit positions, endianness and bit numbering (LA-01) to WP-S-05 §11.1 for these signals, then extend `STATED` in `layout_check.py`. A change to WP-S-05, so for the HSI owner to decide |
-| Decision | 2026-10-13, project maintainer, on the recommendation. Applied in WP-S-05 v0.7: the bit numbering is defined (LA-01 becomes the rule), and the positions of these signals are recorded as **provisional, from the DBC**. `STATED` is not extended: positions copied from the DBC give no independence from it. LC-01 stays open until a bus capture on the reference vehicle (HIL bench B3) confirms them; then they move into `STATED` |
+| Decision | 2026-10-13, project maintainer, on the recommendation. Applied in WP-S-05 v0.10 (numbered v0.7 before the merge with the base): the bit numbering is defined (LA-01 becomes the rule), and the positions of these signals are recorded as **provisional, from the DBC**. `STATED` is not extended: positions copied from the DBC give no independence from it. LC-01 stays open until a bus capture on the reference vehicle (HIL bench B3) confirms them; then they move into `STATED` |

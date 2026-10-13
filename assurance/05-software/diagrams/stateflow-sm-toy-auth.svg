@@ -54,12 +54,12 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <path class="arrow" d="M271.6,201.0 L279.2,201.2 L276.5,206.9 Z"/>
 <rect class="lbl" x="376.1" y="231.0" width="147.8" height="30.0" rx="3"/>
 <text x="450.0" y="242.0" class="tm" text-anchor="middle">T2, T3, T4, T5, T6, T7,</text>
-<text x="450.0" y="255.0" class="tm" text-anchor="middle">T10a, T10c, T11</text>
+<text x="450.0" y="255.0" class="tm" text-anchor="middle">T10a, T10b, T10c, T11</text>
 <path class="edge todo" d="M615.0,175.0 Q450.0,175.0 285.1,175.0"/>
 <path class="arrow todo" d="M285.1,175.0 L292.1,171.8 L292.1,178.2 Z"/>
-<rect class="lbl" x="382.2" y="160.0" width="135.7" height="30.0" rx="3"/>
-<text x="450.0" y="171.0" class="tm" text-anchor="middle">T9, T10b, T10d, T10e,</text>
-<text x="450.0" y="184.0" class="tm" text-anchor="middle">T12, T13, T14, T15</text>
+<rect class="lbl" x="385.2" y="160.0" width="129.6" height="30.0" rx="3"/>
+<text x="450.0" y="171.0" class="tm" text-anchor="middle">T9, T10d, T10e, T12,</text>
+<text x="450.0" y="184.0" class="tm" text-anchor="middle">T13, T14, T15</text>
 <path class="edge" d="M271.6,149.0 Q450.0,59.0 628.4,149.0"/>
 <path class="arrow" d="M628.4,149.0 L620.8,148.8 L623.5,143.1 Z"/>
 <rect class="lbl" x="439.9" y="95.5" width="20.2" height="17.0" rx="3"/>
@@ -145,20 +145,19 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <line class="grid" x1="20" y1="650" x2="880" y2="650"/>
 <text x="20.0" y="663.0" class="tb" text-anchor="start">T10a</text>
 <text x="70.0" y="663.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: safety task: heartbeat check [no SoC heartbeat for &gt; 0.3 s</text>
-<text x="70.0" y="677.0" class="t" text-anchor="start">in a car mode] / {clear}</text>
+<text x="70.0" y="677.0" class="t" text-anchor="start">in a car mode] / {clear; siren 3 s when authority was granted (panda c33343b)}</text>
 <text x="620.0" y="663.0" class="t2" text-anchor="start">all</text>
-<text x="690.0" y="663.0" class="t2" text-anchor="start">Implemented</text>
+<text x="690.0" y="663.0" class="t2" text-anchor="start">Partial</text>
 <line class="grid" x1="20" y1="684" x2="880" y2="684"/>
-<rect class="k2" style="stroke:none" x="20" y="685" width="860" height="30"/>
 <text x="20.0" y="697.0" class="tb" text-anchor="start">T10b</text>
 <text x="70.0" y="697.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: safety task: command freshness check [no accepted</text>
 <text x="70.0" y="711.0" class="t" text-anchor="start">0x2E4/0x343 for 50/100 ms] / {clear, reason}</text>
-<text x="620.0" y="697.0" class="t2" text-anchor="start">all</text>
-<text x="690.0" y="697.0" class="t2" text-anchor="start">Not implemented (not in code)</text>
+<text x="620.0" y="697.0" class="t2" text-anchor="start">reference</text>
+<text x="690.0" y="697.0" class="t2" text-anchor="start">Implemented</text>
 <line class="grid" x1="20" y1="718" x2="880" y2="718"/>
 <text x="20.0" y="731.0" class="tb" text-anchor="start">T10c</text>
-<text x="70.0" y="731.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: 0x1D2 / 0x1D3 [MAIN_ON off while CRUISE_ACTIVE, mismatch</text>
-<text x="70.0" y="745.0" class="t" text-anchor="start">lasting &gt; 150 ms] / {clear}</text>
+<text x="70.0" y="731.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: 0x1D2 / 0x1D3 [CRUISE_ACTIVE while MAIN_ON is off for &gt; 150</text>
+<text x="70.0" y="745.0" class="t" text-anchor="start">ms] / {clear}</text>
 <text x="620.0" y="731.0" class="t2" text-anchor="start">reference</text>
 <text x="690.0" y="731.0" class="t2" text-anchor="start">Partial</text>
 <line class="grid" x1="20" y1="752" x2="880" y2="752"/>

@@ -4,18 +4,20 @@
 |---|---|
 | Work product | Hardware-in-the-loop bench plan (decision D-04 of [WP-M-01](../../01-management/WP-M-01-assurance-strategy.md); test environment of [WP-W-08](../WP-W-08-embedded-software-testing.md) §3) |
 | Standard reference | ISO 26262-6:2018 §11.4.2 (test environments); ISO 26262-8:2018 §9.4.3 (verification environment); ASPICE 4.0 SWE.6 |
-| Version | 0.2 (alignment pass: baseline and pins consistent; mapping for `test_12`…`test_14`; 2026-10-12). 0.1 |
+| Version | 0.5 (merge of PR #47 software alignment with the base; §7 mapping rows of `test_12`…`test_14` merged into the base's rows; 2026-10-13). It carries PR #47's draft, numbered 0.2 there: alignment pass: baseline and pins consistent; mapping for `test_12`…`test_14`. History on the base: 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (§3 diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes: pins `b790fca`/`7993399`, reference-build campaign for `test_11…14`; 2026-10-12). 0.1 |
 | Status | Draft: plan only. No bench exists, no part has been bought, no test has been run on hardware |
 | Author | Assurance team (AI-assisted draft) |
 | Reviewer(s) | TBD |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | Written at LionDriver `4aca58b` (panda `3859fa8`, opendbc `5b5a4ba`). Current pins at `682f184`: panda `8aa8671`, opendbc `7993399`. Use the current pins; §5 commands name `3859fa8` only as the commit that added the watchdog tests |
+| Baseline | Written at LionDriver `4aca58b` (panda `3859fa8`, opendbc `5b5a4ba`); aligned at `682f184` (panda `8aa8671`, opendbc `7993399`) and on the base at `bf6ce8c` (panda `b790fca`, opendbc `7993399`). Current pins: panda `c33343b`, opendbc `273f44e`. Use the current pins; §5 commands name `3859fa8` only as the commit that added the watchdog tests |
 
 ## 1. Purpose
 
-LionDriver has no HIL bench (GAP-30), so no firmware test in [WP-W-08](../WP-W-08-embedded-software-testing.md) or hardware fault-injection case in [WP-V-05](../../06-validation/WP-V-05-fault-injection.md) can run. The hardware watchdog, the 100 Hz safety task and the 5-period RX timeout were integrated on 2026-10-12 (panda `9f60e17`, opendbc `aff4033`) **without hardware verification** ([watchdog change record](../../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) OI-3). The bench now produces the missing evidence for code that is already pinned; until it runs, these pins have no hardware evidence (WP-W-08 §4).
+LionDriver has no HIL bench (GAP-30), so no firmware test in [WP-W-08](../WP-W-08-embedded-software-testing.md) or hardware fault-injection case in [WP-V-05](../../06-validation/WP-V-05-fault-injection.md) can run. The hardware watchdog, the 100 Hz safety task and the 5-period RX timeout were integrated on 2026-10-12 (panda `9f60e17`, opendbc `aff4033`) **without hardware verification** ([watchdog change record](../../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) OI-3). The later envelope changes up to the current pins (panda `c33343b`, opendbc `273f44e`: reference-build lock, EPS fault, TX rate supervision, TX arrival supervision, heartbeat-loss siren, HIL tests `test_11…15`) are equally without hardware verification. The bench now produces the missing evidence for code that is already pinned; until it runs, these pins have no hardware evidence (WP-W-08 §4).
 
 This plan builds the bench in stages, so the watchdog evidence comes from the smallest useful setup and the rest of WP-W-08 follows on the same hardware. The bench is test level L1 of [WP-V-07](../../06-validation/WP-V-07-vehicle-test-operations.md): no vehicle, no road.
+
+It is the one bench that [WP-H-06](../../04-hardware/WP-H-06-hardware-integration-verification.md) §2 defines for hardware, software and system integration. All stages are due by G3, because [WP-M-03](../../01-management/WP-M-03-project-plan.md) phase P4 depends on "G3; HIL bench ready".
 
 > [!NOTE]
 > Part availability and prices are **unconfirmed**. Check each part at the vendor before buying. A part not marked "confirmed" below has not been checked.
@@ -24,7 +26,7 @@ This plan builds the bench in stages, so the watchdog evidence comes from the sm
 
 | Stage | Goal | Adds | Unblocks |
 |---|---|---|---|
-| **B1: watchdog bench** | Run the existing HIL tests and the watchdog fault-injection test on a real STM32H7 panda | DUT panda, panda jungle, host PC Hardware evidence for the integrated watchdog and safety task (VS-FI-17, VS-SWQ-14 in its debug-build form); OI-3 of WP-W-08 for the jungle-based upstream tests |
+| **B1: watchdog bench** | Run the existing HIL tests and the watchdog fault-injection test on a real STM32H7 panda | DUT panda, panda jungle, host PC | Hardware evidence for the integrated watchdog and safety task (VS-FI-17, VS-SWQ-14 in its debug-build form); VS-SWQ-08/13/17/25, VS-FI-04/11 via `test_11…14` (jungle plays the car on bus 0; §5.5); OI-3 of WP-W-08 for the jungle-based upstream tests |
 | **B2: timing evidence** | Measure relay release independently of USB polling, ≥ 100 repetitions (WP-W-08 §4) | Oscilloscope or logic analyser on the SBU lines | Timing results usable as evidence for TSR-501 and D-1 |
 | **B3: vehicle bus** | Replay Corolla CAN traffic and inject bus faults. A candump capture of bus 0 also feeds the inter-frame gap scan ([`tools/can_gaps/`](../../../tools/can_gaps/README.md)) | 2–3 USB CAN interfaces, harness-equivalent wiring, 120 Ω terminations | VS-SWQ-01… (limits, timeouts), VS-FI-01…04, VS-FI-22 |
 | **B4: full WP-W-08 bench** | Supply, debug and SoC-side faults | Programmable supply, SWD probe, reference comma device, audio capture | VS-FI-06…08, -10, -11, -15, -16, -18; release-image repeats |
@@ -32,6 +34,12 @@ This plan builds the bench in stages, so the watchdog evidence comes from the sm
 Build B1 first. B2 is cheap and turns B1 results into evidence. B3 and B4 follow; the 100 Hz safety task and the RX timeout are already integrated (§1), so they are waiting only on hardware.
 
 ## 3. Architecture
+
+![Figure 3-1: HIL bench architecture with host PC, DUT panda, panda jungle, scope or logic analyser, USB CAN interfaces, programmable supply and SWD probe, each tagged with its build stage B1 to B4](figures/fig-hil-3-1-bench-architecture.svg)
+
+*Figure 3-1.* The bench by build stage: B1 elements are solid, elements added in B2–B4 and their links are dashed; part numbers refer to §4. Source: [`figures/fig-hil-3-1-bench-architecture.svg`](figures/fig-hil-3-1-bench-architecture.svg); change it together with §2 and §4.
+
+<details><summary>Text version of Figure 3-1</summary>
 
 ```
                  USB                    USB
@@ -47,6 +55,8 @@ Build B1 first. B2 is cheap and turns B1 results into evidence. B3 and B4 follow
   programmable supply ─► jungle / DUT 12 V                              (B4)
   SWD probe ─► DUT (debug header)                                       (B4)
 ```
+
+</details>
 
 The relay itself is not on the DUT: the panda drives the harness relay through the SBU lines. The jungle stands in for the harness. It reports the SBU voltages in `health()` (`ch1_sbu1_voltage`…), which is how the watchdog test sees the relay drive drop when the MCU resets.
 
@@ -81,7 +91,7 @@ From a LionDriver checkout, with the panda submodule at its pin:
 
 ```bash
 cd panda
-git checkout 8aa8671   # the current LionDriver pin (contains the watchdog tests added at 3859fa8 and test_12…test_14)
+git checkout c33343b   # the LionDriver pin, with the fault injection and the HIL tests test_10…15
 pip install -e .[dev]                                               # panda python lib, pytest, libusb1, pycapnp
 export PYTHONPATH=$PWD/../opendbc_repo:$PWD/..
 ```
@@ -124,7 +134,18 @@ HITL=1 python -m pytest -v tests/hitl/
 
 Upstream tests that need comma's multi-panda jig or SPI-only hardware will fail or skip; record which ones and why rather than treating every failure as a defect.
 
-### 5.5 What B1 does and does not show
+### 5.5 Reference build campaign
+
+`test_11_reference_lock.py`, `test_13_eps_fault.py`, `test_14_tx_rate.py` and `test_15_heartbeat_siren.py` skip unless `REFERENCE_BUILD=1` (`test_15` needs it for the car simulation only: the heartbeat-loss siren is in every build); `test_12_rx_timeout.py` runs on any build and adds the reference build's RX messages (`EPS_STATUS`, `PCM_CRUISE_2`) with `REFERENCE_BUILD=1`. All five need the jungle, which plays the car on bus 0. `test_15` times the revocation after the last heartbeat; the host cannot read the speaker, so the tester confirms by ear (or a microphone) that the siren sounds at the revocation (≤ 0.56 s after the last heartbeat, WP-S-04 T-07a) and records it in the bench log.
+
+```bash
+LIONDRIVER_REFERENCE=1 ./board/flash.py    # builds with -DLIONDRIVER_REFERENCE (debug build unless RELEASE=1) and flashes
+HITL=1 REFERENCE_BUILD=1 python -m pytest -v tests/hitl/test_11_reference_lock.py tests/hitl/test_12_rx_timeout.py tests/hitl/test_13_eps_fault.py tests/hitl/test_14_tx_rate.py tests/hitl/test_15_heartbeat_siren.py
+```
+
+Record each skipped test as **Not run**, never as Pass. Record the build type (debug or release) of the reference image in the test log; a debug reference build is not the release image (WP-W-08 §4). Flash the normal image again afterwards (§5.3).
+
+### 5.6 What B1 does and does not show
 
 | Shows | Does not show |
 |---|---|
@@ -148,16 +169,18 @@ WP-W-08 §4 asks for the worst value over ≥ 100 repetitions with random phase 
 
 | Bench test | WP-W-08 / WP-V-05 case | Requirement | Stage | State |
 |---|---|---|---|---|
-| `tests/hitl/test_10_hw_watchdog.py` modes 1–3 (tick hang budget includes one tick period) | VS-SWQ-14 (hang part), VS-FI-17 (main-loop and tick hang; interrupts disabled) | TSR-501, HWSR-501, HWSR-501c | B1 | Implemented on `liondriver/hw-watchdog` and panda#3, not run |
+| `tests/hitl/test_10_hw_watchdog.py` modes 1–3 (tick hang budget includes one tick period) | VS-SWQ-14 (hang part), VS-FI-17 (main-loop and tick hang; interrupts disabled) | TSR-501, HWSR-501, HWSR-501c | B1 | Implemented, in pin `b790fca`, not run |
 | `test_no_reset_without_fault` | VS-SWQ-14 (no false trip) | TSR-501 | B1 | Implemented, not run |
 | Timing campaign (§6) | VS-SWQ-14 timing, VS-FI-17 pass criterion | TSR-501, SG-01 budget | B2 | Planned |
 | Safety-task hang | VS-FI-17 | TSR-501 | B1 | `test_safety_task_hang` (mode 4, panda#3; in the pin), implemented, not run |
 | SPI interrupt hang | VS-FI-17 (SPI ISR) | TSR-501, TSR-502 | B4 (reference device: SPI) | Planned: needs another injection mode and the SPI path |
 | Window violation (early feed) | VS-SWQ-14 / HWSR-501b | HWSR-501b | B1 | `test_early_feed_window_violation` (mode 5, panda#3; in the pin), implemented, not run |
+| `tests/hitl/test_11_reference_lock.py` | VS-SWQ-17, VS-FI-11 | TSR-512, TSR-513 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` (§5.5) |
+| `tests/hitl/test_12_rx_timeout.py` | VS-SWQ-08, VS-FI-04 | TSR-401, TSR-306 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` for the reference RX set (§5.5) ([RX timeout](../../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md), [EPS fault](../../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md) change records) |
+| `tests/hitl/test_13_eps_fault.py` | VS-SWQ-13 | TSR-110 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` (§5.5) ([EPS fault change record](../../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md)) |
+| `tests/hitl/test_14_tx_rate.py` | VS-SWQ-25 (TSR-518 part) | TSR-518 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` (§5.5) ([TX rate change record](../../07-supporting/impact/change-2026-10-12-tx-rate-supervision.md)) |
+| `tests/hitl/test_15_heartbeat_siren.py` (added 2026-10-13, panda `c33343b`) | VS-SWQ-10 (revocation timing and siren on heartbeat loss), VS-FI-10 (a) | TSR-407, TSR-516 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` for the car simulation (§5.5); siren confirmed by ear |
 | Upstream `tests/hitl/test_1…9` | Regression | — | B1 | Existing, not run on LionDriver hardware |
-| `tests/hitl/test_12_rx_timeout.py` | VS-SWQ-08 | TSR-401 | Not assigned | Implemented, not run ([RX timeout](../../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md), [EPS fault](../../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md) change records) |
-| `tests/hitl/test_13_eps_fault.py` | VS-SWQ-13 | TSR-110 | Not assigned | Implemented, not run ([EPS fault change record](../../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md)) |
-| `tests/hitl/test_14_tx_rate.py` | VS-SWQ-25 (rate part) | TSR-518 | Not assigned | Implemented, not run ([TX rate change record](../../07-supporting/impact/change-2026-10-12-tx-rate-supervision.md)) |
 | Corolla log replay, limit and timeout cases | VS-SWQ-01…, VS-FI-01…04 | TSR-1xx, TSR-401…406 | B3 | Planned |
 | Power dips, resets, SWD memory faults, heartbeat and SPI faults | VS-FI-06…08, -10, -11, -15, -16, -18 | TSR-407…413, TSR-505, TSR-503, TSR-706 | B4 | Planned |
 

@@ -4,9 +4,9 @@
 |---|---|
 | Work product | WP-M-14 ISO 26262-6 software lifecycle implementation specification (future work) |
 | Standard reference | ISO 26262-6:2018 Clauses 5–11 and Annex C; interfaces to ISO 26262-2, -3, -4, -8, -9. Informative links to ISO 21448:2022, ISO/SAE 21434:2021, ISO/PAS 8800:2024, UL 4600 |
-| Version | 0.2 (aligned with the software work products at `682f184`: pre-entry track §2.3, readiness snapshot §3.2, SWSR field mapping §4.2, trace engine state §8.2, rules §16, alignment audit RR-2026-008 (OI-6); 2026-10-12). 0.1 |
+| Version | 0.3 (merge of PR #47 with the base: activation decision renumbered D-09 → D-14, since the base uses D-08…D-13; review record renumbered RR-2026-008 → RR-2026-009; CFG-001 named by generation (E210); 2026-10-13). 0.2 (aligned with the software work products at `682f184`: pre-entry track §2.3, readiness snapshot §3.2, SWSR field mapping §4.2, trace engine state §8.2, rules §16, alignment audit RR-2026-009 (OI-6); 2026-10-12). 0.1 |
 | Status | Draft — **implementation deferred.** This is a plan. It does not authorize, start or evidence any Part 6 activity |
-| Activation | Not authorized. Needs decision D-09 ([WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required)) and an approved entry baseline (§3) |
+| Activation | Not authorized. Needs decision D-14 ([WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required)) and an approved entry baseline (§3) |
 | ASIL / scope | Software of the item. Highest proposed ASIL is C (SG-01, [WP-C-03](../02-concept/WP-C-03-hara.md)); ratings are unconfirmed until CR-02 |
 | Author | Project maintainer (specification). Adapted to this repository with AI assistance (Claude Code); the adaptation is AI-generated and has not been reviewed |
 | Reviewer(s) | TBD (I1, external while the project has a single maintainer; [WP-M-01 T-09](WP-M-01-assurance-strategy.md#5-tailoring)) |
@@ -71,7 +71,7 @@ Software-level engineering is already under way before activation. At `682f184`:
 - safety mechanisms derived from proposed TSRs and SWSRs (hardware watchdog, RX timeout, TX whitelist, safety-mode lock, heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are integrated in the reference build. Each has a CT-1 change record in [`07-supporting/impact/`](../07-supporting/impact/README.md), and none is verified on hardware or independently reviewed;
 - a design note ([DN-01](../05-software/design-notes/DN-01-tx-rate-supervision.md)) and a HIL bench plan ([`hil-bench/`](../05-software/hil-bench/README.md), D-04) exist.
 
-This work is legitimate engineering, and it is what makes activation possible. It is governed by these rules until D-09. The project maintainer confirmed them as written on 2026-10-12 ([RR-2026-008](../05-software/reviews/RR-2026-008.md) POL-1, decided by delegation "go with your recommendation"):
+This work is legitimate engineering, and it is what makes activation possible. It is governed by these rules until D-14. The project maintainer confirmed them as written on 2026-10-12 ([RR-2026-009](../05-software/reviews/RR-2026-009.md) POL-1, decided by delegation "go with your recommendation"):
 
 | Rule | Consequence |
 |---|---|
@@ -101,7 +101,7 @@ Reviewers and independence levels are those of [WP-M-06](WP-M-06-confirmation-me
 
 ### 3.1 Entry criteria
 
-Part 6 implementation (Phases B–F, §15) starts only when the project maintainer has recorded, as decision D-09, approval of an **entry baseline**. The entry baseline is a git revision plus the approved versions of the work products below, with any exception justified in writing.
+Part 6 implementation (Phases B–F, §15) starts only when the project maintainer has recorded, as decision D-14, approval of an **entry baseline**. The entry baseline is a git revision plus the approved versions of the work products below, with any exception justified in writing.
 
 | # | Prerequisite | Work product | Minimum state for entry | Confirmation measure |
 |---|---|---|---|---|
@@ -138,7 +138,7 @@ This is an inventory of what exists. It is **not** the Phase A gap assessment, a
 | Safety plan, CM, change, requirements management, review procedure | Yes | Draft | CT-1 change records are in use (9 records), so change control runs in practice. Single maintainer; I1 needs an external reviewer (T-09) |
 | Tool classification | Yes | Draft | GAP-34: no tool qualified |
 | Software safety requirements | Yes ([WP-W-02](../05-software/WP-W-02-software-safety-requirements.md)) | Draft, v0.12 | 134 SWSRs, all `proposed`; TSR → SWSR coverage checked (K4). Field gaps against §4.2 listed there |
-| Software architecture, analysis, unit design | Yes (WP-W-03…05, DN-01) | Draft | Partly updated for the integrated changes; stale sections marked and listed in [RR-2026-008](../05-software/reviews/RR-2026-008.md) |
+| Software architecture, analysis, unit design | Yes (WP-W-03…05, DN-01) | Draft | Partly updated for the integrated changes; stale sections marked and listed in [RR-2026-009](../05-software/reviews/RR-2026-009.md) |
 | Software verification specifications | Yes (WP-W-06…08) | Draft (specification); not executed | 96 of 134 SWSRs are cited by a `VS-SWI` or `VS-SWQ` case; the other 38 are mostly QM host requirements (§17) |
 | Existing software tests | Yes, upstream assets plus LionDriver tests in the opendbc and panda forks | Not reviewed as evidence | Safety tests, MISRA and mutation run in fork CI ([`safety.yaml`](../../.github/workflows/safety.yaml)); line coverage only (GAP-13); host builds, not target (GAP-13, GAP-41) |
 | Target test environment | Plan only ([`hil-bench/`](../05-software/hil-bench/README.md)) | Draft | No bench exists (D-04, GAP-30) |
@@ -360,7 +360,7 @@ The Part 6 lifecycle runs once at platform level. Configuration-specific assuran
 | Tier | Record classification | Meaning |
 |---|---|---|
 | Upstream-compatible | `upstream-compatible` | Supported by the upstream code. No LionDriver evaluation. **No assurance claim** |
-| LionDriver-evaluated | `liondriver-evaluated` | Analysed by LionDriver. Evidence in progress. Today only CFG-001 (2020 Corolla, TSS2), `in-progress` |
+| LionDriver-evaluated | `liondriver-evaluated` | Analysed by LionDriver. Evidence in progress. Today only CFG-001 (Toyota Corolla, 12th generation (E210), TSS 2.0), `in-progress` |
 | Assurance-supported | `assurance-supported` | Has at least one claim with accepted evidence ([`case/README.md` §5](../case/README.md)). None today |
 
 ### 7.2 Records
@@ -519,7 +519,7 @@ Meeting these criteria shows that the **framework** exists. It does not show ISO
 
 | Phase | Content | Entry condition | Maps to |
 |---|---|---|---|
-| A — Readiness and gap assessment | Inspect the repository, prerequisites, architecture, toolchain and verification evidence at the entry baseline; produce the Part 6 gap assessment and the implementation plan | D-09 authorizes Phase A; §3.1 E-01…E-05 at least `In review` | Late P2 / G2 |
+| A — Readiness and gap assessment | Inspect the repository, prerequisites, architecture, toolchain and verification evidence at the entry baseline; produce the Part 6 gap assessment and the implementation plan | D-14 authorizes Phase A; §3.1 E-01…E-05 at least `In review` | Late P2 / G2 |
 | B — Work product infrastructure | Register, schemas, templates, status model, baselines, trace kinds, CI checks | Phase A report approved; entry baseline approved (all of §3.1, or justified exceptions) | P3 / G3 |
 | C — Requirements and architecture | Clauses 6 and 7 with approved system inputs | Phase B acceptance criteria 1–3 met | P3 / G3 |
 | D — Unit design and verification | Clauses 8 and 9 | SWSRs and architecture approved for the units in scope | P3 / G3 |
@@ -530,7 +530,7 @@ Phases advance on approved outputs, never because templates or scripts exist. Ph
 
 ## 16. Rules until activation
 
-Until D-09 is recorded:
+Until D-14 is recorded:
 
 1. This document is kept and maintained as the Part 6 implementation specification.
 2. Pre-entry engineering (§2.3) continues under rules P-01…P-05. No verification results or approvals are recorded except from work that was actually performed and reviewed, and no pre-entry artifact is presented as Part 6 progress.
@@ -542,9 +542,9 @@ Until D-09 is recorded:
 
 | ID | Item | Owner |
 |---|---|---|
-| OI-1 | Record decision D-09 (authorize Phase A) when E-01…E-05 reach `In review` | Project maintainer |
+| OI-1 | Record decision D-14 (authorize Phase A) when E-01…E-05 reach `In review` | Project maintainer |
 | OI-2 | Check every clause reference and the principal work product lists in §4 against the licensed ISO 26262-6:2018 | Reviewer |
 | OI-3 | Decide whether to adopt the §2.2 status extension (Planned, Verified, Superseded) project-wide or for Part 6 records only | Project maintainer |
 | OI-4 | Decide the store for raw verification results (CI artifacts with retention vs a committed results folder) | Project maintainer |
 | OI-5 | Independent (I1) review of this specification | External reviewer |
-| OI-6 | Close the judgement findings F-01…F-32 of the software alignment audit [RR-2026-008](../05-software/reviews/RR-2026-008.md), in particular F-11, F-14, F-16, F-19, F-20 (documents still describing `8b8c6ae`) | Safety engineer, SW lead |
+| OI-6 | Close the judgement findings F-01…F-32 of the software alignment audit [RR-2026-009](../05-software/reviews/RR-2026-009.md), in particular F-11, F-14, F-16, F-19, F-20 (documents still describing `8b8c6ae`) | Safety engineer, SW lead |

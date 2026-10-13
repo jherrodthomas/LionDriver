@@ -1,0 +1,841 @@
+# yaml-language-server: $schema=../schema/fmea.schema.json
+# DFMEA of the safety-relevant item hardware at BL-002, per RT-1.
+# - Basis: block-level analysis in assurance WP-H-02 (hardware design) and WP-H-03 (qualitative FMEDA), DFA WP-A-03, and
+#   the BL-002 firmware. LionDriver has no schematic or BOM for the comma 3X (WP-H-02 UK-01, UK-02), so causes are at block
+#   level and occurrence cannot use failure-rate data.
+# - Occurrence: COTS device in volume field use, but no supplier reliability evidence and not known to be automotive
+#   qualified: O=3 for permanent component faults, 2 where silicon ECC or a boot check limits the cause, 4-5 where the
+#   cause is driven by the vehicle environment or by owner installation.
+# - Detection: LionDriver has no hardware verification yet (no HIL bench, no qualification, WP-H-06/07): D=10 where no
+#   test is defined, D=8-9 where a test exists but has not been run or only exercises the software reaction.
+# - In-field diagnostics are listed as safety_mechanisms (they reduce S or O through the design, not D; RT-1 §3).
+# Every failure mode reaches a HARA hazard, so S=10 and AP is H throughout; the value of this revision is the cause and
+# action list, not the AP distribution.
+schema_version: 1
+analysis:
+  id: DFM
+  type: dfmea
+  title: "DFMEA — device, integrated panda, harness, vehicle interfaces"
+  revision: "0.2"
+  status: draft
+  baseline: BL-002
+  rating_tables: RT-1
+  scope: "Safety-relevant hardware of AC-001 at BL-002: comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03)."
+  team:
+    - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
+    - {name: Claude (AI assistant), role: "Drafting assistance; ratings require human review"}
+  references:
+    - assurance/08-analyses/fmea/fmea-plan.md
+    - assurance/08-analyses/fmea/rating-tables.md
+    - assurance/04-hardware/WP-H-02-hardware-design.md
+    - assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
+    - assurance/08-analyses/WP-A-03-dependent-failure-analysis.md
+  updated: 2026-10-12
+structure:
+- id: DFM-SE-001
+  name: 'Item hardware: comma 3X with integrated panda, Toyota harness and relay box, installed in a 2020 Corolla LE'
+  kind: system
+  parent: null
+  description: Hardware part of FSC elements EL-07 (panda) and EL-08 (harness); System FMEA SFM-SE-003/004
+- id: DFM-SE-002
+  name: 'Safety MCU STM32H725: core, flash, SRAM'
+  kind: subsystem
+  parent: DFM-SE-001
+  description: WP-H-02 HE-01..HE-03
+- id: DFM-SE-003
+  name: MCU clock and independent watchdog (HSE, PLL, LSI, IWDG)
+  kind: component
+  parent: DFM-SE-002
+  description: 'WP-H-02 HE-04, HE-06; IWDG used from BL-002 (panda#1, #3)'
+- id: DFM-SE-004
+  name: MCU power supply and supervision (board regulator, SMPS/LDO, BOR, PVD)
+  kind: component
+  parent: DFM-SE-001
+  description: WP-H-02 HE-05, HE-14; regulator unknown (UK-01, UK-05)
+- id: DFM-SE-005
+  name: CAN transceivers XCVR1-4 and enables
+  kind: component
+  parent: DFM-SE-001
+  description: WP-H-02 HE-07, §3.3
+- id: DFM-SE-006
+  name: Intercept relay and relay driver
+  kind: component
+  parent: DFM-SE-001
+  description: WP-H-02 HE-08; relay part and coil supply unknown (UK-03)
+- id: DFM-SE-007
+  name: Harness, connectors, SBU orientation and ignition sense
+  kind: interface
+  parent: DFM-SE-001
+  description: WP-H-02 HE-09, HE-10
+- id: DFM-SE-008
+  name: 'SoC-MCU interface: SPI link, STM_RST_N, STM_BOOT0'
+  kind: interface
+  parent: DFM-SE-001
+  description: WP-H-02 HE-11, HE-12
+- id: DFM-SE-009
+  name: SoC-independent acoustic warning path (siren)
+  kind: component
+  parent: DFM-SE-001
+  description: WP-H-02 HE-17; topology unknown (UK-07)
+- id: DFM-SE-010
+  name: Enclosure, windscreen mount and cooling (fan, DTS)
+  kind: component
+  parent: DFM-SE-001
+  description: WP-H-02 HE-15, HE-16
+functions:
+- id: DFM-FN-001
+  element: DFM-SE-002
+  description: Execute the safety model and hold its code, constants and state without corruption
+  requirements:
+  - FSR-002
+  - FSR-005
+  - FSR-019
+- id: DFM-FN-002
+  element: DFM-SE-003
+  description: Provide an accurate time base for all timeouts, and reset the MCU (releasing the relay) within 0.1 s if execution stops
+  requirements:
+  - FSR-007
+  - FSR-038
+- id: DFM-FN-003
+  element: DFM-SE-004
+  description: Supply the MCU within its operating range, or hold it in reset
+  requirements:
+  - FSR-002
+  - FSR-038
+- id: DFM-FN-004
+  element: DFM-SE-005
+  description: Transmit and receive on buses 0, 1 and 2 without disturbing the vehicle bus
+  requirements:
+  - FSR-005
+  - FSR-037
+- id: DFM-FN-005
+  element: DFM-SE-006
+  description: Separate the camera from the car bus only while energised; restore the stock camera path whenever de-energised
+  requirements:
+  - FSR-008
+  - FSR-037
+  - FSR-038
+- id: DFM-FN-006
+  element: DFM-SE-007
+  description: Connect the device to the vehicle buses, power and ignition, and report harness orientation correctly
+  requirements:
+  - FSR-010
+  - FSR-038
+- id: DFM-FN-007
+  element: DFM-SE-008
+  description: Carry commands, CAN frames and heartbeat between SoC and MCU intact; keep the MCU running the signed application
+  requirements:
+  - FSR-007
+  - FSR-010
+- id: DFM-FN-008
+  element: DFM-SE-009
+  description: Sound a warning when the SoC is lost while engaged, independently of the SoC audio
+  requirements:
+  - FSR-015
+- id: DFM-FN-009
+  element: DFM-SE-010
+  description: Keep the device mechanically secured and within its thermal operating range
+  requirements:
+  - FSR-002
+  - FSR-015
+failure_modes:
+- id: DFM-001
+  element: DFM-SE-002
+  function: DFM-FN-001
+  failure_mode: Safety check computes a wrong result (permanent CPU or data-path fault)
+  guideword: degraded
+  effects:
+  - level: local
+    description: Torque/acceleration limit or controls_allowed evaluated wrongly
+  - level: next_higher
+    description: Out-of-envelope or unauthorised command passes the panda
+  - level: end
+    description: Uncontrollable steering or unintended acceleration
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-001.C1
+    description: Permanent fault in the Cortex-M7 core or bus matrix; single core, no lockstep, no CPU self-test
+    element: DFM-SE-002
+    prevention_controls:
+    - &id001
+      description: COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02)
+      ref: assurance/04-hardware/WP-H-02-hardware-design.md
+    detection_controls: &id002
+    - description: No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04)
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-001
+  safety_mechanisms:
+  - description: None in the MCU at BL-002. Host compares controls_allowed after about 2 s (QM, does not check limits). EPS and PCM own limits (AOU-01, AOU-05)
+    ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
+  notes: WP-H-03 FM-CPU-01. High diagnostic coverage is not credible without hardware redundancy.
+- id: DFM-002
+  element: DFM-SE-002
+  function: DFM-FN-001
+  failure_mode: Code or limit constants corrupted in flash during operation
+  guideword: degraded
+  effects:
+  - level: local
+    description: Wrong limit value or wrong instruction
+  - level: next_higher
+    description: Panda enforces wrong limits
+  - level: end
+    description: Steering or acceleration beyond the envelope
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-002.C1
+    description: Multi-bit flash error or cell degradation; double-error ECC flag not handled; image signature checked at boot only
+    element: DFM-SE-002
+    prevention_controls:
+    - *id001
+    - description: Bootstub signature check at power-up (bootstub.c:47-72); flash ECC corrects single bits in silicon
+      ref: panda/board/bootstub.c
+    detection_controls: *id002
+    occurrence: 2
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-002
+  safety_mechanisms:
+  - description: Boot-time signature only. Periodic code CRC exists on panda branch liondriver/g1-layer1 (TSR-MCU-09), not pinned at BL-002
+    ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
+  notes: WP-H-03 FM-FLS-02.
+- id: DFM-003
+  element: DFM-SE-002
+  function: DFM-FN-001
+  failure_mode: Safety state in SRAM corrupted (controls_allowed, limits, counters, stack)
+  guideword: degraded
+  effects:
+  - level: local
+    description: Wrong authority or limit decision, or crash
+  - level: next_higher
+    description: Unauthorised or out-of-envelope command passes
+  - level: end
+    description: Unintended steering or acceleration
+    hazard: HZ-001
+    severity: 10
+  - level: end
+    description: Contributes to HZ-002
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-003.C1
+    description: Double-bit soft error or permanent SRAM fault; RAMECC monitors not configured, ECC interrupt not registered
+    element: DFM-SE-002
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-002
+  - id: DFM-003.C2
+    description: Wrong-address write by the SPI DMA (no MPU)
+    element: DFM-SE-002
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-002
+  safety_mechanisms:
+  - description: None at BL-002. RAMECC handling, redundant storage and start-up RAM test exist on panda branch liondriver/g1-layer1 (TSR-MCU-07, -08, -10), not pinned
+    ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
+  notes: WP-H-03 FM-RAM-02/03, FM-CPU-07.
+- id: DFM-004
+  element: DFM-SE-003
+  function: DFM-FN-002
+  failure_mode: MCU execution stops with the relay energised
+  guideword: stuck
+  effects:
+  - level: local
+    description: Checks, TX and forwarding stop; relay holds last state
+  - level: next_higher
+    description: Camera path stays cut; no stock PCS messages to the car
+  - level: end
+    description: Stock AEB unavailable until power cycle
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-004.C1
+    description: Hang in an ISR or main loop, unused vector to Default_Handler, or assert_fatal loop
+    element: DFM-SE-003
+    prevention_controls:
+    - description: 'IWDG (LSI), 90 ms nominal, window mode, started on every relay drive and fed only after safety-task and main-loop progress (BL-002, panda#1, #3);
+        a reset floats the relay GPIO'
+      ref: panda/board/drivers/hw_watchdog.h
+    detection_controls:
+    - description: Watchdog HIL test with injected hangs (FAULT_INJECTION build); targeted, not yet run (no HIL bench, D-04)
+      test: panda/tests/hitl/test_10_hw_watchdog.py
+    occurrence: 3
+    detection: 8
+    ap: H
+    actions:
+    - DFM-ACT-003
+  safety_mechanisms:
+  - description: IWDG reset releases the relay if the drive circuit is de-energise-to-safe (HWSR-502, unconfirmed, UK-06)
+    ref: panda/board/drivers/hw_watchdog.h
+  notes: WP-H-03 FM-CPU-03/05. Before BL-002 there was no reset path (O was 7).
+- id: DFM-005
+  element: DFM-SE-003
+  function: DFM-FN-002
+  failure_mode: MCU time base wrong
+  guideword: drift
+  effects:
+  - level: local
+    description: All timeouts and the CAN bit timing shift
+  - level: next_higher
+    description: RX and heartbeat timeouts longer than specified; CAN errors
+  - level: end
+    description: Stale data used beyond the detection budget
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-008
+    hazard: HZ-008
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-005.C1
+    description: HSE crystal drift or PLL misconfiguration; no cross-check against an independent oscillator
+    element: DFM-SE-003
+    prevention_controls:
+    - *id001
+    - description: Clock security system on HSE loss (NMI, reset); register readback of RCC, report-only
+      ref: panda/board/stm32h7/clock.h
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-004
+  notes: WP-H-03 FM-CLK-02/03. HSE loss itself is covered by CSS (FM-CLK-01).
+- id: DFM-006
+  element: DFM-SE-003
+  function: DFM-FN-002
+  failure_mode: Watchdog does not reset the MCU when execution stops
+  guideword: loss
+  effects:
+  - level: local
+    description: 'Latent: the hang reaction is missing'
+  - level: next_higher
+    description: A later hang leaves the relay energised
+  - level: end
+    description: Stock AEB unavailable until power cycle
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-006.C1
+    description: LSI oscillator failure or IWDG fault; reset path never proven in operation
+    element: DFM-SE-003
+    prevention_controls:
+    - *id001
+    detection_controls:
+    - description: Watchdog HIL test proves the reset path on the bench; not yet run
+      test: panda/tests/hitl/test_10_hw_watchdog.py
+    occurrence: 2
+    detection: 8
+    ap: H
+    actions:
+    - DFM-ACT-003
+  notes: WP-H-03 FM-CLK-04. A latent fault of a safety mechanism (LFM).
+- id: DFM-007
+  element: DFM-SE-004
+  function: DFM-FN-003
+  failure_mode: MCU operates in the brown-out zone
+  guideword: insufficient
+  effects:
+  - level: local
+    description: Undefined logic behaviour, flash read errors
+  - level: next_higher
+    description: Wrong safety decisions while still running
+  - level: end
+    description: Unintended steering or acceleration
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-007.C1
+    description: Vehicle supply dip (cranking, alternator fault) with BOR level not set and PVD not enabled
+    element: DFM-SE-004
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 5
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-005
+  safety_mechanisms:
+  - description: None at BL-002 (PVD handler stub; BOR level unknown, UK-04)
+    ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
+  notes: WP-H-03 FM-PWR-02; WP-A-03 DFI-01, DFI-06 (common cause with the EPS and the SoC).
+- id: DFM-008
+  element: DFM-SE-005
+  function: DFM-FN-004
+  failure_mode: Car-side transceiver holds the bus dominant
+  guideword: stuck
+  effects:
+  - level: local
+    description: Vehicle CAN bus 0 blocked
+  - level: next_higher
+    description: EPS, PCM and ADAS messages lost
+  - level: end
+    description: Loss of assist and stock functions
+    hazard: HZ-004
+    severity: 10
+  - level: end
+    description: Contributes to HZ-011
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-008.C1
+    description: XCVR1 TX driver fault or TXD stuck low
+    element: DFM-SE-005
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-006
+  safety_mechanisms:
+  - description: Transceiver dominant-timeout (part dependent, unknown); FDCAN error counters read, core reset on bus-off; no safety reaction
+    ref: panda/board/drivers/fdcan.h
+  notes: WP-H-03 FM-CAN-01. Vehicle ECUs detect the bus failure themselves.
+- id: DFM-009
+  element: DFM-SE-005
+  function: DFM-FN-004
+  failure_mode: Car-side transceiver receives nothing
+  guideword: open
+  effects:
+  - level: local
+    description: No RX of vehicle messages
+  - level: next_higher
+    description: Panda RX checks time out; controls withdrawn
+  - level: end
+    description: Item disengages; loss of lateral control
+    hazard: HZ-004
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-009.C1
+    description: XCVR1 RX open or stuck recessive
+    element: DFM-SE-005
+    prevention_controls:
+    - *id001
+    detection_controls:
+    - description: Per-message RX timeout test (opendbc, CI) verifies the reaction in software, not the transceiver fault
+      test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+    occurrence: 3
+    detection: 9
+    ap: H
+    actions:
+    - DFM-ACT-006
+  safety_mechanisms:
+  - description: RX timeout after 5 periods (BL-002, about 0.16 s) withdraws controls; SoC alerts on panda state
+    ref: opendbc_repo/opendbc/safety/safety.h
+  notes: WP-H-03 FM-CAN-02. Detected and safe-direction; severity stays 10 because the end effect is loss of lateral control while engaged.
+- id: DFM-010
+  element: DFM-SE-006
+  function: DFM-FN-005
+  failure_mode: Relay stays intercepting when commanded released
+  guideword: stuck
+  effects:
+  - level: local
+    description: Camera disconnected from the car while the panda forwards nothing or is off
+  - level: next_higher
+    description: Stock PCS and LKA messages do not reach the car
+  - level: end
+    description: Stock AEB unavailable
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-010.C1
+    description: Relay contacts welded in the intercept position
+    element: DFM-SE-006
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-007
+  - id: DFM-010.C2
+    description: Relay driver output (MCU pin or transistor) stuck on
+    element: DFM-SE-006
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-007
+  safety_mechanisms:
+  - description: 'None: no relay readback (GAP-12)'
+    ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
+  notes: 'WP-H-03 FM-REL-02/04: a single-point path for the PCS goal that no firmware change can close.'
+- id: DFM-011
+  element: DFM-SE-006
+  function: DFM-FN-005
+  failure_mode: Relay stays released when commanded to intercept
+  guideword: stuck
+  effects:
+  - level: local
+    description: Stock camera LKA/ACC messages reach the car together with panda TX
+  - level: next_higher
+    description: Conflicting steering and ACC commands
+  - level: end
+    description: Erratic or excessive steering or braking
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-011.C1
+    description: Relay coil or driver open, or contacts welded in the stock position
+    element: DFM-SE-006
+    prevention_controls:
+    - *id001
+    detection_controls:
+    - description: Relay-malfunction tests in the opendbc suite exercise the software reaction, not the relay
+      test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+    occurrence: 3
+    detection: 9
+    ap: H
+    actions:
+    - DFM-ACT-007
+  safety_mechanisms:
+  - description: 'Relay malfunction detection: stock camera message on the car side after a 1 s grace blocks all TX (safety.h stock_ecu_check)'
+    ref: opendbc_repo/opendbc/safety/safety.h
+  notes: WP-H-03 FM-REL-01.
+- id: DFM-012
+  element: DFM-SE-007
+  function: DFM-FN-006
+  failure_mode: Harness disconnected or intermittent while driving
+  guideword: connection
+  effects:
+  - level: local
+    description: Panda loses CAN, power or relay drive
+  - level: next_higher
+    description: Item disengages; relay releases if the coil loses drive
+  - level: end
+    description: Loss of lateral control while engaged
+    hazard: HZ-004
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-012.C1
+    description: Connector not fully latched at installation, or vibration loosens it
+    element: DFM-SE-007
+    prevention_controls:
+    - description: Owner installation per comma instructions; no LionDriver installation check yet (WP-O-01)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    detection_controls: *id002
+    occurrence: 5
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-008
+  safety_mechanisms:
+  - description: RX timeouts and host canBusMissing alert
+    ref: opendbc_repo/opendbc/safety/safety.h
+  notes: WP-H-03 FM-HAR-01; WP-A-03 DFI-20.
+- id: DFM-013
+  element: DFM-SE-007
+  function: DFM-FN-006
+  failure_mode: Stock camera path open inside the relay box
+  guideword: open
+  effects:
+  - level: local
+    description: Camera disconnected from the car
+  - level: next_higher
+    description: No stock PCS messages to the car
+  - level: end
+    description: Stock AEB unavailable
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-013.C1
+    description: Open circuit in the relay box stock path (solder joint, contact)
+    element: DFM-SE-006
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-008
+  notes: WP-H-03 FM-HAR-04.
+- id: DFM-014
+  element: DFM-SE-007
+  function: DFM-FN-006
+  failure_mode: Ignition sense reads on when the ignition is off
+  guideword: short
+  effects:
+  - level: local
+    description: Heartbeat timeout uses the 5 s ignition-on value
+  - level: next_higher
+    description: Slower withdrawal after SoC loss; device stays powered
+  - level: end
+    description: Longer actuation window after SoC loss
+    hazard: HZ-002
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-014.C1
+    description: Ignition sense line shorted
+    element: DFM-SE-007
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-008
+  notes: WP-H-03 FM-IGN-02. Line open is the safe direction (2 s timeout).
+- id: DFM-015
+  element: DFM-SE-008
+  function: DFM-FN-007
+  failure_mode: Corrupted SoC-to-MCU transfer accepted
+  guideword: emc
+  effects:
+  - level: local
+    description: A command or CAN frame is changed in transit and passes the 8-bit XOR
+  - level: next_higher
+    description: Wrong command executed; a TX frame still passes the envelope checks
+  - level: end
+    description: Wrong in-envelope actuation, or a wrong configuration request
+    hazard: HZ-002
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-015.C1
+    description: Bit errors on the SPI link (EMC, signal integrity); 8-bit XOR only, no sequence counter
+    element: DFM-SE-008
+    prevention_controls:
+    - *id001
+    - description: 8-bit XOR on header and data, NACK on mismatch (drivers/spi.h:97-138); reference lock limits what a corrupted 0xdc can select (reference build
+        only)
+      ref: panda/board/drivers/spi.h
+    detection_controls: *id002
+    occurrence: 4
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-009
+  notes: WP-H-03 FM-SPI-01; GAP-10.
+- id: DFM-016
+  element: DFM-SE-008
+  function: DFM-FN-007
+  failure_mode: MCU forced into the ROM bootloader or reflashed by the SoC
+  guideword: connection
+  effects:
+  - level: local
+    description: The MCU runs no or unverified safety firmware
+  - level: next_higher
+    description: Without a safety model, or with an unsigned image
+  - level: end
+    description: Any actuation hazard (unverified image), or loss of function
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-016.C1
+    description: SoC drives STM_BOOT0/STM_RST_N (fault or compromise); no RDP/WRP; pandad recovery flashes a development bootstub
+    element: DFM-SE-008
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 4
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-010
+  safety_mechanisms:
+  - description: Bootstub signature check, but the debug key is accepted in debug builds and RDP/WRP are not set (GAP-24, GAP-38). D-09/D-10 decided, not implemented
+    ref: panda/board/bootstub.c
+  notes: WP-H-03 FM-BT0-01; LD-DES-001.
+- id: DFM-017
+  element: DFM-SE-009
+  function: DFM-FN-008
+  failure_mode: No SoC-independent warning on SoC loss
+  guideword: loss
+  effects:
+  - level: local
+    description: Siren silent
+  - level: next_higher
+    description: Driver not warned when control is withdrawn after SoC loss
+  - level: end
+    description: Loss of control without timely warning
+    hazard: HZ-004
+    severity: 10
+  - level: end
+    description: Contributes to HZ-012
+    hazard: HZ-012
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-017.C1
+    description: Siren shares the codec, amplifier or speaker with the SoC audio, which the faulty SoC powers down
+    element: DFM-SE-009
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 5
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-011
+  - id: DFM-017.C2
+    description: Siren path fault stays latent (no self-test)
+    element: DFM-SE-009
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 4
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-011
+  notes: WP-H-03 FM-SIR-01; WP-A-03 DFI-23.
+- id: DFM-018
+  element: DFM-SE-010
+  function: DFM-FN-009
+  failure_mode: MCU runs above its temperature rating
+  guideword: thermal
+  effects:
+  - level: local
+    description: Timing and memory errors; possible resets
+  - level: next_higher
+    description: Unreliable safety checks or loss of function
+  - level: end
+    description: Unintended actuation or loss of control
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-004
+    hazard: HZ-004
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-018.C1
+    description: Sun-loaded windscreen enclosure plus SoC heat; fan stall; MCU temperature grade unknown (UK-02)
+    element: DFM-SE-010
+    prevention_controls:
+    - *id001
+    - description: Host thermal policy and fan check (QM); MCU DTS read but no firmware reaction
+      ref: panda/board/stm32h7/lldts.h
+    detection_controls: *id002
+    occurrence: 4
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-012
+  notes: WP-H-03 FM-TMP-01; WP-A-03 DFI-04.
+actions:
+- id: DFM-ACT-001
+  kind: prevention
+  description: Add a CPU self-test (vendor STL if available for STM32H7) at start-up and periodically, or argue the ASIL B target without CPU coverage (WP-H-03 finding
+    4)
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-002
+  kind: design_change
+  description: Integrate the G1 layer 1 MCU measures (RAMECC handling, redundant storage, code CRC, start-up RAM test, fault escalation) from panda branch liondriver/g1-layer1
+    after review and HIL evidence
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-003
+  kind: detection
+  description: Run the watchdog HIL test (test_10_hw_watchdog) on the bench and confirm the relay releases on reset (HWSR-502, UK-06) (D-04)
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-004
+  kind: design_change
+  description: Cross-check the HSE-derived time base against LSI or HSI and react on deviation (HWSR-504a)
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-005
+  kind: design_change
+  description: Set the BOR level in the option bytes and enable PVD with a safe-state reaction (WP-H-02 DC-07); read the option bytes of a reference device (UK-04)
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-006
+  kind: design_change
+  description: Disable a transceiver and enter the safe state on persistent error or bus-off (HWSR-508, WP-H-02 DC-04)
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-007
+  kind: design_change
+  description: Add relay readback in a LionDriver harness adapter (WP-H-02 DC-03) and confirm the de-energised contact state (UK-03)
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-008
+  kind: detection
+  description: Define the installation check, including a stock PCS/AEB function check and a harness latch check (WP-O-01, TSR-805)
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-009
+  kind: design_change
+  description: Replace the 8-bit XOR with a CRC and add a sequence counter on the SoC-MCU link (GAP-10)
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-010
+  kind: design_change
+  description: 'Implement D-09/D-10: LionDriver signing key, no debug key in release builds, WRP + RDP1, remove the development-bootstub recovery (LD-DES-001 DR-10..DR-16)'
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-011
+  kind: detection
+  description: Confirm the siren audio topology (UK-07) and add a start-up siren self-test (TSR-515/516)
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-012
+  kind: design_change
+  description: React to MCU DTS out of range with the safe state (HWSR-509, DC-10); obtain the MCU temperature grade (UK-02)
+  owner: Jherrod Thomas
+  status: open

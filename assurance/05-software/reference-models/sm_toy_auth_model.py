@@ -3,16 +3,16 @@
 
 Written from the specification layer only, not from the C:
   - the state-machine record   assurance/05-software/state-machines/sm-toy-auth.yaml (transition ids, events, guards)
-  - the SWSR texts              WP-W-02 / trace/items/swsr.yaml (SWSR-301, 302, 306, 311, 401, 402, 405(c) v0.16, 406, 518)
+  - the SWSR texts              WP-W-02 / trace/items/swsr.yaml (SWSR-301, 302, 306, 311, 401, 402, 405(c) v0.20, 406, 408, 518)
   - the TX rate design          05-software/design-notes/DN-01-tx-rate-supervision.md §4 and §10
   - configuration data          WP-W-09 CD-03 (timeout), CD-04 (RX set), DN-01 §4.1 (budgets); DLC from the DBC
 Where these sources are silent the model makes a modelling assumption (MA-xx in README.md). Each place where the
 model may differ from the C on purpose is a named option in DEVIATIONS, off by default, so that a divergence found by
 the back-to-back run can be attributed: switching the option on must make that class of divergence disappear.
 
-Scope: the transitions observable through libsafety (T1, T2, T3, T4, T5, T7, T8, T10c, T11). T6 and T10a are panda
-main.c and are not in libsafety; T9, T10b, T10d, T10e, T12-T15 are target state ("not implemented") and are not
-compared. Drafting origin: ai-assisted (Claude), not reviewed. The author had read the C before writing this model, so
+Scope: the transitions observable through libsafety (T1, T2, T3, T4, T5, T7, T8, T10b, T10c, T11). T6 and T10a are
+panda main.c and are not in libsafety; T9, T10d, T10e, T12-T15 are target state ("not implemented") and are not
+compared. T10b (SWSR-408) is in the reference build since opendbc 273f44e. Drafting origin: ai-assisted (Claude), not reviewed. The author had read the C before writing this model, so
 it is an independent implementation, not an independent reading of the requirements (README.md §4).
 
 Standard library only. The model works on decoded events, not on CAN bytes; the harness (b2b_toy_auth.py) encodes the
@@ -45,6 +45,9 @@ CRUISE_MAIN_TOLERANCE_US = 150_000  # SM record T10c "> 150 ms"
 # DN-01 §4.1 (reference build): addr -> (f Hz, burst). TX whitelist DLC from WP-W-09 CD-04 TX column.
 TX_RATE_ROWS = {0x2E4: (100, 5), 0x191: (50, 3), 0x343: (33, 3), 0x412: (5, 4), 0x283: (1, 2), 0x1D2: (1, 2),
                 0x750: (5, 2)}
+# SWSR-408 (reference build): longest gap between accepted actuation frames while authority is granted. 0x343 is
+# supervised with openpilot longitudinal, which the reference configuration (param 73, no stock-longitudinal flag) is.
+TX_ARRIVAL_US = {0x2E4: 50_000, 0x343: 100_000}
 TX_WINDOW_US = 250_000          # DN-01 §4: 250 ms window of two 125 ms half-windows
 TX_REVOKE_REJECTED = 3          # DN-01 D-3
 
@@ -56,6 +59,9 @@ DEVIATIONS = {
   "length_not_checked": False,
   # SWSR-302 says "any wheel speed is non-zero". Option: moving = sum of the four wheel speeds non-zero.
   "moving_from_sum": False,
+  # SWSR-408 / MA-08: supervision starts when authority is granted (B2B-04). Option: it starts at the first safety task that
+  # finds authority granted, and "granted before" is what the previous safety task saw.
+  "arrival_from_first_tick": False,
 }
 
 
@@ -142,6 +148,9 @@ class SmToyAuth:
     self.brake_prev = False
     self.wheels = (0, 0, 0, 0)      # last valid 0xAA wheel speeds, raw offset removed (0 = standing)
     self.mismatch_start: int | None = None
+    self.arrival_last = {a: None for a in TX_ARRIVAL_US}   # last accepted (or, deviation, offered) frame per ID
+    self.grant_ts: int | None = None                        # time authority was last granted
+    self.allowed_prev_tick = False                          # authority as the previous safety task left it
 
   # ---------------------------------------------------------------- helpers
 
@@ -178,11 +187,26 @@ class SmToyAuth:
     return [t for t in fired if (t in from_not_allowed) != was_allowed]
 
   def _tick(self) -> list[str]:
+    fired = []
     # T5: any RX check lagging, below 10 Hz or invalid -> clear
     if not self._all_checks_ok():
       self.allowed = False
-      return ["T5"]
-    return []
+      fired.append("T5")
+    # T10b (reference build), SWSR-408: an actuation message not accepted for longer than its limit -> clear.
+    # MA-07: evaluated in the safety task (acceptance: "50/100 ms + task period")
+    if self.reference:
+      if self.dev["arrival_from_first_tick"] and self.allowed and not self.allowed_prev_tick:
+        self.arrival_last = {a: self.now for a in TX_ARRIVAL_US}
+      if self.allowed:
+        for a, limit in TX_ARRIVAL_US.items():
+          since = [x for x in (self.arrival_last[a], None if self.dev["arrival_from_first_tick"] else self.grant_ts)
+                   if x is not None]
+          if since and self.now - max(since) > limit:
+            self.allowed = False
+            fired.append("T10b")
+            break
+      self.allowed_prev_tick = self.allowed
+    return fired
 
   def _tx(self, ev: Tx) -> list[str]:
     # T11 (reference build), DN-01 §4.2. Only frames on the TX whitelist reach the rate check; the harness sends
@@ -190,6 +214,7 @@ class SmToyAuth:
     row = self.tx.get(ev.addr) if ev.bus == 0 else None
     if row is None:
       return []
+    supervised = ev.addr in TX_ARRIVAL_US
     freq, burst = TX_RATE_ROWS[ev.addr]
     elapsed = self.now - row.ts_last
     if elapsed >= TX_WINDOW_US // 2:
@@ -206,6 +231,8 @@ class SmToyAuth:
         return ["T11"]
     else:
       row.msgs += 1
+      if supervised:
+        self.arrival_last[ev.addr] = self.now   # SWSR-408: accepted. MA-09: content is not modelled (B2B-05)
     return []
 
   def _rx(self, ev: Rx) -> list[str]:
@@ -241,7 +268,7 @@ class SmToyAuth:
           fired.append("T2")
         elif not self.cruise_active:
           # rising edge: T1 if every RX check passes now (SWSR-306) and, in the reference build, MAIN_ON = 1
-          # (SWSR-405(c) v0.16: cruise becoming active while main is off is an RX fault at once); else T8
+          # (SWSR-405(c) v0.20: cruise becoming active while main is off is an RX fault at once); else T8
           if self._all_checks_ok() and not (self.reference and not self.main_on):
             grant = True
             fired.append("T1")
@@ -264,7 +291,7 @@ class SmToyAuth:
         elif self.mismatch_start is None:
           self.mismatch_start = self.now
           if ev.addr == 0x1D2:
-            clear = True            # SWSR-405(c) v0.16: the mismatch began with cruise becoming active
+            clear = True            # SWSR-405(c) v0.20: the mismatch began with cruise becoming active
         elif self.now - self.mismatch_start > CRUISE_MAIN_TOLERANCE_US:
           clear = True
           fired.append("T10c")
@@ -279,5 +306,7 @@ class SmToyAuth:
     if clear:
       self.allowed = False
     elif grant:
+      if not self.allowed:
+        self.grant_ts = self.now
       self.allowed = True
     return fired

@@ -4,17 +4,17 @@
 |---|---|
 | Work product | WP-M-02 Functional safety plan |
 | Standard reference | ISO 26262-2:2018 §6 (project-dependent safety management: roles, planning, tailoring, safety case, confirmation measures); ISO 26262-2 §5 (anomaly handling, interfaces to overall safety management); ISO 26262-8 §5–§12 (supporting processes, by reference); ASPICE 4.0 MAN.3 |
-| Version | 0.1 |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (early-implementation rule §4.1, AI-assisted authoring §3.3, impact records and design notes in §7, OI-4 corrected, OI-7…OI-9 added; audit [RR-2026-008](reviews/RR-2026-008.md); 2026-10-12). 0.1 (initial draft) |
 | Status | Draft |
 | ASIL / scope | All. Planned to ASIL D until the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)) is approved |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review TBD (external assessor, I3 planned, see [WP-M-06](WP-M-06-confirmation-measures-plan.md)) |
 | Approver | Safety manager |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` |
 
 ## 1. Purpose and scope
 
-This plan sets out how functional safety is managed for the LionDriver reference configuration defined in [WP-M-01 §3.1](WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to): 2020 Toyota Corolla LE (US, ICE, TSS 2.0, `TOYOTA_COROLLA_TSS2`), one identified comma device revision with panda safety MCU, and a tagged LionDriver release.
+This plan sets out how functional safety is managed for the LionDriver reference configuration defined in [WP-M-01 §3.1](WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to): Toyota Corolla, 12th generation (E210), TSS 2.0 (US, ICE, `TOYOTA_COROLLA_TSS2`), one identified comma device revision with panda safety MCU, and a tagged LionDriver release.
 
 It implements the [assurance strategy (WP-M-01)](WP-M-01-assurance-strategy.md) for ISO 26262. It does not repeat the strategy. The companion plans cover the other disciplines:
 
@@ -48,11 +48,11 @@ The project has one maintainer today. One person holding several roles is allowe
 | Role | Responsibilities | Assigned to | Needed by |
 |---|---|---|---|
 | Safety manager | Owns this plan; plans and coordinates safety activities; tracks progress; approves safety work products (except own-authored ones that need independent approval); maintains the safety case; initiates confirmation measures; decides on safety anomaly escalation | Jherrod Thomas (acting) | G0 |
-| Project maintainer | Overall project responsibility; resource and scope decisions; strategic decisions D-01…D-08; release decision (with safety manager) | Jherrod Thomas | G0 |
+| Project maintainer | Overall project responsibility; resource and scope decisions; strategic decisions D-01…D-13; release decision (with safety manager) | Jherrod Thomas | G0 |
 | Configuration and change manager | CM plan, baselines, submodule control, change board | Jherrod Thomas (acting) | G0 |
 | Cybersecurity manager | Owns [WP-M-09](WP-M-09-cybersecurity-plan.md); TARA; interface to safety on safety-relevant threats | Jherrod Thomas (acting); permanent holder TBD | G1 |
-| SOTIF lead | Owns [WP-M-08](WP-M-08-sotif-plan.md); validation targets; scenario evaluation | TBD | G1 |
-| AI/ML safety lead | Owns [WP-M-10](WP-M-10-ai-safety-plan.md); model pinning and model lifecycle evidence | TBD | G1 |
+| SOTIF lead | Owns [WP-M-08](WP-M-08-sotif-plan.md); validation targets; scenario evaluation | Jherrod Thomas (acting); permanent holder TBD | G1 |
+| AI/ML safety lead | Owns [WP-M-10](WP-M-10-ai-safety-plan.md); model pinning and model lifecycle evidence | Jherrod Thomas (acting); permanent holder TBD | G1 |
 | Envelope software engineer(s) | Requirements back-fill, design, implementation and unit verification of opendbc safety and panda firmware changes | Jherrod Thomas; additional contributors TBD | G2 |
 | Hardware safety engineer | Hardware FMEDA, metrics, component qualification (WP-H-*) | TBD (likely external) | G2 |
 | Verification reviewer(s) | Verification reviews of work products and code (PR reviews) at the independence level set in [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) | TBD (at least one person other than the author) | G0 |
@@ -87,6 +87,14 @@ R = responsible, A = accountable, C = consulted, I = informed. SM = safety manag
 
 "CR" means the assessor performs the confirmation review. The assessor is never responsible for producing a work product.
 
+### 3.3 AI-assisted authoring
+
+Added in v0.2. Most work products and most envelope changes to date were drafted with an AI coding assistant working under the maintainer's direction. Rules:
+
+- An AI-drafted work product or code change is the author's work. The person who commits it is the author for independence purposes (WP-P-05) and answers for its content.
+- AI drafting is not a verification activity. An AI-produced audit or checklist run (for example RR-2026-005…008) is an author-side pre-review audit at I0. It gives no review credit at I1 or above.
+- Tool classification of the assistant (tool impact, tool error detection, resulting TCL) is open as OI-7 and belongs in [WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md). Until it is closed, every AI-drafted change to safety-relevant code is covered by the same verification as hand-written code: CI (MISRA, coverage, mutation), the HIL campaign and human review.
+
 ## 4. Lifecycle activities per phase
 
 Phases and gates are defined in [WP-M-01 §7](WP-M-01-assurance-strategy.md#7-phases-gates-and-sequence) and [WP-M-00 §2](WP-M-00-work-product-register.md#2-gates). This table assigns the safety activities in each phase. Work product IDs refer to the register.
@@ -102,6 +110,31 @@ Phases and gates are defined in [WP-M-01 §7](WP-M-01-assurance-strategy.md#7-ph
 | P6 Operation | Field monitoring, safety anomaly handling after release, controlled updates, incident response | SM, CSM | WP-O-04, O-05, WP-P-03 | G5 passed; release record signed |
 
 **Hold point.** No LionDriver public-road operation beyond upstream behaviour until G1 is passed and WP-V-07 is approved (gap assessment §9 action 10; WP-M-01 §9).
+
+### 4.1 Early implementation (at-risk work)
+
+Added in v0.2. Envelope hardening from P3 has started before G0. This is allowed under these conditions:
+
+1. The change is compiled only when `LIONDRIVER_REFERENCE=1` ([WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md)). Since LionDriver #36 the top-level `SConstruct` sets it by default, so the panda firmware flashed on the device carries the changes; building with `LIONDRIVER_REFERENCE=` (empty) gives upstream behaviour. CI tests both variants.
+2. Each change has a change impact record in [`07-supporting/impact/`](../07-supporting/impact/README.md) and traces to a draft TSR and SWSR.
+3. The change is at-risk work. It earns no credit toward G2 or G3 until (a) the TSRs and SWSRs it implements are approved, (b) the change has a verification review per [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) at I1 or above, and (c) the HIL evidence named in [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) exists. If a later HARA or TSC decision changes the requirement, the change is reworked or reverted.
+4. The hold point above still applies. Implemented envelope changes do not permit public-road operation.
+
+Status at v0.2 (all reference build only; none reviewed at I1; no HIL evidence):
+
+| Change | Requirement | Fork commit | Impact record |
+|---|---|---|---|
+| IWDG hardware watchdog | TSR-501, TSR-401 | panda (see record) | [panda-hw-watchdog](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) |
+| Fast heartbeat (0.3 s) | TSR-406, TSR-407 | panda (see record) | [panda-fast-heartbeat](../07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md) |
+| Safety-mode lock; host requires a reference panda build | TSR-512, TSR-513, TSR-514 | panda (see record), `6dee6fa`; LionDriver #36, #41 | [panda-safety-mode-lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md) |
+| IRQ priorities | TSR-519 | panda `52cad44` | [panda-irq-priorities](../07-supporting/impact/change-2026-10-12-panda-irq-priorities.md) |
+| TX whitelist | TSR-705 | opendbc (see record) | [opendbc-toyota-tx-whitelist](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md) |
+| RX timeouts `0x262`, `0x1D3` | TSR-401, TSR-110 | opendbc `98404a4` | [opendbc-toyota-rx-timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md) |
+| EPS fault gate, host flag, siren; siren when heartbeat loss revokes authority (all builds, added 2026-10-13) | TSR-516 | opendbc `242d63d`, `adcb7c2`; panda `877730e`, `b790fca`; heartbeat-loss siren panda `c33343b` | [opendbc-toyota-eps-fault](../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md); heartbeat-loss siren: [panda-fast-heartbeat](../07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md) §5 |
+| Cruise main cross-check | TSR-405 | opendbc `875e325` | [opendbc-toyota-cruise-main](../07-supporting/impact/change-2026-10-12-opendbc-toyota-cruise-main.md) |
+| TX rate supervision | TSR-518 | opendbc `7993399`; panda `8aa8671` | [tx-rate-supervision](../07-supporting/impact/change-2026-10-12-tx-rate-supervision.md) |
+
+The requirement column names the main TSR only; each impact record lists the full set. The pinned commits are in [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md).
 
 ## 5. Work products
 
@@ -132,6 +165,8 @@ Each tailoring decision is subject to confirmation review (WP-M-06).
 |---|---|
 | Configuration management (incl. safety-relevant file list, submodules, baselines) | [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md) |
 | Change management and impact analysis | [WP-P-02](../07-supporting/WP-P-02-change-management.md) |
+| Change impact records (one per envelope change or upstream sync) | [`07-supporting/impact/`](../07-supporting/impact/README.md) |
+| Design notes supporting SW architecture and unit design (DN-nn) | [`05-software/design-notes/`](../05-software/design-notes/DN-01-tx-rate-supervision.md) |
 | Problem resolution and safety anomaly handling | [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md) |
 | Documentation management | [WP-P-04](../07-supporting/WP-P-04-documentation-management.md) |
 | Verification and review | [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) |
@@ -213,6 +248,9 @@ Upstream management and the absence of a DIA are handled in [WP-M-11](WP-M-11-up
 | OI-1 | Fill TBD roles in §3.1, at minimum one verification reviewer and a QA person independent of the author | PM | G0 |
 | OI-2 | The safety manager and the project maintainer are the same person, who also authors most work products. Define who approves work products the safety manager authored (proposal: approval after external confirmation review for I3 items; second reviewer for others) | PM | G0 |
 | OI-3 | Engage an external functional safety assessor (D-06) and agree scope and schedule | PM | G0 |
-| OI-4 | Confirm the anomaly triage target (5 working days) is achievable with current staffing | SM | G0 |
+| OI-4 | Confirm the triage targets in §9 (1 working day when a safety box is ticked, otherwise 10 working days) are achievable with current staffing | SM | G0 |
 | OI-5 | Closed: [`gates/`](../10-safety-case/gates/README.md) (with the gate record template) and [`confirmation/`](../10-safety-case/confirmation/README.md) created | SM | G0 |
 | OI-6 | Revisit the ASIL D planning assumption once the HARA is approved; adjust independence and method selection | SM | G1 |
+| OI-7 | Classify the AI coding assistant used for drafting (§3.3) in WP-P-07: tool impact, tool error detection, TCL, and whether qualification is needed | SM | G0 |
+| OI-8 | Give a verification review at I1 or above to every at-risk envelope change in §4.1, and add their HIL campaign (`REFERENCE_BUILD=1`) to the bench plan | SM, VR | G2 |
+| OI-9 | EPS-fault siren latency: the siren starts ≤ 1.26 s worst case after the first fault frame (1 s persistence + 10 ms task + up to 2 × 125 ms, because the speaker sounds only on every other 8 Hz tick; corrected 2026-10-13 from about 1.14 s). This exceeds the SG-02 1 s warning time; TSR-516's ≤ 0.5 s holds only if the 1 s persistence counts as detection time. LKA torque is refused from the first fault frame. Decide whether to shorten persistence or justify the delay (recorded in [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md)) | SM, PM | G2 |

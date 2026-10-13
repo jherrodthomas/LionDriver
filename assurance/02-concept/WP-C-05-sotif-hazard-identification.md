@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-05 SOTIF hazard identification and risk evaluation, acceptance criteria |
 | Standard reference | ISO 21448:2022 §6 (hazard identification and risk evaluation, acceptance criteria), Annex B (misuse, informative); ISO 26262-3:2018 §6 (shared hazard log) |
-| Version | 0.1 |
+| Version | 0.3 (Figure 2-1 added: four-area view of the analysis; 2026-10-13). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -28,6 +28,10 @@ Inputs: [WP-C-03 HARA](WP-C-03-hara.md) (H-01…H-06, H-08; OS-01…OS-11), `doc
 4. **Exposure** is not used to compute an ASIL (ISO 21448 does not assign ASILs). It is recorded to help set validation targets.
 5. **Evaluation.** A hazard with S0 or C0 needs no further SOTIF treatment. Every other hazard goes into the triggering-condition analysis ([WP-C-06](WP-C-06-sotif-insufficiencies-triggering-conditions.md)) and needs an acceptance criterion (§5).
 
+![Figure 2-1: ISO 21448 four-area chart. Area 2, known hazardous: SH-01 to SH-13 and the WP-C-06 insufficiencies and triggering conditions with their evaluation. Area 3, unknown hazardous: black-box driving model, reduced by WP-V-04 and AC-07. Area 1, known not hazardous: no scenario there by evidence yet. Area 4: not addressed](figures/fig-c05-2-1-sotif-four-areas.svg)
+
+*Figure 2-1.* The ISO 21448 scenario areas, filled with what this document and WP-C-06 currently state. Area 2 shows the hazards of §3, plus the insufficiencies, triggering conditions and §5 evaluation outcomes of WP-C-06. Area 3 shows the unknown-scenario sources named in WP-C-06 §1 and §6 and how AC-07 addresses them. Area 1 is empty by evidence: only conditional "acceptable" rows exist. Area 4 is not addressed. The arrows are the treatment routes of §5.3 and §6. The counts come from §3 and WP-C-06 §3–§5; area sizes are not to scale. Source: [`figures/fig-c05-2-1-sotif-four-areas.svg`](figures/fig-c05-2-1-sotif-four-areas.svg). Change it together with §3, §5.3 and §6, and with WP-C-06 §5.
+
 ## 3. SOTIF hazards
 
 | ID | Hazardous behaviour (intended function, no fault) | Function | Linked H | Example situations | S | C | Reused from / rationale |
@@ -41,7 +45,7 @@ Inputs: [WP-C-03 HARA](WP-C-03-hara.md) (H-01…H-06, H-08; OS-01…OS-11), `doc
 | SH-07 | — not used (H-07 mode confusion is a malfunction hazard in the HARA; its non-malfunction counterpart is in WP-C-08 MC-08/09/12) | — | — | — | — | — | — |
 | SH-08 | Stock PCS performance degraded by the item's intended behaviour (e.g. openpilot longitudinal commands or forwarded/blocked messages that change PCS timing; PCS warnings missed because the device alert covers them) | F-02, F-08 | H-08 | OS-09 | S3 | C3 | HE-08.1. Intended forwarding is unverified (AOU-04) |
 | SH-09 | Traffic-control non-compliance with over-trust: in Experimental Mode the driver expects the vehicle to stop for red lights and stop signs; the model misses one and the vehicle enters the intersection. In Chill mode the same over-trust can arise from confusion between modes | F-02, F-05 | new (effect like H-03/H-06) | Signalised intersection in ODD-A, cross traffic | S3 | C2 | New. S3: side impact or VRU at intersection speed. C2: driver supervising, but trained expectation delays braking. Without Experimental Mode the expectation does not arise from the function itself |
-| SH-10 | Assisted lane change into an occupied lane: driver nudges after signalling; the system does not check the blind spot | F-01 | new (effect like H-01) | OS-01 multi-lane highway | S3 | C2 | New. `LIMITATIONS.md:6`. The reference Corolla LE is assumed to have no blind-spot input (`desire_helper.py:48` would use it if present). Controllable: driver initiated and can abort |
+| SH-10 | Assisted lane change into an occupied lane: driver nudges after signalling; the system does not check the blind spot | F-01 | new (effect like H-01) | OS-01 multi-lane highway | S3 | C2 | New. `LIMITATIONS.md:6`. Blind-spot input is not assumed for the reference Corolla, whether or not the trim fitted has blind-spot monitoring (`desire_helper.py:48` would use it if present; which trims provide it is open, WP-C-01 OI-9). Controllable: driver initiated and can abort |
 | SH-11 | No reaction to a VRU in or entering the path (pedestrian crossing, cyclist in lane) | F-01, F-02 | new (effect like H-06) | OS-04, OS-06 | S3 | C2 | New. `LIMITATIONS.md:34`. Lead logic is vehicle-oriented (`radard.py:153-165`). Stock PCS pedestrian AEB exists but is not credited |
 | SH-12 | Prolonged unsupervised operation: DM does not detect inattention (sunglasses, glare, face out of view, wheel-touch fallback reset by small inputs), so warnings and the force-decel stage come late or never | F-04 | Contributes to all; no direct H | Any, esp. long highway drives | — | — | Not a vehicle-level hazard on its own (HARA §4). It removes the controllability basis (C2) of SH-01…SH-11. Handled as a misuse-enabling insufficiency in WP-C-08 |
 | SH-13 | System stays engaged outside the ODD: above 120 km/h (up to and above 149 km/h, where only a warning is given), in construction zones, in heavy rain, on roads without markings | all | Increases probability of SH-01…SH-06 | ODD exit | as linked SH | as linked SH | New. `events.py:989-996` (no disengage). The model's training distribution is unknown (GAP-22) |

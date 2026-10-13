@@ -5,7 +5,7 @@
 | Status | Draft — AI-assisted (Claude), not reviewed. The diagrams are views; the normative content is the state-machine records and the WP-W-05 §5 tables |
 | Generator | [`make_diagrams.py`](make_diagrams.py) (standard library, plus [`svgkit.py`](svgkit.py)) |
 | CI | `make_diagrams.py --check` in the assurance workflow fails if a diagram is out of date |
-| Tool | WP-P-07 TL-36 (TCL1: no claim rests on a figure) |
+| Tool | WP-P-07 TL-39 (TCL1: no claim rests on a figure) |
 
 MATLAB-style figures drawn from the project data, with no MATLAB, Simulink or Stateflow licence needed ([TE-01](../../07-supporting/tool-evaluations/TE-01-modelling-tools.md)).
 

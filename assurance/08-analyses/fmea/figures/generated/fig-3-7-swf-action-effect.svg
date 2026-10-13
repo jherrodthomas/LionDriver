@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1082" viewBox="0 0 1280 1082" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-7. SW FMEA action effect (predicted, not achieved)</title>
+  <desc id="d">SW FMEA (SWF rev 0.6): 76 rated causes, as rated H 72, M 0, L 4; predicted if every action with a revised rating were completed H 53, M 1, L 22. One row per action with a revised rating (SWF-ACT-001, SWF-ACT-002, SWF-ACT-025, SWF-ACT-030, SWF-ACT-040, SWF-ACT-041) showing the causes it addresses and the predicted rating, which is not achieved or verified.</desc>
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
+  </defs>
+  <rect width="1280" height="1082" fill="#FFFFFF"/>
+  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-7 · SW FMEA — Action Priority before and after planned actions</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 0.6 · BL-004 · draft · actions that record a predicted (`revised`) rating, and the causes they address</text>
+  <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
+  <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="104" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">RATED CAUSES BY ACTION PRIORITY</text>
+  <text x="40" y="147" font-size="11" fill="#0F172A" font-weight="600">As rated today</text>
+  <rect x="330" y="134" width="720" height="22" fill="#D2553F"/>
+  <text x="690" y="149" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 72</text>
+  <rect x="1050" y="134" width="40" height="22" fill="#0F766E"/>
+  <text x="1070" y="149" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">L 4</text>
+  <text x="1104" y="149" font-size="10.5" fill="#0F172A" font-weight="700">H 72 · M 0 · L 4</text>
+  <text x="40" y="171" font-size="11" fill="#0F172A" font-weight="600">If every action with a predicted rating were</text>
+  <text x="40" y="184" font-size="11" fill="#0F172A" font-weight="600">completed</text>
+  <rect x="330" y="164" width="530" height="22" fill="#FBE4DF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="595" y="179" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">H 53</text>
+  <rect x="860" y="164" width="10" height="22" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <rect x="870" y="164" width="220" height="22" fill="url(#hatchA)" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="980" y="179" font-size="10.5" fill="#0F766E" font-weight="700" text-anchor="middle">L 22</text>
+  <text x="1104" y="179" font-size="10.5" fill="#D97706" font-weight="700">H 53 · M 1 · L 22</text>
+  <text x="330" y="206" font-size="10" fill="#D97706" font-weight="600">76 rated causes. Prediction only: the hatched bar uses the `revised` S/O/D of open actions; none of these ratings has been achieved or verified.</text>
+  <line x1="40" y1="228" x2="1240" y2="228" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="250" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">ACTION (STEP 6)</text>
+  <text x="420" y="250" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">CAUSES IT ADDRESSES · AS RATED</text>
+  <text x="860" y="250" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">PREDICTED AFTER THE ACTION</text>
+  <rect x="40" y="264" width="360" height="95.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="49" y="283.5" font-size="12" fill="#0F172A" font-weight="700">SWF-ACT-001</text>
+  <rect x="144.9" y="272.5" width="56.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="173.1" y="283.4" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">detection</text>
+  <rect x="329.8" y="272.5" width="61.2" height="15" rx="7.5" fill="#2E9E6A"/><text x="360.4" y="283.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">completed</text>
+  <text x="49" y="298.1" font-size="10.5" fill="#0F172A">Run the opendbc safety suite and the mutation tests as a blocking</text>
+  <text x="49" y="312.1" font-size="10.5" fill="#0F172A">gate in LionDriver CI for every change and submodule bump</text>
+  <text x="49" y="324.9" font-size="9.5" fill="#475569" font-style="italic">Evidence: .github/workflows/safety.yaml (CR-CI-05, merged from</text>
+  <text x="49" y="337.6" font-size="9.5" fill="#475569" font-style="italic">liondriver-dev): safety tests with 100% line coverage, MISRA and mutation</text>
+  <text x="49" y="350.3" font-size="9.5" fill="#475569" font-style="italic">jobs on push and pull request. Branch protection making them blocking is…</text>
+  <text x="420" y="280" font-size="10.5" fill="#D2553F" font-weight="600">Not referenced by any cause: the predicted rating</text>
+  <text x="420" y="294" font-size="10.5" fill="#D2553F" font-weight="600">cannot be attributed (fmea_lint warning).</text>
+  <rect x="860" y="282.7" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
+  <rect x="874" y="292.7" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="303.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="918.5" y="304.7" font-size="12" fill="#0F172A" font-weight="700">S10 O5 D3</text>
+  <rect x="872" y="314.7" width="199.4" height="16" fill="#FFFFFF" rx="3"/>
+  <text x="876" y="326.7" font-size="10" fill="#D97706" font-weight="700">action completed · rating not verified</text>
+  <line x1="40" y1="366.3" x2="1240" y2="366.3" stroke="#F1F5F9" stroke-width="1"/>
+  <rect x="40" y="373.3" width="360" height="71.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="49" y="392.8" font-size="12" fill="#0F172A" font-weight="700">SWF-ACT-002</text>
+  <rect x="144.9" y="381.8" width="62.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="175.9" y="392.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">prevention</text>
+  <rect x="356.2" y="381.8" width="34.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="373.6" y="392.8" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">open</text>
+  <text x="49" y="407.4" font-size="10.5" fill="#0F172A">Requirements-based tests for the panda safety model, traced to the</text>
+  <text x="49" y="421.5" font-size="10.5" fill="#0F172A">draft TSRs and SWSRs (assurance WP-S-02, WP-W-02); the</text>
+  <text x="49" y="435.5" font-size="10.5" fill="#0F172A">requirements exist as drafts, the tests do not</text>
+  <rect x="420" y="377.3" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="388.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="462.5" y="388.3" font-size="10.5" fill="#0F172A" font-weight="600">S10 O5 D3 · 10 causes</text>
+  <rect x="420" y="396.3" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="407.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-001.C2</text>
+  <rect x="497.8" y="396.3" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="407.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-002.C1</text>
+  <rect x="575.6" y="396.3" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="612.5" y="407.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-003.C2</text>
+  <rect x="653.4" y="396.3" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="690.3" y="407.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-007.C1</text>
+  <rect x="420" y="414.3" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="425.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-008.C2</text>
+  <rect x="497.8" y="414.3" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="425.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-009.C1</text>
+  <rect x="575.6" y="414.3" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="612.5" y="425.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-010.C1</text>
+  <rect x="653.4" y="414.3" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="690.3" y="425.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-011.C1</text>
+  <rect x="420" y="432.3" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="443.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-012.C1</text>
+  <rect x="497.8" y="432.3" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="443.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-017.C1</text>
+  <path d="M820 414.3H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
+  <rect x="860" y="385.3" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
+  <rect x="874" y="395.3" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="406.3" font-size="9.5" font-weight="700" fill="#0F766E" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="918.5" y="407.3" font-size="12" fill="#0F172A" font-weight="700">S10 O3 D3</text>
+  <rect x="872" y="417.3" width="126.1" height="16" fill="#FFFFFF" rx="3"/>
+  <text x="876" y="429.3" font-size="10" fill="#D97706" font-weight="700">planned · not achieved</text>
+  <line x1="40" y1="462.3" x2="1240" y2="462.3" stroke="#F1F5F9" stroke-width="1"/>
+  <rect x="40" y="469.3" width="360" height="109.4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="49" y="488.8" font-size="12" fill="#0F172A" font-weight="700">SWF-ACT-025</text>
+  <rect x="144.9" y="477.8" width="81.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="185.4" y="488.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">design change</text>
+  <rect x="325.1" y="477.8" width="65.9" height="15" rx="7.5" fill="#D97706"/><text x="358.1" y="488.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">in progress</text>
+  <text x="49" y="503.4" font-size="10.5" fill="#0F172A">Fix the faults mapping. Size the list from the mapped bits only, log</text>
+  <text x="49" y="517.5" font-size="10.5" fill="#0F172A">unknown bits, and add the panda bit 27 (interruptRateSoundDma) to</text>
+  <text x="49" y="531.5" font-size="10.5" fill="#0F172A">cereal FaultType (log.capnp, pandad.cc:257-268)</text>
+  <text x="49" y="544.3" font-size="9.5" fill="#475569" font-style="italic">Evidence: Implemented in jherrodthomas/LionDriver#48 (fill_panda_faults,</text>
+  <text x="49" y="557" font-size="9.5" fill="#475569" font-style="italic">interruptRateSoundDma @27, tests/test_pandad_faults run by</text>
+  <text x="49" y="569.7" font-size="9.5" fill="#475569" font-style="italic">test_native.py; fails with the old sizing). Impact record…</text>
+  <rect x="420" y="473.3" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="484.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="462.5" y="484.3" font-size="10.5" fill="#0F172A" font-weight="600">S8 O8 D10 · 1 cause</text>
+  <rect x="420" y="492.3" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="503.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-025.C1</text>
+  <path d="M820 524H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
+  <rect x="860" y="495" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
+  <rect x="874" y="505" width="38.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1" stroke-dasharray="3 2"/><text x="893.5" y="515.9" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">AP M</text>
+  <text x="920.9" y="517" font-size="12" fill="#0F172A" font-weight="700">S8 O2 D8</text>
+  <rect x="872" y="527" width="136.8" height="16" fill="#FFFFFF" rx="3"/>
+  <text x="876" y="539" font-size="10" fill="#D97706" font-weight="700">in progress · not verified</text>
+  <line x1="40" y1="585.7" x2="1240" y2="585.7" stroke="#F1F5F9" stroke-width="1"/>
+  <rect x="40" y="592.7" width="360" height="85.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="49" y="612.2" font-size="12" fill="#0F172A" font-weight="700">SWF-ACT-030</text>
+  <rect x="144.9" y="601.2" width="62.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="175.9" y="612.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">prevention</text>
+  <rect x="356.2" y="601.2" width="34.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="373.6" y="612.1" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">open</text>
+  <text x="49" y="626.8" font-size="10.5" fill="#0F172A">Requirements-based tests for selfdrived traced to</text>
+  <text x="49" y="640.9" font-size="10.5" fill="#0F172A">FSR-030/033/034/036 and TSR-601/606/617/621: state machine,</text>
+  <text x="49" y="654.9" font-size="10.5" fill="#0F172A">data_sample/update_events with synthetic carState, pandaStates</text>
+  <text x="49" y="669" font-size="10.5" fill="#0F172A">and SubMaster faults (brake, cancel, stale or missing services…</text>
+  <rect x="420" y="596.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="607.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="462.5" y="607.7" font-size="10.5" fill="#0F172A" font-weight="600">S10 O6 D8 · 1 cause</text>
+  <rect x="420" y="615.7" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="626.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-030.C1</text>
+  <rect x="420" y="638.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="649.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="462.5" y="649.7" font-size="10.5" fill="#0F172A" font-weight="600">S10 O7 D8 · 1 cause</text>
+  <rect x="420" y="657.7" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="668.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-031.C2</text>
+  <path d="M820 636.7H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
+  <rect x="860" y="607.7" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
+  <rect x="874" y="617.7" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="628.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="918.5" y="629.7" font-size="12" fill="#0F172A" font-weight="700">S10 O5 D4</text>
+  <rect x="872" y="639.7" width="126.1" height="16" fill="#FFFFFF" rx="3"/>
+  <text x="876" y="651.7" font-size="10" fill="#D97706" font-weight="700">planned · not achieved</text>
+  <line x1="40" y1="687.7" x2="1240" y2="687.7" stroke="#F1F5F9" stroke-width="1"/>
+  <rect x="40" y="694.7" width="360" height="123.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="49" y="714.2" font-size="12" fill="#0F172A" font-weight="700">SWF-ACT-040</text>
+  <rect x="144.9" y="703.2" width="81.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="185.4" y="714.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">design change</text>
+  <rect x="325.1" y="703.2" width="65.9" height="15" rx="7.5" fill="#D97706"/><text x="358.1" y="714.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">in progress</text>
+  <text x="49" y="728.8" font-size="10.5" fill="#0F172A">Implement TSR-602 in controlsd: check age and valid of</text>
+  <text x="49" y="742.9" font-size="10.5" fill="#0F172A">selfdriveState, carState, modelV2, longitudinalPlan,</text>
+  <text x="49" y="756.9" font-size="10.5" fill="#0F172A">vehicleParameters and deviceMotion before use (≤ 2 periods); set</text>
+  <text x="49" y="771" font-size="10.5" fill="#0F172A">latActive/longActive false and raise an immediate-disable event…</text>
+  <text x="49" y="783.7" font-size="9.5" fill="#475569" font-style="italic">Evidence: latActive/longActive gated on selfdriveState, carState, modelV2,</text>
+  <text x="49" y="796.5" font-size="9.5" fill="#475569" font-style="italic">longitudinalPlan (controls/lib/input_freshness.py, unit tests); threshold 10</text>
+  <text x="49" y="809.2" font-size="9.5" fill="#475569" font-style="italic">periods, not 2; vehicleParameters and deviceMotion not yet included…</text>
+  <rect x="420" y="698.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="709.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="462.5" y="709.7" font-size="10.5" fill="#0F172A" font-weight="600">S10 O6 D9 · 2 causes</text>
+  <rect x="420" y="717.7" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="728.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-042.C3</text>
+  <rect x="497.8" y="717.7" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="728.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-048.C1</text>
+  <rect x="420" y="740.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="751.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="462.5" y="751.7" font-size="10.5" fill="#0F172A" font-weight="600">S10 O7 D10 · 3 causes</text>
+  <rect x="420" y="759.7" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="770.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-040.C1</text>
+  <rect x="497.8" y="759.7" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="770.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-043.C1</text>
+  <rect x="575.6" y="759.7" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="612.5" y="770.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-043.C2</text>
+  <path d="M820 756.5H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
+  <rect x="860" y="727.5" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
+  <rect x="874" y="737.5" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="748.4" font-size="9.5" font-weight="700" fill="#0F766E" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="918.5" y="749.5" font-size="12" fill="#0F172A" font-weight="700">S10 O3 D4</text>
+  <rect x="872" y="759.5" width="136.8" height="16" fill="#FFFFFF" rx="3"/>
+  <text x="876" y="771.5" font-size="10" fill="#D97706" font-weight="700">in progress · not verified</text>
+  <line x1="40" y1="825.2" x2="1240" y2="825.2" stroke="#F1F5F9" stroke-width="1"/>
+  <rect x="40" y="832.2" width="360" height="123.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="49" y="851.7" font-size="12" fill="#0F172A" font-weight="700">SWF-ACT-041</text>
+  <rect x="144.9" y="840.7" width="81.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="185.4" y="851.6" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">design change</text>
+  <rect x="325.1" y="840.7" width="65.9" height="15" rx="7.5" fill="#D97706"/><text x="358.1" y="851.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">in progress</text>
+  <text x="49" y="866.3" font-size="10.5" fill="#0F172A">Implement TSR-604: treat any non-finite input or actuator value as</text>
+  <text x="49" y="880.3" font-size="10.5" fill="#0F172A">a fault (immediate disable with alert), reset desired_curvature and</text>
+  <text x="49" y="894.4" font-size="10.5" fill="#0F172A">both controllers' state, and guard lateralDelay before the int()</text>
+  <text x="49" y="908.5" font-size="10.5" fill="#0F172A">conversion</text>
+  <text x="49" y="921.2" font-size="9.5" fill="#475569" font-style="italic">Evidence: Non-finite desired curvature, roll, aTarget and lateralDelay no</text>
+  <text x="49" y="933.9" font-size="9.5" fill="#475569" font-style="italic">longer reach the controllers (one step skipped, desired_curvature reset);</text>
+  <text x="49" y="946.7" font-size="9.5" fill="#475569" font-style="italic">no fault event or alert yet (change-2026-10-13-host-supervision.md)</text>
+  <rect x="420" y="836.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="847.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="462.5" y="847.2" font-size="10.5" fill="#0F172A" font-weight="600">S10 O6 D10 · 3 causes</text>
+  <rect x="420" y="855.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="866.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-045.C1</text>
+  <rect x="497.8" y="855.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="866.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-045.C2</text>
+  <rect x="575.6" y="855.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="612.5" y="866.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-047.C1</text>
+  <path d="M820 893.9H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
+  <rect x="860" y="864.9" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
+  <rect x="874" y="874.9" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="885.9" font-size="9.5" font-weight="700" fill="#0F766E" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="918.5" y="886.9" font-size="12" fill="#0F172A" font-weight="700">S10 O3 D4</text>
+  <rect x="872" y="896.9" width="136.8" height="16" fill="#FFFFFF" rx="3"/>
+  <text x="876" y="908.9" font-size="10" fill="#D97706" font-weight="700">in progress · not verified</text>
+  <line x1="40" y1="962.7" x2="1240" y2="962.7" stroke="#F1F5F9" stroke-width="1"/>
+  <text x="40" y="977.7" font-size="10.5" fill="#475569">Actions in progress or completed without a predicted rating: SWF-ACT-004 (in progress), SWF-ACT-007 (in progress), SWF-ACT-033 (in progress), SWF-ACT-034 (completed).</text>
+  <line x1="40" y1="1003.7" x2="1240" y2="1003.7" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="40" y="1014.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="58.2" y="1025.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="82.5" y="1025.7" font-size="10.5" fill="#0F172A">as rated (solid)</text>
+  <rect x="178.5" y="1014.7" width="34" height="14" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="4" stroke-dasharray="5 3"/>
+  <text x="218.5" y="1025.7" font-size="10.5" fill="#0F172A">predicted by the action's `revised` rating — not achieved, not verified (hatched, dashed)</text>
+  <text x="40" y="1043.7" font-size="10" fill="#475569">AP recomputed from the revised S/O/D with the AIAG-VDA table (rating-tables §5) and checked against the stored value. Actions not referenced by any cause: SWF-ACT-001.</text>
+  <text x="40" y="1061.7" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+</svg>

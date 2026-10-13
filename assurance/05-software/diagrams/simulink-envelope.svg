@@ -84,7 +84,7 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <text x="725.0" y="214.0" class="tm" text-anchor="middle">brake: T3</text>
 <path class="edge" d="M650.0,310.0 L800.0,310.0"/>
 <path class="arrow" d="M800.0,310.0 L793.0,313.1 L793.0,306.9 Z"/>
-<text x="725.0" y="304.0" class="tm" text-anchor="middle">lagging: T5</text>
+<text x="725.0" y="304.0" class="tm" text-anchor="middle">T5, T10b*</text>
 <path class="edge" d="M650.0,400.0 L800.0,400.0"/>
 <path class="arrow" d="M800.0,400.0 L793.0,403.1 L793.0,396.9 Z"/>
 <text x="725.0" y="394.0" class="tm" text-anchor="middle">T6, T10a</text>
@@ -135,8 +135,8 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <rect class="shadow" x="443" y="283" width="210" height="60"/>
 <rect class="k1" x="440" y="280" width="210" height="60"/>
 <text x="545.0" y="298.0" class="tb" text-anchor="middle">safety_tick (100 Hz)</text>
-<text x="545.0" y="314.0" class="ts" text-anchor="middle">UN-05, UN-37: RX timeout 5</text>
-<text x="545.0" y="327.0" class="ts" text-anchor="middle">periods, invalid check</text>
+<text x="545.0" y="314.0" class="ts" text-anchor="middle">UN-05, UN-37: RX timeout,</text>
+<text x="545.0" y="327.0" class="ts" text-anchor="middle">invalid check; TX arrival*</text>
 <rect class="shadow" x="443" y="373" width="210" height="60"/>
 <rect class="k1" x="440" y="370" width="210" height="60"/>
 <text x="545.0" y="388.0" class="tb" text-anchor="middle">Heartbeat monitor</text>

@@ -1,0 +1,115 @@
+# Configurations that safety analyses are performed against. Schema: schema/baseline.schema.json
+# A baseline is "proposed" until Phase 1 of fmea-plan.md starts, then "frozen".
+# Changing any field of a frozen baseline requires a new BL id and an impact analysis.
+schema_version: 1
+baselines:
+  - id: BL-001
+    status: proposed
+    description: >-
+      Initial reference configuration. Software is upstream openpilot as imported into LionDriver,
+      before any LionDriver functional changes.
+    vehicle:
+      make: Toyota
+      model: Corolla
+      model_year: 2020
+      trim: LE
+      market: US
+      platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
+    hardware:
+      device: comma 3X
+      panda: integrated in device
+      harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
+    software:
+      repo_commit: 8b8c6aefc34ea1e3ca3cf0938927c08b6a35e85c
+      submodules:
+        panda: 92eb565169fd553f4dfaf508c1a3f8dbc14fbfbf
+        opendbc_repo: 229dc7062d8986b4f954c7c97875b4ffd0044d12
+        msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
+        rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
+        teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
+        tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
+      os: AGNOS 19.9 (launch_env.sh)
+  - id: BL-002
+    status: proposed
+    description: >-
+      BL-001 plus the first LionDriver firmware changes, as pinned on liondriver-dev (PR #28): panda hardware
+      watchdog, 100 Hz safety task and reference-build mode lock (jherrodthomas/panda#1, #3, #4); opendbc Toyota
+      5-period RX timeout, grant-time RX check and TX whitelist reduction (jherrodthomas/opendbc#1, #2, #3).
+      The mode lock is compiled only with LIONDRIVER_REFERENCE=1.
+    vehicle:
+      make: Toyota
+      model: Corolla
+      model_year: 2020
+      trim: LE
+      market: US
+      platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
+    hardware:
+      device: comma 3X
+      panda: integrated in device
+      harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
+    software:
+      repo_commit: 73652bb718dda6c3047bbe0c6228f3ec22d58b02
+      submodules:
+        panda: 9f60e1745e815afe5bf71ffa1ccd24dda27fe160
+        opendbc_repo: aff4033237d0f72e48236898c7f06c2d358a58f6
+        msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
+        rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
+        teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
+        tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
+      os: AGNOS 19.9 (launch_env.sh)
+  - id: BL-003
+    status: proposed
+    description: >-
+      BL-002 plus liondriver-dev #30-#32: watchdog-reset and refused-request reporting to openpilot (panda#6), 0x411
+      refused in the reference build (opendbc#5), HIL tests for the lock and RX timeout (panda#5), and authority revoked
+      after 0.3 s without a heartbeat (panda#7).
+    vehicle:
+      make: Toyota
+      model: Corolla
+      model_year: 2020
+      trim: LE
+      market: US
+      platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
+    hardware:
+      device: comma 3X
+      panda: integrated in device
+      harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
+    software:
+      repo_commit: 9881895550ba8ed218c29d18ffbc9bdf96f6b387
+      submodules:
+        panda: c2e5d93e2d35f628b278b09349410abbad226146
+        opendbc_repo: 5b5a4baa1c88dd9df05f7ee8b4c5470e4daffd28
+        msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
+        rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
+        teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
+        tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
+      os: AGNOS 19.9 (launch_env.sh)
+  - id: BL-004
+    status: proposed
+    description: >-
+      BL-003 plus liondriver-dev #33-#43: explicit IRQ priorities (panda#10) and a HIL test of the watchdog-reset report (panda#9);
+      in the reference build only, 0x262 and 0x1D3 supervised (opendbc#6), LKA actuation refused on an EPS fault (opendbc#7,
+      reported to openpilot as pandaState.epsFault through opendbc#8 and panda#11),
+      CRUISE_ACTIVE checked against MAIN_ON (opendbc#9) and per-ID TX rate supervision (opendbc#10, panda#13). No build path sets
+      LIONDRIVER_REFERENCE at BL-004 (open LionDriver#36, #41), so the reference-only features are not active in a default build.
+    vehicle:
+      make: Toyota
+      model: Corolla
+      model_year: 2020
+      trim: LE
+      market: US
+      platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
+    hardware:
+      device: comma 3X
+      panda: integrated in device
+      harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
+    software:
+      repo_commit: 682f1845af254612dcd90636a77a6fc016b12f83
+      submodules:
+        panda: 8aa86712909bb9eeccc2834583764993a6f1fa54
+        opendbc_repo: 7993399406bea579fdad910c760d51a06bf1064b
+        msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
+        rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
+        teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
+        tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
+      os: AGNOS 19.9 (launch_env.sh)

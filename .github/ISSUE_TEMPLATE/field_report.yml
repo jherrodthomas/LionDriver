@@ -41,7 +41,7 @@ body:
     attributes:
       label: Configuration
       options:
-        - Reference configuration (2020 Toyota Corolla LE, TSS2)
+        - Reference configuration (E210 Corolla, TSS 2.0)
         - Other vehicle (outside the assured scope)
     validations:
       required: true

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the state-machine records and generate the WP-W-05 §5 tables from them (RR-2026-008 F-16).
+"""Check the state-machine records and generate the WP-W-05 §5 tables from them (RR-2026-009 F-16).
 
 Records: assurance/05-software/state-machines/*.yaml. Each is the normative source of one WP-W-05 §5
 table. Implementation state is not stored in the records; it is read from the WP-W-02 Baseline column
@@ -108,7 +108,7 @@ def swsr_records() -> dict[str, dict]:
     m = re.search(r"^- id: (SWSR-\S+)", rec, re.M)
     if not m:
       continue
-    def f(k):
+    def f(k, rec=rec):
       mm = re.search(rf'^  {k}: "(.*)"$', rec, re.M)
       return mm.group(1) if mm else ""
     out[m.group(1)] = {"text": f("text"), "baseline": f("baseline_impl"),
@@ -179,7 +179,7 @@ def check(sm: dict, sw: dict) -> tuple[list[str], list[str]]:
         continue  # e.g. reference vs upstream: never in the same build
       if b["id"] not in a.get("exclusive_with", []) or a["id"] not in b.get("exclusive_with", []):
         errors.append(f"S3 {name}: {a['id']} and {b['id']} share source and event '{a['event']}' "
-                      f"but are not declared mutually exclusive")
+                      + "but are not declared mutually exclusive")
   for t in T:
     if not t.get("swsr"):
       if t.get("gap"):
@@ -221,9 +221,9 @@ def _cell(s: str) -> str:
 def render(sm: dict, sw: dict) -> str:
   T = sm["transitions"]
   lines = [f"Generated from [`state-machines/{BLOCKS[sm['machine']]}.yaml`](state-machines/{BLOCKS[sm['machine']]}.yaml) "
-           "by `assurance/trace/tools/check_state_machines.py --write`; do not edit by hand. Status is taken from the "
-           "WP-W-02 Baseline column of the cited SWSRs (\"Implemented\" = code changed and host tests pass, not verified "
-           "on hardware). Build: all, reference (`LIONDRIVER_REFERENCE=1` only) or upstream (without it).",
+           + "by `assurance/trace/tools/check_state_machines.py --write`; do not edit by hand. Status is taken from the "
+           + "WP-W-02 Baseline column of the cited SWSRs (\"Implemented\" = code changed and host tests pass, not verified "
+           + "on hardware). Build: all, reference (`LIONDRIVER_REFERENCE=1` only) or upstream (without it).",
            "",
            "| # | Current | Event | Guard | Action | Next | Build | SWSR | Status | Code |",
            "|---|---|---|---|---|---|---|---|---|---|"]
@@ -278,7 +278,7 @@ def main(argv: list[str]) -> int:
     errors, warnings = check(sm, sw)
     n_err += len(errors)
     print(f"{sm['machine']}: {len(sm['states'])} states, {len(sm['transitions'])} transitions, "
-          f"{len(errors)} errors, {len(warnings)} findings")
+          + f"{len(errors)} errors, {len(warnings)} findings")
     for e in errors:
       print("  ERROR " + e)
     for w in warnings:

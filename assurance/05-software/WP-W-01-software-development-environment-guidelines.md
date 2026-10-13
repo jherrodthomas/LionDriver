@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-01 SW development environment, languages and coding guidelines |
 | Standard reference | ISO 26262-6:2018 §5 (general topics for product development at the software level: development environment, modelling and coding guidelines); ISO 26262-8:2018 §11 (by reference to WP-P-07); ISO/SAE 21434:2021 §10 (secure coding); MISRA C:2012 (incl. amendments as supported by the analyser); ASPICE 4.0 SWE.3 |
-| Version | 0.4 (§14: generated Stateflow-style and Simulink-style figures; 2026-10-13). 0.3 (§14: `selfdrived` state machine recorded, checker finding S7 and unit tests; 2026-10-13). 0.2 ([RR-2026-008](reviews/RR-2026-008.md) F-17: `LIONDRIVER_REFERENCE` in §7 and CF-01, K-2, ENV-R-08; F-18: build manifest and tool versions in CI; F-28: author; 2026-10-12). 0.1 |
+| Version | 0.5 (§14: generated Stateflow-style and Simulink-style figures; 2026-10-13). 0.4 (§14: `selfdrived` state machine recorded, checker finding S7 and unit tests; 2026-10-13). 0.3 (merge of PR #47 software alignment with the base: CI row lists the base's `mutation_reference` and `panda_host_tests` jobs; 2026-10-13). 0.2 ([RR-2026-009](reviews/RR-2026-009.md) F-17: `LIONDRIVER_REFERENCE` in §7 and CF-01, K-2, ENV-R-08; F-18: build manifest and tool versions in CI; F-28: author; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope (E-03): ASIL C provisional, ASIL B expected after SG-01 re-rating ([WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md)). Host stack (E-01, E-02): QM / SOTIF / CS |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -13,7 +13,7 @@
 | Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 > [!NOTE]
-> **Status at `682f184` (opendbc `7993399`, panda `8aa8671`).** This document describes the code at `8b8c6ae` unless a statement names a later pin. Safety mechanisms integrated since then (hardware watchdog and 100 Hz safety task, RX timeout, TX whitelist, safety-mode lock, 0.3 s heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are recorded in the [WP-W-02](WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md). The sections of this document that still describe the earlier behaviour are listed in [RR-2026-008](reviews/RR-2026-008.md) and are to be updated ([WP-M-14 §2.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#23-pre-entry-engineering-track) P-03).
+> **Status at `682f184` (opendbc `7993399`, panda `8aa8671`).** This document describes the code at `8b8c6ae` unless a statement names a later pin. Safety mechanisms integrated since then (hardware watchdog and 100 Hz safety task, RX timeout, TX whitelist, safety-mode lock, 0.3 s heartbeat, IRQ priorities, EPS fault, cruise-main check, TX rate supervision) are recorded in the [WP-W-02](WP-W-02-software-safety-requirements.md) Baseline column and the [change records](../07-supporting/impact/README.md). The sections of this document that still describe the earlier behaviour are listed in [RR-2026-009](reviews/RR-2026-009.md) and are to be updated ([WP-M-14 §2.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#23-pre-entry-engineering-track) P-03).
 
 ## 1. Purpose and scope
 
@@ -82,7 +82,7 @@ The tools, their versions and their tool confidence levels are owned by [WP-P-07
 | Code generators (QM) | capnp (TL-10), acados (TL-11), rednose/sympy (TL-12), Cython (TL-13), DBC generator (TL-14), tinygrad (TL-09) | per tool | QM | §11 |
 | Firmware signing | `panda/board/crypto/sign.py` (TL-15) | `panda/SConscript:117-125` | 2 | Release key handling in [WP-P-10](../07-supporting/WP-P-10-release-management.md) |
 | Dependency resolution | uv + `uv.lock` (TL-16) | `uv.lock`, `opendbc_repo/uv.lock` | 1 | uv itself unpinned |
-| CI | GitHub Actions (TL-18) | `.github/workflows/tests.yaml`, `.github/workflows/safety.yaml` | 1 | `safety.yaml` (since D-03) runs the opendbc safety tests (release and reference-build variants), opendbc and panda MISRA and mutation on `liondriver-dev` and PRs; each job writes a build manifest with the submodule commits, build flags and tool versions on PATH and uploads it as an artifact (`tools/ci/build_manifest.py`, F-18; first CI run pending) (ENV-01) |
+| CI | GitHub Actions (TL-18) | `.github/workflows/tests.yaml`, `.github/workflows/safety.yaml` | 1 | `safety.yaml` (since D-03) runs the opendbc safety tests (release and reference-build variants), opendbc and panda MISRA, mutation (standard and reference variants, `mutation_reference`) and the panda host unit tests (`panda_host_tests`: `hw_watchdog`, `heartbeat_monitor`, `heartbeat_siren`, `reference_lock`, `irq_priorities`, `eps_fault_siren`) on `liondriver-dev` and PRs; each job writes a build manifest with the submodule commits, build flags and tool versions on PATH and uploads it as an artifact (`tools/ci/build_manifest.py`, F-18; first CI run pending) (ENV-01) |
 
 Environment rules:
 
@@ -137,6 +137,27 @@ Environment rules:
 | CR-C-07 | Rule 3.2 (no `\` line splicing in `//` comments) and other unchecked rules |
 | CR-C-08 | Defensive checks of §6 present for every new input |
 
+### 5.5 Security coding rules: CERT C subset (SAST-02)
+
+The CERT C rules that LionDriver applies in addition to MISRA are the ones the secure-coding rules of [WP-W-11 §3.1](WP-W-11-cybersecurity-implementation-verification.md) name (SC-C-02, -03, -04, -07, -08). Scope: the envelope (E-03) including the bootstub and the host command handler, and `pandad` (SAST-02 scope in WP-W-11 §4). Selected 2026-10-12 (WP-W-11 OI-2).
+
+| CERT C rule | Topic | Checked by tool | Covered by review | WP-W-11 rule |
+|---|---|---|---|---|
+| ARR30-C | No out-of-bounds pointers or array subscripts | cppcheck `arrayIndexOutOfBounds`, `negativeIndex`; MISRA 18.1, 18.2 (cppcheck) | Indices and lengths taken from host or bus messages | SC-C-02 |
+| ARR38-C | Library functions do not form invalid pointers | cppcheck `bufferAccessOutOfBounds`; MISRA 21.17, 21.18 (cppcheck) | Every `memcpy`/`memset` size derives from a validated length | SC-C-02, SC-C-03 |
+| STR31-C | Sufficient storage for strings and their terminator | cppcheck `bufferAccessOutOfBounds`; MISRA 21.17 (cppcheck) | String handling on received data | SC-C-03 |
+| INT30-C | Unsigned arithmetic does not wrap | none reliable | All arithmetic on externally supplied values | SC-C-04 |
+| INT31-C | Integer conversions do not lose or misinterpret data | MISRA 10.3, 10.4, 10.8 (addon); cppcheck `signConversion` | Casts of 16-bit command parameters and CAN byte assembly | SC-C-02, SC-C-04 |
+| INT32-C | Signed operations do not overflow | cppcheck `integerOverflow` (constant expressions); MISRA 12.2 (addon), cppcheck `shiftTooManyBits` | Signed arithmetic on runtime values | SC-C-04 |
+| EXP33-C | No reads of uninitialised memory | cppcheck `uninitvar`; MISRA 9.1 (cppcheck) | Security-relevant state has a defined value at reset | SC-C-08 |
+
+Rules on the tools:
+
+- **C-20** The designated cppcheck (2.21.0, §4) runs these core checkers on the scope above, and the MISRA rules listed are those its coverage table marks as checked (`opendbc_repo/opendbc/safety/tests/misra/coverage_table`). cppcheck 2.21.0 has **no CERT addon**: `addons/` contains `misra.py` but no `cert.py`. The CERT subset therefore cannot be checked by a cppcheck CERT run, only through the checkers in the table.
+- **C-21** clang-tidy runs the `cert-*` checks on the same scope as an additional net. In LLVM 20.1 those checks are 21 C rules: ARR39, CON36, DCL03, DCL16, DCL37, ENV33, ERR33, ERR34, EXP42, FIO38, FLP30, FLP37, INT09, MSC24, MSC30, MSC32, MSC33, POS44, POS47, SIG30, STR34 (`-C` suffix), plus the `-cpp` checks for `pandad`. None of them is a rule of the table above, so they complement the table and do not replace its review column. The clang-tidy version is pinned and classified in [WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md) before its results are used (OI-13).
+- **C-22** Findings follow WP-W-11 §4: CAL 3 paths, zero unjustified findings. A justified finding is recorded like a MISRA deviation (§8), with a `CERT-` prefixed deviation ID.
+- **C-23** SC-C-07 (crypto: one reviewed library, constant-time comparison of digests and signatures) has no CERT rule that a tool checks. It is covered by review only, with the review recorded against CSR-031.
+
 ## 6. Design principles for the envelope (E-03)
 
 These principles apply to the software unit design ([WP-W-05](WP-W-05-software-unit-design.md)) and architecture ([WP-W-03](WP-W-03-software-architecture.md)). "Current state" records what the baseline does; a "No" is a finding, not a waiver.
@@ -177,7 +198,7 @@ From `panda/SConscript`:
 
 Rules:
 
-- **CF-01** The qualified option set (TL-01 qualification, WP-P-07 §5) is exactly the reference release configuration: `RELEASE=1 LIONDRIVER_REFERENCE=1`. A build without `LIONDRIVER_REFERENCE` lacks the safety-mode lock, the reduced TX whitelist and the TX rate supervision and is not the verified configuration. `tools/release/build_release.sh` does not set it yet ([RR-2026-008](reviews/RR-2026-008.md) F-33). Changing any flag is an SR-T change ([WP-P-01 §4](../07-supporting/WP-P-01-configuration-management-plan.md#4-safety-relevant-file-list)).
+- **CF-01** The qualified option set (TL-01 qualification, WP-P-07 §5) is exactly the reference release configuration: `RELEASE=1 LIONDRIVER_REFERENCE=1`. A build without `LIONDRIVER_REFERENCE` lacks the safety-mode lock, the reduced TX whitelist and the TX rate supervision and is not the verified configuration. `tools/release/build_release.sh` does not set it yet ([RR-2026-009](reviews/RR-2026-009.md) F-33). Changing any flag is an SR-T change ([WP-P-01 §4](../07-supporting/WP-P-01-configuration-management-plan.md#4-safety-relevant-file-list)).
 - **CF-02** Add `-Wconversion -Wsign-conversion -Wcast-align -Wshadow -Wundef` to the target build after the existing warnings are resolved (OI-8). Not present at baseline.
 - **CF-03** Add `-fstack-usage` and a link map review for ENV-R-14 (OI-7).
 
@@ -333,7 +354,7 @@ LionDriver does not use model-based development for production code. Models appe
 | Use | Notation | Rules |
 |---|---|---|
 | Architecture (system, software) | Block diagrams as Markdown tables plus ASCII or Mermaid diagrams; one viewpoint per diagram | Every block has an element ID from the element catalogue (`assurance/trace/elements.yaml`, WP-P-06 OI-4); every arrow names the interface (IF-xx) |
-| State machines (engagement, safety modes, selfdrived) | YAML records in [`state-machines/`](state-machines/) (state, event, guard, action, next state, build, SWSR, code citation) | The records are normative. The WP-W-05 §5 tables and Mermaid diagrams are generated from them by `assurance/trace/tools/check_state_machines.py` and checked in CI (S1–S4 errors; S5/S6 findings). Implementation status comes from the WP-W-02 Baseline column, not from the record ([RR-2026-008](reviews/RR-2026-008.md) F-16). `selfdrived` is recorded in `sm-selfdrived.yaml` (WP-W-05 §5.3, host QM). A transition without a host SWSR carries a `gap` reason and is reported as finding S7. The checker is tested by `assurance/trace/tools/test_check_state_machines.py`. Stateflow-style charts of every record and a Simulink-style envelope block diagram are generated by `diagrams/make_diagrams.py` (figures, not normative; CI checks they are current) |
+| State machines (engagement, safety modes, selfdrived) | YAML records in [`state-machines/`](state-machines/) (state, event, guard, action, next state, build, SWSR, code citation) | The records are normative. The WP-W-05 §5 tables and Mermaid diagrams are generated from them by `assurance/trace/tools/check_state_machines.py` and checked in CI (S1–S4 errors; S5/S6 findings). Implementation status comes from the WP-W-02 Baseline column, not from the record ([RR-2026-009](reviews/RR-2026-009.md) F-16). `selfdrived` is recorded in `sm-selfdrived.yaml` (WP-W-05 §5.3, host QM). A transition without a host SWSR carries a `gap` reason and is reported as finding S7. The checker is tested by `assurance/trace/tools/test_check_state_machines.py`. Stateflow-style charts of every record and a Simulink-style envelope block diagram are generated by `diagrams/make_diagrams.py` (figures, not normative; CI checks they are current) |
 | Data flow | Table of producer → service/message → consumer with rate and timeout | Rates from `cereal/services.py` |
 | Requirements | YAML per [WP-P-06](../07-supporting/WP-P-06-requirements-management-traceability.md) | Markdown tables must match YAML (WP-P-06 K11) |
 | Timing | Tables in [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md); units in ms | |
@@ -366,3 +387,4 @@ LionDriver does not use model-based development for production code. Models appe
 | OI-10 | Change request: add the LionDriver banned APIs (§10.2) to `pyproject.toml` | Maintainer | G3 |
 | OI-11 | Extend cpplint to `openpilot/selfdrive/pandad` | Maintainer | G4 |
 | OI-12 | Add the bootstub variant to the panda MISRA run (WP-P-07 K-5) | Maintainer | G3 |
+| OI-13 | Implement SAST-02 per §5.5: cppcheck core checkers and clang-tidy `cert-*` on the envelope, bootstub and `pandad` in LionDriver CI; pin and classify clang-tidy in WP-P-07 | Maintainer | G3 |

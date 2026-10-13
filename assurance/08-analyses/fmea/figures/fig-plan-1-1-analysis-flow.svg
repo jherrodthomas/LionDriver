@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="650" viewBox="0 0 1280 650" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 1-1. Flow of information between the five analyses (FMEA program plan §1)</title>
+  <desc id="d">The lifecycle chain runs Item Definition, HARA, Safety Goals (ASIL), FSC, TSC / Architecture. TSC / Architecture feeds the DFMEA and the SW FMEA. System FMEA effects feed the HARA; DFMEA failure modes are the System FMEA causes. DFMEA feeds the FMEDA, which needs the safety goals and ASIL. SW FMEA feeds the DFA / FTA. Separately, the PFMEA feeds the release and install control plan, which defines the configuration as assured.</desc>
+  <defs>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .wp{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .an{fill:#FFFFFF;stroke:#334155;stroke-width:1.6}
+      .dn{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2;stroke-dasharray:5 3}
+      .g{fill:none;stroke:#475569;stroke-width:1.6}
+      .a{fill:none;stroke:#0F766E;stroke-width:2}
+      .lt{fill:#0F766E;font-size:9.5px;font-weight:600}
+      .tag{font-size:9px;font-weight:700;letter-spacing:.06em}
+    </style>
+  </defs>
+
+  <rect width="1280" height="650" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 1-1 · Flow of information between the analyses</text>
+  <text x="40" y="66" class="m" font-size="12.5">Five analyses (System FMEA, DFMEA, SW FMEA, PFMEA, FMEDA) against the ISO 26262 concept chain</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">FMEA program plan §1</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">scopes §3</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+
+  <!-- ===== lifecycle chain ===== -->
+  <rect x="40" y="110" width="210" height="46" rx="8" class="wp"/>
+  <text x="145" y="138" class="t sb" font-size="13" text-anchor="middle">Item Definition</text>
+  <rect x="287" y="110" width="210" height="46" rx="8" class="wp"/>
+  <text x="392" y="138" class="t sb" font-size="13" text-anchor="middle">HARA</text>
+  <rect x="534" y="110" width="210" height="46" rx="8" class="wp"/>
+  <text x="639" y="138" class="t sb" font-size="13" text-anchor="middle">Safety Goals (ASIL)</text>
+  <rect x="781" y="110" width="210" height="46" rx="8" class="wp"/>
+  <text x="886" y="138" class="t sb" font-size="13" text-anchor="middle">FSC</text>
+  <rect x="1028" y="110" width="210" height="46" rx="8" class="wp"/>
+  <text x="1133" y="138" class="t sb" font-size="13" text-anchor="middle">TSC / Architecture</text>
+  <path class="g" d="M250 133 H285" marker-end="url(#aG)"/>
+  <path class="g" d="M497 133 H532" marker-end="url(#aG)"/>
+  <path class="g" d="M744 133 H779" marker-end="url(#aG)"/>
+  <path class="g" d="M991 133 H1026" marker-end="url(#aG)"/>
+
+  <!-- TSC feeds DFMEA and SW FMEA -->
+  <path class="g" d="M1133 156 V248" marker-end="url(#aG)"/>
+  <path class="g" d="M1133 202 H886 V248" marker-end="url(#aG)"/>
+
+  <!-- ===== analyses, row 2 ===== -->
+  <rect x="287" y="250" width="210" height="74" rx="10" class="an"/>
+  <text x="303" y="272" class="t b" font-size="13">System FMEA</text>
+  <text x="303" y="289" class="m xs">function (ACC + ALC + DM)</text>
+  <text x="303" y="302" class="m xs">item / vehicle level</text>
+  <text x="303" y="315" class="m xs">AIAG-VDA 2019 · ISO 26262-9 §8</text>
+
+  <rect x="781" y="250" width="210" height="74" rx="10" class="an"/>
+  <text x="797" y="272" class="t b" font-size="13">DFMEA</text>
+  <text x="797" y="289" class="m xs">HW design: comma 3X, panda,</text>
+  <text x="797" y="302" class="m xs">harness, vehicle interfaces</text>
+  <text x="797" y="315" class="m xs">AIAG-VDA 2019</text>
+
+  <rect x="1028" y="250" width="210" height="74" rx="10" class="an"/>
+  <text x="1044" y="272" class="t b" font-size="13">SW FMEA</text>
+  <text x="1044" y="289" class="m xs">processes, modules, safety code</text>
+  <text x="1044" y="302" class="m xs">AIAG-VDA 2019 adapted, SAE J1739</text>
+  <text x="1044" y="315" class="m xs">ISO 26262-6 §7.4.10</text>
+
+  <!-- System FMEA effects -> HARA -->
+  <path class="a" d="M392 250 V158" marker-end="url(#aT)"/>
+  <text x="400" y="200" class="lt">effects</text>
+  <text x="400" y="213" class="m xs">trace to HARA hazards</text>
+
+  <!-- DFMEA -> System FMEA (causes) -->
+  <path class="a" d="M781 287 H499" marker-end="url(#aT)"/>
+  <text x="640" y="279" class="lt" text-anchor="middle">causes</text>
+  <text x="640" y="303" class="m xs" text-anchor="middle">System FMEA causes become the</text>
+  <text x="640" y="316" class="m xs" text-anchor="middle">failure modes of DFMEA / SW FMEA</text>
+
+  <!-- ===== row 3 ===== -->
+  <rect x="781" y="390" width="210" height="108" rx="10" class="an"/>
+  <text x="797" y="412" class="t b" font-size="13">FMEDA</text>
+  <text x="797" y="429" class="m xs">safety-relevant HW parts</text>
+  <text x="797" y="442" class="m xs">(panda MCU path first)</text>
+  <text x="797" y="455" class="m xs">ISO 26262-5 §8–9, ISO 26262-11</text>
+  <text x="797" y="474" fill="#C2410C" font-size="10" font-weight="600">needs safety goals + ASIL:</text>
+  <text x="797" y="486" fill="#C2410C" font-size="10" font-weight="600">cannot be final before the HARA</text>
+
+  <rect x="1028" y="390" width="210" height="60" rx="10" class="dn"/>
+  <text x="1044" y="414" class="t b" font-size="13">DFA / FTA</text>
+  <text x="1044" y="432" class="m xs">dependent failure analysis</text>
+
+  <path class="a" d="M886 324 V388" marker-end="url(#aT)"/>
+  <text x="878" y="360" class="lt" text-anchor="end">HW failure modes reused</text>
+  <path class="a" d="M1133 324 V388" marker-end="url(#aT)"/>
+  <text x="1125" y="352" class="lt" text-anchor="end">root causes shared</text>
+  <text x="1125" y="365" class="lt" text-anchor="end">across redundant paths</text>
+
+  <!-- ===== process side ===== -->
+  <rect x="40" y="510" width="210" height="60" rx="10" class="an"/>
+  <text x="56" y="532" class="t b" font-size="13">PFMEA</text>
+  <text x="56" y="549" class="m xs">build → release → install →</text>
+  <text x="56" y="562" class="m xs">calibration → OTA · AIAG-VDA 2019</text>
+  <rect x="287" y="510" width="300" height="60" rx="10" class="wp"/>
+  <text x="303" y="534" class="t sb" font-size="13">Release / install control plan</text>
+  <text x="303" y="553" class="m xs">feeds “configuration as assured” (WP-O-01 §3–§4)</text>
+  <path class="a" d="M250 540 H285" marker-end="url(#aT)"/>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="600" x2="1240" y2="600" stroke="#E2E8F0"/>
+  <g transform="translate(40,624)" font-size="10.5">
+    <rect x="0" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#334155" stroke-width="1.4"/><text x="36" y="4" class="t">Analysis in this plan</text>
+    <rect x="170" y="-8" width="28" height="16" rx="4" fill="#F1F5F9" stroke="#94A3B8"/><text x="206" y="4" class="t">Lifecycle work product</text>
+    <rect x="356" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="5 3"/><text x="392" y="4" class="t">Downstream analysis</text>
+    <line x1="530" y1="0" x2="558" y2="0" stroke="#475569" stroke-width="1.6"/><text x="566" y="4" class="t">Lifecycle flow</text>
+    <line x1="670" y1="0" x2="698" y2="0" stroke="#0F766E" stroke-width="2"/><text x="706" y="4" class="t">Information passed between analyses</text>
+  </g>
+</svg>

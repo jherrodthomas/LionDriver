@@ -45,15 +45,17 @@ MUTANTS = {
   "brake_while_moving_ignored": lambda: setattr(M.SmToyAuth, "_moving", lambda self: False),
   "engagement_not_gated": lambda: setattr(M.SmToyAuth, "_all_checks_ok", lambda self: True),
   "quality_flag_ignored": lambda: M.RX_SET_COMMON.__setitem__(0x0AA, (83, False, False)),
+  "tx_arrival_limit_60ms": lambda: M.TX_ARRIVAL_US.__setitem__(0x2E4, 60_000),
 }
 
-IN_SCOPE = ["T1", "T2", "T3", "T4", "T5", "T7", "T8", "T10c", "T11"]
-REFERENCE_ONLY = {"T10c", "T11"}
+IN_SCOPE = ["T1", "T2", "T3", "T4", "T5", "T7", "T8", "T10b", "T10c", "T11"]
+REFERENCE_ONLY = {"T10b", "T10c", "T11"}
 TOYOTA_PARAM = 73          # reference configuration (CD-01): EPS factor 73, no flags
 TICK_US = 10_000           # 100 Hz safety task (SWSR-401a)
 TX_DLC = {0x2E4: 5, 0x191: 8, 0x412: 8, 0x343: 8, 0x1D2: 8, 0x283: 7, 0x750: 8}  # whitelist lengths (CD-04)
 MSG_NAME = {0x0AA: "WHEEL_SPEEDS", 0x260: "STEER_TORQUE_SENSOR", 0x1D2: "PCM_CRUISE", 0x226: "BRAKE_MODULE",
             0x262: "EPS_STATUS", 0x1D3: "PCM_CRUISE_2"}
+ACTUATION = {0x2E4: 100, 0x343: 33}  # SoC actuation frames a running host sends (SWSR-408 supervises both)
 WHEELS = ("FR", "FL", "RR", "RL")
 STANDING = 6767            # raw wheel speed for 0 km/h (factor 0.01, offset -67.67)
 
@@ -61,8 +63,9 @@ STANDING = 6767            # raw wheel speed for 0 km/h (factor 0.01, offset -67
 # ------------------------------------------------------------------ event streams
 
 class Feeder:
-  """Holds the vehicle signal state and emits (time, event) pairs: periodic RX frames at their nominal rates and the
-  100 Hz safety tick. Directed scenarios drive it explicitly; the random generator perturbs it."""
+  """Holds the vehicle signal state and emits (time, event) pairs: periodic RX frames at their nominal rates, the
+  100 Hz safety tick and, as a running host would, the SoC's actuation frames 0x2E4 (100 Hz) and 0x343 (33 Hz).
+  Directed scenarios drive it explicitly; the random generator perturbs it and sends its own TX traffic."""
 
   def __init__(self, reference: bool):
     self.rx = dict(RX_SET_COMMON)
@@ -72,6 +75,9 @@ class Feeder:
     self.next_due = {a: 0 for a in self.rx}
     self.next_tick = 0
     self.muted: set[int] = set()
+    self.actuate = True                        # emit nominal SoC actuation traffic
+    self.next_tx = {a: 0 for a in ACTUATION}
+    self.tx_muted: set[int] = set()
     self.sig = {"CRUISE_ACTIVE": 0, "GAS_RELEASED": 1, "MAIN_ON": 1, "BRAKE_PRESSED": 0, "LKA_STATE": 5,
                 **{f"WHEEL_SPEED_{w}_RAW": STANDING for w in WHEELS}, **{f"WHEEL_SPEED_{w}_FAULT": 0 for w in WHEELS}}
     self.events: list[tuple[int, object]] = []
@@ -85,7 +91,8 @@ class Feeder:
   def run(self, dur_us: int, period_scale: float = 1.0, rng: random.Random | None = None, jitter: float = 0.0) -> None:
     end = self.now + dur_us
     while True:
-      due = min([self.next_tick] + [self.next_due[a] for a in self.rx])
+      tx_due = [self.next_tx[a] for a in ACTUATION] if self.actuate else []
+      due = min([self.next_tick] + [self.next_due[a] for a in self.rx] + tx_due)
       if due > end:
         break
       self.now = due
@@ -100,6 +107,12 @@ class Feeder:
           if rng is not None and jitter:
             period = max(1, int(period * (1 + rng.uniform(-jitter, jitter))))
           self.next_due[a] = due + period
+      if self.actuate:
+        for a, hz in ACTUATION.items():
+          if self.next_tx[a] == due:
+            if a not in self.tx_muted:
+              self.emit(Tx(a, dlc=TX_DLC[a]))
+            self.next_tx[a] = due + 1_000_000 // hz
     self.now = end
 
   def engage(self) -> None:
@@ -178,18 +191,22 @@ def directed(reference: bool) -> dict[str, list]:
     S["D12 T10c cruise rising edge while main off"] = f.events
 
     for mult in (2, 10):
-      f = new(); f.engage()
+      f = new(); f.engage(); f.tx_muted = {0x2E4}   # the flood replaces the nominal 0x2E4 traffic
       for k in range(60 * mult // 2):
         f.emit(Tx(0x2E4, dlc=5), at=f.now + k * (10_000 // mult))
       f.run(300_000)
       S[f"D13 T11 0x2E4 flood at {mult}x while allowed"] = f.events
 
-    f = new(); f.engage()
+    f = new(); f.engage(); f.tx_muted = {0x2E4}
     for k in range(60):
       f.emit(Tx(0x2E4, dlc=5), at=f.now + k * 5_000)
     f.run(300_000)
     f.sig["CRUISE_ACTIVE"] = 0; f.run(200_000); f.sig["CRUISE_ACTIVE"] = 1; f.emit(f.frame(0x1D2)); f.run(100_000)
     S["D13c T11 revoked, then a new cruise edge (F-34)"] = f.events
+
+    for a, limit in sorted(M.TX_ARRIVAL_US.items()):
+      f = new(); f.engage(); f.run(100_000); f.tx_muted = {a}; f.run(limit + 100_000)
+      S[f"D18 T10b {a:#x} stops while allowed (limit {limit // 1000} ms)"] = f.events
 
   f = new(); f.engage(); f.sig["BRAKE_PRESSED"] = 1; f.emit(f.frame(0x226, dlc=7)); f.now += 1_000
   f.emit(f.frame(0x260)); f.run(100_000)
@@ -214,7 +231,9 @@ def random_sequence(reference: bool, seed: int, n_events: int) -> list:
   f.sig["MAIN_ON"] = int(rng.random() < 0.9)
   dropout: dict[int, int] = {}
   flood: tuple[int, float, int] | None = None   # (addr, multiplier, until)
+  f.actuate = False                            # TX traffic is generated below, with floods and dropouts
   next_tx = {0x2E4: 0, 0x343: 0, 0x412: 0}
+  tx_gap: dict[int, int] = {}                  # actuation dropouts (T10b): addr -> until
   while len(f.events) < n_events:
     # one 10 ms slice at a time, frames at nominal rates with jitter and occasional long gaps
     f.muted = {a for a, until in dropout.items() if until > f.now}
@@ -260,9 +279,13 @@ def random_sequence(reference: bool, seed: int, n_events: int) -> list:
     if flood is None and rng.random() < 0.003:
       flood = (rng.choice(sorted(TX_RATE_ROWS)), rng.choice([0.5, 1.0, 1.5, 2.0, 4.0, 10.0]),
                f.now + rng.choice([100_000, 300_000, 1_000_000]))
+    if rng.random() < 0.004:
+      a = rng.choice(sorted(ACTUATION))
+      tx_gap[a] = f.now + rng.choice([20_000, 40_000, 50_000, 60_000, 90_000, 100_000, 110_000, 200_000])
     for a, hz in ((0x2E4, 100), (0x343, 33), (0x412, 5)):
       while next_tx[a] <= f.now:
-        f.emit(Tx(a, dlc=TX_DLC[a]), at=next_tx[a])
+        if tx_gap.get(a, 0) <= next_tx[a]:
+          f.emit(Tx(a, dlc=TX_DLC[a]), at=next_tx[a])
         next_tx[a] += int(1_000_000 / hz)
     if flood is not None:
       a, mult, until = flood

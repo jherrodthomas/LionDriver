@@ -50,4 +50,4 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 
 ## Addendum: further work products affected (2026-10-12)
 
-The software alignment audit ([RR-2026-008](../../05-software/reviews/RR-2026-008.md) F-30) found that this change also affects: WP-W-09 (TX-rate budgets, window and burst values), WP-W-11 (SoC TX flooding as a cybersecurity threat, if a CSR applies). These were updated in the RR-2026-008 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.
+The software alignment audit ([RR-2026-009](../../05-software/reviews/RR-2026-009.md) F-30) found that this change also affects: WP-W-09 (TX-rate budgets, window and burst values), WP-W-11 (SoC TX flooding as a cybersecurity threat, if a CSR applies). These were updated in the RR-2026-009 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.

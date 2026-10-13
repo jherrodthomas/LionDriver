@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-V-01 Safety validation plan, specification and report |
 | Standard reference | ISO 26262-4:2018 §8 (safety validation); ISO 26262-3:2018 §6 (controllability basis), §7 (external measures, AoU); ASPICE 4.0 VAL.1. Informative: RESPONSE 3 Code of Practice for ADAS controllability assessment; ISO 11270, ISO 15622 |
-| Version | 0.1 |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (plan and specification). Report section is a template: **Not yet executed** |
 | ASIL / scope | Up to ASIL C (SG-01), D if AOU-01/02 fail ([WP-C-03](../02-concept/WP-C-03-hara.md)) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); validation report reviewed as part of the functional safety assessment (I3) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`) |
 
 ## 1. Purpose and scope
 
@@ -31,10 +31,10 @@ Out of scope: SOTIF validation of functional insufficiencies ([WP-V-02](WP-V-02-
 
 | Item | Configuration |
 |---|---|
-| Vehicle | Reference 2020 Corolla LE (VIN and ECU firmware per [WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-1); [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) INS-01…INS-30 passed |
+| Vehicle | Reference Toyota Corolla, 12th generation (E210), TSS 2.0 (VIN and ECU firmware per [WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-1); [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) INS-01…INS-30 passed |
 | Item | Released LionDriver tag (or release candidate) with pinned models and panda firmware; parameters per INS-19 |
 | Test builds | Fault-injection and characterization builds (§5.1 VS-VAL-02, -05; §5.3) are separately identified builds with their own tag, used **only** on the closed course and removed afterwards; their use is logged in the drive sheet ([WP-V-07](WP-V-07-vehicle-test-operations.md) §7.4) |
-| Equipment | Steering-wheel torque/angle sensor (instrumented wheel or clamp-on), rim force gauge, accelerometer/IMU independent of the device, GNSS/RTK or video lane-position measurement, CAN logger independent of the panda (second interface on the vehicle CAN), cabin sound level meter, soft target (radar-reflective) with propulsion or trolley, passenger-side abort switch (WP-V-07 §6.3) |
+| Equipment | Steering-wheel torque/angle sensor (instrumented wheel or clamp-on), rim force gauge, accelerometer/IMU independent of the device, GNSS/RTK or video lane-position measurement, CAN logger independent of the panda (second interface on the vehicle CAN), cabin sound level meter, soft target (radar-reflective) with propulsion or trolley, passenger-side abort switch (WP-V-07 §6.3). Rear-facing camera, fitted for every engaged public-road block: it covers the ego lane behind to at least 50 m (1.5 s at 120 km/h), records on the clock of the CAN logger and IMU, and is stored with the drive's logs, so that following vehicles can be annotated for P(E-situation) of SH-04 ([WP-V-02](WP-V-02-sotif-vv-strategy.md) §3.4, OS-08). It is a data-collection instrument only: no function of the item uses it, and it is not connected to the device |
 | Environment | Closed course for all controllability, characterization and fault-injection cases; public roads (after G1) only for VS-VAL-40…43 |
 | Personnel | Safety driver and test operator qualified per WP-V-07; test subjects for controllability studies (§5.2) |
 
@@ -75,10 +75,13 @@ Timing values are the preliminary FTTI allocation of [WP-C-04 §8](../02-concept
 | VS-VAL-05 | PCM ACC envelope and cancel (AOU-05) | AOU-05R, FSR-03.06, FSR-04.03; WP-C-08 V-1 | Characterization build sends `ACC_CONTROL` (`0x343`) accel requests beyond the panda envelope (e.g., +3, +4, −5, −7 m/s²) — only with a closed-course firmware build whose identity is logged; speeds ≤ 60 km/h; also test the cancel bit | Achieved acceleration recorded per request; PCM limits recorded; cancel honoured within a recorded time. Result decides whether AOU-05 holds (ratings of HE-03.1, HE-04.1) | CC, fault-injection rules |
 | VS-VAL-06 | Stock PCS preservation (AOU-04) | AOU-04R, FSR-07.04; SG-07; AC-06 | Soft-target approach tests at stock PCS speeds with (a) harness removed, (b) item installed and disengaged, (c) item engaged. Shared with [WP-V-03](WP-V-03-sotif-known-scenarios.md) KS-20 | PCS warning and brake onset at the same TTC within ±0.2 s in (a), (b), (c); camera PCS messages present on car-side CAN in (b) and (c) | CC |
 | VS-VAL-07 | VSC/ABS status visibility (AOU-10) | HE-01, HE-04 | Switch VSC off; check `espDisabled` event and engagement behaviour (`car_events.py:116-117`) | Engagement blocked or alerting as specified in WP-C-04 | Stationary/CC |
+| VS-VAL-08 | PCM ACC response onset (planning-to-actuation time) | [WP-V-02 §4.3](WP-V-02-sotif-vv-strategy.md#43-derivation-of-the-air-01-air-03-and-air-04-values) (AIR-04 t_r, AIR-03 latency); AOU-05R | Release build, engaged, no lead, straight level track at 30 and 60 km/h, and at 90 km/h if the site allows (OI-1). `tools/longitudinal_maneuvers` (`maneuversd.py`) steps `longitudinalPlan.aTarget` from 0 to −1.0, −2.0, −3.0 (a_lim) and −3.5 m/s² (envelope minimum) and to +1.0 m/s², ≥ 10 repetitions per step and speed, at random phase. Time stamps: (1) the `longitudinalPlan` message with the new target (rlog); (2) the first `ACC_CONTROL` (`0x343`) frame carrying it on the car-side bus (independent CAN logger); (3) onset of the vehicle response, the first time the independent IMU's longitudinal acceleration (filtered, logged on the same clock as the CAN logger) has moved 10 % of the step from its pre-step value; (4) 90 % of the step | Characterisation. Reported per step and speed: (1)→(2) software time, (2)→(3) PCM onset time, (1)→(3) planning-to-actuation time, (2)→(4) rise time, each as the worst observed value. The 0.5 s share for planning to actuation assumed in WP-V-02 §4.3 holds if the worst (1)→(3) is ≤ 0.5 s for the braking steps; otherwise AIR-04 t_r and the AIR-03 latency are re-derived from the measured value | CC |
 
 ### 5.2 Driver controllability tests
 
 Test subjects: licensed drivers who are not project members and have not driven LD-SDA before, briefed only with the user information ([WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md)). The safety driver sits in the front passenger seat with the abort switch; the test operator in the rear. Twenty valid subjects per test condition, unless the worst-case condition is shown on a smaller set first (speed escalation: a condition is run only after the slower one passed). Ethics: informed consent, right to stop, debrief.
+
+VS-VAL-10, -12, -13, -14 and -16 also supply P(not controlled) to the SOTIF validation targets ([WP-V-02](WP-V-02-sotif-vv-strategy.md) §3.3). Their result row therefore reports, per tested speed and condition, the number of valid subjects, the number who did not control the event and the one-sided 95 % upper bound on that share.
 
 | ID | Purpose | Parent | Procedure (summary) | Pass criterion |
 |---|---|---|---|---|
@@ -98,12 +101,12 @@ Vehicle-level repetition of selected [WP-V-05](WP-V-05-fault-injection.md) cases
 
 | ID | Mechanism | Injection | Pass criterion |
 |---|---|---|---|
-| VS-VAL-20 | Heartbeat supervision | Stop `pandad` / SPI heartbeat while engaged at 50 km/h | Actuation removed; time measured against the FTTI (current 3–5 s timers `panda/board/main.c:182-193` are expected to fail SG-01 FTTI, GAP-06) |
-| VS-VAL-21 | RX checks | Disconnect / block wheel-speed or PCM message on the harness (breakout box) | `controls_allowed` cleared; release time recorded (current ≤ ≈ 2 s, GAP-06) |
+| VS-VAL-20 | Heartbeat supervision | Stop `pandad` / SPI heartbeat while engaged at 50 km/h | Actuation removed; time measured against the FTTI. Since 2026-10-12 authority is revoked after 0.3 s without heartbeat in all builds (`panda/board/drivers/heartbeat_monitor.h`, not verified on hardware); the SILENT timers (3–5 s) are unchanged and SILENT timing is still expected to fail (GAP-06). Since 2026-10-13 the siren sounds at the revocation, ≈ 0.56 s after the last heartbeat, in all builds (panda `c33343b`; WP-S-04 T-07a; not verified on hardware) |
+| VS-VAL-21 | RX checks | Disconnect / block wheel-speed or PCM message on the harness (breakout box) | `controls_allowed` cleared; release time recorded (since 2026-10-12: after 5 nominal periods, ≤ 0.16 s, opendbc `7993399`; not verified on hardware) |
 | VS-VAL-22 | Torque and accel limits | Test build on SoC requests torque > 1500 raw and rates above limits; accel outside −3.5…+2.0 | Panda blocks over-limit frames (no actuation above limits on the independent CAN logger) |
 | VS-VAL-23 | Engagement gating | SoC commands torque while not engaged | No torque frame on the car side |
 | VS-VAL-24 | Relay malfunction | Inject camera-side LKA message on the car side (breakout box) | `relayMalfunction` detected, immediate disable |
-| VS-VAL-25 | Safety-mode integrity | Send `0xdc` with a different mode while onroad | Detected (`controlsMismatch`), immediate disable; after GAP-09 closure: rejected by firmware |
+| VS-VAL-25 | Safety-mode integrity | Send `0xdc` with a different mode while onroad | Reference build (`LIONDRIVER_REFERENCE=1`): rejected by the firmware (TSR-512, `panda/board/reference_lock.h`; not verified on hardware). Default build: detected (`controlsMismatch`), immediate disable |
 | VS-VAL-26 | Host fault reactions | Kill `modeld`, `controlsd`; CPU overload | Alert and disengagement within SG-02 budget; GAP-16 3 s soft-disable behaviour measured |
 
 ### 5.4 Validation of external measures
@@ -127,7 +130,7 @@ Vehicle-level repetition of selected [WP-V-05](WP-V-05-fault-injection.md) cases
 
 | Group | Gate | Depends on |
 |---|---|---|
-| §5.1 VS-VAL-01, -03, -04, -06, -07 | G1 | WP-V-07 approved; closed-course site; instrumented wheel |
+| §5.1 VS-VAL-01, -03, -04, -06, -07, -08 | G1 | WP-V-07 approved; closed-course site; instrumented wheel; independent IMU and CAN logger on one clock (VS-VAL-08). VS-VAL-01, -03, -04, -06 and -08 are entry criteria for public-road level L5 (WP-V-07 §4) |
 | §5.1 VS-VAL-02, -05 | G1 (target) | Fault-injection/characterization build process (configuration control), WP-V-05 rules |
 | §5.2 | G4–G5 | §5.1 results; envelope parameters fixed (WP-S-02); ethics/consent forms |
 | §5.3 | G4 | HIL results from WP-V-05; breakout box |
@@ -160,6 +163,7 @@ Vehicle-level repetition of selected [WP-V-05](WP-V-05-fault-injection.md) cases
 | VS-VAL-05 | | | Not yet executed | | | |
 | VS-VAL-06 | | | Not yet executed | | | |
 | VS-VAL-07 | | | Not yet executed | | | |
+| VS-VAL-08 | | | Not yet executed | | | |
 | VS-VAL-10…18 | | | Not yet executed | | | |
 | VS-VAL-20…26 | | | Not yet executed | | | |
 | VS-VAL-40…43 | | | Not yet executed | | | |
@@ -182,4 +186,4 @@ Vehicle-level repetition of selected [WP-V-05](WP-V-05-fault-injection.md) cases
 | OI-3 | Fix the AOU-02R force limit and the CA-01 lateral margin with the WP-C-04 / WP-C-08 owners before §5.2 starts |
 | OI-4 | Define the configuration-control procedure for characterization and fault-injection builds (VS-VAL-02, -05, §5.3) with WP-P-01 |
 | OI-5 | Prepare consent, recruitment and debrief material for test subjects; decide whether an external human-factors reviewer supervises §5.2 (WP-M-08 OI-6) |
-| OI-6 | Procure the instrumented steering wheel, independent CAN logger, soft target and abort switch |
+| OI-6 | Procure the instrumented steering wheel, independent CAN logger, soft target, abort switch and rear-facing camera |

@@ -1,0 +1,4548 @@
+{
+ "environment": {
+  "superproject": "0478c1c",
+  "opendbc": "273f44e6",
+  "panda_pinned": "8aa8671",
+  "python": "3.12.13",
+  "cc": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "sha256": {
+   "sm_toy_auth_model.py": "a44f6350bbc0c7cfc7a15539967ac63baa3074f90273bc59ca9190e50de50d32",
+   "b2b_toy_auth.py": "17497ac6ae4c12f3e8f4f0ef61cb757fc08a2fd3009ca519d56986fbe85a08a5"
+  }
+ },
+ "runs": [
+  {
+   "variant": "reference",
+   "deviations": [],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x1d3 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D02 T8 rising edge while 0x262 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": {
+     "step": 230,
+     "t_us": 450000,
+     "event": "RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T3"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "440000 us  RX 0x262",
+      "440000 us  TX 0x2e4",
+      "445776 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "450000 us  Tick",
+      "450000 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+      "450000 us  TX 0x2e4",
+      "450000 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x1d3": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D07 T4 bad checksum on 0x262": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}"
+     ],
+     "signature": "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x1d3 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x1d3 (dlc 7) {'MAIN_ON': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x1d3 (dlc 7) {'MAIN_ON': 1}"
+     ],
+     "signature": "RX 0x1d3 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7)"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x260 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x260 (dlc 7)"
+     ],
+     "signature": "RX 0x260 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x262 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x262 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x262 (dlc 7)"
+     ],
+     "signature": "RX 0x262 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick at the 0x262 timeout (200000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x262 timeout (200000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D11 T10c main off with cruise on, evaluated at exactly 150 ms": "agree",
+    "D11 T10c main off with cruise on, evaluated at 150 ms + 1 us": "agree",
+    "D12 T10c cruise rising edge while main off": "agree",
+    "D13 T11 0x2E4 flood at 2x while allowed": "agree",
+    "D13 T11 0x2E4 flood at 10x while allowed": "agree",
+    "D13c T11 revoked, then a new cruise edge (F-34)": {
+     "step": 464,
+     "t_us": 910000,
+     "event": "Tick",
+     "model_fired": [
+      "T10b"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": true,
+     "c_tx_flag": true,
+     "context": [
+      "900000 us  RX 0x260",
+      "900000 us  RX 0x226",
+      "903600 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "909090 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+      "909090 us  RX 0x1d3 {'MAIN_ON': 1}",
+      "909090 us  TX 0x343",
+      "910000 us  Tick"
+     ],
+     "signature": "Tick | model fired ['T10b'] | model 0/1 vs C 1/1 (allowed/tx flag)"
+    },
+    "D18 T10b 0x2e4 stops while allowed (limit 50 ms)": "agree",
+    "D18 T10b 0x343 stops while allowed (limit 100 ms)": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 18,
+    "classes": {
+     "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 30,
+       "t_us": 50000,
+       "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "39204 us  RX 0x260",
+        "40000 us  Tick",
+        "40000 us  TX 0x2e4",
+        "46027 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "49337 us  RX 0x262",
+        "50000 us  Tick",
+        "50000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 92
+      }
+     },
+     "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 5,
+      "example": {
+       "step": 416,
+       "t_us": 819458,
+       "event": "RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T1"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "810000 us  TX 0x2e4",
+        "810294 us  RX 0x1d3 {'MAIN_ON': 1}",
+        "815397 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}",
+        "816089 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "816763 us  RX 0x260",
+        "818181 us  TX 0x343",
+        "819458 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 37
+      }
+     },
+     "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2328,
+       "t_us": 4640000,
+       "event": "RX 0x260 (dlc 6)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": true,
+       "c_tx_flag": true,
+       "context": [
+        "4630000 us  TX 0x2e4",
+        "4634893 us  RX 0xaa {'FR': 2345, 'FL': 1723, 'RR': 2360, 'RL': 1523}",
+        "4635433 us  RX 0x262",
+        "4636359 us  TX 0x343",
+        "4637246 us  RX 0x1d3 {'MAIN_ON': 1}",
+        "4640000 us  Tick",
+        "4640000 us  RX 0x260 (dlc 6)"
+       ],
+       "signature": "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)",
+       "seed": 9
+      }
+     },
+     "Tick | model fired ['T10b'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 4,
+      "example": {
+       "step": 83,
+       "t_us": 190000,
+       "event": "Tick",
+       "model_fired": [
+        "T10b"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "171674 us  RX 0x260",
+        "176498 us  RX 0x226",
+        "178035 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "180000 us  Tick",
+        "181818 us  TX 0x343",
+        "188410 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "190000 us  Tick"
+       ],
+       "signature": "Tick | model fired ['T10b'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 78
+      }
+     },
+     "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2312,
+       "t_us": 4580000,
+       "event": "RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": true,
+       "c_tx_flag": true,
+       "context": [
+        "4572528 us  RX 0x262",
+        "4575753 us  TX 0x343",
+        "4576309 us  RX 0x226",
+        "4577133 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "4579691 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "4580000 us  Tick",
+        "4580000 us  RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)",
+       "seed": 48
+      }
+     },
+     "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 2,
+      "example": {
+       "step": 1848,
+       "t_us": 3670000,
+       "event": "RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "3660000 us  Tick",
+        "3660000 us  TX 0x2e4",
+        "3665866 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "3666663 us  TX 0x343",
+        "3668989 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "3670000 us  Tick",
+        "3670000 us  RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 53
+      }
+     },
+     "RX 0x1d3 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 512,
+       "t_us": 1010000,
+       "event": "RX 0x1d3 (dlc 0) {'MAIN_ON': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1000000 us  Tick",
+        "1000000 us  TX 0x2e4",
+        "1000000 us  TX 0x412",
+        "1003003 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': 1, 'RL': 1}",
+        "1008904 us  RX 0x260",
+        "1010000 us  Tick",
+        "1010000 us  RX 0x1d3 (dlc 0) {'MAIN_ON': 1}"
+       ],
+       "signature": "RX 0x1d3 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 69
+      }
+     },
+     "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2103,
+       "t_us": 4480025,
+       "event": "RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}",
+       "model_fired": [
+        "T3"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4470000 us  Tick",
+        "4470000 us  TX 0x2e4",
+        "4471342 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "4475752 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "4480000 us  Tick",
+        "4480000 us  TX 0x2e4",
+        "4480025 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}"
+       ],
+       "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 89
+      }
+     }
+    }
+   },
+   "events": 311604,
+   "coverage": {
+    "T1": 308,
+    "T2": 77,
+    "T3": 47,
+    "T4": 33,
+    "T5": 39,
+    "T7": 28,
+    "T8": 280,
+    "T10b": 11,
+    "T10c": 10,
+    "T11": 28
+   }
+  },
+  {
+   "variant": "reference",
+   "deviations": [
+    "arrival_from_first_tick"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x1d3 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D02 T8 rising edge while 0x262 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": {
+     "step": 230,
+     "t_us": 450000,
+     "event": "RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T3"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "440000 us  RX 0x262",
+      "440000 us  TX 0x2e4",
+      "445776 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "450000 us  Tick",
+      "450000 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+      "450000 us  TX 0x2e4",
+      "450000 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x1d3": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D07 T4 bad checksum on 0x262": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}"
+     ],
+     "signature": "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x1d3 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x1d3 (dlc 7) {'MAIN_ON': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x1d3 (dlc 7) {'MAIN_ON': 1}"
+     ],
+     "signature": "RX 0x1d3 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7)"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x260 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x260 (dlc 7)"
+     ],
+     "signature": "RX 0x260 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x262 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x262 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x262 (dlc 7)"
+     ],
+     "signature": "RX 0x262 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick at the 0x262 timeout (200000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x262 timeout (200000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D11 T10c main off with cruise on, evaluated at exactly 150 ms": "agree",
+    "D11 T10c main off with cruise on, evaluated at 150 ms + 1 us": "agree",
+    "D12 T10c cruise rising edge while main off": "agree",
+    "D13 T11 0x2E4 flood at 2x while allowed": "agree",
+    "D13 T11 0x2E4 flood at 10x while allowed": "agree",
+    "D13c T11 revoked, then a new cruise edge (F-34)": "agree",
+    "D18 T10b 0x2e4 stops while allowed (limit 50 ms)": "agree",
+    "D18 T10b 0x343 stops while allowed (limit 100 ms)": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 14,
+    "classes": {
+     "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 30,
+       "t_us": 50000,
+       "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "39204 us  RX 0x260",
+        "40000 us  Tick",
+        "40000 us  TX 0x2e4",
+        "46027 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "49337 us  RX 0x262",
+        "50000 us  Tick",
+        "50000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 92
+      }
+     },
+     "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 5,
+      "example": {
+       "step": 416,
+       "t_us": 819458,
+       "event": "RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T1"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "810000 us  TX 0x2e4",
+        "810294 us  RX 0x1d3 {'MAIN_ON': 1}",
+        "815397 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}",
+        "816089 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "816763 us  RX 0x260",
+        "818181 us  TX 0x343",
+        "819458 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 37
+      }
+     },
+     "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2328,
+       "t_us": 4640000,
+       "event": "RX 0x260 (dlc 6)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": true,
+       "c_tx_flag": true,
+       "context": [
+        "4630000 us  TX 0x2e4",
+        "4634893 us  RX 0xaa {'FR': 2345, 'FL': 1723, 'RR': 2360, 'RL': 1523}",
+        "4635433 us  RX 0x262",
+        "4636359 us  TX 0x343",
+        "4637246 us  RX 0x1d3 {'MAIN_ON': 1}",
+        "4640000 us  Tick",
+        "4640000 us  RX 0x260 (dlc 6)"
+       ],
+       "signature": "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)",
+       "seed": 9
+      }
+     },
+     "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2312,
+       "t_us": 4580000,
+       "event": "RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": true,
+       "c_tx_flag": true,
+       "context": [
+        "4572528 us  RX 0x262",
+        "4575753 us  TX 0x343",
+        "4576309 us  RX 0x226",
+        "4577133 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "4579691 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "4580000 us  Tick",
+        "4580000 us  RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)",
+       "seed": 48
+      }
+     },
+     "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 2,
+      "example": {
+       "step": 1848,
+       "t_us": 3670000,
+       "event": "RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "3660000 us  Tick",
+        "3660000 us  TX 0x2e4",
+        "3665866 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "3666663 us  TX 0x343",
+        "3668989 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "3670000 us  Tick",
+        "3670000 us  RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 53
+      }
+     },
+     "RX 0x1d3 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 512,
+       "t_us": 1010000,
+       "event": "RX 0x1d3 (dlc 0) {'MAIN_ON': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1000000 us  Tick",
+        "1000000 us  TX 0x2e4",
+        "1000000 us  TX 0x412",
+        "1003003 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': 1, 'RL': 1}",
+        "1008904 us  RX 0x260",
+        "1010000 us  Tick",
+        "1010000 us  RX 0x1d3 (dlc 0) {'MAIN_ON': 1}"
+       ],
+       "signature": "RX 0x1d3 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 69
+      }
+     },
+     "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2103,
+       "t_us": 4480025,
+       "event": "RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}",
+       "model_fired": [
+        "T3"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4470000 us  Tick",
+        "4470000 us  TX 0x2e4",
+        "4471342 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "4475752 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "4480000 us  Tick",
+        "4480000 us  TX 0x2e4",
+        "4480025 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}"
+       ],
+       "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 89
+      }
+     }
+    }
+   },
+   "events": 311604,
+   "coverage": {
+    "T1": 315,
+    "T2": 78,
+    "T3": 48,
+    "T4": 33,
+    "T5": 39,
+    "T7": 30,
+    "T8": 289,
+    "T10b": 12,
+    "T10c": 10,
+    "T11": 31
+   }
+  },
+  {
+   "variant": "reference",
+   "deviations": [
+    "length_not_checked"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x1d3 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D02 T8 rising edge while 0x262 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": {
+     "step": 230,
+     "t_us": 450000,
+     "event": "RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T3"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "440000 us  RX 0x262",
+      "440000 us  TX 0x2e4",
+      "445776 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "450000 us  Tick",
+      "450000 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+      "450000 us  TX 0x2e4",
+      "450000 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x1d3": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D07 T4 bad checksum on 0x262": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x1d3 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x262 (SWSR-402 length)": "agree",
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick at the 0x262 timeout (200000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x262 timeout (200000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D11 T10c main off with cruise on, evaluated at exactly 150 ms": "agree",
+    "D11 T10c main off with cruise on, evaluated at 150 ms + 1 us": "agree",
+    "D12 T10c cruise rising edge while main off": "agree",
+    "D13 T11 0x2E4 flood at 2x while allowed": "agree",
+    "D13 T11 0x2E4 flood at 10x while allowed": "agree",
+    "D13c T11 revoked, then a new cruise edge (F-34)": {
+     "step": 464,
+     "t_us": 910000,
+     "event": "Tick",
+     "model_fired": [
+      "T10b"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": true,
+     "c_tx_flag": true,
+     "context": [
+      "900000 us  RX 0x260",
+      "900000 us  RX 0x226",
+      "903600 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "909090 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+      "909090 us  RX 0x1d3 {'MAIN_ON': 1}",
+      "909090 us  TX 0x343",
+      "910000 us  Tick"
+     ],
+     "signature": "Tick | model fired ['T10b'] | model 0/1 vs C 1/1 (allowed/tx flag)"
+    },
+    "D18 T10b 0x2e4 stops while allowed (limit 50 ms)": "agree",
+    "D18 T10b 0x343 stops while allowed (limit 100 ms)": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": "agree",
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 10,
+    "classes": {
+     "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 5,
+      "example": {
+       "step": 416,
+       "t_us": 819458,
+       "event": "RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T1"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "810000 us  TX 0x2e4",
+        "810294 us  RX 0x1d3 {'MAIN_ON': 1}",
+        "815397 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}",
+        "816089 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "816763 us  RX 0x260",
+        "818181 us  TX 0x343",
+        "819458 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 37
+      }
+     },
+     "Tick | model fired ['T10b'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 4,
+      "example": {
+       "step": 83,
+       "t_us": 190000,
+       "event": "Tick",
+       "model_fired": [
+        "T10b"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "171674 us  RX 0x260",
+        "176498 us  RX 0x226",
+        "178035 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "180000 us  Tick",
+        "181818 us  TX 0x343",
+        "188410 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "190000 us  Tick"
+       ],
+       "signature": "Tick | model fired ['T10b'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 78
+      }
+     },
+     "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2103,
+       "t_us": 4480025,
+       "event": "RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}",
+       "model_fired": [
+        "T3"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4470000 us  Tick",
+        "4470000 us  TX 0x2e4",
+        "4471342 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "4475752 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "4480000 us  Tick",
+        "4480000 us  TX 0x2e4",
+        "4480025 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}"
+       ],
+       "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 89
+      }
+     }
+    }
+   },
+   "events": 311604,
+   "coverage": {
+    "T1": 318,
+    "T2": 80,
+    "T3": 54,
+    "T4": 18,
+    "T5": 41,
+    "T7": 29,
+    "T8": 291,
+    "T10b": 11,
+    "T10c": 13,
+    "T11": 30
+   }
+  },
+  {
+   "variant": "reference",
+   "deviations": [
+    "moving_from_sum"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x1d3 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D02 T8 rising edge while 0x262 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": "agree",
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x1d3": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D07 T4 bad checksum on 0x262": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}"
+     ],
+     "signature": "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x1d3 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x1d3 (dlc 7) {'MAIN_ON': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x1d3 (dlc 7) {'MAIN_ON': 1}"
+     ],
+     "signature": "RX 0x1d3 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7)"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x260 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x260 (dlc 7)"
+     ],
+     "signature": "RX 0x260 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x262 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x262 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x262 (dlc 7)"
+     ],
+     "signature": "RX 0x262 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick at the 0x262 timeout (200000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x262 timeout (200000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D11 T10c main off with cruise on, evaluated at exactly 150 ms": "agree",
+    "D11 T10c main off with cruise on, evaluated at 150 ms + 1 us": "agree",
+    "D12 T10c cruise rising edge while main off": "agree",
+    "D13 T11 0x2E4 flood at 2x while allowed": "agree",
+    "D13 T11 0x2E4 flood at 10x while allowed": "agree",
+    "D13c T11 revoked, then a new cruise edge (F-34)": {
+     "step": 464,
+     "t_us": 910000,
+     "event": "Tick",
+     "model_fired": [
+      "T10b"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": true,
+     "c_tx_flag": true,
+     "context": [
+      "900000 us  RX 0x260",
+      "900000 us  RX 0x226",
+      "903600 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "909090 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+      "909090 us  RX 0x1d3 {'MAIN_ON': 1}",
+      "909090 us  TX 0x343",
+      "910000 us  Tick"
+     ],
+     "signature": "Tick | model fired ['T10b'] | model 0/1 vs C 1/1 (allowed/tx flag)"
+    },
+    "D18 T10b 0x2e4 stops while allowed (limit 50 ms)": "agree",
+    "D18 T10b 0x343 stops while allowed (limit 100 ms)": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 14,
+    "classes": {
+     "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 4,
+      "example": {
+       "step": 30,
+       "t_us": 50000,
+       "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "39204 us  RX 0x260",
+        "40000 us  Tick",
+        "40000 us  TX 0x2e4",
+        "46027 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "49337 us  RX 0x262",
+        "50000 us  Tick",
+        "50000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 92
+      }
+     },
+     "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2328,
+       "t_us": 4640000,
+       "event": "RX 0x260 (dlc 6)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": true,
+       "c_tx_flag": true,
+       "context": [
+        "4630000 us  TX 0x2e4",
+        "4634893 us  RX 0xaa {'FR': 2345, 'FL': 1723, 'RR': 2360, 'RL': 1523}",
+        "4635433 us  RX 0x262",
+        "4636359 us  TX 0x343",
+        "4637246 us  RX 0x1d3 {'MAIN_ON': 1}",
+        "4640000 us  Tick",
+        "4640000 us  RX 0x260 (dlc 6)"
+       ],
+       "signature": "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)",
+       "seed": 9
+      }
+     },
+     "Tick | model fired ['T10b'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 4,
+      "example": {
+       "step": 83,
+       "t_us": 190000,
+       "event": "Tick",
+       "model_fired": [
+        "T10b"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "171674 us  RX 0x260",
+        "176498 us  RX 0x226",
+        "178035 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "180000 us  Tick",
+        "181818 us  TX 0x343",
+        "188410 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "190000 us  Tick"
+       ],
+       "signature": "Tick | model fired ['T10b'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 78
+      }
+     },
+     "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2312,
+       "t_us": 4580000,
+       "event": "RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": true,
+       "c_tx_flag": true,
+       "context": [
+        "4572528 us  RX 0x262",
+        "4575753 us  TX 0x343",
+        "4576309 us  RX 0x226",
+        "4577133 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "4579691 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "4580000 us  Tick",
+        "4580000 us  RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)",
+       "seed": 48
+      }
+     },
+     "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 2,
+      "example": {
+       "step": 1848,
+       "t_us": 3670000,
+       "event": "RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "3660000 us  Tick",
+        "3660000 us  TX 0x2e4",
+        "3665866 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "3666663 us  TX 0x343",
+        "3668989 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "3670000 us  Tick",
+        "3670000 us  RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 53
+      }
+     },
+     "RX 0x1d3 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 512,
+       "t_us": 1010000,
+       "event": "RX 0x1d3 (dlc 0) {'MAIN_ON': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1000000 us  Tick",
+        "1000000 us  TX 0x2e4",
+        "1000000 us  TX 0x412",
+        "1003003 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': 1, 'RL': 1}",
+        "1008904 us  RX 0x260",
+        "1010000 us  Tick",
+        "1010000 us  RX 0x1d3 (dlc 0) {'MAIN_ON': 1}"
+       ],
+       "signature": "RX 0x1d3 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 69
+      }
+     },
+     "RX 0x226 (dlc 0) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2783,
+       "t_us": 5820000,
+       "event": "RX 0x226 (dlc 0) {'BRAKE_PRESSED': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": true,
+       "c_tx_flag": true,
+       "context": [
+        "5806943 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "5810000 us  Tick",
+        "5810000 us  TX 0x2e4",
+        "5817455 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "5818176 us  TX 0x343",
+        "5820000 us  Tick",
+        "5820000 us  RX 0x226 (dlc 0) {'BRAKE_PRESSED': 1}"
+       ],
+       "signature": "RX 0x226 (dlc 0) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)",
+       "seed": 89
+      }
+     }
+    }
+   },
+   "events": 311604,
+   "coverage": {
+    "T1": 317,
+    "T2": 84,
+    "T3": 46,
+    "T4": 36,
+    "T5": 39,
+    "T7": 29,
+    "T8": 288,
+    "T10b": 12,
+    "T10c": 10,
+    "T11": 30
+   }
+  },
+  {
+   "variant": "reference",
+   "deviations": [
+    "length_not_checked",
+    "moving_from_sum"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x1d3 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D02 T8 rising edge while 0x262 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": "agree",
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x1d3": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D07 T4 bad checksum on 0x262": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x1d3 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x262 (SWSR-402 length)": "agree",
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick at the 0x262 timeout (200000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x262 timeout (200000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D11 T10c main off with cruise on, evaluated at exactly 150 ms": "agree",
+    "D11 T10c main off with cruise on, evaluated at 150 ms + 1 us": "agree",
+    "D12 T10c cruise rising edge while main off": "agree",
+    "D13 T11 0x2E4 flood at 2x while allowed": "agree",
+    "D13 T11 0x2E4 flood at 10x while allowed": "agree",
+    "D13c T11 revoked, then a new cruise edge (F-34)": {
+     "step": 464,
+     "t_us": 910000,
+     "event": "Tick",
+     "model_fired": [
+      "T10b"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": true,
+     "c_tx_flag": true,
+     "context": [
+      "900000 us  RX 0x260",
+      "900000 us  RX 0x226",
+      "903600 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "909090 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+      "909090 us  RX 0x1d3 {'MAIN_ON': 1}",
+      "909090 us  TX 0x343",
+      "910000 us  Tick"
+     ],
+     "signature": "Tick | model fired ['T10b'] | model 0/1 vs C 1/1 (allowed/tx flag)"
+    },
+    "D18 T10b 0x2e4 stops while allowed (limit 50 ms)": "agree",
+    "D18 T10b 0x343 stops while allowed (limit 100 ms)": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": "agree",
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 4,
+    "classes": {
+     "Tick | model fired ['T10b'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 4,
+      "example": {
+       "step": 83,
+       "t_us": 190000,
+       "event": "Tick",
+       "model_fired": [
+        "T10b"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "171674 us  RX 0x260",
+        "176498 us  RX 0x226",
+        "178035 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "180000 us  Tick",
+        "181818 us  TX 0x343",
+        "188410 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "190000 us  Tick"
+       ],
+       "signature": "Tick | model fired ['T10b'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 78
+      }
+     }
+    }
+   },
+   "events": 311604,
+   "coverage": {
+    "T1": 330,
+    "T2": 90,
+    "T3": 53,
+    "T4": 19,
+    "T5": 41,
+    "T7": 30,
+    "T8": 299,
+    "T10b": 12,
+    "T10c": 13,
+    "T11": 34
+   }
+  },
+  {
+   "variant": "reference",
+   "deviations": [
+    "moving_from_sum",
+    "arrival_from_first_tick"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x1d3 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D02 T8 rising edge while 0x262 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": "agree",
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x1d3": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D07 T4 bad checksum on 0x262": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}"
+     ],
+     "signature": "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x1d3 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x1d3 (dlc 7) {'MAIN_ON': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x1d3 (dlc 7) {'MAIN_ON': 1}"
+     ],
+     "signature": "RX 0x1d3 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7)"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x260 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x260 (dlc 7)"
+     ],
+     "signature": "RX 0x260 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x262 (SWSR-402 length)": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x262 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x262 (dlc 7)"
+     ],
+     "signature": "RX 0x262 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick at the 0x262 timeout (200000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x262 timeout (200000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D11 T10c main off with cruise on, evaluated at exactly 150 ms": "agree",
+    "D11 T10c main off with cruise on, evaluated at 150 ms + 1 us": "agree",
+    "D12 T10c cruise rising edge while main off": "agree",
+    "D13 T11 0x2E4 flood at 2x while allowed": "agree",
+    "D13 T11 0x2E4 flood at 10x while allowed": "agree",
+    "D13c T11 revoked, then a new cruise edge (F-34)": "agree",
+    "D18 T10b 0x2e4 stops while allowed (limit 50 ms)": "agree",
+    "D18 T10b 0x343 stops while allowed (limit 100 ms)": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": {
+     "step": 181,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 10,
+    "classes": {
+     "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 4,
+      "example": {
+       "step": 30,
+       "t_us": 50000,
+       "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "39204 us  RX 0x260",
+        "40000 us  Tick",
+        "40000 us  TX 0x2e4",
+        "46027 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "49337 us  RX 0x262",
+        "50000 us  Tick",
+        "50000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 92
+      }
+     },
+     "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2328,
+       "t_us": 4640000,
+       "event": "RX 0x260 (dlc 6)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": true,
+       "c_tx_flag": true,
+       "context": [
+        "4630000 us  TX 0x2e4",
+        "4634893 us  RX 0xaa {'FR': 2345, 'FL': 1723, 'RR': 2360, 'RL': 1523}",
+        "4635433 us  RX 0x262",
+        "4636359 us  TX 0x343",
+        "4637246 us  RX 0x1d3 {'MAIN_ON': 1}",
+        "4640000 us  Tick",
+        "4640000 us  RX 0x260 (dlc 6)"
+       ],
+       "signature": "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)",
+       "seed": 9
+      }
+     },
+     "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2312,
+       "t_us": 4580000,
+       "event": "RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": true,
+       "c_tx_flag": true,
+       "context": [
+        "4572528 us  RX 0x262",
+        "4575753 us  TX 0x343",
+        "4576309 us  RX 0x226",
+        "4577133 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "4579691 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "4580000 us  Tick",
+        "4580000 us  RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)",
+       "seed": 48
+      }
+     },
+     "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 2,
+      "example": {
+       "step": 1848,
+       "t_us": 3670000,
+       "event": "RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "3660000 us  Tick",
+        "3660000 us  TX 0x2e4",
+        "3665866 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "3666663 us  TX 0x343",
+        "3668989 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "3670000 us  Tick",
+        "3670000 us  RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 53
+      }
+     },
+     "RX 0x1d3 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 512,
+       "t_us": 1010000,
+       "event": "RX 0x1d3 (dlc 0) {'MAIN_ON': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1000000 us  Tick",
+        "1000000 us  TX 0x2e4",
+        "1000000 us  TX 0x412",
+        "1003003 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': 1, 'RL': 1}",
+        "1008904 us  RX 0x260",
+        "1010000 us  Tick",
+        "1010000 us  RX 0x1d3 (dlc 0) {'MAIN_ON': 1}"
+       ],
+       "signature": "RX 0x1d3 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 69
+      }
+     },
+     "RX 0x226 (dlc 0) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2783,
+       "t_us": 5820000,
+       "event": "RX 0x226 (dlc 0) {'BRAKE_PRESSED': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": true,
+       "c_tx_flag": true,
+       "context": [
+        "5806943 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "5810000 us  Tick",
+        "5810000 us  TX 0x2e4",
+        "5817455 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "5818176 us  TX 0x343",
+        "5820000 us  Tick",
+        "5820000 us  RX 0x226 (dlc 0) {'BRAKE_PRESSED': 1}"
+       ],
+       "signature": "RX 0x226 (dlc 0) | model fired ['T4'] | model 0/1 vs C 1/1 (allowed/tx flag)",
+       "seed": 89
+      }
+     }
+    }
+   },
+   "events": 311604,
+   "coverage": {
+    "T1": 324,
+    "T2": 85,
+    "T3": 47,
+    "T4": 36,
+    "T5": 39,
+    "T7": 31,
+    "T8": 297,
+    "T10b": 13,
+    "T10c": 10,
+    "T11": 33
+   }
+  },
+  {
+   "variant": "reference",
+   "deviations": [
+    "length_not_checked",
+    "arrival_from_first_tick"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x1d3 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D02 T8 rising edge while 0x262 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": {
+     "step": 230,
+     "t_us": 450000,
+     "event": "RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T3"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "440000 us  RX 0x262",
+      "440000 us  TX 0x2e4",
+      "445776 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "450000 us  Tick",
+      "450000 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+      "450000 us  TX 0x2e4",
+      "450000 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x1d3": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D07 T4 bad checksum on 0x262": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x1d3 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x262 (SWSR-402 length)": "agree",
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick at the 0x262 timeout (200000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x262 timeout (200000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D11 T10c main off with cruise on, evaluated at exactly 150 ms": "agree",
+    "D11 T10c main off with cruise on, evaluated at 150 ms + 1 us": "agree",
+    "D12 T10c cruise rising edge while main off": "agree",
+    "D13 T11 0x2E4 flood at 2x while allowed": "agree",
+    "D13 T11 0x2E4 flood at 10x while allowed": "agree",
+    "D13c T11 revoked, then a new cruise edge (F-34)": "agree",
+    "D18 T10b 0x2e4 stops while allowed (limit 50 ms)": "agree",
+    "D18 T10b 0x343 stops while allowed (limit 100 ms)": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": "agree",
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 6,
+    "classes": {
+     "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 5,
+      "example": {
+       "step": 416,
+       "t_us": 819458,
+       "event": "RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T1"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "810000 us  TX 0x2e4",
+        "810294 us  RX 0x1d3 {'MAIN_ON': 1}",
+        "815397 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}",
+        "816089 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "816763 us  RX 0x260",
+        "818181 us  TX 0x343",
+        "819458 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 37
+      }
+     },
+     "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2103,
+       "t_us": 4480025,
+       "event": "RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}",
+       "model_fired": [
+        "T3"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4470000 us  Tick",
+        "4470000 us  TX 0x2e4",
+        "4471342 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "4475752 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "4480000 us  Tick",
+        "4480000 us  TX 0x2e4",
+        "4480025 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}"
+       ],
+       "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 89
+      }
+     }
+    }
+   },
+   "events": 311604,
+   "coverage": {
+    "T1": 325,
+    "T2": 81,
+    "T3": 55,
+    "T4": 18,
+    "T5": 41,
+    "T7": 31,
+    "T8": 300,
+    "T10b": 12,
+    "T10c": 13,
+    "T11": 33
+   }
+  },
+  {
+   "variant": "reference",
+   "deviations": [
+    "length_not_checked",
+    "moving_from_sum",
+    "arrival_from_first_tick"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x1d3 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D02 T8 rising edge while 0x262 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": "agree",
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x1d3": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D07 T4 bad checksum on 0x262": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x1d3 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x262 (SWSR-402 length)": "agree",
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d3 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick at the 0x262 timeout (200000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x262 timeout (200000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D11 T10c main off with cruise on, evaluated at exactly 150 ms": "agree",
+    "D11 T10c main off with cruise on, evaluated at 150 ms + 1 us": "agree",
+    "D12 T10c cruise rising edge while main off": "agree",
+    "D13 T11 0x2E4 flood at 2x while allowed": "agree",
+    "D13 T11 0x2E4 flood at 10x while allowed": "agree",
+    "D13c T11 revoked, then a new cruise edge (F-34)": "agree",
+    "D18 T10b 0x2e4 stops while allowed (limit 50 ms)": "agree",
+    "D18 T10b 0x343 stops while allowed (limit 100 ms)": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": "agree",
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 0,
+    "classes": {}
+   },
+   "events": 311604,
+   "coverage": {
+    "T1": 337,
+    "T2": 91,
+    "T3": 54,
+    "T4": 19,
+    "T5": 41,
+    "T7": 32,
+    "T8": 308,
+    "T10b": 13,
+    "T10c": 13,
+    "T11": 37
+   }
+  },
+  {
+   "variant": "upstream",
+   "deviations": [],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": {
+     "step": 203,
+     "t_us": 450000,
+     "event": "RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T3"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "440000 us  RX 0x260",
+      "440000 us  TX 0x2e4",
+      "445776 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "450000 us  Tick",
+      "450000 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+      "450000 us  TX 0x2e4",
+      "450000 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}"
+     ],
+     "signature": "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7)"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x260 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x260 (dlc 7)"
+     ],
+     "signature": "RX 0x260 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 34,
+    "classes": {
+     "RX 0x226 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 4,
+      "example": {
+       "step": 537,
+       "t_us": 1210000,
+       "event": "RX 0x226 (dlc 0)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1200000 us  TX 0x2e4",
+        "1200000 us  TX 0x412",
+        "1200452 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}",
+        "1201739 us  RX 0x260",
+        "1204659 us  RX 0x226",
+        "1210000 us  Tick",
+        "1210000 us  RX 0x226 (dlc 0)"
+       ],
+       "signature": "RX 0x226 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 97
+      }
+     },
+     "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 10,
+      "example": {
+       "step": 565,
+       "t_us": 1203520,
+       "event": "RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T1"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1192574 us  RX 0x260",
+        "1199623 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 1, 'RL': -1}",
+        "1200000 us  Tick",
+        "1200000 us  TX 0x2e4",
+        "1200000 us  TX 0x412",
+        "1201826 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "1203520 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 27
+      }
+     },
+     "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 318,
+       "t_us": 720000,
+       "event": "RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "710000 us  TX 0x2e4",
+        "713054 us  RX 0x260",
+        "716074 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "718860 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "719305 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "720000 us  Tick",
+        "720000 us  RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}"
+       ],
+       "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 7
+      }
+     },
+     "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 2,
+      "example": {
+       "step": 547,
+       "t_us": 1224716,
+       "event": "RX 0xaa {'FR': 1, 'FL': -1, 'RR': 1, 'RL': -1}",
+       "model_fired": [
+        "T3"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1210000 us  TX 0x2e4",
+        "1210933 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "1212120 us  TX 0x343",
+        "1214701 us  RX 0x260",
+        "1220000 us  Tick",
+        "1220000 us  TX 0x2e4",
+        "1224716 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 1, 'RL': -1}"
+       ],
+       "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 85
+      }
+     },
+     "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 1986,
+       "t_us": 4720000,
+       "event": "RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4700000 us  TX 0x2e4",
+        "4701262 us  RX 0x260",
+        "4709190 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "4710000 us  Tick",
+        "4710000 us  TX 0x2e4",
+        "4720000 us  Tick",
+        "4720000 us  RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 11
+      }
+     },
+     "RX 0xaa (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 559,
+       "t_us": 1160000,
+       "event": "RX 0xaa (dlc 6) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1155000 us  TX 0x2e4",
+        "1156000 us  TX 0x2e4",
+        "1157000 us  TX 0x2e4",
+        "1158000 us  TX 0x2e4",
+        "1159000 us  TX 0x2e4",
+        "1160000 us  Tick",
+        "1160000 us  RX 0xaa (dlc 6) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 88
+      }
+     },
+     "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 732,
+       "t_us": 1670000,
+       "event": "RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1660000 us  TX 0x2e4",
+        "1660856 us  RX 0x260",
+        "1666665 us  TX 0x343",
+        "1667149 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "1667905 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "1670000 us  Tick",
+        "1670000 us  RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 39
+      }
+     },
+     "RX 0x1d2 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 1275,
+       "t_us": 2880000,
+       "event": "RX 0x1d2 (dlc 0) {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "2870000 us  Tick",
+        "2870000 us  TX 0x2e4",
+        "2874606 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "2875956 us  RX 0xaa {'FR': 694, 'FL': 244, 'RR': 2487, 'RL': 1816}",
+        "2878785 us  TX 0x343",
+        "2880000 us  Tick",
+        "2880000 us  RX 0x1d2 (dlc 0) {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 44
+      }
+     },
+     "RX 0x260 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 2,
+      "example": {
+       "step": 1683,
+       "t_us": 3720000,
+       "event": "RX 0x260 (dlc 0)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "3705425 us  RX 0xaa {'FR': -1, 'FL': -1, 'RR': -1, 'RL': 1}",
+        "3709185 us  RX 0x260",
+        "3710000 us  Tick",
+        "3710000 us  TX 0x2e4",
+        "3718551 us  RX 0x226",
+        "3720000 us  Tick",
+        "3720000 us  RX 0x260 (dlc 0)"
+       ],
+       "signature": "RX 0x260 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 50
+      }
+     },
+     "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 1838,
+       "t_us": 4110000,
+       "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4100000 us  Tick",
+        "4100000 us  TX 0x2e4",
+        "4100000 us  TX 0x283",
+        "4101765 us  RX 0x260",
+        "4105387 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "4110000 us  Tick",
+        "4110000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 72
+      }
+     },
+     "RX 0x1d2 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 429,
+       "t_us": 940000,
+       "event": "RX 0x1d2 (dlc 6) {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "930000 us  Tick",
+        "930000 us  TX 0x2e4",
+        "933681 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "935387 us  RX 0x260",
+        "939393 us  TX 0x343",
+        "940000 us  Tick",
+        "940000 us  RX 0x1d2 (dlc 6) {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 80
+      }
+     },
+     "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2145,
+       "t_us": 4880000,
+       "event": "RX 0x260 (dlc 6)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4865307 us  RX 0x260",
+        "4869830 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 1}",
+        "4870000 us  Tick",
+        "4870000 us  TX 0x2e4",
+        "4878783 us  TX 0x343",
+        "4880000 us  Tick",
+        "4880000 us  RX 0x260 (dlc 6)"
+       ],
+       "signature": "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 89
+      }
+     }
+    }
+   },
+   "events": 305883,
+   "coverage": {
+    "T1": 494,
+    "T2": 156,
+    "T3": 87,
+    "T4": 46,
+    "T5": 55,
+    "T7": 32,
+    "T8": 68
+   }
+  },
+  {
+   "variant": "upstream",
+   "deviations": [
+    "arrival_from_first_tick"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": {
+     "step": 203,
+     "t_us": 450000,
+     "event": "RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T3"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "440000 us  RX 0x260",
+      "440000 us  TX 0x2e4",
+      "445776 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "450000 us  Tick",
+      "450000 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+      "450000 us  TX 0x2e4",
+      "450000 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}"
+     ],
+     "signature": "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7)"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x260 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x260 (dlc 7)"
+     ],
+     "signature": "RX 0x260 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 34,
+    "classes": {
+     "RX 0x226 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 4,
+      "example": {
+       "step": 537,
+       "t_us": 1210000,
+       "event": "RX 0x226 (dlc 0)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1200000 us  TX 0x2e4",
+        "1200000 us  TX 0x412",
+        "1200452 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}",
+        "1201739 us  RX 0x260",
+        "1204659 us  RX 0x226",
+        "1210000 us  Tick",
+        "1210000 us  RX 0x226 (dlc 0)"
+       ],
+       "signature": "RX 0x226 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 97
+      }
+     },
+     "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 10,
+      "example": {
+       "step": 565,
+       "t_us": 1203520,
+       "event": "RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T1"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1192574 us  RX 0x260",
+        "1199623 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 1, 'RL': -1}",
+        "1200000 us  Tick",
+        "1200000 us  TX 0x2e4",
+        "1200000 us  TX 0x412",
+        "1201826 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "1203520 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 27
+      }
+     },
+     "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 318,
+       "t_us": 720000,
+       "event": "RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "710000 us  TX 0x2e4",
+        "713054 us  RX 0x260",
+        "716074 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "718860 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "719305 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "720000 us  Tick",
+        "720000 us  RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}"
+       ],
+       "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 7
+      }
+     },
+     "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 2,
+      "example": {
+       "step": 547,
+       "t_us": 1224716,
+       "event": "RX 0xaa {'FR': 1, 'FL': -1, 'RR': 1, 'RL': -1}",
+       "model_fired": [
+        "T3"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1210000 us  TX 0x2e4",
+        "1210933 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "1212120 us  TX 0x343",
+        "1214701 us  RX 0x260",
+        "1220000 us  Tick",
+        "1220000 us  TX 0x2e4",
+        "1224716 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 1, 'RL': -1}"
+       ],
+       "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 85
+      }
+     },
+     "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 1986,
+       "t_us": 4720000,
+       "event": "RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4700000 us  TX 0x2e4",
+        "4701262 us  RX 0x260",
+        "4709190 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "4710000 us  Tick",
+        "4710000 us  TX 0x2e4",
+        "4720000 us  Tick",
+        "4720000 us  RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 11
+      }
+     },
+     "RX 0xaa (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 559,
+       "t_us": 1160000,
+       "event": "RX 0xaa (dlc 6) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1155000 us  TX 0x2e4",
+        "1156000 us  TX 0x2e4",
+        "1157000 us  TX 0x2e4",
+        "1158000 us  TX 0x2e4",
+        "1159000 us  TX 0x2e4",
+        "1160000 us  Tick",
+        "1160000 us  RX 0xaa (dlc 6) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 88
+      }
+     },
+     "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 732,
+       "t_us": 1670000,
+       "event": "RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1660000 us  TX 0x2e4",
+        "1660856 us  RX 0x260",
+        "1666665 us  TX 0x343",
+        "1667149 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "1667905 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "1670000 us  Tick",
+        "1670000 us  RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 39
+      }
+     },
+     "RX 0x1d2 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 1275,
+       "t_us": 2880000,
+       "event": "RX 0x1d2 (dlc 0) {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "2870000 us  Tick",
+        "2870000 us  TX 0x2e4",
+        "2874606 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "2875956 us  RX 0xaa {'FR': 694, 'FL': 244, 'RR': 2487, 'RL': 1816}",
+        "2878785 us  TX 0x343",
+        "2880000 us  Tick",
+        "2880000 us  RX 0x1d2 (dlc 0) {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 44
+      }
+     },
+     "RX 0x260 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 2,
+      "example": {
+       "step": 1683,
+       "t_us": 3720000,
+       "event": "RX 0x260 (dlc 0)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "3705425 us  RX 0xaa {'FR': -1, 'FL': -1, 'RR': -1, 'RL': 1}",
+        "3709185 us  RX 0x260",
+        "3710000 us  Tick",
+        "3710000 us  TX 0x2e4",
+        "3718551 us  RX 0x226",
+        "3720000 us  Tick",
+        "3720000 us  RX 0x260 (dlc 0)"
+       ],
+       "signature": "RX 0x260 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 50
+      }
+     },
+     "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 1838,
+       "t_us": 4110000,
+       "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4100000 us  Tick",
+        "4100000 us  TX 0x2e4",
+        "4100000 us  TX 0x283",
+        "4101765 us  RX 0x260",
+        "4105387 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "4110000 us  Tick",
+        "4110000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 72
+      }
+     },
+     "RX 0x1d2 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 429,
+       "t_us": 940000,
+       "event": "RX 0x1d2 (dlc 6) {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "930000 us  Tick",
+        "930000 us  TX 0x2e4",
+        "933681 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "935387 us  RX 0x260",
+        "939393 us  TX 0x343",
+        "940000 us  Tick",
+        "940000 us  RX 0x1d2 (dlc 6) {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 80
+      }
+     },
+     "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2145,
+       "t_us": 4880000,
+       "event": "RX 0x260 (dlc 6)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4865307 us  RX 0x260",
+        "4869830 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 1}",
+        "4870000 us  Tick",
+        "4870000 us  TX 0x2e4",
+        "4878783 us  TX 0x343",
+        "4880000 us  Tick",
+        "4880000 us  RX 0x260 (dlc 6)"
+       ],
+       "signature": "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 89
+      }
+     }
+    }
+   },
+   "events": 305883,
+   "coverage": {
+    "T1": 494,
+    "T2": 156,
+    "T3": 87,
+    "T4": 46,
+    "T5": 55,
+    "T7": 32,
+    "T8": 68
+   }
+  },
+  {
+   "variant": "upstream",
+   "deviations": [
+    "length_not_checked"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": {
+     "step": 203,
+     "t_us": 450000,
+     "event": "RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T3"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "440000 us  RX 0x260",
+      "440000 us  TX 0x2e4",
+      "445776 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "450000 us  Tick",
+      "450000 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+      "450000 us  TX 0x2e4",
+      "450000 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": "agree",
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": "agree",
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 14,
+    "classes": {
+     "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 11,
+      "example": {
+       "step": 565,
+       "t_us": 1203520,
+       "event": "RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T1"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1192574 us  RX 0x260",
+        "1199623 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 1, 'RL': -1}",
+        "1200000 us  Tick",
+        "1200000 us  TX 0x2e4",
+        "1200000 us  TX 0x412",
+        "1201826 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "1203520 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 27
+      }
+     },
+     "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 547,
+       "t_us": 1224716,
+       "event": "RX 0xaa {'FR': 1, 'FL': -1, 'RR': 1, 'RL': -1}",
+       "model_fired": [
+        "T3"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1210000 us  TX 0x2e4",
+        "1210933 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "1212120 us  TX 0x343",
+        "1214701 us  RX 0x260",
+        "1220000 us  Tick",
+        "1220000 us  TX 0x2e4",
+        "1224716 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 1, 'RL': -1}"
+       ],
+       "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 85
+      }
+     }
+    }
+   },
+   "events": 305883,
+   "coverage": {
+    "T1": 548,
+    "T2": 190,
+    "T3": 106,
+    "T4": 20,
+    "T5": 62,
+    "T7": 37,
+    "T8": 73
+   }
+  },
+  {
+   "variant": "upstream",
+   "deviations": [
+    "moving_from_sum"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": "agree",
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}"
+     ],
+     "signature": "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7)"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x260 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x260 (dlc 7)"
+     ],
+     "signature": "RX 0x260 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 22,
+    "classes": {
+     "RX 0x226 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 4,
+      "example": {
+       "step": 537,
+       "t_us": 1210000,
+       "event": "RX 0x226 (dlc 0)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1200000 us  TX 0x2e4",
+        "1200000 us  TX 0x412",
+        "1200452 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}",
+        "1201739 us  RX 0x260",
+        "1204659 us  RX 0x226",
+        "1210000 us  Tick",
+        "1210000 us  RX 0x226 (dlc 0)"
+       ],
+       "signature": "RX 0x226 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 97
+      }
+     },
+     "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 318,
+       "t_us": 720000,
+       "event": "RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "710000 us  TX 0x2e4",
+        "713054 us  RX 0x260",
+        "716074 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "718860 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "719305 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "720000 us  Tick",
+        "720000 us  RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}"
+       ],
+       "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 7
+      }
+     },
+     "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 1986,
+       "t_us": 4720000,
+       "event": "RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4700000 us  TX 0x2e4",
+        "4701262 us  RX 0x260",
+        "4709190 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "4710000 us  Tick",
+        "4710000 us  TX 0x2e4",
+        "4720000 us  Tick",
+        "4720000 us  RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 11
+      }
+     },
+     "RX 0xaa (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 559,
+       "t_us": 1160000,
+       "event": "RX 0xaa (dlc 6) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1155000 us  TX 0x2e4",
+        "1156000 us  TX 0x2e4",
+        "1157000 us  TX 0x2e4",
+        "1158000 us  TX 0x2e4",
+        "1159000 us  TX 0x2e4",
+        "1160000 us  Tick",
+        "1160000 us  RX 0xaa (dlc 6) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 88
+      }
+     },
+     "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 732,
+       "t_us": 1670000,
+       "event": "RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1660000 us  TX 0x2e4",
+        "1660856 us  RX 0x260",
+        "1666665 us  TX 0x343",
+        "1667149 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "1667905 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "1670000 us  Tick",
+        "1670000 us  RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 39
+      }
+     },
+     "RX 0x1d2 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 1275,
+       "t_us": 2880000,
+       "event": "RX 0x1d2 (dlc 0) {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "2870000 us  Tick",
+        "2870000 us  TX 0x2e4",
+        "2874606 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "2875956 us  RX 0xaa {'FR': 694, 'FL': 244, 'RR': 2487, 'RL': 1816}",
+        "2878785 us  TX 0x343",
+        "2880000 us  Tick",
+        "2880000 us  RX 0x1d2 (dlc 0) {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 44
+      }
+     },
+     "RX 0x260 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 2,
+      "example": {
+       "step": 1683,
+       "t_us": 3720000,
+       "event": "RX 0x260 (dlc 0)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "3705425 us  RX 0xaa {'FR': -1, 'FL': -1, 'RR': -1, 'RL': 1}",
+        "3709185 us  RX 0x260",
+        "3710000 us  Tick",
+        "3710000 us  TX 0x2e4",
+        "3718551 us  RX 0x226",
+        "3720000 us  Tick",
+        "3720000 us  RX 0x260 (dlc 0)"
+       ],
+       "signature": "RX 0x260 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 50
+      }
+     },
+     "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 1838,
+       "t_us": 4110000,
+       "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4100000 us  Tick",
+        "4100000 us  TX 0x2e4",
+        "4100000 us  TX 0x283",
+        "4101765 us  RX 0x260",
+        "4105387 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "4110000 us  Tick",
+        "4110000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 72
+      }
+     },
+     "RX 0x1d2 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 429,
+       "t_us": 940000,
+       "event": "RX 0x1d2 (dlc 6) {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "930000 us  Tick",
+        "930000 us  TX 0x2e4",
+        "933681 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "935387 us  RX 0x260",
+        "939393 us  TX 0x343",
+        "940000 us  Tick",
+        "940000 us  RX 0x1d2 (dlc 6) {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 80
+      }
+     },
+     "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2145,
+       "t_us": 4880000,
+       "event": "RX 0x260 (dlc 6)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4865307 us  RX 0x260",
+        "4869830 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 1}",
+        "4870000 us  Tick",
+        "4870000 us  TX 0x2e4",
+        "4878783 us  TX 0x343",
+        "4880000 us  Tick",
+        "4880000 us  RX 0x260 (dlc 6)"
+       ],
+       "signature": "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 89
+      }
+     }
+    }
+   },
+   "events": 305883,
+   "coverage": {
+    "T1": 523,
+    "T2": 172,
+    "T3": 88,
+    "T4": 48,
+    "T5": 63,
+    "T7": 35,
+    "T8": 70
+   }
+  },
+  {
+   "variant": "upstream",
+   "deviations": [
+    "length_not_checked",
+    "moving_from_sum"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": "agree",
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": "agree",
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": "agree",
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 0,
+    "classes": {}
+   },
+   "events": 305883,
+   "coverage": {
+    "T1": 581,
+    "T2": 208,
+    "T3": 106,
+    "T4": 23,
+    "T5": 70,
+    "T7": 40,
+    "T8": 75
+   }
+  },
+  {
+   "variant": "upstream",
+   "deviations": [
+    "moving_from_sum",
+    "arrival_from_first_tick"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": "agree",
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}"
+     ],
+     "signature": "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7)"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x260 (dlc 7)",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x260 (dlc 7)"
+     ],
+     "signature": "RX 0x260 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": {
+     "step": 160,
+     "t_us": 350000,
+     "event": "RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}",
+     "model_fired": [
+      "T4"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "340000 us  RX 0x260",
+      "340000 us  TX 0x2e4",
+      "349392 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "350000 us  Tick",
+      "350000 us  RX 0x226",
+      "350000 us  TX 0x2e4",
+      "350000 us  RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}"
+     ],
+     "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 22,
+    "classes": {
+     "RX 0x226 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 4,
+      "example": {
+       "step": 537,
+       "t_us": 1210000,
+       "event": "RX 0x226 (dlc 0)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1200000 us  TX 0x2e4",
+        "1200000 us  TX 0x412",
+        "1200452 us  RX 0xaa {'FR': -1, 'FL': 1, 'RR': -1, 'RL': 1}",
+        "1201739 us  RX 0x260",
+        "1204659 us  RX 0x226",
+        "1210000 us  Tick",
+        "1210000 us  RX 0x226 (dlc 0)"
+       ],
+       "signature": "RX 0x226 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 97
+      }
+     },
+     "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 318,
+       "t_us": 720000,
+       "event": "RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "710000 us  TX 0x2e4",
+        "713054 us  RX 0x260",
+        "716074 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "718860 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "719305 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "720000 us  Tick",
+        "720000 us  RX 0x226 (dlc 7) {'BRAKE_PRESSED': 1}"
+       ],
+       "signature": "RX 0x226 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 7
+      }
+     },
+     "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 1986,
+       "t_us": 4720000,
+       "event": "RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4700000 us  TX 0x2e4",
+        "4701262 us  RX 0x260",
+        "4709190 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "4710000 us  Tick",
+        "4710000 us  TX 0x2e4",
+        "4720000 us  Tick",
+        "4720000 us  RX 0x1d2 (dlc 7) {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 11
+      }
+     },
+     "RX 0xaa (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 559,
+       "t_us": 1160000,
+       "event": "RX 0xaa (dlc 6) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1155000 us  TX 0x2e4",
+        "1156000 us  TX 0x2e4",
+        "1157000 us  TX 0x2e4",
+        "1158000 us  TX 0x2e4",
+        "1159000 us  TX 0x2e4",
+        "1160000 us  Tick",
+        "1160000 us  RX 0xaa (dlc 6) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 88
+      }
+     },
+     "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 732,
+       "t_us": 1670000,
+       "event": "RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1660000 us  TX 0x2e4",
+        "1660856 us  RX 0x260",
+        "1666665 us  TX 0x343",
+        "1667149 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "1667905 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "1670000 us  Tick",
+        "1670000 us  RX 0xaa (dlc 0) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 39
+      }
+     },
+     "RX 0x1d2 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 1275,
+       "t_us": 2880000,
+       "event": "RX 0x1d2 (dlc 0) {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "2870000 us  Tick",
+        "2870000 us  TX 0x2e4",
+        "2874606 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+        "2875956 us  RX 0xaa {'FR': 694, 'FL': 244, 'RR': 2487, 'RL': 1816}",
+        "2878785 us  TX 0x343",
+        "2880000 us  Tick",
+        "2880000 us  RX 0x1d2 (dlc 0) {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 44
+      }
+     },
+     "RX 0x260 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 2,
+      "example": {
+       "step": 1683,
+       "t_us": 3720000,
+       "event": "RX 0x260 (dlc 0)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "3705425 us  RX 0xaa {'FR': -1, 'FL': -1, 'RR': -1, 'RL': 1}",
+        "3709185 us  RX 0x260",
+        "3710000 us  Tick",
+        "3710000 us  TX 0x2e4",
+        "3718551 us  RX 0x226",
+        "3720000 us  Tick",
+        "3720000 us  RX 0x260 (dlc 0)"
+       ],
+       "signature": "RX 0x260 (dlc 0) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 50
+      }
+     },
+     "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 1838,
+       "t_us": 4110000,
+       "event": "RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4100000 us  Tick",
+        "4100000 us  TX 0x2e4",
+        "4100000 us  TX 0x283",
+        "4101765 us  RX 0x260",
+        "4105387 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "4110000 us  Tick",
+        "4110000 us  RX 0xaa (dlc 7) {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}"
+       ],
+       "signature": "RX 0xaa (dlc 7) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 72
+      }
+     },
+     "RX 0x1d2 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 429,
+       "t_us": 940000,
+       "event": "RX 0x1d2 (dlc 6) {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "930000 us  Tick",
+        "930000 us  TX 0x2e4",
+        "933681 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "935387 us  RX 0x260",
+        "939393 us  TX 0x343",
+        "940000 us  Tick",
+        "940000 us  RX 0x1d2 (dlc 6) {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 80
+      }
+     },
+     "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 1,
+      "example": {
+       "step": 2145,
+       "t_us": 4880000,
+       "event": "RX 0x260 (dlc 6)",
+       "model_fired": [
+        "T4"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "4865307 us  RX 0x260",
+        "4869830 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 1}",
+        "4870000 us  Tick",
+        "4870000 us  TX 0x2e4",
+        "4878783 us  TX 0x343",
+        "4880000 us  Tick",
+        "4880000 us  RX 0x260 (dlc 6)"
+       ],
+       "signature": "RX 0x260 (dlc 6) | model fired ['T4'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 89
+      }
+     }
+    }
+   },
+   "events": 305883,
+   "coverage": {
+    "T1": 523,
+    "T2": 172,
+    "T3": 88,
+    "T4": 48,
+    "T5": 63,
+    "T7": 35,
+    "T8": 70
+   }
+  },
+  {
+   "variant": "upstream",
+   "deviations": [
+    "length_not_checked",
+    "arrival_from_first_tick"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": {
+     "step": 203,
+     "t_us": 450000,
+     "event": "RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}",
+     "model_fired": [
+      "T3"
+     ],
+     "model_allowed": false,
+     "c_allowed": true,
+     "model_tx_flag": false,
+     "c_tx_flag": false,
+     "context": [
+      "440000 us  RX 0x260",
+      "440000 us  TX 0x2e4",
+      "445776 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+      "450000 us  Tick",
+      "450000 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+      "450000 us  TX 0x2e4",
+      "450000 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 0, 'RL': 0}"
+     ],
+     "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)"
+    },
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": "agree",
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": "agree",
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 14,
+    "classes": {
+     "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 11,
+      "example": {
+       "step": 565,
+       "t_us": 1203520,
+       "event": "RX 0x1d2 {'CRUISE_ACTIVE': 1}",
+       "model_fired": [
+        "T1"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1192574 us  RX 0x260",
+        "1199623 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 1, 'RL': -1}",
+        "1200000 us  Tick",
+        "1200000 us  TX 0x2e4",
+        "1200000 us  TX 0x412",
+        "1201826 us  RX 0x226 {'BRAKE_PRESSED': 1}",
+        "1203520 us  RX 0x1d2 {'CRUISE_ACTIVE': 1}"
+       ],
+       "signature": "RX 0x1d2 | model fired ['T1'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 27
+      }
+     },
+     "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)": {
+      "count": 3,
+      "example": {
+       "step": 547,
+       "t_us": 1224716,
+       "event": "RX 0xaa {'FR': 1, 'FL': -1, 'RR': 1, 'RL': -1}",
+       "model_fired": [
+        "T3"
+       ],
+       "model_allowed": false,
+       "c_allowed": true,
+       "model_tx_flag": false,
+       "c_tx_flag": false,
+       "context": [
+        "1210000 us  TX 0x2e4",
+        "1210933 us  RX 0xaa {'FR': 0, 'FL': 0, 'RR': 0, 'RL': 0}",
+        "1212120 us  TX 0x343",
+        "1214701 us  RX 0x260",
+        "1220000 us  Tick",
+        "1220000 us  TX 0x2e4",
+        "1224716 us  RX 0xaa {'FR': 1, 'FL': -1, 'RR': 1, 'RL': -1}"
+       ],
+       "signature": "RX 0xaa | model fired ['T3'] | model 0/0 vs C 1/0 (allowed/tx flag)",
+       "seed": 85
+      }
+     }
+    }
+   },
+   "events": 305883,
+   "coverage": {
+    "T1": 548,
+    "T2": 190,
+    "T3": 106,
+    "T4": 20,
+    "T5": 62,
+    "T7": 37,
+    "T8": 73
+   }
+  },
+  {
+   "variant": "upstream",
+   "deviations": [
+    "length_not_checked",
+    "moving_from_sum",
+    "arrival_from_first_tick"
+   ],
+   "directed": {
+    "D01 T1 engage, all RX checks passing": "agree",
+    "D02 T8 rising edge while 0xaa never received": "agree",
+    "D02 T8 rising edge while 0x1d2 never received": "agree",
+    "D02 T8 rising edge while 0x226 never received": "agree",
+    "D02 T8 rising edge while 0x260 never received": "agree",
+    "D03 T8 rising edge after a bad 0x260 checksum": "agree",
+    "D04 T2 cruise off": "agree",
+    "D05a T3 brake rising, standing": "agree",
+    "D05b T3 engaged with brake held at standstill, then moving": "agree",
+    "D06 T3 brake held, two wheels non-zero with opposite sign (SWSR-302 'any wheel')": "agree",
+    "D07 T4 bad checksum on 0x1d2": "agree",
+    "D07 T4 bad checksum on 0x260": "agree",
+    "D08 T4 wrong DLC (7) on 0xaa (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x1d2 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x226 (SWSR-402 length)": "agree",
+    "D08 T4 wrong DLC (7) on 0x260 (SWSR-402 length)": "agree",
+    "D09 T5 tick at the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)": "agree",
+    "D09 T5 tick at the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)": "agree",
+    "D09 T5 tick at the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)": "agree",
+    "D09 T5 tick at the 0x260 timeout (100000 us)": "agree",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)": "agree",
+    "D10 T7 safety mode set while allowed": "agree",
+    "D14 OI-1 brake pressed in a 0x226 frame that fails validation": "agree",
+    "D15 T4 wheel-speed fault bit (quality)": "agree",
+    "D16 cruise off and brake on bus 2 (not the car bus): no effect": "agree",
+    "D17 gas pressed and EPS fault while allowed: non-revoking": "agree"
+   },
+   "random": {
+    "sequences": 100,
+    "events_per_sequence": 3000,
+    "diverged": 0,
+    "classes": {}
+   },
+   "events": 305883,
+   "coverage": {
+    "T1": 581,
+    "T2": 208,
+    "T3": 106,
+    "T4": 23,
+    "T5": 70,
+    "T7": 40,
+    "T8": 75
+   }
+  }
+ ],
+ "mutants": {
+  "brake_while_moving_ignored": {
+   "directed_diverged": [
+    "D05b T3 engaged with brake held at standstill, then moving"
+   ],
+   "random_diverged": 9,
+   "random_sequences": 20,
+   "detected": true
+  },
+  "cruise_main_tolerance_160ms": {
+   "directed_diverged": [
+    "D11 T10c main off with cruise on, evaluated at 150 ms + 1 us"
+   ],
+   "random_diverged": 1,
+   "random_sequences": 20,
+   "detected": true
+  },
+  "engagement_not_gated": {
+   "directed_diverged": [
+    "D02 T8 rising edge while 0x226 never received",
+    "D02 T8 rising edge while 0x260 never received",
+    "D02 T8 rising edge while 0x262 never received",
+    "D02 T8 rising edge while 0xaa never received",
+    "D03 T8 rising edge after a bad 0x260 checksum",
+    "D09 T5 tick 1 us past the 0x1d2 timeout (151515 us)",
+    "D09 T5 tick 1 us past the 0x1d3 timeout (151515 us)",
+    "D09 T5 tick 1 us past the 0x226 timeout (125000 us)",
+    "D09 T5 tick 1 us past the 0x260 timeout (100000 us)",
+    "D09 T5 tick 1 us past the 0x262 timeout (200000 us)",
+    "D09 T5 tick 1 us past the 0xaa timeout (60240 us)"
+   ],
+   "random_diverged": 13,
+   "random_sequences": 20,
+   "detected": true
+  },
+  "quality_flag_ignored": {
+   "directed_diverged": [
+    "D15 T4 wheel-speed fault bit (quality)"
+   ],
+   "random_diverged": 0,
+   "random_sequences": 20,
+   "detected": true
+  },
+  "timeout_4_periods": {
+   "directed_diverged": [
+    "D09 T5 tick 1 us past the 0x1d2 timeout (121212 us)",
+    "D09 T5 tick 1 us past the 0x1d3 timeout (121212 us)",
+    "D09 T5 tick 1 us past the 0x226 timeout (100000 us)",
+    "D09 T5 tick 1 us past the 0x260 timeout (80000 us)",
+    "D09 T5 tick 1 us past the 0x262 timeout (160000 us)",
+    "D09 T5 tick 1 us past the 0xaa timeout (48192 us)"
+   ],
+   "random_diverged": 7,
+   "random_sequences": 20,
+   "detected": true
+  },
+  "timeout_6_periods": {
+   "directed_diverged": [
+    "D09 T5 tick 1 us past the 0x1d2 timeout (181818 us)",
+    "D09 T5 tick 1 us past the 0x1d3 timeout (181818 us)",
+    "D09 T5 tick 1 us past the 0x226 timeout (150000 us)",
+    "D09 T5 tick 1 us past the 0x260 timeout (120000 us)",
+    "D09 T5 tick 1 us past the 0x262 timeout (240000 us)",
+    "D09 T5 tick 1 us past the 0xaa timeout (72288 us)",
+    "D09 T5 tick at the 0x1d2 timeout (181818 us)",
+    "D09 T5 tick at the 0x1d3 timeout (181818 us)",
+    "D09 T5 tick at the 0x226 timeout (150000 us)",
+    "D09 T5 tick at the 0x260 timeout (120000 us)",
+    "D09 T5 tick at the 0x262 timeout (240000 us)",
+    "D09 T5 tick at the 0xaa timeout (72288 us)"
+   ],
+   "random_diverged": 8,
+   "random_sequences": 20,
+   "detected": true
+  },
+  "tx_arrival_limit_60ms": {
+   "directed_diverged": [
+    "D13c T11 revoked, then a new cruise edge (F-34)",
+    "D18 T10b 0x2e4 stops while allowed (limit 60 ms)"
+   ],
+   "random_diverged": 0,
+   "random_sequences": 20,
+   "detected": true
+  },
+  "tx_budget_plus_1": {
+   "directed_diverged": [
+    "D13 T11 0x2E4 flood at 10x while allowed",
+    "D13 T11 0x2E4 flood at 2x while allowed",
+    "D13c T11 revoked, then a new cruise edge (F-34)"
+   ],
+   "random_diverged": 2,
+   "random_sequences": 20,
+   "detected": true
+  },
+  "tx_revoke_after_4_rejected": {
+   "directed_diverged": [
+    "D13 T11 0x2E4 flood at 10x while allowed",
+    "D13 T11 0x2E4 flood at 2x while allowed",
+    "D13c T11 revoked, then a new cruise edge (F-34)"
+   ],
+   "random_diverged": 2,
+   "random_sequences": 20,
+   "detected": true
+  }
+ },
+ "gate": []
+}

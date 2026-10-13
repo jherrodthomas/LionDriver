@@ -5,7 +5,7 @@
 | Work product | DN-01 Design note: per-ID TX rate supervision (supports [WP-W-03](../WP-W-03-software-architecture.md) and [WP-W-05](../WP-W-05-software-unit-design.md) UN-03) |
 | Standard reference | ISO 26262-6:2018 §7, §8 |
 | ASIL / scope | B‡ (SWSR-518) |
-| Version | 0.3 (RR-2026-008 F-27: check order corrected from the code, `0x1D2` and `0x750` budgets, D-4 naming, stale wording; 2026-10-12). 0.2 (decisions recorded and implemented, 2026-10-12). 0.1: proposal |
+| Version | 0.3 (RR-2026-009 F-27: check order corrected from the code, `0x1D2` and `0x750` budgets, D-4 naming, stale wording; 2026-10-12). 0.2 (decisions recorded and implemented, 2026-10-12). 0.1: proposal |
 | Status | Draft — design decisions recorded; implemented in the reference build (opendbc `7993399`, panda `8aa8671`; §10). Not yet verified on hardware; budgets not yet confirmed on logs |
 | Requirements | [TSR-518](../../03-system/WP-S-02-technical-safety-requirements.md), [SWSR-518](../WP-W-02-software-safety-requirements.md) |
 | Analyses | [WP-A-02](../../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) FFI-CM-04 (SoC floods CAN TX); [WP-W-04](../WP-W-04-software-safety-analysis.md) SDF-05 (shared TX queue delays forwarded PCS frames), OI-2 |
@@ -115,9 +115,9 @@ Timing, for `0x2E4` (budget 36):
 | 4× (400 Hz) | ≈ 90 ms | ≈ 95 ms |
 | 10× (1 kHz) | ≈ 36 ms | ≈ 40 ms |
 
-TSR-518 asks for revocation ≤ 0.1 s. That holds from the **first rejected frame**, but not from flood onset at rates below about 4×. A shorter window lowers the latency but also lowers the burst tolerance of §2.2. While the flood is below the budget, the steering torque is still bounded by the real-time limit (450 per 250 ms), and every frame is still content-checked. Decision D-6.
+An Octave model of this algorithm ([`assurance/models/octave/`](../../models/octave/README.md), a model, not the C code) gives the same 190 ms from an empty window, and 135 ms when the normal frames sent just before the flood count against the budget. TSR-518 asks for revocation ≤ 0.1 s. That holds from the **first rejected frame**, but not from flood onset at rates below about 4×. A shorter window lowers the latency but also lowers the burst tolerance of §2.2. While the flood is below the budget, the steering torque is still bounded by the real-time limit (450 per 250 ms), and every frame is still content-checked. Decision D-6.
 
-Rejected frames do not update the brand limit state: the rate check runs before the brand hook, and the brand hook is called only for a frame within budget (opendbc `7993399`, `safety.h` `safety_tx_hook`: `if (whitelisted && tx_rate_check(msg)) { safety_allowed = current_hooks->tx(msg); }`). The proposal (v0.1) placed the check after the brand hook; the implementation moved it in front, which is simpler and gives the same guarantee (the same rule as the EPS fault gate, opendbc#7). [RR-2026-008](../reviews/RR-2026-008.md) F-27.
+Rejected frames do not update the brand limit state: the rate check runs before the brand hook, and the brand hook is called only for a frame within budget (opendbc `7993399`, `safety.h` `safety_tx_hook`: `if (whitelisted && tx_rate_check(msg)) { safety_allowed = current_hooks->tx(msg); }`). The proposal (v0.1) placed the check after the brand hook; the implementation moved it in front, which is simpler and gives the same guarantee (the same rule as the EPS fault gate, opendbc#7). [RR-2026-009](../reviews/RR-2026-009.md) F-27.
 
 ### 4.3 Reporting
 

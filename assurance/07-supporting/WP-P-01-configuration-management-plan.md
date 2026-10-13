@@ -4,21 +4,23 @@
 |---|---|
 | Work product | WP-P-01 Configuration management plan (incl. safety-relevant file list, baselines, submodules) |
 | Standard reference | ISO 26262-8:2018 §7; ISO 26262-2:2018 §6 (release, baselines); ISO/SAE 21434:2021 §5 (configuration management); ASPICE 4.0 SUP.8 |
-| Version | 0.1 |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: §2 marked historical, current pins, build variant in CI-6, OI-1/OI-2/OI-7 status; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (highest: ASIL of the envelope as set by WP-C-03) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose and scope
 
 This plan defines how LionDriver identifies, controls, records and audits its configuration items (CIs). It closes the planning part of GAP-29, GAP-35 and GAP-37 in the [gap assessment](../00-assessment/gap-assessment.md) and carries out decisions D-01, D-02 and D-07 of [WP-M-01 §8](../01-management/WP-M-01-assurance-strategy.md#8-strategic-decisions-required).
 
-Scope: everything needed to rebuild, re-verify and re-argue a LionDriver release for the reference configuration (2020 Corolla LE, `TOYOTA_COROLLA_TSS2`, comma device with panda safety MCU). Change control is in [WP-P-02](WP-P-02-change-management.md); release baselines are in [WP-P-10](WP-P-10-release-management.md).
+Scope: everything needed to rebuild, re-verify and re-argue a LionDriver release for the reference configuration (Toyota Corolla, 12th generation (E210), TSS 2.0, `TOYOTA_COROLLA_TSS2`, comma device with panda safety MCU). Change control is in [WP-P-02](WP-P-02-change-management.md); release baselines are in [WP-P-10](WP-P-10-release-management.md).
 
-## 2. Current state (as found at `8b8c6ae`)
+## 2. State as found at `8b8c6ae` (historical)
+
+Status 2026-10-12: D-01 done (#3); submodules point at the forks under `jherrodthomas` with absolute URLs; opendbc and panda pinned at `opendbc_repo@273f44e` and `panda@c33343b` (LionDriver #41, #42 and #45; `273f44e` contains `7993399`; `c33343b` contains `6dee6fa`, which contains the siren change `b790fca`; 2026-10-13: panda `c33343b` adds the heartbeat-loss siren, panda#15). The table below records the state at `8b8c6ae`.
 
 | Item | Observation | Evidence |
 |---|---|---|
@@ -40,7 +42,7 @@ Scope: everything needed to rebuild, re-verify and re-argue a LionDriver release
 | CI-3 ML models | `openpilot/selfdrive/modeld/models/*.onnx`, `big_*_tinygrad.pkl` (LFS) | LFS `oid sha256` in the pointer file | Model change = SOTIF-relevant change (D-05) |
 | CI-4 Parameter defaults | `openpilot/common/params_keys.h` (e.g. `ExperimentalMode` default `"1"` at line 43) | File content at commit | Safety-relevant (§4) |
 | CI-5 Vehicle configuration data | `opendbc_repo/opendbc/car/toyota/{values,fingerprints,interface}.py`, `opendbc_repo/opendbc/car/torque_data/*.toml`, Toyota DBC sources and generated DBCs | File content at submodule commit | Safety-relevant; covered by [WP-W-09](../05-software/WP-W-09-configuration-calibration-data.md) |
-| CI-6 Safety firmware | `panda/board/**`, `panda/SConscript` (build type), `panda/board/crypto/certs/*.pub` | Submodule SHA + built binary SHA-256 + panda version string `<builder>-<git8>-<RELEASE/DEBUG>` (`panda/SConscript` `get_version`) | ASIL path |
+| CI-6 Safety firmware | `panda/board/**`, `panda/SConscript` (build type), `panda/board/crypto/certs/*.pub` | Submodule SHA + built binary SHA-256 + panda version string `<builder>-<git8>-<RELEASE/DEBUG>` (`panda/SConscript` `get_version`) + build variant (reference `LIONDRIVER_REFERENCE=1` / non-reference) | ASIL path |
 | CI-7 Build and CI configuration | `.github/workflows/*.yaml`, `Jenkinsfile`, `panda/Jenkinsfile`, `opendbc_repo/.github/workflows/*`, `tools/op.sh`, `tools/test_runner.py`, `tools/release/*` | File content at commit | Affects verification evidence |
 | CI-8 Toolchain and dependency versions | `uv.lock`, `opendbc_repo/uv.lock`, `pyproject.toml`, `opendbc_repo/pyproject.toml`, `.python-version`, `launch_env.sh` (`AGNOS_VERSION` default 19.9) | Lockfile hashes; versions recorded in [WP-P-07](WP-P-07-tool-classification-qualification.md) | Change needs tool impact check |
 | CI-9 Test references | Process-replay reference logs (today fetched from `commaai/ci-artifacts`), opendbc car-diff refs, MISRA `coverage_table` and `checkers.txt` | Ref commit + content hash | Fork-owned refs required (GAP-30) |
@@ -230,11 +232,11 @@ A baseline manifest (`baseline-manifest.yaml`, generated, stored with the tag's 
 
 | ID | Item |
 |---|---|
-| OI-1 | Create the LionDriver GitHub organization and forks (D-01); decide whether the `jherrodthomas/LionDriver` repository moves into it |
-| OI-2 | Keep the safety-relevant file list as a machine-readable file (proposed `assurance/trace/safety-relevant-files.txt`) so CI can classify PRs automatically |
+| OI-1 | Create the LionDriver GitHub organization and forks (D-01); decide whether the `jherrodthomas/LionDriver` repository moves into it. Partly closed 2026-10-12: forks under `jherrodthomas` (D-01); organization and move open |
+| OI-2 | Keep the safety-relevant file list as a machine-readable file (proposed `assurance/trace/safety-relevant-files.txt`) so CI can classify PRs automatically. Closed: [`safety-relevant-paths.txt`](safety-relevant-paths.txt), read by `tools/sync/sync_report.py`; automatic classification of PRs in CI not yet in place |
 | OI-3 | Configure and record branch protection on `liondriver-dev`; current settings were not verified from the local checkout |
 | OI-4 | Change request for `LIONDRIVER_VERSION`, panda `BUILDER`, and identity replacements (GAP-35) |
 | OI-5 | Write the baseline manifest generator and add it to the release procedure |
 | OI-6 | Confirm that GitHub Actions artifact retention settings and the evidence export (WP-P-10 §5) together meet the retention in WP-P-04 §10 |
-| OI-7 | LionDriver CI only runs `tools/test_runner.py` on `openpilot/` (`tools/op.sh test`). The opendbc safety suite, MISRA and mutation jobs live in `opendbc_repo/.github/workflows/tests.yml` and do not run in LionDriver CI. Add them to fork CI (D-03) |
+| OI-7 | LionDriver CI only runs `tools/test_runner.py` on `openpilot/` (`tools/op.sh test`). The opendbc safety suite, MISRA and mutation jobs live in `opendbc_repo/.github/workflows/tests.yml` and do not run in LionDriver CI. Add them to fork CI (D-03). Closed: `.github/workflows/safety.yaml` runs the safety suite (default and reference variants), opendbc and panda MISRA, and mutation tests (default variant) |
 | OI-8 | `tests.yaml` triggers on `push` to `master` and on `pull_request`; pushes to `liondriver-dev` are not tested. Add `liondriver-dev` to the push trigger |

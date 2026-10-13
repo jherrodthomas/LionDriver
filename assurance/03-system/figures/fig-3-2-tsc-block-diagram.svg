@@ -1,0 +1,323 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1000" viewBox="0 0 1280 1000" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-2. Technical safety architecture of LD-SDA (WP-S-03 §3.2)</title>
+  <desc id="d">The comma device E-04 is split into a QM partition and the ASIL B‡ safety envelope. The QM partition holds the E-04b cameras, IMU, display and speaker and the E-01 SoC processes: modeld and the DM model (E-02), locationd and calibration, radard, plannerd, controlsd, card, dmonitoringd, selfdrived, ui and soundd, and pandad. pandad talks to the safety MCU over SPI (IF-04) and the SoC drives the MCU boot and reset pins (IF-04b). In the MCU, comms_control_handler and comms_can_write (E-03b) feed the tick and heartbeat and the E-03a safety layer: safety_tx_hook with limits and gating, safety_rx_hook and the forwarding hook, which use FDCAN TX and RX. Bus 0 (IF-01, IF-02) goes through the E-05 harness relay to the vehicle CAN with EPS, PCM, ABS and cluster; bus 2 (IF-03) goes to the Toyota forward camera; the relay is driven by a GPIO (IF-10) and, when released, links camera and vehicle directly. The MCU siren and the SoC HMI warn the driver (IF-07). Each block carries the safety mechanisms (SM) and TSRs that §3.3, §5 and §6 assign to it.</desc>
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7C3AED"/></marker>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+      .ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .chip{fill:#FFFFFF;stroke:#CBD5E1;stroke-width:1}
+      .ml{fill:#EEF2FF;stroke:#A5B4FC;stroke-width:1}
+      .e3a{fill:#FFEDD5;stroke:#C2410C;stroke-width:1.4}
+      .e3b{fill:#FFFFFF;stroke:#C2410C;stroke-width:1.2}
+      .e4a{fill:#FFFFFF;stroke:#FDBA74;stroke-width:1.2}
+      .sm{font-size:9.5px;font-weight:700;fill:#C2410C}
+      .tsr{font-size:9px;fill:#475569}
+      .tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+      .lbl{font-size:9.5px;font-weight:600}
+    </style>
+  </defs>
+
+  <rect width="1280" height="1000" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 3-2 · Technical safety architecture</text>
+  <text x="40" y="66" class="m" font-size="12.5">Static view as inherited at 8b8c6ae · QM partition and B‡ safety envelope · SM-xx from §6 and TSRs from §3.3 / §5 on the blocks they are assigned to</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">WP-S-03 §3.2</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">elements §3.1 · interfaces §3.3 · SM §6</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+
+  <!-- ===== E-04 comma device ===== -->
+  <rect x="40" y="100" width="1200" height="556" rx="14" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+  <text x="58" y="124" class="t b" font-size="13">E-04 comma device</text>
+  <text x="196" y="124" class="m s">E-04a safety MCU hardware: B‡ · E-04b rest of the device: QM</text>
+
+  <!-- partition bars -->
+  <rect x="52" y="140" width="670" height="22" rx="11" fill="#64748B"/>
+  <text x="387" y="155" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".06em">QM PARTITION · E-01, E-02 (SOTIF / PAS 8800), E-04b</text>
+  <rect x="790" y="140" width="434" height="22" rx="11" fill="#C2410C"/>
+  <text x="1007" y="155" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".06em">SAFETY ENVELOPE · B‡ · E-03a, E-03b, E-04a</text>
+
+  <!-- E-04b column -->
+  <rect x="52" y="176" width="116" height="456" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+  <text x="62" y="198" class="t b" font-size="12">E-04b</text>
+  <text x="62" y="214" class="m xs">device HW · QM</text>
+  <rect x="60" y="242" width="100" height="52" rx="7" class="chip"/>
+  <text x="110" y="264" class="t sb" font-size="11.5" text-anchor="middle">Road cameras</text>
+  <text x="110" y="279" class="m xs" text-anchor="middle">wide + narrow</text>
+  <rect x="60" y="326" width="100" height="52" rx="7" class="chip"/>
+  <text x="110" y="348" class="t sb" font-size="11.5" text-anchor="middle">IMU · GNSS</text>
+  <text x="110" y="363" class="m xs" text-anchor="middle">sensor messages</text>
+  <rect x="60" y="410" width="100" height="52" rx="7" class="chip"/>
+  <text x="110" y="432" class="t sb" font-size="11.5" text-anchor="middle">Cabin camera</text>
+  <text x="110" y="447" class="m xs" text-anchor="middle">driver, IR</text>
+  <rect x="60" y="494" width="100" height="52" rx="7" class="chip"/>
+  <text x="110" y="516" class="t sb" font-size="11.5" text-anchor="middle">Display</text>
+  <text x="110" y="531" class="m xs" text-anchor="middle">· speaker</text>
+
+  <!-- ===== E-01 SoC ===== -->
+  <rect x="210" y="176" width="512" height="456" rx="12" fill="#F8FAFC" stroke="#334155" stroke-width="1.4"/>
+  <text x="226" y="198" class="t b" font-size="13">E-01 SoC software</text>
+  <text x="226" y="214" class="m xs">openpilot processes (§8) · cereal services (§9)</text>
+  <rect x="664" y="186" width="44" height="18" rx="9" fill="#64748B"/>
+  <text x="686" y="199" fill="#FFFFFF" class="tag" text-anchor="middle">QM</text>
+
+  <!-- row A -->
+  <rect x="224" y="236" width="106" height="64" rx="7" class="ml"/>
+  <text x="277" y="262" class="t sb" font-size="12" text-anchor="middle">E-02 modeld</text>
+  <text x="277" y="278" class="m xs" text-anchor="middle">driving model</text>
+  <rect x="350" y="236" width="106" height="64" rx="7" class="box"/>
+  <text x="403" y="262" class="t sb" font-size="12" text-anchor="middle">plannerd</text>
+  <text x="403" y="278" class="m xs" text-anchor="middle">longitudinal plan</text>
+  <rect x="476" y="236" width="106" height="64" rx="7" class="box"/>
+  <text x="529" y="262" class="t sb" font-size="12" text-anchor="middle">controlsd</text>
+  <text x="529" y="278" class="m xs" text-anchor="middle">control law</text>
+  <rect x="602" y="236" width="106" height="64" rx="7" class="box"/>
+  <text x="655" y="262" class="t sb" font-size="12" text-anchor="middle">card</text>
+  <text x="655" y="278" class="m xs" text-anchor="middle">carState · packing</text>
+  <!-- row B -->
+  <rect x="224" y="320" width="106" height="64" rx="7" class="chip"/>
+  <text x="277" y="346" class="t sb" font-size="12" text-anchor="middle">locationd</text>
+  <text x="277" y="362" class="m xs" text-anchor="middle">calibrationd, …</text>
+  <rect x="350" y="320" width="106" height="64" rx="7" class="box"/>
+  <text x="403" y="346" class="t sb" font-size="12" text-anchor="middle">radard</text>
+  <text x="403" y="362" class="m xs" text-anchor="middle">lead fusion</text>
+  <!-- row C -->
+  <rect x="224" y="404" width="106" height="64" rx="7" class="ml"/>
+  <text x="277" y="430" class="t sb" font-size="12" text-anchor="middle">E-02 DM model</text>
+  <text x="277" y="446" class="m xs" text-anchor="middle">dmonitoringmodeld</text>
+  <rect x="350" y="404" width="106" height="64" rx="7" class="box"/>
+  <text x="403" y="430" class="t sb" font-size="12" text-anchor="middle">dmonitoringd</text>
+  <text x="403" y="446" class="m xs" text-anchor="middle">DM policy</text>
+  <rect x="476" y="404" width="106" height="64" rx="7" class="box"/>
+  <text x="529" y="430" class="t sb" font-size="12" text-anchor="middle">selfdrived</text>
+  <text x="529" y="446" class="m xs" text-anchor="middle">state machine</text>
+  <rect x="602" y="404" width="106" height="148" rx="7" class="box"/>
+  <text x="655" y="430" class="t sb" font-size="12" text-anchor="middle">pandad</text>
+  <text x="655" y="448" class="m xs" text-anchor="middle">SPI link</text>
+  <text x="655" y="466" class="m xs" text-anchor="middle">heartbeat 0xf3</text>
+  <text x="655" y="479" class="m xs" text-anchor="middle">10 Hz</text>
+  <text x="655" y="497" class="m xs" text-anchor="middle">mode set 0xdc</text>
+  <text x="655" y="515" class="m xs" text-anchor="middle">sendcan → MCU</text>
+  <text x="655" y="533" class="m xs" text-anchor="middle">CAN, health ← MCU</text>
+  <!-- row D -->
+  <rect x="224" y="488" width="106" height="64" rx="7" class="box"/>
+  <text x="277" y="514" class="t sb" font-size="12" text-anchor="middle">ui · soundd</text>
+  <text x="277" y="530" class="m xs" text-anchor="middle">HMI alerts</text>
+  <!-- row E: host mechanisms -->
+  <rect x="224" y="572" width="484" height="44" rx="7" fill="#FFFFFF" stroke="#CBD5E1" stroke-dasharray="4 3"/>
+  <text x="238" y="590" class="t sb" font-size="11">Host mechanisms on E-01 / E-02 · QM (B-sup)</text>
+  <text x="238" y="606" class="sm" fill="#475569" style="fill:#475569">SM-25 · 26 · 27 · 28 · 30 · 31 · 32 · 33 · 34 · 37 · 43</text>
+  <text x="694" y="606" class="tsr" text-anchor="end">TSR-303, 307(b), 308, 601–618, 709</text>
+
+  <!-- SoC internal flows -->
+  <g fill="none" stroke="#475569" stroke-width="1.4">
+    <path d="M330 268 H348" marker-end="url(#aG)"/>
+    <path d="M456 268 H474" marker-end="url(#aG)"/>
+    <path d="M582 268 H600" marker-end="url(#aG)"/>
+    <path d="M403 320 V302" marker-end="url(#aG)"/>
+    <path d="M506 404 V302" marker-end="url(#aG)"/>
+    <path d="M616 300 V392 H556 V402" marker-end="url(#aG)"/>
+    <path d="M330 436 H348" marker-end="url(#aG)"/>
+    <path d="M456 436 H474" marker-end="url(#aG)"/>
+    <path d="M582 436 H600" marker-end="url(#aG)"/>
+    <path d="M630 300 V402" marker-end="url(#aG)"/>
+    <path d="M690 402 V302" marker-end="url(#aG)"/>
+  </g>
+  <text x="512" y="356" class="m" font-size="9.5">selfdriveState</text>
+  <text x="560" y="388" class="m" font-size="9.5" text-anchor="middle">carState</text>
+  <text x="634" y="350" class="m" font-size="9.5">sendcan</text>
+  <text x="694" y="366" class="m" font-size="9.5">can</text>
+
+  <!-- sensors into SoC -->
+  <path d="M160 268 H222" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <path d="M160 352 H222" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <path d="M160 436 H222" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <path d="M224 520 H162" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <text x="185" y="230" class="m" font-size="9" text-anchor="middle">VisionIPC</text>
+
+  <!-- ===== E-03 / E-04a safety MCU ===== -->
+  <rect x="790" y="176" width="434" height="456" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>
+  <text x="806" y="198" class="t b" font-size="13">E-03 / E-04a safety MCU</text>
+  <text x="806" y="214" class="m xs">E-03b also: SM-16 fault → safe state (TSR-406, 502, 706)</text>
+  <rect x="1172" y="186" width="36" height="18" rx="9" fill="#C2410C"/>
+  <text x="1190" y="199" fill="#FFFFFF" class="tag" text-anchor="middle">B‡</text>
+
+  <!-- row A: E-04a hardware -->
+  <rect x="806" y="236" width="402" height="64" rx="7" class="e4a"/>
+  <text x="820" y="256" class="t sb" font-size="12">E-04a MCU hardware · STM32H7</text>
+  <text x="820" y="272" class="m xs">SPI4 · FDCAN1–3 · GPIO · ADC · DAC/codec · clock · supply · memories</text>
+  <text x="820" y="290" class="sm">SM-15 · 17 · 18 · 19 · 21 · 41</text>
+  <text x="1196" y="290" class="tsr" text-anchor="end">TSR-501, 503–505, 507–509, 515</text>
+
+  <!-- E-03a container -->
+  <rect x="958" y="310" width="146" height="256" rx="9" fill="none" stroke="#C2410C" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="1031" y="563" fill="#C2410C" font-size="9" font-weight="700" text-anchor="middle" letter-spacing=".06em">E-03a SAFETY LAYER</text>
+
+  <!-- m1 column (E-03b) -->
+  <rect x="806" y="320" width="140" height="64" rx="7" class="e3b"/>
+  <text x="816" y="338" class="t sb" font-size="11.5">tick 8 Hz / 1 Hz</text>
+  <text x="816" y="351" class="m xs">heartbeat · safety_tick</text>
+  <text x="816" y="365" class="sm">SM-09 · 12 · 13 · 29</text>
+  <text x="816" y="377" class="tsr" style="font-size:8.5px">TSR-307(a), 309, 401, 407–409</text>
+
+  <rect x="806" y="404" width="140" height="64" rx="7" class="e3b"/>
+  <text x="816" y="422" class="t sb" font-size="10.5">comms_control_handler</text>
+  <text x="816" y="435" class="m xs">0xdc, 0xf3, 0xc5, …</text>
+  <text x="816" y="449" class="sm">SM-14 · 22</text>
+  <text x="816" y="461" class="tsr">TSR-410–413, 511–514</text>
+
+  <rect x="806" y="488" width="140" height="64" rx="7" class="e3b"/>
+  <text x="816" y="506" class="t sb" font-size="11.5">comms_can_write</text>
+  <text x="816" y="519" class="m xs">SoC CAN frames in</text>
+  <text x="816" y="533" class="sm">SM-14</text>
+  <text x="816" y="545" class="tsr">TSR-410–413</text>
+
+  <!-- m2 column (E-03a) -->
+  <rect x="966" y="320" width="130" height="64" rx="7" class="e3a"/>
+  <text x="976" y="338" class="t sb" font-size="11.5">fwd hook</text>
+  <text x="976" y="351" class="m xs">fixed block list</text>
+  <text x="976" y="365" class="sm">SM-35</text>
+  <text x="976" y="377" class="tsr">TSR-704, 707, 711</text>
+
+  <rect x="966" y="404" width="130" height="64" rx="7" class="e3a"/>
+  <text x="976" y="422" class="t sb" font-size="11.5">safety_rx_hook</text>
+  <text x="976" y="435" class="m xs">RX checks, PCM state</text>
+  <text x="976" y="449" class="sm">SM-05·06·10·11·24·29</text>
+  <text x="976" y="461" class="tsr">TSR-3xx, 401–406, 710</text>
+
+  <rect x="966" y="488" width="130" height="64" rx="7" class="e3a"/>
+  <text x="976" y="506" class="t sb" font-size="11.5">safety_tx_hook</text>
+  <text x="976" y="519" class="m xs">LIM · GATE</text>
+  <text x="976" y="533" class="sm">SM-01–04·07·08·36·39</text>
+  <text x="976" y="545" class="tsr">TSR-1xx, 2xx, 518, 705</text>
+
+  <!-- m3: FDCAN -->
+  <rect x="1114" y="320" width="94" height="232" rx="7" class="e3b"/>
+  <text x="1161" y="340" class="t sb" font-size="11.5" text-anchor="middle">FDCAN</text>
+  <text x="1161" y="354" class="m xs" text-anchor="middle">TX · RX</text>
+  <text x="1161" y="372" class="m xs" text-anchor="middle">bus 0 · bus 2</text>
+  <text x="1161" y="420" class="sm" text-anchor="middle">SM-38 · 40</text>
+  <text x="1161" y="433" class="tsr" text-anchor="middle">TSR-508, 517</text>
+
+  <!-- row E -->
+  <rect x="806" y="580" width="140" height="40" rx="7" class="e3b"/>
+  <text x="816" y="596" class="t sb" font-size="11.5">siren (DAC/codec)</text>
+  <text x="816" y="611" class="sm">SM-23 <tspan class="tsr" font-weight="400">· TSR-516</tspan></text>
+  <rect x="966" y="580" width="130" height="40" rx="7" class="e3b"/>
+  <text x="976" y="596" class="t sb" font-size="11.5">relay GPIO</text>
+  <text x="976" y="611" class="sm">SM-20 · 42 <tspan class="tsr" font-weight="400">· TSR-506, 701</tspan></text>
+
+  <!-- MCU internal flows -->
+  <path d="M876 404 V386" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <text x="882" y="397" class="m" font-size="9">0xf3</text>
+  <path d="M946 520 H964" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+  <path d="M1096 520 H1112" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+  <path d="M1114 436 H1098" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <path d="M1114 344 H1098" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <path d="M1096 362 H1112" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+
+  <!-- IF-04 SPI and IF-04b GPIO across the FFI boundary -->
+  <path d="M710 436 H804" fill="none" stroke="#C2410C" stroke-width="2.4" marker-end="url(#aR)" marker-start="url(#aR)"/>
+  <path d="M710 520 H804" fill="none" stroke="#C2410C" stroke-width="2.4" marker-end="url(#aR)" marker-start="url(#aR)"/>
+  <path d="M722 268 H804" fill="none" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#aP)"/>
+  <g class="tag">
+    <rect x="733" y="469" width="46" height="18" rx="9" fill="#C2410C"/><text x="756" y="482" fill="#fff" text-anchor="middle">IF-04</text>
+    <rect x="729" y="240" width="54" height="18" rx="9" fill="#7C3AED"/><text x="756" y="253" fill="#fff" text-anchor="middle">IF-04b</text>
+  </g>
+  <text x="756" y="501" fill="#C2410C" class="lbl" text-anchor="middle">SPI</text>
+  <text x="756" y="546" class="tsr" text-anchor="middle">TSR-407–413,</text>
+  <text x="756" y="558" class="tsr" text-anchor="middle">511–514</text>
+  <text x="756" y="286" fill="#7C3AED" font-size="9" font-weight="600" text-anchor="middle">STM_BOOT0</text>
+  <text x="756" y="297" fill="#7C3AED" font-size="9" font-weight="600" text-anchor="middle">STM_RST_N</text>
+  <text x="756" y="310" class="tsr" text-anchor="middle">TSR-511</text>
+  <text x="756" y="322" fill="#7C3AED" font-size="9" font-weight="700" text-anchor="middle">FFI-3 open</text>
+  <text transform="translate(760,375) rotate(-90)" fill="#C2410C" font-size="9.5" font-weight="700" text-anchor="middle" letter-spacing=".08em">FFI-1…6 · §7</text>
+
+  <!-- IF-05/06 tags -->
+  <g class="tag">
+    <rect x="162" y="242" width="46" height="18" rx="9" fill="#0F766E"/><text x="185" y="255" fill="#fff" text-anchor="middle">IF-05</text>
+    <rect x="162" y="410" width="46" height="18" rx="9" fill="#0F766E"/><text x="185" y="423" fill="#fff" text-anchor="middle">IF-06</text>
+  </g>
+
+  <!-- ===== outside: driver ===== -->
+  <rect x="40" y="690" width="180" height="100" rx="10" class="ext"/>
+  <g transform="translate(78,716)" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round">
+    <circle cx="0" cy="0" r="9"/><path d="M0 9V34M-14 18H14M0 34L-11 52M0 34L11 52"/>
+  </g>
+  <text x="108" y="730" class="t b" font-size="14">Driver</text>
+  <text x="108" y="747" class="m xs">alerts, siren;</text>
+  <text x="108" y="760" class="m xs">brake, cancel, steer</text>
+  <text x="108" y="773" class="m xs">act on the vehicle</text>
+
+  <!-- HMI to driver -->
+  <path d="M110 546 V688" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <!-- siren to driver -->
+  <path d="M876 620 V740 H222" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+  <g class="tag">
+    <rect x="87" y="662" width="46" height="18" rx="9" fill="#0F766E"/><text x="110" y="675" fill="#fff" text-anchor="middle">IF-07</text>
+    <rect x="300" y="731" width="46" height="18" rx="9" fill="#C2410C"/><text x="323" y="744" fill="#fff" text-anchor="middle">IF-07</text>
+  </g>
+  <text x="354" y="733" fill="#C2410C" class="lbl">SoC-independent siren · B</text>
+  <text x="354" y="757" class="tsr">TSR-516 (siren), 606 (HMI)</text>
+
+  <!-- ===== E-05 harness ===== -->
+  <rect x="1000" y="676" width="240" height="124" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+  <rect x="1012" y="692" width="216" height="48" rx="6" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.2"/>
+  <text x="1022" y="711" class="t sb" font-size="11.5">intercept relay</text>
+  <text x="1022" y="728" class="m" font-size="9.5">released: cam ↔ car direct</text>
+  <text x="1012" y="762" class="t b" font-size="12.5">E-05 harness</text>
+  <text x="1012" y="777" class="m xs">B (PCS restore)</text>
+  <text x="1012" y="790" class="m xs">B‡ (blocking)</text>
+
+  <!-- relay drive IF-10 -->
+  <path d="M1031 620 V690" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+  <!-- bus 0 / bus 2 from FDCAN to relay -->
+  <path d="M1140 552 V692" fill="none" stroke="#C2410C" stroke-width="3"/>
+  <path d="M1190 552 V692" fill="none" stroke="#0F766E" stroke-width="3"/>
+  <!-- bus 0 car side to vehicle CAN -->
+  <path d="M1140 740 V820 H760 V848" fill="none" stroke="#C2410C" stroke-width="3" marker-end="url(#aR)" marker-start="url(#aR)"/>
+  <!-- bus 2 camera side to forward camera -->
+  <path d="M1190 740 V848" fill="none" stroke="#0F766E" stroke-width="3" marker-end="url(#aT)" marker-start="url(#aT)"/>
+  <text x="1134" y="648" fill="#C2410C" class="lbl" text-anchor="end">bus 0</text>
+  <text x="1196" y="648" fill="#0F766E" class="lbl">bus 2</text>
+
+  <g class="tag">
+    <rect x="1008" y="642" width="46" height="18" rx="9" fill="#C2410C"/><text x="1031" y="655" fill="#fff" text-anchor="middle">IF-10</text>
+    <rect x="860" y="811" width="96" height="18" rx="9" fill="#C2410C"/><text x="908" y="824" fill="#fff" text-anchor="middle">IF-01 · IF-02</text>
+    <rect x="1167" y="811" width="46" height="18" rx="9" fill="#0F766E"/><text x="1190" y="824" fill="#fff" text-anchor="middle">IF-03</text>
+  </g>
+  <text x="908" y="790" fill="#C2410C" class="lbl" text-anchor="middle">TX actuation · RX status</text>
+  <text x="908" y="803" class="tsr" text-anchor="middle">TSR-1xx, 2xx, 705 · 3xx, 401–406</text>
+
+  <!-- ===== outside: vehicle CAN and camera ===== -->
+  <rect x="560" y="850" width="340" height="60" rx="8" class="ext"/>
+  <text x="730" y="874" class="t sb" font-size="13" text-anchor="middle">Vehicle CAN · car side</text>
+  <text x="730" y="892" class="m xs" text-anchor="middle">EXT-EPS · EXT-PCM · ABS · cluster · AoU only</text>
+  <rect x="1080" y="850" width="160" height="60" rx="8" class="ext"/>
+  <text x="1160" y="874" class="t sb" font-size="13" text-anchor="middle">Toyota fwd camera</text>
+  <text x="1160" y="892" class="m xs" text-anchor="middle">camera side</text>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="932" x2="1240" y2="932" stroke="#E2E8F0"/>
+  <g transform="translate(40,956)" font-size="10.5">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#C2410C" stroke-width="2.6"/><text x="36" y="4" class="t">Actuation / envelope path</text>
+    <line x1="196" y1="0" x2="224" y2="0" stroke="#0F766E" stroke-width="2"/><text x="232" y="4" class="t">Sensing, HMI, forwarded CAN</text>
+    <line x1="410" y1="0" x2="438" y2="0" stroke="#475569" stroke-width="1.4"/><text x="446" y="4" class="t">Internal data flow</text>
+    <line x1="566" y1="0" x2="594" y2="0" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4"/><text x="602" y="4" class="t">SoC control of MCU boot (FFI / CS)</text>
+    <text x="1200" y="4" class="m" text-anchor="end">B‡ / B-sup: WP-S-02 §2.1</text>
+  </g>
+  <g transform="translate(40,980)" font-size="10.5">
+    <rect x="0" y="-8" width="28" height="16" rx="4" class="e3a"/><text x="36" y="4" class="t">E-03a safety layer</text>
+    <rect x="160" y="-8" width="28" height="16" rx="4" class="e3b"/><text x="196" y="4" class="t">E-03b platform firmware</text>
+    <rect x="352" y="-8" width="28" height="16" rx="4" class="e4a"/><text x="388" y="4" class="t">E-04a hardware</text>
+    <rect x="496" y="-8" width="28" height="16" rx="4" class="box"/><text x="532" y="4" class="t">QM element</text>
+    <rect x="618" y="-8" width="28" height="16" rx="4" class="ml"/><text x="654" y="4" class="t">E-02 ML model</text>
+    <rect x="760" y="-8" width="28" height="16" rx="4" class="ext"/><text x="796" y="4" class="t">Outside the item</text>
+    <text x="1200" y="4" class="m" text-anchor="end"><tspan class="sm" font-size="10.5">SM-xx</tspan> mechanism (§6) · TSR-xxx (§3.3, §5)</text>
+  </g>
+</svg>

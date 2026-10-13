@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-S-08 System integration and test strategy, specification and report |
 | Standard reference | ISO 26262-4:2018 §7 (item integration and testing); ISO 26262-4 §7 test methods and fault-injection guidance (verify table numbers against the licensed copy); ISO 26262-8:2018 §9 (verification); ASPICE 4.0 SYS.4 (system integration and integration verification) |
-| Version | 0.2 (VS-SI-25 added from WP-W-08 VS-SWQ-20, RR-2026-008 F-24; 2026-10-12). 0.1 |
+| Version | 0.4 (merge of PR #47 software alignment with the base; carries PR #47's draft 0.2: VS-SI-27 (drafted as VS-SI-25, renumbered because VS-SI-25 is the MCU-reset case) added from WP-W-08 VS-SWQ-20, RR-2026-009 F-24; 2026-10-13). 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification). **Results: not yet executed** |
 | ASIL / scope | ASIL C (SG-01 until re-rated), ASIL B (SG-02…SG-07); reference configuration only |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); test specification review with independence per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`) |
 
 ## 1. Purpose and scope
 
@@ -18,7 +18,7 @@ This document specifies how the LionDriver elements are integrated into the item
 
 - the integration strategy and sequence (§3),
 - the integration environment, which is the **LionDriver HIL bench** that decision D-04 ([WP-M-01 §8](../01-management/WP-M-01-assurance-strategy.md#8-strategic-decisions-required)) requires and that [WP-H-06](../04-hardware/WP-H-06-hardware-integration-verification.md) §2 defines (§4),
-- the test specification VS-SI-01…VS-SI-26, traced to TSRs and interfaces (§6),
+- the test specification VS-SI-01…VS-SI-27, traced to TSRs and interfaces (§6),
 - the report template (§8), with every result **"Not yet executed"**.
 
 Out of scope: hardware integration of the device (WP-H-06, VS-HW-nn), software integration ([WP-W-07](../05-software/WP-W-07-software-integration-verification.md)), embedded software qualification ([WP-W-08](../05-software/WP-W-08-embedded-software-testing.md)), system qualification on the vehicle ([WP-S-09](WP-S-09-system-verification.md)), and the systematic fault-injection campaign, which is specified in [WP-V-05](../06-validation/WP-V-05-fault-injection.md). Test cases here that inject faults reference the WP-V-05 case for the detailed procedure.
@@ -52,6 +52,8 @@ Bottom-up integration in four steps. Each step adds one element or interface, an
 | I-2 | I-1 + full openpilot on the SoC (pandad, card, controlsd, selfdrived, ui/soundd), camera inputs from recorded video or covered (no model credit) | IF-04 real traffic, IF-07 HMI | Open-loop Corolla log replay on the CAN side; process faults injected on the SoC | SoC ↔ envelope integration, fault reactions, warnings, heartbeat |
 | I-3 | I-2 in closed loop with a vehicle model (Corolla lateral/longitudinal plant on the bench PC, producing `0x260`, `0xAA`, `0x1D2`, `0x226` responses to `0x2E4`/`0x343`) | Closed control loop through the panda | Scenario scripts | Dynamic behaviour at limits; FTTI-relevant timing with plant response |
 | I-4 | Device + harness installed in the reference vehicle, **stationary** (engine on, wheels on ground or lifted per [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md)) | All IF incl. real EPS/PCM/camera | Engagement attempts, stalk/brake/gas inputs, relay checks, PCS message capture | Integration with existing vehicle elements before driving; hand-over to WP-S-09 |
+
+Step I-1 uses the setup of [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md). A VS-SI case at I-1 that WP-W-08 §6.1 maps to a VS-SWQ case is not re-run here: its I-1 result is the WP-W-08 report entry, judged also against the pass criteria and GC-1/GC-2 of this document. This document runs I-1 itself only for cases with no VS-SWQ counterpart (VS-SI-18, -25, -26) and runs every case at I-2, I-3 and I-4.
 
 Element entry criteria for each step: element versions recorded as configuration items ([WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md)); unit/software integration results available for the version under test (WP-W-07); open problem reports reviewed ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)).
 
@@ -106,19 +108,19 @@ Columns: **Trace** = FSR / TSR block / interface; **Step** = integration step; *
 
 | ID | Title | Trace | Step | Preconditions | Procedure | Pass criteria | Expected baseline |
 |---|---|---|---|---|---|---|---|
-| VS-SI-05 | Heartbeat loss | FSR-01.07, FSR-02.05; TSR-407, TSR-510, TSR-516; IF-04 | I-1, I-2 | Engaged, ignition on | Stop heartbeat (`0xf3`) and all SPI traffic | Authority revoked after > 0.3 s without heartbeat (TSR-407); SS-S (relay released) within ≤ 2 s (TSR-510); panda siren ≤ 0.5 s after detection (TSR-516) | **Fail (known GAP-06)**: SILENT after 5 s, siren 3 s (`panda/board/main.c:101-103, 193-213`) |
+| VS-SI-05 | Heartbeat loss | FSR-01.07, FSR-02.05; TSR-407, TSR-510, TSR-516; IF-04 | I-1, I-2 | Engaged, ignition on | Stop heartbeat (`0xf3`) and all SPI traffic | Authority revoked after > 0.3 s without heartbeat (TSR-407); SS-S (relay released) within ≤ 2 s (TSR-510); panda siren ≤ 0.5 s after detection (TSR-516) | Revocation at 0.3 s implemented 2026-10-12 (`panda/board/drivers/heartbeat_monitor.h`, all builds; not verified on hardware); SILENT 5 s still **Fail (known GAP-06)**; siren: 2026-10-13, at the revocation when authority was granted, ≈ 0.56 s after the last heartbeat, all builds (panda `c33343b`; WP-S-04 T-07a), not verified on hardware |
 | VS-SI-06 | Heartbeat engaged mismatch | FSR-01.07; TSR-307 (a), TSR-409 | I-1 | Engaged | Send heartbeat with `engaged=0`; then send heartbeats whose control-loop evidence does not advance | Authority revoked within ≤ 0.3 s in both cases (TSR-307 (a), TSR-409) | **Fail (known GAP-06)**: 3 ticks at 1 Hz (`main.c:182-189`) |
-| VS-SI-07 | Safety mode / param set in car mode | FSR-01.10; TSR-512; IF-04 | I-1 | Toyota mode, engaged | Send `0xdc` with (a) another car mode, (b) Toyota with another param, (c) SILENT, (d) NO_OUTPUT | (a),(b) rejected, mode unchanged; (c),(d) accepted, relay released, authority cleared | **Fail (known GAP-09)**: any mode accepted (`main_comms.h:223-225`); authority is cleared on change (`safety.h:458`) |
-| VS-SI-08 | Configuration commands in car mode | FFI-CM-07…-10 ([WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md)); TSR-513, TSR-506; IF-04 | I-1 | Toyota mode, engaged, camera traffic on bus 2 | Send each of `0xc5`, `0xe7`(1), `0xe5`(1), `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xf1` (TSR-513 list) and, for information, `0xd1`(1), `0xd8` | Each rejected, or the item enters SS-S with siren; never a state with relay energised and forwarding stopped; never a relay state change outside SS-S | **Fail expected** (all accepted; WP-S-02 NF-05). `0xe7` expected to stop camera-side forwarding with relay energised (WP-A-02 FFI-CM-08) |
+| VS-SI-07 | Safety mode / param set in car mode | FSR-01.10; TSR-512; IF-04 | I-1 | Toyota mode, engaged | Send `0xdc` with (a) another car mode, (b) Toyota with another param, (c) SILENT, (d) NO_OUTPUT | (a),(b) rejected, mode unchanged; (c),(d) accepted, relay released, authority cleared | Reference build (`LIONDRIVER_REFERENCE=1`): Meets by design (`panda/board/reference_lock.h`), not verified on hardware. Default build: **Fail (known GAP-09)**, any mode accepted; authority is cleared on change (`safety.h:458`) |
+| VS-SI-08 | Configuration commands in car mode | FFI-CM-07…-10 ([WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md)); TSR-513, TSR-506; IF-04 | I-1 | Toyota mode, engaged, camera traffic on bus 2 | Send each of `0xc5`, `0xe7`(1), `0xe5`(1), `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xf1` (TSR-513 list) and, for information, `0xd1`(1), `0xd8` | Each rejected, or the item enters SS-S with siren; never a state with relay energised and forwarding stopped; never a relay state change outside SS-S | Reference build: Meets by design (`panda/board/reference_lock.h`), not verified on hardware. Default build: **Fail expected** (all accepted; WP-S-02 NF-05). `0xe7` expected to stop camera-side forwarding with relay energised (WP-A-02 FFI-CM-08) |
 | VS-SI-09 | SPI corruption | FSR-01.08; TSR-410, TSR-412, TSR-413; IF-04 | I-2 | Engaged, CAN replay | Enable `SPI_ERR_PROB` (e.g. 0.001 and 0.01) in pandad (`openpilot/selfdrive/pandad/spi.cc:280-301`); also scripted bad header/checksum (`panda/tests/hitl/test_5_spi.py:58-72`); detailed in WP-V-05 VS-FI-06 | No corrupted frame on bus 0 (GC-1); corrupted control commands rejected; error counters increase; sustained corruption → safe state within budget | Frames: GC-1 expected to hold (TX hook); 8-bit XOR residual error not quantified (GAP-10) |
 | VS-SI-10 | Stale / replayed command stream | FSR-01.07, FSR-01.08; TSR-408, TSR-410, TSR-411 | I-1 | Engaged | Replay a captured command buffer repeatedly with valid checksums; freeze command value | Transfers older than 2 control periods rejected (TSR-411); no `0x2E4` for > 50 ms → SS-L (TSR-408) | **Fail (known GAP-10)**: no sequence counter |
-| VS-SI-11 | TX flooding (babbling SoC) | FSR-01.08; TSR-502 (interrupt-rate reaction); TX-rate supervision has no TSR (OI-7) | I-1 | Engaged | Flood `0x2E4`/`0x343` at 10× nominal and send non-whitelisted IDs (reuse logic of `common.py:937` `test_spam_can_buses`) | Non-whitelisted IDs never on bus 0; actuation message rate on bus 0 within spec; tick timing unaffected (siren/heartbeat timing unchanged); interrupt-rate fault → safe state | Whitelist meets; rate supervision and fault reaction absent (GAP-08) |
+| VS-SI-11 | TX flooding (babbling SoC) | FSR-01.08; TSR-502 (interrupt-rate reaction); TSR-518 (DN-01), implemented in the reference build | I-1 | Engaged | Flood `0x2E4`/`0x343` at 10× nominal and send non-whitelisted IDs (reuse logic of `common.py:937` `test_spam_can_buses`) | Non-whitelisted IDs never on bus 0; actuation message rate on bus 0 within spec; tick timing unaffected (siren/heartbeat timing unchanged); interrupt-rate fault → safe state | Whitelist meets; reference build: per-ID rate supervision with revocation ≤ 0.1 s after the first rejected frame (TSR-518; `test_tx_rate_*`; HIL `test_14_tx_rate.py`, not run); interrupt-rate fault reaction absent (GAP-08) |
 
 ### 6.3 Vehicle CAN RX integrity (TSR-4xx)
 
 | ID | Title | Trace | Step | Preconditions | Procedure | Pass criteria | Expected baseline |
 |---|---|---|---|---|---|---|---|
-| VS-SI-12 | RX timeout per gating signal | FSR-01.06; TSR-401, TSR-406; IF-02 | I-1, I-3 | Engaged | Stop, one at a time: `0x1D2`, `0x226`, `0x260`, `0xAA` | Absence detected after 5 nominal periods with ≥ 50 Hz evaluation (TSR-401); authority revoked ≤ 0.1 s later (TSR-406); host warning | **Fail (known GAP-06)**: ≤ ≈2 s (`safety.h:321-344`) |
+| VS-SI-12 | RX timeout per gating signal | FSR-01.06; TSR-401, TSR-406; IF-02 | I-1, I-3 | Engaged | Stop, one at a time: `0x1D2`, `0x226`, `0x260`, `0xAA` | Absence detected after 5 nominal periods with ≥ 50 Hz evaluation (TSR-401); authority revoked ≤ 0.1 s later (TSR-406); host warning | 5 nominal periods, ≤ 0.16 s, implemented (opendbc `7993399`, `test_rx_timeout_5_periods*`); hardware not verified (HIL `test_12_rx_timeout.py`, not run) |
 | VS-SI-13 | E2E plausibility: stuck and replayed frames | FSR-01.06; TSR-403, TSR-404, TSR-405, TSR-406 | I-1, I-3 | Engaged | (a) Repeat last `0x1D2` with valid checksum while the plant cancels; (b) `0x226` stuck "not pressed" while plant brakes; (c) `0xAA` frozen; (d) `0x260` frozen | Each detected within the TSR-403/404/405 tolerance and authority revoked ≤ 0.1 s later (TSR-406) | **Fail (known GAP-01)**: only silence detected |
 | VS-SI-14 | Checksum and quality-flag rejection | FSR-01.06; TSR-402, TSR-406 | I-1 | Engaged | Corrupt checksum of `0x1D2`/`0x260`; set wheel-speed fault bits in `0xAA` | Authority revoked on the faulty frame | Meets for checksummed messages and wheel fault bits (`modes/toyota.h:84-93`, `safety.h:112-121`) |
 
@@ -137,16 +139,15 @@ Columns: **Trace** = FSR / TSR block / interface; **Step** = integration step; *
 | VS-SI-18 | Relay state per mode | FSR-07.03; TSR-506, TSR-702, TSR-706; AOU-13 | I-1, I-4 | — | Cycle SILENT → NO_OUTPUT → Toyota → SILENT; unplug device power while in Toyota mode | Relay released in SILENT/NO_OUTPUT and on power loss (stock camera↔car continuity); energised only in Toyota mode. Reuses VS-HW-01 setup | SILENT/NO_OUTPUT release in code (`main.c:45-54`); power-loss state unknown (AOU-13) |
 | VS-SI-19 | Relay malfunction detection | FSR-01.11; TSR-506, TSR-710 | I-1 | Engaged | Inject camera LKA `0x2E4` on bus 0 side (relay bypass), see WP-H-06 VS-HW-03/04 for hardware procedure | All actuation TX and forwarding blocked within ≤ 0.3 s; host immediate disable with correct alert | Detection 1–2 s (`safety.h:215-220, 372-380`) — **Fail (known GAP-12)** for timing |
 | VS-SI-20 | PCS message forwarding unchanged | FSR-07.01; TSR-704, TSR-707; IF-03 | I-1, I-2, I-4 | Each mode: SILENT, NO_OUTPUT, Toyota disengaged, Toyota engaged, engaged with gas override | Generate camera-side traffic including `0x344` PRE_COLLISION, `0x411` PCS_HUD, `0x283`; in I-4 capture real camera traffic | Every non-intercepted camera frame appears on bus 0 unchanged (content, rate, latency bound to be set); intercepted set (`0x2E4`, `0x191`, `0x412`, `0x343` with op long) not forwarded (`safety.h:270-281`) | Expected to meet in all modes (static block list) |
-| VS-SI-21 | PCS masquerade from SoC | FSR-07.02; TSR-705; IF-01 | I-1 | Toyota mode | Host sends `0x344`, `0x411`, non-zero `0x283` on bus 0 | All blocked, including DSU-only IDs (WP-S-02 NF-07) | **Fail (GAP-42)**: `0x344`/`0x411` whitelisted (`modes/toyota.h:19-28`); `0x283` non-zero blocked (`toyota.h:251-257`) |
+| VS-SI-21 | PCS masquerade from SoC | FSR-07.02; TSR-705; IF-01 | I-1 | Toyota mode | Host sends `0x344`, `0x411`, non-zero `0x283` on bus 0 | All blocked, including DSU-only IDs (WP-S-02 NF-07) | `0x344` and the DSU-only IDs blocked in all builds; reference build also blocks `0x411` (D-1; `test_pcs_hud`, `test_pcs_and_dsu_messages_blocked`); `0x283` non-zero blocked. Default build: `0x411` still whitelisted (**Fail**, GAP-42). Not verified on hardware |
 
 ### 6.6 SoC fault reactions and warnings (TSR-6xx, TSR-4xx)
 
 | ID | Title | Trace | Step | Preconditions | Procedure | Pass criteria | Expected baseline |
 |---|---|---|---|---|---|---|---|
 | VS-SI-22 | Soft disable on stale inputs | FSR-02.02, FSR-02.03, FSR-06.02; TSR-601, TSR-602, TSR-606 | I-2, I-3 | Engaged, curve scenario (I-3) | Stop `modelV2` (pause modeld) | Visual + acoustic warning ≤ 1 s; no actuation on inputs that are no longer valid (command untrusted → immediate SS-L/SS-G per WP-C-04 §6) | **Fail (known GAP-16)**: up to ≈3.5 s actuation on stale inputs |
-| VS-SI-23 | SoC process kill / hang | FSR-01.07, FSR-02.05; TSR-407, TSR-408, TSR-516, TSR-601 | I-2 | Engaged | Kill (SIGKILL) and stop (SIGSTOP) in turn: controlsd, card, pandad, selfdrived, ui, soundd; detailed in WP-V-05 VS-FI-09 | Envelope safe state within FTTI budget when the command path stops; warning within 1 s from SoC or panda siren | Host `processNotRunning`/`commIssue` soft disable; panda 3–5 s (GAP-06); siren timing (GAP-06) |
+| VS-SI-23 | SoC process kill / hang | FSR-01.07, FSR-02.05; TSR-407, TSR-408, TSR-516, TSR-601 | I-2 | Engaged | Kill (SIGKILL) and stop (SIGSTOP) in turn: controlsd, card, pandad, selfdrived, ui, soundd; detailed in WP-V-05 VS-FI-09 | Envelope safe state within FTTI budget when the command path stops; warning within 1 s from SoC or panda siren | Host `processNotRunning`/`commIssue` soft disable; panda 3–5 s (GAP-06); siren timing (GAP-06). 2026-10-13: where the kill or hang stops the heartbeat (`pandad`, whole SoC), revocation at 0.3 s and siren ≈ 0.56 s after the last heartbeat if engaged (panda `c33343b`), not verified |
 | VS-SI-24 | Cruise mismatch reaction | FSR-05.06; TSR-307 (b), TSR-308 | I-2 | — | Plant holds PCM cruise active while selfdrived is disengaged (and reverse) | Warning and cancel request within 1 s (TSR-308) | **Fail (known GAP-19)**: event only after 6 s, no reaction (`selfdrived.py:421`, `events.py:458-460`) |
-| VS-SI-25 | Host reaction to envelope reports | TSR-307, TSR-514, TSR-601, TSR-606, TSR-615, TSR-619, TSR-620; SWSR-307h, 514h, 601, 606, 615, 619, 620; IF-04 | I-2 | Engaged | Make the envelope report each revocation cause and fault flag in turn (bench or debug hook; reported causes per WP-W-08 VS-SWQ-20) | `selfdrived` disables immediately (≤ 0.2 s) and the HMI gives a take-over request naming the fault class ≤ 1 s | Not run. Moved here from WP-W-08 VS-SWQ-20 ([RR-2026-008](../05-software/reviews/RR-2026-008.md) F-24) |
 | VS-SI-25 | MCU reset during engagement | FSR-01.09, FSR-07.03; TSR-311, TSR-706 | I-1, I-2 | Engaged | `0xd8` reset; NRST from the SoC GPIO (`openpilot/common/hardware/comma/hardware.py:401-408`) | No TX and relay released during reset; after restart SILENT, re-engagement needs a new PCM rising edge; host immediate disable with warning | Expected to meet (start in SILENT, `main.c:295`); relay reset state unconfirmed (AOU-13) |
 
 ### 6.7 Back-to-back
@@ -154,6 +155,7 @@ Columns: **Trace** = FSR / TSR block / interface; **Step** = integration step; *
 | ID | Title | Trace | Step | Preconditions | Procedure | Pass criteria | Expected baseline |
 |---|---|---|---|---|---|---|---|
 | VS-SI-26 | Target vs host safety model; process replay regression | FSR-01.xx…07.xx; TSR-101…TSR-311 (decision logic) | I-1, I-2 | Fork-owned Corolla logs | (a) Feed the same frame sequence (recorded + fault-augmented) to the target MCU on the bench and to host-built `libsafety`; compare per-frame TX/RX decisions and `controls_allowed`. (b) Run `process_replay/test_processes.py` against fork-owned references | (a) identical decisions; any difference is a defect (compiler/target, DFI-17); (b) no unexplained diffs | No fork-owned references (GAP-30) |
+| VS-SI-27 | Host reaction to envelope reports | TSR-307, TSR-514, TSR-601, TSR-606, TSR-615, TSR-619, TSR-620; SWSR-307h, 514h, 601, 606, 615, 619, 620; IF-04 | I-2 | Engaged | Make the envelope report each revocation cause and fault flag in turn (bench or debug hook; reported causes per WP-W-08 VS-SWQ-20) | `selfdrived` disables immediately (≤ 0.2 s) and the HMI gives a take-over request naming the fault class ≤ 1 s | Not run. Moved here from WP-W-08 VS-SWQ-20 ([RR-2026-009](../05-software/reviews/RR-2026-009.md) F-24) |
 
 ## 7. Coverage of TSR blocks and interfaces
 
@@ -163,7 +165,7 @@ Columns: **Trace** = FSR / TSR block / interface; **Step** = integration step; *
 | TSR-201…TSR-207 longitudinal | VS-SI-04, -16, -26 (TSR-206, TSR-208: WP-S-09) |
 | TSR-301…TSR-311 engagement / override | VS-SI-01…-04, -06, -24, -25 (TSR-303, TSR-309, TSR-310: WP-S-09) |
 | TSR-401…TSR-413 communication | VS-SI-05, -06, -09…-14, -23 |
-| TSR-501…TSR-516 MCU platform | VS-SI-05 (TSR-510, -516), -07 (TSR-512), -08 (TSR-513), -11 (TSR-502); TSR-501, -503…-509, -511, -514, -515 in WP-H-06 VS-HW-nn and WP-V-05 |
+| TSR-501…TSR-519 MCU platform | VS-SI-05 (TSR-510, -516), -07 (TSR-512), -08 (TSR-513), -11 (TSR-502, -518); TSR-501, -503…-509, -511, -514, -515 in WP-H-06 VS-HW-nn and WP-V-05; TSR-517, -519 in [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) VS-SWQ-25 |
 | TSR-601…TSR-618 host monitoring | VS-SI-17, -22, -23 (TSR-608…TSR-612 DM: WP-S-09 VS-SQ-15) |
 | TSR-701…TSR-710 PCS / harness | VS-SI-18…-21 (TSR-701, -703 in WP-H-06; TSR-708 in WP-S-09) |
 | IF-01 / IF-02 / IF-03 / IF-04 / IF-07 / IF-08 | -15,-16,-21 / -01,-02,-12…-14 / -20 / -05…-11 / -22,-23 / WP-H-06 VS-HW-09 |
@@ -207,6 +209,7 @@ Every FSR allocated to E-03 or E-05 in WP-C-04 §10 has at least one VS-SI case 
 | VS-SI-24 | — | — | **Not yet executed** | — | — | — | — |
 | VS-SI-25 | — | — | **Not yet executed** | — | — | — | — |
 | VS-SI-26 | — | — | **Not yet executed** | — | — | — | — |
+| VS-SI-27 | — | — | **Not yet executed** | — | — | — | — |
 
 Summary (to complete after execution): number passed / failed / known GAP / blocked; open problem reports; regression scope; verdict on integration readiness for WP-S-09.
 
@@ -215,9 +218,9 @@ Summary (to complete after execution): number passed / failed / known GAP / bloc
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
 | OI-1 | Re-check TSR references and timing when WP-S-02 and WP-S-04 leave Draft | Safety engineer | G2 |
-| OI-2 | Build the HIL bench (D-04) and the bench-PC Corolla plant model; record its validation | Test lead | G4 |
+| OI-2 | Build the HIL bench (D-04, the one bench of WP-H-06 §2, due by G3) and the bench-PC Corolla plant model; record its validation | Test lead | G3 |
 | OI-3 | Record fork-owned Corolla drive logs and process-replay references (D-03, GAP-30) | Maintainer | G4 |
 | OI-4 | Set latency bound for PCS forwarding (VS-SI-20) from camera message periods | Safety engineer | G2 |
 | OI-5 | Decide whether to adapt `tools/sim` to Toyota and route it through a real panda (would make I-3 closed-loop with the real envelope) | SW lead | G3 |
 | OI-6 | Re-baseline expected results after the envelope hardening backlog (gap assessment §9 action 5) lands | Test lead | G4 |
-| OI-7 | Report to the WP-S-02 author: no TSR for SoC→CAN TX rate supervision per actuation message ID (VS-SI-11); TSR-513 does not list `0xd1` param 1 and `0xd8` | Safety engineer | G2 |
+| OI-7 | Closed 2026-10-12: TX rate supervision per actuation message ID is TSR-518 (DN-01; VS-SI-11); TSR-513 now lists `0xd1` param 1 and `0xd8` | Safety engineer | G2 |

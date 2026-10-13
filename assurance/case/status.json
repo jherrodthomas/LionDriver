@@ -2,9 +2,9 @@
   "actions_open": 5,
   "assurance_state": "Development",
   "baseline": {
-    "id": "BL-001",
+    "id": "BL-002",
     "lifecycle_status": "under-development",
-    "source_revision": "8b8c6ae"
+    "source_revision": "bf6ce8c"
   },
   "claims": {
     "accepted": 0,
@@ -26,10 +26,10 @@
   "evidence": {
     "accepted": 0,
     "available": 0,
-    "awaiting_review": 34,
+    "awaiting_review": 35,
     "missing": 15,
-    "partial": 34,
-    "registered": 49
+    "partial": 35,
+    "registered": 50
   },
   "lifecycle_areas": [
     {
@@ -75,10 +75,10 @@
     {
       "accepted": 0,
       "available": 0,
-      "evidence": 15,
+      "evidence": 16,
       "id": "verification-validation",
       "missing": 11,
-      "partial": 4,
+      "partial": 5,
       "status": "In Progress",
       "title": "Verification and Validation"
     },
@@ -93,6 +93,6 @@
       "title": "Safety Case and Review"
     }
   ],
-  "records_digest": "2a24d9a68daf",
+  "records_digest": "115222261c5f",
   "reviews": 0
 }

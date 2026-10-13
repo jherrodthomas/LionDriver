@@ -1,0 +1,73 @@
+# Integrated lifecycle (L0) and swimlanes. Format: assurance/process/README.md §3.
+# Gate names and exit criteria are not copied here: they are read from WP-M-00 §2.
+# Role names must match a role in WP-M-02 §3.1; the assignee is read from there.
+
+- id: G0
+  kind: phase
+  handbook_chapters: [4]
+  modelled: true
+- id: G1
+  kind: phase
+  handbook_chapters: [5]
+  modelled: true
+- id: G2
+  kind: phase
+  handbook_chapters: [6]
+  modelled: true
+- id: G3
+  kind: phase
+  handbook_chapters: [7, 8]
+  modelled: true
+- id: G4
+  kind: phase
+  handbook_chapters: [9]
+  modelled: true
+- id: G5
+  kind: phase
+  handbook_chapters: [9]
+  modelled: true
+- id: G6
+  kind: phase
+  handbook_chapters: [10]
+  modelled: true
+
+- id: joint
+  kind: lane
+  name: "Joint (all disciplines)"
+  role: "Safety manager"
+  plan: WP-M-02
+- id: fusa
+  kind: lane
+  name: "Functional safety (ISO 26262)"
+  role: "Safety manager"
+  plan: WP-M-02
+- id: hw
+  kind: lane
+  name: "Hardware (ISO 26262-5)"
+  role: "Hardware safety engineer"
+  plan: WP-M-02
+- id: sw
+  kind: lane
+  name: "Software (ISO 26262-6)"
+  role: "Envelope software engineer(s)"
+  plan: WP-M-02
+- id: sotif
+  kind: lane
+  name: "SOTIF (ISO 21448)"
+  role: "SOTIF lead"
+  plan: WP-M-08
+- id: ai
+  kind: lane
+  name: "AI safety (ISO/PAS 8800)"
+  role: "AI/ML safety lead"
+  plan: WP-M-10
+- id: cs
+  kind: lane
+  name: "Cybersecurity (ISO/SAE 21434)"
+  role: "Cybersecurity manager"
+  plan: WP-M-09
+- id: assess
+  kind: lane
+  name: "Independent confirmation"
+  role: "External functional safety assessor"
+  plan: WP-M-06

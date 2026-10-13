@@ -543,7 +543,7 @@
   acceptance: "Warning and cancel within 1 s"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met: 6 s, reaction commented out (`selfdrived.py:420-422`, `events.py:458-460`) (GAP-19)"
+  baseline_impl: "Implemented: 1 s, repeating prompt; cancel requested by `controlsd` (`selfdrived.py`, `events.py`)"
   status: proposed
   source: WP-W-02
 
@@ -719,7 +719,7 @@
   acceptance: "Clear at 50/100 ms + task period; SS-L via SWSR-109a"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl (GAP-10)"
+  baseline_impl: "Impl in the reference build (opendbc `273f44e`): `tx_arrival_checks` (`safety.h`), Toyota table (`modes/toyota.h`); unit tests `test_tx_arrival_*`; HIL, FI open"
   status: proposed
   source: WP-W-02
 
@@ -1247,7 +1247,7 @@
   acceptance: "No engagement with debug FW"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not impl; W-09 DVR-05"
+  baseline_impl: "Partly: in a reference build `pandad` keeps the panda in NOOUTPUT unless its health packet reports `HEALTH_FLAG_REFERENCE_BUILD` (`panda_safety.cc`, panda `6dee6fa`); `selfdrived` then raises `controlsMismatch` (no entry). A debug (non-release) build is not yet detected (D-09); W-09 DVR-05"
   status: proposed
   source: WP-W-02
 
@@ -1327,7 +1327,7 @@
   acceptance: "Siren ≤ 0.5 s for each trigger; no siren on a brake press or PCM cancel alone"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: 3 s siren after 5 s heartbeat loss only (`main.c:169-171, 198-201`)"
+  baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 1 s while authority is granted → siren ≥ 3 s (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run). Other (b) triggers and (c) not impl"
   status: proposed
   source: WP-W-02
 
@@ -1391,7 +1391,7 @@
   acceptance: "Stale input → inactive next frame"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met (`selfdrive/controls/controlsd.py:66`) (GAP-16)"
+  baseline_impl: "Partly: 10 periods, not 2 (`controls/lib/input_freshness.py`, unit tests); event via `commIssue` (impact record OI-1)"
   status: proposed
   source: WP-W-02
 
@@ -1589,7 +1589,7 @@
 
 - id: SWSR-614
   kind: swsr
-  text: "**Withdrawn** (2026-10-12, RR-2026-008 (assurance/05-software/reviews/RR-2026-008.md) F-06): duplicate of SWSR-414h, which keeps the requirement. `pandad` shall drop `sendcan` older than 20 ms."
+  text: "**Withdrawn** (2026-10-12, RR-2026-009 (assurance/05-software/reviews/RR-2026-009.md) F-06): duplicate of SWSR-414h, which keeps the requirement. `pandad` shall drop `sendcan` older than 20 ms."
   asil: "QM (B-sup)"
   parents: [TSR-614]
   parent_text: "TSR-614"
@@ -1615,7 +1615,7 @@
   acceptance: "Event ≤ 0.2 s"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: `relayMalfunction`, `safetyRxChecksInvalid` only (`selfdrived.py:338-342`)"
+  baseline_impl: "Partly: heartbeat lost, TX-rate revocation, rising `safetyTxBlocked` (`selfdrived/supervision.py`) plus `relayMalfunction`, `safetyRxChecksInvalid`; other faults open (OI-2)"
   status: proposed
   source: WP-W-02
 
@@ -1711,7 +1711,7 @@
   acceptance: "Event ≤ 0.5 s; no event on single-sample skew in the reference log set"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial: 200 samples ≈ 2 s (`selfdrived.py:338, 508-510`)"
+  baseline_impl: "Implemented: 2 consecutive samples, ≤ 0.5 s (`selfdrived/supervision.py`, unit tests)"
   status: proposed
   source: WP-W-02
 
@@ -1973,7 +1973,7 @@
 
 - id: SWSR-501b
   kind: swsr
-  text: "IWDG1 shall be configured in window mode and started (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on any path; no software path shall be able to stop it. Start in the bootstub before the application runs remains a target (OI-10)."
+  text: "The firmware shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on every path that energises it, and no software path shall be able to stop it afterwards. (Amended in v0.14 to the TSR-501 v0.4 / HWSR-501c start condition; it previously required a start in the bootstub.) Start in the bootstub before the application runs remains a target (OI-10)."
   asil: "B‡"
   parents: [TSR-501]
   parent_text: "TSR-501 (WP-W-02 §11; ASIL taken from TSR-501)"
@@ -1983,7 +1983,7 @@
   acceptance: "IWDG running before the relay is first driven after any reset; no write path stops it; stall → reset ≤ 0.1 s (VS-SWQ-14)"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Implemented, not verified on hardware: started at the first relay drive (panda `8aa8671`, `board/drivers/harness.h` → `hw_watchdog_start()`, `board/drivers/hw_watchdog.h`), as TSR-501 v0.4"
+  baseline_impl: "**Implemented, not verified on hardware:** `hw_watchdog_start()` from `set_intercept_relay()` (`board/drivers/harness.h`, `board/drivers/hw_watchdog.h`), panda `3859fa8`/`9f60e17`, unchanged at `8aa8671`; 90 ms nominal, window mode; as TSR-501 v0.4"
   status: proposed
   source: WP-W-02
 
