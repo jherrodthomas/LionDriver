@@ -55,15 +55,15 @@ K-06 is evaluated for the whole fleet here; the per-driver check needs the drive
 
 Each event counts once, on its rising edge, because openpilot republishes an active event in every message.
 
-## Interpretations to confirm
+## Interpretations
 
-These follow WP-V-04's wording but make a choice it leaves open. Each one is a constant at the top of the script.
+The AS-01, AS-05, AS-06 and AS-10 readings below were confirmed by the project maintainer on 2026-10-13 and are now part of the WP-V-04 §2.1 definitions (signature-set version `WP-V-04-2.1/2026-10-13`). The MON-14 placeholder of −6 m/s² is accepted as interim in WP-O-04 OI-8. Each one is a constant at the top of the script.
 
 - **AS-01.** "Not during a lane change" is taken as no blinker on.
 - **AS-05.** "Lane-line offset" is taken as the gap between the vehicle's side and the line, using the reference Corolla's width of 1.781 m. Only lines seen with probability ≥ 0.5 count.
 - **AS-06.** "No lead within TTC 4 s" uses the radar lead (`radarState.leadOne`) and counts a lead only while it closes.
 - **AS-10.** Only DM alert levels 2–3 and lockouts are scored. Periods of DM uncertainty fallback are not.
-- **Exposure.** Each interval between two `carState` messages counts in the state at its end.
+- **Exposure** (not a signature definition). Each interval between two `carState` messages counts in the state at its end.
 
 ## Limits
 

@@ -228,4 +228,4 @@ Every field action is recorded with: trigger, affected releases and installation
 | OI-5 | KPI thresholds: proposed in §5 from the validation targets, with the BREACH/WATCH/MET/OPEN rule. Still open: assessor review of the proposals (with WP-V-02 OI-3), and baselines from development drives for K-04, K-05 and K-08 | G4 |
 | OI-6 | Legal review of SGO and Part 573 applicability | G5 |
 | OI-7 | Establish a field-action notification channel with confirmed receipt | G5 |
-| OI-8 | Define crash detection criteria from IMU/`carState` for MON-14 (automatic flagging) | G4 |
+| OI-8 | Define crash detection criteria from IMU/`carState` for MON-14 (automatic flagging). Interim, accepted by the project maintainer on 2026-10-13: `carState.aEgo` < −6 m/s² flags a crash candidate for review; it is a placeholder, not a validated criterion | G4 |

@@ -34,19 +34,21 @@ For an end-to-end ML driving model trained on data LionDriver cannot see, area 3
 
 | ID | Signature | Definition (initial) | Relevance | Field event ([WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) §2.1) |
 |---|---|---|---|---|
-| AS-01 | Steering override while engaged | `carState.steeringPressed` with lateral active, not during a lane change | SH-01, SH-02 | MON-01 |
+| AS-01 | Steering override while engaged | `carState.steeringPressed` with lateral active, not during a lane change (no blinker on) | SH-01, SH-02 | MON-01 |
 | AS-02 | Brake disengagement with high deceleration | Driver brake followed by `aEgo` < −4 m/s² within 2 s | SH-06, SH-03 | MON-01 |
 | AS-03 | Gas override during deceleration | Driver gas while planner decelerates > 1.5 m/s² | SH-04 | MON-17 |
 | AS-04 | Envelope limit hit | Panda TX blocked or torque/accel at the limit (safety replay, `opendbc_repo/opendbc/safety/safety_replay/`) | SH-01, SH-04 | MON-06 |
-| AS-05 | Lane-line proximity | Model lane-line offset < 0.3 m to either side while engaged | SH-01 | MON-17 |
-| AS-06 | Phantom deceleration | `aEgo` < −2 m/s² while engaged with no lead within TTC 4 s | SH-04 | MON-17 |
+| AS-05 | Lane-line proximity | Gap between the vehicle side and a model lane line < 0.3 m to either side while engaged; vehicle width 1.781 m (reference Corolla); only lines with probability ≥ 0.5 count | SH-01 | MON-17 |
+| AS-06 | Phantom deceleration | `aEgo` < −2 m/s² while engaged with no closing radar lead (`radarState.leadOne`) within TTC 4 s | SH-04 | MON-17 |
 | AS-07 | FCW event | `fcw` alert | SH-06 | MON-08 |
 | AS-08 | Model disagreement | Large divergence between action curvature and plan curvature; lead flicker rate above AIR-11 | AE-T | MON-13 |
 | AS-09 | Model uncertainty spike | Plan / lead std above the 99.9th percentile of the evaluation set | AE-O | MON-13 |
-| AS-10 | DM anomaly | Long periods of model uncertainty fallback; alert level 2–3 events; lockouts | SH-12 | MON-07 |
+| AS-10 | DM anomaly | DM alert level 2–3 events; lockouts. Periods of model uncertainty fallback are not scored | SH-12 | MON-07 |
 | AS-11 | System events | `steerSaturated`, `commIssue`, `modeldLagging`, soft disables, `excessiveActuation` latch | SH-02, SH-06 (TC-23) | MON-09, MON-10, MON-02, MON-05 |
 
 Thresholds are tuned on a held-out set (DSR-11 of [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md)) and reviewed after each block.
+
+The readings in brackets for AS-01, AS-05, AS-06 and AS-10 were confirmed by the project maintainer on 2026-10-13. They are the choices the extraction script (`tools/field_monitoring/extract_events.py`) makes where the original wording left one open, and they are part of signature-set version `WP-V-04-2.1/2026-10-13`.
 
 #### 2.1.1 One signature set before and after release
 

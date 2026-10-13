@@ -41,14 +41,14 @@ import os
 import sys
 from dataclasses import dataclass, field
 
-SIGNATURE_SET_VERSION = "WP-V-04-2.1/2026-10-12"  # bump with any change to AS-01…AS-11 below
+SIGNATURE_SET_VERSION = "WP-V-04-2.1/2026-10-13"  # bump with any change to AS-01…AS-11 below
 
 # Thresholds of WP-V-04 §2.1 (the only definition; change them there first).
 AS02_DECEL = -4.0          # m/s^2, within AS02_WINDOW_S of a brake disengagement
 AS02_WINDOW_S = 2.0
 AS03_PLAN_DECEL = -1.5     # m/s^2, planner target while the driver presses gas
 AS05_CLEARANCE_M = 0.3     # m, vehicle side to lane line
-AS05_MIN_LINE_PROB = 0.5   # line must be seen for the clearance to count (assumed)
+AS05_MIN_LINE_PROB = 0.5   # line must be seen for the clearance to count
 AS06_DECEL = -2.0          # m/s^2, with no lead inside AS06_TTC_S
 AS06_TTC_S = 4.0
 AS08_LEAD_TOGGLES_PER_S = 1.0  # AIR-11 / VT-14
