@@ -1,6 +1,6 @@
 # LionDriver — FMEA Program Plan
 
-**Status:** Draft v0.4 — Phase 0 complete; System FMEA draft with severities; HARA draft rev 0.1
+**Status:** Draft v0.5 — Phase 0 complete; System FMEA rated (rev 0.5, BL-004); SW FMEA P1 elements rated (rev 0.6, BL-004); HARA draft rev 0.3
 **Scope:** 2020 Toyota Corolla LE (U.S.), comma 3X (`system/hardware/tici`) with integrated panda, current LionDriver software baseline
 **Covers:** System FMEA, DFMEA, PFMEA, SW FMEA, FMEDA
 
@@ -110,6 +110,15 @@ Prioritised by safety relevance (path from perception to actuator):
   - a control-loop stall behind a live heartbeat, caught only by the 3 s engaged mismatch (SWF-014.C2);
   - unrestricted ELM327 content.
 - **Implementation defects** in the opendbc core are O5/D3 (CI gate with mutation tests).
+
+**Host P1 elements (rev 0.6, BL-004):** pandad (SWF-020..029), selfdrived (SWF-030..039) and controlsd with the Toyota CarController hand-off (SWF-040..049): 30 failure modes, 51 causes, all AP H, 30 actions (SWF-ACT-020..049). The panda rows keep their BL-003 ratings, because every BL-004 firmware change except the IRQ priorities is compiled only into the reference build. Main findings:
+  - pandad fills `pandaStates.faults` for bits 0..26 only; panda fault bit 27 leaves an entry at 0 = relayMalfunction, a false immediate disable (SWF-025);
+  - the heartbeat's engaged flag reflects only selfdriveState, and controlsd uses selfdriveState, modelV2 and longitudinalPlan with no freshness check (SWF-020, SWF-040, SWF-043);
+  - selfdrived reads none of the panda health flags (heartbeatLost, safetyTxBlocked, txRateExceeded, epsFault) and raises controlsMismatch only after 200 cycles (SWF-032, SWF-034);
+  - a single non-finite input latches LatControlTorque and silently zeroes lateral output for the drive (SWF-045);
+  - cruiseMismatch has no reaction, and lateral torque continues while the driver overrides (SWF-039, SWF-038/044).
+
+**System FMEA (rev 0.5, BL-004):** all 80 causes rated: 79 AP H, 1 AP M (SFM-024.C1). Causes on the panda, host, harness and hardware elements inherit the linked SW FMEA or DFMEA rows; actions SFM-ACT-001..011.
 
 **DFMEA (rev 0.2, `analyses/dfmea.yaml`):** 18 failure modes and 21 causes across 10 hardware elements of the comma 3X panda section, harness and relay box, based on WP-H-02/WP-H-03. Every row is S10, AP H, and most have no LionDriver hardware verification (D9–D10). The watchdog (DFM-004) is the only cause whose occurrence the BL-002 firmware lowers.
 
@@ -234,8 +243,8 @@ The linter checks: schema; unique and resolvable ids; failure-mode severity = ma
 |---|---|---|
 | 0 | This plan + rating tables + YAML schema + baseline SHAs | — |
 | 1 | System FMEA steps 1–4 (structure, functions, failure modes, effects, causes) — **draft rev 0.2 done** | Item definition draft |
-| 2 | SW FMEA P1 elements + DFMEA structure/function — **SW FMEA rev 0.2: panda safety model done (17 failure modes, all rated); pandad, selfdrived, controlsd next** | Phase 1 |
-| 3 | HARA → apply severities (**HARA draft + System FMEA severities done**); risk analysis & AP for System/SW/DFMEA | HARA |
+| 2 | SW FMEA P1 elements + DFMEA structure/function — **SW FMEA rev 0.6: panda safety model, pandad, selfdrived and controlsd done (49 failure modes, all rated)** | Phase 1 |
+| 3 | HARA → apply severities (**HARA draft + System FMEA severities done**); risk analysis & AP for System/SW/DFMEA (**done at BL-004: System FMEA rev 0.5, SW FMEA rev 0.6, DFMEA rev 0.2**) | HARA |
 | 4 | PFMEA + release/install control plan — **PFMEA rev 0.2 done; control plan = WP-O-01 §3–§4** | Phase 0 |
 | 5 | FMEDA Phase A (panda) | Safety goals, TSC, panda BOM |
 | 6 | SW FMEA P2/P3, DFMEA comma 3X, FMEDA Phase B gap report | Phase 3 |

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-04 Software safety analysis and software-level DFA |
 | Standard reference | ISO 26262-6:2018 §7 (safety analysis and DFA at the software architectural level; Annex E informative); ISO 26262-9:2018 §7 (dependent failures), §8 (safety analyses); ASPICE 4.0 SWE.2 |
-| Version | 0.2 (§3.2 SWF-48: lost revocation during a grant, bounded at one task period; SWF-49, SWF-50; §3.5 AIAG-VDA cross-reference; 2026-10-12). 0.1 |
+| Version | 0.2.1 (§3.5: SW FMEA rev 0.6 adds the host elements pandad, selfdrived and controlsd at BL-004; 2026-10-13). 0.2 (§3.2 SWF-48: lost revocation during a grant, bounded at one task period; SWF-49, SWF-50; §3.5 AIAG-VDA cross-reference; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope software (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating); host components summarised |
 | Author | Assurance team (initial draft) |
@@ -111,7 +111,7 @@ Every other N and P row has an SWSR in WP-W-02 (SWF-48: SWSR-519 and an accepted
 
 ### 3.5 AIAG-VDA ratings and test evidence
 
-A second SW FMEA of the safety layer, with AIAG-VDA 2019 severity, occurrence, detection and action priority, is kept as machine-readable data in [`../08-analyses/fmea/analyses/sw-fmea.yaml`](../08-analyses/fmea/analyses/sw-fmea.yaml) (rev 0.5, re-rated at BL-003: panda `c2e5d93`, opendbc `5b5a4ba`; rating tables in [`rating-tables.md`](../08-analyses/fmea/rating-tables.md), checked by `tools/safety/fmea_lint.py`). It was first written separately from this document against the same baseline (BL-001) and was re-rated at BL-002 and BL-003; the rows above are still at BL-001. This section is the cross-reference; the rows above stay the analysis of record.
+A second SW FMEA of the safety layer, with AIAG-VDA 2019 severity, occurrence, detection and action priority, is kept as machine-readable data in [`../08-analyses/fmea/analyses/sw-fmea.yaml`](../08-analyses/fmea/analyses/sw-fmea.yaml) (rev 0.6: panda safety model rows re-rated at BL-003, panda `c2e5d93`, opendbc `5b5a4ba`, and unchanged at BL-004 outside the reference build; host rows pandad SWF-020..029, selfdrived SWF-030..039 and controlsd SWF-040..049 added at BL-004, all AP H; rating tables in [`rating-tables.md`](../08-analyses/fmea/rating-tables.md), checked by `tools/safety/fmea_lint.py`). It was first written separately from this document against the same baseline (BL-001) and was re-rated at BL-002 and BL-003; the rows above are still at BL-001. This section is the cross-reference; the rows above stay the analysis of record.
 
 | AIAG-VDA row | Failure mode | This document | Ratings at BL-003 (S/O/D AP per cause) |
 |---|---|---|---|
