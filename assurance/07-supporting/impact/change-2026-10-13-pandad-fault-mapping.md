@@ -34,7 +34,7 @@ The schema change only appends an enumerant, so old logs read unchanged and old 
 | `tests/test_pandad_faults` (new): no faults; bit 27 alone; bit 27 with unknown bits 28 and 31; only unknown bits; real relay malfunction with an unknown bit; every bit except bit 0; `PANDA_FAULT_TYPE_MAX` equals the last FaultType in the schema; panda bit 27 equals `interruptRateSoundDma` | Pass |
 | Mutation check: list sized from all set bits again | Test fails (`faults.size() == 1U`, bit 27 with unknown bits) |
 | `tests/test_pandad_canprotocol` | Pass |
-| `scons` (pandad, tests, full tree) | Builds |
+| `scons` | pandad and both pandad tests build. `scons -k` on the full tree builds every target except the two modeld `*_tinygrad.pkl` models, whose ONNX inputs are Git LFS pointers in the test environment (unrelated to this change) |
 | `log.capnp` with the new enumerant | Loads (`log.PandaState.FaultType.interruptRateSoundDma == 27`) |
 | Process replay, HIL | **Not run** |
 
