@@ -127,6 +127,8 @@ jobs:
         python3 tools/test_sysml.py
     - name: SysML v2 conformance with the OMG pilot implementation (WP-P-07 TL-26)
       run: |
+        # the pilot jar is built for Java 21; the runner image provides it next to the default JDK
+        export JAVA_HOME="$JAVA_HOME_21_X64" PATH="$JAVA_HOME_21_X64/bin:$PATH"
         python3 -m pip install --quiet --user --break-system-packages zstandard
         assurance/models/sysml/tools/pilot/validate.sh "$RUNNER_TEMP/sysml-pilot"
 

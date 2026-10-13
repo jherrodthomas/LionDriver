@@ -66,7 +66,7 @@ python3 tools/check_model.py           # M1-M8
 python3 tools/render_views.py --check  # figures match the model
 python3 tools/explorer.py --check      # explorer matches the model
 python3 tools/test_sysml.py
-tools/pilot/validate.sh                # SysML v2 conformance (Java 17+, python3 with zstandard)
+tools/pilot/validate.sh                # SysML v2 conformance (JDK 21+, python3 with zstandard)
 ```
 
 All of them run in CI (`.github/workflows/assurance.yaml`, job "sysml model"). Result at this baseline: M1 to M8 pass; the pilot reports 0 errors and 0 warnings for the four files.
