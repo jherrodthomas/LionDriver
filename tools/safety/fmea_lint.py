@@ -976,7 +976,7 @@ def check_stpa_map(name, doc, ctx, res: Result):
     if not u.get("assumption"):
       res.error(f"{name} {uid}", "external UCA needs the assumption it rests on")
 
-  counts = {k: 0 for k in STPA_STATUS}
+  counts = dict.fromkeys(STPA_STATUS, 0)
   for lid, s in scenarios.items():
     where = f"{name} {lid}"
     st = s.get("status")
@@ -1005,9 +1005,9 @@ def check_stpa_map(name, doc, ctx, res: Result):
       res.error(where, f"status {st} needs at least one fault-tree event or FMEA failure mode")
     if st == "new" and not s.get("finding"):
       res.error(where, "status new needs a finding")
-  res.report.append(f"STPA map: {len(doc_ucas)} UCAs ({len(covered_ucas & doc_ucas)} with a loss scenario, "
-                    f"{len(set(external) & doc_ucas)} external); {len(scenarios)} loss scenarios "
-                    f"({', '.join(f"{k.replace('_', ' ')} {v}" for k, v in counts.items())})")
+  status_counts = ", ".join(f"{k.replace('_', ' ')} {v}" for k, v in counts.items())
+  uca_counts = f"{len(covered_ucas & doc_ucas)} with a loss scenario, {len(set(external) & doc_ucas)} external"
+  res.report.append(f"STPA map: {len(doc_ucas)} UCAs ({uca_counts}); {len(scenarios)} loss scenarios ({status_counts})")
 
 
 def fd_sort_key(ident: str):
