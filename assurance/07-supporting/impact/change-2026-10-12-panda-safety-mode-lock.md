@@ -69,7 +69,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 
 | Item | Detail |
 |---|---|
-| Change request | jherrodthomas/panda#12 (firmware flag) and this LionDriver change (host check); panda pinned at `14f8f15` (branch `claude/reference-build-health-flag`) until panda#12 is merged |
+| Change request | jherrodthomas/panda#12 (firmware flag) and this LionDriver change (host check); panda pinned at `6dee6fa`, the merge commit of panda#12 |
 | Change, firmware | `HEALTH_FLAG_REFERENCE_BUILD` (bit 12) is set in every health packet of a firmware built with `LIONDRIVER_REFERENCE` (`reference_build_health_flags()`, `board/reference_lock.h`), 0 otherwise. The Python library reports it as `health()['reference_build']` |
 | Change, host | `SConstruct` exports `liondriver_reference` from the same setting that builds the firmware (§6); `selfdrive/pandad/SConscript` then compiles `pandad` with `LIONDRIVER_REFERENCE`. Before it sets the car safety mode from `CarParams`, `pandad` reads the health packet; without the flag (or if the read fails) it logs an error and sets NOOUTPUT instead. `pandaState.referenceBuild` (`@45`) carries the flag in the logs |
 | Why | §6 makes LionDriver build the reference firmware, but a panda flashed with other firmware (upstream openpilot, a development build, a different fork) would still accept any safety mode, and the host would configure it. The lock must be present on the running panda, not only in the build |

@@ -854,7 +854,7 @@
   mechanism: "CFG"
   timing: "—"
   verification: "R"
-  baseline_impl: "Not met by default: DEBUG + `ALLOW_DEBUG` unless `RELEASE` and `CERT` are set (`panda/SConscript:12-20`); debug modes `safety.h:413-422`; debug key `bootstub.c:66-71` (GAP-25). The reference build is reported in the health packet (`HEALTH_FLAG_REFERENCE_BUILD`, panda `14f8f15`) and `pandad` configures a car safety mode only on a panda that reports it (`selfdrive/pandad/panda_safety.cc`, SWSR-514h); the debug/release build type is not yet reported"
+  baseline_impl: "Not met by default: DEBUG + `ALLOW_DEBUG` unless `RELEASE` and `CERT` are set (`panda/SConscript:12-20`); debug modes `safety.h:413-422`; debug key `bootstub.c:66-71` (GAP-25). The reference build is reported in the health packet (`HEALTH_FLAG_REFERENCE_BUILD`, panda `6dee6fa`) and `pandad` configures a car safety mode only on a panda that reports it (`selfdrive/pandad/panda_safety.cc`, SWSR-514h); the debug/release build type is not yet reported"
   status: proposed
   source: WP-S-02
 
