@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-03 Dependent failure analysis (DFA), system level |
 | Standard reference | ISO 26262-9:2018 §7 (analysis of dependent failures); ISO 26262-9 §5 (independence for decomposition, by reference); ISO 26262-5:2018 §7 (hardware DFA input); ISO 26262-6:2018 §7 (software-level DFA input, detailed in [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md)) |
-| Version | 0.4 (status update 2026-10-12: dated status notes for the reference build at `bf6ce8c` on DFI-09, -10, -11, -13, -14; DFI-09 and DFI-13 rated P in the reference build; IC-01 updated; nothing verified on hardware or reviewed independently). History: 0.3 (DFI-24 measure TSR-626; 2026-10-12) |
+| Version | 0.5 (§5 Figure 5-1 DFI-versus-claim matrix added, generated from §4 and §5 by `figures/fig_a03_dfi_matrix.py`; no rating changed; 2026-10-13). 0.4 (status update 2026-10-12: dated status notes for the reference build at `bf6ce8c` on DFI-09, -10, -11, -13, -14; DFI-09 and DFI-13 rated P in the reference build; IC-01 updated; nothing verified on hardware or reviewed independently). History: 0.3 (DFI-24 measure TSR-626; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | SG-01 (ASIL C ⚠) and SG-02…SG-07 (ASIL B). Elements: E-03 envelope, E-01/E-02 SoC stack, E-04 device hardware, E-05 harness, EXT-EPS, EXT-PCM, EXT-CLU, driver |
 | Author | Assurance team (initial draft) |
@@ -122,6 +122,10 @@ The fsc-builder completeness check of [WP-C-04](../02-concept/WP-C-04-functional
 | IC-05 stock PCS | — | DFI-01, -05, -06, -20 plus WP-A-02 FFI-CM-05/08 | **Partly** | AOU-04R/AOU-13 verified; relay readback; reject `0xe7` in car modes; whitelist fix |
 | IC-06 buzzer vs SoC HMI | DFI-23, -25 | DFI-14, -24 | **Not independent** until the audio topology is known | FSR-02.05 timing met; siren path independent of SoC audio |
 | IC-07 (fallback E-07) | n/a | n/a | Not applicable unless DEC-01 activated | WP-A-01 IR-01…IR-10 |
+
+![Figure 5-1: matrix of the dependent failure initiators DFI-01 to DFI-26 against the independence claims IC-01 to IC-07, with not-controlled and partly-controlled cells, reference-build changes and the verdict per claim](figures/fig-a03-5-1-dfi-claim-matrix.svg)
+
+*Figure 5-1.* One row per DFI of §4, one column per claim of §2; a filled cell is a DFI listed under that claim in this table (red not controlled, amber partly controlled), split where the reference build changes the rating. A dashed cell with † marks a claim named in a §4 "Elements reached" cell but not listed here. Generated from §4 and this table by [`figures/fig_a03_dfi_matrix.py`](figures/fig_a03_dfi_matrix.py). Source: [`figures/fig-a03-5-1-dfi-claim-matrix.svg`](figures/fig-a03-5-1-dfi-claim-matrix.svg); change §4 or §5 and regenerate.
 
 ## 6. Required measures (summary)
 
