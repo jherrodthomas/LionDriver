@@ -1,0 +1,152 @@
+# Concept phase (gate G1) process model. Format: assurance/process/README.md §3.
+# Clause references are not copied here: they are read from the WP-M-00 register row of each
+# produced work product. `inputs` are the work products an activity needs before it can finish;
+# iteration between activities is modelled as an interface (interfaces.yaml), not as an input.
+# `handbook_wp` is the informative mapping to the Integrated Automotive Standards Handbook
+# Chapter 13 integrated work products (WP-1 item definition, WP-2 risk assessment, WP-3 concept,
+# WP-4 requirements specification, WP-6 V&V, WP-7 assurance case).
+
+- id: CON-01
+  kind: activity
+  phase: G1
+  lane: joint
+  name: "Define the item and its boundary"
+  produces: [WP-C-01]
+  inputs: [WP-M-01, WP-M-12]
+  handbook_wp: [WP-1]
+- id: CON-02
+  kind: activity
+  phase: G1
+  lane: sotif
+  name: "Specify ODD and intended functionality"
+  produces: [WP-C-02]
+  inputs: [WP-C-01]
+  handbook_wp: [WP-1]
+- id: CON-03
+  kind: activity
+  phase: G1
+  lane: sotif
+  name: "Analyse driver interaction, HMI and misuse"
+  produces: [WP-C-08]
+  inputs: [WP-C-01, WP-C-02]
+  handbook_wp: [WP-2]
+- id: CON-04
+  kind: activity
+  phase: G1
+  lane: fusa
+  name: "Hazard analysis and risk assessment"
+  produces: [WP-C-03]
+  inputs: [WP-C-01, WP-C-02, WP-C-08]
+  handbook_wp: [WP-2]
+- id: CON-05
+  kind: activity
+  phase: G1
+  lane: fusa
+  name: "Functional safety concept"
+  produces: [WP-C-04]
+  inputs: [WP-C-01, WP-C-03, WP-C-08]
+  handbook_wp: [WP-3]
+- id: CON-06
+  kind: activity
+  phase: G1
+  lane: sotif
+  name: "Identify SOTIF hazards, set acceptance criteria"
+  produces: [WP-C-05]
+  inputs: [WP-C-02, WP-C-03, WP-C-08]
+  handbook_wp: [WP-2]
+- id: CON-07
+  kind: activity
+  phase: G1
+  lane: sotif
+  name: "Analyse insufficiencies and triggering conditions"
+  produces: [WP-C-06]
+  inputs: [WP-C-02, WP-C-05]
+  handbook_wp: [WP-2]
+- id: CON-08
+  kind: activity
+  phase: G1
+  lane: sotif
+  name: "Define SOTIF functional modifications"
+  produces: [WP-C-07]
+  inputs: [WP-C-04, WP-C-06]
+  handbook_wp: [WP-3]
+- id: CON-09
+  kind: activity
+  phase: G1
+  lane: ai
+  name: "Define AI system and AI safety requirements"
+  produces: [WP-C-11]
+  inputs: [WP-C-02, WP-C-04, WP-C-06, WP-C-07, WP-C-08]
+  handbook_wp: [WP-1, WP-4]
+- id: CON-10
+  kind: activity
+  phase: G1
+  lane: cs
+  name: "Threat analysis and risk assessment"
+  produces: [WP-C-09]
+  inputs: [WP-C-01, WP-C-03]
+  handbook_wp: [WP-2]
+- id: CON-11
+  kind: activity
+  phase: G1
+  lane: cs
+  name: "Cybersecurity goals, claims and concept"
+  produces: [WP-C-10]
+  inputs: [WP-C-01, WP-C-04, WP-C-09]
+  handbook_wp: [WP-3]
+- id: CON-12
+  kind: activity
+  phase: G1
+  lane: joint
+  name: "Prepare vehicle test operations (road-test hold point)"
+  produces: [WP-V-07]
+  inputs: [WP-C-02, WP-C-03, WP-C-08]
+  handbook_wp: [WP-6]
+- id: CON-13
+  kind: activity
+  phase: G1
+  lane: joint
+  name: "Record hazard log and argument structure"
+  produces: [WP-T-01, WP-K-01]
+  inputs: [WP-C-03, WP-C-04, WP-C-05, WP-C-10, WP-C-11]
+  handbook_wp: [WP-7]
+
+# Confirmation measures planned for G1 (WP-M-06 §9). `covers` are the work products the
+# measure examines; the checker verifies the set equals the G1 row of WP-M-06 §9. A measure counts
+# as performed when its record `10-safety-case/confirmation/<id>.md` exists (WP-M-06 §10).
+- id: CR-02
+  kind: review
+  phase: G1
+  name: "Confirmation review of the HARA"
+  covers: [WP-C-03, WP-C-01, WP-C-08]
+  independence: I3
+- id: CR-03@G1
+  kind: review
+  phase: G1
+  name: "Confirmation review of the safety plan (re-confirm after HARA)"
+  covers: [WP-M-02, WP-M-01, WP-M-06]
+  independence: I3
+- id: CR-04
+  kind: review
+  phase: G1
+  name: "Confirmation review of the functional safety concept"
+  covers: [WP-C-04]
+  independence: I3
+- id: FSA-I1
+  kind: review
+  phase: G1
+  name: "Interim functional safety assessment"
+  covers: [WP-C-01, WP-C-03, WP-C-04]
+  independence: I3
+- id: SR-01
+  kind: review
+  phase: G1
+  name: "Review of SOTIF hazard identification and acceptance criteria"
+  covers: [WP-C-05, WP-C-06, WP-C-08]
+  independence: "I3-equivalent"
+- id: CS-I1
+  kind: review
+  phase: G1
+  name: "Interim cybersecurity review (TARA, goals, links to safety goals)"
+  covers: [WP-C-09, WP-C-10]
+  independence: external

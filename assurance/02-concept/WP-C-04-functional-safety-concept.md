@@ -24,6 +24,8 @@ Inputs:
 - [Gap assessment](../00-assessment/gap-assessment.md): GAP-01…GAP-37.
 - [WP-M-01 §4](../01-management/WP-M-01-assurance-strategy.md#4-safety-architecture-argument-the-central-strategy): safety envelope pattern.
 
+Interface to cybersecurity (ISO/SAE 21434 §9.5): the cybersecurity goals that protect each safety goal against an attacker are mapped in [WP-C-10 §8](WP-C-10-cybersecurity-goals-and-concept.md#8-relation-to-safety-goals), against the FSR allocation of §5 and §10 below. A change to an FSR's allocation between the envelope (E-03) and the SoC (E-01) changes that mapping and must be reflected there.
+
 The ASILs in this document are those proposed in the HARA. The HARA is not yet confirmed (I3). If the confirmation review changes a rating, the FSR ASILs here change with it.
 
 ## 2. Architectural elements used for allocation

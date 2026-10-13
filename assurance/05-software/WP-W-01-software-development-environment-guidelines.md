@@ -137,6 +137,27 @@ Environment rules:
 | CR-C-07 | Rule 3.2 (no `\` line splicing in `//` comments) and other unchecked rules |
 | CR-C-08 | Defensive checks of §6 present for every new input |
 
+### 5.5 Security coding rules: CERT C subset (SAST-02)
+
+The CERT C rules that LionDriver applies in addition to MISRA are the ones the secure-coding rules of [WP-W-11 §3.1](WP-W-11-cybersecurity-implementation-verification.md) name (SC-C-02, -03, -04, -07, -08). Scope: the envelope (E-03) including the bootstub and the host command handler, and `pandad` (SAST-02 scope in WP-W-11 §4). Selected 2026-10-12 (WP-W-11 OI-2).
+
+| CERT C rule | Topic | Checked by tool | Covered by review | WP-W-11 rule |
+|---|---|---|---|---|
+| ARR30-C | No out-of-bounds pointers or array subscripts | cppcheck `arrayIndexOutOfBounds`, `negativeIndex`; MISRA 18.1, 18.2 (cppcheck) | Indices and lengths taken from host or bus messages | SC-C-02 |
+| ARR38-C | Library functions do not form invalid pointers | cppcheck `bufferAccessOutOfBounds`; MISRA 21.17, 21.18 (cppcheck) | Every `memcpy`/`memset` size derives from a validated length | SC-C-02, SC-C-03 |
+| STR31-C | Sufficient storage for strings and their terminator | cppcheck `bufferAccessOutOfBounds`; MISRA 21.17 (cppcheck) | String handling on received data | SC-C-03 |
+| INT30-C | Unsigned arithmetic does not wrap | none reliable | All arithmetic on externally supplied values | SC-C-04 |
+| INT31-C | Integer conversions do not lose or misinterpret data | MISRA 10.3, 10.4, 10.8 (addon); cppcheck `signConversion` | Casts of 16-bit command parameters and CAN byte assembly | SC-C-02, SC-C-04 |
+| INT32-C | Signed operations do not overflow | cppcheck `integerOverflow` (constant expressions); MISRA 12.2 (addon), cppcheck `shiftTooManyBits` | Signed arithmetic on runtime values | SC-C-04 |
+| EXP33-C | No reads of uninitialised memory | cppcheck `uninitvar`; MISRA 9.1 (cppcheck) | Security-relevant state has a defined value at reset | SC-C-08 |
+
+Rules on the tools:
+
+- **C-20** The designated cppcheck (2.21.0, §4) runs these core checkers on the scope above, and the MISRA rules listed are those its coverage table marks as checked (`opendbc_repo/opendbc/safety/tests/misra/coverage_table`). cppcheck 2.21.0 has **no CERT addon**: `addons/` contains `misra.py` but no `cert.py`. The CERT subset therefore cannot be checked by a cppcheck CERT run, only through the checkers in the table.
+- **C-21** clang-tidy runs the `cert-*` checks on the same scope as an additional net. In LLVM 20.1 those checks are 21 C rules: ARR39, CON36, DCL03, DCL16, DCL37, ENV33, ERR33, ERR34, EXP42, FIO38, FLP30, FLP37, INT09, MSC24, MSC30, MSC32, MSC33, POS44, POS47, SIG30, STR34 (`-C` suffix), plus the `-cpp` checks for `pandad`. None of them is a rule of the table above, so they complement the table and do not replace its review column. The clang-tidy version is pinned and classified in [WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md) before its results are used (OI-13).
+- **C-22** Findings follow WP-W-11 §4: CAL 3 paths, zero unjustified findings. A justified finding is recorded like a MISRA deviation (§8), with a `CERT-` prefixed deviation ID.
+- **C-23** SC-C-07 (crypto: one reviewed library, constant-time comparison of digests and signatures) has no CERT rule that a tool checks. It is covered by review only, with the review recorded against CSR-031.
+
 ## 6. Design principles for the envelope (E-03)
 
 These principles apply to the software unit design ([WP-W-05](WP-W-05-software-unit-design.md)) and architecture ([WP-W-03](WP-W-03-software-architecture.md)). "Current state" records what the baseline does; a "No" is a finding, not a waiver.
@@ -366,3 +387,4 @@ LionDriver does not use model-based development for production code. Models appe
 | OI-10 | Change request: add the LionDriver banned APIs (§10.2) to `pyproject.toml` | Maintainer | G3 |
 | OI-11 | Extend cpplint to `openpilot/selfdrive/pandad` | Maintainer | G4 |
 | OI-12 | Add the bootstub variant to the panda MISRA run (WP-P-07 K-5) | Maintainer | G3 |
+| OI-13 | Implement SAST-02 per §5.5: cppcheck core checkers and clang-tidy `cert-*` on the envelope, bootstub and `pandad` in LionDriver CI; pin and classify clang-tidy in WP-P-07 | Maintainer | G3 |

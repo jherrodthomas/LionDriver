@@ -156,7 +156,7 @@ Every SFMEA row of WP-A-04 §10 up to SFMEA-32 with a named mechanism maps to at
 
 1. **U level in fork CI**: VS-FI-01…-05, -11 (reference build), -13, -14, -30, -31 on host `libsafety` and the panda host tests. They run in LionDriver CI `safety.yaml` (default and reference variants) from 2026-10-12, still in the `ALLOW_DEBUG` configuration (GAP-41); no run recorded as evidence yet.
 2. **S level**: VS-FI-09, -12, -13, -23, -25 with process replay on fork-owned Corolla logs.
-3. **H level, release firmware**: VS-FI-01…-11, -14…-16, -19, -21…-26, -28…-31 (-30, -31 and the reference part of -11 with a reference build, [HIL bench plan](../05-software/hil-bench/README.md) §5.5). Baseline run first to record known GAPs.
+3. **H level, release firmware**: VS-FI-01…-11, -14…-16, -19, -21…-26, -28…-31 (-30, -31 and the reference part of -11 with a reference build, [HIL bench plan](../05-software/hil-bench/README.md) §5.5). Baseline run first to record known GAPs. A case that [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) §6.1 maps to a VS-SWQ case is run once, on the reference device, and reported in WP-W-08; this document cites that entry and does not re-run it. This document stays the only source of the injection procedure.
 4. **H level, fault-injection firmware**: VS-FI-07, -17, -18, -20 (after the related mechanisms exist; WP-H-06 DC-nn).
 5. **V level**: VS-FI-27 after G1 and WP-S-08 completion.
 6. **Regression**: after each change to a safety-relevant file, re-run the cases whose mechanism the change touches (impact analysis per [WP-P-02](../07-supporting/WP-P-02-change-management.md)).

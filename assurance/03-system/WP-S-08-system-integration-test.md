@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-08 System integration and test strategy, specification and report |
 | Standard reference | ISO 26262-4:2018 §7 (item integration and testing); ISO 26262-4 §7 test methods and fault-injection guidance (verify table numbers against the licensed copy); ISO 26262-8:2018 §9 (verification); ASPICE 4.0 SYS.4 (system integration and integration verification) |
-| Version | 0.4 (merge of PR #47 software alignment with the base; carries PR #47's draft 0.2: VS-SI-25 added from WP-W-08 VS-SWQ-20, RR-2026-009 F-24; 2026-10-13). 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.4 (merge of PR #47 software alignment with the base; carries PR #47's draft 0.2: VS-SI-27 (drafted as VS-SI-25, renumbered because VS-SI-25 is the MCU-reset case) added from WP-W-08 VS-SWQ-20, RR-2026-009 F-24; 2026-10-13). 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification). **Results: not yet executed** |
 | ASIL / scope | ASIL C (SG-01 until re-rated), ASIL B (SG-02…SG-07); reference configuration only |
 | Author | Assurance team (initial draft) |
@@ -18,7 +18,7 @@ This document specifies how the LionDriver elements are integrated into the item
 
 - the integration strategy and sequence (§3),
 - the integration environment, which is the **LionDriver HIL bench** that decision D-04 ([WP-M-01 §8](../01-management/WP-M-01-assurance-strategy.md#8-strategic-decisions-required)) requires and that [WP-H-06](../04-hardware/WP-H-06-hardware-integration-verification.md) §2 defines (§4),
-- the test specification VS-SI-01…VS-SI-26, traced to TSRs and interfaces (§6),
+- the test specification VS-SI-01…VS-SI-27, traced to TSRs and interfaces (§6),
 - the report template (§8), with every result **"Not yet executed"**.
 
 Out of scope: hardware integration of the device (WP-H-06, VS-HW-nn), software integration ([WP-W-07](../05-software/WP-W-07-software-integration-verification.md)), embedded software qualification ([WP-W-08](../05-software/WP-W-08-embedded-software-testing.md)), system qualification on the vehicle ([WP-S-09](WP-S-09-system-verification.md)), and the systematic fault-injection campaign, which is specified in [WP-V-05](../06-validation/WP-V-05-fault-injection.md). Test cases here that inject faults reference the WP-V-05 case for the detailed procedure.
@@ -52,6 +52,8 @@ Bottom-up integration in four steps. Each step adds one element or interface, an
 | I-2 | I-1 + full openpilot on the SoC (pandad, card, controlsd, selfdrived, ui/soundd), camera inputs from recorded video or covered (no model credit) | IF-04 real traffic, IF-07 HMI | Open-loop Corolla log replay on the CAN side; process faults injected on the SoC | SoC ↔ envelope integration, fault reactions, warnings, heartbeat |
 | I-3 | I-2 in closed loop with a vehicle model (Corolla lateral/longitudinal plant on the bench PC, producing `0x260`, `0xAA`, `0x1D2`, `0x226` responses to `0x2E4`/`0x343`) | Closed control loop through the panda | Scenario scripts | Dynamic behaviour at limits; FTTI-relevant timing with plant response |
 | I-4 | Device + harness installed in the reference vehicle, **stationary** (engine on, wheels on ground or lifted per [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md)) | All IF incl. real EPS/PCM/camera | Engagement attempts, stalk/brake/gas inputs, relay checks, PCS message capture | Integration with existing vehicle elements before driving; hand-over to WP-S-09 |
+
+Step I-1 uses the setup of [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md). A VS-SI case at I-1 that WP-W-08 §6.1 maps to a VS-SWQ case is not re-run here: its I-1 result is the WP-W-08 report entry, judged also against the pass criteria and GC-1/GC-2 of this document. This document runs I-1 itself only for cases with no VS-SWQ counterpart (VS-SI-18, -25, -26) and runs every case at I-2, I-3 and I-4.
 
 Element entry criteria for each step: element versions recorded as configuration items ([WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md)); unit/software integration results available for the version under test (WP-W-07); open problem reports reviewed ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)).
 
@@ -146,7 +148,6 @@ Columns: **Trace** = FSR / TSR block / interface; **Step** = integration step; *
 | VS-SI-22 | Soft disable on stale inputs | FSR-02.02, FSR-02.03, FSR-06.02; TSR-601, TSR-602, TSR-606 | I-2, I-3 | Engaged, curve scenario (I-3) | Stop `modelV2` (pause modeld) | Visual + acoustic warning ≤ 1 s; no actuation on inputs that are no longer valid (command untrusted → immediate SS-L/SS-G per WP-C-04 §6) | **Fail (known GAP-16)**: up to ≈3.5 s actuation on stale inputs |
 | VS-SI-23 | SoC process kill / hang | FSR-01.07, FSR-02.05; TSR-407, TSR-408, TSR-516, TSR-601 | I-2 | Engaged | Kill (SIGKILL) and stop (SIGSTOP) in turn: controlsd, card, pandad, selfdrived, ui, soundd; detailed in WP-V-05 VS-FI-09 | Envelope safe state within FTTI budget when the command path stops; warning within 1 s from SoC or panda siren | Host `processNotRunning`/`commIssue` soft disable; panda 3–5 s (GAP-06); siren timing (GAP-06). 2026-10-13: where the kill or hang stops the heartbeat (`pandad`, whole SoC), revocation at 0.3 s and siren ≈ 0.56 s after the last heartbeat if engaged (panda `c33343b`), not verified |
 | VS-SI-24 | Cruise mismatch reaction | FSR-05.06; TSR-307 (b), TSR-308 | I-2 | — | Plant holds PCM cruise active while selfdrived is disengaged (and reverse) | Warning and cancel request within 1 s (TSR-308) | **Fail (known GAP-19)**: event only after 6 s, no reaction (`selfdrived.py:421`, `events.py:458-460`) |
-| VS-SI-25 | Host reaction to envelope reports | TSR-307, TSR-514, TSR-601, TSR-606, TSR-615, TSR-619, TSR-620; SWSR-307h, 514h, 601, 606, 615, 619, 620; IF-04 | I-2 | Engaged | Make the envelope report each revocation cause and fault flag in turn (bench or debug hook; reported causes per WP-W-08 VS-SWQ-20) | `selfdrived` disables immediately (≤ 0.2 s) and the HMI gives a take-over request naming the fault class ≤ 1 s | Not run. Moved here from WP-W-08 VS-SWQ-20 ([RR-2026-009](../05-software/reviews/RR-2026-009.md) F-24) |
 | VS-SI-25 | MCU reset during engagement | FSR-01.09, FSR-07.03; TSR-311, TSR-706 | I-1, I-2 | Engaged | `0xd8` reset; NRST from the SoC GPIO (`openpilot/common/hardware/comma/hardware.py:401-408`) | No TX and relay released during reset; after restart SILENT, re-engagement needs a new PCM rising edge; host immediate disable with warning | Expected to meet (start in SILENT, `main.c:295`); relay reset state unconfirmed (AOU-13) |
 
 ### 6.7 Back-to-back
@@ -154,6 +155,7 @@ Columns: **Trace** = FSR / TSR block / interface; **Step** = integration step; *
 | ID | Title | Trace | Step | Preconditions | Procedure | Pass criteria | Expected baseline |
 |---|---|---|---|---|---|---|---|
 | VS-SI-26 | Target vs host safety model; process replay regression | FSR-01.xx…07.xx; TSR-101…TSR-311 (decision logic) | I-1, I-2 | Fork-owned Corolla logs | (a) Feed the same frame sequence (recorded + fault-augmented) to the target MCU on the bench and to host-built `libsafety`; compare per-frame TX/RX decisions and `controls_allowed`. (b) Run `process_replay/test_processes.py` against fork-owned references | (a) identical decisions; any difference is a defect (compiler/target, DFI-17); (b) no unexplained diffs | No fork-owned references (GAP-30) |
+| VS-SI-27 | Host reaction to envelope reports | TSR-307, TSR-514, TSR-601, TSR-606, TSR-615, TSR-619, TSR-620; SWSR-307h, 514h, 601, 606, 615, 619, 620; IF-04 | I-2 | Engaged | Make the envelope report each revocation cause and fault flag in turn (bench or debug hook; reported causes per WP-W-08 VS-SWQ-20) | `selfdrived` disables immediately (≤ 0.2 s) and the HMI gives a take-over request naming the fault class ≤ 1 s | Not run. Moved here from WP-W-08 VS-SWQ-20 ([RR-2026-009](../05-software/reviews/RR-2026-009.md) F-24) |
 
 ## 7. Coverage of TSR blocks and interfaces
 
@@ -207,6 +209,7 @@ Every FSR allocated to E-03 or E-05 in WP-C-04 §10 has at least one VS-SI case 
 | VS-SI-24 | — | — | **Not yet executed** | — | — | — | — |
 | VS-SI-25 | — | — | **Not yet executed** | — | — | — | — |
 | VS-SI-26 | — | — | **Not yet executed** | — | — | — | — |
+| VS-SI-27 | — | — | **Not yet executed** | — | — | — | — |
 
 Summary (to complete after execution): number passed / failed / known GAP / blocked; open problem reports; regression scope; verdict on integration readiness for WP-S-09.
 
@@ -215,7 +218,7 @@ Summary (to complete after execution): number passed / failed / known GAP / bloc
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
 | OI-1 | Re-check TSR references and timing when WP-S-02 and WP-S-04 leave Draft | Safety engineer | G2 |
-| OI-2 | Build the HIL bench (D-04) and the bench-PC Corolla plant model; record its validation | Test lead | G4 |
+| OI-2 | Build the HIL bench (D-04, the one bench of WP-H-06 §2, due by G3) and the bench-PC Corolla plant model; record its validation | Test lead | G3 |
 | OI-3 | Record fork-owned Corolla drive logs and process-replay references (D-03, GAP-30) | Maintainer | G4 |
 | OI-4 | Set latency bound for PCS forwarding (VS-SI-20) from camera message periods | Safety engineer | G2 |
 | OI-5 | Decide whether to adapt `tools/sim` to Toyota and route it through a real panda (would make I-3 closed-loop with the real envelope) | SW lead | G3 |

@@ -62,6 +62,8 @@ Back-filled requirements from existing code (T-03) also need: the value as imple
 
 *Figure 4-1.* One lane per domain, arrows from parent to child as in the text version; colour separates derivation, implementation and verification links, and dashed lines show the links between domains. Source: [`figures/fig-p06-4-1-trace-model.svg`](figures/fig-p06-4-1-trace-model.svg); change it together with the link table below and the ID pattern in §5.2.
 
+The model populated with the current items, on the ASPICE 4.0 V-model with derivation and verification coverage, is generated in [`trace/maps/aspice-trace-map.md`](../trace/maps/aspice-trace-map.md).
+
 <details><summary>Text version of Figure 4-1</summary>
 
 ```text

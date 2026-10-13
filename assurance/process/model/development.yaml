@@ -1,0 +1,187 @@
+# Hardware and software development phase (gate G3). Format: assurance/process/README.md §3.
+# Clause references are read from the WP-M-00 register row of each produced work product.
+# The hardware is a COTS device: its design is recovered from firmware and documentation, so the
+# design (DEV-03) is recorded before the hardware safety requirements that refine the TSRs onto it.
+
+- id: DEV-01
+  kind: activity
+  phase: G3
+  lane: sw
+  name: "Set SW development environment and coding guidelines"
+  produces: [WP-W-01]
+  inputs: [WP-P-01, WP-P-05]
+  handbook_wp: [WP-5]
+- id: DEV-02
+  kind: activity
+  phase: G3
+  lane: joint
+  name: "Classify and qualify software tools"
+  produces: [WP-P-07]
+  inputs: [WP-P-01, WP-W-01]
+  handbook_wp: [WP-6]
+- id: DEV-03
+  kind: activity
+  phase: G3
+  lane: hw
+  name: "Record hardware architectural and detailed design"
+  produces: [WP-H-02]
+  inputs: [WP-C-01, WP-S-05]
+  handbook_wp: [WP-5]
+- id: DEV-04
+  kind: activity
+  phase: G3
+  lane: hw
+  name: "Specify hardware safety requirements"
+  produces: [WP-H-01]
+  inputs: [WP-C-04, WP-S-02, WP-S-04, WP-S-05, WP-H-02]
+  handbook_wp: [WP-4]
+- id: DEV-05
+  kind: activity
+  phase: G3
+  lane: hw
+  name: "Hardware safety analysis (FMEA, FMEDA)"
+  produces: [WP-H-03]
+  inputs: [WP-A-04, WP-H-01, WP-H-02]
+  handbook_wp: [WP-2]
+- id: DEV-06
+  kind: activity
+  phase: G3
+  lane: hw
+  name: "Plan and perform hardware component qualification"
+  produces: [WP-H-07]
+  inputs: [WP-M-11, WP-H-02, WP-H-03]
+  handbook_wp: [WP-6]
+- id: DEV-07
+  kind: activity
+  phase: G3
+  lane: hw
+  name: "Evaluate hardware architectural metrics"
+  produces: [WP-H-04]
+  inputs: [WP-H-01, WP-H-03]
+  handbook_wp: [WP-6]
+- id: DEV-08
+  kind: activity
+  phase: G3
+  lane: hw
+  name: "Evaluate random hardware failures (PMHF)"
+  produces: [WP-H-05]
+  inputs: [WP-H-03, WP-H-04]
+  handbook_wp: [WP-6]
+- id: DEV-09
+  kind: activity
+  phase: G3
+  lane: sw
+  name: "Specify software safety requirements"
+  produces: [WP-W-02]
+  inputs: [WP-S-02, WP-S-05, WP-H-01]
+  handbook_wp: [WP-4]
+- id: DEV-10
+  kind: activity
+  phase: G3
+  lane: sw
+  name: "Software architectural design"
+  produces: [WP-W-03]
+  inputs: [WP-S-03, WP-A-02, WP-W-01, WP-W-02]
+  handbook_wp: [WP-5]
+- id: DEV-11
+  kind: activity
+  phase: G3
+  lane: sw
+  name: "Software safety analysis and software-level DFA"
+  produces: [WP-W-04]
+  inputs: [WP-S-03, WP-A-02, WP-A-04, WP-W-02, WP-W-03]
+  handbook_wp: [WP-2]
+- id: DEV-12
+  kind: activity
+  phase: G3
+  lane: sw
+  name: "Software unit design and implementation"
+  produces: [WP-W-05]
+  inputs: [WP-W-01, WP-W-02, WP-W-03]
+  handbook_wp: [WP-5]
+- id: DEV-13
+  kind: activity
+  phase: G3
+  lane: sw
+  name: "Software unit verification"
+  produces: [WP-W-06]
+  inputs: [WP-C-04, WP-S-02, WP-P-07, WP-W-01, WP-W-02, WP-W-05]
+  handbook_wp: [WP-6]
+- id: DEV-14
+  kind: activity
+  phase: G3
+  lane: sw
+  name: "Specify safety-related configuration and calibration data"
+  produces: [WP-W-09]
+  inputs: [WP-C-08, WP-S-02, WP-W-02]
+  handbook_wp: [WP-4]
+- id: DEV-15
+  kind: activity
+  phase: G3
+  lane: ai
+  name: "ML engineering: model requirements, data, testing, deployment"
+  produces: [WP-W-10]
+  inputs: [WP-C-11, WP-V-02, WP-P-07]
+  handbook_wp: [WP-4, WP-6]
+- id: DEV-16
+  kind: activity
+  phase: G3
+  lane: cs
+  name: "Cybersecurity implementation and verification"
+  produces: [WP-W-11]
+  inputs: [WP-C-09, WP-S-07, WP-P-07, WP-W-01]
+  handbook_wp: [WP-6]
+- id: DEV-17
+  kind: activity
+  phase: G3
+  lane: joint
+  name: "Qualify third-party and upstream software components"
+  produces: [WP-P-08]
+  inputs: [WP-A-02, WP-W-02, WP-W-03]
+  handbook_wp: [WP-6]
+- id: DEV-18
+  kind: activity
+  phase: G3
+  lane: joint
+  name: "Evaluate proven-in-use arguments"
+  produces: [WP-P-09]
+  inputs: [WP-M-11, WP-P-08]
+  handbook_wp: [WP-7]
+
+# Confirmation measures planned for G3 (WP-M-06 §9).
+- id: CR-06@G3
+  kind: review
+  phase: G3
+  name: "Confirmation review of the hardware and software safety analyses"
+  covers: [WP-H-03, WP-W-04]
+  independence: I3
+- id: CR-07
+  kind: review
+  phase: G3
+  name: "Evaluation of hardware metrics and random hardware failure targets"
+  covers: [WP-H-04, WP-H-05]
+  independence: I3
+- id: CR-08
+  kind: review
+  phase: G3
+  name: "Confirmation review of hardware component qualification"
+  covers: [WP-H-07]
+  independence: I3
+- id: CR-09
+  kind: review
+  phase: G3
+  name: "Confirmation review of software tool qualification"
+  covers: [WP-P-07]
+  independence: I2
+- id: CR-10
+  kind: review
+  phase: G3
+  name: "Confirmation review of software component qualification"
+  covers: [WP-P-08]
+  independence: I2
+- id: SR-04@G3
+  kind: review
+  phase: G3
+  name: "Review of the AI assurance argument (PAS 8800)"
+  covers: [WP-C-11, WP-W-10, WP-K-01]
+  independence: external

@@ -17,6 +17,8 @@ LionDriver has no HIL bench (GAP-30), so no firmware test in [WP-W-08](../WP-W-0
 
 This plan builds the bench in stages, so the watchdog evidence comes from the smallest useful setup and the rest of WP-W-08 follows on the same hardware. The bench is test level L1 of [WP-V-07](../../06-validation/WP-V-07-vehicle-test-operations.md): no vehicle, no road.
 
+It is the one bench that [WP-H-06](../../04-hardware/WP-H-06-hardware-integration-verification.md) §2 defines for hardware, software and system integration. All stages are due by G3, because [WP-M-03](../../01-management/WP-M-03-project-plan.md) phase P4 depends on "G3; HIL bench ready".
+
 > [!NOTE]
 > Part availability and prices are **unconfirmed**. Check each part at the vendor before buying. A part not marked "confirmed" below has not been checked.
 
