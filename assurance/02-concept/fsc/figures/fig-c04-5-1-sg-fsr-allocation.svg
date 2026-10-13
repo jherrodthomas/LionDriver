@@ -1,0 +1,426 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1563" viewBox="0 0 1280 1563" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 5-1. Safety goals, FSRs and allocation (WP-C-04 §3, §5, §9)</title>
+<desc id="d">Matrix of the WP-C-04 functional safety requirements grouped by safety goal. For each goal: ASIL, safe state and preliminary FTTI. For each FSR: its ASIL, the other goals it serves in the §9 trace, and a marker in the column of each element it is allocated to (E-03 envelope, E-05 harness relay, E-01 SoC software, E-01/DM, E-01/HMI, E-02, and the external measures EXT-EPS, EXT-PCM, EXT-CLU). SG-01: 14 FSRs. SG-02: 11 FSRs. SG-03: 6 FSRs. SG-04: 6 FSRs. SG-05: 7 FSRs. SG-06: 5 FSRs. SG-07: 5 FSRs.</desc>
+<defs></defs>
+<rect width="1280" height="1563" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-1 · Safety goals, functional safety requirements and allocation</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">7 safety goals (§3) → 54 FSRs (§5) → allocated elements (§5 Alloc), with the §9 trace</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-04 §3, §5, §9</text>
+<text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">safe states §6 · FTTI §8</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+<text x="40" y="134" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">SAFETY GOAL · SAFE STATE · FTTI (§3)</text>
+<text x="356" y="134" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">FSR</text>
+<text x="450" y="134" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">ASIL</text>
+<text x="520" y="134" font-size="10.5" fill="#475569" font-weight="700" letter-spacing=".04em">ALSO SERVES (§9)</text>
+<text x="856" y="106" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">Item elements</text>
+<line x1="670" y1="112" x2="1042" y2="112" stroke="#94A3B8"/>
+<text x="1144" y="106" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">External measures (AoU)</text>
+<line x1="1054" y1="112" x2="1234" y2="112" stroke="#94A3B8"/>
+<text x="696" y="130" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">E-03</text>
+<text x="696" y="144" font-size="9.5" fill="#475569" text-anchor="middle">envelope</text>
+<text x="760" y="130" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">E-05</text>
+<text x="760" y="144" font-size="9.5" fill="#475569" text-anchor="middle">relay</text>
+<text x="824" y="130" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">E-01</text>
+<text x="824" y="144" font-size="9.5" fill="#475569" text-anchor="middle">SoC SW</text>
+<text x="888" y="130" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">E-01/DM</text>
+<text x="888" y="144" font-size="9.5" fill="#475569" text-anchor="middle">DM chain</text>
+<text x="952" y="130" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">E-01/HMI</text>
+<text x="952" y="144" font-size="9.5" fill="#475569" text-anchor="middle">HMI</text>
+<text x="1016" y="130" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">E-02</text>
+<text x="1016" y="144" font-size="9.5" fill="#475569" text-anchor="middle">ML models</text>
+<text x="1080" y="130" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">EXT-EPS</text>
+<text x="1080" y="144" font-size="9.5" fill="#475569" text-anchor="middle">EPS</text>
+<text x="1144" y="130" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">EXT-PCM</text>
+<text x="1144" y="144" font-size="9.5" fill="#475569" text-anchor="middle">PCM / brake</text>
+<text x="1208" y="130" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">EXT-CLU</text>
+<text x="1208" y="144" font-size="9.5" fill="#475569" text-anchor="middle">cluster</text>
+<line x1="40" y1="152" x2="1240" y2="152" stroke="#CBD5E1"/>
+<rect x="346" y="158" width="894" height="302" rx="6" fill="#F8FAFC"/>
+<rect x="346" y="727" width="894" height="134" rx="6" fill="#F8FAFC"/>
+<rect x="346" y="1023" width="894" height="155" rx="6" fill="#F8FAFC"/>
+<rect x="346" y="1319" width="894" height="132.0" rx="6" fill="#F8FAFC"/>
+<line x1="696.0" y1="152" x2="696.0" y2="1451.0" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="760.0" y1="152" x2="760.0" y2="1451.0" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="824.0" y1="152" x2="824.0" y2="1451.0" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="888.0" y1="152" x2="888.0" y2="1451.0" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="952.0" y1="152" x2="952.0" y2="1451.0" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1016.0" y1="152" x2="1016.0" y2="1451.0" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1080.0" y1="152" x2="1080.0" y2="1451.0" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1144.0" y1="152" x2="1144.0" y2="1451.0" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1208.0" y1="152" x2="1208.0" y2="1451.0" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1048" y1="114" x2="1048" y2="1451.0" stroke="#CBD5E1" stroke-dasharray="4 3"/>
+<rect x="40" y="158" width="300" height="105" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
+<text x="52" y="179" font-size="13" fill="#0F172A" font-weight="700">SG-01</text>
+<rect x="106" y="166" width="172.5" height="18" rx="9" fill="#C2410C" stroke="#9A3412"/><text x="192.235" y="178.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL C ⚠ (D if AOU-01/02 fail)</text>
+<text x="52" y="203" font-size="11" fill="#0F172A" font-weight="600">No uncontrollable lateral motion, no steering</text>
+<text x="52" y="217" font-size="11" fill="#0F172A" font-weight="600">actuation while not engaged</text>
+<text x="52" y="236.5" font-size="10.5" fill="#475569">Safe state: LKA torque 0, steer request cleared</text>
+<text x="52" y="250" font-size="10.5" fill="#475569">FTTI: ≤ 0.5 s</text>
+<text x="356" y="176.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.01</text>
+<rect x="450" y="164.5" width="34" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="467" y="176" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<circle cx="696.0" cy="172.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="356" y="197.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.02</text>
+<rect x="450" y="185.5" width="34" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="467" y="197" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<circle cx="696.0" cy="193.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="356" y="218.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.03</text>
+<rect x="450" y="206.5" width="34" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="467" y="218" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<circle cx="696.0" cy="214.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="356" y="239.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.04</text>
+<rect x="450" y="227.5" width="34" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="467" y="239" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<circle cx="696.0" cy="235.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="356" y="260.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.05</text>
+<rect x="450" y="248.5" width="34" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="467" y="260" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="520" y="249.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="260" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">03</text>
+<rect x="547" y="249.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="559" y="260" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">04</text>
+<rect x="574" y="249.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="586" y="260" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">05</text>
+<circle cx="696.0" cy="256.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="356" y="281.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.06</text>
+<rect x="450" y="269.5" width="34" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="467" y="281" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="520" y="270.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="281" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">03</text>
+<rect x="547" y="270.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="559" y="281" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">04</text>
+<rect x="574" y="270.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="586" y="281" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">05</text>
+<circle cx="696.0" cy="277.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="356" y="302.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.07</text>
+<rect x="450" y="290.5" width="34" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="467" y="302" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="520" y="291.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="302" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">02</text>
+<rect x="547" y="291.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="559" y="302" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">03</text>
+<rect x="574" y="291.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="586" y="302" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">04</text>
+<rect x="601" y="291.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="613" y="302" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">06</text>
+<circle cx="696.0" cy="298.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="356" y="323.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.08</text>
+<rect x="450" y="311.5" width="34" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="467" y="323" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="520" y="312.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="323" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">03</text>
+<rect x="547" y="312.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="559" y="323" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">04</text>
+<circle cx="696.0" cy="319.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="356" y="344.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.09</text>
+<rect x="450" y="332.5" width="34" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="467" y="344" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="520" y="333.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="344" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">02</text>
+<rect x="547" y="333.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="559" y="344" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">03</text>
+<rect x="574" y="333.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="586" y="344" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">04</text>
+<rect x="601" y="333.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="613" y="344" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">05</text>
+<rect x="628" y="333.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="640" y="344" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">06</text>
+<rect x="655" y="333.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="667" y="344" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">07</text>
+<circle cx="696.0" cy="340.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="356" y="365.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.10</text>
+<rect x="450" y="353.5" width="34" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="467" y="365" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="520" y="354.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="365" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">03</text>
+<rect x="547" y="354.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="559" y="365" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">04</text>
+<rect x="574" y="354.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="586" y="365" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">05</text>
+<rect x="601" y="354.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="613" y="365" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">07</text>
+<circle cx="696.0" cy="361.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="356" y="386.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.11</text>
+<rect x="450" y="374.5" width="34" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="467" y="386" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<rect x="520" y="375.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="386" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">03</text>
+<rect x="547" y="375.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="559" y="386" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">07</text>
+<circle cx="696.0" cy="382.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<circle cx="760.0" cy="382.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="356" y="407.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.12</text>
+<rect x="450" y="395.5" width="34" height="16" rx="8" fill="#C2410C" stroke="#9A3412"/>
+<text x="467" y="407" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
+<circle cx="696.0" cy="403.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="356" y="428.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.13</text>
+<rect x="450" y="416.5" width="48" height="16" rx="8" fill="#FFFFFF" stroke="#64748B"/>
+<text x="474" y="428" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ext.</text>
+<rect x="520" y="417.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="428" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">05</text>
+<circle cx="1080.0" cy="424.5" r="5.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1.8"/>
+<text x="356" y="449.5" font-size="11" fill="#0F172A" font-weight="600">FSR-01.14</text>
+<rect x="450" y="437.5" width="34" height="16" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="467" y="449" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">QM</text>
+<circle cx="824.0" cy="445.5" r="6" fill="#94A3B8" stroke="#64748B" stroke-width="1.2"/>
+<rect x="40" y="474" width="300" height="105" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
+<text x="52" y="495" font-size="13" fill="#0F172A" font-weight="700">SG-02</text>
+<rect x="106" y="482" width="54.9" height="18" rx="9" fill="#FB923C" stroke="#EA580C"/><text x="133.458" y="494.6" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B</text>
+<text x="52" y="519" font-size="11" fill="#0F172A" font-weight="600">No loss/degradation of lateral control without</text>
+<text x="52" y="533" font-size="11" fill="#0F172A" font-weight="600">adequate take-over warning</text>
+<text x="52" y="552.5" font-size="10.5" fill="#475569">Safe state: Warning + torque ramp-down</text>
+<text x="52" y="566" font-size="10.5" fill="#475569">FTTI: ≤ 1 s to warning</text>
+<text x="356" y="492.5" font-size="11" fill="#0F172A" font-weight="600">FSR-02.01</text>
+<rect x="450" y="480.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="492" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="488.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="824.0" cy="488.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="513.5" font-size="11" fill="#0F172A" font-weight="600">FSR-02.02</text>
+<rect x="450" y="501.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="513" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="824.0" cy="509.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="696.0" cy="509.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="534.5" font-size="11" fill="#0F172A" font-weight="600">FSR-02.03</text>
+<rect x="450" y="522.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="534" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="952.0" cy="530.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="696.0" cy="530.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="555.5" font-size="11" fill="#0F172A" font-weight="600">FSR-02.04</text>
+<rect x="450" y="543.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="555" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="824.0" cy="551.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="696.0" cy="551.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="576.5" font-size="11" fill="#0F172A" font-weight="600">FSR-02.05</text>
+<rect x="450" y="564.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="576" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="572.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="597.5" font-size="11" fill="#0F172A" font-weight="600">FSR-02.06</text>
+<rect x="450" y="585.5" width="34" height="16" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="467" y="597" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">QM</text>
+<rect x="520" y="586.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="597" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">06</text>
+<circle cx="888.0" cy="593.5" r="6" fill="#94A3B8" stroke="#64748B" stroke-width="1.2"/>
+<circle cx="1016.0" cy="593.5" r="6" fill="#94A3B8" stroke="#64748B" stroke-width="1.2"/>
+<text x="356" y="618.5" font-size="11" fill="#0F172A" font-weight="600">FSR-02.07</text>
+<rect x="450" y="606.5" width="34" height="16" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="467" y="618" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">QM</text>
+<rect x="520" y="607.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="618" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">06</text>
+<circle cx="888.0" cy="614.5" r="6" fill="#94A3B8" stroke="#64748B" stroke-width="1.2"/>
+<text x="356" y="639.5" font-size="11" fill="#0F172A" font-weight="600">FSR-02.08</text>
+<rect x="450" y="627.5" width="34" height="16" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="467" y="639" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">QM</text>
+<rect x="520" y="628.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="639" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">06</text>
+<circle cx="888.0" cy="635.5" r="6" fill="#94A3B8" stroke="#64748B" stroke-width="1.2"/>
+<text x="356" y="660.5" font-size="11" fill="#0F172A" font-weight="600">FSR-02.09</text>
+<rect x="450" y="648.5" width="34" height="16" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="467" y="660" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">QM</text>
+<rect x="520" y="649.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="660" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">04</text>
+<rect x="547" y="649.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="559" y="660" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">06</text>
+<circle cx="888.0" cy="656.5" r="6" fill="#94A3B8" stroke="#64748B" stroke-width="1.2"/>
+<text x="356" y="681.5" font-size="11" fill="#0F172A" font-weight="600">FSR-02.10</text>
+<rect x="450" y="669.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="681" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="520" y="670.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="681" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">06</text>
+<circle cx="824.0" cy="677.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="696.0" cy="677.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="702.5" font-size="11" fill="#0F172A" font-weight="600">FSR-02.11</text>
+<rect x="450" y="690.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="702" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="520" y="691.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="702" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">06</text>
+<circle cx="952.0" cy="698.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="696.0" cy="698.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<rect x="40" y="727" width="300" height="91" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
+<text x="52" y="748" font-size="13" fill="#0F172A" font-weight="700">SG-03</text>
+<rect x="106" y="735" width="66.2" height="18" rx="9" fill="#FB923C" stroke="#EA580C"/><text x="139.076" y="747.6" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B ⚠</text>
+<text x="52" y="772" font-size="11" fill="#0F172A" font-weight="600">No unintended acceleration</text>
+<text x="52" y="791.5" font-size="10.5" fill="#475569">Safe state: Accel ≤ 0; ACC cancelled</text>
+<text x="52" y="805" font-size="10.5" fill="#475569">FTTI: ≤ 1 s</text>
+<text x="356" y="745.5" font-size="11" fill="#0F172A" font-weight="600">FSR-03.01</text>
+<rect x="450" y="733.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="745" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="741.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="766.5" font-size="11" fill="#0F172A" font-weight="600">FSR-03.02</text>
+<rect x="450" y="754.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="766" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="520" y="755.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="766" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">04</text>
+<circle cx="696.0" cy="762.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="787.5" font-size="11" fill="#0F172A" font-weight="600">FSR-03.03</text>
+<rect x="450" y="775.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="787" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="783.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="808.5" font-size="11" fill="#0F172A" font-weight="600">FSR-03.04</text>
+<rect x="450" y="796.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="808" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="804.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="829.5" font-size="11" fill="#0F172A" font-weight="600">FSR-03.05</text>
+<rect x="450" y="817.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="829" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="825.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="824.0" cy="825.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="850.5" font-size="11" fill="#0F172A" font-weight="600">FSR-03.06</text>
+<rect x="450" y="838.5" width="48" height="16" rx="8" fill="#FFFFFF" stroke="#64748B"/>
+<text x="474" y="850" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ext.</text>
+<circle cx="1144.0" cy="846.5" r="5.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1.8"/>
+<rect x="40" y="875" width="300" height="118.5" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
+<text x="52" y="896" font-size="13" fill="#0F172A" font-weight="700">SG-04</text>
+<rect x="106" y="883" width="66.2" height="18" rx="9" fill="#FB923C" stroke="#EA580C"/><text x="139.076" y="895.6" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B ⚠</text>
+<text x="52" y="920" font-size="11" fill="#0F172A" font-weight="600">No deceleration beyond what following traffic</text>
+<text x="52" y="934" font-size="11" fill="#0F172A" font-weight="600">and driver can control</text>
+<text x="52" y="953.5" font-size="10.5" fill="#475569">Safe state: Inactive (no ACC command) with bounded</text>
+<text x="52" y="967" font-size="10.5" fill="#475569">jerk</text>
+<text x="52" y="980.5" font-size="10.5" fill="#475569">FTTI: ≤ 1 s</text>
+<text x="356" y="893.5" font-size="11" fill="#0F172A" font-weight="600">FSR-04.01</text>
+<rect x="450" y="881.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="893" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="889.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="914.5" font-size="11" fill="#0F172A" font-weight="600">FSR-04.02</text>
+<rect x="450" y="902.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="914" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="910.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="935.5" font-size="11" fill="#0F172A" font-weight="600">FSR-04.03</text>
+<rect x="450" y="923.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="935" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="824.0" cy="931.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="696.0" cy="931.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="956.5" font-size="11" fill="#0F172A" font-weight="600">FSR-04.04</text>
+<rect x="450" y="944.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="956" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="952.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="1144.0" cy="952.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="977.5" font-size="11" fill="#0F172A" font-weight="600">FSR-04.05</text>
+<rect x="450" y="965.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="977" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="824.0" cy="973.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="696.0" cy="973.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="998.5" font-size="11" fill="#0F172A" font-weight="600">FSR-04.06</text>
+<rect x="450" y="986.5" width="34" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="467" y="998" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<circle cx="824.0" cy="994.5" r="6" fill="#FED7AA" stroke="#FDBA74" stroke-width="1.2"/>
+<rect x="40" y="1023" width="300" height="105" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
+<text x="52" y="1044" font-size="13" fill="#0F172A" font-weight="700">SG-05</text>
+<rect x="106" y="1031" width="66.2" height="18" rx="9" fill="#FB923C" stroke="#EA580C"/><text x="139.076" y="1043.6" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B ⚠</text>
+<text x="52" y="1068" font-size="11" fill="#0F172A" font-weight="600">Release on driver brake, cancel, steering</text>
+<text x="52" y="1082" font-size="11" fill="#0F172A" font-weight="600">override</text>
+<text x="52" y="1101.5" font-size="10.5" fill="#475569">Safe state: Disengaged</text>
+<text x="52" y="1115" font-size="10.5" fill="#475569">FTTI: ≤ 0.2 s</text>
+<text x="356" y="1041.5" font-size="11" fill="#0F172A" font-weight="600">FSR-05.01</text>
+<rect x="450" y="1029.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1041" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="1037.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1062.5" font-size="11" fill="#0F172A" font-weight="600">FSR-05.02</text>
+<rect x="450" y="1050.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1062" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="1058.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1083.5" font-size="11" fill="#0F172A" font-weight="600">FSR-05.03</text>
+<rect x="450" y="1071.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1083" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="1079.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1104.5" font-size="11" fill="#0F172A" font-weight="600">FSR-05.04</text>
+<rect x="450" y="1092.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1104" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="1100.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1125.5" font-size="11" fill="#0F172A" font-weight="600">FSR-05.05</text>
+<rect x="450" y="1113.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1125" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="520" y="1114.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="1125" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">02</text>
+<rect x="547" y="1114.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="559" y="1125" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">06</text>
+<circle cx="696.0" cy="1121.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="1208.0" cy="1121.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1146.5" font-size="11" fill="#0F172A" font-weight="600">FSR-05.06</text>
+<rect x="450" y="1134.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1146" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<rect x="520" y="1135.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="532" y="1146" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">02</text>
+<rect x="547" y="1135.0" width="24" height="15" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+<text x="559" y="1146" font-size="9.5" fill="#0F172A" font-weight="600" text-anchor="middle">06</text>
+<circle cx="824.0" cy="1142.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="696.0" cy="1142.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1167.5" font-size="11" fill="#0F172A" font-weight="600">FSR-05.07</text>
+<rect x="450" y="1155.5" width="48" height="16" rx="8" fill="#FFFFFF" stroke="#64748B"/>
+<text x="474" y="1167" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ext.</text>
+<circle cx="1144.0" cy="1163.5" r="5.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1.8"/>
+<rect x="40" y="1192" width="300" height="105" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
+<text x="52" y="1213" font-size="13" fill="#0F172A" font-weight="700">SG-06</text>
+<rect x="106" y="1200" width="54.9" height="18" rx="9" fill="#FB923C" stroke="#EA580C"/><text x="133.458" y="1212.6" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B</text>
+<text x="52" y="1237" font-size="11" fill="#0F172A" font-weight="600">No loss of longitudinal deceleration without</text>
+<text x="52" y="1251" font-size="11" fill="#0F172A" font-weight="600">take-over warning</text>
+<text x="52" y="1270.5" font-size="10.5" fill="#475569">Safe state: Warning; ACC cancelled</text>
+<text x="52" y="1284" font-size="10.5" fill="#475569">FTTI: ≤ 1 s</text>
+<text x="356" y="1210.5" font-size="11" fill="#0F172A" font-weight="600">FSR-06.01</text>
+<rect x="450" y="1198.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1210" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="824.0" cy="1206.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="696.0" cy="1206.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1231.5" font-size="11" fill="#0F172A" font-weight="600">FSR-06.02</text>
+<rect x="450" y="1219.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1231" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="824.0" cy="1227.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="696.0" cy="1227.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1252.5" font-size="11" fill="#0F172A" font-weight="600">FSR-06.03</text>
+<rect x="450" y="1240.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1252" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="824.0" cy="1248.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1273.5" font-size="11" fill="#0F172A" font-weight="600">FSR-06.04</text>
+<rect x="450" y="1261.5" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1273" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="824.0" cy="1269.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="696.0" cy="1269.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1294.5" font-size="11" fill="#0F172A" font-weight="600">FSR-06.05</text>
+<text x="450" y="1294.5" font-size="10" fill="#475569" font-style="italic">as ref.</text>
+<rect x="666" y="1282.5" width="233.2" height="16" rx="3" fill="#FFFFFF"/>
+<text x="672" y="1294.5" font-size="10" fill="#475569" font-style="italic">as ref.: allocation as in the FSRs it references</text>
+<rect x="40" y="1319" width="300" height="132" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
+<text x="52" y="1340" font-size="13" fill="#0F172A" font-weight="700">SG-07</text>
+<rect x="106" y="1327" width="54.9" height="18" rx="9" fill="#FB923C" stroke="#EA580C"/><text x="133.458" y="1339.6" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B</text>
+<text x="52" y="1364" font-size="11" fill="#0F172A" font-weight="600">No suppression, delay or alteration of stock</text>
+<text x="52" y="1378" font-size="11" fill="#0F172A" font-weight="600">PCS/AEB</text>
+<text x="52" y="1397.5" font-size="10.5" fill="#475569">Safe state: Camera PCS messages forwarded; relay</text>
+<text x="52" y="1411" font-size="10.5" fill="#475569">released if forwarding cannot be guaranteed</text>
+<text x="52" y="1424.5" font-size="10.5" fill="#475569">FTTI: ≤ 0.2 s for forwarding loss (preliminary,</text>
+<text x="52" y="1438" font-size="10.5" fill="#475569">WP-S-04 §3.6); content: per frame</text>
+<text x="356" y="1347" font-size="11" fill="#0F172A" font-weight="600">FSR-07.01</text>
+<rect x="450" y="1335.0" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1346.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="1343" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1368" font-size="11" fill="#0F172A" font-weight="600">FSR-07.02</text>
+<rect x="450" y="1356.0" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1367.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="696.0" cy="1364" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1389" font-size="11" fill="#0F172A" font-weight="600">FSR-07.03</text>
+<rect x="450" y="1377.0" width="34" height="16" rx="8" fill="#FB923C" stroke="#EA580C"/>
+<text x="467" y="1388.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">B</text>
+<circle cx="760.0" cy="1385" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<circle cx="696.0" cy="1385" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="356" y="1410" font-size="11" fill="#0F172A" font-weight="600">FSR-07.04</text>
+<rect x="450" y="1398.0" width="48" height="16" rx="8" fill="#FFFFFF" stroke="#64748B"/>
+<text x="474" y="1409.5" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">ext.</text>
+<circle cx="1144.0" cy="1406" r="5.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1.8"/>
+<text x="356" y="1431" font-size="11" fill="#0F172A" font-weight="600">FSR-07.05</text>
+<rect x="450" y="1419.0" width="34" height="16" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="467" y="1430.5" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">QM</text>
+<circle cx="824.0" cy="1427" r="6" fill="#94A3B8" stroke="#64748B" stroke-width="1.2"/>
+<text x="40" y="1477" font-size="11" fill="#475569">Also serves: the other safety goals the §9 trace marks for the FSR (number = SG-0n). Roles stated in the Alloc column (detection, alert, backstop, ...) are not drawn; see §5 and the allocation summary in §10.</text>
+<text x="40" y="1493" font-size="11" fill="#475569">All FSRs have status Proposed; a dot shows allocation, not implementation. SG-01 FSRs carry ASIL C until the controllability evidence of §4.2 exists. FTTIs are preliminary (§8, WP-S-04).</text>
+<line x1="40" y1="1515.0" x2="1240" y2="1515.0" stroke="#E2E8F0"/>
+<circle cx="46" cy="1535" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="58" y="1539" font-size="10.5" fill="#0F172A">ASIL C</text>
+<circle cx="128.53" cy="1535" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="140.53" y="1539" font-size="10.5" fill="#0F172A">ASIL B</text>
+<circle cx="211.06" cy="1535" r="6" fill="#FED7AA" stroke="#FDBA74" stroke-width="1.2"/>
+<text x="223.06" y="1539" font-size="10.5" fill="#0F172A">ASIL A</text>
+<circle cx="293.59000000000003" cy="1535" r="6" fill="#94A3B8" stroke="#64748B" stroke-width="1.2"/>
+<text x="305.59" y="1539" font-size="10.5" fill="#0F172A">QM</text>
+<circle cx="350.29" cy="1535" r="5.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1.8"/>
+<text x="362.29" y="1539" font-size="10.5" fill="#0F172A">External measure (no ASIL, AoU)</text>
+<text x="554.29" y="1539" font-size="10.5" fill="#475569">Marker = FSR allocated to that element; colour = FSR ASIL</text>
+<text x="1240" y="1539" font-size="10" fill="#475569" text-anchor="end">Generated by fsc_figures.py</text>
+</svg>

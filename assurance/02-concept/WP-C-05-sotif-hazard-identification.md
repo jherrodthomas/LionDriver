@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-05 SOTIF hazard identification and risk evaluation, acceptance criteria |
 | Standard reference | ISO 21448:2022 §6 (hazard identification and risk evaluation, acceptance criteria), Annex B (misuse, informative); ISO 26262-3:2018 §6 (shared hazard log) |
-| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.3 (Figure 2-1 added: four-area view of the analysis; 2026-10-13). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -27,6 +27,10 @@ Inputs: [WP-C-03 HARA](WP-C-03-hara.md) (H-01…H-06, H-08; OS-01…OS-11), `doc
 3. **Severity and controllability.** Reused from the HARA hazardous event with the same effect and situation. Where no HARA event exists, rated here with the HARA scales and marked "new".
 4. **Exposure** is not used to compute an ASIL (ISO 21448 does not assign ASILs). It is recorded to help set validation targets.
 5. **Evaluation.** A hazard with S0 or C0 needs no further SOTIF treatment. Every other hazard goes into the triggering-condition analysis ([WP-C-06](WP-C-06-sotif-insufficiencies-triggering-conditions.md)) and needs an acceptance criterion (§5).
+
+![Figure 2-1: ISO 21448 four-area chart. Area 2, known hazardous: SH-01 to SH-13 and the WP-C-06 insufficiencies and triggering conditions with their evaluation. Area 3, unknown hazardous: black-box driving model, reduced by WP-V-04 and AC-07. Area 1, known not hazardous: no scenario there by evidence yet. Area 4: not addressed](figures/fig-c05-2-1-sotif-four-areas.svg)
+
+*Figure 2-1.* The ISO 21448 scenario areas, filled with what this document and WP-C-06 currently state. Area 2 shows the hazards of §3, plus the insufficiencies, triggering conditions and §5 evaluation outcomes of WP-C-06. Area 3 shows the unknown-scenario sources named in WP-C-06 §1 and §6 and how AC-07 addresses them. Area 1 is empty by evidence: only conditional "acceptable" rows exist. Area 4 is not addressed. The arrows are the treatment routes of §5.3 and §6. The counts come from §3 and WP-C-06 §3–§5; area sizes are not to scale. Source: [`figures/fig-c05-2-1-sotif-four-areas.svg`](figures/fig-c05-2-1-sotif-four-areas.svg). Change it together with §3, §5.3 and §6, and with WP-C-06 §5.
 
 ## 3. SOTIF hazards
 

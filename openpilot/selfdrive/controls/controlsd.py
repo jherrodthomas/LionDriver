@@ -5,6 +5,7 @@ from numbers import Number
 from openpilot.cereal import log
 from opendbc.car.structs import car
 import openpilot.cereal.messaging as messaging
+from openpilot.cereal.services import SERVICE_LIST
 from openpilot.common.constants import CV
 from openpilot.common.params import Params
 from openpilot.common.realtime import config_realtime_process, DT_CTRL, Priority, Ratekeeper
@@ -13,6 +14,7 @@ from openpilot.common.swaglog import cloudlog
 from opendbc.car.car_helpers import interfaces
 from opendbc.car.vehicle_model import VehicleModel
 from openpilot.selfdrive.controls.lib.drive_helpers import clip_curvature
+from openpilot.selfdrive.controls.lib.input_freshness import inputs_fresh
 from openpilot.selfdrive.controls.lib.latcontrol import LatControl
 from openpilot.selfdrive.controls.lib.latcontrol_pid import LatControlPID
 from openpilot.selfdrive.controls.lib.latcontrol_angle import LatControlAngle, STEER_ANGLE_SATURATION_THRESHOLD
@@ -27,6 +29,12 @@ LaneChangeState = log.LaneChangeState
 LaneChangeDirection = log.LaneChangeDirection
 
 ACTUATOR_FIELDS = tuple(car.CarControl.Actuators.schema.fields.keys())
+
+# LionDriver (TSR-602): inputs that must still be arriving for each actuator (lib/input_freshness.py): stale after 10 nominal
+# periods, i.e. selfdriveState and carState 0.1 s, modelV2 and longitudinalPlan 0.5 s
+LAT_INPUTS = ('selfdriveState', 'carState', 'modelV2')
+LONG_INPUTS = ('selfdriveState', 'carState', 'longitudinalPlan')
+INPUT_FREQUENCY = {s: SERVICE_LIST[s].frequency for s in set(LAT_INPUTS + LONG_INPUTS)}
 
 
 class Controls:
@@ -70,6 +78,9 @@ class Controls:
       device_motion = Pose.from_device_motion(self.sm['deviceMotion'])
       self.calibrated_pose = self.pose_calibrator.build_calibrated_pose(device_motion)
 
+  def inputs_fresh(self, services) -> bool:
+    return inputs_fresh(services, self.sm.seen, self.sm.alive, self.sm.logMonoTime, INPUT_FREQUENCY)
+
   def state_control(self):
     CS = self.sm['carState']
 
@@ -79,8 +90,11 @@ class Controls:
     sr = max(lp.steerRatio, 0.1)
     self.VM.update_params(x, sr)
 
+    # LionDriver (SWF-045): a non-finite roll would make the curvature, and through clip_curvature every later desired
+    # curvature, NaN for the rest of the drive; use 0 and keep lateral control off for this step
+    roll = lp.roll if math.isfinite(lp.roll) else 0.0
     steer_angle_without_offset = math.radians(CS.steeringAngleDeg - lp.angleOffsetDeg)
-    self.curvature = -self.VM.calc_curvature(steer_angle_without_offset, CS.vEgo, lp.roll)
+    self.curvature = -self.VM.calc_curvature(steer_angle_without_offset, CS.vEgo, roll)
 
     # Update Torque Params
     if self.CP.lateralTuning.which() == 'torque':
@@ -101,6 +115,22 @@ class Controls:
                    (not standstill or self.CP.steerAtStandstill)
     CC.longActive = CC.enabled and not any(e.overrideLongitudinal for e in self.sm['onroadEvents']) and self.CP.openpilotLongitudinalControl
 
+    # LionDriver (TSR-602, SWF-040, SWF-043): no actuation on stale inputs. selfdrived raises commIssue from the same checks
+    CC.latActive = CC.latActive and self.inputs_fresh(LAT_INPUTS)
+    CC.longActive = CC.longActive and self.inputs_fresh(LONG_INPUTS)
+
+    # LionDriver (SWF-045): a non-finite target must not reach the controllers, whose state would keep it; skip this step
+    if self.sm.valid['lateralManeuverPlan']:
+      requested_curvature = self.sm['lateralManeuverPlan'].desiredCurvature
+    else:
+      requested_curvature = model_v2.action.desiredCurvature
+    if not (math.isfinite(requested_curvature) and math.isfinite(lp.roll)):
+      CC.latActive = False
+    a_target = long_plan.aTarget
+    if not math.isfinite(a_target):
+      CC.longActive = False
+      a_target = 0.0
+
     actuators = CC.actuators
     actuators.longControlState = self.LoC.long_control_state
 
@@ -116,16 +146,18 @@ class Controls:
 
     # accel PID loop
     pid_accel_limits = self.CI.get_pid_accel_limits(self.CP, CS.vEgo, CS.vCruise * CV.KPH_TO_MS)
-    actuators.accel = float(self.LoC.update(CC.longActive, CS, long_plan.aTarget, long_plan.shouldStop, pid_accel_limits))
+    actuators.accel = float(self.LoC.update(CC.longActive, CS, a_target, long_plan.shouldStop, pid_accel_limits))
 
     # Steering PID loop and lateral MPC
     # Reset desired curvature to current to avoid violating the limits on engage
-    if self.sm.valid['lateralManeuverPlan']:
-      new_desired_curvature = self.sm['lateralManeuverPlan'].desiredCurvature if CC.latActive else self.curvature
-    else:
-      new_desired_curvature = model_v2.action.desiredCurvature if CC.latActive else self.curvature
-    self.desired_curvature, curvature_limited = clip_curvature(CS.vEgo, self.desired_curvature, new_desired_curvature, lp.roll)
-    lat_delay = self.sm["lateralDelay"].lateralDelay + LAT_SMOOTH_SECONDS
+    new_desired_curvature = requested_curvature if CC.latActive else self.curvature
+    if not math.isfinite(self.desired_curvature):
+      self.desired_curvature = self.curvature if math.isfinite(self.curvature) else 0.0
+    self.desired_curvature, curvature_limited = clip_curvature(CS.vEgo, self.desired_curvature, new_desired_curvature, roll)
+    lateral_delay = self.sm["lateralDelay"].lateralDelay
+    if not math.isfinite(lateral_delay):
+      lateral_delay = self.CP.steerActuatorDelay
+    lat_delay = lateral_delay + LAT_SMOOTH_SECONDS
 
     actuators.curvature = self.desired_curvature
     steer, lateral_output, lac_log = self.LaC.update(CC.latActive, CS, self.VM, lp,

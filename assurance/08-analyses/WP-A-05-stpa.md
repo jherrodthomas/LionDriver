@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-05 System-theoretic process analysis (STPA) of the reference configuration |
 | Standard reference | STPA Handbook (Leveson and Thomas, 2018), steps 1–4; ISO 21448:2022 §6–§7 (STPA as a method for hazards from functional insufficiencies and reasonably foreseeable misuse); ISO 26262-9:2018 §8 (supplementary system-level analysis); ISO/PAS 8800:2024 (control-structure view of the ML stack) |
-| Version | 0.1 |
+| Version | 0.2 (§3.1 control-structure diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.1 |
 | Status | Draft (steps 1–3 complete for the control actions below; step 4 for the highest-priority UCAs only) |
 | ASIL / scope | SG-01 (ASIL C ⚠) … SG-07; SOTIF (SH-) and misuse (WP-C-08) |
 | Author | Claude (AI-assisted draft) |
@@ -66,6 +66,12 @@ The functional-safety hazards of the HARA are used as the system-level hazards, 
 
 ### 3.1 Diagram
 
+![Figure 3-1: STPA control structure with C1 driver, C2 openpilot, C3 panda safety model, C6 stock ADAS camera, C5 PCM/ACC/brake ECU, C4 EPS ECU, the harness relay and the controlled process, control actions CA-01 to CA-13 and feedback FB-01 to FB-07](figures/fig-a05-3-1-stpa-control-structure.svg)
+
+*Figure 3-1.* Controllers are drawn top to bottom by authority. Control actions (orange) point down, feedback (teal) points up, each tagged with its ID from §3.3; CA-07 (alerts to the driver) and FB-07 (driver camera) run against that direction by nature. Grey controllers are outside the item; their UCAs are recorded as assumptions (§4.4). Source: [`figures/fig-a05-3-1-stpa-control-structure.svg`](figures/fig-a05-3-1-stpa-control-structure.svg); change it together with §3.2 and §3.3.
+
+<details><summary>Text version of Figure 3-1</summary>
+
 ```
                           ┌───────────────────────────────────────────────┐
                           │ C1 Driver                                     │
@@ -98,6 +104,8 @@ The functional-safety hazards of the HARA are used as the system-level hazards, 
              │ Controlled process: vehicle lateral and longitudinal motion │
              └──────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ### 3.2 Controllers, responsibilities and process models
 

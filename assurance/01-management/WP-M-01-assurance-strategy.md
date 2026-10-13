@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-01 Assurance strategy and lifecycle tailoring |
 | Standard reference | ISO 26262-2:2018 §6 (tailoring, safety plan inputs); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6; ISO/PAS 8800:2024 (AI safety management, assurance argument); ASPICE 4.0 MAN.3; UL 4600 (informative, safety case structure) |
-| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: P0 sync policy per D-02, D-13 added (envelope strategy); 2026-10-12). 0.1 |
+| Version | 0.4 (§4.1 safety envelope diagram redrawn as Figure 4-1; text version kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: P0 sync policy per D-02, D-13 added (envelope strategy); 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (FuSa, SOTIF, CS, AI, process) |
 | Author | Assurance team (initial draft) |
@@ -73,6 +73,12 @@ It is supported by five sub-claims, which structure the [safety case (WP-K-01)](
 
 openpilot already has an architecture that makes a credible ISO 26262 argument possible without re-developing the whole stack to ASIL:
 
+![Figure 4-1: the safety envelope pattern: QM application SoC (camerad, modeld, plannerd, controlsd, card, pandad; dmonitoringmodeld, dmonitoringd, selfdrived), SPI to the ASIL-allocated panda safety MCU (opendbc Toyota mode), vehicle CAN to EPS, ECM and brake, driver and vehicle outside](figures/fig-m01-4-1-safety-envelope.svg)
+
+*Figure 4-1.* The application SoC runs the QM, SOTIF-managed driving stack; the panda safety MCU (ASIL-allocated, target) is the only path to the vehicle CAN and enforces the envelope. The driver and the vehicle's existing elements sit outside the device, and the note marks the known weakness of §4.2 item 2. Source: [`figures/fig-m01-4-1-safety-envelope.svg`](figures/fig-m01-4-1-safety-envelope.svg); change it together with §4.1 and §4.2.
+
+<details><summary>Text version of Figure 4-1</summary>
+
 ```
  ┌─────────────── comma device ───────────────────────────────────────┐
  │  Application SoC (Linux/AGNOS)          Safety MCU (STM32H7 "panda")│
@@ -90,6 +96,8 @@ openpilot already has an architecture that makes a credible ISO 26262 argument p
           Vehicle: EPS torque limiting & fault detection (AoU), brakes, PCS (AoU)
 ```
 
+</details>
+
 - **Safety element:** the opendbc safety mode running on the panda MCU. It is the only path to the actuators, and it enforces:
   - actuation limits (steering torque magnitude and rate, measured-torque tracking, acceleration bounds),
   - engagement gating (no actuation unless engaged; immediate release on driver brake, gas or cancel, depending on configuration),
@@ -104,7 +112,7 @@ openpilot already has an architecture that makes a credible ISO 26262 argument p
 ### 4.2 Consequences that shape the plan
 
 1. **ASIL work concentrates on a small codebase:** `opendbc/safety/*.h`, `opendbc/safety/modes/toyota.h`, and the panda firmware paths they rely on (CAN drivers, SPI comms, heartbeat, relay, main loop, fault handling). This is a few thousand lines of MISRA-checked C, which is a realistic size for full ISO 26262-6 treatment.
-2. **Freedom from interference is the hinge.** The argument holds only if a fault or insufficiency on the SoC cannot defeat the envelope. That covers: SPI corruption, a babbling SoC, a wrong safety mode or parameter sent by the SoC at start-up, panda firmware replaced by the SoC, and shared power, clock or thermal failures. Each one needs an analysis and a mechanism ([WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md), [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md)). The **safety mode and safety parameter are selected by the SoC** (`openpilot/selfdrive/pandad/panda_safety.cc`), so a QM element configures the safety element. This is a known weakness that must be closed, for example by locking the mode in panda firmware for the reference configuration or adding an independent cross-check.
+2. **Freedom from interference is the hinge.** The argument holds only if a fault or insufficiency on the SoC cannot defeat the envelope. That covers: SPI corruption, a babbling SoC, a wrong safety mode or parameter sent by the SoC at start-up, panda firmware replaced by the SoC, and shared power, clock or thermal failures. Each one needs an analysis and a mechanism ([WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md), [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md)). The **safety mode and safety parameter are selected by the SoC** (`openpilot/selfdrive/pandad/panda_safety.cc`), so a QM element configures the safety element. This is a known weakness that must be closed, for example by locking the mode in panda firmware for the reference configuration or adding an independent cross-check. *Status 2026-10-13:* the reference build locks the mode and parameter in panda firmware (TSR-512, TSR-513; LionDriver #36) and `pandad` requires a reference panda build before configuring a car safety mode (TSR-514; #41); implemented, not verified on hardware or independently reviewed.
 3. **Single-channel hardware.** The panda MCU is single-channel, and it shares the device PCB, power and enclosure with the SoC. Whether this meets the ASIL from the HARA depends on the hardware metrics (WP-H-04/05) and the DFA. If the HARA gives ASIL C or D for a safety goal, the likely route is ASIL decomposition onto the envelope plus vehicle-side measures (EPS limiting, driver), or plausibility checks by the EPS. That route depends on AoUs about OEM ECUs that cannot be proven without vehicle testing.
 4. **Driver monitoring is safety-relevant.** If controllability ratings assume an attentive driver, then the mechanism that enforces attention (DM model, `monitoring/policy.py` timers, disengagement on unresponsiveness) is a safety measure. Under ISO 21448 it is treated as a measure against foreseeable misuse. Whether its failure is also an ISO 26262 safety goal violation is decided in the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)).
 5. **Hardware evidence comes from qualification, not development.** The device is COTS. The route is hardware component qualification (ISO 26262-8 §13) together with the hardware metrics and FMEDA that LionDriver performs itself, using schematic information as far as it is available. If the evidence cannot be obtained, the gap is recorded and the residual risk is argued, never assumed away.

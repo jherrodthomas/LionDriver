@@ -10,7 +10,7 @@ For each page:
 Absolute URLs are not fetched. Links inside code spans and fenced code blocks are ignored.
 
 Usage: python3 assurance/case/tools/check_pages.py [PAGE ...]
-Default pages: README.md and docs/liondriver/*.md. Exit code 0 when clean, 1 otherwise.
+Default pages: README.md, assurance/README.md and docs/liondriver/*.md. Exit code 0 when clean, 1 otherwise.
 """
 from __future__ import annotations
 
@@ -100,7 +100,7 @@ def check_page(page: Path) -> tuple[int, list[str]]:
 
 
 def main(argv: list[str]) -> int:
-  pages = [Path(a).resolve() for a in argv] or [REPO_ROOT / "README.md", *sorted((REPO_ROOT / "docs" / "liondriver").glob("*.md"))]
+  pages = [Path(a).resolve() for a in argv] or [REPO_ROOT / "README.md", REPO_ROOT / "assurance" / "README.md", *sorted((REPO_ROOT / "docs" / "liondriver").glob("*.md"))]
   total, errors = 0, []
   for page in pages:
     t, e = check_page(page)

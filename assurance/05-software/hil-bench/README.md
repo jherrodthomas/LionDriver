@@ -4,7 +4,7 @@
 |---|---|
 | Work product | Hardware-in-the-loop bench plan (decision D-04 of [WP-M-01](../../01-management/WP-M-01-assurance-strategy.md); test environment of [WP-W-08](../WP-W-08-embedded-software-testing.md) §3) |
 | Standard reference | ISO 26262-6:2018 §11.4.2 (test environments); ISO 26262-8:2018 §9.4.3 (verification environment); ASPICE 4.0 SWE.6 |
-| Version | 0.2 (verification status for the integrated envelope changes: pins `b790fca`/`7993399`, reference-build campaign for `test_11…14`; 2026-10-12). 0.1 |
+| Version | 0.3 (§3 diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes: pins `b790fca`/`7993399`, reference-build campaign for `test_11…14`; 2026-10-12). 0.1 |
 | Status | Draft: plan only. No bench exists, no part has been bought, no test has been run on hardware |
 | Author | Assurance team (AI-assisted draft) |
 | Reviewer(s) | TBD |
@@ -34,6 +34,12 @@ Build B1 first. B2 is cheap and turns B1 results into evidence. B3 and B4 follow
 
 ## 3. Architecture
 
+![Figure 3-1: HIL bench architecture with host PC, DUT panda, panda jungle, scope or logic analyser, USB CAN interfaces, programmable supply and SWD probe, each tagged with its build stage B1 to B4](figures/fig-hil-3-1-bench-architecture.svg)
+
+*Figure 3-1.* The bench by build stage: B1 elements are solid, elements added in B2–B4 and their links are dashed; part numbers refer to §4. Source: [`figures/fig-hil-3-1-bench-architecture.svg`](figures/fig-hil-3-1-bench-architecture.svg); change it together with §2 and §4.
+
+<details><summary>Text version of Figure 3-1</summary>
+
 ```
                  USB                    USB
   host PC  ─────────────── DUT panda ◄──────── (power, comms)
@@ -48,6 +54,8 @@ Build B1 first. B2 is cheap and turns B1 results into evidence. B3 and B4 follow
   programmable supply ─► jungle / DUT 12 V                              (B4)
   SWD probe ─► DUT (debug header)                                       (B4)
 ```
+
+</details>
 
 The relay itself is not on the DUT: the panda drives the harness relay through the SBU lines. The jungle stands in for the harness. It reports the SBU voltages in `health()` (`ch1_sbu1_voltage`…), which is how the watchdog test sees the relay drive drop when the MCU resets.
 
