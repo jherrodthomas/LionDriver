@@ -42,6 +42,8 @@ GSN elements are written as text with these prefixes. Each element has a stable 
 
 Indented trees show "supported by" (→) and "in context of" (⊙) relations. The evidence status of each `Sn` is in §6; defeaters are in §7.
 
+Diagrams: the argument is also drawn in GSN graphical notation (GSN Community Standard v3), one sheet per sub-argument, in [gsn/](gsn/README.md). The sheets are generated from the case records ([`assurance/case/`](../case/README.md)) and the contexts in this document by `assurance/case/tools/gsn_diagrams.py`; CI fails if they are out of date. Solutions are coloured by evidence status, and open defeaters are listed on the goal they undermine.
+
 ## 3. Top level
 
 ```mermaid

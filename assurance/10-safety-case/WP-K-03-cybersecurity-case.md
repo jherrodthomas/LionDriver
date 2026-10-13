@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-K-03 Cybersecurity case |
 | Standard reference | ISO/SAE 21434:2021 §6 (cybersecurity case), with evidence from §8–§15; UN R155 (informative) |
-| Version | 0.2 (CSn-21 Partial: safety-mode lock and command gating implemented in the reference build, panda `9f60e17`; CDF-04 annotated; 2026-10-12). 0.1: initial draft |
+| Version | 0.2 (CSn-21 Partial: safety-mode lock and command gating implemented in the reference build, panda `9f60e17`; CDF-04 annotated; 2026-10-12). 0.1.1 (§3 trees show CDF-02/CDF-04 on CG2.1 and CDF-10 on CG5.6, as the §6 register already did; GSN diagrams in [gsn/](gsn/README.md); 2026-10-12). 0.1: initial draft |
 | Status | Draft — argument structure written; **almost all evidence is Missing or Partial**. This case does not support a release at this version |
 | ASIL / scope | CS (CAL 1–3); interface to the safety case G4 ([WP-K-01](WP-K-01-safety-case.md)) |
 | Author | Assurance team (initial draft) |
@@ -17,6 +17,8 @@
 The cybersecurity case argues that the cybersecurity of the LD-SDA reference configuration is adequate for a given release, by connecting the cybersecurity goals and claims of [WP-C-10](../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) to the evidence produced under the [cybersecurity plan (WP-M-09)](../01-management/WP-M-09-cybersecurity-plan.md). It is built incrementally per [WP-M-09 §7](../01-management/WP-M-09-cybersecurity-plan.md) and is the main input to the cybersecurity assessment ([WP-K-05](WP-K-05-cybersecurity-assessment.md)) and to the release record ([WP-K-06](WP-K-06-release-record.md)). It supports sub-claim G4 of the [safety case](WP-K-01-safety-case.md#44-g4-cybersecurity).
 
 Notation follows [WP-K-01 §2](WP-K-01-safety-case.md#2-notation) with prefixes `CG` (goal/claim), `CS` (strategy), `CC` (context), `CA` (assumption, reusing CA-01…CA-05 of WP-C-10), `CJ` (justification), `CSn` (evidence) and `CDF` (defeater).
+
+Diagrams: the argument is also drawn in GSN graphical notation, one sheet per sub-argument, in [gsn/](gsn/README.md) (sheets `gsn-cs-*`). They are generated from §2–§4 and §6 of this document by `assurance/case/tools/gsn_diagrams.py`; CI fails if they are out of date or if the §3 trees and the §6 register disagree on a defeater.
 
 ## 2. Top-level argument
 
@@ -64,6 +66,7 @@ CG2  Each cybersecurity goal is achieved.
  → CS2 Argue per goal over refinement, implementation, verification and validation
     → CG2.1 CSG-01 safety configuration integrity (CAL 3)
         → CSR-011…CSR-016, CSR-021…CSR-024  → CSn-10, CSn-20, CSn-21, CSn-30
+        ⇐ CDF-02, CDF-04
     → CG2.2 CSG-02 firmware and boot-chain integrity (CAL 3)
         → CSR-021…CSR-054                    → CSn-10, CSn-11, CSn-20, CSn-22, CSn-31
         ⇐ CDF-01, CDF-02, CDF-03
@@ -126,6 +129,7 @@ CG5  Cybersecurity is maintained after release.
     → CG5.4 Production/provisioning controls (keys, firmware, option bytes)  → CSn-52
     → CG5.5 End of support and decommissioning defined                       → CSn-53
     → CG5.6 LionDriver vulnerability intake published                        → CSn-54
+        ⇐ CDF-10
 ```
 
 ### 3.6 CG6 Process and assessment

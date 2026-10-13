@@ -202,7 +202,7 @@ Derived from [gap assessment §9](../00-assessment/gap-assessment.md#9-priority-
 | B-12 | Record the reference vehicle's VIN, ECU firmware versions and device revision | — | Input to WP-C-01 | PM |
 | B-13 | Independent I1 review of the change impact records in [`impact/`](../07-supporting/impact/README.md) and of DN-01 | R-26 | Review records | PM |
 | B-14 | Merge LionDriver PR #45 (panda `b790fca`, TSR-516(b)) | — | Pin on `liondriver-dev` | PM |
-| B-15 | Maintainer decision D-09 (FSC envelope strategy, option (c)) | WP-C-04 OI-1, D-09 | Decision record in WP-M-01 §8 and WP-M-07 §5 | PM |
+| B-15 | Maintainer decision D-13 (FSC envelope strategy, option (c)) | WP-C-04 OI-1, D-13 | Decision record in WP-M-01 §8 and WP-M-07 §5 | PM |
 | B-16 | Fork-owned reference drive logs | R-27 | Logs | PM |
 | B-17 | Run the panda host tests and the reference-variant mutation tests in LionDriver CI (both in `safety.yaml`: host tests 2026-10-12, reference-variant mutation via #44) | GAP-39 | CI jobs | ENG |
 
