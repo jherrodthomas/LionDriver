@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3312" height="1046" viewBox="0 0 3312 1046" font-family="Helvetica, Arial, sans-serif">
+<style>.id{font-size:11px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.n{font-size:9.5px;font-style:italic;text-anchor:middle;fill:#444}.b{font-size:8.6px;font-weight:600;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">FTA SG-02 — loss or degradation of lateral control without adequate take-over warning  (sheet 1 of 4)</text>
+<rect x="1501.5" y="70" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="2.2"/>
+<text x="1601.5" y="89" class="id">TE-02</text>
+<text x="1601.5" y="102.5" class="d">Loss of lateral control without</text>
+<text x="1601.5" y="115.0" class="d">take-over request within ≤ 1 s</text>
+<path d="M1583.5,157.0 Q1601.5,149.0 1619.5,157.0 Q1617.5,133.0 1601.5,123.0 Q1585.5,133.0 1583.5,157.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1601.5" y1="157.0" x2="1601.5" y2="175.0" class="w"/>
+<line x1="130.0" y1="175.0" x2="3073.0" y2="175.0" class="w"/>
+<line x1="130.0" y1="175.0" x2="130.0" y2="193.0" class="w"/>
+<line x1="348.0" y1="175.0" x2="348.0" y2="193.0" class="w"/>
+<line x1="566.0" y1="175.0" x2="566.0" y2="193.0" class="w"/>
+<line x1="1111.0" y1="175.0" x2="1111.0" y2="193.0" class="w"/>
+<line x1="1765.0" y1="175.0" x2="1765.0" y2="193.0" class="w"/>
+<line x1="2419.0" y1="175.0" x2="2419.0" y2="193.0" class="w"/>
+<line x1="3073.0" y1="175.0" x2="3073.0" y2="193.0" class="w"/>
+<rect x="30" y="193.0" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="130.0" y="212.0" class="id">G2.1</text>
+<text x="130.0" y="225.5" class="d">EPS drops LKA assistance and no</text>
+<text x="130.0" y="238.0" class="d">adequate take-over request</text>
+<rect x="72.0" y="244.0" width="116.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="130.0" y="253.5" class="b" fill="#222">continued on sheet 2</text>
+<path d="M130.0,262.0 L148.0,292.0 L112.0,292.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="139.0" y1="277.0" x2="160.0" y2="277.0" stroke="#111" stroke-width="1.4"/>
+<rect x="248" y="193.0" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="348.0" y="212.0" class="id">G2.2</text>
+<text x="348.0" y="225.5" class="d">Envelope blocks or revokes</text>
+<text x="348.0" y="238.0" class="d">authority and no adequate take-over</text>
+<text x="348.0" y="250.5" class="d">request</text>
+<rect x="290.0" y="256.5" width="116.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="348.0" y="266.0" class="b" fill="#222">continued on sheet 3</text>
+<path d="M348.0,274.5 L366.0,304.5 L330.0,304.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="357.0" y1="289.5" x2="378.0" y2="289.5" stroke="#111" stroke-width="1.4"/>
+<rect x="466" y="193.0" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="566.0" y="212.0" class="id">G2.3</text>
+<text x="566.0" y="225.5" class="d">Control-law input lost and no</text>
+<text x="566.0" y="238.0" class="d">adequate take-over request</text>
+<rect x="508.0" y="244.0" width="116.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="566.0" y="253.5" class="b" fill="#222">continued on sheet 4</text>
+<path d="M566.0,262.0 L584.0,292.0 L548.0,292.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="575.0" y1="277.0" x2="596.0" y2="277.0" stroke="#111" stroke-width="1.4"/>
+<rect x="1011.0" y="193.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1111.0" y="212.0" class="id">G2.4</text>
+<text x="1111.0" y="225.5" class="d">Non-finite command and no adequate</text>
+<text x="1111.0" y="238.0" class="d">take-over request</text>
+<path d="M1093.0,280.0 L1093.0,262.0 A18,16 0 0 1 1129.0,262.0 L1129.0,280.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1111.0" y1="280.0" x2="1111.0" y2="298.0" class="w"/>
+<line x1="784.0" y1="298.0" x2="1438.0" y2="298.0" class="w"/>
+<line x1="784.0" y1="298.0" x2="784.0" y2="344.5" class="w"/>
+<line x1="1111.0" y1="298.0" x2="1111.0" y2="344.5" class="w"/>
+<line x1="1438.0" y1="298.0" x2="1438.0" y2="344.5" class="w"/>
+<rect x="684" y="344.5" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="784.0" y="363.5" class="id">BE-2.04</text>
+<text x="784.0" y="377.0" class="d">Non-finite command clamped to 0</text>
+<text x="784.0" y="389.5" class="d">without a fault</text>
+<text x="784.0" y="402.0" class="d">(controlsd.py:140-147, GAP-19)</text>
+<circle cx="784.0" cy="425.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1011.0" y="344.5" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1111.0" y="363.5" class="id">G2.4.1</text>
+<text x="1111.0" y="377.0" class="d">SoC warning missing or late</text>
+<path d="M1093.0,419.0 Q1111.0,411.0 1129.0,419.0 Q1127.0,395.0 1111.0,385.0 Q1095.0,395.0 1093.0,419.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1111.0" y1="419.0" x2="1111.0" y2="437.0" class="w"/>
+<line x1="1002.0" y1="437.0" x2="1220.0" y2="437.0" class="w"/>
+<line x1="1002.0" y1="437.0" x2="1002.0" y2="521.0" class="w"/>
+<line x1="1220.0" y1="437.0" x2="1220.0" y2="521.0" class="w"/>
+<rect x="902" y="521.0" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1002.0" y="540.0" class="id">BE-2.11</text>
+<text x="1002.0" y="553.5" class="d">Non-finite command logged only</text>
+<text x="1002.0" y="566.0" class="d">(GAP-19)</text>
+<rect x="954.8" y="572.0" width="94.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="1002.0" y="581.5" class="b" fill="#fff">latent, baseline</text>
+<circle cx="1002.0" cy="605.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1120" y="521.0" width="200" height="56.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1220.0" y="540.0" class="id">G-HMI</text>
+<text x="1220.0" y="553.5" class="d">HMI does not deliver the warning</text>
+<rect x="1162.0" y="559.5" width="116.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="1220.0" y="569.0" class="b" fill="#222">developed on sheet 2</text>
+<path d="M1220.0,577.5 L1238.0,607.5 L1202.0,607.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1338" y="344.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1438.0" y="363.5" class="id">G-LATCUE</text>
+<text x="1438.0" y="377.0" class="d">SoC-independent cue missing or late</text>
+<text x="1438.0" y="389.5" class="d">(lateral loss)</text>
+<rect x="1380.0" y="395.5" width="116.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="1438.0" y="405.0" class="b" fill="#222">developed on sheet 2</text>
+<path d="M1438.0,413.5 L1456.0,443.5 L1420.0,443.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1665.0" y="193.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1765.0" y="212.0" class="id">G2.5</text>
+<text x="1765.0" y="225.5" class="d">SoC crash or hang: control and the</text>
+<text x="1765.0" y="238.0" class="d">SoC warning are lost together</text>
+<path d="M1747.0,280.0 L1747.0,262.0 A18,16 0 0 1 1783.0,262.0 L1783.0,280.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1765.0" y1="280.0" x2="1765.0" y2="298.0" class="w"/>
+<line x1="1656.0" y1="298.0" x2="1874.0" y2="298.0" class="w"/>
+<line x1="1656.0" y1="298.0" x2="1656.0" y2="344.5" class="w"/>
+<line x1="1874.0" y1="298.0" x2="1874.0" y2="344.5" class="w"/>
+<rect x="1556" y="344.5" width="200" height="56.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1656.0" y="363.5" class="id">BE-2.05</text>
+<text x="1656.0" y="377.0" class="d">SoC crash or hang (whole SoC)</text>
+<rect x="1625.0" y="383.0" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="1656.0" y="392.5" class="b" fill="#fff">CCF DFI-14</text>
+<circle cx="1656.0" cy="416.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1774" y="344.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1874.0" y="363.5" class="id">G-LATCUE</text>
+<text x="1874.0" y="377.0" class="d">SoC-independent cue missing or late</text>
+<text x="1874.0" y="389.5" class="d">(lateral loss)</text>
+<rect x="1816.0" y="395.5" width="116.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="1874.0" y="405.0" class="b" fill="#222">developed on sheet 2</text>
+<path d="M1874.0,413.5 L1892.0,443.5 L1856.0,443.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2319.0" y="193.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2419.0" y="212.0" class="id">G2.6</text>
+<text x="2419.0" y="225.5" class="d">Actuation frames stop and no</text>
+<text x="2419.0" y="238.0" class="d">adequate take-over request</text>
+<path d="M2401.0,280.0 L2401.0,262.0 A18,16 0 0 1 2437.0,262.0 L2437.0,280.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="2419.0" y1="280.0" x2="2419.0" y2="298.0" class="w"/>
+<line x1="2092.0" y1="298.0" x2="2746.0" y2="298.0" class="w"/>
+<line x1="2092.0" y1="298.0" x2="2092.0" y2="344.5" class="w"/>
+<line x1="2419.0" y1="298.0" x2="2419.0" y2="344.5" class="w"/>
+<line x1="2746.0" y1="298.0" x2="2746.0" y2="344.5" class="w"/>
+<rect x="1992" y="344.5" width="200" height="106.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2092.0" y="363.5" class="id">BE-2.06</text>
+<text x="2092.0" y="377.0" class="d">Actuation frames stop reaching the</text>
+<text x="2092.0" y="389.5" class="d">bus: SoC configuration command</text>
+<text x="2092.0" y="402.0" class="d">(0xe5, 0xde, 0xf1; FFI-CM-09), MCU</text>
+<text x="2092.0" y="414.5" class="d">hang (SFMEA-22), car-side bus-off</text>
+<text x="2092.0" y="427.0" class="d">(SFMEA-26)</text>
+<rect x="2063.7" y="433.0" width="56.6" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="2092.0" y="442.5" class="b" fill="#fff">FFI-CM-09</text>
+<circle cx="2092.0" cy="466.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2319.0" y="344.5" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2419.0" y="363.5" class="id">G2.6.1</text>
+<text x="2419.0" y="377.0" class="d">SoC warning missing or late</text>
+<path d="M2401.0,419.0 Q2419.0,411.0 2437.0,419.0 Q2435.0,395.0 2419.0,385.0 Q2403.0,395.0 2401.0,419.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="2419.0" y1="419.0" x2="2419.0" y2="437.0" class="w"/>
+<line x1="2310.0" y1="437.0" x2="2528.0" y2="437.0" class="w"/>
+<line x1="2310.0" y1="437.0" x2="2310.0" y2="521.0" class="w"/>
+<line x1="2528.0" y1="437.0" x2="2528.0" y2="521.0" class="w"/>
+<rect x="2210" y="521.0" width="200" height="103.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2310.0" y="540.0" class="id">BE-2.17</text>
+<text x="2310.0" y="553.5" class="d">Loss of the actuation frames not</text>
+<text x="2310.0" y="566.0" class="d">reported in time by the SoC: no</text>
+<text x="2310.0" y="578.5" class="d">check that the frames reach the</text>
+<text x="2310.0" y="591.0" class="d">bus; seen only indirectly</text>
+<text x="2310.0" y="603.5" class="d">(pandaStates, canError) with timing</text>
+<text x="2310.0" y="616.0" class="d">not analysed (to confirm, OI-10)</text>
+<circle cx="2310.0" cy="639.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2428" y="521.0" width="200" height="56.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2528.0" y="540.0" class="id">G-HMI</text>
+<text x="2528.0" y="553.5" class="d">HMI does not deliver the warning</text>
+<rect x="2470.0" y="559.5" width="116.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="2528.0" y="569.0" class="b" fill="#222">developed on sheet 2</text>
+<path d="M2528.0,577.5 L2546.0,607.5 L2510.0,607.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2646" y="344.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2746.0" y="363.5" class="id">G-LATCUE</text>
+<text x="2746.0" y="377.0" class="d">SoC-independent cue missing or late</text>
+<text x="2746.0" y="389.5" class="d">(lateral loss)</text>
+<rect x="2688.0" y="395.5" width="116.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="2746.0" y="405.0" class="b" fill="#222">developed on sheet 2</text>
+<path d="M2746.0,413.5 L2764.0,443.5 L2728.0,443.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2973.0" y="193.0" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="3073.0" y="212.0" class="id">G2.7</text>
+<text x="3073.0" y="225.5" class="d">Loss of the 12 V supply: the SoC</text>
+<text x="3073.0" y="238.0" class="d">warning and the siren are lost with</text>
+<text x="3073.0" y="250.5" class="d">control</text>
+<path d="M3055.0,292.5 L3055.0,274.5 A18,16 0 0 1 3091.0,274.5 L3091.0,292.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="3073.0" y1="292.5" x2="3073.0" y2="310.5" class="w"/>
+<line x1="2964.0" y1="310.5" x2="3182.0" y2="310.5" class="w"/>
+<line x1="2964.0" y1="310.5" x2="2964.0" y2="344.5" class="w"/>
+<line x1="3182.0" y1="310.5" x2="3182.0" y2="344.5" class="w"/>
+<rect x="2864" y="344.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2964.0" y="363.5" class="id">BE-2.07</text>
+<text x="2964.0" y="377.0" class="d">Loss of the 12 V supply to the</text>
+<text x="2964.0" y="389.5" class="d">device (FSC node N08)</text>
+<circle cx="2964.0" cy="412.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="3082" y="344.5" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="3182.0" y="363.5" class="id">UE-2.18</text>
+<text x="3182.0" y="377.0" class="d">Driver does not notice the end of</text>
+<text x="3182.0" y="389.5" class="d">LKA torque or the cluster cruise</text>
+<text x="3182.0" y="402.0" class="d">indicator (AOU-01R, AOU-12)</text>
+<path d="M3182.0,410.0 L3202.0,425.0 L3182.0,440.0 L3162.0,425.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="30" y="712.0" class="h">Symbols (IEC 61025)</text>
+<rect x="32" y="726.0" width="36" height="22" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="96" y="741.0" class="l">Top / intermediate event</text>
+<path d="M32,794.0 Q50,786.0 68,794.0 Q66,770.0 50,760.0 Q34,770.0 32,794.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="779.0" class="l">OR gate</text>
+<path d="M32,832.0 L32,814.0 A18,16 0 0 1 68,814.0 L68,832.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="817.0" class="l">AND gate</text>
+<circle cx="50" cy="851.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="855.0" class="l">Basic event</text>
+<path d="M50,874.0 L70,889.0 L50,904.0 L30,889.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="893.0" class="l">Undeveloped event (outside the item or not developed)</text>
+<path d="M50,912.0 L68,942.0 L32,942.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="59" y1="927.0" x2="80" y2="927.0" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="931.0" class="l">Transfer: continued on another sheet</text>
+<path d="M50,950.0 L68,980.0 L32,980.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="969.0" class="l">Transfer in: gate developed elsewhere</text>
+<rect x="30" y="996.0" width="24.2" height="13" rx="6.5" fill="#b3261e"/>
+<text x="42.1" y="1005.5" class="b" fill="#fff">SPF</text>
+<rect x="59.2" y="996.0" width="40.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="79.4" y="1005.5" class="b" fill="#fff">latent</text>
+<rect x="104.60000000000001" y="996.0" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
+<text x="122.1" y="1005.5" class="b" fill="#fff">SOTIF</text>
+<rect x="144.60000000000002" y="996.0" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="175.6" y="1005.5" class="b" fill="#fff">CCF DFI-nn</text>
+<rect x="211.60000000000002" y="996.0" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="223.7" y="1005.5" class="b" fill="#fff">FFI</text>
+<rect x="240.8" y="996.0" width="72.8" height="13" rx="6.5" fill="#3d6b3d"/>
+<text x="277.2" y="1005.5" class="b" fill="#fff">outside item</text>
+<rect x="318.6" y="996.0" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="344.2" y="1005.5" class="b" fill="#222">repeated</text>
+<rect x="2852" y="700.0" width="430" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="2862" y="722.0" class="h" text-anchor="start">LionDriver — FTA SG-02</text>
+<text x="2862" y="738.0" class="l" text-anchor="start">loss or degradation of lateral control without adequate take-over warn</text>
+<text x="2862" y="754.0" class="l" text-anchor="start">Sheet 1 of 4   ·   top of sheet: TE-02</text>
+<text x="2862" y="770.0" class="l" text-anchor="start">Source: WP-A-04 §4 (analysis of record)</text>
+<text x="2862" y="786.0" class="s" text-anchor="start">Generated by fta_diagrams.py — edit WP-A-04, not this file</text>
+</svg>

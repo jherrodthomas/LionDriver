@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1571" height="1030" viewBox="0 0 1571 1030" font-family="Helvetica, Arial, sans-serif">
+<style>.g{fill:#fff;stroke:#111;stroke-width:1.4}.ctx{fill:#f4f4f4;stroke:#111;stroke-width:1.1}.id{font-size:11.5px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.sid{font-size:10.5px;font-weight:700;text-anchor:middle}.cid{font-size:10px;font-weight:700;text-anchor:middle}.cs{font-size:9.5px;text-anchor:middle;fill:#333}.aj{font-size:11px;font-weight:700;text-anchor:end}.df{font-size:9.5px;font-weight:700;fill:#b3261e;text-anchor:middle}.dfl{font-size:9.5px;font-weight:700;fill:#b3261e}.sh{font-size:9.5px;font-weight:600;fill:#444;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">Safety case — argument from G1.1  (sheet 3 of 6)</text>
+<rect x="670.5" y="70" width="230" height="85.0" class="g"/>
+<text x="785.5" y="89" class="id">G1.1</text>
+<text x="785.5" y="102.5" class="d">SG-01 (lateral motion, ASIL C ⚠ / B if</text>
+<text x="785.5" y="115.0" class="d">C1 shown under option c) is met.</text>
+<text x="785.5" y="129.0" class="df">defeaters: DF-14</text>
+<text x="785.5" y="144.0" class="sh">from sheet 2</text>
+<ellipse cx="1006.5" cy="97.0" rx="95.0" ry="31.0" class="ctx"/>
+<text x="1097.5" y="130.0" class="aj">A</text>
+<text x="1006.5" y="88" class="cid">Assumption</text>
+<text x="1006.5" y="100.5" class="cs">AOU-01, AOU-02 hold (WP-K-01</text>
+<text x="1006.5" y="113.0" class="cs">§5)</text>
+<line x1="900.5" y1="90" x2="904.5" y2="90" class="w"/>
+<line x1="904.5" y1="90" x2="904.5" y2="97.0" class="w"/>
+<line x1="904.5" y1="97.0" x2="910.5" y2="97.0" class="w"/><path d="M910.5,97.0 L902.2,100.5 L902.2,93.5 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="785.5" y1="155.0" x2="785.5" y2="174.0" class="w"/>
+<line x1="785.5" y1="174.0" x2="785.5" y2="174.0" class="w"/>
+<line x1="785.5" y1="174.0" x2="785.5" y2="200.0" class="w"/><path d="M785.5,200.0 L782.0,191.7 L789.0,191.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<path d="M674.5,201.0 L910.5,201.0 L896.5,306.0 L660.5,306.0 Z" class="g"/>
+<text x="785.5" y="220.0" class="id">S1.1</text>
+<text x="785.5" y="233.5" class="d">Argue over (i) envelope limits keep</text>
+<text x="785.5" y="246.0" class="d">any command controllable, (ii) the</text>
+<text x="785.5" y="258.5" class="d">limits are enforced by an element of</text>
+<text x="785.5" y="271.0" class="d">sufficient integrity, (iii) faults</text>
+<text x="785.5" y="283.5" class="d">of the enforcing element are</text>
+<text x="785.5" y="296.0" class="d">detected and reacted to in FTTI</text>
+<line x1="785.5" y1="306.0" x2="785.5" y2="325.0" class="w"/>
+<line x1="153.0" y1="325.0" x2="1418.0" y2="325.0" class="w"/>
+<line x1="153.0" y1="325.0" x2="153.0" y2="351.0" class="w"/><path d="M153.0,351.0 L149.5,342.7 L156.5,342.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="748.0" y1="325.0" x2="748.0" y2="351.0" class="w"/><path d="M748.0,351.0 L744.5,342.7 L751.5,342.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1150.0" y1="325.0" x2="1150.0" y2="351.0" class="w"/><path d="M1150.0,351.0 L1146.5,342.7 L1153.5,342.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1418.0" y1="325.0" x2="1418.0" y2="351.0" class="w"/><path d="M1418.0,351.0 L1414.5,342.7 L1421.5,342.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<rect x="38.0" y="352.0" width="230" height="95.0" class="g"/>
+<text x="153.0" y="371.0" class="id">G1.1.1</text>
+<text x="153.0" y="384.5" class="d">Envelope limits (torque magnitude,</text>
+<text x="153.0" y="397.0" class="d">rate, measured tracking) are</text>
+<text x="153.0" y="409.5" class="d">controllable by a typical driver (C1</text>
+<text x="153.0" y="422.0" class="d">basis).</text>
+<text x="153.0" y="436.0" class="df">defeaters: DF-28, DF-34</text>
+<ellipse cx="374.0" cy="379.0" rx="95.0" ry="31.0" class="ctx"/>
+<text x="465.0" y="412.0" class="aj">A</text>
+<text x="374.0" y="370.0" class="cid">Assumption</text>
+<text x="374.0" y="382.5" class="cs">AOU-01, AOU-02 hold (WP-K-01</text>
+<text x="374.0" y="395.0" class="cs">§5)</text>
+<line x1="268.0" y1="372.0" x2="272.0" y2="372.0" class="w"/>
+<line x1="272.0" y1="372.0" x2="272.0" y2="379.0" class="w"/>
+<line x1="272.0" y1="379.0" x2="278.0" y2="379.0" class="w"/><path d="M278.0,379.0 L269.7,382.5 L269.7,375.5 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="153.0" y1="447.0" x2="153.0" y2="466.0" class="w"/>
+<line x1="86.0" y1="466.0" x2="220.0" y2="466.0" class="w"/>
+<line x1="86.0" y1="466.0" x2="86.0" y2="507.0" class="w"/><path d="M86.0,507.0 L82.5,498.7 L89.5,498.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="220.0" y1="466.0" x2="220.0" y2="507.0" class="w"/><path d="M220.0,507.0 L216.5,498.7 L223.5,498.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="86.0" cy="531.0" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86.0" y="535.0" class="sid" fill="#111">Sn-01</text>
+<text x="86.0" y="568.5" class="cs">Functional safety</text>
+<text x="86.0" y="581.0" class="cs">requirements</text>
+<text x="86.0" y="593.5" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="220.0" cy="531.0" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="220.0" y="535.0" class="sid" fill="#111">Sn-20</text>
+<text x="220.0" y="568.5" class="cs">Vehicle</text>
+<text x="220.0" y="581.0" class="cs">controllability and</text>
+<text x="220.0" y="593.5" class="cs">EPS characterisation</text>
+<text x="220.0" y="606.0" class="cs">(AOU-01/02)</text>
+<rect x="633.0" y="352.0" width="230" height="70.0" class="g"/>
+<text x="748.0" y="371.0" class="id">G1.1.2</text>
+<text x="748.0" y="384.5" class="d">Limits are enforced on every TX frame</text>
+<text x="748.0" y="397.0" class="d">by the Toyota safety mode.</text>
+<text x="748.0" y="411.0" class="df">defeaters: DF-03, DF-16, DF-27, DF-30</text>
+<line x1="748.0" y1="422.0" x2="748.0" y2="441.0" class="w"/>
+<line x1="547.0" y1="441.0" x2="949.0" y2="441.0" class="w"/>
+<line x1="547.0" y1="441.0" x2="547.0" y2="507.0" class="w"/><path d="M547.0,507.0 L543.5,498.7 L550.5,498.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="681.0" y1="441.0" x2="681.0" y2="507.0" class="w"/><path d="M681.0,507.0 L677.5,498.7 L684.5,498.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="815.0" y1="441.0" x2="815.0" y2="507.0" class="w"/><path d="M815.0,507.0 L811.5,498.7 L818.5,498.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="949.0" y1="441.0" x2="949.0" y2="507.0" class="w"/><path d="M949.0,507.0 L945.5,498.7 L952.5,498.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="547.0" cy="531.0" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="547.0" y="535.0" class="sid" fill="#111">Sn-02</text>
+<text x="547.0" y="568.5" class="cs">Technical safety</text>
+<text x="547.0" y="581.0" class="cs">requirements</text>
+<circle cx="681.0" cy="531.0" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="681.0" y="535.0" class="sid" fill="#111">Sn-03</text>
+<text x="681.0" y="568.5" class="cs">Software safety</text>
+<text x="681.0" y="581.0" class="cs">requirements</text>
+<circle cx="815.0" cy="531.0" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="815.0" y="535.0" class="sid" fill="#111">Sn-10</text>
+<text x="815.0" y="568.5" class="cs">opendbc safety unit</text>
+<text x="815.0" y="581.0" class="cs">tests (100% line</text>
+<text x="815.0" y="593.5" class="cs">coverage gate,</text>
+<text x="815.0" y="606.0" class="cs">MISRA, mutation,…</text>
+<circle cx="949.0" cy="531.0" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="949.0" y="535.0" class="sid" fill="#111">Sn-12</text>
+<text x="949.0" y="568.5" class="cs">HIL tests of the</text>
+<text x="949.0" y="581.0" class="cs">envelope</text>
+<rect x="1035.0" y="352.0" width="230" height="70.0" class="g"/>
+<text x="1150.0" y="371.0" class="id">G1.1.3</text>
+<text x="1150.0" y="384.5" class="d">No steering actuation while not</text>
+<text x="1150.0" y="397.0" class="d">engaged.</text>
+<text x="1150.0" y="411.0" class="df">defeaters: DF-38</text>
+<line x1="1150.0" y1="422.0" x2="1150.0" y2="441.0" class="w"/>
+<line x1="1083.0" y1="441.0" x2="1217.0" y2="441.0" class="w"/>
+<line x1="1083.0" y1="441.0" x2="1083.0" y2="507.0" class="w"/><path d="M1083.0,507.0 L1079.5,498.7 L1086.5,498.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1217.0" y1="441.0" x2="1217.0" y2="507.0" class="w"/><path d="M1217.0,507.0 L1213.5,498.7 L1220.5,498.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="1083.0" cy="531.0" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1083.0" y="535.0" class="sid" fill="#111">Sn-10</text>
+<text x="1083.0" y="568.5" class="cs">opendbc safety unit</text>
+<text x="1083.0" y="581.0" class="cs">tests (100% line</text>
+<text x="1083.0" y="593.5" class="cs">coverage gate,</text>
+<text x="1083.0" y="606.0" class="cs">MISRA, mutation,…</text>
+<circle cx="1217.0" cy="531.0" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="1217.0" y="535.0" class="sid" fill="#111">Sn-12</text>
+<text x="1217.0" y="568.5" class="cs">HIL tests of the</text>
+<text x="1217.0" y="581.0" class="cs">envelope</text>
+<rect x="1303.0" y="352.0" width="230" height="110.0" class="g"/>
+<text x="1418.0" y="371.0" class="id">G1.1.4</text>
+<text x="1418.0" y="384.5" class="d">Envelope faults (MCU hang, SPI</text>
+<text x="1418.0" y="397.0" class="d">corruption, wrong safety mode, stale</text>
+<text x="1418.0" y="409.5" class="d">RX) reach the safe state within the</text>
+<text x="1418.0" y="422.0" class="d">FTTI.</text>
+<text x="1418.0" y="436.0" class="df">defeaters: DF-01, DF-02, DF-03, DF-04,</text>
+<text x="1418.0" y="451.0" class="df">DF-05, DF-06, DF-29, DF-36, DF-40</text>
+<line x1="1418.0" y1="462.0" x2="1418.0" y2="481.0" class="w"/>
+<line x1="1351.0" y1="481.0" x2="1485.0" y2="481.0" class="w"/>
+<line x1="1351.0" y1="481.0" x2="1351.0" y2="507.0" class="w"/><path d="M1351.0,507.0 L1347.5,498.7 L1354.5,498.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1485.0" y1="481.0" x2="1485.0" y2="507.0" class="w"/><path d="M1485.0,507.0 L1481.5,498.7 L1488.5,498.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="1351.0" cy="531.0" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1351.0" y="535.0" class="sid" fill="#111">Sn-04</text>
+<text x="1351.0" y="568.5" class="cs">FTTI and timing</text>
+<text x="1351.0" y="581.0" class="cs">budget</text>
+<circle cx="1485.0" cy="531.0" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="1485.0" y="535.0" class="sid" fill="#111">Sn-13</text>
+<text x="1485.0" y="568.5" class="cs">Fault injection</text>
+<text x="30" y="662.0" class="h">Notation (GSN Community Standard v3)</text>
+<rect x="30" y="676.0" width="40" height="22" class="g"/>
+<text x="86" y="691.0" class="l">Goal (claim)</text>
+<path d="M37,706.0 L70,706.0 L63,728.0 L30,728.0 Z" class="g"/>
+<text x="86" y="721.0" class="l">Strategy (argument)</text>
+<circle cx="50" cy="747.0" r="11" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.6"/>
+<text x="86" y="751.0" class="l">Solution: evidence available</text>
+<circle cx="50" cy="777.0" r="11" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86" y="781.0" class="l">Solution: evidence partial</text>
+<circle cx="50" cy="807.0" r="11" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="86" y="811.0" class="l">Solution: evidence missing</text>
+<rect x="30" y="826.0" width="40" height="22" rx="10" class="ctx"/>
+<text x="86" y="841.0" class="l">Context</text>
+<ellipse cx="50" cy="867.0" rx="20" ry="11" class="ctx"/>
+<text x="86" y="871.0" class="l">Assumption (A) / justification (J)</text>
+<path d="M50,888.0 L59,897.0 L50,906.0 L41,897.0 Z" fill="#fff" stroke="#111" stroke-width="1.2"/>
+<text x="86" y="901.0" class="l">Undeveloped goal</text>
+<line x1="30.0" y1="927.0" x2="70.0" y2="927.0" class="w"/><path d="M70.0,927.0 L61.7,930.5 L61.7,923.5 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<text x="86" y="931.0" class="l">SupportedBy</text>
+<line x1="30.0" y1="957.0" x2="70.0" y2="957.0" class="w"/><path d="M70.0,957.0 L61.7,960.5 L61.7,953.5 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<text x="86" y="961.0" class="l">InContextOf</text>
+<text x="30" y="986.0" class="dfl">defeaters: DF-nn</text>
+<text x="140" y="986.0" class="l">open counter-evidence on the goal (WP-K-01 §7, WP-K-03 §6)</text>
+<rect x="1101.0" y="650.0" width="440" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="1111.0" y="672.0" class="h">LionDriver — Safety case (GSN)</text>
+<text x="1111.0" y="688.0" class="l">Argument from G1.1</text>
+<text x="1111.0" y="704.0" class="l">Sheet 3 of 6</text>
+<text x="1111.0" y="720.0" class="l">Source: case records (assurance/case/) and WP-K-01 contexts</text>
+<text x="1111.0" y="736.0" class="s">Generated by gsn_diagrams.py — edit the source, not this file</text>
+</svg>

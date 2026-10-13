@@ -1,0 +1,371 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="5283" height="1060" viewBox="0 0 5283 1060" font-family="Helvetica, Arial, sans-serif">
+<style>.g{fill:#fff;stroke:#111;stroke-width:1.4}.ctx{fill:#f4f4f4;stroke:#111;stroke-width:1.1}.id{font-size:11.5px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.sid{font-size:10.5px;font-weight:700;text-anchor:middle}.cid{font-size:10px;font-weight:700;text-anchor:middle}.cs{font-size:9.5px;text-anchor:middle;fill:#333}.aj{font-size:11px;font-weight:700;text-anchor:end}.df{font-size:9.5px;font-weight:700;fill:#b3261e;text-anchor:middle}.dfl{font-size:9.5px;font-weight:700;fill:#b3261e}.sh{font-size:9.5px;font-weight:600;fill:#444;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">Safety case — argument from G1  (sheet 2 of 6)</text>
+<rect x="3720.5" y="70" width="230" height="95.0" class="g"/>
+<text x="3835.5" y="89" class="id">G1</text>
+<text x="3835.5" y="102.5" class="d">Hazards from E/E malfunctions of the</text>
+<text x="3835.5" y="115.0" class="d">item are reduced to a tolerable level:</text>
+<text x="3835.5" y="127.5" class="d">every safety goal SG-01…SG-07 is met</text>
+<text x="3835.5" y="140.0" class="d">with the integrity of its ASIL.</text>
+<text x="3835.5" y="154.0" class="sh">from sheet 1</text>
+<rect x="3961.5" y="70" width="190" height="54.0" rx="14" class="ctx"/>
+<text x="4056.5" y="88" class="cid">C4</text>
+<text x="4056.5" y="100.5" class="cs">(safety goals and ASILs,</text>
+<text x="4056.5" y="113.0" class="cs">WP-C-03 §6)</text>
+<rect x="3961.5" y="132.0" width="190" height="91.5" rx="14" class="ctx"/>
+<text x="4056.5" y="150.0" class="cid">C7</text>
+<text x="4056.5" y="162.5" class="cs">Envelope strategy: reduced</text>
+<text x="4056.5" y="175.0" class="cs">authority (option c) + ASIL B</text>
+<text x="4056.5" y="187.5" class="cs">hardening, recommended and</text>
+<text x="4056.5" y="200.0" class="cs">pending maintainer decision</text>
+<text x="4056.5" y="212.5" class="cs">[WP-C-04 §4]</text>
+<line x1="3950.5" y1="90" x2="3954.5" y2="90" class="w"/>
+<line x1="3954.5" y1="90" x2="3954.5" y2="177.75" class="w"/>
+<line x1="3954.5" y1="97.0" x2="3960.5" y2="97.0" class="w"/><path d="M3960.5,97.0 L3952.2,100.5 L3952.2,93.5 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="3954.5" y1="177.8" x2="3960.5" y2="177.8" class="w"/><path d="M3960.5,177.8 L3952.2,181.3 L3952.2,174.2 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="3835.5" y1="165.0" x2="3835.5" y2="184.0" class="w"/>
+<line x1="2474.0" y1="184.0" x2="5197.0" y2="184.0" class="w"/>
+<line x1="2474.0" y1="184.0" x2="2474.0" y2="268.5" class="w"/><path d="M2474.0,268.5 L2470.5,260.2 L2477.5,260.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="5197.0" y1="184.0" x2="5197.0" y2="268.5" class="w"/><path d="M5197.0,268.5 L5193.5,260.2 L5200.5,260.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<path d="M2363.0,269.5 L2599.0,269.5 L2585.0,324.5 L2349.0,324.5 Z" class="g"/>
+<text x="2474.0" y="288.5" class="id">S1</text>
+<text x="2474.0" y="302.0" class="d">Argue per safety goal, then over the</text>
+<text x="2474.0" y="314.5" class="d">properties every SG depends on</text>
+<line x1="2474.0" y1="324.5" x2="2474.0" y2="343.5" class="w"/>
+<line x1="145.0" y1="343.5" x2="4803.0" y2="343.5" class="w"/>
+<line x1="145.0" y1="343.5" x2="145.0" y2="391.5" class="w"/><path d="M145.0,391.5 L141.5,383.2 L148.5,383.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="740.0" y1="343.5" x2="740.0" y2="391.5" class="w"/><path d="M740.0,391.5 L736.5,383.2 L743.5,383.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1343.0" y1="343.5" x2="1343.0" y2="391.5" class="w"/><path d="M1343.0,391.5 L1339.5,383.2 L1346.5,383.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1879.0" y1="343.5" x2="1879.0" y2="391.5" class="w"/><path d="M1879.0,391.5 L1875.5,383.2 L1882.5,383.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2474.0" y1="343.5" x2="2474.0" y2="391.5" class="w"/><path d="M2474.0,391.5 L2470.5,383.2 L2477.5,383.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3002.0" y1="343.5" x2="3002.0" y2="391.5" class="w"/><path d="M3002.0,391.5 L2998.5,383.2 L3005.5,383.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3471.0" y1="343.5" x2="3471.0" y2="391.5" class="w"/><path d="M3471.0,391.5 L3467.5,383.2 L3474.5,383.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3932.0" y1="343.5" x2="3932.0" y2="391.5" class="w"/><path d="M3932.0,391.5 L3928.5,383.2 L3935.5,383.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="4334.0" y1="343.5" x2="4334.0" y2="391.5" class="w"/><path d="M4334.0,391.5 L4330.5,383.2 L4337.5,383.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="4803.0" y1="343.5" x2="4803.0" y2="391.5" class="w"/><path d="M4803.0,391.5 L4799.5,383.2 L4806.5,383.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<rect x="30" y="392.5" width="230" height="85.0" class="g"/>
+<text x="145.0" y="411.5" class="id">G1.1</text>
+<text x="145.0" y="425.0" class="d">SG-01 (lateral motion, ASIL C ⚠ / B if</text>
+<text x="145.0" y="437.5" class="d">C1 shown under option c) is met.</text>
+<text x="145.0" y="451.5" class="df">defeaters: DF-14</text>
+<text x="145.0" y="466.5" class="sh">developed on sheet 3</text>
+<ellipse cx="366.0" cy="419.5" rx="95.0" ry="31.0" class="ctx"/>
+<text x="457.0" y="452.5" class="aj">A</text>
+<text x="366.0" y="410.5" class="cid">Assumption</text>
+<text x="366.0" y="423.0" class="cs">AOU-01, AOU-02 hold (WP-K-01</text>
+<text x="366.0" y="435.5" class="cs">§5)</text>
+<line x1="260" y1="412.5" x2="264" y2="412.5" class="w"/>
+<line x1="264" y1="412.5" x2="264" y2="419.5" class="w"/>
+<line x1="264.0" y1="419.5" x2="270.0" y2="419.5" class="w"/><path d="M270.0,419.5 L261.7,423.0 L261.7,416.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<rect x="625.0" y="392.5" width="230" height="70.0" class="g"/>
+<text x="740.0" y="411.5" class="id">G1.2</text>
+<text x="740.0" y="425.0" class="d">SG-02 (lateral loss without warning,</text>
+<text x="740.0" y="437.5" class="d">B) is met.</text>
+<text x="740.0" y="451.5" class="df">defeaters: DF-07, DF-08, DF-36, DF-41</text>
+<line x1="740.0" y1="462.5" x2="740.0" y2="481.5" class="w"/>
+<line x1="539.0" y1="481.5" x2="941.0" y2="481.5" class="w"/>
+<line x1="539.0" y1="481.5" x2="539.0" y2="537.5" class="w"/><path d="M539.0,537.5 L535.5,529.2 L542.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="673.0" y1="481.5" x2="673.0" y2="537.5" class="w"/><path d="M673.0,537.5 L669.5,529.2 L676.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="807.0" y1="481.5" x2="807.0" y2="537.5" class="w"/><path d="M807.0,537.5 L803.5,529.2 L810.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="941.0" y1="481.5" x2="941.0" y2="537.5" class="w"/><path d="M941.0,537.5 L937.5,529.2 L944.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="539.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="539.0" y="565.5" class="sid" fill="#111">Sn-01</text>
+<text x="539.0" y="599.0" class="cs">Functional safety</text>
+<text x="539.0" y="611.5" class="cs">requirements</text>
+<text x="539.0" y="624.0" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="673.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="673.0" y="565.5" class="sid" fill="#111">Sn-02</text>
+<text x="673.0" y="599.0" class="cs">Technical safety</text>
+<text x="673.0" y="611.5" class="cs">requirements</text>
+<circle cx="807.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="807.0" y="565.5" class="sid" fill="#111">Sn-14</text>
+<text x="807.0" y="599.0" class="cs">SW integration /</text>
+<text x="807.0" y="611.5" class="cs">process replay</text>
+<circle cx="941.0" cy="561.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="941.0" y="565.5" class="sid" fill="#111">Sn-13</text>
+<text x="941.0" y="599.0" class="cs">Fault injection</text>
+<rect x="1228.0" y="392.5" width="230" height="70.0" class="g"/>
+<text x="1343.0" y="411.5" class="id">G1.3</text>
+<text x="1343.0" y="425.0" class="d">SG-03 (unintended acceleration, B ⚠)</text>
+<text x="1343.0" y="437.5" class="d">is met.</text>
+<text x="1343.0" y="451.5" class="df">defeaters: DF-14, DF-38</text>
+<ellipse cx="1564.0" cy="413.25" rx="95.0" ry="24.75" class="ctx"/>
+<text x="1655.0" y="440.0" class="aj">A</text>
+<text x="1564.0" y="410.5" class="cid">Assumption</text>
+<text x="1564.0" y="423.0" class="cs">AOU-05 hold (WP-K-01 §5)</text>
+<line x1="1458.0" y1="412.5" x2="1462.0" y2="412.5" class="w"/>
+<line x1="1462.0" y1="412.5" x2="1462.0" y2="413.25" class="w"/>
+<line x1="1462.0" y1="413.2" x2="1468.0" y2="413.2" class="w"/><path d="M1468.0,413.2 L1459.7,416.8 L1459.7,409.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1343.0" y1="462.5" x2="1343.0" y2="481.5" class="w"/>
+<line x1="1075.0" y1="481.5" x2="1611.0" y2="481.5" class="w"/>
+<line x1="1075.0" y1="481.5" x2="1075.0" y2="537.5" class="w"/><path d="M1075.0,537.5 L1071.5,529.2 L1078.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1209.0" y1="481.5" x2="1209.0" y2="537.5" class="w"/><path d="M1209.0,537.5 L1205.5,529.2 L1212.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1343.0" y1="481.5" x2="1343.0" y2="537.5" class="w"/><path d="M1343.0,537.5 L1339.5,529.2 L1346.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1477.0" y1="481.5" x2="1477.0" y2="537.5" class="w"/><path d="M1477.0,537.5 L1473.5,529.2 L1480.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1611.0" y1="481.5" x2="1611.0" y2="537.5" class="w"/><path d="M1611.0,537.5 L1607.5,529.2 L1614.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="1075.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1075.0" y="565.5" class="sid" fill="#111">Sn-01</text>
+<text x="1075.0" y="599.0" class="cs">Functional safety</text>
+<text x="1075.0" y="611.5" class="cs">requirements</text>
+<text x="1075.0" y="624.0" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="1209.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1209.0" y="565.5" class="sid" fill="#111">Sn-02</text>
+<text x="1209.0" y="599.0" class="cs">Technical safety</text>
+<text x="1209.0" y="611.5" class="cs">requirements</text>
+<circle cx="1343.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1343.0" y="565.5" class="sid" fill="#111">Sn-10</text>
+<text x="1343.0" y="599.0" class="cs">opendbc safety unit</text>
+<text x="1343.0" y="611.5" class="cs">tests (100% line</text>
+<text x="1343.0" y="624.0" class="cs">coverage gate,</text>
+<text x="1343.0" y="636.5" class="cs">MISRA, mutation,…</text>
+<circle cx="1477.0" cy="561.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="1477.0" y="565.5" class="sid" fill="#111">Sn-12</text>
+<text x="1477.0" y="599.0" class="cs">HIL tests of the</text>
+<text x="1477.0" y="611.5" class="cs">envelope</text>
+<circle cx="1611.0" cy="561.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="1611.0" y="565.5" class="sid" fill="#111">Sn-21</text>
+<text x="1611.0" y="599.0" class="cs">PCM ACC envelope</text>
+<text x="1611.0" y="611.5" class="cs">test (AOU-05)</text>
+<rect x="1764.0" y="392.5" width="230" height="70.0" class="g"/>
+<text x="1879.0" y="411.5" class="id">G1.4</text>
+<text x="1879.0" y="425.0" class="d">SG-04 (excessive deceleration, B ⚠) is</text>
+<text x="1879.0" y="437.5" class="d">met.</text>
+<text x="1879.0" y="451.5" class="df">defeaters: DF-09, DF-38</text>
+<ellipse cx="2100.0" cy="419.5" rx="95.0" ry="31.0" class="ctx"/>
+<text x="2191.0" y="452.5" class="aj">A</text>
+<text x="2100.0" y="410.5" class="cid">Assumption</text>
+<text x="2100.0" y="423.0" class="cs">AOU-05, AOU-10 hold (WP-K-01</text>
+<text x="2100.0" y="435.5" class="cs">§5)</text>
+<line x1="1994.0" y1="412.5" x2="1998.0" y2="412.5" class="w"/>
+<line x1="1998.0" y1="412.5" x2="1998.0" y2="419.5" class="w"/>
+<line x1="1998.0" y1="419.5" x2="2004.0" y2="419.5" class="w"/><path d="M2004.0,419.5 L1995.7,423.0 L1995.7,416.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1879.0" y1="462.5" x2="1879.0" y2="481.5" class="w"/>
+<line x1="1745.0" y1="481.5" x2="2013.0" y2="481.5" class="w"/>
+<line x1="1745.0" y1="481.5" x2="1745.0" y2="537.5" class="w"/><path d="M1745.0,537.5 L1741.5,529.2 L1748.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1879.0" y1="481.5" x2="1879.0" y2="537.5" class="w"/><path d="M1879.0,537.5 L1875.5,529.2 L1882.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2013.0" y1="481.5" x2="2013.0" y2="537.5" class="w"/><path d="M2013.0,537.5 L2009.5,529.2 L2016.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="1745.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1745.0" y="565.5" class="sid" fill="#111">Sn-01</text>
+<text x="1745.0" y="599.0" class="cs">Functional safety</text>
+<text x="1745.0" y="611.5" class="cs">requirements</text>
+<text x="1745.0" y="624.0" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="1879.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1879.0" y="565.5" class="sid" fill="#111">Sn-02</text>
+<text x="1879.0" y="599.0" class="cs">Technical safety</text>
+<text x="1879.0" y="611.5" class="cs">requirements</text>
+<circle cx="2013.0" cy="561.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="2013.0" y="565.5" class="sid" fill="#111">Sn-21</text>
+<text x="2013.0" y="599.0" class="cs">PCM ACC envelope</text>
+<text x="2013.0" y="611.5" class="cs">test (AOU-05)</text>
+<rect x="2359.0" y="392.5" width="230" height="70.0" class="g"/>
+<text x="2474.0" y="411.5" class="id">G1.5</text>
+<text x="2474.0" y="425.0" class="d">SG-05 (release on driver action, B ⚠)</text>
+<text x="2474.0" y="437.5" class="d">is met.</text>
+<text x="2474.0" y="451.5" class="df">defeaters: DF-10, DF-05, DF-14, DF-36</text>
+<ellipse cx="2695.0" cy="419.5" rx="95.0" ry="31.0" class="ctx"/>
+<text x="2786.0" y="452.5" class="aj">A</text>
+<text x="2695.0" y="410.5" class="cid">Assumption</text>
+<text x="2695.0" y="423.0" class="cs">AOU-01, AOU-02, AOU-03 hold</text>
+<text x="2695.0" y="435.5" class="cs">(WP-K-01 §5)</text>
+<line x1="2589.0" y1="412.5" x2="2593.0" y2="412.5" class="w"/>
+<line x1="2593.0" y1="412.5" x2="2593.0" y2="419.5" class="w"/>
+<line x1="2593.0" y1="419.5" x2="2599.0" y2="419.5" class="w"/><path d="M2599.0,419.5 L2590.7,423.0 L2590.7,416.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="2474.0" y1="462.5" x2="2474.0" y2="481.5" class="w"/>
+<line x1="2273.0" y1="481.5" x2="2675.0" y2="481.5" class="w"/>
+<line x1="2273.0" y1="481.5" x2="2273.0" y2="537.5" class="w"/><path d="M2273.0,537.5 L2269.5,529.2 L2276.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2407.0" y1="481.5" x2="2407.0" y2="537.5" class="w"/><path d="M2407.0,537.5 L2403.5,529.2 L2410.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2541.0" y1="481.5" x2="2541.0" y2="537.5" class="w"/><path d="M2541.0,537.5 L2537.5,529.2 L2544.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2675.0" y1="481.5" x2="2675.0" y2="537.5" class="w"/><path d="M2675.0,537.5 L2671.5,529.2 L2678.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="2273.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="2273.0" y="565.5" class="sid" fill="#111">Sn-01</text>
+<text x="2273.0" y="599.0" class="cs">Functional safety</text>
+<text x="2273.0" y="611.5" class="cs">requirements</text>
+<text x="2273.0" y="624.0" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="2407.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="2407.0" y="565.5" class="sid" fill="#111">Sn-02</text>
+<text x="2407.0" y="599.0" class="cs">Technical safety</text>
+<text x="2407.0" y="611.5" class="cs">requirements</text>
+<circle cx="2541.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="2541.0" y="565.5" class="sid" fill="#111">Sn-10</text>
+<text x="2541.0" y="599.0" class="cs">opendbc safety unit</text>
+<text x="2541.0" y="611.5" class="cs">tests (100% line</text>
+<text x="2541.0" y="624.0" class="cs">coverage gate,</text>
+<text x="2541.0" y="636.5" class="cs">MISRA, mutation,…</text>
+<circle cx="2675.0" cy="561.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="2675.0" y="565.5" class="sid" fill="#111">Sn-22</text>
+<text x="2675.0" y="599.0" class="cs">Brake override test</text>
+<text x="2675.0" y="611.5" class="cs">(AOU-03)</text>
+<rect x="2887.0" y="392.5" width="230" height="70.0" class="g"/>
+<text x="3002.0" y="411.5" class="id">G1.6</text>
+<text x="3002.0" y="425.0" class="d">SG-06 (longitudinal loss without</text>
+<text x="3002.0" y="437.5" class="d">warning, B) is met.</text>
+<text x="3002.0" y="451.5" class="df">defeaters: DF-07, DF-41</text>
+<line x1="3002.0" y1="462.5" x2="3002.0" y2="481.5" class="w"/>
+<line x1="2868.0" y1="481.5" x2="3136.0" y2="481.5" class="w"/>
+<line x1="2868.0" y1="481.5" x2="2868.0" y2="537.5" class="w"/><path d="M2868.0,537.5 L2864.5,529.2 L2871.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3002.0" y1="481.5" x2="3002.0" y2="537.5" class="w"/><path d="M3002.0,537.5 L2998.5,529.2 L3005.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3136.0" y1="481.5" x2="3136.0" y2="537.5" class="w"/><path d="M3136.0,537.5 L3132.5,529.2 L3139.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="2868.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="2868.0" y="565.5" class="sid" fill="#111">Sn-01</text>
+<text x="2868.0" y="599.0" class="cs">Functional safety</text>
+<text x="2868.0" y="611.5" class="cs">requirements</text>
+<text x="2868.0" y="624.0" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="3002.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="3002.0" y="565.5" class="sid" fill="#111">Sn-14</text>
+<text x="3002.0" y="599.0" class="cs">SW integration /</text>
+<text x="3002.0" y="611.5" class="cs">process replay</text>
+<circle cx="3136.0" cy="561.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="3136.0" y="565.5" class="sid" fill="#111">Sn-13</text>
+<text x="3136.0" y="599.0" class="cs">Fault injection</text>
+<rect x="3356.0" y="392.5" width="230" height="72.5" class="g"/>
+<text x="3471.0" y="411.5" class="id">G1.7</text>
+<text x="3471.0" y="425.0" class="d">SG-07 (stock PCS preserved, B) is met.</text>
+<text x="3471.0" y="439.0" class="df">defeaters: DF-11, DF-12, DF-14, DF-32,</text>
+<text x="3471.0" y="454.0" class="df">DF-33, DF-38, DF-39</text>
+<ellipse cx="3692.0" cy="413.25" rx="95.0" ry="24.75" class="ctx"/>
+<text x="3783.0" y="440.0" class="aj">A</text>
+<text x="3692.0" y="410.5" class="cid">Assumption</text>
+<text x="3692.0" y="423.0" class="cs">AOU-04 hold (WP-K-01 §5)</text>
+<line x1="3586.0" y1="412.5" x2="3590.0" y2="412.5" class="w"/>
+<line x1="3590.0" y1="412.5" x2="3590.0" y2="413.25" class="w"/>
+<line x1="3590.0" y1="413.2" x2="3596.0" y2="413.2" class="w"/><path d="M3596.0,413.2 L3587.7,416.8 L3587.7,409.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="3471.0" y1="465.0" x2="3471.0" y2="484.0" class="w"/>
+<line x1="3270.0" y1="484.0" x2="3672.0" y2="484.0" class="w"/>
+<line x1="3270.0" y1="484.0" x2="3270.0" y2="537.5" class="w"/><path d="M3270.0,537.5 L3266.5,529.2 L3273.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3404.0" y1="484.0" x2="3404.0" y2="537.5" class="w"/><path d="M3404.0,537.5 L3400.5,529.2 L3407.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3538.0" y1="484.0" x2="3538.0" y2="537.5" class="w"/><path d="M3538.0,537.5 L3534.5,529.2 L3541.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3672.0" y1="484.0" x2="3672.0" y2="537.5" class="w"/><path d="M3672.0,537.5 L3668.5,529.2 L3675.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="3270.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="3270.0" y="565.5" class="sid" fill="#111">Sn-01</text>
+<text x="3270.0" y="599.0" class="cs">Functional safety</text>
+<text x="3270.0" y="611.5" class="cs">requirements</text>
+<text x="3270.0" y="624.0" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="3404.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="3404.0" y="565.5" class="sid" fill="#111">Sn-02</text>
+<text x="3404.0" y="599.0" class="cs">Technical safety</text>
+<text x="3404.0" y="611.5" class="cs">requirements</text>
+<circle cx="3538.0" cy="561.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="3538.0" y="565.5" class="sid" fill="#111">Sn-23</text>
+<text x="3538.0" y="599.0" class="cs">Stock PCS target</text>
+<text x="3538.0" y="611.5" class="cs">test (AOU-04)</text>
+<circle cx="3672.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="3672.0" y="565.5" class="sid" fill="#111">Sn-30</text>
+<text x="3672.0" y="599.0" class="cs">Installation and</text>
+<text x="3672.0" y="611.5" class="cs">provisioning</text>
+<text x="3672.0" y="624.0" class="cs">control;</text>
+<text x="3672.0" y="636.5" class="cs">installation records</text>
+<rect x="3817.0" y="392.5" width="230" height="100.0" class="g"/>
+<text x="3932.0" y="411.5" class="id">G1.8</text>
+<text x="3932.0" y="425.0" class="d">The QM SoC stack cannot interfere with</text>
+<text x="3932.0" y="437.5" class="d">the envelope (FFI).</text>
+<text x="3932.0" y="451.5" class="df">defeaters: DF-03, DF-12, DF-06, DF-18,</text>
+<text x="3932.0" y="466.5" class="df">DF-22, DF-29, DF-32, DF-34, DF-37, DF-39,</text>
+<text x="3932.0" y="481.5" class="df">DF-40</text>
+<line x1="3932.0" y1="492.5" x2="3932.0" y2="511.5" class="w"/>
+<line x1="3865.0" y1="511.5" x2="3999.0" y2="511.5" class="w"/>
+<line x1="3865.0" y1="511.5" x2="3865.0" y2="537.5" class="w"/><path d="M3865.0,537.5 L3861.5,529.2 L3868.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3999.0" y1="511.5" x2="3999.0" y2="537.5" class="w"/><path d="M3999.0,537.5 L3995.5,529.2 L4002.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="3865.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="3865.0" y="565.5" class="sid" fill="#111">Sn-05</text>
+<text x="3865.0" y="599.0" class="cs">FFI analysis</text>
+<circle cx="3999.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="3999.0" y="565.5" class="sid" fill="#111">Sn-06</text>
+<text x="3999.0" y="599.0" class="cs">Dependent failure</text>
+<text x="3999.0" y="611.5" class="cs">analysis</text>
+<rect x="4219.0" y="392.5" width="230" height="95.0" class="g"/>
+<text x="4334.0" y="411.5" class="id">G1.9</text>
+<text x="4334.0" y="425.0" class="d">Random hardware failures of the panda</text>
+<text x="4334.0" y="437.5" class="d">MCU, relay, power and harness are</text>
+<text x="4334.0" y="450.0" class="d">sufficiently controlled for the target</text>
+<text x="4334.0" y="462.5" class="d">ASIL.</text>
+<text x="4334.0" y="476.5" class="df">defeaters: DF-04, DF-13, DF-01, DF-33</text>
+<line x1="4334.0" y1="487.5" x2="4334.0" y2="506.5" class="w"/>
+<line x1="4133.0" y1="506.5" x2="4535.0" y2="506.5" class="w"/>
+<line x1="4133.0" y1="506.5" x2="4133.0" y2="537.5" class="w"/><path d="M4133.0,537.5 L4129.5,529.2 L4136.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="4267.0" y1="506.5" x2="4267.0" y2="537.5" class="w"/><path d="M4267.0,537.5 L4263.5,529.2 L4270.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="4401.0" y1="506.5" x2="4401.0" y2="537.5" class="w"/><path d="M4401.0,537.5 L4397.5,529.2 L4404.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="4535.0" y1="506.5" x2="4535.0" y2="537.5" class="w"/><path d="M4535.0,537.5 L4531.5,529.2 L4538.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="4133.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="4133.0" y="565.5" class="sid" fill="#111">Sn-07</text>
+<text x="4133.0" y="599.0" class="cs">Hardware FMEDA</text>
+<circle cx="4267.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="4267.0" y="565.5" class="sid" fill="#111">Sn-08</text>
+<text x="4267.0" y="599.0" class="cs">Hardware</text>
+<text x="4267.0" y="611.5" class="cs">architectural</text>
+<text x="4267.0" y="624.0" class="cs">metrics</text>
+<circle cx="4401.0" cy="561.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="4401.0" y="565.5" class="sid" fill="#111">Sn-09</text>
+<text x="4401.0" y="599.0" class="cs">Random HW failure</text>
+<text x="4401.0" y="611.5" class="cs">evaluation</text>
+<circle cx="4535.0" cy="561.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="4535.0" y="565.5" class="sid" fill="#111">Sn-11</text>
+<text x="4535.0" y="599.0" class="cs">HW component</text>
+<text x="4535.0" y="611.5" class="cs">qualification</text>
+<rect x="4688.0" y="392.5" width="230" height="82.5" class="g"/>
+<text x="4803.0" y="411.5" class="id">G1.10</text>
+<text x="4803.0" y="425.0" class="d">The assumptions credited in</text>
+<text x="4803.0" y="437.5" class="d">controllability (AOU-01/02/03/05) are</text>
+<text x="4803.0" y="450.0" class="d">verified.</text>
+<text x="4803.0" y="464.0" class="df">defeaters: DF-14</text>
+<ellipse cx="5024.0" cy="419.5" rx="95.0" ry="31.0" class="ctx"/>
+<text x="5115.0" y="452.5" class="aj">A</text>
+<text x="5024.0" y="410.5" class="cid">Assumption</text>
+<text x="5024.0" y="423.0" class="cs">AOU-01, AOU-02, AOU-03, AOU-05</text>
+<text x="5024.0" y="435.5" class="cs">hold (WP-K-01 §5)</text>
+<line x1="4918.0" y1="412.5" x2="4922.0" y2="412.5" class="w"/>
+<line x1="4922.0" y1="412.5" x2="4922.0" y2="419.5" class="w"/>
+<line x1="4922.0" y1="419.5" x2="4928.0" y2="419.5" class="w"/><path d="M4928.0,419.5 L4919.7,423.0 L4919.7,416.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="4803.0" y1="475.0" x2="4803.0" y2="494.0" class="w"/>
+<line x1="4669.0" y1="494.0" x2="4937.0" y2="494.0" class="w"/>
+<line x1="4669.0" y1="494.0" x2="4669.0" y2="537.5" class="w"/><path d="M4669.0,537.5 L4665.5,529.2 L4672.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="4803.0" y1="494.0" x2="4803.0" y2="537.5" class="w"/><path d="M4803.0,537.5 L4799.5,529.2 L4806.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="4937.0" y1="494.0" x2="4937.0" y2="537.5" class="w"/><path d="M4937.0,537.5 L4933.5,529.2 L4940.5,529.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="4669.0" cy="561.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="4669.0" y="565.5" class="sid" fill="#111">Sn-20</text>
+<text x="4669.0" y="599.0" class="cs">Vehicle</text>
+<text x="4669.0" y="611.5" class="cs">controllability and</text>
+<text x="4669.0" y="624.0" class="cs">EPS characterisation</text>
+<text x="4669.0" y="636.5" class="cs">(AOU-01/02)</text>
+<circle cx="4803.0" cy="561.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="4803.0" y="565.5" class="sid" fill="#111">Sn-21</text>
+<text x="4803.0" y="599.0" class="cs">PCM ACC envelope</text>
+<text x="4803.0" y="611.5" class="cs">test (AOU-05)</text>
+<circle cx="4937.0" cy="561.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="4937.0" y="565.5" class="sid" fill="#111">Sn-22</text>
+<text x="4937.0" y="599.0" class="cs">Brake override test</text>
+<text x="4937.0" y="611.5" class="cs">(AOU-03)</text>
+<circle cx="5197.0" cy="292.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="5197.0" y="296.5" class="sid" fill="#111">Sn-49</text>
+<text x="5197.0" y="330.0" class="cs">Hazard analysis and</text>
+<text x="5197.0" y="342.5" class="cs">risk assessment</text>
+<text x="30" y="692.5" class="h">Notation (GSN Community Standard v3)</text>
+<rect x="30" y="706.5" width="40" height="22" class="g"/>
+<text x="86" y="721.5" class="l">Goal (claim)</text>
+<path d="M37,736.5 L70,736.5 L63,758.5 L30,758.5 Z" class="g"/>
+<text x="86" y="751.5" class="l">Strategy (argument)</text>
+<circle cx="50" cy="777.5" r="11" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.6"/>
+<text x="86" y="781.5" class="l">Solution: evidence available</text>
+<circle cx="50" cy="807.5" r="11" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86" y="811.5" class="l">Solution: evidence partial</text>
+<circle cx="50" cy="837.5" r="11" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="86" y="841.5" class="l">Solution: evidence missing</text>
+<rect x="30" y="856.5" width="40" height="22" rx="10" class="ctx"/>
+<text x="86" y="871.5" class="l">Context</text>
+<ellipse cx="50" cy="897.5" rx="20" ry="11" class="ctx"/>
+<text x="86" y="901.5" class="l">Assumption (A) / justification (J)</text>
+<path d="M50,918.5 L59,927.5 L50,936.5 L41,927.5 Z" fill="#fff" stroke="#111" stroke-width="1.2"/>
+<text x="86" y="931.5" class="l">Undeveloped goal</text>
+<line x1="30.0" y1="957.5" x2="70.0" y2="957.5" class="w"/><path d="M70.0,957.5 L61.7,961.0 L61.7,954.0 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<text x="86" y="961.5" class="l">SupportedBy</text>
+<line x1="30.0" y1="987.5" x2="70.0" y2="987.5" class="w"/><path d="M70.0,987.5 L61.7,991.0 L61.7,984.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<text x="86" y="991.5" class="l">InContextOf</text>
+<text x="30" y="1016.5" class="dfl">defeaters: DF-nn</text>
+<text x="140" y="1016.5" class="l">open counter-evidence on the goal (WP-K-01 §7, WP-K-03 §6)</text>
+<rect x="4813.0" y="680.5" width="440" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="4823.0" y="702.5" class="h">LionDriver — Safety case (GSN)</text>
+<text x="4823.0" y="718.5" class="l">Argument from G1</text>
+<text x="4823.0" y="734.5" class="l">Sheet 2 of 6</text>
+<text x="4823.0" y="750.5" class="l">Source: case records (assurance/case/) and WP-K-01 contexts</text>
+<text x="4823.0" y="766.5" class="s">Generated by gsn_diagrams.py — edit the source, not this file</text>
+</svg>

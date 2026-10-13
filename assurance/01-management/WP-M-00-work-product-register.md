@@ -147,6 +147,7 @@ Legend for **ASPICE**: process IDs from ASPICE PAM 4.0, including the ML (MLE), 
 | [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) | Coexistence of elements and freedom from interference | 9 §6 | | | | — | G2 | D |
 | [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md) | Dependent failure analysis | 9 §7 | | | | — | G2 | D |
 | [WP-A-04](../08-analyses/WP-A-04-system-fta-fmea.md) | System-level safety analyses (FTA, FMEA) | 9 §8, 4 §6 | §7 | | | — | G2 | D |
+| [WP-A-05](../08-analyses/WP-A-05-stpa.md) | System-theoretic process analysis (STPA) | 9 §8 (supplementary) | §6–§7 | | STPA Handbook 2018; PAS 8800 | — | G2 | D |
 
 ### 3.9 Production, operation and decommissioning (`09-production-operation/`)
 

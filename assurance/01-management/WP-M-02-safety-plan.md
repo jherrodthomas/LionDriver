@@ -48,7 +48,7 @@ The project has one maintainer today. One person holding several roles is allowe
 | Role | Responsibilities | Assigned to | Needed by |
 |---|---|---|---|
 | Safety manager | Owns this plan; plans and coordinates safety activities; tracks progress; approves safety work products (except own-authored ones that need independent approval); maintains the safety case; initiates confirmation measures; decides on safety anomaly escalation | Jherrod Thomas (acting) | G0 |
-| Project maintainer | Overall project responsibility; resource and scope decisions; strategic decisions D-01…D-08; release decision (with safety manager) | Jherrod Thomas | G0 |
+| Project maintainer | Overall project responsibility; resource and scope decisions; strategic decisions D-01…D-12; release decision (with safety manager) | Jherrod Thomas | G0 |
 | Configuration and change manager | CM plan, baselines, submodule control, change board | Jherrod Thomas (acting) | G0 |
 | Cybersecurity manager | Owns [WP-M-09](WP-M-09-cybersecurity-plan.md); TARA; interface to safety on safety-relevant threats | Jherrod Thomas (acting); permanent holder TBD | G1 |
 | SOTIF lead | Owns [WP-M-08](WP-M-08-sotif-plan.md); validation targets; scenario evaluation | TBD | G1 |

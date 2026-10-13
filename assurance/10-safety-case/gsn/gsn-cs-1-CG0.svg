@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1952" height="1044" viewBox="0 0 1952 1044" font-family="Helvetica, Arial, sans-serif">
+<style>.g{fill:#fff;stroke:#111;stroke-width:1.4}.ctx{fill:#f4f4f4;stroke:#111;stroke-width:1.1}.id{font-size:11.5px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.sid{font-size:10.5px;font-weight:700;text-anchor:middle}.cid{font-size:10px;font-weight:700;text-anchor:middle}.cs{font-size:9.5px;text-anchor:middle;fill:#333}.aj{font-size:11px;font-weight:700;text-anchor:end}.df{font-size:9.5px;font-weight:700;fill:#b3261e;text-anchor:middle}.dfl{font-size:9.5px;font-weight:700;fill:#b3261e}.sh{font-size:9.5px;font-weight:600;fill:#444;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">Cybersecurity case — argument from CG0  (sheet 1 of 7)</text>
+<rect x="861.0" y="70" width="230" height="80.0" class="g"/>
+<text x="976.0" y="89" class="id">CG0</text>
+<text x="976.0" y="102.5" class="d">The cybersecurity risks of LD-SDA in</text>
+<text x="976.0" y="115.0" class="d">its reference configuration are</text>
+<text x="976.0" y="127.5" class="d">reduced to an acceptable level for</text>
+<text x="976.0" y="140.0" class="d">release &lt;ld-vX.Y.Z&gt;.</text>
+<rect x="1102.0" y="70" width="190" height="66.5" rx="14" class="ctx"/>
+<text x="1197.0" y="88" class="cid">CC1</text>
+<text x="1197.0" y="100.5" class="cs">Item, boundary and reference</text>
+<text x="1197.0" y="113.0" class="cs">configuration (WP-C-01;</text>
+<text x="1197.0" y="125.5" class="cs">WP-M-01 §3.1)</text>
+<rect x="1102.0" y="144.5" width="190" height="54.0" rx="14" class="ctx"/>
+<text x="1197.0" y="162.5" class="cid">CC2</text>
+<text x="1197.0" y="175.0" class="cs">Tailoring T-11, CT-1…CT-4</text>
+<text x="1197.0" y="187.5" class="cs">(WP-M-01 §5; WP-M-09 §4)</text>
+<rect x="1102.0" y="206.5" width="190" height="66.5" rx="14" class="ctx"/>
+<text x="1197.0" y="224.5" class="cid">CC3</text>
+<text x="1197.0" y="237.0" class="cs">Risk acceptance: TARA risk</text>
+<text x="1197.0" y="249.5" class="cs">value ≤ 2 retainable; ≥ 3</text>
+<text x="1197.0" y="262.0" class="cs">treated (WP-C-09 §7)</text>
+<ellipse cx="1197.0" cy="308.0" rx="95.0" ry="31.0" class="ctx"/>
+<text x="1288.0" y="341.0" class="aj">A</text>
+<text x="1197.0" y="299.0" class="cid">CA-01…CA-05</text>
+<text x="1197.0" y="311.5" class="cs">Assumptions on external</text>
+<text x="1197.0" y="324.0" class="cs">entities (WP-C-10 §2)</text>
+<line x1="1091.0" y1="90" x2="1095.0" y2="90" class="w"/>
+<line x1="1095.0" y1="90" x2="1095.0" y2="308.0" class="w"/>
+<line x1="1095.0" y1="103.2" x2="1101.0" y2="103.2" class="w"/><path d="M1101.0,103.2 L1092.7,106.8 L1092.7,99.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1095.0" y1="171.5" x2="1101.0" y2="171.5" class="w"/><path d="M1101.0,171.5 L1092.7,175.0 L1092.7,168.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1095.0" y1="239.8" x2="1101.0" y2="239.8" class="w"/><path d="M1101.0,239.8 L1092.7,243.3 L1092.7,236.2 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1095.0" y1="308.0" x2="1101.0" y2="308.0" class="w"/><path d="M1101.0,308.0 L1092.7,311.5 L1092.7,304.5 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="976.0" y1="150.0" x2="976.0" y2="169.0" class="w"/>
+<line x1="976.0" y1="169.0" x2="976.0" y2="169.0" class="w"/>
+<line x1="976.0" y1="169.0" x2="976.0" y2="380.0" class="w"/><path d="M976.0,380.0 L972.5,371.7 L979.5,371.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<path d="M865.0,381.0 L1101.0,381.0 L1087.0,473.5 L851.0,473.5 Z" class="g"/>
+<text x="976.0" y="400.0" class="id">CS1</text>
+<text x="976.0" y="413.5" class="d">Argue over (a) completeness of risk</text>
+<text x="976.0" y="426.0" class="d">identification, (b) achievement of</text>
+<text x="976.0" y="438.5" class="d">each cybersecurity goal, (c)</text>
+<text x="976.0" y="451.0" class="d">validity of each claim, (d) process</text>
+<text x="976.0" y="463.5" class="d">and post-development readiness.</text>
+<line x1="976.0" y1="473.5" x2="976.0" y2="492.5" class="w"/>
+<line x1="145.0" y1="492.5" x2="1807.0" y2="492.5" class="w"/>
+<line x1="145.0" y1="492.5" x2="145.0" y2="518.5" class="w"/><path d="M145.0,518.5 L141.5,510.2 L148.5,510.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="598.0" y1="492.5" x2="598.0" y2="518.5" class="w"/><path d="M598.0,518.5 L594.5,510.2 L601.5,510.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1051.0" y1="492.5" x2="1051.0" y2="518.5" class="w"/><path d="M1051.0,518.5 L1047.5,510.2 L1054.5,510.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1303.0" y1="492.5" x2="1303.0" y2="518.5" class="w"/><path d="M1303.0,518.5 L1299.5,510.2 L1306.5,510.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1555.0" y1="492.5" x2="1555.0" y2="518.5" class="w"/><path d="M1555.0,518.5 L1551.5,510.2 L1558.5,510.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1807.0" y1="492.5" x2="1807.0" y2="518.5" class="w"/><path d="M1807.0,518.5 L1803.5,510.2 L1810.5,510.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<rect x="30" y="519.5" width="230" height="70.0" class="g"/>
+<text x="145.0" y="538.5" class="id">CG1</text>
+<text x="145.0" y="552.0" class="d">Risks are identified and rated</text>
+<text x="145.0" y="564.5" class="d">completely and correctly.</text>
+<text x="145.0" y="578.5" class="sh">developed on sheet 2</text>
+<ellipse cx="366.0" cy="552.75" rx="95.0" ry="37.25" class="ctx"/>
+<text x="457.0" y="592.0" class="aj">J</text>
+<text x="366.0" y="537.5" class="cid">CJ1</text>
+<text x="366.0" y="550.0" class="cs">Open source: knowledge of the</text>
+<text x="366.0" y="562.5" class="cs">item rated "public" for every</text>
+<text x="366.0" y="575.0" class="cs">path (WP-C-09 §6)</text>
+<line x1="260" y1="539.5" x2="264" y2="539.5" class="w"/>
+<line x1="264" y1="539.5" x2="264" y2="552.75" class="w"/>
+<line x1="264.0" y1="552.8" x2="270.0" y2="552.8" class="w"/><path d="M270.0,552.8 L261.7,556.3 L261.7,549.2 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<rect x="483.0" y="519.5" width="230" height="70.0" class="g"/>
+<text x="598.0" y="538.5" class="id">CG2</text>
+<text x="598.0" y="552.0" class="d">Each cybersecurity goal CSG-01…CSG-08</text>
+<text x="598.0" y="564.5" class="d">is achieved</text>
+<text x="598.0" y="578.5" class="sh">developed on sheet 3</text>
+<ellipse cx="819.0" cy="571.5" rx="95.0" ry="56.0" class="ctx"/>
+<text x="910.0" y="629.5" class="aj">J</text>
+<text x="819.0" y="537.5" class="cid">CJ2</text>
+<text x="819.0" y="550.0" class="cs">Envelope principle:</text>
+<text x="819.0" y="562.5" class="cs">safety-relevant protection</text>
+<text x="819.0" y="575.0" class="cs">sits in the panda (Z1);</text>
+<text x="819.0" y="587.5" class="cs">SoC-side controls are credited</text>
+<text x="819.0" y="600.0" class="cs">for likelihood reduction only</text>
+<text x="819.0" y="612.5" class="cs">(WP-S-07 §3.2)</text>
+<line x1="713.0" y1="539.5" x2="717.0" y2="539.5" class="w"/>
+<line x1="717.0" y1="539.5" x2="717.0" y2="571.5" class="w"/>
+<line x1="717.0" y1="571.5" x2="723.0" y2="571.5" class="w"/><path d="M723.0,571.5 L714.7,575.0 L714.7,568.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<rect x="936.0" y="519.5" width="230" height="82.5" class="g"/>
+<text x="1051.0" y="538.5" class="id">CG3</text>
+<text x="1051.0" y="552.0" class="d">Each retained/shared/avoided risk</text>
+<text x="1051.0" y="564.5" class="d">(CSC-01…CSC-05) is justified and its</text>
+<text x="1051.0" y="577.0" class="d">condition holds</text>
+<text x="1051.0" y="591.0" class="sh">developed on sheet 4</text>
+<rect x="1188.0" y="519.5" width="230" height="70.0" class="g"/>
+<text x="1303.0" y="538.5" class="id">CG4</text>
+<text x="1303.0" y="552.0" class="d">The residual risk after validation is</text>
+<text x="1303.0" y="564.5" class="d">acceptable.</text>
+<text x="1303.0" y="578.5" class="sh">developed on sheet 5</text>
+<rect x="1440.0" y="519.5" width="230" height="82.5" class="g"/>
+<text x="1555.0" y="538.5" class="id">CG5</text>
+<text x="1555.0" y="552.0" class="d">Cybersecurity is maintained after</text>
+<text x="1555.0" y="564.5" class="d">release (monitoring, incident</text>
+<text x="1555.0" y="577.0" class="d">response, updates, end of support)</text>
+<text x="1555.0" y="591.0" class="sh">developed on sheet 6</text>
+<rect x="1692.0" y="519.5" width="230" height="70.0" class="g"/>
+<text x="1807.0" y="538.5" class="id">CG6</text>
+<text x="1807.0" y="552.0" class="d">The cybersecurity process was followed</text>
+<text x="1807.0" y="564.5" class="d">and independently assessed.</text>
+<text x="1807.0" y="578.5" class="sh">developed on sheet 7</text>
+<text x="30" y="675.5" class="h">Notation (GSN Community Standard v3)</text>
+<rect x="30" y="689.5" width="40" height="22" class="g"/>
+<text x="86" y="704.5" class="l">Goal (claim)</text>
+<path d="M37,719.5 L70,719.5 L63,741.5 L30,741.5 Z" class="g"/>
+<text x="86" y="734.5" class="l">Strategy (argument)</text>
+<circle cx="50" cy="760.5" r="11" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.6"/>
+<text x="86" y="764.5" class="l">Solution: evidence available</text>
+<circle cx="50" cy="790.5" r="11" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86" y="794.5" class="l">Solution: evidence partial</text>
+<circle cx="50" cy="820.5" r="11" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="86" y="824.5" class="l">Solution: evidence missing</text>
+<rect x="30" y="839.5" width="40" height="22" rx="10" class="ctx"/>
+<text x="86" y="854.5" class="l">Context</text>
+<ellipse cx="50" cy="880.5" rx="20" ry="11" class="ctx"/>
+<text x="86" y="884.5" class="l">Assumption (A) / justification (J)</text>
+<path d="M50,901.5 L59,910.5 L50,919.5 L41,910.5 Z" fill="#fff" stroke="#111" stroke-width="1.2"/>
+<text x="86" y="914.5" class="l">Undeveloped goal</text>
+<line x1="30.0" y1="940.5" x2="70.0" y2="940.5" class="w"/><path d="M70.0,940.5 L61.7,944.0 L61.7,937.0 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<text x="86" y="944.5" class="l">SupportedBy</text>
+<line x1="30.0" y1="970.5" x2="70.0" y2="970.5" class="w"/><path d="M70.0,970.5 L61.7,974.0 L61.7,967.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<text x="86" y="974.5" class="l">InContextOf</text>
+<text x="30" y="999.5" class="dfl">defeaters: DF-nn</text>
+<text x="140" y="999.5" class="l">open counter-evidence on the goal (WP-K-01 §7, WP-K-03 §6)</text>
+<rect x="1482.0" y="663.5" width="440" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="1492.0" y="685.5" class="h">LionDriver — Cybersecurity case (GSN)</text>
+<text x="1492.0" y="701.5" class="l">Argument from CG0</text>
+<text x="1492.0" y="717.5" class="l">Sheet 1 of 7</text>
+<text x="1492.0" y="733.5" class="l">Source: WP-K-03 §2–§4, §6 (text trees and tables)</text>
+<text x="1492.0" y="749.5" class="s">Generated by gsn_diagrams.py — edit the source, not this file</text>
+</svg>

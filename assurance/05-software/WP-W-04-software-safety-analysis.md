@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-04 Software safety analysis and software-level DFA |
 | Standard reference | ISO 26262-6:2018 §7 (safety analysis and DFA at the software architectural level; Annex E informative); ISO 26262-9:2018 §7 (dependent failures), §8 (safety analyses); ASPICE 4.0 SWE.2 |
-| Version | 0.2 (§3.2 SWF-48: lost revocation during a grant, bounded at one task period; 2026-10-12). 0.1 |
+| Version | 0.2.1 (§3.5: SW FMEA rev 0.6 adds the host elements pandad, selfdrived and controlsd at BL-004; 2026-10-13). 0.2 (§3.2 SWF-48: lost revocation during a grant, bounded at one task period; SWF-49, SWF-50; §3.5 AIAG-VDA cross-reference; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope software (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating); host components summarised |
 | Author | Assurance team (initial draft) |
@@ -53,6 +53,8 @@ The analysis was done by code reading at the baseline. It has not been reviewed.
 | SWF-17 | U-SAF-CORE relay | Omission: relay malfunction latch cleared by `0xdc` | Camera and item commands both reach the car (SG-01), PCS cut (SG-07) | none | N | SWSR-506a (GAP-48) |
 | SWF-18 | U-SAF-CORE forwarding | Late/omission: forwarding of camera frames stops or is delayed (queue full, power save) | Stock PCS frames lost while relay driven (SG-07) | overflow counted (`drivers/can_common.h:165`) | N | SWSR-707, 513 (`0xe7`) |
 | SWF-19 | U-SAF-CORE EPS status | Omission: EPS fault not seen by envelope | Unannounced loss of steering assist (SG-02) | host only | N | SWSR-110 (GAP-03) |
+| SWF-49 | U-SAF-CORE mode (ELM327) | Commission: in ELM327 mode `elm327_tx_hook` passes any 8-byte ISO 15765 frame to `0x7xx`, `0x18DAxxF1` or `0x18DB33F1`, whatever the service, ignition or vehicle motion (`opendbc_repo/opendbc/safety/modes/elm327.h:6-35`) | SoC can send UDS ECUReset, CommunicationControl or routine requests to the EPS, PCM or radar while the vehicle moves: loss of assist or of stock PCS (SG-02, SG-07) | Relay released in ELM327 (`panda/board/main.c:55-56`); SWSR-512 blocks a switch to ELM327 once TOYOTA is active | P | Residual before engagement (fingerprinting, radar disable) has no SWSR: OI-6 |
+| SWF-50 | U-SAF-CORE TX entry | Commission: a host TX path calls `can_send` with `skip_tx_hook=true` and bypasses the envelope | Unchecked frame on the car bus (all) | Both host TX entries pass `false` (`panda/board/can_comms.h:97, 118`); only forwarding uses `true` | P | No test pins this; static check proposed (AIAG SWF-ACT-008); OI-6 |
 | SWF-20 | U-SAF-HELP | Wrong value: macro side effects / overflow in `SAFETY_ABS(INT_MIN)`, float rounding in `safety_interpolate` | Wrong limit | UBSan on host; review | P | VS-UV-01, VS-UV-S3 |
 
 ### 3.2 Panda platform (E-03b)
@@ -103,7 +105,42 @@ Host failure modes are analysed at system level in [WP-A-04](../08-analyses/WP-A
 | P | 17 |
 | N | 23 |
 
-Every N and P row has an SWSR in WP-W-02 (SWF-48: SWSR-519 and an accepted 10 ms bound). Diagnostic-coverage targets in WP-S-03 §6 cannot be claimed until those SWSRs are implemented and verified.
+SWF-49 and SWF-50 (added in v0.2) are both P and are not in these counts; they have no SWSR yet (OI-6).
+
+Every other N and P row has an SWSR in WP-W-02 (SWF-48: SWSR-519 and an accepted 10 ms bound). Diagnostic-coverage targets in WP-S-03 §6 cannot be claimed until those SWSRs are implemented and verified.
+
+### 3.5 AIAG-VDA ratings and test evidence
+
+A second SW FMEA of the safety layer, with AIAG-VDA 2019 severity, occurrence, detection and action priority, is kept as machine-readable data in [`../08-analyses/fmea/analyses/sw-fmea.yaml`](../08-analyses/fmea/analyses/sw-fmea.yaml) (rev 0.6: panda safety model rows re-rated at BL-003, panda `c2e5d93`, opendbc `5b5a4ba`, and unchanged at BL-004 outside the reference build; host rows pandad SWF-020..029, selfdrived SWF-030..039 and controlsd SWF-040..049 added at BL-004, all AP H; rating tables in [`rating-tables.md`](../08-analyses/fmea/rating-tables.md), checked by `tools/safety/fmea_lint.py`). It was first written separately from this document against the same baseline (BL-001) and was re-rated at BL-002 and BL-003; the rows above are still at BL-001. This section is the cross-reference; the rows above stay the analysis of record.
+
+| AIAG-VDA row | Failure mode | This document | Ratings at BL-003 (S/O/D AP per cause) |
+|---|---|---|---|
+| SWF-001 | Steering request above the torque or torque-rate limit for the vehicle is passed | SWF-01, SWF-05, SWF-06; SDF-08 | C1 10/6/9 H; C2 10/5/3 H; C3 10/3/4 L |
+| SWF-002 | Steering torque passed while controls are not allowed | SWF-03 | C1 10/5/3 H |
+| SWF-003 | Acceleration request outside the intended envelope is passed | SWF-08; SDF-08, WP-A-04 BE-3.01 | C1 10/6/9 H; C2 10/5/3 H |
+| SWF-004 | Step change of deceleration request to the minimum is passed | SWF-09 | C1 10/8/9 H |
+| SWF-005 | Corrupted brake-pressed value accepted | SWF-13 | C1 10/3/9 H |
+| SWF-006 | Stale brake, cruise or EPS data used beyond the detection budget | SWF-14 | C1 10/4/3 H |
+| SWF-007 | Controls allowed without a driver engagement | SWF-12; WP-A-04 BE-1.12 | C1 10/5/3 H |
+| SWF-008 | Controls not withdrawn on brake press | SWF-13, SWF-16 (brake flag in the param) | C1 10/3/4 L; C2 10/5/3 H |
+| SWF-009 | Controls not withdrawn when PCM cruise disengages | SWF-13 | C1 10/5/3 H |
+| SWF-010 | Stock camera steering or ACC messages forwarded while the item transmits | SWF-34 | C1 10/5/3 H |
+| SWF-011 | Stock pre-collision (AEB) messages blocked | SWF-11, SWF-18 | C1 10/5/3 H |
+| SWF-012 | Relay malfunction not detected | SWF-17, SWF-37 | C1 10/5/3 H |
+| SWF-013 | Wrong or permissive safety mode accepted from the host | SWF-16, SWF-24 | C1 10/3/4 L; C2 10/8/9 H |
+| SWF-014 | Controls withdrawn later than the FTTI after host loss | SWF-25, SWF-28 | C1 10/3/4 L; C2 10/8/8 H |
+| SWF-015 | Diagnostic (ELM327) mode accepted while driving | SWF-49 | C1 10/5/9 H |
+| SWF-016 | Host transmission bypasses the safety check | SWF-50 | C1 10/3/8 H |
+| SWF-017 | Item deceleration passed while the driver presses the accelerator | — (gas override verified in code, `get_longitudinal_allowed`) | C1 10/5/3 H |
+| SWF-018 | Safety checks stop running while the relay is driven | SWF-29, SWF-30 (GAP-43, closed in part by the BL-002 watchdog) | C1 10/4/7 H |
+| SWF-019 | Spurious MCU reset while engaged | — (new failure mode of the BL-002 watchdog; OI-3) | C1 10/5/8 H |
+
+Evidence recorded with the AIAG-VDA data (not yet reviewed, I1 pending):
+
+- The opendbc safety suite passed at the baseline (3173 tests, 390 skipped) in a local run.
+- `mutation.py` killed 2705 of 2705 operator mutants across `opendbc/safety` (66 build-incompatible mutants pruned), including the three `known_survivors`. Mutation changes operators only, not constants or statements, and does not reach panda board code (heartbeat, mode handling, bootstub). It therefore says nothing about wrong limit values (SDF-08, SDF-09).
+- At BL-002 the Toyota tests pass locally (287, 34 skipped) and the panda host tests for the mode lock and the watchdog pass (14). The mode lock is compiled only with `LIONDRIVER_REFERENCE=1`, which no build path sets yet (AIAG SWF-013.C2, AP H); the three causes it prevents are AP L only for a reference build.
+- These jobs now run in fork CI (`.github/workflows/safety.yaml`, CR-CI-05). This is the basis for the revised detection rating D3 for implementation defects (AIAG SWF-ACT-001). The rows above stay **P** for test adequacy until requirements-based tests exist (WP-W-06).
 
 ## 4. Software-level dependent failure analysis
 
@@ -159,4 +196,5 @@ Every N and P row has an SWSR in WP-W-02 (SWF-48: SWSR-519 and an accepted 10 ms
 | OI-2 | Decide whether a separate forwarding queue is needed in addition to SWSR-518 (SDF-05) | Safety engineer | G3 |
 | OI-3 | Repeat this analysis after the SWSRs are implemented (new failure modes of new mechanisms, e.g. autonomous zero-torque frames) | Safety engineer | G4 |
 | OI-4 | Independent (I2) review of this analysis | Safety manager | G3 |
-| OI-5 | Align SWF IDs with WP-A-04 SFMEA rows in the trace data | Safety engineer | G3 |
+| OI-5 | Align SWF IDs with WP-A-04 SFMEA rows in the trace data; the AIAG-VDA IDs (`SWF-0nn`, three digits) map to this document through §3.5 | Safety engineer | G3 |
+| OI-6 | Add SWSRs for SWF-49 (restrict ELM327 TX to the services fingerprinting and radar disable need, and refuse it above standstill) and SWF-50 (a test or static check that every host TX path uses the TX hook) in WP-W-02 | Safety engineer | G3 |

@@ -14,7 +14,7 @@
 
 ## 1. Purpose and scope
 
-This document defines how LionDriver identifies, analyses, treats and monitors **project risks**: events that could stop the project from achieving the assurance path in [WP-M-01](WP-M-01-assurance-strategy.md) on its planned scope, effort and quality. It also tracks the open strategic decisions D-01…D-08 from [WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required).
+This document defines how LionDriver identifies, analyses, treats and monitors **project risks**: events that could stop the project from achieving the assurance path in [WP-M-01](WP-M-01-assurance-strategy.md) on its planned scope, effort and quality. It also tracks the strategic decisions D-01…D-12 from [WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required).
 
 Product risks (hazards to road users, threats to the vehicle) are **not** managed here. They belong to the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)), the SOTIF analyses ([WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md)) and the TARA ([WP-C-09](../02-concept/WP-C-09-tara.md)). Where a project risk would weaken a product safety argument, the register says so and links the affected work product.
 
@@ -118,7 +118,11 @@ Each decision is tracked as a GitHub issue labelled `decision:D-nn`. A decision 
 | D-05 | Model update policy | Pin weights per release; model change re-runs scenario evaluations | Open | PM / ML | G1 | R-24 |
 | D-06 | External assessor | Engage an independent FuSa assessor for the G1 HARA confirmation review | Open | PM | G0 | R-08, R-20 |
 | D-07 | Work product format | Markdown docs-as-code; machine-readable requirements in `trace/`; PR review | Open (de facto in use; not formally decided) | PM | G0 | — |
-| D-08 | Default enablement of Experimental Mode | Disabled for the reference configuration until validated | Open | PM / SL | G1 | R-17 |
+| D-08 | Default enablement of Experimental Mode | Disabled for the reference configuration until validated | **Decided** 2026-10-10: Chill Mode (Experimental Mode off) for the reference configuration until validated; code change B-06 open | PM / SL | G1 | R-17 |
+| D-09 | Panda release signing key | Offline key held by the maintainer; sign after the panda release gate | **Decided** 2026-10-10 as recommended; modern algorithm, no debug key in release builds | PM / CSM | G3 | R-15 |
+| D-10 | Panda flash protection | WRP + RDP1 after verification on a sacrificial unit | **Decided** 2026-10-10 as recommended; implementation with the pandad recovery change (GAP-38) | PM / HW | G3 | R-15 |
+| D-11 | Vehicle lock (VIN) | Report only until a panda-side VIN read exists | **Decided** 2026-10-10 as recommended | PM / SL | G3 | — |
+| D-12 | LionDriver-only devices | Yes for the reference configuration; development units outside the claims | **Decided** 2026-10-10 as recommended | PM | G3 | — |
 
 ## 6. Records
 

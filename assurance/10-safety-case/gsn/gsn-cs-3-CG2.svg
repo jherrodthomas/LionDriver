@@ -1,0 +1,377 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4814" height="972" viewBox="0 0 4814 972" font-family="Helvetica, Arial, sans-serif">
+<style>.g{fill:#fff;stroke:#111;stroke-width:1.4}.ctx{fill:#f4f4f4;stroke:#111;stroke-width:1.1}.id{font-size:11.5px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.sid{font-size:10.5px;font-weight:700;text-anchor:middle}.cid{font-size:10px;font-weight:700;text-anchor:middle}.cs{font-size:9.5px;text-anchor:middle;fill:#333}.aj{font-size:11px;font-weight:700;text-anchor:end}.df{font-size:9.5px;font-weight:700;fill:#b3261e;text-anchor:middle}.dfl{font-size:9.5px;font-weight:700;fill:#b3261e}.sh{font-size:9.5px;font-weight:600;fill:#444;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">Cybersecurity case — argument from CG2  (sheet 3 of 7)</text>
+<rect x="2262.5" y="70" width="230" height="70.0" class="g"/>
+<text x="2377.5" y="89" class="id">CG2</text>
+<text x="2377.5" y="102.5" class="d">Each cybersecurity goal CSG-01…CSG-08</text>
+<text x="2377.5" y="115.0" class="d">is achieved</text>
+<text x="2377.5" y="129.0" class="sh">from sheet 1</text>
+<ellipse cx="2598.5" cy="122.0" rx="95.0" ry="56.0" class="ctx"/>
+<text x="2689.5" y="180.0" class="aj">J</text>
+<text x="2598.5" y="88" class="cid">CJ2</text>
+<text x="2598.5" y="100.5" class="cs">Envelope principle:</text>
+<text x="2598.5" y="113.0" class="cs">safety-relevant protection</text>
+<text x="2598.5" y="125.5" class="cs">sits in the panda (Z1);</text>
+<text x="2598.5" y="138.0" class="cs">SoC-side controls are credited</text>
+<text x="2598.5" y="150.5" class="cs">for likelihood reduction only</text>
+<text x="2598.5" y="163.0" class="cs">(WP-S-07 §3.2)</text>
+<line x1="2492.5" y1="90" x2="2496.5" y2="90" class="w"/>
+<line x1="2496.5" y1="90" x2="2496.5" y2="122.0" class="w"/>
+<line x1="2496.5" y1="122.0" x2="2502.5" y2="122.0" class="w"/><path d="M2502.5,122.0 L2494.2,125.5 L2494.2,118.5 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="2377.5" y1="140.0" x2="2377.5" y2="159.0" class="w"/>
+<line x1="2377.5" y1="159.0" x2="2377.5" y2="159.0" class="w"/>
+<line x1="2377.5" y1="159.0" x2="2377.5" y2="219.0" class="w"/><path d="M2377.5,219.0 L2374.0,210.7 L2381.0,210.7 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<path d="M2266.5,220.0 L2502.5,220.0 L2488.5,287.5 L2252.5,287.5 Z" class="g"/>
+<text x="2377.5" y="239.0" class="id">CS2</text>
+<text x="2377.5" y="252.5" class="d">Argue per goal over refinement,</text>
+<text x="2377.5" y="265.0" class="d">implementation, verification and</text>
+<text x="2377.5" y="277.5" class="d">validation</text>
+<line x1="2377.5" y1="287.5" x2="2377.5" y2="306.5" class="w"/>
+<line x1="287.0" y1="306.5" x2="4468.0" y2="306.5" class="w"/>
+<line x1="287.0" y1="306.5" x2="287.0" y2="332.5" class="w"/><path d="M287.0,332.5 L283.5,324.2 L290.5,324.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="949.0" y1="306.5" x2="949.0" y2="332.5" class="w"/><path d="M949.0,332.5 L945.5,324.2 L952.5,324.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1552.0" y1="306.5" x2="1552.0" y2="332.5" class="w"/><path d="M1552.0,332.5 L1548.5,324.2 L1555.5,324.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2080.0" y1="306.5" x2="2080.0" y2="332.5" class="w"/><path d="M2080.0,332.5 L2076.5,324.2 L2083.5,324.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2675.0" y1="306.5" x2="2675.0" y2="332.5" class="w"/><path d="M2675.0,332.5 L2671.5,324.2 L2678.5,324.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3270.0" y1="306.5" x2="3270.0" y2="332.5" class="w"/><path d="M3270.0,332.5 L3266.5,324.2 L3273.5,324.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3932.0" y1="306.5" x2="3932.0" y2="332.5" class="w"/><path d="M3932.0,332.5 L3928.5,324.2 L3935.5,324.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="4468.0" y1="306.5" x2="4468.0" y2="332.5" class="w"/><path d="M4468.0,332.5 L4464.5,324.2 L4471.5,324.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<rect x="172.0" y="333.5" width="230" height="70.0" class="g"/>
+<text x="287.0" y="352.5" class="id">CG2.1</text>
+<text x="287.0" y="366.0" class="d">CSG-01 safety configuration integrity</text>
+<text x="287.0" y="378.5" class="d">(CAL 3)</text>
+<text x="287.0" y="392.5" class="df">defeaters: CDF-02, CDF-04</text>
+<rect x="413.0" y="333.5" width="190" height="54.0" rx="14" class="ctx"/>
+<text x="508.0" y="351.5" class="cid">Requirements</text>
+<text x="508.0" y="364.0" class="cs">CSR-011…CSR-016,</text>
+<text x="508.0" y="376.5" class="cs">CSR-021…CSR-024</text>
+<line x1="402.0" y1="353.5" x2="406.0" y2="353.5" class="w"/>
+<line x1="406.0" y1="353.5" x2="406.0" y2="360.5" class="w"/>
+<line x1="406.0" y1="360.5" x2="412.0" y2="360.5" class="w"/><path d="M412.0,360.5 L403.7,364.0 L403.7,357.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="287.0" y1="403.5" x2="287.0" y2="422.5" class="w"/>
+<line x1="86.0" y1="422.5" x2="488.0" y2="422.5" class="w"/>
+<line x1="86.0" y1="422.5" x2="86.0" y2="448.5" class="w"/><path d="M86.0,448.5 L82.5,440.2 L89.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="220.0" y1="422.5" x2="220.0" y2="448.5" class="w"/><path d="M220.0,448.5 L216.5,440.2 L223.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="354.0" y1="422.5" x2="354.0" y2="448.5" class="w"/><path d="M354.0,448.5 L350.5,440.2 L357.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="488.0" y1="422.5" x2="488.0" y2="448.5" class="w"/><path d="M488.0,448.5 L484.5,440.2 L491.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="86.0" cy="472.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86.0" y="476.5" class="sid" fill="#111">CSn-10</text>
+<text x="86.0" y="510.0" class="cs">CS goals, claims,</text>
+<text x="86.0" y="522.5" class="cs">concept; detailed</text>
+<text x="86.0" y="535.0" class="cs">CSRs and</text>
+<text x="86.0" y="547.5" class="cs">architecture</text>
+<circle cx="220.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="220.0" y="476.5" class="sid" fill="#111">CSn-20</text>
+<text x="220.0" y="510.0" class="cs">Secure coding, SAST</text>
+<text x="220.0" y="522.5" class="cs">results, per-CSR</text>
+<text x="220.0" y="535.0" class="cs">verification (VS-CS)</text>
+<circle cx="354.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="354.0" y="476.5" class="sid" fill="#111">CSn-21</text>
+<text x="354.0" y="510.0" class="cs">Safety-mode lock and</text>
+<text x="354.0" y="522.5" class="cs">command-gating tests</text>
+<text x="354.0" y="535.0" class="cs">(shared with</text>
+<text x="354.0" y="547.5" class="cs">TSR-512, TSR-513)</text>
+<circle cx="488.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="488.0" y="476.5" class="sid" fill="#111">CSn-30</text>
+<text x="488.0" y="510.0" class="cs">Validation TC-01,</text>
+<text x="488.0" y="522.5" class="cs">TC-02 (command</text>
+<text x="488.0" y="535.0" class="cs">fuzzing, mode lock)</text>
+<rect x="834.0" y="333.5" width="230" height="70.0" class="g"/>
+<text x="949.0" y="352.5" class="id">CG2.2</text>
+<text x="949.0" y="366.0" class="d">CSG-02 firmware and boot-chain</text>
+<text x="949.0" y="378.5" class="d">integrity (CAL 3)</text>
+<text x="949.0" y="392.5" class="df">defeaters: CDF-01, CDF-02, CDF-03</text>
+<rect x="1075.0" y="333.5" width="190" height="41.5" rx="14" class="ctx"/>
+<text x="1170.0" y="351.5" class="cid">Requirements</text>
+<text x="1170.0" y="364.0" class="cs">CSR-021…CSR-054</text>
+<line x1="1064.0" y1="353.5" x2="1068.0" y2="353.5" class="w"/>
+<line x1="1068.0" y1="353.5" x2="1068.0" y2="354.25" class="w"/>
+<line x1="1068.0" y1="354.2" x2="1074.0" y2="354.2" class="w"/><path d="M1074.0,354.2 L1065.7,357.8 L1065.7,350.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="949.0" y1="403.5" x2="949.0" y2="422.5" class="w"/>
+<line x1="681.0" y1="422.5" x2="1217.0" y2="422.5" class="w"/>
+<line x1="681.0" y1="422.5" x2="681.0" y2="448.5" class="w"/><path d="M681.0,448.5 L677.5,440.2 L684.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="815.0" y1="422.5" x2="815.0" y2="448.5" class="w"/><path d="M815.0,448.5 L811.5,440.2 L818.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="949.0" y1="422.5" x2="949.0" y2="448.5" class="w"/><path d="M949.0,448.5 L945.5,440.2 L952.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1083.0" y1="422.5" x2="1083.0" y2="448.5" class="w"/><path d="M1083.0,448.5 L1079.5,440.2 L1086.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1217.0" y1="422.5" x2="1217.0" y2="448.5" class="w"/><path d="M1217.0,448.5 L1213.5,440.2 L1220.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="681.0" cy="472.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="681.0" y="476.5" class="sid" fill="#111">CSn-10</text>
+<text x="681.0" y="510.0" class="cs">CS goals, claims,</text>
+<text x="681.0" y="522.5" class="cs">concept; detailed</text>
+<text x="681.0" y="535.0" class="cs">CSRs and</text>
+<text x="681.0" y="547.5" class="cs">architecture</text>
+<circle cx="815.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="815.0" y="476.5" class="sid" fill="#111">CSn-11</text>
+<text x="815.0" y="510.0" class="cs">Boot-chain and RDP</text>
+<text x="815.0" y="522.5" class="cs">architecture</text>
+<text x="815.0" y="535.0" class="cs">decisions</text>
+<text x="815.0" y="547.5" class="cs">CS-AD-01…04</text>
+<circle cx="949.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="949.0" y="476.5" class="sid" fill="#111">CSn-20</text>
+<text x="949.0" y="510.0" class="cs">Secure coding, SAST</text>
+<text x="949.0" y="522.5" class="cs">results, per-CSR</text>
+<text x="949.0" y="535.0" class="cs">verification (VS-CS)</text>
+<circle cx="1083.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="1083.0" y="476.5" class="sid" fill="#111">CSn-22</text>
+<text x="1083.0" y="510.0" class="cs">Release build-config</text>
+<text x="1083.0" y="522.5" class="cs">audit report</text>
+<text x="1083.0" y="535.0" class="cs">(BA-01…BA-08)</text>
+<circle cx="1217.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="1217.0" y="476.5" class="sid" fill="#111">CSn-31</text>
+<text x="1217.0" y="510.0" class="cs">Validation</text>
+<text x="1217.0" y="522.5" class="cs">TC-03…TC-05</text>
+<text x="1217.0" y="535.0" class="cs">(firmware, boot</text>
+<text x="1217.0" y="547.5" class="cs">pins, option bytes)</text>
+<rect x="1437.0" y="333.5" width="230" height="57.5" class="g"/>
+<text x="1552.0" y="352.5" class="id">CG2.3</text>
+<text x="1552.0" y="366.0" class="d">CSG-03 params / IPC integrity (CAL 2)</text>
+<text x="1552.0" y="380.0" class="df">defeaters: CDF-04</text>
+<rect x="1678.0" y="333.5" width="190" height="41.5" rx="14" class="ctx"/>
+<text x="1773.0" y="351.5" class="cid">Requirements</text>
+<text x="1773.0" y="364.0" class="cs">CSR-061…CSR-073</text>
+<line x1="1667.0" y1="353.5" x2="1671.0" y2="353.5" class="w"/>
+<line x1="1671.0" y1="353.5" x2="1671.0" y2="354.25" class="w"/>
+<line x1="1671.0" y1="354.2" x2="1677.0" y2="354.2" class="w"/><path d="M1677.0,354.2 L1668.7,357.8 L1668.7,350.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="1552.0" y1="391.0" x2="1552.0" y2="410.0" class="w"/>
+<line x1="1351.0" y1="410.0" x2="1753.0" y2="410.0" class="w"/>
+<line x1="1351.0" y1="410.0" x2="1351.0" y2="448.5" class="w"/><path d="M1351.0,448.5 L1347.5,440.2 L1354.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1485.0" y1="410.0" x2="1485.0" y2="448.5" class="w"/><path d="M1485.0,448.5 L1481.5,440.2 L1488.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1619.0" y1="410.0" x2="1619.0" y2="448.5" class="w"/><path d="M1619.0,448.5 L1615.5,440.2 L1622.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1753.0" y1="410.0" x2="1753.0" y2="448.5" class="w"/><path d="M1753.0,448.5 L1749.5,440.2 L1756.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="1351.0" cy="472.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1351.0" y="476.5" class="sid" fill="#111">CSn-10</text>
+<text x="1351.0" y="510.0" class="cs">CS goals, claims,</text>
+<text x="1351.0" y="522.5" class="cs">concept; detailed</text>
+<text x="1351.0" y="535.0" class="cs">CSRs and</text>
+<text x="1351.0" y="547.5" class="cs">architecture</text>
+<circle cx="1485.0" cy="472.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1485.0" y="476.5" class="sid" fill="#111">CSn-12</text>
+<text x="1485.0" y="510.0" class="cs">FFI analysis</text>
+<text x="1485.0" y="522.5" class="cs">treating SoC</text>
+<text x="1485.0" y="535.0" class="cs">attacker as common</text>
+<text x="1485.0" y="547.5" class="cs">cause</text>
+<circle cx="1619.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="1619.0" y="476.5" class="sid" fill="#111">CSn-20</text>
+<text x="1619.0" y="510.0" class="cs">Secure coding, SAST</text>
+<text x="1619.0" y="522.5" class="cs">results, per-CSR</text>
+<text x="1619.0" y="535.0" class="cs">verification (VS-CS)</text>
+<circle cx="1753.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="1753.0" y="476.5" class="sid" fill="#111">CSn-32</text>
+<text x="1753.0" y="510.0" class="cs">Validation TC-06,</text>
+<text x="1753.0" y="522.5" class="cs">TC-07 (params/IPC,</text>
+<text x="1753.0" y="535.0" class="cs">envelope under SoC</text>
+<text x="1753.0" y="547.5" class="cs">compromise)</text>
+<rect x="1965.0" y="333.5" width="230" height="70.0" class="g"/>
+<text x="2080.0" y="352.5" class="id">CG2.4</text>
+<text x="2080.0" y="366.0" class="d">CSG-04 model artefact integrity (CAL</text>
+<text x="2080.0" y="378.5" class="d">2)</text>
+<text x="2080.0" y="392.5" class="df">defeaters: CDF-05</text>
+<rect x="2206.0" y="333.5" width="190" height="41.5" rx="14" class="ctx"/>
+<text x="2301.0" y="351.5" class="cid">Requirements</text>
+<text x="2301.0" y="364.0" class="cs">CSR-081…CSR-083</text>
+<line x1="2195.0" y1="353.5" x2="2199.0" y2="353.5" class="w"/>
+<line x1="2199.0" y1="353.5" x2="2199.0" y2="354.25" class="w"/>
+<line x1="2199.0" y1="354.2" x2="2205.0" y2="354.2" class="w"/><path d="M2205.0,354.2 L2196.7,357.8 L2196.7,350.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="2080.0" y1="403.5" x2="2080.0" y2="422.5" class="w"/>
+<line x1="1946.0" y1="422.5" x2="2214.0" y2="422.5" class="w"/>
+<line x1="1946.0" y1="422.5" x2="1946.0" y2="448.5" class="w"/><path d="M1946.0,448.5 L1942.5,440.2 L1949.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2080.0" y1="422.5" x2="2080.0" y2="448.5" class="w"/><path d="M2080.0,448.5 L2076.5,440.2 L2083.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2214.0" y1="422.5" x2="2214.0" y2="448.5" class="w"/><path d="M2214.0,448.5 L2210.5,440.2 L2217.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="1946.0" cy="472.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1946.0" y="476.5" class="sid" fill="#111">CSn-10</text>
+<text x="1946.0" y="510.0" class="cs">CS goals, claims,</text>
+<text x="1946.0" y="522.5" class="cs">concept; detailed</text>
+<text x="1946.0" y="535.0" class="cs">CSRs and</text>
+<text x="1946.0" y="547.5" class="cs">architecture</text>
+<circle cx="2080.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="2080.0" y="476.5" class="sid" fill="#111">CSn-20</text>
+<text x="2080.0" y="510.0" class="cs">Secure coding, SAST</text>
+<text x="2080.0" y="522.5" class="cs">results, per-CSR</text>
+<text x="2080.0" y="535.0" class="cs">verification (VS-CS)</text>
+<circle cx="2214.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="2214.0" y="476.5" class="sid" fill="#111">CSn-33</text>
+<text x="2214.0" y="510.0" class="cs">Validation TC-08</text>
+<text x="2214.0" y="522.5" class="cs">(model artefacts)</text>
+<rect x="2560.0" y="333.5" width="230" height="42.5" class="g"/>
+<text x="2675.0" y="352.5" class="id">CG2.5</text>
+<text x="2675.0" y="366.0" class="d">CSG-05 vehicle CAN integrity (CAL 2)</text>
+<rect x="2801.0" y="333.5" width="190" height="41.5" rx="14" class="ctx"/>
+<text x="2896.0" y="351.5" class="cid">Requirements</text>
+<text x="2896.0" y="364.0" class="cs">CSR-091…CSR-093</text>
+<line x1="2790.0" y1="353.5" x2="2794.0" y2="353.5" class="w"/>
+<line x1="2794.0" y1="353.5" x2="2794.0" y2="354.25" class="w"/>
+<line x1="2794.0" y1="354.2" x2="2800.0" y2="354.2" class="w"/><path d="M2800.0,354.2 L2791.7,357.8 L2791.7,350.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="2675.0" y1="376.0" x2="2675.0" y2="395.0" class="w"/>
+<line x1="2474.0" y1="395.0" x2="2876.0" y2="395.0" class="w"/>
+<line x1="2474.0" y1="395.0" x2="2474.0" y2="448.5" class="w"/><path d="M2474.0,448.5 L2470.5,440.2 L2477.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2608.0" y1="395.0" x2="2608.0" y2="448.5" class="w"/><path d="M2608.0,448.5 L2604.5,440.2 L2611.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2742.0" y1="395.0" x2="2742.0" y2="448.5" class="w"/><path d="M2742.0,448.5 L2738.5,440.2 L2745.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="2876.0" y1="395.0" x2="2876.0" y2="448.5" class="w"/><path d="M2876.0,448.5 L2872.5,440.2 L2879.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="2474.0" cy="472.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="2474.0" y="476.5" class="sid" fill="#111">CSn-10</text>
+<text x="2474.0" y="510.0" class="cs">CS goals, claims,</text>
+<text x="2474.0" y="522.5" class="cs">concept; detailed</text>
+<text x="2474.0" y="535.0" class="cs">CSRs and</text>
+<text x="2474.0" y="547.5" class="cs">architecture</text>
+<circle cx="2608.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="2608.0" y="476.5" class="sid" fill="#111">CSn-20</text>
+<text x="2608.0" y="510.0" class="cs">Secure coding, SAST</text>
+<text x="2608.0" y="522.5" class="cs">results, per-CSR</text>
+<text x="2608.0" y="535.0" class="cs">verification (VS-CS)</text>
+<circle cx="2742.0" cy="472.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="2742.0" y="476.5" class="sid" fill="#111">CSn-23</text>
+<text x="2742.0" y="510.0" class="cs">Envelope TX</text>
+<text x="2742.0" y="522.5" class="cs">allow-list and</text>
+<text x="2742.0" y="535.0" class="cs">relay-malfunction</text>
+<text x="2742.0" y="547.5" class="cs">tests</text>
+<circle cx="2876.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="2876.0" y="476.5" class="sid" fill="#111">CSn-34</text>
+<text x="2876.0" y="510.0" class="cs">Validation TC-09,</text>
+<text x="2876.0" y="522.5" class="cs">TC-10 (CAN</text>
+<text x="2876.0" y="535.0" class="cs">robustness)</text>
+<rect x="3155.0" y="333.5" width="230" height="70.0" class="g"/>
+<text x="3270.0" y="352.5" class="id">CG2.6</text>
+<text x="3270.0" y="366.0" class="d">CSG-06 remote and interactive access</text>
+<text x="3270.0" y="378.5" class="d">minimized (CAL 3)</text>
+<text x="3270.0" y="392.5" class="df">defeaters: CDF-06</text>
+<rect x="3396.0" y="333.5" width="190" height="41.5" rx="14" class="ctx"/>
+<text x="3491.0" y="351.5" class="cid">Requirements</text>
+<text x="3491.0" y="364.0" class="cs">CSR-101…CSR-117</text>
+<line x1="3385.0" y1="353.5" x2="3389.0" y2="353.5" class="w"/>
+<line x1="3389.0" y1="353.5" x2="3389.0" y2="354.25" class="w"/>
+<line x1="3389.0" y1="354.2" x2="3395.0" y2="354.2" class="w"/><path d="M3395.0,354.2 L3386.7,357.8 L3386.7,350.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="3270.0" y1="403.5" x2="3270.0" y2="422.5" class="w"/>
+<line x1="3069.0" y1="422.5" x2="3471.0" y2="422.5" class="w"/>
+<line x1="3069.0" y1="422.5" x2="3069.0" y2="448.5" class="w"/><path d="M3069.0,448.5 L3065.5,440.2 L3072.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3203.0" y1="422.5" x2="3203.0" y2="448.5" class="w"/><path d="M3203.0,448.5 L3199.5,440.2 L3206.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3337.0" y1="422.5" x2="3337.0" y2="448.5" class="w"/><path d="M3337.0,448.5 L3333.5,440.2 L3340.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3471.0" y1="422.5" x2="3471.0" y2="448.5" class="w"/><path d="M3471.0,448.5 L3467.5,440.2 L3474.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="3069.0" cy="472.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="3069.0" y="476.5" class="sid" fill="#111">CSn-10</text>
+<text x="3069.0" y="510.0" class="cs">CS goals, claims,</text>
+<text x="3069.0" y="522.5" class="cs">concept; detailed</text>
+<text x="3069.0" y="535.0" class="cs">CSRs and</text>
+<text x="3069.0" y="547.5" class="cs">architecture</text>
+<circle cx="3203.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="3203.0" y="476.5" class="sid" fill="#111">CSn-13</text>
+<text x="3203.0" y="510.0" class="cs">Reference-configurat</text>
+<text x="3203.0" y="522.5" class="cs">ion remote-feature</text>
+<text x="3203.0" y="535.0" class="cs">decision</text>
+<circle cx="3337.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="3337.0" y="476.5" class="sid" fill="#111">CSn-20</text>
+<text x="3337.0" y="510.0" class="cs">Secure coding, SAST</text>
+<text x="3337.0" y="522.5" class="cs">results, per-CSR</text>
+<text x="3337.0" y="535.0" class="cs">verification (VS-CS)</text>
+<circle cx="3471.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="3471.0" y="476.5" class="sid" fill="#111">CSn-35</text>
+<text x="3471.0" y="510.0" class="cs">Validation</text>
+<text x="3471.0" y="522.5" class="cs">TC-11…TC-13 (remote</text>
+<text x="3471.0" y="535.0" class="cs">surface, back-end</text>
+<text x="3471.0" y="547.5" class="cs">independence)</text>
+<rect x="3817.0" y="333.5" width="230" height="70.0" class="g"/>
+<text x="3932.0" y="352.5" class="id">CG2.7</text>
+<text x="3932.0" y="366.0" class="d">CSG-07 authenticated updates and</text>
+<text x="3932.0" y="378.5" class="d">supply chain (CAL 3)</text>
+<text x="3932.0" y="392.5" class="df">defeaters: CDF-07, CDF-08</text>
+<rect x="4058.0" y="333.5" width="190" height="41.5" rx="14" class="ctx"/>
+<text x="4153.0" y="351.5" class="cid">Requirements</text>
+<text x="4153.0" y="364.0" class="cs">CSR-121…CSR-135</text>
+<line x1="4047.0" y1="353.5" x2="4051.0" y2="353.5" class="w"/>
+<line x1="4051.0" y1="353.5" x2="4051.0" y2="354.25" class="w"/>
+<line x1="4051.0" y1="354.2" x2="4057.0" y2="354.2" class="w"/><path d="M4057.0,354.2 L4048.7,357.8 L4048.7,350.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="3932.0" y1="403.5" x2="3932.0" y2="422.5" class="w"/>
+<line x1="3664.0" y1="422.5" x2="4200.0" y2="422.5" class="w"/>
+<line x1="3664.0" y1="422.5" x2="3664.0" y2="448.5" class="w"/><path d="M3664.0,448.5 L3660.5,440.2 L3667.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3798.0" y1="422.5" x2="3798.0" y2="448.5" class="w"/><path d="M3798.0,448.5 L3794.5,440.2 L3801.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="3932.0" y1="422.5" x2="3932.0" y2="448.5" class="w"/><path d="M3932.0,448.5 L3928.5,440.2 L3935.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="4066.0" y1="422.5" x2="4066.0" y2="448.5" class="w"/><path d="M4066.0,448.5 L4062.5,440.2 L4069.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="4200.0" y1="422.5" x2="4200.0" y2="448.5" class="w"/><path d="M4200.0,448.5 L4196.5,440.2 L4203.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="3664.0" cy="472.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="3664.0" y="476.5" class="sid" fill="#111">CSn-10</text>
+<text x="3664.0" y="510.0" class="cs">CS goals, claims,</text>
+<text x="3664.0" y="522.5" class="cs">concept; detailed</text>
+<text x="3664.0" y="535.0" class="cs">CSRs and</text>
+<text x="3664.0" y="547.5" class="cs">architecture</text>
+<circle cx="3798.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="3798.0" y="476.5" class="sid" fill="#111">CSn-14</text>
+<text x="3798.0" y="510.0" class="cs">Signed update design</text>
+<text x="3798.0" y="522.5" class="cs">and implementation</text>
+<circle cx="3932.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="3932.0" y="476.5" class="sid" fill="#111">CSn-20</text>
+<text x="3932.0" y="510.0" class="cs">Secure coding, SAST</text>
+<text x="3932.0" y="522.5" class="cs">results, per-CSR</text>
+<text x="3932.0" y="535.0" class="cs">verification (VS-CS)</text>
+<circle cx="4066.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="4066.0" y="476.5" class="sid" fill="#111">CSn-24</text>
+<text x="4066.0" y="510.0" class="cs">SBOM and</text>
+<text x="4066.0" y="522.5" class="cs">vulnerability scan</text>
+<text x="4066.0" y="535.0" class="cs">report for the</text>
+<text x="4066.0" y="547.5" class="cs">release</text>
+<circle cx="4200.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="4200.0" y="476.5" class="sid" fill="#111">CSn-36</text>
+<text x="4200.0" y="510.0" class="cs">Validation TC-14,</text>
+<text x="4200.0" y="522.5" class="cs">TC-15 (updates,</text>
+<text x="4200.0" y="535.0" class="cs">supply chain)</text>
+<rect x="4353.0" y="333.5" width="230" height="70.0" class="g"/>
+<text x="4468.0" y="352.5" class="id">CG2.8</text>
+<text x="4468.0" y="366.0" class="d">CSG-08 personal data and identity key</text>
+<text x="4468.0" y="378.5" class="d">protected (CAL 2)</text>
+<text x="4468.0" y="392.5" class="df">defeaters: CDF-09</text>
+<rect x="4594.0" y="333.5" width="190" height="41.5" rx="14" class="ctx"/>
+<text x="4689.0" y="351.5" class="cid">Requirements</text>
+<text x="4689.0" y="364.0" class="cs">CSR-141…CSR-152</text>
+<line x1="4583.0" y1="353.5" x2="4587.0" y2="353.5" class="w"/>
+<line x1="4587.0" y1="353.5" x2="4587.0" y2="354.25" class="w"/>
+<line x1="4587.0" y1="354.2" x2="4593.0" y2="354.2" class="w"/><path d="M4593.0,354.2 L4584.7,357.8 L4584.7,350.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<line x1="4468.0" y1="403.5" x2="4468.0" y2="422.5" class="w"/>
+<line x1="4334.0" y1="422.5" x2="4602.0" y2="422.5" class="w"/>
+<line x1="4334.0" y1="422.5" x2="4334.0" y2="448.5" class="w"/><path d="M4334.0,448.5 L4330.5,440.2 L4337.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="4468.0" y1="422.5" x2="4468.0" y2="448.5" class="w"/><path d="M4468.0,448.5 L4464.5,440.2 L4471.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="4602.0" y1="422.5" x2="4602.0" y2="448.5" class="w"/><path d="M4602.0,448.5 L4598.5,440.2 L4605.5,440.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="4334.0" cy="472.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="4334.0" y="476.5" class="sid" fill="#111">CSn-10</text>
+<text x="4334.0" y="510.0" class="cs">CS goals, claims,</text>
+<text x="4334.0" y="522.5" class="cs">concept; detailed</text>
+<text x="4334.0" y="535.0" class="cs">CSRs and</text>
+<text x="4334.0" y="547.5" class="cs">architecture</text>
+<circle cx="4468.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="4468.0" y="476.5" class="sid" fill="#111">CSn-20</text>
+<text x="4468.0" y="510.0" class="cs">Secure coding, SAST</text>
+<text x="4468.0" y="522.5" class="cs">results, per-CSR</text>
+<text x="4468.0" y="535.0" class="cs">verification (VS-CS)</text>
+<circle cx="4602.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="4602.0" y="476.5" class="sid" fill="#111">CSn-37</text>
+<text x="4602.0" y="510.0" class="cs">Validation TC-16,</text>
+<text x="4602.0" y="522.5" class="cs">TC-17 (data at rest,</text>
+<text x="4602.0" y="535.0" class="cs">decommissioning)</text>
+<text x="30" y="603.5" class="h">Notation (GSN Community Standard v3)</text>
+<rect x="30" y="617.5" width="40" height="22" class="g"/>
+<text x="86" y="632.5" class="l">Goal (claim)</text>
+<path d="M37,647.5 L70,647.5 L63,669.5 L30,669.5 Z" class="g"/>
+<text x="86" y="662.5" class="l">Strategy (argument)</text>
+<circle cx="50" cy="688.5" r="11" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.6"/>
+<text x="86" y="692.5" class="l">Solution: evidence available</text>
+<circle cx="50" cy="718.5" r="11" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86" y="722.5" class="l">Solution: evidence partial</text>
+<circle cx="50" cy="748.5" r="11" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="86" y="752.5" class="l">Solution: evidence missing</text>
+<rect x="30" y="767.5" width="40" height="22" rx="10" class="ctx"/>
+<text x="86" y="782.5" class="l">Context</text>
+<ellipse cx="50" cy="808.5" rx="20" ry="11" class="ctx"/>
+<text x="86" y="812.5" class="l">Assumption (A) / justification (J)</text>
+<path d="M50,829.5 L59,838.5 L50,847.5 L41,838.5 Z" fill="#fff" stroke="#111" stroke-width="1.2"/>
+<text x="86" y="842.5" class="l">Undeveloped goal</text>
+<line x1="30.0" y1="868.5" x2="70.0" y2="868.5" class="w"/><path d="M70.0,868.5 L61.7,872.0 L61.7,865.0 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<text x="86" y="872.5" class="l">SupportedBy</text>
+<line x1="30.0" y1="898.5" x2="70.0" y2="898.5" class="w"/><path d="M70.0,898.5 L61.7,902.0 L61.7,895.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<text x="86" y="902.5" class="l">InContextOf</text>
+<text x="30" y="927.5" class="dfl">defeaters: DF-nn</text>
+<text x="140" y="927.5" class="l">open counter-evidence on the goal (WP-K-01 §7, WP-K-03 §6)</text>
+<rect x="4344.0" y="591.5" width="440" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="4354.0" y="613.5" class="h">LionDriver — Cybersecurity case (GSN)</text>
+<text x="4354.0" y="629.5" class="l">Argument from CG2</text>
+<text x="4354.0" y="645.5" class="l">Sheet 3 of 7</text>
+<text x="4354.0" y="661.5" class="l">Source: WP-K-03 §2–§4, §6 (text trees and tables)</text>
+<text x="4354.0" y="677.5" class="s">Generated by gsn_diagrams.py — edit the source, not this file</text>
+</svg>
