@@ -63,3 +63,7 @@ Editing WP-S-05 S-11 to bit 38 made L0 fail. The document was restored afterward
 | Effect | For these signals the DBC is the only source of the layout, so the back-to-back run cannot detect a DBC error that the C shares. B2B-02 (wheel-speed sign) also depends on the `0xAA` layout |
 | Proposal | Add bit positions, endianness and bit numbering (LA-01) to WP-S-05 §11.1 for these signals, then extend `STATED` in `layout_check.py`. A change to WP-S-05, so for the HSI owner to decide |
 | Decision | 2026-10-13, project maintainer, on the recommendation. Applied in WP-S-05 v0.10 (numbered v0.7 before the merge with the base): the bit numbering is defined (LA-01 becomes the rule), and the positions of these signals are recorded as **provisional, from the DBC**. `STATED` is not extended: positions copied from the DBC give no independence from it. LC-01 stays open until a bus capture on the reference vehicle (HIL bench B3) confirms them; then they move into `STATED` |
+
+## 4. Re-run at opendbc `273f44e` (merge with the base)
+
+The branch was merged with a base that pins opendbc `273f44e` (T10b, actuation-frame arrival, reference build). The check was run again in both build variants with the same command. Every check passed (L0, L1 and L2 for CRUISE_ACTIVE, GAS_RELEASED and BRAKE_PRESSED, and the hand-computed checksum). Raw output: [`layout-check-2026-10-13-273f44e-reference.json`](layout-check-2026-10-13-273f44e-reference.json), [`layout-check-2026-10-13-273f44e-upstream.json`](layout-check-2026-10-13-273f44e-upstream.json). LC-01 is unchanged.
