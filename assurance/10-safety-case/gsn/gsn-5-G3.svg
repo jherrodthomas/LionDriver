@@ -1,148 +1,246 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1346" height="1046" viewBox="0 0 1346 1046" font-family="Helvetica, Arial, sans-serif">
-<style>.g{fill:#fff;stroke:#111;stroke-width:1.4}.ctx{fill:#f4f4f4;stroke:#111;stroke-width:1.1}.id{font-size:11.5px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.sid{font-size:10.5px;font-weight:700;text-anchor:middle}.cid{font-size:10px;font-weight:700;text-anchor:middle}.cs{font-size:9.5px;text-anchor:middle;fill:#333}.aj{font-size:11px;font-weight:700;text-anchor:end}.df{font-size:9.5px;font-weight:700;fill:#b3261e;text-anchor:middle}.dfl{font-size:9.5px;font-weight:700;fill:#b3261e}.sh{font-size:9.5px;font-weight:600;fill:#444;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
-<rect width="100%" height="100%" fill="#fff"/>
-<text x="30" y="36" class="h">Safety case — argument from G3  (sheet 5 of 6)</text>
-<rect x="558.0" y="70" width="230" height="110.0" class="g"/>
-<text x="673.0" y="89" class="id">G3</text>
-<text x="673.0" y="102.5" class="d">The ML components (driving model, DM</text>
-<text x="673.0" y="115.0" class="d">model) are adequately specified,</text>
-<text x="673.0" y="127.5" class="d">developed, validated and monitored for</text>
-<text x="673.0" y="140.0" class="d">their role in the architecture.</text>
-<text x="673.0" y="154.0" class="df">defeaters: DF-15</text>
-<text x="673.0" y="169.0" class="sh">from sheet 1</text>
-<rect x="799.0" y="70" width="190" height="66.5" rx="14" class="ctx"/>
-<text x="894.0" y="88" class="cid">C10</text>
-<text x="894.0" y="100.5" class="cs">AI system definition and AI</text>
-<text x="894.0" y="113.0" class="cs">safety requirements AIR-nn</text>
-<text x="894.0" y="125.5" class="cs">[WP-C-11]</text>
-<ellipse cx="894.0" cy="196.5" rx="95.0" ry="56.0" class="ctx"/>
-<text x="985.0" y="254.5" class="aj">J</text>
-<text x="894.0" y="162.5" class="cid">J3</text>
-<text x="894.0" y="175.0" class="cs">Models are QM components</text>
-<text x="894.0" y="187.5" class="cs">inside the envelope; their</text>
-<text x="894.0" y="200.0" class="cs">errors are SOTIF</text>
-<text x="894.0" y="212.5" class="cs">insufficiencies (G2) and their</text>
-<text x="894.0" y="225.0" class="cs">worst-case actuation is</text>
-<text x="894.0" y="237.5" class="cs">bounded by G1.1</text>
-<line x1="788.0" y1="90" x2="792.0" y2="90" class="w"/>
-<line x1="792.0" y1="90" x2="792.0" y2="196.5" class="w"/>
-<line x1="792.0" y1="103.2" x2="798.0" y2="103.2" class="w"/><path d="M798.0,103.2 L789.7,106.8 L789.7,99.7 Z" fill="#fff" stroke="#111" stroke-width="1"/>
-<line x1="792.0" y1="196.5" x2="798.0" y2="196.5" class="w"/><path d="M798.0,196.5 L789.7,200.0 L789.7,193.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
-<line x1="673.0" y1="180.0" x2="673.0" y2="199.0" class="w"/>
-<line x1="673.0" y1="199.0" x2="673.0" y2="199.0" class="w"/>
-<line x1="673.0" y1="199.0" x2="673.0" y2="293.5" class="w"/><path d="M673.0,293.5 L669.5,285.2 L676.5,285.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<path d="M562.0,294.5 L798.0,294.5 L784.0,374.5 L548.0,374.5 Z" class="g"/>
-<text x="673.0" y="313.5" class="id">S3</text>
-<text x="673.0" y="327.0" class="d">Argue over model identity,</text>
-<text x="673.0" y="339.5" class="d">input-space/ODD fit, performance</text>
-<text x="673.0" y="352.0" class="d">evidence, runtime supervision, and</text>
-<text x="673.0" y="364.5" class="d">change control</text>
-<line x1="673.0" y1="374.5" x2="673.0" y2="393.5" class="w"/>
-<line x1="153.0" y1="393.5" x2="1193.0" y2="393.5" class="w"/>
-<line x1="153.0" y1="393.5" x2="153.0" y2="419.5" class="w"/><path d="M153.0,419.5 L149.5,411.2 L156.5,411.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="413.0" y1="393.5" x2="413.0" y2="419.5" class="w"/><path d="M413.0,419.5 L409.5,411.2 L416.5,411.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="673.0" y1="393.5" x2="673.0" y2="419.5" class="w"/><path d="M673.0,419.5 L669.5,411.2 L676.5,411.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="933.0" y1="393.5" x2="933.0" y2="419.5" class="w"/><path d="M933.0,419.5 L929.5,411.2 L936.5,411.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="1193.0" y1="393.5" x2="1193.0" y2="419.5" class="w"/><path d="M1193.0,419.5 L1189.5,411.2 L1196.5,411.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<rect x="38.0" y="420.5" width="230" height="70.0" class="g"/>
-<text x="153.0" y="439.5" class="id">G3.1</text>
-<text x="153.0" y="453.0" class="d">The deployed models are exactly the</text>
-<text x="153.0" y="465.5" class="d">validated ones.</text>
-<text x="153.0" y="479.5" class="df">defeaters: DF-19, DF-31</text>
-<line x1="153.0" y1="490.5" x2="153.0" y2="509.5" class="w"/>
-<line x1="86.0" y1="509.5" x2="220.0" y2="509.5" class="w"/>
-<line x1="86.0" y1="509.5" x2="86.0" y2="535.5" class="w"/><path d="M86.0,535.5 L82.5,527.2 L89.5,527.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="220.0" y1="509.5" x2="220.0" y2="535.5" class="w"/><path d="M220.0,535.5 L216.5,527.2 L223.5,527.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<circle cx="86.0" cy="559.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="86.0" y="563.5" class="sid" fill="#111">Sn-50</text>
-<text x="86.0" y="597.0" class="cs">Model hashes in</text>
-<text x="86.0" y="609.5" class="cs">release record</text>
-<circle cx="220.0" cy="559.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="220.0" y="563.5" class="sid" fill="#111">Sn-31</text>
-<text x="220.0" y="597.0" class="cs">Model hash check at</text>
-<text x="220.0" y="609.5" class="cs">installation</text>
-<text x="220.0" y="622.0" class="cs">(INS-18)</text>
-<rect x="298" y="420.5" width="230" height="70.0" class="g"/>
-<text x="413.0" y="439.5" class="id">G3.2</text>
-<text x="413.0" y="453.0" class="d">The models' input space covers the</text>
-<text x="413.0" y="465.5" class="d">ODD.</text>
-<text x="413.0" y="479.5" class="df">defeaters: DF-20</text>
-<line x1="413.0" y1="490.5" x2="413.0" y2="509.5" class="w"/>
-<line x1="354.0" y1="509.5" x2="413.0" y2="509.5" class="w"/>
-<line x1="354.0" y1="509.5" x2="354.0" y2="535.5" class="w"/><path d="M354.0,535.5 L350.5,527.2 L357.5,527.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<circle cx="354.0" cy="559.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
-<text x="354.0" y="563.5" class="sid" fill="#111">Sn-51</text>
-<text x="354.0" y="597.0" class="cs">Dataset / ODD</text>
-<text x="354.0" y="609.5" class="cs">coverage analysis</text>
-<rect x="558.0" y="420.5" width="230" height="70.0" class="g"/>
-<text x="673.0" y="439.5" class="id">G3.3</text>
-<text x="673.0" y="453.0" class="d">Model performance meets AIR targets in</text>
-<text x="673.0" y="465.5" class="d">the ODD.</text>
-<text x="673.0" y="479.5" class="df">defeaters: DF-16, DF-35</text>
-<line x1="673.0" y1="490.5" x2="673.0" y2="509.5" class="w"/>
-<line x1="606.0" y1="509.5" x2="740.0" y2="509.5" class="w"/>
-<line x1="606.0" y1="509.5" x2="606.0" y2="535.5" class="w"/><path d="M606.0,535.5 L602.5,527.2 L609.5,527.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="740.0" y1="509.5" x2="740.0" y2="535.5" class="w"/><path d="M740.0,535.5 L736.5,527.2 L743.5,527.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<circle cx="606.0" cy="559.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="606.0" y="563.5" class="sid" fill="#111">Sn-52</text>
-<text x="606.0" y="597.0" class="cs">Model test reports</text>
-<circle cx="740.0" cy="559.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="740.0" y="563.5" class="sid" fill="#111">Sn-42</text>
-<text x="740.0" y="597.0" class="cs">Known-scenario</text>
-<text x="740.0" y="609.5" class="cs">evaluation</text>
-<rect x="818" y="420.5" width="230" height="70.0" class="g"/>
-<text x="933.0" y="439.5" class="id">G3.4</text>
-<text x="933.0" y="453.0" class="d">Out-of-distribution or degraded model</text>
-<text x="933.0" y="465.5" class="d">behaviour is detected or bounded.</text>
-<text x="933.0" y="479.5" class="df">defeaters: DF-21, DF-08</text>
-<line x1="933.0" y1="490.5" x2="933.0" y2="509.5" class="w"/>
-<line x1="874.0" y1="509.5" x2="933.0" y2="509.5" class="w"/>
-<line x1="874.0" y1="509.5" x2="874.0" y2="535.5" class="w"/><path d="M874.0,535.5 L870.5,527.2 L877.5,527.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<circle cx="874.0" cy="559.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
-<text x="874.0" y="563.5" class="sid" fill="#111">Sn-53</text>
-<text x="874.0" y="597.0" class="cs">AI runtime</text>
-<text x="874.0" y="609.5" class="cs">supervision design,</text>
-<text x="874.0" y="622.0" class="cs">AIR-nn</text>
-<rect x="1078.0" y="420.5" width="230" height="42.5" class="g"/>
-<text x="1193.0" y="439.5" class="id">G3.5</text>
-<text x="1193.0" y="453.0" class="d">Model changes are controlled (D-05).</text>
-<line x1="1193.0" y1="463.0" x2="1193.0" y2="482.0" class="w"/>
-<line x1="1126.0" y1="482.0" x2="1260.0" y2="482.0" class="w"/>
-<line x1="1126.0" y1="482.0" x2="1126.0" y2="535.5" class="w"/><path d="M1126.0,535.5 L1122.5,527.2 L1129.5,527.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="1260.0" y1="482.0" x2="1260.0" y2="535.5" class="w"/><path d="M1260.0,535.5 L1256.5,527.2 L1263.5,527.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<circle cx="1126.0" cy="559.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
-<text x="1126.0" y="563.5" class="sid" fill="#111">Sn-60</text>
-<text x="1126.0" y="597.0" class="cs">Management plans</text>
-<circle cx="1260.0" cy="559.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
-<text x="1260.0" y="563.5" class="sid" fill="#111">Sn-54</text>
-<text x="1260.0" y="597.0" class="cs">AI safety plan</text>
-<text x="30" y="678.0" class="h">Notation (GSN Community Standard v3)</text>
-<rect x="30" y="692.0" width="40" height="22" class="g"/>
-<text x="86" y="707.0" class="l">Goal (claim)</text>
-<path d="M37,722.0 L70,722.0 L63,744.0 L30,744.0 Z" class="g"/>
-<text x="86" y="737.0" class="l">Strategy (argument)</text>
-<circle cx="50" cy="763.0" r="11" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.6"/>
-<text x="86" y="767.0" class="l">Solution: evidence available</text>
-<circle cx="50" cy="793.0" r="11" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
-<text x="86" y="797.0" class="l">Solution: evidence partial</text>
-<circle cx="50" cy="823.0" r="11" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="86" y="827.0" class="l">Solution: evidence missing</text>
-<rect x="30" y="842.0" width="40" height="22" rx="10" class="ctx"/>
-<text x="86" y="857.0" class="l">Context</text>
-<ellipse cx="50" cy="883.0" rx="20" ry="11" class="ctx"/>
-<text x="86" y="887.0" class="l">Assumption (A) / justification (J)</text>
-<path d="M50,904.0 L59,913.0 L50,922.0 L41,913.0 Z" fill="#fff" stroke="#111" stroke-width="1.2"/>
-<text x="86" y="917.0" class="l">Undeveloped goal</text>
-<line x1="30.0" y1="943.0" x2="70.0" y2="943.0" class="w"/><path d="M70.0,943.0 L61.7,946.5 L61.7,939.5 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<text x="86" y="947.0" class="l">SupportedBy</text>
-<line x1="30.0" y1="973.0" x2="70.0" y2="973.0" class="w"/><path d="M70.0,973.0 L61.7,976.5 L61.7,969.5 Z" fill="#fff" stroke="#111" stroke-width="1"/>
-<text x="86" y="977.0" class="l">InContextOf</text>
-<text x="30" y="1002.0" class="dfl">defeaters: DF-nn</text>
-<text x="140" y="1002.0" class="l">open counter-evidence on the goal (WP-K-01 §7, WP-K-03 §6)</text>
-<rect x="876" y="666.0" width="440" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="886" y="688.0" class="h">LionDriver — Safety case (GSN)</text>
-<text x="886" y="704.0" class="l">Argument from G3</text>
-<text x="886" y="720.0" class="l">Sheet 5 of 6</text>
-<text x="886" y="736.0" class="l">Source: case records (assurance/case/) and WP-K-01 contexts</text>
-<text x="886" y="752.0" class="s">Generated by gsn_diagrams.py — edit the source, not this file</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1456" height="1128" viewBox="0 0 1456 1128">
+<title>Safety case (GSN), sheet 5 of 6: argument from G3</title>
+<style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.sid{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.cid{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.cs{font:400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle;fill:#3c4556}.aj{font:700 10px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff;text-anchor:middle}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#1d2433;stroke-width:1.3}.wc{stroke:#7d8798;stroke-width:1.2;stroke-dasharray:4 3}.shadow{fill:#0f172a;opacity:.06}</style>
+<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
+<rect width="100%" height="100%" fill="#f7f8fa"/>
+<rect y="78" width="100%" height="1050" fill="url(#dots)"/>
+<rect width="100%" height="78" fill="#0f2a44"/>
+<text x="40" y="32" class="eyebrow">GSN · SAFETY CASE · WP-K-01</text>
+<text x="40" y="59" class="title">G3 · The ML components (driving model, DM model) are adequately specified,…</text>
+<rect x="1216" y="21" width="200" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
+<text x="1316" y="44" class="hc">Sheet 5 of 6</text>
+<rect x="607.5" y="116.5" width="244" height="120" rx="4" class="shadow"/>
+<rect x="606.0" y="114" width="244" height="120" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M610.0,114 H846.0 A4,4 0 0 1 850.0,118 V120 H606.0 V118 A4,4 0 0 1 610.0,114 Z" fill="#c62828"/>
+<text x="620.0" y="139" class="id" text-anchor="start">G3</text>
+<text x="836.0" y="139" class="kind">GOAL</text>
+<text x="620.0" y="153" class="d">The ML components (driving model, DM</text>
+<text x="620.0" y="167" class="d">model) are adequately specified,</text>
+<text x="620.0" y="181" class="d">developed, validated and monitored</text>
+<text x="620.0" y="195" class="d">for their role in the architecture.</text>
+<rect x="620.0" y="203.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="641.2" y="214.5" class="chip" fill="#fff">DF-15</text>
+<rect x="667.5" y="203.0" width="82.4" height="16" rx="8" fill="#e6e9ef"/>
+<text x="708.7" y="214.5" class="chip" fill="#334155">from sheet 1</text>
+<rect x="862.0" y="114" width="196" height="82" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="960.0" y="135" class="cid" fill="#2f557f">C10</text>
+<text x="960.0" y="149" class="cs">AI system definition and AI</text>
+<text x="960.0" y="163" class="cs">safety requirements AIR-nn</text>
+<text x="960.0" y="177" class="cs">[WP-C-11]</text>
+<ellipse cx="960.0" cy="268.0" rx="98.0" ry="67.0" fill="#dcefe0" stroke="#5f9f6d" stroke-width="1.2"/>
+<circle cx="1050.0" cy="332" r="9" fill="#245a31"/>
+<text x="1050.0" y="336" class="aj">J</text>
+<text x="960.0" y="227" class="cid" fill="#245a31">J3</text>
+<text x="960.0" y="241" class="cs">Models are QM components</text>
+<text x="960.0" y="255" class="cs">inside the envelope; their</text>
+<text x="960.0" y="269" class="cs">errors are SOTIF</text>
+<text x="960.0" y="283" class="cs">insufficiencies (G2) and</text>
+<text x="960.0" y="297" class="cs">their worst-case actuation is</text>
+<text x="960.0" y="311" class="cs">bounded by G1.1</text>
+<line x1="850.0" y1="136" x2="855.0" y2="136" class="wc"/>
+<line x1="855.0" y1="136" x2="855.0" y2="268.0" class="wc"/>
+<line x1="855.0" y1="155.0" x2="861.0" y2="155.0" class="wc"/><path d="M861.0,155.0 L851.9,159.1 L851.9,150.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="855.0" y1="268.0" x2="861.0" y2="268.0" class="wc"/><path d="M861.0,268.0 L851.9,272.1 L851.9,263.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="728.0" y1="234" x2="728.0" y2="353.0" class="w"/>
+<line x1="728.0" y1="353.0" x2="728.0" y2="353.0" class="w"/>
+<line x1="728.0" y1="353.0" x2="728.0" y2="383.0" class="w"/><path d="M728.0,383.0 L723.9,373.9 L732.1,373.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<path d="M613.0,384 L859.0,384 L843.0,482 L597.0,482 Z" transform="translate(1.5 2.5)" class="shadow"/>
+<path d="M613.0,384 L859.0,384 L843.0,482 L597.0,482 Z" fill="#e4e7fb" stroke="#4b5bb7" stroke-width="1.4"/>
+<text x="625.0" y="409" class="id" text-anchor="start">S3</text>
+<text x="845.0" y="409" class="kind">STRATEGY</text>
+<text x="625.0" y="423" class="d">Argue over model identity,</text>
+<text x="625.0" y="437" class="d">input-space/ODD fit, performance</text>
+<text x="625.0" y="451" class="d">evidence, runtime supervision, and</text>
+<text x="625.0" y="465" class="d">change control</text>
+<line x1="728.0" y1="482" x2="728.0" y2="505.0" class="w"/>
+<line x1="172.0" y1="505.0" x2="1284.0" y2="505.0" class="w"/>
+<line x1="172.0" y1="505.0" x2="172.0" y2="535.0" class="w"/><path d="M172.0,535.0 L167.9,525.9 L176.1,525.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="450.0" y1="505.0" x2="450.0" y2="535.0" class="w"/><path d="M450.0,535.0 L445.9,525.9 L454.1,525.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="728.0" y1="505.0" x2="728.0" y2="535.0" class="w"/><path d="M728.0,535.0 L723.9,525.9 L732.1,525.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1006.0" y1="505.0" x2="1006.0" y2="535.0" class="w"/><path d="M1006.0,535.0 L1001.9,525.9 L1010.1,525.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1284.0" y1="505.0" x2="1284.0" y2="535.0" class="w"/><path d="M1284.0,535.0 L1279.9,525.9 L1288.1,525.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<rect x="51.5" y="538.5" width="244" height="92" rx="4" class="shadow"/>
+<rect x="50.0" y="536" width="244" height="92" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M54.0,536 H290.0 A4,4 0 0 1 294.0,540 V542 H50.0 V540 A4,4 0 0 1 54.0,536 Z" fill="#c62828"/>
+<text x="64.0" y="561" class="id" text-anchor="start">G3.1</text>
+<text x="280.0" y="561" class="kind">GOAL</text>
+<text x="64.0" y="575" class="d">The deployed models are exactly the</text>
+<text x="64.0" y="589" class="d">validated ones.</text>
+<rect x="64.0" y="597.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="85.2" y="608.5" class="chip" fill="#fff">DF-19</text>
+<rect x="111.5" y="597.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="132.8" y="608.5" class="chip" fill="#fff">DF-31</text>
+<line x1="172.0" y1="628" x2="172.0" y2="651.0" class="w"/>
+<line x1="100.0" y1="651.0" x2="244.0" y2="651.0" class="w"/>
+<line x1="100.0" y1="651.0" x2="100.0" y2="695.0" class="w"/><path d="M100.0,695.0 L95.9,685.9 L104.1,685.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="244.0" y1="651.0" x2="244.0" y2="695.0" class="w"/><path d="M244.0,695.0 L239.9,685.9 L248.1,685.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="100.0" cy="720.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="100.0" y="724.0" class="sid" fill="#b3261e">Sn-50</text>
+<text x="100.0" y="762" class="cs">Model hashes in</text>
+<text x="100.0" y="776" class="cs">release record</text>
+<circle cx="244.0" cy="720.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="244.0" y="724.0" class="sid" fill="#b3261e">Sn-31</text>
+<text x="244.0" y="762" class="cs">Model hash check at</text>
+<text x="244.0" y="776" class="cs">installation (INS-18)</text>
+<rect x="329.5" y="538.5" width="244" height="92" rx="4" class="shadow"/>
+<rect x="328" y="536" width="244" height="92" rx="4" fill="#fdf5e1" stroke="#ecc77a" stroke-width="1.2"/>
+<path d="M332,536 H568 A4,4 0 0 1 572,540 V542 H328 V540 A4,4 0 0 1 332,536 Z" fill="#e0a21b"/>
+<text x="342" y="561" class="id" text-anchor="start">G3.2</text>
+<text x="558" y="561" class="kind">GOAL</text>
+<text x="342" y="575" class="d">The models' input space covers the</text>
+<text x="342" y="589" class="d">ODD.</text>
+<rect x="342.0" y="597.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="363.2" y="608.5" class="chip" fill="#fff">DF-20</text>
+<line x1="450.0" y1="628" x2="450.0" y2="651.0" class="w"/>
+<line x1="388.0" y1="651.0" x2="450.0" y2="651.0" class="w"/>
+<line x1="388.0" y1="651.0" x2="388.0" y2="695.0" class="w"/><path d="M388.0,695.0 L383.9,685.9 L392.1,685.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="388.0" cy="722.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="388.0" cy="720.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="388.0" y="724.0" class="sid" fill="#1d2433">Sn-51</text>
+<text x="388.0" y="762" class="cs">Dataset / ODD</text>
+<text x="388.0" y="776" class="cs">coverage analysis</text>
+<rect x="607.5" y="538.5" width="244" height="92" rx="4" class="shadow"/>
+<rect x="606.0" y="536" width="244" height="92" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M610.0,536 H846.0 A4,4 0 0 1 850.0,540 V542 H606.0 V540 A4,4 0 0 1 610.0,536 Z" fill="#c62828"/>
+<text x="620.0" y="561" class="id" text-anchor="start">G3.3</text>
+<text x="836.0" y="561" class="kind">GOAL</text>
+<text x="620.0" y="575" class="d">Model performance meets AIR targets</text>
+<text x="620.0" y="589" class="d">in the ODD.</text>
+<rect x="620.0" y="597.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="641.2" y="608.5" class="chip" fill="#fff">DF-16</text>
+<rect x="667.5" y="597.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="688.8" y="608.5" class="chip" fill="#fff">DF-35</text>
+<line x1="728.0" y1="628" x2="728.0" y2="651.0" class="w"/>
+<line x1="656.0" y1="651.0" x2="800.0" y2="651.0" class="w"/>
+<line x1="656.0" y1="651.0" x2="656.0" y2="695.0" class="w"/><path d="M656.0,695.0 L651.9,685.9 L660.1,685.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="800.0" y1="651.0" x2="800.0" y2="695.0" class="w"/><path d="M800.0,695.0 L795.9,685.9 L804.1,685.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="656.0" cy="720.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="656.0" y="724.0" class="sid" fill="#b3261e">Sn-52</text>
+<text x="656.0" y="762" class="cs">Model test reports</text>
+<circle cx="800.0" cy="720.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="800.0" y="724.0" class="sid" fill="#b3261e">Sn-42</text>
+<text x="800.0" y="762" class="cs">Known-scenario</text>
+<text x="800.0" y="776" class="cs">evaluation</text>
+<rect x="885.5" y="538.5" width="244" height="106" rx="4" class="shadow"/>
+<rect x="884" y="536" width="244" height="106" rx="4" fill="#fdf5e1" stroke="#ecc77a" stroke-width="1.2"/>
+<path d="M888,536 H1124 A4,4 0 0 1 1128,540 V542 H884 V540 A4,4 0 0 1 888,536 Z" fill="#e0a21b"/>
+<text x="898" y="561" class="id" text-anchor="start">G3.4</text>
+<text x="1114" y="561" class="kind">GOAL</text>
+<text x="898" y="575" class="d">Out-of-distribution or degraded</text>
+<text x="898" y="589" class="d">model behaviour is detected or</text>
+<text x="898" y="603" class="d">bounded.</text>
+<rect x="898.0" y="611.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="919.2" y="622.5" class="chip" fill="#fff">DF-21</text>
+<rect x="945.5" y="611.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="966.8" y="622.5" class="chip" fill="#fff">DF-08</text>
+<line x1="1006.0" y1="642" x2="1006.0" y2="665.0" class="w"/>
+<line x1="944.0" y1="665.0" x2="1006.0" y2="665.0" class="w"/>
+<line x1="944.0" y1="665.0" x2="944.0" y2="695.0" class="w"/><path d="M944.0,695.0 L939.9,685.9 L948.1,685.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="944.0" cy="722.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="944.0" cy="720.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="944.0" y="724.0" class="sid" fill="#1d2433">Sn-53</text>
+<text x="944.0" y="762" class="cs">AI runtime</text>
+<text x="944.0" y="776" class="cs">supervision design,</text>
+<text x="944.0" y="790" class="cs">AIR-nn</text>
+<rect x="1163.5" y="538.5" width="244" height="56" rx="4" class="shadow"/>
+<rect x="1162.0" y="536" width="244" height="56" rx="4" fill="#fdf5e1" stroke="#ecc77a" stroke-width="1.2"/>
+<path d="M1166.0,536 H1402.0 A4,4 0 0 1 1406.0,540 V542 H1162.0 V540 A4,4 0 0 1 1166.0,536 Z" fill="#e0a21b"/>
+<text x="1176.0" y="561" class="id" text-anchor="start">G3.5</text>
+<text x="1392.0" y="561" class="kind">GOAL</text>
+<text x="1176.0" y="575" class="d">Model changes are controlled (D-05).</text>
+<line x1="1284.0" y1="592" x2="1284.0" y2="615.0" class="w"/>
+<line x1="1212.0" y1="615.0" x2="1356.0" y2="615.0" class="w"/>
+<line x1="1212.0" y1="615.0" x2="1212.0" y2="695.0" class="w"/><path d="M1212.0,695.0 L1207.9,685.9 L1216.1,685.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1356.0" y1="615.0" x2="1356.0" y2="695.0" class="w"/><path d="M1356.0,695.0 L1351.9,685.9 L1360.1,685.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="1212.0" cy="722.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="1212.0" cy="720.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="1212.0" y="724.0" class="sid" fill="#1d2433">Sn-60</text>
+<text x="1212.0" y="762" class="cs">Management plans</text>
+<circle cx="1356.0" cy="722.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="1356.0" cy="720.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="1356.0" y="724.0" class="sid" fill="#1d2433">Sn-54</text>
+<text x="1356.0" y="762" class="cs">AI safety plan</text>
+<text x="40" y="852" class="lh">Notation · GSN Community Standard v3</text>
+<rect x="48" y="868" width="52" height="30" rx="4" fill="#fdf5e1" stroke="#ecc77a"/>
+<rect x="48" y="868" width="52" height="5" rx="2" fill="#e0a21b"/>
+<text x="74" y="916" class="s" text-anchor="middle">Goal</text>
+<path d="M148,868 L194,868 L184,898 L138,898 Z" fill="#e4e7fb" stroke="#4b5bb7" stroke-width="1.4"/>
+<text x="166" y="916" class="s" text-anchor="middle">Strategy</text>
+<rect x="232" y="869" width="52" height="28" rx="14" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="258" y="916" class="s" text-anchor="middle">Context</text>
+<ellipse cx="350" cy="883" rx="27" ry="14" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<text x="350" y="887" class="cid" fill="#7a4f00">A</text>
+<text x="350" y="916" class="s" text-anchor="middle">Assumption</text>
+<ellipse cx="442" cy="883" rx="27" ry="14" fill="#dcefe0" stroke="#5f9f6d" stroke-width="1.2"/>
+<text x="442" y="887" class="cid" fill="#245a31">J</text>
+<text x="442" y="916" class="s" text-anchor="middle">Justification</text>
+<path d="M534,872 L545,883 L534,894 L523,883 Z" fill="#fff" stroke="#1d2433" stroke-width="1.4"/>
+<text x="534" y="916" class="s" text-anchor="middle">Undeveloped</text>
+<text x="40" y="959" class="lb">Solution</text>
+<circle cx="166" cy="957" r="14" fill="#0f172a" opacity=".10"/>
+<circle cx="166" cy="955" r="14" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.8"/>
+<circle cx="166" cy="955" r="10" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="1.2"/>
+<text x="166" y="988" class="s" text-anchor="middle">Available</text>
+<circle cx="258" cy="957" r="14" fill="#0f172a" opacity=".10"/>
+<circle cx="258" cy="955" r="14" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="258" y="988" class="s" text-anchor="middle">Partial</text>
+<circle cx="350" cy="955" r="14" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="350" y="988" class="s" text-anchor="middle">Missing</text>
+<line x1="40.0" y1="1020.0" x2="84.0" y2="1020.0" class="w"/><path d="M84.0,1020.0 L74.9,1024.1 L74.9,1015.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<text x="94" y="1024" class="s">SupportedBy</text>
+<line x1="190.0" y1="1020.0" x2="234.0" y2="1020.0" class="wc"/><path d="M234.0,1020.0 L224.9,1024.1 L224.9,1015.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<text x="244" y="1024" class="s">InContextOf</text>
+<rect x="340.0" y="1012.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="361.2" y="1023.5" class="chip" fill="#fff">DF-nn</text>
+<text x="390.5" y="1024" class="s">open defeater on the goal</text>
+<text x="40" y="1050" class="lb">Goal colour: the evidence below it, on every sheet</text>
+<rect x="40" y="1058" width="26" height="14" rx="3" fill="#edf7ee" stroke="#9fcfa3"/>
+<rect x="40" y="1058" width="26" height="4" rx="2" fill="#2e7d32"/>
+<text x="72" y="1069" class="s">all evidence available</text>
+<rect x="211.2" y="1058" width="26" height="14" rx="3" fill="#fdf5e1" stroke="#ecc77a"/>
+<rect x="211.2" y="1058" width="26" height="4" rx="2" fill="#e0a21b"/>
+<text x="243.2" y="1069" class="s">evidence partial</text>
+<rect x="348.79999999999995" y="1058" width="26" height="14" rx="3" fill="#fdecec" stroke="#eba9a9"/>
+<rect x="348.79999999999995" y="1058" width="26" height="4" rx="2" fill="#c62828"/>
+<text x="380.79999999999995" y="1069" class="s">evidence missing</text>
+<rect x="486.4" y="1058" width="26" height="14" rx="3" fill="#f1f3f6" stroke="#c9cfd8"/>
+<rect x="486.4" y="1058" width="26" height="4" rx="2" fill="#8a93a3"/>
+<text x="518.4" y="1069" class="s">not developed</text>
+<rect x="896" y="838" width="520" height="250" rx="10" fill="#fff" stroke="#d9dee6"/>
+<line x1="896" y1="884" x2="1416" y2="884" stroke="#d9dee6"/>
+<line x1="1226" y1="884" x2="1226" y2="1088" stroke="#d9dee6"/>
+<text x="914" y="867" class="tbh">LionDriver · Safety case</text>
+<rect x="1266" y="852" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
+<text x="1332" y="866" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
+<text x="914" y="910" class="k">ARGUMENT FROM</text>
+<text x="1018" y="910" class="v">G3</text>
+<text x="914" y="936" class="k">SOURCE</text>
+<text x="1018" y="936" class="v">case records (assurance/case/)</text>
+<text x="1018" y="951" class="v">and WP-K-01 contexts</text>
+<text x="914" y="977" class="k">GENERATED BY</text>
+<text x="1018" y="977" class="v">gsn_diagrams.py</text>
+<text x="914" y="1003" class="k">EDIT</text>
+<text x="1018" y="1003" class="v">the source, not this file</text>
+<text x="914" y="1033" class="k">EVIDENCE ON THIS SHEET</text>
+<rect x="914.0" y="1041" width="147.0" height="10" fill="#f2b233" stroke="#9a6b00" stroke-width=".8"/>
+<rect x="1061.0" y="1041" width="147.0" height="10" fill="#ffffff" stroke="#b3261e" stroke-width=".8"/>
+<text x="914" y="1067" class="s">0 available · 4 partial · 4 missing</text>
+<text x="1242" y="908" class="k">SHEETS</text>
+<line x1="1321.0" y1="945.0" x2="1257.2" y2="959.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="1257.2" y1="979.0" x2="1321.0" y2="993.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="1321.0" y1="945.0" x2="1299.8" y2="959.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="1321.0" y1="945.0" x2="1342.2" y2="959.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="1321.0" y1="945.0" x2="1384.8" y2="959.0" stroke="#7d8798" stroke-width="1.3"/>
+<rect x="1307.0" y="925.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1321.0" y="939.0" class="mm" fill="#0f2a44">1</text>
+<rect x="1243.2" y="959.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1257.2" y="973.0" class="mm" fill="#0f2a44">2</text>
+<rect x="1285.8" y="959.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1299.8" y="973.0" class="mm" fill="#0f2a44">4</text>
+<rect x="1328.2" y="959.0" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1342.2" y="973.0" class="mm" fill="#fff">5</text>
+<rect x="1370.8" y="959.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1384.8" y="973.0" class="mm" fill="#0f2a44">6</text>
+<rect x="1307.0" y="993.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1321.0" y="1007.0" class="mm" fill="#0f2a44">3</text>
 </svg>
