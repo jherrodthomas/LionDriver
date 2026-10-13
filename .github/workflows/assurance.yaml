@@ -110,6 +110,28 @@ jobs:
     - name: Field-monitoring extraction unit tests
       run: python3 -m unittest tools.field_monitoring.test_extract_events -v
 
+  sysml:
+    name: sysml model
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Model matches WP-C-01, WP-S-03 and WP-W-03 (M1-M8), figures and explorer up to date, tests
+      working-directory: assurance/models/sysml
+      run: |
+        python3 tools/check_model.py
+        python3 tools/render_views.py --check
+        python3 tools/explorer.py --check
+        python3 tools/test_sysml.py
+    - name: SysML v2 conformance with the OMG pilot implementation (WP-P-07 TL-26)
+      run: |
+        # the pilot jar is built for Java 21; the runner image provides it next to the default JDK
+        export JAVA_HOME="$JAVA_HOME_21_X64" PATH="$JAVA_HOME_21_X64/bin:$PATH"
+        python3 -m pip install --quiet --user --break-system-packages zstandard
+        assurance/models/sysml/tools/pilot/validate.sh "$RUNNER_TEMP/sysml-pilot"
+
   safety-case:
     name: living safety case
     runs-on: ubuntu-24.04
