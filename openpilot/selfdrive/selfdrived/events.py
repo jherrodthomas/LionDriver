@@ -977,6 +977,13 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
     ET.PERMANENT: NormalPermanentAlert("Safety Processor Restarted", "Watchdog reset: report this drive"),
   },
 
+  # LionDriver: the panda firmware is not a LionDriver reference build, so pandad did not configure the car safety mode
+  # (TSR-514, SWSR-514h). The panda must be reflashed from this build before the system can engage
+  EventName.pandaNotReferenceBuild: {
+    ET.PERMANENT: NormalPermanentAlert("Panda Firmware Not Verified", "Not a LionDriver build: reflash"),
+    ET.NO_ENTRY: NoEntryAlert("Panda Firmware Not Verified"),
+  },
+
   EventName.relayMalfunction: {
     ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Harness Relay Malfunction"),
     ET.PERMANENT: NormalPermanentAlert("Harness Relay Malfunction", "Contact comma.ai/support"),

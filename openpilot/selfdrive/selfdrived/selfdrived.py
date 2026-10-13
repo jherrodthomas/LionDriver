@@ -341,6 +341,12 @@ class SelfdriveD:
       if log.PandaState.FaultType.relayMalfunction in pandaState.faults:
         self.events.add(EventName.relayMalfunction)
 
+      # LionDriver (TSR-514, SWSR-514h): the car needs a car safety mode, but after the settling time the panda is still
+      # in NOOUTPUT and is not a reference build, i.e. pandad refused to configure it. Says why controlsMismatch is set
+      if i < len(self.CP.safetyConfigs) and self.CP.safetyConfigs[i].safetyModel not in IGNORED_SAFETY_MODES and \
+         pandaState.safetyModel == SafetyModel.noOutput and not pandaState.referenceBuild and self.sm.frame*DT_CTRL > 10.:
+        self.events.add(EventName.pandaNotReferenceBuild)
+
       # LionDriver (TSR-501): non-blocking warning after a panda reset by its hardware watchdog
       if pandaState.watchdogReset:
         self.events.add(EventName.pandaWatchdogReset)
