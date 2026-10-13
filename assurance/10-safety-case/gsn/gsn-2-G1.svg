@@ -261,7 +261,7 @@
 <text x="3806.0" y="599.0" class="cs">panda firmware host</text>
 <text x="3806.0" y="611.5" class="cs">unit tests</text>
 <text x="3806.0" y="624.0" class="cs">(watchdog, heartbeat</text>
-<text x="3806.0" y="636.5" class="cs">monitor, reference…</text>
+<text x="3806.0" y="636.5" class="cs">monitor,…</text>
 <rect x="3959.0" y="392.5" width="230" height="100.0" class="g"/>
 <text x="4074.0" y="411.5" class="id">G1.8</text>
 <text x="4074.0" y="425.0" class="d">The QM SoC stack cannot interfere with</text>
@@ -286,7 +286,7 @@
 <text x="4208.0" y="599.0" class="cs">panda firmware host</text>
 <text x="4208.0" y="611.5" class="cs">unit tests</text>
 <text x="4208.0" y="624.0" class="cs">(watchdog, heartbeat</text>
-<text x="4208.0" y="636.5" class="cs">monitor, reference…</text>
+<text x="4208.0" y="636.5" class="cs">monitor,…</text>
 <rect x="4428.0" y="392.5" width="230" height="95.0" class="g"/>
 <text x="4543.0" y="411.5" class="id">G1.9</text>
 <text x="4543.0" y="425.0" class="d">Random hardware failures of the panda</text>

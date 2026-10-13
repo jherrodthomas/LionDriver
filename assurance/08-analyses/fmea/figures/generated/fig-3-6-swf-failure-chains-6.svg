@@ -73,8 +73,8 @@
   <text x="885" y="170.1" font-size="10.5" fill="#0F172A">(controlsd.py:92-93, 119, 126); cs.lateralPlanMonoTime and</text>
   <text x="885" y="184.2" font-size="10.5" fill="#0F172A">longitudinalPlanMonoTime are logged only (196-197). The only…</text>
   <text x="885" y="197.3" font-size="9.8" fill="#475569" font-weight="600">O7 · D10 · in SWF-SE-041</text>
-  <rect x="885" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 open</text>
-  <rect x="997.9" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-048 open</text>
+  <rect x="885" y="203.3" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="214.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 in progress</text>
+  <rect x="1029" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1083.4" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-048 open</text>
   <rect x="876" y="234.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="253.8" font-size="12" fill="#0F172A" font-weight="700">SWF-043.C2</text>
   <rect x="1194.5" y="242.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="253.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
@@ -82,7 +82,7 @@
   <text x="885" y="282.5" font-size="10.5" fill="#0F172A">settling (selfdrived.py:386-388), so held modelV2 reaches controlsd</text>
   <text x="885" y="296.6" font-size="10.5" fill="#0F172A">without any reaction for that window (selfdrived element; recorded…</text>
   <text x="885" y="309.7" font-size="9.8" fill="#475569" font-weight="600">O7 · D10 · in SWF-SE-041</text>
-  <rect x="885" y="315.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="326.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 open</text>
+  <rect x="885" y="315.7" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="326.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 in progress</text>
   <rect x="520" y="409.3" width="326" height="105.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
   <text x="529" y="428.8" font-size="12" fill="#0F172A" font-weight="700">SWF-045</text>
   <rect x="593.9" y="417.8" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="428.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
@@ -102,8 +102,8 @@
   <text x="885" y="400.8" font-size="10.5" fill="#0F172A">passes clip_curvature (np.clip propagates NaN,</text>
   <text x="885" y="414.9" font-size="10.5" fill="#0F172A">drive_helpers.py:32-41) into self.desired_curvature, which is the cli…</text>
   <text x="885" y="428" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SWF-SE-041</text>
-  <rect x="885" y="434" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="444.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-041 open</text>
-  <rect x="997.9" y="434" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="444.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-044 open</text>
+  <rect x="885" y="434" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="444.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-041 in progress</text>
+  <rect x="1029" y="434" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1083.4" y="444.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-044 open</text>
   <rect x="876" y="465" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="484.5" font-size="12" fill="#0F172A" font-weight="700">SWF-045.C2</text>
   <rect x="1194.5" y="473.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="484.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
@@ -111,8 +111,8 @@
   <text x="885" y="513.2" font-size="10.5" fill="#0F172A">ki=0 (0·NaN), so accel stays NaN, sanitised to 0, until the state</text>
   <text x="885" y="527.2" font-size="10.5" fill="#0F172A">machine leaves pid (longcontrol.py:56-71)</text>
   <text x="885" y="540.4" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SWF-SE-043</text>
-  <rect x="885" y="546.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="557.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-041 open</text>
-  <rect x="997.9" y="546.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="557.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-044 open</text>
+  <rect x="885" y="546.4" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="557.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-041 in progress</text>
+  <rect x="1029" y="546.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1083.4" y="557.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-044 open</text>
   <rect x="520" y="590.4" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
   <text x="529" y="609.9" font-size="12" fill="#0F172A" font-weight="700">SWF-049</text>
   <rect x="593.9" y="598.9" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="609.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
@@ -155,8 +155,8 @@
   <text x="885" y="753.9" font-size="10.5" fill="#0F172A">(controlsd.py:162), where CC.enabled is the unchecked</text>
   <text x="885" y="767.9" font-size="10.5" fill="#0F172A">selfdriveState (SWF-040.C1), and it is sent only inside the 33 Hz…</text>
   <text x="885" y="781.1" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-041</text>
-  <rect x="885" y="787.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="798" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 open</text>
-  <rect x="997.9" y="787.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="798" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-049 open</text>
+  <rect x="885" y="787.1" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="798" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 in progress</text>
+  <rect x="1029" y="787.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1083.4" y="798" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-049 open</text>
   <rect x="40" y="1030.5" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="49" y="1050" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-042</text>
   <text x="49" y="1064.5" font-size="10.5" fill="#0F172A" font-weight="600">Lateral torque controller</text>
@@ -208,8 +208,8 @@
   <text x="885" y="1112.9" font-size="10.5" fill="#0F172A">no alive or valid check, only a 0.1 floor (controlsd.py:77-83); roll</text>
   <text x="885" y="1126.9" font-size="10.5" fill="#0F172A">also widens the clip_curvature lateral-acceleration bound by roll·g…</text>
   <text x="885" y="1140.1" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-041</text>
-  <rect x="885" y="1146.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1157" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 open</text>
-  <rect x="997.9" y="1146.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="1157" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-045 open</text>
+  <rect x="885" y="1146.1" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="1157" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 in progress</text>
+  <rect x="1029" y="1146.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1083.4" y="1157" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-045 open</text>
   <rect x="520" y="1190.1" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
   <text x="529" y="1209.6" font-size="12" fill="#0F172A" font-weight="700">SWF-044</text>
   <rect x="593.9" y="1198.6" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1209.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
@@ -267,7 +267,8 @@
   <rect x="179.4" y="1479.7" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1490.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
   <text x="223.9" y="1490.7" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
   <rect x="455.4" y="1479.7" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1490.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
-  <text x="522.7" y="1490.7" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <rect x="518.7" y="1479.7" width="90.4" height="15" rx="7.5" fill="#D97706"/><text x="563.9" y="1490.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT in progress</text>
+  <text x="617.1" y="1490.7" font-size="10.5" fill="#0F172A">action status (step 6)</text>
   <text x="40" y="1510.7" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
   <text x="40" y="1528.7" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

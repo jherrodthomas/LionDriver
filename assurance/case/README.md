@@ -4,11 +4,11 @@
 |---|---|
 | Work product | Living Safety Case data (machine-readable copy of [WP-K-01](../10-safety-case/WP-K-01-safety-case.md)), validator and dashboard generator |
 | Standard reference | ISO 26262-2:2018 §6.4.8 (safety case); ISO 26262-8:2018 §10 (documentation management); UL 4600 principles (living safety case, defeaters) |
-| Version | 0.3 (Figure 1 added; the full Living Safety Case moved to the assurance README, the front-page README keeps a generated status strip; 2026-10-13). 0.2 (baseline `BL-002` added for the firmware changes integrated 2026-10-12; evidence Sn-15 added; records restated for the 2026-10-12 state carry `source_revision: "bf6ce8c"` and stay on `baseline: BL-001` until they are re-baselined; 2026-10-12). 0.1: initial records |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (Figure 1 added; the full Living Safety Case moved to the assurance README, the front-page README keeps a generated status strip; 2026-10-13). 0.2 (baseline `BL-002` added for the firmware changes integrated 2026-10-12; evidence Sn-15 added; records restated for the 2026-10-12 state carry `source_revision: "bf6ce8c"` and stay on `baseline: BL-001` until they are re-baselined; 2026-10-12). 0.1: initial records |
 | Status | Draft |
 | Author | Assurance team |
 | Reviewer(s) | TBD (I1) |
-| Baseline | `BL-001` (`8b8c6ae`); `BL-002` (`bf6ce8c`; opendbc `7993399`, panda `b790fca`; now pinned at opendbc `273f44e` and panda `6dee6fa`, which contain them), under development |
+| Baseline | `BL-001` (`8b8c6ae`); `BL-002` (`bf6ce8c`; opendbc `7993399`, panda `b790fca`; now pinned at opendbc `273f44e` and panda `c33343b` (contains `6dee6fa`; 2026-10-13), which contain them), under development |
 
 ## 1. Purpose
 

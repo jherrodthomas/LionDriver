@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="778" viewBox="0 0 1280 778" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="822" viewBox="0 0 1280 822" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 4-1. Action Priority overview of the four FMEAs</title>
   <desc id="d">Action Priority overview: System FMEA SFM rev 0.5 H 79, M 1, L 0; DFMEA DFM rev 0.2 H 21, M 0, L 0; SW FMEA SWF rev 0.6 H 72, M 0, L 4; PFMEA PFM rev 0.2 H 16, M 0, L 1. For each FMEA an occurrence by detection grid of the severity 9–10 causes over the AP table, the causes at other severities, and how the AP H causes are treated (action status or rationale).</desc>
   <defs>
@@ -7,7 +7,7 @@
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="778" fill="#FFFFFF"/>
+  <rect width="1280" height="822" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-1 · Action Priority overview of the four FMEAs</text>
   <text x="40" y="66" font-size="12.5" fill="#475569">Ratings as recorded (AIAG-VDA 2019 AP, step 5) · where the causes sit in the AP table · how AP H is treated (step 6)</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §4</text>
@@ -180,12 +180,16 @@
   <text x="82.5" y="548" font-size="10" fill="#0F172A">SFM-031.C1  S8 O5 D10</text>
   <text x="40" y="574" font-size="10" fill="#D97706" font-weight="600">AP M: SFM-024.C1</text>
   <text x="40" y="600" font-size="10" fill="#475569" font-weight="700">AP H causes (79) by treatment</text>
-  <rect x="40" y="614" width="4" height="16" fill="#FDEFD8" stroke="#D97706" stroke-width="1" rx="2"/>
-  <text x="50" y="626" font-size="10" fill="#0F172A">1  decision pending</text>
-  <rect x="40" y="636" width="123.2" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
-  <text x="169.2" y="648" font-size="10" fill="#0F172A">59  action open</text>
-  <rect x="40" y="658" width="39.7" height="16" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" rx="2"/>
-  <text x="85.7" y="670" font-size="10" fill="#0F172A">19  rationale, no action</text>
+  <rect x="40" y="614" width="4.2" height="16" fill="#2E9E6A" rx="2"/>
+  <text x="50.2" y="626" font-size="10" fill="#0F172A">2  action completed</text>
+  <rect x="40" y="636" width="8.4" height="16" fill="#D97706" rx="2"/>
+  <text x="54.4" y="648" font-size="10" fill="#0F172A">4  action in progress</text>
+  <rect x="40" y="658" width="4" height="16" fill="#FDEFD8" stroke="#D97706" stroke-width="1" rx="2"/>
+  <text x="50" y="670" font-size="10" fill="#0F172A">1  decision pending</text>
+  <rect x="40" y="680" width="110.7" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
+  <text x="156.7" y="692" font-size="10" fill="#0F172A">53  action open</text>
+  <rect x="40" y="702" width="39.7" height="16" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" rx="2"/>
+  <text x="85.7" y="714" font-size="10" fill="#0F172A">19  rationale, no action</text>
   <text x="345" y="114" font-size="15" fill="#0F172A" font-weight="700">DFMEA</text>
   <text x="345" y="131" font-size="10.5" fill="#475569">DFM rev 0.2 · BL-002 · draft</text>
   <text x="345" y="146" font-size="10.5" fill="#475569">21 rated causes</text>
@@ -515,10 +519,12 @@
   <text x="650" y="559" font-size="10" fill="#0F766E" font-weight="600">AP L: SWF-001.C3, SWF-008.C1, SWF-013.C1,</text>
   <text x="650" y="572" font-size="10" fill="#0F766E" font-weight="600">SWF-014.C1</text>
   <text x="650" y="598" font-size="10" fill="#475569" font-weight="700">AP H causes (72) by treatment</text>
-  <rect x="650" y="612" width="4.6" height="16" fill="#D97706" rx="2"/>
-  <text x="660.6" y="624" font-size="10" fill="#0F172A">2  action in progress</text>
-  <rect x="650" y="634" width="160.4" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
-  <text x="816.4" y="646" font-size="10" fill="#0F172A">70  action open</text>
+  <rect x="650" y="612" width="4" height="16" fill="#2E9E6A" rx="2"/>
+  <text x="660" y="624" font-size="10" fill="#0F172A">1  action completed</text>
+  <rect x="650" y="634" width="32.1" height="16" fill="#D97706" rx="2"/>
+  <text x="688.1" y="646" font-size="10" fill="#0F172A">14  action in progress</text>
+  <rect x="650" y="656" width="130.6" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
+  <text x="786.6" y="668" font-size="10" fill="#0F172A">57  action open</text>
   <text x="955" y="114" font-size="15" fill="#0F172A" font-weight="700">PFMEA</text>
   <text x="955" y="131" font-size="10.5" fill="#475569">PFM rev 0.2 · BL-003 · draft</text>
   <text x="955" y="146" font-size="10.5" fill="#475569">17 rated causes</text>
@@ -674,16 +680,16 @@
   <text x="955" y="532" font-size="10" fill="#475569" font-weight="700">AP H causes (16) by treatment</text>
   <rect x="955" y="546" width="165" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
   <text x="1126" y="558" font-size="10" fill="#0F172A">16  action open</text>
-  <line x1="40" y1="700" x2="1240" y2="700" stroke="#E2E8F0" stroke-width="1"/>
-  <rect x="40" y="711" width="14" height="14" fill="#FBE4DF"/>
-  <circle cx="68" cy="718" r="7" fill="#D2553F"/>
-  <text x="82" y="722" font-size="10.5" fill="#0F172A">AP H region of the AIAG-VDA table / causes rated H</text>
-  <rect x="365.6" y="711" width="14" height="14" fill="#FDEFD8"/>
-  <circle cx="393.6" cy="718" r="7" fill="#D97706"/>
-  <text x="407.6" y="722" font-size="10.5" fill="#0F172A">AP M region of the AIAG-VDA table / causes rated M</text>
-  <rect x="696.1" y="711" width="14" height="14" fill="#DDF0EC"/>
-  <circle cx="724.1" cy="718" r="7" fill="#0F766E"/>
-  <text x="738.1" y="722" font-size="10.5" fill="#0F172A">AP L region of the AIAG-VDA table / causes rated L</text>
-  <text x="40" y="740" font-size="10" fill="#475569">Grid background = AP for S 9–10 from the AIAG-VDA table (rating-tables §5); circle = number of causes rated at that O and D. AP values are those stored in the YAML (fmea_lint checks them against the table).</text>
-  <text x="40" y="758" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/system-fmea.yaml, dfmea.yaml, sw-fmea.yaml, pfmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <line x1="40" y1="744" x2="1240" y2="744" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="40" y="755" width="14" height="14" fill="#FBE4DF"/>
+  <circle cx="68" cy="762" r="7" fill="#D2553F"/>
+  <text x="82" y="766" font-size="10.5" fill="#0F172A">AP H region of the AIAG-VDA table / causes rated H</text>
+  <rect x="365.6" y="755" width="14" height="14" fill="#FDEFD8"/>
+  <circle cx="393.6" cy="762" r="7" fill="#D97706"/>
+  <text x="407.6" y="766" font-size="10.5" fill="#0F172A">AP M region of the AIAG-VDA table / causes rated M</text>
+  <rect x="696.1" y="755" width="14" height="14" fill="#DDF0EC"/>
+  <circle cx="724.1" cy="762" r="7" fill="#0F766E"/>
+  <text x="738.1" y="766" font-size="10.5" fill="#0F172A">AP L region of the AIAG-VDA table / causes rated L</text>
+  <text x="40" y="784" font-size="10" fill="#475569">Grid background = AP for S 9–10 from the AIAG-VDA table (rating-tables §5); circle = number of causes rated at that O and D. AP values are those stored in the YAML (fmea_lint checks them against the table).</text>
+  <text x="40" y="802" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/system-fmea.yaml, dfmea.yaml, sw-fmea.yaml, pfmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

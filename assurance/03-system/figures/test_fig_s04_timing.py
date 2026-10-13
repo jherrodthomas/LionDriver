@@ -34,9 +34,16 @@ class TestTimingFigures(unittest.TestCase):
 
   def test_eps_fault_chain_matches_t28(self):
     t = ft.T28
-    self.assertAlmostEqual(t["persist"] + t["task"] + t["tick"], 1.135)
+    # worst case: 1 s persistence + one 10 ms task period + two 125 ms ticks (speaker only on every other 8 Hz tick)
+    self.assertAlmostEqual(t["persist"] + t["task"] + t["tick"], 1.26)
     eps = ft.GROUPS[1]["rows"][0]["ref"]["kind"]
-    self.assertAlmostEqual(eps[1], 1.135)
+    self.assertAlmostEqual(eps[1], 1.26)
+
+  def test_heartbeat_siren_matches_t07a(self):
+    # 0.3 s heartbeat timeout + one 10 ms task period + two 125 ms ticks, within the SG-02 1 s warning budget
+    hb = ft.GROUPS[1]["rows"][1]
+    self.assertAlmostEqual(hb["ref"]["kind"][1], 0.3 + 0.01 + 0.25)
+    self.assertLessEqual(hb["ref"]["kind"][1], hb["limit"])
 
   def test_build_is_deterministic(self):
     self.assertEqual(ft.build(), ft.build())

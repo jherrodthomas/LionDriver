@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-K-01 Safety case (integrated functional safety, SOTIF and AI argument; links to the cybersecurity case) |
 | Standard reference | ISO 26262-2:2018 §6 (safety case); ISO 21448:2022 §12 (via [WP-K-02](WP-K-02-sotif-release-argument.md)); ISO/PAS 8800:2024 (AI assurance argument); ISO/SAE 21434:2021 §6 (cybersecurity case, via [WP-K-03](WP-K-03-cybersecurity-case.md)); UL 4600 (informative only, see §8); GSN Community Standard (notation) |
-| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status at BL-002 `bf6ce8c` after the firmware changes integrated 2026-10-12: defeaters DF-01…03, 05, 12, 30, 32…34, 39, 40 restated (all still open); evidence Sn-02, 03, 10, 12, 13 updated (WP-S-02 v0.14, WP-W-02 v0.14), Sn-15 added; AOU-14 added; 2026-10-12). 0.1: initial draft |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status at BL-002 `bf6ce8c` after the firmware changes integrated 2026-10-12: defeaters DF-01…03, 05, 12, 30, 32…34, 39, 40 restated (all still open); evidence Sn-02, 03, 10, 12, 13 updated (WP-S-02 v0.14, WP-W-02 v0.14), Sn-15 added; AOU-14 added; 2026-10-12). 0.1: initial draft |
 | Status | Draft — **living document. At this baseline the argument structure is defined; almost all evidence is missing or partial. This safety case does not support any release or public-road claim** |
 | ASIL / scope | Item LD-SDA, reference configuration; up to ASIL C (SG-01) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review CR-12 by external assessor (I3) per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
-| Baseline | `BL-001` (`8b8c6ae`); status notes for `BL-002` (`bf6ce8c`; opendbc `7993399`, panda `b790fca`; now pinned at opendbc `273f44e` and panda `6dee6fa`, which contain them) |
+| Baseline | `BL-001` (`8b8c6ae`); status notes for `BL-002` (`bf6ce8c`; opendbc `7993399`, panda `b790fca`; now pinned at opendbc `273f44e` and panda `c33343b` (contains `6dee6fa`; 2026-10-13), which contain them) |
 
 ## 1. Purpose
 
@@ -287,10 +287,10 @@ Evidence rule (shared by [WP-K-01 §6](WP-K-01-safety-case.md#6-evidence-status)
 | Sn-09 | Random HW failure evaluation | [WP-H-05](../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) | G1.9 | Partial | Method and plan only; no value computed |
 | Sn-10 | opendbc safety unit tests (100% line coverage gate, MISRA, mutation, UBSan) | `opendbc_repo/opendbc/safety/tests/` (`test.sh:36-43`, `misra/test_misra.sh`, `mutation.py`); report in [WP-W-06](../05-software/WP-W-06-software-unit-verification.md) | G1.1.2, G1.1.3, G1.3, G1.5 | Partial | LionDriver CI runs the suite (UBSan, 100 % line coverage, MISRA, mutation incl. the reference variant) in the default and `LIONDRIVER_REFERENCE` variants; LionDriver tests for TSR-110/306/401/405(c)/518/705; not requirement-traced; line coverage only; host x86 not target; not reviewed |
 | Sn-11 | HW component qualification | [WP-H-07](../04-hardware/WP-H-07-hardware-component-qualification.md) | G1.9 | Missing | spec drafted, not executed (WP-H-07 qualification plan; no qualification performed) |
-| Sn-12 | HIL tests of the envelope | [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) | G1.1.2, G1.3 | Missing | spec and scripts drafted (panda `tests/hitl/test_10`…`test_14`), not executed: no bench (D-04) |
-| Sn-13 | Fault injection | [WP-V-05](../06-validation/WP-V-05-fault-injection.md) | G1.1.4, G1.2, G1.6 | Missing | spec and scripts drafted (WP-V-05; panda `tests/hitl/test_10`…`test_14`), not executed: no bench (D-04) |
+| Sn-12 | HIL tests of the envelope | [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) | G1.1.2, G1.3 | Missing | spec and scripts drafted (panda `tests/hitl/test_10`…`test_15`), not executed: no bench (D-04) |
+| Sn-13 | Fault injection | [WP-V-05](../06-validation/WP-V-05-fault-injection.md) | G1.1.4, G1.2, G1.6 | Missing | spec and scripts drafted (WP-V-05; panda `tests/hitl/test_10`…`test_15`), not executed: no bench (D-04) |
 | Sn-14 | SW integration / process replay | [WP-W-07](../05-software/WP-W-07-software-integration-verification.md) | G1.2, G1.6 | Partial | Inherited process replay; references fetched from comma storage (GAP-30) |
-| Sn-15 | panda firmware host unit tests (watchdog, heartbeat monitor, reference lock, IRQ priorities, EPS-fault siren) | `panda/tests/` (host builds); impact analyses in [07-supporting/impact](../07-supporting/impact/README.md) | G1.1.4, G1.7, G1.8 | Partial | LionDriver-written tests `tests/hw_watchdog`, `heartbeat_monitor`, `reference_lock`, `irq_priorities`, `eps_fault_siren`; added to LionDriver CI 2026-10-12, no run recorded as evidence yet; host x86 not target; not reviewed |
+| Sn-15 | panda firmware host unit tests (watchdog, heartbeat monitor, heartbeat-loss siren, reference lock, IRQ priorities, EPS-fault siren) | `panda/tests/` (host builds); impact analyses in [07-supporting/impact](../07-supporting/impact/README.md) | G1.1.4, G1.7, G1.8 | Partial | LionDriver-written tests `tests/hw_watchdog`, `heartbeat_monitor`, `heartbeat_siren` (added 2026-10-13, panda `c33343b`), `reference_lock`, `irq_priorities`, `eps_fault_siren`; added to LionDriver CI 2026-10-12, no run recorded as evidence yet; host x86 not target; not reviewed |
 | Sn-20 | Vehicle controllability and EPS characterisation (AOU-01/02) | [WP-V-01](../06-validation/WP-V-01-safety-validation.md) | G1.1.1, G1.10 | Missing | spec drafted, not executed (WP-V-01) |
 | Sn-21 | PCM ACC envelope test (AOU-05) | WP-V-01 | G1.3, G1.4, G1.10 | Missing | spec drafted, not executed (WP-V-01) |
 | Sn-22 | Brake override test (AOU-03) | WP-V-01 | G1.5, G1.10 | Missing | spec drafted, not executed (WP-V-01) |

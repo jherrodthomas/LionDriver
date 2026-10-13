@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay) |
 | Standard reference | ISO 26262-5:2018 §7 (hardware design: architectural and detailed design, safety-related HW elements); ISO 26262-8:2018 §13; ASPICE 4.0 HWE.2 |
-| Version | 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
+| Version | 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
 | Status | Draft |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-07) |
 | Author | Assurance team (initial draft) |
@@ -163,7 +163,7 @@ QM SoC (GAP-11) and HWSR-502a.
 | Other exceptions / unused vectors | `Default_Handler` infinite loop | **Last state (may stay driven)** | Stops (no ISR), pending FIFO frames may still go out | `startup_stm32h7x5xx.s:111-114` |
 | `assert_fatal` | `while(1)` with interrupts as they were | **Last state** | Stops | `libc.h:12-20` |
 | Main loop or ISR hang | Since 2026-10-12 (panda `9f60e17`): once the relay has been driven, IWDG reset ≤ ~90 ms nominal after the stall (LSI tolerance open), then as power-on. Before the first relay drive the IWDG is not started, but the relay has not been energised. *As found: no hardware watchdog, no recovery (GAP-07)* | Released after the reset *(HWSR-502 unconfirmed)*; not verified on hardware | Stops | `drivers/hw_watchdog.h`; WP-H-01 HWSR-501 |
-| SoC heartbeat loss | In a car mode authority revoked after 0.3 s (100 Hz safety task, panda `c2e5d93`, not verified on hardware); SILENT after 5 s (ign on) / 2 s; relay released; siren 3 s if engaged | Released (after the SILENT timeout) | Actuation refused from 0.3 s; none after SILENT | `drivers/heartbeat_monitor.h`; `main.c:140-142` and the 1 Hz path in `main.c` |
+| SoC heartbeat loss | In a car mode authority revoked after 0.3 s (100 Hz safety task, panda `c2e5d93`, not verified on hardware); SILENT after 5 s (ign on) / 2 s; relay released; siren 3 s if engaged (2026-10-13: sounded at the 0.3 s revocation when authority was granted, ≈ 0.56 s after the last heartbeat, all builds, panda `c33343b`, `drivers/heartbeat_siren.h`) | Released (after the SILENT timeout) | Actuation refused from 0.3 s; none after SILENT | `drivers/heartbeat_monitor.h`; `main.c:140-142` and the 1 Hz path in `main.c` |
 | Relay malfunction detected | TX and forwarding blocked | Unchanged | Blocked | `safety.h:252, 268` |
 
 The rows marked **Last state** are the key hardware finding: a hang with the relay energised
