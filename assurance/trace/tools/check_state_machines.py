@@ -14,8 +14,10 @@ Checks:
       or the other way round
   S6  (warning, authority machines only) an envelope SWSR whose text requires clearing or revoking authority
       is not realised by any transition (a record may list reasoned exceptions under s6_exempt)
+  S7  (warning) a transition without an SWSR that records the requirement gap in its "gap" field (without a
+      "gap" field an empty swsr list is an S4 error)
 
-S1-S4 are errors (exit 1). S5 and S6 are findings for the engineer and do not fail the run.
+S1-S4 are errors (exit 1). S5, S6 and S7 are findings for the engineer and do not fail the run.
 
 Usage:
   python3 assurance/trace/tools/check_state_machines.py           # check, print findings
@@ -35,7 +37,7 @@ SM_DIR = ASSURANCE / "05-software" / "state-machines"
 SWSR_YAML = ASSURANCE / "trace" / "items" / "swsr.yaml"
 WP_W05 = ASSURANCE / "05-software" / "WP-W-05-software-unit-design.md"
 PLACEHOLDERS = {"any", "same", "m"}
-BLOCKS = {"SM-SAFETY-MODE": "sm-safety-mode", "SM-TOY-AUTH": "sm-toy-auth"}
+BLOCKS = {"SM-SAFETY-MODE": "sm-safety-mode", "SM-TOY-AUTH": "sm-toy-auth", "SM-SELFDRIVED": "sm-selfdrived"}
 
 
 # ---------------------------------------------------------------- loading
@@ -180,7 +182,10 @@ def check(sm: dict, sw: dict) -> tuple[list[str], list[str]]:
                       + "but are not declared mutually exclusive")
   for t in T:
     if not t.get("swsr"):
-      errors.append(f"S4 {name} {t['id']}: no SWSR reference")
+      if t.get("gap"):
+        warnings.append(f"S7 {name} {t['id']}: no SWSR (gap: {t['gap']})")
+      else:
+        errors.append(f"S4 {name} {t['id']}: no SWSR reference")
     for s in t.get("swsr", []):
       if s not in sw:
         errors.append(f"S4 {name} {t['id']}: {s} not in swsr.yaml")
@@ -223,10 +228,16 @@ def render(sm: dict, sw: dict) -> str:
            "| # | Current | Event | Guard | Action | Next | Build | SWSR | Status | Code |",
            "|---|---|---|---|---|---|---|---|---|---|"]
   for t in T:
-    sws = ", ".join(s.replace("SWSR-", "") for s in t.get("swsr", []))
+    sws = ", ".join(s.replace("SWSR-", "") for s in t.get("swsr", [])) or ("gap" if t.get("gap") else "")
     lines.append("| " + " | ".join(_cell(x) for x in (
       t["id"], t["from"], t["event"], t.get("guard", ""), t.get("action", ""), t["to"], t.get("build", "all"),
       sws, LABEL[transition_state(t, sw)], t.get("code", ""))) + " |")
+  gaps = [t for t in T if not t.get("swsr") and t.get("gap")]
+  if gaps:
+    lines += ["", "Transitions without an SWSR (requirement gaps, checker finding S7):", "",
+              "| # | Gap |", "|---|---|"]
+    for t in gaps:
+      lines.append(f"| {_cell(t['id'])} | {_cell(t['gap'])} |")
   if sm.get("non_revoking"):
     lines += ["", "Reactions that do **not** change the state:", "",
               "| Event | Reaction | Build | SWSR | Code |", "|---|---|---|---|---|"]

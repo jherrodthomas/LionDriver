@@ -1,0 +1,118 @@
+{
+ "variant": "upstream",
+ "results": [
+  {
+   "check": "L0",
+   "signal": "CRUISE_ACTIVE",
+   "row": "S-09",
+   "stated_bit": 5,
+   "spec_text": "CRUISE_ACTIVE, `0x1D2` PCM_CRUISE bit 5",
+   "ok": true
+  },
+  {
+   "check": "L0",
+   "signal": "GAS_RELEASED",
+   "row": "S-10",
+   "stated_bit": 4,
+   "spec_text": "GAS_RELEASED, `0x1D2` bit 4",
+   "ok": true
+  },
+  {
+   "check": "L0",
+   "signal": "BRAKE_PRESSED",
+   "row": "S-11",
+   "stated_bit": 37,
+   "spec_text": "BRAKE_PRESSED, `0x226` BRAKE_MODULE bit 37",
+   "ok": true
+  },
+  {
+   "check": "L1",
+   "signal": "CRUISE_ACTIVE",
+   "row": "S-09",
+   "stated_bit": 5,
+   "dbc_bits": [
+    5
+   ],
+   "ok": true
+  },
+  {
+   "check": "L1",
+   "signal": "GAS_RELEASED",
+   "row": "S-10",
+   "stated_bit": 4,
+   "dbc_bits": [
+    4
+   ],
+   "ok": true
+  },
+  {
+   "check": "L1",
+   "signal": "BRAKE_PRESSED",
+   "row": "S-11",
+   "stated_bit": 37,
+   "dbc_bits": [
+    37
+   ],
+   "ok": true
+  },
+  {
+   "check": "L2",
+   "case": "bit 5 rising engages (S-09)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "L2",
+   "case": "all 0x1D2 data bits except 5 set: no engagement",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "L2",
+   "case": "engaged, bit 5 cleared with all other bits set: authority cleared (T2)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "L2",
+   "case": "bit 4 clear = gas pressed, bit 4 set = released, other bits do not release (S-10)",
+   "ok": true,
+   "detail": "pressed_without_bit4=True released_with_bit4=True pressed_with_others=True"
+  },
+  {
+   "check": "L2",
+   "case": "all 0x226 bits except 37 set: authority kept; bit 37 alone: cleared (S-11, T3)",
+   "ok": true,
+   "detail": "kept_with_others=True cleared_with_bit37=True"
+  },
+  {
+   "check": "L2",
+   "case": "hand checksum agrees with the C (corrupted copy clears authority)",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "not_stated": [
+  {
+   "signal": "MAIN_ON",
+   "message": "PCM_CRUISE_2 0x1D3",
+   "note": "S-13 gives no bit"
+  },
+  {
+   "signal": "WHEEL_SPEED_FR/FL/RR/RL and *_FAULT",
+   "message": "WHEEL_SPEEDS 0xAA",
+   "note": "S-06 gives width, scale and offset, not positions; fault bits not mentioned"
+  },
+  {
+   "signal": "LKA_STATE",
+   "message": "EPS_STATUS 0x262",
+   "note": "S-12 gives width only"
+  },
+  {
+   "signal": "STEER_ANGLE_INITIALIZING (quality flag)",
+   "message": "STEER_TORQUE_SENSOR 0x260",
+   "note": "not in \u00a711.1 (WP-W-05 UN-17 describes bit 3 from the code)"
+  }
+ ],
+ "failed": 0
+}

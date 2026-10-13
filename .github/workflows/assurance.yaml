@@ -13,6 +13,7 @@ on:
       - 'assurance/**'
       - 'opendbc_repo'
       - 'tools/sync/**'
+      - 'tools/ci/**'
       - 'tools/severity/**'
       - 'tools/field_monitoring/**'
       - 'tools/safety/**'
@@ -26,6 +27,7 @@ on:
       - 'assurance/**'
       - 'opendbc_repo'
       - 'tools/sync/**'
+      - 'tools/ci/**'
       - 'tools/severity/**'
       - 'tools/field_monitoring/**'
       - 'tools/safety/**'
@@ -55,6 +57,10 @@ jobs:
       run: python3 assurance/trace/tools/check_trace.py
     - name: State machines (WP-W-05 §5 generated from state-machines/*.yaml)
       run: python3 assurance/trace/tools/check_state_machines.py --check
+    - name: Design diagrams (Stateflow-style charts, Simulink-style block diagram) current
+      run: python3 assurance/05-software/diagrams/make_diagrams.py --check
+    - name: Trace tool unit tests (check_state_machines, check_trace, sync_requirements; WP-P-07 TL-28, OI-9)
+      run: python3 -m unittest discover -s assurance/trace/tools -p 'test_*.py' -v
     - name: Relative links
       run: python3 assurance/trace/tools/check_links.py
     - name: ASPICE traceability map matches the trace data and test specifications (and its tests)
@@ -73,6 +79,12 @@ jobs:
       run: python3 assurance/02-concept/hara/hara_model.py --check
     - name: FSC completeness (every SG x node basic event mapped to WP-C-04 FSRs)
       run: python3 assurance/02-concept/fsc/fsc_model.py --check
+    - name: HARA and FSC model unit tests (WP-P-07 TL-36, TL-37)
+      run: |
+        python3 -m unittest discover -s assurance/02-concept/hara -p 'test_*.py' -v
+        python3 -m unittest discover -s assurance/02-concept/fsc -p 'test_*.py' -v
+    - name: Build manifest unit tests (WP-P-07 TL-38)
+      run: python3 -m unittest discover -s tools/ci -p 'test_*.py' -v
     - name: Integrated process model and maps (WP-P-11)
       run: python3 assurance/process/tools/process_model.py --check
     - name: Process model self-tests

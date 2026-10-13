@@ -1,0 +1,28 @@
+# selfdrived engagement state machine (openpilot host, QM / QM (B-sup)). Normative source of WP-W-05 §5.3, which is
+# generated from this file by assurance/trace/tools/check_state_machines.py (do not edit §5.3 by hand).
+# Describes openpilot/selfdrive/selfdrived/state.py at superproject 682f184 (unchanged up to this record). The machine
+# runs once per selfdrived cycle at 100 Hz (selfdrived.py:134); its input is the set of event types raised in that
+# cycle (events.py:36-46). Several transitions can have their event types present in the same cycle; the code takes
+# them in a fixed order (state.py:25-90), which the guards below spell out, so transitions with a common source are
+# mutually exclusive. "Not engaged" here is host state only: authority on the car is SM-TOY-AUTH (envelope).
+# Transitions without a host SWSR carry swsr: [] and a "gap" reason (checker finding S7, not an error).
+# Drafting origin: ai-assisted (Claude), not reviewed.
+machine: SM-SELFDRIVED
+title: selfdrived engagement state (OpenpilotState)
+units: [host.selfdrived]
+initial: disabled
+states: [disabled, preEnabled, enabled, softDisabling, overriding]
+transitions:
+  - {id: X1, from: "preEnabled, enabled, softDisabling, overriding", event: "update (100 Hz)", guard: "IMMEDIATE_DISABLE present", action: "IMMEDIATE_DISABLE alert", to: disabled, build: all, swsr: [SWSR-601, SWSR-615, SWSR-618, SWSR-621, SWSR-626, SWSR-307h], exclusive_with: [X2, E1, E2, SD1, SD2, P1, O1, O2], code: "openpilot selfdrived/state.py:27-29"}
+  - {id: X2, from: "preEnabled, enabled, softDisabling, overriding", event: "update (100 Hz)", guard: "USER_DISABLE present, no IMMEDIATE_DISABLE", action: "USER_DISABLE alert", to: disabled, build: all, swsr: [], gap: "no host SWSR for driver-initiated disengagement (cruise off, brake, cancel button); the envelope side is SWSR-301/302", exclusive_with: [X1, E1, E2, SD1, SD2, P1, O1, O2], code: "openpilot selfdrived/state.py:31-33"}
+  - {id: E1, from: enabled, event: "update (100 Hz)", guard: "SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE", action: "soft-disable timer = 3 s (300 cycles); SOFT_DISABLE alert", to: softDisabling, build: all, swsr: [SWSR-601, SWSR-624], exclusive_with: [X1, X2, E2], code: "openpilot selfdrived/state.py:7, 38-41"}
+  - {id: E2, from: enabled, event: "update (100 Hz)", guard: "OVERRIDE_LATERAL or OVERRIDE_LONGITUDINAL present, no disable event", action: "override alerts", to: overriding, build: all, swsr: [], gap: "no host SWSR for driver override while engaged; the envelope side is SWSR-305 (gas blocks longitudinal)", exclusive_with: [X1, X2, E1], code: "openpilot selfdrived/state.py:43-45"}
+  - {id: SD1, from: softDisabling, event: "update (100 Hz)", guard: "SOFT_DISABLE no longer present, no IMMEDIATE_DISABLE or USER_DISABLE", action: none, to: enabled, build: all, swsr: [SWSR-601], exclusive_with: [X1, X2, SD2], code: "openpilot selfdrived/state.py:49-51"}
+  - {id: SD2, from: softDisabling, event: "update (100 Hz)", guard: "SOFT_DISABLE still present and the timer has run out (3 s after E1/O1)", action: none, to: disabled, build: all, swsr: [SWSR-601, SWSR-624], exclusive_with: [X1, X2, SD1], code: "openpilot selfdrived/state.py:20, 53-57"}
+  - {id: P1, from: preEnabled, event: "update (100 Hz)", guard: "PRE_ENABLE no longer present, no disable event", action: none, to: enabled, build: all, swsr: [], gap: "no SWSR for the pre-enable phase (engagement requested while e.g. the brake is held); SOFT_DISABLE is not acted on in preEnabled", exclusive_with: [X1, X2], code: "openpilot selfdrived/state.py:60-64"}
+  - {id: O1, from: overriding, event: "update (100 Hz)", guard: "SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE", action: "soft-disable timer = 3 s; SOFT_DISABLE alert", to: softDisabling, build: all, swsr: [SWSR-601, SWSR-624], exclusive_with: [X1, X2, O2], code: "openpilot selfdrived/state.py:67-71"}
+  - {id: O2, from: overriding, event: "update (100 Hz)", guard: "no override event and no SOFT_DISABLE, no disable event", action: none, to: enabled, build: all, swsr: [], gap: "no host SWSR for driver override while engaged (see E2)", exclusive_with: [X1, X2, O1], code: "openpilot selfdrived/state.py:72-73"}
+  - {id: N1, from: disabled, event: "update (100 Hz)", guard: "ENABLE and NO_ENTRY present", action: "NO_ENTRY alert, engagement refused", to: same, build: all, swsr: [SWSR-514h, SWSR-610, SWSR-619, SWSR-620, SWSR-623], exclusive_with: [D1, D2, D3], code: "openpilot selfdrived/state.py:79-81"}
+  - {id: D1, from: disabled, event: "update (100 Hz)", guard: "ENABLE and PRE_ENABLE present, no NO_ENTRY", action: "ENABLE alert", to: preEnabled, build: all, swsr: [SWSR-514h, SWSR-610, SWSR-619, SWSR-620, SWSR-623], exclusive_with: [N1, D2, D3], code: "openpilot selfdrived/state.py:84-85, 90"}
+  - {id: D2, from: disabled, event: "update (100 Hz)", guard: "ENABLE and an override event present, no NO_ENTRY or PRE_ENABLE", action: "ENABLE alert", to: overriding, build: all, swsr: [SWSR-514h, SWSR-610, SWSR-619, SWSR-620, SWSR-623], exclusive_with: [N1, D1, D3], code: "openpilot selfdrived/state.py:86-87, 90"}
+  - {id: D3, from: disabled, event: "update (100 Hz)", guard: "ENABLE present, no NO_ENTRY, PRE_ENABLE or override event", action: "ENABLE alert", to: enabled, build: all, swsr: [SWSR-514h, SWSR-610, SWSR-619, SWSR-620, SWSR-623], exclusive_with: [N1, D1, D2], code: "openpilot selfdrived/state.py:88-90"}
