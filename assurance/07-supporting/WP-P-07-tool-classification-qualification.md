@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-07 Software tool classification and qualification |
 | Standard reference | ISO 26262-8:2018 §11; ISO/SAE 21434:2021 §5 (tool management); ISO/PAS 8800:2024 (tools for AI development, informative) |
-| Version | 0.3 (OI-9 closed by the modelling plan; OI-10 OpenModelica; 2026-10-13). 0.2 TL-23 GNU Octave; OI-8, OI-9. 0.1 |
+| Version | 0.3 (OI-10 closed by the modelling plan; OI-11 OpenModelica; 2026-10-13). 0.2 (TL-25 GNU Octave; OI-9, OI-10; drafted as TL-23, OI-8 and OI-9 and renumbered on merge with TL-23/TL-24 and OI-8 from the base; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (qualification effort driven by the envelope ASIL from WP-C-03) |
 | Author | Assurance team (initial draft) |
@@ -57,7 +57,9 @@ Versions are taken from `uv.lock` (openpilot) and `opendbc_repo/uv.lock` (opendb
 | TL-20 | coverage (Python) | 7.16.0 | Informational line coverage of openpilot | QM | TI1 | — | TCL1 | No threshold, no credit (GAP-36) |
 | TL-21 | UBSan | via host compiler | Undefined-behaviour detection in safety tests | Envelope verification | TI1 | — | TCL1 | Additional measure; no credit claimed beyond TL-02 TD rationale |
 | TL-22 | Jenkins (`Jenkinsfile`, `panda/Jenkinsfile`) | comma infrastructure | HIL, on-device tests | — | — | — | N/A | Not available to the fork (GAP-30) |
-| TL-23 | GNU Octave (open-source MATLAB) with gnuplot | Octave 8.4.0, gnuplot 6.0.0 (Ubuntu 24.04 packages `octave` 8.4.0-1build5, `gnuplot`), installed by `apt-get` in CI, **unpinned** | Models of envelope logic for design exploration and plots ([`assurance/models/octave/`](../models/octave/README.md)); constants read from the pinned opendbc source | None (design support) | TI1 | — | TCL1 | No verification or design credit is taken from its output; the models are not the C code. If a model result is ever used as evidence, re-classify (TI2) and pin the version |
+| TL-23 | ONNX Runtime (CPU execution provider) and `onnx` | onnxruntime 1.24.1, onnx 1.19.0: the versions the pinned tinygrad (`d3f09c9`) declares in its `testing` extra (`uv.lock`); not resolved in the openpilot environment, to be added to a LionDriver lock (OI-8) | Independent reference for VS-ML-01 (compile equivalence, FP32 on PC) and graph parsing for VS-ML-02 ([WP-W-10 §6](../05-software/WP-W-10-ml-engineering.md)) | QM ML stack (SOTIF / PAS 8800) | TI2 | TD2 | QM: no 26262 TCL; confidence measures below | A wrong reference could hide a compile error only if ONNX Runtime and tinygrad fail identically. They are separate implementations from separate organisations, and the CPU provider shares no kernels with the device GPU path. The comparison is seeded with a known difference (§5 note) |
+| TL-24 | Perturbation scripts (in-house) | LionDriver-owned, to be written; numpy 2.5.3 and pillow 12.3.0 (`uv.lock`); `ffmpeg` for HEVC re-encode, today unpinned and called from `openpilot/tools/lib/framereader.py` (OI-8) | Generate the VS-ML-04 perturbation classes (calibration offset, exposure, noise, HEVC re-encode, occlusion masks, frame drop and duplication) | QM ML stack (SOTIF / PAS 8800) | TI2 | TD3 | QM: no 26262 TCL; treated as LionDriver-owned test software | A script that perturbs less than specified would make a robustness test pass falsely, and nothing downstream would show it. Each run therefore measures and records the applied perturbation on the output frames |
+| TL-25 | GNU Octave (open-source MATLAB) with gnuplot | Octave 8.4.0, gnuplot 6.0.0 (Ubuntu 24.04 packages `octave` 8.4.0-1build5, `gnuplot`), installed by `apt-get` in CI, **unpinned** | Models of envelope logic for design exploration and plots ([`assurance/models/octave/`](../models/octave/README.md)); constants read from the pinned opendbc source | None (design support) | TI1 | — | TCL1 | No verification or design credit is taken from its output; the models are not the C code. If a model result is ever used as evidence, re-classify (TI2) and pin the version |
 
 ## 4. Known issues affecting the classification
 
@@ -87,6 +89,11 @@ Versions are taken from `uv.lock` (openpilot) and `opendbc_repo/uv.lock` (opendb
 | TL-07 unittest harness | 2 | 1a + 1c | Validation: a deliberately failing test must fail the job; test counts compared run-to-run; harness code (`libsafety_py.py`) reviewed as SR-T | TQR-07 |
 | TL-15 signing + release script | 2 | 1c | Validation in [WP-P-10](WP-P-10-release-management.md) dry-run: wrong key and tampered binary must be rejected by the bootstub on a bench device | TQR-15 (with WP-W-11) |
 
+Confidence measures for TL-23 and TL-24 (QM, under SOTIF/PAS 8800; selected 2026-10-12, [WP-W-10](../05-software/WP-W-10-ml-engineering.md) OI-2):
+
+- **TL-23.** Run ONNX Runtime with all graph optimizations disabled and one intra-op thread, so that it executes the graph as written and deterministically. Before first use and on every version change, run the `onnx` backend node tests for each operator type in the pinned driving and driver-monitoring graphs. Each VS-ML-01 campaign includes a seeded check: a copy of the ONNX graph with one weight changed must fail the comparison, which shows that the tolerance can see a difference.
+- **TL-24.** Reviewed as test software (WP-P-05). Every output frame set records the measured perturbation: occluded area, exposure shift, noise level, bitrate, and dropped or duplicated frame indices. A run whose measured value falls outside the VS-ML-04 specification is invalid.
+
 QM tools (TL-08 to TL-14) get confidence measures under SOTIF/PAS 8800 instead: pinned versions, fork-owned process-replay references, and for tinygrad a back-to-back comparison of compiled-model outputs against a reference ONNX runtime on a fixed input set ([WP-W-10](../05-software/WP-W-10-ml-engineering.md)). If any of them is later used to support an ASIL claim, it is reclassified here.
 
 ## 6. Tool management
@@ -109,6 +116,7 @@ QM tools (TL-08 to TL-14) get confidence measures under SOTIF/PAS 8800 instead: 
 | OI-5 | Add branch coverage and an MC/DC strategy (K-3) |
 | OI-6 | Pin host compiler, uv and CI runner images (K-8) |
 | OI-7 | Determine the `comma-deps-cppcheck` version used by panda (no panda lockfile in tree) |
-| OI-8 | Classify the in-house assurance checkers (`check_trace.py`, `sync_requirements.py`, `check_state_machines.py`, `check_links.py`) and `tools/ci/build_manifest.py`: they produce consistency evidence and generate normative tables |
-| OI-9 | Closed 2026-10-13: tools chosen in the [modelling plan](../models/README.md) MD-01 (Python for state machines and back-to-back, OpenModelica for the HIL plant model, Octave for calculations only; Scilab/Xcos not adopted) |
-| OI-10 | Classify OpenModelica (`omc`, version to be pinned) before the HIL plant model (modelling plan item 4) is built or used |
+| OI-8 | Add onnxruntime 1.24.1 and onnx 1.19.0 (TL-23) to a LionDriver-controlled lock, and pin the `ffmpeg` build used by TL-24 and the replay tools |
+| OI-9 | Classify the in-house assurance checkers (`check_trace.py`, `sync_requirements.py`, `check_state_machines.py`, `check_links.py`) and `tools/ci/build_manifest.py`: they produce consistency evidence and generate normative tables |
+| OI-10 | Closed 2026-10-13: tools chosen in the [modelling plan](../models/README.md) MD-01 (Python for state machines and back-to-back, OpenModelica for the HIL plant model, Octave for calculations only; Scilab/Xcos not adopted) |
+| OI-11 | Classify OpenModelica (`omc`, version to be pinned) before the HIL plant model (modelling plan item 4) is built or used |

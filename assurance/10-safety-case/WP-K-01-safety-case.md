@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-K-01 Safety case (integrated functional safety, SOTIF and AI argument; links to the cybersecurity case) |
 | Standard reference | ISO 26262-2:2018 §6 (safety case); ISO 21448:2022 §12 (via [WP-K-02](WP-K-02-sotif-release-argument.md)); ISO/PAS 8800:2024 (AI assurance argument); ISO/SAE 21434:2021 §6 (cybersecurity case, via [WP-K-03](WP-K-03-cybersecurity-case.md)); UL 4600 (informative only, see §8); GSN Community Standard (notation) |
-| Version | 0.1 |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status at BL-002 `bf6ce8c` after the firmware changes integrated 2026-10-12: defeaters DF-01…03, 05, 12, 30, 32…34, 39, 40 restated (all still open); evidence Sn-02, 03, 10, 12, 13 updated (WP-S-02 v0.14, WP-W-02 v0.14), Sn-15 added; AOU-14 added; 2026-10-12). 0.1: initial draft |
 | Status | Draft — **living document. At this baseline the argument structure is defined; almost all evidence is missing or partial. This safety case does not support any release or public-road claim** |
 | ASIL / scope | Item LD-SDA, reference configuration; up to ASIL C (SG-01) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review CR-12 by external assessor (I3) per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
-| Baseline | `8b8c6ae` |
+| Baseline | `BL-001` (`8b8c6ae`); status notes for `BL-002` (`bf6ce8c`; opendbc `7993399`, panda `b790fca`; now pinned at opendbc `273f44e` and panda `c33343b` (contains `6dee6fa`; 2026-10-13), which contain them) |
 
 ## 1. Purpose
 
@@ -42,6 +42,8 @@ GSN elements are written as text with these prefixes. Each element has a stable 
 
 Indented trees show "supported by" (→) and "in context of" (⊙) relations. The evidence status of each `Sn` is in §6; defeaters are in §7.
 
+Diagrams: the argument is also drawn in GSN graphical notation (GSN Community Standard v3), one sheet per sub-argument, in [gsn/](gsn/README.md). The sheets are generated from the case records ([`assurance/case/`](../case/README.md)) and the contexts in this document by `assurance/case/tools/gsn_diagrams.py`; CI fails if they are out of date. Solutions are coloured by evidence status, and open defeaters are listed on the goal they undermine.
+
 ## 3. Top level
 
 ```mermaid
@@ -51,7 +53,7 @@ flowchart TD
   C2(["C2 ODD WP-C-02"]) --- G0
   C3(["C3 Reference configuration WP-M-01 §3.1"]) --- G0
   C4(["C4 Hazard log WP-C-03 + WP-C-05"]) --- G0
-  A1(["A1 AOU-01…AOU-13 WP-C-01 §7"]) --- G0
+  A1(["A1 AOU-01…AOU-14 WP-C-01 §7"]) --- G0
   S0[/"S0: Argue over the risk sources: E/E malfunction, intended-function insufficiency and misuse, ML, cyber, process and lifecycle"/]
   G0 --> S0
   S0 --> G1["G1 FuSa (ISO 26262)"]
@@ -71,7 +73,7 @@ G0  The LionDriver reference configuration, operated by an attentive driver with
  ⊙ C1   Item definition: functions F-01…F-09, elements E-01…E-06, interfaces IF-01…IF-09
         [WP-C-01]
  ⊙ C2   ODD and intended functionality [WP-C-02]
- ⊙ C3   Reference configuration: 2020 Corolla LE ICE TSS2 (TOYOTA_COROLLA_TSS2), one
+ ⊙ C3   Reference configuration: E210 Corolla ICE TSS2 (TOYOTA_COROLLA_TSS2), one
         recorded device revision + Toyota harness, tagged LionDriver release
         [WP-M-01 §3.1; WP-O-01 SPC-04…SPC-07]
  ⊙ C4   Hazard log: H-01…H-06, H-08; HE-01.1…HE-08.1; SG-01…SG-07 [WP-C-03];
@@ -79,7 +81,7 @@ G0  The LionDriver reference configuration, operated by an attentive driver with
  ⊙ C5   Safety envelope architecture pattern: QM SoC stack bounded by the opendbc safety
         mode on the panda MCU [WP-M-01 §4.1]
  ⊙ C6   Tailoring T-01…T-13 [WP-M-01 §5]
- ⊙ A1   AOU-01…AOU-13 hold [WP-C-01 §7] — see §5 for status
+ ⊙ A1   AOU-01…AOU-14 hold [WP-C-01 §7] — see §5 for status
  ⊙ J0   "No worse than manual driving with stock TSS 2.0" is the acceptance principle
         because LD-SDA replaces stock LTA and DRCC; the comparison baseline is what the
         driver would otherwise have. Quantified in WP-C-05 §5 and WP-V-02
@@ -115,7 +117,8 @@ G1  Hazards from E/E malfunctions of the item are reduced to a tolerable level: 
                    → Sn-10 (`lateral.h:98-101` tests); Sn-12
               → G1.1.4 Envelope faults (MCU hang, SPI corruption, wrong safety mode,
                         stale RX) reach the safe state within the FTTI
-                   → Sn-04 FTTI budget [WP-S-04]; Sn-13 fault injection [WP-V-05]
+                   → Sn-04 FTTI budget [WP-S-04]; Sn-13 fault injection [WP-V-05];
+                     Sn-15 panda host unit tests
                    ⇐ DF-01, DF-02, DF-03, DF-04, DF-05, DF-06
      → G1.2  SG-02 (lateral loss without warning, B) is met
           → Sn-01 FSR-02.x; Sn-02 TSR-6xx; Sn-14 SW integration tests [WP-W-07];
@@ -134,10 +137,10 @@ G1  Hazards from E/E malfunctions of the item are reduced to a tolerable level: 
           → Sn-01 FSR-06.x; Sn-14; Sn-13
      → G1.7  SG-07 (stock PCS preserved, B) is met
           → Sn-01 FSR-07.x; Sn-02 TSR-7xx; Sn-23 PCS target test (AOU-04);
-            Sn-30 installation check INS-27 [WP-O-01]
+            Sn-30 installation check INS-27 [WP-O-01]; Sn-15
           ⇐ DF-11 (relay detection traffic-based only)
      → G1.8  The QM SoC stack cannot interfere with the envelope (FFI)
-          → Sn-05 coexistence/FFI analysis [WP-A-02]; Sn-06 DFA [WP-A-03]
+          → Sn-05 coexistence/FFI analysis [WP-A-02]; Sn-06 DFA [WP-A-03]; Sn-15
           ⇐ DF-03 (host sets safety mode), DF-12 (debug relay command)
      → G1.9  Random hardware failures of the panda MCU, relay, power and harness are
              sufficiently controlled for the target ASIL
@@ -263,6 +266,7 @@ G5  The work was done by competent people under controlled processes, was
 | AOU-11 | Back end untrusted; no safety function depends on it | G4 | Design constraint | — |
 | AOU-12 | Cluster cruise indicator driven by PCM state, not by item TX other than `0x412` | G1.2, G1.6 | Unverified | Independent cue for SG-02/SG-06 (TSR-303, TSR-309) |
 | AOU-13 | De-energised harness relay restores the stock camera-to-car path | G1.7 | Unverified | SG-07 safe state |
+| AOU-14 | The reference build (`LIONDRIVER_REFERENCE=1`) is used with openpilot's default alternative experience; no setting that sets alternative-experience bits is enabled | G1.8 | Unverified | The firmware fixes the value at 0; a different host value leads to a controls mismatch (TSR-512, SWSR-512a) |
 
 Status values are copied from [WP-C-01 §7](../02-concept/WP-C-01-item-definition.md) (machine-readable copy: `trace/items/aou.yaml`).
 
@@ -273,19 +277,20 @@ Evidence rule (shared by [WP-K-01 §6](WP-K-01-safety-case.md#6-evidence-status)
 | Sn | Evidence | Work product / source | Supports | Status | Note |
 |---|---|---|---|---|---|
 | Sn-01 | Functional safety requirements FSR-01.01…FSR-07.05 | [WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) | G1.x | Partial | Draft; envelope strategy decision open |
-| Sn-02 | Technical safety requirements | [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) | G1.x | Partial | Draft: TSR-101…TSR-818 (incl. TSR-517…519, 619, 620 added in the consistency pass); not reviewed |
-| Sn-03 | Software safety requirements | [WP-W-02](../05-software/WP-W-02-software-safety-requirements.md) | G1.1.2 | Partial | Draft in preparation; not reviewed |
+| Sn-02 | Technical safety requirements | [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) | G1.x | Partial | Draft v0.14: TSR-101…TSR-818 (incl. TSR-517…519, 619, 620 added in the consistency pass); not reviewed |
+| Sn-03 | Software safety requirements | [WP-W-02](../05-software/WP-W-02-software-safety-requirements.md) | G1.1.2 | Partial | Draft v0.14; not reviewed |
 | Sn-04 | FTTI and timing budget | [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) | G1.1.4 | Partial | Draft: kinematic estimates only, no measurement |
 | Sn-05 | FFI analysis | [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) | G1.8 | Partial | Draft analysis; not reviewed |
 | Sn-06 | Dependent failure analysis | [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md) | G1.8 | Partial | Draft analysis; audio-path independence (DFI-23) open |
 | Sn-07 | Hardware FMEDA | [WP-H-03](../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) | G1.9 | Partial | Draft qualitative FMEA; quantitative FMEDA is a template |
 | Sn-08 | Hardware architectural metrics | [WP-H-04](../04-hardware/WP-H-04-hardware-metrics.md) | G1.9 | Partial | Method and plan only; no metric computed |
 | Sn-09 | Random HW failure evaluation | [WP-H-05](../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) | G1.9 | Partial | Method and plan only; no value computed |
-| Sn-10 | opendbc safety unit tests (100% line coverage gate, MISRA, mutation, UBSan) | `opendbc_repo/opendbc/safety/tests/` (`test.sh:36-43`, `misra/test_misra.sh`, `mutation.py`); report in [WP-W-06](../05-software/WP-W-06-software-unit-verification.md) | G1.1.2, G1.1.3, G1.3, G1.5 | Partial | Inherited results: not requirement-based; line coverage only; host x86 not target; not re-run in LionDriver-controlled CI at a recorded baseline (U-6, GAP-39) |
+| Sn-10 | opendbc safety unit tests (100% line coverage gate, MISRA, mutation, UBSan) | `opendbc_repo/opendbc/safety/tests/` (`test.sh:36-43`, `misra/test_misra.sh`, `mutation.py`); report in [WP-W-06](../05-software/WP-W-06-software-unit-verification.md) | G1.1.2, G1.1.3, G1.3, G1.5 | Partial | LionDriver CI runs the suite (UBSan, 100 % line coverage, MISRA, mutation incl. the reference variant) in the default and `LIONDRIVER_REFERENCE` variants; LionDriver tests for TSR-110/306/401/405(c)/518/705; not requirement-traced; line coverage only; host x86 not target; not reviewed |
 | Sn-11 | HW component qualification | [WP-H-07](../04-hardware/WP-H-07-hardware-component-qualification.md) | G1.9 | Missing | spec drafted, not executed (WP-H-07 qualification plan; no qualification performed) |
-| Sn-12 | HIL tests of the envelope | [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) | G1.1.2, G1.3 | Missing | spec drafted, not executed (WP-W-08 in preparation; no HIL in the fork, GAP-30) |
-| Sn-13 | Fault injection | [WP-V-05](../06-validation/WP-V-05-fault-injection.md) | G1.1.4, G1.2, G1.6 | Missing | spec drafted, not executed (WP-V-05) |
+| Sn-12 | HIL tests of the envelope | [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) | G1.1.2, G1.3 | Missing | spec and scripts drafted (panda `tests/hitl/test_10`…`test_15`), not executed: no bench (D-04) |
+| Sn-13 | Fault injection | [WP-V-05](../06-validation/WP-V-05-fault-injection.md) | G1.1.4, G1.2, G1.6 | Missing | spec and scripts drafted (WP-V-05; panda `tests/hitl/test_10`…`test_15`), not executed: no bench (D-04) |
 | Sn-14 | SW integration / process replay | [WP-W-07](../05-software/WP-W-07-software-integration-verification.md) | G1.2, G1.6 | Partial | Inherited process replay; references fetched from comma storage (GAP-30) |
+| Sn-15 | panda firmware host unit tests (watchdog, heartbeat monitor, heartbeat-loss siren, reference lock, IRQ priorities, EPS-fault siren) | `panda/tests/` (host builds); impact analyses in [07-supporting/impact](../07-supporting/impact/README.md) | G1.1.4, G1.7, G1.8 | Partial | LionDriver-written tests `tests/hw_watchdog`, `heartbeat_monitor`, `heartbeat_siren` (added 2026-10-13, panda `c33343b`), `reference_lock`, `irq_priorities`, `eps_fault_siren`; added to LionDriver CI 2026-10-12, no run recorded as evidence yet; host x86 not target; not reviewed |
 | Sn-20 | Vehicle controllability and EPS characterisation (AOU-01/02) | [WP-V-01](../06-validation/WP-V-01-safety-validation.md) | G1.1.1, G1.10 | Missing | spec drafted, not executed (WP-V-01) |
 | Sn-21 | PCM ACC envelope test (AOU-05) | WP-V-01 | G1.3, G1.4, G1.10 | Missing | spec drafted, not executed (WP-V-01) |
 | Sn-22 | Brake override test (AOU-03) | WP-V-01 | G1.5, G1.10 | Missing | spec drafted, not executed (WP-V-01) |
@@ -322,7 +327,7 @@ Evidence rule (shared by [WP-K-01 §6](WP-K-01-safety-case.md#6-evidence-status)
 | Sn-69 | Vehicle test operations and records | [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md) | G5.7 | Partial | Procedure drafted; no drive records yet |
 | Sn-70 | Cybersecurity case | [WP-K-03](WP-K-03-cybersecurity-case.md) | G4 | Partial | Draft argument; almost all CS evidence Missing or Partial |
 
-Summary at `8b8c6ae` (evidence rule above): **Available 0, Partial 34, Missing 15** (49 evidence items). Partial items are drafted analyses/specifications or inherited results; test, measurement and assessment results with only a drafted specification are Missing. No work product is approved, so nothing is Available. No claim G1–G5 is supported.
+Summary at `BL-002` (`bf6ce8c`; evidence rule above): **Available 0, Partial 35, Missing 15** (50 evidence items). Nothing has been verified on hardware or independently reviewed; the firmware changes since `8b8c6ae` are AI-assisted drafts merged by the maintainer. Partial items are drafted analyses/specifications or inherited results; test, measurement and assessment results with only a drafted specification are Missing. No work product is approved, so nothing is Available. No claim G1–G5 is supported.
 
 ## 7. Defeaters (counter-evidence)
 
@@ -330,18 +335,18 @@ Each defeater is a known fact that, while it stands, defeats the claim it is att
 
 | DF | Counter-evidence | GAP | Undermines | Closure route |
 |---|---|---|---|---|
-| DF-01 | Hardware watchdog (IWDG) never initialised; SW watchdog checked from the ISR it supervises | GAP-07 | G1.1.4, G1.9 | TSR-5xx; WP-H-01 |
-| DF-02 | Detection times (RX ≤ 2 s, heartbeat 3–5 s) exceed the preliminary SG-01 FTTI (≤ 0.5 s) | GAP-06 | G1.1.4 | WP-S-04, TSR-4xx/5xx |
-| DF-03 | QM host sets the safety mode and parameter at any time, unauthenticated (`0xdc`) | GAP-09 | G1.8, G1.1.2 | Safety-mode lock (TSR-5xx) |
+| DF-01 | IWDG implemented (90 ms, window, 100 Hz feed) but not verified on hardware; LSI tolerance against the 0.1 s limit unconfirmed (2026-10-12) | GAP-07 | G1.1.4, G1.9 | HIL `test_10` (D-04), IA watchdog OI-2, review |
+| DF-02 | RX timeout (5 nominal periods, ≤ 0.16 s for PCM_CRUISE, ≈ 0.21 s for `0x262`) and heartbeat absence (0.3 s) now within the preliminary SG-01 FTTI (≤ 0.5 s) but unmeasured; heartbeat mismatch still 3 s (2026-10-12) | GAP-06 | G1.1.4 | WP-S-04, TSR-4xx/5xx; measurement on HIL `test_12` (D-04) |
+| DF-03 | Mechanism implemented in the reference build (host tests); open until HIL `test_11` and review, and until the release build uses `LIONDRIVER_REFERENCE=1`: QM host sets the safety mode and parameter at any time, unauthenticated (`0xdc`) | GAP-09 | G1.8, G1.1.2 | Safety-mode lock (TSR-5xx) |
 | DF-04 | Faults are report-only (`PERMANENT_FAULTS = 0U`); no MPU, no RAM ECC handling | GAP-08 | G1.1.4, G1.9 | TSR-5xx |
-| DF-05 | No E2E alive counters on any Toyota RX message; brake and wheel speed have no checksum | GAP-01 | G1.1.4, G1.5 | TSR-4xx |
+| DF-05 | No E2E alive counters on any Toyota RX message; brake and wheel speed have no checksum. Mitigation started in the reference build (2026-10-12): `0x262` and `0x1D3` checksummed RX checks, CRUISE_ACTIVE vs MAIN_ON (TSR-405(c)); counters, TSR-405(a)/(b) open | GAP-01 | G1.1.4, G1.5 | TSR-4xx |
 | DF-06 | Weak SoC↔panda integrity (8-bit XOR, no sequence counter); heartbeat proves `pandad` alive, not the control loop | GAP-10 | G1.1.4, G1.8 | TSR-4xx |
 | DF-07 | Soft disable keeps actuating up to 3 s on failed inputs (≈ 3.5 s with stale data) | GAP-16 | G1.2, G1.6, G2.1 | WP-C-07, TSR-6xx |
 | DF-08 | Diagnostics masked during big-model fallback; cold model hot-switch while actuating | GAP-17 | G1.2, G2.1, G3.4 | Exclude Chestnut (WP-C-01 OI-4) |
 | DF-09 | No longitudinal jerk limit in the envelope | GAP-04 | G1.4 | TSR-2xx |
 | DF-10 | Envelope does not monitor driver steering torque; override relies on EPS + QM host | GAP-02 | G1.5 | FSR-05.x / TSR-3xx |
 | DF-11 | Relay failure detected only by traffic observation, 1–2 s grace, no readback | GAP-12 | G1.7 | HWSR / TSR-7xx |
-| DF-12 | Debug relay-drive command `0xc5` not gated in release builds | GAP-09 | G1.7, G1.8 | Firmware change |
+| DF-12 | Mechanism implemented in the reference build (host tests); open until HIL `test_11` and review, and until the release build uses `LIONDRIVER_REFERENCE=1`: Debug relay-drive command `0xc5` not gated in release builds | GAP-09 | G1.7, G1.8 | Firmware change |
 | DF-13 | No FMEDA/SPFM/LFM/PMHF; no supplier safety data for the COTS device | GAP-15 | G1.9 | WP-H-03…H-07 |
 | DF-14 | All vehicle AoUs (AOU-01…05) unverified; ⚠ ratings may rise to ASIL C/D | GAP-05 | G1.1, G1.3–G1.5, G1.7, G1.10 | Vehicle characterisation |
 | DF-15 | Experimental Mode (end-to-end longitudinal) on by default, without hazard assessment | GAP-18 | G2.1, G3 | D-08; WP-C-07 |
@@ -359,17 +364,17 @@ Each defeater is a known fact that, while it stands, defeats the claim it is att
 | DF-27 | Verification is line coverage only on host builds; MISRA deviations unrecorded; bootstub not MISRA-checked | GAP-13 | G1.1.2 | WP-W-06 |
 | DF-28 | Controller limits equal envelope limits (zero margin); raw limits not traced to physical units | GAP-04 | G1.1.1 | WP-S-02 |
 | DF-29 | The QM SoC controls the panda MCU reset and boot pins; pandad recovery flashes a development bootstub | GAP-38 | G1.1.4, G1.8, G4 | TSR-511; HWSR-502c |
-| DF-30 | Safety-code verification (coverage gate, MISRA, mutation) not run in LionDriver CI; unit tests built with `ALLOW_DEBUG`, release configuration untested | GAP-39, GAP-41 | G1.1.2, G5.2 | WP-W-06, WP-P-01 |
+| DF-30 | Safety-code verification (coverage gate, MISRA, mutation) now in LionDriver CI, incl. the reference variant (`LIONDRIVER_REFERENCE=1`), but no run recorded as evidence; unit tests built with `ALLOW_DEBUG`, release configuration untested | GAP-39, GAP-41 | G1.1.2, G5.2 | WP-W-06, WP-P-01 |
 | DF-31 | Model weights stored and served by comma's LFS host, outside LionDriver CM | GAP-40 | G3.1, G5.2 | WP-P-01; release record model hashes |
-| DF-32 | SoC may transmit PCS messages (`0x344`, `0x411`) without content check; DSU-only IDs whitelisted | GAP-42, GAP-49 | G1.7, G1.8 | TSR-705 |
-| DF-33 | MCU hang leaves the relay in intercept: forwarding and stock PCS lost | GAP-43 | G1.7, G1.9 | TSR-706, TSR-501 |
-| DF-34 | Envelope accepts any EPS torque factor from the QM host | GAP-44 | G1.1.1, G1.8 | TSR-512 (compiled-in parameter) |
+| DF-32 | Fixed in the reference build (`test_pcs_and_dsu_messages_blocked`, `test_pcs_hud`); awaiting review: SoC may transmit PCS messages (`0x344`, `0x411`) without content check; DSU-only IDs whitelisted | GAP-42, GAP-49 | G1.7, G1.8 | TSR-705 |
+| DF-33 | MCU hang → IWDG reset ≈ 90 ms + relay drop-out; meets SG-07 0.1 s only if LSI within tolerance (IA watchdog OI-2); relay stuck in intercept undetected | GAP-43 | G1.7, G1.9 | TSR-706, TSR-501 |
+| DF-34 | Mechanism implemented in the reference build (host tests); open until HIL `test_11` and review, and until the release build uses `LIONDRIVER_REFERENCE=1`: Envelope accepts any EPS torque factor from the QM host | GAP-44 | G1.1.1, G1.8 | TSR-512 (compiled-in parameter) |
 | DF-35 | Model replay cannot fail in CI; simulator driving test skipped | GAP-45 | G2.2, G3.3 | WP-W-10, WP-V-02 |
 | DF-36 | Rejected `0x2E4` frames are dropped, not replaced by zero torque; EPS may keep acting until its own timeout | GAP-46 | G1.1.4, G1.2, G1.5 | TSR-109 |
 | DF-37 | SPI length fields and control-request indices from the SoC not bounds-checked | GAP-47 | G1.8, G4 | TSR-412 |
 | DF-38 | Envelope checks incomplete (steer request while not engaged, ACC_CONTROL fields, relay latch cleared by mode change) | GAP-48 | G1.1.3, G1.3, G1.4, G1.7 | TSR-105, TSR-207, TSR-506 |
-| DF-39 | About nine configuration commands ungated in car modes; `0xe7` stops PCS forwarding with the relay energised (HIL confirmation pending) | GAP-49 | G1.7, G1.8 | TSR-513 |
-| DF-40 | No interrupt-priority scheme; safety hooks, CAN TX and command dispatch run in ISR context; timing unanalysed | GAP-50 | G1.1.4, G1.8 | TSR-519 |
+| DF-39 | Configuration commands gated in car mode in the reference build (TSR-513); `0xc0`/`0xb0`/`0xb1`/`0xf6` unconfirmed; `0xe7` HIL confirmation pending | GAP-49 | G1.7, G1.8 | TSR-513 |
+| DF-40 | Explicit equal priorities and critical sections (panda `52cad44`, TSR-519 partial); safety logic still in ISR context; no scheme adopted; WCET/latency unmeasured | GAP-50 | G1.1.4, G1.8 | TSR-519 |
 | DF-41 | Fuzz testing excludes the safety-relevant host processes; simulator runs a Honda and bypasses the panda | GAP-51 | G1.2, G1.6, G2.2 | WP-V-02, WP-W-08 |
 
 ## 8. UL 4600 principles used (informative)

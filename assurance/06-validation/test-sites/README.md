@@ -26,8 +26,8 @@ The speeds come from the WP-V-01 test specifications and the WP-V-07 §8.1 close
 
 | Tier | Speeds | Tests | Minimum layout (TBC) |
 |---|---|---|---|
-| **T1 Low speed** | ≤ 60 km/h (VS-VAL-04 up to 80 km/h) | VS-VAL-01 EPS torque, -02 EPS message loss, -04 brake override, -05 PCM envelope, -11 lateral deviation at ≤ 50 km/h, -13 unexpected acceleration at 40 km/h, -16 loss of deceleration at 50 km/h, -20…-26 envelope fault reactions | Straight of about 400 m plus run-off, or a large paved pad; space for a 3.5 m coned lane |
-| **T2 Up to 90 km/h** | 60–90 km/h (110 km/h only after a separate risk review) | VS-VAL-03 driver override at 90 km/h, -10 lateral disturbance in a coned lane at 30–90 km/h, -12 loss of lateral control in a curve at 50 and 70 km/h, -14 deceleration step at 60 and 90 km/h, -15 release on driver input at 30/60/90 km/h | Straight of about 1 km, or a loop with long straights; gentle curves of known radius for VS-VAL-12; run-off along the test lane |
+| **T1 Low speed** | ≤ 60 km/h (VS-VAL-04 up to 80 km/h) | VS-VAL-01 EPS torque, -02 EPS message loss, -04 brake override, -05 PCM envelope, -08 PCM onset at 30 and 60 km/h, -11 lateral deviation at ≤ 50 km/h, -13 unexpected acceleration at 40 km/h, -16 loss of deceleration at 50 km/h, -20…-26 envelope fault reactions | Straight of about 400 m plus run-off, or a large paved pad; space for a 3.5 m coned lane |
+| **T2 Up to 90 km/h** | 60–90 km/h (110 km/h only after a separate risk review) | VS-VAL-03 driver override at 90 km/h, -10 lateral disturbance in a coned lane at 30–90 km/h, -12 loss of lateral control in a curve at 50 and 70 km/h, -14 deceleration step at 60 and 90 km/h, -08 PCM onset at 90 km/h, -15 release on driver input at 30/60/90 km/h | Straight of about 1 km, or a loop with long straights; gentle curves of known radius for VS-VAL-12; run-off along the test lane |
 | **T3 Soft targets** | Stock PCS and following speeds | VS-VAL-06 stock PCS/AEB preservation (AOU-04, SG-07), -13, -16 | Permission to use radar-reflective soft targets (and a target carrier if hired); straight long enough to reach PCS test speeds |
 
 ### 2.2 Conditions every site must meet

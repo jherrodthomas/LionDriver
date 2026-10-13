@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-K-04 Functional safety assessment report |
 | Standard reference | ISO 26262-2:2018 §6 (functional safety assessment, independence per Table 1); ISO 26262-2 §6 (confirmation measures); [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) §6 (FSA-I1, FSA-I2, FSA-F) |
-| Version | 0.1 |
+| Version | 0.2 (defeater range corrected to DF-01 … DF-41; 2026-10-12). 0.1: initial draft |
 | Status | Skeleton — plan and report template. **No assessment has been performed and no assessor has been engaged (D-06 open).** All result sections are "Not yet executed" |
 | ASIL / scope | Item LD-SDA, up to ASIL C (SG-01) |
 | Author | Assurance team (initial draft); report to be authored by the assessor |
@@ -81,7 +81,7 @@ Timing: FSA-I1 at G1, FSA-I2 at G2, FSA-F at G5 ([WP-M-06](../01-management/WP-M
 | Tailoring / defeater | Assessor judgement |
 |---|---|
 | T-01 … T-13 | |
-| DF-01 … DF-28 ([WP-K-01 §7](WP-K-01-safety-case.md#7-defeaters-counter-evidence)) | |
+| DF-01 … DF-41 ([WP-K-01 §7](WP-K-01-safety-case.md#7-defeaters-counter-evidence)) | |
 
 ## 9. Recommendation — Not yet executed
 

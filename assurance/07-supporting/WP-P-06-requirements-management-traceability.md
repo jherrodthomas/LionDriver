@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-06 Requirements management and traceability procedure |
 | Standard reference | ISO 26262-8:2018 §6; ISO 21448:2022 §5, §7–8 (requirements from SOTIF analyses); ISO/SAE 21434:2021 §9–10 (cybersecurity goals and requirements); ASPICE 4.0 SYS.2–5, SWE.1–6 traceability and consistency BPs |
-| Version | 0.1 |
+| Version | 0.2 (§4 trace model redrawn as Figure 4-1; text version kept; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -58,6 +58,14 @@ Back-filled requirements from existing code (T-03) also need: the value as imple
 
 ## 4. Trace model
 
+![Figure 4-1: trace model lanes for FuSa (H/HS, SG, FSR, TSR, SWSR, HWSR, AOU, code and tests), CS (TS, CSG, CSR), SOTIF (SH, TC/FI, FM, SYS/TSR/AIR, V&V scenario), AI (AIR, model and dataset requirements, model test) and problems and changes](figures/fig-p06-4-1-trace-model.svg)
+
+*Figure 4-1.* One lane per domain, arrows from parent to child as in the text version; colour separates derivation, implementation and verification links, and dashed lines show the links between domains. Source: [`figures/fig-p06-4-1-trace-model.svg`](figures/fig-p06-4-1-trace-model.svg); change it together with the link table below and the ID pattern in §5.2.
+
+The model populated with the current items, on the ASPICE 4.0 V-model with derivation and verification coverage, is generated in [`trace/maps/aspice-trace-map.md`](../trace/maps/aspice-trace-map.md).
+
+<details><summary>Text version of Figure 4-1</summary>
+
 ```text
 FuSa:   H / HS ──> SG ──> FSR ──> TSR ──┬──> SWSR ──> code (C/Python) ──> unit test
                                         │              └─> SW integration test
@@ -71,6 +79,8 @@ CS:     TS ──> CSG ──> CSR ──> SWSR/HWSR or CSR(impl) ──> code �
         CSG <──> SG (where an attack causes a safety hazard)
 Problems and changes:  issue #n ──> requirement IDs affected (WP-P-02, WP-P-03)
 ```
+
+</details>
 
 | Link | Direction stored | Cardinality |
 |---|---|---|

@@ -1,10 +1,11 @@
 name: safety
 
 # Safety-envelope verification (WP-W-06): opendbc safety unit tests under UBSan with the 100%
-# line-coverage gate, MISRA C:2012 for the opendbc safety code and the panda firmware, and
-# mutation testing. Upstream runs these only in opendbc's and panda's own CI; running them here
-# keeps the evidence under LionDriver control (GAP-39). Everything runs against the pinned
-# submodules: panda MISRA uses the pinned opendbc_repo, not panda's opendbc@master dependency.
+# line-coverage gate, MISRA C:2012 for the opendbc safety code and the panda firmware, mutation
+# testing, and host tests of the LionDriver panda firmware changes. Upstream runs the first three
+# only in opendbc's and panda's own CI; running them here keeps the evidence under LionDriver
+# control (GAP-39). Everything runs against the pinned submodules: panda MISRA uses the pinned
+# opendbc_repo, not panda's opendbc@master dependency.
 
 on:
   push:
@@ -106,6 +107,35 @@ jobs:
         name: build-manifest-panda_misra
         path: build-manifest/panda_misra.json
 
+  panda_host_tests:
+    name: panda host tests
+    # Host-compiled unit tests for the LionDriver panda firmware changes (WP-W-06; RR-2026-008).
+    # Each suite compiles one firmware header with the host gcc and drives it through ctypes;
+    # reference_lock includes the pinned opendbc_repo headers. No device is needed.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v7
+    - name: Checkout opendbc and panda submodules
+      run: git submodule update --init --depth 1 opendbc_repo panda
+    - name: Run host tests
+      working-directory: panda
+      run: |
+        for suite in hw_watchdog heartbeat_monitor heartbeat_siren reference_lock irq_priorities eps_fault_siren; do
+          echo "::group::$suite"
+          python3 -m unittest discover -v -s "tests/$suite" -t .
+          echo "::endgroup::"
+        done
+    - name: Build manifest and tool versions (WP-W-01 ENV-01)
+      if: always()
+      run: python3 tools/ci/build_manifest.py build-manifest/panda_host_tests.json
+    - name: Upload build manifest
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: build-manifest-panda_host_tests
+        path: build-manifest/panda_host_tests.json
+
   mutation:
     name: safety mutation tests
     runs-on: ubuntu-24.04
@@ -128,3 +158,31 @@ jobs:
       with:
         name: build-manifest-mutation
         path: build-manifest/mutation.json
+
+  mutation_reference:
+    name: safety mutation tests (reference build)
+    # The reference-only additions (LIONDRIVER_REFERENCE: RX supervision, EPS fault, cruise-main check, TX arrival, ...)
+    # are not compiled in the standard variant, so the job above never mutates them. mutation.py compiles and tests the
+    # reference variant when LIONDRIVER_REFERENCE=1, as the unit tests do
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+    - uses: actions/checkout@v7
+    - name: Checkout opendbc submodule
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Run mutation tests, LionDriver reference build variant
+      working-directory: opendbc_repo
+      env:
+        LIONDRIVER_REFERENCE: "1"
+      run: |
+        source setup.sh
+        python opendbc/safety/tests/mutation.py
+    - name: Build manifest and tool versions (WP-W-01 ENV-01)
+      if: always()
+      run: python3 tools/ci/build_manifest.py build-manifest/mutation_reference.json
+    - name: Upload build manifest
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: build-manifest-mutation_reference
+        path: build-manifest/mutation_reference.json

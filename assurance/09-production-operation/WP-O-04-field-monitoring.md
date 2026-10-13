@@ -33,11 +33,11 @@ Each event class has an ID (`MON-nn`), its source signal in the logs, and the sa
 | ID | Event | Source signal (log service) | Code reference | Why it matters |
 |---|---|---|---|---|
 | MON-01 | Disengagement by driver (brake, cancel, steering override), with the 10 s before it | `selfdriveState` (enabled/active transitions), `carState` (brakePressed, steeringPressed, gasPressed, cruiseState) | `selfdrive/selfdrived/state.py`; `selfdrived.py:253-256` | Proxy for driver-perceived insufficiency (SOTIF); override effort (AOU-02) |
-| MON-02 | Fault-triggered disengagement (any IMMEDIATE_DISABLE or SOFT_DISABLE event) | `onroadEvents`, `selfdriveState.alertType` | `selfdrived/events.py` | E/E or system fault reaching the driver (SG-02, SG-06) |
+| MON-02 | Fault-triggered disengagement (any IMMEDIATE_DISABLE or SOFT_DISABLE event) | `onroadEvents`, `selfdriveState.alertType` | `selfdrived/events.py` | E/E or system fault reaching the driver (SG-02, SG-06); also `pandaStates.epsFault` where the build reports it |
 | MON-03 | `controlsMismatch` | `onroadEvents`; `pandaStates` (safetyModel, safetyParam, controlsAllowed, safetyRxChecksInvalid) | `selfdrived.py:328-339`; `events.py:919-922` | Host and envelope disagree: possible FFI or configuration fault (SG-01, GAP-09) |
 | MON-04 | `relayMalfunction` | `pandaStates.faults`; `onroadEvents` | `opendbc/safety/safety.h:215-220, 372-380`; `selfdrived.py:341-342` | Harness or relay fault: SG-07 (stock PCS) at risk |
 | MON-05 | Excessive actuation (latched) | `onroadEvents` (`excessiveActuation`), param `Offroad_ExcessiveActuation` | `selfdrived/helpers.py:16-53`; `selfdrived.py:305-310` | Direct indicator of a possible SG-01/SG-03/SG-04 violation |
-| MON-06 | Panda TX blocks and safety violations | `pandaStates` (safetyTxBlocked, safetyRxInvalid, faults, heartbeatLost) | `panda/board/drivers/can_common.h:161-176`; `panda/board/main.c:182-213` | Envelope intervened: the QM stack commanded outside the envelope. Each one is a near-miss for SG-01/03/04 |
+| MON-06 | Panda TX blocks and safety violations | `pandaStates` (safetyTxBlocked, safetyRxInvalid, faults, heartbeatLost, txRateExceeded where the build reports it) | `panda/board/drivers/can_common.h:161-176`; `panda/board/main.c:182-213` | Envelope intervened: the QM stack commanded outside the envelope. Each one is a near-miss for SG-01/03/04 |
 | MON-07 | Driver monitoring: alert levels 1–3, no-response forced deceleration, lockouts, DM uncertainty fallback | `driverMonitoringState`, `onroadEvents` (`driverDistracted1-3`, `driverUnresponsive1-3`, `tooDistracted`) | `selfdrive/monitoring/policy.py:28-44, 77-78, 398`; `selfdrived.py:217-239` | Effectiveness of the misuse measure (AOU-06); controllability basis |
 | MON-08 | FCW and stock AEB activations | `onroadEvents` (`fcw`, `stockAeb`, `stockFcw`), `carState.stockAeb` | `selfdrived.py:441-445`; `events.py:470-498` | Near-miss indicator; SG-07 evidence that stock PCS still acts |
 | MON-09 | Steering saturation; steer temporarily unavailable | `onroadEvents` (`steerSaturated`, `steerTempUnavailable*`) | `selfdrived.py:430-438`; `events.py:511-517, 619-625` | Demand above envelope: ODD/curvature insufficiency (SOTIF) |
@@ -48,6 +48,9 @@ Each event class has an ID (`MON-nn`), its source signal in the logs, and the sa
 | MON-14 | Crash or near-miss reported by the driver, or detected (high deceleration in IMU / `carState.aEgo`, airbag-related CAN signals if available, flag button) | `userBookmark`; `accelerometer`; `carState`; driver report | `system/loggerd/loggerd.cc:198-285` (bookmark preserves segment) | Safety goal violation evidence; SGO-style reporting (§8) |
 | MON-15 | Use outside the ODD (speed, road type, weather, night) while engaged | `carState.vEgo`, GPS, model road-edge and lane outputs, time of day; `speedTooHigh` event | `events.py:989-996` | Misuse frequency (AOU-06, [WP-O-03](WP-O-03-user-information-safety-warnings.md) UI-10) |
 | MON-16 | Configuration drift: software commit, panda firmware signature, model hashes, parameters, `carFw`, fingerprint fuzzy flag | `initData`, `carParams`, `pandaStates`, params snapshot | `selfdrive/car/card.py:141-150, 195-201` | Field units must equal the released reference configuration ([WP-O-01](WP-O-01-installation-and-provisioning-control.md) SPC-04…SPC-07) |
+| MON-17 | SOTIF anomaly signatures with no other field event: AS-03 gas override during deceleration, AS-05 lane-line proximity, AS-06 phantom deceleration ([WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) §2.1) | `carState`, `longitudinalPlan`, `modelV2`, `radarState` | Definitions and thresholds in WP-V-04 §2.1 | Near-miss indicators for SH-01 and SH-04; keeps the field statistics comparable with pre-release exploration |
+
+The SOTIF anomaly signatures AS-01…AS-11 are defined only in WP-V-04 §2.1 (one set before and after release, WP-V-04 §2.1.1). This document extracts them unchanged with the same script and signature-set version, and records the version with each KPI report. MON-01, -02, -05…-10, -13 and -17 contain them.
 
 ### 2.2 Exposure data (denominators)
 
@@ -99,7 +102,7 @@ Minimum data set retrieved for every engaged route: `qlog` and `rlog` for all se
 ### 4.1 Pipeline
 
 1. **Ingest**: copy, checksum, register route ID, vehicle, software baseline (from `initData` / `carParams`).
-2. **Automatic event extraction**: script scans `qlog`/`rlog` for MON-01…MON-16 and writes an event table (route, time, event, context signals). Not written yet (OI-4).
+2. **Automatic event extraction**: [`tools/field_monitoring/extract_events.py`](../../tools/field_monitoring/README.md) scans `qlog`/`rlog` for MON-01…MON-17, scores AS-01…AS-11 of [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) §2.1 and writes an event table (route, time, MON, signatures, triage class, context signals) with the exposure of §2.2 and the signature-set version. It counts each event once on its rising edge and lists what it could not score. Tested on synthetic logs only; not yet run on a recorded drive (OI-4).
 3. **Configuration check**: compare MON-16 with the release record; a mismatch is an event in itself.
 4. **Review**: the safety manager (or delegate) reviews every event in the triage classes below within the stated time.
 5. **Problem report**: open an issue under [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md) with category and severity, linking route and time.
@@ -111,28 +114,41 @@ Minimum data set retrieved for every engaged route: `qlog` and `rlog` for all se
 |---|---|---|---|
 | T1 Immediate | Crash or near-miss while engaged or within 30 s after disengagement (MON-14); excessive actuation (MON-05); `controlsMismatch` (MON-03); `relayMalfunction` (MON-04); configuration drift on a safety-relevant item (MON-16) | Same day | S-1 until analysed |
 | T2 Priority | Envelope TX blocks while engaged (MON-06); stock AEB activations while engaged (MON-08); DM no-response or lockout (MON-07); fault disengagements (MON-02); model non-finite outputs (MON-13) | 5 working days | S-2 until analysed |
-| T3 Statistical | Driver disengagements, FCW, steering saturation, DM level 1–2, calibration changes, out-of-ODD use, timing faults | Monthly trend review | S-3/S-4, or none if within expected rates |
+| T3 Statistical | Driver disengagements, FCW, steering saturation, DM level 1–2, calibration changes, out-of-ODD use, timing faults, SOTIF anomaly signatures (MON-17) | Monthly trend review | S-3/S-4, or none if within expected rates |
 
 A T3 event becomes T2 when its rate exceeds the threshold in §5 or a new pattern (location, condition, software baseline) appears.
 
 ## 5. KPIs and thresholds
 
-Thresholds are placeholders until the SOTIF validation targets proposed in [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) §4 (VT-01…VT-13, Draft, not yet confirmed) are agreed and baseline rates from development driving exist (OI-5). A KPI breach is a problem report, not an automatic field action.
+The thresholds below are **proposals** (OI-5). Where a validation target of [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) §4 sets a rate, the threshold is derived from it. Where none does, the KPI is reported against a baseline from development driving, which does not exist yet. Both the targets (WP-V-02 OI-3) and these derivations wait for the assessor. A KPI breach is a problem report, not an automatic field action.
 
-| KPI | Definition | Initial threshold (placeholder) | Linked claim |
-|---|---|---|---|
-| K-01 | Crashes while engaged per engaged distance | 0 tolerated without T1 investigation; rate compared with VT targets | G0, G2 |
-| K-02 | Excessive-actuation latches per 1,000 engaged km | 0 (any occurrence → T1) | SG-01, SG-03, SG-04 |
-| K-03 | `controlsMismatch` / `relayMalfunction` per 1,000 engaged hours | 0 (any occurrence → T1) | SG-01, SG-07 |
-| K-04 | Envelope TX blocks while engaged per engaged hour | Baseline from development drives; > 2× baseline → T2 | SG-01, SG-03, SG-04 |
-| K-05 | Safety-relevant driver disengagements (driver takeover judged necessary on review) per 100 engaged km | Baseline; trend | SOTIF residual risk |
-| K-06 | DM level-3 alerts and lockouts per engaged hour, per driver | Baseline; trend per driver | AOU-06; misuse |
-| K-07 | Engaged time outside ODD / total engaged time | < 1% (placeholder) | AOU-06, UI-10 |
-| K-08 | Fault disengagements (soft + immediate) per engaged hour | Baseline | SG-02, SG-06 |
-| K-09 | Stock AEB activations while engaged, each reviewed for whether LD-SDA contributed | Review all | SG-07, H-06 |
-| K-10 | Model anomaly events per engaged hour (MON-13) | Baseline | G3 (AI) |
-| K-11 | Field units on non-released configuration | 0 | All |
-| K-12 | Data coverage: share of engaged distance whose logs were retrieved | ≥ 95% | Validity of all KPIs |
+| KPI | Definition | Proposed threshold | Derivation | Linked claim |
+|---|---|---|---|---|
+| K-01 | Crashes while engaged per engaged distance; crash candidates and bookmarks (MON-14) | 0 tolerated without T1 investigation | VT-11: zero injury crashes | G0, G2 |
+| K-02 | Excessive-actuation latches per 1,000 engaged km | 0 (any occurrence → T1) | Direct indicator of a safety-goal violation | SG-01, SG-03, SG-04 |
+| K-03 | `controlsMismatch` / `relayMalfunction` per 1,000 engaged hours | 0 (any occurrence → T1) | As K-02 | SG-01, SG-07 |
+| K-04 | Envelope TX blocks while engaged per engaged hour | Baseline from development drives; > 2× baseline → T2 | No target; the envelope intervening is a near-miss | SG-01, SG-03, SG-04 |
+| K-05 | Safety-relevant driver disengagements (driver takeover judged necessary on review) per 100 engaged km | Baseline; trend | Needs review, not automatic | SOTIF residual risk |
+| K-06 | DM level-3 alerts and lockouts per engaged hour, per driver | ≤ 0.1 per engaged hour | A level-3 alert follows two ignored warnings; more than one per 10 engaged hours is a misuse pattern | AOU-06; misuse |
+| K-07 | Engaged above the ODD speed bound (MON-15); engaged time outside the other ODD limits / total engaged time | Speed: 0. Other limits: < 1 % | VT-12: the speed bound is deterministic (FM-07); the other exits rely on user information (AC-04) | AOU-06, UI-10 |
+| K-08 | Fault disengagements (soft + immediate) per engaged hour | Baseline | No target | SG-02, SG-06 |
+| K-09 | Stock AEB activations while engaged, each reviewed for whether LD-SDA contributed | Review all | — | SG-07, H-06 |
+| K-10 | Lead flicker, AS-08 (MON-13), per engaged hour | ≤ 0.6 per engaged hour | VT-14: at most 1 % of 60 s steady-scene instances may fail, and an engaged hour holds at most 60 instances | G3 (AI) |
+| K-11 | Field units on non-released configuration | 0 | — | All |
+| K-12 | Data coverage: share of engaged distance whose logs were retrieved | ≥ 95 % | Below it, the rates above are not representative | Validity of all KPIs |
+| K-13 | Phantom decelerations, AS-06 (MON-17), per 1,000 engaged km | ≤ 1 per 1,000 km | VT-04: ≤ 1 per 1,000 km | SH-04 |
+| K-14 | Lane-line proximity, AS-05 (MON-17), per engaged hour | ≤ 0.6 per engaged hour | VT-01/AIR-01: at most 1 % of 60 s lane-keeping instances may fail, at most 60 per engaged hour. In narrow lanes AS-05 also counts some instances that AIR-01 passes, so this is conservative | SH-01 |
+
+**How a rate is judged.** Field counts are small, so a rate is judged with its exact one-sided 95 % Poisson bounds, the confidence level of the validation targets:
+
+| Status | Condition | Action |
+|---|---|---|
+| BREACH | The lower bound is above the threshold: the rate is shown to exceed it | Problem report ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)); field-action criteria of §9 checked |
+| WATCH | The observed rate is above the threshold, but the lower bound is not | T3 events of that class become T2 (§4.2) |
+| MET | The upper bound is at or below the threshold: the target is shown to be met | None |
+| OPEN | Neither: not enough exposure yet. With no events, 3.0 / threshold of exposure is needed to show MET (for example 3,000 km for K-13) | Keep collecting |
+
+`tools/field_monitoring/extract_events.py` evaluates K-01…K-04, K-06…K-08, K-10, K-13 and K-14 from the logs with these rules. K-05, K-09, K-11 and K-12 need review or the retrieval log, not the drive logs alone. K-06 is evaluated per fleet by the script; the per-driver check needs the driver identity from the retrieval log.
 
 ## 6. Feeding the analyses
 
@@ -146,7 +162,7 @@ Thresholds are placeholders until the SOTIF validation targets proposed in [WP-V
 | Possible cyber cause | [WP-O-05](WP-O-05-cybersecurity-incident-response-updates.md) | Incident response |
 | Counter-evidence to the safety case | [WP-K-01](../10-safety-case/WP-K-01-safety-case.md) defeater list | Add or update defeater |
 
-The SOTIF "unknown scenario" discovery rate (new scenarios per 1,000 engaged km) is reported to WP-V-04 monthly as an input to the residual-risk argument.
+The SOTIF "unknown scenario" discovery rate (new class-U scenario classes per 1,000 engaged km inside the ODD, as defined in WP-V-04 §2.1.1) is reported to WP-V-04 monthly as an input to the residual-risk argument.
 
 ## 7. Reviews and reporting inside the project
 
@@ -196,8 +212,8 @@ Every field action is recorded with: trigger, affected releases and installation
 |---|---|
 | Event signals logged on the device | Available (inherited) |
 | LionDriver access to field data | **Not available**: default upload goes to comma.ai; no LionDriver path |
-| Event extraction tooling | Not available (OI-4) |
-| KPI thresholds | Not defined (OI-5) |
+| Event extraction tooling | Written and unit-tested on synthetic logs; not yet run on recorded drives (OI-4) |
+| KPI thresholds | Proposed (§5), not yet reviewed; baselines missing (OI-5) |
 | Notification channel for field actions | Not available (OI-7) |
 | Field monitoring records | None (no LionDriver field operation yet) |
 
@@ -208,8 +224,8 @@ Every field action is recorded with: trigger, affected releases and installation
 | OI-1 | Decide how comma upload and athena are disabled for LionDriver installations (unpaired device, configuration change, or code change) and verify no data leaves the device unintentionally | G1 (before LionDriver public-road testing) |
 | OI-2 | Decide the post-release data path (manual vs. LionDriver endpoint) | G5 |
 | OI-3 | Privacy and consent review (data categories, consent text, retention) | G1 |
-| OI-4 | Write the event-extraction script for MON-01…MON-16 over qlog/rlog | G1 (for development driving) |
-| OI-5 | Set KPI thresholds from validation targets and development-drive baselines | G4 |
+| OI-4 | Event extraction: the script exists (`tools/field_monitoring/`, §4.1). Still open: run it on the first recorded development drives and check each MON class against a manual review of the same drives; then score AS-08 curvature divergence and AS-09 once WP-V-04 gives their thresholds (evaluation-set percentiles) | G1 (for development driving) |
+| OI-5 | KPI thresholds: proposed in §5 from the validation targets, with the BREACH/WATCH/MET/OPEN rule. Still open: assessor review of the proposals (with WP-V-02 OI-3), and baselines from development drives for K-04, K-05 and K-08 | G4 |
 | OI-6 | Legal review of SGO and Part 573 applicability | G5 |
 | OI-7 | Establish a field-action notification channel with confirmed receipt | G5 |
-| OI-8 | Define crash detection criteria from IMU/`carState` for MON-14 (automatic flagging) | G4 |
+| OI-8 | Define crash detection criteria from IMU/`carState` for MON-14 (automatic flagging). Interim, accepted by the project maintainer on 2026-10-13: `carState.aEgo` < −6 m/s² flags a crash candidate for review; it is a placeholder, not a validated criterion | G4 |

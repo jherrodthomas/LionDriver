@@ -4,7 +4,7 @@
 |---|---|
 | What | Models of LionDriver envelope logic in MATLAB syntax, run with GNU Octave (open-source MATLAB) |
 | Status | Draft, AI-assisted (Claude), not reviewed |
-| Tool | GNU Octave 8.4.0 with gnuplot, classified in [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) as TL-23 (TCL1, no verification credit) |
+| Tool | GNU Octave 8.4.0 with gnuplot, classified in [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) as TL-25 (TCL1, no verification credit) |
 | Code read | opendbc at the pinned commit (`opendbc_repo/opendbc/safety/safety.h`, `modes/toyota.h`) |
 
 Tool choice for all modelling work: [modelling plan](../README.md) (MD-01).

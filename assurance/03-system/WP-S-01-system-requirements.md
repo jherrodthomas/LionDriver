@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-S-01 System requirements specification (functional, non-safety) |
 | Standard reference | ASPICE 4.0 SYS.2; ISO 21448:2022 §5 (specification of the intended functionality); ISO 15622, ISO 22179, ISO 11270 as informative performance references |
-| Version | 0.1 |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). History: 0.2 (status update 2026-10-12: SYS-120 metric excludes frames refused by design in the reference build; SYS-121 evidence lists the health fields added at `bf6ce8c`). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM / SOTIF (safety requirements are in [WP-S-02](WP-S-02-technical-safety-requirements.md)) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`). Originally `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 ## 1. Purpose and scope
 
@@ -60,7 +60,7 @@ Paths are under `openpilot/` unless prefixed.
 | ID | Requirement | Type | Target / criterion | Verif | Current implementation | Rationale for TBD |
 |---|---|---|---|---|---|---|
 | SYS-040 | Engagement shall be possible only through the stock cruise controls and only when no no-entry condition is present. | F | as stated | T-SIL, T-VEH | `selfdrive/selfdrived/state.py:79-90` | — |
-| SYS-041 | The system shall engage from standstill up to the ODD speed bound. | F | as stated | T-VEH | `minEnableSpeed = -1` (`opendbc_repo/opendbc/car/toyota/interface.py:115`) | Confirm for Corolla LE (WP-C-01 OI-7) |
+| SYS-041 | The system shall engage from standstill up to the ODD speed bound. | F | as stated | T-VEH | `minEnableSpeed = -1` (`opendbc_repo/opendbc/car/toyota/interface.py:115`) | Confirm across the trims in scope (WP-C-01 OI-7) |
 | SYS-042 | A brake press or cancel shall disengage; the accelerator shall override longitudinal control without disengaging (reference setting). | F | as stated | T-VEH | `selfdrived.py:253-256`; `DisengageOnAccelerator` default 0 (`common/params_keys.h:35`) | HMI decision in WP-C-08 |
 | SYS-043 | After start-up, the system shall be ready to engage within **TBD** s of ignition on. | P | proposed ≤ 30 s | T-VEH | init waits for checks or 6 s (`selfdrived.py:474-475`) | Device boot time varies (`common/hardware/comma/hardware.py` `booted`) |
 
@@ -69,7 +69,7 @@ Paths are under `openpilot/` unless prefixed.
 | ID | Requirement | Type | Target / criterion | Verif | Current implementation | Rationale for TBD |
 |---|---|---|---|---|---|---|
 | SYS-060 | Above 10 km/h, DM shall warn a visually distracted driver with escalating alerts at 5, 8 and 13 s (vision policy) or 5, 15 and 25 s (wheel-touch policy). | H | as stated | T-SIL, T-VEH | `selfdrive/monitoring/policy.py:29-36` | — |
-| SYS-061 | DM classification performance shall meet AIR-07/AIR-08 of WP-C-11. | P | recall ≥ 95 % gaze-off > 2 s (TBC); false distraction ≤ 1/h (TBC) | LOG | Model + policy thresholds `policy.py:49-72` | Needs labelled LionDriver data |
+| SYS-061 | DM classification performance shall meet AIR-07/AIR-08 of WP-C-11. | P | recall ≥ 95 % gaze-off > 2 s; false distraction ≤ 1/h (confirmed, WP-C-08 OI-2) | LOG | Model + policy thresholds `policy.py:49-72` | Needs labelled LionDriver data |
 | SYS-062 | DM shall work in the ODD lighting conditions (day, dusk, night with IR) and with sunglasses, or fall back to the wheel-touch policy. | P | fallback triggered when uncertain; coverage **TBD** | T-VEH, LOG | `policy.py:77-78, 307-308` | Data |
 | SYS-063 | On no response to the highest alert, the system shall slow the vehicle, disengage and lock out re-engagement (1/5/15/30 min). | F | as stated | T-SIL, T-VEH | `policy.py:39-44, 398`; `controlsd.py:203-204` | — |
 
@@ -96,8 +96,8 @@ The safety requirements of F-08 are TSR-1xx…7xx in [WP-S-02](WP-S-02-technical
 
 | ID | Requirement | Type | Target / criterion | Verif | Current implementation |
 |---|---|---|---|---|---|
-| SYS-120 | In normal operation inside the ODD, the envelope shall not reject any command produced by the SoC controller (no false interventions). | P | `safetyTxBlocked` increments per hour of engaged driving = 0 (excluding intentional tests) | LOG | Reported in `pandaStates` (`panda/board/main_comms.h:27`) |
-| SYS-121 | The envelope shall report its mode, parameter, authority state, fault flags and counters to the SoC at ≥ 10 Hz. | I | as stated | T-HIL | health packet `panda/board/main_comms.h:9-55`; pandad 10 Hz (`selfdrive/pandad/pandad.cc:385-394`) |
+| SYS-120 | In normal operation inside the ODD, the envelope shall not reject any command produced by the SoC controller (no false interventions). | P | `safetyTxBlocked` increments per hour of engaged driving = 0 (excluding intentional tests, and excluding frames refused by design: STEERING_LKA frames refused by the EPS-fault gate at fault onset (TSR-110) and frames rejected by the TX rate supervision (TSR-518), reference build, added 2026-10-12) | LOG | Reported in `pandaStates` (`panda/board/main_comms.h:27`) |
+| SYS-121 | The envelope shall report its mode, parameter, authority state, fault flags and counters to the SoC at ≥ 10 Hz. | I | as stated | T-HIL | health packet `panda/board/main_comms.h:9-55`; pandad 10 Hz (`selfdrive/pandad/pandad.cc:385-394`). 2026-10-12 (`bf6ce8c`): health flags and counter added and published in `pandaState`: `watchdogReset` (TSR-501), `requestsRejected` (counter, TSR-512/513), `epsFault` (TSR-110), `txRateExceeded` (TSR-518); not verified on hardware |
 
 ## 9. F-09 Logging, upload, remote access, update
 

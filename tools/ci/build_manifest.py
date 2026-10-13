@@ -18,7 +18,7 @@ import os
 import shutil
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
@@ -54,7 +54,7 @@ def submodules() -> dict[str, str]:
 def manifest() -> dict:
   env = os.environ
   return {
-    "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    "generated_utc": datetime.now(UTC).isoformat(timespec="seconds"),
     "superproject": env.get("GITHUB_SHA") or run(["git", "rev-parse", "HEAD"]),
     "ref": env.get("GITHUB_REF", ""),
     "ci_run": {k: env.get(k, "") for k in ("GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT", "GITHUB_WORKFLOW", "GITHUB_JOB")},

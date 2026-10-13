@@ -142,6 +142,14 @@ struct OnroadEvent @0xc4fa6047f024e718 {
 
     # LionDriver: the panda's last reset was caused by its hardware watchdog (TSR-501)
     pandaWatchdogReset @105;
+    # LionDriver: pandad kept the panda in NOOUTPUT because its firmware is not a reference build (TSR-514, SWSR-514h)
+    pandaNotReferenceBuild @106;
+    # LionDriver: the panda revoked authority because the SoC exceeded a TX rate budget (TSR-518, TSR-615)
+    pandaTxRateExceeded @107;
+    # LionDriver: the panda reports that it lost the SoC heartbeat (TSR-615)
+    pandaHeartbeatLost @108;
+    # LionDriver: the panda blocked a frame the SoC sent while engaged (TSR-615)
+    pandaTxBlocked @109;
   }
 }
 
@@ -586,6 +594,8 @@ struct PandaState @0xa7649e2575e4591e {
   # LionDriver: the panda revoked authority because the SoC exceeded a TX rate budget (TSR-518); latched until the
   # next safety mode change
   txRateExceeded @45 :Bool;
+  # LionDriver: the panda firmware is a reference build with the safety-mode lock (TSR-514, TSR-619)
+  referenceBuild @46 :Bool;
 
   enum FaultStatus {
     none @0;
@@ -621,7 +631,8 @@ struct PandaState @0xa7649e2575e4591e {
     interruptRateUart7 @24;
     sirenMalfunction @25;
     heartbeatLoopWatchdog @26;
-    # Update max fault type in boardd when adding faults
+    interruptRateSoundDma @27;
+    # Update PANDA_FAULT_TYPE_MAX in selfdrive/pandad/pandad.h when adding faults
   }
 
   enum PandaType @0x8a58adf93e5b3751 {

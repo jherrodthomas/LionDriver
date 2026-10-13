@@ -32,21 +32,33 @@ For an end-to-end ML driving model trained on data LionDriver cannot see, area 3
 
 ### 2.1 Anomaly signatures for U-3
 
-| Signature | Definition (initial) | Relevance |
-|---|---|---|
-| Steering override while engaged | `carState.steeringPressed` with lateral active, not during a lane change | SH-01, SH-02 |
-| Brake disengagement with high deceleration | Driver brake followed by `aEgo` < −4 m/s² within 2 s | SH-06, SH-03 |
-| Gas override during deceleration | Driver gas while planner decelerates > 1.5 m/s² | SH-04 |
-| Envelope limit hit | Panda TX blocked or torque/accel at the limit (safety replay, `opendbc_repo/opendbc/safety/safety_replay/`) | SH-01, SH-04 |
-| Lane-line proximity | Model lane-line offset < 0.3 m to either side while engaged | SH-01 |
-| Phantom deceleration | `aEgo` < −2 m/s² while engaged with no lead within TTC 4 s | SH-04 |
-| FCW event | `fcw` alert | SH-06 |
-| Model disagreement | Large divergence between action curvature and plan curvature; lead flicker rate above AIR-11 | AE-T |
-| Model uncertainty spike | Plan / lead std above the 99.9th percentile of the evaluation set | AE-O |
-| DM anomaly | Long periods of model uncertainty fallback; alert level 2–3 events; lockouts | SH-12 |
-| System events | `steerSaturated`, `commIssue`, `modeldLagging`, soft disables, `excessiveActuation` latch | SH-02, SH-06 (TC-23) |
+| ID | Signature | Definition (initial) | Relevance | Field event ([WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) §2.1) |
+|---|---|---|---|---|
+| AS-01 | Steering override while engaged | `carState.steeringPressed` with lateral active, not during a lane change (no blinker on) | SH-01, SH-02 | MON-01 |
+| AS-02 | Brake disengagement with high deceleration | Driver brake followed by `aEgo` < −4 m/s² within 2 s | SH-06, SH-03 | MON-01 |
+| AS-03 | Gas override during deceleration | Driver gas while planner decelerates > 1.5 m/s² | SH-04 | MON-17 |
+| AS-04 | Envelope limit hit | Panda TX blocked or torque/accel at the limit (safety replay, `opendbc_repo/opendbc/safety/safety_replay/`) | SH-01, SH-04 | MON-06 |
+| AS-05 | Lane-line proximity | Gap between the vehicle side and a model lane line < 0.3 m to either side while engaged; vehicle width 1.781 m (reference Corolla); only lines with probability ≥ 0.5 count | SH-01 | MON-17 |
+| AS-06 | Phantom deceleration | `aEgo` < −2 m/s² while engaged with no closing radar lead (`radarState.leadOne`) within TTC 4 s | SH-04 | MON-17 |
+| AS-07 | FCW event | `fcw` alert | SH-06 | MON-08 |
+| AS-08 | Model disagreement | Large divergence between action curvature and plan curvature; lead flicker rate above AIR-11 | AE-T | MON-13 |
+| AS-09 | Model uncertainty spike | Plan / lead std above the 99.9th percentile of the evaluation set | AE-O | MON-13 |
+| AS-10 | DM anomaly | DM alert level 2–3 events; lockouts. Periods of model uncertainty fallback are not scored | SH-12 | MON-07 |
+| AS-11 | System events | `steerSaturated`, `commIssue`, `modeldLagging`, soft disables, `excessiveActuation` latch | SH-02, SH-06 (TC-23) | MON-09, MON-10, MON-02, MON-05 |
 
 Thresholds are tuned on a held-out set (DSR-11 of [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md)) and reviewed after each block.
+
+The readings in brackets for AS-01, AS-05, AS-06 and AS-10 were confirmed by the project maintainer on 2026-10-13. They are the choices the extraction script (`tools/field_monitoring/extract_events.py`) makes where the original wording left one open, and they are part of signature-set version `WP-V-04-2.1/2026-10-13`.
+
+#### 2.1.1 One signature set before and after release
+
+Pre-release exploration and field monitoring use the same signature set, so that discovery rates and surrogate rates before and after release can be compared:
+
+1. **One definition.** This table is the only definition of AS-01…AS-11, including thresholds. WP-O-04 extracts the same signatures from field logs and does not redefine them. Its MON events are the field triage classes that contain them.
+2. **One extractor.** Development and field logs are scored by the same extraction script ([WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) OI-4) at the same signature-set version. The version is recorded with every block summary (§6.1) and every field KPI report.
+3. **Frozen thresholds.** Thresholds are tuned once on the held-out set before block B1 and are then fixed for a signature-set version. A change of definition or threshold creates a new version. Earlier blocks and field periods are re-scored with it before any comparison.
+4. **Same denominator.** Rates are per engaged km inside the ODD, from the exposure data of WP-O-04 §2.2. Engaged km outside the ODD (MON-15) is counted separately and not mixed in.
+5. **Same discovery rate.** "Discovery rate" means new class-U scenario classes (§3) per 1 000 engaged km in the ODD, both here (§5.2) and in WP-O-04 §6.
 
 ## 3. Event triage and feedback
 
@@ -146,4 +158,3 @@ The SOTIF release argument (WP-K-02) may claim acceptable residual risk from unk
 | OI-2 | Agree the R3 discovery-trend criterion and target with the assessor |
 | OI-3 | Extend the MetaDrive bridge for U-4 (traffic, scenario scripting, randomised maps) |
 | OI-4 | Define the stratified route pool for U-1 once the ODD (WP-C-02) is fixed |
-| OI-5 | Agree with WP-O-04 the signature set and thresholds used in both pre-release exploration and field monitoring, so that statistics are comparable |

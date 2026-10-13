@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="750" viewBox="0 0 1280 750" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 4-1. The safety envelope pattern (WP-M-01 §4.1)</title>
+  <desc id="d">The comma device holds the application SoC and the panda safety MCU. On the SoC (Linux/AGNOS, QM for functional safety, SOTIF-managed) camerad feeds modeld (ML), plannerd, controlsd, card and pandad; a second chain runs dmonitoringmodeld (ML), dmonitoringd and selfdrived. pandad talks to the panda over SPI. The panda runs the opendbc safety Toyota mode with RX checks, TX filter, torque and acceleration limits, engagement gating and a heartbeat timeout, is ASIL-allocated (target), and is the only path to the vehicle CAN (EPS, ECM, brake). The vehicle (EPS torque limiting and fault detection as AoU, brakes, PCS as AoU) and the supervising driver, who overrides by brake, steering or cancel, are outside the device.</desc>
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+      .ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .chip{fill:#F8FAFC;stroke:#CBD5E1;stroke-width:1}
+      .ml{fill:#EEF2FF;stroke:#A5B4FC;stroke-width:1}
+      .tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+    </style>
+  </defs>
+
+  <rect width="1280" height="750" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 4-1 · The safety envelope pattern</text>
+  <text x="40" y="66" class="m" font-size="12.5">The QM driving stack on the application SoC commands; the panda safety MCU is the only path to the actuators and enforces the limits</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">WP-M-01 §4.1</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">consequences §4.2</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+
+  <!-- ===== comma device ===== -->
+  <rect x="40" y="104" width="960" height="420" rx="12" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+  <text x="58" y="128" class="t b" font-size="13">comma device</text>
+  <text x="158" y="128" class="m s">application SoC and safety MCU share the PCB, power and enclosure (§4.2 item 3)</text>
+
+  <!-- application SoC -->
+  <rect x="60" y="146" width="600" height="358" rx="10" fill="#F8FAFC" stroke="#334155" stroke-width="1.4"/>
+  <text x="76" y="170" class="t b" font-size="13">Application SoC</text>
+  <text x="644" y="170" class="m s" text-anchor="end">Linux / AGNOS · openpilot</text>
+
+  <!-- driving chain -->
+  <rect x="80" y="190" width="96" height="46" rx="6" class="chip"/>
+  <text x="128" y="210" class="t sb" font-size="11.5" text-anchor="middle">camerad</text>
+  <text x="128" y="225" class="m xs" text-anchor="middle">camera frames</text>
+  <rect x="198" y="190" width="96" height="46" rx="6" class="ml"/>
+  <text x="246" y="210" class="t sb" font-size="11.5" text-anchor="middle">modeld</text>
+  <text x="246" y="225" class="m xs" text-anchor="middle">driving model · ML</text>
+  <rect x="316" y="190" width="96" height="46" rx="6" class="chip"/>
+  <text x="364" y="210" class="t sb" font-size="11.5" text-anchor="middle">plannerd</text>
+  <text x="364" y="225" class="m xs" text-anchor="middle">planning</text>
+  <rect x="434" y="190" width="96" height="46" rx="6" class="chip"/>
+  <text x="482" y="210" class="t sb" font-size="11.5" text-anchor="middle">controlsd</text>
+  <text x="482" y="225" class="m xs" text-anchor="middle">control</text>
+  <rect x="434" y="262" width="96" height="46" rx="6" class="chip"/>
+  <text x="482" y="282" class="t sb" font-size="11.5" text-anchor="middle">card</text>
+  <text x="482" y="297" class="m xs" text-anchor="middle">car interface</text>
+  <rect x="556" y="190" width="88" height="200" rx="6" class="chip"/>
+  <text x="600" y="286" class="t sb" font-size="11.5" text-anchor="middle">pandad</text>
+  <text x="600" y="301" class="m xs" text-anchor="middle">panda link</text>
+
+  <path d="M176 213 H196" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M294 213 H314" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M412 213 H432" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M482 236 V260" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M530 285 H554" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+
+  <!-- driver monitoring chain -->
+  <rect x="80" y="340" width="140" height="46" rx="6" class="ml"/>
+  <text x="150" y="360" class="t sb" font-size="11.5" text-anchor="middle">dmonitoringmodeld</text>
+  <text x="150" y="375" class="m xs" text-anchor="middle">DM model · ML</text>
+  <rect x="244" y="340" width="110" height="46" rx="6" class="chip"/>
+  <text x="299" y="360" class="t sb" font-size="11.5" text-anchor="middle">dmonitoringd</text>
+  <text x="299" y="375" class="m xs" text-anchor="middle">DM policy</text>
+  <rect x="378" y="340" width="110" height="46" rx="6" class="chip"/>
+  <text x="433" y="360" class="t sb" font-size="11.5" text-anchor="middle">selfdrived</text>
+  <text x="433" y="375" class="m xs" text-anchor="middle">engagement state</text>
+  <path d="M220 363 H242" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M354 363 H376" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+
+  <!-- SoC classification -->
+  <line x1="76" y1="414" x2="644" y2="414" stroke="#E2E8F0"/>
+  <rect x="76" y="428" width="196" height="22" rx="11" fill="#475569"/>
+  <text x="174" y="443" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".05em">QM (FuSa) · SOTIF-MANAGED</text>
+  <text x="286" y="443" class="m xs">performance limits under ISO 21448 and ISO/PAS 8800</text>
+  <text x="76" y="476" class="m xs">Freedom from interference with the safety element must be shown: SPI corruption, babbling SoC,</text>
+  <text x="76" y="490" class="m xs">wrong mode or parameter, firmware replaced, shared power / clock / thermal (WP-A-02, WP-A-03)</text>
+
+  <!-- panda safety MCU -->
+  <rect x="740" y="146" width="240" height="358" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>
+  <text x="756" y="170" class="t b" font-size="12.5">Safety MCU · STM32H7 “panda”</text>
+  <text x="756" y="187" class="m s">opendbc safety · Toyota mode</text>
+  <rect x="756" y="198" width="140" height="22" rx="11" fill="#C2410C"/>
+  <text x="826" y="213" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".05em">SAFETY ENVELOPE</text>
+  <text x="756" y="244" class="t sb s">• RX checks</text>
+  <text x="766" y="257" class="m xs">checksum, counter, timeout</text>
+  <text x="756" y="279" class="t sb s">• TX filter</text>
+  <text x="766" y="292" class="m xs">message whitelist</text>
+  <text x="756" y="314" class="t sb s">• Torque / accel limits</text>
+  <text x="766" y="327" class="m xs">magnitude, rate, measured-torque tracking</text>
+  <text x="756" y="349" class="t sb s">• Engagement gating</text>
+  <text x="766" y="362" class="m xs">no actuation unless engaged; release on</text>
+  <text x="766" y="375" class="m xs">driver brake, gas or cancel</text>
+  <text x="756" y="397" class="t sb s">• Heartbeat timeout</text>
+  <text x="766" y="410" class="m xs">removes actuation if the SoC goes silent</text>
+  <line x1="756" y1="428" x2="964" y2="428" stroke="#FED7AA"/>
+  <text x="756" y="448" fill="#C2410C" font-size="11.5" font-weight="700">ASIL-allocated (target)</text>
+  <text x="756" y="464" class="m xs">ASIL from the HARA (WP-C-03);</text>
+  <text x="756" y="477" class="m xs">re-verified per tailoring T-03</text>
+
+  <!-- SPI -->
+  <path d="M644 262 H738" fill="none" stroke="#C2410C" stroke-width="2.4" marker-end="url(#aR)"/>
+  <path d="M740 322 H646" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <g class="tag"><rect x="674" y="283" width="40" height="18" rx="9" fill="#C2410C"/><text x="694" y="296" fill="#fff" text-anchor="middle">SPI</text></g>
+  <text x="692" y="250" fill="#C2410C" font-size="9.5" font-weight="600" text-anchor="middle">commands</text>
+  <text x="692" y="338" fill="#0F766E" font-size="9.5" font-weight="600" text-anchor="middle">CAN RX</text>
+
+  <!-- ===== vehicle ===== -->
+  <rect x="1080" y="146" width="160" height="358" rx="10" class="ext"/>
+  <text x="1096" y="170" class="t b" font-size="13">Vehicle</text>
+  <text x="1096" y="185" class="m xs">existing elements,</text>
+  <text x="1096" y="197" class="m xs">outside the item</text>
+  <rect x="1092" y="210" width="136" height="56" rx="6" class="box"/>
+  <text x="1104" y="228" class="t sb" font-size="11.5">EPS</text>
+  <text x="1104" y="243" class="m xs">torque limiting and</text>
+  <text x="1104" y="256" class="m xs">fault detection · AoU</text>
+  <rect x="1092" y="274" width="136" height="30" rx="6" class="box"/>
+  <text x="1104" y="293" class="t sb" font-size="11.5">ECM</text>
+  <rect x="1092" y="312" width="136" height="30" rx="6" class="box"/>
+  <text x="1104" y="331" class="t sb" font-size="11.5">Brake actuator</text>
+  <rect x="1092" y="350" width="136" height="44" rx="6" class="box"/>
+  <text x="1104" y="368" class="t sb" font-size="11.5">PCS · AoU</text>
+  <text x="1104" y="383" class="m xs">stays available</text>
+  <rect x="1092" y="402" width="136" height="30" rx="6" class="box"/>
+  <text x="1104" y="421" class="t sb" font-size="11.5">Stock radar, camera</text>
+  <text x="1096" y="458" class="m xs">AoUs recorded in WP-C-01;</text>
+  <text x="1096" y="471" class="m xs">verified by vehicle testing</text>
+  <text x="1096" y="484" class="m xs">(no Toyota evidence)</text>
+
+  <!-- vehicle CAN -->
+  <path d="M980 262 H1078" fill="none" stroke="#C2410C" stroke-width="2.8" marker-end="url(#aR)"/>
+  <path d="M1080 322 H982" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <g class="tag"><rect x="1005" y="283" width="72" height="18" rx="9" fill="#0F172A"/><text x="1041" y="296" fill="#fff" text-anchor="middle">vehicle CAN</text></g>
+  <text x="1036" y="247" fill="#C2410C" font-size="9" font-weight="600" text-anchor="middle">TX actuation</text>
+  <text x="1041" y="338" fill="#0F766E" font-size="9.5" font-weight="600" text-anchor="middle">RX state</text>
+
+  <!-- ===== known weakness note ===== -->
+  <rect x="40" y="566" width="520" height="86" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <rect x="40" y="566" width="5" height="86" rx="2" fill="#C2410C"/>
+  <text x="60" y="588" class="t b" font-size="12">Known weakness · §4.2 item 2</text>
+  <text x="60" y="606" class="m s">The safety mode and safety parameter are selected by the SoC</text>
+  <text x="60" y="621" class="m s">(panda_safety.cc), so a QM element configures the safety element.</text>
+  <text x="60" y="636" class="s" fill="#B45309" font-weight="600">2026-10-13: mode lock in the reference build (TSR-512/513/514); not verified.</text>
+
+  <!-- ===== driver ===== -->
+  <rect x="600" y="566" width="340" height="86" rx="10" class="ext"/>
+  <g transform="translate(634,584)" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round">
+    <circle cx="0" cy="0" r="8"/><path d="M0 8V32M-12 16H12M0 32L-9 48M0 32L9 48"/>
+  </g>
+  <text x="666" y="590" class="t b" font-size="13">Driver</text>
+  <text x="666" y="607" class="m s">supervises; overrides by brake, steering, cancel</text>
+  <text x="666" y="624" class="m xs">envelope limits chosen so that any command within</text>
+  <text x="666" y="637" class="m xs">them stays controllable (ISO 11270 / ISO 15622 basis)</text>
+
+  <!-- driver supervises device; driver overrides via vehicle -->
+  <path d="M770 566 V528" fill="none" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="3 3" marker-end="url(#aS)"/>
+  <text x="778" y="552" class="m xs">supervises</text>
+  <path d="M940 609 H1160 V508" fill="none" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="3 3" marker-end="url(#aS)"/>
+  <text x="1050" y="600" class="m xs" text-anchor="middle">overrides: brake, steering, cancel</text>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="690" x2="1240" y2="690" stroke="#E2E8F0"/>
+  <g transform="translate(40,716)" font-size="10.5">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#C2410C" stroke-width="2.6"/><text x="36" y="4" class="t">Actuation / safety-envelope path</text>
+    <line x1="228" y1="0" x2="256" y2="0" stroke="#0F766E" stroke-width="2"/><text x="264" y="4" class="t">Received vehicle CAN</text>
+    <line x1="400" y1="0" x2="428" y2="0" stroke="#475569" stroke-width="1.4"/><text x="436" y="4" class="t">Internal data flow</text>
+    <line x1="560" y1="0" x2="588" y2="0" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="3 3"/><text x="596" y="4" class="t">Driver action</text>
+    <rect x="700" y="-8" width="28" height="16" rx="4" fill="#EEF2FF" stroke="#A5B4FC"/><text x="736" y="4" class="t">ML component</text>
+    <rect x="850" y="-8" width="28" height="16" rx="4" fill="#FFF7ED" stroke="#C2410C"/><text x="886" y="4" class="t">Safety element</text>
+    <rect x="1000" y="-8" width="28" height="16" rx="4" fill="#F1F5F9" stroke="#94A3B8"/><text x="1036" y="4" class="t">Outside the item</text>
+  </g>
+</svg>

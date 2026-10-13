@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-K-06 Release for production / release record |
 | Standard reference | ISO 26262-2:2018 §6 (release for production, documentation); ISO 26262-4:2018 §9 (release for production); ISO 21448:2022 §12 (release); ISO/SAE 21434:2021 §6 (release for post-development); ASPICE 4.0 SUP.8 |
-| Version | 0.1 |
+| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Skeleton — template. **No LionDriver release has been made.** One copy of §2–§8 is filled per release |
 | ASIL / scope | All (FuSa, SOTIF, CS) |
 | Author | Assurance team (initial draft) |
@@ -30,7 +30,7 @@ Rules:
 | Release | `ld-vX.Y.Z` |
 | Release type | MAJOR / MINOR / PATCH ([WP-P-01 §7](../07-supporting/WP-P-01-configuration-management-plan.md)) |
 | Previous release | |
-| Scope (reference configuration) | 2020 Toyota Corolla LE, US, ICE, TSS2 (`TOYOTA_COROLLA_TSS2`); device revision `<…>`; harness `<…>` |
+| Scope (reference configuration) | Toyota Corolla, 12th generation (E210), TSS 2.0, US, ICE (`TOYOTA_COROLLA_TSS2`); device revision `<…>`; harness `<…>` |
 | ODD version | [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) v`<…>` |
 | Release date | |
 

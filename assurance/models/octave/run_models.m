@@ -1,4 +1,4 @@
-% LionDriver envelope models in GNU Octave (MATLAB syntax). RR-2026-008 follow-up; WP-P-07 TL-23.
+% LionDriver envelope models in GNU Octave (MATLAB syntax). RR-2026-009 follow-up; WP-P-07 TL-25.
 % Usage, from the repository root:  octave-cli --no-gui assurance/models/octave/run_models.m [out_dir]
 % Models of the logic, written from the code and DN-01. They are NOT the C code and NOT verification
 % evidence. Constants are read from opendbc at the pinned commit (ld_constants.m), so a code change that

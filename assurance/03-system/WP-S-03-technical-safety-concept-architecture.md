@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-S-03 Technical safety concept and system architectural design |
 | Standard reference | ISO 26262-4:2018 §6 (technical safety concept, system architectural design, safety mechanisms, FFI/independence by reference to ISO 26262-9 §6–§7); ISO 21448:2022 §8 (architecture-level functional modifications, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
+| Version | 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3.2, §4.1 and §4.4 diagrams redrawn as Figures 3-2, 4-1 and 4-4; text versions kept; 2026-10-13). History: 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently); 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01, until re-rated); target ASIL B for the envelope (FSC option (c)) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); independent review (I2) of §5 and §7 |
 | Approver | Safety manager |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`). Architecture described as inherited at `8b8c6ae` (opendbc `229dc70`, panda `92eb565`); dated notes give the reference-build status |
 
 ## 1. Purpose
 
@@ -33,7 +33,7 @@ It describes the architecture **as inherited at the baseline** and marks where t
 | AP-2 | **Fail-silent.** On any detected fault, the item stops actuating and hands back to the driver; there is no fail-operational mode | [WP-C-04 §6](../02-concept/WP-C-04-functional-safety-concept.md) |
 | AP-3 | **Reduced authority.** Envelope limits are chosen so that worst-case actuation inside them is controllable (C1 target), which makes ASIL B sufficient for the envelope | FSC §4.2 option (c) |
 | AP-4 | **De-energise to safe.** Loss of power or drive releases the harness relay and restores the stock camera path | TSR-506, TSR-702, TSR-706 |
-| AP-5 | **QM SoC does not configure or control the safety element.** Configuration (mode, parameter, limits) is fixed in the envelope; the SoC can only request de-escalation | TSR-511…514. **Not true at the baseline** (GAP-09, GAP-38) |
+| AP-5 | **QM SoC does not configure or control the safety element.** Configuration (mode, parameter, limits) is fixed in the envelope; the SoC can only request de-escalation | TSR-511…514. **Not true at the baseline** (GAP-09, GAP-38). 2026-10-12: mode/parameter lock and car-mode request gating in the reference build (TSR-512, 513, `board/reference_lock.h`); boot control (GAP-38) open |
 | AP-6 | **Driver as an independent channel.** The driver's brake, cancel and steering act on vehicle elements outside the item, and the envelope follows the PCM cruise state | TSR-301, 302, 309, 310 |
 | AP-7 | **SOTIF measures in the QM stack.** Model insufficiencies are bounded by AP-1/AP-3 and managed under ISO 21448 and ISO/PAS 8800 | [WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md), [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) |
 
@@ -53,6 +53,12 @@ It describes the architecture **as inherited at the baseline** and marks where t
 | EXT-EPS, EXT-PCM, EXT-CLU | Toyota EPS, PCM/brake, cluster | AoU only | [WP-C-04 §11](../02-concept/WP-C-04-functional-safety-concept.md) |
 
 ### 3.2 Block diagram
+
+![Figure 3-2: technical safety architecture with the QM partition (E-01 processes, E-02 models, E-04b) and the B‡ safety envelope (E-03a, E-03b, E-04a safety MCU), the E-05 harness relay, interfaces IF-01 to IF-10 and the SM and TSR tags of each block](figures/fig-3-2-tsc-block-diagram.svg)
+
+*Figure 3-2.* The device E-04 is split into the QM partition and the B‡ safety envelope; inside the MCU, E-03a blocks are shaded, E-03b blocks outlined and E-04a is the hardware strip. Each block carries the safety mechanisms of §6 and the TSRs of §3.3 and §5 that are assigned to it; host mechanisms of E-01/E-02 are listed together because §6 assigns them to E-01 as a whole. It shows the architecture as inherited at `8b8c6ae`. Source: [`figures/fig-3-2-tsc-block-diagram.svg`](figures/fig-3-2-tsc-block-diagram.svg); change it together with §3.1, §3.3, §5 and §6.
+
+<details><summary>Text version of Figure 3-2</summary>
 
 ```
                                    ┌──────────────── comma device (E-04) ───────────────────────────────────────┐
@@ -76,6 +82,8 @@ It describes the architecture **as inherited at the baseline** and marks where t
                                                                           ╚═══╝  (relay released: direct link)
 ```
 
+</details>
+
 ### 3.3 Interfaces
 
 | ID | Interface | Between | Content | Safety relevance | TSRs | Detail |
@@ -95,6 +103,12 @@ It describes the architecture **as inherited at the baseline** and marks where t
 
 ### 4.1 Start-up and engagement
 
+![Figure 4-1: start-up and engagement sequence across driver, PCM, E-05 relay, E-03 safety MCU, pandad, card, controlsd and selfdrived, with MCU safety modes SILENT, NOOUTPUT, ELM327, TOYOTA param 73 and controls_allowed, and the TSR-515, TSR-512 and TSR-306 conditions](figures/fig-4-1-startup-engagement.svg)
+
+*Figure 4-1.* Lifelines run left to right from the driver to selfdrived; pills on the MCU and selfdrived lifelines are states, [brackets] are transition conditions, and the step column gives the code references of the text version. TSR-515 is drawn as still to be inserted and TSR-512 as implemented in the reference build (2026-10-12); the ignition-off changes of OI-4 are not part of this figure. Source: [`figures/fig-4-1-startup-engagement.svg`](figures/fig-4-1-startup-engagement.svg); change it together with §4.1, §4.3 and OI-4.
+
+<details><summary>Text version of Figure 4-1</summary>
+
 ```
 Ignition on
   │ MCU: main() → clock/peripherals → set_safety_mode(SILENT) → CAN transceivers on → tick 8 Hz → SPI   (main.c:251-328)
@@ -103,7 +117,7 @@ Ignition on
   │ pandad: if SILENT → NOOUTPUT (pandad.cc:194-196); onroad → ELM327 for FW query (panda_safety.cc:23-34)
   │ card: fingerprint → CarParams → pandad sets TOYOTA, param 73 via 0xdc (panda_safety.cc:56-69)
   │ MCU: set_safety_hooks(): authority false, limiter state reset; relay driven (main.c:70-76, safety.h:391-462)
-  │ [TSR-512: MCU accepts only TOYOTA/73; afterwards only de-escalation]
+  │ [TSR-512: MCU accepts only TOYOTA/73; afterwards only de-escalation — implemented in the reference build 2026-10-12]
   │ selfdrived: waits for all checks or 6 s (selfdrived.py:474-475), checks panda mode/param after 10 s (:338)
   │ Driver presses SET → PCM CRUISE_ACTIVE 0→1 on 0x1D2
   │ MCU: pcm_cruise_check rising edge → controls_allowed = true (safety.h:518-527)
@@ -112,6 +126,8 @@ Ignition on
   │ pandad heartbeat 0xf3 engaged=1 (10 Hz) ; controlsd latActive/longActive → card → sendcan
   ▼ MCU: each 0x2E4/0x343 → safety_tx_hook limits → FDCAN TX (can_common.h:161-176)
 ```
+
+</details>
 
 ### 4.2 Driver override and disengagement
 
@@ -126,23 +142,29 @@ After revocation the envelope rejects further actuation frames. Under TSR-109 it
 
 ### 4.3 Fault reaction sequences
 
-| Fault | Detected by | Detection (baseline → required) | Reaction (baseline → required) |
-|---|---|---|---|
-| Lateral command out of limits | E-03 `steer_torque_cmd_checks` | per frame → per frame | frame dropped → latch SS-L + zero-torque frame (TSR-108, 109) |
-| RX message lost | E-03 `safety_tick` | 1–2 s → ≤ 0.2 s (TSR-401) | revoke → revoke + reason code (TSR-406) |
-| RX checksum wrong | E-03 `rx_msg_safety_check` | per frame | revoke |
-| RX stuck/inserted/implausible | none → TSR-403…405 | — → ≤ 0.2 s | — → revoke |
-| SoC heartbeat lost | E-03 tick | 4–5 s → ≤ 0.3 s (TSR-407) | SILENT + siren → revoke at 0.3 s, SILENT after ≤ 2 s, siren (TSR-516) |
-| SoC control loop frozen, pandad alive | none → TSR-408/409 | — → ≤ 50 ms | EPS drop-out only → SS-L |
-| Host/panda engaged mismatch | E-03 tick; selfdrived | 2–3 s / 2 s → ≤ 0.3 s (TSR-307) | revoke / immediate disable |
-| MCU hang | none (GAP-07) → IWDG | — → ≤ 0.1 s (TSR-501) | relay stays in last state (GAP-43) → reset → SS-S |
-| MCU fault (ECC, clock, interrupt rate…) | report-only → TSR-502/503 | various → ≤ 0.2 s | none (GAP-08) → SS-S |
-| Relay stuck released | E-03 `stock_ecu_check` | 1–2 s window | block TX/fwd; host immediate disable |
-| Relay stuck intercepting | none → TSR-506 readback | — → ≤ 0.3 s | — → SS-S + warning (GAP-43) |
-| SoC input stale (model, plan) | selfdrived `commIssue` | 10 periods (0.5 s for modelV2) | soft disable 3 s → immediate disable (TSR-601) |
-| EPS LKA fault | host carstate | 1.5 s hysteresis | lat inactive + warning → also envelope revoke (TSR-110) |
+| Fault | Detected by | Detection (baseline → required) | Reaction (baseline → required) | Reference build 2026-10-12 (`bf6ce8c`; not verified on hardware) |
+|---|---|---|---|---|
+| Lateral command out of limits | E-03 `steer_torque_cmd_checks` | per frame → per frame | frame dropped → latch SS-L + zero-torque frame (TSR-108, 109) | unchanged |
+| RX message lost | E-03 `safety_tick` | 1–2 s → ≤ 0.2 s (TSR-401) | revoke → revoke + reason code (TSR-406) | 5 periods at 100 Hz: ≤ 0.16 s (`0x262` ≈ 0.21 s); revoke (TSR-401) |
+| RX checksum wrong | E-03 `rx_msg_safety_check` | per frame | revoke | also on `0x262`, `0x1D3` |
+| RX stuck/inserted/implausible | none → TSR-403…405 | — → ≤ 0.2 s | — → revoke | TSR-405(c) only: cruise active with main off refused at once, revoked after 150 ms |
+| SoC heartbeat lost | E-03 tick | 4–5 s → ≤ 0.3 s (TSR-407) | SILENT + siren → revoke at 0.3 s, SILENT after ≤ 2 s, siren (TSR-516) | revoke at 0.3 s (≤ 0.31 s, TSR-407); SILENT still after 5 s. Siren: 2026-10-13, at the revocation when authority was granted, ≈ 0.56 s after the last heartbeat, all builds (TSR-516, panda `c33343b`; WP-S-04 T-07a); otherwise after 5 s |
+| SoC control loop frozen, pandad alive | none → TSR-408/409 | — → ≤ 50 ms | EPS drop-out only → SS-L | unchanged (TSR-408/409 open) |
+| Host/panda engaged mismatch | E-03 tick; selfdrived | 2–3 s / 2 s → ≤ 0.3 s (TSR-307) | revoke / immediate disable | unchanged |
+| MCU hang | none (GAP-07) → IWDG | — → ≤ 0.1 s (TSR-501) | relay stays in last state (GAP-43) → reset → SS-S | IWDG reset ≈ 90 ms nominal after the first relay drive (TSR-501); LSI tolerance open |
+| MCU fault (ECC, clock, interrupt rate…) | report-only → TSR-502/503 | various → ≤ 0.2 s | none (GAP-08) → SS-S | unchanged (report-only); watchdog reset reported as `watchdogReset` |
+| Relay stuck released | E-03 `stock_ecu_check` | 1–2 s window | block TX/fwd; host immediate disable | unchanged |
+| Relay stuck intercepting | none → TSR-506 readback | — → ≤ 0.3 s | — → SS-S + warning (GAP-43) | unchanged |
+| SoC input stale (model, plan) | selfdrived `commIssue` | 10 periods (0.5 s for modelV2) | soft disable 3 s → immediate disable (TSR-601) | unchanged |
+| EPS LKA fault | host carstate | 1.5 s hysteresis | lat inactive + warning → also envelope revoke (TSR-110) | LKA torque refused on receipt of the fault frame (TSR-110), `epsFault` reported; siren after 1 s persistence, ≤ 1.26 s worst case after onset (TSR-516(b); WP-S-04 OI-8) |
 
 ### 4.4 Heartbeat and timeout chain
+
+![Figure 4-4: heartbeat and timeout chain: command path controlsd, card, pandad, MCU safety_tx_hook with freshness limits 0.1 s, 1 s and none, heartbeat path selfdrived, pandad 0xf3 at 10 Hz, MCU heartbeat counter at 1 Hz, and timing of heartbeat loss (revoke 0.3 s in the reference build, siren ≤ 0.56 s if engaged since panda c33343b, SILENT after 4–5 s) and engaged mismatch (revoke after 2–3 s) against the required limits](figures/fig-4-4-heartbeat-timeout-chain.svg)
+
+*Figure 4-4.* Part A shows both paths with the freshness limit at each stage and the required changes in red. Part B puts heartbeat loss and engaged mismatch on one time axis; the 1 Hz tick phase is arbitrary, so the baseline times are ranges (4–5 s, 2–3 s, as in WP-S-04 T-05/T-06), and the dashed red lines are the required limits of TSR-407, TSR-510 and TSR-307. Source: [`figures/fig-4-4-heartbeat-timeout-chain.svg`](figures/fig-4-4-heartbeat-timeout-chain.svg); change it together with §4.3, §4.4 and [WP-S-04](WP-S-04-timing-ftti-budget.md) §4–§5.
+
+<details><summary>Text version of Figure 4-4</summary>
 
 ```
 controlsd 100 Hz ─carControl─▶ card 100 Hz ─sendcan─▶ pandad send thread ─SPI─▶ MCU safety_tx_hook ─▶ EPS/PCM
@@ -154,7 +176,11 @@ selfdrived 100 Hz ─selfdriveState─▶ pandad main 10 Hz ─0xf3 engaged─�
                                                                        5 ticks w/o heartbeat → SILENT (main.c:193)
 ```
 
+</details>
+
 Required changes (WP-S-04 §5): heartbeat evaluated at ≥ 10 Hz with a 0.3 s timeout and control-loop evidence (TSR-407, 409); command-frame freshness in the MCU (TSR-408); `sendcan` age ≤ 20 ms (TSR-614).
+
+Status 2026-10-12 (`bf6ce8c`, not verified on hardware): the MCU's 100 Hz safety task revokes authority 0.3 s after the last `0xf3` in a car mode (`drivers/heartbeat_monitor.h`, panda `c2e5d93`); the 1 Hz mismatch and 5 s SILENT paths are unchanged. *2026-10-13:* the same task sounds the siren at that revocation when authority was granted, ≈ 0.56 s after the last heartbeat, in all builds (`drivers/heartbeat_siren.h`, panda `c33343b`; WP-S-04 T-07a; not verified on hardware). TSR-408, TSR-409 and TSR-614 are open.
 
 ## 5. Allocation of TSRs to elements
 
@@ -181,24 +207,24 @@ Diagnostic coverage (DC) values are **targets** for the FMEDA ([WP-H-03](../04-h
 | SM-03 | Measured-torque tracking | command diverging from EPS output | E-03a | 104 | Impl | medium (depends on `0x260` integrity) | as SM-01 |
 | SM-04 | Authority gating (PCM edge, brake, gas, steer request) | actuation when not engaged; no release on driver action | E-03a | 105–107, 203, 301–306 | Impl/Partial | high | T-SIL; T-VEH at installation (INS-28) |
 | SM-05 | Driver-torque override monitor | actuation opposing driver | E-03a | 304 | New | medium | T-SIL; periodic T-VEH |
-| SM-06 | EPS status monitor | EPS LKA fault while engaged | E-03a | 110, 607 | New | medium | log check |
+| SM-06 | EPS status monitor | EPS LKA fault while engaged | E-03a | 110, 607 | New at baseline; **Partial** 2026-10-12 (reference build: LKA refused on LKA_STATE fault codes, `epsFault` reported; code set unconfirmed; not verified) | medium | log check |
 | SM-07 | Longitudinal bounds and jerk limits | excessive accel/decel or onset | E-03a | 201–207 | Partial | high | T-SIL |
 | SM-08 | Active safe-state frame | torque persisting after rejection | E-03a | 108, 109 | New | high | T-HIL each release |
-| SM-09 | RX timeout | lost/delayed RX | E-03a | 401 | Partial | medium (alone) | T-SIL, FI |
+| SM-09 | RX timeout | lost/delayed RX | E-03a | 401 | Partial at baseline; **Impl** 2026-10-12 (Toyota RX set, 5 periods at 100 Hz; `0x262` marginal; `0xB4` not in the set; not verified) | medium (alone) | T-SIL, FI |
 | SM-10 | RX checksum + length | corrupted RX (`0x260`, `0x1D2`) | E-03a | 402 | Partial | low (8-bit additive) | T-SIL |
-| SM-11 | RX rate, frozen-content and cross-checks | repeated/inserted/masqueraded RX | E-03a | 403–405 | New | medium (combined with SM-09/10) | LOG, FI |
-| SM-12 | Heartbeat + control-loop liveness | SoC hang, frozen control loop | E-03b | 407, 409 | Partial | medium | FI |
+| SM-11 | RX rate, frozen-content and cross-checks | repeated/inserted/masqueraded RX | E-03a | 403–405 | New at baseline; **Partial** 2026-10-12 (TSR-405(c) in the reference build; 403, 404, 405(a)(b)(d) open) | medium (combined with SM-09/10) | LOG, FI |
+| SM-12 | Heartbeat + control-loop liveness | SoC hang, frozen control loop | E-03b | 407, 409 | Partial (2026-10-12: 0.3 s revoke implemented, TSR-409 open) | medium | FI |
 | SM-13 | Command-frame freshness | SoC stops sending commands | E-03a/b | 408, 614 | New | high | FI |
 | SM-14 | SPI CRC + sequence counter + bounds checks | corrupted/stale/oversized SoC transfers | E-03b | 410–413 | Partial | high (with CRC-16/32) | FI |
-| SM-15 | Independent watchdog | MCU program-flow stall | E-04a/E-03b | 501 | New | medium (timeout only) / high (window + logical checkpoint) | IWDG reset-path test at defined interval (TSR-515) |
+| SM-15 | Independent watchdog | MCU program-flow stall | E-04a/E-03b | 501 | New at baseline; **Impl, not verified** 2026-10-12 (IWDG1, window, ≈ 90 ms nominal; LSI tolerance and HIL open) | medium (timeout only) / high (window + logical checkpoint) | IWDG reset-path test at defined interval (TSR-515) |
 | SM-16 | Fault → safe state | any detected platform fault | E-03b | 406, 502, 706 | New | — (enabler) | FI |
 | SM-17 | RAM ECC, flash CRC, register checks | memory/register corruption | E-04a/E-03b | 503 | Partial | high (ECC), medium (register) | start-up CRC; ECC event counting |
 | SM-18 | Clock monitor (CSS + cross-check) | clock loss/drift | E-04a | 504 | Partial | medium | start-up check |
 | SM-19 | Supply monitor (BOR, PVD, input voltage) | under/over-voltage | E-04a | 505 | Unknown | medium | start-up check |
 | SM-20 | Relay readback and latch | relay stuck either way | E-04a/E-05 | 506, 710 | Partial (one direction, indirect) | high (with readback) | relay test at start-up (TSR-515) |
 | SM-21 | MPU isolation | comms handler corrupting safety data | E-04a | 507 | New | medium | — |
-| SM-22 | Configuration lock and command gating | SoC selects wrong mode/param; debug commands | E-03b | 511–514, 619, 620 | New | high | release-build check (TSR-514), INS-17/23 |
-| SM-23 | SoC-independent siren | warning when the SoC is lost, on every envelope revocation that is not a driver action, and when a fault-induced ACC cancel has no effect | E-03b/E-04a | 516 | Partial | — (warning) | siren test at start-up (TSR-515) |
+| SM-22 | Configuration lock and command gating | SoC selects wrong mode/param; debug commands | E-03b | 511–514, 619, 620 | New at baseline; **Partial** 2026-10-12 (TSR-512/513 in the reference build; 511, 514, 619, 620 open) | high | release-build check (TSR-514), INS-17/23 |
+| SM-23 | SoC-independent siren | warning when the SoC is lost, on every envelope revocation that is not a driver action, and when a fault-induced ACC cancel has no effect | E-03b/E-04a | 516 | Partial (2026-10-12: EPS-fault siren after 1 s persistence in the reference build; 2026-10-13: siren when heartbeat loss revokes granted authority, ≈ 0.56 s after the last heartbeat, all builds, panda `c33343b`) | — (warning) | siren test at start-up (TSR-515) |
 | SM-24 | Relay malfunction detection (traffic-based) | relay stuck released / camera on car bus | E-03a | 710 | Impl | medium | INS-27 |
 | SM-25 | Host fault classification and freshness | stale/invalid inputs on SoC | E-01 | 601–604, 606, 615, 616 | Partial | QM | T-SIL |
 | SM-26 | Driver monitoring | inattention (misuse) | E-01/E-02 | 608–612 | Partial | QM (SOTIF) | DM validity (TSR-609) |
@@ -211,10 +237,10 @@ Diagnostic coverage (DC) values are **targets** for the FMEDA ([WP-H-03](../04-h
 | SM-33 | FCW input freshness and false-alarm rate | FCW from stale or invalid inputs; false FCW causing reflex braking | E-01 | 625 | Partial | ASIL A on QM element (open, WP-C-04 OI-9) | T-SIL; LOG fleet false-rate monitoring |
 | SM-34 | PCM ACC-fault reaction | PCM does not execute ACC (ACC or cruise fault) | E-01 | 618 | Impl | QM (B-sup: SM-29) | T-SIL |
 | SM-35 | Forwarding with fixed block list and forwarding supervision | camera-side frames lost, delayed or altered; block list wrong | E-03a/E-03b | 704, 707, 711 | Impl (704) / Not verified (707) / Not impl (711) | high (block list, design); medium (overflow counting) | T-HIL each release |
-| SM-36 | PCS and DSU message TX gate | item originates or alters frames used by the stock PCS | E-03a | 705 | **Not met** (GAP-42) | high (when implemented) | T-SIL |
+| SM-36 | PCS and DSU message TX gate | item originates or alters frames used by the stock PCS | E-03a | 705 | **Not met** (GAP-42) at baseline; **Met (reference build)** 2026-10-12 (other builds keep `0x411`; not verified on hardware) | high (when implemented) | T-SIL |
 | SM-37 | Stock AEB/FCW event indication | driver not told that the stock system intervened | E-01 | 709 | Impl | QM | — |
 | SM-38 | Post-load TX read-back | approved actuation frame altered in FDCAN message RAM, FDCAN core or transceiver | E-03b/E-04a | 517 | New | high | FI each release |
-| SM-39 | Per-ID TX rate supervision | actuation frames sent faster than nominal (burst, duplicated frames) | E-03a | 518 | New | medium | T-SIL |
+| SM-39 | Per-ID TX rate supervision | actuation frames sent faster than nominal (burst, duplicated frames) | E-03a | 518 | New at baseline; **Impl (reference build)** 2026-10-12 (budgets to be confirmed on logs; not verified) | medium | T-SIL |
 | SM-40 | Car-side transceiver supervision | transceiver transmitting from reset; bus-off or persistent TX failure while authority is granted | E-04a/E-03b | 508 | Partial | medium | start-up check (TSR-515) |
 | SM-41 | MCU die-temperature monitor | MCU outside its specified temperature range | E-04a/E-03b | 509 | Partial (report only) | medium | start-up check |
 | SM-42 | Harness orientation and connection detection | harness flipped, not connected or partly inserted; wrong CAN routing or relay pin | E-04a/E-05 | 701 | Partial | medium | before the relay is first driven (TSR-515) |
@@ -233,11 +259,11 @@ Notes:
 | Claim | Interference path | Mechanisms (required) | Baseline | Analysed in |
 |---|---|---|---|---|
 | FFI-1 | QM SoC sends wrong or excessive commands | SM-01…08 | Partial | [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) |
-| FFI-2 | QM SoC reconfigures the safety element (mode, param, relay, CAN config) | SM-22 (TSR-512, 513) | **Not met** (GAP-09, NF-05) | WP-A-02 |
+| FFI-2 | QM SoC reconfigures the safety element (mode, param, relay, CAN config) | SM-22 (TSR-512, 513) | **Not met** (GAP-09, NF-05); 2026-10-12: **Partial** (reference build lock and gating; other builds unchanged) | WP-A-02 |
 | FFI-3 | QM SoC replaces MCU firmware via BOOT0/NRST or softloader | TSR-511 | **Not met** (GAP-24, GAP-38) | WP-A-02, [WP-S-07](WP-S-07-cybersecurity-requirements-architecture.md) |
 | FFI-4 | QM SoC corrupts MCU memory through malformed SPI transfers | SM-14 bounds checks, SM-21 MPU | **Not met** (NF-04) | WP-A-02 |
-| FFI-5 | QM SoC timing faults (hang, frozen loop) | SM-12, SM-13 | Partial (slow) | WP-A-02 |
-| FFI-6 | Comms ISRs on the MCU starve safety processing | interrupt-rate monitors with reaction, SM-15 with logical checkpoint | report-only | WP-A-02, [WP-W-03](../05-software/WP-W-03-software-architecture.md) |
+| FFI-5 | QM SoC timing faults (hang, frozen loop) | SM-12, SM-13 | Partial (slow); 2026-10-12: Partial (0.3 s revoke; TSR-408 open) | WP-A-02 |
+| FFI-6 | Comms ISRs on the MCU starve safety processing | interrupt-rate monitors with reaction, SM-15 with logical checkpoint | report-only; 2026-10-12: Partial (IWDG, explicit equal priorities; no WCET; rate faults report-only) | WP-A-02, [WP-W-03](../05-software/WP-W-03-software-architecture.md) |
 | DFA-1 | Shared power supply of SoC and MCU | SM-19, de-energise-to-safe relay (AP-4) | Unknown | [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md) |
 | DFA-2 | Shared PCB, enclosure, thermal environment | SM-15, TSR-509 | Partial | WP-A-03 |
 | DFA-3 | Shared speaker/codec between SoC audio and MCU siren | TSR-516 analysis | Open | WP-A-03 |
@@ -298,5 +324,5 @@ The messaging layer has no authentication (GAP-20); any local process can publis
 | OI-1 | Confirm the DC targets of §6 in the FMEDA (WP-H-03) and software safety analysis (WP-W-04) | Safety engineer | G3 |
 | OI-2 | Write WP-A-02 and WP-A-03 for FFI-1…6 and DFA-1…4 | Safety engineer | G2 |
 | OI-3 | Decide whether the fallback independent limiter (IND-1) is needed, after the SG-01 re-rating | Maintainer | G2 |
-| OI-4 | Update §4 sequences once TSR-512 (mode lock) changes the start-up flow (ELM327 → TOYOTA) | SW lead | G3 |
+| OI-4 | Update §4 sequences once TSR-512 (mode lock) changes the start-up flow (ELM327 → TOYOTA). 2026-10-12: trigger reached (lock in the reference build). The start-up flow ELM327 → TOYOTA/73 is accepted unchanged; the ignition-off sequence changes (`0xe7` refused in TOYOTA, accepted after NOOUTPUT; mode-lock impact record §3). §4 sequences still to be redrawn | SW lead | G3 |
 | OI-5 | Record the architecture in `docs/contributing/architecture.md` or replace that empty file with a pointer to this WP | Maintainer | G2 |

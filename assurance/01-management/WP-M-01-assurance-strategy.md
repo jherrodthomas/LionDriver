@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-M-01 Assurance strategy and lifecycle tailoring |
 | Standard reference | ISO 26262-2:2018 §6 (tailoring, safety plan inputs); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6; ISO/PAS 8800:2024 (AI safety management, assurance argument); ASPICE 4.0 MAN.3; UL 4600 (informative, safety case structure) |
-| Version | 0.1 |
+| Version | 0.5 (merge of PR #47 software alignment with the base: D-14 added (authorize the ISO 26262-6 software lifecycle, numbered D-09 in PR #47 drafts); 2026-10-13). 0.4 (§4.1 safety envelope diagram redrawn as Figure 4-1; text version kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: P0 sync policy per D-02, D-13 added (envelope strategy); 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (FuSa, SOTIF, CS, AI, process) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review of tailoring rationale by independent assessor (I3) |
 | Approver | Project maintainer (acting safety manager). Self-approval is an accepted interim limitation until a second person takes the safety manager or reviewer role ([WP-M-02](WP-M-02-safety-plan.md) OI-2) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose
 
@@ -40,12 +40,14 @@ From the [baseline gap assessment](../00-assessment/gap-assessment.md):
 
 | Element | Reference configuration |
 |---|---|
-| Vehicle | 2020 Toyota Corolla LE, US market, ICE (non-hybrid), TSS 2.0. Platform `TOYOTA_COROLLA_TSS2`. VIN, firmware versions and options recorded in the [item definition](../02-concept/WP-C-01-item-definition.md) |
+| Vehicle | Toyota Corolla, 12th generation (E210), TSS 2.0, US market, ICE (non-hybrid). Platform `TOYOTA_COROLLA_TSS2`. VIN, firmware versions and options recorded in the [item definition](../02-concept/WP-C-01-item-definition.md) |
 | Device | One identified comma device hardware revision (recorded in WP-C-01) with the Toyota harness |
 | Software | A tagged LionDriver release that pins openpilot, opendbc, panda, msgq, rednose, tinygrad and the model weights by commit hash |
 | Function | Supervised SAE Level 2: lane centring (lateral) plus openpilot longitudinal control (ACC with stop-and-go). On TSS2 without radar ACC, the Corolla runs openpilot longitudinal by default (`opendbc_repo/opendbc/car/toyota/interface.py:105`) |
 | ODD | Defined in [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) |
 | User | A licensed, attentive driver who has been briefed according to [WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md). During the development phase: trained safety drivers only ([WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md)) |
+
+The vehicle scope is the E210 generation, with the market and powertrain qualifiers above, not one model year or trim (decision 2026-10-12). Whether ECU firmware and equipment differences across the model years and trims covered change the envelope assumptions is open ([WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-9).
 
 Any other vehicle, device, software baseline or ODD extension needs an impact analysis ([WP-M-12](WP-M-12-impact-analysis.md)) and supporting evidence before it joins the claimed scope.
 
@@ -71,6 +73,12 @@ It is supported by five sub-claims, which structure the [safety case (WP-K-01)](
 
 openpilot already has an architecture that makes a credible ISO 26262 argument possible without re-developing the whole stack to ASIL:
 
+![Figure 4-1: the safety envelope pattern: QM application SoC (camerad, modeld, plannerd, controlsd, card, pandad; dmonitoringmodeld, dmonitoringd, selfdrived), SPI to the ASIL-allocated panda safety MCU (opendbc Toyota mode), vehicle CAN to EPS, ECM and brake, driver and vehicle outside](figures/fig-m01-4-1-safety-envelope.svg)
+
+*Figure 4-1.* The application SoC runs the QM, SOTIF-managed driving stack; the panda safety MCU (ASIL-allocated, target) is the only path to the vehicle CAN and enforces the envelope. The driver and the vehicle's existing elements sit outside the device, and the note marks the known weakness of §4.2 item 2. Source: [`figures/fig-m01-4-1-safety-envelope.svg`](figures/fig-m01-4-1-safety-envelope.svg); change it together with §4.1 and §4.2.
+
+<details><summary>Text version of Figure 4-1</summary>
+
 ```
  ┌─────────────── comma device ───────────────────────────────────────┐
  │  Application SoC (Linux/AGNOS)          Safety MCU (STM32H7 "panda")│
@@ -88,6 +96,8 @@ openpilot already has an architecture that makes a credible ISO 26262 argument p
           Vehicle: EPS torque limiting & fault detection (AoU), brakes, PCS (AoU)
 ```
 
+</details>
+
 - **Safety element:** the opendbc safety mode running on the panda MCU. It is the only path to the actuators, and it enforces:
   - actuation limits (steering torque magnitude and rate, measured-torque tracking, acceleration bounds),
   - engagement gating (no actuation unless engaged; immediate release on driver brake, gas or cancel, depending on configuration),
@@ -102,7 +112,7 @@ openpilot already has an architecture that makes a credible ISO 26262 argument p
 ### 4.2 Consequences that shape the plan
 
 1. **ASIL work concentrates on a small codebase:** `opendbc/safety/*.h`, `opendbc/safety/modes/toyota.h`, and the panda firmware paths they rely on (CAN drivers, SPI comms, heartbeat, relay, main loop, fault handling). This is a few thousand lines of MISRA-checked C, which is a realistic size for full ISO 26262-6 treatment.
-2. **Freedom from interference is the hinge.** The argument holds only if a fault or insufficiency on the SoC cannot defeat the envelope. That covers: SPI corruption, a babbling SoC, a wrong safety mode or parameter sent by the SoC at start-up, panda firmware replaced by the SoC, and shared power, clock or thermal failures. Each one needs an analysis and a mechanism ([WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md), [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md)). The **safety mode and safety parameter are selected by the SoC** (`openpilot/selfdrive/pandad/panda_safety.cc`), so a QM element configures the safety element. This is a known weakness that must be closed, for example by locking the mode in panda firmware for the reference configuration or adding an independent cross-check.
+2. **Freedom from interference is the hinge.** The argument holds only if a fault or insufficiency on the SoC cannot defeat the envelope. That covers: SPI corruption, a babbling SoC, a wrong safety mode or parameter sent by the SoC at start-up, panda firmware replaced by the SoC, and shared power, clock or thermal failures. Each one needs an analysis and a mechanism ([WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md), [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md)). The **safety mode and safety parameter are selected by the SoC** (`openpilot/selfdrive/pandad/panda_safety.cc`), so a QM element configures the safety element. This is a known weakness that must be closed, for example by locking the mode in panda firmware for the reference configuration or adding an independent cross-check. *Status 2026-10-13:* the reference build locks the mode and parameter in panda firmware (TSR-512, TSR-513; LionDriver #36) and `pandad` requires a reference panda build before configuring a car safety mode (TSR-514; #41); implemented, not verified on hardware or independently reviewed.
 3. **Single-channel hardware.** The panda MCU is single-channel, and it shares the device PCB, power and enclosure with the SoC. Whether this meets the ASIL from the HARA depends on the hardware metrics (WP-H-04/05) and the DFA. If the HARA gives ASIL C or D for a safety goal, the likely route is ASIL decomposition onto the envelope plus vehicle-side measures (EPS limiting, driver), or plausibility checks by the EPS. That route depends on AoUs about OEM ECUs that cannot be proven without vehicle testing.
 4. **Driver monitoring is safety-relevant.** If controllability ratings assume an attentive driver, then the mechanism that enforces attention (DM model, `monitoring/policy.py` timers, disengagement on unresponsiveness) is a safety measure. Under ISO 21448 it is treated as a measure against foreseeable misuse. Whether its failure is also an ISO 26262 safety goal violation is decided in the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)).
 5. **Hardware evidence comes from qualification, not development.** The device is COTS. The route is hardware component qualification (ISO 26262-8 §13) together with the hardware metrics and FMEDA that LionDriver performs itself, using schematic information as far as it is available. If the evidence cannot be obtained, the gap is recorded and the residual risk is argued, never assumed away.
@@ -143,10 +153,10 @@ One shared **hazard log** (in [WP-C-03](../02-concept/WP-C-03-hara.md), with SOT
 
 | Phase | Gate | Key work products | Prerequisites and notes |
 |---|---|---|---|
-| **P0 Governance** | G0 | M-00…M-13, P-01…P-06 | Fork opendbc and panda into LionDriver control (D-01). Freeze upstream sync (D-02). Fix CI for the fork (D-03). CODEOWNERS and branch protection |
+| **P0 Governance** | G0 | M-00…M-13, P-01…P-06 | Fork opendbc and panda into LionDriver control (D-01). Planned sync once per minor release (D-02, decided 2026-10-10). Fix CI for the fork (D-03). CODEOWNERS and branch protection |
 | **P1 Concept** | G1 | C-01…C-11, V-07, K-01 (initial argument) | No public-road testing until WP-V-07 is approved. HARA confirmation review by an external assessor |
 | **P2 System design** | G2 | S-01…S-07, A-01…A-04, V-02 | Envelope requirements back-filled from code. FFI and DFA analyses decide whether hardware changes are needed |
-| **P3 HW/SW development** | G3 | H-01…H-05, H-07, W-01…W-06, W-09…W-11, P-07…P-09 | Includes closing gaps found in P2, for example locking the safety mode and parameter. The software-level lifecycle runs to [WP-M-14](WP-M-14-iso26262-6-implementation-specification.md) and starts only after D-09; its entry baseline needs the Part 2 plans (CR-03), the Part 3 concept (CR-02, CR-04), the Part 4 TSC, HSI and FTTI (CR-05), the system FFI and DFA, and approved CM, change, requirements and review procedures (WP-M-14 §3.1) |
+| **P3 HW/SW development** | G3 | H-01…H-05, H-07, W-01…W-06, W-09…W-11, P-07…P-09 | Includes closing gaps found in P2, for example locking the safety mode and parameter. The software-level lifecycle runs to [WP-M-14](WP-M-14-iso26262-6-implementation-specification.md) and starts only after D-14; its entry baseline needs the Part 2 plans (CR-03), the Part 3 concept (CR-02, CR-04), the Part 4 TSC, HSI and FTTI (CR-05), the system FFI and DFA, and approved CM, change, requirements and review procedures (WP-M-14 §3.1) |
 | **P4 Integration and verification** | G4 | S-08, S-09, H-06, W-07, W-08, V-03, V-05 | Software integration and embedded testing per WP-M-14 Phase E. **Needs a LionDriver HIL bench** (panda + CAN simulation + Corolla DBC replay) and a fork-owned process-replay reference set |
 | **P5 Validation and release** | G5 | V-01, V-04, V-06, K-02…K-06, O-01…O-03 | Validation driving under WP-V-07; SOTIF residual-risk acceptance; external FSA |
 | **P6 Operation** | G6 | O-04, O-05, P-03 | Field monitoring, incident response, controlled updates |
@@ -176,8 +186,13 @@ These are owned by the project maintainer. Until each one is decided, it stays o
 | D-05 | Model update policy | Pin model weights per release. Treat any model change as a SOTIF-relevant change that re-runs the scenario evaluations (WP-V-03) |
 | D-06 | External assessor | Engage an independent functional safety assessor for the HARA confirmation review at G1 |
 | D-07 | Work product format | Markdown in the repository (docs-as-code), with machine-readable requirements in `trace/`. Reviewed through pull requests. Can be exported to an ALM tool later |
-| D-08 | Default enablement of Experimental Mode | Upstream commit `f21bfc3` turns on Experimental Mode by default without confirmation. For the reference configuration, decide whether this is in the ODD; recommendation: disabled until validated |
-| D-09 | Authorize the ISO 26262-6 software lifecycle | Do not start [WP-M-14](WP-M-14-iso26262-6-implementation-specification.md) Phase A until its entry criteria E-01…E-05 (safety plan, item definition, HARA, FSC, TSC) are at least in review; do not start Phase B until the full entry baseline (WP-M-14 §3.1) is approved or each exception is justified. **Status:** open. Snapshot at `3ed97c8`: no entry criterion met |
+| D-08 | Default enablement of Experimental Mode | Upstream commit `f21bfc3` turns on Experimental Mode by default without confirmation. For the reference configuration, decide whether this is in the ODD; recommendation: disabled until validated. **Status:** decided 2026-10-10: the reference configuration runs in Chill Mode (Experimental Mode off) until WP-C-07 validates it. The code change of the default is B-06 ([WP-M-03](WP-M-03-project-plan.md)) and is still open |
+| D-09 | Panda release signing key | Holder and storage of the LionDriver panda signing key ([LD-DES-001](../08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md) D1). **Status:** decided 2026-10-10: an offline key held by the project maintainer; images are signed only after the panda release gate passes ([WP-P-10](../07-supporting/WP-P-10-release-management.md)). The algorithm moves off RSA-1024/SHA-1, and release builds stop accepting the debug key (GAP-24, GAP-25) |
+| D-10 | Panda flash protection | Protect the bootstub with WRP and RDP level 1 ([LD-DES-001](../08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md) D2, DR-13), or leave ROM DFU open. **Status:** decided 2026-10-10: adopt WRP + RDP1 after the bootloader behaviour is verified on a sacrificial unit; applied together with removing pandad's development-bootstub recovery (GAP-38) |
+| D-11 | Vehicle lock (VIN) | Whether the panda enforces the VIN of the recorded vehicle ([LD-DES-001](../08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md) D3). **Status:** decided 2026-10-10: report only for now; enforcement waits for a panda-side UDS VIN read before authority is granted |
+| D-12 | LionDriver-only devices | Whether assured devices run only LionDriver-signed panda firmware ([LD-DES-001](../08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md) D4). **Status:** decided 2026-10-10: yes, for the reference configuration; development units keep the debug bootstub and are outside the safety claims |
+| D-13 | Envelope strategy ([WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md#42-recommendation), OI-1) | Option (c): reduce actuation authority so that controllability C1 can be shown, lowering SG-01 to ASIL B, combined with ASIL B hardening of the envelope; option (b) kept as fallback. **Status:** pending maintainer decision (tracked in [WP-M-07](WP-M-07-risk-management.md) §5) |
+| D-14 | Authorize the ISO 26262-6 software lifecycle | Do not start [WP-M-14](WP-M-14-iso26262-6-implementation-specification.md) Phase A until its entry criteria E-01…E-05 (safety plan, item definition, HARA, FSC, TSC) are at least in review; do not start Phase B until the full entry baseline (WP-M-14 §3.1) is approved or each exception is justified. **Status:** open. Snapshot at `3ed97c8`: no entry criterion met |
 
 ## 9. Top risks to the assurance path
 

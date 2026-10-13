@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-1. Coexistence and interference map: QM SoC, panda firmware partitions, interference channels and FFI verdicts (WP-A-02 §2–§8)</title>
+  <desc id="d">The comma device (L-DEV) holds the QM SoC software and the panda STM32H7 firmware (L-MCU). The firmware is one image without MPU partitioning: SoC-facing code (SPI/USB transport, command dispatcher, bootstub and softloader) is ASIL C where it touches safety state and FFI otherwise; the envelope core, tick handler, CAN driver, relay drivers, mode setting and fault handling are ASIL C (B after re-rating); housekeeping is QM with FFI. Communication channels from the SoC are data frames (FFI-CM-01 to -05), configuration commands (FFI-CM-06 to -11, -13, -14), and boot and reset lines (FFI-CM-12); SoC timing faults are FFI-TM-06 and -07. Inside the MCU, spatial interference FFI-SP-01 to -05 and temporal interference FFI-TM-01 to -05 reach the ASIL partition. Vehicle CAN faults are FFI-CM-15 and -16. The verdicts of §8: L-MCU spatial not shown; L-MCU temporal partially shown since 2026-10-12; device data communication partially shown; device commands partially shown in the reference build; boot control not shown. Nothing is verified on hardware.</desc>
+  <defs>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7C3AED"/></marker>
+    <marker id="aY" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#A16207"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .chip{fill:#F8FAFC;stroke:#CBD5E1;stroke-width:1}
+      .ml{fill:#EEF2FF;stroke:#A5B4FC;stroke-width:1}
+      .asilc{fill:#FFFFFF;stroke:#FDBA74;stroke-width:1}
+      .tag{font-size:9.5px;font-weight:700;fill:#FFFFFF}
+    </style>
+  </defs>
+  <rect width="1280" height="800" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 3-1 · Coexistence and interference map with FFI verdicts</text>
+  <text x="40" y="66" class="m" font-size="12.5">QM SoC and ASIL-allocated panda firmware on one device · interference channels by type · verdicts at bf6ce8c, nothing verified on hardware</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">WP-A-02 §3</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">decisions §2 · channels §4–§6 · verdicts §8</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+
+  <!-- ===== L-DEV container ===== -->
+  <rect x="40" y="100" width="812" height="548" rx="14" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+  <text x="56" y="122" class="t b" font-size="13">L-DEV · E-04 comma device</text>
+  <text x="250" y="122" class="m s">SoC and MCU: separate memories, shared PCB and power (WP-A-03)</text>
+
+  <!-- ===== SoC (QM) ===== -->
+  <rect x="56" y="136" width="234" height="496" rx="10" fill="#F8FAFC" stroke="#334155" stroke-width="1.4"/>
+  <text x="70" y="158" class="t b" font-size="12.5">E-01 · E-02 SoC</text>
+  <rect x="234" y="146" width="44" height="18" rx="9" fill="#64748B"/><text x="256" y="159" class="tag" text-anchor="middle">QM</text>
+
+  <rect x="70" y="222" width="206" height="54" rx="7" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="173" y="243" class="t sb" font-size="11.5" text-anchor="middle">pandad · card · controlsd</text>
+  <text x="173" y="258" class="m xs" text-anchor="middle">selfdrived · CAN TX, heartbeat 0xf3</text>
+  <text x="173" y="270" class="m xs" text-anchor="middle">configuration requests</text>
+
+  <rect x="70" y="286" width="206" height="40" rx="7" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="173" y="303" class="t sb" font-size="11.5" text-anchor="middle">hardware.py · recovery</text>
+  <text x="173" y="317" class="m xs" text-anchor="middle">STM_BOOT0, STM_RST_N lines</text>
+
+  <rect x="70" y="336" width="206" height="40" rx="7" class="ml"/>
+  <text x="173" y="353" class="t sb" font-size="11.5" text-anchor="middle">E-02 models</text>
+  <text x="173" y="367" class="m xs" text-anchor="middle">modeld, dmonitoringmodeld</text>
+
+  <rect x="70" y="386" width="206" height="40" rx="7" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="173" y="403" class="t sb" font-size="11.5" text-anchor="middle">AGNOS Linux · scheduler</text>
+  <text x="173" y="417" class="m xs" text-anchor="middle">overload, GC pause, crash, freeze</text>
+
+  <rect x="70" y="456" width="206" height="40" rx="7" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="173" y="473" class="t sb" font-size="11.5" text-anchor="middle">ui · soundd</text>
+  <text x="173" y="487" class="m xs" text-anchor="middle">alerts, take-over requests</text>
+
+  <rect x="70" y="532" width="206" height="40" rx="7" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="173" y="549" class="t sb" font-size="11.5" text-anchor="middle">logging · encoding · upload</text>
+  <text x="173" y="563" class="m xs" text-anchor="middle">streaming, athena</text>
+
+  <path d="M120 532V498" stroke="#0F766E" stroke-width="1.6" fill="none" marker-end="url(#aT)"/>
+  <rect x="130" y="506" width="86" height="16" rx="8" fill="#0F766E"/><text x="173" y="518" class="tag" text-anchor="middle">CM-17…19</text>
+  <text x="70" y="592" class="m xs">QM-to-QM on the HMI and status path</text>
+  <text x="70" y="605" class="m xs">(§6.4): starved ui/soundd, low volume,</text>
+  <text x="70" y="618" class="m xs">stale pandaStates</text>
+
+  <!-- ===== panda MCU (L-MCU) ===== -->
+  <rect x="440" y="136" width="396" height="496" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="1.4"/>
+  <text x="456" y="158" class="t b" font-size="12.5">L-MCU · E-03 panda STM32H7 firmware</text>
+  <text x="456" y="174" class="m xs">one binary, one CPU, one address space · no MPU (GAP-11)</text>
+
+  <!-- SoC-facing partition -->
+  <rect x="456" y="186" width="364" height="140" rx="9" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3" stroke-dasharray="5 3"/>
+  <text x="468" y="202" class="m xs" font-weight="600">SoC-facing code · ASIL C where it touches safety state, FFI otherwise</text>
+  <rect x="468" y="222" width="152" height="54" rx="7" class="asilc"/>
+  <text x="544" y="243" class="t sb" font-size="11.5" text-anchor="middle">SPI/USB transport</text>
+  <text x="544" y="258" class="m xs" text-anchor="middle">C: integrity checks</text>
+  <text x="544" y="270" class="m xs" text-anchor="middle">FFI: rest (DMA, buffers)</text>
+  <path d="M620 249H642" stroke="#475569" stroke-width="1.4" fill="none" marker-end="url(#aG)"/>
+  <rect x="644" y="222" width="164" height="54" rx="7" class="asilc"/>
+  <text x="726" y="243" class="t sb" font-size="11.5" text-anchor="middle">command dispatcher</text>
+  <text x="726" y="258" class="m xs" text-anchor="middle">C: commands that touch</text>
+  <text x="726" y="270" class="m xs" text-anchor="middle">safety state · FFI: others</text>
+  <rect x="468" y="286" width="340" height="32" rx="7" class="asilc"/>
+  <text x="480" y="306" class="t sb" font-size="11.5">bootstub · softloader</text>
+  <text x="610" y="306" class="m xs">C: signature check, relay-safe start</text>
+
+  <!-- arrows SoC-facing -> ASIL -->
+  <path d="M540 326V354" stroke="#7C3AED" stroke-width="2" fill="none" marker-end="url(#aP)"/>
+  <rect x="548" y="332" width="74" height="16" rx="8" fill="#7C3AED"/><text x="585" y="344" class="tag" text-anchor="middle">SP-01…05</text>
+  <path d="M700 326V354" stroke="#A16207" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#aY)"/>
+  <rect x="708" y="332" width="74" height="16" rx="8" fill="#A16207"/><text x="745" y="344" class="tag" text-anchor="middle">TM-01…05</text>
+
+  <!-- ASIL partition -->
+  <rect x="456" y="356" width="364" height="164" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>
+  <rect x="468" y="366" width="170" height="18" rx="9" fill="#C2410C"/>
+  <text x="553" y="379" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle">ASIL C (B after re-rating)</text>
+  <text x="648" y="379" class="m xs">envelope state in DTCM</text>
+  <rect x="468" y="392" width="164" height="36" rx="7" class="asilc"/>
+  <text x="550" y="408" class="t sb" font-size="11" text-anchor="middle">tick · supervision</text>
+  <text x="550" y="421" class="m" font-size="9.5" text-anchor="middle">heartbeat, siren, safety_tick</text>
+  <rect x="644" y="392" width="164" height="36" rx="7" class="asilc"/>
+  <text x="726" y="408" class="t sb" font-size="11" text-anchor="middle">safety core · Toyota mode</text>
+  <text x="726" y="421" class="m" font-size="9.5" text-anchor="middle">RX/TX/FWD hooks, limits</text>
+  <rect x="468" y="434" width="164" height="36" rx="7" class="asilc"/>
+  <text x="550" y="450" class="t sb" font-size="11" text-anchor="middle">set_safety_mode</text>
+  <text x="550" y="463" class="m" font-size="9.5" text-anchor="middle">mode bookkeeping</text>
+  <rect x="644" y="434" width="164" height="36" rx="7" class="asilc"/>
+  <text x="726" y="450" class="t sb" font-size="11" text-anchor="middle">fault handling</text>
+  <text x="726" y="463" class="m" font-size="9.5" text-anchor="middle">exceptions, early init</text>
+  <rect x="468" y="476" width="164" height="36" rx="7" class="asilc"/>
+  <text x="550" y="492" class="t sb" font-size="11" text-anchor="middle">CAN driver RX/TX</text>
+  <text x="550" y="505" class="m" font-size="9.5" text-anchor="middle">FDCAN ISR, queues</text>
+  <rect x="644" y="476" width="164" height="36" rx="7" class="asilc"/>
+  <text x="726" y="492" class="t sb" font-size="11" text-anchor="middle">relay · harness drivers</text>
+  <text x="726" y="505" class="m" font-size="9.5" text-anchor="middle">ASIL C/B · safe-state actuation</text>
+
+  <!-- arrows QM -> ASIL -->
+  <path d="M540 556V524" stroke="#7C3AED" stroke-width="2" fill="none" marker-end="url(#aP)"/>
+  <rect x="548" y="530" width="74" height="16" rx="8" fill="#7C3AED"/><text x="585" y="542" class="tag" text-anchor="middle">SP-01, -04</text>
+  <path d="M700 556V524" stroke="#A16207" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#aY)"/>
+  <rect x="708" y="530" width="74" height="16" rx="8" fill="#A16207"/><text x="745" y="542" class="tag" text-anchor="middle">TM-01, -02</text>
+
+  <!-- QM partition -->
+  <rect x="456" y="556" width="364" height="62" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+  <rect x="468" y="566" width="86" height="18" rx="9" fill="#64748B"/>
+  <text x="511" y="579" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle">QM with FFI</text>
+  <text x="564" y="579" class="m xs">housekeeping, must not block or corrupt</text>
+  <text x="468" y="604" class="t" font-size="10.5">fan · sound · LED · IR · DTS/ADC · debug print</text>
+
+  <!-- ===== channels SoC -> MCU ===== -->
+  <path d="M276 240H466" stroke="#0F766E" stroke-width="2" fill="none" marker-end="url(#aT)"/>
+  <rect x="300" y="222" width="104" height="16" rx="8" fill="#0F766E"/><text x="352" y="234" class="tag" text-anchor="middle">data · CM-01…05</text>
+  <path d="M276 260H466" stroke="#0F766E" stroke-width="2" fill="none" marker-end="url(#aT)"/>
+  <rect x="296" y="264" width="134" height="16" rx="8" fill="#0F766E"/><text x="363" y="276" class="tag" text-anchor="middle">cmds · CM-06…11, 13, 14</text>
+  <text x="300" y="214" fill="#0F766E" font-size="9.5" font-weight="600">IF-04 SPI</text>
+  <path d="M276 304H372V302H466" stroke="#0F766E" stroke-width="2" stroke-dasharray="2 3" fill="none" marker-end="url(#aT)"/>
+  <rect x="300" y="308" width="110" height="16" rx="8" fill="#0F766E"/><text x="355" y="320" class="tag" text-anchor="middle">boot/reset · CM-12</text>
+  <path d="M276 406H466" stroke="#A16207" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#aY)"/>
+  <rect x="300" y="386" width="104" height="16" rx="8" fill="#A16207"/><text x="352" y="398" class="tag" text-anchor="middle">timing · TM-06, -07</text>
+
+  <!-- ===== vehicle CAN ===== -->
+  <line x1="40" y1="684" x2="852" y2="684" stroke="#0F172A" stroke-width="4" stroke-linecap="round"/>
+  <text x="40" y="672" class="t b" font-size="12">Vehicle CAN · IF-01, IF-02, IF-03</text>
+  <path d="M448 682V494H466" stroke="#0F766E" stroke-width="2" fill="none" marker-end="url(#aT)" marker-start="url(#aT)"/>
+  <rect x="458" y="660" width="140" height="16" rx="8" fill="#0F766E"/><text x="528" y="672" class="tag" text-anchor="middle">RX, forwarding · CM-15, -16</text>
+
+  <!-- ===== verdict panel ===== -->
+  <text x="876" y="112" class="m b" font-size="10" letter-spacing=".06em">FFI VERDICT (§8) · KEY MEASURES (§7)</text>
+
+  <!-- 1 spatial -->
+  <rect x="876" y="122" width="364" height="96" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <rect x="876" y="122" width="6" height="96" rx="3" fill="#7C3AED"/>
+  <text x="894" y="142" class="t b" font-size="12">L-MCU spatial</text>
+  <rect x="1132" y="130" width="96" height="18" rx="9" fill="#D2553F"/><text x="1180" y="143" class="tag" text-anchor="middle">NOT SHOWN</text>
+  <text x="894" y="162" class="t" font-size="10.5">No MPU; QM paths share the address space; SPI</text>
+  <text x="894" y="176" class="t" font-size="10.5">length unbounded (bank separation unconfirmed)</text>
+  <text x="894" y="196" class="m xs">MPU and stack guard TSR-507 · RAM/flash ECC TSR-503</text>
+  <text x="894" y="209" class="m xs">SPI length bounds TSR-412 (NF-04, OI-3)</text>
+
+  <!-- 2 temporal -->
+  <rect x="876" y="226" width="364" height="96" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <rect x="876" y="226" width="6" height="96" rx="3" fill="#A16207"/>
+  <text x="894" y="246" class="t b" font-size="12">L-MCU temporal</text>
+  <rect x="1012" y="234" width="72" height="18" rx="9" fill="#FFFFFF" stroke="#D2553F"/><text x="1048" y="247" font-size="9" font-weight="700" fill="#D2553F" text-anchor="middle">8b8c6ae: NOT</text>
+  <text x="1092" y="247" class="m" font-size="11" text-anchor="middle">→</text>
+  <rect x="1100" y="234" width="128" height="18" rx="9" fill="#D97706"/><text x="1164" y="247" class="tag" text-anchor="middle">PARTIALLY SHOWN</text>
+  <text x="894" y="266" class="t" font-size="10.5">IWDG (≈ 90 ms) and 100 Hz safety task implemented,</text>
+  <text x="894" y="280" class="t" font-size="10.5">priorities explicit; no WCET; rate faults report-only</text>
+  <text x="894" y="300" class="m xs">IWDG TSR-501 · fault reaction TSR-502 · scheme TSR-519</text>
+  <text x="894" y="313" class="m xs">not verified on hardware</text>
+
+  <!-- 3 data -->
+  <rect x="876" y="330" width="364" height="96" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <rect x="876" y="330" width="6" height="96" rx="3" fill="#0F766E"/>
+  <text x="894" y="350" class="t b" font-size="12">L-DEV communication · data</text>
+  <rect x="1100" y="338" width="128" height="18" rx="9" fill="#D97706"/><text x="1164" y="351" class="tag" text-anchor="middle">PARTIALLY SHOWN</text>
+  <text x="894" y="370" class="t" font-size="10.5">TX hook limits every frame; no freshness or</text>
+  <text x="894" y="384" class="t" font-size="10.5">sequence counter; weak 8-bit XOR checksum</text>
+  <text x="894" y="404" class="m xs">CRC, sequence, freshness TSR-409…411 · TSR-614</text>
+  <text x="894" y="417" class="m xs">TX rate supervision TSR-518 (reference build)</text>
+
+  <!-- 4 commands -->
+  <rect x="876" y="434" width="364" height="96" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <rect x="876" y="434" width="6" height="96" rx="3" fill="#0F766E"/>
+  <text x="894" y="454" class="t b" font-size="12">L-DEV communication · cmds</text>
+  <rect x="1124" y="442" width="104" height="18" rx="9" fill="#D97706"/><text x="1176" y="455" class="tag" text-anchor="middle">PARTIAL (REF)</text>
+  <text x="894" y="474" class="t" font-size="10.5">Not shown at 8b8c6ae. Reference build: mode lock and</text>
+  <text x="894" y="488" class="t" font-size="10.5">car-mode request gating; other builds unchanged</text>
+  <text x="894" y="508" class="m xs">mode/param lock TSR-512 · command refusal TSR-513</text>
+  <text x="894" y="521" class="m xs">not verified on hardware</text>
+
+  <!-- 5 boot -->
+  <rect x="876" y="538" width="364" height="94" rx="9" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <rect x="876" y="538" width="6" height="94" rx="3" fill="#0F766E"/>
+  <text x="894" y="558" class="t b" font-size="12">L-DEV boot control</text>
+  <rect x="1132" y="546" width="96" height="18" rx="9" fill="#D2553F"/><text x="1180" y="559" class="tag" text-anchor="middle">NOT SHOWN</text>
+  <text x="894" y="578" class="t" font-size="10.5">SoC drives BOOT0/RST; no RDP/WRP; development</text>
+  <text x="894" y="592" class="t" font-size="10.5">bootstub in the recovery path (GAP-38, GAP-24)</text>
+  <text x="894" y="612" class="m xs">RDP/WRP, modern signature TSR-511, TSR-514</text>
+  <text x="894" y="625" class="m xs">FFI must be shown before G2</text>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="712" x2="1240" y2="712" stroke="#E2E8F0"/>
+  <g transform="translate(40,736)" font-size="10.5">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#7C3AED" stroke-width="2"/><text x="36" y="4" class="t">Spatial (memory) FFI-SP</text>
+    <line x1="200" y1="0" x2="228" y2="0" stroke="#A16207" stroke-width="2" stroke-dasharray="5 3"/><text x="236" y="4" class="t">Temporal FFI-TM</text>
+    <line x1="360" y1="0" x2="388" y2="0" stroke="#0F766E" stroke-width="2"/><text x="396" y="4" class="t">Communication FFI-CM</text>
+    <line x1="550" y1="0" x2="578" y2="0" stroke="#0F766E" stroke-width="2" stroke-dasharray="2 3"/><text x="586" y="4" class="t">Boot/reset GPIO</text>
+    <rect x="700" y="-8" width="28" height="16" rx="4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/><text x="736" y="4" class="t">ASIL partition</text>
+    <rect x="846" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#C2410C" stroke-dasharray="5 3"/><text x="882" y="4" class="t">ASIL C in part, FFI for the rest</text>
+    <rect x="1080" y="-8" width="28" height="16" rx="4" fill="#F1F5F9" stroke="#94A3B8"/><text x="1116" y="4" class="t">QM with FFI</text>
+  </g>
+  <g transform="translate(40,764)" font-size="10.5">
+    <rect x="0" y="-8" width="28" height="16" rx="8" fill="#D2553F"/><text x="36" y="4" class="t">Not shown</text>
+    <rect x="130" y="-8" width="28" height="16" rx="8" fill="#D97706"/><text x="166" y="4" class="t">Partially shown (implemented in part, not verified)</text>
+    <text x="1200" y="4" class="m" text-anchor="end">IDs abbreviated: SP-01 = FFI-SP-01 etc. Vehicle RX (CM-15/16) and the HMI path (CM-17…19) have no §8 verdict row.</text>
+  </g>
+</svg>

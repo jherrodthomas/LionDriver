@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-02 ODD and intended functionality specification |
 | Standard reference | ISO 21448:2022 §5 (specification of the functionality); ISO 26262-3:2018 §5 (item definition input); ISO/PAS 8800:2024 (input space definition); ASPICE 4.0 SYS.1; SAE J3016 and ISO 34503 (ODD taxonomy, informative) |
-| Version | 0.1 |
+| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF; input to HARA exposure ratings |
 | Author | Assurance team (initial draft) |
@@ -14,7 +14,7 @@
 
 ## 1. Purpose
 
-This document specifies, for the reference configuration (2020 Toyota Corolla LE, US, `TOYOTA_COROLLA_TSS2`, openpilot longitudinal; see [WP-C-01](WP-C-01-item-definition.md)):
+This document specifies, for the reference configuration (Toyota Corolla, 12th generation (E210), TSS 2.0, US, `TOYOTA_COROLLA_TSS2`, openpilot longitudinal; see [WP-C-01](WP-C-01-item-definition.md)):
 
 1. the operational design domain (ODD) in which LD-SDA is intended to be used and for which claims are made;
 2. the intended functionality: the nominal behaviour of each function F-01…F-07, the driver's role and the system limits;
@@ -86,13 +86,22 @@ R_ctrl = v² / 3.0 m/s² is the curve the controller can command at its lateral 
 
 The planner in Chill mode does not reduce speed ahead of curves; it only limits acceleration in turns (`longitudinal_planner.py:37-50`). Entering a curve tighter than R_ODD at the current speed is therefore a driver task.
 
+### 3.3 Relation to the driving model's training data
+
+The training-data ODD of the driving model is unknown. comma.ai has not published it ([WP-M-11 §3.5](../01-management/WP-M-11-upstream-and-supplier-management.md#35-public-information-on-the-ml-models-wp-m-10-oi-7)), and by the maintainer's decision (2026-10-12) LionDriver does not compare the reference ODD with it. The comparison is replaced by LionDriver's own evidence:
+
+1. **Claimed only where evaluated.** A stratum of §3.1 is part of the claimed ODD only if LionDriver evaluation data covers it ([WP-C-11](WP-C-11-ai-system-definition-and-safety-requirements.md) DSR-03, DSR-04) and the AI safety requirements are met in it (AIR-09). A stratum without enough data, or one that fails, is not claimed. It is removed from the ODD through a functional modification ([WP-C-07](WP-C-07-sotif-functional-modifications.md)) or the user information.
+2. **Independent data.** Evaluation data is independent of the training data (DSR-05), so a stratum the model was trained on is not credited twice.
+3. **Runtime backstop.** Inside the claimed ODD, out-of-distribution inputs that the evaluation did not reveal are handled by the runtime monitor (AIR-14), which raises a take-over alert.
+4. **Stated residual.** What remains unknown is whether the training data covers rare conditions inside a claimed stratum. WP-C-11 §7 records this, and so does the safety case as defeater DF-20 ([WP-K-01](../10-safety-case/WP-K-01-safety-case.md)). No argument relies on training-data coverage (DSR-01).
+
 ## 4. Intended functionality
 
 ### 4.1 Nominal behaviour per function
 
 | Function | Nominal behaviour inside the ODD | Not intended / not provided |
 |---|---|---|
-| F-01 Lateral control | Keeps the vehicle near the centre of the lane by commanding steering torque from the driving model's desired curvature; lateral acceleration ≤ 3.0 m/s², jerk ≤ 5 m/s³. Assisted lane change when the driver signals and nudges the wheel, above 20 mph, within 10 s (`desire_helper.py:8-9`) | Blind-spot checking (the Corolla LE reference vehicle has no BSM input expected; the driver checks), turning at intersections, evasive steering, steering at standstill |
+| F-01 Lateral control | Keeps the vehicle near the centre of the lane by commanding steering torque from the driving model's desired curvature; lateral acceleration ≤ 3.0 m/s², jerk ≤ 5 m/s³. Assisted lane change when the driver signals and nudges the wheel, above 20 mph, within 10 s (`desire_helper.py:8-9`) | Blind-spot checking (blind-spot monitoring input is not used by LionDriver, whether or not the trim fitted has it; the driver checks), turning at intersections, evasive steering, steering at standstill |
 | F-02 Longitudinal control (Chill mode) | Holds the set speed; follows the lead vehicle (radar track fused with vision, `radard.py:153-165`) at the selected personality gap; stops behind a stopping lead and resumes when it moves; acceleration −3.5…+2.0 m/s², cruise acceleration 1.6→0.6 m/s² by speed | Stopping for traffic lights, stop signs, pedestrians, stationary vehicles not previously tracked as lead; detecting speed limits (`LIMITATIONS.md:35-37`); emergency braking (stock PCS remains responsible) |
 | F-03 Engagement and modes | Engages only through the stock cruise controls; the envelope grants authority on the PCM cruise rising edge. Driver brake or cancel disengages; gas overrides longitudinal (does not disengage, `DisengageOnAccelerator` default `0`, `common/params_keys.h:35`); steering input overrides lateral | Engagement without driver action; staying engaged after brake |
 | F-04 Driver monitoring | Above 2.8 m/s, monitors driver attention by camera; escalating alerts 5/8/13 s (vision) or 5/15/25 s (wheel-touch fallback); force deceleration and lockout on no response (`policy.py:29-44`) | Exact alertness measurement (`LIMITATIONS.md:49`); monitoring below 10 km/h |
@@ -192,5 +201,4 @@ Decision record: **pending** — maintainer decision under D-08 / WP-C-01 OI-8.
 | OI-3 | Obtain the device operating temperature range and set the ambient temperature bound | HW lead | G1 |
 | OI-4 | Confirm ODD-A inclusion with the HARA owner (OS-03/OS-04 exposure depends on it); if ODD-A is dropped, re-rate exposure | HARA owner | G1 |
 | OI-5 | Confirm grade and banking bounds (6 %) by vehicle test | Safety engineer | G2 |
-| OI-6 | Specify the training-data ODD of the driving model (not available from upstream; GAP-22) and compare with this ODD ([WP-C-11](WP-C-11-ai-system-definition-and-safety-requirements.md)) | ML lead | G2 |
 | OI-7 | Feed the ODD in driver-recognisable terms into WP-O-03 user information | Maintainer | G5 |

@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1510" height="793" viewBox="0 0 1510 793">
+<title>FTA SG-07 sheet 2 of 2: suppression, delay or alteration of the stock PCS/AEB</title>
+<style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.n{font:italic 400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#6b7385}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.gl{font:700 7.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.06em;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.title2{font:600 17px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#9aa3b2;stroke-width:1.4;stroke-linecap:round}.wh{stroke:#c62828;stroke-width:3.2;stroke-linecap:round}.shadow{fill:#0f172a;opacity:.06}</style>
+<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
+<rect width="100%" height="100%" fill="#f7f8fa"/>
+<rect y="78" width="100%" height="715" fill="url(#dots)"/>
+<rect width="100%" height="78" fill="#0f2a44"/>
+<text x="40" y="32" class="eyebrow">FTA · SG-07 · WP-A-04 §8</text>
+<text x="40" y="59" class="title">Suppression, delay or alteration of the stock PCS/AEB</text>
+<rect x="1234" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
+<text x="1352" y="44" class="hc">Sheet 2 of 2  ·  ASIL B</text>
+<rect x="646.5" y="116.5" width="220" height="107.5" rx="9" class="shadow"/>
+<rect x="645.0" y="114" width="220" height="107.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M654.0,114 H856.0 A9,9 0 0 1 865.0,123 V119 H645.0 V123 A9,9 0 0 1 654.0,114 Z" fill="#1d2433"/>
+<text x="659.0" y="139" class="id">G7.1</text>
+<text x="851.0" y="139" class="kind">INTERMEDIATE</text>
+<text x="659.0" y="153.5" class="d">Camera-side PCS frames not</text>
+<text x="659.0" y="168.0" class="d">forwarded while the relay</text>
+<text x="659.0" y="182.5" class="d">intercepts</text>
+<rect x="659.0" y="190.5" width="82.4" height="16" rx="8" fill="#e6e9ef"/>
+<text x="700.2" y="202.0" class="chip" fill="#334155">from sheet 1</text>
+<path d="M735.0,259.5 Q755.0,250.5 775.0,259.5 Q773.0,232.5 755.0,221.5 Q737.0,232.5 735.0,259.5 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="755.0" y="251.5" class="gl" fill="#c62828">OR</text>
+<line x1="150.0" y1="282.5" x2="1360.0" y2="282.5" class="w"/>
+<line x1="150.0" y1="282.5" x2="1360.0" y2="282.5" class="wh"/>
+<line x1="755.0" y1="259.5" x2="755.0" y2="282.5" class="wh"/>
+<line x1="150.0" y1="282.5" x2="150.0" y2="307.5" class="wh"/>
+<line x1="392.0" y1="282.5" x2="392.0" y2="307.5" class="wh"/>
+<line x1="634.0" y1="282.5" x2="634.0" y2="307.5" class="wh"/>
+<line x1="876.0" y1="282.5" x2="876.0" y2="307.5" class="wh"/>
+<line x1="1118.0" y1="282.5" x2="1118.0" y2="307.5" class="wh"/>
+<line x1="1360.0" y1="282.5" x2="1360.0" y2="307.5" class="wh"/>
+<rect x="41.5" y="310.0" width="220" height="165.5" rx="9" class="shadow"/>
+<rect x="40" y="307.5" width="220" height="165.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M49,307.5 H251 A9,9 0 0 1 260,316.5 V312.5 H40 V316.5 A9,9 0 0 1 49,307.5 Z" fill="#c62828"/>
+<text x="54" y="332.5" class="id">BE-7.01</text>
+<text x="246" y="332.5" class="kind">BASIC</text>
+<text x="54" y="347.0" class="d">MCU hang with the relay</text>
+<text x="54" y="361.5" class="d">energised (no IWDG; GAP-07,</text>
+<text x="54" y="376.0" class="d">GAP-43) 2026-10-12: IWDG reset ≤</text>
+<text x="54" y="390.5" class="d">≈ 90 ms nominal (TSR-501);</text>
+<text x="54" y="405.0" class="d">residual: hang-to-reset plus</text>
+<text x="54" y="419.5" class="d">relay drop-out against the 0.2 s</text>
+<text x="54" y="434.0" class="d">FTTI</text>
+<rect x="54.0" y="442.0" width="48.2" height="16" rx="8" fill="#c62828"/>
+<text x="78.1" y="453.5" class="chip" fill="#fff">SPF-06</text>
+<circle cx="150.0" cy="490.0" r="16" fill="#fde8e8" stroke="#c62828" stroke-width="2.4"/>
+<rect x="283.5" y="310.0" width="220" height="107.5" rx="9" class="shadow"/>
+<rect x="282" y="307.5" width="220" height="107.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M291,307.5 H493 A9,9 0 0 1 502,316.5 V312.5 H282 V316.5 A9,9 0 0 1 291,307.5 Z" fill="#c62828"/>
+<text x="296" y="332.5" class="id">BE-7.02</text>
+<text x="488" y="332.5" class="kind">BASIC</text>
+<text x="296" y="347.0" class="d">Power-save command 0xe7 in car</text>
+<text x="296" y="361.5" class="d">mode stops the camera-side bus</text>
+<text x="296" y="376.0" class="d">(FFI-CM-08)</text>
+<rect x="296.0" y="384.0" width="48.2" height="16" rx="8" fill="#c62828"/>
+<text x="320.1" y="395.5" class="chip" fill="#fff">SPF-08</text>
+<rect x="349.2" y="384.0" width="31.1" height="16" rx="8" fill="#1a5fb4"/>
+<text x="364.8" y="395.5" class="chip" fill="#fff">FFI</text>
+<circle cx="392.0" cy="432.0" r="16" fill="#fde8e8" stroke="#c62828" stroke-width="2.4"/>
+<rect x="525.5" y="310.0" width="220" height="107.5" rx="9" class="shadow"/>
+<rect x="524" y="307.5" width="220" height="107.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M533,307.5 H735 A9,9 0 0 1 744,316.5 V312.5 H524 V316.5 A9,9 0 0 1 533,307.5 Z" fill="#1a5fb4"/>
+<text x="538" y="332.5" class="id">BE-7.03</text>
+<text x="730" y="332.5" class="kind">BASIC</text>
+<text x="538" y="347.0" class="d">Other SoC configuration commands</text>
+<text x="538" y="361.5" class="d">disturb bus 2 (0xe5, 0xde, 0xf1;</text>
+<text x="538" y="376.0" class="d">FFI-CM-09)</text>
+<rect x="538.0" y="384.0" width="31.1" height="16" rx="8" fill="#1a5fb4"/>
+<text x="553.5" y="395.5" class="chip" fill="#fff">FFI</text>
+<circle cx="634.0" cy="432.0" r="16" fill="#e6effb" stroke="#c62828" stroke-width="2.4"/>
+<rect x="767.5" y="310.0" width="220" height="100.0" rx="9" class="shadow"/>
+<rect x="766" y="307.5" width="220" height="100.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M775,307.5 H977 A9,9 0 0 1 986,316.5 V312.5 H766 V316.5 A9,9 0 0 1 775,307.5 Z" fill="#64748b"/>
+<text x="780" y="332.5" class="id">BE-7.04</text>
+<text x="972" y="332.5" class="kind">BASIC</text>
+<text x="780" y="347.0" class="d">Forwarding queue overflow or</text>
+<text x="780" y="361.5" class="d">latency under worst-case load</text>
+<text x="780" y="376.0" class="d">(TSR-707 not verified; overflow</text>
+<text x="780" y="390.5" class="d">counted only, can_common.h:165)</text>
+<circle cx="876.0" cy="424.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
+<rect x="1009.5" y="310.0" width="220" height="85.5" rx="9" class="shadow"/>
+<rect x="1008" y="307.5" width="220" height="85.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M1017,307.5 H1219 A9,9 0 0 1 1228,316.5 V312.5 H1008 V316.5 A9,9 0 0 1 1017,307.5 Z" fill="#64748b"/>
+<text x="1022" y="332.5" class="id">BE-7.05</text>
+<text x="1214" y="332.5" class="kind">BASIC</text>
+<text x="1022" y="347.0" class="d">Block list wrongly includes a</text>
+<text x="1022" y="361.5" class="d">PCS message (systematic; static</text>
+<text x="1022" y="376.0" class="d">list safety.h:270-281)</text>
+<circle cx="1118.0" cy="410.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
+<rect x="1251.5" y="310.0" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="1250" y="307.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M1259,307.5 H1461 A9,9 0 0 1 1470,316.5 V312.5 H1250 V316.5 A9,9 0 0 1 1259,307.5 Z" fill="#64748b"/>
+<text x="1264" y="332.5" class="id">BE-7.06</text>
+<text x="1456" y="332.5" class="kind">BASIC</text>
+<text x="1264" y="347.0" class="d">Camera-side FDCAN or transceiver</text>
+<text x="1264" y="361.5" class="d">fault (random HW)</text>
+<circle cx="1360.0" cy="395.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
+<text x="40" y="571.0" class="lh">Symbols · IEC 61025</text>
+<rect x="46" y="591.0" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>
+<rect x="46" y="591.0" width="44" height="4" rx="2" fill="#1d2433"/>
+<text x="68" y="645.0" class="s" text-anchor="middle">Event</text>
+<path d="M128,625.0 Q148,616.0 168,625.0 Q166,598.0 148,587.0 Q130,598.0 128,625.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="148" y="617.0" class="gl" fill="#1d2433">OR</text>
+<text x="148" y="645.0" class="s" text-anchor="middle">OR gate</text>
+<path d="M208,625.0 L208,605.0 A20,18 0 0 1 248,605.0 L248,625.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="228" y="617.0" class="gl" fill="#1d2433">AND</text>
+<text x="228" y="645.0" class="s" text-anchor="middle">AND gate</text>
+<circle cx="308" cy="605.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="308" y="645.0" class="s" text-anchor="middle">Basic event</text>
+<path d="M388,588.0 L410,605.0 L388,622.0 L366,605.0 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
+<text x="388" y="645.0" class="s" text-anchor="middle">Undeveloped</text>
+<path d="M468,587.0 L488,620.0 L448,620.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><line x1="478" y1="603.0" x2="502" y2="603.0" stroke="#1d2433" stroke-width="1.7" stroke-linecap="round"/>
+<text x="468" y="645.0" class="s" text-anchor="middle">Transfer out</text>
+<path d="M548,588.0 L568,621.0 L528,621.0 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="548" y="645.0" class="s" text-anchor="middle">Transfer in</text>
+<rect x="40.0" y="663.0" width="31.1" height="16" rx="8" fill="#c62828"/>
+<text x="55.5" y="674.5" class="chip" fill="#fff">SPF</text>
+<rect x="77.1" y="663.0" width="48.2" height="16" rx="8" fill="#5f6368"/>
+<text x="101.2" y="674.5" class="chip" fill="#fff">latent</text>
+<rect x="131.3" y="663.0" width="42.5" height="16" rx="8" fill="#6a3fb5"/>
+<text x="152.6" y="674.5" class="chip" fill="#fff">SOTIF</text>
+<rect x="179.8" y="663.0" width="71.0" height="16" rx="8" fill="#b45309"/>
+<text x="215.3" y="674.5" class="chip" fill="#fff">CCF DFI-nn</text>
+<rect x="256.8" y="663.0" width="31.1" height="16" rx="8" fill="#1a5fb4"/>
+<text x="272.4" y="674.5" class="chip" fill="#fff">FFI</text>
+<rect x="293.9" y="663.0" width="82.4" height="16" rx="8" fill="#3d6b3d"/>
+<text x="335.1" y="674.5" class="chip" fill="#fff">outside item</text>
+<rect x="382.3" y="663.0" width="122.3" height="16" rx="8" fill="#e6e9ef"/>
+<text x="443.5" y="674.5" class="chip" fill="#334155">repeated / transfer</text>
+<line x1="40" y1="697.0" x2="74" y2="697.0" class="wh"/>
+<text x="86" y="701.0" class="lb">Single-point path</text>
+<text x="86" y="717.0" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
+<text x="86" y="732.0" class="s">Computed from the gate logic (see cut-sets.md); the SPF tags are WP-A-04's own claims.</text>
+<rect x="970" y="557.0" width="500" height="196" rx="10" fill="#fff" stroke="#d9dee6"/>
+<line x1="970" y1="603.0" x2="1470" y2="603.0" stroke="#d9dee6"/>
+<line x1="1288" y1="603.0" x2="1288" y2="753.0" stroke="#d9dee6"/>
+<text x="988" y="586.0" class="tbh">LionDriver · FTA SG-07</text>
+<rect x="1320" y="571.0" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
+<text x="1386" y="585.0" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
+<text x="988" y="629.0" class="k">TOP OF SHEET</text>
+<text x="1086" y="629.0" class="v">G7.1</text>
+<text x="988" y="655.0" class="k">SINGLE-POINT</text>
+<text x="1086" y="655.0" class="v">6 basic events on this sheet</text>
+<text x="988" y="681.0" class="k">SOURCE</text>
+<text x="1086" y="681.0" class="v">WP-A-04 §8 (analysis of record)</text>
+<text x="988" y="707.0" class="k">GENERATED BY</text>
+<text x="1086" y="707.0" class="v">fta_diagrams.py</text>
+<text x="988" y="733.0" class="k">EDIT</text>
+<text x="1086" y="733.0" class="v">WP-A-04, not this file</text>
+<text x="1304" y="627.0" class="k">SHEETS</text>
+<line x1="1379.0" y1="662.0" x2="1379.0" y2="676.0" stroke="#9aa3b2" stroke-width="1.3"/>
+<rect x="1365.0" y="642.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1379.0" y="656.0" class="mm" fill="#0f2a44">1</text>
+<rect x="1365.0" y="676.0" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1379.0" y="690.0" class="mm" fill="#fff">2</text>
+</svg>

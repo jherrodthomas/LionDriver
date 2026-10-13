@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-C-10 Cybersecurity goals, claims and concept |
 | Standard reference | ISO/SAE 21434:2021 §9.4 (cybersecurity goals and claims), §9.5 (cybersecurity concept); ASPICE 4.0 SEC.1 |
-| Version | 0.1 |
+| Version | 0.2 (status update 2026-10-12: implementation status of CSR-C-01 and CSR-C-02 in the reference build at `bf6ce8c`; not verified). History: 0.1 |
 | Status | Draft — goals and CAL proposals are for review; not approved until the preliminary cybersecurity assessment passes |
 | ASIL / scope | CS (cybersecurity); safety relation traced to SG-01…SG-07 |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); preliminary cybersecurity assessment by an independent assessor |
 | Approver | Project maintainer (acting cybersecurity manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`). Concept originally at `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 > Defensive concept document. It states cybersecurity goals, claims and the controls that
 > meet them. It contains no exploitation detail or key material.
@@ -96,8 +96,8 @@ These are concept-level requirements. [WP-S-07](../03-system/WP-S-07-cybersecuri
 
 | ID | Requirement (one statement) | Parent CSG | CAL | Allocation | Verification method | Status / evidence |
 |---|---|---|---|---|---|---|
-| CSR-C-01 | The panda firmware shall enforce the Toyota safety mode and reject any mode/parameter change from the SoC that is not authorized for the reference configuration | CSG-01 | 3 | panda FW | Review + test (fault injection) | Not implemented; `0xdc` unauthenticated (GAP-09, `main_comms.h:222-225`) |
-| CSR-C-02 | Release panda firmware shall not accept a debug signing key and shall not enable debug-only capabilities (ALLOUTPUT, unrestricted relay drive, softloader) | CSG-01, CSG-02 | 3 | panda FW | Review + build-config audit | Not implemented; DEBUG+`ALLOW_DEBUG` default (GAP-25, `SConscript:12-20`) |
+| CSR-C-01 | The panda firmware shall enforce the Toyota safety mode and reject any mode/parameter change from the SoC that is not authorized for the reference configuration | CSG-01 | 3 | panda FW | Review + test (fault injection) | Not implemented; `0xdc` unauthenticated (GAP-09, `main_comms.h:222-225`). **2026-10-12: Implemented in the reference build (lock plus gating, `board/reference_lock.h`; TSR-512, TSR-513), not verified**; other builds unchanged |
+| CSR-C-02 | Release panda firmware shall not accept a debug signing key and shall not enable debug-only capabilities (ALLOUTPUT, unrestricted relay drive, softloader) | CSG-01, CSG-02 | 3 | panda FW | Review + build-config audit | Not implemented; DEBUG+`ALLOW_DEBUG` default (GAP-25, `SConscript:12-20`). **2026-10-12: Partial in the reference build, not verified**: relay drive (`0xc5`) and softloader entry (`0xd1` param 1) refused in a car mode; release-key, `ALLOW_DEBUG` and RDP parts open |
 | CSR-C-03 | The safety MCU shall boot only firmware whose integrity and authenticity are verified with a current cryptographic algorithm | CSG-02 | 3 | panda FW | Review + test | Not implemented; RSA-1024/SHA-1 (GAP-24, `rsa.h:37`, `sha.h:45`) |
 | CSR-C-04 | Flash read/write protection (RDP/WRP) shall be configured so the running safety firmware cannot be replaced or read out without authorization | CSG-02 | 3 | panda FW; user (provisioning) | Option-byte inspection | Not implemented; no RDP/WRP in code (GAP-38, `llflash.h:14`) |
 | CSR-C-05 | The recovery/bootloader path reachable from the SoC shall not flash unauthenticated (development) firmware in the reference configuration | CSG-02 | 3 | panda FW; SoC (pandad) | Review + test | Not implemented; dev bootstub flashed on boot failure (GAP-38, `pandad.py:34-39`) |
@@ -120,12 +120,14 @@ Cybersecurity goals protect the HARA safety goals by preventing an attacker from
 | Safety goal (ASIL) | Protected by CSG | How |
 |---|---|---|
 | SG-01 lateral authority (C/D) | CSG-01, CSG-02, CSG-03, CSG-05 | Safety-mode integrity, firmware authenticity, param/IPC integrity and CAN integrity keep an attacker from commanding excess lateral torque (H-01) |
-| SG-02 no silent loss of lateral control (B) | CSG-02, CSG-03, CSG-06 | Firmware authenticity and DoS resistance prevent silent lateral-control loss (H-02); remote-access reduction removes a DoS vector |
+| SG-02 no silent loss of lateral control (B) | CSG-01, CSG-02, CSG-03, CSG-04, CSG-05, CSG-06, CSG-07 | The envelope's authority-state and safety-mode check (FSR-02.10) needs CSG-01 and CSG-02; the EPS fault states it detects arrive over CAN (FSR-02.01, CSG-05). The take-over warnings, input-loss detection and driver monitoring run on the QM SoC (FSR-02.02, 02.03, 02.06…02.11), so every goal that keeps an attacker off the SoC applies: param/IPC integrity (CSG-03), model loading (CSG-04), remote access (CSG-06) and updates (CSG-07). Only the SoC-independent buzzer on link loss (FSR-02.05) does not depend on them (H-02, H-07) |
 | SG-03 no unintended acceleration (B/C) | CSG-01, CSG-02, CSG-03, CSG-05 | Same envelope-integrity chain applied to the longitudinal command (H-03) |
 | SG-04 bounded deceleration (B/C) | CSG-01, CSG-02, CSG-03, CSG-05 | Envelope integrity bounds attacker-induced deceleration (H-04) |
-| SG-05 override/disengage (B/C) | CSG-01, CSG-03, CSG-05 | Protecting engagement/override logic and its inputs keeps the driver able to override (H-05) |
-| SG-06 no silent loss of deceleration (B) | CSG-02, CSG-03, CSG-06 | Firmware authenticity and DoS resistance prevent silent longitudinal-control loss (H-06) |
-| SG-07 stock PCS preserved (B) | CSG-02, CSG-05 | Firmware and CAN integrity keep the item from suppressing/altering forwarded PCS messages (H-08) |
+| SG-05 override/disengage (B/C) | CSG-01, CSG-02, CSG-03, CSG-05 | The release on brake, cancel and override is enforced in the envelope firmware (FSR-05.01…05.06), so it needs firmware authenticity as well as safety-mode integrity; the brake and cruise inputs arrive over CAN (`0x226` has no counter or checksum) (H-05) |
+| SG-06 no silent loss of deceleration (B) | CSG-01, CSG-02, CSG-03, CSG-04, CSG-05, CSG-06, CSG-07 | As SG-02 for the longitudinal path: FSR-02.10 also serves SG-06; the PCM ACC fault that must be detected arrives over CAN (FSR-06.03); detection of plan loss and the warnings run on the SoC (FSR-06.01, 06.02, 06.05) (H-06, H-07) |
+| SG-07 stock PCS preserved (B) | CSG-01, CSG-02, CSG-03, CSG-05 | Forwarding, the block list and the relay release on SILENT/NO_OUTPUT depend on the envelope's safety mode and firmware (FSR-07.01, 07.03); an ungated SoC command can stop forwarding (GAP-49). Until FSR-07.02 is met, the openpilot-longitudinal transmit whitelist lets the SoC send PCS messages (`0x344`, `0x411`), so SoC integrity (CSG-03) applies as well, and through it every SoC entry path (CSG-04, CSG-06, CSG-07) (H-08) |
+
+Checked against the functional safety concept ([WP-C-04](WP-C-04-functional-safety-concept.md) Draft, §5 and §10) on 2026-10-12 (OI-6). The FSC allocates at least one FSR of every safety goal to the envelope firmware (E-03). So safety-mode integrity (CSG-01) and firmware authenticity (CSG-02) protect every goal, and both were added where the HARA-only mapping had left them out (CSG-01 for SG-02, SG-06 and SG-07; CSG-02 for SG-05). The goals whose warnings and detection the FSC allocates to the QM SoC without an envelope backstop (SG-02, SG-06) were extended with every goal that keeps an attacker off the SoC (CSG-04, CSG-06, CSG-07), and CAN integrity (CSG-05) where the FSC detects a fault from a received CAN message. CSG-08 (personal data) protects no safety goal.
 
 Two cross-cutting dependencies: **safety-mode integrity** (CSG-01) and **firmware authenticity** (CSG-02) protect every safety goal, because they are the common point where a cybersecurity attack and a functional-safety failure converge on the envelope. The freedom-from-interference argument in [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) and the dependent-failure analysis in [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md) must treat an attacker on the SoC as a credible common-cause source, not only random SoC faults.
 
@@ -138,5 +140,5 @@ Two cross-cutting dependencies: **safety-mode integrity** (CSG-01) and **firmwar
 | OI-3 | Confirm whether encryption at rest exists on AGNOS for personal data and the identity key (dimensions CSG-08/CSR-C-14) |
 | OI-4 | Agree the CAL proposals in §3–§4 with the independent assessor |
 | OI-5 | Decide the signed-update design (CSG-07/CSR-C-12), replacing the git-branch updater ([WP-M-09 OI-3](../01-management/WP-M-09-cybersecurity-plan.md)) |
-| OI-6 | Confirm the SG↔CSG mapping in §8 against [WP-C-04](WP-C-04-functional-safety-concept.md) (now Draft; the mapping was written from the HARA only) with the FSC author |
+| OI-6 | Closed: the SG↔CSG mapping in §8 was checked against [WP-C-04](WP-C-04-functional-safety-concept.md) §5 and §10 and corrected (2026-10-12). The check was made by the author of both documents; it is confirmed independently in CS-I1 at G1 ([WP-M-06 §8](../01-management/WP-M-06-confirmation-measures-plan.md)) |
 | OI-7 | Hand CSR-C-01…CSR-C-16 to [WP-S-07](../03-system/WP-S-07-cybersecurity-requirements-architecture.md) for refinement into CSR-nnn; keep the CAL and allocation attributes consistent |

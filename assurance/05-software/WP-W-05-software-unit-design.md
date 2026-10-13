@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-W-05 Software unit design and implementation |
 | Standard reference | ISO 26262-6:2018 §8 (software unit design and implementation: notation, design principles for unit design and implementation); ISO/SAE 21434:2021 §10 (by reference to WP-W-11); ASPICE 4.0 SWE.3 |
-| Version | 0.3 (RR-2026-008 F-16: unit inventory, §3, §4, §6–§8 rewritten for the current pins, new units UN-36…UN-44, allocation lines for SWSRs without a unit, ENV-R-07 sizes marked as line spans; F-29: Origin column; F-28: Author, baseline; 2026-10-12). 0.2 (UN-03: TX rate supervision design proposal DN-01; 2026-10-12). 0.1 |
+| Version | 0.5 (merge of PR #47 software alignment with the base; 2026-10-13: PR #47's unit numbering kept (UN-36…UN-44); the base's new units mapped to it: heartbeat monitor = UN-42, IWDG = UN-41, IRQ priorities = UN-43, reference lock = UN-40, TX rate check = UN-36, Toyota checks = UN-38/UN-39; the base's EPS-fault siren and heartbeat-loss siren added as UN-45 and UN-46 (base numbers UN-39 and UN-43 are not used); §8 notes the base's later status). It carries PR #47's draft, numbered 0.3 there: 0.3 (RR-2026-009 F-16: unit inventory, §3, §4, §6–§8 rewritten for the current pins, new units UN-36…UN-44, allocation lines for SWSRs without a unit, ENV-R-07 sizes marked as line spans; F-29: Origin column; F-28: Author, baseline; 2026-10-12). History on the base: 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (status update 2026-10-12: UN-05 in the 100 Hz safety task; UN-N1 exists; new units UN-36…UN-42 for the integrated LionDriver changes (heartbeat monitor, IWDG, IRQ priorities, EPS-fault siren, reference lock, TX rate check, Toyota cruise-main and EPS-fault checks); UN-02, UN-03, UN-15, UN-16, UN-19, UN-21, §5 updated. Nothing verified on hardware). 0.2 (UN-03: TX rate supervision design proposal DN-01; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope units (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating) |
 | Author | Assurance team (AI-assisted draft, Claude) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `682f184` (opendbc `7993399`, panda `8aa8671`) |
+| Baseline | `682f184` (opendbc `7993399`, panda `8aa8671`); UN-45 and UN-46 at panda `b790fca` and `c33343b` (current pins: panda `c33343b`, opendbc `273f44e`). Earlier: `bf6ce8c` (status update on the base; panda `b790fca`, opendbc `7993399`); `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 ## 1. Purpose and scope
 
@@ -26,11 +26,11 @@ The design is back-filled from code (T-03). The code is the implementation; this
 
 ## 2. Unit inventory
 
-**Pins and paths.** Repo "opendbc" means opendbc `7993399`, paths relative to `opendbc_repo/opendbc/safety/`; repo "panda" means panda `8aa8671`, paths relative to `panda/board/`. Every file:line in §2–§4 and §6–§8 is at these pins unless another pin is named. Line numbers are file positions of the first and last line of the function or block.
+**Pins and paths.** Repo "opendbc" means opendbc `7993399`, paths relative to `opendbc_repo/opendbc/safety/`; repo "panda" means panda `8aa8671`, paths relative to `panda/board/`. Every file:line in §2–§4 and §6–§8 is at these pins unless another pin is named (UN-45 and UN-46 were added from the base at panda `b790fca` and `c33343b`; no line numbers are given for them). Line numbers are file positions of the first and last line of the function or block.
 
 **Build variants.** Code under `#ifdef LIONDRIVER_REFERENCE` is compiled only in the reference build (`LIONDRIVER_REFERENCE=1`, panda `SConscript:24-26`); code under `LIONDRIVER_FAULT_INJECTION` only in debug builds made with `FAULT_INJECTION=1` (panda `SConscript:29-31`). Units or parts marked "(ref. build)" do not exist in other builds.
 
-**Origin** (RR-2026-008 F-29) is decided from the fork histories: every non-merge commit in opendbc `229dc70..7993399` (10 commits) and panda `92eb565..8aa8671` (17 commits) is a LionDriver commit (author "Claude", merged through pull requests on the `jherrodthomas` forks); `229dc70` (commaai/opendbc #3846) and `92eb565` (commaai/panda #2455) are the upstream bases. Method: `git log --no-merges` and `git diff --stat` over those ranges on a full clone of the fork remotes (the submodule checkouts in the working tree are shallow). A unit is
+**Origin** (RR-2026-009 F-29) is decided from the fork histories: every non-merge commit in opendbc `229dc70..7993399` (10 commits) and panda `92eb565..8aa8671` (17 commits) is a LionDriver commit (author "Claude", merged through pull requests on the `jherrodthomas` forks); `229dc70` (commaai/opendbc #3846) and `92eb565` (commaai/panda #2455) are the upstream bases. Method: `git log --no-merges` and `git diff --stat` over those ranges on a full clone of the fork remotes (the submodule checkouts in the working tree are shallow). A unit is
 
 - *Inherited* — no line of it changed in those ranges (inherited from opendbc or panda upstream);
 - *Inherited, modified by LionDriver* — upstream function with LionDriver lines added or changed;
@@ -82,7 +82,9 @@ The design is back-filled from code (T-03). The code is the implementation; this
 | UN-42 | `heartbeat_monitor_reset`, `heartbeat_monitor_tick` | panda | `drivers/heartbeat_monitor.h:1-30` | U-PND-MAIN | SPI/USB ISR (reset), safety task ISR (tick) | LionDriver-authored | 407 |
 | UN-43 | `interrupt_priorities_init` | panda | `drivers/irq_priorities.h:1-46` | U-PND-PLAT | thread, before interrupts are enabled | LionDriver-authored | 519 |
 | UN-44 | fault-injection hooks (`fault_injection_*`), request `0xa9` (debug builds with `FAULT_INJECTION=1` only) | panda | `drivers/fault_injection.h:1-55`; `main_comms.h:91-96` | U-PND-FLT (test support) | thread, tick, safety task, SPI/USB ISR | LionDriver-authored | none (HIL test support for 501) |
-| UN-N1 | `safety_task_handler`, `safety_task_timer_init` (periodic safety task, formerly "(new)") | panda | `main.c:128-144`; `drivers/timers.h:30-38`; `stm32h7/stm32h7_config.h:38-41` | U-PND-MAIN | TIM4 ISR, 100 Hz | LionDriver-authored | 401a, 407, 501 (run in it); 408, 413, 506, 711a (not yet) |
+| UN-45 | `eps_fault_siren_tick`, `eps_fault_siren_reset` | panda `b790fca` | `drivers/eps_fault_siren.h` | U-PND-HK | safety task ISR (tick), mode change (reset) | LionDriver-authored | 516 |
+| UN-46 | `heartbeat_siren_tick`, `heartbeat_siren_reset` (all builds) | panda `c33343b` | `drivers/heartbeat_siren.h` | U-PND-HK | safety task ISR (with the revocation of UN-42), mode change (reset) | LionDriver-authored | 516, 407 |
+| UN-N1 | `safety_task_handler`, `safety_task_timer_init` (periodic safety task, formerly "(new)") | panda | `main.c:128-144`; `drivers/timers.h:30-38`; `stm32h7/stm32h7_config.h:38-41` | U-PND-MAIN | TIM4 ISR, 100 Hz | LionDriver-authored | 401a, 407, 501 (run in it), 516 (UN-45 since panda `b790fca`, UN-46 since `c33343b`); 408, 413, 506, 711a (not yet) |
 | UN-N2 | (new) fault reaction `enter_safe_state(reason)` — not implemented | — | — | U-PND-FLT | any | — | 502, 108a, 503b, 504, 505, 509 |
 | UN-N3 | (new) zero-torque frame generator — not implemented | — | — | U-SAF-TOY | TX path, safety task | — | 109, 109a |
 | UN-N4 | (new) RX plausibility: rate and frozen-value checks, cross-checks (a), (b), (d) — not implemented; cross-check (c) is UN-39 | — | — | U-SAF-CORE/TOY | RX ISR, safety task | — | 403–405 |
@@ -100,7 +102,7 @@ These SWSRs are allocated in [`swsr.yaml`](../trace/items/swsr.yaml) (field `all
 | 504 | U-PND-FLT | UN-N2 (planned); existing: `NMI_Handler` resets the MCU (UN-34, `early_init.h:73-76`). Whether the clock security system is enabled so that it raises the NMI: not confirmed here | Not implemented |
 | 505 | U-PND-FLT | UN-N2 (planned); supply voltage is only reported in health (`main_comms.h:13`) | Not implemented |
 | 509 | U-PND-FLT | UN-N2 (planned); die temperature is only reported in health (`main_comms.h:57-58`) | Partial (report only) |
-| 514 | build, U-PND-COMMS | UN-21 request `0xd6` returns `gitversion` (`main_comms.h:229-233`), built as `<builder>-<git>-<RELEASE\|DEBUG>` (panda `SConscript:36-41, 155-159`), so the build type is readable. The default build is DEBUG with `ALLOW_DEBUG` (`SConscript:12-20`); `LIONDRIVER_REFERENCE` is not part of the version string | Not met by default (build type reported; release not the default) |
+| 514 | build, U-PND-COMMS | UN-21 request `0xd6` returns `gitversion` (`main_comms.h:229-233`), built as `<builder>-<git>-<RELEASE\|DEBUG>` (panda `SConscript:36-41, 155-159`), so the build type is readable. The default build is DEBUG with `ALLOW_DEBUG` (`SConscript:12-20`); `LIONDRIVER_REFERENCE` is not part of the version string | Not met by default (build type reported; release not the default). On the base (panda `6dee6fa`) a reference build also sets `HEALTH_FLAG_REFERENCE_BUILD` (bit 12) in every health packet, which `pandad` requires before it sets a car mode (SWSR-514h) |
 | 516b | U-SAF-CORE | None. Candidate units: UN-08 (cruise state) and UN-N1 (periodic evaluation) | Not implemented |
 | 711 | U-PND-FDCAN, U-PND-MAIN | UN-25, UN-27 (inputs: frames received, queue push) and UN-N1 (periodic check); today a full TX/forward queue is only counted (`drivers/can_common.h:165`) | Not implemented |
 | 711a | U-PND-MAIN | UN-N1: the 100 Hz task that SWSR-711a requires exists since panda `9f60e17`; no `t_fwd` constant or forwarding check runs in it | Not implemented |
@@ -298,7 +300,7 @@ Calls UN-07 inside `ENTER_CRITICAL()`/`EXIT_CRITICAL()` (`main.c:43-45`; WP-W-03
 |---|---|
 | Purpose | Run the periodic safety checks at a fixed rate independent of the 8 Hz tick (SWSR-401a) |
 | Timer | TIM4, 1 MHz count, ARR = 10^6 / `SAFETY_TASK_FREQ` − 1 (`drivers/timers.h:30-38`), `SAFETY_TASK_FREQ = 100` (`stm32h7/stm32h7_config.h:38-41`); registered with an interrupt-rate limit of 110 Hz sharing `FAULT_INTERRUPT_RATE_TICK` (`main.c:351-353`) |
-| Algorithm | (`main.c:130-144`) when the update flag is set: (1) `safety_tick()` (UN-05); (2) `heartbeat_monitor_tick()` (UN-42) and, in a car mode, `controls_allowed = false` while it reports a timeout; (3) `hw_watchdog_tick()` (UN-41); (4) fault-injection hook (UN-44, debug builds with `FAULT_INJECTION` only); then clear the flag |
+| Algorithm | (`main.c:130-144`) when the update flag is set: (1) `safety_tick()` (UN-05); (2) `heartbeat_monitor_tick()` (UN-42) and, in a car mode, `controls_allowed = false` while it reports a timeout; (3) `hw_watchdog_tick()` (UN-41); (4) fault-injection hook (UN-44, debug builds with `FAULT_INJECTION` only); then clear the flag. Since panda `b790fca` the task also runs the EPS-fault siren (UN-45), and since `c33343b` the heartbeat-loss siren (UN-46), which is called with the result of UN-42 and with `controls_allowed` before the revocation clears it (order taken from the change record; line numbers not re-read at these pins) |
 | Priority | NVIC level 8, same as all other interrupts (UN-43), so it does not preempt and is not preempted |
 | Not yet in it | SWSR-307, 403, 404, 405 (beyond UN-39, which runs per frame), 408, 413, 506, 109a, 711/711a |
 | Timing | Period, jitter and execution time not measured (SWSR-401a, SWSR-519) |
@@ -404,6 +406,27 @@ Sets an explicit NVIC priority for the interrupts the firmware enables (20 `NVIC
 
 `fault_injection.h` (`drivers/fault_injection.h:1-55`) refuses to compile without `ALLOW_DEBUG` (`:10-12`) and is included only with `LIONDRIVER_FAULT_INJECTION` (`main.c:11-13`), which the build allows only for DEBUG (`SConscript:29-31`). Request `0xa9` selects a hang of the main loop, the tick, the safety task, a hang with interrupts disabled, or an early watchdog feed, for the HIL watchdog tests. Not part of a release image; listed so that the inventory covers all LionDriver-authored firmware code.
 
+### UN-45 EPS-fault siren (panda `b790fca`)
+
+| Item | Description |
+|---|---|
+| Purpose | Warn the driver when an EPS fault persists while authority is granted (SWSR-516 (b), EPS-fault trigger) |
+| Constants | `EPS_FAULT_SIREN_PERSIST_TICKS` 100 (1 s), `EPS_FAULT_SIREN_HOLD_TICKS` 300 (3 s) |
+| Algorithm | In UN-N1: once `safety_eps_fault` (UN-38) has been set for 1 s while `controls_allowed`, request the siren for at least 3 s; re-triggered while the fault persists; reset on every safety mode change. The speaker is driven by the 8 Hz tick on odd ticks only, so the worst case is 1 s + 10 ms + 2 × 125 ms ≈ 1.26 s after the fault onset (WP-S-04 T-28) |
+| Build | Compiled in every build; only the reference build sets `safety_eps_fault` |
+| Remarks | Host tests `tests/eps_fault_siren`; HIL not run. Numbered UN-39 on the base |
+
+### UN-46 heartbeat-loss siren (panda `c33343b`)
+
+| Item | Description |
+|---|---|
+| Purpose | Warn the driver within 1 s, without the SoC, when heartbeat loss revokes granted authority (SWSR-516 (a), TSR-516) |
+| Constants | `HEARTBEAT_SIREN_HOLD_TICKS` 300 (3 s) |
+| Algorithm | In UN-N1, with the revocation of UN-42 and `controls_allowed` taken before the revocation clears it: when the monitor revokes granted authority in a car mode, request the siren at once and hold it 3 s; no siren when not engaged or while heartbeats arrive; reset on every safety mode change. The 8 Hz tick drives the speaker on every other tick, so the siren sounds ≤ 0.3 s + 10 ms + 250 ms ≈ 0.56 s after the last heartbeat (WP-S-04 T-07a) |
+| Build | All builds (like UN-42), not only the reference build |
+| Not changed | The 1 Hz path of UN-19 (SILENT after 4–5 s, 3 s siren if authority was granted within the last 5 s); it is the only siren when authority ended within the 5 s before the loss (WP-S-04 OI-9) |
+| Remarks | Host tests `tests/heartbeat_siren` (8 tests); HIL `tests/hitl/test_15_heartbeat_siren.py` not run. Numbered UN-43 on the base |
+
 ## 5. Normative state tables
 
 ### 5.1 Safety-mode transitions (UN-18/UN-07)
@@ -456,8 +479,8 @@ Generated from [`state-machines/sm-toy-auth.yaml`](state-machines/sm-toy-auth.ya
 | T6 | ALLOWED | 1 Hz tick | heartbeat engaged=0 for 3 consecutive ticks | clear | NOT_ALLOWED | all | 307 | Not implemented | panda main.c:225-229 |
 | T7 | any | safety mode set (0xdc, heartbeat loss, harness change) | — | clear | NOT_ALLOWED | all | 311 | Implemented | opendbc safety.h:534 (set_safety_hooks) |
 | T9 | ALLOWED | TX frame rejected by a content check | — | clear, reason | NOT_ALLOWED | all | 108 | Not implemented | not implemented: the frame is dropped, authority kept (opendbc safety.h safety_tx_hook) |
-| T10a | ALLOWED | safety task: heartbeat check | no SoC heartbeat for > 0.3 s in a car mode | clear | NOT_ALLOWED | all | 407 | Implemented | panda main.c:135-137 (heartbeat_monitor_tick) |
-| T10b | ALLOWED | safety task: command freshness check | no accepted 0x2E4/0x343 for 50/100 ms | clear, reason | NOT_ALLOWED | all | 408 | Not implemented | not implemented |
+| T10a | ALLOWED | safety task: heartbeat check | no SoC heartbeat for > 0.3 s in a car mode | clear; siren 3 s when authority was granted (panda c33343b) | NOT_ALLOWED | all | 407, 516 | Partial | panda main.c:135-137 (heartbeat_monitor_tick); heartbeat_siren.h at panda c33343b |
+| T10b | ALLOWED | safety task: command freshness check | no accepted 0x2E4/0x343 for 50/100 ms | clear, reason | NOT_ALLOWED | reference | 408 | Implemented | opendbc 273f44e safety.h (tx_arrival_checks; merged from the base, lines not re-read) |
 | T10c | ALLOWED | 0x1D2 / 0x1D3 | CRUISE_ACTIVE while MAIN_ON is off for > 150 ms | clear | NOT_ALLOWED | reference | 405 | Partial | opendbc modes/toyota.h:126-143 (toyota_cruise_main_check) |
 | T10d | ALLOWED | platform fault | — | clear, SS-S | NOT_ALLOWED | all | 502 | Not implemented | not implemented: faults are reported only |
 | T10e | ALLOWED | driver steering override | — | clear, reason | NOT_ALLOWED | all | 304 | Not implemented | not implemented for Toyota LKA |
@@ -572,6 +595,8 @@ The status column is copied from the WP-W-02 Baseline column at `682f184` (opend
 | 511a, 513 | UN-40, UN-21 | Gating in car modes | 511a: Partial; 513: Met (ref. build) |
 | 705 | UN-16, UN-15 | Reduced whitelist | 705: Met (ref. build) |
 | 711, 711a | UN-N1, UN-25, UN-27 (§2.1) | (0.3) Forwarding-stopped detection at ≥ 50 Hz, relay release | 711: Not impl; 711a: Not impl |
+
+Changed on the base after `682f184` (merged in v0.5; WP-W-02 Baseline column): 408 implemented in the reference build (opendbc `273f44e`, `tx_arrival_checks`; no unit entry yet, UN-N1/UN-03 candidates); 516 Partial (EPS-fault siren UN-45, panda `b790fca`; heartbeat-loss siren UN-46, panda `c33343b`); 514h Partly (host check of `HEALTH_FLAG_REFERENCE_BUILD`, panda `6dee6fa`).
 
 ## 9. Open items
 
