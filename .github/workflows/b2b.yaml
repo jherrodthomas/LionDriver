@@ -1,0 +1,55 @@
+name: b2b
+
+# Back-to-back run of the SM-TOY-AUTH reference model against the opendbc safety C (libsafety), both build
+# variants (assurance/05-software/reference-models). Fails if the model and the C diverge with all recorded
+# deviations on (a new difference), if a recorded deviation is no longer needed, or if a seeded model fault is
+# not detected. An additional measure: no verification credit is taken from it (TE-01 TL-24, not yet decided).
+
+on:
+  push:
+    branches:
+      - liondriver-dev
+    paths:
+      - 'opendbc_repo'
+      - 'assurance/05-software/reference-models/**'
+      - 'assurance/05-software/state-machines/**'
+      - '.github/workflows/b2b.yaml'
+  pull_request:
+    paths:
+      - 'opendbc_repo'
+      - 'assurance/05-software/reference-models/**'
+      - 'assurance/05-software/state-machines/**'
+      - '.github/workflows/b2b.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: b2b-${{ github.event_name == 'push' && github.run_id || github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  b2b_toy_auth:
+    name: SM-TOY-AUTH model vs safety C
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout opendbc submodule
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Run back-to-back (both builds, deviations, mutants)
+      # setup.sh must run from inside opendbc_repo: uv discovers the project from the working directory
+      run: |
+        cd opendbc_repo
+        source setup.sh
+        cd ..
+        python assurance/05-software/reference-models/b2b_toy_auth.py --all --gate --json b2b-toy-auth.json
+    - name: Upload result
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: b2b-toy-auth
+        path: b2b-toy-auth.json

@@ -80,4 +80,10 @@ opendbc_repo/.venv/bin/python assurance/05-software/reference-models/b2b_toy_aut
 
 `--all` runs both build variants with the literal model, with each deviation, and with all deviations, then runs the mutants. It prints one summary line per run to stderr. `--variant reference|upstream [--deviation NAME] [--mutant NAME] [--seeds N] [--events N]` runs a single configuration and prints its JSON. The run is deterministic for a given seed range, apart from the toolchain.
 
-It does not run in CI yet. The assurance workflow does not build libsafety. A CI step would need the opendbc environment and is a proposal, not done here.
+`--gate` (with `--all`) makes the run exit 1 in any of these cases:
+
+- a divergence remains with all deviations on, which means a new difference between the model and the C;
+- a deviation is no longer needed in either build, because the code or the specification changed and the option should be removed;
+- a mutant is not detected.
+
+CI runs `--all --gate` in the [`b2b` workflow](../../../.github/workflows/b2b.yaml) whenever `opendbc_repo`, this directory or the state-machine records change, and uploads the JSON as an artifact. A passing CI run is not a verification result (TE-01 TL-24).

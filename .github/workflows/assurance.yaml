@@ -47,6 +47,8 @@ jobs:
       run: python3 assurance/trace/tools/check_trace.py
     - name: State machines (WP-W-05 §5 generated from state-machines/*.yaml)
       run: python3 assurance/trace/tools/check_state_machines.py --check
+    - name: State-machine checker unit tests (known-bad records, golden output; TE-01 TL-23)
+      run: python3 -m unittest discover -s assurance/trace/tools -p 'test_*.py' -v
     - name: Relative links
       run: python3 assurance/trace/tools/check_links.py
     - name: HARA model consistency (summary and WP-C-03 §2.1 counts)

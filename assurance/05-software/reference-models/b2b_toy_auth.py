@@ -408,7 +408,7 @@ def environment() -> dict:
   cc = subprocess.run(["cc", "--version"], capture_output=True, text=True).stdout.splitlines()[0]
   return {"superproject": git("rev-parse", "--short", "HEAD"),
           "opendbc": git("rev-parse", "--short", "HEAD", cwd=REPO / "opendbc_repo"),
-          "panda": git("rev-parse", "--short", "HEAD", cwd=REPO / "panda"),
+          "panda_pinned": git("rev-parse", "--short", "HEAD:panda"),  # not used by libsafety; may not be checked out
           "python": sys.version.split()[0], "cc": cc,
           "sha256": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (HERE / "sm_toy_auth_model.py", HERE / "b2b_toy_auth.py")}}
 
@@ -422,12 +422,18 @@ def main() -> int:
   ap.add_argument("--seeds", type=int, default=100)
   ap.add_argument("--events", type=int, default=3000)
   ap.add_argument("--json", type=Path)
+  ap.add_argument("--gate", action="store_true",
+                  help="with --all: exit 1 unless the all-deviations runs agree everywhere, every deviation is still "
+                       "needed and every mutant is detected (CI)")
   a = ap.parse_args()
 
   if a.all:
     runs = []
+    names = sorted(DEVIATIONS)
+    dev_sets = [()] + [(d,) for d in names] + [tuple(x for x in names if x != d) for d in names] + [tuple(names)]
+    dev_sets = list(dict.fromkeys(dev_sets))
     for variant in ("reference", "upstream"):
-      for dev in [[]] + [[d] for d in sorted(DEVIATIONS)] + [["all"]]:
+      for dev in dev_sets:
         cmd = [sys.executable, __file__, "--variant", variant, "--seeds", str(a.seeds), "--events", str(a.events)]
         for d in dev:
           cmd += ["--deviation", d]
@@ -457,13 +463,28 @@ def main() -> int:
                          "detected": bool(directed_hits or r["random"]["diverged"])}
       print(f"mutant {mutant:30} detected={mutants[mutant]['detected']} directed={len(directed_hits)} "
             f"random={r['random']['diverged']}/{r['random']['sequences']}", file=sys.stderr)
-    result = {"environment": environment(), "runs": runs, "mutants": mutants}
+    gate = []
+    for r in runs:
+      if set(r["deviations"]) == set(names):
+        n = sum(v != "agree" for v in r["directed"].values()) + r["random"]["diverged"]
+        if n:
+          gate.append(f"{r['variant']}: {n} divergences with all deviations on (a new difference between model and C)")
+    for d in names:
+      rest = set(names) - {d}
+      if not any(set(r["deviations"]) == rest and (r["random"]["diverged"] or
+                                                   any(v != "agree" for v in r["directed"].values())) for r in runs):
+        gate.append(f"deviation {d} is no longer needed in either build (code or specification changed): remove it")
+    gate += [f"mutant {m} not detected" for m, v in mutants.items() if not v["detected"]]
+    for g in gate:
+      print(f"GATE FAIL: {g}", file=sys.stderr)
+    print("GATE " + ("FAIL" if gate else "OK"), file=sys.stderr)
+    result = {"environment": environment(), "runs": runs, "mutants": mutants, "gate": gate}
     text = json.dumps(result, indent=1)
     if a.json:
       a.json.write_text(text + "\n")
     else:
       print(text)
-    return 0
+    return 1 if (a.gate and gate) else 0
 
   if a.variant is None:
     ap.error("--variant or --all is required")
