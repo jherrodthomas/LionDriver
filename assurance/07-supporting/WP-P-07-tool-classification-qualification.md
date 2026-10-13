@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-07 Software tool classification and qualification |
 | Standard reference | ISO 26262-8:2018 §11; ISO/SAE 21434:2021 §5 (tool management); ISO/PAS 8800:2024 (tools for AI development, informative) |
-| Version | 0.1 |
+| Version | 0.2 (§3 note and OI-8: modelling-tool evaluation [TE-01](tool-evaluations/TE-01-modelling-tools.md), proposed TL-23…TL-26 not yet entered; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (qualification effort driven by the envelope ASIL from WP-C-03) |
 | Author | Assurance team (initial draft) |
@@ -32,6 +32,8 @@ A tool used only on QM elements (the SoC stack under T-03) needs no ISO 26262 qu
 ## 3. Tool inventory and classification
 
 Versions are taken from `uv.lock` (openpilot) and `opendbc_repo/uv.lock` (opendbc tests) at the baseline unless stated.
+
+Modelling tools and the in-house state-machine checker and back-to-back harness are evaluated in [TE-01](tool-evaluations/TE-01-modelling-tools.md). Its proposed rows TL-23…TL-26 are not in this table until decided (OI-8).
 
 | ID | Tool | Version / source | Use case | Target element | TI | TD | TCL | Rationale for TD |
 |---|---|---|---|---|---|---|---|---|
@@ -108,3 +110,4 @@ QM tools (TL-08 to TL-14) get confidence measures under SOTIF/PAS 8800 instead: 
 | OI-5 | Add branch coverage and an MC/DC strategy (K-3) |
 | OI-6 | Pin host compiler, uv and CI runner images (K-8) |
 | OI-7 | Determine the `comma-deps-cppcheck` version used by panda (no panda lockfile in tree) |
+| OI-8 | Decide [TE-01](tool-evaluations/TE-01-modelling-tools.md) D1–D4 (modelling tool per use case; TL-23 `check_state_machines.py`, TL-24 reference model and back-to-back harness, TL-25 HIL plant tool, TL-26 calculation scripts), then enter the rows in §3 and the TCL2 plans in §5 |

@@ -7,7 +7,7 @@
 | Model | [`sm_toy_auth_model.py`](sm_toy_auth_model.py): SM-TOY-AUTH ([record](../state-machines/sm-toy-auth.yaml), WP-W-05 §5.2) |
 | Harness | [`b2b_toy_auth.py`](b2b_toy_auth.py) |
 | Results | [`results/`](results/) |
-| Tool status | Not yet classified in [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md). Until it is, no verification credit is taken from these runs |
+| Tool status | Not yet classified in [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md). Proposed in [TE-01](../../07-supporting/tool-evaluations/TE-01-modelling-tools.md) as TL-24: an additional measure with no credit (TCL1), or TCL2 if credit is claimed. Until that is decided, no verification credit is taken from these runs |
 
 ## 1. What it does
 
