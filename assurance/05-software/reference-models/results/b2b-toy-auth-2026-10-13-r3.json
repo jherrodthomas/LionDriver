@@ -1,8 +1,8 @@
 {
  "environment": {
-  "superproject": "0478c1c",
+  "superproject": "7102765",
   "opendbc": "273f44e6",
-  "panda_pinned": "8aa8671",
+  "panda_pinned": "c33343b",
   "python": "3.12.13",
   "cc": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
   "sha256": {
