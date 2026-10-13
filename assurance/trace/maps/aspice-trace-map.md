@@ -28,7 +28,7 @@ block-beta
   space
   space
   space
-  VAL1["<b>VAL.1</b><br/>Validation<br/>VS-VAL: 30 cases"]
+  VAL1["<b>VAL.1</b><br/>Validation<br/>VS-VAL: 31 cases"]
   space
   SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39* · FSR 54 · TSR 118<br/>TC 33* · FI 22* · FM 11*<br/>CSG 8*<br/><i>from SG: 7/7</i>"]
   space
@@ -163,7 +163,7 @@ A named item is a **specified** link, not a passed test. 0 of 411 traced items c
 | **SWE.2** | SW architectural design | WP-W-03 | — |
 | **HWE.2** | HW design | WP-H-02 | — |
 | **SWE.3** | SW detailed design and unit construction | WP-W-05 | — |
-| **VAL.1** | Validation | WP-V-01 | VS-VAL (30 cases) |
+| **VAL.1** | Validation | WP-V-01 | VS-VAL (31 cases) |
 | **SYS.5** | System verification | WP-S-09 | VS-SQ (19 cases) |
 | **SYS.4** | System integration and integration verification | WP-S-08, WP-V-05 | VS-SI (26 cases), VS-FI (31 cases) |
 | **SWE.6** | SW verification | WP-W-08 | VS-SWQ (26 cases) |
