@@ -303,15 +303,33 @@ def paginate(root: Node) -> list[Node]:
 
 # ---------------------------------------------------------------- drawing
 
-GOAL_W = 230
-STRAT_W = 250
-SOL_D = 46
-SOL_W = 112
-SIDE_W = 190
-GAP_X = 22
-LEVEL_GAP = 46
-MARGIN = 30
-LINE_H = 12.5
+GOAL_W = 244
+STRAT_W = 262
+SOL_D = 48
+SOL_W = 120
+SIDE_W = 196
+GAP_X = 24
+LEVEL_GAP = 54
+MARGIN = 40
+HEADER_H = 78
+LINE_H = 14
+MIN_WIDTH = 1180
+
+INK, MUTED, WIRE, HAIR, NAVY = "#1d2433", "#5b6475", "#7d8798", "#d9dee6", "#0f2a44"
+SANS = "Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+MONO = "'JetBrains Mono', Menlo, Consolas, monospace"
+STRATEGY = ("#e4e7fb", "#4b5bb7")      # fill, stroke
+SIDE_STYLE = {                           # kind -> fill, stroke, marker colour
+  "C": ("#dfeaf6", "#6f8fb5", "#2f557f"),
+  "A": ("#fbeccd", "#c9963a", "#7a4f00"),
+  "J": ("#dcefe0", "#5f9f6d", "#245a31"),
+}
+SUPPORT = {   # evidence roll-up of a goal's subtree -> stripe colour, label, card tint, card border
+  "available": ("#2e7d32", "all evidence available", "#edf7ee", "#9fcfa3"),
+  "partial": ("#e0a21b", "evidence partial", "#fdf5e1", "#ecc77a"),
+  "missing": ("#c62828", "evidence missing", "#fdecec", "#eba9a9"),
+  "none": ("#8a93a3", "not developed", "#f1f3f6", "#c9cfd8"),
+}
 
 
 def wrap(text: str, width: int) -> list[str]:
@@ -343,6 +361,23 @@ def _clip(lines: list[str], n: int, width: int) -> list[str]:
   return lines
 
 
+def support(node: Node) -> str:
+  """Worst evidence status of the solutions below a goal or strategy, across all sheets."""
+  statuses = set()
+
+  def visit(n: Node) -> None:
+    if n.kind == "solution":
+      statuses.add(n.status)
+    for c in n.children:
+      visit(c)
+
+  visit(node)
+  for s in ("missing", "partial", "available"):
+    if s in statuses:
+      return s
+  return "none"
+
+
 @dataclass(eq=False)
 class Box:
   node: Node
@@ -354,7 +389,7 @@ class Box:
   x: float = 0.0            # left edge of the main shape
   y: float = 0.0
   children: list[Box] = field(default_factory=list)
-  tags: list[tuple[str, str]] = field(default_factory=list)
+  chips: list[list[tuple[str, str, float]]] = field(default_factory=list)   # rows of (kind, label, width)
 
   @property
   def foot(self) -> float:
@@ -362,31 +397,49 @@ class Box:
     return self.w + (GAP_X / 2 + SIDE_W if self.side_boxes else 0)
 
 
+def _chip_w(label: str) -> float:
+  return 14 + 5.7 * len(label)
+
+
+def _chip_rows(chips: list[tuple[str, str]], width: float) -> list[list[tuple[str, str, float]]]:
+  rows: list[list[tuple[str, str, float]]] = []
+  row: list[tuple[str, str, float]] = []
+  used = 0.0
+  for kind, label in chips:
+    w = _chip_w(label)
+    if row and used + w > width:
+      rows.append(row)
+      row, used = [], 0.0
+    row.append((kind, label, w))
+    used += w + 5
+  if row:
+    rows.append(row)
+  return rows
+
+
 def make_box(node: Node, sheet_root: Node) -> Box:
-  tags: list[tuple[str, str]] = []
   if node.kind == "solution":
-    lines = _clip(wrap(node.text, 20), 4, 20)
-    h = SOL_D + 6 + LINE_H * len(lines)
+    lines = _clip(wrap(node.text, 21), 4, 21)
+    h = SOL_D + 8 + LINE_H * len(lines)
     box = Box(node, SOL_W, h, lines, [])
   else:
     width = GOAL_W if node.kind == "goal" else STRAT_W
-    chars = 38 if node.kind == "goal" else 36
+    chars = 36 if node.kind == "goal" else 34
     lines = _clip(wrap(node.text, chars), 9, chars)
-    if node.defeaters:
-      tags.append(("df", "defeaters: " + ", ".join(node.defeaters)))
+    chips = [("df", d) for d in node.defeaters]
     if node is not sheet_root and node.sheet_link is not None:
-      tags.append(("sheet", f"developed on sheet {node.sheet_link}"))
+      chips.append(("sheet", f"→ sheet {node.sheet_link}"))
     if node is sheet_root and node.sheet_from is not None:
-      tags.append(("sheet", f"from sheet {node.sheet_from}"))
-    tag_lines = sum(len(wrap(t, 44)) for _, t in tags)
-    h = 8 + 14 + LINE_H * len(lines) + 15 * tag_lines + 8
-    box = Box(node, width, h, lines, [], tags=tags)
+      chips.append(("sheet", f"from sheet {node.sheet_from}"))
+    rows = _chip_rows(chips, width - 34)
+    h = 30 + LINE_H * len(lines) + 22 * len(rows) + 12
+    box = Box(node, width, h, lines, [], chips=rows)
   sides = []
   for kind, cid, text in node.sides:
-    sl = _clip(wrap(text, 30), 6, 30)
-    sides.append((kind, cid, sl, 8 + 13 + LINE_H * len(sl) + 8))
+    sl = _clip(wrap(text, 29), 6, 29)
+    sides.append((kind, cid, sl, 30 + LINE_H * len(sl) + 10))
   box.side_boxes = sides
-  box.side_h = sum(s[3] for s in sides) + 8 * max(0, len(sides) - 1)
+  box.side_h = sum(s[3] for s in sides) + 10 * max(0, len(sides) - 1)
   developed_here = not (node is not sheet_root and node.sheet_link is not None)
   if developed_here:
     box.children = [make_box(c, sheet_root) for c in node.children]
@@ -397,13 +450,13 @@ def layout(root: Box) -> tuple[float, float]:
   level_h: dict[int, float] = {}
 
   def heights(b: Box, d: int):
-    extra = 16 if b.node.undeveloped else 0
+    extra = 22 if b.node.undeveloped else 0
     level_h[d] = max(level_h.get(d, 0), max(b.h + extra, b.side_h))
     for c in b.children:
       heights(c, d + 1)
 
   heights(root, 0)
-  level_y = {0: MARGIN + 40}
+  level_y = {0: HEADER_H + 36}
   for d in range(1, max(level_h) + 1):
     level_y[d] = level_y[d - 1] + level_h[d - 1] + LEVEL_GAP
   cursor = [MARGIN]
@@ -424,86 +477,118 @@ def layout(root: Box) -> tuple[float, float]:
 
   place(root, 0)
   depth = max(level_h)
-  return cursor[0] - GAP_X + MARGIN, level_y[depth] + level_h[depth] + MARGIN
+  return cursor[0] - GAP_X + MARGIN, level_y[depth] + level_h[depth] + 24
 
 
 def _arrow(x1, y1, x2, y2, hollow: bool) -> str:
-
   ang = math.atan2(y2 - y1, x2 - x1)
-  ax, ay = x2 - 9 * math.cos(ang - 0.4), y2 - 9 * math.sin(ang - 0.4)
-  bx, by = x2 - 9 * math.cos(ang + 0.4), y2 - 9 * math.sin(ang + 0.4)
-  fill = "#fff" if hollow else "#111"
-  return (f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" class="w"/>' +
-          f'<path d="M{x2:.1f},{y2:.1f} L{ax:.1f},{ay:.1f} L{bx:.1f},{by:.1f} Z" fill="{fill}" stroke="#111" stroke-width="1"/>')
+  ax, ay = x2 - 10 * math.cos(ang - 0.42), y2 - 10 * math.sin(ang - 0.42)
+  bx, by = x2 - 10 * math.cos(ang + 0.42), y2 - 10 * math.sin(ang + 0.42)
+  cls = "wc" if hollow else "w"
+  head = (f'fill="#fff" stroke="{WIRE}" stroke-width="1.3"' if hollow else f'fill="{INK}" stroke="{INK}" stroke-width="1"')
+  return (f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" class="{cls}"/>' +
+          f'<path d="M{x2:.1f},{y2:.1f} L{ax:.1f},{ay:.1f} L{bx:.1f},{by:.1f} Z" {head} stroke-linejoin="round"/>')
+
+
+def _chip(out: list[str], x: float, y: float, kind: str, label: str, w: float) -> None:
+  bg, fg = ("#c62828", "#fff") if kind == "df" else ("#e6e9ef", "#334155")
+  out.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="16" rx="8" fill="{bg}"/>')
+  out.append(f'<text x="{x + w / 2:.1f}" y="{y + 11.5:.1f}" class="chip" fill="{fg}">{escape(label)}</text>')
 
 
 def _side(kind: str, cid: str, lines: list[str], x: float, y: float, h: float, out: list[str]) -> None:
+  fill, stroke, mark = SIDE_STYLE.get(kind, SIDE_STYLE["C"])
   if kind == "C":
-    out.append(f'<rect x="{x}" y="{y}" width="{SIDE_W}" height="{h}" rx="14" class="ctx"/>')
+    out.append(f'<rect x="{x}" y="{y}" width="{SIDE_W}" height="{h}" rx="16" fill="{fill}" stroke="{stroke}" stroke-width="1.2"/>')
   else:
-    out.append(f'<ellipse cx="{x + SIDE_W / 2}" cy="{y + h / 2}" rx="{SIDE_W / 2}" ry="{h / 2 + 4}" class="ctx"/>')
-    out.append(f'<text x="{x + SIDE_W - 4}" y="{y + h + 6}" class="aj">{kind}</text>')
-  ty = y + 8 + 10
+    out.append(f'<ellipse cx="{x + SIDE_W / 2}" cy="{y + h / 2}" rx="{SIDE_W / 2}" ry="{h / 2 + 5}" fill="{fill}" ' +
+               f'stroke="{stroke}" stroke-width="1.2"/>')
+    out.append(f'<circle cx="{x + SIDE_W - 8}" cy="{y + h + 2}" r="9" fill="{mark}"/>')
+    out.append(f'<text x="{x + SIDE_W - 8}" y="{y + h + 6}" class="aj">{kind}</text>')
+  ty = y + 21
   label = cid if cid != "A" else "Assumption"
-  out.append(f'<text x="{x + SIDE_W / 2}" y="{ty}" class="cid">{escape(label)}</text>')
+  out.append(f'<text x="{x + SIDE_W / 2}" y="{ty}" class="cid" fill="{mark}">{escape(label)}</text>')
   for ln in lines:
     ty += LINE_H
     out.append(f'<text x="{x + SIDE_W / 2}" y="{ty}" class="cs">{escape(ln)}</text>')
+
+
+def _solution(out: list[str], cx: float, cy: float, r: float, status: str, ident: str | None) -> None:
+  fill, stroke, _ = STATUS_STYLE.get(status, ("#eee", "#555", status))
+  dash = ' stroke-dasharray="5 3"' if status == "missing" else ""
+  if status != "missing":
+    out.append(f'<circle cx="{cx}" cy="{cy + 2}" r="{r}" fill="#0f172a" opacity=".10"/>')
+  out.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{fill}" stroke="{stroke}" stroke-width="1.8"{dash}/>')
+  if status == "available":
+    out.append(f'<circle cx="{cx}" cy="{cy}" r="{r - 4}" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="1.2"/>')
+  if ident:
+    tcol = "#fff" if status == "available" else ("#b3261e" if status == "missing" else INK)
+    out.append(f'<text x="{cx}" y="{cy + 4}" class="sid" fill="{tcol}">{escape(ident)}</text>')
 
 
 def draw(b: Box, out: list[str]) -> None:
   n = b.node
   x, y, cx = b.x, b.y, b.x + b.w / 2
   if n.kind == "solution":
-    fill, stroke, _ = STATUS_STYLE.get(n.status, ("#eee", "#555", n.status))
-    dash = ' stroke-dasharray="4 3"' if n.status == "missing" else ""
     r = SOL_D / 2
-    out.append(f'<circle cx="{cx}" cy="{y + r}" r="{r}" fill="{fill}" stroke="{stroke}" stroke-width="1.6"{dash}/>')
-    tcol = "#fff" if n.status == "available" else "#111"
-    out.append(f'<text x="{cx}" y="{y + r + 4}" class="sid" fill="{tcol}">{escape(n.ident)}</text>')
-    ty = y + SOL_D + 4
+    _solution(out, cx, y + r, r, n.status, n.ident)
+    ty = y + SOL_D + 6
     for ln in b.lines:
       ty += LINE_H
       out.append(f'<text x="{cx}" y="{ty - 2}" class="cs">{escape(ln)}</text>')
   else:
     if n.kind == "goal":
-      out.append(f'<rect x="{x}" y="{y}" width="{b.w}" height="{b.h}" class="g"/>')
+      stripe, _, tint, border = SUPPORT["none" if n.undeveloped else support(n)]
+      out.append(f'<rect x="{x + 1.5}" y="{y + 2.5}" width="{b.w}" height="{b.h}" rx="4" class="shadow"/>')
+      out.append(f'<rect x="{x}" y="{y}" width="{b.w}" height="{b.h}" rx="4" fill="{tint}" stroke="{border}" stroke-width="1.2"/>')
+      out.append(f'<path d="M{x + 4},{y} H{x + b.w - 4} A4,4 0 0 1 {x + b.w},{y + 4} V{y + 6} H{x} V{y + 4} ' +
+                 f'A4,4 0 0 1 {x + 4},{y} Z" fill="{stripe}"/>')
+      tx, anchor = x + 14, "start"
+      kind_x = x + b.w - 14
     else:
-      k = 14
-      out.append(f'<path d="M{x + k},{y} L{x + b.w},{y} L{x + b.w - k},{y + b.h} L{x},{y + b.h} Z" class="g"/>')
-    ty = y + 8 + 11
-    out.append(f'<text x="{cx}" y="{ty}" class="id">{escape(n.ident)}</text>')
-    ty += 3
+      k = 16
+      pts = f"M{x + k},{y} L{x + b.w},{y} L{x + b.w - k},{y + b.h} L{x},{y + b.h} Z"
+      out.append(f'<path d="{pts}" transform="translate(1.5 2.5)" class="shadow"/>')
+      out.append(f'<path d="{pts}" fill="{STRATEGY[0]}" stroke="{STRATEGY[1]}" stroke-width="1.4"/>')
+      tx, anchor = x + k + 12, "start"
+      kind_x = x + b.w - 14
+    ty = y + 25
+    out.append(f'<text x="{tx}" y="{ty}" class="id" text-anchor="{anchor}">{escape(n.ident)}</text>')
+    out.append(f'<text x="{kind_x}" y="{ty}" class="kind">{"GOAL" if n.kind == "goal" else "STRATEGY"}</text>')
     for ln in b.lines:
       ty += LINE_H
-      out.append(f'<text x="{cx}" y="{ty - 2}" class="d">{escape(ln)}</text>')
-    for kind, t in b.tags:
-      for ln in wrap(t, 44):
-        ty += 15
-        cls = "df" if kind == "df" else "sh"
-        out.append(f'<text x="{cx}" y="{ty - 3}" class="{cls}">{escape(ln)}</text>')
+      out.append(f'<text x="{tx}" y="{ty}" class="d">{escape(ln)}</text>')
+    ty += 8
+    for row in b.chips:
+      bx = tx
+      for kind, label, w in row:
+        _chip(out, bx, ty, kind, label, w)
+        bx += w + 5
+      ty += 22
     if n.undeveloped:
       dy = y + b.h
-      out.append(f'<path d="M{cx},{dy} L{cx + 9},{dy + 8} L{cx},{dy + 16} L{cx - 9},{dy + 8} Z" fill="#fff" stroke="#111" stroke-width="1.2"/>')
+      out.append(f'<path d="M{cx},{dy + 2} L{cx + 10},{dy + 11} L{cx},{dy + 20} L{cx - 10},{dy + 11} Z" fill="#fff" ' +
+                 f'stroke="{INK}" stroke-width="1.4"/>')
   # side elements (InContextOf)
   if b.side_boxes:
     sy = y
     sx = x + b.w + GAP_X / 2
-    spine = x + b.w + 4
+    spine = x + b.w + 5
     mids = []
     for kind, cid, lines, h in b.side_boxes:
       _side(kind, cid, lines, sx, sy, h, out)
       mids.append(sy + h / 2)
-      sy += h + 8
-    start = y + min(b.h / 2, 20)
-    out.append(f'<line x1="{x + b.w}" y1="{start}" x2="{spine}" y2="{start}" class="w"/>')
-    out.append(f'<line x1="{spine}" y1="{min(mids + [start])}" x2="{spine}" y2="{max(mids + [start])}" class="w"/>')
+      sy += h + 10
+    start = y + min(b.h / 2, 22)
+    out.append(f'<line x1="{x + b.w}" y1="{start}" x2="{spine}" y2="{start}" class="wc"/>')
+    out.append(f'<line x1="{spine}" y1="{min(mids + [start])}" x2="{spine}" y2="{max(mids + [start])}" class="wc"/>')
     for m in mids:
       out.append(_arrow(spine, m, sx - 1, m, hollow=True))
   # SupportedBy
   if b.children:
     top_y = y + b.h
-    bus = top_y + LEVEL_GAP / 2 - 4
+    # below the side column too, so the bus never crosses a context box
+    bus = y + max(b.h + (22 if n.undeveloped else 0), b.side_h) + LEVEL_GAP / 2 - 4
     out.append(f'<line x1="{cx}" y1="{top_y}" x2="{cx}" y2="{bus}" class="w"/>')
     xs = [c.x + c.w / 2 for c in b.children]
     out.append(f'<line x1="{min(xs + [cx])}" y1="{bus}" x2="{max(xs + [cx])}" y2="{bus}" class="w"/>')
@@ -521,91 +606,188 @@ def _walk(b: Box):
 
 
 def legend(x: float, y: float) -> tuple[list[str], float]:
-  out = [f'<text x="{x}" y="{y + 12}" class="h">Notation (GSN Community Standard v3)</text>']
-  cy = y + 26
-  items = [
-    ("goal", "Goal (claim)"), ("strategy", "Strategy (argument)"),
-    ("available", "Solution: evidence available"), ("partial", "Solution: evidence partial"),
-    ("missing", "Solution: evidence missing"), ("C", "Context"), ("A", "Assumption (A) / justification (J)"),
-    ("undev", "Undeveloped goal"), ("sup", "SupportedBy"), ("ctx", "InContextOf"),
-  ]
-  for kind, label in items:
+  out = [f'<text x="{x}" y="{y + 14}" class="lh">Notation · GSN Community Standard v3</text>']
+
+  def item(kind: str, cx: float, top: float, label: str) -> None:
     if kind == "goal":
-      out.append(f'<rect x="{x}" y="{cy}" width="40" height="22" class="g"/>')
+      out.append(f'<rect x="{cx - 26}" y="{top}" width="52" height="30" rx="4" fill="{SUPPORT["partial"][2]}" ' +
+                 f'stroke="{SUPPORT["partial"][3]}"/>')
+      out.append(f'<rect x="{cx - 26}" y="{top}" width="52" height="5" rx="2" fill="{SUPPORT["partial"][0]}"/>')
     elif kind == "strategy":
-      out.append(f'<path d="M{x + 7},{cy} L{x + 40},{cy} L{x + 33},{cy + 22} L{x},{cy + 22} Z" class="g"/>')
+      out.append(f'<path d="M{cx - 18},{top} L{cx + 28},{top} L{cx + 18},{top + 30} L{cx - 28},{top + 30} Z" ' +
+                 f'fill="{STRATEGY[0]}" stroke="{STRATEGY[1]}" stroke-width="1.4"/>')
     elif kind in STATUS_STYLE:
-      fill, stroke, _ = STATUS_STYLE[kind]
-      dash = ' stroke-dasharray="4 3"' if kind == "missing" else ""
-      out.append(f'<circle cx="{x + 20}" cy="{cy + 11}" r="11" fill="{fill}" stroke="{stroke}" stroke-width="1.6"{dash}/>')
+      _solution(out, cx, top + 15, 14, kind, None)
     elif kind == "C":
-      out.append(f'<rect x="{x}" y="{cy}" width="40" height="22" rx="10" class="ctx"/>')
-    elif kind == "A":
-      out.append(f'<ellipse cx="{x + 20}" cy="{cy + 11}" rx="20" ry="11" class="ctx"/>')
-    elif kind == "undev":
-      out.append(f'<path d="M{x + 20},{cy + 2} L{x + 29},{cy + 11} L{x + 20},{cy + 20} L{x + 11},{cy + 11} Z" fill="#fff" stroke="#111" stroke-width="1.2"/>')
-    elif kind == "sup":
-      out.append(_arrow(x, cy + 11, x + 40, cy + 11, hollow=False))
+      fill, stroke, _ = SIDE_STYLE["C"]
+      out.append(f'<rect x="{cx - 26}" y="{top + 1}" width="52" height="28" rx="14" fill="{fill}" stroke="{stroke}" stroke-width="1.2"/>')
+    elif kind in ("A", "J"):
+      fill, stroke, mark = SIDE_STYLE[kind]
+      out.append(f'<ellipse cx="{cx}" cy="{top + 15}" rx="27" ry="14" fill="{fill}" stroke="{stroke}" stroke-width="1.2"/>')
+      out.append(f'<text x="{cx}" y="{top + 19}" class="cid" fill="{mark}">{kind}</text>')
     else:
-      out.append(_arrow(x, cy + 11, x + 40, cy + 11, hollow=True))
-    out.append(f'<text x="{x + 56}" y="{cy + 15}" class="l">{escape(label)}</text>')
-    cy += 30
-  out.append(f'<text x="{x}" y="{cy + 10}" class="dfl">defeaters: DF-nn</text>')
-  out.append(f'<text x="{x + 110}" y="{cy + 10}" class="l">open counter-evidence on the goal (WP-K-01 §7, WP-K-03 §6)</text>')
-  return out, cy + 24 - y
+      out.append(f'<path d="M{cx},{top + 4} L{cx + 11},{top + 15} L{cx},{top + 26} L{cx - 11},{top + 15} Z" ' +
+                 f'fill="#fff" stroke="{INK}" stroke-width="1.4"/>')
+    out.append(f'<text x="{cx}" y="{top + 48}" class="s" text-anchor="middle">{label}</text>')
+
+  row1 = [("goal", "Goal"), ("strategy", "Strategy"), ("C", "Context"), ("A", "Assumption"), ("J", "Justification"),
+          ("undev", "Undeveloped")]
+  for i, (kind, label) in enumerate(row1):
+    item(kind, x + 34 + 92 * i, y + 30, label)
+  sy = y + 102
+  out.append(f'<text x="{x}" y="{sy + 19}" class="lb">Solution</text>')
+  for i, (kind, label) in enumerate((("available", "Available"), ("partial", "Partial"), ("missing", "Missing"))):
+    item(kind, x + 126 + 92 * i, sy, label)
+  ay = sy + 80
+  out.append(_arrow(x, ay, x + 44, ay, hollow=False))
+  out.append(f'<text x="{x + 54}" y="{ay + 4}" class="s">SupportedBy</text>')
+  out.append(_arrow(x + 150, ay, x + 194, ay, hollow=True))
+  out.append(f'<text x="{x + 204}" y="{ay + 4}" class="s">InContextOf</text>')
+  _chip(out, x + 300, ay - 8, "df", "DF-nn", _chip_w("DF-nn"))
+  out.append(f'<text x="{x + 300 + _chip_w("DF-nn") + 8}" y="{ay + 4}" class="s">open defeater on the goal</text>')
+  gy = ay + 30
+  out.append(f'<text x="{x}" y="{gy}" class="lb">Goal colour: the evidence below it, on every sheet</text>')
+  gx = x
+  for key in ("available", "partial", "missing", "none"):
+    colour, label, tint, border = SUPPORT[key]
+    out.append(f'<rect x="{gx}" y="{gy + 8}" width="26" height="14" rx="3" fill="{tint}" stroke="{border}"/>')
+    out.append(f'<rect x="{gx}" y="{gy + 8}" width="26" height="4" rx="2" fill="{colour}"/>')
+    out.append(f'<text x="{gx + 32}" y="{gy + 19}" class="s">{label}</text>')
+    gx += 32 + 5.6 * len(label) + 16
+  return out, gy + 30 - y
 
 
-def render_sheet(root: Node, no: int, total: int, case: str = "Safety case", source: str = "") -> str:
+def _sheet_map(sheets: list[Node], current: int, x: float, y: float, w: float, h: float) -> list[str]:
+  """Small tree of the case's sheets (parent = the sheet that develops into it), current one filled."""
+  depth = {1: 0}
+  for no, root in enumerate(sheets[1:], 2):
+    depth[no] = depth[root.sheet_from] + 1
+  levels: dict[int, list[int]] = {}
+  for no in range(1, len(sheets) + 1):
+    levels.setdefault(depth[no], []).append(no)
+  dy = min(34, (h - 22) / max(1, len(levels) - 1)) if len(levels) > 1 else 0
+  pos = {}
+  for d, nos in levels.items():
+    step = w / len(nos)
+    for i, no in enumerate(nos):
+      pos[no] = (x + step * (i + 0.5), y + 11 + d * dy)
+  out = []
+  for no, root in enumerate(sheets[1:], 2):
+    (px, py), (cx, cy) = pos[root.sheet_from], pos[no]
+    out.append(f'<line x1="{px:.1f}" y1="{py + 10:.1f}" x2="{cx:.1f}" y2="{cy - 10:.1f}" stroke="{WIRE}" stroke-width="1.3"/>')
+  for no, (cx, cy) in pos.items():
+    cur = no == current
+    out.append(f'<rect x="{cx - 14:.1f}" y="{cy - 10:.1f}" width="28" height="20" rx="5" ' +
+               f'fill="{NAVY if cur else "#fff"}" stroke="{NAVY}" stroke-width="1.3"/>')
+    out.append(f'<text x="{cx:.1f}" y="{cy + 4:.1f}" class="mm" fill="{"#fff" if cur else NAVY}">{no}</text>')
+  return out
+
+
+def render_sheet(sheets: list[Node], no: int, case: str = "Safety case", source: str = "", doc_id: str = "") -> str:
+  root = sheets[no - 1]
+  total = len(sheets)
   box = make_box(root, root)
   width, height = layout(box)
-  width = max(width, 1100)
+  width = max(width, MIN_WIDTH)
   body: list[str] = []
   draw(box, body)
-  fy = height + 10
+  counts = dict.fromkeys(STATUS_STYLE, 0)
+  for b in _walk(box):
+    if b.node.kind == "solution" and b.node.status in counts:
+      counts[b.node.status] += 1
+
+  fy = height + 20
   leg, lh = legend(MARGIN, fy)
-  tb_w, tb_h = 440, 92
+  tb_w, tb_h = 520, 250
   tb_x = width - MARGIN - tb_w
-  rows = [
-    ("h", f"LionDriver — {case} (GSN)"),
-    ("l", f"Argument from {root.ident}"),
-    ("l", f"Sheet {no} of {total}"),
-    ("l", f"Source: {source or 'case records (assurance/case/) and WP-K-01 contexts'}"),
-    ("s", "Generated by gsn_diagrams.py — edit the source, not this file"),
+  split = tb_x + 330
+  foot = [
+    f'<rect x="{tb_x}" y="{fy}" width="{tb_w}" height="{tb_h}" rx="10" fill="#fff" stroke="{HAIR}"/>',
+    f'<line x1="{tb_x}" y1="{fy + 46}" x2="{tb_x + tb_w}" y2="{fy + 46}" stroke="{HAIR}"/>',
+    f'<line x1="{split}" y1="{fy + 46}" x2="{split}" y2="{fy + tb_h}" stroke="{HAIR}"/>',
+    f'<text x="{tb_x + 18}" y="{fy + 29}" class="tbh">LionDriver · {escape(case)}</text>',
+    f'<rect x="{tb_x + tb_w - 150}" y="{fy + 14}" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>',
+    f'<text x="{tb_x + tb_w - 84}" y="{fy + 28}" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>',
   ]
-  foot = [f'<rect x="{tb_x}" y="{fy}" width="{tb_w}" height="{tb_h}" fill="#fff" stroke="#111" stroke-width="1.4"/>']
-  ry = fy + 6
-  for cls, t in rows:
-    ry += 16
-    foot.append(f'<text x="{tb_x + 10}" y="{ry}" class="{cls}">{escape(t)}</text>')
+  rows = [
+    ("Argument from", root.ident),
+    ("Source", source or "case records and WP-K-01 contexts"),
+    ("Generated by", "gsn_diagrams.py"),
+    ("Edit", "the source, not this file"),
+  ]
+  ry = fy + 72
+  for k, v in rows:
+    foot.append(f'<text x="{tb_x + 18}" y="{ry}" class="k">{k.upper()}</text>')
+    for i, ln in enumerate(wrap(v, 30)[:2]):
+      foot.append(f'<text x="{tb_x + 122}" y="{ry + 15 * i}" class="v">{escape(ln)}</text>')
+    ry += 26 + 15 * (min(2, len(wrap(v, 30))) - 1)
+  # evidence bar on this sheet
+  total_sol = sum(counts.values())
+  foot.append(f'<text x="{tb_x + 18}" y="{ry + 4}" class="k">EVIDENCE ON THIS SHEET</text>')
+  bx, bw = tb_x + 18, 294
+  if total_sol:
+    cx = bx
+    for s in ("available", "partial", "missing"):
+      if counts[s]:
+        w = bw * counts[s] / total_sol
+        fill, stroke, _ = STATUS_STYLE[s]
+        foot.append(f'<rect x="{cx:.1f}" y="{ry + 12}" width="{w:.1f}" height="10" fill="{fill}" stroke="{stroke}" stroke-width=".8"/>')
+        cx += w
+  foot.append(f'<text x="{bx}" y="{ry + 38}" class="s">{counts["available"]} available · {counts["partial"]} partial · ' +
+              f'{counts["missing"]} missing</text>')
+  foot.append(f'<text x="{split + 16}" y="{fy + 70}" class="k">SHEETS</text>')
+  foot += _sheet_map(sheets, no, split + 10, fy + 86, tb_x + tb_w - split - 20, tb_h - 100)
   total_h = max(fy + lh, fy + tb_h) + MARGIN
-  head = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0f}" height="{total_h:.0f}" ' +
-          f'viewBox="0 0 {width:.0f} {total_h:.0f}" font-family="Helvetica, Arial, sans-serif">\n' +
-          '<style>' +
-          '.g{fill:#fff;stroke:#111;stroke-width:1.4}' +
-          '.ctx{fill:#f4f4f4;stroke:#111;stroke-width:1.1}' +
-          '.id{font-size:11.5px;font-weight:700;text-anchor:middle}' +
-          '.d{font-size:10px;text-anchor:middle}' +
-          '.sid{font-size:10.5px;font-weight:700;text-anchor:middle}' +
-          '.cid{font-size:10px;font-weight:700;text-anchor:middle}' +
-          '.cs{font-size:9.5px;text-anchor:middle;fill:#333}' +
-          '.aj{font-size:11px;font-weight:700;text-anchor:end}' +
-          '.df{font-size:9.5px;font-weight:700;fill:#b3261e;text-anchor:middle}' +
-          '.dfl{font-size:9.5px;font-weight:700;fill:#b3261e}' +
-          '.sh{font-size:9.5px;font-weight:600;fill:#444;text-anchor:middle}' +
-          '.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}' +
-          '.w{stroke:#111;stroke-width:1.1}' +
-          '</style>\n<rect width="100%" height="100%" fill="#fff"/>\n' +
-          f'<text x="{MARGIN}" y="{MARGIN + 6}" class="h">{escape(case)} — argument from {escape(root.ident)}' +
-          f'{"" if total == 1 else f"  (sheet {no} of {total})"}</text>\n')
-  return head + "\n".join(body + leg + foot) + "\n</svg>\n"
+
+  css = "".join([
+    f".id{{font:700 13px {MONO};fill:{INK}}}",
+    f".kind{{font:600 9px {SANS};letter-spacing:.1em;fill:#8a93a3;text-anchor:end}}",
+    f".d{{font:400 11.5px {SANS};fill:#2b3343}}",
+    f".sid{{font:700 11px {MONO};text-anchor:middle}}",
+    f".cid{{font:700 11px {MONO};text-anchor:middle}}",
+    f".cs{{font:400 10.5px {SANS};text-anchor:middle;fill:#3c4556}}",
+    f".aj{{font:700 10px {SANS};fill:#fff;text-anchor:middle}}",
+    f".chip{{font:600 9.5px {SANS};text-anchor:middle}}",
+    f".eyebrow{{font:600 12px {SANS};letter-spacing:.14em;fill:#9fb7d1}}",
+    f".title{{font:600 21px {SANS};fill:#fff}}",
+    f".hc{{font:600 12px {SANS};letter-spacing:.04em;fill:#fff;text-anchor:middle}}",
+    f".lh{{font:600 13px {SANS};fill:{INK}}}",
+    f".lb{{font:600 12px {SANS};fill:{INK}}}",
+    f".s{{font:400 11px {SANS};fill:{MUTED}}}",
+    f".tbh{{font:700 14px {SANS};fill:{NAVY}}}",
+    f".k{{font:600 9px {SANS};letter-spacing:.12em;fill:#8a93a3}}",
+    f".v{{font:400 11.5px {SANS};fill:{INK}}}",
+    f".mm{{font:700 11px {MONO};text-anchor:middle}}",
+    f".w{{stroke:{INK};stroke-width:1.3}}",
+    f".wc{{stroke:{WIRE};stroke-width:1.2;stroke-dasharray:4 3}}",
+    ".shadow{fill:#0f172a;opacity:.06}",
+  ])
+  chip_w = 200
+  summary = wrap(root.text, 72)
+  title = f"{root.ident} · {summary[0]}{'…' if len(summary) > 1 else ''}"
+  head = [
+    f'<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0f}" height="{total_h:.0f}" viewBox="0 0 {width:.0f} {total_h:.0f}">',
+    f'<title>{escape(case)} (GSN), sheet {no} of {total}: argument from {escape(root.ident)}</title>',
+    f'<style>{css}</style>',
+    '<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">' +
+    '<circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>',
+    '<rect width="100%" height="100%" fill="#f7f8fa"/>',
+    f'<rect y="{HEADER_H}" width="100%" height="{total_h - HEADER_H:.0f}" fill="url(#dots)"/>',
+    f'<rect width="100%" height="{HEADER_H}" fill="{NAVY}"/>',
+    f'<text x="{MARGIN}" y="32" class="eyebrow">GSN · {escape(case.upper())}{" · " + escape(doc_id) if doc_id else ""}</text>',
+    f'<text x="{MARGIN}" y="59" class="title">{escape(title)}</text>',
+    f'<rect x="{width - MARGIN - chip_w:.0f}" y="21" width="{chip_w}" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>',
+    f'<text x="{width - MARGIN - chip_w / 2:.0f}" y="44" class="hc">Sheet {no} of {total}</text>',
+  ]
+  return "\n".join(head + body + leg + foot) + "\n</svg>\n"
 
 
 CASES = [
-  # (prefix, case name, source label, tree builder, document)
+  # (prefix, case name, source label, tree builder, document, document ID)
   ("gsn", "Safety case", "case records (assurance/case/) and WP-K-01 contexts", build_tree,
-   "[WP-K-01](../WP-K-01-safety-case.md)"),
+   "[WP-K-01](../WP-K-01-safety-case.md)", "WP-K-01"),
   ("gsn-cs", "Cybersecurity case", "WP-K-03 §2–§4, §6 (text trees and tables)", build_cyber_tree,
-   "[WP-K-03](../WP-K-03-cybersecurity-case.md)"),
+   "[WP-K-03](../WP-K-03-cybersecurity-case.md)", "WP-K-03"),
 ]
 
 
@@ -625,11 +807,11 @@ def build() -> dict[str, str]:
     "| Case | Sheet | Argument from | Goals | Solutions |",
     "|---|---|---|---|---|",
   ]
-  for prefix, case, source, builder, doc in CASES:
+  for prefix, case, source, builder, doc, doc_id in CASES:
     sheets = paginate(builder())
     for no, root_node in enumerate(sheets, 1):
       name = f"{prefix}-{no}-{root_node.ident}.svg"
-      outputs[name] = render_sheet(root_node, no, len(sheets), case, source)
+      outputs[name] = render_sheet(sheets, no, case, source, doc_id)
       box = make_box(root_node, root_node)
       goals = sum(1 for b in _walk(box) if b.node.kind == "goal")
       sols = sum(1 for b in _walk(box) if b.node.kind == "solution")
@@ -637,6 +819,8 @@ def build() -> dict[str, str]:
   index += ["", "Notation: goal = rectangle; strategy = parallelogram; solution = circle (green available, " +
             "amber partial, white dashed missing); context = rounded box; assumption / justification = oval " +
             "(A / J); diamond = undeveloped goal. Solid arrows are SupportedBy, hollow arrows InContextOf. " +
+            "The colour of a goal (stripe and tint) is the worst evidence status of all solutions below it, on every " +
+            "sheet (green all available, amber partial, red missing, grey not developed). " +
             "Defeaters (open counter-evidence, WP-K-01 §7, WP-K-03 §6) are listed in red on the goal they " +
             "undermine. In the cybersecurity case the requirements that refine a goal (CSR-nnn) are shown as " +
             "a context.", ""]
