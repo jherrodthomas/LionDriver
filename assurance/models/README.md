@@ -24,7 +24,7 @@ Nothing listed under "Planned" exists yet. No model output is verification evide
 |---|---|---|---|
 | 1 | Tool comparison | — | Done: this plan (MD-01) |
 | 2 | SM-SELFDRIVED record (host state machine) | Python checker | Planned; needs `qm_reason` (MD-02) |
-| 3 | Back-to-back test: Python model of `sm-toy-auth.yaml` vs C `libsafety` | Python | Planned; model follows the record (MD-03) |
+| 3 | Back-to-back test: Python model of `sm-toy-auth.yaml` vs C `libsafety` | Python | Exists, draft: [`b2b/`](b2b/README.md); in CI; candidate findings BB-C-01, BB-C-02 |
 | 4 | HIL plant model: Corolla EPS and vehicle lateral, closed loop, bench stage B3 | OpenModelica | Planned; blocked on WP-P-07 OI-11, assumed EPS lag (MD-04) |
 | — | Envelope calculations and plots | Octave | Exists: [`octave/`](octave/README.md) |
 

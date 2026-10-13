@@ -156,3 +156,31 @@ jobs:
       with:
         name: octave-models
         path: build/octave-models/
+
+  b2b-toy-auth:
+    name: Back-to-back SM-TOY-AUTH model vs libsafety
+    # Python reference model of sm-toy-auth.yaml against the C safety code, upstream and reference builds
+    # (assurance/models/b2b, modelling plan MD-03). Not verification: fails only on a divergence that is
+    # neither expected (record says "not implemented") nor a known candidate finding.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout opendbc submodule
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Run back-to-back test
+      # setup.sh installs the opendbc test dependencies from opendbc_repo/uv.lock, as the safety tests do. It must be
+      # sourced from inside opendbc_repo: uv discovers the project from the working directory
+      run: |
+        cd opendbc_repo
+        source setup.sh
+        cd ..
+        python assurance/models/b2b/run_b2b.py build/b2b
+    - name: Upload report
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: b2b-toy-auth
+        path: build/b2b/
