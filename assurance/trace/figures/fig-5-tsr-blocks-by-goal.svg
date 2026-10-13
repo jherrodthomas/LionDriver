@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="510" viewBox="0 0 1280 510" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 5 · TSR blocks × safety goals</title>
+<desc>Heat map of how many TSRs of each block 1xx–8xx trace up to each safety goal: 1xx SG-01 10, SG-02 2, SG-03 0, SG-04 0, SG-05 2, SG-06 0, SG-07 0; 2xx SG-01 0, SG-02 0, SG-03 6, SG-04 6, SG-05 1, SG-06 0, SG-07 0; 3xx SG-01 4, SG-02 4, SG-03 5, SG-04 5, SG-05 10, SG-06 4, SG-07 0; 4xx SG-01 13, SG-02 3, SG-03 13, SG-04 13, SG-05 7, SG-06 3, SG-07 1; 5xx SG-01 17, SG-02 12, SG-03 17, SG-04 16, SG-05 15, SG-06 12, SG-07 17; 6xx SG-01 7, SG-02 18, SG-03 3, SG-04 6, SG-05 2, SG-06 19, SG-07 2; 7xx SG-01 1, SG-02 0, SG-03 1, SG-04 0, SG-05 0, SG-06 0, SG-07 11; 8xx SG-01 6, SG-02 3, SG-03 5, SG-04 5, SG-05 5, SG-06 3, SG-07 8.</desc>
+<defs><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F766E"/></marker><marker id="hw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker><marker id="aou" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D97706"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker></defs>
+<rect x="0" y="0" width="1280" height="510" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5 · Where each safety goal lands: TSR blocks × goals</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Cell = TSRs in the block that trace up to the goal through their parents. A TSR serving several goals counts in each column.</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-T-01 §6 · WP-S-02</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="538" y="116" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">SG-01</text>
+<text x="622" y="116" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">SG-02</text>
+<text x="706" y="116" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">SG-03</text>
+<text x="790" y="116" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">SG-04</text>
+<text x="874" y="116" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">SG-05</text>
+<text x="958" y="116" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">SG-06</text>
+<text x="1042" y="116" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">SG-07</text>
+<text x="1128" y="116" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">TSRs</text>
+<text x="1198" y="116" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">no goal</text>
+<text x="48" y="152" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">1xx</text>
+<text x="100" y="152" font-size="12" fill="#0F172A">Lateral actuation envelope</text>
+<rect x="500" y="130" width="76" height="34" rx="6" fill="#FB923C" stroke="none" stroke-width="1"/>
+<text x="538" y="152" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">10</text>
+<rect x="584" y="130" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="622" y="152" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">2</text>
+<rect x="668" y="130" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="706" y="152" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="752" y="130" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="790" y="152" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="836" y="130" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="874" y="152" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">2</text>
+<rect x="920" y="130" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="958" y="152" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="1004" y="130" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1042" y="152" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<text x="1128" y="152" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">11</text>
+<text x="1198" y="152" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<text x="48" y="192" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">2xx</text>
+<text x="100" y="192" font-size="12" fill="#0F172A">Longitudinal envelope</text>
+<rect x="500" y="170" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="538" y="192" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="584" y="170" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="622" y="192" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="668" y="170" width="76" height="34" rx="6" fill="#FDBA74" stroke="none" stroke-width="1"/>
+<text x="706" y="192" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">6</text>
+<rect x="752" y="170" width="76" height="34" rx="6" fill="#FDBA74" stroke="none" stroke-width="1"/>
+<text x="790" y="192" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">6</text>
+<rect x="836" y="170" width="76" height="34" rx="6" fill="#FFEDD5" stroke="none" stroke-width="1"/>
+<text x="874" y="192" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">1</text>
+<rect x="920" y="170" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="958" y="192" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="1004" y="170" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1042" y="192" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<text x="1128" y="192" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">8</text>
+<text x="1198" y="192" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<text x="48" y="232" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">3xx</text>
+<text x="100" y="232" font-size="12" fill="#0F172A">Engagement, disengagement and driver override</text>
+<rect x="500" y="210" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="538" y="232" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">4</text>
+<rect x="584" y="210" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="622" y="232" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">4</text>
+<rect x="668" y="210" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="706" y="232" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">5</text>
+<rect x="752" y="210" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="790" y="232" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">5</text>
+<rect x="836" y="210" width="76" height="34" rx="6" fill="#FB923C" stroke="none" stroke-width="1"/>
+<text x="874" y="232" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">10</text>
+<rect x="920" y="210" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="958" y="232" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">4</text>
+<rect x="1004" y="210" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1042" y="232" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<text x="1128" y="232" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">11</text>
+<text x="1198" y="232" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<text x="48" y="272" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">4xx</text>
+<text x="100" y="272" font-size="12" fill="#0F172A">Communication integrity</text>
+<rect x="500" y="250" width="76" height="34" rx="6" fill="#FB923C" stroke="none" stroke-width="1"/>
+<text x="538" y="272" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">13</text>
+<rect x="584" y="250" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="622" y="272" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">3</text>
+<rect x="668" y="250" width="76" height="34" rx="6" fill="#FB923C" stroke="none" stroke-width="1"/>
+<text x="706" y="272" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">13</text>
+<rect x="752" y="250" width="76" height="34" rx="6" fill="#FB923C" stroke="none" stroke-width="1"/>
+<text x="790" y="272" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">13</text>
+<rect x="836" y="250" width="76" height="34" rx="6" fill="#FDBA74" stroke="none" stroke-width="1"/>
+<text x="874" y="272" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">7</text>
+<rect x="920" y="250" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="958" y="272" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">3</text>
+<rect x="1004" y="250" width="76" height="34" rx="6" fill="#FFEDD5" stroke="none" stroke-width="1"/>
+<text x="1042" y="272" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">1</text>
+<text x="1128" y="272" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">13</text>
+<text x="1198" y="272" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<text x="48" y="312" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">5xx</text>
+<text x="100" y="312" font-size="12" fill="#0F172A">Safety-MCU platform integrity</text>
+<rect x="500" y="290" width="76" height="34" rx="6" fill="#EA580C" stroke="none" stroke-width="1"/>
+<text x="538" y="312" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">17</text>
+<rect x="584" y="290" width="76" height="34" rx="6" fill="#FB923C" stroke="none" stroke-width="1"/>
+<text x="622" y="312" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">12</text>
+<rect x="668" y="290" width="76" height="34" rx="6" fill="#EA580C" stroke="none" stroke-width="1"/>
+<text x="706" y="312" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">17</text>
+<rect x="752" y="290" width="76" height="34" rx="6" fill="#EA580C" stroke="none" stroke-width="1"/>
+<text x="790" y="312" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">16</text>
+<rect x="836" y="290" width="76" height="34" rx="6" fill="#EA580C" stroke="none" stroke-width="1"/>
+<text x="874" y="312" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">15</text>
+<rect x="920" y="290" width="76" height="34" rx="6" fill="#FB923C" stroke="none" stroke-width="1"/>
+<text x="958" y="312" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">12</text>
+<rect x="1004" y="290" width="76" height="34" rx="6" fill="#EA580C" stroke="none" stroke-width="1"/>
+<text x="1042" y="312" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">17</text>
+<text x="1128" y="312" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">19</text>
+<text x="1198" y="312" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<text x="48" y="352" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">6xx</text>
+<text x="100" y="352" font-size="12" fill="#0F172A">Host-side (SoC) monitoring, DM and HMI</text>
+<rect x="500" y="330" width="76" height="34" rx="6" fill="#FDBA74" stroke="none" stroke-width="1"/>
+<text x="538" y="352" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">7</text>
+<rect x="584" y="330" width="76" height="34" rx="6" fill="#C2410C" stroke="none" stroke-width="1"/>
+<text x="622" y="352" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">18</text>
+<rect x="668" y="330" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="706" y="352" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">3</text>
+<rect x="752" y="330" width="76" height="34" rx="6" fill="#FDBA74" stroke="none" stroke-width="1"/>
+<text x="790" y="352" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">6</text>
+<rect x="836" y="330" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="874" y="352" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">2</text>
+<rect x="920" y="330" width="76" height="34" rx="6" fill="#C2410C" stroke="none" stroke-width="1"/>
+<text x="958" y="352" font-size="12.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">19</text>
+<rect x="1004" y="330" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="1042" y="352" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">2</text>
+<text x="1128" y="352" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">27</text>
+<text x="1198" y="352" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<text x="48" y="392" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">7xx</text>
+<text x="100" y="392" font-size="12" fill="#0F172A">Stock PCS preservation and harness</text>
+<rect x="500" y="370" width="76" height="34" rx="6" fill="#FFEDD5" stroke="none" stroke-width="1"/>
+<text x="538" y="392" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">1</text>
+<rect x="584" y="370" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="622" y="392" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="668" y="370" width="76" height="34" rx="6" fill="#FFEDD5" stroke="none" stroke-width="1"/>
+<text x="706" y="392" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">1</text>
+<rect x="752" y="370" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="790" y="392" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="836" y="370" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="874" y="392" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="920" y="370" width="76" height="34" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="958" y="392" font-size="12.5" fill="#94A3B8" text-anchor="middle">·</text>
+<rect x="1004" y="370" width="76" height="34" rx="6" fill="#FB923C" stroke="none" stroke-width="1"/>
+<text x="1042" y="392" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">11</text>
+<text x="1128" y="392" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">11</text>
+<text x="1198" y="392" font-size="12" fill="#94A3B8" text-anchor="middle">·</text>
+<text x="48" y="432" font-size="12.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">8xx</text>
+<text x="100" y="432" font-size="12" fill="#0F172A">Production, operation, service and decommissioning</text>
+<rect x="500" y="410" width="76" height="34" rx="6" fill="#FDBA74" stroke="none" stroke-width="1"/>
+<text x="538" y="432" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">6</text>
+<rect x="584" y="410" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="622" y="432" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">3</text>
+<rect x="668" y="410" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="706" y="432" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">5</text>
+<rect x="752" y="410" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="790" y="432" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">5</text>
+<rect x="836" y="410" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="874" y="432" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">5</text>
+<rect x="920" y="410" width="76" height="34" rx="6" fill="#FED7AA" stroke="none" stroke-width="1"/>
+<text x="958" y="432" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">3</text>
+<rect x="1004" y="410" width="76" height="34" rx="6" fill="#FDBA74" stroke="none" stroke-width="1"/>
+<text x="1042" y="432" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">8</text>
+<text x="1128" y="432" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">18</text>
+<text x="1198" y="432" font-size="12" fill="#475569" text-anchor="middle">9</text>
+<text x="40" y="466" font-size="11" fill="#475569">Block names are the WP-S-02 section titles. “No goal”: TSRs whose parents reach no safety goal (operation requirements in 8xx, for example).</text>
+<text x="40" y="492" font-size="10.5" fill="#475569">Fewer</text>
+<rect x="80" y="482" width="22" height="14" rx="3" fill="#FFEDD5" stroke="none" stroke-width="0"/>
+<rect x="106" y="482" width="22" height="14" rx="3" fill="#FED7AA" stroke="none" stroke-width="0"/>
+<rect x="132" y="482" width="22" height="14" rx="3" fill="#FDBA74" stroke="none" stroke-width="0"/>
+<rect x="158" y="482" width="22" height="14" rx="3" fill="#FB923C" stroke="none" stroke-width="0"/>
+<rect x="184" y="482" width="22" height="14" rx="3" fill="#EA580C" stroke="none" stroke-width="0"/>
+<rect x="210" y="482" width="22" height="14" rx="3" fill="#C2410C" stroke="none" stroke-width="0"/>
+<text x="240" y="492" font-size="10.5" fill="#475569">more TSRs (max 19)</text>
+</svg>

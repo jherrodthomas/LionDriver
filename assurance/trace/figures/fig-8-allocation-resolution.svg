@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="410" viewBox="0 0 1280 410" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 8 · Allocation resolution</title>
+<desc>Of 351 allocated_to values 298 resolve to SysML model elements: TSR 118 of 118, FSR 53 of 54, SWSR 124 of 134, HWSR 3 of 45.</desc>
+<defs><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F766E"/></marker><marker id="hw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker><marker id="aou" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D97706"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker></defs>
+<rect x="0" y="0" width="1280" height="410" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 8 · Allocation: do requirements land on real architecture elements?</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Every allocated_to value matched against the SysML v2 model (check M8). A value is resolved when every identifier in it names a model element.</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-T-01 §3.2 · SysML report</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="48" y="123" font-size="13" fill="#0F172A" font-weight="700">TSR</text>
+<rect x="130" y="108" width="289.1" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="274.6" y="123" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">118</text>
+<text x="431.1" y="123" font-size="12" fill="#0F172A">118 / 118 · 100 %</text>
+<text x="48" y="159" font-size="13" fill="#0F172A" font-weight="700">FSR</text>
+<rect x="130" y="144" width="129.9" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="194.9" y="159" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">53</text>
+<rect x="259.9" y="144" width="2.5" height="22" rx="4" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="274.3" y="159" font-size="12" fill="#0F172A">53 / 54 · 98 %</text>
+<text x="48" y="195" font-size="13" fill="#0F172A" font-weight="700">SWSR</text>
+<rect x="130" y="180" width="303.8" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="281.9" y="195" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">124</text>
+<rect x="433.8" y="180" width="24.5" height="22" rx="4" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="446.1" y="195" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">10</text>
+<text x="470.3" y="195" font-size="12" fill="#0F172A">124 / 134 · 93 %</text>
+<text x="48" y="231" font-size="13" fill="#0F172A" font-weight="700">HWSR</text>
+<rect x="130" y="216" width="7.4" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
+<rect x="137.4" y="216" width="102.9" height="22" rx="4" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="188.8" y="231" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">42</text>
+<text x="252.3" y="231" font-size="12" fill="#0F172A">3 / 45 · 7 %</text>
+<line x1="40" y1="242" x2="1240" y2="242" stroke="#E2E8F0" stroke-width="1"/>
+<text x="48" y="271" font-size="13" fill="#0F172A" font-weight="700">All</text>
+<rect x="130" y="256" width="730.1" height="22" rx="4" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="495.1" y="271" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">298</text>
+<rect x="860.1" y="256" width="129.9" height="22" rx="4" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="925.1" y="271" font-size="11" fill="#FFFFFF" font-weight="700" text-anchor="middle">53</text>
+<text x="1002" y="271" font-size="12" fill="#0F172A" font-weight="700">298 / 351 · 85 %</text>
+<text x="40" y="304" font-size="11.5" fill="#0F172A" font-weight="700">Most common unresolved values (49 distinct, by number of requirements):</text>
+<rect x="40" y="316" width="82.9" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
+<text x="49" y="330" font-size="10.5" fill="#D2553F">Firmware ×3</text>
+<rect x="130.9" y="316" width="112.4" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
+<text x="139.9" y="330" font-size="10.5" fill="#D2553F">Cortex-M7 MPU ×2</text>
+<rect x="251.3" y="316" width="94.7" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
+<text x="260.3" y="330" font-size="10.5" fill="#D2553F">Relay part ×2</text>
+<rect x="354" y="316" width="153.7" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
+<text x="363" y="330" font-size="10.5" fill="#D2553F">ADC on input divider ×1</text>
+<rect x="515.7" y="316" width="82.9" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
+<text x="524.7" y="330" font-size="10.5" fill="#D2553F">Analysis ×1</text>
+<rect x="606.6" y="316" width="230.4" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
+<text x="615.6" y="330" font-size="10.5" fill="#D2553F">Boot pins, option bytes (RDP/WRP… ×1</text>
+<rect x="845" y="316" width="47.5" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
+<text x="854" y="330" font-size="10.5" fill="#D2553F">CI ×1</text>
+<rect x="40" y="342" width="230.4" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
+<text x="49" y="356" font-size="10.5" fill="#D2553F">Car-side FDCAN instance, transce… ×1</text>
+<rect x="278.4" y="342" width="230.4" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
+<text x="287.4" y="356" font-size="10.5" fill="#D2553F">Codec I2C acknowledge or amplifi… ×1</text>
+<rect x="516.8" y="342" width="94.7" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
+<text x="525.8" y="356" font-size="10.5" fill="#D2553F">Connectors ×1</text>
+<rect x="619.5" y="342" width="230.4" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
+<text x="628.5" y="356" font-size="10.5" fill="#D2553F">DAC/DMA and codec over I2C5 (tre… ×1</text>
+<rect x="857.9" y="342" width="195" height="20" rx="10" fill="#FEF2F2" stroke="#F5B5A8" stroke-width="1"/>
+<text x="866.9" y="356" font-size="10.5" fill="#D2553F">DAC/codec (board dependent) ×1</text>
+<text x="1060.9" y="356" font-size="10.5" fill="#475569">… and 37 more</text>
+<rect x="40" y="378" width="14" height="12" rx="3" fill="#0F766E" stroke="#0F766E" stroke-width="1.2"/>
+<text x="60" y="388" font-size="11" fill="#475569">resolved to a model element</text>
+<rect x="241.4" y="378" width="14" height="12" rx="3" fill="#D2553F" stroke="#D2553F" stroke-width="1.2"/>
+<text x="261.4" y="388" font-size="11" fill="#475569">not resolved</text>
+<text x="1240" y="388" font-size="11" fill="#475569" text-anchor="end">42 of 53 unresolved allocations are HWSRs: WP-H-01 allocates to part descriptions, not element IDs.</text>
+</svg>
