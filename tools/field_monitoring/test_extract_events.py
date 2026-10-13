@@ -195,5 +195,43 @@ class ExtractEventsTest(unittest.TestCase):
     self.assertEqual(summary["triage"], {"T1": 0, "T2": 0, "T3": 1})
 
 
+  def test_poisson_bounds_match_tables(self):
+    self.assertEqual(fx.poisson_bounds(0)[0], 0.0)
+    self.assertAlmostEqual(fx.poisson_bounds(0)[1], 2.9957, places=3)
+    self.assertAlmostEqual(fx.poisson_bounds(1)[0], 0.0513, places=3)
+    self.assertAlmostEqual(fx.poisson_bounds(5)[1], 10.5130, places=3)
+
+  def kpi(self, rows, kid):
+    return next(r for r in rows if r["id"] == kid)
+
+  def test_kpi_status_by_evidence(self):
+    phantom = [fx.Event("r", 0.0, "MON-17", ["AS-06"], "phantomDecel", True) for _ in range(3)]
+    # 3 events in 10,000 km: rate 0.3/1000 km, upper bound 7.75/10 = 0.775 <= 1 -> MET
+    self.assertEqual(self.kpi(fx.evaluate_kpis(phantom, 100, 10000), "K-13")["status"], "MET")
+    # 3 events in 2,000 km: rate 1.5 > 1, lower bound 0.82/2 = 0.41 -> WATCH
+    self.assertEqual(self.kpi(fx.evaluate_kpis(phantom, 100, 2000), "K-13")["status"], "WATCH")
+    # 3 events in 500 km: lower bound 0.82/0.5 = 1.64 > 1 -> BREACH
+    self.assertEqual(self.kpi(fx.evaluate_kpis(phantom, 100, 500), "K-13")["status"], "BREACH")
+    # no events in 1,000 km: upper bound 3.0 > 1 -> OPEN; 3,000 km would be needed
+    open_row = self.kpi(fx.evaluate_kpis([], 10, 1000), "K-13")
+    self.assertEqual(open_row["status"], "OPEN")
+    self.assertAlmostEqual(open_row["exposure_to_demonstrate"], 3.0, places=1)
+
+  def test_zero_tolerance_and_baseline_kpis(self):
+    events = [fx.Event("r", 0.0, "MON-05", ["AS-11"], "excessiveActuation", True),
+              fx.Event("r", 1.0, "MON-06", ["AS-04"], "safetyTxBlocked", False)]
+    rows = fx.evaluate_kpis(events, 10, 500)
+    self.assertEqual(self.kpi(rows, "K-02")["status"], "FINDING")
+    self.assertEqual(self.kpi(rows, "K-03")["status"], "OK")
+    k04 = self.kpi(rows, "K-04")
+    self.assertEqual((k04["status"], k04["count"]), ("BASELINE", 0))  # the TX block was not engaged
+
+  def test_kpis_in_summary_and_markdown(self):
+    s = Stream().step(engaged(), ("carState", car(20.0)), n=361)
+    summary = fx.summarise([s.scan()])
+    ids = [k["id"] for k in summary["kpis"]]
+    self.assertEqual(ids, [k["id"] for k in fx.KPIS])
+    self.assertIn("| K-13 phantom decelerations, AS-06 | 0 |", fx.markdown(summary))
+
 if __name__ == "__main__":
   unittest.main()

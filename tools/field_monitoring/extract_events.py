@@ -384,6 +384,99 @@ def read_log(path: str):
     yield (ev.logMonoTime - t0) / 1e9, which, getattr(ev, which)
 
 
+# KPI thresholds (WP-O-04 §5, OI-5): proposals derived from the validation targets of WP-V-02 §4,
+# pending assessor review (WP-V-02 OI-3) and development-drive baselines.
+# kind: "zero" any occurrence is a finding; "rate" compared with a threshold per unit of engaged
+# exposure ("h" engaged hour, "1000km" 1000 engaged km); "baseline" reported until a development
+# baseline sets the threshold.
+KPIS = [
+  {"id": "K-01", "what": "crash candidates and bookmarks (MON-14)", "mon": {"MON-14"}, "kind": "zero",
+   "basis": "VT-11: zero injury crashes; every candidate is reviewed (T1)"},
+  {"id": "K-02", "what": "excessive-actuation latches", "triggers": {"excessiveActuation"}, "kind": "zero",
+   "basis": "SG-01/03/04: any occurrence is T1"},
+  {"id": "K-03", "what": "controlsMismatch and relayMalfunction", "mon": {"MON-03", "MON-04"}, "kind": "zero",
+   "basis": "SG-01/SG-07: any occurrence is T1"},
+  {"id": "K-04", "what": "envelope TX blocks while engaged", "triggers": {"safetyTxBlocked"}, "engaged": True,
+   "kind": "baseline", "unit": "h", "basis": "no target; > 2x the development baseline once it exists"},
+  {"id": "K-06", "what": "DM level-3 alerts and lockouts", "triggers": {"driverDistracted3", "driverUnresponsive3", "tooDistracted"},
+   "kind": "rate", "unit": "h", "threshold": 0.1,
+   "basis": "AOU-06: a level-3 alert follows two ignored warnings; more than one per 10 engaged hours is a misuse pattern"},
+  {"id": "K-07", "what": "engaged above the ODD speed bound (MON-15)", "mon": {"MON-15"}, "kind": "zero",
+   "basis": "VT-12: the deterministic speed bound (FM-07) prevents it"},
+  {"id": "K-08", "what": "fault disengagements (MON-02)", "mon": {"MON-02"}, "kind": "baseline", "unit": "h",
+   "basis": "no target; trend against the development baseline"},
+  {"id": "K-10", "what": "lead flicker, AS-08 (VT-14 failures)", "signatures": {"AS-08"}, "kind": "rate", "unit": "h",
+   "threshold": 0.6, "basis": "VT-14: p_s <= 1 % of 60 s steady-scene instances, at most 60 instances per engaged hour"},
+  {"id": "K-13", "what": "phantom decelerations, AS-06", "signatures": {"AS-06"}, "kind": "rate", "unit": "1000km",
+   "threshold": 1.0, "basis": "VT-04: <= 1 per 1000 km"},
+  {"id": "K-14", "what": "lane-line proximity, AS-05", "signatures": {"AS-05"}, "kind": "rate", "unit": "h",
+   "threshold": 0.6, "basis": "VT-01/AIR-01: <= 1 % of 60 s lane-keeping instances fail, at most 60 per engaged hour"},
+]
+ALPHA = 0.05  # one-sided, as the validation targets (95 %)
+
+
+def poisson_cdf(k: int, mu: float) -> float:
+  term = total = math.exp(-mu)
+  for i in range(1, k + 1):
+    term *= mu / i
+    total += term
+  return total
+
+
+def poisson_bounds(n: int, alpha: float = ALPHA) -> tuple[float, float]:
+  """Exact one-sided (lower, upper) bounds on the Poisson mean for n observed events."""
+  def solve(f, lo=0.0, hi=1000.0 + 10 * n):
+    for _ in range(200):
+      mid = (lo + hi) / 2
+      lo, hi = (mid, hi) if f(mid) else (lo, mid)
+    return (lo + hi) / 2
+  lower = 0.0 if n == 0 else solve(lambda mu: 1 - poisson_cdf(n - 1, mu) < alpha)
+  upper = solve(lambda mu: poisson_cdf(n, mu) > alpha)
+  return lower, upper
+
+
+def kpi_matches(kpi: dict, e: Event) -> bool:
+  if kpi.get("engaged") and not e.engaged:
+    return False
+  return (e.mon in kpi.get("mon", set()) or e.trigger in kpi.get("triggers", set())
+          or bool(kpi.get("signatures", set()) & set(e.signatures)))
+
+
+def evaluate_kpis(events: list[Event], engaged_h: float, engaged_km: float) -> list[dict]:
+  """Status per KPI. rate KPIs: BREACH if the lower 95 % bound is above the threshold, WATCH if
+  the point rate is, MET if the upper bound is below it, else OPEN (not enough exposure yet)."""
+  rows = []
+  for k in KPIS:
+    n = sum(1 for e in events if kpi_matches(k, e))
+    row = {"id": k["id"], "what": k["what"], "count": n, "basis": k["basis"]}
+    if k["kind"] == "zero":
+      row["status"] = "FINDING" if n else "OK"
+    else:
+      exposure = engaged_h if k["unit"] == "h" else engaged_km / 1000
+      lo, hi = poisson_bounds(n)
+      row.update({"unit": k["unit"], "exposure": round(exposure, 4)})
+      if exposure > 0:
+        row.update({"rate": round(n / exposure, 4), "lower95": round(lo / exposure, 4), "upper95": round(hi / exposure, 4)})
+      if k["kind"] == "baseline":
+        row["status"] = "BASELINE"
+      else:
+        t = k["threshold"]
+        row["threshold"] = t
+        row["exposure_to_demonstrate"] = round(hi / t, 2)  # exposure at which this count would meet the target
+        if exposure <= 0:
+          row["status"] = "OPEN"
+        elif lo / exposure > t:
+          row["status"] = "BREACH"
+        elif n / exposure > t:
+          row["status"] = "WATCH"
+        elif hi / exposure <= t:
+          row["status"] = "MET"
+        else:
+          row["status"] = "OPEN"
+    rows.append(row)
+  return rows
+
+
 def summarise(scanners: list[RouteScanner]) -> dict:
   exposure = Exposure()
   events = [e for sc in scanners for e in sc.events]
@@ -409,6 +502,7 @@ def summarise(scanners: list[RouteScanner]) -> dict:
     "counts_by_mon": {k: {"count": v, "per_engaged_h": rate(v)} for k, v in sorted(by_mon.items())},
     "counts_by_signature": {k: {"count": v, "per_engaged_h": rate(v)} for k, v in sorted(by_as.items())},
     "triage": {c: sum(1 for e in events if e.triage == c) for c in ("T1", "T2", "T3")},
+    "kpis": evaluate_kpis(events, hours, exposure.engaged_m / 1000),
     "not_scored": sorted(set().union(*(sc.not_scored for sc in scanners))) if scanners else [],
     "events": [e.row() for e in events],
   }
@@ -424,7 +518,15 @@ def markdown(summary: dict) -> str:
   out += ["", "| Signature | Count | Per engaged h |", "|---|---|---|"]
   out += [f"| {k} | {v['count']} | {v['per_engaged_h']} |" for k, v in summary["counts_by_signature"].items()]
   t = summary["triage"]
-  out += ["", f"Triage: T1 {t['T1']}, T2 {t['T2']}, T3 {t['T3']}.", "", "Not scored: " + "; ".join(summary["not_scored"])]
+  out += ["", f"Triage: T1 {t['T1']}, T2 {t['T2']}, T3 {t['T3']}.", ""]
+  out += ["| KPI | Count | Rate | 95 % bounds | Threshold | Status |", "|---|---|---|---|---|---|"]
+  for k in summary["kpis"]:
+    unit = {"h": "/h", "1000km": "/1000 km"}.get(k.get("unit"), "")
+    rate = f"{k['rate']}{unit}" if "rate" in k else ""
+    bounds = f"{k['lower95']}–{k['upper95']}" if "lower95" in k else ""
+    thr = f"{k['threshold']}{unit}" if "threshold" in k else ("0" if k["status"] in ("OK", "FINDING") else "")
+    out.append(f"| {k['id']} {k['what']} | {k['count']} | {rate} | {bounds} | {thr} | {k['status']} |")
+  out += ["", "Not scored: " + "; ".join(summary["not_scored"])]
   return "\n".join(out)
 
 
@@ -451,7 +553,8 @@ def main(argv: list[str] | None = None) -> int:
       w = csv.DictWriter(f, fieldnames=["route", "t_s", "mon", "signatures", "trigger", "triage", "engaged", "detail"])
       w.writeheader()
       w.writerows(summary["events"])
-  return 1 if summary["triage"]["T1"] else 0
+  findings = any(k["status"] in ("FINDING", "BREACH") for k in summary["kpis"])
+  return 1 if summary["triage"]["T1"] or findings else 0
 
 
 if __name__ == "__main__":

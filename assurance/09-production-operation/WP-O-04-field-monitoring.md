@@ -120,22 +120,35 @@ A T3 event becomes T2 when its rate exceeds the threshold in §5 or a new patter
 
 ## 5. KPIs and thresholds
 
-Thresholds are placeholders until the SOTIF validation targets proposed in [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) §4 (VT-01…VT-15, Draft, not yet confirmed) are agreed and baseline rates from development driving exist (OI-5). A KPI breach is a problem report, not an automatic field action.
+The thresholds below are **proposals** (OI-5). Where a validation target of [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) §4 sets a rate, the threshold is derived from it. Where none does, the KPI is reported against a baseline from development driving, which does not exist yet. Both the targets (WP-V-02 OI-3) and these derivations wait for the assessor. A KPI breach is a problem report, not an automatic field action.
 
-| KPI | Definition | Initial threshold (placeholder) | Linked claim |
-|---|---|---|---|
-| K-01 | Crashes while engaged per engaged distance | 0 tolerated without T1 investigation; rate compared with VT targets | G0, G2 |
-| K-02 | Excessive-actuation latches per 1,000 engaged km | 0 (any occurrence → T1) | SG-01, SG-03, SG-04 |
-| K-03 | `controlsMismatch` / `relayMalfunction` per 1,000 engaged hours | 0 (any occurrence → T1) | SG-01, SG-07 |
-| K-04 | Envelope TX blocks while engaged per engaged hour | Baseline from development drives; > 2× baseline → T2 | SG-01, SG-03, SG-04 |
-| K-05 | Safety-relevant driver disengagements (driver takeover judged necessary on review) per 100 engaged km | Baseline; trend | SOTIF residual risk |
-| K-06 | DM level-3 alerts and lockouts per engaged hour, per driver | Baseline; trend per driver | AOU-06; misuse |
-| K-07 | Engaged time outside ODD / total engaged time | < 1% (placeholder) | AOU-06, UI-10 |
-| K-08 | Fault disengagements (soft + immediate) per engaged hour | Baseline | SG-02, SG-06 |
-| K-09 | Stock AEB activations while engaged, each reviewed for whether LD-SDA contributed | Review all | SG-07, H-06 |
-| K-10 | Model anomaly events per engaged hour (MON-13) | Baseline | G3 (AI) |
-| K-11 | Field units on non-released configuration | 0 | All |
-| K-12 | Data coverage: share of engaged distance whose logs were retrieved | ≥ 95% | Validity of all KPIs |
+| KPI | Definition | Proposed threshold | Derivation | Linked claim |
+|---|---|---|---|---|
+| K-01 | Crashes while engaged per engaged distance; crash candidates and bookmarks (MON-14) | 0 tolerated without T1 investigation | VT-11: zero injury crashes | G0, G2 |
+| K-02 | Excessive-actuation latches per 1,000 engaged km | 0 (any occurrence → T1) | Direct indicator of a safety-goal violation | SG-01, SG-03, SG-04 |
+| K-03 | `controlsMismatch` / `relayMalfunction` per 1,000 engaged hours | 0 (any occurrence → T1) | As K-02 | SG-01, SG-07 |
+| K-04 | Envelope TX blocks while engaged per engaged hour | Baseline from development drives; > 2× baseline → T2 | No target; the envelope intervening is a near-miss | SG-01, SG-03, SG-04 |
+| K-05 | Safety-relevant driver disengagements (driver takeover judged necessary on review) per 100 engaged km | Baseline; trend | Needs review, not automatic | SOTIF residual risk |
+| K-06 | DM level-3 alerts and lockouts per engaged hour, per driver | ≤ 0.1 per engaged hour | A level-3 alert follows two ignored warnings; more than one per 10 engaged hours is a misuse pattern | AOU-06; misuse |
+| K-07 | Engaged above the ODD speed bound (MON-15); engaged time outside the other ODD limits / total engaged time | Speed: 0. Other limits: < 1 % | VT-12: the speed bound is deterministic (FM-07); the other exits rely on user information (AC-04) | AOU-06, UI-10 |
+| K-08 | Fault disengagements (soft + immediate) per engaged hour | Baseline | No target | SG-02, SG-06 |
+| K-09 | Stock AEB activations while engaged, each reviewed for whether LD-SDA contributed | Review all | — | SG-07, H-06 |
+| K-10 | Lead flicker, AS-08 (MON-13), per engaged hour | ≤ 0.6 per engaged hour | VT-14: at most 1 % of 60 s steady-scene instances may fail, and an engaged hour holds at most 60 instances | G3 (AI) |
+| K-11 | Field units on non-released configuration | 0 | — | All |
+| K-12 | Data coverage: share of engaged distance whose logs were retrieved | ≥ 95 % | Below it, the rates above are not representative | Validity of all KPIs |
+| K-13 | Phantom decelerations, AS-06 (MON-17), per 1,000 engaged km | ≤ 1 per 1,000 km | VT-04: ≤ 1 per 1,000 km | SH-04 |
+| K-14 | Lane-line proximity, AS-05 (MON-17), per engaged hour | ≤ 0.6 per engaged hour | VT-01/AIR-01: at most 1 % of 60 s lane-keeping instances may fail, at most 60 per engaged hour. In narrow lanes AS-05 also counts some instances that AIR-01 passes, so this is conservative | SH-01 |
+
+**How a rate is judged.** Field counts are small, so a rate is judged with its exact one-sided 95 % Poisson bounds, the confidence level of the validation targets:
+
+| Status | Condition | Action |
+|---|---|---|
+| BREACH | The lower bound is above the threshold: the rate is shown to exceed it | Problem report ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)); field-action criteria of §9 checked |
+| WATCH | The observed rate is above the threshold, but the lower bound is not | T3 events of that class become T2 (§4.2) |
+| MET | The upper bound is at or below the threshold: the target is shown to be met | None |
+| OPEN | Neither: not enough exposure yet. With no events, 3.0 / threshold of exposure is needed to show MET (for example 3,000 km for K-13) | Keep collecting |
+
+`tools/field_monitoring/extract_events.py` evaluates K-01…K-04, K-06…K-08, K-10, K-13 and K-14 from the logs with these rules. K-05, K-09, K-11 and K-12 need review or the retrieval log, not the drive logs alone. K-06 is evaluated per fleet by the script; the per-driver check needs the driver identity from the retrieval log.
 
 ## 6. Feeding the analyses
 
@@ -200,7 +213,7 @@ Every field action is recorded with: trigger, affected releases and installation
 | Event signals logged on the device | Available (inherited) |
 | LionDriver access to field data | **Not available**: default upload goes to comma.ai; no LionDriver path |
 | Event extraction tooling | Written and unit-tested on synthetic logs; not yet run on recorded drives (OI-4) |
-| KPI thresholds | Not defined (OI-5) |
+| KPI thresholds | Proposed (§5), not yet reviewed; baselines missing (OI-5) |
 | Notification channel for field actions | Not available (OI-7) |
 | Field monitoring records | None (no LionDriver field operation yet) |
 
@@ -212,7 +225,7 @@ Every field action is recorded with: trigger, affected releases and installation
 | OI-2 | Decide the post-release data path (manual vs. LionDriver endpoint) | G5 |
 | OI-3 | Privacy and consent review (data categories, consent text, retention) | G1 |
 | OI-4 | Event extraction: the script exists (`tools/field_monitoring/`, §4.1). Still open: run it on the first recorded development drives and check each MON class against a manual review of the same drives; then score AS-08 curvature divergence and AS-09 once WP-V-04 gives their thresholds (evaluation-set percentiles) | G1 (for development driving) |
-| OI-5 | Set KPI thresholds from validation targets and development-drive baselines | G4 |
+| OI-5 | KPI thresholds: proposed in §5 from the validation targets, with the BREACH/WATCH/MET/OPEN rule. Still open: assessor review of the proposals (with WP-V-02 OI-3), and baselines from development drives for K-04, K-05 and K-08 | G4 |
 | OI-6 | Legal review of SGO and Part 573 applicability | G5 |
 | OI-7 | Establish a field-action notification channel with confirmed receipt | G5 |
 | OI-8 | Define crash detection criteria from IMU/`carState` for MON-14 (automatic flagging) | G4 |

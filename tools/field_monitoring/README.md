@@ -21,7 +21,22 @@ The output has four parts:
 - **Counts.** Counts per MON and AS, and rates per engaged hour.
 - **Not scored.** A list of the signatures the run could not score, with the reason.
 
-Exit status 1 means at least one T1 event was found. A T1 event needs review the same day.
+Exit status 1 means at least one T1 event was found, or a KPI is a FINDING or BREACH. A T1 event needs review the same day.
+
+## KPIs
+
+The report also judges the KPIs of WP-O-04 §5 that the logs alone can show: K-01…K-04, K-06…K-08, K-10, K-13 and K-14. Their thresholds are proposals derived from the validation targets of WP-V-02 §4, for example K-13 ≤ 1 phantom deceleration per 1,000 engaged km from VT-04. They wait for assessor review (WP-O-04 OI-5).
+
+| Status | Meaning |
+|---|---|
+| FINDING | A zero-tolerance KPI (K-01, K-02, K-03, K-07) has an occurrence |
+| BREACH | The exact one-sided 95 % Poisson lower bound of the rate is above the threshold |
+| WATCH | The observed rate is above the threshold, but the lower bound is not |
+| MET | The 95 % upper bound is at or below the threshold |
+| OPEN | Not enough exposure to decide. `exposure_to_demonstrate` says how much would show MET at the current count |
+| BASELINE | No target yet (K-04, K-08); the rate is reported for the development baseline |
+
+K-06 is evaluated for the whole fleet here; the per-driver check needs the driver identity from the retrieval log.
 
 ## How events are found
 
