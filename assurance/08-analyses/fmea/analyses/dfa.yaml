@@ -35,7 +35,7 @@ analysis:
     - {revision: "0.2", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Evidence from panda 92eb565 / opendbc 229dc70 for DFI-07/08/09; DFI-08 open -> insufficient; DOI-002 closed by design LD-DES-001; DOI-007 added"}
     - {revision: "0.3", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Re-based on FSC rev 0.2; no DFI changes"}
     - {revision: "0.4", date: 2026-10-10, author: Claude (AI-assisted draft), change: "SW FMEA rev 0.2 code review: DM-05 corrected (checksum on 0x1D2/0x260 only, no counters, BRAKE_MODULE timing only); DM-06 and DM-20 evidence recorded in DOI-001; statuses unchanged pending independent verification"}
-    - {revision: "0.5", date: 2026-10-13, author: Claude (AI-assisted draft), change: "The seven insufficient DFIs re-checked against liondriver-dev 102224c (panda c33343b, opendbc 273f44e, after BL-004). DM-21 panda reference lock and DM-22 host reference-build check added (existing, unverified on hardware); DFI-07 insufficient -> open; DFI-05/08/09/14/18/19 stay insufficient, each rationale now names what is in the code and what is still needed; DM-20 runs in CI (DOI-001); DOI-007 progress; decomposition statuses unchanged"}
+    - {revision: "0.5", date: 2026-10-13, author: Claude (AI-assisted draft), change: "The seven insufficient DFIs re-checked against liondriver-dev 102224c (panda c33343b, opendbc 273f44e, after BL-004). DM-21 panda reference lock and DM-22 host reference-build check added (existing, unverified on hardware); DFI-07 insufficient -> open; DFI-05/08/09/14/18/19 stay insufficient, each rationale now names what is in the code and what is still needed; DM-20 runs in CI (DOI-001); DOI-007 progress; decomposition statuses unchanged. Then DM-12 (panda 4ac8e1c, ELM327 refused after the car mode until ignition off) and DM-11 (opendbc c393a04, assist-active LKAS_HUD refused without authority) implemented and unit-tested: DFI-08 and DFI-19 insufficient -> open"}
 
 categories:
   - {id: CAT-01, name: Shared power supply, applicable: true, rationale: "Panda and SoC are on the same comma 3X board, powered from the same 12 V input."}
@@ -210,13 +210,17 @@ dfis:
     effect: Diagnostic traffic to EPS or ADAS ECUs while driving could reset them or drop assist (loss of function, HZ-004 type), not unintended actuation.
     evidence: openpilot/selfdrive/pandad/panda_safety.cc:23-36; opendbc modes/elm327.h:6-33 (LD-DES-001 F5)
     measures: [DM-12, DM-21]
-    assessment: insufficient
+    assessment: open
     rationale: >-
       Verified at BL-001 that the ELM327 TX hook has no ignition or motion condition. Rev 0.5: the reference lock
       (DM-21) refuses ELM327 while TOYOTA is active, but allows it from NOOUTPUT or SILENT with no ignition or
       motion condition, and it allows TOYOTA to NOOUTPUT at any time. A faulty SoC can therefore go
-      TOYOTA -> NOOUTPUT -> ELM327 while driving. Needed for sufficient: DR-05 in the reference gate (ELM327 only
-      with ignition off, or stationary with no car mode since ignition on), unit-tested like the existing gate.
+      TOYOTA -> NOOUTPUT -> ELM327 while driving. Then implemented (DM-12, panda 4ac8e1c): once TOYOTA has been
+      accepted, ELM327 is refused until the 1 Hz tick sees the ignition off; fingerprinting before the car mode is
+      unaffected. The "stationary" alternative of DR-05 is not used (no vehicle speed outside a car mode). Residual:
+      before the first car mode of an ignition cycle ELM327 is still accepted while moving (fingerprinting runs
+      seconds after ignition on). Open, not sufficient: unit-tested (panda/tests/reference_lock), not verified on
+      the bench (HIL).
   - id: DFI-09
     category: CAT-06
     kind: cascading
@@ -354,12 +358,16 @@ dfis:
     decompositions: [FSR-015, FSR-025]
     effect: A SoC that shows the wrong state on the device can send the same wrong state to the cluster; the two warning channels fail together.
     measures: [DM-11]
-    assessment: insufficient
+    assessment: open
     rationale: >-
       The panda forwards HUD content without checking it against controls-allowed. FSR-017/027 need the panda to
       enforce consistent status bits (DM-11). Rev 0.5: unchanged; the reference build only rate-limits LKAS_HUD
-      (0x412, TSR-518) and does not look at its content. Needed for sufficient: DM-11 in the Toyota TX hook (refuse
-      an LKAS_HUD that shows assist active while controls are not allowed), after DOI-005 names the bits.
+      (0x412, TSR-518) and does not look at its content. Then implemented (DM-11, opendbc c393a04): an LKAS_HUD with
+      BARRIERS != 0 is refused unless controls are allowed or were allowed within the last 1 s (the host clears the
+      HUD a few frames after a disengagement). The cluster can therefore show assist for at most 1 s after authority
+      is withdrawn. Open, not sufficient: unit-tested (test_toyota.py, both variants), not verified on the vehicle;
+      that BARRIERS is the indication the driver reads as "assist active" is from the DBC and openpilot's
+      carcontroller, to be confirmed on the reference cluster (DOI-005).
 
 measures:
   - {id: DM-01, description: "All item CAN transmission passes through the panda; an unpowered or reset panda transmits nothing.", status: existing, ref: openpilot/selfdrive/pandad, allocated_to: [EL-07]}
@@ -372,8 +380,8 @@ measures:
   - {id: DM-08, description: "Firmware authenticity: panda bootloader accepts only signed LionDriver release firmware, rejects downgrade, and flashing is allowed only offroad.", status: required, ref: "LD-DES-001 DR-10..DR-16", allocated_to: [EL-07]}
   - {id: DM-09, description: "Separate release gate for panda firmware and safety model (safety test suite, HIL, independent review), versioned independently of SoC software.", status: required, allocated_to: [process]}
   - {id: DM-10, description: "Envelope derived from vehicle measurements independently of opendbc, with both channels' limits checked against it.", status: required, allocated_to: [process]}
-  - {id: DM-11, description: "Panda blocks assist-active HUD and status bits when controls are not allowed.", status: required, allocated_to: [EL-07]}
-  - {id: DM-12, description: "Panda accepts diagnostic (ELM327) mode only offroad.", status: required, ref: "LD-DES-001 DR-05", allocated_to: [EL-07]}
+  - {id: DM-11, description: "Panda blocks assist-active HUD and status bits when controls are not allowed. Reference build: LKAS_HUD with BARRIERS != 0 refused unless controls are allowed or were allowed within 1 s. Unit-tested; not verified on the vehicle.", status: existing_unverified, ref: opendbc_repo/opendbc/safety/modes/toyota.h, allocated_to: [EL-07]}
+  - {id: DM-12, description: "Panda accepts diagnostic (ELM327) mode only offroad. Reference build: ELM327 refused once the car mode has been accepted, until the ignition is off (LD-DES-001 DR-05 without the stationary alternative). Unit-tested; HIL not run.", status: existing_unverified, ref: panda/board/reference_lock.h, allocated_to: [EL-07]}
   - {id: DM-13, description: "EMC/ESD immunity testing of device and harness (ISO 7637-2, ISO 11452, ISO 10605).", status: required, allocated_to: [process]}
   - {id: DM-14, description: "Thermal characterization of the windshield-mounted device against panda MCU and regulator ratings.", status: required, allocated_to: [process]}
   - {id: DM-15, description: "Panda robustness against host input: protocol fuzzing and malformed-command tests.", status: required, allocated_to: [EL-07]}
@@ -413,7 +421,11 @@ open_items:
     affects: [DFI-05]
     status: open
   - id: DOI-005
-    text: Refine FSR-017 and FSR-027 in FSC rev 0.2 so the panda enforces status bits consistent with controls-allowed (DM-11).
+    text: >-
+      Refine FSR-017 and FSR-027 in FSC rev 0.2 so the panda enforces status bits consistent with controls-allowed
+      (DM-11). Progress at rev 0.5: the reference build refuses LKAS_HUD.BARRIERS without authority (opendbc
+      c393a04); still to do: confirm on the reference cluster that BARRIERS is the indication the driver reads as
+      lane assist active, and name the bits in FSR-017/027.
     affects: [DFI-19, DM-11, FSR-017, FSR-027]
     status: open
   - id: DOI-006
@@ -426,7 +438,7 @@ open_items:
       Implement and verify LD-DES-001 (DR-01..DR-16) in LionDriver forks of panda and opendbc and in pandad/selfdrived,
       after decisions D1-D4 in LD-DES-001 section 7. DM-07, DM-08 and DM-12 stay "required" until then.
       Progress at rev 0.5: for AC-001 the reference lock (DM-21) implements DR-01, DR-03 and the effect of DR-06
-      without a VLR, and refuses softloader entry in a car mode (part of DR-14). Not implemented: DR-05 (ELM327
-      while moving), DR-10..DR-13, DR-15, DR-16.
+      without a VLR, and refuses softloader entry in a car mode (part of DR-14); DR-05 implemented in the same gate
+      (panda 4ac8e1c, see DFI-08). Not implemented: DR-10..DR-13, DR-15, DR-16.
     affects: [DM-07, DM-08, DM-12, DFI-07, DFI-08, DFI-09]
     status: open
