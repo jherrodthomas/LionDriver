@@ -14,7 +14,7 @@ Row results: *match* = a computed cut set; *effective* = omits only latent event
 | SG-02 | 33 | 3 | 8 | 1 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-03 | 16 | 7 | 11 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-04 | 17 | 6 | 10 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| SG-05 | 6 | 5 | 7 | 6 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| SG-05 | 7 | 6 | 8 | 7 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
 | SG-06 | 32 | 3 | 8 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-07 | 11 | 10 | 11 | 10 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
@@ -207,7 +207,7 @@ Top event TE-04. 17 minimal cut sets.
 
 ## SG-05: no release on driver brake, cancel or steering override
 
-Top event TE-05. 6 minimal cut sets.
+Top event TE-05. 7 minimal cut sets.
 
 ### Computed cut sets
 
@@ -218,7 +218,8 @@ Top event TE-05. 6 minimal cut sets.
 | 3 | 1 BE + 1 UE | 1 | {BE-5.01, UE-5.04} |  | MCS-05.3 |
 | 4 | 1 BE + 1 UE | 1 | {BE-5.08, UE-5.09} |  | MCS-05.6 |
 | 5 | 2 BE + 0 UE | 2 | {BE-5.10, BE-5.11} | C | MCS-05.7 |
-| 6 | 2 BE + 1 UE | 1 | {BE-5.05, BE-5.06, UE-5.07} | L | MCS-05.5 |
+| 6 | 1 BE + 1 UE | 0 | {BE-5.12, UE-5.13} | L | MCS-05.8 |
+| 7 | 2 BE + 1 UE | 1 | {BE-5.05, BE-5.06, UE-5.07} | L | MCS-05.5 |
 
 ### Table rows of WP-A-04
 
@@ -231,6 +232,7 @@ Top event TE-05. 6 minimal cut sets.
 | MCS-05.5 | 1 + ext. | {BE-5.05 (latent), BE-5.06, UE-5.07} | match | — |
 | MCS-05.6 | 1 + ext. | {BE-5.08, UE-5.09} | match | — |
 | MCS-05.7 | 2 | {BE-5.10, BE-5.11} | match | — |
+| MCS-05.8 | 1 + ext. (latent at the baseline) | {UE-5.13, BE-5.12} | match | — |
 
 ## SG-06: loss of longitudinal deceleration without take-over warning
 

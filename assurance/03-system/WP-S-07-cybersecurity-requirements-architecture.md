@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-S-07 Cybersecurity requirements and architectural design |
 | Standard reference | ISO/SAE 21434:2021 §10 (product development: refinement of cybersecurity requirements, architectural design, cybersecurity controls); §9.5 (concept, as input); ASPICE 4.0 SEC.1, SYS.3 |
-| Version | 0.1 |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). History: 0.2 (status update 2026-10-12: evidence of CSR-011, -012, -014, -015, -016, -024, -092 for the reference build at `bf6ce8c`; §3.5 status; §8 differences 2 and 3 resolved by WP-S-02 (TSR-512, TSR-619); not verified on hardware, not reviewed independently). 0.1 |
 | Status | Draft — requirements are proposals derived from code review and the concept; not verified, not approved |
 | ASIL / scope | CS (CAL 1–3); requirements with a safety relation reference their TSR in WP-S-02 (B‡: target ASIL B, ASIL C until SG-01 is re-rated) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); CS assessor sampling per [WP-M-09 §8](../01-management/WP-M-09-cybersecurity-plan.md) |
 | Approver | Project maintainer (acting cybersecurity manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`). Requirements and the "Evidence at baseline" column were derived at `8b8c6ae` (opendbc `229dc70`, panda `92eb565`); dated notes give the status at `bf6ce8c` |
 
 > Defensive engineering document. It states requirements and architecture for protection
 > mechanisms. It contains no exploitation procedures, payloads or key material.
@@ -128,7 +128,7 @@ Architecture decisions (proposed, for CCB and assessor agreement):
 
 ### 3.5 Safety-mode lock
 
-Today `0xdc` calls `set_safety_mode(param1, param2)` with no check (`panda/board/main_comms.h:223-225`); pandad takes the mode and parameter from `CarParams` in the unauthenticated params store (`openpilot/selfdrive/pandad/panda_safety.cc:56-69`). Alternative experience (`0xdf`) is settable only in a non-car mode (`main_comms.h:242-247`), but the SoC can switch to a non-car mode, set it and switch back.
+At baseline `8b8c6ae`, `0xdc` calls `set_safety_mode(param1, param2)` with no check (`panda/board/main_comms.h:223-225`); pandad takes the mode and parameter from `CarParams` in the unauthenticated params store (`openpilot/selfdrive/pandad/panda_safety.cc:56-69`). Alternative experience (`0xdf`) is settable only in a non-car mode (`main_comms.h:242-247`), but the SoC can switch to a non-car mode, set it and switch back.
 
 Design for the release firmware of the reference configuration:
 
@@ -136,6 +136,8 @@ Design for the release firmware of the reference configuration:
 2. Permitted transitions: non-actuating modes (SILENT, NOOUTPUT, ELM327) → the locked car configuration; the locked car configuration → NOOUTPUT or SILENT only. Any request for another mode, parameter or alternative-experience value is rejected, leaves the panda in a non-actuating mode, and sets a reported fault.
 3. Commands that change actuation, relay, CAN configuration or comms state (at least the list in TSR-513: `0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`) are rejected while a car mode is active (command allow-list).
 4. SoC-side cross-check (defence in depth, QM): pandad compares the panda-reported mode/param with the release record and blocks engagement on mismatch.
+
+Status 2026-10-12 (`bf6ce8c`, not verified on hardware): the reference build (`LIONDRIVER_REFERENCE=1`, `panda/board/reference_lock.h`) implements items 1 and 3, and item 2 in part: a rejected request has no effect and is counted in the health packet (`pandaState.requestsRejected`), but the panda stays in its current mode (which may be TOYOTA) and no fault flag is set (CSR-012). `0xdf` is refused in every mode, so the alternative experience stays 0. The lock is tied to `LIONDRIVER_REFERENCE`, not to `RELEASE`. Item 4 (TSR-619) is open.
 
 This design serves CSG-01 and FSR-01.10 at the same time; the safety requirements are TSR-512 (mode lock) and TSR-513 (command gating in car mode) of [WP-S-02](WP-S-02-technical-safety-requirements.md) (§8). TSR-512 also permits ELM327 mode (fingerprinting, relay released) as a non-actuating mode; this document follows it.
 
@@ -159,7 +161,7 @@ Target: a LionDriver release manifest (release ID, git tree commit including sub
 
 The params store is unauthenticated flat files and msgq shared memory has no publisher authentication (GAP-20). The architecture does **not** try to make SoC-local IPC secure against a root attacker; it (a) makes the envelope independent of params/IPC (CSR-061), (b) restricts who can write safety-relevant keys and publish safety-relevant topics against non-root compromise of network-facing processes (CSR-062…CSR-064), and (c) removes developer modes from release builds (CSR-071…CSR-073).
 
-Safety-relevant keys (initial list; maintained with [WP-W-09](../05-software/WP-W-09-configuration-calibration-data.md)): `CarParams`, `CarParamsCache`, `ExperimentalMode` (default "1", `params_keys.h:43`, GAP-18), `DisengageOnAccelerator`, `IsDriverViewEnabled`, `JoystickDebugMode`, `LongitudinalManeuverMode`, `LateralManeuverMode`, `DisableUpdates`, `UpdaterTargetBranch`, `SshEnabled`, `GithubSshKeys`. `SecOCKey` (`params_keys.h:120`) is not used on the 2020 Corolla (no SecOC flag) and is out of scope for the reference configuration.
+Safety-relevant keys (initial list; maintained with [WP-W-09](../05-software/WP-W-09-configuration-calibration-data.md)): `CarParams`, `CarParamsCache`, `ExperimentalMode` (default "1", `params_keys.h:43`, GAP-18), `DisengageOnAccelerator`, `IsDriverViewEnabled`, `JoystickDebugMode`, `LongitudinalManeuverMode`, `LateralManeuverMode`, `DisableUpdates`, `UpdaterTargetBranch`, `SshEnabled`, `GithubSshKeys`. `SecOCKey` (`params_keys.h:120`) is not used on the Toyota Corolla, 12th generation (E210), TSS 2.0 (`TOYOTA_COROLLA_TSS2` has no SecOC flag) and is out of scope for the reference configuration.
 
 ## 4. Detailed cybersecurity requirements
 
@@ -167,12 +169,12 @@ Safety-relevant keys (initial list; maintained with [WP-W-09](../05-software/WP-
 
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
-| CSR-011 | Release panda firmware for the reference configuration shall accept a car safety mode only if model, parameter and alternative experience equal the compile-time locked values recorded in the release record. | FW | TSR-512, FSR-01.10, B‡ | R, UT, HIL | Not implemented: `0xdc` unconditional (`main_comms.h:223-225`) (GAP-09) |
-| CSR-012 | A rejected safety-configuration request shall leave the panda in a non-actuating mode and set a fault flag reported to the SoC in the health packet. | FW | TSR-512, B‡ | UT, HIL | Not implemented |
+| CSR-011 | Release panda firmware for the reference configuration shall accept a car safety mode only if model, parameter and alternative experience equal the compile-time locked values recorded in the release record. | FW | TSR-512, FSR-01.10, B‡ | R, UT, HIL | Not implemented: `0xdc` unconditional (`main_comms.h:223-225`) (GAP-09). **2026-10-12: Implemented, not verified (reference build)**: `reference_lock.h` (TSR-512) |
+| CSR-012 | A rejected safety-configuration request shall leave the panda in a non-actuating mode and set a fault flag reported to the SoC in the health packet. | FW | TSR-512, B‡ | UT, HIL | Not implemented. **2026-10-12: Partial (reference build)**: rejected, counted as `requestsRejected` (panda `3859fa8`); no fault-flag reaction (the panda keeps its current mode) and no driver alert |
 | CSR-013 | Transitions from the locked car mode to SILENT or NOOUTPUT shall remain permitted at all times. | FW | TSR-512, B‡ (safe state reachable) | UT, HIL | Implemented generically (`set_safety_mode` accepts any mode); keep under the lock |
-| CSR-014 | While a car safety mode is active, release firmware shall reject host commands outside a documented allow-list, including relay drive (`0xc5`), CAN mode/speed changes (`0xdb`, `0xde`) and loopback. | FW | TSR-513, B‡ | R, UT, FZ | Not implemented; none of the TSR-513 commands is gated (`main_comms.h:144-147, 218-276, 296-314`) (GAP-09) |
-| CSR-015 | Alternative experience shall not be changeable in release firmware for the reference configuration. | FW | TSR-512, TSR-804 | UT | Partial: only in non-car mode (`main_comms.h:242-247`), bypassable by mode switching |
-| CSR-016 | pandad shall compare the panda-reported safety model, parameter and alternative experience with the release-record values and prevent engagement and raise an alert on mismatch. | SoC | QM (B-sup: TSR-512); no matching TSR-6xx (proposed addition, OI-1) | UT, HIL | Not implemented; pandad takes values from `CarParams` (`panda_safety.cc:56-69`) |
+| CSR-014 | While a car safety mode is active, release firmware shall reject host commands outside a documented allow-list, including relay drive (`0xc5`), CAN mode/speed changes (`0xdb`, `0xde`) and loopback. | FW | TSR-513, B‡ | R, UT, FZ | Not implemented; none of the TSR-513 commands is gated (`main_comms.h:144-147, 218-276, 296-314`) (GAP-09). **2026-10-12: Partial (reference build)**: the TSR-513 list (`0xc5`, `0xd8`, `0xdb`, `0xde`, `0xe5`, `0xe6`, `0xe7`, `0xe8`, `0xf1`, `0xf9`, `0xfc`, `0xd1` param 1) refused in a car mode; `0xc0`, `0xb0`, `0xb1`, `0xf6` to confirm (WP-W-02 OI-5); a deny-list, not an allow-list |
+| CSR-015 | Alternative experience shall not be changeable in release firmware for the reference configuration. | FW | TSR-512, TSR-804 | UT | Partial: only in non-car mode (`main_comms.h:242-247`), bypassable by mode switching. **2026-10-12: Implemented, not verified (reference build)**: `0xdf` refused in every mode (SWSR-512a); AOU-14 |
+| CSR-016 | pandad shall compare the panda-reported safety model, parameter and alternative experience with the release-record values and prevent engagement and raise an alert on mismatch. | SoC | QM (B-sup: TSR-512); no matching TSR-6xx (proposed addition, OI-1). 2026-10-12: TSR-619 of WP-S-02 now refines this CSR | UT, HIL | Not implemented; pandad takes values from `CarParams` (`panda_safety.cc:56-69`). 2026-10-12: unchanged (TSR-619 not implemented) |
 
 ### 4.2 CSR-C-02 No debug capability in release firmware (CSG-01/CSG-02, CAL 3)
 
@@ -181,7 +183,7 @@ Safety-relevant keys (initial list; maintained with [WP-W-09](../05-software/WP-
 | CSR-021 | The release panda firmware and bootstub shall be built with `RELEASE` and the LionDriver certificate, and the release build shall fail if `ALLOW_DEBUG` is defined. | FW; ENV | TSR-514, FSR-01.10, B‡ | BA | Not met: DEBUG + `ALLOW_DEBUG` is the default (`panda/SConscript:12-20`) (GAP-25) |
 | CSR-022 | The release bootstub shall not contain the debug public key and shall accept no key other than the LionDriver release key. | FW | TSR-514, B‡ | BA, HIL | Conditional: debug key accepted only under `ALLOW_DEBUG` (`bootstub.c:67-72`); correct only if CSR-021 holds |
 | CSR-023 | Debug-only host commands (relay drive `0xc5`, ALLOUTPUT mode, bootloader entry, debug sleep) shall be absent from release firmware. | FW | TSR-514, TSR-513, HWSR-506c | BA, R, FZ | Partial: ALLOUTPUT (`safety.h:413-422`), `0xd1` param 0 (`main_comms.h:170`), `0xb5` (`:92`) gated; `0xc5` not gated (GAP-09) |
-| CSR-024 | Softloader entry (`0xd1` param 1) shall be accepted only while the panda is in a non-actuating mode and the vehicle ignition is off. | FW | TSR-511 (softloader refused in car mode), B‡; ignition-off condition is an additional CS constraint | UT, HIL | Not implemented: allowed in release at any time (`main_comms.h:176-179`) (GAP-24) |
+| CSR-024 | Softloader entry (`0xd1` param 1) shall be accepted only while the panda is in a non-actuating mode and the vehicle ignition is off. | FW | TSR-511 (softloader refused in car mode), B‡; ignition-off condition is an additional CS constraint | UT, HIL | Not implemented: allowed in release at any time (`main_comms.h:176-179`) (GAP-24). **2026-10-12: Partial (reference build)**: refused in a car mode (panda `7e2d148`); ignition-off condition not implemented |
 
 ### 4.3 CSR-C-03 Authenticated firmware boot (CSG-02, CAL 3)
 
@@ -239,7 +241,7 @@ Safety-relevant keys (initial list; maintained with [WP-W-09](../05-software/WP-
 | ID | Statement | Alloc | Safety relation | Verif | Evidence at baseline |
 |---|---|---|---|---|---|
 | CSR-091 | Panda firmware shall verify every checksum and counter that the vehicle provides on safety-relevant RX messages, and shall cross-check messages that carry none (brake `0x226`, wheel speed `0xAA`) for plausibility against independent signals. | FW | TSR-401…405, B‡; GAP-01 | R, UT, HIL | Partial: 8-bit checksums on some messages; none on `0x226`/`0xAA`; no counters (GAP-01) |
-| CSR-092 | Panda firmware shall transmit only allow-listed actuation messages on the car-side bus and shall not alter camera-originated PCS messages it forwards. | FW | TSR-7xx, SG-07 | R, UT | Implemented in part: Toyota TX allow-list (`opendbc_repo/opendbc/safety/modes/toyota.h:6-19`); forwarding verification per TSR-7xx |
+| CSR-092 | Panda firmware shall transmit only allow-listed actuation messages on the car-side bus and shall not alter camera-originated PCS messages it forwards. | FW | TSR-7xx, SG-07 | R, UT | Implemented in part: Toyota TX allow-list (`opendbc_repo/opendbc/safety/modes/toyota.h:6-19`); forwarding verification per TSR-7xx. 2026-10-12: PCS and DSU IDs removed from the allow-list, `0x411` in the reference build only (TSR-705); per-ID TX rate supervision in the reference build (TSR-518); not verified on hardware |
 | CSR-093 | Reception on the car-side bus of an actuation message ID that the panda transmits, while the relay intercepts, shall be detected and lead to actuation inhibit. | FW | TSR-506, HWSR-506b, B‡ | UT, HIL | Partial: relay-malfunction detection on intercepted IDs (`safety.h:372-380`); timing per HWSR-506a |
 
 Residual risk of physical injection after CSR-091…093 is retained under CSC-01.
@@ -379,8 +381,8 @@ CSRs with no TSR counterpart (pure cybersecurity, or privacy): CSR-063, CSR-064,
 Differences to resolve with the WP-S-02 author (OI-1):
 
 1. CSR-024 adds "ignition off" to the TSR-511 softloader condition (car mode only in TSR-511).
-2. CSR-015 locks alternative experience in firmware; TSR-512 locks mode and parameter but names alternative experience only in the installation check TSR-804.
-3. CSR-016 (SoC-side cross-check of the panda configuration) has no TSR-6xx counterpart; propose one as QM (B-sup: TSR-512).
+2. ~~CSR-015 locks alternative experience in firmware; TSR-512 locks mode and parameter but names alternative experience only in the installation check TSR-804.~~ **Resolved 2026-10-12:** TSR-512 (WP-S-02) now also fixes the alternative-experience word in release builds.
+3. ~~CSR-016 (SoC-side cross-check of the panda configuration) has no TSR-6xx counterpart; propose one as QM (B-sup: TSR-512).~~ **Resolved 2026-10-12:** TSR-619 (WP-S-02) refines CSR-016.
 
 Consistency rule: where a CSR and a TSR state the same mechanism (e.g. CSR-011 and TSR-512), the stricter verification applies (ISO 26262-6 methods for B‡ plus CAL 3 methods per [WP-W-11](../05-software/WP-W-11-cybersecurity-implementation-verification.md)), and one implementation satisfies both. Conflicts between safety and security (e.g. RDP level vs field recovery, CSR-024 vs firmware update availability) are resolved by the CCB with the safety manager and recorded as CS-AD decisions.
 
@@ -404,7 +406,7 @@ Machine-readable trace entries go to `trace/` per [WP-P-06](../07-supporting/WP-
 
 | ID | Item |
 |---|---|
-| OI-1 | Resolve the three differences to WP-S-02 listed in §8 with the WP-S-02 author (softloader ignition condition, alternative-experience lock, SoC cross-check TSR) |
+| OI-1 | Resolve the three differences to WP-S-02 listed in §8 with the WP-S-02 author (softloader ignition condition, alternative-experience lock, SoC cross-check TSR). 2026-10-12: differences 2 and 3 resolved (TSR-512, TSR-619); difference 1 (softloader ignition condition) open |
 | OI-2 | CS-AD-02: determine from RM0468 which STM32H7 RDP level, if any, prevents ROM-bootloader reprogramming; decide the level with the safety manager (irreversibility, field recovery) |
 | OI-3 | Decide CSR-104 (SSH blocked onroad) and the opt-in policy for athenad (CSR-111) under CT-4 / [WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-2 |
 | OI-4 | Select the bootstub signature scheme and implementation (CSR-031) and the update manifest format (CSR-121); CCB decision required |

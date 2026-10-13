@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-M-12 Impact analysis of the openpilot-derived baseline (modification of existing item) |
 | Standard reference | ISO 26262-2:2018 §6 (impact analysis, tailoring); ISO 26262-8:2018 §8 (change management); ISO/SAE 21434:2021 §6 (reuse analysis); ISO 21448:2022 §4 (interface); ASPICE 4.0 SUP.10 |
-| Version | 0.1 |
+| Version | 0.2 (status update for the integrated envelope changes: M-11, status of M-2 and M-3, review deviation in §7.2; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (FuSa, SOTIF, AI, CS) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review of the tailoring conclusion (§5) by the external assessor |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose
 
@@ -45,8 +45,8 @@ It also serves as the ISO/SAE 21434 §6 reuse analysis for the inherited code.
 | # | Modification | Category | Affected elements | Planned in |
 |---|---|---|---|---|
 | M-1 | Scope claims to the reference configuration: one vehicle (`TOYOTA_COROLLA_TSS2`), one device revision, pinned software, defined ODD | Scope restriction | Item definition, configuration | [WP-C-01](../02-concept/WP-C-01-item-definition.md), [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) |
-| M-2 | Lock the safety mode and parameter for the reference configuration in panda firmware or add an independent cross-check | Safety mechanism (envelope) | `panda/board/main_comms.h:222-225` | [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) (GAP-09) |
-| M-3 | Envelope hardening backlog: IWDG, fault → safe state, gate debug relay command, driver-torque and EPS-status monitoring, RX E2E strategy, limit rationale | Safety mechanisms | `opendbc_repo/opendbc/safety/**`, `panda/board/**` | WP-S-02, [WP-W-02](../05-software/WP-W-02-software-safety-requirements.md) (GAP-01…GAP-08) |
+| M-2 | Lock the safety mode and parameter for the reference configuration in panda firmware or add an independent cross-check. Status 2026-10-12: implemented in the reference build (TSR-512/513); not verified, not reviewed | Safety mechanism (envelope) | `panda/board/main_comms.h:222-225` | [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) (GAP-09) |
+| M-3 | Envelope hardening backlog: IWDG, fault → safe state, gate debug relay command, driver-torque and EPS-status monitoring, RX E2E strategy, limit rationale. Status 2026-10-12: partly implemented in the reference build; see the change records in [`impact/README.md`](../07-supporting/impact/README.md); not verified, not reviewed | Safety mechanisms | `opendbc_repo/opendbc/safety/**`, `panda/board/**` | WP-S-02, [WP-W-02](../05-software/WP-W-02-software-safety-requirements.md) (GAP-01…GAP-08) |
 | M-4 | Change defaults: Experimental Mode off; possibly exclude Chestnut big model | SOTIF functional modification | `openpilot/common/params_keys.h:43`, release build flags | [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md) (D-08, GAP-17, GAP-18) |
 | M-5 | Fix soft-disable window, missing event reactions and DM weaknesses | SOTIF / FuSa | `openpilot/selfdrive/selfdrived/`, `monitoring/` | WP-C-07 (GAP-16, GAP-19, GAP-21) |
 | M-6 | AI runtime monitors and model integrity check | SOTIF / AI / CS | `openpilot/selfdrive/modeld/` | [WP-M-10 §7](WP-M-10-ai-safety-plan.md#7-runtime-monitoring-gap-22) |
@@ -54,6 +54,7 @@ It also serves as the ISO/SAE 21434 §6 reuse analysis for the inherited code.
 | M-8 | Replace or constrain update path and remote access; LionDriver vulnerability intake | CS | `openpilot/system/updated/`, `openpilot/system/athena/`, `SECURITY.md` | [WP-M-09](WP-M-09-cybersecurity-plan.md) (GAP-26…GAP-28) |
 | M-9 | Configuration control and CI for the fork | Process | `.gitmodules`, `.github/workflows/*`, `Jenkinsfile` | [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md), D-01, D-03 (GAP-29…GAP-32) |
 | M-10 | LionDriver versioning and identity | Process | `openpilot/common/version.h`, `pyproject.toml` | WP-P-01 (GAP-35) |
+| M-11 | LionDriver reference build: compile-time `LIONDRIVER_REFERENCE` in panda and opendbc; the envelope changes are active only in this variant | Configuration | `panda/SConscript`, `opendbc_repo/opendbc/safety/**`, `.github/workflows/safety.yaml` | [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md), [WP-P-10](../07-supporting/WP-P-10-release-management.md) |
 
 ## 4. Differences in operational environment and use
 
@@ -142,6 +143,8 @@ A pull request touching safety-relevant code without an impact analysis is not m
 5. Decide the required action; open follow-up change requests or problem reports.
 6. Have the analysis reviewed (I1 minimum; I2 for changes to ASIL-allocated code once WP-M-06 requires it).
 7. Store the analysis with the change request; link it from the affected work products.
+
+Deviation (2026-10-12): the 9 CT-1 change records in [`impact/`](../07-supporting/impact/README.md) were merged on maintainer decision without the I1 review of step 6 (no reviewer available, [WP-M-02](WP-M-02-safety-plan.md) OI-1). The review is owed before any credit is taken; tracked as [WP-M-07](WP-M-07-risk-management.md) R-26.
 
 ### 7.3 Template
 

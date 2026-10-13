@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="3094" height="832" viewBox="0 0 3094 832" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="3094" height="870" viewBox="0 0 3094 870" font-family="Helvetica, Arial, sans-serif">
 <style>.id{font-size:11px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.n{font-size:9.5px;font-style:italic;text-anchor:middle;fill:#444}.b{font-size:8.6px;font-weight:600;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
 <rect width="100%" height="100%" fill="#fff"/>
 <text x="30" y="36" class="h">FTA SG-07 — suppression, delay or alteration of the stock PCS/AEB</text>
@@ -28,13 +28,17 @@
 <line x1="784.0" y1="310.5" x2="784.0" y2="328.5" class="w"/>
 <line x1="1002.0" y1="310.5" x2="1002.0" y2="328.5" class="w"/>
 <line x1="1220.0" y1="310.5" x2="1220.0" y2="328.5" class="w"/>
-<rect x="30" y="328.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<rect x="30" y="328.5" width="200" height="119.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
 <text x="130.0" y="347.5" class="id">BE-7.01</text>
 <text x="130.0" y="361.0" class="d">MCU hang with the relay energised</text>
 <text x="130.0" y="373.5" class="d">(no IWDG; GAP-07, GAP-43)</text>
-<rect x="109.8" y="379.5" width="40.4" height="13" rx="6.5" fill="#b3261e"/>
-<text x="130.0" y="389.0" class="b" fill="#fff">SPF-06</text>
-<circle cx="130.0" cy="412.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="130.0" y="386.0" class="d">2026-10-12: IWDG reset ≤ ≈ 90 ms</text>
+<text x="130.0" y="398.5" class="d">nominal (TSR-501); residual:</text>
+<text x="130.0" y="411.0" class="d">hang-to-reset plus relay drop-out</text>
+<text x="130.0" y="423.5" class="d">against the 0.2 s FTTI</text>
+<rect x="109.8" y="429.5" width="40.4" height="13" rx="6.5" fill="#b3261e"/>
+<text x="130.0" y="439.0" class="b" fill="#fff">SPF-06</text>
+<circle cx="130.0" cy="462.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
 <rect x="248" y="328.5" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
 <text x="348.0" y="347.5" class="id">BE-7.02</text>
 <text x="348.0" y="361.0" class="d">Power-save command 0xe7 in car mode</text>
@@ -80,14 +84,17 @@
 <line x1="1438.0" y1="298.0" x2="1656.0" y2="298.0" class="w"/>
 <line x1="1438.0" y1="298.0" x2="1438.0" y2="328.5" class="w"/>
 <line x1="1656.0" y1="298.0" x2="1656.0" y2="328.5" class="w"/>
-<rect x="1338" y="328.5" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<rect x="1338" y="328.5" width="200" height="119.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
 <text x="1438.0" y="347.5" class="id">BE-7.07</text>
 <text x="1438.0" y="361.0" class="d">0x344, 0x411 and DSU IDs in the TX</text>
 <text x="1438.0" y="373.5" class="d">whitelist without a content check</text>
 <text x="1438.0" y="386.0" class="d">(modes/toyota.h:19-32; GAP-42)</text>
-<rect x="1396.2" y="392.0" width="83.6" height="13" rx="6.5" fill="#5f6368"/>
-<text x="1438.0" y="401.5" class="b" fill="#fff">latent, design</text>
-<circle cx="1438.0" cy="425.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="1438.0" y="398.5" class="d">2026-10-12: removed in the</text>
+<text x="1438.0" y="411.0" class="d">reference build (TSR-705; 0x411</text>
+<text x="1438.0" y="423.5" class="d">kept in other builds)</text>
+<rect x="1396.2" y="429.5" width="83.6" height="13" rx="6.5" fill="#5f6368"/>
+<text x="1438.0" y="439.0" class="b" fill="#fff">latent, design</text>
+<circle cx="1438.0" cy="462.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
 <rect x="1556" y="328.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
 <text x="1656.0" y="347.5" class="id">BE-7.08</text>
 <text x="1656.0" y="361.0" class="d">SoC sends such a frame (QM fault or</text>
@@ -153,39 +160,39 @@
 <text x="2964.0" y="361.0" class="d">PCM arbitration does not prioritise</text>
 <text x="2964.0" y="373.5" class="d">PCS (AOU-04R fails)</text>
 <path d="M2964.0,381.5 L2984.0,396.5 L2964.0,411.5 L2944.0,396.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="30" y="498.0" class="h">Symbols (IEC 61025)</text>
-<rect x="32" y="512.0" width="36" height="22" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="96" y="527.0" class="l">Top / intermediate event</text>
-<path d="M32,580.0 Q50,572.0 68,580.0 Q66,556.0 50,546.0 Q34,556.0 32,580.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="565.0" class="l">OR gate</text>
-<path d="M32,618.0 L32,600.0 A18,16 0 0 1 68,600.0 L68,618.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="603.0" class="l">AND gate</text>
-<circle cx="50" cy="637.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="641.0" class="l">Basic event</text>
-<path d="M50,660.0 L70,675.0 L50,690.0 L30,675.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="679.0" class="l">Undeveloped event (outside the item or not developed)</text>
-<path d="M50,698.0 L68,728.0 L32,728.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="59" y1="713.0" x2="80" y2="713.0" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="717.0" class="l">Transfer: continued on another sheet</text>
-<path d="M50,736.0 L68,766.0 L32,766.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="755.0" class="l">Transfer in: gate developed elsewhere</text>
-<rect x="30" y="782.0" width="24.2" height="13" rx="6.5" fill="#b3261e"/>
-<text x="42.1" y="791.5" class="b" fill="#fff">SPF</text>
-<rect x="59.2" y="782.0" width="40.4" height="13" rx="6.5" fill="#5f6368"/>
-<text x="79.4" y="791.5" class="b" fill="#fff">latent</text>
-<rect x="104.60000000000001" y="782.0" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
-<text x="122.1" y="791.5" class="b" fill="#fff">SOTIF</text>
-<rect x="144.60000000000002" y="782.0" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
-<text x="175.6" y="791.5" class="b" fill="#fff">CCF DFI-nn</text>
-<rect x="211.60000000000002" y="782.0" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
-<text x="223.7" y="791.5" class="b" fill="#fff">FFI</text>
-<rect x="240.8" y="782.0" width="72.8" height="13" rx="6.5" fill="#3d6b3d"/>
-<text x="277.2" y="791.5" class="b" fill="#fff">outside item</text>
-<rect x="318.6" y="782.0" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
-<text x="344.2" y="791.5" class="b" fill="#222">repeated</text>
-<rect x="2634" y="486.0" width="430" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="2644" y="508.0" class="h" text-anchor="start">LionDriver — FTA SG-07</text>
-<text x="2644" y="524.0" class="l" text-anchor="start">suppression, delay or alteration of the stock PCS/AEB</text>
-<text x="2644" y="540.0" class="l" text-anchor="start">Sheet 1 of 1   ·   top of sheet: TE-07</text>
-<text x="2644" y="556.0" class="l" text-anchor="start">Source: WP-A-04 §8 (analysis of record)</text>
-<text x="2644" y="572.0" class="s" text-anchor="start">Generated by fta_diagrams.py — edit WP-A-04, not this file</text>
+<text x="30" y="535.5" class="h">Symbols (IEC 61025)</text>
+<rect x="32" y="549.5" width="36" height="22" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="96" y="564.5" class="l">Top / intermediate event</text>
+<path d="M32,617.5 Q50,609.5 68,617.5 Q66,593.5 50,583.5 Q34,593.5 32,617.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="602.5" class="l">OR gate</text>
+<path d="M32,655.5 L32,637.5 A18,16 0 0 1 68,637.5 L68,655.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="640.5" class="l">AND gate</text>
+<circle cx="50" cy="674.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="678.5" class="l">Basic event</text>
+<path d="M50,697.5 L70,712.5 L50,727.5 L30,712.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="716.5" class="l">Undeveloped event (outside the item or not developed)</text>
+<path d="M50,735.5 L68,765.5 L32,765.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="59" y1="750.5" x2="80" y2="750.5" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="754.5" class="l">Transfer: continued on another sheet</text>
+<path d="M50,773.5 L68,803.5 L32,803.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="792.5" class="l">Transfer in: gate developed elsewhere</text>
+<rect x="30" y="819.5" width="24.2" height="13" rx="6.5" fill="#b3261e"/>
+<text x="42.1" y="829.0" class="b" fill="#fff">SPF</text>
+<rect x="59.2" y="819.5" width="40.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="79.4" y="829.0" class="b" fill="#fff">latent</text>
+<rect x="104.60000000000001" y="819.5" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
+<text x="122.1" y="829.0" class="b" fill="#fff">SOTIF</text>
+<rect x="144.60000000000002" y="819.5" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="175.6" y="829.0" class="b" fill="#fff">CCF DFI-nn</text>
+<rect x="211.60000000000002" y="819.5" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="223.7" y="829.0" class="b" fill="#fff">FFI</text>
+<rect x="240.8" y="819.5" width="72.8" height="13" rx="6.5" fill="#3d6b3d"/>
+<text x="277.2" y="829.0" class="b" fill="#fff">outside item</text>
+<rect x="318.6" y="819.5" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="344.2" y="829.0" class="b" fill="#222">repeated</text>
+<rect x="2634" y="523.5" width="430" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="2644" y="545.5" class="h" text-anchor="start">LionDriver — FTA SG-07</text>
+<text x="2644" y="561.5" class="l" text-anchor="start">suppression, delay or alteration of the stock PCS/AEB</text>
+<text x="2644" y="577.5" class="l" text-anchor="start">Sheet 1 of 1   ·   top of sheet: TE-07</text>
+<text x="2644" y="593.5" class="l" text-anchor="start">Source: WP-A-04 §8 (analysis of record)</text>
+<text x="2644" y="609.5" class="s" text-anchor="start">Generated by fta_diagrams.py — edit WP-A-04, not this file</text>
 </svg>

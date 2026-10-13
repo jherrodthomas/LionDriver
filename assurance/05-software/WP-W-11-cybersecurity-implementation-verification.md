@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-W-11 Cybersecurity implementation and verification |
 | Standard reference | ISO/SAE 21434:2021 §10 (product development: implementation, integration and verification; weakness analysis), §6 (off-the-shelf and open-source components); ISO 26262-6:2018 §5 (coding guidelines, as shared base); ASPICE 4.0 SEC.2, SEC.3 |
-| Version | 0.1 |
+| Version | 0.2 (status update 2026-10-12: §8 status of CSR-011, -012, -014, -015, -016, -024, -092 for the reference build at `bf6ce8c`; host unit tests only, no CS verification executed). History: 0.1 |
 | Status | Draft — rules and plan proposed; no cybersecurity verification activity has been executed. The status column records code-review observations only |
 | ASIL / scope | CS (CAL 1–3); shared coding rules apply to the envelope code (B‡ per WP-S-02: ASIL C until SG-01 is re-rated) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting cybersecurity manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`). Status originally recorded at `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 > Defensive engineering document. It defines coding rules, analysis tooling and verification
 > of protection mechanisms. It contains no exploitation detail and reproduces no key material.
@@ -164,16 +164,16 @@ Verification specs use IDs `VS-CS-nnn` matching the CSR number. Status at baseli
 
 | CSR | CAL | VS | Method | Pass criterion (summary) | Status |
 |---|---|---|---|---|---|
-| CSR-011 | 3 | VS-CS-011 | UT (libpanda) + HIL | Every non-locked mode/param/alt-exp request rejected; locked config accepted | Not met |
-| CSR-012 | 3 | VS-CS-012 | UT + HIL | After rejection: non-actuating mode, fault bit set in health | Not met |
+| CSR-011 | 3 | VS-CS-011 | UT (libpanda) + HIL | Every non-locked mode/param/alt-exp request rejected; locked config accepted | Not met at `8b8c6ae`. 2026-10-12: Implemented, not verified (reference build, `reference_lock.h`; host unit tests `tests/reference_lock` only; HIL not run) |
+| CSR-012 | 3 | VS-CS-012 | UT + HIL | After rejection: non-actuating mode, fault bit set in health | Not met at `8b8c6ae`. 2026-10-12: Partial (reference build): rejected, counted as `requestsRejected`; no fault-flag reaction, panda keeps its current mode; no alert |
 | CSR-013 | 3 | VS-CS-013 | UT | SILENT/NOOUTPUT reachable from locked mode | Implemented, not verified |
-| CSR-014 | 3 | VS-CS-014 | R + UT + FZ (bench) | Commands outside allow-list rejected in car mode; fuzzing of the command handler finds no crash, hang or state change outside the allow-list | Not met |
-| CSR-015 | 3 | VS-CS-015 | UT | Alt-exp unchanged across any mode sequence | Partial |
-| CSR-016 | 2* | VS-CS-016 | UT + HIL | Mismatch blocks engagement and alerts | Not met |
+| CSR-014 | 3 | VS-CS-014 | R + UT + FZ (bench) | Commands outside allow-list rejected in car mode; fuzzing of the command handler finds no crash, hang or state change outside the allow-list | Not met at `8b8c6ae`. 2026-10-12: Partial (reference build): TSR-513 list refused in a car mode (deny-list); `0xc0`, `0xb0`, `0xb1`, `0xf6` to confirm; no fuzzing run |
+| CSR-015 | 3 | VS-CS-015 | UT | Alt-exp unchanged across any mode sequence | Partial at `8b8c6ae`. 2026-10-12: Implemented, not verified (reference build: `0xdf` refused in every mode) |
+| CSR-016 | 2* | VS-CS-016 | UT + HIL | Mismatch blocks engagement and alerts | Not met (2026-10-12: unchanged; refined by TSR-619, not implemented) |
 | CSR-021 | 3 | VS-CS-021 | BA-01 | Release build refuses `ALLOW_DEBUG` | Not met |
 | CSR-022 | 3 | VS-CS-022 | BA-02 + HIL | Debug-signed and tampered images rejected on bench | Partial (conditional on CSR-021) |
 | CSR-023 | 3 | VS-CS-023 | BA-03 + FZ | No debug command effective in release image | Partial |
-| CSR-024 | 3 | VS-CS-024 | UT + HIL | Softloader entry refused in car mode / ignition on | Not met |
+| CSR-024 | 3 | VS-CS-024 | UT + HIL | Softloader entry refused in car mode / ignition on | Not met at `8b8c6ae`. 2026-10-12: Partial (reference build): refused in a car mode; ignition-off condition not implemented |
 | CSR-031 | 3 | VS-CS-031 | R + HIL | Bootstub verifies with selected scheme; known-answer tests pass; invalid signatures rejected | Not met |
 | CSR-032 | 3 | VS-CS-032 | CM + PR | Key ceremony record; key absent from repo/CI | Not met |
 | CSR-033 | 3 | VS-CS-033 | UT + HIL | Lower-version signed image rejected | Partial |
@@ -196,7 +196,7 @@ Verification specs use IDs `VS-CS-nnn` matching the CSR number. Status at baseli
 | CSR-082 | 2 | VS-CS-082 | UT + HIL | Modified artefact → process refuses, engagement blocked | Not met |
 | CSR-083 | 2 | VS-CS-083 | CM | LFS store under LionDriver control; hashes in release record | Not met |
 | CSR-091 | 2 | VS-CS-091 | R + UT + HIL | Checksum/counter checks where available; plausibility for the rest | Partial |
-| CSR-092 | 2 | VS-CS-092 | R + UT | TX outside allow-list blocked; PCS forwarding unaltered | Partial (envelope tests exist upstream, `opendbc_repo/opendbc/safety/tests/test_toyota.py`; not run in LionDriver CI, GAP-39) |
+| CSR-092 | 2 | VS-CS-092 | R + UT | TX outside allow-list blocked; PCS forwarding unaltered | Partial (envelope tests exist upstream, `opendbc_repo/opendbc/safety/tests/test_toyota.py`; not run in LionDriver CI, GAP-39). 2026-10-12: PCS/DSU IDs removed from the allow-list (`0x411` in the reference build only, TSR-705) and per-ID TX rate supervision in the reference build (TSR-518), with unit tests; LionDriver `safety.yaml` runs the reference variant of the safety suite; HIL not run |
 | CSR-093 | 2 | VS-CS-093 | UT + HIL | Foreign actuation ID on car side → inhibit | Partial |
 | CSR-101 | 3 | VS-CS-101 | BA-04 | No embedded key; `INTERNAL` undefined | Not met for INTERNAL builds |
 | CSR-102 | 3 | VS-CS-102 | PR | INS-19 record shows `SshEnabled` off | Process |

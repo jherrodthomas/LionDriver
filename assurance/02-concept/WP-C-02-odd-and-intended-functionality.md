@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-02 ODD and intended functionality specification |
 | Standard reference | ISO 21448:2022 §5 (specification of the functionality); ISO 26262-3:2018 §5 (item definition input); ISO/PAS 8800:2024 (input space definition); ASPICE 4.0 SYS.1; SAE J3016 and ISO 34503 (ODD taxonomy, informative) |
-| Version | 0.1 |
+| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF; input to HARA exposure ratings |
 | Author | Assurance team (initial draft) |
@@ -14,7 +14,7 @@
 
 ## 1. Purpose
 
-This document specifies, for the reference configuration (2020 Toyota Corolla LE, US, `TOYOTA_COROLLA_TSS2`, openpilot longitudinal; see [WP-C-01](WP-C-01-item-definition.md)):
+This document specifies, for the reference configuration (Toyota Corolla, 12th generation (E210), TSS 2.0, US, `TOYOTA_COROLLA_TSS2`, openpilot longitudinal; see [WP-C-01](WP-C-01-item-definition.md)):
 
 1. the operational design domain (ODD) in which LD-SDA is intended to be used and for which claims are made;
 2. the intended functionality: the nominal behaviour of each function F-01…F-07, the driver's role and the system limits;
@@ -92,7 +92,7 @@ The planner in Chill mode does not reduce speed ahead of curves; it only limits 
 
 | Function | Nominal behaviour inside the ODD | Not intended / not provided |
 |---|---|---|
-| F-01 Lateral control | Keeps the vehicle near the centre of the lane by commanding steering torque from the driving model's desired curvature; lateral acceleration ≤ 3.0 m/s², jerk ≤ 5 m/s³. Assisted lane change when the driver signals and nudges the wheel, above 20 mph, within 10 s (`desire_helper.py:8-9`) | Blind-spot checking (the Corolla LE reference vehicle has no BSM input expected; the driver checks), turning at intersections, evasive steering, steering at standstill |
+| F-01 Lateral control | Keeps the vehicle near the centre of the lane by commanding steering torque from the driving model's desired curvature; lateral acceleration ≤ 3.0 m/s², jerk ≤ 5 m/s³. Assisted lane change when the driver signals and nudges the wheel, above 20 mph, within 10 s (`desire_helper.py:8-9`) | Blind-spot checking (blind-spot monitoring input is not used by LionDriver, whether or not the trim fitted has it; the driver checks), turning at intersections, evasive steering, steering at standstill |
 | F-02 Longitudinal control (Chill mode) | Holds the set speed; follows the lead vehicle (radar track fused with vision, `radard.py:153-165`) at the selected personality gap; stops behind a stopping lead and resumes when it moves; acceleration −3.5…+2.0 m/s², cruise acceleration 1.6→0.6 m/s² by speed | Stopping for traffic lights, stop signs, pedestrians, stationary vehicles not previously tracked as lead; detecting speed limits (`LIMITATIONS.md:35-37`); emergency braking (stock PCS remains responsible) |
 | F-03 Engagement and modes | Engages only through the stock cruise controls; the envelope grants authority on the PCM cruise rising edge. Driver brake or cancel disengages; gas overrides longitudinal (does not disengage, `DisengageOnAccelerator` default `0`, `common/params_keys.h:35`); steering input overrides lateral | Engagement without driver action; staying engaged after brake |
 | F-04 Driver monitoring | Above 2.8 m/s, monitors driver attention by camera; escalating alerts 5/8/13 s (vision) or 5/15/25 s (wheel-touch fallback); force deceleration and lockout on no response (`policy.py:29-44`) | Exact alertness measurement (`LIMITATIONS.md:49`); monitoring below 10 km/h |

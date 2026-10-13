@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-08 SOTIF plan |
 | Standard reference | ISO 21448:2022 §4 (management of SOTIF activities), §5–§13; ISO/PAS 8800:2024 (interface for AI-related insufficiencies); ASPICE 4.0 MAN.3 |
-| Version | 0.1 |
+| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -14,7 +14,7 @@
 
 ## 1. Purpose and scope
 
-This plan says how LionDriver carries out the ISO 21448 activities for the reference configuration defined in [WP-M-01 §3.1](WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to): supervised Level 2 lane centring plus openpilot longitudinal control on a 2020 Toyota Corolla LE (TSS2, US, ICE), comma device and panda safety MCU.
+This plan says how LionDriver carries out the ISO 21448 activities for the reference configuration defined in [WP-M-01 §3.1](WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to): supervised Level 2 lane centring plus openpilot longitudinal control on a Toyota Corolla, 12th generation (E210), TSS 2.0 (US, ICE), comma device and panda safety MCU.
 
 It implements sub-claim **G2** of the [assurance strategy](WP-M-01-assurance-strategy.md#32-top-level-claim) and tailoring decision **T-10** (all of ISO 21448 applies; the "unknown unsafe" area dominates for an ML-driven function). It does not repeat the strategy; it assigns activities, owners, gates and work products.
 

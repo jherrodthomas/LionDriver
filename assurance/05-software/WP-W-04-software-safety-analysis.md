@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-W-04 Software safety analysis and software-level DFA |
 | Standard reference | ISO 26262-6:2018 §7 (safety analysis and DFA at the software architectural level; Annex E informative); ISO 26262-9:2018 §7 (dependent failures), §8 (safety analyses); ASPICE 4.0 SWE.2 |
-| Version | 0.2.1 (§3.5: SW FMEA rev 0.6 adds the host elements pandad, selfdrived and controlsd at BL-004; 2026-10-13). 0.2 (§3.2 SWF-48: lost revocation during a grant, bounded at one task period; SWF-49, SWF-50; §3.5 AIAG-VDA cross-reference; 2026-10-12). 0.1 |
+| Version | 0.3 (status update 2026-10-12: mechanisms integrated at panda `b790fca`, opendbc `7993399` re-rated: SWF-06, 11, 12, 14, 16, 24, 28, 38 to C (design level, not verified); SWF-19, 29, 30 to P; §3.4 recounted; SDF-02, SDF-05, SDF-11 measures updated). 0.2.1 (§3.5: SW FMEA rev 0.6 adds the host elements pandad, selfdrived and controlsd at BL-004; 2026-10-13). 0.2 (§3.2 SWF-48: lost revocation during a grant, bounded at one task period; SWF-49, SWF-50; §3.5 AIAG-VDA cross-reference; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope software (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating); host components summarised |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); I2 per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; panda `b790fca`, opendbc `7993399`). Earlier: `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 ## 1. Purpose and scope
 
@@ -26,6 +26,7 @@ The analysis was done by code reading at the baseline. It has not been reviewed.
 - **Effect** is traced to the vehicle level through the safe states SS-L, SS-G, SS-S of [WP-S-02 §2.3](../03-system/WP-S-02-technical-safety-requirements.md).
 - **Mechanism** is what detects or prevents the failure at the baseline, with file:line. **Gap** leads to an SWSR in WP-W-02.
 - Rating: **C** covered, **P** partly covered, **N** not covered.
+- *Status update 2026-10-12:* rows whose mechanism changed with the integrated LionDriver changes (panda `b790fca`, opendbc `7993399`) carry a dated note in the mechanism cell and the old rating as "(was N)". **A C rating is a design-level judgement from code reading: none of these mechanisms has been verified on hardware or reviewed independently.** "(reference build)" means the mechanism exists only with `LIONDRIVER_REFERENCE`. The EPS-fault siren (panda `b790fca`) is in LionDriver PR #45, not merged.
 - **DFA** (§4) uses the coupling factors of ISO 26262-9 §7 applied to software: shared resources (memory, execution time, peripherals), shared information inputs, common design/specification, and common development (same author/values).
 
 ## 3. Software FMEA
@@ -39,20 +40,20 @@ The analysis was done by code reading at the baseline. It has not been reviewed.
 | SWF-03 | U-SAF-LAT | Commission: torque accepted while not engaged with STEER_REQUEST=1 and torque 0 | EPS enters LKA-active with zero torque; next frame may ramp (SG-01, mode confusion) | Torque ≠ 0 rejected (`lateral.h:98-101`) | P | SWSR-105 (GAP-48) |
 | SWF-04 | U-SAF-LAT | Omission of safe state: violation detected, frame dropped, EPS keeps last torque until its own timeout | Torque persists up to ≈2 s (SG-01, SG-05) | `safety_tx_blocked` counted (`drivers/can_common.h:168-171`) | N | SWSR-108, 109, 109a (GAP-46) |
 | SWF-05 | U-SAF-LAT | Wrong value: speed-independent limit too high at high speed | Lateral deviation beyond controllability (SG-01) | Fixed 1500 raw | N | SWSR-102, 102a (GAP-04) |
-| SWF-06 | U-SAF-LAT | Wrong value: measured-torque window uses wrong EPS scale (`param & 0xFF` from SoC) | Measured-torque limit wrong by factor up to 3.5 (SG-01) | none (`modes/toyota.h:383`) | N | SWSR-104a, 512 (GAP-44) |
+| SWF-06 | U-SAF-LAT | Wrong value: measured-torque window uses wrong EPS scale (`param & 0xFF` from SoC) | Measured-torque limit wrong by factor up to 3.5 (SG-01) | none (`modes/toyota.h:383`). *2026-10-12:* parameter fixed to 73 by the reference lock (`reference_lock.h`, panda `9f60e17`); other parameters refused | C (reference build; was N) | SWSR-104a, 512 (GAP-44); factor 73 for the reference EPS still to be confirmed (SWSR-104a) |
 | SWF-07 | U-SAF-LAT | Commission: driver opposes, envelope keeps accepting torque within limits | Fight with driver (SG-05, SG-01) | EPS (AoU); host 500 raw (QM) | N | SWSR-304, 304a (GAP-02) |
 | SWF-08 | U-SAF-LONG | Wrong value: accel outside bounds accepted | Unintended accel/decel (SG-03, SG-04) | Bound check (`longitudinal.h:8-12`), tests | C (defect) | — |
 | SWF-09 | U-SAF-LONG | Wrong value: abrupt step within bounds (−3.5 → +2.0 in one frame) | Jerk beyond controllability (SG-03, SG-04) | none in envelope | N | SWSR-204, 205 |
 | SWF-10 | U-SAF-TOY TX | Commission: other `0x343` fields (PERMIT_BRAKING, RELEASE_STANDSTILL) request action without authority | Standstill release / braking without engagement (SG-03, SG-04) | ACCEL_CMD only | N | SWSR-207 (GAP-48) |
-| SWF-11 | U-SAF-TOY TX | Commission: PCS/DSU messages (`0x344`, `0x411`, DSU set) sent by SoC | Stock PCS altered (SG-07) | whitelist allows; `0x283` content check only | N | SWSR-705 (GAP-42, GAP-49) |
-| SWF-12 | U-SAF-CORE authority | Commission: authority granted on edge while an RX message is already lagging | Actuation on stale state (SG-01, SG-03) | Timeout evaluated at 1 Hz | P | SWSR-306, 401a |
+| SWF-11 | U-SAF-TOY TX | Commission: PCS/DSU messages (`0x344`, `0x411`, DSU set) sent by SoC | Stock PCS altered (SG-07) | whitelist allows; `0x283` content check only. *2026-10-12:* `0x344` and the DSU set removed from the whitelist (opendbc `e089e85`); `0x411` left out in the reference build (opendbc `5b5a4ba`); `0x283` zero payload only | C (reference build; was N) | SWSR-705 (GAP-42, GAP-49) |
+| SWF-12 | U-SAF-CORE authority | Commission: authority granted on edge while an RX message is already lagging | Actuation on stale state (SG-01, SG-03) | Timeout evaluated at 1 Hz. *2026-10-12:* grant only when every RX check is valid and not lagging at that moment (`rx_checks_allow_engagement`, opendbc#3, TSR-306); timeout evaluated in the 100 Hz safety task | C (was P) | SWSR-306, 401a |
 | SWF-13 | U-SAF-CORE RX | Stuck: `0x1D2`/`0x226` frozen or replayed with valid checksum (`0x226` has none) | Authority not revoked on brake/cancel (SG-05, SG-01) | Timeout only; checksum on `0x1D2` | N | SWSR-403, 404, 405 (GAP-01); refines WP-A-04 SFMEA-13 |
-| SWF-14 | U-SAF-CORE RX | Late: message loss detected after 1–2 s | Actuation on stale vehicle state (SG-01, SG-03) | `safety_tick` (`safety.h:321-344`) | P | SWSR-401, 401a (GAP-06) |
+| SWF-14 | U-SAF-CORE RX | Late: message loss detected after 1–2 s | Actuation on stale vehicle state (SG-01, SG-03) | `safety_tick` (`safety.h:321-344`). *2026-10-12:* Toyota `rx_timeout_periods` = 5, evaluated in the 100 Hz safety task: detection ≤ 0.16 s for the RX-check set (`0x1D2`); `0x262`, `0x1D3` added in the reference build; `0xB4` not in the set | C (was P) | SWSR-401, 401a (GAP-06); nominal rates to be confirmed on the vehicle |
 | SWF-15 | U-SAF-CORE RX | Wrong value: wheel speed corrupted (no checksum) → `vehicle_moving` false | Brake-while-moving rule disabled; dynamic limit (future) wrong | Wheel fault bits only (`modes/toyota.h:84-93`) | P | SWSR-405(a) |
-| SWF-16 | U-SAF-CORE mode | Commission: `set_safety_hooks` with another brand/param | Envelope enforces wrong limits (all SGs) | Host cross-check after 10 s (QM, same source) | N | SWSR-512 (GAP-09) |
+| SWF-16 | U-SAF-CORE mode | Commission: `set_safety_hooks` with another brand/param | Envelope enforces wrong limits (all SGs) | Host cross-check after 10 s (QM, same source). *2026-10-12:* `0xdc` accepts only SILENT, NOOUTPUT, ELM327 and TOYOTA/73, and in TOYOTA only NOOUTPUT/SILENT (`reference_lock.h`); refusals counted in health | C (reference build; was N) | SWSR-512 (GAP-09) |
 | SWF-17 | U-SAF-CORE relay | Omission: relay malfunction latch cleared by `0xdc` | Camera and item commands both reach the car (SG-01), PCS cut (SG-07) | none | N | SWSR-506a (GAP-48) |
 | SWF-18 | U-SAF-CORE forwarding | Late/omission: forwarding of camera frames stops or is delayed (queue full, power save) | Stock PCS frames lost while relay driven (SG-07) | overflow counted (`drivers/can_common.h:165`) | N | SWSR-707, 513 (`0xe7`) |
-| SWF-19 | U-SAF-CORE EPS status | Omission: EPS fault not seen by envelope | Unannounced loss of steering assist (SG-02) | host only | N | SWSR-110 (GAP-03) |
+| SWF-19 | U-SAF-CORE EPS status | Omission: EPS fault not seen by envelope | Unannounced loss of steering assist (SG-02) | host only. *2026-10-12:* reference build reads EPS_STATUS.LKA_STATE (`0x262`) and refuses non-zero torque / STEER_REQUEST on fault codes (`toyota_lka_state_is_fault`, opendbc `242d63d`); siren on a fault persisting 1 s while engaged (panda `b790fca`, PR #45 not merged) | P (reference build; was N): fault codes reverse-engineered, not confirmed for the reference EPS; driver cue only after 1 s and not yet merged | SWSR-110 (GAP-03), SWSR-516 |
 | SWF-49 | U-SAF-CORE mode (ELM327) | Commission: in ELM327 mode `elm327_tx_hook` passes any 8-byte ISO 15765 frame to `0x7xx`, `0x18DAxxF1` or `0x18DB33F1`, whatever the service, ignition or vehicle motion (`opendbc_repo/opendbc/safety/modes/elm327.h:6-35`) | SoC can send UDS ECUReset, CommunicationControl or routine requests to the EPS, PCM or radar while the vehicle moves: loss of assist or of stock PCS (SG-02, SG-07) | Relay released in ELM327 (`panda/board/main.c:55-56`); SWSR-512 blocks a switch to ELM327 once TOYOTA is active | P | Residual before engagement (fingerprinting, radar disable) has no SWSR: OI-6 |
 | SWF-50 | U-SAF-CORE TX entry | Commission: a host TX path calls `can_send` with `skip_tx_hook=true` and bypasses the envelope | Unchecked frame on the car bus (all) | Both host TX entries pass `false` (`panda/board/can_comms.h:97, 118`); only forwarding uses `true` | P | No test pins this; static check proposed (AIAG SWF-ACT-008); OI-6 |
 | SWF-20 | U-SAF-HELP | Wrong value: macro side effects / overflow in `SAFETY_ABS(INT_MIN)`, float rounding in `safety_interpolate` | Wrong limit | UBSan on host; review | P | VS-UV-01, VS-UV-S3 |
@@ -64,13 +65,13 @@ The analysis was done by code reading at the baseline. It has not been reviewed.
 | SWF-21 | U-PND-SPI | Wrong value: corrupted control request passes 8-bit XOR | Wrong command executed, e.g. `0xdc`, `0xc5` (all) | XOR, NACK (`drivers/spi.h:97-138`) | P | SWSR-410 (GAP-10); refines SFMEA-18 |
 | SWF-22 | U-PND-SPI | Commission: header length > buffer → DMA overrun | Corruption of SRAM1/2 beyond `spi_buf_rx` (`spi_buf_tx`), then DMA error; effect on envelope state to be confirmed from map file | none (`drivers/spi.h:115-116, 233`) | N | SWSR-412 (GAP-47); refines SFMEA-19 |
 | SWF-23 | U-PND-COMMS | Commission: `0xe8` index out of range | Write outside `bus_config[]` | none (`main_comms.h:262-264`) | N | SWSR-412a (GAP-47) |
-| SWF-24 | U-PND-COMMS | Commission: configuration requests in car mode (`0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd1/1`, `0xd8`) | Relay/CAN config changed, softloader entry, MCU reset while driving (all; loss of function) | `0xdf`, `0xf8` gated; `0xb5`, `0xd1/0` debug-only | N | SWSR-511a, 512a, 513 (GAP-49); `0xc0` → WP-W-02 OI-5 |
+| SWF-24 | U-PND-COMMS | Commission: configuration requests in car mode (`0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd1/1`, `0xd8`) | Relay/CAN config changed, softloader entry, MCU reset while driving (all; loss of function) | `0xdf`, `0xf8` gated; `0xb5`, `0xd1/0` debug-only. *2026-10-12:* every request listed here refused in a car mode in the reference build (`reference_lock.h`, panda `9f60e17`) | C (reference build; was N) | SWSR-511a, 512a, 513 (GAP-49); `0xc0`, `0xb0`, `0xb1`, `0xf6` → WP-W-02 OI-5 |
 | SWF-25 | U-PND-COMMS | Stuck: SoC freezes but `pandad` keeps sending heartbeats with `engaged=1` | Envelope keeps authority while last frames repeat or stop (SG-01, SG-02) | Mismatch only if `engaged` drops | N | SWSR-408, 409, 409h (GAP-10); WP-A-02 FFI-CM-11 |
 | SWF-26 | U-PND-COMMS | Wrong value: repeated/old CAN-TX transfer | Stale command re-applied within limits | none | N | SWSR-410a, 411 |
 | SWF-27 | U-PND-COMMS reassembly | Wrong value: partial packet carried over after resync | Malformed frame to TX hook (rejected by whitelist/length unless it matches) | Whitelist + XOR (`drivers/fdcan.h:100`) | P | SWSR-412b |
-| SWF-28 | U-PND-MAIN heartbeat | Late: heartbeat loss detected after 4–5 s | Actuation continues on dead SoC (SG-01, SG-02) | 1 Hz counter | P | SWSR-407, 510 (GAP-06) |
-| SWF-29 | U-PND-MAIN tick | Omission: tick ISR not executed (starved by comms ISRs or hung handler) | No timeout or heartbeat supervision (all) | Interrupt-rate fault, report-only; software watchdog in the same ISR | N | SWSR-501, 502b, 519 (GAP-07, GAP-50); refines SFMEA-16 |
-| SWF-30 | U-PND-PLAT | Stuck: any handler or `assert_fatal` loops | Relay stays driven, forwarding stops (SG-07), no TX (SG-02) | NMI/HardFault reset only | N | SWSR-501, 502a (GAP-43) |
+| SWF-28 | U-PND-MAIN heartbeat | Late: heartbeat loss detected after 4–5 s | Actuation continues on dead SoC (SG-01, SG-02) | 1 Hz counter. *2026-10-12:* authority revoked after 0.3 s without a heartbeat in a car mode (`drivers/heartbeat_monitor.h`, 100 Hz safety task, panda `c2e5d93`) | C (was P) | SWSR-407, 510 (GAP-06) |
+| SWF-29 | U-PND-MAIN tick | Omission: tick ISR not executed (starved by comms ISRs or hung handler) | No timeout or heartbeat supervision (all) | Interrupt-rate fault, report-only; software watchdog in the same ISR. *2026-10-12:* supervision moved to the 100 Hz safety task; if it stops (or the main loop stops) the IWDG is not fed and resets after ≈ 90 ms once the relay has been driven (`drivers/hw_watchdog.h`, panda `9f60e17`); priorities explicit but equal | P (was N): delays below the IWDG timeout are not detected (task WCET and jitter not measured); the 8 Hz/1 Hz tick itself is not supervised | SWSR-501, 502b, 519 (GAP-07, GAP-50); refines SFMEA-16 |
+| SWF-30 | U-PND-PLAT | Stuck: any handler or `assert_fatal` loops | Relay stays driven, forwarding stops (SG-07), no TX (SG-02) | NMI/HardFault reset only. *2026-10-12:* a loop in a handler or `assert_fatal` stops the IWDG feed: reset ≈ 90 ms nominal, relay released (panda `9f60e17`) | P (was N): only after the first relay drive; LSI tolerance and reset-state relay release (HWSR-502) unconfirmed | SWSR-501, 502a (GAP-43) |
 | SWF-31 | U-PND-FLT | Omission: detected faults (interrupt rate, register divergence, siren) produce no reaction | Fault persists while engaged (all) | report-only (`sys/faults.h:8-27`) | N | SWSR-502, 503a (GAP-08) |
 | SWF-32 | U-PND-FDCAN TX | Wrong value: frame altered after TX hook (queue RAM bit flip) | Approved frame changed (SG-01, SG-03) | Packet XOR before FIFO load (`drivers/fdcan.h:100`); message RAM not covered | P | SWSR-517 (TX read-back), SWSR-503b; HW measures (WP-H-03) |
 | SWF-33 | U-PND-FDCAN RX | Omission: RX FIFO overflow loses frames | Missed brake edge if `0x226` lost (SG-05) | `total_rx_lost_cnt` (`drivers/fdcan.h:168-171`) | P | Edge logic tolerates one loss only if brake stays pressed; SWSR-401 timeout; add overflow → fault (SWSR-502b) |
@@ -78,7 +79,7 @@ The analysis was done by code reading at the baseline. It has not been reviewed.
 | SWF-35 | U-PND-FDCAN bus-off | Omission: car-side bus-off while engaged | No actuation frames; EPS drop-out (SG-02) | counted, core reset (`drivers/fdcan.h:76-83`) | P | SWSR-508 |
 | SWF-36 | U-PND-HARN | Wrong value: orientation wrong or lost while relay driven | Commands on wrong bus, PCS cut (SG-07) | detection suspended while driven (`drivers/harness.h:59`) | P | SWSR-701 |
 | SWF-37 | U-PND-HARN relay | Stuck: relay stuck intercepting | PCS cut when item inactive (SG-07) | none | N | SWSR-506, 506b (GAP-12) |
-| SWF-38 | U-PND-PWR | Commission: power save entered in car mode (`0xe7`) | Camera-side CAN IRQs and transceivers off with relay driven (SG-07) | none | N | SWSR-513; WP-A-02 FFI-CM-08 |
+| SWF-38 | U-PND-PWR | Commission: power save entered in car mode (`0xe7`) | Camera-side CAN IRQs and transceivers off with relay driven (SG-07) | none. *2026-10-12:* `0xe7` refused in a car mode in the reference build (`reference_lock.h`) | C (reference build; was N) | SWSR-513; WP-A-02 FFI-CM-08 |
 | SWF-39 | U-PND-HK siren | Omission: siren not sounding when SoC lost | No warning (SG-02, SG-06) | malfunction reported only (`drivers/fake_siren.h`) | P | SWSR-516, 515 |
 | SWF-40 | U-PND-BOOT | Commission: non-release image executed | Unverified envelope (all) | RSA-1024/SHA-1; debug key in debug builds | P | SWSR-511, 514 (GAP-24, GAP-25) |
 | SWF-41 | U-PND-PLAT clock | Wrong value: clock drift → timers wrong | Timeouts and RT windows wrong (SG-01) | CSS on HSE loss only | P | SWSR-504 |
@@ -99,11 +100,13 @@ Host failure modes are analysed at system level in [WP-A-04](../08-analyses/WP-A
 
 ### 3.4 Coverage summary
 
-| Rating | Count (SWF-01…42, SWF-48) |
-|---|---|
-| C | 3 |
-| P | 17 |
-| N | 23 |
+| Rating | Count (SWF-01…42, SWF-48), status 2026-10-12 | At `8b8c6ae` |
+|---|---|---|
+| C | 11 (8 of them design-level, not verified: SWF-06, 11, 12, 14, 16, 24, 28, 38; five only in the reference build) | 3 |
+| P | 17 | 17 |
+| N | 15 | 23 |
+
+Re-rated 2026-10-12: N → C SWF-06, 11, 16, 24, 38; P → C SWF-12, 14, 28; N → P SWF-19, 29, 30. The new C ratings are judgements from code reading of the integrated changes; they become coverage claims only with the unit, integration and HIL evidence of WP-W-06…08 and an independent review.
 
 SWF-49 and SWF-50 (added in v0.2) are both P and are not in these counts; they have no SWSR yet (OI-6).
 
@@ -149,10 +152,10 @@ Evidence recorded with the AIAG-VDA data (not yet reviewed, I1 pending):
 | ID | Coupling factor | Elements involved | Dependent failure | Measure today | Required |
 |---|---|---|---|---|---|
 | SDF-01 | Shared address space (no MPU) | comms handlers, USB/SPI drivers, envelope state | A defect in QM-like code (housekeeping, comms) corrupts `controls_allowed`, limits, mode, `relay_malfunction` | none | SWSR-507; WP-A-02 FFI-SP-01 |
-| SDF-02 | Shared execution time: all ISRs at one priority (§5.1 of WP-W-03) | CAN RX, SPI, USB, tick | Interrupt storm or long handler delays the tick → supervision late or absent | interrupt-rate fault, report-only | SWSR-401a, 501, 502b, 519 (GAP-50); WP-A-02 FFI-TM-01 |
+| SDF-02 | Shared execution time: all ISRs at one priority (§5.1 of WP-W-03) | CAN RX, SPI, USB, tick | Interrupt storm or long handler delays the tick → supervision late or absent | interrupt-rate fault, report-only. *2026-10-12:* 100 Hz safety task with its own rate limit (110 Hz, `FAULT_INTERRUPT_RATE_TICK`, report-only) and the IWDG fed from it (a stalled task resets after ≈ 90 ms; a task running too fast feeds inside the closed window and resets); explicit, equal priorities | SWSR-401a, 501, 502b, 519 (GAP-50); WP-A-02 FFI-TM-01 |
 | SDF-03 | Busy-waits reachable from SoC commands (`while (harness.sbu_adc_lock)`, SPI drain loop) | `set_intercept_relay` via `0xdc`/`0xc5`; `llspi_mosi_dma` | A stuck flag hangs the SPI ISR and with it all processing | equal priority prevents the tick from holding the lock while SPI runs | Argue by priority scheme (WP-W-03 OI-4); bounded waits; SWSR-501 |
 | SDF-04 | Shared ring buffers (`can_rx_q`, `can_queues[]`) | TX path, forwarding, rejected-frame echo, SoC read | SoC not reading → `rx_q` full → only reporting lost; forwarding TX queue full → PCS frames dropped | overflow counters | SWSR-707; queue overflow → fault |
-| SDF-05 | Shared TX queue for forwarded and SoC frames on bus 0 | forwarding (camera→car) and SoC actuation on the same queue `can_queues[0]` | SoC flood (in-limit frames) delays forwarded PCS frames | whitelist and per-frame limits; no rate limit | SWSR-518 (per-ID TX rate); separate forwarding queue (OI-2) |
+| SDF-05 | Shared TX queue for forwarded and SoC frames on bus 0 | forwarding (camera→car) and SoC actuation on the same queue `can_queues[0]` | SoC flood (in-limit frames) delays forwarded PCS frames | whitelist and per-frame limits. *2026-10-12:* per-ID TX rate supervision (SWSR-518) implemented in the reference build (`tx_rate_check`, opendbc `951b459`), not verified | SWSR-518 implemented (reference build); separate forwarding queue open (OI-2) |
 | SDF-06 | Shared global time base (TIM2 µs counter) | RT window, steer-request interval, RX timeouts, ISR load | One timer fault breaks all timing checks in the same way | none | SWSR-504 cross-check |
 | SDF-07 | Shared `set_safety_mode` path | mode change, heartbeat loss, harness re-init (`main.c:138`) | Re-init by harness flicker resets authority and limiter state, and (today) the relay latch | authority reset is safe direction | SWSR-506a |
 
@@ -163,7 +166,7 @@ Evidence recorded with the AIAG-VDA data (not yet reviewed, I1 pending):
 | SDF-08 | Same limit values | Host `CarControllerParams` equal to envelope constants (1500, 15/25, 350, 2.0/−3.5) (`values.py:20, 39-47`; `modes/toyota.h:172-210`) | Controller operates at the envelope boundary; a common wrong value (copied) is not caught by either | SWSR-605, 605a; independent derivation of envelope values (SWSR-102, WP-S-02 OI-3) |
 | SDF-09 | Same specification source | Envelope tests copy constants from `toyota.h` (`test_toyota.py:139-155`) | A wrong limit passes its own test (GAP-14) | W-09 DVR-04; tests from requirement data |
 | SDF-10 | Same signal decoding | Host DBC and envelope hard-coded bit positions decode the same frames | Common misinterpretation of a signal | Diverse decoding (DBC vs hand-coded) is a weak benefit; `test_panda_safety_carstate` on fork-owned routes (W-09 DVR-11) |
-| SDF-11 | Same input source for engagement | Driver, host and envelope all follow PCM cruise state | Corrupted `0x1D2` affects all three | SWSR-405(c) cross-check with `0x1D3` |
+| SDF-11 | Same input source for engagement | Driver, host and envelope all follow PCM cruise state | Corrupted `0x1D2` affects all three | SWSR-405(c) cross-check with `0x1D3` (implemented in the reference build, `toyota_cruise_main_check`, opendbc `8836b65`; not verified) |
 | SDF-12 | Same configuration source | Safety mode/param chosen by host fingerprint and confirmed by the host itself | Wrong configuration undetected | SWSR-512 (compiled-in configuration) |
 | SDF-13 | Same development team / upstream | Envelope and controller written and reviewed by the same upstream contributors | Common misconception of limits | I2 review of envelope values; external assessor (T-09) |
 | SDF-14 | Same compiler | Envelope and platform built by one toolchain | Compiler defect affects all checks | TCL3 tool (WP-P-07 TL-01); back-to-back host/target (VS-UV-20) |
@@ -173,10 +176,10 @@ Evidence recorded with the AIAG-VDA data (not yet reviewed, I1 pending):
 | Claim ([WP-S-03 §7](../03-system/WP-S-03-technical-safety-concept-architecture.md)) | Software-level verdict |
 |---|---|
 | FFI-1 (wrong commands) | Holds for per-frame limits; not for omission of safe state (SWF-04) or stale repetition (SWF-26) |
-| FFI-2 (reconfiguration) | Does not hold (SWF-16, 24) |
+| FFI-2 (reconfiguration) | Does not hold (SWF-16, 24). *2026-10-12:* holds by design in the reference build (reference lock), not verified; does not hold in other builds |
 | FFI-4 (memory corruption via SPI) | Does not hold (SWF-22, 23, SDF-01) |
-| FFI-5 (SoC timing) | Partly (SWF-25, 28) |
-| FFI-6 (ISR starvation) | Does not hold (SWF-29, SDF-02) |
+| FFI-5 (SoC timing) | Partly (SWF-25, 28). *2026-10-12:* SWF-28 covered by the 0.3 s heartbeat (design level); SWF-25 open |
+| FFI-6 (ISR starvation) | Does not hold (SWF-29, SDF-02). *2026-10-12:* partly: a stall of the safety task beyond the IWDG timeout ends in a reset; shorter delays not bounded until measured (WP-W-03 §5.4.5) |
 
 ## 5. Results feeding other work products
 

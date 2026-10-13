@@ -127,3 +127,12 @@
   aou_status: "Unverified"
   status: proposed
   source: WP-C-01
+
+- id: AOU-15
+  kind: aou
+  text: "The reference build (`LIONDRIVER_REFERENCE=1`) is used only on camera-ACC configurations. It refuses PCS_HUD `0x411` from the SoC, so on radar-ACC cars with openpilot longitudinal (`DISABLE_RADAR`) the FCW HUD indication is lost"
+  credited_in: "WP-S-02 TSR-705 (decision D-1)"
+  verification_approach: "Installation checklist (reference vehicle is camera-ACC); release record of the supported configurations"
+  aou_status: "Unverified"
+  status: proposed
+  source: WP-C-01

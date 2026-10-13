@@ -24,8 +24,8 @@
 <text x="1961.5" y="200.0" class="cs">[WP-C-02]</text>
 <rect x="1866.5" y="219.0" width="190" height="104.0" rx="14" class="ctx"/>
 <text x="1961.5" y="237.0" class="cid">C3</text>
-<text x="1961.5" y="249.5" class="cs">Reference configuration: 2020</text>
-<text x="1961.5" y="262.0" class="cs">Corolla LE ICE TSS2</text>
+<text x="1961.5" y="249.5" class="cs">Reference configuration: E210</text>
+<text x="1961.5" y="262.0" class="cs">Corolla ICE TSS2</text>
 <text x="1961.5" y="274.5" class="cs">(TOYOTA_COROLLA_TSS2), one</text>
 <text x="1961.5" y="287.0" class="cs">recorded device revision +</text>
 <text x="1961.5" y="299.5" class="cs">Toyota harness, tagged</text>
@@ -50,7 +50,7 @@
 <ellipse cx="1961.5" cy="606.5" rx="95.0" ry="31.0" class="ctx"/>
 <text x="2052.5" y="639.5" class="aj">A</text>
 <text x="1961.5" y="597.5" class="cid">A1</text>
-<text x="1961.5" y="610.0" class="cs">AOU-01…AOU-13 hold [WP-C-01</text>
+<text x="1961.5" y="610.0" class="cs">AOU-01…AOU-14 hold [WP-C-01</text>
 <text x="1961.5" y="622.5" class="cs">§7] — see §5 for status</text>
 <ellipse cx="1961.5" cy="693.5" rx="95.0" ry="56.0" class="ctx"/>
 <text x="2052.5" y="751.5" class="aj">J</text>

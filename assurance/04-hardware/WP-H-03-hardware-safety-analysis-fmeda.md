@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-H-03 Hardware safety analysis (FMEA/FMEDA) |
 | Standard reference | ISO 26262-5:2018 §7 (safety analyses on HW design), §8 (metrics input), Annex D (diagnostic coverage of safety mechanisms, informative); ISO 26262-9:2018 §8 (safety analyses); ISO 26262-11:2018 (semiconductor failure modes, informative); ASPICE 4.0 HWE.2 |
-| Version | 0.1 |
+| Version | 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
 | Status | Draft (qualitative FMEA); quantitative FMEDA: generic-rate estimate in §6.3, part-level template TBD |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose
 
@@ -97,16 +97,18 @@ Code paths are under `panda/board/` unless prefixed. "DC today" is the coverage 
 present at baseline `8b8c6ae`; "DC planned" assumes the WP-H-02 §6 changes (DC-xx) are made and
 verified.
 
+*Status note 2026-10-12:* the IWDG (DC-01, panda `9f60e17`) and the 0.3 s heartbeat revocation (panda `c2e5d93`) are now implemented but **not verified on hardware**. They are recorded in the "Existing diagnostic" cells below; "DC today" stays at the baseline `8b8c6ae` values, and no DC is credited for them until HIL fault-injection evidence exists ([watchdog impact record](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) OI-3) and the LSI tolerance is confirmed (OI-2).
+
 ### 4.1 MCU core (CPU, buses, interrupt controller)
 
 | FM-ID | Failure mode | Local effect | SG effect | Class (today) | Existing diagnostic | DC today | Planned mechanism | DC planned |
 |---|---|---|---|---|---|---|---|---|
 | FM-CPU-01 | Wrong instruction execution / wrong data path result (permanent) | Safety check computes wrong result (e.g. torque limit passes out-of-range value, `controls_allowed` wrongly true) | SG-01, SG-03, SG-04, SG-05 | SPF | None in MCU. Host compares `controls_allowed` with its own state after 2 s (`controlsMismatch`, onboard review) — QM, slow, and does not check limits | None | Software CPU self-test library at start-up and periodically (vendor STL if available for STM32H7, WP-H-07 QE-03), plus control-flow monitoring with the IWDG (DC-01) | Medium (single core, no lockstep; "high" is not credible without hardware redundancy) |
 | FM-CPU-02 | Transient upset (soft error in registers/pipeline) | As FM-CPU-01 for one cycle | SG-01… (one frame) | RF | None | None | Same as above; per-frame limit re-evaluation bounds a single-frame effect | Low–medium |
-| FM-CPU-03 | Program-flow hang (stuck in loop or ISR, stuck critical section) | TX stops; forwarding stops; relay stays in last state | SG-07 (relay driven, PCS forwarding lost); SG-02/06 (actuation lost — EPS timeout — without MCU warning) | SPF for SG-07 | SW watchdog in the same ISR (`drivers/simple_watchdog.h:7-17`) cannot see a hang; host sees missing panda states (QM) | Low (host only) | IWDG window + safe service point (DC-01) → reset → relay released | High (for hang); medium for timing faults |
+| FM-CPU-03 | Program-flow hang (stuck in loop or ISR, stuck critical section) | TX stops; forwarding stops; relay stays in last state | SG-07 (relay driven, PCS forwarding lost); SG-02/06 (actuation lost — EPS timeout — without MCU warning) | SPF for SG-07 | SW watchdog in the same ISR (`drivers/simple_watchdog.h:7-17`) cannot see a hang; host sees missing panda states (QM). **2026-10-12:** IWDG window, started at the first relay drive, fed from the 100 Hz safety task after main-loop progress (`drivers/hw_watchdog.h`, panda `9f60e17`); no DC claimed until HIL | Low (host only) | IWDG window + safe service point (DC-01) → reset → relay released | High (for hang); medium for timing faults |
 | FM-CPU-04 | Unexpected exception (HardFault/NMI) | Reset via cookie path (`early_init.h:73-80`) | Transient loss of function; safe for SG-01; relay released after reset *(if HWSR-502 holds)* | S / MPF-D | Reset + `HEALTH_FLAG_*_RESET` reported (`main.c:319-325`) | High (for this mode) | — | High |
-| FM-CPU-05 | Exception routed to `Default_Handler` (unused vector, SVC, PendSV, DebugMon) | Infinite loop (`stm32h7/startup_stm32h7x5xx.s:111-114`) | As FM-CPU-03 | SPF for SG-07 | None | None | DC-08 + IWDG | High |
-| FM-CPU-06 | Interrupt controller fault: CAN or tick IRQ lost or storm | Missing checks or overload | SG-01 (missed RX checks), SG-07 | RF | Interrupt-rate monitor, report-only (`drivers/interrupts.h:34-37`) | Low | DC-04 (reaction) + IWDG | Medium |
+| FM-CPU-05 | Exception routed to `Default_Handler` (unused vector, SVC, PendSV, DebugMon) | Infinite loop (`stm32h7/startup_stm32h7x5xx.s:111-114`) | As FM-CPU-03 | SPF for SG-07 | None. **2026-10-12:** the IWDG ends the loop in a reset once the relay has been driven (as FM-CPU-03); no DC claimed until HIL | None | DC-08 + IWDG | High |
+| FM-CPU-06 | Interrupt controller fault: CAN or tick IRQ lost or storm | Missing checks or overload | SG-01 (missed RX checks), SG-07 | RF | Interrupt-rate monitor, report-only (`drivers/interrupts.h:34-37`). **2026-10-12:** a lost safety-task IRQ stops the IWDG feed; a safety-task storm that feeds before the window opens (≈ 5 ms) resets; no DC claimed until HIL | Low | DC-04 (reaction) + IWDG | Medium |
 | FM-CPU-07 | DMA fault (SPI DMA2 writes wrong memory) | Corrupt safety state | SG-01… | RF | None | None | MPU (DC-06) on safety data; RAM ECC does not cover wrong-address writes | Medium |
 
 ### 4.2 Flash
@@ -133,7 +135,7 @@ verified.
 | FM-CLK-01 | HSE stops | CSS → NMI → reset; re-init hangs on HSERDY (`stm32h7/clock.h:80`) | Loss of function; relay released *(if HWSR-502 holds)*; SG-02/06 warning only from SoC | MPF-D | CSS (`clock.h:119`) + NMI reset (`early_init.h:73-76`) | High | Bounded wait + safe state instead of infinite wait | High |
 | FM-CLK-02 | HSE frequency drift (crystal ageing, wrong load) | All timeouts and CAN bit timing shift; CAN errors | SG-01 (RX timeouts longer than specified) | RF | CAN errors visible (`drivers/fdcan.h:44-63`), report-only | Low | Clock cross-check against LSI/HSI (HWSR-504a) | Medium |
 | FM-CLK-03 | PLL unlock / wrong multiplier | CPU and FDCAN clock wrong | as FM-CLK-02 | RF | Register readback of RCC config, report-only (`drivers/registers.h:56-70`) | Low | DC-04 + HWSR-504a | Medium |
-| FM-CLK-04 | LSI failure (IWDG clock) | Watchdog would not expire | Latent (once IWDG used) | MPF-L | n/a today | — | IWDG start check at boot (prove reset path periodically, e.g. by a controlled watchdog reset at power-up) | Medium |
+| FM-CLK-04 | LSI failure (IWDG clock) | Watchdog would not expire | Latent; relevant now (IWDG used since 2026-10-12, panda `9f60e17`) | MPF-L | None: LSI failure is latent; the start-up IWDG test (TSR-515) is open | None | IWDG start check at boot (prove reset path periodically, e.g. by a controlled watchdog reset at power-up) | Medium |
 
 ### 4.5 MCU power
 
@@ -163,14 +165,14 @@ verified.
 | FM-REL-02 | Relay stuck intercepting (contacts welded, driver shorted) while commanded released (SILENT, power-save, after fault) | Camera disconnected from car while panda forwards nothing or is off | **SG-07** (PCS messages lost) | **SPF** | None | None | Readback (DC-03); harness design check (HWSR-702) | High |
 | FM-REL-03 | Relay contact intermittent / chatter | Bus interruptions | SG-07 (intermittent), SG-01 (RX timeouts) | RF | RX timeouts, CAN errors | Low | Readback | Medium |
 | FM-REL-04 | Relay driver output stuck (MCU pin or driver transistor) "on" | As FM-REL-02 | SG-07 | SPF | None | None | Readback; external supervisor cut (DC-02) | High |
-| FM-REL-05 | Debug command drives relay (`0xc5`, `main_comms.h:144-147`) | Systematic, listed for completeness | SG-07 | n/a (systematic, GAP-09) | — | — | DC-09 | — |
+| FM-REL-05 | Debug command drives relay (`0xc5`, `main_comms.h:164-166`) | Systematic, listed for completeness | SG-07 | n/a (systematic, GAP-09) | 2026-10-12: refused in a car mode in the reference build (`reference_lock.h`); still operable in SILENT/NOOUTPUT | — | DC-09 | — |
 
 ### 4.8 SPI link (SoC↔MCU)
 
 | FM-ID | Failure mode | Local effect | SG effect | Class (today) | Existing diagnostic | DC today | Planned | DC planned |
 |---|---|---|---|---|---|---|---|---|
 | FM-SPI-01 | Bit errors on the link | Corrupted command/TX frame accepted | SG-01, SG-03 (frame then passes the envelope checks, which bound the effect) | RF | 8-bit XOR checksum (`drivers/spi.h:97-104`) | Low | CRC + sequence counter (TSR-4xx, GAP-10) | High |
-| FM-SPI-02 | Link stuck / no transfer | No commands, no heartbeat | Safe after heartbeat timeout (5 s, GAP-06) | MPF-D | Heartbeat (`main.c:191-225`) | Medium (slow) | Faster timeout (FSC §8) | High |
+| FM-SPI-02 | Link stuck / no transfer | No commands, no heartbeat | Safe after heartbeat timeout (5 s, GAP-06). **2026-10-12:** authority revoked after 0.3 s in a car mode; SILENT after 5 s | MPF-D | Heartbeat (`main.c` 1 Hz path); since 2026-10-12 also `drivers/heartbeat_monitor.h` in the 100 Hz safety task (panda `c2e5d93`, not verified on hardware) | Medium (slow) | Faster timeout (FSC §8) | High |
 | FM-SPI-03 | SPI DMA overrun / interrupt storm | Lost or repeated frames | as FM-SPI-01 | RF | Interrupt-rate fault, report-only (`stm32h7/llspi.h:86-88`) | Low | DC-04 | Medium |
 
 ### 4.9 Harness connector and sense lines

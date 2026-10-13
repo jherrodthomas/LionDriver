@@ -66,7 +66,7 @@
 <text x="220.0" y="510.0" class="cs">Secure coding, SAST</text>
 <text x="220.0" y="522.5" class="cs">results, per-CSR</text>
 <text x="220.0" y="535.0" class="cs">verification (VS-CS)</text>
-<circle cx="354.0" cy="472.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<circle cx="354.0" cy="472.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
 <text x="354.0" y="476.5" class="sid" fill="#111">CSn-21</text>
 <text x="354.0" y="510.0" class="cs">Safety-mode lock and</text>
 <text x="354.0" y="522.5" class="cs">command-gating tests</text>

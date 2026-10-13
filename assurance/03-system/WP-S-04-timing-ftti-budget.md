@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-S-04 Timing analysis: FTTI, fault detection and reaction budget |
 | Standard reference | ISO 26262-4:2018 §6 (fault tolerant time interval, fault detection and fault reaction time intervals, emergency operation); ISO 26262-3:2018 §7 (FTTI as FSC input); ISO 26262-1:2018 (definitions, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.2 (§3.6 preliminary SG-07 FTTI and budget, RR-2026-005 F-02; 2026-10-12) |
-| Status | Draft — kinematic estimates only; no measurement has been performed |
+| Version | 0.3 (status update 2026-10-12: §4 code-derived times for the reference build at `bf6ce8c` (T-01, T-06a/b, T-09a, T-26…T-29), §5 verdicts, OI-8 EPS-fault warning latency; nothing verified on hardware). History: 0.2 (§3.6 preliminary SG-07 FTTI and budget, RR-2026-005 F-02; 2026-10-12) |
+| Status | Draft — kinematic estimates and code-derived times only; no measurement has been performed; not reviewed independently |
 | ASIL / scope | SG-01 (C until re-rated, B‡), SG-02…SG-07 (B) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Safety manager |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`). Original analysis at `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 ## 1. Purpose
 
@@ -127,7 +127,7 @@ Budget: **FDTI ≤ 0.1 s** to detect that forwarding has stopped (forwarding sup
 
 Consequences for the TSRs:
 
-- TSR-501 set the watchdog timeout to ≤ 0.2 s, which fits SG-01 (0.5 s) but not the SG-07 FDTI of 0.1 s. WP-S-02 v0.3 tightens it to ≤ 0.1 s. The alternative, releasing the relay by another path on an MCU hang, is open in WP-H-01 (HWSR-502).
+- TSR-501 set the watchdog timeout to ≤ 0.2 s, which fits SG-01 (0.5 s) but not the SG-07 FDTI of 0.1 s. WP-S-02 v0.3 tightens it to ≤ 0.1 s. The alternative, releasing the relay by another path on an MCU hang, is open in WP-H-01 (HWSR-502). *Status 2026-10-12:* the IWDG is implemented with a 90 ms nominal timeout (reload 719, panda `b790fca`, T-09a); whether it stays ≤ 0.1 s depends on the LSI tolerance (watchdog impact record OI-2), so the zero margin of OI-7 is not yet shown.
 - TSR-706 releases the relay ≤ 0.1 s after the fault reaction. That fits the FRTI.
 - TSR-707 (forwarding latency ≤ 1 ms in normal operation) is far inside the budget.
 - No TSR detected that forwarding has stopped. TSR-711 is added in [WP-S-02](WP-S-02-technical-safety-requirements.md) v0.3.
@@ -140,28 +140,31 @@ Consequences for the TSRs:
 | SG-01 RX loss/corruption | 0.5 s | ≤ 0.2 s (TSR-401) | ≤ 0.1 s | ≥ 0.2 s |
 | SG-01 SoC heartbeat loss | 0.5 s | ≤ 0.3 s (TSR-407) | ≤ 0.1 s | ≥ 0.1 s |
 | SG-01 SoC command stall | 0.5 s | ≤ 0.05 s (TSR-408) | ≤ 0.1 s | ≥ 0.35 s |
-| SG-01 MCU execution fault | 0.5 s | ≤ 0.1 s (TSR-501; set by SG-07) | ≤ 0.1 s (reset + relay release) | ≥ 0.3 s |
+| SG-01 MCU execution fault | 0.5 s | ≤ 0.1 s (TSR-501; set by SG-07; 90 ms nominal implemented, T-09a) | ≤ 0.1 s (reset + relay release) | ≥ 0.3 s |
 | SG-01 relay stuck | 0.5 s | ≤ 0.3 s (TSR-506) | ≤ 0.1 s | ≥ 0.1 s |
-| SG-02/06 loss without warning | 1 s to warning | ≤ 0.5 s | ≤ 0.5 s | — (see §3.2) |
+| SG-02/06 loss without warning | 1 s to warning | ≤ 0.5 s | ≤ 0.5 s | — (see §3.2). EPS-fault siren of the reference build ≈ 1.14 s from fault onset exceeds this row (T-28, OI-8) |
 | SG-03/04 | 1 s | ≤ 0.5 s | ≤ 0.3 s | ≥ 0.2 s |
 | SG-05 brake/cancel | 0.2 s | ≤ 30 ms | ≤ 10 ms + EPS/PCM | TBD |
 | SG-05 steering override | 0.2 s | ≤ 40 ms + t_ovr | ≤ 0.1 s | TBD |
 | SG-07 content (TX gate, block list) | per frame | 0 | — | — |
-| SG-07 forwarding loss | 0.2 s (preliminary, §3.6) | ≤ 0.1 s (TSR-711; MCU hang: TSR-501 ≤ 0.1 s) | ≤ 0.1 s (TSR-706, incl. relay drop-out) | 0 |
+| SG-07 forwarding loss | 0.2 s (preliminary, §3.6) | ≤ 0.1 s (TSR-711; MCU hang: TSR-501 ≤ 0.1 s, 90 ms nominal implemented, T-09a) | ≤ 0.1 s (TSR-706, incl. relay drop-out) | 0 (depends on LSI tolerance, OI-7) |
 
 ## 4. Current detection and reaction times (code-derived)
 
 | # | Mechanism | Code | Derivation | Worst-case time |
 |---|---|---|---|---|
-| T-01 | RX timeout | `opendbc_repo/opendbc/safety/safety.h:321-344`; called at 1 Hz from `panda/board/main.c:241-242` | threshold max(10 × period, 1 s); for the Corolla messages 10 × period is 120 ms (`0xAA` 83 Hz), 200 ms (`0x260` 50 Hz), 303 ms (`0x1D2` 33 Hz), 250 ms (`0x226` 40 Hz), so 1 s applies; evaluated once per second | **1–2 s** |
+| T-01 | RX timeout | `opendbc_repo/opendbc/safety/safety.h:321-344`; called at 1 Hz from `panda/board/main.c:241-242` | threshold max(10 × period, 1 s); for the Corolla messages 10 × period is 120 ms (`0xAA` 83 Hz), 200 ms (`0x260` 50 Hz), 303 ms (`0x1D2` 33 Hz), 250 ms (`0x226` 40 Hz), so 1 s applies; evaluated once per second | **1–2 s** (at `8b8c6ae`). *Status 2026-10-12:* 5 nominal periods (`rx_timeout_periods`, opendbc `de80b63`), evaluated by the 100 Hz safety task (panda `171fcdf`): **≤ 0.16 s** for `0x1D2`; the reference build adds `0x262` (25 Hz, ≈ 0.21 s, slightly above TSR-401's 0.2 s if the real rate is 25 Hz) and `0x1D3` (33 Hz, ≈ 0.16 s) (opendbc `21d8dd8`). Not verified on hardware |
 | T-02 | RX checksum / quality | `safety.h:112-121, 164-197` | on receipt | 1 message period (12–30 ms) |
 | T-03 | RX counter | — | no Toyota counters (`modes/toyota.h:39-46`) | not detected |
 | T-04 | Brake / cruise revoke | `safety.h:350-356, 518-527` | on receipt | 25 ms (brake 40 Hz), 30 ms (cruise 33 Hz) |
 | T-05 | Heartbeat engaged mismatch | `panda/board/main.c:181-189` | 3 consecutive 1 Hz ticks | **2–3 s** |
-| T-06 | Heartbeat loss → SILENT | `main.c:101-103, 153-162, 191-213` | counter +1 per 1 Hz tick, reset by each `0xf3`; ≥ 5 with ignition, ≥ 2 without | **4–5 s** (ign on), 1–2 s (ign off) |
+| T-06 | Heartbeat loss → SILENT | `main.c:101-103, 153-162, 191-213` | counter +1 per 1 Hz tick, reset by each `0xf3`; ≥ 5 with ignition, ≥ 2 without | **4–5 s** (ign on), 1–2 s (ign off) (at `8b8c6ae`; split into T-06a/T-06b below) |
+| T-06a | Heartbeat loss → authority revoked (added 2026-10-12) | `panda/board/drivers/heartbeat_monitor.h`; `main.c` `safety_task_handler` (panda `b87197f`, pin `c2e5d93`) | 100 Hz safety task counts ticks since the last `0xf3`; in a car mode clears `controls_allowed` at 30 ticks | **≤ 0.31 s** (0.3 s + one task period). Not verified on hardware |
+| T-06b | Heartbeat loss → SILENT (2026-10-12) | as T-06 | unchanged | 4–5 s (ign on), 1–2 s (ign off); TSR-510 (SILENT ≤ 2 s) not met |
 | T-07 | Siren after heartbeat loss | `main.c:169-171, 198-201` | 3 s siren if authority within last 5 s | starts at T-06 |
 | T-08 | Relay malfunction | `safety.h:372-380` | first offending frame after `safety_mode_cnt > 1` (1 Hz) | 1–2 s after mode set; then immediate |
 | T-09 | Software watchdog | `panda/board/drivers/simple_watchdog.h`; `main.c:119, 301` | 375 ms threshold, checked from the 8 Hz tick it supervises | cannot detect a tick-ISR hang |
+| T-09a | Hardware watchdog IWDG1 (added 2026-10-12) | `panda/board/drivers/hw_watchdog.h` (PR /4, RLR 719, WINR 679); fed from `safety_task_handler` (panda `171fcdf`, `a35d1c6`) | timeout 4 × (719 + 1) / f_LSI ≈ 90 ms nominal; window: a feed earlier than ≈ 5 ms after the previous one resets; fed by the 100 Hz task only after main-loop progress; started at the first relay drive after reset | **≈ 90 ms** nominal; ≤ 0.1 s only if the LSI is at most 10 % slow (watchdog impact record OI-2). Hangs before the first relay drive not covered. Not verified on hardware (M-06) |
 | T-10 | Heartbeat send rate | `openpilot/selfdrive/pandad/pandad.cc:385-394` | every 10th frame of the 100 Hz loop | 100 ms period |
 | T-11 | `sendcan` age limit | `pandad.cc:78-79` | logMonoTime age | 1 s |
 | T-12 | SPI ACK timeout | `openpilot/selfdrive/pandad/spi.cc:30, 216, 246` | 500 ms per wait, retries until > 5 timeouts | up to seconds |
@@ -178,17 +181,20 @@ Consequences for the TSRs:
 | T-23 | EPS drop-out handling (vehicle) | comment `opendbc_repo/opendbc/car/toyota/carstate.py:15-16` | LKA_STATE 9 → 11 over ≈ 2 s, then 3 | ≈ 2 s (unverified, AOU-01R) |
 | T-24 | DM escalation | `selfdrive/monitoring/policy.py:31-36, 39` | vision 5/8/13 s; wheel-touch 5/15/25 s; +5 s at alert 3 → force decel | per policy |
 | T-25 | Host steering fault hysteresis | `selfdrive/car/car_events.py` (onboard review) | 1.5 s | 1.5 s |
+| T-26 | Cruise active with main off (reference build, added 2026-10-12) | `opendbc_repo/opendbc/safety/modes/toyota.h` (`TOYOTA_CRUISE_MAIN_TOLERANCE_US`, opendbc `8836b65`) | CRUISE_ACTIVE (`0x1D2`) becoming active while MAIN_ON (`0x1D3`) is 0: refused on receipt; main going off while engaged: revoked once the disagreement lasts > 150 ms | refuse at once; revoke after 150 ms (+ one 30 ms frame) (TSR-405(c)). Not verified on hardware |
+| T-27 | TX rate supervision (reference build, added 2026-10-12) | `opendbc_repo/opendbc/safety/safety.h` `tx_rate_check` (opendbc `951b459`) | per-ID sliding 250 ms window; 3 rejections while controls are allowed revoke | revoke ≤ 0.1 s after the first rejected frame (≤ 0.2 s from onset at 2× the rate; unit tests) (TSR-518). Not verified on hardware |
+| T-28 | EPS fault (reference build, added 2026-10-12) | `modes/toyota.h` (opendbc `338f5fc`); `panda/board/drivers/eps_fault_siren.h` (panda `6a7f2fb`) | LKA_STATE fault codes on `0x262`: STEERING_LKA with torque refused from the receipt of the fault frame; siren once the fault has persisted 1 s (100 ticks) while `controls_allowed`, driven by the 8 Hz speaker tick | LKA refused on receipt of the fault frame (TSR-110); siren ≤ 1 s + 10 ms + 125 ms ≈ **1.14 s** after fault onset (TSR-516(b)); exceeds the SG-02 1 s warning row (OI-8). Not verified on hardware |
 
 ## 5. Comparison and required changes
 
 | Fault class | Budget | Baseline | Verdict | Required change | TSR |
 |---|---|---|---|---|---|
-| RX loss | ≤ 0.2 s | 1–2 s (T-01) | **Not met** | 5 periods, evaluation ≥ 50 Hz (move timeout check out of the 1 Hz path) | TSR-401 |
+| RX loss | ≤ 0.2 s | 1–2 s (T-01) | **Not met** at `8b8c6ae`. *2026-10-12:* Met by design for the Toyota RX set (`0x262` marginal, ≈ 0.21 s), not verified (M-04) | 5 periods, evaluation ≥ 50 Hz (move timeout check out of the 1 Hz path) | TSR-401 |
 | RX stuck/inserted | ≤ 0.2 s | not detected (T-03) | **Not met** | rate, frozen-content, cross-checks | TSR-403…405 |
-| SoC heartbeat loss | ≤ 0.3 s | 4–5 s (T-06) | **Not met** | evaluate at ≥ 10 Hz; revoke at 0.3 s; SILENT ≤ 2 s | TSR-407, 510 |
+| SoC heartbeat loss | ≤ 0.3 s | 4–5 s (T-06) | **Not met** at `8b8c6ae`. *2026-10-12:* Revoke met by design (T-06a, ≤ 0.31 s; M-05 pending); SILENT ≤ 2 s not met (T-06b, TSR-510) | evaluate at ≥ 10 Hz; revoke at 0.3 s; SILENT ≤ 2 s | TSR-407, 510 |
 | Host/panda mismatch | ≤ 0.3 s | 2–3 s (T-05), 2 s (T-17) | **Not met** | 0.3 s both sides | TSR-307 |
 | SoC command stall | ≤ 0.05 s | 0.1 s at host (T-13), then EPS ≈ 2 s (T-23) | **Not met** | command-frame freshness in the MCU + active zero frame | TSR-408, 109 |
-| MCU hang | ≤ 0.1 s | not detected (T-09) | **Not met** | IWDG | TSR-501 |
+| MCU hang | ≤ 0.1 s | not detected (T-09) | **Not met** at `8b8c6ae`. *2026-10-12:* Met by design if the LSI tolerance holds (T-09a, ≈ 90 ms; watchdog impact record OI-2); M-06 pending | IWDG | TSR-501 |
 | Relay stuck released | ≤ 0.3 s | 1–2 s window (T-08) | **Not met** | readback | TSR-506 |
 | Brake / cancel | ≤ 30 ms | 25–30 ms (T-04) | Met (envelope side) | verify EPS/PCM response; TSR-109 | TSR-302, 109 |
 | Steering override | ≤ 0.2 s | not in envelope | **Not met** | driver-torque monitor | TSR-304 |
@@ -197,8 +203,13 @@ Consequences for the TSRs:
 | Cruise mismatch | ≤ 1 s with reaction | 6 s, no reaction (T-19) | **Not met** | 1 s, warn + cancel | TSR-308 |
 | `sendcan` age | ≤ 20 ms | 1 s (T-11) | **Not met** | 20 ms | TSR-614 |
 | Take-over request | ≤ 1 s after detection | alerts immediate; timing unverified | To verify | measure | TSR-606 |
+| Cruise active with main off (added 2026-10-12) | ≤ 0.2 s | refuse at once; revoke after 150 ms (T-26) | Met by design (reference build), not verified | — | TSR-405(c) |
+| SoC TX rate above budget (added 2026-10-12) | revoke | ≤ 0.1 s after first rejected frame, ≤ 0.2 s from onset at 2× (T-27) | Met by design (reference build), not verified; budgets to be confirmed on logs | — | TSR-518 |
+| EPS fault (added 2026-10-12) | LKA refused; warning within SG-02 1 s (§3.7) | LKA refused on receipt; siren ≈ 1.14 s after onset (T-28) | Refusal met by design (reference build); **warning latency exceeds the 1 s budget** (OI-8); not verified | see OI-8 | TSR-110, 516 |
 
 Implementation note: the panda tick handler runs at 8 Hz and the safety checks are "decimated to 1 Hz" (`main.c:105-106, 142-143`). The required budgets need a periodic safety task of at least 50 Hz (TSR-401) on a timer independent of the comms interrupts, with its completion feeding the IWDG service point (TSR-501). The architectural change is recorded in [WP-W-03](../05-software/WP-W-03-software-architecture.md).
+
+*Status 2026-10-12:* since panda `9f60e17` a 100 Hz safety task on TIM4 runs `safety_tick()`, the heartbeat monitor, the EPS-fault siren timer and the IWDG feed (`main.c` `safety_task_handler`). All interrupts are at one priority level (`irq_priorities.h`, panda `52cad44`), so the task can be delayed by other handlers; its latency under load is not measured ([WP-W-03](../05-software/WP-W-03-software-architecture.md) §5.4.5). The 8 Hz / 1 Hz tick keeps the SILENT transition (T-06b), the engaged-mismatch check (T-05) and the relay grace counter (T-08).
 
 Additional timing requirements from other work products:
 
@@ -243,3 +254,4 @@ Results (template — **Not yet executed**):
 | OI-7 | SG-07 forwarding loss has zero margin (FDTI + FRTI = FTTI). Decide whether to shorten the watchdog and forwarding-supervision times below 0.1 s once the PCS timing is measured | Safety engineer | G2 |
 | OI-5 | Execute M-01…M-11 and fill §6 results | Test lead | G4 |
 | OI-6 | Update FSC §8 budgets after this document is approved (FSC OI-4) | Safety engineer | G2 |
+| OI-8 | EPS-fault siren latency ≈ 1.14 s from fault onset (T-28) exceeds the SG-02 1 s warning budget (§3.7). TSR-516's ≤ 0.5 s after detection is met (≈ 0.14 s) only because WP-S-02 v0.14 defines detection as the 1 s persistence; measured from the first fault frame it is not. Caused by the maintainer decision of 2026-10-12 (persistent faults only, 1 s; EPS-fault impact record §7). Options: shorten the persistence (e.g. 0.7 s), or justify that LKA actuation is already refused from the first fault frame (lateral authority removed at onset; the warning is for a lasting loss). **Decision needed.** No requirement changed here (added 2026-10-12) | Safety manager | G2 |

@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-M-01 Assurance strategy and lifecycle tailoring |
 | Standard reference | ISO 26262-2:2018 §6 (tailoring, safety plan inputs); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6; ISO/PAS 8800:2024 (AI safety management, assurance argument); ASPICE 4.0 MAN.3; UL 4600 (informative, safety case structure) |
-| Version | 0.1 |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: P0 sync policy per D-02, D-13 added (envelope strategy); 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (FuSa, SOTIF, CS, AI, process) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review of tailoring rationale by independent assessor (I3) |
 | Approver | Project maintainer (acting safety manager). Self-approval is an accepted interim limitation until a second person takes the safety manager or reviewer role ([WP-M-02](WP-M-02-safety-plan.md) OI-2) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose
 
@@ -40,12 +40,14 @@ From the [baseline gap assessment](../00-assessment/gap-assessment.md):
 
 | Element | Reference configuration |
 |---|---|
-| Vehicle | 2020 Toyota Corolla LE, US market, ICE (non-hybrid), TSS 2.0. Platform `TOYOTA_COROLLA_TSS2`. VIN, firmware versions and options recorded in the [item definition](../02-concept/WP-C-01-item-definition.md) |
+| Vehicle | Toyota Corolla, 12th generation (E210), TSS 2.0, US market, ICE (non-hybrid). Platform `TOYOTA_COROLLA_TSS2`. VIN, firmware versions and options recorded in the [item definition](../02-concept/WP-C-01-item-definition.md) |
 | Device | One identified comma device hardware revision (recorded in WP-C-01) with the Toyota harness |
 | Software | A tagged LionDriver release that pins openpilot, opendbc, panda, msgq, rednose, tinygrad and the model weights by commit hash |
 | Function | Supervised SAE Level 2: lane centring (lateral) plus openpilot longitudinal control (ACC with stop-and-go). On TSS2 without radar ACC, the Corolla runs openpilot longitudinal by default (`opendbc_repo/opendbc/car/toyota/interface.py:105`) |
 | ODD | Defined in [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) |
 | User | A licensed, attentive driver who has been briefed according to [WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md). During the development phase: trained safety drivers only ([WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md)) |
+
+The vehicle scope is the E210 generation, with the market and powertrain qualifiers above, not one model year or trim (decision 2026-10-12). Whether ECU firmware and equipment differences across the model years and trims covered change the envelope assumptions is open ([WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-9).
 
 Any other vehicle, device, software baseline or ODD extension needs an impact analysis ([WP-M-12](WP-M-12-impact-analysis.md)) and supporting evidence before it joins the claimed scope.
 
@@ -143,7 +145,7 @@ One shared **hazard log** (in [WP-C-03](../02-concept/WP-C-03-hara.md), with SOT
 
 | Phase | Gate | Key work products | Prerequisites and notes |
 |---|---|---|---|
-| **P0 Governance** | G0 | M-00…M-13, P-01…P-06 | Fork opendbc and panda into LionDriver control (D-01). Freeze upstream sync (D-02). Fix CI for the fork (D-03). CODEOWNERS and branch protection |
+| **P0 Governance** | G0 | M-00…M-13, P-01…P-06 | Fork opendbc and panda into LionDriver control (D-01). Planned sync once per minor release (D-02, decided 2026-10-10). Fix CI for the fork (D-03). CODEOWNERS and branch protection |
 | **P1 Concept** | G1 | C-01…C-11, V-07, K-01 (initial argument) | No public-road testing until WP-V-07 is approved. HARA confirmation review by an external assessor |
 | **P2 System design** | G2 | S-01…S-07, A-01…A-04, V-02 | Envelope requirements back-filled from code. FFI and DFA analyses decide whether hardware changes are needed |
 | **P3 HW/SW development** | G3 | H-01…H-05, H-07, W-01…W-06, W-09…W-11, P-07…P-09 | Includes closing gaps found in P2, for example locking the safety mode and parameter |
@@ -181,6 +183,7 @@ These are owned by the project maintainer. Until each one is decided, it stays o
 | D-10 | Panda flash protection | Protect the bootstub with WRP and RDP level 1 ([LD-DES-001](../08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md) D2, DR-13), or leave ROM DFU open. **Status:** decided 2026-10-10: adopt WRP + RDP1 after the bootloader behaviour is verified on a sacrificial unit; applied together with removing pandad's development-bootstub recovery (GAP-38) |
 | D-11 | Vehicle lock (VIN) | Whether the panda enforces the VIN of the recorded vehicle ([LD-DES-001](../08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md) D3). **Status:** decided 2026-10-10: report only for now; enforcement waits for a panda-side UDS VIN read before authority is granted |
 | D-12 | LionDriver-only devices | Whether assured devices run only LionDriver-signed panda firmware ([LD-DES-001](../08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md) D4). **Status:** decided 2026-10-10: yes, for the reference configuration; development units keep the debug bootstub and are outside the safety claims |
+| D-13 | Envelope strategy ([WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md#42-recommendation), OI-1) | Option (c): reduce actuation authority so that controllability C1 can be shown, lowering SG-01 to ASIL B, combined with ASIL B hardening of the envelope; option (b) kept as fallback. **Status:** pending maintainer decision (tracked in [WP-M-07](WP-M-07-risk-management.md) §5) |
 
 ## 9. Top risks to the assurance path
 

@@ -58,7 +58,8 @@ The set is `TEMP_STEER_FAULTS ∪ PERM_STEER_FAULTS` of `opendbc/car/toyota/cars
 |---|---|---|
 | OI-1 | Confirm the fault code set on reference EPS logs (LKA_STATE values while engaged, during driver override and after message drop-out) | Integration |
 | OI-2 | Closed 2026-10-12: reported to the host (§6) | — |
-| OI-3 | Siren on EPS fault (TSR-516(b)) | Later change |
+| OI-3 | Closed 2026-10-12: siren on a persistent EPS fault (§7) | — |
+| OI-4 | Confirm the 1 s persistence threshold against EPS fault durations in reference logs (temporary codes during message drop-out) | Integration |
 
 ## 6. Follow-on change: EPS fault reported to the host (opendbc#8, panda#11)
 
@@ -71,3 +72,15 @@ The set is `TEMP_STEER_FAULTS ∪ PERM_STEER_FAULTS` of `opendbc/car/toyota/cars
 | LionDriver | `openpilot/cereal/log.capnp`, `openpilot/selfdrive/pandad/pandad.cc` | `pandaState.epsFault` (field 44) set from the flag; `pandad` logs each change (error on onset, warning on clearing). No alert or engagement logic changes | No (QM host) | No | No | No | TSR-110 (report) | WP-S-05 (S-12) | Unit tests, process replay | This change |
 
 Verification: opendbc safety suite OK in both variants with 100 % line coverage, MISRA clean; panda builds, MISRA and host tests pass; `log.capnp` loads with the new field. HIL tests 12 and 13 **not run** (D-04).
+
+## 7. Follow-on change: siren on a persistent EPS fault (panda#14)
+
+[jherrodthomas/panda#14](https://github.com/jherrodthomas/panda/pull/14) (`8aa8671..b790fca`).
+
+Decision (2026-10-12, project maintainer): the siren sounds only for an EPS fault that **persists 1 s while authority is granted**; shorter faults (temporary codes during a message drop-out) do not sound it, so that the driver does not learn to ignore it. A maintainer decision, not an independent review (WP-M-06).
+
+| Commit(s) | Files | Summary of behaviour change | FuSa | SOTIF | AI | CS | Hazards / findings affected | WPs affected | Verification to re-run | Decision |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `6a7f2fb` | `board/drivers/eps_fault_siren.h` (new), `board/drivers/drivers.h`, `board/main.c`, `tests/eps_fault_siren/` (new) | In the 100 Hz safety task: once `safety_eps_fault` has been set for 1 s while `controls_allowed`, the panda's own siren sounds for at least 3 s and is re-triggered while the fault persists. Reset on every safety mode change. Starts ≤ 1 s + 10 ms + 125 ms after the fault onset (8 Hz speaker tick). Only the reference build sets `safety_eps_fault` | Yes | Yes (driver warned of a lasting loss of lateral support) | No | No | SG-02, SG-06; FSR-02.05, FSR-06.05 | WP-S-02 (TSR-516), WP-W-02 (SWSR-516), WP-S-05 (S-12), WP-V-05 (siren on EPS fault) | Host tests; panda builds and MISRA; HIL: EPS fault held > 1 s while engaged → siren audible | Taken (maintainer merged panda#14, 2026-10-12) |
+
+Verification (host only): `tests/eps_fault_siren` (constants; siren after 1 s; no siren for repeated short faults or when not engaged; 3 s hold after the fault clears or the driver disengages; persistence restarts after a clear); mutations (`&&` → `||`, hold not counted down, persistence not reset) each fail tests; panda builds in four variants (`-Werror`) and MISRA (standard and reference) clean. HIL **not run**: the siren is not in the health packet, so the bench check is audible or with a scope on the speaker line.
