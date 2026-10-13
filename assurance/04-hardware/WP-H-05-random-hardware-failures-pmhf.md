@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-05 Evaluation of safety goal violations due to random HW failures (PMHF) |
 | Standard reference | ISO 26262-5:2018 §9 (evaluation of safety goal violations due to random hardware failures: probabilistic metric and evaluation of each cause), Annex C; ISO 26262-10:2018 (PMHF explanations, informative); ISO 26262-11:2018 (informative) |
-| Version | 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
+| Version | 0.3 (§6 status and §8 template drawn as Figure 6-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
 | Status | Draft (method and plan; no value computed) |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -128,6 +128,10 @@ also unknown. No conclusion on meeting the target is possible today; the evaluat
 reported as "met" or "not met" until computed.
 
 *Status note 2026-10-12:* since 2026-10-12 DC-01 (IWDG1, window mode, fed from the 100 Hz safety task; panda `9f60e17`) is implemented, **not verified**. It is not credited in the PMHF or as DC until HIL fault-injection evidence exists and the LSI tolerance is confirmed ([watchdog impact record](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) OI-3 and OI-2). The judgement above is unchanged.
+
+![Figure 6-1: PMHF status: inputs (method, mission profile, failure rates, FMEDA, PMHF per SG, AoU verification) not complete, and for SG-01, SG-02/SG-06, SG-03/SG-04, SG-05 and SG-07 every PMHF term TBD against the 100 FIT target](figures/fig-h05-6-1-pmhf-status.svg)
+
+*Figure 6-1.* Top: the inputs of the evaluation with their status from the table above. Bottom: each row of the §8 results template, with the terms of §2.1 (single-point plus residual, dual-point, PMHF) all TBD against the §4 target, the variants with and without external measures where §8 has them, and the expected dominant terms of §5.1 and the external measures of §5. Drawn from §4, §5, §5.1, §6 and §8. Source: [`figures/fig-h05-6-1-pmhf-status.svg`](figures/fig-h05-6-1-pmhf-status.svg); change it together with §4, §6 and §8.
 
 ## 7. Plan
 

@@ -1,0 +1,318 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1691" viewBox="0 0 1280 1691" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-6. SW FMEA failure chains — sheet 5 of 7 (SWF)</title>
+  <desc id="d">SW FMEA failure chains, sheet 5 of 7 (SWF rev 0.6): failure modes SWF-034 to SWF-040 (7 failure modes, 12 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
+  </defs>
+  <rect width="1280" height="1691" fill="#FFFFFF"/>
+  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 5 of 7</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 0.6 · BL-004 · draft · SWF-034 … SWF-040 · 12 causes on this sheet</text>
+  <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
+  <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">STRUCTURE ELEMENT</text>
+  <text x="250" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FUNCTION (STEP 3)</text>
+  <text x="520" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE MODE · S · END EFFECT (STEP 4)</text>
+  <text x="876" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE CAUSE · O · D · AP · ACTIONS (STEPS 4–6)</text>
+  <path d="M220 329.4H235V246.9H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 329.4H235V504.6H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 246.9H505V256.8H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 256.8H861V144H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 256.8H861V256.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 256.8H861V368.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 504.6H505V498.1H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 498.1H861V491H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 693.4H235V688.1H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 688.1H505V682H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 682H861V625.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 682H861V737.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 891H235V885.7H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 885.7H505V886.1H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 886.1H861V872.1H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 1081.5H235V1069.1H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1069.1H505V1070.1H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1070.1H861V1006.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1070.1H861V1118.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 1321.1H235V1315.8H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1315.8H505V1309.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1309.7H861V1253.1H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1309.7H861V1365.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 1512.1H235V1499.8H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1499.8H505V1500.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1500.7H861V1500.2H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <rect x="40" y="307.4" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="326.9" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-032</text>
+  <rect x="136.1" y="315.9" width="35.6" height="15" rx="7.5" fill="#E2E8F0"/><text x="153.9" y="326.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">cont.</text>
+  <text x="49" y="341.5" font-size="10.5" fill="#0F172A" font-weight="600">Input sampling and event</text>
+  <text x="49" y="355.5" font-size="10.5" fill="#0F172A" font-weight="600">generation</text>
+  <text x="49" y="368.3" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="381" font-size="9.5" fill="#475569">in SWF-SE-030</text>
+  <rect x="250" y="224.9" width="240" height="125.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="244.4" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-032</text>
+  <text x="259" y="258.9" font-size="10.5" fill="#0F172A">Raise fault and driver-action events from</text>
+  <text x="259" y="273" font-size="10.5" fill="#0F172A">carState, pandaStates and</text>
+  <text x="259" y="287.1" font-size="10.5" fill="#0F172A">process/message supervision, including</text>
+  <text x="259" y="301.2" font-size="10.5" fill="#0F172A">controlsMismatch when the panda safety…</text>
+  <rect x="259" y="307.2" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="318.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <rect x="318.4" y="307.2" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="318.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-011</text>
+  <rect x="377.8" y="307.2" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="405.5" y="318.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="259" y="325.2" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="336.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-016</text>
+  <rect x="318.4" y="325.2" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="336.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-026</text>
+  <rect x="377.8" y="325.2" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="405.5" y="336.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-030</text>
+  <rect x="520" y="234.8" width="326" height="105.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="254.3" font-size="12" fill="#0F172A" font-weight="700">SWF-034</text>
+  <rect x="593.9" y="243.3" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="254.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="243.3" width="29.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="644.4" y="254.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">late</text>
+  <text x="529" y="268.9" font-size="10.5" fill="#0F172A" font-weight="600">Panda/host disagreement on safety mode or</text>
+  <text x="529" y="283" font-size="10.5" fill="#0F172A" font-weight="600">controls-allowed detected late or not at all</text>
+  <text x="529" y="296.1" font-size="9.8" fill="#475569" font-style="italic">End effect: Steering or ACC stops while the device shows</text>
+  <text x="529" y="309.2" font-size="9.8" fill="#475569" font-style="italic">engaged; no takeover request</text>
+  <text x="529" y="326.2" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="315.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="326.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="618.8" y="315.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="326.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-012</text>
+  <rect x="671.3" y="315.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="695.6" y="326.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="876" y="122" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="141.5" font-size="12" fill="#0F172A" font-weight="700">SWF-034.C1</text>
+  <rect x="1194.5" y="130.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="141.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="156.1" font-size="10.5" fill="#0F172A">controlsMismatch needs 200 cycles (about 2 s, cumulative per</text>
+  <text x="885" y="170.1" font-size="10.5" fill="#0F172A">engagement) with a panda reporting controlsAllowed false; the</text>
+  <text x="885" y="184.2" font-size="10.5" fill="#0F172A">comment says two samples (selfdrived.py:338, 504-514). TSR-621…</text>
+  <text x="885" y="197.3" font-size="9.8" fill="#475569" font-weight="600">O8 · D10 · in SWF-SE-032</text>
+  <rect x="885" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 open</text>
+  <rect x="876" y="234.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="253.8" font-size="12" fill="#0F172A" font-weight="700">SWF-034.C2</text>
+  <rect x="1194.5" y="242.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="253.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="268.4" font-size="10.5" fill="#0F172A">Safety model, parameter and alternative-experience mismatch is</text>
+  <text x="885" y="282.5" font-size="10.5" fill="#0F172A">ignored for the first 10 s after selfdrived starts</text>
+  <text x="885" y="296.6" font-size="10.5" fill="#0F172A">(sm.frame*DT_CTRL &gt; 10, selfdrived.py:338), so an engagement i…</text>
+  <text x="885" y="309.7" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in SWF-SE-032 · → SWF-013</text>
+  <rect x="885" y="315.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="326.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 open</text>
+  <rect x="876" y="346.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="366.2" font-size="12" fill="#0F172A" font-weight="700">SWF-034.C3</text>
+  <rect x="1194.5" y="355.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="366.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="380.8" font-size="10.5" fill="#0F172A">Stale pandaStates (pandad stalled): the last message, with</text>
+  <text x="885" y="394.8" font-size="10.5" fill="#0F172A">controlsAllowed true, is reused, so the mismatch counter does not</text>
+  <text x="885" y="408.9" font-size="10.5" fill="#0F172A">count; only commIssue after the 1 s alive window (10 Hz service)…</text>
+  <text x="885" y="422" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SWF-SE-032</text>
+  <rect x="885" y="428" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="438.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 open</text>
+  <rect x="250" y="482.6" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="502.1" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-038</text>
+  <text x="259" y="516.7" font-size="10.5" fill="#0F172A">Detect PCM cruise active while not</text>
+  <text x="259" y="530.8" font-size="10.5" fill="#0F172A">engaged and warn the driver</text>
+  <rect x="259" y="536.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="547.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-015</text>
+  <rect x="318.4" y="536.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="547.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-034</text>
+  <rect x="520" y="476.1" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="495.6" font-size="12" fill="#0F172A" font-weight="700">SWF-039</text>
+  <rect x="593.9" y="484.6" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="495.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="484.6" width="70.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="664.8" y="495.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">wrong mode</text>
+  <text x="529" y="510.1" font-size="10.5" fill="#0F172A" font-weight="600">PCM cruise active while selfdrived is not engaged, without</text>
+  <text x="529" y="524.2" font-size="10.5" fill="#0F172A" font-weight="600">warning or reaction</text>
+  <text x="529" y="537.3" font-size="9.8" fill="#475569" font-style="italic">End effect: Stock cruise active without the driver knowing</text>
+  <text x="529" y="554.3" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="543.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="554.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-012</text>
+  <rect x="876" y="469" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="488.5" font-size="12" fill="#0F172A" font-weight="700">SWF-039.C1</text>
+  <rect x="1194.5" y="477.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="488.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="503.1" font-size="10.5" fill="#0F172A">cruiseMismatch has no reaction or alert (events.py:458-460, alert</text>
+  <text x="885" y="517.2" font-size="10.5" fill="#0F172A">commented out) and is raised only after 6 s (selfdrived.py:421-426);</text>
+  <text x="885" y="531.2" font-size="10.5" fill="#0F172A">it covers the case where the cancel request from controlsd…</text>
+  <text x="885" y="544.4" font-size="9.8" fill="#475569" font-weight="600">O8 · D9 · in SWF-SE-033</text>
+  <rect x="885" y="550.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="561.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-034 open</text>
+  <rect x="40" y="671.4" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="690.9" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-033</text>
+  <text x="49" y="705.5" font-size="10.5" fill="#0F172A" font-weight="600">Event catalogue and reaction</text>
+  <text x="49" y="719.6" font-size="10.5" fill="#0F172A" font-weight="600">mapping</text>
+  <text x="49" y="732.3" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="745" font-size="9.5" fill="#475569">in SWF-SE-030</text>
+  <rect x="250" y="666.1" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="685.6" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-033</text>
+  <text x="259" y="700.2" font-size="10.5" fill="#0F172A">Give each event the reaction type (no entry,</text>
+  <text x="259" y="714.2" font-size="10.5" fill="#0F172A">soft or immediate disable, user disable) and</text>
+  <text x="259" y="728.3" font-size="10.5" fill="#0F172A">alert its fault requires</text>
+  <rect x="259" y="734.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="745.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="318.4" y="734.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="745.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-016</text>
+  <rect x="377.8" y="734.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="405.5" y="745.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-026</text>
+  <rect x="520" y="660" width="326" height="105.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="679.5" font-size="12" fill="#0F172A" font-weight="700">SWF-032</text>
+  <rect x="593.9" y="668.5" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="679.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="668.5" width="54.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="656.7" y="679.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">omission</text>
+  <text x="529" y="694.1" font-size="10.5" fill="#0F172A" font-weight="600">A detected or reportable fault leads to no disable reaction</text>
+  <text x="529" y="708.1" font-size="10.5" fill="#0F172A" font-weight="600">while engaged</text>
+  <text x="529" y="721.3" font-size="9.8" fill="#475569" font-style="italic">End effect: Item continues, or the panda stops it while the driver</text>
+  <text x="529" y="734.4" font-size="9.8" fill="#475569" font-style="italic">is told it is engaged</text>
+  <text x="529" y="751.4" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="740.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="751.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-012</text>
+  <rect x="618.8" y="740.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="751.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="876" y="603.4" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="622.9" font-size="12" fill="#0F172A" font-weight="700">SWF-032.C1</text>
+  <rect x="1194.5" y="611.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="622.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="637.4" font-size="10.5" fill="#0F172A">Panda health flags are published by pandad but not read by</text>
+  <text x="885" y="651.5" font-size="10.5" fill="#0F172A">selfdrived: heartbeatLost, safetyTxBlocked, txRateExceeded</text>
+  <text x="885" y="665.6" font-size="10.5" fill="#0F172A">(LionDriver #43) and every fault other than relayMalfunction…</text>
+  <text x="885" y="678.7" font-size="9.8" fill="#475569" font-weight="600">O8 · D10 · in SWF-SE-032</text>
+  <rect x="885" y="684.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="695.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-033 open</text>
+  <rect x="876" y="715.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="735.2" font-size="12" fill="#0F172A" font-weight="700">SWF-032.C2</text>
+  <rect x="1194.5" y="724.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="735.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="749.8" font-size="10.5" fill="#0F172A">Diagnostics masked on the big-model path: commIssue is</text>
+  <text x="885" y="763.9" font-size="10.5" fill="#0F172A">suppressed for every service while ChestnutLoading is set and for 5</text>
+  <text x="885" y="777.9" font-size="10.5" fill="#0F172A">s after, and posenet, locationd, paramsd and modeldLagging check…</text>
+  <text x="885" y="791.1" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in SWF-SE-032</text>
+  <rect x="885" y="797.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="808" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-031 open</text>
+  <rect x="40" y="869" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="888.5" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-034</text>
+  <text x="49" y="903" font-size="10.5" fill="#0F172A" font-weight="600">Alert manager</text>
+  <text x="49" y="915.8" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="928.5" font-size="9.5" fill="#475569">in SWF-SE-030</text>
+  <rect x="250" y="863.7" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="883.2" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-034</text>
+  <text x="259" y="897.7" font-size="10.5" fill="#0F172A">Present the most urgent alert; every</text>
+  <text x="259" y="911.8" font-size="10.5" fill="#0F172A">takeover request visual and audible</text>
+  <rect x="259" y="917.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="928.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-015</text>
+  <rect x="318.4" y="917.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="928.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-016</text>
+  <rect x="377.8" y="917.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="405.5" y="928.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-025</text>
+  <rect x="520" y="864.1" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="883.6" font-size="12" fill="#0F172A" font-weight="700">SWF-035</text>
+  <rect x="593.9" y="872.6" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="883.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="872.6" width="70.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="664.8" y="883.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">wrong mode</text>
+  <text x="529" y="898.2" font-size="10.5" fill="#0F172A" font-weight="600">Takeover request masked by a lower-urgency alert</text>
+  <text x="529" y="911.3" font-size="9.8" fill="#475569" font-style="italic">End effect: Missing or late handback warning</text>
+  <text x="529" y="928.3" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="917.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="928.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-012</text>
+  <rect x="618.8" y="917.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="928.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="876" y="850.1" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="869.6" font-size="12" fill="#0F172A" font-weight="700">SWF-035.C1</text>
+  <rect x="1194.5" y="858.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="869.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="884.1" font-size="10.5" fill="#0F172A">Selection is by priority, then start frame (alertmanager.py:63).</text>
+  <text x="885" y="898.2" font-size="10.5" fill="#0F172A">SoftDisableAlert is Priority.MID (events.py:161-166), below</text>
+  <text x="885" y="912.3" font-size="10.5" fill="#0F172A">speedTooHigh (WARNING, HIGH, promptRepeat…</text>
+  <text x="885" y="925.4" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-034</text>
+  <rect x="885" y="931.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="942.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-036 open</text>
+  <rect x="40" y="1059.5" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1079" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-035</text>
+  <text x="49" y="1093.5" font-size="10.5" fill="#0F172A" font-weight="600">Excessive actuation check</text>
+  <text x="49" y="1106.3" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="1119" font-size="9.5" fill="#475569">in SWF-SE-030</text>
+  <rect x="250" y="1047.1" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1066.6" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-035</text>
+  <text x="259" y="1081.2" font-size="10.5" fill="#0F172A">Detect excessive longitudinal or lateral</text>
+  <text x="259" y="1095.3" font-size="10.5" fill="#0F172A">vehicle response while engaged and</text>
+  <text x="259" y="1109.3" font-size="10.5" fill="#0F172A">soft-disable</text>
+  <rect x="259" y="1115.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1126.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-018</text>
+  <rect x="318.4" y="1115.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1126.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-020</text>
+  <rect x="520" y="1048.1" width="326" height="91.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1067.6" font-size="12" fill="#0F172A" font-weight="700">SWF-037</text>
+  <rect x="593.9" y="1056.6" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1067.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1056.6" width="54.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="656.7" y="1067.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">omission</text>
+  <text x="529" y="1082.1" font-size="10.5" fill="#0F172A" font-weight="600">Excessive vehicle response while engaged not detected</text>
+  <text x="529" y="1095.3" font-size="9.8" fill="#475569" font-style="italic">End effect: Excessive acceleration caused by another fault</text>
+  <text x="529" y="1108.4" font-size="9.8" fill="#475569" font-style="italic">continues (multiple-point with the primary cause)</text>
+  <text x="529" y="1125.4" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1114.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1125.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="618.8" y="1114.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="1125.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
+  <rect x="671.3" y="1114.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="695.6" y="1125.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="876" y="984.4" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1003.9" font-size="12" fill="#0F172A" font-weight="700">SWF-037.C1</text>
+  <rect x="1194.5" y="992.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1003.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1018.5" font-size="10.5" fill="#0F172A">Thresholds at twice the envelope: longitudinal above</text>
+  <text x="885" y="1032.5" font-size="10.5" fill="#0F172A">2*ACCEL_MAX (4 m/s²) or below 2*ACCEL_MIN (-7 m/s²), lateral</text>
+  <text x="885" y="1046.6" font-size="10.5" fill="#0F172A">above 2*ISO_LATERAL_ACCEL (6 m/s²), for more than 0.25 s…</text>
+  <text x="885" y="1059.7" font-size="9.8" fill="#475569" font-weight="600">O8 · D10 · in SWF-SE-035</text>
+  <rect x="885" y="1065.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1076.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-038 open</text>
+  <rect x="876" y="1096.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1116.2" font-size="12" fill="#0F172A" font-weight="700">SWF-037.C2</text>
+  <rect x="1194.5" y="1105.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1116.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1130.8" font-size="10.5" fill="#0F172A">The counter is reset whenever |aEgo - IMU acceleration| &gt;= 2 m/s²</text>
+  <text x="885" y="1144.9" font-size="10.5" fill="#0F172A">(device_motion_valid, helpers.py:45-46), which also holds in wheel</text>
+  <text x="885" y="1158.9" font-size="10.5" fill="#0F172A">slip or lock during a gross event (SFM-030.C2); no check until a…</text>
+  <text x="885" y="1172.1" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SWF-SE-035</text>
+  <rect x="885" y="1178.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1189" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-038 open</text>
+  <rect x="40" y="1299.1" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1318.6" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-036</text>
+  <text x="49" y="1333.2" font-size="10.5" fill="#0F172A" font-weight="600">selfdriveState publication and</text>
+  <text x="49" y="1347.3" font-size="10.5" fill="#0F172A" font-weight="600">main loop</text>
+  <text x="49" y="1360" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="1372.7" font-size="9.5" fill="#475569">in SWF-SE-030</text>
+  <rect x="250" y="1293.8" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1313.3" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-036</text>
+  <text x="259" y="1327.9" font-size="10.5" fill="#0F172A">Publish selfdriveState (enabled, active,</text>
+  <text x="259" y="1342" font-size="10.5" fill="#0F172A">alert) every 10 ms cycle, consistent with</text>
+  <text x="259" y="1356" font-size="10.5" fill="#0F172A">the state machine</text>
+  <rect x="259" y="1362" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1372.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-011</text>
+  <rect x="318.4" y="1362" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1372.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-015</text>
+  <rect x="377.8" y="1362" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="405.5" y="1372.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-016</text>
+  <rect x="520" y="1287.7" width="326" height="105.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1307.2" font-size="12" fill="#0F172A" font-weight="700">SWF-036</text>
+  <rect x="593.9" y="1296.2" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1307.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1296.2" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="1307.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">crash</text>
+  <text x="529" y="1321.8" font-size="10.5" fill="#0F172A" font-weight="600">selfdrived stops publishing selfdriveState (crash or hang)</text>
+  <text x="529" y="1335.9" font-size="10.5" fill="#0F172A" font-weight="600">while engaged</text>
+  <text x="529" y="1349" font-size="9.8" fill="#475569" font-style="italic">End effect: Steering and ACC stop within about 0.1 s with no</text>
+  <text x="529" y="1362.1" font-size="9.8" fill="#475569" font-style="italic">device takeover warning for 5 s</text>
+  <text x="529" y="1379.1" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1368.1" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1379" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="618.8" y="1368.1" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="1379" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-012</text>
+  <rect x="876" y="1231.1" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1250.6" font-size="12" fill="#0F172A" font-weight="700">SWF-036.C1</text>
+  <rect x="1194.5" y="1239.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1250.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1265.1" font-size="10.5" fill="#0F172A">Unhandled exception on unexpected input content or state (e.g.</text>
+  <text x="885" y="1279.2" font-size="10.5" fill="#0F172A">callback alerts, events from car_events); selfdrived is excluded from</text>
+  <text x="885" y="1293.3" font-size="10.5" fill="#0F172A">the fuzz test (test_fuzzy.py:13 NOT_TESTED)</text>
+  <text x="885" y="1306.4" font-size="9.8" fill="#475569" font-weight="600">O7 · D9 · in SWF-SE-036</text>
+  <rect x="885" y="1312.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1323.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-037 open</text>
+  <rect x="876" y="1343.4" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1362.9" font-size="12" fill="#0F172A" font-weight="700">SWF-036.C2</text>
+  <rect x="1194.5" y="1351.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1362.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1377.5" font-size="10.5" fill="#0F172A">Hang or starvation of the Python process (blocking Params writes in</text>
+  <text x="885" y="1391.6" font-size="10.5" fill="#0F172A">the 100 Hz loop, selfdrived.py:220, 306, 468; GIL contention with</text>
+  <text x="885" y="1405.6" font-size="10.5" fill="#0F172A">params_thread; CPU load); no process watchdog for selfdrived…</text>
+  <text x="885" y="1418.8" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in SWF-SE-036 · → SWF-014</text>
+  <rect x="885" y="1424.8" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1435.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-037 open</text>
+  <rect x="40" y="1490.1" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1509.6" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-041</text>
+  <text x="49" y="1524.2" font-size="10.5" fill="#0F172A" font-weight="600">controlsd main loop, input</text>
+  <text x="49" y="1538.2" font-size="10.5" fill="#0F172A" font-weight="600">handling and actuator gating</text>
+  <text x="49" y="1551" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="1563.7" font-size="9.5" fill="#475569">in SWF-SE-040</text>
+  <rect x="250" y="1477.8" width="240" height="107.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1497.3" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-040</text>
+  <text x="259" y="1511.8" font-size="10.5" fill="#0F172A">Request lateral control only while</text>
+  <text x="259" y="1525.9" font-size="10.5" fill="#0F172A">selfdriveState is active, no EPS fault is</text>
+  <text x="259" y="1540" font-size="10.5" fill="#0F172A">reported and the car is above the minimum</text>
+  <text x="259" y="1554" font-size="10.5" fill="#0F172A">steer speed; request longitudinal control…</text>
+  <rect x="259" y="1560" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1571" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-004</text>
+  <rect x="318.4" y="1560" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1571" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-006</text>
+  <rect x="520" y="1478.7" width="326" height="105.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1498.2" font-size="12" fill="#0F172A" font-weight="700">SWF-040</text>
+  <rect x="593.9" y="1487.2" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1498.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1487.2" width="64.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="661.9" y="1498.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">value stale</text>
+  <text x="529" y="1512.8" font-size="10.5" fill="#0F172A" font-weight="600">Actuation continues on a stale engagement state after</text>
+  <text x="529" y="1526.8" font-size="10.5" fill="#0F172A" font-weight="600">selfdrived stops publishing</text>
+  <text x="529" y="1540" font-size="9.8" fill="#475569" font-style="italic">End effect: About 3 s of unsupervised lateral control; a model or</text>
+  <text x="529" y="1553.1" font-size="9.8" fill="#475569" font-style="italic">input fault in that window is not acted on</text>
+  <text x="529" y="1570.1" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1559.1" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1570" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-003</text>
+  <rect x="618.8" y="1559.1" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="1570" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="876" y="1478.2" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1497.7" font-size="12" fill="#0F172A" font-weight="700">SWF-040.C1</text>
+  <rect x="1194.5" y="1486.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1497.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1512.3" font-size="10.5" fill="#0F172A">controlsd reads selfdriveState.enabled/active with no alive, valid or</text>
+  <text x="885" y="1526.4" font-size="10.5" fill="#0F172A">age check (controlsd.py:96-102); the SubMaster keeps the last</text>
+  <text x="885" y="1540.4" font-size="10.5" fill="#0F172A">message and the poll only bounds the wait to 15 ms…</text>
+  <text x="885" y="1553.6" font-size="9.8" fill="#475569" font-weight="600">O7 · D10 · in SWF-SE-041</text>
+  <rect x="885" y="1559.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1570.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 open</text>
+  <rect x="997.9" y="1559.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="1570.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-047 open</text>
+  <line x1="40" y1="1611" x2="1240" y2="1611" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="1633" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
+  <rect x="96" y="1622" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="1633" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <rect x="136.5" y="1622" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="1633" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
+  <rect x="179.4" y="1622" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1633" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="223.9" y="1633" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
+  <rect x="455.4" y="1622" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1633" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
+  <text x="522.7" y="1633" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <text x="40" y="1653" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
+  <text x="40" y="1671" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+</svg>

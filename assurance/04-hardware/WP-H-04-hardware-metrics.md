@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-04 Hardware architectural metrics (SPFM, LFM) |
 | Standard reference | ISO 26262-5:2018 §8 (evaluation of the hardware architectural metrics), Annex C (metric definitions, informative), Annex D (diagnostic coverage, informative); ISO 26262-11:2018 (semiconductors, informative) |
-| Version | 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
+| Version | 0.3 (§5 status and §4 targets drawn as Figure 5-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
 | Status | Draft (method and plan; no metric computed) |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -136,6 +136,10 @@ channel. This supports the FSC recommendation of option (c).
 
 **For SG-07:** ASIL B is *unlikely* to be met without relay readback (DC-03) unless the relay's
 "stuck intercepting" rate is shown to be small relative to the total, which needs part data.
+
+![Figure 5-1: SPFM and LFM status: calculation steps 1 to 7 not done or qualitative only for lack of a BOM, and for SG-01, SG-03/SG-04, SG-05, SG-02/SG-06 and SG-07 the ASIL targets marked with no computed value](figures/fig-h04-5-1-metric-status.svg)
+
+*Figure 5-1.* Top: the calculation steps of §3.2 with their status from the §5 table. Bottom: the §4 targets per safety-goal row of §7 on a 50–100 % scale; the hatched track means no value exists (every “Met?” cell in §7 is “Not yet computed”). The right column repeats the engineering judgement of §5.1, which is not a metric. Drawn from §4, §5, §5.1 and §7. Source: [`figures/fig-h04-5-1-metric-status.svg`](figures/fig-h04-5-1-metric-status.svg); change it together with §4, §5 and §7.
 
 ## 6. Plan
 

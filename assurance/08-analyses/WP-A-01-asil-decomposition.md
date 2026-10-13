@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-01 ASIL decomposition rationale |
 | Standard reference | ISO 26262-9:2018 §5 (requirements decomposition with respect to ASIL tailoring); ISO 26262-9 §7 (DFA, as the independence evidence §5 relies on); ISO 26262-3 §7 (FSC, where decomposition would be applied) |
-| Version | 0.2 (status update 2026-10-12: GAP-06/-07 partly closed, envelope configuration locked in the reference build; no change to the decomposition rationale). History: 0.1 |
+| Version | 0.3 (Figure 2-1 decision and candidate schemes, Figure 4-1 DEC-01 independence requirements added; no change to the rationale; 2026-10-13). 0.2 (status update 2026-10-12: GAP-06/-07 partly closed, envelope configuration locked in the reference build; no change to the decomposition rationale). History: 0.1 |
 | Status | Draft |
 | ASIL / scope | SG-01 (ASIL C ⚠, D if AOU-01/02 fail); SG-02…SG-07 (ASIL B) checked for decomposition need |
 | Author | Assurance team (initial draft) |
@@ -34,6 +34,10 @@ Inputs:
 | Is the Toyota EPS credited as a decomposition partner? | **No, and not recommended** (§5) |
 | When would decomposition become necessary? | Only if vehicle controllability tests (WP-C-04 OI-2, [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §8) show that C1 cannot be reached at a torque level that keeps the function useful, **and** the envelope cannot be argued at ASIL C (option (a)) |
 | Status of the fallback | Documented option set (§4) with independence requirements (§4.3). No hardware for it exists. Activation needs a maintainer decision and a WP-C-04 update |
+
+![Figure 2-1: decomposition decision for SG-01 (controllability C1 shown, option (c), no decomposition; otherwise option (a) or the fallback DEC-01) and the candidate schemes DEC-01 to DEC-04 with their record status](figures/fig-a01-2-1-decomposition-decision.svg)
+
+*Figure 2-1.* The decision of this table and §3 as a flow, next to the four candidate schemes of §4.1 with their §7 record status: DEC-01 proposed, not applied; DEC-02 and DEC-04 rejected; DEC-03 not recommended. Drawn from §2, §3, §4.1 and §7. Source: [`figures/fig-a01-2-1-decomposition-decision.svg`](figures/fig-a01-2-1-decomposition-decision.svg); change it together with §2, §4.1 and §7.
 
 ## 3. Decomposition need per safety goal
 
@@ -91,6 +95,10 @@ These requirements must be met, and shown by the DFA ([WP-A-03](WP-A-03-dependen
 | IR-08 | E-07 shall be physically separated from the comma device PCB (separate housing or separate board in the harness box) | Shared PCB, thermal, mechanical (DFI-03, DFI-04) | Design review, environmental test |
 | IR-09 | The harness connector and relay itself remain a shared element. Its failure modes (welded contact, coil open) shall be covered by a relay-state readback seen by both E-03 and E-07, and by a latent-fault test at start-up | Shared relay / connector (DFI-05) | FMEDA ([WP-H-03](../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md)), HIL test |
 | IR-10 | E-07 limits shall be set from the controllability evidence (WP-C-04 OI-2), independently of the E-01 controller limits and the E-03 limits | Identical constants as common cause (DFI-08) | Review of limit derivation records |
+
+![Figure 4-1: DEC-01 fallback — envelope E-03 (B(C)) on the comma device with its shared supply, clock and PCB, the concept element E-07 (A(C)) with its own supply, clock and receive-only CAN transceiver, the independence requirements IR-01 to IR-10, and the shared intercept relay E-05 with the E-07 series switch](figures/fig-a01-4-1-dec01-independence.svg)
+
+*Figure 4-1.* What E-07 must not share with E-03 if DEC-01 is activated: the resources E-03 shares on the device (left), the requirements of this table (middle) and the own resources they give E-07 (right). The relay and connector stay shared (IR-09). E-07 is a concept (§4.2); nothing here exists. Drawn from §4.2 and this table. Source: [`figures/fig-a01-4-1-dec01-independence.svg`](figures/fig-a01-4-1-dec01-independence.svg); change it together with §4.2 and §4.3.
 
 ### 4.4 Consequences for the elements if DEC-01 is applied
 

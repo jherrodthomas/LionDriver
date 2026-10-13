@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="836" viewBox="0 0 1280 836" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 6-1. PMHF: status of the evaluation against the targets (WP-H-05 §4, §6, §8)</title>
+  <desc id="d">Top: the inputs to the PMHF evaluation with their status from §6: method proposed but not approved, mission profile proposed in part, no failure rates because there is no BOM, FMEDA qualitative at block level only, PMHF per safety goal cannot be computed, and verification of the vehicle external measures AOU-01R, AOU-04R and AOU-05R not started. Bottom: for each row of the §8 results template (SG-01 and SG-03/SG-04 in two variants, with and without external measures; SG-02/SG-06, SG-05 and SG-07) the terms single-point plus residual, dual-point and PMHF are all to be determined, the target is below 100 FIT (10 to the minus 7 per hour) and the result is not yet computed. The expected dominant contributors of §5.1 and the external measures of §5 are listed per row.</desc>
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7C3AED"/></marker>
+    <marker id="aY" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#A16207"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+      .ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .chip{fill:#F8FAFC;stroke:#CBD5E1;stroke-width:1}
+      .tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+    </style>
+  </defs>
+
+  <rect width="1280" height="836" fill="#FFFFFF"/>
+  <text x="40" y="44" class="t b" font-size="20">Figure 6-1 · PMHF against the targets: no value can be computed yet</text>
+  <text x="40" y="66" class="m" font-size="12.5">Inputs to the evaluation (§6) and, per safety goal, the PMHF terms of §2.1 against the §4 target · every term is still TBD</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">WP-H-05 §4, §6, §8</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">method §2 · external measures §5</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+  <text x="40" y="110" class="t b" font-size="13">A · Inputs to the evaluation (§6 status)</text>
+  <rect x="760" y="96" width="480" height="22" rx="11" fill="#FDECEA" stroke="#D2553F" stroke-width="1.2"/>
+  <text x="1000" y="111" font-size="11" text-anchor="middle" font-weight="700" fill="#9F2A1B">No BOM and no failure-rate data (§1; WP-H-02 UK-01/02)</text>
+  <rect x="40" y="132" width="190" height="76" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.6"/>
+  <rect x="40" y="132" width="6" height="76" rx="3" fill="#D97706"/>
+  <text x="56" y="154" class="t b" font-size="12">Method decision</text>
+  <text x="220" y="154" class="m" font-size="10" text-anchor="end" font-weight="600">OI-1</text>
+  <text x="56" y="176" class="m" font-size="10.5">PMHF + EEC-style check:</text>
+  <text x="56" y="190" class="m" font-size="10.5">proposed, not approved</text>
+  <rect x="242" y="132" width="190" height="76" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.6"/>
+  <rect x="242" y="132" width="6" height="76" rx="3" fill="#D97706"/>
+  <text x="258" y="154" class="t b" font-size="12">Mission profile</text>
+  <text x="422" y="154" class="m" font-size="10" text-anchor="end" font-weight="600">OI-2</text>
+  <text x="258" y="176" class="m" font-size="10.5">15-year life proposed;</text>
+  <text x="258" y="190" class="m" font-size="10.5">other values TBD</text>
+  <rect x="444" y="132" width="190" height="76" rx="10" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6"/>
+  <rect x="444" y="132" width="6" height="76" rx="3" fill="#D2553F"/>
+  <text x="460" y="154" class="t b" font-size="12">Failure rates</text>
+  <text x="624" y="154" class="m" font-size="10" text-anchor="end" font-weight="600">OI-5</text>
+  <text x="460" y="176" class="m" font-size="10.5">None — requires BOM</text>
+  <text x="460" y="190" class="m" font-size="10.5">(ST data: WP-H-07 QE-02)</text>
+  <rect x="646" y="132" width="190" height="76" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.6"/>
+  <rect x="646" y="132" width="6" height="76" rx="3" fill="#D97706"/>
+  <text x="662" y="154" class="t b" font-size="12">FMEDA</text>
+  <text x="662" y="176" class="m" font-size="10.5">Qualitative block level</text>
+  <text x="662" y="190" class="m" font-size="10.5">only (WP-H-03)</text>
+  <rect x="848" y="132" width="190" height="76" rx="10" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6"/>
+  <rect x="848" y="132" width="6" height="76" rx="3" fill="#D2553F"/>
+  <text x="864" y="154" class="t b" font-size="12">PMHF per SG</text>
+  <text x="864" y="176" class="m" font-size="10.5">Cannot be computed</text>
+  <rect x="1050" y="132" width="190" height="76" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.6"/>
+  <rect x="1050" y="132" width="6" height="76" rx="3" fill="#94A3B8"/>
+  <text x="1066" y="154" class="t b" font-size="12">AoU verification</text>
+  <text x="1230" y="154" class="m" font-size="10" text-anchor="end" font-weight="600">OI-3</text>
+  <text x="1066" y="176" class="m" font-size="10.5">AOU-01R, -04R, -05R</text>
+  <text x="1066" y="190" class="m" font-size="10.5">not started</text>
+  <text x="40" y="230" class="m" font-size="11">DC-01 (IWDG1) is implemented since 2026-10-12, not verified: not credited in the PMHF or as DC until HIL fault-injection evidence exists. The §6 judgement is unchanged: no conclusion on meeting the target is possible today.</text>
+  <line x1="40" y1="250" x2="1240" y2="250" stroke="#E2E8F0"/>
+  <text x="40" y="276" class="t b" font-size="13">B · PMHF per safety goal (§8 template): terms of §2.1 against the §4 target</text>
+  <text x="40" y="302" class="m sb" font-size="11">Safety goal</text>
+  <text x="150" y="302" class="m sb" font-size="11">ASIL (§4)</text>
+  <text x="238" y="302" class="m sb" font-size="11">Variant (§5 rule 2)</text>
+  <text x="800" y="302" class="m sb" font-size="11">Met? (§8)</text>
+  <text x="912" y="302" class="m sb" font-size="11">Expected dominant terms (§5.1) · external measure (§5)</text>
+  <text x="408.0" y="302" class="m sb" font-size="11" text-anchor="middle">Σλ_SPF + Σλ_RF</text>
+  <text x="526.0" y="302" class="m sb" font-size="11" text-anchor="middle">dual-point</text>
+  <text x="644.0" y="302" class="m sb" font-size="11" text-anchor="middle">PMHF</text>
+  <text x="751.0" y="302" class="m sb" font-size="11" text-anchor="middle">target (§4)</text>
+  <rect x="40" y="316" width="1200" height="86" rx="8" fill="#F8FAFC"/>
+  <text x="50" y="363.0" class="t b" font-size="12.5">SG-01</text>
+  <text x="150" y="355.5" class="t sb" font-size="11.5">C (prov.)</text>
+  <text x="150" y="370.5" class="m" font-size="10.5">→ B after (c)</text>
+  <text x="238" y="348.0" class="t" font-size="10.5">with ext. measures</text>
+  <rect x="362" y="332.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="390.0" y="337.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="408.0" y="348.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="480" y="332.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="508.0" y="337.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="526.0" y="348.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="598" y="332.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="626.0" y="337.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="644.0" y="348.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <text x="467" y="349.0" class="t b" font-size="14" text-anchor="middle">+</text>
+  <text x="585" y="349.0" class="t b" font-size="14" text-anchor="middle">=</text>
+  <text x="703" y="348.0" class="m" font-size="10.5" text-anchor="middle">vs</text>
+  <rect x="716" y="332.0" width="70" height="24" rx="5" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+  <text x="751.0" y="348.0" class="t b" font-size="10.5" text-anchor="middle">&lt; 100 FIT</text>
+  <rect x="800" y="333.0" width="98" height="22" rx="11" fill="#F1F5F9" stroke="#94A3B8"/>
+  <text x="849" y="348.0" class="m" font-size="9.5" text-anchor="middle" font-weight="700">not yet computed</text>
+  <text x="238" y="378.0" class="t" font-size="10.5">without</text>
+  <rect x="362" y="362.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="390.0" y="367.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="408.0" y="378.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="480" y="362.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="508.0" y="367.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="526.0" y="378.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="598" y="362.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="626.0" y="367.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="644.0" y="378.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <text x="467" y="379.0" class="t b" font-size="14" text-anchor="middle">+</text>
+  <text x="585" y="379.0" class="t b" font-size="14" text-anchor="middle">=</text>
+  <text x="703" y="378.0" class="m" font-size="10.5" text-anchor="middle">vs</text>
+  <rect x="716" y="362.0" width="70" height="24" rx="5" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+  <text x="751.0" y="378.0" class="t b" font-size="10.5" text-anchor="middle">&lt; 100 FIT</text>
+  <rect x="800" y="363.0" width="98" height="22" rx="11" fill="#F1F5F9" stroke="#94A3B8"/>
+  <text x="849" y="378.0" class="m" font-size="9.5" text-anchor="middle" font-weight="700">not yet computed</text>
+  <text x="912" y="355.0" class="t" font-size="10.5">MCU core, SRAM wrong-data; flash multi-bit</text>
+  <text x="912" y="371.0" font-size="10.5" font-weight="600" fill="#B45309">AOU-01R: EPS torque limit and timeout · unverified</text>
+  <rect x="40" y="410" width="1200" height="64" rx="8" fill="#F8FAFC"/>
+  <text x="50" y="446.0" class="t b" font-size="12.5">SG-02/SG-06</text>
+  <text x="150" y="446.0" class="t sb" font-size="11.5">B</text>
+  <text x="238" y="446.0" class="t" font-size="10.5">—</text>
+  <rect x="362" y="430.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="390.0" y="435.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="408.0" y="446.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="480" y="430.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="508.0" y="435.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="526.0" y="446.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="598" y="430.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="626.0" y="435.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="644.0" y="446.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <text x="467" y="447.0" class="t b" font-size="14" text-anchor="middle">+</text>
+  <text x="585" y="447.0" class="t b" font-size="14" text-anchor="middle">=</text>
+  <text x="703" y="446.0" class="m" font-size="10.5" text-anchor="middle">vs</text>
+  <rect x="716" y="430.0" width="70" height="24" rx="5" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+  <text x="751.0" y="446.0" class="t b" font-size="10.5" text-anchor="middle">&lt; 100 FIT</text>
+  <rect x="800" y="431.0" width="98" height="22" rx="11" fill="#F1F5F9" stroke="#94A3B8"/>
+  <text x="849" y="446.0" class="m" font-size="9.5" text-anchor="middle" font-weight="700">not yet computed</text>
+  <text x="912" y="438.0" class="t" font-size="10.5">MCU hang/reset while engaged + siren path</text>
+  <text x="912" y="454.0" class="t" font-size="10.5">failed latent (dual-point)</text>
+  <rect x="40" y="482" width="1200" height="86" rx="8" fill="#F8FAFC"/>
+  <text x="50" y="529.0" class="t b" font-size="12.5">SG-03/SG-04</text>
+  <text x="150" y="529.0" class="t sb" font-size="11.5">B</text>
+  <text x="238" y="514.0" class="t" font-size="10.5">with ext. measures</text>
+  <rect x="362" y="498.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="390.0" y="503.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="408.0" y="514.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="480" y="498.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="508.0" y="503.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="526.0" y="514.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="598" y="498.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="626.0" y="503.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="644.0" y="514.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <text x="467" y="515.0" class="t b" font-size="14" text-anchor="middle">+</text>
+  <text x="585" y="515.0" class="t b" font-size="14" text-anchor="middle">=</text>
+  <text x="703" y="514.0" class="m" font-size="10.5" text-anchor="middle">vs</text>
+  <rect x="716" y="498.0" width="70" height="24" rx="5" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+  <text x="751.0" y="514.0" class="t b" font-size="10.5" text-anchor="middle">&lt; 100 FIT</text>
+  <rect x="800" y="499.0" width="98" height="22" rx="11" fill="#F1F5F9" stroke="#94A3B8"/>
+  <text x="849" y="514.0" class="m" font-size="9.5" text-anchor="middle" font-weight="700">not yet computed</text>
+  <text x="238" y="544.0" class="t" font-size="10.5">without</text>
+  <rect x="362" y="528.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="390.0" y="533.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="408.0" y="544.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="480" y="528.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="508.0" y="533.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="526.0" y="544.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="598" y="528.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="626.0" y="533.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="644.0" y="544.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <text x="467" y="545.0" class="t b" font-size="14" text-anchor="middle">+</text>
+  <text x="585" y="545.0" class="t b" font-size="14" text-anchor="middle">=</text>
+  <text x="703" y="544.0" class="m" font-size="10.5" text-anchor="middle">vs</text>
+  <rect x="716" y="528.0" width="70" height="24" rx="5" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+  <text x="751.0" y="544.0" class="t b" font-size="10.5" text-anchor="middle">&lt; 100 FIT</text>
+  <rect x="800" y="529.0" width="98" height="22" rx="11" fill="#F1F5F9" stroke="#94A3B8"/>
+  <text x="849" y="544.0" class="m" font-size="9.5" text-anchor="middle" font-weight="700">not yet computed</text>
+  <text x="912" y="521.0" class="t" font-size="10.5">MCU core, SRAM wrong-data; flash multi-bit</text>
+  <text x="912" y="537.0" font-size="10.5" font-weight="600" fill="#B45309">AOU-05R: PCM clamp and cancel · unverified</text>
+  <rect x="40" y="576" width="1200" height="64" rx="8" fill="#F8FAFC"/>
+  <text x="50" y="612.0" class="t b" font-size="12.5">SG-05</text>
+  <text x="150" y="612.0" class="t sb" font-size="11.5">B</text>
+  <text x="238" y="612.0" class="t" font-size="10.5">—</text>
+  <rect x="362" y="596.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="390.0" y="601.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="408.0" y="612.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="480" y="596.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="508.0" y="601.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="526.0" y="612.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="598" y="596.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="626.0" y="601.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="644.0" y="612.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <text x="467" y="613.0" class="t b" font-size="14" text-anchor="middle">+</text>
+  <text x="585" y="613.0" class="t b" font-size="14" text-anchor="middle">=</text>
+  <text x="703" y="612.0" class="m" font-size="10.5" text-anchor="middle">vs</text>
+  <rect x="716" y="596.0" width="70" height="24" rx="5" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+  <text x="751.0" y="612.0" class="t b" font-size="10.5" text-anchor="middle">&lt; 100 FIT</text>
+  <rect x="800" y="597.0" width="98" height="22" rx="11" fill="#F1F5F9" stroke="#94A3B8"/>
+  <text x="849" y="612.0" class="m" font-size="9.5" text-anchor="middle" font-weight="700">not yet computed</text>
+  <text x="912" y="612.0" class="m" font-size="10.5">Not listed in §5.1</text>
+  <rect x="40" y="648" width="1200" height="74" rx="8" fill="#F8FAFC"/>
+  <text x="50" y="689.0" class="t b" font-size="12.5">SG-07</text>
+  <text x="150" y="689.0" class="t sb" font-size="11.5">B</text>
+  <text x="238" y="689.0" class="t" font-size="10.5">—</text>
+  <rect x="362" y="673.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="390.0" y="678.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="408.0" y="689.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="480" y="673.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="508.0" y="678.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="526.0" y="689.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <rect x="598" y="673.0" width="92" height="24" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><rect x="626.0" y="678.0" width="36" height="14" rx="3" fill="#FFFFFF" fill-opacity=".92"/><text x="644.0" y="689.0" font-size="10" font-weight="700" fill="#9F2A1B" text-anchor="middle">TBD</text>
+  <text x="467" y="690.0" class="t b" font-size="14" text-anchor="middle">+</text>
+  <text x="585" y="690.0" class="t b" font-size="14" text-anchor="middle">=</text>
+  <text x="703" y="689.0" class="m" font-size="10.5" text-anchor="middle">vs</text>
+  <rect x="716" y="673.0" width="70" height="24" rx="5" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/>
+  <text x="751.0" y="689.0" class="t b" font-size="10.5" text-anchor="middle">&lt; 100 FIT</text>
+  <rect x="800" y="674.0" width="98" height="22" rx="11" fill="#F1F5F9" stroke="#94A3B8"/>
+  <text x="849" y="689.0" class="m" font-size="9.5" text-anchor="middle" font-weight="700">not yet computed</text>
+  <text x="912" y="673.0" class="t" font-size="10.5">Relay stuck intercepting; relay driver short;</text>
+  <text x="912" y="689.0" class="t" font-size="10.5">MCU hang with relay driven</text>
+  <text x="912" y="705.0" font-size="10.5" font-weight="600" fill="#B45309">AOU-04R: PCS priority; not vs relay stuck · unverified</text>
+  <text x="40" y="742" class="m" font-size="11">Target: &lt; 10⁻⁷ /h (100 FIT) for ASIL B and C, a commonly used value to be verified against the licensed text (OI-4); ASIL D would be &lt; 10 FIT and applies only if AOU-01/02 fail. The full budget is allocated to E-04 + E-05.</text>
+  <text x="40" y="759" class="m" font-size="11">External measures count only in the effect analysis, never as DC; an unverified AoU turns its faults back into single-point faults, so both variants are reported (§5).</text>
+  <line x1="40" y1="782" x2="1240" y2="782" stroke="#E2E8F0"/>
+  <g transform="translate(40,806)" font-size="10.5">
+    <rect x="0" y="-10" width="36" height="18" rx="4" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><text x="44" y="3" class="t">TBD: no value (no failure rates)</text>
+    <rect x="240" y="-10" width="36" height="18" rx="4" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.2"/><text x="284" y="3" class="t">Target (§4)</text>
+    <rect x="380" y="-10" width="28" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6"/><text x="416" y="3" class="t">Missing input</text>
+    <rect x="520" y="-10" width="28" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.6"/><text x="556" y="3" class="t">Proposed / partial</text>
+    <rect x="686" y="-10" width="28" height="18" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.6"/><text x="722" y="3" class="t">Not started</text>
+    <text x="830" y="3" class="t"><tspan font-weight="600" fill="#B45309">Amber text:</tspan> vehicle-side AoU relied on, unverified</text>
+  </g>
+</svg>

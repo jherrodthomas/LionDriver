@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1208" viewBox="0 0 1280 1208" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-8. PFMEA structure tree (PFM)</title>
+  <desc id="d">PFMEA structure tree (PFM rev 0.2, BL-003): 12 structure elements in 1 root(s), 11 functions with the number of failure modes analyzed for each.</desc>
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
+  </defs>
+  <rect width="1280" height="1208" fill="#FFFFFF"/>
+  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-8 · PFMEA structure and function tree</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">PFM rev 0.2 · BL-003 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
+  <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.4</text>
+  <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/pfmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="108" font-size="10" fill="#475569" font-weight="700" letter-spacing=".06em">Structure root (level 0)</text>
+  <text x="304" y="108" font-size="10" fill="#475569" font-weight="700" letter-spacing=".06em">Structure level 1</text>
+  <text x="568" y="108" font-size="10" fill="#475569" font-weight="700" letter-spacing=".06em">Functions (step 3) · failure modes found</text>
+  <path d="M270 614.4H287V144H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 614.4H287V235.9H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 614.4H287V341.8H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 614.4H287V433.7H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 614.4H287V525.5H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 614.4H287V622.1H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 614.4H287V704.5H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 614.4H287V796.4H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 614.4H287V888.2H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 614.4H287V980.1H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 614.4H287V1072H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 144H551V146.4H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 235.9H551V245.3H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 341.8H551V344.2H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 433.7H551V436.1H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 525.5H551V528H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 622.1H551V617.4H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 704.5H551V706.9H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 796.4H551V798.8H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 888.2H551V890.6H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 980.1H551V982.5H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 1072H551V1074.4H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <rect x="40" y="592.4" width="230" height="57.1" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="611.9" font-size="12" fill="#0F172A" font-weight="700">PFM-SE-001</text>
+  <rect x="136.1" y="600.9" width="74.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="173.3" y="611.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process item</text>
+  <text x="49" y="626.4" font-size="10.5" fill="#0F172A" font-weight="600">Producing the as-driven reference</text>
+  <text x="49" y="640.5" font-size="10.5" fill="#0F172A" font-weight="600">configuration (AC-001)</text>
+  <rect x="304" y="122" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="141.5" font-size="12" fill="#0F172A" font-weight="700">PFM-SE-010</text>
+  <rect x="400.1" y="130.5" width="74.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="437.4" y="141.4" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process step</text>
+  <text x="313" y="156.1" font-size="10.5" fill="#0F172A" font-weight="600">R1 Freeze and pin the baseline</text>
+  <text x="313" y="170.1" font-size="10.5" fill="#0F172A" font-weight="600">(WP-P-10 §4 steps 1-3)</text>
+  <text x="313" y="182.9" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="124.4" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="143.9" font-size="12" fill="#0F172A" font-weight="700">PFM-FN-001</text>
+  <rect x="1192.7" y="132.9" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="143.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="158.5" font-size="10.5" fill="#0F172A">Freeze every component of the release at an identified, protected version</text>
+  <text x="577" y="175.5" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="164.5" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="175.4" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <rect x="304" y="213.9" width="230" height="83.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="233.4" font-size="12" fill="#0F172A" font-weight="700">PFM-SE-011</text>
+  <rect x="400.1" y="222.4" width="74.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="437.4" y="233.3" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process step</text>
+  <text x="313" y="247.9" font-size="10.5" fill="#0F172A" font-weight="600">R2 Build the release (host tree, panda</text>
+  <text x="313" y="262" font-size="10.5" fill="#0F172A" font-weight="600">RELEASE firmware; WP-P-10 §4 step</text>
+  <text x="313" y="276.1" font-size="10.5" fill="#0F172A" font-weight="600">4, §6)</text>
+  <text x="313" y="288.8" font-size="9.5" fill="#475569">2 failure modes · 2 causes located here</text>
+  <rect x="568" y="223.3" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="242.8" font-size="12" fill="#0F172A" font-weight="700">PFM-FN-002</text>
+  <rect x="1192.7" y="231.8" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="242.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">2 FM</text>
+  <text x="577" y="257.4" font-size="10.5" fill="#0F172A">Produce the release artifacts, including a panda RELEASE build with the LionDriver key and the reference lock</text>
+  <text x="577" y="274.4" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="263.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="274.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-010</text>
+  <rect x="304" y="319.8" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="339.3" font-size="12" fill="#0F172A" font-weight="700">PFM-SE-012</text>
+  <rect x="400.1" y="328.3" width="74.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="437.4" y="339.2" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process step</text>
+  <text x="313" y="353.9" font-size="10.5" fill="#0F172A" font-weight="600">R3 Verify and assemble the evidence</text>
+  <text x="313" y="367.9" font-size="10.5" fill="#0F172A" font-weight="600">package (WP-P-10 §4 steps 5-8, §5)</text>
+  <text x="313" y="380.7" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="322.2" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="341.7" font-size="12" fill="#0F172A" font-weight="700">PFM-FN-003</text>
+  <rect x="1192.7" y="330.7" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="341.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="356.3" font-size="10.5" fill="#0F172A">Run and archive all required verification on the exact release commit</text>
+  <text x="577" y="373.3" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="362.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="373.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-002</text>
+  <rect x="304" y="411.7" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="431.2" font-size="12" fill="#0F172A" font-weight="700">PFM-SE-013</text>
+  <rect x="400.1" y="420.2" width="74.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="437.4" y="431.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process step</text>
+  <text x="313" y="445.8" font-size="10.5" fill="#0F172A" font-weight="600">R4 Release decision and publication</text>
+  <text x="313" y="459.8" font-size="10.5" fill="#0F172A" font-weight="600">(WP-P-10 §4 steps 9-10)</text>
+  <text x="313" y="472.6" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="414.1" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="433.6" font-size="12" fill="#0F172A" font-weight="700">PFM-FN-004</text>
+  <rect x="1192.7" y="422.6" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="433.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="448.2" font-size="10.5" fill="#0F172A">Publish only the approved release through the LionDriver channel</text>
+  <text x="577" y="465.2" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="454.2" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="465.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <rect x="304" y="503.6" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="523" font-size="12" fill="#0F172A" font-weight="700">PFM-SE-020</text>
+  <rect x="400.1" y="512" width="74.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="437.4" y="523" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process step</text>
+  <text x="313" y="537.6" font-size="10.5" fill="#0F172A" font-weight="600">I1 Incoming inspection (WP-O-01</text>
+  <text x="313" y="551.7" font-size="10.5" fill="#0F172A" font-weight="600">INS-01..04)</text>
+  <text x="313" y="564.4" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="506" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="525.5" font-size="12" fill="#0F172A" font-weight="700">PFM-FN-005</text>
+  <rect x="1192.7" y="514.5" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="525.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="540" font-size="10.5" fill="#0F172A">Use only the approved, undamaged device and harness</text>
+  <text x="577" y="557" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="546" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="556.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
+  <rect x="684.7" y="546" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="556.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="304" y="600.1" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="619.6" font-size="12" fill="#0F172A" font-weight="700">PFM-SE-021</text>
+  <rect x="400.1" y="608.6" width="74.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="437.4" y="619.5" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process step</text>
+  <text x="313" y="634.1" font-size="10.5" fill="#0F172A" font-weight="600">I2 Vehicle preconditions (INS-05..08)</text>
+  <text x="313" y="646.9" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="595.4" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="614.9" font-size="12" fill="#0F172A" font-weight="700">PFM-FN-006</text>
+  <rect x="1192.7" y="603.9" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="614.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="629.5" font-size="10.5" fill="#0F172A">Install only on a vehicle that is in the reference configuration and healthy</text>
+  <text x="577" y="646.5" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="635.5" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="646.4" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <rect x="304" y="682.5" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="702" font-size="12" fill="#0F172A" font-weight="700">PFM-SE-022</text>
+  <rect x="400.1" y="691" width="74.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="437.4" y="701.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process step</text>
+  <text x="313" y="716.6" font-size="10.5" fill="#0F172A" font-weight="600">I3 Mechanical and electrical installation</text>
+  <text x="313" y="730.6" font-size="10.5" fill="#0F172A" font-weight="600">(INS-09..14)</text>
+  <text x="313" y="743.4" font-size="9.5" fill="#475569">3 failure modes · 3 causes located here</text>
+  <rect x="568" y="684.9" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="704.4" font-size="12" fill="#0F172A" font-weight="700">PFM-FN-007</text>
+  <rect x="1192.7" y="693.4" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="704.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">3 FM</text>
+  <text x="577" y="719" font-size="10.5" fill="#0F172A">Mount the device and connect the harness so that the CAN path, relay and camera view are as designed</text>
+  <text x="577" y="736" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="725" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="735.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
+  <rect x="684.7" y="725" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="735.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="304" y="774.4" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="793.9" font-size="12" fill="#0F172A" font-weight="700">PFM-SE-023</text>
+  <rect x="400.1" y="782.9" width="74.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="437.4" y="793.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process step</text>
+  <text x="313" y="808.4" font-size="10.5" fill="#0F172A" font-weight="600">I4 Provisioning: software, firmware,</text>
+  <text x="313" y="822.5" font-size="10.5" fill="#0F172A" font-weight="600">parameters (INS-15..20)</text>
+  <text x="313" y="835.2" font-size="9.5" fill="#475569">2 failure modes · 2 causes located here</text>
+  <rect x="568" y="776.8" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="796.3" font-size="12" fill="#0F172A" font-weight="700">PFM-FN-008</text>
+  <rect x="1192.7" y="785.3" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="796.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">2 FM</text>
+  <text x="577" y="810.8" font-size="10.5" fill="#0F172A">Provision the released software, panda firmware, models and parameter set</text>
+  <text x="577" y="827.8" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="816.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="827.8" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <rect x="684.7" y="816.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="827.8" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-010</text>
+  <rect x="304" y="866.2" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="885.7" font-size="12" fill="#0F172A" font-weight="700">PFM-SE-024</text>
+  <rect x="400.1" y="874.7" width="74.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="437.4" y="885.6" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process step</text>
+  <text x="313" y="900.3" font-size="10.5" fill="#0F172A" font-weight="600">I5 Reference-configuration check</text>
+  <text x="313" y="914.4" font-size="10.5" fill="#0F172A" font-weight="600">(INS-21..24)</text>
+  <text x="313" y="927.1" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="868.6" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="888.1" font-size="12" fill="#0F172A" font-weight="700">PFM-FN-009</text>
+  <rect x="1192.7" y="877.1" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="888.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="902.7" font-size="10.5" fill="#0F172A">Confirm that the item identifies the vehicle as the reference configuration and runs the reference safety mode</text>
+  <text x="577" y="919.7" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="908.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="919.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <rect x="684.7" y="908.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="919.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-011</text>
+  <rect x="304" y="958.1" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="977.6" font-size="12" fill="#0F172A" font-weight="700">PFM-SE-025</text>
+  <rect x="400.1" y="966.6" width="74.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="437.4" y="977.5" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process step</text>
+  <text x="313" y="992.2" font-size="10.5" fill="#0F172A" font-weight="600">I6 Calibration, functional check and</text>
+  <text x="313" y="1006.2" font-size="10.5" fill="#0F172A" font-weight="600">driver briefing (INS-25..30)</text>
+  <text x="313" y="1019" font-size="9.5" fill="#475569">2 failure modes · 2 causes located here</text>
+  <rect x="568" y="960.5" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="980" font-size="12" fill="#0F172A" font-weight="700">PFM-FN-010</text>
+  <rect x="1192.7" y="969" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="979.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">2 FM</text>
+  <text x="577" y="994.6" font-size="10.5" fill="#0F172A">Calibrate, prove the stock PCS path and engagement transitions, and brief the driver</text>
+  <text x="577" y="1011.6" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="1000.6" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="1011.5" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
+  <rect x="684.7" y="1000.6" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="1011.5" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-015</text>
+  <rect x="304" y="1050" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="1069.5" font-size="12" fill="#0F172A" font-weight="700">PFM-SE-030</text>
+  <rect x="400.1" y="1058.5" width="74.5" height="15" rx="7.5" fill="#E2E8F0"/><text x="437.4" y="1069.4" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">process step</text>
+  <text x="313" y="1084" font-size="10.5" fill="#0F172A" font-weight="600">U1 Software update and rollback</text>
+  <text x="313" y="1098.1" font-size="10.5" fill="#0F172A" font-weight="600">(WP-P-10 §8, WP-O-02)</text>
+  <text x="313" y="1110.8" font-size="9.5" fill="#475569">2 failure modes · 2 causes located here</text>
+  <rect x="568" y="1052.4" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="1071.9" font-size="12" fill="#0F172A" font-weight="700">PFM-FN-011</text>
+  <rect x="1192.7" y="1060.9" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="1071.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">2 FM</text>
+  <text x="577" y="1086.4" font-size="10.5" fill="#0F172A">Update or roll back only to an approved release whose evidence is valid for the installed device</text>
+  <text x="577" y="1103.4" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="1092.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="1103.4" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <line x1="40" y1="1145.8" x2="1240" y2="1145.8" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="40" y="1156.8" width="26" height="14" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="4"/>
+  <text x="72" y="1167.8" font-size="10.5" fill="#0F172A">Structure element (kind)</text>
+  <rect x="215.3" y="1156.8" width="26" height="14" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.3" rx="4" stroke-dasharray="5 3"/>
+  <text x="247.3" y="1167.8" font-size="10.5" fill="#0F172A">External element (outside the item)</text>
+  <rect x="446.1" y="1156.8" width="26" height="14" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="4"/>
+  <text x="478.1" y="1167.8" font-size="10.5" fill="#0F172A">Function</text>
+  <rect x="543.4" y="1156.8" width="37.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="562.2" y="1167.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">n FM</text>
+  <text x="587.1" y="1167.8" font-size="10.5" fill="#0F172A">failure modes analyzed for the function</text>
+  <rect x="805.2" y="1156.8" width="43.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="826.9" y="1167.8" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">no FM</text>
+  <text x="854.6" y="1167.8" font-size="10.5" fill="#0F172A">none yet</text>
+  <text x="40" y="1187.8" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/pfmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+</svg>
