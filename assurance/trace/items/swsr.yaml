@@ -11,8 +11,10 @@
   parent_text: "TSR-101"
   other_parents: false
   allocated_to: "`panda.safety.lateral` (U-SAF-LAT), `panda.safety.toyota` (U-SAF-TOY)"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "\\|τ\\| = τ_max accepted, τ_max + 1 rejected, both signs, extreme int16 rejected"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:173`, check `lateral.h:73-74`. No physical rationale (GAP-04)"
   status: proposed
   source: WP-W-02
@@ -25,8 +27,10 @@
   parent_text: "TSR-101, TSR-107"
   other_parents: false
   allocated_to: "U-SAF-TOY"
-  verification: "UT, R"
+  verification: "UT, R, IT"
   acceptance: "Decoding matches the DBC for all 2^16 torque values; other lengths not whitelisted"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:11, 322-325`; length match `helpers.h:60-64`"
   status: proposed
   source: WP-W-02
@@ -39,8 +43,10 @@
   parent_text: "TSR-102"
   other_parents: false
   allocated_to: "U-SAF-LAT, U-SAF-TOY, data CD-22"
-  verification: "UT, A, VT"
+  verification: "UT, A, VT, IT"
   acceptance: "Bound at every breakpoint and midpoint equals the table; uncertainty direction verified against the table shape"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: `dynamic_max_torque` unset for Toyota (`modes/toyota.h:172-186`); mechanism `lateral.h:66-71` uses `vehicle_speed.min − 1 m/s`, conservative only for increasing tables; `struct lookup_t` holds 3 breakpoints only (`declarations.h`) (GAP-04, WP-S-02 OI-3)"
   status: proposed
   source: WP-W-02
@@ -53,9 +59,11 @@
   parent_text: "TSR-102"
   other_parents: false
   allocated_to: "build of `panda.safety.toyota`"
-  verification: "R, A"
+  verification: "R, A, IT"
   acceptance: "Build fails on a non-monotonic or out-of-range table"
-  baseline_impl: "Not impl; [WP-W-09](WP-W-09-configuration-calibration-data.md) DVR-22"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Not impl; WP-W-09 (assurance/05-software/WP-W-09-configuration-calibration-data.md) DVR-22"
   status: proposed
   source: WP-W-02
 
@@ -67,8 +75,10 @@
   parent_text: "TSR-103"
   other_parents: false
   allocated_to: "U-SAF-LAT"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "Violation exactly at Δ + 1 raw for up and down, both signs"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:174-175`; `lateral.h:14-19` (inside `dist_to_meas_check`). Values without rationale (GAP-04)"
   status: proposed
   source: WP-W-02
@@ -81,8 +91,10 @@
   parent_text: "TSR-103"
   other_parents: false
   allocated_to: "U-SAF-LAT"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "Rejection at 451 raw; window restart at 250 ms with timer resolution 1 µs"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:177`; `lateral.h:49-57, 87-95`; `MAX_RT_INTERVAL` `declarations.h:71`"
   status: proposed
   source: WP-W-02
@@ -95,8 +107,10 @@
   parent_text: "TSR-104"
   other_parents: false
   allocated_to: "U-SAF-LAT, U-SAF-TOY"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "Rejection at meas.max + 1 + 351 raw; window of exactly 6 samples"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:98-111, 176`; `lateral.h:10-23, 82-83`; `MAX_SAMPLE_VALS` `declarations.h:68`"
   status: proposed
   source: WP-W-02
@@ -109,9 +123,11 @@
   parent_text: "TSR-104, TSR-512"
   other_parents: false
   allocated_to: "U-SAF-TOY"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "Only `param & 0xFF == 73` accepted in the reference build"
-  baseline_impl: "Not impl: any 0–255 accepted (`modes/toyota.h:383`) (GAP-44, GAP-09)"
+  applies_to: "CFG-001, reference build only (`LIONDRIVER_REFERENCE=1`); other builds keep the upstream behaviour"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Met in the reference build through the panda lock, not verified on hardware: TOYOTA is accepted only with parameter 73 (panda `8aa8671`, `board/reference_lock.h`, SWSR-512). `toyota_init` itself has no range check and accepts any factor 0–255 (opendbc `7993399`, `modes/toyota.h:492`), so builds without `LIONDRIVER_REFERENCE` still do (GAP-44, GAP-09)"
   status: proposed
   source: WP-W-02
 
@@ -123,8 +139,10 @@
   parent_text: "TSR-105"
   other_parents: false
   allocated_to: "U-SAF-LAT"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "All four combinations of (torque≠0, request) rejected except (0, 0)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: non-zero torque rejected (`lateral.h:98-101`); request = 1 with zero torque accepted (`lateral.h:105`) (GAP-48)"
   status: proposed
   source: WP-W-02
@@ -137,8 +155,10 @@
   parent_text: "TSR-106"
   other_parents: false
   allocated_to: "U-SAF-LAT"
-  verification: "UT"
+  verification: "UT, IT"
   acceptance: "Boundary at 16/17 frames, 2 consecutive cuts, 161/162 ms"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:182-185`; `lateral.h:111-138`"
   status: proposed
   source: WP-W-02
@@ -151,8 +171,10 @@
   parent_text: "TSR-107"
   other_parents: false
   allocated_to: "U-SAF-TOY"
-  verification: "UT"
+  verification: "UT, IT"
   acceptance: "Each field set alone → rejected"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:260-273`"
   status: proposed
   source: WP-W-02
@@ -165,8 +187,10 @@
   parent_text: "TSR-108"
   other_parents: false
   allocated_to: "U-SAF-LAT, `panda.safety.core` (U-SAF-CORE)"
-  verification: "UT, FI"
+  verification: "UT, FI, IT"
   acceptance: "`controls_allowed` false after the first violating frame; no frame accepted until a new PCM rising edge"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: frame dropped and limiter state reset (`lateral.h:140-148`), `controls_allowed` unchanged (WP-S-02 OI-4)"
   status: proposed
   source: WP-W-02
@@ -179,9 +203,11 @@
   parent_text: "TSR-108, TSR-406"
   other_parents: false
   allocated_to: "U-SAF-CORE, `panda.comms` (U-PND-COMMS)"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "Each cause produces its distinct code in `0xd2` health within one health period"
-  baseline_impl: "Not impl: only `safety_tx_blocked` count and one RX-invalid flag (`main_comms.h:23, 27`); interface change in [WP-S-05 §4.2](../03-system/WP-S-05-hsi-specification.md)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Partial: no general reason code yet (OI-8). Reported today: `safety_tx_blocked` count and the RX-invalid flag (`main_comms.h`); in addition since 2026-10-12 the health flags EPS fault (bit 10, `pandaState.epsFault`), TX rate exceeded (bit 11, `pandaState.txRateExceeded`) and watchdog reset (bit 9, `pandaState.watchdogReset`), and the refused-request counter `requests_rejected_pkt` (panda `8aa8671`, `board/health.h`); interface change in WP-S-05 §4.2 (assurance/03-system/WP-S-05-hsi-specification.md)"
   status: proposed
   source: WP-W-02
 
@@ -193,8 +219,10 @@
   parent_text: "TSR-109"
   other_parents: false
   allocated_to: "U-SAF-TOY, `panda.drivers.fdcan` (U-PND-FDCAN)"
-  verification: "UT, HIL, VT"
+  verification: "UT, HIL, VT, IT"
   acceptance: "Substitute frame on bus 0 within one frame period of the rejected frame; EPS torque at zero ≤ 0.1 s (VT, WP-S-04 M-02)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: rejected frame is only counted and returned to the SoC (`drivers/can_common.h:161-176`) (GAP-46)"
   status: proposed
   source: WP-W-02
@@ -207,8 +235,10 @@
   parent_text: "TSR-109, TSR-408"
   other_parents: false
   allocated_to: "`panda.main.safety_task` (U-PND-MAIN), U-SAF-TOY"
-  verification: "HIL, FI, VT"
+  verification: "HIL, FI, VT, IT"
   acceptance: "Zero frames present on bus 0 from ≤ 10 ms after revocation"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl; needs the periodic task of SWSR-401a and a design decision on frame ownership (OI-3)"
   status: proposed
   source: WP-W-02
@@ -221,8 +251,10 @@
   parent_text: "TSR-110"
   other_parents: false
   allocated_to: "U-SAF-TOY, U-SAF-CORE"
-  verification: "UT, RP, VT"
+  verification: "UT, RP, VT, IT, HIL"
   acceptance: "Revocation within 1 frame of a fault code; fault set confirmed on reference EPS logs"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial (reference build): `0x262` in the RX set with checksum and timeout (opendbc `98404a4`, test `test_reference_rx_checks`); lateral actuation refused while LKA_STATE is in the host's fault set (opendbc `242d63d`; `toyota_lka_state_is_fault`, `modes/toyota.h`; test `test_eps_fault_blocks_lka`, every code 0…127). The frame that reports the fault removes authority for the next STEERING_LKA frame. The state is reported to the host (`safety_eps_fault` → health flag bit 10 → `pandaState.epsFault`; panda `877730e`, opendbc `adcb7c2`; HIL test `tests/hitl/test_13_eps_fault.py`, not run). Open: fault set confirmed on reference EPS logs (verification criterion) (GAP-03)"
   status: proposed
   source: WP-W-02
@@ -235,8 +267,10 @@
   parent_text: "TSR-201"
   other_parents: false
   allocated_to: "`panda.safety.longitudinal` (U-SAF-LONG), U-SAF-TOY"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "2000 accepted, 2001 rejected"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:207-210, 225`; `longitudinal.h:8-12` (GAP-04)"
   status: proposed
   source: WP-W-02
@@ -249,8 +283,10 @@
   parent_text: "TSR-201, TSR-202"
   other_parents: false
   allocated_to: "U-SAF-TOY"
-  verification: "UT, R"
+  verification: "UT, R, IT"
   acceptance: "Decoding matches DBC over full range"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:217-218`"
   status: proposed
   source: WP-W-02
@@ -263,8 +299,10 @@
   parent_text: "TSR-202"
   other_parents: false
   allocated_to: "U-SAF-LONG, U-SAF-TOY"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "−3500 accepted, −3501 rejected"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:209`"
   status: proposed
   source: WP-W-02
@@ -277,8 +315,10 @@
   parent_text: "TSR-203"
   other_parents: false
   allocated_to: "U-SAF-LONG"
-  verification: "UT"
+  verification: "UT, IT"
   acceptance: "Any non-zero value rejected in each non-granted state"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `longitudinal.h:3-12`; inactive value is the implicit zero-initialised field of `TOYOTA_LONG_LIMITS` (`modes/toyota.h:207-210`) — make explicit (G-01)"
   status: proposed
   source: WP-W-02
@@ -291,8 +331,10 @@
   parent_text: "TSR-204"
   other_parents: false
   allocated_to: "U-SAF-LONG"
-  verification: "UT, VT"
+  verification: "UT, VT, IT"
   acceptance: "Rejection at j_up + 1 raw per frame"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl (GAP-04); host wind-up only (`carcontroller.py:21`)"
   status: proposed
   source: WP-W-02
@@ -305,8 +347,10 @@
   parent_text: "TSR-205"
   other_parents: false
   allocated_to: "U-SAF-LONG"
-  verification: "UT, VT"
+  verification: "UT, VT, IT"
   acceptance: "Rejection at j_down + 1 raw per frame"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl (GAP-04); host only (`carcontroller.py:22`)"
   status: proposed
   source: WP-W-02
@@ -319,8 +363,10 @@
   parent_text: "TSR-206"
   other_parents: false
   allocated_to: "U-SAF-LONG"
-  verification: "UT, VT"
+  verification: "UT, VT, IT"
   acceptance: "Wind-down accepted, any increase in magnitude rejected, all non-zero rejected after 1 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl; decision depends on WP-S-04 M-03 (AOU-05R)"
   status: proposed
   source: WP-W-02
@@ -333,8 +379,10 @@
   parent_text: "TSR-207"
   other_parents: false
   allocated_to: "U-SAF-TOY"
-  verification: "UT"
+  verification: "UT, IT"
   acceptance: "Each field set alone without authority → rejected"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: only ACCEL_CMD checked (`modes/toyota.h:216-241`) (GAP-48)"
   status: proposed
   source: WP-W-02
@@ -347,8 +395,10 @@
   parent_text: "TSR-301"
   other_parents: false
   allocated_to: "U-SAF-CORE, U-SAF-TOY"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "State table of WP-W-05 §5.2 fully covered"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `safety.h:518-527`; `modes/toyota.h:143-146`"
   status: proposed
   source: WP-W-02
@@ -361,8 +411,10 @@
   parent_text: "TSR-302"
   other_parents: false
   allocated_to: "U-SAF-CORE, U-SAF-TOY"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "Clear in the same RX call"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `safety.h:350-357`; `modes/toyota.h:148-150, 157-168`. `0x226` without checksum (GAP-01) → SWSR-405"
   status: proposed
   source: WP-W-02
@@ -377,6 +429,8 @@
   allocated_to: "`host.controlsd`, `host.card`"
   verification: "UT, VT"
   acceptance: "CANCEL_REQ = 1 within 0.1 s of disengagement, in both longitudinal modes"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `controlsd.py:162`; `carcontroller.py:253-254, 269-273`"
   status: proposed
   source: WP-W-02
@@ -389,8 +443,10 @@
   parent_text: "TSR-304"
   other_parents: false
   allocated_to: "U-SAF-LAT, U-SAF-TOY"
-  verification: "UT, VT"
+  verification: "UT, VT, IT"
   acceptance: "Boundary at allowance ± 1 raw"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl on LKA path: Toyota uses `TorqueMotorLimited` (`modes/toyota.h:178`); driver samples used for LTA only (`:113-116, 294-298`); `driver_limit_check` exists (`lateral.h:26-46`) (GAP-02)"
   status: proposed
   source: WP-W-02
@@ -405,6 +461,8 @@
   allocated_to: "U-SAF-TOY, U-SAF-CORE"
   verification: "UT, VT"
   acceptance: "Clear at t_ovr + 1 frame; values from WP-C-08"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: `steering_disengage` edge handling exists (`safety.h:365-369`), not set by Toyota (GAP-02)"
   status: proposed
   source: WP-W-02
@@ -417,8 +475,10 @@
   parent_text: "TSR-305"
   other_parents: false
   allocated_to: "U-SAF-TOY, U-SAF-LONG"
-  verification: "UT"
+  verification: "UT, IT"
   acceptance: "Lateral accepted, `0x343` non-inactive rejected while gas pressed"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `modes/toyota.h:146`; `longitudinal.h:3-5`"
   status: proposed
   source: WP-W-02
@@ -431,9 +491,11 @@
   parent_text: "TSR-306"
   other_parents: false
   allocated_to: "U-SAF-CORE"
-  verification: "UT, FI"
+  verification: "UT, FI, IT"
   acceptance: "Rising edge ignored while any message lags > 5 periods"
-  baseline_impl: "Partial (opendbc `aff4033`): rising edge gated on seen, checksum, counter, quality and timeout for Toyota (`rx_checks_allow_engagement()`); frozen-value and cross-checks do not exist yet ([IA RX timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md) §7)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Partial (opendbc `aff4033`): rising edge gated on seen, checksum, counter, quality and timeout for Toyota (`rx_checks_allow_engagement()`); frozen-value and cross-checks do not exist yet (IA RX timeout (assurance/07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md) §7)"
   status: proposed
   source: WP-W-02
 
@@ -445,8 +507,10 @@
   parent_text: "TSR-307(a)"
   other_parents: false
   allocated_to: "U-PND-MAIN"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "Clear within 0.3 s + one task period"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: 3 consecutive 1 Hz ticks (`main.c:181-189`) (GAP-06)"
   status: proposed
   source: WP-W-02
@@ -459,8 +523,10 @@
   parent_text: "TSR-307(b)"
   other_parents: false
   allocated_to: "`host.selfdrived`"
-  verification: "UT"
+  verification: "UT, IT"
   acceptance: "Event within 30 frames"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: 200 frames (`selfdrive/selfdrived/selfdrived.py:338, 503-510`)"
   status: proposed
   source: WP-W-02
@@ -475,6 +541,8 @@
   allocated_to: "`host.selfdrived`, `host.card`"
   verification: "UT"
   acceptance: "Warning and cancel within 1 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Implemented: 1 s, repeating prompt; cancel requested by `controlsd` (`selfdrived.py`, `events.py`)"
   status: proposed
   source: WP-W-02
@@ -489,6 +557,8 @@
   allocated_to: "U-SAF-CORE, U-PND-COMMS"
   verification: "R, A"
   acceptance: "Code inspection: single write of `true`"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: only write of `true` is `safety.h:524` (in E-03 code; test harness excepted)"
   status: proposed
   source: WP-W-02
@@ -501,8 +571,10 @@
   parent_text: "TSR-311"
   other_parents: false
   allocated_to: "U-SAF-CORE"
-  verification: "UT"
+  verification: "UT, IT"
   acceptance: "All state variables of WP-W-05 §5.1 at reset values after `set_safety_hooks`"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `safety.h:57, 425-460`"
   status: proposed
   source: WP-W-02
@@ -515,9 +587,11 @@
   parent_text: "TSR-401"
   other_parents: false
   allocated_to: "U-SAF-CORE"
-  verification: "UT, HIL, FI"
+  verification: "UT, HIL, FI, IT"
   acceptance: "Detection ≤ 5 periods + one task period (≤ 0.2 s for 33 Hz `0x1D2`)"
-  baseline_impl: "Met for the Toyota RX checks: the four common ones (opendbc `aff4033`) and, in the reference build, `0x262` and `0x1D3` (opendbc `98404a4`); `safety.h` `rx_check_lagging()`, `modes/toyota.h`; `0xB4` not added (no nominal rate); not yet verified on hardware ([IA RX timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md))"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Met for the Toyota RX checks: the four common ones (opendbc `aff4033`) and, in the reference build, `0x262` and `0x1D3` (opendbc `98404a4`); `safety.h` `rx_check_lagging()`, `modes/toyota.h`; `0xB4` not added (no nominal rate); not yet verified on hardware (IA RX timeout (assurance/07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md))"
   status: proposed
   source: WP-W-02
 
@@ -529,22 +603,26 @@
   parent_text: "TSR-401, TSR-407"
   other_parents: false
   allocated_to: "`panda.main.safety_task` (U-PND-MAIN)"
-  verification: "HIL, A"
+  verification: "HIL, A, IT"
   acceptance: "Measured period ≤ 20 ms, jitter recorded"
-  baseline_impl: "Implemented (panda `9f60e17`): TIM4 100 Hz safety task runs `safety_tick()` and feeds the IWDG (`main.c` `safety_task_handler`), rate fault at 110 Hz. Period and jitter not yet measured ([IA watchdog](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) §7)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Partial (panda `9f60e17`): TIM4 100 Hz safety task runs `safety_tick()` (RX timeout), the heartbeat monitor (SWSR-407) and feeds the IWDG; the checks of SWSR-307, 403, 404, 405, 408, 413 and 506 do not run in it (`main.c` `safety_task_handler`), rate fault at 110 Hz. Period and jitter not yet measured (IA watchdog (assurance/07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) §7)"
   status: proposed
   source: WP-W-02
 
 - id: SWSR-402
   kind: swsr
-  text: "The envelope shall verify the Toyota additive checksum and length of `0x260` and `0x1D2` (and `0x262`, `0x1D3`, `0xB4` once added) on every frame and treat one failure as an RX fault."
+  text: "The envelope shall verify the Toyota additive checksum and length of `0x260` and `0x1D2` (and `0x262`, `0x1D3`, which are in the reference-build RX set since opendbc `98404a4`; `0xB4` once added) on every frame and treat one failure as an RX fault."
   asil: "B‡"
   parents: [TSR-402]
   parent_text: "TSR-402"
   other_parents: false
   allocated_to: "U-SAF-CORE, U-SAF-TOY"
-  verification: "UT"
+  verification: "UT, IT"
   acceptance: "Single bit flip in data or checksum → fault"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `safety.h:164-197`; `modes/toyota.h:40-46, 65-77`; 8-bit additive (GAP-01)"
   status: proposed
   source: WP-W-02
@@ -557,8 +635,10 @@
   parent_text: "TSR-403"
   other_parents: false
   allocated_to: "U-SAF-CORE"
-  verification: "UT, FI"
+  verification: "UT, FI, IT"
   acceptance: "Fault at injected 1.5× + 1 frame per window; no fault on reference logs (RP)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl (GAP-01)"
   status: proposed
   source: WP-W-02
@@ -571,8 +651,10 @@
   parent_text: "TSR-404"
   other_parents: false
   allocated_to: "U-SAF-CORE, U-SAF-TOY"
-  verification: "UT, RP, FI"
+  verification: "UT, RP, FI, IT"
   acceptance: "Detection ≤ t_frz; no false detection on the reference log set"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl (GAP-01)"
   status: proposed
   source: WP-W-02
@@ -585,8 +667,10 @@
   parent_text: "TSR-405"
   other_parents: false
   allocated_to: "U-SAF-CORE, U-SAF-TOY"
-  verification: "UT, RP, FI"
+  verification: "UT, RP, FI, IT"
   acceptance: "Each disagreement detected ≤ 0.2 s; no false detection on reference logs"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial (reference build, opendbc `875e325`): (c) implemented (`toyota_cruise_main_check`, `modes/toyota.h`; test `test_cruise_active_with_main_off`; tolerance 150 ms). Not impl: (a) (`speed_mismatch_check` exists, unused, `safety.h:529-537`); (b) pending the `0x1D3` BRAKE_PRESSED semantics on reference logs; (d) (GAP-01)"
   status: proposed
   source: WP-W-02
@@ -599,8 +683,10 @@
   parent_text: "TSR-406"
   other_parents: false
   allocated_to: "U-SAF-CORE"
-  verification: "UT, FI"
+  verification: "UT, FI, IT"
   acceptance: "Reaction in same call; re-engage only after edge"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: `safety.h:112-121, 337-340`; single flag `main_comms.h:23`"
   status: proposed
   source: WP-W-02
@@ -613,9 +699,11 @@
   parent_text: "TSR-407"
   other_parents: false
   allocated_to: "U-PND-MAIN"
-  verification: "HIL, FI"
+  verification: "HIL, FI, IT"
   acceptance: "Clear ≤ 0.3 s + one task period"
-  baseline_impl: "Implemented (panda `c2e5d93`, `drivers/heartbeat_monitor.h`); host tests `tests/heartbeat_monitor`; not yet verified on hardware ([IA heartbeat](../07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md))"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Implemented (panda `c2e5d93`, `drivers/heartbeat_monitor.h`); host tests `tests/heartbeat_monitor`; not yet verified on hardware (IA heartbeat (assurance/07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md)). TSR-407 is Partial because its SS-S part (SILENT after the TSR-510 timeout, SWSR-510) is still 5 s; the revocation this SWSR covers is implemented"
   status: proposed
   source: WP-W-02
 
@@ -627,8 +715,10 @@
   parent_text: "TSR-408"
   other_parents: false
   allocated_to: "U-PND-MAIN, U-SAF-CORE"
-  verification: "HIL, FI"
+  verification: "HIL, FI, IT"
   acceptance: "Clear at 50/100 ms + task period; SS-L via SWSR-109a"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl in the reference build (opendbc `273f44e`): `tx_arrival_checks` (`safety.h`), Toyota table (`modes/toyota.h`); unit tests `test_tx_arrival_*`; HIL, FI open"
   status: proposed
   source: WP-W-02
@@ -641,8 +731,10 @@
   parent_text: "TSR-409"
   other_parents: false
   allocated_to: "U-PND-COMMS, U-PND-MAIN"
-  verification: "HIL, FI"
+  verification: "HIL, FI, IT"
   acceptance: "Frozen counter with live heartbeat → revocation ≤ 0.3 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: heartbeat carries only `engaged` (`main_comms.h:277-285`)"
   status: proposed
   source: WP-W-02
@@ -657,6 +749,8 @@
   allocated_to: "`host.pandad`"
   verification: "UT, IT"
   acceptance: "Counter equals `carControl` frame"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: `engaged` only (`selfdrive/pandad/pandad.cc:389-390`; `panda.cc:137-139`) (GAP-10)"
   status: proposed
   source: WP-W-02
@@ -669,8 +763,10 @@
   parent_text: "TSR-410"
   other_parents: false
   allocated_to: "`panda.drivers.spi` (U-PND-SPI)"
-  verification: "UT, HIL, FI"
+  verification: "UT, HIL, FI, IT"
   acceptance: "All injected 1–3 bit errors and burst errors ≤ CRC width detected"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: 8-bit XOR seeded 0xAB (`drivers/spi.h:97-104, 122, 137`) (GAP-10)"
   status: proposed
   source: WP-W-02
@@ -683,8 +779,10 @@
   parent_text: "TSR-410"
   other_parents: false
   allocated_to: "U-PND-SPI, U-PND-COMMS"
-  verification: "UT, HIL, FI"
+  verification: "UT, HIL, FI, IT"
   acceptance: "Replayed, dropped and reordered transfers detected"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl (`can_comms.h:8-37`)"
   status: proposed
   source: WP-W-02
@@ -699,6 +797,8 @@
   allocated_to: "`host.pandad`"
   verification: "IT"
   acceptance: "Interface test VS-SWI"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl (`selfdrive/pandad/spi.cc`)"
   status: proposed
   source: WP-W-02
@@ -713,6 +813,8 @@
   allocated_to: "U-PND-COMMS"
   verification: "HIL, FI"
   acceptance: "Stale transfer rejected"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl"
   status: proposed
   source: WP-W-02
@@ -725,8 +827,10 @@
   parent_text: "TSR-412"
   other_parents: false
   allocated_to: "U-PND-SPI"
-  verification: "UT, HIL, FI"
+  verification: "UT, HIL, FI, IT"
   acceptance: "Length = bound accepted; bound + 1 NACKed, no write outside `spi_buf_rx`"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: lengths from header (`drivers/spi.h:115-116`) used for DMA (`:233`) and read (`:150`) unchecked (GAP-47)"
   status: proposed
   source: WP-W-02
@@ -739,8 +843,10 @@
   parent_text: "TSR-412"
   other_parents: false
   allocated_to: "U-PND-COMMS"
-  verification: "UT, R"
+  verification: "UT, R, IT"
   acceptance: "`0xe8` with param1 ≥ `PANDA_CAN_CNT` has no effect"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: `bus_config[param1]` (`main_comms.h:262-264`) (GAP-47); others checked (`:117, 135, 235, 298, 309`)"
   status: proposed
   source: WP-W-02
@@ -753,8 +859,10 @@
   parent_text: "TSR-412"
   other_parents: false
   allocated_to: "U-PND-COMMS"
-  verification: "UT, FI"
+  verification: "UT, FI, IT"
   acceptance: "Fuzzed transfers never write outside `can_write_buffer.data`"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: bounded by DLC table (`can_comms.h:113-125`); no resync rule; WP-A-02 FFI-SP-03"
   status: proposed
   source: WP-W-02
@@ -767,8 +875,10 @@
   parent_text: "TSR-413"
   other_parents: false
   allocated_to: "U-PND-SPI, U-PND-MAIN"
-  verification: "HIL, FI"
+  verification: "HIL, FI, IT"
   acceptance: "Clear on N_spi + 1 errors"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: counted only (`drivers/spi.h:220-222`, `main_comms.h:36`)"
   status: proposed
   source: WP-W-02
@@ -781,9 +891,11 @@
   parent_text: "TSR-614"
   other_parents: false
   allocated_to: "`host.pandad`"
-  verification: "UT"
+  verification: "UT, IT"
   acceptance: "21 ms message dropped"
-  baseline_impl: "Not met: 1 s (`selfdrive/pandad/pandad.cc:78-79`) — listed here and as SWSR-614"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Not met: 1 s (`selfdrive/pandad/pandad.cc:78-79`) (SWSR-614 withdrawn as its duplicate)"
   status: proposed
   source: WP-W-02
 
@@ -795,9 +907,11 @@
   parent_text: "TSR-501"
   other_parents: false
   allocated_to: "U-PND-MAIN, `panda.sys.faults` (U-PND-FLT)"
-  verification: "R, HIL, FI"
+  verification: "R, HIL, FI, IT"
   acceptance: "Stall of task, comms ISR storm or main-loop hang → reset ≤ 0.1 s"
-  baseline_impl: "Implemented (panda `3859fa8`, `drivers/hw_watchdog.h`; watchdog reset reported as `pandaState.watchdogReset`): IWDG1, 90 ms nominal, window mode, fed from the 100 Hz safety task after main-loop progress; not yet verified on hardware ([IA watchdog](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md))"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Implemented (panda `3859fa8`, `drivers/hw_watchdog.h`; watchdog reset reported as `pandaState.watchdogReset`): IWDG1, 90 ms nominal, window mode, fed from the 100 Hz safety task after main-loop progress; not yet verified on hardware (IA watchdog (assurance/07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md))"
   status: proposed
   source: WP-W-02
 
@@ -809,8 +923,10 @@
   parent_text: "TSR-502"
   other_parents: false
   allocated_to: "U-PND-FLT, U-PND-MAIN"
-  verification: "R, FI"
+  verification: "R, FI, IT"
   acceptance: "Each fault injected → SS-S ≤ 0.1 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: report-only (`sys/faults.h:8-27`), `PERMANENT_FAULTS 0U` (`sys/sys.h:50`) (GAP-08)"
   status: proposed
   source: WP-W-02
@@ -823,8 +939,10 @@
   parent_text: "TSR-502"
   other_parents: false
   allocated_to: "`panda.platform` (U-PND-PLAT)"
-  verification: "R, FI"
+  verification: "R, FI, IT"
   acceptance: "Each path injected → reset or SS-S"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: NMI/HardFault reset (`early_init.h:73-81`); unused IRQ report-only (`drivers/interrupts.h:5-9`); `assert_fatal` hangs (`main.c:39, 354-356`) (GAP-43)"
   status: proposed
   source: WP-W-02
@@ -837,8 +955,10 @@
   parent_text: "TSR-502, TSR-508"
   other_parents: false
   allocated_to: "U-PND-FLT"
-  verification: "FI"
+  verification: "FI, IT"
   acceptance: "ISR storm → SS-S"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: detected, report-only (`drivers/interrupts.h:35-37`)"
   status: proposed
   source: WP-W-02
@@ -853,6 +973,8 @@
   allocated_to: "U-PND-FLT, U-PND-PLAT"
   verification: "HIL, FI"
   acceptance: "Flipped image byte → SS-S, relay never driven"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl (GAP-08)"
   status: proposed
   source: WP-W-02
@@ -865,8 +987,10 @@
   parent_text: "TSR-503"
   other_parents: false
   allocated_to: "U-PND-FLT"
-  verification: "FI"
+  verification: "FI, IT"
   acceptance: "Divergent register → SS-S within one check period"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: 1 Hz, report-only (`drivers/registers.h:56-70`, `main.c:229`)"
   status: proposed
   source: WP-W-02
@@ -881,6 +1005,8 @@
   allocated_to: "U-PND-FLT"
   verification: "FI"
   acceptance: "Injected ECC event → reaction/count"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl (HWSR-503…503b)"
   status: proposed
   source: WP-W-02
@@ -895,6 +1021,8 @@
   allocated_to: "U-PND-FLT"
   verification: "FI"
   acceptance: "±tolerance drift detected"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl; CSS → NMI → reset exists (`early_init.h:73-76`)"
   status: proposed
   source: WP-W-02
@@ -909,6 +1037,8 @@
   allocated_to: "U-PND-FLT"
   verification: "HIL"
   acceptance: "Supply ramp → SS-S before brown-out"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: voltage reported only (`main_comms.h:14`)"
   status: proposed
   source: WP-W-02
@@ -923,6 +1053,8 @@
   allocated_to: "`panda.drivers.harness` (U-PND-HARN), U-PND-FLT"
   verification: "HIL, FI"
   acceptance: "Stuck-released and stuck-intercept each detected ≤ 0.3 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: no readback (GAP-12)"
   status: proposed
   source: WP-W-02
@@ -935,8 +1067,10 @@
   parent_text: "TSR-506"
   other_parents: false
   allocated_to: "U-SAF-CORE"
-  verification: "UT"
+  verification: "UT, IT"
   acceptance: "Latch survives `0xdc`"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: cleared in `set_safety_hooks` (`safety.h:427, 459`) (GAP-48)"
   status: proposed
   source: WP-W-02
@@ -951,6 +1085,8 @@
   allocated_to: "U-PND-PLAT"
   verification: "R, FI"
   acceptance: "Injected write from comms context → MemManage → reset"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl (GAP-08, GAP-11)"
   status: proposed
   source: WP-W-02
@@ -965,6 +1101,8 @@
   allocated_to: "U-PND-FDCAN, U-SAF-CORE"
   verification: "HIL, FI"
   acceptance: "Clear ≤ 0.3 s after bus-off"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: counted (`drivers/fdcan.h:47-48, 76-83`), no reaction"
   status: proposed
   source: WP-W-02
@@ -979,6 +1117,8 @@
   allocated_to: "U-PND-FLT"
   verification: "HIL"
   acceptance: "SS-S ≤ 1 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: reported only (`main_comms.h:51-52`)"
   status: proposed
   source: WP-W-02
@@ -991,8 +1131,10 @@
   parent_text: "TSR-510"
   other_parents: false
   allocated_to: "U-PND-MAIN"
-  verification: "HIL"
+  verification: "HIL, IT"
   acceptance: "SILENT ≤ 2 s with ignition on and off"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: 5 s with ignition (`main.c:101-103, 193`)"
   status: proposed
   source: WP-W-02
@@ -1007,6 +1149,8 @@
   allocated_to: "`panda.bootstub` (U-PND-BOOT)"
   verification: "HIL, FI"
   acceptance: "Tampered image or debug-signed image not executed"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: RSA-1024/SHA-1 (`bootstub.c:47-72`); debug key only with `ALLOW_DEBUG` (`:67-72`) (GAP-24)"
   status: proposed
   source: WP-W-02
@@ -1019,9 +1163,11 @@
   parent_text: "TSR-511"
   other_parents: false
   allocated_to: "U-PND-COMMS"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "No reset into softloader from car mode"
-  baseline_impl: "Partial: softloader entry (`0xd1` param 1) refused in a car mode in the reference build (panda `9f60e17`); still allowed outside a car mode (GAP-24) ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Partial: softloader entry (`0xd1` param 1) refused in a car mode in the reference build (panda `9f60e17`); still allowed outside a car mode (GAP-24) (IA mode lock (assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
@@ -1033,23 +1179,27 @@
   parent_text: "TSR-512"
   other_parents: false
   allocated_to: "U-PND-COMMS, U-PND-MAIN"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "All other (mode, param) pairs rejected, state unchanged"
-  baseline_impl: "Met in the reference build (`LIONDRIVER_REFERENCE=1`, panda `3859fa8`, `board/reference_lock.h`); host tests `tests/reference_lock`. Refused requests reported as `pandaState.requestsRejected` ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
+  applies_to: "CFG-001, reference build only (`LIONDRIVER_REFERENCE=1`); other builds keep the upstream behaviour"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Met in the reference build (`LIONDRIVER_REFERENCE=1`, panda `3859fa8`, `board/reference_lock.h`); host tests `tests/reference_lock`; not verified on hardware. Refused requests reported as `pandaState.requestsRejected` (IA mode lock (assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
 - id: SWSR-513
   kind: swsr
-  text: "In release builds, requests `0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd8` and `0xdf` shall be rejected while a car safety mode is active (`0xd1` param 1: SWSR-511a)."
+  text: "In the reference release build (`RELEASE=1 LIONDRIVER_REFERENCE=1`), requests `0xc5`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xe7`, `0xf1`, `0xd8` and `0xdf` shall be rejected while a car safety mode is active (`0xd1` param 1: SWSR-511a)."
   asil: "B‡"
   parents: [TSR-513]
   parent_text: "TSR-513"
   other_parents: false
   allocated_to: "U-PND-COMMS"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "Each request has no effect in TOYOTA mode"
-  baseline_impl: "Met in the reference build for the listed requests (panda `9f60e17`, `board/reference_lock.h`) ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
+  applies_to: "CFG-001, reference build only (`LIONDRIVER_REFERENCE=1`); other builds keep the upstream behaviour"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Met in the reference build for the listed requests (panda `9f60e17`, `board/reference_lock.h`); not verified on hardware (IA mode lock (assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
@@ -1063,7 +1213,9 @@
   allocated_to: "U-PND-COMMS"
   verification: "UT, HIL"
   acceptance: "`0xdf` in NOOUTPUT followed by TOYOTA leaves the reference value"
-  baseline_impl: "Met in the reference build (panda `9f60e17`): `0xdf` refused in every mode; AOU-14 ([IA mode lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
+  applies_to: "CFG-001, reference build only (`LIONDRIVER_REFERENCE=1`); other builds keep the upstream behaviour"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Met in the reference build (panda `9f60e17`): `0xdf` refused in every mode; AOU-14; not verified on hardware (IA mode lock (assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md))"
   status: proposed
   source: WP-W-02
 
@@ -1077,6 +1229,8 @@
   allocated_to: "build, U-PND-COMMS"
   verification: "R, HIL"
   acceptance: "Release image contains no ALLOUTPUT/debug modes (symbol check); build type readable"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met by default (`panda/SConscript:12-20`; `safety.h:413-422`) (GAP-25)"
   status: proposed
   source: WP-W-02
@@ -1089,8 +1243,10 @@
   parent_text: "TSR-514, TSR-802"
   other_parents: false
   allocated_to: "`host.pandad`, `host.selfdrived`"
-  verification: "UT"
+  verification: "UT, IT"
   acceptance: "No engagement with debug FW"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partly: in a reference build `pandad` keeps the panda in NOOUTPUT unless its health packet reports `HEALTH_FLAG_REFERENCE_BUILD` (`panda_safety.cc`, panda `6dee6fa`); `selfdrived` then raises `controlsMismatch` (no entry). A debug (non-release) build is not yet detected (D-09); W-09 DVR-05"
   status: proposed
   source: WP-W-02
@@ -1105,6 +1261,8 @@
   allocated_to: "U-PND-PLAT, U-PND-MAIN"
   verification: "HIL, FI"
   acceptance: "Each injected start-up failure → no relay drive"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl"
   status: proposed
   source: WP-W-02
@@ -1117,23 +1275,27 @@
   parent_text: "TSR-517"
   other_parents: false
   allocated_to: "U-PND-FDCAN, U-PND-FLT"
-  verification: "FI, HIL"
+  verification: "FI, HIL, IT"
   acceptance: "Injected corruption after the TX hook detected ≤ 2 frames"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: XOR check before FIFO load only (`drivers/fdcan.h:100`)"
   status: proposed
   source: WP-W-02
 
 - id: SWSR-518
   kind: swsr
-  text: "The TX hook shall reject frames of each whitelisted ID sent faster than its nominal period minus a tolerance, and shall revoke authority and report when the excess persists while authority is granted."
+  text: "The TX hook shall count the frames of each whitelisted ID over a sliding 250 ms window (two 125 ms half-windows) and reject a frame when the count reaches the ID's budget (nominal rate with a 1.2× tolerance, plus a burst allowance); while authority is granted, 3 rejected frames within one half-window shall revoke authority and be reported."
   asil: "B‡"
   parents: [TSR-518]
   parent_text: "TSR-518"
   other_parents: false
   allocated_to: "U-SAF-CORE, U-SAF-TOY"
-  verification: "UT, HIL"
-  acceptance: "`0x2E4` at 2× rate: excess frames rejected; persistent excess → revocation ≤ 0.1 s"
-  baseline_impl: "Impl (reference build, opendbc `7993399`, panda `8aa8671`): `tx_rate_check` (`opendbc/safety/safety.h`), Toyota budgets (`modes/toyota.h`), health flag bit 11 → `pandaState.txRateExceeded`; unit tests `test_tx_rate_*` (flood, sliding window, host cadence, revocation timing, catch-up bursts, no limit-state update); HIL `tests/hitl/test_14_tx_rate.py` (not run). Design [DN-01](design-notes/DN-01-tx-rate-supervision.md)"
+  verification: "UT, HIL, IT"
+  acceptance: "`0x2E4` at 2× rate: excess frames rejected; revocation ≤ 0.1 s after the first rejected frame (≤ 0.2 s from flood onset at 2×), as TSR-518 v0.13"
+  applies_to: "CFG-001, reference build only (`LIONDRIVER_REFERENCE=1`); other builds keep the upstream behaviour"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Impl (reference build, opendbc `7993399`, panda `8aa8671`): `tx_rate_check` (`opendbc/safety/safety.h`), Toyota budgets (`modes/toyota.h`), health flag bit 11 → `pandaState.txRateExceeded`; unit tests `test_tx_rate_*` (flood, sliding window, host cadence, revocation timing, catch-up bursts, no limit-state update); HIL `tests/hitl/test_14_tx_rate.py` (not run). Design DN-01 (assurance/05-software/design-notes/DN-01-tx-rate-supervision.md)"
   status: proposed
   source: WP-W-02
 
@@ -1145,8 +1307,10 @@
   parent_text: "TSR-519"
   other_parents: false
   allocated_to: "U-PND-PLAT, U-PND-MAIN"
-  verification: "A, HIL"
+  verification: "A, HIL, IT"
   acceptance: "Every enabled IRQ has a documented priority; measured latency within budget"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial (panda `52cad44`): every enabled IRQ has an explicit priority (`board/drivers/irq_priorities.h`, host test `tests/irq_priorities`), all at one level until the WP-W-03 §5.4.2 scheme is adopted. Latency not measured (WP-W-03 §5.4.5, D-04); RX hook in FDCAN ISR, TX hook and dispatcher in SPI DMA ISR (GAP-50)"
   status: proposed
   source: WP-W-02
@@ -1159,8 +1323,10 @@
   parent_text: "TSR-516"
   other_parents: false
   allocated_to: "U-PND-MAIN, `panda.drivers.siren` (U-PND-HK)"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "Siren ≤ 0.5 s for each trigger; no siren on a brake press or PCM cancel alone"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 1 s while authority is granted → siren ≥ 3 s (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run). Other (b) triggers and (c) not impl"
   status: proposed
   source: WP-W-02
@@ -1175,6 +1341,8 @@
   allocated_to: "U-SAF-CORE"
   verification: "UT, HIL"
   acceptance: "Flag at 0.5 s ± one RX period; not set when cruise drops within 0.5 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl"
   status: proposed
   source: WP-W-02
@@ -1187,8 +1355,10 @@
   parent_text: "TSR-601"
   other_parents: false
   allocated_to: "`host.selfdrived`"
-  verification: "UT, FI"
+  verification: "UT, FI, IT"
   acceptance: "Actuation on a failed input ends ≤ 0.2 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: `commIssue` SOFT_DISABLE (`selfdrive/selfdrived/events.py:853-856`), 3 s (`state.py:7-8`) (GAP-16)"
   status: proposed
   source: WP-W-02
@@ -1203,6 +1373,8 @@
   allocated_to: "`host.cereal`"
   verification: "UT"
   acceptance: "Alive false at 2 periods + 1"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: 10 periods (`cereal/messaging/__init__.py:265`)"
   status: proposed
   source: WP-W-02
@@ -1217,6 +1389,8 @@
   allocated_to: "`host.controlsd`"
   verification: "UT"
   acceptance: "Stale input → inactive next frame"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partly: 10 periods, not 2 (`controls/lib/input_freshness.py`, unit tests); event via `commIssue` (impact record OI-1)"
   status: proposed
   source: WP-W-02
@@ -1231,6 +1405,8 @@
   allocated_to: "`host.selfdrived`, `host.modeld`"
   verification: "R, UT"
   acceptance: "No suppression path reachable while engaged"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: `selfdrived.py:382-384, 403, 457`; `modeld.py:411-419` (GAP-17)"
   status: proposed
   source: WP-W-02
@@ -1245,6 +1421,8 @@
   allocated_to: "`host.controlsd`"
   verification: "UT"
   acceptance: "NaN → event in same frame"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: replaced by 0 (`controlsd.py:140-147`) (GAP-19)"
   status: proposed
   source: WP-W-02
@@ -1259,6 +1437,8 @@
   allocated_to: "`host.card` (CarControllerParams)"
   verification: "UT, A"
   acceptance: "Automated check passes"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: equal values (`values.py:20, 39-47`)"
   status: proposed
   source: WP-W-02
@@ -1273,6 +1453,8 @@
   allocated_to: "CI"
   verification: "R"
   acceptance: "Check runs on every SR-Q PR"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl; W-09 DVR-06"
   status: proposed
   source: WP-W-02
@@ -1287,6 +1469,8 @@
   allocated_to: "`host.selfdrived`, `host.hmi`"
   verification: "IT, HIL"
   acceptance: "Latency ≤ 1 s; text matches class"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: `canError` text wrong (`events.py:928-936`) (GAP-19)"
   status: proposed
   source: WP-W-02
@@ -1301,6 +1485,8 @@
   allocated_to: "`host.card`, `host.selfdrived`"
   verification: "UT"
   acceptance: "Warning ≤ 1 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `steerFaultTemporary/Permanent`"
   status: proposed
   source: WP-W-02
@@ -1315,6 +1501,8 @@
   allocated_to: "`host.dm`"
   verification: "UT"
   acceptance: "Timers match"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `selfdrive/monitoring/policy.py:31-36`"
   status: proposed
   source: WP-W-02
@@ -1329,6 +1517,8 @@
   allocated_to: "`host.dm`"
   verification: "UT, FI"
   acceptance: "Escalation ≤ 2 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: `valid=True` always (`selfdrive/modeld/dmonitoringmodeld.py:99`) (GAP-21)"
   status: proposed
   source: WP-W-02
@@ -1343,6 +1533,8 @@
   allocated_to: "`host.selfdrived`, `host.dm`"
   verification: "UT"
   acceptance: "No engagement with key set"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met (`dmonitoringd.py:26-38`) (GAP-20); W-09 DVR-12"
   status: proposed
   source: WP-W-02
@@ -1357,6 +1549,8 @@
   allocated_to: "`host.dm`, `host.controlsd`"
   verification: "UT"
   acceptance: "As specified"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `policy.py:39-44`; `controlsd.py:203-204`"
   status: proposed
   source: WP-W-02
@@ -1371,6 +1565,8 @@
   allocated_to: "`host.dm`"
   verification: "UT"
   acceptance: "Small inputs do not reset"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met (`policy.py:334-335`) (GAP-21)"
   status: proposed
   source: WP-W-02
@@ -1385,13 +1581,15 @@
   allocated_to: "`host.manager`, `host.controlsd`"
   verification: "R"
   acceptance: "Not present in release manifest"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met (`system/manager/process_config.py:34-47, 95-109`; `controlsd.py:123-124`) (GAP-20)"
   status: proposed
   source: WP-W-02
 
 - id: SWSR-614
   kind: swsr
-  text: "`pandad` shall drop `sendcan` older than 20 ms (same as SWSR-414h)."
+  text: "**Withdrawn** (2026-10-12, RR-2026-009 (assurance/05-software/reviews/RR-2026-009.md) F-06): duplicate of SWSR-414h, which keeps the requirement. `pandad` shall drop `sendcan` older than 20 ms."
   asil: "QM (B-sup)"
   parents: [TSR-614]
   parent_text: "TSR-614"
@@ -1399,8 +1597,10 @@
   allocated_to: "`host.pandad`"
   verification: "UT"
   acceptance: "21 ms dropped"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met (`pandad.cc:78-79`)"
-  status: proposed
+  status: withdrawn
   source: WP-W-02
 
 - id: SWSR-615
@@ -1411,8 +1611,10 @@
   parent_text: "TSR-615"
   other_parents: false
   allocated_to: "`host.selfdrived`"
-  verification: "UT, FI"
+  verification: "UT, FI, IT"
   acceptance: "Event ≤ 0.2 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partly: heartbeat lost, TX-rate revocation, rising `safetyTxBlocked` (`selfdrived/supervision.py`) plus `relayMalfunction`, `safetyRxChecksInvalid`; other faults open (OI-2)"
   status: proposed
   source: WP-W-02
@@ -1427,6 +1629,8 @@
   allocated_to: "`host.modeld`, `host.controlsd`"
   verification: "UT"
   acceptance: "Injected invalid output → event"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial (`modeld.py:210-211`) (GAP-22)"
   status: proposed
   source: WP-W-02
@@ -1441,6 +1645,8 @@
   allocated_to: "`host.selfdrived`"
   verification: "UT"
   acceptance: "Latch"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `selfdrived/helpers.py:12, 30, 41`; `selfdrived.py:305-310`"
   status: proposed
   source: WP-W-02
@@ -1455,6 +1661,8 @@
   allocated_to: "`host.selfdrived`"
   verification: "UT"
   acceptance: "Event"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `events.py:908`"
   status: proposed
   source: WP-W-02
@@ -1469,6 +1677,8 @@
   allocated_to: "`host.pandad`, `host.selfdrived`"
   verification: "UT, IT"
   acceptance: "Mismatch → no engagement ≤ 1 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl (`selfdrive/pandad/panda_safety.cc:56-69`); host check vs CarParams only (`selfdrived.py:330-339`)"
   status: proposed
   source: WP-W-02
@@ -1483,6 +1693,8 @@
   allocated_to: "`host.card`, `host.pandad`"
   verification: "UT, VT"
   acceptance: "Mismatching FW set → NOOUTPUT"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: fuzzy fingerprinting (`opendbc_repo/opendbc/car/car_helpers.py:86-87, 144, 164`); W-09 DVR-10"
   status: proposed
   source: WP-W-02
@@ -1497,6 +1709,8 @@
   allocated_to: "`host.selfdrived`"
   verification: "UT, FI"
   acceptance: "Event ≤ 0.5 s; no event on single-sample skew in the reference log set"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Implemented: 2 consecutive samples, ≤ 0.5 s (`selfdrived/supervision.py`, unit tests)"
   status: proposed
   source: WP-W-02
@@ -1511,6 +1725,8 @@
   allocated_to: "`host.hmi`, `host.selfdrived`"
   verification: "UT, FI"
   acceptance: "Disable ≤ 1.2 s after a render or audio stall (SIGSTOP of the process)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: only `processNotRunning` on a crash (`selfdrived.py:351-357`)"
   status: proposed
   source: WP-W-02
@@ -1525,6 +1741,8 @@
   allocated_to: "`host.selfdrived`"
   verification: "IT"
   acceptance: "Cancel sent on the HMI-stall disable"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: cancel follows from disable (`controlsd.py:162`)"
   status: proposed
   source: WP-W-02
@@ -1539,6 +1757,8 @@
   allocated_to: "`host.hmi`, `host.selfdrived`"
   verification: "UT, R"
   acceptance: "Output gain ≥ minimum for every alert while engageable"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not assessed: ambient-scaled volume with `MIN_VOLUME = 0.1` (`selfdrive/ui/soundd.py:20, 159-160`)"
   status: proposed
   source: WP-W-02
@@ -1553,6 +1773,8 @@
   allocated_to: "`host.controlsd`, `host.plannerd`, `host.dm`"
   verification: "UT, VT"
   acceptance: "Alert-to-onset ≥ 1 s; jerk ≤ j_down in replay"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: soft-disable force deceleration starts with its alert (`longitudinal_planner.py:84-85`); no jerk bound"
   status: proposed
   source: WP-W-02
@@ -1567,6 +1789,8 @@
   allocated_to: "`host.selfdrived`"
   verification: "UT, LOG"
   acceptance: "No FCW from a stale or invalid input; rate measurable from logs"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: no freshness gate (`selfdrived.py:440-445`)"
   status: proposed
   source: WP-W-02
@@ -1581,6 +1805,8 @@
   allocated_to: "`host.selfdrived`, `host.card`"
   verification: "UT, RP, FI"
   acceptance: "(a) ≤ 0.2 s; (b), (c) ≤ t_blk ≤ 0.5 s; no false event in the reference log set"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: `pandaStates` alive limit 1 s"
   status: proposed
   source: WP-W-02
@@ -1595,6 +1821,8 @@
   allocated_to: "`host.hmi`"
   verification: "R, IT (load)"
   acceptance: "Priority set, or load test passed"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: no real-time priority for `soundd`; `ui` at `Priority.CTRL_HIGH` (`selfdrive/ui/ui.py:19`)"
   status: proposed
   source: WP-W-02
@@ -1609,6 +1837,8 @@
   allocated_to: "U-PND-HARN, U-PND-MAIN"
   verification: "HIL, FI"
   acceptance: "Orientation change while driven → SS-S ≤ 1 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: detection `drivers/harness.h:54-94`, suspended while driven (`:59`); re-init only (`main.c:132-140`)"
   status: proposed
   source: WP-W-02
@@ -1621,8 +1851,10 @@
   parent_text: "TSR-704"
   other_parents: false
   allocated_to: "U-SAF-CORE, U-PND-FDCAN"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "Forwarding matrix fully tested"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `safety.h:254-290`; `drivers/fdcan.h:199-215`"
   status: proposed
   source: WP-W-02
@@ -1635,9 +1867,11 @@
   parent_text: "TSR-705"
   other_parents: false
   allocated_to: "U-SAF-TOY"
-  verification: "UT, R"
+  verification: "UT, R, IT"
   acceptance: "Each ID rejected; `0x283` non-zero rejected"
-  baseline_impl: "Met in the reference build; `0x411` refused there by decision D-1 (opendbc `5b5a4ba`, `modes/toyota.h`; test `test_pcs_and_dsu_messages_blocked`) ([IA TX whitelist](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md))"
+  applies_to: "CFG-001, reference build only (`LIONDRIVER_REFERENCE=1`); other builds keep the upstream behaviour"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Met in the reference build; not verified on hardware; `0x411` refused there by decision D-1 of the TX-whitelist change record (opendbc `5b5a4ba`, `modes/toyota.h`; test `test_pcs_and_dsu_messages_blocked`) (IA TX whitelist (assurance/07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md))"
   status: proposed
   source: WP-W-02
 
@@ -1651,6 +1885,8 @@
   allocated_to: "U-PND-MAIN, U-PND-HARN"
   verification: "UT, HIL"
   acceptance: "Relay output released after each path"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: `main.c:44-54`; hang path → SWSR-501/502a (GAP-43)"
   status: proposed
   source: WP-W-02
@@ -1663,8 +1899,10 @@
   parent_text: "TSR-707"
   other_parents: false
   allocated_to: "U-PND-FDCAN"
-  verification: "HIL, A"
+  verification: "HIL, A, IT"
   acceptance: "Measured p100 latency ≤ bound"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not verified; overflow counted (`drivers/can_common.h:165`)"
   status: proposed
   source: WP-W-02
@@ -1679,6 +1917,8 @@
   allocated_to: "U-PND-FDCAN, U-PND-MAIN"
   verification: "UT, HIL, FI"
   acceptance: "Relay released ≤ 0.1 s after the condition (SG-07 FRTI); detection ≤ 0.1 s"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl: overflow counted only (`drivers/can_common.h:165`)"
   status: proposed
   source: WP-W-02
@@ -1693,7 +1933,9 @@
   allocated_to: "U-PND-MAIN"
   verification: "R, HIL"
   acceptance: "Constant traced to the measurement; check period ≤ 20 ms"
-  baseline_impl: "Not impl: periodic checks run in the 1 Hz tick"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Not impl: no SWSR-711 check exists. The 100 Hz safety task that could run it exists since panda `9f60e17` (SWSR-401a)"
   status: proposed
   source: WP-W-02
 
@@ -1705,8 +1947,10 @@
   parent_text: "TSR-710"
   other_parents: false
   allocated_to: "U-SAF-CORE"
-  verification: "UT, HIL"
+  verification: "UT, HIL, IT"
   acceptance: "Latch, TX and forwarding blocked"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `safety.h:211-220, 252, 268, 372-380`"
   status: proposed
   source: WP-W-02
@@ -1721,21 +1965,25 @@
   allocated_to: "`host.card`"
   verification: "UT"
   acceptance: "Event"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `selfdrive/car/car_events.py:120-123`"
   status: proposed
   source: WP-W-02
 
 - id: SWSR-501b
   kind: swsr
-  text: "The firmware shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on every path that energises it, and no software path shall be able to stop it afterwards. (Amended in v0.14 to the TSR-501 v0.4 / HWSR-501c start condition; it previously required a start in the bootstub.)"
+  text: "The firmware shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on every path that energises it, and no software path shall be able to stop it afterwards. (Amended in v0.14 to the TSR-501 v0.4 / HWSR-501c start condition; it previously required a start in the bootstub.) Start in the bootstub before the application runs remains a target (OI-10)."
   asil: "B‡"
   parents: [TSR-501]
   parent_text: "TSR-501 (WP-W-02 §11; ASIL taken from TSR-501)"
   other_parents: false
   allocated_to: "IWDG1, LSI"
-  verification: ""
-  acceptance: ""
-  baseline_impl: "**Implemented, not verified on hardware:** `hw_watchdog_start()` from `set_intercept_relay()` (`drivers/harness.h`), panda `3859fa8`/`9f60e17`; 90 ms nominal, window mode"
+  verification: "R, HIL, FI"
+  acceptance: "IWDG running before the relay is first driven after any reset; no write path stops it; stall → reset ≤ 0.1 s (VS-SWQ-14)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "**Implemented, not verified on hardware:** `hw_watchdog_start()` from `set_intercept_relay()` (`board/drivers/harness.h`, `board/drivers/hw_watchdog.h`), panda `3859fa8`/`9f60e17`, unchanged at `8aa8671`; 90 ms nominal, window mode; as TSR-501 v0.4"
   status: proposed
   source: WP-W-02
 
@@ -1747,8 +1995,10 @@
   parent_text: "TSR-502 (WP-W-02 §11; ASIL taken from TSR-502)"
   other_parents: false
   allocated_to: "GPIO (relay SBU1/SBU2), transceiver enable"
-  verification: ""
-  acceptance: ""
+  verification: "R, HIL"
+  acceptance: "Relay outputs at the released level and car-side transceivers disabled from reset until a car mode is set (VS-SWQ-16)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: relay released in `harness_init` (`drivers/harness.h:96-107`) after clock/peripheral init (`main.c:259-282`); transceivers enabled after SILENT (`main.c:295-298`)"
   status: proposed
   source: WP-W-02
@@ -1761,8 +2011,10 @@
   parent_text: "TSR-503 (WP-W-02 §11; ASIL taken from TSR-503)"
   other_parents: false
   allocated_to: "RAMECC, flash ECC"
-  verification: ""
-  acceptance: ""
+  verification: "R, FI"
+  acceptance: "Injected uncorrectable SRAM ECC error in a safety-data region → SS-S per SWSR-502 (no VS case yet, WP-W-08 OI-6)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl"
   status: proposed
   source: WP-W-02
@@ -1775,8 +2027,10 @@
   parent_text: "TSR-504 (WP-W-02 §11; ASIL taken from TSR-504)"
   other_parents: false
   allocated_to: "LSI/HSI, timers"
-  verification: ""
-  acceptance: ""
+  verification: "R, A"
+  acceptance: "The cross-check reference clock is not derived from HSE (configuration review; no VS case yet, WP-W-08 OI-6)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl"
   status: proposed
   source: WP-W-02
@@ -1789,8 +2043,10 @@
   parent_text: "TSR-505 (WP-W-02 §11; ASIL taken from TSR-505)"
   other_parents: false
   allocated_to: "PWR PVD, ADC"
-  verification: ""
-  acceptance: ""
+  verification: "HIL, FI"
+  acceptance: "Supply dip below the PVD threshold → PVD interrupt handled; input voltage sampled every safety-task period (no VS case yet, WP-W-08 OI-6)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl"
   status: proposed
   source: WP-W-02
@@ -1803,8 +2059,10 @@
   parent_text: "TSR-506 (WP-W-02 §11; ASIL taken from TSR-506)"
   other_parents: false
   allocated_to: "Relay readback input (to be added)"
-  verification: ""
-  acceptance: ""
+  verification: "HIL"
+  acceptance: "Relay feedback read every safety-task period once the HW signal exists (VS-SWQ-19)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl (no HW signal)"
   status: proposed
   source: WP-W-02
@@ -1817,8 +2075,10 @@
   parent_text: "TSR-507 (WP-W-02 §11; ASIL taken from TSR-507)"
   other_parents: false
   allocated_to: "Cortex-M7 MPU"
-  verification: ""
-  acceptance: ""
+  verification: "R, A"
+  acceptance: "MPU region table equals the WP-S-05 §8 memory map (no VS case yet, WP-W-08 OI-6)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl"
   status: proposed
   source: WP-W-02
@@ -1831,8 +2091,10 @@
   parent_text: "TSR-508 (WP-W-02 §11; ASIL taken from TSR-508)"
   other_parents: false
   allocated_to: "Transceiver enable GPIO"
-  verification: ""
-  acceptance: ""
+  verification: "HIL"
+  acceptance: "Car-side transceivers disabled on every SS-S entry (no VS case yet, WP-W-08 OI-6)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial: `enable_can_transceivers` (`sys/power_saving.h:15-21`) used for power save, not as safe state"
   status: proposed
   source: WP-W-02
@@ -1845,8 +2107,10 @@
   parent_text: "TSR-410 (WP-W-02 §11; ASIL taken from TSR-410)"
   other_parents: false
   allocated_to: "SPI4, DMA2 streams 2/3"
-  verification: ""
-  acceptance: ""
+  verification: "IT, HIL, FI"
+  acceptance: "DMA transfer error, overrun or mode fault on a transfer → transfer discarded and counted as an SPI error (VS-SWI-07, VS-SWQ-12)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not impl (`stm32h7/llspi.h:56-82` handle completion only)"
   status: proposed
   source: WP-W-02
@@ -1859,8 +2123,10 @@
   parent_text: "TSR-516 (WP-W-02 §11; ASIL taken from TSR-516)"
   other_parents: false
   allocated_to: "DAC/codec (board dependent)"
-  verification: ""
-  acceptance: ""
+  verification: "HIL"
+  acceptance: "Siren audible with the SoC audio stack stopped (no VS case yet, WP-W-08 OI-6)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Partial (`drivers/fake_siren.h:38-52`)"
   status: proposed
   source: WP-W-02
@@ -1873,8 +2139,10 @@
   parent_text: "TSR-701 (WP-W-02 §11; ASIL taken from TSR-701)"
   other_parents: false
   allocated_to: "SBU ADC"
-  verification: ""
-  acceptance: ""
+  verification: "R, HIL"
+  acceptance: "No relay state change while an SBU ADC conversion holds the lock (VS-SWQ-19)"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Impl: `drivers/harness.h:20, 39, 59-85` (busy-wait, WP-A-02 FFI-TM-03)"
   status: proposed
   source: WP-W-02

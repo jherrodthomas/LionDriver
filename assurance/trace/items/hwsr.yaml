@@ -13,7 +13,7 @@
   allocated_to: "STM32H7 IWDG1"
   hw_kind: "CFG"
   verification: "R, T-HIL, FI"
-  baseline_impl: "**Implemented, not verified on hardware** (panda `9f60e17`: panda#1 and panda#3; [impact record](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md)): IWDG1 (`IND_WDG`, `stm32h7/stm32h7_config.h:48`) on the LSI, prescaler /4, RLR 719, nominal timeout 90 ms at 32 kHz (`drivers/hw_watchdog.h`); expiry resets the MCU. The LSI tolerance and so the timeout at both ends are not yet confirmed from the datasheet (impact OI-2); HIL fault injection not run (impact OI-3, D-04). *As found before 2026-10-12: IWDG1 unused; only the software check of `drivers/simple_watchdog.h` from the 8 Hz tick, report-only (GAP-07).*"
+  baseline_impl: "**Implemented, not verified on hardware** (panda `9f60e17`: panda#1 and panda#3; impact record (assurance/07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md)): IWDG1 (`IND_WDG`, `stm32h7/stm32h7_config.h:48`) on the LSI, prescaler /4, RLR 719, nominal timeout 90 ms at 32 kHz (`drivers/hw_watchdog.h`); expiry resets the MCU. The LSI tolerance and so the timeout at both ends are not yet confirmed from the datasheet (impact OI-2); HIL fault injection not run (impact OI-3, D-04). *As found before 2026-10-12: IWDG1 unused; only the software check of `drivers/simple_watchdog.h` from the 8 Hz tick, report-only (GAP-07).*"
   status: proposed
   source: WP-H-01
 
@@ -55,7 +55,7 @@
   allocated_to: "IWDG option bytes (IWDG_SW, freeze in stop/standby)"
   hw_kind: "CFG"
   verification: "R, T-HIL"
-  baseline_impl: "**Implemented (software start), not verified on hardware:** `hw_watchdog_start()` is called from `set_intercept_relay()` the first time the relay is driven, on every path including `0xc5` (`drivers/harness.h:17-20`); once started it cannot be stopped by software. `enter_stop_mode()` resets the MCU first if the IWDG runs (`sys/power_saving.h:61-63`). Option-byte state (IWDG_SW, freeze in stop/standby) on shipped devices is not known ([WP-H-02](WP-H-02-hardware-design.md) UK-04, open)"
+  baseline_impl: "**Implemented (software start), not verified on hardware:** `hw_watchdog_start()` is called from `set_intercept_relay()` the first time the relay is driven, on every path including `0xc5` (`drivers/harness.h:17-20`); once started it cannot be stopped by software. `enter_stop_mode()` resets the MCU first if the IWDG runs (`sys/power_saving.h:61-63`). Option-byte state (IWDG_SW, freeze in stop/standby) on shipped devices is not known (WP-H-02 (assurance/04-hardware/WP-H-02-hardware-design.md) UK-04, open)"
   status: proposed
   source: WP-H-01
 
@@ -69,7 +69,7 @@
   allocated_to: "External"
   hw_kind: "ADD"
   verification: "A, T-HIL"
-  baseline_impl: "Not present on the COTS PCB as far as observable. See [WP-H-02](WP-H-02-hardware-design.md) §6, DC-01. Needed for an ASIL C claim because IWDG shares supply and silicon with the CPU (GAP-11)"
+  baseline_impl: "Not present on the COTS PCB as far as observable. See WP-H-02 (assurance/04-hardware/WP-H-02-hardware-design.md) §6, DC-01. Needed for an ASIL C claim because IWDG shares supply and silicon with the CPU (GAP-11)"
   status: proposed
   source: WP-H-01
 
@@ -363,7 +363,7 @@
   allocated_to: "Relay part"
   hw_kind: "HW"
   verification: "A (datasheet)"
-  baseline_impl: "Part number unknown ([WP-H-07](WP-H-07-hardware-component-qualification.md) QE-05)"
+  baseline_impl: "Part number unknown (WP-H-07 (assurance/04-hardware/WP-H-07-hardware-component-qualification.md) QE-05)"
   status: proposed
   source: WP-H-01
 
@@ -461,7 +461,7 @@
   allocated_to: "Analysis"
   hw_kind: "HW"
   verification: "A"
-  baseline_impl: "Not analysed ([WP-H-03](WP-H-03-hardware-safety-analysis-fmeda.md) FM-IGN-*)"
+  baseline_impl: "Not analysed (WP-H-03 (assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) FM-IGN-*)"
   status: proposed
   source: WP-H-01
 

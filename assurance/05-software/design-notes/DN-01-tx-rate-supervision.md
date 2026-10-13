@@ -2,21 +2,25 @@
 
 | Field | Value |
 |---|---|
-| Note | DN-01 |
-| Version | 0.2 (decisions recorded and implemented, 2026-10-12). 0.1: proposal |
-| Status | **Decided and implemented** in the reference build (opendbc `7993399`, panda `8aa8671`; §10). Not yet verified on hardware; budgets not yet confirmed on logs |
+| Work product | DN-01 Design note: per-ID TX rate supervision (supports [WP-W-03](../WP-W-03-software-architecture.md) and [WP-W-05](../WP-W-05-software-unit-design.md) UN-03) |
+| Standard reference | ISO 26262-6:2018 §7, §8 |
+| ASIL / scope | B‡ (SWSR-518) |
+| Version | 0.3 (RR-2026-009 F-27: check order corrected from the code, `0x1D2` and `0x750` budgets, D-4 naming, stale wording; 2026-10-12). 0.2 (decisions recorded and implemented, 2026-10-12). 0.1: proposal |
+| Status | Draft — design decisions recorded; implemented in the reference build (opendbc `7993399`, panda `8aa8671`; §10). Not yet verified on hardware; budgets not yet confirmed on logs |
 | Requirements | [TSR-518](../../03-system/WP-S-02-technical-safety-requirements.md), [SWSR-518](../WP-W-02-software-safety-requirements.md) |
 | Analyses | [WP-A-02](../../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) FFI-CM-04 (SoC floods CAN TX); [WP-W-04](../WP-W-04-software-safety-analysis.md) SDF-05 (shared TX queue delays forwarded PCS frames), OI-2 |
 | Units | [WP-W-05](../WP-W-05-software-unit-design.md) UN-03 `safety_tx_hook`, UN-15 `toyota_tx_hook` |
 | Author / reviewer | Claude (AI-assisted draft) / TBD; an AI draft is not a review (WP-M-06) |
+| Approver | Project maintainer (acting safety manager) |
+| Baseline | `682f184` (opendbc `7993399`, panda `8aa8671`) for §10; §1–§8 written before implementation |
 
 ## 1. Problem
 
 TSR-518: the envelope shall reject frames of each TX-whitelisted ID sent faster than the nominal rate plus a tolerance, and revoke authority and report when the excess persists while authority is granted (revoke ≤ 0.1 s).
 
-Today the TX hook checks content only. A faulty or compromised SoC can send in-limit frames at any rate. That has three effects:
+At `8b8c6ae` the TX hook checked content only (the problem this note solved). A faulty or compromised SoC can send in-limit frames at any rate. That has three effects:
 
-| Effect | Bound today | Why it matters |
+| Effect | Bound at `8b8c6ae` | Why it matters |
 |---|---|---|
 | Faster effective ramp of a per-frame limit | Torque: the real-time check (`max_rt_delta` 450 per 250 ms) bounds the ramp regardless of frame rate. Accel (`0x343`): **no** time-based bound; only the absolute range is checked | A per-frame-limited command sent faster changes the vehicle faster than the limits assume |
 | Bus load on bus 0 | None | Delays other frames, including forwarded camera frames (SDF-05) and the car's own traffic |
@@ -61,7 +65,7 @@ An earlier attempt at TSR-403 (RX rate) broke 35 common tests and was backed out
 
 Recommendation: **C**, generalised from the curvature check (two half-windows, so the effective window slides) into a table-driven check in `safety.h` that every mode can use. Toyota uses it in the reference build first.
 
-## 4. Proposed design (option C)
+## 4. Design (option C, implemented)
 
 ### 4.1 Configuration
 
@@ -80,7 +84,7 @@ typedef struct {
 } TxRateCheck;
 ```
 
-Proposed Toyota reference values (window 250 ms, 1.2× buffer):
+Toyota reference values (window 250 ms, 1.2× buffer), as implemented at opendbc `7993399`:
 
 | ID | f (Hz) | burst | Budget per 250 ms | Host sends per 250 ms |
 |---|---|---|---|---|
@@ -89,10 +93,14 @@ Proposed Toyota reference values (window 250 ms, 1.2× buffer):
 | `0x343` | 33 | 3 | 14 | 8–9 (+ cancel) |
 | `0x412` | 5 | 4 | 7 | 1–2 (+ on change) |
 | `0x283` | 1 | 2 | 4 | 0 |
+| `0x1D2` | 1 | 2 | 4 | 0 (PCM cancel; not sent by the reference car) |
+| `0x750` | 5 | 2 | 5 | 0 (radar tester present; DISABLE_RADAR cars only) |
+
+Budget = ⌈f × 0.25 s × 1.2⌉ + 1 + burst (opendbc `7993399`, `safety.h` `tx_rate_check`). The `0x1D2` and `0x750` rows were added at implementation (`modes/toyota.h`, `toyota_tx_rate_checks`); they were missing from the v0.1 proposal.
 
 An ID in the TX whitelist but not in this table is not rate-checked. Unit test T6 enforces that every whitelisted ID of the reference build has a row.
 
-### 4.2 Algorithm (in `safety_tx_hook`, after the whitelist and the brand hook)
+### 4.2 Algorithm (in `safety_tx_hook`, after the whitelist check and before the brand hook)
 
 1. Find the row for (addr, bus). If there is none, no check.
 2. Roll the window: if 125 ms have passed since `ts_last`, set `msgs_prev = msgs`, `msgs = 0`, `rejected_in_window = 0`, `ts_last = now`.
@@ -107,9 +115,9 @@ Timing, for `0x2E4` (budget 36):
 | 4× (400 Hz) | ≈ 90 ms | ≈ 95 ms |
 | 10× (1 kHz) | ≈ 36 ms | ≈ 40 ms |
 
-TSR-518 asks for revocation ≤ 0.1 s. That holds from the **first rejected frame**, but not from flood onset at rates below about 4×. A shorter window lowers the latency but also lowers the burst tolerance of §2.2. While the flood is below the budget, the steering torque is still bounded by the real-time limit (450 per 250 ms), and every frame is still content-checked. Decision D-6.
+An Octave model of this algorithm ([`assurance/models/octave/`](../../models/octave/README.md), a model, not the C code) gives the same 190 ms from an empty window, and 135 ms when the normal frames sent just before the flood count against the budget. TSR-518 asks for revocation ≤ 0.1 s. That holds from the **first rejected frame**, but not from flood onset at rates below about 4×. A shorter window lowers the latency but also lowers the burst tolerance of §2.2. While the flood is below the budget, the steering torque is still bounded by the real-time limit (450 per 250 ms), and every frame is still content-checked. Decision D-6.
 
-Rejected frames do not update the brand limit state. The check runs after the brand hook only to decide transmission, so it must not change the brand hook's per-frame state (the same rule as the EPS fault gate, opendbc#7).
+Rejected frames do not update the brand limit state: the rate check runs before the brand hook, and the brand hook is called only for a frame within budget (opendbc `7993399`, `safety.h` `safety_tx_hook`: `if (whitelisted && tx_rate_check(msg)) { safety_allowed = current_hooks->tx(msg); }`). The proposal (v0.1) placed the check after the brand hook; the implementation moved it in front, which is simpler and gives the same guarantee (the same rule as the EPS fault gate, opendbc#7). [RR-2026-009](../reviews/RR-2026-009.md) F-27.
 
 ### 4.3 Reporting
 
@@ -152,14 +160,14 @@ Mutation targets: budget formula, window roll, the persistent-excess threshold, 
 - **SDF-05.** Forwarded camera frames share `can_queues[0]` with SoC frames. This design bounds the SoC's share of the queue but does not reserve capacity for forwarding. WP-W-04 OI-2 (separate forwarding queue) stays open.
 - **The RX side.** RX rate checking is TSR-403, which needs reference logs.
 
-## 8. Decisions needed
+## 8. Decisions needed (resolved in §10)
 
 | # | Decision | Recommendation |
 |---|---|---|
 | D-1 | Option A, B or C | C (§3) |
 | D-2 | Budgets and burst values of §4.1 | As proposed; confirm against reference logs (peak count per 250 ms per ID) before release |
 | D-3 | Persistent-excess threshold (3 rejected frames per half-window) | As proposed |
-| D-4 | New health flag and `pandaState.txRateExceeded` | Yes, same path as `epsFault` |
+| D-4 (DN-01/D-4; not the HIL bench decision D-04 of WP-M-01) | New health flag and `pandaState.txRateExceeded` | Yes, same path as `epsFault` |
 | D-5 | Scope: reference build only | Yes, for now |
 | D-6 | Reference point of "revoke ≤ 0.1 s" in TSR-518 | Measure from the first rejected frame and amend TSR-518 to say so; the latency from onset (≤ 0.19 s at 2×) is bounded by the existing real-time torque limit. Alternative: a 100 ms window (half-windows of 50 ms) with larger burst values |
 

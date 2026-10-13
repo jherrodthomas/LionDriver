@@ -64,6 +64,7 @@ WBS elements follow the phases and gates in [WP-M-01 §7](WP-M-01-assurance-stra
 | 3.5 | SOTIF V&V strategy | WP-V-02 | |
 | 4 | P3 HW/SW development | | G3 |
 | 4.1 | Hardware safety | WP-H-01…H-05, H-07 | |
+| 4.0 | Part 6 activation | D-14; WP-M-14 Phase A gap assessment and Phase B infrastructure ([WP-M-14](WP-M-14-iso26262-6-implementation-specification.md)). Depends on WBS 1 (Part 2 plans, supporting procedures), 2.1–2.3 (Part 3) and 3.1–3.4 (Part 4) | |
 | 4.2 | Software safety requirements, architecture, analysis | WP-W-01…W-04 | |
 | 4.3 | Envelope hardening (code changes) | IWDG, fault → safe state, mode lock, gate `0xc5`, driver-torque and EPS-status monitoring, RX E2E strategy (gap §9 action 5). Status 2026-10-12 (reference build, not verified, not reviewed): done: IWDG and window mode, mode lock, `0xc5` refused in car mode, EPS-status monitoring and report (TSR-110), RX timeout and engagement gate, heartbeat 0.3 s, TX whitelist and `0x411`, per-ID TX rate supervision (TSR-518, DN-01), IRQ priorities (TSR-519, priority scheme not adopted). Partial: RX cross-checks (TSR-405(c) only), siren (TSR-516(b) EPS fault only; 2026-10-13 also heartbeat loss revoking granted authority, all builds, panda `c33343b`). Open: driver-torque monitoring, TSR-405(a)(b)(d), GAP-46. Records: [`impact/`](../07-supporting/impact/README.md) | |
 | 4.4 | Firmware security | LionDriver signing key, modern algorithm, RDP/WRP, release build without debug key (gap §9 action 6) | |

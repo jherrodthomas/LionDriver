@@ -15,11 +15,13 @@ on:
       - 'opendbc_repo'
       - 'panda'
       - '.github/workflows/safety.yaml'
+      - 'tools/ci/build_manifest.py'
   pull_request:
     paths:
       - 'opendbc_repo'
       - 'panda'
       - '.github/workflows/safety.yaml'
+      - 'tools/ci/build_manifest.py'
   workflow_dispatch:
 
 concurrency:
@@ -42,6 +44,15 @@ jobs:
       env:
         LIONDRIVER_REFERENCE: "1"
       run: ./opendbc_repo/opendbc/safety/tests/test.sh
+    - name: Build manifest and tool versions (WP-W-01 ENV-01)
+      if: always()
+      run: python3 tools/ci/build_manifest.py build-manifest/safety_tests.json
+    - name: Upload build manifest
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: build-manifest-safety_tests
+        path: build-manifest/safety_tests.json
 
   misra:
     name: safety MISRA C:2012
@@ -53,6 +64,15 @@ jobs:
       run: git submodule update --init --depth 1 opendbc_repo
     - name: Run MISRA analysis
       run: ./opendbc_repo/opendbc/safety/tests/misra/test_misra.sh
+    - name: Build manifest and tool versions (WP-W-01 ENV-01)
+      if: always()
+      run: python3 tools/ci/build_manifest.py build-manifest/misra.json
+    - name: Upload build manifest
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: build-manifest-misra
+        path: build-manifest/misra.json
 
   panda_misra:
     name: panda MISRA C:2012
@@ -77,6 +97,15 @@ jobs:
       env:
         PYTHONPATH: ${{ github.workspace }}/opendbc_repo
       run: panda/tests/misra/test_misra.sh
+    - name: Build manifest and tool versions (WP-W-01 ENV-01)
+      if: always()
+      run: python3 tools/ci/build_manifest.py build-manifest/panda_misra.json
+    - name: Upload build manifest
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: build-manifest-panda_misra
+        path: build-manifest/panda_misra.json
 
   panda_host_tests:
     name: panda host tests
@@ -97,6 +126,15 @@ jobs:
           python3 -m unittest discover -v -s "tests/$suite" -t .
           echo "::endgroup::"
         done
+    - name: Build manifest and tool versions (WP-W-01 ENV-01)
+      if: always()
+      run: python3 tools/ci/build_manifest.py build-manifest/panda_host_tests.json
+    - name: Upload build manifest
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: build-manifest-panda_host_tests
+        path: build-manifest/panda_host_tests.json
 
   mutation:
     name: safety mutation tests
@@ -111,6 +149,15 @@ jobs:
       run: |
         source setup.sh
         python opendbc/safety/tests/mutation.py
+    - name: Build manifest and tool versions (WP-W-01 ENV-01)
+      if: always()
+      run: python3 tools/ci/build_manifest.py build-manifest/mutation.json
+    - name: Upload build manifest
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: build-manifest-mutation
+        path: build-manifest/mutation.json
 
   mutation_reference:
     name: safety mutation tests (reference build)
@@ -130,3 +177,12 @@ jobs:
       run: |
         source setup.sh
         python opendbc/safety/tests/mutation.py
+    - name: Build manifest and tool versions (WP-W-01 ENV-01)
+      if: always()
+      run: python3 tools/ci/build_manifest.py build-manifest/mutation_reference.json
+    - name: Upload build manifest
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: build-manifest-mutation_reference
+        path: build-manifest/mutation_reference.json

@@ -79,3 +79,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Not covered | The check runs once per onroad transition, before the car safety mode is set. Detection of a debug (non-release) build stays open (D-09) |
 | Verification | Firmware: `tests/reference_lock` (flag set only with `LIONDRIVER_REFERENCE`; C and Python definitions agree; flag bits unique), full panda suite 81 tests (44 HIL skipped), MISRA (cppcheck) for both variants, `panda_h7` compiled with `-Werror` in both variants. Host: `panda_safety.cc` and `pandad.cc` compiled with openpilot's warning flags against generated cereal headers, with and without `LIONDRIVER_REFERENCE`; the exact `SConstruct` and `pandad/SConscript` blocks run in scons 4.11.1: unset or `1` → both firmware and `pandad` defined, empty → neither. Not run: the full openpilot build (CI builds it) and HIL (D-04: a panda with non-reference firmware must not reach TOYOTA mode) |
 
+
+## Addendum: further work products affected (2026-10-12)
+
+The software alignment audit ([RR-2026-009](../../05-software/reviews/RR-2026-009.md) F-30) found that this change also affects: WP-W-01 (ENV-R-08, CF-01 build flag), WP-W-05 (UN-21 request gating), WP-W-09 (CD-01, DVR-01/02, `LIONDRIVER_REFERENCE` configuration item), WP-W-11 (CSR-011…015), WP-S-07 (cybersecurity requirements of the lock). These were updated in the RR-2026-009 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.

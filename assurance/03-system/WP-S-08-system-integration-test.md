@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-08 System integration and test strategy, specification and report |
 | Standard reference | ISO 26262-4:2018 §7 (item integration and testing); ISO 26262-4 §7 test methods and fault-injection guidance (verify table numbers against the licensed copy); ISO 26262-8:2018 §9 (verification); ASPICE 4.0 SYS.4 (system integration and integration verification) |
-| Version | 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.4 (merge of PR #47 software alignment with the base; carries PR #47's draft 0.2: VS-SI-27 (drafted as VS-SI-25, renumbered because VS-SI-25 is the MCU-reset case) added from WP-W-08 VS-SWQ-20, RR-2026-009 F-24; 2026-10-13). 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification). **Results: not yet executed** |
 | ASIL / scope | ASIL C (SG-01 until re-rated), ASIL B (SG-02…SG-07); reference configuration only |
 | Author | Assurance team (initial draft) |
@@ -18,7 +18,7 @@ This document specifies how the LionDriver elements are integrated into the item
 
 - the integration strategy and sequence (§3),
 - the integration environment, which is the **LionDriver HIL bench** that decision D-04 ([WP-M-01 §8](../01-management/WP-M-01-assurance-strategy.md#8-strategic-decisions-required)) requires and that [WP-H-06](../04-hardware/WP-H-06-hardware-integration-verification.md) §2 defines (§4),
-- the test specification VS-SI-01…VS-SI-26, traced to TSRs and interfaces (§6),
+- the test specification VS-SI-01…VS-SI-27, traced to TSRs and interfaces (§6),
 - the report template (§8), with every result **"Not yet executed"**.
 
 Out of scope: hardware integration of the device (WP-H-06, VS-HW-nn), software integration ([WP-W-07](../05-software/WP-W-07-software-integration-verification.md)), embedded software qualification ([WP-W-08](../05-software/WP-W-08-embedded-software-testing.md)), system qualification on the vehicle ([WP-S-09](WP-S-09-system-verification.md)), and the systematic fault-injection campaign, which is specified in [WP-V-05](../06-validation/WP-V-05-fault-injection.md). Test cases here that inject faults reference the WP-V-05 case for the detailed procedure.
@@ -155,6 +155,7 @@ Columns: **Trace** = FSR / TSR block / interface; **Step** = integration step; *
 | ID | Title | Trace | Step | Preconditions | Procedure | Pass criteria | Expected baseline |
 |---|---|---|---|---|---|---|---|
 | VS-SI-26 | Target vs host safety model; process replay regression | FSR-01.xx…07.xx; TSR-101…TSR-311 (decision logic) | I-1, I-2 | Fork-owned Corolla logs | (a) Feed the same frame sequence (recorded + fault-augmented) to the target MCU on the bench and to host-built `libsafety`; compare per-frame TX/RX decisions and `controls_allowed`. (b) Run `process_replay/test_processes.py` against fork-owned references | (a) identical decisions; any difference is a defect (compiler/target, DFI-17); (b) no unexplained diffs | No fork-owned references (GAP-30) |
+| VS-SI-27 | Host reaction to envelope reports | TSR-307, TSR-514, TSR-601, TSR-606, TSR-615, TSR-619, TSR-620; SWSR-307h, 514h, 601, 606, 615, 619, 620; IF-04 | I-2 | Engaged | Make the envelope report each revocation cause and fault flag in turn (bench or debug hook; reported causes per WP-W-08 VS-SWQ-20) | `selfdrived` disables immediately (≤ 0.2 s) and the HMI gives a take-over request naming the fault class ≤ 1 s | Not run. Moved here from WP-W-08 VS-SWQ-20 ([RR-2026-009](../05-software/reviews/RR-2026-009.md) F-24) |
 
 ## 7. Coverage of TSR blocks and interfaces
 
@@ -208,6 +209,7 @@ Every FSR allocated to E-03 or E-05 in WP-C-04 §10 has at least one VS-SI case 
 | VS-SI-24 | — | — | **Not yet executed** | — | — | — | — |
 | VS-SI-25 | — | — | **Not yet executed** | — | — | — | — |
 | VS-SI-26 | — | — | **Not yet executed** | — | — | — | — |
+| VS-SI-27 | — | — | **Not yet executed** | — | — | — | — |
 
 Summary (to complete after execution): number passed / failed / known GAP / blocked; open problem reports; regression scope; verdict on integration readiness for WP-S-09.
 

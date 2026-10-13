@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-01 Assurance strategy and lifecycle tailoring |
 | Standard reference | ISO 26262-2:2018 §6 (tailoring, safety plan inputs); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6; ISO/PAS 8800:2024 (AI safety management, assurance argument); ASPICE 4.0 MAN.3; UL 4600 (informative, safety case structure) |
-| Version | 0.4 (§4.1 safety envelope diagram redrawn as Figure 4-1; text version kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: P0 sync policy per D-02, D-13 added (envelope strategy); 2026-10-12). 0.1 |
+| Version | 0.5 (merge of PR #47 software alignment with the base: D-14 added (authorize the ISO 26262-6 software lifecycle, numbered D-09 in PR #47 drafts); 2026-10-13). 0.4 (§4.1 safety envelope diagram redrawn as Figure 4-1; text version kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: P0 sync policy per D-02, D-13 added (envelope strategy); 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (FuSa, SOTIF, CS, AI, process) |
 | Author | Assurance team (initial draft) |
@@ -156,8 +156,8 @@ One shared **hazard log** (in [WP-C-03](../02-concept/WP-C-03-hara.md), with SOT
 | **P0 Governance** | G0 | M-00…M-13, P-01…P-06 | Fork opendbc and panda into LionDriver control (D-01). Planned sync once per minor release (D-02, decided 2026-10-10). Fix CI for the fork (D-03). CODEOWNERS and branch protection |
 | **P1 Concept** | G1 | C-01…C-11, V-07, K-01 (initial argument) | No public-road testing until WP-V-07 is approved. HARA confirmation review by an external assessor |
 | **P2 System design** | G2 | S-01…S-07, A-01…A-04, V-02 | Envelope requirements back-filled from code. FFI and DFA analyses decide whether hardware changes are needed |
-| **P3 HW/SW development** | G3 | H-01…H-05, H-07, W-01…W-06, W-09…W-11, P-07…P-09 | Includes closing gaps found in P2, for example locking the safety mode and parameter |
-| **P4 Integration and verification** | G4 | S-08, S-09, H-06, W-07, W-08, V-03, V-05 | **Needs a LionDriver HIL bench** (panda + CAN simulation + Corolla DBC replay) and a fork-owned process-replay reference set |
+| **P3 HW/SW development** | G3 | H-01…H-05, H-07, W-01…W-06, W-09…W-11, P-07…P-09 | Includes closing gaps found in P2, for example locking the safety mode and parameter. The software-level lifecycle runs to [WP-M-14](WP-M-14-iso26262-6-implementation-specification.md) and starts only after D-14; its entry baseline needs the Part 2 plans (CR-03), the Part 3 concept (CR-02, CR-04), the Part 4 TSC, HSI and FTTI (CR-05), the system FFI and DFA, and approved CM, change, requirements and review procedures (WP-M-14 §3.1) |
+| **P4 Integration and verification** | G4 | S-08, S-09, H-06, W-07, W-08, V-03, V-05 | Software integration and embedded testing per WP-M-14 Phase E. **Needs a LionDriver HIL bench** (panda + CAN simulation + Corolla DBC replay) and a fork-owned process-replay reference set |
 | **P5 Validation and release** | G5 | V-01, V-04, V-06, K-02…K-06, O-01…O-03 | Validation driving under WP-V-07; SOTIF residual-risk acceptance; external FSA |
 | **P6 Operation** | G6 | O-04, O-05, P-03 | Field monitoring, incident response, controlled updates |
 
@@ -192,6 +192,7 @@ These are owned by the project maintainer. Until each one is decided, it stays o
 | D-11 | Vehicle lock (VIN) | Whether the panda enforces the VIN of the recorded vehicle ([LD-DES-001](../08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md) D3). **Status:** decided 2026-10-10: report only for now; enforcement waits for a panda-side UDS VIN read before authority is granted |
 | D-12 | LionDriver-only devices | Whether assured devices run only LionDriver-signed panda firmware ([LD-DES-001](../08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md) D4). **Status:** decided 2026-10-10: yes, for the reference configuration; development units keep the debug bootstub and are outside the safety claims |
 | D-13 | Envelope strategy ([WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md#42-recommendation), OI-1) | Option (c): reduce actuation authority so that controllability C1 can be shown, lowering SG-01 to ASIL B, combined with ASIL B hardening of the envelope; option (b) kept as fallback. **Status:** pending maintainer decision (tracked in [WP-M-07](WP-M-07-risk-management.md) §5) |
+| D-14 | Authorize the ISO 26262-6 software lifecycle | Do not start [WP-M-14](WP-M-14-iso26262-6-implementation-specification.md) Phase A until its entry criteria E-01…E-05 (safety plan, item definition, HARA, FSC, TSC) are at least in review; do not start Phase B until the full entry baseline (WP-M-14 §3.1) is approved or each exception is justified. **Status:** open. Snapshot at `3ed97c8`: no entry criterion met |
 
 ## 9. Top risks to the assurance path
 

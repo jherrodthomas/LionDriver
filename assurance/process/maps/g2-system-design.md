@@ -23,6 +23,7 @@ flowchart LR
     DES_08["DES-08<br/>Dependent failure analysis<br/>WP-A-03"]
     DES_09["DES-09<br/>Decide on ASIL decomposition<br/>WP-A-01"]
     DES_10["DES-10<br/>System FTA and FMEA<br/>WP-A-04"]
+    DES_14["DES-14<br/>Specify the ISO 26262-6 software lifecycle implementation (activation per D-14)<br/>WP-M-14"]
   end
   subgraph L_sotif["SOTIF (ISO 21448)"]
     direction LR
@@ -51,6 +52,7 @@ flowchart LR
   DES_08 --> DES_10
   DES_04 --> DES_12
   DES_03 --> DES_13
+  DES_03 --> DES_14
   DES_01 --> GATE
   DES_06 --> GATE
   DES_09 --> GATE
@@ -58,6 +60,7 @@ flowchart LR
   DES_11 --> GATE
   DES_12 --> GATE
   DES_13 --> GATE
+  DES_14 --> GATE
   L_assess --> GATE
   classDef joint fill:#dafbe1,stroke:#1a7f37,color:#0f3d1c
   class DES_01,DES_12,DES_13 joint
@@ -102,6 +105,7 @@ Clause references and status are read from the [register (WP-M-00)](../../01-man
 | DES-11 SOTIF V&V strategy and validation targets | SOTIF (ISO 21448) | [WP-V-02](../../06-validation/WP-V-02-sotif-vv-strategy.md) | WP-C-02, WP-C-05, WP-C-06, WP-C-07, WP-C-11 |  | §9 |  | PAS 8800 (AI V&V) | VAL.1 | WP-6 | Draft |
 | DES-12 Requirements for production, operation, service and decommissioning | Joint (all disciplines) | [WP-S-06](../../03-system/WP-S-06-requirements-production-operation.md) | WP-C-01, WP-S-02, WP-S-07 | 4 §6 | §13 | §10 |  | SYS.2 | WP-4 | Draft |
 | DES-13 System-theoretic process analysis (STPA) | Joint (all disciplines) | [WP-A-05](../../08-analyses/WP-A-05-stpa.md) | WP-C-01, WP-C-03, WP-C-06, WP-C-08, WP-S-02 | 9 §8 (supplementary) | §6–§7 |  | STPA Handbook 2018; PAS 8800 |  | WP-2 | Draft |
+| DES-14 Specify the ISO 26262-6 software lifecycle implementation (activation per D-14) | Functional safety (ISO 26262) | [WP-M-14](../../01-management/WP-M-14-iso26262-6-implementation-specification.md) | WP-M-01, WP-M-02, WP-S-02 | 6 §5–11, Annex C; 8 §6–12 |  |  |  | MAN.3, SWE.1–6 |  | Draft |
 
 ## 3. Cross-domain interfaces
 
@@ -120,17 +124,17 @@ Each interface is anchored to text in the work products; the checker fails if an
 
 Which activity answers each clause reference listed in the register. One activity can answer several standards; that is the point of the integrated lifecycle.
 
-- **ISO 26262:** 4 §6 → DES-02, DES-03, DES-05, DES-06, DES-12; 9 §6 → DES-07; 9 §7 → DES-08; 9 §5 → DES-09; 9 §8, 4 §6 → DES-10; 9 §8 (supplementary) → DES-13
+- **ISO 26262:** 4 §6 → DES-02, DES-03, DES-05, DES-06, DES-12; 9 §6 → DES-07; 9 §7 → DES-08; 9 §5 → DES-09; 9 §8, 4 §6 → DES-10; 9 §8 (supplementary) → DES-13; 6 §5–11, Annex C; 8 §6–12 → DES-14
 - **ISO 21448:** §5 → DES-01; §8 → DES-05; §7 → DES-10; §9 → DES-11; §13 → DES-12; §6–§7 → DES-13
 - **ISO/SAE 21434:** §10 → DES-04, DES-12
 - **Other:** PAS 8800 (AI V&V) → DES-11; STPA Handbook 2018; PAS 8800 → DES-13
-- **ASPICE:** SYS.2 → DES-01, DES-03, DES-12; SYS.3 → DES-02, DES-05, DES-06; SEC.1, SYS.3 → DES-04; VAL.1 → DES-11
+- **ASPICE:** SYS.2 → DES-01, DES-03, DES-12; SYS.3 → DES-02, DES-05, DES-06; SEC.1, SYS.3 → DES-04; VAL.1 → DES-11; MAN.3, SWE.1–6 → DES-14
 
 ## 5. G2 readiness
 
 **Exit criterion (WP-M-00 §2):** TSC, system architecture, HSI and system-level safety analyses approved
 
-**Work products:** 13 Draft of 13. Approval needs the verification review of [WP-P-05](../../07-supporting/WP-P-05-verification-review-procedure.md).
+**Work products:** 14 Draft of 14. Approval needs the verification review of [WP-P-05](../../07-supporting/WP-P-05-verification-review-procedure.md).
 
 **Roles the lanes need (WP-M-02 §3.1):**
 
@@ -154,6 +158,6 @@ Which activity answers each clause reference listed in the register. One activit
 | AUD-1 Functional safety audit (process in use for concept and system design) | WP-M-02, WP-M-05 | I3 | Not performed |
 | SR-02 Review of V&V strategy and validation targets | WP-V-02 | I3-equivalent | Not performed |
 
-**Work products with no confirmation measure at this gate** (verification review only): WP-S-01, WP-S-07, WP-S-06, WP-A-05.
+**Work products with no confirmation measure at this gate** (verification review only): WP-S-01, WP-S-07, WP-S-06, WP-A-05, WP-M-14.
 
 **Open interfaces due by this gate** (from this or an earlier phase): IX-13 (WP-V-02 OI-3).

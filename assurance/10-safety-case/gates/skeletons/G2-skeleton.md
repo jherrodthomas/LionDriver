@@ -18,12 +18,12 @@
 
 | Input | Status at this baseline | Link |
 |---|---|---|
-| WP-M-00 status of the gate's work products | 13 Draft of 13 (table below) | [WP-M-00](../../../01-management/WP-M-00-work-product-register.md) |
+| WP-M-00 status of the gate's work products | 14 Draft of 14 (table below) | [WP-M-00](../../../01-management/WP-M-00-work-product-register.md) |
 | Open anomalies (`safety-anomaly`), incl. any potential safety goal violation | | GitHub issues labelled `safety-anomaly` |
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 5 performed: CR-05, CR-06@G2, FSA-I2, AUD-1, SR-02 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 81 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 87 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -42,6 +42,7 @@
 | [WP-V-02](../../../06-validation/WP-V-02-sotif-vv-strategy.md) SOTIF verification and validation strategy, validation targets | DES-11 | Draft | 7 | |
 | [WP-S-06](../../../03-system/WP-S-06-requirements-production-operation.md) Requirements for production, operation, service and decommissioning | DES-12 | Draft | 4 | |
 | [WP-A-05](../../../08-analyses/WP-A-05-stpa.md) System-theoretic process analysis (STPA) | DES-13 | Draft | 8 | |
+| [WP-M-14](../../../01-management/WP-M-14-iso26262-6-implementation-specification.md) ISO 26262-6 software lifecycle implementation specification (future work; activation deferred, D-14) | DES-14 | Draft | 6 | |
 
 ### Confirmation measures
 
