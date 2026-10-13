@@ -7,6 +7,8 @@
 | Tool | GNU Octave 8.4.0 with gnuplot, classified in [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) as TL-25 (TCL1, no verification credit) |
 | Code read | opendbc at the pinned commit (`opendbc_repo/opendbc/safety/safety.h`, `modes/toyota.h`) |
 
+Tool choice for all modelling work: [modelling plan](../README.md) (MD-01).
+
 ## What these are, and what they are not
 
 The scripts model three pieces of envelope logic so their behaviour can be explored and plotted quickly:
