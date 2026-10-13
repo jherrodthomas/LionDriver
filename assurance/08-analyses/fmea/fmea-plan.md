@@ -1,6 +1,6 @@
 # LionDriver — FMEA Program Plan
 
-**Status:** Draft v0.5 — Phase 0 complete; System FMEA rated (rev 0.5, BL-004); SW FMEA P1 elements rated (rev 0.6, BL-004); HARA draft rev 0.3
+**Status:** Draft v0.6 (§1 flow diagram redrawn as Figure 1-1; text version kept; 2026-10-13) — Phase 0 complete; System FMEA rated (rev 0.5, BL-004); SW FMEA P1 elements rated (rev 0.6, BL-004); HARA draft rev 0.3
 **Scope:** 2020 Toyota Corolla LE (U.S.), comma 3X (`system/hardware/tici`) with integrated panda, current LionDriver software baseline
 **Covers:** System FMEA, DFMEA, PFMEA, SW FMEA, FMEDA
 
@@ -22,6 +22,12 @@
 
 **Flow of information**
 
+![Figure 1-1: flow of information from Item Definition, HARA, Safety Goals, FSC and TSC to System FMEA, DFMEA, SW FMEA, FMEDA and DFA/FTA, and from PFMEA to the release and install control plan](figures/fig-plan-1-1-analysis-flow.svg)
+
+*Figure 1-1.* The concept chain runs along the top; the five analyses of this plan have dark outlines and the teal arrows carry information between them. Source: [`figures/fig-plan-1-1-analysis-flow.svg`](figures/fig-plan-1-1-analysis-flow.svg); change it together with the table above and §3.
+
+<details><summary>Text version of Figure 1-1</summary>
+
 ```
 Item Definition ─► HARA ─► Safety Goals (ASIL) ─► FSC ─► TSC / Architecture
                      ▲                                      │
@@ -33,6 +39,8 @@ Item Definition ─► HARA ─► Safety Goals (ASIL) ─► FSC ─► TSC / A
 PFMEA ─► Release / install control plan  (feeds "configuration as assured")
 ```
 
+</details>
+
 - System FMEA **effects** must trace to HARA hazards; its **causes** become the failure modes of DFMEA / SW FMEA.
 - FMEDA reuses DFMEA hardware failure modes but **requires safety goals and ASIL** — it cannot be finalized before HARA.
 - SW FMEA findings that share a root cause across redundant paths feed the Dependent Failure Analysis.
@@ -43,7 +51,7 @@ PFMEA ─► Release / install control plan  (feeds "configuration as assured")
 
 | Prereq | Needed by | Status |
 |---|---|---|
-| Item definition & boundary (README roadmap item 2) | All | Draft LD-ITEM-001 rev 0.1 (`item-definition.md`): platform (334 vehicles), variant family VF-001 Corolla E210, assured configuration AC-001 |
+| Item definition & boundary (README roadmap item 2) | All | Draft LD-ITEM-001 rev 0.2 (`item-definition.md`): platform (334 vehicles), variant family VF-001 Corolla E210, assured configuration AC-001 |
 | HARA + safety goals | System FMEA severity, FMEDA | Draft rev 0.3 (`analyses/hara.yaml`): 13 hazards, 15 situations, 19 hazardous events, 10 safety goals (SG-001 ASIL D); guide-word matrix and situation coverage complete; pre-checks in `reviews/` |
 | Functional / technical safety concept | DFMEA, SW FMEA, FMEDA | FSC draft rev 0.2 (`analyses/fsc.yaml`): 40 FSRs, 12 elements, 11 panda/SoC decompositions; DFA rev 0.4 accepts none of them yet (`analyses/dfa.yaml`); TSC not started |
 | HW/SW baseline frozen (commit SHA + submodule SHAs + AGNOS version) | All | BL-001 proposed in `baseline.yaml`; freeze at Phase 1 start |
