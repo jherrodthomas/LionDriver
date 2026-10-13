@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-08 Testing of the embedded software (software qualification, HIL) |
 | Standard reference | ISO 26262-6:2018 §11 (testing of the embedded software: test environments, methods, test-case derivation); ISO 26262-8:2018 §9; ASPICE 4.0 SWE.6 |
-| Version | 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section **Not yet executed** |
 | ASIL / scope | Embedded envelope software on the STM32H7 (E-03): B‡ (ASIL C until SG-01 re-rating) |
 | Author | Assurance team (initial draft) |
@@ -57,7 +57,7 @@ The staged build plan, parts list and the first bench test (hardware watchdog) a
 
 ## 5. Test specification (VS-SWQ)
 
-Status (2026-10-12): specified, not implemented, except five cases with HIL scripts in panda `b790fca` that are implemented and **not run** (bench not built, GAP-30): VS-SWQ-08 → `panda/tests/hitl/test_12_rx_timeout.py`, VS-SWQ-13 → `test_13_eps_fault.py`, VS-SWQ-14 → `test_10_hw_watchdog.py`, VS-SWQ-17 → `test_11_reference_lock.py`, VS-SWQ-25 (518 part) → `test_14_tx_rate.py`. `test_11`, `test_13` and `test_14` need a reference build; `test_10` needs a fault-injection debug build ([hil-bench/](hil-bench/README.md) §5.5, §7).
+Status (2026-10-12): specified, not implemented, except five cases with HIL scripts in panda `b790fca` that are implemented and **not run** (bench not built, GAP-30): VS-SWQ-08 → `panda/tests/hitl/test_12_rx_timeout.py`, VS-SWQ-13 → `test_13_eps_fault.py`, VS-SWQ-14 → `test_10_hw_watchdog.py`, VS-SWQ-17 → `test_11_reference_lock.py`, VS-SWQ-25 (518 part) → `test_14_tx_rate.py`. `test_11`, `test_13` and `test_14` need a reference build; `test_10` needs a fault-injection debug build ([hil-bench/](hil-bench/README.md) §5.5, §7). *2026-10-13:* a sixth, VS-SWQ-10 (revocation and heartbeat-loss siren) → `test_15_heartbeat_siren.py` (panda `c33343b`), implemented and **not run**; it needs a reference build for the car simulation and an ear (or microphone) check of the siren.
 
 | ID | Objective | SWSRs | Stimulus | Pass criterion |
 |---|---|---|---|---|
@@ -70,7 +70,7 @@ Status (2026-10-12): specified, not implemented, except five cases with HIL scri
 | VS-SWQ-07 | Driver override and heartbeat mismatch | 304, 304a, 307 | Plant driver torque; heartbeat `engaged=0` | Revocation timing per SWSRs (0.3 s for 307; expected fail today: ≈3 s) |
 | VS-SWQ-08 | RX timeouts | 401, 401a, 406 | Remove each RX message at random phase | Detection ≤ 5 periods + task period: implemented (opendbc `7993399`), ≤ 5 nominal periods + 10 ms, worst case ≤ 0.16 s (`0x1D2`). HIL `test_12_rx_timeout.py`, not run |
 | VS-SWQ-09 | RX plausibility | 402–405 | Corrupted checksums, 1.5× rate, frozen payload, disagreeing cross-signals | Each detected within its bound |
-| VS-SWQ-10 | Heartbeat loss, SILENT, siren | 407, 409, 510, 516 | Stop heartbeat with ignition on/off; frozen loop counter | Revocation ≤ 0.3 s; SILENT ≤ 2 s; siren ≤ 0.5 s. Revocation at 0.3 s implemented (`heartbeat_monitor.h`); SILENT and siren after 3–5 s unchanged (expected fail) |
+| VS-SWQ-10 | Heartbeat loss, SILENT, siren | 407, 409, 510, 516 | Stop heartbeat with ignition on/off; frozen loop counter | Revocation ≤ 0.3 s; SILENT ≤ 2 s; siren ≤ 0.5 s. Revocation at 0.3 s implemented (`heartbeat_monitor.h`); SILENT after 3–5 s unchanged (expected fail). *2026-10-13:* siren at the revocation when authority was granted, ≤ 0.26 s after it (≈ 0.56 s after the last heartbeat), all builds (`heartbeat_siren.h`, panda `c33343b`; host test `panda/tests/heartbeat_siren`; HIL `test_15_heartbeat_siren.py` times the revocation, siren by ear; not run); the 1 Hz siren after 4–5 s unchanged |
 | VS-SWQ-11 | Command stall | 408, 109a | Stop `0x2E4`/`0x343` with heartbeat alive | Revocation 50/100 ms; zero frames |
 | VS-SWQ-12 | SPI integrity and bounds on target (also HWSR-401) | 410, 410a, 410b, 411, 412, 412a, 412b, 413 | Corrupted, replayed, reordered, oversized transfers via fault-injecting SPI host | No effect from corrupted transfer; no memory corruption (stack/guard canaries via SWD); error burst revokes |
 | VS-SWQ-13 | EPS status monitoring | 110 | Plant reports LKA_STATE fault codes; `0x262` loss | Lateral revocation within one frame / timeout. Reference build: HIL `test_13_eps_fault.py`, not run |

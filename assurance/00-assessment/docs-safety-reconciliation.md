@@ -4,7 +4,7 @@
 |---|---|
 | Work product | Reconciliation record (supporting document, not a registered work product) |
 | Standard reference | ISO 26262-8:2018 §7 (configuration management), §8 (change management) |
-| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status of the layer-1 measures after the firmware changes integrated 2026-10-12: TSR-501 IWDG implemented, not verified; layer 2 and OI-3 re-scoped; TSR-306, TSR-405 added to ASM-V-03…05; 2026-10-12). 0.1: initial reconciliation |
+| Version | 0.4 (§8: second-set HARA mapped onto WP-C-03, decisions RD-1…RD-3; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status of the layer-1 measures after the firmware changes integrated 2026-10-12: TSR-501 IWDG implemented, not verified; layer 2 and OI-3 re-scoped; TSR-306, TSR-405 added to ASM-V-03…05; 2026-10-12). 0.1: initial reconciliation |
 | Status | Draft |
 | Author | Assurance team |
 | Reviewer(s) | TBD |
@@ -122,4 +122,88 @@ Like LD-HARA-001, the second-set HARA rates the lateral goal ASIL D (SG-001), wi
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-5 | Decide whether the second-set HARA, FSC and item definition are withdrawn once WP-C-01/03/04 settle OI-1, OI-2 and OI-4, and re-point the FMEA data at WP-C-03 hazard IDs | Safety engineer | G1 |
+| OI-5 | Decide whether the second-set HARA, FSC and item definition are withdrawn once WP-C-01/03/04 settle OI-1, OI-2 and OI-4. **Re-pointing done (§8):** every second-set hazard and goal is mapped onto WP-C-03 in [`hara-mapping.yaml`](../08-analyses/fmea/hara-mapping.yaml), checked in CI; withdrawal waits for RD-1…RD-3 | Safety engineer | G1 |
+
+## 8. Second-set HARA mapped onto WP-C-03 (OI-5)
+
+The FMEA data cites second-set hazard IDs (`HZ-0nn`) in its effects. [`hara-mapping.yaml`](../08-analyses/fmea/hara-mapping.yaml) carries each of them to the WP-C-03 hazards, hazardous events and safety goals. `tools/safety/fmea_lint.py` checks the mapping in the assurance workflow:
+- every second-set hazard and goal is mapped;
+- every WP-C-03 ID exists in WP-C-03;
+- both ASILs match their sources;
+- the stated agreement matches the ASILs;
+- every difference names a decision below.
+
+The FMEA files keep their `HZ-0nn` links, so no rating changes. If the second set is withdrawn, the mapping becomes the trace from the FMEA rows to WP-C-03.
+
+### 8.1 Hazards
+
+| Second set | WP-C-03 hazard | WP-C-03 events | Note |
+|---|---|---|---|
+| HZ-001 torque while not engaged | H-01 | HE-01.4 | |
+| HZ-002 excessive steering while engaged | H-01 | HE-01.1, HE-01.2, HE-01.3 | |
+| HZ-003 steering toward the lane boundary at normal magnitude | H-01 | HE-01.1, HE-01.2, HE-02.3 | WP-C-03 rates it with H-01 and the frozen command |
+| HZ-004 loss of lateral control without warning | H-02 | HE-02.1, HE-02.2, HE-02.4, HE-02.5 | |
+| HZ-005 unintended acceleration | H-03 | HE-03.1 … HE-03.5 | |
+| HZ-006 unintended or excessive deceleration | H-04 | HE-04.1 … HE-04.5 | |
+| HZ-007 insufficient or late deceleration for a lead | H-06 | HE-06.1, HE-06.2, HE-06.3 | |
+| HZ-008 not released on brake or cancel | H-05 | HE-05.1, HE-05.3, HE-05.4 | |
+| HZ-009 resists driver steering | H-05 | HE-05.2 | |
+| HZ-010 unintended engagement | H-01, H-03 | HE-01.4 | Rated inside H-01 and H-03 |
+| HZ-011 stock AEB/FCW degraded | H-08 | HE-08.1 | |
+| HZ-012 driver misinformed about the automation state | H-07 | HE-07.1, HE-07.2, HE-07.3 | |
+| HZ-013 automated control continues with an unresponsive driver | none | none | RD-3 |
+
+### 8.2 Safety goals
+
+| Second set | ASIL | WP-C-03 | ASIL | Agreement | Cause of the difference |
+|---|---|---|---|---|---|
+| SG-001 steering the driver cannot counteract | **D** | SG-01 | C ⚠ | Second set higher | Controllability at motorway speed: C3 against C2 (RD-1) |
+| SG-002 steering out of the lane | C | SG-01 | C | Same | |
+| SG-003 loss of lateral control or wrong state without warning | B | SG-02, SG-06 | B | Same | |
+| SG-004 unintended acceleration | **C** | SG-03 | B ⚠ | Second set higher | Exposure of closing on a slower lead at highway speed: E4 against E3 (RD-2) |
+| SG-005 unintended or excessive deceleration | B | SG-04 | B | Same | |
+| SG-006 insufficient deceleration for a lead | B | SG-06 | B | Same | |
+| SG-007 release on brake or cancel; do not resist steering | B | SG-05 | B | Same | |
+| SG-008 unintended engagement | B | SG-01, SG-03 | C | WP-C-03 higher | Covered inside SG-01 |
+| SG-009 stock AEB/FCW availability | B | SG-07 | B | Same | |
+| SG-010 continued automated control with an unresponsive driver | A | none | none | No counterpart | RD-3 |
+
+Six of ten goals agree. The two HARAs disagree on two ratings and one hazard. Each difference is a decision for the safety engineer (OI-1, OI-5); none can be settled by analysis alone.
+
+### 8.3 Decisions needed
+
+**RD-1: lateral controllability at motorway speed (this is OI-1).** Both HARAs rate the situation S3 E4.
+- The second set takes **C3** (HE-002). An L2 driver may be hands-off or hands-light, and without the item's limits the deviation can exceed 1 m before a typical reaction completes.
+- WP-C-03 takes **C2** (HE-01.1, HE-01.2). It credits the EPS limiting LKA torque (AOU-01) and a normal driver overpowering it (AOU-02).
+- WP-C-03's own HE-02.1 records that hands-off driving is foreseeable, because openpilot does not require hands on the wheel.
+- Neither assumption has been verified on the reference car. WP-C-01 plans bench and vehicle characterisation of the EPS for AOU-01, and a steering-force measurement on the vehicle for AOU-02; both are "Unverified". The panda's torque limits are copied from upstream tuning rather than derived from measurement (SWF-001.C1, SFM-ACT-001).
+
+| Option | Consequence |
+|---|---|
+| C3: SG-01 becomes ASIL D | The panda safety path carries ASIL D. The FMEDA SG-001 targets become SPFM ≥ 99 % and LFM ≥ 90 %, against 96.9 % / 87.7 % today with generic rates. That is a hardware-metrics gap the comma 3X design may not be able to close without an added mechanism |
+| C2: SG-01 stays ASIL C | Defensible only once AOU-01 and AOU-02 are measured on the reference car: torque fade-out, override force, and lateral deviation at the panda's torque and rate limits within the reaction time (SFM-ACT-001, SWF-ACT-003) |
+
+*Proposal for the review:*
+- Keep SG-01 at C, with the measurement as an entry condition for G1.
+- Until the measurement exists, design the panda path to the D measures, and claim no controllability credit in the safety case.
+
+**RD-2: exposure of closing on a slower lead at highway speed.**
+- The second set rates it E4 (HE-008, OS-011).
+- WP-C-03 rates it E3 (HE-03.3, OS-07).
+- With S3 and C2 the goal is C under E4, and B under E3.
+
+ISO 26262-3 Annex B allows exposure by duration (E3: 1–10 % of operating time) or by frequency (E4: almost every drive). Closing on a slower lead happens on almost every highway drive, but it lasts only seconds each time. An unintended-acceleration fault becomes a hazard only if it coincides with that phase, which supports a duration-based E3.
+
+*Proposal:* keep E3, and record the duration argument and the method choice in WP-C-03 §2. If the review prefers frequency-based exposure, SG-03 becomes C, and the FSC allocation of the longitudinal checks moves up with it.
+
+**RD-3: an unresponsive driver as a vehicle-level hazard.**
+- The second set has HZ-013 with SG-010 at ASIL A (HE-018: S3 E1 C3).
+- WP-C-03 has no such hazard. It treats driver monitoring as a measure that controllability relies on, whose failure is a latent fault (WP-C-04 §7).
+- Two other analyses reach the second set's view:
+  - the STPA proposes H-STPA-1 (engaged while the driver is not supervising) with SC-8, "reach a minimal-risk behaviour";
+  - the System FMEA finds that awareness reaching zero has no disable reaction (SFM-025, SFM-ACT-005).
+
+*Proposal:*
+- Add the hazard to WP-C-03 (H-09) with an ASIL A goal.
+- Define its safe state together with the open decision on what the item does at zero awareness (SFM-ACT-005). That decision is needed in any case.
+

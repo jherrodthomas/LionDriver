@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-03 Technical safety concept and system architectural design |
 | Standard reference | ISO 26262-4:2018 §6 (technical safety concept, system architectural design, safety mechanisms, FFI/independence by reference to ISO 26262-9 §6–§7); ISO 21448:2022 §8 (architecture-level functional modifications, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.5 (§3.2, §4.1 and §4.4 diagrams redrawn as Figures 3-2, 4-1 and 4-4; text versions kept; 2026-10-13). History: 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently); 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
+| Version | 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3.2, §4.1 and §4.4 diagrams redrawn as Figures 3-2, 4-1 and 4-4; text versions kept; 2026-10-13). History: 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently); 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01, until re-rated); target ASIL B for the envelope (FSC option (c)) |
 | Author | Assurance team (initial draft) |
@@ -148,7 +148,7 @@ After revocation the envelope rejects further actuation frames. Under TSR-109 it
 | RX message lost | E-03 `safety_tick` | 1–2 s → ≤ 0.2 s (TSR-401) | revoke → revoke + reason code (TSR-406) | 5 periods at 100 Hz: ≤ 0.16 s (`0x262` ≈ 0.21 s); revoke (TSR-401) |
 | RX checksum wrong | E-03 `rx_msg_safety_check` | per frame | revoke | also on `0x262`, `0x1D3` |
 | RX stuck/inserted/implausible | none → TSR-403…405 | — → ≤ 0.2 s | — → revoke | TSR-405(c) only: cruise active with main off refused at once, revoked after 150 ms |
-| SoC heartbeat lost | E-03 tick | 4–5 s → ≤ 0.3 s (TSR-407) | SILENT + siren → revoke at 0.3 s, SILENT after ≤ 2 s, siren (TSR-516) | revoke at 0.3 s (≤ 0.31 s, TSR-407); SILENT and siren still after 5 s |
+| SoC heartbeat lost | E-03 tick | 4–5 s → ≤ 0.3 s (TSR-407) | SILENT + siren → revoke at 0.3 s, SILENT after ≤ 2 s, siren (TSR-516) | revoke at 0.3 s (≤ 0.31 s, TSR-407); SILENT still after 5 s. Siren: 2026-10-13, at the revocation when authority was granted, ≈ 0.56 s after the last heartbeat, all builds (TSR-516, panda `c33343b`; WP-S-04 T-07a); otherwise after 5 s |
 | SoC control loop frozen, pandad alive | none → TSR-408/409 | — → ≤ 50 ms | EPS drop-out only → SS-L | unchanged (TSR-408/409 open) |
 | Host/panda engaged mismatch | E-03 tick; selfdrived | 2–3 s / 2 s → ≤ 0.3 s (TSR-307) | revoke / immediate disable | unchanged |
 | MCU hang | none (GAP-07) → IWDG | — → ≤ 0.1 s (TSR-501) | relay stays in last state (GAP-43) → reset → SS-S | IWDG reset ≈ 90 ms nominal after the first relay drive (TSR-501); LSI tolerance open |
@@ -156,11 +156,11 @@ After revocation the envelope rejects further actuation frames. Under TSR-109 it
 | Relay stuck released | E-03 `stock_ecu_check` | 1–2 s window | block TX/fwd; host immediate disable | unchanged |
 | Relay stuck intercepting | none → TSR-506 readback | — → ≤ 0.3 s | — → SS-S + warning (GAP-43) | unchanged |
 | SoC input stale (model, plan) | selfdrived `commIssue` | 10 periods (0.5 s for modelV2) | soft disable 3 s → immediate disable (TSR-601) | unchanged |
-| EPS LKA fault | host carstate | 1.5 s hysteresis | lat inactive + warning → also envelope revoke (TSR-110) | LKA torque refused on receipt of the fault frame (TSR-110), `epsFault` reported; siren after 1 s persistence, ≈ 1.14 s after onset (TSR-516(b); WP-S-04 OI-8) |
+| EPS LKA fault | host carstate | 1.5 s hysteresis | lat inactive + warning → also envelope revoke (TSR-110) | LKA torque refused on receipt of the fault frame (TSR-110), `epsFault` reported; siren after 1 s persistence, ≤ 1.26 s worst case after onset (TSR-516(b); WP-S-04 OI-8) |
 
 ### 4.4 Heartbeat and timeout chain
 
-![Figure 4-4: heartbeat and timeout chain: command path controlsd, card, pandad, MCU safety_tx_hook with freshness limits 0.1 s, 1 s and none, heartbeat path selfdrived, pandad 0xf3 at 10 Hz, MCU heartbeat counter at 1 Hz, and timing of heartbeat loss (revoke 0.3 s in the reference build, SILENT after 4–5 s) and engaged mismatch (revoke after 2–3 s) against the required limits](figures/fig-4-4-heartbeat-timeout-chain.svg)
+![Figure 4-4: heartbeat and timeout chain: command path controlsd, card, pandad, MCU safety_tx_hook with freshness limits 0.1 s, 1 s and none, heartbeat path selfdrived, pandad 0xf3 at 10 Hz, MCU heartbeat counter at 1 Hz, and timing of heartbeat loss (revoke 0.3 s in the reference build, siren ≤ 0.56 s if engaged since panda c33343b, SILENT after 4–5 s) and engaged mismatch (revoke after 2–3 s) against the required limits](figures/fig-4-4-heartbeat-timeout-chain.svg)
 
 *Figure 4-4.* Part A shows both paths with the freshness limit at each stage and the required changes in red. Part B puts heartbeat loss and engaged mismatch on one time axis; the 1 Hz tick phase is arbitrary, so the baseline times are ranges (4–5 s, 2–3 s, as in WP-S-04 T-05/T-06), and the dashed red lines are the required limits of TSR-407, TSR-510 and TSR-307. Source: [`figures/fig-4-4-heartbeat-timeout-chain.svg`](figures/fig-4-4-heartbeat-timeout-chain.svg); change it together with §4.3, §4.4 and [WP-S-04](WP-S-04-timing-ftti-budget.md) §4–§5.
 
@@ -180,7 +180,7 @@ selfdrived 100 Hz ─selfdriveState─▶ pandad main 10 Hz ─0xf3 engaged─�
 
 Required changes (WP-S-04 §5): heartbeat evaluated at ≥ 10 Hz with a 0.3 s timeout and control-loop evidence (TSR-407, 409); command-frame freshness in the MCU (TSR-408); `sendcan` age ≤ 20 ms (TSR-614).
 
-Status 2026-10-12 (`bf6ce8c`, not verified on hardware): the MCU's 100 Hz safety task revokes authority 0.3 s after the last `0xf3` in a car mode (`drivers/heartbeat_monitor.h`, panda `c2e5d93`); the 1 Hz mismatch and 5 s SILENT paths are unchanged. TSR-408, TSR-409 and TSR-614 are open.
+Status 2026-10-12 (`bf6ce8c`, not verified on hardware): the MCU's 100 Hz safety task revokes authority 0.3 s after the last `0xf3` in a car mode (`drivers/heartbeat_monitor.h`, panda `c2e5d93`); the 1 Hz mismatch and 5 s SILENT paths are unchanged. *2026-10-13:* the same task sounds the siren at that revocation when authority was granted, ≈ 0.56 s after the last heartbeat, in all builds (`drivers/heartbeat_siren.h`, panda `c33343b`; WP-S-04 T-07a; not verified on hardware). TSR-408, TSR-409 and TSR-614 are open.
 
 ## 5. Allocation of TSRs to elements
 
@@ -224,7 +224,7 @@ Diagnostic coverage (DC) values are **targets** for the FMEDA ([WP-H-03](../04-h
 | SM-20 | Relay readback and latch | relay stuck either way | E-04a/E-05 | 506, 710 | Partial (one direction, indirect) | high (with readback) | relay test at start-up (TSR-515) |
 | SM-21 | MPU isolation | comms handler corrupting safety data | E-04a | 507 | New | medium | — |
 | SM-22 | Configuration lock and command gating | SoC selects wrong mode/param; debug commands | E-03b | 511–514, 619, 620 | New at baseline; **Partial** 2026-10-12 (TSR-512/513 in the reference build; 511, 514, 619, 620 open) | high | release-build check (TSR-514), INS-17/23 |
-| SM-23 | SoC-independent siren | warning when the SoC is lost, on every envelope revocation that is not a driver action, and when a fault-induced ACC cancel has no effect | E-03b/E-04a | 516 | Partial (2026-10-12: EPS-fault siren after 1 s persistence in the reference build) | — (warning) | siren test at start-up (TSR-515) |
+| SM-23 | SoC-independent siren | warning when the SoC is lost, on every envelope revocation that is not a driver action, and when a fault-induced ACC cancel has no effect | E-03b/E-04a | 516 | Partial (2026-10-12: EPS-fault siren after 1 s persistence in the reference build; 2026-10-13: siren when heartbeat loss revokes granted authority, ≈ 0.56 s after the last heartbeat, all builds, panda `c33343b`) | — (warning) | siren test at start-up (TSR-515) |
 | SM-24 | Relay malfunction detection (traffic-based) | relay stuck released / camera on car bus | E-03a | 710 | Impl | medium | INS-27 |
 | SM-25 | Host fault classification and freshness | stale/invalid inputs on SoC | E-01 | 601–604, 606, 615, 616 | Partial | QM | T-SIL |
 | SM-26 | Driver monitoring | inattention (misuse) | E-01/E-02 | 608–612 | Partial | QM (SOTIF) | DM validity (TSR-609) |

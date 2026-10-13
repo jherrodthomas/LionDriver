@@ -29,7 +29,7 @@ LionDriver publishes its safety argument as it is built: the claims, the evidenc
 
 <!-- BEGIN GENERATED: assurance-headline (assurance/case/tools/generate_dashboard.py) -->
 
-**Development** · baseline `BL-002` at `bf6ce8c` · 36 claims (0 with accepted evidence) · 50 evidence items (0 accepted) · 41 open defeaters · records digest `a08f42e912d0`
+**Development** · baseline `BL-002` at `bf6ce8c` · 36 claims (0 with accepted evidence) · 50 evidence items (0 accepted) · 41 open defeaters · records digest `115222261c5f`
 
 <!-- END GENERATED: assurance-headline -->
 

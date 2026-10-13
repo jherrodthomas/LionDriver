@@ -71,14 +71,16 @@ GROUPS = [
        "budget_text": "detect ≤ 0.5 s + warn ≤ 0.5 s",
        "src": [],
        "base": {"kind": ("blank",), "text": "no time at 8b8c6ae (T-28 added 2026-10-12)", "src": []},
-       "ref": {"kind": ("value", 1.135), "text": "siren ≈ 1.14 s, exceeds 1 s (T-28, OI-8)",
-               "src": ["siren ≤ 1 s + 10 ms + 125 ms ≈ **1.14 s** after fault onset"], "warn": True}},
+       "ref": {"kind": ("value", 1.26), "text": "siren ≤ 1.26 s worst case, exceeds 1 s (T-28, OI-8)",
+               "src": ["siren ≤ 1 s + 10 ms + 2 × 125 ms ≈ **1.26 s** after fault onset worst case"], "warn": True}},
       {"title": "SoC heartbeat loss → siren", "sub": "FSR-02.05, TSR-516", "fdti": 0.5, "frti": 0.5, "limit": 1.0,
        "budget_text": "detect ≤ 0.5 s + warn ≤ 0.5 s",
        "src": [],
        "base": {"kind": ("range", 4.0, 5.0), "text": "siren starts at T-06: 4–5 s (T-07)",
                 "src": ["| 3 s siren if authority within last 5 s | starts at T-06 |"]},
-       "ref": {"kind": ("range", 4.0, 5.0), "text": "unchanged: starts at T-06b, 4–5 s (T-07)", "src": []}},
+       "ref": {"kind": ("value", 0.56), "text": "≈ 0.56 s if engaged, all builds, c33343b (T-07a)",
+               "src": ["siren ≤ 0.3 s + 10 ms + 250 ms ≈ **0.56 s** after the last heartbeat",
+                       "| warning within SG-02 1 s (§3.7) | siren at T-06: 4–5 s (T-07) |"]}},
     ],
   },
   {
@@ -123,10 +125,10 @@ GROUPS = [
 
 # Figure 5-2: EPS-fault warning chain (T-28)
 T28 = {
-  "persist": 1.0, "task": 0.010, "tick": 0.125,
-  "src": ["siren once the fault has persisted 1 s (100 ticks) while `controls_allowed`, driven by the 8 Hz speaker tick",
-          "siren ≤ 1 s + 10 ms + 125 ms ≈ **1.14 s** after fault onset (TSR-516(b))",
-          "TSR-516's ≤ 0.5 s after detection is met (≈ 0.14 s) only because WP-S-02 v0.14 defines detection as the 1 s persistence",
+  "persist": 1.0, "task": 0.010, "tick": 0.250,  # tick: two 125 ms periods, the speaker sounds only on odd 8 Hz ticks
+  "src": ["siren once the fault has persisted 1 s (100 ticks) while `controls_allowed`, driven by the 8 Hz speaker tick on every other tick",
+          "siren ≤ 1 s + 10 ms + 2 × 125 ms ≈ **1.26 s** after fault onset worst case (TSR-516(b))",
+          "TSR-516's ≤ 0.5 s after detection is met (≤ 0.26 s) only because WP-S-02 v0.14 defines detection as the 1 s persistence",
           "LKA refused on receipt of the fault frame (TSR-110)"],
 }
 
@@ -244,7 +246,7 @@ def figure_5_1() -> str:
   H = legend_y + 92
   out.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W1}" height="{H}" viewBox="0 0 {W1} {H}" font-family="{FONT}" role="img" aria-labelledby="t d">')
   out.append('<title id="t">Figure 5-1. FTTI, detection and reaction budgets per safety goal against code-derived times (WP-S-04 §3.7, §4, §5)</title>')
-  out.append('<desc id="d">For each fault class of §3.7 the budget bar shows the fault detection time interval, the fault reaction time interval and the margin up to the fault tolerant time interval, on a linear time axis from 0 to 1.2 s. Below it the code-derived times of §4 are drawn to the same scale for the original baseline 8b8c6ae (grey) and for the reference build bf6ce8c (amber, implemented but not verified on hardware). Red marks the part of a time beyond its budget. The EPS-fault siren of the reference build at about 1.14 s exceeds the SG-02 1 s warning budget (OI-8); the siren after SoC heartbeat loss still comes at 4 to 5 s. No time has been measured.</desc>')
+  out.append('<desc id="d">For each fault class of §3.7 the budget bar shows the fault detection time interval, the fault reaction time interval and the margin up to the fault tolerant time interval, on a linear time axis from 0 to 1.2 s. Below it the code-derived times of §4 are drawn to the same scale for the original baseline 8b8c6ae (grey) and for the reference build bf6ce8c (amber, implemented but not verified on hardware). Red marks the part of a time beyond its budget. The EPS-fault siren of the reference build at up to 1.26 s worst case exceeds the SG-02 1 s warning budget (OI-8). Since panda c33343b (all builds) the siren after SoC heartbeat loss sounds about 0.56 s after the last heartbeat when authority was granted, within the budget; the 1 Hz path at 4 to 5 s is unchanged. No time has been measured.</desc>')
   out.append(DEFS)
   header(out, W1, "Figure 5-1 · Timing budgets per safety goal vs code-derived times",
          "Fault onset at t = 0 · budgets from §3.7 · code-derived times from §4 (T-xx) · drawn to scale · nothing measured yet (§6)",
@@ -343,7 +345,7 @@ def figure_5_1() -> str:
 
 # ---------------------------------------------------------------- Figure 5-2
 W2 = 1280
-P0, P1, PMAX = 300, 1180, 1.3
+P0, P1, PMAX = 300, 1180, 1.5
 
 
 def P(v):
@@ -357,14 +359,14 @@ def figure_5_2() -> str:
   siren = p + k + s
   out.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W2}" height="{H}" viewBox="0 0 {W2} {H}" font-family="{FONT}" role="img" aria-labelledby="t d">')
   out.append('<title id="t">Figure 5-2. EPS-fault warning chain of the reference build against the SG-02 1 s warning budget (WP-S-04 T-28, OI-8)</title>')
-  out.append('<desc id="d">Time axis from the first EPS fault frame. The envelope refuses STEERING_LKA with torque on receipt of the fault frame (TSR-110). The panda 100 Hz safety task counts 1 s of persistence while controls are allowed, adds up to 10 ms of task period, and the 8 Hz speaker tick adds up to 125 ms, so the siren starts about 1.14 s after fault onset. Measured from fault onset this exceeds the SG-02 1 s warning budget by about 0.14 s. Measured from detection as defined in WP-S-02 v0.14 (the end of the 1 s persistence) it is about 0.14 s, inside TSR-516 0.5 s. OI-8 needs a decision. Not verified on hardware.</desc>')
+  out.append('<desc id="d">Time axis from the first EPS fault frame. The envelope refuses STEERING_LKA with torque on receipt of the fault frame (TSR-110). The panda 100 Hz safety task counts 1 s of persistence while controls are allowed, adds up to 10 ms of task period, and the 8 Hz tick drives the speaker only on every other tick, adding up to 250 ms, so the siren starts at most 1.26 s after fault onset. Measured from fault onset this exceeds the SG-02 1 s warning budget by up to 0.26 s. Measured from detection as defined in WP-S-02 v0.14 (the end of the 1 s persistence) it is at most 0.26 s, inside TSR-516 0.5 s. OI-8 needs a decision. Not verified on hardware.</desc>')
   out.append(DEFS)
   header(out, W2, "Figure 5-2 · EPS-fault warning chain (T-28) vs the SG-02 warning budget",
          "Reference build bf6ce8c (opendbc 338f5fc, panda 6a7f2fb) · upper bounds from §4 T-28 · drawn to scale · not verified on hardware",
          "WP-S-04 §5, OI-8", "T-28 · §3.7 SG-02/06 row")
   # axis
   ay = 118
-  for i in range(14):
+  for i in range(round(PMAX * 10) + 1):
     v = i / 10
     x = P(v)
     out.append(line(x, ay + 4, x, 404, "#F1F5F9" if i % 5 else "#E2E8F0", 1))
@@ -377,7 +379,7 @@ def figure_5_2() -> str:
     ("EPS · 0x262 LKA_STATE", "vehicle CAN, bus 0", 196),
     ("Envelope · toyota.h", "opendbc 338f5fc", 252),
     ("Safety task · 100 Hz", "eps_fault_siren.h", 308),
-    ("Speaker tick · 8 Hz", "siren output", 364),
+    ("Speaker tick · 8 Hz", "siren on every other tick", 364),
   ]
   for name, sub, ly in lanes:
     out.append(t(40, ly + 13, name, 12, INK, 600))
@@ -403,9 +405,10 @@ def figure_5_2() -> str:
   out.append(rect(P0, sy, P(p) - P0, 14, REF_LIGHT, AMBER, 1))
   out.append(t((P0 + P(p)) / 2, sy + 11, "fault persists 1 s (100 ticks) while controls_allowed", 10.5, INK, anchor="middle"))
   out.append(rect(P(p), sy, P(p + k) - P(p), 14, AMBER))
-  # speaker tick lane: +125 ms
+  # speaker tick lane: up to two 125 ms tick periods (the speaker sounds only on odd ticks)
   ky = 372
-  out.append(rect(P(p + k), ky, P(siren) - P(p + k), 14, AMBER))
+  out.append(rect(P(p + k), ky, P(p + k + s / 2) - P(p + k), 14, REF_LIGHT, AMBER, 1))
+  out.append(rect(P(p + k + s / 2), ky, P(siren) - P(p + k + s / 2), 14, AMBER))
   out.append(f'<path d="M{P(p + k):g} {sy + 14:g}V{ky:g}" stroke="{MUTED}" stroke-width="1.2" fill="none" marker-end="url(#aM)"/>')
   # siren marker
   out.append(f'<path d="M{P(siren):g} {ky - 4:g}V{ky + 20:g}" stroke="{RED}" stroke-width="2"/>')
@@ -424,10 +427,10 @@ def figure_5_2() -> str:
   # task and tick annotations above their bars, with leader text to the right
   out.append(t(P(siren) + 50, sy + 11, "+ ≤ 10 ms task period", 10, MUTED))
   out.append(line(P(p + k) + 2, sy + 7, P(siren) + 46, sy + 7, BASE_LIGHT, 1))
-  out.append(t(P(siren) + 50, ky + 11, "+ ≤ 125 ms (8 Hz tick)", 10, MUTED))
-  bracket(P0, P(siren), 456, RED, "From fault onset: ≈ 1.14 s, exceeds the 1 s warning budget by ≈ 0.14 s",
+  out.append(t(P(p + k) - 8, ky + 11, "+ ≤ 2 × 125 ms: the speaker sounds only on every other 8 Hz tick", 10, MUTED, anchor="end"))
+  bracket(P0, P(siren), 456, RED, f"From fault onset: ≤ {siren:.2f} s worst case, exceeds the 1 s warning budget by ≤ {siren - 1.0:.2f} s",
           "how §3.7 measures the SG-02 row (FDTI + FRTI from fault onset)")
-  bracket(P(p), P(siren), 512, AMBER, "From detection (WP-S-02 v0.14): ≈ 0.14 s, within TSR-516(b) ≤ 0.5 s",
+  bracket(P(p), P(siren), 512, AMBER, f"From detection (WP-S-02 v0.14): ≤ {siren - p:.2f} s, within TSR-516(b) ≤ 0.5 s",
           "detection defined as the end of the 1 s persistence", anchor_x=P(siren) - 200)
   # OI-8 note box on the left under lanes
   out.append(rect(40, 440, 236, 96, "#FEF2F2", RED, 1.2, rx=8))

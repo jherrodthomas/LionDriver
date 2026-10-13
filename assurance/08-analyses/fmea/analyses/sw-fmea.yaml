@@ -1141,7 +1141,7 @@ failure_modes:
     actions:
     - SWF-ACT-007
   safety_mechanisms:
-  - description: 'Heartbeat loss: authority revoked after 0.3 s (TSR-407); SILENT after 5 s; engaged mismatch after about 3 s; siren for 3 s if engaged'
+  - description: 'Heartbeat loss: authority revoked after 0.3 s (TSR-407); SILENT after 5 s; engaged mismatch after about 3 s; siren for 3 s if engaged (since panda c33343b, 2026-10-13, at the 0.3 s revocation, not credited in the ratings)'
     ref: panda/board/main.c
 - id: SWF-015
   element: SWF-SE-012
@@ -1397,8 +1397,9 @@ failure_modes:
   - description: 'selfdrived controlsMismatch (IMMEDIATE_DISABLE, QM) once mismatch_counter >= 200. The counter increments at 100 Hz while any pandaState shows
       !controlsAllowed, so the delay is about 2 s, not "two samples" as the code comment says'
     ref: openpilot/selfdrive/selfdrived/selfdrived.py:338, 507-514
-  - description: Panda siren for 3 s only after the 1 Hz heartbeat counter times out (SILENT), not at the 0.3 s revocation
-    ref: panda/board/main.c:236-256
+  - description: 'Panda siren for 3 s only after the 1 Hz heartbeat counter times out (SILENT), not at the 0.3 s revocation. 2026-10-13 (panda c33343b, all builds,
+      not credited in the ratings): the siren also sounds at the 0.3 s revocation when authority was granted, about 0.56 s after the last heartbeat (WP-S-04 T-07a)'
+    ref: panda/board/main.c:236-256; panda/board/drivers/heartbeat_siren.h
   causes:
   - id: SWF-021.C1
     description: 'The heartbeat is skipped whenever the health read fails: process_panda_state returns before send_heartbeat (pandad.cc:299-303, 313). A control
@@ -1706,7 +1707,8 @@ failure_modes:
     severity: 10
   severity: 10
   safety_mechanisms:
-  - description: Panda heartbeat monitor revokes authority after 0.3 s (TSR-407). SILENT and a 3 s siren follow after the 1 Hz heartbeat timeout
+  - description: 'Panda heartbeat monitor revokes authority after 0.3 s (TSR-407). SILENT and a 3 s siren follow after the 1 Hz heartbeat timeout. 2026-10-13
+      (panda c33343b, all builds, not credited in the ratings): the siren also sounds at the revocation when authority was granted, about 0.56 s after the last heartbeat'
     ref: panda/board/drivers/heartbeat_monitor.h
   - description: selfdrived commIssue (SOFT_DISABLE) and canError (IMMEDIATE_DISABLE) when pandaStates or can stop (QM). manager does not flag a hung pandad, because
       the process is still running

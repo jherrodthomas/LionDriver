@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1112" viewBox="0 0 1280 1112" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 5-1. FTTI, detection and reaction budgets per safety goal against code-derived times (WP-S-04 §3.7, §4, §5)</title>
-<desc id="d">For each fault class of §3.7 the budget bar shows the fault detection time interval, the fault reaction time interval and the margin up to the fault tolerant time interval, on a linear time axis from 0 to 1.2 s. Below it the code-derived times of §4 are drawn to the same scale for the original baseline 8b8c6ae (grey) and for the reference build bf6ce8c (amber, implemented but not verified on hardware). Red marks the part of a time beyond its budget. The EPS-fault siren of the reference build at about 1.14 s exceeds the SG-02 1 s warning budget (OI-8); the siren after SoC heartbeat loss still comes at 4 to 5 s. No time has been measured.</desc>
+<desc id="d">For each fault class of §3.7 the budget bar shows the fault detection time interval, the fault reaction time interval and the margin up to the fault tolerant time interval, on a linear time axis from 0 to 1.2 s. Below it the code-derived times of §4 are drawn to the same scale for the original baseline 8b8c6ae (grey) and for the reference build bf6ce8c (amber, implemented but not verified on hardware). Red marks the part of a time beyond its budget. The EPS-fault siren of the reference build at up to 1.26 s worst case exceeds the SG-02 1 s warning budget (OI-8). Since panda c33343b (all builds) the siren after SoC heartbeat loss sounds about 0.56 s after the last heartbeat when authority was granted, within the budget; the 1 Hz path at 4 to 5 s is unchanged. No time has been measured.</desc>
 <defs>
   <pattern id="tbd" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern>
   <marker id="aI" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F172A"/></marker>
@@ -168,9 +168,11 @@
 <text x="966" y="542.5" font-size="10.5" fill="#475569">detect ≤ 0.5 s + warn ≤ 0.5 s</text>
 <line x1="350" y1="557" x2="364" y2="557" stroke="#CBD5E1" stroke-width="1.2"/>
 <text x="966" y="560.5" font-size="10.5" fill="#475569" font-style="italic">no time at 8b8c6ae (T-28 added 2026-10-12)</text>
-<rect x="350" y="570" width="567.5" height="10" fill="#D97706"/>
-<rect x="850" y="570" width="67.5" height="10" fill="#D2553F" fill-opacity="0.9"/>
-<text x="966" y="578.5" font-size="10.5" fill="#D2553F" font-weight="600">siren ≈ 1.14 s, exceeds 1 s (T-28, OI-8)</text>
+<rect x="350" y="570" width="600" height="10" fill="#D97706"/>
+<rect x="850" y="570" width="100" height="10" fill="#D2553F" fill-opacity="0.9"/>
+<path d="M937 582L941 568M942 582L946 568" stroke="#FFFFFF" stroke-width="2.4"/>
+<path d="M950 569L957 575L950 581z" fill="#D2553F"/>
+<text x="966" y="578.5" font-size="10.5" fill="#D2553F" font-weight="600">siren ≤ 1.26 s worst case, exceeds 1 s (T-28, OI-8)</text>
 <text x="40" y="609" font-size="12" fill="#0F172A" font-weight="600">SoC heartbeat loss → siren</text>
 <text x="40" y="624" font-size="10" fill="#475569">FSR-02.05, TSR-516</text>
 <text x="338" y="608.5" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">budget</text>
@@ -186,13 +188,8 @@
 <path d="M937 630L941 616M942 630L946 616" stroke="#FFFFFF" stroke-width="2.4"/>
 <path d="M950 617L957 623L950 629z" fill="#D2553F"/>
 <text x="966" y="626.5" font-size="10.5" fill="#0F172A">siren starts at T-06: 4–5 s (T-07)</text>
-<rect x="350" y="636" width="600" height="10" fill="#D97706"/>
-<rect x="950" y="636" width="0" height="10" fill="#FCD9A8"/>
-<rect x="850" y="636" width="100" height="10" fill="#D2553F" fill-opacity="0.9"/>
-<rect x="950" y="636" width="0" height="10" fill="#FFFFFF" fill-opacity="0.45"/>
-<path d="M937 648L941 634M942 648L946 634" stroke="#FFFFFF" stroke-width="2.4"/>
-<path d="M950 635L957 641L950 647z" fill="#D2553F"/>
-<text x="966" y="644.5" font-size="10.5" fill="#0F172A">unchanged: starts at T-06b, 4–5 s (T-07)</text>
+<rect x="350" y="636" width="280" height="10" fill="#D97706"/>
+<text x="966" y="644.5" font-size="10.5" fill="#0F172A">≈ 0.56 s if engaged, all builds, c33343b (T-07a)</text>
 <line x1="850" y1="526" x2="850" y2="656" stroke="#0F172A" stroke-width="1.6"/>
 <rect x="800" y="503" width="100" height="18" fill="#0F172A" rx="9"/>
 <text x="850" y="515.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1 s to warning</text>
