@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-07 Software tool classification and qualification |
 | Standard reference | ISO 26262-8:2018 §11; ISO/SAE 21434:2021 §5 (tool management); ISO/PAS 8800:2024 (tools for AI development, informative) |
-| Version | 0.2 (§3 note and OI-8: modelling-tool evaluation [TE-01](tool-evaluations/TE-01-modelling-tools.md), proposed TL-23…TL-26 not yet entered; 2026-10-13). 0.1 |
+| Version | 0.3 (TE-01 decided, maintainer 2026-10-13: TL-23…TL-26 entered in §3, TQR-23 plan in §5, OI-8 closed, OI-9 added). 0.2 (§3 note and OI-8: modelling-tool evaluation [TE-01](tool-evaluations/TE-01-modelling-tools.md), proposed TL-23…TL-26 not yet entered; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (qualification effort driven by the envelope ASIL from WP-C-03) |
 | Author | Assurance team (initial draft) |
@@ -33,7 +33,7 @@ A tool used only on QM elements (the SoC stack under T-03) needs no ISO 26262 qu
 
 Versions are taken from `uv.lock` (openpilot) and `opendbc_repo/uv.lock` (opendbc tests) at the baseline unless stated.
 
-Modelling tools and the in-house state-machine checker and back-to-back harness are evaluated in [TE-01](tool-evaluations/TE-01-modelling-tools.md). Its proposed rows TL-23…TL-26 are not in this table until decided (OI-8).
+Modelling tools, the in-house state-machine checker and the back-to-back harness were evaluated in [TE-01](tool-evaluations/TE-01-modelling-tools.md). Its proposed rows TL-23…TL-26 are entered below as decided (maintainer, 2026-10-13, on the recommendation; a decision, not an independent review).
 
 | ID | Tool | Version / source | Use case | Target element | TI | TD | TCL | Rationale for TD |
 |---|---|---|---|---|---|---|---|---|
@@ -59,6 +59,10 @@ Modelling tools and the in-house state-machine checker and back-to-back harness 
 | TL-20 | coverage (Python) | 7.16.0 | Informational line coverage of openpilot | QM | TI1 | — | TCL1 | No threshold, no credit (GAP-36) |
 | TL-21 | UBSan | via host compiler | Undefined-behaviour detection in safety tests | Envelope verification | TI1 | — | TCL1 | Additional measure; no credit claimed beyond TL-02 TD rationale |
 | TL-22 | Jenkins (`Jenkinsfile`, `panda/Jenkinsfile`) | comma infrastructure | HIL, on-device tests | — | — | — | N/A | Not available to the fork (GAP-30) |
+| TL-23 | `check_state_machines.py` (in-house) | Superproject; standard library, PyYAML optional | Check the state-machine records (S1–S7) and generate the WP-W-05 §5 tables and diagrams | Envelope design description | TI2 | TD2 | **TCL2** | A false "consistent" or a wrong generated table could hide a design gap; generated tables are diffed and reviewed. Validation suite `assurance/trace/tools/test_check_state_machines.py` in CI ([TE-01](tool-evaluations/TE-01-modelling-tools.md) §5) |
+| TL-24 | SM-TOY-AUTH reference model, back-to-back harness and signal-layout check (in-house; cffi, `CANPacker`, DBC) | `assurance/05-software/reference-models/` | Back-to-back comparison with the safety C; findings only | Envelope verification (no credit) | TI1 | — | **TCL1** | Additional measure: no claim rests on an "agree" (TE-01-D3). Becomes TI2/TD2/TCL2 if credit is claimed; TQR-24 activities in TE-01 §5 |
+| TL-25 | HIL plant-model tool: Python with scipy; OpenModelica (FMU) only for a demonstrated fidelity need | Not yet in use | Plant for HIL bench stimuli | Envelope verification on the bench | TI1 if verdicts are taken on envelope outputs only; else TI2 | TD2 | TCL1 / TCL2 | Bench tests are to be designed with verdicts on envelope outputs (TE-01 §6). Classified again when a bench stage uses a plant |
+| TL-26 | Calculation scripts (Python, in the repository, `--check` in CI) | Superproject | Derived values in requirements and configuration data | Requirements, configuration data | TI2 | TD1 | TCL1 | Each value is recomputed by the script and compared with the document, and reviewed |
 
 ## 4. Known issues affecting the classification
 
@@ -86,6 +90,7 @@ Modelling tools and the in-house state-machine checker and back-to-back harness 
 | TL-05 gcov/gcovr | 2 | 1a + 1c | Validation project: small C file with known line/branch coverage, checked each release with the pinned versions | TQR-05 |
 | TL-06 mutation.py | 3 | 1c (+ 1d-style review as in-house tool) | Treat as LionDriver-owned software: requirements, review, tests. Validation: seed mutants with known outcome (one must survive, one must be killed) and check verdicts; report the mutation score per run | TQR-06 |
 | TL-07 unittest harness | 2 | 1a + 1c | Validation: a deliberately failing test must fail the job; test counts compared run-to-run; harness code (`libsafety_py.py`) reviewed as SR-T | TQR-07 |
+| TL-23 check_state_machines.py | 2 | 1c | Validation suite of known-bad records (one per check S1–S7) and golden output, in CI; review of the checker as SR-T code | TQR-23 (suite exists: `test_check_state_machines.py`; review open) |
 | TL-15 signing + release script | 2 | 1c | Validation in [WP-P-10](WP-P-10-release-management.md) dry-run: wrong key and tampered binary must be rejected by the bootstub on a bench device | TQR-15 (with WP-W-11) |
 
 QM tools (TL-08 to TL-14) get confidence measures under SOTIF/PAS 8800 instead: pinned versions, fork-owned process-replay references, and for tinygrad a back-to-back comparison of compiled-model outputs against a reference ONNX runtime on a fixed input set ([WP-W-10](../05-software/WP-W-10-ml-engineering.md)). If any of them is later used to support an ASIL claim, it is reclassified here.
@@ -110,4 +115,5 @@ QM tools (TL-08 to TL-14) get confidence measures under SOTIF/PAS 8800 instead: 
 | OI-5 | Add branch coverage and an MC/DC strategy (K-3) |
 | OI-6 | Pin host compiler, uv and CI runner images (K-8) |
 | OI-7 | Determine the `comma-deps-cppcheck` version used by panda (no panda lockfile in tree) |
-| OI-8 | Decide [TE-01](tool-evaluations/TE-01-modelling-tools.md) D1–D4 (modelling tool per use case; TL-23 `check_state_machines.py`, TL-24 reference model and back-to-back harness, TL-25 HIL plant tool, TL-26 calculation scripts), then enter the rows in §3 and the TCL2 plans in §5 |
+| OI-8 | **Closed 2026-10-13:** [TE-01](tool-evaluations/TE-01-modelling-tools.md) D1–D4 decided as recommended; TL-23…TL-26 in §3 |
+| OI-9 | Classify the other in-house assurance scripts (`check_trace.py`, `sync_requirements.py`, `check_links.py`, `case/tools`, `hara_model.py`, `fsc_model.py`) as TE-01-D4 asks; validation suites for `check_trace.py` and `sync_requirements.py` exist (`assurance/trace/tools/test_*.py`) |

@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Purpose | Input to [WP-P-07](../WP-P-07-tool-classification-qualification.md): which open-source tool to use for each LionDriver modelling use case, and how each tool in use would be classified |
-| Status | Draft — **recommendation, not a decision**. AI-assisted (Claude), not reviewed. Proposed TL rows (§5) enter WP-P-07 only after a decision |
+| Status | Draft, **decided** 2026-10-13 by the project maintainer, on the recommendation: D1–D4 as recommended in §7. AI-assisted (Claude), not reviewed. The TL rows are entered in WP-P-07 v0.3 §3. A maintainer decision, not an independent review |
 | Standard reference | ISO 26262-8:2018 §11 (TI, TD, TCL, qualification methods 1a–1d), applied as in WP-P-07 §2 |
 | Date | 2026-10-13 |
 | Baseline | Superproject branch `claude/modelling-b2b-toy-auth` (opendbc `7993399`, panda `8aa8671`) |
@@ -83,7 +83,7 @@ Related tools outside this evaluation are not classified in WP-P-07 either: `che
 4. For the HIL plant (U3), start with a **Python** model. Design the bench verdicts on envelope outputs (TI1). Bring in **OpenModelica** (as an FMU) only for a demonstrated fidelity need.
 5. Keep **no production code generation from models** (WP-W-01 §14). If that ever changes, it needs a new evaluation; none of the candidates has a qualified generator.
 
-## 7. Decisions requested
+## 7. Decisions (decided 2026-10-13 as recommended)
 
 | ID | Decision | Recommended |
 |---|---|---|
