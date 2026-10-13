@@ -142,7 +142,7 @@ jobs:
     - name: Install GNU Octave and gnuplot
       run: |
         sudo apt-get update -q
-        sudo apt-get install -y -q --no-install-recommends octave gnuplot
+        sudo apt-get install -y -q --no-install-recommends octave gnuplot fonts-freefont-otf ghostscript
         octave-cli --version | head -1
     - name: Run models and model checks
       run: octave-cli --no-gui assurance/models/octave/run_models.m build/octave-models
