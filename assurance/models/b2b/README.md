@@ -68,13 +68,13 @@ T4 covers checksum and quality flag only. The Toyota RX checks ignore counters, 
 
 ## Results at the first run (2026-10-13, opendbc `273f44e`)
 
-22 scenarios × 2 builds. No UNEXPECTED divergence.
+22 scenarios × 2 builds. No UNEXPECTED divergence. Since the T10c record correction (BB-C-02, below), BB-06b agrees in both builds.
 
 | Divergence | Scenario | Build | Class |
 |---|---|---|---|
 | T9: torque step over the rate limit is refused, but authority is kept | BB-09 | both | expected (SWSR-108 open) |
 | Authority granted again after a safety-mode set without a new driver engagement | BB-08b | both | known, BB-C-01 |
-| Cruise going active while MAIN_ON is off: the C code refuses at once, the record allows 150 ms | BB-06b | reference | known, BB-C-02 |
+| Cruise going active while MAIN_ON is off: the C code refuses at once, the record allowed 150 ms | BB-06b | reference | known, BB-C-02 (resolved: record corrected, the scenario now agrees) |
 
 ## Candidate findings
 
@@ -83,7 +83,7 @@ These are proposals for the next software review record. None is a finding until
 | ID | Observation | Analysis | Proposed disposition |
 |---|---|---|---|
 | BB-C-01 | After a safety-mode set (T7) while CRUISE_ACTIVE stays 1, the C code grants authority again on the next PCM_CRUISE frame, with no new driver engagement. This happens when every RX check has been received again before that frame (BB-08b). When one has not (BB-08a), authority stays off. | `set_safety_hooks` clears `cruise_engaged_prev` (safety.h), so a held CRUISE_ACTIVE looks like a rising edge to `pcm_cruise_check`. SWSR-311 requires this reset ("all … edge state reset on every safety-mode change"). SWSR-301 allows authority "only on a rising edge of CRUISE_ACTIVE". The two requirements conflict. Whether authority returns depends on the order in which the frames arrive after the mode set. | Requirement conflict for the safety engineer. One option: SWSR-311 sets the edge memory to "unknown", and authority then needs CRUISE_ACTIVE to be seen at 0 before a rising edge counts. A code change would go through CT-1 with an impact analysis. Relevant to T7 causes that happen during a drive (heartbeat loss and recovery). |
-| BB-C-02 | Cruise going active while MAIN_ON is off: the record's T10c guard says "for > 150 ms", but the C code never grants authority in this case. `toyota_cruise_main_check(true)` clears it in the same RX call that granted it (BB-06b). | The code is stricter than the record. SWSR-405 (c) says only "flag an RX fault"; it gives no tolerance and no special case for the first frame. | Record update: add the case "mismatch first seen on PCM_CRUISE: cleared at once" to T10c in `sm-toy-auth.yaml`. Then remove BB-C-02 from `KNOWN`. No code change. |
+| BB-C-02 | Cruise going active while MAIN_ON is off: the record's T10c guard says "for > 150 ms", but the C code never grants authority in this case. `toyota_cruise_main_check(true)` clears it in the same RX call that granted it (BB-06b). | The code is stricter than the record. SWSR-405 (c) says only "flag an RX fault"; it gives no tolerance and no special case for the first frame. | **Resolved 2026-10-13** (delegated decision, adopting the proposed disposition): T10c guard in `sm-toy-auth.yaml` now reads "at once if the mismatch is first seen on 0x1D2, otherwise once it lasts > 150 ms"; WP-W-05 §5.2 regenerated; the model follows; removed from `KNOWN`. No code change. |
 
 ## Limits
 

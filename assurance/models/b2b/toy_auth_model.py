@@ -35,7 +35,7 @@ NOT_EXECUTED = {
 # From the record (guard text of the cited transition)
 RX_TIMEOUT_PERIODS = 5             # T5 "lagging (5 periods)"
 RX_MIN_FREQUENCY_HZ = 10           # T5 "below 10 Hz"
-CRUISE_MAIN_TOLERANCE_US = 150000  # T10c "> 150 ms"
+CRUISE_MAIN_TOLERANCE_US = 150000  # T10c "lasts > 150 ms" (and "at once if first seen on 0x1D2")
 TX_ARRIVAL_TIMEOUT_US = {"STEERING_LKA": 50000, "ACC_CONTROL": 100000}  # T10b "0x2E4/0x343 for 50/100 ms"
 TX_RATE_REVOKE_REJECTED = 3        # T11 "3 rejected frames in one 125 ms half-window"
 TX_RATE_HALF_WINDOW_US = 125000
@@ -154,10 +154,10 @@ class ToyAuthModel:
           else:
             self.fired.append((t, "T8"))
         self.cruise = cruise
-        self._cruise_main(t)
+        self._cruise_main(t, on_pcm_cruise=True)
       elif name == "PCM_CRUISE_2":
         self.main_on = bool(values["MAIN_ON"])
-        self._cruise_main(t)
+        self._cruise_main(t, on_pcm_cruise=False)
       elif name == "BRAKE_MODULE":
         self.brake = bool(values["BRAKE_PRESSED"])
       elif name == "WHEEL_SPEEDS":
@@ -167,12 +167,14 @@ class ToyAuthModel:
       self._clear(t, "T3")
     self.brake_prev = self.brake
 
-  def _cruise_main(self, t: int) -> None:
+  def _cruise_main(self, t: int, on_pcm_cruise: bool) -> None:
     if not self._enabled("T10c"):
       return
     if self.cruise and not self.main_on:
       if self.mismatch_since is None:
         self.mismatch_since = t
+        if on_pcm_cruise:
+          self._clear(t, "T10c")
       elif t - self.mismatch_since > CRUISE_MAIN_TOLERANCE_US:
         self._clear(t, "T10c")
     else:

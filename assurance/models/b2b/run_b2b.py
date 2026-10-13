@@ -52,7 +52,6 @@ SAFETY_PARAM = 73  # CFG-001: LKA torque control, openpilot longitudinal, EPS fa
 KNOWN: dict[tuple[str, str, str], tuple[str, str]] = {
   ("BB-08b", "upstream", "C only"): ("BB-C-01", "T1"),
   ("BB-08b", "reference", "C only"): ("BB-C-01", "T1"),
-  ("BB-06b", "reference", "T1"): ("BB-C-02", "T10c"),
 }
 
 # Short labels for the coverage views
