@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-01 Item definition |
 | Standard reference | ISO 26262-3:2018 §5; ISO 21448:2022 §5 (specification of the functionality and system); ISO/SAE 21434:2021 §9.3; ASPICE SYS.1 |
-| Version | 0.5 (reference configuration named by generation, E210; OI-9 added; 2026-10-12). History: 0.4 (AOU-15 added: reference build used on camera-ACC configurations only, `0x411` refused (TSR-705 D-1); 2026-10-12). 0.3 (AOU-14 added for the reference build's fixed alternative experience; 2026-10-12) |
+| Version | 0.6 (§3.3 boundary diagram redrawn as Figure 3-1 with interface IDs; text version kept; 2026-10-13). 0.5 (reference configuration named by generation, E210; OI-9 added; 2026-10-12). History: 0.4 (AOU-15 added: reference build used on camera-ACC configurations only, `0x411` refused (TSR-705 D-1); 2026-10-12). 0.3 (AOU-14 added for the reference build's fixed alternative experience; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Item level (ASIL determined in [WP-C-03](WP-C-03-hara.md)) |
 | Author | Assurance team (initial draft) |
@@ -80,6 +80,12 @@ LD-SDA helps the driver by controlling steering (lane centring) and speed (adapt
 
 ### 3.3 Boundary diagram
 
+![Figure 3-1: item boundary of LD-SDA, with elements E-01 to E-06 and interfaces IF-01 to IF-09](figures/fig-3-1-item-boundary.svg)
+
+*Figure 3-1.* The item boundary (dashed) contains E-01…E-05. E-06 is drawn outside because it is excluded pending OI-4. Each line carries the interface ID of §3.4. The source is [`figures/fig-3-1-item-boundary.svg`](figures/fig-3-1-item-boundary.svg); change the figure and §3.1, §3.2 and §3.4 together.
+
+<details><summary>Text version of Figure 3-1</summary>
+
 ```
                 ┌──────────────────────── ITEM: LD-SDA ─────────────────────────┐
  Driver ◀──HMI──┤ E-04 device display/sound   E-01 SoC software + E-02 models  │
@@ -94,6 +100,8 @@ LD-SDA helps the driver by controlling steering (lane centring) and speed (adapt
    │ EPS      │ ECM / PCM   │ ABS / VSC │ Radar       │ Cluster   │   (existing elements, outside item)
    └──────────┴─────────────┴───────────┴─────────────┴───────────┘
 ```
+
+</details>
 
 ### 3.4 Interfaces
 
