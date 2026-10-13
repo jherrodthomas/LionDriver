@@ -20,7 +20,7 @@ Scope: everything needed to rebuild, re-verify and re-argue a LionDriver release
 
 ## 2. State as found at `8b8c6ae` (historical)
 
-Status 2026-10-12: D-01 done (#3); submodules point at the forks under `jherrodthomas` with absolute URLs; opendbc and panda pinned at `opendbc_repo@7993399` and `panda@6dee6fa` (LionDriver #41 and #45; `6dee6fa` contains the siren change `b790fca`). The table below records the state at `8b8c6ae`.
+Status 2026-10-12: D-01 done (#3); submodules point at the forks under `jherrodthomas` with absolute URLs; opendbc and panda pinned at `opendbc_repo@273f44e` and `panda@6dee6fa` (LionDriver #41, #42 and #45; `273f44e` contains `7993399`; `6dee6fa` contains the siren change `b790fca`). The table below records the state at `8b8c6ae`.
 
 | Item | Observation | Evidence |
 |---|---|---|

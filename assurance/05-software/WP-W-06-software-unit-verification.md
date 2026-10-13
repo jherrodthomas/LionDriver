@@ -91,7 +91,7 @@ Coverage exclusions (`GCOV_EXCL`, e.g. `modes/defaults.h:5-10, 18-24`) need a re
 
 | Measure | Role | Today |
 |---|---|---|
-| Mutation analysis | Checks test-suite strength (fault detection), complements coverage | `tests/mutation.py`, 3 accepted survivors (§4.4); LionDriver CI `safety.yaml` `mutation`, default build only; a `LIONDRIVER_REFERENCE` variant is proposed in LionDriver PR #44, not yet merged |
+| Mutation analysis | Checks test-suite strength (fault detection), complements coverage | `tests/mutation.py`, 3 accepted survivors (§4.4); LionDriver CI `safety.yaml` `mutation`, default and `LIONDRIVER_REFERENCE` builds (reference variant added by LionDriver #44), not yet merged |
 | Undefined-behaviour sanitizer | Detects UB on the host build | UBSan run (`test.sh:11`, `libsafety_py.py:27-28`) |
 | Drive-log safety replay | Plausibility of the safety mode on real data | `tests/safety_replay/replay_drive.py` (needs logs; not fork-owned) |
 | Analyser self-test | Confidence in MISRA tool | `misra/test_mutation.py` (§4.3) |
@@ -185,7 +185,7 @@ Note: tests assert constants copied into the test classes (`test_toyota.py:490-5
 | Pass criterion | No surviving mutant other than the accepted list | `mutation.py:608-617` |
 | Accepted survivors | 3, all `boundary` mutator: `lateral.h:188` (curvature real-time window roll, `MAX_RT_INTERVAL / 2U`), `lateral.h:218` and `lateral.h:219` (angle-rate bounds in `steer_angle_cmd_checks`) | `mutation.py:608-612` |
 | Relevance to reference configuration | None of the 3 lines executes in the Toyota LKA torque path: line 188 is in the curvature check (not used by Toyota); lines 218-219 are in the angle check used by Toyota **LTA** (`ToyotaSafetyFlags.LTA`), which is not set for `TOYOTA_COROLLA_TSS2`. Each still needs a justification record (WP-P-07 K-7) | |
-| Build variants mutated | Default build only. Reference-only code (TSR-110 EPS fault, TSR-405(c), TSR-518 TX rate, TSR-705 D-1) is not yet mutation-tested; a `LIONDRIVER_REFERENCE` mutation run is proposed in LionDriver PR #44, not yet merged. No CI run recorded as evidence yet | `.github/workflows/safety.yaml` |
+| Build variants mutated | Default and reference builds (reference variant added by LionDriver #44), so reference-only code (TSR-110 EPS fault, TSR-405(c), TSR-518 TX rate, TSR-705 D-1) is now mutated too. No CI run recorded as evidence yet | `.github/workflows/safety.yaml` |
 | Mutation score report | Not produced | |
 | Baseline sanity check | Aborts if unmutated tests fail (`mutation.py:527-532`); does not detect false "killed" verdicts | WP-P-07 TL-06 |
 
@@ -245,7 +245,7 @@ The Toyota safety mode was re-implemented independently in [XZACT](https://githu
 | UV-G1 | Line coverage only; no branch, no MC/DC | ASIL C structural coverage not demonstrated | GAP-13 | Add branch gate; select and qualify MC/DC tool (OI-3) |
 | UV-G2 | Tests run on x86/arm64 host, `-O0`; target Cortex-M7 `-Os` never tested by unit tests | Compiler (TL-01 TCL3) and target-specific defects undetected | GAP-13, GAP-30 | VS-UV-20 on HIL (D-04) |
 | UV-G3 | Tested configuration is `ALLOW_DEBUG`; release configuration only compiled | Tested ≠ shipped | GAP-41 | VS-UV-19 |
-| UV-G4 | MISRA, mutation (default build) and the panda host tests run in LionDriver CI from 2026-10-12; no run recorded as evidence yet. Reference-only code not mutation-tested (reference variant proposed in PR #44, not yet merged) | Evidence not yet archived | GAP-39 | OI-4; §8 |
+| UV-G4 | MISRA, mutation (default and reference builds) and the panda host tests run in LionDriver CI from 2026-10-12; no run recorded as evidence yet. Reference-variant mutation added by #44 | Evidence not yet archived | GAP-39 | OI-4; §8 |
 | UV-G5 | No requirement tags; tests assert copied constants | No requirements-based test argument | GAP-14 | `@req` tags + `links/verification.yaml` (WP-P-06) |
 | UV-G6 | No deviation records for MISRA suppressions; bootstub not analysed; 2 rules unchecked | MISRA compliance claim incomplete | GAP-13 | WP-W-01 §9, panda bootstub variant |
 | UV-G7 | 3 accepted mutation survivors without justification; no mutation score | Weak evidence of test strength | GAP-13 | Justification records; mutation score in report |

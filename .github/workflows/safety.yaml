@@ -111,3 +111,22 @@ jobs:
       run: |
         source setup.sh
         python opendbc/safety/tests/mutation.py
+
+  mutation_reference:
+    name: safety mutation tests (reference build)
+    # The reference-only additions (LIONDRIVER_REFERENCE: RX supervision, EPS fault, cruise-main check, TX arrival, ...)
+    # are not compiled in the standard variant, so the job above never mutates them. mutation.py compiles and tests the
+    # reference variant when LIONDRIVER_REFERENCE=1, as the unit tests do
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+    - uses: actions/checkout@v7
+    - name: Checkout opendbc submodule
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Run mutation tests, LionDriver reference build variant
+      working-directory: opendbc_repo
+      env:
+        LIONDRIVER_REFERENCE: "1"
+      run: |
+        source setup.sh
+        python opendbc/safety/tests/mutation.py

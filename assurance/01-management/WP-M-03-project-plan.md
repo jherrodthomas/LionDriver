@@ -204,7 +204,7 @@ Derived from [gap assessment §9](../00-assessment/gap-assessment.md#9-priority-
 | B-14 | Merge LionDriver PR #45 (panda `b790fca`, TSR-516(b)) | — | Pin on `liondriver-dev` | PM |
 | B-15 | Maintainer decision D-09 (FSC envelope strategy, option (c)) | WP-C-04 OI-1, D-09 | Decision record in WP-M-01 §8 and WP-M-07 §5 | PM |
 | B-16 | Fork-owned reference drive logs | R-27 | Logs | PM |
-| B-17 | Run the panda host tests and the reference-variant mutation tests in LionDriver CI (mutation: proposed in PR #44, not merged) | GAP-39 | CI jobs | ENG |
+| B-17 | Run the panda host tests and the reference-variant mutation tests in LionDriver CI (both in `safety.yaml`: host tests 2026-10-12, reference-variant mutation via #44) | GAP-39 | CI jobs | ENG |
 
 ## 10. Open items
 
