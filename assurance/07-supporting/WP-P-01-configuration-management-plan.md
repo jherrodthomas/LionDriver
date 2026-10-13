@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-01 Configuration management plan (incl. safety-relevant file list, baselines, submodules) |
 | Standard reference | ISO 26262-8:2018 §7; ISO 26262-2:2018 §6 (release, baselines); ISO/SAE 21434:2021 §5 (configuration management); ASPICE 4.0 SUP.8 |
-| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: §2 marked historical, current pins, build variant in CI-6, OI-1/OI-2/OI-7 status; 2026-10-12). 0.1 |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: §2 marked historical, current pins, build variant in CI-6, OI-1/OI-2/OI-7 status; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (highest: ASIL of the envelope as set by WP-C-03) |
 | Author | Assurance team (initial draft) |
@@ -20,7 +20,7 @@ Scope: everything needed to rebuild, re-verify and re-argue a LionDriver release
 
 ## 2. State as found at `8b8c6ae` (historical)
 
-Status 2026-10-12: D-01 done (#3); submodules point at the forks under `jherrodthomas` with absolute URLs; opendbc and panda pinned at `opendbc_repo@273f44e` and `panda@6dee6fa` (LionDriver #41, #42 and #45; `273f44e` contains `7993399`; `6dee6fa` contains the siren change `b790fca`). The table below records the state at `8b8c6ae`.
+Status 2026-10-12: D-01 done (#3); submodules point at the forks under `jherrodthomas` with absolute URLs; opendbc and panda pinned at `opendbc_repo@273f44e` and `panda@c33343b` (LionDriver #41, #42 and #45; `273f44e` contains `7993399`; `c33343b` contains `6dee6fa`, which contains the siren change `b790fca`; 2026-10-13: panda `c33343b` adds the heartbeat-loss siren, panda#15). The table below records the state at `8b8c6ae`.
 
 | Item | Observation | Evidence |
 |---|---|---|

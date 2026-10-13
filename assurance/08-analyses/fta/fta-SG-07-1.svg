@@ -1,198 +1,219 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="3094" height="870" viewBox="0 0 3094 870" font-family="Helvetica, Arial, sans-serif">
-<style>.id{font-size:11px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.n{font-size:9.5px;font-style:italic;text-anchor:middle;fill:#444}.b{font-size:8.6px;font-weight:600;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
-<rect width="100%" height="100%" fill="#fff"/>
-<text x="30" y="36" class="h">FTA SG-07 — suppression, delay or alteration of the stock PCS/AEB</text>
-<rect x="1665.0" y="70" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="2.2"/>
-<text x="1765.0" y="89" class="id">TE-07</text>
-<text x="1765.0" y="102.5" class="d">Stock PCS/AEB suppressed, delayed</text>
-<text x="1765.0" y="115.0" class="d">or altered</text>
-<path d="M1747.0,157.0 Q1765.0,149.0 1783.0,157.0 Q1781.0,133.0 1765.0,123.0 Q1749.0,133.0 1747.0,157.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<line x1="1765.0" y1="157.0" x2="1765.0" y2="175.0" class="w"/>
-<line x1="675.0" y1="175.0" x2="2855.0" y2="175.0" class="w"/>
-<line x1="675.0" y1="175.0" x2="675.0" y2="193.0" class="w"/>
-<line x1="1547.0" y1="175.0" x2="1547.0" y2="193.0" class="w"/>
-<line x1="1983.0" y1="175.0" x2="1983.0" y2="193.0" class="w"/>
-<line x1="2419.0" y1="175.0" x2="2419.0" y2="193.0" class="w"/>
-<line x1="2855.0" y1="175.0" x2="2855.0" y2="193.0" class="w"/>
-<rect x="575.0" y="193.0" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="675.0" y="212.0" class="id">G7.1</text>
-<text x="675.0" y="225.5" class="d">Camera-side PCS frames not</text>
-<text x="675.0" y="238.0" class="d">forwarded while the relay</text>
-<text x="675.0" y="250.5" class="d">intercepts</text>
-<path d="M657.0,292.5 Q675.0,284.5 693.0,292.5 Q691.0,268.5 675.0,258.5 Q659.0,268.5 657.0,292.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<line x1="675.0" y1="292.5" x2="675.0" y2="310.5" class="w"/>
-<line x1="130.0" y1="310.5" x2="1220.0" y2="310.5" class="w"/>
-<line x1="130.0" y1="310.5" x2="130.0" y2="328.5" class="w"/>
-<line x1="348.0" y1="310.5" x2="348.0" y2="328.5" class="w"/>
-<line x1="566.0" y1="310.5" x2="566.0" y2="328.5" class="w"/>
-<line x1="784.0" y1="310.5" x2="784.0" y2="328.5" class="w"/>
-<line x1="1002.0" y1="310.5" x2="1002.0" y2="328.5" class="w"/>
-<line x1="1220.0" y1="310.5" x2="1220.0" y2="328.5" class="w"/>
-<rect x="30" y="328.5" width="200" height="119.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="130.0" y="347.5" class="id">BE-7.01</text>
-<text x="130.0" y="361.0" class="d">MCU hang with the relay energised</text>
-<text x="130.0" y="373.5" class="d">(no IWDG; GAP-07, GAP-43)</text>
-<text x="130.0" y="386.0" class="d">2026-10-12: IWDG reset ≤ ≈ 90 ms</text>
-<text x="130.0" y="398.5" class="d">nominal (TSR-501); residual:</text>
-<text x="130.0" y="411.0" class="d">hang-to-reset plus relay drop-out</text>
-<text x="130.0" y="423.5" class="d">against the 0.2 s FTTI</text>
-<rect x="109.8" y="429.5" width="40.4" height="13" rx="6.5" fill="#b3261e"/>
-<text x="130.0" y="439.0" class="b" fill="#fff">SPF-06</text>
-<circle cx="130.0" cy="462.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="248" y="328.5" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="348.0" y="347.5" class="id">BE-7.02</text>
-<text x="348.0" y="361.0" class="d">Power-save command 0xe7 in car mode</text>
-<text x="348.0" y="373.5" class="d">stops the camera-side bus</text>
-<text x="348.0" y="386.0" class="d">(FFI-CM-08)</text>
-<rect x="313.7" y="392.0" width="40.4" height="13" rx="6.5" fill="#b3261e"/>
-<text x="333.9" y="401.5" class="b" fill="#fff">SPF-08</text>
-<rect x="358.1" y="392.0" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
-<text x="370.2" y="401.5" class="b" fill="#fff">FFI</text>
-<circle cx="348.0" cy="425.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="466" y="328.5" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="566.0" y="347.5" class="id">BE-7.03</text>
-<text x="566.0" y="361.0" class="d">Other SoC configuration commands</text>
-<text x="566.0" y="373.5" class="d">disturb bus 2 (0xe5, 0xde, 0xf1;</text>
-<text x="566.0" y="386.0" class="d">FFI-CM-09)</text>
-<rect x="553.9" y="392.0" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
-<text x="566.0" y="401.5" class="b" fill="#fff">FFI</text>
-<circle cx="566.0" cy="425.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="684" y="328.5" width="200" height="78.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="784.0" y="347.5" class="id">BE-7.04</text>
-<text x="784.0" y="361.0" class="d">Forwarding queue overflow or</text>
-<text x="784.0" y="373.5" class="d">latency under worst-case load</text>
-<text x="784.0" y="386.0" class="d">(TSR-707 not verified; overflow</text>
-<text x="784.0" y="398.5" class="d">counted only, can_common.h:165)</text>
-<circle cx="784.0" cy="421.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="902" y="328.5" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="1002.0" y="347.5" class="id">BE-7.05</text>
-<text x="1002.0" y="361.0" class="d">Block list wrongly includes a PCS</text>
-<text x="1002.0" y="373.5" class="d">message (systematic; static list</text>
-<text x="1002.0" y="386.0" class="d">safety.h:270-281)</text>
-<circle cx="1002.0" cy="409.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="1120" y="328.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="1220.0" y="347.5" class="id">BE-7.06</text>
-<text x="1220.0" y="361.0" class="d">Camera-side FDCAN or transceiver</text>
-<text x="1220.0" y="373.5" class="d">fault (random HW)</text>
-<circle cx="1220.0" cy="396.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="1447.0" y="193.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="1547.0" y="212.0" class="id">G7.2</text>
-<text x="1547.0" y="225.5" class="d">Item originates or alters</text>
-<text x="1547.0" y="238.0" class="d">PCS-relevant frames</text>
-<path d="M1529.0,280.0 L1529.0,262.0 A18,16 0 0 1 1565.0,262.0 L1565.0,280.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<line x1="1547.0" y1="280.0" x2="1547.0" y2="298.0" class="w"/>
-<line x1="1438.0" y1="298.0" x2="1656.0" y2="298.0" class="w"/>
-<line x1="1438.0" y1="298.0" x2="1438.0" y2="328.5" class="w"/>
-<line x1="1656.0" y1="298.0" x2="1656.0" y2="328.5" class="w"/>
-<rect x="1338" y="328.5" width="200" height="119.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="1438.0" y="347.5" class="id">BE-7.07</text>
-<text x="1438.0" y="361.0" class="d">0x344, 0x411 and DSU IDs in the TX</text>
-<text x="1438.0" y="373.5" class="d">whitelist without a content check</text>
-<text x="1438.0" y="386.0" class="d">(modes/toyota.h:19-32; GAP-42)</text>
-<text x="1438.0" y="398.5" class="d">2026-10-12: removed in the</text>
-<text x="1438.0" y="411.0" class="d">reference build (TSR-705; 0x411</text>
-<text x="1438.0" y="423.5" class="d">kept in other builds)</text>
-<rect x="1396.2" y="429.5" width="83.6" height="13" rx="6.5" fill="#5f6368"/>
-<text x="1438.0" y="439.0" class="b" fill="#fff">latent, design</text>
-<circle cx="1438.0" cy="462.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="1556" y="328.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="1656.0" y="347.5" class="id">BE-7.08</text>
-<text x="1656.0" y="361.0" class="d">SoC sends such a frame (QM fault or</text>
-<text x="1656.0" y="373.5" class="d">compromise)</text>
-<rect x="1627.7" y="379.5" width="56.6" height="13" rx="6.5" fill="#1a5fb4"/>
-<text x="1656.0" y="389.0" class="b" fill="#fff">FFI-CM-05</text>
-<circle cx="1656.0" cy="412.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="1883.0" y="193.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="1983.0" y="212.0" class="id">G7.3</text>
-<text x="1983.0" y="225.5" class="d">Relay held in intercept while</text>
-<text x="1983.0" y="238.0" class="d">forwarding is not running</text>
-<path d="M1965.0,280.0 L1965.0,262.0 A18,16 0 0 1 2001.0,262.0 L2001.0,280.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<line x1="1983.0" y1="280.0" x2="1983.0" y2="298.0" class="w"/>
-<line x1="1874.0" y1="298.0" x2="2092.0" y2="298.0" class="w"/>
-<line x1="1874.0" y1="298.0" x2="1874.0" y2="328.5" class="w"/>
-<line x1="2092.0" y1="298.0" x2="2092.0" y2="328.5" class="w"/>
-<rect x="1774" y="328.5" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="1874.0" y="347.5" class="id">BE-7.09</text>
-<text x="1874.0" y="361.0" class="d">Relay welded or driven without</text>
-<text x="1874.0" y="373.5" class="d">forwarding (no readback; GAP-12)</text>
-<rect x="1853.8" y="379.5" width="40.4" height="13" rx="6.5" fill="#b3261e"/>
-<text x="1874.0" y="389.0" class="b" fill="#fff">SPF-07</text>
-<circle cx="1874.0" cy="412.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="1992" y="328.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2092.0" y="347.5" class="id">BE-7.10</text>
-<text x="2092.0" y="361.0" class="d">Forwarding not running (device off,</text>
-<text x="2092.0" y="373.5" class="d">MCU in reset or bootloader)</text>
-<circle cx="2092.0" cy="396.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="2319.0" y="193.0" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2419.0" y="212.0" class="id">G7.4</text>
-<text x="2419.0" y="225.5" class="d">Harness cuts the stock path</text>
-<path d="M2401.0,267.5 Q2419.0,259.5 2437.0,267.5 Q2435.0,243.5 2419.0,233.5 Q2403.0,243.5 2401.0,267.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<line x1="2419.0" y1="267.5" x2="2419.0" y2="285.5" class="w"/>
-<line x1="2310.0" y1="285.5" x2="2528.0" y2="285.5" class="w"/>
-<line x1="2310.0" y1="285.5" x2="2310.0" y2="328.5" class="w"/>
-<line x1="2528.0" y1="285.5" x2="2528.0" y2="328.5" class="w"/>
-<rect x="2210" y="328.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2310.0" y="347.5" class="id">BE-7.11</text>
-<text x="2310.0" y="361.0" class="d">Connector intermittent or partly</text>
-<text x="2310.0" y="373.5" class="d">seated (SFMEA-30; DFI-05, DFI-20)</text>
-<circle cx="2310.0" cy="396.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="2428" y="328.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2528.0" y="347.5" class="id">BE-7.12</text>
-<text x="2528.0" y="361.0" class="d">Passive camera-to-car path broken</text>
-<text x="2528.0" y="373.5" class="d">in the harness (TSR-702)</text>
-<circle cx="2528.0" cy="396.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="2755.0" y="193.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2855.0" y="212.0" class="id">G7.5</text>
-<text x="2855.0" y="225.5" class="d">PCM gives the item's ACC request</text>
-<text x="2855.0" y="238.0" class="d">priority over PCS braking</text>
-<path d="M2837.0,280.0 L2837.0,262.0 A18,16 0 0 1 2873.0,262.0 L2873.0,280.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<line x1="2855.0" y1="280.0" x2="2855.0" y2="298.0" class="w"/>
-<line x1="2746.0" y1="298.0" x2="2964.0" y2="298.0" class="w"/>
-<line x1="2746.0" y1="298.0" x2="2746.0" y2="328.5" class="w"/>
-<line x1="2964.0" y1="298.0" x2="2964.0" y2="328.5" class="w"/>
-<rect x="2646" y="328.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2746.0" y="347.5" class="id">BE-7.13</text>
-<text x="2746.0" y="361.0" class="d">Item sends an ACC request during a</text>
-<text x="2746.0" y="373.5" class="d">PCS event</text>
-<circle cx="2746.0" cy="396.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<rect x="2864" y="328.5" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="2964.0" y="347.5" class="id">UE-7.14</text>
-<text x="2964.0" y="361.0" class="d">PCM arbitration does not prioritise</text>
-<text x="2964.0" y="373.5" class="d">PCS (AOU-04R fails)</text>
-<path d="M2964.0,381.5 L2984.0,396.5 L2964.0,411.5 L2944.0,396.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="30" y="535.5" class="h">Symbols (IEC 61025)</text>
-<rect x="32" y="549.5" width="36" height="22" fill="#fff" stroke="#111" stroke-width="1.1"/>
-<text x="96" y="564.5" class="l">Top / intermediate event</text>
-<path d="M32,617.5 Q50,609.5 68,617.5 Q66,593.5 50,583.5 Q34,593.5 32,617.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="602.5" class="l">OR gate</text>
-<path d="M32,655.5 L32,637.5 A18,16 0 0 1 68,637.5 L68,655.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="640.5" class="l">AND gate</text>
-<circle cx="50" cy="674.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="678.5" class="l">Basic event</text>
-<path d="M50,697.5 L70,712.5 L50,727.5 L30,712.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="716.5" class="l">Undeveloped event (outside the item or not developed)</text>
-<path d="M50,735.5 L68,765.5 L32,765.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="59" y1="750.5" x2="80" y2="750.5" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="754.5" class="l">Transfer: continued on another sheet</text>
-<path d="M50,773.5 L68,803.5 L32,803.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="96" y="792.5" class="l">Transfer in: gate developed elsewhere</text>
-<rect x="30" y="819.5" width="24.2" height="13" rx="6.5" fill="#b3261e"/>
-<text x="42.1" y="829.0" class="b" fill="#fff">SPF</text>
-<rect x="59.2" y="819.5" width="40.4" height="13" rx="6.5" fill="#5f6368"/>
-<text x="79.4" y="829.0" class="b" fill="#fff">latent</text>
-<rect x="104.60000000000001" y="819.5" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
-<text x="122.1" y="829.0" class="b" fill="#fff">SOTIF</text>
-<rect x="144.60000000000002" y="819.5" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
-<text x="175.6" y="829.0" class="b" fill="#fff">CCF DFI-nn</text>
-<rect x="211.60000000000002" y="819.5" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
-<text x="223.7" y="829.0" class="b" fill="#fff">FFI</text>
-<rect x="240.8" y="819.5" width="72.8" height="13" rx="6.5" fill="#3d6b3d"/>
-<text x="277.2" y="829.0" class="b" fill="#fff">outside item</text>
-<rect x="318.6" y="819.5" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
-<text x="344.2" y="829.0" class="b" fill="#222">repeated</text>
-<rect x="2634" y="523.5" width="430" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="2644" y="545.5" class="h" text-anchor="start">LionDriver — FTA SG-07</text>
-<text x="2644" y="561.5" class="l" text-anchor="start">suppression, delay or alteration of the stock PCS/AEB</text>
-<text x="2644" y="577.5" class="l" text-anchor="start">Sheet 1 of 1   ·   top of sheet: TE-07</text>
-<text x="2644" y="593.5" class="l" text-anchor="start">Source: WP-A-04 §8 (analysis of record)</text>
-<text x="2644" y="609.5" class="s" text-anchor="start">Generated by fta_diagrams.py — edit WP-A-04, not this file</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="2236" height="936" viewBox="0 0 2236 936">
+<title>FTA SG-07 sheet 1 of 2: suppression, delay or alteration of the stock PCS/AEB</title>
+<style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.n{font:italic 400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#6b7385}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.gl{font:700 7.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.06em;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.title2{font:600 17px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#9aa3b2;stroke-width:1.4;stroke-linecap:round}.wh{stroke:#c62828;stroke-width:3.2;stroke-linecap:round}.shadow{fill:#0f172a;opacity:.06}</style>
+<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
+<rect width="100%" height="100%" fill="#f7f8fa"/>
+<rect y="78" width="100%" height="858" fill="url(#dots)"/>
+<rect width="100%" height="78" fill="#0f2a44"/>
+<text x="40" y="32" class="eyebrow">FTA · SG-07 · WP-A-04 §8</text>
+<text x="40" y="59" class="title">Suppression, delay or alteration of the stock PCS/AEB</text>
+<rect x="1960" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
+<text x="2078" y="44" class="hc">Sheet 1 of 2  ·  ASIL B</text>
+<rect x="949.0" y="116.5" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="947.5" y="114" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M956.5,114 H1158.5 A9,9 0 0 1 1167.5,123 V119 H947.5 V123 A9,9 0 0 1 956.5,114 Z" fill="#0f2a44"/>
+<text x="961.5" y="139" class="id">TE-07</text>
+<text x="1153.5" y="139" class="kind">TOP EVENT</text>
+<text x="961.5" y="153.5" class="d">Stock PCS/AEB suppressed,</text>
+<text x="961.5" y="168.0" class="d">delayed or altered</text>
+<path d="M1037.5,223.0 Q1057.5,214.0 1077.5,223.0 Q1075.5,196.0 1057.5,185.0 Q1039.5,196.0 1037.5,223.0 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="1057.5" y="215.0" class="gl" fill="#c62828">OR</text>
+<line x1="150.0" y1="246.0" x2="1965.0" y2="246.0" class="w"/>
+<line x1="150.0" y1="246.0" x2="1965.0" y2="246.0" class="wh"/>
+<line x1="1057.5" y1="223.0" x2="1057.5" y2="246.0" class="wh"/>
+<line x1="150.0" y1="246.0" x2="150.0" y2="271.0" class="wh"/>
+<line x1="513.0" y1="246.0" x2="513.0" y2="271.0" class="w"/>
+<line x1="997.0" y1="246.0" x2="997.0" y2="271.0" class="w"/>
+<line x1="1481.0" y1="246.0" x2="1481.0" y2="271.0" class="wh"/>
+<line x1="1965.0" y1="246.0" x2="1965.0" y2="271.0" class="wh"/>
+<rect x="41.5" y="273.5" width="220" height="107.5" rx="9" class="shadow"/>
+<rect x="40" y="271.0" width="220" height="107.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M49,271.0 H251 A9,9 0 0 1 260,280.0 V276.0 H40 V280.0 A9,9 0 0 1 49,271.0 Z" fill="#1d2433"/>
+<text x="54" y="296.0" class="id">G7.1</text>
+<text x="246" y="296.0" class="kind">TRANSFER OUT</text>
+<text x="54" y="310.5" class="d">Camera-side PCS frames not</text>
+<text x="54" y="325.0" class="d">forwarded while the relay</text>
+<text x="54" y="339.5" class="d">intercepts</text>
+<rect x="54.0" y="347.5" width="128.0" height="16" rx="8" fill="#e6e9ef"/>
+<text x="118.0" y="359.0" class="chip" fill="#334155">continued on sheet 2</text>
+<path d="M150.0,378.5 L170.0,411.5 L130.0,411.5 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><line x1="160.0" y1="394.5" x2="184.0" y2="394.5" stroke="#c62828" stroke-width="2.4" stroke-linecap="round"/>
+<rect x="404.5" y="273.5" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="403.0" y="271.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M412.0,271.0 H614.0 A9,9 0 0 1 623.0,280.0 V276.0 H403.0 V280.0 A9,9 0 0 1 412.0,271.0 Z" fill="#1d2433"/>
+<text x="417.0" y="296.0" class="id">G7.2</text>
+<text x="609.0" y="296.0" class="kind">INTERMEDIATE</text>
+<text x="417.0" y="310.5" class="d">Item originates or alters</text>
+<text x="417.0" y="325.0" class="d">PCS-relevant frames</text>
+<path d="M493.0,380.0 L493.0,360.0 A20,18 0 0 1 533.0,360.0 L533.0,380.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="513.0" y="372.0" class="gl" fill="#1d2433">AND</text>
+<line x1="392.0" y1="403.0" x2="634.0" y2="403.0" class="w"/>
+<line x1="513.0" y1="380.0" x2="513.0" y2="403.0" class="w"/>
+<line x1="392.0" y1="403.0" x2="392.0" y2="464.5" class="w"/>
+<line x1="634.0" y1="403.0" x2="634.0" y2="464.5" class="w"/>
+<rect x="283.5" y="467.0" width="220" height="151.0" rx="9" class="shadow"/>
+<rect x="282" y="464.5" width="220" height="151.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M291,464.5 H493 A9,9 0 0 1 502,473.5 V469.5 H282 V473.5 A9,9 0 0 1 291,464.5 Z" fill="#5f6368"/>
+<text x="296" y="489.5" class="id">BE-7.07</text>
+<text x="488" y="489.5" class="kind">BASIC</text>
+<text x="296" y="504.0" class="d">0x344, 0x411 and DSU IDs in the</text>
+<text x="296" y="518.5" class="d">TX whitelist without a content</text>
+<text x="296" y="533.0" class="d">check (modes/toyota.h:19-32;</text>
+<text x="296" y="547.5" class="d">GAP-42) 2026-10-12: removed in</text>
+<text x="296" y="562.0" class="d">the reference build (TSR-705;</text>
+<text x="296" y="576.5" class="d">0x411 kept in other builds)</text>
+<rect x="296.0" y="584.5" width="93.8" height="16" rx="8" fill="#5f6368"/>
+<text x="342.9" y="596.0" class="chip" fill="#fff">latent, design</text>
+<circle cx="392.0" cy="632.5" r="16" fill="#eceef1" stroke="#5f6368" stroke-width="1.7"/>
+<rect x="525.5" y="467.0" width="220" height="93.0" rx="9" class="shadow"/>
+<rect x="524" y="464.5" width="220" height="93.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M533,464.5 H735 A9,9 0 0 1 744,473.5 V469.5 H524 V473.5 A9,9 0 0 1 533,464.5 Z" fill="#1a5fb4"/>
+<text x="538" y="489.5" class="id">BE-7.08</text>
+<text x="730" y="489.5" class="kind">BASIC</text>
+<text x="538" y="504.0" class="d">SoC sends such a frame (QM fault</text>
+<text x="538" y="518.5" class="d">or compromise)</text>
+<rect x="538.0" y="526.5" width="65.3" height="16" rx="8" fill="#1a5fb4"/>
+<text x="570.6" y="538.0" class="chip" fill="#fff">FFI-CM-05</text>
+<circle cx="634.0" cy="574.5" r="16" fill="#e6effb" stroke="#1a5fb4" stroke-width="1.7"/>
+<rect x="888.5" y="273.5" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="887.0" y="271.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M896.0,271.0 H1098.0 A9,9 0 0 1 1107.0,280.0 V276.0 H887.0 V280.0 A9,9 0 0 1 896.0,271.0 Z" fill="#1d2433"/>
+<text x="901.0" y="296.0" class="id">G7.3</text>
+<text x="1093.0" y="296.0" class="kind">INTERMEDIATE</text>
+<text x="901.0" y="310.5" class="d">Relay held in intercept while</text>
+<text x="901.0" y="325.0" class="d">forwarding is not running</text>
+<path d="M977.0,380.0 L977.0,360.0 A20,18 0 0 1 1017.0,360.0 L1017.0,380.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="997.0" y="372.0" class="gl" fill="#1d2433">AND</text>
+<line x1="876.0" y1="403.0" x2="1118.0" y2="403.0" class="w"/>
+<line x1="997.0" y1="380.0" x2="997.0" y2="403.0" class="w"/>
+<line x1="876.0" y1="403.0" x2="876.0" y2="464.5" class="w"/>
+<line x1="1118.0" y1="403.0" x2="1118.0" y2="464.5" class="w"/>
+<rect x="767.5" y="467.0" width="220" height="93.0" rx="9" class="shadow"/>
+<rect x="766" y="464.5" width="220" height="93.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M775,464.5 H977 A9,9 0 0 1 986,473.5 V469.5 H766 V473.5 A9,9 0 0 1 775,464.5 Z" fill="#c62828"/>
+<text x="780" y="489.5" class="id">BE-7.09</text>
+<text x="972" y="489.5" class="kind">BASIC</text>
+<text x="780" y="504.0" class="d">Relay welded or driven without</text>
+<text x="780" y="518.5" class="d">forwarding (no readback; GAP-12)</text>
+<rect x="780.0" y="526.5" width="48.2" height="16" rx="8" fill="#c62828"/>
+<text x="804.1" y="538.0" class="chip" fill="#fff">SPF-07</text>
+<circle cx="876.0" cy="574.5" r="16" fill="#fde8e8" stroke="#c62828" stroke-width="1.7"/>
+<rect x="1009.5" y="467.0" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="1008" y="464.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1017,464.5 H1219 A9,9 0 0 1 1228,473.5 V469.5 H1008 V473.5 A9,9 0 0 1 1017,464.5 Z" fill="#64748b"/>
+<text x="1022" y="489.5" class="id">BE-7.10</text>
+<text x="1214" y="489.5" class="kind">BASIC</text>
+<text x="1022" y="504.0" class="d">Forwarding not running (device</text>
+<text x="1022" y="518.5" class="d">off, MCU in reset or bootloader)</text>
+<circle cx="1118.0" cy="552.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="1372.5" y="273.5" width="220" height="56.5" rx="9" class="shadow"/>
+<rect x="1371.0" y="271.0" width="220" height="56.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M1380.0,271.0 H1582.0 A9,9 0 0 1 1591.0,280.0 V276.0 H1371.0 V280.0 A9,9 0 0 1 1380.0,271.0 Z" fill="#1d2433"/>
+<text x="1385.0" y="296.0" class="id">G7.4</text>
+<text x="1577.0" y="296.0" class="kind">INTERMEDIATE</text>
+<text x="1385.0" y="310.5" class="d">Harness cuts the stock path</text>
+<path d="M1461.0,365.5 Q1481.0,356.5 1501.0,365.5 Q1499.0,338.5 1481.0,327.5 Q1463.0,338.5 1461.0,365.5 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="1481.0" y="357.5" class="gl" fill="#c62828">OR</text>
+<line x1="1360.0" y1="388.5" x2="1602.0" y2="388.5" class="w"/>
+<line x1="1360.0" y1="388.5" x2="1602.0" y2="388.5" class="wh"/>
+<line x1="1481.0" y1="365.5" x2="1481.0" y2="388.5" class="wh"/>
+<line x1="1360.0" y1="388.5" x2="1360.0" y2="464.5" class="wh"/>
+<line x1="1602.0" y1="388.5" x2="1602.0" y2="464.5" class="wh"/>
+<rect x="1251.5" y="467.0" width="220" height="85.5" rx="9" class="shadow"/>
+<rect x="1250" y="464.5" width="220" height="85.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M1259,464.5 H1461 A9,9 0 0 1 1470,473.5 V469.5 H1250 V473.5 A9,9 0 0 1 1259,464.5 Z" fill="#64748b"/>
+<text x="1264" y="489.5" class="id">BE-7.11</text>
+<text x="1456" y="489.5" class="kind">BASIC</text>
+<text x="1264" y="504.0" class="d">Connector intermittent or partly</text>
+<text x="1264" y="518.5" class="d">seated (SFMEA-30; DFI-05,</text>
+<text x="1264" y="533.0" class="d">DFI-20)</text>
+<circle cx="1360.0" cy="567.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
+<rect x="1493.5" y="467.0" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="1492" y="464.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M1501,464.5 H1703 A9,9 0 0 1 1712,473.5 V469.5 H1492 V473.5 A9,9 0 0 1 1501,464.5 Z" fill="#64748b"/>
+<text x="1506" y="489.5" class="id">BE-7.12</text>
+<text x="1698" y="489.5" class="kind">BASIC</text>
+<text x="1506" y="504.0" class="d">Passive camera-to-car path</text>
+<text x="1506" y="518.5" class="d">broken in the harness (TSR-702)</text>
+<circle cx="1602.0" cy="552.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
+<rect x="1856.5" y="273.5" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="1855.0" y="271.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M1864.0,271.0 H2066.0 A9,9 0 0 1 2075.0,280.0 V276.0 H1855.0 V280.0 A9,9 0 0 1 1864.0,271.0 Z" fill="#1d2433"/>
+<text x="1869.0" y="296.0" class="id">G7.5</text>
+<text x="2061.0" y="296.0" class="kind">INTERMEDIATE</text>
+<text x="1869.0" y="310.5" class="d">PCM gives the item's ACC request</text>
+<text x="1869.0" y="325.0" class="d">priority over PCS braking</text>
+<path d="M1945.0,380.0 L1945.0,360.0 A20,18 0 0 1 1985.0,360.0 L1985.0,380.0 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="1965.0" y="372.0" class="gl" fill="#c62828">AND</text>
+<line x1="1844.0" y1="403.0" x2="2086.0" y2="403.0" class="w"/>
+<line x1="1844.0" y1="403.0" x2="1965.0" y2="403.0" class="wh"/>
+<line x1="1965.0" y1="380.0" x2="1965.0" y2="403.0" class="wh"/>
+<line x1="1844.0" y1="403.0" x2="1844.0" y2="464.5" class="wh"/>
+<line x1="2086.0" y1="403.0" x2="2086.0" y2="464.5" class="w"/>
+<rect x="1735.5" y="467.0" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="1734" y="464.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M1743,464.5 H1945 A9,9 0 0 1 1954,473.5 V469.5 H1734 V473.5 A9,9 0 0 1 1743,464.5 Z" fill="#64748b"/>
+<text x="1748" y="489.5" class="id">BE-7.13</text>
+<text x="1940" y="489.5" class="kind">BASIC</text>
+<text x="1748" y="504.0" class="d">Item sends an ACC request during</text>
+<text x="1748" y="518.5" class="d">a PCS event</text>
+<circle cx="1844.0" cy="552.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
+<rect x="1977.5" y="467.0" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="1976" y="464.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1985,464.5 H2187 A9,9 0 0 1 2196,473.5 V469.5 H1976 V473.5 A9,9 0 0 1 1985,464.5 Z" fill="#3d6b3d"/>
+<text x="1990" y="489.5" class="id">UE-7.14</text>
+<text x="2182" y="489.5" class="kind">UNDEVELOPED</text>
+<text x="1990" y="504.0" class="d">PCM arbitration does not</text>
+<text x="1990" y="518.5" class="d">prioritise PCS (AOU-04R fails)</text>
+<path d="M2086.0,535.5 L2108.0,552.5 L2086.0,569.5 L2064.0,552.5 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
+<text x="40" y="713.5" class="lh">Symbols · IEC 61025</text>
+<rect x="46" y="733.5" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>
+<rect x="46" y="733.5" width="44" height="4" rx="2" fill="#1d2433"/>
+<text x="68" y="787.5" class="s" text-anchor="middle">Event</text>
+<path d="M128,767.5 Q148,758.5 168,767.5 Q166,740.5 148,729.5 Q130,740.5 128,767.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="148" y="759.5" class="gl" fill="#1d2433">OR</text>
+<text x="148" y="787.5" class="s" text-anchor="middle">OR gate</text>
+<path d="M208,767.5 L208,747.5 A20,18 0 0 1 248,747.5 L248,767.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="228" y="759.5" class="gl" fill="#1d2433">AND</text>
+<text x="228" y="787.5" class="s" text-anchor="middle">AND gate</text>
+<circle cx="308" cy="747.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="308" y="787.5" class="s" text-anchor="middle">Basic event</text>
+<path d="M388,730.5 L410,747.5 L388,764.5 L366,747.5 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
+<text x="388" y="787.5" class="s" text-anchor="middle">Undeveloped</text>
+<path d="M468,729.5 L488,762.5 L448,762.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><line x1="478" y1="745.5" x2="502" y2="745.5" stroke="#1d2433" stroke-width="1.7" stroke-linecap="round"/>
+<text x="468" y="787.5" class="s" text-anchor="middle">Transfer out</text>
+<path d="M548,730.5 L568,763.5 L528,763.5 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="548" y="787.5" class="s" text-anchor="middle">Transfer in</text>
+<rect x="40.0" y="805.5" width="31.1" height="16" rx="8" fill="#c62828"/>
+<text x="55.5" y="817.0" class="chip" fill="#fff">SPF</text>
+<rect x="77.1" y="805.5" width="48.2" height="16" rx="8" fill="#5f6368"/>
+<text x="101.2" y="817.0" class="chip" fill="#fff">latent</text>
+<rect x="131.3" y="805.5" width="42.5" height="16" rx="8" fill="#6a3fb5"/>
+<text x="152.6" y="817.0" class="chip" fill="#fff">SOTIF</text>
+<rect x="179.8" y="805.5" width="71.0" height="16" rx="8" fill="#b45309"/>
+<text x="215.3" y="817.0" class="chip" fill="#fff">CCF DFI-nn</text>
+<rect x="256.8" y="805.5" width="31.1" height="16" rx="8" fill="#1a5fb4"/>
+<text x="272.4" y="817.0" class="chip" fill="#fff">FFI</text>
+<rect x="293.9" y="805.5" width="82.4" height="16" rx="8" fill="#3d6b3d"/>
+<text x="335.1" y="817.0" class="chip" fill="#fff">outside item</text>
+<rect x="382.3" y="805.5" width="122.3" height="16" rx="8" fill="#e6e9ef"/>
+<text x="443.5" y="817.0" class="chip" fill="#334155">repeated / transfer</text>
+<line x1="40" y1="839.5" x2="74" y2="839.5" class="wh"/>
+<text x="86" y="843.5" class="lb">Single-point path</text>
+<text x="86" y="859.5" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
+<text x="86" y="874.5" class="s">Computed from the gate logic (see cut-sets.md); the SPF tags are WP-A-04's own claims.</text>
+<rect x="1696" y="699.5" width="500" height="196" rx="10" fill="#fff" stroke="#d9dee6"/>
+<line x1="1696" y1="745.5" x2="2196" y2="745.5" stroke="#d9dee6"/>
+<line x1="2014" y1="745.5" x2="2014" y2="895.5" stroke="#d9dee6"/>
+<text x="1714" y="728.5" class="tbh">LionDriver · FTA SG-07</text>
+<rect x="2046" y="713.5" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
+<text x="2112" y="727.5" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
+<text x="1714" y="771.5" class="k">TOP OF SHEET</text>
+<text x="1812" y="771.5" class="v">TE-07</text>
+<text x="1714" y="797.5" class="k">SINGLE-POINT</text>
+<text x="1812" y="797.5" class="v">3 basic events on this sheet</text>
+<text x="1714" y="823.5" class="k">SOURCE</text>
+<text x="1812" y="823.5" class="v">WP-A-04 §8 (analysis of record)</text>
+<text x="1714" y="849.5" class="k">GENERATED BY</text>
+<text x="1812" y="849.5" class="v">fta_diagrams.py</text>
+<text x="1714" y="875.5" class="k">EDIT</text>
+<text x="1812" y="875.5" class="v">WP-A-04, not this file</text>
+<text x="2030" y="769.5" class="k">SHEETS</text>
+<line x1="2105.0" y1="804.5" x2="2105.0" y2="818.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<rect x="2091.0" y="784.5" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2105.0" y="798.5" class="mm" fill="#fff">1</text>
+<rect x="2091.0" y="818.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2105.0" y="832.5" class="mm" fill="#0f2a44">2</text>
 </svg>

@@ -208,7 +208,7 @@
   parents: [SG-02]
   allocated_to: "E-03 (panda buzzer)"
   verification: "T-HIL"
-  baseline_impl: "Partial: siren 3 s after heartbeat loss (`panda/board/main.c:193-205`); depends on 5 s detection (GAP-06)"
+  baseline_impl: "Partial: siren 3 s after heartbeat loss (`panda/board/main.c:193-205`); depends on 5 s detection (GAP-06). 2026-10-13: siren also at the 0.3 s heartbeat revocation (TSR-407) when authority was granted, ≈ 0.56 s after the last heartbeat, all builds (panda `c33343b`, TSR-516; WP-S-04 T-07a); not verified on hardware"
   status: proposed
   source: WP-C-04
 
