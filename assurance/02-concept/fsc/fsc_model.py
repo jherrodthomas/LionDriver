@@ -12,7 +12,8 @@ over the nodes of the system block diagram: one basic event per (safety goal, no
 
 `python3 fsc_model.py` writes the generator inputs to build/ and the coverage table
 `fsc-coverage.md`. `--check` fails if the coverage table is stale, cites an FSR that WP-C-04 does
-not define, leaves a basic event without FSRs or reason, or if a WP-C-04 FSR is not used anywhere.
+not define, leaves a basic event without FSRs or reason, has no entry at all for a basic event (an
+omission is not "not relevant": NA must be written), or if a WP-C-04 FSR is not used anywhere.
 `--postprocess <xlsx>` adds the coverage tab to a generated FSC workbook.
 """
 from __future__ import annotations
@@ -186,7 +187,7 @@ def coverage_rows():
     if not n[3]:
       continue
     for sg in SGS:
-      c = COVERAGE[n[0]].get(sg, NA)
+      c = COVERAGE.get(n[0], {}).get(sg, NA)
       rows.append((sg, n[0], n[1], n[2], c))
   return rows
 
@@ -216,6 +217,11 @@ def check() -> list[str]:
   errs = []
   defined = defined_fsrs()
   used = set()
+  for n in NODES:
+    if n[3]:
+      for sg in SGS:
+        if sg not in COVERAGE.get(n[0], {}):
+          errs.append(f"{sg}/{n[0]}: no coverage entry (list the FSRs, or NA with the goal's not-relevant reason)")
   for sg, nid, _, _, c in coverage_rows():
     if c is None:
       continue

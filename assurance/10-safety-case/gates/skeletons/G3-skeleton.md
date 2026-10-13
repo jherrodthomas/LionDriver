@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 6 performed: CR-06@G3, CR-07, CR-08, CR-09, CR-10, SR-04@G3 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 136 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 139 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -37,7 +37,7 @@
 | [WP-H-07](../../../04-hardware/WP-H-07-hardware-component-qualification.md) Qualification of hardware components (comma device, STM32H7, harness) | DEV-06 | Draft | 6 | |
 | [WP-H-04](../../../04-hardware/WP-H-04-hardware-metrics.md) Hardware architectural metrics (SPFM, LFM) | DEV-07 | Draft | 5 | |
 | [WP-H-05](../../../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) Evaluation of safety goal violations due to random HW failures (PMHF) | DEV-08 | Draft | 5 | |
-| [WP-W-02](../../../05-software/WP-W-02-software-safety-requirements.md) Software safety requirements specification | DEV-09 | Draft | 11 | |
+| [WP-W-02](../../../05-software/WP-W-02-software-safety-requirements.md) Software safety requirements specification | DEV-09 | Draft | 14 | |
 | [WP-W-03](../../../05-software/WP-W-03-software-architecture.md) Software architectural design | DEV-10 | Draft | 8 | |
 | [WP-W-04](../../../05-software/WP-W-04-software-safety-analysis.md) Software safety analysis and software-level DFA | DEV-11 | Draft | 6 | |
 | [WP-W-05](../../../05-software/WP-W-05-software-unit-design.md) Software unit design and implementation | DEV-12 | Draft | 8 | |
