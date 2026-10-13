@@ -1,12 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1030" viewBox="0 0 900 1030" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1076" viewBox="0 0 900 1076" role="img" aria-labelledby="t d">
 <title id="t">SM-SELFDRIVED state chart</title>
 <desc id="d">Stateflow-style chart of SM-SELFDRIVED with 5 states and 13 transitions, generated from sm-selfdrived.yaml; the table below the chart lists every transition.</desc>
 <style>
 svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de;
-       --edge:#3d3c39; --shade:#d9d8d3; --s1:#2a78d6; --s2:#eb6834; --hi:#f4f3ef; }
+       --edge:#3d3c39; --shade:#d9d8d3; --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --hi:#f4f3ef;
+       --c1:#2a78d6; --f1:#dde9f8; --c2:#eb6834; --f2:#fce7df; --c3:#1baf7a; --f3:#dbf2ea; --c4:#eda100; --f4:#fcf0d6; --c6:#008300; --f6:#d6ebd6; --c7:#6250d6; --f7:#e6e3f8; --c8:#e34948; --f8:#fbe2e2; }
 @media (prefers-color-scheme: dark) {
   svg { --surface:#1a1a19; --panel:#232322; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f;
-         --edge:#c3c2b7; --shade:#0e0e0d; --s1:#3987e5; --s2:#d95926; --hi:#2b2b29; }
+         --edge:#c3c2b7; --shade:#0e0e0d; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --hi:#2b2b29;
+         --c1:#3987e5; --f1:#2a415c; --c2:#d95926; --f2:#5a3323; --c3:#199e70; --f3:#204839; --c4:#c98500; --f4:#554018; --c6:#008300; --f6:#184018; --c7:#9085e9; --f7:#44405e; --c8:#e66767; --f8:#5e3737; }
 }
 .bg { fill:var(--surface); }
 .t { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:11.5px; fill:var(--ink); }
@@ -25,17 +27,29 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 .axis { stroke:var(--ink3); stroke-width:1; }
 .s1 { fill:none; stroke:var(--s1); stroke-width:2; }
 .s2 { fill:none; stroke:var(--s2); stroke-width:2; stroke-dasharray:6 3; }
+.s3 { fill:none; stroke:var(--s3); stroke-width:2; }
+.band { fill:var(--f1); }
+.edge.todo { stroke:var(--s2); stroke-dasharray:5 4; }
+.arrow.todo { fill:var(--s2); }
+.k1 { fill:var(--f1); stroke:var(--c1); stroke-width:1.4; }
+.k2 { fill:var(--f2); stroke:var(--c2); stroke-width:1.4; }
+.k3 { fill:var(--f3); stroke:var(--c3); stroke-width:1.4; }
+.k4 { fill:var(--f4); stroke:var(--c4); stroke-width:1.4; }
+.k6 { fill:var(--f6); stroke:var(--c6); stroke-width:1.4; }
+.k7 { fill:var(--f7); stroke:var(--c7); stroke-width:1.4; }
+.k8 { fill:var(--f8); stroke:var(--c8); stroke-width:1.4; }
 .m1 { fill:var(--s1); }
 .m2 { fill:var(--s2); }
+.m3 { fill:var(--s3); }
 .arrow { fill:var(--edge); }
 .arrow.target { fill:var(--ink3); }
 .dot { fill:var(--edge); }
 .lbl { fill:var(--surface); }
 </style>
-<rect class="bg" x="0" y="0" width="900" height="1030"/>
+<rect class="bg" x="0" y="0" width="900" height="1076"/>
 <text x="20.0" y="26.0" class="th" text-anchor="start">SM-SELFDRIVED: selfdrived engagement state (OpenpilotState)</text>
 <text x="20.0" y="44.0" class="ts" text-anchor="start">Stateflow-style chart generated from state-machines/sm-selfdrived.yaml by diagrams/make_diagrams.py.</text>
-<text x="20.0" y="58.0" class="ts" text-anchor="start">Solid: in the code. Dashed: not in the code (target state). Status column: WP-W-02 Baseline of the cited SWSRs.</text>
+<text x="20.0" y="58.0" class="ts" text-anchor="start">Solid grey: in the code. Dashed orange: not in the code. Fill: state role (legend). Status: WP-W-02 Baseline of the cited SWSRs.</text>
 <path class="edge" d="M148.1,274.0 Q181.8,166.3 250.8,136.0"/>
 <path class="arrow" d="M250.8,136.0 L245.8,141.8 L243.1,136.1 Z"/>
 <rect class="lbl" x="180.5" y="177.2" width="20.2" height="17.0" rx="3"/>
@@ -96,102 +110,117 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <rect class="box" x="75.0" y="274.0" width="130.0" height="52.0" rx="12"/>
 <text x="85.0" y="292.0" class="tb" text-anchor="start">disabled</text>
 <rect class="shadow" x="248.0" y="87.0" width="130.0" height="52.0" rx="12"/>
-<rect class="box" x="245.0" y="84.0" width="130.0" height="52.0" rx="12"/>
+<rect class="k4" x="245.0" y="84.0" width="130.0" height="52.0" rx="12"/>
 <text x="255.0" y="102.0" class="tb" text-anchor="start">preEnabled</text>
 <rect class="shadow" x="458.0" y="277.0" width="130.0" height="52.0" rx="12"/>
-<rect class="box" x="455.0" y="274.0" width="130.0" height="52.0" rx="12"/>
+<rect class="k1" x="455.0" y="274.0" width="130.0" height="52.0" rx="12"/>
 <text x="465.0" y="292.0" class="tb" text-anchor="start">enabled</text>
 <rect class="shadow" x="699.7" y="427.0" width="146.6" height="52.0" rx="12"/>
-<rect class="box" x="696.7" y="424.0" width="146.6" height="52.0" rx="12"/>
+<rect class="k8" x="696.7" y="424.0" width="146.6" height="52.0" rx="12"/>
 <text x="706.7" y="442.0" class="tb" text-anchor="start">softDisabling</text>
 <rect class="shadow" x="708.0" y="107.0" width="130.0" height="52.0" rx="12"/>
-<rect class="box" x="705.0" y="104.0" width="130.0" height="52.0" rx="12"/>
+<rect class="k7" x="705.0" y="104.0" width="130.0" height="52.0" rx="12"/>
 <text x="715.0" y="122.0" class="tb" text-anchor="start">overriding</text>
 <circle class="dot" cx="29.0" cy="300.0" r="4"/>
 <path class="edge" d="M29.0,300.0 L75.0,300.0"/>
 <path class="arrow" d="M75.0,300.0 L68.0,303.1 L68.0,296.9 Z"/>
-<text x="20.0" y="530.0" class="tb" text-anchor="start">Transitions (Stateflow label notation: event [guard] / {action})</text>
-<line class="grid" x1="20" y1="544" x2="880" y2="544"/>
-<text x="20.0" y="558.0" class="t2" text-anchor="start">ID</text>
-<text x="70.0" y="558.0" class="t2" text-anchor="start">Transition</text>
-<text x="640.0" y="558.0" class="t2" text-anchor="start">Build</text>
-<text x="720.0" y="558.0" class="t2" text-anchor="start">WP-W-02 status</text>
-<line class="grid" x1="20" y1="568" x2="880" y2="568"/>
-<text x="20.0" y="581.0" class="tb" text-anchor="start">X1</text>
-<text x="70.0" y="581.0" class="t" text-anchor="start">preEnabled, enabled, softDisabling, overriding → disabled: update (100 Hz)</text>
-<text x="70.0" y="595.0" class="t" text-anchor="start">[IMMEDIATE_DISABLE present] / {IMMEDIATE_DISABLE alert}</text>
-<text x="640.0" y="581.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="581.0" class="t2" text-anchor="start">Partial</text>
-<line class="grid" x1="20" y1="602" x2="880" y2="602"/>
-<text x="20.0" y="615.0" class="tb" text-anchor="start">X2</text>
-<text x="70.0" y="615.0" class="t" text-anchor="start">preEnabled, enabled, softDisabling, overriding → disabled: update (100 Hz)</text>
-<text x="70.0" y="629.0" class="t" text-anchor="start">[USER_DISABLE present, no IMMEDIATE_DISABLE] / {USER_DISABLE alert}</text>
-<text x="640.0" y="615.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="615.0" class="t2" text-anchor="start">Not assessed</text>
-<line class="grid" x1="20" y1="636" x2="880" y2="636"/>
-<text x="20.0" y="649.0" class="tb" text-anchor="start">E1</text>
-<text x="70.0" y="649.0" class="t" text-anchor="start">enabled → softDisabling: update (100 Hz) [SOFT_DISABLE present, no IMMEDIATE_DISABLE</text>
-<text x="70.0" y="663.0" class="t" text-anchor="start">or USER_DISABLE] / {soft-disable timer = 3 s (300 cycles); SOFT_DISABLE alert}</text>
-<text x="640.0" y="649.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="649.0" class="t2" text-anchor="start">Partial</text>
-<line class="grid" x1="20" y1="670" x2="880" y2="670"/>
-<text x="20.0" y="683.0" class="tb" text-anchor="start">E2</text>
-<text x="70.0" y="683.0" class="t" text-anchor="start">enabled → overriding: update (100 Hz) [OVERRIDE_LATERAL or OVERRIDE_LONGITUDINAL</text>
-<text x="70.0" y="697.0" class="t" text-anchor="start">present, no disable event] / {override alerts}</text>
-<text x="640.0" y="683.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="683.0" class="t2" text-anchor="start">Not assessed</text>
-<line class="grid" x1="20" y1="704" x2="880" y2="704"/>
-<text x="20.0" y="717.0" class="tb" text-anchor="start">SD1</text>
-<text x="70.0" y="717.0" class="t" text-anchor="start">softDisabling → enabled: update (100 Hz) [SOFT_DISABLE no longer present, no</text>
-<text x="70.0" y="731.0" class="t" text-anchor="start">IMMEDIATE_DISABLE or USER_DISABLE] / {none}</text>
-<text x="640.0" y="717.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="717.0" class="t2" text-anchor="start">Not implemented</text>
-<line class="grid" x1="20" y1="738" x2="880" y2="738"/>
-<text x="20.0" y="751.0" class="tb" text-anchor="start">SD2</text>
-<text x="70.0" y="751.0" class="t" text-anchor="start">softDisabling → disabled: update (100 Hz) [SOFT_DISABLE still present and the timer</text>
-<text x="70.0" y="765.0" class="t" text-anchor="start">has run out (3 s after E1/O1)] / {none}</text>
-<text x="640.0" y="751.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="751.0" class="t2" text-anchor="start">Partial</text>
-<line class="grid" x1="20" y1="772" x2="880" y2="772"/>
-<text x="20.0" y="785.0" class="tb" text-anchor="start">P1</text>
-<text x="70.0" y="785.0" class="t" text-anchor="start">preEnabled → enabled: update (100 Hz) [PRE_ENABLE no longer present, no disable event]</text>
-<text x="70.0" y="799.0" class="t" text-anchor="start">/ {none}</text>
-<text x="640.0" y="785.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="785.0" class="t2" text-anchor="start">Not assessed</text>
-<line class="grid" x1="20" y1="806" x2="880" y2="806"/>
-<text x="20.0" y="819.0" class="tb" text-anchor="start">O1</text>
-<text x="70.0" y="819.0" class="t" text-anchor="start">overriding → softDisabling: update (100 Hz) [SOFT_DISABLE present, no</text>
-<text x="70.0" y="833.0" class="t" text-anchor="start">IMMEDIATE_DISABLE or USER_DISABLE] / {soft-disable timer = 3 s; SOFT_DISABLE alert}</text>
-<text x="640.0" y="819.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="819.0" class="t2" text-anchor="start">Partial</text>
-<line class="grid" x1="20" y1="840" x2="880" y2="840"/>
-<text x="20.0" y="853.0" class="tb" text-anchor="start">O2</text>
-<text x="70.0" y="853.0" class="t" text-anchor="start">overriding → enabled: update (100 Hz) [no override event and no SOFT_DISABLE, no</text>
-<text x="70.0" y="867.0" class="t" text-anchor="start">disable event] / {none}</text>
-<text x="640.0" y="853.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="853.0" class="t2" text-anchor="start">Not assessed</text>
-<line class="grid" x1="20" y1="874" x2="880" y2="874"/>
-<text x="20.0" y="887.0" class="tb" text-anchor="start">N1</text>
-<text x="70.0" y="887.0" class="t" text-anchor="start">disabled → same: update (100 Hz) [ENABLE and NO_ENTRY present] / {NO_ENTRY alert,</text>
-<text x="70.0" y="901.0" class="t" text-anchor="start">engagement refused}</text>
-<text x="640.0" y="887.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="887.0" class="t2" text-anchor="start">Not implemented</text>
-<line class="grid" x1="20" y1="908" x2="880" y2="908"/>
-<text x="20.0" y="921.0" class="tb" text-anchor="start">D1</text>
-<text x="70.0" y="921.0" class="t" text-anchor="start">disabled → preEnabled: update (100 Hz) [ENABLE and PRE_ENABLE present, no NO_ENTRY] /</text>
-<text x="70.0" y="935.0" class="t" text-anchor="start">{ENABLE alert}</text>
-<text x="640.0" y="921.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="921.0" class="t2" text-anchor="start">Not implemented</text>
-<line class="grid" x1="20" y1="942" x2="880" y2="942"/>
-<text x="20.0" y="955.0" class="tb" text-anchor="start">D2</text>
-<text x="70.0" y="955.0" class="t" text-anchor="start">disabled → overriding: update (100 Hz) [ENABLE and an override event present, no</text>
-<text x="70.0" y="969.0" class="t" text-anchor="start">NO_ENTRY or PRE_ENABLE] / {ENABLE alert}</text>
-<text x="640.0" y="955.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="955.0" class="t2" text-anchor="start">Not implemented</text>
-<line class="grid" x1="20" y1="976" x2="880" y2="976"/>
-<text x="20.0" y="989.0" class="tb" text-anchor="start">D3</text>
-<text x="70.0" y="989.0" class="t" text-anchor="start">disabled → enabled: update (100 Hz) [ENABLE present, no NO_ENTRY, PRE_ENABLE or</text>
-<text x="70.0" y="1003.0" class="t" text-anchor="start">override event] / {ENABLE alert}</text>
-<text x="640.0" y="989.0" class="t2" text-anchor="start">all</text>
-<text x="720.0" y="989.0" class="t2" text-anchor="start">Not implemented</text>
+<rect class="box" x="20" y="502" width="22" height="14" rx="4"/>
+<text x="48.0" y="513.0" class="t2" text-anchor="start">not engaged</text>
+<rect class="k4" x="140.4" y="502" width="22" height="14" rx="4"/>
+<text x="168.4" y="513.0" class="t2" text-anchor="start">engagement pending</text>
+<rect class="k1" x="305.6" y="502" width="22" height="14" rx="4"/>
+<text x="333.6" y="513.0" class="t2" text-anchor="start">engaged</text>
+<rect class="k7" x="400.40000000000003" y="502" width="22" height="14" rx="4"/>
+<text x="428.4" y="513.0" class="t2" text-anchor="start">engaged, driver overriding</text>
+<rect class="k8" x="616.8000000000001" y="502" width="22" height="14" rx="4"/>
+<text x="644.8" y="513.0" class="t2" text-anchor="start">disengaging (3 s timer)</text>
+<path class="edge" d="M20,528 L46,528"/>
+<text x="52.0" y="532.0" class="t2" text-anchor="start">in the code</text>
+<path class="edge todo" d="M150,528 L176,528"/>
+<text x="182.0" y="532.0" class="t2" text-anchor="start">not in the code (target state)</text>
+<text x="20.0" y="562.0" class="tb" text-anchor="start">Transitions (Stateflow label notation: event [guard] / {action})</text>
+<line class="grid" x1="20" y1="576" x2="880" y2="576"/>
+<text x="20.0" y="590.0" class="t2" text-anchor="start">ID</text>
+<text x="70.0" y="590.0" class="t2" text-anchor="start">Transition</text>
+<text x="620.0" y="590.0" class="t2" text-anchor="start">Build</text>
+<text x="690.0" y="590.0" class="t2" text-anchor="start">WP-W-02 status</text>
+<line class="grid" x1="20" y1="600" x2="880" y2="600"/>
+<text x="20.0" y="613.0" class="tb" text-anchor="start">X1</text>
+<text x="70.0" y="613.0" class="t" text-anchor="start">preEnabled, enabled, softDisabling, overriding → disabled: update (100 Hz)</text>
+<text x="70.0" y="627.0" class="t" text-anchor="start">[IMMEDIATE_DISABLE present] / {IMMEDIATE_DISABLE alert}</text>
+<text x="620.0" y="613.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="613.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="634" x2="880" y2="634"/>
+<text x="20.0" y="647.0" class="tb" text-anchor="start">X2</text>
+<text x="70.0" y="647.0" class="t" text-anchor="start">preEnabled, enabled, softDisabling, overriding → disabled: update (100 Hz)</text>
+<text x="70.0" y="661.0" class="t" text-anchor="start">[USER_DISABLE present, no IMMEDIATE_DISABLE] / {USER_DISABLE alert}</text>
+<text x="620.0" y="647.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="647.0" class="t2" text-anchor="start">Not assessed</text>
+<line class="grid" x1="20" y1="668" x2="880" y2="668"/>
+<text x="20.0" y="681.0" class="tb" text-anchor="start">E1</text>
+<text x="70.0" y="681.0" class="t" text-anchor="start">enabled → softDisabling: update (100 Hz) [SOFT_DISABLE present, no</text>
+<text x="70.0" y="695.0" class="t" text-anchor="start">IMMEDIATE_DISABLE or USER_DISABLE] / {soft-disable timer = 3 s (300 cycles);</text>
+<text x="70.0" y="709.0" class="t" text-anchor="start">SOFT_DISABLE alert}</text>
+<text x="620.0" y="681.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="681.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="716" x2="880" y2="716"/>
+<text x="20.0" y="729.0" class="tb" text-anchor="start">E2</text>
+<text x="70.0" y="729.0" class="t" text-anchor="start">enabled → overriding: update (100 Hz) [OVERRIDE_LATERAL or OVERRIDE_LONGITUDINAL</text>
+<text x="70.0" y="743.0" class="t" text-anchor="start">present, no disable event] / {override alerts}</text>
+<text x="620.0" y="729.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="729.0" class="t2" text-anchor="start">Not assessed</text>
+<line class="grid" x1="20" y1="750" x2="880" y2="750"/>
+<text x="20.0" y="763.0" class="tb" text-anchor="start">SD1</text>
+<text x="70.0" y="763.0" class="t" text-anchor="start">softDisabling → enabled: update (100 Hz) [SOFT_DISABLE no longer present, no</text>
+<text x="70.0" y="777.0" class="t" text-anchor="start">IMMEDIATE_DISABLE or USER_DISABLE] / {none}</text>
+<text x="620.0" y="763.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="763.0" class="t2" text-anchor="start">Not implemented</text>
+<line class="grid" x1="20" y1="784" x2="880" y2="784"/>
+<text x="20.0" y="797.0" class="tb" text-anchor="start">SD2</text>
+<text x="70.0" y="797.0" class="t" text-anchor="start">softDisabling → disabled: update (100 Hz) [SOFT_DISABLE still present and the timer</text>
+<text x="70.0" y="811.0" class="t" text-anchor="start">has run out (3 s after E1/O1)] / {none}</text>
+<text x="620.0" y="797.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="797.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="818" x2="880" y2="818"/>
+<text x="20.0" y="831.0" class="tb" text-anchor="start">P1</text>
+<text x="70.0" y="831.0" class="t" text-anchor="start">preEnabled → enabled: update (100 Hz) [PRE_ENABLE no longer present, no disable</text>
+<text x="70.0" y="845.0" class="t" text-anchor="start">event] / {none}</text>
+<text x="620.0" y="831.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="831.0" class="t2" text-anchor="start">Not assessed</text>
+<line class="grid" x1="20" y1="852" x2="880" y2="852"/>
+<text x="20.0" y="865.0" class="tb" text-anchor="start">O1</text>
+<text x="70.0" y="865.0" class="t" text-anchor="start">overriding → softDisabling: update (100 Hz) [SOFT_DISABLE present, no</text>
+<text x="70.0" y="879.0" class="t" text-anchor="start">IMMEDIATE_DISABLE or USER_DISABLE] / {soft-disable timer = 3 s; SOFT_DISABLE alert}</text>
+<text x="620.0" y="865.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="865.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="886" x2="880" y2="886"/>
+<text x="20.0" y="899.0" class="tb" text-anchor="start">O2</text>
+<text x="70.0" y="899.0" class="t" text-anchor="start">overriding → enabled: update (100 Hz) [no override event and no SOFT_DISABLE, no</text>
+<text x="70.0" y="913.0" class="t" text-anchor="start">disable event] / {none}</text>
+<text x="620.0" y="899.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="899.0" class="t2" text-anchor="start">Not assessed</text>
+<line class="grid" x1="20" y1="920" x2="880" y2="920"/>
+<text x="20.0" y="933.0" class="tb" text-anchor="start">N1</text>
+<text x="70.0" y="933.0" class="t" text-anchor="start">disabled → same: update (100 Hz) [ENABLE and NO_ENTRY present] / {NO_ENTRY alert,</text>
+<text x="70.0" y="947.0" class="t" text-anchor="start">engagement refused}</text>
+<text x="620.0" y="933.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="933.0" class="t2" text-anchor="start">Not implemented</text>
+<line class="grid" x1="20" y1="954" x2="880" y2="954"/>
+<text x="20.0" y="967.0" class="tb" text-anchor="start">D1</text>
+<text x="70.0" y="967.0" class="t" text-anchor="start">disabled → preEnabled: update (100 Hz) [ENABLE and PRE_ENABLE present, no NO_ENTRY]</text>
+<text x="70.0" y="981.0" class="t" text-anchor="start">/ {ENABLE alert}</text>
+<text x="620.0" y="967.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="967.0" class="t2" text-anchor="start">Not implemented</text>
+<line class="grid" x1="20" y1="988" x2="880" y2="988"/>
+<text x="20.0" y="1001.0" class="tb" text-anchor="start">D2</text>
+<text x="70.0" y="1001.0" class="t" text-anchor="start">disabled → overriding: update (100 Hz) [ENABLE and an override event present, no</text>
+<text x="70.0" y="1015.0" class="t" text-anchor="start">NO_ENTRY or PRE_ENABLE] / {ENABLE alert}</text>
+<text x="620.0" y="1001.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="1001.0" class="t2" text-anchor="start">Not implemented</text>
+<line class="grid" x1="20" y1="1022" x2="880" y2="1022"/>
+<text x="20.0" y="1035.0" class="tb" text-anchor="start">D3</text>
+<text x="70.0" y="1035.0" class="t" text-anchor="start">disabled → enabled: update (100 Hz) [ENABLE present, no NO_ENTRY, PRE_ENABLE or</text>
+<text x="70.0" y="1049.0" class="t" text-anchor="start">override event] / {ENABLE alert}</text>
+<text x="620.0" y="1035.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="1035.0" class="t2" text-anchor="start">Not implemented</text>
 </svg>
