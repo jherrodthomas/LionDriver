@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1132" height="886" viewBox="0 0 1132 886" font-family="Helvetica, Arial, sans-serif">
+<style>.id{font-size:11px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.n{font-size:9.5px;font-style:italic;text-anchor:middle;fill:#444}.b{font-size:8.6px;font-weight:600;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">FTA SG-06 — loss of longitudinal deceleration without take-over warning  (sheet 2 of 4)</text>
+<rect x="411.5" y="70" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="511.5" y="89" class="id">G6.1</text>
+<text x="511.5" y="102.5" class="d">Plan or lead input lost and no</text>
+<text x="511.5" y="115.0" class="d">adequate take-over request</text>
+<rect x="475.1" y="121.0" width="72.8" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="511.5" y="130.5" class="b" fill="#222">from sheet 1</text>
+<path d="M493.5,173.0 L493.5,155.0 A18,16 0 0 1 529.5,155.0 L529.5,173.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="511.5" y1="173.0" x2="511.5" y2="191.0" class="w"/>
+<line x1="130.0" y1="191.0" x2="893.0" y2="191.0" class="w"/>
+<line x1="130.0" y1="191.0" x2="130.0" y2="209.0" class="w"/>
+<line x1="457.0" y1="191.0" x2="457.0" y2="209.0" class="w"/>
+<line x1="893.0" y1="191.0" x2="893.0" y2="209.0" class="w"/>
+<rect x="30" y="209.0" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="130.0" y="228.0" class="id">BE-6.01</text>
+<text x="130.0" y="241.5" class="d">Plan, lead or model input lost or</text>
+<text x="130.0" y="254.0" class="d">stale (radarFault, commIssue;</text>
+<text x="130.0" y="266.5" class="d">GAP-16)</text>
+<circle cx="130.0" cy="289.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="357.0" y="209.0" width="200" height="40.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="457.0" y="228.0" class="id">G6.1.1</text>
+<text x="457.0" y="241.5" class="d">SoC warning missing or late</text>
+<path d="M439.0,283.5 Q457.0,275.5 475.0,283.5 Q473.0,259.5 457.0,249.5 Q441.0,259.5 439.0,283.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="457.0" y1="283.5" x2="457.0" y2="301.5" class="w"/>
+<line x1="348.0" y1="301.5" x2="566.0" y2="301.5" class="w"/>
+<line x1="348.0" y1="301.5" x2="348.0" y2="344.5" class="w"/>
+<line x1="566.0" y1="301.5" x2="566.0" y2="344.5" class="w"/>
+<rect x="248" y="344.5" width="200" height="119.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="348.0" y="363.5" class="id">BE-2.10</text>
+<text x="348.0" y="377.0" class="d">Input loss handled as soft disable:</text>
+<text x="348.0" y="389.5" class="d">actuation continues ≈3 s</text>
+<text x="348.0" y="402.0" class="d">(events.py:853-856, state.py:7-8;</text>
+<text x="348.0" y="414.5" class="d">GAP-16)</text>
+<text x="348.0" y="427.0" class="n">input loss handled as soft disable,</text>
+<text x="348.0" y="439.5" class="n">as SG-02</text>
+<rect x="303.5" y="445.5" width="89.0" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="348.0" y="455.0" class="b" fill="#222">repeated, SG-02</text>
+<circle cx="348.0" cy="478.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="466" y="344.5" width="200" height="56.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="566.0" y="363.5" class="id">G-HMI</text>
+<text x="566.0" y="377.0" class="d">HMI does not deliver the warning</text>
+<rect x="491.8" y="383.0" width="148.4" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="566.0" y="392.5" class="b" fill="#222">developed in SG-02 sheet 2</text>
+<path d="M566.0,401.0 L584.0,431.0 L548.0,431.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="793.0" y="209.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="893.0" y="228.0" class="id">G-LONCUE</text>
+<text x="893.0" y="241.5" class="d">SoC-independent cue missing or late</text>
+<text x="893.0" y="254.0" class="d">(longitudinal loss)</text>
+<path d="M875.0,296.0 L875.0,278.0 A18,16 0 0 1 911.0,278.0 L911.0,296.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="893.0" y1="296.0" x2="893.0" y2="314.0" class="w"/>
+<line x1="784.0" y1="314.0" x2="1002.0" y2="314.0" class="w"/>
+<line x1="784.0" y1="314.0" x2="784.0" y2="344.5" class="w"/>
+<line x1="1002.0" y1="314.0" x2="1002.0" y2="344.5" class="w"/>
+<rect x="684" y="344.5" width="200" height="56.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="784.0" y="363.5" class="id">G-SIREN</text>
+<text x="784.0" y="377.0" class="d">Siren missing or late</text>
+<rect x="709.8" y="383.0" width="148.4" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="784.0" y="392.5" class="b" fill="#222">developed in SG-02 sheet 2</text>
+<path d="M784.0,401.0 L802.0,431.0 L766.0,431.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="902" y="344.5" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1002.0" y="363.5" class="id">BE-6.06</text>
+<text x="1002.0" y="377.0" class="d">PCM cruise stays active, so the</text>
+<text x="1002.0" y="389.5" class="d">cluster shows no change (no ACC</text>
+<text x="1002.0" y="402.0" class="d">cancel on the fault, TSR-303)</text>
+<rect x="954.8" y="408.0" width="94.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="1002.0" y="417.5" class="b" fill="#fff">latent, baseline</text>
+<circle cx="1002.0" cy="441.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="30" y="551.5" class="h">Symbols (IEC 61025)</text>
+<rect x="32" y="565.5" width="36" height="22" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="96" y="580.5" class="l">Top / intermediate event</text>
+<path d="M32,633.5 Q50,625.5 68,633.5 Q66,609.5 50,599.5 Q34,609.5 32,633.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="618.5" class="l">OR gate</text>
+<path d="M32,671.5 L32,653.5 A18,16 0 0 1 68,653.5 L68,671.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="656.5" class="l">AND gate</text>
+<circle cx="50" cy="690.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="694.5" class="l">Basic event</text>
+<path d="M50,713.5 L70,728.5 L50,743.5 L30,728.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="732.5" class="l">Undeveloped event (outside the item or not developed)</text>
+<path d="M50,751.5 L68,781.5 L32,781.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="59" y1="766.5" x2="80" y2="766.5" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="770.5" class="l">Transfer: continued on another sheet</text>
+<path d="M50,789.5 L68,819.5 L32,819.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="808.5" class="l">Transfer in: gate developed elsewhere</text>
+<rect x="30" y="835.5" width="24.2" height="13" rx="6.5" fill="#b3261e"/>
+<text x="42.1" y="845.0" class="b" fill="#fff">SPF</text>
+<rect x="59.2" y="835.5" width="40.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="79.4" y="845.0" class="b" fill="#fff">latent</text>
+<rect x="104.60000000000001" y="835.5" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
+<text x="122.1" y="845.0" class="b" fill="#fff">SOTIF</text>
+<rect x="144.60000000000002" y="835.5" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="175.6" y="845.0" class="b" fill="#fff">CCF DFI-nn</text>
+<rect x="211.60000000000002" y="835.5" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="223.7" y="845.0" class="b" fill="#fff">FFI</text>
+<rect x="240.8" y="835.5" width="72.8" height="13" rx="6.5" fill="#3d6b3d"/>
+<text x="277.2" y="845.0" class="b" fill="#fff">outside item</text>
+<rect x="318.6" y="835.5" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="344.2" y="845.0" class="b" fill="#222">repeated</text>
+<rect x="672" y="539.5" width="430" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="682" y="561.5" class="h" text-anchor="start">LionDriver — FTA SG-06</text>
+<text x="682" y="577.5" class="l" text-anchor="start">loss of longitudinal deceleration without take-over warning</text>
+<text x="682" y="593.5" class="l" text-anchor="start">Sheet 2 of 4   ·   top of sheet: G6.1</text>
+<text x="682" y="609.5" class="l" text-anchor="start">Source: WP-A-04 §7 (analysis of record)</text>
+<text x="682" y="625.5" class="s" text-anchor="start">Generated by fta_diagrams.py — edit WP-A-04, not this file</text>
+</svg>

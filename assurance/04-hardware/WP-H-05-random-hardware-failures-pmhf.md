@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-H-05 Evaluation of safety goal violations due to random HW failures (PMHF) |
 | Standard reference | ISO 26262-5:2018 §9 (evaluation of safety goal violations due to random hardware failures: probabilistic metric and evaluation of each cause), Annex C; ISO 26262-10:2018 (PMHF explanations, informative); ISO 26262-11:2018 (informative) |
-| Version | 0.1 |
+| Version | 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
 | Status | Draft (method and plan; no value computed) |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose
 
@@ -126,6 +126,8 @@ so its failure rate enters PMHF almost entirely as λ_SPF. Whether that alone ex
 depends on the die rate, which is unknown. The SG-07 figure is dominated by the relay data,
 also unknown. No conclusion on meeting the target is possible today; the evaluation must not be
 reported as "met" or "not met" until computed.
+
+*Status note 2026-10-12:* since 2026-10-12 DC-01 (IWDG1, window mode, fed from the 100 Hz safety task; panda `9f60e17`) is implemented, **not verified**. It is not credited in the PMHF or as DC until HIL fault-injection evidence exists and the LSI tolerance is confirmed ([watchdog impact record](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) OI-3 and OI-2). The judgement above is unchanged.
 
 ## 7. Plan
 

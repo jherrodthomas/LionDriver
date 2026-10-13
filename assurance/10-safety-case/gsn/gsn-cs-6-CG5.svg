@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1582" height="836" viewBox="0 0 1582 836" font-family="Helvetica, Arial, sans-serif">
+<style>.g{fill:#fff;stroke:#111;stroke-width:1.4}.ctx{fill:#f4f4f4;stroke:#111;stroke-width:1.1}.id{font-size:11.5px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.sid{font-size:10.5px;font-weight:700;text-anchor:middle}.cid{font-size:10px;font-weight:700;text-anchor:middle}.cs{font-size:9.5px;text-anchor:middle;fill:#333}.aj{font-size:11px;font-weight:700;text-anchor:end}.df{font-size:9.5px;font-weight:700;fill:#b3261e;text-anchor:middle}.dfl{font-size:9.5px;font-weight:700;fill:#b3261e}.sh{font-size:9.5px;font-weight:600;fill:#444;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">Cybersecurity case — argument from CG5  (sheet 6 of 7)</text>
+<rect x="676.0" y="70" width="230" height="82.5" class="g"/>
+<text x="791.0" y="89" class="id">CG5</text>
+<text x="791.0" y="102.5" class="d">Cybersecurity is maintained after</text>
+<text x="791.0" y="115.0" class="d">release (monitoring, incident</text>
+<text x="791.0" y="127.5" class="d">response, updates, end of support)</text>
+<text x="791.0" y="141.5" class="sh">from sheet 1</text>
+<line x1="791.0" y1="152.5" x2="791.0" y2="171.5" class="w"/>
+<line x1="145.0" y1="171.5" x2="1437.0" y2="171.5" class="w"/>
+<line x1="145.0" y1="171.5" x2="145.0" y2="197.5" class="w"/><path d="M145.0,197.5 L141.5,189.2 L148.5,189.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="405.0" y1="171.5" x2="405.0" y2="197.5" class="w"/><path d="M405.0,197.5 L401.5,189.2 L408.5,189.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="673.0" y1="171.5" x2="673.0" y2="197.5" class="w"/><path d="M673.0,197.5 L669.5,189.2 L676.5,189.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="933.0" y1="171.5" x2="933.0" y2="197.5" class="w"/><path d="M933.0,197.5 L929.5,189.2 L936.5,189.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1185.0" y1="171.5" x2="1185.0" y2="197.5" class="w"/><path d="M1185.0,197.5 L1181.5,189.2 L1188.5,189.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="1437.0" y1="171.5" x2="1437.0" y2="197.5" class="w"/><path d="M1437.0,197.5 L1433.5,189.2 L1440.5,189.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<rect x="30" y="198.5" width="230" height="55.0" class="g"/>
+<text x="145.0" y="217.5" class="id">CG5.1</text>
+<text x="145.0" y="231.0" class="d">Monitoring, event evaluation and</text>
+<text x="145.0" y="243.5" class="d">vulnerability management running</text>
+<line x1="145.0" y1="253.5" x2="145.0" y2="272.5" class="w"/>
+<line x1="86.0" y1="272.5" x2="145.0" y2="272.5" class="w"/>
+<line x1="86.0" y1="272.5" x2="86.0" y2="313.5" class="w"/><path d="M86.0,313.5 L82.5,305.2 L89.5,305.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="86.0" cy="337.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86.0" y="341.5" class="sid" fill="#111">CSn-50</text>
+<text x="86.0" y="375.0" class="cs">Monitoring,</text>
+<text x="86.0" y="387.5" class="cs">vulnerability</text>
+<text x="86.0" y="400.0" class="cs">management, incident</text>
+<text x="86.0" y="412.5" class="cs">response, update…</text>
+<rect x="290.0" y="198.5" width="230" height="55.0" class="g"/>
+<text x="405.0" y="217.5" class="id">CG5.2</text>
+<text x="405.0" y="231.0" class="d">Incident response plan in place,</text>
+<text x="405.0" y="243.5" class="d">including stop-use coordination</text>
+<line x1="405.0" y1="253.5" x2="405.0" y2="272.5" class="w"/>
+<line x1="338.0" y1="272.5" x2="472.0" y2="272.5" class="w"/>
+<line x1="338.0" y1="272.5" x2="338.0" y2="313.5" class="w"/><path d="M338.0,313.5 L334.5,305.2 L341.5,305.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="472.0" y1="272.5" x2="472.0" y2="313.5" class="w"/><path d="M472.0,313.5 L468.5,305.2 L475.5,305.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="338.0" cy="337.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="338.0" y="341.5" class="sid" fill="#111">CSn-50</text>
+<text x="338.0" y="375.0" class="cs">Monitoring,</text>
+<text x="338.0" y="387.5" class="cs">vulnerability</text>
+<text x="338.0" y="400.0" class="cs">management, incident</text>
+<text x="338.0" y="412.5" class="cs">response, update…</text>
+<circle cx="472.0" cy="337.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="472.0" y="341.5" class="sid" fill="#111">CSn-51</text>
+<text x="472.0" y="375.0" class="cs">Field-action</text>
+<text x="472.0" y="387.5" class="cs">criteria incl.</text>
+<text x="472.0" y="400.0" class="cs">stop-use for</text>
+<text x="472.0" y="412.5" class="cs">exploitable…</text>
+<rect x="558.0" y="198.5" width="230" height="55.0" class="g"/>
+<text x="673.0" y="217.5" class="id">CG5.3</text>
+<text x="673.0" y="231.0" class="d">Update management with integrity,</text>
+<text x="673.0" y="243.5" class="d">impact analysis, rollback</text>
+<line x1="673.0" y1="253.5" x2="673.0" y2="272.5" class="w"/>
+<line x1="606.0" y1="272.5" x2="740.0" y2="272.5" class="w"/>
+<line x1="606.0" y1="272.5" x2="606.0" y2="313.5" class="w"/><path d="M606.0,313.5 L602.5,305.2 L609.5,305.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<line x1="740.0" y1="272.5" x2="740.0" y2="313.5" class="w"/><path d="M740.0,313.5 L736.5,305.2 L743.5,305.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="606.0" cy="337.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="606.0" y="341.5" class="sid" fill="#111">CSn-14</text>
+<text x="606.0" y="375.0" class="cs">Signed update design</text>
+<text x="606.0" y="387.5" class="cs">and implementation</text>
+<circle cx="740.0" cy="337.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="740.0" y="341.5" class="sid" fill="#111">CSn-50</text>
+<text x="740.0" y="375.0" class="cs">Monitoring,</text>
+<text x="740.0" y="387.5" class="cs">vulnerability</text>
+<text x="740.0" y="400.0" class="cs">management, incident</text>
+<text x="740.0" y="412.5" class="cs">response, update…</text>
+<rect x="818" y="198.5" width="230" height="55.0" class="g"/>
+<text x="933.0" y="217.5" class="id">CG5.4</text>
+<text x="933.0" y="231.0" class="d">Production/provisioning controls</text>
+<text x="933.0" y="243.5" class="d">(keys, firmware, option bytes)</text>
+<line x1="933.0" y1="253.5" x2="933.0" y2="272.5" class="w"/>
+<line x1="874.0" y1="272.5" x2="933.0" y2="272.5" class="w"/>
+<line x1="874.0" y1="272.5" x2="874.0" y2="313.5" class="w"/><path d="M874.0,313.5 L870.5,305.2 L877.5,305.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="874.0" cy="337.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="874.0" y="341.5" class="sid" fill="#111">CSn-52</text>
+<text x="874.0" y="375.0" class="cs">Provisioning</text>
+<text x="874.0" y="387.5" class="cs">controls (keys,</text>
+<text x="874.0" y="400.0" class="cs">firmware, option</text>
+<text x="874.0" y="412.5" class="cs">bytes)</text>
+<rect x="1070" y="198.5" width="230" height="55.0" class="g"/>
+<text x="1185.0" y="217.5" class="id">CG5.5</text>
+<text x="1185.0" y="231.0" class="d">End of support and decommissioning</text>
+<text x="1185.0" y="243.5" class="d">defined</text>
+<line x1="1185.0" y1="253.5" x2="1185.0" y2="272.5" class="w"/>
+<line x1="1126.0" y1="272.5" x2="1185.0" y2="272.5" class="w"/>
+<line x1="1126.0" y1="272.5" x2="1126.0" y2="313.5" class="w"/><path d="M1126.0,313.5 L1122.5,305.2 L1129.5,305.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="1126.0" cy="337.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="1126.0" y="341.5" class="sid" fill="#111">CSn-53</text>
+<text x="1126.0" y="375.0" class="cs">End of support and</text>
+<text x="1126.0" y="387.5" class="cs">decommissioning</text>
+<rect x="1322" y="198.5" width="230" height="70.0" class="g"/>
+<text x="1437.0" y="217.5" class="id">CG5.6</text>
+<text x="1437.0" y="231.0" class="d">LionDriver vulnerability intake</text>
+<text x="1437.0" y="243.5" class="d">published</text>
+<text x="1437.0" y="257.5" class="df">defeaters: CDF-10</text>
+<line x1="1437.0" y1="268.5" x2="1437.0" y2="287.5" class="w"/>
+<line x1="1378.0" y1="287.5" x2="1437.0" y2="287.5" class="w"/>
+<line x1="1378.0" y1="287.5" x2="1378.0" y2="313.5" class="w"/><path d="M1378.0,313.5 L1374.5,305.2 L1381.5,305.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<circle cx="1378.0" cy="337.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="1378.0" y="341.5" class="sid" fill="#111">CSn-54</text>
+<text x="1378.0" y="375.0" class="cs">Published LionDriver</text>
+<text x="1378.0" y="387.5" class="cs">`SECURITY.md` and</text>
+<text x="1378.0" y="400.0" class="cs">intake</text>
+<text x="30" y="468.5" class="h">Notation (GSN Community Standard v3)</text>
+<rect x="30" y="482.5" width="40" height="22" class="g"/>
+<text x="86" y="497.5" class="l">Goal (claim)</text>
+<path d="M37,512.5 L70,512.5 L63,534.5 L30,534.5 Z" class="g"/>
+<text x="86" y="527.5" class="l">Strategy (argument)</text>
+<circle cx="50" cy="553.5" r="11" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.6"/>
+<text x="86" y="557.5" class="l">Solution: evidence available</text>
+<circle cx="50" cy="583.5" r="11" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
+<text x="86" y="587.5" class="l">Solution: evidence partial</text>
+<circle cx="50" cy="613.5" r="11" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
+<text x="86" y="617.5" class="l">Solution: evidence missing</text>
+<rect x="30" y="632.5" width="40" height="22" rx="10" class="ctx"/>
+<text x="86" y="647.5" class="l">Context</text>
+<ellipse cx="50" cy="673.5" rx="20" ry="11" class="ctx"/>
+<text x="86" y="677.5" class="l">Assumption (A) / justification (J)</text>
+<path d="M50,694.5 L59,703.5 L50,712.5 L41,703.5 Z" fill="#fff" stroke="#111" stroke-width="1.2"/>
+<text x="86" y="707.5" class="l">Undeveloped goal</text>
+<line x1="30.0" y1="733.5" x2="70.0" y2="733.5" class="w"/><path d="M70.0,733.5 L61.7,737.0 L61.7,730.0 Z" fill="#111" stroke="#111" stroke-width="1"/>
+<text x="86" y="737.5" class="l">SupportedBy</text>
+<line x1="30.0" y1="763.5" x2="70.0" y2="763.5" class="w"/><path d="M70.0,763.5 L61.7,767.0 L61.7,760.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
+<text x="86" y="767.5" class="l">InContextOf</text>
+<text x="30" y="792.5" class="dfl">defeaters: DF-nn</text>
+<text x="140" y="792.5" class="l">open counter-evidence on the goal (WP-K-01 §7, WP-K-03 §6)</text>
+<rect x="1112" y="456.5" width="440" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="1122" y="478.5" class="h">LionDriver — Cybersecurity case (GSN)</text>
+<text x="1122" y="494.5" class="l">Argument from CG5</text>
+<text x="1122" y="510.5" class="l">Sheet 6 of 7</text>
+<text x="1122" y="526.5" class="l">Source: WP-K-03 §2–§4, §6 (text trees and tables)</text>
+<text x="1122" y="542.5" class="s">Generated by gsn_diagrams.py — edit the source, not this file</text>
+</svg>

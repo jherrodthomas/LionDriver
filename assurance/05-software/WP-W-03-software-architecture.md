@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-W-03 Software architectural design |
 | Standard reference | ISO 26262-6:2018 §7 (software architectural design: notation, design principles, static and dynamic aspects, ASIL attribution, resource usage); ISO 26262-9:2018 §6 (coexistence, by reference to WP-A-02); ASPICE 4.0 SWE.2 |
-| Version | 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
+| Version | 0.4 (status update 2026-10-12: §2, §3 and §4.2 aligned with the 100 Hz TIM4 safety task and 0.3 s heartbeat of §5.1; new units in §3.1 (heartbeat monitor, IWDG, IRQ priority table, reference lock, EPS-fault siren in panda `b790fca`, LionDriver PR #45, not merged; TX rate check in `safety_tx_hook`); §5.1 priorities, §5.4 start-up, §5.4 status, §6.2 and §8 ratings updated. Nothing verified on hardware). 0.3 (§5.4.4 prerequisites implemented, panda `52cad44`: explicit priority table, atomic safety-config switch and fault word; R-2 recorded as a 10 ms bound; 2026-10-12). 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Envelope (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host (E-01): QM / QM (B-sup) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); I2 for §6 and §8 |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; panda `b790fca`, opendbc `7993399`). Earlier: `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 ## 1. Purpose and scope
 
@@ -29,7 +29,7 @@ Notation (WP-W-01 §14): component tables, ASCII block diagrams, state-transitio
 |---|---|---|
 | Envelope independent of QM commands | AP-1, AP-5 (WP-S-03 §2) | All actuation passes `safety_tx_hook`; configuration must be locked (SWSR-512) |
 | Fail-silent | AP-2 | One safe state SS-S reachable from every fault (SWSR-502) |
-| Timing budgets 0.05–0.3 s | [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) | Periodic safety task ≥ 50 Hz (SWSR-401a); current 1 Hz evaluation does not meet them |
+| Timing budgets 0.05–0.3 s | [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) | Periodic safety task ≥ 50 Hz (SWSR-401a): the TIM4 100 Hz safety task (§5.1) runs `safety_tick` and the 0.3 s heartbeat monitor; WCET and jitter not yet measured (§5.4.5). *As found at `8b8c6ae`: 1 Hz evaluation, which did not meet them* |
 | Single MCU, single address space | GAP-11 | FFI must be argued by software means and MPU (SWSR-507) |
 | Reuse of upstream code | T-03 | Architecture back-filled; minimal structural change preferred |
 
@@ -49,9 +49,9 @@ Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PN
 | `panda.safety.defaults` | U-SAF-DEF | `modes/defaults.h`, `modes/elm327.h` | SILENT/NOOUTPUT/ELM327 hooks | B‡ (safe-state modes) |
 | `panda.safety.ignition` | U-SAF-IGN | `ignition.h` | CAN ignition detection | B (feeds heartbeat timeout choice, TSR-510) |
 | `panda.safety.other_modes` | — | `modes/*.h` other brands | Not used by the reference configuration but linked and selectable via `0xdc` | Interference source until SWSR-512 locks the mode; then dead code to be removed or justified (OI-2) |
-| `panda.main` | U-PND-MAIN | `main.c` | Start-up, `set_safety_mode`, tick ISR (8 Hz/1 Hz), heartbeat supervision, siren control, main idle loop | B‡ |
-| `panda.main.safety_task` | U-PND-MAIN | (new) | Periodic safety task ≥ 50 Hz with watchdog checkpoint (SWSR-401a, 501) | B‡ (to be created) |
-| `panda.comms` | U-PND-COMMS | `main_comms.h`, `can_comms.h` | Control-request dispatcher, health packet, CAN stream packing/unpacking | B‡ (it calls envelope APIs and can change configuration) |
+| `panda.main` | U-PND-MAIN | `main.c` | Start-up, `set_safety_mode`, tick ISR (8 Hz/1 Hz), heartbeat supervision (1 Hz SILENT path), siren control, main idle loop | B‡ |
+| `panda.main.safety_task` | U-PND-MAIN | `main.c` (`safety_task_handler`), `drivers/timers.h` (`safety_task_timer_init`), `drivers/heartbeat_monitor.h`, `drivers/hw_watchdog.h`, `drivers/eps_fault_siren.h` | TIM4 100 Hz safety task (SWSR-401a): `safety_tick`, heartbeat monitor (0.3 s, TSR-407), EPS-fault siren (1 s persistence, TSR-516(b); panda `b790fca`, LionDriver PR #45, not merged), IWDG feed after main-loop progress (SWSR-501) | B‡ (exists since panda#3, pin `9f60e17`; not verified on hardware) |
+| `panda.comms` | U-PND-COMMS | `main_comms.h`, `can_comms.h`, `reference_lock.h` (reference build: mode/parameter lock, requests refused in a car mode, SWSR-512/513) | Control-request dispatcher, health packet, CAN stream packing/unpacking | B‡ (it calls envelope APIs and can change configuration) |
 | `panda.drivers.spi` | U-PND-SPI | `drivers/spi.h`, `stm32h7/llspi.h` | SPI framing, checksum, DMA control | B‡ |
 | `panda.drivers.usb` | U-PND-USB | `drivers/usb.h`, `stm32h7/llusb.h` | USB endpoint handling; reaches the same comms handlers (`drivers/usb.h:575, 616, 700`) | Not needed by the reference device (SPI); interference source (OI-3) |
 | `panda.drivers.fdcan` | U-PND-FDCAN | `drivers/fdcan.h`, `drivers/can_common.h`, `stm32h7/llfdcan.h` | CAN RX ISR (forward, RX hook, queue), TX path (`can_send` → TX hook → queue → FIFO), error handling | B‡ |
@@ -59,7 +59,7 @@ Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PN
 | `panda.sys.faults` | U-PND-FLT | `sys/faults.h`, `drivers/simple_watchdog.h`, `drivers/registers.h`, `drivers/interrupts.h` | Fault recording, software watchdog, register check, interrupt-rate supervision | B‡ |
 | `panda.sys.power_saving` | U-PND-PWR | `sys/power_saving.h` | Power-save: CAN IRQ and transceiver disable | B‡ (can stop camera-side forwarding, WP-A-02 FFI-CM-08) |
 | `panda.drivers.siren` / housekeeping | U-PND-HK | `drivers/fake_siren.h`, `stm32h7/sound.h`, `drivers/{fan,led,bootkick,clock_source,pwm}.h`, `stm32h7/lldts.h`, ADC | Siren (B, TSR-516); others QM | Mixed: siren B, rest QM |
-| `panda.platform` | U-PND-PLAT | `stm32h7/startup_stm32h7x5xx.s`, `early_init.h`, `stm32h7/{clock,peripherals,interrupt_handlers,llflash}.h`, `drivers/timers.h`, `sys/critical.h` | Reset, exception handlers, clocks, vectors, timers, critical sections | B‡ |
+| `panda.platform` | U-PND-PLAT | `stm32h7/startup_stm32h7x5xx.s`, `early_init.h`, `stm32h7/{clock,peripherals,interrupt_handlers,llflash}.h`, `drivers/timers.h`, `drivers/irq_priorities.h`, `sys/critical.h` | Reset, exception handlers, clocks, vectors, timers, explicit NVIC priority table (SWSR-519), critical sections | B‡ |
 | `panda.bootstub` | U-PND-BOOT | `bootstub.c`, `crypto/*`, `flasher.h` | Signature check, soft flasher | B‡ + CS |
 
 ### 3.2 Block diagram
@@ -71,7 +71,7 @@ Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PN
      (hdr+data, XOR)              │     │                    │ 0xdc ─▶ U-PND-MAIN set_safety_mode  │
                                   │     │                    │           └▶ U-SAF-CORE set_safety_hooks
                                   │     │                    │ 0xf3 ─▶ heartbeat vars               │
-                                  │     │                    └ 0xc5 ─▶ U-PND-HARN relay (ungated)   │
+                                  │     │                    └ 0xc5 ─▶ U-PND-HARN relay (ref lock)  │
                                   │     └─can write─▶ comms_can_write ─▶ can_send ─▶ safety_tx_hook │
                                   │                                        (U-SAF-CORE→U-SAF-TOY→  │
                                   │                                         U-SAF-LAT/LONG)        │
@@ -82,8 +82,10 @@ Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PN
    bus 0/2 RX ════════════════════╪══▶ can_rx: safety_fwd_hook ─▶ can_send(skip hook) other bus    │
                                   │            safety_rx_hook ─▶ U-SAF-TOY rx ─▶ controls_allowed   │
                                   │            can_push(rx_q) ─▶ comms_can_read ─▶ SPI to SoC      │
+                                  │  TIM4 safety task 100 Hz: safety_tick, heartbeat 0.3 s,         │
+                                  │     EPS-fault siren, IWDG feed (window)                        │
                                   │  TIM12 tick ISR 8 Hz: harness_tick, simple_watchdog_kick, siren │
-                                  │     └ 1 Hz: heartbeat checks, check_registers, safety_tick     │
+                                  │     └ 1 Hz: heartbeat counter (SILENT 5 s), check_registers    │
                                   │  TIM6 1 Hz: interrupt-rate statistics                           │
                                   │  main loop: LED fade / WFI only                                 │
                                   └───────────────────────────────────────────────────────────────┘
@@ -136,7 +138,7 @@ Rates from `cereal/services.py`. Consumers and alive limits as in [WP-S-03 §9](
 | selfdrived → `selfdriveState` → controlsd, pandad | 100 Hz | enabled/active | 0.1 s | — |
 | controlsd → `carControl` → card | 100 Hz | actuator request | card sends only if alive (`selfdrive/car/card.py:234-238`) | — |
 | card → `sendcan` → pandad → SPI → panda | 100 Hz | CAN frames | pandad drops > 1 s (`pandad.cc:78-79`) | 20 ms (SWSR-414h) |
-| pandad → `0xf3` heartbeat → panda | 10 Hz | engaged flag | panda 1 Hz evaluation | 0.3 s + loop counter (SWSR-407, 409) |
+| pandad → `0xf3` heartbeat → panda | 10 Hz | engaged flag | panda 100 Hz safety task: authority revoked after 0.3 s (panda `c2e5d93`); SILENT after 5 s | 0.3 s + loop counter (SWSR-407, 409) |
 | panda → health → pandad → `pandaStates` → selfdrived | 10 Hz | authority, faults | mismatch 2 s | 0.3 s (SWSR-307h) |
 
 ## 5. Dynamic behaviour
@@ -149,15 +151,15 @@ All envelope processing runs in **interrupt context**. The main loop (`main.c:33
 |---|---|---|---|
 | FDCANx IT0 (RX) | frame received, per bus | `can_rx` (`drivers/fdcan.h:154-243`) | `safety_fwd_hook`, `safety_rx_hook`, `ignition_can_hook` |
 | FDCANx IT1 (TX) | TX FIFO empty / `process_can` | `process_can` (`drivers/fdcan.h:88-150`) | none (XOR check only) |
-| DMA2 Stream2 (SPI RX done) | end of MOSI DMA | `spi_rx_done` (`drivers/spi.h:106-223`) via `stm32h7/llspi.h:56-61` | via `comms_control_handler`: `set_safety_mode` → `set_safety_hooks`; via `comms_can_write`: `safety_tx_hook` |
+| DMA2 Stream2 (SPI RX done) | end of MOSI DMA | `spi_rx_done` (`drivers/spi.h:106-223`) via `stm32h7/llspi.h:56-61` | via `comms_control_handler`: `set_safety_mode` → `set_safety_hooks`; via `comms_can_write`: `safety_tx_hook` (in the reference build the per-ID TX rate check `tx_rate_check` runs first, TSR-518) |
 | DMA2 Stream3, SPI4 | MISO done | `spi_tx_done` | none |
 | USB OTG | USB transfer | `drivers/usb.h` | same comms handlers |
-| TIM4 safety task (LionDriver) | 100 Hz (`drivers/timers.h` `safety_task_timer_init`) | `safety_task_handler` (`main.c`) | `safety_tick` (RX timeouts), heartbeat monitor (0.3 s, `drivers/heartbeat_monitor.h`), IWDG feed (`drivers/hw_watchdog.h`) |
+| TIM4 safety task (LionDriver) | 100 Hz (`drivers/timers.h` `safety_task_timer_init`) | `safety_task_handler` (`main.c`) | `safety_tick` (RX timeouts), heartbeat monitor (0.3 s, `drivers/heartbeat_monitor.h`), EPS-fault siren (`drivers/eps_fault_siren.h`, panda `b790fca`), IWDG feed (`drivers/hw_watchdog.h`) |
 | TIM12 tick | 8 Hz (`drivers/timers.h:30-31`) | `tick_handler` (`main.c`) | 1 Hz: heartbeat counter and SILENT after 5 s, `heartbeat_engaged` mismatch, `check_registers`; 8 Hz: harness, software watchdog kick, siren |
 | TIM6 | 1 Hz | `interrupt_timer_handler` (`drivers/interrupts.h:50-72`) | rate statistics |
 | NMI / HardFault | exception | `early_init.h:73-81` | reset |
 
-**Priorities.** No `NVIC_SetPriority` call exists in `panda/board`, so all peripheral interrupts run at the reset-default priority. Equal priority means no preemption between them: each handler runs to completion and pending handlers are served in exception-number order. Consequences: (i) envelope state is never accessed concurrently, which makes the single-writer argument of §6.3 simple; (ii) a long handler (e.g. a CAN burst or `set_safety_mode` → `can_init_all`) delays every other handler, including the tick; (iii) the tick cannot preempt a hung handler, so only a hardware watchdog can detect it (SWSR-501). `ENTER_CRITICAL` masks all interrupts (`sys/sys.h:11-22`). This finding matches [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) FFI-SP-04 and GAP-50; TSR-519 / SWSR-519 require an explicit priority and timing scheme.
+**Priorities.** Since panda `52cad44` every enabled IRQ has an explicit priority (`drivers/irq_priorities.h`, `interrupt_priorities_init()`), all at one level (8); behaviour unchanged. *As found at `8b8c6ae`: no `NVIC_SetPriority` call, all interrupts at the reset-default priority.* Equal priority means no preemption between them: each handler runs to completion and pending handlers are served in exception-number order. Consequences: (i) envelope state is never accessed concurrently, which makes the single-writer argument of §6.3 simple; (ii) a long handler (e.g. a CAN burst or `set_safety_mode` → `can_init_all`) delays every other handler, including the tick; (iii) the tick cannot preempt a hung handler, so only a hardware watchdog can detect it (SWSR-501). `ENTER_CRITICAL` masks all interrupts (`sys/sys.h:11-22`). This finding matches [WP-A-02](../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) FFI-SP-04 and GAP-50; TSR-519 / SWSR-519 require an explicit priority and timing scheme.
 
 ### 5.2 Tick schedule (baseline)
 
@@ -165,7 +167,7 @@ All envelope processing runs in **interrupt context**. The main loop (`main.c:33
 |---|---|---|
 | 125 ms | siren toggle, `fan_tick`, `harness_tick` (ADC orientation when relay not driven), `simple_watchdog_kick`, `sound_tick`, relay-fault reporting, harness re-init on change | `main.c:113-140` |
 | 1 s | LEDs, ignition, `bootkick_tick`, heartbeat counter, `heartbeat_engaged` mismatch (3 ticks), heartbeat loss → SILENT (5 s ign on / 2 s off), siren countdown, `check_registers`, CAN ignition timeout, counters | `main.c` |
-| 10 ms (TIM4, LionDriver, panda `c2e5d93`) | `safety_tick` (RX timeouts, 5 periods for Toyota), heartbeat monitor (authority revoked after 0.3 s), IWDG feed (window mode) | `main.c` `safety_task_handler` |
+| 10 ms (TIM4, LionDriver, panda `c2e5d93`) | `safety_tick` (RX timeouts, 5 periods for Toyota), heartbeat monitor (authority revoked after 0.3 s), EPS-fault siren (1 s persistence, 3 s hold; panda `b790fca`), IWDG feed (window mode) | `main.c` `safety_task_handler` |
 
 Required schedule (SWSR-401a, 501): a dedicated timer at ≥ 50 Hz running `safety_tick`, heartbeat, command freshness, SPI error rate, relay readback, platform monitors; IWDG serviced at its end. The 8 Hz/1 Hz tick keeps housekeeping only. **Status (panda `c2e5d93`):** the 100 Hz safety task exists and runs `safety_tick`, the heartbeat monitor and the IWDG feed; command freshness (TSR-408), SPI error rate, relay readback and platform monitors are not in it yet. It still runs at the same priority as every other interrupt; the proposed priority scheme is §5.4.
 
@@ -174,7 +176,7 @@ Required schedule (SWSR-401a, 501): a dedicated timer at ≥ 50 Hz running `safe
 1. `card` packs `0x2E4` into `sendcan`; `pandad` send thread checks age < 1 s and writes it over SPI endpoint 3.
 2. DMA2 Stream2 IRQ → `spi_rx_done`: header XOR checked (`drivers/spi.h:122`), then data DMA of `spi_data_len_mosi + 1` bytes (`:233`), then data XOR (`:137`).
 3. `comms_can_write` reassembles `CANPacket_t` (`can_comms.h:83-129`) → `can_send(…, false)` (`drivers/can_common.h:161`).
-4. `safety_tx_hook`: whitelist (`safety.h:230-239`) → `toyota_tx_hook` → `steer_torque_cmd_checks` (`lateral.h:60-151`) → relay check (`safety.h:252`).
+4. `safety_tx_hook`: whitelist (`safety.h:230-239`) → (reference build) per-ID TX rate check `tx_rate_check` (250 ms window, TSR-518) → `toyota_tx_hook` → `steer_torque_cmd_checks` (`lateral.h:60-151`) → relay check (`safety.h:252`).
 5. Accept: `can_push(can_queues[0])`, `process_can` writes the FDCAN TX FIFO after the packet XOR check (`drivers/fdcan.h:100`) and echoes the frame to `rx_q`. Reject: `safety_tx_blocked++`, frame returned to `rx_q` with `rejected=1`.
 6. EPS answers on `0x260` at 50 Hz → FDCAN RX ISR → forwarded to bus 2 → `safety_rx_hook` updates `torque_meas` used by the next check.
 
@@ -194,7 +196,7 @@ Worst-case latency step 2→5 is to be measured (VS-SWI-15, VS-SWQ-23).
 | 8 | panda | `set_safety_hooks` resets state; relay driven; CAN re-init | `main.c:70-78`; `safety.h:391-482` |
 | 9 | PCM | CRUISE_ACTIVE rising edge → `controls_allowed = true` | `safety.h:518-527` |
 
-Required: start-up tests (SWSR-515) between steps 4 and 8; IWDG started in step 1 (SWSR-501b); step 7 restricted by the mode lock (SWSR-512).
+Required: start-up tests (SWSR-515) between steps 4 and 8; IWDG started at the first relay energisation (TSR-501 v0.4; implemented in `set_intercept_relay`, step 8); step 7 restricted by the mode lock (SWSR-512; implemented in the reference build, `reference_lock.h`).
 
 ### 5.5 Safety-mode state machine (panda)
 
@@ -203,14 +205,14 @@ Required: start-up tests (SWSR-515) between steps 4 and 8; IWDG started in step 
 | SILENT | released | silent | reset, heartbeat loss, failed mode set | `0xdc` any mode |
 | NOOUTPUT | released | normal, TX hook rejects all | `0xdc` | `0xdc` |
 | ELM327 | released | OBD mux per param | `0xdc` | `0xdc` |
-| TOYOTA | driven | normal | `0xdc` 2/73 | `0xdc` (any, today); heartbeat loss → SILENT |
+| TOYOTA | driven | normal | `0xdc` 2/73 | `0xdc` (any, upstream build; reference build only NOOUTPUT/SILENT, `reference_lock.h`); heartbeat loss → SILENT |
 
 Required (SWSR-512): TOYOTA exits only to SILENT/NOOUTPUT; new fault state SS-S (= SILENT + latch) reachable from every state (SWSR-502).
 
 
 ### 5.4 Interrupt priority scheme (proposed, SWSR-519, OI-4)
 
-**Status: proposal for review; not implemented.** Analysis at panda `c2e5d93`, opendbc `5b5a4ba`. The timing claims below are design targets until measured on the target (§5.4.5).
+**Status (2026-10-12): priority levels not adopted; §5.4.4 prerequisites 1, 3 and 4 done, 2 accepted as a bound (WP-W-04 SWF-48).** Analysis at panda `c2e5d93`, opendbc `5b5a4ba`. The timing claims below are design targets until measured on the target (§5.4.5).
 
 #### 5.4.1 Why equal priority is not enough
 
@@ -252,11 +254,15 @@ Preemption creates the concurrent access that equal priority prevented (§5.1 co
 
 #### 5.4.4 Changes needed before the scheme can be enabled
 
-1. Mask the safety task during `set_safety_mode` / `set_safety_hooks` (R-1). This is mandatory: without it the proposal introduces an out-of-bounds read.
-2. Make the grant in `pcm_cruise_check` atomic with respect to the safety task (R-2), or record the 10 ms bound in WP-W-04.
-3. Make `fault_occurred` atomic (R-8).
-4. Add the priority table and set it before the first `NVIC_EnableIRQ` (`REGISTER_INTERRUPT` call sites, §5.1).
-5. Host tests cannot show any of this; it needs the target measurement below.
+| # | Change | Status (panda `52cad44`, [jherrodthomas/panda#10](https://github.com/jherrodthomas/panda/pull/10)) |
+|---|---|---|
+| 1 | Mask the safety task during `set_safety_mode` / `set_safety_hooks` (R-1). Mandatory: without it the proposal introduces an out-of-bounds read | **Done:** both `set_safety_hooks` calls in `set_safety_mode` run in `ENTER_CRITICAL`/`EXIT_CRITICAL` |
+| 2 | Make the grant in `pcm_cruise_check` atomic with respect to the safety task (R-2), or record the 10 ms bound in WP-W-04 | **Bound recorded** ([WP-W-04](WP-W-04-software-safety-analysis.md) SWF-48): opendbc has no critical-section primitive, and every safety-task revocation is re-evaluated each period, so a lost revocation lasts at most one task period (10 ms) plus its jitter. The single-writer `safety_revoke` API (§6.3) remains the target |
+| 3 | Make `fault_occurred` atomic (R-8) | **Done:** `fault_occurred` and `fault_recovered` run in a critical section |
+| 4 | Add the priority table and set it before the first `NVIC_EnableIRQ` (§5.1) | **Done:** `board/drivers/irq_priorities.h`, `interrupt_priorities_init()` before `clock_init()`. All classes at level 8, so behaviour is unchanged until the scheme is adopted. Host test `tests/irq_priorities` checks that every `NVIC_EnableIRQ` site has an entry and that the classes are still equal |
+| 5 | Host tests cannot show the timing; it needs the target measurement below | Open (D-04) |
+
+Adopting §5.4.2 is now a change of the five `IRQ_PRIO_*` values and of the `test_classes_equal_until_scheme_adopted` host test, after the §5.4.5 measurements.
 
 #### 5.4.5 Measurement plan (target, HIL bench D-04)
 
@@ -290,9 +296,9 @@ If the baseline measurement shows that the longest handler or critical section s
 |---|---|---|
 | MPU configuration | Any comms defect can overwrite envelope state | 507 |
 | Bounds checks on SoC lengths/indices | DMA/array overrun from the QM SoC | 412, 412a, 412b |
-| Hardware watchdog with logical checkpoint | Hangs undetected | 501, 501b |
-| Temporal isolation | Comms interrupt load can delay safety checks without bound | 401a, 502b |
-| Configuration lock and command gating | QM SoC configures the envelope | 512, 513 |
+| Hardware watchdog with logical checkpoint | Hangs undetected. **2026-10-12: implemented, not verified** (IWDG window, fed from the safety task after main-loop progress) | 501, 501b |
+| Temporal isolation | Comms interrupt load can delay safety checks without bound. **2026-10-12: partial** (100 Hz safety task, explicit but equal priorities; WCET not measured) | 401a, 502b |
+| Configuration lock and command gating | QM SoC configures the envelope. **2026-10-12: implemented in the reference build, not verified** (`reference_lock.h`) | 512, 513 |
 | Removal of unused brand modes and USB path | Larger interference surface | OI-2, OI-3 |
 
 ### 6.3 Shared data between contexts (ENV-R-12)
@@ -334,8 +340,8 @@ ISO 26262-6 §7 lists design principles with recommendation levels per ASIL; the
 | Restricted size of interfaces | Hooks have narrow signatures, but much state is shared as globals (§6.3) | Partial | Accessor functions for authority |
 | Strong cohesion | Safety layer cohesive; `tick_handler` mixes housekeeping with safety supervision | Partial | Separate safety task (SWSR-401a) |
 | Loose coupling | Safety core coupled to all brand modes via compile-time inclusion | Partial | Build only required modes (OI-2) |
-| Appropriate scheduling properties | No periodic safety task; 1 Hz timeout evaluation; equal priorities (GAP-50) | **No** | SWSR-401a, 501, 519 |
-| Restricted use of interrupts | Whole envelope runs in ISRs; no priorities | **No** (to be justified or changed) | Documented priority scheme (OI-4) |
+| Appropriate scheduling properties | No periodic safety task; 1 Hz timeout evaluation; equal priorities (GAP-50). *2026-10-12:* 100 Hz safety task (TIM4); WCET not measured | **Partial** (was No) | SWSR-401a, 501, 519 |
+| Restricted use of interrupts | Whole envelope runs in ISRs; no priorities. *2026-10-12:* explicit, equal priorities (panda `52cad44`) | **Partial** (was No; explicit, equal) | Documented priority scheme (OI-4) |
 | Appropriate spatial isolation | No MPU | **No** | SWSR-507 |
 | Appropriate management of shared resources | Ring buffers protected; globals rely on equal priority | Partial | §6.3 |
 
@@ -346,7 +352,7 @@ ISO 26262-6 §7 lists design principles with recommendation levels per ASIL; the
 | OI-1 | Add U-PND-USB, U-PND-PWR, U-PND-HK, U-PND-PLAT to the WP-W-06 unit list | Safety engineer | G3 |
 | OI-2 | Remove unused brand modes from the reference firmware build or justify them (WP-A-02 OI-2) | SW lead | G3 |
 | OI-3 | Decide whether USB comms are disabled in the reference build | SW lead | G3 |
-| OI-4 | Define the NVIC priority scheme for the new safety task (SWSR-519) and re-assess §6.3. **Proposed in §5.4 (2026-10-12, AI draft, I0)**; still needed: review, the §5.4.4 code changes, and the §5.4.5 measurements on the target | SW architect | G3 |
+| OI-4 | Define the NVIC priority scheme for the new safety task (SWSR-519) and re-assess §6.3. **Proposed in §5.4 (2026-10-12, AI draft, I0)**; §5.4.4 code changes done (panda `52cad44`); still needed: review and the §5.4.5 measurements on the target | SW architect | G3 |
 | OI-5 | Check principle recommendation levels against the licensed ISO 26262-6 | Safety engineer | G3 |
 | OI-6 | Measure the resource estimates of §7 from the map file and on target | Maintainer | G4 |
 | OI-7 | Create `elements.yaml` from §3.1 and §4.1 (WP-P-06 OI-4) | Safety engineer | G3 |

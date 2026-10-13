@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-W-05 Software unit design and implementation |
 | Standard reference | ISO 26262-6:2018 §8 (software unit design and implementation: notation, design principles for unit design and implementation); ISO/SAE 21434:2021 §10 (by reference to WP-W-11); ASPICE 4.0 SWE.3 |
-| Version | 0.1 |
+| Version | 0.3 (status update 2026-10-12: UN-05 in the 100 Hz safety task; UN-N1 exists; new units UN-36…UN-42 for the integrated LionDriver changes (heartbeat monitor, IWDG, IRQ priorities, EPS-fault siren, reference lock, TX rate check, Toyota cruise-main and EPS-fault checks); UN-02, UN-03, UN-15, UN-16, UN-19, UN-21, §5 updated. Nothing verified on hardware). 0.2 (UN-03: TX rate supervision design proposal DN-01; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope units (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; panda `b790fca`, opendbc `7993399`). Earlier: `8b8c6ae` (opendbc `229dc70`, panda `92eb565`); line numbers in §2 are from that baseline unless stated (OI-4) |
 
 ## 1. Purpose and scope
 
@@ -30,7 +30,7 @@ The design is back-filled from code (T-03). The code is the implementation; this
 | UN-02 | `rx_msg_safety_check`, `get_addr_check_index`, `update_addr_timestamp`, `update_counter`, `is_msg_valid` | `safety.h:112-197` | U-SAF-CORE | RX ISR, tick | 402, 406 |
 | UN-03 | `safety_tx_hook`, `tx_msg_safety_check` | `safety.h:230-253` | U-SAF-CORE | SPI/USB ISR | 101–107, 201–207, 705, 710 |
 | UN-04 | `safety_fwd_hook`, `get_fwd_bus` | `safety.h:255-288` | U-SAF-CORE | RX ISR | 704, 710 |
-| UN-05 | `safety_tick` | `safety.h:321-344` | U-SAF-CORE | tick ISR (1 Hz) | 401, 406 |
+| UN-05 | `safety_tick` | `safety.h:321-344` | U-SAF-CORE | 100 Hz safety task (UN-N1); 1 Hz tick ISR at `8b8c6ae` | 401, 406 |
 | UN-06 | `generic_rx_checks`, `stock_ecu_check`, `relay_malfunction_set/reset` | `safety.h:346-384` | U-SAF-CORE | RX ISR | 302, 710 |
 | UN-07 | `set_safety_hooks`, `reset_sample` | `safety.h:386-482` | U-SAF-CORE | SPI ISR, tick ISR | 311, 512 |
 | UN-08 | `pcm_cruise_check` | `safety.h:518-527` | U-SAF-CORE | RX ISR | 301, 309 |
@@ -61,12 +61,19 @@ The design is back-filled from code (T-03). The code is the implementation; this
 | UN-33 | `set_power_save_state`, `enable_can_transceivers` | `sys/power_saving.h:15-55` | U-PND-PWR | SPI ISR, tick | 508a, 513 |
 | UN-34 | `NMI_Handler`, `HardFault_Handler`, early init | `early_init.h:60-81` | U-PND-PLAT | exception | 502a |
 | UN-35 | bootstub `main` | `bootstub.c:33-82` | U-PND-BOOT | thread | 511 |
-| UN-N1 | (new) periodic safety task | — | U-PND-MAIN | new timer ISR | 401a, 407, 408, 413, 501, 506 |
+| UN-N1 | periodic safety task `safety_task_handler` (exists since panda#3, pin `9f60e17`) | `main.c:135-151` (panda `b790fca`) | U-PND-MAIN | TIM4 ISR, 100 Hz | 401a, 407, 501, 516 (implemented); 408, 413, 506 (not yet) |
 | UN-N2 | (new) fault reaction `enter_safe_state(reason)` | — | U-PND-FLT | any | 502, 108a |
 | UN-N3 | (new) zero-torque frame generator | — | U-SAF-TOY | TX path, safety task | 109, 109a |
 | UN-N4 | (new) RX plausibility (rate, frozen, cross-checks) | — | U-SAF-CORE/TOY | RX ISR, safety task | 403–405 |
 | UN-N5 | (new) start-up tests | — | U-PND-PLAT | thread before IRQs | 515 |
 | UN-N6 | (new) SPI CRC and sequence check | — | U-PND-SPI/COMMS | ISR | 410, 410a, 411 |
+| UN-36 | `heartbeat_monitor_tick`, `heartbeat_monitor_reset` | `drivers/heartbeat_monitor.h` (panda `c2e5d93`) | U-PND-MAIN | safety task; SPI ISR (`0xf3` reset) | 407 |
+| UN-37 | `hw_watchdog_start`, `hw_watchdog_tick`, `hw_watchdog_main_loop_alive` | `drivers/hw_watchdog.h` (panda `9f60e17`) | U-PND-FLT | relay drive (start), safety task (feed), main loop | 501, 501b |
+| UN-38 | `interrupt_priorities_init` | `drivers/irq_priorities.h` (panda `52cad44`) | U-PND-PLAT | thread, before the first `NVIC_EnableIRQ` | 519 |
+| UN-39 | `eps_fault_siren_tick`, `eps_fault_siren_reset` | `drivers/eps_fault_siren.h` (panda `b790fca`; LionDriver PR #45, not merged) | U-PND-HK | safety task; mode change | 516 |
+| UN-40 | `reference_request_allowed` | `reference_lock.h` (panda `9f60e17`; reference build only) | U-PND-COMMS | SPI/USB ISR | 511a, 512, 512a, 513 |
+| UN-41 | `tx_rate_check` | `safety.h:248-280` (opendbc `7993399`; reference build only) | U-SAF-CORE | TX path | 518 |
+| UN-42 | `toyota_cruise_main_check`, `toyota_lka_state_is_fault` | `modes/toyota.h:99-144` (opendbc `7993399`; reference build only) | U-SAF-TOY | RX ISR | 405(c), 110 |
 
 ## 3. Unit design descriptions (safety layer)
 
@@ -93,7 +100,7 @@ The design is back-filled from code (T-03). The code is the implementation; this
 | Algorithm | Linear search with first-match latch of the alternative address (`msg_seen`); checksum via brand callbacks unless `ignore_checksum`; counter compares expected `(last+1) mod (max+1)` and keeps a clamped 0…5 score; quality flag via callback |
 | Limits | `MAX_WRONG_COUNTERS = 5` (`safety.h:54`); `MAX_ADDR_CHECK_MSGS = 3` |
 | Error handling | invalid → authority cleared (`safety.h:115-118`) |
-| Change | Add `0x262`, `0x1D3`, `0xB4` entries (SWSR-110, 405); rate and frozen checks (UN-N4) |
+| Change | Add `0x262`, `0x1D3`, `0xB4` entries (SWSR-110, 405); rate and frozen checks (UN-N4). *Status 2026-10-12:* `0x262` (25 Hz) and `0x1D3` (33 Hz) added in the reference build; `0xB4` open; Toyota `rx_timeout_periods` = 5 |
 
 ### UN-03 `safety_tx_hook`
 
@@ -104,7 +111,7 @@ The design is back-filled from code (T-03). The code is the implementation; this
 | Outputs | true = transmit |
 | Algorithm | whitelist by (addr, bus, length) → brand TX hook → AND with `!relay_malfunction`; ALLOUTPUT and ELM327 bypass the whitelist |
 | Error handling | caller (`can_send`) counts rejection and echoes frame with `rejected=1` |
-| Change | On rejection of a lateral frame while engaged: revoke and request substitute frame (SWSR-108, 109) |
+| Change | On rejection of a lateral frame while engaged: revoke and request substitute frame (SWSR-108, 109). Per-ID TX rate supervision (SWSR-518, [DN-01](design-notes/DN-01-tx-rate-supervision.md)): *implemented in the reference build (UN-41), runs after the whitelist and before the brand hook; not verified on hardware* |
 
 ### UN-04 `safety_fwd_hook`
 
@@ -116,8 +123,8 @@ Purpose: return the destination bus (0↔2) or −1. Blocked when `relay_malfunc
 |---|---|
 | Purpose | Detect lagging RX messages |
 | Algorithm | For each RX entry: lagging if `elapsed > max(10 × period, 1 s)`; invalid if frequency < 10 Hz or `is_msg_valid` false → `controls_allowed = false`, `safety_rx_checks_invalid = true` |
-| Timing | Called at 1 Hz → detection 1–2 s |
-| Change | 5 periods, called from UN-N1 at ≥ 50 Hz (SWSR-401, 401a) |
+| Timing | Called from the 100 Hz safety task (UN-N1); Toyota sets `rx_timeout_periods` = 5, so detection is 5 nominal periods plus one 10 ms task period (≤ 0.16 s for `0x1D2`). *At `8b8c6ae`: called at 1 Hz, detection 1–2 s* |
+| Change | Done (SWSR-401, 401a): opendbc `de80b63`, panda#3; not verified on hardware |
 
 ### UN-07 `set_safety_hooks`
 
@@ -167,11 +174,11 @@ Runs only for valid, whitelisted frames. Changes: driver override (SWSR-304a), E
 
 ### UN-15 `toyota_tx_hook`
 
-Per-address checks: `0x343` ACCEL_CMD bounds/inactive (+ stock-long cancel-only branch); `0x183` (SecOC, unused); `0x283` zero payload; `0x191` no actuation in LKA config; `0x131` (SecOC); `0x2E4` → UN-10; `0x750` tester present only. Default: frames on the whitelist without a specific check pass (e.g. `0x412`, `0x1D2`, `0x344`, `0x411`, DSU set). Changes: SWSR-207, 705, 109.
+Per-address checks: `0x343` ACCEL_CMD bounds/inactive (+ stock-long cancel-only branch); `0x183` (SecOC, unused); `0x283` zero payload; `0x191` no actuation in LKA config; `0x131` (SecOC); `0x2E4` → UN-10; `0x750` tester present only. Default: frames on the whitelist without a specific check pass (e.g. `0x412`, `0x1D2`). *Since 2026-10-12* `0x344` and the DSU set are no longer whitelisted, and `0x411` is left out in the reference build (SWSR-705); in the reference build `0x2E4` with torque or STEER_REQUEST is refused while the EPS reports a fault (UN-42). Changes: SWSR-207, 109.
 
 ### UN-16 `toyota_init`
 
-Decodes `param`: low byte = EPS factor, bit 8 ALT_BRAKE, bit 9 STOCK_LONGITUDINAL, bit 10 LTA, bit 11 SECOC (debug only); selects TX list and RX check table. No range check (GAP-44). Change: accept only 73 with no flags in the reference build (SWSR-104a, 512).
+Decodes `param`: low byte = EPS factor, bit 8 ALT_BRAKE, bit 9 STOCK_LONGITUDINAL, bit 10 LTA, bit 11 SECOC (debug only); selects TX list and RX check table. No range check (GAP-44). Change: accept only 73 with no flags in the reference build (SWSR-104a, 512). *Status 2026-10-12:* enforced before `toyota_init` by the reference lock (UN-40, `0xdc` accepts TOYOTA only with parameter 73); `toyota_init` itself still has no range check.
 
 ## 4. Unit design descriptions (panda platform)
 
@@ -181,7 +188,7 @@ Calls UN-07; on failure falls back to SILENT and `assert_fatal`s if SILENT fails
 
 ### UN-19 `tick_handler`
 
-Described in [WP-W-03 §5.2](WP-W-03-software-architecture.md). Heartbeat logic at 1 Hz: `heartbeat_counter` incremented every second and cleared by `0xf3`; mismatch of authority and `heartbeat_engaged` for 3 ticks clears authority; counter ≥ 5 (ignition) / 2 → `heartbeat_lost`, siren 3 s if authority was recent, SILENT, power save. Changes: move supervision into UN-N1 with 0.3 s limits (SWSR-307, 407, 510).
+*Status 2026-10-12:* the 0.3 s heartbeat revocation now runs in UN-N1 (UN-36); the 1 Hz logic below keeps the SILENT path. Described in [WP-W-03 §5.2](WP-W-03-software-architecture.md). Heartbeat logic at 1 Hz: `heartbeat_counter` incremented every second and cleared by `0xf3`; mismatch of authority and `heartbeat_engaged` for 3 ticks clears authority; counter ≥ 5 (ignition) / 2 → `heartbeat_lost`, siren 3 s if authority was recent, SILENT, power save. Changes: move supervision into UN-N1 with 0.3 s limits (SWSR-307, 407, 510).
 
 ### UN-21 `comms_control_handler`
 
@@ -189,13 +196,13 @@ One switch over the request byte. Safety-relevant cases and their gating:
 
 | Request | Effect | Gating today | Required |
 |---|---|---|---|
-| `0xdc` | set mode/param | none | SWSR-512 |
+| `0xdc` | set mode/param | none (reference build: UN-40 lock) | SWSR-512 |
 | `0xf3` | heartbeat | none | + loop counter (SWSR-409) |
-| `0xc5` | drive relay | none | SWSR-513 |
-| `0xd1` | bootloader (0, debug only) / softloader (1) | partial | SWSR-511a |
-| `0xd8` | MCU reset | none | SWSR-513 |
-| `0xdb`, `0xde`, `0xe5`, `0xe6`, `0xe7`, `0xe8`, `0xf1`, `0xf9`, `0xfc` | CAN/clock/power config | none (`0xe8` no bound) | SWSR-513, 412a |
-| `0xdf` | alternative experience | rejected in car modes only | SWSR-512a, 513 |
+| `0xc5` | drive relay | none (reference build: refused in a car mode) | SWSR-513 |
+| `0xd1` | bootloader (0, debug only) / softloader (1) | partial (reference build: param 1 refused in a car mode) | SWSR-511a |
+| `0xd8` | MCU reset | none (reference build: refused in a car mode) | SWSR-513 |
+| `0xdb`, `0xde`, `0xe5`, `0xe6`, `0xe7`, `0xe8`, `0xf1`, `0xf9`, `0xfc` | CAN/clock/power config | none (`0xe8` no bound); reference build: all refused in a car mode | SWSR-513, 412a |
+| `0xdf` | alternative experience | rejected in car modes only; reference build: refused in every mode | SWSR-512a, 513 |
 | `0xf8` | disable heartbeat | rejected in car modes | keep |
 | `0xd2` | health | — | add reason code (SWSR-108a) |
 
@@ -237,6 +244,20 @@ Relay outputs open-drain, active low; `set_intercept_relay` busy-waits on `sbu_a
 
 Soft flasher if the softloader magic is set; else length check, SHA-1 over the image, version tag, RSA-1024 against the release key (debug key only under `ALLOW_DEBUG`), jump or `fail()`. Change: SWSR-511, 501b (start IWDG).
 
+### UN-36…UN-42 LionDriver units (added 2026-10-12)
+
+Back-filled from code at panda `b790fca`, opendbc `7993399`. Host unit tests exist for each (WP-W-06); none is verified on hardware.
+
+| Unit | Purpose | Key constants | Error handling / remarks |
+|---|---|---|---|
+| UN-36 heartbeat monitor | Revoke authority in a car mode when no `0xf3` heartbeat for 0.3 s | `HEARTBEAT_AUTHORITY_TIMEOUT_TICKS` 30 (0.3 s at 100 Hz) | Saturating age counter, reset by `0xf3`; revokes every tick until the next heartbeat; the 1 Hz SILENT path (UN-19) is unchanged |
+| UN-37 IWDG | Reset on a stalled safety task or main loop | PR 0 (/4), RLR 719 (≈ 90 ms), WINR 679 (≈ 5 ms) at 32 kHz LSI | Started at the first relay drive (`set_intercept_relay`); first tick after start skipped; bounded wait on register update flags; feed only if the main loop ran since the previous feed |
+| UN-38 IRQ priorities | Explicit NVIC priority for every enabled IRQ | five classes, all `8U` | Called before the first `NVIC_EnableIRQ`; equal levels keep the no-preemption argument (WP-W-03 §5.1) |
+| UN-39 EPS-fault siren | Siren when the EPS fault persists while engaged | `EPS_FAULT_SIREN_PERSIST_TICKS` 100 (1 s), `EPS_FAULT_SIREN_HOLD_TICKS` 300 (3 s) | Re-triggered while the fault persists; reset on every mode change; speaker driven by the 8 Hz tick |
+| UN-40 reference lock | Refuse host requests outside the reference configuration | `LIONDRIVER_REFERENCE_TOYOTA_PARAM` 73 | `0xdc` limited to SILENT/NOOUTPUT/ELM327/TOYOTA-73 (from TOYOTA only NOOUTPUT/SILENT); `0xdf` always refused; listed requests refused in a car mode; refusals counted (saturating) and printed |
+| UN-41 TX rate check | Per-ID frame budget in a sliding 250 ms window | `TX_RATE_WINDOW_US` 250000, budget `ceil(f × 0.3) + 1 + burst`, `TX_RATE_REVOKE_REJECTED` 3 | Runs after the whitelist, before the brand TX hook, so a rejected frame does not update limiter state; 3 rejections in a half-window while engaged revoke and set `safety_tx_rate_exceeded` |
+| UN-42 Toyota checks | `toyota_lka_state_is_fault`: LKA_STATE ∈ {0, 3, 9, 11, 17, 21, 25} → `safety_eps_fault`; `toyota_cruise_main_check`: CRUISE_ACTIVE vs MAIN_ON | `TOYOTA_CRUISE_MAIN_TOLERANCE_US` 150000 | EPS fault refuses `0x2E4` torque/STEER_REQUEST only; cruise-main disagreement revokes at once on activation, after 150 ms otherwise; not used for alt-brake cars |
+
 ## 5. Normative state tables
 
 ### 5.1 Safety-mode transitions (UN-18/UN-07)
@@ -244,7 +265,8 @@ Soft flasher if the softloader magic is set; else length check, SHA-1 over the i
 | Current | Event | Guard | Action | Next |
 |---|---|---|---|---|
 | any | reset | — | `set_safety_mode(SILENT)` | SILENT |
-| any | `0xdc` (m, p) | m in registry | reset state; relay per m; CAN re-init | m |
+| any | `0xdc` (m, p) | m in registry (reference build: and allowed by UN-40) | reset state; relay per m; CAN re-init | m |
+| any (reference build) | `0xdc` (m, p) | refused by UN-40 | none; refusal counted | same |
 | any | `0xdc` (m, p) | m unknown | state reset; SILENT | SILENT |
 | car mode | 1 Hz tick | heartbeat counter ≥ 5 (ign) / 2 | siren if recent authority; `heartbeat_lost` | SILENT |
 | any | harness status change | — | `set_safety_mode(current)` (state reset) | same |
@@ -257,12 +279,17 @@ Soft flasher if the softloader magic is set; else length check, SHA-1 over the i
 | T2 | ALLOWED | `0x1D2` valid | CRUISE_ACTIVE = 0 | clear | NOT_ALLOWED |
 | T3 | ALLOWED | any RX | `brake_pressed` and (not previously pressed or vehicle moving) | clear | NOT_ALLOWED |
 | T4 | ALLOWED | RX of checked message | checksum or quality invalid | clear | NOT_ALLOWED |
-| T5 | ALLOWED | `safety_tick` | any message lagging or invalid | clear | NOT_ALLOWED |
+| T5 | ALLOWED | `safety_tick` (100 Hz) | any message lagging (5 periods, Toyota) or invalid | clear | NOT_ALLOWED |
 | T6 | ALLOWED | 1 Hz tick | `!heartbeat_engaged` for 3 ticks | clear | NOT_ALLOWED |
 | T7 | any | mode change | — | clear | NOT_ALLOWED |
 | T8 | NOT_ALLOWED | `0x1D2` | CRUISE_ACTIVE = 1 and previous = 1 | none | NOT_ALLOWED |
 | T9 (new) | ALLOWED | TX violation | — | clear, reason | NOT_ALLOWED (SWSR-108) |
-| T10 (new) | ALLOWED | heartbeat > 0.3 s / command stall / RX plausibility / platform fault / driver override / EPS fault | — | clear, reason | NOT_ALLOWED |
+| T10 (new) | ALLOWED | command stall / RX plausibility / platform fault / driver override | — | clear, reason | NOT_ALLOWED |
+| T11 | ALLOWED | safety task (UN-36) | no heartbeat for 0.3 s in a car mode | clear | NOT_ALLOWED |
+| T12 (reference build) | any | `0x1D2`/`0x1D3` (UN-42) | CRUISE_ACTIVE with MAIN_ON = 0: at once on activation, after 150 ms when main goes off while engaged | clear | NOT_ALLOWED |
+| T13 (reference build) | ALLOWED | TX (UN-41) | 3 rate rejections of one ID in a half-window | clear, `safety_tx_rate_exceeded` | NOT_ALLOWED |
+
+The EPS fault (UN-42) does not change the state: it refuses lateral frames only. T11…T13 are implemented, not verified on hardware.
 
 Gas pressed does not change the state; it gates longitudinal only (UN-12). This table is the reference for WP-W-06 VS-UV-06.
 
@@ -273,7 +300,7 @@ Gas pressed does not change the state; it gates longitudinal only (UN-12). This 
 | Fault | Source unit | Class (proposed) | Reaction |
 |---|---|---|---|
 | Relay malfunction | UN-06, SWSR-506 | latched until power cycle | TX + forwarding blocked; relay released if readback shows stuck |
-| Watchdog / hang | IWDG | reset | SS-S after reset |
+| Watchdog / hang | IWDG (UN-37, implemented) | reset | SS-S after reset |
 | Interrupt rate (CAN, SPI, tick) | UN-31 | latched for drive cycle | SS-S |
 | Register divergence | UN-32 | latched | SS-S |
 | RAM/flash ECC double error, image CRC | new | latched | SS-S |
@@ -328,6 +355,8 @@ Gas pressed does not change the state; it gates longitudinal only (UN-12). This 
 | 519 | UN-20, all ISRs | Explicit NVIC priorities; WCET measurement |
 | 511a, 513 | UN-21 | Gating in car modes |
 | 705 | UN-16 | Reduced whitelist |
+
+*Status 2026-10-12 (implemented, not verified on hardware; reference build where marked):* 306, 401, 401a, 407 (UN-05, UN-N1, UN-36); 501, 501b (UN-37, started at the first relay drive instead of the bootstub, TSR-501 v0.4); 519 priority table (UN-38; levels equal, WCET not measured); 104a/512, 511a, 513 (UN-40, reference build); 705 (whitelist, `0x411` reference build only); 518 (UN-41, reference build); 110, 405(c) (UN-42, reference build); 516 EPS-fault siren (UN-39, PR #45 not merged).
 
 ## 9. Open items
 

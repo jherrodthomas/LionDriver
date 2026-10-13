@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3530" height="1046" viewBox="0 0 3530 1046" font-family="Helvetica, Arial, sans-serif">
+<style>.id{font-size:11px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.n{font-size:9.5px;font-style:italic;text-anchor:middle;fill:#444}.b{font-size:8.6px;font-weight:600;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="30" y="36" class="h">FTA SG-05 — no release on driver brake, cancel or steering override</text>
+<rect x="1801.25" y="70" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="2.2"/>
+<text x="1901.25" y="89" class="id">TE-05</text>
+<text x="1901.25" y="102.5" class="d">Item does not release on driver</text>
+<text x="1901.25" y="115.0" class="d">action</text>
+<path d="M1883.25,157.0 Q1901.25,149.0 1919.25,157.0 Q1917.25,133.0 1901.25,123.0 Q1885.25,133.0 1883.25,157.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1901.25" y1="157.0" x2="1901.25" y2="175.0" class="w"/>
+<line x1="511.5" y1="175.0" x2="3291.0" y2="175.0" class="w"/>
+<line x1="511.5" y1="175.0" x2="511.5" y2="193.0" class="w"/>
+<line x1="1492.5" y1="175.0" x2="1492.5" y2="193.0" class="w"/>
+<line x1="2310.0" y1="175.0" x2="2310.0" y2="193.0" class="w"/>
+<line x1="2855.0" y1="175.0" x2="2855.0" y2="193.0" class="w"/>
+<line x1="3291.0" y1="175.0" x2="3291.0" y2="193.0" class="w"/>
+<rect x="411.5" y="193.0" width="200" height="78.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="511.5" y="212.0" class="id">G5.1</text>
+<text x="511.5" y="225.5" class="d">No release on brake press</text>
+<text x="511.5" y="238.0" class="n">CCF → DFI-10: one stuck RX path,</text>
+<text x="511.5" y="250.5" class="n">BE-1.13, causes BE-5.01 and BE-5.03</text>
+<text x="511.5" y="263.0" class="n">together</text>
+<path d="M493.5,305.0 L493.5,287.0 A18,16 0 0 1 529.5,287.0 L529.5,305.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="511.5" y1="305.0" x2="511.5" y2="323.0" class="w"/>
+<line x1="239.0" y1="323.0" x2="784.0" y2="323.0" class="w"/>
+<line x1="239.0" y1="323.0" x2="239.0" y2="341.0" class="w"/>
+<line x1="784.0" y1="323.0" x2="784.0" y2="341.0" class="w"/>
+<rect x="139.0" y="341.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="239.0" y="360.0" class="id">G5.1.1</text>
+<text x="239.0" y="373.5" class="d">Envelope does not see the brake</text>
+<text x="239.0" y="386.0" class="d">(safety.h:354-356)</text>
+<path d="M221.0,428.0 Q239.0,420.0 257.0,428.0 Q255.0,404.0 239.0,394.0 Q223.0,404.0 221.0,428.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="239.0" y1="428.0" x2="239.0" y2="446.0" class="w"/>
+<line x1="130.0" y1="446.0" x2="348.0" y2="446.0" class="w"/>
+<line x1="130.0" y1="446.0" x2="130.0" y2="505.0" class="w"/>
+<line x1="348.0" y1="446.0" x2="348.0" y2="505.0" class="w"/>
+<rect x="30" y="505.0" width="200" height="90.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="130.0" y="524.0" class="id">BE-5.01</text>
+<text x="130.0" y="537.5" class="d">0x226 lost or stuck "not pressed"</text>
+<text x="130.0" y="550.0" class="d">(no checksum or counter, timeout ≈2</text>
+<text x="130.0" y="562.5" class="d">s; GAP-01, GAP-06) (= BE-1.16).</text>
+<text x="130.0" y="575.0" class="d">2026-10-12: loss detected ≤ 0.16 s;</text>
+<text x="130.0" y="587.5" class="d">stuck still undetected</text>
+<circle cx="130.0" cy="610.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="248" y="505.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="348.0" y="524.0" class="id">BE-5.02</text>
+<text x="348.0" y="537.5" class="d">MCU fault keeps controls_allowed</text>
+<text x="348.0" y="550.0" class="d">(BE-1.07, BE-1.14 class)</text>
+<circle cx="348.0" cy="573.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="684.0" y="341.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="784.0" y="360.0" class="id">G5.1.2</text>
+<text x="784.0" y="373.5" class="d">Cruise-inactive path does not</text>
+<text x="784.0" y="386.0" class="d">revoke (safety.h:520-521)</text>
+<path d="M766.0,428.0 Q784.0,420.0 802.0,428.0 Q800.0,404.0 784.0,394.0 Q768.0,404.0 766.0,428.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="784.0" y1="428.0" x2="784.0" y2="446.0" class="w"/>
+<line x1="566.0" y1="446.0" x2="1002.0" y2="446.0" class="w"/>
+<line x1="566.0" y1="446.0" x2="566.0" y2="505.0" class="w"/>
+<line x1="784.0" y1="446.0" x2="784.0" y2="505.0" class="w"/>
+<line x1="1002.0" y1="446.0" x2="1002.0" y2="505.0" class="w"/>
+<rect x="466" y="505.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="566.0" y="524.0" class="id">BE-5.03</text>
+<text x="566.0" y="537.5" class="d">0x1D2 stuck "cruise active" with</text>
+<text x="566.0" y="550.0" class="d">valid checksum (= BE-1.17)</text>
+<circle cx="566.0" cy="573.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="684" y="505.0" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="784.0" y="524.0" class="id">BE-5.02</text>
+<text x="784.0" y="537.5" class="d">MCU fault keeps controls_allowed</text>
+<text x="784.0" y="550.0" class="d">(BE-1.07, BE-1.14 class)</text>
+<rect x="758.4" y="556.0" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="784.0" y="565.5" class="b" fill="#222">repeated</text>
+<circle cx="784.0" cy="589.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="902" y="505.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1002.0" y="524.0" class="id">UE-5.04</text>
+<text x="1002.0" y="537.5" class="d">PCM does not drop cruise on brake</text>
+<text x="1002.0" y="550.0" class="d">(AOU-03R)</text>
+<path d="M1002.0,558.0 L1022.0,573.0 L1002.0,588.0 L982.0,573.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1392.5" y="193.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1492.5" y="212.0" class="id">G5.2</text>
+<text x="1492.5" y="225.5" class="d">No release on cancel or main switch</text>
+<text x="1492.5" y="238.0" class="d">off</text>
+<path d="M1474.5,280.0 Q1492.5,272.0 1510.5,280.0 Q1508.5,256.0 1492.5,246.0 Q1476.5,256.0 1474.5,280.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1492.5" y1="280.0" x2="1492.5" y2="298.0" class="w"/>
+<line x1="1220.0" y1="298.0" x2="1765.0" y2="298.0" class="w"/>
+<line x1="1220.0" y1="298.0" x2="1220.0" y2="341.0" class="w"/>
+<line x1="1438.0" y1="298.0" x2="1438.0" y2="341.0" class="w"/>
+<line x1="1765.0" y1="298.0" x2="1765.0" y2="341.0" class="w"/>
+<rect x="1120" y="341.0" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1220.0" y="360.0" class="id">BE-5.03</text>
+<text x="1220.0" y="373.5" class="d">0x1D2 stuck "cruise active" with</text>
+<text x="1220.0" y="386.0" class="d">valid checksum (= BE-1.17)</text>
+<rect x="1194.4" y="392.0" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="1220.0" y="401.5" class="b" fill="#222">repeated</text>
+<circle cx="1220.0" cy="425.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1338" y="341.0" width="200" height="69.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1438.0" y="360.0" class="id">BE-5.02</text>
+<text x="1438.0" y="373.5" class="d">MCU fault keeps controls_allowed</text>
+<text x="1438.0" y="386.0" class="d">(BE-1.07, BE-1.14 class)</text>
+<rect x="1412.4" y="392.0" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="1438.0" y="401.5" class="b" fill="#222">repeated</text>
+<circle cx="1438.0" cy="425.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1665.0" y="341.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1765.0" y="360.0" class="id">G5.2.1</text>
+<text x="1765.0" y="373.5" class="d">Main switch off with CRUISE_ACTIVE</text>
+<text x="1765.0" y="386.0" class="d">still set, not seen</text>
+<path d="M1747.0,428.0 L1747.0,410.0 A18,16 0 0 1 1783.0,410.0 L1783.0,428.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="1765.0" y1="428.0" x2="1765.0" y2="446.0" class="w"/>
+<line x1="1656.0" y1="446.0" x2="1874.0" y2="446.0" class="w"/>
+<line x1="1656.0" y1="446.0" x2="1656.0" y2="505.0" class="w"/>
+<line x1="1874.0" y1="446.0" x2="1874.0" y2="505.0" class="w"/>
+<rect x="1556" y="505.0" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1656.0" y="524.0" class="id">UE-5.13</text>
+<text x="1656.0" y="537.5" class="d">PCM keeps CRUISE_ACTIVE set after</text>
+<text x="1656.0" y="550.0" class="d">the main switch is turned off</text>
+<text x="1656.0" y="562.5" class="d">(AOU-05R)</text>
+<path d="M1656.0,570.5 L1676.0,585.5 L1656.0,600.5 L1636.0,585.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="1774" y="505.0" width="200" height="119.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="1874.0" y="524.0" class="id">BE-5.12</text>
+<text x="1874.0" y="537.5" class="d">The envelope ignores PCM_CRUISE_2</text>
+<text x="1874.0" y="550.0" class="d">MAIN_ON (0x1D3) 2026-10-12,</text>
+<text x="1874.0" y="562.5" class="d">reference build: cruise active with</text>
+<text x="1874.0" y="575.0" class="d">main off refused at once, revoked</text>
+<text x="1874.0" y="587.5" class="d">after 150 ms (TSR-405(c), opendbc</text>
+<text x="1874.0" y="600.0" class="d">8836b65)</text>
+<rect x="1826.8" y="606.0" width="94.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="1874.0" y="615.5" class="b" fill="#fff">latent, baseline</text>
+<circle cx="1874.0" cy="639.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2210.0" y="193.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2310.0" y="212.0" class="id">G5.3</text>
+<text x="2310.0" y="225.5" class="d">LKA torque opposes the driver's</text>
+<text x="2310.0" y="238.0" class="d">steering</text>
+<path d="M2292.0,280.0 L2292.0,262.0 A18,16 0 0 1 2328.0,262.0 L2328.0,280.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="2310.0" y1="280.0" x2="2310.0" y2="298.0" class="w"/>
+<line x1="2092.0" y1="298.0" x2="2528.0" y2="298.0" class="w"/>
+<line x1="2092.0" y1="298.0" x2="2092.0" y2="341.0" class="w"/>
+<line x1="2310.0" y1="298.0" x2="2310.0" y2="341.0" class="w"/>
+<line x1="2528.0" y1="298.0" x2="2528.0" y2="341.0" class="w"/>
+<rect x="1992" y="341.0" width="200" height="94.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2092.0" y="360.0" class="id">BE-5.05</text>
+<text x="2092.0" y="373.5" class="d">No driver-override check on the LKA</text>
+<text x="2092.0" y="386.0" class="d">path in the envelope (GAP-02;</text>
+<text x="2092.0" y="398.5" class="d">host-only MAX_USER_TORQUE 500,</text>
+<text x="2092.0" y="411.0" class="d">carcontroller.py:33, 83)</text>
+<rect x="2050.2" y="417.0" width="83.6" height="13" rx="6.5" fill="#5f6368"/>
+<text x="2092.0" y="426.5" class="b" fill="#fff">latent, design</text>
+<circle cx="2092.0" cy="450.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2210" y="341.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2310.0" y="360.0" class="id">BE-5.06</text>
+<text x="2310.0" y="373.5" class="d">Host override check fails or SoC</text>
+<text x="2310.0" y="386.0" class="d">fault (QM)</text>
+<circle cx="2310.0" cy="409.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2428" y="341.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2528.0" y="360.0" class="id">UE-5.07</text>
+<text x="2528.0" y="373.5" class="d">EPS does not let the driver</text>
+<text x="2528.0" y="386.0" class="d">overpower LKA torque (AOU-02R)</text>
+<path d="M2528.0,394.0 L2548.0,409.0 L2528.0,424.0 L2508.0,409.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2755.0" y="193.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2855.0" y="212.0" class="id">G5.4</text>
+<text x="2855.0" y="225.5" class="d">Accelerator does not override</text>
+<text x="2855.0" y="238.0" class="d">commanded deceleration</text>
+<path d="M2837.0,280.0 L2837.0,262.0 A18,16 0 0 1 2873.0,262.0 L2873.0,280.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="2855.0" y1="280.0" x2="2855.0" y2="298.0" class="w"/>
+<line x1="2746.0" y1="298.0" x2="2964.0" y2="298.0" class="w"/>
+<line x1="2746.0" y1="298.0" x2="2746.0" y2="341.0" class="w"/>
+<line x1="2964.0" y1="298.0" x2="2964.0" y2="341.0" class="w"/>
+<rect x="2646" y="341.0" width="200" height="78.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2746.0" y="360.0" class="id">BE-5.08</text>
+<text x="2746.0" y="373.5" class="d">GAS_RELEASED stuck "released" while</text>
+<text x="2746.0" y="386.0" class="d">the driver presses (= BE-3.11); the</text>
+<text x="2746.0" y="398.5" class="d">envelope then allows non-inactive</text>
+<text x="2746.0" y="411.0" class="d">values (longitudinal.h:3-5)</text>
+<circle cx="2746.0" cy="434.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="2864" y="341.0" width="200" height="53.0" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="2964.0" y="360.0" class="id">UE-5.09</text>
+<text x="2964.0" y="373.5" class="d">PCM does not give the driver's</text>
+<text x="2964.0" y="386.0" class="d">pedal priority (AOU-05R)</text>
+<path d="M2964.0,394.0 L2984.0,409.0 L2964.0,424.0 L2944.0,409.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="3191.0" y="193.0" width="200" height="65.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="3291.0" y="212.0" class="id">G5.5</text>
+<text x="3291.0" y="225.5" class="d">Mode confusion: driver believes the</text>
+<text x="3291.0" y="238.0" class="d">item is disengaged while it</text>
+<text x="3291.0" y="250.5" class="d">actuates</text>
+<path d="M3273.0,292.5 L3273.0,274.5 A18,16 0 0 1 3309.0,274.5 L3309.0,292.5 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<line x1="3291.0" y1="292.5" x2="3291.0" y2="310.5" class="w"/>
+<line x1="3182.0" y1="310.5" x2="3400.0" y2="310.5" class="w"/>
+<line x1="3182.0" y1="310.5" x2="3182.0" y2="341.0" class="w"/>
+<line x1="3400.0" y1="310.5" x2="3400.0" y2="341.0" class="w"/>
+<rect x="3082" y="341.0" width="200" height="90.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="3182.0" y="360.0" class="id">BE-5.10</text>
+<text x="3182.0" y="373.5" class="d">Item HMI shows the wrong state, or</text>
+<text x="3182.0" y="386.0" class="d">cruiseMismatch raised after 6 s</text>
+<text x="3182.0" y="398.5" class="d">with no reaction</text>
+<text x="3182.0" y="411.0" class="d">(selfdrived.py:420-422,</text>
+<text x="3182.0" y="423.5" class="d">events.py:458-460; GAP-19)</text>
+<circle cx="3182.0" cy="446.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<rect x="3300" y="341.0" width="200" height="81.5" rx="2" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="3400.0" y="360.0" class="id">BE-5.11</text>
+<text x="3400.0" y="373.5" class="d">Cluster cruise indicator not an</text>
+<text x="3400.0" y="386.0" class="d">independent cue (AOU-12 fails; item</text>
+<text x="3400.0" y="398.5" class="d">TX 0x412 affects the cluster)</text>
+<rect x="3369.0" y="404.5" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="3400.0" y="414.0" class="b" fill="#fff">CCF DFI-15</text>
+<circle cx="3400.0" cy="437.5" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="30" y="712.0" class="h">Symbols (IEC 61025)</text>
+<rect x="32" y="726.0" width="36" height="22" fill="#fff" stroke="#111" stroke-width="1.1"/>
+<text x="96" y="741.0" class="l">Top / intermediate event</text>
+<path d="M32,794.0 Q50,786.0 68,794.0 Q66,770.0 50,760.0 Q34,770.0 32,794.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="779.0" class="l">OR gate</text>
+<path d="M32,832.0 L32,814.0 A18,16 0 0 1 68,814.0 L68,832.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="817.0" class="l">AND gate</text>
+<circle cx="50" cy="851.0" r="15" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="855.0" class="l">Basic event</text>
+<path d="M50,874.0 L70,889.0 L50,904.0 L30,889.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="893.0" class="l">Undeveloped event (outside the item or not developed)</text>
+<path d="M50,912.0 L68,942.0 L32,942.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/><line x1="59" y1="927.0" x2="80" y2="927.0" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="931.0" class="l">Transfer: continued on another sheet</text>
+<path d="M50,950.0 L68,980.0 L32,980.0 Z" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="96" y="969.0" class="l">Transfer in: gate developed elsewhere</text>
+<rect x="30" y="996.0" width="24.2" height="13" rx="6.5" fill="#b3261e"/>
+<text x="42.1" y="1005.5" class="b" fill="#fff">SPF</text>
+<rect x="59.2" y="996.0" width="40.4" height="13" rx="6.5" fill="#5f6368"/>
+<text x="79.4" y="1005.5" class="b" fill="#fff">latent</text>
+<rect x="104.60000000000001" y="996.0" width="35.0" height="13" rx="6.5" fill="#6a3fb5"/>
+<text x="122.1" y="1005.5" class="b" fill="#fff">SOTIF</text>
+<rect x="144.60000000000002" y="996.0" width="62.0" height="13" rx="6.5" fill="#c25e00"/>
+<text x="175.6" y="1005.5" class="b" fill="#fff">CCF DFI-nn</text>
+<rect x="211.60000000000002" y="996.0" width="24.2" height="13" rx="6.5" fill="#1a5fb4"/>
+<text x="223.7" y="1005.5" class="b" fill="#fff">FFI</text>
+<rect x="240.8" y="996.0" width="72.8" height="13" rx="6.5" fill="#3d6b3d"/>
+<text x="277.2" y="1005.5" class="b" fill="#fff">outside item</text>
+<rect x="318.6" y="996.0" width="51.2" height="13" rx="6.5" fill="#e8e8e8"/>
+<text x="344.2" y="1005.5" class="b" fill="#222">repeated</text>
+<rect x="3070" y="700.0" width="430" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
+<text x="3080" y="722.0" class="h" text-anchor="start">LionDriver — FTA SG-05</text>
+<text x="3080" y="738.0" class="l" text-anchor="start">no release on driver brake, cancel or steering override</text>
+<text x="3080" y="754.0" class="l" text-anchor="start">Sheet 1 of 1   ·   top of sheet: TE-05</text>
+<text x="3080" y="770.0" class="l" text-anchor="start">Source: WP-A-04 §6 (analysis of record)</text>
+<text x="3080" y="786.0" class="s" text-anchor="start">Generated by fta_diagrams.py — edit WP-A-04, not this file</text>
+</svg>

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-K-03 Cybersecurity case |
 | Standard reference | ISO/SAE 21434:2021 §6 (cybersecurity case), with evidence from §8–§15; UN R155 (informative) |
-| Version | 0.1 |
+| Version | 0.2 (CSn-21 Partial: safety-mode lock and command gating implemented in the reference build, panda `9f60e17`; CDF-04 annotated; 2026-10-12). 0.1.1 (§3 trees show CDF-02/CDF-04 on CG2.1 and CDF-10 on CG5.6, as the §6 register already did; GSN diagrams in [gsn/](gsn/README.md); 2026-10-12). 0.1: initial draft |
 | Status | Draft — argument structure written; **almost all evidence is Missing or Partial**. This case does not support a release at this version |
 | ASIL / scope | CS (CAL 1–3); interface to the safety case G4 ([WP-K-01](WP-K-01-safety-case.md)) |
 | Author | Assurance team (initial draft) |
@@ -17,6 +17,8 @@
 The cybersecurity case argues that the cybersecurity of the LD-SDA reference configuration is adequate for a given release, by connecting the cybersecurity goals and claims of [WP-C-10](../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) to the evidence produced under the [cybersecurity plan (WP-M-09)](../01-management/WP-M-09-cybersecurity-plan.md). It is built incrementally per [WP-M-09 §7](../01-management/WP-M-09-cybersecurity-plan.md) and is the main input to the cybersecurity assessment ([WP-K-05](WP-K-05-cybersecurity-assessment.md)) and to the release record ([WP-K-06](WP-K-06-release-record.md)). It supports sub-claim G4 of the [safety case](WP-K-01-safety-case.md#44-g4-cybersecurity).
 
 Notation follows [WP-K-01 §2](WP-K-01-safety-case.md#2-notation) with prefixes `CG` (goal/claim), `CS` (strategy), `CC` (context), `CA` (assumption, reusing CA-01…CA-05 of WP-C-10), `CJ` (justification), `CSn` (evidence) and `CDF` (defeater).
+
+Diagrams: the argument is also drawn in GSN graphical notation, one sheet per sub-argument, in [gsn/](gsn/README.md) (sheets `gsn-cs-*`). They are generated from §2–§4 and §6 of this document by `assurance/case/tools/gsn_diagrams.py`; CI fails if they are out of date or if the §3 trees and the §6 register disagree on a defeater.
 
 ## 2. Top-level argument
 
@@ -64,6 +66,7 @@ CG2  Each cybersecurity goal is achieved.
  → CS2 Argue per goal over refinement, implementation, verification and validation
     → CG2.1 CSG-01 safety configuration integrity (CAL 3)
         → CSR-011…CSR-016, CSR-021…CSR-024  → CSn-10, CSn-20, CSn-21, CSn-30
+        ⇐ CDF-02, CDF-04
     → CG2.2 CSG-02 firmware and boot-chain integrity (CAL 3)
         → CSR-021…CSR-054                    → CSn-10, CSn-11, CSn-20, CSn-22, CSn-31
         ⇐ CDF-01, CDF-02, CDF-03
@@ -126,6 +129,7 @@ CG5  Cybersecurity is maintained after release.
     → CG5.4 Production/provisioning controls (keys, firmware, option bytes)  → CSn-52
     → CG5.5 End of support and decommissioning defined                       → CSn-53
     → CG5.6 LionDriver vulnerability intake published                        → CSn-54
+        ⇐ CDF-10
 ```
 
 ### 3.6 CG6 Process and assessment
@@ -155,7 +159,7 @@ Evidence rule (shared by [WP-K-01 §6](WP-K-01-safety-case.md#6-evidence-status)
 | CSn-13 | Reference-configuration remote-feature decision | WP-C-10 OI-2; WP-M-09 OI-2 | CG2.6 | Missing | — |
 | CSn-14 | Signed update design and implementation | WP-S-07 §3.6; CSR-121…126 | CG2.7, CG5.3 | Missing | GAP-26 |
 | CSn-20 | Secure coding, SAST results, per-CSR verification (VS-CS) | [WP-W-11](../05-software/WP-W-11-cybersecurity-implementation-verification.md) | CG2.x | Missing | spec drafted, not executed (WP-W-11 plan; 0 of 64 CSRs verified) |
-| CSn-21 | Safety-mode lock and command-gating tests (shared with TSR-512, TSR-513) | WP-W-06/WP-W-08 | CG2.1 | Missing | Mechanism not implemented (GAP-09) |
+| CSn-21 | Safety-mode lock and command-gating tests (shared with TSR-512, TSR-513) | WP-W-06/WP-W-08 | CG2.1 | Partial | Implemented in the reference build (`LIONDRIVER_REFERENCE`, 2026-10-12); host tests `panda/tests/reference_lock` (added to LionDriver CI 2026-10-12, no run recorded as evidence yet); HIL `test_11` not run (no bench, D-04); not reviewed (GAP-09) |
 | CSn-22 | Release build-config audit report (BA-01…BA-08) | WP-W-11 §7 | CG2.2, CG2.7 | Missing | `test_release_build.py` only checks compilation (GAP-41) |
 | CSn-23 | Envelope TX allow-list and relay-malfunction tests | `opendbc_repo/opendbc/safety/tests/test_toyota.py`, `common.py` (upstream) | CG2.5 | Partial | Inherited upstream results; not run in LionDriver CI (GAP-39); release config not tested (GAP-41) |
 | CSn-24 | SBOM and vulnerability scan report for the release | WP-W-11 §5 | CG2.7, CG3.4, CG6.2 | Missing | Tooling not selected |
@@ -182,7 +186,7 @@ Evidence rule (shared by [WP-K-01 §6](WP-K-01-safety-case.md#6-evidence-status)
 | CSn-62 | Review records at required independence | PR reviews per [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) | CG6.3 | Missing | No I1 reviewer yet (T-09) |
 | CSn-63 | Cybersecurity assessment report | [WP-K-05](WP-K-05-cybersecurity-assessment.md) | CG6.4 | Missing | Skeleton |
 
-Summary (evidence rule above): Available 0; Partial 16; Missing 21 (of 37 evidence items).
+Summary (evidence rule above): Available 0; Partial 17; Missing 20 (of 37 evidence items).
 
 ## 5. Residual risks and claims register (current view)
 
@@ -203,7 +207,7 @@ These mirror DF-22 and DF-23 of [WP-K-01 §7](WP-K-01-safety-case.md) in more de
 | CDF-01 | panda signing uses RSA-1024/SHA-1; comma's release key, not a LionDriver key (`panda/board/crypto/rsa.h:37`, `sha.h:45`, `panda/board/bootstub.c:63`) | GAP-24 | CG2.2 | CSR-031, CSR-032 |
 | CDF-02 | Debug private key committed; builds default to DEBUG with `ALLOW_DEBUG` (`panda/SConscript:12-20`) | GAP-25 | CG2.1, CG2.2 | CSR-021…CSR-023 |
 | CDF-03 | SoC controls panda boot pins; pandad flashes a development bootstub; no RDP/WRP (`openpilot/common/hardware/comma/hardware.py:410-419`, `openpilot/selfdrive/pandad/pandad.py:34-39`, `panda/board/stm32h7/llflash.h:14`) | GAP-38 | CG2.2 | CSR-041…CSR-054, CS-AD-02 |
-| CDF-04 | Unauthenticated params and IPC; developer modes replace control processes; host sets any safety mode (`panda/board/main_comms.h:223-225`) | GAP-09, GAP-20 | CG2.1, CG2.3 | CSR-011…CSR-016, CSR-061…CSR-073 |
+| CDF-04 | Unauthenticated params and IPC; developer modes replace control processes; host sets any safety mode (`panda/board/main_comms.h:223-225`) (locked in the reference build, TSR-512) | GAP-09, GAP-20 | CG2.1, CG2.3 | CSR-011…CSR-016, CSR-061…CSR-073 |
 | CDF-05 | Models loaded with `pickle`, no hash check (`openpilot/selfdrive/modeld/modeld.py:150,159`) | GAP-22 | CG2.4 | CSR-081, CSR-082 |
 | CDF-06 | athena RPCs: arbitrary-URL upload, SSH tunnel, authorized-key read; INTERNAL installer embeds an SSH key (`openpilot/system/athena/athenad.py:619-757`, `openpilot/selfdrive/ui/installer/installer.cc:204-213`) | GAP-27 | CG2.6 | CSR-101, CSR-111…CSR-115 |
 | CDF-07 | Unsigned git-branch updater; AGNOS hashes from the same tree (`openpilot/system/updated/updated.py:205-222, 387-399`) | GAP-26 | CG2.7 | CSR-121…CSR-125 |

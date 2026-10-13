@@ -13,7 +13,7 @@
   allocated_to: "STM32H7 IWDG1"
   hw_kind: "CFG"
   verification: "R, T-HIL, FI"
-  baseline_impl: "**Not implemented.** `IND_WDG` defined as `IWDG1` (`stm32h7/stm32h7_config.h:43`) and never used. The only watchdog is a software timestamp check called from the 8 Hz tick ISR it is meant to supervise (`drivers/simple_watchdog.h:7-17`, `main.c:119, 301`) and only raises a report-only fault (GAP-07)"
+  baseline_impl: "**Implemented, not verified on hardware** (panda `9f60e17`: panda#1 and panda#3; [impact record](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md)): IWDG1 (`IND_WDG`, `stm32h7/stm32h7_config.h:48`) on the LSI, prescaler /4, RLR 719, nominal timeout 90 ms at 32 kHz (`drivers/hw_watchdog.h`); expiry resets the MCU. The LSI tolerance and so the timeout at both ends are not yet confirmed from the datasheet (impact OI-2); HIL fault injection not run (impact OI-3, D-04). *As found before 2026-10-12: IWDG1 unused; only the software check of `drivers/simple_watchdog.h` from the 8 Hz tick, report-only (GAP-07).*"
   status: proposed
   source: WP-H-01
 
@@ -27,7 +27,7 @@
   allocated_to: "Firmware + IWDG"
   hw_kind: "CFG"
   verification: "R, FI"
-  baseline_impl: "Not implemented (GAP-07)"
+  baseline_impl: "**Implemented, not verified on hardware** (panda `9f60e17`): fed only from the 100 Hz safety task (TIM4, `main.c:145`, after `safety_tick()` and the heartbeat check) and only when the main loop has run since the previous feed (`hw_watchdog_main_loop_alive()`, `main.c:124`), so a stall of the task interrupt or of the main loop ends in a reset. TX/RX hooks run in the CAN and host interrupts and are not themselves proven by the feed"
   status: proposed
   source: WP-H-01
 
@@ -41,7 +41,7 @@
   allocated_to: "IWDG1 window register"
   hw_kind: "CFG"
   verification: "A, T-HIL"
-  baseline_impl: "Not implemented. STM32H7 IWDG has a window register (verify against RM0468)"
+  baseline_impl: "**Implemented, not verified on hardware** (panda `a35d1c6`, in pin `9f60e17`): WINR 679, so a feed is accepted only ≈ 5 ms or more after the previous one; timeout ≈ 90 ms nominal. The first tick after the start is skipped. ≤ 0.1 s holds only if the LSI is at most about 10 % slow (impact OI-2, open); HIL evidence open (OI-3)"
   status: proposed
   source: WP-H-01
 
@@ -55,7 +55,7 @@
   allocated_to: "IWDG option bytes (IWDG_SW, freeze in stop/standby)"
   hw_kind: "CFG"
   verification: "R, T-HIL"
-  baseline_impl: "Not implemented. Interaction with stop mode (`main.c:353-356`, `sys/power_saving.h`) must be analysed: freezing IWDG in stop mode is acceptable only when the relay is released and TX is off"
+  baseline_impl: "**Implemented (software start), not verified on hardware:** `hw_watchdog_start()` is called from `set_intercept_relay()` the first time the relay is driven, on every path including `0xc5` (`drivers/harness.h:17-20`); once started it cannot be stopped by software. `enter_stop_mode()` resets the MCU first if the IWDG runs (`sys/power_saving.h:61-63`). Option-byte state (IWDG_SW, freeze in stop/standby) on shipped devices is not known ([WP-H-02](WP-H-02-hardware-design.md) UK-04, open)"
   status: proposed
   source: WP-H-01
 
@@ -83,7 +83,7 @@
   allocated_to: "NVIC, DWT"
   hw_kind: "CFG"
   verification: "R, T-HIL (timing measurement)"
-  baseline_impl: "Partial: default NVIC priorities assumed (WP-A-02 OI-5); DWT present on the core, not used"
+  baseline_impl: "Partial: explicit NVIC priority for every enabled interrupt (panda `52cad44`, `board/drivers/irq_priorities.h`); DWT present on the core, not used"
   status: proposed
   source: WP-H-01
 
@@ -125,7 +125,7 @@
   allocated_to: "Exception handlers"
   hw_kind: "CFG"
   verification: "R, FI"
-  baseline_impl: "**Partial.** NMI and HardFault set a cookie and reset (`early_init.h:66-80`). MemManage/BusFault/UsageFault are not enabled, so they escalate to HardFault (to confirm). Other vectors use `Default_Handler`, an infinite loop (`stm32h7/startup_stm32h7x5xx.s:111-114, 319-332`). `assert_fatal` hangs in `while(1)` (`libc.h:12-20`) and the clock init hangs on an unknown package or a non-starting HSE (`stm32h7/clock.h:68, 80`). Without an IWDG, a hang keeps the relay in its last state (GAP-07, GAP-08)"
+  baseline_impl: "**Partial.** NMI and HardFault set a cookie and reset (`early_init.h:66-80`). MemManage/BusFault/UsageFault are not enabled, so they escalate to HardFault (to confirm). Other vectors use `Default_Handler`, an infinite loop (`stm32h7/startup_stm32h7x5xx.s:111-114, 319-332`). `assert_fatal` hangs in `while(1)` (`libc.h:12-20`) and the clock init hangs on an unknown package or a non-starting HSE (`stm32h7/clock.h:68, 80`). Without an IWDG, a hang keeps the relay in its last state (GAP-07, GAP-08). *2026-10-12: once the relay has been driven, the IWDG (HWSR-501) now ends such a hang in a reset; not verified on hardware*"
   status: proposed
   source: WP-H-01
 
@@ -349,7 +349,7 @@
   allocated_to: "Firmware"
   hw_kind: "CFG"
   verification: "R, T-HIL"
-  baseline_impl: "**Not met.** `0xc5` drives the relay without `ALLOW_DEBUG` gating (`main_comms.h:144-147`) (GAP-09)"
+  baseline_impl: "**Partial.** In the reference build (`LIONDRIVER_REFERENCE=1`) `0xc5` is refused in a car mode (`reference_lock.h`, panda `9f60e17`); it is still operable in SILENT/NOOUTPUT, and in other builds it drives the relay without `ALLOW_DEBUG` gating (`main_comms.h:164-166`) (GAP-09). Not verified on hardware"
   status: proposed
   source: WP-H-01
 
