@@ -2064,9 +2064,11 @@ actions:
     description: Justify every SOFT_DISABLE reaction and debounce against the FTTI (WP-S-04) and alert at once when the panda withdraws authority while engaged
       (controlsMismatch debounce)
     owner: Jherrod Thomas
-    status: open
+    status: in_progress
+    evidence: "controlsMismatch debounce cut from 200 cumulative samples (~2 s) to 2 consecutive samples, at most 0.5 s (change-2026-10-13-host-supervision.md); FTTI justification of SOFT_DISABLE reactions open"
   - id: SFM-ACT-011
     kind: design_change
     description: Alert the driver when stock cruise stays engaged while the item is disengaged (cruiseMismatch has no alert at BL-004)
     owner: Jherrod Thomas
-    status: open
+    status: completed
+    evidence: "cruiseMismatch now alerts after 1 s (change-2026-10-13-host-supervision.md); see SWF-ACT-034"
