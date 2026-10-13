@@ -1091,7 +1091,7 @@
   allocated_to: "`host.pandad`, `host.selfdrived`"
   verification: "UT"
   acceptance: "No engagement with debug FW"
-  baseline_impl: "Not impl; W-09 DVR-05"
+  baseline_impl: "Partly: in a reference build `pandad` keeps the panda in NOOUTPUT unless its health packet reports `HEALTH_FLAG_REFERENCE_BUILD` (`panda_safety.cc`, panda `6dee6fa`); `selfdrived` then raises `controlsMismatch` (no entry). A debug (non-release) build is not yet detected (D-09); W-09 DVR-05"
   status: proposed
   source: WP-W-02
 

@@ -8,7 +8,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Status | **Integrated 2026-10-12: LionDriver pins panda `9f60e17`, opendbc `aff4033`; follow-ups at panda `3859fa8`, opendbc `5b5a4ba` (merge commits on the forks' `master`); not yet verified on hardware (HIL bench D-04); not reviewed independently.** |
 | Change request | [jherrodthomas/panda#4](https://github.com/jherrodthomas/panda/pull/4), stacked on panda#3 and panda#1 |
 | Range | panda `a35d1c6..7e2d148` (branch `claude/safety-mode-lock`) |
-| Reference configuration affected | Yes, in the reference build only (`LIONDRIVER_REFERENCE=1`); other builds are unchanged |
+| Reference configuration affected | Yes, in the reference build only (`LIONDRIVER_REFERENCE=1`). Since the follow-up below, openpilot's own build (`SConstruct`) builds the panda firmware with the flag by default; opt-out is `LIONDRIVER_REFERENCE=` (empty) |
 | Author / reviewer (independence) | Claude (AI-assisted draft) / TBD; an AI draft is not a review (WP-M-06) |
 
 ## 1. Change
@@ -49,6 +49,33 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Closed 2026-10-12: refused requests are counted in the health packet (`requests_rejected_pkt`, saturating) and published as `pandaState.requestsRejected`; `pandad` logs every increase ([jherrodthomas/panda#6](https://github.com/jherrodthomas/panda/pull/6), panda `3859fa8`). No driver-facing alert yet | — |
-| OI-2 | Release procedure: build the reference release with `RELEASE=1 LIONDRIVER_REFERENCE=1`; record it in WP-P-01 (configuration management) | Release |
+| OI-2 | Partly closed: the top-level `SConstruct` sets `LIONDRIVER_REFERENCE=1` for the panda firmware unless the variable is set (follow-up §6), so every openpilot build, including on the device, has the lock. Still open: `RELEASE=1` with the LionDriver key (D-09) and recording the flag in WP-P-01 | Release |
 | OI-3 | Add the alternative-experience AoU to WP-C-01 and decide the host-side guard | Integration |
 | OI-4 | Confirm `0xc0`, `0xb0`, `0xb1`, `0xf6` (WP-W-02 OI-5). `0xd1` param 1 is gated in a car mode since `7e2d148` | Later change |
+
+## 6. Follow-up: reference build by default (SW FMEA SWF-ACT-009, PFMEA PFM-ACT-001)
+
+| Item | Detail |
+|---|---|
+| Change | Top-level `SConstruct`: around `SConscript(['panda/SConscript'])`, `LIONDRIVER_REFERENCE` is set to `1` unless already set, and removed again afterwards if it was unset |
+| Why | The lock was compiled only when someone set the variable. No build path did, so the firmware that `pandad` flashes on the device had no lock, and the host could still select any safety mode and parameter |
+| Effect | Device firmware built from LionDriver accepts only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73 (D-12: LionDriver-only devices for the reference configuration). A vehicle other than the reference configuration stays in ELM327 and cannot engage. `0xdf` is refused; openpilot always sends alternative experience 0 (`card.py:111`), so there is no mismatch (AOU-14). The comma body firmware (`body_h7`) also gets the flag; the body is out of scope |
+| Opt-out | `LIONDRIVER_REFERENCE=` (empty) for development on other vehicles; such firmware is outside the safety claims |
+| Not affected | opendbc `libsafety` for the tests reads the variable at import time in the test process, not during the build, so openpilot's car-model tests are unchanged. The variable is restored after the panda SConscript |
+| Verification | The exact `SConstruct` block, run in front of the real `panda/SConscript` with scons 4.11.1 and arm-none-eabi-gcc 13.2.1 (the pins of the fork CI): unset → `-DLIONDRIVER_REFERENCE` on every firmware compile; empty → absent. Real compile of `panda_h7` with `-Werror` passes; the signed image contains the reference-lock code. The full openpilot build was not run locally (it needs acados and other device dependencies); CI builds it |
+| Open | Host-side check that the running panda firmware is a reference build: done, §7. RELEASE build with the LionDriver key (D-09) |
+
+## 7. Follow-up: the host requires a reference panda build (TSR-514, SWSR-514h)
+
+| Item | Detail |
+|---|---|
+| Change request | jherrodthomas/panda#12 (firmware flag) and this LionDriver change (host check); panda pinned at `6dee6fa`, the merge commit of panda#12 |
+| Change, firmware | `HEALTH_FLAG_REFERENCE_BUILD` (bit 12) is set in every health packet of a firmware built with `LIONDRIVER_REFERENCE` (`reference_build_health_flags()`, `board/reference_lock.h`), 0 otherwise. The Python library reports it as `health()['reference_build']` |
+| Change, host | `SConstruct` exports `liondriver_reference` from the same setting that builds the firmware (§6); `selfdrive/pandad/SConscript` then compiles `pandad` with `LIONDRIVER_REFERENCE`. Before it sets the car safety mode from `CarParams`, `pandad` reads the health packet; without the flag (or if the read fails) it logs an error and sets NOOUTPUT instead. `pandaState.referenceBuild` (`@45`) carries the flag in the logs |
+| Why | §6 makes LionDriver build the reference firmware, but a panda flashed with other firmware (upstream openpilot, a development build, a different fork) would still accept any safety mode, and the host would configure it. The lock must be present on the running panda, not only in the build |
+| Effect | On a panda without the reference build, the safety model stays NOOUTPUT (no TX), `selfdrived` sees it differ from `CarParams` and raises `controlsMismatch` (no entry, "Controls Mismatch"): no engagement. `pandad` normally reflashes the panda with the firmware of the same build at start-up, so this is the fallback for a failed or skipped flash and for a panda programmed elsewhere |
+| Opt-out | `LIONDRIVER_REFERENCE=` (empty) builds neither the firmware lock nor the host check; the two cannot be built mismatched |
+| Alert | `selfdrived` raises `pandaNotReferenceBuild` (`@106`) when the car needs a car safety mode but, after the 10 s settling time that also applies to `controlsMismatch`, the panda is still in NOOUTPUT and does not report the reference build: "Panda Firmware Not Verified" (no entry, and a permanent "Not a LionDriver build: reflash"). In a build without `LIONDRIVER_REFERENCE`, `pandad` configures the car mode as before, so the event does not occur |
+| Not covered | The check runs once per onroad transition, before the car safety mode is set. Detection of a debug (non-release) build stays open (D-09) |
+| Verification | Firmware: `tests/reference_lock` (flag set only with `LIONDRIVER_REFERENCE`; C and Python definitions agree; flag bits unique), full panda suite 81 tests (44 HIL skipped), MISRA (cppcheck) for both variants, `panda_h7` compiled with `-Werror` in both variants. Host: `panda_safety.cc` and `pandad.cc` compiled with openpilot's warning flags against generated cereal headers, with and without `LIONDRIVER_REFERENCE`; the exact `SConstruct` and `pandad/SConscript` blocks run in scons 4.11.1: unset or `1` → both firmware and `pandad` defined, empty → neither. Not run: the full openpilot build (CI builds it) and HIL (D-04: a panda with non-reference firmware must not reach TOYOTA mode) |
+
