@@ -45,8 +45,8 @@ Upstream history in the baseline window shows how often AI-2 changes: `4bcf732`,
 
 | Role | Holder (today) | Responsibility |
 |---|---|---|
-| AI safety lead | Jherrod Thomas (maintainer) | Owns this plan, WP-C-11, WP-W-10; signs model change impact analyses |
-| SOTIF lead | Jherrod Thomas | Receives AI-related FI-nn into WP-C-06 ([WP-M-08](WP-M-08-sotif-plan.md)) |
+| AI safety lead | Jherrod Thomas (maintainer, acting; permanent holder TBD per [WP-M-02 §3.1](WP-M-02-safety-plan.md)) | Owns this plan, WP-C-11, WP-W-10; signs model change impact analyses |
+| SOTIF lead | Jherrod Thomas (acting) | Receives AI-related FI-nn into WP-C-06 ([WP-M-08](WP-M-08-sotif-plan.md)) |
 | Data steward | Jherrod Thomas | LionDriver evaluation datasets (§6.3) |
 | Independent reviewer / assessor | External, TBD (D-06) | Confirms the acquired-model route and the limits of the AI argument |
 
@@ -150,4 +150,4 @@ The AI argument is the G3 branch of the [safety case (WP-K-01)](../10-safety-cas
 | OI-4 | Obtain LFS objects for the pinned models and record their hashes and sizes in the release manifest (this checkout holds pointers only) |
 | OI-5 | Define the LionDriver evaluation dataset specification and storage, including the policy on uploading to comma servers (§6.3) |
 | OI-6 | Decide a replacement for `pickle`-based model loading, or a verified-hash precondition (RM-1) |
-| OI-7 | Ask upstream whether any model card, training-data description or evaluation report can be published; record the answer in WP-M-11 |
+| OI-7 | Closed (2026-10-12): no request was sent. By decision of the maintainer the question is answered from comma.ai's public statements, recorded in [WP-M-11 §3.5](WP-M-11-upstream-and-supplier-management.md#35-public-information-on-the-ml-models-wp-m-10-oi-7). Training-data source is known in kind (uploaded user drives); no model card, dataset description or evaluation report is published |

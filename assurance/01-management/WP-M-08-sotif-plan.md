@@ -40,9 +40,9 @@ The project has one maintainer today (WP-M-01 §9). Roles are listed separately 
 
 | Role | Holder (today) | Responsibilities in this plan |
 |---|---|---|
-| SOTIF lead | Jherrod Thomas (maintainer) | Owns this plan, WP-C-05…C-08, WP-V-02…V-04, WP-K-02. Maintains the shared hazard log entries for SH-/TC-/FI- items |
+| SOTIF lead | Jherrod Thomas (maintainer, acting; permanent holder TBD per [WP-M-02 §3.1](WP-M-02-safety-plan.md)) | Owns this plan, WP-C-05…C-08, WP-V-02…V-04, WP-K-02. Maintains the shared hazard log entries for SH-/TC-/FI- items |
 | Safety manager (acting) | Jherrod Thomas | Approves this plan and the acceptance criteria; signs the SOTIF release recommendation input to WP-K-06 |
-| AI safety lead | Jherrod Thomas | Supplies model-related insufficiencies and evaluation data ([WP-M-10](WP-M-10-ai-safety-plan.md)) |
+| AI safety lead | Jherrod Thomas (acting) | Supplies model-related insufficiencies and evaluation data ([WP-M-10](WP-M-10-ai-safety-plan.md)) |
 | Safety driver(s) | To be appointed under [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md) | Execute validation drives, log events, report anomalies |
 | HMI / human-factors reviewer | External, TBD | Reviews WP-C-08 (driver interaction, misuse) — the maintainer has no human-factors competence record yet ([WP-M-04](WP-M-04-organization-competence-safety-culture.md)) |
 | Independent reviewer / assessor | External, TBD (D-06) | Reviews acceptance criteria, validation targets and the SOTIF release argument |

@@ -289,7 +289,7 @@ Rated in [`hara/WP-C-03-hara-cartesian_experimental.xlsx`](hara/WP-C-03-hara-car
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | Verify AOU-01/02/03/05 by vehicle characterization, then confirm or revise the ⚠ ratings | G1 |
-| OI-2 | Confirm the exposure classes against real usage data (fork-owned drive logs, or published L2 usage statistics) | G1 |
+| OI-2 | Confirm the exposure classes against real usage data (fork-owned drive logs, or published L2 usage statistics). For OS-01, -02, -03, -05, -07 and -08, the measurements of [WP-V-02 §3.4](../06-validation/WP-V-02-sotif-vv-strategy.md#34-evidence-for-pe-situation) provide the fork-owned data | G1 |
 | OI-3 | Derive FTTIs from vehicle dynamics (lateral deviation vs time at envelope limits, per speed) in [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) | G2 |
 | OI-4 | Decide the envelope strategy (harden / decompose / reduce authority) in [WP-C-04](WP-C-04-functional-safety-concept.md) | G1 |
 | OI-5 | Experimental Mode is rated as a scope variant (§5.10). If D-08 chooses option B, move EX-09.1/EX-04.1 into §5 with HE IDs and add SG-09 | G1 |

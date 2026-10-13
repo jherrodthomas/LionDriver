@@ -53,6 +53,8 @@ Bottom-up integration in four steps. Each step adds one element or interface, an
 | I-3 | I-2 in closed loop with a vehicle model (Corolla lateral/longitudinal plant on the bench PC, producing `0x260`, `0xAA`, `0x1D2`, `0x226` responses to `0x2E4`/`0x343`) | Closed control loop through the panda | Scenario scripts | Dynamic behaviour at limits; FTTI-relevant timing with plant response |
 | I-4 | Device + harness installed in the reference vehicle, **stationary** (engine on, wheels on ground or lifted per [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md)) | All IF incl. real EPS/PCM/camera | Engagement attempts, stalk/brake/gas inputs, relay checks, PCS message capture | Integration with existing vehicle elements before driving; hand-over to WP-S-09 |
 
+Step I-1 uses the setup of [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md). A VS-SI case at I-1 that WP-W-08 §6.1 maps to a VS-SWQ case is not re-run here: its I-1 result is the WP-W-08 report entry, judged also against the pass criteria and GC-1/GC-2 of this document. This document runs I-1 itself only for cases with no VS-SWQ counterpart (VS-SI-18, -25, -26) and runs every case at I-2, I-3 and I-4.
+
 Element entry criteria for each step: element versions recorded as configuration items ([WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md)); unit/software integration results available for the version under test (WP-W-07); open problem reports reviewed ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)).
 
 ### 3.2 Test methods
@@ -214,7 +216,7 @@ Summary (to complete after execution): number passed / failed / known GAP / bloc
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
 | OI-1 | Re-check TSR references and timing when WP-S-02 and WP-S-04 leave Draft | Safety engineer | G2 |
-| OI-2 | Build the HIL bench (D-04) and the bench-PC Corolla plant model; record its validation | Test lead | G4 |
+| OI-2 | Build the HIL bench (D-04, the one bench of WP-H-06 §2, due by G3) and the bench-PC Corolla plant model; record its validation | Test lead | G3 |
 | OI-3 | Record fork-owned Corolla drive logs and process-replay references (D-03, GAP-30) | Maintainer | G4 |
 | OI-4 | Set latency bound for PCS forwarding (VS-SI-20) from camera message periods | Safety engineer | G2 |
 | OI-5 | Decide whether to adapt `tools/sim` to Toyota and route it through a real panda (would make I-3 closed-loop with the real envelope) | SW lead | G3 |

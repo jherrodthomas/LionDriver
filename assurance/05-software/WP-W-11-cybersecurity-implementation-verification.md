@@ -91,7 +91,7 @@ The checklist becomes part of the PR template proposed in [WP-P-02 §8](../07-su
 | ID | Tool class | Target | Configuration | Gate | Status at baseline |
 |---|---|---|---|---|---|
 | SAST-01 | cppcheck with MISRA addon | `panda/board/**`, `opendbc_repo/opendbc/safety/**` | Existing MISRA scripts; add bootstub and command handler; record deviations | CAL 3 paths: zero unjustified findings | Exists for panda/opendbc envelope; not in LionDriver CI (GAP-39); cppcheck from a mutable branch (`uv.lock:586`, GAP-34) |
-| SAST-02 | C security rule set (cppcheck CERT addon or clang-tidy `cert-*`/`bugprone-*` checks) | Same as SAST-01 + pandad, installer | Selected CERT C rules from §3.1 | CAL 3: zero unjustified findings | Not configured |
+| SAST-02 | C security rule set: cppcheck 2.21.0 core checkers plus clang-tidy `cert-*` checks. cppcheck 2.21.0 has no CERT addon ([WP-W-01 §5.5](WP-W-01-software-development-environment-guidelines.md) C-20) | Same as SAST-01 + pandad, installer | CERT C subset of WP-W-01 §5.5 (ARR30-C, ARR38-C, STR31-C, INT30-C, INT31-C, INT32-C, EXP33-C), with the tool and review coverage stated there | CAL 3: zero unjustified findings | Not configured |
 | SAST-03 | Python security lint (ruff `S` rules, flake8-bandit equivalent) | `openpilot/**` | Enable `S` rule family; per-file ignores with rationale for tests | CAL 2–3 paths: no new findings | Not enabled: current ruff selection has no `S` rules (`pyproject.toml:114-125`) |
 | SAST-04 | Semantic code scanning (e.g. CodeQL or Semgrep) for C/C++ and Python | Whole tree | Default security queries + custom queries for `pickle.load`, `shell=True`, unvalidated `os.path.join` with RPC input | Findings triaged per release | Not configured |
 | SAST-05 | Secret scanning | Whole history and every PR | Repository secret scanning plus a pre-merge scanner; documented allow-list entry only for the known-public panda debug key (§6) | Block on new secrets | Not configured |
@@ -244,7 +244,7 @@ Summary at baseline: of 64 CSRs, 0 verified; 3 implemented but not verified; 10 
 | ID | Item |
 |---|---|
 | OI-1 | Select and qualify SAST, SBOM and scanning tools (WP-P-07; [WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-4) |
-| OI-2 | Choose the CERT C rule subset for SAST-02 and record it in [WP-W-01](WP-W-01-software-development-environment-guidelines.md) |
+| OI-2 | Closed (2026-10-12): the CERT C subset for SAST-02 is recorded in [WP-W-01 §5.5](WP-W-01-software-development-environment-guidelines.md), with the checker or review that covers each rule. Implementation in CI is WP-W-01 OI-13 |
 | OI-3 | Triage each `shell=True` call in non-test host code (SC-PY-02) |
 | OI-4 | Review athena/uploader path handling for symlinks under the log root (SC-PY-03) |
 | OI-5 | Add the §3.4 checklist to the PR template in [WP-P-02](../07-supporting/WP-P-02-change-management.md) |
