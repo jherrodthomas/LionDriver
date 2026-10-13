@@ -3013,7 +3013,9 @@ actions:
   description: 'Fix the faults mapping. Size the list from the mapped bits only, log unknown bits, and add the panda bit 27 (interruptRateSoundDma) to cereal FaultType
     (log.capnp, pandad.cc:257-268)'
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'Implemented in jherrodthomas/LionDriver#48 (fill_panda_faults, interruptRateSoundDma @27, tests/test_pandad_faults run by test_native.py; fails
+    with the old sizing). Impact record assurance/07-supporting/impact/change-2026-10-13-pandad-fault-mapping.md. Completed on merge'
   revised:
     severity: 8
     occurrence: 2

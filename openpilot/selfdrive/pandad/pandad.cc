@@ -168,6 +168,26 @@ void fill_panda_can_state(cereal::PandaState::PandaCanState::Builder &cs, const 
   cs.setCanCoreResetCnt(can_health.can_core_reset_cnt);
 }
 
+uint32_t fill_panda_faults(cereal::PandaState::Builder &ps, uint32_t faults_pkt) {
+  constexpr size_t max_fault = size_t(PANDA_FAULT_TYPE_MAX);
+  static_assert(max_fault < sizeof(faults_pkt) * 8, "FaultType does not fit faults_pkt");
+  constexpr uint32_t known_mask = uint32_t((uint64_t(1) << (max_fault + 1U)) - 1U);
+
+  // Size the list from the mapped bits only, so no entry is left at the default (relayMalfunction)
+  std::bitset<sizeof(faults_pkt) * 8> fault_bits(faults_pkt & known_mask);
+  auto faults = ps.initFaults(fault_bits.count());
+
+  size_t j = 0;
+  for (size_t f = size_t(cereal::PandaState::FaultType::RELAY_MALFUNCTION); f <= max_fault; f++) {
+    if (fault_bits.test(f)) {
+      faults.set(j, cereal::PandaState::FaultType(f));
+      j++;
+    }
+  }
+  assert(j == faults.size());
+  return faults_pkt & ~known_mask;
+}
+
 std::optional<bool> send_panda_states(PubMaster *pm, Panda *panda, bool is_onroad, bool spoofing_started) {
   // build msg
   MessageBuilder msg;
@@ -255,18 +275,12 @@ std::optional<bool> send_panda_states(PubMaster *pm, Panda *panda, bool is_onroa
     fill_panda_can_state(cs[j], can_health[j]);
   }
 
-  // Convert faults bitset to capnp list
-  std::bitset<sizeof(health.faults_pkt) * 8> fault_bits(health.faults_pkt);
-  auto faults = ps.initFaults(fault_bits.count());
-
-  size_t j = 0;
-  for (size_t f = size_t(cereal::PandaState::FaultType::RELAY_MALFUNCTION);
-       f <= size_t(cereal::PandaState::FaultType::HEARTBEAT_LOOP_WATCHDOG); f++) {
-    if (fault_bits.test(f)) {
-      faults.set(j, cereal::PandaState::FaultType(f));
-      j++;
-    }
+  static uint32_t unknown_faults_prev = 0U;
+  uint32_t unknown_faults = fill_panda_faults(ps, health.faults_pkt);
+  if ((unknown_faults != 0U) && (unknown_faults != unknown_faults_prev)) {
+    LOGE("panda reports fault bits without a FaultType: 0x%08x", unknown_faults);
   }
+  unknown_faults_prev = unknown_faults;
 
   pm->send("pandaStates", msg);
   return ignition_local;

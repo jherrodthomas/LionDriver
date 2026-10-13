@@ -413,8 +413,8 @@ def crash_fatal_ub(closing_kmh: float, ego: dict, lead: dict, e: float = RESTITU
           "p_fatal_crash_ub": min(1.0, ego["occupants"] * p_e + lead["occupants"] * p_l)}
 
 
-# Reference-vehicle check (`--vehicles`, 2026-10-12). Ego mass: 2020 Corolla LE curb weight
-# 2,910-2,955 lb (1,320-1,340 kg; TrueDelta and AutoPadre listings, search summaries; Toyota's
+# Reference-vehicle check (`--vehicles`, 2026-10-12). Ego mass: reference vehicle Corolla E210;
+# 2020 LE curb weight 2,910-2,955 lb (1,320-1,340 kg; TrueDelta and AutoPadre listings, search summaries; Toyota's
 # own sheet not reached); opendbc's TOYOTA_COROLLA_TSS2 CarSpecs gives 3,060 lb (1,388 kg) for
 # the whole platform, hybrids included; with five 80 kg occupants about 1,720 kg. Seats: 5.
 # Width 1,781 mm (the 1.78 m used in WP-S-04). Other vehicles: a small car of 1,100 kg and a
