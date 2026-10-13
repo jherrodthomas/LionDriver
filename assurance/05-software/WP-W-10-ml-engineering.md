@@ -231,9 +231,9 @@ It cannot show that AIRs are met. It is reused as VS-ML-12 (regression), with a 
 | Need | Status |
 |---|---|
 | Reference device for VS-ML-01/-10 | Not available as a test asset (D-04 HIL bench) |
-| PC ONNX reference runtime | To be selected and classified ([WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md)) |
+| PC ONNX reference runtime | ONNX Runtime 1.24.1, CPU execution provider, graph optimizations disabled, with `onnx` 1.19.0 for graph parsing: TL-23 in [WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md). Not yet installed in a LionDriver environment (WP-P-07 OI-8) |
 | Replay harness with dataset manifests | Upstream `process_replay.py` usable; route/frame fetching must be pointed at LionDriver storage instead of `openpilot/tools/lib/openpilotci.py` |
-| Perturbation scripts | To be written; classified as test tools |
+| Perturbation scripts | To be written; classified as TL-24 in WP-P-07 (in-house test software that records the perturbation it applied) |
 
 ## 7. Deployment
 
@@ -279,7 +279,7 @@ Upstream history shows why this matters: the big model was replaced and reverted
 | ID | Item |
 |---|---|
 | OI-1 | Fetch the LFS objects, compile on the reference device and record source and compiled hashes (first application of §4) |
-| OI-2 | Select and classify the independent ONNX reference runtime and the perturbation tools (WP-P-07) |
+| OI-2 | Closed (2026-10-12): ONNX Runtime 1.24.1 (CPU) is the independent reference (TL-23) and the perturbation scripts are TL-24, both classified in WP-P-07 §3 with confidence measures in §5. Installing them is WP-P-07 OI-8; writing the scripts is part of VS-ML-04 |
 | OI-3 | Build fork-owned model replay (route set, LionDriver storage, CI that fails on unexplained differences) |
 | OI-4 | Write the label specification and consent forms for DS-EVAL-DM |
 | OI-5 | Decide the replacement for `pickle` loading or the verified-hash precondition (shared with WP-C-11 OI-4) |

@@ -1,0 +1,141 @@
+# Validation and release phase (gate G5). Format: assurance/process/README.md §3.
+# Clause references are read from the WP-M-00 register row of each produced work product.
+# The safety case (WP-K-01) and the trace data (WP-T-01) are living work products: produced at G1
+# (CON-13) and completed here (REL-10, `updates`). The functional safety assessment report
+# (WP-K-04) and the cybersecurity assessment report (WP-K-05) are written by the independent
+# assessors, so their activities sit in the confirmation lane. FSA-F below is the WP-M-06 measure
+# whose report WP-K-04 is.
+
+- id: REL-01
+  kind: activity
+  phase: G5
+  lane: fusa
+  name: "Safety validation in the reference vehicle"
+  produces: [WP-V-01]
+  inputs: [WP-C-03, WP-C-04, WP-C-08, WP-V-07, WP-V-05, WP-S-09]
+  handbook_wp: [WP-6]
+- id: REL-02
+  kind: activity
+  phase: G5
+  lane: sotif
+  name: "Evaluate unknown hazardous scenarios"
+  produces: [WP-V-04]
+  inputs: [WP-V-02, WP-V-03, WP-V-07, WP-W-10]
+  handbook_wp: [WP-6]
+- id: REL-03
+  kind: activity
+  phase: G5
+  lane: cs
+  name: "Cybersecurity validation and penetration testing"
+  produces: [WP-V-06]
+  inputs: [WP-C-09, WP-C-10, WP-S-07, WP-W-11, WP-V-07]
+  handbook_wp: [WP-6]
+- id: REL-04
+  kind: activity
+  phase: G5
+  lane: joint
+  name: "Installation, provisioning and production control"
+  produces: [WP-O-01]
+  inputs: [WP-C-01, WP-M-11, WP-S-06, WP-V-07]
+  handbook_wp: [WP-8]
+- id: REL-05
+  kind: activity
+  phase: G5
+  lane: joint
+  name: "User information and safety warnings"
+  produces: [WP-O-03]
+  inputs: [WP-C-02, WP-C-03, WP-C-08, WP-S-06]
+  handbook_wp: [WP-8]
+- id: REL-06
+  kind: activity
+  phase: G5
+  lane: joint
+  name: "Operation, service and decommissioning"
+  produces: [WP-O-02]
+  inputs: [WP-S-06, WP-O-01, WP-O-03]
+  handbook_wp: [WP-8]
+- id: REL-07
+  kind: activity
+  phase: G5
+  lane: sotif
+  name: "SOTIF achievement evaluation and release recommendation"
+  produces: [WP-K-02]
+  inputs: [WP-C-05, WP-C-07, WP-V-02, WP-V-03, WP-W-10, WP-V-04, WP-O-03]
+  handbook_wp: [WP-7]
+- id: REL-08
+  kind: activity
+  phase: G5
+  lane: cs
+  name: "Cybersecurity case"
+  produces: [WP-K-03]
+  inputs: [WP-C-09, WP-C-10, WP-S-07, WP-W-11, WP-V-06]
+  handbook_wp: [WP-7]
+- id: REL-09
+  kind: activity
+  phase: G5
+  lane: joint
+  name: "Release management and baseline procedure"
+  produces: [WP-P-10]
+  inputs: [WP-P-01, WP-S-07]
+  handbook_wp: [WP-7]
+- id: REL-10
+  kind: activity
+  phase: G5
+  lane: joint
+  name: "Complete the safety case and the trace data"
+  produces: []
+  updates: [WP-K-01, WP-T-01]
+  inputs: [WP-V-01, WP-K-02, WP-K-03]
+  handbook_wp: [WP-7]
+- id: REL-11
+  kind: activity
+  phase: G5
+  lane: assess
+  name: "Final functional safety assessment"
+  produces: [WP-K-04]
+  inputs: [WP-K-01, WP-V-01, WP-V-05]
+  handbook_wp: [WP-7]
+- id: REL-12
+  kind: activity
+  phase: G5
+  lane: assess
+  name: "Cybersecurity assessment"
+  produces: [WP-K-05]
+  inputs: [WP-K-03, WP-V-06]
+  handbook_wp: [WP-7]
+- id: REL-13
+  kind: activity
+  phase: G5
+  lane: joint
+  name: "Release decision and release record"
+  produces: [WP-K-06]
+  inputs: [WP-K-01, WP-K-02, WP-K-03, WP-K-04, WP-K-05, WP-P-10, WP-O-01, WP-O-02, WP-O-03]
+  handbook_wp: [WP-7]
+
+# Confirmation measures planned for G5 (WP-M-06 §9). The cybersecurity assessment in the same row
+# has no measure ID; it is the work product WP-K-05, produced by REL-12.
+- id: CR-12
+  kind: review
+  phase: G5
+  name: "Confirmation review of the safety case (completeness)"
+  covers: [WP-K-01]
+  independence: I3
+- id: FSA-F
+  kind: review
+  phase: G5
+  name: "Final functional safety assessment (report WP-K-04)"
+  covers: [WP-K-01, WP-V-01, WP-V-05]
+  independence: I3
+  record_wp: WP-K-04
+- id: SR-03
+  kind: review
+  phase: G5
+  name: "Review of the SOTIF release argument and residual risk"
+  covers: [WP-K-02, WP-V-03, WP-V-04]
+  independence: "I3-equivalent"
+- id: SR-04@G5
+  kind: review
+  phase: G5
+  name: "Review of the AI assurance argument (PAS 8800)"
+  covers: [WP-C-11, WP-W-10, WP-K-01]
+  independence: external

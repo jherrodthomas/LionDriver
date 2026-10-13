@@ -71,6 +71,29 @@ Pins are from `.gitmodules`, `git submodule status` and the files named. Submodu
 
 Toyota and the vehicle's ECUs (EPS, ECM, brake, radar, camera) are **existing elements outside the item** (T-02). They are handled by Assumptions of Use in [WP-C-01](../02-concept/WP-C-01-item-definition.md) and vehicle testing, not by supplier management.
 
+### 3.5 Public information on the ML models (WP-M-10 OI-7)
+
+No request was sent to comma.ai. As decided by the maintainer (2026-10-12), WP-M-10 OI-7 is answered from what comma.ai has published. The table lists only statements found in primary sources available at the baseline (openpilot 0.11.2). "Not published" means not found in those sources.
+
+| Topic | What comma.ai states | Source |
+|---|---|---|
+| Training-data source (driving models) | "openpilot learns to drive by watching humans, like you, drive." Users can maximise "training data uploads to improve openpilot's driving models"; comma "selectively pull[s] a subset of your segments"; "only upstream openpilot (and particular forks) are able to be used for training" | Firehose Mode text, `openpilot/selfdrive/ui/layouts/settings/firehose.py` |
+| Training method (driving models) | Since 0.10.0 a new training architecture "described in our CVPR paper: 'Learning to Drive from a World Model'"; 0.11.0 driving model "fully trained using a learned simulator"; 0.11.2 adds a "big model with 880M parameters" | `RELEASES.md` (0.10.0, 0.11.0, 0.11.2) |
+| Training-data amount (driving models) | Relative only: in 0.10.1 the world model and the driving vision model were "trained on 4x the number of segments" | `RELEASES.md` (0.10.1) |
+| Training data (driver monitoring) | 0.10.3 driver monitoring model "trained on a new dataset, including comma four data"; 0.11.1 "new driver monitoring model" without a data description | `RELEASES.md` (0.10.3, 0.11.1) |
+| Model card or per-model documentation | Not published. `selfdrive/modeld/models/README.md` points only to an architecture viewer | `openpilot/selfdrive/modeld/models/README.md` |
+| Training-data description (size, geography, ODD coverage, labelling, driver population) | Not published | — |
+| Evaluation report or metrics for a released model | Not published | — |
+| Mapping of model files (hashes) to release notes | Not published; the release notes do not identify model files | — |
+
+Not used as evidence: secondary reports of absolute figures (segment counts, parameter counts of the world model), and the CVPR paper itself. Neither could be retrieved from this environment (blog.comma.ai and arxiv.org are blocked by its network policy). The paper is cited by the release notes and should be read and recorded here before G3.
+
+Consequences:
+
+- The source of the driving models' training data is now known in kind: drives uploaded by openpilot users, selected by comma.ai. Its coverage of the reference ODD, its labelling and its bias are still unknown. [WP-C-11 §7](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) keeps its position: no argument relies on training-data coverage.
+- Because uploads from "particular forks" may be used for training, evaluation data that LionDriver collects is independent of future training data only if it is not uploaded to comma.ai (WP-C-11 DSR-05).
+- The comparison of the training-data ODD with the reference ODD cannot be made from public information. By the maintainer's decision it is replaced by LionDriver's own per-stratum evaluation evidence ([WP-C-02 §3.3](../02-concept/WP-C-02-odd-and-intended-functionality.md#33-relation-to-the-driving-models-training-data)).
+
 ## 4. Why no DIA is possible, and what replaces it
 
 | DIA element (ISO 26262-8 §5 / 21434 §7) | Normal content | Status with upstreams | LionDriver replacement |
@@ -167,5 +190,5 @@ The watch list and its review records are kept under `01-management/` (format to
 | OI-3 | Define the format and location of the upstream watch list and its review log |
 | OI-4 | Confirm the licences of all submodules and of the model artefacts, and record any redistribution constraints |
 | OI-5 | Fix the comma device type and hardware revision for the reference configuration (WP-C-01) and request any available hardware documentation from comma.ai; record the answer |
-| OI-6 | Ask comma.ai whether any safety, CS or model documentation can be shared; record the answer (shared with [WP-M-10](WP-M-10-ai-safety-plan.md) OI-7) |
+| OI-6 | Ask comma.ai whether any safety or CS documentation can be shared; record the answer. The model-documentation part is answered from public information in §3.5 ([WP-M-10](WP-M-10-ai-safety-plan.md) OI-7, closed) |
 | OI-7 | Decide whether to mirror AGNOS images and the toolchain wheels under LionDriver control |

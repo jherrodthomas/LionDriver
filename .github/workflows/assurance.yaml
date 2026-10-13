@@ -1,7 +1,7 @@
 name: assurance
 
-# Assurance data checks: trace consistency (WP-T-01), Living Safety Case records and dashboard
-# (assurance/case), and links in the assurance tree, README and LionDriver docs.
+# Assurance data checks: trace consistency (WP-T-01), integrated process model (WP-P-11), Living
+# Safety Case records and dashboard (assurance/case), and links in the assurance tree, README and LionDriver docs.
 # Read-only: the job never writes to the repository. Generated dashboard files are committed by
 # contributors (generate_dashboard.py) and this job fails if they are out of date.
 
@@ -12,6 +12,8 @@ on:
     paths:
       - 'assurance/**'
       - 'tools/sync/**'
+      - 'tools/severity/**'
+      - 'tools/field_monitoring/**'
       - 'tools/safety/**'
       - 'README.md'
       - 'docs/CARS.md'
@@ -22,6 +24,8 @@ on:
     paths:
       - 'assurance/**'
       - 'tools/sync/**'
+      - 'tools/severity/**'
+      - 'tools/field_monitoring/**'
       - 'tools/safety/**'
       - 'README.md'
       - 'docs/CARS.md'
@@ -49,6 +53,10 @@ jobs:
       run: python3 assurance/trace/tools/check_trace.py
     - name: Relative links
       run: python3 assurance/trace/tools/check_links.py
+    - name: ASPICE traceability map matches the trace data and test specifications (and its tests)
+      run: |
+        python3 assurance/trace/tools/trace_map.py --check
+        python3 assurance/trace/tools/test_trace_map.py
     - name: Markdown tables (every row has the header's number of cells)
       run: |
         python3 assurance/trace/tools/check_tables.py
@@ -57,6 +65,10 @@ jobs:
       run: python3 assurance/02-concept/hara/hara_model.py --check
     - name: FSC completeness (every SG x node basic event mapped to WP-C-04 FSRs)
       run: python3 assurance/02-concept/fsc/fsc_model.py --check
+    - name: Integrated process model and maps (WP-P-11)
+      run: python3 assurance/process/tools/process_model.py --check
+    - name: Process model self-tests
+      run: python3 assurance/process/tools/test_process_model.py
     - name: Concept-phase figures match the HARA, FSC and SOTIF data (and their tests)
       run: |
         python3 assurance/02-concept/hara/hara_figures.py --check
@@ -89,6 +101,10 @@ jobs:
       run: python3 -m unittest tools.sync.test_sync_report -v
     - name: CAN gap scan unit tests
       run: python3 -m unittest tools.can_gaps.test_can_gap_scan -v
+    - name: Severity ratio tool unit tests
+      run: python3 -m unittest tools.severity.test_severity_ratio tools.severity.test_risk_curve -v
+    - name: Field-monitoring extraction unit tests
+      run: python3 -m unittest tools.field_monitoring.test_extract_events -v
 
   safety-case:
     name: living safety case

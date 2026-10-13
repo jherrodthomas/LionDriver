@@ -51,8 +51,8 @@ The project has one maintainer today. One person holding several roles is allowe
 | Project maintainer | Overall project responsibility; resource and scope decisions; strategic decisions D-01…D-13; release decision (with safety manager) | Jherrod Thomas | G0 |
 | Configuration and change manager | CM plan, baselines, submodule control, change board | Jherrod Thomas (acting) | G0 |
 | Cybersecurity manager | Owns [WP-M-09](WP-M-09-cybersecurity-plan.md); TARA; interface to safety on safety-relevant threats | Jherrod Thomas (acting); permanent holder TBD | G1 |
-| SOTIF lead | Owns [WP-M-08](WP-M-08-sotif-plan.md); validation targets; scenario evaluation | TBD | G1 |
-| AI/ML safety lead | Owns [WP-M-10](WP-M-10-ai-safety-plan.md); model pinning and model lifecycle evidence | TBD | G1 |
+| SOTIF lead | Owns [WP-M-08](WP-M-08-sotif-plan.md); validation targets; scenario evaluation | Jherrod Thomas (acting); permanent holder TBD | G1 |
+| AI/ML safety lead | Owns [WP-M-10](WP-M-10-ai-safety-plan.md); model pinning and model lifecycle evidence | Jherrod Thomas (acting); permanent holder TBD | G1 |
 | Envelope software engineer(s) | Requirements back-fill, design, implementation and unit verification of opendbc safety and panda firmware changes | Jherrod Thomas; additional contributors TBD | G2 |
 | Hardware safety engineer | Hardware FMEDA, metrics, component qualification (WP-H-*) | TBD (likely external) | G2 |
 | Verification reviewer(s) | Verification reviews of work products and code (PR reviews) at the independence level set in [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) | TBD (at least one person other than the author) | G0 |
