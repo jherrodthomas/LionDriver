@@ -67,6 +67,9 @@ class TestRealDocument(unittest.TestCase):
     self.assertEqual(genv[0].kind, "transfer_in")
     self.assertEqual(genv[0].ref_tree, "SG-01")
 
+  def test_goal_asils_from_wp_c03(self):
+    self.assertEqual(sorted(fd.goal_asils()), [f"SG-0{i}" for i in range(1, 8)])
+
   def test_committed_outputs_current(self):
     outputs = fd.build()
     for name, content in outputs.items():
@@ -166,6 +169,23 @@ class TestCutSets(unittest.TestCase):
 
   def test_real_document_parses_and_report_current(self):
     self.assertEqual(fc.OUTPUT.read_text(encoding="utf-8"), fc.build())
+
+  def test_single_point_path(self):
+    t = self.trees[0]
+    hot = fd.single_point_nodes(t)
+    drawn = {n.ident for n in walk(t.root) if id(n) in hot}
+    self.assertEqual(drawn, {"TE-01", "G1.1", "G1.1.1", "BE-1.01", "BE-1.02", "BE-1.06"})
+
+  def test_single_point_paths_match_cut_sets(self):
+    trees = fd.parse_document(fd.SOURCE.read_text(encoding="utf-8"))
+    fd.resolve(trees)
+    solver = fc.Solver(trees)
+    for t in trees:
+      hot = fd.single_point_nodes(t)
+      drawn = {n.ident for n in walk(t.root) if id(n) in hot and n.ident.startswith("BE-") and not n.children}
+      order_one = {e for c in solver.cut_sets(t.root) if sum(e.startswith("BE-") for e in c) == 1
+                   for e in c if e.startswith("BE-")}
+      self.assertEqual(drawn, order_one, t.goal)
 
   def test_transfer_expanded(self):
     trees = fd.parse_document(fd.SOURCE.read_text(encoding="utf-8"))
