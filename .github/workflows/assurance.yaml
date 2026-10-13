@@ -49,6 +49,8 @@ jobs:
       run: python3 assurance/trace/tools/check_trace.py
     - name: State machines (WP-W-05 §5 generated from state-machines/*.yaml)
       run: python3 assurance/trace/tools/check_state_machines.py --check
+    - name: Design diagrams (Stateflow-style charts, Simulink-style block diagram) current
+      run: python3 assurance/05-software/diagrams/make_diagrams.py --check
     - name: Trace tool unit tests (check_state_machines, check_trace, sync_requirements; WP-P-07 TL-23, OI-9)
       run: python3 -m unittest discover -s assurance/trace/tools -p 'test_*.py' -v
     - name: Relative links

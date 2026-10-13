@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="946" viewBox="0 0 900 946" role="img" aria-labelledby="t d">
+<title id="t">SM-TOY-AUTH state chart</title>
+<desc id="d">Stateflow-style chart of SM-TOY-AUTH with 2 states and 19 transitions, generated from sm-toy-auth.yaml; the table below the chart lists every transition.</desc>
+<style>
+svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de;
+       --edge:#3d3c39; --shade:#d9d8d3; --s1:#2a78d6; --s2:#eb6834; --hi:#f4f3ef; }
+@media (prefers-color-scheme: dark) {
+  svg { --surface:#1a1a19; --panel:#232322; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f;
+         --edge:#c3c2b7; --shade:#0e0e0d; --s1:#3987e5; --s2:#d95926; --hi:#2b2b29; }
+}
+.bg { fill:var(--surface); }
+.t { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:11.5px; fill:var(--ink); }
+.t2 { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:11.5px; fill:var(--ink2); }
+.tm { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:10.5px; fill:var(--ink2); }
+.tb { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:12.5px; font-weight:600; fill:var(--ink); }
+.th { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:15px; font-weight:600; fill:var(--ink); }
+.ts { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:10.5px; fill:var(--ink3); }
+.box { fill:var(--panel); stroke:var(--edge); stroke-width:1.2; }
+.shadow { fill:var(--shade); }
+.hi { fill:var(--hi); }
+.edge { fill:none; stroke:var(--edge); stroke-width:1.2; }
+.edge.thin { stroke-width:0.8; }
+.edge.target { stroke:var(--ink3); stroke-dasharray:5 4; }
+.grid { stroke:var(--grid); stroke-width:1; }
+.axis { stroke:var(--ink3); stroke-width:1; }
+.s1 { fill:none; stroke:var(--s1); stroke-width:2; }
+.s2 { fill:none; stroke:var(--s2); stroke-width:2; stroke-dasharray:6 3; }
+.m1 { fill:var(--s1); }
+.m2 { fill:var(--s2); }
+.arrow { fill:var(--edge); }
+.arrow.target { fill:var(--ink3); }
+.dot { fill:var(--edge); }
+.lbl { fill:var(--surface); }
+</style>
+<rect class="bg" x="0" y="0" width="900" height="946"/>
+<text x="20.0" y="26.0" class="th" text-anchor="start">SM-TOY-AUTH: Toyota authority (controls_allowed)</text>
+<text x="20.0" y="44.0" class="ts" text-anchor="start">Stateflow-style chart generated from state-machines/sm-toy-auth.yaml by diagrams/make_diagrams.py.</text>
+<text x="20.0" y="58.0" class="ts" text-anchor="start">Solid: in the code. Dashed: not in the code (target state). Status column: WP-W-02 Baseline of the cited SWSRs.</text>
+<path class="edge" d="M628.4,201.0 Q450.0,291.0 271.6,201.0"/>
+<path class="arrow" d="M271.6,201.0 L279.2,201.2 L276.5,206.9 Z"/>
+<rect class="lbl" x="376.1" y="231.0" width="147.8" height="30.0" rx="3"/>
+<text x="450.0" y="242.0" class="tm" text-anchor="middle">T2, T3, T4, T5, T6, T7,</text>
+<text x="450.0" y="255.0" class="tm" text-anchor="middle">T10a, T10c, T11</text>
+<path class="edge target" d="M615.0,175.0 Q450.0,175.0 285.1,175.0"/>
+<path class="arrow target" d="M285.1,175.0 L292.1,171.8 L292.1,178.2 Z"/>
+<rect class="lbl" x="382.2" y="160.0" width="135.7" height="30.0" rx="3"/>
+<text x="450.0" y="171.0" class="tm" text-anchor="middle">T9, T10b, T10d, T10e,</text>
+<text x="450.0" y="184.0" class="tm" text-anchor="middle">T12, T13, T14, T15</text>
+<path class="edge" d="M271.6,149.0 Q450.0,59.0 628.4,149.0"/>
+<path class="arrow" d="M628.4,149.0 L620.8,148.8 L623.5,143.1 Z"/>
+<rect class="lbl" x="439.9" y="95.5" width="20.2" height="17.0" rx="3"/>
+<text x="450.0" y="106.5" class="tm" text-anchor="middle">T1</text>
+<path class="edge" d="M187.4,149.0 C187.4,109.4 252.6,109.4 252.6,149.0"/>
+<path class="arrow" d="M252.6,149.0 L249.4,142.0 L255.7,142.0 Z"/>
+<rect class="lbl" x="197.8" y="110.8" width="44.5" height="17.0" rx="3"/>
+<text x="220.0" y="121.8" class="tm" text-anchor="middle">T8, T7</text>
+<rect class="shadow" x="157.9" y="152.0" width="130.2" height="52.0" rx="12"/>
+<rect class="box" x="154.9" y="149.0" width="130.2" height="52.0" rx="12"/>
+<text x="164.9" y="167.0" class="tb" text-anchor="start">NOT_ALLOWED</text>
+<rect class="shadow" x="618.0" y="152.0" width="130.0" height="52.0" rx="12"/>
+<rect class="box" x="615.0" y="149.0" width="130.0" height="52.0" rx="12"/>
+<text x="625.0" y="167.0" class="tb" text-anchor="start">ALLOWED</text>
+<circle class="dot" cx="108.9" cy="175.0" r="4"/>
+<path class="edge" d="M108.9,175.0 L154.9,175.0"/>
+<path class="arrow" d="M154.9,175.0 L147.9,178.2 L147.9,171.8 Z"/>
+<text x="20.0" y="340.0" class="tb" text-anchor="start">Transitions (Stateflow label notation: event [guard] / {action})</text>
+<line class="grid" x1="20" y1="354" x2="880" y2="354"/>
+<text x="20.0" y="368.0" class="t2" text-anchor="start">ID</text>
+<text x="70.0" y="368.0" class="t2" text-anchor="start">Transition</text>
+<text x="640.0" y="368.0" class="t2" text-anchor="start">Build</text>
+<text x="720.0" y="368.0" class="t2" text-anchor="start">WP-W-02 status</text>
+<line class="grid" x1="20" y1="378" x2="880" y2="378"/>
+<text x="20.0" y="391.0" class="tb" text-anchor="start">T1</text>
+<text x="70.0" y="391.0" class="t" text-anchor="start">NOT_ALLOWED → ALLOWED: 0x1D2 valid [CRUISE_ACTIVE 0→1 and</text>
+<text x="70.0" y="405.0" class="t" text-anchor="start">rx_checks_allow_engagement(); reference build also MAIN_ON = 1] / {set}</text>
+<text x="640.0" y="391.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="391.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="412" x2="880" y2="412"/>
+<text x="20.0" y="425.0" class="tb" text-anchor="start">T8</text>
+<text x="70.0" y="425.0" class="t" text-anchor="start">NOT_ALLOWED → NOT_ALLOWED: 0x1D2 valid [CRUISE_ACTIVE held 1, or 0→1 with an RX check</text>
+<text x="70.0" y="439.0" class="t" text-anchor="start">failing, or (reference build) 0→1 while MAIN_ON = 0] / {none}</text>
+<text x="640.0" y="425.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="425.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="446" x2="880" y2="446"/>
+<text x="20.0" y="459.0" class="tb" text-anchor="start">T2</text>
+<text x="70.0" y="459.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: 0x1D2 valid [CRUISE_ACTIVE = 0] / {clear}</text>
+<text x="640.0" y="459.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="459.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="466" x2="880" y2="466"/>
+<text x="20.0" y="479.0" class="tb" text-anchor="start">T3</text>
+<text x="70.0" y="479.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: any RX [brake rising, or pressed while moving] / {clear}</text>
+<text x="640.0" y="479.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="479.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="486" x2="880" y2="486"/>
+<text x="20.0" y="499.0" class="tb" text-anchor="start">T4</text>
+<text x="70.0" y="499.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: RX of checked message [checksum, quality flag or counter</text>
+<text x="70.0" y="513.0" class="t" text-anchor="start">invalid] / {clear}</text>
+<text x="640.0" y="499.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="499.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="520" x2="880" y2="520"/>
+<text x="20.0" y="533.0" class="tb" text-anchor="start">T5</text>
+<text x="70.0" y="533.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: safety_tick (100 Hz safety task) [any RX check lagging (5</text>
+<text x="70.0" y="547.0" class="t" text-anchor="start">periods), below 10 Hz, or invalid] / {clear}</text>
+<text x="640.0" y="533.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="533.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="554" x2="880" y2="554"/>
+<text x="20.0" y="567.0" class="tb" text-anchor="start">T6</text>
+<text x="70.0" y="567.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: 1 Hz tick [heartbeat engaged=0 for 3 consecutive ticks] /</text>
+<text x="70.0" y="581.0" class="t" text-anchor="start">{clear}</text>
+<text x="640.0" y="567.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="567.0" class="t2" text-anchor="start">Not implemented</text>
+<line class="grid" x1="20" y1="588" x2="880" y2="588"/>
+<text x="20.0" y="601.0" class="tb" text-anchor="start">T7</text>
+<text x="70.0" y="601.0" class="t" text-anchor="start">any → NOT_ALLOWED: safety mode set (0xdc, heartbeat loss, harness change) / {clear}</text>
+<text x="640.0" y="601.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="601.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="608" x2="880" y2="608"/>
+<text x="20.0" y="621.0" class="tb" text-anchor="start">T9</text>
+<text x="70.0" y="621.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: TX frame rejected by a content check / {clear, reason}</text>
+<text x="640.0" y="621.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="621.0" class="t2" text-anchor="start">Not implemented (not in code)</text>
+<line class="grid" x1="20" y1="628" x2="880" y2="628"/>
+<text x="20.0" y="641.0" class="tb" text-anchor="start">T10a</text>
+<text x="70.0" y="641.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: safety task: heartbeat check [no SoC heartbeat for &gt; 0.3 s in a</text>
+<text x="70.0" y="655.0" class="t" text-anchor="start">car mode] / {clear}</text>
+<text x="640.0" y="641.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="641.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="662" x2="880" y2="662"/>
+<text x="20.0" y="675.0" class="tb" text-anchor="start">T10b</text>
+<text x="70.0" y="675.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: safety task: command freshness check [no accepted 0x2E4/0x343</text>
+<text x="70.0" y="689.0" class="t" text-anchor="start">for 50/100 ms] / {clear, reason}</text>
+<text x="640.0" y="675.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="675.0" class="t2" text-anchor="start">Not implemented (not in code)</text>
+<line class="grid" x1="20" y1="696" x2="880" y2="696"/>
+<text x="20.0" y="709.0" class="tb" text-anchor="start">T10c</text>
+<text x="70.0" y="709.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: 0x1D2 / 0x1D3 [MAIN_ON off while CRUISE_ACTIVE, mismatch</text>
+<text x="70.0" y="723.0" class="t" text-anchor="start">lasting &gt; 150 ms] / {clear}</text>
+<text x="640.0" y="709.0" class="t2" text-anchor="start">reference</text>
+<text x="720.0" y="709.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="730" x2="880" y2="730"/>
+<text x="20.0" y="743.0" class="tb" text-anchor="start">T10d</text>
+<text x="70.0" y="743.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: platform fault / {clear, SS-S}</text>
+<text x="640.0" y="743.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="743.0" class="t2" text-anchor="start">Not implemented (not in code)</text>
+<line class="grid" x1="20" y1="750" x2="880" y2="750"/>
+<text x="20.0" y="763.0" class="tb" text-anchor="start">T10e</text>
+<text x="70.0" y="763.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: driver steering override / {clear, reason}</text>
+<text x="640.0" y="763.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="763.0" class="t2" text-anchor="start">Not implemented (not in code)</text>
+<line class="grid" x1="20" y1="770" x2="880" y2="770"/>
+<text x="20.0" y="783.0" class="tb" text-anchor="start">T11</text>
+<text x="70.0" y="783.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: TX frame over the per-ID rate budget [3 rejected frames in one</text>
+<text x="70.0" y="797.0" class="t" text-anchor="start">125 ms half-window] / {clear, report txRateExceeded}</text>
+<text x="640.0" y="783.0" class="t2" text-anchor="start">reference</text>
+<text x="720.0" y="783.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="804" x2="880" y2="804"/>
+<text x="20.0" y="817.0" class="tb" text-anchor="start">T12</text>
+<text x="70.0" y="817.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: safety task: driver torque check [|driver torque| &gt; T_ovr for &gt;</text>
+<text x="70.0" y="831.0" class="t" text-anchor="start">t_ovr] / {clear (steering_disengage)}</text>
+<text x="640.0" y="817.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="817.0" class="t2" text-anchor="start">Not implemented (not in code)</text>
+<line class="grid" x1="20" y1="838" x2="880" y2="838"/>
+<text x="20.0" y="851.0" class="tb" text-anchor="start">T13</text>
+<text x="70.0" y="851.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: SPI error [more than N_spi errors within 100 ms] / {clear,</text>
+<text x="70.0" y="865.0" class="t" text-anchor="start">report}</text>
+<text x="640.0" y="851.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="851.0" class="t2" text-anchor="start">Partial (not in code)</text>
+<line class="grid" x1="20" y1="872" x2="880" y2="872"/>
+<text x="20.0" y="885.0" class="tb" text-anchor="start">T14</text>
+<text x="70.0" y="885.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: car-side CAN bus-off or persistent TX failure / {clear, report}</text>
+<text x="640.0" y="885.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="885.0" class="t2" text-anchor="start">Partial (not in code)</text>
+<line class="grid" x1="20" y1="892" x2="880" y2="892"/>
+<text x="20.0" y="905.0" class="tb" text-anchor="start">T15</text>
+<text x="70.0" y="905.0" class="t" text-anchor="start">ALLOWED → NOT_ALLOWED: safety task: forwarding supervision [relay driven and no</text>
+<text x="70.0" y="919.0" class="t" text-anchor="start">camera-side frame for &gt; t_fwd, or camera-side bus-off] / {clear all, release relay}</text>
+<text x="640.0" y="905.0" class="t2" text-anchor="start">all</text>
+<text x="720.0" y="905.0" class="t2" text-anchor="start">Not implemented (not in code)</text>
+</svg>

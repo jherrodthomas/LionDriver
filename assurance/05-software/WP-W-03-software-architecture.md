@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-03 Software architectural design |
 | Standard reference | ISO 26262-6:2018 §7 (software architectural design: notation, design principles, static and dynamic aspects, ASIL attribution, resource usage); ISO 26262-9:2018 §6 (coexistence, by reference to WP-A-02); ASPICE 4.0 SWE.2 |
-| Version | 0.6 (§10 ATC-25: wrong-length RX frame as RX fault, B2B-01, maintainer decision; 2026-10-13). 0.5 (RR-2026-008 F-11: §2, §3, §5.1–§5.2, §5.5–§5.6, §6, §7 and §8 rewritten from a code reading at `682f184` (opendbc `7993399`, panda `8aa8671`), new modules added to the catalogue, reference-build-only elements marked; F-12: TX-hook revocation (SWSR-518) added to §6.3 and to the §5.4.3 race analysis; F-13: every target-state entry moved to the new §10; F-28: Author field; status note removed; 2026-10-12). 0.4 (alignment pass, [RR-2026-008](reviews/RR-2026-008.md): sections renumbered so §5.4 is only the interrupt-priority scheme, start-up is §5.5 and the safety-mode state machine §5.6; §5.1 priority note updated to panda `52cad44`; status note on stale sections; 2026-10-12). 0.3 (§5.4.4 prerequisites implemented, panda `52cad44`: explicit priority table, atomic safety-config switch and fault word; R-2 recorded as a 10 ms bound; 2026-10-12). 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
+| Version | 0.7 (§3.2: Simulink-style envelope block diagram added as a generated figure; 2026-10-13). 0.6 (§10 ATC-25: wrong-length RX frame as RX fault, B2B-01, maintainer decision; 2026-10-13). 0.5 (RR-2026-008 F-11: §2, §3, §5.1–§5.2, §5.5–§5.6, §6, §7 and §8 rewritten from a code reading at `682f184` (opendbc `7993399`, panda `8aa8671`), new modules added to the catalogue, reference-build-only elements marked; F-12: TX-hook revocation (SWSR-518) added to §6.3 and to the §5.4.3 race analysis; F-13: every target-state entry moved to the new §10; F-28: Author field; status note removed; 2026-10-12). 0.4 (alignment pass, [RR-2026-008](reviews/RR-2026-008.md): sections renumbered so §5.4 is only the interrupt-priority scheme, start-up is §5.5 and the safety-mode state machine §5.6; §5.1 priority note updated to panda `52cad44`; status note on stale sections; 2026-10-12). 0.3 (§5.4.4 prerequisites implemented, panda `52cad44`: explicit priority table, atomic safety-config switch and fault word; R-2 recorded as a 10 ms bound; 2026-10-12). 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Envelope (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host (E-01): QM / QM (B-sup) |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -111,6 +111,10 @@ Pins: panda `8aa8671`, opendbc `7993399`. **[ref]** = reference build only. All 
                                   │  main loop: hw_watchdog_main_loop_alive, LED fade / WFI          │
                                   └──────────────────────────────────────────────────────────────────┘
 ```
+
+The signal flow inside the envelope, for the Toyota reference build, is also drawn as a Simulink-style block diagram (generated, design description): [`diagrams/simulink-envelope.svg`](diagrams/simulink-envelope.svg).
+
+![Safety envelope block diagram](diagrams/simulink-envelope.svg)
 
 ### 3.3 Interfaces between components
 
