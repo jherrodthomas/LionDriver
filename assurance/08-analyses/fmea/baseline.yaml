@@ -84,3 +84,32 @@ baselines:
         teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
         tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
       os: AGNOS 19.9 (launch_env.sh)
+  - id: BL-004
+    status: proposed
+    description: >-
+      BL-003 plus liondriver-dev #33-#43: explicit IRQ priorities (panda#10) and a HIL test of the watchdog-reset report (panda#9);
+      in the reference build only, 0x262 and 0x1D3 supervised (opendbc#6), LKA actuation refused on an EPS fault (opendbc#7,
+      reported to openpilot as pandaState.epsFault through opendbc#8 and panda#11),
+      CRUISE_ACTIVE checked against MAIN_ON (opendbc#9) and per-ID TX rate supervision (opendbc#10, panda#13). No build path sets
+      LIONDRIVER_REFERENCE at BL-004 (open LionDriver#36, #41), so the reference-only features are not active in a default build.
+    vehicle:
+      make: Toyota
+      model: Corolla
+      model_year: 2020
+      trim: LE
+      market: US
+      platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
+    hardware:
+      device: comma 3X
+      panda: integrated in device
+      harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
+    software:
+      repo_commit: 682f1845af254612dcd90636a77a6fc016b12f83
+      submodules:
+        panda: 8aa86712909bb9eeccc2834583764993a6f1fa54
+        opendbc_repo: 7993399406bea579fdad910c760d51a06bf1064b
+        msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
+        rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
+        teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
+        tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
+      os: AGNOS 19.9 (launch_env.sh)
