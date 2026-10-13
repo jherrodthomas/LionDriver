@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-H-04 Hardware architectural metrics (SPFM, LFM) |
 | Standard reference | ISO 26262-5:2018 §8 (evaluation of the hardware architectural metrics), Annex C (metric definitions, informative), Annex D (diagnostic coverage, informative); ISO 26262-11:2018 (semiconductors, informative) |
-| Version | 0.1 |
+| Version | 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
 | Status | Draft (method and plan; no metric computed) |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose
 
@@ -126,6 +126,8 @@ SG-01 or SG-07, and the ASIL C targets are not met.** Reasons:
    not tested at start-up, so their faults are latent. The relay-malfunction check is exercised only
    when a stock message appears, which in normal operation never happens.
 
+*Status note 2026-10-12:* since 2026-10-12 DC-01 (IWDG1, window mode, fed from the 100 Hz safety task; panda `9f60e17`) is implemented, **not verified**. No DC credit is taken for it until HIL fault-injection evidence exists and the LSI tolerance is confirmed ([watchdog impact record](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) OI-3 and OI-2). Its own latent fault (LSI failure, WP-H-03 FM-CLK-04) needs the start-up test of OI-4 below. The assessment above is otherwise unchanged.
+
 **With the firmware-only changes of WP-H-02 §6 (DC-01, DC-04…DC-10):** SPFM ≥ 90 % for SG-01 looks
 *plausible but not certain*. The CPU core remains at "medium" coverage at best on a single
 non-lockstep core with a software test library; whether that is enough depends on the CPU's share
@@ -142,7 +144,7 @@ channel. This supports the FSC recommendation of option (c).
 | 1 | Fix the reference device revision and harness part number | WP-C-01 | Configuration record | G1 |
 | 2 | Obtain BOM/schematic from comma.ai or perform a teardown (WP-H-02 OI-1) | Supplier | BOM, schematic extract | G2 |
 | 3 | Agree failure-rate sources (WP-H-03 OI-2) and the mission profile (WP-H-05 §3) | Safety manager | Decision record | G2 |
-| 4 | Implement firmware mechanisms DC-01, DC-04…DC-10 in the panda fork | D-01 forks, D-04 HIL | Code + tests | G3 |
+| 4 | Implement firmware mechanisms DC-01, DC-04…DC-10 in the panda fork | D-01 forks, D-04 HIL | Code + tests | G3 (2026-10-12: DC-01 implemented, not verified; DC-09 partial in the reference build) |
 | 5 | Fault-injection campaign to justify DC claims (WP-H-06 VS-HW-xx) | HIL bench | Test records | G3 |
 | 6 | Fill FMEDA, compute SPFM/LFM per SG, sensitivity analysis | 2–5 | Calculation + this document v1.0 | G3 |
 | 7 | If targets are missed: decide DC-02/DC-03 harness adapter, or record the deviation and its rationale for the assessor | 6 | Decision record (WP-M-01 §8) | G3 |

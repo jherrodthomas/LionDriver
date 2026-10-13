@@ -4,19 +4,19 @@
 |---|---|
 | Work product | WP-W-09 Safety-related configuration and calibration data (car params, fingerprints, limits, model weights) |
 | Standard reference | ISO 26262-6:2018 Annex C (software configuration; calibration data); ISO 26262-6:2018 §6, §9 (requirements on and verification of data); ISO 26262-8:2018 §7 (configuration management); ISO/PAS 8800:2024 (model as configuration item, informative); ASPICE 4.0 SWE.3 |
-| Version | 0.1 |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: CD-01, CD-03, CD-04 and §5 updated to the integrated LionDriver changes at panda `b790fca`, opendbc `7993399`; DVR-01/02 status. Nothing verified on hardware). 0.1: initial draft |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (data that configures or parameterises the envelope E-03); QM / SOTIF / PAS 8800 for host data |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; panda `b790fca`, opendbc `7993399`). Earlier: `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 ## 1. Purpose and scope
 
 ISO 26262-6 Annex C treats configuration data (selecting a variant or behaviour of the software) and calibration data (adapting the software's behaviour by values) as part of the software that must be specified, verified and controlled with the same rigour as code of the same ASIL. This document:
 
-1. lists every data item that can change the safety-relevant behaviour of the LionDriver reference configuration (2020 Corolla LE, `TOYOTA_COROLLA_TSS2`, openpilot longitudinal, comma device with panda);
+1. lists every data item that can change the safety-relevant behaviour of the LionDriver reference configuration (Toyota Corolla, 12th generation (E210), TSS 2.0, `TOYOTA_COROLLA_TSS2`, openpilot longitudinal, comma device with panda);
 2. classifies each item, assigns an owner and ASIL, and records how it is verified, protected and changed today;
 3. states requirements for data verification and protection (DVR-nn, §6).
 
@@ -76,9 +76,9 @@ Each entry gives: current value and source; what it affects; where it is verifie
 | Effect | EPS factor scales measured torque used by the measured-torque check (`toyota.h:104`, FSR-01.03). Flags select RX checks, TX whitelist and the lateral path (`toyota.h:384-425`). A wrong STOCK_LONGITUDINAL bit changes the TX set; a wrong EPS factor loosens or tightens the ±350 tracking bound |
 | Path | Host fingerprints the car (CD-10) → `CarParams` written to Params by `card.py:146-150` → `pandad` reads `CarParams` and sends model/param to panda (`openpilot/selfdrive/pandad/panda_safety.cc:56-70`) → panda `0xdc` (`panda/board/main_comms.h:222-225`) |
 | Verified today | Host side: `selfdrived` raises `controlsMismatch` if panda-reported model/param/alt-experience differ from `CarParams` for > 10 s (`openpilot/selfdrive/selfdrived/selfdrived.py:328-338`). Envelope side: tests set the param explicitly (`test_toyota.py`); `test_models.py` sets `safetyConfigs[-1]` per route (`opendbc_repo/opendbc/car/tests/test_models.py:186-190`) |
-| Protection today | **None in the envelope.** No range or equality check of the EPS factor (any 0–255 accepted, including 0); unknown flag bits ignored; the SoC can change mode/param at any time without authentication (GAP-09). Host check is QM and slow (10 s) |
+| Protection today | **None in the envelope.** No range or equality check of the EPS factor (any 0–255 accepted, including 0); unknown flag bits ignored; the SoC can change mode/param at any time without authentication (GAP-09). Host check is QM and slow (10 s). *2026-10-12:* in the reference build (`LIONDRIVER_REFERENCE=1`) the panda accepts `0xdc` only for SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73, from TOYOTA only NOOUTPUT/SILENT, and refuses `0xdf` (`panda/board/reference_lock.h`, panda `9f60e17`); `toyota_init` still has no range check of its own. Not verified on hardware |
 | Change control | `values.py`/`interface.py` are SR-Q; `toyota.h` is SR-A ([WP-P-01 §4.2](../07-supporting/WP-P-01-configuration-management-plan.md#42-globs)) |
-| Gaps | GAP-09, FSR-01.10 not implemented. Addressed by DVR-01, DVR-02 |
+| Gaps | GAP-09. FSR-01.10: implemented in the reference build (reference lock), not verified on hardware; not in other builds. Addressed by DVR-01, DVR-02 |
 
 **CD-02 Toyota envelope limit constants**
 
@@ -110,12 +110,20 @@ TSR-102 in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) requ
 | Constant | Value | Source |
 |---|---|---|
 | `MAX_RT_INTERVAL` | 250 000 µs | `opendbc_repo/opendbc/safety/declarations.h:71` |
-| RX lag threshold | max(10 × expected period, 1 s), evaluated at 1 Hz | `opendbc_repo/opendbc/safety/safety.h:321-344` |
+| RX lag threshold | Toyota: `rx_timeout_periods` = 5 nominal periods (`TOYOTA_RX_TIMEOUT_PERIODS`), no 1 s floor; other modes max(10 × expected period, 1 s). Evaluated at 100 Hz (safety task). *At `8b8c6ae`: max(10 × period, 1 s) at 1 Hz* | `opendbc_repo/opendbc/safety/safety.h:378-385`; `modes/toyota.h:83, 543` |
+| Safety task rate | `SAFETY_TASK_FREQ` 100 Hz (TIM4, 10 ms); interrupt-rate limit 110 Hz (`FAULT_INTERRUPT_RATE_TICK`) | `panda/board/stm32h7/stm32h7_config.h:41`; `panda/board/main.c:359` |
 | Relay-malfunction grace | `safety_mode_cnt > 1` (1–2 s) | `safety.h:215-220, 372-380` |
-| Heartbeat mismatch / loss | 3 s / 5 s with ignition (2 s without) | `panda/board/main.c:101-103, 182-213` |
-| Expected RX frequencies (Toyota) | `0xAA` 83 Hz, `0x260` 50 Hz, `0x1D2` 33 Hz, `0x226` 40 Hz | `toyota.h:39-46` |
+| Heartbeat mismatch / loss | 3 s / 5 s with ignition (2 s without) (1 Hz path, SILENT) | `panda/board/main.c` (tick handler) |
+| Heartbeat authority timeout | `HEARTBEAT_AUTHORITY_TIMEOUT_TICKS` 30 ticks = 0.3 s at 100 Hz (car modes) | `panda/board/drivers/heartbeat_monitor.h:15` |
+| IWDG | PR 0 (/4), RLR 719 (≈ 90 ms nominal at 32 kHz LSI), WINR 679 (feed accepted ≈ 5 ms after the previous); LSI tolerance not yet confirmed | `panda/board/drivers/hw_watchdog.h:35-37` |
+| TX rate supervision (reference build) | Sliding window `TX_RATE_WINDOW_US` 250 ms; budget per ID `ceil(f × 0.3) + 1 + burst`; `TX_RATE_REVOKE_REJECTED` 3 rejections in a half-window revoke. Per ID (f Hz / burst → budget): `0x2E4` 100/5 → 36, `0x191` 50/3 → 19, `0x343` 33/3 → 14, `0x412` 5/4 → 7, `0x1D2` 1/2 → 4, `0x283` 1/2 → 4, `0x750` 5/2 → 5 (non-SecOC only); budgets not yet confirmed on reference logs | `safety.h:246-280`; `modes/toyota.h:549-557` |
+| Cruise-main tolerance (reference build) | `TOYOTA_CRUISE_MAIN_TOLERANCE_US` 150 ms (CRUISE_ACTIVE with MAIN_ON = 0 while engaged); immediate on activation | `modes/toyota.h:122` |
+| EPS-fault siren | `EPS_FAULT_SIREN_PERSIST_TICKS` 100 (1 s persistence while engaged), `EPS_FAULT_SIREN_HOLD_TICKS` 300 (3 s hold); panda `b790fca`, LionDriver PR #45, not merged | `panda/board/drivers/eps_fault_siren.h:17-18` |
+| Expected RX frequencies (Toyota) | `0xAA` 83 Hz, `0x260` 50 Hz, `0x1D2` 33 Hz, `0x226` 40 Hz; reference build also `0x262` 25 Hz and `0x1D3` 33 Hz (nominal: the minimum rates openpilot's CAN parser requires; to be confirmed on the vehicle, WP-S-05 OI-7) | `toyota.h:56-80` |
 
 Verified by `test_safety_tick` (`common.py:1208`) for the RX timeout; heartbeat timing has no unit test. Values exceed the FSC §8 budgets (GAP-06). Change control SR-A. DVR-03.
+
+*Status 2026-10-12:* the RX timeout now has `test_rx_timeout_5_periods` and `test_rx_timeout_5_periods_each_msg` (`test_toyota.py`); the panda constants have host tests (`panda/tests/heartbeat_monitor`, `hw_watchdog`, `eps_fault_siren`); the TX rate budgets have `test_tx_rate_*`. On paper the RX timeout (≤ 0.16 s) and heartbeat (0.3 s) now fit the FSC §8 budgets; none is verified on hardware (HIL D-04). The constants still lack the requirement IDs, tolerances and rationale of DVR-03.
 
 **CD-04 Toyota RX check table and TX whitelist**
 
@@ -125,7 +133,7 @@ Verified by `test_safety_tick` (`common.py:1208`) for the RX timeout; heartbeat 
 | Effect | Defines which inputs are integrity-checked and which outputs the SoC may command (FSR-01.06, FSR-07.02) |
 | Verified today | `test_rx_hook` (checksum, `test_toyota.py:110`), `test_block_aeb` (`:87`), `test_spam_can_buses` (`common.py:937`) |
 | Protection | Firmware integrity only |
-| Gaps | GAP-01 (no counters); `0x344`/`0x411` allowed on TX (FSC OI-5) |
+| Gaps | GAP-01 (no counters). *As found:* `0x344`/`0x411` allowed on TX (FSC OI-5). *2026-10-12:* `0x344` and the DSU set removed from the whitelist (opendbc `e089e85`); `0x411` not allowed in the reference build (opendbc `5b5a4ba`); reference build RX set adds `0x262`, `0x1D3` |
 
 **CD-05 panda firmware build configuration**
 
@@ -251,7 +259,7 @@ Change control: algorithms and bounds are SR-Q source. The **learned values them
 
 | ID | ASIL | Verified today (where) | Integrity protection today | Plausibility today | Change control today | Main gap |
 |---|---|---|---|---|---|---|
-| CD-01 | C | Host 10 s mismatch check; safety tests set param explicitly | None | None in envelope | SR-Q (source) / runtime unprotected | GAP-09 |
+| CD-01 | C | Host 10 s mismatch check; safety tests set param explicitly; reference-lock host tests (`panda/tests/reference_lock`) | None | Reference build: mode/parameter lock (2026-10-12, not verified); otherwise none in envelope | SR-Q (source) / runtime locked in the reference build only | GAP-09 |
 | CD-02 | C | opendbc safety tests (upstream CI) | Firmware signature (weak) | n/a (constants) | SR-A | GAP-04, GAP-14 |
 | CD-03 | C | `test_safety_tick` | Firmware signature | n/a | SR-A | GAP-06 |
 | CD-04 | C | `test_rx_hook`, `test_block_aeb` | Firmware signature | n/a | SR-A | GAP-01 |
@@ -273,8 +281,8 @@ Requirement IDs `DVR-nn` are local to this work product until they are migrated 
 
 | ID | Requirement | ASIL | Parent | Allocation | Verification | Current state / GAP |
 |---|---|---|---|---|---|---|
-| DVR-01 | In the reference configuration the envelope shall accept only safety model `toyota` with safety parameter `73` (no flag bits); any other model or parameter requested by the SoC shall leave the envelope in a non-actuating mode. | C | FSR-01.10 / TSR-512, TSR-804 | E-03 (`toyota_init`, `set_safety_hooks`) | T-SIL (WP-W-06 VS-UV-12), T-HIL | Not met: any 0–255 EPS factor accepted (`toyota.h:383`) (GAP-09) |
-| DVR-02 | Once a car safety mode is active, the envelope shall reject mode or parameter changes from the SoC until ignition off. | C | FSR-01.10 / TSR-512, TSR-513 | E-03 (`main_comms.h` `0xdc`) | T-HIL (VS-UV-13) | Not met (GAP-09) |
+| DVR-01 | In the reference configuration the envelope shall accept only safety model `toyota` with safety parameter `73` (no flag bits); any other model or parameter requested by the SoC shall leave the envelope in a non-actuating mode. | C | FSR-01.10 / TSR-512, TSR-804 | E-03 (`toyota_init`, `set_safety_hooks`) | T-SIL (WP-W-06 VS-UV-12), T-HIL | *As found:* not met: any 0–255 EPS factor accepted (`toyota.h:383`) (GAP-09). *2026-10-12:* met in the reference build, not verified: `reference_lock.h` refuses TOYOTA with another parameter and every other car mode; the previous (non-actuating) mode stays. Not met in other builds |
+| DVR-02 | Once a car safety mode is active, the envelope shall reject mode or parameter changes from the SoC until ignition off. | C | FSR-01.10 / TSR-512, TSR-513 | E-03 (`main_comms.h` `0xdc`) | T-HIL (VS-UV-13) | *As found:* not met (GAP-09). *2026-10-12:* met in the reference build, not verified, with one difference: from TOYOTA, changes to NOOUTPUT or SILENT (non-actuating) are accepted, as `pandad` needs at ignition off |
 | DVR-03 | Every envelope limit and timing constant (CD-02, CD-03) shall have a requirement ID, physical unit, value, tolerance and rationale recorded in `assurance/trace/` and a `@req` tag at its definition. | C | FSR-01.01…01.07 / TSR-101…104, 201…205, 401, 407 | E-03 source + trace | Review, trace check K10 (WP-P-06) | Not met (GAP-14, GAP-04) |
 | DVR-04 | Unit tests of envelope limits shall take expected values from the requirement data (`assurance/trace/`), not from copies of the source constants. | C | DVR-03 | Test code | Review | Not met (`test_toyota.py:139-155`) |
 | DVR-05 | Firmware installed in a vehicle shall be a RELEASE build signed with the LionDriver release key; the device shall report build type and firmware hash, and the host shall refuse to engage on a DEBUG build. | C | FSR-01.10 / TSR-514, TSR-802 | E-03 build, E-01 check | Release audit (WP-P-01 §11), T-HIL | Not met (GAP-25) |

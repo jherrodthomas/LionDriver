@@ -3,36 +3,36 @@
 
 - id: DF-01
   kind: defeater
-  title: "Hardware watchdog (IWDG) never initialised; SW watchdog checked from the ISR it supervises"
-  description: "Closure route: TSR-5xx; WP-H-01"
+  title: "IWDG implemented (90 ms, window, 100 Hz feed) but not verified on hardware; LSI tolerance against the 0.1 s limit unconfirmed (2026-10-12)"
+  description: "Closure route: HIL `test_10` (D-04), IA watchdog OI-2, review"
   lifecycle_status: open
   gaps: [GAP-07]
   related_claims: [G1.1.4, G1.9]
   baseline: BL-001
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: DF-02
   kind: defeater
-  title: "Detection times (RX ≤ 2 s, heartbeat 3–5 s) exceed the preliminary SG-01 FTTI (≤ 0.5 s)"
-  description: "Closure route: WP-S-04, TSR-4xx/5xx"
+  title: "RX timeout (5 nominal periods, ≤ 0.16 s for PCM_CRUISE, ≈ 0.21 s for `0x262`) and heartbeat absence (0.3 s) now within the preliminary SG-01 FTTI (≤ 0.5 s) but unmeasured; heartbeat mismatch still 3 s (2026-10-12)"
+  description: "Closure route: WP-S-04, TSR-4xx/5xx; measurement on HIL `test_12` (D-04)"
   lifecycle_status: open
   gaps: [GAP-06]
   related_claims: [G1.1.4]
   baseline: BL-001
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: DF-03
   kind: defeater
-  title: "QM host sets the safety mode and parameter at any time, unauthenticated (`0xdc`)"
+  title: "Mechanism implemented in the reference build (host tests); open until HIL `test_11` and review, and until the release build uses `LIONDRIVER_REFERENCE=1`: QM host sets the safety mode and parameter at any time, unauthenticated (`0xdc`)"
   description: "Closure route: Safety-mode lock (TSR-5xx)"
   lifecycle_status: open
   gaps: [GAP-09]
   related_claims: [G1.1.2, G1.1.4, G1.8]
   baseline: BL-001
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: DF-04
   kind: defeater
@@ -47,14 +47,14 @@
 
 - id: DF-05
   kind: defeater
-  title: "No E2E alive counters on any Toyota RX message; brake and wheel speed have no checksum"
+  title: "No E2E alive counters on any Toyota RX message; brake and wheel speed have no checksum. Mitigation started in the reference build (2026-10-12): `0x262` and `0x1D3` checksummed RX checks, CRUISE_ACTIVE vs MAIN_ON (TSR-405(c)); counters, TSR-405(a)/(b) open"
   description: "Closure route: TSR-4xx"
   lifecycle_status: open
   gaps: [GAP-01]
   related_claims: [G1.1.4, G1.5]
   baseline: BL-001
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: DF-06
   kind: defeater
@@ -124,14 +124,14 @@
 
 - id: DF-12
   kind: defeater
-  title: "Debug relay-drive command `0xc5` not gated in release builds"
+  title: "Mechanism implemented in the reference build (host tests); open until HIL `test_11` and review, and until the release build uses `LIONDRIVER_REFERENCE=1`: Debug relay-drive command `0xc5` not gated in release builds"
   description: "Closure route: Firmware change"
   lifecycle_status: open
   gaps: [GAP-09]
   related_claims: [G1.7, G1.8]
   baseline: BL-001
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: DF-13
   kind: defeater
@@ -322,14 +322,14 @@
 
 - id: DF-30
   kind: defeater
-  title: "Safety-code verification (coverage gate, MISRA, mutation) not run in LionDriver CI; unit tests built with `ALLOW_DEBUG`, release configuration untested"
+  title: "Safety-code verification (coverage gate, MISRA, mutation) now in LionDriver CI, incl. the reference variant (`LIONDRIVER_REFERENCE=1`), but no run recorded as evidence; unit tests built with `ALLOW_DEBUG`, release configuration untested"
   description: "Closure route: WP-W-06, WP-P-01"
   lifecycle_status: open
   gaps: [GAP-39, GAP-41]
   related_claims: [G1.1.2, G5.2]
   baseline: BL-001
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: DF-31
   kind: defeater
@@ -344,36 +344,36 @@
 
 - id: DF-32
   kind: defeater
-  title: "SoC may transmit PCS messages (`0x344`, `0x411`) without content check; DSU-only IDs whitelisted"
+  title: "Fixed in the reference build (`test_pcs_and_dsu_messages_blocked`, `test_pcs_hud`); awaiting review: SoC may transmit PCS messages (`0x344`, `0x411`) without content check; DSU-only IDs whitelisted"
   description: "Closure route: TSR-705"
   lifecycle_status: open
   gaps: [GAP-42, GAP-49]
   related_claims: [G1.7, G1.8]
   baseline: BL-001
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: DF-33
   kind: defeater
-  title: "MCU hang leaves the relay in intercept: forwarding and stock PCS lost"
+  title: "MCU hang → IWDG reset ≈ 90 ms + relay drop-out; meets SG-07 0.1 s only if LSI within tolerance (IA watchdog OI-2); relay stuck in intercept undetected"
   description: "Closure route: TSR-706, TSR-501"
   lifecycle_status: open
   gaps: [GAP-43]
   related_claims: [G1.7, G1.9]
   baseline: BL-001
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: DF-34
   kind: defeater
-  title: "Envelope accepts any EPS torque factor from the QM host"
+  title: "Mechanism implemented in the reference build (host tests); open until HIL `test_11` and review, and until the release build uses `LIONDRIVER_REFERENCE=1`: Envelope accepts any EPS torque factor from the QM host"
   description: "Closure route: TSR-512 (compiled-in parameter)"
   lifecycle_status: open
   gaps: [GAP-44]
   related_claims: [G1.1.1, G1.8]
   baseline: BL-001
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: DF-35
   kind: defeater
@@ -421,25 +421,25 @@
 
 - id: DF-39
   kind: defeater
-  title: "About nine configuration commands ungated in car modes; `0xe7` stops PCS forwarding with the relay energised (HIL confirmation pending)"
+  title: "Configuration commands gated in car mode in the reference build (TSR-513); `0xc0`/`0xb0`/`0xb1`/`0xf6` unconfirmed; `0xe7` HIL confirmation pending"
   description: "Closure route: TSR-513"
   lifecycle_status: open
   gaps: [GAP-49]
   related_claims: [G1.7, G1.8]
   baseline: BL-001
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: DF-40
   kind: defeater
-  title: "No interrupt-priority scheme; safety hooks, CAN TX and command dispatch run in ISR context; timing unanalysed"
+  title: "Explicit equal priorities and critical sections (panda `52cad44`, TSR-519 partial); safety logic still in ISR context; no scheme adopted; WCET/latency unmeasured"
   description: "Closure route: TSR-519"
   lifecycle_status: open
   gaps: [GAP-50]
   related_claims: [G1.1.4, G1.8]
   baseline: BL-001
   source: WP-K-01
-  source_revision: "8b8c6ae"
+  source_revision: "bf6ce8c"
 
 - id: DF-41
   kind: defeater

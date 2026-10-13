@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay) |
 | Standard reference | ISO 26262-5:2018 §7 (hardware design: architectural and detailed design, safety-related HW elements); ISO 26262-8:2018 §13; ASPICE 4.0 HWE.2 |
-| Version | 0.1 |
+| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
 | Status | Draft |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose and limits of this document
 
@@ -43,7 +43,7 @@ this document covers both boards (WP-H-01 OI-7).
 ### 3.1 Block diagram
 
 ```
-                     Vehicle (2020 Corolla TSS2)
+                     Vehicle (E210 Corolla TSS2)
    Forward camera (LKA/ACC/PCS)                 Vehicle CAN (EPS, ECM/PCM, ABS, ...)
           │ camera-side CAN                                │ car-side CAN
           │                                                │
@@ -93,7 +93,7 @@ Bus numbering is that of the Toyota safety mode: bus 0 = car side, bus 2 = camer
 | HE-03 | SRAM (DTCM 128 K, AXI 320 K, SRAM1/2 32 K, SRAM4 16 K, backup 4 K) | Data, stack, CAN queues | all | ECC hardware present on STM32H7 SRAM *(verify RM0468)*; monitors not configured | `stm32h7/stm32h7x5_flash.ld:67-75` |
 | HE-04 | Clock: 25 MHz HSE crystal/oscillator, PLL1, LSI (IWDG), HSI48 | Time base for all timeouts and CAN bit timing | all | CSS on HSE enabled → NMI → reset | `stm32h7/clock.h:79-80, 119`; `early_init.h:73-76` |
 | HE-05 | MCU power: SMPS/LDO of the STM32H7 and the board regulator feeding it | Supply | all | SMPS or LDO chosen by package; board regulator unknown | `stm32h7/clock.h:61-69` |
-| HE-06 | IWDG1 | Independent watchdog | SG-01…07 | **Present in silicon, not used** | `stm32h7/stm32h7_config.h:43` (GAP-07) |
+| HE-06 | IWDG1 | Independent watchdog | SG-01…07 | **Used** (since 2026-10-12, panda `9f60e17`): IWDG1, started at the first relay drive, window mode, ≈ 90 ms nominal; not verified on hardware. *As found: present in silicon, not used (GAP-07)* | `stm32h7/stm32h7_config.h:48`; `drivers/hw_watchdog.h`; `drivers/harness.h:17-20` |
 | HE-07 | CAN transceivers XCVR1–4 | Physical layer for buses 0/1/2 | SG-01, SG-03…07 | Active-low enables per transceiver. tres: XCVR1 and XCVR3 share one enable pair (PG11, PD7) "CAN0 and 2 are tied"; XCVR2 PB10, XCVR4 PB11. cuatro: PB7, PB10, PD8, PB11. Part numbers unknown | `boards/tres.h:32-56`; `boards/cuatro.h:9-26` |
 | HE-08 | Intercept relay (harness) and its driver | Breaks the camera→car link for LKA/ACC messages; restores stock path when released | SG-01, SG-07 | Two open-drain, active-low outputs (relay, and an "ignition relay" used only for testing). Assignment swaps with harness orientation. No readback | `drivers/harness.h:7-33, 96-107`; pins tres PA8/PA3, cuatro PA9/PA3 (`boards/tres.h:138-149`, `boards/cuatro.h:99-110`) |
 | HE-09 | Harness connector, SBU lines | Orientation detection, ignition sense, relay drive | SG-07 | SBU1/SBU2 read by ADC (PC4 ch4 / PA1 ch17), threshold `avdd_mV/2` = 900 mV; pins not 5 V tolerant in ADC mode | `drivers/harness.h:54-90`; `boards/tres.h:155` |
@@ -146,8 +146,8 @@ QM SoC (GAP-11) and HWSR-502a.
 | HardFault | Cookie + reset | Released *(inferred)* | None | `early_init.h:78-80` |
 | Other exceptions / unused vectors | `Default_Handler` infinite loop | **Last state (may stay driven)** | Stops (no ISR), pending FIFO frames may still go out | `startup_stm32h7x5xx.s:111-114` |
 | `assert_fatal` | `while(1)` with interrupts as they were | **Last state** | Stops | `libc.h:12-20` |
-| Main loop or ISR hang | No hardware watchdog → no recovery | **Last state** | Stops | GAP-07 |
-| SoC heartbeat loss | SILENT after 5 s (ign on) / 2 s; relay released; siren 3 s if engaged | Released | None | `main.c:191-225` |
+| Main loop or ISR hang | Since 2026-10-12 (panda `9f60e17`): once the relay has been driven, IWDG reset ≤ ~90 ms nominal after the stall (LSI tolerance open), then as power-on. Before the first relay drive the IWDG is not started, but the relay has not been energised. *As found: no hardware watchdog, no recovery (GAP-07)* | Released after the reset *(HWSR-502 unconfirmed)*; not verified on hardware | Stops | `drivers/hw_watchdog.h`; WP-H-01 HWSR-501 |
+| SoC heartbeat loss | In a car mode authority revoked after 0.3 s (100 Hz safety task, panda `c2e5d93`, not verified on hardware); SILENT after 5 s (ign on) / 2 s; relay released; siren 3 s if engaged | Released (after the SILENT timeout) | Actuation refused from 0.3 s; none after SILENT | `drivers/heartbeat_monitor.h`; `main.c:140-142` and the 1 Hz path in `main.c` |
 | Relay malfunction detected | TX and forwarding blocked | Unchanged | Blocked | `safety.h:252, 268` |
 
 The rows marked **Last state** are the key hardware finding: a hang with the relay energised
@@ -160,7 +160,7 @@ main motivation for HWSR-501 (IWDG) and HWSR-506a.
 
 | Mechanism | Hardware resource | Present | Configured by firmware | Reaction |
 |---|---|---|---|---|
-| Independent watchdog | IWDG1 (LSI) | Yes | **No** | — |
+| Independent watchdog | IWDG1 (LSI) | Yes | **Yes** since 2026-10-12 (`drivers/hw_watchdog.h`, panda `9f60e17`): RLR 719, WINR 679, started at the first relay drive, fed from the 100 Hz safety task; not verified on hardware | Reset |
 | Window watchdog | WWDG1 (APB clock) | Yes *(verify)* | No | — |
 | Clock security system | RCC CSS (HSE) | Yes | Yes (`clock.h:119`) | NMI → reset |
 | Brown-out reset | PWR BOR (option bytes) | Yes | Unknown (option bytes not set by code) | Reset |
@@ -197,7 +197,7 @@ silicon (low cost) or add-ons in the harness path (LionDriver-controlled hardwar
 
 | ID | Change | Addresses | Kind | Impact | Recommendation |
 |---|---|---|---|---|---|
-| DC-01 | Enable IWDG1 in window mode from the bootstub; service it from the end of the 8 Hz tick processing and only if the main loop and CAN RX/TX safety processing reported progress; timeout ≤ 0.1 s minus reset time (SG-07 FDTI) | GAP-07, HWSR-501–501c | Firmware config | Small code change in the panda fork; must be verified for stop mode, flashing and bootloader paths (an IWDG that cannot be stopped also runs during firmware update — the flasher must service it). Requires HIL (D-04) | **Do (G3)**. Needed at any ASIL |
+| DC-01 | Enable IWDG1 in window mode from the bootstub; service it from the end of the 8 Hz tick processing and only if the main loop and CAN RX/TX safety processing reported progress; timeout ≤ 0.1 s minus reset time (SG-07 FDTI) | GAP-07, HWSR-501–501c | Firmware config | Small code change in the panda fork; must be verified for stop mode, flashing and bootloader paths (an IWDG that cannot be stopped also runs during firmware update — the flasher must service it). Requires HIL (D-04) | **Do (G3)**. Needed at any ASIL. **2026-10-12: done differently:** started at the first relay drive (not in the bootstub), window mode, fed from the 100 Hz safety task only after main-loop progress (TSR-501 v0.4; panda `9f60e17`); stop-mode entry resets first; not verified on hardware (HIL, D-04) |
 | DC-02 | External voltage supervisor + watchdog (separate clock) that holds MCU in reset and cuts the relay coil supply | GAP-07 residual (common cause with MCU), GAP-11, HWSR-501d | HW add-on in a LionDriver harness adapter | Requires a LionDriver-built adapter between harness and device; new component to qualify; changes the item (impact analysis per WP-M-12) | Needed if SG-01 stays ASIL C or decomposition (FSC §4.3) is chosen. Optional at ASIL B |
 | DC-03 | Relay readback: sense the camera-side and car-side bus continuity, or use a relay with auxiliary contact, wired to a spare MCU input (or to the DC-02 supervisor) | GAP-12, HWSR-506a | HW add-on (harness adapter) + firmware | Same adapter as DC-02; adds an input to the HSI; closes the "stuck intercepting" detection hole for SG-07 | **Recommended** for SG-07 at ASIL B; LFM benefit for the relay |
 | DC-04 | Fault reaction: make relay malfunction, register divergence, ECC double error, PVD, interrupt-rate faults and watchdog-loop faults permanent faults leading to SILENT (relay released, TX off) | GAP-08 | Firmware | Changes `PERMANENT_FAULTS` and adds a reaction in `fault_occurred()`; availability impact to be evaluated (false trips) | **Do (G3)** |
@@ -205,7 +205,7 @@ silicon (low cost) or add-ons in the harness path (LionDriver-controlled hardwar
 | DC-06 | Configure MPU (stack guard, read-only code, protected safety data) | GAP-08/11, HWSR-507 | Firmware | Moderate code; impacts all panda drivers; MISRA/ref tests | **Do** |
 | DC-07 | Set BOR level and enable PVD with safe-state reaction; set RDP/WRP for release devices | HWSR-505/505a, GAP-24, GAP-38 | Option bytes + firmware | RDP level changes are partly irreversible; production/provisioning procedure in [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) | **Do** with care (RDP level 2 is permanent) |
 | DC-08 | Replace `Default_Handler` loop and `assert_fatal` hang with a safe-state-then-reset routine | HWSR-502b | Firmware | Small | **Do** |
-| DC-09 | Gate debug relay command `0xc5` with `ALLOW_DEBUG` | GAP-09, HWSR-506c | Firmware | Trivial | **Do** |
+| DC-09 | Gate debug relay command `0xc5` with `ALLOW_DEBUG` | GAP-09, HWSR-506c | Firmware | Trivial | **Do**. **2026-10-12: partial:** refused in a car mode in the reference build (`reference_lock.h`, panda `9f60e17`); not gated by `ALLOW_DEBUG`, still operable in SILENT/NOOUTPUT and in other builds |
 | DC-10 | Monitor MCU DTS and Vin in firmware with safe-state thresholds | HWSR-505b, -509 | Firmware | Small; thresholds need datasheet values | Do |
 
 ## 7. Hardware architecture evaluation against ISO 26262-5 §7 expectations

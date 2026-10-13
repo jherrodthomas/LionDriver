@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-H-06 Hardware integration and verification specification and report |
 | Standard reference | ISO 26262-5:2018 §10 (hardware integration and verification); ISO 26262-8:2018 §9 (verification), §13 (qualification tests of HW components); ASPICE 4.0 HWE.3, HWE.4 |
-| Version | 0.1 |
+| Version | 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section is a template — **Not yet executed** |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1 minimum, external reviewer, T-09) |
 | Approver | TBD (per [WP-M-02](../01-management/WP-M-02-safety-plan.md)) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12; panda `b790fca`) |
 
 ## 1. Purpose and scope
 
@@ -28,7 +28,9 @@ manufacturer (environmental, EMC, durability) are covered by supplier evidence t
 
 No test in this document has been executed. The upstream panda HITL tests
 (`panda/tests/hitl/test_*.py`) ran on comma's device farm, which the fork cannot use (GAP-30);
-they are reused as a starting point where noted, but their past results are not evidence.
+they are reused as a starting point where noted, but their past results are not evidence. The
+LionDriver HIL script for the watchdog (`panda/tests/hitl/test_10_hw_watchdog.py`, panda `b790fca`)
+is implemented and has not been run (bench not built, GAP-30; [HIL bench plan](../05-software/hil-bench/README.md)).
 
 ## 2. Test environment: HIL bench (decision D-04)
 
@@ -94,8 +96,8 @@ safe state on the scope/CAN log.
 | VS-HW-03 | Relay failure detection — stuck released | HWSR-506a, -506b; FSR-01.11 | Car mode, engaged, stock camera traffic on bus 2 | Bridge the relay contacts in the stock position (or open coil) | Relay malfunction detected and all actuation TX blocked; **today**: within 1–2 s (`opendbc_repo/opendbc/safety/safety.h:372-380`); **target**: ≤ 0.3 s (HWSR-506a, after DC-03). Reported to SoC; host immediate-disable | T-HIL, FI | DC-03 for target |
 | VS-HW-04 | Relay failure detection — stuck intercepting | HWSR-506a, -702; SG-07 | SILENT mode, camera PCS traffic on bus 2 | Force relay energised (coil supplied externally) while firmware commands release | Mismatch detected and reported within ≤ 0.3 s. **Expected today: not detected** (GAP-12) | T-HIL, FI | DC-03 |
 | VS-HW-05 | Debug relay command gated | HWSR-506c | Release build | Send `0xc5` | Relay state unchanged; command rejected | T-HIL | DC-09 |
-| VS-HW-06 | Watchdog reset behaviour (after fix) | HWSR-501, -501a–c, -502b; FSR-01.09 | Fault-injection build, car mode, relay energised, engaged | Inject: (a) infinite loop in main context; (b) infinite loop in tick ISR; (c) interrupts disabled; (d) too-early servicing (window); (e) stop servicing from the SoC side (must have no effect on IWDG) | (a)–(d): MCU reset; safe state reached within ≤ 0.2 s total (≤ 0.1 s detection + ≤ 0.1 s reaction, FSC §8); reset cause = IWDG reported after restart. (e): no reset, heartbeat path handles it | T-HIL, FI | DC-01 |
-| VS-HW-07 | Watchdog cannot be disabled | HWSR-501c | Release build | Attempt every host command path, stop-mode entry, firmware update path | IWDG remains active whenever the relay can be driven; firmware update completes without spurious reset | T-HIL | DC-01 |
+| VS-HW-06 | Watchdog reset behaviour (after fix) | HWSR-501, -501a–c, -502b; FSR-01.09 | Fault-injection build, car mode, relay energised, engaged | Inject: (a) infinite loop in main context; (b) infinite loop in tick ISR; (c) interrupts disabled; (d) too-early servicing (window); (e) stop servicing from the SoC side (must have no effect on IWDG) | (a)–(d): MCU reset; safe state reached within ≤ 0.2 s total (≤ 0.1 s detection + ≤ 0.1 s reaction, FSC §8); reset cause = IWDG reported after restart. (e): no reset, heartbeat path handles it | T-HIL, FI | DC-01 (implemented 2026-10-12, panda `9f60e17`, not verified on hardware). Script: `panda/tests/hitl/test_10_hw_watchdog.py` implemented, not run, covers (a)–(d) plus a safety-task hang; (e) not covered |
+| VS-HW-07 | Watchdog cannot be disabled | HWSR-501c | Release build | Attempt every host command path, stop-mode entry, firmware update path | IWDG remains active whenever the relay can be driven; firmware update completes without spurious reset | T-HIL | DC-01 (implemented 2026-10-12, not verified on hardware); no script yet |
 | VS-HW-08 | Exception and fatal-assert paths | HWSR-502b | Fault-injection build | Trigger HardFault, NMI, MemManage, unused vector, `assert_fatal` | Each ends in reset or safe state; never a hang with relay energised | T-HIL, FI | DC-08 |
 | VS-HW-09 | Power brown-out and dropouts | HWSR-505, -505a, -502, -502a | Car mode, engaged | Programmable supply: (a) dropouts 1 ms–1 s to 0 V; (b) slow ramp down to 0 V and back; (c) plateau at levels between nominal and BOR; (d) cranking-type profile (ISO 16750-2 style, informative) | No actuation frame outside the envelope at any point; relay released or device operating correctly; after recovery the device starts in SILENT and needs re-engagement; PVD/BOR behaviour recorded | T-HIL | DC-07 for PVD |
 | VS-HW-10 | Supply over-voltage (non-destructive) | HWSR-505b | — | Raise input within the rated range (rating from UK-08) | Reported; safe state above threshold (after DC-10) | T-HIL | DC-10 |
@@ -115,7 +117,7 @@ safe state on the scope/CAN log.
 
 1. Bench characterization (no device): CAN interface timing, supply profiles, scope triggers.
 2. Device + harness, release firmware, no faults: VS-HW-01, -13, -14, -19, -21 (baseline behaviour).
-3. Fault-injection firmware: VS-HW-06…-08, -17, -18, -20 (only after DC-01, DC-04…DC-08 exist).
+3. Fault-injection firmware: VS-HW-06…-08, -17, -18, -20 (only after the related DC exists: DC-01 implemented 2026-10-12; DC-04…DC-08 open).
 4. Hardware fault injection on spare units: VS-HW-03, -04, -09…-12, -15, -16.
 5. Regression subset on every panda firmware change touching `panda/board/**` (selection rule in
    [WP-P-02](../07-supporting/WP-P-02-change-management.md)).
@@ -164,8 +166,8 @@ safe state on the scope/CAN log.
 | VS-HW-03 | — | — | — | — | **Not yet executed** | — | — | — |
 | VS-HW-04 | — | — | — | — | **Not yet executed** | — | — | — |
 | VS-HW-05 | — | — | — | — | **Not yet executed** | — | — | — |
-| VS-HW-06 | — | — | — | — | **Not yet executed** (blocked by DC-01) | — | — | — |
-| VS-HW-07 | — | — | — | — | **Not yet executed** (blocked by DC-01) | — | — | — |
+| VS-HW-06 | — | — | — | — | **Not yet executed** (bench not built, GAP-30) | — | — | — |
+| VS-HW-07 | — | — | — | — | **Not yet executed** (bench not built, GAP-30) | — | — | — |
 | VS-HW-08 | — | — | — | — | **Not yet executed** | — | — | — |
 | VS-HW-09 | — | — | — | — | **Not yet executed** | — | — | — |
 | VS-HW-10 | — | — | — | — | **Not yet executed** | — | — | — |

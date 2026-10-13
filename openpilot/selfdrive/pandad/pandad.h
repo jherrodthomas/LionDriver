@@ -23,6 +23,7 @@ private:
   void updateMultiplexingMode();
   std::string fetchCarParams();
   void setSafetyMode(const std::string &params_string);
+  bool panda_reference_build();
 
   bool initialized_ = false;
   bool log_once_ = false;

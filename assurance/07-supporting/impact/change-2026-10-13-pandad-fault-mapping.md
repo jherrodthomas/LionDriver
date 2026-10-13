@@ -7,7 +7,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Analysis | IA-2026-<nn> (assign on review) |
 | Status | **In review: unit test passes, `scons` builds, process replay unchanged in CI; HIL not run; not reviewed independently** |
 | Change requests | This LionDriver change |
-| Finding | SW FMEA SWF-025 / action SWF-ACT-025 (`assurance/08-analyses/fmea/analyses/sw-fmea.yaml`, on branch `claude/charming-knuth-b8nnqh`, not yet on `liondriver-dev`) |
+| Finding | SW FMEA SWF-025 / action SWF-ACT-025 ([`sw-fmea.yaml`](../../08-analyses/fmea/analyses/sw-fmea.yaml)); SWF-ACT-025 set to `in_progress` with evidence, `completed` on merge |
 | Range | LionDriver `682f184..` this change |
 | Reference configuration affected | Yes (all builds) |
 | Author / reviewer (independence) | Claude (AI-assisted draft) / TBD; an AI draft is not a review (WP-M-06) |
@@ -43,5 +43,5 @@ The schema change only appends an enumerant, so old logs read unchanged and old 
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Set SWF-ACT-025 to done and rate SWF-025 detection with the new test once `sw-fmea.yaml` is on `liondriver-dev` | FMEA merge |
+| OI-1 | Set SWF-ACT-025 to `completed` and re-rate SWF-025.C1 detection with the new test (SWF-ACT-024 covers the fault mapping part of the host tests) | Merge of this change |
 | OI-2 | TSR-615: react to panda faults other than `relayMalfunction` (unchanged by this change) | Later change |

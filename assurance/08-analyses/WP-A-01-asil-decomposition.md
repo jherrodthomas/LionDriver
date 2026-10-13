@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-A-01 ASIL decomposition rationale |
 | Standard reference | ISO 26262-9:2018 §5 (requirements decomposition with respect to ASIL tailoring); ISO 26262-9 §7 (DFA, as the independence evidence §5 relies on); ISO 26262-3 §7 (FSC, where decomposition would be applied) |
-| Version | 0.1 |
+| Version | 0.2 (status update 2026-10-12: GAP-06/-07 partly closed, envelope configuration locked in the reference build; no change to the decomposition rationale). History: 0.1 |
 | Status | Draft |
 | ASIL / scope | SG-01 (ASIL C ⚠, D if AOU-01/02 fail); SG-02…SG-07 (ASIL B) checked for decomposition need |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review of any applied decomposition by an independent assessor (I3) per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`). Analysis originally at `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 ## 1. Purpose and scope
 
@@ -41,7 +41,7 @@ ISO 26262-9 §5 allows decomposition only between sufficiently independent eleme
 
 | SG | ASIL | Primary implementation | Can a single element carry the ASIL? | Decomposition needed? |
 |---|---|---|---|---|
-| SG-01 | C ⚠ (D if AOU-01/02 fail) | E-03 envelope: torque magnitude, rate, measured tracking, engagement gating (FSR-01.01…01.12) | Not today (GAP-01, -06, -07, -08, -11). After hardening, ASIL B is plausible; ASIL C on a COTS single-channel MCU with shared PCB/power is unlikely (WP-M-01 §9) | **Not if** C1 is shown (SG-01 → B). **Yes (fallback)** if C1 fails and option (a) is not reachable |
+| SG-01 | C ⚠ (D if AOU-01/02 fail) | E-03 envelope: torque magnitude, rate, measured tracking, engagement gating (FSR-01.01…01.12) | Not today (GAP-01, -06, -07, -08, -11; GAP-06/-07 partly closed 2026-10-12, not verified on hardware). After hardening, ASIL B is plausible; ASIL C on a COTS single-channel MCU with shared PCB/power is unlikely (WP-M-01 §9) | **Not if** C1 is shown (SG-01 → B). **Yes (fallback)** if C1 fails and option (a) is not reachable |
 | SG-02 | B | E-03 backstop (FSR-01.07 stale-command removal, FSR-02.05 SoC-independent buzzer) + QM SoC warning | Yes, after hardening | No |
 | SG-03 | B ⚠ (C if AOU-05 fails) | E-03 accel bound, inactive value, gas block (FSR-03.01…03.05) | Yes, after hardening and jerk limit (GAP-04) | No, unless AOU-05 fails. Then the same fallback reasoning as SG-01 applies (see OI-3) |
 | SG-04 | B ⚠ (C if AOU-05 fails) | E-03 decel bound and onset-rate limit (FSR-04.01…04.04) | Yes, after hardening | As SG-03 |
@@ -60,7 +60,7 @@ Observation: the ⚠ ratings mean that a failed AoU verification can raise SG-03
 | DEC-01 | C(C) = B(C) + A(C) | E-03 envelope on the panda STM32H7 (TSR-101…TSR-110, TSR-301…TSR-311, TSR-401…TSR-413, TSR-501…TSR-516) | **New element E-07 "independent actuation monitor" (IAM)**: a second MCU on the harness side that observes bus 0 TX/RX and can de-energise the intercept relay (stock path) | FSR-01.01 (magnitude), FSR-01.03 (measured tracking), FSR-01.04 (no torque when not engaged), FSR-01.05 (engagement only with PCM cruise active) | **Preferred fallback.** Both elements inside LionDriver's control; independence can be designed in; safe state of E-07 (relay open) is de-energise-to-safe |
 | DEC-02 | C(C) = B(C) + A(C) | E-03 envelope | Second software channel on the **same** STM32H7 (diverse re-implementation of the limit checks) | Same as DEC-01 | **Rejected.** Shares clock, power, memory, CAN peripheral, compiler and the SoC-controlled reset/boot pins (GAP-38). The DFA cannot show sufficient independence on one die without MPU partitioning or lockstep (GAP-11). Kept only as a diagnostic-coverage measure inside E-03, not as decomposition |
 | DEC-03 | C(C) = B(C) + A(C) | E-03 envelope | Toyota EPS internal LKA torque limitation and timeout (EXT-EPS, AOU-01R) | FSR-01.01, FSR-01.13 | **Not recommended** (§5) |
-| DEC-04 | C(C) = A(C) + B(C) | QM-to-ASIL-A upgraded SoC monitor (e.g. controlsd plausibility) | E-03 envelope at B | — | **Rejected.** The SoC is Linux/Python with no partitioning or WCET (GAP-23), configures the envelope (GAP-09) and controls its boot pins (GAP-38). It cannot be shown independent of the failure it would monitor (it produces the command) |
+| DEC-04 | C(C) = A(C) + B(C) | QM-to-ASIL-A upgraded SoC monitor (e.g. controlsd plausibility) | E-03 envelope at B | — | **Rejected.** The SoC is Linux/Python with no partitioning or WCET (GAP-23), could configure the envelope (GAP-09; locked in the reference build since 2026-10-12) and controls its boot pins (GAP-38). It cannot be shown independent of the failure it would monitor (it produces the command) |
 
 ### 4.2 DEC-01 element E-07 functional outline (only if activated)
 

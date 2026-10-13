@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="420" viewBox="0 0 1000 420" role="img" aria-labelledby="life-t life-d">
   <title id="life-t">LionDriver assurance lifecycle areas</title>
-  <desc id="life-d">Safety Management: In Progress (11 evidence items, 10 drafted, 1 missing, 0 accepted); Hazard Analysis: In Progress (6 evidence items, 6 drafted, 0 missing, 0 accepted); Safety Concepts: In Progress (7 evidence items, 7 drafted, 0 missing, 0 accepted); Technical Implementation: In Progress (5 evidence items, 5 drafted, 0 missing, 0 accepted); Verification and Validation: In Progress (15 evidence items, 4 drafted, 11 missing, 0 accepted); Safety Case and Review: In Progress (5 evidence items, 2 drafted, 3 missing, 0 accepted)</desc>
+  <desc id="life-d">Safety Management: In Progress (11 evidence items, 10 drafted, 1 missing, 0 accepted); Hazard Analysis: In Progress (6 evidence items, 6 drafted, 0 missing, 0 accepted); Safety Concepts: In Progress (7 evidence items, 7 drafted, 0 missing, 0 accepted); Technical Implementation: In Progress (5 evidence items, 5 drafted, 0 missing, 0 accepted); Verification and Validation: In Progress (16 evidence items, 5 drafted, 11 missing, 0 accepted); Safety Case and Review: In Progress (5 evidence items, 2 drafted, 3 missing, 0 accepted)</desc>
   <defs>
     <linearGradient id="life-bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#0E1A31"/><stop offset="1" stop-color="#070D1A"/>
@@ -72,11 +72,11 @@
     <defs><clipPath id="bar374364"><rect x="374" y="364" width="252" height="8" rx="4.0"/></clipPath></defs>
     <g clip-path="url(#bar374364)">
     <rect x="374" y="364" width="252" height="8" rx="4.0" fill="#070D1A" stroke="#24345A"/>
-    <rect x="374.0" y="364" width="67.2" height="8" fill="#4EA8FF"/>
-    <rect x="441.2" y="364" width="184.8" height="8" fill="#5F6E8C"/>
+    <rect x="374.0" y="364" width="78.8" height="8" fill="#4EA8FF"/>
+    <rect x="452.8" y="364" width="173.2" height="8" fill="#5F6E8C"/>
     </g>
-    <text x="374" y="390" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="start">4 drafted · 11 missing</text>
-    <text x="626" y="390" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="end">0 of 15 accepted</text>
+    <text x="374" y="390" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="start">5 drafted · 11 missing</text>
+    <text x="626" y="390" font-size="13" font-weight="400" fill="#93A1BC" text-anchor="end">0 of 16 accepted</text>
     <rect x="664" y="270" width="296" height="130" rx="14" fill="#111E37" stroke="#24345A"/>
     <text x="686" y="306" font-size="15" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="1">06</text>
     <text x="720" y="306" font-size="18" font-weight="600" fill="#F4F6FA" text-anchor="start">Safety Case and Review</text>

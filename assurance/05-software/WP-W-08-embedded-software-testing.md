@@ -4,19 +4,19 @@
 |---|---|
 | Work product | WP-W-08 Testing of the embedded software (software qualification, HIL) |
 | Standard reference | ISO 26262-6:2018 §11 (testing of the embedded software: test environments, methods, test-case derivation); ISO 26262-8:2018 §9; ASPICE 4.0 SWE.6 |
-| Version | 0.1 |
+| Version | 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section **Not yet executed** |
 | ASIL / scope | Embedded envelope software on the STM32H7 (E-03): B‡ (ASIL C until SG-01 re-rating) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`) |
 
 ## 1. Purpose and scope
 
 This document specifies tests that show the embedded software, as built for release and running on the target MCU in a representative environment, meets the SWSRs of [WP-W-02](WP-W-02-software-safety-requirements.md). It is the software qualification step after integration ([WP-W-07](WP-W-07-software-integration-verification.md)) and before system integration ([WP-S-08](../03-system/WP-S-08-system-integration-test.md)). It also covers the SPI integrity tests that [WP-H-06](../04-hardware/WP-H-06-hardware-integration-verification.md) assigns here for HWSR-401.
 
-**No test in this document has been executed.** LionDriver has no HIL bench (GAP-30); building one is decision D-04 ([WP-M-01](../01-management/WP-M-01-assurance-strategy.md)).
+**No test in this document has been executed.** Five cases have HIL scripts in the panda pin `b790fca` (§5), none of them run. LionDriver has no HIL bench (GAP-30); building one is decision D-04 ([WP-M-01](../01-management/WP-M-01-assurance-strategy.md)).
 
 ## 2. Test strategy
 
@@ -55,7 +55,7 @@ The staged build plan, parts list and the first bench test (hardware watchdog) a
 
 ## 5. Test specification (VS-SWQ)
 
-Status of all: Specified, not implemented.
+Status (2026-10-12): specified, not implemented, except five cases with HIL scripts in panda `b790fca` that are implemented and **not run** (bench not built, GAP-30): VS-SWQ-08 → `panda/tests/hitl/test_12_rx_timeout.py`, VS-SWQ-13 → `test_13_eps_fault.py`, VS-SWQ-14 → `test_10_hw_watchdog.py`, VS-SWQ-17 → `test_11_reference_lock.py`, VS-SWQ-25 (518 part) → `test_14_tx_rate.py`. `test_11`, `test_13` and `test_14` need a reference build; `test_10` needs a fault-injection debug build ([hil-bench/](hil-bench/README.md) §5.5, §7).
 
 | ID | Objective | SWSRs | Stimulus | Pass criterion |
 |---|---|---|---|---|
@@ -66,24 +66,25 @@ Status of all: Specified, not implemented.
 | VS-SWQ-05 | Longitudinal limits and fields | 201–207 | Accel boundaries, steps, field variations, gas pressed | As per SWSRs; jerk and field checks expected to fail today |
 | VS-SWQ-06 | Engagement and brake/gas | 301–306, 309, 311 | PCM edges, brake at standstill/moving, gas | Authority transitions per WP-W-05 §5.2 within the RX frame |
 | VS-SWQ-07 | Driver override and heartbeat mismatch | 304, 304a, 307 | Plant driver torque; heartbeat `engaged=0` | Revocation timing per SWSRs (0.3 s for 307; expected fail today: ≈3 s) |
-| VS-SWQ-08 | RX timeouts | 401, 401a, 406 | Remove each RX message at random phase | Detection ≤ 5 periods + task period; today 1–2 s (expected fail) |
+| VS-SWQ-08 | RX timeouts | 401, 401a, 406 | Remove each RX message at random phase | Detection ≤ 5 periods + task period: implemented (opendbc `7993399`), ≤ 5 nominal periods + 10 ms, worst case ≤ 0.16 s (`0x1D2`). HIL `test_12_rx_timeout.py`, not run |
 | VS-SWQ-09 | RX plausibility | 402–405 | Corrupted checksums, 1.5× rate, frozen payload, disagreeing cross-signals | Each detected within its bound |
-| VS-SWQ-10 | Heartbeat loss, SILENT, siren | 407, 409, 510, 516 | Stop heartbeat with ignition on/off; frozen loop counter | Revocation ≤ 0.3 s; SILENT ≤ 2 s; siren ≤ 0.5 s; today 3–5 s (expected fail) |
+| VS-SWQ-10 | Heartbeat loss, SILENT, siren | 407, 409, 510, 516 | Stop heartbeat with ignition on/off; frozen loop counter | Revocation ≤ 0.3 s; SILENT ≤ 2 s; siren ≤ 0.5 s. Revocation at 0.3 s implemented (`heartbeat_monitor.h`); SILENT and siren after 3–5 s unchanged (expected fail) |
 | VS-SWQ-11 | Command stall | 408, 109a | Stop `0x2E4`/`0x343` with heartbeat alive | Revocation 50/100 ms; zero frames |
 | VS-SWQ-12 | SPI integrity and bounds on target (also HWSR-401) | 410, 410a, 410b, 411, 412, 412a, 412b, 413 | Corrupted, replayed, reordered, oversized transfers via fault-injecting SPI host | No effect from corrupted transfer; no memory corruption (stack/guard canaries via SWD); error burst revokes |
-| VS-SWQ-13 | EPS status monitoring | 110 | Plant reports LKA_STATE fault codes; `0x262` loss | Lateral revocation within one frame / timeout |
-| VS-SWQ-14 | Watchdog and hang | 501, 501b, 502a | Halt main/tick/comms ISR via SWD; infinite loop in a handler; `assert_fatal` | MCU reset ≤ 0.1 s; relay released; CAN TX silent |
+| VS-SWQ-13 | EPS status monitoring | 110 | Plant reports LKA_STATE fault codes; `0x262` loss | Lateral revocation within one frame / timeout. Reference build: HIL `test_13_eps_fault.py`, not run |
+| VS-SWQ-14 | Watchdog and hang | 501, 501b, 502a | Halt main/tick/comms ISR via SWD; infinite loop in a handler; `assert_fatal` | MCU reset ≤ 0.1 s; relay released; CAN TX silent. HIL `test_10_hw_watchdog.py` (fault-injection debug build), not run |
 | VS-SWQ-15 | Fault reaction | 502, 502b, 503a, 503b, 504, 505, 508, 509 | Interrupt storm, register divergence, ECC event (if injectable), clock drift, supply ramp, bus-off, temperature | SS-S ≤ 0.1 s after detection, latch class per WP-W-05 §6.1 |
 | VS-SWQ-16 | Start-up tests and image integrity | 503, 515, 502c | Corrupted image byte; failing relay readback; power-up observation of relay and transceivers | Relay never driven on failure; outputs safe from reset |
-| VS-SWQ-17 | Configuration lock and request gating | 511a, 512, 512a, 513, 514 | All control requests in TOYOTA mode; non-reference `0xdc`; `0xd6` build type | Rejected as specified; build type "release" |
+| VS-SWQ-17 | Configuration lock and request gating | 511a, 512, 512a, 513, 514 | All control requests in TOYOTA mode; non-reference `0xdc`; `0xd6` build type | Rejected as specified; build type "release". Reference build: HIL `test_11_reference_lock.py`, not run |
 | VS-SWQ-18 | Bootstub signature | 511 | Tampered, debug-signed, truncated images | Not executed; soft flasher entered |
 | VS-SWQ-19 | Relay readback, orientation, relay latch | 506, 506a, 506b, 701, 701a, 706, 710 | Relay stuck open/closed (simulated); harness flip/unplug while driven; `0xdc` after latch | Detection ≤ 0.3 s; SS-S; latch persists |
 | VS-SWQ-20 | Host reaction to envelope reports (with `pandad` and `selfdrived`) | 307h, 514h, 601, 606, 615, 619, 620 | Each envelope reason code and flag | Immediate disable ≤ 0.2 s, take-over request ≤ 1 s |
 | VS-SWQ-21 | Forwarding and PCS message rules | 704, 705, 707 | Camera-side traffic at full load; SoC sends PCS/DSU IDs | Forwarding latency ≤ bound (TSR-707); PCS/DSU IDs not transmitted from SoC |
 | VS-SWQ-22 | Relay malfunction detection by traffic | 710 | `check_relay` IDs on car side | Latch and TX/forward block |
 | VS-SWQ-23 | Resource usage and timing on target | WP-W-03 §7; 401a | Worst-case bus + SPI load | Stack margin ≥ 20 %; safety task period ≤ 20 ms; hook WCET and TX latency within WP-S-04 budgets |
-| VS-SWQ-25 | TX read-back, per-ID TX rate, priority scheme | 517, 518, 519 | Corruption between TX hook and bus (SWD); SoC TX at 2× rate; worst-case IRQ load | Mismatch → SS-S ≤ 2 frames; excess rejected and revoked; safety-task latency within budget |
+| VS-SWQ-25 | TX read-back, per-ID TX rate, priority scheme | 517, 518, 519 | Corruption between TX hook and bus (SWD); SoC TX at 2× rate; worst-case IRQ load | Mismatch → SS-S ≤ 2 frames; excess rejected and revoked; safety-task latency within budget. 518 (reference build): HIL `test_14_tx_rate.py`, not run; 517: not implemented |
 | VS-SWQ-24 | Endurance replay | all envelope | ≥ 10 h of fork-owned Corolla logs at real time, nominal | No false revocation, no watchdog reset, no fault flag |
+| VS-SWQ-26 | EPS-fault siren | 516(b) | EPS fault (`LKA_STATE` fault code) persisting 1 s while engaged | Siren ≥ 3 s (TSR-516(b)). Host test `panda/tests/eps_fault_siren`; no HIL script (the siren state is not in the health packet: audible or scope check) |
 
 ## 6. SWSR coverage
 
@@ -94,7 +95,7 @@ Status of all: Specified, not implemented.
 | 301–311 | 06, 07 |
 | 401–406 | 08, 09 |
 | 407–413 | 10–12 |
-| 501–519 | 14–18, 23, 25, 10 (510, 516) |
+| 501–519 | 14–18, 23, 25, 26, 10 (510, 516) |
 | 701–710 | 19, 21, 22 |
 | Host (SWSR-6xx, h-suffix) | 20 (others by host tests and WP-S-08) |
 
@@ -113,7 +114,7 @@ SWSRs whose only verification is review or analysis (e.g. SWSR-102a, 309, 605a) 
 
 | VS ID | Cases | Passed | Failed | Not run | Worst-case timing | Result | Evidence |
 |---|---|---|---|---|---|---|---|
-| VS-SWQ-01 … VS-SWQ-25 | — | — | — | — | — | Not yet executed | — |
+| VS-SWQ-01 … VS-SWQ-26 | — | — | — | — | — | Not yet executed | — |
 
 | Deviations from specification | Not yet executed |
 |---|---|

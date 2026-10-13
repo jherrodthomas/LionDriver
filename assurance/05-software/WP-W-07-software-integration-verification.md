@@ -4,19 +4,19 @@
 |---|---|
 | Work product | WP-W-07 Software integration and verification specification and report |
 | Standard reference | ISO 26262-6:2018 §10 (software integration and verification: integration steps, methods, test-case derivation, coverage at architectural level, test environment); ISO 26262-8:2018 §9; ASPICE 4.0 SWE.5 |
-| Version | 0.1 |
+| Version | 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section **Not yet executed** |
 | ASIL / scope | Envelope software (E-03): B‡ (ASIL C until SG-01 re-rating); host↔panda software interface: QM (B-sup) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`) |
 
 ## 1. Purpose and scope
 
 This document specifies how the software units of [WP-W-05](WP-W-05-software-unit-design.md) are integrated into the components and the embedded software of [WP-W-03](WP-W-03-software-architecture.md), and how the integrated software is verified against the architecture and the SWSRs of [WP-W-02](WP-W-02-software-safety-requirements.md). It ends where system integration of [WP-S-08](../03-system/WP-S-08-system-integration-test.md) starts (S-08 levels I-1…I-4). Embedded software testing on the target in a representative environment is in [WP-W-08](WP-W-08-embedded-software-testing.md).
 
-**No LionDriver integration test has been executed.** Upstream CI and comma's device farm results are not LionDriver evidence (GAP-30, GAP-39).
+**No LionDriver integration test has been executed as recorded evidence.** The SWI-1 host tests named in §5 run in LionDriver CI (`.github/workflows/safety.yaml`) from 2026-10-12, but no CI run has yet been recorded as evidence; the LionDriver HIL scripts for SWI-3 (`panda/tests/hitl/test_10…14`) are implemented and have not been run (bench not built, GAP-30). Upstream CI and comma's device farm results are not LionDriver evidence (GAP-30, GAP-39).
 
 ## 2. Integration strategy
 
@@ -54,33 +54,34 @@ Architectural coverage target: **100 % function coverage** of the E-03 units in 
 | Safety replay | `opendbc_repo/opendbc/safety/tests/safety_replay/replay_drive.py` | SWI-1 replay (VS-SWI-18) | Needs fork-owned logs (WP-W-06 OI-9) |
 | `libpanda` harness | `panda/tests/libpanda/{panda.c, SConscript, libpanda_py.py}`; `panda/tests/usbprotocol/test_comms.py` (5 tests) | SWI-2 | Covers packing only |
 | panda HITL tests | `panda/tests/hitl/test_1…9_*.py` (e.g. `test_5_spi.py`: bad header/checksum; `test_6_safety.py`: NOOUTPUT only; `test_4_can_loopback.py`) | SWI-3 starting point | Need comma jigs and Jenkins (GAP-30) |
+| LionDriver HIL tests | `panda/tests/hitl/test_10_hw_watchdog.py`, `test_11_reference_lock.py`, `test_12_rx_timeout.py`, `test_13_eps_fault.py`, `test_14_tx_rate.py` (panda `b790fca`); jungle plays the car on bus 0 ([HIL bench plan](hil-bench/README.md)) | SWI-3 for VS-SWI-04, 10, 13, 14, 19 | Implemented, **not run** (bench not built, GAP-30); `test_11`, `13`, `14` need a reference build (`REFERENCE_BUILD=1`) |
 | Process replay | `openpilot/selfdrive/test/process_replay/{process_replay.py, test_processes.py}` (card, controlsd, selfdrived, …) | SWI-4 host-side regression | Reference logs from comma (D-03) |
 | opendbc car tests | `opendbc_repo/opendbc/car/tests/test_models.py` (`test_panda_safety_carstate`) | host vs envelope decoding | Route data from comma |
 
 ## 5. Integration test specification (VS-SWI)
 
-Status of all: Specified, not implemented. Env: SWI step.
+Status (2026-10-12): specified, not implemented, unless the row says otherwise. Host tests named below run in LionDriver CI but no run is recorded as evidence yet; HIL scripts named below are implemented and not run. Env: SWI step.
 
 | ID | Objective | SWSRs | Env | Method / injected condition | Pass criterion |
 |---|---|---|---|---|---|
 | VS-SWI-01 | Actuation path across units: SoC frame → TX hook → limits → accept/reject; lateral and longitudinal; substitute zero-torque frame after rejection | 101–109, 201–207 | SWI-1, SWI-2 | Sequences at limit ± 1 through `can_send`; check queue content | Accepted frames unchanged in queue; rejected frames not in queue; substitute frame present (once implemented); authority revoked on violation |
 | VS-SWI-02 | Engagement chain: RX frames (`0x1D2`, `0x226`, `0xAA`, `0x260`) → authority → TX acceptance | 301–306, 311 | SWI-1 | All transitions of WP-W-05 §5.2 driven through RX hook, TX checked after each | Every transition observable in TX acceptance in the next call |
 | VS-SWI-03 | RX check integration: forwarding before RX validation, checksum failure, quality flag, whitelisting | 402, 406, 704 | SWI-2, SWI-3 | Corrupted frames on bus 0 and 2 | Corrupted frame forwarded per rules but no authority; reason reported |
-| VS-SWI-04 | RX timeout through the periodic task | 401, 401a, 306 | SWI-1 (timer stub), SWI-3 | Stop each RX message at random phase | Detection ≤ 5 periods + task period; today expected to **fail** |
-| VS-SWI-05 | Heartbeat path `0xf3` → tick/safety task | 307, 407, 409, 510 | SWI-2, SWI-3 | Stop heartbeat; send `engaged=0`; frozen loop counter | Revocation ≤ 0.3 s; SILENT ≤ 2 s; today expected to fail |
+| VS-SWI-04 | RX timeout through the periodic task | 401, 401a, 306 | SWI-1 (timer stub), SWI-3 | Stop each RX message at random phase | Detection ≤ 5 periods + task period. SWI-1: implemented, `test_rx_timeout_5_periods`, `test_rx_timeout_5_periods_each_msg`, `test_no_engagement_with_invalid_rx_checks` (opendbc `7993399`); SWI-3: HIL `test_12_rx_timeout.py`, not run |
+| VS-SWI-05 | Heartbeat path `0xf3` → tick/safety task | 307, 407, 409, 510 | SWI-2, SWI-3 | Stop heartbeat; send `engaged=0`; frozen loop counter | Revocation ≤ 0.3 s; SILENT ≤ 2 s. Revocation at 0.3 s implemented (`heartbeat_monitor.h`, host test `panda/tests/heartbeat_monitor`, all builds); SILENT timing (3 s / 5 s) unchanged and still expected to **fail** |
 | VS-SWI-06 | Command freshness | 408, 109a | SWI-3 | Stop `0x2E4`/`0x343` while heartbeat continues | Revocation at 50/100 ms; zero frames emitted |
 | VS-SWI-07 | SPI corruption | 410, 410a, 410b, 413 | SWI-2, SWI-3 | Bit flips in header, data, CAN packets; replayed, dropped and reordered transfers; DMA error flags | Every corrupted transfer NACKed/discarded; no frame from a corrupted transfer reaches the TX hook; error burst revokes |
 | VS-SWI-08 | SPI length and index bounds (fuzz) | 412, 412a, 412b | SWI-2, SWI-3 | Header lengths 0…65535; `0xe8` param 0…65535; random CAN streams | No write outside buffers (canary/guard check on target, ASan on host); NACK for out-of-range |
 | VS-SWI-09 | Forwarding and relay malfunction interplay | 704, 705, 707, 710, 506a | SWI-1, SWI-3 | `check_relay` messages on bus 0 before/after 1 s; `0xdc` after latch | Latch set; TX and forwarding blocked; latch survives mode change (target) |
-| VS-SWI-10 | Mode-set sequence SILENT → NOOUTPUT → ELM327 → TOYOTA/73, and lock | 311, 512, 104a | SWI-2, SWI-3 | Valid sequence; invalid modes/params; requests after TOYOTA | Valid sequence reaches TOYOTA with state reset; others rejected and reported |
+| VS-SWI-10 | Mode-set sequence SILENT → NOOUTPUT → ELM327 → TOYOTA/73, and lock | 311, 512, 104a | SWI-2, SWI-3 | Valid sequence; invalid modes/params; requests after TOYOTA | Valid sequence reaches TOYOTA with state reset; others rejected and reported. Reference build: lock implemented (`reference_lock.h`), host test `panda/tests/reference_lock`, HIL `test_11_reference_lock.py` not run; default build: no lock |
 | VS-SWI-11 | Queue overflow | 707, 502b | SWI-2, SWI-3 | Flood `sendcan`; SoC stops reading `rx_q`; camera-side burst | Overflow counted and treated as fault per WP-W-05 §6.1; forwarded PCS frames not starved (measure) |
 | VS-SWI-12 | ISR load and priority scheme | 401a, 501, 502b, 519 | SWI-3 | CAN at 100 % bus load on 3 buses + max SPI rate | Safety task period held; interrupt-rate fault → SS-S; no watchdog reset under nominal worst case |
 | VS-SWI-13 | Fault reaction integration | 502, 502a, 503a, 516 | SWI-3 | Trigger each fault source of WP-W-05 §6.1 (debug build hooks) | SS-S ≤ 0.1 s; siren per SWSR-516 |
-| VS-SWI-14 | Control-request gating in car mode | 511a, 513 | SWI-2, SWI-3 | Every request of WP-W-05 UN-21 table in TOYOTA mode | Gated requests have no effect |
+| VS-SWI-14 | Control-request gating in car mode | 511a, 513 | SWI-2, SWI-3 | Every request of WP-W-05 UN-21 table in TOYOTA mode | Gated requests have no effect. Reference build: `reference_lock.h` (`panda/tests/reference_lock`; HIL `test_11`, not run); default build: not gated, expected to fail |
 | VS-SWI-15 | Resource usage | WP-W-03 §7 | SWI-3 | Map file, stack painting, `interrupt_load`, cycle counter around hooks | Stack margin ≥ 20 %; RAM within regions; hook WCET recorded; TX path latency recorded |
 | VS-SWI-16 | `pandad` ↔ firmware interface | 409h, 410h, 414h, 514h, 619 | SWI-4 | Normal traffic; delayed `sendcan`; debug firmware | Loop counter advancing; CRC/sequence accepted; old messages dropped at 20 ms; no engagement with debug FW |
 | VS-SWI-17 | Host reaction chain: health → `pandaStates` → `selfdrived` | 307h, 601, 615, 606 | SWI-4 | Inject each panda flag/reason code | Immediate disable ≤ 0.2 s, alert class correct |
-| VS-SWI-19 | Per-ID TX rate supervision and TX read-back | 517, 518 | SWI-1, SWI-3 | `0x2E4` at 2× rate; corrupt frame after TX hook (debug hook) | Excess frames rejected, revocation on persistence; corruption detected ≤ 2 frames |
+| VS-SWI-19 | Per-ID TX rate supervision and TX read-back | 517, 518 | SWI-1, SWI-3 | `0x2E4` at 2× rate; corrupt frame after TX hook (debug hook) | Excess frames rejected, revocation on persistence; corruption detected ≤ 2 frames. 518 (reference build): implemented, SWI-1 `test_tx_rate_*`, SWI-3 HIL `test_14_tx_rate.py` not run. 517 (TX read-back): not implemented, expected to fail |
 | VS-SWI-18 | Replay of fork-owned reference drives through the release `libsafety` | 401–406, 101–207 | SWI-1 | `replay_drive.py` with mode TOYOTA, param 73 | Zero RX invalid and zero blocked `0x2E4`/`0x343` on nominal drives; expected detections on fault-injected copies |
 
 ## 6. Test environment
@@ -97,7 +98,7 @@ Configuration of every run (superproject, opendbc, panda commit, build type, too
 
 - All VS-SWI on the release configuration; a debug build is used only to inject faults that cannot be injected otherwise, and the test record states it.
 - Any SR-A change re-runs SWI-1/SWI-2 in CI; SWI-3/SWI-4 at each release candidate.
-- Failures expected at the baseline (VS-SWI-04, 05, 06, 08, 13, 14) are tracked as problem reports ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)), not waived.
+- Failures expected at the baseline (VS-SWI-05 SILENT timing, 06, 08, 13, 14 in the default build, 19 TX read-back part) are tracked as problem reports ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)), not waived.
 
 ## 8. Integration and verification report (template)
 

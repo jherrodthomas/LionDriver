@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-O-01 Installation, provisioning and production control |
 | Standard reference | ISO 26262-7:2018 §5 (planning for production, production control, special characteristics, records), tailored per T-07; ISO 26262-4:2018 §6 (requirements for production, by reference to WP-S-06); ISO/SAE 21434:2021 §12 (production) |
-| Version | 0.1 |
+| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01 elements: harness, relay, panda firmware, safety-mode configuration); CS (provisioning) |
 | Author | Assurance team (initial draft) |
@@ -64,7 +64,7 @@ Each step has an ID (`INS-nn`), the check that proves it, and the record field i
 
 | ID | Step | Acceptance check | Record |
 |---|---|---|---|
-| INS-05 | Record VIN, model year, trim (LE), powertrain (ICE), tyre size, mileage | VIN decodes to a 2020 Corolla LE ICE sedan, US market | R-VEH |
+| INS-05 | Record VIN, model year, trim, powertrain (ICE), tyre size, mileage | VIN decodes to an E210 Corolla ICE sedan, US market, of a model year covered by `TOYOTA_COROLLA_TSS2` | R-VEH |
 | INS-06 **[SC]** | Read DTCs of EPS (`0x7a1`), ABS/VSC (`0x7b0`), engine (`0x7e0`), forward camera and radar with a scan tool, or `tools/scripts/car/read_dtc_status.py` with openpilot stopped | No active DTC in EPS, brake, powertrain, ADAS camera or radar (AOU-09, AOU-10) | R-VEH |
 | INS-07 | Confirm no modification of steering, suspension, ride height, tyres outside OEM spec, or windscreen (aftermarket glass, tint strip in camera area) | None found (AOU-09) | R-VEH |
 | INS-08 | Confirm stock TSS 2.0 functions work before installation: LTA/LDA, DRCC, PCS warning (static self-test at ignition), no TSS fault indicators | Functions available, no warnings | R-VEH |

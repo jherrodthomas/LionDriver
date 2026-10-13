@@ -4,15 +4,15 @@
 |---|---|
 | Work product | Hardware-in-the-loop bench plan (decision D-04 of [WP-M-01](../../01-management/WP-M-01-assurance-strategy.md); test environment of [WP-W-08](../WP-W-08-embedded-software-testing.md) §3) |
 | Standard reference | ISO 26262-6:2018 §11.4.2 (test environments); ISO 26262-8:2018 §9.4.3 (verification environment); ASPICE 4.0 SWE.6 |
-| Version | 0.1 |
+| Version | 0.2 (verification status for the integrated envelope changes: pins `b790fca`/`7993399`, reference-build campaign for `test_11…14`; 2026-10-12). 0.1 |
 | Status | Draft: plan only. No bench exists, no part has been bought, no test has been run on hardware |
 | Author | Assurance team (AI-assisted draft) |
 | Reviewer(s) | TBD |
-| Baseline | LionDriver `4aca58b`; panda pin `3859fa8`, opendbc pin `5b5a4ba` (panda#1, #3, #4, #5, #6 and opendbc#1, #2, #3 integrated 2026-10-12) |
+| Baseline | `bf6ce8c` (status update 2026-10-12); panda pin `b790fca`, opendbc pin `7993399` |
 
 ## 1. Purpose
 
-LionDriver has no HIL bench (GAP-30), so no firmware test in [WP-W-08](../WP-W-08-embedded-software-testing.md) or hardware fault-injection case in [WP-V-05](../../06-validation/WP-V-05-fault-injection.md) can run. The hardware watchdog, the 100 Hz safety task and the 5-period RX timeout were integrated on 2026-10-12 (panda `9f60e17`, opendbc `aff4033`) **without hardware verification** ([watchdog change record](../../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) OI-3). The bench now produces the missing evidence for code that is already pinned; until it runs, these pins have no hardware evidence (WP-W-08 §4).
+LionDriver has no HIL bench (GAP-30), so no firmware test in [WP-W-08](../WP-W-08-embedded-software-testing.md) or hardware fault-injection case in [WP-V-05](../../06-validation/WP-V-05-fault-injection.md) can run. The hardware watchdog, the 100 Hz safety task and the 5-period RX timeout were integrated on 2026-10-12 (panda `9f60e17`, opendbc `aff4033`) **without hardware verification** ([watchdog change record](../../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) OI-3). The later envelope changes up to the current pins (panda `b790fca`, opendbc `7993399`: reference-build lock, EPS fault, TX rate supervision, HIL tests `test_11…14`) are equally without hardware verification. The bench now produces the missing evidence for code that is already pinned; until it runs, these pins have no hardware evidence (WP-W-08 §4).
 
 This plan builds the bench in stages, so the watchdog evidence comes from the smallest useful setup and the rest of WP-W-08 follows on the same hardware. The bench is test level L1 of [WP-V-07](../../06-validation/WP-V-07-vehicle-test-operations.md): no vehicle, no road.
 
@@ -23,7 +23,7 @@ This plan builds the bench in stages, so the watchdog evidence comes from the sm
 
 | Stage | Goal | Adds | Unblocks |
 |---|---|---|---|
-| **B1: watchdog bench** | Run the existing HIL tests and the watchdog fault-injection test on a real STM32H7 panda | DUT panda, panda jungle, host PC Hardware evidence for the integrated watchdog and safety task (VS-FI-17, VS-SWQ-14 in its debug-build form); OI-3 of WP-W-08 for the jungle-based upstream tests |
+| **B1: watchdog bench** | Run the existing HIL tests and the watchdog fault-injection test on a real STM32H7 panda | DUT panda, panda jungle, host PC | Hardware evidence for the integrated watchdog and safety task (VS-FI-17, VS-SWQ-14 in its debug-build form); VS-SWQ-08/13/17/25, VS-FI-04/11 via `test_11…14` (jungle plays the car on bus 0; §5.5); OI-3 of WP-W-08 for the jungle-based upstream tests |
 | **B2: timing evidence** | Measure relay release independently of USB polling, ≥ 100 repetitions (WP-W-08 §4) | Oscilloscope or logic analyser on the SBU lines | Timing results usable as evidence for TSR-501 and D-1 |
 | **B3: vehicle bus** | Replay Corolla CAN traffic and inject bus faults. A candump capture of bus 0 also feeds the inter-frame gap scan ([`tools/can_gaps/`](../../../tools/can_gaps/README.md)) | 2–3 USB CAN interfaces, harness-equivalent wiring, 120 Ω terminations | VS-SWQ-01… (limits, timeouts), VS-FI-01…04, VS-FI-22 |
 | **B4: full WP-W-08 bench** | Supply, debug and SoC-side faults | Programmable supply, SWD probe, reference comma device, audio capture | VS-FI-06…08, -10, -11, -15, -16, -18; release-image repeats |
@@ -80,7 +80,7 @@ From a LionDriver checkout, with the panda submodule at its pin:
 
 ```bash
 cd panda
-git checkout 3859fa8   # the LionDriver pin; panda#1, #3, #4, #5, #6 with the fault injection and HIL tests
+git checkout 6dee6fa   # the LionDriver pin, with the fault injection and the HIL tests test_10…14
 pip install -e .[dev]                                               # panda python lib, pytest, libusb1, pycapnp
 export PYTHONPATH=$PWD/../opendbc_repo:$PWD/..
 ```
@@ -123,7 +123,18 @@ HITL=1 python -m pytest -v tests/hitl/
 
 Upstream tests that need comma's multi-panda jig or SPI-only hardware will fail or skip; record which ones and why rather than treating every failure as a defect.
 
-### 5.5 What B1 does and does not show
+### 5.5 Reference build campaign
+
+`test_11_reference_lock.py`, `test_13_eps_fault.py` and `test_14_tx_rate.py` skip unless `REFERENCE_BUILD=1`; `test_12_rx_timeout.py` runs on any build and adds the reference build's RX messages (`EPS_STATUS`, `PCM_CRUISE_2`) with `REFERENCE_BUILD=1`. All four need the jungle, which plays the car on bus 0.
+
+```bash
+LIONDRIVER_REFERENCE=1 ./board/flash.py    # builds with -DLIONDRIVER_REFERENCE (debug build unless RELEASE=1) and flashes
+HITL=1 REFERENCE_BUILD=1 python -m pytest -v tests/hitl/test_11_reference_lock.py tests/hitl/test_12_rx_timeout.py tests/hitl/test_13_eps_fault.py tests/hitl/test_14_tx_rate.py
+```
+
+Record each skipped test as **Not run**, never as Pass. Record the build type (debug or release) of the reference image in the test log; a debug reference build is not the release image (WP-W-08 §4). Flash the normal image again afterwards (§5.3).
+
+### 5.6 What B1 does and does not show
 
 | Shows | Does not show |
 |---|---|
@@ -147,12 +158,16 @@ WP-W-08 §4 asks for the worst value over ≥ 100 repetitions with random phase 
 
 | Bench test | WP-W-08 / WP-V-05 case | Requirement | Stage | State |
 |---|---|---|---|---|
-| `tests/hitl/test_10_hw_watchdog.py` modes 1–3 (tick hang budget includes one tick period) | VS-SWQ-14 (hang part), VS-FI-17 (main-loop and tick hang; interrupts disabled) | TSR-501, HWSR-501, HWSR-501c | B1 | Implemented on `liondriver/hw-watchdog` and panda#3, not run |
+| `tests/hitl/test_10_hw_watchdog.py` modes 1–3 (tick hang budget includes one tick period) | VS-SWQ-14 (hang part), VS-FI-17 (main-loop and tick hang; interrupts disabled) | TSR-501, HWSR-501, HWSR-501c | B1 | Implemented, in pin `b790fca`, not run |
 | `test_no_reset_without_fault` | VS-SWQ-14 (no false trip) | TSR-501 | B1 | Implemented, not run |
 | Timing campaign (§6) | VS-SWQ-14 timing, VS-FI-17 pass criterion | TSR-501, SG-01 budget | B2 | Planned |
 | Safety-task hang | VS-FI-17 | TSR-501 | B1 | `test_safety_task_hang` (mode 4, panda#3; in the pin), implemented, not run |
 | SPI interrupt hang | VS-FI-17 (SPI ISR) | TSR-501, TSR-502 | B4 (reference device: SPI) | Planned: needs another injection mode and the SPI path |
 | Window violation (early feed) | VS-SWQ-14 / HWSR-501b | HWSR-501b | B1 | `test_early_feed_window_violation` (mode 5, panda#3; in the pin), implemented, not run |
+| `tests/hitl/test_11_reference_lock.py` | VS-SWQ-17, VS-FI-11 | TSR-512, TSR-513 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` (§5.5) |
+| `tests/hitl/test_12_rx_timeout.py` | VS-SWQ-08, VS-FI-04 | TSR-401, TSR-306 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` for the reference RX set (§5.5) |
+| `tests/hitl/test_13_eps_fault.py` | VS-SWQ-13 | TSR-110 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` (§5.5) |
+| `tests/hitl/test_14_tx_rate.py` | VS-SWQ-25 (TSR-518 part) | TSR-518 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` (§5.5) |
 | Upstream `tests/hitl/test_1…9` | Regression | — | B1 | Existing, not run on LionDriver hardware |
 | Corolla log replay, limit and timeout cases | VS-SWQ-01…, VS-FI-01…04 | TSR-1xx, TSR-401…406 | B3 | Planned |
 | Power dips, resets, SWD memory faults, heartbeat and SPI faults | VS-FI-06…08, -10, -11, -15, -16, -18 | TSR-407…413, TSR-505, TSR-503, TSR-706 | B4 | Planned |

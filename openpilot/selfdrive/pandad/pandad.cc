@@ -137,6 +137,7 @@ void fill_panda_state(cereal::PandaState::Builder &ps, cereal::PandaState::Panda
   ps.setRequestsRejected(health.requests_rejected_pkt);
   ps.setEpsFault((health.flags_pkt & HEALTH_FLAG_EPS_FAULT) != 0U);
   ps.setTxRateExceeded((health.flags_pkt & HEALTH_FLAG_TX_RATE_EXCEEDED) != 0U);
+  ps.setReferenceBuild((health.flags_pkt & HEALTH_FLAG_REFERENCE_BUILD) != 0U);
 }
 
 void fill_panda_can_state(cereal::PandaState::PandaCanState::Builder &cs, const can_health_t &can_health) {
