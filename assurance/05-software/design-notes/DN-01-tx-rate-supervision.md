@@ -115,7 +115,7 @@ Timing, for `0x2E4` (budget 36):
 | 4× (400 Hz) | ≈ 90 ms | ≈ 95 ms |
 | 10× (1 kHz) | ≈ 36 ms | ≈ 40 ms |
 
-TSR-518 asks for revocation ≤ 0.1 s. That holds from the **first rejected frame**, but not from flood onset at rates below about 4×. A shorter window lowers the latency but also lowers the burst tolerance of §2.2. While the flood is below the budget, the steering torque is still bounded by the real-time limit (450 per 250 ms), and every frame is still content-checked. Decision D-6.
+An Octave model of this algorithm ([`assurance/models/octave/`](../../models/octave/README.md), a model, not the C code) gives the same 190 ms from an empty window, and 135 ms when the normal frames sent just before the flood count against the budget. TSR-518 asks for revocation ≤ 0.1 s. That holds from the **first rejected frame**, but not from flood onset at rates below about 4×. A shorter window lowers the latency but also lowers the burst tolerance of §2.2. While the flood is below the budget, the steering torque is still bounded by the real-time limit (450 per 250 ms), and every frame is still content-checked. Decision D-6.
 
 Rejected frames do not update the brand limit state: the rate check runs before the brand hook, and the brand hook is called only for a frame within budget (opendbc `7993399`, `safety.h` `safety_tx_hook`: `if (whitelisted && tx_rate_check(msg)) { safety_allowed = current_hooks->tx(msg); }`). The proposal (v0.1) placed the check after the brand hook; the implementation moved it in front, which is simpler and gives the same guarantee (the same rule as the EPS fault gate, opendbc#7). [RR-2026-009](../reviews/RR-2026-009.md) F-27.
 

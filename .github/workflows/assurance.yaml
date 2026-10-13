@@ -11,6 +11,7 @@ on:
       - liondriver-dev
     paths:
       - 'assurance/**'
+      - 'opendbc_repo'
       - 'tools/sync/**'
       - 'tools/severity/**'
       - 'tools/safety/**'
@@ -22,6 +23,7 @@ on:
   pull_request:
     paths:
       - 'assurance/**'
+      - 'opendbc_repo'
       - 'tools/sync/**'
       - 'tools/severity/**'
       - 'tools/safety/**'
@@ -124,3 +126,29 @@ jobs:
         python3 assurance/case/tools/test_gsn.py
     - name: README and documentation links
       run: python3 assurance/case/tools/check_pages.py
+
+  octave-models:
+    name: Octave envelope models
+    # Models of envelope logic (assurance/models/octave, WP-P-07 TL-25). Not verification of the C code:
+    # the job checks that the models still follow the pinned opendbc constants and pass their own checks.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout opendbc submodule
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Install GNU Octave and gnuplot
+      run: |
+        sudo apt-get update -q
+        sudo apt-get install -y -q --no-install-recommends octave gnuplot
+        octave-cli --version | head -1
+    - name: Run models and model checks
+      run: octave-cli --no-gui assurance/models/octave/run_models.m build/octave-models
+    - name: Upload plots
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: octave-models
+        path: build/octave-models/
