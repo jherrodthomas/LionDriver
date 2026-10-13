@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-02 Coexistence of elements and freedom from interference |
 | Standard reference | ISO 26262-9:2018 §6 (criteria for coexistence of elements); ISO 26262-6:2018 §7 and Annex D (freedom from interference between software elements: timing and execution, memory, exchange of information); ISO 26262-5:2018 Annex D (communication bus diagnostic measures, informative); ASPICE 4.0 SYS.3, SWE.2 |
-| Version | 0.4 (status update 2026-10-12: dated status notes for the reference build at `bf6ce8c` in §4–§6, §8 verdicts, OI-5 partly closed; nothing verified on hardware or reviewed independently). History: 0.3 (TSR-626, TSR-627 for FFI-CM-17/19; 2026-10-12) |
+| Version | 0.5 (§3 Figure 3-1 interference map with the §8 verdicts added; no change to the analysis; 2026-10-13). 0.4 (status update 2026-10-12: dated status notes for the reference build at `bf6ce8c` in §4–§6, §8 verdicts, OI-5 partly closed; nothing verified on hardware or reviewed independently). History: 0.3 (TSR-626, TSR-627 for FFI-CM-17/19; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | ASIL C (SG-01, until re-rated) / ASIL B (SG-02…SG-07) elements coexisting with QM elements, on the panda MCU and on the comma device |
 | Author | Assurance team (initial draft) |
@@ -53,6 +53,10 @@ ISO 26262-9 §6 gives two options for a QM or lower-ASIL sub-element that coexis
 | Spatial (memory) | Corruption of content, read/write access to memory allocated to another element, stack overflow, DMA writes to wrong location | L-MCU |
 | Temporal (timing and execution) | Blocking of execution, deadlock, livelock, wrong allocation of execution time, incorrect synchronisation, interrupt overload | L-MCU, L-DEV |
 | Communication (exchange of information) | Repetition, loss, delay, insertion, masquerade/incorrect addressing, incorrect sequence, corruption, asymmetric information, information to only a subset, blocking of a communication channel; plus unintended **commands** that change the receiver's configuration | L-MCU ↔ SoC (IF-04), vehicle CAN (IF-01/02/03), boot/reset lines |
+
+![Figure 3-1: coexistence and interference map — QM SoC, panda firmware partitions (SoC-facing code, ASIL C core, QM housekeeping), interference channels FFI-SP-01…05, FFI-TM-01…07 and FFI-CM-01…19, and the five FFI verdicts of §8](figures/fig-a02-3-1-interference-map.svg)
+
+*Figure 3-1.* The coexistence decisions of §2 drawn as partitions of the one firmware image, the interference channels of §4–§6 by type (spatial, temporal, communication), and the verdicts of §8 with the key measures of §7. Amber means implemented in part and not verified; no verdict is "shown". Drawn from §2, §4–§8. Source: [`figures/fig-a02-3-1-interference-map.svg`](figures/fig-a02-3-1-interference-map.svg); change it together with §2, §7 and §8.
 
 ## 4. Spatial interference (L-MCU)
 

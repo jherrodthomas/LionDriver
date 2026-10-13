@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-03 Technical safety concept and system architectural design |
 | Standard reference | ISO 26262-4:2018 §6 (technical safety concept, system architectural design, safety mechanisms, FFI/independence by reference to ISO 26262-9 §6–§7); ISO 21448:2022 §8 (architecture-level functional modifications, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently). History: 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
+| Version | 0.5 (§3.2, §4.1 and §4.4 diagrams redrawn as Figures 3-2, 4-1 and 4-4; text versions kept; 2026-10-13). History: 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently); 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01, until re-rated); target ASIL B for the envelope (FSC option (c)) |
 | Author | Assurance team (initial draft) |
@@ -54,6 +54,12 @@ It describes the architecture **as inherited at the baseline** and marks where t
 
 ### 3.2 Block diagram
 
+![Figure 3-2: technical safety architecture with the QM partition (E-01 processes, E-02 models, E-04b) and the B‡ safety envelope (E-03a, E-03b, E-04a safety MCU), the E-05 harness relay, interfaces IF-01 to IF-10 and the SM and TSR tags of each block](figures/fig-3-2-tsc-block-diagram.svg)
+
+*Figure 3-2.* The device E-04 is split into the QM partition and the B‡ safety envelope; inside the MCU, E-03a blocks are shaded, E-03b blocks outlined and E-04a is the hardware strip. Each block carries the safety mechanisms of §6 and the TSRs of §3.3 and §5 that are assigned to it; host mechanisms of E-01/E-02 are listed together because §6 assigns them to E-01 as a whole. It shows the architecture as inherited at `8b8c6ae`. Source: [`figures/fig-3-2-tsc-block-diagram.svg`](figures/fig-3-2-tsc-block-diagram.svg); change it together with §3.1, §3.3, §5 and §6.
+
+<details><summary>Text version of Figure 3-2</summary>
+
 ```
                                    ┌──────────────── comma device (E-04) ───────────────────────────────────────┐
  road cam ─┐                       │  E-01 SoC (QM)                                  E-03/E-04a safety MCU (B‡)  │
@@ -76,6 +82,8 @@ It describes the architecture **as inherited at the baseline** and marks where t
                                                                           ╚═══╝  (relay released: direct link)
 ```
 
+</details>
+
 ### 3.3 Interfaces
 
 | ID | Interface | Between | Content | Safety relevance | TSRs | Detail |
@@ -95,6 +103,12 @@ It describes the architecture **as inherited at the baseline** and marks where t
 
 ### 4.1 Start-up and engagement
 
+![Figure 4-1: start-up and engagement sequence across driver, PCM, E-05 relay, E-03 safety MCU, pandad, card, controlsd and selfdrived, with MCU safety modes SILENT, NOOUTPUT, ELM327, TOYOTA param 73 and controls_allowed, and the TSR-515, TSR-512 and TSR-306 conditions](figures/fig-4-1-startup-engagement.svg)
+
+*Figure 4-1.* Lifelines run left to right from the driver to selfdrived; pills on the MCU and selfdrived lifelines are states, [brackets] are transition conditions, and the step column gives the code references of the text version. TSR-515 is drawn as still to be inserted and TSR-512 as implemented in the reference build (2026-10-12); the ignition-off changes of OI-4 are not part of this figure. Source: [`figures/fig-4-1-startup-engagement.svg`](figures/fig-4-1-startup-engagement.svg); change it together with §4.1, §4.3 and OI-4.
+
+<details><summary>Text version of Figure 4-1</summary>
+
 ```
 Ignition on
   │ MCU: main() → clock/peripherals → set_safety_mode(SILENT) → CAN transceivers on → tick 8 Hz → SPI   (main.c:251-328)
@@ -112,6 +126,8 @@ Ignition on
   │ pandad heartbeat 0xf3 engaged=1 (10 Hz) ; controlsd latActive/longActive → card → sendcan
   ▼ MCU: each 0x2E4/0x343 → safety_tx_hook limits → FDCAN TX (can_common.h:161-176)
 ```
+
+</details>
 
 ### 4.2 Driver override and disengagement
 
@@ -144,6 +160,12 @@ After revocation the envelope rejects further actuation frames. Under TSR-109 it
 
 ### 4.4 Heartbeat and timeout chain
 
+![Figure 4-4: heartbeat and timeout chain: command path controlsd, card, pandad, MCU safety_tx_hook with freshness limits 0.1 s, 1 s and none, heartbeat path selfdrived, pandad 0xf3 at 10 Hz, MCU heartbeat counter at 1 Hz, and timing of heartbeat loss (revoke 0.3 s in the reference build, SILENT after 4–5 s) and engaged mismatch (revoke after 2–3 s) against the required limits](figures/fig-4-4-heartbeat-timeout-chain.svg)
+
+*Figure 4-4.* Part A shows both paths with the freshness limit at each stage and the required changes in red. Part B puts heartbeat loss and engaged mismatch on one time axis; the 1 Hz tick phase is arbitrary, so the baseline times are ranges (4–5 s, 2–3 s, as in WP-S-04 T-05/T-06), and the dashed red lines are the required limits of TSR-407, TSR-510 and TSR-307. Source: [`figures/fig-4-4-heartbeat-timeout-chain.svg`](figures/fig-4-4-heartbeat-timeout-chain.svg); change it together with §4.3, §4.4 and [WP-S-04](WP-S-04-timing-ftti-budget.md) §4–§5.
+
+<details><summary>Text version of Figure 4-4</summary>
+
 ```
 controlsd 100 Hz ─carControl─▶ card 100 Hz ─sendcan─▶ pandad send thread ─SPI─▶ MCU safety_tx_hook ─▶ EPS/PCM
    (alive: 0.1 s,                (sends only if          (drops if older            (no command-freshness
@@ -153,6 +175,8 @@ selfdrived 100 Hz ─selfdriveState─▶ pandad main 10 Hz ─0xf3 engaged─�
    (engaged = alive&&valid&&enabled, pandad.cc:389)                    mismatch 3 ticks → revoke (main.c:182-186)
                                                                        5 ticks w/o heartbeat → SILENT (main.c:193)
 ```
+
+</details>
 
 Required changes (WP-S-04 §5): heartbeat evaluated at ≥ 10 Hz with a 0.3 s timeout and control-loop evidence (TSR-407, 409); command-frame freshness in the MCU (TSR-408); `sendcan` age ≤ 20 ms (TSR-614).
 

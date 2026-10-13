@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Doc ID** | LD-ITEM-001 |
-| **Revision** | 0.1 (draft) |
-| **Date** | 2026-10-10 |
+| **Revision** | 0.2 (draft; §A.3 boundary diagram redrawn as Figure A-1, text version kept). 0.1 (draft) |
+| **Date** | 2026-10-13 |
 | **Status** | Draft — requires review by Jherrod Thomas; item-definition confirmation per ISO 26262-2 not yet performed |
 | **Standard** | ISO 26262-3:2018 clause 5 |
 | **Baseline** | BL-001 (LionDriver `8b8c6ae`, panda `92eb565`, opendbc `229dc70`, AGNOS 19.9) |
@@ -75,6 +75,12 @@ The functions are the same on every vehicle. Their limits and interfaces are veh
 
 ## A.3 Item boundary and architecture
 
+![Figure A-1: platform item boundary with the comma 3X (SoC with openpilot software, integrated panda MCU safety model), harness and relay, and interfaces IF-01 to IF-07 to the vehicle CAN and ECUs, stock ADAS camera, 12 V supply, driver, road environment and servers](figures/fig-item-a-1-item-boundary.svg)
+
+*Figure A-1.* The dashed boundary contains the comma 3X and the harness; each line carries the interface ID of §A.4. It uses the visual language of WP-C-01 Figure 3-1 but shows the platform (PL-001), not the AC-001 Toyota configuration. Source: [`figures/fig-item-a-1-item-boundary.svg`](figures/fig-item-a-1-item-boundary.svg); change it together with the boundary and function allocation tables below and §A.4.
+
+<details><summary>Text version of Figure A-1</summary>
+
 ```
                   ┌──────────────────── item ────────────────────┐
  driver ◄──HMI──► │  comma 3X                                    │
@@ -87,6 +93,8 @@ The functions are the same on every vehicle. Their limits and interfaces are veh
                                  │ CAN / CAN FD, 12 V
          vehicle: EPS · powertrain/brakes · ADAS camera/radar · gateway · cluster
 ```
+
+</details>
 
 | In the item | Outside the item (interfaces only) |
 |---|---|
