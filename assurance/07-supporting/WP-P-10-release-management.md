@@ -87,7 +87,7 @@ Layout: `evidence/ld-vX.Y.Z/{manifest,artifacts,ci,unit,integration,validation,t
 
 | Rule | Detail |
 |---|---|
-| Build type | `RELEASE=1` with `CERT=<LionDriver release key>`. `panda/SConscript` otherwise defaults to `DEBUG` with `-DALLOW_DEBUG` and the committed debug key (`panda/board/crypto/certs/debug`). A DEBUG build is never released or used for vehicle testing beyond the bench |
+| Build type | `RELEASE=1` with `CERT=<LionDriver release key>`. `panda/SConscript` otherwise defaults to `DEBUG` with `-DALLOW_DEBUG` and the committed debug key (`panda/board/crypto/certs/debug`). A DEBUG build is never released or used for vehicle testing beyond the bench. The reference lock (`LIONDRIVER_REFERENCE=1`) is set by the top-level `SConstruct` by default; a release build must not override it |
 | Key | LionDriver release key pair generated offline; private key never in Git or CI logs; public key committed in the panda fork replacing `release.pub`. Algorithm upgrade (from RSA-1024/SHA-1 in `panda/board/crypto/rsa.h`, `sha.h`) is a bootstub change tracked under [WP-S-07](../03-system/WP-S-07-cybersecurity-requirements-architecture.md); until then the existing scheme is used with a LionDriver key and the weakness stays a recorded CS risk |
 | Builder identity | `BUILDER` changed from `DEV` to `LD` so the version string reads `LD-<git8>-RELEASE` ([WP-P-01 §7](WP-P-01-configuration-management-plan.md#7-version-scheme-closes-gap-35-when-implemented)) |
 | Verification | Release check: version string contains `RELEASE`; binary hash recorded; rebuild from tag reproduces the hash (or differences explained); `ALLOW_DEBUG` symbol absent; `opendbc/safety/tests/test_release_build.py` passes |
