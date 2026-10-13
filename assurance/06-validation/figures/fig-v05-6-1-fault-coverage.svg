@@ -1,0 +1,980 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1350" viewBox="0 0 1280 1350" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 6-1 · Fault-injection coverage</title>
+<desc>Matrix of the 31 fault-injection cases VS-FI-01 to VS-FI-31, grouped by §5.1 to §5.6. For each case: injection levels, the TSR blocks 1xx to 8xx its mechanism names (with counts), the safety goals SG-01 to SG-07 reached through the parent FSRs, whether a §6 analysis item names it, the WP-W-02 implementation status, and the §8 result, which is 'not yet executed' for every case. Below, the 14 §6 analysis items from WP-A-04, WP-A-02 and WP-A-03 with their cases; SPF-01 is not testable by fault injection and SFMEA-33 to -40 have no case yet.</desc>
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1350" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6-1 · Fault-injection coverage</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The 31 fault-injection cases of §5 against the TSR blocks and safety goals their mechanisms serve, and the §6 analysis items they cover. Specification only: nothing has been executed.</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-V-05 §5, §6, §8</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="144" font-size="11.5" fill="#0F172A" font-weight="700">Case · fault</text>
+<text x="334" y="116" font-size="11" fill="#0F172A" font-weight="700">Level (§3)</text>
+<text x="424" y="116" font-size="11" fill="#0F172A" font-weight="700">TSR block of the mechanism (WP-S-02)</text>
+<text x="700" y="116" font-size="11" fill="#0F172A" font-weight="700">Safety goal (via parent FSR)</text>
+<text x="954" y="116" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">§6</text>
+<text x="972" y="116" font-size="11" fill="#0F172A" font-weight="700">At 682f184 (WP-W-02)</text>
+<text x="1140" y="116" font-size="11" fill="#0F172A" font-weight="700">Result (§8)</text>
+<text x="341" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">U</text>
+<text x="356" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">S</text>
+<text x="371" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">H</text>
+<text x="386" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">V</text>
+<text x="401" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">A</text>
+<text x="440.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">1xx</text>
+<text x="473.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">2xx</text>
+<text x="506.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">3xx</text>
+<text x="539.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">4xx</text>
+<text x="572.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">5xx</text>
+<text x="605.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">6xx</text>
+<text x="638.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">7xx</text>
+<text x="671.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">8xx</text>
+<text x="715.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">01</text>
+<text x="746.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">02</text>
+<text x="777.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">03</text>
+<text x="808.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">04</text>
+<text x="839.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">05</text>
+<text x="870.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">06</text>
+<text x="901.5" y="144" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">07</text>
+<text x="954" y="144" font-size="10" fill="#475569" text-anchor="middle">item</text>
+<text x="972" y="144" font-size="10" fill="#475569">SWSR status of the case's TSRs</text>
+<text x="1140" y="144" font-size="10" fill="#475569">campaign</text>
+<text x="700" y="130" font-size="10" fill="#475569">SG-0n</text>
+<line x1="40" y1="152" x2="1240" y2="152" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="40" y="152" width="1200" height="26" rx="0" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="46" y="169" font-size="11" fill="#0F172A" font-weight="700">§5.1 Vehicle CAN faults (RX side)</text>
+<text x="406" y="169" font-size="10.5" fill="#475569">7 cases</text>
+<text x="46" y="192.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-01</text>
+<text x="106" y="192.5" font-size="10" fill="#0F172A">Corrupted frame (bad checksum, wrong len…</text>
+<rect x="335" y="182" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="341" y="192" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">U</text>
+<rect x="365" y="182" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="192" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="188.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="539.5" y="192" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<circle cx="572.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="188.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="188.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<text x="954" y="192.5" font-size="10" fill="#94A3B8" text-anchor="middle">—</text>
+<text x="972" y="192.5" font-size="10" fill="#0F172A">SWSR Partial 1</text>
+<rect x="963" y="184.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="181" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="192" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="199" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="213.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-02</text>
+<text x="106" y="213.5" font-size="10" fill="#0F172A">Stuck / frozen payload with valid checks…</text>
+<rect x="335" y="203" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="341" y="213" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">U</text>
+<rect x="365" y="203" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="213" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="209.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="209.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="209.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="209.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="539.5" y="213" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<circle cx="572.5" cy="209.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="209.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="209.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="209.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="209.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="209.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="209.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="209.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="209.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="870.5" cy="209.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="209.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="209.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="213.5" font-size="10" fill="#0F172A">SWSR Partial 2</text>
+<rect x="963" y="205.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="202" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="213" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<text x="46" y="234.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-03</text>
+<text x="106" y="234.5" font-size="10" fill="#0F172A">Replayed / duplicated / inserted frames</text>
+<rect x="335" y="224" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="341" y="234" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">U</text>
+<rect x="365" y="224" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="234" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="230.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="539.5" y="234" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<circle cx="572.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="230.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="230.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="230.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="234.5" font-size="10" fill="#0F172A">SWSR Partial 1</text>
+<rect x="963" y="226.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="223" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="234" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="241" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="255.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-04</text>
+<text x="106" y="255.5" font-size="10" fill="#0F172A">Message timeout</text>
+<rect x="335" y="245" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="341" y="255" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">U</text>
+<rect x="365" y="245" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="255" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="251.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="539.5" y="255" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<circle cx="572.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="251.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="251.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<text x="954" y="255.5" font-size="10" fill="#94A3B8" text-anchor="middle">—</text>
+<text x="972" y="255.5" font-size="10" fill="#0F172A">SWSR Met 1 · Partial 2</text>
+<rect x="963" y="247.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="244" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="255" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<text x="46" y="276.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-05</text>
+<text x="106" y="276.5" font-size="10" fill="#0F172A">Cross-signal implausibility</text>
+<rect x="335" y="266" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="341" y="276" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">U</text>
+<rect x="365" y="266" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="276" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="272.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="272.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="272.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="272.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="539.5" y="276" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="572.5" cy="272.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="272.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="272.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="272.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="272.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="272.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="272.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="272.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="272.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="870.5" cy="272.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="272.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="272.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="276.5" font-size="10" fill="#0F172A">SWSR Partial 1</text>
+<rect x="963" y="268.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="265" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="276" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="283" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="297.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-22</text>
+<text x="106" y="297.5" font-size="10" fill="#0F172A">Car-side bus-off, CAN-H/L short, error f…</text>
+<rect x="365" y="287" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="297" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="293.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="297" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="605.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="293.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="293.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="293.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="297.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="286" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="297" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<text x="46" y="318.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-31</text>
+<text x="106" y="318.5" font-size="10" fill="#0F172A">EPS fault</text>
+<rect x="335" y="308" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="341" y="318" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">U</text>
+<rect x="365" y="308" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="318" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="314.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="440.5" y="318" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="473.5" cy="314.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="314.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="314.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="314.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="318" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="605.5" cy="314.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="314.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="314.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="314.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="746.5" cy="314.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="777.5" cy="314.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="314.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="314.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="314.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="901.5" cy="314.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<text x="954" y="318.5" font-size="10" fill="#94A3B8" text-anchor="middle">—</text>
+<text x="972" y="318.5" font-size="10" fill="#0F172A">SWSR Partial 2</text>
+<rect x="963" y="310.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="307" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="318" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="325" width="1200" height="26" rx="0" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="46" y="342" font-size="11" fill="#0F172A" font-weight="700">§5.2 SoC ↔ panda link faults</text>
+<text x="406" y="342" font-size="10.5" fill="#475569">6 cases</text>
+<text x="46" y="365.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-06</text>
+<text x="106" y="365.5" font-size="10" fill="#0F172A">SPI bit errors</text>
+<rect x="365" y="355" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="365" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="361.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="539.5" y="365" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<circle cx="572.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="361.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="361.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="361.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="365.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="354" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="365" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="372" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="386.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-07</text>
+<text x="106" y="386.5" font-size="10" fill="#0F172A">Out-of-range length fields and indices</text>
+<rect x="365" y="376" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="386" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="382.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="539.5" y="386" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="572.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="382.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="382.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="382.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="386.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="375" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="386" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<text x="46" y="407.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-08</text>
+<text x="106" y="407.5" font-size="10" fill="#0F172A">Stale / replayed / frozen command stream</text>
+<rect x="365" y="397" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="407" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="403.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="539.5" y="407" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<circle cx="572.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="403.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="403.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="403.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="407.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="396" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="407" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="414" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="428.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-10</text>
+<text x="106" y="428.5" font-size="10" fill="#0F172A">Heartbeat faults</text>
+<rect x="365" y="418" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="428" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="424.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="424.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="424.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="506.5" y="428" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="539.5" cy="424.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="539.5" y="428" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<circle cx="572.5" cy="424.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="428" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<circle cx="605.5" cy="424.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="424.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="424.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="424.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="424.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="777.5" cy="424.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="424.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="424.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="870.5" cy="424.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="901.5" cy="424.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="954" cy="424.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="428.5" font-size="10" fill="#0F172A">SWSR Impl. 1 · Partial 2</text>
+<rect x="963" y="420.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="417" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="428" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<text x="46" y="449.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-11</text>
+<text x="106" y="449.5" font-size="10" fill="#0F172A">Unauthorised configuration commands in c…</text>
+<rect x="365" y="439" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="449" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="445.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="449" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<circle cx="605.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="445.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="445.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="445.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="449.5" font-size="10" fill="#0F172A">SWSR Met 4</text>
+<rect x="963" y="441.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="438" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="449" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="456" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="470.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-30</text>
+<text x="106" y="470.5" font-size="10" fill="#0F172A">SoC TX flood (babbling SoC)</text>
+<rect x="335" y="460" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="341" y="470" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">U</text>
+<rect x="365" y="460" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="470" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="466.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="470" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="605.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="466.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="466.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<text x="954" y="470.5" font-size="10" fill="#94A3B8" text-anchor="middle">—</text>
+<text x="972" y="470.5" font-size="10" fill="#0F172A">SWSR Impl. 1</text>
+<rect x="963" y="462.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="459" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="470" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="477" width="1200" height="26" rx="0" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="46" y="494" font-size="11" fill="#0F172A" font-weight="700">§5.3 SoC software faults</text>
+<text x="406" y="494" font-size="10.5" fill="#475569">5 cases</text>
+<text x="46" y="517.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-09</text>
+<text x="106" y="517.5" font-size="10" fill="#0F172A">Process kill (SIGKILL) and hang (SIGSTOP)</text>
+<rect x="350" y="507" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="356" y="517" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">S</text>
+<rect x="365" y="507" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="517" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<rect x="380" y="507" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="386" y="517" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">V</text>
+<circle cx="440.5" cy="513.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="513.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="513.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="513.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="539.5" y="517" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<circle cx="572.5" cy="513.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="517" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="605.5" cy="513.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="605.5" y="517" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<circle cx="638.5" cy="513.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="513.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="513.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="513.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="777.5" cy="513.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="513.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="513.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="513.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="901.5" cy="513.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="513.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="517.5" font-size="10" fill="#0F172A">SWSR Impl. 1 · Partial 2</text>
+<rect x="963" y="509.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="506" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="517" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="524" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="538.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-12</text>
+<text x="106" y="538.5" font-size="10" fill="#0F172A">Stale or faulty model output</text>
+<rect x="350" y="528" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="356" y="538" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">S</text>
+<rect x="365" y="528" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="538" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="534.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="534.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="534.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="534.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="534.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="534.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="605.5" y="538" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+<circle cx="638.5" cy="534.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="534.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="534.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="746.5" cy="534.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="777.5" cy="534.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="534.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="534.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="534.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="901.5" cy="534.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<text x="954" y="538.5" font-size="10" fill="#94A3B8" text-anchor="middle">—</text>
+<text x="972" y="538.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="527" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="538" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<text x="46" y="559.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-13</text>
+<text x="106" y="559.5" font-size="10" fill="#0F172A">Non-finite actuator commands</text>
+<rect x="335" y="549" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="341" y="559" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">U</text>
+<rect x="350" y="549" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="356" y="559" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">S</text>
+<circle cx="440.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="555.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="605.5" y="559" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="638.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="746.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="555.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="901.5" cy="555.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<text x="954" y="559.5" font-size="10" fill="#94A3B8" text-anchor="middle">—</text>
+<text x="972" y="559.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="548" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="559" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="566" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="580.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-14</text>
+<text x="106" y="580.5" font-size="10" fill="#0F172A">Out-of-limit commands from the SoC</text>
+<rect x="335" y="570" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="341" y="580" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">U</text>
+<rect x="365" y="570" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="580" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<rect x="380" y="570" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="386" y="580" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">V</text>
+<circle cx="440.5" cy="576.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="440.5" y="580" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">9</text>
+<circle cx="473.5" cy="576.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="473.5" y="580" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
+<circle cx="506.5" cy="576.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="576.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="576.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="576.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="576.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="576.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="576.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="576.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="777.5" cy="576.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="808.5" cy="576.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="839.5" cy="576.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="870.5" cy="576.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="576.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<text x="954" y="580.5" font-size="10" fill="#94A3B8" text-anchor="middle">—</text>
+<text x="972" y="580.5" font-size="10" fill="#0F172A">SWSR Met 1 · Partial 1</text>
+<rect x="963" y="572.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="569" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="580" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<text x="46" y="601.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-25</text>
+<text x="106" y="601.5" font-size="10" fill="#0F172A">Driver-monitoring input loss</text>
+<rect x="350" y="591" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="356" y="601" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">S</text>
+<rect x="365" y="591" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="601" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="597.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="605.5" y="601" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="638.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="746.5" cy="597.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="777.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="597.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<text x="954" y="601.5" font-size="10" fill="#94A3B8" text-anchor="middle">—</text>
+<text x="972" y="601.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="590" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="601" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="608" width="1200" height="26" rx="0" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="46" y="625" font-size="11" fill="#0F172A" font-weight="700">§5.4 Panda MCU and hardware faults</text>
+<text x="406" y="625" font-size="10.5" fill="#475569">11 cases</text>
+<text x="46" y="648.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-15</text>
+<text x="106" y="648.5" font-size="10" fill="#0F172A">Power dips and brown-out</text>
+<rect x="365" y="638" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="648" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="644.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="644.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="644.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="644.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="644.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="648" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="605.5" cy="644.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="644.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="638.5" y="648" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="671.5" cy="644.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="644.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="644.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="644.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="644.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="644.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="644.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="644.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="954" cy="644.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="648.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="637" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="648" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="655" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="669.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-16</text>
+<text x="106" y="669.5" font-size="10" fill="#0F172A">Panda reset during engagement</text>
+<rect x="365" y="659" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="669" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="665.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="665.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="665.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="506.5" y="669" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="539.5" cy="665.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="665.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="665.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="665.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="638.5" y="669" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="671.5" cy="665.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="665.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="665.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="665.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="665.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="665.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="665.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="665.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<text x="954" y="669.5" font-size="10" fill="#94A3B8" text-anchor="middle">—</text>
+<text x="972" y="669.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="658" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="669" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<text x="46" y="690.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-17</text>
+<text x="106" y="690.5" font-size="10" fill="#0F172A">Panda hang</text>
+<rect x="365" y="680" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="690" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="686.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="686.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="686.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="686.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="686.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="690" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<circle cx="605.5" cy="686.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="686.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="638.5" y="690" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="671.5" cy="686.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="686.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="686.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="686.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="686.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="686.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="686.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="686.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="954" cy="686.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="690.5" font-size="10" fill="#0F172A">SWSR Impl. 2</text>
+<rect x="963" y="682.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="679" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="690" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="697" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="711.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-18</text>
+<text x="106" y="711.5" font-size="10" fill="#0F172A">Memory corruption</text>
+<rect x="365" y="701" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="711" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="707.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="707.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="707.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="707.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="707.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="711" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<circle cx="605.5" cy="707.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="707.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="707.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="707.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="707.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="707.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="707.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="707.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="707.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="707.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="954" cy="707.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="711.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="700" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="711" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<text x="46" y="732.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-19</text>
+<text x="106" y="732.5" font-size="10" fill="#0F172A">Interrupt storm</text>
+<rect x="365" y="722" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="732" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="728.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="728.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="728.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="728.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="728.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="732" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<circle cx="605.5" cy="728.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="728.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="728.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="728.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="728.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="728.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="728.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="728.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="728.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="728.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="954" cy="728.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="732.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="721" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="732" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="739" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="753.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-20</text>
+<text x="106" y="753.5" font-size="10" fill="#0F172A">Clock fault</text>
+<rect x="365" y="743" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="753" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<rect x="395" y="743" width="12" height="13" rx="2" fill="#FFFFFF" stroke="#475569" stroke-width="1" stroke-dasharray="2 1.5"/>
+<text x="401" y="753" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">A</text>
+<circle cx="440.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="749.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="753" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="605.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="749.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="749.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="749.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="753.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="742" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="753" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<text x="46" y="774.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-21</text>
+<text x="106" y="774.5" font-size="10" fill="#0F172A">Relay faults</text>
+<rect x="365" y="764" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="774" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="770.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="770.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="770.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="770.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="770.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="774" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="605.5" cy="770.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="770.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="638.5" y="774" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="671.5" cy="770.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="770.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="770.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="770.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="770.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="770.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="770.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="770.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="954" cy="770.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="774.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="763" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="774" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="781" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="795.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-24</text>
+<text x="106" y="795.5" font-size="10" fill="#0F172A">Camera-side forwarding interruption with…</text>
+<rect x="365" y="785" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="795" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="791.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="791.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="791.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="791.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="791.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="795" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="605.5" cy="791.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="791.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="638.5" y="795" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="671.5" cy="791.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="791.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="791.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="791.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="791.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="791.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="791.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="791.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="954" cy="791.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="795.5" font-size="10" fill="#0F172A">SWSR Met 1</text>
+<rect x="963" y="787.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="784" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="795" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<text x="46" y="816.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-26</text>
+<text x="106" y="816.5" font-size="10" fill="#0F172A">Over-temperature</text>
+<rect x="365" y="806" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="816" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="812.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="816" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="605.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="812.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="812.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="812.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="816.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="805" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="816" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="823" width="1200" height="21" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="46" y="837.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-28</text>
+<text x="106" y="837.5" font-size="10" fill="#0F172A">Harness disconnect / orientation change…</text>
+<rect x="365" y="827" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="837" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="605.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="833.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="638.5" y="837" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="671.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="746.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="833.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="833.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<text x="954" y="837.5" font-size="10" fill="#94A3B8" text-anchor="middle">—</text>
+<text x="972" y="837.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="826" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="837" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<text x="46" y="858.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-29</text>
+<text x="106" y="858.5" font-size="10" fill="#0F172A">Firmware integrity</text>
+<rect x="365" y="848" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="858" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="854.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="858" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+<circle cx="605.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="638.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="854.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="777.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="854.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="854.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="858.5" font-size="10" fill="#0F172A">SWSR Partial 1</text>
+<rect x="963" y="850.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="847" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="858" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="865" width="1200" height="26" rx="0" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="46" y="882" font-size="11" fill="#0F172A" font-weight="700">§5.5 Configuration data tampering (faulty QM element)</text>
+<text x="406" y="882" font-size="10.5" fill="#475569">1 case</text>
+<text x="46" y="905.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-23</text>
+<text x="106" y="905.5" font-size="10" fill="#0F172A">Params tampering</text>
+<rect x="350" y="895" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="356" y="905" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">S</text>
+<rect x="365" y="895" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="371" y="905" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">H</text>
+<circle cx="440.5" cy="901.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="473.5" cy="901.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="506.5" cy="901.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="901.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="572.5" cy="901.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="572.5" y="905" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="605.5" cy="901.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="605.5" y="905" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+<circle cx="638.5" cy="901.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="901.5" r="7.5" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="671.5" y="905" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+<circle cx="715.5" cy="901.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="746.5" cy="901.5" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<circle cx="777.5" cy="901.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="808.5" cy="901.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="839.5" cy="901.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="870.5" cy="901.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="901.5" cy="901.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="954" cy="901.5" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="972" y="905.5" font-size="10" fill="#0F172A">SWSR Met 3</text>
+<rect x="963" y="897.5" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="1140" y="894" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="905" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<rect x="40" y="912" width="1200" height="26" rx="0" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="46" y="929" font-size="11" fill="#0F172A" font-weight="700">§5.6 Vehicle-level confirmation (closed course)</text>
+<text x="406" y="929" font-size="10.5" fill="#475569">1 case</text>
+<text x="46" y="952.5" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FI-27</text>
+<text x="106" y="952.5" font-size="10" fill="#0F172A">Selected faults while driving</text>
+<rect x="380" y="942" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="386" y="952" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">V</text>
+<circle cx="440.5" cy="948.5" r="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2.5 2"/>
+<text x="440.5" y="952" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle">9</text>
+<circle cx="473.5" cy="948.5" r="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2.5 2"/>
+<text x="473.5" y="952" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle">5</text>
+<circle cx="506.5" cy="948.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="539.5" cy="948.5" r="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2.5 2"/>
+<text x="539.5" y="952" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle">4</text>
+<circle cx="572.5" cy="948.5" r="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2.5 2"/>
+<text x="572.5" y="952" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle">1</text>
+<circle cx="605.5" cy="948.5" r="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2.5 2"/>
+<text x="605.5" y="952" font-size="9" fill="#C2410C" font-weight="700" text-anchor="middle">2</text>
+<circle cx="638.5" cy="948.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="671.5" cy="948.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<circle cx="715.5" cy="948.5" r="5.5" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.4" stroke-dasharray="2.5 2"/>
+<circle cx="746.5" cy="948.5" r="5.5" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.4" stroke-dasharray="2.5 2"/>
+<circle cx="777.5" cy="948.5" r="5.5" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.4" stroke-dasharray="2.5 2"/>
+<circle cx="808.5" cy="948.5" r="5.5" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.4" stroke-dasharray="2.5 2"/>
+<circle cx="839.5" cy="948.5" r="5.5" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.4" stroke-dasharray="2.5 2"/>
+<circle cx="870.5" cy="948.5" r="5.5" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.4" stroke-dasharray="2.5 2"/>
+<circle cx="901.5" cy="948.5" r="1.6" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="0"/>
+<text x="954" y="952.5" font-size="10" fill="#94A3B8" text-anchor="middle">—</text>
+<text x="972" y="952.5" font-size="10" fill="#94A3B8">unchanged since 8b8c6ae</text>
+<rect x="1140" y="941" width="96" height="15" rx="7.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="1188" y="952" font-size="9.5" fill="#475569" text-anchor="middle">not yet executed</text>
+<line x1="40" y1="959" x2="1240" y2="959" stroke="#CBD5E1" stroke-width="1"/>
+<text x="106" y="975" font-size="10" fill="#475569">cases naming the column</text>
+<text x="440.5" y="975" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">3</text>
+<text x="473.5" y="975" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">2</text>
+<text x="506.5" y="975" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">2</text>
+<text x="539.5" y="975" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">11</text>
+<text x="572.5" y="975" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">17</text>
+<text x="605.5" y="975" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">6</text>
+<text x="638.5" y="975" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">6</text>
+<text x="671.5" y="975" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">1</text>
+<text x="715.5" y="975" font-size="10.5" fill="#4F46E5" font-weight="700" text-anchor="middle">26</text>
+<text x="746.5" y="975" font-size="10.5" fill="#4F46E5" font-weight="700" text-anchor="middle">8</text>
+<text x="777.5" y="975" font-size="10.5" fill="#4F46E5" font-weight="700" text-anchor="middle">2</text>
+<text x="808.5" y="975" font-size="10.5" fill="#4F46E5" font-weight="700" text-anchor="middle">2</text>
+<text x="839.5" y="975" font-size="10.5" fill="#4F46E5" font-weight="700" text-anchor="middle">5</text>
+<text x="870.5" y="975" font-size="10.5" fill="#4F46E5" font-weight="700" text-anchor="middle">6</text>
+<text x="901.5" y="975" font-size="10.5" fill="#4F46E5" font-weight="700" text-anchor="middle">9</text>
+<text x="954" y="975" font-size="10.5" fill="#0F766E" font-weight="700" text-anchor="middle">20</text>
+<text x="1140" y="975" font-size="10.5" fill="#475569" font-weight="700">0 of 31 executed</text>
+<text x="106" y="995" font-size="9.5" fill="#475569">TSR blocks: 1xx Lateral actuation envelope  ·  2xx Longitudinal envelope  ·  3xx Engagement, disengagement and driver override  ·  4xx Communication integrity  · </text>
+<text x="106" y="1008" font-size="9.5" fill="#475569"> 5xx Safety-MCU platform integrity  ·  6xx Host-side (SoC) monitoring, DM and HMI  ·  7xx Stock PCS preservation and harness  ·  8xx Production, operation, service and decommissioning</text>
+<line x1="40" y1="1024" x2="1240" y2="1024" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="1040" font-size="13" fill="#0F172A" font-weight="700">§6 Coverage of safety analyses</text>
+<text x="270" y="1040" font-size="10.5" fill="#475569">14 items listed: 13 have a specified case (not executed), 1 not testable by fault injection; WP-A-04 SFMEA-33…-40 have no case yet. §6 names no STPA (WP-A-05) item.</text>
+<text x="40" y="1070" font-size="10.5" fill="#0F172A" font-weight="700">System FTA / FMEA (WP-A-04)</text>
+<rect x="250" y="1056" width="232" height="36" rx="6" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="258" y="1071" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SPF-01</text>
+<text x="302.4" y="1071" font-size="9.5" fill="#475569">limit values</text>
+<text x="258" y="1085" font-size="9.5" fill="#475569">not testable by fault injection</text>
+<rect x="490" y="1056" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="498" y="1071" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SPF-02</text>
+<text x="542.4" y="1071" font-size="9.5" fill="#475569">post-hook frame corruption</text>
+<text x="498" y="1085" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-18</text>
+<rect x="730" y="1056" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="738" y="1071" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SPF-03</text>
+<text x="782.4" y="1071" font-size="9.5" fill="#475569">SoC disables monitor</text>
+<text x="738" y="1085" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-11, FI-23, FI-29</text>
+<rect x="970" y="1056" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="978" y="1071" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SPF-04</text>
+<text x="1022.4" y="1071" font-size="9.5" fill="#475569">shared RX path</text>
+<text x="978" y="1085" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-02, FI-03, FI-05</text>
+<rect x="250" y="1100" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="258" y="1115" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SPF-05</text>
+<text x="302.4" y="1115" font-size="9.5" fill="#475569">debug build</text>
+<text x="258" y="1129" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-29</text>
+<rect x="490" y="1100" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="498" y="1115" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SPF-06</text>
+<text x="542.4" y="1115" font-size="9.5" fill="#475569">MCU hang, relay energised; GAP…</text>
+<text x="498" y="1129" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-17</text>
+<rect x="730" y="1100" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="738" y="1115" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SPF-07</text>
+<text x="782.4" y="1115" font-size="9.5" fill="#475569">relay welded</text>
+<text x="738" y="1129" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-21</text>
+<rect x="970" y="1100" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="978" y="1115" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SPF-08</text>
+<text x="1022.4" y="1115" font-size="9.5" fill="#475569">0xe7 stops forwarding</text>
+<text x="978" y="1129" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-11, FI-24</text>
+<rect x="250" y="1144" width="232" height="36" rx="6" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.3" stroke-dasharray="4 3"/>
+<text x="258" y="1159" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">SFMEA-33…-40</text>
+<text x="258" y="1173" font-size="9.5" fill="#D2553F" font-weight="600">no fault-injection case yet (OI-6)</text>
+<text x="40" y="1206" font-size="10.5" fill="#0F172A" font-weight="700">Freedom from interference (WP-A-02)</text>
+<rect x="250" y="1192" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="258" y="1207" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FFI-SP-02</text>
+<text x="321.6" y="1207" font-size="9.5" fill="#475569">SPI length</text>
+<text x="258" y="1221" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-07</text>
+<rect x="490" y="1192" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="498" y="1207" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FFI-TM-01/02</text>
+<text x="580.8" y="1207" font-size="9.5" fill="#475569">ISR load, hang</text>
+<text x="498" y="1221" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-17, FI-19</text>
+<rect x="730" y="1192" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="738" y="1207" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">FFI-CM-01…-04, -11</text>
+<text x="738" y="1221" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-06, FI-08, FI-10, FI-19</text>
+<text x="40" y="1254" font-size="10.5" fill="#0F172A" font-weight="700">Dependent failures (WP-A-03)</text>
+<rect x="250" y="1240" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="258" y="1255" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">DFI-01, -02, -04, -07</text>
+<text x="258" y="1269" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-15, FI-20, FI-22, FI-26</text>
+<rect x="490" y="1240" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="498" y="1255" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">DFI-09</text>
+<text x="542.4" y="1255" font-size="9.5" fill="#475569">shared CarParams</text>
+<text x="498" y="1269" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-23</text>
+<rect x="730" y="1240" width="232" height="36" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<text x="738" y="1255" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">DFI-14</text>
+<text x="782.4" y="1255" font-size="9.5" fill="#475569">SoC crash removes warning</text>
+<text x="738" y="1269" font-size="9.5" fill="#0F766E" font-weight="600">→ FI-09, FI-10</text>
+<line x1="40" y1="1290" x2="1240" y2="1290" stroke="#E2E8F0" stroke-width="1"/>
+<circle cx="47" cy="1302" r="7" fill="#C2410C" stroke="#C2410C" stroke-width="1.4"/>
+<text x="60" y="1306" font-size="10.5" fill="#475569">TSRs of the block named (count)</text>
+<circle cx="251" cy="1302" r="5.5" fill="#4F46E5" stroke="#4F46E5" stroke-width="1.4"/>
+<text x="263" y="1306" font-size="10.5" fill="#475569">goal reached via the TSR's parent FSR</text>
+<circle cx="480" cy="1302" r="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2.5 2"/>
+<text x="493" y="1306" font-size="10.5" fill="#475569">inherited: "As in the referenced cases" (27 → 08, 09, 14)</text>
+<circle cx="809" cy="1302" r="5" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.4"/>
+<text x="820" y="1306" font-size="10.5" fill="#475569">named by a §6 item</text>
+<rect x="40" y="1318" width="12" height="13" rx="2" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+<text x="58" y="1328" font-size="10.5" fill="#475569">level U unit, S SoC SIL, H HIL, V vehicle; A is not defined in §3 (VS-FI-20)</text>
+<rect x="500" y="1319" width="5" height="8" rx="1" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="512" y="1328" font-size="10.5" fill="#475569">implementation status from WP-W-02, not verified</text>
+<rect x="800" y="1318" width="34" height="13" rx="6.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="842" y="1328" font-size="10.5" fill="#475569">§8: not yet executed (nothing is green)</text>
+</svg>
