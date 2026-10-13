@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="706" viewBox="0 0 1280 706" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 2-1. ASIL decomposition decision for SG-01 and the four candidate schemes DEC-01 to DEC-04 (WP-A-01 §2, §4.1, §7)</title>
+  <desc id="d">SG-01 is ASIL C (D if AOU-01/02 fail). If controllability tests show C1 at a useful torque level, SG-01 is re-rated to ASIL B and the envelope E-03 is hardened to ASIL B as one element with no decomposition; this is the primary strategy, option (c). If not, and the envelope can be argued at ASIL C (option (a)), there is still no decomposition. Only if neither holds is the fallback DEC-01 used: C(C) = B(C) on the E-03 envelope plus A(C) on a new independent actuation monitor E-07; it is proposed, not applied. DEC-02 (second channel on the same MCU) and DEC-04 (SoC monitor) are rejected, DEC-03 (Toyota EPS) is not recommended; all three are withdrawn.</desc>
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#FECACA" stroke-width="2"/></pattern>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10.5px}.b{font-weight:700}.sb{font-weight:600}
+      .asil{fill:#FFF7ED;stroke:#C2410C;stroke-width:1.6}
+      .concept{fill:#FFFFFF;stroke:#C2410C;stroke-width:1.4;stroke-dasharray:5 3}
+      .ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .rej{fill:url(#hatch);stroke:#D2553F;stroke-width:1.4;stroke-dasharray:5 3}
+      .dec{fill:#F8FAFC;stroke:#334155;stroke-width:1.4}
+      .card{fill:#FFFFFF;stroke:#CBD5E1;stroke-width:1.2}
+    </style>
+  </defs>
+  <rect width="1280" height="706" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 2-1 · Decomposition decision and candidate schemes</text>
+  <text x="40" y="66" class="m" font-size="12.5">Primary strategy uses no decomposition · DEC-01 is a documented fallback only · no hardware for it exists</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">WP-A-01 §2, §4.1</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">need per SG §3 · records §7</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+
+  <text x="40" y="106" class="m b" font-size="10" letter-spacing=".06em">DECISION (§2, §3)</text>
+  <text x="660" y="106" class="m b" font-size="10" letter-spacing=".06em">CANDIDATE SCHEMES (§4.1) · RECORD STATUS (§7)</text>
+
+  <!-- ===== left: decision flow ===== -->
+  <!-- A: SG-01 -->
+  <rect x="40" y="120" width="560" height="64" rx="10" class="asil"/>
+  <text x="58" y="144" class="t b" font-size="13.5">SG-01 · ASIL C ⚠</text>
+  <text x="196" y="144" class="m s">D if AOU-01/02 fail</text>
+  <text x="58" y="164" class="t xs">SG-01-derived FSRs carry ASIL C until the HARA is re-rated on controllability evidence;</text>
+  <text x="58" y="177" class="t xs">all other envelope FSRs carry ASIL B</text>
+
+  <!-- D1 -->
+  <path d="M62 212H578L600 241L578 270H62L40 241Z" class="dec"/>
+  <text x="320" y="236" class="t sb" font-size="12" text-anchor="middle">Controllability tests show C1 at a torque level that keeps the function useful?</text>
+  <text x="320" y="253" class="m xs" text-anchor="middle">WP-C-04 OI-2 · WP-C-08 §8 · WP-A-01 OI-2</text>
+  <path d="M320 184V210" stroke="#475569" stroke-width="1.4" fill="none" marker-end="url(#aG)"/>
+
+  <!-- P: primary -->
+  <rect x="40" y="306" width="262" height="150" rx="10" class="asil"/>
+  <rect x="54" y="318" width="234" height="20" rx="10" fill="#C2410C"/>
+  <text x="171" y="332" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".04em">PRIMARY · OPTION (c)</text>
+  <text x="56" y="358" class="t xs">• no decomposition · SG-01 re-rated C → B</text>
+  <text x="56" y="374" class="t xs">• lateral authority reduced until C1 shown</text>
+  <text x="56" y="390" class="t xs">• E-03 envelope hardened to ASIL B as one</text>
+  <text x="64" y="404" class="t xs">non-decomposed element</text>
+  <text x="56" y="426" font-size="10.5" font-weight="700" fill="#D97706">Not yet achieved: awaits OI-1 (maintainer)</text>
+  <text x="56" y="441" font-size="10.5" font-weight="700" fill="#D97706">and the controllability tests</text>
+  <path d="M171 270V304" stroke="#475569" stroke-width="1.4" fill="none" marker-end="url(#aG)"/>
+  <text x="180" y="292" class="t b" font-size="11">yes</text>
+
+  <!-- D2 -->
+  <path d="M352 306H578L600 334L578 362H352L330 334Z" class="dec"/>
+  <text x="465" y="330" class="t sb" font-size="12" text-anchor="middle">Envelope argued at ASIL C?</text>
+  <text x="465" y="347" class="m xs" text-anchor="middle">option (a)</text>
+  <path d="M465 270V304" stroke="#475569" stroke-width="1.4" fill="none" marker-end="url(#aG)"/>
+  <text x="474" y="292" class="t b" font-size="11">no</text>
+
+  <!-- Ca: option (a) -->
+  <rect x="330" y="396" width="270" height="60" rx="10" class="asil"/>
+  <text x="346" y="416" class="t sb" font-size="12">E-03 at ASIL C · no decomposition</text>
+  <text x="346" y="432" class="m xs">unlikely on a COTS single-channel MCU</text>
+  <text x="346" y="446" class="m xs">with shared PCB/power (§3; WP-M-01 §9)</text>
+  <path d="M465 362V394" stroke="#475569" stroke-width="1.4" fill="none" marker-end="url(#aG)"/>
+  <text x="474" y="383" class="t b" font-size="11">yes</text>
+
+  <!-- D2 no -> DEC-01 -->
+  <path d="M600 334H628V176H658" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#aR)"/>
+  <text x="610" y="326" fill="#C2410C" font-size="11" font-weight="700">no</text>
+
+  <!-- notes on other goals -->
+  <rect x="40" y="482" width="560" height="128" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="56" y="503" class="t b" font-size="12">Other goals (§3)</text>
+  <text x="56" y="522" class="t xs">• SG-02, SG-06, SG-07 (ASIL B): E-03 carries the ASIL alone after hardening; no decomposition</text>
+  <text x="56" y="539" class="t xs">• SG-03, SG-04 (C if AOU-05 fails) and SG-05 (C if AOU-01/02/03 fail): ASIL B ⚠; if an AoU fails,</text>
+  <text x="64" y="554" class="t xs">the same fallback applies and DEC-01 scope is extended (OI-3)</text>
+  <text x="56" y="574" class="t xs">• The QM SoC (E-01) and the Toyota EPS are never credited as a decomposition partner (§2)</text>
+
+  <!-- ===== right: candidate cards ===== -->
+  <!-- DEC-01 -->
+  <rect x="660" y="120" width="580" height="118" rx="10" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.6"/>
+  <text x="676" y="143" class="t b" font-size="13.5">DEC-01</text>
+  <text x="738" y="143" class="m s">C(C) = B(C) + A(C) · preferred fallback</text>
+  <rect x="1046" y="129" width="180" height="20" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4"/>
+  <text x="1136" y="143" fill="#D97706" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">PROPOSED · NOT APPLIED</text>
+  <rect x="676" y="156" width="262" height="40" rx="7" class="asil"/>
+  <text x="688" y="173" class="t sb" font-size="11.5">E-03 envelope · panda STM32H7</text>
+  <text x="688" y="188" class="m" font-size="10">B(C) · TSR-101…110, -301…311, -401…413, -501…516</text>
+  <text x="951" y="182" class="t b" font-size="15" text-anchor="middle">+</text>
+  <rect x="964" y="156" width="262" height="40" rx="7" class="concept"/>
+  <text x="976" y="173" class="t sb" font-size="11.5">E-07 independent actuation monitor</text>
+  <text x="976" y="188" class="m" font-size="10">A(C) · new element, concept only (§4.2)</text>
+  <text x="676" y="214" class="t xs">Decomposed: FSR-01.01, -01.03, -01.04, -01.05 · independence IR-01…IR-10 (§4.3, Figure 4-1)</text>
+  <text x="676" y="229" class="m xs">Both halves under LionDriver control; E-07 safe state = relay de-energised (needs AOU-13, OI-5)</text>
+
+  <!-- DEC-02 -->
+  <rect x="660" y="250" width="580" height="112" rx="10" class="card"/>
+  <text x="676" y="273" class="t b" font-size="13.5">DEC-02</text>
+  <text x="738" y="273" class="m s">C(C) = B(C) + A(C) · two channels, one MCU</text>
+  <rect x="1046" y="259" width="180" height="20" rx="10" fill="#D2553F"/>
+  <text x="1136" y="273" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">WITHDRAWN · REJECTED</text>
+  <rect x="676" y="286" width="262" height="34" rx="7" class="asil"/>
+  <text x="688" y="307" class="t sb" font-size="11.5">E-03 envelope</text>
+  <text x="951" y="309" class="t b" font-size="15" text-anchor="middle">+</text>
+  <rect x="964" y="286" width="262" height="34" rx="7" class="rej"/>
+  <rect x="972" y="294" width="246" height="18" rx="4" fill="#FFFFFF" fill-opacity=".9"/>
+  <text x="980" y="307" class="t sb" font-size="11.5">2nd software channel, same STM32H7</text>
+  <text x="676" y="338" class="m xs">Shares clock, power, memory, CAN peripheral, compiler and SoC-controlled reset/boot pins (GAP-38);</text>
+  <text x="676" y="353" class="m" font-size="10">no MPU partitioning or lockstep (GAP-11). Kept only as diagnostic coverage inside E-03</text>
+
+  <!-- DEC-03 -->
+  <rect x="660" y="374" width="580" height="112" rx="10" class="card"/>
+  <text x="676" y="397" class="t b" font-size="13.5">DEC-03</text>
+  <text x="738" y="397" class="m s">C(C) = B(C) + A(C) · envelope + Toyota EPS</text>
+  <rect x="1006" y="383" width="220" height="20" rx="10" fill="#D2553F"/>
+  <text x="1116" y="397" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">WITHDRAWN · NOT RECOMMENDED</text>
+  <rect x="676" y="410" width="262" height="34" rx="7" class="asil"/>
+  <text x="688" y="431" class="t sb" font-size="11.5">E-03 envelope</text>
+  <text x="951" y="433" class="t b" font-size="15" text-anchor="middle">+</text>
+  <rect x="964" y="410" width="262" height="34" rx="7" class="rej"/>
+  <rect x="972" y="418" width="246" height="18" rx="4" fill="#FFFFFF" fill-opacity=".9"/>
+  <text x="980" y="431" class="t sb" font-size="11.5">Toyota EPS LKA limit (EXT-EPS)</text>
+  <text x="676" y="462" class="m xs">§5: no development evidence · no input independence · unknown behaviour · change outside</text>
+  <text x="676" y="477" class="m" font-size="10">LionDriver control · assessor risk. EPS stays an external measure (FSR-01.13, TSR-111, AOU-01R)</text>
+
+  <!-- DEC-04 -->
+  <rect x="660" y="498" width="580" height="112" rx="10" class="card"/>
+  <text x="676" y="521" class="t b" font-size="13.5">DEC-04</text>
+  <text x="738" y="521" class="m s">C(C) = A(C) + B(C) · SoC monitor + envelope</text>
+  <rect x="1046" y="507" width="180" height="20" rx="10" fill="#D2553F"/>
+  <text x="1136" y="521" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">WITHDRAWN · REJECTED</text>
+  <rect x="676" y="534" width="262" height="34" rx="7" class="rej"/>
+  <rect x="684" y="542" width="246" height="18" rx="4" fill="#FFFFFF" fill-opacity=".9"/>
+  <text x="692" y="555" class="t sb" font-size="11.5">SoC monitor E-01, QM → ASIL A</text>
+  <text x="951" y="557" class="t b" font-size="15" text-anchor="middle">+</text>
+  <rect x="964" y="534" width="262" height="34" rx="7" class="asil"/>
+  <text x="976" y="555" class="t sb" font-size="11.5">E-03 envelope at B</text>
+  <text x="676" y="586" class="m xs">The SoC produces the command it would monitor; Linux/Python without partitioning or WCET (GAP-23);</text>
+  <text x="676" y="601" class="m" font-size="10">could configure the envelope (GAP-09, locked in the reference build) and controls its boot pins (GAP-38)</text>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="636" x2="1240" y2="636" stroke="#E2E8F0"/>
+  <g transform="translate(40,660)" font-size="10.5">
+    <rect x="0" y="-8" width="28" height="16" rx="4" class="asil"/><text x="36" y="4" class="t">ASIL element (E-03)</text>
+    <rect x="170" y="-8" width="28" height="16" rx="4" class="concept"/><text x="206" y="4" class="t">Concept element, does not exist</text>
+    <rect x="400" y="-8" width="28" height="16" rx="4" class="rej"/><text x="436" y="4" class="t">Rejected partner</text>
+    <path d="M556 -8H578L586 0L578 8H556L548 0Z" class="dec"/><text x="596" y="4" class="t">Decision</text>
+    <rect x="676" y="-8" width="28" height="16" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4"/><text x="712" y="4" class="t">Proposed, not applied / not achieved</text>
+    <rect x="950" y="-8" width="28" height="16" rx="8" fill="#D2553F"/><text x="986" y="4" class="t">Withdrawn (record kept, §7)</text>
+  </g>
+  <text x="40" y="692" class="m" font-size="10">X(Y): requirement of ASIL X decomposed from an ASIL Y goal (ISO 26262-9 §5). ⚠: rating depends on unverified AoUs.</text>
+</svg>

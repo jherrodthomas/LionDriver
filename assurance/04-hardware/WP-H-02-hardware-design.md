@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay) |
 | Standard reference | ISO 26262-5:2018 §7 (hardware design: architectural and detailed design, safety-related HW elements); ISO 26262-8:2018 §13; ASPICE 4.0 HWE.2 |
-| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
+| Version | 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
 | Status | Draft |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-07) |
 | Author | Assurance team (initial draft) |
@@ -41,6 +41,12 @@ this document covers both boards (WP-H-01 OI-7).
 ## 3. Architecture (observable)
 
 ### 3.1 Block diagram
+
+![Figure 3-1: recovered hardware block diagram with vehicle 12 V, forward camera and vehicle CAN; E-05 harness with intercept relay HE-08, ignition line HE-10 and harness connector HE-09; E-04 comma device with power input, QM application SoC and peripherals, and the panda safety MCU STM32H725 with CAN transceivers HE-07 on buses 0/1/2, relay drive, SPI IF-04 and HE-01 to HE-17](figures/fig-h02-3-1-hardware-block-diagram.svg)
+
+*Figure 3-1.* The recovered hardware architecture: harness relay (drawn de-energised, stock path closed), the harness connector lines, the QM SoC with its peripherals and the panda safety MCU with its CAN transceivers and internal resources. Safety-relevant elements are outlined in orange and tagged with their HE-ID from §3.2; buses carry the Toyota-mode numbers and the WP-C-01 interface IDs. Source: [`figures/fig-h02-3-1-hardware-block-diagram.svg`](figures/fig-h02-3-1-hardware-block-diagram.svg); change it together with §3.2 and §3.3.
+
+<details><summary>Text version of Figure 3-1</summary>
 
 ```
                      Vehicle (E210 Corolla TSS2)
@@ -79,6 +85,8 @@ this document covers both boards (WP-H-01 OI-7).
  │                                                  └──────────────────────────────────┘   │
  └─────────────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 Bus numbering is that of the Toyota safety mode: bus 0 = car side, bus 2 = camera side
 (WP-C-01 IF-01…IF-03). The STM32H7 has three FDCAN controllers (`panda/board/can.h:3`,
@@ -125,11 +133,19 @@ disturb the stock path (WP-H-03 FM-CAN-03).
 
 ### 3.4 Power path
 
+![Figure 3-2: power path from vehicle 12 V through the E-05 harness and the device input to the SoC/PMIC rail (DC_IN enable PC11 on cuatro), the MCU regulator and STM32H7 SMPS/LDO (HE-05), and the relay coil supply (HE-08), with unknowns UK-03, UK-05 and UK-08](figures/fig-h02-3-4-power-path.svg)
+
+*Figure 3-2.* Supply branches from the vehicle 12 V input to the SoC rail, the MCU rail and the relay coil. Dashed boxes are unknown or unconfirmed; the bootkick line (HE-13) shows that the MCU can switch SoC power. Source: [`figures/fig-h02-3-4-power-path.svg`](figures/fig-h02-3-4-power-path.svg); change it together with §3.2, §3.4 and §5.
+
+<details><summary>Text version of Figure 3-2</summary>
+
 ```
 Vehicle 12 V ─ harness ─ device input ─┬─ (cuatro) DC_IN enable PC11 ── SoC/PMIC rail
                                        ├─ MCU regulator (unknown) ── STM32H7 (SMPS or LDO internal)
                                        └─ relay coil supply (in harness box? unknown)
 ```
+
+</details>
 
 Known: the MCU keeps running with the SoC off (stop mode with CAN/SBU wake on cuatro,
 `main.c:353-356`); the MCU can switch SoC power (bootkick). Unknown: whether MCU and SoC share a
@@ -147,7 +163,7 @@ QM SoC (GAP-11) and HWSR-502a.
 | Other exceptions / unused vectors | `Default_Handler` infinite loop | **Last state (may stay driven)** | Stops (no ISR), pending FIFO frames may still go out | `startup_stm32h7x5xx.s:111-114` |
 | `assert_fatal` | `while(1)` with interrupts as they were | **Last state** | Stops | `libc.h:12-20` |
 | Main loop or ISR hang | Since 2026-10-12 (panda `9f60e17`): once the relay has been driven, IWDG reset ≤ ~90 ms nominal after the stall (LSI tolerance open), then as power-on. Before the first relay drive the IWDG is not started, but the relay has not been energised. *As found: no hardware watchdog, no recovery (GAP-07)* | Released after the reset *(HWSR-502 unconfirmed)*; not verified on hardware | Stops | `drivers/hw_watchdog.h`; WP-H-01 HWSR-501 |
-| SoC heartbeat loss | In a car mode authority revoked after 0.3 s (100 Hz safety task, panda `c2e5d93`, not verified on hardware); SILENT after 5 s (ign on) / 2 s; relay released; siren 3 s if engaged | Released (after the SILENT timeout) | Actuation refused from 0.3 s; none after SILENT | `drivers/heartbeat_monitor.h`; `main.c:140-142` and the 1 Hz path in `main.c` |
+| SoC heartbeat loss | In a car mode authority revoked after 0.3 s (100 Hz safety task, panda `c2e5d93`, not verified on hardware); SILENT after 5 s (ign on) / 2 s; relay released; siren 3 s if engaged (2026-10-13: sounded at the 0.3 s revocation when authority was granted, ≈ 0.56 s after the last heartbeat, all builds, panda `c33343b`, `drivers/heartbeat_siren.h`) | Released (after the SILENT timeout) | Actuation refused from 0.3 s; none after SILENT | `drivers/heartbeat_monitor.h`; `main.c:140-142` and the 1 Hz path in `main.c` |
 | Relay malfunction detected | TX and forwarding blocked | Unchanged | Blocked | `safety.h:252, 268` |
 
 The rows marked **Last state** are the key hardware finding: a hang with the relay energised

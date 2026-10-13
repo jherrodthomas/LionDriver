@@ -1,0 +1,286 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="938" viewBox="0 0 1280 938" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 5-1. Gate roadmap G0 to G6 with blockers and the 30-day backlog (WP-M-03 §3, §5, §9)</title>
+  <desc id="d">Phases P0 Governance, P1 Concept, P2 System design, P3 HW/SW development, P4 Integration and verification, P5 Validation and release and P6 Operation, each closed by its gate G0 to G6, with relative durations and effort estimates from §4 and §5. No gate is recorded as passed and no calendar dates are set. Under each phase are its entry conditions from §5 and the open items due at its gate; below are the critical path, the long-lead items and the single-maintainer bottleneck R-01. The bottom panel shows backlog items B-01 to B-17 of §9 by status: B-02, B-03, B-10, B-14 and B-17 done; B-04 and B-07 done with an exception; the other ten not marked done.</desc>
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7C3AED"/></marker>
+    <marker id="aY" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#A16207"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+      .ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .chip{fill:#F8FAFC;stroke:#CBD5E1;stroke-width:1}
+      .tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+    </style>
+  </defs>
+  <rect width="1280" height="938" fill="#FFFFFF"/>
+  <text x="40" y="44" class="t b" font-size="20">Figure 5-1 · Gate roadmap G0…G6: no gate passed yet</text>
+  <text x="40" y="66" class="m" font-size="12.5">Phases and gates of §3 with the relative durations of §5 and effort of §4.2 (not to scale; no calendar dates, OI-1) · blockers from §5, §6, §10 · backlog from §9</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">WP-M-03 §3, §5, §9</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">status as recorded 2026-10-12</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+  <rect x="40" y="96" width="1200" height="24" rx="12" fill="#FDECEA" stroke="#D2553F" stroke-width="1.2"/>
+  <text x="640.0" y="112" font-size="11.5" text-anchor="middle" font-weight="700" fill="#9F2A1B">No gate is recorded as passed · no milestones exist yet (B-01) · the plan is Draft and the schedule is relative only (OI-1)</text>
+  <rect x="40" y="138" width="110" height="92" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+  <text x="52" y="160" class="t b" font-size="15">P0</text>
+  <text x="52" y="178" class="t sb" font-size="11">Governance</text>
+  <text x="52" y="210" class="m" font-size="10.5">2–3 months</text>
+  <text x="52" y="224" class="m" font-size="10.5">6–10 pw</text>
+  <path d="M150 176.0 H163.5" stroke="#475569" stroke-width="1.4"/>
+  <path d="M195.5 176.0 H209" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M179.5 159.0 L195.5 176.0 L179.5 193.0 L163.5 176.0Z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="4 2"/>
+  <text x="179.5" y="180.0" class="t b" font-size="11" text-anchor="middle">G0</text>
+  <text x="179.5" y="207.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">not</text>
+  <text x="179.5" y="217.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">passed</text>
+  <rect x="211" y="138" width="110" height="92" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+  <text x="223" y="160" class="t b" font-size="15">P1</text>
+  <text x="223" y="178" class="t sb" font-size="11">Concept</text>
+  <text x="223" y="210" class="m" font-size="10.5">4–6 months</text>
+  <text x="223" y="224" class="m" font-size="10.5">14–24 pw</text>
+  <path d="M321 176.0 H334.5" stroke="#475569" stroke-width="1.4"/>
+  <path d="M366.5 176.0 H380" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M350.5 159.0 L366.5 176.0 L350.5 193.0 L334.5 176.0Z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="4 2"/>
+  <text x="350.5" y="180.0" class="t b" font-size="11" text-anchor="middle">G1</text>
+  <text x="350.5" y="207.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">not</text>
+  <text x="350.5" y="217.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">passed</text>
+  <rect x="382" y="138" width="110" height="92" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+  <text x="394" y="160" class="t b" font-size="15">P2</text>
+  <text x="394" y="178" class="t sb" font-size="11">System design</text>
+  <text x="394" y="210" class="m" font-size="10.5">4–6 months</text>
+  <text x="394" y="224" class="m" font-size="10.5">14–22 pw</text>
+  <path d="M492 176.0 H505.5" stroke="#475569" stroke-width="1.4"/>
+  <path d="M537.5 176.0 H551" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M521.5 159.0 L537.5 176.0 L521.5 193.0 L505.5 176.0Z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="4 2"/>
+  <text x="521.5" y="180.0" class="t b" font-size="11" text-anchor="middle">G2</text>
+  <text x="521.5" y="207.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">not</text>
+  <text x="521.5" y="217.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">passed</text>
+  <rect x="553" y="138" width="110" height="92" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+  <text x="565" y="160" class="t b" font-size="15">P3</text>
+  <text x="565" y="178" class="t sb" font-size="11">HW/SW</text>
+  <text x="565" y="192" class="t sb" font-size="11">development</text>
+  <text x="565" y="210" class="m" font-size="10.5">8–12 months</text>
+  <text x="565" y="224" class="m" font-size="10.5">30–55 pw</text>
+  <path d="M663 176.0 H676.5" stroke="#475569" stroke-width="1.4"/>
+  <path d="M708.5 176.0 H722" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M692.5 159.0 L708.5 176.0 L692.5 193.0 L676.5 176.0Z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="4 2"/>
+  <text x="692.5" y="180.0" class="t b" font-size="11" text-anchor="middle">G3</text>
+  <text x="692.5" y="207.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">not</text>
+  <text x="692.5" y="217.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">passed</text>
+  <rect x="724" y="138" width="110" height="92" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+  <text x="736" y="160" class="t b" font-size="15">P4</text>
+  <text x="736" y="178" class="t sb" font-size="11">Integration and</text>
+  <text x="736" y="192" class="t sb" font-size="11">verification</text>
+  <text x="736" y="210" class="m" font-size="10.5">5–8 months</text>
+  <text x="736" y="224" class="m" font-size="10.5">20–35 pw</text>
+  <path d="M834 176.0 H847.5" stroke="#475569" stroke-width="1.4"/>
+  <path d="M879.5 176.0 H893" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M863.5 159.0 L879.5 176.0 L863.5 193.0 L847.5 176.0Z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="4 2"/>
+  <text x="863.5" y="180.0" class="t b" font-size="11" text-anchor="middle">G4</text>
+  <text x="863.5" y="207.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">not</text>
+  <text x="863.5" y="217.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">passed</text>
+  <rect x="895" y="138" width="110" height="92" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+  <text x="907" y="160" class="t b" font-size="15">P5</text>
+  <text x="907" y="178" class="t sb" font-size="11">Validation and</text>
+  <text x="907" y="192" class="t sb" font-size="11">release</text>
+  <text x="907" y="210" class="m" font-size="10.5">5–9 months</text>
+  <text x="907" y="224" class="m" font-size="10.5">20–40 pw</text>
+  <path d="M1005 176.0 H1018.5" stroke="#475569" stroke-width="1.4"/>
+  <path d="M1050.5 176.0 H1064" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M1034.5 159.0 L1050.5 176.0 L1034.5 193.0 L1018.5 176.0Z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="4 2"/>
+  <text x="1034.5" y="180.0" class="t b" font-size="11" text-anchor="middle">G5</text>
+  <text x="1034.5" y="207.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">not</text>
+  <text x="1034.5" y="217.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">passed</text>
+  <rect x="1066" y="138" width="110" height="92" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+  <text x="1078" y="160" class="t b" font-size="15">P6</text>
+  <text x="1078" y="178" class="t sb" font-size="11">Operation</text>
+  <text x="1078" y="210" class="m" font-size="10.5">continuous</text>
+  <text x="1078" y="224" class="m" font-size="10.5">0.1–0.2 FTE</text>
+  <path d="M1176 176.0 H1189.5" stroke="#475569" stroke-width="1.4"/>
+  <path d="M1205.5 159.0 L1221.5 176.0 L1205.5 193.0 L1189.5 176.0Z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="4 2"/>
+  <text x="1205.5" y="180.0" class="t b" font-size="11" text-anchor="middle">G6</text>
+  <text x="1205.5" y="207.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">not</text>
+  <text x="1205.5" y="217.0" font-size="9" text-anchor="middle" font-weight="700" fill="#9F2A1B">passed</text>
+  <text x="40" y="260" class="t b" font-size="12">Entry conditions of each phase (§5 “Depends on”) and open items due at its gate (§10)</text>
+  <rect x="40" y="268" width="159" height="106" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="50" y="286" class="m sb" font-size="10">Start: no dependency</text>
+  <circle cx="50" cy="298" r="3" fill="#D2553F"/>
+  <text x="58" y="302" class="t" font-size="10">Due G0: OI-1 FTE and dated</text>
+  <text x="58" y="318" class="t" font-size="10">schedule · OI-2 funding ·</text>
+  <text x="58" y="334" class="t" font-size="10">OI-3 licensed standards</text>
+  <rect x="211" y="268" width="159" height="106" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="221" y="286" class="m sb" font-size="10">Needs G0</text>
+  <circle cx="221" cy="298" r="3" fill="#D2553F"/>
+  <text x="229" y="302" class="t" font-size="10">Assessor engaged (for</text>
+  <text x="229" y="318" class="t" font-size="10">HARA CR) · test driver</text>
+  <text x="229" y="334" class="t" font-size="10">trained (for WP-V-07)</text>
+  <circle cx="221" cy="346" r="3" fill="#D2553F"/>
+  <text x="229" y="350" class="t" font-size="10">Due G1: OI-4 vehicle ·</text>
+  <text x="229" y="366" class="t" font-size="10">OI-5 re-estimate</text>
+  <rect x="382" y="268" width="159" height="106" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="392" y="286" class="m sb" font-size="10">Needs G1 (HARA confir-</text>
+  <text x="392" y="302" class="m sb" font-size="10">mation review passed)</text>
+  <rect x="553" y="268" width="159" height="106" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="563" y="286" class="m sb" font-size="10">Needs G2 (FFI/DFA decide</text>
+  <text x="563" y="302" class="m sb" font-size="10">the hardware route)</text>
+  <rect x="724" y="268" width="159" height="106" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="734" y="286" class="m sb" font-size="10">Needs G3</text>
+  <circle cx="734" cy="298" r="3" fill="#D2553F"/>
+  <text x="742" y="302" class="t" font-size="10">HIL bench ready: not built</text>
+  <text x="742" y="318" class="t" font-size="10">(D-04, GAP-30); HIL tests</text>
+  <text x="742" y="334" class="t" font-size="10">test_10…test_14 not run</text>
+  <rect x="895" y="268" width="159" height="106" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="905" y="286" class="m sb" font-size="10">Needs G4</text>
+  <circle cx="905" cy="298" r="3" fill="#D2553F"/>
+  <text x="913" y="302" class="t" font-size="10">Vehicle: E210 test vehicle,</text>
+  <text x="913" y="318" class="t" font-size="10">insurance TBD (§6)</text>
+  <circle cx="905" cy="330" r="3" fill="#D2553F"/>
+  <text x="913" y="334" class="t" font-size="10">Assessor availability</text>
+  <rect x="1066" y="268" width="159" height="106" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="1076" y="286" class="m sb" font-size="10">Needs G5</text>
+  <text x="40" y="398" class="t b" font-size="12">Critical path (§5)</text>
+  <rect x="77.0" y="408" width="36" height="24" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+  <text x="95.0" y="424" font-size="10.5" text-anchor="middle" font-weight="700" fill="#9A3412">P0</text>
+  <rect x="240.0" y="408" width="52" height="24" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+  <text x="266.0" y="424" font-size="10.5" text-anchor="middle" font-weight="700" fill="#9A3412">HARA</text>
+  <path d="M113.0 420 H238.0" fill="none" stroke="#C2410C" stroke-width="1.6" marker-end="url(#aR)"/>
+  <rect x="314.5" y="408" width="72" height="24" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+  <text x="350.5" y="424" font-size="10.5" text-anchor="middle" font-weight="700" fill="#9A3412">HARA CR</text>
+  <path d="M292.0 420 H312.5" fill="none" stroke="#C2410C" stroke-width="1.6" marker-end="url(#aR)"/>
+  <rect x="404.0" y="408" width="66" height="24" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+  <text x="437.0" y="424" font-size="10.5" text-anchor="middle" font-weight="700" fill="#9A3412">FFI/DFA</text>
+  <path d="M386.5 420 H402.0" fill="none" stroke="#C2410C" stroke-width="1.6" marker-end="url(#aR)"/>
+  <rect x="542.0" y="408" width="132" height="24" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+  <text x="608.0" y="424" font-size="10.5" text-anchor="middle" font-weight="700" fill="#9A3412">Envelope hardening</text>
+  <path d="M470.0 420 H540.0" fill="none" stroke="#C2410C" stroke-width="1.6" marker-end="url(#aR)"/>
+  <rect x="723.0" y="408" width="112" height="24" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+  <text x="779.0" y="424" font-size="10.5" text-anchor="middle" font-weight="700" fill="#9A3412">HIL verification</text>
+  <path d="M674.0 420 H721.0" fill="none" stroke="#C2410C" stroke-width="1.6" marker-end="url(#aR)"/>
+  <rect x="912.0" y="408" width="76" height="24" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+  <text x="950.0" y="424" font-size="10.5" text-anchor="middle" font-weight="700" fill="#9A3412">Validation</text>
+  <path d="M835.0 420 H910.0" fill="none" stroke="#C2410C" stroke-width="1.6" marker-end="url(#aR)"/>
+  <rect x="1013.5" y="408" width="42" height="24" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+  <text x="1034.5" y="424" font-size="10.5" text-anchor="middle" font-weight="700" fill="#9A3412">FSA</text>
+  <path d="M988.0 420 H1011.5" fill="none" stroke="#C2410C" stroke-width="1.6" marker-end="url(#aR)"/>
+  <text x="40" y="454" class="t b" font-size="12">Long-lead items to start early (§5) · status (§3, §6)</text>
+  <rect x="40" y="462" width="4" height="46" rx="2" fill="#0F766E"/>
+  <text x="52" y="474" class="t" font-size="10.5" font-weight="600">Assessor engagement</text>
+  <text x="52" y="488" class="m" font-size="10">assessor TBD (D-06); B-09</text>
+  <text x="52" y="502" class="m" font-size="10">not marked done</text>
+  <rect x="211" y="462" width="4" height="46" rx="2" fill="#0F766E"/>
+  <text x="223" y="474" class="t" font-size="10.5" font-weight="600">Test vehicle access,</text>
+  <text x="223" y="488" class="m" font-size="10">safety-driver training</text>
+  <text x="223" y="502" class="m" font-size="10">vehicle TBD (§6)</text>
+  <rect x="382" y="462" width="4" height="32" rx="2" fill="#0F766E"/>
+  <text x="394" y="474" class="t" font-size="10.5" font-weight="600">HIL bench parts</text>
+  <text x="394" y="488" class="m" font-size="10">bench not built (D-04)</text>
+  <rect x="553" y="462" width="4" height="46" rx="2" fill="#D97706"/>
+  <text x="565" y="474" class="t" font-size="10.5" font-weight="600">WBS 4.3 hardening:</text>
+  <text x="565" y="488" class="m" font-size="10">partly in reference build;</text>
+  <text x="565" y="502" class="m" font-size="10">not verified, not reviewed</text>
+  <rect x="724" y="462" width="4" height="46" rx="2" fill="#0F766E"/>
+  <text x="736" y="474" class="t" font-size="10.5" font-weight="600">Pen-test procurement</text>
+  <text x="736" y="488" class="m" font-size="10">CS assessor, pen tester</text>
+  <text x="736" y="502" class="m" font-size="10">TBD (§6)</text>
+  <rect x="40" y="524" width="1200" height="28" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4"/>
+  <rect x="40" y="524" width="6" height="28" rx="3" fill="#D2553F"/>
+  <text x="58" y="542" class="t b" font-size="11.5">Across all phases · R-01 single-maintainer bottleneck:</text>
+  <text x="374" y="542" class="t" font-size="11">every WP-M-02 role resolves to one person, who is the critical path and cannot review their own work (§4.3); B-11 recruits reviewers.</text>
+  <line x1="40" y1="574" x2="1240" y2="574" stroke="#E2E8F0"/>
+  <text x="40" y="596" class="t b" font-size="13">Next-30-days backlog (§9): status as written in the table</text>
+  <circle cx="46" cy="620" r="5" fill="#2E9E6A"/>
+  <text x="56" y="624" class="t sb" font-size="11.5">Done (5)</text>
+  <rect x="40" y="636" width="280" height="38" rx="6" fill="#FFFFFF" stroke="#2E9E6A" stroke-width="1.4"/>
+  <rect x="40" y="636" width="5" height="38" rx="2.5" fill="#2E9E6A"/>
+  <text x="54" y="652" class="t b" font-size="10.5">B-02</text>
+  <text x="92" y="652" class="t" font-size="10.5">Fork opendbc + panda; submodule URLs</text>
+  <text x="92" y="667" font-size="10" font-weight="600" fill="#1F7A52">Done #3</text>
+  <rect x="40" y="680" width="280" height="38" rx="6" fill="#FFFFFF" stroke="#2E9E6A" stroke-width="1.4"/>
+  <rect x="40" y="680" width="5" height="38" rx="2.5" fill="#2E9E6A"/>
+  <text x="54" y="696" class="t b" font-size="10.5">B-03</text>
+  <text x="92" y="696" class="t" font-size="10.5">Upstream sync procedure</text>
+  <text x="92" y="711" font-size="10" font-weight="600" fill="#1F7A52">Done #4</text>
+  <rect x="40" y="724" width="280" height="38" rx="6" fill="#FFFFFF" stroke="#2E9E6A" stroke-width="1.4"/>
+  <rect x="40" y="724" width="5" height="38" rx="2.5" fill="#2E9E6A"/>
+  <text x="54" y="740" class="t b" font-size="10.5">B-10</text>
+  <text x="92" y="740" class="t" font-size="10.5">Drafts WP-M-08…M-13, WP-P-01…P-06</text>
+  <text x="92" y="755" font-size="10" font-weight="600" fill="#1F7A52">Done #2</text>
+  <rect x="40" y="768" width="280" height="38" rx="6" fill="#FFFFFF" stroke="#2E9E6A" stroke-width="1.4"/>
+  <rect x="40" y="768" width="5" height="38" rx="2.5" fill="#2E9E6A"/>
+  <text x="54" y="784" class="t b" font-size="10.5">B-14</text>
+  <text x="92" y="784" class="t" font-size="10.5">Merge PR #45 (TSR-516(b))</text>
+  <text x="92" y="799" font-size="10" font-weight="600" fill="#1F7A52">Done #45 (1d38dc3; panda pin 6dee6fa)</text>
+  <rect x="40" y="812" width="280" height="38" rx="6" fill="#FFFFFF" stroke="#2E9E6A" stroke-width="1.4"/>
+  <rect x="40" y="812" width="5" height="38" rx="2.5" fill="#2E9E6A"/>
+  <text x="54" y="828" class="t b" font-size="10.5">B-17</text>
+  <text x="92" y="828" class="t" font-size="10.5">Panda host + mutation tests in CI</text>
+  <text x="92" y="843" font-size="10" font-weight="600" fill="#1F7A52">Done #44 / #45</text>
+  <circle cx="340" cy="620" r="5" fill="#D97706"/>
+  <text x="350" y="624" class="t sb" font-size="11.5">Done, with an exception (2)</text>
+  <rect x="334" y="636" width="290" height="38" rx="6" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4"/>
+  <rect x="334" y="636" width="5" height="38" rx="2.5" fill="#D97706"/>
+  <text x="348" y="652" class="t b" font-size="10.5">B-04</text>
+  <text x="386" y="652" class="t" font-size="10.5">Fork CI with safety tests, MISRA, mutation</text>
+  <text x="386" y="667" font-size="10" font-weight="600" fill="#B45309">Done; except CR-CI-08</text>
+  <rect x="334" y="680" width="290" height="38" rx="6" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4"/>
+  <rect x="334" y="680" width="5" height="38" rx="2.5" fill="#D97706"/>
+  <text x="348" y="696" class="t b" font-size="10.5">B-07</text>
+  <text x="386" y="696" class="t" font-size="10.5">SECURITY.md and vulnerability intake</text>
+  <text x="386" y="711" font-size="10" font-weight="600" fill="#B45309">Done; except private vulnerability reporting</text>
+  <circle cx="644" cy="620" r="5" fill="#94A3B8"/>
+  <text x="654" y="624" class="t sb" font-size="11.5">Not marked done (10)</text>
+  <rect x="638.0" y="636" width="295.0" height="38" rx="6" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+  <text x="648.0" y="652" class="t b" font-size="10.5">B-01</text>
+  <text x="686.0" y="652" class="t" font-size="10.5">Milestones G0–G6, labels, issues</text>
+  <text x="686.0" y="667" font-size="10" font-weight="600" fill="#9F2A1B">Open (2026-10-12): none created yet</text>
+  <rect x="945.0" y="636" width="295.0" height="38" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="955.0" y="652" class="t b" font-size="10.5">B-05</text>
+  <text x="993.0" y="652" class="t" font-size="10.5">CODEOWNERS, PR template, branch protection</text>
+  <text x="993.0" y="667" font-size="10" font-weight="600" fill="#64748B">not marked done · GAP-32</text>
+  <rect x="638.0" y="680" width="295.0" height="38" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="648.0" y="696" class="t b" font-size="10.5">B-06</text>
+  <text x="686.0" y="696" class="t" font-size="10.5">Experimental Mode default off</text>
+  <text x="686.0" y="711" font-size="10" font-weight="600" fill="#64748B">not marked done · GAP-18, D-08</text>
+  <rect x="945.0" y="680" width="295.0" height="38" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="955.0" y="696" class="t b" font-size="10.5">B-08</text>
+  <text x="993.0" y="696" class="t" font-size="10.5">No public-road use before G1 + WP-V-07</text>
+  <text x="993.0" y="711" font-size="10" font-weight="600" fill="#64748B">not marked done</text>
+  <rect x="638.0" y="724" width="295.0" height="38" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="648.0" y="740" class="t b" font-size="10.5">B-09</text>
+  <text x="686.0" y="740" class="t" font-size="10.5">Contact external FuSa assessors</text>
+  <text x="686.0" y="755" font-size="10" font-weight="600" fill="#64748B">not marked done · D-06</text>
+  <rect x="945.0" y="724" width="295.0" height="38" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="955.0" y="740" class="t b" font-size="10.5">B-11</text>
+  <text x="993.0" y="740" class="t" font-size="10.5">Recruit independent reviewer and QA</text>
+  <text x="993.0" y="755" font-size="10" font-weight="600" fill="#64748B">not marked done · R-01</text>
+  <rect x="638.0" y="768" width="295.0" height="38" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="648.0" y="784" class="t b" font-size="10.5">B-12</text>
+  <text x="686.0" y="784" class="t" font-size="10.5">Record VIN, ECU firmware, device rev.</text>
+  <text x="686.0" y="799" font-size="10" font-weight="600" fill="#64748B">not marked done</text>
+  <rect x="945.0" y="768" width="295.0" height="38" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="955.0" y="784" class="t b" font-size="10.5">B-13</text>
+  <text x="993.0" y="784" class="t" font-size="10.5">I1 review of impact records and DN-01</text>
+  <text x="993.0" y="799" font-size="10" font-weight="600" fill="#64748B">not marked done · R-26</text>
+  <rect x="638.0" y="812" width="295.0" height="38" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="648.0" y="828" class="t b" font-size="10.5">B-15</text>
+  <text x="686.0" y="828" class="t" font-size="10.5">Maintainer decision D-13 (FSC option (c))</text>
+  <text x="686.0" y="843" font-size="10" font-weight="600" fill="#64748B">not marked done</text>
+  <rect x="945.0" y="812" width="295.0" height="38" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+  <text x="955.0" y="828" class="t b" font-size="10.5">B-16</text>
+  <text x="993.0" y="828" class="t" font-size="10.5">Fork-owned reference drive logs</text>
+  <text x="993.0" y="843" font-size="10" font-weight="600" fill="#64748B">not marked done · R-27</text>
+  <text x="40" y="868" class="m" font-size="11">“Done” is the backlog status written in §9 (PR numbers in brackets); it is not verification evidence and does not pass any gate.</text>
+  <line x1="40" y1="890" x2="1240" y2="890" stroke="#E2E8F0"/>
+  <g transform="translate(40,912)" font-size="10.5">
+    <path d="M14 -13 L28 0 L14 13 L0 0Z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="4 2"/><text x="36" y="4" class="t">Gate, not passed</text>
+    <circle cx="166" cy="0" r="3" fill="#D2553F"/><text x="176" y="4" class="t">Open blocker / item due</text>
+    <rect x="330" y="-9" width="40" height="18" rx="9" fill="#FFF7ED" stroke="#C2410C"/><text x="378" y="4" class="t">Critical path</text>
+    <rect x="470" y="-8" width="4" height="16" rx="2" fill="#0F766E"/><text x="482" y="4" class="t">Long-lead item</text>
+    <circle cx="604" cy="0" r="5" fill="#2E9E6A"/><text x="614" y="4" class="t">Done (§9)</text>
+    <circle cx="700" cy="0" r="5" fill="#D97706"/><text x="710" y="4" class="t">Done with exception / partial, not verified</text>
+    <circle cx="960" cy="0" r="5" fill="#94A3B8"/><text x="970" y="4" class="t">Not marked done</text>
+  </g>
+</svg>

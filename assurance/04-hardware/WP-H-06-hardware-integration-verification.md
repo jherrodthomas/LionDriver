@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-06 Hardware integration and verification specification and report |
 | Standard reference | ISO 26262-5:2018 §10 (hardware integration and verification); ISO 26262-8:2018 §9 (verification), §13 (qualification tests of HW components); ASPICE 4.0 HWE.3, HWE.4 |
-| Version | 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section is a template — **Not yet executed** |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -36,6 +36,12 @@ is implemented and has not been run (bench not built, GAP-30; [HIL bench plan](.
 
 ### 2.1 Configuration
 
+![Figure 2-1: HW integration test configuration with the Linux bench PC, panda jungle or 3-bus CAN interface, programmable power supply, reference comma device, Toyota TSS2 harness with instrumented relay box, optional forward camera and additional instruments](figures/fig-h06-2-1-hil-configuration.svg)
+
+*Figure 2-1.* The HIL bench for hardware integration: the bench PC controls the CAN interface, the supply and the reference device; the harness and relay box are instrumented with contact state and coil current probes. Dashed elements are optional. Source: [`figures/fig-h06-2-1-hil-configuration.svg`](figures/fig-h06-2-1-hil-configuration.svg); change it together with the table below and §2.2.
+
+<details><summary>Text version of Figure 2-1</summary>
+
 ```
  ┌───────────── Bench PC (Linux) ─────────────┐
  │ test runner (pytest), log capture,          │
@@ -59,6 +65,8 @@ is implemented and has not been run (bench not built, GAP-30; [HIL bench plan](.
   NRST and BOOT0; thermal chamber or heat gun + thermocouple; SWD probe (debug build
   only, for fault injection); optional: real forward camera on the camera-side bus.
 ```
+
+</details>
 
 | Item | Requirement |
 |---|---|

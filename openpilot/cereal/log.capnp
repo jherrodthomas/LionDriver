@@ -144,6 +144,12 @@ struct OnroadEvent @0xc4fa6047f024e718 {
     pandaWatchdogReset @105;
     # LionDriver: pandad kept the panda in NOOUTPUT because its firmware is not a reference build (TSR-514, SWSR-514h)
     pandaNotReferenceBuild @106;
+    # LionDriver: the panda revoked authority because the SoC exceeded a TX rate budget (TSR-518, TSR-615)
+    pandaTxRateExceeded @107;
+    # LionDriver: the panda reports that it lost the SoC heartbeat (TSR-615)
+    pandaHeartbeatLost @108;
+    # LionDriver: the panda blocked a frame the SoC sent while engaged (TSR-615)
+    pandaTxBlocked @109;
   }
 }
 

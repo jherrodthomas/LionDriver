@@ -404,7 +404,7 @@
   mechanism: "PLB, WRN"
   timing: "≤ 1 s"
   verification: "T-SIL"
-  baseline_impl: "Not met: `cruiseMismatch` raised after 6 s (`selfdrive/selfdrived/selfdrived.py:420-422`) with IMMEDIATE_DISABLE commented out (`selfdrive/selfdrived/events.py:458-460`) (GAP-19)"
+  baseline_impl: "Implemented, not verified on the vehicle: `cruiseMismatch` after 1 s with a repeating prompt (`selfdrive/selfdrived/selfdrived.py`, `events.py`); `controlsd` keeps requesting the cancel. The other direction (engaged while PCM cruise is off) disengages through `pcmDisable` on PCM-cruise cars (GAP-19 closed in code)"
   status: proposed
   source: WP-S-02
 
@@ -884,7 +884,7 @@
   mechanism: "WRN"
   timing: "≤ 0.5 s after detection"
   verification: "T-HIL"
-  baseline_impl: "Partial: siren for 3 s after 5 s heartbeat loss (`main.c:169-171, 198-201`); (b) for the EPS fault (TSR-110): siren once the fault has persisted 1 s while authority is granted, ≥ 3 s, ≤ 0.14 s after that detection (panda `b790fca`, `drivers/eps_fault_siren.h`, [IA EPS fault](../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md) §7; detection defined as 1 s persistence by maintainer decision 2026-10-12, to be confirmed against fault durations in reference logs); other (b) triggers and (c) not implemented; siren path via codec over I2C on some boards, malfunction reported only (`drivers/fake_siren.h:38-52`); shared speaker with SoC audio to be analysed in DFA ([WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md))"
+  baseline_impl: "Partial: (a) heartbeat loss: siren for 3 s at once when the 0.3 s heartbeat monitor (TSR-407) revokes authority that was granted, ≤ 0.3 s + 10 ms + 250 ms ≈ 0.56 s after the last heartbeat, in all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, [IA fast heartbeat](../07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md) §5; not verified on hardware); the 1 Hz path (siren for 3 s after 4–5 s heartbeat loss if authority within the last 5 s, `main.c:169-171, 198-201`) unchanged, and alone covers authority that ended within the 5 s before the loss; (b) for the EPS fault (TSR-110): siren once the fault has persisted 1 s while authority is granted, ≥ 3 s, ≤ 0.26 s after that detection (worst case: the speaker sounds only on every other 8 Hz tick) (panda `b790fca`, `drivers/eps_fault_siren.h`, [IA EPS fault](../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md) §7; detection defined as 1 s persistence by maintainer decision 2026-10-12, to be confirmed against fault durations in reference logs); other (b) triggers and (c) not implemented; siren path via codec over I2C on some boards, malfunction reported only (`drivers/fake_siren.h:38-52`); shared speaker with SoC audio to be analysed in DFA ([WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md))"
   status: proposed
   source: WP-S-02
 
@@ -959,7 +959,7 @@
   mechanism: "TMO"
   timing: "≤ 0.1 s"
   verification: "T-SIL"
-  baseline_impl: "Not met: no freshness check (`selfdrive/controls/controlsd.py:66` polls on `selfdriveState` only) (GAP-16)"
+  baseline_impl: "Partly met: `latActive` / `longActive` are false while an input is stale (`selfdrive/controls/lib/input_freshness.py`), but after 10 nominal periods, not 2, to avoid nuisance disengagements from model frame drops until logs show the jitter; the event is `selfdrived`'s `commIssue` from the same 10-period check (GAP-16 narrowed; impact record OI-1)"
   status: proposed
   source: WP-S-02
 
@@ -1154,7 +1154,7 @@
   mechanism: "FR"
   timing: "≤ 0.2 s"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: only `relayMalfunction` and `safetyRxChecksInvalid` react (`selfdrive/selfdrived/selfdrived.py:338-342`)"
+  baseline_impl: "Partly met: heartbeat lost, LionDriver TX-rate revocation and a rising `safetyTxBlocked` while engaged disable at once (`pandaHeartbeatLost`, `pandaTxRateExceeded`, `pandaTxBlocked`; `selfdrive/selfdrived/supervision.py`), as do `relayMalfunction` and `safetyRxChecksInvalid`. Other fault flags and SPI error bursts: no reaction yet (impact record OI-2)"
   status: proposed
   source: WP-S-02
 
@@ -1244,7 +1244,7 @@
   mechanism: "PLB"
   timing: "≤ 0.5 s / ≤ 0.5 s to warning"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: `controlsMismatch` after 200 samples ≈ 2 s (`selfdrive/selfdrived/selfdrived.py:338, 508-510`); exceeds the SG-02 budget"
+  baseline_impl: "Implemented, not verified on the vehicle: `controlsMismatch` after 2 consecutive mismatched `pandaStates` samples and at most 0.5 s after the first mismatched frame (`selfdrive/selfdrived/supervision.py`, unit tests)"
   status: proposed
   source: WP-S-02
 

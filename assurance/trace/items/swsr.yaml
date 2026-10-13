@@ -475,7 +475,7 @@
   allocated_to: "`host.selfdrived`, `host.card`"
   verification: "UT"
   acceptance: "Warning and cancel within 1 s"
-  baseline_impl: "Not met: 6 s, reaction commented out (`selfdrived.py:420-422`, `events.py:458-460`) (GAP-19)"
+  baseline_impl: "Implemented: 1 s, repeating prompt; cancel requested by `controlsd` (`selfdrived.py`, `events.py`)"
   status: proposed
   source: WP-W-02
 
@@ -1161,7 +1161,7 @@
   allocated_to: "U-PND-MAIN, `panda.drivers.siren` (U-PND-HK)"
   verification: "UT, HIL"
   acceptance: "Siren ≤ 0.5 s for each trigger; no siren on a brake press or PCM cancel alone"
-  baseline_impl: "Partial: 3 s siren after 5 s heartbeat loss (`main.c:169-171, 198-201`); EPS fault (SWSR-110) persisting 1 s while authority is granted → siren ≥ 3 s (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run). Other (b) triggers and (c) not impl"
+  baseline_impl: "Partial: heartbeat loss (SWSR-407) revoking authority that was granted → 3 s siren at once, ≈ 0.56 s after the last heartbeat (0.3 s + 10 ms + 2 × 125 ms speaker tick), all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, host test `tests/heartbeat_siren`, HIL `tests/hitl/test_15_heartbeat_siren.py` not run); 1 Hz path unchanged: 3 s siren after 4–5 s heartbeat loss (`main.c:169-171, 198-201`), the only siren when authority ended within the 5 s before the loss; EPS fault (SWSR-110) persisting 1 s while authority is granted → siren ≥ 3 s (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run). Other (b) triggers and (c) not impl"
   status: proposed
   source: WP-W-02
 
@@ -1217,7 +1217,7 @@
   allocated_to: "`host.controlsd`"
   verification: "UT"
   acceptance: "Stale input → inactive next frame"
-  baseline_impl: "Not met (`selfdrive/controls/controlsd.py:66`) (GAP-16)"
+  baseline_impl: "Partly: 10 periods, not 2 (`controls/lib/input_freshness.py`, unit tests); event via `commIssue` (impact record OI-1)"
   status: proposed
   source: WP-W-02
 
@@ -1413,7 +1413,7 @@
   allocated_to: "`host.selfdrived`"
   verification: "UT, FI"
   acceptance: "Event ≤ 0.2 s"
-  baseline_impl: "Partial: `relayMalfunction`, `safetyRxChecksInvalid` only (`selfdrived.py:338-342`)"
+  baseline_impl: "Partly: heartbeat lost, TX-rate revocation, rising `safetyTxBlocked` (`selfdrived/supervision.py`) plus `relayMalfunction`, `safetyRxChecksInvalid`; other faults open (OI-2)"
   status: proposed
   source: WP-W-02
 
@@ -1497,7 +1497,7 @@
   allocated_to: "`host.selfdrived`"
   verification: "UT, FI"
   acceptance: "Event ≤ 0.5 s; no event on single-sample skew in the reference log set"
-  baseline_impl: "Partial: 200 samples ≈ 2 s (`selfdrived.py:338, 508-510`)"
+  baseline_impl: "Implemented: 2 consecutive samples, ≤ 0.5 s (`selfdrived/supervision.py`, unit tests)"
   status: proposed
   source: WP-W-02
 

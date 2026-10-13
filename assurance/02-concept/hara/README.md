@@ -10,6 +10,9 @@ This folder holds the Cartesian HARA behind [WP-C-03](../WP-C-03-hara.md) §2.
 | [`WP-C-03-hara-cartesian_experimental.xlsx`](WP-C-03-hara-cartesian_experimental.xlsx) | Generated workbook, Experimental Mode variant (D-08 option B) |
 | [`hara-events.csv`](hara-events.csv) | Generated. All 2 790 hazardous-event rows of the reference workbook (tab 12), one per line, with S/E/C rationale, ASIL, ASIL if the ⚠ AoUs fail, and safety goal. **This is the file to review on GitHub**: it renders as a searchable table, and a PR diff shows exactly which rows a rule change moves |
 | [`hara-events_experimental.csv`](hara-events_experimental.csv) | Generated. The same for the Experimental Mode variant (2 970 rows) |
+| [`hara_figures.py`](hara_figures.py) | Figure generator. It draws WP-C-03 Figure 2-1 (rows per S × E × C cell, as rated and if every ⚠ AoU fails) from the model, and Figure 6-1 (hazards → hazardous events → safety goals) from WP-C-03 §4–§6 and the model. It fails if a goal's ASIL is not the highest ASIL of its source events, or if a rated event has no goal |
+| [`figures/`](figures/) | Generated SVGs `fig-c03-2-1-asil-heatmap.svg` and `fig-c03-6-1-hazard-sg-overview.svg`, embedded in WP-C-03. Do not edit by hand |
+| [`test_hara_figures.py`](test_hara_figures.py) | Unit tests: the figures are current, the heat-map totals equal the model's ASIL counts, and inconsistent goal tables are rejected |
 | [`hara-function-guideword.csv`](hara-function-guideword.csv) | Generated. The 140 function × guide-word pairs (tab 11, both variants) with class SC / NSC / NA, subsumption and the reason. This is the SC filter that decides which rows exist (RR-2026-003 F-01) |
 
 ## Regenerating
@@ -34,7 +37,13 @@ This folder holds the Cartesian HARA behind [WP-C-03](../WP-C-03-hara.md) §2.
    - It adds the rationale column to tab 11 and the "Consolidated into" column to tab 13.
    - It has to run **before** the recalculation, because re-saving with openpyxl drops cached formula values.
 
-3. CI runs `python3 hara_model.py --check`. It fails if the summary, the CSV files or the WP-C-03 §2.1 table no longer match the model.
+3. Redraw the figures (`figures/`):
+
+   ```bash
+   python3 hara_figures.py
+   ```
+
+4. CI runs `python3 hara_model.py --check`. It fails if the summary, the CSV files or the WP-C-03 §2.1 table no longer match the model. `python3 hara_figures.py --check` and `python3 test_hara_figures.py` fail if a figure no longer matches the model or WP-C-03; they are run in CI (`assurance.yaml`) next to the model check.
 
 ## Reviewing
 

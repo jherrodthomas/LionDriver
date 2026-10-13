@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-09 Threat analysis and risk assessment (TARA) |
 | Standard reference | ISO/SAE 21434:2021 §15 (threat analysis and risk assessment methods); §9.3 (item definition, CS view); UN R155 Annex 5 (informative threat catalogue); ASPICE 4.0 SEC.1 |
-| Version | 0.2 (status update 2026-10-12: treatment status of AP-02/TS-02 at `bf6ce8c`; new TS-14/AP-14 (SoC injects PCS/DSU frames or floods whitelisted actuation IDs), rated at the shipped baseline; ratings unapproved). History: 0.1 |
+| Version | 0.3 (§8 risk matrix drawn as Figure 8-1 and §9 top-risk attack paths as Figure 9-1; no rating changed; 2026-10-13). 0.2 (status update 2026-10-12: treatment status of AP-02/TS-02 at `bf6ce8c`; new TS-14/AP-14 (SoC injects PCS/DSU frames or floods whitelisted actuation IDs), rated at the shipped baseline; ratings unapproved). History: 0.1 |
 | Status | Draft — ratings are engineering proposals for review, not approved. They must not be used to argue cybersecurity until the preliminary assessment ([WP-M-09 §8](../01-management/WP-M-09-cybersecurity-plan.md)) passes |
 | ASIL / scope | CS (cybersecurity); safety impact traced to the HARA ASILs |
 | Author | Assurance team (initial draft) |
@@ -177,6 +177,10 @@ Risk value = f(impact level, feasibility), per ISO/SAE 21434 §15.8. Impact leve
 | TS-14 | 4 | High | **5** | **Reduce** | Remove PCS/DSU IDs from the TX whitelist (TSR-705) and supervise the TX rate per actuation ID (TSR-518); CSG-05 / CSR-092. **Treatment status 2026-10-12:** both implemented in the reference build (`0x411` refused only there), not verified on hardware. Residual (not re-rated, OI-5): in-limit actuation within the rate budget, bounded by the envelope limits |
 | TS-13 | 3 | Medium | **3** | **Reduce / Retain** | Per-device key hygiene; non-repudiation improvements are lower priority; retainable with rationale if key theft (TS-11) is treated |
 
+![Figure 8-1: risk value matrix of §7, impact level 4 to 1 against feasibility High to Very low, with TS-02, TS-03, TS-04, TS-11 and TS-14 at risk 5, TS-01, TS-05 to TS-10 and TS-12 at risk 4, TS-13 at risk 3, and the risk-3 treatment threshold](figures/fig-c09-8-1-risk-matrix.svg)
+
+*Figure 8-1.* The §7 risk matrix with each threat scenario placed by its maximum impact and feasibility from the table above; the outlined cells are at or above the treatment threshold (risk ≥ 3). An amber mark (TS-02, TS-14) means the treatment is implemented in the reference build only, not verified, and the scenario is not re-rated (OI-5). Drawn from §7 and the §8 table. Source: [`figures/fig-c09-8-1-risk-matrix.svg`](figures/fig-c09-8-1-risk-matrix.svg); change it together with §3, §6, §7 and §8.
+
 All safety-impacting threat scenarios reach risk 4–5 because the item currently exposes the safety envelope to an unauthenticated QM SoC (GAP-09/20/38) and ships weak firmware authenticity (GAP-24/25). These are the dimensioning risks for the cybersecurity concept.
 
 ## 9. Top-risk summary (sorted by risk value)
@@ -197,6 +201,10 @@ All safety-impacting threat scenarios reach risk 4–5 because the item currentl
 | 12 | TS-10 | **4** | Supply-chain injection via upstream submodules and mutable tool/model branches |
 | 13 | TS-12 | **4** | DoS on SoC processes with ~3 s stale-data actuation during soft-disable |
 | 14 | TS-13 | **3** | Device-origin data repudiation / identity-key reuse |
+
+![Figure 9-1: attack paths of the five risk-5 threat scenarios: code execution on the SoC via AP-02, AP-03, AP-14 and AP-04 (with AP-08 as foothold) and physical possession via AP-11, to assets AS-01 to AS-07 and AS-11 to AS-15 and damage scenarios DS-01 to DS-12](figures/fig-c09-9-1-top-risk-attack-paths.svg)
+
+*Figure 9-1.* Attack paths of ranks 1–5 above (all risk 5): entry point → attack path → asset reached → damage scenarios, at the abstraction level of §5. AP-08 (TS-08, risk 4) is drawn only as the foothold that §5 says yields root on the SoC. Drawn from §2, §3, the “Damage” column of §4, §5, §6 and §8. Source: [`figures/fig-c09-9-1-top-risk-attack-paths.svg`](figures/fig-c09-9-1-top-risk-attack-paths.svg); change it together with those sections.
 
 ## Open items
 

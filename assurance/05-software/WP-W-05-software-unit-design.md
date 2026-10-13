@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-05 Software unit design and implementation |
 | Standard reference | ISO 26262-6:2018 §8 (software unit design and implementation: notation, design principles for unit design and implementation); ISO/SAE 21434:2021 §10 (by reference to WP-W-11); ASPICE 4.0 SWE.3 |
-| Version | 0.3 (status update 2026-10-12: UN-05 in the 100 Hz safety task; UN-N1 exists; new units UN-36…UN-42 for the integrated LionDriver changes (heartbeat monitor, IWDG, IRQ priorities, EPS-fault siren, reference lock, TX rate check, Toyota cruise-main and EPS-fault checks); UN-02, UN-03, UN-15, UN-16, UN-19, UN-21, §5 updated. Nothing verified on hardware). 0.2 (UN-03: TX rate supervision design proposal DN-01; 2026-10-12). 0.1 |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (status update 2026-10-12: UN-05 in the 100 Hz safety task; UN-N1 exists; new units UN-36…UN-42 for the integrated LionDriver changes (heartbeat monitor, IWDG, IRQ priorities, EPS-fault siren, reference lock, TX rate check, Toyota cruise-main and EPS-fault checks); UN-02, UN-03, UN-15, UN-16, UN-19, UN-21, §5 updated. Nothing verified on hardware). 0.2 (UN-03: TX rate supervision design proposal DN-01; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope units (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating) |
 | Author | Assurance team (initial draft) |
@@ -74,6 +74,7 @@ The design is back-filled from code (T-03). The code is the implementation; this
 | UN-40 | `reference_request_allowed` | `reference_lock.h` (panda `9f60e17`; reference build only) | U-PND-COMMS | SPI/USB ISR | 511a, 512, 512a, 513 |
 | UN-41 | `tx_rate_check` | `safety.h:248-280` (opendbc `7993399`; reference build only) | U-SAF-CORE | TX path | 518 |
 | UN-42 | `toyota_cruise_main_check`, `toyota_lka_state_is_fault` | `modes/toyota.h:99-144` (opendbc `7993399`; reference build only) | U-SAF-TOY | RX ISR | 405(c), 110 |
+| UN-43 | `heartbeat_siren_tick`, `heartbeat_siren_reset` | `drivers/heartbeat_siren.h` (panda `c33343b`, all builds; added 2026-10-13) | U-PND-HK | safety task (after UN-36, before the revocation); mode change | 516, 407 |
 
 ## 3. Unit design descriptions (safety layer)
 
@@ -244,7 +245,7 @@ Relay outputs open-drain, active low; `set_intercept_relay` busy-waits on `sbu_a
 
 Soft flasher if the softloader magic is set; else length check, SHA-1 over the image, version tag, RSA-1024 against the release key (debug key only under `ALLOW_DEBUG`), jump or `fail()`. Change: SWSR-511, 501b (start IWDG).
 
-### UN-36…UN-42 LionDriver units (added 2026-10-12)
+### UN-36…UN-43 LionDriver units (added 2026-10-12; UN-43 2026-10-13)
 
 Back-filled from code at panda `b790fca`, opendbc `7993399`. Host unit tests exist for each (WP-W-06); none is verified on hardware.
 
@@ -257,6 +258,7 @@ Back-filled from code at panda `b790fca`, opendbc `7993399`. Host unit tests exi
 | UN-40 reference lock | Refuse host requests outside the reference configuration | `LIONDRIVER_REFERENCE_TOYOTA_PARAM` 73 | `0xdc` limited to SILENT/NOOUTPUT/ELM327/TOYOTA-73 (from TOYOTA only NOOUTPUT/SILENT); `0xdf` always refused; listed requests refused in a car mode; refusals counted (saturating) and printed |
 | UN-41 TX rate check | Per-ID frame budget in a sliding 250 ms window | `TX_RATE_WINDOW_US` 250000, budget `ceil(f × 0.3) + 1 + burst`, `TX_RATE_REVOKE_REJECTED` 3 | Runs after the whitelist, before the brand TX hook, so a rejected frame does not update limiter state; 3 rejections in a half-window while engaged revoke and set `safety_tx_rate_exceeded` |
 | UN-42 Toyota checks | `toyota_lka_state_is_fault`: LKA_STATE ∈ {0, 3, 9, 11, 17, 21, 25} → `safety_eps_fault`; `toyota_cruise_main_check`: CRUISE_ACTIVE vs MAIN_ON | `TOYOTA_CRUISE_MAIN_TOLERANCE_US` 150000 | EPS fault refuses `0x2E4` torque/STEER_REQUEST only; cruise-main disagreement revokes at once on activation, after 150 ms otherwise; not used for alt-brake cars |
+| UN-43 heartbeat-loss siren (2026-10-13) | Siren when the heartbeat monitor (UN-36) revokes authority that was granted | `HEARTBEAT_SIREN_HOLD_TICKS` 300 (3 s) | Called with the revocation of UN-36 and `controls_allowed` before the revocation clears it; no siren when not engaged; reset on every mode change; speaker driven by the 8 Hz tick on every other tick, so ≤ 0.3 s + 10 ms + 250 ms ≈ 0.56 s after the last heartbeat (WP-S-04 T-07a) |
 
 ## 5. Normative state tables
 
@@ -285,7 +287,7 @@ Back-filled from code at panda `b790fca`, opendbc `7993399`. Host unit tests exi
 | T8 | NOT_ALLOWED | `0x1D2` | CRUISE_ACTIVE = 1 and previous = 1 | none | NOT_ALLOWED |
 | T9 (new) | ALLOWED | TX violation | — | clear, reason | NOT_ALLOWED (SWSR-108) |
 | T10 (new) | ALLOWED | command stall / RX plausibility / platform fault / driver override | — | clear, reason | NOT_ALLOWED |
-| T11 | ALLOWED | safety task (UN-36) | no heartbeat for 0.3 s in a car mode | clear | NOT_ALLOWED |
+| T11 | ALLOWED | safety task (UN-36) | no heartbeat for 0.3 s in a car mode | clear; siren 3 s (UN-43, since 2026-10-13) | NOT_ALLOWED |
 | T12 (reference build) | any | `0x1D2`/`0x1D3` (UN-42) | CRUISE_ACTIVE with MAIN_ON = 0: at once on activation, after 150 ms when main goes off while engaged | clear | NOT_ALLOWED |
 | T13 (reference build) | ALLOWED | TX (UN-41) | 3 rate rejections of one ID in a half-window | clear, `safety_tx_rate_exceeded` | NOT_ALLOWED |
 
@@ -356,7 +358,7 @@ Gas pressed does not change the state; it gates longitudinal only (UN-12). This 
 | 511a, 513 | UN-21 | Gating in car modes |
 | 705 | UN-16 | Reduced whitelist |
 
-*Status 2026-10-12 (implemented, not verified on hardware; reference build where marked):* 306, 401, 401a, 407 (UN-05, UN-N1, UN-36); 501, 501b (UN-37, started at the first relay drive instead of the bootstub, TSR-501 v0.4); 519 priority table (UN-38; levels equal, WCET not measured); 104a/512, 511a, 513 (UN-40, reference build); 705 (whitelist, `0x411` reference build only); 518 (UN-41, reference build); 110, 405(c) (UN-42, reference build); 516 EPS-fault siren (UN-39, PR #45 not merged).
+*Status 2026-10-12 (implemented, not verified on hardware; reference build where marked):* 306, 401, 401a, 407 (UN-05, UN-N1, UN-36); 501, 501b (UN-37, started at the first relay drive instead of the bootstub, TSR-501 v0.4); 519 priority table (UN-38; levels equal, WCET not measured); 104a/512, 511a, 513 (UN-40, reference build); 705 (whitelist, `0x411` reference build only); 518 (UN-41, reference build); 110, 405(c) (UN-42, reference build); 516 EPS-fault siren (UN-39, PR #45 not merged). *2026-10-13:* 516 heartbeat-loss siren (UN-43, panda `c33343b`, all builds).
 
 ## 9. Open items
 

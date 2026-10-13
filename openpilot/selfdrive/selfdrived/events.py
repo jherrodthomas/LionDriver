@@ -455,8 +455,13 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
     ET.NO_ENTRY: NoEntryAlert("Invalid LKAS setting"),
   },
 
+  # LionDriver (TSR-308): stock cruise stays engaged after the item disengaged; controlsd keeps requesting the cancel
   EventName.cruiseMismatch: {
-    #ET.PERMANENT: ImmediateDisableAlert("openpilot failed to cancel cruise"),
+    ET.PERMANENT: Alert(
+      "Stock Cruise Still Engaged",
+      "Press Cancel or Brake",
+      AlertStatus.userPrompt, AlertSize.mid,
+      Priority.MID, VisualAlert.none, AudibleAlert.promptRepeat, .1),
   },
 
   # openpilot doesn't recognize the car. This switches openpilot into a
@@ -982,6 +987,21 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
   EventName.pandaNotReferenceBuild: {
     ET.PERMANENT: NormalPermanentAlert("Panda Firmware Not Verified", "Not a LionDriver build: reflash"),
     ET.NO_ENTRY: NoEntryAlert("Panda Firmware Not Verified"),
+  },
+
+  # LionDriver (TSR-615): the panda has withdrawn authority or refused a frame; disengage at once with a take-over request
+  EventName.pandaTxRateExceeded: {
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Safety Processor: Rate Fault"),
+    ET.NO_ENTRY: NoEntryAlert("Safety Processor: Rate Fault"),
+  },
+
+  EventName.pandaHeartbeatLost: {
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Safety Processor: No Heartbeat"),
+    ET.NO_ENTRY: NoEntryAlert("Safety Processor: No Heartbeat"),
+  },
+
+  EventName.pandaTxBlocked: {
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Safety Processor: Blocked TX"),
   },
 
   EventName.relayMalfunction: {

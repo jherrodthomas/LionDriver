@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-09 Safety-related configuration and calibration data (car params, fingerprints, limits, model weights) |
 | Standard reference | ISO 26262-6:2018 Annex C (software configuration; calibration data); ISO 26262-6:2018 §6, §9 (requirements on and verification of data); ISO 26262-8:2018 §7 (configuration management); ISO/PAS 8800:2024 (model as configuration item, informative); ASPICE 4.0 SWE.3 |
-| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: CD-01, CD-03, CD-04 and §5 updated to the integrated LionDriver changes at panda `b790fca`, opendbc `7993399`; DVR-01/02 status. Nothing verified on hardware). 0.1: initial draft |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: CD-01, CD-03, CD-04 and §5 updated to the integrated LionDriver changes at panda `b790fca`, opendbc `7993399`; DVR-01/02 status. Nothing verified on hardware). 0.1: initial draft |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (data that configures or parameterises the envelope E-03); QM / SOTIF / PAS 8800 for host data |
 | Author | Assurance team (initial draft) |
@@ -119,11 +119,12 @@ TSR-102 in [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) requ
 | TX rate supervision (reference build) | Sliding window `TX_RATE_WINDOW_US` 250 ms; budget per ID `ceil(f × 0.3) + 1 + burst`; `TX_RATE_REVOKE_REJECTED` 3 rejections in a half-window revoke. Per ID (f Hz / burst → budget): `0x2E4` 100/5 → 36, `0x191` 50/3 → 19, `0x343` 33/3 → 14, `0x412` 5/4 → 7, `0x1D2` 1/2 → 4, `0x283` 1/2 → 4, `0x750` 5/2 → 5 (non-SecOC only); budgets not yet confirmed on reference logs | `safety.h:246-280`; `modes/toyota.h:549-557` |
 | Cruise-main tolerance (reference build) | `TOYOTA_CRUISE_MAIN_TOLERANCE_US` 150 ms (CRUISE_ACTIVE with MAIN_ON = 0 while engaged); immediate on activation | `modes/toyota.h:122` |
 | EPS-fault siren | `EPS_FAULT_SIREN_PERSIST_TICKS` 100 (1 s persistence while engaged), `EPS_FAULT_SIREN_HOLD_TICKS` 300 (3 s hold); panda `b790fca`, LionDriver PR #45, not merged | `panda/board/drivers/eps_fault_siren.h:17-18` |
+| Heartbeat-loss siren (added 2026-10-13) | `HEARTBEAT_SIREN_HOLD_TICKS` 300 (3 s hold from the 0.3 s revocation of granted authority); all builds, panda `c33343b` | `panda/board/drivers/heartbeat_siren.h:17` |
 | Expected RX frequencies (Toyota) | `0xAA` 83 Hz, `0x260` 50 Hz, `0x1D2` 33 Hz, `0x226` 40 Hz; reference build also `0x262` 25 Hz and `0x1D3` 33 Hz (nominal: the minimum rates openpilot's CAN parser requires; to be confirmed on the vehicle, WP-S-05 OI-7) | `toyota.h:56-80` |
 
 Verified by `test_safety_tick` (`common.py:1208`) for the RX timeout; heartbeat timing has no unit test. Values exceed the FSC §8 budgets (GAP-06). Change control SR-A. DVR-03.
 
-*Status 2026-10-12:* the RX timeout now has `test_rx_timeout_5_periods` and `test_rx_timeout_5_periods_each_msg` (`test_toyota.py`); the panda constants have host tests (`panda/tests/heartbeat_monitor`, `hw_watchdog`, `eps_fault_siren`); the TX rate budgets have `test_tx_rate_*`. On paper the RX timeout (≤ 0.16 s) and heartbeat (0.3 s) now fit the FSC §8 budgets; none is verified on hardware (HIL D-04). The constants still lack the requirement IDs, tolerances and rationale of DVR-03.
+*Status 2026-10-12:* the RX timeout now has `test_rx_timeout_5_periods` and `test_rx_timeout_5_periods_each_msg` (`test_toyota.py`); the panda constants have host tests (`panda/tests/heartbeat_monitor`, `hw_watchdog`, `eps_fault_siren`; since 2026-10-13 also `heartbeat_siren`); the TX rate budgets have `test_tx_rate_*`. On paper the RX timeout (≤ 0.16 s) and heartbeat (0.3 s) now fit the FSC §8 budgets; none is verified on hardware (HIL D-04). The constants still lack the requirement IDs, tolerances and rationale of DVR-03.
 
 **CD-04 Toyota RX check table and TX whitelist**
 

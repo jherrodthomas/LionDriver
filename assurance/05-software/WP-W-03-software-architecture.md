@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-03 Software architectural design |
 | Standard reference | ISO 26262-6:2018 §7 (software architectural design: notation, design principles, static and dynamic aspects, ASIL attribution, resource usage); ISO 26262-9:2018 §6 (coexistence, by reference to WP-A-02); ASPICE 4.0 SWE.2 |
-| Version | 0.4 (status update 2026-10-12: §2, §3 and §4.2 aligned with the 100 Hz TIM4 safety task and 0.3 s heartbeat of §5.1; new units in §3.1 (heartbeat monitor, IWDG, IRQ priority table, reference lock, EPS-fault siren in panda `b790fca`, LionDriver PR #45, not merged; TX rate check in `safety_tx_hook`); §5.1 priorities, §5.4 start-up, §5.4 status, §6.2 and §8 ratings updated. Nothing verified on hardware). 0.3 (§5.4.4 prerequisites implemented, panda `52cad44`: explicit priority table, atomic safety-config switch and fault word; R-2 recorded as a 10 ms bound; 2026-10-12). 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
+| Version | 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3.2 block diagram redrawn as Figure 3-1 with unit IDs and SI interface tags; text version kept; 2026-10-13). 0.4 (status update 2026-10-12: §2, §3 and §4.2 aligned with the 100 Hz TIM4 safety task and 0.3 s heartbeat of §5.1; new units in §3.1 (heartbeat monitor, IWDG, IRQ priority table, reference lock, EPS-fault siren in panda `b790fca`, LionDriver PR #45, not merged; TX rate check in `safety_tx_hook`); §5.1 priorities, §5.4 start-up, §5.4 status, §6.2 and §8 ratings updated. Nothing verified on hardware). 0.3 (§5.4.4 prerequisites implemented, panda `52cad44`: explicit priority table, atomic safety-config switch and fault word; R-2 recorded as a 10 ms bound; 2026-10-12). 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Envelope (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host (E-01): QM / QM (B-sup) |
 | Author | Assurance team (initial draft) |
@@ -50,7 +50,7 @@ Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PN
 | `panda.safety.ignition` | U-SAF-IGN | `ignition.h` | CAN ignition detection | B (feeds heartbeat timeout choice, TSR-510) |
 | `panda.safety.other_modes` | — | `modes/*.h` other brands | Not used by the reference configuration but linked and selectable via `0xdc` | Interference source until SWSR-512 locks the mode; then dead code to be removed or justified (OI-2) |
 | `panda.main` | U-PND-MAIN | `main.c` | Start-up, `set_safety_mode`, tick ISR (8 Hz/1 Hz), heartbeat supervision (1 Hz SILENT path), siren control, main idle loop | B‡ |
-| `panda.main.safety_task` | U-PND-MAIN | `main.c` (`safety_task_handler`), `drivers/timers.h` (`safety_task_timer_init`), `drivers/heartbeat_monitor.h`, `drivers/hw_watchdog.h`, `drivers/eps_fault_siren.h` | TIM4 100 Hz safety task (SWSR-401a): `safety_tick`, heartbeat monitor (0.3 s, TSR-407), EPS-fault siren (1 s persistence, TSR-516(b); panda `b790fca`, LionDriver PR #45, not merged), IWDG feed after main-loop progress (SWSR-501) | B‡ (exists since panda#3, pin `9f60e17`; not verified on hardware) |
+| `panda.main.safety_task` | U-PND-MAIN | `main.c` (`safety_task_handler`), `drivers/timers.h` (`safety_task_timer_init`), `drivers/heartbeat_monitor.h`, `drivers/hw_watchdog.h`, `drivers/eps_fault_siren.h`, `drivers/heartbeat_siren.h` | TIM4 100 Hz safety task (SWSR-401a): `safety_tick`, heartbeat monitor (0.3 s, TSR-407), heartbeat-loss siren (3 s when the monitor revokes granted authority, TSR-516; panda `c33343b`, all builds, 2026-10-13), EPS-fault siren (1 s persistence, TSR-516(b); panda `b790fca`, LionDriver PR #45, not merged), IWDG feed after main-loop progress (SWSR-501) | B‡ (exists since panda#3, pin `9f60e17`; not verified on hardware) |
 | `panda.comms` | U-PND-COMMS | `main_comms.h`, `can_comms.h`, `reference_lock.h` (reference build: mode/parameter lock, requests refused in a car mode, SWSR-512/513) | Control-request dispatcher, health packet, CAN stream packing/unpacking | B‡ (it calls envelope APIs and can change configuration) |
 | `panda.drivers.spi` | U-PND-SPI | `drivers/spi.h`, `stm32h7/llspi.h` | SPI framing, checksum, DMA control | B‡ |
 | `panda.drivers.usb` | U-PND-USB | `drivers/usb.h`, `stm32h7/llusb.h` | USB endpoint handling; reaches the same comms handlers (`drivers/usb.h:575, 616, 700`) | Not needed by the reference device (SPI); interference source (OI-3) |
@@ -63,6 +63,12 @@ Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PN
 | `panda.bootstub` | U-PND-BOOT | `bootstub.c`, `crypto/*`, `flasher.h` | Signature check, soft flasher | B‡ + CS |
 
 ### 3.2 Block diagram
+
+![Figure 3-1: software architecture of the panda firmware, with the QM host stack (host.pandad) and the safety envelope units U-PND-SPI, U-PND-COMMS, U-PND-MAIN, U-PND-HARN, U-PND-FDCAN, U-SAF-CORE, U-SAF-TOY, U-SAF-LAT and U-SAF-LONG, interfaces SI-01 to SI-10 and the execution contexts](figures/fig-w03-3-2-panda-software-architecture.svg)
+
+*Figure 3-1.* The QM host stack (left) reaches the panda envelope (B‡) through SPI4 (USB, not used by the reference device, is not drawn). Inside the panda, boxes are the units of §3.1 with their functions as chips; U-PND-FDCAN spans the TX and RX chips (dashed region). Orange lines are the command and actuation path, teal lines CAN reception, forwarding and data back to the SoC, grey lines control requests and internal calls; each tag is an interface ID of §3.3. The bridge on the TX line marks a crossing without a connection. Source: [`figures/fig-w03-3-2-panda-software-architecture.svg`](figures/fig-w03-3-2-panda-software-architecture.svg); change it together with §3.1, §3.3 and §5.1.
+
+<details><summary>Text version of Figure 3-1</summary>
 
 ```
           SoC (pandad)                       panda STM32H7 (one address space, no MPU)
@@ -90,6 +96,8 @@ Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PN
                                   │  main loop: LED fade / WFI only                                 │
                                   └───────────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ### 3.3 Interfaces between components
 
@@ -154,7 +162,7 @@ All envelope processing runs in **interrupt context**. The main loop (`main.c:33
 | DMA2 Stream2 (SPI RX done) | end of MOSI DMA | `spi_rx_done` (`drivers/spi.h:106-223`) via `stm32h7/llspi.h:56-61` | via `comms_control_handler`: `set_safety_mode` → `set_safety_hooks`; via `comms_can_write`: `safety_tx_hook` (in the reference build the per-ID TX rate check `tx_rate_check` runs first, TSR-518) |
 | DMA2 Stream3, SPI4 | MISO done | `spi_tx_done` | none |
 | USB OTG | USB transfer | `drivers/usb.h` | same comms handlers |
-| TIM4 safety task (LionDriver) | 100 Hz (`drivers/timers.h` `safety_task_timer_init`) | `safety_task_handler` (`main.c`) | `safety_tick` (RX timeouts), heartbeat monitor (0.3 s, `drivers/heartbeat_monitor.h`), EPS-fault siren (`drivers/eps_fault_siren.h`, panda `b790fca`), IWDG feed (`drivers/hw_watchdog.h`) |
+| TIM4 safety task (LionDriver) | 100 Hz (`drivers/timers.h` `safety_task_timer_init`) | `safety_task_handler` (`main.c`) | `safety_tick` (RX timeouts), heartbeat monitor (0.3 s, `drivers/heartbeat_monitor.h`), heartbeat-loss siren (`drivers/heartbeat_siren.h`, panda `c33343b`), EPS-fault siren (`drivers/eps_fault_siren.h`, panda `b790fca`), IWDG feed (`drivers/hw_watchdog.h`) |
 | TIM12 tick | 8 Hz (`drivers/timers.h:30-31`) | `tick_handler` (`main.c`) | 1 Hz: heartbeat counter and SILENT after 5 s, `heartbeat_engaged` mismatch, `check_registers`; 8 Hz: harness, software watchdog kick, siren |
 | TIM6 | 1 Hz | `interrupt_timer_handler` (`drivers/interrupts.h:50-72`) | rate statistics |
 | NMI / HardFault | exception | `early_init.h:73-81` | reset |
@@ -167,7 +175,7 @@ All envelope processing runs in **interrupt context**. The main loop (`main.c:33
 |---|---|---|
 | 125 ms | siren toggle, `fan_tick`, `harness_tick` (ADC orientation when relay not driven), `simple_watchdog_kick`, `sound_tick`, relay-fault reporting, harness re-init on change | `main.c:113-140` |
 | 1 s | LEDs, ignition, `bootkick_tick`, heartbeat counter, `heartbeat_engaged` mismatch (3 ticks), heartbeat loss → SILENT (5 s ign on / 2 s off), siren countdown, `check_registers`, CAN ignition timeout, counters | `main.c` |
-| 10 ms (TIM4, LionDriver, panda `c2e5d93`) | `safety_tick` (RX timeouts, 5 periods for Toyota), heartbeat monitor (authority revoked after 0.3 s), EPS-fault siren (1 s persistence, 3 s hold; panda `b790fca`), IWDG feed (window mode) | `main.c` `safety_task_handler` |
+| 10 ms (TIM4, LionDriver, panda `c2e5d93`) | `safety_tick` (RX timeouts, 5 periods for Toyota), heartbeat monitor (authority revoked after 0.3 s), heartbeat-loss siren (3 s hold from that revocation if authority was granted; panda `c33343b`), EPS-fault siren (1 s persistence, 3 s hold; panda `b790fca`), IWDG feed (window mode) | `main.c` `safety_task_handler` |
 
 Required schedule (SWSR-401a, 501): a dedicated timer at ≥ 50 Hz running `safety_tick`, heartbeat, command freshness, SPI error rate, relay readback, platform monitors; IWDG serviced at its end. The 8 Hz/1 Hz tick keeps housekeeping only. **Status (panda `c2e5d93`):** the 100 Hz safety task exists and runs `safety_tick`, the heartbeat monitor and the IWDG feed; command freshness (TSR-408), SPI error rate, relay readback and platform monitors are not in it yet. It still runs at the same priority as every other interrupt; the proposed priority scheme is §5.4.
 
