@@ -49,7 +49,7 @@ Only the reference configuration is driven: Toyota, parameter 73 (non-SecOC, LKA
 
 - **The implementation is independent.** It is a different language and structure, and it shares no code with the C. The C sees only bytes packed from the DBC, so the bit positions the C decodes are checked against the DBC as well.
 - **The reading is not independent.** The same author (Claude) wrote the SM record, the SWSR texts and this model, and had read the C before writing the model. A requirement that copied a code defect would be reproduced here too. The run checks code against the written specification; it does not validate the specification.
-- **Shared harness parts.** Both sides depend on `CANPacker` and the DBC. A DBC error that moves a signal would go unnoticed if the C was built from the same wrong DBC position.
+- **Shared harness parts.** Both sides depend on `CANPacker` and the DBC. A DBC error that moves a signal would go unnoticed if the C was built from the same wrong DBC position. [`layout_check.py`](layout_check.py) closes this for the signals whose bit position WP-S-05 §11.1 states: CRUISE_ACTIVE, GAS_RELEASED and BRAKE_PRESSED. It checks the DBC and the C against frames built by hand from those positions. For the other signals the gap stays open ([LAYOUT-CHECK-2026-10-13](results/LAYOUT-CHECK-2026-10-13.md) LC-01).
 
 ## 5. Modelling assumptions and deviations
 

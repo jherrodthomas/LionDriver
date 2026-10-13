@@ -13,12 +13,14 @@ on:
       - 'opendbc_repo'
       - 'assurance/05-software/reference-models/**'
       - 'assurance/05-software/state-machines/**'
+      - 'assurance/03-system/WP-S-05-hsi-specification.md'
       - '.github/workflows/b2b.yaml'
   pull_request:
     paths:
       - 'opendbc_repo'
       - 'assurance/05-software/reference-models/**'
       - 'assurance/05-software/state-machines/**'
+      - 'assurance/03-system/WP-S-05-hsi-specification.md'
       - '.github/workflows/b2b.yaml'
   workflow_dispatch:
 
@@ -40,16 +42,20 @@ jobs:
         persist-credentials: false
     - name: Checkout opendbc submodule
       run: git submodule update --init --depth 1 opendbc_repo
-    - name: Run back-to-back (both builds, deviations, mutants)
+    - name: Run back-to-back (both builds, deviations, mutants) and the signal-layout check
       # setup.sh must run from inside opendbc_repo: uv discovers the project from the working directory
       run: |
         cd opendbc_repo
         source setup.sh
         cd ..
         python assurance/05-software/reference-models/b2b_toy_auth.py --all --gate --json b2b-toy-auth.json
+        python assurance/05-software/reference-models/layout_check.py --variant reference > layout-check-reference.json
+        python assurance/05-software/reference-models/layout_check.py --variant upstream > layout-check-upstream.json
     - name: Upload result
       if: always()
       uses: actions/upload-artifact@v7
       with:
         name: b2b-toy-auth
-        path: b2b-toy-auth.json
+        path: |
+          b2b-toy-auth.json
+          layout-check-*.json
