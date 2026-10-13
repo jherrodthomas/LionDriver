@@ -122,6 +122,8 @@ jobs:
       run: python3 assurance/case/tools/validate.py
     - name: Validator self-tests
       run: python3 assurance/case/tools/test_case.py
+    - name: Snapshot builder tests
+      run: python3 assurance/case/tools/test_snapshot.py
     - name: Dashboard is in sync with the records
       run: python3 assurance/case/tools/generate_dashboard.py --check
     - name: GSN diagrams are in sync with the records, WP-K-01 and WP-K-03

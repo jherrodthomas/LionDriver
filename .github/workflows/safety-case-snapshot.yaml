@@ -1,0 +1,111 @@
+name: safety case snapshot
+
+# Builds the downloadable safety case snapshot (WP-K-01) and publishes it as a GitHub release:
+#   - every merge to liondriver-dev that touches the assurance set: a living snapshot, the rolling
+#     pre-release `snapshot-latest` (replaced each time; the README button downloads its PDF);
+#   - a pushed tag bl-NNN: a baseline release, kept permanently. It shows "approved" only if the
+#     records hold a passed gate record and a frozen, tagged baseline (caselib.release_status).
+# Pull requests build and render the snapshot without publishing, so a broken build fails before merge.
+# Nothing is published if the records, trace or links checks fail.
+
+on:
+  push:
+    branches:
+      - liondriver-dev
+    tags:
+      - 'bl-*'
+    paths:
+      - 'assurance/**'
+      - 'README.md'
+      - '.github/workflows/safety-case-snapshot.yaml'
+  pull_request:
+    paths:
+      - 'assurance/case/**'
+      - '.github/workflows/safety-case-snapshot.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: safety-case-snapshot-${{ github.event_name == 'pull_request' && github.head_ref || 'publish' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  PLAYWRIGHT_VERSION: 1.48.2
+  OUT: build/snapshot
+
+jobs:
+  snapshot:
+    name: build and publish snapshot
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write        # create the release
+      id-token: write        # sign the build attestation (Sigstore, GitHub OIDC)
+      attestations: write
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        fetch-depth: 0         # the revision history and contributors come from git
+        persist-credentials: false
+    - name: Check the records, trace and links first
+      run: |
+        python3 assurance/case/tools/validate.py
+        python3 assurance/trace/tools/check_trace.py
+        python3 assurance/trace/tools/check_links.py
+        python3 assurance/case/tools/generate_dashboard.py --check
+    - name: Fetch the previous snapshot manifest
+      if: github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/')
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: gh release download snapshot-latest -p manifest.json -D previous -R "$GITHUB_REPOSITORY" || echo "no previous snapshot"
+    - name: Build the snapshot (HTML and manifest)
+      run: |
+        if [[ "$GITHUB_REF" == refs/tags/bl-* ]]; then
+          python3 assurance/case/tools/build_snapshot.py --out "$OUT" --tag "$GITHUB_REF_NAME"
+        else
+          python3 assurance/case/tools/build_snapshot.py --out "$OUT" --previous previous/manifest.json
+        fi
+    - name: Install Chromium for printing
+      run: |
+        npm install --no-save --no-audit --no-fund "playwright@$PLAYWRIGHT_VERSION"
+        npx playwright install --with-deps chromium
+    - name: Print the PDF
+      run: node assurance/case/tools/render_snapshot.cjs "$OUT"
+    - name: Hashes
+      run: |
+        cd "$OUT"
+        sha256sum LionDriver-safety-case.pdf LionDriver-safety-case.html manifest.json > SHA256SUMS
+        cat SHA256SUMS
+    - uses: actions/upload-artifact@v7
+      with:
+        name: safety-case-snapshot
+        path: ${{ env.OUT }}
+    - name: Attest the build
+      if: github.event_name != 'pull_request'
+      uses: actions/attest-build-provenance@v2
+      with:
+        subject-path: |
+          ${{ env.OUT }}/LionDriver-safety-case.pdf
+          ${{ env.OUT }}/LionDriver-safety-case.html
+          ${{ env.OUT }}/manifest.json
+    - name: Publish the release
+      if: github.event_name != 'pull_request'
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        id=$(python3 -c "import json;print(json.load(open('$OUT/manifest.json'))['snapshot']['id'])")
+        status=$(python3 -c "import json;r=json.load(open('$OUT/manifest.json'))['release_status'];print(r['label']+': '+r['detail'])")
+        files=("$OUT/LionDriver-safety-case.pdf" "$OUT/LionDriver-safety-case.html" "$OUT/manifest.json" "$OUT/SHA256SUMS")
+        notes="Safety case snapshot $id ($status), built from $GITHUB_SHA by this workflow (run $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID).
+
+        Verify a downloaded copy: \`sha256sum -c SHA256SUMS\` and \`gh attestation verify LionDriver-safety-case.pdf -R $GITHUB_REPOSITORY\`.
+        Uncontrolled when downloaded; the controlled version is the repository at the commit above."
+        if [[ "$GITHUB_REF" == refs/tags/bl-* ]]; then
+          gh release create "$GITHUB_REF_NAME" "${files[@]}" -R "$GITHUB_REPOSITORY" --verify-tag --title "Safety case $id" --notes "$notes"
+        else
+          gh release delete snapshot-latest --cleanup-tag --yes -R "$GITHUB_REPOSITORY" || true
+          gh release create snapshot-latest "${files[@]}" -R "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --prerelease \
+            --title "Safety case snapshot $id (rolling)" --notes "$notes"
+        fi
