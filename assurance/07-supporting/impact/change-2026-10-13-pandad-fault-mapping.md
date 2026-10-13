@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **In review: unit test passes, `scons` builds; process replay not run; not reviewed independently** |
+| Status | **In review: unit test passes, `scons` builds, process replay unchanged in CI; HIL not run; not reviewed independently** |
 | Change requests | This LionDriver change |
 | Finding | SW FMEA SWF-025 / action SWF-ACT-025 (`assurance/08-analyses/fmea/analyses/sw-fmea.yaml`, on branch `claude/charming-knuth-b8nnqh`, not yet on `liondriver-dev`) |
 | Range | LionDriver `682f184..` this change |
@@ -36,7 +36,8 @@ The schema change only appends an enumerant, so old logs read unchanged and old 
 | `tests/test_pandad_canprotocol` | Pass |
 | `scons` | pandad and both pandad tests build. `scons -k` on the full tree builds every target except the two modeld `*_tinygrad.pkl` models, whose ONNX inputs are Git LFS pointers in the test environment (unrelated to this change) |
 | `log.capnp` with the new enumerant | Loads (`log.PandaState.FaultType.interruptRateSoundDma == 27`) |
-| Process replay, HIL | **Not run** |
+| Process replay (CI, PR #48) | 0 changed, 66 passed, 0 errors |
+| HIL | **Not run** |
 
 ## 4. Open items
 
