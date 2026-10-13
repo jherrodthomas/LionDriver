@@ -826,6 +826,94 @@ if __name__ == "__main__":
   unittest.main()
 
 
+class TestStpaMap(unittest.TestCase):
+  """STPA loss scenarios <-> fault trees, FMEA and TSRs (stpa-map.yaml)."""
+  STPA = "\n".join([
+    "| H-01 | Lateral motion | L-1 | SG-01 |",
+    "| H-STPA-1 | Unsupervised | L-1 | none |",
+    "| UCA-01 | P | Engages badly | H-01 |",
+    "| UCA-40 | C4 EPS | Overpowers | H-01 | AOU-01 |",
+    "| LS-01 | UCA-01 | Scenario | Type | x | y |",
+  ])
+  FTA = TestFtaFmeaMap.FTA
+  TSR = "| TSR-101 | limit |\n"
+
+  def doc(self, **over):
+    d = {"schema_version": 1, "source": "stpa.md", "fta_source": "fta.md", "tsr_source": "tsr.md",
+         "hazards": {"H-01": ["SG-01"], "H-STPA-1": []},
+         "external_ucas": [{"uca": "UCA-40", "assumption": "AOU-01"}],
+         "scenarios": [{"id": "LS-01", "ucas": ["UCA-01"], "hazards": ["H-01"], "status": "covered",
+                        "fta": ["BE-1.01"], "fmea": ["SWF-001"], "requirements": ["TSR-101"]}]}
+    d.update(over)
+    return d
+
+  def check(self, doc):
+    with tempfile.TemporaryDirectory() as d:
+      root = Path(d)
+      fta_dir = root / "assurance" / "08-analyses" / "fta"
+      fta_dir.mkdir(parents=True)
+      shutil.copy(fmea_lint.ROOT / "assurance" / "08-analyses" / "fta" / "fta_diagrams.py", fta_dir)
+      (root / "stpa.md").write_text(self.STPA)
+      (root / "fta.md").write_text(self.FTA)
+      (root / "tsr.md").write_text(self.TSR)
+      ctx = fmea_lint.Context(root)
+      ctx.fm_index["SWF-001"] = {"id": "SWF-001", "effects": [], "causes": []}
+      res = fmea_lint.Result()
+      sys.modules.pop("fta_diagrams", None)
+      fmea_lint.check_stpa_map("map", doc, ctx, res)
+      sys.modules.pop("fta_diagrams", None)
+      return res
+
+  def test_valid(self):
+    res = self.check(self.doc())
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("STPA map: 2 UCAs (1 with a loss scenario, 1 external); 1 loss scenarios" in r for r in res.report))
+
+  def test_uca_without_scenario(self):
+    errors = " ".join(self.check(self.doc(external_ucas=[])).errors)
+    self.assertIn("UCA-40", errors)
+    self.assertIn("no loss scenario", errors)
+
+  def test_scenario_sets_match_the_document(self):
+    doc = self.doc()
+    doc["scenarios"].append(dict(doc["scenarios"][0], id="LS-99"))
+    self.assertTrue(any("LS-99" in e and "no such loss scenario" in e for e in self.check(doc).errors))
+    self.assertTrue(any("LS-01" in e and "not in the map" in e for e in self.check(self.doc(scenarios=[])).errors))
+
+  def test_unknown_references(self):
+    doc = self.doc()
+    doc["scenarios"][0].update(fta=["BE-9.99"], fmea=["SWF-999"], requirements=["TSR-999"])
+    errors = " ".join(self.check(doc).errors)
+    for ref in ("BE-9.99", "SWF-999", "TSR-999"):
+      self.assertIn(ref, errors)
+
+  def test_status_rules(self):
+    doc = self.doc()
+    doc["scenarios"][0].update(fta=[], fmea=[])
+    self.assertTrue(any("needs at least one" in e for e in self.check(doc).errors))
+    doc["scenarios"][0].update(status="new")
+    self.assertTrue(any("needs a finding" in e for e in self.check(doc).errors))
+    doc["scenarios"][0]["finding"] = "no row anywhere"
+    self.assertEqual(self.check(doc).errors, [])
+
+  def test_event_outside_the_hazards_tree_warns(self):
+    second = "\n".join(["## 3. FTA — SG-02: other goal", "", "```",
+                         "TE-02 Top                                                   [OR]",
+                         "├── BE-2.01 One", "└── BE-2.02 Two", "```", ""])
+    self.FTA = TestFtaFmeaMap.FTA + second
+    self.STPA = TestStpaMap.STPA + "\n| H-02 | Other | L-1 | SG-02 |"
+    doc = self.doc(hazards={"H-01": ["SG-01"], "H-02": ["SG-02"], "H-STPA-1": []})
+    self.assertEqual(self.check(doc).warnings, [])
+    doc["scenarios"][0]["hazards"] = ["H-02"]
+    res = self.check(doc)
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("BE-1.01 is in no fault tree of SG-02" in w for w in res.warnings))
+
+  def test_real_map_is_clean(self):
+    res = fmea_lint.lint()
+    self.assertEqual([e for e in res.errors if "stpa-map" in e], [])
+
+
 class TestHaraMapping(unittest.TestCase):
   WP = "\n".join([
     "### 5.1 H-01 Unintended lateral motion",

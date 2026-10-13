@@ -144,6 +144,39 @@ The functional-safety hazards of the HARA are used as the system-level hazards, 
 | FB-06 | Road cameras, model outputs | → C2 |
 | FB-07 | Driver camera (face, eyes, phone) and wheel touch | C1 → C2 |
 
+### 3.4 Inside openpilot, configuration, calibration and updates (v0.3, OI-7)
+
+The structure of §3.1–§3.3 treats openpilot (C2) as one controller. Version 0.3 opens it up along the ML control loop (ISO/PAS 8800: model → planner → controller) and adds the control actions that configure the item rather than move the vehicle. These do not change Figure 3-1; they refine C2 and add one controller outside the vehicle (C7).
+
+| ID | Sub-controller | Processes | Responsibilities | Process-model variables that matter |
+|---|---|---|---|---|
+| C2.1 | Driving model | `modeld` | Desired curvature and acceleration (`modelV2.action`), lead estimates, hard-brake and gas-press predictions | Camera image valid; calibration; model confidence |
+| C2.2 | Longitudinal planner | `radard`, `plannerd` | Lead tracks and longitudinal plan (`aTarget`, `shouldStop`, `fcw`, `allowThrottle`). The Corolla TSS2 has no radar parsed (`radarUnavailable`), so leads come from the same model as the path (`toyota/interface.py:91`) | Leads present and distance; set speed; personality |
+| C2.3 | Controller | `controlsd`, Toyota `CarController` | Turn the plan into torque and acceleration requests while `latActive`/`longActive` | Inputs fresh and finite; engagement state; learned vehicle parameters |
+| C2.4 | Supervisor | `selfdrived` | Engagement state machine, events, alerts; gates `latActive`/`longActive` | Panda state; process health; driver state; PCM cruise |
+| C2.5 | Driver monitoring | `dmonitoringmodeld`, `dmonitoringd` | Awareness estimate and escalation | Face and eye visibility; wheel touch |
+| C2.6 | Calibration and learning | `calibrationd`, `paramsd`, `torqued`, `lagd` | Camera extrinsics; steer ratio, stiffness and angle offset; lateral acceleration factor and friction; actuator lag | Calibration status; estimator validity |
+| C2.7 | Panda interface | `pandad` | Flash the panda firmware at start; configure the safety mode, parameter and alternative experience; heartbeat; forward `sendcan` | Panda signature and reference-build flag; CarParams; onroad state |
+| C7 | Updater and owner settings (outside the vehicle loop) | `updated`; the owner through the settings UI | Install software updates (offroad only, swapped in at reboot); set driving mode, personality and toggles | Release identity; parameter values |
+
+| ID | Control action | From → to | Channel |
+|---|---|---|---|
+| CA-14 | Desired curvature and acceleration, lead estimates | C2.1 → C2.2, C2.3 | `modelV2` (`action.desiredCurvature`, `action.desiredAcceleration`, leads, `meta`) |
+| CA-15 | Longitudinal plan | C2.2 → C2.3 | `longitudinalPlan` (`aTarget`, `shouldStop`, `allowThrottle`, `fcw`) |
+| CA-16 | Lateral and longitudinal activation | C2.4 → C2.3 | `selfdriveState` (enabled, active); `latActive`/`longActive` in `controlsd.py:110-131` |
+| CA-17 | Calibration and learned parameters | C2.6 → C2.1, C2.3 | `liveCalibration`, `liveParameters`, `liveTorqueParameters`, `liveDelay` |
+| CA-18 | Safety configuration requests: ELM327 for fingerprinting, car safety mode with parameter and alternative experience, NOOUTPUT offroad, power save | C2.7 → C3 | SPI `0xdc`, `0xdf`, `0xe7` (`panda_safety.cc:5-88`) |
+| CA-19 | Flash the panda firmware | C2.7 → C3 | Bootloader over SPI, at pandad start (`pandad.py:20-51`) |
+| CA-20 | Install a software update | C7 → C2, C3 (through CA-19 at the next start) | `updated` (offroad only, `process_config.py:114`), swap at reboot |
+| CA-21 | Driving mode, personality and toggles | C7 (owner) → C2 | Params (`ExperimentalMode`, `LongitudinalPersonality`, `DisengageOnAccelerator`, …) |
+
+| ID | Feedback | From → to |
+|---|---|---|
+| FB-08 | Model and plan validity (message `valid`, alive, age; model confidence) | C2.1, C2.2 → C2.3, C2.4 |
+| FB-09 | Calibration and estimator status (`calStatus`, `vehicleParameters.valid`, `lateralTorqueParameters.valid`) | C2.6 → C2.4 |
+| FB-10 | Panda signature, reference-build flag, configured safety mode and parameter | C3 → C2.7, C2.4 |
+| FB-11 | Update and release state (installed version, update failed, offroad alerts) | C7 → C1 |
+
 ## 4. Step 3 — Unsafe control actions
 
 Types: **N** not provided causes hazard; **P** provided causes hazard; **T** too early, too late or wrong order; **D** stopped too soon or applied too long.
@@ -206,6 +239,37 @@ Types: **N** not provided causes hazard; **P** provided causes hazard; **T** too
 | CC-6 | Driver monitoring shall escalate fast enough for the current speed and road, and shall not allow engagement while the driver is not supervising | UCA-05, UCA-18, UCA-01 |
 | CC-7 | User information shall state what the item does not handle in Chill Mode (lights, stop signs, stopped vehicles at speed, sharp curves) | UCA-01, UCA-06 |
 | CC-8 | The relay shall be driven only while the panda forwards every non-replaced stock message, and released otherwise | UCA-33 |
+
+### 4.6 Inside openpilot, configuration, calibration and updates (v0.3, OI-7)
+
+UCAs of the control actions of §3.4. Several restate, at sub-controller level, UCAs of §4.2 (noted in the last column); they are kept because the causes, and so the constraints, sit in a different process.
+
+| UCA | Controller | Type | Unsafe control action | Hazards | Refines |
+|---|---|---|---|---|---|
+| UCA-50 | C2.1 | P | Desired curvature or acceleration provided from a degraded input (occluded or blinded camera, calibration invalid or wrong) with no drop in the confidence that gates its use | H-01, H-03, H-04 | UCA-11, UCA-14, UCA-16 |
+| UCA-51 | C2.1, C2.2 | N | A lead is not provided (missed or late detection). Planner braking and the FCW both depend on it, because on the Corolla the leads come from the same model as the path | H-06 | UCA-15, UCA-17 |
+| UCA-52 | C2.2 | P | `allowThrottle` provided from a wrong gas-press prediction, so positive acceleration is planned towards a slower lead | H-03 | UCA-14 |
+| UCA-53 | C2.1, C2.2 | D | Plan or model output held after its publisher stops or lags | H-01, H-03, H-04, H-06 | UCA-13 |
+| UCA-54 | C2.4 | P | `latActive`/`longActive` provided while the panda does not grant authority, or while the PCM cruise state differs | H-07, H-02, H-06 | UCA-19 |
+| UCA-55 | C2.4 | N | Disengagement not provided when a supervised input is invalid, because its event is masked (big-model loading) | H-02, H-06 | UCA-17 |
+| UCA-56 | C2.6 | P | Learned steer ratio, stiffness, angle offset or lateral acceleration factor applied while wrong; bounded only to 0.5–2× the platform value (`paramsd.py:47`) | H-01, H-02 | UCA-11, UCA-12 |
+| UCA-57 | C2.6 | P | Camera calibration kept after the device has moved on its mount by less than the recalibration threshold (spread above 4° pitch or 2° yaw, `calibrationd.py:35-36, 164-167`) | H-01, H-04 | UCA-11 |
+| UCA-58 | C2.7 | P | A car safety mode or parameter requested for the wrong vehicle (fingerprint) or before the panda firmware is confirmed as the reference build | H-01, H-03, H-05 | UCA-20 |
+| UCA-59 | C2.7 | P | ELM327, power save or a reset/boot-mode request provided while driving | H-02, H-06, H-08 | — |
+| UCA-60 | C2.7 | P | Panda flashed with firmware other than the assured reference build (the bundled image is wrong, or a rollback brings an older one) | H-01, H-03, H-05, H-08 | — |
+| UCA-61 | C7 | P | Update installed that is not an approved LionDriver release, or that swaps in partly | All | — |
+| UCA-62 | C7 (owner) | P | Driving mode or toggles set outside the reference configuration (Experimental Mode, aggressive personality, developer toggles) | H-03, H-04, H-06, H-STPA-1 | UCA-06 |
+
+Controller constraints added for these UCAs:
+
+| ID | Constraint | From UCA |
+|---|---|---|
+| CC-9 | openpilot shall not actuate on model or plan outputs that are stale, invalid or produced from an invalid calibration, and shall announce the resulting loss of control | UCA-50, UCA-53, UCA-55 |
+| CC-10 | Learned vehicle parameters shall be bounded to ranges validated for the reference vehicle, and leaving the range shall be treated as a fault | UCA-56 |
+| CC-11 | A change of device attitude after calibration shall be detected and shall prevent engagement until recalibrated | UCA-57 |
+| CC-12 | A car safety mode shall be configured only on a reference panda and only for the reference vehicle; diagnostic, power-save and reset requests shall be refused while a car mode is active | UCA-58, UCA-59 |
+| CC-13 | Only approved releases shall be installed, and the panda firmware shall match the release record | UCA-60, UCA-61 |
+| CC-14 | The reference configuration shall be enforced, or deviations shown to the driver, at every start | UCA-62 |
 
 ## 5. Step 4 — Loss scenarios (priority UCAs)
 
