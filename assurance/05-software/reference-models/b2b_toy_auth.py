@@ -178,6 +178,25 @@ def directed(reference: bool) -> dict[str, list]:
   f = new(); f.engage(); f.emit(SetMode()); f.run(300_000)
   S["D10 T7 safety mode set while allowed"] = f.events
 
+  # Ported from the retired models/b2b harness (BB-08a, BB-08b, BB-01c). D19: a mode set while CRUISE_ACTIVE is held 1
+  # (B2B-06 / BB-C-01). After the reset the held 1 is a new edge (MA-01, SWSR-311); whether authority comes back
+  # depends on every RX check being received again before the next 0x1D2.
+  f = new(); f.engage(); f.run(100_000); f.emit(SetMode()); f.muted = {0x226}
+  f.run(f.next_due[0x1D2] - f.now + 1_000); f.muted = set(); f.run(200_000)
+  S["D19a T7 mode set, cruise held; 0x226 arrives after the next 0x1D2: no regrant"] = f.events
+
+  f = new(); f.engage(); f.run(100_000); f.emit(SetMode())
+  for a in sorted(f.rx):
+    if a != 0x1D2:
+      f.now += 100; f.emit(f.frame(a))
+  f.run(200_000)
+  S["D19b T7 mode set, cruise held; every RX check received before the next 0x1D2: authority granted again"] = f.events
+
+  f = new(); f.sig["CRUISE_ACTIVE"] = 1; f.run(300_000)
+  f.sig["CRUISE_ACTIVE"] = 0; f.emit(f.frame(0x1D2)); f.run(100_000)
+  f.sig["CRUISE_ACTIVE"] = 1; f.emit(f.frame(0x1D2)); f.run(100_000)
+  S["D20 T8 then T1: cruise active from the start (no edge), then off and on again"] = f.events
+
   if reference:
     for extra, tag in ((0, "exactly 150 ms"), (1, "150 ms + 1 us")):
       f = new(); f.engage()

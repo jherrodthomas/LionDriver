@@ -20,7 +20,7 @@ After every event the harness compares `controls_allowed`, and in the reference 
 
 Event sources:
 
-- **Directed scenarios D01…D18.** As a running host would, they carry the SoC's actuation frames `0x2E4` (100 Hz) and `0x343` (33 Hz) unless a scenario mutes them (D13 sends its own `0x2E4` flood; D18 stops one of them). At least one per in-scope transition, the timeout and tolerance boundaries (at the limit and 1 µs past it), and WP-W-05 OI-1.
+- **Directed scenarios D01…D20** (D19a, D19b and D20 ported from the retired `models/b2b` harness, BB-08a, BB-08b, BB-01c). As a running host would, they carry the SoC's actuation frames `0x2E4` (100 Hz) and `0x343` (33 Hz) unless a scenario mutes them (D13 sends its own `0x2E4` flood; D18 stops one of them). At least one per in-scope transition, the timeout and tolerance boundaries (at the limit and 1 µs past it), and WP-W-05 OI-1.
 - **Seeded random sequences.** Nominal frame rates with ±25 % jitter, dropouts across the timeout thresholds, gaps of 20…200 ms in the actuation frames (T10b), signal changes, corrupted frames (checksum, DLC, wheel-speed fault bit), bus-2 copies, safety-mode sets, and TX floods at 0.5×…10× on every rate-checked ID.
 
 ## 2. Sources of the model
