@@ -27,5 +27,6 @@ Nothing listed under "Planned" exists yet. No model output is verification evide
 | 3 | Back-to-back test: Python model of `sm-toy-auth.yaml` vs C `libsafety` | Python | Planned; model follows the record (MD-03) |
 | 4 | HIL plant model: Corolla EPS and vehicle lateral, closed loop, bench stage B3 | OpenModelica | Planned; blocked on WP-P-07 OI-11, assumed EPS lag (MD-04) |
 | — | Envelope calculations and plots | Octave | Exists: [`octave/`](octave/README.md) |
+| 5 | Architecture model: elements, interfaces, cereal services, safety mechanisms and generated views | SysML v2 textual notation; OMG pilot implementation 0.62.0 for conformance; in-house Python for checks and figures | Draft: [`sysml/`](sysml/README.md). Decisions SY-01 to SY-06 there are proposals, not yet taken (WP-P-07 TL-26, TL-27) |
 
 Item 4 also has an open question: whether a soft real-time loop on the bench PC at 100 Hz is acceptable for stage B3. It is not decided by this plan.

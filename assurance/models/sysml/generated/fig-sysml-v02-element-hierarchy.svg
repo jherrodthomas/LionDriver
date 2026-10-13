@@ -1,0 +1,454 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1100" viewBox="0 0 1520 1100" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-02. Element hierarchy (SysML v2 view elementHierarchy)</title>
+<desc id="d">Decomposition view generated from the SysML v2 model: the item LD-SDA and its components E-01 to E-05, each with its parts and software units, their integrity attribution (dot), the software unit of WP-W-06 §2, whether the element exists only in the reference build, and how many safety mechanisms it performs.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter></defs>
+<rect width="1520" height="1100" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-02 · Element hierarchy</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">Item, components, parts and software units of LD-SDA (ISO 26262-1 3.39) with integrity attribution, unit and build scope</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::elementHierarchy</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">DecompositionView · render asTreeDiagram · model de46ffb8cc06</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<rect x="580" y="112" width="360" height="74" rx="12" fill="#FFFDF8" stroke="#C2410C" stroke-width="1.6" stroke-dasharray="6 4"/>
+<rect x="596" y="126" width="37.7" height="18" rx="9" fill="#C2410C"/><text x="614.8" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">ITEM</text>
+<text x="641.7" y="140" font-size="15" fill="#0F172A" font-weight="700">LD-SDA</text>
+<text x="596" y="162" font-size="10.5" fill="#64748B">Supervised Driving Assistance · aftermarket SAE Level 2 retrofit</text>
+<text x="596" y="176" font-size="9.5" fill="#94A3B8" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«part» ldsda : LdSda</text>
+<rect x="40" y="250" width="296" height="354" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" filter="url(#lift)"/>
+<path d="M40 262a12 12 0 0 1 12 -12h272a12 12 0 0 1 12 12v54h-296z" fill="#FFFFFF" />
+<line x1="40" y1="316" x2="336" y2="316" stroke="#94A3B8" stroke-width="1"/>
+<rect x="54" y="263" width="35.8" height="18" rx="9" fill="#475569"/><text x="71.9" y="275.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-01</text>
+<rect x="291.8" y="263" width="30.2" height="17" rx="8.5" fill="#475569"/><text x="306.9" y="274.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">QM</text>
+<text x="54" y="296" font-size="13.5" fill="#0F172A" font-weight="700">SoC software</text>
+<text x="54" y="310" font-size="10" fill="#64748B">14 parts · 11 SM</text>
+<g data-el="context.ldsda.socSoftware"><rect x="40" y="250" width="296" height="66" fill="transparent"/></g>
+<g data-el="context.ldsda.socSoftware.pandad"><rect x="44" y="326" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="335.5" r="3.6" fill="#475569"/>
+<text x="66" y="339.1" font-size="9.8" fill="#0F172A" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.pandad</text>
+</g>
+<g data-el="context.ldsda.socSoftware.card"><rect x="44" y="345" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="354.5" r="3.6" fill="#475569"/>
+<text x="66" y="358.1" font-size="9.8" fill="#0F172A" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.card</text>
+</g>
+<g data-el="context.ldsda.socSoftware.controlsd"><rect x="44" y="364" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="373.5" r="3.6" fill="#475569"/>
+<text x="66" y="377.1" font-size="9.8" fill="#0F172A" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.controlsd</text>
+</g>
+<g data-el="context.ldsda.socSoftware.selfdrived"><rect x="44" y="383" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="392.5" r="3.6" fill="#475569"/>
+<text x="66" y="396.1" font-size="9.8" fill="#0F172A" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.selfdrived</text>
+</g>
+<g data-el="context.ldsda.socSoftware.plannerd"><rect x="44" y="402" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="411.5" r="3.6" fill="#CBD5E1"/>
+<text x="66" y="415.1" font-size="9.8" fill="#0F172A" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.plannerd</text>
+</g>
+<g data-el="context.ldsda.socSoftware.radard"><rect x="44" y="421" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="430.5" r="3.6" fill="#CBD5E1"/>
+<text x="66" y="434.1" font-size="9.8" fill="#0F172A" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.radard</text>
+</g>
+<g data-el="context.ldsda.socSoftware.modeld"><rect x="44" y="440" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="449.5" r="3.6" fill="#CBD5E1"/>
+<text x="66" y="453.1" font-size="9.8" fill="#0F172A" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.modeld</text>
+</g>
+<g data-el="context.ldsda.socSoftware.dm"><rect x="44" y="459" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="468.5" r="3.6" fill="#CBD5E1"/>
+<text x="66" y="472.1" font-size="9.8" fill="#0F172A" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.dm</text>
+</g>
+<g data-el="context.ldsda.socSoftware.hmi"><rect x="44" y="478" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="487.5" r="3.6" fill="#475569"/>
+<text x="66" y="491.1" font-size="9.8" fill="#0F172A" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.hmi</text>
+</g>
+<g data-el="context.ldsda.socSoftware.manager"><rect x="44" y="497" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="506.5" r="3.6" fill="#CBD5E1"/>
+<text x="66" y="510.1" font-size="9.8" fill="#0F172A" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.manager</text>
+</g>
+<g data-el="context.ldsda.socSoftware.cereal"><rect x="44" y="516" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="525.5" r="3.6" fill="#CBD5E1"/>
+<text x="66" y="529.1" font-size="9.8" fill="#0F172A" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">host.cereal</text>
+</g>
+<g data-el="context.ldsda.socSoftware.estimators"><rect x="44" y="535" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="544.5" r="3.6" fill="#CBD5E1"/>
+<text x="66" y="548.1" font-size="10.5" fill="#0F172A">estimators</text>
+</g>
+<g data-el="context.ldsda.socSoftware.hardwared"><rect x="44" y="554" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="563.5" r="3.6" fill="#CBD5E1"/>
+<text x="66" y="567.1" font-size="10.5" fill="#0F172A">hardwared</text>
+</g>
+<g data-el="context.ldsda.socSoftware.remoteAndLogging"><rect x="44" y="573" width="288" height="19" rx="4" fill="transparent"/>
+<circle cx="57" cy="582.5" r="3.6" fill="#CBD5E1"/>
+<text x="66" y="586.1" font-size="10.5" fill="#0F172A">athena · loggerd</text>
+</g>
+<rect x="354" y="250" width="196" height="126" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" filter="url(#lift)"/>
+<path d="M354 262a12 12 0 0 1 12 -12h172a12 12 0 0 1 12 12v54h-196z" fill="#EEF2FF" />
+<line x1="354" y1="316" x2="550" y2="316" stroke="#818CF8" stroke-width="1"/>
+<rect x="368" y="263" width="37.8" height="18" rx="9" fill="#4F46E5"/><text x="386.9" y="275.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-02</text>
+<rect x="505.8" y="263" width="30.2" height="17" rx="8.5" fill="#475569"/><text x="520.9" y="274.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">QM</text>
+<text x="368" y="296" font-size="13.5" fill="#0F172A" font-weight="700">ML models</text>
+<text x="368" y="310" font-size="10" fill="#64748B">2 parts · 1 SM</text>
+<g data-el="context.ldsda.mlModels"><rect x="354" y="250" width="196" height="66" fill="transparent"/></g>
+<g data-el="context.ldsda.mlModels.drivingModel"><rect x="358" y="326" width="188" height="19" rx="4" fill="transparent"/>
+<circle cx="371" cy="335.5" r="3.6" fill="#CBD5E1"/>
+<text x="380" y="339.1" font-size="10.5" fill="#0F172A">Driving model</text>
+</g>
+<g data-el="context.ldsda.mlModels.dmModel"><rect x="358" y="345" width="188" height="19" rx="4" fill="transparent"/>
+<circle cx="371" cy="354.5" r="3.6" fill="#CBD5E1"/>
+<text x="380" y="358.1" font-size="10.5" fill="#0F172A">DM model</text>
+</g>
+<rect x="568" y="250" width="392" height="734" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" filter="url(#lift)"/>
+<path d="M568 262a12 12 0 0 1 12 -12h368a12 12 0 0 1 12 12v54h-392z" fill="#FFEDD5" />
+<line x1="568" y1="316" x2="960" y2="316" stroke="#C2410C" stroke-width="1"/>
+<rect x="582" y="263" width="38" height="18" rx="9" fill="#C2410C"/><text x="601" y="275.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-03</text>
+<rect x="920.2" y="263" width="25.8" height="17" rx="8.5" fill="#C2410C"/><text x="933.1" y="274.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<text x="582" y="296" font-size="13.5" fill="#0F172A" font-weight="700">Safety MCU firmware</text>
+<text x="582" y="310" font-size="10" fill="#64748B">34 parts · 27 SM</text>
+<g data-el="context.ldsda.safetyFirmware"><rect x="568" y="250" width="392" height="66" fill="transparent"/></g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer"><rect x="572" y="326" width="384" height="19" rx="4" fill="transparent"/>
+<circle cx="585" cy="335.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="338.9" font-size="9" fill="#C2410C" font-weight="700" text-anchor="end">17 SM</text>
+<text x="594" y="339.1" font-size="10.5" fill="#0F172A" font-weight="600">E-03a  Safety layer</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.core"><rect x="572" y="345" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 339.5V354.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="354.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="357.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-CORE</text>
+<text x="608" y="358.1" font-size="9.8" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.core</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.core.rxEngagement"><rect x="572" y="364" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M602 358.5V373.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="613" cy="373.5" r="3.6" fill="#C2410C"/>
+<text x="622" y="377.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.core.rx_engagement</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.core.txRateCheck"><rect x="572" y="383" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M602 377.5V392.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="613" cy="392.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="395.9" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="end">[ref]</text>
+<text x="622" y="396.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.core.tx_rate_check</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.lateral"><rect x="572" y="402" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 396.5V411.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="411.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="414.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-LAT</text>
+<text x="608" y="415.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.lateral</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.longitudinal"><rect x="572" y="421" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 415.5V430.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="430.5" r="3.6" fill="#FB923C"/>
+<text x="948" y="433.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-LONG</text>
+<text x="608" y="434.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.longitudinal</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.helpers"><rect x="572" y="440" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 434.5V449.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="449.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="452.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-HELP</text>
+<text x="608" y="453.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.helpers</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.toyota"><rect x="572" y="459" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 453.5V468.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="468.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="471.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-TOY</text>
+<text x="608" y="472.1" font-size="9.8" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.toyota</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.toyota.epsFault"><rect x="572" y="478" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M602 472.5V487.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="613" cy="487.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="490.9" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="end">[ref]</text>
+<text x="622" y="491.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.toyota.eps_fault</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.toyota.refRxSet"><rect x="572" y="497" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M602 491.5V506.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="613" cy="506.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="509.9" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="end">[ref]</text>
+<text x="622" y="510.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.toyota.ref_rx_set</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.toyota.cruiseMain"><rect x="572" y="516" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M602 510.5V525.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="613" cy="525.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="528.9" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="end">[ref]</text>
+<text x="622" y="529.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.toyota.cruise_main</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.toyota.txBudgets"><rect x="572" y="535" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M602 529.5V544.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="613" cy="544.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="547.9" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="end">[ref]</text>
+<text x="622" y="548.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.toyota.tx_budgets</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.defaults"><rect x="572" y="554" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 548.5V563.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="563.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="566.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-DEF</text>
+<text x="608" y="567.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.defaults</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.ignition"><rect x="572" y="573" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 567.5V582.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="582.5" r="3.6" fill="#FB923C"/>
+<text x="948" y="585.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-SAF-IGN</text>
+<text x="608" y="586.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.ignition</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.safetyLayer.otherModes"><rect x="572" y="592" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 586.5V601.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="601.5" r="3.6" fill="#CBD5E1"/>
+<text x="608" y="605.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.safety.other_modes</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware"><rect x="572" y="611" width="384" height="19" rx="4" fill="transparent"/>
+<circle cx="585" cy="620.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="623.9" font-size="9" fill="#C2410C" font-weight="700" text-anchor="end">13 SM</text>
+<text x="594" y="624.1" font-size="10.5" fill="#0F172A" font-weight="600">E-03b  Platform firmware</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.main"><rect x="572" y="630" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 624.5V639.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="639.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="642.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-MAIN</text>
+<text x="608" y="643.1" font-size="9.8" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.main</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.main.safetyTask"><rect x="572" y="649" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M602 643.5V658.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="613" cy="658.5" r="3.6" fill="#C2410C"/>
+<text x="622" y="662.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.main.safety_task</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.heartbeatMonitor"><rect x="572" y="668" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 662.5V677.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="677.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="680.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-MAIN</text>
+<text x="608" y="681.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.drivers.heartbeat_monitor</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.heartbeatSiren"><rect x="572" y="687" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 681.5V696.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="696.5" r="3.6" fill="#FB923C"/>
+<text x="948" y="699.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-HK</text>
+<text x="608" y="700.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.drivers.heartbeat_siren</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.epsFaultSiren"><rect x="572" y="706" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 700.5V715.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="715.5" r="3.6" fill="#FB923C"/>
+<text x="948" y="718.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-HK</text>
+<text x="608" y="719.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.drivers.eps_fault_siren</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.hwWatchdog"><rect x="572" y="725" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 719.5V734.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="734.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="737.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-FLT</text>
+<text x="608" y="738.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.drivers.hw_watchdog</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.irqPriorities"><rect x="572" y="744" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 738.5V753.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="753.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="756.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-PLAT</text>
+<text x="608" y="757.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.drivers.irq_priorities</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.referenceLock"><rect x="572" y="763" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 757.5V772.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="772.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="775.9" font-size="9" fill="#7C3AED" font-weight="700" text-anchor="end">[ref]</text>
+<text x="920.5" y="775.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-COMMS</text>
+<text x="608" y="776.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.reference_lock</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.comms"><rect x="572" y="782" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 776.5V791.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="791.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="794.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-COMMS</text>
+<text x="608" y="795.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.comms</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.spi"><rect x="572" y="801" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 795.5V810.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="810.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="813.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-SPI</text>
+<text x="608" y="814.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.drivers.spi</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.usb"><rect x="572" y="820" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 814.5V829.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="829.5" r="3.6" fill="#CBD5E1"/>
+<text x="948" y="832.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-USB</text>
+<text x="608" y="833.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.drivers.usb</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.fdcan"><rect x="572" y="839" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 833.5V848.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="848.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="851.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-FDCAN</text>
+<text x="608" y="852.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.drivers.fdcan</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.harnessDriver"><rect x="572" y="858" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 852.5V867.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="867.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="870.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-HARN</text>
+<text x="608" y="871.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.drivers.harness</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.faults"><rect x="572" y="877" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 871.5V886.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="886.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="889.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-FLT</text>
+<text x="608" y="890.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.sys.faults</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.powerSaving"><rect x="572" y="896" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 890.5V905.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="905.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="908.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-PWR</text>
+<text x="608" y="909.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.sys.power_saving</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.siren"><rect x="572" y="915" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 909.5V924.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="924.5" r="3.6" fill="#FB923C"/>
+<text x="948" y="927.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-HK</text>
+<text x="608" y="928.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.drivers.siren</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.platform"><rect x="572" y="934" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 928.5V943.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="943.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="946.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-PLAT</text>
+<text x="608" y="947.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.platform</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware.platformFirmware.bootstub"><rect x="572" y="953" width="384" height="19" rx="4" fill="transparent"/>
+<path d="M588 947.5V962.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="599" cy="962.5" r="3.6" fill="#C2410C"/>
+<text x="948" y="965.9" font-size="9" fill="#64748B" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-PND-BOOT</text>
+<text x="608" y="966.1" font-size="9.8" fill="#334155" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">panda.bootstub</text>
+</g>
+<rect x="978" y="250" width="300" height="468" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" filter="url(#lift)"/>
+<path d="M978 262a12 12 0 0 1 12 -12h276a12 12 0 0 1 12 12v54h-300z" fill="#FFEDD5" />
+<line x1="978" y1="316" x2="1278" y2="316" stroke="#C2410C" stroke-width="1"/>
+<rect x="992" y="263" width="38.3" height="18" rx="9" fill="#C2410C"/><text x="1011.1" y="275.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-04</text>
+<rect x="1238.2" y="263" width="25.8" height="17" rx="8.5" fill="#C2410C"/><text x="1251.1" y="274.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<text x="992" y="296" font-size="13.5" fill="#0F172A" font-weight="700">Device hardware</text>
+<text x="992" y="310" font-size="10" fill="#64748B">20 parts · 11 SM</text>
+<g data-el="context.ldsda.deviceHardware"><rect x="978" y="250" width="300" height="66" fill="transparent"/></g>
+<g data-el="context.ldsda.deviceHardware.safetyMcu"><rect x="982" y="326" width="292" height="19" rx="4" fill="transparent"/>
+<circle cx="995" cy="335.5" r="3.6" fill="#C2410C"/>
+<text x="1266" y="338.9" font-size="9" fill="#C2410C" font-weight="700" text-anchor="end">11 SM</text>
+<text x="1004" y="339.1" font-size="10.5" fill="#0F172A" font-weight="600">E-04a  STM32H7 safety MCU</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.safetyMcu.clock"><rect x="982" y="345" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 339.5V354.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="354.5" r="3.6" fill="#C2410C"/>
+<text x="1018" y="358.1" font-size="10.5" fill="#334155">Clock</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.safetyMcu.supply"><rect x="982" y="364" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 358.5V373.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="373.5" r="3.6" fill="#C2410C"/>
+<text x="1018" y="377.1" font-size="10.5" fill="#334155">Supply</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.safetyMcu.memories"><rect x="982" y="383" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 377.5V392.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="392.5" r="3.6" fill="#C2410C"/>
+<text x="1018" y="396.1" font-size="10.5" fill="#334155">RAM, flash (ECC)</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.safetyMcu.spi4"><rect x="982" y="402" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 396.5V411.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="411.5" r="3.6" fill="#C2410C"/>
+<text x="1018" y="415.1" font-size="10.5" fill="#334155">SPI4</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.safetyMcu.fdcanPeripherals"><rect x="982" y="421" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 415.5V430.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="430.5" r="3.6" fill="#C2410C"/>
+<text x="1018" y="434.1" font-size="10.5" fill="#334155">FDCAN1–3</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.safetyMcu.adc"><rect x="982" y="440" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 434.5V449.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="449.5" r="3.6" fill="#C2410C"/>
+<text x="1018" y="453.1" font-size="10.5" fill="#334155">ADC</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.safetyMcu.gpio"><rect x="982" y="459" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 453.5V468.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="468.5" r="3.6" fill="#C2410C"/>
+<text x="1018" y="472.1" font-size="10.5" fill="#334155">GPIO</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.safetyMcu.sirenPath"><rect x="982" y="478" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 472.5V487.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="487.5" r="3.6" fill="#C2410C"/>
+<text x="1018" y="491.1" font-size="10.5" fill="#334155">DAC, codec siren path</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.safetyMcu.iwdg1"><rect x="982" y="497" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 491.5V506.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="506.5" r="3.6" fill="#C2410C"/>
+<text x="1018" y="510.1" font-size="10.5" fill="#334155">IWDG1</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.restOfDevice"><rect x="982" y="516" width="292" height="19" rx="4" fill="transparent"/>
+<circle cx="995" cy="525.5" r="3.6" fill="#CBD5E1"/>
+<text x="1004" y="529.1" font-size="10.5" fill="#0F172A" font-weight="600">E-04b  Rest of the device</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.soc"><rect x="982" y="535" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 529.5V544.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="544.5" r="3.6" fill="#CBD5E1"/>
+<text x="1018" y="548.1" font-size="10.5" fill="#334155">Qualcomm SoC</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.roadCameras"><rect x="982" y="554" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 548.5V563.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="563.5" r="3.6" fill="#CBD5E1"/>
+<text x="1018" y="567.1" font-size="10.5" fill="#334155">Road cameras</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.driverCamera"><rect x="982" y="573" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 567.5V582.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="582.5" r="3.6" fill="#CBD5E1"/>
+<text x="1018" y="586.1" font-size="10.5" fill="#334155">Driver camera</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.imuGnss"><rect x="982" y="592" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 586.5V601.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="601.5" r="3.6" fill="#CBD5E1"/>
+<text x="1018" y="605.1" font-size="10.5" fill="#334155">IMU · GNSS</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.display"><rect x="982" y="611" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 605.5V620.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="620.5" r="3.6" fill="#CBD5E1"/>
+<text x="1018" y="624.1" font-size="10.5" fill="#334155">Display</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.speaker"><rect x="982" y="630" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 624.5V639.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="639.5" r="3.6" fill="#CBD5E1"/>
+<text x="1018" y="643.1" font-size="10.5" fill="#334155">Speaker</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.canTransceivers"><rect x="982" y="649" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 643.5V658.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="658.5" r="3.6" fill="#CBD5E1"/>
+<text x="1018" y="662.1" font-size="10.5" fill="#334155">CAN transceivers</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.powerSupply"><rect x="982" y="668" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 662.5V677.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="677.5" r="3.6" fill="#CBD5E1"/>
+<text x="1018" y="681.1" font-size="10.5" fill="#334155">Power supply</text>
+</g>
+<g data-el="context.ldsda.deviceHardware.restOfDevice.enclosure"><rect x="982" y="687" width="292" height="19" rx="4" fill="transparent"/>
+<path d="M998 681.5V696.5h5" fill="none" stroke="#E2E8F0" stroke-width="1.2"/>
+<circle cx="1009" cy="696.5" r="3.6" fill="#CBD5E1"/>
+<text x="1018" y="700.1" font-size="10.5" fill="#334155">Enclosure</text>
+</g>
+<rect x="1296" y="250" width="196" height="126" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" filter="url(#lift)"/>
+<path d="M1296 262a12 12 0 0 1 12 -12h172a12 12 0 0 1 12 12v54h-196z" fill="#FFEDD5" />
+<line x1="1296" y1="316" x2="1492" y2="316" stroke="#C2410C" stroke-width="1"/>
+<rect x="1310" y="263" width="37.9" height="18" rx="9" fill="#C2410C"/><text x="1329" y="275.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-05</text>
+<rect x="1452.2" y="263" width="25.8" height="17" rx="8.5" fill="#C2410C"/><text x="1465.1" y="274.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<text x="1310" y="296" font-size="13.5" fill="#0F172A" font-weight="700">Harness</text>
+<text x="1310" y="310" font-size="10" fill="#64748B">2 parts · 2 SM</text>
+<g data-el="context.ldsda.harness"><rect x="1296" y="250" width="196" height="66" fill="transparent"/></g>
+<g data-el="context.ldsda.harness.wiring"><rect x="1300" y="326" width="188" height="19" rx="4" fill="transparent"/>
+<circle cx="1313" cy="335.5" r="3.6" fill="#C2410C"/>
+<text x="1322" y="339.1" font-size="10.5" fill="#0F172A">Wiring</text>
+</g>
+<g data-el="context.ldsda.harness.interceptRelay"><rect x="1300" y="345" width="188" height="19" rx="4" fill="transparent"/>
+<circle cx="1313" cy="354.5" r="3.6" fill="#C2410C"/>
+<text x="1322" y="358.1" font-size="10.5" fill="#0F172A">Intercept relay</text>
+</g>
+<path d="M760 186l6 9l-6 9l-6 -9z" fill="#334155"/>
+<line x1="760" y1="204" x2="760" y2="224" stroke="#334155" stroke-width="1.4"/>
+<line x1="188" y1="224" x2="1394" y2="224" stroke="#334155" stroke-width="1.4"/>
+<line x1="188" y1="224" x2="188" y2="250" stroke="#334155" stroke-width="1.4"/>
+<line x1="452" y1="224" x2="452" y2="250" stroke="#334155" stroke-width="1.4"/>
+<line x1="764" y1="224" x2="764" y2="250" stroke="#334155" stroke-width="1.4"/>
+<line x1="1128" y1="224" x2="1128" y2="250" stroke="#334155" stroke-width="1.4"/>
+<line x1="1394" y1="224" x2="1394" y2="250" stroke="#334155" stroke-width="1.4"/>
+<text x="772" y="216" font-size="10" fill="#64748B">5 components</text>
+<line x1="40" y1="1008" x2="1480" y2="1008" stroke="#E2E8F0"/>
+<circle cx="44" cy="1034" r="4" fill="#C2410C"/>
+<text x="54" y="1038" font-size="10.5" fill="#334155">B‡</text>
+<circle cx="93.97" cy="1034" r="4" fill="#FB923C"/>
+<text x="104" y="1038" font-size="10.5" fill="#334155">ASIL B</text>
+<circle cx="164.52" cy="1034" r="4" fill="#475569"/>
+<text x="174.5" y="1038" font-size="10.5" fill="#334155">QM (B-sup)</text>
+<circle cx="260.27" cy="1034" r="4" fill="#CBD5E1"/>
+<text x="270.3" y="1038" font-size="10.5" fill="#334155">QM</text>
+<path d="M311.7 1034l6 -5l6 5l-6 5z" fill="#334155"/>
+<text x="329.7" y="1038" font-size="10.5" fill="#334155">composite part (SysML)</text>
+<text x="472.4" y="1038" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-XXX</text>
+<text x="508.4" y="1038" font-size="10.5" fill="#334155">software unit (WP-W-06 §2)</text>
+<text x="673.4" y="1038" font-size="10" fill="#7C3AED" font-weight="700">[ref]</text>
+<text x="701.1" y="1038" font-size="10.5" fill="#334155">reference build only</text>
+<text x="824.3" y="1038" font-size="10" fill="#C2410C" font-weight="700">n SM</text>
+<text x="854.7" y="1038" font-size="10.5" fill="#334155">safety mechanisms performed</text>
+<text x="40" y="1084" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>
