@@ -86,3 +86,7 @@ Decision (2026-10-12, project maintainer): the siren sounds only for an EPS faul
 Verification (host only): `tests/eps_fault_siren` (constants; siren after 1 s; no siren for repeated short faults or when not engaged; 3 s hold after the fault clears or the driver disengages; persistence restarts after a clear); mutations (`&&` → `||`, hold not counted down, persistence not reset) each fail tests; panda builds in four variants (`-Werror`) and MISRA (standard and reference) clean. HIL **not run**: the siren is not in the health packet, so the bench check is audible or with a scope on the speaker line.
 
 *Note 2026-10-13 (correction):* the start time above (≤ 1 s + 10 ms + 125 ms, about 1.14 s) assumed the speaker sounds on every 8 Hz tick. `main.c` drives it only on odd ticks (`set_siren((loop_counter & 1U) && ...)`), so the worst case is 1 s + 10 ms + 2 × 125 ms ≈ 1.26 s after the fault onset (≤ 0.26 s after the end of the 1 s persistence). Corrected in WP-S-04 T-28 and OI-8, WP-M-02 OI-9 and the documents that quote the figure; the row above is kept as recorded on 2026-10-12. The code is unchanged.
+
+## Addendum: further work products affected (2026-10-12)
+
+The software alignment audit ([RR-2026-009](../../05-software/reviews/RR-2026-009.md) F-30) found that this change also affects: WP-W-05 (EPS-fault gate unit), WP-W-09 (LKA_STATE fault set as calibration data). These were updated in the RR-2026-009 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.

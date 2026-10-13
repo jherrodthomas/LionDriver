@@ -140,3 +140,11 @@
   name: "Review of V&V strategy and validation targets"
   covers: [WP-V-02]
   independence: "I3-equivalent"
+- id: DES-14
+  kind: activity
+  phase: G2
+  lane: fusa
+  name: "Specify the ISO 26262-6 software lifecycle implementation (activation per D-14)"
+  produces: [WP-M-14]
+  inputs: [WP-M-01, WP-M-02, WP-S-02]
+  handbook_wp: []

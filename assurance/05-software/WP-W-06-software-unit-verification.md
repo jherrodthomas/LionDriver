@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-W-06 Software unit verification specification and report (static analysis, MISRA, coverage, mutation) |
 | Standard reference | ISO 26262-6:2018 §9 (software unit verification; methods, test-case derivation and structural coverage tables of §9); ISO 26262-8:2018 §9 (verification), §11 (tools, by reference to WP-P-07); ISO/SAE 21434:2021 §10 (verification of implementation); ASPICE 4.0 SWE.4 |
-| Version | 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.4 (merge of PR #47 software alignment with the base; 2026-10-13: §4 keeps the @229dc70 figures and gains §4.9 with the base's LionDriver test assets (at `bf6ce8c`, panda `c33343b`); §2 keeps PR #47's unit split, the base's per-header units noted there; §6 existing basis extended with the HIL tests 10…15 and the heartbeat-siren and EPS-fault-siren host suites; VS-UV-18 corrected to the whitelist at all builds; OI-4 done). It carries PR #47's drafts, numbered 0.2–0.3 there: 0.3 ([RR-2026-009](reviews/RR-2026-009.md) F-22: §4 figures labelled @229dc70; F-23: §6 parent column now cites SWSRs; F-28: author; 2026-10-12). 0.2 (alignment pass: §6 "existing basis" and expected outcomes rechecked against the WP-W-02 baseline column at opendbc `7993399`, panda `8aa8671`; VS-UV-23 for SWSR-518; units and modules updated; report template per [WP-M-14 §8.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#83-evidence-binding); 2026-10-12). History on the base: 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section **Not yet executed** |
 | ASIL / scope | Envelope (E-03) units: ASIL C provisional (B expected after SG-01 re-rating, [WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md)). Host (E-01) units: QM, summarised only |
-| Author | Assurance team (initial draft) |
+| Author | Assurance team (AI-assisted draft, Claude) |
 | Reviewer(s) | TBD (I1); I2 for the ASIL C strategy per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`) |
+| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) for §4 inventory figures; §6 expectations rechecked at `682f184` (opendbc `7993399`, panda `8aa8671`); §4.9 at `bf6ce8c` (opendbc `7993399`, panda `b790fca`) and panda `c33343b` (heartbeat siren) |
 
 ## 1. Purpose and scope
 
@@ -33,23 +33,21 @@ Unit granularity: one C header/source module, verified through its public hooks.
 | U-SAF-LAT | `opendbc_repo/opendbc/safety/lateral.h` | Torque magnitude, rate, measured-torque and real-time checks; steer-request tolerance; angle/curvature checks (not used in ref. config) | C | TSR-1xx |
 | U-SAF-LONG | `opendbc_repo/opendbc/safety/longitudinal.h` | Longitudinal allowed, accel bounds, inactive value | C (SG-03/04: B) | TSR-2xx |
 | U-SAF-HELP | `opendbc_repo/opendbc/safety/helpers.h`, `can.h`, `declarations.h` | Min/max/clamp/abs macros, CRC8, message match, timestamp arithmetic, interpolation, sample buffers | C | all |
-| U-SAF-IGN | `opendbc_repo/opendbc/safety/ignition.h` | Ignition detection from CAN | C | TSR-5xx |
+| U-SAF-IGN | `opendbc_repo/opendbc/safety/ignition.h` (defined in WP-W-03; not yet in WP-W-05) | Ignition detection from CAN | C | TSR-5xx |
 | U-SAF-TOY | `opendbc_repo/opendbc/safety/modes/toyota.h` | Toyota RX parsing, limits, TX hook, init and safety-parameter decoding | C | TSR-1xx, 2xx, 3xx, 4xx, 7xx |
-| U-SAF-DEF | `opendbc_repo/opendbc/safety/modes/defaults.h` | `noOutput`/`allOutput` modes | C | TSR-5xx |
-| U-PND-MAIN | `panda/board/main.c` (tick, heartbeat, safe-mode transitions) | Heartbeat supervision, SILENT on loss, siren, mode switching | C | TSR-4xx, TSR-5xx |
-| U-PND-COMMS | `panda/board/main_comms.h`, `can_comms.h` | Host command handling (`0xdc` set mode, `0xc5` relay, `0xf3` heartbeat), host CAN packet unpacking | C | TSR-4xx, TSR-5xx |
+| U-SAF-DEF | `opendbc_repo/opendbc/safety/modes/defaults.h` (defined in WP-W-03; not yet in WP-W-05) | `noOutput`/`allOutput` modes | C | TSR-5xx |
+| U-PND-MAIN | `panda/board/main.c` (tick, 100 Hz safety task, safe-mode transitions), `drivers/heartbeat_monitor.h` | Heartbeat supervision, SILENT on loss, siren, mode switching | C | TSR-4xx, TSR-5xx |
+| U-PND-COMMS | `panda/board/main_comms.h`, `can_comms.h`, `reference_lock.h` | Host command handling (`0xdc` set mode, `0xc5` relay, `0xf3` heartbeat), host CAN packet unpacking | C | TSR-4xx, TSR-5xx |
 | U-PND-SPI | `panda/board/drivers/spi.h` | SPI framing, XOR checksum, ACK/NACK | C | TSR-4xx |
 | U-PND-FDCAN | `panda/board/drivers/fdcan.h`, `drivers/can_common.h` | RX → forward hook → RX hook; TX via TX hook | C | TSR-4xx, TSR-7xx |
 | U-PND-HARN | `panda/board/drivers/harness.h` | Relay drive and harness orientation | C | TSR-5xx, TSR-7xx |
-| U-PND-FLT | `panda/board/sys/faults.h`, `drivers/simple_watchdog.h`, `drivers/registers.h`, `drivers/interrupts.h` | Fault recording, software watchdog, register check, interrupt-rate check | C | TSR-5xx |
+| U-PND-FLT | `panda/board/sys/faults.h`, `drivers/simple_watchdog.h`, `drivers/hw_watchdog.h`, `drivers/registers.h`, `drivers/interrupts.h` | Fault recording, software watchdog, register check, interrupt-rate check | C | TSR-5xx |
 | U-PND-BOOT | `panda/board/bootstub.c`, `crypto/*` | Signature verification of application | C + CS | TSR-5xx |
-| U-PND-HBM | `panda/board/drivers/heartbeat_monitor.h` (LionDriver) | Revokes authority after > 0.3 s without SoC heartbeat in a car mode (all builds) | C | TSR-407 |
-| U-PND-HBS | `panda/board/drivers/heartbeat_siren.h` (LionDriver, added 2026-10-13, panda `c33343b`) | Siren for 3 s when the heartbeat monitor revokes authority that was granted (all builds) | C | TSR-516, TSR-407 |
-| U-PND-LOCK | `panda/board/reference_lock.h` (LionDriver, reference build only) | Refuses safety-mode and other control requests that would leave the locked configuration | C | TSR-512, TSR-513 |
-| U-PND-IRQ | `panda/board/drivers/irq_priorities.h` (LionDriver) | Explicit NVIC priority for every enabled interrupt | C | TSR-519 |
-| U-PND-EFS | `panda/board/drivers/eps_fault_siren.h` (LionDriver) | Siren when the EPS fault (TSR-110) persists while authority is granted | C | TSR-516(b) |
-| U-PND-IWDG | `panda/board/drivers/hw_watchdog.h` (LionDriver) | Independent watchdog in window mode, fed from the main loop and the safety task | C | TSR-501, TSR-502 |
-| U-PND-FI | `panda/board/drivers/fault_injection.h` (LionDriver, debug builds only: `LIONDRIVER_FAULT_INJECTION`, requires `ALLOW_DEBUG`) | Fault-injection hooks for HIL tests; not in the release image | QM (debug only) | — |
+| U-PND-PLAT | `panda/board/early_init.h`, `drivers/irq_priorities.h` | Exception handlers, early init, interrupt priority table, start-up tests | C | TSR-5xx |
+| U-PND-PWR | `panda/board/sys/power_saving.h` | Power save, transceiver enable | C | TSR-5xx |
+| U-PND-HK | Housekeeping (siren, fan, LEDs) per WP-W-05; LionDriver siren triggers `drivers/eps_fault_siren.h` (panda `b790fca`, WP-W-05 UN-45) and `drivers/heartbeat_siren.h` (panda `c33343b`, all builds, WP-W-05 UN-46) | Siren drive; siren on a persistent EPS fault (SWSR-516 (b)) and when heartbeat loss revokes granted authority (SWSR-516 (a)) | C (siren: B) | TSR-5xx, TSR-516 |
+
+The base (status update 2026-10-12) listed the LionDriver headers as separate units: U-PND-HBM (`heartbeat_monitor.h`), U-PND-HBS (`heartbeat_siren.h`), U-PND-LOCK (`reference_lock.h`), U-PND-IRQ (`irq_priorities.h`), U-PND-EFS (`eps_fault_siren.h`), U-PND-IWDG (`hw_watchdog.h`) and U-PND-FI (`fault_injection.h`, debug builds only, QM). This document keeps the unit split of [WP-W-03 §3.1](WP-W-03-software-architecture.md) (they belong to U-PND-MAIN, U-PND-HK, U-PND-COMMS, U-PND-PLAT and U-PND-FLT above); the per-header split is not used elsewhere.
 
 ## 3. Verification strategy
 
@@ -65,7 +63,7 @@ ISO 26262-6 §9 gives methods for unit verification with recommendation levels p
 | Formal verification | Not applied; rationale: effort vs ASIL C recommendation level to be checked (OI-1) | Not applied | — | No |
 | Control-flow analysis | **Applied** | Applied | cppcheck `--check-level=exhaustive --safety`; review | Partial (tool only) |
 | Data-flow analysis | **Applied** | Applied | cppcheck; review of ISR shared data (WP-W-01 ENV-R-12) | Partial |
-| Static code analysis (MISRA) | **Applied**, zero unrecorded violations | Applied | `test_misra.sh` (opendbc and panda) | Yes: LionDriver CI `safety.yaml` (`misra`, `panda_misra`, pinned submodules), 2026-10-12 |
+| Static code analysis (MISRA) | **Applied**, zero unrecorded violations | Applied | `test_misra.sh` (opendbc and panda) | Yes, upstream CI only |
 | Static analysis by abstract interpretation | Planned (run-time error absence, e.g. integer overflow) | Optional | Tool to be selected and classified (OI-2) | No |
 | Requirements-based test | **Applied**: every SWSR has ≥ 1 test with `@req` link | Applied | §6 VS-UV | No (tests reference constants, GAP-14) |
 | Interface test | **Applied**: hook signatures, safety-param decoding, CAN packet layout, SPI framing | Applied | VS-UV-12…15 | Partial |
@@ -92,11 +90,11 @@ Coverage exclusions (`GCOV_EXCL`, e.g. `modes/defaults.h:5-10, 18-24`) need a re
 
 | Measure | Role | Today |
 |---|---|---|
-| Mutation analysis | Checks test-suite strength (fault detection), complements coverage | `tests/mutation.py`, 3 accepted survivors (§4.4); LionDriver CI `safety.yaml` `mutation`, default and `LIONDRIVER_REFERENCE` builds (reference variant added by LionDriver #44), not yet merged |
+| Mutation analysis | Checks test-suite strength (fault detection), complements coverage | `tests/mutation.py`, 3 accepted survivors (§4.4) |
 | Undefined-behaviour sanitizer | Detects UB on the host build | UBSan run (`test.sh:11`, `libsafety_py.py:27-28`) |
 | Drive-log safety replay | Plausibility of the safety mode on real data | `tests/safety_replay/replay_drive.py` (needs logs; not fork-owned) |
 | Analyser self-test | Confidence in MISRA tool | `misra/test_mutation.py` (§4.3) |
-| Independent re-implementation with trace equivalence | Shows the unit tests fully determine the Toyota safety mode's behaviour, including at every limit boundary | XZACT port outside this repository (§4.8); not reproduced in LionDriver CI |
+| Independent re-implementation with trace equivalence | Intended to show (external, unreviewed; §4.8) that the unit tests fully determine the Toyota safety mode's behaviour, including at every limit boundary | XZACT port outside this repository (§4.8); not reproduced in LionDriver CI |
 
 ### 3.4 Test environment
 
@@ -109,6 +107,8 @@ Coverage exclusions (`GCOV_EXCL`, e.g. `modes/defaults.h:5-10, 18-24`) need a re
 
 ## 4. Existing verification assets (as found at the baseline)
 
+All figures in §4 (test counts, file lengths, suppression and mutant counts) were taken at opendbc `229dc70` and panda `92eb565` (@229dc70) unless a row names a later pin. They are recounted at the next baseline tag ([RR-2026-009](reviews/RR-2026-009.md) F-22). Tests added since then are listed in §6 under "Existing basis".
+
 All figures below were obtained by inspecting the files at the baseline. Test-method counts are **static counts of `def test_` definitions**; the number of executed test cases is higher because brand classes inherit from shared bases. No run was performed for this document.
 
 ### 4.1 opendbc safety unit tests
@@ -117,13 +117,13 @@ All figures below were obtained by inspecting the files at the baseline. Test-me
 |---|---|---|
 | Test modules in `opendbc_repo/opendbc/safety/tests/` | 25 `test_*.py` files (21 brand/platform modules, plus `test_defaults.py`, `test_elm327.py`, `test_body.py`, `test_release_build.py`) | directory listing |
 | Shared test base `common.py` | 1217 lines; 51 test methods in 12 test classes (e.g. `CarSafetyTest` line 1033, `MotorTorqueSteeringSafetyTest` 537, `SteerRequestCutSafetyTest` 321, `LongitudinalAccelSafetyTest` 163, `SafetyTest` 908) | `tests/common.py` |
-| Toyota suite `test_toyota.py` | 752 lines; 31 test methods; 10 classes; run in default and `LIONDRIVER_REFERENCE=1` variants. Reference-configuration class: `TestToyotaSafetyTorque` (line 490) = Toyota base + `MotorTorqueSteeringSafetyTest` + `SteerRequestCutSafetyTest` | `tests/test_toyota.py` |
+| Toyota suite `test_toyota.py` | 397 lines; 16 test methods; 10 classes. Reference-configuration class: `TestToyotaSafetyTorque` (line 139) = Toyota base + `MotorTorqueSteeringSafetyTest` + `SteerRequestCutSafetyTest` | `tests/test_toyota.py` |
 | Static count of test methods over the safety test directory | 236 | `grep "def test_"` |
 | Harness | cffi wrapper builds `libsafety.so` from `tests/libsafety/safety.c` with `cc` (`libsafety_py.py:14-40`) | |
 | Runner | `python -m unittest discover -s .`, run twice: UBSan pass (`SAFETY_COVERAGE=0`, `test.sh:11`) and coverage pass (`SAFETY_COVERAGE=1`, `test.sh:17`) | `tests/test.sh` |
 | Coverage gate | `gcovr -r opendbc/safety -d --fail-under-line=100 -e ^libsafety` (`test.sh:36-42`); gcov on Linux, `llvm-cov gcov` on macOS (`test.sh:22-26`) | |
 | Release configuration | `test_release_build.py` (16 lines, 2 tests) only **compiles** `libsafety` with and without `release=True`; no test is executed in the release configuration | GAP-41 |
-| Upstream CI | jobs `safety` (`test.sh`), `mutation` (Linux + macOS), `tests` (`./test.sh` → `lefthook run test` incl. MISRA and `unittest-parallel`) in `opendbc_repo/.github/workflows/tests.yml:10-56` | LionDriver CI `safety.yaml` since 2026-10-12 (`safety_tests` default and reference variants, `misra`, `mutation`); no run recorded as evidence yet |
+| Upstream CI | jobs `safety` (`test.sh`), `mutation` (Linux + macOS), `tests` (`./test.sh` → `lefthook run test` incl. MISRA and `unittest-parallel`) in `opendbc_repo/.github/workflows/tests.yml:10-56` | Not in LionDriver CI (GAP-39) |
 
 Toyota-relevant coverage of the reference configuration by existing tests (traced to FSRs of WP-C-04; to be re-traced to SWSRs):
 
@@ -138,20 +138,15 @@ Toyota-relevant coverage of the reference configuration by existing tests (trace
 | Brake disengage | `test_prev_user_brake`, `test_allow_user_brake_at_zero_speed`, `test_not_allow_user_brake_when_moving` (`:1111-1176`) | FSR-05.01 |
 | Gas blocks long, no disengage | `test_prev_gas`, `test_no_disengage_on_gas` (`:1086-1110`) | FSR-03.02, FSR-05.04 |
 | Accel bounds | `test_accel_limits_correct`, `test_accel_actuation_limits` (`:174-178`) | FSR-03.01, FSR-04.01 |
-| RX checksum, wheel-speed fault | `TestToyotaSafetyBase::test_rx_hook` (`test_toyota.py:461`) | FSR-01.06 (partial) |
-| RX timeout, 5 nominal periods per message (LionDriver) | `test_rx_timeout_5_periods` (`test_toyota.py:369`), `test_rx_timeout_5_periods_each_msg` (`:413`); generic `test_safety_tick` (`common.py:1208`) | FSR-01.06 / TSR-401 |
-| No engagement while an RX check is failed (LionDriver) | `test_no_engagement_with_invalid_rx_checks` (`test_toyota.py:387`) | TSR-306 |
-| Reference-build RX set (`EPS_STATUS` `0x262`, `PCM_CRUISE_2` `0x1D3`) and EPS fault blocks LKA (LionDriver) | `test_reference_rx_checks` (`test_toyota.py:349`), `test_eps_fault_blocks_lka` (`:309`) | FSR-02.01 / TSR-110 |
-| Cruise active with main off refused (LionDriver) | `test_cruise_active_with_main_off` (`test_toyota.py:263`) | TSR-405(c) |
-| PCS and DSU frames blocked (LionDriver, D-1) | `test_pcs_hud` (`test_toyota.py:84`), `test_pcs_and_dsu_messages_blocked` (`:91`) | FSR-07.02 / TSR-705 D-1 |
-| TX rate budget per whitelisted ID (LionDriver, reference build) | `test_tx_rate_*` (7 methods, `test_toyota.py:128-228`) | TSR-518 (DN-01) |
+| RX checksum, wheel-speed fault | `TestToyotaSafetyBase::test_rx_hook` (`test_toyota.py:110`) | FSR-01.06 (partial) |
+| RX timeout | `SafetyTest`/`CarSafetyTest::test_safety_tick` (`common.py:1208`) | FSR-01.06 (partial) |
 | Relay malfunction | `test_relay_malfunction` (`common.py:1067`) | FSR-01.11 |
 | Forwarding block list | `test_fwd_hook` (`common.py:927`) | FSR-07.01 |
 | TX whitelist, bus spam | `test_spam_can_buses` (`common.py:937`), `test_tx_hook_on_wrong_safety_mode` (`:952`) | FSR-07.02 (partial) |
-| AEB `0x283` blocked unless zero | `test_block_aeb` (`test_toyota.py:438`) | FSR-07.02 (partial) |
-| Diagnostics TX restrictions | `test_diagnostics` (`test_toyota.py:431`) | — |
+| AEB `0x283` blocked unless zero | `test_block_aeb` (`test_toyota.py:87`) | FSR-07.02 (partial) |
+| Diagnostics TX restrictions | `test_diagnostics` (`test_toyota.py:80`) | — |
 
-Note: tests assert constants copied into the test classes (`test_toyota.py:490-506`), not requirement values. A wrong limit in `toyota.h` that is copied into the test passes (GAP-14).
+Note: tests assert constants copied into the test classes (`test_toyota.py:139-155`), not requirement values. A wrong limit in `toyota.h` that is copied into the test passes (GAP-14).
 
 ### 4.2 Structural coverage
 
@@ -186,7 +181,6 @@ Note: tests assert constants copied into the test classes (`test_toyota.py:490-5
 | Pass criterion | No surviving mutant other than the accepted list | `mutation.py:608-617` |
 | Accepted survivors | 3, all `boundary` mutator: `lateral.h:188` (curvature real-time window roll, `MAX_RT_INTERVAL / 2U`), `lateral.h:218` and `lateral.h:219` (angle-rate bounds in `steer_angle_cmd_checks`) | `mutation.py:608-612` |
 | Relevance to reference configuration | None of the 3 lines executes in the Toyota LKA torque path: line 188 is in the curvature check (not used by Toyota); lines 218-219 are in the angle check used by Toyota **LTA** (`ToyotaSafetyFlags.LTA`), which is not set for `TOYOTA_COROLLA_TSS2`. Each still needs a justification record (WP-P-07 K-7) | |
-| Build variants mutated | Default and reference builds (reference variant added by LionDriver #44), so reference-only code (TSR-110 EPS fault, TSR-405(c), TSR-518 TX rate, TSR-705 D-1) is now mutated too. No CI run recorded as evidence yet | `.github/workflows/safety.yaml` |
 | Mutation score report | Not produced | |
 | Baseline sanity check | Aborts if unmutated tests fail (`mutation.py:527-532`); does not detect false "killed" verdicts | WP-P-07 TL-06 |
 
@@ -194,12 +188,10 @@ Note: tests assert constants copied into the test classes (`test_toyota.py:490-5
 
 | Item | Figure | Source |
 |---|---|---|
-| Test modules | 15 HITL (`tests/hitl/test_1…15_*.py`, 48 test methods; `test_10…15` are LionDriver: `test_10_hw_watchdog`, `test_11_reference_lock`, `test_12_rx_timeout`, `test_13_eps_fault`, `test_14_tx_rate`, `test_15_heartbeat_siren` (2026-10-13)), 2 host protocol tests (`tests/usbprotocol/test_comms.py` 5 methods, `test_pandalib.py` 1 method), 1 MISRA self-test | `panda/tests/` |
-| LionDriver host unit suites | `tests/heartbeat_monitor`, `tests/heartbeat_siren` (8 tests, 2026-10-13), `tests/reference_lock`, `tests/irq_priorities`, `tests/eps_fault_siren`, `tests/hw_watchdog` (one `test_*.py` each) | `panda/tests/` |
-| LionDriver CI | From 2026-10-12 job `panda_host_tests` in `safety.yaml` runs `python3 -m unittest discover` for each of the six LionDriver host suites (`heartbeat_siren` added 2026-10-13) (no device needed; HITL and the upstream host tests not included); no run recorded as evidence yet | `.github/workflows/safety.yaml` |
+| Test modules | 12 `test_*.py`: 9 HITL (`tests/hitl/test_1…9_*.py`, 29 test methods), 2 host protocol tests (`tests/usbprotocol/test_comms.py` 5 methods, `test_pandalib.py` 1 method), 1 MISRA self-test | `panda/tests/` |
 | Host unit harness | `tests/libpanda` builds `panda.c` as a shared library (`tests/libpanda/SConscript`) used by `test_comms.py` | |
-| HITL | Upstream: comma test jigs and Jenkins (`panda/Jenkinsfile`); `test_6_safety.py` has 1 test (no-output mode). LionDriver `test_10…15`: implemented, **not run** (bench not built; [HIL bench plan](hil-bench/README.md)) | GAP-30 |
-| Coverage | No coverage measurement, no mutation testing of panda firmware units (the LionDriver host suites are requirements-based, without coverage) | gap |
+| HITL | Needs comma test jigs and Jenkins (`panda/Jenkinsfile`); `test_6_safety.py` has 1 test (no-output mode) | Not available to the fork (GAP-30) |
+| Coverage | No coverage measurement, no mutation testing of panda firmware units | gap |
 | CI in panda repo | `.github/workflows/test.yaml`: build debug FW, build release FW with the **debug** cert (`CERT=board/crypto/certs/debug RELEASE=1 scons`), `./test.sh` (`ruff`, `unittest discover -s tests`) | panda CI only |
 
 ### 4.6 Related opendbc car-level tests (data and interface)
@@ -233,11 +225,30 @@ The Toyota safety mode was re-implemented independently in [XZACT](https://githu
 
 | Item | Note |
 |---|---|
-| What it shows | The safety mode's behaviour is fully determined by its tests, and an independent implementation reproduces it exactly |
+| What it is reported to show (not reviewed, not reproduced) | The safety mode's behaviour is fully determined by its tests, and an independent implementation reproduces it exactly |
 | What it does not show | That the limits are the right limits for the vehicle (WP-C-03, AOU-01…05), or anything about timing on the safety MCU |
 | Relation to §4.4 | The 30 planted bugs are a separate experiment from `tests/mutation.py`; they do not replace the mutation-score report (OI-5) |
 | Tool confidence | The XZACT compiler has silently miscompiled valid programs (earlier safety-plan anomaly A02). The port is used only as a test oracle, so a miscompilation can produce a false mismatch but cannot change the shipped C. No XZACT-generated code may be used in the product |
 | Status | Produced outside this repository, not reviewed, not reproducible from LionDriver CI (OI-10) |
+
+### 4.9 LionDriver test assets added since @229dc70 (from the base)
+
+Recorded on the base at `bf6ce8c` (opendbc `7993399`, panda `b790fca`), with the heartbeat-siren suite at panda `c33343b`. Static counts as in §4; no run was performed for this document.
+
+| Item | Figure | Source |
+|---|---|---|
+| Toyota suite `test_toyota.py` | 752 lines; 31 test methods; 10 classes; run in default and `LIONDRIVER_REFERENCE=1` variants. Reference-configuration class `TestToyotaSafetyTorque` at line 490 | `tests/test_toyota.py` |
+| RX timeout, 5 nominal periods per message | `test_rx_timeout_5_periods` (`test_toyota.py:369`), `test_rx_timeout_5_periods_each_msg` (`:413`); generic `test_safety_tick` (`common.py:1208`) | FSR-01.06 / TSR-401 |
+| No engagement while an RX check is failed | `test_no_engagement_with_invalid_rx_checks` (`test_toyota.py:387`) | TSR-306 |
+| Reference-build RX set (`0x262`, `0x1D3`) and EPS fault blocks LKA | `test_reference_rx_checks` (`test_toyota.py:349`), `test_eps_fault_blocks_lka` (`:309`) | FSR-02.01 / TSR-110 |
+| Cruise active with main off refused | `test_cruise_active_with_main_off` (`test_toyota.py:263`) | TSR-405(c) |
+| PCS and DSU frames blocked (D-1) | `test_pcs_hud` (`test_toyota.py:84`), `test_pcs_and_dsu_messages_blocked` (`:91`) | FSR-07.02 / TSR-705 D-1 |
+| TX rate budget per whitelisted ID (reference build) | `test_tx_rate_*` (7 methods, `test_toyota.py:128-228`) | TSR-518 (DN-01) |
+| Line references of §4.1 at this pin | `test_rx_hook` `test_toyota.py:461`, `test_block_aeb` `:438`, `test_diagnostics` `:431`; copied constants `:490-506` | |
+| Mutation build variants | Default and reference builds (`mutation_reference` job, LionDriver #44), so reference-only code (TSR-110, TSR-405(c), TSR-518, TSR-705 D-1) is mutated too | `.github/workflows/safety.yaml` |
+| panda test modules | 15 HITL (`tests/hitl/test_1…15_*.py`, 48 test methods); `test_10…15` are LionDriver: `test_10_hw_watchdog`, `test_11_reference_lock`, `test_12_rx_timeout`, `test_13_eps_fault`, `test_14_tx_rate`, `test_15_heartbeat_siren` (2026-10-13). Implemented, **not run** (bench not built; [HIL bench plan](hil-bench/README.md)) | `panda/tests/` |
+| LionDriver host unit suites | `tests/hw_watchdog`, `tests/heartbeat_monitor`, `tests/heartbeat_siren` (8 tests, 2026-10-13), `tests/reference_lock`, `tests/irq_priorities`, `tests/eps_fault_siren` (one `test_*.py` each; requirements-based, without coverage) | `panda/tests/` |
+| LionDriver CI | `safety.yaml` since 2026-10-12: `safety_tests` (default and reference variants), `misra`, `panda_misra`, `mutation`, `mutation_reference`, and `panda_host_tests` (the six host suites above, `heartbeat_siren` added 2026-10-13; no device needed; HITL and the upstream host tests not included); every job writes a build manifest (WP-W-01 ENV-01). No run recorded as evidence yet | `.github/workflows/safety.yaml` |
 
 ## 5. Gaps against the strategy
 
@@ -246,44 +257,44 @@ The Toyota safety mode was re-implemented independently in [XZACT](https://githu
 | UV-G1 | Line coverage only; no branch, no MC/DC | ASIL C structural coverage not demonstrated | GAP-13 | Add branch gate; select and qualify MC/DC tool (OI-3) |
 | UV-G2 | Tests run on x86/arm64 host, `-O0`; target Cortex-M7 `-Os` never tested by unit tests | Compiler (TL-01 TCL3) and target-specific defects undetected | GAP-13, GAP-30 | VS-UV-20 on HIL (D-04) |
 | UV-G3 | Tested configuration is `ALLOW_DEBUG`; release configuration only compiled | Tested ≠ shipped | GAP-41 | VS-UV-19 |
-| UV-G4 | MISRA, mutation (default and reference builds) and the panda host tests run in LionDriver CI from 2026-10-12; no run recorded as evidence yet. Reference-variant mutation added by #44 | Evidence not yet archived | GAP-39 | OI-4; §8 |
+| UV-G4 | Envelope verification not run in LionDriver CI | Partly closed: `safety.yaml` runs the opendbc safety tests (incl. the reference-build variant), MISRA and mutation on `liondriver-dev` and PRs. The panda host suites (`panda_host_tests`) and the reference-variant mutation (`mutation_reference`, #44) run there too. Results are not yet archived as evidence | GAP-39 | OI-4 |
 | UV-G5 | No requirement tags; tests assert copied constants | No requirements-based test argument | GAP-14 | `@req` tags + `links/verification.yaml` (WP-P-06) |
 | UV-G6 | No deviation records for MISRA suppressions; bootstub not analysed; 2 rules unchecked | MISRA compliance claim incomplete | GAP-13 | WP-W-01 §9, panda bootstub variant |
 | UV-G7 | 3 accepted mutation survivors without justification; no mutation score | Weak evidence of test strength | GAP-13 | Justification records; mutation score in report |
 | UV-G8 | panda firmware units: no unit tests with coverage; HITL needs comma infrastructure | U-PND-* unverified at unit level | GAP-30 | Extend `tests/libpanda` host harness; HIL bench |
-| UV-G9 | No tests for behaviours that are not implemented yet (E2E counters, driver-torque override, jerk limit). IWDG, safety-mode lock (reference build) and EPS fault are implemented with host tests (§4.1, §4.5) | Will be needed once implemented | GAP-01, -02, -04 | VS-UV-08…18 specified now |
+| UV-G9 | No tests for behaviours that are not implemented yet (E2E counters, driver-torque override, jerk limit, fault → safe state). IWDG, safety-mode lock, EPS fault, RX timeout and TX rate now have host tests in the forks (WP-W-02 baseline column), not yet traced to VS-UV results | Will be needed once implemented | GAP-01, -02, -03, -04, -07, -09 | VS-UV-08…18 specified now |
 | UV-G10 | No resource-usage (stack, execution time) evaluation | ASIL C method not applied | — | VS-UV-21 |
 | UV-G11 | Tools unqualified (gcovr, cppcheck, mutation.py, harness) | Evidence confidence | GAP-34 | WP-P-07 TQR-04…07 |
 
 ## 6. Unit verification specification (VS-UV)
 
-Each VS-UV is a group of test cases. Detailed cases are generated from the SWSRs of [WP-W-02](WP-W-02-software-safety-requirements.md) once agreed; the parent column gives the TSR of [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) (Draft) and the FSR it traces to. **Environment:** H = host (ENV-H-REL unless stated), T = target (ENV-T). **Status** (2026-10-12): entries marked "Implemented" or "Existing (partial)" have host tests (not yet recorded as LionDriver CI evidence, §8); target (T) parts are not run anywhere (GAP-30); all other entries are specified, not implemented.
+Each VS-UV is a group of test cases. Detailed cases are generated from the SWSRs of [WP-W-02](WP-W-02-software-safety-requirements.md) once agreed; the parent column gives the envelope SWSRs of WP-W-02 (generated from the TSRs they refine, host `h` SWSRs left out) and the FSR they trace to. **Environment:** H = host (ENV-H-REL unless stated), T = target (ENV-T). **Status** of all entries: Specified, not implemented unless "Existing (partial)".
 
-| ID | Unit | Objective | Parent TSR (WP-S-02) / FSR | Methods (derivation) | Env. | Pass criterion | Existing basis |
+| ID | Unit | Objective | SWSRs (WP-W-02) / FSR | Methods (derivation) | Env. | Pass criterion | Existing basis |
 |---|---|---|---|---|---|---|---|
 | VS-UV-01 | U-SAF-HELP | Min/max/clamp/abs macros, CRC8, `safety_get_ts_elapsed` wrap-around, `safety_interpolate` hold-at-ends | supports all E-03 TSRs | Equivalence classes, boundary values (INT_MIN/MAX, unsigned wrap) | H, T | Results equal to reference model for all vectors; no UBSan report | None dedicated |
-| VS-UV-02 | U-SAF-LAT, U-SAF-TOY | Torque magnitude limit | TSR-101, TSR-102 / FSR-01.01 | Boundary: limit−1, limit, limit+1, −limit−1, extreme int16 | H, T | Frames with \|τ\| > limit rejected, `controls_allowed` and counters as specified | Existing (partial): `test_torque_absolute_limits` |
-| VS-UV-03 | U-SAF-LAT | Rate up/down and real-time window | TSR-103 / FSR-01.02 | Boundary on delta per frame and per 250 ms window; window roll-over timing | H, T | Violations exactly at limit+1; window reset at 250 ms ± 0 µs | Existing (partial) |
-| VS-UV-04 | U-SAF-LAT, U-SAF-TOY | Measured-torque tracking incl. EPS scale and ±1 padding | TSR-104 / FSR-01.03 | Boundary; EPS factor 73 (reference) | H, T | Command beyond meas ± 350 (+ padding) rejected | Existing (partial) |
-| VS-UV-05 | U-SAF-LAT | No torque / no steer-request bit without authority; steer-request cut tolerance; LTA frame rejection; authority revocation on rejected frame | TSR-105…108 / FSR-01.04, FSR-01.12 | State × input combinations (MC/DC on decision) | H | All combinations per decision table | Existing (partial) |
-| VS-UV-06 | U-SAF-CORE, U-SAF-TOY | Engagement only on PCM rising edge; revocation on PCM inactive, brake edge or brake while moving | TSR-301, TSR-302, TSR-311 / FSR-01.05, FSR-05.01, FSR-05.02 | State-transition coverage (all transitions of WP-W-05 table) | H | Every transition and every guard false/true covered; MC/DC on guards | Existing (partial) |
-| VS-UV-07 | U-SAF-LONG, U-SAF-TOY | Accel bounds, inactive value, gas blocks longitudinal | TSR-201, 202, 203, 305 / FSR-03.01, 03.02, 04.01, 05.04 | Boundary on ±raw limits; gas × authority combinations | H, T | As specified | Existing (partial) |
-| VS-UV-08 | U-SAF-LONG | Accel rate (jerk) limit — once implemented | TSR-204, TSR-205 / FSR-03.03, FSR-04.02 | Boundary | H, T | Per SWSR | None (GAP-04) |
-| VS-UV-09 | U-SAF-CORE, U-SAF-TOY | RX integrity: checksum, counter, quality flag per Toyota message; repeated/stale frame detection | TSR-402…406 / FSR-01.06 | Fault injection: bit flips, frozen payload with valid checksum, replay, wrong length/bus | H | Every injected fault detected within the SWSR bound; authority revoked | Existing (partial): `test_rx_hook` (checksum only); `test_cruise_active_with_main_off` (TSR-405(c), reference build); counters not implemented (GAP-01) |
-| VS-UV-10 | U-SAF-CORE | RX timeout detection time | TSR-401, TSR-306 / FSR-01.06 | Fault injection: message stop at each phase relative to the 1 Hz tick | H, T | Detection within TSR-401 (absence > 5 nominal periods) | Implemented (H): `test_rx_timeout_5_periods`, `test_rx_timeout_5_periods_each_msg` (5 periods, 100 Hz task, no 1 s floor) and engagement gate `test_no_engagement_with_invalid_rx_checks` (TSR-306); T part: HIL `test_12_rx_timeout.py`, not run |
-| VS-UV-11 | U-SAF-CORE | Relay malfunction latch and TX/forward inhibition | TSR-710 / FSR-01.11 | Fault injection of check-relay messages on bus 0 before/after grace | H | Latch set after grace; all TX and forwarding blocked until re-init | Existing (partial) |
-| VS-UV-12 | U-SAF-TOY (init) | Safety-parameter decoding and **range check** (EPS factor, flag bits) | TSR-512 / FSR-01.10 | Interface test: all 16-bit params incl. 0, 72, 73, 74, 255, unknown flag bits | H, T | Only the reference parameter is accepted in the locked configuration; any other → no actuation | Partial: reference build `panda/tests/reference_lock` (host); HIL `test_11_reference_lock.py`, not run. Default build still accepts any EPS factor 0–255 |
-| VS-UV-13 | U-PND-COMMS | `0xdc` set-mode rejected while a car mode is active / not the locked mode; `0xc5` unavailable in release | TSR-512, TSR-513 / FSR-01.10 | Interface + fault injection on control commands | H (libpanda), T | Commands rejected as specified | Partial: reference build `panda/tests/reference_lock` (host); HIL `test_11_reference_lock.py`, not run. Default build: no lock (GAP-09) |
-| VS-UV-14 | U-PND-MAIN | Heartbeat supervision: mismatch and loss timing, SILENT + relay release + siren | TSR-407, 409, 516 / FSR-01.07, FSR-02.05 | Timing boundary on tick phases | H (libpanda), T | Detection within TSR-407 (> 0.3 s heartbeat absence) | Partial: `panda/tests/heartbeat_monitor` (authority revoked at 0.3 s, all builds); *2026-10-13:* `panda/tests/heartbeat_siren` (U-PND-HBS: siren in the task that revokes granted authority, 3 s hold, none when not engaged; all builds); SILENT after 3 s / 5 s unchanged, that part still expected to **fail** (GAP-06) |
-| VS-UV-15 | U-PND-SPI, U-PND-COMMS, U-PND-FDCAN | SoC→MCU frame integrity: checksum, length, sequence/freshness (once implemented) | TSR-410…413 / FSR-01.08 | Fault injection: corrupted, truncated, duplicated, reordered frames | H (libpanda), T | Corrupted frames discarded; no actuation from an unverified frame | Partial: `usbprotocol/test_comms.py` (5 tests, packing) |
-| VS-UV-16 | U-PND-FLT, U-PND-MAIN | Fault → safe state; watchdog servicing (once IWDG implemented) | TSR-501, 502, 503 / FSR-01.09 | Fault injection: stalled main loop, stalled tick, register divergence | T | Safe state within budget (≤ 0.2 s detection) | Partial: IWDG window mode in pin, host `panda/tests/hw_watchdog`; HIL `test_10_hw_watchdog.py`, not run; register divergence not covered (GAP-08) |
-| VS-UV-17 | U-SAF-TOY, U-SAF-LAT | Driver steering override and EPS fault monitoring (once moved into envelope) | TSR-304 / FSR-05.03; TSR-110 / FSR-02.01 | Boundary on driver torque threshold; EPS `LKA_STATE` codes | H, T | Per SWSR | EPS fault part implemented (reference build): `test_eps_fault_blocks_lka`, `panda/tests/eps_fault_siren` (TSR-516(b)); HIL `test_13_eps_fault.py`, not run. Driver override not implemented (GAP-02) |
-| VS-UV-18 | U-SAF-CORE, U-SAF-TOY | TX whitelist content checks incl. PCS messages `0x344`/`0x411` and AEB `0x283` | TSR-704, 705, 207 / FSR-07.01, 07.02 | Equivalence classes over every whitelisted address and content | H | No PCS-relevant frame passes in the reference configuration | Partial: `test_block_aeb`; `test_pcs_and_dsu_messages_blocked` (`0x344` and the DSU-only IDs refused, all builds); `test_pcs_hud` (`0x411` refused in the reference build, D-1). Default build still passes `0x411` (FSC OI-5) |
-| VS-UV-19 | all U-SAF-* | Run the **complete** safety suite in the release configuration (`release=True`) with coverage | all; TSR-514 | Re-execution | H (ENV-H-REL) | All pass; coverage targets of §3.2 met in release config | Build only today (GAP-41) |
+| VS-UV-02 | U-SAF-LAT, U-SAF-TOY | Torque magnitude limit | SWSR-101, SWSR-101a, SWSR-102, SWSR-102a / FSR-01.01 | Boundary: limit−1, limit, limit+1, −limit−1, extreme int16 | H, T | Frames with \|τ\| > limit rejected, `controls_allowed` and counters as specified | Existing (partial): `test_torque_absolute_limits` |
+| VS-UV-03 | U-SAF-LAT | Rate up/down and real-time window | SWSR-103, SWSR-103a / FSR-01.02 | Boundary on delta per frame and per 250 ms window; window roll-over timing | H, T | Violations exactly at limit+1; window reset at 250 ms ± 0 µs | Existing (partial) |
+| VS-UV-04 | U-SAF-LAT, U-SAF-TOY | Measured-torque tracking incl. EPS scale and ±1 padding | SWSR-104, SWSR-104a / FSR-01.03 | Boundary; EPS factor 73 (reference) | H, T | Command beyond meas ± 350 (+ padding) rejected | Existing (partial) |
+| VS-UV-05 | U-SAF-LAT | No torque / no steer-request bit without authority; steer-request cut tolerance; LTA frame rejection; authority revocation on rejected frame | SWSR-105, SWSR-106, SWSR-101a, SWSR-107, SWSR-108, SWSR-108a / FSR-01.04, FSR-01.12 | State × input combinations (MC/DC on decision) | H | All combinations per decision table | Existing (partial) |
+| VS-UV-06 | U-SAF-CORE, U-SAF-TOY | Engagement only on PCM rising edge; revocation on PCM inactive, brake edge or brake while moving | SWSR-301, SWSR-302, SWSR-311 / FSR-01.05, FSR-05.01, FSR-05.02 | State-transition coverage (all transitions of WP-W-05 table) | H | Every transition and every guard false/true covered; MC/DC on guards | Existing (partial) |
+| VS-UV-07 | U-SAF-LONG, U-SAF-TOY | Accel bounds, inactive value, gas blocks longitudinal | SWSR-201, SWSR-201a, SWSR-202, SWSR-203, SWSR-305 / FSR-03.01, 03.02, 04.01, 05.04 | Boundary on ±raw limits; gas × authority combinations | H, T | As specified | Existing (partial) |
+| VS-UV-08 | U-SAF-LONG | Accel rate (jerk) limit — once implemented | SWSR-204, SWSR-205 / FSR-03.03, FSR-04.02 | Boundary | H, T | Per SWSR | None (GAP-04) |
+| VS-UV-09 | U-SAF-CORE, U-SAF-TOY | RX integrity: checksum, counter, quality flag per Toyota message; repeated/stale frame detection | SWSR-402, SWSR-403, SWSR-404, SWSR-405, SWSR-108a, SWSR-406 / FSR-01.06 | Fault injection: bit flips, frozen payload with valid checksum, replay, wrong length/bus | H | Every injected fault detected within the SWSR bound; authority revoked | Existing (partial): `test_rx_hook` (checksum only); counters not implemented (GAP-01) |
+| VS-UV-10 | U-SAF-CORE | RX timeout detection time | SWSR-401, SWSR-401a, SWSR-306 / FSR-01.06 | Fault injection: message stop at each phase relative to the 1 Hz tick | H, T | Detection within TSR-401 (absence > 5 nominal periods + one 10 ms task period). Implemented for the Toyota RX checks (opendbc `aff4033`, `98404a4`; WP-W-02 SWSR-401, 401a); phase the stop relative to the 100 Hz safety task | Existing (partial): `test_safety_tick`; RX-timeout tests in the opendbc fork (opendbc#1); HIL `test_12_rx_timeout.py` (T part), not run |
+| VS-UV-11 | U-SAF-CORE | Relay malfunction latch and TX/forward inhibition | SWSR-710 / FSR-01.11 | Fault injection of check-relay messages on bus 0 before/after grace | H | Latch set after grace; all TX and forwarding blocked until re-init | Existing (partial) |
+| VS-UV-12 | U-SAF-TOY (init) | Safety-parameter decoding and **range check** (EPS factor, flag bits) | SWSR-104a, SWSR-512, SWSR-512a / FSR-01.10 | Interface test: all 16-bit params incl. 0, 72, 73, 74, 255, unknown flag bits | H, T | Only the reference parameter is accepted in the locked configuration; any other → no actuation | None; today any EPS factor 0–255 is accepted (`modes/toyota.h:369-383`). Since then: reference build `panda/tests/reference_lock` (host); HIL `test_11_reference_lock.py`, not run; the default build still accepts any EPS factor 0–255 |
+| VS-UV-13 | U-PND-COMMS | `0xdc` set-mode rejected while a car mode is active / not the locked mode; `0xc5` unavailable in release | SWSR-104a, SWSR-512, SWSR-512a, SWSR-513 / FSR-01.10 | Interface + fault injection on control commands | H (libpanda), T | Commands rejected as specified | Existing (partial): host tests `tests/reference_lock` (SWSR-512, 513 met in the reference build, panda `3859fa8`); `0xc5` in release (SWSR-514) not covered; HIL `test_11_reference_lock.py`, not run |
+| VS-UV-14 | U-PND-MAIN | Heartbeat supervision: mismatch and loss timing, SILENT + relay release + siren | SWSR-401a, SWSR-407, SWSR-409, SWSR-516, SWSR-516b, SWSR-516a / FSR-01.07, FSR-02.05 | Timing boundary on tick phases | H (libpanda), T | Revocation ≤ 0.3 s + one task period (SWSR-407: implemented, panda `c2e5d93`). SILENT ≤ 2 s (SWSR-510) and mismatch clearing ≤ 0.3 s (SWSR-307): not implemented, expected to **fail** | Existing (partial): host tests `tests/heartbeat_monitor`; *2026-10-13:* `tests/heartbeat_siren` (siren in the task that revokes granted authority, 3 s hold, none when not engaged; all builds, panda `c33343b`; SWSR-516 (a) Partial); HIL `test_15_heartbeat_siren.py`, not run |
+| VS-UV-15 | U-PND-SPI, U-PND-COMMS, U-PND-FDCAN | SoC→MCU frame integrity: checksum, length, sequence/freshness (once implemented) | SWSR-410, SWSR-410a, SWSR-410b, SWSR-411, SWSR-412, SWSR-412a, SWSR-412b, SWSR-413 / FSR-01.08 | Fault injection: corrupted, truncated, duplicated, reordered frames | H (libpanda), T | Corrupted frames discarded; no actuation from an unverified frame | Partial: `usbprotocol/test_comms.py` (5 tests, packing) |
+| VS-UV-16 | U-PND-FLT, U-PND-MAIN | Fault → safe state; watchdog servicing (once IWDG implemented) | SWSR-501, SWSR-501b, SWSR-502, SWSR-502a, SWSR-502b, SWSR-502c, SWSR-503, SWSR-503a, SWSR-503b, SWSR-503c / FSR-01.09 | Fault injection: stalled main loop, stalled safety task, register divergence | T | Watchdog reset ≤ 0.1 s (SWSR-501 acceptance; 0.2 s accepted as interim under deviation D-1 of the [watchdog change record](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md)); safe state per SWSR-502 | Existing (partial): host tests `tests/hw_watchdog` (IWDG implemented, panda `3859fa8`); fault → safe state (SWSR-502) not implemented (GAP-08); HIL `test_10_hw_watchdog.py`, not run |
+| VS-UV-17 | U-SAF-TOY, U-SAF-LAT | Driver steering override and EPS fault monitoring (once moved into envelope) | SWSR-304, SWSR-304a / FSR-05.03; SWSR-110 / FSR-02.01 | Boundary on driver torque threshold; EPS `LKA_STATE` codes | H, T | Per SWSR | Existing (partial) for EPS fault: `test_eps_fault_blocks_lka`, `test_reference_rx_checks` (opendbc `242d63d`, `98404a4`; SWSR-110 Partial). Driver override in envelope: none (GAP-02); `panda/tests/eps_fault_siren` (siren after a 1 s persistent EPS fault, SWSR-516 (b), panda `b790fca`); HIL `test_13_eps_fault.py`, not run |
+| VS-UV-18 | U-SAF-CORE, U-SAF-TOY | TX whitelist content checks incl. PCS messages `0x344`/`0x411` and AEB `0x283` | SWSR-704, SWSR-705, SWSR-207 / FSR-07.01, 07.02 | Equivalence classes over every whitelisted address and content | H | No PCS-relevant frame passes in the reference configuration | Partial: `test_block_aeb`; `test_pcs_and_dsu_messages_blocked` (`0x344` and the DSU-only IDs refused in all builds, opendbc `e089e85`); `test_pcs_hud` (`0x411` refused in the reference build only, opendbc `5b5a4ba`, D-1; SWSR-705 met there). Non-reference builds still pass `0x411` |
+| VS-UV-19 | all U-SAF-* | Run the **complete** safety suite in the release configuration (`release=True`) with coverage | all; SWSR-514 | Re-execution | H (ENV-H-REL) | All pass; coverage targets of §3.2 met in release config | Build only today (GAP-41) |
 | VS-UV-20 | all E-03 units | Back-to-back host vs target: replay the VS-UV vectors on the target binary and compare hook outputs bit-exactly | all | Back-to-back | H + T | Identical outputs for all vectors | None (GAP-30) |
-| VS-UV-21 | all E-03 units | Resource usage: max stack per hook, WCET of RX/TX/tick hooks on target | TSR-501 (timing), budgets of WP-S-04 | Measurement + static stack analysis | T | Stack margin ≥ 20 %; WCET within the timing budget of [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) | None |
-| VS-UV-23 | U-SAF-CORE, U-SAF-TOY | TX rate budget per whitelisted ID, sliding 250 ms window, revocation ≤ 0.1 s after the first rejected frame (reference build) | TSR-518 (DN-01) / FSR-07.02 | Boundary on budget per window; window slide; persistent excess | H, T | Frames beyond the budget rejected; authority revoked ≤ 0.1 s after the first rejected frame; host cadence never rejected | Implemented (H): `test_tx_rate_*` (7 methods); T part: HIL `test_14_tx_rate.py`, not run |
-| VS-UV-22 | U-PND-BOOT | Signature verification accepts only the release key; tampered image rejected | TSR-511 | Fault injection on image bytes and signature | T | Rejection of all tampered images | None (GAP-24, GAP-25) |
+| VS-UV-21 | all E-03 units | Resource usage: max stack per hook, WCET of RX/TX/tick hooks on target | SWSR-501, SWSR-501b (timing), budgets of WP-S-04 | Measurement + static stack analysis | T | Stack margin ≥ 20 %; WCET within the timing budget of [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) | None |
+| VS-UV-23 | U-SAF-CORE, U-SAF-TOY | Per-ID TX rate supervision | SWSR-518 / FSR-01.08, FSR-01.12 | Boundary on frame rate per ID; flood; persistence | H | SWSR-518 acceptance: `0x2E4` at 2× rate, excess frames rejected; persistent excess → revocation ≤ 0.1 s | Existing (partial): `test_tx_rate_*` (opendbc `7993399`); T part: HIL `test_14_tx_rate.py`, not run |
+| VS-UV-22 | U-PND-BOOT | Signature verification accepts only the release key; tampered image rejected | SWSR-511, SWSR-511a | Fault injection on image bytes and signature | T | Rejection of all tampered images | None (GAP-24, GAP-25) |
 
 Static verification items (not tests):
 
@@ -311,11 +322,17 @@ Static verification items (not tests):
 | CI run ID(s) | Not yet executed |
 | Tool versions (cppcheck, gcc, gcovr, Python) | Not yet executed |
 | Configuration (release / debug) | Not yet executed |
+| Build manifest ID (all submodule commits, toolchain, flags) | Not yet executed |
+| Vehicle configuration ID (e.g. CFG-001) | Not yet executed |
+| Test environment ID (ENV-H-REL, ENV-T bench record) | Not yet executed |
+| Execution date | Not yet executed |
+| Raw artifact location | Not yet executed |
+| Reviewer, independence, review state | Not yet executed |
 
-| VS ID | Cases | Passed | Failed | Not run | Environment | Coverage (stmt / branch / MC/DC) | Result | Evidence |
-|---|---|---|---|---|---|---|---|---|
-| VS-UV-01 … VS-UV-23 | — | — | — | — | — | — | Not yet executed | — |
-| VS-UV-S1 … S4 | — | — | — | — | — | — | Not yet executed | — |
+| VS ID | SWSR IDs | Cases | Passed | Failed | Not run | Environment | Coverage (stmt / branch / MC/DC, tool) | Result | Anomalies | Evidence |
+|---|---|---|---|---|---|---|---|---|---|---|
+| VS-UV-01 … VS-UV-23 | — | — | — | — | — | — | — | Not yet executed | — | — |
+| VS-UV-S1 … S4 | — | — | — | — | — | — | — | Not yet executed | — | — |
 
 | Deviations from this specification | Not yet executed |
 |---|---|
@@ -329,12 +346,12 @@ Static verification items (not tests):
 | OI-1 | Check method and coverage recommendation levels for ASIL B and C against the licensed ISO 26262-6 §9 tables; adjust §3 decisions | Safety engineer | G3 |
 | OI-2 | Select and classify (WP-P-07) an abstract-interpretation or bounded-model-checking tool for VS-UV-S3 | Maintainer | G3 |
 | OI-3 | Select and qualify an MC/DC measurement approach; add branch gate (`--fail-under-branch`) to `test.sh` in the opendbc fork | Maintainer | G3 |
-| OI-4 | ~~Add the opendbc `safety`, `mutation` and MISRA jobs and the panda MISRA job to LionDriver CI~~ Done 2026-10-12: `safety.yaml` (`safety_tests`, `misra`, `panda_misra`, `mutation` (default build), `panda_host_tests`), triggered on `liondriver-dev`. Remaining: record the first run as evidence in §8; mutation of the reference variant (PR #44, not yet merged) (GAP-39, WP-P-01 OI-7/OI-8) | Maintainer | G3 |
+| OI-4 | ~~Add the opendbc `safety`, `mutation` and MISRA jobs and the panda MISRA job to LionDriver CI~~ Done 2026-10-12: `safety.yaml` (`safety_tests`, `misra`, `panda_misra`, `mutation`, `mutation_reference` (#44), `panda_host_tests`), triggered on `liondriver-dev`. Remaining: record the first run as evidence in §8 (GAP-39, WP-P-01 OI-7/OI-8) | Maintainer | G3 |
 | OI-5 | Write justification records for the 3 accepted mutation survivors and add a mutation-score report | Safety engineer | G3 |
-| OI-6 | Re-trace §4.1 test methods to SWSRs once WP-W-02 is agreed; re-check §6 parents when WP-S-02 is approved | Safety engineer | G3 |
+| OI-6 | §6 now cites SWSRs (F-23). Remaining: re-trace §4.1 test methods to SWSRs and re-check §6 when WP-W-02 is agreed | Safety engineer | G3 |
 | OI-7 | Extend `panda/tests/libpanda` to host-test U-PND-MAIN/COMMS/SPI with coverage | Maintainer | G3 |
 | OI-8 | HIL bench (D-04) for ENV-T | Maintainer | G4 |
 | OI-9 | Fork-owned drive logs for `safety_replay/replay_drive.py` and `test_models.py` | Maintainer | G4 |
 | OI-10 | Make the XZACT equivalence check (§4.8) reproducible: pin the XZACT revision, store the trace generator and results with this WP, and classify XZACT under WP-P-07 as a verification tool | Maintainer | G3 |
 
-> Note from the consistency pass: WP-W-03 defines additional panda units U-PND-USB, U-PND-PWR, U-PND-HK and U-PND-PLAT that are not yet in this unit list. Add them with their verification methods. "ASIL C provisional" in this document equals the B‡ notation used in WP-W-02 and WP-S-02.
+> Note from the consistency pass: U-PND-PLAT, U-PND-PWR and U-PND-HK were added to §2 in v0.2; U-PND-USB is still missing. Their VS-UV cases are not yet specified. "ASIL C provisional" in this document equals the B‡ notation used in WP-W-02 and WP-S-02.

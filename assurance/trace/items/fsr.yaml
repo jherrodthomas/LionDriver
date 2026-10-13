@@ -214,7 +214,7 @@
 
 - id: FSR-02.06
   kind: fsr
-  text: "Driver monitoring shall detect an inattentive or unresponsive driver while engaged and escalate warnings within the timing set in [WP-C-08](WP-C-08-driver-hmi-misuse-analysis.md) §5."
+  text: "Driver monitoring shall detect an inattentive or unresponsive driver while engaged and escalate warnings within the timing set in WP-C-08 (assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §5."
   asil: "QM (see §7)"
   parents: [SG-02, SG-06]
   allocated_to: "E-01/DM, E-02"

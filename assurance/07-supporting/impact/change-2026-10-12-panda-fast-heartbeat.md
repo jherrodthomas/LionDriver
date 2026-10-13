@@ -58,3 +58,7 @@ Added 2026-10-13.
 | Verification | Host: `tests/heartbeat_siren` (8 tests, compiled with `heartbeat_monitor.h` in the safety-task order): 3 s hold; siren in the task that revokes granted authority, not before; worst case to sound below 1 s; none when not engaged or while heartbeats arrive; stops after 3 s; once per revocation; again after re-engagement. Pass locally on 2026-10-13; in LionDriver CI (`safety.yaml`, job `panda_host_tests`, now six suites). HIL: `tests/hitl/test_15_heartbeat_siren.py` measures the 0.3 s revocation after the last heartbeat (needs a `LIONDRIVER_REFERENCE=1` build for the car simulation); the host cannot read the speaker, so the siren is confirmed by ear or microphone and recorded in the bench log. **Not run** (D-04). Nothing run on hardware |
 | Decision | Taken (maintainer merged panda#15, 2026-10-13). Not reviewed independently; an AI draft is not a review (WP-M-06) |
 | Open | OI-1 extended: on the HIL bench also confirm the siren within 0.56 s of the last heartbeat. WP-S-04 OI-9: the case of authority that ended within the 5 s before the loss |
+
+## Addendum: further work products affected (2026-10-12)
+
+The software alignment audit ([RR-2026-009](../../05-software/reviews/RR-2026-009.md) F-30) found that this change also affects: WP-W-05 (UN-07, UN-18, UN-19), WP-W-09 (CD-03 heartbeat timing). These were updated in the RR-2026-009 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.

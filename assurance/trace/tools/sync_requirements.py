@@ -173,26 +173,53 @@ def _parent_cell(text: str) -> str:
   return re.sub(r"\s*\([^)]*\)", "", text).replace(" / ", ", ")
 
 
+def swsr_attributes(text: str) -> tuple[str, dict[str, str]]:
+  """WP-W-02 §2.4: the drafting origin of all SWSRs and the configuration applicability table."""
+  sec = re.split(r"\n#{2,3} ", text.split("### 2.4 ", 1)[1], maxsplit=1)[0] if "### 2.4 " in text else ""
+  m = re.search(r"Drafting origin: \*\*(.+?)\*\*", sec)
+  origin = m.group(1) if m else ""
+  applies: dict[str, str] = {}
+  for line in sec.splitlines():
+    c = cells(line) if line.startswith("| SWSR-") else []
+    if len(c) >= 2:
+      for sid in re.findall(r"SWSR-[0-9]{3}[a-z]?", c[0]):
+        applies[sid] = c[1]
+  return origin, applies
+
+
+def _swsr_status(req: str) -> str:
+  return "withdrawn" if re.match(r"^\**Withdrawn", req) else "proposed"
+
+
 def swsr_items() -> list[dict]:
   items = []
   tsr_asil = {t["id"]: t["asil"] for t in tsr_items()}
-  for line in SWSR_MD.read_text(encoding="utf-8").splitlines():
-    if not re.match(r"^\| SWSR-[0-9]{3}[a-z]? \|", line):
+  text = SWSR_MD.read_text(encoding="utf-8")
+  origin, applies = swsr_attributes(text)
+  default_applies = applies.get("SWSR-default", "CFG-001")
+  section = ""
+  for line in text.splitlines():
+    if line.startswith("#"):
+      section = line.lstrip("#").split()[0]
+    if not re.match(r"^\| SWSR-[0-9]{3}[a-z]? \|", line) or section == "2.4":
       continue
     c = cells(line)
-    if len(c) == 8:
+    extra = {"applies_to": applies.get(c[0], default_applies), "proposed_by": origin}
+    if section == "11.":  # §11 SW-HW interface requirement: parent is the TSR of the same number
+      if len(c) != 8:
+        raise ValueError(f"WP-W-02 §11: unexpected column count {len(c)} in {c[0]}")
+      sid, req, hw, hsi, hwsr, verif, accept, impl = c
+      tid = "TSR-" + re.match(r"SWSR-([0-9]{3})", sid).group(1)
+      items.append({"id": sid, "kind": "swsr", "text": req, "asil": tsr_asil.get(tid, ""), "parents": [tid],
+                    "parent_text": f"{tid} (WP-W-02 §11; ASIL taken from {tid})", "other_parents": False,
+                    "allocated_to": hw, "verification": verif, "acceptance": accept, **extra, "baseline_impl": impl,
+                    "status": _swsr_status(req), "source": "WP-W-02"})
+    elif len(c) == 8:
       sid, req, asil, parent, alloc, verif, accept, impl = c
       ids, other = expand_refs(_parent_cell(parent))
       items.append({"id": sid, "kind": "swsr", "text": req, "asil": asil, "parents": ids, "parent_text": parent,
                     "other_parents": bool(other), "allocated_to": alloc, "verification": verif, "acceptance": accept,
-                    "baseline_impl": impl, "status": "proposed", "source": "WP-W-02"})
-    elif len(c) == 6:  # §11 SW-HW interface requirement: parent is the TSR of the same number
-      sid, req, hw, hsi, hwsr, impl = c
-      tid = "TSR-" + re.match(r"SWSR-([0-9]{3})", sid).group(1)
-      items.append({"id": sid, "kind": "swsr", "text": req, "asil": tsr_asil.get(tid, ""), "parents": [tid],
-                    "parent_text": f"{tid} (WP-W-02 §11; ASIL taken from {tid})", "other_parents": False,
-                    "allocated_to": hw, "verification": "", "acceptance": "", "baseline_impl": impl,
-                    "status": "proposed", "source": "WP-W-02"})
+                    **extra, "baseline_impl": impl, "status": _swsr_status(req), "source": "WP-W-02"})
     else:
       raise ValueError(f"WP-W-02: unexpected column count {len(c)} in {c[0]}")
   return items
@@ -231,12 +258,34 @@ def not_refined(md: Path, heading: str) -> list[str]:
 # ---------------------------------------------------------------- output
 
 FIELD_ORDER = ["id", "kind", "text", "asil", "parents", "parent_text", "other_parents", "allocated_to", "mechanism",
-               "timing", "hw_kind", "verification", "acceptance", "baseline_impl", "status", "source"]
+               "timing", "hw_kind", "verification", "acceptance", "applies_to", "proposed_by", "baseline_impl", "status",
+               "source"]
+SOURCE_MD = {"WP-C-04": FSC_MD, "WP-S-02": TSR_MD, "WP-S-06": TSR8_MD, "WP-W-02": SWSR_MD, "WP-H-01": HWSR_MD}
+REPO_ROOT = ASSURANCE_DIR.parent
+MD_LINK = re.compile(r"\[([^\]]*)\]\(([^)\s]+)\)")
+
+
+def delink(s: str, source_md: Path | None) -> str:
+  """Markdown links copied from a work product do not resolve from trace/items/. Rewrite '[text](relative)' to
+  'text (repository-relative path)'; absolute URLs are kept as 'text (url)'."""
+  def repl(m: re.Match) -> str:
+    text, target = m.group(1), m.group(2)
+    if re.match(r"^[a-z][a-z0-9+.-]*:", target, re.I) or source_md is None:
+      return f"{text} ({target})"
+    path, _, anchor = target.partition("#")
+    resolved = (source_md.parent / path).resolve() if path else source_md.resolve()
+    try:
+      rel = resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+      rel = target
+    return f"{text} ({rel}{'#' + anchor if anchor else ''})"
+  return MD_LINK.sub(repl, s)
 
 
 def render(items: list[dict], header: str) -> str:
   out = [header, ""]
   for it in items:
+    src = SOURCE_MD.get(it.get("source", ""))
     first = True
     for key in FIELD_ORDER:
       if key not in it:
@@ -249,7 +298,7 @@ def render(items: list[dict], header: str) -> str:
       elif key in ("id", "kind", "status", "source"):
         val = v
       else:
-        val = quote(v)
+        val = quote(delink(v, src))
       out.append(f"{'- ' if first else '  '}{key}: {val}")
       first = False
     out.append("")

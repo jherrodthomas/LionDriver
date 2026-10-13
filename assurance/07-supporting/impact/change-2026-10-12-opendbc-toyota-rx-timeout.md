@@ -93,3 +93,7 @@ Verification of opendbc#3 (host only): full safety suite OK; 100 % line coverage
 **Nominal rates.** The DBC files carry no cycle times. 25 Hz and 33 Hz are the minimum rates openpilot's CAN parser required for these messages (`selfdrive/car/toyota/carstate.py`, openpilot v0.8.16). A declared rate below the real one only lengthens detection: at 25 Hz the `0x262` timeout is 0.2 s plus one task period, slightly above the 0.2 s of TSR-401 if the real rate is that low. A declared rate above the real one would block engagement permanently, which is why `0xB4` (no known rate) is not added. Both rates are to be confirmed by OI-2.
 
 **Verification (host only):** safety suite OK in the default and reference variants with 100 % line coverage; new test `test_reference_rx_checks` (bad checksum rejected; no engagement with either message missing); `test_rx_timeout_5_periods_each_msg` covers both messages in the reference variant; mutations (rate 25 → 26 Hz, checksum ignored on `0x1D3`, `0x262` removed) each fail tests; opendbc and panda MISRA clean. Safety replay and HIL not run.
+
+## Addendum: further work products affected (2026-10-12)
+
+The software alignment audit ([RR-2026-009](../../05-software/reviews/RR-2026-009.md) F-30) found that this change also affects: WP-W-05 (UN-02, UN-05, UN-14), WP-W-09 (CD-03 timeouts). These were updated in the RR-2026-009 alignment change, not in the change above. The original "WPs affected" entries are left as recorded.
