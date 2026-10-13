@@ -1,10 +1,12 @@
-Import('env', 'arch', 'common', 'messaging')
+Import('env', 'arch', 'common', 'messaging', 'cereal')
 
 if arch != "Darwin":
   libs = [common, messaging, 'pthread']
   panda = env.Library('panda', ['panda.cc', 'spi.cc'])
 
-  env.Program('pandad', ['main.cc', 'pandad.cc', 'panda_safety.cc'], LIBS=[panda] + libs)
+  pandad_objs = env.Object(['pandad.cc', 'panda_safety.cc'])
+  env.Program('pandad', ['main.cc'] + pandad_objs, LIBS=[panda] + libs)
 
   if GetOption('extras'):
     env.Program('tests/test_pandad_canprotocol', ['tests/test_pandad_canprotocol.cc'], LIBS=[panda] + libs)
+    env.Program('tests/test_pandad_faults', ['tests/test_pandad_faults.cc'] + pandad_objs, LIBS=[panda, cereal] + libs)
