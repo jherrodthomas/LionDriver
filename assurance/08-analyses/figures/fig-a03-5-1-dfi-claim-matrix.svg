@@ -1,0 +1,282 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1016" viewBox="0 0 1280 1016" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 5-1. Dependent failure initiators against the independence claims they reach, with evaluation (WP-A-03 §4, §5)</title>
+<desc id="d">Matrix of the 26 dependent failure initiators DFI-01 to DFI-26 of §4 (rows, grouped by §4.1 to §4.6) against the independence claims IC-01 to IC-07 (columns). A red cell means §5 lists the initiator as not controlled for that claim, an amber cell partly controlled. Split cells show a rating that improves in the reference build. Dashed cells with a dagger are claims named in the §4 Elements reached column but not listed in §5. The bottom row gives the §5 verdict per claim: IC-01 and IC-06 not independent, IC-02, IC-04 and IC-05 partly, IC-03 open, IC-07 not applicable. 10 initiators are rated not controlled at the baseline; none is rated controlled.</desc>
+<defs><pattern id="na" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="6" stroke="#E2E8F0" stroke-width="2"/></pattern></defs>
+<rect width="1280" height="1016" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-1 · Dependent failure initiators vs independence claims</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Rows: DFI-xx of §4 · columns: claims IC-xx of §2 · cell colour: evaluation from §5 · baseline 8b8c6ae, reference-build changes split</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-A-03 §5</text>
+<text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">initiators §4 · claims §2 · evaluation §5</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+<text x="40" y="110" font-size="10" fill="#475569" font-weight="700">INITIATOR</text>
+<text x="492" y="110" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">EVAL (§4)</text>
+<text x="600" y="110" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">IC-01</text>
+<text x="600" y="126" font-size="10" fill="#475569" text-anchor="middle">envelope vs SoC</text>
+<text x="696" y="110" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">IC-02</text>
+<text x="696" y="126" font-size="10" fill="#475569" text-anchor="middle">envelope vs EPS</text>
+<text x="792" y="110" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">IC-03</text>
+<text x="792" y="126" font-size="10" fill="#475569" text-anchor="middle">envelope+EPS vs</text>
+<text x="792" y="139" font-size="10" fill="#475569" text-anchor="middle">driver</text>
+<text x="888" y="110" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">IC-04</text>
+<text x="888" y="126" font-size="10" fill="#475569" text-anchor="middle">cluster</text>
+<text x="888" y="139" font-size="10" fill="#475569" text-anchor="middle">indication</text>
+<text x="984" y="110" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">IC-05</text>
+<text x="984" y="126" font-size="10" fill="#475569" text-anchor="middle">stock PCS</text>
+<text x="1080" y="110" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">IC-06</text>
+<text x="1080" y="126" font-size="10" fill="#475569" text-anchor="middle">buzzer vs SoC HMI</text>
+<text x="1176" y="110" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">IC-07</text>
+<text x="1176" y="126" font-size="10" fill="#475569" text-anchor="middle">(fallback E-07)</text>
+<rect x="554" y="154" width="92" height="704" fill="#FBFCFD"/>
+<rect x="650" y="154" width="92" height="704" fill="#FFFFFF"/>
+<rect x="746" y="154" width="92" height="704" fill="#FBFCFD"/>
+<rect x="842" y="154" width="92" height="704" fill="#FFFFFF"/>
+<rect x="938" y="154" width="92" height="704" fill="#FBFCFD"/>
+<rect x="1034" y="154" width="92" height="704" fill="#FFFFFF"/>
+<rect x="1130" y="154" width="92" height="704" fill="url(#na)"/>
+<rect x="40" y="156" width="1200" height="18" fill="#F1F5F9" rx="4"/>
+<text x="48" y="169" font-size="10.5" fill="#475569" font-weight="700">§4.1 Shared resources (random hardware and external resources)</text>
+<line x1="40" y1="198" x2="1240" y2="198" stroke="#F1F5F9"/>
+<text x="40" y="191" font-size="11" fill="#0F172A" font-weight="700">DFI-01</text>
+<text x="92" y="191" font-size="11" fill="#0F172A">Shared power</text>
+<rect x="452" y="180" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="191" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="562" y="180" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="600" y="191" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="946" y="180" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="984" y="191" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="1042" y="180" width="76" height="14" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4" rx="3" stroke-dasharray="3 2"/>
+<text x="1080" y="191" font-size="10" fill="#D97706" font-weight="700" text-anchor="middle">P †</text>
+<line x1="40" y1="220" x2="1240" y2="220" stroke="#F1F5F9"/>
+<text x="40" y="213" font-size="11" fill="#0F172A" font-weight="700">DFI-02</text>
+<text x="92" y="213" font-size="11" fill="#0F172A">Clock</text>
+<rect x="452" y="202" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="213" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="562" y="202" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="600" y="213" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="242" x2="1240" y2="242" stroke="#F1F5F9"/>
+<text x="40" y="235" font-size="11" fill="#0F172A" font-weight="700">DFI-03</text>
+<text x="92" y="235" font-size="11" fill="#0F172A">Shared PCB and enclosure</text>
+<rect x="452" y="224" width="22" height="14" fill="#D2553F" rx="3"/>
+<text x="463" y="235" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="562" y="224" width="76" height="14" fill="#D2553F" rx="3"/>
+<text x="600" y="235" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<line x1="40" y1="264" x2="1240" y2="264" stroke="#F1F5F9"/>
+<text x="40" y="257" font-size="11" fill="#0F172A" font-weight="700">DFI-04</text>
+<text x="92" y="257" font-size="11" fill="#0F172A">Thermal</text>
+<rect x="452" y="246" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="257" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="562" y="246" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="600" y="257" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="286" x2="1240" y2="286" stroke="#F1F5F9"/>
+<text x="40" y="279" font-size="11" fill="#0F172A" font-weight="700">DFI-05</text>
+<text x="92" y="279" font-size="11" fill="#0F172A">Harness connector and relay</text>
+<rect x="452" y="268" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="279" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="946" y="268" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="984" y="279" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="308" x2="1240" y2="308" stroke="#F1F5F9"/>
+<text x="40" y="301" font-size="11" fill="#0F172A" font-weight="700">DFI-06</text>
+<text x="92" y="301" font-size="11" fill="#0F172A">Vehicle 12 V low-voltage event</text>
+<rect x="452" y="290" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="301" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="658" y="290" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="696" y="301" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="946" y="290" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="984" y="301" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="330" x2="1240" y2="330" stroke="#F1F5F9"/>
+<text x="40" y="323" font-size="11" fill="#0F172A" font-weight="700">DFI-07</text>
+<text x="92" y="323" font-size="11" fill="#0F172A">EMC / ESD transient on the CAN harness</text>
+<rect x="452" y="312" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="323" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="562" y="312" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="600" y="323" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="40" y="332" width="1200" height="18" fill="#F1F5F9" rx="4"/>
+<text x="48" y="345" font-size="10.5" fill="#475569" font-weight="700">§4.2 Shared information and configuration</text>
+<line x1="40" y1="374" x2="1240" y2="374" stroke="#F1F5F9"/>
+<text x="40" y="367" font-size="11" fill="#0F172A" font-weight="700">DFI-08</text>
+<text x="92" y="367" font-size="11" fill="#0F172A">Identical constants in controller and envelope</text>
+<rect x="452" y="356" width="22" height="14" fill="#D2553F" rx="3"/>
+<text x="463" y="367" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="562" y="356" width="76" height="14" fill="#D2553F" rx="3"/>
+<text x="600" y="367" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="754" y="356" width="76" height="14" fill="#D2553F" rx="3"/>
+<text x="792" y="367" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<line x1="40" y1="396" x2="1240" y2="396" stroke="#F1F5F9"/>
+<text x="40" y="389" font-size="11" fill="#0F172A" font-weight="700">DFI-09</text>
+<text x="92" y="389" font-size="11" fill="#0F172A">Shared configuration data CarParams</text>
+<rect x="452" y="378" width="22" height="14" fill="#D2553F" rx="3"/>
+<text x="463" y="389" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<text x="482" y="389" font-size="10" fill="#475569" text-anchor="middle">→</text>
+<rect x="490" y="378" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="501" y="389" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<text x="518" y="389" font-size="9.5" fill="#D97706" font-weight="600">ref</text>
+<rect x="562" y="378" width="38" height="14" fill="#D2553F"/>
+<rect x="600" y="378" width="38" height="14" fill="#D97706"/>
+<text x="581" y="389" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<text x="619" y="389" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">P ref</text>
+<line x1="40" y1="418" x2="1240" y2="418" stroke="#F1F5F9"/>
+<text x="40" y="411" font-size="11" fill="#0F172A" font-weight="700">DFI-10</text>
+<text x="92" y="411" font-size="11" fill="#0F172A">Shared sensor inputs</text>
+<rect x="452" y="400" width="22" height="14" fill="#D2553F" rx="3"/>
+<text x="463" y="411" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="562" y="400" width="76" height="14" fill="#D2553F" rx="3"/>
+<text x="600" y="411" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<line x1="40" y1="440" x2="1240" y2="440" stroke="#F1F5F9"/>
+<text x="40" y="433" font-size="11" fill="#0F172A" font-weight="700">DFI-11</text>
+<text x="92" y="433" font-size="11" fill="#0F172A">EPS-reported motor torque used by the envelope to bound…</text>
+<rect x="452" y="422" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="433" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="658" y="422" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="696" y="433" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="462" x2="1240" y2="462" stroke="#F1F5F9"/>
+<text x="40" y="455" font-size="11" fill="#0F172A" font-weight="700">DFI-12</text>
+<text x="92" y="455" font-size="11" fill="#0F172A">Shared command path to the EPS</text>
+<rect x="452" y="444" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="455" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="658" y="444" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="696" y="455" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="40" y="464" width="1200" height="18" fill="#F1F5F9" rx="4"/>
+<text x="48" y="477" font-size="10.5" fill="#475569" font-weight="700">§4.3 Control coupling (one element can alter the other)</text>
+<line x1="40" y1="506" x2="1240" y2="506" stroke="#F1F5F9"/>
+<text x="40" y="499" font-size="11" fill="#0F172A" font-weight="700">DFI-13</text>
+<text x="92" y="499" font-size="11" fill="#0F172A">SoC configures, resets and reflashes the MCU</text>
+<rect x="452" y="488" width="22" height="14" fill="#D2553F" rx="3"/>
+<text x="463" y="499" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<text x="482" y="499" font-size="10" fill="#475569" text-anchor="middle">→</text>
+<rect x="490" y="488" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="501" y="499" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<text x="518" y="499" font-size="9.5" fill="#D97706" font-weight="600">ref</text>
+<rect x="562" y="488" width="38" height="14" fill="#D2553F"/>
+<rect x="600" y="488" width="38" height="14" fill="#D97706"/>
+<text x="581" y="499" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<text x="619" y="499" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">P ref</text>
+<rect x="946" y="488" width="76" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" rx="3" stroke-dasharray="3 2"/>
+<text x="984" y="499" font-size="10" fill="#D2553F" font-weight="700" text-anchor="middle">N †</text>
+<line x1="40" y1="528" x2="1240" y2="528" stroke="#F1F5F9"/>
+<text x="40" y="521" font-size="11" fill="#0F172A" font-weight="700">DFI-14</text>
+<text x="92" y="521" font-size="11" fill="#0F172A">SoC crash removes actuation and warnings at the same time</text>
+<rect x="452" y="510" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="521" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="1042" y="510" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="1080" y="521" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="550" x2="1240" y2="550" stroke="#F1F5F9"/>
+<text x="40" y="543" font-size="11" fill="#0F172A" font-weight="700">DFI-15</text>
+<text x="92" y="543" font-size="11" fill="#0F172A">Item TX can affect the cluster indication</text>
+<rect x="452" y="532" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="543" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="850" y="532" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="888" y="543" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="572" x2="1240" y2="572" stroke="#F1F5F9"/>
+<text x="40" y="565" font-size="11" fill="#0F172A" font-weight="700">DFI-23</text>
+<text x="92" y="565" font-size="11" fill="#0F172A">Shared audio path for the panda siren</text>
+<rect x="452" y="554" width="22" height="14" fill="#D2553F" rx="3"/>
+<text x="463" y="565" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="1042" y="554" width="76" height="14" fill="#D2553F" rx="3"/>
+<text x="1080" y="565" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="40" y="574" width="1200" height="18" fill="#F1F5F9" rx="4"/>
+<text x="48" y="587" font-size="10.5" fill="#475569" font-weight="700">§4.4 Systematic (development, tools, people)</text>
+<line x1="40" y1="616" x2="1240" y2="616" stroke="#F1F5F9"/>
+<text x="40" y="609" font-size="11" fill="#0F172A" font-weight="700">DFI-16</text>
+<text x="92" y="609" font-size="11" fill="#0F172A">Common upstream source and authors</text>
+<rect x="452" y="598" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="609" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="562" y="598" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="600" y="609" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="638" x2="1240" y2="638" stroke="#F1F5F9"/>
+<text x="40" y="631" font-size="11" fill="#0F172A" font-weight="700">DFI-17</text>
+<text x="92" y="631" font-size="11" fill="#0F172A">Common toolchain</text>
+<rect x="452" y="620" width="22" height="14" fill="#D2553F" rx="3"/>
+<text x="463" y="631" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="562" y="620" width="76" height="14" fill="#D2553F" rx="3"/>
+<text x="600" y="631" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<line x1="40" y1="660" x2="1240" y2="660" stroke="#F1F5F9"/>
+<text x="40" y="653" font-size="11" fill="#0F172A" font-weight="700">DFI-18</text>
+<text x="92" y="653" font-size="11" fill="#0F172A">Same test oracle</text>
+<rect x="452" y="642" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="653" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="562" y="642" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="600" y="653" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="682" x2="1240" y2="682" stroke="#F1F5F9"/>
+<text x="40" y="675" font-size="11" fill="#0F172A" font-weight="700">DFI-19</text>
+<text x="92" y="675" font-size="11" fill="#0F172A">Single maintainer</text>
+<rect x="452" y="664" width="22" height="14" fill="#D2553F" rx="3"/>
+<text x="463" y="675" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="562" y="664" width="652" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" rx="3" stroke-dasharray="3 2"/>
+<text x="888" y="675" font-size="10" fill="#D2553F" font-weight="700" text-anchor="middle">N † · reaches: All · not assigned to a claim in §5</text>
+<rect x="40" y="684" width="1200" height="18" fill="#F1F5F9" rx="4"/>
+<text x="48" y="697" font-size="10.5" fill="#475569" font-weight="700">§4.5 Installation, service and use</text>
+<line x1="40" y1="726" x2="1240" y2="726" stroke="#F1F5F9"/>
+<text x="40" y="719" font-size="11" fill="#0F172A" font-weight="700">DFI-20</text>
+<text x="92" y="719" font-size="11" fill="#0F172A">Mis-installation</text>
+<rect x="452" y="708" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="719" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="946" y="708" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="984" y="719" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="748" x2="1240" y2="748" stroke="#F1F5F9"/>
+<text x="40" y="741" font-size="11" fill="#0F172A" font-weight="700">DFI-21</text>
+<text x="92" y="741" font-size="11" fill="#0F172A">Driver state and DM share the cause</text>
+<rect x="452" y="730" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="741" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="754" y="730" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="792" y="741" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="770" x2="1240" y2="770" stroke="#F1F5F9"/>
+<text x="40" y="763" font-size="11" fill="#0F172A" font-weight="700">DFI-22</text>
+<text x="92" y="763" font-size="11" fill="#0F172A">Vehicle maintenance changes the EPS or PCM</text>
+<rect x="452" y="752" width="22" height="14" fill="#D2553F" rx="3"/>
+<text x="463" y="763" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="658" y="752" width="76" height="14" fill="#D2553F" rx="3"/>
+<text x="696" y="763" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="946" y="752" width="76" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" rx="3" stroke-dasharray="3 2"/>
+<text x="984" y="763" font-size="10" fill="#D2553F" font-weight="700" text-anchor="middle">N †</text>
+<rect x="40" y="772" width="1200" height="18" fill="#F1F5F9" rx="4"/>
+<text x="48" y="785" font-size="10.5" fill="#475569" font-weight="700">§4.6 Initiators from the FSC v0.2 completeness check</text>
+<line x1="40" y1="814" x2="1240" y2="814" stroke="#F1F5F9"/>
+<text x="40" y="807" font-size="11" fill="#0F172A" font-weight="700">DFI-24</text>
+<text x="92" y="807" font-size="11" fill="#0F172A">Envelope-blocking detection uses the envelope's own report</text>
+<rect x="452" y="796" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="807" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="562" y="796" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="600" y="807" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="1042" y="796" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="1080" y="807" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="836" x2="1240" y2="836" stroke="#F1F5F9"/>
+<text x="40" y="829" font-size="11" fill="#0F172A" font-weight="700">DFI-25</text>
+<text x="92" y="829" font-size="11" fill="#0F172A">HMI hang removes warnings while actuation continues</text>
+<rect x="452" y="818" width="22" height="14" fill="#D2553F" rx="3"/>
+<text x="463" y="829" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<rect x="1042" y="818" width="76" height="14" fill="#D2553F" rx="3"/>
+<text x="1080" y="829" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text>
+<line x1="40" y1="858" x2="1240" y2="858" stroke="#F1F5F9"/>
+<text x="40" y="851" font-size="11" fill="#0F172A" font-weight="700">DFI-26</text>
+<text x="92" y="851" font-size="11" fill="#0F172A">FCW and longitudinal planning share the lead input</text>
+<rect x="452" y="840" width="22" height="14" fill="#D97706" rx="3"/>
+<text x="463" y="851" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<rect x="754" y="840" width="76" height="14" fill="#D97706" rx="3"/>
+<text x="792" y="851" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text>
+<line x1="40" y1="864" x2="1240" y2="864" stroke="#475569"/>
+<text x="40" y="886" font-size="12" fill="#0F172A" font-weight="700">Verdict per claim (§5, current baseline)</text>
+<text x="40" y="902" font-size="10" fill="#475569">IC-01: unchanged in the reference build (§5)</text>
+<rect x="558" y="872" width="84" height="36" fill="#D2553F" rx="6"/>
+<text x="600" y="887.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Not</text>
+<text x="600" y="900.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">independent</text>
+<rect x="654" y="872" width="84" height="36" fill="#D97706" rx="6"/>
+<text x="696" y="894" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Partly</text>
+<rect x="750" y="872" width="84" height="36" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" rx="6"/>
+<text x="792" y="894" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle">Open</text>
+<rect x="846" y="872" width="84" height="36" fill="#D97706" rx="6"/>
+<text x="888" y="894" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Partly</text>
+<rect x="942" y="872" width="84" height="36" fill="#D97706" rx="6"/>
+<text x="984" y="894" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Partly</text>
+<rect x="1038" y="872" width="84" height="36" fill="#D2553F" rx="6"/>
+<text x="1080" y="887.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Not</text>
+<text x="1080" y="900.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">independent</text>
+<rect x="1134" y="872" width="84" height="36" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1" rx="6" stroke-dasharray="4 3"/>
+<text x="1176" y="894" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">n/a</text>
+<line x1="40" y1="918" x2="1240" y2="918" stroke="#E2E8F0"/>
+<g transform="translate(40,930)"><rect x="0" y="0" width="26" height="14" fill="#D2553F" rx="3"/><text x="13" y="11" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">N</text><text x="34" y="11" font-size="10.5" fill="#0F172A">Not controlled</text></g>
+<g transform="translate(190,930)"><rect x="0" y="0" width="26" height="14" fill="#D97706" rx="3"/><text x="13" y="11" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">P</text><text x="34" y="11" font-size="10.5" fill="#0F172A">Partly controlled (none is rated controlled)</text></g>
+<g transform="translate(500,930)"><rect x="0" y="0" width="13" height="14" fill="#D2553F"/><rect x="13" y="0" width="13" height="14" fill="#D97706"/><text x="34" y="11" font-size="10.5" fill="#0F172A">Baseline → reference build bf6ce8c (not verified on hardware)</text></g>
+<g transform="translate(900,930)"><rect x="0" y="0" width="26" height="14" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4" rx="3" stroke-dasharray="3 2"/><text x="34" y="11" font-size="10.5" fill="#0F172A">† named in §4 “Elements reached”, not listed in §5</text></g>
+<g transform="translate(40,956)"><rect x="0" y="0" width="26" height="14" fill="url(#na)" stroke="#94A3B8" stroke-width="1" rx="3"/><text x="34" y="11" font-size="10.5" fill="#0F172A">Fallback claim, not applicable unless WP-A-01 DEC-01 is activated</text></g>
+<text x="40" y="990" font-size="10.5" fill="#475569">IC-05 §5 also counts WP-A-02 FFI-CM-05/08 as partly controlled (interference, analysed in WP-A-02).</text>
+</svg>

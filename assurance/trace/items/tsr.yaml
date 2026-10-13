@@ -404,7 +404,7 @@
   mechanism: "PLB, WRN"
   timing: "≤ 1 s"
   verification: "T-SIL"
-  baseline_impl: "Not met: `cruiseMismatch` raised after 6 s (`selfdrive/selfdrived/selfdrived.py:420-422`) with IMMEDIATE_DISABLE commented out (`selfdrive/selfdrived/events.py:458-460`) (GAP-19)"
+  baseline_impl: "Implemented, not verified on the vehicle: `cruiseMismatch` after 1 s with a repeating prompt (`selfdrive/selfdrived/selfdrived.py`, `events.py`); `controlsd` keeps requesting the cancel. The other direction (engaged while PCM cruise is off) disengages through `pcmDisable` on PCM-cruise cars (GAP-19 closed in code)"
   status: proposed
   source: WP-S-02
 
@@ -959,7 +959,7 @@
   mechanism: "TMO"
   timing: "≤ 0.1 s"
   verification: "T-SIL"
-  baseline_impl: "Not met: no freshness check (`selfdrive/controls/controlsd.py:66` polls on `selfdriveState` only) (GAP-16)"
+  baseline_impl: "Partly met: `latActive` / `longActive` are false while an input is stale (`selfdrive/controls/lib/input_freshness.py`), but after 10 nominal periods, not 2, to avoid nuisance disengagements from model frame drops until logs show the jitter; the event is `selfdrived`'s `commIssue` from the same 10-period check (GAP-16 narrowed; impact record OI-1)"
   status: proposed
   source: WP-S-02
 
@@ -1154,7 +1154,7 @@
   mechanism: "FR"
   timing: "≤ 0.2 s"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: only `relayMalfunction` and `safetyRxChecksInvalid` react (`selfdrive/selfdrived/selfdrived.py:338-342`)"
+  baseline_impl: "Partly met: heartbeat lost, LionDriver TX-rate revocation and a rising `safetyTxBlocked` while engaged disable at once (`pandaHeartbeatLost`, `pandaTxRateExceeded`, `pandaTxBlocked`; `selfdrive/selfdrived/supervision.py`), as do `relayMalfunction` and `safetyRxChecksInvalid`. Other fault flags and SPI error bursts: no reaction yet (impact record OI-2)"
   status: proposed
   source: WP-S-02
 
@@ -1244,7 +1244,7 @@
   mechanism: "PLB"
   timing: "≤ 0.5 s / ≤ 0.5 s to warning"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: `controlsMismatch` after 200 samples ≈ 2 s (`selfdrive/selfdrived/selfdrived.py:338, 508-510`); exceeds the SG-02 budget"
+  baseline_impl: "Implemented, not verified on the vehicle: `controlsMismatch` after 2 consecutive mismatched `pandaStates` samples and at most 0.5 s after the first mismatched frame (`selfdrive/selfdrived/supervision.py`, unit tests)"
   status: proposed
   source: WP-S-02
 

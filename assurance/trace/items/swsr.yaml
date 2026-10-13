@@ -475,7 +475,7 @@
   allocated_to: "`host.selfdrived`, `host.card`"
   verification: "UT"
   acceptance: "Warning and cancel within 1 s"
-  baseline_impl: "Not met: 6 s, reaction commented out (`selfdrived.py:420-422`, `events.py:458-460`) (GAP-19)"
+  baseline_impl: "Implemented: 1 s, repeating prompt; cancel requested by `controlsd` (`selfdrived.py`, `events.py`)"
   status: proposed
   source: WP-W-02
 
@@ -1217,7 +1217,7 @@
   allocated_to: "`host.controlsd`"
   verification: "UT"
   acceptance: "Stale input → inactive next frame"
-  baseline_impl: "Not met (`selfdrive/controls/controlsd.py:66`) (GAP-16)"
+  baseline_impl: "Partly: 10 periods, not 2 (`controls/lib/input_freshness.py`, unit tests); event via `commIssue` (impact record OI-1)"
   status: proposed
   source: WP-W-02
 
@@ -1413,7 +1413,7 @@
   allocated_to: "`host.selfdrived`"
   verification: "UT, FI"
   acceptance: "Event ≤ 0.2 s"
-  baseline_impl: "Partial: `relayMalfunction`, `safetyRxChecksInvalid` only (`selfdrived.py:338-342`)"
+  baseline_impl: "Partly: heartbeat lost, TX-rate revocation, rising `safetyTxBlocked` (`selfdrived/supervision.py`) plus `relayMalfunction`, `safetyRxChecksInvalid`; other faults open (OI-2)"
   status: proposed
   source: WP-W-02
 
@@ -1497,7 +1497,7 @@
   allocated_to: "`host.selfdrived`"
   verification: "UT, FI"
   acceptance: "Event ≤ 0.5 s; no event on single-sample skew in the reference log set"
-  baseline_impl: "Partial: 200 samples ≈ 2 s (`selfdrived.py:338, 508-510`)"
+  baseline_impl: "Implemented: 2 consecutive samples, ≤ 0.5 s (`selfdrived/supervision.py`, unit tests)"
   status: proposed
   source: WP-W-02
 

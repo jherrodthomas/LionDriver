@@ -13,6 +13,7 @@ on:
       - 'assurance/**'
       - 'tools/sync/**'
       - 'tools/severity/**'
+      - 'tools/safety/**'
       - 'README.md'
       - 'docs/CARS.md'
       - 'docs/liondriver/**'
@@ -23,6 +24,7 @@ on:
       - 'assurance/**'
       - 'tools/sync/**'
       - 'tools/severity/**'
+      - 'tools/safety/**'
       - 'README.md'
       - 'docs/CARS.md'
       - 'docs/liondriver/**'
@@ -61,6 +63,24 @@ jobs:
       run: python3 assurance/process/tools/process_model.py --check
     - name: Process model self-tests
       run: python3 assurance/process/tools/test_process_model.py
+    - name: Concept-phase figures match the HARA, FSC and SOTIF data (and their tests)
+      run: |
+        python3 assurance/02-concept/hara/hara_figures.py --check
+        python3 assurance/02-concept/hara/test_hara_figures.py
+        python3 assurance/02-concept/fsc/fsc_figures.py --check
+        python3 assurance/02-concept/fsc/test_fsc_figures.py
+        python3 assurance/02-concept/sotif/sotif_figures.py --check
+        python3 assurance/02-concept/sotif/test_sotif_figures.py
+    - name: FMEA, FMEDA and DFA figures match the YAML analyses (and their tests)
+      run: |
+        python3 tools/safety/fmea_diagrams.py --check
+        python3 tools/safety/test_fmea_diagrams.py
+    - name: Timing-budget and DFI-matrix figures match WP-S-04 and WP-A-03 (and their tests)
+      run: |
+        python3 assurance/03-system/figures/fig_s04_timing.py --check
+        python3 assurance/03-system/figures/test_fig_s04_timing.py
+        python3 assurance/08-analyses/figures/fig_a03_dfi_matrix.py --check
+        python3 assurance/08-analyses/figures/test_fig_a03_dfi_matrix.py
     - name: Fault tree diagrams and cut sets match WP-A-04 (and their tests)
       run: |
         python3 assurance/08-analyses/fta/fta_diagrams.py --check

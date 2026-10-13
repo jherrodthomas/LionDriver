@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-03 Software architectural design |
 | Standard reference | ISO 26262-6:2018 §7 (software architectural design: notation, design principles, static and dynamic aspects, ASIL attribution, resource usage); ISO 26262-9:2018 §6 (coexistence, by reference to WP-A-02); ASPICE 4.0 SWE.2 |
-| Version | 0.4 (status update 2026-10-12: §2, §3 and §4.2 aligned with the 100 Hz TIM4 safety task and 0.3 s heartbeat of §5.1; new units in §3.1 (heartbeat monitor, IWDG, IRQ priority table, reference lock, EPS-fault siren in panda `b790fca`, LionDriver PR #45, not merged; TX rate check in `safety_tx_hook`); §5.1 priorities, §5.4 start-up, §5.4 status, §6.2 and §8 ratings updated. Nothing verified on hardware). 0.3 (§5.4.4 prerequisites implemented, panda `52cad44`: explicit priority table, atomic safety-config switch and fault word; R-2 recorded as a 10 ms bound; 2026-10-12). 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
+| Version | 0.5 (§3.2 block diagram redrawn as Figure 3-1 with unit IDs and SI interface tags; text version kept; 2026-10-13). 0.4 (status update 2026-10-12: §2, §3 and §4.2 aligned with the 100 Hz TIM4 safety task and 0.3 s heartbeat of §5.1; new units in §3.1 (heartbeat monitor, IWDG, IRQ priority table, reference lock, EPS-fault siren in panda `b790fca`, LionDriver PR #45, not merged; TX rate check in `safety_tx_hook`); §5.1 priorities, §5.4 start-up, §5.4 status, §6.2 and §8 ratings updated. Nothing verified on hardware). 0.3 (§5.4.4 prerequisites implemented, panda `52cad44`: explicit priority table, atomic safety-config switch and fault word; R-2 recorded as a 10 ms bound; 2026-10-12). 0.2 (§5.1–5.2 updated to panda `c2e5d93`; new §5.4 proposed interrupt-priority scheme and race analysis (OI-4, SWSR-519); §6.3 re-assessed; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Envelope (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating, [WP-S-02 §2.1](../03-system/WP-S-02-technical-safety-requirements.md)); host (E-01): QM / QM (B-sup) |
 | Author | Assurance team (initial draft) |
@@ -64,6 +64,12 @@ Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PN
 
 ### 3.2 Block diagram
 
+![Figure 3-1: software architecture of the panda firmware, with the QM host stack (host.pandad) and the safety envelope units U-PND-SPI, U-PND-COMMS, U-PND-MAIN, U-PND-HARN, U-PND-FDCAN, U-SAF-CORE, U-SAF-TOY, U-SAF-LAT and U-SAF-LONG, interfaces SI-01 to SI-10 and the execution contexts](figures/fig-w03-3-2-panda-software-architecture.svg)
+
+*Figure 3-1.* The QM host stack (left) reaches the panda envelope (B‡) through SPI4 (USB, not used by the reference device, is not drawn). Inside the panda, boxes are the units of §3.1 with their functions as chips; U-PND-FDCAN spans the TX and RX chips (dashed region). Orange lines are the command and actuation path, teal lines CAN reception, forwarding and data back to the SoC, grey lines control requests and internal calls; each tag is an interface ID of §3.3. The bridge on the TX line marks a crossing without a connection. Source: [`figures/fig-w03-3-2-panda-software-architecture.svg`](figures/fig-w03-3-2-panda-software-architecture.svg); change it together with §3.1, §3.3 and §5.1.
+
+<details><summary>Text version of Figure 3-1</summary>
+
 ```
           SoC (pandad)                       panda STM32H7 (one address space, no MPU)
    ───────────────────────────    ┌───────────────────────────────────────────────────────────────┐
@@ -90,6 +96,8 @@ Unit IDs U-xxx follow [WP-W-06 §2](WP-W-06-software-unit-verification.md). U-PN
                                   │  main loop: LED fade / WFI only                                 │
                                   └───────────────────────────────────────────────────────────────┘
 ```
+
+</details>
 
 ### 3.3 Interfaces between components
 

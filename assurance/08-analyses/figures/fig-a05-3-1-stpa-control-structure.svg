@@ -1,0 +1,228 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1000" viewBox="0 0 1280 1000" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-1. STPA control structure of the reference configuration (WP-A-05 §3.1)</title>
+  <desc id="d">Controllers from top to bottom by authority: C1 driver; C2 openpilot on the SoC; C3 panda safety model on the MCU and C6 stock ADAS camera; C5 PCM/ACC/brake ECU and C4 EPS ECU; the controlled process is the vehicle lateral and longitudinal motion. Control actions point down: CA-01 engage/resume, CA-02 disengage and CA-04 accelerator input from C1 to C5; CA-03 steering input from C1 to the vehicle; CA-05 and CA-06 from C2 to C3; CA-08 safety mode and heartbeat from C2 to C3; CA-05 lateral torque from C3 to C4; CA-06 acceleration from C3 to C5; CA-10 block TX from C3 to C4 and C5; CA-09 relay drive from C3 to the harness relay; CA-13 PCS brake and warnings from C6 to C5, forwarded by C3; CA-11 rack torque from C4 and CA-12 acceleration/brake from C5 to the vehicle. CA-07 alerts and take-over requests go from C2 to C1. Feedback points up: FB-01 HMI from C2 and siren from C3 to C1; FB-02 cluster to C1; FB-03 vehicle motion to C1; FB-04 panda health from C3 to C2; FB-05 vehicle CAN state to C2 and C3; FB-06 road cameras to C2; FB-07 driver camera and wheel touch from C1 to C2.</desc>
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.xxs{font-size:9.5px}.b{font-weight:700}.sb{font-weight:600}
+      .item{fill:#FFFFFF;stroke:#64748B;stroke-width:1.4}
+      .env{fill:#FFF7ED;stroke:#C2410C;stroke-width:1.8}
+      .ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+      .ca{fill:none;stroke:#C2410C;stroke-width:2}
+      .fb{fill:none;stroke:#0F766E;stroke-width:1.8}
+      .lr{fill:#C2410C;font-size:9.5px;font-weight:600}
+      .lt{fill:#0F766E;font-size:9.5px;font-weight:600}
+    </style>
+  </defs>
+
+  <rect width="1280" height="1000" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 3-1 · STPA control structure</text>
+  <text x="40" y="66" class="m" font-size="12.5">Reference configuration while driving · controllers top to bottom by authority · control actions down, feedback up</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">WP-A-05 §3.1</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">controllers §3.2 · CA / FB §3.3</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+
+  <!-- ===== C1 driver ===== -->
+  <rect x="260" y="98" width="740" height="92" rx="10" class="item"/>
+  <g transform="translate(296,126)" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round">
+    <circle cx="0" cy="0" r="8"/><path d="M0 8V32M-13 16H13M0 32L-10 48M0 32L10 48"/>
+  </g>
+  <text x="330" y="124" class="t b" font-size="14">C1 Driver</text>
+  <text x="330" y="142" class="m xs">human controller: supervises at all times, overrides or disengages, responds to alerts</text>
+  <text x="330" y="160" class="t xs sb">Process model:</text>
+  <text x="408" y="160" class="m xs">item state (engaged / overriding / disengaged), road, own role</text>
+
+  <!-- ===== C2 openpilot ===== -->
+  <rect x="680" y="300" width="420" height="86" rx="10" class="item"/>
+  <text x="696" y="322" class="t b" font-size="13.5">C2 openpilot on the SoC</text>
+  <text x="1086" y="322" class="m xxs" text-anchor="end">item · E-01</text>
+  <text x="696" y="342" class="m xs">modeld, planner, controlsd, selfdrived,</text>
+  <text x="696" y="356" class="m xs">dmonitoringd, pandad, ui / soundd</text>
+
+  <!-- ===== C3 panda ===== -->
+  <rect x="640" y="470" width="360" height="90" rx="10" class="env"/>
+  <text x="656" y="492" class="t b" font-size="13.5">C3 panda safety model (MCU)</text>
+  <text x="986" y="492" class="m xxs" text-anchor="end">item · E-03</text>
+  <text x="656" y="514" class="m xs">block / forward, limits, authority,</text>
+  <text x="656" y="528" class="m xs">relay, heartbeat, watchdog</text>
+
+  <!-- ===== C6 stock ADAS camera ===== -->
+  <rect x="130" y="470" width="170" height="90" rx="10" class="ext"/>
+  <text x="146" y="492" class="t b" font-size="13">C6 stock ADAS</text>
+  <text x="146" y="508" class="t b" font-size="13">camera (PCS)</text>
+  <text x="146" y="528" class="m xxs">external · UCA-42 → AOU-04</text>
+
+  <!-- ===== C5 PCM ===== -->
+  <rect x="320" y="660" width="300" height="80" rx="10" class="ext"/>
+  <text x="336" y="682" class="t b" font-size="13">C5 PCM / ACC / brake ECU</text>
+  <text x="336" y="700" class="m xs">cruise state, powertrain, brake</text>
+  <text x="336" y="728" class="m xxs">external · UCA-41 → AOU-03, AOU-05</text>
+
+  <!-- ===== C4 EPS ===== -->
+  <rect x="700" y="660" width="260" height="80" rx="10" class="ext"/>
+  <text x="716" y="682" class="t b" font-size="13">C4 EPS ECU</text>
+  <text x="716" y="700" class="m xs">assist + LKA</text>
+  <text x="716" y="728" class="m xxs">external · UCA-40 → AOU-01, AOU-02</text>
+
+  <!-- ===== harness relay ===== -->
+  <rect x="1040" y="660" width="130" height="80" rx="10" class="item"/>
+  <text x="1105" y="690" class="t b" font-size="12" text-anchor="middle">Harness</text>
+  <text x="1105" y="706" class="t b" font-size="12" text-anchor="middle">intercept relay</text>
+  <text x="1105" y="726" class="m xxs" text-anchor="middle">item · E-05</text>
+
+  <!-- ===== controlled process ===== -->
+  <rect x="40" y="840" width="1200" height="56" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.6"/>
+  <text x="640" y="864" class="t b" font-size="14" text-anchor="middle">Controlled process: vehicle lateral and longitudinal motion</text>
+  <text x="640" y="882" class="m xs" text-anchor="middle">rack torque from C4 and the driver's steering add at the rack; acceleration and braking via C5</text>
+
+  <!-- ===== control actions (down) ===== -->
+  <!-- CA-03 steering: C1 -> vehicle -->
+  <path d="M260 130 H70 V836" class="ca" marker-end="url(#aR)"/>
+  <!-- CA-01, CA-02, CA-04: C1 -> C5 -->
+  <path d="M330 190 V656" class="ca" marker-end="url(#aR)"/>
+  <path d="M450 190 V656" class="ca" marker-end="url(#aR)"/>
+  <path d="M570 190 V656" class="ca" marker-end="url(#aR)"/>
+  <!-- CA-07: C2 -> C1 (alerts) -->
+  <path d="M850 300 V194" class="ca" marker-end="url(#aR)"/>
+  <!-- CA-05 / CA-06 and CA-08: C2 -> C3 -->
+  <path d="M710 386 V466" class="ca" marker-end="url(#aR)"/>
+  <path d="M820 386 V466" class="ca" marker-end="url(#aR)"/>
+  <!-- CA-06: C3 -> C5 -->
+  <path d="M690 560 V712 H624" class="ca" marker-end="url(#aR)"/>
+  <!-- CA-10: C3 -> C5, C4 (frames not sent) -->
+  <path d="M660 560 V680 H624" class="ca" stroke-dasharray="6 4" marker-end="url(#aR)"/>
+  <path d="M760 560 V656" class="ca" stroke-dasharray="6 4" marker-end="url(#aR)"/>
+  <!-- CA-05: C3 -> C4 -->
+  <path d="M870 560 V656" class="ca" marker-end="url(#aR)"/>
+  <!-- CA-09: C3 -> relay -->
+  <path d="M980 560 V610 H1105 V656" class="ca" marker-end="url(#aR)"/>
+  <!-- CA-13: C6 -> C5 -->
+  <path d="M215 560 V712 H316" class="ca" marker-end="url(#aR)"/>
+  <!-- CA-12, CA-11 -> process -->
+  <path d="M470 740 V836" class="ca" marker-end="url(#aR)"/>
+  <path d="M830 740 V836" class="ca" marker-end="url(#aR)"/>
+
+  <!-- ===== feedback (up) ===== -->
+  <!-- FB-03 vehicle motion -> C1 -->
+  <path d="M100 840 V166 H256" class="fb" marker-end="url(#aT)"/>
+  <!-- FB-02 cluster -> C1 -->
+  <path d="M280 470 V194" class="fb" marker-end="url(#aT)"/>
+  <!-- FB-01 siren from C3 -> C1 -->
+  <path d="M655 470 V194" class="fb" marker-end="url(#aT)"/>
+  <!-- FB-01 HMI from C2 -> C1 -->
+  <path d="M740 300 V194" class="fb" marker-end="url(#aT)"/>
+  <!-- FB-07 driver camera: C1 -> C2 -->
+  <path d="M960 190 V296" class="fb" marker-end="url(#aT)"/>
+  <!-- FB-04 panda health C3 -> C2 -->
+  <path d="M930 470 V390" class="fb" marker-end="url(#aT)"/>
+  <!-- FB-05 vehicle CAN state -> C2, C3 -->
+  <path d="M1190 840 V360 H1104" class="fb" marker-end="url(#aT)"/>
+  <path d="M1190 505 H1004" class="fb" marker-end="url(#aT)"/>
+  <circle cx="1190" cy="505" r="3" fill="#0F766E"/>
+  <!-- FB-06 road cameras -> C2 -->
+  <path d="M1225 840 V330 H1104" class="fb" marker-end="url(#aT)"/>
+
+  <!-- ===== tags (pills on the lines) ===== -->
+  <g class="tag">
+    <!-- driver CAs -->
+    <rect x="308" y="214" width="44" height="18" rx="9" fill="#C2410C"/><text x="330" y="227" fill="#fff" text-anchor="middle">CA-01</text>
+    <rect x="428" y="214" width="44" height="18" rx="9" fill="#C2410C"/><text x="450" y="227" fill="#fff" text-anchor="middle">CA-02</text>
+    <rect x="548" y="214" width="44" height="18" rx="9" fill="#C2410C"/><text x="570" y="227" fill="#fff" text-anchor="middle">CA-04</text>
+    <rect x="96" y="114" width="44" height="18" rx="9" fill="#C2410C"/><text x="118" y="127" fill="#fff" text-anchor="middle">CA-03</text>
+    <!-- C2 <-> C1 -->
+    <rect x="718" y="214" width="44" height="18" rx="9" fill="#0F766E"/><text x="740" y="227" fill="#fff" text-anchor="middle">FB-01</text>
+    <rect x="828" y="214" width="44" height="18" rx="9" fill="#C2410C"/><text x="850" y="227" fill="#fff" text-anchor="middle">CA-07</text>
+    <rect x="938" y="232" width="44" height="18" rx="9" fill="#0F766E"/><text x="960" y="245" fill="#fff" text-anchor="middle">FB-07</text>
+    <rect x="633" y="300" width="44" height="18" rx="9" fill="#0F766E"/><text x="655" y="313" fill="#fff" text-anchor="middle">FB-01</text>
+    <rect x="258" y="300" width="44" height="18" rx="9" fill="#0F766E"/><text x="280" y="313" fill="#fff" text-anchor="middle">FB-02</text>
+    <!-- C2 <-> C3 -->
+    <rect x="666" y="400" width="88" height="18" rx="9" fill="#C2410C"/><text x="710" y="413" fill="#fff" text-anchor="middle">CA-05 · CA-06</text>
+    <rect x="798" y="400" width="44" height="18" rx="9" fill="#C2410C"/><text x="820" y="413" fill="#fff" text-anchor="middle">CA-08</text>
+    <rect x="908" y="400" width="44" height="18" rx="9" fill="#0F766E"/><text x="930" y="413" fill="#fff" text-anchor="middle">FB-04</text>
+    <!-- right side -->
+    <rect x="1112" y="296" width="44" height="18" rx="9" fill="#0F766E"/><text x="1134" y="309" fill="#fff" text-anchor="middle">FB-06</text>
+    <rect x="1168" y="420" width="44" height="18" rx="9" fill="#0F766E"/><text x="1190" y="433" fill="#fff" text-anchor="middle">FB-05</text>
+    <!-- C3 -> C4 / C5 / relay -->
+    <rect x="638" y="600" width="44" height="18" rx="9" fill="#C2410C"/><text x="660" y="613" fill="#fff" text-anchor="middle">CA-10</text>
+    <rect x="632" y="720" width="44" height="18" rx="9" fill="#C2410C"/><text x="654" y="733" fill="#fff" text-anchor="middle">CA-06</text>
+    <rect x="738" y="600" width="44" height="18" rx="9" fill="#C2410C"/><text x="760" y="613" fill="#fff" text-anchor="middle">CA-10</text>
+    <rect x="848" y="600" width="44" height="18" rx="9" fill="#C2410C"/><text x="870" y="613" fill="#fff" text-anchor="middle">CA-05</text>
+    <rect x="1010" y="584" width="44" height="18" rx="9" fill="#C2410C"/><text x="1032" y="597" fill="#fff" text-anchor="middle">CA-09</text>
+    <rect x="193" y="600" width="44" height="18" rx="9" fill="#C2410C"/><text x="215" y="613" fill="#fff" text-anchor="middle">CA-13</text>
+    <!-- to process -->
+    <rect x="448" y="780" width="44" height="18" rx="9" fill="#C2410C"/><text x="470" y="793" fill="#fff" text-anchor="middle">CA-12</text>
+    <rect x="808" y="780" width="44" height="18" rx="9" fill="#C2410C"/><text x="830" y="793" fill="#fff" text-anchor="middle">CA-11</text>
+    <rect x="78" y="760" width="44" height="18" rx="9" fill="#0F766E"/><text x="100" y="773" fill="#fff" text-anchor="middle">FB-03</text>
+  </g>
+
+  <!-- ===== labels ===== -->
+  <text x="146" y="127" class="lr">steering input</text>
+  <text x="96" y="148" class="lr">mechanical, adds at the rack</text>
+
+  <text x="336" y="248" class="lr">engage / resume</text>
+  <text x="336" y="261" class="lr">cruise SET, RES</text>
+  <text x="456" y="248" class="lr">disengage: brake</text>
+  <text x="456" y="261" class="lr">pedal, CANCEL</text>
+  <text x="456" y="274" class="lr">(also to C2, C3)</text>
+  <text x="576" y="248" class="lr">accelerator</text>
+  <text x="576" y="261" class="lr">override</text>
+
+  <text x="274" y="334" class="lt" text-anchor="end">cluster: cruise,</text>
+  <text x="274" y="347" class="lt" text-anchor="end">LKA / LTA, PCS</text>
+  <text x="274" y="360" class="lt" text-anchor="end">warnings (C5 / C6)</text>
+  <text x="649" y="334" class="lt" text-anchor="end">siren</text>
+  <text x="649" y="347" class="lt" text-anchor="end">from C3</text>
+
+  <text x="746" y="248" class="lt">engagement</text>
+  <text x="746" y="261" class="lt">state, alerts</text>
+  <text x="746" y="274" class="lt">(UI, sounds)</text>
+  <text x="856" y="248" class="lr">alerts, take-over</text>
+  <text x="856" y="261" class="lr">requests, DM</text>
+  <text x="856" y="274" class="lr">escalation</text>
+  <text x="966" y="266" class="lt">driver camera,</text>
+  <text x="966" y="279" class="lt">wheel touch</text>
+
+  <text x="716" y="436" class="lr">torque 0x2E4,</text>
+  <text x="716" y="449" class="lr">accel 0x343</text>
+  <text x="826" y="436" class="lr">safety mode 0xdc,</text>
+  <text x="826" y="449" class="lr">heartbeat 0xf3</text>
+  <text x="936" y="436" class="lt">panda</text>
+  <text x="936" y="449" class="lt">health</text>
+
+  <text x="1160" y="309" class="lt">road</text>
+  <text x="1160" y="322" class="lt">cameras</text>
+  <text x="1184" y="456" class="lt" text-anchor="end">vehicle</text>
+  <text x="1184" y="469" class="lt" text-anchor="end">CAN state</text>
+
+  <text x="766" y="634" class="lr">block TX /</text>
+  <text x="766" y="647" class="lr">controls off</text>
+  <text x="876" y="634" class="lr">lateral torque</text>
+  <text x="876" y="647" class="lr">0x2E4</text>
+  <text x="1060" y="597" class="lr">relay drive (GPIO)</text>
+
+  <text x="209" y="634" class="lr" text-anchor="end">PCS brake,</text>
+  <text x="209" y="647" class="lr" text-anchor="end">warnings;</text>
+  <text x="209" y="660" class="lr" text-anchor="end">forwarded</text>
+  <text x="209" y="673" class="lr" text-anchor="end">by C3</text>
+
+  <text x="476" y="816" class="lr">accel / brake</text>
+  <text x="836" y="816" class="lr">rack torque</text>
+  <text x="106" y="796" class="lt">vehicle motion,</text>
+  <text x="106" y="809" class="lt">steering feel</text>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="926" x2="1240" y2="926" stroke="#E2E8F0"/>
+  <g transform="translate(40,952)" font-size="10.5">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#C2410C" stroke-width="2"/><text x="36" y="4" class="t">Control action</text>
+    <line x1="136" y1="0" x2="164" y2="0" stroke="#C2410C" stroke-width="2" stroke-dasharray="6 4"/><text x="172" y="4" class="t">Control action by withholding (frames not sent)</text>
+    <line x1="430" y1="0" x2="458" y2="0" stroke="#0F766E" stroke-width="1.8"/><text x="466" y="4" class="t">Feedback</text>
+    <rect x="546" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="582" y="4" class="t">Controller in the item</text>
+    <rect x="722" y="-8" width="28" height="16" rx="4" fill="#FFF7ED" stroke="#C2410C"/><text x="758" y="4" class="t">Safety envelope</text>
+    <rect x="868" y="-8" width="28" height="16" rx="4" fill="#F1F5F9" stroke="#94A3B8"/><text x="904" y="4" class="t">External controller (UCAs as assumptions, §4.4)</text>
+  </g>
+  <text x="40" y="984" class="m xs">CA-07 is a control action of C2 on the driver and therefore points up. CA-11 and CA-12 come from the text version; the table in §3.3 lists CA-01…CA-10 and CA-13.</text>
+</svg>

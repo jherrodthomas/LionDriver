@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-03 Project plan (scope, WBS, schedule, resources) |
 | Standard reference | ASPICE 4.0 MAN.3 (project management); ISO 26262-2 §6 (planning of safety activities, by reference to WP-M-02) |
-| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: WBS 4.3, resources, backlog B-13…B-17; 2026-10-12). 0.1 |
+| Version | 0.5 (backlog B-14 and B-17 marked done: #45 merged 2026-10-13, #44 merged; Figure 5-1 regenerated; 2026-10-13). 0.4 (§5 gate roadmap with blockers and the §9 backlog drawn as Figure 5-1; no plan content changed; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: WBS 4.3, resources, backlog B-13…B-17; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (project management) |
 | Author | Assurance team (initial draft) |
@@ -141,6 +141,10 @@ Critical path: P0 → HARA → HARA confirmation review → FFI/DFA → envelope
 
 Long-lead items to start early: assessor engagement (P0), HIL bench parts (P2), test vehicle access and safety driver training (P1), pen-test procurement (P4).
 
+![Figure 5-1: gate roadmap of phases P0 to P6 and gates G0 to G6, none passed, with each phase's entry conditions and open items, the critical path, long-lead items, the R-01 bottleneck and backlog items B-01 to B-17 by status](figures/fig-m03-5-1-gate-roadmap.svg)
+
+*Figure 5-1.* Phases and gates of §3 with the relative durations above and the effort of §4.2 (not to scale; no calendar dates, OI-1). No gate is recorded as passed. Under each phase are its §5 dependencies and the §10 open items due at its gate; below are the critical path, the long-lead items with their §6 status and R-01 (§4.3), and the §9 backlog by the status written in its table (“Done” there is not verification evidence). Drawn from §3, §4, §5, §6, §9 and §10. Source: [`figures/fig-m03-5-1-gate-roadmap.svg`](figures/fig-m03-5-1-gate-roadmap.svg); change it together with those sections.
+
 ## 6. Resources
 
 | Resource | Need | Status |
@@ -201,10 +205,10 @@ Derived from [gap assessment §9](../00-assessment/gap-assessment.md#9-priority-
 | B-11 | Recruit at least one verification reviewer and one QA person independent of the author | R-01 | Names in WP-M-02 §3.1 | PM |
 | B-12 | Record the reference vehicle's VIN, ECU firmware versions and device revision | — | Input to WP-C-01 | PM |
 | B-13 | Independent I1 review of the change impact records in [`impact/`](../07-supporting/impact/README.md) and of DN-01 | R-26 | Review records | PM |
-| B-14 | Merge LionDriver PR #45 (panda `b790fca`, TSR-516(b)) | — | Pin on `liondriver-dev` | PM |
+| B-14 | **Done (#45, merged 2026-10-13 as squash `1d38dc3`; panda pin now `6dee6fa`).** Merge LionDriver PR #45 (panda `b790fca`, TSR-516(b)) | — | Pin on `liondriver-dev` | PM |
 | B-15 | Maintainer decision D-13 (FSC envelope strategy, option (c)) | WP-C-04 OI-1, D-13 | Decision record in WP-M-01 §8 and WP-M-07 §5 | PM |
 | B-16 | Fork-owned reference drive logs | R-27 | Logs | PM |
-| B-17 | Run the panda host tests and the reference-variant mutation tests in LionDriver CI (both in `safety.yaml`: host tests 2026-10-12, reference-variant mutation via #44) | GAP-39 | CI jobs | ENG |
+| B-17 | **Done (#44 / #45).** Run the panda host tests and the reference-variant mutation tests in LionDriver CI (both in `safety.yaml`: host tests 2026-10-12, reference-variant mutation via #44) | GAP-39 | CI jobs | ENG |
 
 ## 10. Open items
 
