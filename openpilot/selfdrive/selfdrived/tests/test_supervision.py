@@ -49,6 +49,40 @@ class TestControlsMismatch:
         break
     assert triggered == 50
 
+  def test_engage_grace_absorbs_the_heartbeat_latency(self):
+    # LS-06: the panda grants authority only after the heartbeat reports openpilot engaged. Samples in the first 0.3 s
+    # after engaging do not count, so two stale samples (one heartbeat missed) do not disengage
+    cm = ControlsMismatch(2, 0.5, DT, engage_grace=0.3)
+    for f in range(25):
+      cm.update(True, f % 10 == 0, f, enabled=True)
+      assert not cm.triggered(f)
+    cm.update(False, True, 25, enabled=True)  # the panda has granted
+    assert not cm.triggered(25) and cm.count == 0
+
+  def test_engage_grace_keeps_the_time_bound(self):
+    # a panda that never grants is still detected 0.5 s after the first mismatched frame (TSR-621)
+    cm = ControlsMismatch(2, 0.5, DT, engage_grace=0.3)
+    triggered = None
+    for f in range(200):
+      cm.update(True, f % 10 == 0, f, enabled=True)
+      if cm.triggered(f):
+        triggered = f
+        break
+    assert triggered == 40  # samples at 0.3 s and 0.4 s count after the grace; both inside the 0.5 s bound
+
+  def test_engage_grace_only_after_engaging(self):
+    # long after engaging the grace does not apply: two samples trigger, as without it
+    cm = ControlsMismatch(2, 0.5, DT, engage_grace=0.3)
+    for f in range(100):
+      cm.update(False, f % 10 == 0, f, enabled=True)
+    triggered = None
+    for f in range(100, 200):
+      cm.update(True, f % 10 == 0, f, enabled=True)
+      if cm.triggered(f):
+        triggered = f
+        break
+    assert triggered == 110
+
   def test_not_triggered_without_mismatch(self):
     cm = ControlsMismatch(2, 0.5, DT)
     for f in range(1000):
