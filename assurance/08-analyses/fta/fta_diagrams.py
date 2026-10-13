@@ -32,6 +32,8 @@ from xml.sax.saxutils import escape
 
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parent / "WP-A-04-system-fta-fmea.md"
+FTA_FMEA_MAP = HERE.parent / "fta-fmea-map.yaml"
+FMEA_REFS: dict[str, dict] = {}   # event id -> its row in fta-fmea-map.yaml, filled by build()
 
 MAX_LEAVES_PER_SHEET = 10
 SHEET_OF: dict[int, tuple[str, int]] = {}   # id(defining node) -> (goal, sheet), filled by build()
@@ -364,6 +366,8 @@ BADGE_STYLE = {   # chip background, chip text
   "ue": ("#3d6b3d", "#fff"),
   "repeat": ("#e6e9ef", "#334155"),
   "sheet": ("#e6e9ef", "#334155"),
+  "fmea": ("#111827", "#fff"),
+  "nofmea": ("#fff1f1", "#c62828"),
 }
 TINT = {   # event colour (card stripe, symbol outline) and symbol fill
   "spf": ("#c62828", "#fde8e8"),
@@ -462,6 +466,12 @@ def make_box(node: Node, sheet_root: Node, expand: bool, hot: set[int]) -> Box:
     badges.append(("sheet", f"continued on sheet {node.sheet_link}"))
   if node is sheet_root and node.sheet_from is not None:
     badges.append(("sheet", f"from sheet {node.sheet_from}"))
+  ref = FMEA_REFS.get(node.ident) if node.kind != "transfer_in" else None
+  if ref is not None:
+    backing = list(ref.get("fmea", [])) + [f.partition(":")[2] for f in ref.get("fmeda", [])]
+    badges += [("fmea", b) for b in backing]
+    if not backing and not node.children and ref.get("class") not in ("by_design", "external"):
+      badges.append(("nofmea", "no FMEA"))
   rows: list[list[tuple[str, str, float]]] = []
   row: list[tuple[str, str, float]] = []
   used = 0.0
@@ -632,7 +642,8 @@ def _legend(x: float, y: float) -> tuple[list[str], float]:
   cy = y + 106
   bx = x
   for kind, label in [("spf", "SPF"), ("latent", "latent"), ("sotif", "SOTIF"), ("ccf", "CCF DFI-nn"),
-                      ("ffi", "FFI"), ("ue", "outside item"), ("repeat", "repeated / transfer")]:
+                      ("ffi", "FFI"), ("ue", "outside item"), ("repeat", "repeated / transfer"),
+                      ("fmea", "FMEA / FMEDA row"), ("nofmea", "no FMEA")]:
     w = _chip_w(label)
     _chip(out, bx, cy, kind, label, w)
     bx += w + 6
@@ -762,7 +773,18 @@ def _walk_sheet(b: Box):
 
 # ---------------------------------------------------------------- outputs
 
+def load_fmea_refs() -> dict[str, dict]:
+  """Events and gates of fta-fmea-map.yaml by id; empty without the file (the map is checked by tools/safety/fmea_lint.py)."""
+  if not FTA_FMEA_MAP.exists():
+    return {}
+  import yaml
+  doc = yaml.safe_load(FTA_FMEA_MAP.read_text(encoding="utf-8")) or {}
+  return {r["id"]: r for r in doc.get("events", []) + doc.get("gates", [])}
+
+
 def build() -> dict[str, str]:
+  FMEA_REFS.clear()
+  FMEA_REFS.update(load_fmea_refs())
   trees = parse_document(SOURCE.read_text(encoding="utf-8"))
   resolve(trees)
   trees.sort(key=lambda t: t.goal)
@@ -799,7 +821,10 @@ def build() -> dict[str, str]:
             "Tags: SPF (single point in the baseline design), latent, SOTIF, CCF (→ WP-A-03 DFI), " +
             "FFI (→ WP-A-02), repeated (event drawn again; defined where first shown). " +
             "Red path: single-point path, one basic event in the item reaching the top event " +
-            "(undeveloped events outside the item assumed), computed from the gate logic.", "",
+            "(undeveloped events outside the item assumed), computed from the gate logic. " +
+            "Dark tags: the FMEA failure modes and FMEDA rows that realise a basic event " +
+            "([fta-fmea-map.yaml](../fta-fmea-map.yaml), checked by `fmea_lint.py`); red \"no FMEA\": an event of a mapped " +
+            "tree that no FMEA row backs yet.", "",
             "Minimal cut sets computed from the same trees, and the check of the WP-A-04 tables: " +
             "[cut-sets.md](cut-sets.md) (`fta_cutsets.py`).", ""]
   outputs["README.md"] = "\n".join(index)

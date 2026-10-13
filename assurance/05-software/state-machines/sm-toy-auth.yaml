@@ -5,7 +5,8 @@
 # code that implements it; "swsr" lists the requirements it realises or is meant to realise. Implementation
 # state is NOT stored here: the checker reads it from the WP-W-02 Baseline column (trace/items/swsr.yaml).
 # build: all = every build; reference = only with LIONDRIVER_REFERENCE=1.
-# Drafting origin: ai-assisted (Claude), not reviewed (RR-2026-009 F-16).
+# Drafting origin: ai-assisted (Claude), not reviewed (RR-2026-009 F-16). The immediate refusal of cruise while main is off
+# (back-to-back findings B2B-03 / BB-C-02) is in the T1/T8 guards (SWSR-405(c)); T10c keeps the 150 ms rule.
 machine: SM-TOY-AUTH
 title: Toyota authority (controls_allowed)
 units: [U-SAF-CORE, U-SAF-TOY, U-PND-MAIN]

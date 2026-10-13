@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="910" viewBox="0 0 1280 910" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
-  <title id="t">Figure 3-1. LD-SDA item boundary and interfaces (WP-C-01 §3.3)</title>
+  <title id="t">Figure 3-2. LD-SDA item boundary and interfaces (WP-C-01 §3.3)</title>
   <desc id="d">The item LD-SDA contains the comma device hardware (E-04) with the SoC software and ML models (E-01, E-02), the panda safety MCU firmware (E-03), and the harness with intercept relay (E-05). Interfaces IF-01 to IF-09 connect it to the driver, the road environment, the vehicle CAN with EPS, ECM/PCM, ABS/VSC and cluster, the forward radar, the Toyota forward camera, vehicle power and the untrusted comma.ai back end. E-06 external compute is excluded.</desc>
   <defs>
     <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
@@ -22,7 +22,7 @@
   <rect width="1280" height="910" fill="#FFFFFF"/>
 
   <!-- header -->
-  <text x="40" y="44" class="t b" font-size="20">Figure 3-1 · Item boundary of LD-SDA</text>
+  <text x="40" y="44" class="t b" font-size="20">Figure 3-2 · Item boundary of LD-SDA</text>
   <text x="40" y="66" class="m" font-size="12.5">Reference configuration: Toyota Corolla, 12th generation (E210), TSS 2.0 · comma device with panda safety MCU</text>
   <text x="1240" y="44" class="m s" text-anchor="end">WP-C-01 §3.3</text>
   <text x="1240" y="62" class="m s" text-anchor="end">elements §3.1–3.2 · interfaces §3.4</text>

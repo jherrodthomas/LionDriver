@@ -1,131 +1,221 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1346" height="846" viewBox="0 0 1346 846" font-family="Helvetica, Arial, sans-serif">
-<style>.g{fill:#fff;stroke:#111;stroke-width:1.4}.ctx{fill:#f4f4f4;stroke:#111;stroke-width:1.1}.id{font-size:11.5px;font-weight:700;text-anchor:middle}.d{font-size:10px;text-anchor:middle}.sid{font-size:10.5px;font-weight:700;text-anchor:middle}.cid{font-size:10px;font-weight:700;text-anchor:middle}.cs{font-size:9.5px;text-anchor:middle;fill:#333}.aj{font-size:11px;font-weight:700;text-anchor:end}.df{font-size:9.5px;font-weight:700;fill:#b3261e;text-anchor:middle}.dfl{font-size:9.5px;font-weight:700;fill:#b3261e}.sh{font-size:9.5px;font-weight:600;fill:#444;text-anchor:middle}.h{font-size:12px;font-weight:700}.l{font-size:10.5px}.s{font-size:9px;fill:#555}.w{stroke:#111;stroke-width:1.1}</style>
-<rect width="100%" height="100%" fill="#fff"/>
-<text x="30" y="36" class="h">Cybersecurity case — argument from CG3  (sheet 4 of 7)</text>
-<rect x="562.0" y="70" width="230" height="82.5" class="g"/>
-<text x="677.0" y="89" class="id">CG3</text>
-<text x="677.0" y="102.5" class="d">Each retained/shared/avoided risk</text>
-<text x="677.0" y="115.0" class="d">(CSC-01…CSC-05) is justified and its</text>
-<text x="677.0" y="127.5" class="d">condition holds</text>
-<text x="677.0" y="141.5" class="sh">from sheet 1</text>
-<line x1="677.0" y1="152.5" x2="677.0" y2="171.5" class="w"/>
-<line x1="153.0" y1="171.5" x2="1201.0" y2="171.5" class="w"/>
-<line x1="153.0" y1="171.5" x2="153.0" y2="197.5" class="w"/><path d="M153.0,197.5 L149.5,189.2 L156.5,189.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="421.0" y1="171.5" x2="421.0" y2="197.5" class="w"/><path d="M421.0,197.5 L417.5,189.2 L424.5,189.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="681.0" y1="171.5" x2="681.0" y2="197.5" class="w"/><path d="M681.0,197.5 L677.5,189.2 L684.5,189.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="941.0" y1="171.5" x2="941.0" y2="197.5" class="w"/><path d="M941.0,197.5 L937.5,189.2 L944.5,189.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="1201.0" y1="171.5" x2="1201.0" y2="197.5" class="w"/><path d="M1201.0,197.5 L1197.5,189.2 L1204.5,189.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<rect x="38.0" y="198.5" width="230" height="55.0" class="g"/>
-<text x="153.0" y="217.5" class="id">CG3.1</text>
-<text x="153.0" y="231.0" class="d">CSC-01 physical CAN residual retained</text>
-<text x="153.0" y="243.5" class="d">(condition: CSG-05 implemented; CA-05)</text>
-<line x1="153.0" y1="253.5" x2="153.0" y2="272.5" class="w"/>
-<line x1="86.0" y1="272.5" x2="220.0" y2="272.5" class="w"/>
-<line x1="86.0" y1="272.5" x2="86.0" y2="323.5" class="w"/><path d="M86.0,323.5 L82.5,315.2 L89.5,315.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="220.0" y1="272.5" x2="220.0" y2="323.5" class="w"/><path d="M220.0,323.5 L216.5,315.2 L223.5,315.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<circle cx="86.0" cy="347.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="86.0" y="351.5" class="sid" fill="#111">CSn-34</text>
-<text x="86.0" y="385.0" class="cs">Validation TC-09,</text>
-<text x="86.0" y="397.5" class="cs">TC-10 (CAN</text>
-<text x="86.0" y="410.0" class="cs">robustness)</text>
-<circle cx="220.0" cy="347.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
-<text x="220.0" y="351.5" class="sid" fill="#111">CSn-40</text>
-<text x="220.0" y="385.0" class="cs">Physical-access</text>
-<text x="220.0" y="397.5" class="cs">assumption recorded</text>
-<text x="220.0" y="410.0" class="cs">in user information</text>
-<rect x="306.0" y="198.5" width="230" height="80.0" class="g"/>
-<text x="421.0" y="217.5" class="id">CG3.2</text>
-<text x="421.0" y="231.0" class="d">CSC-02 back-end security shared</text>
-<text x="421.0" y="243.5" class="d">(condition: CSG-06 device-side</text>
-<text x="421.0" y="256.0" class="d">constraints; no safety dependency,</text>
-<text x="421.0" y="268.5" class="d">CSR-117)</text>
-<line x1="421.0" y1="278.5" x2="421.0" y2="297.5" class="w"/>
-<line x1="354.0" y1="297.5" x2="488.0" y2="297.5" class="w"/>
-<line x1="354.0" y1="297.5" x2="354.0" y2="323.5" class="w"/><path d="M354.0,323.5 L350.5,315.2 L357.5,315.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="488.0" y1="297.5" x2="488.0" y2="323.5" class="w"/><path d="M488.0,323.5 L484.5,315.2 L491.5,315.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<circle cx="354.0" cy="347.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="354.0" y="351.5" class="sid" fill="#111">CSn-35</text>
-<text x="354.0" y="385.0" class="cs">Validation</text>
-<text x="354.0" y="397.5" class="cs">TC-11…TC-13 (remote</text>
-<text x="354.0" y="410.0" class="cs">surface, back-end</text>
-<text x="354.0" y="422.5" class="cs">independence)</text>
-<circle cx="488.0" cy="347.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
-<text x="488.0" y="351.5" class="sid" fill="#111">CSn-41</text>
-<text x="488.0" y="385.0" class="cs">Onroad streaming</text>
-<text x="488.0" y="397.5" class="cs">block (inherited</text>
-<text x="488.0" y="410.0" class="cs">mechanism)</text>
-<rect x="566" y="198.5" width="230" height="67.5" class="g"/>
-<text x="681.0" y="217.5" class="id">CG3.3</text>
-<text x="681.0" y="231.0" class="d">CSC-03 non-repudiation retained</text>
-<text x="681.0" y="243.5" class="d">(condition: identity key protected,</text>
-<text x="681.0" y="256.0" class="d">CSR-141)</text>
-<line x1="681.0" y1="266.0" x2="681.0" y2="285.0" class="w"/>
-<line x1="622.0" y1="285.0" x2="681.0" y2="285.0" class="w"/>
-<line x1="622.0" y1="285.0" x2="622.0" y2="323.5" class="w"/><path d="M622.0,323.5 L618.5,315.2 L625.5,315.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<circle cx="622.0" cy="347.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="622.0" y="351.5" class="sid" fill="#111">CSn-37</text>
-<text x="622.0" y="385.0" class="cs">Validation TC-16,</text>
-<text x="622.0" y="397.5" class="cs">TC-17 (data at rest,</text>
-<text x="622.0" y="410.0" class="cs">decommissioning)</text>
-<rect x="826.0" y="198.5" width="230" height="55.0" class="g"/>
-<text x="941.0" y="217.5" class="id">CG3.4</text>
-<text x="941.0" y="231.0" class="d">CSC-04 OTS supply chain shared</text>
-<text x="941.0" y="243.5" class="d">(condition: SBOM + monitoring running)</text>
-<line x1="941.0" y1="253.5" x2="941.0" y2="272.5" class="w"/>
-<line x1="874.0" y1="272.5" x2="1008.0" y2="272.5" class="w"/>
-<line x1="874.0" y1="272.5" x2="874.0" y2="323.5" class="w"/><path d="M874.0,323.5 L870.5,315.2 L877.5,315.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<line x1="1008.0" y1="272.5" x2="1008.0" y2="323.5" class="w"/><path d="M1008.0,323.5 L1004.5,315.2 L1011.5,315.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<circle cx="874.0" cy="347.5" r="23.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="874.0" y="351.5" class="sid" fill="#111">CSn-24</text>
-<text x="874.0" y="385.0" class="cs">SBOM and</text>
-<text x="874.0" y="397.5" class="cs">vulnerability scan</text>
-<text x="874.0" y="410.0" class="cs">report for the</text>
-<text x="874.0" y="422.5" class="cs">release</text>
-<circle cx="1008.0" cy="347.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
-<text x="1008.0" y="351.5" class="sid" fill="#111">CSn-50</text>
-<text x="1008.0" y="385.0" class="cs">Monitoring,</text>
-<text x="1008.0" y="397.5" class="cs">vulnerability</text>
-<text x="1008.0" y="410.0" class="cs">management, incident</text>
-<text x="1008.0" y="422.5" class="cs">response, update…</text>
-<rect x="1086" y="198.5" width="230" height="55.0" class="g"/>
-<text x="1201.0" y="217.5" class="id">CG3.5</text>
-<text x="1201.0" y="231.0" class="d">CSC-05 eGPU avoided (condition:</text>
-<text x="1201.0" y="243.5" class="d">excluded from reference configuration)</text>
-<line x1="1201.0" y1="253.5" x2="1201.0" y2="272.5" class="w"/>
-<line x1="1142.0" y1="272.5" x2="1201.0" y2="272.5" class="w"/>
-<line x1="1142.0" y1="272.5" x2="1142.0" y2="323.5" class="w"/><path d="M1142.0,323.5 L1138.5,315.2 L1145.5,315.2 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<circle cx="1142.0" cy="347.5" r="23.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
-<text x="1142.0" y="351.5" class="sid" fill="#111">CSn-42</text>
-<text x="1142.0" y="385.0" class="cs">eGPU exclusion in</text>
-<text x="1142.0" y="397.5" class="cs">reference</text>
-<text x="1142.0" y="410.0" class="cs">configuration</text>
-<text x="30" y="478.5" class="h">Notation (GSN Community Standard v3)</text>
-<rect x="30" y="492.5" width="40" height="22" class="g"/>
-<text x="86" y="507.5" class="l">Goal (claim)</text>
-<path d="M37,522.5 L70,522.5 L63,544.5 L30,544.5 Z" class="g"/>
-<text x="86" y="537.5" class="l">Strategy (argument)</text>
-<circle cx="50" cy="563.5" r="11" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.6"/>
-<text x="86" y="567.5" class="l">Solution: evidence available</text>
-<circle cx="50" cy="593.5" r="11" fill="#f2b233" stroke="#9a6b00" stroke-width="1.6"/>
-<text x="86" y="597.5" class="l">Solution: evidence partial</text>
-<circle cx="50" cy="623.5" r="11" fill="#ffffff" stroke="#b3261e" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="86" y="627.5" class="l">Solution: evidence missing</text>
-<rect x="30" y="642.5" width="40" height="22" rx="10" class="ctx"/>
-<text x="86" y="657.5" class="l">Context</text>
-<ellipse cx="50" cy="683.5" rx="20" ry="11" class="ctx"/>
-<text x="86" y="687.5" class="l">Assumption (A) / justification (J)</text>
-<path d="M50,704.5 L59,713.5 L50,722.5 L41,713.5 Z" fill="#fff" stroke="#111" stroke-width="1.2"/>
-<text x="86" y="717.5" class="l">Undeveloped goal</text>
-<line x1="30.0" y1="743.5" x2="70.0" y2="743.5" class="w"/><path d="M70.0,743.5 L61.7,747.0 L61.7,740.0 Z" fill="#111" stroke="#111" stroke-width="1"/>
-<text x="86" y="747.5" class="l">SupportedBy</text>
-<line x1="30.0" y1="773.5" x2="70.0" y2="773.5" class="w"/><path d="M70.0,773.5 L61.7,777.0 L61.7,770.0 Z" fill="#fff" stroke="#111" stroke-width="1"/>
-<text x="86" y="777.5" class="l">InContextOf</text>
-<text x="30" y="802.5" class="dfl">defeaters: DF-nn</text>
-<text x="140" y="802.5" class="l">open counter-evidence on the goal (WP-K-01 §7, WP-K-03 §6)</text>
-<rect x="876" y="466.5" width="440" height="92" fill="#fff" stroke="#111" stroke-width="1.4"/>
-<text x="886" y="488.5" class="h">LionDriver — Cybersecurity case (GSN)</text>
-<text x="886" y="504.5" class="l">Argument from CG3</text>
-<text x="886" y="520.5" class="l">Sheet 4 of 7</text>
-<text x="886" y="536.5" class="l">Source: WP-K-03 §2–§4, §6 (text trees and tables)</text>
-<text x="886" y="552.5" class="s">Generated by gsn_diagrams.py — edit the source, not this file</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1456" height="872" viewBox="0 0 1456 872">
+<title>Cybersecurity case (GSN), sheet 4 of 7: argument from CG3</title>
+<style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.sid{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.cid{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.cs{font:400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle;fill:#3c4556}.aj{font:700 10px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff;text-anchor:middle}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#1d2433;stroke-width:1.3}.wc{stroke:#7d8798;stroke-width:1.2;stroke-dasharray:4 3}.shadow{fill:#0f172a;opacity:.06}</style>
+<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
+<rect width="100%" height="100%" fill="#f7f8fa"/>
+<rect y="78" width="100%" height="794" fill="url(#dots)"/>
+<rect width="100%" height="78" fill="#0f2a44"/>
+<text x="40" y="32" class="eyebrow">GSN · CYBERSECURITY CASE · WP-K-03</text>
+<text x="40" y="59" class="title">CG3 · Each retained/shared/avoided risk (CSC-01…CSC-05) is justified and its…</text>
+<rect x="1216" y="21" width="200" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
+<text x="1316" y="44" class="hc">Sheet 4 of 7</text>
+<rect x="612.5" y="116.5" width="244" height="106" rx="4" class="shadow"/>
+<rect x="611.0" y="114" width="244" height="106" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M615.0,114 H851.0 A4,4 0 0 1 855.0,118 V120 H611.0 V118 A4,4 0 0 1 615.0,114 Z" fill="#c62828"/>
+<text x="625.0" y="139" class="id" text-anchor="start">CG3</text>
+<text x="841.0" y="139" class="kind">GOAL</text>
+<text x="625.0" y="153" class="d">Each retained/shared/avoided risk</text>
+<text x="625.0" y="167" class="d">(CSC-01…CSC-05) is justified and its</text>
+<text x="625.0" y="181" class="d">condition holds</text>
+<rect x="625.0" y="189.0" width="82.4" height="16" rx="8" fill="#e6e9ef"/>
+<text x="666.2" y="200.5" class="chip" fill="#334155">from sheet 1</text>
+<line x1="733.0" y1="220" x2="733.0" y2="243.0" class="w"/>
+<line x1="172.0" y1="243.0" x2="1294.0" y2="243.0" class="w"/>
+<line x1="172.0" y1="243.0" x2="172.0" y2="273.0" class="w"/><path d="M172.0,273.0 L167.9,263.9 L176.1,263.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="460.0" y1="243.0" x2="460.0" y2="273.0" class="w"/><path d="M460.0,273.0 L455.9,263.9 L464.1,263.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="738.0" y1="243.0" x2="738.0" y2="273.0" class="w"/><path d="M738.0,273.0 L733.9,263.9 L742.1,263.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1016.0" y1="243.0" x2="1016.0" y2="273.0" class="w"/><path d="M1016.0,273.0 L1011.9,263.9 L1020.1,263.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1294.0" y1="243.0" x2="1294.0" y2="273.0" class="w"/><path d="M1294.0,273.0 L1289.9,263.9 L1298.1,263.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<rect x="51.5" y="276.5" width="244" height="84" rx="4" class="shadow"/>
+<rect x="50.0" y="274" width="244" height="84" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M54.0,274 H290.0 A4,4 0 0 1 294.0,278 V280 H50.0 V278 A4,4 0 0 1 54.0,274 Z" fill="#c62828"/>
+<text x="64.0" y="299" class="id" text-anchor="start">CG3.1</text>
+<text x="280.0" y="299" class="kind">GOAL</text>
+<text x="64.0" y="313" class="d">CSC-01 physical CAN residual</text>
+<text x="64.0" y="327" class="d">retained (condition: CSG-05</text>
+<text x="64.0" y="341" class="d">implemented; CA-05)</text>
+<line x1="172.0" y1="358" x2="172.0" y2="381.0" class="w"/>
+<line x1="100.0" y1="381.0" x2="244.0" y2="381.0" class="w"/>
+<line x1="100.0" y1="381.0" x2="100.0" y2="425.0" class="w"/><path d="M100.0,425.0 L95.9,415.9 L104.1,415.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="244.0" y1="381.0" x2="244.0" y2="425.0" class="w"/><path d="M244.0,425.0 L239.9,415.9 L248.1,415.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="100.0" cy="450.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="100.0" y="454.0" class="sid" fill="#b3261e">CSn-34</text>
+<text x="100.0" y="492" class="cs">Validation TC-09,</text>
+<text x="100.0" y="506" class="cs">TC-10 (CAN</text>
+<text x="100.0" y="520" class="cs">robustness)</text>
+<circle cx="244.0" cy="452.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="244.0" cy="450.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="244.0" y="454.0" class="sid" fill="#1d2433">CSn-40</text>
+<text x="244.0" y="492" class="cs">Physical-access</text>
+<text x="244.0" y="506" class="cs">assumption recorded</text>
+<text x="244.0" y="520" class="cs">in user information</text>
+<rect x="339.5" y="276.5" width="244" height="98" rx="4" class="shadow"/>
+<rect x="338.0" y="274" width="244" height="98" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M342.0,274 H578.0 A4,4 0 0 1 582.0,278 V280 H338.0 V278 A4,4 0 0 1 342.0,274 Z" fill="#c62828"/>
+<text x="352.0" y="299" class="id" text-anchor="start">CG3.2</text>
+<text x="568.0" y="299" class="kind">GOAL</text>
+<text x="352.0" y="313" class="d">CSC-02 back-end security shared</text>
+<text x="352.0" y="327" class="d">(condition: CSG-06 device-side</text>
+<text x="352.0" y="341" class="d">constraints; no safety dependency,</text>
+<text x="352.0" y="355" class="d">CSR-117)</text>
+<line x1="460.0" y1="372" x2="460.0" y2="395.0" class="w"/>
+<line x1="388.0" y1="395.0" x2="532.0" y2="395.0" class="w"/>
+<line x1="388.0" y1="395.0" x2="388.0" y2="425.0" class="w"/><path d="M388.0,425.0 L383.9,415.9 L392.1,415.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="532.0" y1="395.0" x2="532.0" y2="425.0" class="w"/><path d="M532.0,425.0 L527.9,415.9 L536.1,415.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="388.0" cy="450.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="388.0" y="454.0" class="sid" fill="#b3261e">CSn-35</text>
+<text x="388.0" y="492" class="cs">Validation</text>
+<text x="388.0" y="506" class="cs">TC-11…TC-13 (remote</text>
+<text x="388.0" y="520" class="cs">surface, back-end</text>
+<text x="388.0" y="534" class="cs">independence)</text>
+<circle cx="532.0" cy="452.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="532.0" cy="450.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="532.0" y="454.0" class="sid" fill="#1d2433">CSn-41</text>
+<text x="532.0" y="492" class="cs">Onroad streaming</text>
+<text x="532.0" y="506" class="cs">block (inherited</text>
+<text x="532.0" y="520" class="cs">mechanism)</text>
+<rect x="617.5" y="276.5" width="244" height="84" rx="4" class="shadow"/>
+<rect x="616" y="274" width="244" height="84" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M620,274 H856 A4,4 0 0 1 860,278 V280 H616 V278 A4,4 0 0 1 620,274 Z" fill="#c62828"/>
+<text x="630" y="299" class="id" text-anchor="start">CG3.3</text>
+<text x="846" y="299" class="kind">GOAL</text>
+<text x="630" y="313" class="d">CSC-03 non-repudiation retained</text>
+<text x="630" y="327" class="d">(condition: identity key protected,</text>
+<text x="630" y="341" class="d">CSR-141)</text>
+<line x1="738.0" y1="358" x2="738.0" y2="381.0" class="w"/>
+<line x1="676.0" y1="381.0" x2="738.0" y2="381.0" class="w"/>
+<line x1="676.0" y1="381.0" x2="676.0" y2="425.0" class="w"/><path d="M676.0,425.0 L671.9,415.9 L680.1,415.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="676.0" cy="450.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="676.0" y="454.0" class="sid" fill="#b3261e">CSn-37</text>
+<text x="676.0" y="492" class="cs">Validation TC-16,</text>
+<text x="676.0" y="506" class="cs">TC-17 (data at rest,</text>
+<text x="676.0" y="520" class="cs">decommissioning)</text>
+<rect x="895.5" y="276.5" width="244" height="84" rx="4" class="shadow"/>
+<rect x="894.0" y="274" width="244" height="84" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M898.0,274 H1134.0 A4,4 0 0 1 1138.0,278 V280 H894.0 V278 A4,4 0 0 1 898.0,274 Z" fill="#c62828"/>
+<text x="908.0" y="299" class="id" text-anchor="start">CG3.4</text>
+<text x="1124.0" y="299" class="kind">GOAL</text>
+<text x="908.0" y="313" class="d">CSC-04 OTS supply chain shared</text>
+<text x="908.0" y="327" class="d">(condition: SBOM + monitoring</text>
+<text x="908.0" y="341" class="d">running)</text>
+<line x1="1016.0" y1="358" x2="1016.0" y2="381.0" class="w"/>
+<line x1="944.0" y1="381.0" x2="1088.0" y2="381.0" class="w"/>
+<line x1="944.0" y1="381.0" x2="944.0" y2="425.0" class="w"/><path d="M944.0,425.0 L939.9,415.9 L948.1,415.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1088.0" y1="381.0" x2="1088.0" y2="425.0" class="w"/><path d="M1088.0,425.0 L1083.9,415.9 L1092.1,415.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="944.0" cy="450.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="944.0" y="454.0" class="sid" fill="#b3261e">CSn-24</text>
+<text x="944.0" y="492" class="cs">SBOM and</text>
+<text x="944.0" y="506" class="cs">vulnerability scan</text>
+<text x="944.0" y="520" class="cs">report for the</text>
+<text x="944.0" y="534" class="cs">release</text>
+<circle cx="1088.0" cy="452.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="1088.0" cy="450.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="1088.0" y="454.0" class="sid" fill="#1d2433">CSn-50</text>
+<text x="1088.0" y="492" class="cs">Monitoring,</text>
+<text x="1088.0" y="506" class="cs">vulnerability</text>
+<text x="1088.0" y="520" class="cs">management, incident</text>
+<text x="1088.0" y="534" class="cs">response, update…</text>
+<rect x="1173.5" y="276.5" width="244" height="84" rx="4" class="shadow"/>
+<rect x="1172" y="274" width="244" height="84" rx="4" fill="#fdf5e1" stroke="#ecc77a" stroke-width="1.2"/>
+<path d="M1176,274 H1412 A4,4 0 0 1 1416,278 V280 H1172 V278 A4,4 0 0 1 1176,274 Z" fill="#e0a21b"/>
+<text x="1186" y="299" class="id" text-anchor="start">CG3.5</text>
+<text x="1402" y="299" class="kind">GOAL</text>
+<text x="1186" y="313" class="d">CSC-05 eGPU avoided (condition:</text>
+<text x="1186" y="327" class="d">excluded from reference</text>
+<text x="1186" y="341" class="d">configuration)</text>
+<line x1="1294.0" y1="358" x2="1294.0" y2="381.0" class="w"/>
+<line x1="1232.0" y1="381.0" x2="1294.0" y2="381.0" class="w"/>
+<line x1="1232.0" y1="381.0" x2="1232.0" y2="425.0" class="w"/><path d="M1232.0,425.0 L1227.9,415.9 L1236.1,415.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="1232.0" cy="452.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="1232.0" cy="450.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="1232.0" y="454.0" class="sid" fill="#1d2433">CSn-42</text>
+<text x="1232.0" y="492" class="cs">eGPU exclusion in</text>
+<text x="1232.0" y="506" class="cs">reference</text>
+<text x="1232.0" y="520" class="cs">configuration</text>
+<text x="40" y="596" class="lh">Notation · GSN Community Standard v3</text>
+<rect x="48" y="612" width="52" height="30" rx="4" fill="#fdf5e1" stroke="#ecc77a"/>
+<rect x="48" y="612" width="52" height="5" rx="2" fill="#e0a21b"/>
+<text x="74" y="660" class="s" text-anchor="middle">Goal</text>
+<path d="M148,612 L194,612 L184,642 L138,642 Z" fill="#e4e7fb" stroke="#4b5bb7" stroke-width="1.4"/>
+<text x="166" y="660" class="s" text-anchor="middle">Strategy</text>
+<rect x="232" y="613" width="52" height="28" rx="14" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="258" y="660" class="s" text-anchor="middle">Context</text>
+<ellipse cx="350" cy="627" rx="27" ry="14" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<text x="350" y="631" class="cid" fill="#7a4f00">A</text>
+<text x="350" y="660" class="s" text-anchor="middle">Assumption</text>
+<ellipse cx="442" cy="627" rx="27" ry="14" fill="#dcefe0" stroke="#5f9f6d" stroke-width="1.2"/>
+<text x="442" y="631" class="cid" fill="#245a31">J</text>
+<text x="442" y="660" class="s" text-anchor="middle">Justification</text>
+<path d="M534,616 L545,627 L534,638 L523,627 Z" fill="#fff" stroke="#1d2433" stroke-width="1.4"/>
+<text x="534" y="660" class="s" text-anchor="middle">Undeveloped</text>
+<text x="40" y="703" class="lb">Solution</text>
+<circle cx="166" cy="701" r="14" fill="#0f172a" opacity=".10"/>
+<circle cx="166" cy="699" r="14" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.8"/>
+<circle cx="166" cy="699" r="10" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="1.2"/>
+<text x="166" y="732" class="s" text-anchor="middle">Available</text>
+<circle cx="258" cy="701" r="14" fill="#0f172a" opacity=".10"/>
+<circle cx="258" cy="699" r="14" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="258" y="732" class="s" text-anchor="middle">Partial</text>
+<circle cx="350" cy="699" r="14" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="350" y="732" class="s" text-anchor="middle">Missing</text>
+<line x1="40.0" y1="764.0" x2="84.0" y2="764.0" class="w"/><path d="M84.0,764.0 L74.9,768.1 L74.9,759.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<text x="94" y="768" class="s">SupportedBy</text>
+<line x1="190.0" y1="764.0" x2="234.0" y2="764.0" class="wc"/><path d="M234.0,764.0 L224.9,768.1 L224.9,759.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<text x="244" y="768" class="s">InContextOf</text>
+<rect x="340.0" y="756.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="361.2" y="767.5" class="chip" fill="#fff">DF-nn</text>
+<text x="390.5" y="768" class="s">open defeater on the goal</text>
+<text x="40" y="794" class="lb">Goal colour: the evidence below it, on every sheet</text>
+<rect x="40" y="802" width="26" height="14" rx="3" fill="#edf7ee" stroke="#9fcfa3"/>
+<rect x="40" y="802" width="26" height="4" rx="2" fill="#2e7d32"/>
+<text x="72" y="813" class="s">all evidence available</text>
+<rect x="211.2" y="802" width="26" height="14" rx="3" fill="#fdf5e1" stroke="#ecc77a"/>
+<rect x="211.2" y="802" width="26" height="4" rx="2" fill="#e0a21b"/>
+<text x="243.2" y="813" class="s">evidence partial</text>
+<rect x="348.79999999999995" y="802" width="26" height="14" rx="3" fill="#fdecec" stroke="#eba9a9"/>
+<rect x="348.79999999999995" y="802" width="26" height="4" rx="2" fill="#c62828"/>
+<text x="380.79999999999995" y="813" class="s">evidence missing</text>
+<rect x="486.4" y="802" width="26" height="14" rx="3" fill="#f1f3f6" stroke="#c9cfd8"/>
+<rect x="486.4" y="802" width="26" height="4" rx="2" fill="#8a93a3"/>
+<text x="518.4" y="813" class="s">not developed</text>
+<rect x="896" y="582" width="520" height="250" rx="10" fill="#fff" stroke="#d9dee6"/>
+<line x1="896" y1="628" x2="1416" y2="628" stroke="#d9dee6"/>
+<line x1="1226" y1="628" x2="1226" y2="832" stroke="#d9dee6"/>
+<text x="914" y="611" class="tbh">LionDriver · Cybersecurity case</text>
+<rect x="1266" y="596" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
+<text x="1332" y="610" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
+<text x="914" y="654" class="k">ARGUMENT FROM</text>
+<text x="1018" y="654" class="v">CG3</text>
+<text x="914" y="680" class="k">SOURCE</text>
+<text x="1018" y="680" class="v">WP-K-03 §2–§4, §6 (text trees</text>
+<text x="1018" y="695" class="v">and tables)</text>
+<text x="914" y="721" class="k">GENERATED BY</text>
+<text x="1018" y="721" class="v">gsn_diagrams.py</text>
+<text x="914" y="747" class="k">EDIT</text>
+<text x="1018" y="747" class="v">the source, not this file</text>
+<text x="914" y="777" class="k">EVIDENCE ON THIS SHEET</text>
+<rect x="914.0" y="785" width="147.0" height="10" fill="#f2b233" stroke="#9a6b00" stroke-width=".8"/>
+<rect x="1061.0" y="785" width="147.0" height="10" fill="#ffffff" stroke="#b3261e" stroke-width=".8"/>
+<text x="914" y="811" class="s">0 available · 4 partial · 4 missing</text>
+<text x="1242" y="652" class="k">SHEETS</text>
+<line x1="1321.0" y1="689.0" x2="1250.2" y2="703.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="1321.0" y1="689.0" x2="1278.5" y2="703.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="1321.0" y1="689.0" x2="1306.8" y2="703.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="1321.0" y1="689.0" x2="1335.2" y2="703.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="1321.0" y1="689.0" x2="1363.5" y2="703.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="1321.0" y1="689.0" x2="1391.8" y2="703.0" stroke="#7d8798" stroke-width="1.3"/>
+<rect x="1307.0" y="669.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1321.0" y="683.0" class="mm" fill="#0f2a44">1</text>
+<rect x="1236.2" y="703.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1250.2" y="717.0" class="mm" fill="#0f2a44">2</text>
+<rect x="1264.5" y="703.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1278.5" y="717.0" class="mm" fill="#0f2a44">3</text>
+<rect x="1292.8" y="703.0" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1306.8" y="717.0" class="mm" fill="#fff">4</text>
+<rect x="1321.2" y="703.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1335.2" y="717.0" class="mm" fill="#0f2a44">5</text>
+<rect x="1349.5" y="703.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1363.5" y="717.0" class="mm" fill="#0f2a44">6</text>
+<rect x="1377.8" y="703.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1391.8" y="717.0" class="mm" fill="#0f2a44">7</text>
 </svg>
