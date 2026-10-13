@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1268" height="992" viewBox="0 0 1268 992">
-<title>FTA SG-04 sheet 3 of 5: deceleration beyond what following traffic and the driver can control</title>
+<title>FTA SG-04 sheet 3 of 9: deceleration beyond what following traffic and the driver can control</title>
 <style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.n{font:italic 400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#6b7385}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.gl{font:700 7.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.06em;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.title2{font:600 17px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#9aa3b2;stroke-width:1.4;stroke-linecap:round}.wh{stroke:#c62828;stroke-width:3.2;stroke-linecap:round}.shadow{fill:#0f172a;opacity:.06}</style>
 <defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
 <rect width="100%" height="100%" fill="#f7f8fa"/>
@@ -8,7 +8,7 @@
 <text x="40" y="32" class="eyebrow">FTA · SG-04 · WP-A-04 §5</text>
 <text x="40" y="59" class="title">Deceleration beyond what following traffic and the driver can control</text>
 <rect x="992" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
-<text x="1110" y="44" class="hc">Sheet 3 of 5  ·  ASIL B</text>
+<text x="1110" y="44" class="hc">Sheet 3 of 9  ·  ASIL B</text>
 <rect x="707.0" y="116.5" width="220" height="93.0" rx="9" class="shadow"/>
 <rect x="705.5" y="114" width="220" height="93.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M714.5,114 H916.5 A9,9 0 0 1 925.5,123 V119 H705.5 V123 A9,9 0 0 1 714.5,114 Z" fill="#1d2433"/>
@@ -106,8 +106,8 @@
 <text x="1022" y="332.5" class="d">SoC sends a negative</text>
 <text x="1022" y="347.0" class="d">acceleration while not engaged</text>
 <text x="1022" y="361.5" class="d">(QM)</text>
-<rect x="1022.0" y="369.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="1049.0" y="381.0" class="chip" fill="#c62828">no FMEA</text>
+<rect x="1022.0" y="369.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1049.0" y="381.0" class="chip" fill="#fff">SWF-052</text>
 <circle cx="1118.0" cy="417.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <text x="40" y="770.0" class="lh">Symbols · IEC 61025</text>
 <rect x="46" y="790.0" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>
@@ -164,18 +164,30 @@
 <text x="746" y="932.0" class="k">EDIT</text>
 <text x="844" y="932.0" class="v">WP-A-04, not this file</text>
 <text x="1062" y="826.0" class="k">SHEETS</text>
-<line x1="1137.0" y1="861.0" x2="1076.2" y2="875.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="1137.0" y1="861.0" x2="1116.8" y2="875.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="1137.0" y1="861.0" x2="1157.2" y2="875.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="1137.0" y1="861.0" x2="1197.8" y2="875.0" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1137.0" y1="861.0" x2="1066.1" y2="875.0" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1137.0" y1="861.0" x2="1086.4" y2="875.0" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1137.0" y1="861.0" x2="1106.6" y2="875.0" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1137.0" y1="861.0" x2="1126.9" y2="875.0" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1137.0" y1="861.0" x2="1147.1" y2="875.0" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1137.0" y1="861.0" x2="1167.4" y2="875.0" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1137.0" y1="861.0" x2="1187.6" y2="875.0" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1137.0" y1="861.0" x2="1207.9" y2="875.0" stroke="#9aa3b2" stroke-width="1.3"/>
 <rect x="1123.0" y="841.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
 <text x="1137.0" y="855.0" class="mm" fill="#0f2a44">1</text>
-<rect x="1062.2" y="875.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1076.2" y="889.0" class="mm" fill="#0f2a44">2</text>
-<rect x="1102.8" y="875.0" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1116.8" y="889.0" class="mm" fill="#fff">3</text>
-<rect x="1143.2" y="875.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1157.2" y="889.0" class="mm" fill="#0f2a44">4</text>
-<rect x="1183.8" y="875.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1197.8" y="889.0" class="mm" fill="#0f2a44">5</text>
+<rect x="1052.1" y="875.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1066.1" y="889.0" class="mm" fill="#0f2a44">2</text>
+<rect x="1072.4" y="875.0" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1086.4" y="889.0" class="mm" fill="#fff">3</text>
+<rect x="1092.6" y="875.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1106.6" y="889.0" class="mm" fill="#0f2a44">4</text>
+<rect x="1112.9" y="875.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1126.9" y="889.0" class="mm" fill="#0f2a44">5</text>
+<rect x="1133.1" y="875.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1147.1" y="889.0" class="mm" fill="#0f2a44">6</text>
+<rect x="1153.4" y="875.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1167.4" y="889.0" class="mm" fill="#0f2a44">7</text>
+<rect x="1173.6" y="875.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1187.6" y="889.0" class="mm" fill="#0f2a44">8</text>
+<rect x="1193.9" y="875.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1207.9" y="889.0" class="mm" fill="#0f2a44">9</text>
 </svg>

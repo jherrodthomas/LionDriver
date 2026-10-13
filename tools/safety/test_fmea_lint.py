@@ -805,6 +805,18 @@ class TestFtaFmeaMap(unittest.TestCase):
     res = self.check(doc, [self.fm("SWF-001"), self.fm("DFM-001", detection=3)])
     self.assertTrue(any("BE-1.03" in w and "single point" in w for w in res.warnings))
 
+  def test_not_in_fta_row_for_a_cited_mode(self):
+    doc = self.doc(not_in_fta=[{"fm": "SWF-001", "goal": "SG-01", "kind": "tree_gap", "reason": "branch missing"}])
+    self.assertTrue(any("SWF-001 is in not_in_fta for SG-01 but an event or gate of the tree cites it" in e
+                        for e in self.check(doc).errors))
+
+  def test_event_outside_the_scoped_trees_warns(self):
+    doc = self.doc()
+    doc["events"].append({"id": "BE-9.01", "class": "systematic_sw", "fmea": ["SWF-001"]})
+    res = self.check(doc)
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("BE-9.01" in w and "not in the tree of any goal in scope" in w for w in res.warnings))
+
   def test_real_map_is_clean(self):
     res = fmea_lint.lint()
     self.assertEqual([e for e in res.errors if "fta-fmea-map" in e], [])

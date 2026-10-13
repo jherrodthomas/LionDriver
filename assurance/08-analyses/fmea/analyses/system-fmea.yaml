@@ -19,7 +19,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.5"
+  revision: "0.6"
   status: draft
   baseline: BL-004
   rating_tables: RT-1
@@ -1579,6 +1579,7 @@ failure_modes:
       - {level: local, description: "Alert selected by alertmanager but not shown or not played"}
       - {level: next_higher, description: "Driver not informed of state change"}
       - {level: end, description: "Driver unaware of handback; delayed response", hazard: HZ-012, severity: 10}
+      - {level: end, description: "Contributes to HZ-006: item-initiated deceleration not announced (HE-04.3)", hazard: HZ-006, severity: 10}
     severity: 10
     safety_mechanisms:
       - description: Visual alert on device screen and audible alert through soundd (two channels)

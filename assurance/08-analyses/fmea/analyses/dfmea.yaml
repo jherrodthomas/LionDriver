@@ -16,7 +16,7 @@ analysis:
   id: DFM
   type: dfmea
   title: "DFMEA — device, integrated panda, harness, vehicle interfaces"
-  revision: "0.2"
+  revision: "0.3"
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -157,6 +157,10 @@ failure_modes:
     description: Contributes to HZ-005
     hazard: HZ-005
     severity: 10
+  - level: end
+    description: Contributes to HZ-006 (deceleration limit or authority evaluated wrongly)
+    hazard: HZ-006
+    severity: 10
   severity: 10
   causes:
   - id: DFM-001.C1
@@ -235,6 +239,10 @@ failure_modes:
   - level: end
     description: Contributes to HZ-005
     hazard: HZ-005
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006 (deceleration limit or authority corrupted)
+    hazard: HZ-006
     severity: 10
   severity: 10
   causes:
@@ -776,6 +784,61 @@ failure_modes:
     actions:
     - DFM-ACT-012
   notes: WP-H-03 FM-TMP-01; WP-A-03 DFI-04.
+- id: DFM-019
+  element: DFM-SE-002
+  function: DFM-FN-004
+  failure_mode: Approved CAN frame altered between the TX check and the bus
+  guideword: intermittent
+  effects:
+  - level: local
+    description: A frame that passed safety_tx_hook changes in the FDCAN message RAM, the FDCAN core or the transceiver
+  - level: next_higher
+    description: Out-of-envelope steering or acceleration frame reaches the vehicle with a valid CAN CRC
+  - level: end
+    description: Steering torque above the controllable bound
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005 (acceleration above the bound)
+    hazard: HZ-005
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006 (deceleration below the bound)
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-019.C1
+    description: Soft error or permanent fault in the copy into FDCAN message RAM, the message RAM or the FDCAN core. The packet XOR is
+      checked at the FDCAN load (fdcan.h:100) and covers only the software queue; the CAN CRC is computed after the fault
+    element: DFM-SE-002
+    prevention_controls:
+    - *id001
+    - description: Packet XOR checked before the FDCAN load (software queue only)
+      ref: panda/board/drivers/fdcan.h
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-013
+  - id: DFM-019.C2
+    description: Transceiver fault that changes bits on TX without a CAN error (not credible for a single bit, which the CAN CRC and the
+      bit monitoring of the transmitting controller detect; kept until the transceiver part is known, WP-H-02 UK-01)
+    element: DFM-SE-005
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 2
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-013
+  safety_mechanisms:
+  - description: None after the FDCAN load (SPF-02). TSR-517 specifies a TX read-back of own frames; not implemented at BL-002
+    ref: assurance/03-system/WP-S-02-technical-safety-requirements.md
+  notes: WP-A-04 BE-1.10 and BE-4.03 (SPF-02); FMEDA SG-001 FMD-002 and FMD-010. The same TX path carries 0x2E4 and 0x343, so the
+    rates of the SG-001 rows apply to the longitudinal path; SG-04 has no FMEDA of its own yet.
 actions:
 - id: DFM-ACT-001
   kind: prevention
@@ -837,5 +900,11 @@ actions:
 - id: DFM-ACT-012
   kind: design_change
   description: React to MCU DTS out of range with the safe state (HWSR-509, DC-10); obtain the MCU temperature grade (UK-02)
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-013
+  kind: design_change
+  description: 'Implement TSR-517: read back the item''s own TX frames from the bus and compare with the approved frame, revoking on a
+    mismatch; enable RAMECC handling for the FDCAN message RAM if the H725 provides it'
   owner: Jherrod Thomas
   status: open

@@ -875,6 +875,7 @@ def check_fta_fmea_map(name, doc, ctx, res: Result):
     if r.get("kind") not in ("justified", "tree_gap") or not r.get("reason"):
       res.error(f"{name} not_in_fta {fm}", "kind must be justified or tree_gap, with a reason")
 
+  reachable: set[str] = set()
   for goal in doc["scope"]:
     tree = by_goal.get(goal)
     if tree is None:
@@ -882,6 +883,7 @@ def check_fta_fmea_map(name, doc, ctx, res: Result):
       continue
     leaves, gate_ids = fta_reach(fd, tree)
     leaf_ids = {n.ident for n in leaves}
+    reachable |= leaf_ids
     for eid in sorted(leaf_ids - set(events), key=fd_sort_key):
       res.error(f"{name} {goal}", f"{eid} is in the {goal} tree but not mapped")
     for gid in set(gates) - gate_ids - {g for t in by_goal.values() for g in fta_reach(fd, t)[1]}:
@@ -891,6 +893,8 @@ def check_fta_fmea_map(name, doc, ctx, res: Result):
     cited = {f for e in leaf_ids if e in events for f in events[e].get("fmea", [])}
     cited |= {f for g in gate_ids if g in gates for f in gates[g].get("fmea", [])}
     relevant = {fid for fid, fm in ctx.fm_index.items() if {x.get("hazard") for x in fm["effects"]} & goal_hz}
+    for fid in sorted(cited & {f for (f, g) in nf if g == goal}):
+      res.error(f"{name} {goal}", f"{fid} is in not_in_fta for {goal} but an event or gate of the tree cites it")
     for fid in sorted(relevant - cited):
       if (fid, goal) not in nf:
         hz = ", ".join(sorted({x.get("hazard") for x in ctx.fm_index[fid]["effects"]} & goal_hz))
@@ -922,6 +926,10 @@ def check_fta_fmea_map(name, doc, ctx, res: Result):
     n_gap = sum(r["kind"] == "tree_gap" for r in rows)
     fmea_counts = f"in the tree {len(relevant & cited)}, justified {n_just}, tree gaps {n_gap}"
     res.report.append(f"FTA-FMEA map {goal}: {len(leaf_ids)} events ({event_counts}); {len(relevant)} FMEA modes reach {goal} ({fmea_counts})")
+
+  if all(g in by_goal for g in doc["scope"]):
+    for eid in sorted(set(events) - reachable, key=fd_sort_key):
+      res.warn(f"{name} {eid}", "mapped, but not in the tree of any goal in scope")
 
 
 def fd_sort_key(ident: str):
