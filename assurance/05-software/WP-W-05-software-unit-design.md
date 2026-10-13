@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-05 Software unit design and implementation |
 | Standard reference | ISO 26262-6:2018 §8 (software unit design and implementation: notation, design principles for unit design and implementation); ISO/SAE 21434:2021 §10 (by reference to WP-W-11); ASPICE 4.0 SWE.3 |
-| Version | 0.5 (merge of PR #47 software alignment with the base; 2026-10-13: PR #47's unit numbering kept (UN-36…UN-44); the base's new units mapped to it: heartbeat monitor = UN-42, IWDG = UN-41, IRQ priorities = UN-43, reference lock = UN-40, TX rate check = UN-36, Toyota checks = UN-38/UN-39; the base's EPS-fault siren and heartbeat-loss siren added as UN-45 and UN-46 (base numbers UN-39 and UN-43 are not used); §8 notes the base's later status). It carries PR #47's draft, numbered 0.3 there: 0.3 (RR-2026-009 F-16: unit inventory, §3, §4, §6–§8 rewritten for the current pins, new units UN-36…UN-44, allocation lines for SWSRs without a unit, ENV-R-07 sizes marked as line spans; F-29: Origin column; F-28: Author, baseline; 2026-10-12). History on the base: 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (status update 2026-10-12: UN-05 in the 100 Hz safety task; UN-N1 exists; new units UN-36…UN-42 for the integrated LionDriver changes (heartbeat monitor, IWDG, IRQ priorities, EPS-fault siren, reference lock, TX rate check, Toyota cruise-main and EPS-fault checks); UN-02, UN-03, UN-15, UN-16, UN-19, UN-21, §5 updated. Nothing verified on hardware). 0.2 (UN-03: TX rate supervision design proposal DN-01; 2026-10-12). 0.1 |
+| Version | 0.6 (§5 Mermaid state diagrams replaced by generated Figures 5-1 and 5-2, drawn from the state-machine records like the §5 tables; 2026-10-13). 0.5 (merge of PR #47 software alignment with the base; 2026-10-13: PR #47's unit numbering kept (UN-36…UN-44); the base's new units mapped to it: heartbeat monitor = UN-42, IWDG = UN-41, IRQ priorities = UN-43, reference lock = UN-40, TX rate check = UN-36, Toyota checks = UN-38/UN-39; the base's EPS-fault siren and heartbeat-loss siren added as UN-45 and UN-46 (base numbers UN-39 and UN-43 are not used); §8 notes the base's later status). It carries PR #47's draft, numbered 0.3 there: 0.3 (RR-2026-009 F-16: unit inventory, §3, §4, §6–§8 rewritten for the current pins, new units UN-36…UN-44, allocation lines for SWSRs without a unit, ENV-R-07 sizes marked as line spans; F-29: Origin column; F-28: Author, baseline; 2026-10-12). History on the base: 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (status update 2026-10-12: UN-05 in the 100 Hz safety task; UN-N1 exists; new units UN-36…UN-42 for the integrated LionDriver changes (heartbeat monitor, IWDG, IRQ priorities, EPS-fault siren, reference lock, TX rate check, Toyota cruise-main and EPS-fault checks); UN-02, UN-03, UN-15, UN-16, UN-19, UN-21, §5 updated. Nothing verified on hardware). 0.2 (UN-03: TX rate supervision design proposal DN-01; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope units (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating) |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -445,22 +445,9 @@ Generated from [`state-machines/sm-safety-mode.yaml`](state-machines/sm-safety-m
 | M7 | TOYOTA, OTHER_CAR | 1 Hz tick | heartbeat counter ≥ 5 (ignition on) / 2 (off) | siren if recently engaged; heartbeat_lost | SILENT | all | 510, 516 | Partial | panda main.c:237-257 |
 | M8 | any | harness status change | — | set_safety_mode(current) (state reset) | same | all | 311 | Implemented | panda main.c:176-183 |
 
-```mermaid
-stateDiagram-v2
-  [*] --> SILENT
-  SILENT --> SILENT: M1
-  NOOUTPUT --> SILENT: M1
-  ELM327 --> SILENT: M1
-  TOYOTA --> SILENT: M1
-  OTHER_CAR --> SILENT: M1
-  SILENT --> SILENT: M3
-  NOOUTPUT --> SILENT: M3
-  ELM327 --> SILENT: M3
-  TOYOTA --> SILENT: M3
-  OTHER_CAR --> SILENT: M3
-  TOYOTA --> SILENT: M7
-  OTHER_CAR --> SILENT: M7
-```
+![Figure 5-1: state diagram of SM-SAFETY-MODE (Panda safety mode): states SILENT, NOOUTPUT, ELM327, TOYOTA, OTHER_CAR; transitions M1, M2, M3, M4, M5, M6, M7, M8; arrow colour by implementation status](figures/fig-w05-5-1-safety-mode.svg)
+
+*Figure 5-1.* State diagram of SM-SAFETY-MODE; initial state SILENT. Arrow colour is the Status column above: teal = implemented at the baseline (host tests only, not verified), amber = partial, red dashed = not implemented; nothing is drawn as verified. The table and the figure are both generated from [`state-machines/sm-safety-mode.yaml`](state-machines/sm-safety-mode.yaml) (the figure by [`figures/fig_w05_state_machines.py`](figures/fig_w05_state_machines.py)); CI fails if either is stale.
 <!-- END GENERATED: sm-safety-mode -->
 
 ### 5.2 Authority (`controls_allowed`) for the Toyota mode
@@ -497,29 +484,9 @@ Reactions that do **not** change the state:
 | EPS reports a fault (LKA_STATE in the fault set) | lateral frames with torque or steer request refused; authority kept | reference | 110 | opendbc modes/toyota.h:425-432 |
 | gas pressed | longitudinal actuation blocked; authority kept | all | 305 | opendbc longitudinal.h (UN-12) |
 
-```mermaid
-stateDiagram-v2
-  [*] --> NOT_ALLOWED
-  NOT_ALLOWED --> ALLOWED: T1
-  ALLOWED --> NOT_ALLOWED: T2
-  ALLOWED --> NOT_ALLOWED: T3
-  ALLOWED --> NOT_ALLOWED: T4
-  ALLOWED --> NOT_ALLOWED: T5
-  ALLOWED --> NOT_ALLOWED: T6
-  NOT_ALLOWED --> NOT_ALLOWED: T7
-  ALLOWED --> NOT_ALLOWED: T7
-  ALLOWED --> NOT_ALLOWED: T9
-  ALLOWED --> NOT_ALLOWED: T10a
-  ALLOWED --> NOT_ALLOWED: T10b
-  ALLOWED --> NOT_ALLOWED: T10c
-  ALLOWED --> NOT_ALLOWED: T10d
-  ALLOWED --> NOT_ALLOWED: T10e
-  ALLOWED --> NOT_ALLOWED: T11
-  ALLOWED --> NOT_ALLOWED: T12
-  ALLOWED --> NOT_ALLOWED: T13
-  ALLOWED --> NOT_ALLOWED: T14
-  ALLOWED --> NOT_ALLOWED: T15
-```
+![Figure 5-2: state diagram of SM-TOY-AUTH (Toyota authority (controls_allowed)): states NOT_ALLOWED, ALLOWED; transitions T1, T8, T2, T3, T4, T5, T6, T7, T9, T10a, T10b, T10c, T10d, T10e, T11, T12, T13, T14, T15; arrow colour by implementation status](figures/fig-w05-5-2-toy-auth.svg)
+
+*Figure 5-2.* State diagram of SM-TOY-AUTH; initial state NOT_ALLOWED. Arrow colour is the Status column above: teal = implemented at the baseline (host tests only, not verified), amber = partial, red dashed = not implemented; nothing is drawn as verified. The table and the figure are both generated from [`state-machines/sm-toy-auth.yaml`](state-machines/sm-toy-auth.yaml) (the figure by [`figures/fig_w05_state_machines.py`](figures/fig_w05_state_machines.py)); CI fails if either is stale.
 <!-- END GENERATED: sm-toy-auth -->
 
 Gas pressed does not change the state; it gates longitudinal only (UN-12). This table is the reference for WP-W-06 VS-UV-06.

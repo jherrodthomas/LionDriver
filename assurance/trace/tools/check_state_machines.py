@@ -21,6 +21,8 @@ Usage:
   python3 assurance/trace/tools/check_state_machines.py           # check, print findings
   python3 assurance/trace/tools/check_state_machines.py --write   # also regenerate the WP-W-05 §5 blocks
   python3 assurance/trace/tools/check_state_machines.py --check   # also fail if those blocks are out of date
+Each §5 block ends with the embed of its state diagram (Figure 5-n), drawn from the same record by
+assurance/05-software/figures/fig_w05_state_machines.py, which imports this module (figure_number, figure_file).
 Standard library only; PyYAML is used if importable.
 """
 from __future__ import annotations
@@ -36,6 +38,7 @@ SWSR_YAML = ASSURANCE / "trace" / "items" / "swsr.yaml"
 WP_W05 = ASSURANCE / "05-software" / "WP-W-05-software-unit-design.md"
 PLACEHOLDERS = {"any", "same", "m"}
 BLOCKS = {"SM-SAFETY-MODE": "sm-safety-mode", "SM-TOY-AUTH": "sm-toy-auth"}
+FIG_SCRIPT = "figures/fig_w05_state_machines.py"
 
 
 # ---------------------------------------------------------------- loading
@@ -213,7 +216,7 @@ def _cell(s: str) -> str:
   return str(s).replace("|", "\\|") or "—"
 
 
-def render(sm: dict, sw: dict) -> str:
+def render(sm: dict, sw: dict, number: str) -> str:
   T = sm["transitions"]
   lines = [f"Generated from [`state-machines/{BLOCKS[sm['machine']]}.yaml`](state-machines/{BLOCKS[sm['machine']]}.yaml) "
            + "by `assurance/trace/tools/check_state_machines.py --write`; do not edit by hand. Status is taken from the "
@@ -234,28 +237,45 @@ def render(sm: dict, sw: dict) -> str:
       lines.append("| " + " | ".join(_cell(x) for x in (
         n["event"], n["reaction"], n.get("build", "all"), ", ".join(s.replace("SWSR-", "") for s in n["swsr"]),
         n.get("code", ""))) + " |")
-  lines += ["", "```mermaid", "stateDiagram-v2", f"  [*] --> {sm['initial']}"]
-  for t in T:
-    if t["to"] in ("same", "m"):
-      continue
-    for s in _sources(t, sm["states"]):
-      if s == t["to"] and t.get("action") == "none":
-        continue
-      lines.append(f"  {s} --> {t['to']}: {t['id']}")
-  lines.append("```")
+  fig = figure_file(BLOCKS[sm["machine"]], number)
+  ids = ", ".join(t["id"] for t in T)
+  lines += ["", f"![Figure {number}: state diagram of {sm['machine']} ({sm['title']}): states " + ", ".join(sm["states"])
+            + f"; transitions {ids}; arrow colour by implementation status]({fig})", "",
+            f"*Figure {number}.* State diagram of {sm['machine']}; initial state {sm['initial']}. Arrow colour is the Status "
+            + "column above: teal = implemented at the baseline (host tests only, not verified), amber = partial, "
+            + "red dashed = not implemented; nothing is drawn as verified. The table and the figure are both generated "
+            + f"from [`state-machines/{BLOCKS[sm['machine']]}.yaml`](state-machines/{BLOCKS[sm['machine']]}.yaml) "
+            + f"(the figure by [`{FIG_SCRIPT}`]({FIG_SCRIPT})); CI fails if either is stale."]
   return "\n".join(lines)
+
+
+def _begin(tag: str) -> str:
+  return f"<!-- BEGIN GENERATED: {tag} (assurance/trace/tools/check_state_machines.py) -->"
+
+
+def figure_number(tag: str, text: str) -> str:
+  """'5-1' for the WP-W-05 subsection heading (### 5.1) under which the generated block of this tag sits."""
+  found = re.findall(r"^### (\d+)\.(\d+)\b", text.split(_begin(tag), 1)[0], re.M)
+  if _begin(tag) not in text or not found:
+    raise SystemExit(f"WP-W-05: no '### n.m' heading before the {tag} block")
+  return "-".join(found[-1])
+
+
+def figure_file(tag: str, number: str) -> str:
+  """Path of the state diagram, relative to WP-W-05: figures/fig-w05-5-1-safety-mode.svg."""
+  return f"figures/fig-w05-{number}-{tag.removeprefix('sm-')}.svg"
 
 
 def blocks(sms: list[dict], sw: dict, text: str) -> str:
   for sm in sms:
     tag = BLOCKS[sm["machine"]]
-    begin = f"<!-- BEGIN GENERATED: {tag} (assurance/trace/tools/check_state_machines.py) -->"
+    begin = _begin(tag)
     end = f"<!-- END GENERATED: {tag} -->"
     if begin not in text or end not in text:
       raise SystemExit(f"WP-W-05: markers for {tag} not found")
     head, rest = text.split(begin, 1)
     _, tail = rest.split(end, 1)
-    text = head + begin + "\n" + render(sm, sw) + "\n" + end + tail
+    text = head + begin + "\n" + render(sm, sw, figure_number(tag, text)) + "\n" + end + tail
   return text
 
 

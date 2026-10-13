@@ -61,6 +61,20 @@ jobs:
       run: |
         python3 assurance/trace/tools/trace_map.py --check
         python3 assurance/trace/tools/test_trace_map.py
+    - name: Work-product figures match their source tables and records (and their tests)
+      run: |
+        python3 assurance/01-management/figures/fig_m_management.py --check
+        python3 assurance/01-management/figures/test_fig_m_management.py
+        python3 assurance/02-concept/figures/fig_c02_odd.py --check
+        python3 assurance/02-concept/figures/test_fig_c02_odd.py
+        python3 assurance/03-system/figures/fig_s03_defence_in_depth.py --check
+        python3 assurance/03-system/figures/test_fig_s03_defence_in_depth.py
+        python3 assurance/05-software/figures/fig_w05_state_machines.py --check
+        python3 assurance/05-software/figures/test_fig_w05_state_machines.py
+        python3 assurance/06-validation/figures/fig_v02_validation_targets.py --check
+        python3 assurance/06-validation/figures/test_fig_v02_validation_targets.py
+        python3 assurance/06-validation/figures/fig_v05_fault_coverage.py --check
+        python3 assurance/06-validation/figures/test_fig_v05_fault_coverage.py
     - name: Traceability figures of WP-T-01 match the data (and their tests)
       run: |
         python3 assurance/trace/tools/trace_figures.py --check
