@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="640" viewBox="0 0 1100 640" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-1. HIL bench architecture by stage B1 to B4 (HIL bench plan §3)</title>
+  <desc id="d">Stage B1: the Linux host PC connects by USB to the DUT panda (power, comms) and by USB to the panda jungle. The DUT harness port (SBU1/SBU2, CAN 0/1/2, ignition) connects to the jungle, which emulates harness orientation and ignition, reads the SBU voltages (relay drive) and switches DUT power. Stage B2 adds a scope or logic analyser on the SBU lines. Stage B3 adds USB CAN interfaces on CAN 0/1/2 for replay and fault injection. Stage B4 adds a programmable supply feeding 12 V to the jungle or DUT and an SWD probe on the DUT debug header. The relay is not on the DUT: the panda drives the harness relay through the SBU lines and the jungle stands in for the harness.</desc>
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aY" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#A16207"/></marker>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+      .later{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2;stroke-dasharray:5 3}
+      .stg{fill:#FFFFFF;font-size:10px;font-weight:700;letter-spacing:.04em}
+      .lbl{font-size:9.5px;font-weight:600}
+    </style>
+  </defs>
+
+  <rect width="1100" height="640" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 3-1 · HIL bench architecture</text>
+  <text x="40" y="66" class="m" font-size="12.5">Built in stages: B1 watchdog bench, B2 timing evidence, B3 vehicle bus, B4 full WP-W-08 bench · test level L1, no vehicle</text>
+  <text x="1060" y="44" class="m s" text-anchor="end">HIL bench plan §3</text>
+  <text x="1060" y="62" class="m s" text-anchor="end">stages §2 · parts §4</text>
+  <line x1="40" y1="82" x2="1060" y2="82" stroke="#E2E8F0"/>
+
+  <!-- host PC (B1) -->
+  <rect x="40" y="130" width="200" height="100" rx="10" fill="#F8FAFC" stroke="#334155" stroke-width="1.4"/>
+  <text x="56" y="152" class="t b" font-size="13">Host PC (Linux)</text>
+  <text x="56" y="169" class="m s">pytest, flashing, logs</text>
+  <text x="56" y="184" class="m s">3 USB ports, powered hub</text>
+  <text x="56" y="200" class="m xs">P-3</text>
+  <rect x="196" y="140" width="34" height="18" rx="9" fill="#334155"/><text x="213" y="153" class="stg" text-anchor="middle">B1</text>
+
+  <!-- DUT panda (B1) -->
+  <rect x="420" y="120" width="280" height="100" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>
+  <text x="436" y="142" class="t b" font-size="13">DUT panda · STM32H725</text>
+  <text x="436" y="159" class="m s">red panda, or the panda inside a</text>
+  <text x="436" y="174" class="m s">comma 3X / comma four (P-1)</text>
+  <text x="436" y="198" class="m xs">debug bootstub + fault-injection build</text>
+  <rect x="656" y="130" width="34" height="18" rx="9" fill="#334155"/><text x="673" y="143" class="stg" text-anchor="middle">B1</text>
+
+  <!-- panda jungle (B1) -->
+  <rect x="420" y="320" width="280" height="118" rx="10" class="box"/>
+  <text x="436" y="342" class="t b" font-size="13">Panda jungle (P-2)</text>
+  <text x="436" y="360" class="m s">stands in for the harness:</text>
+  <text x="436" y="376" class="m s">· emulates harness orientation + ignition</text>
+  <text x="436" y="392" class="m s">· reads SBU voltages (relay drive)</text>
+  <text x="446" y="408" class="m s">in health(): ch1_sbu1_voltage …</text>
+  <text x="436" y="424" class="m s">· switches DUT power</text>
+  <rect x="656" y="330" width="34" height="18" rx="9" fill="#334155"/><text x="673" y="343" class="stg" text-anchor="middle">B1</text>
+
+  <!-- SWD probe (B4) -->
+  <rect x="820" y="130" width="240" height="64" rx="10" class="later"/>
+  <text x="836" y="152" class="t b" font-size="13">SWD probe (P-10)</text>
+  <text x="836" y="169" class="m s">halt core, write memory</text>
+  <rect x="1016" y="140" width="34" height="18" rx="9" fill="#64748B"/><text x="1033" y="153" class="stg" text-anchor="middle">B4</text>
+
+  <!-- scope (B2) -->
+  <rect x="820" y="300" width="240" height="64" rx="10" class="later"/>
+  <text x="836" y="322" class="t b" font-size="13">Scope / logic analyser</text>
+  <text x="836" y="339" class="m s">on the SBU lines · P-5</text>
+  <rect x="1016" y="310" width="34" height="18" rx="9" fill="#64748B"/><text x="1033" y="323" class="stg" text-anchor="middle">B2</text>
+
+  <!-- USB CAN interfaces (B3) -->
+  <rect x="820" y="400" width="240" height="64" rx="10" class="later"/>
+  <text x="836" y="422" class="t b" font-size="13">USB CAN interfaces</text>
+  <text x="836" y="439" class="m s">replay + fault injection · P-7, P-8</text>
+  <rect x="1016" y="410" width="34" height="18" rx="9" fill="#64748B"/><text x="1033" y="423" class="stg" text-anchor="middle">B3</text>
+
+  <!-- programmable supply (B4) -->
+  <rect x="40" y="440" width="230" height="64" rx="10" class="later"/>
+  <text x="56" y="462" class="t b" font-size="13">Programmable supply</text>
+  <text x="56" y="479" class="m s">dips, ramps · P-9</text>
+  <rect x="226" y="450" width="34" height="18" rx="9" fill="#64748B"/><text x="243" y="463" class="stg" text-anchor="middle">B4</text>
+
+  <!-- ===== connections ===== -->
+  <!-- host <-> DUT USB -->
+  <path d="M242 170 H418" fill="none" stroke="#475569" stroke-width="1.6" marker-start="url(#aG)" marker-end="url(#aG)"/>
+  <text x="330" y="162" class="m lbl" text-anchor="middle">USB (power, comms)</text>
+  <!-- host <-> jungle USB -->
+  <path d="M242 215 H320 V370 H418" fill="none" stroke="#475569" stroke-width="1.6" marker-start="url(#aG)" marker-end="url(#aG)"/>
+  <text x="328" y="362" class="m lbl">USB</text>
+  <!-- DUT harness port <-> jungle -->
+  <path d="M560 222 V318" fill="none" stroke="#C2410C" stroke-width="2.4" marker-start="url(#aR)" marker-end="url(#aR)"/>
+  <text x="570" y="262" fill="#C2410C" class="lbl">harness port</text>
+  <text x="570" y="276" class="m" font-size="9.5">SBU1/SBU2 · CAN 0/1/2 · ignition</text>
+  <!-- SWD -> DUT -->
+  <path d="M818 162 H702" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#aG)"/>
+  <text x="760" y="154" class="m lbl" text-anchor="middle">debug header</text>
+  <!-- jungle -> scope (SBU lines) -->
+  <path d="M702 332 H818" fill="none" stroke="#C2410C" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#aR)"/>
+  <text x="760" y="324" fill="#C2410C" class="lbl" text-anchor="middle">SBU lines</text>
+  <!-- jungle <-> USB CAN -->
+  <path d="M702 432 H818" fill="none" stroke="#0F766E" stroke-width="2.2" stroke-dasharray="5 3" marker-start="url(#aT)" marker-end="url(#aT)"/>
+  <text x="760" y="424" fill="#0F766E" class="lbl" text-anchor="middle">CAN 0/1/2</text>
+  <!-- supply -> jungle / DUT 12 V -->
+  <path d="M272 472 H560 V440" fill="none" stroke="#A16207" stroke-width="2" stroke-dasharray="2 4" stroke-linecap="round" marker-end="url(#aY)"/>
+  <text x="415" y="465" fill="#A16207" class="lbl" text-anchor="middle">12 V to jungle / DUT</text>
+
+  <!-- note -->
+  <rect x="40" y="524" width="1020" height="44" rx="8" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="56" y="542" class="t xs"><tspan class="sb">The relay is not on the DUT.</tspan> The panda drives the harness relay through the SBU lines; the jungle stands in for the harness and reports the</text>
+  <text x="56" y="557" class="t xs">SBU voltages, which is how the watchdog test sees the relay drive drop when the MCU resets.</text>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="590" x2="1060" y2="590" stroke="#E2E8F0"/>
+  <g transform="translate(40,614)" font-size="10.5">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#475569" stroke-width="1.6"/><text x="36" y="4" class="t">USB / debug</text>
+    <line x1="124" y1="0" x2="152" y2="0" stroke="#C2410C" stroke-width="2.4"/><text x="160" y="4" class="t">Harness port, SBU / relay drive</text>
+    <line x1="350" y1="0" x2="378" y2="0" stroke="#0F766E" stroke-width="2.2"/><text x="386" y="4" class="t">CAN</text>
+    <line x1="430" y1="0" x2="458" y2="0" stroke="#A16207" stroke-width="2" stroke-dasharray="2 4" stroke-linecap="round"/><text x="466" y="4" class="t">Power</text>
+    <rect x="524" y="-8" width="28" height="16" rx="4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/><text x="560" y="4" class="t">Device under test</text>
+    <rect x="680" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="5 3"/><text x="716" y="4" class="t">Added in a later stage (dashed links too)</text>
+    <rect x="962" y="-8" width="24" height="16" rx="8" fill="#334155"/><text x="974" y="4" class="stg" text-anchor="middle">B1</text><text x="992" y="4" class="t">stage</text>
+  </g>
+</svg>
