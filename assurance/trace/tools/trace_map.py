@@ -26,6 +26,7 @@ import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
+from xml.sax.saxutils import escape
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -34,6 +35,7 @@ import check_trace as ct
 TRACE_DIR = HERE.parent
 ASSURANCE_DIR = TRACE_DIR.parent
 OUT = TRACE_DIR / "maps" / "aspice-trace-map.md"
+FIG = TRACE_DIR / "maps" / "fig-1-aspice-v-model.svg"
 
 # Kinds in the trace data, by ID prefix.
 YAML_KIND = {"hazard": "H", "hazardous-event": "HE", "safety-goal": "SG", "aou": "AOU", "fsr": "FSR",
@@ -113,7 +115,7 @@ PAIRS = [
   ("MLE1", "MLE4", ("AIR", "DSR")),
   ("SWE2", "SWE5", ("SWSR",)),
   ("HWE2", "HWE3", ("HWSR",)),
-  ("SWE3", "SWE4", ("TSR",)),
+  ("SWE3", "SWE4", ("SWSR",)),
 ]
 # Derivation links on the left, from the trace data: (parent kind, child kind, label, parents that need a child).
 DERIVATIONS = [
@@ -129,8 +131,9 @@ STATUS_FILL = {"full": "#DCFCE7", "partial": "#FEF3C7", "none": "#FEE2E2", "untr
 STATUS_STROKE = {"full": "#16A34A", "partial": "#D97706", "none": "#DC2626", "untraced": "#94A3B8"}
 STATUS_WORD = {"full": "complete", "partial": "partial", "none": "missing", "untraced": "not in trace data"}
 
-ID_RE = re.compile(r"\b(SG|FSR|TSR|SWSR|HWSR|SYS|AIR|DSR|MLR|SH|TC|FI|FM|CSR|CSG|TS|AOU|HE|H)-(\d{2,3}(?:\.\d{1,2})?)([a-z]?)\b(?!\.xx)")
-WILD_RE = re.compile(r"\bFSR-(\d{2})\.xx(?:\s*…\s*(\d{2})\.xx)?")  # "FSR-01.xx…07.xx": every FSR of goals 01…07
+ID_RE = re.compile(r"\b(SG|FSR|TSR|SWSR|HWSR|SYS|AIR|DSR|MLR|SH|TC|FI|FM|CSR|CSG|TS|AOU|HE|H)-(\d{2,3}(?:\.\d{1,2})?)([a-z]?)\b(?!\.x)")
+# "FSR-01.xx…07.xx": every FSR of goals 01…07; "HE-01.x": every hazardous event of hazard H-01
+WILD_RE = re.compile(r"\b(FSR|HE)-(\d{2})\.xx?(?:\s*…\s*(?:\1-)?(\d{2})\.xx?)?")
 RANGE_RE = re.compile(r"\b(TSR|SWSR|HWSR|SYS|AIR|DSR|CSR)-(\d{3}|\d{2})\s*[…–-]\s*(?:\1-)?(\d{3}|\d{2})\b")
 BARE_RE = re.compile(r"(?<![\w.-])(\d{3})([a-z]?)(?:\s*[–…]\s*(\d{3}))?(?![\w.])")
 ROW_ID_RE = re.compile(r"^\|\s*\*{0,2}([A-Z]{1,4}-\d{2,3}(?:\.\d{1,2})?[a-z]?)\*{0,2}\s*\|")
@@ -176,9 +179,9 @@ def header_kind(header: str) -> str | None:
 def refs_in(text: str, bare_kind: str | None, known: set[str]) -> set[str]:
   """Requirement IDs named in a cell: prefixed IDs, prefixed ranges, and bare numbers in a typed column."""
   found = {f"{k}-{n}{s}" for k, n, s in ID_RE.findall(text)}
-  for lo, hi in WILD_RE.findall(text):
+  for kind, lo, hi in WILD_RE.findall(text):
     groups = range(int(lo), int(hi or lo) + 1)
-    found |= {i for i in known if i.startswith("FSR-") and int(i[4:6]) in groups}
+    found |= {i for i in known if i.startswith(f"{kind}-") and int(i.split("-")[1][:2]) in groups}
   for kind, lo, hi in RANGE_RE.findall(text):
     for n in range(int(lo), int(hi) + 1):
       cand = f"{kind}-{n:0{len(lo)}d}"
@@ -266,12 +269,10 @@ def derivation(m: Model, parent: str, child: str, alloc: tuple[str, ...] | None)
 
 def pool_for(m: Model, right: str, kind: str) -> list[str]:
   """Items a verification level is expected to name: TSRs allocated to operation (OPS, WP-S-06) are verified in
-  production and operation, not on the V; unit verification only covers TSRs allocated to software."""
+  production and operation, not on the V."""
   pool = sorted(m.ids.get(kind, set()))
   if kind == "TSR":
     pool = [t for t in pool if m.items[t].get("allocated_to") != "OPS"]
-    if right == "SWE4":
-      pool = [t for t in pool if any(a in m.items[t].get("allocated_to", "") for a in ct.SW_ALLOC)]
   return pool
 
 
@@ -397,6 +398,97 @@ def stack(m: Model, group: str, keys: list[str], label) -> str:
   return f"  block:{group}\n    columns 1\n{inner}\n  end"
 
 
+# ---------------------------------------------------------------- SVG (Figure 1)
+
+FONT = "Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
+INK, MUTED = "#0F172A", "#475569"
+BOX_W, LINE_H, PAD, GAP_Y, STEP_X, MARGIN = 210, 15, 9, 22, 92, 16
+
+
+def box_lines(m: Model, lv: Level, left: bool) -> list[tuple[str, bool]]:
+  """(text, bold) lines of one box, the same content as the Mermaid labels."""
+  label = left_label(m, lv) if left else right_label(m, lv)
+  out = []
+  for part in label.split("<br/>"):
+    bold = part.startswith("<b>")
+    out.append((re.sub(r"</?[bi]>", "", part), bold))
+  return out
+
+
+def box_style(m: Model, lv: Level, left: bool) -> tuple[str, str, str]:
+  """fill, stroke, dash"""
+  if left:
+    st = left_status(m, lv)
+    if st == "all":
+      return "#DBEAFE", "#2563EB", ""
+    return ("#EFF6FF", "#2563EB", "4 3") if st == "some" else ("#F1F5F9", "#94A3B8", "4 3")
+  kinds = next(p[2] for p in PAIRS if p[1] == lv.key)
+  st = pair_status(m, lv.key, kinds)[0]
+  return STATUS_FILL[st], STATUS_STROKE[st], ""
+
+
+def el(tag: str, text: str | None = None, **attrs) -> str:
+  """One SVG element; attribute names use _ for - (stroke_width -> stroke-width)."""
+  a = "".join(f' {k.rstrip("_").replace("_", "-")}="{v}"' for k, v in attrs.items() if v != "")
+  return f"<{tag}{a}/>" if text is None else f"<{tag}{a}>{escape(text)}</{tag}>"
+
+
+def svg_v_model(m: Model) -> str:
+  """Figure 1 as SVG: each depth of the V is one row; left boxes step right, right boxes step left."""
+  rows = []  # per row: (left keys, right keys, height)
+  for lefts, rights in V_ROWS:
+    hl = sum(len(box_lines(m, level(k), True)) * LINE_H + 2 * PAD for k in lefts) + 6 * (len(lefts) - 1)
+    hr = sum(len(box_lines(m, level(k), False)) * LINE_H + 2 * PAD for k in rights) + 6 * (len(rights) - 1)
+    rows.append((lefts, rights, max(hl, hr)))
+  depth = len(rows)
+  width = 2 * MARGIN + 2 * BOX_W + 2 * (depth - 1) * STEP_X + 150
+  pos: dict[str, tuple[float, float, float, float]] = {}  # key -> x, y, w, h
+  y = MARGIN + 30
+  for d, (lefts, rights, h) in enumerate(rows):
+    for keys, left in ((lefts, True), (rights, False)):
+      x = MARGIN + d * STEP_X if left else width - MARGIN - BOX_W - d * STEP_X
+      yy = y
+      for k in keys:
+        bh = len(box_lines(m, level(k), left)) * LINE_H + 2 * PAD
+        pos[k] = (x, yy, BOX_W, bh)
+        yy += bh + 6
+    y += h + GAP_Y
+  height = y + 4
+  head = el("svg", None, xmlns="http://www.w3.org/2000/svg", width=width, height=height, viewBox=f"0 0 {width} {height}",
+            font_family=FONT, font_size=12)
+  arrow = el("path", None, d="M0,0 L10,5 L0,10 z", fill=MUTED)
+  marker = f'<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">{arrow}</marker>'
+  out = [head[:-2] + ">", f"<defs>{marker}</defs>", el("rect", None, width=width, height=height, fill="#FFFFFF"),
+         el("text", "Specification (ASPICE 4.0)", x=MARGIN, y=MARGIN + 12, font_weight=700, fill=INK),
+         el("text", "Verification", x=width - MARGIN, y=MARGIN + 12, font_weight=700, fill=INK, text_anchor="end")]
+  # decomposition down the left side
+  for a, b in V_DOWN:
+    ka = a if a in pos else V_ROWS[int(a[1:])][0][-1]
+    kb = b if b in pos else V_ROWS[int(b[1:])][0][0]
+    xa, ya, wa, ha = pos[ka]
+    xb, yb, _, _ = pos[kb]
+    out.append(el("line", None, x1=xa + 30, y1=ya + ha, x2=xb + 30, y2=yb, stroke=MUTED, marker_end="url(#a)"))
+  # verification links across the V
+  for left, right, kinds in PAIRS:
+    xl, yl, wl, hl = pos[left]
+    xr, yr, _, hr = pos[right]
+    ym = min(yl + hl / 2, yr + hr / 2)
+    text = pair_status(m, right, kinds)[1]
+    out.append(el("line", None, x1=xr, y1=ym, x2=xl + wl, y2=ym, stroke=MUTED, stroke_dasharray="5 3", marker_end="url(#a)"))
+    out.append(el("text", text, x=(xr + xl + wl) / 2, y=ym - 4, text_anchor="middle", fill=INK))
+  # boxes last, on top
+  for key, (x, yy, w, h) in pos.items():
+    left = any(key in r[0] for r in V_ROWS)
+    fill, stroke, dash = box_style(m, level(key), left)
+    out.append(el("rect", None, x=x, y=yy, width=w, height=h, rx=5, fill=fill, stroke=stroke, stroke_width=1.5,
+                  stroke_dasharray=dash))
+    for i, (line, bold) in enumerate(box_lines(m, level(key), left)):
+      out.append(el("text", line, x=x + w / 2, y=yy + PAD + (i + 1) * LINE_H - 3, text_anchor="middle",
+                    fill=INK if bold or i == 1 else MUTED, font_weight=700 if bold else ""))
+  out.append("</svg>")
+  return "\n".join(out) + "\n"
+
+
 LANES = [  # standard, item kinds in the lane, links (parent -> child)
   ("ISO 26262", ["H", "HE", "SG", "FSR", "TSR", "SWSR", "HWSR", "AOU"],
    [("H", "HE"), ("HE", "SG"), ("SG", "FSR"), ("FSR", "TSR"), ("TSR", "SWSR"), ("TSR", "HWSR"), ("AOU", "SG")]),
@@ -467,9 +559,18 @@ def render(m: Model) -> str:
          "the left follow the decomposition; arrows across the V are verification links, labelled with how many items",
          "of the paired level at least one test case names."),
     "",
+    f"![Figure 1: ASPICE 4.0 V-model with item counts per process and verification coverage across the V]({FIG.name})",
+    "",
+    para("*Figure 1.* Generated SVG, drawn from the same data as the tables below. Source:",
+         f"[`{FIG.name}`]({FIG.name}); the Mermaid version follows as a text alternative."),
+    "",
+    "<details><summary>Mermaid version of Figure 1</summary>",
+    "",
     "```mermaid",
     v_model(m),
     "```",
+    "",
+    "</details>",
     "",
     para("Verification boxes: green when every item of the paired level is named by a case, amber when some are, red when",
          "none is. Specification boxes: solid blue when all their item kinds are in the trace data, dashed blue when some",
@@ -515,7 +616,7 @@ def render(m: Model) -> str:
           para("Items named by at least one case of the paired test specification. A case names an item by its ID, by a",
                "range (`TSR-101…105`), by `FSR-01.xx…07.xx`, or by a bare number in a column headed with the kind",
                "(`SWSRs`). Bare ranges include only IDs without a letter suffix. TSRs allocated to operation (`OPS`,",
-               "WP-S-06) are left out, and SWE.4 counts only TSRs allocated to software (`P-SW`, `SoC`)."),
+               "WP-S-06) are left out."),
           ""]
   rows = []
   for left, right, kinds in PAIRS:
@@ -545,16 +646,19 @@ def render(m: Model) -> str:
 
 
 def main(argv: list[str]) -> int:
-  text = render(build())
+  m = build()
+  outputs = {OUT: render(m), FIG: svg_v_model(m)}
   if "--check" in argv:
-    if not OUT.exists() or OUT.read_text(encoding="utf-8") != text:
-      print(f"{OUT.relative_to(ASSURANCE_DIR.parent)} is stale; run assurance/trace/tools/trace_map.py")
-      return 1
-    print("trace map: up to date")
-    return 0
+    stale = [p for p, text in outputs.items() if not p.exists() or p.read_text(encoding="utf-8") != text]
+    for p in stale:
+      print(f"{p.relative_to(ASSURANCE_DIR.parent)} is stale; run assurance/trace/tools/trace_map.py")
+    if not stale:
+      print("trace map: up to date")
+    return 1 if stale else 0
   OUT.parent.mkdir(exist_ok=True)
-  OUT.write_text(text, encoding="utf-8")
-  print(f"wrote {OUT.relative_to(ASSURANCE_DIR.parent)}")
+  for p, text in outputs.items():
+    p.write_text(text, encoding="utf-8")
+    print(f"wrote {p.relative_to(ASSURANCE_DIR.parent)}")
   return 0
 
 

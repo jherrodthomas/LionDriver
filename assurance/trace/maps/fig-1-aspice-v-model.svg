@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1522" height="872" viewBox="0 0 1522 872" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker></defs>
+<rect width="1522" height="872" fill="#FFFFFF"/>
+<text x="16" y="28" font-weight="700" fill="#0F172A">Specification (ASPICE 4.0)</text>
+<text x="1506" y="28" font-weight="700" fill="#0F172A" text-anchor="end">Verification</text>
+<line x1="46" y1="124" x2="138" y2="146" stroke="#475569" marker-end="url(#a)"/>
+<line x1="138" y1="254" x2="230" y2="276" stroke="#475569" marker-end="url(#a)"/>
+<line x1="230" y1="339" x2="322" y2="376" stroke="#475569" marker-end="url(#a)"/>
+<line x1="322" y1="607" x2="414" y2="629" stroke="#475569" marker-end="url(#a)"/>
+<line x1="414" y1="731" x2="506" y2="783" stroke="#475569" marker-end="url(#a)"/>
+<line x1="1296" y1="77.5" x2="226" y2="77.5" stroke="#475569" stroke-dasharray="5 3" marker-end="url(#a)"/>
+<text x="761.0" y="73.5" text-anchor="middle" fill="#0F172A">SG 7/7 · SH 1/13</text>
+<line x1="1204" y1="177.5" x2="318" y2="177.5" stroke="#475569" stroke-dasharray="5 3" marker-end="url(#a)"/>
+<text x="761.0" y="173.5" text-anchor="middle" fill="#0F172A">SYS 27/39 · FSR 54/54 · TSR 61/100</text>
+<line x1="1112" y1="307.5" x2="410" y2="307.5" stroke="#475569" stroke-dasharray="5 3" marker-end="url(#a)"/>
+<text x="761.0" y="303.5" text-anchor="middle" fill="#0F172A">TSR 79/100</text>
+<line x1="1020" y1="407.5" x2="502" y2="407.5" stroke="#475569" stroke-dasharray="5 3" marker-end="url(#a)"/>
+<text x="761.0" y="403.5" text-anchor="middle" fill="#0F172A">SWSR 84/134</text>
+<line x1="1020" y1="476.5" x2="502" y2="476.5" stroke="#475569" stroke-dasharray="5 3" marker-end="url(#a)"/>
+<text x="761.0" y="472.5" text-anchor="middle" fill="#0F172A">HWSR 18/45</text>
+<line x1="1020" y1="545.5" x2="502" y2="545.5" stroke="#475569" stroke-dasharray="5 3" marker-end="url(#a)"/>
+<text x="761.0" y="541.5" text-anchor="middle" fill="#0F172A">AIR 23/30 · DSR 1/13</text>
+<line x1="928" y1="653.0" x2="594" y2="653.0" stroke="#475569" stroke-dasharray="5 3" marker-end="url(#a)"/>
+<text x="761.0" y="649.0" text-anchor="middle" fill="#0F172A">SWSR 70/134</text>
+<line x1="928" y1="707.0" x2="594" y2="707.0" stroke="#475569" stroke-dasharray="5 3" marker-end="url(#a)"/>
+<text x="761.0" y="703.0" text-anchor="middle" fill="#0F172A">HWSR 18/45</text>
+<line x1="836" y1="807.0" x2="686" y2="807.0" stroke="#475569" stroke-dasharray="5 3" marker-end="url(#a)"/>
+<text x="761.0" y="803.0" text-anchor="middle" fill="#0F172A">SWSR 70/134</text>
+<rect x="16" y="46" width="210" height="78" rx="5" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="121.0" y="67" text-anchor="middle" fill="#0F172A" font-weight="700">SYS.1</text>
+<text x="121.0" y="82" text-anchor="middle" fill="#0F172A">Requirements elicitation</text>
+<text x="121.0" y="97" text-anchor="middle" fill="#475569">AOU 15 · H 8 · HE 30</text>
+<text x="121.0" y="112" text-anchor="middle" fill="#475569">SG 7 · SH 13* · TS 14*</text>
+<rect x="1296" y="46" width="210" height="63" rx="5" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+<text x="1401.0" y="67" text-anchor="middle" fill="#0F172A" font-weight="700">VAL.1</text>
+<text x="1401.0" y="82" text-anchor="middle" fill="#0F172A">Validation</text>
+<text x="1401.0" y="97" text-anchor="middle" fill="#475569">VS-VAL: 31 cases</text>
+<rect x="108" y="146" width="210" height="108" rx="5" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="213.0" y="167" text-anchor="middle" fill="#0F172A" font-weight="700">SYS.2</text>
+<text x="213.0" y="182" text-anchor="middle" fill="#0F172A">System requirements</text>
+<text x="213.0" y="197" text-anchor="middle" fill="#475569">SYS 39* · FSR 54 · TSR 118</text>
+<text x="213.0" y="212" text-anchor="middle" fill="#475569">TC 33* · FI 22* · FM 11*</text>
+<text x="213.0" y="227" text-anchor="middle" fill="#475569">CSG 8*</text>
+<text x="213.0" y="242" text-anchor="middle" fill="#475569">from SG: 7/7</text>
+<rect x="1204" y="146" width="210" height="63" rx="5" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+<text x="1309.0" y="167" text-anchor="middle" fill="#0F172A" font-weight="700">SYS.5</text>
+<text x="1309.0" y="182" text-anchor="middle" fill="#0F172A">System verification</text>
+<text x="1309.0" y="197" text-anchor="middle" fill="#475569">VS-SQ: 19 cases</text>
+<rect x="200" y="276" width="210" height="63" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="305.0" y="297" text-anchor="middle" fill="#0F172A" font-weight="700">SYS.3</text>
+<text x="305.0" y="312" text-anchor="middle" fill="#0F172A">System architecture</text>
+<text x="305.0" y="327" text-anchor="middle" fill="#475569">CSR 64*</text>
+<rect x="1112" y="276" width="210" height="78" rx="5" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+<text x="1217.0" y="297" text-anchor="middle" fill="#0F172A" font-weight="700">SYS.4</text>
+<text x="1217.0" y="312" text-anchor="middle" fill="#0F172A">System integration test</text>
+<text x="1217.0" y="327" text-anchor="middle" fill="#475569">VS-SI: 27 cases</text>
+<text x="1217.0" y="342" text-anchor="middle" fill="#475569">VS-FI: 31 cases</text>
+<rect x="292" y="376" width="210" height="78" rx="5" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+<text x="397.0" y="397" text-anchor="middle" fill="#0F172A" font-weight="700">SWE.1</text>
+<text x="397.0" y="412" text-anchor="middle" fill="#0F172A">SW requirements</text>
+<text x="397.0" y="427" text-anchor="middle" fill="#475569">SWSR 134</text>
+<text x="397.0" y="442" text-anchor="middle" fill="#475569">from TSR: 94/94</text>
+<rect x="292" y="460" width="210" height="78" rx="5" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+<text x="397.0" y="481" text-anchor="middle" fill="#0F172A" font-weight="700">HWE.1</text>
+<text x="397.0" y="496" text-anchor="middle" fill="#0F172A">HW requirements</text>
+<text x="397.0" y="511" text-anchor="middle" fill="#475569">HWSR 45</text>
+<text x="397.0" y="526" text-anchor="middle" fill="#475569">from TSR: 19/19</text>
+<rect x="292" y="544" width="210" height="63" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="397.0" y="565" text-anchor="middle" fill="#0F172A" font-weight="700">MLE.1</text>
+<text x="397.0" y="580" text-anchor="middle" fill="#0F172A">ML requirements</text>
+<text x="397.0" y="595" text-anchor="middle" fill="#475569">AIR 30* · DSR 13*</text>
+<rect x="1020" y="376" width="210" height="63" rx="5" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+<text x="1125.0" y="397" text-anchor="middle" fill="#0F172A" font-weight="700">SWE.6</text>
+<text x="1125.0" y="412" text-anchor="middle" fill="#0F172A">SW verification</text>
+<text x="1125.0" y="427" text-anchor="middle" fill="#475569">VS-SWQ: 26 cases</text>
+<rect x="1020" y="445" width="210" height="63" rx="5" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+<text x="1125.0" y="466" text-anchor="middle" fill="#0F172A" font-weight="700">HWE.4</text>
+<text x="1125.0" y="481" text-anchor="middle" fill="#0F172A">HW req. verification</text>
+<text x="1125.0" y="496" text-anchor="middle" fill="#475569">VS-HW: 21 cases</text>
+<rect x="1020" y="514" width="210" height="63" rx="5" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+<text x="1125.0" y="535" text-anchor="middle" fill="#0F172A" font-weight="700">MLE.4</text>
+<text x="1125.0" y="550" text-anchor="middle" fill="#0F172A">ML model testing</text>
+<text x="1125.0" y="565" text-anchor="middle" fill="#475569">VS-ML: 12 cases</text>
+<rect x="384" y="629" width="210" height="48" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="489.0" y="650" text-anchor="middle" fill="#0F172A" font-weight="700">SWE.2</text>
+<text x="489.0" y="665" text-anchor="middle" fill="#0F172A">SW architecture</text>
+<rect x="384" y="683" width="210" height="48" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="489.0" y="704" text-anchor="middle" fill="#0F172A" font-weight="700">HWE.2</text>
+<text x="489.0" y="719" text-anchor="middle" fill="#0F172A">HW design</text>
+<rect x="928" y="629" width="210" height="63" rx="5" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+<text x="1033.0" y="650" text-anchor="middle" fill="#0F172A" font-weight="700">SWE.5</text>
+<text x="1033.0" y="665" text-anchor="middle" fill="#0F172A">SW integration test</text>
+<text x="1033.0" y="680" text-anchor="middle" fill="#475569">VS-SWI: 19 cases</text>
+<rect x="928" y="698" width="210" height="63" rx="5" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+<text x="1033.0" y="719" text-anchor="middle" fill="#0F172A" font-weight="700">HWE.3</text>
+<text x="1033.0" y="734" text-anchor="middle" fill="#0F172A">HW design verification</text>
+<text x="1033.0" y="749" text-anchor="middle" fill="#475569">VS-HW: 21 cases</text>
+<rect x="476" y="783" width="210" height="48" rx="5" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="581.0" y="804" text-anchor="middle" fill="#0F172A" font-weight="700">SWE.3</text>
+<text x="581.0" y="819" text-anchor="middle" fill="#0F172A">SW unit design and code</text>
+<rect x="836" y="783" width="210" height="63" rx="5" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+<text x="941.0" y="804" text-anchor="middle" fill="#0F172A" font-weight="700">SWE.4</text>
+<text x="941.0" y="819" text-anchor="middle" fill="#0F172A">SW unit verification</text>
+<text x="941.0" y="834" text-anchor="middle" fill="#475569">VS-UV: 23 cases</text>
+</svg>
