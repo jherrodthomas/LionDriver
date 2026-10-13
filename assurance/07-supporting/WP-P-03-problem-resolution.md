@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-03 Problem resolution management |
 | Standard reference | ISO 26262-2:2018 §5 (anomaly and problem handling in the safety culture and QM), §7 (field monitoring interface); ISO 21448:2022 §13; ISO/SAE 21434:2021 §8 (vulnerability analysis and management); ASPICE 4.0 SUP.9 |
-| Version | 0.1 |
+| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (FuSa, SOTIF, CS, quality) |
 | Author | Assurance team (initial draft) |
@@ -66,7 +66,7 @@ body:
     id: config
     attributes:
       label: Configuration
-      options: ["Reference config (2020 Corolla LE TSS2)", "Other vehicle (out of scope)", "PC / simulator"]
+      options: ["Reference config (E210 Corolla TSS 2.0)", "Other vehicle (out of scope)", "PC / simulator"]
   - type: input            # LionDriver version (ld-vX.Y.Z) or commit SHA
   - type: input            # device hardware revision, panda firmware version string
   - type: textarea         # what happened, expected behaviour, steps to reproduce

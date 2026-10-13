@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-V-05 Fault injection test specification and report |
 | Standard reference | ISO 26262-4:2018 §7 (fault injection at system and vehicle level); ISO 26262-5:2018 §10 (hardware integration, fault injection for safety mechanisms); ISO 26262-6:2018 §10–§11 (fault injection at software integration and embedded software test); ASPICE 4.0 SYS.4, SWE.6 |
-| Version | 0.1 |
+| Version | 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification). **Results: not yet executed** |
 | ASIL / scope | ASIL C (SG-01 until re-rated, WP-S-02 "B‡"), ASIL B (SG-02…SG-07); reference configuration |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); campaign plan reviewed with independence per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`) |
 
 ## 1. Purpose and scope
 
@@ -24,14 +24,16 @@ Not in scope: cybersecurity penetration testing ([WP-V-06](WP-V-06-cybersecurity
 
 | Asset | Faults it injects | Level | Limitation for LionDriver evidence |
 |---|---|---|---|
-| opendbc safety tests (`opendbc_repo/opendbc/safety/tests/common.py`, `test_toyota.py`) | Bad checksums and wheel-fault bits (`test_toyota.py:110-131`), RX timeouts via `safety_tick` (`common.py:1208`), relay malfunction (`common.py:1067`), TX spam on all buses (`common.py:937`), out-of-limit torque/accel (`common.py:550-650`), brake/gas/cruise edge cases (`common.py:1086-1176`) | Unit/integration on host `libsafety` | Runs on x86 with `ALLOW_DEBUG` (GAP-41), not on the Cortex-M7 (GAP-13); upstream CI only (GAP-39) |
-| Mutation testing (`opendbc_repo/opendbc/safety/tests/mutation.py`) | Code mutations to check that tests detect faults in the safety code | Unit (test-suite adequacy) | Measures test strength, not mechanism behaviour; 3 accepted survivors (GAP-13) |
+| opendbc safety tests (`opendbc_repo/opendbc/safety/tests/common.py`, `test_toyota.py`) | Bad checksums and wheel-fault bits (`test_toyota.py:461-483`), RX timeouts via `safety_tick` (`common.py:1208`) and the 5-period tests `test_rx_timeout_5_periods*` (`test_toyota.py:369, 413`), cruise active with main off (`:263`), EPS fault (`:309`), TX rate flood (`test_tx_rate_*`, `:128-228`), relay malfunction (`common.py:1067`), TX spam on all buses (`common.py:937`), out-of-limit torque/accel (`common.py:550-650`), brake/gas/cruise edge cases (`common.py:1086-1176`) | Unit/integration on host `libsafety` | Runs on x86 with `ALLOW_DEBUG` (GAP-41), not on the Cortex-M7 (GAP-13); in LionDriver CI `safety.yaml` (default and `LIONDRIVER_REFERENCE` variants) from 2026-10-12, no run recorded as evidence yet |
+| Mutation testing (`opendbc_repo/opendbc/safety/tests/mutation.py`) | Code mutations to check that tests detect faults in the safety code | Unit (test-suite adequacy) | Measures test strength, not mechanism behaviour; 3 accepted survivors (GAP-13); in LionDriver CI `safety.yaml`, default and reference builds (`mutation`, `mutation_reference`, LionDriver #44) |
 | Process fuzzing (`openpilot/selfdrive/test/process_replay/test_fuzzy.py`) | Random capnp messages into replayed processes with the Corolla fingerprint | SoC software | Excludes selfdrived, controlsd, card, plannerd, calibrationd, dmonitoringd, paramsd, modeld (`test_fuzzy.py:12`); 10 examples per process |
 | pandad SPI corruption (`openpilot/selfdrive/pandad/spi.cc:280-301`, `tests/test_pandad_spi.py`) | Random bit corruption of SPI TX/RX at probability `SPI_ERR_PROB` | Device | comma device farm only (`Jenkinsfile:303-307`) |
 | panda HITL (`panda/tests/hitl/test_5_spi.py:58-72`, `test_2_health.py:38`, `test_6_safety.py:8`, `test_9_harness.py`) | Bad SPI header and checksum, heartbeat, NO_OUTPUT TX blocking, harness orientation | HIL | comma farm only (GAP-30); no car-mode safety cases |
+| LionDriver HITL (`panda/tests/hitl/test_10_hw_watchdog.py` … `test_14_tx_rate.py`, panda `b790fca`) | MCU hangs (fault-injection build), mode-lock requests, RX message silence, EPS fault codes, TX flood; the jungle plays the car on bus 0 | HIL | Implemented, **not run** (bench not built, GAP-30; [HIL bench plan](../05-software/hil-bench/README.md)) |
+| LionDriver panda host tests (`panda/tests/heartbeat_monitor`, `reference_lock`, `irq_priorities`, `eps_fault_siren`, `hw_watchdog`) | Heartbeat loss, refused requests, EPS-fault siren timing, watchdog feed logic | Unit on host | In LionDriver CI (`safety.yaml` `panda_host_tests`) from 2026-10-12; no run recorded as evidence yet |
 | selfdrived state-machine tests (`openpilot/selfdrive/selfdrived/tests/test_state_machine.py`) | Event-driven state transitions | Unit | No timing; no input-loss injection |
 
-None of these produces evidence under LionDriver control today. The campaign reuses them where possible and adds the cases marked "new".
+None of these has produced recorded evidence under LionDriver control yet. The campaign reuses them where possible and adds the cases marked "new".
 
 ## 3. Injection levels and methods
 
@@ -61,18 +63,19 @@ Rules:
 
 ## 5. Fault list and test specification
 
-Columns: **Lvl** = level(s); **Mechanism** = safety mechanism expected to act (TSR); **Expected reaction and time**; **Pass criteria**; **Baseline expectation** = what the code at `8b8c6ae` is expected to do; **Asset** = existing test to reuse or "new".
+Columns: **Lvl** = level(s); **Mechanism** = safety mechanism expected to act (TSR); **Expected reaction and time**; **Pass criteria**; **Baseline expectation** = what the code at `8b8c6ae` is expected to do (rows marked 2026-10-12 or naming later commits state the code at `bf6ce8c`, panda `b790fca`, opendbc `7993399`; none verified on hardware); **Asset** = existing test to reuse or "new".
 
 ### 5.1 Vehicle CAN faults (RX side)
 
 | ID | Fault | Target / signal | Lvl | Mechanism | Expected reaction and time | Pass criteria | Baseline expectation | Asset |
 |---|---|---|---|---|---|---|---|---|
-| VS-FI-01 | Corrupted frame (bad checksum, wrong length) | `0x1D2`, `0x260` (checksummed); `0x226`, `0xAA` (none) | U, H | TSR-402, TSR-406 | Authority revoked on the faulty frame, ≤ 0.1 s to SS-L/SS-G | Revocation on first bad frame; GC-1 | Checksummed messages meet (`safety.h:164-197`); `0x226`/`0xAA` cannot be detected (GAP-01) | `test_toyota.py:110-131`; new HIL |
+| VS-FI-01 | Corrupted frame (bad checksum, wrong length) | `0x1D2`, `0x260` (checksummed); `0x226`, `0xAA` (none) | U, H | TSR-402, TSR-406 | Authority revoked on the faulty frame, ≤ 0.1 s to SS-L/SS-G | Revocation on first bad frame; GC-1 | Checksummed messages meet (`safety.h:164-197`); `0x226`/`0xAA` cannot be detected (GAP-01) | `test_toyota.py:461-483`; new HIL |
 | VS-FI-02 | Stuck / frozen payload with valid checksum | `0x1D2` CRUISE_ACTIVE stuck 1; `0x260` torque frozen; `0xAA` frozen while moving; `0x226` stuck "not pressed" | U, H | TSR-404, TSR-405, TSR-406 | Detected within t_frz or cross-check tolerance; revoke ≤ 0.1 s | Detection inside SG-01 budget (≤ 0.3 s) where signals are gating | Not detected (GAP-01) | new |
 | VS-FI-03 | Replayed / duplicated / inserted frames | Same IDs at 2× rate; old frames re-injected | U, H | TSR-403, TSR-406 | Detected within ≤ 0.1 s window | Revocation and fault code | Not detected (no counters, GAP-01) | new |
-| VS-FI-04 | Message timeout | Each of `0x1D2`, `0x226`, `0x260`, `0xAA` (later `0x262`, `0x1D3`, `0xB4`) silenced | U, H | TSR-401, TSR-406 | Absence after 5 periods detected at ≥ 50 Hz; revoke ≤ 0.1 s | Total ≤ 0.3 s | ≈1–2 s (1 Hz `safety_tick`, `safety.h:321-344`) (GAP-06) | `common.py:1208`; new HIL timing |
-| VS-FI-05 | Cross-signal implausibility | Brake in `0x226` vs PCM brake; wheel speed vs vehicle speed | U, H | TSR-405 | Disagreement beyond tolerance → RX fault | Revocation | Not implemented | new |
+| VS-FI-04 | Message timeout | Each of `0x1D2`, `0x226`, `0x260`, `0xAA` (later `0x262`, `0x1D3`, `0xB4`) silenced | U, H | TSR-401, TSR-406 | Absence after 5 periods detected at ≥ 50 Hz; revoke ≤ 0.1 s | Total ≤ 0.3 s | 2026-10-12: 5 nominal periods, 100 Hz task, no 1 s floor: `0xAA` 60 ms, `0x260` 100 ms, `0x226` 125 ms, `0x1D2` 150 ms, each +10 ms (≤ 0.16 s); reference build adds `0x262` (25 Hz) and `0x1D3` (33 Hz). Rates not yet confirmed on logs (`tools/can_gaps/can_gap_scan.py`, WP-S-05 OI-7) | U: `test_rx_timeout_5_periods*`; H: `panda/tests/hitl/test_12_rx_timeout.py` (not run) |
+| VS-FI-05 | Cross-signal implausibility | Brake in `0x226` vs PCM brake; wheel speed vs vehicle speed | U, H | TSR-405 | Disagreement beyond tolerance → RX fault | Revocation | TSR-405(c) implemented in the reference build: CRUISE_ACTIVE with `0x1D3` MAIN_ON = 0 refuses engagement, revokes after 150 ms (`test_cruise_active_with_main_off`); (a), (b), (d) not implemented | U: `test_cruise_active_with_main_off`; new for (a), (b), (d) |
 | VS-FI-22 | Car-side bus-off, CAN-H/L short, error frames | Bus 0 | H | TSR-508 | Authority revoked; warning | ≤ SG-01 budget | Bus-off counted, core reset; no safety reaction (HWSR-508b) | WP-H-06 VS-HW-11 |
+| VS-FI-31 | EPS fault | `0x262` EPS_STATUS `LKA_STATE` in the fault set {0, 3, 9, 11, 17, 21, 25} while engaged | U, H | TSR-110, TSR-516(b) | LKA actuation (torque or steer request) refused while the fault lasts; reported (`pandaState.epsFault`); siren once the fault has persisted 1 s while authority is granted | As stated; GC-1 | Implemented in the reference build (opendbc `242d63d`, panda `b790fca`); fault code set to be confirmed for the reference EPS firmware | U: `test_eps_fault_blocks_lka`, `panda/tests/eps_fault_siren`; H: `panda/tests/hitl/test_13_eps_fault.py` (not run) |
 
 ### 5.2 SoC ↔ panda link faults
 
@@ -81,8 +84,9 @@ Columns: **Lvl** = level(s); **Mechanism** = safety mechanism expected to act (T
 | VS-FI-06 | SPI bit errors | All SPI transfers at `SPI_ERR_PROB` 0.001 / 0.01 / 0.1; targeted single-bit flips in header and in CAN payload | H | TSR-410, TSR-413 | Corrupted transfers rejected (NACK); error burst while engaged → revoke ≤ 0.3 s | No corrupted frame on bus 0 (GC-1); no unintended control command executed | 8-bit XOR; some multi-bit errors pass (GAP-10); error counted only | `spi.cc:280-301`, `test_pandad_spi.py`, `test_5_spi.py:58-72` |
 | VS-FI-07 | Out-of-range length fields and indices | SPI header MOSI/MISO length > buffer; `0xe8` with `param1 ≥ PANDA_CAN_CNT` | H (fault-injection host) | TSR-412 | NACK, SPI error counted; no memory written outside buffers | Memory map check after test (SWD read of guard patterns around `spi_buf_rx`/`spi_buf_tx` and DTCM safety data) unchanged | No bound check (WP-S-02 NF-04, `drivers/spi.h:115-116, 233`); expected effect limited to SRAM1/2 (WP-A-02 FFI-SP-02) — to confirm | new |
 | VS-FI-08 | Stale / replayed / frozen command stream | Replay identical `0x2E4`/`0x343` transfers; stop `0x2E4` while heartbeat continues | H | TSR-408, TSR-411 | Stale transfers rejected; no `0x2E4` for > 50 ms → SS-L | SS-L within ≤ 0.1 s of the 50 ms limit | Not detected; heartbeat 3–5 s (GAP-10, GAP-06) | new |
-| VS-FI-10 | Heartbeat faults | (a) heartbeat stops; (b) `engaged=0` while authority granted; (c) heartbeat continues but control-loop evidence frozen | H | TSR-407, TSR-307 (a), TSR-409, TSR-510, TSR-516 | (a) revoke after 0.3 s, SS-S ≤ 2 s, siren ≤ 0.5 s; (b)/(c) revoke ≤ 0.3 s | As stated | (a) SILENT after 5 s, siren 3 s (`main.c:193-213`); (b) 3 s (`main.c:182-189`); (c) not detected | `test_2_health.py:38`; new |
-| VS-FI-11 | Unauthorised configuration commands in car mode | `0xdc` (other mode/param), `0xc5`, `0xe7`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xf1`; for information `0xd1`/1, `0xd8` | H | TSR-512, TSR-513 | Rejected; state unchanged | Mode, relay and CAN configuration unchanged; GC-2 holds (forwarding continues) | All accepted (GAP-09, WP-S-02 NF-05); `0xe7` expected to stop camera-side forwarding with relay energised (WP-A-02 FFI-CM-08) | new |
+| VS-FI-10 | Heartbeat faults | (a) heartbeat stops; (b) `engaged=0` while authority granted; (c) heartbeat continues but control-loop evidence frozen | H | TSR-407, TSR-307 (a), TSR-409, TSR-510, TSR-516 | (a) revoke after 0.3 s, SS-S ≤ 2 s, siren ≤ 0.5 s; (b)/(c) revoke ≤ 0.3 s | As stated | (a) authority revoked at 0.3 s (`heartbeat_monitor.h`, all builds; host-tested only, `panda/tests/heartbeat_monitor`); SILENT after 5 s, siren 3 s unchanged; (b) 3 s; (c) not detected | `test_2_health.py:38`; new |
+| VS-FI-11 | Unauthorised configuration commands in car mode | `0xdc` (other mode/param), `0xc5`, `0xe7`, `0xe5`, `0xde`, `0xf9`, `0xfc`, `0xe8`, `0xdb`, `0xe6`, `0xf1`; for information `0xd1`/1, `0xd8` | H | TSR-512, TSR-513 | Rejected; state unchanged | Mode, relay and CAN configuration unchanged; GC-2 holds (forwarding continues) | Reference build: refused by `reference_lock.h` (host `panda/tests/reference_lock`; HIL `test_11_reference_lock.py`, not run). Default build: all accepted (GAP-09, WP-S-02 NF-05); `0xe7` expected to stop camera-side forwarding with relay energised (WP-A-02 FFI-CM-08) | U: `panda/tests/reference_lock`; H: `test_11_reference_lock.py` |
+| VS-FI-30 | SoC TX flood (babbling SoC) | Any TX-whitelisted ID, e.g. `0x2E4` at 2× nominal rate and line rate (reference build) | U, H | TSR-518 (DN-01) | Frames beyond the per-ID budget rejected; authority revoked ≤ 0.1 s after the first rejected frame; reported (`pandaState.txRateExceeded`) | As stated; GC-1 | Implemented in the reference build (opendbc `7993399`); default build: no rate supervision | U: `test_tx_rate_*`; H: `panda/tests/hitl/test_14_tx_rate.py` (not run) |
 
 ### 5.3 SoC software faults
 
@@ -100,7 +104,7 @@ Columns: **Lvl** = level(s); **Mechanism** = safety mechanism expected to act (T
 |---|---|---|---|---|---|---|---|---|
 | VS-FI-15 | Power dips and brown-out | Device 12 V input: dropouts 1 ms–1 s, slow ramp, plateau between nominal and BOR, cranking profile | H | TSR-505, TSR-706 | Reset or SS-S; relay to stock path; restart in SILENT, new engagement needed | GC-1 throughout; relay state as specified; no hang with relay energised | PVD not enabled; BOR level unset in code; behaviour unknown | WP-H-06 VS-HW-09 |
 | VS-FI-16 | Panda reset during engagement | `0xd8`; NRST from SoC GPIO; IWDG reset (after TSR-501) | H | TSR-311, TSR-706 | No TX and relay released during reset; authority false after restart | Re-engagement only on new PCM edge; SoC immediate disable with warning | Starts in SILENT (`main.c:295`); relay reset state unconfirmed (AOU-13) | new; WP-H-06 VS-HW-19 |
-| VS-FI-17 | Panda hang | Fault-injection build: infinite loop in main context, in tick ISR, in SPI ISR; interrupts disabled | H | TSR-501, TSR-502, TSR-706 | Watchdog reset ≤ 0.2 s; relay to stock path ≤ 0.1 s | Total ≤ 0.3 s; camera PCS path restored (GC-2) | No IWDG (GAP-07): hang with relay energised and forwarding stopped (GAP-43) | WP-H-06 VS-HW-06 |
+| VS-FI-17 | Panda hang | Fault-injection build: infinite loop in main context, in tick ISR, in SPI ISR; interrupts disabled | H | TSR-501, TSR-502, TSR-706 | Watchdog reset ≤ 0.2 s; relay to stock path ≤ 0.1 s | Total ≤ 0.3 s; camera PCS path restored (GC-2) | IWDG in window mode in the pin (`drivers/hw_watchdog.h`); host `panda/tests/hw_watchdog`; HIL `test_10_hw_watchdog.py` (main loop, tick, interrupts disabled, safety task, early feed; not run); SPI-ISR hang injection not implemented | WP-H-06 VS-HW-06; `test_10_hw_watchdog.py` |
 | VS-FI-18 | Memory corruption | SWD write to `controls_allowed`, limit state, safety mode; ECC error injection where silicon allows; stack overflow; write to safety data from comms handler | H (fault-injection build) | TSR-503, TSR-507, TSR-502 | Detected (ECC/MPU/CRC) → SS-S ≤ 0.1 s | No actuation outside limits after injection | No MPU, no ECC handling (GAP-08): corruption not detected | WP-H-06 VS-HW-17, -18 |
 | VS-FI-19 | Interrupt storm | CAN flood on bus 0/2 at line rate; SPI request flood; USB flood | H | TSR-502 (interrupt-rate faults), TSR-508 | Rate fault → SS-S; tick and timeouts keep their timing until then | Heartbeat/RX timeout timing unchanged under load, or SS-S | Rate faults report-only (`drivers/interrupts.h:33-35`, GAP-08) | `common.py:937` (logic); new HIL |
 | VS-FI-20 | Clock fault | HSE stop (test pad) or analysis; clock drift (if injectable) | H, A | TSR-504 | CSS → NMI → reset; drift detected | Safe state; no actuation with wrong timing | CSS enabled (`stm32h7/clock.h:118-119`); drift not detected | WP-H-06 VS-HW-16 |
@@ -145,9 +149,9 @@ Every SFMEA row of WP-A-04 §10 up to SFMEA-32 with a named mechanism maps to at
 
 ## 7. Campaign execution order
 
-1. **U level in fork CI** (needs D-03 and GAP-39 closed): VS-FI-01…-05, -13, -14 on host `libsafety` built with release defines.
+1. **U level in fork CI**: VS-FI-01…-05, -11 (reference build), -13, -14, -30, -31 on host `libsafety` and the panda host tests. They run in LionDriver CI `safety.yaml` (default and reference variants) from 2026-10-12, still in the `ALLOW_DEBUG` configuration (GAP-41); no run recorded as evidence yet.
 2. **S level**: VS-FI-09, -12, -13, -23, -25 with process replay on fork-owned Corolla logs.
-3. **H level, release firmware**: VS-FI-01…-11, -14…-16, -19, -21…-26, -28, -29. Baseline run first to record known GAPs. A case that [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) §6.1 maps to a VS-SWQ case is run once, on the reference device, and reported in WP-W-08; this document cites that entry and does not re-run it. This document stays the only source of the injection procedure.
+3. **H level, release firmware**: VS-FI-01…-11, -14…-16, -19, -21…-26, -28…-31 (-30, -31 and the reference part of -11 with a reference build, [HIL bench plan](../05-software/hil-bench/README.md) §5.5). Baseline run first to record known GAPs. A case that [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) §6.1 maps to a VS-SWQ case is run once, on the reference device, and reported in WP-W-08; this document cites that entry and does not re-run it. This document stays the only source of the injection procedure.
 4. **H level, fault-injection firmware**: VS-FI-07, -17, -18, -20 (after the related mechanisms exist; WP-H-06 DC-nn).
 5. **V level**: VS-FI-27 after G1 and WP-S-08 completion.
 6. **Regression**: after each change to a safety-relevant file, re-run the cases whose mechanism the change touches (impact analysis per [WP-P-02](../07-supporting/WP-P-02-change-management.md)).
@@ -179,7 +183,7 @@ Every SFMEA row of WP-A-04 §10 up to SFMEA-32 with a named mechanism maps to at
 | VS-FI-14 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
 | VS-FI-15 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
 | VS-FI-16 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
-| VS-FI-17 | — | — | — | — | — | — | — | — | **Not yet executed** (blocked until IWDG exists for the pass case) | — | — |
+| VS-FI-17 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
 | VS-FI-18 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
 | VS-FI-19 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
 | VS-FI-20 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
@@ -192,6 +196,8 @@ Every SFMEA row of WP-A-04 §10 up to SFMEA-32 with a named mechanism maps to at
 | VS-FI-27 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
 | VS-FI-28 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
 | VS-FI-29 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
+| VS-FI-30 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
+| VS-FI-31 | — | — | — | — | — | — | — | — | **Not yet executed** | — | — |
 
 Summary (to complete after execution): cases passed / failed / known GAP / blocked; mechanisms whose timing does not meet the FTTI; diagnostic coverage observations handed to [WP-H-04](../04-hardware/WP-H-04-hardware-metrics.md); open problem reports.
 
@@ -200,7 +206,7 @@ Summary (to complete after execution): cases passed / failed / known GAP / block
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
 | OI-1 | Build fault-injection support: bench CAN fault generator, fault-injection firmware build (documented configuration item), closed-course test host build | Test lead | G4 |
-| OI-2 | Run the opendbc safety tests in fork CI with release defines (GAP-39, GAP-41) so U-level cases produce LionDriver evidence | SW lead | G3 |
+| OI-2 | Run the opendbc safety tests in fork CI with release defines (GAP-39, GAP-41) so U-level cases produce LionDriver evidence. CI part done 2026-10-12 (`safety.yaml`); release defines open (GAP-41) | SW lead | G3 |
 | OI-3 | Extend `test_fuzzy.py` to the excluded safety-relevant processes, or document why each cannot be fuzzed | SW lead | G3 |
 | OI-4 | Confirm FTTI and budgets (WP-S-04) and update §4 | Safety engineer | G2 |
 | OI-5 | Decide whether VS-FI-07 (SPI overflow) may be run on the reference device or only on a spare | Test lead | G4 |

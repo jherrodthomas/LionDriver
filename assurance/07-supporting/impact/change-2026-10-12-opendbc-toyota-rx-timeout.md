@@ -67,7 +67,7 @@ None are changed yet, because the change is not integrated. When opendbc#1 and p
 |---|---|---|
 | OI-1 | Run safety replay on Toyota routes (reference vehicle first) and record any false timeouts. Tool for the gap part: [`tools/can_gaps/can_gap_scan.py`](../../../tools/can_gaps/README.md) reports the longest inter-frame gap of each RX message in rlogs or candump captures against the timeout; not yet run (no drive data in the development environment) | Integration |
 | OI-2 | Confirm the declared RX rates against measured rates (WP-S-05 OI-7). The gap scan also reports each message's observed rate | Integration |
-| OI-3 | Add `0x262`, `0x1D3` and `0xB4` to the RX check set (TSR-110, TSR-401) | Later change |
+| OI-3 | `0x262` and `0x1D3` added in the reference build (§8, opendbc `98404a4`); `0xB4` still open until its nominal rate is measured | Later change |
 | OI-4 | HIL fault injection: remove each RX message and measure the time to revocation | Release |
 
 ## 7. Follow-on change: engagement gated on the RX checks (opendbc#3)
@@ -81,3 +81,15 @@ None are changed yet, because the change is not integrated. When opendbc#1 and p
 Effect (proposed; pending review): TSR-306 / SWSR-306 met for the checks the envelope has today (seen, checksum, counter, quality flag, timeout) on the four Toyota RX checks. The frozen-value and cross-checks that SWSR-306 also names do not exist yet, so SWSR-306 stays partial. A late message at the moment of a PCM rising edge leaves openpilot not engaged, and the driver has to engage again once the message is back. That is the safe direction; its frequency belongs to the false-timeout check of OI-1.
 
 Verification of opendbc#3 (host only): full safety suite OK; 100 % line coverage; new test `test_no_engagement_with_invalid_rx_checks` (both sides of the threshold, and a message never received); mutation (gate always allows) fails 14 tests; opendbc and panda MISRA clean. The Toyota tests now receive every checked message in `setUp`, as on a live bus; the common tests are unchanged.
+
+## 8. Follow-on change: `0x262` and `0x1D3` in the reference RX set (opendbc#6)
+
+[jherrodthomas/opendbc#6](https://github.com/jherrodthomas/opendbc/pull/6) (branch `claude/toyota-rx-additions`, `5b5a4ba..98404a4`; LionDriver pins `98404a4`).
+
+| Commit(s) | Files | Summary of behaviour change | FuSa | SOTIF | AI | CS | Hazards / findings affected | WPs affected | Verification to re-run | Decision |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `21d8dd8` | `opendbc/safety/modes/toyota.h`, `opendbc/safety/tests/test_toyota.py` | With `LIONDRIVER_REFERENCE`, the non-SecOC Toyota RX set with BRAKE_MODULE (the reference car, parameter 73) adds EPS_STATUS `0x262` (25 Hz) and PCM_CRUISE_2 `0x1D3` (33 Hz) with checksum and the 5-period timeout. Engagement needs both (TSR-306); a timeout revokes authority (TSR-401). Their content is not used yet. Alt-brake and SecOC sets, and all other builds, are unchanged | Yes | Yes (engagement refused if either message is missing, late or corrupt) | No | No | SG-01, SG-02; FSR-01.06, FSR-02.01; GAP-03, GAP-06 | WP-S-02 (TSR-110, 401), WP-W-02 (SWSR-110, 401), WP-S-05 (§3, S-12, S-13), WP-W-06 (unit test) | As §1; plus the false-timeout check for both messages on reference logs (OI-1, OI-2) | Taken (maintainer merged opendbc#6, 2026-10-12) |
+
+**Nominal rates.** The DBC files carry no cycle times. 25 Hz and 33 Hz are the minimum rates openpilot's CAN parser required for these messages (`selfdrive/car/toyota/carstate.py`, openpilot v0.8.16). A declared rate below the real one only lengthens detection: at 25 Hz the `0x262` timeout is 0.2 s plus one task period, slightly above the 0.2 s of TSR-401 if the real rate is that low. A declared rate above the real one would block engagement permanently, which is why `0xB4` (no known rate) is not added. Both rates are to be confirmed by OI-2.
+
+**Verification (host only):** safety suite OK in the default and reference variants with 100 % line coverage; new test `test_reference_rx_checks` (bad checksum rejected; no engagement with either message missing); `test_rx_timeout_5_periods_each_msg` covers both messages in the reference variant; mutations (rate 25 → 26 Hz, checksum ignored on `0x1D3`, `0x262` removed) each fail tests; opendbc and panda MISRA clean. Safety replay and HIL not run.

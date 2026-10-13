@@ -49,6 +49,10 @@ jobs:
       run: python3 assurance/trace/tools/check_trace.py
     - name: Relative links
       run: python3 assurance/trace/tools/check_links.py
+    - name: Markdown tables (every row has the header's number of cells)
+      run: |
+        python3 assurance/trace/tools/check_tables.py
+        python3 assurance/trace/tools/test_check_tables.py
     - name: HARA model consistency (summary and WP-C-03 §2.1 counts)
       run: python3 assurance/02-concept/hara/hara_model.py --check
     - name: FSC completeness (every SG x node basic event mapped to WP-C-04 FSRs)
@@ -57,6 +61,11 @@ jobs:
       run: python3 assurance/process/tools/process_model.py --check
     - name: Process model self-tests
       run: python3 assurance/process/tools/test_process_model.py
+    - name: Fault tree diagrams and cut sets match WP-A-04 (and their tests)
+      run: |
+        python3 assurance/08-analyses/fta/fta_diagrams.py --check
+        python3 assurance/08-analyses/fta/test_fta_diagrams.py
+        python3 assurance/08-analyses/fta/fta_cutsets.py --check
     - name: Sync report tool unit tests
       run: python3 -m unittest tools.sync.test_sync_report -v
     - name: CAN gap scan unit tests
@@ -78,5 +87,9 @@ jobs:
       run: python3 assurance/case/tools/test_case.py
     - name: Dashboard is in sync with the records
       run: python3 assurance/case/tools/generate_dashboard.py --check
+    - name: GSN diagrams are in sync with the records, WP-K-01 and WP-K-03
+      run: |
+        python3 assurance/case/tools/gsn_diagrams.py --check
+        python3 assurance/case/tools/test_gsn.py
     - name: README and documentation links
       run: python3 assurance/case/tools/check_pages.py

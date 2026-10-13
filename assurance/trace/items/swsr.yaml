@@ -223,7 +223,7 @@
   allocated_to: "U-SAF-TOY, U-SAF-CORE"
   verification: "UT, RP, VT"
   acceptance: "Revocation within 1 frame of a fault code; fault set confirmed on reference EPS logs"
-  baseline_impl: "Not impl: host only (`carstate.py:122-127`, codes `:19-22`); not in RX checks (`modes/toyota.h:39-46`) (GAP-03)"
+  baseline_impl: "Partial (reference build): `0x262` in the RX set with checksum and timeout (opendbc `98404a4`, test `test_reference_rx_checks`); lateral actuation refused while LKA_STATE is in the host's fault set (opendbc `242d63d`; `toyota_lka_state_is_fault`, `modes/toyota.h`; test `test_eps_fault_blocks_lka`, every code 0…127). The frame that reports the fault removes authority for the next STEERING_LKA frame. The state is reported to the host (`safety_eps_fault` → health flag bit 10 → `pandaState.epsFault`; panda `877730e`, opendbc `adcb7c2`; HIL test `tests/hitl/test_13_eps_fault.py`, not run). Open: fault set confirmed on reference EPS logs (verification criterion) (GAP-03)"
   status: proposed
   source: WP-W-02
 
@@ -517,7 +517,7 @@
   allocated_to: "U-SAF-CORE"
   verification: "UT, HIL, FI"
   acceptance: "Detection ≤ 5 periods + one task period (≤ 0.2 s for 33 Hz `0x1D2`)"
-  baseline_impl: "Met for the four Toyota RX checks (opendbc `aff4033`; `safety.h` `rx_check_lagging()`, `modes/toyota.h`); not yet verified on hardware ([IA RX timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md))"
+  baseline_impl: "Met for the Toyota RX checks: the four common ones (opendbc `aff4033`) and, in the reference build, `0x262` and `0x1D3` (opendbc `98404a4`); `safety.h` `rx_check_lagging()`, `modes/toyota.h`; `0xB4` not added (no nominal rate); not yet verified on hardware ([IA RX timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md))"
   status: proposed
   source: WP-W-02
 
@@ -587,7 +587,7 @@
   allocated_to: "U-SAF-CORE, U-SAF-TOY"
   verification: "UT, RP, FI"
   acceptance: "Each disagreement detected ≤ 0.2 s; no false detection on reference logs"
-  baseline_impl: "Not impl: `speed_mismatch_check` exists, unused (`safety.h:529-537`) (GAP-01)"
+  baseline_impl: "Partial (reference build, opendbc `875e325`): (c) implemented (`toyota_cruise_main_check`, `modes/toyota.h`; test `test_cruise_active_with_main_off`; tolerance 150 ms). Not impl: (a) (`speed_mismatch_check` exists, unused, `safety.h:529-537`); (b) pending the `0x1D3` BRAKE_PRESSED semantics on reference logs; (d) (GAP-01)"
   status: proposed
   source: WP-W-02
 
@@ -629,7 +629,7 @@
   allocated_to: "U-PND-MAIN, U-SAF-CORE"
   verification: "HIL, FI"
   acceptance: "Clear at 50/100 ms + task period; SS-L via SWSR-109a"
-  baseline_impl: "Not impl (GAP-10)"
+  baseline_impl: "Impl in the reference build (opendbc `273f44e`): `tx_arrival_checks` (`safety.h`), Toyota table (`modes/toyota.h`); unit tests `test_tx_arrival_*`; HIL, FI open"
   status: proposed
   source: WP-W-02
 
@@ -1091,7 +1091,7 @@
   allocated_to: "`host.pandad`, `host.selfdrived`"
   verification: "UT"
   acceptance: "No engagement with debug FW"
-  baseline_impl: "Not impl; W-09 DVR-05"
+  baseline_impl: "Partly: in a reference build `pandad` keeps the panda in NOOUTPUT unless its health packet reports `HEALTH_FLAG_REFERENCE_BUILD` (`panda_safety.cc`, panda `6dee6fa`); `selfdrived` then raises `controlsMismatch` (no entry). A debug (non-release) build is not yet detected (D-09); W-09 DVR-05"
   status: proposed
   source: WP-W-02
 
@@ -1133,7 +1133,7 @@
   allocated_to: "U-SAF-CORE, U-SAF-TOY"
   verification: "UT, HIL"
   acceptance: "`0x2E4` at 2× rate: excess frames rejected; persistent excess → revocation ≤ 0.1 s"
-  baseline_impl: "Not impl (content checks only)"
+  baseline_impl: "Impl (reference build, opendbc `7993399`, panda `8aa8671`): `tx_rate_check` (`opendbc/safety/safety.h`), Toyota budgets (`modes/toyota.h`), health flag bit 11 → `pandaState.txRateExceeded`; unit tests `test_tx_rate_*` (flood, sliding window, host cadence, revocation timing, catch-up bursts, no limit-state update); HIL `tests/hitl/test_14_tx_rate.py` (not run). Design [DN-01](design-notes/DN-01-tx-rate-supervision.md)"
   status: proposed
   source: WP-W-02
 
@@ -1147,7 +1147,7 @@
   allocated_to: "U-PND-PLAT, U-PND-MAIN"
   verification: "A, HIL"
   acceptance: "Every enabled IRQ has a documented priority; measured latency within budget"
-  baseline_impl: "Not impl: no `NVIC_SetPriority` in `panda/board` (all at default priority); RX hook in FDCAN ISR (`drivers/fdcan.h:221`), TX hook and dispatcher in SPI DMA ISR (`stm32h7/llspi.h:56-61`) (GAP-50)"
+  baseline_impl: "Partial (panda `52cad44`): every enabled IRQ has an explicit priority (`board/drivers/irq_priorities.h`, host test `tests/irq_priorities`), all at one level until the WP-W-03 §5.4.2 scheme is adopted. Latency not measured (WP-W-03 §5.4.5, D-04); RX hook in FDCAN ISR, TX hook and dispatcher in SPI DMA ISR (GAP-50)"
   status: proposed
   source: WP-W-02
 
@@ -1161,7 +1161,7 @@
   allocated_to: "U-PND-MAIN, `panda.drivers.siren` (U-PND-HK)"
   verification: "UT, HIL"
   acceptance: "Siren ≤ 0.5 s for each trigger; no siren on a brake press or PCM cancel alone"
-  baseline_impl: "Partial: 3 s siren after 5 s heartbeat loss only (`main.c:169-171, 198-201`)"
+  baseline_impl: "Partial: 3 s siren after 5 s heartbeat loss (`main.c:169-171, 198-201`); EPS fault (SWSR-110) persisting 1 s while authority is granted → siren ≥ 3 s (panda `b790fca`, `drivers/eps_fault_siren.h`, host test `tests/eps_fault_siren`; HIL not run). Other (b) triggers and (c) not impl"
   status: proposed
   source: WP-W-02
 
@@ -1727,7 +1727,7 @@
 
 - id: SWSR-501b
   kind: swsr
-  text: "The bootstub shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) before jumping to the application; no software path shall be able to stop it."
+  text: "The firmware shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on every path that energises it, and no software path shall be able to stop it afterwards. (Amended in v0.14 to the TSR-501 v0.4 / HWSR-501c start condition; it previously required a start in the bootstub.)"
   asil: "B‡"
   parents: [TSR-501]
   parent_text: "TSR-501 (WP-W-02 §11; ASIL taken from TSR-501)"
@@ -1735,7 +1735,7 @@
   allocated_to: "IWDG1, LSI"
   verification: ""
   acceptance: ""
-  baseline_impl: "Not impl"
+  baseline_impl: "**Implemented, not verified on hardware:** `hw_watchdog_start()` from `set_intercept_relay()` (`drivers/harness.h`), panda `3859fa8`/`9f60e17`; 90 ms nominal, window mode"
   status: proposed
   source: WP-W-02
 

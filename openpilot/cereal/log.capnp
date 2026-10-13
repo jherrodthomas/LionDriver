@@ -142,6 +142,8 @@ struct OnroadEvent @0xc4fa6047f024e718 {
 
     # LionDriver: the panda's last reset was caused by its hardware watchdog (TSR-501)
     pandaWatchdogReset @105;
+    # LionDriver: pandad kept the panda in NOOUTPUT because its firmware is not a reference build (TSR-514, SWSR-514h)
+    pandaNotReferenceBuild @106;
   }
 }
 
@@ -581,6 +583,13 @@ struct PandaState @0xa7649e2575e4591e {
   # safety-mode lock of the reference build since the last panda reset (TSR-512)
   watchdogReset @42 :Bool;
   requestsRejected @43 :UInt16;
+  # LionDriver: the panda refuses lateral actuation because the car's EPS reports a fault (TSR-110)
+  epsFault @44 :Bool;
+  # LionDriver: the panda revoked authority because the SoC exceeded a TX rate budget (TSR-518); latched until the
+  # next safety mode change
+  txRateExceeded @45 :Bool;
+  # LionDriver: the panda firmware is a reference build with the safety-mode lock (TSR-514, TSR-619)
+  referenceBuild @46 :Bool;
 
   enum FaultStatus {
     none @0;

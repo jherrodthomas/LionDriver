@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-C-10 Cybersecurity goals, claims and concept |
 | Standard reference | ISO/SAE 21434:2021 §9.4 (cybersecurity goals and claims), §9.5 (cybersecurity concept); ASPICE 4.0 SEC.1 |
-| Version | 0.1 |
+| Version | 0.2 (status update 2026-10-12: implementation status of CSR-C-01 and CSR-C-02 in the reference build at `bf6ce8c`; not verified). History: 0.1 |
 | Status | Draft — goals and CAL proposals are for review; not approved until the preliminary cybersecurity assessment passes |
 | ASIL / scope | CS (cybersecurity); safety relation traced to SG-01…SG-07 |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); preliminary cybersecurity assessment by an independent assessor |
 | Approver | Project maintainer (acting cybersecurity manager) |
-| Baseline | `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
+| Baseline | `bf6ce8c` (status update 2026-10-12; opendbc `7993399`, panda `b790fca`). Concept originally at `8b8c6ae` (opendbc `229dc70`, panda `92eb565`) |
 
 > Defensive concept document. It states cybersecurity goals, claims and the controls that
 > meet them. It contains no exploitation detail or key material.
@@ -96,8 +96,8 @@ These are concept-level requirements. [WP-S-07](../03-system/WP-S-07-cybersecuri
 
 | ID | Requirement (one statement) | Parent CSG | CAL | Allocation | Verification method | Status / evidence |
 |---|---|---|---|---|---|---|
-| CSR-C-01 | The panda firmware shall enforce the Toyota safety mode and reject any mode/parameter change from the SoC that is not authorized for the reference configuration | CSG-01 | 3 | panda FW | Review + test (fault injection) | Not implemented; `0xdc` unauthenticated (GAP-09, `main_comms.h:222-225`) |
-| CSR-C-02 | Release panda firmware shall not accept a debug signing key and shall not enable debug-only capabilities (ALLOUTPUT, unrestricted relay drive, softloader) | CSG-01, CSG-02 | 3 | panda FW | Review + build-config audit | Not implemented; DEBUG+`ALLOW_DEBUG` default (GAP-25, `SConscript:12-20`) |
+| CSR-C-01 | The panda firmware shall enforce the Toyota safety mode and reject any mode/parameter change from the SoC that is not authorized for the reference configuration | CSG-01 | 3 | panda FW | Review + test (fault injection) | Not implemented; `0xdc` unauthenticated (GAP-09, `main_comms.h:222-225`). **2026-10-12: Implemented in the reference build (lock plus gating, `board/reference_lock.h`; TSR-512, TSR-513), not verified**; other builds unchanged |
+| CSR-C-02 | Release panda firmware shall not accept a debug signing key and shall not enable debug-only capabilities (ALLOUTPUT, unrestricted relay drive, softloader) | CSG-01, CSG-02 | 3 | panda FW | Review + build-config audit | Not implemented; DEBUG+`ALLOW_DEBUG` default (GAP-25, `SConscript:12-20`). **2026-10-12: Partial in the reference build, not verified**: relay drive (`0xc5`) and softloader entry (`0xd1` param 1) refused in a car mode; release-key, `ALLOW_DEBUG` and RDP parts open |
 | CSR-C-03 | The safety MCU shall boot only firmware whose integrity and authenticity are verified with a current cryptographic algorithm | CSG-02 | 3 | panda FW | Review + test | Not implemented; RSA-1024/SHA-1 (GAP-24, `rsa.h:37`, `sha.h:45`) |
 | CSR-C-04 | Flash read/write protection (RDP/WRP) shall be configured so the running safety firmware cannot be replaced or read out without authorization | CSG-02 | 3 | panda FW; user (provisioning) | Option-byte inspection | Not implemented; no RDP/WRP in code (GAP-38, `llflash.h:14`) |
 | CSR-C-05 | The recovery/bootloader path reachable from the SoC shall not flash unauthenticated (development) firmware in the reference configuration | CSG-02 | 3 | panda FW; SoC (pandad) | Review + test | Not implemented; dev bootstub flashed on boot failure (GAP-38, `pandad.py:34-39`) |

@@ -4,19 +4,19 @@
 |---|---|
 | Work product | WP-M-06 Confirmation measures plan (reviews, audit, assessment, independence) |
 | Standard reference | ISO 26262-2:2018 §6 (confirmation measures; Table 1 independence scheme); ISO 21448:2022 §4 (SOTIF management, release argument review); ISO/SAE 21434:2021 §6 (cybersecurity assessment); ISO/PAS 8800:2024 (assurance argument review, informative) |
-| Version | 0.1 |
+| Version | 0.2 (status update for the integrated envelope changes: queued maintainer acceptances, CR-05/CR-06 scope, confirmation folder; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All. Planned to ASIL D until the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)) is approved |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review of this plan by external assessor (I3 planned) |
 | Approver | Safety manager |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose
 
 This plan defines the confirmation measures for LionDriver: which work products get a confirmation review and at what independence, when the functional safety audits and assessments take place, who may perform them, and where the records go. It also covers the equivalent independent evaluations for SOTIF and cybersecurity.
 
-No confirmation measure has been performed at baseline `8b8c6ae`. No assessor has been engaged (D-06 open).
+No confirmation measure has been performed at baseline `8b8c6ae`, nor by 2026-10-12. No assessor has been engaged (D-06 open).
 
 Confirmation measures are separate from verification reviews. Verification reviews (normally by pull request, per [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md)) check a work product against its inputs and requirements. Confirmation measures check that the work product, the process and the overall result meet ISO 26262 and are adequate for the safety argument.
 
@@ -68,6 +68,8 @@ Integration, verification and validation plans and reports are not listed as sep
 4. Outcome: `Confirmed`, `Confirmed with findings` (findings tracked as issues), or `Not confirmed`.
 5. Record stored as `10-safety-case/confirmation/CR-nn-<WP-ID>-v<version>.md` (folder and naming rules: [`confirmation/README.md`](../10-safety-case/confirmation/README.md)).
 6. If the work product changes after confirmation in a way that the change impact analysis ([WP-P-02](../07-supporting/WP-P-02-change-management.md)) classifies as safety-relevant, the confirmation review is repeated or its scope is extended.
+
+Status 2026-10-12: no confirmation measure has been performed. Queued for the assessor when engaged: maintainer acceptances recorded as "not an independent review" (IWDG deviations D-1…D-3 in the [watchdog change record](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md); `0x411` option (a); EPS siren 1 s persistence; [DN-01](../05-software/design-notes/DN-01-tx-rate-supervision.md) D-1…D-6; WP-W-03 R-2 10 ms bound / WP-W-04 SWF-48). Scope additions: CR-05 includes the TSR-518 amendment and DN-01; CR-06 (SW) includes WP-W-03 §5.4 and WP-W-04 SWF-48.
 
 ## 5. Functional safety audit
 
@@ -147,7 +149,7 @@ Per ISO/SAE 21434 §6 and [WP-M-09](WP-M-09-cybersecurity-plan.md).
 
 ## 10. Records
 
-All confirmation records are stored in `assurance/10-safety-case/confirmation/` (folder to be created). Each record contains: identifier; object (work product ID, version, baseline commit); reviewer name and independence declaration; date; method; findings with IDs; outcome. Findings are tracked as GitHub issues labelled `confirmation-finding` and resolved via [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md). The register (WP-M-00 §4) points here for confirmation review and audit reports.
+All confirmation records are stored in [`assurance/10-safety-case/confirmation/`](../10-safety-case/confirmation/README.md). Each record contains: identifier; object (work product ID, version, baseline commit); reviewer name and independence declaration; date; method; findings with IDs; outcome. Findings are tracked as GitHub issues labelled `confirmation-finding` and resolved via [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md). The register (WP-M-00 §4) points here for confirmation review and audit reports.
 
 ## 11. Open items
 

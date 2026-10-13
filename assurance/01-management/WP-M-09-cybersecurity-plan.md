@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-M-09 Cybersecurity plan |
 | Standard reference | ISO/SAE 21434:2021 §6 (project dependent cybersecurity management), with activity references to §7–§15; UN R155 / R156 (informative); ASPICE 4.0 MAN.7, SEC.1–SEC.4 |
-| Version | 0.1 |
+| Version | 0.2 (status update for the integrated envelope changes: §5 activity status, GAP-09, OI-5; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | CS |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); cybersecurity assessment by an independent assessor (see §8) |
 | Approver | Project maintainer (acting cybersecurity manager) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bf6ce8c` (status update 2026-10-12) |
 
 ## 1. Purpose and scope
 
@@ -34,7 +34,7 @@ The [gap assessment §5](../00-assessment/gap-assessment.md#5-cybersecurity) giv
 | GAP-27 | Persistent remote connection to comma's server; RPCs to read live services, upload files to arbitrary URLs, tunnel SSH, read authorized keys, start camera streaming while onroad | `openpilot/system/athena/athenad.py:355, 620, 710, 757, 792` | [WP-C-09](../02-concept/WP-C-09-tara.md) |
 | GAP-28 | Vulnerability reports route to comma.ai; LionDriver has no intake | `SECURITY.md:5`; `.github/ISSUE_TEMPLATE/*` | [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) |
 
-Related findings with a cybersecurity aspect: GAP-09 (unauthenticated safety-mode change, `panda/board/main_comms.h:222-225`), GAP-20 (unauthenticated parameters and IPC), GAP-22 (models loaded with `pickle`, `openpilot/selfdrive/modeld/modeld.py:150, 159`), GAP-29 (submodules resolve to upstream repositories).
+Related findings with a cybersecurity aspect: GAP-09 (unauthenticated safety-mode change, `panda/board/main_comms.h:222-225`; mitigated in the reference build by TSR-512/513, 2026-10-12; not verified), GAP-20 (unauthenticated parameters and IPC), GAP-22 (models loaded with `pickle`, `openpilot/selfdrive/modeld/modeld.py:150, 159`), GAP-29 (submodules resolve to upstream repositories).
 
 **Signing constraint to resolve early.** Release panda firmware is verified against comma's release key (`panda/board/bootstub.c:47-65`). LionDriver cannot sign with that key. Any LionDriver-modified panda firmware therefore needs either a debug-key path (which GAP-25 says must not ship) or a LionDriver-controlled boot chain. This decision shapes WP-S-07 and is tracked as OI-1.
 
@@ -67,10 +67,10 @@ Each tailoring entry needs the assessor's agreement before G1.
 |---|---|---|---|---|
 | §6 | Plan, tailor, reuse analysis, off-the-shelf handling, CS case, CS assessment, release for post-development | This plan; [WP-M-12](WP-M-12-impact-analysis.md) (reuse analysis); [WP-K-03](../10-safety-case/WP-K-03-cybersecurity-case.md); [WP-K-05](../10-safety-case/WP-K-05-cybersecurity-assessment.md); [WP-P-10](../07-supporting/WP-P-10-release-management.md) | G0, G5 | This draft |
 | §7 | Distributed activities: supplier capability, responsibilities, CS interface | [WP-M-11](WP-M-11-upstream-and-supplier-management.md) | G0 | Draft in parallel |
-| §8 | Continual activities: cybersecurity monitoring, event evaluation, vulnerability analysis and management | [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md), [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md) | G0 (process running), G6 | Not running. `SECURITY.md` routes to comma (GAP-28) |
-| §9 | Concept: item definition (CS view), cybersecurity goals, claims, concept | [WP-C-01](../02-concept/WP-C-01-item-definition.md), [WP-C-10](../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) | G1 | Not started |
-| §15 | TARA methods: asset identification, threat scenarios, impact rating (safety, financial, operational, privacy), attack paths, feasibility, risk values, treatment decisions | [WP-C-09](../02-concept/WP-C-09-tara.md) | G1 (initial), updated each gate | Not started |
-| §10 | Product development: CS requirements and architecture, implementation, integration and verification | [WP-S-07](../03-system/WP-S-07-cybersecurity-requirements-architecture.md), [WP-W-11](../05-software/WP-W-11-cybersecurity-implementation-verification.md), [WP-W-01](../05-software/WP-W-01-software-development-environment-guidelines.md) | G2, G3 | Not started |
+| §8 | Continual activities: cybersecurity monitoring, event evaluation, vulnerability analysis and management | [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md), [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md) | G0 (process running), G6 | Intake defined ([`SECURITY.md`](../../SECURITY.md), GitHub private vulnerability reporting; enabling it in the repository settings is pending, B-07). Monitoring and vulnerability management not running |
+| §9 | Concept: item definition (CS view), cybersecurity goals, claims, concept | [WP-C-01](../02-concept/WP-C-01-item-definition.md), [WP-C-10](../02-concept/WP-C-10-cybersecurity-goals-and-concept.md) | G1 | Draft (WP-C-10 v0.1) |
+| §15 | TARA methods: asset identification, threat scenarios, impact rating (safety, financial, operational, privacy), attack paths, feasibility, risk values, treatment decisions | [WP-C-09](../02-concept/WP-C-09-tara.md) | G1 (initial), updated each gate | Draft (WP-C-09 v0.1, ratings unapproved) |
+| §10 | Product development: CS requirements and architecture, implementation, integration and verification | [WP-S-07](../03-system/WP-S-07-cybersecurity-requirements-architecture.md), [WP-W-11](../05-software/WP-W-11-cybersecurity-implementation-verification.md), [WP-W-01](../05-software/WP-W-01-software-development-environment-guidelines.md) | G2, G3 | Draft. CS-relevant envelope controls implemented in the reference build: mode lock (TSR-512/513), reduced TX whitelist (TSR-705), per-ID TX rate supervision (TSR-518); not CS-verified (WP-W-11) |
 | §11 | Cybersecurity validation of the item, including penetration testing | [WP-V-06](../06-validation/WP-V-06-cybersecurity-validation.md) | G5 | Not started |
 | §12 | Production control (key handling, firmware loading, configuration lock) | [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md), [WP-S-06](../03-system/WP-S-06-requirements-production-operation.md) | G5 | Not started |
 | §13 | Operations and maintenance: incident response, updates | [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) | G6 | Not started. Update path is upstream git-based (GAP-26) |
@@ -143,7 +143,7 @@ Tooling for SBOM generation and scanning is not in the repository today; selecti
 | OI-2 | Decide which remote features are disabled in the reference configuration (athena RPCs, SSH, live streaming, comma-hosted uploads) — WP-C-10 |
 | OI-3 | Define the LionDriver update mechanism replacing the git-branch updater, with signature verification (GAP-26) |
 | OI-4 | Select SBOM and vulnerability-scanning tooling; classify it under WP-P-07 |
-| OI-5 | Publish a LionDriver `SECURITY.md` and intake channel (GAP-28) |
+| OI-5 | Publish a LionDriver `SECURITY.md` and intake channel (GAP-28). Status 2026-10-12: `SECURITY.md` published (private vulnerability reporting, response times, scope); private vulnerability reporting not yet enabled in the repository settings (B-07) |
 | OI-6 | Engage an independent cybersecurity assessor and penetration tester |
 | OI-7 | Agree with the assessor the tailoring entries CT-1…CT-4 |
 | OI-8 | Determine whether driver-camera and location data handling needs a privacy impact assessment beyond the TARA privacy impact category |
