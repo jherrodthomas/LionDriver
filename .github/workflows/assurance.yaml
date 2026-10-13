@@ -12,6 +12,7 @@ on:
     paths:
       - 'assurance/**'
       - 'tools/sync/**'
+      - 'tools/safety/**'
       - 'README.md'
       - 'docs/CARS.md'
       - 'docs/liondriver/**'
@@ -21,6 +22,7 @@ on:
     paths:
       - 'assurance/**'
       - 'tools/sync/**'
+      - 'tools/safety/**'
       - 'README.md'
       - 'docs/CARS.md'
       - 'docs/liondriver/**'
@@ -63,6 +65,10 @@ jobs:
         python3 assurance/02-concept/fsc/test_fsc_figures.py
         python3 assurance/02-concept/sotif/sotif_figures.py --check
         python3 assurance/02-concept/sotif/test_sotif_figures.py
+    - name: FMEA, FMEDA and DFA figures match the YAML analyses (and their tests)
+      run: |
+        python3 tools/safety/fmea_diagrams.py --check
+        python3 tools/safety/test_fmea_diagrams.py
     - name: Fault tree diagrams and cut sets match WP-A-04 (and their tests)
       run: |
         python3 assurance/08-analyses/fta/fta_diagrams.py --check

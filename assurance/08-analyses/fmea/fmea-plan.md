@@ -1,6 +1,6 @@
 # LionDriver — FMEA Program Plan
 
-**Status:** Draft v0.6 (§1 flow diagram redrawn as Figure 1-1; text version kept; 2026-10-13) — Phase 0 complete; System FMEA rated (rev 0.5, BL-004); SW FMEA P1 elements rated (rev 0.6, BL-004); HARA draft rev 0.3
+**Status:** Draft v0.7 (generated FMEA, FMEDA and DFA figures, Figures 2-1, 3-1…3-11, 4-1; 2026-10-13). v0.6 (§1 flow diagram redrawn as Figure 1-1; text version kept; 2026-10-13) — Phase 0 complete; System FMEA rated (rev 0.5, BL-004); SW FMEA P1 elements rated (rev 0.6, BL-004); HARA draft rev 0.3
 **Scope:** 2020 Toyota Corolla LE (U.S.), comma 3X (`system/hardware/tici`) with integrated panda, current LionDriver software baseline
 **Covers:** System FMEA, DFMEA, PFMEA, SW FMEA, FMEDA
 
@@ -62,6 +62,10 @@ PFMEA ─► Release / install control plan  (feeds "configuration as assured")
 
 ---
 
+![Figure 2-1: DFA initiators DFI-01..DFI-19 by category against the 11 panda/SoC ASIL decompositions, with measures DM-01..DM-20 and open items](figures/generated/fig-2-1-dfa-initiators.svg)
+
+*Figure 2-1.* Dependent failure initiators against the FSC decompositions, coloured by assessment; measures by status (green only for `existing`). Drawn from `analyses/dfa.yaml` by `tools/safety/fmea_diagrams.py`; index of all generated figures: [figures/generated/README.md](figures/generated/README.md).
+
 ## 3. Analysis scopes
 
 ### 3.1 System FMEA
@@ -78,6 +82,10 @@ Functions under analysis (from `docs/SAFETY.md` and `selfdrived`/`controlsd`):
 
 Failure modes per function: loss, unintended, too much, too little, too early/late, stuck, wrong direction.
 
+![Figure 3-1: System FMEA structure tree SFM-SE-001..034 with functions SFM-FN-001..008](figures/generated/fig-3-1-sfm-structure.svg)
+
+*Figure 3-1.* System FMEA structure and functions (steps 2–3). *Figure 3-2.* Failure chains, sheets [1](figures/generated/fig-3-2-sfm-failure-chains-1.svg) [2](figures/generated/fig-3-2-sfm-failure-chains-2.svg) [3](figures/generated/fig-3-2-sfm-failure-chains-3.svg) [4](figures/generated/fig-3-2-sfm-failure-chains-4.svg) [5](figures/generated/fig-3-2-sfm-failure-chains-5.svg) [6](figures/generated/fig-3-2-sfm-failure-chains-6.svg). Drawn from `analyses/system-fmea.yaml`.
+
 ### 3.2 DFMEA (hardware)
 Structure tree:
 
@@ -85,6 +93,10 @@ Structure tree:
 2. **Integrated panda** — STM32H7 MCU, CAN/CAN-FD transceivers, SPI link to SoC, watchdog, power-on/relay control
 3. **Harness / harness box** — Toyota TSS2 camera connector, relay that intercepts the stock camera's CAN, connectors
 4. **Vehicle interfaces** (boundary, analysed as interfaces only) — EPS, ADAS ECU, gateway, power (12 V), mount/windshield
+
+![Figure 3-3: DFMEA structure tree DFM-SE-001..010 with functions](figures/generated/fig-3-3-dfm-structure.svg)
+
+*Figure 3-3.* DFMEA structure and functions. *Figure 3-4.* Failure chains, sheets [1](figures/generated/fig-3-4-dfm-failure-chains-1.svg) [2](figures/generated/fig-3-4-dfm-failure-chains-2.svg). Drawn from `analyses/dfmea.yaml`.
 
 ### 3.3 SW FMEA
 Prioritised by safety relevance (path from perception to actuator):
@@ -160,6 +172,10 @@ This file supports the narrative analysis in [WP-W-04](../../05-software/WP-W-04
 SW failure-mode guidewords: omission, commission, early, late, incorrect value (high/low/stale/frozen), corrupted, out-of-sequence, wrong mode.
 Model-level performance limitations go to the **SOTIF** analysis, not SW FMEA — SW FMEA covers the model as a software element (crash, stale output, wrong tensor shape, timeout).
 
+![Figure 3-5: SW FMEA structure tree SWF-SE-001..046 with functions and the number of failure modes per function](figures/generated/fig-3-5-swf-structure.svg)
+
+*Figure 3-5.* SW FMEA structure and functions. *Figure 3-6.* Failure chains, sheets [1](figures/generated/fig-3-6-swf-failure-chains-1.svg) [2](figures/generated/fig-3-6-swf-failure-chains-2.svg) [3](figures/generated/fig-3-6-swf-failure-chains-3.svg) [4](figures/generated/fig-3-6-swf-failure-chains-4.svg) [5](figures/generated/fig-3-6-swf-failure-chains-5.svg) [6](figures/generated/fig-3-6-swf-failure-chains-6.svg) [7](figures/generated/fig-3-6-swf-failure-chains-7.svg). *Figure 3-7.* [AP as rated vs. predicted after planned actions (not achieved)](figures/generated/fig-3-7-swf-action-effect.svg). Drawn from `analyses/sw-fmea.yaml`.
+
 ### 3.4 PFMEA
 LionDriver doesn't manufacture hardware, so "process" means the steps that produce the as-driven configuration:
 
@@ -172,6 +188,10 @@ LionDriver doesn't manufacture hardware, so "process" means the steps that produ
 
 Output: a **release & install control plan** (checklist) — this is the practical deliverable.
 
+![Figure 3-8: PFMEA process tree PFM-SE-001..030 with functions](figures/generated/fig-3-8-pfm-structure.svg)
+
+*Figure 3-8.* PFMEA process structure and functions. *Figure 3-9.* Failure chains, sheets [1](figures/generated/fig-3-9-pfm-failure-chains-1.svg) [2](figures/generated/fig-3-9-pfm-failure-chains-2.svg). Drawn from `analyses/pfmea.yaml`.
+
 ### 3.5 FMEDA
 - **Phase A (feasible now):** panda safety path — MCU, CAN transceivers, relay, watchdog, power supervision. Open schematic allows component-level analysis.
 - **Phase B (data-limited):** comma 3X compute — treat as QM or use a top-down/budget approach; document the gap rather than invent failure rates.
@@ -179,6 +199,10 @@ Output: a **release & install control plan** (checklist) — this is the practic
 - Metrics: SPFM, LFM, PMHF per safety goal, with diagnostic coverage justified per safety mechanism (ISO 26262-5 Annex D).
 
 ---
+
+![Figure 3-10: FMEDA SG-001 SPFM, LFM and λSPF+λRF against the ASIL D target, generic estimates, not verified](figures/generated/fig-3-10-fmeda-sg001-metrics.svg)
+
+*Figure 3-10.* FMEDA SG-001 and *Figure 3-11* [SG-009](figures/generated/fig-3-11-fmeda-sg009-metrics.svg): metrics against the ASIL target (rating-tables §6.3), split per component and failure mode, and safety-mechanism coverage. Failure rates are generic estimates; nothing here is verified. Drawn from `analyses/fmeda-sg001.yaml` and `analyses/fmeda-sg009.yaml`.
 
 ## 4. Method decisions
 
@@ -189,6 +213,10 @@ Output: a **release & install control plan** (checklist) — this is the practic
 - **Severity 9–10 or AP=H** items require an action with owner and due date, or a documented rationale.
 
 ---
+
+![Figure 4-1: Action Priority overview of the System FMEA, DFMEA, SW FMEA and PFMEA](figures/generated/fig-4-1-action-priority-overview.svg)
+
+*Figure 4-1.* AP counts as rated, where the causes sit in the AIAG-VDA AP table, and how AP H is treated (action status or rationale). Drawn from the four FMEA YAML files.
 
 ## 5. Repository format & traceability
 
@@ -225,6 +253,8 @@ tools/safety/
   export_fsc_xlsx.py           (FSC -> xlsx in fsc-builder layout, for fsc-checklist-reviewer)
   export_item_xlsx.py          (item definition -> xlsx in item-definition-builder layout, for item-def-checklist-reviewer)
   gen_vehicle_catalog.py       (vehicle catalog from docs/CARS.md and item/variants.yaml)
+  fmea_diagrams.py             (figures/generated/*.svg + README.md from the YAML; --check)
+  test_fmea_diagrams.py
 ```
 
 Review workbooks come from the builder/reviewer skills in jherrodthomas/automotive-skills-suite. Exports render the YAML as-is; the skills' heuristic ratings are never written back into the analyses.
