@@ -7,7 +7,7 @@
 | Model | [`sm_toy_auth_model.py`](sm_toy_auth_model.py): SM-TOY-AUTH ([record](../state-machines/sm-toy-auth.yaml), WP-W-05 §5.2) |
 | Harness | [`b2b_toy_auth.py`](b2b_toy_auth.py) |
 | Results | [`results/`](results/) |
-| Tool status | Classified in [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) as TL-27: an additional measure with no credit (TCL1, [TE-01](../../07-supporting/tool-evaluations/TE-01-modelling-tools.md)-D3); TCL2 if credit is ever claimed. No verification credit is taken from these runs |
+| Tool status | Classified in [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) as TL-29: an additional measure with no credit (TCL1, [TE-01](../../07-supporting/tool-evaluations/TE-01-modelling-tools.md)-D3); TCL2 if credit is ever claimed. No verification credit is taken from these runs |
 
 ## 1. What it does
 
@@ -89,4 +89,4 @@ opendbc_repo/.venv/bin/python assurance/05-software/reference-models/b2b_toy_aut
 - a deviation is no longer needed in either build, because the code or the specification changed and the option should be removed;
 - a mutant is not detected.
 
-CI runs `--all --gate` in the [`b2b` workflow](../../../.github/workflows/b2b.yaml) whenever `opendbc_repo`, this directory or the state-machine records change, and uploads the JSON as an artifact. A passing CI run is not a verification result (TE-01 TL-27).
+CI runs `--all --gate` in the [`b2b` workflow](../../../.github/workflows/b2b.yaml) whenever `opendbc_repo`, this directory or the state-machine records change, and uploads the JSON as an artifact. A passing CI run is not a verification result (TE-01 TL-29).

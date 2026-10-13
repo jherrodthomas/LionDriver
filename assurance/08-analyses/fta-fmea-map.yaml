@@ -20,7 +20,8 @@
 #   - warnings: an FMEA mode cited in a goal's tree whose effects do not cite that goal's hazards; a single-point
 #     event (computed from the tree) whose FMEA causes all claim a detection rating <= 4
 #
-# Status: SG-04 pilot, 2026-10-13. Draft, AI-assisted; each link needs review.
+# Status: SG-04 pilot, 2026-10-13; findings F-1..F-10 resolved the same day (WP-A-04 v0.9, SW FMEA rev 0.7, DFMEA rev 0.3,
+# System FMEA rev 0.6, PFMEA rev 0.3). Draft, AI-assisted; each link needs review.
 schema_version: 1
 source: assurance/08-analyses/WP-A-04-system-fta-fmea.md
 scope: [SG-04]
@@ -30,19 +31,18 @@ events:
   - id: BE-4.01
     class: systematic_sw
     fmea: [SWF-003]
-    note: >-
-      The lower bound -3.5 m/s² not derived from vehicle data. SWF-003 has no cause for it: SWF-003.C1 covers the upper
-      bound only (finding F-2).
+    note: SWF-003.C3 (lower bound -3.5 m/s² not derived; DFA DFI-14 / DM-10)
   - id: BE-4.02
     class: sotif
     fmea: [SFM-009]
     note: SFM-009.C1 (false lead) and SFM-009.C2 (controller overshoot)
   - id: BE-4.03
     class: random_hw
+    fmea: [DFM-019]
     fmeda: [fmeda-sg001:FMD-002, fmeda-sg001:FMD-010, fmeda-sg001:FMD-019]
     note: >-
-      Frame altered after the TX check. Only the SG-001 (lateral) FMEDA has these rows; there is no FMEDA for the
-      longitudinal path and no DFMEA failure mode for corruption after the check (finding F-3).
+      DFM-019 (frame altered between the TX check and the bus). The FMEDA rows are those of SG-001: the same TX path carries
+      0x2E4 and 0x343, so their rates apply; SG-04 has no FMEDA of its own and no SG-04 metrics yet.
   - id: BE-4.05
     class: systematic_sw
     fmea: [SWF-004]
@@ -52,30 +52,51 @@ events:
     note: PFM-011 (Experimental Mode or other parameters not at the reference) raises the phantom-braking rate
   - id: BE-4.07
     class: by_design
-    reason: The envelope passes any in-bound request while authority is granted; the hazard is the request (BE-4.06).
+    reason: The envelope passes any in-bound request while authority is granted; the hazard is the request (G4.3.1).
   - id: BE-4.09
     class: by_design
     reason: Intended driver-monitoring or fault soft-disable deceleration (HE-04.3); hazardous only unannounced (G4.4.1).
   - id: BE-4.10
     class: systematic_sw
-    fmea: [SFM-026]
-    note: >-
-      Nearest system-level mode is "takeover or disengagement alert not presented"; its causes do not include an
-      alert shown only at the start of the deceleration (longitudinal_planner.py:84-85) (finding F-4).
+    fmea: [SWF-050, SFM-026]
+    note: SWF-050 (deceleration starts with the soft-disable alert, no lead time); SFM-026 (alert not presented at all)
   - id: BE-4.11
     class: sotif
-    fmea: [SFM-009]
-    note: >-
-      SFM-009.C1 names a false FCW trigger. No SW FMEA row for the FCW decision on stale input
-      (selfdrived.py:440-445) (finding F-4).
+    fmea: [SFM-009, SWF-051]
+    note: SFM-009.C1 (false lead raises a valid FCW, SOTIF); SWF-051 (FCW from stale or invalid input, systematic)
   - id: BE-4.13
     class: systematic_sw
-    fmea: []
-    gap: No FMEA failure mode for a deceleration request sent while not engaged (SFM-008 covers acceleration only).
+    fmea: [SWF-052]
   - id: BE-4.14
     class: systematic_sw
-    fmea: []
-    gap: No FMEA failure mode for the deceleration step when authority is revoked (no item-side ramp, FSR-04.03).
+    fmea: [SWF-053]
+  - id: BE-4.16
+    class: systematic_sw
+    fmea: [SWF-003]
+    note: SWF-003.C2 (implementation defect in longitudinal_accel_checks)
+  - id: BE-4.17
+    class: systematic_sw
+    fmea: [SWF-046]
+    note: SWF-046.C1 (jerk limit applied before pitch compensation and the PID)
+  - id: BE-4.18
+    class: systematic_sw
+    fmea: [SWF-023, SWF-043]
+  - id: BE-4.19
+    class: random_hw
+    fmea: [DFM-011, SFM-034]
+  - id: BE-4.20
+    class: systematic_sw
+    fmea: [SWF-010]
+  - id: BE-4.21
+    class: systematic_sw
+    fmea: [SWF-012]
+    note: SWF-012 (relay malfunction not detected); the 1-2 s detection time is the design property that lets the commands combine
+  - id: BE-4.22
+    class: systematic_sw
+    fmea: [SFM-020]
+  - id: BE-4.23
+    class: systematic_sw
+    fmea: [SWF-017]
   - id: UE-4.04
     class: external
     ref: AOU-05R
@@ -88,13 +109,7 @@ events:
   - id: UE-4.15
     class: external
     ref: AOU-05R
-  # ---- events borrowed from other trees (G-ENV from SG-01, G4.4.1 from SG-02, G4.6.1 from SG-01 and SG-03)
-  - id: BE-1.06
-    class: systematic_sw
-    fmea: [SWF-001]
-    note: >-
-      Lateral check defect. In the SG-04 tree the envelope that fails to clamp is the longitudinal check, whose defect
-      (SWF-003.C2) has no event (finding F-1).
+  # ---- events borrowed from other trees (G-LENV from SG-01, G4.4.1 from SG-02, G4.6.1 from SG-01 and SG-03)
   - id: BE-1.07
     class: random_hw
     fmea: [DFM-001, DFM-003]
@@ -105,9 +120,6 @@ events:
   - id: BE-1.09
     class: systematic_sw
     fmea: [SWF-028, PFM-001]
-  - id: BE-1.10
-    class: random_hw
-    fmeda: [fmeda-sg001:FMD-002, fmeda-sg001:FMD-010, fmeda-sg001:FMD-019]
   - id: BE-1.12
     class: systematic_sw
     fmea: [SWF-007]
@@ -135,8 +147,12 @@ gates:
     fmea: [SFM-009]
   - id: G4.3
     fmea: [SFM-009]
-  - id: G-ENV
+  - id: G-LENV
     fmea: [SFM-029]
+  - id: G4.8
+    fmea: [SFM-034]
+  - id: G4.9
+    fmea: [SFM-020]
 
 not_in_fta:
   - fm: SFM-014
@@ -155,35 +171,3 @@ not_in_fta:
     goal: SG-04
     kind: justified
     reason: With the reference lock the panda enforces the reference model whatever the fingerprint (DFA DM-21); a wrong host configuration acts as a QM planner fault (BE-4.02).
-  - fm: SFM-034
-    goal: SG-04
-    kind: tree_gap
-    reason: Relay released while the item transmits puts stock ACC_CONTROL and item 0x343 on the bus together; no SG-04 branch covers conflicting deceleration commands (finding F-5).
-  - fm: DFM-011
-    goal: SG-04
-    kind: tree_gap
-    reason: As SFM-034 (relay stays released, hardware cause).
-  - fm: SWF-010
-    goal: SG-04
-    kind: tree_gap
-    reason: As SFM-034 (stock camera ACC messages forwarded while the item transmits, software cause).
-  - fm: SFM-020
-    goal: SG-04
-    kind: tree_gap
-    reason: Item deceleration during accelerator override has no SG-04 branch (finding F-6).
-  - fm: SWF-017
-    goal: SG-04
-    kind: tree_gap
-    reason: As SFM-020 (panda passes item deceleration during accelerator override).
-  - fm: SWF-023
-    goal: SG-04
-    kind: tree_gap
-    reason: G4.3 (unwarranted braking within the bound) lists only SOTIF causes; stale or replayed host frames are a systematic cause with the same effect (finding F-7).
-  - fm: SWF-043
-    goal: SG-04
-    kind: tree_gap
-    reason: As SWF-023 (deceleration computed from a stale or frozen planner output).
-  - fm: SWF-046
-    goal: SG-04
-    kind: tree_gap
-    reason: G4.2 has only the envelope's missing jerk limit (BE-4.05); the host-side step (jerk limit bypassed after it is applied) is not an event (finding F-8).

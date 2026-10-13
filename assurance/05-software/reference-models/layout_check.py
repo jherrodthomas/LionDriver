@@ -3,7 +3,7 @@
 
 The back-to-back run (b2b_toy_auth.py) packs every frame with opendbc's CANPacker from the DBC, so the model and the C
 share one input. A DBC error would therefore go unnoticed there if the C used the same wrong position (TE-01 §5,
-TL-27 known issue). This check uses a second source, the bit positions stated in WP-S-05 §11.1:
+TL-29 known issue). This check uses a second source, the bit positions stated in WP-S-05 §11.1:
 
   L0  the positions below are still the ones WP-S-05 §11.1 states (read from the document at run time).
   L1  DBC vs specification: packing the signal with the DBC changes exactly the stated bit (checksum byte excluded).

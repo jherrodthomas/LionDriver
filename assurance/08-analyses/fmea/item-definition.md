@@ -277,7 +277,7 @@ The identical panda and SoC steering limits under P2 are concrete evidence for D
 | **Harness** | Toyota A connector, harness box, comma power v3 |
 | **Software** | BL-001 (`baseline.yaml`) |
 | **Configuration** | Experimental Mode on (BL-001 default); openpilot longitudinal; safety model `SAFETY_TOYOTA`, parameter 73 |
-| **Analyses** | System FMEA rev 0.4, HARA rev 0.3, FSC rev 0.2, DFA rev 0.3 |
+| **Analyses** | System FMEA rev 0.6, HARA rev 0.4, FSC rev 0.3, DFA rev 0.5 |
 
 ---
 

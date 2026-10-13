@@ -3,7 +3,7 @@ name: b2b
 # Back-to-back run of the SM-TOY-AUTH reference model against the opendbc safety C (libsafety), both build
 # variants (assurance/05-software/reference-models). Fails if the model and the C diverge with all recorded
 # deviations on (a new difference), if a recorded deviation is no longer needed, or if a seeded model fault is
-# not detected. An additional measure: no verification credit is taken from it (TE-01 TL-27, not yet decided).
+# not detected. An additional measure: no verification credit is taken from it (TE-01 TL-29, not yet decided).
 
 on:
   push:

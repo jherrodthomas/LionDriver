@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for build_manifest.py (WP-P-07 TL-36, OI-12).
+"""Tests for build_manifest.py (WP-P-07 TL-38, OI-13).
 
 The manifest is built in a throwaway git repository with one submodule, controlled environment variables and a PATH
 holding only fake tools, so every field has a known expected value.

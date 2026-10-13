@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for fsc_model.py (WP-P-07 TL-35, OI-12).
+"""Tests for fsc_model.py (WP-P-07 TL-37, OI-13).
 
 Each completeness rule of check() has a one-entry change to the real model that must make it fail, and the real
 model must pass. The model is patched in memory only; no file is written.

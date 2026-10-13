@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for hara_model.py (WP-P-07 TL-34, OI-12).
+"""Tests for hara_model.py (WP-P-07 TL-36, OI-13).
 
 The ASIL table is checked exhaustively against check_trace.py's risk graph, a second implementation written
 separately. The rating rules are checked as properties over every generated hazardous event. --check must pass on

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for check_state_machines.py (proposed TL-26, TE-01 §5: known-bad records and golden output).
+"""Tests for check_state_machines.py (proposed TL-28, TE-01 §5: known-bad records and golden output).
 
 Each check S1-S6 has a record that must trigger it and a minimal change that must clear it, so that a check which
 stops firing, or fires on a correct record, fails here. The generated WP-W-05 §5 table and diagram are compared with

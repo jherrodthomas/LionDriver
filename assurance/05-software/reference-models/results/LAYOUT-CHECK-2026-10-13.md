@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Draft — AI-assisted (Claude), not reviewed. Not a verification result (tool not classified; [TE-01](../../../07-supporting/tool-evaluations/TE-01-modelling-tools.md) TL-27) |
+| Status | Draft — AI-assisted (Claude), not reviewed. Not a verification result (tool not classified; [TE-01](../../../07-supporting/tool-evaluations/TE-01-modelling-tools.md) TL-29) |
 | Purpose | Close part of the common-cause gap of the back-to-back run: there, the model and the C both get frames packed from the same DBC, so a DBC error that the C shares would go unnoticed ([B2B-TOY-AUTH-2026-10-13](B2B-TOY-AUTH-2026-10-13.md) §5) |
 | Code under test | opendbc `7993399` (libsafety, both build variants); DBC `toyota_nodsu_pt_generated` |
 | Tool | [`layout_check.py`](../layout_check.py) SHA-256 `bd045f1a…77c6`; same environment as the back-to-back run (CPython 3.12.13, gcc 13.3.0) |

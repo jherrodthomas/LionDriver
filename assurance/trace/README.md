@@ -32,7 +32,7 @@ The Markdown work products remain the documents that are reviewed and approved. 
 | `tools/check_trace.py` | Consistency checker (§6) | — | — |
 | `tools/check_links.py` | Relative-link checker for all of `assurance/` (WP-P-04) | — | — |
 | `tools/sync_requirements.py` | Regenerates `fsr.yaml`, `tsr.yaml`, `swsr.yaml` and `hwsr.yaml` from the work products; `--check` reports drift | — | — |
-| `tools/trace_map.py` | Generates [`maps/aspice-trace-map.md`](maps/aspice-trace-map.md): the ASPICE 4.0 V-model with the items of each process and the derivation and verification coverage, from the items and the test-specification tables; `--check` fails if the map is stale | — | — |
+| `tools/trace_map.py` | Generates [`maps/aspice-trace-map.md`](maps/aspice-trace-map.md) and its Figure 1 ([`maps/fig-1-aspice-v-model.svg`](maps/fig-1-aspice-v-model.svg)): the ASPICE 4.0 V-model with the items of each process and the derivation and verification coverage, from the items and the test-specification tables; `--check` fails if the map is stale | — | — |
 
 All items carry `status: proposed`: none of the source work products is approved. The HARA ratings are proposals pending the I3 confirmation review (CR-02).
 
