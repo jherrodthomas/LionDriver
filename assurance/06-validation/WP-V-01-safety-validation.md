@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-01 Safety validation plan, specification and report |
 | Standard reference | ISO 26262-4:2018 §8 (safety validation); ISO 26262-3:2018 §6 (controllability basis), §7 (external measures, AoU); ASPICE 4.0 VAL.1. Informative: RESPONSE 3 Code of Practice for ADAS controllability assessment; ISO 11270, ISO 15622 |
-| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.5 (§3 verification and validation hierarchy added as Figure 3-1; 2026-10-13). 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (plan and specification). Report section is a template: **Not yet executed** |
 | ASIL / scope | Up to ASIL C (SG-01), D if AOU-01/02 fail ([WP-C-03](../02-concept/WP-C-03-hara.md)) |
 | Author | Assurance team (initial draft) |
@@ -47,6 +47,10 @@ Out of scope: SOTIF validation of functional insufficiencies ([WP-V-02](WP-V-02-
 | Analysis of recorded data | Timing from CAN logs; lateral deviation vs time |
 | Long-term / user tests in real operating conditions | Public-road validation drives (after G1) for alert behaviour, nuisance rates and DM |
 | Review | Evidence that AoU results are consistent with the HARA ratings; that external measures are fit for purpose |
+
+![Figure 3-1: verification and validation hierarchy of LD-SDA: VS-VAL (WP-V-01) validates the item; VS-SQ (WP-S-09) and VS-SI (WP-S-08) verify the system; VS-HW (WP-H-06), VS-ML (WP-W-10), VS-SWQ (WP-W-08) and VS-SWI (WP-W-07) verify components E-04/E-05, E-02 and E-03; VS-UV (WP-W-06) verifies the E-03 units; VS-FI (WP-V-05) cuts across levels; no specification has been executed](figures/fig-v01-3-1-verification-hierarchy.svg)
+
+*Figure 3-1.* Where this validation sits on the right side of the V: each level of the element hierarchy of [WP-C-01 Figure 3-1](../02-concept/WP-C-01-item-definition.md#31-elements-inside-the-item) with the test specification that verifies or validates it, its case-ID prefix, the number of specified cases and the requirements its cases name (both from the generated [trace map](../trace/maps/aspice-trace-map.md) §2 and §5), and its results as each document records them: none has been executed (§7 here). SOTIF validation is out of scope of this document (§1) and is shown dashed. Source: [`figures/fig-v01-3-1-verification-hierarchy.svg`](figures/fig-v01-3-1-verification-hierarchy.svg); change it together with §1, §3 and §7 and when a case count or result in the work products shown changes.
 
 ## 4. Acceptance criteria (overview)
 

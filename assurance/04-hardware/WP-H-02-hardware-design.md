@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay) |
 | Standard reference | ISO 26262-5:2018 §7 (hardware design: architectural and detailed design, safety-related HW elements); ISO 26262-8:2018 §13; ASPICE 4.0 HWE.2 |
-| Version | 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
+| Version | 0.6 (§3.2 element hierarchy added as Figure 3-2; power-path diagram renumbered Figure 3-3; 2026-10-13). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
 | Status | Draft |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-07) |
 | Author | Assurance team (initial draft) |
@@ -114,6 +114,10 @@ Bus numbering is that of the Toyota safety mode: bus 0 = car side, bus 2 = camer
 | HE-16 | Fan and tachometer | Cooling of SoC and MCU | availability | PWM on TIM3 ch3, enable line, tach on EXTI2 | `drivers/fan.h`; `stm32h7/llfan.h:14` |
 | HE-17 | "Siren" acoustic output | SoC-independent warning on SoC loss (FSR-02.05) | SG-02, SG-06 | tres: driven over I2C5 (open drain PC10/PC11); cuatro: TIM7 + SAI4 audio path. Whether it shares amplifier/speaker with the SoC audio is unknown | `boards/tres.h:129-132`; `drivers/fake_siren.h:71, 92`; `boards/cuatro.h:87-96` |
 
+![Figure 3-2: hardware element hierarchy: the LD-SDA system of WP-C-01 Figure 3-1 with its hardware components E-04 device hardware (variants tres and cuatro) and E-05 harness; E-04 consists of the panda safety MCU resources HE-01 to HE-06 and HE-15, the board circuits HE-07, HE-14, HE-16 and HE-17, the SoC-MCU lines HE-11 to HE-13 and eight QM parts; E-05 consists of HE-08 to HE-10; each part with its safety goals, the HWSRs this document names and its unknowns UK-01 to UK-08](figures/fig-h02-3-2-hardware-element-hierarchy.svg)
+
+*Figure 3-2.* The elements of this table arranged on the ISO 26262-1 hierarchy (3.39 element: component, hardware part) below the two hardware components of [WP-C-01](../02-concept/WP-C-01-item-definition.md) Figure 3-1; the panels inside E-04 group the parts and are not a hierarchy level. Each part carries its SG column, the HWSRs of [WP-H-01](WP-H-01-hardware-safety-requirements.md) that this document names for it (with the §6 change that implements them), the variant data of §2 and the unknowns of §5, drawn amber and dashed as still to be obtained; HE-06 is implemented but not verified on hardware, and the §6 harness adapter (DC-02, DC-03) is proposed and not decided (OI-4). Source: [`figures/fig-h02-3-2-hardware-element-hierarchy.svg`](figures/fig-h02-3-2-hardware-element-hierarchy.svg); change it together with §2, §3.2, §4, §5 and §6.
+
 Non-safety-relevant (QM) hardware: cameras, IR illumination, display, modem, GNSS, IMU, USB. They
 matter for SOTIF (cameras, IMU) and for dependent-failure analysis (shared power, thermal,
 EMC) in [WP-A-03](../08-analyses/WP-A-03-dependent-failure-analysis.md).
@@ -133,11 +137,11 @@ disturb the stock path (WP-H-03 FM-CAN-03).
 
 ### 3.4 Power path
 
-![Figure 3-2: power path from vehicle 12 V through the E-05 harness and the device input to the SoC/PMIC rail (DC_IN enable PC11 on cuatro), the MCU regulator and STM32H7 SMPS/LDO (HE-05), and the relay coil supply (HE-08), with unknowns UK-03, UK-05 and UK-08](figures/fig-h02-3-4-power-path.svg)
+![Figure 3-3: power path from vehicle 12 V through the E-05 harness and the device input to the SoC/PMIC rail (DC_IN enable PC11 on cuatro), the MCU regulator and STM32H7 SMPS/LDO (HE-05), and the relay coil supply (HE-08), with unknowns UK-03, UK-05 and UK-08](figures/fig-h02-3-3-power-path.svg)
 
-*Figure 3-2.* Supply branches from the vehicle 12 V input to the SoC rail, the MCU rail and the relay coil. Dashed boxes are unknown or unconfirmed; the bootkick line (HE-13) shows that the MCU can switch SoC power. Source: [`figures/fig-h02-3-4-power-path.svg`](figures/fig-h02-3-4-power-path.svg); change it together with §3.2, §3.4 and §5.
+*Figure 3-3.* Supply branches from the vehicle 12 V input to the SoC rail, the MCU rail and the relay coil. Dashed boxes are unknown or unconfirmed; the bootkick line (HE-13) shows that the MCU can switch SoC power. Source: [`figures/fig-h02-3-3-power-path.svg`](figures/fig-h02-3-3-power-path.svg); change it together with §3.2, §3.4 and §5.
 
-<details><summary>Text version of Figure 3-2</summary>
+<details><summary>Text version of Figure 3-3</summary>
 
 ```
 Vehicle 12 V ─ harness ─ device input ─┬─ (cuatro) DC_IN enable PC11 ── SoC/PMIC rail

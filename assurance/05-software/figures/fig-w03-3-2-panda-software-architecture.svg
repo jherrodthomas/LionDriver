@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1130" viewBox="0 0 1280 1130" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
-  <title id="t">Figure 3-1. Software architecture of the panda firmware and its host interface (WP-W-03 §3.2)</title>
+  <title id="t">Figure 3-2. Software architecture of the panda firmware and its host interface (WP-W-03 §3.2)</title>
   <desc id="d">On the left, the QM host stack on the SoC (host.pandad) exchanges SPI4 transfers with the panda STM32H7, which runs the safety envelope (B‡) in one address space without MPU. U-PND-SPI passes control requests to U-PND-COMMS comms_control_handler: 0xdc goes to U-PND-MAIN set_safety_mode and then U-SAF-CORE set_safety_hooks, 0xf3 updates the heartbeat variables, 0xc5 drives the U-PND-HARN relay under the reference lock. CAN writes go through comms_can_write and can_send in U-PND-FDCAN to safety_tx_hook (U-SAF-CORE, U-SAF-TOY, U-SAF-LAT/LONG); accepted frames go to can_queues, process_can with XOR check and the FDCAN1/3 TX FIFO onto bus 0, rejected frames to rx_q. Frames received on bus 0 and bus 2 enter can_rx, which calls safety_fwd_hook (forwarded with can_send skipping the hook to the other bus) and safety_rx_hook (U-SAF-TOY rx, controls_allowed) and pushes them to rx_q, read by comms_can_read and sent over SPI to the SoC. Periodic contexts: TIM4 safety task at 100 Hz, TIM12 tick at 8 Hz with a 1 Hz branch, TIM6 at 1 Hz, and the main loop. Interfaces SI-01 to SI-10 of §3.3 are tagged.</desc>
   <defs>
     <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
@@ -19,7 +19,7 @@
   <rect width="1280" height="1130" fill="#FFFFFF"/>
 
   <!-- header -->
-  <text x="40" y="44" class="t b" font-size="20">Figure 3-1 · Software architecture of the panda firmware</text>
+  <text x="40" y="44" class="t b" font-size="20">Figure 3-2 · Software architecture of the panda firmware</text>
   <text x="40" y="66" class="m" font-size="12.5">Units U-xxx (§3.1) and interfaces SI-xx (§3.3) · QM host stack on the SoC, safety envelope (B‡) on the panda STM32H7</text>
   <text x="1240" y="44" class="m s" text-anchor="end">WP-W-03 §3.2</text>
   <text x="1240" y="62" class="m s" text-anchor="end">units §3.1 · interfaces §3.3 · contexts §5.1</text>

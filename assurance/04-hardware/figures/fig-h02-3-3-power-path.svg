@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
-  <title id="t">Figure 3-2. Power path from the vehicle 12 V supply to the SoC, the panda MCU and the relay coil (WP-H-02 §3.4)</title>
+  <title id="t">Figure 3-3. Power path from the vehicle 12 V supply to the SoC, the panda MCU and the relay coil (WP-H-02 §3.4)</title>
   <desc id="d">Vehicle 12 V passes through the E-05 harness to the device input, whose protection is unknown (UK-08). From the device input three branches leave: on cuatro, the DC_IN enable on PC11 switches the SoC/PMIC rail that feeds the QM application SoC; an MCU regulator of unknown type feeds the STM32H7, which uses its internal SMPS or LDO (HE-05); and the relay coil supply, whose location (possibly in the harness box) is unknown (UK-03), feeds the intercept relay coil (HE-08). The MCU can switch SoC power through bootkick (HE-13) and keeps running with the SoC off. Whether MCU and SoC share a regulator (UK-05) and whether there is a supply supervisor is unknown.</desc>
   <defs>
     <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
@@ -20,7 +20,7 @@
   <rect width="1000" height="560" fill="#FFFFFF"/>
 
   <!-- header -->
-  <text x="40" y="44" class="t b" font-size="20">Figure 3-2 · Power path</text>
+  <text x="40" y="44" class="t b" font-size="20">Figure 3-3 · Power path</text>
   <text x="40" y="66" class="m" font-size="12.5">Vehicle 12 V to SoC, panda MCU and relay coil · dashed boxes are unknown or unconfirmed</text>
   <text x="960" y="44" class="m s" text-anchor="end">WP-H-02 §3.4</text>
   <text x="960" y="62" class="m s" text-anchor="end">elements §3.2 · unknowns §5</text>
