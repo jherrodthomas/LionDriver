@@ -11,6 +11,66 @@ structure follows UL 4600 principles where they apply to a supervised Level 2 sy
 > existing here does not mean the activity behind it is complete. Read the `Status` field
 > of each work product and the register in [`01-management/WP-M-00-work-product-register.md`](01-management/WP-M-00-work-product-register.md).
 
+## Living Safety Case
+
+LionDriver publishes its safety argument as it is built: the claims it makes, the evidence for each one, the known counter-evidence against it, and what has and has not been reviewed. The figures below are generated from the structured records in [`case/`](case/README.md) and checked by CI on every pull request. Nothing on this card is typed by hand.
+
+<p align="center">
+  <img src="../docs/assets/liondriver/assurance/dashboard.svg" width="100%" alt="Living Safety Case dashboard generated from the assurance records. The same values are listed as text in the table below.">
+</p>
+
+> **Assurance status represents recorded engineering evidence and review state. It does not constitute certification or approval for unsupervised operation.**
+
+<p align="center">
+  <img src="../docs/assets/liondriver/assurance/lifecycle.svg" width="100%" alt="Status of the six lifecycle areas, derived from the evidence records. The same values are listed as text in the table below.">
+</p>
+
+<details>
+<summary><b>Recorded values as text</b></summary>
+
+<!-- BEGIN GENERATED: assurance-summary (assurance/case/tools/generate_dashboard.py) -->
+
+| Indicator | Recorded value |
+|---|---|
+| Assurance state | Development |
+| Engineering baseline | `BL-002` at `bf6ce8c` (under development) |
+| Registered safety claims | 36 |
+| Claims with accepted supporting evidence | 0 |
+| Registered evidence items | 50 (0 available, 35 drafted, 15 not yet performed) |
+| Evidence requiring review | 35 |
+| Open assurance actions | 5 |
+| Open defeaters (known counter-evidence) | 41 |
+| Evaluated configurations | 1 |
+| Assurance-supported configurations | 0 |
+| Records digest | `a08f42e912d0` |
+
+| Lifecycle area | Status | Evidence (drafted / missing / accepted) |
+|---|---|---|
+| Safety Management | In Progress | 11 (10 / 1 / 0) |
+| Hazard Analysis | In Progress | 6 (6 / 0 / 0) |
+| Safety Concepts | In Progress | 7 (7 / 0 / 0) |
+| Technical Implementation | In Progress | 5 (5 / 0 / 0) |
+| Verification and Validation | In Progress | 16 (5 / 11 / 0) |
+| Safety Case and Review | In Progress | 5 (2 / 3 / 0) |
+
+<!-- END GENERATED: assurance-summary -->
+
+</details>
+
+**Read more:** [full safety case (WP-K-01)](10-safety-case/WP-K-01-safety-case.md) · [how the figures are computed](case/README.md#5-dashboard-figures) · [known gaps](00-assessment/gap-assessment.md)
+
+**What the dashboard guarantees:**
+
+- A claim counts as accepted only when a recorded review accepts it, every piece of evidence it cites is available and accepted, and no defeater against it is open. The [validator](case/tools/validate.py) refuses anything else.
+- A passing CI run, a passing test or the existence of a document never accepts a claim on its own, and an AI-generated review is not a substitute for independent confirmation.
+- A change to safety-relevant code needs an [impact analysis](01-management/WP-M-12-impact-analysis.md) that names the assurance records it affects.
+
+How the records, the validator and the generators fit together:
+
+![Figure: records, validator, generators and published outputs of the Living Safety Case](case/figures/fig-case-1-how-it-works.svg)
+
+Details: [Living Safety Case records](case/README.md).
+
 ## Start here
 
 | Document | Why read it |

@@ -6,7 +6,8 @@ Outputs (all deterministic, no timestamps):
   docs/assets/liondriver/assurance/dashboard.svg   metrics card shown in the README
   docs/assets/liondriver/assurance/lifecycle.svg   lifecycle-area status card
   docs/assets/liondriver/assurance/ecosystem.svg   vehicle classification card
-  README.md, between the assurance-summary markers  the same figures as text
+  assurance/README.md, between the assurance-summary markers   the same figures as text
+  README.md, between the assurance-headline markers            one-line status strip
 
 Usage:
   python3 assurance/case/tools/generate_dashboard.py           # write the outputs
@@ -27,8 +28,11 @@ from caselib import CASE_DIR, REPO_ROOT, load_case, summarize, validate
 ASSET_DIR = REPO_ROOT / "docs" / "assets" / "liondriver" / "assurance"
 STATUS_JSON = CASE_DIR / "status.json"
 README = REPO_ROOT / "README.md"
+ASSURANCE_README = REPO_ROOT / "assurance" / "README.md"
 BEGIN = "<!-- BEGIN GENERATED: assurance-summary (assurance/case/tools/generate_dashboard.py) -->"
 END = "<!-- END GENERATED: assurance-summary -->"
+HEAD_BEGIN = "<!-- BEGIN GENERATED: assurance-headline (assurance/case/tools/generate_dashboard.py) -->"
+HEAD_END = "<!-- END GENERATED: assurance-headline -->"
 
 FONT = "Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif"
 C = {
@@ -240,12 +244,28 @@ def readme_block(s: dict) -> str:
   return "\n".join(lines)
 
 
+def headline_block(s: dict) -> str:
+  ev, cl = s["evidence"], s["claims"]
+  bl = s["baseline"]
+  line = (f"**{s['assurance_state']}** · baseline `{bl['id']}` at `{bl['source_revision']}` · "
+          f"{cl['registered']} claims ({cl['with_accepted_evidence']} with accepted evidence) · "
+          f"{ev['registered']} evidence items ({ev['accepted']} accepted) · "
+          f"{s['defeaters_open']} open defeaters · records digest `{s['records_digest']}`")
+  return "\n".join([HEAD_BEGIN, "", line, "", HEAD_END])
+
+
+def _replace(text: str, begin: str, end: str, block: str) -> str:
+  if begin in text and end in text:
+    pre, rest = text.split(begin, 1)
+    text = pre + block + rest.split(end, 1)[1]
+  return text
+
+
 def outputs(s: dict) -> dict[Path, str]:
   readme = README.read_text(encoding="utf-8")
-  if BEGIN in readme and END in readme:
-    pre, rest = readme.split(BEGIN, 1)
-    post = rest.split(END, 1)[1]
-    readme = pre + readme_block(s) + post
+  readme = _replace(readme, HEAD_BEGIN, HEAD_END, headline_block(s))
+  readme = _replace(readme, BEGIN, END, readme_block(s))
+  assurance_readme = _replace(ASSURANCE_README.read_text(encoding="utf-8"), BEGIN, END, readme_block(s))
   # Keep the upstream model count quoted in the README prose in step with docs/CARS.md.
   readme = re.sub(r"\*\*[0-9]+ car models\*\*", f"**{s['configurations']['upstream_compatible']['stated_count']} car models**", readme)
   return {
@@ -254,6 +274,7 @@ def outputs(s: dict) -> dict[Path, str]:
     ASSET_DIR / "lifecycle.svg": lifecycle_svg(s),
     ASSET_DIR / "ecosystem.svg": ecosystem_svg(s),
     README: readme,
+    ASSURANCE_README: assurance_readme,
   }
 
 
