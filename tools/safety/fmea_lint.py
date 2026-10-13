@@ -765,6 +765,169 @@ def check_hara_mapping(name, doc, ctx, res: Result):
     ", ".join(f"{a} {sum(r['agreement'] == a for r in doc['goals'])}" for a in AGREEMENTS))
 
 
+FTA_CLASSES = {   # event class -> FMEA prefixes of which at least one must back it (None: no FMEA, a reason instead)
+  "systematic_sw": ("SWF", "SFM"),
+  "systematic_hw": ("DFM",),
+  "random_hw": ("DFM", "FMEDA"),
+  "sotif": ("SFM",),
+  "installation": ("PFM",),
+  "by_design": None,
+  "external": None,
+}
+WP_C03_GOAL_EVENTS = re.compile(r"^\| \*\*(SG-\d{2})\*\* \|[^|]*\|[^|]*\|([^|]*)\|")
+HE_RANGE = re.compile(r"HE-(\d{2})\.(\d+)(?:\s*[–-]\s*(\d{2})\.(\d+))?")
+
+
+def goal_events(wp_c03_text: str) -> dict[str, set[str]]:
+  """Hazardous events each WP-C-03 safety goal covers, from the 'source' column of its goal table."""
+  out: dict[str, set[str]] = {}
+  for line in wp_c03_text.splitlines():
+    m = WP_C03_GOAL_EVENTS.match(line)
+    if not m:
+      continue
+    evs = out.setdefault(m.group(1), set())
+    for h, a, h2, b in HE_RANGE.findall(m.group(2)):
+      if h2 and h2 != h:
+        continue
+      for i in range(int(a), int(b or a) + 1):
+        evs.add(f"HE-{h}.{i}")
+  return out
+
+
+def _fta_module(root: Path):
+  sys.path.insert(0, str(root / "assurance" / "08-analyses" / "fta"))
+  try:
+    import fta_diagrams
+  finally:
+    sys.path.pop(0)
+  return fta_diagrams
+
+
+def fta_reach(fd, tree) -> tuple[list, set[str]]:
+  """Leaf events (first node per id) and gate ids reachable from a tree's top event, following transfers."""
+  leaves: dict[str, object] = {}
+  gates: set[str] = set()
+
+  def visit(n):
+    if n.kind == "transfer_in":
+      gates.add(n.ident)
+      visit(n.ref_of)
+      return
+    if n.children:
+      if n.ident:
+        gates.add(n.ident)
+      for c in n.children:
+        visit(c)
+    elif n.ident:
+      leaves.setdefault(n.ident, n)
+
+  visit(tree.root)
+  return list(leaves.values()), gates
+
+
+def check_fta_fmea_map(name, doc, ctx, res: Result):
+  """FTA basic events <-> FMEA failure modes (ISO 26262-9 clause 8), for the goals in scope."""
+  fd = _fta_module(ctx.root)
+  trees = fd.parse_document((ctx.root / doc["source"]).read_text(encoding="utf-8"))
+  fd.resolve(trees)
+  by_goal = {t.goal: t for t in trees}
+  hm = load_yaml((ctx.root / SAFETY_DIR / "hara-mapping.yaml").read_text())
+  sg_events = goal_events((ctx.root / hm["target"]).read_text(encoding="utf-8"))
+  hz_events = {h["second"]: set(h["events"]) for h in hm["hazards"]}
+
+  events = {e["id"]: e for e in doc.get("events", [])}
+  gates = {g["id"]: g for g in doc.get("gates", [])}
+
+  def refs_ok(where, row):
+    for f in row.get("fmea", []):
+      if f not in ctx.fm_index:
+        res.error(where, f"FMEA failure mode {f} not found")
+    for f in row.get("fmeda", []):
+      stem, _, fid = f.partition(":")
+      if fid not in ctx.fmeda_ids.get(stem, set()):
+        res.error(where, f"FMEDA failure mode {f} not found")
+
+  for eid, e in events.items():
+    where = f"{name} {eid}"
+    refs_ok(where, e)
+    cls = e.get("class")
+    if cls not in FTA_CLASSES:
+      res.error(where, f"class {cls} not one of {', '.join(FTA_CLASSES)}")
+      continue
+    need = FTA_CLASSES[cls]
+    backing = [f.split("-")[0] for f in e.get("fmea", [])] + ["FMEDA"] * len(e.get("fmeda", []))
+    if need is None:
+      if not (e.get("reason") or e.get("ref")):
+        res.error(where, f"{cls} event needs a reason or ref")
+    elif not backing:
+      if not e.get("gap"):
+        res.error(where, "no FMEA backing and no gap statement")
+    elif not any(b in need for b in backing):
+      res.error(where, f"{cls} event needs one of {', '.join(need)}; has {', '.join(sorted(set(backing)))}")
+
+  for gid, g in gates.items():
+    refs_ok(f"{name} {gid}", g)
+
+  nf = {(r["fm"], r["goal"]): r for r in doc.get("not_in_fta", [])}
+  for (fm, _goal), r in nf.items():
+    if fm not in ctx.fm_index:
+      res.error(f"{name} not_in_fta {fm}", "FMEA failure mode not found")
+    if r.get("kind") not in ("justified", "tree_gap") or not r.get("reason"):
+      res.error(f"{name} not_in_fta {fm}", "kind must be justified or tree_gap, with a reason")
+
+  for goal in doc["scope"]:
+    tree = by_goal.get(goal)
+    if tree is None:
+      res.error(name, f"scope goal {goal} has no fault tree in {doc['source']}")
+      continue
+    leaves, gate_ids = fta_reach(fd, tree)
+    leaf_ids = {n.ident for n in leaves}
+    for eid in sorted(leaf_ids - set(events), key=fd_sort_key):
+      res.error(f"{name} {goal}", f"{eid} is in the {goal} tree but not mapped")
+    for gid in set(gates) - gate_ids - {g for t in by_goal.values() for g in fta_reach(fd, t)[1]}:
+      res.error(f"{name} {gid}", "gate not found in any tree")
+
+    goal_hz = {hz for hz, evs in hz_events.items() if evs & sg_events.get(goal, set())}
+    cited = {f for e in leaf_ids if e in events for f in events[e].get("fmea", [])}
+    cited |= {f for g in gate_ids if g in gates for f in gates[g].get("fmea", [])}
+    relevant = {fid for fid, fm in ctx.fm_index.items() if {x.get("hazard") for x in fm["effects"]} & goal_hz}
+    for fid in sorted(relevant - cited):
+      if (fid, goal) not in nf:
+        hz = ", ".join(sorted({x.get("hazard") for x in ctx.fm_index[fid]["effects"]} & goal_hz))
+        res.error(f"{name} {goal}", f"{fid} cites {hz} but no {goal} event or gate cites it, and it is not in not_in_fta")
+    for fid in sorted(cited - relevant):
+      if fid in ctx.fm_index:
+        res.warn(f"{name} {goal}", f"{fid} is cited in the {goal} tree but its effects cite none of {', '.join(sorted(goal_hz))}")
+
+    hot = fd.single_point_nodes(tree)
+    spf = {n.ident for n in leaves if id(n) in hot}
+    for eid in sorted(spf & set(events)):
+      causes = [c for f in events[eid].get("fmea", []) for c in ctx.fm_index.get(f, {}).get("causes", [])]
+      if causes and all(isinstance(c.get("detection"), int) and c["detection"] <= 4 for c in causes):
+        res.warn(f"{name} {eid}", "single point in the tree, but every FMEA cause claims a detection rating <= 4")
+
+    mapped = [events[e] for e in leaf_ids if e in events]
+    counts = {
+      "backed": sum(1 for e in mapped if e.get("fmea") or e.get("fmeda")),
+      "by design": sum(1 for e in mapped if e.get("class") == "by_design"),
+      "external": sum(1 for e in mapped if e.get("class") == "external"),
+      "unbacked": sum(1 for e in mapped if e.get("class") not in ("by_design", "external") and not (e.get("fmea") or e.get("fmeda"))),
+    }
+    for e in mapped:
+      if e.get("class") not in ("by_design", "external") and not (e.get("fmea") or e.get("fmeda")):
+        res.warn(f"{name} {e['id']}", f"no FMEA backing: {e.get('gap', '(no gap statement)')}")
+    rows = [r for (f, g), r in nf.items() if g == goal]
+    event_counts = ", ".join(f"{k} {v}" for k, v in counts.items())
+    n_just = sum(r["kind"] == "justified" for r in rows)
+    n_gap = sum(r["kind"] == "tree_gap" for r in rows)
+    fmea_counts = f"in the tree {len(relevant & cited)}, justified {n_just}, tree gaps {n_gap}"
+    res.report.append(f"FTA-FMEA map {goal}: {len(leaf_ids)} events ({event_counts}); {len(relevant)} FMEA modes reach {goal} ({fmea_counts})")
+
+
+def fd_sort_key(ident: str):
+  return [int(x) if x.isdigit() else x for x in re.split(r"[-.]", ident)]
+
+
 class Context:
   def __init__(self, root: Path):
     self.root = root
@@ -773,6 +936,8 @@ class Context:
     self.elements: set[str] = set()
     self.functions: set[str] = set()
     self.fm_hazards: dict[str, set[str]] = {}  # FMEA failure mode -> hazards its effects link to
+    self.fm_index: dict[str, dict] = {}  # every FMEA failure mode (System, DFMEA, SW, PFMEA) by id
+    self.fmeda_ids: dict[str, set[str]] = {}  # FMEDA file stem -> its failure mode ids
     self.hazards: set[str] | None = None  # None until a HARA file is loaded
     self.safety_goals: dict[str, dict] = {}
     self.hara_revision: str | None = None
@@ -829,6 +994,7 @@ def lint(root: Path = ROOT) -> Result:
       ids = [m["id"] for m in doc["safety_mechanisms"]]
       ids += [c["id"] for c in doc["components"]]
       ids += [fm["id"] for c in doc["components"] for fm in c["failure_modes"]]
+      ctx.fmeda_ids[path.stem] = {fm["id"] for c in doc["components"] for fm in c["failure_modes"]}
     elif kind == "hara":
       scope = seen_ids
       ids = [x["id"] for k in ("assumptions", "operational_situations", "hazards", "hazardous_events", "safety_goals", "open_items")
@@ -850,6 +1016,7 @@ def lint(root: Path = ROOT) -> Result:
       ids = [x["id"] for k in ("structure", "functions", "actions", "failure_modes") for x in doc[k]]
       ids += [c["id"] for fm in doc["failure_modes"] for c in fm["causes"]]
       ctx.failure_modes.update(fm["id"] for fm in doc["failure_modes"])
+      ctx.fm_index.update((fm["id"], fm) for fm in doc["failure_modes"])
       ctx.elements.update(e["id"] for e in doc["structure"])
       # The HARA traces to System FMEA functions and failure modes only; lower-level FMEAs may cite
       # hazards in their effects without joining the guide-word matrix or the HARA sfm_refs back-links.
@@ -869,6 +1036,10 @@ def lint(root: Path = ROOT) -> Result:
   mapping = safety / "hara-mapping.yaml"
   if mapping.exists():
     check_hara_mapping(mapping.relative_to(root).as_posix(), load_yaml(mapping.read_text()), ctx, res)
+
+  fta_map = root / "assurance" / "08-analyses" / "fta-fmea-map.yaml"
+  if fta_map.exists():
+    check_fta_fmea_map(fta_map.relative_to(root).as_posix(), load_yaml(fta_map.read_text()), ctx, res)
 
   res.report.insert(0, f"rated causes by AP: H={ctx.ap_counts['H']} M={ctx.ap_counts['M']} L={ctx.ap_counts['L']}")
   return res

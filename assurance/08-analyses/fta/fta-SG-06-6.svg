@@ -83,6 +83,10 @@
 <text x="335.1" y="594.5" class="chip" fill="#fff">outside item</text>
 <rect x="382.3" y="583.0" width="122.3" height="16" rx="8" fill="#e6e9ef"/>
 <text x="443.5" y="594.5" class="chip" fill="#334155">repeated / transfer</text>
+<rect x="510.6" y="583.0" width="105.2" height="16" rx="8" fill="#111827"/>
+<text x="563.2" y="594.5" class="chip" fill="#fff">FMEA / FMEDA row</text>
+<rect x="621.8" y="583.0" width="53.9" height="16" rx="8" fill="#fff1f1"/>
+<text x="648.8" y="594.5" class="chip" fill="#c62828">no FMEA</text>
 <line x1="40" y1="617.0" x2="74" y2="617.0" class="wh"/>
 <text x="86" y="621.0" class="lb">Single-point path</text>
 <text x="86" y="637.0" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
