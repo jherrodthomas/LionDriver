@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="830" viewBox="0 0 1280 830" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 2-1. ISO 21448 scenario areas as covered by WP-C-05 and WP-C-06</title>
+  <desc id="d">Two-by-two chart of known and unknown scenarios against hazardous and not hazardous behaviour. Area 2, known hazardous: the twelve SOTIF hazards SH-01 to SH-06 and SH-08 to SH-13, all needing further treatment, with 22 functional insufficiencies and 33 triggering conditions in WP-C-06, whose 31 evaluation rows are 12 needs modification, 16 needs validation and 3 acceptable with a condition. Area 1, known not hazardous: hazards rated S0 or C0 need no treatment, but none qualifies; three triggering-condition rows are acceptable only with a condition; acceptance criteria AC-01 to AC-06 are not yet met. Area 3, unknown hazardous: the driving model is a black box with unknown training data, with no out-of-distribution supervision; addressed by unknown-scenario exploration in WP-V-04 and acceptance criterion AC-07. Area 4, unknown not hazardous, is not addressed. Arrows show Area 3 to Area 2 by exploration and Area 2 to Area 1 by functional modification, ODD restriction, user information and validation.</desc>
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#E2E8F0" stroke-width="2"/></pattern>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.b{font-weight:700}.sb{font-weight:600}
+      .ax{font-size:11px;font-weight:700;letter-spacing:.08em;fill:#475569}
+    </style>
+  </defs>
+
+  <rect width="1280" height="830" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 2-1 · SOTIF scenario areas for LD-SDA</text>
+  <text x="40" y="66" class="m" font-size="12.5">ISO 21448:2022 four-area model, filled with what WP-C-05 and WP-C-06 state today · the goal is to move scenarios out of Areas 2 and 3 into Area 1</text>
+  <text x="1240" y="44" class="m" font-size="11" text-anchor="end">WP-C-05 §2, §3, §5, §6</text>
+  <text x="1240" y="62" class="m" font-size="11" text-anchor="end">WP-C-06 §1, §5</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+
+  <!-- axis headers -->
+  <text x="400" y="114" class="ax" text-anchor="middle">KNOWN SCENARIOS</text>
+  <text x="995" y="114" class="ax" text-anchor="middle">UNKNOWN SCENARIOS</text>
+  <rect x="40" y="128" width="104" height="300" rx="8" fill="#F1F5F9"/>
+  <text x="92" y="272" class="ax" text-anchor="middle">HAZARDOUS</text>
+  <text x="92" y="290" class="m" font-size="10" text-anchor="middle">behaviour</text>
+  <rect x="40" y="508" width="104" height="236" rx="8" fill="#F1F5F9"/>
+  <text x="92" y="620" class="ax" text-anchor="middle">NOT</text>
+  <text x="92" y="636" class="ax" text-anchor="middle">HAZARDOUS</text>
+
+  <!-- ===== Area 2: known hazardous ===== -->
+  <rect x="160" y="128" width="480" height="300" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>
+  <rect x="176" y="142" width="64" height="22" rx="11" fill="#C2410C"/>
+  <text x="208" y="157" fill="#FFFFFF" font-size="11" font-weight="700" text-anchor="middle">Area 2</text>
+  <text x="252" y="158" class="t b" font-size="14">Known, hazardous</text>
+  <text x="178" y="192" class="t sb" font-size="12">12 SOTIF hazards (WP-C-05 §3)</text>
+  <text x="178" y="209" class="m" font-size="11">SH-01…SH-06, SH-08…SH-13 · SH-07 not used</text>
+  <text x="178" y="224" class="m" font-size="11">All 12 need further SOTIF treatment (§6; SH-09 only if</text>
+  <text x="178" y="239" class="m" font-size="11">Experimental Mode is kept) · misuse raises C (§4, WP-C-08)</text>
+  <text x="178" y="268" class="t sb" font-size="12">Causes analysed in WP-C-06</text>
+  <text x="178" y="285" class="m" font-size="11">22 functional insufficiencies FI-01…FI-22 (§3)</text>
+  <text x="178" y="300" class="m" font-size="11">33 triggering conditions TC-01…TC-33 (§4)</text>
+  <text x="178" y="329" class="t sb" font-size="12">Evaluation of the 31 rows of WP-C-06 §5</text>
+  <rect x="178" y="341" width="206" height="20" rx="10" fill="#D2553F"/>
+  <text x="281" y="355" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle">12 · needs modification</text>
+  <rect x="392" y="341" width="186" height="20" rx="10" fill="#D97706"/>
+  <text x="485" y="355" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle">16 · needs validation</text>
+  <rect x="178" y="367" width="250" height="20" rx="10" fill="#FFFFFF" stroke="#64748B"/>
+  <text x="303" y="381" fill="#475569" font-size="10.5" font-weight="700" text-anchor="middle">3 · acceptable, with a condition</text>
+  <text x="178" y="410" class="m" font-size="10.5">Acceptance criteria AC-01…AC-06 (§5.3); quantitative targets deferred to WP-V-02</text>
+
+  <!-- ===== Area 3: unknown hazardous ===== -->
+  <rect x="760" y="128" width="480" height="300" rx="12" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.6" stroke-dasharray="7 4"/>
+  <rect x="776" y="142" width="64" height="22" rx="11" fill="#D2553F"/>
+  <text x="808" y="157" fill="#FFFFFF" font-size="11" font-weight="700" text-anchor="middle">Area 3</text>
+  <text x="852" y="158" class="t b" font-size="14">Unknown, hazardous</text>
+  <text x="778" y="192" class="t sb" font-size="12">Why this area is large for LD-SDA</text>
+  <text x="778" y="209" class="m" font-size="11">The driving model is a black box: its training data and</text>
+  <text x="778" y="224" class="m" font-size="11">training ODD are not available (WP-C-06 §1, GAP-22)</text>
+  <text x="778" y="241" class="m" font-size="11">No uncertainty or out-of-distribution supervision of the</text>
+  <text x="778" y="256" class="m" font-size="11">control action (FI-03; WP-C-06 §6)</text>
+  <text x="778" y="285" class="t sb" font-size="12">How it is reduced</text>
+  <text x="778" y="302" class="m" font-size="11">Unknown-scenario exploration in WP-V-04; the TC list is</text>
+  <text x="778" y="317" class="m" font-size="11">reviewed against that plan (WP-C-06 OI-4)</text>
+  <text x="778" y="334" class="m" font-size="11">AC-07: the final campaign finds no new hazardous</text>
+  <text x="778" y="349" class="m" font-size="11">scenario class, or each one found is addressed</text>
+  <text x="778" y="378" font-size="10.5" font-weight="700" fill="#D2553F">Size of this area is not estimated in WP-C-05 / WP-C-06</text>
+
+  <!-- ===== Area 1: known not hazardous ===== -->
+  <rect x="160" y="508" width="480" height="236" rx="12" fill="#F8FAFC" stroke="#64748B" stroke-width="1.6"/>
+  <rect x="176" y="522" width="64" height="22" rx="11" fill="#475569"/>
+  <text x="208" y="537" fill="#FFFFFF" font-size="11" font-weight="700" text-anchor="middle">Area 1</text>
+  <text x="252" y="538" class="t b" font-size="14">Known, not hazardous</text>
+  <text x="178" y="571" class="m" font-size="11">Hazards rated S0 or C0 need no further treatment (WP-C-05 §2</text>
+  <text x="178" y="586" class="m" font-size="11">step 5) · none of SH-01…SH-13 is rated so (§6)</text>
+  <text x="178" y="610" class="m" font-size="11">Acceptable only with a condition (WP-C-06 §5): TC-19 large</text>
+  <text x="178" y="625" class="m" font-size="11">calibration errors · TC-21 after FM-03 · TC-28 with user</text>
+  <text x="178" y="640" class="m" font-size="11">information, abort controllability still to be validated</text>
+  <rect x="178" y="660" width="444" height="66" rx="8" fill="#FFFBEB" stroke="#D97706"/>
+  <text x="192" y="682" font-size="11" font-weight="700" fill="#B45309">No scenario is in Area 1 by evidence yet</text>
+  <text x="192" y="699" class="m" font-size="11">AC-01…AC-07 and the WP-V-02 validation targets are still</text>
+  <text x="192" y="714" class="m" font-size="11">to be met; no row of WP-C-06 §5 is closed by evidence</text>
+
+  <!-- ===== Area 4: unknown not hazardous ===== -->
+  <rect x="760" y="508" width="480" height="236" rx="12" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/>
+  <rect x="776" y="522" width="64" height="22" rx="11" fill="#94A3B8"/>
+  <text x="808" y="537" fill="#FFFFFF" font-size="11" font-weight="700" text-anchor="middle">Area 4</text>
+  <rect x="848" y="522" width="190" height="22" rx="4" fill="#FFFFFF" fill-opacity=".92"/>
+  <text x="852" y="538" class="t b" font-size="14">Unknown, not hazardous</text>
+  <rect x="776" y="598" width="448" height="56" rx="8" fill="#FFFFFF" fill-opacity=".94"/>
+  <text x="1000" y="622" class="m" font-size="11.5" font-weight="600" text-anchor="middle">Not addressed in WP-C-05 or WP-C-06</text>
+  <text x="1000" y="640" class="m" font-size="11" text-anchor="middle">no SOTIF activity targets this area</text>
+
+  <!-- ===== transitions ===== -->
+  <!-- Area 3 -> Area 2: discovery -->
+  <path d="M758 278 H644" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#aG)"/>
+  <text x="700" y="256" class="t" font-size="10.5" font-weight="700" text-anchor="middle">explore</text>
+  <text x="700" y="300" class="m" font-size="10" text-anchor="middle">WP-V-04,</text>
+  <text x="700" y="313" class="m" font-size="10" text-anchor="middle">AC-07</text>
+  <!-- Area 2 -> Area 1: treatment -->
+  <path d="M400 430 V504" fill="none" stroke="#C2410C" stroke-width="2.4" marker-end="url(#aR)"/>
+  <text x="414" y="454" class="t" font-size="10.5" font-weight="700">modify · restrict · inform · validate</text>
+  <text x="414" y="469" class="m" font-size="10">WP-C-07 FM-01…FM-11 · ODD restriction (WP-C-02) · user</text>
+  <text x="414" y="482" class="m" font-size="10">information (WP-O-03) · scenario tests WP-V-03 (AC-01…AC-06)</text>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="770" x2="1240" y2="770" stroke="#E2E8F0"/>
+  <g transform="translate(40,796)" font-size="10.5">
+    <line x1="0" y1="-4" x2="28" y2="-4" stroke="#C2410C" stroke-width="2.4"/><text x="36" y="0" class="t">Treatment of known hazards</text>
+    <line x1="210" y1="-4" x2="238" y2="-4" stroke="#475569" stroke-width="2"/><text x="246" y="0" class="t">Discovery of unknown scenarios</text>
+    <rect x="440" y="-12" width="28" height="16" rx="8" fill="#D2553F"/><text x="476" y="0" class="t">Needs modification</text>
+    <rect x="590" y="-12" width="28" height="16" rx="8" fill="#D97706"/><text x="626" y="0" class="t">Needs validation</text>
+    <rect x="730" y="-12" width="28" height="16" rx="8" fill="#FFFFFF" stroke="#64748B"/><text x="766" y="0" class="t">Acceptable, with a condition</text>
+    <rect x="930" y="-12" width="28" height="16" rx="4" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="4 3"/><text x="966" y="0" class="t">Not addressed</text>
+    <text x="1200" y="0" class="m" text-anchor="end">Area sizes are not to scale</text>
+  </g>
+</svg>
