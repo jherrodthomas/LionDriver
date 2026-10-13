@@ -694,6 +694,122 @@ class TestFmedaExport(unittest.TestCase):
 
 
 
+class TestFtaFmeaMap(unittest.TestCase):
+  """FTA <-> FMEA cross-mapping (fta-fmea-map.yaml), on a two-event tree."""
+  FTA = "\n".join([
+    "## 2. FTA — SG-01: test goal",
+    "",
+    "```",
+    "TE-01 Top                                                   [OR]",
+    "├── G1.1 Both                                               [AND]",
+    "│   ├── BE-1.01 Software defect",
+    "│   └── UE-1.02 Outside the item",
+    "└── BE-1.03 Random fault                                     (SPF, random HW)",
+    "```",
+    "",
+  ])
+  WP = "| **SG-01** | No lateral motion | **C** | HE-01.1–01.2 |\n"
+
+  def fm(self, fid, hazard="HZ-001", detection=8):
+    return {"id": fid, "effects": [{"level": "end", "description": "x", "hazard": hazard}],
+            "causes": [{"id": fid + ".C1", "detection": detection}]}
+
+  def doc(self, **over):
+    d = {"schema_version": 1, "source": "fta.md", "scope": ["SG-01"],
+         "events": [{"id": "BE-1.01", "class": "systematic_sw", "fmea": ["SWF-001"]},
+                    {"id": "UE-1.02", "class": "external", "ref": "AOU-01"},
+                    {"id": "BE-1.03", "class": "random_hw", "fmeda": ["fmeda-x:FMD-001"]}],
+         "gates": [], "not_in_fta": []}
+    d.update(over)
+    return d
+
+  def check(self, doc, fms=None):
+    with tempfile.TemporaryDirectory() as d:
+      root = Path(d)
+      fta_dir = root / "assurance" / "08-analyses" / "fta"
+      fta_dir.mkdir(parents=True)
+      shutil.copy(fmea_lint.ROOT / "assurance" / "08-analyses" / "fta" / "fta_diagrams.py", fta_dir)
+      (root / "fta.md").write_text(self.FTA)
+      (root / "wp.md").write_text(self.WP)
+      (root / fmea_lint.SAFETY_DIR).mkdir(parents=True)
+      (root / fmea_lint.SAFETY_DIR / "hara-mapping.yaml").write_text(yaml.safe_dump(
+        {"target": "wp.md", "hazards": [{"second": "HZ-001", "wp_c03": ["H-01"], "events": ["HE-01.1"]},
+                                        {"second": "HZ-002", "wp_c03": ["H-02"], "events": ["HE-02.1"]}]}))
+      ctx = fmea_lint.Context(root)
+      for f in fms if fms is not None else [self.fm("SWF-001")]:
+        ctx.fm_index[f["id"]] = f
+      ctx.fmeda_ids["fmeda-x"] = {"FMD-001"}
+      res = fmea_lint.Result()
+      sys.modules.pop("fta_diagrams", None)
+      fmea_lint.check_fta_fmea_map("map", doc, ctx, res)
+      sys.modules.pop("fta_diagrams", None)
+      return res
+
+  def test_goal_events_ranges(self):
+    self.assertEqual(fmea_lint.goal_events(self.WP), {"SG-01": {"HE-01.1", "HE-01.2"}})
+
+  def test_valid(self):
+    res = self.check(self.doc())
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("FTA-FMEA map SG-01: 3 events" in r for r in res.report))
+
+  def test_unmapped_event(self):
+    doc = self.doc()
+    doc["events"] = doc["events"][:2]
+    self.assertTrue(any("BE-1.03 is in the SG-01 tree but not mapped" in e for e in self.check(doc).errors))
+
+  def test_unknown_references(self):
+    doc = self.doc()
+    doc["events"][0]["fmea"] = ["SWF-999"]
+    doc["events"][2]["fmeda"] = ["fmeda-x:FMD-404"]
+    errors = " ".join(self.check(doc).errors)
+    self.assertIn("SWF-999 not found", errors)
+    self.assertIn("fmeda-x:FMD-404 not found", errors)
+
+  def test_class_needs_matching_analysis(self):
+    doc = self.doc()
+    doc["events"][2] = {"id": "BE-1.03", "class": "random_hw", "fmea": ["SWF-001"]}
+    self.assertTrue(any("random_hw event needs one of DFM, FMEDA" in e for e in self.check(doc).errors))
+
+  def test_unbacked_event_needs_gap(self):
+    doc = self.doc()
+    doc["events"][0]["fmea"] = []
+    self.assertTrue(any("no FMEA backing and no gap" in e for e in self.check(doc, []).errors))
+    doc["events"][0]["gap"] = "no FMEA row yet"
+    res = self.check(doc, [])
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("no FMEA backing: no FMEA row yet" in w for w in res.warnings))
+
+  def test_fmea_mode_reaching_the_goal_must_be_in_the_tree(self):
+    fms = [self.fm("SWF-001"), self.fm("SWF-002")]
+    errors = self.check(self.doc(), fms).errors
+    self.assertTrue(any("SWF-002 cites HZ-001 but no SG-01 event or gate cites it" in e for e in errors))
+    doc = self.doc(not_in_fta=[{"fm": "SWF-002", "goal": "SG-01", "kind": "tree_gap", "reason": "branch missing"}])
+    res = self.check(doc, fms)
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("tree gaps 1" in r for r in res.report))
+    # a mode reaching another goal's hazard only is not required here
+    self.assertEqual(self.check(self.doc(), [self.fm("SWF-001"), self.fm("SWF-003", "HZ-002")]).errors, [])
+
+  def test_gate_mapping_counts_as_cited(self):
+    fms = [self.fm("SWF-001"), self.fm("SFM-001")]
+    self.assertEqual(self.check(self.doc(gates=[{"id": "G1.1", "fmea": ["SFM-001"]}]), fms).errors, [])
+
+  def test_cited_mode_without_the_goal_hazard_warns(self):
+    res = self.check(self.doc(), [self.fm("SWF-001", "HZ-002")])
+    self.assertTrue(any("SWF-001 is cited in the SG-01 tree but its effects cite none of HZ-001" in w for w in res.warnings))
+
+  def test_single_point_with_claimed_detection_warns(self):
+    doc = self.doc()
+    doc["events"][2] = {"id": "BE-1.03", "class": "random_hw", "fmea": ["DFM-001"]}
+    res = self.check(doc, [self.fm("SWF-001"), self.fm("DFM-001", detection=3)])
+    self.assertTrue(any("BE-1.03" in w and "single point" in w for w in res.warnings))
+
+  def test_real_map_is_clean(self):
+    res = fmea_lint.lint()
+    self.assertEqual([e for e in res.errors if "fta-fmea-map" in e], [])
+
+
 if __name__ == "__main__":
   unittest.main()
 

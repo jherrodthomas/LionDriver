@@ -18,6 +18,8 @@
 <text x="296.0" y="168.0" class="d">bound</text>
 <rect x="296.0" y="176.0" width="82.4" height="16" rx="8" fill="#e6e9ef"/>
 <text x="337.2" y="187.5" class="chip" fill="#334155">from sheet 1</text>
+<rect x="383.4" y="176.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="410.3" y="187.5" class="chip" fill="#fff">SFM-009</text>
 <path d="M372.0,245.0 L372.0,225.0 A20,18 0 0 1 412.0,225.0 L412.0,245.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="392.0" y="237.0" class="gl" fill="#1d2433">AND</text>
 <line x1="150.0" y1="268.0" x2="634.0" y2="268.0" class="w"/>
 <line x1="392.0" y1="245.0" x2="392.0" y2="268.0" class="w"/>
@@ -33,6 +35,10 @@
 <text x="54" y="347.0" class="d">cause (phantom or false lead)</text>
 <rect x="54.0" y="355.0" width="59.6" height="16" rx="8" fill="#6a3fb5"/>
 <text x="83.8" y="366.5" class="chip" fill="#fff">SOTIF/QM</text>
+<rect x="118.6" y="355.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="145.5" y="366.5" class="chip" fill="#fff">SFM-009</text>
+<rect x="177.5" y="355.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="204.4" y="366.5" class="chip" fill="#fff">PFM-011</text>
 <circle cx="150.0" cy="403.0" r="16" fill="#efe8fb" stroke="#6a3fb5" stroke-width="1.7"/>
 <rect x="283.5" y="295.5" width="220" height="85.5" rx="9" class="shadow"/>
 <rect x="282" y="293.0" width="220" height="85.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
@@ -81,6 +87,10 @@
 <text x="335.1" y="587.5" class="chip" fill="#fff">outside item</text>
 <rect x="382.3" y="576.0" width="122.3" height="16" rx="8" fill="#e6e9ef"/>
 <text x="443.5" y="587.5" class="chip" fill="#334155">repeated / transfer</text>
+<rect x="510.6" y="576.0" width="105.2" height="16" rx="8" fill="#111827"/>
+<text x="563.2" y="587.5" class="chip" fill="#fff">FMEA / FMEDA row</text>
+<rect x="621.8" y="576.0" width="53.9" height="16" rx="8" fill="#fff1f1"/>
+<text x="648.8" y="587.5" class="chip" fill="#c62828">no FMEA</text>
 <line x1="40" y1="610.0" x2="74" y2="610.0" class="wh"/>
 <text x="86" y="614.0" class="lb">Single-point path</text>
 <text x="86" y="630.0" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>

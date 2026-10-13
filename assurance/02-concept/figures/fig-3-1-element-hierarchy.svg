@@ -1,0 +1,307 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1020" viewBox="0 0 1280 1020" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-1. LD-SDA element hierarchy (WP-C-01 §2.1, §3.1, §3.2)</title>
+  <desc id="d">The item LD-SDA realizes the functions F-01 to F-09. It consists of one system: sensors, controllers and an actuation output, whose actuators (EPS, ECM/PCM, ABS/VSC) are existing vehicle elements outside the item, reached through IF-01 and IF-02. The system consists of five components: E-04 device hardware, E-05 harness, E-03 safety MCU firmware, E-01 application SoC software and E-02 ML models. E-06 external compute is excluded pending OI-4. Each component consists of hardware parts or software units: E-04 of the SoC, panda MCU, cameras, IMU, GNSS, display, speaker, CAN transceivers, power supply and enclosure; E-05 of the harness wiring and intercept relay; E-03 of the panda firmware and the opendbc Toyota safety mode; E-01 of 23 openpilot processes; E-02 of the driving model and the driver monitoring model. E-01 and E-02 run on the SoC, E-03 on the panda MCU.</desc>
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="real" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M1 1L11 6L1 11z" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" stroke-linejoin="round"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+      .ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .chip{fill:#F8FAFC;stroke:#CBD5E1;stroke-width:1}
+      .pan{fill:#FFFFFF;stroke:#E2E8F0;stroke-width:1}
+      .ml{fill:#EEF2FF;stroke:#A5B4FC;stroke-width:1}
+      .env{fill:#FFF7ED;stroke:#FDBA74;stroke-width:1}
+      .tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+      .lvl{font-size:10.5px;font-weight:700;letter-spacing:.08em;fill:#64748B}
+      .agg{fill:none;stroke:#475569;stroke-width:1.4}
+      .dia{fill:#FFFFFF;stroke:#475569;stroke-width:1.4}
+      .code{font-family:'JetBrains Mono','SFMono-Regular',Menlo,Consolas,monospace;font-size:10px;fill:#0F172A}
+      .mult{font-size:11px;font-weight:700;fill:#475569}
+    </style>
+  </defs>
+
+  <rect width="1280" height="1020" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 3-1 · Element hierarchy of LD-SDA</text>
+  <text x="40" y="66" class="m" font-size="12.5">Item → system → components → hardware parts and software units, after ISO 26262-1:2018 3.39 (element) · functions realized by the item</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">WP-C-01 §3.1</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">functions §2.1 · environment §3.2 · interfaces §3.4</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+
+  <!-- ===== level gutter ===== -->
+  <text x="40" y="104" class="m" font-size="9.5" font-weight="600" letter-spacing=".06em">ISO 26262-1 LEVEL</text>
+  <text x="40" y="170" class="lvl">ITEM</text>
+  <text x="40" y="330" class="lvl">SYSTEM</text>
+  <text x="40" y="474" class="lvl">COMPONENTS</text>
+  <text x="40" y="690" class="lvl">HW PARTS /</text>
+  <text x="40" y="705" class="lvl">SW UNITS</text>
+  <line x1="40" y1="250" x2="1240" y2="250" stroke="#F1F5F9" stroke-width="1"/>
+  <line x1="40" y1="398" x2="160" y2="398" stroke="#F1F5F9" stroke-width="1"/>
+  <line x1="40" y1="524" x2="160" y2="524" stroke="#F1F5F9" stroke-width="1"/>
+
+  <!-- ===== ITEM ===== -->
+  <rect x="170" y="128" width="300" height="76" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="2" stroke-dasharray="10 5"/>
+  <rect x="186" y="118" width="58" height="20" rx="10" fill="#B45309"/>
+  <text x="215" y="132" fill="#FFFFFF" text-anchor="middle" class="tag">ITEM</text>
+  <text x="320" y="160" class="t b" font-size="15" text-anchor="middle">LD-SDA</text>
+  <text x="320" y="177" class="m s" text-anchor="middle">Supervised Driving Assistance</text>
+  <text x="320" y="193" class="m xs" text-anchor="middle">aftermarket retrofit, SAE Level 2 (§1)</text>
+
+  <!-- realization: item → functions -->
+  <line x1="470" y1="166" x2="560" y2="166" stroke="#475569" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#real)"/>
+  <text x="514" y="157" class="m xs" text-anchor="middle">realizes</text>
+  <text x="514" y="184" class="mult" text-anchor="middle">9</text>
+
+  <!-- ===== FUNCTIONS band ===== -->
+  <rect x="560" y="96" width="680" height="140" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+  <rect x="576" y="87" width="116" height="18" rx="9" fill="#334155"/>
+  <text x="634" y="100" fill="#FFFFFF" text-anchor="middle" class="tag">FUNCTIONS · §2.1</text>
+
+  <g font-size="10.5">
+    <!-- row a -->
+    <rect x="570" y="110" width="124" height="54" rx="7" class="box"/>
+    <text x="578" y="125" class="t b">F-01</text><text x="686" y="125" font-size="9.5" font-weight="700" text-anchor="end"><tspan fill="#475569">E-01</tspan><tspan dx="4" fill="#4F46E5">E-02</tspan></text>
+    <text x="578" y="141" class="t sb">Lateral control</text><text x="578" y="155" class="m xs">lane centring</text>
+
+    <rect x="703" y="110" width="124" height="54" rx="7" class="box"/>
+    <text x="711" y="125" class="t b">F-02</text><text x="819" y="125" font-size="9.5" font-weight="700" text-anchor="end"><tspan fill="#475569">E-01</tspan><tspan dx="4" fill="#4F46E5">E-02</tspan></text>
+    <text x="711" y="141" class="t sb">Longitudinal control</text><text x="711" y="155" class="m xs">ACC, stop-and-go</text>
+
+    <rect x="836" y="110" width="124" height="54" rx="7" class="box"/>
+    <text x="844" y="125" class="t b">F-03</text><text x="952" y="125" font-size="9.5" font-weight="700" text-anchor="end"><tspan fill="#475569">E-01</tspan><tspan dx="4" fill="#C2410C">E-03</tspan></text>
+    <text x="844" y="141" class="t sb">Engagement and</text><text x="844" y="155" class="m xs">mode management</text>
+
+    <rect x="969" y="110" width="124" height="54" rx="7" class="box"/>
+    <text x="977" y="125" class="t b">F-04</text><text x="1085" y="125" font-size="9.5" font-weight="700" text-anchor="end"><tspan fill="#475569">E-01</tspan><tspan dx="4" fill="#4F46E5">E-02</tspan></text>
+    <text x="977" y="141" class="t sb">Driver monitoring</text><text x="977" y="155" class="m xs">warnings, lockout</text>
+
+    <rect x="1102" y="110" width="124" height="54" rx="7" class="box"/>
+    <text x="1110" y="125" class="t b">F-05</text><text x="1218" y="125" font-size="9.5" font-weight="700" text-anchor="end" fill="#475569">E-01</text>
+    <text x="1110" y="141" class="t sb">Driver information</text><text x="1110" y="155" class="m xs">display, sounds, HUD</text>
+
+    <!-- row b -->
+    <rect x="570" y="172" width="124" height="54" rx="7" class="box"/>
+    <text x="578" y="187" class="t b">F-06</text><text x="686" y="187" font-size="9.5" font-weight="700" text-anchor="end"><tspan fill="#475569">E-01</tspan><tspan dx="4" fill="#4F46E5">E-02</tspan></text>
+    <text x="578" y="203" class="t sb">Forward collision</text><text x="578" y="217" class="m xs">warning (no braking)</text>
+
+    <rect x="703" y="172" width="124" height="54" rx="7" class="box"/>
+    <text x="711" y="187" class="t b">F-07</text><text x="819" y="187" font-size="9.5" font-weight="700" text-anchor="end" fill="#475569">E-01</text>
+    <text x="711" y="203" class="t sb">Lane departure</text><text x="711" y="217" class="m xs">warning</text>
+
+    <rect x="836" y="172" width="124" height="54" rx="7" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+    <text x="844" y="187" class="t b">F-08</text><text x="952" y="187" font-size="9.5" font-weight="700" text-anchor="end" fill="#C2410C">E-03</text>
+    <text x="844" y="203" class="t sb">Safety envelope</text><text x="844" y="217" class="m xs">on the panda MCU</text>
+
+    <rect x="969" y="172" width="124" height="54" rx="7" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <text x="977" y="187" class="t b">F-09</text><text x="1085" y="187" font-size="9.5" font-weight="700" text-anchor="end" fill="#475569">E-01</text>
+    <text x="977" y="203" class="t sb">Logging, upload,</text><text x="977" y="217" class="m xs">remote access, OTA</text>
+  </g>
+  <text x="1110" y="186" class="m" font-size="9.5">Tags: software elements</text>
+  <text x="1110" y="199" class="m" font-size="9.5">in the main implementation</text>
+  <text x="1110" y="212" class="m" font-size="9.5">(§2.1). E-04 and E-05</text>
+  <text x="1110" y="225" class="m" font-size="9.5">serve every function.</text>
+
+  <!-- ===== SYSTEM ===== -->
+  <!-- aggregation item → system -->
+  <polygon points="320,204 326,213 320,222 314,213" class="dia"/>
+  <line x1="320" y1="222" x2="320" y2="268" class="agg"/>
+  <text x="330" y="262" class="mult">1</text>
+
+  <rect x="170" y="268" width="730" height="116" rx="12" class="box"/>
+  <text x="186" y="290" class="t b" font-size="13">LD-SDA system</text>
+  <text x="290" y="290" class="m s">sensor → controller → actuation output; the actuators themselves are existing vehicle elements outside the item</text>
+
+  <rect x="186" y="306" width="218" height="64" rx="8" class="chip"/>
+  <text x="198" y="324" font-size="10" font-weight="700" letter-spacing=".06em" fill="#0F766E">SENSORS</text>
+  <text x="198" y="341" class="t xs">cameras, IMU, GNSS (E-04)</text>
+  <text x="198" y="357" class="t xs">vehicle and radar CAN status (IF-02)</text>
+
+  <line x1="404" y1="338" x2="422" y2="338" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+
+  <rect x="424" y="306" width="218" height="64" rx="8" class="chip"/>
+  <text x="436" y="324" font-size="10" font-weight="700" letter-spacing=".06em" fill="#475569">CONTROLLERS</text>
+  <text x="436" y="341" class="t xs">SoC: E-01 software, E-02 models</text>
+  <text x="436" y="357" class="t xs">panda MCU: E-03 safety envelope (IF-04)</text>
+
+  <line x1="642" y1="338" x2="660" y2="338" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+
+  <rect x="662" y="306" width="218" height="64" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+  <text x="674" y="324" font-size="10" font-weight="700" letter-spacing=".06em" fill="#C2410C">ACTUATION OUTPUT</text>
+  <text x="674" y="341" class="t xs">CAN commands through E-05 (IF-01)</text>
+  <text x="674" y="357" class="t xs">LKA torque · ACC accel · LKA HUD</text>
+
+  <!-- outside: existing vehicle elements -->
+  <rect x="960" y="268" width="280" height="116" rx="10" class="ext" stroke-dasharray="5 3"/>
+  <text x="976" y="290" class="t b" font-size="12">Existing vehicle elements</text>
+  <text x="976" y="304" class="m xs">outside the item (§3.2)</text>
+  <text x="976" y="325" class="t" font-size="10.5">Toyota EPS · ECM/PCM · ABS/VSC</text>
+  <text x="976" y="341" class="t" font-size="10.5">forward camera · forward radar</text>
+  <text x="976" y="357" class="t" font-size="10.5">instrument cluster · cruise stalk</text>
+  <text x="976" y="374" class="m xs">AOU-01…AOU-05, AOU-10</text>
+
+  <line x1="900" y1="322" x2="958" y2="322" stroke="#C2410C" stroke-width="2.4" marker-end="url(#aR)"/>
+  <line x1="958" y1="358" x2="902" y2="358" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <g class="tag">
+    <rect x="906" y="304" width="46" height="18" rx="9" fill="#C2410C"/><text x="929" y="317" fill="#fff" text-anchor="middle">IF-01</text>
+    <rect x="906" y="362" width="46" height="18" rx="9" fill="#0F766E"/><text x="929" y="375" fill="#fff" text-anchor="middle">IF-02</text>
+  </g>
+
+  <!-- ===== COMPONENTS ===== -->
+  <polygon points="535,384 541,393 535,402 529,393" class="dia"/>
+  <line x1="535" y1="402" x2="535" y2="414" class="agg"/>
+  <path d="M255 432V414H1023V432M422 414V432M584 414V432M806 414V432" class="agg"/>
+  <text x="545" y="409" class="mult">5</text>
+
+  <!-- E-04 -->
+  <rect x="170" y="432" width="170" height="76" rx="10" class="box"/>
+  <rect x="180" y="442" width="40" height="18" rx="9" fill="#475569"/><text x="200" y="455" fill="#fff" text-anchor="middle" class="tag">E-04</text>
+  <text x="330" y="455" class="m xs b" text-anchor="end">HW</text>
+  <text x="180" y="482" class="t b" font-size="12.5">Device hardware</text>
+  <text x="180" y="498" class="m xs">comma device</text>
+
+  <!-- E-05 -->
+  <rect x="352" y="432" width="140" height="76" rx="10" class="box"/>
+  <rect x="362" y="442" width="40" height="18" rx="9" fill="#475569"/><text x="382" y="455" fill="#fff" text-anchor="middle" class="tag">E-05</text>
+  <text x="482" y="455" class="m xs b" text-anchor="end">HW</text>
+  <text x="362" y="482" class="t b" font-size="12.5">Harness</text>
+  <text x="362" y="498" class="m xs">Toyota TSS2</text>
+
+  <!-- E-03 -->
+  <rect x="504" y="432" width="160" height="76" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+  <rect x="514" y="442" width="40" height="18" rx="9" fill="#C2410C"/><text x="534" y="455" fill="#fff" text-anchor="middle" class="tag">E-03</text>
+  <text x="654" y="455" class="m xs b" text-anchor="end">SW</text>
+  <text x="514" y="482" class="t b" font-size="12.5">Safety MCU firmware</text>
+  <text x="514" y="498" class="m xs">panda + opendbc safety</text>
+
+  <!-- E-01 -->
+  <rect x="676" y="432" width="260" height="76" rx="10" class="box"/>
+  <rect x="686" y="442" width="40" height="18" rx="9" fill="#475569"/><text x="706" y="455" fill="#fff" text-anchor="middle" class="tag">E-01</text>
+  <text x="926" y="455" class="m xs b" text-anchor="end">SW</text>
+  <text x="686" y="482" class="t b" font-size="12.5">Application SoC software</text>
+  <text x="686" y="498" class="m xs">openpilot processes on AGNOS Linux</text>
+
+  <!-- E-02 -->
+  <rect x="948" y="432" width="150" height="76" rx="10" fill="#EEF2FF" stroke="#6366F1" stroke-width="1.4"/>
+  <rect x="958" y="442" width="40" height="18" rx="9" fill="#4F46E5"/><text x="978" y="455" fill="#fff" text-anchor="middle" class="tag">E-02</text>
+  <text x="1088" y="455" class="m xs b" text-anchor="end">ML</text>
+  <text x="958" y="482" class="t b" font-size="12.5">ML models</text>
+  <text x="958" y="498" class="m xs">LFS artefacts</text>
+
+  <!-- E-06 excluded -->
+  <rect x="1110" y="432" width="130" height="76" rx="10" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <rect x="1116" y="438" width="118" height="64" rx="7" fill="#FFFFFF" fill-opacity=".85"/>
+  <rect x="1120" y="442" width="40" height="18" rx="9" fill="#94A3B8"/><text x="1140" y="455" fill="#fff" text-anchor="middle" class="tag">E-06</text>
+  <text x="1124" y="476" class="m b" font-size="11">External compute</text>
+  <text x="1124" y="490" class="m xs">excluded pending</text>
+  <text x="1124" y="502" class="m xs">OI-4 (GAP-17)</text>
+
+  <!-- ===== HW PARTS / SW UNITS ===== -->
+  <!-- E-04 parts -->
+  <polygon points="255,508 261,517 255,526 249,517" class="dia"/>
+  <line x1="255" y1="526" x2="255" y2="540" class="agg"/>
+  <text x="265" y="537" class="mult">11</text>
+  <rect x="170" y="540" width="170" height="320" rx="10" class="pan"/>
+  <g font-size="10.5">
+    <rect x="178" y="548" width="154" height="22" rx="6" class="chip"/><text x="186" y="563" class="t sb">SoC</text><text x="324" y="563" font-size="9" font-weight="700" text-anchor="end"><tspan fill="#475569">hosts E-01</tspan><tspan dx="4" fill="#4F46E5">E-02</tspan></text>
+    <rect x="178" y="576" width="154" height="22" rx="6" fill="#FFF7ED" stroke="#FDBA74"/><text x="186" y="591" class="t sb">panda MCU</text><text x="324" y="591" font-size="9" font-weight="700" text-anchor="end" fill="#C2410C">hosts E-03</text>
+    <rect x="178" y="604" width="154" height="22" rx="6" class="chip"/><text x="186" y="619" class="t">road-facing cameras</text>
+    <rect x="178" y="632" width="154" height="22" rx="6" class="chip"/><text x="186" y="647" class="t">driver camera (IR)</text>
+    <rect x="178" y="660" width="154" height="22" rx="6" class="chip"/><text x="186" y="675" class="t">IMU</text>
+    <rect x="178" y="688" width="154" height="22" rx="6" class="chip"/><text x="186" y="703" class="t">GNSS</text>
+    <rect x="178" y="716" width="154" height="22" rx="6" class="chip"/><text x="186" y="731" class="t">display</text>
+    <rect x="178" y="744" width="154" height="22" rx="6" class="chip"/><text x="186" y="759" class="t">speaker</text>
+    <rect x="178" y="772" width="154" height="22" rx="6" class="chip"/><text x="186" y="787" class="t">CAN transceivers</text>
+    <rect x="178" y="800" width="154" height="22" rx="6" class="chip"/><text x="186" y="815" class="t">power supply</text>
+    <rect x="178" y="828" width="154" height="22" rx="6" class="chip"/><text x="186" y="843" class="t">enclosure, windscreen mount</text>
+  </g>
+
+  <!-- E-05 parts -->
+  <polygon points="422,508 428,517 422,526 416,517" class="dia"/>
+  <line x1="422" y1="526" x2="422" y2="540" class="agg"/>
+  <text x="432" y="537" class="mult">2</text>
+  <rect x="352" y="540" width="140" height="96" rx="10" class="pan"/>
+  <g font-size="10.5">
+    <rect x="360" y="548" width="124" height="22" rx="6" class="chip"/><text x="368" y="563" class="t">harness wiring</text>
+    <rect x="360" y="576" width="124" height="22" rx="6" fill="#FFF7ED" stroke="#FDBA74"/><text x="368" y="591" class="t">intercept relay</text>
+  </g>
+  <text x="360" y="614" class="m" font-size="9.5">camera ↔ vehicle CAN;</text>
+  <text x="360" y="627" class="m" font-size="9.5">vehicle 12 V (IF-08)</text>
+
+  <!-- E-03 units -->
+  <polygon points="584,508 590,517 584,526 578,517" class="dia"/>
+  <line x1="584" y1="526" x2="584" y2="540" class="agg"/>
+  <text x="594" y="537" class="mult">2</text>
+  <rect x="504" y="540" width="160" height="128" rx="10" class="pan"/>
+  <rect x="512" y="548" width="144" height="36" rx="6" class="env"/>
+  <text x="520" y="563" class="t sb" font-size="10.5">panda firmware</text><text x="520" y="577" class="code">panda/board</text>
+  <rect x="512" y="590" width="144" height="36" rx="6" class="env"/>
+  <text x="520" y="605" class="t sb" font-size="10.5">Toyota safety mode</text><text x="520" y="619" class="code">opendbc/safety</text>
+  <text x="512" y="646" font-size="9.5" font-weight="600" fill="#C2410C">runs on the panda MCU</text>
+  <text x="512" y="659" class="m" font-size="9.5">implements F-08</text>
+
+  <!-- E-01 units -->
+  <polygon points="806,508 812,517 806,526 800,517" class="dia"/>
+  <line x1="806" y1="526" x2="806" y2="540" class="agg"/>
+  <text x="816" y="537" class="mult">23</text>
+  <rect x="676" y="540" width="260" height="380" rx="10" class="pan"/>
+  <g>
+    <rect x="684" y="548" width="118" height="22" rx="6" class="chip"/><text x="692" y="563" class="code">camerad</text>
+    <rect x="810" y="548" width="118" height="22" rx="6" class="chip"/><text x="818" y="563" class="code">dmonitoringmodeld</text>
+    <rect x="684" y="576" width="118" height="22" rx="6" class="chip"/><text x="692" y="591" class="code">sensord</text>
+    <rect x="810" y="576" width="118" height="22" rx="6" class="chip"/><text x="818" y="591" class="code">dmonitoringd</text>
+    <rect x="684" y="604" width="118" height="22" rx="6" class="chip"/><text x="692" y="619" class="code">modeld</text>
+    <rect x="810" y="604" width="118" height="22" rx="6" class="chip"/><text x="818" y="619" class="code">locationd</text>
+    <rect x="684" y="632" width="118" height="22" rx="6" class="chip"/><text x="692" y="647" class="code">plannerd</text>
+    <rect x="810" y="632" width="118" height="22" rx="6" class="chip"/><text x="818" y="647" class="code">calibrationd</text>
+    <rect x="684" y="660" width="118" height="22" rx="6" class="chip"/><text x="692" y="675" class="code">radard</text>
+    <rect x="810" y="660" width="118" height="22" rx="6" class="chip"/><text x="818" y="675" class="code">paramsd</text>
+    <rect x="684" y="688" width="118" height="22" rx="6" class="chip"/><text x="692" y="703" class="code">controlsd</text>
+    <rect x="810" y="688" width="118" height="22" rx="6" class="chip"/><text x="818" y="703" class="code">torqued</text>
+    <rect x="684" y="716" width="118" height="22" rx="6" class="chip"/><text x="692" y="731" class="code">card</text>
+    <rect x="810" y="716" width="118" height="22" rx="6" class="chip"/><text x="818" y="731" class="code">lagd</text>
+    <rect x="684" y="744" width="118" height="22" rx="6" class="chip"/><text x="692" y="759" class="code">selfdrived</text>
+    <rect x="810" y="744" width="118" height="22" rx="6" class="chip"/><text x="818" y="759" class="code">ui</text>
+    <rect x="684" y="772" width="118" height="22" rx="6" class="chip"/><text x="692" y="787" class="code">pandad</text>
+    <rect x="810" y="772" width="118" height="22" rx="6" class="chip"/><text x="818" y="787" class="code">soundd</text>
+    <rect x="684" y="800" width="118" height="22" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="4 3"/><text x="692" y="815" class="code">loggerd</text>
+    <rect x="810" y="800" width="118" height="22" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="4 3"/><text x="818" y="815" class="code">uploader</text>
+    <rect x="684" y="828" width="118" height="22" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="4 3"/><text x="692" y="843" class="code">athenad</text>
+    <rect x="810" y="828" width="118" height="22" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="4 3"/><text x="818" y="843" class="code">updated</text>
+    <rect x="684" y="856" width="118" height="22" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-dasharray="4 3"/><text x="692" y="871" class="code">webrtcd</text>
+  </g>
+  <text x="810" y="866" class="m" font-size="9.5">dashed: non-driving</text>
+  <text x="810" y="878" class="m" font-size="9.5">processes (F-09)</text>
+  <text x="684" y="898" font-size="9.5" font-weight="600" fill="#475569">runs on the SoC</text>
+  <text x="684" y="911" class="code" font-size="9">system/manager/process_config.py:70-121</text>
+
+  <!-- E-02 units -->
+  <polygon points="1023,508 1029,517 1023,526 1017,517" class="dia"/>
+  <line x1="1023" y1="526" x2="1023" y2="540" class="agg"/>
+  <text x="1033" y="537" class="mult">2</text>
+  <rect x="948" y="540" width="150" height="128" rx="10" class="pan"/>
+  <g font-size="10.5">
+    <rect x="956" y="548" width="134" height="22" rx="6" class="ml"/><text x="964" y="563" class="t">driving model</text>
+    <rect x="956" y="576" width="134" height="22" rx="6" class="ml"/><text x="964" y="591" class="t">driver monitoring model</text>
+  </g>
+  <text x="956" y="616" class="code" font-size="9">selfdrive/modeld/</text><text x="956" y="628" class="code" font-size="9">models/</text>
+  <text x="956" y="646" font-size="9.5" font-weight="600" fill="#4F46E5">runs on the SoC</text>
+  <text x="956" y="659" class="m" font-size="9.5">executed by modeld processes</text>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="944" x2="1240" y2="944" stroke="#E2E8F0"/>
+  <g transform="translate(40,968)" font-size="10.5">
+    <polygon points="0,0 6,-6 12,0 6,6" class="dia"/><line x1="12" y1="0" x2="34" y2="0" class="agg"/><text x="42" y="4" class="t">consists of (aggregation)</text>
+    <line x1="200" y1="0" x2="228" y2="0" stroke="#475569" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#real)"/><text x="238" y="4" class="t">realizes</text>
+    <text x="306" y="4" class="mult">5</text><text x="320" y="4" class="t">number of children</text>
+    <rect x="450" y="-8" width="28" height="16" rx="4" fill="#FFF7ED" stroke="#C2410C"/><text x="486" y="4" class="t">Safety envelope / actuation path</text>
+    <rect x="680" y="-8" width="28" height="16" rx="4" fill="#EEF2FF" stroke="#6366F1"/><text x="716" y="4" class="t">ML element</text>
+    <rect x="800" y="-8" width="28" height="16" rx="4" fill="#F1F5F9" stroke="#94A3B8" stroke-dasharray="5 3"/><text x="836" y="4" class="t">Outside the item</text>
+    <rect x="950" y="-8" width="28" height="16" rx="4" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="5 3"/><text x="986" y="4" class="t">Excluded</text>
+  </g>
+  <text x="40" y="998" class="m" font-size="10">Element (ISO 26262-1 3.39): a system, component, hardware part or software unit. A system has at least a sensor, a controller and an actuator; here the actuators are existing vehicle elements commanded through IF-01.</text>
+</svg>

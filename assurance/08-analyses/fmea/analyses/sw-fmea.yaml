@@ -14,6 +14,7 @@
 # hand-off SWF-040..049), all AP H: upstream code without requirements or proven tests (O 5-8, D 8-10); no field-exposure credit.
 # The panda rows SWF-001..019 keep their BL-003 ratings: every BL-004 firmware change except the IRQ priorities (panda#10) is
 # compiled only into the LIONDRIVER_REFERENCE build, which no build path sets at BL-004 (SWF-013.C2).
+# Post-BL-004: SWF-025.C1 re-rated after its fix merged (#48, 3534bc2): O 8->5, D 10->4, AP H->M (SWF-ACT-025 completed).
 #
 # SW FMEA element pandad (FSC EL-06, System FMEA SFM-SE-017). Ratings per RT-1, against BL-004 (liondriver-dev 682f184,
 # panda 8aa8671, opendbc 7993399). The LIONDRIVER_REFERENCE firmware build is not enabled by any build path at BL-004, so the
@@ -1634,13 +1635,19 @@ failure_modes:
       no entry for it (log.capnp:596-625). When bit 27 is set, the last list entry stays 0 = relayMalfunction'
     element: SWF-SE-024
     prevention_controls:
-    - description: Upstream code, reviewed. A comment in log.capnp asks to update pandad when faults are added, and that was not done for bit 27
-      ref: openpilot/cereal/log.capnp:624
+    - description: 'Fixed in #48 (3534bc2): fill_panda_faults sizes the list from the bits that have a FaultType (mask up to PANDA_FAULT_TYPE_MAX) and
+        returns the rest, which are logged, so no entry is left at the default; interruptRateSoundDma @27 added. New C++ with a unit test, -Werror build,
+        merged by the owner; no independent review, no C++ static analysis, no documented pandad requirements'
+      ref: openpilot/selfdrive/pandad/pandad.cc
     detection_controls:
-    - description: No test targets this cause
-    occurrence: 8
-    detection: 10
-    ap: H
+    - description: 'tests/test_pandad_faults (bit 27 alone and with unknown bits 28/31, only unknown bits, every bit but bit 0, a real relay fault; PANDA_FAULT_TYPE_MAX
+        equals the last FaultType in the schema). Built with extras and run by test_native.py in CI unit_tests on every PR. Proven: fails with the old sizing
+        (mutation in the impact record). Pass-fail'
+      test: openpilot/selfdrive/pandad/tests/test_pandad_faults.cc
+      ref: assurance/07-supporting/impact/change-2026-10-13-pandad-fault-mapping.md
+    occurrence: 5
+    detection: 4
+    ap: M
     actions:
     - SWF-ACT-025
     - SWF-ACT-024
@@ -3013,13 +3020,14 @@ actions:
   description: 'Fix the faults mapping. Size the list from the mapped bits only, log unknown bits, and add the panda bit 27 (interruptRateSoundDma) to cereal FaultType
     (log.capnp, pandad.cc:257-268)'
   owner: Jherrod Thomas
-  status: in_progress
-  evidence: 'Implemented in jherrodthomas/LionDriver#48 (fill_panda_faults, interruptRateSoundDma @27, tests/test_pandad_faults run by test_native.py; fails
-    with the old sizing). Impact record assurance/07-supporting/impact/change-2026-10-13-pandad-fault-mapping.md. Completed on merge'
+  status: completed
+  evidence: 'Merged in jherrodthomas/LionDriver#48 (3534bc2): fill_panda_faults, interruptRateSoundDma @27, tests/test_pandad_faults run by test_native.py in CI
+    unit_tests; fails with the old sizing. Impact record assurance/07-supporting/impact/change-2026-10-13-pandad-fault-mapping.md. SWF-025.C1 re-rated O 8->5,
+    D 10->4 (AP H->M)'
   revised:
     severity: 8
-    occurrence: 2
-    detection: 8
+    occurrence: 5
+    detection: 4
     ap: M
 - id: SWF-ACT-026
   kind: design_change

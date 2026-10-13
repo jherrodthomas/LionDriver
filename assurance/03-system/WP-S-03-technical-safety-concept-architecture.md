@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-03 Technical safety concept and system architectural design |
 | Standard reference | ISO 26262-4:2018 §6 (technical safety concept, system architectural design, safety mechanisms, FFI/independence by reference to ISO 26262-9 §6–§7); ISO 21448:2022 §8 (architecture-level functional modifications, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3.2, §4.1 and §4.4 diagrams redrawn as Figures 3-2, 4-1 and 4-4; text versions kept; 2026-10-13). History: 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently); 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
+| Version | 0.7 (§3.1 element hierarchy added as Figure 3-1; 2026-10-13). 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3.2, §4.1 and §4.4 diagrams redrawn as Figures 3-2, 4-1 and 4-4; text versions kept; 2026-10-13). History: 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently); 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01, until re-rated); target ASIL B for the envelope (FSC option (c)) |
 | Author | Assurance team (initial draft) |
@@ -51,6 +51,10 @@ It describes the architecture **as inherited at the baseline** and marks where t
 | E-04b Device hardware (rest) | SoC, cameras, IMU, display, speaker, power supply, enclosure | QM | WP-H-02 |
 | E-05 Harness | Toyota TSS2 harness with intercept relay, ignition line, orientation sense | B (PCS restore), B‡ (blocking) | WP-H-02 |
 | EXT-EPS, EXT-PCM, EXT-CLU | Toyota EPS, PCM/brake, cluster | AoU only | [WP-C-04 §11](../02-concept/WP-C-04-functional-safety-concept.md) |
+
+![Figure 3-1: system element hierarchy: the LD-SDA system (the system node of WP-C-01 Figure 3-1) consists of E-01, E-02 and E-04b in the QM partition, E-03a, E-03b and E-04a in the B‡ safety envelope, and E-05; each element carries its §5 TSRs and §6 safety mechanisms and consists of the parts and units of §3.1 and the openpilot processes of §8; EXT-EPS, EXT-PCM and EXT-CLU are outside the item](figures/fig-s03-3-1-system-element-hierarchy.svg)
+
+*Figure 3-1.* The elements of this table on the ISO 26262-1 hierarchy (3.39 element), below the system node of [WP-C-01](../02-concept/WP-C-01-item-definition.md) Figure 3-1: E-03a/E-03b refine E-03 and E-04a/E-04b refine E-04 of WP-C-01. Integrity tags are those of this table; TSR tags are the §5 allocation as written there (TSR-xxx, ranges as given; E-02 and E-04b have none, OPS 801–818 no element); SM tags are the §6 mechanisms whose Element column names that element alone, the twelve that name two elements are listed separately. E-01 is decomposed into the processes of §8 with their §8 role and TSRs. No implementation or verification status is shown. Source: [`figures/fig-s03-3-1-system-element-hierarchy.svg`](figures/fig-s03-3-1-system-element-hierarchy.svg); change it together with §3.1, §5, §6 and §8.
 
 ### 3.2 Block diagram
 

@@ -48,8 +48,8 @@
 <line x1="150.0" y1="589.5" x2="150.0" y2="721.5" class="w"/>
 <line x1="392.0" y1="589.5" x2="392.0" y2="721.5" class="w"/>
 <line x1="634.0" y1="589.5" x2="634.0" y2="721.5" class="w"/>
-<rect x="41.5" y="724.0" width="220" height="100.0" rx="9" class="shadow"/>
-<rect x="40" y="721.5" width="220" height="100.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<rect x="41.5" y="724.0" width="220" height="122.0" rx="9" class="shadow"/>
+<rect x="40" y="721.5" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M49,721.5 H251 A9,9 0 0 1 260,730.5 V726.5 H40 V730.5 A9,9 0 0 1 49,721.5 Z" fill="#64748b"/>
 <text x="54" y="746.5" class="id">BE-1.12</text>
 <text x="246" y="746.5" class="kind">BASIC</text>
@@ -57,9 +57,11 @@
 <text x="54" y="775.5" class="d">false cruise rising edge with</text>
 <text x="54" y="790.0" class="d">valid 8-bit checksum (no</text>
 <text x="54" y="804.5" class="d">counter, GAP-01)</text>
-<circle cx="150.0" cy="838.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<rect x="283.5" y="724.0" width="220" height="100.0" rx="9" class="shadow"/>
-<rect x="282" y="721.5" width="220" height="100.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<rect x="54.0" y="812.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="81.0" y="824.0" class="chip" fill="#fff">SWF-007</text>
+<circle cx="150.0" cy="860.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="283.5" y="724.0" width="220" height="122.0" rx="9" class="shadow"/>
+<rect x="282" y="721.5" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M291,721.5 H493 A9,9 0 0 1 502,730.5 V726.5 H282 V730.5 A9,9 0 0 1 291,721.5 Z" fill="#64748b"/>
 <text x="296" y="746.5" class="id">BE-1.13</text>
 <text x="488" y="746.5" class="kind">BASIC</text>
@@ -67,15 +69,21 @@
 <text x="296" y="775.5" class="d">stale/stuck cruise frame to both</text>
 <text x="296" y="790.0" class="d">envelope and SoC (single RX</text>
 <text x="296" y="804.5" class="d">path; CCF → DFI-10)</text>
-<circle cx="392.0" cy="838.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<rect x="525.5" y="724.0" width="220" height="71.0" rx="9" class="shadow"/>
-<rect x="524" y="721.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<rect x="296.0" y="812.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="322.9" y="824.0" class="chip" fill="#fff">SWF-006</text>
+<circle cx="392.0" cy="860.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="525.5" y="724.0" width="220" height="93.0" rx="9" class="shadow"/>
+<rect x="524" y="721.5" width="220" height="93.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M533,721.5 H735 A9,9 0 0 1 744,730.5 V726.5 H524 V730.5 A9,9 0 0 1 533,721.5 Z" fill="#64748b"/>
 <text x="538" y="746.5" class="id">BE-1.14</text>
 <text x="730" y="746.5" class="kind">BASIC</text>
 <text x="538" y="761.0" class="d">MCU fault sets controls_allowed</text>
 <text x="538" y="775.5" class="d">(BE-1.07 class)</text>
-<circle cx="634.0" cy="809.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="538.0" y="783.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="565.0" y="795.0" class="chip" fill="#fff">DFM-003</text>
+<rect x="596.9" y="783.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="623.9" y="795.0" class="chip" fill="#fff">FMD-009</text>
+<circle cx="634.0" cy="831.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="767.5" y="474.5" width="220" height="114.5" rx="9" class="shadow"/>
 <rect x="766" y="472.0" width="220" height="114.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M775,472.0 H977 A9,9 0 0 1 986,481.0 V477.0 H766 V481.0 A9,9 0 0 1 775,472.0 Z" fill="#64748b"/>
@@ -189,6 +197,10 @@
 <text x="335.1" y="1066.5" class="chip" fill="#fff">outside item</text>
 <rect x="382.3" y="1055.0" width="122.3" height="16" rx="8" fill="#e6e9ef"/>
 <text x="443.5" y="1066.5" class="chip" fill="#334155">repeated / transfer</text>
+<rect x="510.6" y="1055.0" width="105.2" height="16" rx="8" fill="#111827"/>
+<text x="563.2" y="1066.5" class="chip" fill="#fff">FMEA / FMEDA row</text>
+<rect x="621.8" y="1055.0" width="53.9" height="16" rx="8" fill="#fff1f1"/>
+<text x="648.8" y="1066.5" class="chip" fill="#c62828">no FMEA</text>
 <line x1="40" y1="1089.0" x2="74" y2="1089.0" class="wh"/>
 <text x="86" y="1093.0" class="lb">Single-point path</text>
 <text x="86" y="1109.0" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
