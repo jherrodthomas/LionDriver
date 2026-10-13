@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Proposed 2026-10-13: unit-tested and MISRA-clean; LionDriver pins the branch commits for CI (panda `4ac8e1c`, opendbc `c393a04`), to be re-pinned to the merge commits; not verified on the bench or the vehicle; not reviewed independently** |
+| Status | **Integrated 2026-10-13: LionDriver pins panda `a55bdfc` and opendbc `a57b667` (merge commits of the changes `4ac8e1c` and `c393a04` on the forks' `master`); unit-tested and MISRA-clean; not verified on the bench or the vehicle; not reviewed independently** |
 | Change requests | [jherrodthomas/panda#16](https://github.com/jherrodthomas/panda/pull/16), [jherrodthomas/opendbc#13](https://github.com/jherrodthomas/opendbc/pull/13) |
 | Reference configuration affected | Yes, in the reference build only (`LIONDRIVER_REFERENCE=1`, the default) |
 | Author / reviewer (independence) | Claude (AI-assisted draft) / TBD; an AI draft is not a review (WP-M-06) |
@@ -30,4 +30,4 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 |---|---|
 | OI-1 | HIL: ELM327 refusal after the car mode and its reset on ignition off (extend `tests/hitl/test_11_reference_lock.py`) |
 | OI-2 | Vehicle: confirm that `BARRIERS` is the indication the driver reads as lane assist active on the reference cluster, then name the bits in FSR-017/027 (DFA DOI-005) |
-| OI-3 | Re-pin LionDriver to the forks' merge commits once panda#16 and opendbc#13 are merged |
+| OI-3 | ~~Re-pin LionDriver to the forks' merge commits once panda#16 and opendbc#13 are merged~~ **Closed:** panda `a55bdfc`, opendbc `a57b667` |
