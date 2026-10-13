@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-02 Functional safety plan |
 | Standard reference | ISO 26262-2:2018 §6 (project-dependent safety management: roles, planning, tailoring, safety case, confirmation measures); ISO 26262-2 §5 (anomaly handling, interfaces to overall safety management); ISO 26262-8 §5–§12 (supporting processes, by reference); ASPICE 4.0 MAN.3 |
-| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (early-implementation rule §4.1, AI-assisted authoring §3.3, impact records and design notes in §7, OI-4 corrected, OI-7…OI-9 added; audit [RR-2026-008](reviews/RR-2026-008.md); 2026-10-12). 0.1 (initial draft) |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (early-implementation rule §4.1, AI-assisted authoring §3.3, impact records and design notes in §7, OI-4 corrected, OI-7…OI-9 added; audit [RR-2026-008](reviews/RR-2026-008.md); 2026-10-12). 0.1 (initial draft) |
 | Status | Draft |
 | ASIL / scope | All. Planned to ASIL D until the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)) is approved |
 | Author | Assurance team (initial draft) |
@@ -130,7 +130,7 @@ Status at v0.2 (all reference build only; none reviewed at I1; no HIL evidence):
 | IRQ priorities | TSR-519 | panda `52cad44` | [panda-irq-priorities](../07-supporting/impact/change-2026-10-12-panda-irq-priorities.md) |
 | TX whitelist | TSR-705 | opendbc (see record) | [opendbc-toyota-tx-whitelist](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md) |
 | RX timeouts `0x262`, `0x1D3` | TSR-401, TSR-110 | opendbc `98404a4` | [opendbc-toyota-rx-timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md) |
-| EPS fault gate, host flag, siren | TSR-516 | opendbc `242d63d`, `adcb7c2`; panda `877730e`, `b790fca` | [opendbc-toyota-eps-fault](../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md) |
+| EPS fault gate, host flag, siren; siren when heartbeat loss revokes authority (all builds, added 2026-10-13) | TSR-516 | opendbc `242d63d`, `adcb7c2`; panda `877730e`, `b790fca`; heartbeat-loss siren panda `c33343b` | [opendbc-toyota-eps-fault](../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md); heartbeat-loss siren: [panda-fast-heartbeat](../07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md) §5 |
 | Cruise main cross-check | TSR-405 | opendbc `875e325` | [opendbc-toyota-cruise-main](../07-supporting/impact/change-2026-10-12-opendbc-toyota-cruise-main.md) |
 | TX rate supervision | TSR-518 | opendbc `7993399`; panda `8aa8671` | [tx-rate-supervision](../07-supporting/impact/change-2026-10-12-tx-rate-supervision.md) |
 
@@ -253,4 +253,4 @@ Upstream management and the absence of a DIA are handled in [WP-M-11](WP-M-11-up
 | OI-6 | Revisit the ASIL D planning assumption once the HARA is approved; adjust independence and method selection | SM | G1 |
 | OI-7 | Classify the AI coding assistant used for drafting (§3.3) in WP-P-07: tool impact, tool error detection, TCL, and whether qualification is needed | SM | G0 |
 | OI-8 | Give a verification review at I1 or above to every at-risk envelope change in §4.1, and add their HIL campaign (`REFERENCE_BUILD=1`) to the bench plan | SM, VR | G2 |
-| OI-9 | EPS-fault siren latency: the siren starts about 1.14 s after the first fault frame (1 s persistence + 10 ms task + up to 125 ms frame period). This exceeds the SG-02 1 s warning time; TSR-516's ≤ 0.5 s holds only if the 1 s persistence counts as detection time. LKA torque is refused from the first fault frame. Decide whether to shorten persistence or justify the delay (recorded in [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md)) | SM, PM | G2 |
+| OI-9 | EPS-fault siren latency: the siren starts ≤ 1.26 s worst case after the first fault frame (1 s persistence + 10 ms task + up to 2 × 125 ms, because the speaker sounds only on every other 8 Hz tick; corrected 2026-10-13 from about 1.14 s). This exceeds the SG-02 1 s warning time; TSR-516's ≤ 0.5 s holds only if the 1 s persistence counts as detection time. LKA torque is refused from the first fault frame. Decide whether to shorten persistence or justify the delay (recorded in [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md)) | SM, PM | G2 |

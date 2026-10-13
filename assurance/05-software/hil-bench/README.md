@@ -4,7 +4,7 @@
 |---|---|
 | Work product | Hardware-in-the-loop bench plan (decision D-04 of [WP-M-01](../../01-management/WP-M-01-assurance-strategy.md); test environment of [WP-W-08](../WP-W-08-embedded-software-testing.md) §3) |
 | Standard reference | ISO 26262-6:2018 §11.4.2 (test environments); ISO 26262-8:2018 §9.4.3 (verification environment); ASPICE 4.0 SWE.6 |
-| Version | 0.3 (§3 diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes: pins `b790fca`/`7993399`, reference-build campaign for `test_11…14`; 2026-10-12). 0.1 |
+| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (§3 diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes: pins `b790fca`/`7993399`, reference-build campaign for `test_11…14`; 2026-10-12). 0.1 |
 | Status | Draft: plan only. No bench exists, no part has been bought, no test has been run on hardware |
 | Author | Assurance team (AI-assisted draft) |
 | Reviewer(s) | TBD |
@@ -88,7 +88,7 @@ From a LionDriver checkout, with the panda submodule at its pin:
 
 ```bash
 cd panda
-git checkout 6dee6fa   # the LionDriver pin, with the fault injection and the HIL tests test_10…14
+git checkout c33343b   # the LionDriver pin, with the fault injection and the HIL tests test_10…15
 pip install -e .[dev]                                               # panda python lib, pytest, libusb1, pycapnp
 export PYTHONPATH=$PWD/../opendbc_repo:$PWD/..
 ```
@@ -133,11 +133,11 @@ Upstream tests that need comma's multi-panda jig or SPI-only hardware will fail 
 
 ### 5.5 Reference build campaign
 
-`test_11_reference_lock.py`, `test_13_eps_fault.py` and `test_14_tx_rate.py` skip unless `REFERENCE_BUILD=1`; `test_12_rx_timeout.py` runs on any build and adds the reference build's RX messages (`EPS_STATUS`, `PCM_CRUISE_2`) with `REFERENCE_BUILD=1`. All four need the jungle, which plays the car on bus 0.
+`test_11_reference_lock.py`, `test_13_eps_fault.py`, `test_14_tx_rate.py` and `test_15_heartbeat_siren.py` skip unless `REFERENCE_BUILD=1` (`test_15` needs it for the car simulation only: the heartbeat-loss siren is in every build); `test_12_rx_timeout.py` runs on any build and adds the reference build's RX messages (`EPS_STATUS`, `PCM_CRUISE_2`) with `REFERENCE_BUILD=1`. All five need the jungle, which plays the car on bus 0. `test_15` times the revocation after the last heartbeat; the host cannot read the speaker, so the tester confirms by ear (or a microphone) that the siren sounds at the revocation (≤ 0.56 s after the last heartbeat, WP-S-04 T-07a) and records it in the bench log.
 
 ```bash
 LIONDRIVER_REFERENCE=1 ./board/flash.py    # builds with -DLIONDRIVER_REFERENCE (debug build unless RELEASE=1) and flashes
-HITL=1 REFERENCE_BUILD=1 python -m pytest -v tests/hitl/test_11_reference_lock.py tests/hitl/test_12_rx_timeout.py tests/hitl/test_13_eps_fault.py tests/hitl/test_14_tx_rate.py
+HITL=1 REFERENCE_BUILD=1 python -m pytest -v tests/hitl/test_11_reference_lock.py tests/hitl/test_12_rx_timeout.py tests/hitl/test_13_eps_fault.py tests/hitl/test_14_tx_rate.py tests/hitl/test_15_heartbeat_siren.py
 ```
 
 Record each skipped test as **Not run**, never as Pass. Record the build type (debug or release) of the reference image in the test log; a debug reference build is not the release image (WP-W-08 §4). Flash the normal image again afterwards (§5.3).
@@ -176,6 +176,7 @@ WP-W-08 §4 asks for the worst value over ≥ 100 repetitions with random phase 
 | `tests/hitl/test_12_rx_timeout.py` | VS-SWQ-08, VS-FI-04 | TSR-401, TSR-306 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` for the reference RX set (§5.5) |
 | `tests/hitl/test_13_eps_fault.py` | VS-SWQ-13 | TSR-110 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` (§5.5) |
 | `tests/hitl/test_14_tx_rate.py` | VS-SWQ-25 (TSR-518 part) | TSR-518 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` (§5.5) |
+| `tests/hitl/test_15_heartbeat_siren.py` (added 2026-10-13, panda `c33343b`) | VS-SWQ-10 (revocation timing and siren on heartbeat loss), VS-FI-10 (a) | TSR-407, TSR-516 | B1 | Implemented, not run; needs `REFERENCE_BUILD=1` for the car simulation (§5.5); siren confirmed by ear |
 | Upstream `tests/hitl/test_1…9` | Regression | — | B1 | Existing, not run on LionDriver hardware |
 | Corolla log replay, limit and timeout cases | VS-SWQ-01…, VS-FI-01…04 | TSR-1xx, TSR-401…406 | B3 | Planned |
 | Power dips, resets, SWD memory faults, heartbeat and SPI faults | VS-FI-06…08, -10, -11, -15, -16, -18 | TSR-407…413, TSR-505, TSR-503, TSR-706 | B4 | Planned |

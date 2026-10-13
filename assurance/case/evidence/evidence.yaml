@@ -194,7 +194,7 @@
 - id: Sn-12
   kind: evidence
   title: "HIL tests of the envelope"
-  description: "spec and scripts drafted (panda `tests/hitl/test_10`…`test_14`), not executed: no bench (D-04)"
+  description: "spec and scripts drafted (panda `tests/hitl/test_10`…`test_15`), not executed: no bench (D-04)"
   evidence_status: missing
   lifecycle_area: verification-validation
   location: "assurance/05-software/WP-W-08-embedded-software-testing.md"
@@ -211,7 +211,7 @@
 - id: Sn-13
   kind: evidence
   title: "Fault injection"
-  description: "spec and scripts drafted (WP-V-05; panda `tests/hitl/test_10`…`test_14`), not executed: no bench (D-04)"
+  description: "spec and scripts drafted (WP-V-05; panda `tests/hitl/test_10`…`test_15`), not executed: no bench (D-04)"
   evidence_status: missing
   lifecycle_area: verification-validation
   location: "assurance/06-validation/WP-V-05-fault-injection.md"
@@ -244,8 +244,8 @@
 
 - id: Sn-15
   kind: evidence
-  title: "panda firmware host unit tests (watchdog, heartbeat monitor, reference lock, IRQ priorities, EPS-fault siren)"
-  description: "LionDriver-written tests `panda/tests/hw_watchdog`, `heartbeat_monitor`, `reference_lock`, `irq_priorities`, `eps_fault_siren`; added to LionDriver CI 2026-10-12, no run recorded as evidence yet; host x86 not target; not reviewed"
+  title: "panda firmware host unit tests (watchdog, heartbeat monitor, heartbeat-loss siren, reference lock, IRQ priorities, EPS-fault siren)"
+  description: "LionDriver-written tests `panda/tests/hw_watchdog`, `heartbeat_monitor`, `heartbeat_siren` (added 2026-10-13, panda `c33343b`), `reference_lock`, `irq_priorities`, `eps_fault_siren`; added to LionDriver CI 2026-10-12, no run recorded as evidence yet; host x86 not target; not reviewed"
   evidence_status: partial
   lifecycle_area: verification-validation
   location: ".github/workflows/safety.yaml"

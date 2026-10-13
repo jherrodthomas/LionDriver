@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-03 Project plan (scope, WBS, schedule, resources) |
 | Standard reference | ASPICE 4.0 MAN.3 (project management); ISO 26262-2 §6 (planning of safety activities, by reference to WP-M-02) |
-| Version | 0.5 (backlog B-14 and B-17 marked done: #45 merged 2026-10-13, #44 merged; Figure 5-1 regenerated; 2026-10-13). 0.4 (§5 gate roadmap with blockers and the §9 backlog drawn as Figure 5-1; no plan content changed; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: WBS 4.3, resources, backlog B-13…B-17; 2026-10-12). 0.1 |
+| Version | 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (backlog B-14 and B-17 marked done: #45 merged 2026-10-13, #44 merged; Figure 5-1 regenerated; 2026-10-13). 0.4 (§5 gate roadmap with blockers and the §9 backlog drawn as Figure 5-1; no plan content changed; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: WBS 4.3, resources, backlog B-13…B-17; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (project management) |
 | Author | Assurance team (initial draft) |
@@ -65,7 +65,7 @@ WBS elements follow the phases and gates in [WP-M-01 §7](WP-M-01-assurance-stra
 | 4 | P3 HW/SW development | | G3 |
 | 4.1 | Hardware safety | WP-H-01…H-05, H-07 | |
 | 4.2 | Software safety requirements, architecture, analysis | WP-W-01…W-04 | |
-| 4.3 | Envelope hardening (code changes) | IWDG, fault → safe state, mode lock, gate `0xc5`, driver-torque and EPS-status monitoring, RX E2E strategy (gap §9 action 5). Status 2026-10-12 (reference build, not verified, not reviewed): done: IWDG and window mode, mode lock, `0xc5` refused in car mode, EPS-status monitoring and report (TSR-110), RX timeout and engagement gate, heartbeat 0.3 s, TX whitelist and `0x411`, per-ID TX rate supervision (TSR-518, DN-01), IRQ priorities (TSR-519, priority scheme not adopted). Partial: RX cross-checks (TSR-405(c) only), siren (TSR-516(b) EPS fault only). Open: driver-torque monitoring, TSR-405(a)(b)(d), GAP-46. Records: [`impact/`](../07-supporting/impact/README.md) | |
+| 4.3 | Envelope hardening (code changes) | IWDG, fault → safe state, mode lock, gate `0xc5`, driver-torque and EPS-status monitoring, RX E2E strategy (gap §9 action 5). Status 2026-10-12 (reference build, not verified, not reviewed): done: IWDG and window mode, mode lock, `0xc5` refused in car mode, EPS-status monitoring and report (TSR-110), RX timeout and engagement gate, heartbeat 0.3 s, TX whitelist and `0x411`, per-ID TX rate supervision (TSR-518, DN-01), IRQ priorities (TSR-519, priority scheme not adopted). Partial: RX cross-checks (TSR-405(c) only), siren (TSR-516(b) EPS fault only; 2026-10-13 also heartbeat loss revoking granted authority, all builds, panda `c33343b`). Open: driver-torque monitoring, TSR-405(a)(b)(d), GAP-46. Records: [`impact/`](../07-supporting/impact/README.md) | |
 | 4.4 | Firmware security | LionDriver signing key, modern algorithm, RDP/WRP, release build without debug key (gap §9 action 6) | |
 | 4.5 | Onboard stack fixes | Soft disable and Chestnut masking (gap §9 action 8) | |
 | 4.6 | Unit design and verification | WP-W-05, W-06 (structural coverage beyond line, MISRA deviation records) | |
