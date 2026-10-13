@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-01 Item definition |
 | Standard reference | ISO 26262-3:2018 §5; ISO 21448:2022 §5 (specification of the functionality and system); ISO/SAE 21434:2021 §9.3; ASPICE SYS.1 |
-| Version | 0.6 (§3.3 boundary diagram redrawn as Figure 3-1 with interface IDs; text version kept; 2026-10-13). 0.5 (reference configuration named by generation, E210; OI-9 added; 2026-10-12). History: 0.4 (AOU-15 added: reference build used on camera-ACC configurations only, `0x411` refused (TSR-705 D-1); 2026-10-12). 0.3 (AOU-14 added for the reference build's fixed alternative experience; 2026-10-12) |
+| Version | 0.7 (§3.1 element hierarchy added as Figure 3-1; boundary diagram renumbered Figure 3-2; 2026-10-13). 0.6 (§3.3 boundary diagram redrawn as Figure 3-1 with interface IDs; text version kept; 2026-10-13). 0.5 (reference configuration named by generation, E210; OI-9 added; 2026-10-12). History: 0.4 (AOU-15 added: reference build used on camera-ACC configurations only, `0x411` refused (TSR-705 D-1); 2026-10-12). 0.3 (AOU-14 added for the reference build's fixed alternative experience; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Item level (ASIL determined in [WP-C-03](WP-C-03-hara.md)) |
 | Author | Assurance team (initial draft) |
@@ -65,6 +65,10 @@ LD-SDA helps the driver by controlling steering (lane centring) and speed (adapt
 | E-05 Harness | Toyota TSS2 harness with intercept relay between the forward camera and the vehicle CAN |
 | E-06 Optional external compute ("Chestnut" big-model eGPU over USB) | **Proposed for exclusion** from the reference configuration pending analysis of GAP-17. Not part of the item until OI-4 is decided |
 
+![Figure 3-1: element hierarchy of LD-SDA: the item realizes F-01 to F-09 and consists of one system, whose components E-01 to E-05 consist of hardware parts and software units; E-06 is excluded](figures/fig-3-1-element-hierarchy.svg)
+
+*Figure 3-1.* The elements of this section arranged on the ISO 26262-1 hierarchy (3.39 element: system, component, hardware part, software unit), with the functions of §2.1 the item realizes. The item is one system. Its actuators (EPS, ECM/PCM, ABS/VSC) are existing vehicle elements outside the item (§3.2), commanded through IF-01 (§3.4). Function tags name the software elements in the main implementation of §2.1; the parts and units are those this table and `system/manager/process_config.py:70-121` list. Source: [`figures/fig-3-1-element-hierarchy.svg`](figures/fig-3-1-element-hierarchy.svg); change it together with §2.1, §3.1 and §3.2.
+
 ### 3.2 Elements outside the item (environment and existing vehicle elements)
 
 | Element | Relationship | Assumptions |
@@ -80,11 +84,11 @@ LD-SDA helps the driver by controlling steering (lane centring) and speed (adapt
 
 ### 3.3 Boundary diagram
 
-![Figure 3-1: item boundary of LD-SDA, with elements E-01 to E-06 and interfaces IF-01 to IF-09](figures/fig-3-1-item-boundary.svg)
+![Figure 3-2: item boundary of LD-SDA, with elements E-01 to E-06 and interfaces IF-01 to IF-09](figures/fig-3-2-item-boundary.svg)
 
-*Figure 3-1.* The item boundary (dashed) contains E-01…E-05. E-06 is drawn outside because it is excluded pending OI-4. Each line carries the interface ID of §3.4. The source is [`figures/fig-3-1-item-boundary.svg`](figures/fig-3-1-item-boundary.svg); change the figure and §3.1, §3.2 and §3.4 together.
+*Figure 3-2.* The item boundary (dashed) contains E-01…E-05. E-06 is drawn outside because it is excluded pending OI-4. Each line carries the interface ID of §3.4. The source is [`figures/fig-3-2-item-boundary.svg`](figures/fig-3-2-item-boundary.svg); change the figure and §3.1, §3.2 and §3.4 together.
 
-<details><summary>Text version of Figure 3-1</summary>
+<details><summary>Text version of Figure 3-2</summary>
 
 ```
                 ┌──────────────────────── ITEM: LD-SDA ─────────────────────────┐
