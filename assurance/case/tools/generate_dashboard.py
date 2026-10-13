@@ -7,7 +7,8 @@ Outputs (all deterministic, no timestamps):
   docs/assets/liondriver/assurance/lifecycle.svg   lifecycle-area status card
   docs/assets/liondriver/assurance/ecosystem.svg   vehicle classification card
   assurance/README.md, between the assurance-summary markers   the same figures as text
-  README.md, between the assurance-headline markers            one-line status strip
+  README.md, between the assurance-headline markers            one-line status strip and snapshot button
+  assurance/case/badge.json                        shields.io endpoint for the snapshot button
 
 Usage:
   python3 assurance/case/tools/generate_dashboard.py           # write the outputs
@@ -23,10 +24,17 @@ import sys
 from html import escape
 from pathlib import Path
 
-from caselib import CASE_DIR, REPO_ROOT, load_case, summarize, validate
+from caselib import CASE_DIR, REPO_ROOT, load_case, release_status, summarize, validate
 
 ASSET_DIR = REPO_ROOT / "docs" / "assets" / "liondriver" / "assurance"
 STATUS_JSON = CASE_DIR / "status.json"
+BADGE_JSON = CASE_DIR / "badge.json"
+REPO_SLUG = "jherrodthomas/LionDriver"
+SNAPSHOT_TAG = "snapshot-latest"
+SNAPSHOT_PDF = "LionDriver-safety-case.pdf"
+BADGE_URL = ("https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2F"
+             + REPO_SLUG.replace("/", "%2F") + "%2Fliondriver-dev%2Fassurance%2Fcase%2Fbadge.json")
+SNAPSHOT_URL = f"https://github.com/{REPO_SLUG}/releases/download/{SNAPSHOT_TAG}/{SNAPSHOT_PDF}"
 README = REPO_ROOT / "README.md"
 ASSURANCE_README = REPO_ROOT / "assurance" / "README.md"
 BEGIN = "<!-- BEGIN GENERATED: assurance-summary (assurance/case/tools/generate_dashboard.py) -->"
@@ -251,7 +259,17 @@ def headline_block(s: dict) -> str:
           f"{cl['registered']} claims ({cl['with_accepted_evidence']} with accepted evidence) · "
           f"{ev['registered']} evidence items ({ev['accepted']} accepted) · "
           f"{s['defeaters_open']} open defeaters · records digest `{s['records_digest']}`")
-  return "\n".join([HEAD_BEGIN, "", line, "", HEAD_END])
+  button = (f"[![Download the safety case snapshot (PDF)]({BADGE_URL})]({SNAPSHOT_URL}) "
+            + f"· [all snapshots and how to verify them](https://github.com/{REPO_SLUG}/releases/tag/{SNAPSHOT_TAG})")
+  return "\n".join([HEAD_BEGIN, "", button, "", line, "", HEAD_END])
+
+
+def badge_json(s: dict) -> str:
+  rs = release_status(s)
+  bl = s["baseline"]
+  badge = {"schemaVersion": 1, "label": "⬇ safety case", "message": f"{rs['label']} · {rs['detail']} · {bl['id']}",
+           "color": rs["color"], "labelColor": "334155"}
+  return json.dumps(badge, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
 
 
 def _replace(text: str, begin: str, end: str, block: str) -> str:
@@ -270,6 +288,7 @@ def outputs(s: dict) -> dict[Path, str]:
   readme = re.sub(r"\*\*[0-9]+ car models\*\*", f"**{s['configurations']['upstream_compatible']['stated_count']} car models**", readme)
   return {
     STATUS_JSON: json.dumps(s, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
+    BADGE_JSON: badge_json(s),
     ASSET_DIR / "dashboard.svg": dashboard_svg(s),
     ASSET_DIR / "lifecycle.svg": lifecycle_svg(s),
     ASSET_DIR / "ecosystem.svg": ecosystem_svg(s),
