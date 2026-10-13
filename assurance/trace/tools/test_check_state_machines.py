@@ -127,6 +127,20 @@ class TestChecks(unittest.TestCase):
     self.sm["transitions"][2]["swsr"] = []
     self.assertEqual(ids(run(self.sm)[0], "S4"), ["S4 SM-TEST T2: no SWSR reference"])
 
+  def test_s7_gap_recorded_is_finding_not_error(self):
+    self.sm["transitions"][2]["swsr"] = []
+    self.sm["transitions"][2]["gap"] = "no host SWSR"
+    errors, warnings = run(self.sm)
+    self.assertEqual(ids(errors, "S4"), [])
+    self.assertEqual(ids(warnings, "S7"), ["S7 SM-TEST T2: no SWSR (gap: no host SWSR)"])
+
+  def test_s7_empty_gap_is_still_s4(self):
+    self.sm["transitions"][2]["swsr"] = []
+    self.sm["transitions"][2]["gap"] = ""
+    errors, warnings = run(self.sm)
+    self.assertEqual(ids(errors, "S4"), ["S4 SM-TEST T2: no SWSR reference"])
+    self.assertEqual(ids(warnings, "S7"), [])
+
   def test_s4_unknown_swsr(self):
     self.sm["transitions"][2]["swsr"] = ["SWSR-99"]
     self.assertEqual(ids(run(self.sm)[0], "S4"), ["S4 SM-TEST T2: SWSR-99 not in swsr.yaml"])
@@ -228,6 +242,14 @@ class TestGeneration(unittest.TestCase):
     out = csm.render(GOOD, SW)
     self.assertIn(GOLDEN_TABLE, out)
     self.assertTrue(out.endswith(GOLDEN_MERMAID), out[-400:])
+
+  def test_render_gap_table(self):
+    sm = copy.deepcopy(GOOD)
+    sm["transitions"][2]["swsr"] = []
+    sm["transitions"][2]["gap"] = "none | yet"
+    out = csm.render(sm, SW)
+    self.assertIn("| T2 | ALLOWED | e2 | — | clear | NOT_ALLOWED | all | gap | Not assessed | a.h:2 |", out)
+    self.assertIn("| # | Gap |\n|---|---|\n| T2 | none \\| yet |", out)
 
   def test_blocks_replace_and_idempotent(self):
     text = ("before\n<!-- BEGIN GENERATED: sm-test (assurance/trace/tools/check_state_machines.py) -->\nstale\n"

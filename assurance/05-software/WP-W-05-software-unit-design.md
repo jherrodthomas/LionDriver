@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-05 Software unit design and implementation |
 | Standard reference | ISO 26262-6:2018 §8 (software unit design and implementation: notation, design principles for unit design and implementation); ISO/SAE 21434:2021 §10 (by reference to WP-W-11); ASPICE 4.0 SWE.3 |
-| Version | 0.4 (§5.2 regenerated: T1/T8/T10c guards for SWSR-405(c) v0.16, [B2B-TOY-AUTH-2026-10-13](reference-models/results/B2B-TOY-AUTH-2026-10-13.md) B2B-03; 2026-10-13). 0.3 (RR-2026-008 F-16: unit inventory, §3, §4, §6–§8 rewritten for the current pins, new units UN-36…UN-44, allocation lines for SWSRs without a unit, ENV-R-07 sizes marked as line spans; F-29: Origin column; F-28: Author, baseline; 2026-10-12). 0.2 (UN-03: TX rate supervision design proposal DN-01; 2026-10-12). 0.1 |
+| Version | 0.5 (§5.3 host engagement state of `selfdrived` generated from `state-machines/sm-selfdrived.yaml`; 2026-10-13). 0.4 (§5.2 regenerated: T1/T8/T10c guards for SWSR-405(c) v0.16, [B2B-TOY-AUTH-2026-10-13](reference-models/results/B2B-TOY-AUTH-2026-10-13.md) B2B-03; 2026-10-13). 0.3 (RR-2026-008 F-16: unit inventory, §3, §4, §6–§8 rewritten for the current pins, new units UN-36…UN-44, allocation lines for SWSRs without a unit, ENV-R-07 sizes marked as line spans; F-29: Origin column; F-28: Author, baseline; 2026-10-12). 0.2 (UN-03: TX rate supervision design proposal DN-01; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope units (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating) |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -500,6 +500,62 @@ stateDiagram-v2
 <!-- END GENERATED: sm-toy-auth -->
 
 Gas pressed does not change the state; it gates longitudinal only (UN-12). This table is the reference for WP-W-06 VS-UV-06.
+
+### 5.3 Host engagement state (`selfdrived`, QM)
+
+The host engagement state of `selfdrived` (`openpilot/selfdrive/selfdrived/state.py`) is QM / QM (B-sup) software, not an envelope unit. It is recorded here so that the host and envelope state machines can be read side by side: `enabled` in this table is host state only, and authority on the car is §5.2. The machine runs once per 100 Hz cycle on the event types raised in that cycle; the guards spell out the fixed priority order of the code.
+
+<!-- BEGIN GENERATED: sm-selfdrived (assurance/trace/tools/check_state_machines.py) -->
+Generated from [`state-machines/sm-selfdrived.yaml`](state-machines/sm-selfdrived.yaml) by `assurance/trace/tools/check_state_machines.py --write`; do not edit by hand. Status is taken from the WP-W-02 Baseline column of the cited SWSRs ("Implemented" = code changed and host tests pass, not verified on hardware). Build: all, reference (`LIONDRIVER_REFERENCE=1` only) or upstream (without it).
+
+| # | Current | Event | Guard | Action | Next | Build | SWSR | Status | Code |
+|---|---|---|---|---|---|---|---|---|---|
+| X1 | preEnabled, enabled, softDisabling, overriding | update (100 Hz) | IMMEDIATE_DISABLE present | IMMEDIATE_DISABLE alert | disabled | all | 601, 615, 618, 621, 626, 307h | Partial | openpilot selfdrived/state.py:27-29 |
+| X2 | preEnabled, enabled, softDisabling, overriding | update (100 Hz) | USER_DISABLE present, no IMMEDIATE_DISABLE | USER_DISABLE alert | disabled | all | gap | Not assessed | openpilot selfdrived/state.py:31-33 |
+| E1 | enabled | update (100 Hz) | SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE | soft-disable timer = 3 s (300 cycles); SOFT_DISABLE alert | softDisabling | all | 601, 624 | Partial | openpilot selfdrived/state.py:7, 38-41 |
+| E2 | enabled | update (100 Hz) | OVERRIDE_LATERAL or OVERRIDE_LONGITUDINAL present, no disable event | override alerts | overriding | all | gap | Not assessed | openpilot selfdrived/state.py:43-45 |
+| SD1 | softDisabling | update (100 Hz) | SOFT_DISABLE no longer present, no IMMEDIATE_DISABLE or USER_DISABLE | none | enabled | all | 601 | Not implemented | openpilot selfdrived/state.py:49-51 |
+| SD2 | softDisabling | update (100 Hz) | SOFT_DISABLE still present and the timer has run out (3 s after E1/O1) | none | disabled | all | 601, 624 | Partial | openpilot selfdrived/state.py:20, 53-57 |
+| P1 | preEnabled | update (100 Hz) | PRE_ENABLE no longer present, no disable event | none | enabled | all | gap | Not assessed | openpilot selfdrived/state.py:60-64 |
+| O1 | overriding | update (100 Hz) | SOFT_DISABLE present, no IMMEDIATE_DISABLE or USER_DISABLE | soft-disable timer = 3 s; SOFT_DISABLE alert | softDisabling | all | 601, 624 | Partial | openpilot selfdrived/state.py:67-71 |
+| O2 | overriding | update (100 Hz) | no override event and no SOFT_DISABLE, no disable event | none | enabled | all | gap | Not assessed | openpilot selfdrived/state.py:72-73 |
+| N1 | disabled | update (100 Hz) | ENABLE and NO_ENTRY present | NO_ENTRY alert, engagement refused | same | all | 514h, 610, 619, 620, 623 | Not implemented | openpilot selfdrived/state.py:79-81 |
+| D1 | disabled | update (100 Hz) | ENABLE and PRE_ENABLE present, no NO_ENTRY | ENABLE alert | preEnabled | all | 514h, 610, 619, 620, 623 | Not implemented | openpilot selfdrived/state.py:84-85, 90 |
+| D2 | disabled | update (100 Hz) | ENABLE and an override event present, no NO_ENTRY or PRE_ENABLE | ENABLE alert | overriding | all | 514h, 610, 619, 620, 623 | Not implemented | openpilot selfdrived/state.py:86-87, 90 |
+| D3 | disabled | update (100 Hz) | ENABLE present, no NO_ENTRY, PRE_ENABLE or override event | ENABLE alert | enabled | all | 514h, 610, 619, 620, 623 | Not implemented | openpilot selfdrived/state.py:88-90 |
+
+Transitions without an SWSR (requirement gaps, checker finding S7):
+
+| # | Gap |
+|---|---|
+| X2 | no host SWSR for driver-initiated disengagement (cruise off, brake, cancel button); the envelope side is SWSR-301/302 |
+| E2 | no host SWSR for driver override while engaged; the envelope side is SWSR-305 (gas blocks longitudinal) |
+| P1 | no SWSR for the pre-enable phase (engagement requested while e.g. the brake is held); SOFT_DISABLE is not acted on in preEnabled |
+| O2 | no host SWSR for driver override while engaged (see E2) |
+
+```mermaid
+stateDiagram-v2
+  [*] --> disabled
+  preEnabled --> disabled: X1
+  enabled --> disabled: X1
+  softDisabling --> disabled: X1
+  overriding --> disabled: X1
+  preEnabled --> disabled: X2
+  enabled --> disabled: X2
+  softDisabling --> disabled: X2
+  overriding --> disabled: X2
+  enabled --> softDisabling: E1
+  enabled --> overriding: E2
+  softDisabling --> enabled: SD1
+  softDisabling --> disabled: SD2
+  preEnabled --> enabled: P1
+  overriding --> softDisabling: O1
+  overriding --> enabled: O2
+  disabled --> preEnabled: D1
+  disabled --> overriding: D2
+  disabled --> enabled: D3
+```
+<!-- END GENERATED: sm-selfdrived -->
 
 ## 6. Error handling and fault classification (target design)
 
