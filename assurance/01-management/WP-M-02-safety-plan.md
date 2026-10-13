@@ -115,7 +115,7 @@ Phases and gates are defined in [WP-M-01 §7](WP-M-01-assurance-strategy.md#7-ph
 
 Added in v0.2. Envelope hardening from P3 has started before G0. This is allowed under these conditions:
 
-1. The change is compiled only into the reference build (`LIONDRIVER_REFERENCE`, [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md)). The default build keeps upstream behaviour.
+1. The change is compiled only when `LIONDRIVER_REFERENCE=1` ([WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md)). Since LionDriver #36 the top-level `SConstruct` sets it by default, so the panda firmware flashed on the device carries the changes; building with `LIONDRIVER_REFERENCE=` (empty) gives upstream behaviour. CI tests both variants.
 2. Each change has a change impact record in [`07-supporting/impact/`](../07-supporting/impact/README.md) and traces to a draft TSR and SWSR.
 3. The change is at-risk work. It earns no credit toward G2 or G3 until (a) the TSRs and SWSRs it implements are approved, (b) the change has a verification review per [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) at I1 or above, and (c) the HIL evidence named in [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) exists. If a later HARA or TSC decision changes the requirement, the change is reworked or reverted.
 4. The hold point above still applies. Implemented envelope changes do not permit public-road operation.
