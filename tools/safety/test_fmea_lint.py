@@ -696,3 +696,67 @@ class TestFmedaExport(unittest.TestCase):
 
 if __name__ == "__main__":
   unittest.main()
+
+
+class TestHaraMapping(unittest.TestCase):
+  WP = "\n".join([
+    "### 5.1 H-01 Unintended lateral motion",
+    "| HE-01.1 | OS-01 | x | S3 | E4 | C2 | **C** | r |",
+    "### 5.2 H-02 Loss of lateral control",
+    "| **SG-01** | No lateral motion | **C** ⚠ (D if AOU-01 fails) | HE-01.1 |",
+    "| **SG-02** | No silent loss | **B** | HE-02.1 |",
+  ])
+
+  def mapping(self, **goal):
+    row = {"second": "SG-001", "second_asil": "D", "wp_c03": ["SG-01"], "wp_c03_asil": "C", "agreement": "second_higher",
+           "decision": "RD-1"}
+    row.update(goal)
+    return {"schema_version": 1, "target": "wp.md", "decisions": ["RD-1"],
+            "hazards": [{"second": "HZ-001", "wp_c03": ["H-01"], "events": ["HE-01.1"]}], "goals": [row]}
+
+  def check(self, doc, hazards=("HZ-001",), goals=None):
+    with tempfile.TemporaryDirectory() as d:
+      (Path(d) / "wp.md").write_text(self.WP)
+      ctx = fmea_lint.Context(Path(d))
+      ctx.hazards = set(hazards)
+      ctx.safety_goals = goals or {"SG-001": {"asil": "D"}}
+      res = fmea_lint.Result()
+      fmea_lint.check_hara_mapping("map", doc, ctx, res)
+      return res.errors
+
+  def test_parse(self):
+    self.assertEqual(fmea_lint.parse_wp_c03(self.WP), ({"H-01", "H-02"}, {"HE-01.1"}, {"SG-01": "C", "SG-02": "B"}))
+
+  def test_valid(self):
+    self.assertEqual(self.check(self.mapping()), [])
+
+  def test_unmapped_hazard_and_goal(self):
+    errors = self.check(self.mapping(), hazards=("HZ-001", "HZ-002"), goals={"SG-001": {"asil": "D"}, "SG-002": {"asil": "B"}})
+    self.assertTrue(any("HZ-002 is not mapped" in e for e in errors))
+    self.assertTrue(any("SG-002 is not mapped" in e for e in errors))
+
+  def test_unknown_wp_c03_ids(self):
+    doc = self.mapping(wp_c03=["SG-09"])
+    doc["hazards"][0]["events"] = ["HE-09.9"]
+    errors = " ".join(self.check(doc))
+    self.assertIn("SG-09 not found", errors)
+    self.assertIn("HE-09.9 not found", errors)
+
+  def test_asils_must_match_sources(self):
+    self.assertTrue(any("second_asil C != D" in e for e in self.check(self.mapping(second_asil="C"))))
+    self.assertTrue(any("wp_c03_asil B != C" in e for e in self.check(self.mapping(wp_c03_asil="B"))))
+
+  def test_agreement_follows_asils(self):
+    self.assertTrue(any("the ASILs give second_higher" in e for e in self.check(self.mapping(agreement="same"))))
+    doc = self.mapping(wp_c03=["SG-01", "SG-02"])  # max of the targets
+    self.assertEqual(self.check(doc), [])
+
+  def test_difference_needs_listed_decision(self):
+    self.assertTrue(any("needs a reconciliation decision" in e for e in self.check(self.mapping(decision=None))))
+    self.assertTrue(any("RD-9 not listed" in e for e in self.check(self.mapping(decision="RD-9"))))
+
+  def test_no_counterpart(self):
+    doc = self.mapping(wp_c03=[], wp_c03_asil=None, agreement="no_counterpart")
+    self.assertEqual(self.check(doc), [])
+    doc["hazards"][0] = {"second": "HZ-001", "wp_c03": [], "events": []}
+    self.assertTrue(any("needs a note" in e for e in self.check(doc)))

@@ -44,7 +44,7 @@ PFMEA ─► Release / install control plan  (feeds "configuration as assured")
 | Prereq | Needed by | Status |
 |---|---|---|
 | Item definition & boundary (README roadmap item 2) | All | Draft LD-ITEM-001 rev 0.1 (`item-definition.md`): platform (334 vehicles), variant family VF-001 Corolla E210, assured configuration AC-001 |
-| HARA + safety goals | System FMEA severity, FMEDA | Draft rev 0.3 (`analyses/hara.yaml`): 13 hazards, 15 situations, 19 hazardous events, 10 safety goals (SG-001 ASIL D); guide-word matrix and situation coverage complete; pre-checks in `reviews/` |
+| HARA + safety goals | System FMEA severity, FMEDA | Draft rev 0.3 (`analyses/hara.yaml`): 13 hazards, 15 situations, 19 hazardous events, 10 safety goals (SG-001 ASIL D); guide-word matrix and situation coverage complete; pre-checks in `reviews/`; mapped onto WP-C-03, the HARA of record, in `hara-mapping.yaml` (checked by `fmea_lint.py`; [reconciliation §8](../../00-assessment/docs-safety-reconciliation.md#8-second-set-hara-mapped-onto-wp-c-03-oi-5)) |
 | Functional / technical safety concept | DFMEA, SW FMEA, FMEDA | FSC draft rev 0.2 (`analyses/fsc.yaml`): 40 FSRs, 12 elements, 11 panda/SoC decompositions; DFA rev 0.4 accepts none of them yet (`analyses/dfa.yaml`); TSC not started |
 | HW/SW baseline frozen (commit SHA + submodule SHAs + AGNOS version) | All | BL-001 proposed in `baseline.yaml`; freeze at Phase 1 start |
 | Panda schematic + BOM (open hardware) | DFMEA, FMEDA | To collect |

@@ -684,6 +684,87 @@ def check_dfa(name, doc, ctx, res: Result):
                     + f"; required measures: {sum(1 for m in doc['measures'] if m['status'] == 'required')}")
 
 
+WP_C03_GOAL = re.compile(r"^\| \*\*(SG-\d{2})\*\* \|[^|]*\| \*\*(QM|A|B|C|D)\*\*")
+WP_C03_HAZARD = re.compile(r"^### 5\.\d+ (H-\d{2}) ")
+WP_C03_EVENT = re.compile(r"^\| (HE-\d{2}\.\d+) \|")
+AGREEMENTS = ("same", "second_higher", "wp_c03_higher", "no_counterpart")
+
+
+def parse_wp_c03(text: str):
+  """Hazards, hazardous events and safety goals (with ASIL) of the HARA of record, from its markdown tables."""
+  hazards, events, goals = set(), set(), {}
+  for line in text.splitlines():
+    if m := WP_C03_HAZARD.match(line):
+      hazards.add(m.group(1))
+    elif m := WP_C03_EVENT.match(line):
+      events.add(m.group(1))
+    elif m := WP_C03_GOAL.match(line):
+      goals[m.group(1)] = m.group(2)
+  return hazards, events, goals
+
+
+def check_hara_mapping(name, doc, ctx, res: Result):
+  """The second-set HARA mapped onto WP-C-03 (docs-safety-reconciliation.md §8)."""
+  target = ctx.root / doc["target"]
+  if not target.exists():
+    res.error(name, f"target {doc['target']} not found")
+    return
+  wp_hazards, wp_events, wp_goals = parse_wp_c03(target.read_text(encoding="utf-8"))
+  decisions = set(doc.get("decisions", []))
+
+  mapped = set()
+  for row in doc["hazards"]:
+    where = f"{name} {row['second']}"
+    mapped.add(row["second"])
+    if ctx.hazards is not None and row["second"] not in ctx.hazards:
+      res.error(where, "not a hazard of the second-set HARA")
+    for h in row["wp_c03"]:
+      if h not in wp_hazards:
+        res.error(where, f"{h} not found in {doc['target']}")
+    for he in row["events"]:
+      if he not in wp_events:
+        res.error(where, f"{he} not found in {doc['target']}")
+    if not row["wp_c03"] and not row.get("note"):
+      res.error(where, "unmapped hazard needs a note saying why")
+  for h in sorted((ctx.hazards or set()) - mapped):
+    res.error(name, f"second-set hazard {h} is not mapped")
+
+  mapped = set()
+  for row in doc["goals"]:
+    where = f"{name} {row['second']}"
+    mapped.add(row["second"])
+    sg = ctx.safety_goals.get(row["second"])
+    if sg is None:
+      res.error(where, "not a safety goal of the second-set HARA")
+    elif sg["asil"] != row["second_asil"]:
+      res.error(where, f"second_asil {row['second_asil']} != {sg['asil']} in the second-set HARA")
+    missing = [g for g in row["wp_c03"] if g not in wp_goals]
+    for g in missing:
+      res.error(where, f"{g} not found in {doc['target']}")
+    wp_asil = max_asil(wp_goals[g] for g in row["wp_c03"]) if row["wp_c03"] and not missing else None
+    if not missing and wp_asil != row["wp_c03_asil"]:
+      res.error(where, f"wp_c03_asil {row['wp_c03_asil']} != {wp_asil} in {doc['target']}")
+    if wp_asil is None:
+      expected = "no_counterpart"
+    else:
+      order = ASIL_ORDER.index(row["second_asil"]) - ASIL_ORDER.index(wp_asil)
+      expected = "same" if order == 0 else "second_higher" if order > 0 else "wp_c03_higher"
+    if row["agreement"] not in AGREEMENTS:
+      res.error(where, f"agreement {row['agreement']} not one of {', '.join(AGREEMENTS)}")
+    elif row["agreement"] != expected:
+      res.error(where, f"agreement is {row['agreement']}, the ASILs give {expected}")
+    if expected in ("second_higher", "no_counterpart"):
+      if not row.get("decision"):
+        res.error(where, f"{expected} needs a reconciliation decision")
+      elif row["decision"] not in decisions:
+        res.error(where, f"decision {row['decision']} not listed in decisions")
+  for g in sorted(set(ctx.safety_goals) - mapped):
+    res.error(name, f"second-set safety goal {g} is not mapped")
+  res.report.append(
+    f"HARA mapping: {len(doc['goals'])} goals, " +
+    ", ".join(f"{a} {sum(r['agreement'] == a for r in doc['goals'])}" for a in AGREEMENTS))
+
+
 class Context:
   def __init__(self, root: Path):
     self.root = root
@@ -784,6 +865,10 @@ def lint(root: Path = ROOT) -> Result:
 
   for name, kind, doc in docs:
     {"fmeda": check_fmeda, "hara": check_hara, "fsc": check_fsc, "dfa": check_dfa}.get(kind, check_fmea)(name, doc, ctx, res)
+
+  mapping = safety / "hara-mapping.yaml"
+  if mapping.exists():
+    check_hara_mapping(mapping.relative_to(root).as_posix(), load_yaml(mapping.read_text()), ctx, res)
 
   res.report.insert(0, f"rated causes by AP: H={ctx.ap_counts['H']} M={ctx.ap_counts['M']} L={ctx.ap_counts['L']}")
   return res
