@@ -64,7 +64,7 @@ Modelling assumptions, where the sources are silent:
 | MA-05 | T10c is evaluated on valid `0x1D2` and `0x1D3` frames (record T10c event), not in the safety tick |
 | MA-06 | The lag threshold is 5 × ⌊10⁶ / f⌋ µs, strictly exceeded (CD-03, SWSR-401 "more than") |
 
-Deviations: the three places where the literal specification and the C were found to differ (see the results). Each is a named option in `DEVIATIONS`, off by default. Switching one on makes the model follow the C's reading at that point. This attributes every divergence to a named cause: with all three on, the remaining divergence count must be zero.
+Deviations: the places where the literal specification and the C are found to differ and are not yet resolved (see the results). Each is a named option in `DEVIATIONS`, off by default. Switching one on makes the model follow the C's reading at that point. This attributes every divergence to a named cause: with all of them on, the remaining divergence count must be zero. A difference that is resolved by changing the specification is removed from the list, and the model follows the new text (B2B-03, SWSR-405(c) v0.16).
 
 Seeded model faults (`MUTANTS` in the harness) check the comparison itself. Each one changes a constant or a guard in the model. Each is run with all deviations on and must cause at least one divergence; one that does not is reported as `detected=False`.
 

@@ -3,7 +3,7 @@
 
 Written from the specification layer only, not from the C:
   - the state-machine record   assurance/05-software/state-machines/sm-toy-auth.yaml (transition ids, events, guards)
-  - the SWSR texts              WP-W-02 / trace/items/swsr.yaml (SWSR-301, 302, 306, 311, 401, 402, 405(c), 406, 518)
+  - the SWSR texts              WP-W-02 / trace/items/swsr.yaml (SWSR-301, 302, 306, 311, 401, 402, 405(c) v0.16, 406, 518)
   - the TX rate design          05-software/design-notes/DN-01-tx-rate-supervision.md §4 and §10
   - configuration data          WP-W-09 CD-03 (timeout), CD-04 (RX set), DN-01 §4.1 (budgets); DLC from the DBC
 Where these sources are silent the model makes a modelling assumption (MA-xx in README.md). Each place where the
@@ -56,9 +56,6 @@ DEVIATIONS = {
   "length_not_checked": False,
   # SWSR-302 says "any wheel speed is non-zero". Option: moving = sum of the four wheel speeds non-zero.
   "moving_from_sum": False,
-  # SM record T10c / SWSR-405(c): clear after the mismatch has lasted > 150 ms. Option: also clear at once when the
-  # mismatch is first seen on a 0x1D2 frame.
-  "cruise_main_immediate_on_1d2": False,
 }
 
 
@@ -243,8 +240,9 @@ class SmToyAuth:
           clear = True
           fired.append("T2")
         elif not self.cruise_active:
-          # rising edge: T1 if every RX check passes now (SWSR-306), else T8 (edge consumed, no grant)
-          if self._all_checks_ok():
+          # rising edge: T1 if every RX check passes now (SWSR-306) and, in the reference build, MAIN_ON = 1
+          # (SWSR-405(c) v0.16: cruise becoming active while main is off is an RX fault at once); else T8
+          if self._all_checks_ok() and not (self.reference and not self.main_on):
             grant = True
             fired.append("T1")
           else:
@@ -258,16 +256,15 @@ class SmToyAuth:
         self.wheels = tuple(int(s.get(f"WHEEL_SPEED_{w}_RAW", 6767)) - 6767 for w in ("FR", "FL", "RR", "RL"))
       # 0x260 and 0x262 carry no authority input (EPS fault is non-revoking in the SM record)
 
-      # T10c (reference build), SWSR-405(c): CRUISE_ACTIVE with MAIN_ON off for > 150 ms, evaluated on 0x1D2 / 0x1D3
+      # T10c (reference build), SWSR-405(c): MAIN_ON off while CRUISE_ACTIVE for > 150 ms, evaluated on 0x1D2 / 0x1D3
       if self.reference and ev.addr in (0x1D2, 0x1D3):
         mismatch = self.cruise_active and not self.main_on
         if not mismatch:
           self.mismatch_start = None
         elif self.mismatch_start is None:
           self.mismatch_start = self.now
-          if self.dev["cruise_main_immediate_on_1d2"] and ev.addr == 0x1D2:
-            clear = True
-            fired.append("T10c")
+          if ev.addr == 0x1D2:
+            clear = True            # SWSR-405(c) v0.16: the mismatch began with cruise becoming active
         elif self.now - self.mismatch_start > CRUISE_MAIN_TOLERANCE_US:
           clear = True
           fired.append("T10c")

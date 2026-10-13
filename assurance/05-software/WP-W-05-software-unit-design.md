@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-05 Software unit design and implementation |
 | Standard reference | ISO 26262-6:2018 §8 (software unit design and implementation: notation, design principles for unit design and implementation); ISO/SAE 21434:2021 §10 (by reference to WP-W-11); ASPICE 4.0 SWE.3 |
-| Version | 0.3 (RR-2026-008 F-16: unit inventory, §3, §4, §6–§8 rewritten for the current pins, new units UN-36…UN-44, allocation lines for SWSRs without a unit, ENV-R-07 sizes marked as line spans; F-29: Origin column; F-28: Author, baseline; 2026-10-12). 0.2 (UN-03: TX rate supervision design proposal DN-01; 2026-10-12). 0.1 |
+| Version | 0.4 (§5.2 regenerated: T1/T8/T10c guards for SWSR-405(c) v0.16, [B2B-TOY-AUTH-2026-10-13](reference-models/results/B2B-TOY-AUTH-2026-10-13.md) B2B-03; 2026-10-13). 0.3 (RR-2026-008 F-16: unit inventory, §3, §4, §6–§8 rewritten for the current pins, new units UN-36…UN-44, allocation lines for SWSRs without a unit, ENV-R-07 sizes marked as line spans; F-29: Origin column; F-28: Author, baseline; 2026-10-12). 0.2 (UN-03: TX rate supervision design proposal DN-01; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | Envelope units (E-03a/E-03b): B‡ (ASIL C until SG-01 re-rating) |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -447,8 +447,8 @@ Generated from [`state-machines/sm-toy-auth.yaml`](state-machines/sm-toy-auth.ya
 
 | # | Current | Event | Guard | Action | Next | Build | SWSR | Status | Code |
 |---|---|---|---|---|---|---|---|---|---|
-| T1 | NOT_ALLOWED | 0x1D2 valid | CRUISE_ACTIVE 0→1 and rx_checks_allow_engagement() | set | ALLOWED | all | 301, 306 | Partial | opendbc safety.h:606-608 (pcm_cruise_check) |
-| T8 | NOT_ALLOWED | 0x1D2 valid | CRUISE_ACTIVE held 1, or 0→1 with an RX check failing | none | NOT_ALLOWED | all | 301, 306 | Partial | opendbc safety.h:606-608 |
+| T1 | NOT_ALLOWED | 0x1D2 valid | CRUISE_ACTIVE 0→1 and rx_checks_allow_engagement(); reference build also MAIN_ON = 1 | set | ALLOWED | all | 301, 306, 405 | Partial | opendbc safety.h:606-608 (pcm_cruise_check); reference build modes/toyota.h:134-137, 246-247 (grant cleared in the same call) |
+| T8 | NOT_ALLOWED | 0x1D2 valid | CRUISE_ACTIVE held 1, or 0→1 with an RX check failing, or (reference build) 0→1 while MAIN_ON = 0 | none | NOT_ALLOWED | all | 301, 306, 405 | Partial | opendbc safety.h:606-608; modes/toyota.h:134-137 |
 | T2 | ALLOWED | 0x1D2 valid | CRUISE_ACTIVE = 0 | clear | NOT_ALLOWED | all | 301 | Implemented | opendbc safety.h:603-605 |
 | T3 | ALLOWED | any RX | brake rising, or pressed while moving | clear | NOT_ALLOWED | all | 302 | Implemented | opendbc safety.h:430-432 (generic_rx_checks) |
 | T4 | ALLOWED | RX of checked message | checksum, quality flag or counter invalid | clear | NOT_ALLOWED | all | 402, 406 | Partial | opendbc safety.h:117-120 (is_msg_valid) |
@@ -458,7 +458,7 @@ Generated from [`state-machines/sm-toy-auth.yaml`](state-machines/sm-toy-auth.ya
 | T9 | ALLOWED | TX frame rejected by a content check | — | clear, reason | NOT_ALLOWED | all | 108 | Not implemented | not implemented: the frame is dropped, authority kept (opendbc safety.h safety_tx_hook) |
 | T10a | ALLOWED | safety task: heartbeat check | no SoC heartbeat for > 0.3 s in a car mode | clear | NOT_ALLOWED | all | 407 | Implemented | panda main.c:135-137 (heartbeat_monitor_tick) |
 | T10b | ALLOWED | safety task: command freshness check | no accepted 0x2E4/0x343 for 50/100 ms | clear, reason | NOT_ALLOWED | all | 408 | Not implemented | not implemented |
-| T10c | ALLOWED | 0x1D2 / 0x1D3 | CRUISE_ACTIVE while MAIN_ON is off for > 150 ms | clear | NOT_ALLOWED | reference | 405 | Partial | opendbc modes/toyota.h:126-143 (toyota_cruise_main_check) |
+| T10c | ALLOWED | 0x1D2 / 0x1D3 | MAIN_ON off while CRUISE_ACTIVE, mismatch lasting > 150 ms | clear | NOT_ALLOWED | reference | 405 | Partial | opendbc modes/toyota.h:126-143 (toyota_cruise_main_check) |
 | T10d | ALLOWED | platform fault | — | clear, SS-S | NOT_ALLOWED | all | 502 | Not implemented | not implemented: faults are reported only |
 | T10e | ALLOWED | driver steering override | — | clear, reason | NOT_ALLOWED | all | 304 | Not implemented | not implemented for Toyota LKA |
 | T11 | ALLOWED | TX frame over the per-ID rate budget | 3 rejected frames in one 125 ms half-window | clear, report txRateExceeded | NOT_ALLOWED | reference | 518 | Implemented | opendbc safety.h:264-272 (tx_rate_check) |
