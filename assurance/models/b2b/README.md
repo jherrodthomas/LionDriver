@@ -18,7 +18,8 @@ It is **not verification evidence**. The model, the scenarios and the harness ar
 |---|---|
 | `toy_auth_model.py` | The model. Lists the transitions it executes, the ones it cannot execute at the libsafety boundary (with reasons), and the assumptions it makes where the record is silent (A-1…A-6) |
 | `scenarios.py` | Scenarios BB-01…BB-11: the car's RX messages at nominal rates, the host's TX frames, the 100 Hz safety task, plus the change each scenario makes |
-| `run_b2b.py` | Builds libsafety twice, runs both sides, classifies divergences, writes `b2b-report.md` and `b2b-report.json` |
+| `run_b2b.py` | Builds libsafety twice, runs both sides, classifies divergences, writes the report (below) |
+| `b2b_plots.py` | The views: trace SVGs, the coverage diagram (SVG and Mermaid). Standard library only |
 
 Before each run the harness checks that every transition in the record is either executed by the model or listed as not executable. It also checks that the constants the model takes from the code (the RX check rates and the TX rate rows) still match `modes/toyota.h`.
 
@@ -29,7 +30,7 @@ cd opendbc_repo && source setup.sh && cd ..      # opendbc test dependencies, as
 python assurance/models/b2b/run_b2b.py <output dir>
 ```
 
-CI runs it in `.github/workflows/assurance.yaml` (job "Back-to-back SM-TOY-AUTH model vs libsafety") and uploads the report as an artifact. The run takes a few seconds.
+CI runs it in `.github/workflows/assurance.yaml` (job "Back-to-back SM-TOY-AUTH model vs libsafety") and uploads the report, including the HTML page and the SVGs, as the artifact `b2b-toy-auth`. The run takes a few seconds.
 
 Divergence classes:
 
@@ -40,6 +41,22 @@ Divergence classes:
 | UNEXPECTED | Anything else | Yes |
 
 Sensitivity check, done by hand on 2026-10-13: four deliberate model errors were each detected as UNEXPECTED, and the run failed. The errors were T5 at 8 periods, T10c at 300 ms, T11 after 5 rejections and T10b at 80 ms.
+
+## Report and views
+
+| Output | Content |
+|---|---|
+| `b2b-report.html` | Self-contained page: run data, coverage diagram, scenario × build grid (cells link to traces), and the traces with the divergence details. Open this one first |
+| `b2b-report.md` | The same content in Markdown, with the SVGs linked and the coverage diagram as Mermaid (renders on GitHub) |
+| `coverage.svg` | Every record transition between NOT_ALLOWED and ALLOWED, coloured: blue = exercised and model = C; amber = expected difference; red = candidate finding; purple = unexpected; grey dashed = not executed at the libsafety boundary |
+| `traces/<scenario>-<build>-overview.svg`, `-zoom.svg` | For every run with a difference, plus one run without (BB-10a, reference) for comparison. The overview spans the whole scenario. The zoom runs 20 ms before to 40 ms after the first difference and shows every RX frame, TX frame and safety-task tick |
+| `b2b-report.json` | Machine-readable results, without traces |
+
+In the traces, the model line is the model run **without** re-alignment, so a shaded band shows how long a difference lasts. The classification tables use the re-aligned model, so each difference is counted once. Nothing is drawn green: "agrees" is neutral blue because agreement is not a pass.
+
+Example: BB-08b, reference build, zoom on the mode set. All six RX checks are received again (blue dots) before the PCM_CRUISE frame at 609 ms, and the C code grants authority again (BB-C-01). The image was generated at opendbc `273f44e` and is not regenerated automatically; CI produces the current set.
+
+![BB-08b reference zoom](example-BB-08b-reference-zoom.svg)
 
 ## Coverage
 
