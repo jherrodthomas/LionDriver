@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-07 Software tool classification and qualification |
 | Standard reference | ISO 26262-8:2018 §11; ISO/SAE 21434:2021 §5 (tool management); ISO/PAS 8800:2024 (tools for AI development, informative) |
-| Version | 0.2 (TL-23 GNU Octave; OI-8, OI-9; 2026-10-13). 0.1 |
+| Version | 0.3 (OI-9 closed by the modelling plan; OI-10 OpenModelica; 2026-10-13). 0.2 TL-23 GNU Octave; OI-8, OI-9. 0.1 |
 | Status | Draft |
 | ASIL / scope | All (qualification effort driven by the envelope ASIL from WP-C-03) |
 | Author | Assurance team (initial draft) |
@@ -110,4 +110,5 @@ QM tools (TL-08 to TL-14) get confidence measures under SOTIF/PAS 8800 instead: 
 | OI-6 | Pin host compiler, uv and CI runner images (K-8) |
 | OI-7 | Determine the `comma-deps-cppcheck` version used by panda (no panda lockfile in tree) |
 | OI-8 | Classify the in-house assurance checkers (`check_trace.py`, `sync_requirements.py`, `check_state_machines.py`, `check_links.py`) and `tools/ci/build_manifest.py`: they produce consistency evidence and generate normative tables |
-| OI-9 | Compare the open-source modelling tools (GNU Octave, Scilab/Xcos, OpenModelica, Python) for the planned uses (plant model, further state machines) before any of them is used for evidence |
+| OI-9 | Closed 2026-10-13: tools chosen in the [modelling plan](../models/README.md) MD-01 (Python for state machines and back-to-back, OpenModelica for the HIL plant model, Octave for calculations only; Scilab/Xcos not adopted) |
+| OI-10 | Classify OpenModelica (`omc`, version to be pinned) before the HIL plant model (modelling plan item 4) is built or used |
