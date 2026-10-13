@@ -80,7 +80,7 @@ From a LionDriver checkout, with the panda submodule at its pin:
 
 ```bash
 cd panda
-git checkout b790fca   # the LionDriver pin, with the fault injection and the HIL tests test_10…14
+git checkout 6dee6fa   # the LionDriver pin, with the fault injection and the HIL tests test_10…14
 pip install -e .[dev]                                               # panda python lib, pytest, libusb1, pycapnp
 export PYTHONPATH=$PWD/../opendbc_repo:$PWD/..
 ```

@@ -10,7 +10,7 @@
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review CR-12 by external assessor (I3) per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
-| Baseline | `BL-001` (`8b8c6ae`); status notes for `BL-002` (`bf6ce8c`; opendbc `7993399`, panda `b790fca`; the panda `b790fca` pin is in LionDriver PR #45, not yet merged) |
+| Baseline | `BL-001` (`8b8c6ae`); status notes for `BL-002` (`bf6ce8c`; opendbc `7993399`, panda `b790fca`; panda now pinned at `6dee6fa`, which contains `b790fca`) |
 
 ## 1. Purpose
 

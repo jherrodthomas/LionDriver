@@ -37,6 +37,12 @@ void PandaSafety::updateMultiplexingMode() {
   }
 }
 
+bool PandaSafety::panda_reference_build() {
+  // a failed read counts as "not a reference build"
+  auto health = panda_->get_state();
+  return health.has_value() && ((health->flags_pkt & HEALTH_FLAG_REFERENCE_BUILD) != 0U);
+}
+
 std::string PandaSafety::fetchCarParams() {
   if (!params_.getBool("FirmwareQueryDone")) {
     return {};
@@ -63,6 +69,18 @@ void PandaSafety::setSafetyMode(const std::string &params_string) {
 
   cereal::CarParams::SafetyModel safety_model = safety_configs[0].getSafetyModel();
   uint16_t safety_param = safety_configs[0].getSafetyParam();
+
+#ifdef LIONDRIVER_REFERENCE
+  // LionDriver (TSR-619, TSR-514): a car safety mode is configured only on a panda whose firmware carries the
+  // safety-mode lock of the reference build. Otherwise the panda stays in NOOUTPUT (no TX); selfdrived then sees the
+  // safety model differ from CarParams (controlsMismatch) and does not allow engagement.
+  if (!panda_reference_build()) {
+    LOGE("panda firmware is not a LionDriver reference build: refusing safety model %d, param %d; panda kept in "
+         "NOOUTPUT", (int)safety_model, safety_param);
+    panda_->set_safety_model(cereal::CarParams::SafetyModel::NO_OUTPUT, 0U);
+    return;
+  }
+#endif
 
   LOGW("setting safety model: %d, param: %d, alternative experience: %d", (int)safety_model, safety_param, alternative_experience);
   panda_->set_alternative_experience(alternative_experience);

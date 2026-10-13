@@ -126,7 +126,7 @@ Status at v0.2 (all reference build only; none reviewed at I1; no HIL evidence):
 |---|---|---|---|
 | IWDG hardware watchdog | TSR-501, TSR-401 | panda (see record) | [panda-hw-watchdog](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) |
 | Fast heartbeat (0.3 s) | TSR-406, TSR-407 | panda (see record) | [panda-fast-heartbeat](../07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md) |
-| Safety-mode lock | TSR-512, TSR-513 | panda (see record) | [panda-safety-mode-lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md) |
+| Safety-mode lock; host requires a reference panda build | TSR-512, TSR-513, TSR-514 | panda (see record), `6dee6fa`; LionDriver #36, #41 | [panda-safety-mode-lock](../07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md) |
 | IRQ priorities | TSR-519 | panda `52cad44` | [panda-irq-priorities](../07-supporting/impact/change-2026-10-12-panda-irq-priorities.md) |
 | TX whitelist | TSR-705 | opendbc (see record) | [opendbc-toyota-tx-whitelist](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-whitelist.md) |
 | RX timeouts `0x262`, `0x1D3` | TSR-401, TSR-110 | opendbc `98404a4` | [opendbc-toyota-rx-timeout](../07-supporting/impact/change-2026-10-12-opendbc-toyota-rx-timeout.md) |

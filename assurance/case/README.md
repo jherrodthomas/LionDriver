@@ -8,7 +8,7 @@
 | Status | Draft |
 | Author | Assurance team |
 | Reviewer(s) | TBD (I1) |
-| Baseline | `BL-001` (`8b8c6ae`); `BL-002` (`bf6ce8c`; opendbc `7993399`, panda `b790fca`, the panda pin in LionDriver PR #45, not yet merged), under development |
+| Baseline | `BL-001` (`8b8c6ae`); `BL-002` (`bf6ce8c`; opendbc `7993399`, panda `b790fca`; panda now pinned at `6dee6fa`, which contains `b790fca`), under development |
 
 ## 1. Purpose
 
