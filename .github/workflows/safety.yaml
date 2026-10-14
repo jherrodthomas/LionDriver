@@ -16,12 +16,16 @@ on:
       - 'panda'
       - '.github/workflows/safety.yaml'
       - 'tools/ci/build_manifest.py'
+      - 'tools/release/release_variant.sh'
+      - 'tools/release/build_release.sh'
   pull_request:
     paths:
       - 'opendbc_repo'
       - 'panda'
       - '.github/workflows/safety.yaml'
       - 'tools/ci/build_manifest.py'
+      - 'tools/release/release_variant.sh'
+      - 'tools/release/build_release.sh'
   workflow_dispatch:
 
 concurrency:
@@ -106,6 +110,61 @@ jobs:
       with:
         name: build-manifest-panda_misra
         path: build-manifest/panda_misra.json
+
+  panda_reference_release_build:
+    name: panda reference release build
+    # WP-W-03 ATC-19 (RR-2026-009 F-33): the release firmware must be the LionDriver reference build. Selects the
+    # variant through tools/release/release_variant.sh, as build_release.sh does, then builds the panda firmware with
+    # RELEASE=1 and checks that every compile carries -DLIONDRIVER_REFERENCE and none -DALLOW_DEBUG. Signed with the
+    # debug key: this checks the configuration and the build, not the signed release image.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v7
+    - name: Checkout opendbc and panda submodules
+      run: git submodule update --init --depth 1 opendbc_repo panda
+    - name: Set up pinned toolchain
+      working-directory: opendbc_repo
+      run: |
+        source setup.sh
+        uv pip install "scons==4.11.1" "comma-deps-gcc-arm-none-eabi==13.2.1.post103"
+        echo "$GITHUB_WORKSPACE/opendbc_repo/.venv/bin" >> "$GITHUB_PATH"
+    - name: Release variant selection
+      run: |
+        set -e
+        bash -n tools/release/build_release.sh
+        (unset RELEASE_VARIANT LIONDRIVER_REFERENCE; source tools/release/release_variant.sh; test "$LIONDRIVER_REFERENCE" = 1)
+        (export LIONDRIVER_REFERENCE=; unset RELEASE_VARIANT; source tools/release/release_variant.sh; test "$LIONDRIVER_REFERENCE" = 1)
+        (RELEASE_VARIANT=upstream; source tools/release/release_variant.sh 2>/dev/null; test -z "$LIONDRIVER_REFERENCE")
+        ! (RELEASE_VARIANT=bogus; source tools/release/release_variant.sh 2>/dev/null)
+    - name: Build the reference release firmware
+      working-directory: panda
+      env:
+        PYTHONPATH: ${{ github.workspace }}/opendbc_repo
+      run: |
+        set -eo pipefail
+        unset RELEASE_VARIANT
+        source ../tools/release/release_variant.sh
+        RELEASE=1 CERT="$PWD/board/crypto/certs/debug" scons -j"$(nproc)"
+        # every firmware compile (arm-none-eabi-gcc) must carry the reference flag and none the debug flag
+        python3 - <<'PY'
+        import json
+        cmds = [e.get("command") or " ".join(e["arguments"]) for e in json.load(open("compile_commands.json"))]
+        fw = [c for c in cmds if "arm-none-eabi-gcc" in c]
+        ref = [c for c in fw if "-DLIONDRIVER_REFERENCE" in c]
+        dbg = [c for c in fw if "-DALLOW_DEBUG" in c]
+        print(f"firmware compiles: {len(fw)}, with -DLIONDRIVER_REFERENCE: {len(ref)}, with -DALLOW_DEBUG: {len(dbg)}")
+        assert fw and len(ref) == len(fw) and not dbg
+        PY
+    - name: Build manifest and tool versions (WP-W-01 ENV-01)
+      if: always()
+      run: python3 tools/ci/build_manifest.py build-manifest/panda_reference_release_build.json
+    - name: Upload build manifest
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: build-manifest-panda_reference_release_build
+        path: build-manifest/panda_reference_release_build.json
 
   panda_host_tests:
     name: panda host tests
