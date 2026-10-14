@@ -1,0 +1,766 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1225" viewBox="0 0 1520 1225" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-07. Satisfy and verify matrix · system requirements (WP-S-01) (SysML v2 view systemRequirementMatrix)</title>
+<desc id="d">Matrix view generated from the SysML v2 model: the 39 system requirements of WP-S-01 grouped by function, a dot for each element that satisfies them and the verification cases that verify them; requirements without a case are marked.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter><marker id="rq-teal" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#0F766E"/></marker><marker id="rq-blue" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#2563EB"/></marker><marker id="rq-or" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#C2410C"/></marker><marker id="rq-ink" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#334155"/></marker><marker id="rq-mut" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#64748B"/></marker></defs>
+<rect width="1520" height="1225" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-07 · Satisfy and verify matrix · system requirements (WP-S-01)</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">Every SYS requirement against the elements that satisfy it and the verification cases that verify it, grouped by function</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::systemRequirementMatrix</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">RequirementMatrixView · render asElementTable · model 63553f5ef5ae</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<text transform="translate(317,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">host.pandad</text>
+<text transform="translate(363,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">host.card</text>
+<text transform="translate(409,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">host.controlsd</text>
+<text transform="translate(455,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">host.selfdrived</text>
+<text transform="translate(501,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">host.plannerd</text>
+<text transform="translate(547,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">host.modeld</text>
+<text transform="translate(593,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">host.dm</text>
+<text transform="translate(639,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">host.hmi</text>
+<text transform="translate(685,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">host.manager</text>
+<text transform="translate(731,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">estimators</text>
+<text transform="translate(777,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">hardwared</text>
+<text transform="translate(823,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">athena · loggerd</text>
+<text transform="translate(869,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">Safety layer</text>
+<text transform="translate(915,196) rotate(-55)" font-size="11" fill="#0F172A" font-weight="600">Platform firmware</text>
+<text x="290" y="112" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">SATISFIED BY («satisfy» in the model)</text>
+<text x="962" y="112" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">VERIFIED BY («verify»)</text>
+<text x="1360" y="112" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">COVERAGE</text>
+<rect x="40" y="208" width="1440" height="172" rx="4" fill="#F8FAFC"/>
+<text x="48" y="225" font-size="11.5" fill="#0F172A" font-weight="700">F-01</text>
+<text x="132" y="225" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-001</text>
+<line x1="313" y1="210" x2="313" y2="231" stroke="#E2E8F0"/>
+<line x1="359" y1="210" x2="359" y2="231" stroke="#E2E8F0"/>
+<line x1="405" y1="210" x2="405" y2="231" stroke="#E2E8F0"/>
+<circle cx="405" cy="220.5" r="5.5" fill="#0F766E"/>
+<line x1="451" y1="210" x2="451" y2="231" stroke="#E2E8F0"/>
+<line x1="497" y1="210" x2="497" y2="231" stroke="#E2E8F0"/>
+<line x1="543" y1="210" x2="543" y2="231" stroke="#E2E8F0"/>
+<circle cx="543" cy="220.5" r="5.5" fill="#0F766E"/>
+<line x1="589" y1="210" x2="589" y2="231" stroke="#E2E8F0"/>
+<line x1="635" y1="210" x2="635" y2="231" stroke="#E2E8F0"/>
+<line x1="681" y1="210" x2="681" y2="231" stroke="#E2E8F0"/>
+<line x1="727" y1="210" x2="727" y2="231" stroke="#E2E8F0"/>
+<line x1="773" y1="210" x2="773" y2="231" stroke="#E2E8F0"/>
+<line x1="819" y1="210" x2="819" y2="231" stroke="#E2E8F0"/>
+<line x1="865" y1="210" x2="865" y2="231" stroke="#E2E8F0"/>
+<line x1="911" y1="210" x2="911" y2="231" stroke="#E2E8F0"/>
+<rect x="962" y="212" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="223.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<rect x="1008.5" y="212" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1029.8" y="223.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-19</text>
+<text x="1360" y="225" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="246" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-002</text>
+<line x1="313" y1="231" x2="313" y2="252" stroke="#E2E8F0"/>
+<line x1="359" y1="231" x2="359" y2="252" stroke="#E2E8F0"/>
+<line x1="405" y1="231" x2="405" y2="252" stroke="#E2E8F0"/>
+<circle cx="405" cy="241.5" r="5.5" fill="#0F766E"/>
+<line x1="451" y1="231" x2="451" y2="252" stroke="#E2E8F0"/>
+<line x1="497" y1="231" x2="497" y2="252" stroke="#E2E8F0"/>
+<line x1="543" y1="231" x2="543" y2="252" stroke="#E2E8F0"/>
+<line x1="589" y1="231" x2="589" y2="252" stroke="#E2E8F0"/>
+<line x1="635" y1="231" x2="635" y2="252" stroke="#E2E8F0"/>
+<line x1="681" y1="231" x2="681" y2="252" stroke="#E2E8F0"/>
+<line x1="727" y1="231" x2="727" y2="252" stroke="#E2E8F0"/>
+<line x1="773" y1="231" x2="773" y2="252" stroke="#E2E8F0"/>
+<line x1="819" y1="231" x2="819" y2="252" stroke="#E2E8F0"/>
+<line x1="865" y1="231" x2="865" y2="252" stroke="#E2E8F0"/>
+<line x1="911" y1="231" x2="911" y2="252" stroke="#E2E8F0"/>
+<rect x="962" y="233" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="244.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<text x="1360" y="246" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="267" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-003</text>
+<line x1="313" y1="252" x2="313" y2="273" stroke="#E2E8F0"/>
+<line x1="359" y1="252" x2="359" y2="273" stroke="#E2E8F0"/>
+<line x1="405" y1="252" x2="405" y2="273" stroke="#E2E8F0"/>
+<circle cx="405" cy="262.5" r="5.5" fill="#0F766E"/>
+<line x1="451" y1="252" x2="451" y2="273" stroke="#E2E8F0"/>
+<circle cx="451" cy="262.5" r="5.5" fill="#0F766E"/>
+<line x1="497" y1="252" x2="497" y2="273" stroke="#E2E8F0"/>
+<line x1="543" y1="252" x2="543" y2="273" stroke="#E2E8F0"/>
+<line x1="589" y1="252" x2="589" y2="273" stroke="#E2E8F0"/>
+<line x1="635" y1="252" x2="635" y2="273" stroke="#E2E8F0"/>
+<line x1="681" y1="252" x2="681" y2="273" stroke="#E2E8F0"/>
+<line x1="727" y1="252" x2="727" y2="273" stroke="#E2E8F0"/>
+<line x1="773" y1="252" x2="773" y2="273" stroke="#E2E8F0"/>
+<line x1="819" y1="252" x2="819" y2="273" stroke="#E2E8F0"/>
+<line x1="865" y1="252" x2="865" y2="273" stroke="#E2E8F0"/>
+<line x1="911" y1="252" x2="911" y2="273" stroke="#E2E8F0"/>
+<rect x="962" y="254" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="265.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<rect x="1008.5" y="254" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1029.8" y="265.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-19</text>
+<text x="1360" y="267" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="288" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-004</text>
+<line x1="313" y1="273" x2="313" y2="294" stroke="#E2E8F0"/>
+<line x1="359" y1="273" x2="359" y2="294" stroke="#E2E8F0"/>
+<line x1="405" y1="273" x2="405" y2="294" stroke="#E2E8F0"/>
+<line x1="451" y1="273" x2="451" y2="294" stroke="#E2E8F0"/>
+<circle cx="451" cy="283.5" r="5.5" fill="#0F766E"/>
+<line x1="497" y1="273" x2="497" y2="294" stroke="#E2E8F0"/>
+<line x1="543" y1="273" x2="543" y2="294" stroke="#E2E8F0"/>
+<line x1="589" y1="273" x2="589" y2="294" stroke="#E2E8F0"/>
+<line x1="635" y1="273" x2="635" y2="294" stroke="#E2E8F0"/>
+<circle cx="635" cy="283.5" r="5.5" fill="#0F766E"/>
+<line x1="681" y1="273" x2="681" y2="294" stroke="#E2E8F0"/>
+<line x1="727" y1="273" x2="727" y2="294" stroke="#E2E8F0"/>
+<line x1="773" y1="273" x2="773" y2="294" stroke="#E2E8F0"/>
+<line x1="819" y1="273" x2="819" y2="294" stroke="#E2E8F0"/>
+<line x1="865" y1="273" x2="865" y2="294" stroke="#E2E8F0"/>
+<line x1="911" y1="273" x2="911" y2="294" stroke="#E2E8F0"/>
+<rect x="962" y="275" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="286.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<rect x="1008.5" y="275" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1029.8" y="286.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-19</text>
+<text x="1360" y="288" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="309" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-005</text>
+<line x1="313" y1="294" x2="313" y2="315" stroke="#E2E8F0"/>
+<line x1="359" y1="294" x2="359" y2="315" stroke="#E2E8F0"/>
+<line x1="405" y1="294" x2="405" y2="315" stroke="#E2E8F0"/>
+<line x1="451" y1="294" x2="451" y2="315" stroke="#E2E8F0"/>
+<line x1="497" y1="294" x2="497" y2="315" stroke="#E2E8F0"/>
+<line x1="543" y1="294" x2="543" y2="315" stroke="#E2E8F0"/>
+<circle cx="543" cy="304.5" r="5.5" fill="#0F766E"/>
+<line x1="589" y1="294" x2="589" y2="315" stroke="#E2E8F0"/>
+<line x1="635" y1="294" x2="635" y2="315" stroke="#E2E8F0"/>
+<line x1="681" y1="294" x2="681" y2="315" stroke="#E2E8F0"/>
+<line x1="727" y1="294" x2="727" y2="315" stroke="#E2E8F0"/>
+<line x1="773" y1="294" x2="773" y2="315" stroke="#E2E8F0"/>
+<line x1="819" y1="294" x2="819" y2="315" stroke="#E2E8F0"/>
+<line x1="865" y1="294" x2="865" y2="315" stroke="#E2E8F0"/>
+<line x1="911" y1="294" x2="911" y2="315" stroke="#E2E8F0"/>
+<rect x="1360" y="296" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="308.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<text x="132" y="330" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-006</text>
+<line x1="313" y1="315" x2="313" y2="336" stroke="#E2E8F0"/>
+<line x1="359" y1="315" x2="359" y2="336" stroke="#E2E8F0"/>
+<line x1="405" y1="315" x2="405" y2="336" stroke="#E2E8F0"/>
+<line x1="451" y1="315" x2="451" y2="336" stroke="#E2E8F0"/>
+<line x1="497" y1="315" x2="497" y2="336" stroke="#E2E8F0"/>
+<line x1="543" y1="315" x2="543" y2="336" stroke="#E2E8F0"/>
+<circle cx="543" cy="325.5" r="5.5" fill="#0F766E"/>
+<line x1="589" y1="315" x2="589" y2="336" stroke="#E2E8F0"/>
+<line x1="635" y1="315" x2="635" y2="336" stroke="#E2E8F0"/>
+<line x1="681" y1="315" x2="681" y2="336" stroke="#E2E8F0"/>
+<line x1="727" y1="315" x2="727" y2="336" stroke="#E2E8F0"/>
+<line x1="773" y1="315" x2="773" y2="336" stroke="#E2E8F0"/>
+<line x1="819" y1="315" x2="819" y2="336" stroke="#E2E8F0"/>
+<line x1="865" y1="315" x2="865" y2="336" stroke="#E2E8F0"/>
+<line x1="911" y1="315" x2="911" y2="336" stroke="#E2E8F0"/>
+<rect x="1360" y="317" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="329.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<text x="132" y="351" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-007</text>
+<line x1="313" y1="336" x2="313" y2="357" stroke="#E2E8F0"/>
+<line x1="359" y1="336" x2="359" y2="357" stroke="#E2E8F0"/>
+<line x1="405" y1="336" x2="405" y2="357" stroke="#E2E8F0"/>
+<circle cx="405" cy="346.5" r="5.5" fill="#0F766E"/>
+<line x1="451" y1="336" x2="451" y2="357" stroke="#E2E8F0"/>
+<line x1="497" y1="336" x2="497" y2="357" stroke="#E2E8F0"/>
+<line x1="543" y1="336" x2="543" y2="357" stroke="#E2E8F0"/>
+<line x1="589" y1="336" x2="589" y2="357" stroke="#E2E8F0"/>
+<line x1="635" y1="336" x2="635" y2="357" stroke="#E2E8F0"/>
+<line x1="681" y1="336" x2="681" y2="357" stroke="#E2E8F0"/>
+<line x1="727" y1="336" x2="727" y2="357" stroke="#E2E8F0"/>
+<line x1="773" y1="336" x2="773" y2="357" stroke="#E2E8F0"/>
+<line x1="819" y1="336" x2="819" y2="357" stroke="#E2E8F0"/>
+<line x1="865" y1="336" x2="865" y2="357" stroke="#E2E8F0"/>
+<line x1="911" y1="336" x2="911" y2="357" stroke="#E2E8F0"/>
+<rect x="962" y="338" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="349.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<text x="1360" y="351" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="372" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-008</text>
+<line x1="313" y1="357" x2="313" y2="378" stroke="#E2E8F0"/>
+<line x1="359" y1="357" x2="359" y2="378" stroke="#E2E8F0"/>
+<line x1="405" y1="357" x2="405" y2="378" stroke="#E2E8F0"/>
+<circle cx="405" cy="367.5" r="5.5" fill="#0F766E"/>
+<line x1="451" y1="357" x2="451" y2="378" stroke="#E2E8F0"/>
+<line x1="497" y1="357" x2="497" y2="378" stroke="#E2E8F0"/>
+<line x1="543" y1="357" x2="543" y2="378" stroke="#E2E8F0"/>
+<line x1="589" y1="357" x2="589" y2="378" stroke="#E2E8F0"/>
+<line x1="635" y1="357" x2="635" y2="378" stroke="#E2E8F0"/>
+<line x1="681" y1="357" x2="681" y2="378" stroke="#E2E8F0"/>
+<line x1="727" y1="357" x2="727" y2="378" stroke="#E2E8F0"/>
+<circle cx="727" cy="367.5" r="5.5" fill="#0F766E"/>
+<line x1="773" y1="357" x2="773" y2="378" stroke="#E2E8F0"/>
+<line x1="819" y1="357" x2="819" y2="378" stroke="#E2E8F0"/>
+<line x1="865" y1="357" x2="865" y2="378" stroke="#E2E8F0"/>
+<line x1="911" y1="357" x2="911" y2="378" stroke="#E2E8F0"/>
+<rect x="962" y="359" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="370.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<rect x="1008.5" y="359" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1029.8" y="370.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-19</text>
+<text x="1360" y="372" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<rect x="40" y="384" width="1440" height="172" rx="4" fill="#FFFFFF"/>
+<text x="48" y="401" font-size="11.5" fill="#0F172A" font-weight="700">F-02</text>
+<text x="132" y="401" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-020</text>
+<line x1="313" y1="386" x2="313" y2="407" stroke="#E2E8F0"/>
+<line x1="359" y1="386" x2="359" y2="407" stroke="#E2E8F0"/>
+<line x1="405" y1="386" x2="405" y2="407" stroke="#E2E8F0"/>
+<line x1="451" y1="386" x2="451" y2="407" stroke="#E2E8F0"/>
+<line x1="497" y1="386" x2="497" y2="407" stroke="#E2E8F0"/>
+<circle cx="497" cy="396.5" r="5.5" fill="#0F766E"/>
+<line x1="543" y1="386" x2="543" y2="407" stroke="#E2E8F0"/>
+<line x1="589" y1="386" x2="589" y2="407" stroke="#E2E8F0"/>
+<line x1="635" y1="386" x2="635" y2="407" stroke="#E2E8F0"/>
+<line x1="681" y1="386" x2="681" y2="407" stroke="#E2E8F0"/>
+<line x1="727" y1="386" x2="727" y2="407" stroke="#E2E8F0"/>
+<line x1="773" y1="386" x2="773" y2="407" stroke="#E2E8F0"/>
+<line x1="819" y1="386" x2="819" y2="407" stroke="#E2E8F0"/>
+<line x1="865" y1="386" x2="865" y2="407" stroke="#E2E8F0"/>
+<line x1="911" y1="386" x2="911" y2="407" stroke="#E2E8F0"/>
+<rect x="962" y="388" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="399.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<rect x="1008.5" y="388" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1029.8" y="399.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-19</text>
+<text x="1360" y="401" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="422" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-021</text>
+<line x1="313" y1="407" x2="313" y2="428" stroke="#E2E8F0"/>
+<line x1="359" y1="407" x2="359" y2="428" stroke="#E2E8F0"/>
+<circle cx="359" cy="417.5" r="5.5" fill="#0F766E"/>
+<line x1="405" y1="407" x2="405" y2="428" stroke="#E2E8F0"/>
+<line x1="451" y1="407" x2="451" y2="428" stroke="#E2E8F0"/>
+<line x1="497" y1="407" x2="497" y2="428" stroke="#E2E8F0"/>
+<line x1="543" y1="407" x2="543" y2="428" stroke="#E2E8F0"/>
+<line x1="589" y1="407" x2="589" y2="428" stroke="#E2E8F0"/>
+<line x1="635" y1="407" x2="635" y2="428" stroke="#E2E8F0"/>
+<line x1="681" y1="407" x2="681" y2="428" stroke="#E2E8F0"/>
+<line x1="727" y1="407" x2="727" y2="428" stroke="#E2E8F0"/>
+<line x1="773" y1="407" x2="773" y2="428" stroke="#E2E8F0"/>
+<line x1="819" y1="407" x2="819" y2="428" stroke="#E2E8F0"/>
+<line x1="865" y1="407" x2="865" y2="428" stroke="#E2E8F0"/>
+<line x1="911" y1="407" x2="911" y2="428" stroke="#E2E8F0"/>
+<rect x="962" y="409" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="420.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<text x="1360" y="422" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="443" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-022</text>
+<line x1="313" y1="428" x2="313" y2="449" stroke="#E2E8F0"/>
+<line x1="359" y1="428" x2="359" y2="449" stroke="#E2E8F0"/>
+<line x1="405" y1="428" x2="405" y2="449" stroke="#E2E8F0"/>
+<line x1="451" y1="428" x2="451" y2="449" stroke="#E2E8F0"/>
+<line x1="497" y1="428" x2="497" y2="449" stroke="#E2E8F0"/>
+<circle cx="497" cy="438.5" r="5.5" fill="#0F766E"/>
+<line x1="543" y1="428" x2="543" y2="449" stroke="#E2E8F0"/>
+<line x1="589" y1="428" x2="589" y2="449" stroke="#E2E8F0"/>
+<line x1="635" y1="428" x2="635" y2="449" stroke="#E2E8F0"/>
+<line x1="681" y1="428" x2="681" y2="449" stroke="#E2E8F0"/>
+<line x1="727" y1="428" x2="727" y2="449" stroke="#E2E8F0"/>
+<line x1="773" y1="428" x2="773" y2="449" stroke="#E2E8F0"/>
+<line x1="819" y1="428" x2="819" y2="449" stroke="#E2E8F0"/>
+<line x1="865" y1="428" x2="865" y2="449" stroke="#E2E8F0"/>
+<line x1="911" y1="428" x2="911" y2="449" stroke="#E2E8F0"/>
+<rect x="962" y="430" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="441.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-11</text>
+<rect x="1008.5" y="430" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1029.8" y="441.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<rect x="1055" y="430" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1076.2" y="441.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-19</text>
+<text x="1360" y="443" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="464" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-023</text>
+<line x1="313" y1="449" x2="313" y2="470" stroke="#E2E8F0"/>
+<line x1="359" y1="449" x2="359" y2="470" stroke="#E2E8F0"/>
+<line x1="405" y1="449" x2="405" y2="470" stroke="#E2E8F0"/>
+<line x1="451" y1="449" x2="451" y2="470" stroke="#E2E8F0"/>
+<line x1="497" y1="449" x2="497" y2="470" stroke="#E2E8F0"/>
+<line x1="543" y1="449" x2="543" y2="470" stroke="#E2E8F0"/>
+<line x1="589" y1="449" x2="589" y2="470" stroke="#E2E8F0"/>
+<line x1="635" y1="449" x2="635" y2="470" stroke="#E2E8F0"/>
+<line x1="681" y1="449" x2="681" y2="470" stroke="#E2E8F0"/>
+<circle cx="681" cy="459.5" r="5.5" fill="#0F766E"/>
+<line x1="727" y1="449" x2="727" y2="470" stroke="#E2E8F0"/>
+<line x1="773" y1="449" x2="773" y2="470" stroke="#E2E8F0"/>
+<line x1="819" y1="449" x2="819" y2="470" stroke="#E2E8F0"/>
+<line x1="865" y1="449" x2="865" y2="470" stroke="#E2E8F0"/>
+<line x1="911" y1="449" x2="911" y2="470" stroke="#E2E8F0"/>
+<rect x="962" y="451" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="462.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<text x="1360" y="464" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="485" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-024</text>
+<line x1="313" y1="470" x2="313" y2="491" stroke="#E2E8F0"/>
+<line x1="359" y1="470" x2="359" y2="491" stroke="#E2E8F0"/>
+<circle cx="359" cy="480.5" r="5.5" fill="#0F766E"/>
+<line x1="405" y1="470" x2="405" y2="491" stroke="#E2E8F0"/>
+<line x1="451" y1="470" x2="451" y2="491" stroke="#E2E8F0"/>
+<line x1="497" y1="470" x2="497" y2="491" stroke="#E2E8F0"/>
+<circle cx="497" cy="480.5" r="5.5" fill="#0F766E"/>
+<line x1="543" y1="470" x2="543" y2="491" stroke="#E2E8F0"/>
+<line x1="589" y1="470" x2="589" y2="491" stroke="#E2E8F0"/>
+<line x1="635" y1="470" x2="635" y2="491" stroke="#E2E8F0"/>
+<line x1="681" y1="470" x2="681" y2="491" stroke="#E2E8F0"/>
+<line x1="727" y1="470" x2="727" y2="491" stroke="#E2E8F0"/>
+<line x1="773" y1="470" x2="773" y2="491" stroke="#E2E8F0"/>
+<line x1="819" y1="470" x2="819" y2="491" stroke="#E2E8F0"/>
+<line x1="865" y1="470" x2="865" y2="491" stroke="#E2E8F0"/>
+<line x1="911" y1="470" x2="911" y2="491" stroke="#E2E8F0"/>
+<rect x="962" y="472" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="483.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-11</text>
+<rect x="1008.5" y="472" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1029.8" y="483.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<text x="1360" y="485" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="506" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-025</text>
+<line x1="313" y1="491" x2="313" y2="512" stroke="#E2E8F0"/>
+<line x1="359" y1="491" x2="359" y2="512" stroke="#E2E8F0"/>
+<circle cx="359" cy="501.5" r="5.5" fill="#0F766E"/>
+<line x1="405" y1="491" x2="405" y2="512" stroke="#E2E8F0"/>
+<line x1="451" y1="491" x2="451" y2="512" stroke="#E2E8F0"/>
+<line x1="497" y1="491" x2="497" y2="512" stroke="#E2E8F0"/>
+<line x1="543" y1="491" x2="543" y2="512" stroke="#E2E8F0"/>
+<line x1="589" y1="491" x2="589" y2="512" stroke="#E2E8F0"/>
+<line x1="635" y1="491" x2="635" y2="512" stroke="#E2E8F0"/>
+<line x1="681" y1="491" x2="681" y2="512" stroke="#E2E8F0"/>
+<line x1="727" y1="491" x2="727" y2="512" stroke="#E2E8F0"/>
+<line x1="773" y1="491" x2="773" y2="512" stroke="#E2E8F0"/>
+<line x1="819" y1="491" x2="819" y2="512" stroke="#E2E8F0"/>
+<line x1="865" y1="491" x2="865" y2="512" stroke="#E2E8F0"/>
+<line x1="911" y1="491" x2="911" y2="512" stroke="#E2E8F0"/>
+<rect x="962" y="493" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="504.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<text x="1360" y="506" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="527" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-026</text>
+<line x1="313" y1="512" x2="313" y2="533" stroke="#E2E8F0"/>
+<line x1="359" y1="512" x2="359" y2="533" stroke="#E2E8F0"/>
+<line x1="405" y1="512" x2="405" y2="533" stroke="#E2E8F0"/>
+<line x1="451" y1="512" x2="451" y2="533" stroke="#E2E8F0"/>
+<line x1="497" y1="512" x2="497" y2="533" stroke="#E2E8F0"/>
+<circle cx="497" cy="522.5" r="5.5" fill="#0F766E"/>
+<line x1="543" y1="512" x2="543" y2="533" stroke="#E2E8F0"/>
+<line x1="589" y1="512" x2="589" y2="533" stroke="#E2E8F0"/>
+<line x1="635" y1="512" x2="635" y2="533" stroke="#E2E8F0"/>
+<line x1="681" y1="512" x2="681" y2="533" stroke="#E2E8F0"/>
+<line x1="727" y1="512" x2="727" y2="533" stroke="#E2E8F0"/>
+<line x1="773" y1="512" x2="773" y2="533" stroke="#E2E8F0"/>
+<line x1="819" y1="512" x2="819" y2="533" stroke="#E2E8F0"/>
+<line x1="865" y1="512" x2="865" y2="533" stroke="#E2E8F0"/>
+<line x1="911" y1="512" x2="911" y2="533" stroke="#E2E8F0"/>
+<rect x="962" y="514" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="525.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-11</text>
+<rect x="1008.5" y="514" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1029.8" y="525.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<text x="1360" y="527" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="548" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-027</text>
+<line x1="313" y1="533" x2="313" y2="554" stroke="#E2E8F0"/>
+<line x1="359" y1="533" x2="359" y2="554" stroke="#E2E8F0"/>
+<line x1="405" y1="533" x2="405" y2="554" stroke="#E2E8F0"/>
+<line x1="451" y1="533" x2="451" y2="554" stroke="#E2E8F0"/>
+<line x1="497" y1="533" x2="497" y2="554" stroke="#E2E8F0"/>
+<line x1="543" y1="533" x2="543" y2="554" stroke="#E2E8F0"/>
+<line x1="589" y1="533" x2="589" y2="554" stroke="#E2E8F0"/>
+<line x1="635" y1="533" x2="635" y2="554" stroke="#E2E8F0"/>
+<circle cx="635" cy="543.5" r="5.5" fill="#0F766E"/>
+<line x1="681" y1="533" x2="681" y2="554" stroke="#E2E8F0"/>
+<circle cx="681" cy="543.5" r="5.5" fill="#0F766E"/>
+<line x1="727" y1="533" x2="727" y2="554" stroke="#E2E8F0"/>
+<line x1="773" y1="533" x2="773" y2="554" stroke="#E2E8F0"/>
+<line x1="819" y1="533" x2="819" y2="554" stroke="#E2E8F0"/>
+<line x1="865" y1="533" x2="865" y2="554" stroke="#E2E8F0"/>
+<line x1="911" y1="533" x2="911" y2="554" stroke="#E2E8F0"/>
+<rect x="1360" y="535" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="547.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<rect x="40" y="560" width="1440" height="88" rx="4" fill="#F8FAFC"/>
+<text x="48" y="577" font-size="11.5" fill="#0F172A" font-weight="700">F-03</text>
+<text x="132" y="577" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-040</text>
+<line x1="313" y1="562" x2="313" y2="583" stroke="#E2E8F0"/>
+<line x1="359" y1="562" x2="359" y2="583" stroke="#E2E8F0"/>
+<line x1="405" y1="562" x2="405" y2="583" stroke="#E2E8F0"/>
+<line x1="451" y1="562" x2="451" y2="583" stroke="#E2E8F0"/>
+<circle cx="451" cy="572.5" r="5.5" fill="#0F766E"/>
+<line x1="497" y1="562" x2="497" y2="583" stroke="#E2E8F0"/>
+<line x1="543" y1="562" x2="543" y2="583" stroke="#E2E8F0"/>
+<line x1="589" y1="562" x2="589" y2="583" stroke="#E2E8F0"/>
+<line x1="635" y1="562" x2="635" y2="583" stroke="#E2E8F0"/>
+<line x1="681" y1="562" x2="681" y2="583" stroke="#E2E8F0"/>
+<line x1="727" y1="562" x2="727" y2="583" stroke="#E2E8F0"/>
+<line x1="773" y1="562" x2="773" y2="583" stroke="#E2E8F0"/>
+<line x1="819" y1="562" x2="819" y2="583" stroke="#E2E8F0"/>
+<line x1="865" y1="562" x2="865" y2="583" stroke="#E2E8F0"/>
+<line x1="911" y1="562" x2="911" y2="583" stroke="#E2E8F0"/>
+<rect x="962" y="564" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="575.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-08</text>
+<text x="1360" y="577" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="598" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-041</text>
+<line x1="313" y1="583" x2="313" y2="604" stroke="#E2E8F0"/>
+<line x1="359" y1="583" x2="359" y2="604" stroke="#E2E8F0"/>
+<circle cx="359" cy="593.5" r="5.5" fill="#0F766E"/>
+<line x1="405" y1="583" x2="405" y2="604" stroke="#E2E8F0"/>
+<line x1="451" y1="583" x2="451" y2="604" stroke="#E2E8F0"/>
+<line x1="497" y1="583" x2="497" y2="604" stroke="#E2E8F0"/>
+<line x1="543" y1="583" x2="543" y2="604" stroke="#E2E8F0"/>
+<line x1="589" y1="583" x2="589" y2="604" stroke="#E2E8F0"/>
+<line x1="635" y1="583" x2="635" y2="604" stroke="#E2E8F0"/>
+<line x1="681" y1="583" x2="681" y2="604" stroke="#E2E8F0"/>
+<line x1="727" y1="583" x2="727" y2="604" stroke="#E2E8F0"/>
+<line x1="773" y1="583" x2="773" y2="604" stroke="#E2E8F0"/>
+<line x1="819" y1="583" x2="819" y2="604" stroke="#E2E8F0"/>
+<line x1="865" y1="583" x2="865" y2="604" stroke="#E2E8F0"/>
+<line x1="911" y1="583" x2="911" y2="604" stroke="#E2E8F0"/>
+<rect x="962" y="585" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="596.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-08</text>
+<text x="1360" y="598" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="619" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-042</text>
+<line x1="313" y1="604" x2="313" y2="625" stroke="#E2E8F0"/>
+<line x1="359" y1="604" x2="359" y2="625" stroke="#E2E8F0"/>
+<line x1="405" y1="604" x2="405" y2="625" stroke="#E2E8F0"/>
+<line x1="451" y1="604" x2="451" y2="625" stroke="#E2E8F0"/>
+<circle cx="451" cy="614.5" r="5.5" fill="#0F766E"/>
+<line x1="497" y1="604" x2="497" y2="625" stroke="#E2E8F0"/>
+<line x1="543" y1="604" x2="543" y2="625" stroke="#E2E8F0"/>
+<line x1="589" y1="604" x2="589" y2="625" stroke="#E2E8F0"/>
+<line x1="635" y1="604" x2="635" y2="625" stroke="#E2E8F0"/>
+<line x1="681" y1="604" x2="681" y2="625" stroke="#E2E8F0"/>
+<line x1="727" y1="604" x2="727" y2="625" stroke="#E2E8F0"/>
+<line x1="773" y1="604" x2="773" y2="625" stroke="#E2E8F0"/>
+<line x1="819" y1="604" x2="819" y2="625" stroke="#E2E8F0"/>
+<line x1="865" y1="604" x2="865" y2="625" stroke="#E2E8F0"/>
+<line x1="911" y1="604" x2="911" y2="625" stroke="#E2E8F0"/>
+<rect x="962" y="606" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="617.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-08</text>
+<rect x="1008.5" y="606" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1029.8" y="617.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-09</text>
+<text x="1360" y="619" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="640" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-043</text>
+<line x1="313" y1="625" x2="313" y2="646" stroke="#E2E8F0"/>
+<line x1="359" y1="625" x2="359" y2="646" stroke="#E2E8F0"/>
+<line x1="405" y1="625" x2="405" y2="646" stroke="#E2E8F0"/>
+<line x1="451" y1="625" x2="451" y2="646" stroke="#E2E8F0"/>
+<circle cx="451" cy="635.5" r="5.5" fill="#0F766E"/>
+<line x1="497" y1="625" x2="497" y2="646" stroke="#E2E8F0"/>
+<line x1="543" y1="625" x2="543" y2="646" stroke="#E2E8F0"/>
+<line x1="589" y1="625" x2="589" y2="646" stroke="#E2E8F0"/>
+<line x1="635" y1="625" x2="635" y2="646" stroke="#E2E8F0"/>
+<line x1="681" y1="625" x2="681" y2="646" stroke="#E2E8F0"/>
+<line x1="727" y1="625" x2="727" y2="646" stroke="#E2E8F0"/>
+<line x1="773" y1="625" x2="773" y2="646" stroke="#E2E8F0"/>
+<circle cx="773" cy="635.5" r="5.5" fill="#0F766E"/>
+<line x1="819" y1="625" x2="819" y2="646" stroke="#E2E8F0"/>
+<line x1="865" y1="625" x2="865" y2="646" stroke="#E2E8F0"/>
+<line x1="911" y1="625" x2="911" y2="646" stroke="#E2E8F0"/>
+<rect x="1360" y="627" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="639.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<rect x="40" y="652" width="1440" height="88" rx="4" fill="#FFFFFF"/>
+<text x="48" y="669" font-size="11.5" fill="#0F172A" font-weight="700">F-04</text>
+<text x="132" y="669" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-060</text>
+<line x1="313" y1="654" x2="313" y2="675" stroke="#E2E8F0"/>
+<line x1="359" y1="654" x2="359" y2="675" stroke="#E2E8F0"/>
+<line x1="405" y1="654" x2="405" y2="675" stroke="#E2E8F0"/>
+<line x1="451" y1="654" x2="451" y2="675" stroke="#E2E8F0"/>
+<line x1="497" y1="654" x2="497" y2="675" stroke="#E2E8F0"/>
+<line x1="543" y1="654" x2="543" y2="675" stroke="#E2E8F0"/>
+<line x1="589" y1="654" x2="589" y2="675" stroke="#E2E8F0"/>
+<circle cx="589" cy="664.5" r="5.5" fill="#0F766E"/>
+<line x1="635" y1="654" x2="635" y2="675" stroke="#E2E8F0"/>
+<line x1="681" y1="654" x2="681" y2="675" stroke="#E2E8F0"/>
+<line x1="727" y1="654" x2="727" y2="675" stroke="#E2E8F0"/>
+<line x1="773" y1="654" x2="773" y2="675" stroke="#E2E8F0"/>
+<line x1="819" y1="654" x2="819" y2="675" stroke="#E2E8F0"/>
+<line x1="865" y1="654" x2="865" y2="675" stroke="#E2E8F0"/>
+<line x1="911" y1="654" x2="911" y2="675" stroke="#E2E8F0"/>
+<rect x="962" y="656" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="667.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-15</text>
+<text x="1360" y="669" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="690" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-061</text>
+<line x1="313" y1="675" x2="313" y2="696" stroke="#E2E8F0"/>
+<line x1="359" y1="675" x2="359" y2="696" stroke="#E2E8F0"/>
+<line x1="405" y1="675" x2="405" y2="696" stroke="#E2E8F0"/>
+<line x1="451" y1="675" x2="451" y2="696" stroke="#E2E8F0"/>
+<line x1="497" y1="675" x2="497" y2="696" stroke="#E2E8F0"/>
+<line x1="543" y1="675" x2="543" y2="696" stroke="#E2E8F0"/>
+<line x1="589" y1="675" x2="589" y2="696" stroke="#E2E8F0"/>
+<circle cx="589" cy="685.5" r="5.5" fill="#0F766E"/>
+<line x1="635" y1="675" x2="635" y2="696" stroke="#E2E8F0"/>
+<line x1="681" y1="675" x2="681" y2="696" stroke="#E2E8F0"/>
+<line x1="727" y1="675" x2="727" y2="696" stroke="#E2E8F0"/>
+<line x1="773" y1="675" x2="773" y2="696" stroke="#E2E8F0"/>
+<line x1="819" y1="675" x2="819" y2="696" stroke="#E2E8F0"/>
+<line x1="865" y1="675" x2="865" y2="696" stroke="#E2E8F0"/>
+<line x1="911" y1="675" x2="911" y2="696" stroke="#E2E8F0"/>
+<rect x="1360" y="677" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="689.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<text x="132" y="711" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-062</text>
+<line x1="313" y1="696" x2="313" y2="717" stroke="#E2E8F0"/>
+<line x1="359" y1="696" x2="359" y2="717" stroke="#E2E8F0"/>
+<line x1="405" y1="696" x2="405" y2="717" stroke="#E2E8F0"/>
+<line x1="451" y1="696" x2="451" y2="717" stroke="#E2E8F0"/>
+<line x1="497" y1="696" x2="497" y2="717" stroke="#E2E8F0"/>
+<line x1="543" y1="696" x2="543" y2="717" stroke="#E2E8F0"/>
+<line x1="589" y1="696" x2="589" y2="717" stroke="#E2E8F0"/>
+<circle cx="589" cy="706.5" r="5.5" fill="#0F766E"/>
+<line x1="635" y1="696" x2="635" y2="717" stroke="#E2E8F0"/>
+<line x1="681" y1="696" x2="681" y2="717" stroke="#E2E8F0"/>
+<line x1="727" y1="696" x2="727" y2="717" stroke="#E2E8F0"/>
+<line x1="773" y1="696" x2="773" y2="717" stroke="#E2E8F0"/>
+<line x1="819" y1="696" x2="819" y2="717" stroke="#E2E8F0"/>
+<line x1="865" y1="696" x2="865" y2="717" stroke="#E2E8F0"/>
+<line x1="911" y1="696" x2="911" y2="717" stroke="#E2E8F0"/>
+<rect x="962" y="698" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="709.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-15</text>
+<text x="1360" y="711" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="732" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-063</text>
+<line x1="313" y1="717" x2="313" y2="738" stroke="#E2E8F0"/>
+<line x1="359" y1="717" x2="359" y2="738" stroke="#E2E8F0"/>
+<line x1="405" y1="717" x2="405" y2="738" stroke="#E2E8F0"/>
+<circle cx="405" cy="727.5" r="5.5" fill="#0F766E"/>
+<line x1="451" y1="717" x2="451" y2="738" stroke="#E2E8F0"/>
+<line x1="497" y1="717" x2="497" y2="738" stroke="#E2E8F0"/>
+<line x1="543" y1="717" x2="543" y2="738" stroke="#E2E8F0"/>
+<line x1="589" y1="717" x2="589" y2="738" stroke="#E2E8F0"/>
+<circle cx="589" cy="727.5" r="5.5" fill="#0F766E"/>
+<line x1="635" y1="717" x2="635" y2="738" stroke="#E2E8F0"/>
+<line x1="681" y1="717" x2="681" y2="738" stroke="#E2E8F0"/>
+<line x1="727" y1="717" x2="727" y2="738" stroke="#E2E8F0"/>
+<line x1="773" y1="717" x2="773" y2="738" stroke="#E2E8F0"/>
+<line x1="819" y1="717" x2="819" y2="738" stroke="#E2E8F0"/>
+<line x1="865" y1="717" x2="865" y2="738" stroke="#E2E8F0"/>
+<line x1="911" y1="717" x2="911" y2="738" stroke="#E2E8F0"/>
+<rect x="962" y="719" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="730.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-15</text>
+<text x="1360" y="732" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<rect x="40" y="744" width="1440" height="88" rx="4" fill="#F8FAFC"/>
+<text x="48" y="761" font-size="11.5" fill="#0F172A" font-weight="700">F-05</text>
+<text x="132" y="761" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-080</text>
+<line x1="313" y1="746" x2="313" y2="767" stroke="#E2E8F0"/>
+<line x1="359" y1="746" x2="359" y2="767" stroke="#E2E8F0"/>
+<circle cx="359" cy="756.5" r="5.5" fill="#0F766E"/>
+<line x1="405" y1="746" x2="405" y2="767" stroke="#E2E8F0"/>
+<line x1="451" y1="746" x2="451" y2="767" stroke="#E2E8F0"/>
+<line x1="497" y1="746" x2="497" y2="767" stroke="#E2E8F0"/>
+<line x1="543" y1="746" x2="543" y2="767" stroke="#E2E8F0"/>
+<line x1="589" y1="746" x2="589" y2="767" stroke="#E2E8F0"/>
+<line x1="635" y1="746" x2="635" y2="767" stroke="#E2E8F0"/>
+<circle cx="635" cy="756.5" r="5.5" fill="#0F766E"/>
+<line x1="681" y1="746" x2="681" y2="767" stroke="#E2E8F0"/>
+<line x1="727" y1="746" x2="727" y2="767" stroke="#E2E8F0"/>
+<line x1="773" y1="746" x2="773" y2="767" stroke="#E2E8F0"/>
+<line x1="819" y1="746" x2="819" y2="767" stroke="#E2E8F0"/>
+<line x1="865" y1="746" x2="865" y2="767" stroke="#E2E8F0"/>
+<line x1="911" y1="746" x2="911" y2="767" stroke="#E2E8F0"/>
+<rect x="962" y="748" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="759.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-08</text>
+<text x="1360" y="761" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="782" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-081</text>
+<line x1="313" y1="767" x2="313" y2="788" stroke="#E2E8F0"/>
+<line x1="359" y1="767" x2="359" y2="788" stroke="#E2E8F0"/>
+<line x1="405" y1="767" x2="405" y2="788" stroke="#E2E8F0"/>
+<line x1="451" y1="767" x2="451" y2="788" stroke="#E2E8F0"/>
+<circle cx="451" cy="777.5" r="5.5" fill="#0F766E"/>
+<line x1="497" y1="767" x2="497" y2="788" stroke="#E2E8F0"/>
+<line x1="543" y1="767" x2="543" y2="788" stroke="#E2E8F0"/>
+<line x1="589" y1="767" x2="589" y2="788" stroke="#E2E8F0"/>
+<line x1="635" y1="767" x2="635" y2="788" stroke="#E2E8F0"/>
+<circle cx="635" cy="777.5" r="5.5" fill="#0F766E"/>
+<line x1="681" y1="767" x2="681" y2="788" stroke="#E2E8F0"/>
+<line x1="727" y1="767" x2="727" y2="788" stroke="#E2E8F0"/>
+<line x1="773" y1="767" x2="773" y2="788" stroke="#E2E8F0"/>
+<line x1="819" y1="767" x2="819" y2="788" stroke="#E2E8F0"/>
+<line x1="865" y1="767" x2="865" y2="788" stroke="#E2E8F0"/>
+<line x1="911" y1="767" x2="911" y2="788" stroke="#E2E8F0"/>
+<rect x="962" y="769" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="780.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-13</text>
+<rect x="1008.5" y="769" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1029.8" y="780.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-14</text>
+<rect x="1055" y="769" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1076.2" y="780.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-19</text>
+<text x="1360" y="782" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="803" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-082</text>
+<line x1="313" y1="788" x2="313" y2="809" stroke="#E2E8F0"/>
+<line x1="359" y1="788" x2="359" y2="809" stroke="#E2E8F0"/>
+<line x1="405" y1="788" x2="405" y2="809" stroke="#E2E8F0"/>
+<line x1="451" y1="788" x2="451" y2="809" stroke="#E2E8F0"/>
+<circle cx="451" cy="798.5" r="5.5" fill="#0F766E"/>
+<line x1="497" y1="788" x2="497" y2="809" stroke="#E2E8F0"/>
+<line x1="543" y1="788" x2="543" y2="809" stroke="#E2E8F0"/>
+<line x1="589" y1="788" x2="589" y2="809" stroke="#E2E8F0"/>
+<line x1="635" y1="788" x2="635" y2="809" stroke="#E2E8F0"/>
+<line x1="681" y1="788" x2="681" y2="809" stroke="#E2E8F0"/>
+<line x1="727" y1="788" x2="727" y2="809" stroke="#E2E8F0"/>
+<line x1="773" y1="788" x2="773" y2="809" stroke="#E2E8F0"/>
+<line x1="819" y1="788" x2="819" y2="809" stroke="#E2E8F0"/>
+<line x1="865" y1="788" x2="865" y2="809" stroke="#E2E8F0"/>
+<line x1="911" y1="788" x2="911" y2="809" stroke="#E2E8F0"/>
+<rect x="962" y="790" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="801.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-13</text>
+<text x="1360" y="803" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="824" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-083</text>
+<line x1="313" y1="809" x2="313" y2="830" stroke="#E2E8F0"/>
+<line x1="359" y1="809" x2="359" y2="830" stroke="#E2E8F0"/>
+<line x1="405" y1="809" x2="405" y2="830" stroke="#E2E8F0"/>
+<line x1="451" y1="809" x2="451" y2="830" stroke="#E2E8F0"/>
+<line x1="497" y1="809" x2="497" y2="830" stroke="#E2E8F0"/>
+<line x1="543" y1="809" x2="543" y2="830" stroke="#E2E8F0"/>
+<line x1="589" y1="809" x2="589" y2="830" stroke="#E2E8F0"/>
+<line x1="635" y1="809" x2="635" y2="830" stroke="#E2E8F0"/>
+<circle cx="635" cy="819.5" r="5.5" fill="#0F766E"/>
+<line x1="681" y1="809" x2="681" y2="830" stroke="#E2E8F0"/>
+<line x1="727" y1="809" x2="727" y2="830" stroke="#E2E8F0"/>
+<line x1="773" y1="809" x2="773" y2="830" stroke="#E2E8F0"/>
+<line x1="819" y1="809" x2="819" y2="830" stroke="#E2E8F0"/>
+<line x1="865" y1="809" x2="865" y2="830" stroke="#E2E8F0"/>
+<line x1="911" y1="809" x2="911" y2="830" stroke="#E2E8F0"/>
+<rect x="1360" y="811" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="823.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<rect x="40" y="836" width="1440" height="67" rx="4" fill="#FFFFFF"/>
+<text x="48" y="853" font-size="11.5" fill="#0F172A" font-weight="700">F-06, F-07</text>
+<text x="132" y="853" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-100</text>
+<line x1="313" y1="838" x2="313" y2="859" stroke="#E2E8F0"/>
+<line x1="359" y1="838" x2="359" y2="859" stroke="#E2E8F0"/>
+<line x1="405" y1="838" x2="405" y2="859" stroke="#E2E8F0"/>
+<line x1="451" y1="838" x2="451" y2="859" stroke="#E2E8F0"/>
+<circle cx="451" cy="848.5" r="5.5" fill="#0F766E"/>
+<line x1="497" y1="838" x2="497" y2="859" stroke="#E2E8F0"/>
+<line x1="543" y1="838" x2="543" y2="859" stroke="#E2E8F0"/>
+<circle cx="543" cy="848.5" r="5.5" fill="#0F766E"/>
+<line x1="589" y1="838" x2="589" y2="859" stroke="#E2E8F0"/>
+<line x1="635" y1="838" x2="635" y2="859" stroke="#E2E8F0"/>
+<line x1="681" y1="838" x2="681" y2="859" stroke="#E2E8F0"/>
+<line x1="727" y1="838" x2="727" y2="859" stroke="#E2E8F0"/>
+<line x1="773" y1="838" x2="773" y2="859" stroke="#E2E8F0"/>
+<line x1="819" y1="838" x2="819" y2="859" stroke="#E2E8F0"/>
+<line x1="865" y1="838" x2="865" y2="859" stroke="#E2E8F0"/>
+<line x1="911" y1="838" x2="911" y2="859" stroke="#E2E8F0"/>
+<rect x="1360" y="840" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="852.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<text x="132" y="874" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-101</text>
+<line x1="313" y1="859" x2="313" y2="880" stroke="#E2E8F0"/>
+<line x1="359" y1="859" x2="359" y2="880" stroke="#E2E8F0"/>
+<line x1="405" y1="859" x2="405" y2="880" stroke="#E2E8F0"/>
+<line x1="451" y1="859" x2="451" y2="880" stroke="#E2E8F0"/>
+<circle cx="451" cy="869.5" r="5.5" fill="#0F766E"/>
+<line x1="497" y1="859" x2="497" y2="880" stroke="#E2E8F0"/>
+<line x1="543" y1="859" x2="543" y2="880" stroke="#E2E8F0"/>
+<line x1="589" y1="859" x2="589" y2="880" stroke="#E2E8F0"/>
+<line x1="635" y1="859" x2="635" y2="880" stroke="#E2E8F0"/>
+<line x1="681" y1="859" x2="681" y2="880" stroke="#E2E8F0"/>
+<line x1="727" y1="859" x2="727" y2="880" stroke="#E2E8F0"/>
+<line x1="773" y1="859" x2="773" y2="880" stroke="#E2E8F0"/>
+<line x1="819" y1="859" x2="819" y2="880" stroke="#E2E8F0"/>
+<line x1="865" y1="859" x2="865" y2="880" stroke="#E2E8F0"/>
+<line x1="911" y1="859" x2="911" y2="880" stroke="#E2E8F0"/>
+<rect x="1360" y="861" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="873.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<text x="132" y="895" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-102</text>
+<line x1="313" y1="880" x2="313" y2="901" stroke="#E2E8F0"/>
+<line x1="359" y1="880" x2="359" y2="901" stroke="#E2E8F0"/>
+<line x1="405" y1="880" x2="405" y2="901" stroke="#E2E8F0"/>
+<line x1="451" y1="880" x2="451" y2="901" stroke="#E2E8F0"/>
+<line x1="497" y1="880" x2="497" y2="901" stroke="#E2E8F0"/>
+<circle cx="497" cy="890.5" r="5.5" fill="#0F766E"/>
+<line x1="543" y1="880" x2="543" y2="901" stroke="#E2E8F0"/>
+<line x1="589" y1="880" x2="589" y2="901" stroke="#E2E8F0"/>
+<line x1="635" y1="880" x2="635" y2="901" stroke="#E2E8F0"/>
+<line x1="681" y1="880" x2="681" y2="901" stroke="#E2E8F0"/>
+<line x1="727" y1="880" x2="727" y2="901" stroke="#E2E8F0"/>
+<line x1="773" y1="880" x2="773" y2="901" stroke="#E2E8F0"/>
+<line x1="819" y1="880" x2="819" y2="901" stroke="#E2E8F0"/>
+<line x1="865" y1="880" x2="865" y2="901" stroke="#E2E8F0"/>
+<line x1="911" y1="880" x2="911" y2="901" stroke="#E2E8F0"/>
+<rect x="1360" y="882" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="894.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<rect x="40" y="907" width="1440" height="46" rx="4" fill="#F8FAFC"/>
+<text x="48" y="924" font-size="11.5" fill="#0F172A" font-weight="700">F-08</text>
+<text x="132" y="924" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-120</text>
+<line x1="313" y1="909" x2="313" y2="930" stroke="#E2E8F0"/>
+<line x1="359" y1="909" x2="359" y2="930" stroke="#E2E8F0"/>
+<line x1="405" y1="909" x2="405" y2="930" stroke="#E2E8F0"/>
+<line x1="451" y1="909" x2="451" y2="930" stroke="#E2E8F0"/>
+<line x1="497" y1="909" x2="497" y2="930" stroke="#E2E8F0"/>
+<line x1="543" y1="909" x2="543" y2="930" stroke="#E2E8F0"/>
+<line x1="589" y1="909" x2="589" y2="930" stroke="#E2E8F0"/>
+<line x1="635" y1="909" x2="635" y2="930" stroke="#E2E8F0"/>
+<line x1="681" y1="909" x2="681" y2="930" stroke="#E2E8F0"/>
+<line x1="727" y1="909" x2="727" y2="930" stroke="#E2E8F0"/>
+<line x1="773" y1="909" x2="773" y2="930" stroke="#E2E8F0"/>
+<line x1="819" y1="909" x2="819" y2="930" stroke="#E2E8F0"/>
+<line x1="865" y1="909" x2="865" y2="930" stroke="#E2E8F0"/>
+<circle cx="865" cy="919.5" r="5.5" fill="#0F766E"/>
+<line x1="911" y1="909" x2="911" y2="930" stroke="#E2E8F0"/>
+<rect x="962" y="911" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="922.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-18</text>
+<rect x="1008.5" y="911" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="1029.8" y="922.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-19</text>
+<text x="1360" y="924" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="945" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-121</text>
+<line x1="313" y1="930" x2="313" y2="951" stroke="#E2E8F0"/>
+<circle cx="313" cy="940.5" r="5.5" fill="#0F766E"/>
+<line x1="359" y1="930" x2="359" y2="951" stroke="#E2E8F0"/>
+<line x1="405" y1="930" x2="405" y2="951" stroke="#E2E8F0"/>
+<line x1="451" y1="930" x2="451" y2="951" stroke="#E2E8F0"/>
+<line x1="497" y1="930" x2="497" y2="951" stroke="#E2E8F0"/>
+<line x1="543" y1="930" x2="543" y2="951" stroke="#E2E8F0"/>
+<line x1="589" y1="930" x2="589" y2="951" stroke="#E2E8F0"/>
+<line x1="635" y1="930" x2="635" y2="951" stroke="#E2E8F0"/>
+<line x1="681" y1="930" x2="681" y2="951" stroke="#E2E8F0"/>
+<line x1="727" y1="930" x2="727" y2="951" stroke="#E2E8F0"/>
+<line x1="773" y1="930" x2="773" y2="951" stroke="#E2E8F0"/>
+<line x1="819" y1="930" x2="819" y2="951" stroke="#E2E8F0"/>
+<line x1="865" y1="930" x2="865" y2="951" stroke="#E2E8F0"/>
+<line x1="911" y1="930" x2="911" y2="951" stroke="#E2E8F0"/>
+<circle cx="911" cy="940.5" r="5.5" fill="#0F766E"/>
+<rect x="1360" y="932" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="944.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<rect x="40" y="957" width="1440" height="130" rx="4" fill="#FFFFFF"/>
+<text x="48" y="974" font-size="11.5" fill="#0F172A" font-weight="700">F-09</text>
+<text x="132" y="974" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-140</text>
+<line x1="313" y1="959" x2="313" y2="980" stroke="#E2E8F0"/>
+<line x1="359" y1="959" x2="359" y2="980" stroke="#E2E8F0"/>
+<line x1="405" y1="959" x2="405" y2="980" stroke="#E2E8F0"/>
+<line x1="451" y1="959" x2="451" y2="980" stroke="#E2E8F0"/>
+<line x1="497" y1="959" x2="497" y2="980" stroke="#E2E8F0"/>
+<line x1="543" y1="959" x2="543" y2="980" stroke="#E2E8F0"/>
+<line x1="589" y1="959" x2="589" y2="980" stroke="#E2E8F0"/>
+<line x1="635" y1="959" x2="635" y2="980" stroke="#E2E8F0"/>
+<line x1="681" y1="959" x2="681" y2="980" stroke="#E2E8F0"/>
+<line x1="727" y1="959" x2="727" y2="980" stroke="#E2E8F0"/>
+<line x1="773" y1="959" x2="773" y2="980" stroke="#E2E8F0"/>
+<line x1="819" y1="959" x2="819" y2="980" stroke="#E2E8F0"/>
+<circle cx="819" cy="969.5" r="5.5" fill="#0F766E"/>
+<line x1="865" y1="959" x2="865" y2="980" stroke="#E2E8F0"/>
+<line x1="911" y1="959" x2="911" y2="980" stroke="#E2E8F0"/>
+<rect x="962" y="961" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="972.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-19</text>
+<text x="1360" y="974" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="995" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-141</text>
+<line x1="313" y1="980" x2="313" y2="1001" stroke="#E2E8F0"/>
+<line x1="359" y1="980" x2="359" y2="1001" stroke="#E2E8F0"/>
+<line x1="405" y1="980" x2="405" y2="1001" stroke="#E2E8F0"/>
+<line x1="451" y1="980" x2="451" y2="1001" stroke="#E2E8F0"/>
+<line x1="497" y1="980" x2="497" y2="1001" stroke="#E2E8F0"/>
+<line x1="543" y1="980" x2="543" y2="1001" stroke="#E2E8F0"/>
+<line x1="589" y1="980" x2="589" y2="1001" stroke="#E2E8F0"/>
+<line x1="635" y1="980" x2="635" y2="1001" stroke="#E2E8F0"/>
+<line x1="681" y1="980" x2="681" y2="1001" stroke="#E2E8F0"/>
+<line x1="727" y1="980" x2="727" y2="1001" stroke="#E2E8F0"/>
+<line x1="773" y1="980" x2="773" y2="1001" stroke="#E2E8F0"/>
+<line x1="819" y1="980" x2="819" y2="1001" stroke="#E2E8F0"/>
+<circle cx="819" cy="990.5" r="5.5" fill="#0F766E"/>
+<line x1="865" y1="980" x2="865" y2="1001" stroke="#E2E8F0"/>
+<line x1="911" y1="980" x2="911" y2="1001" stroke="#E2E8F0"/>
+<rect x="962" y="982" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="983.2" y="993.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-19</text>
+<text x="1360" y="995" font-size="11" fill="#0F766E" font-weight="600">✓ satisfied · verified</text>
+<text x="132" y="1016" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-142</text>
+<line x1="313" y1="1001" x2="313" y2="1022" stroke="#E2E8F0"/>
+<line x1="359" y1="1001" x2="359" y2="1022" stroke="#E2E8F0"/>
+<line x1="405" y1="1001" x2="405" y2="1022" stroke="#E2E8F0"/>
+<line x1="451" y1="1001" x2="451" y2="1022" stroke="#E2E8F0"/>
+<line x1="497" y1="1001" x2="497" y2="1022" stroke="#E2E8F0"/>
+<line x1="543" y1="1001" x2="543" y2="1022" stroke="#E2E8F0"/>
+<line x1="589" y1="1001" x2="589" y2="1022" stroke="#E2E8F0"/>
+<line x1="635" y1="1001" x2="635" y2="1022" stroke="#E2E8F0"/>
+<line x1="681" y1="1001" x2="681" y2="1022" stroke="#E2E8F0"/>
+<line x1="727" y1="1001" x2="727" y2="1022" stroke="#E2E8F0"/>
+<line x1="773" y1="1001" x2="773" y2="1022" stroke="#E2E8F0"/>
+<line x1="819" y1="1001" x2="819" y2="1022" stroke="#E2E8F0"/>
+<circle cx="819" cy="1011.5" r="5.5" fill="#0F766E"/>
+<line x1="865" y1="1001" x2="865" y2="1022" stroke="#E2E8F0"/>
+<line x1="911" y1="1001" x2="911" y2="1022" stroke="#E2E8F0"/>
+<rect x="1360" y="1003" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="1015.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<text x="132" y="1037" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-143</text>
+<line x1="313" y1="1022" x2="313" y2="1043" stroke="#E2E8F0"/>
+<line x1="359" y1="1022" x2="359" y2="1043" stroke="#E2E8F0"/>
+<line x1="405" y1="1022" x2="405" y2="1043" stroke="#E2E8F0"/>
+<line x1="451" y1="1022" x2="451" y2="1043" stroke="#E2E8F0"/>
+<line x1="497" y1="1022" x2="497" y2="1043" stroke="#E2E8F0"/>
+<line x1="543" y1="1022" x2="543" y2="1043" stroke="#E2E8F0"/>
+<line x1="589" y1="1022" x2="589" y2="1043" stroke="#E2E8F0"/>
+<line x1="635" y1="1022" x2="635" y2="1043" stroke="#E2E8F0"/>
+<line x1="681" y1="1022" x2="681" y2="1043" stroke="#E2E8F0"/>
+<line x1="727" y1="1022" x2="727" y2="1043" stroke="#E2E8F0"/>
+<line x1="773" y1="1022" x2="773" y2="1043" stroke="#E2E8F0"/>
+<line x1="819" y1="1022" x2="819" y2="1043" stroke="#E2E8F0"/>
+<circle cx="819" cy="1032.5" r="5.5" fill="#0F766E"/>
+<line x1="865" y1="1022" x2="865" y2="1043" stroke="#E2E8F0"/>
+<line x1="911" y1="1022" x2="911" y2="1043" stroke="#E2E8F0"/>
+<rect x="1360" y="1024" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="1036.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<text x="132" y="1058" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-144</text>
+<line x1="313" y1="1043" x2="313" y2="1064" stroke="#E2E8F0"/>
+<line x1="359" y1="1043" x2="359" y2="1064" stroke="#E2E8F0"/>
+<line x1="405" y1="1043" x2="405" y2="1064" stroke="#E2E8F0"/>
+<line x1="451" y1="1043" x2="451" y2="1064" stroke="#E2E8F0"/>
+<line x1="497" y1="1043" x2="497" y2="1064" stroke="#E2E8F0"/>
+<line x1="543" y1="1043" x2="543" y2="1064" stroke="#E2E8F0"/>
+<line x1="589" y1="1043" x2="589" y2="1064" stroke="#E2E8F0"/>
+<line x1="635" y1="1043" x2="635" y2="1064" stroke="#E2E8F0"/>
+<line x1="681" y1="1043" x2="681" y2="1064" stroke="#E2E8F0"/>
+<circle cx="681" cy="1053.5" r="5.5" fill="#0F766E"/>
+<line x1="727" y1="1043" x2="727" y2="1064" stroke="#E2E8F0"/>
+<line x1="773" y1="1043" x2="773" y2="1064" stroke="#E2E8F0"/>
+<line x1="819" y1="1043" x2="819" y2="1064" stroke="#E2E8F0"/>
+<circle cx="819" cy="1053.5" r="5.5" fill="#0F766E"/>
+<line x1="865" y1="1043" x2="865" y2="1064" stroke="#E2E8F0"/>
+<line x1="911" y1="1043" x2="911" y2="1064" stroke="#E2E8F0"/>
+<rect x="1360" y="1045" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="1057.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<text x="132" y="1079" font-size="11" fill="#334155" font-weight="600" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SYS-145</text>
+<line x1="313" y1="1064" x2="313" y2="1085" stroke="#E2E8F0"/>
+<line x1="359" y1="1064" x2="359" y2="1085" stroke="#E2E8F0"/>
+<line x1="405" y1="1064" x2="405" y2="1085" stroke="#E2E8F0"/>
+<line x1="451" y1="1064" x2="451" y2="1085" stroke="#E2E8F0"/>
+<line x1="497" y1="1064" x2="497" y2="1085" stroke="#E2E8F0"/>
+<line x1="543" y1="1064" x2="543" y2="1085" stroke="#E2E8F0"/>
+<line x1="589" y1="1064" x2="589" y2="1085" stroke="#E2E8F0"/>
+<line x1="635" y1="1064" x2="635" y2="1085" stroke="#E2E8F0"/>
+<line x1="681" y1="1064" x2="681" y2="1085" stroke="#E2E8F0"/>
+<line x1="727" y1="1064" x2="727" y2="1085" stroke="#E2E8F0"/>
+<line x1="773" y1="1064" x2="773" y2="1085" stroke="#E2E8F0"/>
+<circle cx="773" cy="1074.5" r="5.5" fill="#0F766E"/>
+<line x1="819" y1="1064" x2="819" y2="1085" stroke="#E2E8F0"/>
+<circle cx="819" cy="1074.5" r="5.5" fill="#0F766E"/>
+<line x1="865" y1="1064" x2="865" y2="1085" stroke="#E2E8F0"/>
+<line x1="911" y1="1064" x2="911" y2="1085" stroke="#E2E8F0"/>
+<rect x="1360" y="1066" width="59.3" height="18" rx="9" fill="#D2553F"/><text x="1389.6" y="1078.2" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">no verifier</text>
+<text x="40" y="1117" font-size="12" fill="#0F172A" font-weight="600">39 requirements · 39 satisfied · 25 verified by at least one case · 14 not verified (generated/requirements-coverage.md)</text>
+<line x1="40" y1="1133" x2="1480" y2="1133" stroke="#E2E8F0"/>
+<circle cx="48" cy="1163" r="5.5" fill="#0F766E"/>
+<text x="60" y="1167" font-size="11" fill="#334155">satisfies</text>
+<rect x="150" y="1155" width="42.5" height="16" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/><text x="171.2" y="1166.4" font-size="9.5" fill="#2563EB" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SQ-16</text>
+<text x="210" y="1167" font-size="11" fill="#334155">verification case VS-SQ-16 verifies (specified, not run)</text>
+<text x="40" y="1209" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="670" viewBox="0 0 1520 670" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-05. Requirement thread · TSR-407 heartbeat loss (SysML v2 view requirementThread)</title>
+<desc id="d">Thread view generated from the SysML v2 model for TSR-407: the #derivation chain to FSR-01.07 and its safety goals, the satisfy relationship to the element its allocation names, the safety mechanisms whose TSR list cites it with their performing elements, and the verification cases of the test specifications that verify it.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter><marker id="rq-teal" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#0F766E"/></marker><marker id="rq-blue" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#2563EB"/></marker><marker id="rq-or" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#C2410C"/></marker><marker id="rq-ink" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#334155"/></marker><marker id="rq-mut" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#64748B"/></marker></defs>
+<rect width="1520" height="670" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-05 · Requirement thread · TSR-407 heartbeat loss</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">Derived from its safety goals through FSR-01.07, satisfied by the safety MCU firmware, cited by SM-12 and verified by the cases that name it</text>
+<text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::requirementThread</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">ThreadView · render asTreeDiagram · model 63553f5ef5ae</text>
+<line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
+<text x="40" y="114" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">DERIVED FROM · «derivation»</text>
+<text x="360" y="114" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">REQUIREMENT</text>
+<text x="752" y="114" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">SATISFIED BY · «satisfy»</text>
+<text x="1074" y="114" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">VERIFIED BY · «verify»</text>
+<rect x="360" y="130" width="310" height="180" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="2" filter="url(#lift)"/>
+<text x="372" y="146" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«requirement» TechnicalSafetyRequirement</text>
+<rect x="372" y="150" width="53.9" height="18" rx="9" fill="#C2410C"/><text x="398.9" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">TSR-407</text>
+<text x="432.9" y="163" font-size="12" fill="#0F172A" font-weight="600"></text>
+<text x="372" y="180" font-size="10.5" fill="#64748B">In a car safety mode, the envelope shall detect absence…</text>
+<text x="372" y="194" font-size="10.5" fill="#64748B">the SoC heartbeat (0xf3) for &gt; 0.3 s and then revoke all</text>
+<text x="372" y="208" font-size="10.5" fill="#64748B">actuation authority at once (SS-L, SS-G). It shall enter S…</text>
+<text x="372" y="222" font-size="10.5" fill="#64748B">(SILENT, relay released) after the longer timeout of</text>
+<text x="372" y="236" font-size="10.5" fill="#64748B">TSR-510.</text>
+<text x="372" y="250" font-size="10.5" fill="#64748B">ASIL: B‡</text>
+<text x="372" y="264" font-size="10.5" fill="#64748B">timing: detect ≤ 0.3 s / react ≤ 0.1 s</text>
+<text x="372" y="278" font-size="10.5" fill="#64748B">verification: T-HIL, FI</text>
+<text x="372" y="292" font-size="10.5" fill="#64748B">mechanism class: TMO</text>
+<rect x="56" y="130" width="280" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="68" y="138" width="65.3" height="18" rx="9" fill="#C2410C"/><text x="100.7" y="150.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">FSR-01.07</text>
+<text x="140.3" y="151" font-size="12" fill="#0F172A" font-weight="600">The envelope shall detect mis…</text>
+<text x="68" y="168" font-size="10.5" fill="#64748B">ASIL C · WP-C-04</text>
+<rect x="56" y="204" width="280" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="68" y="212" width="42.5" height="18" rx="9" fill="#C2410C"/><text x="89.2" y="224.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-01</text>
+<text x="117.5" y="225" font-size="12" fill="#0F172A" font-weight="600">The item shall not cause lateral m…</text>
+<text x="68" y="242" font-size="10.5" fill="#64748B">ASIL C · WP-C-03</text>
+<rect x="56" y="268" width="280" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="68" y="276" width="42.5" height="18" rx="9" fill="#C2410C"/><text x="89.2" y="288.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-02</text>
+<text x="117.5" y="289" font-size="12" fill="#0F172A" font-weight="600">The item shall not lose or degrade…</text>
+<text x="68" y="306" font-size="10.5" fill="#64748B">ASIL B · WP-C-03</text>
+<rect x="56" y="332" width="280" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="68" y="340" width="42.5" height="18" rx="9" fill="#C2410C"/><text x="89.2" y="352.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-03</text>
+<text x="117.5" y="353" font-size="12" fill="#0F172A" font-weight="600">The item shall not cause unintend…</text>
+<text x="68" y="370" font-size="10.5" fill="#64748B">ASIL B · WP-C-03</text>
+<rect x="56" y="396" width="280" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="68" y="404" width="42.5" height="18" rx="9" fill="#C2410C"/><text x="89.2" y="416.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-04</text>
+<text x="117.5" y="417" font-size="12" fill="#0F172A" font-weight="600">The item shall not cause decelera…</text>
+<text x="68" y="434" font-size="10.5" fill="#64748B">ASIL B · WP-C-03</text>
+<rect x="56" y="460" width="280" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="68" y="468" width="42.5" height="18" rx="9" fill="#C2410C"/><text x="89.2" y="480.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-06</text>
+<text x="117.5" y="481" font-size="12" fill="#0F172A" font-weight="600">The item shall not lose longitudin…</text>
+<text x="68" y="498" font-size="10.5" fill="#64748B">ASIL B · WP-C-03</text>
+<path d="M360 160L339.5 160Q338 160 338 158.5L338 158Q338 157 337 157L336 157" fill="none" stroke="#C2410C" stroke-width="1.3" marker-end="url(#rq-or)"/>
+<path d="M56 157L51 157Q46 157 46 162L46 226Q46 231 51 231L56 231" fill="none" stroke="#C2410C" stroke-width="1.1" marker-end="url(#rq-or)"/>
+<path d="M56 157L51 157Q46 157 46 162L46 290Q46 295 51 295L56 295" fill="none" stroke="#C2410C" stroke-width="1.1" marker-end="url(#rq-or)"/>
+<path d="M56 157L51 157Q46 157 46 162L46 354Q46 359 51 359L56 359" fill="none" stroke="#C2410C" stroke-width="1.1" marker-end="url(#rq-or)"/>
+<path d="M56 157L51 157Q46 157 46 162L46 418Q46 423 51 423L56 423" fill="none" stroke="#C2410C" stroke-width="1.1" marker-end="url(#rq-or)"/>
+<path d="M56 157L51 157Q46 157 46 162L46 482Q46 487 51 487L56 487" fill="none" stroke="#C2410C" stroke-width="1.1" marker-end="url(#rq-or)"/>
+<rect x="752" y="130" width="300" height="58" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
+<text x="764" y="146" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«part»</text>
+<rect x="764" y="150" width="36.8" height="18" rx="9" fill="#C2410C"/><text x="782.4" y="162.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">E-03</text>
+<text x="807.8" y="163" font-size="12" fill="#0F172A" font-weight="600">Safety MCU firmware</text>
+<text x="764" y="180" font-size="10.5" fill="#64748B">SafetyMcuFirmware · B‡</text>
+<path d="M752 165L740.5 165Q738 165 738 162.5L738 162.5Q738 160 735.5 160L672 160" fill="none" stroke="#0F766E" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#rq-teal)"/>
+<rect x="674.4" y="139" width="61.3" height="16" rx="4" fill="#FFFFFF"/>
+<text x="705" y="151" font-size="9.5" fill="#0F766E" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«satisfy»</text>
+<text x="752" y="218" font-size="9.5" fill="#64748B" font-weight="700" letter-spacing="1">SAFETY MECHANISMS THAT CITE IT (WP-S-03 §6)</text>
+<rect x="752" y="228" width="300" height="72" rx="8" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
+<text x="764" y="244" font-size="9.5" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«action» SafetyMechanism · tsr</text>
+<rect x="764" y="248" width="42.5" height="18" rx="9" fill="#C2410C"/><text x="785.2" y="260.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SM-12</text>
+<text x="813.5" y="261" font-size="12" fill="#0F172A" font-weight="600">heartbeatLiveness</text>
+<text x="764" y="278" font-size="10.5" fill="#64748B">performed by E-03b</text>
+<text x="764" y="292" font-size="10.5" fill="#64748B">DC target medium</text>
+<rect x="1074" y="130" width="270" height="54" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="1086" y="138" width="59.6" height="18" rx="9" fill="#2563EB"/><text x="1115.8" y="150.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VS-FI-09</text>
+<text x="1152.6" y="151" font-size="12" fill="#0F172A" font-weight="600">Process kill (SIGKILL) and ha…</text>
+<text x="1086" y="168" font-size="10.5" fill="#64748B">WP-V-05 §5.3 · specified</text>
+<rect x="1074" y="194" width="270" height="54" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="1086" y="202" width="59.6" height="18" rx="9" fill="#2563EB"/><text x="1115.8" y="214.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VS-FI-10</text>
+<text x="1152.6" y="215" font-size="12" fill="#0F172A" font-weight="600">Heartbeat faults</text>
+<text x="1086" y="232" font-size="10.5" fill="#64748B">WP-V-05 §5.2 · specified</text>
+<rect x="1074" y="258" width="270" height="54" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="1086" y="266" width="59.6" height="18" rx="9" fill="#2563EB"/><text x="1115.8" y="278.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VS-SI-05</text>
+<text x="1152.6" y="279" font-size="12" fill="#0F172A" font-weight="600">Heartbeat loss</text>
+<text x="1086" y="296" font-size="10.5" fill="#64748B">WP-S-08 §6.2 · specified</text>
+<rect x="1074" y="322" width="270" height="54" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="1086" y="330" width="59.6" height="18" rx="9" fill="#2563EB"/><text x="1115.8" y="342.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VS-SI-23</text>
+<text x="1152.6" y="343" font-size="12" fill="#0F172A" font-weight="600">SoC process kill / hang</text>
+<text x="1086" y="360" font-size="10.5" fill="#64748B">WP-S-08 §6.6 · specified</text>
+<rect x="1074" y="386" width="270" height="54" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1.3" filter="url(#lift)"/>
+<rect x="1086" y="394" width="59.6" height="18" rx="9" fill="#2563EB"/><text x="1115.8" y="406.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">VS-SQ-12</text>
+<text x="1152.6" y="407" font-size="12" fill="#0F172A" font-weight="600">SoC loss while driving</text>
+<text x="1086" y="424" font-size="10.5" fill="#64748B">WP-S-09 §5.2 · specified</text>
+<path d="M1074 157L1058 157" fill="none" stroke="#2563EB" stroke-width="1.4" stroke-dasharray="6 4"/>
+<path d="M1074 221L1058 221" fill="none" stroke="#2563EB" stroke-width="1.4" stroke-dasharray="6 4"/>
+<path d="M1074 285L1058 285" fill="none" stroke="#2563EB" stroke-width="1.4" stroke-dasharray="6 4"/>
+<path d="M1074 349L1058 349" fill="none" stroke="#2563EB" stroke-width="1.4" stroke-dasharray="6 4"/>
+<path d="M1074 413L1058 413" fill="none" stroke="#2563EB" stroke-width="1.4" stroke-dasharray="6 4"/>
+<path d="M1058 157L1058 323Q1058 330 1051 330L522 330Q515 330 515 323L515 312" fill="none" stroke="#2563EB" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#rq-blue)"/>
+<rect x="747.3" y="321" width="78.4" height="16" rx="4" fill="#FFFFFF"/>
+<text x="786.5" y="333" font-size="9.5" fill="#2563EB" font-weight="600" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«verify» × 5</text>
+<rect x="1368" y="130" width="120" height="230" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="1380" y="152" font-size="10" fill="#64748B" font-weight="700" letter-spacing="1.1">THREAD</text>
+<circle cx="1384" cy="176" r="5" fill="#0F766E"/>
+<text x="1396" y="180" font-size="11" fill="#0F172A" font-weight="600">derived</text>
+<text x="1396" y="194" font-size="10" fill="#64748B">6 ancestors</text>
+<circle cx="1384" cy="212" r="5" fill="#0F766E"/>
+<text x="1396" y="216" font-size="11" fill="#0F172A" font-weight="600">satisfied</text>
+<text x="1396" y="230" font-size="10" fill="#64748B">1 element(s)</text>
+<circle cx="1384" cy="248" r="5" fill="#0F766E"/>
+<text x="1396" y="252" font-size="11" fill="#0F172A" font-weight="600">mechanisms</text>
+<text x="1396" y="266" font-size="10" fill="#64748B">1 cite it</text>
+<circle cx="1384" cy="284" r="5" fill="#2563EB"/>
+<text x="1396" y="288" font-size="11" fill="#0F172A" font-weight="600">verified</text>
+<text x="1396" y="302" font-size="10" fill="#64748B">5 case(s)</text>
+<circle cx="1384" cy="320" r="5" fill="#D97706"/>
+<text x="1396" y="324" font-size="11" fill="#0F172A" font-weight="600">run</text>
+<text x="1396" y="338" font-size="10" fill="#64748B">not recorded</text>
+<text x="40" y="554" font-size="11" fill="#64748B">Every arrow is a model relationship: #derivation connections from the trace data, satisfy from the allocation, perform statements of the mechanisms, verify from the test specifications. Execution results are not in the model.</text>
+<line x1="40" y1="578" x2="1480" y2="578" stroke="#E2E8F0"/>
+<path d="M40 608L66 608" fill="none" stroke="#0F766E" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="74" y="612" font-size="11" fill="#334155">«satisfy»</text>
+<path d="M150 608L176 608" fill="none" stroke="#2563EB" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="184" y="612" font-size="11" fill="#334155">«verify»</text>
+<path d="M256 608L282 608" fill="none" stroke="#C2410C" stroke-width="2"/>
+<text x="290" y="612" font-size="11" fill="#334155">«derivation»</text>
+<text x="40" y="654" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

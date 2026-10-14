@@ -22,7 +22,8 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 MODEL_DIR = HERE.parent / "model"
-MODEL_FILES = ["LionDriverLibrary.sysml", "Mechanisms.sysml", "Architecture.sysml", "Views.sysml"]
+MODEL_FILES = ["LionDriverLibrary.sysml", "Mechanisms.sysml", "Architecture.sysml", "Requirements.sysml", "Satisfaction.sysml",
+               "Verification.sysml", "Views.sysml"]
 ROOT_USAGE = ("LionDriverArchitecture", "context")
 
 
@@ -40,7 +41,7 @@ TOKEN_RE = re.compile(r"""
   | (?P<num>[0-9]+(?:\.[0-9]+)?)
   | (?P<qname>'(?:[^'\\]|\\.)*')
   | (?P<name>[A-Za-z_][A-Za-z0-9_]*)
-  | (?P<sym>::>|:>>|:>|::|\*\*|[{};:=(),<>\[\].*~@])
+  | (?P<sym>::>|:>>|:>|::|\*\*|[{};:=(),<>\[\].*~@#])
 """, re.S | re.X)
 
 
@@ -311,6 +312,43 @@ class Parser:
       self.connect_ends(d)
       self.body(d)
       return d
+    if kw == "end" and self.peek(1).text == "#":
+      # end of a #derivation connection: end #original ::> chain;  /  end #derive ::> chain;
+      self.next()
+      self.next()
+      d = Decl("end role", self.name(), fname=self.fname, line=t.line)
+      self.expect("::>")
+      d.target = self.qualified()
+      self.expect(";")
+      return d
+    if kw == "#":
+      self.next()
+      prefix = self.name()
+      if prefix != "derivation" or self.peek().text != "connection":
+        raise self.error(t, "only '#derivation connection' is supported")
+      self.next()
+      d = self.head("derivation", t)
+      self.body(d)
+      return d
+    if kw == "satisfy":
+      self.next()
+      self.accept("requirement")
+      d = Decl("satisfy", None, target=self.qualified(), fname=self.fname, line=t.line)
+      self.expect("by")
+      d.target2 = self.qualified()
+      self.expect(";")
+      return d
+    if kw == "verify":
+      self.next()
+      self.accept("requirement")
+      d = Decl("verify", None, target=self.qualified(), fname=self.fname, line=t.line)
+      self.expect(";")
+      return d
+    if kw == "objective":
+      self.next()
+      d = Decl("objective", None, fname=self.fname, line=t.line)
+      self.body(d)
+      return d
     if kw == "end":
       self.next()
       k = self.next()
@@ -328,7 +366,7 @@ class Parser:
       d = Decl("enum", self.name(), fname=self.fname, line=t.line)
       self.expect(";")
       return d
-    if kw in ("part", "port", "action", "view", "metadata", "interface", "connection", "attribute"):
+    if kw in ("part", "port", "action", "view", "metadata", "interface", "connection", "attribute", "requirement", "verification"):
       self.next()
       is_def = self.accept("def")
       kind = kw + (" def" if is_def else "")
@@ -438,6 +476,29 @@ class Mechanism:
 
 
 @dataclass
+class Requirement:
+  short: str
+  name: str
+  definition: str           # SystemRequirement, TechnicalSafetyRequirement, ...
+  doc: str
+  values: dict[str, object]
+  package: str
+  derived_from: list[str] = field(default_factory=list)   # requirement shorts this one is derived from
+  satisfied_by: list[str] = field(default_factory=list)   # element paths
+  verified_by: list[str] = field(default_factory=list)    # verification case shorts
+
+
+@dataclass
+class Verification:
+  short: str
+  name: str
+  definition: str
+  doc: str
+  values: dict[str, object]
+  verifies: list[str] = field(default_factory=list)       # requirement shorts
+
+
+@dataclass
 class View:
   short: str
   name: str
@@ -458,6 +519,8 @@ class Model:
   aliases: dict[str, str]           # alias name -> element path
   views: dict[str, View]
   files: list[Path]
+  requirements: dict[str, Requirement] = field(default_factory=dict)
+  verifications: dict[str, Verification] = field(default_factory=dict)
 
   def by_ident(self) -> dict[str, Element]:
     return {e.short: e for e in self.elements.values() if e.short}
@@ -645,7 +708,60 @@ def load(files: list[Path] | None = None) -> Model:
   if dupes:
     raise ModelError(f"short names used more than once in the instance tree: {', '.join(dupes)}")
 
-  return Model(packages, root, elements, connections, allocations, mechanisms, aliases, views, files)
+  requirements, verifications = _requirements(packages, elements)
+  return Model(packages, root, elements, connections, allocations, mechanisms, aliases, views, files,
+               requirements, verifications)
+
+
+def _requirements(packages: dict[str, Decl], elements: dict[str, Element]):
+  """Requirement and verification usages, with derivation, satisfy and verify relationships resolved."""
+  reqs: dict[str, Requirement] = {}
+  by_name: dict[str, str] = {}
+  vers: dict[str, Verification] = {}
+  for pkg in packages.values():
+    for m in pkg.members:
+      if m.kind == "requirement":
+        if not m.short or not m.name:
+          raise ModelError(f"{m.fname}:{m.line}: a requirement needs a short name (its ID) and a name")
+        if m.short in reqs:
+          raise ModelError(f"{m.fname}:{m.line}: requirement {m.short} declared twice")
+        reqs[m.short] = Requirement(m.short, m.name, (m.type or "").split("::")[-1], m.doc, dict(m.values), pkg.name)
+        by_name[m.name] = by_name[f"{pkg.name}::{m.name}"] = m.short
+
+  def req(q: str, where: Decl) -> str:
+    short = by_name.get(q) or by_name.get(q.split("::")[-1])
+    if short is None:
+      raise ModelError(f"{where.fname}:{where.line}: {q!r} does not name a requirement")
+    return short
+
+  for pkg in packages.values():
+    for m in pkg.members:
+      if m.kind == "derivation":
+        roles = {x.name: x.target for x in m.members if x.kind == "end role"}
+        if set(roles) != {"original", "derive"}:
+          raise ModelError(f"{m.fname}:{m.line}: a derivation needs exactly one #original and one #derive end")
+        reqs[req(roles["derive"], m)].derived_from.append(req(roles["original"], m))
+      elif m.kind == "satisfy":
+        r = req(m.target, m)
+        path = m.target2
+        if path.startswith(f"{ROOT_USAGE[0]}::"):
+          path = path.split("::", 1)[1]
+        if path not in elements:
+          raise ModelError(f"{m.fname}:{m.line}: satisfy target {m.target2!r} is not an element of the instance tree")
+        reqs[r].satisfied_by.append(path)
+      elif m.kind == "verification":
+        if not m.short:
+          raise ModelError(f"{m.fname}:{m.line}: a verification case needs a short name (its ID)")
+        v = Verification(m.short, m.name or "", (m.type or "").split("::")[-1], m.doc, dict(m.values))
+        for o in m.members:
+          if o.kind == "objective":
+            for x in o.members:
+              if x.kind == "verify":
+                v.verifies.append(req(x.target, x))
+        for r in v.verifies:
+          reqs[r].verified_by.append(v.short)
+        vers[v.short] = v
+  return reqs, vers
 
 
 if __name__ == "__main__":
@@ -653,4 +769,5 @@ if __name__ == "__main__":
   parts = [e for e in m.elements.values() if e.kind == "part"]
   print(f"sysml_lite: {len(m.files)} files, {len(parts)} parts, {len(m.elements) - len(parts)} ports, " +
         f"{len(m.connections)} connections, {len(m.allocations)} allocations, {len(m.mechanisms)} mechanisms, " +
-        f"{len(m.aliases)} aliases, {len(m.views)} views")
+        f"{len(m.aliases)} aliases, {len(m.views)} views, {len(m.requirements)} requirements, " +
+        f"{len(m.verifications)} verification cases")

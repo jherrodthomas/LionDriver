@@ -24,7 +24,7 @@ import sysml_lite
 import svgkit as k
 
 OUT = render_views.OUT / "explorer.html"
-VIEW_ORDER = ["V-01", "V-03", "V-02", "V-04"]
+VIEW_ORDER = ["V-01", "V-03", "V-02", "V-04", "V-05", "V-06", "V-07"]
 
 
 def requirement_index(m: sysml_lite.Model) -> dict[str, list[dict]]:
@@ -34,9 +34,16 @@ def requirement_index(m: sysml_lite.Model) -> dict[str, list[dict]]:
     if u:
       units[u["id"]].append(e.short)
   out: dict[str, list[dict]] = defaultdict(list)
+  # requirements in the model: from their satisfy relationships, with the cases that verify them
+  for r in m.requirements.values():
+    for p in r.satisfied_by:
+      out[p].append({"id": r.short, "kind": r.short.split("-")[0].lower(), "asil": str(r.values.get("asil", "") or ""),
+                     "text": r.doc[:220], "alloc": str(r.values.get("allocText", "")), "via": "satisfy",
+                     "cases": sorted(r.verified_by)})
+  # software and hardware safety requirements are not modelled yet: from their allocated_to text
   for it in check_model.load_items():
     text = it.get("allocated_to")
-    if not text:
+    if not text or it["id"] in m.requirements:
       continue
     _, resolved, _ = check_model.resolve_allocation(m, str(text), units)
     paths = set()
@@ -48,7 +55,8 @@ def requirement_index(m: sysml_lite.Model) -> dict[str, list[dict]]:
         paths.update(m.find(s).path for s in units[token])
     for p in paths:
       out[p].append({"id": it["id"], "kind": it.get("kind", ""), "asil": str(it.get("asil", "") or ""),
-                     "text": str(it.get("text", "")).replace("`", "")[:220], "alloc": str(text)})
+                     "text": str(it.get("text", "")).replace("`", "")[:220], "alloc": str(text), "via": "allocated_to",
+                     "cases": []})
   return out
 
 
@@ -87,7 +95,8 @@ def build_data(m: sysml_lite.Model) -> dict:
   return {"elements": elements, "connections": conns, "mechanisms": mechs, "views": views,
           "aliases": m.aliases, "digest": render_views.model_digest(m),
           "stats": {"parts": parts, "connections": len(m.connections), "mechanisms": len(m.mechanisms),
-                    "requirements": sum(len(v) for v in reqs.values())}}
+                    "requirements": sum(len(v) for v in reqs.values()), "modelled": len(m.requirements),
+                    "cases": len(m.verifications)}}
 
 
 STYLE = (HERE / "explorer_assets" / "explorer.css").read_text(encoding="utf-8")
@@ -113,7 +122,7 @@ def page(m: sysml_lite.Model, figures: dict[str, str]) -> str:
     <div class="brand"><h1>LionDriver architecture model</h1>
       <p>SysML v2 model of LD-SDA · generated from assurance/models/sysml · draft, not reviewed</p></div>
     <div class="stats"><span><b>{st['parts']}</b> parts</span><span><b>{st['connections']}</b> connections</span>
-      <span><b>{st['mechanisms']}</b> safety mechanisms</span><span><b>{st['requirements']}</b> requirement allocations resolved</span>
+      <span><b>{st['mechanisms']}</b> safety mechanisms</span><span><b>{st['modelled']}</b> requirements in the model</span><span><b>{st['cases']}</b> verification cases</span><span><b>{st['requirements']}</b> requirement allocations resolved</span>
       <span class="digest" title="Digest of the model and layout files">model {data['digest']}</span></div>
   </header>
   <main>

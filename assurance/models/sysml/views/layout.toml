@@ -591,3 +591,35 @@ label = ""
 [[views.V-03.edge]]
 between = ["speaker", "driver"]
 label = ""
+
+[views.V-05]
+file = "fig-sysml-v05-requirement-thread.svg"
+kind = "thread"
+requirement = "TSR-407"
+title = "Requirement thread · TSR-407 heartbeat loss"
+subtitle = "Derived from its safety goals through FSR-01.07, satisfied by the safety MCU firmware, cited by SM-12 and verified by the cases that name it"
+width = 1520
+desc = """Thread view generated from the SysML v2 model for TSR-407: the #derivation chain to FSR-01.07 and its safety \
+goals, the satisfy relationship to the element its allocation names, the safety mechanisms whose TSR list cites it with \
+their performing elements, and the verification cases of the test specifications that verify it."""
+
+[views.V-06]
+file = "fig-sysml-v06-f01-requirements.svg"
+kind = "requirements"
+function = "F-01"
+title = "Requirement diagram · F-01 lateral control"
+subtitle = "SYS requirements of WP-S-01 §2 with the elements that satisfy them (§10.1) and the cases that verify them (WP-S-09)"
+width = 1340
+desc = """Requirement view generated from the SysML v2 model: the system requirements of F-01 lateral control, the \
+elements that satisfy them from WP-S-01 §10.1, and the verification cases of the test specifications that name them; \
+requirements no case names are outlined red."""
+
+[views.V-07]
+file = "fig-sysml-v07-system-requirement-matrix.svg"
+kind = "reqmatrix"
+title = "Satisfy and verify matrix · system requirements (WP-S-01)"
+subtitle = "Every SYS requirement against the elements that satisfy it and the verification cases that verify it, grouped by function"
+width = 1520
+desc = """Matrix view generated from the SysML v2 model: the 39 system requirements of WP-S-01 grouped by function, a dot \
+for each element that satisfies them and the verification cases that verify them; requirements without a case are \
+marked."""

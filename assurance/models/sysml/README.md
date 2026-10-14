@@ -2,9 +2,9 @@
 
 | Field | Value |
 |---|---|
-| What | The LD-SDA architecture as a SysML v2 model: elements, integrity, ports, interfaces, cereal services, safety mechanisms, and the views drawn from them |
+| What | The LD-SDA architecture as a SysML v2 model: elements, integrity, ports, interfaces, cereal services, safety mechanisms, the requirements of WP-C-03, WP-C-04, WP-S-01, WP-S-02 and WP-S-07 with their derivation, satisfy and verify relationships, and the views drawn from them |
 | Status | Draft, AI-assisted (Claude), not reviewed. Decisions SY-01 to SY-06 are **proposed**, not taken |
-| Documents of record | [WP-C-01](../../02-concept/WP-C-01-item-definition.md) §3, [WP-S-03](../../03-system/WP-S-03-technical-safety-concept-architecture.md) §3, §6, §8, §9, [WP-W-03](../../05-software/WP-W-03-software-architecture.md) §3.1, §4.1. The model is a checked copy of them (§4) |
+| Documents of record | [WP-C-01](../../02-concept/WP-C-01-item-definition.md) §3, [WP-S-03](../../03-system/WP-S-03-technical-safety-concept-architecture.md) §3, §6, §8, §9, [WP-W-03](../../05-software/WP-W-03-software-architecture.md) §3.1, §4.1; for requirements the trace data ([`trace/items`](../../trace/items)), [WP-S-01](../../03-system/WP-S-01-system-requirements.md) §2–§10.1, [WP-S-07](../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) §4 and the test specifications. The model is a checked copy of them (§4) |
 | Tool classification | [WP-P-07](../../07-supporting/WP-P-07-tool-classification-qualification.md) TL-26 (OMG pilot implementation), TL-27 (in-house reader, checks, renderer); TCL1, no verification credit |
 | Explorer | [`generated/explorer.html`](generated/explorer.html): open locally in a browser |
 
@@ -36,10 +36,15 @@ The architecture is already written down, in tables in five work products and in
 | [`model/LionDriverLibrary.sysml`](model/LionDriverLibrary.sysml) | Integrity enumeration (WP-S-02 §2.1 notation), element classes, port, interface and connection definitions, metadata (`Safety`, `Source`, `Unit`, `InterfaceId`, `FfiClaim`), view definitions |
 | [`model/Mechanisms.sysml`](model/Mechanisms.sysml) | SM-01 to SM-43 as `action` usages of `SafetyMechanism` with coverage, DC target and TSRs (WP-S-03 §6) |
 | [`model/Architecture.sysml`](model/Architecture.sysml) | E-01 to E-05 with their parts and software units, allocation of software to hardware, interfaces IF-01 to IF-10, the 23 cereal services of WP-S-03 §9 between modelled processes, `perform` statements, the vehicle context and the allocation short forms `P-SW`, `P-HW`, `SoC`, `HAR` as aliases |
-| [`model/Views.sysml`](model/Views.sysml) | Views V-01 to V-04: what each exposes and how it is rendered |
+| [`model/Requirements.sysml`](model/Requirements.sysml) | **Generated.** 282 requirements as `requirement` usages: safety goals SG, FSRs and TSRs from the trace data, system requirements SYS of WP-S-01, cybersecurity requirements CSR of WP-S-07 §4, each with its text, ASIL, allocation text and verification method; the parent links of the trace data as `#derivation` connections |
+| [`model/Satisfaction.sysml`](model/Satisfaction.sysml) | **Generated.** `satisfy` relationships from each requirement's allocation: `allocated_to` of the trace data (resolved as in M8), WP-S-01 §10.1, the Alloc column of WP-S-07 §4 (FW → E-03, SoC → E-01); a safety goal is satisfied by the item. EXT, OPS, ENV and USR give no relationship |
+| [`model/Verification.sysml`](model/Verification.sysml) | **Generated.** Every test case of a specification table (VS-…) as a `verification` usage whose objective verifies the modelled requirements it names, ranges expanded |
+| [`model/Views.sysml`](model/Views.sysml) | Views V-01 to V-07: what each exposes and how it is rendered |
 | [`views/layout.toml`](views/layout.toml) | Placement only: boxes, grids, route adjustments, display names |
 | [`tools/sysml_lite.py`](tools/sysml_lite.py) | Reader for the subset of the textual notation the model uses; builds the instance tree. Refuses any other construct with its line number |
-| [`tools/check_model.py`](tools/check_model.py) | Checks M1 to M8 (§4) and the allocation-resolution report |
+| [`tools/gen_requirements.py`](tools/gen_requirements.py) | Generates the three requirement files above from the work products; `--check` fails if they differ |
+| [`tools/check_model.py`](tools/check_model.py) | Checks M1 to M8 and R1 to R4 (§4), the allocation-resolution report and the requirements-coverage report |
+| [`tools/render_requirements.py`](tools/render_requirements.py) | Renderer of the requirement views V-05 to V-07 |
 | [`tools/render_views.py`](tools/render_views.py), [`tools/svgkit.py`](tools/svgkit.py) | View renderer and drawing kit (palette, measured Inter metrics, orthogonal routing) |
 | [`tools/explorer.py`](tools/explorer.py), [`tools/explorer_assets/`](tools/explorer_assets) | Builds the interactive explorer |
 | [`tools/pilot/`](tools/pilot) | Pinned download and validation with the OMG pilot implementation |
@@ -58,18 +63,23 @@ The architecture is already written down, in tables in five work products and in
 | M6 | Cereal services of WP-S-03 §9 between modelled processes, in both directions |
 | M7 | Every element inside the item has an integrity; any connection between a QM and an ASIL element inside the item declares the FFI claims of WP-S-03 §7 it crosses (`@FfiClaim`) |
 | M8 | [`generated/allocation-resolution.md`](generated/allocation-resolution.md) is up to date |
+| R1 | `Requirements.sysml`, `Satisfaction.sysml` and `Verification.sysml` equal what `gen_requirements.py` builds from the work products today: a requirement, allocation or test case changed in a document without regenerating fails |
+| R2 | Every `satisfy` ends on an element inside the item; every SYS requirement is satisfied and every name in WP-S-01 §10.1 is an element of the model |
+| R3 | Every verification case that names a requirement verifies it in the model, and the requirement lists the case |
+| R4 | [`generated/requirements-coverage.md`](generated/requirements-coverage.md) is up to date: per kind, how many requirements are satisfied, allocated outside the item, verified by at least one case and derived from a parent, with the lists of those that are not (informational) |
 
 Integrity in a table cell is read as the highest level it names (`B (PCS restore), B‡ (blocking)` is B‡). Run from this folder:
 
 ```sh
-python3 tools/check_model.py           # M1-M8
+python3 tools/gen_requirements.py      # regenerate the requirement files (--check to compare)
+python3 tools/check_model.py           # M1-M8, R1-R4 (--write regenerates the two reports)
 python3 tools/render_views.py --check  # figures match the model
 python3 tools/explorer.py --check      # explorer matches the model
 python3 tools/test_sysml.py
 tools/pilot/validate.sh                # SysML v2 conformance (JDK 21+, python3 with zstandard)
 ```
 
-All of them run in CI (`.github/workflows/assurance.yaml`, job "sysml model"). Result at this baseline: M1 to M8 pass; the pilot reports 0 errors and 0 warnings for the four files.
+All of them run in CI (`.github/workflows/assurance.yaml`, job "sysml model"). Result at this baseline: M1 to M8 and R1 to R4 pass; the pilot reports 0 errors and 0 warnings for the seven files.
 
 Writing the model found one difference worth recording. WP-S-03 §3.3 defines IF-05/06 as camera images reaching E-01/E-02 and IF-07 as starting in E-01, while WP-C-01 §3.4 defines the same IDs at the item boundary (road environment and driver to the cameras and display). The model now carries both hops under one identifier; the work products should say that the identifier covers the whole path (OI-7).
 
@@ -106,6 +116,22 @@ Every figure below is generated. The explorer shows the same four views with the
 
 ![V-04: safety mechanism allocation generated from the SysML model](generated/fig-sysml-v04-mechanism-allocation.svg)
 
+**V-05 Requirement thread:** one requirement (TSR-407, heartbeat loss) with what it derives from, what satisfies it, the mechanisms that cite it and the cases that verify it.
+
+![V-05: requirement thread of TSR-407 generated from the SysML model](generated/fig-sysml-v05-requirement-thread.svg)
+
+**V-06 Requirement diagram:** the system requirements of F-01 lateral control with their satisfying elements and verification cases; the two lane-change requirements have no case.
+
+![V-06: requirement diagram of F-01 generated from the SysML model](generated/fig-sysml-v06-f01-requirements.svg)
+
+**V-07 Satisfy and verify matrix:** all 39 system requirements of WP-S-01.
+
+![V-07: satisfy and verify matrix of the system requirements generated from the SysML model](generated/fig-sysml-v07-system-requirement-matrix.svg)
+
+### 6.1 Requirements coverage
+
+[`generated/requirements-coverage.md`](generated/requirements-coverage.md) is read from the model on every build. At this baseline: all 39 SYS requirements are satisfied and 25 are verified by a case; 96 of 118 TSRs are satisfied inside the item and the other 22 are allocated to EXT or OPS; 89 TSRs are verified by a case; no test specification names a CSR yet. "Verified" means a case is specified, not that it has passed: execution results are not in the model.
+
 ## 7. Changing the model
 
 1. Change the work product and the `.sysml` file in the same pull request.
@@ -121,7 +147,9 @@ Keep to SysML v2 words for names: `item`, `view`, `via`, `state`, `flow` and sim
 | OI-1 | Model the hardware parts of WP-H-02 (RAMECC, PVD, CSS, relay driver, codec, transceivers) so that HWSR allocations resolve |
 | OI-2 | Model the firmware interfaces SI-01 to SI-16 of WP-W-03 §3.3 and add a firmware interconnection view |
 | OI-3 | Model behaviour: the state machines in [`05-software/state-machines/`](../../05-software/state-machines) as SysML `state def`, and the start-up sequence of WP-S-03 §4.1 |
-| OI-4 | Link requirements to the model with `satisfy` once the allocation vocabulary is settled (WP-P-06 OI-4) |
+| OI-4 | **Closed 2026-10-14:** SG, FSR, TSR, SYS and CSR are in the model with `satisfy` and `verify` relationships (R1–R4). SWSR and HWSR are not yet requirement elements; they follow with OI-1 (hardware parts) and the firmware interfaces of OI-2 |
+| OI-9 | Add verification cases for the cybersecurity requirements (no test specification names a CSR) and for the 14 SYS requirements without a case (WP-S-09 OI-6); the coverage report lists them |
+| OI-10 | Steps 2 to 5 of the MBSE extension: functions and functional chains, behaviour (state machines, sequences), timing budgets and HSI signals, security zones (mockups V-08 to V-14) |
 | OI-5 | Decide SY-05 (generate the architecture tables from the model) |
 | OI-6 | Decide SY-06 (replace hand-drawn figures with generated views) |
 | OI-7 | State in WP-C-01 §3.4 and WP-S-03 §3.3 that IF-05, IF-06 and IF-07 cover the path from the environment or driver to E-01/E-02 |

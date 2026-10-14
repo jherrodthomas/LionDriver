@@ -132,5 +132,69 @@ class Rendering(unittest.TestCase):
       cv.place()
 
 
+REQ_TEXT = """
+package R {
+    private import ScalarValues::*;
+    requirement def Req { attribute asil : String; }
+    requirement <'SG-01'> sg_01 : Req { doc /* goal */ :>> asil = "C"; }
+    requirement <'TSR-001'> tsr_001 : Req { doc /* derived */ :>> asil = "B"; }
+    #derivation connection {
+        end #original ::> sg_01;
+        end #derive ::> tsr_001;
+    }
+    verification def Case;
+    verification <'VS-SI-01'> vs_si_01 : Case {
+        doc /* a case */
+        objective { verify R::tsr_001; }
+    }
+}
+"""
+
+
+class Requirements(unittest.TestCase):
+  def test_parses_requirements_derivation_and_verification(self):
+    pkgs = {d.name: d for d in sysml_lite.parse_text(REQ_TEXT)}
+    reqs, vers = sysml_lite._requirements(pkgs, {})
+    self.assertEqual(reqs["TSR-001"].derived_from, ["SG-01"])
+    self.assertEqual(reqs["TSR-001"].verified_by, ["VS-SI-01"])
+    self.assertEqual(vers["VS-SI-01"].verifies, ["TSR-001"])
+    self.assertEqual(reqs["SG-01"].values["asil"], "C")
+
+  def test_satisfy_must_name_an_element(self):
+    pkgs = {d.name: d for d in sysml_lite.parse_text(REQ_TEXT + "package S { satisfy R::tsr_001 by context.nothing; }")}
+    with self.assertRaisesRegex(sysml_lite.ModelError, "not an element"):
+      sysml_lite._requirements(pkgs, {})
+
+  def test_verify_must_name_a_requirement(self):
+    bad = REQ_TEXT.replace("verify R::tsr_001;", "verify R::tsr_999;")
+    with self.assertRaisesRegex(sysml_lite.ModelError, "does not name a requirement"):
+      sysml_lite._requirements({d.name: d for d in sysml_lite.parse_text(bad)}, {})
+
+  def test_model_thread_tsr_407(self):
+    m = sysml_lite.load()
+    r = m.requirements["TSR-407"]
+    self.assertEqual(r.derived_from, ["FSR-01.07"])
+    self.assertIn("context.ldsda.safetyFirmware", r.satisfied_by)
+    self.assertIn("VS-SI-05", r.verified_by)
+    self.assertEqual(set(m.requirements["FSR-01.07"].derived_from), {"SG-01", "SG-02", "SG-03", "SG-04", "SG-06"})
+
+  def test_every_system_requirement_is_satisfied_and_counted(self):
+    m = sysml_lite.load()
+    sys_reqs = [r for r in m.requirements.values() if r.short.startswith("SYS-")]
+    self.assertEqual(len(sys_reqs), 39)
+    self.assertTrue(all(r.satisfied_by for r in sys_reqs))
+    self.assertEqual(m.requirements["SYS-102"].satisfied_by, ["context.ldsda.socSoftware.plannerd"])
+
+  def test_ranges_are_expanded_but_notes_are_not_references(self):
+    m = sysml_lite.load()
+    self.assertIn("VS-SQ-16", m.requirements["SYS-007"].verified_by)
+    self.assertNotIn("VS-SQ-16", m.requirements["SYS-005"].verified_by)
+
+  def test_generated_files_and_reports_are_current(self):
+    import gen_requirements
+    self.assertEqual(gen_requirements.main(["--check"]), 0)
+    self.assertEqual(check_model.main([]), 0)
+
+
 if __name__ == "__main__":
   unittest.main()

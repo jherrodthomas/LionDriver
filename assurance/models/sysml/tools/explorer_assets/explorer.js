@@ -170,7 +170,7 @@ function inspect(p) {
   if (all.length) {
     const shown = all.slice(0, reqLimit);
     html.push(`<div class="sect"><h4>Allocated requirements <span>${all.length}${own.length !== all.length ? ` · ${own.length} here` : ''}</span></h4>${asilBar(all)}
-      <ul class="list">${shown.map(r => `<li><span class="k ${r.kind === 'tsr' ? '' : 'mut'}">${esc(r.id)}</span><span class="t">${esc(r.text)}<small>${esc(r.asil || '—')} · allocated_to: ${esc(r.alloc)}</small></span></li>`).join('')}</ul>
+      <ul class="list">${shown.map(r => `<li><span class="k ${r.kind === 'tsr' ? '' : 'mut'}">${esc(r.id)}</span><span class="t">${esc(r.text)}<small>${esc(r.asil || '—')} · ${r.via === 'satisfy' ? 'satisfy' : 'allocated_to'}: ${esc(r.alloc || '—')}${r.via === 'satisfy' ? ` · ${r.cases.length ? 'verified by ' + esc(r.cases.join(', ')) : 'no verification case'}` : ''}</small></span></li>`).join('')}</ul>
       ${all.length > shown.length ? `<button class="more" id="more">Show all ${all.length}</button>` : ''}</div>`);
   }
   if (kids.length) {
