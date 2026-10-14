@@ -8,7 +8,7 @@ analysis:
   id: FSC
   type: fsc
   doc_id: LD-FSC-001
-  title: "Functional Safety Concept — LionDriver L2 ACC/ALC on 2020 Toyota Corolla LE (US)"
+  title: "Functional Safety Concept — LionDriver L2 ACC/ALC on Corolla E210 · ZRE212 · US (CFG-001)"
   revision: "0.3"
   status: draft
   baseline: BL-001

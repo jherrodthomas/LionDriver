@@ -26,7 +26,9 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "vehicles"))
 import fmea_lint
+import vehicle_register
 
 ANALYSES = Path("assurance/08-analyses/fmea/analyses")
 EXPORTS = Path("assurance/08-analyses/fmea/exports")
@@ -110,7 +112,7 @@ def postprocess(out: Path, kind: str, hdr: dict, statuses: dict[str, str]) -> No
   ws = wb["00_Title_Page"]
   row = ws.max_row + 1
   for label, value in (("FMEA ID", f"LD-{hdr['id']}-001"), ("Status", hdr["status"].replace("_", " ").title()),
-                       ("Project", "LionDriver: openpilot fork, reference configuration 2020 Toyota Corolla LE (AC-001)")):
+                       ("Project", f"LionDriver: openpilot fork, reference configuration {vehicle_register.reference_label()}")):
     ws.cell(row=row, column=2, value=label).font = copy.copy(ws.cell(row=row - 1, column=2).font)
     ws.cell(row=row, column=3, value=value)
     row += 1
@@ -157,7 +159,7 @@ def to_builder_json(kind: str, doc: dict, fsc: dict | None) -> dict:
     program.update(item_name="Panda safety model (opendbc safety + panda firmware)", item_id=hdr["id"], asil="D (FSC; see HARA OI-1)",
                    safety_goal="SG-001..SG-010 (LD-HARA-001)", sw_owner="Jherrod Thomas")
   elif kind == "system":
-    program.update(part_name="LionDriver L2 ACC/ALC item (comma 3X, harness, vehicle interfaces)", part_number="AC-001: 2020 Toyota Corolla LE",
+    program.update(part_name="LionDriver L2 ACC/ALC item (comma 3X, harness, vehicle interfaces)", part_number=f"AC-001: {vehicle_register.reference_label()}",
                    design_owner="Jherrod Thomas", design_responsibility="LionDriver (integration); comma.ai and Toyota (components)")
   else:
     program.update(part_name="comma 3X panda section, Toyota harness and relay box", part_number="comma 3X / Toyota A harness",

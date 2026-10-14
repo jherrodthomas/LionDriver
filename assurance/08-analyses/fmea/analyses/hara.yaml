@@ -7,7 +7,7 @@ schema_version: 1
 analysis:
   id: HARA
   type: hara
-  title: "HARA — LionDriver L2 ACC/ALC on 2020 Toyota Corolla LE (US)"
+  title: "HARA — LionDriver L2 ACC/ALC on Corolla E210 · ZRE212 · US (CFG-001)"
   doc_id: LD-HARA-001
   revision: "0.4"
   status: draft
@@ -15,7 +15,7 @@ analysis:
   baseline: BL-001
   scope: >-
     The item is defined in LD-ITEM-001 (assurance/08-analyses/fmea/item-definition.md). This HARA covers assured configuration
-    AC-001: variant family VF-001 (Toyota Corolla E210), 2020 Corolla LE sedan, US market, comma 3X, baseline
+    AC-001 (= CFG-001, Corolla E210 · ZRE212 · US): variant family VF-001 (Toyota Corolla E210), US sedan MY2020-2022, 1.8 L CVT, comma 3X, baseline
     BL-001. Extension to other VF-001 members or other vehicles requires a variant impact analysis
     (LD-ITEM-001 section A.10, IOI-002, IOI-004).
   method: >-

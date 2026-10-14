@@ -1,7 +1,7 @@
 # LionDriver — FMEA Program Plan
 
 **Status:** Draft v0.9 (SG-04 FTA↔FMEA findings F-1…F-10 resolved: SW FMEA rev 0.7 adds SWF-003.C3 and SWF-050…053, DFMEA rev 0.3 adds DFM-019, System FMEA rev 0.6 and PFMEA rev 0.3 add HZ-006 effects, HARA rev 0.4 back-links SFM-026, FSC rev 0.3 re-based; [fta-fmea-mapping.md](../fta-fmea-mapping.md); 2026-10-13). v0.8 (DFA rev 0.5: the seven insufficient initiators re-checked against the reference build; 2026-10-13). v0.7 (generated FMEA, FMEDA and DFA figures, Figures 2-1, 3-1…3-11, 4-1; 2026-10-13). v0.6 (§1 flow diagram redrawn as Figure 1-1; text version kept; 2026-10-13) — Phase 0 complete; System FMEA rated (rev 0.5, BL-004); SW FMEA P1 elements rated (rev 0.6, BL-004); HARA draft rev 0.3
-**Scope:** 2020 Toyota Corolla LE (U.S.), comma 3X (`system/hardware/tici`) with integrated panda, current LionDriver software baseline
+**Scope:** reference configuration CFG-001 (AC-001), Corolla E210 · ZRE212 · US: US sedan, model years 2020–2022, 1.8 L CVT ([vehicle register](../../../docs/liondriver/vehicles/README.md)); comma 3X (`system/hardware/tici`) with integrated panda, current LionDriver software baseline
 **Covers:** System FMEA, DFMEA, PFMEA, SW FMEA, FMEDA
 
 > **Location:** moved from `docs/safety/` on 2026-10-10. `assurance/` is the source of truth. This folder is supporting data for [WP-W-04](../../05-software/WP-W-04-software-safety-analysis.md), [WP-A-03](../WP-A-03-dependent-failure-analysis.md) and [WP-A-04](../WP-A-04-system-fta-fmea.md). Its HARA, FSC and item definition are parallel drafts that were not adopted; see the [reconciliation §7](../../00-assessment/docs-safety-reconciliation.md#7-second-set-aiag-vda-analyses-assurance08-analysesfmea).
