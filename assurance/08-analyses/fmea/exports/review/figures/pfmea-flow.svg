@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 798 802" width="798" height="802" role="img">
+<title>Release, installation and update of AC-001</title>
+<style>
+.bg{fill:#ffffff}.ink{fill:#1f2328}.mut{fill:#59636e}.acc{fill:#0969da}.surf{fill:#f6f8fa}.box{fill:#ffffff;stroke:#d1d9e0}
+.in{fill:#ddf4ff;stroke:#54aeff}.out{fill:#f6f8fa;stroke:#d1d9e0}.bd{fill:none;stroke:#0969da;stroke-dasharray:6 4}.frame{fill:none;stroke:#d1d9e0}
+.hS{fill:#ffebe9}.h{fill:#cf222e}.mS{fill:#fff8c5}.m{fill:#9a6700}.lS{fill:#dafbe1}.l{fill:#1a7f37}
+.hB{fill:#ffebe9;stroke:#ff8182}.lB{fill:#dafbe1;stroke:#4ac26b}.nB{fill:#fbefff;stroke:#c297ff}.n{fill:#8250df}
+.ln{stroke:#59636e;fill:none}.data{stroke:#0969da;fill:none}.energy{stroke:#bc4c00;fill:none;stroke-width:2.2}
+.physical{stroke:#59636e;fill:none;stroke-dasharray:5 3}.material{stroke:#1a7f37;fill:none;stroke-dasharray:1.5 3}
+.ah{fill:#59636e}.lbl{fill:#ffffff}.lane{fill:#f6f8fa}.laneT{fill:#59636e}
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif}
+.mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0d1117}.ink{fill:#e6edf3}.mut{fill:#9198a1}.acc{fill:#4493f8}.surf{fill:#151b23}.box{fill:#0d1117;stroke:#3d444d}
+.in{fill:#0c2d6b;stroke:#1f6feb}.out{fill:#151b23;stroke:#3d444d}.bd{stroke:#4493f8}.frame{stroke:#3d444d}
+.hS{fill:#3c1618}.h{fill:#ff7b72}.mS{fill:#3a2a0c}.m{fill:#d29922}.lS{fill:#12261a}.l{fill:#3fb950}
+.hB{fill:#3c1618;stroke:#da3633}.lB{fill:#12261a;stroke:#238636}.nB{fill:#271052;stroke:#8957e5}.n{fill:#ab7df8}
+.ln{stroke:#9198a1}.data{stroke:#4493f8}.energy{stroke:#f0883e}.physical{stroke:#9198a1}.material{stroke:#3fb950}
+.ah{fill:#9198a1}.lbl{fill:#0d1117}.lane{fill:#151b23}.laneT{fill:#9198a1}}
+</style>
+<rect class="bg" x="0" y="0" width="798" height="802" rx="8"/>
+<text x="24.0" y="30.0" class="ink" font-size="15" font-weight="600" text-anchor="start">Release, installation and update of AC-001</text>
+<rect x="30.0" y="44.0" width="238.0" height="712.0" rx="8" class="lane"/>
+<text x="149.0" y="62.0" class="laneT" font-size="11" font-weight="700" text-anchor="middle">RELEASE</text>
+<rect x="280.0" y="44.0" width="238.0" height="712.0" rx="8" class="lane"/>
+<text x="399.0" y="62.0" class="laneT" font-size="11" font-weight="700" text-anchor="middle">INSTALLATION</text>
+<rect x="530.0" y="44.0" width="238.0" height="712.0" rx="8" class="lane"/>
+<text x="649.0" y="62.0" class="laneT" font-size="11" font-weight="700" text-anchor="middle">UPDATE</text>
+<path d="M149.0 120.0 L149.0 146.0" class="ln"/>
+<path d="M149.0 146.0 L146.3 139.6 L151.7 139.6 Z" class="ah"/>
+<path d="M149.0 192.0 L149.0 218.0" class="ln"/>
+<path d="M149.0 218.0 L146.3 211.6 L151.7 211.6 Z" class="ah"/>
+<path d="M149.0 264.0 L149.0 290.0" class="ln"/>
+<path d="M149.0 290.0 L146.3 283.6 L151.7 283.6 Z" class="ah"/>
+<path d="M149.0 336.0 L149.0 362.0" class="ln"/>
+<path d="M149.0 362.0 L146.3 355.6 L151.7 355.6 Z" class="ah"/>
+<path d="M149.0 408.0 L149.0 434.0" class="ln"/>
+<path d="M149.0 434.0 L146.3 427.6 L151.7 427.6 Z" class="ah"/>
+<path d="M149.0 480.0 L149.0 506.0" class="ln"/>
+<path d="M149.0 506.0 L146.3 499.6 L151.7 499.6 Z" class="ah"/>
+<path d="M244.0 457.0 L260.0 457.0 L260.0 169.0 L244.0 169.0" class="ln"/>
+<path d="M244.0 169.0 L250.4 166.3 L250.4 171.7 Z" class="ah"/>
+<path d="M244.0 529.0 L274.0 529.0 L274.0 97.0 L304.0 97.0" class="ln"/>
+<path d="M304.0 97.0 L297.6 99.7 L297.6 94.3 Z" class="ah"/>
+<path d="M399.0 120.0 L399.0 146.0" class="ln"/>
+<path d="M399.0 146.0 L396.3 139.6 L401.7 139.6 Z" class="ah"/>
+<path d="M399.0 192.0 L399.0 218.0" class="ln"/>
+<path d="M399.0 218.0 L396.3 211.6 L401.7 211.6 Z" class="ah"/>
+<path d="M399.0 264.0 L399.0 290.0" class="ln"/>
+<path d="M399.0 290.0 L396.3 283.6 L401.7 283.6 Z" class="ah"/>
+<path d="M399.0 336.0 L399.0 362.0" class="ln"/>
+<path d="M399.0 362.0 L396.3 355.6 L401.7 355.6 Z" class="ah"/>
+<path d="M399.0 408.0 L399.0 434.0" class="ln"/>
+<path d="M399.0 434.0 L396.3 427.6 L401.7 427.6 Z" class="ah"/>
+<path d="M399.0 480.0 L399.0 506.0" class="ln"/>
+<path d="M399.0 506.0 L396.3 499.6 L401.7 499.6 Z" class="ah"/>
+<path d="M399.0 552.0 L399.0 578.0" class="ln"/>
+<path d="M399.0 578.0 L396.3 571.6 L401.7 571.6 Z" class="ah"/>
+<path d="M399.0 624.0 L399.0 650.0" class="ln"/>
+<path d="M399.0 650.0 L396.3 643.6 L401.7 643.6 Z" class="ah"/>
+<path d="M494.0 673.0 L524.0 673.0 L524.0 97.0 L554.0 97.0" class="ln"/>
+<path d="M554.0 97.0 L547.6 99.7 L547.6 94.3 Z" class="ah"/>
+<path d="M649.0 120.0 L649.0 146.0" class="ln"/>
+<path d="M649.0 146.0 L646.3 139.6 L651.7 139.6 Z" class="ah"/>
+<path d="M649.0 192.0 L649.0 740.0 L280.0 740.0 L280.0 457.0 L304.0 457.0" class="ln"/>
+<path d="M304.0 457.0 L297.6 459.7 L297.6 454.3 Z" class="ah"/>
+<path d="M649.0 264.0 L649.0 290.0" class="ln"/>
+<path d="M649.0 290.0 L646.3 283.6 L651.7 283.6 Z" class="ah"/>
+<path d="M744.0 313.0 L772.0 313.0 L772.0 97.0 L744.0 97.0" class="ln"/>
+<path d="M744.0 97.0 L750.4 94.3 L750.4 99.7 Z" class="ah"/>
+<rect x="54.0" y="74.0" width="190.0" height="46.0" rx="6" class="in"/>
+<text x="149.0" y="101.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Branch, freeze, tag RC</text>
+<text x="59.0" y="71.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P01</text>
+<rect x="54.0" y="146.0" width="190.0" height="46.0" rx="6" class="in"/>
+<text x="149.0" y="166.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Build release</text>
+<text x="149.0" y="180.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">artifacts</text>
+<text x="59.0" y="143.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P02</text>
+<rect x="54.0" y="218.0" width="190.0" height="46.0" rx="6" class="lB"/>
+<text x="149.0" y="245.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Release build check</text>
+<text x="59.0" y="215.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P03</text>
+<rect x="54.0" y="290.0" width="190.0" height="46.0" rx="6" class="in"/>
+<text x="149.0" y="310.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Verify, archive</text>
+<text x="149.0" y="324.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">evidence</text>
+<text x="59.0" y="287.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P04</text>
+<rect x="54.0" y="362.0" width="190.0" height="46.0" rx="6" class="lB"/>
+<text x="149.0" y="382.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Config audit,</text>
+<text x="149.0" y="396.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">assessments</text>
+<text x="59.0" y="359.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P05</text>
+<path d="M149.0 429 L244.0 457.0 L149.0 485 L54.0 457.0 Z" class="nB"/>
+<text x="149.0" y="461.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Release decision</text>
+<text x="59.0" y="431.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P06</text>
+<rect x="54.0" y="506.0" width="190.0" height="46.0" rx="18" class="out"/>
+<text x="149.0" y="526.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Tag and publish</text>
+<text x="149.0" y="540.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">release</text>
+<text x="59.0" y="503.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P07</text>
+<rect x="304.0" y="74.0" width="190.0" height="46.0" rx="6" class="lB"/>
+<text x="399.0" y="101.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Incoming inspection</text>
+<text x="309.0" y="71.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P08</text>
+<rect x="304.0" y="146.0" width="190.0" height="46.0" rx="6" class="lB"/>
+<text x="399.0" y="173.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Vehicle preconditions</text>
+<text x="309.0" y="143.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P09</text>
+<rect x="304.0" y="218.0" width="190.0" height="46.0" rx="6" class="in"/>
+<text x="399.0" y="245.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Mount, connect, route</text>
+<text x="309.0" y="215.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P10</text>
+<rect x="304.0" y="290.0" width="190.0" height="46.0" rx="6" class="lB"/>
+<text x="399.0" y="317.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">First-boot alert check</text>
+<text x="309.0" y="287.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P11</text>
+<rect x="304.0" y="362.0" width="190.0" height="46.0" rx="6" class="in"/>
+<text x="399.0" y="382.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Provision SW, FW,</text>
+<text x="399.0" y="396.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">params</text>
+<text x="309.0" y="359.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P12</text>
+<path d="M399.0 429 L494.0 457.0 L399.0 485 L304.0 457.0 Z" class="nB"/>
+<text x="399.0" y="454.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Reference-config</text>
+<text x="399.0" y="468.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">check</text>
+<text x="309.0" y="431.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P13</text>
+<rect x="304.0" y="506.0" width="190.0" height="46.0" rx="6" class="in"/>
+<text x="399.0" y="533.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Calibration drive</text>
+<text x="309.0" y="503.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P14</text>
+<rect x="304.0" y="578.0" width="190.0" height="46.0" rx="6" class="lB"/>
+<text x="399.0" y="598.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">PCS, engagement, DM</text>
+<text x="399.0" y="612.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">checks</text>
+<text x="309.0" y="575.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P15</text>
+<rect x="304.0" y="650.0" width="190.0" height="46.0" rx="18" class="out"/>
+<text x="399.0" y="677.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Briefing and sign-off</text>
+<text x="309.0" y="647.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P16</text>
+<rect x="554.0" y="74.0" width="190.0" height="46.0" rx="6" class="in"/>
+<text x="649.0" y="101.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Manual offroad update</text>
+<text x="559.0" y="71.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P17</text>
+<rect x="554.0" y="146.0" width="190.0" height="46.0" rx="6" class="lB"/>
+<text x="649.0" y="173.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Post-update checks</text>
+<text x="559.0" y="143.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P18</text>
+<path d="M649.0 213 L744.0 241.0 L649.0 269 L554.0 241.0 Z" class="nB"/>
+<text x="649.0" y="245.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Rollback decision</text>
+<text x="559.0" y="215.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P19</text>
+<rect x="554.0" y="290.0" width="190.0" height="46.0" rx="6" class="lB"/>
+<text x="649.0" y="317.0" class="ink" font-size="11.5" font-weight="600" text-anchor="middle">Bench-test rollback FW</text>
+<text x="559.0" y="287.0" class="mut mono" font-size="9" font-weight="600" text-anchor="start">P20</text>
+<rect x="24.0" y="778.0" width="22.0" height="13.0" rx="3" class="in"/>
+<text x="52.0" y="789.0" class="mut" font-size="11" text-anchor="start">operation</text>
+<rect x="126.7" y="778.0" width="22.0" height="13.0" rx="3" class="lB"/>
+<text x="154.7" y="789.0" class="mut" font-size="11" text-anchor="start">inspection / check</text>
+<rect x="286.1" y="778.0" width="22.0" height="13.0" rx="3" class="nB"/>
+<text x="314.1" y="789.0" class="mut" font-size="11" text-anchor="start">decision / gate</text>
+<rect x="426.6" y="778.0" width="22.0" height="13.0" rx="3" class="out"/>
+<text x="454.6" y="789.0" class="mut" font-size="11" text-anchor="start">handover</text>
+</svg>
