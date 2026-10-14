@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Proposed 2026-10-14: opendbc change on [jherrodthomas/opendbc#14](https://github.com/jherrodthomas/opendbc/pull/14) (`b9f7451`, pinned here before the fork merge); unit-tested, MISRA-clean in both variants, reference-variant mutation run; not verified on the bench or the vehicle; not reviewed independently** |
+| Status | **Integrated 2026-10-14: LionDriver pins opendbc `9a13f60` (merge commit of `b9f7451`, [jherrodthomas/opendbc#14](https://github.com/jherrodthomas/opendbc/pull/14)); unit-tested, MISRA-clean in both variants, reference-variant mutation run; not verified on the bench or the vehicle; not reviewed independently** |
 | Change requests | [jherrodthomas/opendbc#14](https://github.com/jherrodthomas/opendbc/pull/14); this LionDriver PR (pin, `selfdrived`, requirements) |
 | Reference configuration affected | Yes, in the reference build only (`LIONDRIVER_REFERENCE=1`, the default) for the opendbc part; the host part applies to every build |
 | Decision | The user chose the heartbeat gate over a shorter mismatch window (2026-10-14) |
@@ -35,5 +35,5 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | ID | Item |
 |---|---|
 | OI-1 | Vehicle or HIL: measure the edge-to-grant time and confirm that no `controlsMismatch` occurs at engagement over repeated engagements |
-| OI-2 | Re-pin LionDriver to the fork's merge commit once opendbc#14 is merged |
-| OI-3 | WP-A-05 LS-06 status to covered, once the STPA v0.3 PR (LionDriver #68) is merged; SW FMEA SWF-039 safety mechanism line |
+| OI-2 | ~~Re-pin LionDriver to the fork's merge commit once opendbc#14 is merged~~ **Closed:** opendbc `9a13f60` |
+| OI-3 | ~~WP-A-05 LS-06 status to covered~~ **Done** (WP-A-05 v0.3.1). Open: SW FMEA SWF-039 safety mechanism line; SM-TOY-AUTH model and state-machine record to include the heartbeat condition (the B2B harness sets the heartbeat engaged, so the gate is not exercised there) |

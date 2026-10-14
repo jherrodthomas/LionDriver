@@ -299,7 +299,7 @@
   mechanism: "GATE"
   timing: "detect ≤ 1 period (30 ms at 33 Hz) / same frame"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Implemented: `safety.h:518-527`; `modes/toyota.h:143-146`. `0x1D2` has a checksum but no counter (GAP-01) → TSR-402…405. 2026-10-14, reference build: the heartbeat condition (WP-A-05 LS-06): the edge opens a 1 s window, the grant is made in the safety task once `heartbeat_engaged` is set; cancelled by cruise off, brake, an RX fault or a mode change (opendbc `b9f7451`, jherrodthomas/opendbc#14 (https://github.com/jherrodthomas/opendbc/pull/14)); unit-tested, not verified on the vehicle"
+  baseline_impl: "Implemented: `safety.h:518-527`; `modes/toyota.h:143-146`. `0x1D2` has a checksum but no counter (GAP-01) → TSR-402…405. 2026-10-14, reference build: the heartbeat condition (WP-A-05 LS-06): the edge opens a 1 s window, the grant is made in the safety task once `heartbeat_engaged` is set; cancelled by cruise off, brake, an RX fault or a mode change (opendbc `9a13f60`, jherrodthomas/opendbc#14 (https://github.com/jherrodthomas/opendbc/pull/14)); unit-tested, not verified on the vehicle"
   status: proposed
   source: WP-S-02
 
