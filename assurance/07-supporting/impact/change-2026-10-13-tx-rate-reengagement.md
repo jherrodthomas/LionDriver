@@ -27,7 +27,7 @@ Design choice: a separate block instead of the report flag. ATC-20 first propose
 
 ## 3. Interaction with candidate finding BB-C-01
 
-A safety-mode set clears the block (SWSR-311 resets all envelope state on a mode change). The same reset clears the CRUISE_ACTIVE edge memory, and the B2B test showed that authority can then come back on the next PCM_CRUISE frame without a new driver engagement (BB-C-01, `assurance/models/b2b`). A host that floods, is revoked, and then sets the safety mode again could therefore get authority back while cruise stays on. That path does not exist through the driver's re-engagement, which this change closes, but it exists through the mode reset. This change does not close it. Closing it needs the BB-C-01 decision (SWSR-301 vs SWSR-311). That fix would cover both cases, because any grant would then require CRUISE_ACTIVE to be seen at 0 first.
+A safety-mode set clears the block (SWSR-311 resets all envelope state on a mode change). The same reset clears the CRUISE_ACTIVE edge memory, and the B2B test showed that authority can then come back on the next PCM_CRUISE frame without a new driver engagement (BB-C-01, `assurance/models/b2b`). A host that floods, is revoked, and then sets the safety mode again could therefore get authority back while cruise stays on. That path does not exist through the driver's re-engagement, which this change closes, but it exists through the mode reset. This change does not close it. The BB-C-01 decision (2026-10-14) closes it in a separate change on the same opendbc branch: [change-2026-10-14-mode-set-regrant](change-2026-10-14-mode-set-regrant.md) (ATC-25). That fix would cover both cases, because any grant would then require CRUISE_ACTIVE to be seen at 0 first.
 
 ## 4. Verification results (local, 2026-10-13)
 
@@ -49,4 +49,4 @@ A safety-mode set clears the block (SWSR-311 resets all envelope state on a mode
 | OI-1 | Merge the opendbc branch and bump the LionDriver pin; update `sm-toy-auth.yaml` T1 guard, the B2B model and add the B2B scenario; regenerate WP-W-05 §5.2 | Pin bump |
 | OI-2 | DN-01: add the re-engagement rule to the design note | Pin bump |
 | OI-3 | Extend HIL test 14: re-engage during and after a flood | HIL bench (D-04) |
-| OI-4 | BB-C-01 decision (mode set re-grants without a new engagement); see §3 | Safety engineer |
+| OI-4 | BB-C-01: decided 2026-10-14; change [change-2026-10-14-mode-set-regrant](change-2026-10-14-mode-set-regrant.md) | Done |

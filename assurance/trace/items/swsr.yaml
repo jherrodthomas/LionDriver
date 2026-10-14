@@ -565,7 +565,7 @@
 
 - id: SWSR-311
   kind: swsr
-  text: "Authority shall be false and all limiter, sample and edge state reset at MCU start-up and on every safety-mode change."
+  text: "Authority shall be false and all limiter, sample and edge state reset at MCU start-up and on every safety-mode change. The CRUISE_ACTIVE edge state shall reset to \"not yet seen disengaged\": after the change, authority shall be granted only on a rising edge that follows the reception of CRUISE_ACTIVE = 0 (SWSR-301)."
   asil: "B‡"
   parents: [TSR-311]
   parent_text: "TSR-311"
@@ -575,7 +575,7 @@
   acceptance: "All state variables of WP-W-05 §5.1 at reset values after `set_safety_hooks`"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `safety.h:57, 425-460`"
+  baseline_impl: "Impl: `safety.h:57, 425-460`. Edge state \"not yet seen disengaged\" (amendment, ATC-25): not at the pinned opendbc; proposed change change-2026-10-14-mode-set-regrant (assurance/07-supporting/impact/change-2026-10-14-mode-set-regrant.md)"
   status: proposed
   source: WP-W-02
 
