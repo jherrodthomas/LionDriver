@@ -90,6 +90,55 @@ class TestManagementFigures(unittest.TestCase):
     svg = self.outputs["fig-m13-6-1-capability-profile.svg"]
     self.assertEqual(svg.count(">safety code<"), len(split))
 
+  # ---------------------------------------------------------------- WP-M-03 planning figures (fig_m_plans.py)
+
+  def test_m03_roadmap_draws_every_phase_and_backlog_item(self):
+    pl = fm.fig_m_plans.load_plan()
+    svg = self.outputs["fig-m03-5-1-gate-roadmap.svg"]
+    md = fm.fig_m_plans.WP_M_03.read_text(encoding="utf-8")
+    ids = re.findall(r"^\| (B-\d+) \|", md, re.M)
+    self.assertEqual([b.bid for b in pl.backlog], ids)
+    for b in pl.backlog:
+      self.assertIn(f">{b.bid}<", svg)
+    self.assertEqual([p.pid for p in pl.phases], [f"P{i}" for i in range(len(pl.phases))])
+    for p in pl.phases:
+      self.assertIn(f">{p.pid}<", svg)
+      self.assertIn(f">{p.gate}<", svg)
+    done = sum(b.status == "done" for b in pl.backlog)
+    self.assertIn(f">Done ({done})<", svg)
+
+  def test_m03_no_green_gate_without_a_pass_record(self):
+    pl = fm.fig_m_plans.load_plan()
+    if not pl.passed:
+      self.assertIn("no gate passed yet", self.outputs["fig-m03-5-1-gate-roadmap.svg"])
+      self.assertNotIn(f'stroke="{fm.GREEN}" stroke-width="1.5"', self.outputs["fig-m03-5-1-gate-roadmap.svg"])
+
+  def test_m03_schedule_sums_match_section_5(self):
+    pl = fm.fig_m_plans.load_plan()
+    lo = sum(p.months[0] for p in pl.phases if p.months)
+    hi = sum(p.months[1] for p in pl.phases if p.months)
+    self.assertIn(f"between month {lo} and month {hi}", self.outputs["fig-m03-5-2-schedule.svg"])
+
+  def test_m03_long_lead_items_resolve(self):
+    pl = fm.fig_m_plans.load_plan()
+    self.assertEqual(len(pl.long_lead), len(fm.fig_m_plans.LONG_LEAD))
+    phases = {p.pid for p in pl.phases}
+    for item, start, status, needed in pl.long_lead:
+      self.assertIn(start, phases, item)
+      self.assertIn(needed, phases, item)
+      self.assertTrue(status, item)
+
+  def test_decision_status_words(self):
+    w = fm.fig_m_plans.decision_word
+    self.assertEqual(w("**Done** 2026-10-10: forked"), "done")
+    self.assertEqual(w("**Mostly done** 2026-10-10"), "mostly done")
+    self.assertEqual(w("answered 2026-10-14: defer"), "answered")
+    self.assertEqual(w("Open (de facto in use)"), "open")
+    self.assertEqual(fm.fig_m_plans.decision_mismatches(), [])
+
+  def test_pinned_figures_current(self):
+    self.assertEqual(fm.fig_m_plans.pin_problems(), [])
+
 
 if __name__ == "__main__":
   unittest.main()

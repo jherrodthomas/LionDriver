@@ -169,7 +169,7 @@
 <text x="826" y="339" font-size="11" fill="#D2553F" font-weight="700">E 20</text>
 <text x="862" y="339" font-size="10.5" fill="#475569">P5 × I4</text>
 <text x="1232" y="339" font-size="10.5" fill="#475569" text-anchor="end">Mitigate · PM · due G3</text>
-<text x="826" y="356" font-size="10.5" fill="#0F172A">SR-A changes merged without independent review (9 change records in …</text>
+<text x="826" y="356" font-size="10.5" fill="#0F172A">SR-A changes merged without independent review (16 change records in …</text>
 <rect x="776" y="376" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
 <text x="796" y="388.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-03</text>
 <text x="826" y="389" font-size="11" fill="#D2553F" font-weight="700">E 16</text>

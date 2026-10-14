@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-03 Project plan (scope, WBS, schedule, resources) |
 | Standard reference | ASPICE 4.0 MAN.3 (project management); ISO 26262-2 §6 (planning of safety activities, by reference to WP-M-02) |
-| Version | 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (backlog B-14 and B-17 marked done: #45 merged 2026-10-13, #44 merged; Figure 5-1 regenerated; 2026-10-13). 0.4 (§5 gate roadmap with blockers and the §9 backlog drawn as Figure 5-1; no plan content changed; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: WBS 4.3, resources, backlog B-13…B-17; 2026-10-12). 0.1 |
+| Version | 0.7 (B-06 done (#74); WBS 4.3 status to 2026-10-14; the lead's answers of 2026-10-14 on the assessor and the HIL bench noted in §6 and new OI-6; Figure 5-1 now generated from §3–§10 and checked in CI; Figure 5-2 schedule; 2026-10-14). 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (backlog B-14 and B-17 marked done: #45 merged 2026-10-13, #44 merged; Figure 5-1 regenerated; 2026-10-13). 0.4 (§5 gate roadmap with blockers and the §9 backlog drawn as Figure 5-1; no plan content changed; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: WBS 4.3, resources, backlog B-13…B-17; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (project management) |
 | Author | Assurance team (initial draft) |
@@ -66,7 +66,7 @@ WBS elements follow the phases and gates in [WP-M-01 §7](WP-M-01-assurance-stra
 | 4.1 | Hardware safety | WP-H-01…H-05, H-07 | |
 | 4.0 | Part 6 activation | D-14; WP-M-14 Phase A gap assessment and Phase B infrastructure ([WP-M-14](WP-M-14-iso26262-6-implementation-specification.md)). Depends on WBS 1 (Part 2 plans, supporting procedures), 2.1–2.3 (Part 3) and 3.1–3.4 (Part 4) | |
 | 4.2 | Software safety requirements, architecture, analysis | WP-W-01…W-04 | |
-| 4.3 | Envelope hardening (code changes) | IWDG, fault → safe state, mode lock, gate `0xc5`, driver-torque and EPS-status monitoring, RX E2E strategy (gap §9 action 5). Status 2026-10-12 (reference build, not verified, not reviewed): done: IWDG and window mode, mode lock, `0xc5` refused in car mode, EPS-status monitoring and report (TSR-110), RX timeout and engagement gate, heartbeat 0.3 s, TX whitelist and `0x411`, per-ID TX rate supervision (TSR-518, DN-01), IRQ priorities (TSR-519, priority scheme not adopted). Partial: RX cross-checks (TSR-405(c) only), siren (TSR-516(b) EPS fault only; 2026-10-13 also heartbeat loss revoking granted authority, all builds, panda `c33343b`). Open: driver-torque monitoring, TSR-405(a)(b)(d), GAP-46. Records: [`impact/`](../07-supporting/impact/README.md) | |
+| 4.3 | Envelope hardening (code changes) | IWDG, fault → safe state, mode lock, gate `0xc5`, driver-torque and EPS-status monitoring, RX E2E strategy (gap §9 action 5). Status 2026-10-12 (reference build, not verified, not reviewed): done: IWDG and window mode, mode lock, `0xc5` refused in car mode, EPS-status monitoring and report (TSR-110), RX timeout and engagement gate, heartbeat 0.3 s, TX whitelist and `0x411`, per-ID TX rate supervision (TSR-518, DN-01), IRQ priorities (TSR-519, priority scheme not adopted). Partial: RX cross-checks (TSR-405(c) only), siren (TSR-516(b) EPS fault only; 2026-10-13 also heartbeat loss revoking granted authority, all builds, panda `c33343b`). Added 2026-10-12…14 (same status): TX arrival supervision (TSR-408), diagnostic-mode gate and cluster HUD authority (TSR-513), host supervision of panda flags and inputs (TSR-621, #51), `pandad` fault mapping (#48), PCM-edge authority gated on the heartbeat (TSR-301, #70). Decided, not implemented: wrong-length RX frame as an RX fault. Open: driver-torque monitoring, TSR-405(a)(b)(d), GAP-46. Records: [`impact/`](../07-supporting/impact/README.md) | |
 | 4.4 | Firmware security | LionDriver signing key, modern algorithm, RDP/WRP, release build without debug key (gap §9 action 6) | |
 | 4.5 | Onboard stack fixes | Soft disable and Chestnut masking (gap §9 action 8) | |
 | 4.6 | Unit design and verification | WP-W-05, W-06 (structural coverage beyond line, MISRA deviation records) | |
@@ -144,7 +144,11 @@ Long-lead items to start early: assessor engagement (P0), HIL bench parts (P2), 
 
 ![Figure 5-1: gate roadmap of phases P0 to P6 and gates G0 to G6, none passed, with each phase's entry conditions and open items, the critical path, long-lead items, the R-01 bottleneck and backlog items B-01 to B-17 by status](figures/fig-m03-5-1-gate-roadmap.svg)
 
-*Figure 5-1.* Phases and gates of §3 with the relative durations above and the effort of §4.2 (not to scale; no calendar dates, OI-1). No gate is recorded as passed. Under each phase are its §5 dependencies and the §10 open items due at its gate; below are the critical path, the long-lead items with their §6 status and R-01 (§4.3), and the §9 backlog by the status written in its table (“Done” there is not verification evidence). Drawn from §3, §4, §5, §6, §9 and §10. Source: [`figures/fig-m03-5-1-gate-roadmap.svg`](figures/fig-m03-5-1-gate-roadmap.svg); change it together with those sections.
+*Figure 5-1.* Phases and gates of §3 with the relative durations above and the effort of §4.2 (not to scale; no calendar dates, OI-1). No gate is recorded as passed (a gate counts as passed only when its record under [`10-safety-case/gates/`](../10-safety-case/gates/README.md) says Pass). Under each phase are its §5 dependencies and the §10 open items due at its gate; below are the critical path, the long-lead items with their §6 status (in red where the lead's answer of 2026-10-14 defers them), R-01 (WP-M-07 §4), and the §9 backlog by the status written in its table (“Done” there is not verification evidence). Generated from §3, §4.2, §5, §6, §9 and §10 by [`figures/fig_m_management.py`](figures/fig_m_management.py) ([`fig_m_plans.py`](figures/fig_m_plans.py)); CI fails if it is stale. Source: [`figures/fig-m03-5-1-gate-roadmap.svg`](figures/fig-m03-5-1-gate-roadmap.svg).
+
+![Figure 5-2: relative schedule as a Gantt chart: phases P0 to P5 in sequence from month 0, low estimate solid and high estimate hatched, gate ranges from earliest to latest, G5 between month 28 and month 44, long-lead items against the phase that needs them, two of them deferred by the lead's answers of 2026-10-14](figures/fig-m03-5-2-schedule.svg)
+
+*Figure 5-2.* The §5 durations as a Gantt chart, counted from the start of P0 (month 0) because no calendar dates are set (OI-1, decision register DQ-208). Solid bars are the low estimate, hatched bars the high estimate; each gate is drawn from its earliest to its latest month. Long-lead items run from the phase §5 names to the start of the phase whose “Depends on” cell needs them. The plan is drawn as written: it does not yet reflect the lead's answers of 2026-10-14 (OI-6). Generated from §4.2, §5 and §6 by [`figures/fig_m_management.py`](figures/fig_m_management.py); CI fails if it is stale. Source: [`figures/fig-m03-5-2-schedule.svg`](figures/fig-m03-5-2-schedule.svg).
 
 ## 6. Resources
 
@@ -152,11 +156,11 @@ Long-lead items to start early: assessor engagement (P0), HIL bench parts (P2), 
 |---|---|---|
 | Project maintainer / acting safety manager | Throughout | Jherrod Thomas; availability (FTE) not recorded (OI-1) |
 | Additional engineers and reviewers | See §4.3 | TBD |
-| External FuSa assessor | From P0 (engagement), G1 onward | TBD (D-06) |
+| External FuSa assessor | From P0 (engagement), G1 onward | TBD (D-06). The lead answered on 2026-10-14: no assessor for now (DQ-009 option C); see OI-6 |
 | External CS assessor, pen tester | P4–P5 | TBD |
 | Test vehicle | E210 Corolla TSS 2.0, US, ICE; insurance and registration that cover test use | TBD; ownership and insurance status not recorded |
 | comma device(s) | At least two of the identified revision (one in vehicle, one on HIL), plus Toyota harness | TBD |
-| HIL bench | Bare panda or comma device, CAN interfaces (≥ 3 buses), host PC running Corolla DBC log replay and plant model, power supply with fault injection, relay/harness break-out, debug probe for STM32H7 | Not built (D-04, GAP-30); plan drafted ([`hil-bench/README.md`](../05-software/hil-bench/README.md)); HIL tests `panda/tests/hitl/test_10…test_14` written, not run |
+| HIL bench | Bare panda or comma device, CAN interfaces (≥ 3 buses), host PC running Corolla DBC log replay and plant model, power supply with fault injection, relay/harness break-out, debug probe for STM32H7 | Not built (D-04, GAP-30); plan drafted ([`hil-bench/README.md`](../05-software/hil-bench/README.md)); HIL tests `panda/tests/hitl/test_10…test_14` written, not run. The lead answered on 2026-10-14: defer the bench (DQ-049 option B); see OI-6 |
 | Drive logs | Fork-owned Corolla logs for process replay and scenario evaluation | None yet; needed to confirm the TSR-401 rates and the TSR-405(b), TSR-516(b) and TSR-518 parameters |
 | CI compute | GitHub Actions (hosted runners); optionally a self-hosted runner attached to the HIL bench | Hosted runners available; self-hosted TBD |
 | Tools | Toolchain as pinned in `uv.lock` and submodules; cppcheck; coverage tools; requirements data in `trace/` | Available; qualification pending (WP-P-07) |
@@ -198,7 +202,7 @@ Derived from [gap assessment §9](../00-assessment/gap-assessment.md#9-priority-
 | B-03 | **Done (#4).** Record the upstream sync procedure (D-02: once per minor release) | GAP-37, D-02 | WP-P-01, WP-P-02 drafts | PM |
 | B-04 | **Done (#2, #6)** except CR-CI-08. Disable `jenkins-pr-trigger`, `ui_preview`, `stale`; review `release` and `repo-maintenance`; add a workflow that runs opendbc safety tests, MISRA and mutation in the LionDriver repo | GAP-31, D-03 | Fork CI that produces safety-test evidence | PM |
 | B-05 | Add CODEOWNERS, PR template with safety-impact checklist, branch protection on `liondriver-dev` (and the release branch once defined) | GAP-32 | Review controls active | PM |
-| B-06 | Turn the Experimental Mode default off for the reference configuration pending SOTIF assessment (change request with impact analysis) | GAP-18, D-08 | CR merged or decision recorded | PM / SL |
+| B-06 | **Done (#74, merged 2026-10-14 as squash `9552997`; DQ-001 option A).** Turn the Experimental Mode default off for the reference configuration pending SOTIF assessment (change request with impact analysis: [chill-mode-default](../07-supporting/impact/change-2026-10-14-chill-mode-default.md)) | GAP-18, D-08 | CR merged or decision recorded | PM / SL |
 | B-07 | **Done (#6 and the RR-2026-002 fixes)** except enabling private vulnerability reporting in the repository settings. Add a LionDriver `SECURITY.md` and vulnerability intake; reroute issue templates away from comma.ai | GAP-28 | Intake channel | CSM |
 | B-08 | Record the "no LionDriver public-road operation until G1 and WP-V-07" rule in README and WP-V-07 | Gap §9 action 10 | Rule published | SM |
 | B-09 | Contact candidate external FuSa assessors; agree scope of G0/G1 confirmation reviews | D-06 | Shortlist and quote | PM |
@@ -207,7 +211,7 @@ Derived from [gap assessment §9](../00-assessment/gap-assessment.md#9-priority-
 | B-12 | Record the reference vehicle's VIN, ECU firmware versions and device revision | — | Input to WP-C-01 | PM |
 | B-13 | Independent I1 review of the change impact records in [`impact/`](../07-supporting/impact/README.md) and of DN-01 | R-26 | Review records | PM |
 | B-14 | **Done (#45, merged 2026-10-13 as squash `1d38dc3`; panda pin now `6dee6fa`).** Merge LionDriver PR #45 (panda `b790fca`, TSR-516(b)) | — | Pin on `liondriver-dev` | PM |
-| B-15 | Maintainer decision D-13 (FSC envelope strategy, option (c)) | WP-C-04 OI-1, D-13 | Decision record in WP-M-01 §8 and WP-M-07 §5 | PM |
+| B-15 | Maintainer decision D-13 (FSC envelope strategy, option (c)). The lead answered on 2026-10-14: option (c) (DQ-007); recorded in WP-M-01 §8 and WP-M-07 §5 as not yet applied | WP-C-04 OI-1, D-13 | Decision record in WP-M-01 §8 and WP-M-07 §5 | PM |
 | B-16 | Fork-owned reference drive logs | R-27 | Logs | PM |
 | B-17 | **Done (#44 / #45).** Run the panda host tests and the reference-variant mutation tests in LionDriver CI (both in `safety.yaml`: host tests 2026-10-12, reference-variant mutation via #44) | GAP-39 | CI jobs | ENG |
 
@@ -220,3 +224,4 @@ Derived from [gap assessment §9](../00-assessment/gap-assessment.md#9-priority-
 | OI-3 | Confirm access to licensed copies of the standards | PM | G0 |
 | OI-4 | Confirm test vehicle availability, ownership and insurance cover for test use | PM | G1 |
 | OI-5 | Re-estimate P2–P5 after the HARA gives the actual ASILs | PM / SM | G1 |
+| OI-6 | Re-plan for the lead's answers of 2026-10-14: no external assessor for now (DQ-009) and the HIL bench deferred (DQ-049). Both sit on the critical path of §5: the assessor for the G0 and G1 confirmation reviews, the bench for P4. Until the re-plan, §5 and Figure 5-2 show the plan as written | PM | G0 |

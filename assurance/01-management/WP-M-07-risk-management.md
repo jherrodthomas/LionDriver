@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-07 Project risk management plan and register |
 | Standard reference | ASPICE 4.0 MAN.5 (risk management); ISO 26262-2 §6 (planning and progress, by reference to WP-M-02) |
-| Version | 0.3 (Figure 4-1 added, generated from §2.2 and §4; 2026-10-13). 0.2 (status update for the integrated envelope changes: R-05 closed, R-10 and R-11 re-scored, R-26…R-29 added, D-04 status, D-13 added (envelope strategy); 2026-10-12). 0.1 |
+| Version | 0.4 (decision log brought level with WP-M-01 §8 and the decision register: D-14 added, the lead's answers of 2026-10-14 to D-04, D-05, D-06 and D-13 recorded as answered and not yet applied, a Question column; R-26 record count; OI-3 closed; 2026-10-14). 0.3 (Figure 4-1 added, generated from §2.2 and §4; 2026-10-13). 0.2 (status update for the integrated envelope changes: R-05 closed, R-10 and R-11 re-scored, R-26…R-29 added, D-04 status, D-13 added (envelope strategy); 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (project risk; not product hazard analysis) |
 | Author | Assurance team (initial draft) |
@@ -14,7 +14,7 @@
 
 ## 1. Purpose and scope
 
-This document defines how LionDriver identifies, analyses, treats and monitors **project risks**: events that could stop the project from achieving the assurance path in [WP-M-01](WP-M-01-assurance-strategy.md) on its planned scope, effort and quality. It also tracks the strategic decisions D-01…D-13 from [WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required).
+This document defines how LionDriver identifies, analyses, treats and monitors **project risks**: events that could stop the project from achieving the assurance path in [WP-M-01](WP-M-01-assurance-strategy.md) on its planned scope, effort and quality. It also tracks the strategic decisions D-01…D-14 from [WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required).
 
 Product risks (hazards to road users, threats to the vehicle) are **not** managed here. They belong to the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)), the SOTIF analyses ([WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md)) and the TARA ([WP-C-09](../02-concept/WP-C-09-tara.md)). Where a project risk would weaken a product safety argument, the register says so and links the affected work product.
 
@@ -94,7 +94,7 @@ P/I/E = probability / impact / exposure. Status at baseline: all **Open**; no tr
 | R-23 | Licensed standards not available to the team → clause references and Table 1 values cannot be checked; audit findings | WP-M-03 OI-3; WP-M-06 OI-1 | 3 | 3 | 9 | Mitigate: obtain licensed copies before G0 confirmation reviews | PM | Not available at G0 | G0 |
 | R-24 | Upstream model swaps or tinygrad changes alter driving behaviour silently → scenario evaluations invalid | D-05; GAP-22 | 3 | 4 | 12 | Avoid: pin weights and tinygrad per release; any model change triggers SOTIF re-evaluation | ML | Model hash differs from release record | G3 |
 | R-25 | Hosted CI logs and artefacts expire → verification evidence lost | WP-M-05 §9 | 3 | 2 | 6 | Mitigate: archive release-relevant CI results with the release record | PM | Evidence link broken at audit | G3 |
-| R-26 | SR-A changes merged without independent review (9 change records in `07-supporting/impact/`, DN-01, maintainer decisions) → review debt; rework found at I1/I3 reviews | WP-M-12 §7.2 deviation; WP-M-02 OI-1 | 5 | 4 | 20 | Mitigate: recruit a reviewer (B-11); batch I1 review of the records and DN-01 (B-13) before G3; no credit taken before review | PM | Records still unreviewed at G2 | G3 |
+| R-26 | SR-A changes merged without independent review (16 change records in `07-supporting/impact/` as of 2026-10-14, DN-01, maintainer decisions) → review debt; rework found at I1/I3 reviews | WP-M-12 §7.2 deviation; WP-M-02 OI-1 | 5 | 4 | 20 | Mitigate: recruit a reviewer (B-11); batch I1 review of the records and DN-01 (B-13) before G3; no credit taken before review | PM | Records still unreviewed at G2 | G3 |
 | R-27 | Timing parameters chosen without measurement (0.3 s heartbeat, 5-period RX timeout, 150 ms cruise tolerance, 1 s EPS siren persistence, TX rate budgets) → false disengagements or missed faults; no reference logs to check them | Change records 2026-10-12; DN-01 | 4 | 3 | 12 | Mitigate: fork-owned reference drive logs (B-16); HIL bench (D-04) | ENG | False disengagements in first logged drives | G3 |
 | R-28 | Envelope mechanisms active only in the reference build (`LIONDRIVER_REFERENCE`) → a non-reference binary is flashed, or evidence is taken from the wrong variant | WP-M-12 M-11 | 2 | 5 | 10 | Mitigate: release check for the reference-build flag and reference-variant evidence ([WP-P-10](../07-supporting/WP-P-10-release-management.md)) | PM | Release record without variant identification | G5 |
 | R-29 | LionDriver changes in the opendbc and panda forks diverge from upstream → each sync costly and error-prone | D-02; `impact/` | 4 | 3 | 12 | Mitigate: sync once per MINOR release (D-02) with sync report and impact analysis; keep LionDriver changes small and behind `LIONDRIVER_REFERENCE` | PM | Sync effort exceeds one week | Each sync |
@@ -118,21 +118,24 @@ Summary at baseline: 25 risks — High 11, Medium 13, Low 1. Summary 2026-10-12:
 
 Each decision is tracked as a GitHub issue labelled `decision:D-nn`. A decision is closed when the project maintainer records the choice, the rationale and the date in this table (via pull request) and the dependent work products are updated.
 
-| ID | Decision | Recommendation (WP-M-01) | Status | Owner | Needed by | Linked risks |
-|---|---|---|---|---|---|---|
-| D-01 | Take configuration control of the safety code | Fork opendbc and panda; absolute submodule URLs; pin tinygrad | **Done** 2026-10-10: panda, opendbc, msgq, rednose, teleoprtc forked to `jherrodthomas/*` and repointed (PR #3); tinygrad tracked by commit | PM | G0 | R-05 |
-| D-02 | Upstream synchronization policy | Freeze; sync only by change request with impact analysis | **Decided** 2026-10-10: planned sync once per MINOR release; out-of-cycle cherry-picks only for security or safety fixes; `tools/sync/sync_report.py` + `impact/` records (PR #4) | PM | G0 | R-04 |
-| D-03 | CI for the fork | Disable/replace comma-dependent workflows; fork-owned replay references; safety tests, MISRA and mutation in fork CI | **Mostly done** 2026-10-10 (PRs #2, #3, #6): comma-only workflows removed; safety tests, MISRA and mutation in fork CI; issue forms. Open: fork-owned replay references (CR-CI-08) | PM | G0 | R-05, R-25 |
-| D-04 | HIL capability | Build a minimal HIL bench | Open: plan drafted ([`hil-bench/README.md`](../05-software/hil-bench/README.md)); HIL tests `test_10…test_14` written, not run; no parts bought | PM | G2 (decision); G3 (bench) | R-06 |
-| D-05 | Model update policy | Pin weights per release; model change re-runs scenario evaluations | Open | PM / ML | G1 | R-24 |
-| D-06 | External assessor | Engage an independent FuSa assessor for the G1 HARA confirmation review | Open | PM | G0 | R-08, R-20 |
-| D-07 | Work product format | Markdown docs-as-code; machine-readable requirements in `trace/`; PR review | Open (de facto in use; not formally decided) | PM | G0 | — |
-| D-08 | Default enablement of Experimental Mode | Disabled for the reference configuration until validated | **Decided** 2026-10-10: Chill Mode (Experimental Mode off) for the reference configuration until validated. Code change B-06: default set to off 2026-10-14 (decision register DQ-001; [change record](../07-supporting/impact/change-2026-10-14-chill-mode-default.md)) | PM / SL | G1 | R-17 |
-| D-09 | Panda release signing key | Offline key held by the maintainer; sign after the panda release gate | **Decided** 2026-10-10 as recommended; modern algorithm, no debug key in release builds | PM / CSM | G3 | R-15 |
-| D-10 | Panda flash protection | WRP + RDP1 after verification on a sacrificial unit | **Decided** 2026-10-10 as recommended; implementation with the pandad recovery change (GAP-38) | PM / HW | G3 | R-15 |
-| D-11 | Vehicle lock (VIN) | Report only until a panda-side VIN read exists | **Decided** 2026-10-10 as recommended | PM / SL | G3 | — |
-| D-12 | LionDriver-only devices | Yes for the reference configuration; development units outside the claims | **Decided** 2026-10-10 as recommended | PM | G3 | — |
-| D-13 | Envelope strategy ([WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §4.2, OI-1) | Option (c): reduce actuation authority so C1 can be shown (SG-01 to ASIL B), with ASIL B hardening of the envelope; (b) as fallback | **Pending maintainer** | PM / SM | G1 | R-09, R-02 |
+This table is the record of the strategic decisions. [WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required) holds the recommendations and repeats each status; a check in [`figures/fig_m_management.py`](figures/fig_m_management.py) fails if the two disagree. Where the lead is asked a question about a decision, the Question column names its entry in the [decision register](decisions/register.yaml). **Answered** means the lead picked an option in the register; the decision becomes **Decided** here once the answer is applied to the work products.
+
+| ID | Decision | Recommendation (WP-M-01) | Status | Owner | Needed by | Linked risks | Question |
+|---|---|---|---|---|---|---|---|
+| D-01 | Take configuration control of the safety code | Fork opendbc and panda; absolute submodule URLs; pin tinygrad | **Done** 2026-10-10: panda, opendbc, msgq, rednose, teleoprtc forked to `jherrodthomas/*` and repointed (PR #3); tinygrad tracked by commit | PM | G0 | R-05 | — |
+| D-02 | Upstream synchronization policy | Freeze; sync only by change request with impact analysis | **Decided** 2026-10-10: planned sync once per MINOR release; out-of-cycle cherry-picks only for security or safety fixes; `tools/sync/sync_report.py` + `impact/` records (PR #4) | PM | G0 | R-04 | — |
+| D-03 | CI for the fork | Disable/replace comma-dependent workflows; fork-owned replay references; safety tests, MISRA and mutation in fork CI | **Mostly done** 2026-10-10 (PRs #2, #3, #6): comma-only workflows removed; safety tests, MISRA and mutation in fork CI; issue forms. Open: fork-owned replay references (CR-CI-08) | PM | G0 | R-05, R-25 | — |
+| D-04 | HIL capability | Build a minimal HIL bench | **Answered** 2026-10-14: defer the bench (DQ-049 option B, against the recommendation to build it); not yet applied: WP-M-03 still plans the bench for P2–P4. State: plan drafted ([`hil-bench/README.md`](../05-software/hil-bench/README.md)); HIL tests `test_10…test_14` written, not run; no parts bought | PM | G2 (decision); G3 (bench) | R-06 | DQ-049 |
+| D-05 | Model update policy | Pin weights per release; model change re-runs scenario evaluations | **Answered** 2026-10-14: adopt as written (DQ-038 option A); not yet applied | PM / ML | G1 | R-24 | DQ-038 |
+| D-06 | External assessor | Engage an independent FuSa assessor for the G1 HARA confirmation review | **Answered** 2026-10-14: no assessor for now (DQ-009 option C, against the recommendation to engage one gate by gate); not yet applied: WP-M-06 plans I3 reviews from G0, which cannot be performed without one | PM | G0 | R-08, R-20 | DQ-009 |
+| D-07 | Work product format | Markdown docs-as-code; machine-readable requirements in `trace/`; PR review | Open (de facto in use; not formally decided) | PM | G0 | — | DQ-118 (queued) |
+| D-08 | Default enablement of Experimental Mode | Disabled for the reference configuration until validated | **Decided** 2026-10-10: Chill Mode (Experimental Mode off) for the reference configuration until validated. Code change B-06: default set to off 2026-10-14 (decision register DQ-001; [change record](../07-supporting/impact/change-2026-10-14-chill-mode-default.md)) | PM / SL | G1 | R-17 | — |
+| D-09 | Panda release signing key | Offline key held by the maintainer; sign after the panda release gate | **Decided** 2026-10-10 as recommended; modern algorithm, no debug key in release builds | PM / CSM | G3 | R-15 | — |
+| D-10 | Panda flash protection | WRP + RDP1 after verification on a sacrificial unit | **Decided** 2026-10-10 as recommended; implementation with the pandad recovery change (GAP-38) | PM / HW | G3 | R-15 | — |
+| D-11 | Vehicle lock (VIN) | Report only until a panda-side VIN read exists | **Decided** 2026-10-10 as recommended | PM / SL | G3 | — | — |
+| D-12 | LionDriver-only devices | Yes for the reference configuration; development units outside the claims | **Decided** 2026-10-10 as recommended | PM | G3 | — | — |
+| D-13 | Envelope strategy ([WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §4.2, OI-1) | Option (c): reduce actuation authority so C1 can be shown (SG-01 to ASIL B), with ASIL B hardening of the envelope; (b) as fallback | **Answered** 2026-10-14: option (c), reduce steering authority so SG-01 drops to ASIL B (DQ-007 option C, as recommended); not yet applied to WP-C-03, WP-C-04 and the requirement ASILs | PM / SM | G1 | R-09, R-02 | DQ-007 |
+| D-14 | Authorize the ISO 26262-6 software lifecycle ([WP-M-14](WP-M-14-iso26262-6-implementation-specification.md)) | Hold Phase A until the safety plan, item definition, HARA, FSC and TSC are at least in review; hold Phase B until the full entry baseline is approved or each exception is justified | Open: asked 2026-10-14 (DQ-074); no entry criterion met | PM / SM | G2 | R-01 | DQ-074 |
 
 ## 6. Records
 
@@ -147,5 +150,5 @@ Each decision is tracked as a GitHub issue labelled `decision:D-nn`. A decision 
 |---|---|---|---|
 | OI-1 | Create `risk` and `decision:D-nn` labels and one issue per High risk and per decision | PM | G0 |
 | OI-2 | Have the initial scores reviewed by a second person (scores are single-author judgement) | PM | G0 |
-| OI-3 | Decide whether MAN.5 is added to the ASPICE capability target in WP-M-01 T-12 (currently not listed) | PM | G0 |
+| OI-3 | Closed 2026-10-14: MAN.5 is already in the ASPICE capability target of WP-M-01 T-12 (CL2) | PM | G0 |
 | OI-4 | Link R-02, R-03, R-07 and R-09 to the corresponding counter-evidence or assumption nodes in the safety case once WP-K-01 has an argument structure | SM | G1 |

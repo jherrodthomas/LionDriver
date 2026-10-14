@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-M-12 Impact analysis of the openpilot-derived baseline (modification of existing item) |
 | Standard reference | ISO 26262-2:2018 §6 (impact analysis, tailoring); ISO 26262-8:2018 §8 (change management); ISO/SAE 21434:2021 §6 (reuse analysis); ISO 21448:2022 §4 (interface); ASPICE 4.0 SUP.10 |
-| Version | 0.2 (status update for the integrated envelope changes: M-11, status of M-2 and M-3, review deviation in §7.2; 2026-10-12). 0.1 |
+| Version | 0.3 (status of M-4, M-5, M-8 and M-9; §4 defaults; §6.3 window stated by date; §7.2 deviation covers 16 CT-1 records; open items with owner and due gate; 2026-10-14). 0.2 (status update for the integrated envelope changes: M-11, status of M-2 and M-3, review deviation in §7.2; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (FuSa, SOTIF, AI, CS) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review of the tailoring conclusion (§5) by the external assessor |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `bf6ce8c` (status update 2026-10-12) |
+| Baseline | `bf6ce8c` (status update 2026-10-12); `bd85eff` (status update 2026-10-14) |
 
 ## 1. Purpose
 
@@ -47,12 +47,12 @@ It also serves as the ISO/SAE 21434 §6 reuse analysis for the inherited code.
 | M-1 | Scope claims to the reference configuration: one vehicle (`TOYOTA_COROLLA_TSS2`), one device revision, pinned software, defined ODD | Scope restriction | Item definition, configuration | [WP-C-01](../02-concept/WP-C-01-item-definition.md), [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) |
 | M-2 | Lock the safety mode and parameter for the reference configuration in panda firmware or add an independent cross-check. Status 2026-10-12: implemented in the reference build (TSR-512/513); not verified, not reviewed | Safety mechanism (envelope) | `panda/board/main_comms.h:222-225` | [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) (GAP-09) |
 | M-3 | Envelope hardening backlog: IWDG, fault → safe state, gate debug relay command, driver-torque and EPS-status monitoring, RX E2E strategy, limit rationale. Status 2026-10-12: partly implemented in the reference build; see the change records in [`impact/README.md`](../07-supporting/impact/README.md); not verified, not reviewed | Safety mechanisms | `opendbc_repo/opendbc/safety/**`, `panda/board/**` | WP-S-02, [WP-W-02](../05-software/WP-W-02-software-safety-requirements.md) (GAP-01…GAP-08) |
-| M-4 | Change defaults: Experimental Mode off; possibly exclude Chestnut big model | SOTIF functional modification | `openpilot/common/params_keys.h:43`, release build flags | [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md) (D-08, GAP-17, GAP-18) |
-| M-5 | Fix soft-disable window, missing event reactions and DM weaknesses | SOTIF / FuSa | `openpilot/selfdrive/selfdrived/`, `monitoring/` | WP-C-07 (GAP-16, GAP-19, GAP-21) |
+| M-4 | Change defaults: Experimental Mode off; possibly exclude Chestnut big model. Status 2026-10-14: Experimental Mode default set to off (`params_keys.h:43` `"0"`, commit `38d3320` on `liondriver-dev`; decision register DQ-001 option A; [change record](../07-supporting/impact/change-2026-10-14-chill-mode-default.md), Proposed); not reviewed independently. Chestnut not decided | SOTIF functional modification | `openpilot/common/params_keys.h:43`, release build flags | [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md) (D-08, GAP-17, GAP-18) |
+| M-5 | Fix soft-disable window, missing event reactions and DM weaknesses. Status 2026-10-14: a `cruiseMismatch` reaction was added (`824a0b0`, [change record](../07-supporting/impact/change-2026-10-13-host-supervision.md), Proposed); not reviewed independently. Soft-disable window and DM unchanged | SOTIF / FuSa | `openpilot/selfdrive/selfdrived/`, `monitoring/` | WP-C-07 (GAP-16, GAP-19, GAP-21) |
 | M-6 | AI runtime monitors and model integrity check | SOTIF / AI / CS | `openpilot/selfdrive/modeld/` | [WP-M-10 §7](WP-M-10-ai-safety-plan.md#7-runtime-monitoring-gap-22) |
 | M-7 | Firmware security: LionDriver release build and signing, no debug key in release, RDP/WRP | CS | `panda/board/crypto/`, `panda/SConscript`, bootstub | [WP-S-07](../03-system/WP-S-07-cybersecurity-requirements-architecture.md) (GAP-24, GAP-25) |
-| M-8 | Replace or constrain update path and remote access; LionDriver vulnerability intake | CS | `openpilot/system/updated/`, `openpilot/system/athena/`, `SECURITY.md` | [WP-M-09](WP-M-09-cybersecurity-plan.md) (GAP-26…GAP-28) |
-| M-9 | Configuration control and CI for the fork | Process | `.gitmodules`, `.github/workflows/*`, `Jenkinsfile` | [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md), D-01, D-03 (GAP-29…GAP-32) |
+| M-8 | Replace or constrain update path and remote access; LionDriver vulnerability intake. Status 2026-10-14: LionDriver `SECURITY.md` published ([WP-M-09](WP-M-09-cybersecurity-plan.md) OI-5); update path and remote access unchanged | CS | `openpilot/system/updated/`, `openpilot/system/athena/`, `SECURITY.md` | [WP-M-09](WP-M-09-cybersecurity-plan.md) (GAP-26…GAP-28) |
+| M-9 | Configuration control and CI for the fork. Status 2026-10-14: D-01 done (submodules point at the `jherrodthomas/*` forks, tinygrad pinned by commit; `.gitmodules`); D-03 mostly done (safety tests, MISRA and mutation in fork CI, `.github/workflows/safety.yaml`); fork-owned replay references open | Process | `.gitmodules`, `.github/workflows/*`, `Jenkinsfile` | [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md), D-01, D-03 (GAP-29…GAP-32) |
 | M-10 | LionDriver versioning and identity | Process | `openpilot/common/version.h`, `pyproject.toml` | WP-P-01 (GAP-35) |
 | M-11 | LionDriver reference build: compile-time `LIONDRIVER_REFERENCE` in panda and opendbc; the envelope changes are active only in this variant | Configuration | `panda/SConscript`, `opendbc_repo/opendbc/safety/**`, `.github/workflows/safety.yaml` | [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md), [WP-P-10](../07-supporting/WP-P-10-release-management.md) |
 
@@ -64,7 +64,7 @@ It also serves as the ISO/SAE 21434 §6 reuse analysis for the inherited code.
 | Market | Worldwide | US only | US regulations and crash baselines (T-13) |
 | ODD | Not specified | Specified and restricted (WP-C-02) | Behaviour outside ODD must be detected or the driver informed |
 | Users | General public, self-installed | Development phase: trained safety drivers only (WP-V-07) | Different misuse profile; WP-C-08 addresses both phases |
-| Defaults | Experimental Mode on (`f21bfc3`) | Proposed off | Different longitudinal behaviour from upstream |
+| Defaults | Experimental Mode on (`f21bfc3`) | Off since 2026-10-14 for new installs (M-4); a device set up earlier keeps its stored value | Different longitudinal behaviour from upstream |
 | Back end | comma servers (athena, connect, uploads, updates) | Independent of comma servers for any safety, SOTIF or CS function | Field data and updates must be provided by LionDriver |
 | Verification infrastructure | comma device farm, private routes | None today (GAP-30) | Fork must build HIL bench and own references (D-03, D-04) |
 | Hardware accessories | Chestnut eGPU supported | Proposed excluded | Removes fallback hazard path |
@@ -119,7 +119,7 @@ Range: `8377c40..655bfde` (48 upstream commits, 2026-09-22 … 2026-10-08), excl
 
 ### 6.3 Observations
 
-- In 17 days upstream changed the default driving mode, added a behaviour-learning acceleration term, changed model weights four times, bumped the model runtime, reverted a host–panda comms change, and bumped the safety-code submodule twice. This confirms GAP-37 and the need for D-02 (decided 2026-10-10: no tracking of upstream between planned syncs, one planned sync per minor release with an impact analysis).
+- In the 17 calendar days from 2026-09-22 to 2026-10-08 (both included), upstream changed the default driving mode, added a behaviour-learning acceleration term, changed model weights four times, bumped the model runtime, reverted a host–panda comms change, and bumped the safety-code submodule twice. This confirms GAP-37 and the need for D-02 (decided 2026-10-10: no tracking of upstream between planned syncs, one planned sync per minor release with an impact analysis).
 - Two of the safety-relevant changes were hidden behind unrelated titles (`d05c2d9` reverted `a0d47bc`; `948ad05` "fix offroad alert" extended diagnostic suppression).
 - No commit in the window touched `driving_supercombo.onnx` or `dmonitoring_model.onnx`.
 
@@ -144,7 +144,7 @@ A pull request touching safety-relevant code without an impact analysis is not m
 6. Have the analysis reviewed (I1 minimum; I2 for changes to ASIL-allocated code once WP-M-06 requires it).
 7. Store the analysis with the change request; link it from the affected work products.
 
-Deviation (2026-10-12): the 9 CT-1 change records in [`impact/`](../07-supporting/impact/README.md) were merged on maintainer decision without the I1 review of step 6 (no reviewer available, [WP-M-02](WP-M-02-safety-plan.md) OI-1). The review is owed before any credit is taken; tracked as [WP-M-07](WP-M-07-risk-management.md) R-26.
+Deviation (2026-10-12, updated 2026-10-14): the CT-1 change records in [`impact/`](../07-supporting/impact/README.md) were merged on maintainer decision without the I1 review of step 6. On 2026-10-14 the folder holds 16 CT-1 change records (10 dated 2026-10-12, 4 dated 2026-10-13, 2 dated 2026-10-14) and none has had that review (no reviewer available, [WP-M-02](WP-M-02-safety-plan.md) OI-1). The review is owed before any credit is taken; tracked as [WP-M-07](WP-M-07-risk-management.md) R-26.
 
 ### 7.3 Template
 
@@ -168,11 +168,11 @@ Residual concerns / open items: <list>
 
 ## Open items
 
-| ID | Item |
-|---|---|
-| OI-1 | Obtain unshallow history (or upstream release tags) to bound what changed before `8377c40`, for the record of the existing item |
-| OI-2 | Fetch opendbc history for `4134c0d..229dc70` and analyse changes in `opendbc/safety/` and `opendbc/car/toyota/` |
-| OI-3 | Obtain the rationale for upstream PR #38464 and its revert `910c08e` (SPI turnaround) |
-| OI-4 | Obtain AGNOS 19.8 → 19.9 change notes, if published |
-| OI-5 | Confirm the device type (comma 3X or four) so the UI-only rows in §6.2 can be closed |
-| OI-6 | Agree with the assessor that the full-lifecycle conclusion (§5) and the scope restriction (M-1) are acceptable |
+| ID | Open item | Owner | Due |
+|---|---|---|---|
+| OI-1 | Obtain unshallow history (or upstream release tags) to bound what changed before `8377c40`, for the record of the existing item | PM | G1 |
+| OI-2 | Fetch opendbc history for `4134c0d..229dc70` and analyse changes in `opendbc/safety/` and `opendbc/car/toyota/` | PM | G1 |
+| OI-3 | Obtain the rationale for upstream PR #38464 and its revert `910c08e` (SPI turnaround) | PM | G2 |
+| OI-4 | Obtain AGNOS 19.8 → 19.9 change notes, if published | CSM | G1 |
+| OI-5 | Confirm the device type (comma 3X or four) so the UI-only rows in §6.2 can be closed | PM | G1 |
+| OI-6 | Agree with the assessor that the full-lifecycle conclusion (§5) and the scope restriction (M-1) are acceptable | SM | G1 |

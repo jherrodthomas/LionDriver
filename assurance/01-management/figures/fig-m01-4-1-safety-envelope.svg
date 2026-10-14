@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="750" viewBox="0 0 1280 750" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<!-- source-digest: f5f50f848fbb5f5e -->
   <title id="t">Figure 4-1. The safety envelope pattern (WP-M-01 §4.1)</title>
   <desc id="d">The comma device holds the application SoC and the panda safety MCU. On the SoC (Linux/AGNOS, QM for functional safety, SOTIF-managed) camerad feeds modeld (ML), plannerd, controlsd, card and pandad; a second chain runs dmonitoringmodeld (ML), dmonitoringd and selfdrived. pandad talks to the panda over SPI. The panda runs the opendbc safety Toyota mode with RX checks, TX filter, torque and acceleration limits, engagement gating and a heartbeat timeout, is ASIL-allocated (target), and is the only path to the vehicle CAN (EPS, ECM, brake). The vehicle (EPS torque limiting and fault detection as AoU, brakes, PCS as AoU) and the supervising driver, who overrides by brake, steering or cancel, are outside the device.</desc>
   <defs>
