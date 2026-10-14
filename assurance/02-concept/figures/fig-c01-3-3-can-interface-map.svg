@@ -1,0 +1,271 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1147" viewBox="0 0 1280 1147" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3-3 · CAN interface map</title>
+<desc>CAN interface map of LD-SDA from WP-C-01 §3.4. Bus 0 transmitted by the item (IF-01): 0x2E4 STEERING_LKA to EPS; 0x191 STEERING_LTA to EPS; 0x343 ACC_CONTROL to ECM/PCM and brake actuator via the PCM ACC interface; 0x412 LKAS_HUD to instrument cluster; 0x1D2 PCM_CRUISE to ECM/PCM and brake actuator via the PCM ACC interface; 0x283 PRE_COLLISION to stock PCS receivers; 0x750 radar diagnostic to forward radar, diagnostic address. Received (IF-02): 0xAA WHEEL_SPEEDS; 0x260 STEER_TORQUE_SENSOR; 0x1D2 PCM_CRUISE; 0x226 BRAKE_MODULE; 0x262 EPS_STATUS (reference build only); 0x1D3 PCM_CRUISE_2 (reference build only); 0x180 radar tracks; the radar tracks on bus 1 are read by the host only. Bus 2 (IF-03): camera frames are forwarded to the car except 0x2E4, 0x191, 0x412, 0x343, which the item replaces. For each message the panda safety mode check is shown: TX whitelist, relay check and content limits; RX rate and checksum, with 0x262 and 0x1D3 checked only in the reference build. Nothing is shown as verified.</desc>
+<defs><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F766E"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern><pattern id="hatch-amber" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FFFBEB"/><line x1="0" y1="0" x2="0" y2="8" stroke="#FCD34D" stroke-width="1.4"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1147" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-3 · CAN interface map</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Every CAN message of §3.4 on its bus, with direction, interface, what the panda safety mode checks and the counterpart.</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-01 §3.4</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1240" y="66" font-size="11" fill="#475569" text-anchor="end">reference build, openpilot longitudinal</text>
+<text x="300" y="112" font-size="10.5" fill="#475569" font-weight="700">MESSAGE</text>
+<text x="526" y="112" font-size="10.5" fill="#475569" font-weight="700">DIR</text>
+<text x="572" y="112" font-size="10.5" fill="#475569" font-weight="700">IF</text>
+<text x="622" y="112" font-size="10.5" fill="#475569" font-weight="700">MEANING (§3.4)</text>
+<text x="806" y="112" font-size="10.5" fill="#475569" font-weight="700">PANDA SAFETY MODE</text>
+<text x="1040" y="112" font-size="10.5" fill="#475569" font-weight="700">COUNTERPART · TRACE</text>
+<rect x="290" y="124" width="950" height="26" rx="6" fill="#FFF7ED" stroke="none" stroke-width="1.2"/>
+<text x="300" y="141" font-size="11.5" fill="#C2410C" font-weight="700">BUS 0 · VEHICLE CAN, CAR SIDE · transmitted by the item (IF-01, Actuation path (SG-01, SG-03, SG-04))</text>
+<rect x="300" y="160" width="66" height="20" rx="5" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="333" y="174" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x2E4</text>
+<text x="374" y="174" font-size="11" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">STEERING_LKA</text>
+<line x1="526" y1="170" x2="562" y2="170" stroke="#C2410C" stroke-width="2" marker-end="url(#safety)"/>
+<text x="572" y="174" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-01</text>
+<text x="622" y="174" font-size="10.5" fill="#475569">torque, steer request</text>
+<rect x="806" y="164" width="12" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="824" y="174" font-size="10.5" fill="#C2410C">torque limits · relay check</text>
+<text x="824" y="187" font-size="9.5" fill="#D97706">reference build: refused during an EPS fault</text>
+<text x="1040" y="174" font-size="10.5" fill="#0F172A">EPS</text>
+<rect x="1071.4" y="161" width="54.8" height="18" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1098.8" y="173.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">TSR-101</text>
+<rect x="1130.3" y="161" width="54.8" height="18" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1157.7" y="173.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">TSR-110</text>
+<rect x="300" y="203" width="66" height="20" rx="5" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="333" y="217" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x191</text>
+<text x="374" y="217" font-size="11" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">STEERING_LTA</text>
+<line x1="526" y1="213" x2="562" y2="213" stroke="#C2410C" stroke-width="2" marker-end="url(#safety)"/>
+<text x="572" y="217" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-01</text>
+<text x="622" y="217" font-size="10.5" fill="#475569">no actuation: LTA requests are</text>
+<text x="622" y="230" font-size="10.5" fill="#475569">refused in the LKA torque</text>
+<text x="622" y="243" font-size="10.5" fill="#475569">configuration</text>
+<rect x="806" y="207" width="12" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="824" y="217" font-size="10.5" fill="#C2410C">no actuation (LKA mode) · relay check</text>
+<text x="1040" y="217" font-size="10.5" fill="#0F172A">EPS</text>
+<rect x="300" y="259" width="66" height="20" rx="5" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="333" y="273" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x343</text>
+<text x="374" y="273" font-size="11" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">ACC_CONTROL</text>
+<line x1="526" y1="269" x2="562" y2="269" stroke="#C2410C" stroke-width="2" marker-end="url(#safety)"/>
+<text x="572" y="273" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-01</text>
+<text x="622" y="273" font-size="10.5" fill="#475569">accel, permit braking, cancel</text>
+<rect x="806" y="263" width="12" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="824" y="273" font-size="10.5" fill="#C2410C">accel bounds (§8) · relay check</text>
+<text x="1040" y="273" font-size="10.5" fill="#0F172A">ECM/PCM and brake actuator via the</text>
+<text x="1040" y="286" font-size="10.5" fill="#0F172A">PCM ACC interface</text>
+<rect x="1040" y="294" width="54.8" height="18" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1067.4" y="306.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">TSR-704</text>
+<rect x="300" y="322" width="66" height="20" rx="5" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="333" y="336" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x412</text>
+<text x="374" y="336" font-size="11" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">LKAS_HUD</text>
+<line x1="526" y1="332" x2="562" y2="332" stroke="#C2410C" stroke-width="2" marker-end="url(#safety)"/>
+<text x="572" y="336" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-01</text>
+<text x="622" y="336" font-size="10.5" fill="#475569">cluster LKA HUD</text>
+<rect x="806" y="326" width="12" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="824" y="336" font-size="10.5" fill="#C2410C">relay check</text>
+<text x="824" y="349" font-size="9.5" fill="#D97706">reference build: assist icon needs authority</text>
+<text x="1040" y="336" font-size="10.5" fill="#0F172A">instrument cluster</text>
+<rect x="1040" y="344" width="48.8" height="18" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1064.4" y="356.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">AOU-12</text>
+<rect x="1092.8" y="344" width="42.8" height="18" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1114.3" y="356.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">DM-11</text>
+<rect x="300" y="372" width="66" height="20" rx="5" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="333" y="386" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x1D2</text>
+<text x="374" y="386" font-size="11" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PCM_CRUISE</text>
+<line x1="526" y1="382" x2="562" y2="382" stroke="#C2410C" stroke-width="2" marker-end="url(#safety)"/>
+<text x="572" y="386" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-01</text>
+<text x="622" y="386" font-size="10.5" fill="#475569">PCM cancel command</text>
+<rect x="806" y="376" width="12" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="824" y="386" font-size="10.5" fill="#C2410C">whitelist only</text>
+<text x="824" y="399" font-size="9.5" fill="#94A3B8" font-style="italic">not sent by the reference car</text>
+<text x="1040" y="386" font-size="10.5" fill="#0F172A">ECM/PCM and brake actuator via the</text>
+<text x="1040" y="399" font-size="10.5" fill="#0F172A">PCM ACC interface</text>
+<rect x="300" y="415" width="66" height="20" rx="5" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="333" y="429" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x283</text>
+<text x="374" y="429" font-size="11" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PRE_COLLISION</text>
+<line x1="526" y1="425" x2="562" y2="425" stroke="#C2410C" stroke-width="2" marker-end="url(#safety)"/>
+<text x="572" y="429" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-01</text>
+<text x="622" y="429" font-size="10.5" fill="#475569">zero payload only</text>
+<rect x="806" y="419" width="12" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="824" y="429" font-size="10.5" fill="#C2410C">zero payload only</text>
+<text x="824" y="442" font-size="9.5" fill="#475569">openpilot longitudinal only</text>
+<text x="824" y="455" font-size="9.5" fill="#94A3B8" font-style="italic">not sent by the reference car</text>
+<text x="1040" y="429" font-size="10.5" fill="#0F172A">stock PCS receivers</text>
+<rect x="1158.6" y="416" width="54.8" height="18" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1186" y="428.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">TSR-705</text>
+<rect x="300" y="471" width="66" height="20" rx="5" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="333" y="485" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x750</text>
+<text x="374" y="485" font-size="11" fill="#0F172A" font-weight="600">radar diagnostic</text>
+<line x1="526" y1="481" x2="562" y2="481" stroke="#C2410C" stroke-width="2" marker-end="url(#safety)"/>
+<text x="572" y="485" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-01</text>
+<text x="622" y="485" font-size="10.5" fill="#475569">tester present to the radar</text>
+<text x="622" y="498" font-size="10.5" fill="#475569">only</text>
+<rect x="806" y="475" width="12" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="824" y="485" font-size="10.5" fill="#C2410C">tester present only</text>
+<text x="824" y="498" font-size="9.5" fill="#475569">openpilot longitudinal only</text>
+<text x="824" y="511" font-size="9.5" fill="#94A3B8" font-style="italic">not sent by the reference car</text>
+<text x="1040" y="485" font-size="10.5" fill="#0F172A">forward radar, diagnostic address</text>
+<text x="300" y="535" font-size="10" fill="#475569" font-style="italic">Not accepted from the SoC: 0x344 and the DSU messages (every build); 0x411 PCS_HUD (reference build, AOU-15)</text>
+<rect x="290" y="547" width="950" height="26" rx="6" fill="#F0FDFA" stroke="none" stroke-width="1.2"/>
+<text x="300" y="564" font-size="11.5" fill="#0F766E" font-weight="700">BUS 0 · VEHICLE CAN, CAR SIDE · received (IF-02, engagement gating, override detection, limits)</text>
+<rect x="300" y="583" width="66" height="20" rx="5" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="333" y="597" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0xAA</text>
+<text x="374" y="597" font-size="11" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WHEEL_SPEEDS</text>
+<line x1="562" y1="593" x2="526" y2="593" stroke="#0F766E" stroke-width="2" marker-end="url(#sw)"/>
+<text x="572" y="597" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-02</text>
+<text x="622" y="597" font-size="10.5" fill="#475569">wheel speeds</text>
+<circle cx="812" cy="593" r="5.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="824" y="597" font-size="10.5" fill="#0F766E">rate 83 Hz</text>
+<text x="1040" y="597" font-size="10.5" fill="#0F172A">ABS/VSC</text>
+<rect x="300" y="613" width="66" height="20" rx="5" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="333" y="627" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x260</text>
+<text x="374" y="627" font-size="11" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">STEER_TORQUE_SENSOR</text>
+<line x1="562" y1="623" x2="526" y2="623" stroke="#0F766E" stroke-width="2" marker-end="url(#sw)"/>
+<text x="572" y="627" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-02</text>
+<text x="622" y="627" font-size="10.5" fill="#475569">driver and EPS torque</text>
+<circle cx="812" cy="623" r="5.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="824" y="627" font-size="10.5" fill="#0F766E">rate 50 Hz · checksum</text>
+<text x="1040" y="627" font-size="10.5" fill="#0F172A">EPS</text>
+<rect x="300" y="643" width="66" height="20" rx="5" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="333" y="657" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x1D2</text>
+<text x="374" y="657" font-size="11" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PCM_CRUISE</text>
+<line x1="562" y1="653" x2="526" y2="653" stroke="#0F766E" stroke-width="2" marker-end="url(#sw)"/>
+<text x="572" y="657" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-02</text>
+<text x="622" y="657" font-size="10.5" fill="#475569">cruise active, gas released</text>
+<circle cx="812" cy="653" r="5.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="824" y="657" font-size="10.5" fill="#0F766E">rate 33 Hz · checksum</text>
+<text x="1040" y="657" font-size="10.5" fill="#0F172A">ECM/PCM</text>
+<rect x="1096" y="644" width="36.8" height="18" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1114.4" y="656.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">F-03</text>
+<rect x="300" y="673" width="66" height="20" rx="5" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="333" y="687" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x226</text>
+<text x="374" y="687" font-size="11" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">BRAKE_MODULE</text>
+<line x1="562" y1="683" x2="526" y2="683" stroke="#0F766E" stroke-width="2" marker-end="url(#sw)"/>
+<text x="572" y="687" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-02</text>
+<text x="622" y="687" font-size="10.5" fill="#475569">brake pressed</text>
+<circle cx="812" cy="683" r="5.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="824" y="687" font-size="10.5" fill="#0F766E">rate 40 Hz</text>
+<text x="1040" y="687" font-size="10.5" fill="#0F172A">ABS/VSC</text>
+<rect x="300" y="703" width="66" height="20" rx="5" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="333" y="717" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x262</text>
+<text x="374" y="717" font-size="11" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">EPS_STATUS</text>
+<line x1="562" y1="713" x2="526" y2="713" stroke="#0F766E" stroke-width="2" marker-end="url(#sw)"/>
+<text x="572" y="717" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-02</text>
+<text x="622" y="717" font-size="10.5" fill="#475569">LKA/LTA state</text>
+<circle cx="812" cy="713" r="5.5" fill="#FFFFFF" stroke="#D97706" stroke-width="2"/>
+<text x="824" y="717" font-size="10.5" fill="#D97706">rate 25 Hz · checksum</text>
+<text x="824" y="730" font-size="9.5" fill="#D97706">reference build only;</text>
+<text x="824" y="743" font-size="9.5" fill="#D97706">upstream builds: host only</text>
+<text x="1040" y="717" font-size="10.5" fill="#0F172A">EPS</text>
+<rect x="1071.4" y="704" width="54.8" height="18" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1098.8" y="716.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">TSR-110</text>
+<rect x="300" y="759" width="66" height="20" rx="5" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="333" y="773" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x1D3</text>
+<text x="374" y="773" font-size="11" fill="#0F172A" font-weight="600" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PCM_CRUISE_2</text>
+<line x1="562" y1="769" x2="526" y2="769" stroke="#0F766E" stroke-width="2" marker-end="url(#sw)"/>
+<text x="572" y="773" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-02</text>
+<text x="622" y="773" font-size="10.5" fill="#475569">cruise main on</text>
+<circle cx="812" cy="769" r="5.5" fill="#FFFFFF" stroke="#D97706" stroke-width="2"/>
+<text x="824" y="773" font-size="10.5" fill="#D97706">rate 33 Hz · checksum</text>
+<text x="824" y="786" font-size="9.5" fill="#D97706">reference build only;</text>
+<text x="824" y="799" font-size="9.5" fill="#D97706">upstream builds: host only</text>
+<text x="1040" y="773" font-size="10.5" fill="#0F172A">ECM/PCM</text>
+<rect x="1096" y="760" width="54.8" height="18" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1123.4" y="772.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">TSR-405</text>
+<rect x="290" y="815" width="950" height="26" rx="6" fill="#F0FDFA" stroke="none" stroke-width="1.2"/>
+<text x="300" y="832" font-size="11.5" fill="#0F766E" font-weight="700">BUS 1 · RADAR CAN · received (IF-02)</text>
+<rect x="300" y="851" width="128" height="20" rx="5" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="364" y="865" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x180–0x19F</text>
+<text x="436" y="865" font-size="11" fill="#0F172A" font-weight="600">radar tracks</text>
+<line x1="562" y1="861" x2="526" y2="861" stroke="#0F766E" stroke-width="2" marker-end="url(#sw)"/>
+<text x="572" y="865" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-02</text>
+<text x="622" y="865" font-size="10.5" fill="#475569">lead tracks for F-02</text>
+<circle cx="812" cy="861" r="5.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+<text x="824" y="865" font-size="10.5" fill="#475569">host only (no RX check)</text>
+<text x="1040" y="865" font-size="10.5" fill="#0F172A">forward radar</text>
+<rect x="290" y="881" width="950" height="26" rx="6" fill="#F0FDFA" stroke="none" stroke-width="1.2"/>
+<text x="300" y="898" font-size="11.5" fill="#0F766E" font-weight="700">BUS 2 · CAMERA SIDE · camera messages forwarded to the car, except intercepted control messages (IF-03)</text>
+<rect x="300" y="917" width="104" height="20" rx="5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.2"/>
+<text x="352" y="931" font-size="10.5" fill="#0F766E" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">all other IDs</text>
+<text x="412" y="931" font-size="11" fill="#0F172A" font-weight="600">incl. PCS outputs</text>
+<line x1="526" y1="927" x2="562" y2="927" stroke="#0F766E" stroke-width="2" marker-end="url(#sw)"/>
+<text x="572" y="931" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-03</text>
+<text x="622" y="931" font-size="10.5" fill="#475569">stock camera → car, unchanged</text>
+<line x1="806" y1="927" x2="818" y2="927" stroke="#0F766E" stroke-width="2"/>
+<text x="824" y="931" font-size="10.5" fill="#0F766E">forwarded 2 → 0</text>
+<text x="1040" y="931" font-size="10.5" fill="#0F172A">forward camera → car side</text>
+<rect x="1191.2" y="918" width="48.8" height="18" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1215.6" y="930.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">AOU-04</text>
+<rect x="300" y="949" width="212" height="20" rx="5" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="406" y="963" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">0x2E4 0x191 0x412 0x343</text>
+<line x1="526" y1="959" x2="554" y2="959" stroke="#94A3B8" stroke-width="2"/>
+<line x1="556" y1="951" x2="556" y2="967" stroke="#D2553F" stroke-width="3"/>
+<text x="572" y="963" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">IF-03</text>
+<text x="622" y="963" font-size="10.5" fill="#475569">stock LKA / ACC commands</text>
+<rect x="806" y="953" width="12" height="12" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="824" y="963" font-size="10.5" fill="#C2410C">not forwarded</text>
+<text x="824" y="976" font-size="9.5" fill="#475569">(the relay-checked TX above)</text>
+<text x="1040" y="963" font-size="10.5" fill="#0F172A">replaced by the item's TX</text>
+<rect x="1185.2" y="950" width="54.8" height="18" rx="9" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1212.6" y="962.5" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">TSR-704</text>
+<rect x="290" y="987" width="950" height="26" rx="6" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
+<text x="300" y="1004" font-size="11.5" fill="#475569" font-weight="700">NOT CAN · for completeness</text>
+<text x="300" y="1035" font-size="10.5" fill="#0F172A">IF-05 Road-facing cameras · IF-06 Driver-facing camera (IR) · IF-07 HMI · IF-08 Power · IF-09 Network (Wi-Fi/LTE)</text>
+<text x="1040" y="1035" font-size="10.5" fill="#475569">see Figure 3-2</text>
+<rect x="40" y="104" width="236" height="949" rx="12" fill="#FFFBEB" stroke="#B45309" stroke-width="1.5" stroke-dasharray="10 5"/>
+<rect x="56" y="95" width="94.5" height="18" rx="9" fill="#B45309" stroke="none" stroke-width="1.2"/>
+<text x="103.2" y="107.5" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">ITEM · LD-SDA</text>
+<rect x="54" y="130" width="208" height="92" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+<text x="66" y="152" font-size="12.5" fill="#0F172A" font-weight="700">E-01 SoC software</text>
+<text x="66" y="170" font-size="10.5" fill="#475569">card builds the TX frames;</text>
+<text x="66" y="184" font-size="10.5" fill="#475569">pandad passes CAN streams;</text>
+<text x="66" y="198" font-size="10.5" fill="#475569">radar tracks: host only</text>
+<line x1="88" y1="224" x2="88" y2="280" stroke="#475569" stroke-width="2" marker-end="url(#muted)" marker-start="url(#muted)"/>
+<rect x="102" y="229" width="74.1" height="18" rx="9" fill="#475569" stroke="none" stroke-width="1.2"/>
+<text x="139.1" y="241.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-04 · SPI</text>
+<rect x="54" y="282" width="208" height="593" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>
+<text x="66" y="304" font-size="12.5" fill="#0F172A" font-weight="700">E-03 panda safety MCU</text>
+<text x="66" y="321" font-size="10.5" fill="#475569">Toyota safety mode · envelope B‡</text>
+<rect x="64" y="334" width="188" height="56" rx="8" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1.1"/>
+<text x="74" y="352" font-size="11" fill="#C2410C" font-weight="700">TX hook</text>
+<text x="74" y="367" font-size="10" fill="#475569">whitelist, relay check and</text>
+<text x="74" y="380" font-size="10" fill="#475569">content limits, per message</text>
+<rect x="64" y="430" width="188" height="56" rx="8" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1.1"/>
+<text x="74" y="448" font-size="11" fill="#C2410C" font-weight="700">RX checks</text>
+<text x="74" y="463" font-size="10" fill="#475569">rate and checksum per</text>
+<text x="74" y="476" font-size="10" fill="#475569">message (● in the table)</text>
+<rect x="64" y="526" width="188" height="56" rx="8" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1.1"/>
+<text x="74" y="544" font-size="11" fill="#C2410C" font-weight="700">Forwarding 2 → 0</text>
+<text x="74" y="559" font-size="10" fill="#475569">camera traffic passes except</text>
+<text x="74" y="572" font-size="10" fill="#475569">the relay-checked messages</text>
+<rect x="198" y="796" width="39.8" height="18" rx="9" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="217.9" y="808.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">bus 0</text>
+<text x="66" y="809" font-size="10" fill="#475569">car side</text>
+<rect x="198" y="820" width="39.8" height="18" rx="9" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="217.9" y="832.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">bus 1</text>
+<text x="66" y="833" font-size="10" fill="#475569">radar</text>
+<rect x="198" y="844" width="39.8" height="18" rx="9" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="217.9" y="856.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">bus 2</text>
+<text x="66" y="857" font-size="10" fill="#475569">camera side</text>
+<line x1="158" y1="875" x2="158" y2="905" stroke="#0F766E" stroke-width="2" marker-end="url(#sw)" marker-start="url(#sw)"/>
+<text x="172" y="894" font-size="10" fill="#0F766E">bus 2 via the relay</text>
+<rect x="54" y="905" width="208" height="78" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+<text x="66" y="927" font-size="12.5" fill="#0F172A" font-weight="700">E-05 harness relay</text>
+<text x="66" y="945" font-size="10.5" fill="#475569">energised: camera ↔ panda bus 2</text>
+<text x="66" y="961" font-size="10.5" fill="#475569">released: camera ↔ car (AOU-13)</text>
+<line x1="40" y1="1069" x2="1240" y2="1069" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="1077" width="22" height="12" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="68" y="1087" font-size="11" fill="#475569">transmitted by the item</text>
+<rect x="212" y="1077" width="22" height="12" rx="3" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="240" y="1087" font-size="11" fill="#475569">received</text>
+<rect x="302" y="1077" width="12" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="320" y="1087" font-size="11" fill="#475569">TX check (whitelisted)</text>
+<circle cx="458" cy="1083" r="5.5" fill="#0F766E" stroke="none" stroke-width="0"/>
+<text x="470" y="1087" font-size="11" fill="#475569">RX check in every build</text>
+<circle cx="616" cy="1083" r="5.5" fill="#FFFFFF" stroke="#D97706" stroke-width="2"/>
+<text x="628" y="1087" font-size="11" fill="#475569">RX check in the reference build only</text>
+<circle cx="838" cy="1083" r="5.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+<text x="850" y="1087" font-size="11" fill="#475569">read by the host only</text>
+<rect x="980" y="1077" width="22" height="12" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="1008" y="1087" font-size="11" fill="#475569">not forwarded</text>
+<text x="40" y="1111" font-size="10.5" fill="#475569">Checks as implemented in toyota.h at the opendbc pin; none is verified on the reference vehicle (the RX rates of 0x262 and 0x1D3 are to be measured, WP-S-05 OI-7). Messages, names and counterparts: §3.4 table.</text>
+<text x="40" y="1125" font-size="10.5" fill="#475569">Checks: WP-S-02, WP-S-05 §5, WP-W-05, WP-W-09, DN-01, each named in the generator. Trace pills: requirement, AoU or function the message serves.</text>
+</svg>
