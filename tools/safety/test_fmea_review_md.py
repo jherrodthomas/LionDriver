@@ -73,6 +73,24 @@ class Rendering(unittest.TestCase):
       ET.fromstring(t)
       self.assertIn("prefers-color-scheme: dark", t)
 
+  def test_msr_section(self):
+    doc, dg = load("dfmea")
+    page = m.page("dfmea", doc, dg, m.counts(doc))
+    self.assertIn("## 7. Monitoring and system response", page)
+    self.assertIn("figures/dfmea-msr.svg", page)
+    self.assertIn("`DFM-011.C1`", page.split("## 7.")[1])
+    cov = m.msr_coverage("dfmea", doc)
+    self.assertEqual(cov["rated"] + cov["exempt"], cov["in_scope"])  # msr: complete
+    self.assertNotIn("## 7.", m.page("pfmea", *load("pfmea"), m.counts(load("pfmea")[0])))
+
+  def test_msr_timing_text(self):
+    self.assertEqual(m.msr_timing({"ftti_ms": 500, "fdti_ms": 90, "frti_ms": 100, "basis": "measured"}),
+                     "90 + 100 ms vs FTTI 500 ms ✅ (measured)")
+    self.assertIn("❌", m.msr_timing({"ftti_ms": 500, "fdti_ms": 2000, "frti_ms": 10, "basis": "code_derived"}))
+    self.assertEqual(m.msr_timing({"ftti_ref": "x", "fdti_ms": 0, "frti_ms": 10, "basis": "code_derived"}),
+                     "per frame; reaction 10 ms (code-derived)")
+    self.assertEqual(m.msr_timing({"basis": "unknown"}), "unknown")
+
   def test_wrap_truncates(self):
     self.assertEqual(len(m.wrap("word " * 50, 20, 3)), 3)
     self.assertTrue(m.wrap("word " * 50, 20, 3)[-1].endswith("…"))

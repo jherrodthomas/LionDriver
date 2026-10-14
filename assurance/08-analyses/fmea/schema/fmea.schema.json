@@ -86,7 +86,8 @@
           }
         },
         "references": {"type": "array", "items": {"type": "string"}},
-        "updated": {"type": "string", "format": "date"}
+        "updated": {"type": "string", "format": "date"},
+        "msr": {"enum": ["none", "partial", "complete"], "description": "FMEA-MSR coverage of the in-scope causes (msr-plan.md section 3); complete makes a missing msr or msr_exempt an error."}
       }
     },
     "structure_element": {
@@ -156,7 +157,42 @@
         "detection": {"$ref": "#/$defs/rating"},
         "ap": {"$ref": "#/$defs/ap"},
         "actions": {"type": "array", "items": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-ACT-[0-9]{3,}$"}},
-        "rationale": {"type": "string", "description": "Why no action is taken (required for AP=H without actions)."}
+        "rationale": {"type": "string", "description": "Why no action is taken (required for AP=H without actions)."},
+        "msr": {"$ref": "#/$defs/msr"},
+        "msr_exempt": {"type": "string", "minLength": 1, "description": "Why an in-scope cause has no FMEA-MSR row (msr-plan.md section 3)."}
+      },
+      "not": {"required": ["msr", "msr_exempt"]}
+    },
+    "msr": {
+      "description": "Supplementary FMEA for Monitoring and System Response (AIAG-VDA 2019; rating-tables.md section 7). Rates the in-field mechanisms of the failure mode for this cause; S/O/D and ap above are unchanged by it.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mechanisms", "diagnostic", "system_response", "effect_after_response", "severity_after", "frequency", "monitoring", "ap", "timing"],
+      "properties": {
+        "mechanisms": {"type": "array", "minItems": 1, "items": {"type": "integer", "minimum": 1}, "description": "1-based positions in the failure mode's safety_mechanisms."},
+        "diagnostic": {"type": "string", "minLength": 1},
+        "system_response": {"type": "string", "minLength": 1},
+        "effect_after_response": {"type": "string", "minLength": 1},
+        "severity_after": {"$ref": "#/$defs/rating"},
+        "frequency": {"$ref": "#/$defs/rating"},
+        "monitoring": {"$ref": "#/$defs/rating"},
+        "ap": {"$ref": "#/$defs/ap"},
+        "timing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["basis"],
+          "properties": {
+            "ftti_ref": {"type": "string", "minLength": 1, "description": "First-column label of a row in WP-S-04 section 3.7, e.g. 'SG-01 MCU execution fault'."},
+            "ftti_ms": {"type": "number", "exclusiveMinimum": 0},
+            "fdti_ms": {"type": "number", "minimum": 0},
+            "frti_ms": {"type": "number", "minimum": 0},
+            "basis": {"enum": ["measured", "code_derived", "unknown"]}
+          }
+        },
+        "fmeda": {"type": "string", "pattern": "^fmeda-[a-z0-9-]+/FMD-[A-Z0-9-]+$", "description": "FMEDA failure mode whose DC backs the monitoring rating (DFMEA rows), as <file stem>/<id>."},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/control"}},
+        "actions": {"type": "array", "items": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-ACT-[0-9]{3,}$"}},
+        "rationale": {"type": "string", "minLength": 1}
       }
     },
     "failure_mode": {
@@ -187,7 +223,7 @@
       "required": ["id", "kind", "description", "status"],
       "properties": {
         "id": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-ACT-[0-9]{3,}$"},
-        "kind": {"enum": ["prevention", "detection", "design_change"]},
+        "kind": {"enum": ["prevention", "detection", "design_change", "monitoring"]},
         "description": {"type": "string", "minLength": 1},
         "owner": {"type": "string"},
         "due": {"type": "string", "format": "date"},

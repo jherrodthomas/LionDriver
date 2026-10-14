@@ -1,10 +1,11 @@
 # LionDriver — FMEA Rating Tables
 
-**Version:** RT-1 (referenced by `rating_tables: RT-1` in every analysis file)
+**Version:** RT-2 (referenced by `rating_tables` in every analysis file). RT-2 adds §7 (FMEA-MSR); §1–§6 are unchanged from RT-1.
+**S/O/D unchanged since:** RT-1
 **Basis:** AIAG & VDA FMEA Handbook (2019), tailored. Criteria are paraphrased; consult the handbook for the normative wording.
-**Applies to:** System FMEA, DFMEA, SW FMEA, PFMEA. FMEDA uses §6.
+**Applies to:** System FMEA, DFMEA, SW FMEA, PFMEA. FMEDA uses §6. FMEA-MSR (§7) applies to the System FMEA and DFMEA only.
 
-Any change to these tables increments the version (RT-2, …) and triggers re-rating of affected rows.
+Any change to these tables increments the version (RT-3, …) and triggers re-rating of affected rows. A file rated against the version named in "S/O/D unchanged since" needs no re-rating until it adds rows from a later section; a file with FMEA-MSR rows must name RT-2 or later (checked by the linter).
 
 ---
 
@@ -227,3 +228,70 @@ Each safety mechanism must state its claimed DC and the basis (ISO 26262-5 Annex
 | D | ≥ 99 % | ≥ 90 % | < 10 FIT (10⁻⁸ /h) |
 
 The linter reports SPFM, LFM and the single-point + residual part of PMHF (λSPF + λRF). The dual-point PMHF contribution is not computed by the linter and must be added in the FMEDA report.
+
+---
+
+## 7. FMEA-MSR — Monitoring and System Response (added in RT-2)
+
+Supplementary FMEA for Monitoring and System Response (AIAG & VDA 2019). It rates what happens **in the car** when a cause occurs: is it diagnosed, and does the system reach a safe state before harm? Detection (§3) still rates only what is found before release; S, O, D and AP of a cause are never changed by its MSR row. Scope, rationale and phasing: [msr-plan.md](msr-plan.md).
+
+**Rows:** System FMEA and DFMEA causes whose failure mode has S ≥ 9 and lists a `safety_mechanisms` entry. Software-origin causes are rated once, in the System FMEA. Each such cause carries either an `msr` block or an `msr_exempt` reason (an error once the analysis header says `msr: complete`).
+
+### 7.1 Severity after the system response
+
+Rated with the §1 table on the effect that remains **after** the mechanism has acted, e.g. "steering assist lost with an alert; driver steers" is S 8 instead of S 10.
+
+- It never exceeds the failure mode's severity.
+- It may drop below 10 only if the FSC safe state is reached without driver action, or with a driver action that the HARA rates C0–C2 within the warning time.
+- It enters the MSR AP only at M 1 (§7.4).
+
+### 7.2 Frequency (F)
+
+How often the cause occurs in the field over the vehicle life.
+
+| F | Criterion | Hardware cause (λ of the cause, from the FMEDA or DFMEA) | Host and software cause |
+|---|---|---|---|
+| 10 | Frequency unknown, or the cause occurs on most vehicles | no estimate | no estimate |
+| 9 | Very high | ≥ 1000 FIT | F = the cause's O (§2.1 or §2.2): the same evidence, without field-exposure credit |
+| 8 | High | 100 to < 1000 FIT | ″ |
+| 7 | High | 30 to < 100 FIT | ″ |
+| 6 | Moderate | 10 to < 30 FIT | ″ |
+| 5 | Moderate | 3 to < 10 FIT | ″ |
+| 4 | Low | 1 to < 3 FIT | ″ |
+| 3 | Low | 0.3 to < 1 FIT | ″ |
+| 2 | Very low | 0.1 to < 0.3 FIT | ″ |
+| 1 | Extremely low, or ruled out by the design | < 0.1 FIT | ″ |
+
+The FIT bands are LionDriver tailoring. Generic failure rates (the FMEDAs at this baseline) give at best F 3.
+
+### 7.3 Monitoring (M)
+
+How well the diagnostic detects the cause in operation **and** the system response reaches the safe state within the fault-tolerant time interval (FTTI). FTTI, FDTI and FRTI come from [WP-S-04 §3.7](../../03-system/WP-S-04-timing-ftti-budget.md#37-summary-of-fttis-and-budgets) (budgets) and §4 (code-derived times).
+
+| M | Criterion | Evidence required (checked by the linter where marked ✓) |
+|---|---|---|
+| 10 | No in-field diagnostic for this cause, or only the driver noticing it unaided | — |
+| 9 | A diagnostic exists but is not designed for this cause | — |
+| 8 | Diagnostic targets this cause; the response does not reach the safe state, or its time exceeds the FTTI | e.g. EPS-fault siren at 1.26 s against 1 s (WP-S-04 OI-8) |
+| 7 | Diagnostic and response target this cause; timing unknown or not compared with the FTTI | ✓ timing basis `unknown` forces M ≥ 7 |
+| 6 | Within the FTTI on code-derived timing; test exists, not proven | ✓ WP-S-04 row, FTTI, FDTI + FRTI ≤ FTTI; ✓ evidence `test` path |
+| 5 | As M 6, and the diagnostic's test is proven (mutation or fault injection) | as M 6 |
+| 4 | Within the FTTI on **measured** timing; the proven test covers some instances of the cause | ✓ basis `measured`; ✓ evidence `ref` to the measurement; DFMEA: FMEDA DC ≥ 90 % (warning) |
+| 3 | As M 4, covering all instances of the cause | as M 4 |
+| 2 | As M 3, with margin shown under worst-case conditions (tolerances, load) | as M 4 |
+| 1 | Diagnosis and response always effective (exhaustive or formal argument plus measurement) | as M 4; the severity after the response is rated (§7.4) |
+
+### 7.4 MSR Action Priority
+
+> **Provisional.** The AIAG-VDA FMEA-MSR action priority table is not yet transcribed into this repository. Until it is, the §5 table is applied with **F in place of O** and **M in place of D**. With M 1, the severity after the system response (§7.1) replaces the original severity. Transcribing the handbook table makes RT-3 and re-rates every MSR row. Until then, every MSR AP is marked provisional in the linter report.
+
+The executable copy is `tools/safety/fmea_lint.py` (`AP_MSR_TABLE`, `compute_ap_msr`); its unit tests pin it to §5.
+
+**Rules (enforced by the linter):**
+- The stored `msr.ap` must equal the value from this table.
+- **MSR AP = H:** an `msr.actions` entry (action `kind: monitoring` where it improves the diagnostic or response) or an `msr.rationale`.
+- **MSR AP = M:** action or rationale recommended.
+- Every mechanism an MSR row rates must cite a `ref` or `test` on the failure mode.
+- `ftti_ms` must equal the FTTI of the cited WP-S-04 row.
+- MSR AP never closes a hazard-linked cause by itself. Whether it may count toward accepting residual risk is a lead decision (decision register).
+
