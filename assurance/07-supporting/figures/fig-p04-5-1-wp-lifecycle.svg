@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="502" viewBox="0 0 1280 502" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 5-1 · Work-product lifecycle (WP-P-04)</title>
+<desc>Work-product lifecycle. States: Skeleton: Structure and clause mapping exist; content still to be written; Draft: Content written, derived from code review and engineering judgement; not yet verified; In review: Verification review open (pull request); Approved: Verification review passed and approved by the approver named in the safety plan; Baselined: Approved and frozen in a tagged configuration baseline. Rules: In review: is set when the PR is opened; Approved: only in the merge of an approved PR; Baselined: only when included in a gate or release tag. Review steps: Author submits: PR with label wp and the class from WP-P-02 §4; Verification review: PR review using the checklist for the WP type in WP-P-05; Approval: GitHub "Approve" by the approver named in the header; for ASIL-relevant WPs also the independence level required by WP-M-06; Confirmation review: Separate record (not a PR approval) for WPs listed in WP-M-06, by an independent reviewer; Merge: Only after approvals and green CI (Markdown link check, OI-2).</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="502" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-1 · Work-product lifecycle (WP-P-04)</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Status values of the document control header, what moves a work product into each, and the review that gets it to Approved</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-P-04 §5, §7; assurance README</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="120" width="212.8" height="98" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.4"/>
+<text x="50" y="144" font-size="14" fill="#0F172A" font-weight="700">Skeleton</text>
+<text x="50" y="166" font-size="10.5" fill="#475569">Structure and clause mapping exist;</text>
+<text x="50" y="180" font-size="10.5" fill="#475569">content still to be written</text>
+<rect x="286.8" y="120" width="212.8" height="98" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.4"/>
+<text x="296.8" y="144" font-size="14" fill="#0F172A" font-weight="700">Draft</text>
+<text x="296.8" y="166" font-size="10.5" fill="#475569">Content written, derived from code</text>
+<text x="296.8" y="180" font-size="10.5" fill="#475569">review and engineering judgement; not</text>
+<text x="296.8" y="194" font-size="10.5" fill="#475569">yet verified</text>
+<path d="M256.8 169 L279.8 169" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M286.8 169 L278.8 164 L278.8 174 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="533.6" y="120" width="212.8" height="98" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.4"/>
+<text x="543.6" y="144" font-size="14" fill="#0F172A" font-weight="700">In review</text>
+<text x="543.6" y="166" font-size="10.5" fill="#475569">Verification review open (pull request)</text>
+<path d="M503.6 169 L526.6 169" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M533.6 169 L525.6 164 L525.6 174 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="780.4" y="120" width="212.8" height="98" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.4"/>
+<text x="790.4" y="144" font-size="14" fill="#2E9E6A" font-weight="700">Approved</text>
+<text x="790.4" y="166" font-size="10.5" fill="#475569">Verification review passed and</text>
+<text x="790.4" y="180" font-size="10.5" fill="#475569">approved by the approver named in the</text>
+<text x="790.4" y="194" font-size="10.5" fill="#475569">safety plan</text>
+<path d="M750.4 169 L773.4 169" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M780.4 169 L772.4 164 L772.4 174 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="1027.2" y="120" width="212.8" height="98" rx="8" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.4"/>
+<text x="1037.2" y="144" font-size="14" fill="#2E9E6A" font-weight="700">Baselined</text>
+<text x="1037.2" y="166" font-size="10.5" fill="#475569">Approved and frozen in a tagged</text>
+<text x="1037.2" y="180" font-size="10.5" fill="#475569">configuration baseline</text>
+<path d="M997.2 169 L1020.2 169" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M1027.2 169 L1019.2 164 L1019.2 174 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="533.6" y="230" width="212.8" height="31" rx="6" fill="#FFF7ED" stroke="none" stroke-width="1.2"/>
+<text x="541.6" y="245" font-size="10" fill="#C2410C">In review is set when the PR is opened</text>
+<rect x="780.4" y="230" width="212.8" height="44" rx="6" fill="#FFF7ED" stroke="none" stroke-width="1.2"/>
+<text x="788.4" y="245" font-size="10" fill="#C2410C">Approved only in the merge of an</text>
+<text x="788.4" y="258" font-size="10" fill="#C2410C">approved PR</text>
+<rect x="1027.2" y="230" width="212.8" height="44" rx="6" fill="#FFF7ED" stroke="none" stroke-width="1.2"/>
+<text x="1035.2" y="245" font-size="10" fill="#C2410C">Baselined only when included in a gate or</text>
+<text x="1035.2" y="258" font-size="10" fill="#C2410C">release tag</text>
+<text x="40" y="300" font-size="11" fill="#475569">Version: 0.x while Draft; 1.0 at first approval; MINOR increment for each approved change; MAJOR when the scope or the safety concept changes</text>
+<text x="40" y="340" font-size="13" fill="#0F172A" font-weight="700">§7 Review and approval: In review → Approved</text>
+<rect x="40" y="356" width="219.2" height="92" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="48" y="364" width="82.2" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="89.1" y="375.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Author submits</text>
+<text x="48" y="398" font-size="10.5" fill="#0F172A">PR with label wp and the class from</text>
+<text x="48" y="412" font-size="10.5" fill="#0F172A">WP-P-02 §4</text>
+<rect x="285.2" y="356" width="219.2" height="92" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="293.2" y="364" width="99.8" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="343.1" y="375.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Verification review</text>
+<text x="293.2" y="398" font-size="10.5" fill="#0F172A">PR review using the checklist for the WP</text>
+<text x="293.2" y="412" font-size="10.5" fill="#0F172A">type in WP-P-05</text>
+<path d="M263.2 402 L278.2 402" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M285.2 402 L277.2 397 L277.2 407 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="530.4" y="356" width="219.2" height="92" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="538.4" y="364" width="53.2" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="565" y="375.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Approval</text>
+<text x="538.4" y="398" font-size="10.5" fill="#0F172A">GitHub "Approve" by the approver named</text>
+<text x="538.4" y="412" font-size="10.5" fill="#0F172A">in the header; for ASIL-relevant WPs</text>
+<text x="538.4" y="426" font-size="10.5" fill="#0F172A">also the independence level required by</text>
+<text x="538.4" y="440" font-size="10.5" fill="#0F172A">WP-M-06</text>
+<path d="M508.4 402 L523.4 402" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M530.4 402 L522.4 397 L522.4 407 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="775.6" y="356" width="219.2" height="92" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="783.6" y="364" width="104" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="835.6" y="375.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Confirmation review</text>
+<text x="783.6" y="398" font-size="10.5" fill="#0F172A">Separate record (not a PR approval) for</text>
+<text x="783.6" y="412" font-size="10.5" fill="#0F172A">WPs listed in WP-M-06, by an</text>
+<text x="783.6" y="426" font-size="10.5" fill="#0F172A">independent reviewer</text>
+<path d="M753.6 402 L768.6 402" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M775.6 402 L767.6 397 L767.6 407 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="1020.8" y="356" width="219.2" height="92" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="1028.8" y="364" width="39.3" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="1048.4" y="375.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Merge</text>
+<text x="1028.8" y="398" font-size="10.5" fill="#0F172A">Only after approvals and green CI</text>
+<text x="1028.8" y="412" font-size="10.5" fill="#0F172A">(Markdown link check, OI-2)</text>
+<path d="M998.8 402 L1013.8 402" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M1020.8 402 L1012.8 397 L1012.8 407 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<text x="40" y="478" font-size="10.5" fill="#475569">Generated by fig_p_process.py from the assurance README status table and the WP-P-04 §5 and §7 tables; green: approved states.</text>
+</svg>

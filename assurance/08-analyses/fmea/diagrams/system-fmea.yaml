@@ -6,7 +6,7 @@ schema_version: 1
 analysis: SFM
 
 block_diagram:
-  title: "LionDriver item boundary, 2020 Corolla LE"
+  title: "LionDriver item boundary, Corolla E210 · ZRE212 · US"
   boundary: "LD-SDA item: comma 3X, integrated panda, harness"
   blocks:
     # outside, driver side (column 0)
@@ -267,7 +267,7 @@ block_diagram:
 
 p_diagram:
   title: "L2 ACC + ALC on the Corolla, highway ODD"
-  focus: "LD-SDA L2 ACC + ALC on a 2020 Corolla LE, highway ODD (ODD-H)"
+  focus: "LD-SDA L2 ACC + ALC on the Corolla E210 · ZRE212 · US, highway ODD (ODD-H)"
   functions: [SFM-FN-001, SFM-FN-002, SFM-FN-003, SFM-FN-004, SFM-FN-005, SFM-FN-007]
   inputs:
     - "Road scene images (road/wide camera)"

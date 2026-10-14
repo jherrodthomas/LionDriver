@@ -5,8 +5,8 @@
 
 - id: CFG-001
   kind: configuration
-  title: "Toyota Corolla, 12th generation (E210), Toyota Safety Sense 2.0 (reference configuration)"
-  description: "US-market 1.8 L ICE sedan with TSS 2.0, comma device with the integrated panda safety MCU and the Toyota TSS2 harness. The item analysed in the assurance work products."
+  title: "Corolla E210 · ZRE212 · US: Toyota Corolla sedan, model years 2020–2022, 1.8 L CVT, Toyota Safety Sense 2.0 (reference configuration)"
+  description: "Vehicle facts (model code, model years, powertrain, trims, firmware set, exclusions) in the vehicle register docs/liondriver/vehicles/vehicles.yaml under the same ID; FMEA alias AC-001. With a comma device with the integrated panda safety MCU and the Toyota TSS2 harness. The item analysed in the assurance work products."
   classification: liondriver-evaluated
   evaluation_state: in-progress
   platform: TOYOTA_COROLLA_TSS2

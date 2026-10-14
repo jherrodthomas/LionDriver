@@ -6,7 +6,7 @@
 |---|---|---|---|---|
 | 0.6 | draft | BL-004 | RT-1 | 2026-10-13 |
 
-**Scope.** LionDriver as installed on a 2020 Toyota Corolla LE (US) with comma 3X and integrated panda, software BL-004 (structure and failure analysis written at BL-001, risk analysis at BL-004), while the vehicle is driven on public roads by a licensed driver. Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
+**Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-004 (structure and failure analysis written at BL-001, risk analysis at BL-004), while the vehicle is driven on public roads by a licensed driver. Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
 **Team.** Jherrod Thomas (Project maintainer, safety lead (reviewer/approver)); Claude (AI assistant) (Drafting assistance; content requires human review)
 
@@ -27,7 +27,7 @@ Read the diagrams first, then the worksheet. Comment on this page's lines in a p
 
 ## 1. Block and boundary diagram
 
-![LionDriver item boundary, 2020 Corolla LE](figures/system-fmea-block.svg)
+![LionDriver item boundary, Corolla E210 · ZRE212 · US](figures/system-fmea-block.svg)
 
 **Interface matrix.** Each line in the diagram, with what crosses it.
 
@@ -723,7 +723,7 @@ Effects:
 | `SFM-033.C1` Relay intercepts stock camera messages the vehicle needs for AEB | • Forwarding keeps stock pre-collision messages (0x283, 0x344) passing the relay (SWF-011); which TSS2 functions remain with openpilot longitudinal is not established <sub>opendbc_repo/opendbc/safety/modes/toyota.h</sub> | • No pre-release test targets this cause | 6 | 10 | 🔴 **H** | SFM-ACT-006 |
 | `SFM-033.C2` Item does not forward or reproduce stock safety messages | • Panda safety code: MISRA C:2012, 100% line coverage, review; rated in the SW FMEA <sub>assurance/08-analyses/fmea/analyses/sw-fmea.yaml</sub> | • opendbc safety suite with 100% line coverage and mutation tests, run by CI on every change (proven, early, test-to-fail) <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 5 | 3 | 🔴 **H** | SFM-ACT-006 |
 
-<sub>Note: Open question: which stock TSS2 functions remain on the 2020 Corolla with openpilot longitudinal enabled. Must be established from the opendbc Toyota port and in-vehicle test before the HARA. HARA input: loss of stock AEB/FCW.</sub>
+<sub>Note: Open question: which stock TSS2 functions remain on the reference configuration with openpilot longitudinal enabled. Must be established from the opendbc Toyota port and in-vehicle test before the HARA. HARA input: loss of stock AEB/FCW.</sub>
 
 #### SFM-034 · Harness relay fault
 

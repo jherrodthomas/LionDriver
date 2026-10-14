@@ -15,7 +15,8 @@ HERE = Path(__file__).resolve().parent
 REGISTER = HERE / "register.yaml"
 
 REVERSIBILITY = ("easy", "revisit", "hard")
-STATUS = ("open", "answered", "assumed", "applied", "withdrawn")
+STATUS = ("queued", "open", "answered", "assumed", "applied", "withdrawn")
+DECIDER = ("lead", "claude")
 VIA = ("inbox", "chat", "assumed")
 GATES = tuple(f"G{i}" for i in range(7))
 REQUIRED = ("id", "question", "context", "reversibility", "blocks", "gate", "asked", "options", "status")
@@ -50,7 +51,10 @@ def check(entries: list[dict], base: Path = HERE) -> list[str]:
     def err(msg: str) -> None:
       errs.append(f"{did}: {msg}")
 
+    queued = d.get("status") == "queued"
     for k in REQUIRED:
+      if queued and k in ("asked", "gate"):
+        continue
       if d.get(k) in (None, "", []):
         err(f"missing {k}")
     if not re.fullmatch(r"DQ-\d{3}", str(did)):
@@ -63,8 +67,12 @@ def check(entries: list[dict], base: Path = HERE) -> list[str]:
       err(f"reversibility must be one of {', '.join(REVERSIBILITY)}")
     if status not in STATUS:
       err(f"status must be one of {', '.join(STATUS)}")
-    if d.get("gate") not in GATES:
+    if d.get("gate") not in GATES and not (queued and d.get("gate") is None):
       err("gate must be G0…G6")
+    if "batch" in d and (not isinstance(d["batch"], int) or d["batch"] < 1):
+      err("batch must be a positive whole number")
+    if d.get("decider", "lead") not in DECIDER:
+      err(f"decider must be one of {', '.join(DECIDER)}")
     asked = as_date(d.get("asked"))
     if d.get("asked") is not None and asked is None:
       err("asked is not a date")
@@ -136,6 +144,10 @@ def check(entries: list[dict], base: Path = HERE) -> list[str]:
       err("only status applied can carry applied")
     if status == "withdrawn" and not d.get("note"):
       err("status withdrawn needs a note")
+  for d in entries:
+    for a in d.get("after") or []:
+      if a not in seen or a == d.get("id"):
+        errs.append(f"{d.get('id')}: after names unknown decision {a}")
   return errs
 
 
@@ -146,7 +158,9 @@ def main(argv: list[str]) -> int:
     print(e)
   if errs:
     return 1
-  print(f"decision register OK: {len(load(path))} decisions")
+  entries = load(path)
+  by = {s: sum(1 for d in entries if d["status"] == s) for s in STATUS}
+  print(f"decision register OK: {len(entries)} decisions ({', '.join(f'{v} {k}' for k, v in by.items() if v)})")
   return 0
 
 

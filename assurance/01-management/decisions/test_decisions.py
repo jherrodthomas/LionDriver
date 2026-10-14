@@ -30,6 +30,30 @@ def errors(d: dict) -> list[str]:
   return cd.check([d], HERE)
 
 
+class Queue(unittest.TestCase):
+  def test_queued_needs_no_asked_or_gate(self):
+    d = entry(status="queued")
+    del d["asked"]
+    del d["gate"]
+    self.assertEqual(errors(d), [])
+
+  def test_open_still_needs_asked(self):
+    d = entry()
+    del d["asked"]
+    self.assertTrue(any("missing asked" in e for e in errors(d)))
+
+  def test_decider_and_after(self):
+    self.assertTrue(any("decider" in e for e in errors(entry(decider="bot"))))
+    self.assertTrue(any("unknown decision DQ-999" in e for e in errors(entry(after=["DQ-999"]))))
+
+  def test_queued_entries_are_listed_not_carded(self):
+    page = build_inbox.build([entry(), entry(id="DQ-901", status="queued", decider="claude")], HERE)
+    reg = page.split("const REG = ", 1)[1].split(";\n", 1)[0]
+    self.assertIn("DQ-900", reg)
+    self.assertNotIn("DQ-901", reg)
+    self.assertIn('"id": "DQ-901"', page.split("const QUEUE = ", 1)[1].split(";\n", 1)[0])
+
+
 class Register(unittest.TestCase):
   def test_register_is_clean(self):
     self.assertEqual(cd.check(cd.load(), HERE), [])

@@ -134,7 +134,7 @@ JOKSCH_MPH_DEFAULT = 71.0  # 31.74 m/s per a secondary source; full text not yet
 JOKSCH_MPH = JOKSCH_MPH_DEFAULT
 RESTITUTION = 0.1  # assumed; small at high impact speed
 
-EGO = {"name": "Corolla (reference vehicle)", "mass_kg": 1320, "occupants": 5}  # lowest 2020 LE curb weight (see VEHICLE_GRID)
+EGO = {"name": "Corolla (reference vehicle)", "mass_kg": 1320, "occupants": 5}  # CFG-001 lower curb mass, docs/liondriver/vehicles (see VEHICLE_GRID)
 LEADS = [
   {"name": "passenger car", "mass_kg": 1500, "occupants": 5},
   {"name": "heavy truck", "mass_kg": 36300, "occupants": 2},  # US 80,000 lb gross limit (see VEHICLE_GRID)
