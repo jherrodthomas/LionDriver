@@ -23,7 +23,7 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 2 performed: CR-01, CR-03@G0 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 104 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 101 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
@@ -33,21 +33,21 @@
 | [WP-M-01](../../../01-management/WP-M-01-assurance-strategy.md) Assurance strategy and lifecycle tailoring | GOV-02 | Draft | 0 | |
 | [WP-M-02](../../../01-management/WP-M-02-safety-plan.md) Functional safety plan | GOV-03 | Draft | 8 | |
 | [WP-M-04](../../../01-management/WP-M-04-organization-competence-safety-culture.md) Organization-specific rules, safety culture, competence management | GOV-04 | Draft | 6 | |
-| [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) Quality management and quality assurance plan | GOV-05 | Draft | 6 | |
+| [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) Quality management and quality assurance plan | GOV-05 | Draft | 3 | |
 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) Confirmation measures plan (reviews, audit, assessment, independence) | GOV-06 | Draft | 5 | |
 | [WP-M-08](../../../01-management/WP-M-08-sotif-plan.md) SOTIF plan | GOV-07 | Draft | 8 | |
 | [WP-M-09](../../../01-management/WP-M-09-cybersecurity-plan.md) Cybersecurity plan | GOV-08 | Draft | 8 | |
 | [WP-M-10](../../../01-management/WP-M-10-ai-safety-plan.md) AI safety management plan | GOV-09 | Draft | 6 | |
-| [WP-M-11](../../../01-management/WP-M-11-upstream-and-supplier-management.md) Upstream (comma.ai) and supplier management, development interface agreements | GOV-10 | Draft | 6 | |
-| [WP-M-03](../../../01-management/WP-M-03-project-plan.md) Project plan (scope, WBS, schedule, resources) | GOV-11 | Draft | 5 | |
-| [WP-M-07](../../../01-management/WP-M-07-risk-management.md) Project risk management plan and register | GOV-12 | Draft | 4 | |
+| [WP-M-11](../../../01-management/WP-M-11-upstream-and-supplier-management.md) Upstream (comma.ai) and supplier management, development interface agreements | GOV-10 | Draft | 5 | |
+| [WP-M-03](../../../01-management/WP-M-03-project-plan.md) Project plan (scope, WBS, schedule, resources) | GOV-11 | Draft | 6 | |
+| [WP-M-07](../../../01-management/WP-M-07-risk-management.md) Project risk management plan and register | GOV-12 | Draft | 3 | |
 | [WP-P-06](../../../07-supporting/WP-P-06-requirements-management-traceability.md) Requirements management and traceability procedure | GOV-13 | Draft | 5 | |
 | [WP-P-05](../../../07-supporting/WP-P-05-verification-review-procedure.md) Verification and review procedure | GOV-14 | Draft | 4 | |
 | [WP-P-01](../../../07-supporting/WP-P-01-configuration-management-plan.md) Configuration management plan (incl. safety-relevant file list, baselines, submodules) | GOV-15 | Draft | 5 | |
 | [WP-P-04](../../../07-supporting/WP-P-04-documentation-management.md) Documentation management | GOV-16 | Draft | 6 | |
 | [WP-P-03](../../../07-supporting/WP-P-03-problem-resolution.md) Problem resolution management | GOV-17 | Draft | 5 | |
 | [WP-P-02](../../../07-supporting/WP-P-02-change-management.md) Change management plan | GOV-18 | Draft | 5 | |
-| [WP-M-13](../../../01-management/WP-M-13-aspice-capability-baseline.md) ASPICE capability baseline (self-assessment) | GOV-19 | Draft | 5 | |
+| [WP-M-13](../../../01-management/WP-M-13-aspice-capability-baseline.md) ASPICE capability baseline (self-assessment) | GOV-19 | Draft | 6 | |
 | [WP-M-00](../../../01-management/WP-M-00-work-product-register.md) Work product register | GOV-20 | Draft | 0 | |
 | [WP-P-11](../../../process/README.md) Integrated process model and generated process maps (all phases G0–G6 modelled) | GOV-21 | Draft | 2 | |
 

@@ -4,14 +4,14 @@
 |---|---|
 | Work product | WP-M-14 ISO 26262-6 software lifecycle implementation specification (future work) |
 | Standard reference | ISO 26262-6:2018 Clauses 5–11 and Annex C; interfaces to ISO 26262-2, -3, -4, -8, -9. Informative links to ISO 21448:2022, ISO/SAE 21434:2021, ISO/PAS 8800:2024, UL 4600 |
-| Version | 0.3 (merge of PR #47 with the base: activation decision renumbered D-09 → D-14, since the base uses D-08…D-13; review record renumbered RR-2026-008 → RR-2026-009; CFG-001 named by generation (E210); 2026-10-13). 0.2 (aligned with the software work products at `682f184`: pre-entry track §2.3, readiness snapshot §3.2, SWSR field mapping §4.2, trace engine state §8.2, rules §16, alignment audit RR-2026-009 (OI-6); 2026-10-12). 0.1 |
+| Version | 0.4 (SWSR verification count pointed to RR-2026-009 §1 instead of §17; change-record count 16 in §3.2; §8.2 check list; §13 palette aligned with the shared figure palette; open items with due gate; 2026-10-14). 0.3 (merge of PR #47 with the base: activation decision renumbered D-09 → D-14, since the base uses D-08…D-13; review record renumbered RR-2026-008 → RR-2026-009; CFG-001 named by generation (E210); 2026-10-13). 0.2 (aligned with the software work products at `682f184`: pre-entry track §2.3, readiness snapshot §3.2, SWSR field mapping §4.2, trace engine state §8.2, rules §16, alignment audit RR-2026-009 (OI-6); 2026-10-12). 0.1 |
 | Status | Draft — **implementation deferred.** This is a plan. It does not authorize, start or evidence any Part 6 activity |
 | Activation | Not authorized. Needs decision D-14 ([WP-M-01 §8](WP-M-01-assurance-strategy.md#8-strategic-decisions-required)) and an approved entry baseline (§3) |
 | ASIL / scope | Software of the item. Highest proposed ASIL is C (SG-01, [WP-C-03](../02-concept/WP-C-03-hara.md)); ratings are unconfirmed until CR-02 |
 | Author | Project maintainer (specification). Adapted to this repository with AI assistance (Claude Code); the adaptation is AI-generated and has not been reviewed |
 | Reviewer(s) | TBD (I1, external while the project has a single maintainer; [WP-M-01 T-09](WP-M-01-assurance-strategy.md#5-tailoring)) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `682f184` (opendbc `7993399`, panda `8aa8671`): repository state inspected for §3.2 and §17 |
+| Baseline | `682f184` (opendbc `7993399`, panda `8aa8671`): repository state inspected for §3.2; SWSR verification counts from [RR-2026-009 §1](../05-software/reviews/RR-2026-009.md#1-main-result). Pins on 2026-10-14: opendbc `9a13f60`, panda `a55bdfc`; §3.2 was not re-inspected at those pins except the change-record count |
 
 > [!IMPORTANT]
 > This document describes **how** the software-level lifecycle will be implemented once its prerequisites are mature. It records no completed activity. Nothing here is evidence of ISO 26262-6 conformity, ASIL capability or safety. The drafts in [`05-software/`](../05-software/), and the safety-mechanism changes integrated under change records, are pre-entry engineering (§2.3), not Part 6 execution.
@@ -135,11 +135,11 @@ This is an inventory of what exists. It is **not** the Phase A gap assessment, a
 | Timing / FTTI | Yes | Draft | Kinematic estimates only; nothing measured |
 | HSI | Yes | Draft | — |
 | ASIL decomposition, FFI, DFA (system) | Yes | Draft | — |
-| Safety plan, CM, change, requirements management, review procedure | Yes | Draft | CT-1 change records are in use (9 records), so change control runs in practice. Single maintainer; I1 needs an external reviewer (T-09) |
+| Safety plan, CM, change, requirements management, review procedure | Yes | Draft | CT-1 change records are in use (9 records at `682f184`; 16 on 2026-10-14), so change control runs in practice. None has had an independent review ([WP-M-12 §7.2](WP-M-12-impact-analysis.md#72-procedure)). Single maintainer; I1 needs an external reviewer (T-09) |
 | Tool classification | Yes | Draft | GAP-34: no tool qualified |
 | Software safety requirements | Yes ([WP-W-02](../05-software/WP-W-02-software-safety-requirements.md)) | Draft, v0.12 | 134 SWSRs, all `proposed`; TSR → SWSR coverage checked (K4). Field gaps against §4.2 listed there |
 | Software architecture, analysis, unit design | Yes (WP-W-03…05, DN-01) | Draft | Partly updated for the integrated changes; stale sections marked and listed in [RR-2026-009](../05-software/reviews/RR-2026-009.md) |
-| Software verification specifications | Yes (WP-W-06…08) | Draft (specification); not executed | 96 of 134 SWSRs are cited by a `VS-SWI` or `VS-SWQ` case; the other 38 are mostly QM host requirements (§17) |
+| Software verification specifications | Yes (WP-W-06…08) | Draft (specification); not executed | 96 of 134 SWSRs are cited by a `VS-SWI` or `VS-SWQ` case; the other 38 are mostly QM host requirements ([RR-2026-009 §1](../05-software/reviews/RR-2026-009.md#1-main-result)) |
 | Existing software tests | Yes, upstream assets plus LionDriver tests in the opendbc and panda forks | Not reviewed as evidence | Safety tests, MISRA and mutation run in fork CI ([`safety.yaml`](../../.github/workflows/safety.yaml)); line coverage only (GAP-13); host builds, not target (GAP-13, GAP-41) |
 | Target test environment | Plan only ([`hil-bench/`](../05-software/hil-bench/README.md)) | Draft | No bench exists (D-04, GAP-30) |
 | Review records | No | — | `case/reviews/` holds no record |
@@ -397,7 +397,7 @@ Further links: hazards and safety goals (`H-`, `SG-`), FSRs, safety mechanisms, 
 
 ### 8.2 Engine capabilities
 
-Builds on [`trace/tools/check_trace.py`](../trace/tools/check_trace.py) (checks K1–K3, K12, R1–R4, X1–X2 exist) and the case validator.
+Builds on [`trace/tools/check_trace.py`](../trace/tools/check_trace.py) (checks K1–K4, K12, R1–R4 and X1–X3 exist; K2 partly; [`trace/README.md` §6](../trace/README.md#6-consistency-checks)) and the case validator.
 
 | Capability | Basis | State |
 |---|---|---|
@@ -405,7 +405,7 @@ Builds on [`trace/tools/check_trace.py`](../trace/tools/check_trace.py) (checks 
 | Coverage (every SW-allocated TSR has an SWSR) | K4 | Exists |
 | Markdown ↔ YAML equality | X1, X2, X3 | Exists |
 | Orphan detection (unit without SWSR, architecture element without SWSR) | New | Planned; needs unit and element records |
-| Unverified requirement detection (SWSR not cited by any verification case) | New | Planned; a one-off count is in §17 |
+| Unverified requirement detection (SWSR not cited by any verification case) | New | Planned; a one-off count at `682f184` is in [RR-2026-009 §1](../05-software/reviews/RR-2026-009.md#1-main-result) |
 | Stale evidence (result older than the last change to its subject) | New, uses git history of linked paths | Planned |
 | Change impact analysis | Extends `tools/sync/sync_report.py` and [WP-M-12](WP-M-12-impact-analysis.md) | Planned |
 | Configuration applicability analysis | `applies_to` (§7) | Planned |
@@ -491,7 +491,7 @@ Each check produces a machine-readable result (JSON) and a readable summary. The
 
 Extends [`case/tools/generate_dashboard.py`](../case/tools/generate_dashboard.py) and keeps its rules: values come from records, generated files are checked for freshness in CI, and no value is typed by hand.
 
-- **Design:** deep navy and charcoal surfaces, metallic gold for headings and accents, electric blue for interactive and link elements, white and neutral text, restrained engineering visuals. Follow the existing LionDriver assets in `docs/assets/liondriver/`.
+- **Design:** the shared assurance figure palette, with [`01-management/figures/fig_m_management.py`](figures/fig_m_management.py) as the source: ink `#0F172A` text on light surfaces; discipline accents SAFETY `#C2410C`, SW `#0F766E`, HW `#4F46E5`; status GREEN `#2E9E6A`, AMBER `#D97706`, RED `#D2553F`. Green only for an approved or baselined status. `generate_dashboard.py` still uses a navy and gold scheme; it is moved to this palette when it is extended.
 - **Views:** Clause 5–11 lifecycle overview; work product register and maturity; requirements traceability; architecture relationships; verification results; coverage where measured; open findings; review obligations; configuration applicability; baseline history; links to the Living Safety Case.
 - **Drill-down:** lifecycle stage → work products → records → evidence → review.
 - **Missing data:** show `Not established`, `Not assessed` or `No evidence recorded`. Never show an estimated percentage.
@@ -540,11 +540,11 @@ Until D-14 is recorded:
 
 ## 17. Open items
 
-| ID | Item | Owner |
-|---|---|---|
-| OI-1 | Record decision D-14 (authorize Phase A) when E-01…E-05 reach `In review` | Project maintainer |
-| OI-2 | Check every clause reference and the principal work product lists in §4 against the licensed ISO 26262-6:2018 | Reviewer |
-| OI-3 | Decide whether to adopt the §2.2 status extension (Planned, Verified, Superseded) project-wide or for Part 6 records only | Project maintainer |
-| OI-4 | Decide the store for raw verification results (CI artifacts with retention vs a committed results folder) | Project maintainer |
-| OI-5 | Independent (I1) review of this specification | External reviewer |
-| OI-6 | Close the judgement findings F-01…F-32 of the software alignment audit [RR-2026-009](../05-software/reviews/RR-2026-009.md), in particular F-11, F-14, F-16, F-19, F-20 (documents still describing `8b8c6ae`) | Safety engineer, SW lead |
+| ID | Item | Owner | Due |
+|---|---|---|---|
+| OI-1 | Record decision D-14 (authorize Phase A) when E-01…E-05 reach `In review` | Project maintainer | G2 |
+| OI-2 | Check every clause reference and the principal work product lists in §4 against the licensed ISO 26262-6:2018 | Reviewer | G2 |
+| OI-3 | Decide whether to adopt the §2.2 status extension (Planned, Verified, Superseded) project-wide or for Part 6 records only | Project maintainer | G3 |
+| OI-4 | Decide the store for raw verification results (CI artifacts with retention vs a committed results folder) | Project maintainer | G3 |
+| OI-5 | Independent (I1) review of this specification | External reviewer | G2 |
+| OI-6 | Close the judgement findings F-01…F-32 of the software alignment audit [RR-2026-009](../05-software/reviews/RR-2026-009.md), in particular F-11, F-14, F-16, F-19, F-20 (documents still describing `8b8c6ae`) | Safety engineer, SW lead | G2 |

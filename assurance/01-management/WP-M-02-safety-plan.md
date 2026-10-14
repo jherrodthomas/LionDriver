@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-02 Functional safety plan |
 | Standard reference | ISO 26262-2:2018 §6 (project-dependent safety management: roles, planning, tailoring, safety case, confirmation measures); ISO 26262-2 §5 (anomaly handling, interfaces to overall safety management); ISO 26262-8 §5–§12 (supporting processes, by reference); ASPICE 4.0 MAN.3 |
-| Version | 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (early-implementation rule §4.1, AI-assisted authoring §3.3, impact records and design notes in §7, OI-4 corrected, OI-7…OI-9 added; audit [RR-2026-008](reviews/RR-2026-008.md); 2026-10-12). 0.1 (initial draft) |
+| Version | 0.5 (§4.1 at-risk table brought up to date: five changes of 2026-10-12…14 added; OI-3 and OI-8 note the lead's answers of 2026-10-14 on the assessor and the HIL bench; 2026-10-14). 0.4 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (early-implementation rule §4.1, AI-assisted authoring §3.3, impact records and design notes in §7, OI-4 corrected, OI-7…OI-9 added; audit [RR-2026-008](reviews/RR-2026-008.md); 2026-10-12). 0.1 (initial draft) |
 | Status | Draft |
 | ASIL / scope | All. Planned to ASIL D until the HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)) is approved |
 | Author | Assurance team (initial draft) |
@@ -120,7 +120,7 @@ Added in v0.2. Envelope hardening from P3 has started before G0. This is allowed
 3. The change is at-risk work. It earns no credit toward G2 or G3 until (a) the TSRs and SWSRs it implements are approved, (b) the change has a verification review per [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md) at I1 or above, and (c) the HIL evidence named in [WP-W-08](../05-software/WP-W-08-embedded-software-testing.md) exists. If a later HARA or TSC decision changes the requirement, the change is reworked or reverted.
 4. The hold point above still applies. Implemented envelope changes do not permit public-road operation.
 
-Status at v0.2 (all reference build only; none reviewed at I1; no HIL evidence):
+Status at v0.5, 2026-10-14 (none reviewed at I1; no HIL evidence). Envelope changes are compiled in the reference build only; the host changes (`pandad`, `selfdrived`, `controlsd`) apply to every build:
 
 | Change | Requirement | Fork commit | Impact record |
 |---|---|---|---|
@@ -133,8 +133,13 @@ Status at v0.2 (all reference build only; none reviewed at I1; no HIL evidence):
 | EPS fault gate, host flag, siren; siren when heartbeat loss revokes authority (all builds, added 2026-10-13) | TSR-516 | opendbc `242d63d`, `adcb7c2`; panda `877730e`, `b790fca`; heartbeat-loss siren panda `c33343b` | [opendbc-toyota-eps-fault](../07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md); heartbeat-loss siren: [panda-fast-heartbeat](../07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md) §5 |
 | Cruise main cross-check | TSR-405 | opendbc `875e325` | [opendbc-toyota-cruise-main](../07-supporting/impact/change-2026-10-12-opendbc-toyota-cruise-main.md) |
 | TX rate supervision | TSR-518 | opendbc `7993399`; panda `8aa8671` | [tx-rate-supervision](../07-supporting/impact/change-2026-10-12-tx-rate-supervision.md) |
+| TX arrival supervision (`0x2E4`, `0x343`) | TSR-408 | opendbc `31e890d` (fork master `c221521`) | [opendbc-toyota-tx-arrival](../07-supporting/impact/change-2026-10-12-opendbc-toyota-tx-arrival.md) |
+| Diagnostic-mode gate; cluster HUD authority | TSR-513 | panda `4ac8e1c`, opendbc `c393a04` (pins panda `a55bdfc`, opendbc `a57b667`) | [elm327-gate-hud-authority](../07-supporting/impact/change-2026-10-13-elm327-gate-hud-authority.md) |
+| Host supervision of panda flags, mismatches and input freshness (host) | TSR-621, TSR-615, TSR-602 | LionDriver #51 (`824a0b0`) | [host-supervision](../07-supporting/impact/change-2026-10-13-host-supervision.md) |
+| `pandad` fault mapping (host) | TSR-615 | LionDriver #48 (`3534bc2`) | [pandad-fault-mapping](../07-supporting/impact/change-2026-10-13-pandad-fault-mapping.md) |
+| PCM-edge authority gated on the heartbeat's engaged flag | TSR-301, TSR-408 | opendbc `b9f7451` (pin `9a13f60`); LionDriver #70 | [pcm-engage-heartbeat-gate](../07-supporting/impact/change-2026-10-14-pcm-engage-heartbeat-gate.md) |
 
-The requirement column names the main TSR only; each impact record lists the full set. The pinned commits are in [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md).
+The requirement column names the main TSR only; each impact record lists the full set. A further envelope change, a wrong-length RX frame treated as an RX fault ([opendbc-rx-length-fault](../07-supporting/impact/change-2026-10-13-opendbc-rx-length-fault.md)), is decided but not implemented. The Chill-mode default ([chill-mode-default](../07-supporting/impact/change-2026-10-14-chill-mode-default.md), D-08) is a configuration change outside the envelope and is not listed. The pinned commits are in [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md).
 
 ## 5. Work products
 
@@ -247,10 +252,10 @@ Upstream management and the absence of a DIA are handled in [WP-M-11](WP-M-11-up
 |---|---|---|---|
 | OI-1 | Fill TBD roles in §3.1, at minimum one verification reviewer and a QA person independent of the author | PM | G0 |
 | OI-2 | The safety manager and the project maintainer are the same person, who also authors most work products. Define who approves work products the safety manager authored (proposal: approval after external confirmation review for I3 items; second reviewer for others) | PM | G0 |
-| OI-3 | Engage an external functional safety assessor (D-06) and agree scope and schedule | PM | G0 |
+| OI-3 | Engage an external functional safety assessor (D-06) and agree scope and schedule. The lead answered on 2026-10-14: no assessor for now (DQ-009 option C). While that holds, G0 cannot pass, because CR-01 and CR-03 are due at G0 at I3 (WP-M-06 §9); the plan must be re-planned or the answer revisited | PM | G0 |
 | OI-4 | Confirm the triage targets in §9 (1 working day when a safety box is ticked, otherwise 10 working days) are achievable with current staffing | SM | G0 |
 | OI-5 | Closed: [`gates/`](../10-safety-case/gates/README.md) (with the gate record template) and [`confirmation/`](../10-safety-case/confirmation/README.md) created | SM | G0 |
 | OI-6 | Revisit the ASIL D planning assumption once the HARA is approved; adjust independence and method selection | SM | G1 |
 | OI-7 | Classify the AI coding assistant used for drafting (§3.3) in WP-P-07: tool impact, tool error detection, TCL, and whether qualification is needed | SM | G0 |
-| OI-8 | Give a verification review at I1 or above to every at-risk envelope change in §4.1, and add their HIL campaign (`REFERENCE_BUILD=1`) to the bench plan | SM, VR | G2 |
+| OI-8 | Give a verification review at I1 or above to every at-risk envelope change in §4.1, and add their HIL campaign (`REFERENCE_BUILD=1`) to the bench plan. The lead answered on 2026-10-14: defer the HIL bench (DQ-049 option B), so condition (c) of §4.1 cannot be met until the bench is built | SM, VR | G2 |
 | OI-9 | EPS-fault siren latency: the siren starts ≤ 1.26 s worst case after the first fault frame (1 s persistence + 10 ms task + up to 2 × 125 ms, because the speaker sounds only on every other 8 Hz tick; corrected 2026-10-13 from about 1.14 s). This exceeds the SG-02 1 s warning time; TSR-516's ≤ 0.5 s holds only if the 1 s persistence counts as detection time. LKA torque is refused from the first fault frame. Decide whether to shorten persistence or justify the delay (recorded in [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md)) | SM, PM | G2 |

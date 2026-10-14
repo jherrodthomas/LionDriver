@@ -17,6 +17,10 @@ fi
 
 BUILD_BRANCH=release-mici-staging
 
+# LionDriver: reference (default) or upstream release variant (ATC-19)
+source "$DIR/release_variant.sh"
+echo "[-] release variant: $RELEASE_VARIANT (LIONDRIVER_REFERENCE='$LIONDRIVER_REFERENCE') T=$SECONDS"
+
 
 # set git identity
 source "$DIR/identity.sh"
@@ -89,7 +93,7 @@ VERSION=$(cat openpilot/common/version.h | awk -F[\"-]  '{print $2}')
 # Add built files to git
 # writing larger objects is faster than compressing them on-device
 git -c core.compression=0 add -f .
-git -c core.compression=0 -c gc.auto=0 commit -m "openpilot v$VERSION"
+git -c core.compression=0 -c gc.auto=0 commit -m "openpilot v$VERSION ($RELEASE_VARIANT)"
 source "$SOURCE_DIR/tools/release/check_file_sizes.sh"
 
 # Run tests

@@ -565,7 +565,7 @@
 
 - id: SWSR-311
   kind: swsr
-  text: "Authority shall be false and all limiter, sample and edge state reset at MCU start-up and on every safety-mode change."
+  text: "Authority shall be false and all limiter, sample and edge state reset at MCU start-up and on every safety-mode change. The CRUISE_ACTIVE edge state shall reset to \"not yet seen disengaged\": after the change, authority shall be granted only on a rising edge that follows the reception of CRUISE_ACTIVE = 0 (SWSR-301)."
   asil: "B‡"
   parents: [TSR-311]
   parent_text: "TSR-311"
@@ -575,7 +575,7 @@
   acceptance: "All state variables of WP-W-05 §5.1 at reset values after `set_safety_hooks`"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `safety.h:57, 425-460`"
+  baseline_impl: "Impl: `safety.h:57, 425-460`. Edge state \"not yet seen disengaged\" (amendment, ATC-26): not at the pinned opendbc; proposed change change-2026-10-14-mode-set-regrant (assurance/07-supporting/impact/change-2026-10-14-mode-set-regrant.md)"
   status: proposed
   source: WP-W-02
 
@@ -1285,7 +1285,7 @@
 
 - id: SWSR-518
   kind: swsr
-  text: "The TX hook shall count the frames of each whitelisted ID over a sliding 250 ms window (two 125 ms half-windows) and reject a frame when the count reaches the ID's budget (nominal rate with a 1.2× tolerance, plus a burst allowance); while authority is granted, 3 rejected frames within one half-window shall revoke authority and be reported."
+  text: "The TX hook shall count the frames of each whitelisted ID over a sliding 250 ms window (two 125 ms half-windows) and reject a frame when the count reaches the ID's budget (nominal rate with a 1.2× tolerance, plus a burst allowance); while authority is granted, 3 rejected frames within one half-window shall revoke authority and be reported; after such a revocation, authority shall not be granted again until one full 250 ms window has passed without a rejected frame."
   asil: "B‡"
   parents: [TSR-518]
   parent_text: "TSR-518"
@@ -1295,7 +1295,7 @@
   acceptance: "`0x2E4` at 2× rate: excess frames rejected; revocation ≤ 0.1 s after the first rejected frame (≤ 0.2 s from flood onset at 2×), as TSR-518 v0.13"
   applies_to: "CFG-001, reference build only (`LIONDRIVER_REFERENCE=1`); other builds keep the upstream behaviour"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl (reference build, opendbc `7993399`, panda `8aa8671`): `tx_rate_check` (`opendbc/safety/safety.h`), Toyota budgets (`modes/toyota.h`), health flag bit 11 → `pandaState.txRateExceeded`; unit tests `test_tx_rate_*` (flood, sliding window, host cadence, revocation timing, catch-up bursts, no limit-state update); HIL `tests/hitl/test_14_tx_rate.py` (not run). Design DN-01 (assurance/05-software/design-notes/DN-01-tx-rate-supervision.md)"
+  baseline_impl: "Impl (reference build, opendbc `7993399`, panda `8aa8671`): `tx_rate_check` (`opendbc/safety/safety.h`), Toyota budgets (`modes/toyota.h`), health flag bit 11 → `pandaState.txRateExceeded`; unit tests `test_tx_rate_*` (flood, sliding window, host cadence, revocation timing, catch-up bursts, no limit-state update); HIL `tests/hitl/test_14_tx_rate.py` (not run). Design DN-01 (assurance/05-software/design-notes/DN-01-tx-rate-supervision.md). Re-engagement block (amendment, ATC-20): not at the pinned opendbc; proposed change change-2026-10-13-tx-rate-reengagement (assurance/07-supporting/impact/change-2026-10-13-tx-rate-reengagement.md)"
   status: proposed
   source: WP-W-02
 

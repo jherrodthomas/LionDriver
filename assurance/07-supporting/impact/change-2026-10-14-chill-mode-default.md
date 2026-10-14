@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Proposed 2026-10-14; process replay and the manager default test to run in CI; not reviewed independently** |
+| Status | **Integrated 2026-10-14 (LionDriver #74, `9552997`; commit `38d3320`); process replay and the manager default test run in CI; not reviewed independently** |
 | Decision | D-08 (decided 2026-10-10, [WP-M-07 §5](../../01-management/WP-M-07-risk-management.md#5-decision-log-strategic-decisions-from-wp-m-01-8)); code change chosen by the project lead in the decision register, [DQ-001](../../01-management/decisions/register.yaml) option A (2026-10-14) |
 | Finding | B-06 ([WP-M-03](../../01-management/WP-M-03-project-plan.md)); R-17 ([WP-M-07](../../01-management/WP-M-07-risk-management.md)); STPA LS-31 and LS-03 ([WP-A-05](../../08-analyses/WP-A-05-stpa.md)) |
 | Reference configuration affected | Yes (all builds) |

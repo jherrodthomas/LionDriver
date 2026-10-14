@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Proposed 2026-10-12: LionDriver pins opendbc `273f44e`, the fork's master with opendbc#11 merged (`c221521`) and opendbc#12 (mutation tooling only); not yet verified on the vehicle or on hardware (HIL bench D-04); not reviewed independently** |
+| Status | **Integrated 2026-10-12 and kept in every later pin (now opendbc `9a13f60`): LionDriver pinned opendbc `273f44e`, the fork's master with opendbc#11 merged (`c221521`) and opendbc#12 (mutation tooling only); not yet verified on the vehicle or on hardware (HIL bench D-04); not reviewed independently** |
 | Change request | [jherrodthomas/opendbc#11](https://github.com/jherrodthomas/opendbc/pull/11) |
 | Range | opendbc `875e325..31e890d`, merged with the fork's master (`7993399`, TX rate supervision TSR-518) in `00ea632`, merged to the fork's master as `c221521` |
 | Reference configuration affected | Yes, in the reference build only (`LIONDRIVER_REFERENCE`, Toyota LKA torque control without SecOC); other builds and configurations are unchanged |

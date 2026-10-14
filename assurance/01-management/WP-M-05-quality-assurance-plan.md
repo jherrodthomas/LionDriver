@@ -4,19 +4,19 @@
 |---|---|
 | Work product | WP-M-05 Quality management and quality assurance plan |
 | Standard reference | ASPICE 4.0 SUP.1 (quality assurance); ISO 26262-2:2018 §5 (quality management as a prerequisite for functional safety); ISO/SAE 21434:2021 §5 (quality management for cybersecurity); IATF 16949 (informative only) |
-| Version | 0.1 |
+| Version | 0.2 (status update: §1 current state, §5.3 CI gate status for the fork CI of D-01/D-03 (`safety.yaml`, `check-submodules.sh` against the forks, link check), OI-2, OI-3 and OI-6 closed; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (process) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer |
-| Baseline | `8b8c6ae` |
+| Baseline | `bd85eff` (status update 2026-10-14) |
 
 ## 1. Purpose
 
 ISO 26262-2 §5 and ISO/SAE 21434 §5 expect functional safety and cybersecurity work to sit on top of a quality management system. LionDriver has no certified QMS and does not intend to get one (IATF 16949 is used for orientation only). This plan defines the minimum quality management the project runs instead, and the quality assurance (SUP.1) activities that give objective evidence that work products and processes follow the plans.
 
-Current state at baseline `8b8c6ae`: no QA function, plan or audit record exists (gap assessment §7: SUP.1 CL0). CI quality gates exist upstream (see §5.3), but whether they run for LionDriver depends on D-03.
+Current state at baseline `8b8c6ae`: no QA function, plan or audit record existed (gap assessment §7: SUP.1 CL0). Status 2026-10-14: this plan exists as a Draft; no QA person is named (OI-1) and no QA audit record exists. The pre-review audits in [`reviews/`](reviews/RR-2026-002.md) (for example RR-2026-002, RR-2026-008) are author-side self-checks at I0; they are not QA audits. Since D-01 and D-03 (2026-10-10) the safety-code CI gates run in LionDriver CI (`.github/workflows/safety.yaml`, §5.3). Still open: fork-owned process-replay references (CR-CI-08), CODEOWNERS (QG-9) and branch coverage (QG-3).
 
 ## 2. Quality objectives
 
@@ -93,22 +93,22 @@ Process audits also cover the project management practices in [WP-M-03](WP-M-03-
 
 ### 5.3 CI quality gates
 
-These checks are the automated part of QA. Status column describes the baseline honestly.
+These checks are the automated part of QA. The status column describes the state on 2026-10-14 from the workflow files; it does not claim that any run passed. Run logs are the evidence (§9).
 
-| Gate | Scope | Criterion | Status at `8b8c6ae` |
+| Gate | Scope | Criterion | Status (2026-10-14) |
 |---|---|---|---|
-| QG-1 opendbc safety unit tests | `opendbc/safety` | All tests pass | Exist in the opendbc repository's own CI (`opendbc_repo/.github/workflows/tests.yml`). LionDriver's `tests.yaml` does not run them; they run in comma's opendbc repo, not under LionDriver control (D-01, D-03) |
-| QG-2 Line coverage | `opendbc/safety` | 100 % line coverage (`gcovr --fail-under-line=100`) | Same as QG-1 |
+| QG-1 opendbc safety unit tests | `opendbc/safety` | All tests pass | Run in LionDriver CI: `safety.yaml` job `safety_tests` runs `opendbc/safety/tests/test.sh` on the pinned `opendbc_repo` (LionDriver fork), in the standard and the reference (`LIONDRIVER_REFERENCE=1`) variant. Triggers: pull requests and pushes to `liondriver-dev` that change `opendbc_repo`, `panda` or the workflow, and manual dispatch (D-01, D-03, GAP-39). At `8b8c6ae` they ran only in comma's opendbc CI |
+| QG-2 Line coverage | `opendbc/safety` | 100 % line coverage (`gcovr --fail-under-line=100`) | Same job as QG-1: the gate is in `test.sh` (`opendbc/safety/tests/test.sh:36`) |
 | QG-3 Structural coverage beyond line | `opendbc/safety`, panda firmware paths in the envelope | Branch coverage, MC/DC as required by the HARA ASIL (WP-W-06) | Not implemented (GAP-13) |
-| QG-4 MISRA C:2012 | `opendbc/safety`, panda firmware incl. bootstub | No new violations; every suppression has a deviation record | Check exists for opendbc safety and panda (not bootstub); suppressions have no formal deviation records (GAP-13) |
-| QG-5 Mutation testing | `opendbc/safety` | No new surviving mutants; existing survivors justified | Exists upstream; 3 accepted survivors without formal justification (GAP-13) |
-| QG-6 Unit tests and process replay | openpilot | All pass; replay against fork-owned references | Unit tests run in LionDriver `tests.yaml` on hosted runners; replay references come from comma storage (GAP-30) |
+| QG-4 MISRA C:2012 | `opendbc/safety`, panda firmware incl. bootstub | No new violations; every suppression has a deviation record | Runs in LionDriver CI: `safety.yaml` jobs `misra` (opendbc safety) and `panda_misra` (panda `board/main.c`, default and reference build, against the pinned `opendbc_repo`). Bootstub not checked (`-UBOOTSTUB`). Deviation register drafted in [WP-W-01 §9](../05-software/WP-W-01-software-development-environment-guidelines.md) (DEV-nn), rationales open (GAP-13) |
+| QG-5 Mutation testing | `opendbc/safety` | No new surviving mutants; existing survivors justified | Runs in LionDriver CI: `safety.yaml` jobs `mutation` and `mutation_reference` (reference variant). 3 accepted survivors (`lateral.h:188, 218, 219`, `mutation.py:611-615`) still without formal justification (GAP-13, [WP-W-06](../05-software/WP-W-06-software-unit-verification.md) OI-5) |
+| QG-6 Unit tests and process replay | openpilot | All pass; replay against fork-owned references | Unit tests and process replay run in LionDriver `tests.yaml` on hosted runners, on pull requests and pushes to `liondriver-dev`. Replay references still come from comma storage; `ref_commit` is pinned to the baseline `655bfde` in the interim. Fork-owned references open (CR-CI-08, GAP-30) |
 | QG-7 Static analysis / lint | openpilot | ruff, codespell, cpplint, type check pass | Runs in `tests.yaml` (`static_analysis`); type checking weak (GAP-36) |
-| QG-8 Submodule and dirty-tree checks | Repo | Submodules pinned to LionDriver-controlled commits; clean tree | `check-submodules.sh` checks against upstream master, which conflicts with D-01 |
-| QG-9 Required review | Safety-relevant files | CODEOWNERS approval from a reviewer other than the author | Not implemented (GAP-32) |
-| QG-10 Work product link check | `assurance/` | Relative links resolve, or point to a WP listed in WP-M-00 | Not implemented (proposed) |
+| QG-8 Submodule and dirty-tree checks | Repo | Submodules pinned to LionDriver-controlled commits; clean tree | `tools/release/check-submodules.sh` runs in `tests.yaml` (`build_release`) for `jherrodthomas/LionDriver`. It checks each pin is on `origin/master`; since D-01 `origin` is the LionDriver fork (`.gitmodules` absolute URLs), so it checks the forks. tinygrad (upstream, pinned by commit) is skipped. `check-dirty.sh` runs in the same job |
+| QG-9 Required review | Safety-relevant files | CODEOWNERS approval from a reviewer other than the author | Not implemented: no `CODEOWNERS` file (GAP-32) |
+| QG-10 Work product link check | `assurance/` | Relative links resolve, or point to a WP listed in WP-M-00 | Runs in LionDriver CI: `assurance.yaml` step "Relative links" (`assurance/trace/tools/check_links.py`) on changes to `assurance/**` and the LionDriver docs |
 
-QG-1, QG-2, QG-4, QG-5, QG-8 and QG-9 must be required status checks on the protected branch for safety-relevant changes by G0. QG-3 by G3.
+QG-1, QG-2, QG-4, QG-5, QG-8 and QG-9 must be required status checks on the protected branch for safety-relevant changes by G0. QG-3 by G3. Branch protection and required checks are repository settings and are not visible in the repository; the G0 process audit (§5.2) checks them.
 
 ## 6. Escalation
 
@@ -158,8 +158,8 @@ Escalations and decisions are recorded on the finding's issue.
 | ID | Open item | Owner | Due |
 |---|---|---|---|
 | OI-1 | Name a QA person independent of the author (Q-A) | PM | G0 |
-| OI-2 | Make QG-1, QG-2, QG-4, QG-5 run in LionDriver-controlled CI after D-01 and D-03 | PM | G0 |
-| OI-3 | Replace or reconfigure `check-submodules.sh` so QG-8 checks LionDriver forks, not upstream master | PM | G0 |
+| OI-2 | Closed 2026-10-14: QG-1, QG-2, QG-4 and QG-5 run in LionDriver CI (`.github/workflows/safety.yaml`, D-01 and D-03 done 2026-10-10). Making them required checks is part of the G0 process audit (§5.3) | PM | G0 |
+| OI-3 | Closed 2026-10-14: with the absolute fork URLs of D-01, `check-submodules.sh` checks each pin against the LionDriver fork's `master`; it runs in `tests.yaml` for this repository | PM | G0 |
 | OI-4 | Define the CI log archiving method for release evidence | PM | G3 |
 | OI-5 | Write formal MISRA deviation records for existing suppressions and justifications for surviving mutants | ENG | G3 |
-| OI-6 | Implement QG-10 work product link check | QA | G1 |
+| OI-6 | Closed 2026-10-14: QG-10 runs as `assurance/trace/tools/check_links.py` in `.github/workflows/assurance.yaml` | QA | G1 |
