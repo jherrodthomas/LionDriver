@@ -863,6 +863,13 @@ def figure_7_1(md: str) -> str:
 
 # ---------------------------------------------------------------- consistency
 
+def in_submodule(rel: str) -> bool:
+  """True when `rel` lies in a git submodule (listed in .gitmodules)."""
+  gm = REPO / ".gitmodules"
+  paths = re.findall(r"^\s*path\s*=\s*(\S+)", gm.read_text(encoding="utf-8"), re.M) if gm.exists() else []
+  return any(rel == p or rel.startswith(p.rstrip("/") + "/") for p in paths)
+
+
 def problems(md: str, recs: dict) -> list[str]:
   out = []
   for key, srcs in PROSE.items():
@@ -871,7 +878,8 @@ def problems(md: str, recs: dict) -> list[str]:
   for f, ln, snippet in CODE_SRC:
     p = REPO / f
     if not p.exists():
-      out.append(f"{f}: file missing")
+      if not in_submodule(f):  # submodules are not checked out in the assurance CI job; checked locally
+        out.append(f"{f}: file missing")
       continue
     lines = p.read_text(encoding="utf-8").splitlines()
     if ln and (len(lines) < ln or snippet not in lines[ln - 1]):
