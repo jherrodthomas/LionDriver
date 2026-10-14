@@ -3869,3 +3869,23 @@
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md RD-3", "assurance/02-concept/WP-C-04-functional-safety-concept.md OI-3", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-3", "assurance/00-assessment/docs-safety-reconciliation.md OI-2"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+- id: DQ-206
+  question: "When a diagnostic catches a hazardous fault and the car reaches a safe state in time, may that count as accepting the remaining risk?"
+  context: "The new monitoring-and-response rating (FMEA-MSR) scores how well each in-car diagnostic catches a fault and how fast the system reacts. 194 of 201 failure causes are rated high priority today because diagnostics get no credit. The question is whether a good monitoring score can **close** a hazard-linked cause, or only rank which ones to work on first."
+  reversibility: revisit
+  blocks: "FMEA-MSR step M2; residual-risk argument in the safety case"
+  gate: G3
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "It can close a cause, but only with measured timing"
+      detail: "A low or medium MSR priority closes the cause once the fault-injection timing has been measured inside the fault-tolerant time. Calculated timing only ranks the work. Cost: the HIL and fault-injection measurements are needed before anything closes."
+    - key: B
+      title: "Ranking only; it never closes a cause"
+      detail: "Every high-priority cause still needs its own action or a rationale you sign. Safest, but the list of 194 stays open until the actions are done."
+    - key: C
+      title: "It can close a cause with calculated timing"
+      detail: "Fastest. Timing derived from the code is accepted without measurement. An assessor is likely to challenge it."
+  sources: ["assurance/08-analyses/fmea/msr-plan.md", "assurance/03-system/WP-S-04-timing-ftti-budget.md", "assurance/08-analyses/fmea/rating-tables.md"]
+  status: queued
