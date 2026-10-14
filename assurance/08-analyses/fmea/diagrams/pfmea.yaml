@@ -134,8 +134,18 @@ process_flow:
 p_diagram:
   title: "PFMEA P-diagram: as-driven AC-001"
   focus: "Producing the as-driven reference configuration (AC-001)"
-  functions: [PFM-FN-001, PFM-FN-002, PFM-FN-003, PFM-FN-004, PFM-FN-005, PFM-FN-006,
-              PFM-FN-007, PFM-FN-008, PFM-FN-009, PFM-FN-010, PFM-FN-011]
+  functions:
+    - PFM-FN-001
+    - PFM-FN-002
+    - PFM-FN-003
+    - PFM-FN-004
+    - PFM-FN-005
+    - PFM-FN-006
+    - PFM-FN-007
+    - PFM-FN-008
+    - PFM-FN-009
+    - PFM-FN-010
+    - PFM-FN-011
   inputs:
     - "Frozen baseline, signed RC tag"
     - "LionDriver panda release key"
