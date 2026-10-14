@@ -2,6 +2,7 @@
 """Tests for build_snapshot.py and the release status rule (caselib.release_status)."""
 from __future__ import annotations
 
+import base64
 import hashlib
 import re
 import sys
@@ -13,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_snapshot as bs
 from caselib import release_status
 
-ORDER = ["approval", "control", "contents", "roles", "raci", "contributors", "status", "scope", "hierarchy", "argument",
+ORDER = ["approval", "control", "contents", "roles", "raci", "contributors", "status", "traceability", "scope", "hierarchy", "argument",
          "claims", "evidence", "defeaters", "gates", "config", "annex-a", "annex-b", "annex-c"]
 
 
@@ -112,6 +113,44 @@ class Snapshot(unittest.TestCase):
     self.assertEqual(manifest["snapshot"]["previous"], "SC-2000.01.01-0000000")
     self.assertIn("no status change", html)
     self.assertIn("no change to assurance/", html)
+
+  def _section(self, sid: str) -> str:
+    if sid == "cover":
+      return self.html.split('class="cover"', 1)[1].split("</section>", 1)[0]
+    return self.html.split(f'id="{sid}"', 1)[1].split("</section>", 1)[0]
+
+  @staticmethod
+  def _vs(html: str) -> list[str]:
+    """The system-V SVGs inlined in a piece of the snapshot (base64 data URIs, like every figure)."""
+    out = [base64.b64decode(b).decode() for b in re.findall(r'src="data:image/svg\+xml;base64,([A-Za-z0-9+/=]+)"', html)]
+    return [s for s in out if "<title>System V" in s]
+
+  def test_system_v_is_embedded_where_expected(self):
+    expected = {"cover": ["System V · status lens"], "status": ["System V · status lens"],
+                "traceability": ["System V · trace lens", "System V per safety goal"], "gates": ["System V · gate lens"]}
+    for sid, titles in expected.items():
+      found = [re.search(r"<title>(.*?)</title>", s).group(1) for s in self._vs(self._section(sid))]
+      self.assertEqual(found, titles, sid)
+    self.assertIn('href="#traceability"', self._section("contents"))
+    self.assertIn("1.1 Traceability on the V", self._section("traceability"))
+
+  def test_cover_signature_follows_the_data(self):
+    vd = bs.vmodel.load()
+    self.assertIn(bs.e(bs.v_signature(vd)), self._section("cover"))
+    if not any(vd.executed.values()) and not any(st in ("A", "B") for st, _ in vd.register.values()):
+      self.assertIn("status signature · nothing verified yet", self.html)
+
+  def test_nothing_green_in_any_v(self):
+    vd = bs.vmodel.load()
+    earned = (any(st in ("A", "B") for st, _ in vd.register.values()) or "passed" in vd.gate_status.values()
+              or any(vd.passed.values()))
+    vs = self._vs(self.html)
+    self.assertEqual(len(vs), 5)
+    for svg in vs:
+      self.assertIn('role="img"', svg)
+      if not earned:
+        self.assertNotIn(bs.vmodel.GREEN, svg)
+        self.assertNotIn(bs.vmodel.GREEN_BG, svg)
 
   def test_baseline_tag(self):
     _, manifest = bs.build("bl-002", None)

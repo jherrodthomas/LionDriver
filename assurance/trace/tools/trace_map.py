@@ -26,7 +26,6 @@ import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from xml.sax.saxutils import escape
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -127,8 +126,9 @@ DERIVATIONS = [
   ("TSR", "HWSR", "TSR -> HWSR (HW-allocated TSRs)", ct.HW_ALLOC),
 ]
 ALLOC = {(d[0], d[1]): d[3] for d in DERIVATIONS}
-STATUS_FILL = {"full": "#DCFCE7", "partial": "#FEF3C7", "none": "#FEE2E2", "untraced": "#F1F5F9"}
-STATUS_STROKE = {"full": "#16A34A", "partial": "#D97706", "none": "#DC2626", "untraced": "#94A3B8"}
+# One colour rule with vmodel.py: a case naming an item is a specified link, never green (green is approved or passed).
+STATUS_FILL = {"full": "#EFF6FF", "partial": "#FFFBEB", "none": "#FEF2F2", "untraced": "#F8FAFC"}
+STATUS_STROKE = {"full": "#2563EB", "partial": "#D97706", "none": "#D2553F", "untraced": "#94A3B8"}
 STATUS_WORD = {"full": "complete", "partial": "partial", "none": "missing", "untraced": "not in trace data"}
 
 ID_RE = re.compile(r"\b(SG|FSR|TSR|SWSR|HWSR|SYS|AIR|DSR|MLR|SH|TC|FI|FM|CSR|CSG|TS|AOU|HE|H)-(\d{2,3}(?:\.\d{1,2})?)([a-z]?)\b(?!\.x)")
@@ -318,8 +318,8 @@ def left_status(m: Model, lv: Level) -> str:
 
 # ---------------------------------------------------------------- rendering
 
-LEFT_STYLE = {"all": "fill:#DBEAFE,stroke:#2563EB", "some": "fill:#EFF6FF,stroke:#2563EB,stroke-dasharray:4 3",
-              "none": "fill:#F1F5F9,stroke:#94A3B8,stroke-dasharray:4 3"}
+LEFT_STYLE = {"all": "fill:#EFF6FF,stroke:#2563EB", "some": "fill:#FFFBEB,stroke:#D97706",
+              "none": "fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4"}
 
 
 def para(*parts: str) -> str:
@@ -400,93 +400,10 @@ def stack(m: Model, group: str, keys: list[str], label) -> str:
 
 # ---------------------------------------------------------------- SVG (Figure 1)
 
-FONT = "Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
-INK, MUTED = "#0F172A", "#475569"
-BOX_W, LINE_H, PAD, GAP_Y, STEP_X, MARGIN = 210, 15, 9, 22, 92, 16
-
-
-def box_lines(m: Model, lv: Level, left: bool) -> list[tuple[str, bool]]:
-  """(text, bold) lines of one box, the same content as the Mermaid labels."""
-  label = left_label(m, lv) if left else right_label(m, lv)
-  out = []
-  for part in label.split("<br/>"):
-    bold = part.startswith("<b>")
-    out.append((re.sub(r"</?[bi]>", "", part), bold))
-  return out
-
-
-def box_style(m: Model, lv: Level, left: bool) -> tuple[str, str, str]:
-  """fill, stroke, dash"""
-  if left:
-    st = left_status(m, lv)
-    if st == "all":
-      return "#DBEAFE", "#2563EB", ""
-    return ("#EFF6FF", "#2563EB", "4 3") if st == "some" else ("#F1F5F9", "#94A3B8", "4 3")
-  kinds = next(p[2] for p in PAIRS if p[1] == lv.key)
-  st = pair_status(m, lv.key, kinds)[0]
-  return STATUS_FILL[st], STATUS_STROKE[st], ""
-
-
-def el(tag: str, text: str | None = None, **attrs) -> str:
-  """One SVG element; attribute names use _ for - (stroke_width -> stroke-width)."""
-  a = "".join(f' {k.rstrip("_").replace("_", "-")}="{v}"' for k, v in attrs.items() if v != "")
-  return f"<{tag}{a}/>" if text is None else f"<{tag}{a}>{escape(text)}</{tag}>"
-
-
 def svg_v_model(m: Model) -> str:
-  """Figure 1 as SVG: each depth of the V is one row; left boxes step right, right boxes step left."""
-  rows = []  # per row: (left keys, right keys, height)
-  for lefts, rights in V_ROWS:
-    hl = sum(len(box_lines(m, level(k), True)) * LINE_H + 2 * PAD for k in lefts) + 6 * (len(lefts) - 1)
-    hr = sum(len(box_lines(m, level(k), False)) * LINE_H + 2 * PAD for k in rights) + 6 * (len(rights) - 1)
-    rows.append((lefts, rights, max(hl, hr)))
-  depth = len(rows)
-  width = 2 * MARGIN + 2 * BOX_W + 2 * (depth - 1) * STEP_X + 150
-  pos: dict[str, tuple[float, float, float, float]] = {}  # key -> x, y, w, h
-  y = MARGIN + 30
-  for d, (lefts, rights, h) in enumerate(rows):
-    for keys, left in ((lefts, True), (rights, False)):
-      x = MARGIN + d * STEP_X if left else width - MARGIN - BOX_W - d * STEP_X
-      yy = y
-      for k in keys:
-        bh = len(box_lines(m, level(k), left)) * LINE_H + 2 * PAD
-        pos[k] = (x, yy, BOX_W, bh)
-        yy += bh + 6
-    y += h + GAP_Y
-  height = y + 4
-  head = el("svg", None, xmlns="http://www.w3.org/2000/svg", width=width, height=height, viewBox=f"0 0 {width} {height}",
-            font_family=FONT, font_size=12)
-  arrow = el("path", None, d="M0,0 L10,5 L0,10 z", fill=MUTED)
-  marker = f'<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">{arrow}</marker>'
-  out = [head[:-2] + ">", f"<defs>{marker}</defs>", el("rect", None, width=width, height=height, fill="#FFFFFF"),
-         el("text", "Specification (ASPICE 4.0)", x=MARGIN, y=MARGIN + 12, font_weight=700, fill=INK),
-         el("text", "Verification", x=width - MARGIN, y=MARGIN + 12, font_weight=700, fill=INK, text_anchor="end")]
-  # decomposition down the left side
-  for a, b in V_DOWN:
-    ka = a if a in pos else V_ROWS[int(a[1:])][0][-1]
-    kb = b if b in pos else V_ROWS[int(b[1:])][0][0]
-    xa, ya, wa, ha = pos[ka]
-    xb, yb, _, _ = pos[kb]
-    out.append(el("line", None, x1=xa + 30, y1=ya + ha, x2=xb + 30, y2=yb, stroke=MUTED, marker_end="url(#a)"))
-  # verification links across the V
-  for left, right, kinds in PAIRS:
-    xl, yl, wl, hl = pos[left]
-    xr, yr, _, hr = pos[right]
-    ym = min(yl + hl / 2, yr + hr / 2)
-    text = pair_status(m, right, kinds)[1]
-    out.append(el("line", None, x1=xr, y1=ym, x2=xl + wl, y2=ym, stroke=MUTED, stroke_dasharray="5 3", marker_end="url(#a)"))
-    out.append(el("text", text, x=(xr + xl + wl) / 2, y=ym - 4, text_anchor="middle", fill=INK))
-  # boxes last, on top
-  for key, (x, yy, w, h) in pos.items():
-    left = any(key in r[0] for r in V_ROWS)
-    fill, stroke, dash = box_style(m, level(key), left)
-    out.append(el("rect", None, x=x, y=yy, width=w, height=h, rx=5, fill=fill, stroke=stroke, stroke_width=1.5,
-                  stroke_dasharray=dash))
-    for i, (line, bold) in enumerate(box_lines(m, level(key), left)):
-      out.append(el("text", line, x=x + w / 2, y=yy + PAD + (i + 1) * LINE_H - 3, text_anchor="middle",
-                    fill=INK if bold or i == 1 else MUTED, font_weight=700 if bold else ""))
-  out.append("</svg>")
-  return "\n".join(out) + "\n"
+  """Figure 1: the system V of vmodel.py, trace lens, full size (the same component the figures and the snapshot use)."""
+  import vmodel  # imports this module; imported here to avoid a cycle
+  return vmodel.render("trace", "full", model=m)
 
 
 LANES = [  # standard, item kinds in the lane, links (parent -> child)
@@ -553,15 +470,18 @@ def render(m: Model) -> str:
     "## 1. The V-model",
     "",
     para("Specification on the left, verification on the right. Each verification process sits opposite the process whose",
-         "work products it verifies (ASPICE 4.0). Every box names its process, its work products and the items it holds;",
-         "`*` marks kinds defined in the work products but not yet in the trace data; \"from SG: 7/7\" counts the parents",
-         "with at least one child in the trace data. The work products of each process are listed in §2. Arrows down",
-         "the left follow the decomposition; arrows across the V are verification links, labelled with how many items",
-         "of the paired level at least one test case names."),
+         "work products it verifies (ASPICE 4.0): the system trunk (SYS.1–SYS.3, SYS.4, SYS.5 and VAL.1) steps inward, then",
+         "one dashed bracket holds the software, hardware and machine-learning arms side by side. Each specification box",
+         "lists the items its process holds (`*`: kinds defined in the work products but not yet in the trace data) and,",
+         "where the trace data has the link, \"from SG 7/7\": the parents with at least one child. Each verification box",
+         "lists the cases of its test specifications, then the items of the paired level they name. Arrows down the left",
+         "and up the right follow decomposition and integration; dashed arrows across the V are verification links,",
+         "labelled with the same counts in the trunk. The work products of each process are listed in §2."),
     "",
-    f"![Figure 1: ASPICE 4.0 V-model with item counts per process and verification coverage across the V]({FIG.name})",
+    f"![Figure 1: ASPICE 4.0 system V, trace lens: item counts per process and verification coverage across the V]({FIG.name})",
     "",
-    para("*Figure 1.* Generated SVG, drawn from the same data as the tables below. Source:",
+    para("*Figure 1.* The system V of [`tools/vmodel.py`](../tools/vmodel.py), trace lens, drawn from the same data as the",
+         "tables below; the same component draws the status and per-goal Vs of the README and the safety case snapshot. Source:",
          f"[`{FIG.name}`]({FIG.name}); the Mermaid version follows as a text alternative."),
     "",
     "<details><summary>Mermaid version of Figure 1</summary>",
@@ -572,9 +492,10 @@ def render(m: Model) -> str:
     "",
     "</details>",
     "",
-    para("Verification boxes: green when every item of the paired level is named by a case, amber when some are, red when",
-         "none is. Specification boxes: solid blue when all their item kinds are in the trace data, dashed blue when some",
-         "are, dashed grey when none are or the level holds no item kind yet."),
+    para("One colour rule for every V: blue when every item of the level is in the trace data, or every item of the",
+         "paired level is named by a case (done in the design, not verified); amber when some are; red when none is;",
+         "dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification;",
+         "nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet)."),
     "",
     para(f"A named item is a **specified** link, not a passed test. {verified} of {len(m.items)} traced items carry status",
          "`verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the",

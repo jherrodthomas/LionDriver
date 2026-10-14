@@ -9,6 +9,8 @@
   6  Assumption exposure: what credits each assumption of use
   7  Consistency checks: implemented, partly, not yet (from the table in README §6)
   8  Allocation resolution: how many allocated_to values name an element of the SysML model
+  9  The system V, status lens: register status per ASPICE level, cases specified and run, gate records (vmodel.py)
+ 10  The system V per safety goal: the goal's items per level and how many the paired cases name (vmodel.py)
 
 Every number is computed. The sources are:
   - the trace data in assurance/trace/items/*.yaml (via trace_map.build(), which also counts the IDs of
@@ -36,6 +38,7 @@ from xml.sax.saxutils import escape
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import trace_map as tm
+import vmodel
 
 TRACE_DIR = HERE.parent
 ASSURANCE_DIR = TRACE_DIR.parent
@@ -862,6 +865,30 @@ def fig8(d: Data) -> str:
              ", ".join(f"{k} {c['resolved']} of {n}" for k, n, c in rows[:-1]) + ".", out)
 
 
+# ---------------------------------------------------------------- Figures 9 and 10: the system V (vmodel.py)
+
+def fig9(d: Data) -> str:
+  W = 1280
+  vd = vmodel.load(d.m)
+  dr = vmodel.draw("status", "full", model=vd)
+  out = header(W, 9, "The system V, status lens",
+               "Register status of each level's work products, the test cases specified and run on the right, the gate " +
+               "records below. Nothing is approved or verified yet.", "WP-T-01 §2.1 · WP-M-00 §3")
+  out += [vmodel.marker_defs(dr.body), vmodel.place(dr, (W - dr.width) / 2, 96, dr.width)]
+  return svg(W, int(96 + dr.height + 16), "Figure 9 · The system V, status lens", dr.desc, out)
+
+
+def fig10(d: Data) -> str:
+  W = 1280
+  vd = vmodel.load(d.m)
+  dr = vmodel.goal_grid(vd, width=W, top=100)
+  out = header(W, 10, "The system V per safety goal",
+               "Left: the goal's items at each level (TSRs allocated to operation left out). Right: how many of them the " +
+               "paired test cases name, a specified link, not a passed test.", "WP-T-01 §2.1")
+  out += [vmodel.marker_defs(dr.body), *dr.body]
+  return svg(W, int(dr.height), "Figure 10 · The system V per safety goal", dr.desc, out)
+
+
 # ---------------------------------------------------------------- main
 
 FIGURES = {
@@ -873,6 +900,8 @@ FIGURES = {
   "fig-6-aou-exposure.svg": fig6,
   "fig-7-consistency-checks.svg": fig7,
   "fig-8-allocation-resolution.svg": fig8,
+  "fig-9-system-v-status.svg": fig9,
+  "fig-10-v-per-goal.svg": fig10,
 }
 
 

@@ -67,6 +67,7 @@ jobs:
       run: |
         python3 assurance/trace/tools/trace_map.py --check
         python3 assurance/trace/tools/test_trace_map.py
+        python3 assurance/trace/tools/test_vmodel.py
     - name: Work-product figures match their source tables and records (and their tests)
       run: |
         python3 assurance/01-management/figures/fig_m_management.py --check

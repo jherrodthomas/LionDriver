@@ -30,6 +30,9 @@ from pathlib import Path
 
 from caselib import ASSURANCE_DIR, CASE_DIR, REPO_ROOT, load_case, release_status, summarize, validate
 
+sys.path.insert(0, str(ASSURANCE_DIR / "trace" / "tools"))
+import vmodel
+
 GENERATOR_VERSION = "1.0"
 REPO_SLUG = "jherrodthomas/LionDriver"
 RELEASES_URL = f"https://github.com/{REPO_SLUG}/releases"
@@ -186,6 +189,27 @@ def figure(path: Path, number: int, caption: str) -> str:
   return f'<figure>{img(path, caption)}<figcaption>Figure {number}. {e(caption)}.</figcaption></figure>'
 
 
+def svg_img(svg: str, alt: str, cls: str = "fig") -> str:
+  """A generated SVG inlined like img(): base64 data URI, so the snapshot stays one self-contained file."""
+  data = base64.b64encode(svg.encode()).decode()
+  return f'<img class="{cls}" alt="{e(alt)}" src="data:image/svg+xml;base64,{data}">'
+
+
+def v_figure(dr: vmodel.Drawing, number: int, caption: str) -> str:
+  return f'<figure>{svg_img(vmodel.svg(dr), dr.desc)}<figcaption>Figure {number}. {e(caption)}.</figcaption></figure>'
+
+
+def v_signature(vd: vmodel.Data) -> str:
+  """The cover caption, worded from the data: what has run and passed, and whether any work product is approved."""
+  cases, run, passed = sum(vd.cases.values()), sum(vd.executed.values()), sum(vd.passed.values())
+  approved = sum(1 for s_, _ in vd.register.values() if s_ in ("A", "B"))
+  if not run:
+    state = "nothing verified yet" if not approved else f"{approved} work products approved, nothing verified yet"
+  else:
+    state = f"{passed} of {cases} cases passed"
+  return f"status signature · {state}"
+
+
 def bar(parts: list[tuple[int, str]], total: int) -> str:
   segs = "".join(f'<i style="width:{100 * n / total:.2f}%;background:{c}"></i>' for n, c in parts if n and total)
   return f'<div class="track">{segs}</div>'
@@ -265,21 +289,32 @@ h2{font-size:12pt;margin:6mm 0 2mm}
 figure{margin:0 0 5mm;break-inside:avoid}
 .fig{display:block;max-width:100%;max-height:150mm;margin:2mm auto 1.5mm;border:1px solid var(--line);border-radius:1.5mm}
 figcaption{font-size:8pt;color:var(--mut)}
+section.wide{width:265mm;margin-left:-42.5mm}
+section.wide .fig{max-height:128mm}
+.chead{display:grid;grid-template-columns:1fr 72mm;gap:6mm;align-items:end}
+.vsig{display:block;width:72mm;border:1px solid var(--line);border-radius:1.5mm}
+.vsig+div{font-size:7.6pt;color:var(--mut);text-align:center;margin-top:1mm}
+.hgate{display:grid;grid-template-columns:1fr 58mm;gap:6mm;align-items:start}
+.vloc{display:block;width:58mm;border:1px solid var(--line);border-radius:1.5mm}
+.vloc+div{font-size:7.4pt;color:var(--mut);margin-top:1mm}
 .small{font-size:8pt;color:var(--mut)}
 """
 
 
 # ---------------------------------------------------------------- sections
 
-def cover(ident: dict, s: dict, rs: dict) -> str:
+def cover(ident: dict, s: dict, rs: dict, vd: vmodel.Data) -> str:
   bl = s["baseline"]
+  sig = vmodel.draw("status", "card", model=vd)
   kind_chip = chip("not a baseline", "g") if ident["kind"] == "living snapshot" else chip("baseline release", "ok" if rs["approved"] else "am")
   banner_text = ("<b>Approved.</b> Gate record and approvals are listed on the approval page." if rs["approved"] else
                  f"<b>Not approved. {e(rs['detail'][0].upper() + rs['detail'][1:])}.</b> Valid only as a record of the repository at the commit above.")
   return f"""<section class="cover" style="break-before:auto;page-break-before:auto">
 <div class="brand"><div class="logo">L</div><div><b>LionDriver</b> <span class="small">· Assurance</span></div></div>
-<div class="kicker">SAFETY CASE · WP-K-01</div>
-<div class="ttl">LD-SDA<br>Safety Case</div>
+<div class="chead"><div><div class="kicker">SAFETY CASE · WP-K-01</div>
+<div class="ttl">LD-SDA<br>Safety Case</div></div>
+<div>{svg_img(vmodel.svg(sig), "Status signature: " + sig.desc, "vsig")}
+<div>{e(v_signature(vd))}</div></div></div>
 <div class="small" style="font-size:10pt">LionDriver Supervised Driving Assistance, a supervised SAE Level 2 retrofit<br>
 Reference configuration: Toyota Corolla, 12th generation (E210), TSS 2.0</div>
 <div class="rule"></div>
@@ -386,7 +421,8 @@ def status_delta(s: dict, prev: dict | None) -> str:
 def contents() -> str:
   items = [("approval", "Approval", True), ("control", "Document control", True), ("roles", "Roles and responsibilities", True),
            ("raci", "RACI", True), ("contributors", "Contributors, reviews and confirmation measures", True),
-           ("status", "1 Status at a glance", False), ("scope", "2 Scope", False), ("hierarchy", "2.1 Element hierarchy", False),
+           ("status", "1 Status at a glance", False), ("traceability", "1.1 Traceability on the V", False),
+           ("scope", "2 Scope", False), ("hierarchy", "2.1 Element hierarchy", False),
            ("argument", "3 Argument (GSN)", False),
            ("claims", "4 Claims", False), ("evidence", "5 Evidence register", False), ("defeaters", "6 Open defeaters", False),
            ("gates", "7 Gates, actions and decisions", False), ("config", "8 Configuration and pins", False),
@@ -478,7 +514,7 @@ def area_row(a: dict) -> str:
   return f'<div class="ar"><span>{e(a["title"])}</span>{bar(parts, a["evidence"])}<span class="n">{label}</span></div>'
 
 
-def status_page(s: dict, rs: dict, prev: dict | None) -> str:
+def status_page(s: dict, rs: dict, prev: dict | None, vd: vmodel.Data) -> str:
   cl, ev = s["claims"], s["evidence"]
   kpis = [(f"{cl['accepted']}<small> / {cl['registered']}</small>", f"claims accepted · {cl['undeveloped']} undeveloped"),
           (f"{ev['accepted']}<small> / {ev['registered']}</small>", f"evidence accepted · {ev['awaiting_review']} awaiting review · {ev['missing']} missing"),
@@ -492,6 +528,8 @@ def status_page(s: dict, rs: dict, prev: dict | None) -> str:
 <p class="lead">Assurance state <b>{e(s['assurance_state'])}</b> · baseline {e(s['baseline']['id'])} ({e(s['baseline']['lifecycle_status'].replace('-', ' '))})
 · {e(rs['label'])}: {e(rs['detail'])} · records digest <span class="mono">{e(s['records_digest'])}</span></p>
 <div class="kpis">{k}</div>
+<div class="sect">The system V, status lens</div>
+{v_figure(vmodel.draw("status", "full", model=vd), 1, V_CAPTIONS["status"])}
 <div class="sect">Since the previous snapshot</div><div class="delta">{status_delta(s, prev)}</div>
 <div class="sect">Evidence by lifecycle area</div>{areas}
 <p class="small"><span style="color:#2E9E6A">■</span> accepted · <span style="color:#F59E0B">■</span> partial / awaiting review ·
@@ -500,19 +538,39 @@ def status_page(s: dict, rs: dict, prev: dict | None) -> str:
 </section>"""
 
 
+V_CAPTIONS = {
+  "status": "The system V (ASPICE 4.0), status lens: each level coloured by the WP-M-00 register status of its work products, " +
+            "verification levels with their cases specified and run, the gate records below; generated by assurance/trace/tools/vmodel.py",
+  "trace": "The system V, trace lens: items per level (* only in work products), cases per test specification and items named " +
+           "across the V; the same drawing as Figure 1 of the ASPICE trace map",
+  "goal": "The system V per safety goal: left, the goal's items at each level; right, how many of them the paired test cases " +
+          "name (named / items)",
+}
+
+
+def traceability(vd: vmodel.Data) -> str:
+  lead = ("Where the trace data stands on the V. The trace lens counts the items each specification level holds and how many of " +
+          "the paired level's items the test cases name; the goal lens repeats the V once per safety goal. A case naming an item " +
+          "is a specified link, not a passed test.")
+  return f"""<section id="traceability" class="land wide"><h1>1.1 Traceability on the V</h1><p class="lead">{e(lead)}</p>
+{v_figure(vmodel.draw("trace", "full", model=vd), 2, V_CAPTIONS["trace"])}
+{v_figure(vmodel.goal_grid(vd), 3, V_CAPTIONS["goal"])}
+</section>"""
+
+
 def scope() -> str:
   rows = [[e(plain(r["Attribute"])), e(plain(r["Value"]))] for r in md_table(WP_C_01, "## 1.")]
   title, path = FIGURES[1]
   return f"""<section id="scope"><h1>2 Scope</h1><p class="lead">Item identification, from WP-C-01 §1.</p>
 {table(["Attribute", "Value"], rows)}</section>
-<section id="hierarchy" class="land"><h1>2.1 Element hierarchy</h1>{figure(path, 2, title)}</section>"""
+<section id="hierarchy" class="land"><h1>2.1 Element hierarchy</h1>{figure(path, 4, title)}</section>"""
 
 
 def argument() -> str:
   title, path = FIGURES[0]
   sheets = sorted(GSN_DIR.glob("gsn-*.svg"), key=lambda p: (p.name.startswith("gsn-cs"), int(re.search(r"-(\d+)-", p.name).group(1))))
-  parts = [figure(path, 1, title)]
-  for n, p in enumerate(sheets, start=3):
+  parts = [figure(path, 5, title)]
+  for n, p in enumerate(sheets, start=6):
     t = re.search(r"<title>(.*?)</title>", p.read_text(encoding="utf-8"))
     cap = t.group(1) if t else p.stem
     parts.append(figure(p, n, cap))
@@ -546,10 +604,14 @@ def defeaters_page(case) -> str:
   return f'<section id="defeaters"><h1>6 Open defeaters</h1>{lead}{tbl}</section>'
 
 
-def gates_page(s: dict) -> str:
+def gates_page(s: dict, vd: vmodel.Data) -> str:
   recs = [[e(g["gate"]), e(g["date"]), e(g["outcome"]), f"<span class='mono'>{e(g['record'])}</span>"] for g in s["gates"]["records"]]
   dec = [[f"<span class='mono'>{e(plain(r['ID']))}</span>", e(plain(r["Decision"]))] for r in md_table(WP_M_01, "## 8.")]
-  return f"""<section id="gates"><h1>7 Gates, actions and decisions</h1>
+  card = vmodel.draw("gate", "card", model=vd)
+  loc = (f'<div>{svg_img(vmodel.svg(card), "Gate lens: " + card.desc, "vloc")}' +
+         '<div>Gate lens: each level shows the gate that first needs it, coloured by that gate\'s record.</div></div>')
+  return f"""<section id="gates"><div class="hgate"><div><h1>7 Gates, actions and decisions</h1>
+<p class="lead">Gates G0–G6 of WP-M-00 §2. A gate passes only with a gate review record in 10-safety-case/gates/.</p></div>{loc}</div>
 <div class="sect">Gate review records</div>{table(["Gate", "Date", "Outcome", "Record"], recs) if recs else '<p>No gate review has been held.</p>'}
 <div class="sect">Strategic decisions (WP-M-01 §8)</div><p class="small">Owned by the project maintainer; each stays open in WP-M-07 until decided.</p>
 {table(["ID", "Decision"], dec)}</section>"""
@@ -601,10 +663,12 @@ def build(tag: str | None, previous: dict | None) -> tuple[str, dict]:
   rs = release_status(s)
   ident = identity(tag, previous)
   contrib, reviews = contributors(), review_records()
+  vd = vmodel.load()
   body = "".join([
-    cover(ident, s, rs), approval(s, rs, reviews), document_control(ident, s, previous, contrib), contents(), roles(), raci(),
-    contributors_page(contrib, reviews, confirmation_measures(), s), status_page(s, rs, previous), scope(), argument(),
-    claims_page(case), evidence_page(case), defeaters_page(case), gates_page(s), config_page(case, ident, s), annexes(ident)])
+    cover(ident, s, rs, vd), approval(s, rs, reviews), document_control(ident, s, previous, contrib), contents(), roles(), raci(),
+    contributors_page(contrib, reviews, confirmation_measures(), s), status_page(s, rs, previous, vd), traceability(vd), scope(),
+    argument(), claims_page(case), evidence_page(case), defeaters_page(case), gates_page(s, vd), config_page(case, ident, s),
+    annexes(ident)])
   wm = "" if rs["approved"] else '<div class="wm">DRAFT</div>'
   html = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
