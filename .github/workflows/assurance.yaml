@@ -136,6 +136,10 @@ jobs:
         python3 -m unittest discover -s tools/safety -p 'test_fmea_lint.py'
         python3 tools/safety/fmea_review_xlsx.py --check
         python3 tools/safety/test_fmea_review_xlsx.py
+    - name: FMEA review pages for GitHub (Markdown + SVG) current, diagram data valid (and tests)
+      run: |
+        python3 tools/safety/fmea_review_md.py --check
+        python3 tools/safety/test_fmea_review_md.py
     - name: Sync report tool unit tests
       run: python3 -m unittest tools.sync.test_sync_report -v
     - name: CAN gap scan unit tests
