@@ -1,0 +1,279 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1286" viewBox="0 0 1280 1286" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3-1 · ODD taxonomy</title>
+<desc>Tree of the reference ODD of WP-C-02 §3.1: Road type, Geometry, Lane markings, Speed, Weather, Lighting, Road surface, Traffic, VRUs, Geography, Infrastructure, Connectivity, Vehicle state, Driver state. Each attribute shows the value included in ODD-H and in ODD-A. The horizontal curve radius bound is proposed (GAP-04, OI-2), grade and banking bounds are to be confirmed (OI-5), the ambient temperature bound is TBD (OI-3), and the ODD-A inclusion is to be confirmed (OI-4).</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D97706"/></marker><pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#94A3B8" stroke-width="1.2"/></pattern><pattern id="hatch-amber" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FFFBEB"/><line x1="0" y1="0" x2="0" y2="8" stroke="#FCD34D" stroke-width="1.4"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1286" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-1 · ODD taxonomy</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Reference ODD of §3.1 by category and attribute, with the value included in ODD-H and ODD-A. The whole ODD is proposed.</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-02 §3.1</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="196" y="106" font-size="11" fill="#475569" font-weight="700">Category</text>
+<text x="376" y="106" font-size="11" fill="#475569" font-weight="700">Attribute</text>
+<text x="600" y="106" font-size="11" fill="#475569" font-weight="700">ODD-H · limited-access highway</text>
+<text x="924" y="106" font-size="11" fill="#475569" font-weight="700">ODD-A · arterial and rural</text>
+<rect x="1111.2" y="93" width="128.8" height="18" rx="9" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="1175.6" y="105.5" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">to be confirmed · OI-4</text>
+<rect x="196" y="122" width="150" height="104" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="178" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Road type</text>
+<line x1="346" y1="174" x2="362" y2="174" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="143" x2="362" y2="198" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="143" x2="376" y2="143" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="198" x2="376" y2="198" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="240" width="150" height="222.8" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="355.4" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Geometry</text>
+<line x1="346" y1="351.4" x2="362" y2="351.4" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="263.8" x2="362" y2="448.8" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="263.8" x2="376" y2="263.8" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="317.4" x2="376" y2="317.4" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="361.2" x2="376" y2="361.2" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="405" x2="376" y2="405" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="448.8" x2="376" y2="448.8" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="476.8" width="150" height="28" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="494.8" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Lane markings</text>
+<line x1="346" y1="490.8" x2="376" y2="490.8" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="518.8" width="150" height="62" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="553.8" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Speed</text>
+<line x1="346" y1="549.8" x2="362" y2="549.8" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="532.8" x2="362" y2="566.8" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="532.8" x2="376" y2="532.8" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="566.8" x2="376" y2="566.8" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="594.8" width="150" height="149.6" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="673.6" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Weather</text>
+<line x1="346" y1="669.6" x2="362" y2="669.6" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="608.8" x2="362" y2="720.6" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="608.8" x2="376" y2="608.8" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="642.8" x2="376" y2="642.8" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="676.8" x2="376" y2="676.8" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="720.6" x2="376" y2="720.6" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="758.4" width="150" height="28" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="776.4" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Lighting</text>
+<line x1="346" y1="772.4" x2="376" y2="772.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="800.4" width="150" height="28" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="818.4" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Road surface</text>
+<line x1="346" y1="814.4" x2="376" y2="814.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="842.4" width="150" height="76" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="884.4" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Traffic</text>
+<line x1="346" y1="880.4" x2="362" y2="880.4" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="863.4" x2="362" y2="904.4" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="863.4" x2="376" y2="863.4" stroke="#94A3B8" stroke-width="1.2"/>
+<line x1="362" y1="904.4" x2="376" y2="904.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="932.4" width="150" height="42" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="957.4" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">VRUs</text>
+<line x1="346" y1="953.4" x2="376" y2="953.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="988.4" width="150" height="28" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="1006.4" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Geography</text>
+<line x1="346" y1="1002.4" x2="376" y2="1002.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="1030.4" width="150" height="28" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="1048.4" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Infrastructure</text>
+<line x1="346" y1="1044.4" x2="376" y2="1044.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="1072.4" width="150" height="28" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="1090.4" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Connectivity</text>
+<line x1="346" y1="1086.4" x2="376" y2="1086.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="1114.4" width="150" height="28" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="1132.4" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Vehicle state</text>
+<line x1="346" y1="1128.4" x2="376" y2="1128.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="196" y="1156.4" width="150" height="28" rx="8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3"/>
+<text x="271" y="1174.4" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">Driver state</text>
+<line x1="346" y1="1170.4" x2="376" y2="1170.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="376" y="122" width="196" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="147" font-size="11.5" fill="#0F172A" font-weight="600">Functional class</text>
+<line x1="572" y1="143" x2="600" y2="143" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="122" width="316" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="139.5" font-size="10.5" fill="#0F172A">Limited-access divided highway (Interstate, freeway,</text>
+<text x="612" y="153.5" font-size="10.5" fill="#0F172A">expressway) incl. merge/weave lanes</text>
+<rect x="924" y="122" width="316" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="936" y="139.5" font-size="10.5" fill="#0F172A">Divided and undivided multi-lane arterials; two-lane</text>
+<text x="936" y="153.5" font-size="10.5" fill="#0F172A">rural highways with paved shoulders</text>
+<rect x="376" y="170" width="196" height="56" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="202" font-size="11.5" fill="#0F172A" font-weight="600">Intersections</text>
+<line x1="572" y1="198" x2="600" y2="198" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="170" width="316" height="56" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="201.5" font-size="10.5" fill="#0F172A">None (grade-separated)</text>
+<rect x="924" y="170" width="316" height="56" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="936" y="187.5" font-size="10.5" fill="#0F172A">Signalised and stop-controlled intersections</text>
+<text x="936" y="201.5" font-size="10.5" fill="#0F172A">traversed with the driver controlling all stops and</text>
+<text x="936" y="215.5" font-size="10.5" fill="#0F172A">turns</text>
+<rect x="376" y="240" width="196" height="47.6" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.3" stroke-dasharray="4 3"/>
+<text x="386" y="258" font-size="11.5" fill="#0F172A" font-weight="600">Horizontal curve radius</text>
+<rect x="386" y="268" width="134.1" height="18" rx="9" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="453.1" y="280.5" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">proposed · GAP-04, OI-2</text>
+<line x1="572" y1="263.8" x2="600" y2="263.8" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="240" width="640" height="47.6" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="267.3" font-size="10.5" fill="#0F172A">R ≥ v²/2.5 m/s² at the travel speed (table §3.2)</text>
+<text x="1228" y="267.3" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="293.6" width="196" height="47.6" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.3" stroke-dasharray="4 3"/>
+<text x="386" y="311.6" font-size="11.5" fill="#0F172A" font-weight="600">Longitudinal grade</text>
+<rect x="386" y="321.6" width="128.8" height="18" rx="9" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="450.4" y="334.1" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">to be validated · OI-5</text>
+<line x1="572" y1="317.4" x2="600" y2="317.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="293.6" width="640" height="47.6" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="320.9" font-size="10.5" fill="#0F172A">≤ 6 %</text>
+<text x="1228" y="320.9" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="347.2" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="365.2" font-size="11.5" fill="#0F172A" font-weight="600">Vertical curves</text>
+<line x1="572" y1="361.2" x2="600" y2="361.2" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="347.2" width="640" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="364.7" font-size="10.5" fill="#0F172A">Crests with stopping sight distance per design standards</text>
+<text x="1228" y="364.7" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="381.2" width="196" height="47.6" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.3" stroke-dasharray="4 3"/>
+<text x="386" y="399.2" font-size="11.5" fill="#0F172A" font-weight="600">Cross-slope / banking</text>
+<rect x="386" y="409.2" width="128.8" height="18" rx="9" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="450.4" y="421.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">to be confirmed · OI-5</text>
+<line x1="572" y1="405" x2="600" y2="405" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="381.2" width="640" height="47.6" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="408.5" font-size="10.5" fill="#0F172A">≤ 6 %</text>
+<text x="1228" y="408.5" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="434.8" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="452.8" font-size="11.5" fill="#0F172A" font-weight="600">Lane width</text>
+<line x1="572" y1="448.8" x2="600" y2="448.8" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="434.8" width="316" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="452.3" font-size="10.5" fill="#0F172A">3.0–3.9 m</text>
+<rect x="924" y="434.8" width="316" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="936" y="452.3" font-size="10.5" fill="#0F172A">2.9–3.9 m</text>
+<rect x="376" y="476.8" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="494.8" font-size="11.5" fill="#0F172A" font-weight="600">Presence</text>
+<line x1="572" y1="490.8" x2="600" y2="490.8" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="476.8" width="640" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="494.3" font-size="10.5" fill="#0F172A">Visible longitudinal markings on at least one side, US MUTCD style</text>
+<text x="1228" y="494.3" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="518.8" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="536.8" font-size="11.5" fill="#0F172A" font-weight="600">Ego speed</text>
+<line x1="572" y1="532.8" x2="600" y2="532.8" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="518.8" width="316" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="536.3" font-size="10.5" fill="#0F172A">0 – 120 km/h (75 mph), not above the posted limit</text>
+<rect x="924" y="518.8" width="316" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="936" y="536.3" font-size="10.5" fill="#0F172A">0 – 90 km/h (55 mph), not above the posted limit</text>
+<rect x="376" y="552.8" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="570.8" font-size="11.5" fill="#0F172A" font-weight="600">Stop-and-go</text>
+<line x1="572" y1="566.8" x2="600" y2="566.8" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="552.8" width="640" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="570.3" font-size="10.5" fill="#0F172A">Following a lead to standstill and auto-resume</text>
+<text x="1228" y="570.3" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="594.8" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="612.8" font-size="11.5" fill="#0F172A" font-weight="600">Precipitation</text>
+<line x1="572" y1="608.8" x2="600" y2="608.8" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="594.8" width="640" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="612.3" font-size="10.5" fill="#0F172A">None or light rain</text>
+<text x="1228" y="612.3" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="628.8" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="646.8" font-size="11.5" fill="#0F172A" font-weight="600">Visibility</text>
+<line x1="572" y1="642.8" x2="600" y2="642.8" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="628.8" width="316" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="646.3" font-size="10.5" fill="#0F172A">≥ 200 m</text>
+<rect x="924" y="628.8" width="316" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="936" y="646.3" font-size="10.5" fill="#0F172A">≥ 150 m</text>
+<rect x="376" y="662.8" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="680.8" font-size="11.5" fill="#0F172A" font-weight="600">Wind</text>
+<line x1="572" y1="676.8" x2="600" y2="676.8" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="662.8" width="640" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="680.3" font-size="10.5" fill="#0F172A">Normal</text>
+<text x="1228" y="680.3" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="696.8" width="196" height="47.6" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.3" stroke-dasharray="4 3"/>
+<text x="386" y="714.8" font-size="11.5" fill="#0F172A" font-weight="600">Ambient temperature</text>
+<rect x="386" y="724.8" width="65.1" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="418.6" y="737.3" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">TBD · OI-3</text>
+<line x1="572" y1="720.6" x2="600" y2="720.6" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="696.8" width="640" height="47.6" rx="8" fill="url(#hatch-amber)" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="612" y="724.1" font-size="10.5" fill="#0F172A">Within the device operating range (to be specified from device data, OI-3)</text>
+<text x="1228" y="724.1" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="758.4" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="776.4" font-size="11.5" fill="#0F172A" font-weight="600">Illumination</text>
+<line x1="572" y1="772.4" x2="600" y2="772.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="758.4" width="640" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="775.9" font-size="10.5" fill="#0F172A">Day; dusk/dawn; night with headlights (with or without street lighting)</text>
+<text x="1228" y="775.9" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="800.4" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="818.4" font-size="11.5" fill="#0F172A" font-weight="600">Type and condition</text>
+<line x1="572" y1="814.4" x2="600" y2="814.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="800.4" width="640" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="817.9" font-size="10.5" fill="#0F172A">Paved asphalt or concrete; dry or wet</text>
+<text x="1228" y="817.9" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="842.4" width="196" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="867.4" font-size="11.5" fill="#0F172A" font-weight="600">Motor vehicles</text>
+<line x1="572" y1="863.4" x2="600" y2="863.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="842.4" width="316" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="859.9" font-size="10.5" fill="#0F172A">Mixed traffic incl. trucks; lead vehicles; cut-ins</text>
+<text x="612" y="873.9" font-size="10.5" fill="#0F172A">from adjacent lanes</text>
+<rect x="924" y="842.4" width="316" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="936" y="866.9" font-size="10.5" fill="#0F172A">Same as ODD-H + oncoming traffic on undivided roads</text>
+<rect x="376" y="890.4" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="908.4" font-size="11.5" fill="#0F172A" font-weight="600">Stationary objects in lane</text>
+<line x1="572" y1="904.4" x2="600" y2="904.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="890.4" width="640" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="600" y="890.4" width="5" height="28" rx="2" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="612" y="907.9" font-size="10.5" fill="#0F172A">Not handled reliably; driver must act</text>
+<text x="1228" y="907.9" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="932.4" width="196" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="957.4" font-size="11.5" fill="#0F172A" font-weight="600">Pedestrians, cyclists</text>
+<line x1="572" y1="953.4" x2="600" y2="953.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="932.4" width="316" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="956.9" font-size="10.5" fill="#0F172A">Rare (shoulder only)</text>
+<rect x="924" y="932.4" width="316" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="924" y="932.4" width="5" height="42" rx="2" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="936" y="949.9" font-size="10.5" fill="#0F172A">Present at road edge and crossings; system does not</text>
+<text x="936" y="963.9" font-size="10.5" fill="#0F172A">respond to VRUs reliably; driver must act</text>
+<rect x="376" y="988.4" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="1006.4" font-size="11.5" fill="#0F172A" font-weight="600">Region</text>
+<line x1="572" y1="1002.4" x2="600" y2="1002.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="988.4" width="640" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="1005.9" font-size="10.5" fill="#0F172A">Continental US, right-hand traffic, US MUTCD signs and markings</text>
+<text x="1228" y="1005.9" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="1030.4" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="1048.4" font-size="11.5" fill="#0F172A" font-weight="600">Special zones</text>
+<line x1="572" y1="1044.4" x2="600" y2="1044.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="1030.4" width="640" height="28" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="612" y="1047.9" font-size="10.5" fill="#475569" font-style="italic">nothing included (exclusions only)</text>
+<text x="1228" y="1047.9" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="1072.4" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="1090.4" font-size="11.5" fill="#0F172A" font-weight="600">Network</text>
+<line x1="572" y1="1086.4" x2="600" y2="1086.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="1072.4" width="640" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="1089.9" font-size="10.5" fill="#0F172A">Not required</text>
+<text x="1228" y="1089.9" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="1114.4" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="1132.4" font-size="11.5" fill="#0F172A" font-weight="600">Reference vehicle</text>
+<line x1="572" y1="1128.4" x2="600" y2="1128.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="1114.4" width="640" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="1131.9" font-size="10.5" fill="#0F172A">Maintained, unmodified, no active DTCs, VSC on, device mounted and calibrated</text>
+<text x="1228" y="1131.9" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<rect x="376" y="1156.4" width="196" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="386" y="1174.4" font-size="11.5" fill="#0F172A" font-weight="600">Driver</text>
+<line x1="572" y1="1170.4" x2="600" y2="1170.4" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="600" y="1156.4" width="640" height="28" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="612" y="1173.9" font-size="10.5" fill="#0F172A">Licensed, briefed, attentive, face visible to the driver camera, hands near the wheel</text>
+<text x="1228" y="1173.9" font-size="10" fill="#94A3B8" font-weight="600" text-anchor="end">ODD-H = ODD-A</text>
+<line x1="182" y1="174" x2="182" y2="1170.4" stroke="#475569" stroke-width="1.3"/>
+<line x1="168" y1="672.2" x2="182" y2="672.2" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="174" x2="196" y2="174" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="351.4" x2="196" y2="351.4" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="490.8" x2="196" y2="490.8" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="549.8" x2="196" y2="549.8" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="669.6" x2="196" y2="669.6" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="772.4" x2="196" y2="772.4" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="814.4" x2="196" y2="814.4" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="880.4" x2="196" y2="880.4" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="953.4" x2="196" y2="953.4" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="1002.4" x2="196" y2="1002.4" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="1044.4" x2="196" y2="1044.4" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="1086.4" x2="196" y2="1086.4" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="1128.4" x2="196" y2="1128.4" stroke="#475569" stroke-width="1.3"/>
+<line x1="182" y1="1170.4" x2="196" y2="1170.4" stroke="#475569" stroke-width="1.3"/>
+<rect x="40" y="624.2" width="128" height="96" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.5" stroke-dasharray="10 5"/>
+<text x="104" y="654.2" font-size="13" fill="#0F172A" font-weight="700" text-anchor="middle">Reference ODD</text>
+<text x="104" y="672.2" font-size="10.5" fill="#475569" text-anchor="middle">ODD-H + ODD-A</text>
+<rect x="74.4" y="685.2" width="59.2" height="18" rx="9" fill="#B45309" stroke="none" stroke-width="1.2"/>
+<text x="104" y="697.7" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">proposed</text>
+<line x1="40" y1="1196.4" x2="1240" y2="1196.4" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="1204.4" width="14" height="12" rx="3" fill="#FFFBEB" stroke="#B45309" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="60" y="1214.4" font-size="11" fill="#475569">proposed ODD (§3 heading)</text>
+<rect x="229" y="1204.4" width="14" height="12" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="249" y="1214.4" font-size="11" fill="#475569">bound proposed or to be confirmed (open item named)</text>
+<rect x="579.2" y="1204.4" width="14" height="12" rx="3" fill="url(#hatch-amber)" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="599.2" y="1214.4" font-size="11" fill="#475569">TBD: no value yet</text>
+<rect x="718.6" y="1204.4" width="14" height="12" rx="3" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="738.6" y="1214.4" font-size="11" fill="#475569">nothing included</text>
+<rect x="40" y="1228.4" width="5" height="12" rx="2" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="60" y="1238.4" font-size="11" fill="#475569">value says the system does not handle it reliably; the driver must act</text>
+<text x="560" y="1238.4" font-size="11" fill="#475569">ODD-H = ODD-A: the table says “same” (or gives the same value); one box spans both columns</text>
+<text x="40" y="1262.4" font-size="11" fill="#475569">Drawn with the table’s own categories; the excluded conditions and the basis of each row are in §3.1. Status tags: §3.2, §3.1 Basis and the open items of §7.</text>
+</svg>
