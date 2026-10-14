@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 168" width="880" height="168" role="img">
+<title>PFMEA summary: action priority of 17 causes</title>
+<style>
+.bg{fill:#ffffff}.ink{fill:#1f2328}.mut{fill:#59636e}.acc{fill:#0969da}.surf{fill:#f6f8fa}.box{fill:#ffffff;stroke:#d1d9e0}
+.in{fill:#ddf4ff;stroke:#54aeff}.out{fill:#f6f8fa;stroke:#d1d9e0}.bd{fill:none;stroke:#0969da;stroke-dasharray:6 4}.frame{fill:none;stroke:#d1d9e0}
+.hS{fill:#ffebe9}.h{fill:#cf222e}.mS{fill:#fff8c5}.m{fill:#9a6700}.lS{fill:#dafbe1}.l{fill:#1a7f37}
+.hB{fill:#ffebe9;stroke:#ff8182}.lB{fill:#dafbe1;stroke:#4ac26b}.nB{fill:#fbefff;stroke:#c297ff}.n{fill:#8250df}
+.ln{stroke:#59636e;fill:none}.data{stroke:#0969da;fill:none}.energy{stroke:#bc4c00;fill:none;stroke-width:2.2}
+.physical{stroke:#59636e;fill:none;stroke-dasharray:5 3}.material{stroke:#1a7f37;fill:none;stroke-dasharray:1.5 3}
+.ah{fill:#59636e}.lbl{fill:#ffffff}.lane{fill:#f6f8fa}.laneT{fill:#59636e}
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif}
+.mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0d1117}.ink{fill:#e6edf3}.mut{fill:#9198a1}.acc{fill:#4493f8}.surf{fill:#151b23}.box{fill:#0d1117;stroke:#3d444d}
+.in{fill:#0c2d6b;stroke:#1f6feb}.out{fill:#151b23;stroke:#3d444d}.bd{stroke:#4493f8}.frame{stroke:#3d444d}
+.hS{fill:#3c1618}.h{fill:#ff7b72}.mS{fill:#3a2a0c}.m{fill:#d29922}.lS{fill:#12261a}.l{fill:#3fb950}
+.hB{fill:#3c1618;stroke:#da3633}.lB{fill:#12261a;stroke:#238636}.nB{fill:#271052;stroke:#8957e5}.n{fill:#ab7df8}
+.ln{stroke:#9198a1}.data{stroke:#4493f8}.energy{stroke:#f0883e}.physical{stroke:#9198a1}.material{stroke:#3fb950}
+.ah{fill:#9198a1}.lbl{fill:#0d1117}.lane{fill:#151b23}.laneT{fill:#9198a1}}
+</style>
+<rect class="bg" x="0" y="0" width="880" height="168" rx="8"/>
+<text x="24.0" y="34.0" class="ink" font-size="15" font-weight="600" text-anchor="start">PFMEA: action priority of its 17 causes (17 failure modes)</text>
+<rect x="24.0" y="52" width="783.1" height="30" class="hS"/>
+<text x="34.0" y="72.0" class="h" font-size="13" font-weight="700" text-anchor="start">H  16</text>
+<rect x="807.1" y="52" width="48.9" height="30" class="lS"/>
+<rect x="24" y="52" width="832" height="30" rx="4" class="frame"/>
+<text x="24.0" y="124.0" class="h" font-size="24" font-weight="700" text-anchor="start">16</text>
+<text x="24.0" y="146.0" class="mut" font-size="12" text-anchor="start">causes with priority H</text>
+<text x="232.0" y="124.0" class="h" font-size="24" font-weight="700" text-anchor="start">16</text>
+<text x="232.0" y="146.0" class="mut" font-size="12" text-anchor="start">H without a completed action</text>
+<text x="440.0" y="124.0" class="acc" font-size="24" font-weight="700" text-anchor="start">11 of 11</text>
+<text x="440.0" y="146.0" class="mut" font-size="12" text-anchor="start">actions still open</text>
+<text x="648.0" y="124.0" class="ink" font-size="24" font-weight="700" text-anchor="start">S 10</text>
+<text x="648.0" y="146.0" class="mut" font-size="12" text-anchor="start">highest severity</text>
+</svg>

@@ -1,0 +1,201 @@
+# Diagram data for the PFMEA (assurance/08-analyses/fmea/analyses/pfmea.yaml, rev 0.3, BL-003).
+# Sources: WP-P-10 (release), WP-O-01 (installation INS-01..30), WP-O-02 §6 (update), WP-P-10 §8 (rollback).
+schema_version: 1
+analysis: PFM
+
+process_flow:
+  title: "Release, installation and update of AC-001"
+  lanes: ["Release", "Installation", "Update"]
+  steps:
+    # Release (WP-P-10 §4)
+    - id: P01
+      name: "Branch, freeze, tag RC"          # WP-P-10 §4 steps 1-3
+      element: PFM-SE-010
+      lane: Release
+      kind: operation
+      next: [P02]
+    - id: P02
+      name: "Build release artifacts"         # §4 step 4, §6
+      element: PFM-SE-011
+      lane: Release
+      kind: operation
+      next: [P03]
+    - id: P03
+      name: "Release build check"             # §6 Verification: RELEASE, no ALLOW_DEBUG, hash, flag
+      element: PFM-SE-011
+      lane: Release
+      kind: inspection
+      next: [P04]
+    - id: P04
+      name: "Verify, archive evidence"     # §4 step 5, §5
+      element: PFM-SE-012
+      lane: Release
+      kind: operation
+      next: [P05]
+    - id: P05
+      name: "Config audit, assessments"       # §4 steps 6-8
+      element: PFM-SE-012
+      lane: Release
+      kind: inspection
+      next: [P06]
+    - id: P06
+      name: "Release decision"                # §4 step 9; fix needed -> new RC, steps 4-9 repeated
+      element: PFM-SE-013
+      lane: Release
+      kind: decision
+      next: [P07, P02]
+    - id: P07
+      name: "Tag and publish release"         # §4 step 10: tag ld-vX.Y.Z, update channel (WP-O-01)
+      element: PFM-SE-013
+      lane: Release
+      kind: handover
+      next: [P08]
+    # Installation (WP-O-01 §3)
+    - id: P08
+      name: "Incoming inspection"             # INS-01..04
+      element: PFM-SE-020
+      lane: Installation
+      kind: inspection
+      next: [P09]
+    - id: P09
+      name: "Vehicle preconditions"           # INS-05..08 (VIN, DTCs, mods, stock TSS)
+      element: PFM-SE-021
+      lane: Installation
+      kind: inspection
+      next: [P10]
+    - id: P10
+      name: "Mount, connect, route"           # INS-09..13
+      element: PFM-SE-022
+      lane: Installation
+      kind: operation
+      next: [P11]
+    - id: P11
+      name: "First-boot alert check"          # INS-14
+      element: PFM-SE-022
+      lane: Installation
+      kind: inspection
+      next: [P12]
+    - id: P12
+      name: "Provision SW, FW, params"        # INS-15..20
+      element: PFM-SE-023
+      lane: Installation
+      kind: operation
+      next: [P13]
+    - id: P13
+      name: "Reference-config check"          # INS-21..24; SPC-07 fail -> dashcam only (§6)
+      element: PFM-SE-024
+      lane: Installation
+      kind: decision
+      next: [P14]
+    - id: P14
+      name: "Calibration drive"               # INS-25..26
+      element: PFM-SE-025
+      lane: Installation
+      kind: operation
+      next: [P15]
+    - id: P15
+      name: "PCS, engagement, DM checks"      # INS-27..29
+      element: PFM-SE-025
+      lane: Installation
+      kind: inspection
+      next: [P16]
+    - id: P16
+      name: "Briefing and sign-off"           # INS-30; second-person check of R-SW/R-CFG (§5)
+      element: PFM-SE-025
+      lane: Installation
+      kind: handover
+      next: [P17]
+    # Update and rollback (WP-O-02 §6, WP-P-10 §8)
+    - id: P17
+      name: "Manual offroad update"           # UPD-01, UPD-02, UPD-05 (auto updates disabled)
+      element: PFM-SE-030
+      lane: Update
+      kind: operation
+      next: [P18]
+    - id: P18
+      name: "Post-update checks"              # UPD-02: INS-15..23; UPD-06: INS-19 params
+      element: PFM-SE-030
+      lane: Update
+      kind: inspection
+      next: [P13]
+    - id: P19
+      name: "Rollback decision"               # WP-P-10 §8: S-1/S-2, safety manager within 1 day
+      element: PFM-SE-030
+      lane: Update
+      kind: decision
+      next: [P20]
+    - id: P20
+      name: "Bench-test rollback FW"          # WP-P-10 §8: evidence valid for device, bench first
+      element: PFM-SE-030
+      lane: Update
+      kind: inspection
+      next: [P17]
+
+p_diagram:
+  title: "PFMEA P-diagram: as-driven AC-001"
+  focus: "Producing the as-driven reference configuration (AC-001)"
+  functions: [PFM-FN-001, PFM-FN-002, PFM-FN-003, PFM-FN-004, PFM-FN-005, PFM-FN-006,
+              PFM-FN-007, PFM-FN-008, PFM-FN-009, PFM-FN-010, PFM-FN-011]
+  inputs:
+    - "Frozen baseline, signed RC tag"
+    - "LionDriver panda release key"
+    - "comma 3X and Toyota TSS2 harness"
+    - "2020 Corolla E210 ICE reference vehicle"
+    - "Release record: hashes, FW, parameters"
+    - "Installer with WP-O-01 checklist"
+  ideal_outputs:
+    - "Signed RELEASE panda FW, reference flag"
+    - "Installed commit equals release tag"
+    - "Parameters at release values (Chill)"
+    - "carParams COROLLA_TSS2, safety param 73"
+    - "Mount in tolerance, stock PCS preserved"
+    - "Signed record, briefed driver"
+  error_states:
+    - text: "DEBUG or debug-signed panda firmware"
+      failure_modes: [PFM-001, PFM-002]
+    - text: "Unverified or non-release software on device"
+      failure_modes: [PFM-003, PFM-004, PFM-005, PFM-012, PFM-016, PFM-017]
+    - text: "Wrong parameters, Experimental Mode left on"
+      failure_modes: [PFM-011]
+    - text: "Wrong or damaged harness, connector unlatched"
+      failure_modes: [PFM-006, PFM-008, PFM-010]
+    - text: "Vehicle misidentified or not reference"
+      failure_modes: [PFM-007, PFM-013]
+    - text: "Mount off, PCS path unchecked, no briefing"
+      failure_modes: [PFM-009, PFM-014, PFM-015]
+  noise_factors:
+    piece_to_piece:
+      - "Device revision: comma 3X vs comma four"
+      - "Harness type and harness box revision"
+      - "Vehicle ECU FW versions, trim, model year"
+    change_over_time:
+      - "Upstream defaults change (f21bfc3 Exp. on)"
+      - "Submodule or model pins moved after verify"
+      - "Build and CI tool versions"
+      - "Dealer EPS/ECM updates, windscreen swap"
+    customer_usage:
+      - "Installer skill; latch judged by feel"
+      - "Installer uses comma default installer"
+      - "Owner changes toggles (Experimental, SSH)"
+    external_environment:
+      - "Network for update check, AGNOS from CDN"
+      - "Vehicle state: active DTCs, ignition"
+      - "Calibration road: straight, above 15 mph"
+    system_interaction:
+      - "comma installer and updater (git, TLS)"
+      - "GitHub Actions: logs expire, comma-gated"
+      - "CarParamsCache from another vehicle"
+      - "pandad reflash on signature mismatch"
+  control_factors:
+    - text: "Submodules and models pinned by commit/oid"
+      ref: "assurance/07-supporting/WP-P-10-release-management.md §4 step 2 (D-01, D-05)"
+    - text: "CI gates: safety tests, coverage, MISRA"
+      ref: ".github/workflows/safety.yaml (incl. reference build variant)"
+    - text: "Signed RC tag; release tag on same commit"
+      ref: "assurance/07-supporting/WP-P-10-release-management.md §4 steps 3, 10"
+    - text: "Release decision, signed release record"
+      ref: "assurance/07-supporting/WP-P-10-release-management.md §4 step 9, §7 (WP-K-06)"
+    - text: "Panda reference lock, build flag at boot"
+      ref: "panda/board/reference_lock.h (TSR-512/513/514)"
+    - text: "Installation checklist INS-01..30"
+      ref: "assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md §3"
