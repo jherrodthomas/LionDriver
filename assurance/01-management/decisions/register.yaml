@@ -114,8 +114,9 @@
       title: "Everything in the body, in V order"
       detail: "One reading order from goals to evidence. Cost: the argument is split by long tables."
   sources: ["assurance/case/tools/build_snapshot.py", "ISO 9001 §7.5.2"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-14, note: "Agreed in chat to the recommended option for all three snapshot questions."}
+  applied: {ref: 47bc583, record: "assurance/case/README.md §5.1 (content order); snapshot_pages.py", at: 2026-10-14}
 
 - id: DQ-005
   ref: SNAP-2
