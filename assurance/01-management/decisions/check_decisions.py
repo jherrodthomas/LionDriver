@@ -69,6 +69,8 @@ def check(entries: list[dict], base: Path = HERE) -> list[str]:
       err(f"status must be one of {', '.join(STATUS)}")
     if d.get("gate") not in GATES and not (queued and d.get("gate") is None):
       err("gate must be G0…G6")
+    if "batch" in d and (not isinstance(d["batch"], int) or d["batch"] < 1):
+      err("batch must be a positive whole number")
     if d.get("decider", "lead") not in DECIDER:
       err(f"decider must be one of {', '.join(DECIDER)}")
     asked = as_date(d.get("asked"))

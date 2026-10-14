@@ -26,8 +26,10 @@ question waits for an answer too, but can be reopened at the gate named in `gate
 `decider: claude` marks a reversible technical choice: Claude goes with the recommended option when the work
 reaches it (as `assumed`, so the lead can change it) unless the lead objects. Everything else is the lead's.
 
-Ask in batches of ten: keep about ten questions `open`, and when the lead has answered a batch, move the next ten
-queued entries to `open`, those that unblock the most first (earliest gate, nothing left in `after`). Rewrite its wording to the standard of the open cards
+Ask in batches of ten. An open question carries `batch: N`. The page shows the earliest batch that still has an open
+question; its **Next batch** button reveals the following one, so keep the next batch or two written ahead. When the
+lead has worked through them, write the next ten from the queue, those that unblock the most first (earliest gate,
+nothing left in `after`), rewritten to the open-card standard. Rewrite its wording to the standard of the open cards
 when it moves.
 
 The queue was seeded on 2026-10-14 from a sweep of every open item in `assurance/` (676 rows). 433 were tasks, not
