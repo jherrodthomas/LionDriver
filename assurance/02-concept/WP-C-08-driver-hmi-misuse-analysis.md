@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-08 Driver interaction, HMI and reasonably foreseeable misuse analysis |
 | Standard reference | ISO 26262-3:2018 §6 (controllability basis); ISO 21448:2022 §6 and Annex B (misuse, informative); UNECE R79 and R171 (informative benchmarks, WP-M-01 T-13); RESPONSE 3 Code of Practice for ADAS (informative) |
-| Version | 0.2 (§6.1: H-STPA-1 classified as a misuse hazard under SOTIF, decision register DQ-003; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
+| Version | 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF; backs the HARA C2 ratings (SG-01…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -123,16 +123,15 @@ These regulations are not binding in the US (WP-M-01 T-13). Values must be check
 
 ### 6.1 Classification of H-STPA-1
 
-The STPA hazard H-STPA-1, "the vehicle is driven with the item engaged while the driver is not supervising it" ([WP-A-05](../08-analyses/WP-A-05-stpa.md) §2), is a **misuse hazard under SOTIF**, recorded here through MC-01, MC-02 and MC-03. It is not a rated hazardous event in the HARA ([WP-C-03](WP-C-03-hara.md)).
+The STPA hazard H-STPA-1, "the vehicle is driven with the item engaged while the driver is not supervising it" ([WP-A-05](../08-analyses/WP-A-05-stpa.md) §2), is treated as **reasonably foreseeable misuse in both analyses**: as a misuse hazard under SOTIF, recorded here through MC-01, MC-02 and MC-03, and as foreseeable misuse in the HARA ([WP-C-03](WP-C-03-hara.md); ISO 26262-3 §6.4.2).
 
 | Field | Value |
 |---|---|
-| Decision | Keep H-STPA-1 as a SOTIF misuse hazard (option B of the decision register entry [DQ-003](../01-management/decisions/register.yaml)) |
-| Decided by, date | Project lead, 2026-10-14, on the decision inbox |
-| Rationale | The HARA ratings assume a supervising driver (C2). Driver monitoring is the measure against MC-01…MC-03 and stays QM, as proposed in [WP-C-04](WP-C-04-functional-safety-concept.md) §7. Rating H-STPA-1 in the HARA would give driver monitoring an ASIL that the current hardware cannot meet |
-| Alternatives not taken | (A) a rated HARA hazard, which would require an ODD restriction such as hands-on driving or new monitoring hardware; (C) waiting for the assessor before deciding |
-| Condition | The I3 confirmation review must accept that the C2 ratings do not depend on driver monitoring ([WP-C-04](WP-C-04-functional-safety-concept.md) OI-3). If it does not, this decision is reopened as option A |
-| Measures | §5.3 DM performance targets (DMP-01…DMP-04), §8 controllability validation, user information |
+| Decision | "Both SOTIF and HARA foreseeable misuse" (decision register [DQ-003](../01-management/decisions/register.yaml), answer "other") |
+| Decided by, date | Project lead, 2026-10-14, on the decision inbox. This answer supersedes the first one the same day (option B, SOTIF only) |
+| SOTIF side | Recorded: MC-01…MC-03 in §6, DM performance targets DMP-01…DMP-04 in §5.3, controllability validation in §8 |
+| HARA side | **Open (OI-4):** WP-C-03 does not yet contain the misuse hazardous event. Adding it with S, E and C ratings decides whether driver monitoring is given an ASIL ([WP-C-04](WP-C-04-functional-safety-concept.md) §7, OI-3) |
+| Consequence to watch | If the HARA rating gives driver monitoring an ASIL, the current hardware cannot meet it: the ODD shrinks (for example hands-on driving) or new monitoring hardware is needed |
 
 ## 7. Controllability assumptions to be backed up
 
@@ -168,6 +167,7 @@ Method notes (RESPONSE 3 Code of Practice, informative): use naive subjects repr
 | OI-1 | Confirm benchmark values (R79, R171, EU 2025/1899) against licensed texts and finalise §5.2 | HF specialist | G1 |
 | OI-2 | Closed (2026-10-12): the numeric DM performance targets for DMP-01/02 were confirmed by the SOTIF lead and AI/ML safety lead (acting, one person) as proposed in WP-C-11 AIR-07/AIR-08, with the end-to-end alert time set at ≤ 6 s. Validation is VT-08 in WP-V-02. Assessor approval of the numeric validation targets is still WP-V-02 OI-3 | SOTIF lead | G2 |
 | OI-3 | Agree controllability pass criteria and sample size (CA-01…CA-07) with the external assessor | Safety manager | G1 |
+| OI-4 | Add H-STPA-1 to the HARA (WP-C-03) as reasonably foreseeable misuse with S, E and C ratings, per decision register DQ-003; then confirm or revise WP-C-04 §7 (driver monitoring QM) | Safety engineer | G1 |
 | OI-4 | Decide `DisengageOnAccelerator` default for the reference build (MC-08) | Maintainer | G1 |
 | OI-5 | Check whether alert volume can be reduced below an audible floor (MC-12) | SW lead | G2 |
 | OI-6 | Confirm whether the `mici` device-specific DM alerts (`events.py:1018+`) apply to the reference device | SW lead | G1 |
