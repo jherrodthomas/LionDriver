@@ -98,6 +98,17 @@ class TestCommittedMap(unittest.TestCase):
     for lv in tm.LEFT + tm.RIGHT:
       self.assertEqual(svg.count(f">{lv.process}</text>"), 1, lv.process)
 
+  def test_figure_1_is_the_trace_lens_of_the_system_v(self):
+    import vmodel
+    m = tm.build()
+    self.assertEqual(tm.svg_v_model(m), vmodel.render("trace", "full", model=m))
+    self.assertIn("TRACE LENS", tm.svg_v_model(m))
+
+  def test_map_text_describes_the_component(self):
+    text = tm.render(tm.build())
+    self.assertIn("tools/vmodel.py", text)
+    self.assertNotIn("green when every item", text)
+
 
 if __name__ == "__main__":
   unittest.main()

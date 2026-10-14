@@ -70,8 +70,26 @@ class Figures(unittest.TestCase):
 
   def test_readme_embeds_every_figure(self):
     readme = tf.README.read_text(encoding="utf-8")
-    for name in tf.FIGURES:
+    for n, name in enumerate(tf.FIGURES, start=1):
       self.assertIn(f"(figures/{name})", readme, name)
+      self.assertIn(f"*Figure {n}.*", readme, name)
+
+  def test_system_v_figures_come_from_vmodel(self):
+    self.assertIs(tf.FIGURES["fig-9-system-v-status.svg"], tf.fig9)
+    self.assertIs(tf.FIGURES["fig-10-v-per-goal.svg"], tf.fig10)
+    vd = tf.vmodel.load(self.d.m)
+    fig9 = self.out[tf.FIG_DIR / "fig-9-system-v-status.svg"]
+    self.assertIn("".join(tf.vmodel.draw("status", "full", model=vd).body), fig9)
+    fig10 = self.out[tf.FIG_DIR / "fig-10-v-per-goal.svg"]
+    for g in tf.goals(self.d):
+      self.assertIn(f">{g}</text>", fig10, g)
+
+  def test_system_v_figures_show_nothing_green_unless_earned(self):
+    vd = tf.vmodel.load(self.d.m)
+    earned = any(st in ("A", "B") for st, _ in vd.register.values()) or "passed" in vd.gate_status.values()
+    if not earned:
+      for name in ("fig-9-system-v-status.svg", "fig-10-v-per-goal.svg"):
+        self.assertNotIn(tf.vmodel.GREEN, self.out[tf.FIG_DIR / name], name)
 
 
 if __name__ == "__main__":

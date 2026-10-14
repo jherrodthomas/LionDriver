@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1010" viewBox="0 0 1280 1010" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 4-1 · Operating modes and actuation authority</title>
+<desc>State diagram of the WP-C-01 §4 operating modes: Off / offroad (actuation: none); Onroad, disengaged (actuation: none); Pre-enabled / enabled (actuation: lateral, longitudinal); Overriding (actuation: lateral, no longitudinal); Soft disabling (actuation: lateral, longitudinal (forced decel)); Immediate disable (actuation: none); Driver lockout (actuation: none). Transitions carry the record IDs H:D1, H:D2, H:D3, H:E1, H:E2, H:N1, H:O1, H:O2, H:SD1, H:SD2, H:X1, H:X2, P:M2, P:M4, P:M5, P:M7, P:T1, P:T10a, P:T10b, P:T10c, P:T11, P:T2, P:T3, P:T4, P:T5, P:T6, P:T7, P:T8. Engagement (D1/D3, T1) and driver disengagement (X2, T2/T3) and envelope faults are enforced by the panda envelope; override (E2/O2), immediate disable (X1) and the lockout are host only; soft disabling (E1, O1, SD2) is host only while the envelope keeps controls_allowed = 1 (GAP-16). Configuration: Chill, Experimental (upstream default, GAP-18), debug modes excluded (OI-5).</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="8" stroke="#E2E8F0" stroke-width="2.5"/></pattern><pattern id="hatch-red" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FEF2F2"/><line x1="0" y1="0" x2="0" y2="8" stroke="#F5B5A8" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1010" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-1 · Operating modes and actuation authority</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The §4 modes as one state diagram. Each arrow names the state-machine record transitions it stands for and is coloured by who enforces it.</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-01 §4</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="880" y="96" width="360" height="656" rx="14" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="6 4"/>
+<rect x="900" y="87" width="156.5" height="18" rx="9" fill="#64748B" stroke="none" stroke-width="1.2"/>
+<text x="978.2" y="99.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">ENGAGED · host selfdrived</text>
+<rect x="40" y="336" width="196" height="156" rx="12" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
+<text x="54" y="361" font-size="14.5" fill="#0F172A" font-weight="700">Off / offroad</text>
+<text x="54" y="381" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">selfdrived: not running</text>
+<text x="54" y="398" font-size="10.5" fill="#C2410C" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">NOOUTPUT</text>
+<text x="54" y="419" font-size="10.5" fill="#475569">ignition off or device offroad;</text>
+<text x="54" y="434" font-size="10.5" fill="#475569">SILENT is switched to NOOUTPUT</text>
+<text x="54" y="449" font-size="10" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">pandad.cc</text>
+<rect x="54" y="461" width="86" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="97" y="473.5" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">no actuation</text>
+<rect x="380" y="300" width="252" height="220" rx="12" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.8"/>
+<text x="394" y="325" font-size="14.5" fill="#0F172A" font-weight="700">Onroad, disengaged</text>
+<text x="394" y="345" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">selfdrived: disabled</text>
+<text x="394" y="362" font-size="10.5" fill="#C2410C" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TOYOTA · controls_allowed = 0</text>
+<text x="394" y="383" font-size="10.5" fill="#475569">car safety mode active; non-zero</text>
+<text x="394" y="398" font-size="10.5" fill="#475569">torque or accel rejected</text>
+<text x="394" y="413" font-size="10" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">lateral.h:98-101</text>
+<rect x="394" y="489" width="86" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="437" y="501.5" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">no actuation</text>
+<rect x="900" y="320" width="290" height="160" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>
+<text x="914" y="345" font-size="14.5" fill="#0F172A" font-weight="700">Pre-enabled / enabled</text>
+<text x="914" y="365" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">selfdrived: preEnabled →P1→ enabled</text>
+<text x="914" y="382" font-size="10.5" fill="#C2410C" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">TOYOTA · controls_allowed = 1</text>
+<text x="914" y="403" font-size="10.5" fill="#475569">after the PCM cruise rising edge, no NO_ENTRY</text>
+<text x="914" y="418" font-size="10" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">state.py:79-90</text>
+<rect x="914" y="449" width="56" height="18" rx="9" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="942" y="461.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">lateral</text>
+<rect x="978" y="449" width="86" height="18" rx="9" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="1021" y="461.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">longitudinal</text>
+<rect x="900" y="112" width="290" height="140" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.8"/>
+<text x="914" y="137" font-size="14.5" fill="#0F172A" font-weight="700">Overriding</text>
+<text x="914" y="157" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">selfdrived: overriding</text>
+<text x="914" y="174" font-size="10.5" fill="#C2410C" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">controls_allowed = 1 · gas blocks long.</text>
+<text x="914" y="195" font-size="10.5" fill="#475569">driver gas or steering input</text>
+<text x="914" y="210" font-size="10" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">longitudinal.h:3-5</text>
+<rect x="914" y="221" width="56" height="18" rx="9" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="942" y="233.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">lateral</text>
+<rect x="978" y="221" width="104" height="18" rx="9" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="1030" y="233.5" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">no longitudinal</text>
+<rect x="900" y="560" width="290" height="176" rx="12" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.8"/>
+<text x="914" y="585" font-size="14.5" fill="#0F172A" font-weight="700">Soft disabling</text>
+<text x="914" y="605" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">selfdrived: softDisabling · 3 s</text>
+<text x="914" y="622" font-size="10.5" fill="#C2410C" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">controls_allowed = 1 (unchanged)</text>
+<text x="914" y="643" font-size="10.5" fill="#475569">fault detected; warning; actuation</text>
+<text x="914" y="658" font-size="10.5" fill="#475569">continues up to 3 s</text>
+<text x="914" y="673" font-size="10" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">state.py:7</text>
+<rect x="914" y="707" width="200" height="18" rx="9" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="1014" y="719.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">GAP-16 · envelope does not know</text>
+<rect x="914" y="679" width="56" height="18" rx="9" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="942" y="691.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">lateral</text>
+<rect x="978" y="679" width="176" height="18" rx="9" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="1066" y="691.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">longitudinal (forced decel)</text>
+<rect x="380" y="112" width="252" height="124" rx="12" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.4" stroke-dasharray="6 4"/>
+<text x="394" y="137" font-size="14.5" fill="#0F172A" font-weight="700">Immediate disable</text>
+<text x="394" y="157" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">transient: X1 ends in disabled</text>
+<text x="394" y="178" font-size="10.5" fill="#475569">critical fault; control released at once</text>
+<rect x="394" y="205" width="86" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="437" y="217.5" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">no actuation</text>
+<rect x="380" y="596" width="252" height="140" rx="12" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
+<text x="394" y="621" font-size="14.5" fill="#0F172A" font-weight="700">Driver lockout</text>
+<text x="394" y="641" font-size="10.5" fill="#475569" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">selfdrived: disabled · N1 refuses</text>
+<text x="394" y="662" font-size="10.5" fill="#475569">DM non-compliance; engagement prevented</text>
+<text x="394" y="677" font-size="10.5" fill="#475569">for 1–30 min</text>
+<text x="394" y="692" font-size="10" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">policy.py:42-44</text>
+<rect x="394" y="705" width="86" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="437" y="717.5" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">no actuation</text>
+<path d="M236,378 L380,378" stroke="#C2410C" stroke-width="2.2" fill="none" marker-end="url(#safety)" stroke-linejoin="round"/>
+<text x="244" y="360" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="start">onroad: 0xdc TOYOTA</text>
+<text x="244" y="373" font-size="10.5" fill="#C2410C" text-anchor="start">P: M2 · M4 (reference)</text>
+<path d="M380,430 L236,430" stroke="#C2410C" stroke-width="2.2" fill="none" marker-end="url(#safety)" stroke-linejoin="round"/>
+<text x="244" y="412" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="start">offroad: NOOUTPUT</text>
+<text x="244" y="448" font-size="10.5" fill="#C2410C" text-anchor="start">P: M2 · M5 (ref.) · T7</text>
+<path d="M380,486 L236,486" stroke="#C2410C" stroke-width="2.2" fill="none" marker-end="url(#safety)" stroke-linejoin="round"/>
+<text x="244" y="476" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="start">heartbeat lost</text>
+<text x="244" y="504" font-size="10.5" fill="#C2410C" text-anchor="start">P: M7 → SILENT · T7</text>
+<path d="M632,352 L900,352" stroke="#C2410C" stroke-width="2.2" fill="none" marker-end="url(#safety)" stroke-linejoin="round"/>
+<text x="642" y="313" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="start">cruise set: PCM rising edge</text>
+<text x="642" y="326" font-size="10.5" fill="#475569" text-anchor="start">H: D1 · D3 (D2 → overriding)</text>
+<text x="642" y="343" font-size="10.5" fill="#C2410C" font-weight="600" text-anchor="start">P: T1 grants authority</text>
+<text x="642" y="369" font-size="10.5" fill="#475569" text-anchor="start">refused: H N1 (NO_ENTRY) · P T8</text>
+<path d="M880,424 L632,424" stroke="#C2410C" stroke-width="2.2" fill="none" marker-end="url(#safety)" stroke-linejoin="round"/>
+<text x="642" y="402" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="start">brake · cancel · cruise off</text>
+<text x="642" y="415" font-size="10.5" fill="#C2410C" text-anchor="start">H: X2 · P: T2, T3 clear</text>
+<path d="M880,484 L632,484" stroke="#C2410C" stroke-width="2.2" fill="none" marker-end="url(#safety)" stroke-linejoin="round"/>
+<text x="642" y="449" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="start">envelope fault (RX, heartbeat)</text>
+<text x="642" y="462" font-size="10.5" fill="#C2410C" text-anchor="start">P: T4 T5 T10a · ref.: T10b T10c T11</text>
+<text x="642" y="475" font-size="10.5" fill="#475569" text-anchor="start">H follows: controlsMismatch → X1</text>
+<path d="M900,640 L724,640 L724,512 L632,512" stroke="#D2553F" stroke-width="2.2" fill="none" marker-end="url(#red)" stroke-linejoin="round"/>
+<text x="734" y="618" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="start">3 s timer runs out</text>
+<text x="734" y="631" font-size="10.5" fill="#D2553F" text-anchor="start">H: SD2 → disabled</text>
+<text x="734" y="657" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="start">P keeps authority until T2</text>
+<text x="734" y="670" font-size="10.5" fill="#475569" text-anchor="start">(host cancel → PCM cruise</text>
+<text x="734" y="683" font-size="10.5" fill="#475569" text-anchor="start">off; AOU-05) or T6</text>
+<text x="734" y="696" font-size="10.5" fill="#475569" text-anchor="start">(3 heartbeats, engaged = 0)</text>
+<path d="M880,168 L632,168" stroke="#475569" stroke-width="1.7" fill="none" marker-end="url(#muted)" stroke-linejoin="round"/>
+<text x="642" y="146" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="start">IMMEDIATE_DISABLE</text>
+<text x="642" y="159" font-size="10.5" fill="#475569" text-anchor="start">H: X1 (any engaged state)</text>
+<path d="M506,236 L506,300" stroke="#475569" stroke-width="1.7" fill="none" marker-end="url(#muted)" stroke-linejoin="round"/>
+<text x="516" y="262" font-size="10.5" fill="#475569" text-anchor="start">at once (X1 → disabled)</text>
+<text x="516" y="275" font-size="10.5" fill="#475569" text-anchor="start">P: T2 after cancel, or T6</text>
+<path d="M450,520 L450,596" stroke="#475569" stroke-width="1.7" fill="none" marker-end="url(#muted)" stroke-linejoin="round"/>
+<text x="442" y="550" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="end">DM non-compliance</text>
+<text x="442" y="563" font-size="10.5" fill="#475569" text-anchor="end">dmonitoringd (no record)</text>
+<path d="M560,596 L560,520" stroke="#475569" stroke-width="1.7" fill="none" stroke-dasharray="5 4" marker-end="url(#muted)" stroke-linejoin="round"/>
+<text x="568" y="550" font-size="10.5" fill="#475569" text-anchor="start">expires after</text>
+<text x="568" y="563" font-size="10.5" fill="#475569" text-anchor="start">1–30 min</text>
+<path d="M996,320 L996,252" stroke="#475569" stroke-width="1.7" fill="none" marker-end="url(#muted)" stroke-linejoin="round"/>
+<text x="988" y="280" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="end">gas / steering</text>
+<text x="988" y="293" font-size="10.5" fill="#475569" text-anchor="end">H: E2</text>
+<path d="M1090,252 L1090,320" stroke="#475569" stroke-width="1.7" fill="none" marker-end="url(#muted)" stroke-linejoin="round"/>
+<text x="1098" y="280" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="start">released</text>
+<text x="1098" y="293" font-size="10.5" fill="#475569" text-anchor="start">H: O2</text>
+<path d="M996,480 L996,560" stroke="#D2553F" stroke-width="2.2" fill="none" marker-end="url(#red)" stroke-linejoin="round"/>
+<text x="988" y="514" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="end">SOFT_DISABLE</text>
+<text x="988" y="527" font-size="10.5" fill="#D2553F" text-anchor="end">H only: E1</text>
+<path d="M1090,560 L1090,480" stroke="#475569" stroke-width="1.7" fill="none" stroke-dasharray="5 4" marker-end="url(#muted)" stroke-linejoin="round"/>
+<text x="1098" y="514" font-size="10.5" fill="#0F172A" font-weight="600" text-anchor="start">cleared</text>
+<text x="1098" y="527" font-size="10.5" fill="#475569" text-anchor="start">H: SD1</text>
+<path d="M1190,212 L1212,212 L1212,600 L1190,600" stroke="#D2553F" stroke-width="2.2" fill="none" marker-end="url(#red)" stroke-linejoin="round"/>
+<text x="1217" y="524" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="start">O1</text>
+<rect x="40" y="778" width="1200" height="112" rx="10" fill="#F8FAFC" stroke="none" stroke-width="1.2"/>
+<text x="56" y="802" font-size="11" fill="#475569" font-weight="700">CONFIGURATION · selected before driving, not states (§4 rows)</text>
+<rect x="56" y="816" width="381.3" height="58" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+<text x="70" y="840" font-size="13" fill="#0F172A" font-weight="700">Chill (MPC longitudinal)</text>
+<text x="70" y="860" font-size="10.5" fill="#475569">longitudinal policy selection</text>
+<rect x="449.3" y="816" width="381.3" height="58" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="463.3" y="840" font-size="13" fill="#0F172A" font-weight="700">Experimental (end-to-end model)</text>
+<text x="463.3" y="860" font-size="10.5" fill="#D97706">upstream default (params_keys.h:43) · GAP-18 · in ODD? OI-8</text>
+<rect x="842.7" y="816" width="381.3" height="58" rx="10" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="856.7" y="840" font-size="13" fill="#475569" font-weight="700">Debug · maneuver · joystick</text>
+<text x="856.7" y="860" font-size="10.5" fill="#475569">replace control processes (process_config.py:34-47) · excluded, OI-5</text>
+<line x1="40" y1="896" x2="1240" y2="896" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="40" y1="914" x2="74" y2="914" stroke="#C2410C" stroke-width="2.2" marker-end="url(#safety)"/>
+<text x="82" y="918" font-size="11" fill="#475569">enforced by the panda envelope (P); the host (H) also acts</text>
+<line x1="450.2" y1="914" x2="484.2" y2="914" stroke="#475569" stroke-width="1.7" marker-end="url(#muted)"/>
+<text x="492.2" y="918" font-size="11" fill="#475569">host only (H, selfdrived, QM)</text>
+<line x1="689.3" y1="914" x2="723.3" y2="914" stroke="#D2553F" stroke-width="2.2" marker-end="url(#red)"/>
+<text x="731.3" y="918" font-size="11" fill="#475569">host only while the envelope still allows actuation (GAP-16)</text>
+<rect x="40" y="931" width="56" height="18" rx="9" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="68" y="943.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">lateral</text>
+<text x="104" y="944" font-size="11" fill="#475569">actuation allowed</text>
+<rect x="220" y="931" width="86" height="18" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="263" y="943.5" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">no actuation</text>
+<text x="314" y="944" font-size="11" fill="#475569">none</text>
+<rect x="370" y="931" width="104" height="18" rx="9" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="422" y="943.5" font-size="10" fill="#475569" font-weight="700" text-anchor="middle">no longitudinal</text>
+<text x="482" y="944" font-size="11" fill="#475569">blocked</text>
+<text x="560" y="944" font-size="11" fill="#475569">Record IDs: H = sm-selfdrived; P = sm-toy-auth (T), sm-safety-mode (M).</text>
+<text x="40" y="968" font-size="11" fill="#475569">Envelope clears the record lists as not implemented, so not drawn as enforcement: T9 T10d T10e T12 T13 T14 T15.</text>
+<text x="40" y="988" font-size="11" fill="#475569">Nothing here is verified; it is the design as WP-C-01 §4 and the records state it. The lockout and the 3 s timer exist only on the host; the envelope does not know them.</text>
+</svg>

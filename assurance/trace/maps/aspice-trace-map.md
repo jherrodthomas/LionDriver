@@ -11,11 +11,11 @@
 
 ## 1. The V-model
 
-Specification on the left, verification on the right. Each verification process sits opposite the process whose work products it verifies (ASPICE 4.0). Every box names its process, its work products and the items it holds; `*` marks kinds defined in the work products but not yet in the trace data; "from SG: 7/7" counts the parents with at least one child in the trace data. The work products of each process are listed in §2. Arrows down the left follow the decomposition; arrows across the V are verification links, labelled with how many items of the paired level at least one test case names.
+Specification on the left, verification on the right. Each verification process sits opposite the process whose work products it verifies (ASPICE 4.0): the system trunk (SYS.1–SYS.3, SYS.4, SYS.5 and VAL.1) steps inward, then one dashed bracket holds the software, hardware and machine-learning arms side by side. Each specification box lists the items its process holds (`*`: kinds defined in the work products but not yet in the trace data) and, where the trace data has the link, "from SG 7/7": the parents with at least one child. Each verification box lists the cases of its test specifications, then the items of the paired level they name. Arrows down the left and up the right follow decomposition and integration; dashed arrows across the V are verification links, labelled with the same counts in the trunk. The work products of each process are listed in §2.
 
-![Figure 1: ASPICE 4.0 V-model with item counts per process and verification coverage across the V](fig-1-aspice-v-model.svg)
+![Figure 1: ASPICE 4.0 system V, trace lens: item counts per process and verification coverage across the V](fig-1-aspice-v-model.svg)
 
-*Figure 1.* Generated SVG, drawn from the same data as the tables below. Source: [`fig-1-aspice-v-model.svg`](fig-1-aspice-v-model.svg); the Mermaid version follows as a text alternative.
+*Figure 1.* The system V of [`tools/vmodel.py`](../tools/vmodel.py), trace lens, drawn from the same data as the tables below; the same component draws the status and per-goal Vs of the README and the safety case snapshot. Source: [`fig-1-aspice-v-model.svg`](fig-1-aspice-v-model.svg); the Mermaid version follows as a text alternative.
 
 <details><summary>Mermaid version of Figure 1</summary>
 
@@ -132,29 +132,29 @@ block-beta
   SWE5 -. "SWSR 70/134" .-> SWE2
   HWE3 -. "HWSR 18/45" .-> HWE2
   SWE4 -. "SWSR 70/134" .-> SWE3
-  style VAL1 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
-  style SYS5 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
-  style SYS4 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
-  style SWE6 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
-  style HWE4 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
-  style MLE4 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
-  style SWE5 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
-  style HWE3 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
-  style SWE4 fill:#FEF3C7,stroke:#D97706,stroke-width:2px
-  style SYS1 fill:#EFF6FF,stroke:#2563EB,stroke-dasharray:4 3
-  style SYS2 fill:#EFF6FF,stroke:#2563EB,stroke-dasharray:4 3
-  style SYS3 fill:#F1F5F9,stroke:#94A3B8,stroke-dasharray:4 3
-  style SWE1 fill:#DBEAFE,stroke:#2563EB
-  style HWE1 fill:#DBEAFE,stroke:#2563EB
-  style MLE1 fill:#F1F5F9,stroke:#94A3B8,stroke-dasharray:4 3
-  style SWE2 fill:#F1F5F9,stroke:#94A3B8,stroke-dasharray:4 3
-  style HWE2 fill:#F1F5F9,stroke:#94A3B8,stroke-dasharray:4 3
-  style SWE3 fill:#F1F5F9,stroke:#94A3B8,stroke-dasharray:4 3
+  style VAL1 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
+  style SYS5 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
+  style SYS4 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
+  style SWE6 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
+  style HWE4 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
+  style MLE4 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
+  style SWE5 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
+  style HWE3 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
+  style SWE4 fill:#FFFBEB,stroke:#D97706,stroke-width:2px
+  style SYS1 fill:#FFFBEB,stroke:#D97706
+  style SYS2 fill:#FFFBEB,stroke:#D97706
+  style SYS3 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
+  style SWE1 fill:#EFF6FF,stroke:#2563EB
+  style HWE1 fill:#EFF6FF,stroke:#2563EB
+  style MLE1 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
+  style SWE2 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
+  style HWE2 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
+  style SWE3 fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4
 ```
 
 </details>
 
-Verification boxes: green when every item of the paired level is named by a case, amber when some are, red when none is. Specification boxes: solid blue when all their item kinds are in the trace data, dashed blue when some are, dashed grey when none are or the level holds no item kind yet.
+One colour rule for every V: blue when every item of the level is in the trace data, or every item of the paired level is named by a case (done in the design, not verified); amber when some are; red when none is; dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification; nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet).
 
 A named item is a **specified** link, not a passed test. 0 of 411 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
 
