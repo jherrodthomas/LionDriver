@@ -36,6 +36,7 @@ from caselib import ASSURANCE_DIR, CASE_DIR, REPO_ROOT, load_case, release_statu
 sys.path.insert(0, str(ASSURANCE_DIR / "trace" / "tools"))
 import vmodel
 import distribution
+import snapshot_pages as pages
 
 GENERATOR_VERSION = "1.0"
 REPO_SLUG = "jherrodthomas/LionDriver"
@@ -331,6 +332,17 @@ h2{font-size:12pt;margin:6mm 0 2mm}
 .raci i{display:inline-block;min-width:8mm;border-radius:1mm;font-style:normal;font-weight:700;font-size:7.2pt;padding:0 1mm}
 .rA{background:#0F172A;color:#fff}.rR{background:#C2410C;color:#fff}.rC{background:#E0F2F1;color:#0F766E}.rI{background:#F1F5F9;color:#64748B}
 .rAR{background:linear-gradient(90deg,#0F172A 50%,#C2410C 50%);color:#fff}
+.hm{display:inline-block;min-width:7mm;text-align:center;border:1px solid;border-radius:1mm;font-size:7.2pt;font-weight:700;padding:0 1mm;margin:.3mm;font-variant-numeric:tabular-nums}
+.cols2{display:grid;grid-template-columns:1fr 1.5fr;gap:6mm}
+.tbl.hmx td,.tbl.hmx th{text-align:center}.tbl.hmx td:first-child,.tbl.hmx th:first-child{text-align:left;white-space:nowrap}
+.tbl.compact{font-size:7.6pt}.tbl.compact td{padding:.8mm 1mm}
+.tbl.rtm{font-size:6.6pt;table-layout:fixed}.tbl.rtm td{padding:.5mm .8mm}.tbl.rtm .mono{font-size:6.2pt}.tbl.rtm th:nth-child(1){width:19mm}.tbl.rtm th:nth-child(2){width:11mm}.tbl.rtm th:nth-child(3){width:16mm}.tbl.rtm th:nth-child(4){width:40mm}.tbl.rtm th:nth-child(5){width:62mm}.tbl.rtm th:nth-child(6){width:26mm}
+.swim{width:100%;border-collapse:collapse;font-size:7pt;table-layout:fixed}
+.swim th{font-size:7pt;color:#334155;border-bottom:1.2px solid var(--b2);padding:1mm;text-align:left;vertical-align:bottom}
+.swim th.lane{width:30mm;vertical-align:top;border-bottom:1px solid var(--line);background:#F8FAFC}
+.swim td{border-bottom:1px solid var(--line);border-left:1px dashed var(--line);padding:.8mm;vertical-align:top}
+.swim .hm{font-size:6.4pt;min-width:0;padding:0 .7mm}
+.swim tr{break-inside:avoid}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:3mm}
 .kpi{border:1px solid var(--line);border-radius:2mm;padding:3mm}
 .kpi .v{font-size:19pt;font-weight:800;line-height:1}.kpi .v small{font-size:10pt;color:var(--mut)}
@@ -489,14 +501,18 @@ def status_delta(s: dict, prev: dict | None) -> str:
 
 
 def contents() -> str:
-  items = [("approval", "Approval", True), ("control", "Document control", True), ("roles", "Roles and responsibilities", True),
+  items = [("approval", "Approval", True), ("control", "Document control", True),
+           ("documents", "Controlled documents", True), ("distribution", "Distribution record", True), ("roles", "Roles and responsibilities", True),
            ("raci", "RACI", True), ("contributors", "Contributors, reviews and confirmation measures", True),
            ("status", "1 Status at a glance", False), ("traceability", "1.1 Traceability on the V", False),
+           ("coverage", "1.2 Trace coverage", False), ("lifecycle", "1.3 Lifecycle swimlanes", False),
+           ("vv", "1.4 Verification and validation", False), ("freshness", "1.5 Evidence freshness", False),
            ("scope", "2 Scope", False), ("hierarchy", "2.1 Element hierarchy", False),
            ("argument", "3 Argument (GSN)", False),
            ("claims", "4 Claims", False), ("evidence", "5 Evidence register", False), ("defeaters", "6 Open defeaters", False),
            ("gates", "7 Gates, actions and decisions", False), ("config", "8 Configuration and pins", False),
-           ("annex-a", "A Revision history", False), ("annex-b", "B Abbreviations", False), ("annex-c", "C How to verify this snapshot", False)]
+           ("annex-a", "A Revision history", False), ("annex-b", "B Abbreviations", False), ("annex-c", "C How to verify this snapshot", False),
+           ("annex-d", "D Requirements traceability matrix", False)]
   links = "".join(f'<a class="{"fm" if fm else ""}" href="#{i}"><span>{e(t)}</span><span>›</span></a>' for i, t, fm in items)
   return f'<section id="contents"><h1>Contents</h1><p class="lead">Every entry links to its page.</p><div class="toc">{links}</div></section>'
 
@@ -742,10 +758,12 @@ def build(tag: str | None, previous: dict | None, copy_id: str | None = None) ->
   contrib, reviews = contributors(), review_records()
   vd = vmodel.load()
   body = "".join([
-    cover(ident, s, rs, vd), approval(s, rs, reviews), document_control(ident, s, previous, contrib), contents(), roles(), raci(),
-    contributors_page(contrib, reviews, confirmation_measures(), s), status_page(s, rs, previous, vd), traceability(vd), scope(),
+    cover(ident, s, rs, vd), approval(s, rs, reviews), document_control(ident, s, previous, contrib), contents(),
+    pages.controlled_documents(), pages.distribution_record(), roles(), raci(),
+    contributors_page(contrib, reviews, confirmation_measures(), s), status_page(s, rs, previous, vd), traceability(vd),
+    pages.coverage(vd.m), pages.lifecycle(), pages.vv_matrix(vd), pages.freshness(case), scope(),
     argument(), claims_page(case), evidence_page(case), defeaters_page(case), gates_page(s, vd), config_page(case, ident, s),
-    annexes(ident)])
+    annexes(ident), pages.rtm(vd.m)])
   wm = "" if rs["approved"] else '<div class="wm">DRAFT</div>'
   html = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
