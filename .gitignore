@@ -98,3 +98,6 @@ build/
 .context/
 PLAN.md
 TASK.md
+assurance/08-analyses/fmea/exports/*
+# reviewer workbooks (tools/safety/fmea_review_xlsx.py) are committed; CI checks them against the YAML
+!assurance/08-analyses/fmea/exports/review/

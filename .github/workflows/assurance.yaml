@@ -1,0 +1,234 @@
+name: assurance
+
+# Assurance data checks: trace consistency (WP-T-01), integrated process model (WP-P-11), Living
+# Safety Case records and dashboard (assurance/case), and links in the assurance tree, README and LionDriver docs.
+# Read-only: the job never writes to the repository. Generated dashboard files are committed by
+# contributors (generate_dashboard.py) and this job fails if they are out of date.
+
+on:
+  push:
+    branches:
+      - liondriver-dev
+    paths:
+      - 'assurance/**'
+      - 'opendbc_repo'
+      - 'tools/sync/**'
+      - 'tools/ci/**'
+      - 'tools/severity/**'
+      - 'tools/field_monitoring/**'
+      - 'tools/safety/**'
+      - 'tools/vehicles/**'
+      - 'README.md'
+      - 'docs/CARS.md'
+      - 'docs/liondriver/**'
+      - 'docs/assets/liondriver/**'
+      - '.github/workflows/assurance.yaml'
+  pull_request:
+    paths:
+      - 'assurance/**'
+      - 'opendbc_repo'
+      - 'tools/sync/**'
+      - 'tools/ci/**'
+      - 'tools/severity/**'
+      - 'tools/field_monitoring/**'
+      - 'tools/safety/**'
+      - 'tools/vehicles/**'
+      - 'README.md'
+      - 'docs/CARS.md'
+      - 'docs/liondriver/**'
+      - 'docs/assets/liondriver/**'
+      - '.github/workflows/assurance.yaml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: assurance-${{ github.event_name == 'push' && github.run_id || github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: trace and link checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Trace consistency
+      run: python3 assurance/trace/tools/check_trace.py
+    - name: State machines (WP-W-05 §5 generated from state-machines/*.yaml)
+      run: python3 assurance/trace/tools/check_state_machines.py --check
+    - name: Design diagrams (Stateflow-style charts, Simulink-style block diagram) current
+      run: python3 assurance/05-software/diagrams/make_diagrams.py --check
+    - name: Trace tool unit tests (check_state_machines, check_trace, sync_requirements; WP-P-07 TL-28, OI-9)
+      run: python3 -m unittest discover -s assurance/trace/tools -p 'test_*.py' -v
+    - name: Relative links
+      run: python3 assurance/trace/tools/check_links.py
+    - name: ASPICE traceability map matches the trace data and test specifications (and its tests)
+      run: |
+        python3 assurance/trace/tools/trace_map.py --check
+        python3 assurance/trace/tools/test_trace_map.py
+        python3 assurance/trace/tools/test_vmodel.py
+    - name: Decision register follows its lifecycle rules, and the inbox page builds (and their tests)
+      run: |
+        python3 assurance/01-management/decisions/check_decisions.py
+        python3 assurance/01-management/decisions/test_decisions.py
+    - name: Work-product figures match their source tables and records (and their tests)
+      run: |
+        python3 assurance/01-management/figures/fig_m_management.py --check
+        python3 assurance/01-management/figures/test_fig_m_management.py
+        python3 assurance/02-concept/figures/fig_c02_odd.py --check
+        python3 assurance/02-concept/figures/test_fig_c02_odd.py
+        python3 assurance/02-concept/figures/fig_c01_interfaces.py --check
+        python3 assurance/02-concept/figures/test_fig_c01_interfaces.py
+        python3 assurance/02-concept/figures/fig_c01_modes.py --check
+        python3 assurance/02-concept/figures/test_fig_c01_modes.py
+        python3 assurance/03-system/figures/fig_s03_defence_in_depth.py --check
+        python3 assurance/03-system/figures/test_fig_s03_defence_in_depth.py
+        python3 assurance/06-validation/figures/fig_v02_validation_targets.py --check
+        python3 assurance/06-validation/figures/test_fig_v02_validation_targets.py
+        python3 assurance/07-supporting/figures/fig_p_process.py --check
+        python3 assurance/07-supporting/figures/test_fig_p_process.py
+        python3 assurance/06-validation/figures/fig_v05_fault_coverage.py --check
+        python3 assurance/06-validation/figures/test_fig_v05_fault_coverage.py
+    - name: Traceability figures of WP-T-01 match the data (and their tests)
+      run: |
+        python3 assurance/trace/tools/trace_figures.py --check
+        python3 assurance/trace/tools/test_trace_figures.py
+    - name: Markdown tables (every row has the header's number of cells)
+      run: |
+        python3 assurance/trace/tools/check_tables.py
+        python3 assurance/trace/tools/test_check_tables.py
+    - name: HARA model consistency (summary and WP-C-03 §2.1 counts)
+      run: python3 assurance/02-concept/hara/hara_model.py --check
+    - name: FSC completeness (every SG x node basic event mapped to WP-C-04 FSRs)
+      run: python3 assurance/02-concept/fsc/fsc_model.py --check
+    - name: HARA and FSC model unit tests (WP-P-07 TL-36, TL-37)
+      run: |
+        python3 -m unittest discover -s assurance/02-concept/hara -p 'test_*.py' -v
+        python3 -m unittest discover -s assurance/02-concept/fsc -p 'test_*.py' -v
+    - name: Build manifest unit tests (WP-P-07 TL-38)
+      run: python3 -m unittest discover -s tools/ci -p 'test_*.py' -v
+    - name: Integrated process model and maps (WP-P-11)
+      run: python3 assurance/process/tools/process_model.py --check
+    - name: Process model self-tests
+      run: python3 assurance/process/tools/test_process_model.py
+    - name: Concept-phase figures match the HARA, FSC and SOTIF data (and their tests)
+      run: |
+        python3 assurance/02-concept/hara/hara_figures.py --check
+        python3 assurance/02-concept/hara/test_hara_figures.py
+        python3 assurance/02-concept/fsc/fsc_figures.py --check
+        python3 assurance/02-concept/fsc/test_fsc_figures.py
+        python3 assurance/02-concept/sotif/sotif_figures.py --check
+        python3 assurance/02-concept/sotif/test_sotif_figures.py
+    - name: FMEA, FMEDA and DFA figures match the YAML analyses (and their tests)
+      run: |
+        python3 tools/safety/fmea_diagrams.py --check
+        python3 tools/safety/test_fmea_diagrams.py
+    - name: Timing-budget and DFI-matrix figures match WP-S-04 and WP-A-03 (and their tests)
+      run: |
+        python3 assurance/03-system/figures/fig_s04_timing.py --check
+        python3 assurance/03-system/figures/test_fig_s04_timing.py
+        python3 assurance/08-analyses/figures/fig_a03_dfi_matrix.py --check
+        python3 assurance/08-analyses/figures/test_fig_a03_dfi_matrix.py
+    - name: Fault tree diagrams and cut sets match WP-A-04 (and their tests)
+      run: |
+        python3 assurance/08-analyses/fta/fta_diagrams.py --check
+        python3 assurance/08-analyses/fta/test_fta_diagrams.py
+        python3 assurance/08-analyses/fta/fta_cutsets.py --check
+    - name: FMEA data lint, HARA mapping onto WP-C-03 (and the linter's tests)
+      run: |
+        python3 -m pip install --quiet --user --break-system-packages pyyaml jsonschema openpyxl
+        python3 tools/safety/fmea_lint.py --report
+        python3 -m unittest discover -s tools/safety -p 'test_fmea_lint.py'
+        python3 tools/safety/fmea_review_xlsx.py --check
+        python3 tools/safety/test_fmea_review_xlsx.py
+    - name: Vehicle register page current, citing documents agree with it (and its tests)
+      run: |
+        python3 tools/vehicles/vehicle_register.py --check
+        python3 -m unittest discover -s tools/vehicles -p 'test_*.py' -v
+    - name: FMEA review pages for GitHub (Markdown + SVG) current, diagram data valid (and tests)
+      run: |
+        python3 tools/safety/fmea_review_md.py --check
+        python3 tools/safety/test_fmea_review_md.py
+    - name: Sync report tool unit tests
+      run: python3 -m unittest tools.sync.test_sync_report -v
+    - name: CAN gap scan unit tests
+      run: python3 -m unittest tools.can_gaps.test_can_gap_scan -v
+    - name: Severity ratio tool unit tests
+      run: python3 -m unittest tools.severity.test_severity_ratio tools.severity.test_risk_curve -v
+    - name: Field-monitoring extraction unit tests
+      run: python3 -m unittest tools.field_monitoring.test_extract_events -v
+
+  sysml:
+    name: sysml model
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Model matches WP-C-01, WP-S-03 and WP-W-03 (M1-M8), requirements match WP-S-01, WP-S-02, WP-S-07 and the test specifications (R1-R4), figures and explorer up to date, tests
+      working-directory: assurance/models/sysml
+      run: |
+        python3 tools/gen_requirements.py --check
+        python3 tools/check_model.py
+        python3 tools/render_views.py --check
+        python3 tools/explorer.py --check
+        python3 tools/test_sysml.py
+    - name: SysML v2 conformance with the OMG pilot implementation (WP-P-07 TL-26)
+      run: |
+        # the pilot jar is built for Java 21; the runner image provides it next to the default JDK
+        export JAVA_HOME="$JAVA_HOME_21_X64" PATH="$JAVA_HOME_21_X64/bin:$PATH"
+        python3 -m pip install --quiet --user --break-system-packages zstandard
+        assurance/models/sysml/tools/pilot/validate.sh "$RUNNER_TEMP/sysml-pilot"
+
+  safety-case:
+    name: living safety case
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Validate assurance case records
+      run: python3 assurance/case/tools/validate.py
+    - name: Validator self-tests
+      run: python3 assurance/case/tools/test_case.py
+    - name: Snapshot builder tests
+      run: python3 assurance/case/tools/test_snapshot.py
+    - name: Dashboard is in sync with the records
+      run: python3 assurance/case/tools/generate_dashboard.py --check
+    - name: GSN diagrams are in sync with the records, WP-K-01 and WP-K-03
+      run: |
+        python3 assurance/case/tools/gsn_diagrams.py --check
+        python3 assurance/case/tools/test_gsn.py
+    - name: README and documentation links
+      run: python3 assurance/case/tools/check_pages.py
+
+  octave-models:
+    name: Octave envelope models
+    # Models of envelope logic (assurance/models/octave, WP-P-07 TL-25). Not verification of the C code:
+    # the job checks that the models still follow the pinned opendbc constants and pass their own checks.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout opendbc submodule
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Install GNU Octave and gnuplot
+      run: |
+        sudo apt-get update -q
+        sudo apt-get install -y -q --no-install-recommends octave gnuplot fonts-freefont-otf ghostscript
+        octave-cli --version | head -1
+    - name: Run models and model checks
+      run: octave-cli --no-gui assurance/models/octave/run_models.m build/octave-models
+    - name: Upload plots
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: octave-models
+        path: build/octave-models/

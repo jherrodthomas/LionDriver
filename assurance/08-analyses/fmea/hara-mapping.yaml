@@ -1,0 +1,40 @@
+# Mapping of the second-set HARA (analyses/hara.yaml, LD-HARA-001 rev 0.3) onto WP-C-03, the HARA of record
+# (docs-safety-reconciliation.md §7 OI-5, §8). The FMEA data cites second-set hazard IDs (HZ-xxx) in its effects; this file
+# carries those links to WP-C-03 hazards (H-0n), hazardous events (HE-0n.m) and safety goals (SG-0n).
+# Checked by tools/safety/fmea_lint.py: every second-set hazard and goal is mapped, every WP-C-03 ID exists in WP-C-03, both
+# ASILs match their sources, and `agreement` matches the comparison.
+#   agreement: same            - same ASIL
+#              second_higher   - the second set rates higher; the cause is a reconciliation decision (`decision`)
+#              wp_c03_higher   - WP-C-03 covers it inside a goal with a higher ASIL
+#              no_counterpart  - WP-C-03 has no safety goal for it; the reason is a reconciliation decision
+schema_version: 1
+target: assurance/02-concept/WP-C-03-hara.md
+
+hazards:
+  - {second: HZ-001, wp_c03: [H-01], events: [HE-01.4], note: "Torque while not engaged, driver steering manually"}
+  - {second: HZ-002, wp_c03: [H-01], events: [HE-01.1, HE-01.2, HE-01.3], note: "Excessive steering while engaged"}
+  - {second: HZ-003, wp_c03: [H-01], events: [HE-01.1, HE-01.2, HE-02.3], note: "Steering toward the lane boundary at normal magnitude; WP-C-03 rates it with H-01 and the frozen command HE-02.3"}
+  - {second: HZ-004, wp_c03: [H-02], events: [HE-02.1, HE-02.2, HE-02.4, HE-02.5]}
+  - {second: HZ-005, wp_c03: [H-03], events: [HE-03.1, HE-03.2, HE-03.3, HE-03.4, HE-03.5]}
+  - {second: HZ-006, wp_c03: [H-04], events: [HE-04.1, HE-04.2, HE-04.3, HE-04.4, HE-04.5]}
+  - {second: HZ-007, wp_c03: [H-06], events: [HE-06.1, HE-06.2, HE-06.3]}
+  - {second: HZ-008, wp_c03: [H-05], events: [HE-05.1, HE-05.3, HE-05.4]}
+  - {second: HZ-009, wp_c03: [H-05], events: [HE-05.2]}
+  - {second: HZ-010, wp_c03: [H-01, H-03], events: [HE-01.4], note: "Unintended engagement: WP-C-03 rates it inside H-01 (torque while not engaged) and H-03 (acceleration when not intended)"}
+  - {second: HZ-011, wp_c03: [H-08], events: [HE-08.1]}
+  - {second: HZ-012, wp_c03: [H-07], events: [HE-07.1, HE-07.2, HE-07.3]}
+  - {second: HZ-013, wp_c03: [], events: [], note: "Inattentive or unresponsive driver: not a vehicle-level hazard in WP-C-03; driver monitoring is a measure that controllability relies on (WP-C-04 §7). See RD-3"}
+
+goals:
+  - {second: SG-001, second_asil: D, wp_c03: [SG-01], wp_c03_asil: C, agreement: second_higher, decision: RD-1}
+  - {second: SG-002, second_asil: C, wp_c03: [SG-01], wp_c03_asil: C, agreement: same}
+  - {second: SG-003, second_asil: B, wp_c03: [SG-02, SG-06], wp_c03_asil: B, agreement: same}
+  - {second: SG-004, second_asil: C, wp_c03: [SG-03], wp_c03_asil: B, agreement: second_higher, decision: RD-2}
+  - {second: SG-005, second_asil: B, wp_c03: [SG-04], wp_c03_asil: B, agreement: same}
+  - {second: SG-006, second_asil: B, wp_c03: [SG-06], wp_c03_asil: B, agreement: same}
+  - {second: SG-007, second_asil: B, wp_c03: [SG-05], wp_c03_asil: B, agreement: same}
+  - {second: SG-008, second_asil: B, wp_c03: [SG-01, SG-03], wp_c03_asil: C, agreement: wp_c03_higher}
+  - {second: SG-009, second_asil: B, wp_c03: [SG-07], wp_c03_asil: B, agreement: same}
+  - {second: SG-010, second_asil: A, wp_c03: [], wp_c03_asil: null, agreement: no_counterpart, decision: RD-3}
+
+decisions: [RD-1, RD-2, RD-3]

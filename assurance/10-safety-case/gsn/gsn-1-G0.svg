@@ -1,0 +1,341 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2670" height="1818" viewBox="0 0 2670 1818">
+<title>Safety case (GSN), sheet 1 of 6: argument from G0</title>
+<style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.sid{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.cid{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.cs{font:400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle;fill:#3c4556}.aj{font:700 10px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff;text-anchor:middle}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#1d2433;stroke-width:1.3}.wc{stroke:#7d8798;stroke-width:1.2;stroke-dasharray:4 3}.shadow{fill:#0f172a;opacity:.06}</style>
+<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
+<rect width="100%" height="100%" fill="#f7f8fa"/>
+<rect y="78" width="100%" height="1740" fill="url(#dots)"/>
+<rect width="100%" height="78" fill="#0f2a44"/>
+<text x="40" y="32" class="eyebrow">GSN · SAFETY CASE · WP-K-01</text>
+<text x="40" y="59" class="title">G0 · The LionDriver reference configuration, operated by an attentive driver…</text>
+<rect x="2430" y="21" width="200" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
+<text x="2530" y="44" class="hc">Sheet 1 of 6</text>
+<rect x="1724.0" y="116.5" width="244" height="168" rx="4" class="shadow"/>
+<rect x="1722.5" y="114" width="244" height="168" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M1726.5,114 H1962.5 A4,4 0 0 1 1966.5,118 V120 H1722.5 V118 A4,4 0 0 1 1726.5,114 Z" fill="#c62828"/>
+<text x="1736.5" y="139" class="id" text-anchor="start">G0</text>
+<text x="1952.5" y="139" class="kind">GOAL</text>
+<text x="1736.5" y="153" class="d">The LionDriver reference</text>
+<text x="1736.5" y="167" class="d">configuration, operated by an</text>
+<text x="1736.5" y="181" class="d">attentive driver within its ODD,</text>
+<text x="1736.5" y="195" class="d">does not pose unreasonable risk to</text>
+<text x="1736.5" y="209" class="d">vehicle occupants or other road</text>
+<text x="1736.5" y="223" class="d">users. The residual risk is no worse</text>
+<text x="1736.5" y="237" class="d">than manual driving of the same</text>
+<text x="1736.5" y="251" class="d">vehicle with its stock TSS 2.0</text>
+<text x="1736.5" y="265" class="d">driver assistance.</text>
+<rect x="1978.5" y="114" width="196" height="96" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="2076.5" y="135" class="cid" fill="#2f557f">C1</text>
+<text x="2076.5" y="149" class="cs">Item definition: functions</text>
+<text x="2076.5" y="163" class="cs">F-01…F-09, elements</text>
+<text x="2076.5" y="177" class="cs">E-01…E-06, interfaces</text>
+<text x="2076.5" y="191" class="cs">IF-01…IF-09 [WP-C-01]</text>
+<rect x="1978.5" y="220" width="196" height="68" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="2076.5" y="241" class="cid" fill="#2f557f">C2</text>
+<text x="2076.5" y="255" class="cs">ODD and intended</text>
+<text x="2076.5" y="269" class="cs">functionality [WP-C-02]</text>
+<rect x="1978.5" y="298" width="196" height="124" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="2076.5" y="319" class="cid" fill="#2f557f">C3</text>
+<text x="2076.5" y="333" class="cs">Reference configuration: E210</text>
+<text x="2076.5" y="347" class="cs">Corolla ICE TSS2</text>
+<text x="2076.5" y="361" class="cs">(TOYOTA_COROLLA_TSS2), one</text>
+<text x="2076.5" y="375" class="cs">recorded device revision +</text>
+<text x="2076.5" y="389" class="cs">Toyota harness, tagged</text>
+<text x="2076.5" y="403" class="cs">LionDriver release [WP-M-01…</text>
+<rect x="1978.5" y="432" width="196" height="110" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="2076.5" y="453" class="cid" fill="#2f557f">C4</text>
+<text x="2076.5" y="467" class="cs">Hazard log: H-01…H-06, H-08;</text>
+<text x="2076.5" y="481" class="cs">HE-01.1…HE-08.1; SG-01…SG-07</text>
+<text x="2076.5" y="495" class="cs">[WP-C-03]; SH-01…SH-13</text>
+<text x="2076.5" y="509" class="cs">[WP-C-05]; TARA damage</text>
+<text x="2076.5" y="523" class="cs">scenarios [WP-C-09]</text>
+<rect x="1978.5" y="552" width="196" height="96" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="2076.5" y="573" class="cid" fill="#2f557f">C5</text>
+<text x="2076.5" y="587" class="cs">Safety envelope architecture</text>
+<text x="2076.5" y="601" class="cs">pattern: QM SoC stack bounded</text>
+<text x="2076.5" y="615" class="cs">by the opendbc safety mode on</text>
+<text x="2076.5" y="629" class="cs">the panda MCU [WP-M-01 §4.1]</text>
+<rect x="1978.5" y="658" width="196" height="68" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="2076.5" y="679" class="cid" fill="#2f557f">C6</text>
+<text x="2076.5" y="693" class="cs">Tailoring T-01…T-13 [WP-M-01</text>
+<text x="2076.5" y="707" class="cs">§5]</text>
+<ellipse cx="2076.5" cy="770.0" rx="98.0" ry="39.0" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<circle cx="2166.5" cy="806" r="9" fill="#7a4f00"/>
+<text x="2166.5" y="810" class="aj">A</text>
+<text x="2076.5" y="757" class="cid" fill="#7a4f00">A1</text>
+<text x="2076.5" y="771" class="cs">AOU-01…AOU-14 hold [WP-C-01</text>
+<text x="2076.5" y="785" class="cs">§7] — see §5 for status</text>
+<ellipse cx="2076.5" cy="876.0" rx="98.0" ry="67.0" fill="#dcefe0" stroke="#5f9f6d" stroke-width="1.2"/>
+<circle cx="2166.5" cy="940" r="9" fill="#245a31"/>
+<text x="2166.5" y="944" class="aj">J</text>
+<text x="2076.5" y="835" class="cid" fill="#245a31">J0</text>
+<text x="2076.5" y="849" class="cs">"No worse than manual driving</text>
+<text x="2076.5" y="863" class="cs">with stock TSS 2.0" is the</text>
+<text x="2076.5" y="877" class="cs">acceptance principle because</text>
+<text x="2076.5" y="891" class="cs">LD-SDA replaces stock LTA and</text>
+<text x="2076.5" y="905" class="cs">DRCC; the comparison baseline</text>
+<text x="2076.5" y="919" class="cs">is what the driver would…</text>
+<line x1="1966.5" y1="136" x2="1971.5" y2="136" class="wc"/>
+<line x1="1971.5" y1="136" x2="1971.5" y2="876.0" class="wc"/>
+<line x1="1971.5" y1="162.0" x2="1977.5" y2="162.0" class="wc"/><path d="M1977.5,162.0 L1968.4,166.1 L1968.4,157.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="1971.5" y1="254.0" x2="1977.5" y2="254.0" class="wc"/><path d="M1977.5,254.0 L1968.4,258.1 L1968.4,249.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="1971.5" y1="360.0" x2="1977.5" y2="360.0" class="wc"/><path d="M1977.5,360.0 L1968.4,364.1 L1968.4,355.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="1971.5" y1="487.0" x2="1977.5" y2="487.0" class="wc"/><path d="M1977.5,487.0 L1968.4,491.1 L1968.4,482.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="1971.5" y1="600.0" x2="1977.5" y2="600.0" class="wc"/><path d="M1977.5,600.0 L1968.4,604.1 L1968.4,595.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="1971.5" y1="692.0" x2="1977.5" y2="692.0" class="wc"/><path d="M1977.5,692.0 L1968.4,696.1 L1968.4,687.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="1971.5" y1="770.0" x2="1977.5" y2="770.0" class="wc"/><path d="M1977.5,770.0 L1968.4,774.1 L1968.4,765.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="1971.5" y1="876.0" x2="1977.5" y2="876.0" class="wc"/><path d="M1977.5,876.0 L1968.4,880.1 L1968.4,871.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="1844.5" y1="282" x2="1844.5" y2="961.0" class="w"/>
+<line x1="1119.0" y1="961.0" x2="2570.0" y2="961.0" class="w"/>
+<line x1="1119.0" y1="961.0" x2="1119.0" y2="991.0" class="w"/><path d="M1119.0,991.0 L1114.9,981.9 L1123.1,981.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="2282.0" y1="961.0" x2="2282.0" y2="991.0" class="w"/><path d="M2282.0,991.0 L2277.9,981.9 L2286.1,981.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="2426.0" y1="961.0" x2="2426.0" y2="991.0" class="w"/><path d="M2426.0,991.0 L2421.9,981.9 L2430.1,981.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="2570.0" y1="961.0" x2="2570.0" y2="991.0" class="w"/><path d="M2570.0,991.0 L2565.9,981.9 L2574.1,981.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<path d="M1004.0,992 L1250.0,992 L1234.0,1062 L988.0,1062 Z" transform="translate(1.5 2.5)" class="shadow"/>
+<path d="M1004.0,992 L1250.0,992 L1234.0,1062 L988.0,1062 Z" fill="#e4e7fb" stroke="#4b5bb7" stroke-width="1.4"/>
+<text x="1016.0" y="1017" class="id" text-anchor="start">S0</text>
+<text x="1236.0" y="1017" class="kind">STRATEGY</text>
+<text x="1016.0" y="1031" class="d">Argue over each source of risk,</text>
+<text x="1016.0" y="1045" class="d">one sub-claim per discipline</text>
+<line x1="1119.0" y1="1062" x2="1119.0" y2="1085.0" class="w"/>
+<line x1="162.0" y1="1085.0" x2="2076.0" y2="1085.0" class="w"/>
+<line x1="162.0" y1="1085.0" x2="162.0" y2="1129.0" class="w"/><path d="M162.0,1129.0 L157.9,1119.9 L166.1,1119.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="638.0" y1="1085.0" x2="638.0" y2="1129.0" class="w"/><path d="M638.0,1129.0 L633.9,1119.9 L642.1,1119.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1114.0" y1="1085.0" x2="1114.0" y2="1129.0" class="w"/><path d="M1114.0,1129.0 L1109.9,1119.9 L1118.1,1119.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1600.0" y1="1085.0" x2="1600.0" y2="1129.0" class="w"/><path d="M1600.0,1129.0 L1595.9,1119.9 L1604.1,1119.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="2076.0" y1="1085.0" x2="2076.0" y2="1129.0" class="w"/><path d="M2076.0,1129.0 L2071.9,1119.9 L2080.1,1119.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<rect x="41.5" y="1132.5" width="244" height="134" rx="4" class="shadow"/>
+<rect x="40" y="1130" width="244" height="134" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M44,1130 H280 A4,4 0 0 1 284,1134 V1136 H40 V1134 A4,4 0 0 1 44,1130 Z" fill="#c62828"/>
+<text x="54" y="1155" class="id" text-anchor="start">G1</text>
+<text x="270" y="1155" class="kind">GOAL</text>
+<text x="54" y="1169" class="d">Hazards from E/E malfunctions of the</text>
+<text x="54" y="1183" class="d">item are reduced to a tolerable</text>
+<text x="54" y="1197" class="d">level: every safety goal SG-01…SG-07</text>
+<text x="54" y="1211" class="d">is met with the integrity of its</text>
+<text x="54" y="1225" class="d">ASIL.</text>
+<rect x="54.0" y="1233.0" width="65.3" height="16" rx="8" fill="#e6e9ef"/>
+<text x="86.7" y="1244.5" class="chip" fill="#334155">→ sheet 2</text>
+<rect x="296.0" y="1130" width="196" height="68" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="394.0" y="1151" class="cid" fill="#2f557f">C4</text>
+<text x="394.0" y="1165" class="cs">(safety goals and ASILs,</text>
+<text x="394.0" y="1179" class="cs">WP-C-03 §6)</text>
+<rect x="296.0" y="1208" width="196" height="110" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="394.0" y="1229" class="cid" fill="#2f557f">C7</text>
+<text x="394.0" y="1243" class="cs">Envelope strategy: reduced</text>
+<text x="394.0" y="1257" class="cs">authority (option c) + ASIL B</text>
+<text x="394.0" y="1271" class="cs">hardening, recommended and</text>
+<text x="394.0" y="1285" class="cs">pending maintainer decision</text>
+<text x="394.0" y="1299" class="cs">[WP-C-04 §4]</text>
+<line x1="284" y1="1152" x2="289" y2="1152" class="wc"/>
+<line x1="289" y1="1152" x2="289" y2="1263.0" class="wc"/>
+<line x1="289.0" y1="1164.0" x2="295.0" y2="1164.0" class="wc"/><path d="M295.0,1164.0 L285.9,1168.1 L285.9,1159.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="289.0" y1="1263.0" x2="295.0" y2="1263.0" class="wc"/><path d="M295.0,1263.0 L285.9,1267.1 L285.9,1258.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<rect x="517.5" y="1132.5" width="244" height="134" rx="4" class="shadow"/>
+<rect x="516.0" y="1130" width="244" height="134" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M520.0,1130 H756.0 A4,4 0 0 1 760.0,1134 V1136 H516.0 V1134 A4,4 0 0 1 520.0,1130 Z" fill="#c62828"/>
+<text x="530.0" y="1155" class="id" text-anchor="start">G2</text>
+<text x="746.0" y="1155" class="kind">GOAL</text>
+<text x="530.0" y="1169" class="d">Hazards from functional</text>
+<text x="530.0" y="1183" class="d">insufficiencies of the intended</text>
+<text x="530.0" y="1197" class="d">functionality and from reasonably</text>
+<text x="530.0" y="1211" class="d">foreseeable misuse are acceptably</text>
+<text x="530.0" y="1225" class="d">low.</text>
+<rect x="530.0" y="1233.0" width="65.3" height="16" rx="8" fill="#e6e9ef"/>
+<text x="562.6" y="1244.5" class="chip" fill="#334155">→ sheet 4</text>
+<rect x="772.0" y="1130" width="196" height="82" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="870.0" y="1151" class="cid" fill="#2f557f">C8</text>
+<text x="870.0" y="1165" class="cs">SOTIF hazards SH-01…SH-13,</text>
+<text x="870.0" y="1179" class="cs">acceptance criteria</text>
+<text x="870.0" y="1193" class="cs">AC-01…AC-06 [WP-C-05]</text>
+<rect x="772.0" y="1222" width="196" height="54" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="870.0" y="1243" class="cid" fill="#2f557f">C9</text>
+<text x="870.0" y="1257" class="cs">Validation targets [WP-V-02]</text>
+<ellipse cx="870.0" cy="1313.0" rx="98.0" ry="32.0" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<circle cx="960.0" cy="1342" r="9" fill="#7a4f00"/>
+<text x="960.0" y="1346" class="aj">A</text>
+<text x="870.0" y="1307" class="cid" fill="#7a4f00">Assumption</text>
+<text x="870.0" y="1321" class="cs">AOU-08 hold (WP-K-01 §5)</text>
+<line x1="760.0" y1="1152" x2="765.0" y2="1152" class="wc"/>
+<line x1="765.0" y1="1152" x2="765.0" y2="1313.0" class="wc"/>
+<line x1="765.0" y1="1171.0" x2="771.0" y2="1171.0" class="wc"/><path d="M771.0,1171.0 L761.9,1175.1 L761.9,1166.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="765.0" y1="1249.0" x2="771.0" y2="1249.0" class="wc"/><path d="M771.0,1249.0 L761.9,1253.1 L761.9,1244.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="765.0" y1="1313.0" x2="771.0" y2="1313.0" class="wc"/><path d="M771.0,1313.0 L761.9,1317.1 L761.9,1308.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<rect x="993.5" y="1132.5" width="244" height="120" rx="4" class="shadow"/>
+<rect x="992.0" y="1130" width="244" height="120" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M996.0,1130 H1232.0 A4,4 0 0 1 1236.0,1134 V1136 H992.0 V1134 A4,4 0 0 1 996.0,1130 Z" fill="#c62828"/>
+<text x="1006.0" y="1155" class="id" text-anchor="start">G3</text>
+<text x="1222.0" y="1155" class="kind">GOAL</text>
+<text x="1006.0" y="1169" class="d">The ML components (driving model, DM</text>
+<text x="1006.0" y="1183" class="d">model) are adequately specified,</text>
+<text x="1006.0" y="1197" class="d">developed, validated and monitored</text>
+<text x="1006.0" y="1211" class="d">for their role in the architecture.</text>
+<rect x="1006.0" y="1219.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="1027.2" y="1230.5" class="chip" fill="#fff">DF-15</text>
+<rect x="1053.5" y="1219.0" width="65.3" height="16" rx="8" fill="#e6e9ef"/>
+<text x="1086.2" y="1230.5" class="chip" fill="#334155">→ sheet 5</text>
+<rect x="1248.0" y="1130" width="196" height="82" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="1346.0" y="1151" class="cid" fill="#2f557f">C10</text>
+<text x="1346.0" y="1165" class="cs">AI system definition and AI</text>
+<text x="1346.0" y="1179" class="cs">safety requirements AIR-nn</text>
+<text x="1346.0" y="1193" class="cs">[WP-C-11]</text>
+<ellipse cx="1346.0" cy="1284.0" rx="98.0" ry="67.0" fill="#dcefe0" stroke="#5f9f6d" stroke-width="1.2"/>
+<circle cx="1436.0" cy="1348" r="9" fill="#245a31"/>
+<text x="1436.0" y="1352" class="aj">J</text>
+<text x="1346.0" y="1243" class="cid" fill="#245a31">J3</text>
+<text x="1346.0" y="1257" class="cs">Models are QM components</text>
+<text x="1346.0" y="1271" class="cs">inside the envelope; their</text>
+<text x="1346.0" y="1285" class="cs">errors are SOTIF</text>
+<text x="1346.0" y="1299" class="cs">insufficiencies (G2) and</text>
+<text x="1346.0" y="1313" class="cs">their worst-case actuation is</text>
+<text x="1346.0" y="1327" class="cs">bounded by G1.1</text>
+<line x1="1236.0" y1="1152" x2="1241.0" y2="1152" class="wc"/>
+<line x1="1241.0" y1="1152" x2="1241.0" y2="1284.0" class="wc"/>
+<line x1="1241.0" y1="1171.0" x2="1247.0" y2="1171.0" class="wc"/><path d="M1247.0,1171.0 L1237.9,1175.1 L1237.9,1166.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="1241.0" y1="1284.0" x2="1247.0" y2="1284.0" class="wc"/><path d="M1247.0,1284.0 L1237.9,1288.1 L1237.9,1279.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<rect x="1479.5" y="1132.5" width="244" height="142" rx="4" class="shadow"/>
+<rect x="1478.0" y="1130" width="244" height="142" rx="4" fill="#fdf5e1" stroke="#ecc77a" stroke-width="1.2"/>
+<path d="M1482.0,1130 H1718.0 A4,4 0 0 1 1722.0,1134 V1136 H1478.0 V1134 A4,4 0 0 1 1482.0,1130 Z" fill="#e0a21b"/>
+<text x="1492.0" y="1155" class="id" text-anchor="start">G4</text>
+<text x="1708.0" y="1155" class="kind">GOAL</text>
+<text x="1492.0" y="1169" class="d">Cybersecurity risks that can affect</text>
+<text x="1492.0" y="1183" class="d">safety (and privacy) are treated.</text>
+<text x="1492.0" y="1197" class="d">Developed in the cybersecurity case</text>
+<text x="1492.0" y="1211" class="d">WP-K-03.</text>
+<rect x="1492.0" y="1219.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="1513.2" y="1230.5" class="chip" fill="#fff">DF-22</text>
+<rect x="1539.5" y="1219.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="1560.8" y="1230.5" class="chip" fill="#fff">DF-23</text>
+<rect x="1587.0" y="1219.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="1608.2" y="1230.5" class="chip" fill="#fff">DF-19</text>
+<rect x="1634.5" y="1219.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="1655.8" y="1230.5" class="chip" fill="#fff">DF-29</text>
+<rect x="1492.0" y="1241.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="1513.2" y="1252.5" class="chip" fill="#fff">DF-37</text>
+<ellipse cx="1832.0" cy="1157.0" rx="98.0" ry="32.0" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<circle cx="1922.0" cy="1186" r="9" fill="#7a4f00"/>
+<text x="1922.0" y="1190" class="aj">A</text>
+<text x="1832.0" y="1151" class="cid" fill="#7a4f00">Assumption</text>
+<text x="1832.0" y="1165" class="cs">AOU-11 hold (WP-K-01 §5)</text>
+<line x1="1722.0" y1="1152" x2="1727.0" y2="1152" class="wc"/>
+<line x1="1727.0" y1="1152" x2="1727.0" y2="1157.0" class="wc"/>
+<line x1="1727.0" y1="1157.0" x2="1733.0" y2="1157.0" class="wc"/><path d="M1733.0,1157.0 L1723.9,1161.1 L1723.9,1152.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="1600.0" y1="1272" x2="1600.0" y2="1295.0" class="w"/>
+<line x1="1528.0" y1="1295.0" x2="1672.0" y2="1295.0" class="w"/>
+<line x1="1528.0" y1="1295.0" x2="1528.0" y2="1399.0" class="w"/><path d="M1528.0,1399.0 L1523.9,1389.9 L1532.1,1389.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1672.0" y1="1295.0" x2="1672.0" y2="1399.0" class="w"/><path d="M1672.0,1399.0 L1667.9,1389.9 L1676.1,1389.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="1528.0" cy="1426.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="1528.0" cy="1424.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="1528.0" y="1428.0" class="sid" fill="#1d2433">Sn-68</text>
+<text x="1528.0" y="1466" class="cs">CS incident response</text>
+<text x="1528.0" y="1480" class="cs">and updates</text>
+<circle cx="1672.0" cy="1426.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="1672.0" cy="1424.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="1672.0" y="1428.0" class="sid" fill="#1d2433">Sn-70</text>
+<text x="1672.0" y="1466" class="cs">Cybersecurity case</text>
+<rect x="1955.5" y="1132.5" width="244" height="120" rx="4" class="shadow"/>
+<rect x="1954.0" y="1130" width="244" height="120" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M1958.0,1130 H2194.0 A4,4 0 0 1 2198.0,1134 V1136 H1954.0 V1134 A4,4 0 0 1 1958.0,1130 Z" fill="#c62828"/>
+<text x="1968.0" y="1155" class="id" text-anchor="start">G5</text>
+<text x="2184.0" y="1155" class="kind">GOAL</text>
+<text x="1968.0" y="1169" class="d">The work was done by competent</text>
+<text x="1968.0" y="1183" class="d">people under controlled processes,</text>
+<text x="1968.0" y="1197" class="d">was independently confirmed, and the</text>
+<text x="1968.0" y="1211" class="d">claims stay valid in operation.</text>
+<rect x="1968.0" y="1219.0" width="65.3" height="16" rx="8" fill="#e6e9ef"/>
+<text x="2000.7" y="1230.5" class="chip" fill="#334155">→ sheet 6</text>
+<circle cx="2282.0" cy="1018.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="2282.0" cy="1016.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="2282.0" y="1020.0" class="sid" fill="#1d2433">Sn-49</text>
+<text x="2282.0" y="1058" class="cs">Hazard analysis and</text>
+<text x="2282.0" y="1072" class="cs">risk assessment</text>
+<circle cx="2426.0" cy="1018.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="2426.0" cy="1016.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="2426.0" y="1020.0" class="sid" fill="#1d2433">Sn-55</text>
+<text x="2426.0" y="1058" class="cs">Item definition</text>
+<circle cx="2570.0" cy="1018.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="2570.0" cy="1016.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="2570.0" y="1020.0" class="sid" fill="#1d2433">Sn-56</text>
+<text x="2570.0" y="1058" class="cs">ODD specification</text>
+<text x="40" y="1542" class="lh">Notation · GSN Community Standard v3</text>
+<rect x="48" y="1558" width="52" height="30" rx="4" fill="#fdf5e1" stroke="#ecc77a"/>
+<rect x="48" y="1558" width="52" height="5" rx="2" fill="#e0a21b"/>
+<text x="74" y="1606" class="s" text-anchor="middle">Goal</text>
+<path d="M148,1558 L194,1558 L184,1588 L138,1588 Z" fill="#e4e7fb" stroke="#4b5bb7" stroke-width="1.4"/>
+<text x="166" y="1606" class="s" text-anchor="middle">Strategy</text>
+<rect x="232" y="1559" width="52" height="28" rx="14" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="258" y="1606" class="s" text-anchor="middle">Context</text>
+<ellipse cx="350" cy="1573" rx="27" ry="14" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<text x="350" y="1577" class="cid" fill="#7a4f00">A</text>
+<text x="350" y="1606" class="s" text-anchor="middle">Assumption</text>
+<ellipse cx="442" cy="1573" rx="27" ry="14" fill="#dcefe0" stroke="#5f9f6d" stroke-width="1.2"/>
+<text x="442" y="1577" class="cid" fill="#245a31">J</text>
+<text x="442" y="1606" class="s" text-anchor="middle">Justification</text>
+<path d="M534,1562 L545,1573 L534,1584 L523,1573 Z" fill="#fff" stroke="#1d2433" stroke-width="1.4"/>
+<text x="534" y="1606" class="s" text-anchor="middle">Undeveloped</text>
+<text x="40" y="1649" class="lb">Solution</text>
+<circle cx="166" cy="1647" r="14" fill="#0f172a" opacity=".10"/>
+<circle cx="166" cy="1645" r="14" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.8"/>
+<circle cx="166" cy="1645" r="10" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="1.2"/>
+<text x="166" y="1678" class="s" text-anchor="middle">Available</text>
+<circle cx="258" cy="1647" r="14" fill="#0f172a" opacity=".10"/>
+<circle cx="258" cy="1645" r="14" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="258" y="1678" class="s" text-anchor="middle">Partial</text>
+<circle cx="350" cy="1645" r="14" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="350" y="1678" class="s" text-anchor="middle">Missing</text>
+<line x1="40.0" y1="1710.0" x2="84.0" y2="1710.0" class="w"/><path d="M84.0,1710.0 L74.9,1714.1 L74.9,1705.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<text x="94" y="1714" class="s">SupportedBy</text>
+<line x1="190.0" y1="1710.0" x2="234.0" y2="1710.0" class="wc"/><path d="M234.0,1710.0 L224.9,1714.1 L224.9,1705.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<text x="244" y="1714" class="s">InContextOf</text>
+<rect x="340.0" y="1702.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="361.2" y="1713.5" class="chip" fill="#fff">DF-nn</text>
+<text x="390.5" y="1714" class="s">open defeater on the goal</text>
+<text x="40" y="1740" class="lb">Goal colour: the evidence below it, on every sheet</text>
+<rect x="40" y="1748" width="26" height="14" rx="3" fill="#edf7ee" stroke="#9fcfa3"/>
+<rect x="40" y="1748" width="26" height="4" rx="2" fill="#2e7d32"/>
+<text x="72" y="1759" class="s">all evidence available</text>
+<rect x="211.2" y="1748" width="26" height="14" rx="3" fill="#fdf5e1" stroke="#ecc77a"/>
+<rect x="211.2" y="1748" width="26" height="4" rx="2" fill="#e0a21b"/>
+<text x="243.2" y="1759" class="s">evidence partial</text>
+<rect x="348.79999999999995" y="1748" width="26" height="14" rx="3" fill="#fdecec" stroke="#eba9a9"/>
+<rect x="348.79999999999995" y="1748" width="26" height="4" rx="2" fill="#c62828"/>
+<text x="380.79999999999995" y="1759" class="s">evidence missing</text>
+<rect x="486.4" y="1748" width="26" height="14" rx="3" fill="#f1f3f6" stroke="#c9cfd8"/>
+<rect x="486.4" y="1748" width="26" height="4" rx="2" fill="#8a93a3"/>
+<text x="518.4" y="1759" class="s">not developed</text>
+<rect x="2110.0" y="1528" width="520" height="250" rx="10" fill="#fff" stroke="#d9dee6"/>
+<line x1="2110.0" y1="1574" x2="2630.0" y2="1574" stroke="#d9dee6"/>
+<line x1="2440.0" y1="1574" x2="2440.0" y2="1778" stroke="#d9dee6"/>
+<text x="2128.0" y="1557" class="tbh">LionDriver · Safety case</text>
+<rect x="2480.0" y="1542" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
+<text x="2546.0" y="1556" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
+<text x="2128.0" y="1600" class="k">ARGUMENT FROM</text>
+<text x="2232.0" y="1600" class="v">G0</text>
+<text x="2128.0" y="1626" class="k">SOURCE</text>
+<text x="2232.0" y="1626" class="v">case records (assurance/case/)</text>
+<text x="2232.0" y="1641" class="v">and WP-K-01 contexts</text>
+<text x="2128.0" y="1667" class="k">GENERATED BY</text>
+<text x="2232.0" y="1667" class="v">gsn_diagrams.py</text>
+<text x="2128.0" y="1693" class="k">EDIT</text>
+<text x="2232.0" y="1693" class="v">the source, not this file</text>
+<text x="2128.0" y="1723" class="k">EVIDENCE ON THIS SHEET</text>
+<rect x="2128.0" y="1731" width="294.0" height="10" fill="#f2b233" stroke="#9a6b00" stroke-width=".8"/>
+<text x="2128.0" y="1757" class="s">0 available · 5 partial · 0 missing</text>
+<text x="2456.0" y="1598" class="k">SHEETS</text>
+<line x1="2535.0" y1="1635.0" x2="2471.2" y2="1649.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="2471.2" y1="1669.0" x2="2535.0" y2="1683.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="2535.0" y1="1635.0" x2="2513.8" y2="1649.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="2535.0" y1="1635.0" x2="2556.2" y2="1649.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="2535.0" y1="1635.0" x2="2598.8" y2="1649.0" stroke="#7d8798" stroke-width="1.3"/>
+<rect x="2521.0" y="1615.0" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2535.0" y="1629.0" class="mm" fill="#fff">1</text>
+<rect x="2457.2" y="1649.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2471.2" y="1663.0" class="mm" fill="#0f2a44">2</text>
+<rect x="2499.8" y="1649.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2513.8" y="1663.0" class="mm" fill="#0f2a44">4</text>
+<rect x="2542.2" y="1649.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2556.2" y="1663.0" class="mm" fill="#0f2a44">5</text>
+<rect x="2584.8" y="1649.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2598.8" y="1663.0" class="mm" fill="#0f2a44">6</text>
+<rect x="2521.0" y="1683.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2535.0" y="1697.0" class="mm" fill="#0f2a44">3</text>
+</svg>

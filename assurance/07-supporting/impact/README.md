@@ -1,0 +1,82 @@
+# Upstream sync impact analyses
+
+This folder holds the impact analysis record for each upstream sync (change type CT-3,
+[WP-P-02 §9](../WP-P-02-change-management.md#9-upstream-synchronization-ct-3-d-02)), produced
+under the sync procedure in [WP-M-11 §5](../../01-management/WP-M-11-upstream-and-supplier-management.md#5-upstream-synchronization-procedure-d-02)
+with the template in [WP-M-12 §7.3](../../01-management/WP-M-12-impact-analysis.md#73-template).
+
+## When syncs happen
+
+Syncs happen once per MINOR release, before the release-candidate freeze. The only out-of-cycle exception is a targeted security or safety fix. See [WP-M-11 §5](../../01-management/WP-M-11-upstream-and-supplier-management.md#5-upstream-synchronization-procedure-d-02) (D-02, decided 2026-10-10).
+
+## Generating a report
+
+```sh
+tools/sync/sync_report.py <repo> [--to <upstream commit|branch|tag>] [--from <commit>]
+```
+
+`<repo>` is `openpilot` (the superproject) or one of `panda`, `opendbc_repo`, `msgq_repo`,
+`rednose_repo`, `teleoprtc_repo`, `tinygrad_repo`. Defaults:
+
+- `--from`: the current LionDriver pin. For a submodule that is its gitlink commit in `HEAD`. For
+  `openpilot` it is the upstream baseline recorded in
+  `openpilot/selfdrive/test/process_replay/ref_commit`.
+- `--to`: upstream `master`. Name an exact commit before opening a sync change request; the
+  procedure never syncs to a moving branch head.
+
+The tool fetches upstream history without file contents and lists every commit and changed
+file in the range. It classifies each file against
+[`safety-relevant-paths.txt`](../safety-relevant-paths.txt) and writes
+`sync-<date>-<repo>-<target>.md` here. It never changes pins and never pushes.
+
+## From generated report to record
+
+A generated report covers procedure steps 2–3 (range, commits, classification) and lays out
+step 4. Before it becomes a record:
+
+1. Read every diff in an SR-A or SR-Q file. Commit titles are not enough.
+2. Fill in FuSa / SOTIF / AI / CS, the affected hazards and work products (every work product that describes the changed behaviour, not only the requirement documents: check at least WP-W-01, WP-W-03, WP-W-05, WP-W-09, WP-W-11 and the cybersecurity work products, [RR-2026-009](../../05-software/reviews/RR-2026-009.md) F-30), and the decision
+   (take / modify / reject) for every safety-relevant commit.
+3. Assign the `IA-<yyyy>-<nn>` number, link the change request, and record the author and
+   reviewer with their independence level.
+4. Attach the verification re-run results and list the updated work products.
+5. Set `Status` to `In review`. Merge only after the review in
+   [WP-P-05](../WP-P-05-verification-review-procedure.md) is done.
+
+A report with `Status: Draft: generated, not reviewed` documents upstream drift. It is not
+a sync decision.
+
+## Records
+
+| File | Range | Highest class | Status |
+|---|---|---|---|
+| [sync-2026-10-10-openpilot-b9c815d.md](sync-2026-10-10-openpilot-b9c815d.md) | openpilot `655bfde..b9c815d` (2 commits) | SR-Q | Draft: drift survey, no sync decided |
+| [sync-2026-10-10-msgq-326a9f5.md](sync-2026-10-10-msgq-326a9f5.md) | msgq `0e266c1..326a9f5` (9 commits) | SR-Q | Draft: drift survey, no sync decided |
+
+On 2026-10-10, upstream `panda`, `opendbc`, `rednose` and `teleoprtc` `master` were identical
+to the LionDriver pins, so no report was generated for them.
+
+## LionDriver change records
+
+Impact analyses for changes LionDriver makes itself to safety-relevant code (change type CT-1, [WP-P-02](../WP-P-02-change-management.md)), using the same template.
+
+| File | Change | Highest class | Status |
+|---|---|---|---|
+| [change-2026-10-12-panda-hw-watchdog.md](change-2026-10-12-panda-hw-watchdog.md) | panda: independent hardware watchdog, [jherrodthomas/panda#1](https://github.com/jherrodthomas/panda/pull/1); 100 Hz safety task and window mode, [jherrodthomas/panda#3](https://github.com/jherrodthomas/panda/pull/3); watchdog reset reporting, [jherrodthomas/panda#6](https://github.com/jherrodthomas/panda/pull/6) | SR-A | Integrated 2026-10-12 (panda `9f60e17`, opendbc `aff4033`; follow-ups panda `3859fa8`, opendbc `5b5a4ba`); not verified on hardware; not reviewed independently; D-1, D-2, D-3 accepted as interim |
+| [change-2026-10-12-opendbc-toyota-rx-timeout.md](change-2026-10-12-opendbc-toyota-rx-timeout.md) | opendbc: Toyota RX timeout after 5 periods, [jherrodthomas/opendbc#1](https://github.com/jherrodthomas/opendbc/pull/1); engagement gated on the RX checks, [jherrodthomas/opendbc#3](https://github.com/jherrodthomas/opendbc/pull/3) | SR-A | Integrated 2026-10-12 (panda `9f60e17`, opendbc `aff4033`; follow-ups panda `3859fa8`, opendbc `5b5a4ba`); not verified on hardware; not reviewed independently |
+| [change-2026-10-12-opendbc-toyota-tx-whitelist.md](change-2026-10-12-opendbc-toyota-tx-whitelist.md) | opendbc: PCS and DSU messages removed from the Toyota TX whitelist, [jherrodthomas/opendbc#2](https://github.com/jherrodthomas/opendbc/pull/2) | SR-A | Integrated 2026-10-12 (panda `9f60e17`, opendbc `aff4033`; follow-ups panda `3859fa8`, opendbc `5b5a4ba`); not verified on hardware; not reviewed independently |
+| [change-2026-10-12-panda-safety-mode-lock.md](change-2026-10-12-panda-safety-mode-lock.md) | panda: safety-mode lock in the reference build, [jherrodthomas/panda#4](https://github.com/jherrodthomas/panda/pull/4) | SR-A | Integrated 2026-10-12 (panda `9f60e17`, opendbc `aff4033`; follow-ups panda `3859fa8`, opendbc `5b5a4ba`); not verified on hardware; not reviewed independently |
+| [change-2026-10-12-panda-fast-heartbeat.md](change-2026-10-12-panda-fast-heartbeat.md) | panda: authority revoked 0.3 s after the last SoC heartbeat (TSR-407), [jherrodthomas/panda#7](https://github.com/jherrodthomas/panda/pull/7); siren when that revokes granted authority (TSR-516), [jherrodthomas/panda#15](https://github.com/jherrodthomas/panda/pull/15) (§5, all builds) | SR-A (`panda/board/**`) | Integrated 2026-10-12; not verified on hardware; not reviewed independently (panda `c2e5d93`). Siren: panda `c33343b`, 2026-10-13; not verified on hardware; not reviewed independently |
+| [change-2026-10-12-panda-irq-priorities.md](change-2026-10-12-panda-irq-priorities.md) | panda: explicit interrupt priorities and atomic safety-configuration switch (TSR-519, WP-W-03 R-1, R-8), [jherrodthomas/panda#10](https://github.com/jherrodthomas/panda/pull/10) | SR-A (`panda/board/**`) | Integrated 2026-10-12; not verified on hardware; not reviewed independently (panda `52cad44`) |
+| [change-2026-10-12-opendbc-toyota-eps-fault.md](change-2026-10-12-opendbc-toyota-eps-fault.md) | opendbc: LKA actuation refused while the EPS reports a fault (TSR-110), [jherrodthomas/opendbc#7](https://github.com/jherrodthomas/opendbc/pull/7); reporting to the host, [opendbc#8](https://github.com/jherrodthomas/opendbc/pull/8), [panda#11](https://github.com/jherrodthomas/panda/pull/11); siren on a persistent EPS fault (TSR-516(b)), [panda#14](https://github.com/jherrodthomas/panda/pull/14) | SR-A (`opendbc/safety/**`) | Integrated 2026-10-12; not verified on hardware; not reviewed independently (opendbc `242d63d`; reporting panda `877730e`, opendbc `adcb7c2`). Siren: panda `b790fca`, pinned by LionDriver PR #45, not merged at time of writing |
+| [change-2026-10-12-opendbc-toyota-cruise-main.md](change-2026-10-12-opendbc-toyota-cruise-main.md) | opendbc: CRUISE_ACTIVE checked against MAIN_ON (TSR-405(c)), [jherrodthomas/opendbc#9](https://github.com/jherrodthomas/opendbc/pull/9); TSR-405(b) open | SR-A (`opendbc/safety/**`) | Integrated 2026-10-12; not verified on hardware; not reviewed independently (opendbc `875e325`) |
+| [change-2026-10-12-tx-rate-supervision.md](change-2026-10-12-tx-rate-supervision.md) | opendbc and panda: per-ID TX rate supervision (TSR-518, [DN-01](../../05-software/design-notes/DN-01-tx-rate-supervision.md)), [jherrodthomas/opendbc#10](https://github.com/jherrodthomas/opendbc/pull/10), [jherrodthomas/panda#13](https://github.com/jherrodthomas/panda/pull/13) | SR-A (`opendbc/safety/**`, `panda/board/**`) | Integrated 2026-10-12; not verified on hardware; not reviewed independently (opendbc `7993399`, panda `8aa8671`) |
+| [change-2026-10-12-opendbc-toyota-tx-arrival.md](change-2026-10-12-opendbc-toyota-tx-arrival.md) | opendbc: arrival supervision of the SoC's actuation frames in the reference build (TSR-408), [jherrodthomas/opendbc#11](https://github.com/jherrodthomas/opendbc/pull/11) | SR-A | Proposed 2026-10-12 (opendbc `273f44e`, opendbc#11 merged); not verified on hardware; not reviewed independently |
+| [change-2026-10-13-host-supervision.md](change-2026-10-13-host-supervision.md) | openpilot: `selfdrived` acts on panda flags and `controlsAllowed` mismatches promptly; `controlsd` does not actuate on stale or non-finite inputs (TSR-308, TSR-602, TSR-615, TSR-621) | SR-Q | Proposed 2026-10-13; not verified on the vehicle; not reviewed independently |
+| [change-2026-10-13-pandad-fault-mapping.md](change-2026-10-13-pandad-fault-mapping.md) | pandad/cereal: `interruptRateSoundDma` fault type; `pandaStates.faults` never defaults an entry to `relayMalfunction` (SWF-025) | SR-Q | Integrated 2026-10-13 ([jherrodthomas/LionDriver#48](https://github.com/jherrodthomas/LionDriver/pull/48), `3534bc2`); SWF-ACT-025 completed; not reviewed independently |
+| [change-2026-10-13-elm327-gate-hud-authority.md](change-2026-10-13-elm327-gate-hud-authority.md) | panda: ELM327 refused after the car mode until ignition off (DR-05); opendbc: assist-active LKAS_HUD refused without authority (DM-11); DFA DFI-08, DFI-19 | SR-A | Integrated 2026-10-13 (panda `a55bdfc`, opendbc `a57b667`); unit-tested; not verified on hardware; not reviewed independently |
+| [change-2026-10-14-pcm-engage-heartbeat-gate.md](change-2026-10-14-pcm-engage-heartbeat-gate.md) | opendbc: PCM-edge authority granted only with the heartbeat's engaged flag (reference build, TSR-301), [jherrodthomas/opendbc#14](https://github.com/jherrodthomas/opendbc/pull/14); `selfdrived` 0.3 s engagement grace (TSR-621); WP-A-05 LS-06 | SR-A | Integrated 2026-10-14 (opendbc `9a13f60`) |
+| [change-2026-10-14-chill-mode-default.md](change-2026-10-14-chill-mode-default.md) | openpilot: `ExperimentalMode` defaults to off, so a new install starts in Chill mode (B-06, D-08, decision register DQ-001) | SR-Q | Proposed 2026-10-14; not reviewed independently |
+| [change-2026-10-13-opendbc-rx-length-fault.md](change-2026-10-13-opendbc-rx-length-fault.md) | opendbc: wrong-length frame of an RX-checked message as RX fault (reference build); WP-W-03 ATC-25, B2B-01 | SR-A (`opendbc/safety/**`) | **Proposed, not implemented** (analysis drafted before the change) |
+
+The RX checks for `0x262` and `0x1D3` in the reference build (opendbc `98404a4`, [jherrodthomas/opendbc#6](https://github.com/jherrodthomas/opendbc/pull/6)) are recorded in the RX timeout record (§8) and the EPS fault record.

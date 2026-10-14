@@ -1,0 +1,288 @@
+# yaml-language-server: $schema=../schema/fmeda.schema.json
+# FMEDA for SG-001 (lateral) at BL-002 with GENERIC failure rates (no BOM, no supplier data). The metrics show where the
+# architecture falls short; they are not evidence of compliance. Classification per rating-tables §6.1; DC per §6.2.
+schema_version: 1
+analysis:
+  id: FMD
+  type: fmeda
+  title: FMEDA — SG-001 lateral (panda safety path), generic failure rates
+  revision: '0.2'
+  status: draft
+  baseline: BL-002
+  rating_tables: RT-1
+  scope: Random hardware faults of the panda section that can let an out-of-envelope or unauthorised steering request reach the EPS (LD-HARA-001 SG-001, ASIL D; assurance
+    WP-C-03 SG-01, ASIL C pending OI-1). Reference device at BL-002
+  safety_goal: SG-001
+  asil_target: D
+  mission_profile: 'Passenger car, windscreen-mounted device: ambient up to +85 °C in the sun-loaded enclosure, Tj up to about +105 °C; about 500 operating h/year
+    for 15 years (7,500 h). Failure rates in FIT (1e-9/h); transient (soft-error) rates included where noted. PMHF here is only λSPF + λRF; the dual-point term is
+    not computed (rating-tables §6.3)'
+  out_of_scope:
+  - SoC and its software (QM; their faults are the first fault of a dual-point pair)
+  - 'Vehicle ECUs (EPS, PCM, stock camera): external measures'
+  - 'Relay stuck intercepting and watchdog: no effect on SG-001 (no torque without a valid frame); see the SG-009 FMEDA'
+  references:
+  - assurance/04-hardware/WP-H-02-hardware-design.md
+  - assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
+  - assurance/08-analyses/fmea/analyses/dfmea.yaml
+  - assurance/08-analyses/fmea/rating-tables.md
+  - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
+  updated: '2026-10-14'
+safety_mechanisms:
+- id: FMD-SM-001
+  description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
+  dc_basis: 'ISO 26262-5 Annex D, Table D.6 (memory): ECC, high for single-bit faults'
+  implementation: STM32H7 flash ECC (RM0468); always on
+- id: FMD-SM-002
+  description: SRAM ECC (single-error correction in silicon); double errors flagged but not handled at BL-002
+  dc_basis: 'ISO 26262-5 Annex D, Table D.6: ECC, high for single-bit faults; double errors not credited'
+  implementation: STM32H7 RAM ECC (RM0468); RAMECC monitors not configured
+  requirement: TSR-503
+- id: FMD-SM-003
+  description: Bootstub signature check of the application image at every power-up
+  dc_basis: 'Annex D, Table D.6: memory signature at start-up; credited for latent permanent faults only (once per drive cycle)'
+  implementation: panda/board/bootstub.c
+- id: FMD-SM-004
+  description: 8-bit XOR over the TX packet checked before loading into the FDCAN FIFO
+  dc_basis: 'Annex D, Table D.7 (communication): checksum, low; covers the software TX queue only'
+  implementation: panda/board/drivers/fdcan.h:100
+  requirement: TSR-517
+- id: FMD-SM-005
+  description: 'Clock security system on HSE loss: NMI and reset'
+  dc_basis: 'Annex D, Table D.9 (clock): CSS for clock loss, high for stop; does not detect drift'
+  implementation: panda/board/stm32h7/clock.h
+  requirement: TSR-504
+- id: FMD-SM-006
+  description: 'Relay malfunction detection: a stock camera control message seen on the car side blocks all TX (1 s grace after a mode change)'
+  dc_basis: 'Analysis: detects relay-not-intercepting before or within about 1-2 s of engagement; medium'
+  implementation: opendbc_repo/opendbc/safety/safety.h
+  requirement: TSR-710
+- id: FMD-SM-008
+  description: CAN protocol CRC and per-message RX timeout (5 periods) on vehicle messages
+  dc_basis: 'Annex D, Table D.7: CRC, high for transmission errors; RX timeout for loss'
+  implementation: opendbc_repo/opendbc/safety/safety.h
+  requirement: TSR-401
+components:
+- id: FMD-C-001
+  part: STM32H725 CPU core, bus matrix, interrupt controller and peripherals (digital logic, permanent and transient)
+  dfmea_element: DFM-SE-002
+  failure_rate_fit: 50
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-001
+    mode: Wrong result of a limit or authority check (permanent or transient)
+    distribution: 0.25
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-001
+    notes: Needs a SoC command outside the envelope as second fault. No CPU self-test, so fully latent
+  - id: FMD-002
+    mode: Frame content altered after the TX check (data-path fault)
+    distribution: 0.05
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-019
+    safety_mechanism_spf: FMD-SM-004
+    dc_spf: 0.6
+    notes: 'Only the software-queue part is covered by the XOR; the FDCAN copy and message RAM are not (TSR-517). Also covers SG-04 (deceleration): 0x343 leaves through the same TX path as 0x2E4, so this row and its rates stand for FTA event BE-4.03 too (decision register DQ-002, 2026-10-14)'
+  - id: FMD-003
+    mode: Hang or unexpected exception (no TX)
+    distribution: 0.4
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-004
+    notes: 'Safe for SG-001: no LKA frames, the EPS times out (AOU-01). Relevant to SG-009'
+  - id: FMD-004
+    mode: Other faults without effect on the safety path
+    distribution: 0.3
+    violates_sg_directly: false
+    mpf_potential: false
+  ref_des: U (STM32H725)
+- id: FMD-C-002
+  part: Embedded flash 1 MB (code and limit constants)
+  dfmea_element: DFM-SE-002
+  failure_rate_fit: 20
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-005
+    mode: Single-bit error
+    distribution: 0.8
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-002
+    safety_mechanism_lf: FMD-SM-001
+    dc_lf: 0.99
+    notes: Corrected by ECC; counted as multiple-point detected
+  - id: FMD-006
+    mode: Multi-bit error in limit constants or check code
+    distribution: 0.1
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-002
+    safety_mechanism_lf: FMD-SM-003
+    dc_lf: 0.9
+    notes: Needs a SoC command outside the wrong limit; boot signature finds permanent faults at the next power-up
+  - id: FMD-007
+    mode: Multi-bit error elsewhere (crash, hang)
+    distribution: 0.1
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-002
+- id: FMD-C-003
+  part: SRAM regions holding safety state, limits copy and CAN queues (about 64 KB of 564 KB; soft errors dominate)
+  dfmea_element: DFM-SE-002
+  failure_rate_fit: 100
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-008
+    mode: Single-bit upset
+    distribution: 0.9
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-003
+    safety_mechanism_lf: FMD-SM-002
+    dc_lf: 0.99
+    notes: Corrected by ECC
+  - id: FMD-009
+    mode: Multi-bit upset in authority or limit variables
+    distribution: 0.04
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-003
+    notes: Needs a SoC command outside the envelope or while not engaged; double-error flag not handled (latent)
+  - id: FMD-010
+    mode: Multi-bit upset in the TX queue after the check
+    distribution: 0.02
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-019
+    safety_mechanism_spf: FMD-SM-004
+    dc_spf: 0.6
+    notes: Also covers SG-04 (deceleration), as FMD-002 (decision register DQ-002, 2026-10-14)
+  - id: FMD-011
+    mode: 'Multi-bit upset elsewhere (stack, buffers: crash or dropped frame)'
+    distribution: 0.04
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-003
+- id: FMD-C-004
+  part: 'Clock: 25 MHz HSE crystal and PLL'
+  dfmea_element: DFM-SE-003
+  failure_rate_fit: 10
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-012
+    mode: Oscillation stops
+    distribution: 0.5
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-005
+    safety_mechanism_lf: FMD-SM-005
+    dc_lf: 0.99
+    notes: CSS reset; no frames
+  - id: FMD-013
+    mode: Frequency drift (all timeouts and rate windows scale)
+    distribution: 0.5
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-005
+    notes: Rate limits are per frame and the EPS has its own limits; violation needs a second fault. No cross-check (TSR-504)
+- id: FMD-C-005
+  part: 'MCU supply: board regulator and STM32H7 internal SMPS/LDO'
+  dfmea_element: DFM-SE-004
+  failure_rate_fit: 15
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-014
+    mode: Loss of supply
+    distribution: 0.5
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-007
+    notes: MCU off, relay released
+  - id: FMD-015
+    mode: Under-voltage in the brown-out zone or over-voltage (erratic logic)
+    distribution: 0.3
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-007
+    notes: Undefined behaviour while running; BOR level not set and PVD not enabled at BL-002 (TSR-505)
+  - id: FMD-016
+    mode: Ripple or noise
+    distribution: 0.2
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-007
+- id: FMD-C-006
+  part: Car-side CAN transceiver XCVR1
+  dfmea_element: DFM-SE-005
+  failure_rate_fit: 10
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-017
+    mode: TX stuck dominant
+    distribution: 0.3
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-008
+    notes: 'Bus blocked: no LKA torque; SG-003 effect, not SG-001'
+  - id: FMD-018
+    mode: RX open or stuck recessive
+    distribution: 0.3
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-009
+    notes: RX timeout withdraws authority
+  - id: FMD-019
+    mode: Bit errors on the line
+    distribution: 0.4
+    violates_sg_directly: false
+    mpf_potential: true
+    safety_mechanism_lf: FMD-SM-008
+    dc_lf: 0.99
+    notes: CAN CRC
+- id: FMD-C-007
+  part: Intercept relay and relay driver
+  dfmea_element: DFM-SE-006
+  failure_rate_fit: 15
+  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
+    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-020
+    mode: Stuck released while commanded to intercept (stock LKA and item commands both reach the EPS)
+    distribution: 0.4
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-011
+    safety_mechanism_spf: FMD-SM-006
+    dc_spf: 0.9
+    notes: Usually detected after the mode change and before engagement; detection inside the FTTI while engaged is not shown
+  - id: FMD-021
+    mode: Stuck intercepting, driver stuck on
+    distribution: 0.4
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-010
+    notes: No effect on SG-001; see SG-009
+  - id: FMD-022
+    mode: Intermittent contact
+    distribution: 0.2
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-011
+    safety_mechanism_lf: FMD-SM-008
+    dc_lf: 0.9
+    notes: RX timeouts and CAN errors

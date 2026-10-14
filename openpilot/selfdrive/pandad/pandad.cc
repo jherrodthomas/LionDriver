@@ -133,6 +133,11 @@ void fill_panda_state(cereal::PandaState::Builder &ps, cereal::PandaState::Panda
   ps.setSbu1Voltage(health.sbu1_voltage_mV / 1000.0f);
   ps.setSbu2Voltage(health.sbu2_voltage_mV / 1000.0f);
   ps.setSoundOutputLevel(health.sound_output_level_pkt);
+  ps.setWatchdogReset((health.flags_pkt & HEALTH_FLAG_WATCHDOG_RESET) != 0U);
+  ps.setRequestsRejected(health.requests_rejected_pkt);
+  ps.setEpsFault((health.flags_pkt & HEALTH_FLAG_EPS_FAULT) != 0U);
+  ps.setTxRateExceeded((health.flags_pkt & HEALTH_FLAG_TX_RATE_EXCEEDED) != 0U);
+  ps.setReferenceBuild((health.flags_pkt & HEALTH_FLAG_REFERENCE_BUILD) != 0U);
 }
 
 void fill_panda_can_state(cereal::PandaState::PandaCanState::Builder &cs, const can_health_t &can_health) {
@@ -163,6 +168,26 @@ void fill_panda_can_state(cereal::PandaState::PandaCanState::Builder &cs, const 
   cs.setCanCoreResetCnt(can_health.can_core_reset_cnt);
 }
 
+uint32_t fill_panda_faults(cereal::PandaState::Builder &ps, uint32_t faults_pkt) {
+  constexpr size_t max_fault = size_t(PANDA_FAULT_TYPE_MAX);
+  static_assert(max_fault < sizeof(faults_pkt) * 8, "FaultType does not fit faults_pkt");
+  constexpr uint32_t known_mask = uint32_t((uint64_t(1) << (max_fault + 1U)) - 1U);
+
+  // Size the list from the mapped bits only, so no entry is left at the default (relayMalfunction)
+  std::bitset<sizeof(faults_pkt) * 8> fault_bits(faults_pkt & known_mask);
+  auto faults = ps.initFaults(fault_bits.count());
+
+  size_t j = 0;
+  for (size_t f = size_t(cereal::PandaState::FaultType::RELAY_MALFUNCTION); f <= max_fault; f++) {
+    if (fault_bits.test(f)) {
+      faults.set(j, cereal::PandaState::FaultType(f));
+      j++;
+    }
+  }
+  assert(j == faults.size());
+  return faults_pkt & ~known_mask;
+}
+
 std::optional<bool> send_panda_states(PubMaster *pm, Panda *panda, bool is_onroad, bool spoofing_started) {
   // build msg
   MessageBuilder msg;
@@ -175,6 +200,37 @@ std::optional<bool> send_panda_states(PubMaster *pm, Panda *panda, bool is_onroa
   }
 
   health_t health = *health_opt;
+
+  // LionDriver: make a panda watchdog reset, requests refused by the reference lock and an EPS fault that makes the
+  // panda refuse lateral actuation (TSR-110) visible in the logs
+  static uint16_t prev_requests_rejected = 0U;
+  static bool watchdog_reset_logged = false;
+  static bool eps_fault_prev = false;
+  static bool tx_rate_exceeded_prev = false;
+  if (health.requests_rejected_pkt != prev_requests_rejected) {
+    LOGE("panda refused %u control request(s) (reference build lock), %u since panda reset",
+         (unsigned)(uint16_t)(health.requests_rejected_pkt - prev_requests_rejected), (unsigned)health.requests_rejected_pkt);
+    prev_requests_rejected = health.requests_rejected_pkt;
+  }
+  bool watchdog_reset = (health.flags_pkt & HEALTH_FLAG_WATCHDOG_RESET) != 0U;
+  if (watchdog_reset && !watchdog_reset_logged) {
+    LOGE("panda was reset by its hardware watchdog");
+  }
+  watchdog_reset_logged = watchdog_reset;
+  bool eps_fault = (health.flags_pkt & HEALTH_FLAG_EPS_FAULT) != 0U;
+  if (eps_fault != eps_fault_prev) {
+    if (eps_fault) {
+      LOGE("panda refuses lateral actuation: EPS reports a fault (EPS_STATUS.LKA_STATE)");
+    } else {
+      LOGW("panda: EPS fault cleared, lateral actuation accepted again");
+    }
+  }
+  eps_fault_prev = eps_fault;
+  bool tx_rate_exceeded = (health.flags_pkt & HEALTH_FLAG_TX_RATE_EXCEEDED) != 0U;
+  if (tx_rate_exceeded && !tx_rate_exceeded_prev) {
+    LOGE("panda revoked authority: the SoC exceeded a CAN TX rate budget (TSR-518)");
+  }
+  tx_rate_exceeded_prev = tx_rate_exceeded;
 
   std::array<can_health_t, PANDA_CAN_CNT> can_health{};
   for (uint32_t i = 0; i < PANDA_CAN_CNT; i++) {
@@ -219,18 +275,12 @@ std::optional<bool> send_panda_states(PubMaster *pm, Panda *panda, bool is_onroa
     fill_panda_can_state(cs[j], can_health[j]);
   }
 
-  // Convert faults bitset to capnp list
-  std::bitset<sizeof(health.faults_pkt) * 8> fault_bits(health.faults_pkt);
-  auto faults = ps.initFaults(fault_bits.count());
-
-  size_t j = 0;
-  for (size_t f = size_t(cereal::PandaState::FaultType::RELAY_MALFUNCTION);
-       f <= size_t(cereal::PandaState::FaultType::HEARTBEAT_LOOP_WATCHDOG); f++) {
-    if (fault_bits.test(f)) {
-      faults.set(j, cereal::PandaState::FaultType(f));
-      j++;
-    }
+  static uint32_t unknown_faults_prev = 0U;
+  uint32_t unknown_faults = fill_panda_faults(ps, health.faults_pkt);
+  if ((unknown_faults != 0U) && (unknown_faults != unknown_faults_prev)) {
+    LOGE("panda reports fault bits without a FaultType: 0x%08x", unknown_faults);
   }
+  unknown_faults_prev = unknown_faults;
 
   pm->send("pandaStates", msg);
   return ignition_local;

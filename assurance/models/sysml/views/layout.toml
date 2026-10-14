@@ -1,0 +1,625 @@
+# Layout of the SysML views (assurance/models/sysml/model/Views.sysml).
+#
+# The model decides what a view shows; this file only decides where things go. Every `el`
+# must name an element of the model (its short name, alias or path), otherwise rendering
+# fails. Boxes are [x, y, width, height] in SVG pixels. A `grid` places the listed elements
+# inside a frame in rows. `edge` entries adjust the route of the connection drawn between two
+# nodes (`between`); they never add or remove a connection.
+
+# Display names of elements whose declared name does not read well as a title.
+[titles]
+context = "Vehicle context"
+ldsda = "LD-SDA"
+socSoftware = "SoC software"
+mlModels = "ML models"
+safetyFirmware = "Safety MCU firmware"
+deviceHardware = "Device hardware"
+harness = "Harness"
+safetyLayer = "Safety layer"
+platformFirmware = "Platform firmware"
+roadCameras = "Road cameras"
+driverCamera = "Driver camera"
+imuGnss = "IMU · GNSS"
+soc = "Qualcomm SoC"
+dmModel = "DM model"
+drivingModel = "Driving model"
+adc = "ADC"
+gpio = "GPIO"
+fdcanPeripherals = "FDCAN1–3"
+canTransceivers = "CAN transceivers"
+memories = "RAM, flash (ECC)"
+sirenPath = "DAC, codec siren path"
+interceptRelay = "Intercept relay"
+safetyMcu = "STM32H7 safety MCU"
+restOfDevice = "Rest of the device"
+remoteAndLogging = "athena · loggerd"
+estimators = "estimators"
+hardwared = "hardwared"
+eps = "EPS"
+ecmPcm = "ECM / PCM"
+absVsc = "ABS / VSC"
+cluster = "Cluster, stalk"
+backEnd = "comma.ai back end"
+forwardCamera = "Toyota forward camera"
+forwardRadar = "Forward radar"
+radarCan = "Radar CAN"
+vehicleCan = "Vehicle CAN"
+vehicleSupply = "Vehicle supply"
+roadEnvironment = "Road environment"
+externalCompute = "External compute"
+
+# ======================================================================= V-01
+
+[views.V-01]
+file = "fig-sysml-v01-item-context.svg"
+title = "Item context"
+subtitle = "LD-SDA, its components E-01 to E-05 and the elements outside the item boundary · interfaces IF-01 to IF-10 at component level"
+width = 1440
+height = 966
+ignore_route = ["ifDevicePower"]
+desc = """Context view generated from the SysML v2 model. Inside the item boundary: E-01 SoC software, E-02 ML \
+models, E-03 safety MCU firmware, E-04 device hardware and E-05 harness. Outside: the driver and road \
+environment (IF-05, IF-06, IF-07), the vehicle CAN with EPS, ECM/PCM, ABS/VSC and cluster (IF-01, IF-02 through \
+the harness), the Toyota forward camera (IF-03) and radar, the vehicle supply (IF-08), the untrusted back end \
+(IF-09) and the excluded external compute E-06."""
+
+[views.V-01.subs]
+"E-01" = "openpilot processes on AGNOS Linux · QM"
+"E-02" = "driving model, DM model · SOTIF, PAS 8800"
+"E-03" = "panda firmware with the opendbc Toyota safety mode: the safety envelope"
+"E-04" = "comma device: SoC, STM32H7, cameras, IMU, display, speaker, supply"
+"E-05" = "Toyota TSS2 harness with intercept relay"
+
+[[views.V-01.node]]
+el = "ldsda"
+kind = "frame"
+box = [300, 132, 830, 560]
+title = "Item boundary · LD-SDA"
+sub = "Supervised Driving Assistance, SAE Level 2 retrofit (WP-C-01 §1)"
+style = "envelope"
+dash = "7 5"
+fill = "#FFFDF8"
+integrity = false
+keyword = true
+sm = false
+
+[[views.V-01.node]]
+el = "E-04"
+box = [330, 196, 230, 300]
+title = "Device hardware"
+
+[[views.V-01.node]]
+el = "E-01"
+box = [600, 196, 240, 150]
+title = "SoC software"
+
+[[views.V-01.node]]
+el = "E-02"
+box = [600, 370, 240, 126]
+title = "ML models"
+
+[[views.V-01.node]]
+el = "E-03"
+box = [870, 196, 230, 300]
+title = "Safety MCU firmware"
+
+[[views.V-01.node]]
+el = "E-05"
+box = [870, 540, 230, 118]
+title = "Harness"
+
+[[views.V-01.node]]
+el = "driver"
+kind = "actor"
+box = [40, 196, 200, 196]
+sub = "supervises, overrides, responds to warnings · AOU-06, AOU-07"
+
+[[views.V-01.node]]
+el = "roadEnvironment"
+box = [40, 420, 200, 64]
+sub = "ODD of WP-C-02"
+
+[[views.V-01.node]]
+el = "backEnd"
+box = [1190, 150, 210, 70]
+sub = "athena, connect, updates"
+
+[[views.V-01.node]]
+el = "E-06"
+box = [1190, 244, 210, 76]
+sub = "eGPU over USB · excluded pending WP-C-01 OI-4"
+integrity = false
+
+[[views.V-01.node]]
+el = "forwardRadar"
+box = [1190, 360, 210, 60]
+sub = "lead tracks, stock PCS"
+
+[[views.V-01.node]]
+el = "radarCan"
+box = [1190, 446, 210, 50]
+sub = "panda bus 1"
+
+[[views.V-01.node]]
+el = "forwardCamera"
+box = [1190, 563, 210, 72]
+sub = "LKA, ACC intercepted · PCS forwarded"
+
+[[views.V-01.node]]
+el = "vehicleCan"
+kind = "bus"
+box = [300, 762, 830, 14]
+sub = "car side · panda bus 0"
+
+[[views.V-01.node]]
+el = "vehicleSupply"
+box = [40, 800, 200, 58]
+sub = "12 V and ignition"
+
+[[views.V-01.node]]
+el = "EXT-EPS"
+box = [300, 800, 194, 58]
+sub = "AOU-01, AOU-02"
+
+[[views.V-01.node]]
+el = "EXT-PCM"
+box = [512, 800, 194, 58]
+sub = "ACC envelope · AOU-05"
+
+[[views.V-01.node]]
+el = "absVsc"
+box = [724, 800, 194, 58]
+sub = "AOU-03, AOU-10"
+
+[[views.V-01.node]]
+el = "EXT-CLU"
+box = [936, 800, 194, 58]
+sub = "cruise, HUD · AOU-12"
+
+[[views.V-01.edge]]
+between = ["E-03", "E-05"]
+sides = ["bottom", "top"]
+label = "bus 0 · bus 2"
+
+[[views.V-01.edge]]
+between = ["E-05", "vehicleCan"]
+sides = ["bottom", "top"]
+a_at = 0.5
+label = "IF-01 · IF-02"
+
+[[views.V-01.edge]]
+between = ["E-04", "E-05"]
+sides = ["bottom", "left"]
+a_at = 0.8
+b_at = 0.3
+
+[[views.V-01.edge]]
+between = ["E-01", "E-03"]
+sides = ["right", "left"]
+a_at = 0.5
+b_at = 0.25
+
+[[views.V-01.edge]]
+between = ["E-01", "backEnd"]
+sides = ["right", "left"]
+a_at = 0.2
+points = [[862, 226], [862, 112], [1160, 112], [1160, 185]]
+label_seg = 3
+
+[[views.V-01.edge]]
+between = ["E-04", "E-01"]
+kind = "sensing"
+sides = ["right", "left"]
+a_at = 0.347
+b_at = 0.693
+label = "IF-05 · 06 · 07"
+
+[[views.V-01.edge]]
+between = ["E-01", "E-04"]
+kind = "boot"
+sides = ["left", "right"]
+a_at = 0.893
+b_at = 0.447
+label = "IF-04b"
+
+[[views.V-01.edge]]
+between = ["E-03", "driver"]
+sides = ["left", "right"]
+a_at = 0.04
+points = [[855, 208], [855, 176], [262, 176], [262, 236]]
+b_at = 0.204
+label = "IF-07 siren"
+label_seg = 2
+
+[[views.V-01.edge]]
+between = ["roadEnvironment", "E-04"]
+a_at = 0.5
+b_at = 0.82
+
+[[views.V-01.edge]]
+between = ["driver", "E-04"]
+a_at = 0.6
+b_at = 0.24
+
+[[views.V-01.edge]]
+between = ["vehicleSupply", "E-04"]
+sides = ["top", "bottom"]
+a_at = 0.5
+points = [[140, 724], [400, 724]]
+b_at = 0.3
+label = "IF-08"
+
+[[views.V-01.edge]]
+between = ["vehicleSupply", "E-05"]
+sides = ["top", "left"]
+a_at = 0.8
+points = [[200, 734], [850, 734], [850, 640]]
+b_at = 0.85
+label = ""
+
+# ======================================================================= V-02
+
+[views.V-02]
+file = "fig-sysml-v02-element-hierarchy.svg"
+kind = "hierarchy"
+title = "Element hierarchy"
+subtitle = "Item, components, parts and software units of LD-SDA (ISO 26262-1 3.39) with integrity attribution, unit and build scope"
+width = 1520
+desc = """Decomposition view generated from the SysML v2 model: the item LD-SDA and its components E-01 to E-05, \
+each with its parts and software units, their integrity attribution (dot), the software unit of WP-W-06 §2, \
+whether the element exists only in the reference build, and how many safety mechanisms it performs."""
+columns = [
+  { el = "E-01", width = 296, title = "SoC software" },
+  { el = "E-02", width = 196, title = "ML models" },
+  { el = "E-03", width = 392, title = "Safety MCU firmware" },
+  { el = "E-04", width = 300, title = "Device hardware" },
+  { el = "E-05", width = 196, title = "Harness" },
+]
+
+# ======================================================================= V-04
+
+[views.V-04]
+file = "fig-sysml-v04-mechanism-allocation.svg"
+kind = "matrix"
+title = "Safety mechanism allocation"
+subtitle = "Which element performs each of SM-01 to SM-43 (perform statements of the model), with the DC target and TSRs of WP-S-03 §6"
+width = 1240
+columns = ["E-01", "E-02", "E-03a", "E-03b", "E-04a", "E-05"]
+desc = """Allocation view generated from the SysML v2 model: each safety mechanism of WP-S-03 §6 against the \
+elements that perform it, grouped by the first performing element, with its diagnostic-coverage target and \
+the technical safety requirements it implements."""
+
+[views.V-04.titles]
+"E-01" = "SoC software"
+"E-02" = "ML models"
+"E-03a" = "Safety layer"
+"E-03b" = "Platform firmware"
+"E-04a" = "STM32H7"
+"E-05" = "Harness"
+
+# ======================================================================= V-03
+
+[views.V-03]
+file = "fig-sysml-v03-system-interconnection.svg"
+title = "Technical safety architecture"
+subtitle = "LD-SDA in its vehicle context · QM partition and B‡ safety envelope · interfaces IF-01 to IF-10 · SM from WP-S-03 §6"
+width = 1520
+height = 1200
+ignore_route = ["ifDevicePower"]
+desc = """Interconnection view generated from the SysML v2 model. The comma device E-04 holds the QM partition \
+(E-04b hardware, E-01 SoC processes, E-02 ML models) and the B‡ safety envelope (E-03a safety layer, E-03b \
+platform firmware, E-04a STM32H7). pandad talks to the platform firmware over SPI (IF-04) and drives the MCU \
+boot pins (IF-04b). Bus 0 and bus 2 run through the E-05 harness relay to the vehicle CAN (IF-01, IF-02) and the \
+Toyota forward camera (IF-03); the radar CAN is bus 1. The MCU drives the relay (IF-10). Display, speaker and \
+the SoC-independent siren reach the driver (IF-07); athena and updates reach the untrusted back end (IF-09); the \
+vehicle supply feeds the device and harness (IF-08). Each block lists the safety mechanisms it performs."""
+
+[views.V-03.subs]
+roadCameras = "wide + narrow"
+driverCamera = "IR, driver-facing"
+imuGnss = "sensor messages"
+display = "UI, alerts"
+speaker = "alert sounds"
+powerSupply = "12 V in"
+soc = "runs E-01 and E-02"
+"host.modeld" = "driving model"
+"host.dm" = "driver monitoring"
+"host.plannerd" = "longitudinal plan"
+"host.radard" = "lead fusion"
+"host.controlsd" = "control law"
+"host.selfdrived" = "engagement state"
+"host.card" = "carState · sendcan"
+"host.pandad" = "SPI · heartbeat · mode"
+"host.hmi" = "ui · soundd"
+"host.manager" = "process control"
+"host.cereal" = "pub/sub, alive checks"
+estimators = "locationd, calibrationd, paramsd, torqued"
+hardwared = "thermal, onroad gating"
+remoteAndLogging = "updated, uploader · F-09"
+
+[[views.V-03.node]]
+el = "roadEnvironment"
+box = [40, 222, 180, 64]
+sub = "ODD of WP-C-02"
+
+[[views.V-03.node]]
+el = "driver"
+kind = "actor"
+box = [40, 372, 180, 214]
+sub = "supervises, overrides, responds to warnings · AOU-06, AOU-07"
+
+[[views.V-03.node]]
+el = "E-04"
+kind = "frame"
+box = [250, 104, 990, 668]
+title = "comma device"
+sub = "hosts E-01 and E-02 on the SoC, E-03 on the STM32H7"
+integrity = false
+keyword = true
+
+[[views.V-03.node]]
+key = "band-qm"
+kind = "band"
+box = [266, 146, 594, 22]
+text = "QM PARTITION · E-01, E-02 (SOTIF / PAS 8800), E-04b"
+style = "slate"
+
+[[views.V-03.node]]
+key = "band-env"
+kind = "band"
+box = [876, 146, 348, 22]
+text = "SAFETY ENVELOPE · B‡ · E-03a, E-03b, E-04a"
+style = "envelope"
+
+[[views.V-03.node]]
+el = "E-04b"
+kind = "frame"
+box = [266, 182, 160, 574]
+title = "Device"
+integrity = false
+grid = { rows = [["roadCameras"], ["imuGnss"], ["driverCamera"], ["display"], ["speaker"], ["powerSupply"], ["soc"]], pad = 10, top = 40, row_h = 64, vgap = 11 }
+
+[[views.V-03.node]]
+el = "E-01"
+kind = "frame"
+box = [440, 182, 420, 486]
+title = "SoC software"
+sub = "openpilot · WP-S-03 §8"
+grid = { rows = [["host.modeld", "host.plannerd", "remoteAndLogging"], ["host.dm", "host.radard", "host.controlsd"], ["estimators", "host.selfdrived", "host.card"], ["hardwared", "host.manager", "host.pandad"], ["host.hmi", "host.cereal", ""]], pad = 12, top = 40, row_h = 74, vgap = 11, gap = 12 }
+
+[[views.V-03.node]]
+el = "E-02"
+box = [440, 680, 420, 76]
+title = "ML models"
+sub = "driving model → host.modeld · DM model → host.dm · SOTIF, ISO/PAS 8800"
+
+[[views.V-03.node]]
+el = "E-03"
+kind = "frame"
+box = [876, 182, 348, 404]
+title = "Safety MCU firmware"
+sub = "panda + opendbc"
+integrity = false
+
+[[views.V-03.node]]
+el = "E-03a"
+box = [890, 222, 320, 166]
+title = "Safety layer"
+sub = "opendbc safety core and Toyota mode: TX limits and gating, RX checks, authority"
+list = "units-inline"
+
+[[views.V-03.node]]
+el = "E-03b"
+box = [890, 404, 320, 170]
+title = "Platform firmware"
+sub = "main loop and safety task, comms and reference lock, SPI and FDCAN drivers, faults, bootstub"
+list = "units-inline"
+
+[[views.V-03.node]]
+el = "E-04a"
+box = [876, 598, 348, 158]
+title = "STM32H7 safety MCU"
+sub = "clock, supply, ECC memories, SPI4, FDCAN1–3, ADC, GPIO, DAC siren path, IWDG1"
+
+[[views.V-03.node]]
+el = "E-05"
+box = [990, 806, 250, 104]
+title = "Harness"
+sub = "Toyota TSS2 with intercept relay; released, camera and car CAN link directly (AOU-13)"
+
+[[views.V-03.node]]
+el = "backEnd"
+box = [1290, 120, 190, 70]
+title = "comma.ai back end"
+sub = "athena, connect, updates"
+
+[[views.V-03.node]]
+el = "E-06"
+box = [1290, 214, 190, 74]
+title = "External compute"
+sub = "excluded pending WP-C-01 OI-4"
+integrity = false
+
+[[views.V-03.node]]
+el = "forwardRadar"
+box = [1290, 600, 190, 64]
+title = "Forward radar"
+sub = "lead tracks, stock PCS"
+
+[[views.V-03.node]]
+el = "radarCan"
+box = [1290, 700, 190, 50]
+title = "Radar CAN"
+sub = "panda bus 1"
+
+[[views.V-03.node]]
+el = "forwardCamera"
+box = [1290, 822, 190, 72]
+title = "Toyota forward camera"
+sub = "LKA, ACC intercepted · PCS forwarded"
+
+[[views.V-03.node]]
+el = "vehicleCan"
+kind = "bus"
+box = [250, 972, 990, 14]
+title = "Vehicle CAN"
+sub = "car side · panda bus 0"
+
+[[views.V-03.node]]
+el = "vehicleSupply"
+box = [40, 1010, 180, 58]
+sub = "12 V and ignition"
+
+[[views.V-03.node]]
+el = "EXT-EPS"
+box = [250, 1010, 172, 58]
+title = "EPS"
+sub = "AOU-01, AOU-02"
+
+[[views.V-03.node]]
+el = "EXT-PCM"
+box = [436, 1010, 172, 58]
+title = "ECM / PCM"
+sub = "ACC envelope · AOU-05"
+
+[[views.V-03.node]]
+el = "absVsc"
+box = [622, 1010, 172, 58]
+title = "ABS / VSC"
+sub = "AOU-03, AOU-10"
+
+[[views.V-03.node]]
+el = "EXT-CLU"
+box = [808, 1010, 172, 58]
+title = "Cluster, stalk"
+sub = "cruise, HUD · AOU-12"
+
+# ---- routes
+
+[[views.V-03.edge]]
+between = ["E-03b", "E-05"]
+sides = ["right", "top"]
+a_at = 0.62
+points = [[1232, 509.4], [1232, 790], [1210, 790]]
+b_at = 0.88
+label = "bus 0 · bus 2"
+
+[[views.V-03.edge]]
+between = ["E-05", "vehicleCan"]
+sides = ["bottom", "top"]
+a_at = 0.5
+label = "IF-01 · IF-02"
+
+[[views.V-03.edge]]
+between = ["E-05", "forwardCamera"]
+label = "IF-03"
+
+[[views.V-03.edge]]
+between = ["E-03b", "radarCan"]
+sides = ["right", "left"]
+a_at = 0.38
+mid = 1258
+label = "IF-02 · bus 1"
+
+[[views.V-03.edge]]
+between = ["E-04a", "E-05"]
+sides = ["bottom", "top"]
+a_at = 0.6
+b_at = 0.383
+
+[[views.V-03.edge]]
+between = ["host.pandad", "E-03b"]
+sides = ["right", "left"]
+a_at = 0.33
+b_at = 0.565
+
+[[views.V-03.edge]]
+between = ["host.pandad", "E-04a"]
+sides = ["right", "left"]
+a_at = 0.78
+b_at = 0.14
+mid = 870
+
+[[views.V-03.edge]]
+between = ["remoteAndLogging", "backEnd"]
+sides = ["right", "left"]
+a_at = 0.5
+points = [[867, 259], [867, 96], [1264, 96], [1264, 155]]
+b_at = 0.5
+label_seg = 2
+
+[[views.V-03.edge]]
+between = ["E-03b", "driver"]
+sides = ["bottom", "right"]
+a_at = 0.12
+points = [[928.4, 592], [862, 592], [862, 786], [232, 786], [232, 572]]
+b_at = 0.934
+label = "IF-07 siren"
+label_seg = 3
+
+[[views.V-03.edge]]
+between = ["vehicleSupply", "powerSupply"]
+sides = ["top", "left"]
+a_at = 0.3
+points = [[94, 629]]
+b_at = 0.5
+
+[[views.V-03.edge]]
+between = ["vehicleSupply", "E-05"]
+sides = ["top", "left"]
+a_at = 0.75
+points = [[175, 880]]
+b_at = 0.712
+label = "IF-08"
+
+[[views.V-03.edge]]
+between = ["roadCameras", "host.modeld"]
+label = ""
+
+[[views.V-03.edge]]
+between = ["driverCamera", "host.dm"]
+label = ""
+
+[[views.V-03.edge]]
+between = ["host.hmi", "display"]
+label = ""
+
+[[views.V-03.edge]]
+between = ["host.hmi", "speaker"]
+label = ""
+
+[[views.V-03.edge]]
+between = ["speaker", "driver"]
+label = ""
+
+[views.V-05]
+file = "fig-sysml-v05-requirement-thread.svg"
+kind = "thread"
+requirement = "TSR-407"
+title = "Requirement thread · TSR-407 heartbeat loss"
+subtitle = "Derived from its safety goals through FSR-01.07, satisfied by the safety MCU firmware, cited by SM-12 and verified by the cases that name it"
+width = 1520
+desc = """Thread view generated from the SysML v2 model for TSR-407: the #derivation chain to FSR-01.07 and its safety \
+goals, the satisfy relationship to the element its allocation names, the safety mechanisms whose TSR list cites it with \
+their performing elements, and the verification cases of the test specifications that verify it."""
+
+[views.V-06]
+file = "fig-sysml-v06-f01-requirements.svg"
+kind = "requirements"
+function = "F-01"
+title = "Requirement diagram · F-01 lateral control"
+subtitle = "SYS requirements of WP-S-01 §2 with the elements that satisfy them (§10.1) and the cases that verify them (WP-S-09)"
+width = 1340
+desc = """Requirement view generated from the SysML v2 model: the system requirements of F-01 lateral control, the \
+elements that satisfy them from WP-S-01 §10.1, and the verification cases of the test specifications that name them; \
+requirements no case names are outlined red."""
+
+[views.V-07]
+file = "fig-sysml-v07-system-requirement-matrix.svg"
+kind = "reqmatrix"
+title = "Satisfy and verify matrix · system requirements (WP-S-01)"
+subtitle = "Every SYS requirement against the elements that satisfy it and the verification cases that verify it, grouped by function"
+width = 1520
+desc = """Matrix view generated from the SysML v2 model: the 39 system requirements of WP-S-01 grouped by function, a dot \
+for each element that satisfies them and the verification cases that verify them; requirements without a case are \
+marked."""

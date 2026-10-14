@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600" role="img" aria-labelledby="std-t std-d">
+  <title id="std-t">Standards-informed engineering framework</title>
+  <desc id="std-d">Standards LionDriver&#x27;s engineering framework draws on. ISO 26262 (Functional safety): What if something breaks? Hardware faults and software bugs in E/E systems. ISO 21448 (SOTIF): What if nothing breaks, but it still gets it wrong? Performance limits, triggering conditions, misuse. ISO/SAE 21434 (Cybersecurity): What if someone attacks it? Threat analysis, vulnerabilities, secure updates. ISO/PAS 8800 (AI safety): How far can a learned component be trusted? Data, model performance, runtime supervision. UL 4600 (Safety case): Is the whole argument convincing? Claims, evidence, defeaters, field feedback. Aligned practices, not a claim of compliance.</desc>
+  <defs>
+    <linearGradient id="std-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0E1A31"/><stop offset="1" stop-color="#070D1A"/></linearGradient>
+    <linearGradient id="std-gold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#A97A2A"/><stop offset="0.5" stop-color="#F6DC97"/><stop offset="1" stop-color="#A97A2A"/></linearGradient>
+  </defs>
+  <rect x="0.5" y="0.5" width="999" height="599" rx="22" fill="url(#std-bg)" stroke="#24345A"/>
+  <rect x="40" y="0" width="920" height="3" fill="url(#std-gold)"/>
+  <g font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <text x="40" y="56" font-size="15" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="3">STANDARDS-INFORMED ENGINEERING</text>
+    <text x="40" y="94" font-size="28" font-weight="700" fill="#F4F6FA" text-anchor="start">One question per standard</text>
+    <text x="960" y="94" font-size="15" font-weight="400" fill="#93A1BC" text-anchor="end">Aligned practices, not a compliance claim</text>
+    <rect x="40" y="124" width="920" height="80" rx="14" fill="#111E37" stroke="#24345A"/>
+    <rect x="40" y="144" width="3" height="40" rx="1.5" fill="#E2B85C"/>
+    <text x="66" y="160" font-size="21" font-weight="700" fill="#E2B85C" text-anchor="start">ISO 26262</text>
+    <text x="66" y="186" font-size="15" font-weight="500" fill="#93A1BC" text-anchor="start">Functional safety</text>
+    <text x="300" y="160" font-size="19" font-weight="600" fill="#F4F6FA" text-anchor="start">What if something breaks?</text>
+    <text x="300" y="186" font-size="15" font-weight="400" fill="#93A1BC" text-anchor="start">Hardware faults and software bugs in E/E systems</text>
+    <rect x="40" y="216" width="920" height="80" rx="14" fill="#111E37" stroke="#24345A"/>
+    <rect x="40" y="236" width="3" height="40" rx="1.5" fill="#E2B85C"/>
+    <text x="66" y="252" font-size="21" font-weight="700" fill="#E2B85C" text-anchor="start">ISO 21448</text>
+    <text x="66" y="278" font-size="15" font-weight="500" fill="#93A1BC" text-anchor="start">SOTIF</text>
+    <text x="300" y="252" font-size="19" font-weight="600" fill="#F4F6FA" text-anchor="start">What if nothing breaks, but it still gets it wrong?</text>
+    <text x="300" y="278" font-size="15" font-weight="400" fill="#93A1BC" text-anchor="start">Performance limits, triggering conditions, misuse</text>
+    <rect x="40" y="308" width="920" height="80" rx="14" fill="#111E37" stroke="#24345A"/>
+    <rect x="40" y="328" width="3" height="40" rx="1.5" fill="#E2B85C"/>
+    <text x="66" y="344" font-size="21" font-weight="700" fill="#E2B85C" text-anchor="start">ISO/SAE 21434</text>
+    <text x="66" y="370" font-size="15" font-weight="500" fill="#93A1BC" text-anchor="start">Cybersecurity</text>
+    <text x="300" y="344" font-size="19" font-weight="600" fill="#F4F6FA" text-anchor="start">What if someone attacks it?</text>
+    <text x="300" y="370" font-size="15" font-weight="400" fill="#93A1BC" text-anchor="start">Threat analysis, vulnerabilities, secure updates</text>
+    <rect x="40" y="400" width="920" height="80" rx="14" fill="#111E37" stroke="#24345A"/>
+    <rect x="40" y="420" width="3" height="40" rx="1.5" fill="#E2B85C"/>
+    <text x="66" y="436" font-size="21" font-weight="700" fill="#E2B85C" text-anchor="start">ISO/PAS 8800</text>
+    <text x="66" y="462" font-size="15" font-weight="500" fill="#93A1BC" text-anchor="start">AI safety</text>
+    <text x="300" y="436" font-size="19" font-weight="600" fill="#F4F6FA" text-anchor="start">How far can a learned component be trusted?</text>
+    <text x="300" y="462" font-size="15" font-weight="400" fill="#93A1BC" text-anchor="start">Data, model performance, runtime supervision</text>
+    <rect x="40" y="492" width="920" height="80" rx="14" fill="#111E37" stroke="#24345A"/>
+    <rect x="40" y="512" width="3" height="40" rx="1.5" fill="#E2B85C"/>
+    <text x="66" y="528" font-size="21" font-weight="700" fill="#E2B85C" text-anchor="start">UL 4600</text>
+    <text x="66" y="554" font-size="15" font-weight="500" fill="#93A1BC" text-anchor="start">Safety case</text>
+    <text x="300" y="528" font-size="19" font-weight="600" fill="#F4F6FA" text-anchor="start">Is the whole argument convincing?</text>
+    <text x="300" y="554" font-size="15" font-weight="400" fill="#93A1BC" text-anchor="start">Claims, evidence, defeaters, field feedback</text>
+  </g>
+</svg>

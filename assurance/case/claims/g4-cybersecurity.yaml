@@ -1,0 +1,23 @@
+# Source: WP-K-01 Safety Case (§4.4). Machine-readable copy; WP-K-01 remains the reviewed document.
+# Format: assurance/case/README.md. Lifecycle and review fields are set only through recorded reviews.
+
+- id: G4
+  kind: claim
+  title: "Cybersecurity (ISO/SAE 21434)"
+  description: "Cybersecurity risks that can affect safety (and privacy) are treated. Developed in the cybersecurity case WP-K-03."
+  parent: G0
+  argument: S0
+  lifecycle_status: draft
+  baseline: BL-001
+  configuration: CFG-001
+  related_hazards: []
+  related_requirements: []
+  related_assumptions: [AOU-11]
+  evidence_refs: [Sn-68, Sn-70]
+  defeaters: [DF-22, DF-23, DF-19, DF-29, DF-37]
+  review_state: not-reviewed
+  reviewer: null
+  review_date: null
+  review_ref: null
+  source: WP-K-01
+  source_revision: "8b8c6ae"

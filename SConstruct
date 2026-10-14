@@ -269,7 +269,19 @@ Export('messaging')
 
 
 # Build other submodules
+
+# LionDriver reference build (TSR-512/513, SW FMEA SWF-ACT-009, PFMEA PFM-ACT-001): the panda firmware built with
+# openpilot locks the safety mode and parameter to the reference configuration (2020 Corolla LE, TOYOTA parameter 73)
+# and refuses reconfiguration requests in a car mode (panda/board/reference_lock.h). Without it, any safety mode the
+# host asks for is accepted. Opt out only for development on other vehicles: LIONDRIVER_REFERENCE= (empty).
+# The same setting builds pandad to require a reference panda before it configures a car safety mode (TSR-619).
+_reference_env = os.environ.get("LIONDRIVER_REFERENCE")
+os.environ["LIONDRIVER_REFERENCE"] = "1" if _reference_env is None else _reference_env
+liondriver_reference = os.environ["LIONDRIVER_REFERENCE"] != ""
 SConscript(['panda/SConscript'])
+if _reference_env is None:
+  del os.environ["LIONDRIVER_REFERENCE"]
+Export('liondriver_reference')
 
 # Build rednose library
 SConscript(['rednose_repo/rednose/SConscript'])

@@ -1,0 +1,20 @@
+# Engineering baselines the assurance records refer to. A baseline is frozen only by a tagged
+# configuration baseline under WP-P-01; until then it is under development.
+
+- id: BL-001
+  kind: baseline
+  title: "Initial assurance baseline"
+  description: "Repository state analysed by the draft work products. Submodules: opendbc 229dc70, panda 92eb565."
+  lifecycle_status: under-development
+  tag: null
+  source: WP-P-01
+  source_revision: "8b8c6ae"
+
+- id: BL-002
+  kind: baseline
+  title: "LionDriver safety-firmware changes integrated 2026-10-12"
+  description: "Repository state with the LionDriver firmware changes integrated on 2026-10-12 (watchdog, safety-mode lock, RX timeouts, TX-rate supervision, EPS-fault gating and siren). Submodules: opendbc 7993399, panda b790fca. The panda b790fca pin (siren, TSR-516(b)) is in LionDriver PR #45, not yet merged. Nothing verified on hardware; nothing independently reviewed; all changes are AI-assisted drafts merged by the maintainer."
+  lifecycle_status: under-development
+  tag: null
+  source: WP-P-01
+  source_revision: "bf6ce8c"

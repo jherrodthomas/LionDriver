@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="400" viewBox="0 0 1000 400" role="img" aria-labelledby="eco-t eco-d">
+  <title id="eco-t">LionDriver vehicle ecosystem classification</title>
+  <desc id="eco-d">Upstream compatible: 335 car models from 26 makes listed in docs/CARS.md. LionDriver evaluated: 1 configuration. Assurance supported: 0 configurations. Vehicle compatibility does not imply independent safety assurance.</desc>
+  <defs>
+    <linearGradient id="eco-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0E1A31"/><stop offset="1" stop-color="#070D1A"/>
+    </linearGradient>
+    <linearGradient id="eco-gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#A97A2A"/><stop offset="0.5" stop-color="#F6DC97"/><stop offset="1" stop-color="#A97A2A"/>
+    </linearGradient>
+  </defs>
+  <rect x="0.5" y="0.5" width="999" height="399" rx="22" fill="url(#eco-bg)" stroke="#24345A"/>
+  <rect x="40" y="0" width="920" height="3" fill="url(#eco-gold)"/>
+  <g font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <text x="40" y="56" font-size="15" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="3">VEHICLE ECOSYSTEM</text>
+    <text x="40" y="94" font-size="28" font-weight="700" fill="#F4F6FA" text-anchor="start">Compatibility is not assurance</text>
+    <text x="960" y="94" font-size="15" font-weight="400" fill="#93A1BC" text-anchor="end">Each tier needs its own evidence</text>
+    <rect x="40.0" y="124" width="920" height="74" rx="14" fill="#4EA8FF" fill-opacity="0.12" stroke="#4EA8FF"/>
+    <text x="68.0" y="176" font-size="40" font-weight="700" fill="#F4F6FA" text-anchor="start">335</text>
+    <text x="170.0" y="155" font-size="13" font-weight="700" fill="#4EA8FF" text-anchor="start" letter-spacing="2">UPSTREAM COMPATIBLE</text>
+    <text x="170.0" y="180" font-size="16" font-weight="400" fill="#F4F6FA" text-anchor="start">Car models from 26 makes in the inherited openpilot list</text>
+    <rect x="100.0" y="210" width="800" height="74" rx="14" fill="#E2B85C" fill-opacity="0.12" stroke="#E2B85C"/>
+    <text x="128.0" y="262" font-size="40" font-weight="700" fill="#F4F6FA" text-anchor="start">1</text>
+    <text x="230.0" y="241" font-size="13" font-weight="700" fill="#E2B85C" text-anchor="start" letter-spacing="2">LIONDRIVER EVALUATED</text>
+    <text x="230.0" y="266" font-size="16" font-weight="400" fill="#F4F6FA" text-anchor="start">Configurations under documented engineering evaluation</text>
+    <rect x="160.0" y="296" width="680" height="74" rx="14" fill="#111E37" fill-opacity="1" stroke="#43D19A" stroke-dasharray="6 6"/>
+    <text x="188.0" y="348" font-size="40" font-weight="700" fill="#F4F6FA" text-anchor="start">0</text>
+    <text x="290.0" y="327" font-size="13" font-weight="700" fill="#43D19A" text-anchor="start" letter-spacing="2">ASSURANCE SUPPORTED</text>
+    <text x="290.0" y="352" font-size="16" font-weight="400" fill="#F4F6FA" text-anchor="start">Configurations with accepted evidence for specific claims</text>
+  </g>
+</svg>

@@ -1,0 +1,772 @@
+# yaml-language-server: $schema=../schema/fmea.schema.json
+# PFMEA of the processes that produce the as-driven reference configuration, per RT-1 §4 (PFMEA tables).
+# - Process steps from the draft release procedure (WP-P-10) and installation procedure (WP-O-01); neither is in use
+#   yet (no LionDriver release, no third-party installation), so most prevention controls are documented but not
+#   practised: O=7-8 (RT-1 §4.2), O=3 where a technical control is enforced (pins, LFS hashes).
+# - Detection mostly human inspection with an unproven method (D=8) or an unproven script (D=7).
+# - Every failure mode can reach a hazardous event or occupant injury, so S=10 (RT-1 §4.1); one cause is AP L.
+schema_version: 1
+analysis:
+  id: PFM
+  type: pfmea
+  title: "PFMEA — build, release, install, calibration, OTA"
+  revision: "0.3"
+  status: draft
+  baseline: BL-003
+  rating_tables: RT-1
+  scope: "Release (WP-P-10), installation and provisioning (WP-O-01) and software update/rollback for the reference configuration AC-001, as defined at BL-003. Calibration and fingerprinting are covered as installation steps."
+  out_of_scope:
+    - "Manufacture of the comma 3X and harness (comma.ai; supplier process)"
+    - "Vehicle service by third parties after installation (WP-O-02)"
+  team:
+    - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
+    - {name: Claude (AI assistant), role: "Drafting assistance; ratings require human review"}
+  references:
+    - assurance/08-analyses/fmea/fmea-plan.md
+    - assurance/08-analyses/fmea/rating-tables.md
+    - assurance/07-supporting/WP-P-10-release-management.md
+    - assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+  updated: 2026-10-12
+structure:
+- id: PFM-SE-001
+  name: Producing the as-driven reference configuration (AC-001)
+  kind: process_item
+  parent: null
+  description: Release (WP-P-10), installation and provisioning (WP-O-01), update and rollback
+- id: PFM-SE-010
+  name: R1 Freeze and pin the baseline (WP-P-10 §4 steps 1-3)
+  kind: process_step
+  parent: PFM-SE-001
+- id: PFM-SE-011
+  name: R2 Build the release (host tree, panda RELEASE firmware; WP-P-10 §4 step 4, §6)
+  kind: process_step
+  parent: PFM-SE-001
+- id: PFM-SE-012
+  name: R3 Verify and assemble the evidence package (WP-P-10 §4 steps 5-8, §5)
+  kind: process_step
+  parent: PFM-SE-001
+- id: PFM-SE-013
+  name: R4 Release decision and publication (WP-P-10 §4 steps 9-10)
+  kind: process_step
+  parent: PFM-SE-001
+- id: PFM-SE-020
+  name: I1 Incoming inspection (WP-O-01 INS-01..04)
+  kind: process_step
+  parent: PFM-SE-001
+- id: PFM-SE-021
+  name: I2 Vehicle preconditions (INS-05..08)
+  kind: process_step
+  parent: PFM-SE-001
+- id: PFM-SE-022
+  name: I3 Mechanical and electrical installation (INS-09..14)
+  kind: process_step
+  parent: PFM-SE-001
+- id: PFM-SE-023
+  name: 'I4 Provisioning: software, firmware, parameters (INS-15..20)'
+  kind: process_step
+  parent: PFM-SE-001
+- id: PFM-SE-024
+  name: I5 Reference-configuration check (INS-21..24)
+  kind: process_step
+  parent: PFM-SE-001
+- id: PFM-SE-025
+  name: I6 Calibration, functional check and driver briefing (INS-25..30)
+  kind: process_step
+  parent: PFM-SE-001
+- id: PFM-SE-030
+  name: U1 Software update and rollback (WP-P-10 §8, WP-O-02)
+  kind: process_step
+  parent: PFM-SE-001
+functions:
+- id: PFM-FN-001
+  element: PFM-SE-010
+  description: Freeze every component of the release at an identified, protected version
+  requirements:
+  - FSR-009
+- id: PFM-FN-002
+  element: PFM-SE-011
+  description: Produce the release artifacts, including a panda RELEASE build with the LionDriver key and the reference lock
+  requirements:
+  - FSR-010
+- id: PFM-FN-003
+  element: PFM-SE-012
+  description: Run and archive all required verification on the exact release commit
+  requirements:
+  - FSR-002
+- id: PFM-FN-004
+  element: PFM-SE-013
+  description: Publish only the approved release through the LionDriver channel
+  requirements:
+  - FSR-009
+- id: PFM-FN-005
+  element: PFM-SE-020
+  description: Use only the approved, undamaged device and harness
+  requirements:
+  - FSR-037
+  - FSR-038
+- id: PFM-FN-006
+  element: PFM-SE-021
+  description: Install only on a vehicle that is in the reference configuration and healthy
+  requirements:
+  - FSR-009
+- id: PFM-FN-007
+  element: PFM-SE-022
+  description: Mount the device and connect the harness so that the CAN path, relay and camera view are as designed
+  requirements:
+  - FSR-037
+  - FSR-038
+- id: PFM-FN-008
+  element: PFM-SE-023
+  description: Provision the released software, panda firmware, models and parameter set
+  requirements:
+  - FSR-009
+  - FSR-010
+- id: PFM-FN-009
+  element: PFM-SE-024
+  description: Confirm that the item identifies the vehicle as the reference configuration and runs the reference safety mode
+  requirements:
+  - FSR-009
+  - FSR-011
+- id: PFM-FN-010
+  element: PFM-SE-025
+  description: Calibrate, prove the stock PCS path and engagement transitions, and brief the driver
+  requirements:
+  - FSR-037
+  - FSR-015
+- id: PFM-FN-011
+  element: PFM-SE-030
+  description: Update or roll back only to an approved release whose evidence is valid for the installed device
+  requirements:
+  - FSR-009
+failure_modes:
+- id: PFM-001
+  element: PFM-SE-011
+  function: PFM-FN-002
+  failure_mode: panda firmware released as a DEBUG build, or without LIONDRIVER_REFERENCE
+  guideword: wrong_configuration
+  effects:
+  - level: local
+    description: Release artifact built with the wrong flags
+  - level: next_higher
+    description: Device runs firmware that accepts any safety mode (and ALLOUTPUT in DEBUG)
+  - level: end
+    description: Envelope can be bypassed or misconfigured
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-001.C1
+    description: panda/SConscript defaults to DEBUG with ALLOW_DEBUG; LIONDRIVER_REFERENCE is opt-in and no build path sets it
+    element: PFM-SE-011
+    prevention_controls:
+    - description: WP-P-10 §6 rule (RELEASE=1 with the LionDriver key); not implemented
+      ref: assurance/07-supporting/WP-P-10-release-management.md
+    detection_controls:
+    - description: INS-17 reads the version string (human check); planned release check for RELEASE and absent ALLOW_DEBUG not implemented
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    occurrence: 8
+    detection: 8
+    ap: H
+    actions:
+    - PFM-ACT-001
+    linked_failure_mode: SWF-013
+- id: PFM-002
+  element: PFM-SE-011
+  function: PFM-FN-002
+  failure_mode: panda firmware signed with the debug key or a key not controlled by LionDriver
+  guideword: unverified_artifact
+  effects:
+  - level: local
+    description: Artifact signature not traceable to LionDriver
+  - level: next_higher
+    description: Bootstub accepts images that anyone can sign
+  - level: end
+    description: Unverified envelope firmware in the vehicle
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-002.C1
+    description: No LionDriver release key yet (D-09 decided, not implemented); debug private key is in the repository
+    element: PFM-SE-011
+    prevention_controls:
+    - description: Decision D-09; WP-P-10 §6 key rules
+      ref: assurance/07-supporting/WP-P-10-release-management.md
+    detection_controls:
+    - description: INS-17 compares the signature with the release record (record format not yet in use)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    occurrence: 8
+    detection: 8
+    ap: H
+    actions:
+    - PFM-ACT-002
+- id: PFM-003
+  element: PFM-SE-010
+  function: PFM-FN-001
+  failure_mode: A component enters the release at a different version than verified
+  guideword: wrong_version
+  effects:
+  - level: local
+    description: Baseline manifest does not match what was built
+  - level: next_higher
+    description: Device runs unverified safety code or models
+  - level: end
+    description: Unverified behaviour of the envelope or controller
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-003.C1
+    description: Submodule pin moved after verification, or tinygrad tracked by branch
+    element: PFM-SE-010
+    prevention_controls:
+    - description: Submodules pinned by commit on LionDriver forks (D-01); tinygrad by commit
+    - description: Fork CI runs the safety suite on the pinned submodules
+      ref: .github/workflows/safety.yaml
+    detection_controls:
+    - description: Safety tests, MISRA and mutation run on every change of the pins
+      ref: .github/workflows/safety.yaml
+      test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+    occurrence: 3
+    detection: 4
+    ap: L
+    actions:
+    - PFM-ACT-003
+- id: PFM-004
+  element: PFM-SE-012
+  function: PFM-FN-003
+  failure_mode: Release made without the required verification on the release commit
+  guideword: incomplete
+  effects:
+  - level: local
+    description: Evidence package incomplete
+  - level: next_higher
+    description: Release decision taken on partial evidence
+  - level: end
+    description: Undetected defect in a deployed configuration
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  - level: end
+    description: Contributes to HZ-011
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-004.C1
+    description: No HIL bench or vehicle test capability yet (D-04, GAP-30); evidence package location not defined (WP-P-10 OI-2)
+    element: PFM-SE-012
+    prevention_controls:
+    - description: WP-P-10 §3 gate criteria and §5 evidence package (draft)
+      ref: assurance/07-supporting/WP-P-10-release-management.md
+    detection_controls:
+    - description: Release record review (WP-K-06), human, not yet used
+      ref: assurance/10-safety-case/WP-K-06-release-record.md
+    occurrence: 9
+    detection: 8
+    ap: H
+    actions:
+    - PFM-ACT-003
+- id: PFM-005
+  element: PFM-SE-013
+  function: PFM-FN-004
+  failure_mode: Device installed from the upstream installer or a development branch instead of the LionDriver release
+  guideword: wrong_version
+  effects:
+  - level: local
+    description: Wrong software source
+  - level: next_higher
+    description: Upstream or development software on the device (no reference lock, Experimental default)
+  - level: end
+    description: Unassured configuration driven
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-005.C1
+    description: Installer URL entered by hand; comma's default installer is the natural path; no LionDriver release channel yet
+    element: PFM-SE-013
+    prevention_controls:
+    - description: Procedure defined in a draft work product; no release or third-party installation has been made with it yet
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    detection_controls:
+    - description: 'INS-15: installed commit compared with the tag''s commit (human check)'
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    occurrence: 8
+    detection: 8
+    ap: H
+    actions:
+    - PFM-ACT-004
+- id: PFM-006
+  element: PFM-SE-020
+  function: PFM-FN-005
+  failure_mode: Wrong or damaged harness installed
+  guideword: damage
+  effects:
+  - level: local
+    description: Harness not the approved type or with damaged pins, latches or relay box
+  - level: next_higher
+    description: Relay or CAN path faulty from the start
+  - level: end
+    description: Stock AEB unavailable or CAN faults while driving
+    hazard: HZ-011
+    severity: 10
+  - level: end
+    description: Contributes to HZ-004
+    hazard: HZ-004
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-006.C1
+    description: Visual inspection only; harness revision not recorded against an approved list
+    element: PFM-SE-020
+    prevention_controls:
+    - description: INS-02, INS-03 checklist (draft)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    detection_controls:
+    - description: INS-03 visual inspection; INS-14 no relay or CAN alert at first boot
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    occurrence: 7
+    detection: 8
+    ap: H
+    actions:
+    - PFM-ACT-005
+- id: PFM-007
+  element: PFM-SE-021
+  function: PFM-FN-006
+  failure_mode: Item installed on a vehicle outside the reference configuration
+  guideword: wrong_configuration
+  effects:
+  - level: local
+    description: ECU firmware, trim or condition differs from the reference record
+  - level: next_higher
+    description: Assumptions of use (EPS, PCM, PCS behaviour) no longer valid
+  - level: end
+    description: Safety argument does not hold for this vehicle
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-011
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-007.C1
+    description: Exact ECU firmware compare and DTC read are manual steps; the reference ECU versions are not recorded yet (WP-C-01 OI-1)
+    element: PFM-SE-021
+    prevention_controls:
+    - description: INS-05..08, INS-21 (draft)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    detection_controls:
+    - description: INS-21 FW query script output compared by hand with the reference record
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    occurrence: 8
+    detection: 7
+    ap: H
+    actions:
+    - PFM-ACT-006
+- id: PFM-008
+  element: PFM-SE-022
+  function: PFM-FN-007
+  failure_mode: Harness connector not fully latched
+  guideword: incomplete
+  effects:
+  - level: local
+    description: Connector seated but not locked
+  - level: next_higher
+    description: Intermittent CAN or relay drive while driving
+  - level: end
+    description: Loss of lateral control or of the stock path while driving
+    hazard: HZ-004
+    severity: 10
+  - level: end
+    description: Contributes to HZ-011
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-008.C1
+    description: Latch engagement judged by feel; no positive check
+    element: PFM-SE-022
+    prevention_controls:
+    - description: INS-11 instruction (draft)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    detection_controls:
+    - description: INS-11 pull test by hand; INS-14 alerts at first boot
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    occurrence: 7
+    detection: 8
+    ap: H
+    actions:
+    - PFM-ACT-005
+- id: PFM-009
+  element: PFM-SE-022
+  function: PFM-FN-007
+  failure_mode: Device mounted outside the position and attitude tolerance
+  guideword: wrong_parameter
+  effects:
+  - level: local
+    description: Camera pose differs from the calibration assumption
+  - level: next_higher
+    description: Small, stable pose error not caught by calibration limits
+  - level: end
+    description: Lateral control steers off the lane centre
+    hazard: HZ-003
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-009.C1
+    description: Mount tolerance band not defined (WP-O-01 OI-2); calibration limits are wide (pitch -5.2..+9.7 deg, yaw +/-4 deg)
+    element: PFM-SE-022
+    prevention_controls:
+    - description: INS-09 photo instruction (draft)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    detection_controls:
+    - description: INS-25 calibration converges; only angles outside the wide limits are rejected
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    occurrence: 8
+    detection: 8
+    ap: H
+    actions:
+    - PFM-ACT-007
+- id: PFM-010
+  element: PFM-SE-022
+  function: PFM-FN-007
+  failure_mode: Harness routed through an airbag deployment zone
+  guideword: wrong_step
+  effects:
+  - level: local
+    description: Cable crosses the A-pillar or headliner airbag path
+  - level: next_higher
+    description: Cable obstructs or is thrown by the curtain airbag
+  - level: end
+    description: Occupant injury in a crash
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-010.C1
+    description: Routing left to the installer's judgement; airbag zones not marked for the reference vehicle
+    element: PFM-SE-022
+    prevention_controls:
+    - description: INS-12 instruction (draft)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    detection_controls:
+    - description: INS-12 routing photo (human review)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    occurrence: 7
+    detection: 8
+    ap: H
+    actions:
+    - PFM-ACT-005
+  notes: Occupant-injury effect not traced to a HARA hazard (outside the item's functions); rated S10 per RT-1 §4.1.
+- id: PFM-011
+  element: PFM-SE-023
+  function: PFM-FN-008
+  failure_mode: Parameters not at the reference values (Experimental Mode on, debug or maneuver modes, SSH)
+  guideword: wrong_parameter
+  effects:
+  - level: local
+    description: Parameter set differs from the release record
+  - level: next_higher
+    description: Unassessed behaviour enabled or attack surface opened
+  - level: end
+    description: Model-driven longitudinal behaviour or debug control in the vehicle
+    hazard: HZ-005
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-011.C1
+    description: Upstream default turns Experimental Mode on (B-06 open); parameters set by hand
+    element: PFM-SE-023
+    prevention_controls:
+    - description: D-08 decided; INS-19 parameter list (draft)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    detection_controls:
+    - description: INS-19 parameter dump compared by hand
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    occurrence: 8
+    detection: 8
+    ap: H
+    actions:
+    - PFM-ACT-008
+- id: PFM-012
+  element: PFM-SE-023
+  function: PFM-FN-008
+  failure_mode: Model weights on the device differ from the release
+  guideword: wrong_version
+  effects:
+  - level: local
+    description: Model files not those of the release
+  - level: next_higher
+    description: Unvalidated driving model
+  - level: end
+    description: Unvalidated lateral and longitudinal behaviour
+    hazard: HZ-003
+    severity: 10
+  - level: end
+    description: Contributes to HZ-007
+    hazard: HZ-007
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-012.C1
+    description: Model files changed by an update or local edit
+    element: PFM-SE-023
+    prevention_controls:
+    - description: Models pinned by LFS object id in the release tree (D-05)
+    detection_controls:
+    - description: INS-18 hash compare with the release record (manual, script not proven)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    occurrence: 3
+    detection: 7
+    ap: H
+    actions:
+    - PFM-ACT-006
+- id: PFM-013
+  element: PFM-SE-024
+  function: PFM-FN-009
+  failure_mode: Item identifies the vehicle wrongly (fuzzy fingerprint or cached CarParams of another car)
+  guideword: wrong_configuration
+  effects:
+  - level: local
+    description: carParams not those of TOYOTA_COROLLA_TSS2 with parameter 73
+  - level: next_higher
+    description: Wrong controller tuning and, without the lock, wrong envelope
+  - level: end
+    description: Wrong limits enforced
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-013.C1
+    description: Fuzzy fingerprint accepted at runtime; CarParamsCache can skip the FW query
+    element: PFM-SE-024
+    prevention_controls:
+    - description: Reference lock accepts only TOYOTA with parameter 73 (reference build only, panda#4)
+      ref: panda/board/reference_lock.h
+    detection_controls:
+    - description: INS-22/23 read carParams and pandaStates against the expected values (human check of logs)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    occurrence: 5
+    detection: 6
+    ap: H
+    actions:
+    - PFM-ACT-006
+- id: PFM-014
+  element: PFM-SE-025
+  function: PFM-FN-010
+  failure_mode: Stock PCS path not verified after installation
+  guideword: step_omitted
+  effects:
+  - level: local
+    description: INS-27 skipped or done without log review
+  - level: next_higher
+    description: Relay or forwarding fault undetected
+  - level: end
+    description: Stock AEB unavailable while the owner relies on it
+    hazard: HZ-011
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-014.C1
+    description: Log review of forwarded and intercepted messages is manual and needs tools the installer may not have
+    element: PFM-SE-025
+    prevention_controls:
+    - description: INS-27 instruction (draft)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    detection_controls:
+    - description: relayMalfunction alert covers only the relay-not-intercepting case
+      ref: opendbc_repo/opendbc/safety/safety.h
+    occurrence: 8
+    detection: 9
+    ap: H
+    actions:
+    - PFM-ACT-009
+- id: PFM-015
+  element: PFM-SE-025
+  function: PFM-FN-010
+  failure_mode: Driver not briefed on the item's limits and Chill Mode behaviour
+  guideword: step_omitted
+  effects:
+  - level: local
+    description: INS-30 acknowledgement missing
+  - level: next_higher
+    description: Driver's process model wrong (expects stops at lights, misreads override)
+  - level: end
+    description: Late or no driver intervention
+    hazard: HZ-012
+    severity: 10
+  - level: end
+    description: Contributes to HZ-007
+    hazard: HZ-007
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-015.C1
+    description: User information (WP-O-03) not yet written for the reference configuration
+    element: PFM-SE-025
+    prevention_controls:
+    - description: INS-30 instruction (draft)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    detection_controls:
+    - description: Signed acknowledgement (human)
+      ref: assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md
+    occurrence: 8
+    detection: 8
+    ap: H
+    actions:
+    - PFM-ACT-010
+  notes: STPA WP-A-05 LS-02, LS-03.
+- id: PFM-016
+  element: PFM-SE-030
+  function: PFM-FN-011
+  failure_mode: Device updates to software that is not an approved LionDriver release
+  guideword: wrong_version
+  effects:
+  - level: local
+    description: Update fetched from an uncontrolled branch
+  - level: next_higher
+    description: Unverified software and possibly panda firmware installed
+  - level: end
+    description: Unassured configuration driven
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-005
+    hazard: HZ-005
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-016.C1
+    description: Updates are git fetches from a configurable branch with no signature check beyond TLS (GAP-26)
+    element: PFM-SE-030
+    prevention_controls:
+    - description: LionDriver controls its release branch (planned)
+      ref: assurance/07-supporting/WP-P-10-release-management.md
+    detection_controls:
+    - description: None at the device; next installation check only
+    occurrence: 8
+    detection: 10
+    ap: H
+    actions:
+    - PFM-ACT-011
+- id: PFM-017
+  element: PFM-SE-030
+  function: PFM-FN-011
+  failure_mode: Rollback to a release whose evidence does not cover the installed panda firmware
+  guideword: wrong_sequence
+  effects:
+  - level: local
+    description: Host software and panda firmware from different releases
+  - level: next_higher
+    description: Envelope behaviour not the one verified with that host
+  - level: end
+    description: Unverified combination in the vehicle
+    hazard: HZ-002
+    severity: 10
+  severity: 10
+  causes:
+  - id: PFM-017.C1
+    description: Rollback procedure for the device side not defined yet (WP-O-02)
+    element: PFM-SE-030
+    prevention_controls:
+    - description: 'WP-P-10 §8 rule: rollback only to a release valid for the installed device'
+      ref: assurance/07-supporting/WP-P-10-release-management.md
+    detection_controls:
+    - description: pandad reflashes panda firmware that does not match the host tree
+      ref: openpilot/selfdrive/pandad/pandad.py
+    occurrence: 7
+    detection: 7
+    ap: H
+    actions:
+    - PFM-ACT-011
+actions:
+- id: PFM-ACT-001
+  kind: design_change
+  description: Make RELEASE=1 LIONDRIVER_REFERENCE=1 with the LionDriver key the only release build, and add an automated release check (version contains RELEASE,
+    ALLOW_DEBUG absent, reference lock present) that blocks publication (WP-P-10 §6; SW FMEA SWF-ACT-009)
+  owner: Jherrod Thomas
+  status: open
+- id: PFM-ACT-002
+  kind: design_change
+  description: Generate the LionDriver release key offline and define the signing procedure (D-09); remove the debug key from release builds
+  owner: Jherrod Thomas
+  status: open
+- id: PFM-ACT-003
+  kind: detection
+  description: Build the HIL bench (D-04) and define the evidence package location and contents (WP-P-10 §5, OI-2) before the first vehicle-test baseline
+  owner: Jherrod Thomas
+  status: open
+- id: PFM-ACT-004
+  kind: design_change
+  description: Set up the LionDriver release channel and an installer that installs only signed release tags and records the installed commit (INS-15)
+  owner: Jherrod Thomas
+  status: open
+- id: PFM-ACT-005
+  kind: prevention
+  description: Turn WP-O-01 into a recorded checklist (R-DEV, R-INS) with photos and sign-off, and include harness approval list, latch check and airbag-zone routing
+    diagram for the reference vehicle
+  owner: Jherrod Thomas
+  status: open
+- id: PFM-ACT-006
+  kind: detection
+  description: Write a configuration-check script for INS-18 and INS-21..24 that compares ECU FW versions, model hashes, carParams and pandaStates with the release
+    record and refuses engagement on mismatch (TSR-803)
+  owner: Jherrod Thomas
+  status: open
+- id: PFM-ACT-007
+  kind: prevention
+  description: Define the mount position and attitude tolerance band (WP-O-01 OI-2) and check the converged calibration against it
+  owner: Jherrod Thomas
+  status: open
+- id: PFM-ACT-008
+  kind: design_change
+  description: Ship the reference parameter set as release defaults (Chill Mode, B-06; debug modes off; SSH off) and check it at boot
+  owner: Jherrod Thomas
+  status: open
+- id: PFM-ACT-009
+  kind: detection
+  description: Provide a log-analysis tool for INS-27 that proves forwarding of stock PCS messages and blocking of intercepted ones
+  owner: Jherrod Thomas
+  status: open
+- id: PFM-ACT-010
+  kind: prevention
+  description: Write the user information for the reference configuration (WP-O-03), covering Chill Mode limits and override behaviour
+  owner: Jherrod Thomas
+  status: open
+- id: PFM-ACT-011
+  kind: design_change
+  description: Signed updates from a LionDriver-controlled branch, and a bench-tested rollback procedure for the device side (GAP-26, WP-S-07, WP-O-02)
+  owner: Jherrod Thomas
+  status: open

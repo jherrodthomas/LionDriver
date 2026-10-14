@@ -1,0 +1,276 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1130" viewBox="0 0 1280 1130" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-2. Software architecture of the panda firmware and its host interface (WP-W-03 §3.2)</title>
+  <desc id="d">On the left, the QM host stack on the SoC (host.pandad) exchanges SPI4 transfers with the panda STM32H7, which runs the safety envelope (B‡) in one address space without MPU. U-PND-SPI passes control requests to U-PND-COMMS comms_control_handler: 0xdc goes to U-PND-MAIN set_safety_mode and then U-SAF-CORE set_safety_hooks, 0xf3 updates the heartbeat variables, 0xc5 drives the U-PND-HARN relay under the reference lock. CAN writes go through comms_can_write and can_send in U-PND-FDCAN to safety_tx_hook (U-SAF-CORE, U-SAF-TOY, U-SAF-LAT/LONG); accepted frames go to can_queues, process_can with XOR check and the FDCAN1/3 TX FIFO onto bus 0, rejected frames to rx_q. Frames received on bus 0 and bus 2 enter can_rx, which calls safety_fwd_hook (forwarded with can_send skipping the hook to the other bus) and safety_rx_hook (U-SAF-TOY rx, controls_allowed) and pushes them to rx_q, read by comms_can_read and sent over SPI to the SoC. Periodic contexts: TIM4 safety task at 100 Hz, TIM12 tick at 8 Hz with a 1 Hz branch, TIM6 at 1 Hz, and the main loop. Interfaces SI-01 to SI-10 of §3.3 are tagged.</desc>
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.xxs{font-size:9.5px}.b{font-weight:700}.sb{font-weight:600}
+      .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+      .ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .chip{fill:#F8FAFC;stroke:#CBD5E1;stroke-width:1}
+      .env{fill:#FFF7ED;stroke:#FDBA74;stroke-width:1}
+      .tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+      .code{font-family:'JetBrains Mono',Menlo,Consolas,monospace}
+    </style>
+  </defs>
+
+  <rect width="1280" height="1130" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 3-2 · Software architecture of the panda firmware</text>
+  <text x="40" y="66" class="m" font-size="12.5">Units U-xxx (§3.1) and interfaces SI-xx (§3.3) · QM host stack on the SoC, safety envelope (B‡) on the panda STM32H7</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">WP-W-03 §3.2</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">units §3.1 · interfaces §3.3 · contexts §5.1</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+
+  <!-- ===== host partition (QM) ===== -->
+  <rect x="40" y="104" width="170" height="416" rx="12" fill="#F8FAFC" stroke="#64748B" stroke-width="1.4"/>
+  <text x="56" y="128" class="t b" font-size="13">SoC · host (E-01)</text>
+  <text x="56" y="144" class="m xs">openpilot processes</text>
+  <rect x="56" y="154" width="84" height="18" rx="9" fill="#64748B"/>
+  <text x="98" y="167" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".04em">QM (B-sup)</text>
+  <rect x="56" y="186" width="138" height="318" rx="8" class="chip"/>
+  <text x="125" y="208" class="t sb" font-size="12" text-anchor="middle">host.pandad</text>
+  <text x="125" y="236" class="m xs" text-anchor="middle">pandad.cc · spi.cc</text>
+  <text x="125" y="250" class="m xs" text-anchor="middle">panda_safety.cc</text>
+  <text x="125" y="290" class="m xs" text-anchor="middle">CAN in / out,</text>
+  <text x="125" y="304" class="m xs" text-anchor="middle">heartbeat,</text>
+  <text x="125" y="318" class="m xs" text-anchor="middle">safety-mode set</text>
+  <text x="125" y="358" class="m xs" text-anchor="middle">FFI interface</text>
+  <text x="125" y="372" class="m xs" text-anchor="middle">to the envelope (§4.1)</text>
+
+  <!-- ===== panda partition (envelope) ===== -->
+  <rect x="300" y="104" width="940" height="874" rx="14" fill="#FFF7ED" fill-opacity=".45" stroke="#C2410C" stroke-width="1.8"/>
+  <text x="318" y="130" class="t b" font-size="13">E-03 panda · STM32H7</text>
+  <text x="474" y="130" class="m s">one address space, no MPU · envelope code runs in interrupt context</text>
+  <rect x="1060" y="116" width="164" height="22" rx="11" fill="#C2410C"/>
+  <text x="1142" y="131" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".05em">SAFETY ENVELOPE · B‡</text>
+
+  <!-- U-PND-SPI -->
+  <rect x="318" y="172" width="100" height="330" rx="10" class="box"/>
+  <text x="368" y="192" class="t b" font-size="11.5" text-anchor="middle">U-PND-SPI</text>
+  <text x="368" y="207" class="m xxs" text-anchor="middle">SPI4 · DMA</text>
+  <text x="368" y="220" class="m xxs" text-anchor="middle">framing, XOR</text>
+  <text x="368" y="360" class="m xxs" text-anchor="middle">drivers/spi.h</text>
+  <text x="368" y="373" class="m xxs" text-anchor="middle">llspi.h</text>
+
+  <!-- U-PND-COMMS -->
+  <rect x="470" y="172" width="172" height="330" rx="10" class="box"/>
+  <text x="484" y="192" class="t b" font-size="11.5">U-PND-COMMS</text>
+  <text x="484" y="206" class="m xxs">main_comms.h · can_comms.h</text>
+  <rect x="484" y="216" width="144" height="150" rx="6" class="chip"/>
+  <text x="556" y="234" class="t sb code" font-size="10" text-anchor="middle">comms_control_handler</text>
+  <text x="494" y="256" class="t b code" font-size="10">0xdc</text><text x="526" y="256" class="m xxs">safety mode</text>
+  <text x="494" y="304" class="t b code" font-size="10">0xf3</text><text x="526" y="304" class="m xxs">heartbeat</text>
+  <text x="494" y="345" class="t b code" font-size="10">0xc5</text><text x="526" y="345" class="m xxs">relay</text>
+  <text x="556" y="384" class="m xxs" text-anchor="middle">ref lock: reference_lock.h</text>
+  <rect x="484" y="396" width="144" height="32" rx="6" class="chip"/>
+  <text x="556" y="416" class="t sb code" font-size="10" text-anchor="middle">comms_can_write</text>
+  <rect x="484" y="450" width="144" height="32" rx="6" class="chip"/>
+  <text x="556" y="470" class="t sb code" font-size="10" text-anchor="middle">comms_can_read</text>
+
+  <!-- U-PND-MAIN, heartbeat vars, U-PND-HARN -->
+  <rect x="708" y="206" width="180" height="70" rx="10" class="box"/>
+  <text x="720" y="223" class="t b" font-size="11.5">U-PND-MAIN</text>
+  <text x="876" y="223" class="m xxs" text-anchor="end">main.c</text>
+  <rect x="720" y="236" width="156" height="30" rx="6" class="chip"/>
+  <text x="798" y="255" class="t sb code" font-size="10" text-anchor="middle">set_safety_mode</text>
+  <rect x="708" y="286" width="180" height="28" rx="6" class="chip"/>
+  <text x="798" y="304" class="t sb" font-size="10.5" text-anchor="middle">heartbeat vars</text>
+  <rect x="708" y="324" width="180" height="36" rx="10" class="box"/>
+  <text x="720" y="346" class="t b" font-size="11.5">U-PND-HARN</text>
+  <text x="876" y="346" class="m xxs" text-anchor="end">relay (ref lock)</text>
+
+  <!-- U-PND-FDCAN region (L-shaped) -->
+  <path d="M708 372 H888 V742 H470 V664 H708 Z" fill="#FFFFFF" fill-opacity=".7" stroke="#64748B" stroke-width="1.2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+  <text x="716" y="388" class="t b" font-size="11">U-PND-FDCAN</text>
+  <rect x="744" y="396" width="132" height="32" rx="6" class="chip"/>
+  <text x="810" y="416" class="t sb code" font-size="10" text-anchor="middle">can_send</text>
+  <rect x="716" y="450" width="160" height="32" rx="6" class="chip"/>
+  <text x="796" y="470" class="t sb code" font-size="10" text-anchor="middle">rx_q</text>
+  <rect x="744" y="504" width="132" height="32" rx="6" class="chip"/>
+  <text x="810" y="524" class="t sb code" font-size="10" text-anchor="middle">can_queues[bus]</text>
+  <rect x="744" y="558" width="132" height="34" rx="6" class="chip"/>
+  <text x="810" y="573" class="t sb code" font-size="10" text-anchor="middle">process_can</text>
+  <text x="810" y="586" class="m xxs" text-anchor="middle">XOR check</text>
+  <rect x="744" y="612" width="132" height="34" rx="6" class="env"/>
+  <text x="810" y="627" class="t sb" font-size="10" text-anchor="middle">TX FIFO</text>
+  <text x="810" y="640" class="m xxs" text-anchor="middle">FDCAN1/3</text>
+  <rect x="484" y="678" width="144" height="36" rx="6" class="chip"/>
+  <text x="556" y="694" class="t sb code" font-size="10" text-anchor="middle">can_rx</text>
+  <text x="556" y="707" class="m xxs" text-anchor="middle">RX ISR, per bus</text>
+
+  <!-- ===== opendbc safety layer ===== -->
+  <rect x="978" y="172" width="246" height="650" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+  <rect x="992" y="162" width="160" height="20" rx="10" fill="#C2410C"/>
+  <text x="1072" y="176" fill="#FFFFFF" font-size="10" font-weight="700" text-anchor="middle" letter-spacing=".06em">OPENDBC SAFETY LAYER</text>
+
+  <!-- U-SAF-CORE -->
+  <rect x="990" y="196" width="110" height="614" rx="9" class="box"/>
+  <text x="1045" y="214" class="t b" font-size="11.5" text-anchor="middle">U-SAF-CORE</text>
+  <text x="1045" y="227" class="m xxs" text-anchor="middle">safety.h</text>
+  <rect x="998" y="238" width="94" height="28" rx="6" class="env"/>
+  <text x="1045" y="256" class="t sb code" font-size="9.5" text-anchor="middle">set_safety_hooks</text>
+  <rect x="998" y="396" width="94" height="140" rx="6" class="env"/>
+  <text x="1045" y="440" class="t sb code" font-size="9.5" text-anchor="middle">safety_tx_hook</text>
+  <text x="1045" y="458" class="m xxs" text-anchor="middle">whitelist,</text>
+  <text x="1045" y="471" class="m xxs" text-anchor="middle">TX rate, mode</text>
+  <text x="1045" y="484" class="m xxs" text-anchor="middle">hooks, relay</text>
+  <text x="1045" y="497" class="m xxs" text-anchor="middle">check (§5.3)</text>
+  <rect x="998" y="564" width="94" height="30" rx="6" class="env"/>
+  <text x="1045" y="583" class="t sb code" font-size="9.5" text-anchor="middle">controls_allowed</text>
+  <text x="1045" y="610" class="m xxs" text-anchor="middle">SI-04 shared state</text>
+  <rect x="998" y="668" width="94" height="30" rx="6" class="env"/>
+  <text x="1045" y="687" class="t sb code" font-size="9.5" text-anchor="middle">safety_fwd_hook</text>
+  <rect x="998" y="710" width="94" height="30" rx="6" class="env"/>
+  <text x="1045" y="729" class="t sb code" font-size="9.5" text-anchor="middle">safety_rx_hook</text>
+  <rect x="998" y="766" width="94" height="30" rx="6" class="env"/>
+  <text x="1045" y="785" class="t sb code" font-size="9.5" text-anchor="middle">safety_tick</text>
+
+  <!-- U-SAF-LAT / LONG -->
+  <rect x="1112" y="226" width="102" height="114" rx="9" class="box"/>
+  <text x="1163" y="246" class="t b" font-size="11" text-anchor="middle">U-SAF-LAT</text>
+  <text x="1163" y="260" class="m xxs" text-anchor="middle">torque limit, rate,</text>
+  <text x="1163" y="273" class="m xxs" text-anchor="middle">RT window</text>
+  <text x="1163" y="296" class="t b" font-size="11" text-anchor="middle">U-SAF-LONG</text>
+  <text x="1163" y="310" class="m xxs" text-anchor="middle">accel bounds</text>
+
+  <!-- U-SAF-TOY -->
+  <rect x="1112" y="366" width="102" height="390" rx="9" class="box"/>
+  <text x="1122" y="384" class="t b" font-size="11">U-SAF-TOY</text>
+  <rect x="1120" y="396" width="86" height="32" rx="6" class="env"/>
+  <text x="1163" y="416" class="t sb" font-size="10" text-anchor="middle">TX checks</text>
+  <rect x="1120" y="710" width="86" height="30" rx="6" class="env"/>
+  <text x="1163" y="729" class="t sb" font-size="10" text-anchor="middle">RX parsing</text>
+  <text x="1208" y="520" class="m xxs" text-anchor="end">modes/toyota.h</text>
+
+  <!-- ===== execution contexts ===== -->
+  <rect x="850" y="838" width="374" height="128" rx="10" class="box"/>
+  <text x="864" y="857" class="t b" font-size="11">Execution contexts (§5.1)</text>
+  <text x="1210" y="857" class="m xxs" text-anchor="end">all IRQs at one priority</text>
+  <g font-size="9.5">
+    <text x="864" y="876" class="t b">TIM4 · 100 Hz</text><text x="962" y="876" class="m">safety task: safety_tick, heartbeat 0.3 s,</text>
+    <text x="962" y="889" class="m">EPS-fault siren, IWDG feed (window)</text>
+    <text x="864" y="907" class="t b">TIM12 tick · 8 Hz</text><text x="962" y="907" class="m">harness_tick, simple_watchdog_kick, siren</text>
+    <text x="962" y="920" class="m">└ 1 Hz: heartbeat counter (SILENT 5 s), check_registers</text>
+    <text x="864" y="938" class="t b">TIM6 · 1 Hz</text><text x="962" y="938" class="m">interrupt-rate statistics</text>
+    <text x="864" y="955" class="t b">main loop</text><text x="962" y="955" class="m">LED fade / WFI only</text>
+  </g>
+
+  <!-- ===== vehicle CAN (outside) ===== -->
+  <rect x="40" y="994" width="860" height="70" rx="10" class="ext"/>
+  <text x="56" y="1016" class="t b" font-size="12">Vehicle CAN</text>
+  <text x="56" y="1031" class="m xs">via harness</text>
+  <text x="56" y="1045" class="m xs">and relay</text>
+  <line x1="190" y1="1012" x2="884" y2="1012" stroke="#0F172A" stroke-width="3.5" stroke-linecap="round"/>
+  <text x="196" y="1006" class="t sb" font-size="10">bus 0 · car side</text>
+  <line x1="190" y1="1046" x2="884" y2="1046" stroke="#0F172A" stroke-width="3.5" stroke-linecap="round"/>
+  <text x="196" y="1040" class="t sb" font-size="10">bus 2 · camera side</text>
+
+  <!-- ===== connections ===== -->
+  <!-- host <-> SPI -->
+  <path d="M194 236 H316" fill="none" stroke="#C2410C" stroke-width="2.2" marker-end="url(#aR)"/>
+  <text x="256" y="229" fill="#C2410C" font-size="9.5" font-weight="600" text-anchor="middle">SPI4 transfers</text>
+  <text x="256" y="252" fill="#C2410C" font-size="9.5" font-weight="600" text-anchor="middle">hdr+data, XOR</text>
+  <path d="M318 466 H196" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <text x="256" y="459" fill="#0F766E" font-size="9.5" font-weight="600" text-anchor="middle">SPI to SoC</text>
+  <text x="256" y="482" fill="#0F766E" font-size="9.5" font-weight="600" text-anchor="middle">CAN RX frames</text>
+
+  <!-- SPI -> COMMS -->
+  <path d="M418 300 H482" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <text x="444" y="294" class="m xxs" text-anchor="middle">ctrl</text>
+  <path d="M418 412 H482" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+  <text x="444" y="406" fill="#C2410C" font-size="9.5" font-weight="600" text-anchor="middle">can write</text>
+  <path d="M484 466 H420" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+
+  <!-- control requests -->
+  <path d="M628 252 H718" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M628 300 H706" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M628 342 H706" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <path d="M876 251 H996" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+
+  <!-- TX path -->
+  <path d="M628 412 H742" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+  <path d="M876 412 H996" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+  <path d="M1092 412 H1118" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+  <path d="M1196 396 V342" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+  <path d="M998 466 H878" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <text x="937" y="460" class="m xxs" text-anchor="middle">reject</text>
+  <path d="M998 520 H878" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+  <text x="937" y="514" fill="#C2410C" font-size="9.5" font-weight="600" text-anchor="middle">accept</text>
+  <path d="M810 536 V556" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+  <path d="M810 592 V610" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
+  <!-- TX FIFO -> bus 0, with a bridge over the RX hook line -->
+  <path d="M810 646 V698 A6 6 0 0 1 810 710 V1008" fill="none" stroke="#C2410C" stroke-width="2.4" marker-end="url(#aR)"/>
+  <text x="816" y="790" fill="#C2410C" font-size="9.5" font-weight="600">TX to bus 0</text>
+  <circle cx="810" cy="1012" r="3.5" fill="#0F172A"/>
+
+  <!-- RX queue to comms -->
+  <path d="M716 466 H630" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+
+  <!-- RX path -->
+  <path d="M530 1012 V716" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <circle cx="530" cy="1012" r="3.5" fill="#0F766E"/>
+  <path d="M590 1046 V716" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <circle cx="590" cy="1046" r="3.5" fill="#0F766E"/>
+  <text x="524" y="790" fill="#0F766E" font-size="9.5" font-weight="600" text-anchor="end">bus 0 RX</text>
+  <text x="596" y="790" fill="#0F766E" font-size="9.5" font-weight="600">bus 2 RX</text>
+  <!-- can_push -> rx_q -->
+  <path d="M628 688 H730 V484" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <text x="679" y="682" fill="#0F766E" font-size="9.5" font-weight="600" text-anchor="middle">can_push</text>
+  <!-- can_rx -> hooks -->
+  <path d="M628 704 H950" fill="none" stroke="#0F766E" stroke-width="2"/>
+  <path d="M950 683 V725" fill="none" stroke="#0F766E" stroke-width="2"/>
+  <path d="M950 683 H996" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <path d="M950 725 H996" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <!-- fwd hook -> can_send(skip hook) -> TX FIFO -->
+  <path d="M1070 668 V629 H878" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <text x="933" y="622" fill="#0F766E" font-size="9.5" font-weight="600" text-anchor="middle">can_send</text>
+  <text x="933" y="643" fill="#0F766E" font-size="9.5" font-weight="600" text-anchor="middle">(skip hook)</text>
+  <text x="933" y="655" fill="#0F766E" font-size="9.5" font-weight="600" text-anchor="middle">other bus</text>
+  <!-- rx hook -> TOY rx -> controls_allowed -->
+  <path d="M1092 725 H1118" fill="none" stroke="#0F766E" stroke-width="2" marker-end="url(#aT)"/>
+  <path d="M1132 710 V579 H1094" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <!-- TIM4 -> safety_tick -->
+  <path d="M1045 838 V798" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+
+  <!-- ===== interface tags ===== -->
+  <g class="tag">
+    <rect x="424" y="308" width="40" height="18" rx="9" fill="#475569"/><text x="444" y="321" fill="#fff" text-anchor="middle">SI-07</text>
+    <rect x="648" y="226" width="40" height="18" rx="9" fill="#475569"/><text x="668" y="239" fill="#fff" text-anchor="middle">SI-08</text>
+    <rect x="648" y="350" width="40" height="18" rx="9" fill="#475569"/><text x="668" y="363" fill="#fff" text-anchor="middle">SI-10</text>
+    <rect x="916" y="225" width="40" height="18" rx="9" fill="#475569"/><text x="936" y="238" fill="#fff" text-anchor="middle">SI-03</text>
+    <rect x="916" y="386" width="40" height="18" rx="9" fill="#C2410C"/><text x="936" y="399" fill="#fff" text-anchor="middle">SI-02</text>
+    <rect x="648" y="474" width="40" height="18" rx="9" fill="#0F766E"/><text x="668" y="487" fill="#fff" text-anchor="middle">SI-09</text>
+    <rect x="884" y="712" width="40" height="18" rx="9" fill="#0F766E"/><text x="904" y="725" fill="#fff" text-anchor="middle">SI-01</text>
+    <rect x="1143" y="316" width="40" height="18" rx="9" fill="#C2410C"/><text x="1163" y="329" fill="#fff" text-anchor="middle">SI-06</text>
+    <rect x="1120" y="440" width="40" height="18" rx="9" fill="#C2410C"/><text x="1140" y="453" fill="#fff" text-anchor="middle">SI-05</text>
+    <rect x="1052" y="812" width="40" height="18" rx="9" fill="#475569"/><text x="1072" y="825" fill="#fff" text-anchor="middle">SI-03</text>
+  </g>
+
+  <!-- notes -->
+  <g class="m xxs">
+    <text x="318" y="842" class="t b" font-size="10">Not drawn (§3.3)</text>
+    <text x="318" y="858">SI-11 fault bits,</text>
+    <text x="318" y="871">U-PND-FLT → all units</text>
+    <text x="318" y="889">SI-12 time base, critical</text>
+    <text x="318" y="902">sections, platform → all</text>
+    <text x="318" y="920">SI-13 health packet 0xd2,</text>
+    <text x="318" y="933">U-PND-COMMS → SoC</text>
+    <text x="318" y="951">TIM4, TIM12: U-PND-MAIN;</text>
+    <text x="318" y="964">TIM6: U-PND-FLT</text>
+  </g>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="1084" x2="1240" y2="1084" stroke="#E2E8F0"/>
+  <g transform="translate(40,1108)" font-size="10.5">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#C2410C" stroke-width="2.4"/><text x="36" y="4" class="t">Command / actuation path (SPI in, TX)</text>
+    <line x1="262" y1="0" x2="290" y2="0" stroke="#0F766E" stroke-width="2"/><text x="298" y="4" class="t">CAN RX, forwarding, data to SoC</text>
+    <line x1="500" y1="0" x2="528" y2="0" stroke="#475569" stroke-width="1.4"/><text x="536" y="4" class="t">Control request / internal call</text>
+    <rect x="726" y="-8" width="28" height="16" rx="4" fill="#FFF7ED" stroke="#C2410C"/><text x="762" y="4" class="t">Envelope element</text>
+    <rect x="874" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#64748B" stroke-dasharray="4 3"/><text x="910" y="4" class="t">Unit region (L-shaped)</text>
+    <text x="1200" y="4" class="m" text-anchor="end">B‡: ASIL B target</text>
+  </g>
+</svg>

@@ -1,0 +1,289 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="966" viewBox="0 0 1440 966" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">V-01. Item context (SysML v2 view itemContext)</title>
+<desc id="d">Context view generated from the SysML v2 model. Inside the item boundary: E-01 SoC software, E-02 ML models, E-03 safety MCU firmware, E-04 device hardware and E-05 harness. Outside: the driver and road environment (IF-05, IF-06, IF-07), the vehicle CAN with EPS, ECM/PCM, ABS/VSC and cluster (IF-01, IF-02 through the harness), the Toyota forward camera (IF-03) and radar, the vehicle supply (IF-08), the untrusted back end (IF-09) and the excluded external compute E-06.</desc>
+<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="7" stroke="#E2E8F0" stroke-width="3"/></pattern><filter id="lift" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#0F172A" flood-opacity="0.08"/></filter><marker id="arr-bus" viewBox="0 0 10 10" refX="8.6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#334155"/></marker><marker id="arr-network-p" viewBox="0 0 10 10" refX="15" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#9333EA"/></marker><marker id="arr-power-p" viewBox="0 0 10 10" refX="15" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#B45309"/></marker><marker id="arr-sensing-p" viewBox="0 0 10 10" refX="15" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#0F766E"/></marker><marker id="arr-boot-p" viewBox="0 0 10 10" refX="15" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#7C3AED"/></marker><marker id="arr-ffi-p" viewBox="0 0 10 10" refX="15" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#7C3AED"/></marker><marker id="arr-actuation-p" viewBox="0 0 10 10" refX="15" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0.5 0.8L9.4 5L0.5 9.2z" fill="#C2410C"/></marker></defs>
+<rect width="1440" height="966" fill="#FFFFFF"/>
+<text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-01 · Item context</text>
+<text x="40" y="69" font-size="12.5" fill="#64748B">LD-SDA, its components E-01 to E-05 and the elements outside the item boundary · interfaces IF-01 to IF-10 at component level</text>
+<text x="1400" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::itemContext</text>
+<text x="1400" y="62" font-size="11" fill="#64748B" text-anchor="end">ContextView · render asInterconnectionDiagram · model 63553f5ef5ae</text>
+<line x1="40" y1="86" x2="1400" y2="86" stroke="#E2E8F0"/>
+<g data-el="context.ldsda">
+<rect x="300" y="132" width="830" height="560" rx="12" fill="#FFFDF8" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="7 5"/>
+<text x="316" y="158.5" font-size="14" fill="#0F172A" font-weight="700">Item boundary · LD-SDA</text>
+<text x="491.1" y="158" font-size="11" fill="#64748B">Supervised Driving Assistance, SAE Level 2 retrofit (WP-C-01 §1)</text>
+<text x="1116" y="157.5" font-size="9.5" fill="#94A3B8" text-anchor="end" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">«part» ldsda : LdSda</text>
+</g>
+<g data-edge="bus" data-a="context.eps" data-b="context.vehicleCan" data-ids="">
+<path d="M397 800L397 776" fill="none" stroke="#334155" stroke-width="2.0" stroke-linejoin="round"/>
+</g>
+<g data-edge="bus" data-a="context.ecmPcm" data-b="context.vehicleCan" data-ids="">
+<path d="M609 800L609 776" fill="none" stroke="#334155" stroke-width="2.0" stroke-linejoin="round"/>
+</g>
+<g data-edge="bus" data-a="context.absVsc" data-b="context.vehicleCan" data-ids="">
+<path d="M821 800L821 776" fill="none" stroke="#334155" stroke-width="2.0" stroke-linejoin="round"/>
+</g>
+<g data-edge="bus" data-a="context.cluster" data-b="context.vehicleCan" data-ids="">
+<path d="M1033 800L1033 776" fill="none" stroke="#334155" stroke-width="2.0" stroke-linejoin="round"/>
+</g>
+<g data-edge="bus" data-a="context.forwardRadar" data-b="context.radarCan" data-ids="">
+<path d="M1295 420L1295 446" fill="none" stroke="#334155" stroke-width="2.0" stroke-linejoin="round"/>
+</g>
+<g data-edge="network" data-a="context.ldsda.socSoftware" data-b="context.backEnd" data-ids="IF-09">
+<path d="M840 226L855 226Q862 226 862 219L862 119Q862 112 869 112L1153 112Q1160 112 1160 119L1160 178Q1160 185 1167 185L1183 185Q1190 185 1190 192L1190 206" fill="none" stroke="#9333EA" stroke-width="1.6" stroke-linejoin="round" stroke-dasharray="4 4" marker-end="url(#arr-network-p)"/>
+</g>
+<g data-edge="power" data-a="context.vehicleSupply" data-b="context.ldsda.deviceHardware" data-ids="IF-08">
+<path d="M140 800L140 731Q140 724 147 724L393 724Q400 724 400 717L400 496.5Q400 496 399.5 496L399 496" fill="none" stroke="#B45309" stroke-width="1.8" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arr-power-p)"/>
+</g>
+<g data-edge="power" data-a="context.vehicleSupply" data-b="context.ldsda.harness" data-ids="IF-08">
+<path d="M200 800L200 741Q200 734 207 734L843 734Q850 734 850 727L850 647Q850 640 857 647L870 640.3" fill="none" stroke="#B45309" stroke-width="1.8" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arr-power-p)"/>
+</g>
+<g data-edge="can" data-a="context.ldsda.safetyFirmware" data-b="context.radarCan" data-ids="IF-02">
+<path d="M1100 469L1144 469Q1145 469 1145 470L1145 470Q1145 471 1146 471L1190 471" fill="none" stroke="#0F766E" stroke-width="2.0" stroke-linejoin="round" marker-start="url(#arr-sensing-p)"/>
+</g>
+<g data-edge="can" data-a="context.ldsda.harness" data-b="context.forwardCamera" data-ids="IF-03">
+<path d="M1100 599L1190 599" fill="none" stroke="#0F766E" stroke-width="2.0" stroke-linejoin="round" marker-start="url(#arr-sensing-p)"/>
+</g>
+<g data-edge="sensing" data-a="context.roadEnvironment" data-b="context.ldsda.deviceHardware" data-ids="IF-05">
+<path d="M240 452L280 452Q285 452 285 447L285 447Q285 442 290 442L330 442" fill="none" stroke="#0F766E" stroke-width="2.0" stroke-linejoin="round" marker-end="url(#arr-sensing-p)"/>
+</g>
+<g data-edge="sensing" data-a="context.driver" data-b="context.ldsda.deviceHardware" data-ids="IF-06 IF-07">
+<path d="M240 313.6L278 313.6Q285 313.6 285 306.6L285 275Q285 268 292 268L330 268" fill="none" stroke="#0F766E" stroke-width="2.0" stroke-linejoin="round" marker-end="url(#arr-sensing-p)" marker-start="url(#arr-sensing-p)"/>
+</g>
+<g data-edge="sensing" data-a="context.ldsda.deviceHardware" data-b="context.ldsda.socSoftware" data-ids="IF-05 IF-06 IF-07">
+<path d="M560 300.1L600 299.9" fill="none" stroke="#0F766E" stroke-width="2.0" stroke-linejoin="round" marker-end="url(#arr-sensing-p)" marker-start="url(#arr-sensing-p)"/>
+</g>
+<g data-edge="boot" data-a="context.ldsda.socSoftware" data-b="context.ldsda.deviceHardware" data-ids="IF-04b">
+<path d="M600 329.9L560 330.1" fill="none" stroke="#7C3AED" stroke-width="1.8" stroke-linejoin="round" stroke-dasharray="5 4" marker-end="url(#arr-boot-p)"/>
+</g>
+<g data-edge="ffi" data-a="context.ldsda.socSoftware" data-b="context.ldsda.safetyFirmware" data-ids="IF-04">
+<path d="M840 271L870 271" fill="none" stroke="#7C3AED" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arr-ffi-p)"/>
+</g>
+<g data-edge="can" data-a="context.ldsda.safetyFirmware" data-b="context.ldsda.harness" data-ids="IF-01 IF-02 IF-03">
+<path d="M985 496L985 540" fill="none" stroke="#C2410C" stroke-width="2.4" stroke-linejoin="round" marker-end="url(#arr-actuation-p)" marker-start="url(#arr-actuation-p)"/>
+</g>
+<g data-edge="can" data-a="context.ldsda.harness" data-b="context.vehicleCan" data-ids="IF-01 IF-02">
+<path d="M985 658L985 762" fill="none" stroke="#C2410C" stroke-width="2.4" stroke-linejoin="round" marker-end="url(#arr-actuation-p)" marker-start="url(#arr-actuation-p)"/>
+</g>
+<g data-edge="actuation" data-a="context.ldsda.safetyFirmware" data-b="context.driver" data-ids="IF-07">
+<path d="M870 208L862 208Q855 208 855 201L855 183Q855 176 848 176L269 176Q262 176 262 183L262 229Q262 236 255 229L240 236" fill="none" stroke="#C2410C" stroke-width="2.4" stroke-linejoin="round" marker-end="url(#arr-actuation-p)"/>
+</g>
+<g data-edge="actuation" data-a="context.ldsda.deviceHardware" data-b="context.ldsda.harness" data-ids="IF-10">
+<path d="M514 496L514 568.4Q514 575.4 521 575.4L870 575.4" fill="none" stroke="#C2410C" stroke-width="2.4" stroke-linejoin="round" marker-end="url(#arr-actuation-p)"/>
+</g>
+<g data-el="context.ldsda.deviceHardware">
+<rect x="330" y="196" width="230" height="300" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="341" y="203.5" width="37.1" height="17" rx="8.5" fill="#C2410C"/><text x="359.5" y="215.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-04</text>
+<rect x="523.8" y="203.5" width="25.2" height="16" rx="8" fill="#C2410C"/><text x="536.4" y="214.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<text x="385.1" y="216" font-size="12" fill="#0F172A" font-weight="700">Device hardware</text>
+<text x="341" y="232" font-size="10.5" fill="#64748B">comma device: SoC, STM32H7, cameras,</text>
+<text x="341" y="245.5" font-size="10.5" fill="#64748B">IMU, display, speaker, supply</text>
+</g>
+<g data-el="context.ldsda.socSoftware">
+<rect x="600" y="196" width="240" height="150" rx="9" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="611" y="203.5" width="34.7" height="17" rx="8.5" fill="#475569"/><text x="628.4" y="215.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-01</text>
+<rect x="799.6" y="203.5" width="29.4" height="16" rx="8" fill="#475569"/><text x="814.3" y="214.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">QM</text>
+<text x="652.7" y="216" font-size="12" fill="#0F172A" font-weight="700">SoC software</text>
+<text x="611" y="232" font-size="10.5" fill="#64748B">openpilot processes on AGNOS Linux · QM</text>
+<text x="611" y="337" font-size="9.5" fill="#C2410C" font-weight="700">43</text>
+<text x="611" y="325" font-size="9.5" fill="#C2410C" font-weight="700">SM-25 · 26 · 27 · 28 · 30 · 31 · 32 · 33 · 34 · 37 ·</text>
+</g>
+<g data-el="context.ldsda.mlModels">
+<rect x="600" y="370" width="240" height="126" rx="9" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="611" y="377.5" width="36.6" height="17" rx="8.5" fill="#4F46E5"/><text x="629.3" y="389.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-02</text>
+<rect x="799.6" y="377.5" width="29.4" height="16" rx="8" fill="#475569"/><text x="814.3" y="388.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">QM</text>
+<text x="654.6" y="390" font-size="12" fill="#0F172A" font-weight="700">ML models</text>
+<text x="611" y="406" font-size="10.5" fill="#64748B">driving model, DM model · SOTIF, PAS</text>
+<text x="611" y="419.5" font-size="10.5" fill="#64748B">8800</text>
+<text x="611" y="487" font-size="9.5" fill="#C2410C" font-weight="700">SM-26</text>
+</g>
+<g data-el="context.ldsda.safetyFirmware">
+<rect x="870" y="196" width="230" height="300" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="881" y="203.5" width="36.8" height="17" rx="8.5" fill="#C2410C"/><text x="899.4" y="215.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-03</text>
+<rect x="1063.8" y="203.5" width="25.2" height="16" rx="8" fill="#C2410C"/><text x="1076.4" y="214.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<text x="924.8" y="216" font-size="12" fill="#0F172A" font-weight="700">Safety MCU firmware</text>
+<text x="881" y="232" font-size="10.5" fill="#64748B">panda firmware with the opendbc Toyota</text>
+<text x="881" y="245.5" font-size="10.5" fill="#64748B">safety mode: the safety envelope</text>
+</g>
+<g data-el="context.ldsda.harness">
+<rect x="870" y="540" width="230" height="118" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
+<rect x="881" y="547.5" width="36.7" height="17" rx="8.5" fill="#C2410C"/><text x="899.4" y="559.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-05</text>
+<rect x="1063.8" y="547.5" width="25.2" height="16" rx="8" fill="#C2410C"/><text x="1076.4" y="558.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<text x="924.7" y="560" font-size="12" fill="#0F172A" font-weight="700">Harness</text>
+<text x="881" y="576" font-size="10.5" fill="#64748B">Toyota TSS2 harness with intercept relay</text>
+<text x="881" y="649" font-size="9.5" fill="#C2410C" font-weight="700">SM-20 · 42</text>
+</g>
+<g data-el="context.driver">
+<rect x="40" y="196" width="200" height="196" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<g fill="none" stroke="#334155" stroke-width="1.6" stroke-linecap="round"><circle cx="140" cy="218" r="7"/><path d="M140 225V244M128 232H152M140 244L131 258M140 244L149 258"/></g>
+<text x="140" y="280" font-size="13" fill="#0F172A" font-weight="700" text-anchor="middle">Driver</text>
+<text x="140" y="297" font-size="10.5" fill="#64748B" text-anchor="middle">supervises, overrides, responds to</text>
+<text x="140" y="311" font-size="10.5" fill="#64748B" text-anchor="middle">warnings · AOU-06, AOU-07</text>
+</g>
+<g data-el="context.roadEnvironment">
+<rect x="40" y="420" width="200" height="64" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="51" y="440" font-size="12" fill="#0F172A" font-weight="700">Road environment</text>
+<text x="51" y="456" font-size="10.5" fill="#64748B">ODD of WP-C-02</text>
+</g>
+<g data-el="context.backEnd">
+<rect x="1190" y="150" width="210" height="70" rx="9" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.2"/>
+<text x="1201" y="170" font-size="12" fill="#0F172A" font-weight="700">comma.ai back end</text>
+<text x="1201" y="186" font-size="10.5" fill="#64748B">athena, connect, updates</text>
+</g>
+<g data-el="context.externalCompute">
+<rect x="1190" y="244" width="210" height="76" rx="9" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<rect x="1201" y="251.5" width="36.8" height="17" rx="8.5" fill="#64748B"/><text x="1219.4" y="263.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-06</text>
+<text x="1244.8" y="264" font-size="12" fill="#0F172A" font-weight="700">External compute</text>
+<text x="1201" y="280" font-size="10.5" fill="#64748B">eGPU over USB · excluded pending</text>
+<text x="1201" y="293.5" font-size="10.5" fill="#64748B">WP-C-01 OI-4</text>
+</g>
+<g data-el="context.forwardRadar">
+<rect x="1190" y="360" width="210" height="60" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="1201" y="380" font-size="12" fill="#0F172A" font-weight="700">Forward radar</text>
+<text x="1201" y="396" font-size="10.5" fill="#64748B">lead tracks, stock PCS</text>
+</g>
+<g data-el="context.radarCan">
+<rect x="1190" y="446" width="210" height="50" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="1201" y="466" font-size="12" fill="#0F172A" font-weight="700">Radar CAN</text>
+<text x="1201" y="482" font-size="10.5" fill="#64748B">panda bus 1</text>
+</g>
+<g data-el="context.forwardCamera">
+<rect x="1190" y="563" width="210" height="72" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="1201" y="583" font-size="12" fill="#0F172A" font-weight="700">Toyota forward camera</text>
+<text x="1201" y="599" font-size="10.5" fill="#64748B">LKA, ACC intercepted · PCS</text>
+<text x="1201" y="612.5" font-size="10.5" fill="#64748B">forwarded</text>
+</g>
+<g data-el="context.vehicleCan">
+<line x1="300" y1="769" x2="1130" y2="769" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+<text x="300" y="760" font-size="12" fill="#0F172A" font-weight="700">Vehicle CAN</text>
+<text x="384.3" y="760" font-size="10.5" fill="#64748B">car side · panda bus 0</text>
+</g>
+<g data-el="context.vehicleSupply">
+<rect x="40" y="800" width="200" height="58" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="51" y="820" font-size="12" fill="#0F172A" font-weight="700">Vehicle supply</text>
+<text x="51" y="836" font-size="10.5" fill="#64748B">12 V and ignition</text>
+</g>
+<g data-el="context.eps">
+<rect x="300" y="800" width="194" height="58" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="311" y="807.5" width="55.8" height="17" rx="8.5" fill="#64748B"/><text x="338.9" y="819.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">EXT-EPS</text>
+<text x="373.8" y="820" font-size="12" fill="#0F172A" font-weight="700">EPS</text>
+<text x="311" y="836" font-size="10.5" fill="#64748B">AOU-01, AOU-02</text>
+</g>
+<g data-el="context.ecmPcm">
+<rect x="512" y="800" width="194" height="58" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="523" y="807.5" width="59.7" height="17" rx="8.5" fill="#64748B"/><text x="552.8" y="819.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">EXT-PCM</text>
+<text x="589.7" y="820" font-size="12" fill="#0F172A" font-weight="700">ECM / PCM</text>
+<text x="523" y="836" font-size="10.5" fill="#64748B">ACC envelope · AOU-05</text>
+</g>
+<g data-el="context.absVsc">
+<rect x="724" y="800" width="194" height="58" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="735" y="820" font-size="12" fill="#0F172A" font-weight="700">ABS / VSC</text>
+<text x="735" y="836" font-size="10.5" fill="#64748B">AOU-03, AOU-10</text>
+</g>
+<g data-el="context.cluster">
+<rect x="936" y="800" width="194" height="58" rx="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<rect x="947" y="807.5" width="57" height="17" rx="8.5" fill="#64748B"/><text x="975.5" y="819.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">EXT-CLU</text>
+<text x="1011" y="820" font-size="12" fill="#0F172A" font-weight="700">Cluster, stalk</text>
+<text x="947" y="836" font-size="10.5" fill="#64748B">cruise, HUD · AOU-12</text>
+</g>
+<g data-edge="network" data-a="context.ldsda.socSoftware" data-b="context.backEnd" data-ids="IF-09">
+<rect x="836" y="222" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#9333EA" stroke-width="1.3"/>
+<rect x="1186" y="202" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#9333EA" stroke-width="1.3"/>
+<rect x="1140.4" y="139.5" width="39.3" height="18" rx="9" fill="#9333EA"/><text x="1160" y="151.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-09</text>
+</g>
+<g data-edge="power" data-a="context.vehicleSupply" data-b="context.ldsda.deviceHardware" data-ids="IF-08">
+<rect x="136" y="796" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#B45309" stroke-width="1.3"/>
+<rect x="395" y="492" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#B45309" stroke-width="1.3"/>
+<rect x="250.4" y="715" width="39.3" height="18" rx="9" fill="#B45309"/><text x="270" y="727.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-08</text>
+</g>
+<g data-edge="power" data-a="context.vehicleSupply" data-b="context.ldsda.harness" data-ids="IF-08">
+<rect x="196" y="796" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#B45309" stroke-width="1.3"/>
+<rect x="866" y="636.3" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#B45309" stroke-width="1.3"/>
+</g>
+<g data-edge="can" data-a="context.ldsda.safetyFirmware" data-b="context.radarCan" data-ids="IF-02">
+<rect x="1096" y="465" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<rect x="1186" y="467" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<rect x="1103" y="460" width="39.1" height="18" rx="9" fill="#0F766E"/><text x="1122.5" y="472.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-02</text>
+</g>
+<g data-edge="can" data-a="context.ldsda.harness" data-b="context.forwardCamera" data-ids="IF-03">
+<rect x="1096" y="595" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<rect x="1186" y="595" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<rect x="1125.4" y="590" width="39.3" height="18" rx="9" fill="#0F766E"/><text x="1145" y="602.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-03</text>
+</g>
+<g data-edge="sensing" data-a="context.roadEnvironment" data-b="context.ldsda.deviceHardware" data-ids="IF-05">
+<rect x="236" y="448" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<rect x="326" y="438" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<rect x="242.9" y="443" width="39.2" height="18" rx="9" fill="#0F766E"/><text x="262.5" y="455.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-05</text>
+</g>
+<g data-edge="sensing" data-a="context.driver" data-b="context.ldsda.deviceHardware" data-ids="IF-06 IF-07">
+<rect x="236" y="309.6" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<rect x="326" y="264" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<rect x="249.2" y="281.8" width="71.6" height="18" rx="9" fill="#0F766E"/><text x="285" y="294.2" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-06 · IF-07</text>
+</g>
+<g data-edge="sensing" data-a="context.ldsda.deviceHardware" data-b="context.ldsda.socSoftware" data-ids="IF-05 IF-06 IF-07">
+<rect x="556" y="296.1" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<rect x="596" y="295.9" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.3"/>
+<rect x="540.5" y="291" width="79" height="18" rx="9" fill="#0F766E"/><text x="580" y="303.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-05 · 06 · 07</text>
+</g>
+<g data-edge="boot" data-a="context.ldsda.socSoftware" data-b="context.ldsda.deviceHardware" data-ids="IF-04b">
+<rect x="596" y="325.9" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.3"/>
+<rect x="556" y="326.1" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.3"/>
+<rect x="557.2" y="321" width="45.5" height="18" rx="9" fill="#7C3AED"/><text x="580" y="333.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-04b</text>
+</g>
+<g data-edge="ffi" data-a="context.ldsda.socSoftware" data-b="context.ldsda.safetyFirmware" data-ids="IF-04">
+<rect x="836" y="267" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.3"/>
+<rect x="866" y="267" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.3"/>
+<rect x="835.2" y="262" width="39.6" height="18" rx="9" fill="#7C3AED"/><text x="855" y="274.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-04</text>
+</g>
+<g data-edge="can" data-a="context.ldsda.safetyFirmware" data-b="context.ldsda.harness" data-ids="IF-01 IF-02 IF-03">
+<rect x="981" y="492" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="981" y="536" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="948.5" y="509" width="73" height="18" rx="9" fill="#C2410C"/><text x="985" y="521.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">bus 0 · bus 2</text>
+</g>
+<g data-edge="can" data-a="context.ldsda.harness" data-b="context.vehicleCan" data-ids="IF-01 IF-02">
+<rect x="981" y="654" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="950" y="701" width="70" height="18" rx="9" fill="#C2410C"/><text x="985" y="713.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-01 · IF-02</text>
+</g>
+<g data-edge="actuation" data-a="context.ldsda.safetyFirmware" data-b="context.driver" data-ids="IF-07">
+<rect x="866" y="204" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="236" y="232" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="526.4" y="167" width="64.3" height="18" rx="9" fill="#C2410C"/><text x="558.5" y="179.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-07 siren</text>
+</g>
+<g data-edge="actuation" data-a="context.ldsda.deviceHardware" data-b="context.ldsda.harness" data-ids="IF-10">
+<rect x="510" y="492" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="866" y="571.4" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="673.4" y="566.4" width="37.2" height="18" rx="9" fill="#C2410C"/><text x="692" y="578.8" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">IF-10</text>
+</g>
+<line x1="40" y1="866" x2="1400" y2="866" stroke="#E2E8F0"/>
+<line x1="40" y1="892" x2="66" y2="892" stroke="#C2410C" stroke-width="2.4"/>
+<text x="74" y="896" font-size="10.5" fill="#334155">Actuation, envelope path</text>
+<line x1="223.69" y1="892" x2="249.69" y2="892" stroke="#7C3AED" stroke-width="2.2"/>
+<text x="257.7" y="896" font-size="10.5" fill="#334155">SoC ↔ MCU link (FFI claim)</text>
+<line x1="423.97" y1="892" x2="449.97" y2="892" stroke="#7C3AED" stroke-width="1.8" stroke-dasharray="5 4"/>
+<text x="458" y="896" font-size="10.5" fill="#334155">SoC control of MCU boot (FFI, CS)</text>
+<line x1="654.8050000000001" y1="892" x2="680.8050000000001" y2="892" stroke="#0F766E" stroke-width="2.0"/>
+<text x="688.8" y="896" font-size="10.5" fill="#334155">Sensing, HMI, forwarded CAN</text>
+<line x1="863.8000000000001" y1="892" x2="889.8000000000001" y2="892" stroke="#B45309" stroke-width="1.8" stroke-dasharray="5 4"/>
+<text x="897.8" y="896" font-size="10.5" fill="#334155">Power, ignition</text>
+<line x1="997.615" y1="892" x2="1023.615" y2="892" stroke="#9333EA" stroke-width="1.6" stroke-dasharray="4 4"/>
+<text x="1031.6" y="896" font-size="10.5" fill="#334155">Untrusted network</text>
+<line x1="1150.12" y1="892" x2="1176.12" y2="892" stroke="#334155" stroke-width="2.0"/>
+<text x="1184.1" y="896" font-size="10.5" fill="#334155">CAN bus attachment</text>
+<rect x="40" y="906" width="22" height="14" rx="4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="70" y="917" font-size="10.5" fill="#334155">B‡ safety envelope</text>
+<rect x="186.2" y="906" width="22" height="14" rx="4" fill="#FFFBF5" stroke="#EA580C" stroke-width="1.2"/>
+<text x="216.2" y="917" font-size="10.5" fill="#334155">ASIL B element</text>
+<rect x="313.4" y="906" width="22" height="14" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="343.4" y="917" font-size="10.5" fill="#334155">QM element</text>
+<rect x="425.4" y="906" width="22" height="14" rx="4" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.2"/>
+<text x="455.4" y="917" font-size="10.5" fill="#334155">ML element (E-02)</text>
+<rect x="570.1" y="906" width="22" height="14" rx="4" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="600.1" y="917" font-size="10.5" fill="#334155">Outside the item</text>
+<rect x="703.3" y="906" width="22" height="14" rx="4" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.2"/>
+<text x="733.3" y="917" font-size="10.5" fill="#334155">Untrusted</text>
+<rect x="804.4" y="908.5" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="818.4" y="917" font-size="10.5" fill="#334155">port (SysML)</text>
+<text x="904.7" y="917" font-size="10.5" fill="#C2410C" font-weight="700">SM-nn</text>
+<text x="945.2" y="917" font-size="10.5" fill="#334155">safety mechanisms performed (WP-S-03 §6)</text>
+<text x="40" y="942" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
+</svg>

@@ -1,0 +1,328 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1252" viewBox="0 0 1280 1252" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 3-2. Hardware element hierarchy of the comma device and harness (WP-H-02 §2, §3.2, §5)</title>
+<desc id="d">The LD-SDA system of WP-C-01 Figure 3-1 consists of five components; the two hardware components, E-04 device hardware and E-05 harness, are decomposed here into the hardware elements of WP-H-02 §3.2. E-04 exists in two variants (§2): comma 3X with the tres panda board and comma four with the cuatro board; the mapping is inferred (OI-3). E-04 consists of 22 parts: seven resources of the panda safety MCU STM32H725 (HE-01 core, HE-02 flash, HE-03 SRAM, HE-04 clock, HE-05 MCU power, HE-06 IWDG1, HE-15 die temperature sensor), four board circuits (HE-07 CAN transceivers, HE-14 input voltage and current sensing, HE-16 fan, HE-17 siren), three SoC-MCU lines (HE-11 SPI link, HE-12 reset and boot-mode lines, HE-13 bootkick) and eight QM parts (application SoC, cameras, IR illumination, display, modem, GNSS, IMU, USB). E-05 consists of HE-08 intercept relay (driven by the panda MCU), HE-09 harness connector and SBU lines and HE-10 ignition sense. Each element shows its safety goals, the hardware safety requirements WP-H-02 names for it, and its unknowns UK-01 to UK-08 that are still to be obtained. HE-06 is implemented but not verified on hardware. The harness adapter with DC-02 and DC-03 is proposed and not decided (OI-4).</desc>
+<defs>
+  <marker id="real" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M1 1L11 6L1 11z" fill="#FFFFFF" stroke="#475569" stroke-width="1.3" stroke-linejoin="round"/></marker>
+  <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+  <style>
+    .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+    .req{fill:#334155;font-weight:600}
+    .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+    .chip{fill:#F8FAFC;stroke:#CBD5E1;stroke-width:1}
+    .pan{fill:#FFFFFF;stroke:#E2E8F0;stroke-width:1}
+    .tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+    .lvl{font-size:10.5px;font-weight:700;letter-spacing:.08em;fill:#64748B}
+    .agg{fill:none;stroke:#475569;stroke-width:1.4}
+    .dia{fill:#FFFFFF;stroke:#475569;stroke-width:1.4}
+    .mult{font-size:11px;font-weight:700;fill:#475569}
+    .gh{font-size:10px;font-weight:700;letter-spacing:.06em}
+  </style>
+</defs>
+<rect width="1280" height="1252" fill="#FFFFFF"/>
+<text x="40" y="44" class="t b" font-size="20">Figure 3-2 · Hardware element hierarchy of E-04 and E-05</text>
+<text x="40" y="66" class="m" font-size="12.5">Hardware components → hardware parts, after ISO 26262-1:2018 3.39 (element) · safety goals, allocated HWSRs and unknowns per part</text>
+<text x="1240" y="44" class="m s" text-anchor="end">WP-H-02 §3.2</text>
+<text x="1240" y="62" class="m s" text-anchor="end">variants §2 · mechanisms §4 · unknowns §5 · changes §6</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+<text x="40" y="104" class="m" font-size="9.5" font-weight="600" letter-spacing=".06em">ISO 26262-1 LEVEL</text>
+<text x="40" y="140" class="lvl">SYSTEM</text>
+<text x="40" y="252" class="lvl">COMPONENTS</text>
+<text x="40" y="360" class="lvl">HW PARTS</text>
+<line x1="40" y1="186" x2="160" y2="186" stroke="#F1F5F9"/>
+<line x1="40" y1="318" x2="160" y2="318" stroke="#F1F5F9"/>
+<rect x="170" y="100" width="390" height="70" rx="10" class="box"/>
+<rect x="182" y="110" width="134" height="16" rx="8" fill="#334155"/>
+<text x="249.0" y="121.5" fill="#fff" text-anchor="middle" class="tag">WP-C-01 FIGURE 3-1</text>
+<text x="326" y="122" class="m xs">upward link</text>
+<text x="182" y="144" class="t b" font-size="13">LD-SDA system</text>
+<text x="182" y="160" class="m" font-size="9.5">5 components E-01…E-05; E-01…E-03 (software) not decomposed here</text>
+<rect x="580" y="100" width="660" height="70" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="594" y="120" class="t b" font-size="11.5">Recovered architecture (§1)</text>
+<text x="594" y="136" class="m" font-size="10">The device and harness are COTS (T-04); LionDriver does not design them. Every element below is derived from firmware</text>
+<text x="594" y="150" class="m" font-size="10">and host code, not from a schematic. Part level (part numbers, circuits) is blocked by UK-01/UK-02; §7 evaluates the</text>
+<text x="594" y="164" class="m" font-size="10">architecture at block level only.</text>
+<polygon points="365,170 371,179 365,188 359,179" class="dia"/>
+<path d="M365 188V198H1100V210M365 198V210" class="agg"/>
+<text x="375" y="196" class="mult">2</text>
+<text x="700" y="194" class="m xs">hardware components</text>
+<rect x="170" y="210" width="390" height="92" rx="10" class="box"/>
+<rect x="180" y="220" width="40" height="16" rx="8" fill="#475569"/>
+<text x="200.0" y="231.5" fill="#fff" text-anchor="middle" class="tag">E-04</text>
+<text x="550" y="233" class="m xs b" text-anchor="end">HW</text>
+<text x="180" y="256" class="t b" font-size="12.5">Device hardware</text>
+<text x="180" y="272" class="m xs">comma device (Snapdragon 845 SoC + panda safety MCU)</text>
+<text x="180" y="288" font-size="10" font-weight="600"><tspan fill="#475569">SoC hosts E-01, E-02 (QM) ·</tspan><tspan dx="4" fill="#C2410C">panda MCU hosts E-03</tspan></text>
+<rect x="580" y="210" width="360" height="92" rx="10" fill="#F8FAFC" stroke="#64748B" stroke-dasharray="5 3"/>
+<rect x="590" y="220" width="32" height="14" rx="3" fill="#F1F5F9" stroke="#64748B" stroke-width=".8"/>
+<text x="606" y="231" text-anchor="middle" font-size="9" font-weight="700" fill="#475569">§2 V</text>
+<text x="630" y="232" class="t b" font-size="11">E-04 variants (§2), both in scope</text>
+<text x="592" y="251" class="t" font-size="10">comma 3X (tizi) · tres panda board, HW type 9</text>
+<text x="592" y="265" class="t" font-size="10">comma four (mici) · cuatro panda board, HW type 10</text>
+<circle cx="596" cy="281.5" r="3.5" fill="#D97706"/>
+<text x="604" y="285" font-size="9.5" fill="#B45309" font-weight="600">board ↔ device mapping inferred (OI-3); reference</text>
+<text x="604" y="297" font-size="9.5" fill="#B45309" font-weight="600">device not yet fixed in WP-C-01 (WP-H-01 OI-7)</text>
+<line x1="560" y1="256" x2="580" y2="256" stroke="#64748B" stroke-dasharray="3 3"/>
+<rect x="960" y="210" width="280" height="92" rx="10" class="box"/>
+<rect x="970" y="220" width="40" height="16" rx="8" fill="#475569"/>
+<text x="990.0" y="231.5" fill="#fff" text-anchor="middle" class="tag">E-05</text>
+<text x="1230" y="233" class="m xs b" text-anchor="end">HW</text>
+<text x="970" y="256" class="t b" font-size="12.5">Harness</text>
+<text x="970" y="272" class="m xs">Toyota TSS2 harness with relay box</text>
+<text x="970" y="288" class="m xs">camera ↔ vehicle CAN; vehicle 12 V</text>
+<polygon points="182,302 188,311 182,320 176,311" class="dia"/>
+<rect x="200" y="334" width="740" height="342" rx="10" class="pan"/>
+<text x="210" y="353" class="gh" fill="#C2410C">PANDA SAFETY MCU · STM32H725xx</text>
+<text x="444.0" y="353" class="m" font-size="9.5">Cortex-M7 240 MHz, IDCODE 0x483 · single core, hosts E-03 · silicon resources</text>
+<rect x="208" y="364" width="236" height="96" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="216" y="370" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="238.0" y="381.5" fill="#fff" text-anchor="middle" class="tag">HE-01</text>
+<text x="266" y="382" class="t b" font-size="11">Core, buses, interrupt ctrl</text>
+<text x="218" y="396" class="m sb" font-size="9.5">SG-01…07 · executes the envelope</text>
+<text x="218" y="410" class="t" font-size="10">single core, no lockstep; no MPU configured</text>
+<text x="218" y="424" class="req" font-size="10">→ HWSR-507 (DC-06) · GAP-11</text>
+<rect x="452" y="364" width="236" height="96" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="460" y="370" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="482.0" y="381.5" fill="#fff" text-anchor="middle" class="tag">HE-02</text>
+<text x="510" y="382" class="t b" font-size="11">Embedded flash 1 MB</text>
+<text x="462" y="396" class="m sb" font-size="9.5">all SGs · bootstub, application, serial</text>
+<text x="462" y="410" class="t" font-size="10">sector 0 protected in SW; no RDP/WRP set</text>
+<text x="462" y="424" class="req" font-size="10">→ HWSR-503…503c (DC-05) · GAP-24</text>
+<rect x="461" y="427.5" width="41" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/>
+<text x="481.5" y="438" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-04</text>
+<text x="508.0" y="438" font-size="9.5" fill="#92400E">option bytes RDP/WRP: to be read</text>
+<rect x="696" y="364" width="236" height="96" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="704" y="370" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="726.0" y="381.5" fill="#fff" text-anchor="middle" class="tag">HE-03</text>
+<text x="754" y="382" class="t b" font-size="11">SRAM (DTCM, AXI, SRAM1/2/4)</text>
+<text x="706" y="396" class="m sb" font-size="9.5">all SGs · data, stack, CAN queues</text>
+<text x="706" y="410" class="t" font-size="10">RAMECC monitors not configured</text>
+<text x="706" y="424" class="req" font-size="10">→ HWSR-503…503c (DC-05)</text>
+<text x="706" y="438" font-size="9.5" fill="#64748B" font-style="italic">ECC hardware present: verify RM0468 (OI-5)</text>
+<rect x="208" y="468" width="236" height="96" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="216" y="474" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="238.0" y="485.5" fill="#fff" text-anchor="middle" class="tag">HE-04</text>
+<text x="266" y="486" class="t b" font-size="11">Clock: HSE 25 MHz, PLL1, LSI</text>
+<text x="218" y="500" class="m sb" font-size="9.5">all SGs · time base for timeouts, CAN</text>
+<text x="218" y="514" class="t" font-size="10">CSS on HSE enabled → NMI → reset</text>
+<text x="218" y="528" class="t" font-size="10">LSI clocks the IWDG; HSI48 for USB</text>
+<rect x="217" y="531.5" width="41" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/>
+<text x="237.5" y="542" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-02</text>
+<text x="264.0" y="542" font-size="9.5" fill="#92400E">crystal part number: to be obtained</text>
+<rect x="452" y="468" width="236" height="96" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="460" y="474" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="482.0" y="485.5" fill="#fff" text-anchor="middle" class="tag">HE-05</text>
+<text x="510" y="486" class="t b" font-size="11">MCU power</text>
+<text x="462" y="500" class="m sb" font-size="9.5">all SGs · SMPS/LDO + board regulator</text>
+<text x="462" y="514" class="req" font-size="10">→ HWSR-505, -505a (DC-07) · HWSR-502a</text>
+<rect x="461" y="517.5" width="41" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/>
+<text x="481.5" y="528" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-01</text>
+<text x="508.0" y="528" font-size="9.5" fill="#92400E">board regulator unknown</text>
+<rect x="461" y="531.5" width="41" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/>
+<text x="481.5" y="542" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-05</text>
+<text x="508.0" y="542" font-size="9.5" fill="#92400E">shared rails with SoC? unknown</text>
+<rect x="461" y="545.5" width="41" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/>
+<text x="481.5" y="556" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-04</text>
+<text x="508.0" y="556" font-size="9.5" fill="#92400E">BOR level: to be read</text>
+<rect x="696" y="468" width="236" height="96" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="704" y="474" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="726.0" y="485.5" fill="#fff" text-anchor="middle" class="tag">HE-06</text>
+<text x="754" y="486" class="t b" font-size="11">IWDG1 independent watchdog</text>
+<text x="706" y="500" class="m sb" font-size="9.5">SG-01…07</text>
+<circle cx="710" cy="510.5" r="3.5" fill="#D97706"/>
+<text x="718" y="514" font-size="10" fill="#B45309" font-weight="600">used since panda 9f60e17, ≈ 90 ms</text>
+<circle cx="710" cy="524.5" r="3.5" fill="#D97706"/>
+<text x="718" y="528" font-size="10" fill="#B45309" font-weight="600">implemented, not verified on hardware</text>
+<text x="706" y="542" class="req" font-size="10">→ HWSR-501…501c (DC-01)</text>
+<rect x="705" y="545.5" width="41" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/>
+<text x="725.5" y="556" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-04</text>
+<text x="752.0" y="556" font-size="9.5" fill="#92400E">IWDG_SW, freeze bits: to be read</text>
+<rect x="208" y="572" width="236" height="96" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="216" y="578" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="238.0" y="589.5" fill="#fff" text-anchor="middle" class="tag">HE-15</text>
+<text x="266" y="590" class="t b" font-size="11">Die temperature sensor</text>
+<text x="218" y="604" class="m sb" font-size="9.5">all SGs · thermal monitoring</text>
+<text x="218" y="618" class="t" font-size="10">read and reported only, no reaction</text>
+<text x="218" y="632" class="req" font-size="10">→ HWSR-509 (DC-10)</text>
+<rect x="452" y="572" width="480" height="96" rx="7" fill="#F8FAFC" stroke="#CBD5E1" stroke-dasharray="4 3"/>
+<text x="464" y="591" class="t sb" font-size="10.5">Further STM32H7 resources (§4), present in silicon, not configured by the firmware</text>
+<text x="464" y="609" class="m" font-size="10">WWDG1 (verify) · PVD/AVD · RAMECC monitors · flash ECC (verify) · MPU · CRC unit</text>
+<text x="464" y="625" class="m" font-size="10">BOR: option bytes not set by code, level unknown (UK-04)</text>
+<text x="464" y="643" class="m" font-size="10">Reset behaviour (§3.5): Default_Handler and assert_fatal hang with the relay in its last</text>
+<text x="464" y="657" class="req" font-size="10">state → HWSR-502b (DC-08)</text>
+<rect x="200" y="688" width="740" height="238" rx="10" class="pan"/>
+<text x="210" y="707" class="gh" fill="#C2410C">PANDA BOARD CIRCUITS</text>
+<text x="370.0" y="707" class="m" font-size="9.5">around the MCU · pins and buses differ between tres and cuatro (§2 V)</text>
+<rect x="208" y="718" width="236" height="96" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="216" y="724" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="238.0" y="735.5" fill="#fff" text-anchor="middle" class="tag">HE-07</text>
+<text x="266" y="736" class="t b" font-size="11">CAN transceivers XCVR1–4</text>
+<text x="218" y="750" class="m sb" font-size="9.5">SG-01, SG-03…07 · buses 0/1/2</text>
+<rect x="404" y="740" width="32" height="13" rx="3" fill="#F1F5F9" stroke="#64748B" stroke-width=".8"/>
+<text x="420" y="750" text-anchor="middle" font-size="8.5" font-weight="700" fill="#475569">§2 V</text>
+<text x="218" y="764" class="t" font-size="10">active-low enables; tres: XCVR1+3 tied</text>
+<text x="218" y="778" class="req" font-size="10">→ HWSR-508 · WP-H-03 FM-CAN-03</text>
+<rect x="217" y="781.5" width="41" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/>
+<text x="237.5" y="792" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-02</text>
+<text x="264.0" y="792" font-size="9.5" fill="#92400E">part numbers: to be obtained</text>
+<rect x="217" y="795.5" width="41" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/>
+<text x="237.5" y="806" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-06</text>
+<text x="264.0" y="806" font-size="9.5" fill="#92400E">enable-line pulls at reset: unknown</text>
+<rect x="452" y="718" width="236" height="96" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="460" y="724" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="482.0" y="735.5" fill="#fff" text-anchor="middle" class="tag">HE-14</text>
+<text x="510" y="736" class="t b" font-size="11">Vin and current sensing</text>
+<text x="462" y="750" class="m sb" font-size="9.5">availability, SG (supply)</text>
+<rect x="648" y="740" width="32" height="13" rx="3" fill="#F1F5F9" stroke="#64748B" stroke-width=".8"/>
+<text x="664" y="750" text-anchor="middle" font-size="8.5" font-weight="700" fill="#475569">§2 V</text>
+<text x="462" y="764" class="t" font-size="10">Vin ×11 divider; cuatro current ADC1 ch3</text>
+<text x="462" y="778" class="req" font-size="10">→ HWSR-505b (DC-10)</text>
+<rect x="461" y="781.5" width="41" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/>
+<text x="481.5" y="792" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-08</text>
+<text x="508.0" y="792" font-size="9.5" fill="#92400E">input protection, voltage range</text>
+<rect x="696" y="718" width="236" height="96" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="704" y="724" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="726.0" y="735.5" fill="#fff" text-anchor="middle" class="tag">HE-16</text>
+<text x="754" y="736" class="t b" font-size="11">Fan and tachometer</text>
+<text x="706" y="750" class="m sb" font-size="9.5">availability · cooling of SoC and MCU</text>
+<text x="706" y="764" class="t" font-size="10">PWM TIM3 ch3, enable line, tach EXTI2</text>
+<rect x="208" y="822" width="236" height="96" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="216" y="828" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="238.0" y="839.5" fill="#fff" text-anchor="middle" class="tag">HE-17</text>
+<text x="266" y="840" class="t b" font-size="11">“Siren” acoustic output</text>
+<text x="218" y="854" class="m sb" font-size="9.5">SG-02, SG-06 · FSR-02.05</text>
+<rect x="404" y="844" width="32" height="13" rx="3" fill="#F1F5F9" stroke="#64748B" stroke-width=".8"/>
+<text x="420" y="854" text-anchor="middle" font-size="8.5" font-weight="700" fill="#475569">§2 V</text>
+<text x="218" y="868" class="t" font-size="10">SoC-independent warning on SoC loss</text>
+<text x="218" y="882" class="t" font-size="10">tres I2C5 · cuatro TIM7 + SAI4</text>
+<rect x="217" y="885.5" width="41" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/>
+<text x="237.5" y="896" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-07</text>
+<text x="264.0" y="896" font-size="9.5" fill="#92400E">shared amplifier/speaker? unknown</text>
+<rect x="452" y="822" width="480" height="96" rx="7" fill="#F8FAFC" stroke="#CBD5E1" stroke-dasharray="4 3"/>
+<text x="464" y="841" class="t sb" font-size="10.5">Variant-specific data in §3.2 (§2 V)</text>
+<text x="464" y="859" class="m" font-size="10">HE-07 enables: tres PG11/PD7, PB10, PB11 · cuatro PB7, PB10, PD8, PB11</text>
+<text x="464" y="873" class="m" font-size="10">HE-08 relay drive: tres PA8/PA3 · cuatro PA9/PA3</text>
+<text x="464" y="887" class="m" font-size="10">HE-13 bootkick/SOM reset: tres PA0/PC12 · cuatro PA0/PC11</text>
+<text x="464" y="901" class="m" font-size="10">HE-14 Vin: tres ADC1 ch2 · cuatro ADC1 ch8 · HE-17 as shown</text>
+<rect x="200" y="938" width="740" height="120" rx="10" class="pan"/>
+<text x="210" y="957" class="gh" fill="#C2410C">SoC ↔ MCU LINES</text>
+<text x="333.0" y="957" class="m" font-size="9.5">independence of the QM SoC and the safety MCU (FFI, §7)</text>
+<rect x="208" y="968" width="236" height="82" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="216" y="974" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="238.0" y="985.5" fill="#fff" text-anchor="middle" class="tag">HE-11</text>
+<text x="266" y="986" class="t b" font-size="11">SPI link SoC ↔ MCU (IF-04)</text>
+<text x="218" y="1000" class="m sb" font-size="9.5">SG-01…06 (FFI) · commands, heartbeat</text>
+<text x="218" y="1014" class="t" font-size="10">SPI4 + DMA2 streams 2/3</text>
+<text x="218" y="1028" class="t" font-size="10">8-bit XOR on header and data</text>
+<rect x="452" y="968" width="236" height="82" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="460" y="974" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="482.0" y="985.5" fill="#fff" text-anchor="middle" class="tag">HE-12</text>
+<text x="510" y="986" class="t b" font-size="11">SoC → MCU reset, boot mode</text>
+<text x="462" y="1000" class="m sb" font-size="9.5">FFI · SoC can reset MCU, enter ROM</text>
+<text x="462" y="1014" class="t" font-size="10">STM_RST_N, STM_BOOT0 by SoC GPIO</text>
+<text x="462" y="1028" class="req" font-size="10">→ GAP-38</text>
+<rect x="696" y="968" width="236" height="82" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="704" y="974" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="726.0" y="985.5" fill="#fff" text-anchor="middle" class="tag">HE-13</text>
+<text x="754" y="986" class="t b" font-size="11">MCU → SoC bootkick</text>
+<text x="706" y="1000" class="m sb" font-size="9.5">availability · bootkick, SOM reset</text>
+<rect x="892" y="990" width="32" height="13" rx="3" fill="#F1F5F9" stroke="#64748B" stroke-width=".8"/>
+<text x="908" y="1000" text-anchor="middle" font-size="8.5" font-weight="700" fill="#475569">§2 V</text>
+<text x="706" y="1014" class="t" font-size="10">tres PA0/PC12 · cuatro PA0/PC11</text>
+<rect x="200" y="1070" width="740" height="64" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+<text x="210" y="1089" class="gh" fill="#475569">QM HARDWARE, NOT SAFETY-RELEVANT</text>
+<text x="458.8" y="1089" class="m" font-size="9.5">relevant to SOTIF (cameras, IMU) and DFA (WP-A-03)</text>
+<rect x="208" y="1100" width="180" height="24" rx="6" class="chip"/>
+<text x="216" y="1116" class="t sb" font-size="10.5">Application SoC</text>
+<text x="380" y="1116" font-size="9" text-anchor="end" fill="#475569" font-weight="700">hosts E-01, E-02</text>
+<rect x="396" y="1100" width="70" height="24" rx="6" class="chip"/>
+<text x="404" y="1116" class="t" font-size="10.5">cameras</text>
+<rect x="474" y="1100" width="98" height="24" rx="6" class="chip"/>
+<text x="482" y="1116" class="t" font-size="10.5">IR illumination</text>
+<rect x="580" y="1100" width="64" height="24" rx="6" class="chip"/>
+<text x="588" y="1116" class="t" font-size="10.5">display</text>
+<rect x="652" y="1100" width="62" height="24" rx="6" class="chip"/>
+<text x="660" y="1116" class="t" font-size="10.5">modem</text>
+<rect x="722" y="1100" width="56" height="24" rx="6" class="chip"/>
+<text x="730" y="1116" class="t" font-size="10.5">GNSS</text>
+<rect x="786" y="1100" width="50" height="24" rx="6" class="chip"/>
+<text x="794" y="1116" class="t" font-size="10.5">IMU</text>
+<rect x="844" y="1100" width="50" height="24" rx="6" class="chip"/>
+<text x="852" y="1116" class="t" font-size="10.5">USB</text>
+<path d="M182 320V1085" class="agg"/>
+<line x1="182" y1="349" x2="200" y2="349" class="agg"/>
+<text x="178" y="345" class="mult" text-anchor="end">7</text>
+<line x1="182" y1="703" x2="200" y2="703" class="agg"/>
+<text x="178" y="699" class="mult" text-anchor="end">4</text>
+<line x1="182" y1="953" x2="200" y2="953" class="agg"/>
+<text x="178" y="949" class="mult" text-anchor="end">3</text>
+<line x1="182" y1="1085" x2="200" y2="1085" class="agg"/>
+<text x="178" y="1081" class="mult" text-anchor="end">8</text>
+<text x="170" y="309" class="mult" text-anchor="end">22</text>
+<text x="170" y="321" class="m" font-size="9" text-anchor="end">parts</text>
+<polygon points="1100,302 1106,311 1100,320 1094,311" class="dia"/>
+<line x1="1100" y1="320" x2="1100" y2="334" class="agg"/>
+<text x="1110" y="331" class="mult">3</text>
+<rect x="960" y="334" width="280" height="344" rx="10" class="pan"/>
+<rect x="968" y="342" width="264" height="160" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="976" y="348" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="998.0" y="359.5" fill="#fff" text-anchor="middle" class="tag">HE-08</text>
+<text x="1026" y="360" class="t b" font-size="11">Intercept relay + driver</text>
+<text x="978" y="374" class="m sb" font-size="9.5">SG-01, SG-07 · stock path when released</text>
+<rect x="1192" y="364" width="32" height="13" rx="3" fill="#F1F5F9" stroke="#64748B" stroke-width=".8"/>
+<text x="1208" y="374" text-anchor="middle" font-size="8.5" font-weight="700" fill="#475569">§2 V</text>
+<text x="978" y="388" class="t" font-size="10">breaks camera→car for LKA/ACC messages</text>
+<text x="978" y="402" class="t" font-size="10">relay in harness box; driven by 2 open-drain</text>
+<text x="978" y="416" class="t" font-size="10">active-low panda MCU outputs (E-04)</text>
+<text x="978" y="430" class="t" font-size="10">no readback (GAP-12) · de-energised: AOU-13</text>
+<text x="978" y="444" class="req" font-size="10">→ HWSR-502, -502a, -506, -506a, -506c</text>
+<text x="978" y="458" class="req" font-size="10">→ HWSR-702 (harness, UK-03)</text>
+<rect x="977" y="461.5" width="41" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/>
+<text x="997.5" y="472" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-03</text>
+<text x="1024.0" y="472" font-size="9.5" fill="#92400E">coil supply, contact state: to obtain</text>
+<rect x="977" y="475.5" width="41" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/>
+<text x="997.5" y="486" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-06</text>
+<text x="1024.0" y="486" font-size="9.5" fill="#92400E">drive-line pulls at reset: unknown</text>
+<rect x="968" y="510" width="264" height="76" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="976" y="516" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="998.0" y="527.5" fill="#fff" text-anchor="middle" class="tag">HE-09</text>
+<text x="1026" y="528" class="t b" font-size="11">Harness connector, SBU lines</text>
+<text x="978" y="542" class="m sb" font-size="9.5">SG-07 · orientation, ignition, relay drive</text>
+<text x="978" y="556" class="t" font-size="10">SBU1/SBU2 read by ADC, threshold 900 mV</text>
+<text x="978" y="570" class="t" font-size="10">pins not 5 V tolerant in ADC mode</text>
+<rect x="968" y="594" width="264" height="76" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
+<rect x="976" y="600" width="44" height="16" rx="8" fill="#C2410C"/>
+<text x="998.0" y="611.5" fill="#fff" text-anchor="middle" class="tag">HE-10</text>
+<text x="1026" y="612" class="t b" font-size="11">Ignition sense</text>
+<text x="978" y="626" class="m sb" font-size="9.5">SG-07, availability</text>
+<text x="978" y="640" class="t" font-size="10">active-low input on the SBU line</text>
+<text x="978" y="654" class="t" font-size="10">selected by harness orientation</text>
+<rect x="960" y="692" width="280" height="60" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-dasharray="4 3"/>
+<text x="972" y="710" font-size="10.5" fill="#92400E" font-weight="700">UK-03 · harness schematic and relay part</text>
+<text x="972" y="726" font-size="10" fill="#92400E">number to be obtained (comma.ai, teardown,</text>
+<text x="972" y="740" font-size="10" fill="#92400E">continuity test VS-HW-02 in WP-H-06; OI-1)</text>
+<rect x="960" y="766" width="280" height="112" rx="8" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="5 3"/>
+<rect x="966" y="772" width="268" height="100" rx="6" fill="#FFFFFF" fill-opacity=".9"/>
+<rect x="972" y="778" width="170" height="16" rx="8" fill="#94A3B8"/>
+<text x="1057.0" y="789.5" fill="#fff" text-anchor="middle" class="tag">PROPOSED · NOT DECIDED</text>
+<text x="974" y="812" class="t sb" font-size="10.5">LionDriver harness adapter (§6)</text>
+<text x="974" y="828" class="m" font-size="10">DC-02 voltage supervisor + watchdog</text>
+<text x="974" y="842" class="req" font-size="10">→ HWSR-501d · DC-03 relay readback</text>
+<text x="974" y="856" class="req" font-size="10">→ HWSR-506a · decision OI-4</text>
+<text x="974" y="870" class="m" font-size="9.5">not part of E-05 today; not counted</text>
+<line x1="40" y1="1158" x2="1240" y2="1158" stroke="#E2E8F0"/>
+<g transform="translate(40,1182)" font-size="10.5">
+<polygon points="0,0 6,-6 12,0 6,6" class="dia"/><line x1="12" y1="0" x2="34" y2="0" class="agg"/><text x="42" y="4" class="t">consists of</text>
+<text x="128" y="4" class="mult">7</text><text x="140" y="4" class="t">number of children</text>
+<rect x="262" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/><text x="298" y="4" class="t">safety-relevant HW element (§3.2)</text>
+<rect x="500" y="-8" width="28" height="16" rx="4" fill="#F8FAFC" stroke="#CBD5E1"/><text x="536" y="4" class="t">QM / note</text>
+<rect x="612" y="-7" width="40" height="14" rx="3" fill="#FEF3C7" stroke="#D97706" stroke-width=".9" stroke-dasharray="3 2"/><text x="632" y="3.5" text-anchor="middle" font-size="9" font-weight="700" fill="#92400E">UK-xx</text><text x="660" y="4" class="t">unknown, to be obtained (§5)</text>
+<circle cx="850" cy="0" r="3.5" fill="#D97706"/><text x="860" y="4" class="t">implemented or inferred, not verified</text>
+<text x="1060" y="4" font-style="italic" fill="#64748B">(verify)</text><text x="1108" y="4" class="t">to be confirmed</text>
+</g>
+<g transform="translate(40,1206)" font-size="10.5">
+<rect x="0" y="-7" width="32" height="13" rx="3" fill="#F1F5F9" stroke="#64748B" stroke-width=".8"/><text x="16" y="3" text-anchor="middle" font-size="8.5" font-weight="700" fill="#475569">§2 V</text><text x="40" y="4" class="t">data differs between tres and cuatro</text>
+<text x="262" y="4" class="req">→ HWSR-xxx</text><text x="340" y="4" class="t">requirement in WP-H-01 named by WP-H-02 for this element (DC-xx: the §6 change that implements it)</text>
+<rect x="900" y="-8" width="28" height="16" rx="4" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="5 3"/><text x="936" y="4" class="t">proposed, not decided</text>
+</g>
+<text x="40" y="1232" class="m" font-size="10">No element here is verified on hardware. Allocation and unknowns are as WP-H-02 §3.2, §4, §5 and §6 state them; part-level data (BOM, schematic) does not exist yet (UK-01, UK-02).</text>
+</svg>

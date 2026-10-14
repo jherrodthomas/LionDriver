@@ -1,0 +1,221 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="757" viewBox="0 0 1280 757" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 4-1 · Risk heat map (WP-M-07)</title>
+<desc>Probability by impact grid of the 29 WP-M-07 risks. Open: High 10 (R-01 E25, R-02 E20, R-06 E20, R-07 E20, R-26 E20, R-03 E16, R-04 E16, R-08 E15, R-09 E15, R-20 E15), Medium 17, Low 1; closed: R-05.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="757" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-1 · Risk heat map</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">29 project risks of the §4 register on the probability × impact grid of §2.2; 28 open, 1 closed</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-M-07 §2.2, §4, §4.1</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="202" y="168" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">5 · Almost certain</text>
+<text x="202" y="183" font-size="10" fill="#475569" text-anchor="end">&gt; 80 %</text>
+<rect x="216" y="122" width="96" height="96" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="304" y="136" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">E 5</text>
+<rect x="316" y="122" width="96" height="96" rx="6" fill="#FEF3C7" stroke="#FCD9A0" stroke-width="1"/>
+<text x="404" y="136" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="end">E 10</text>
+<rect x="416" y="122" width="96" height="96" rx="6" fill="#FDE3DE" stroke="#F3B7AB" stroke-width="1"/>
+<text x="504" y="136" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">E 15</text>
+<rect x="516" y="122" width="96" height="96" rx="6" fill="#FDE3DE" stroke="#F3B7AB" stroke-width="1"/>
+<text x="604" y="136" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">E 20</text>
+<rect x="522" y="144" width="40" height="18" rx="4" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="542" y="156.5" font-size="10" fill="#475569" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" text-decoration="line-through">R-05</text>
+<rect x="565" y="144" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="585" y="156.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-06</text>
+<rect x="522" y="167" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="542" y="179.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-26</text>
+<rect x="616" y="122" width="96" height="96" rx="6" fill="#FDE3DE" stroke="#F3B7AB" stroke-width="1"/>
+<text x="704" y="136" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">E 25</text>
+<rect x="622" y="144" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="642" y="156.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-01</text>
+<text x="202" y="268" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">4 · Likely</text>
+<text x="202" y="283" font-size="10" fill="#475569" text-anchor="end">50–80 %</text>
+<rect x="216" y="222" width="96" height="96" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="304" y="236" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">E 4</text>
+<rect x="316" y="222" width="96" height="96" rx="6" fill="#FEF3C7" stroke="#FCD9A0" stroke-width="1"/>
+<text x="404" y="236" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="end">E 8</text>
+<rect x="416" y="222" width="96" height="96" rx="6" fill="#FEF3C7" stroke="#FCD9A0" stroke-width="1"/>
+<text x="504" y="236" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="end">E 12</text>
+<rect x="422" y="244" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="442" y="256.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-21</text>
+<rect x="465" y="244" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="485" y="256.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-22</text>
+<rect x="422" y="267" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="442" y="279.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-27</text>
+<rect x="465" y="267" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="485" y="279.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-29</text>
+<rect x="516" y="222" width="96" height="96" rx="6" fill="#FDE3DE" stroke="#F3B7AB" stroke-width="1"/>
+<text x="604" y="236" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">E 16</text>
+<rect x="522" y="244" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="542" y="256.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-03</text>
+<rect x="565" y="244" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="585" y="256.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-04</text>
+<rect x="522" y="267" width="40" height="18" rx="4" fill="none" stroke="#94A3B8" stroke-width="1" stroke-dasharray="2 2"/>
+<text x="542" y="279.5" font-size="10" fill="#94A3B8" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-10</text>
+<rect x="616" y="222" width="96" height="96" rx="6" fill="#FDE3DE" stroke="#F3B7AB" stroke-width="1"/>
+<text x="704" y="236" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">E 20</text>
+<rect x="622" y="244" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="642" y="256.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-02</text>
+<rect x="665" y="244" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="685" y="256.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-07</text>
+<text x="202" y="368" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">3 · Possible</text>
+<text x="202" y="383" font-size="10" fill="#475569" text-anchor="end">30–50 %</text>
+<rect x="216" y="322" width="96" height="96" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="304" y="336" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">E 3</text>
+<rect x="316" y="322" width="96" height="96" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="404" y="336" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">E 6</text>
+<rect x="322" y="344" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="342" y="356.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-25</text>
+<rect x="416" y="322" width="96" height="96" rx="6" fill="#FEF3C7" stroke="#FCD9A0" stroke-width="1"/>
+<text x="504" y="336" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="end">E 9</text>
+<rect x="422" y="344" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="442" y="356.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-12</text>
+<rect x="465" y="344" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="485" y="356.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-13</text>
+<rect x="422" y="367" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="442" y="379.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-14</text>
+<rect x="465" y="367" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="485" y="379.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-16</text>
+<rect x="422" y="390" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="442" y="402.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-23</text>
+<rect x="516" y="322" width="96" height="96" rx="6" fill="#FEF3C7" stroke="#FCD9A0" stroke-width="1"/>
+<text x="604" y="336" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="end">E 12</text>
+<rect x="522" y="344" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="542" y="356.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-15</text>
+<rect x="565" y="344" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="585" y="356.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-17</text>
+<rect x="522" y="367" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="542" y="379.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-19</text>
+<rect x="565" y="367" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="585" y="379.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-24</text>
+<rect x="522" y="390" width="40" height="18" rx="4" fill="none" stroke="#94A3B8" stroke-width="1" stroke-dasharray="2 2"/>
+<text x="542" y="402.5" font-size="10" fill="#94A3B8" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-11</text>
+<rect x="616" y="322" width="96" height="96" rx="6" fill="#FDE3DE" stroke="#F3B7AB" stroke-width="1"/>
+<text x="704" y="336" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">E 15</text>
+<rect x="622" y="344" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="642" y="356.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-08</text>
+<rect x="665" y="344" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="685" y="356.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-09</text>
+<rect x="622" y="367" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="642" y="379.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-20</text>
+<text x="202" y="468" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">2 · Unlikely</text>
+<text x="202" y="483" font-size="10" fill="#475569" text-anchor="end">10–30 %</text>
+<rect x="216" y="422" width="96" height="96" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="304" y="436" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">E 2</text>
+<rect x="316" y="422" width="96" height="96" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="404" y="436" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">E 4</text>
+<rect x="416" y="422" width="96" height="96" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="504" y="436" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">E 6</text>
+<rect x="516" y="422" width="96" height="96" rx="6" fill="#FEF3C7" stroke="#FCD9A0" stroke-width="1"/>
+<text x="604" y="436" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="end">E 8</text>
+<rect x="522" y="444" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="542" y="456.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-10</text>
+<rect x="565" y="444" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="585" y="456.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-11</text>
+<rect x="616" y="422" width="96" height="96" rx="6" fill="#FEF3C7" stroke="#FCD9A0" stroke-width="1"/>
+<text x="704" y="436" font-size="9.5" fill="#D97706" font-weight="700" text-anchor="end">E 10</text>
+<rect x="622" y="444" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="642" y="456.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-18</text>
+<rect x="665" y="444" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2"/>
+<text x="685" y="456.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-28</text>
+<text x="202" y="568" font-size="11" fill="#0F172A" font-weight="700" text-anchor="end">1 · Very unlikely</text>
+<text x="202" y="583" font-size="10" fill="#475569" text-anchor="end">&lt; 10 %</text>
+<rect x="216" y="522" width="96" height="96" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="304" y="536" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">E 1</text>
+<rect x="316" y="522" width="96" height="96" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="404" y="536" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">E 2</text>
+<rect x="416" y="522" width="96" height="96" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="504" y="536" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">E 3</text>
+<rect x="516" y="522" width="96" height="96" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="604" y="536" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">E 4</text>
+<rect x="616" y="522" width="96" height="96" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="704" y="536" font-size="9.5" fill="#475569" font-weight="700" text-anchor="end">E 5</text>
+<text x="202" y="108" font-size="11" fill="#475569" font-weight="700" text-anchor="end">Probability (P)</text>
+<text x="264" y="638" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">1 · Negligible</text>
+<text x="364" y="638" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">2 · Minor</text>
+<text x="464" y="638" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">3 · Moderate</text>
+<text x="564" y="638" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">4 · Major</text>
+<text x="664" y="638" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">5 · Severe</text>
+<text x="464" y="660" font-size="11" fill="#475569" font-weight="700" text-anchor="middle">Impact (I)</text>
+<text x="770" y="108" font-size="12" fill="#0F172A" font-weight="700">Open High risks (E ≥ 15), by exposure</text>
+<rect x="770" y="121" width="470" height="48" rx="4" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<rect x="776" y="126" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="796" y="138.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-01</text>
+<text x="826" y="139" font-size="11" fill="#D2553F" font-weight="700">E 25</text>
+<text x="862" y="139" font-size="10.5" fill="#475569">P5 × I5</text>
+<text x="1232" y="139" font-size="10.5" fill="#475569" text-anchor="end">Mitigate · PM · due G0</text>
+<text x="826" y="156" font-size="10.5" fill="#0F172A">Single maintainer holds every role</text>
+<rect x="776" y="176" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="796" y="188.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-02</text>
+<text x="826" y="189" font-size="11" fill="#D2553F" font-weight="700">E 20</text>
+<text x="862" y="189" font-size="10.5" fill="#475569">P4 × I5</text>
+<text x="1232" y="189" font-size="10.5" fill="#475569" text-anchor="end">Mitigate · SM / HW · due G2</text>
+<text x="826" y="206" font-size="10.5" fill="#0F172A">No supplier evidence for the comma device / STM32H7</text>
+<rect x="770" y="221" width="470" height="48" rx="4" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<rect x="776" y="226" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="796" y="238.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-06</text>
+<text x="826" y="239" font-size="11" fill="#D2553F" font-weight="700">E 20</text>
+<text x="862" y="239" font-size="10.5" fill="#475569">P5 × I4</text>
+<text x="1232" y="239" font-size="10.5" fill="#475569" text-anchor="end">Mitigate · HIL owner · due G3</text>
+<text x="826" y="256" font-size="10.5" fill="#0F172A">No HIL or on-device verification in the fork</text>
+<rect x="776" y="276" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="796" y="288.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-07</text>
+<text x="826" y="289" font-size="11" fill="#D2553F" font-weight="700">E 20</text>
+<text x="862" y="289" font-size="10.5" fill="#475569">P4 × I5</text>
+<text x="1232" y="289" font-size="10.5" fill="#475569" text-anchor="end">Mitigate · SL · due G2</text>
+<text x="826" y="306" font-size="10.5" fill="#0F172A">ML insufficiencies cannot be quantified without training data</text>
+<rect x="770" y="321" width="470" height="48" rx="4" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<rect x="776" y="326" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="796" y="338.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-26</text>
+<text x="826" y="339" font-size="11" fill="#D2553F" font-weight="700">E 20</text>
+<text x="862" y="339" font-size="10.5" fill="#475569">P5 × I4</text>
+<text x="1232" y="339" font-size="10.5" fill="#475569" text-anchor="end">Mitigate · PM · due G3</text>
+<text x="826" y="356" font-size="10.5" fill="#0F172A">SR-A changes merged without independent review (9 change records in …</text>
+<rect x="776" y="376" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="796" y="388.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-03</text>
+<text x="826" y="389" font-size="11" fill="#D2553F" font-weight="700">E 16</text>
+<text x="862" y="389" font-size="10.5" fill="#475569">P4 × I4</text>
+<text x="1232" y="389" font-size="10.5" fill="#475569" text-anchor="end">Mitigate · SM · due G1–G4</text>
+<text x="826" y="406" font-size="10.5" fill="#0F172A">OEM ECU behaviour (EPS limiting and fault reaction, PCM, PCS availability) …</text>
+<rect x="770" y="421" width="470" height="48" rx="4" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<rect x="776" y="426" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="796" y="438.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-04</text>
+<text x="826" y="439" font-size="11" fill="#D2553F" font-weight="700">E 16</text>
+<text x="862" y="439" font-size="10.5" fill="#475569">P4 × I4</text>
+<text x="1232" y="439" font-size="10.5" fill="#475569" text-anchor="end">Avoid/mitigate · PM · due G0</text>
+<text x="826" y="456" font-size="10.5" fill="#0F172A">Upstream velocity and sync pressure</text>
+<rect x="776" y="476" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="796" y="488.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-08</text>
+<text x="826" y="489" font-size="11" fill="#D2553F" font-weight="700">E 15</text>
+<text x="862" y="489" font-size="10.5" fill="#475569">P3 × I5</text>
+<text x="1232" y="489" font-size="10.5" fill="#475569" text-anchor="end">Mitigate · PM · due G0</text>
+<text x="826" y="506" font-size="10.5" fill="#0F172A">No external assessor engaged, or none affordable</text>
+<rect x="770" y="521" width="470" height="48" rx="4" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<rect x="776" y="526" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="796" y="538.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-09</text>
+<text x="826" y="539" font-size="11" fill="#D2553F" font-weight="700">E 15</text>
+<text x="862" y="539" font-size="10.5" fill="#475569">P3 × I5</text>
+<text x="1232" y="539" font-size="10.5" fill="#475569" text-anchor="end">Mitigate · ENG / HW · due G2</text>
+<text x="826" y="556" font-size="10.5" fill="#0F172A">Single-channel panda MCU sharing power, clock and board with the SoC</text>
+<rect x="776" y="576" width="40" height="18" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+<text x="796" y="588.5" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">R-20</text>
+<text x="826" y="589" font-size="11" fill="#D2553F" font-weight="700">E 15</text>
+<text x="862" y="589" font-size="10.5" fill="#475569">P3 × I5</text>
+<text x="1232" y="589" font-size="10.5" fill="#475569" text-anchor="end">Mitigate · PM · due G0</text>
+<text x="826" y="606" font-size="10.5" fill="#0F172A">Funding for external assessor, pen test and HIL hardware not available</text>
+<text x="40" y="684" font-size="10.5" fill="#475569">Open by band: High 10 · Medium 17 · Low 1 · closed 1 (R-05). Re-scored: R-10 P4 I4 E16 → P2 I4 E8, R-11 P3 I4 E12 → P2 I4 E8 (dotted chip = previous cell).</text>
+<text x="40" y="701" font-size="10.5" fill="#475569">Scores are single-author engineering judgement (§2.2, OI-2). Label = the cause clause of the risk text, before the arrow. Treatment strategy = first word of the Treatment column.</text>
+<line x1="40" y1="717" x2="1240" y2="717" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="729" width="14" height="12" rx="3" fill="#FDE3DE" stroke="#F3B7AB" stroke-width="1.2"/>
+<text x="60" y="739" font-size="11" fill="#475569">High exposure cell</text>
+<rect x="169.4" y="729" width="14" height="12" rx="3" fill="#FEF3C7" stroke="#FCD9A0" stroke-width="1.2"/>
+<text x="189.4" y="739" font-size="11" fill="#475569">Medium exposure cell</text>
+<rect x="312.5" y="729" width="14" height="12" rx="3" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="332.5" y="739" font-size="11" fill="#475569">Low exposure cell</text>
+<rect x="440.4" y="729" width="14" height="12" rx="3" fill="#FFFFFF" stroke="#475569" stroke-width="1.2"/>
+<text x="460.4" y="739" font-size="11" fill="#475569">open risk</text>
+<rect x="521.7" y="729" width="14" height="12" rx="3" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="541.7" y="739" font-size="11" fill="#475569">closed (struck through)</text>
+<rect x="675.2" y="729" width="14" height="12" rx="3" fill="none" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="695.2" y="739" font-size="11" fill="#475569">cell before re-scoring</text>
+<text x="1240" y="739" font-size="10.5" fill="#94A3B8" text-anchor="end">Generated by fig_m_management.py</text>
+</svg>

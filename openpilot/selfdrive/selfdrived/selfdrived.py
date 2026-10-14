@@ -18,6 +18,7 @@ from openpilot.common.gps import get_gps_location_service
 
 from openpilot.selfdrive.car.car_events import CarEvents
 from openpilot.selfdrive.locationd.helpers import PoseCalibrator, Pose
+from openpilot.selfdrive.selfdrived.supervision import ControlsMismatch, TxBlockedMonitor
 from openpilot.selfdrive.selfdrived.events import Events, ET
 from openpilot.selfdrive.selfdrived.helpers import ExcessiveActuationCheck
 from openpilot.selfdrive.selfdrived.state import StateMachine
@@ -48,6 +49,12 @@ AlertLevel = log.DriverMonitoringState.AlertLevel
 MonitoringPolicy = log.DriverMonitoringState.MonitoringPolicy
 
 IGNORED_SAFETY_MODES = (SafetyModel.silent, SafetyModel.noOutput)
+
+# LionDriver host supervision (TSR-621, TSR-308)
+MISMATCH_SAMPLES = 2         # consecutive pandaStates samples with controlsAllowed false while enabled
+MISMATCH_MAX_TIME = 0.5      # s from the first mismatched frame, whatever the pandaStates rate
+MISMATCH_ENGAGE_GRACE = 0.3  # s after engaging in which samples are not counted: the panda grants on the heartbeat (LS-06)
+CRUISE_MISMATCH_TIME = 1.0   # s of stock cruise engaged while the item is not
 
 
 class SelfdriveD:
@@ -126,7 +133,8 @@ class SelfdriveD:
     self.initialized = False
     self.enabled = False
     self.active = False
-    self.mismatch_counter = 0
+    self.controls_mismatch = ControlsMismatch(MISMATCH_SAMPLES, MISMATCH_MAX_TIME, DT_CTRL, MISMATCH_ENGAGE_GRACE)  # TSR-621
+    self.tx_blocked = TxBlockedMonitor()  # TSR-615
     self.cruise_mismatch_counter = 0
     self.last_steering_pressed_frame = 0
     self.distance_traveled = 0
@@ -345,11 +353,34 @@ class SelfdriveD:
         safety_mismatch = pandaState.safetyModel not in IGNORED_SAFETY_MODES
 
       # safety mismatch allows some time for pandad to set the safety mode and publish it back from panda
-      if (safety_mismatch and self.sm.frame*DT_CTRL > 10.) or pandaState.safetyRxChecksInvalid or self.mismatch_counter >= 200:
+      # LionDriver (TSR-621): controlsAllowed false while enabled disables after MISMATCH_SAMPLES consecutive pandaStates
+      # samples (transport skew between the CAN and pandaStates sockets), and in any case MISMATCH_MAX_TIME after the
+      # first mismatched frame (stale pandaStates)
+      if (safety_mismatch and self.sm.frame*DT_CTRL > 10.) or pandaState.safetyRxChecksInvalid or \
+         self.controls_mismatch.triggered(self.sm.frame):
         self.events.add(EventName.controlsMismatch)
+
+      # LionDriver (TSR-615): the panda revoked authority on a TX rate excess, lost the heartbeat, or blocked a frame
+      # the SoC sent while engaged
+      if pandaState.txRateExceeded:
+        self.events.add(EventName.pandaTxRateExceeded)
+      if pandaState.heartbeatLost:
+        self.events.add(EventName.pandaHeartbeatLost)
+      if self.sm.updated['pandaStates'] and self.tx_blocked.update(i, pandaState.safetyTxBlocked, self.enabled):
+        self.events.add(EventName.pandaTxBlocked)
 
       if log.PandaState.FaultType.relayMalfunction in pandaState.faults:
         self.events.add(EventName.relayMalfunction)
+
+      # LionDriver (TSR-514, SWSR-514h): the car needs a car safety mode, but after the settling time the panda is still
+      # in NOOUTPUT and is not a reference build, i.e. pandad refused to configure it. Says why controlsMismatch is set
+      if i < len(self.CP.safetyConfigs) and self.CP.safetyConfigs[i].safetyModel not in IGNORED_SAFETY_MODES and \
+         pandaState.safetyModel == SafetyModel.noOutput and not pandaState.referenceBuild and self.sm.frame*DT_CTRL > 10.:
+        self.events.add(EventName.pandaNotReferenceBuild)
+
+      # LionDriver (TSR-501): non-blocking warning after a panda reset by its hardware watchdog
+      if pandaState.watchdogReset:
+        self.events.add(EventName.pandaWatchdogReset)
 
     # Handle HW and system malfunctions
     # Order is very intentional here. Be careful when modifying this.
@@ -428,7 +459,7 @@ class SelfdriveD:
       # Check for mismatch between openpilot and car's PCM
       cruise_mismatch = CS.cruiseState.enabled and (not self.enabled or not self.CP.pcmCruise)
       self.cruise_mismatch_counter = self.cruise_mismatch_counter + 1 if cruise_mismatch else 0
-      if self.cruise_mismatch_counter > int(6. / DT_CTRL):
+      if self.cruise_mismatch_counter > int(CRUISE_MISMATCH_TIME / DT_CTRL):
         self.events.add(EventName.cruiseMismatch)
 
     # Send a "steering required alert" if saturation count has reached the limit
@@ -511,13 +542,11 @@ class SelfdriveD:
     # we want to disengage openpilot. However the status from the panda goes through
     # another socket other than the CAN messages and one can arrive earlier than the other.
     # Therefore we allow a mismatch for two samples, then we trigger the disengagement.
-    if not self.enabled:
-      self.mismatch_counter = 0
-
-    # All pandas not in silent mode must have controlsAllowed when openpilot is enabled
-    if self.enabled and any(not ps.controlsAllowed for ps in self.sm['pandaStates']
-           if ps.safetyModel not in IGNORED_SAFETY_MODES):
-      self.mismatch_counter += 1
+    # All pandas not in silent mode must have controlsAllowed when openpilot is enabled. LionDriver (TSR-621): the samples
+    # must be consecutive; a sample with controlsAllowed true, or disengaging, starts the count again
+    mismatch = self.enabled and any(not ps.controlsAllowed for ps in self.sm['pandaStates']
+                                    if ps.safetyModel not in IGNORED_SAFETY_MODES)
+    self.controls_mismatch.update(mismatch, self.sm.updated['pandaStates'], self.sm.frame, self.enabled)
 
     return CS
 

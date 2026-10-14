@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="844" viewBox="0 0 1280 844" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 4-2 · One engagement, three layers in time</title>
+<desc>Timing diagram of an illustrative engagement episode with rows for the selfdrived state, panda controls_allowed, panda safety mode, lateral and longitudinal commands, HMI alerts and the DM lockout. Events: cruise set (D3, T1), gas pressed (E2, longitudinal blocked by the panda), released (O2), fault (E1, soft disabling for 3 s with controls_allowed still 1, GAP-16), timer runs out (SD2; the panda clears at T2 after the host cancel, or at latest T6), re-engagement (D3, T1), DM lockout reached, driver brakes (X2, T3), lockout 1 to 30 min during which N1 refuses engagement. Times are made up except the 3 s and the lockout duration.</desc>
+<defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="8" stroke="#E2E8F0" stroke-width="2.5"/></pattern><pattern id="hatch-red" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FEF2F2"/><line x1="0" y1="0" x2="0" y2="8" stroke="#F5B5A8" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="844" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-2 · One engagement, three layers in time</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">An illustrative episode: what the host state machine, the panda authority and the actuators do on a shared time axis.</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-01 §4</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="1020.8" y="53" width="219.2" height="18" rx="9" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="1130.4" y="65.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">ILLUSTRATIVE EPISODE · times made up</text>
+<line x1="320" y1="114" x2="320" y2="690" stroke="#0F172A" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="320" y="108" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">① cruise set</text>
+<line x1="440" y1="130" x2="440" y2="690" stroke="#0F172A" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="440" y="124" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">② gas pressed</text>
+<line x1="520" y1="114" x2="520" y2="690" stroke="#0F172A" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="520" y="108" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">③ gas released</text>
+<line x1="600" y1="130" x2="600" y2="690" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="600" y="124" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">④ fault: SOFT_DISABLE</text>
+<line x1="720" y1="114" x2="720" y2="690" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="720" y="108" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">⑤ 3 s elapsed</text>
+<line x1="880" y1="130" x2="880" y2="690" stroke="#0F172A" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="880" y="124" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">⑥ re-engaged</text>
+<line x1="960" y1="114" x2="960" y2="690" stroke="#D97706" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="960" y="108" font-size="11" fill="#D97706" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">⑦ DM lockout reached</text>
+<line x1="1040" y1="130" x2="1040" y2="690" stroke="#0F172A" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="1040" y="124" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">⑧ driver brakes</text>
+<text x="40" y="164" font-size="12.5" fill="#0F172A" font-weight="700">selfdrived state</text>
+<text x="40" y="179" font-size="10.5" fill="#475569">host · QM · sm-selfdrived</text>
+<text x="40" y="244" font-size="12.5" fill="#0F172A" font-weight="700">panda controls_allowed</text>
+<text x="40" y="259" font-size="10.5" fill="#475569">envelope · sm-toy-auth</text>
+<text x="40" y="334" font-size="12.5" fill="#0F172A" font-weight="700">panda safety mode</text>
+<text x="40" y="349" font-size="10.5" fill="#475569">envelope · sm-safety-mode</text>
+<text x="40" y="394" font-size="12.5" fill="#0F172A" font-weight="700">lateral command</text>
+<text x="40" y="409" font-size="10.5" fill="#475569">0x2E4 on bus 0</text>
+<text x="40" y="474" font-size="12.5" fill="#0F172A" font-weight="700">longitudinal command</text>
+<text x="40" y="489" font-size="10.5" fill="#475569">0x343 on bus 0</text>
+<text x="40" y="554" font-size="12.5" fill="#0F172A" font-weight="700">HMI alert</text>
+<text x="40" y="569" font-size="10.5" fill="#475569">ui · soundd</text>
+<text x="40" y="624" font-size="12.5" fill="#0F172A" font-weight="700">DM lockout</text>
+<text x="40" y="639" font-size="10.5" fill="#475569">dmonitoringd · policy.py</text>
+<rect x="240" y="150" width="80" height="28" rx="0" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+<text x="280" y="168" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">disabled</text>
+<rect x="320" y="150" width="120" height="28" rx="0" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="380" y="168" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">enabled</text>
+<text x="324" y="193" font-size="10" fill="#475569" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">D3</text>
+<rect x="440" y="150" width="80" height="28" rx="0" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.2"/>
+<text x="480" y="168" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">overriding</text>
+<text x="444" y="193" font-size="10" fill="#475569" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">E2</text>
+<rect x="520" y="150" width="80" height="28" rx="0" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="560" y="168" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">enabled</text>
+<text x="524" y="193" font-size="10" fill="#475569" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">O2</text>
+<rect x="600" y="150" width="120" height="28" rx="0" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="660" y="168" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">softDisabling · 3 s</text>
+<text x="604" y="193" font-size="10" fill="#475569" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">E1</text>
+<rect x="720" y="150" width="160" height="28" rx="0" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+<text x="800" y="168" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">disabled</text>
+<text x="724" y="193" font-size="10" fill="#475569" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">SD2</text>
+<rect x="880" y="150" width="160" height="28" rx="0" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
+<text x="960" y="168" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">enabled</text>
+<text x="884" y="193" font-size="10" fill="#475569" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">D3</text>
+<rect x="1040" y="150" width="100" height="28" rx="0" fill="#FFFFFF" stroke="#64748B" stroke-width="1.2"/>
+<text x="1090" y="168" font-size="11" fill="#0F172A" font-weight="700" text-anchor="middle">disabled</text>
+<text x="1044" y="193" font-size="10" fill="#475569" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">X2</text>
+<text x="232" y="232" font-size="10" fill="#475569" text-anchor="end">1</text>
+<text x="232" y="260" font-size="10" fill="#475569" text-anchor="end">0</text>
+<rect x="600" y="214" width="120" height="50" rx="0" fill="#D2553F" stroke="none" stroke-width="1.2" opacity=".09"/>
+<rect x="720" y="226" width="120" height="32" rx="0" fill="url(#hatch-red)" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 3"/>
+<path d="M240,256 L320.0,256 L320.0,228 L720.0,228" stroke="#C2410C" stroke-width="2.6" fill="none" stroke-linejoin="round"/>
+<path d="M840.0,256 L880.0,256 L880.0,228 L1040.0,228 L1040.0,256 L1140.0,256" stroke="#C2410C" stroke-width="2.6" fill="none" stroke-linejoin="round"/>
+<text x="326" y="221" font-size="10.5" fill="#C2410C" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">T1: cruise rising edge</text>
+<text x="660" y="208" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">GAP-16: still 1</text>
+<text x="724" y="275" font-size="10" fill="#D2553F" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">→ 0 at T2 (PCM cruise off after</text>
+<text x="724" y="288" font-size="10" fill="#D2553F" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">host cancel), at latest T6</text>
+<text x="886" y="221" font-size="10.5" fill="#C2410C" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">T1</text>
+<text x="1046" y="249" font-size="10.5" fill="#C2410C" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">T3: brake</text>
+<rect x="240" y="316" width="900" height="26" rx="0" fill="#FFF7ED" stroke="#FDBA74" stroke-width="1.2"/>
+<text x="690" y="333" font-size="11" fill="#C2410C" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">TOYOTA throughout (set by pandad when onroad: 0xdc; M2, or M4 in the reference build)</text>
+<line x1="240" y1="398" x2="1140" y2="398" stroke="#E2E8F0" stroke-width="1"/>
+<path d="M240,398 L320.0,398" stroke="#C2410C" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<path d="M320,398 L336.7,397.6 L353.3,396 L370,393.6 L386.7,392.4 L403.3,393.9 L420,396.4 L436.7,396.8 L453.3,393.7 L470,388.8 L486.7,386.4 L503.3,388.6 L520,393.5 L536.7,396.7 L553.3,395.5 L570,391.3 L586.7,388.2 L603.3,388.9 L620,392.8 L636.7,396.4 L653.3,397.3 L670,396.3 L686.7,395.6 L703.3,396.4 L720,398" stroke="#C2410C" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<path d="M720.0,398 L880.0,398" stroke="#C2410C" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<path d="M880,398 L886.7,397.5 L893.3,396.5 L900,395 L906.7,393.1 L913.3,391.2 L920,389.6 L926.7,388.6 L933.3,388.4 L940,389.1 L946.7,390.6 L953.3,392.4 L960,394.3 L966.7,395.8 L973.3,396.7 L980,396.8 L986.7,396.3 L993.3,395.4 L1000,394.4 L1006.7,393.7 L1013.3,393.4 L1020,393.9 L1026.7,395 L1033.3,396.4 L1040,398" stroke="#C2410C" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<path d="M1040.0,398 L1140.0,398" stroke="#C2410C" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<text x="726" y="415" font-size="10" fill="#475569" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">0 (host disabled)</text>
+<line x1="240" y1="478" x2="1140" y2="478" stroke="#E2E8F0" stroke-width="1"/>
+<path d="M240,478 L320.0,478 C360.0,464 400.0,466 440.0,468" stroke="#C2410C" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<rect x="440" y="454" width="80" height="34" rx="0" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="480" y="468" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">blocked by</text>
+<text x="480" y="481" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">panda (gas)</text>
+<path d="M520.0,468 L600.0,468 L720.0,494 L720.0,478 L880.0,478 C920.0,466 960.0,468 1040.0,470 L1040.0,478 L1140.0,478" stroke="#C2410C" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+<text x="606" y="502" font-size="10" fill="#D2553F" font-weight="700" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">forced decel while</text>
+<text x="606" y="515" font-size="10" fill="#D2553F" font-weight="700" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">soft disabling</text>
+<rect x="321" y="539" width="70" height="22" rx="11" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="356" y="554" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">engage</text>
+<rect x="441" y="539" width="78" height="22" rx="11" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="480" y="554" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">override</text>
+<rect x="601" y="539" width="118" height="22" rx="11" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="660" y="554" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">TAKE CONTROL</text>
+<rect x="881" y="539" width="50" height="22" rx="11" fill="#0F766E" stroke="none" stroke-width="1.2"/>
+<text x="906" y="554" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">engage</text>
+<rect x="941" y="539" width="98" height="22" rx="11" fill="#D97706" stroke="none" stroke-width="1.2"/>
+<text x="990" y="554" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">DM alerts</text>
+<rect x="240" y="609" width="720" height="22" rx="0" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="600" y="624" font-size="10.5" fill="#475569" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">no lockout</text>
+<rect x="960" y="609" width="180" height="22" rx="0" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="1050" y="624" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">lockout · N1 refuses ENABLE</text>
+<rect x="1166" y="609" width="74" height="22" rx="0" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="1203" y="624" font-size="10.5" fill="#0F172A" font-weight="700" text-anchor="middle" stroke="#FFFFFF" stroke-width="4" paint-order="stroke" stroke-linejoin="round">1–30 min</text>
+<text x="1240" y="650" font-size="10" fill="#475569" text-anchor="end" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">policy.py:42-44</text>
+<line x1="240" y1="696" x2="1140" y2="696" stroke="#94A3B8" stroke-width="1"/>
+<line x1="240" y1="696" x2="240" y2="702" stroke="#94A3B8" stroke-width="1"/>
+<text x="240" y="716" font-size="10.5" fill="#475569" text-anchor="middle">0 s</text>
+<line x1="320" y1="696" x2="320" y2="702" stroke="#94A3B8" stroke-width="1"/>
+<text x="320" y="716" font-size="10.5" fill="#475569" text-anchor="middle">2</text>
+<line x1="400" y1="696" x2="400" y2="702" stroke="#94A3B8" stroke-width="1"/>
+<text x="400" y="716" font-size="10.5" fill="#475569" text-anchor="middle">4</text>
+<line x1="480" y1="696" x2="480" y2="702" stroke="#94A3B8" stroke-width="1"/>
+<text x="480" y="716" font-size="10.5" fill="#475569" text-anchor="middle">6</text>
+<line x1="560" y1="696" x2="560" y2="702" stroke="#94A3B8" stroke-width="1"/>
+<text x="560" y="716" font-size="10.5" fill="#475569" text-anchor="middle">8</text>
+<line x1="640" y1="696" x2="640" y2="702" stroke="#94A3B8" stroke-width="1"/>
+<text x="640" y="716" font-size="10.5" fill="#475569" text-anchor="middle">10</text>
+<line x1="720" y1="696" x2="720" y2="702" stroke="#94A3B8" stroke-width="1"/>
+<text x="720" y="716" font-size="10.5" fill="#475569" text-anchor="middle">12</text>
+<line x1="800" y1="696" x2="800" y2="702" stroke="#94A3B8" stroke-width="1"/>
+<text x="800" y="716" font-size="10.5" fill="#475569" text-anchor="middle">14</text>
+<line x1="880" y1="696" x2="880" y2="702" stroke="#94A3B8" stroke-width="1"/>
+<text x="880" y="716" font-size="10.5" fill="#475569" text-anchor="middle">16</text>
+<line x1="960" y1="696" x2="960" y2="702" stroke="#94A3B8" stroke-width="1"/>
+<text x="960" y="716" font-size="10.5" fill="#475569" text-anchor="middle">18</text>
+<line x1="1040" y1="696" x2="1040" y2="702" stroke="#94A3B8" stroke-width="1"/>
+<text x="1040" y="716" font-size="10.5" fill="#475569" text-anchor="middle">20</text>
+<line x1="1120" y1="696" x2="1120" y2="702" stroke="#94A3B8" stroke-width="1"/>
+<text x="1120" y="716" font-size="10.5" fill="#475569" text-anchor="middle">22</text>
+<text x="1156" y="701" font-size="15" fill="#94A3B8" text-anchor="middle">⫽</text>
+<text x="1203" y="716" font-size="10.5" fill="#475569" text-anchor="middle">+1 … 30 min</text>
+<text x="1140" y="732" font-size="10.5" fill="#475569" text-anchor="end">time (s), illustrative</text>
+<line x1="40" y1="740" x2="1240" y2="740" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="758" font-size="11" fill="#475569">Illustrative: the times between events are made up. Code values: the 3 s soft-disable (state.py:7; sm-selfdrived E1 "soft-disable timer = 3 s (300 cycles)") and the 1–30 min lockout (policy.py:42-44).</text>
+<text x="40" y="776" font-size="11" fill="#475569">Red band (GAP-16): for up to 3 s the host keeps commanding and the panda keeps allowing it; the envelope has no soft-disable of its own.</text>
+<text x="40" y="794" font-size="11" fill="#475569">After SD2 no record transition clears controls_allowed directly: the host requests a PCM cancel (controlsd.py, not in a record), the PCM drops cruise</text>
+<text x="40" y="812" font-size="11" fill="#475569">(AOU-05, unverified) and T2 clears; otherwise T6 clears after 3 heartbeat ticks (1 Hz) with engaged = 0. The hatched window marks that interval.</text>
+</svg>

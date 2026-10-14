@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="580" viewBox="0 0 1280 580" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">Figure 5-2. EPS-fault warning chain of the reference build against the SG-02 1 s warning budget (WP-S-04 T-28, OI-8)</title>
+<desc id="d">Time axis from the first EPS fault frame. The envelope refuses STEERING_LKA with torque on receipt of the fault frame (TSR-110). The panda 100 Hz safety task counts 1 s of persistence while controls are allowed, adds up to 10 ms of task period, and the 8 Hz tick drives the speaker only on every other tick, adding up to 250 ms, so the siren starts at most 1.26 s after fault onset. Measured from fault onset this exceeds the SG-02 1 s warning budget by up to 0.26 s. Measured from detection as defined in WP-S-02 v0.14 (the end of the 1 s persistence) it is at most 0.26 s, inside TSR-516 0.5 s. OI-8 needs a decision. Not verified on hardware.</desc>
+<defs>
+  <pattern id="tbd" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern>
+  <marker id="aI" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F172A"/></marker>
+  <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#D2553F"/></marker>
+  <marker id="aM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+</defs>
+<rect width="1280" height="100%" fill="#FFFFFF"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-2 · EPS-fault warning chain (T-28) vs the SG-02 warning budget</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Reference build bf6ce8c (opendbc 338f5fc, panda 6a7f2fb) · upper bounds from §4 T-28 · drawn to scale · not verified on hardware</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-04 §5, OI-8</text>
+<text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">T-28 · §3.7 SG-02/06 row</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="300" y1="122" x2="300" y2="404" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="300" y1="118" x2="300" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="300" y="112" font-size="10" fill="#475569" text-anchor="middle">0</text>
+<line x1="358.667" y1="122" x2="358.667" y2="404" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="358.667" y1="118" x2="358.667" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="358.667" y="112" font-size="10" fill="#475569" text-anchor="middle">0.1</text>
+<line x1="417.333" y1="122" x2="417.333" y2="404" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="417.333" y1="118" x2="417.333" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="417.333" y="112" font-size="10" fill="#475569" text-anchor="middle">0.2</text>
+<line x1="476" y1="122" x2="476" y2="404" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="476" y1="118" x2="476" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="476" y="112" font-size="10" fill="#475569" text-anchor="middle">0.3</text>
+<line x1="534.667" y1="122" x2="534.667" y2="404" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="534.667" y1="118" x2="534.667" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="534.667" y="112" font-size="10" fill="#475569" text-anchor="middle">0.4</text>
+<line x1="593.333" y1="122" x2="593.333" y2="404" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="593.333" y1="118" x2="593.333" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="593.333" y="112" font-size="10" fill="#475569" text-anchor="middle">0.5 s</text>
+<line x1="652" y1="122" x2="652" y2="404" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="652" y1="118" x2="652" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="652" y="112" font-size="10" fill="#475569" text-anchor="middle">0.6</text>
+<line x1="710.667" y1="122" x2="710.667" y2="404" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="710.667" y1="118" x2="710.667" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="710.667" y="112" font-size="10" fill="#475569" text-anchor="middle">0.7</text>
+<line x1="769.333" y1="122" x2="769.333" y2="404" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="769.333" y1="118" x2="769.333" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="769.333" y="112" font-size="10" fill="#475569" text-anchor="middle">0.8</text>
+<line x1="828" y1="122" x2="828" y2="404" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="828" y1="118" x2="828" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="828" y="112" font-size="10" fill="#475569" text-anchor="middle">0.9</text>
+<line x1="886.667" y1="122" x2="886.667" y2="404" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="886.667" y1="118" x2="886.667" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="886.667" y="112" font-size="10" fill="#475569" text-anchor="middle">1.0 s</text>
+<line x1="945.333" y1="122" x2="945.333" y2="404" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="945.333" y1="118" x2="945.333" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="945.333" y="112" font-size="10" fill="#475569" text-anchor="middle">1.1</text>
+<line x1="1004" y1="122" x2="1004" y2="404" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="1004" y1="118" x2="1004" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="1004" y="112" font-size="10" fill="#475569" text-anchor="middle">1.2</text>
+<line x1="1062.67" y1="122" x2="1062.67" y2="404" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="1062.67" y1="118" x2="1062.67" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="1062.67" y="112" font-size="10" fill="#475569" text-anchor="middle">1.3</text>
+<line x1="1121.33" y1="122" x2="1121.33" y2="404" stroke="#F1F5F9" stroke-width="1"/>
+<line x1="1121.33" y1="118" x2="1121.33" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="1121.33" y="112" font-size="10" fill="#475569" text-anchor="middle">1.4</text>
+<line x1="1180" y1="122" x2="1180" y2="404" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1180" y1="118" x2="1180" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="1180" y="112" font-size="10" fill="#475569" text-anchor="middle">1.5 s</text>
+<line x1="300" y1="122" x2="1180" y2="122" stroke="#475569" stroke-width="1"/>
+<text x="40" y="153" font-size="12" fill="#0F172A" font-weight="600">SG-02 budget (§3.7)</text>
+<text x="40" y="168" font-size="10" fill="#475569">1 s to warning</text>
+<text x="40" y="209" font-size="12" fill="#0F172A" font-weight="600">EPS · 0x262 LKA_STATE</text>
+<text x="40" y="224" font-size="10" fill="#475569">vehicle CAN, bus 0</text>
+<text x="40" y="265" font-size="12" fill="#0F172A" font-weight="600">Envelope · toyota.h</text>
+<text x="40" y="280" font-size="10" fill="#475569">opendbc 338f5fc</text>
+<text x="40" y="321" font-size="12" fill="#0F172A" font-weight="600">Safety task · 100 Hz</text>
+<text x="40" y="336" font-size="10" fill="#475569">eps_fault_siren.h</text>
+<text x="40" y="377" font-size="12" fill="#0F172A" font-weight="600">Speaker tick · 8 Hz</text>
+<text x="40" y="392" font-size="10" fill="#475569">siren on every other tick</text>
+<rect x="300" y="146" width="293.333" height="16" fill="#CCFBF1" stroke="#0F766E" stroke-width="1"/>
+<rect x="593.333" y="146" width="293.333" height="16" fill="#FFEDD5" stroke="#C2410C" stroke-width="1"/>
+<text x="446.667" y="158" font-size="10.5" fill="#0F766E" font-weight="600" text-anchor="middle">detection ≤ 0.5 s</text>
+<text x="740" y="158" font-size="10.5" fill="#C2410C" font-weight="600" text-anchor="middle">to warning ≤ 0.5 s</text>
+<rect x="300" y="204" width="880" height="14" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1"/>
+<text x="346.933" y="215" font-size="10.5" fill="#475569">LKA_STATE fault code present (persistent fault)</text>
+<path d="M300 198L306 211L300 224L294 211z" fill="#D2553F"/>
+<text x="310" y="199" font-size="10" fill="#D2553F" font-weight="600">first fault frame (t = 0)</text>
+<rect x="300" y="260" width="880" height="14" fill="#FDE68A" stroke="#D97706" stroke-width="1"/>
+<text x="346.933" y="271" font-size="10.5" fill="#0F172A">STEERING_LKA with torque refused from receipt of the fault frame (TSR-110)</text>
+<rect x="300" y="316" width="586.667" height="14" fill="#FCD9A8" stroke="#D97706" stroke-width="1"/>
+<text x="593.333" y="327" font-size="10.5" fill="#0F172A" text-anchor="middle">fault persists 1 s (100 ticks) while controls_allowed</text>
+<rect x="886.667" y="316" width="5.86667" height="14" fill="#D97706"/>
+<rect x="892.533" y="372" width="73.3333" height="14" fill="#FCD9A8" stroke="#D97706" stroke-width="1"/>
+<rect x="965.867" y="372" width="73.3333" height="14" fill="#D97706"/>
+<path d="M892.533 330V372" stroke="#475569" stroke-width="1.2" fill="none" marker-end="url(#aM)"/>
+<path d="M1039.2 368V392" stroke="#D2553F" stroke-width="2"/>
+<text x="1047.2" y="383" font-size="11" fill="#D2553F" font-weight="700">siren</text>
+<line x1="886.667" y1="136" x2="886.667" y2="404" stroke="#0F172A" stroke-width="1.6"/>
+<rect x="852.667" y="404" width="68" height="18" fill="#0F172A" rx="9"/>
+<text x="886.667" y="416.5" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1 s budget</text>
+<line x1="300" y1="136" x2="300" y2="404" stroke="#475569" stroke-width="1"/>
+<text x="1089.2" y="327" font-size="10" fill="#475569">+ ≤ 10 ms task period</text>
+<line x1="894.533" y1="323" x2="1085.2" y2="323" stroke="#CBD5E1" stroke-width="1"/>
+<text x="884.533" y="383" font-size="10" fill="#475569" text-anchor="end">+ ≤ 2 × 125 ms: the speaker sounds only on every other 8 Hz tick</text>
+<path d="M300 450V456H1039.2V450" stroke="#D2553F" stroke-width="1.4" fill="none"/>
+<text x="669.6" y="472" font-size="11" fill="#D2553F" font-weight="700" text-anchor="middle">From fault onset: ≤ 1.26 s worst case, exceeds the 1 s warning budget by ≤ 0.26 s</text>
+<text x="669.6" y="486" font-size="10" fill="#475569" text-anchor="middle">how §3.7 measures the SG-02 row (FDTI + FRTI from fault onset)</text>
+<path d="M886.667 506V512H1039.2V506" stroke="#D97706" stroke-width="1.4" fill="none"/>
+<text x="839.2" y="528" font-size="11" fill="#D97706" font-weight="700" text-anchor="middle">From detection (WP-S-02 v0.14): ≤ 0.26 s, within TSR-516(b) ≤ 0.5 s</text>
+<text x="839.2" y="542" font-size="10" fill="#475569" text-anchor="middle">detection defined as the end of the 1 s persistence</text>
+<rect x="40" y="440" width="236" height="96" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2" rx="8"/>
+<text x="54" y="460" font-size="12" fill="#D2553F" font-weight="700">OI-8 · decision needed</text>
+<text x="54" y="478" font-size="10" fill="#0F172A">Options in WP-S-04 §7:</text>
+<text x="54" y="492" font-size="10" fill="#0F172A">• shorten the persistence (e.g. 0.7 s)</text>
+<text x="54" y="506" font-size="10" fill="#0F172A">• or justify: lateral authority is</text>
+<text x="54" y="520" font-size="10" fill="#0F172A">  removed at the first fault frame</text>
+</svg>

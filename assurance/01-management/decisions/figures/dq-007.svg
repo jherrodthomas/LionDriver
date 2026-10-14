@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" font-family="Source Sans 3, Segoe UI, sans-serif" viewBox="0 0 640 272" role="img" aria-labelledby="d4t">
+  <title id="d4t">Three ways to make the steering safety goal achievable, compared</title>
+  <text x="0" y="83" text-anchor="start" style="fill:var(--muted,#5a6676)" font-size="12" font-weight="600">Steering authority</text>
+  <text x="0" y="137" text-anchor="start" style="fill:var(--muted,#5a6676)" font-size="12" font-weight="600">Driver can always correct it</text>
+  <text x="0" y="191" text-anchor="start" style="fill:var(--muted,#5a6676)" font-size="12" font-weight="600">SG-01 ASIL</text>
+  <text x="0" y="245" text-anchor="start" style="fill:var(--muted,#5a6676)" font-size="12" font-weight="600">What it needs</text>
+  <rect x="150" y="8" width="156" height="38" rx="5" style="fill:var(--ok-soft,#e1f3ea)"/>
+  <text x="228" y="32" text-anchor="middle" style="fill:var(--ok,#17794a)" font-size="12.5" font-weight="700">c · Reduce authority</text>
+  <rect x="150" y="56" width="156" height="48" rx="5" style="fill:var(--surface,#fff)" stroke="var(--line,#d7dde6)"/>
+  <text x="228" y="77" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">Lowered, set from physics</text>
+  <text x="228" y="90" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">per speed</text>
+  <rect x="150" y="110" width="156" height="48" rx="5" style="fill:var(--surface,#fff)" stroke="var(--line,#d7dde6)"/>
+  <text x="228" y="138" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">Yes, to be shown (C1)</text>
+  <rect x="150" y="164" width="156" height="48" rx="5" style="fill:var(--surface,#fff)" stroke="var(--line,#d7dde6)"/>
+  <text x="228" y="192" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">B (C until shown)</text>
+  <rect x="150" y="218" width="156" height="48" rx="5" style="fill:var(--surface,#fff)" stroke="var(--line,#d7dde6)"/>
+  <text x="228" y="235" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">Controllability tests;</text>
+  <text x="228" y="248" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">some tight curves drop</text>
+  <text x="228" y="261" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">out of the ODD</text>
+  <rect x="314" y="8" width="156" height="38" rx="5" style="fill:var(--warn-soft,#fbefd9)"/>
+  <text x="392" y="32" text-anchor="middle" style="fill:var(--warn,#9a5a00)" font-size="12.5" font-weight="700">a · Harden as is</text>
+  <rect x="314" y="56" width="156" height="48" rx="5" style="fill:var(--surface,#fff)" stroke="var(--line,#d7dde6)"/>
+  <text x="392" y="84" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">Unchanged</text>
+  <rect x="314" y="110" width="156" height="48" rx="5" style="fill:var(--surface,#fff)" stroke="var(--line,#d7dde6)"/>
+  <text x="392" y="138" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">No credit (C2)</text>
+  <rect x="314" y="164" width="156" height="48" rx="5" style="fill:var(--surface,#fff)" stroke="var(--line,#d7dde6)"/>
+  <text x="392" y="192" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">C</text>
+  <rect x="314" y="218" width="156" height="48" rx="5" style="fill:var(--surface,#fff)" stroke="var(--line,#d7dde6)"/>
+  <text x="392" y="235" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">Hardware metrics the</text>
+  <text x="392" y="248" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">device misses today (SPFM</text>
+  <text x="392" y="261" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">96.9 vs 97)</text>
+  <rect x="478" y="8" width="156" height="38" rx="5" style="fill:var(--bad-soft,#fbe4e1)"/>
+  <text x="556" y="32" text-anchor="middle" style="fill:var(--bad,#b4291f)" font-size="12.5" font-weight="700">b · Split with the Toyota EPS</text>
+  <rect x="478" y="56" width="156" height="48" rx="5" style="fill:var(--surface,#fff)" stroke="var(--line,#d7dde6)"/>
+  <text x="556" y="84" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">Unchanged</text>
+  <rect x="478" y="110" width="156" height="48" rx="5" style="fill:var(--surface,#fff)" stroke="var(--line,#d7dde6)"/>
+  <text x="556" y="138" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">No credit (C2)</text>
+  <rect x="478" y="164" width="156" height="48" rx="5" style="fill:var(--surface,#fff)" stroke="var(--line,#d7dde6)"/>
+  <text x="556" y="192" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">C, split B + A</text>
+  <rect x="478" y="218" width="156" height="48" rx="5" style="fill:var(--surface,#fff)" stroke="var(--line,#d7dde6)"/>
+  <text x="556" y="239" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">EPS safety evidence</text>
+  <text x="556" y="252" text-anchor="middle" style="fill:var(--ink,#18202b)" font-size="11.5">Toyota does not publish</text>
+</svg>

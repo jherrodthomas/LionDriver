@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2236" height="932" viewBox="0 0 2236 932">
+<title>FTA SG-05 sheet 1 of 3: no release on driver brake, cancel or steering override</title>
+<style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.n{font:italic 400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#6b7385}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.gl{font:700 7.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.06em;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.title2{font:600 17px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#9aa3b2;stroke-width:1.4;stroke-linecap:round}.wh{stroke:#c62828;stroke-width:3.2;stroke-linecap:round}.shadow{fill:#0f172a;opacity:.06}</style>
+<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
+<rect width="100%" height="100%" fill="#f7f8fa"/>
+<rect y="78" width="100%" height="854" fill="url(#dots)"/>
+<rect width="100%" height="78" fill="#0f2a44"/>
+<text x="40" y="32" class="eyebrow">FTA · SG-05 · WP-A-04 §6</text>
+<text x="40" y="59" class="title">No release on driver brake, cancel or steering override</text>
+<rect x="1960" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
+<text x="2078" y="44" class="hc">Sheet 1 of 3  ·  ASIL B</text>
+<rect x="949.0" y="116.5" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="947.5" y="114" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M956.5,114 H1158.5 A9,9 0 0 1 1167.5,123 V119 H947.5 V123 A9,9 0 0 1 956.5,114 Z" fill="#0f2a44"/>
+<text x="961.5" y="139" class="id">TE-05</text>
+<text x="1153.5" y="139" class="kind">TOP EVENT</text>
+<text x="961.5" y="153.5" class="d">Item does not release on driver</text>
+<text x="961.5" y="168.0" class="d">action</text>
+<path d="M1037.5,223.0 Q1057.5,214.0 1077.5,223.0 Q1075.5,196.0 1057.5,185.0 Q1039.5,196.0 1037.5,223.0 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="1057.5" y="215.0" class="gl" fill="#c62828">OR</text>
+<line x1="150.0" y1="246.0" x2="1965.0" y2="246.0" class="w"/>
+<line x1="150.0" y1="246.0" x2="1481.0" y2="246.0" class="wh"/>
+<line x1="1057.5" y1="223.0" x2="1057.5" y2="246.0" class="wh"/>
+<line x1="150.0" y1="246.0" x2="150.0" y2="271.0" class="wh"/>
+<line x1="392.0" y1="246.0" x2="392.0" y2="271.0" class="wh"/>
+<line x1="876.0" y1="246.0" x2="876.0" y2="271.0" class="w"/>
+<line x1="1481.0" y1="246.0" x2="1481.0" y2="271.0" class="wh"/>
+<line x1="1965.0" y1="246.0" x2="1965.0" y2="271.0" class="w"/>
+<rect x="41.5" y="273.5" width="220" height="119.0" rx="9" class="shadow"/>
+<rect x="40" y="271.0" width="220" height="119.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M49,271.0 H251 A9,9 0 0 1 260,280.0 V276.0 H40 V280.0 A9,9 0 0 1 49,271.0 Z" fill="#1d2433"/>
+<text x="54" y="296.0" class="id">G5.1</text>
+<text x="246" y="296.0" class="kind">TRANSFER OUT</text>
+<text x="54" y="310.5" class="d">No release on brake press</text>
+<text x="54" y="324.0" class="n">CCF → DFI-10: one stuck RX path,</text>
+<text x="54" y="337.5" class="n">BE-1.13, causes BE-5.01 and</text>
+<text x="54" y="351.0" class="n">BE-5.03 together</text>
+<rect x="54.0" y="359.0" width="128.0" height="16" rx="8" fill="#e6e9ef"/>
+<text x="118.0" y="370.5" class="chip" fill="#334155">continued on sheet 2</text>
+<path d="M150.0,390.0 L170.0,423.0 L130.0,423.0 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><line x1="160.0" y1="406.0" x2="184.0" y2="406.0" stroke="#c62828" stroke-width="2.4" stroke-linecap="round"/>
+<rect x="283.5" y="273.5" width="220" height="93.0" rx="9" class="shadow"/>
+<rect x="282" y="271.0" width="220" height="93.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M291,271.0 H493 A9,9 0 0 1 502,280.0 V276.0 H282 V280.0 A9,9 0 0 1 291,271.0 Z" fill="#1d2433"/>
+<text x="296" y="296.0" class="id">G5.2</text>
+<text x="488" y="296.0" class="kind">TRANSFER OUT</text>
+<text x="296" y="310.5" class="d">No release on cancel or main</text>
+<text x="296" y="325.0" class="d">switch off</text>
+<rect x="296.0" y="333.0" width="128.0" height="16" rx="8" fill="#e6e9ef"/>
+<text x="360.0" y="344.5" class="chip" fill="#334155">continued on sheet 3</text>
+<path d="M392.0,364.0 L412.0,397.0 L372.0,397.0 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><line x1="402.0" y1="380.0" x2="426.0" y2="380.0" stroke="#c62828" stroke-width="2.4" stroke-linecap="round"/>
+<rect x="767.5" y="273.5" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="766.0" y="271.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M775.0,271.0 H977.0 A9,9 0 0 1 986.0,280.0 V276.0 H766.0 V280.0 A9,9 0 0 1 775.0,271.0 Z" fill="#1d2433"/>
+<text x="780.0" y="296.0" class="id">G5.3</text>
+<text x="972.0" y="296.0" class="kind">INTERMEDIATE</text>
+<text x="780.0" y="310.5" class="d">LKA torque opposes the driver's</text>
+<text x="780.0" y="325.0" class="d">steering</text>
+<path d="M856.0,380.0 L856.0,360.0 A20,18 0 0 1 896.0,360.0 L896.0,380.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="876.0" y="372.0" class="gl" fill="#1d2433">AND</text>
+<line x1="634.0" y1="403.0" x2="1118.0" y2="403.0" class="w"/>
+<line x1="876.0" y1="380.0" x2="876.0" y2="403.0" class="w"/>
+<line x1="634.0" y1="403.0" x2="634.0" y2="476.0" class="w"/>
+<line x1="876.0" y1="403.0" x2="876.0" y2="476.0" class="w"/>
+<line x1="1118.0" y1="403.0" x2="1118.0" y2="476.0" class="w"/>
+<rect x="525.5" y="478.5" width="220" height="136.5" rx="9" class="shadow"/>
+<rect x="524" y="476.0" width="220" height="136.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M533,476.0 H735 A9,9 0 0 1 744,485.0 V481.0 H524 V485.0 A9,9 0 0 1 533,476.0 Z" fill="#5f6368"/>
+<text x="538" y="501.0" class="id">BE-5.05</text>
+<text x="730" y="501.0" class="kind">BASIC</text>
+<text x="538" y="515.5" class="d">No driver-override check on the</text>
+<text x="538" y="530.0" class="d">LKA path in the envelope</text>
+<text x="538" y="544.5" class="d">(GAP-02; host-only</text>
+<text x="538" y="559.0" class="d">MAX_USER_TORQUE 500,</text>
+<text x="538" y="573.5" class="d">carcontroller.py:33, 83)</text>
+<rect x="538.0" y="581.5" width="93.8" height="16" rx="8" fill="#5f6368"/>
+<text x="584.9" y="593.0" class="chip" fill="#fff">latent, design</text>
+<circle cx="634.0" cy="629.5" r="16" fill="#eceef1" stroke="#5f6368" stroke-width="1.7"/>
+<rect x="767.5" y="478.5" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="766" y="476.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M775,476.0 H977 A9,9 0 0 1 986,485.0 V481.0 H766 V485.0 A9,9 0 0 1 775,476.0 Z" fill="#64748b"/>
+<text x="780" y="501.0" class="id">BE-5.06</text>
+<text x="972" y="501.0" class="kind">BASIC</text>
+<text x="780" y="515.5" class="d">Host override check fails or SoC</text>
+<text x="780" y="530.0" class="d">fault (QM)</text>
+<circle cx="876.0" cy="564.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="1009.5" y="478.5" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="1008" y="476.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1017,476.0 H1219 A9,9 0 0 1 1228,485.0 V481.0 H1008 V485.0 A9,9 0 0 1 1017,476.0 Z" fill="#3d6b3d"/>
+<text x="1022" y="501.0" class="id">UE-5.07</text>
+<text x="1214" y="501.0" class="kind">UNDEVELOPED</text>
+<text x="1022" y="515.5" class="d">EPS does not let the driver</text>
+<text x="1022" y="530.0" class="d">overpower LKA torque (AOU-02R)</text>
+<path d="M1118.0,547.0 L1140.0,564.0 L1118.0,581.0 L1096.0,564.0 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
+<rect x="1372.5" y="273.5" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="1371.0" y="271.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M1380.0,271.0 H1582.0 A9,9 0 0 1 1591.0,280.0 V276.0 H1371.0 V280.0 A9,9 0 0 1 1380.0,271.0 Z" fill="#1d2433"/>
+<text x="1385.0" y="296.0" class="id">G5.4</text>
+<text x="1577.0" y="296.0" class="kind">INTERMEDIATE</text>
+<text x="1385.0" y="310.5" class="d">Accelerator does not override</text>
+<text x="1385.0" y="325.0" class="d">commanded deceleration</text>
+<path d="M1461.0,380.0 L1461.0,360.0 A20,18 0 0 1 1501.0,360.0 L1501.0,380.0 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="1481.0" y="372.0" class="gl" fill="#c62828">AND</text>
+<line x1="1360.0" y1="403.0" x2="1602.0" y2="403.0" class="w"/>
+<line x1="1360.0" y1="403.0" x2="1481.0" y2="403.0" class="wh"/>
+<line x1="1481.0" y1="380.0" x2="1481.0" y2="403.0" class="wh"/>
+<line x1="1360.0" y1="403.0" x2="1360.0" y2="476.0" class="wh"/>
+<line x1="1602.0" y1="403.0" x2="1602.0" y2="476.0" class="w"/>
+<rect x="1251.5" y="478.5" width="220" height="114.5" rx="9" class="shadow"/>
+<rect x="1250" y="476.0" width="220" height="114.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M1259,476.0 H1461 A9,9 0 0 1 1470,485.0 V481.0 H1250 V485.0 A9,9 0 0 1 1259,476.0 Z" fill="#64748b"/>
+<text x="1264" y="501.0" class="id">BE-5.08</text>
+<text x="1456" y="501.0" class="kind">BASIC</text>
+<text x="1264" y="515.5" class="d">GAS_RELEASED stuck "released"</text>
+<text x="1264" y="530.0" class="d">while the driver presses (=</text>
+<text x="1264" y="544.5" class="d">BE-3.11); the envelope then</text>
+<text x="1264" y="559.0" class="d">allows non-inactive values</text>
+<text x="1264" y="573.5" class="d">(longitudinal.h:3-5)</text>
+<circle cx="1360.0" cy="607.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
+<rect x="1493.5" y="478.5" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="1492" y="476.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1501,476.0 H1703 A9,9 0 0 1 1712,485.0 V481.0 H1492 V485.0 A9,9 0 0 1 1501,476.0 Z" fill="#3d6b3d"/>
+<text x="1506" y="501.0" class="id">UE-5.09</text>
+<text x="1698" y="501.0" class="kind">UNDEVELOPED</text>
+<text x="1506" y="515.5" class="d">PCM does not give the driver's</text>
+<text x="1506" y="530.0" class="d">pedal priority (AOU-05R)</text>
+<path d="M1602.0,547.0 L1624.0,564.0 L1602.0,581.0 L1580.0,564.0 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
+<rect x="1856.5" y="273.5" width="220" height="85.5" rx="9" class="shadow"/>
+<rect x="1855.0" y="271.0" width="220" height="85.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1864.0,271.0 H2066.0 A9,9 0 0 1 2075.0,280.0 V276.0 H1855.0 V280.0 A9,9 0 0 1 1864.0,271.0 Z" fill="#1d2433"/>
+<text x="1869.0" y="296.0" class="id">G5.5</text>
+<text x="2061.0" y="296.0" class="kind">INTERMEDIATE</text>
+<text x="1869.0" y="310.5" class="d">Mode confusion: driver believes</text>
+<text x="1869.0" y="325.0" class="d">the item is disengaged while it</text>
+<text x="1869.0" y="339.5" class="d">actuates</text>
+<path d="M1945.0,394.5 L1945.0,374.5 A20,18 0 0 1 1985.0,374.5 L1985.0,394.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="1965.0" y="386.5" class="gl" fill="#1d2433">AND</text>
+<line x1="1844.0" y1="417.5" x2="2086.0" y2="417.5" class="w"/>
+<line x1="1965.0" y1="394.5" x2="1965.0" y2="417.5" class="w"/>
+<line x1="1844.0" y1="417.5" x2="1844.0" y2="476.0" class="w"/>
+<line x1="2086.0" y1="417.5" x2="2086.0" y2="476.0" class="w"/>
+<rect x="1735.5" y="478.5" width="220" height="114.5" rx="9" class="shadow"/>
+<rect x="1734" y="476.0" width="220" height="114.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1743,476.0 H1945 A9,9 0 0 1 1954,485.0 V481.0 H1734 V485.0 A9,9 0 0 1 1743,476.0 Z" fill="#64748b"/>
+<text x="1748" y="501.0" class="id">BE-5.10</text>
+<text x="1940" y="501.0" class="kind">BASIC</text>
+<text x="1748" y="515.5" class="d">Item HMI shows the wrong state,</text>
+<text x="1748" y="530.0" class="d">or cruiseMismatch raised after 6</text>
+<text x="1748" y="544.5" class="d">s with no reaction</text>
+<text x="1748" y="559.0" class="d">(selfdrived.py:420-422,</text>
+<text x="1748" y="573.5" class="d">events.py:458-460; GAP-19)</text>
+<circle cx="1844.0" cy="607.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="1977.5" y="478.5" width="220" height="122.0" rx="9" class="shadow"/>
+<rect x="1976" y="476.0" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1985,476.0 H2187 A9,9 0 0 1 2196,485.0 V481.0 H1976 V485.0 A9,9 0 0 1 1985,476.0 Z" fill="#b45309"/>
+<text x="1990" y="501.0" class="id">BE-5.11</text>
+<text x="2182" y="501.0" class="kind">BASIC</text>
+<text x="1990" y="515.5" class="d">Cluster cruise indicator not an</text>
+<text x="1990" y="530.0" class="d">independent cue (AOU-12 fails;</text>
+<text x="1990" y="544.5" class="d">item TX 0x412 affects the</text>
+<text x="1990" y="559.0" class="d">cluster)</text>
+<rect x="1990.0" y="567.0" width="71.0" height="16" rx="8" fill="#b45309"/>
+<text x="2025.5" y="578.5" class="chip" fill="#fff">CCF DFI-15</text>
+<circle cx="2086.0" cy="615.0" r="16" fill="#fdf0e1" stroke="#b45309" stroke-width="1.7"/>
+<text x="40" y="710.5" class="lh">Symbols · IEC 61025</text>
+<rect x="46" y="730.5" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>
+<rect x="46" y="730.5" width="44" height="4" rx="2" fill="#1d2433"/>
+<text x="68" y="784.5" class="s" text-anchor="middle">Event</text>
+<path d="M128,764.5 Q148,755.5 168,764.5 Q166,737.5 148,726.5 Q130,737.5 128,764.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="148" y="756.5" class="gl" fill="#1d2433">OR</text>
+<text x="148" y="784.5" class="s" text-anchor="middle">OR gate</text>
+<path d="M208,764.5 L208,744.5 A20,18 0 0 1 248,744.5 L248,764.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="228" y="756.5" class="gl" fill="#1d2433">AND</text>
+<text x="228" y="784.5" class="s" text-anchor="middle">AND gate</text>
+<circle cx="308" cy="744.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="308" y="784.5" class="s" text-anchor="middle">Basic event</text>
+<path d="M388,727.5 L410,744.5 L388,761.5 L366,744.5 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
+<text x="388" y="784.5" class="s" text-anchor="middle">Undeveloped</text>
+<path d="M468,726.5 L488,759.5 L448,759.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><line x1="478" y1="742.5" x2="502" y2="742.5" stroke="#1d2433" stroke-width="1.7" stroke-linecap="round"/>
+<text x="468" y="784.5" class="s" text-anchor="middle">Transfer out</text>
+<path d="M548,727.5 L568,760.5 L528,760.5 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="548" y="784.5" class="s" text-anchor="middle">Transfer in</text>
+<rect x="40.0" y="802.5" width="31.1" height="16" rx="8" fill="#c62828"/>
+<text x="55.5" y="814.0" class="chip" fill="#fff">SPF</text>
+<rect x="77.1" y="802.5" width="48.2" height="16" rx="8" fill="#5f6368"/>
+<text x="101.2" y="814.0" class="chip" fill="#fff">latent</text>
+<rect x="131.3" y="802.5" width="42.5" height="16" rx="8" fill="#6a3fb5"/>
+<text x="152.6" y="814.0" class="chip" fill="#fff">SOTIF</text>
+<rect x="179.8" y="802.5" width="71.0" height="16" rx="8" fill="#b45309"/>
+<text x="215.3" y="814.0" class="chip" fill="#fff">CCF DFI-nn</text>
+<rect x="256.8" y="802.5" width="31.1" height="16" rx="8" fill="#1a5fb4"/>
+<text x="272.4" y="814.0" class="chip" fill="#fff">FFI</text>
+<rect x="293.9" y="802.5" width="82.4" height="16" rx="8" fill="#3d6b3d"/>
+<text x="335.1" y="814.0" class="chip" fill="#fff">outside item</text>
+<rect x="382.3" y="802.5" width="122.3" height="16" rx="8" fill="#e6e9ef"/>
+<text x="443.5" y="814.0" class="chip" fill="#334155">repeated / transfer</text>
+<rect x="510.6" y="802.5" width="105.2" height="16" rx="8" fill="#111827"/>
+<text x="563.2" y="814.0" class="chip" fill="#fff">FMEA / FMEDA row</text>
+<rect x="621.8" y="802.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
+<text x="648.8" y="814.0" class="chip" fill="#c62828">no FMEA</text>
+<line x1="40" y1="836.5" x2="74" y2="836.5" class="wh"/>
+<text x="86" y="840.5" class="lb">Single-point path</text>
+<text x="86" y="856.5" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
+<text x="86" y="871.5" class="s">Computed from the gate logic (see cut-sets.md); the SPF tags are WP-A-04's own claims.</text>
+<rect x="1696" y="696.5" width="500" height="196" rx="10" fill="#fff" stroke="#d9dee6"/>
+<line x1="1696" y1="742.5" x2="2196" y2="742.5" stroke="#d9dee6"/>
+<line x1="2014" y1="742.5" x2="2014" y2="892.5" stroke="#d9dee6"/>
+<text x="1714" y="725.5" class="tbh">LionDriver · FTA SG-05</text>
+<rect x="2046" y="710.5" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
+<text x="2112" y="724.5" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
+<text x="1714" y="768.5" class="k">TOP OF SHEET</text>
+<text x="1812" y="768.5" class="v">TE-05</text>
+<text x="1714" y="794.5" class="k">SINGLE-POINT</text>
+<text x="1812" y="794.5" class="v">1 basic event on this sheet</text>
+<text x="1714" y="820.5" class="k">SOURCE</text>
+<text x="1812" y="820.5" class="v">WP-A-04 §6 (analysis of record)</text>
+<text x="1714" y="846.5" class="k">GENERATED BY</text>
+<text x="1812" y="846.5" class="v">fta_diagrams.py</text>
+<text x="1714" y="872.5" class="k">EDIT</text>
+<text x="1812" y="872.5" class="v">WP-A-04, not this file</text>
+<text x="2030" y="766.5" class="k">SHEETS</text>
+<line x1="2105.0" y1="801.5" x2="2064.5" y2="815.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="2105.0" y1="801.5" x2="2145.5" y2="815.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<rect x="2091.0" y="781.5" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2105.0" y="795.5" class="mm" fill="#fff">1</text>
+<rect x="2050.5" y="815.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2064.5" y="829.5" class="mm" fill="#0f2a44">2</text>
+<rect x="2131.5" y="815.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2145.5" y="829.5" class="mm" fill="#0f2a44">3</text>
+</svg>

@@ -455,8 +455,13 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
     ET.NO_ENTRY: NoEntryAlert("Invalid LKAS setting"),
   },
 
+  # LionDriver (TSR-308): stock cruise stays engaged after the item disengaged; controlsd keeps requesting the cancel
   EventName.cruiseMismatch: {
-    #ET.PERMANENT: ImmediateDisableAlert("openpilot failed to cancel cruise"),
+    ET.PERMANENT: Alert(
+      "Stock Cruise Still Engaged",
+      "Press Cancel or Brake",
+      AlertStatus.userPrompt, AlertSize.mid,
+      Priority.MID, VisualAlert.none, AudibleAlert.promptRepeat, .1),
   },
 
   # openpilot doesn't recognize the car. This switches openpilot into a
@@ -971,6 +976,34 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
   # and the rest of the car is separated. When messages from the LKAS camera
   # are received on the car side this usually means the relay hasn't opened correctly
   # and this alert is thrown.
+  # LionDriver: the safety processor (panda) was last reset by its hardware watchdog after a hang (TSR-501). The relay
+  # was released and the panda restarted, so driving can continue, but the hang must be reported and investigated
+  EventName.pandaWatchdogReset: {
+    ET.PERMANENT: NormalPermanentAlert("Safety Processor Restarted", "Watchdog reset: report this drive"),
+  },
+
+  # LionDriver: the panda firmware is not a LionDriver reference build, so pandad did not configure the car safety mode
+  # (TSR-514, SWSR-514h). The panda must be reflashed from this build before the system can engage
+  EventName.pandaNotReferenceBuild: {
+    ET.PERMANENT: NormalPermanentAlert("Panda Firmware Not Verified", "Not a LionDriver build: reflash"),
+    ET.NO_ENTRY: NoEntryAlert("Panda Firmware Not Verified"),
+  },
+
+  # LionDriver (TSR-615): the panda has withdrawn authority or refused a frame; disengage at once with a take-over request
+  EventName.pandaTxRateExceeded: {
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Safety Processor: Rate Fault"),
+    ET.NO_ENTRY: NoEntryAlert("Safety Processor: Rate Fault"),
+  },
+
+  EventName.pandaHeartbeatLost: {
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Safety Processor: No Heartbeat"),
+    ET.NO_ENTRY: NoEntryAlert("Safety Processor: No Heartbeat"),
+  },
+
+  EventName.pandaTxBlocked: {
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Safety Processor: Blocked TX"),
+  },
+
   EventName.relayMalfunction: {
     ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Harness Relay Malfunction"),
     ET.PERMANENT: NormalPermanentAlert("Harness Relay Malfunction", "Contact comma.ai/support"),

@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="762" viewBox="0 0 1280 762" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-2. System FMEA failure chains — sheet 6 of 6 (SFM)</title>
+  <desc id="d">System FMEA failure chains, sheet 6 of 6 (SFM rev 0.8): failure modes SFM-031 to SFM-034 (4 failure modes, 6 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
+  </defs>
+  <rect width="1280" height="762" fill="#FFFFFF"/>
+  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-2 · System FMEA failure chains — sheet 6 of 6</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SFM rev 0.8 · BL-004 · draft · SFM-031 … SFM-034 · 6 causes on this sheet</text>
+  <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.1</text>
+  <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/system-fmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">STRUCTURE ELEMENT</text>
+  <text x="250" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FUNCTION (STEP 3)</text>
+  <text x="520" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE MODE · S · END EFFECT (STEP 4)</text>
+  <text x="876" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE CAUSE · O · D · AP · ACTIONS (STEPS 4–6)</text>
+  <path d="M220 376.2H235V199.2H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 376.2H235V474.3H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 199.2H505V155H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 199.2H505V234.2H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 155H861V144H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 234.2H861V240.8H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 474.3H505V376.6H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 474.3H505V558H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 376.6H861V341.5H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 376.6H861V425.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 558H861V515.9H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 558H861V600.1H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <rect x="40" y="354.2" width="180" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="373.7" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-001</text>
+  <rect x="136.1" y="362.7" width="35.6" height="15" rx="7.5" fill="#E2E8F0"/><text x="153.9" y="373.7" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">cont.</text>
+  <text x="49" y="388.3" font-size="10.5" fill="#0F172A" font-weight="600">LionDriver item (L2 ACC +</text>
+  <text x="49" y="402.4" font-size="10.5" fill="#0F172A" font-weight="600">ALC + driver monitoring)</text>
+  <text x="49" y="415.1" font-size="9.5" fill="#475569">item</text>
+  <rect x="250" y="177.2" width="240" height="71.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="196.7" font-size="12" fill="#0F172A" font-weight="700">SFM-FN-007</text>
+  <rect x="346.1" y="185.7" width="58.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="375.3" y="196.6" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">continued</text>
+  <text x="259" y="211.2" font-size="10.5" fill="#0F172A">F7 Actuation limiting: bound actuator</text>
+  <text x="259" y="225.3" font-size="10.5" fill="#0F172A">commands in magnitude and rate; detect</text>
+  <text x="259" y="239.4" font-size="10.5" fill="#0F172A">excessive actuation</text>
+  <rect x="520" y="133" width="326" height="56.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="152.5" font-size="12" fill="#0F172A" font-weight="700">SFM-031</text>
+  <rect x="593.9" y="141.5" width="25.2" height="15" rx="7.5" fill="#C2410C"/><text x="606.5" y="152.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S8</text>
+  <rect x="623.1" y="141.5" width="64" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="655.1" y="152.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">unintended</text>
+  <text x="529" y="167.1" font-size="10.5" fill="#0F172A" font-weight="600">False excessive-actuation detection</text>
+  <text x="529" y="180.2" font-size="9.8" fill="#475569" font-style="italic">End effect: Unneeded handback to the driver</text>
+  <rect x="876" y="122" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="141.5" font-size="12" fill="#0F172A" font-weight="700">SFM-031.C1</text>
+  <rect x="1194.5" y="130.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="141.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="156.1" font-size="10.5" fill="#0F172A">IMU noise or bad mounting</text>
+  <text x="885" y="169.2" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in SFM-SE-011</text>
+  <rect x="885" y="175.2" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="186.1" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-003 open</text>
+  <rect x="520" y="212.2" width="326" height="91.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="231.7" font-size="12" fill="#0F172A" font-weight="700">SFM-032</text>
+  <rect x="593.9" y="220.7" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="231.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="220.7" width="64" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="661.4" y="231.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">unintended</text>
+  <text x="529" y="246.3" font-size="10.5" fill="#0F172A" font-weight="600">Wrong vehicle configuration active (fingerprint or car port)</text>
+  <text x="529" y="259.4" font-size="9.8" fill="#475569" font-style="italic">End effect: Any F1/F2 effect; possible message conflicts with</text>
+  <text x="529" y="272.5" font-size="9.8" fill="#475569" font-style="italic">stock ECUs</text>
+  <text x="529" y="289.5" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="278.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="289.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="618.8" y="278.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="289.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="671.3" y="278.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="695.6" y="289.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
+  <rect x="876" y="218.8" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="238.3" font-size="12" fill="#0F172A" font-weight="700">SFM-032.C1</text>
+  <rect x="1194.5" y="227.3" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="238.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="252.8" font-size="10.5" fill="#0F172A">Fuzzy fingerprint matches a similar platform</text>
+  <text x="885" y="266" font-size="9.8" fill="#475569" font-weight="600">O5 · D8 · in SFM-SE-016</text>
+  <rect x="885" y="272" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="282.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-008 open</text>
+  <rect x="250" y="452.3" width="240" height="71.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="471.8" font-size="12" fill="#0F172A" font-weight="700">SFM-FN-008</text>
+  <text x="259" y="486.4" font-size="10.5" fill="#0F172A">F8 Stock function preservation: keep stock</text>
+  <text x="259" y="500.5" font-size="10.5" fill="#0F172A">vehicle safety functions not replaced by the</text>
+  <text x="259" y="514.5" font-size="10.5" fill="#0F172A">item available</text>
+  <rect x="520" y="354.6" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="374.1" font-size="12" fill="#0F172A" font-weight="700">SFM-033</text>
+  <rect x="593.9" y="363.1" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="374" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="363.1" width="31.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="645.3" y="374" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">loss</text>
+  <text x="529" y="388.7" font-size="10.5" fill="#0F172A" font-weight="600">Stock safety functions unavailable or degraded while the</text>
+  <text x="529" y="402.7" font-size="10.5" fill="#0F172A" font-weight="600">item is installed</text>
+  <text x="529" y="415.9" font-size="9.8" fill="#475569" font-style="italic">End effect: Driver relies on stock protections that are not present</text>
+  <text x="529" y="432.9" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="421.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="432.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="876" y="319.5" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="339" font-size="12" fill="#0F172A" font-weight="700">SFM-033.C1</text>
+  <rect x="1194.5" y="328" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="339" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="353.6" font-size="10.5" fill="#0F172A">Relay intercepts stock camera messages the vehicle needs for AEB</text>
+  <text x="885" y="366.7" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SFM-SE-004</text>
+  <rect x="885" y="372.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="383.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-006 open</text>
+  <rect x="876" y="403.7" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="423.2" font-size="12" fill="#0F172A" font-weight="700">SFM-033.C2</text>
+  <rect x="1194.5" y="412.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="423.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="437.8" font-size="10.5" fill="#0F172A">Item does not forward or reproduce stock safety messages</text>
+  <text x="885" y="450.9" font-size="9.8" fill="#475569" font-weight="600">O5 · D3 · in SFM-SE-016 · → SWF-011</text>
+  <rect x="885" y="456.9" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="467.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SFM-ACT-006 open</text>
+  <rect x="520" y="536" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="555.5" font-size="12" fill="#0F172A" font-weight="700">SFM-034</text>
+  <rect x="593.9" y="544.5" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="555.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="544.5" width="67.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="663.2" y="555.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">intermittent</text>
+  <text x="529" y="570.1" font-size="10.5" fill="#0F172A" font-weight="600">Harness relay fault</text>
+  <text x="529" y="583.2" font-size="9.8" fill="#475569" font-style="italic">End effect: Erratic stock or item behavior; stock functions lost</text>
+  <text x="529" y="600.2" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="589.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="600.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="618.8" y="589.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="600.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="671.3" y="589.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="695.6" y="600.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
+  <rect x="876" y="493.9" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="513.4" font-size="12" fill="#0F172A" font-weight="700">SFM-034.C1</text>
+  <rect x="1194.5" y="502.4" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="513.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="528" font-size="10.5" fill="#0F172A">Relay contact wear or connector fault</text>
+  <text x="885" y="541.1" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in SFM-SE-004 · → DFM-010</text>
+  <rect x="885" y="547.1" width="104.4" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="937.2" y="558.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <rect x="876" y="578.1" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="597.6" font-size="12" fill="#0F172A" font-weight="700">SFM-034.C2</text>
+  <rect x="1194.5" y="586.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="597.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="612.2" font-size="10.5" fill="#0F172A">Relay drive output fault on panda</text>
+  <text x="885" y="625.3" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in SFM-SE-003 · → DFM-011</text>
+  <rect x="885" y="631.3" width="104.4" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="937.2" y="642.3" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <line x1="40" y1="682.3" x2="1240" y2="682.3" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="704.3" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
+  <rect x="96" y="693.3" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="704.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <rect x="136.5" y="693.3" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="704.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
+  <rect x="179.4" y="693.3" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="704.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="223.9" y="704.3" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
+  <rect x="455.4" y="693.3" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="704.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
+  <rect x="518.7" y="693.3" width="104.4" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="570.9" y="704.3" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">rationale, no action</text>
+  <text x="631.1" y="704.3" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <text x="40" y="724.3" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
+  <text x="40" y="742.3" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/system-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+</svg>

@@ -1,0 +1,576 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="5878" height="1130" viewBox="0 0 5878 1130">
+<title>Safety case (GSN), sheet 2 of 6: argument from G1</title>
+<style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.sid{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.cid{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.cs{font:400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle;fill:#3c4556}.aj{font:700 10px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff;text-anchor:middle}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#1d2433;stroke-width:1.3}.wc{stroke:#7d8798;stroke-width:1.2;stroke-dasharray:4 3}.shadow{fill:#0f172a;opacity:.06}</style>
+<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
+<rect width="100%" height="100%" fill="#f7f8fa"/>
+<rect y="78" width="100%" height="1052" fill="url(#dots)"/>
+<rect width="100%" height="78" fill="#0f2a44"/>
+<text x="40" y="32" class="eyebrow">GSN · SAFETY CASE · WP-K-01</text>
+<text x="40" y="59" class="title">G1 · Hazards from E/E malfunctions of the item are reduced to a tolerable…</text>
+<rect x="5638" y="21" width="200" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
+<text x="5738" y="44" class="hc">Sheet 2 of 6</text>
+<rect x="4150.0" y="116.5" width="244" height="134" rx="4" class="shadow"/>
+<rect x="4148.5" y="114" width="244" height="134" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M4152.5,114 H4388.5 A4,4 0 0 1 4392.5,118 V120 H4148.5 V118 A4,4 0 0 1 4152.5,114 Z" fill="#c62828"/>
+<text x="4162.5" y="139" class="id" text-anchor="start">G1</text>
+<text x="4378.5" y="139" class="kind">GOAL</text>
+<text x="4162.5" y="153" class="d">Hazards from E/E malfunctions of the</text>
+<text x="4162.5" y="167" class="d">item are reduced to a tolerable</text>
+<text x="4162.5" y="181" class="d">level: every safety goal SG-01…SG-07</text>
+<text x="4162.5" y="195" class="d">is met with the integrity of its</text>
+<text x="4162.5" y="209" class="d">ASIL.</text>
+<rect x="4162.5" y="217.0" width="82.4" height="16" rx="8" fill="#e6e9ef"/>
+<text x="4203.7" y="228.5" class="chip" fill="#334155">from sheet 1</text>
+<rect x="4404.5" y="114" width="196" height="68" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="4502.5" y="135" class="cid" fill="#2f557f">C4</text>
+<text x="4502.5" y="149" class="cs">(safety goals and ASILs,</text>
+<text x="4502.5" y="163" class="cs">WP-C-03 §6)</text>
+<rect x="4404.5" y="192" width="196" height="110" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="4502.5" y="213" class="cid" fill="#2f557f">C7</text>
+<text x="4502.5" y="227" class="cs">Envelope strategy: reduced</text>
+<text x="4502.5" y="241" class="cs">authority (option c) + ASIL B</text>
+<text x="4502.5" y="255" class="cs">hardening, recommended and</text>
+<text x="4502.5" y="269" class="cs">pending maintainer decision</text>
+<text x="4502.5" y="283" class="cs">[WP-C-04 §4]</text>
+<line x1="4392.5" y1="136" x2="4397.5" y2="136" class="wc"/>
+<line x1="4397.5" y1="136" x2="4397.5" y2="247.0" class="wc"/>
+<line x1="4397.5" y1="148.0" x2="4403.5" y2="148.0" class="wc"/><path d="M4403.5,148.0 L4394.4,152.1 L4394.4,143.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="4397.5" y1="247.0" x2="4403.5" y2="247.0" class="wc"/><path d="M4403.5,247.0 L4394.4,251.1 L4394.4,242.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="4270.5" y1="248" x2="4270.5" y2="325.0" class="w"/>
+<line x1="2763.0" y1="325.0" x2="5778.0" y2="325.0" class="w"/>
+<line x1="2763.0" y1="325.0" x2="2763.0" y2="355.0" class="w"/><path d="M2763.0,355.0 L2758.9,345.9 L2767.1,345.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="5778.0" y1="325.0" x2="5778.0" y2="355.0" class="w"/><path d="M5778.0,355.0 L5773.9,345.9 L5782.1,345.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<path d="M2648.0,356 L2894.0,356 L2878.0,426 L2632.0,426 Z" transform="translate(1.5 2.5)" class="shadow"/>
+<path d="M2648.0,356 L2894.0,356 L2878.0,426 L2632.0,426 Z" fill="#e4e7fb" stroke="#4b5bb7" stroke-width="1.4"/>
+<text x="2660.0" y="381" class="id" text-anchor="start">S1</text>
+<text x="2880.0" y="381" class="kind">STRATEGY</text>
+<text x="2660.0" y="395" class="d">Argue per safety goal, then over</text>
+<text x="2660.0" y="409" class="d">the properties every SG depends on</text>
+<line x1="2763.0" y1="426" x2="2763.0" y2="449.0" class="w"/>
+<line x1="162.0" y1="449.0" x2="5364.0" y2="449.0" class="w"/>
+<line x1="162.0" y1="449.0" x2="162.0" y2="493.0" class="w"/><path d="M162.0,493.0 L157.9,483.9 L166.1,483.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="792.0" y1="449.0" x2="792.0" y2="493.0" class="w"/><path d="M792.0,493.0 L787.9,483.9 L796.1,483.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1440.0" y1="449.0" x2="1440.0" y2="493.0" class="w"/><path d="M1440.0,493.0 L1435.9,483.9 L1444.1,483.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="2016.0" y1="449.0" x2="2016.0" y2="493.0" class="w"/><path d="M2016.0,493.0 L2011.9,483.9 L2020.1,483.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="2646.0" y1="449.0" x2="2646.0" y2="493.0" class="w"/><path d="M2646.0,493.0 L2641.9,483.9 L2650.1,483.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="3204.0" y1="449.0" x2="3204.0" y2="493.0" class="w"/><path d="M3204.0,493.0 L3199.9,483.9 L3208.1,483.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="3780.0" y1="449.0" x2="3780.0" y2="493.0" class="w"/><path d="M3780.0,493.0 L3775.9,483.9 L3784.1,483.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="4356.0" y1="449.0" x2="4356.0" y2="493.0" class="w"/><path d="M4356.0,493.0 L4351.9,483.9 L4360.1,483.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="4860.0" y1="449.0" x2="4860.0" y2="493.0" class="w"/><path d="M4860.0,493.0 L4855.9,483.9 L4864.1,483.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="5364.0" y1="449.0" x2="5364.0" y2="493.0" class="w"/><path d="M5364.0,493.0 L5359.9,483.9 L5368.1,483.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<rect x="41.5" y="496.5" width="244" height="92" rx="4" class="shadow"/>
+<rect x="40" y="494" width="244" height="92" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M44,494 H280 A4,4 0 0 1 284,498 V500 H40 V498 A4,4 0 0 1 44,494 Z" fill="#c62828"/>
+<text x="54" y="519" class="id" text-anchor="start">G1.1</text>
+<text x="270" y="519" class="kind">GOAL</text>
+<text x="54" y="533" class="d">SG-01 (lateral motion, ASIL C ⚠ / B</text>
+<text x="54" y="547" class="d">if C1 shown under option c) is met.</text>
+<rect x="54.0" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="75.2" y="566.5" class="chip" fill="#fff">DF-14</text>
+<rect x="101.5" y="555.0" width="65.3" height="16" rx="8" fill="#e6e9ef"/>
+<text x="134.2" y="566.5" class="chip" fill="#334155">→ sheet 3</text>
+<ellipse cx="394.0" cy="528.0" rx="98.0" ry="39.0" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<circle cx="484.0" cy="564" r="9" fill="#7a4f00"/>
+<text x="484.0" y="568" class="aj">A</text>
+<text x="394.0" y="515" class="cid" fill="#7a4f00">Assumption</text>
+<text x="394.0" y="529" class="cs">AOU-01, AOU-02 hold (WP-K-01</text>
+<text x="394.0" y="543" class="cs">§5)</text>
+<line x1="284" y1="516" x2="289" y2="516" class="wc"/>
+<line x1="289" y1="516" x2="289" y2="528.0" class="wc"/>
+<line x1="289.0" y1="528.0" x2="295.0" y2="528.0" class="wc"/><path d="M295.0,528.0 L285.9,532.1 L285.9,523.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<rect x="671.5" y="496.5" width="244" height="92" rx="4" class="shadow"/>
+<rect x="670.0" y="494" width="244" height="92" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M674.0,494 H910.0 A4,4 0 0 1 914.0,498 V500 H670.0 V498 A4,4 0 0 1 674.0,494 Z" fill="#c62828"/>
+<text x="684.0" y="519" class="id" text-anchor="start">G1.2</text>
+<text x="900.0" y="519" class="kind">GOAL</text>
+<text x="684.0" y="533" class="d">SG-02 (lateral loss without warning,</text>
+<text x="684.0" y="547" class="d">B) is met.</text>
+<rect x="684.0" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="705.2" y="566.5" class="chip" fill="#fff">DF-07</text>
+<rect x="731.5" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="752.8" y="566.5" class="chip" fill="#fff">DF-08</text>
+<rect x="779.0" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="800.2" y="566.5" class="chip" fill="#fff">DF-36</text>
+<rect x="826.5" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="847.8" y="566.5" class="chip" fill="#fff">DF-41</text>
+<line x1="792.0" y1="586" x2="792.0" y2="609.0" class="w"/>
+<line x1="576.0" y1="609.0" x2="1008.0" y2="609.0" class="w"/>
+<line x1="576.0" y1="609.0" x2="576.0" y2="683.0" class="w"/><path d="M576.0,683.0 L571.9,673.9 L580.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="720.0" y1="609.0" x2="720.0" y2="683.0" class="w"/><path d="M720.0,683.0 L715.9,673.9 L724.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="864.0" y1="609.0" x2="864.0" y2="683.0" class="w"/><path d="M864.0,683.0 L859.9,673.9 L868.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1008.0" y1="609.0" x2="1008.0" y2="683.0" class="w"/><path d="M1008.0,683.0 L1003.9,673.9 L1012.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="576.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="576.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="576.0" y="712.0" class="sid" fill="#1d2433">Sn-01</text>
+<text x="576.0" y="750" class="cs">Functional safety</text>
+<text x="576.0" y="764" class="cs">requirements</text>
+<text x="576.0" y="778" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="720.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="720.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="720.0" y="712.0" class="sid" fill="#1d2433">Sn-02</text>
+<text x="720.0" y="750" class="cs">Technical safety</text>
+<text x="720.0" y="764" class="cs">requirements</text>
+<circle cx="864.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="864.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="864.0" y="712.0" class="sid" fill="#1d2433">Sn-14</text>
+<text x="864.0" y="750" class="cs">SW integration /</text>
+<text x="864.0" y="764" class="cs">process replay</text>
+<circle cx="1008.0" cy="708.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="1008.0" y="712.0" class="sid" fill="#b3261e">Sn-13</text>
+<text x="1008.0" y="750" class="cs">Fault injection</text>
+<rect x="1319.5" y="496.5" width="244" height="92" rx="4" class="shadow"/>
+<rect x="1318.0" y="494" width="244" height="92" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M1322.0,494 H1558.0 A4,4 0 0 1 1562.0,498 V500 H1318.0 V498 A4,4 0 0 1 1322.0,494 Z" fill="#c62828"/>
+<text x="1332.0" y="519" class="id" text-anchor="start">G1.3</text>
+<text x="1548.0" y="519" class="kind">GOAL</text>
+<text x="1332.0" y="533" class="d">SG-03 (unintended acceleration, B ⚠)</text>
+<text x="1332.0" y="547" class="d">is met.</text>
+<rect x="1332.0" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="1353.2" y="566.5" class="chip" fill="#fff">DF-14</text>
+<rect x="1379.5" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="1400.8" y="566.5" class="chip" fill="#fff">DF-38</text>
+<ellipse cx="1672.0" cy="521.0" rx="98.0" ry="32.0" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<circle cx="1762.0" cy="550" r="9" fill="#7a4f00"/>
+<text x="1762.0" y="554" class="aj">A</text>
+<text x="1672.0" y="515" class="cid" fill="#7a4f00">Assumption</text>
+<text x="1672.0" y="529" class="cs">AOU-05 hold (WP-K-01 §5)</text>
+<line x1="1562.0" y1="516" x2="1567.0" y2="516" class="wc"/>
+<line x1="1567.0" y1="516" x2="1567.0" y2="521.0" class="wc"/>
+<line x1="1567.0" y1="521.0" x2="1573.0" y2="521.0" class="wc"/><path d="M1573.0,521.0 L1563.9,525.1 L1563.9,516.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="1440.0" y1="586" x2="1440.0" y2="609.0" class="w"/>
+<line x1="1152.0" y1="609.0" x2="1728.0" y2="609.0" class="w"/>
+<line x1="1152.0" y1="609.0" x2="1152.0" y2="683.0" class="w"/><path d="M1152.0,683.0 L1147.9,673.9 L1156.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1296.0" y1="609.0" x2="1296.0" y2="683.0" class="w"/><path d="M1296.0,683.0 L1291.9,673.9 L1300.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1440.0" y1="609.0" x2="1440.0" y2="683.0" class="w"/><path d="M1440.0,683.0 L1435.9,673.9 L1444.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1584.0" y1="609.0" x2="1584.0" y2="683.0" class="w"/><path d="M1584.0,683.0 L1579.9,673.9 L1588.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="1728.0" y1="609.0" x2="1728.0" y2="683.0" class="w"/><path d="M1728.0,683.0 L1723.9,673.9 L1732.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="1152.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="1152.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="1152.0" y="712.0" class="sid" fill="#1d2433">Sn-01</text>
+<text x="1152.0" y="750" class="cs">Functional safety</text>
+<text x="1152.0" y="764" class="cs">requirements</text>
+<text x="1152.0" y="778" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="1296.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="1296.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="1296.0" y="712.0" class="sid" fill="#1d2433">Sn-02</text>
+<text x="1296.0" y="750" class="cs">Technical safety</text>
+<text x="1296.0" y="764" class="cs">requirements</text>
+<circle cx="1440.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="1440.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="1440.0" y="712.0" class="sid" fill="#1d2433">Sn-10</text>
+<text x="1440.0" y="750" class="cs">opendbc safety unit</text>
+<text x="1440.0" y="764" class="cs">tests (100% line</text>
+<text x="1440.0" y="778" class="cs">coverage gate, MISRA,</text>
+<text x="1440.0" y="792" class="cs">mutation, UBSan)</text>
+<circle cx="1584.0" cy="708.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="1584.0" y="712.0" class="sid" fill="#b3261e">Sn-12</text>
+<text x="1584.0" y="750" class="cs">HIL tests of the</text>
+<text x="1584.0" y="764" class="cs">envelope</text>
+<circle cx="1728.0" cy="708.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="1728.0" y="712.0" class="sid" fill="#b3261e">Sn-21</text>
+<text x="1728.0" y="750" class="cs">PCM ACC envelope test</text>
+<text x="1728.0" y="764" class="cs">(AOU-05)</text>
+<rect x="1895.5" y="496.5" width="244" height="92" rx="4" class="shadow"/>
+<rect x="1894.0" y="494" width="244" height="92" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M1898.0,494 H2134.0 A4,4 0 0 1 2138.0,498 V500 H1894.0 V498 A4,4 0 0 1 1898.0,494 Z" fill="#c62828"/>
+<text x="1908.0" y="519" class="id" text-anchor="start">G1.4</text>
+<text x="2124.0" y="519" class="kind">GOAL</text>
+<text x="1908.0" y="533" class="d">SG-04 (excessive deceleration, B ⚠)</text>
+<text x="1908.0" y="547" class="d">is met.</text>
+<rect x="1908.0" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="1929.2" y="566.5" class="chip" fill="#fff">DF-09</text>
+<rect x="1955.5" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="1976.8" y="566.5" class="chip" fill="#fff">DF-38</text>
+<ellipse cx="2248.0" cy="528.0" rx="98.0" ry="39.0" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<circle cx="2338.0" cy="564" r="9" fill="#7a4f00"/>
+<text x="2338.0" y="568" class="aj">A</text>
+<text x="2248.0" y="515" class="cid" fill="#7a4f00">Assumption</text>
+<text x="2248.0" y="529" class="cs">AOU-05, AOU-10 hold (WP-K-01</text>
+<text x="2248.0" y="543" class="cs">§5)</text>
+<line x1="2138.0" y1="516" x2="2143.0" y2="516" class="wc"/>
+<line x1="2143.0" y1="516" x2="2143.0" y2="528.0" class="wc"/>
+<line x1="2143.0" y1="528.0" x2="2149.0" y2="528.0" class="wc"/><path d="M2149.0,528.0 L2139.9,532.1 L2139.9,523.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="2016.0" y1="586" x2="2016.0" y2="609.0" class="w"/>
+<line x1="1872.0" y1="609.0" x2="2160.0" y2="609.0" class="w"/>
+<line x1="1872.0" y1="609.0" x2="1872.0" y2="683.0" class="w"/><path d="M1872.0,683.0 L1867.9,673.9 L1876.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="2016.0" y1="609.0" x2="2016.0" y2="683.0" class="w"/><path d="M2016.0,683.0 L2011.9,673.9 L2020.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="2160.0" y1="609.0" x2="2160.0" y2="683.0" class="w"/><path d="M2160.0,683.0 L2155.9,673.9 L2164.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="1872.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="1872.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="1872.0" y="712.0" class="sid" fill="#1d2433">Sn-01</text>
+<text x="1872.0" y="750" class="cs">Functional safety</text>
+<text x="1872.0" y="764" class="cs">requirements</text>
+<text x="1872.0" y="778" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="2016.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="2016.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="2016.0" y="712.0" class="sid" fill="#1d2433">Sn-02</text>
+<text x="2016.0" y="750" class="cs">Technical safety</text>
+<text x="2016.0" y="764" class="cs">requirements</text>
+<circle cx="2160.0" cy="708.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="2160.0" y="712.0" class="sid" fill="#b3261e">Sn-21</text>
+<text x="2160.0" y="750" class="cs">PCM ACC envelope test</text>
+<text x="2160.0" y="764" class="cs">(AOU-05)</text>
+<rect x="2525.5" y="496.5" width="244" height="92" rx="4" class="shadow"/>
+<rect x="2524.0" y="494" width="244" height="92" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M2528.0,494 H2764.0 A4,4 0 0 1 2768.0,498 V500 H2524.0 V498 A4,4 0 0 1 2528.0,494 Z" fill="#c62828"/>
+<text x="2538.0" y="519" class="id" text-anchor="start">G1.5</text>
+<text x="2754.0" y="519" class="kind">GOAL</text>
+<text x="2538.0" y="533" class="d">SG-05 (release on driver action, B</text>
+<text x="2538.0" y="547" class="d">⚠) is met.</text>
+<rect x="2538.0" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="2559.2" y="566.5" class="chip" fill="#fff">DF-10</text>
+<rect x="2585.5" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="2606.8" y="566.5" class="chip" fill="#fff">DF-05</text>
+<rect x="2633.0" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="2654.2" y="566.5" class="chip" fill="#fff">DF-14</text>
+<rect x="2680.5" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="2701.8" y="566.5" class="chip" fill="#fff">DF-36</text>
+<ellipse cx="2878.0" cy="528.0" rx="98.0" ry="39.0" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<circle cx="2968.0" cy="564" r="9" fill="#7a4f00"/>
+<text x="2968.0" y="568" class="aj">A</text>
+<text x="2878.0" y="515" class="cid" fill="#7a4f00">Assumption</text>
+<text x="2878.0" y="529" class="cs">AOU-01, AOU-02, AOU-03 hold</text>
+<text x="2878.0" y="543" class="cs">(WP-K-01 §5)</text>
+<line x1="2768.0" y1="516" x2="2773.0" y2="516" class="wc"/>
+<line x1="2773.0" y1="516" x2="2773.0" y2="528.0" class="wc"/>
+<line x1="2773.0" y1="528.0" x2="2779.0" y2="528.0" class="wc"/><path d="M2779.0,528.0 L2769.9,532.1 L2769.9,523.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="2646.0" y1="586" x2="2646.0" y2="609.0" class="w"/>
+<line x1="2430.0" y1="609.0" x2="2862.0" y2="609.0" class="w"/>
+<line x1="2430.0" y1="609.0" x2="2430.0" y2="683.0" class="w"/><path d="M2430.0,683.0 L2425.9,673.9 L2434.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="2574.0" y1="609.0" x2="2574.0" y2="683.0" class="w"/><path d="M2574.0,683.0 L2569.9,673.9 L2578.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="2718.0" y1="609.0" x2="2718.0" y2="683.0" class="w"/><path d="M2718.0,683.0 L2713.9,673.9 L2722.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="2862.0" y1="609.0" x2="2862.0" y2="683.0" class="w"/><path d="M2862.0,683.0 L2857.9,673.9 L2866.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="2430.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="2430.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="2430.0" y="712.0" class="sid" fill="#1d2433">Sn-01</text>
+<text x="2430.0" y="750" class="cs">Functional safety</text>
+<text x="2430.0" y="764" class="cs">requirements</text>
+<text x="2430.0" y="778" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="2574.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="2574.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="2574.0" y="712.0" class="sid" fill="#1d2433">Sn-02</text>
+<text x="2574.0" y="750" class="cs">Technical safety</text>
+<text x="2574.0" y="764" class="cs">requirements</text>
+<circle cx="2718.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="2718.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="2718.0" y="712.0" class="sid" fill="#1d2433">Sn-10</text>
+<text x="2718.0" y="750" class="cs">opendbc safety unit</text>
+<text x="2718.0" y="764" class="cs">tests (100% line</text>
+<text x="2718.0" y="778" class="cs">coverage gate, MISRA,</text>
+<text x="2718.0" y="792" class="cs">mutation, UBSan)</text>
+<circle cx="2862.0" cy="708.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="2862.0" y="712.0" class="sid" fill="#b3261e">Sn-22</text>
+<text x="2862.0" y="750" class="cs">Brake override test</text>
+<text x="2862.0" y="764" class="cs">(AOU-03)</text>
+<rect x="3083.5" y="496.5" width="244" height="92" rx="4" class="shadow"/>
+<rect x="3082.0" y="494" width="244" height="92" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M3086.0,494 H3322.0 A4,4 0 0 1 3326.0,498 V500 H3082.0 V498 A4,4 0 0 1 3086.0,494 Z" fill="#c62828"/>
+<text x="3096.0" y="519" class="id" text-anchor="start">G1.6</text>
+<text x="3312.0" y="519" class="kind">GOAL</text>
+<text x="3096.0" y="533" class="d">SG-06 (longitudinal loss without</text>
+<text x="3096.0" y="547" class="d">warning, B) is met.</text>
+<rect x="3096.0" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="3117.2" y="566.5" class="chip" fill="#fff">DF-07</text>
+<rect x="3143.5" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="3164.8" y="566.5" class="chip" fill="#fff">DF-41</text>
+<line x1="3204.0" y1="586" x2="3204.0" y2="609.0" class="w"/>
+<line x1="3060.0" y1="609.0" x2="3348.0" y2="609.0" class="w"/>
+<line x1="3060.0" y1="609.0" x2="3060.0" y2="683.0" class="w"/><path d="M3060.0,683.0 L3055.9,673.9 L3064.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="3204.0" y1="609.0" x2="3204.0" y2="683.0" class="w"/><path d="M3204.0,683.0 L3199.9,673.9 L3208.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="3348.0" y1="609.0" x2="3348.0" y2="683.0" class="w"/><path d="M3348.0,683.0 L3343.9,673.9 L3352.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="3060.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="3060.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="3060.0" y="712.0" class="sid" fill="#1d2433">Sn-01</text>
+<text x="3060.0" y="750" class="cs">Functional safety</text>
+<text x="3060.0" y="764" class="cs">requirements</text>
+<text x="3060.0" y="778" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="3204.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="3204.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="3204.0" y="712.0" class="sid" fill="#1d2433">Sn-14</text>
+<text x="3204.0" y="750" class="cs">SW integration /</text>
+<text x="3204.0" y="764" class="cs">process replay</text>
+<circle cx="3348.0" cy="708.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="3348.0" y="712.0" class="sid" fill="#b3261e">Sn-13</text>
+<text x="3348.0" y="750" class="cs">Fault injection</text>
+<rect x="3659.5" y="496.5" width="244" height="114" rx="4" class="shadow"/>
+<rect x="3658.0" y="494" width="244" height="114" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M3662.0,494 H3898.0 A4,4 0 0 1 3902.0,498 V500 H3658.0 V498 A4,4 0 0 1 3662.0,494 Z" fill="#c62828"/>
+<text x="3672.0" y="519" class="id" text-anchor="start">G1.7</text>
+<text x="3888.0" y="519" class="kind">GOAL</text>
+<text x="3672.0" y="533" class="d">SG-07 (stock PCS preserved, B) is</text>
+<text x="3672.0" y="547" class="d">met.</text>
+<rect x="3672.0" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="3693.2" y="566.5" class="chip" fill="#fff">DF-11</text>
+<rect x="3719.5" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="3740.8" y="566.5" class="chip" fill="#fff">DF-12</text>
+<rect x="3767.0" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="3788.2" y="566.5" class="chip" fill="#fff">DF-14</text>
+<rect x="3814.5" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="3835.8" y="566.5" class="chip" fill="#fff">DF-32</text>
+<rect x="3672.0" y="577.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="3693.2" y="588.5" class="chip" fill="#fff">DF-33</text>
+<rect x="3719.5" y="577.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="3740.8" y="588.5" class="chip" fill="#fff">DF-38</text>
+<rect x="3767.0" y="577.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="3788.2" y="588.5" class="chip" fill="#fff">DF-39</text>
+<ellipse cx="4012.0" cy="521.0" rx="98.0" ry="32.0" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<circle cx="4102.0" cy="550" r="9" fill="#7a4f00"/>
+<text x="4102.0" y="554" class="aj">A</text>
+<text x="4012.0" y="515" class="cid" fill="#7a4f00">Assumption</text>
+<text x="4012.0" y="529" class="cs">AOU-04 hold (WP-K-01 §5)</text>
+<line x1="3902.0" y1="516" x2="3907.0" y2="516" class="wc"/>
+<line x1="3907.0" y1="516" x2="3907.0" y2="521.0" class="wc"/>
+<line x1="3907.0" y1="521.0" x2="3913.0" y2="521.0" class="wc"/><path d="M3913.0,521.0 L3903.9,525.1 L3903.9,516.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="3780.0" y1="608" x2="3780.0" y2="631.0" class="w"/>
+<line x1="3492.0" y1="631.0" x2="4068.0" y2="631.0" class="w"/>
+<line x1="3492.0" y1="631.0" x2="3492.0" y2="683.0" class="w"/><path d="M3492.0,683.0 L3487.9,673.9 L3496.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="3636.0" y1="631.0" x2="3636.0" y2="683.0" class="w"/><path d="M3636.0,683.0 L3631.9,673.9 L3640.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="3780.0" y1="631.0" x2="3780.0" y2="683.0" class="w"/><path d="M3780.0,683.0 L3775.9,673.9 L3784.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="3924.0" y1="631.0" x2="3924.0" y2="683.0" class="w"/><path d="M3924.0,683.0 L3919.9,673.9 L3928.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="4068.0" y1="631.0" x2="4068.0" y2="683.0" class="w"/><path d="M4068.0,683.0 L4063.9,673.9 L4072.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="3492.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="3492.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="3492.0" y="712.0" class="sid" fill="#1d2433">Sn-01</text>
+<text x="3492.0" y="750" class="cs">Functional safety</text>
+<text x="3492.0" y="764" class="cs">requirements</text>
+<text x="3492.0" y="778" class="cs">FSR-01.01…FSR-07.05</text>
+<circle cx="3636.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="3636.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="3636.0" y="712.0" class="sid" fill="#1d2433">Sn-02</text>
+<text x="3636.0" y="750" class="cs">Technical safety</text>
+<text x="3636.0" y="764" class="cs">requirements</text>
+<circle cx="3780.0" cy="708.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="3780.0" y="712.0" class="sid" fill="#b3261e">Sn-23</text>
+<text x="3780.0" y="750" class="cs">Stock PCS target test</text>
+<text x="3780.0" y="764" class="cs">(AOU-04)</text>
+<circle cx="3924.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="3924.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="3924.0" y="712.0" class="sid" fill="#1d2433">Sn-30</text>
+<text x="3924.0" y="750" class="cs">Installation and</text>
+<text x="3924.0" y="764" class="cs">provisioning control;</text>
+<text x="3924.0" y="778" class="cs">installation records</text>
+<circle cx="4068.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="4068.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="4068.0" y="712.0" class="sid" fill="#1d2433">Sn-15</text>
+<text x="4068.0" y="750" class="cs">panda firmware host</text>
+<text x="4068.0" y="764" class="cs">unit tests (watchdog,</text>
+<text x="4068.0" y="778" class="cs">heartbeat monitor,</text>
+<text x="4068.0" y="792" class="cs">heartbeat-loss siren…</text>
+<rect x="4235.5" y="496.5" width="244" height="136" rx="4" class="shadow"/>
+<rect x="4234.0" y="494" width="244" height="136" rx="4" fill="#fdf5e1" stroke="#ecc77a" stroke-width="1.2"/>
+<path d="M4238.0,494 H4474.0 A4,4 0 0 1 4478.0,498 V500 H4234.0 V498 A4,4 0 0 1 4238.0,494 Z" fill="#e0a21b"/>
+<text x="4248.0" y="519" class="id" text-anchor="start">G1.8</text>
+<text x="4464.0" y="519" class="kind">GOAL</text>
+<text x="4248.0" y="533" class="d">The QM SoC stack cannot interfere</text>
+<text x="4248.0" y="547" class="d">with the envelope (FFI).</text>
+<rect x="4248.0" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4269.2" y="566.5" class="chip" fill="#fff">DF-03</text>
+<rect x="4295.5" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4316.8" y="566.5" class="chip" fill="#fff">DF-12</text>
+<rect x="4343.0" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4364.2" y="566.5" class="chip" fill="#fff">DF-06</text>
+<rect x="4390.5" y="555.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4411.8" y="566.5" class="chip" fill="#fff">DF-18</text>
+<rect x="4248.0" y="577.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4269.2" y="588.5" class="chip" fill="#fff">DF-22</text>
+<rect x="4295.5" y="577.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4316.8" y="588.5" class="chip" fill="#fff">DF-29</text>
+<rect x="4343.0" y="577.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4364.2" y="588.5" class="chip" fill="#fff">DF-32</text>
+<rect x="4390.5" y="577.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4411.8" y="588.5" class="chip" fill="#fff">DF-34</text>
+<rect x="4248.0" y="599.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4269.2" y="610.5" class="chip" fill="#fff">DF-37</text>
+<rect x="4295.5" y="599.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4316.8" y="610.5" class="chip" fill="#fff">DF-39</text>
+<rect x="4343.0" y="599.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4364.2" y="610.5" class="chip" fill="#fff">DF-40</text>
+<line x1="4356.0" y1="630" x2="4356.0" y2="653.0" class="w"/>
+<line x1="4212.0" y1="653.0" x2="4500.0" y2="653.0" class="w"/>
+<line x1="4212.0" y1="653.0" x2="4212.0" y2="683.0" class="w"/><path d="M4212.0,683.0 L4207.9,673.9 L4216.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="4356.0" y1="653.0" x2="4356.0" y2="683.0" class="w"/><path d="M4356.0,683.0 L4351.9,673.9 L4360.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="4500.0" y1="653.0" x2="4500.0" y2="683.0" class="w"/><path d="M4500.0,683.0 L4495.9,673.9 L4504.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="4212.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="4212.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="4212.0" y="712.0" class="sid" fill="#1d2433">Sn-05</text>
+<text x="4212.0" y="750" class="cs">FFI analysis</text>
+<circle cx="4356.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="4356.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="4356.0" y="712.0" class="sid" fill="#1d2433">Sn-06</text>
+<text x="4356.0" y="750" class="cs">Dependent failure</text>
+<text x="4356.0" y="764" class="cs">analysis</text>
+<circle cx="4500.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="4500.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="4500.0" y="712.0" class="sid" fill="#1d2433">Sn-15</text>
+<text x="4500.0" y="750" class="cs">panda firmware host</text>
+<text x="4500.0" y="764" class="cs">unit tests (watchdog,</text>
+<text x="4500.0" y="778" class="cs">heartbeat monitor,</text>
+<text x="4500.0" y="792" class="cs">heartbeat-loss siren…</text>
+<rect x="4739.5" y="496.5" width="244" height="120" rx="4" class="shadow"/>
+<rect x="4738.0" y="494" width="244" height="120" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M4742.0,494 H4978.0 A4,4 0 0 1 4982.0,498 V500 H4738.0 V498 A4,4 0 0 1 4742.0,494 Z" fill="#c62828"/>
+<text x="4752.0" y="519" class="id" text-anchor="start">G1.9</text>
+<text x="4968.0" y="519" class="kind">GOAL</text>
+<text x="4752.0" y="533" class="d">Random hardware failures of the</text>
+<text x="4752.0" y="547" class="d">panda MCU, relay, power and harness</text>
+<text x="4752.0" y="561" class="d">are sufficiently controlled for the</text>
+<text x="4752.0" y="575" class="d">target ASIL.</text>
+<rect x="4752.0" y="583.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4773.2" y="594.5" class="chip" fill="#fff">DF-04</text>
+<rect x="4799.5" y="583.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4820.8" y="594.5" class="chip" fill="#fff">DF-13</text>
+<rect x="4847.0" y="583.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4868.2" y="594.5" class="chip" fill="#fff">DF-01</text>
+<rect x="4894.5" y="583.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="4915.8" y="594.5" class="chip" fill="#fff">DF-33</text>
+<line x1="4860.0" y1="614" x2="4860.0" y2="637.0" class="w"/>
+<line x1="4644.0" y1="637.0" x2="5076.0" y2="637.0" class="w"/>
+<line x1="4644.0" y1="637.0" x2="4644.0" y2="683.0" class="w"/><path d="M4644.0,683.0 L4639.9,673.9 L4648.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="4788.0" y1="637.0" x2="4788.0" y2="683.0" class="w"/><path d="M4788.0,683.0 L4783.9,673.9 L4792.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="4932.0" y1="637.0" x2="4932.0" y2="683.0" class="w"/><path d="M4932.0,683.0 L4927.9,673.9 L4936.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="5076.0" y1="637.0" x2="5076.0" y2="683.0" class="w"/><path d="M5076.0,683.0 L5071.9,673.9 L5080.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="4644.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="4644.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="4644.0" y="712.0" class="sid" fill="#1d2433">Sn-07</text>
+<text x="4644.0" y="750" class="cs">Hardware FMEDA</text>
+<circle cx="4788.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="4788.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="4788.0" y="712.0" class="sid" fill="#1d2433">Sn-08</text>
+<text x="4788.0" y="750" class="cs">Hardware</text>
+<text x="4788.0" y="764" class="cs">architectural metrics</text>
+<circle cx="4932.0" cy="710.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="4932.0" cy="708.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="4932.0" y="712.0" class="sid" fill="#1d2433">Sn-09</text>
+<text x="4932.0" y="750" class="cs">Random HW failure</text>
+<text x="4932.0" y="764" class="cs">evaluation</text>
+<circle cx="5076.0" cy="708.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="5076.0" y="712.0" class="sid" fill="#b3261e">Sn-11</text>
+<text x="5076.0" y="750" class="cs">HW component</text>
+<text x="5076.0" y="764" class="cs">qualification</text>
+<rect x="5243.5" y="496.5" width="244" height="106" rx="4" class="shadow"/>
+<rect x="5242.0" y="494" width="244" height="106" rx="4" fill="#fdecec" stroke="#eba9a9" stroke-width="1.2"/>
+<path d="M5246.0,494 H5482.0 A4,4 0 0 1 5486.0,498 V500 H5242.0 V498 A4,4 0 0 1 5246.0,494 Z" fill="#c62828"/>
+<text x="5256.0" y="519" class="id" text-anchor="start">G1.10</text>
+<text x="5472.0" y="519" class="kind">GOAL</text>
+<text x="5256.0" y="533" class="d">The assumptions credited in</text>
+<text x="5256.0" y="547" class="d">controllability (AOU-01/02/03/05)</text>
+<text x="5256.0" y="561" class="d">are verified.</text>
+<rect x="5256.0" y="569.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="5277.2" y="580.5" class="chip" fill="#fff">DF-14</text>
+<ellipse cx="5596.0" cy="528.0" rx="98.0" ry="39.0" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<circle cx="5686.0" cy="564" r="9" fill="#7a4f00"/>
+<text x="5686.0" y="568" class="aj">A</text>
+<text x="5596.0" y="515" class="cid" fill="#7a4f00">Assumption</text>
+<text x="5596.0" y="529" class="cs">AOU-01, AOU-02, AOU-03,</text>
+<text x="5596.0" y="543" class="cs">AOU-05 hold (WP-K-01 §5)</text>
+<line x1="5486.0" y1="516" x2="5491.0" y2="516" class="wc"/>
+<line x1="5491.0" y1="516" x2="5491.0" y2="528.0" class="wc"/>
+<line x1="5491.0" y1="528.0" x2="5497.0" y2="528.0" class="wc"/><path d="M5497.0,528.0 L5487.9,532.1 L5487.9,523.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<line x1="5364.0" y1="600" x2="5364.0" y2="623.0" class="w"/>
+<line x1="5220.0" y1="623.0" x2="5508.0" y2="623.0" class="w"/>
+<line x1="5220.0" y1="623.0" x2="5220.0" y2="683.0" class="w"/><path d="M5220.0,683.0 L5215.9,673.9 L5224.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="5364.0" y1="623.0" x2="5364.0" y2="683.0" class="w"/><path d="M5364.0,683.0 L5359.9,673.9 L5368.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<line x1="5508.0" y1="623.0" x2="5508.0" y2="683.0" class="w"/><path d="M5508.0,683.0 L5503.9,673.9 L5512.1,673.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<circle cx="5220.0" cy="708.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="5220.0" y="712.0" class="sid" fill="#b3261e">Sn-20</text>
+<text x="5220.0" y="750" class="cs">Vehicle</text>
+<text x="5220.0" y="764" class="cs">controllability and</text>
+<text x="5220.0" y="778" class="cs">EPS characterisation</text>
+<text x="5220.0" y="792" class="cs">(AOU-01/02)</text>
+<circle cx="5364.0" cy="708.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="5364.0" y="712.0" class="sid" fill="#b3261e">Sn-21</text>
+<text x="5364.0" y="750" class="cs">PCM ACC envelope test</text>
+<text x="5364.0" y="764" class="cs">(AOU-05)</text>
+<circle cx="5508.0" cy="708.0" r="24.0" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="5508.0" y="712.0" class="sid" fill="#b3261e">Sn-22</text>
+<text x="5508.0" y="750" class="cs">Brake override test</text>
+<text x="5508.0" y="764" class="cs">(AOU-03)</text>
+<circle cx="5778.0" cy="382.0" r="24.0" fill="#0f172a" opacity=".10"/>
+<circle cx="5778.0" cy="380.0" r="24.0" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="5778.0" y="384.0" class="sid" fill="#1d2433">Sn-49</text>
+<text x="5778.0" y="422" class="cs">Hazard analysis and</text>
+<text x="5778.0" y="436" class="cs">risk assessment</text>
+<text x="40" y="854" class="lh">Notation · GSN Community Standard v3</text>
+<rect x="48" y="870" width="52" height="30" rx="4" fill="#fdf5e1" stroke="#ecc77a"/>
+<rect x="48" y="870" width="52" height="5" rx="2" fill="#e0a21b"/>
+<text x="74" y="918" class="s" text-anchor="middle">Goal</text>
+<path d="M148,870 L194,870 L184,900 L138,900 Z" fill="#e4e7fb" stroke="#4b5bb7" stroke-width="1.4"/>
+<text x="166" y="918" class="s" text-anchor="middle">Strategy</text>
+<rect x="232" y="871" width="52" height="28" rx="14" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
+<text x="258" y="918" class="s" text-anchor="middle">Context</text>
+<ellipse cx="350" cy="885" rx="27" ry="14" fill="#fbeccd" stroke="#c9963a" stroke-width="1.2"/>
+<text x="350" y="889" class="cid" fill="#7a4f00">A</text>
+<text x="350" y="918" class="s" text-anchor="middle">Assumption</text>
+<ellipse cx="442" cy="885" rx="27" ry="14" fill="#dcefe0" stroke="#5f9f6d" stroke-width="1.2"/>
+<text x="442" y="889" class="cid" fill="#245a31">J</text>
+<text x="442" y="918" class="s" text-anchor="middle">Justification</text>
+<path d="M534,874 L545,885 L534,896 L523,885 Z" fill="#fff" stroke="#1d2433" stroke-width="1.4"/>
+<text x="534" y="918" class="s" text-anchor="middle">Undeveloped</text>
+<text x="40" y="961" class="lb">Solution</text>
+<circle cx="166" cy="959" r="14" fill="#0f172a" opacity=".10"/>
+<circle cx="166" cy="957" r="14" fill="#2e7d32" stroke="#1b5e20" stroke-width="1.8"/>
+<circle cx="166" cy="957" r="10" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="1.2"/>
+<text x="166" y="990" class="s" text-anchor="middle">Available</text>
+<circle cx="258" cy="959" r="14" fill="#0f172a" opacity=".10"/>
+<circle cx="258" cy="957" r="14" fill="#f2b233" stroke="#9a6b00" stroke-width="1.8"/>
+<text x="258" y="990" class="s" text-anchor="middle">Partial</text>
+<circle cx="350" cy="957" r="14" fill="#ffffff" stroke="#b3261e" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="350" y="990" class="s" text-anchor="middle">Missing</text>
+<line x1="40.0" y1="1022.0" x2="84.0" y2="1022.0" class="w"/><path d="M84.0,1022.0 L74.9,1026.1 L74.9,1017.9 Z" fill="#1d2433" stroke="#1d2433" stroke-width="1" stroke-linejoin="round"/>
+<text x="94" y="1026" class="s">SupportedBy</text>
+<line x1="190.0" y1="1022.0" x2="234.0" y2="1022.0" class="wc"/><path d="M234.0,1022.0 L224.9,1026.1 L224.9,1017.9 Z" fill="#fff" stroke="#7d8798" stroke-width="1.3" stroke-linejoin="round"/>
+<text x="244" y="1026" class="s">InContextOf</text>
+<rect x="340.0" y="1014.0" width="42.5" height="16" rx="8" fill="#c62828"/>
+<text x="361.2" y="1025.5" class="chip" fill="#fff">DF-nn</text>
+<text x="390.5" y="1026" class="s">open defeater on the goal</text>
+<text x="40" y="1052" class="lb">Goal colour: the evidence below it, on every sheet</text>
+<rect x="40" y="1060" width="26" height="14" rx="3" fill="#edf7ee" stroke="#9fcfa3"/>
+<rect x="40" y="1060" width="26" height="4" rx="2" fill="#2e7d32"/>
+<text x="72" y="1071" class="s">all evidence available</text>
+<rect x="211.2" y="1060" width="26" height="14" rx="3" fill="#fdf5e1" stroke="#ecc77a"/>
+<rect x="211.2" y="1060" width="26" height="4" rx="2" fill="#e0a21b"/>
+<text x="243.2" y="1071" class="s">evidence partial</text>
+<rect x="348.79999999999995" y="1060" width="26" height="14" rx="3" fill="#fdecec" stroke="#eba9a9"/>
+<rect x="348.79999999999995" y="1060" width="26" height="4" rx="2" fill="#c62828"/>
+<text x="380.79999999999995" y="1071" class="s">evidence missing</text>
+<rect x="486.4" y="1060" width="26" height="14" rx="3" fill="#f1f3f6" stroke="#c9cfd8"/>
+<rect x="486.4" y="1060" width="26" height="4" rx="2" fill="#8a93a3"/>
+<text x="518.4" y="1071" class="s">not developed</text>
+<rect x="5318.0" y="840" width="520" height="250" rx="10" fill="#fff" stroke="#d9dee6"/>
+<line x1="5318.0" y1="886" x2="5838.0" y2="886" stroke="#d9dee6"/>
+<line x1="5648.0" y1="886" x2="5648.0" y2="1090" stroke="#d9dee6"/>
+<text x="5336.0" y="869" class="tbh">LionDriver · Safety case</text>
+<rect x="5688.0" y="854" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
+<text x="5754.0" y="868" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
+<text x="5336.0" y="912" class="k">ARGUMENT FROM</text>
+<text x="5440.0" y="912" class="v">G1</text>
+<text x="5336.0" y="938" class="k">SOURCE</text>
+<text x="5440.0" y="938" class="v">case records (assurance/case/)</text>
+<text x="5440.0" y="953" class="v">and WP-K-01 contexts</text>
+<text x="5336.0" y="979" class="k">GENERATED BY</text>
+<text x="5440.0" y="979" class="v">gsn_diagrams.py</text>
+<text x="5336.0" y="1005" class="k">EDIT</text>
+<text x="5440.0" y="1005" class="v">the source, not this file</text>
+<text x="5336.0" y="1035" class="k">EVIDENCE ON THIS SHEET</text>
+<rect x="5336.0" y="1043" width="201.6" height="10" fill="#f2b233" stroke="#9a6b00" stroke-width=".8"/>
+<rect x="5537.6" y="1043" width="92.4" height="10" fill="#ffffff" stroke="#b3261e" stroke-width=".8"/>
+<text x="5336.0" y="1069" class="s">0 available · 24 partial · 11 missing</text>
+<text x="5664.0" y="910" class="k">SHEETS</text>
+<line x1="5743.0" y1="947.0" x2="5679.2" y2="961.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="5679.2" y1="981.0" x2="5743.0" y2="995.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="5743.0" y1="947.0" x2="5721.8" y2="961.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="5743.0" y1="947.0" x2="5764.2" y2="961.0" stroke="#7d8798" stroke-width="1.3"/>
+<line x1="5743.0" y1="947.0" x2="5806.8" y2="961.0" stroke="#7d8798" stroke-width="1.3"/>
+<rect x="5729.0" y="927.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="5743.0" y="941.0" class="mm" fill="#0f2a44">1</text>
+<rect x="5665.2" y="961.0" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="5679.2" y="975.0" class="mm" fill="#fff">2</text>
+<rect x="5707.8" y="961.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="5721.8" y="975.0" class="mm" fill="#0f2a44">4</text>
+<rect x="5750.2" y="961.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="5764.2" y="975.0" class="mm" fill="#0f2a44">5</text>
+<rect x="5792.8" y="961.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="5806.8" y="975.0" class="mm" fill="#0f2a44">6</text>
+<rect x="5729.0" y="995.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="5743.0" y="1009.0" class="mm" fill="#0f2a44">3</text>
+</svg>

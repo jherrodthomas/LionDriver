@@ -1,0 +1,70 @@
+# Integration and verification phase (gate G4). Format: assurance/process/README.md §3.
+# Clause references are read from the WP-M-00 register row of each produced work product.
+# Every G4 work product is a specification today; no result has been recorded. Hardware, embedded
+# software and system integration all run on the LionDriver HIL bench defined in WP-H-06 §2
+# (decision D-04, one bench agreed in IX-20), which does not exist yet and is due by G3.
+
+- id: INT-01
+  kind: activity
+  phase: G4
+  lane: hw
+  name: "Hardware integration and verification (defines the HIL bench)"
+  produces: [WP-H-06]
+  inputs: [WP-H-01, WP-H-02, WP-H-03, WP-H-07]
+  handbook_wp: [WP-6]
+- id: INT-02
+  kind: activity
+  phase: G4
+  lane: sw
+  name: "Software integration and verification"
+  produces: [WP-W-07]
+  inputs: [WP-W-02, WP-W-03, WP-W-05, WP-W-06]
+  handbook_wp: [WP-6]
+- id: INT-03
+  kind: activity
+  phase: G4
+  lane: sw
+  name: "Embedded software testing on target (HIL)"
+  produces: [WP-W-08]
+  inputs: [WP-W-02, WP-H-06, WP-W-07]
+  handbook_wp: [WP-6]
+- id: INT-04
+  kind: activity
+  phase: G4
+  lane: fusa
+  name: "Fault injection campaign"
+  produces: [WP-V-05]
+  inputs: [WP-C-04, WP-S-02, WP-S-04, WP-A-02, WP-A-03, WP-A-04, WP-H-06]
+  handbook_wp: [WP-6]
+- id: INT-05
+  kind: activity
+  phase: G4
+  lane: fusa
+  name: "System integration and testing on the bench"
+  produces: [WP-S-08]
+  inputs: [WP-S-02, WP-S-03, WP-S-05, WP-H-06, WP-W-08, WP-V-05]
+  handbook_wp: [WP-6]
+- id: INT-06
+  kind: activity
+  phase: G4
+  lane: sotif
+  name: "Evaluate known hazardous scenarios"
+  produces: [WP-V-03]
+  inputs: [WP-C-02, WP-C-06, WP-V-02, WP-V-07, WP-W-10]
+  handbook_wp: [WP-6]
+- id: INT-07
+  kind: activity
+  phase: G4
+  lane: joint
+  name: "System verification in the reference vehicle"
+  produces: [WP-S-09]
+  inputs: [WP-C-08, WP-S-01, WP-S-02, WP-V-07, WP-S-08, WP-V-05, WP-V-03]
+  handbook_wp: [WP-6]
+
+# Confirmation measures planned for G4 (WP-M-06 §9): the second functional safety audit.
+- id: AUD-2
+  kind: review
+  phase: G4
+  name: "Functional safety audit (development, verification, tool use)"
+  covers: [WP-M-02, WP-M-05, WP-P-07]
+  independence: I3

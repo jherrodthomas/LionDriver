@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-3. Power path from the vehicle 12 V supply to the SoC, the panda MCU and the relay coil (WP-H-02 §3.4)</title>
+  <desc id="d">Vehicle 12 V passes through the E-05 harness to the device input, whose protection is unknown (UK-08). From the device input three branches leave: on cuatro, the DC_IN enable on PC11 switches the SoC/PMIC rail that feeds the QM application SoC; an MCU regulator of unknown type feeds the STM32H7, which uses its internal SMPS or LDO (HE-05); and the relay coil supply, whose location (possibly in the harness box) is unknown (UK-03), feeds the intercept relay coil (HE-08). The MCU can switch SoC power through bootkick (HE-13) and keeps running with the SoC off. Whether MCU and SoC share a regulator (UK-05) and whether there is a supply supervisor is unknown.</desc>
+  <defs>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aY" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#A16207"/></marker>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+      .ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .unk{fill:#FFFFFF;stroke:#64748B;stroke-width:1.2;stroke-dasharray:5 3}
+      .he{fill:#C2410C;font-size:10px;font-weight:700;letter-spacing:.03em}
+      .tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+      .pw{fill:none;stroke:#A16207;stroke-width:2.2;stroke-dasharray:2 4;stroke-linecap:round}
+      .pwu{fill:none;stroke:#A16207;stroke-width:1.6;stroke-dasharray:2 4;stroke-linecap:round;opacity:.75}
+    </style>
+  </defs>
+
+  <rect width="1000" height="560" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 3-3 · Power path</text>
+  <text x="40" y="66" class="m" font-size="12.5">Vehicle 12 V to SoC, panda MCU and relay coil · dashed boxes are unknown or unconfirmed</text>
+  <text x="960" y="44" class="m s" text-anchor="end">WP-H-02 §3.4</text>
+  <text x="960" y="62" class="m s" text-anchor="end">elements §3.2 · unknowns §5</text>
+  <line x1="40" y1="82" x2="960" y2="82" stroke="#E2E8F0"/>
+
+  <!-- vehicle + harness -->
+  <rect x="40" y="200" width="110" height="56" rx="8" class="ext"/>
+  <text x="95" y="224" class="t sb" font-size="12.5" text-anchor="middle">Vehicle 12 V</text>
+  <text x="95" y="240" class="m xs" text-anchor="middle">supply, GND</text>
+  <rect x="210" y="200" width="110" height="56" rx="8" class="box"/>
+  <text x="265" y="224" class="t sb" font-size="12.5" text-anchor="middle">E-05 harness</text>
+  <text x="265" y="240" class="m xs" text-anchor="middle">connector <tspan class="he">HE-09</tspan></text>
+
+  <!-- device container -->
+  <rect x="360" y="104" width="600" height="290" rx="12" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
+  <text x="376" y="125" class="t b" font-size="13">E-04 comma device</text>
+
+  <!-- device input -->
+  <rect x="380" y="196" width="120" height="64" rx="8" class="unk"/>
+  <text x="440" y="218" class="t sb" font-size="12" text-anchor="middle">Device input</text>
+  <text x="440" y="234" class="m xs" text-anchor="middle">protection unknown</text>
+  <text x="440" y="248" class="m xs" text-anchor="middle">UK-08</text>
+
+  <!-- row 1: SoC domain -->
+  <rect x="560" y="132" width="160" height="48" rx="8" class="box"/>
+  <text x="640" y="152" class="t sb" font-size="12" text-anchor="middle">DC_IN enable · PC11</text>
+  <text x="640" y="168" class="m xs" text-anchor="middle">cuatro only</text>
+  <rect x="770" y="132" width="170" height="48" rx="8" class="box"/>
+  <text x="855" y="152" class="t sb" font-size="12" text-anchor="middle">SoC / PMIC rail</text>
+  <text x="855" y="168" class="m xs" text-anchor="middle">application SoC · QM</text>
+
+  <!-- row 2: MCU domain -->
+  <rect x="560" y="236" width="160" height="48" rx="8" class="unk"/>
+  <text x="640" y="256" class="t sb" font-size="12" text-anchor="middle">MCU regulator</text>
+  <text x="640" y="272" class="m xs" text-anchor="middle">board part unknown</text>
+  <rect x="770" y="236" width="170" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+  <text x="855" y="256" class="t sb" font-size="12" text-anchor="middle">STM32H7 <tspan class="he">HE-05</tspan></text>
+  <text x="855" y="272" class="m xs" text-anchor="middle">internal SMPS or LDO</text>
+
+  <!-- notes -->
+  <text x="560" y="322" class="m xs"><tspan class="t sb">Known:</tspan> the MCU runs with the SoC off (stop mode,</text>
+  <text x="560" y="336" class="m xs">CAN/SBU wake on cuatro) and can switch SoC power.</text>
+  <text x="560" y="354" class="m xs"><tspan class="t sb">Unknown:</tspan> shared MCU/SoC regulator (UK-05), supply</text>
+  <text x="560" y="368" class="m xs">supervisor, input protection (load dump, reverse polarity,</text>
+  <text x="560" y="382" class="m xs">UK-08). They set common cause: GAP-11, HWSR-502a.</text>
+
+  <!-- row 3: relay coil (outside the device) -->
+  <rect x="560" y="414" width="160" height="48" rx="8" class="unk"/>
+  <text x="640" y="434" class="t sb" font-size="12" text-anchor="middle">Relay coil supply</text>
+  <text x="640" y="450" class="m xs" text-anchor="middle">in harness box? UK-03</text>
+  <rect x="770" y="414" width="170" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
+  <text x="855" y="434" class="t sb" font-size="12" text-anchor="middle">Relay coil <tspan class="he">HE-08</tspan></text>
+  <text x="855" y="450" class="m xs" text-anchor="middle">E-05 harness relay box</text>
+
+  <!-- ===== power connections ===== -->
+  <path d="M150 228 H208" class="pw" marker-end="url(#aY)"/>
+  <path d="M320 228 H378" class="pw" marker-end="url(#aY)"/>
+  <path d="M500 228 H530" class="pw"/>
+  <path d="M530 156 V228" class="pw"/>
+  <path d="M530 156 H558" class="pw" marker-end="url(#aY)"/>
+  <path d="M530 228 V260 H558" class="pw" marker-end="url(#aY)"/>
+  <path d="M530 260 V438 H558" class="pwu" marker-end="url(#aY)"/>
+  <path d="M720 156 H768" class="pw" marker-end="url(#aY)"/>
+  <path d="M720 260 H768" class="pw" marker-end="url(#aY)"/>
+  <path d="M720 438 H768" class="pwu" marker-end="url(#aY)"/>
+  <circle cx="530" cy="228" r="3.5" fill="#A16207"/>
+  <circle cx="530" cy="260" r="3.5" fill="#A16207"/>
+  <g class="tag"><rect x="156" y="202" width="46" height="18" rx="9" fill="#A16207"/><text x="179" y="215" fill="#fff" text-anchor="middle">IF-08</text></g>
+
+  <!-- control: bootkick, MCU switches SoC power -->
+  <path d="M900 236 V208 H640 V182" fill="none" stroke="#475569" stroke-width="1.4" marker-end="url(#aG)"/>
+  <text x="652" y="224" class="m xs">bootkick <tspan font-weight="700">HE-13</tspan>: MCU switches SoC power</text>
+
+  <!-- domain labels -->
+  <text x="948" y="125" fill="#475569" font-size="10" font-weight="700" text-anchor="end" letter-spacing=".04em">SOC DOMAIN · QM ↓</text>
+  <text x="948" y="298" fill="#C2410C" font-size="10" font-weight="700" text-anchor="end" letter-spacing=".04em">↑ MCU DOMAIN · SAFETY</text>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="494" x2="960" y2="494" stroke="#E2E8F0"/>
+  <g transform="translate(40,520)" font-size="10.5">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#A16207" stroke-width="2.2" stroke-dasharray="2 4" stroke-linecap="round"/><text x="36" y="4" class="t">Power</text>
+    <line x1="92" y1="0" x2="120" y2="0" stroke="#A16207" stroke-width="1.6" stroke-dasharray="2 4" stroke-linecap="round" opacity=".75"/><text x="128" y="4" class="t">Power, path unconfirmed</text>
+    <line x1="282" y1="0" x2="310" y2="0" stroke="#475569" stroke-width="1.4"/><text x="318" y="4" class="t">Control signal</text>
+    <rect x="420" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#64748B" stroke-dasharray="5 3"/><text x="456" y="4" class="t">Unknown / to confirm</text>
+    <rect x="590" y="-8" width="28" height="16" rx="4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/><text x="626" y="4" class="t">Safety-relevant HW</text>
+    <rect x="752" y="-8" width="28" height="16" rx="4" fill="#F1F5F9" stroke="#94A3B8"/><text x="788" y="4" class="t">Vehicle (outside)</text>
+  </g>
+</svg>

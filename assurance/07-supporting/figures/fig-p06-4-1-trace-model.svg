@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 4-1. Trace model (WP-P-06 §4)</title>
+  <desc id="d">Five lanes. FuSa: H/HS to SG to FSR to TSR; TSR to SWSR to code (C/Python) to unit test, code to SW integration test; TSR to HWSR to HW design to HW test; TSR to system test, HIL or vehicle test; FSR and TSR to AOU (assumptions on driver and vehicle ECUs). CS: TS to CSG to CSR to SWSR/HWSR or CSR(impl) to code to CS test or pen test (WP-V-06); CSG is linked both ways with SG where an attack causes a safety hazard. SOTIF: SH to TC/FI to FM (functional modification) to SYS/TSR/AIR to V&amp;V scenario (WP-V-03/04); SH shares HS rows with the HARA in one hazard log. AI: FI to AIR to model or dataset requirement to model test (WP-W-10). Problems and changes: issue #n to the requirement IDs affected (WP-P-02, WP-P-03).</desc>
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
+    <marker id="aV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2E9E6A"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7C3AED"/></marker>
+    <marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#B45309"/></marker>
+    <style>
+      .t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.b{font-weight:700}.sb{font-weight:600}
+      .box{fill:#FFFFFF;stroke:#94A3B8;stroke-width:1.2}
+      .ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+      .code{fill:#F8FAFC;stroke:#0F766E;stroke-width:1.2}
+      .test{fill:#F0FDF4;stroke:#2E9E6A;stroke-width:1.2}
+      .ml{fill:#EEF2FF;stroke:#A5B4FC;stroke-width:1.2}
+      .lane{fill:#F8FAFC;stroke:#E2E8F0;stroke-width:1}
+      .id{font-size:12px;font-weight:700;fill:#0F172A}
+      .d{font-size:9.5px;fill:#475569}
+      .g{fill:none;stroke:#475569;stroke-width:1.4}
+      .i{fill:none;stroke:#0F766E;stroke-width:1.6}
+      .v{fill:none;stroke:#2E9E6A;stroke-width:1.6}
+    </style>
+  </defs>
+
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+
+  <!-- header -->
+  <text x="40" y="44" class="t b" font-size="20">Figure 4-1 · Trace model</text>
+  <text x="40" y="66" class="m" font-size="12.5">Requirement chains per domain, from source analysis to verification, with the links between domains</text>
+  <text x="1240" y="44" class="m s" text-anchor="end">WP-P-06 §4</text>
+  <text x="1240" y="62" class="m s" text-anchor="end">link storage: §4 table, §5</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
+
+  <!-- lanes -->
+  <rect x="40" y="100" width="1200" height="216" rx="10" class="lane"/>
+  <text x="56" y="128" class="t b" font-size="13">FuSa</text>
+  <text x="56" y="143" class="m xs">ISO 26262</text>
+  <rect x="40" y="324" width="1200" height="66" rx="10" class="lane"/>
+  <text x="56" y="352" class="t b" font-size="13">CS</text>
+  <text x="56" y="367" class="m xs">ISO/SAE 21434</text>
+  <rect x="40" y="398" width="1200" height="78" rx="10" class="lane"/>
+  <text x="56" y="424" class="t b" font-size="13">SOTIF</text>
+  <text x="56" y="439" class="m xs">ISO 21448</text>
+  <rect x="40" y="484" width="1200" height="66" rx="10" class="lane"/>
+  <text x="56" y="512" class="t b" font-size="13">AI</text>
+  <text x="56" y="527" class="m xs">ISO/PAS 8800</text>
+  <rect x="40" y="558" width="1200" height="66" rx="10" class="lane"/>
+  <text x="56" y="582" class="t b" font-size="12">Problems</text>
+  <text x="56" y="597" class="t b" font-size="12">and changes</text>
+
+  <!-- ===== FuSa ===== -->
+  <!-- row a (y 118-154) -->
+  <rect x="160" y="118" width="124" height="36" rx="7" class="ext"/>
+  <text x="172" y="134" class="id">H / HS</text><text x="172" y="147" class="d">hazard log (HARA)</text>
+  <rect x="314" y="118" width="124" height="36" rx="7" class="box"/>
+  <text x="326" y="134" class="id">SG</text><text x="326" y="147" class="d">safety goal</text>
+  <rect x="468" y="118" width="124" height="36" rx="7" class="box"/>
+  <text x="480" y="134" class="id">FSR</text><text x="480" y="147" class="d">functional safety req.</text>
+  <rect x="622" y="118" width="124" height="36" rx="7" class="box"/>
+  <text x="634" y="134" class="id">TSR</text><text x="634" y="147" class="d">technical safety req.</text>
+  <rect x="776" y="118" width="124" height="36" rx="7" class="box"/>
+  <text x="788" y="134" class="id">SWSR</text><text x="788" y="147" class="d">SW safety req.</text>
+  <rect x="930" y="118" width="124" height="36" rx="7" class="code"/>
+  <text x="942" y="134" class="id">code</text><text x="942" y="147" class="d">C / Python</text>
+  <rect x="1084" y="118" width="140" height="36" rx="7" class="test"/>
+  <text x="1096" y="134" class="id">unit test</text>
+  <!-- row b -->
+  <rect x="1084" y="168" width="140" height="36" rx="7" class="test"/>
+  <text x="1096" y="184" class="id">SW integration</text><text x="1096" y="197" class="d">test</text>
+  <!-- row c -->
+  <rect x="776" y="218" width="124" height="36" rx="7" class="box"/>
+  <text x="788" y="234" class="id">HWSR</text><text x="788" y="247" class="d">HW safety req.</text>
+  <rect x="930" y="218" width="124" height="36" rx="7" class="code"/>
+  <text x="942" y="234" class="id">HW design</text>
+  <rect x="1084" y="218" width="140" height="36" rx="7" class="test"/>
+  <text x="1096" y="234" class="id">HW test</text>
+  <!-- row d -->
+  <rect x="1084" y="268" width="140" height="36" rx="7" class="test"/>
+  <text x="1096" y="284" class="id">system test</text><text x="1096" y="297" class="d">HIL / vehicle test</text>
+  <rect x="468" y="268" width="124" height="36" rx="7" class="ext"/>
+  <text x="480" y="284" class="id">AOU</text><text x="480" y="297" class="d">driver / vehicle ECUs</text>
+
+  <!-- FuSa links -->
+  <path class="g" d="M284 136 H312" marker-end="url(#aG)"/>
+  <path class="g" d="M438 136 H466" marker-end="url(#aG)"/>
+  <path class="g" d="M592 136 H620" marker-end="url(#aG)"/>
+  <path class="g" d="M746 136 H774" marker-end="url(#aG)"/>
+  <path class="i" d="M900 136 H928" marker-end="url(#aT)"/>
+  <path class="v" d="M1054 136 H1082" marker-end="url(#aV)"/>
+  <path class="v" d="M992 154 V186 H1082" marker-end="url(#aV)"/>
+  <path class="g" d="M684 154 V286"/>
+  <path class="g" d="M684 236 H774" marker-end="url(#aG)"/>
+  <path class="i" d="M900 236 H928" marker-end="url(#aT)"/>
+  <path class="v" d="M1054 236 H1082" marker-end="url(#aV)"/>
+  <path class="v" d="M684 286 H1082" marker-end="url(#aV)"/>
+  <path d="M684 286 H594" fill="none" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#aS)"/>
+  <path d="M530 154 V266" fill="none" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#aS)"/>
+  <text x="538" y="214" class="d">assumption</text>
+
+  <!-- ===== CS ===== -->
+  <rect x="160" y="338" width="124" height="36" rx="7" class="ext"/>
+  <text x="172" y="354" class="id">TS</text><text x="172" y="367" class="d">threat scenario (TARA)</text>
+  <rect x="314" y="338" width="124" height="36" rx="7" class="box"/>
+  <text x="326" y="354" class="id">CSG</text><text x="326" y="367" class="d">cybersecurity goal</text>
+  <rect x="468" y="338" width="124" height="36" rx="7" class="box"/>
+  <text x="480" y="354" class="id">CSR</text><text x="480" y="367" class="d">cybersecurity req.</text>
+  <rect x="776" y="338" width="124" height="36" rx="7" class="box"/>
+  <text x="788" y="354" class="id">SWSR / HWSR</text><text x="788" y="367" class="d">or CSR (impl)</text>
+  <rect x="930" y="338" width="124" height="36" rx="7" class="code"/>
+  <text x="942" y="354" class="id">code</text>
+  <rect x="1084" y="338" width="140" height="36" rx="7" class="test"/>
+  <text x="1096" y="354" class="id">CS test / pen test</text><text x="1096" y="367" class="d">WP-V-06</text>
+  <path class="g" d="M284 356 H312" marker-end="url(#aG)"/>
+  <path class="g" d="M438 356 H466" marker-end="url(#aG)"/>
+  <path class="g" d="M592 356 H774" marker-end="url(#aG)"/>
+  <path class="i" d="M900 356 H928" marker-end="url(#aT)"/>
+  <path class="v" d="M1054 356 H1082" marker-end="url(#aV)"/>
+  <!-- CSG <-> SG -->
+  <path d="M376 156 V336" fill="none" stroke="#7C3AED" stroke-width="1.6" stroke-dasharray="6 4" marker-start="url(#aP)" marker-end="url(#aP)"/>
+  <text x="368" y="270" fill="#7C3AED" font-size="9.5" font-weight="600" text-anchor="end">where an attack</text>
+  <text x="368" y="283" fill="#7C3AED" font-size="9.5" font-weight="600" text-anchor="end">causes a safety hazard</text>
+
+  <!-- ===== SOTIF ===== -->
+  <rect x="160" y="414" width="124" height="36" rx="7" class="ext"/>
+  <text x="172" y="430" class="id">SH</text><text x="172" y="443" class="d">SOTIF hazard</text>
+  <rect x="314" y="414" width="124" height="36" rx="7" class="ext"/>
+  <text x="326" y="430" class="id">TC / FI</text><text x="326" y="443" class="d">trigger / insufficiency</text>
+  <rect x="468" y="414" width="124" height="36" rx="7" class="box"/>
+  <text x="480" y="430" class="id">FM-</text><text x="480" y="443" class="d">functional modification</text>
+  <rect x="622" y="414" width="124" height="36" rx="7" class="box"/>
+  <text x="634" y="430" class="id">SYS / TSR / AIR</text>
+  <rect x="1084" y="414" width="140" height="36" rx="7" class="test"/>
+  <text x="1096" y="430" class="id">V&amp;V scenario</text><text x="1096" y="443" class="d">WP-V-03 / WP-V-04</text>
+  <path class="g" d="M284 432 H312" marker-end="url(#aG)"/>
+  <path class="g" d="M438 432 H466" marker-end="url(#aG)"/>
+  <path class="g" d="M592 432 H620" marker-end="url(#aG)"/>
+  <path class="v" d="M746 432 H1082" marker-end="url(#aV)"/>
+  <!-- SH shares HS rows (one hazard log) -->
+  <path d="M160 432 H148 V136 H158" fill="none" stroke="#B45309" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text x="56" y="458" fill="#B45309" font-size="9.5" font-weight="600">SH shares HS rows</text>
+  <text x="56" y="470" fill="#B45309" font-size="9.5" font-weight="600">(one hazard log)</text>
+
+  <!-- ===== AI ===== -->
+  <rect x="622" y="498" width="124" height="36" rx="7" class="box"/>
+  <text x="634" y="514" class="id">AIR</text><text x="634" y="527" class="d">AI safety req.</text>
+  <rect x="776" y="498" width="124" height="36" rx="7" class="ml"/>
+  <text x="788" y="514" class="id">model / dataset</text><text x="788" y="527" class="d">requirement</text>
+  <rect x="1084" y="498" width="140" height="36" rx="7" class="test"/>
+  <text x="1096" y="514" class="id">model test</text><text x="1096" y="527" class="d">WP-W-10</text>
+  <path class="g" d="M376 450 V516 H620" marker-end="url(#aG)"/>
+  <text x="384" y="508" class="d">FI</text>
+  <path class="g" d="M746 516 H774" marker-end="url(#aG)"/>
+  <path class="v" d="M900 516 H1082" marker-end="url(#aV)"/>
+
+  <!-- ===== Problems and changes ===== -->
+  <rect x="160" y="572" width="124" height="36" rx="7" class="ext"/>
+  <text x="172" y="588" class="id">issue #n</text><text x="172" y="601" class="d">problem or change</text>
+  <rect x="314" y="572" width="278" height="36" rx="7" class="box"/>
+  <text x="326" y="588" class="id">requirement IDs affected</text><text x="326" y="601" class="d">WP-P-02, WP-P-03</text>
+  <path class="g" d="M284 590 H312" marker-end="url(#aG)"/>
+
+  <!-- ===== legend ===== -->
+  <line x1="40" y1="644" x2="1240" y2="644" stroke="#E2E8F0"/>
+  <g transform="translate(40,668)" font-size="10.5">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#475569" stroke-width="1.4"/><text x="36" y="4" class="t">Derivation (child stores parent)</text>
+    <line x1="210" y1="0" x2="238" y2="0" stroke="#0F766E" stroke-width="1.6"/><text x="246" y="4" class="t">Implementation (@req tag)</text>
+    <line x1="400" y1="0" x2="428" y2="0" stroke="#2E9E6A" stroke-width="1.6"/><text x="436" y="4" class="t">Verification (test → requirement)</text>
+    <line x1="620" y1="0" x2="648" y2="0" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="4 3"/><text x="656" y="4" class="t">Assumption of use</text>
+    <line x1="778" y1="0" x2="806" y2="0" stroke="#7C3AED" stroke-width="1.6" stroke-dasharray="6 4"/><text x="814" y="4" class="t">CSG ↔ SG</text>
+    <line x1="890" y1="0" x2="918" y2="0" stroke="#B45309" stroke-width="1.6" stroke-dasharray="6 4"/><text x="926" y="4" class="t">Same hazard log</text>
+    <rect x="1040" y="-8" width="28" height="16" rx="4" fill="#F1F5F9" stroke="#94A3B8"/><text x="1076" y="4" class="t">Analysis item</text>
+  </g>
+  <text x="40" y="700" class="m xs">Arrows read parent → child, as in the text version. Links are stored on the child (parents), in @req tags or verification.yaml; reverse views are generated.</text>
+</svg>
