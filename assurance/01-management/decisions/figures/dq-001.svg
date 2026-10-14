@@ -1,0 +1,30 @@
+<svg viewBox="0 0 640 230" role="img" aria-labelledby="b06t">
+  <title id="b06t">A newly installed device starts in Experimental mode today; with the change it starts in Chill mode</title>
+  <text x="0" y="16" class="s-muted" font-size="12" font-weight="600" letter-spacing=".06em">TODAY</text>
+  <rect x="0" y="28" width="130" height="56" rx="6" class="s-surface" stroke="var(--line)"/>
+  <text x="65" y="52" text-anchor="middle" class="s-ink" font-size="14" font-weight="600">New install</text>
+  <text x="65" y="70" text-anchor="middle" class="s-muted" font-size="12">or factory reset</text>
+  <path d="M136 56 H186" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect x="192" y="28" width="170" height="56" rx="6" class="s-surface" stroke="var(--line)"/>
+  <text x="277" y="52" text-anchor="middle" class="s-ink mono" font-size="12.5">ExperimentalMode = 1</text>
+  <text x="277" y="70" text-anchor="middle" class="s-muted mono" font-size="11">params_keys.h:43</text>
+  <path d="M368 56 H418" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect x="424" y="28" width="216" height="56" rx="6" class="s-badsoft"/>
+  <text x="532" y="50" text-anchor="middle" class="s-bad" font-size="14" font-weight="700">Experimental mode</text>
+  <text x="532" y="69" text-anchor="middle" class="s-bad" font-size="12">not assessed · risk R-17 = 12</text>
+
+  <text x="0" y="128" class="s-muted" font-size="12" font-weight="600" letter-spacing=".06em">WITH OPTION A</text>
+  <rect x="0" y="140" width="130" height="56" rx="6" class="s-surface" stroke="var(--line)"/>
+  <text x="65" y="164" text-anchor="middle" class="s-ink" font-size="14" font-weight="600">New install</text>
+  <text x="65" y="182" text-anchor="middle" class="s-muted" font-size="12">or factory reset</text>
+  <path d="M136 168 H186" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect x="192" y="140" width="170" height="56" rx="6" class="s-accsoft"/>
+  <text x="277" y="164" text-anchor="middle" class="s-acc mono" font-size="12.5" font-weight="500">ExperimentalMode = 0</text>
+  <text x="277" y="182" text-anchor="middle" class="s-muted" font-size="11">one-line change</text>
+  <path d="M368 168 H418" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect x="424" y="140" width="216" height="56" rx="6" class="s-oksoft"/>
+  <text x="532" y="162" text-anchor="middle" class="s-ok" font-size="14" font-weight="700">Chill mode</text>
+  <text x="532" y="181" text-anchor="middle" class="s-ok" font-size="12">the assessed configuration</text>
+  <text x="0" y="222" class="s-muted" font-size="12">In both cases the owner can still switch Experimental on in Settings. A device that already stored a value keeps it.</text>
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--muted)"/></marker></defs>
+</svg>

@@ -138,6 +138,7 @@ Each decision is tracked as a GitHub issue labelled `decision:D-nn`. A decision 
 
 - This document (register and decision log), versioned in git.
 - GitHub issues labelled `risk` and `decision:D-nn`, with review comments.
+- The decision register [`decisions/register.yaml`](decisions/register.yaml): questions waiting on the project lead, their answers, and where each applied decision is recorded ([`decisions/README.md`](decisions/README.md)).
 - Monthly review notes on the milestone tracking issue (WP-M-03 §8).
 
 ## 7. Open items
