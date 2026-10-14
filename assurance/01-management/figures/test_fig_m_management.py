@@ -139,6 +139,57 @@ class TestManagementFigures(unittest.TestCase):
   def test_pinned_figures_current(self):
     self.assertEqual(fm.fig_m_plans.pin_problems(), [])
 
+  # ---------------------------------------------------------------- WP-M-02 safety plan figures (fig_m_safety.py)
+
+  def test_m02_raci_every_cell_drawn(self):
+    md = fm.fig_m_safety.doc()
+    roles, head, rows = fm.fig_m_safety.load_roles(md)
+    self.assertEqual(sorted(roles), sorted(head[1:]))
+    svg = self.outputs["fig-m02-3-1-raci.svg"]
+    for r in rows:
+      self.assertEqual(len(r), len(head))
+    self.assertIn(f"of {len(rows)} activities", svg)
+
+  def test_m02_at_risk_rows_and_no_unearned_credit(self):
+    md = fm.fig_m_safety.doc()
+    items = fm.fig_m_safety.load_at_risk(md)
+    _, rows = fm.table(fm.section(md, "### 4.1 Early implementation (at-risk work)"), "Change")
+    self.assertEqual(len(items), len(rows))
+    svg = self.outputs["fig-m02-4-2-at-risk.svg"]
+    for it in items:
+      self.assertTrue(it.reqs, it.change)
+      if "not reviewed independently" in it.status:
+        self.assertFalse(it.reviewed, it.change)
+    earned = sum(it.approved and it.reviewed and it.hil for it in items)
+    self.assertIn(f"{earned} of {len(items)} changes have earned credit", svg)
+    if not earned:
+      self.assertNotIn(">earned<", svg)
+
+  def test_m02_lifecycle_and_anomaly_steps(self):
+    md = fm.fig_m_safety.doc()
+    _, phases = fm.table(fm.section(md, "## 4. Lifecycle activities per phase"), "Phase")
+    svg = self.outputs["fig-m02-4-1-lifecycle.svg"]
+    for r in phases:
+      self.assertIn(f">{fm.plain(r[0]).split()[0]}<", svg)
+    _, steps = fm.table(fm.section(md, "## 9. Safety anomaly handling"), "Step")
+    svg = self.outputs["fig-m02-9-1-anomaly.svg"]
+    for r in steps:
+      if fm.plain(r[0]) != "Gate rule":
+        self.assertIn(fm.plain(r[0]), svg)
+
+  # ---------------------------------------------------------------- WP-M-03 WBS and effort
+
+  def test_m03_wbs_and_effort(self):
+    md = fm.fig_m_plans.WP_M_03.read_text(encoding="utf-8")
+    _, rows = fm.table(fm.section(md, "## 3. Work breakdown structure"), "WBS")
+    svg = self.outputs["fig-m03-3-1-wbs.svg"]
+    for r in rows:
+      self.assertIn(fm.plain(r[0]), svg)
+    _, est = fm.table(fm.section(md, "### 4.2 Estimate"), "Phase")
+    lo = sum(int(fm.plain(r[1])) for r in est if re.match(r"P\d ", fm.plain(r[0])) and fm.plain(r[1]).isdigit())
+    hi = sum(int(fm.plain(r[2])) for r in est if re.match(r"P\d ", fm.plain(r[0])) and fm.plain(r[2]).isdigit())
+    self.assertIn(f"Total P0–P5: {lo}–{hi} pw summed", self.outputs["fig-m03-4-1-effort.svg"])
+
 
 if __name__ == "__main__":
   unittest.main()

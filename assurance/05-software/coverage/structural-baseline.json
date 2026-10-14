@@ -1,0 +1,29 @@
+{
+  "opendbc": "9a13f60",
+  "units": {
+    "U-SAF-LAT": {
+      "branches_uncovered": 105,
+      "branches_total": 184,
+      "mcdc_uncovered": 15,
+      "mcdc_total": 25
+    },
+    "U-SAF-LONG": {
+      "branches_uncovered": 16,
+      "branches_total": 28,
+      "mcdc_uncovered": 8,
+      "mcdc_total": 14
+    },
+    "U-SAF-TOY": {
+      "branches_uncovered": 2,
+      "branches_total": 202,
+      "mcdc_uncovered": 0,
+      "mcdc_total": 36
+    },
+    "U-SAF-CORE": {
+      "branches_uncovered": 53,
+      "branches_total": 248,
+      "mcdc_uncovered": 17,
+      "mcdc_total": 56
+    }
+  }
+}

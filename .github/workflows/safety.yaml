@@ -16,6 +16,8 @@ on:
       - 'panda'
       - '.github/workflows/safety.yaml'
       - 'tools/ci/build_manifest.py'
+      - 'tools/ci/coverage/**'
+      - 'assurance/05-software/coverage/structural-baseline.json'
       - 'tools/release/release_variant.sh'
       - 'tools/release/build_release.sh'
   pull_request:
@@ -24,6 +26,8 @@ on:
       - 'panda'
       - '.github/workflows/safety.yaml'
       - 'tools/ci/build_manifest.py'
+      - 'tools/ci/coverage/**'
+      - 'assurance/05-software/coverage/structural-baseline.json'
       - 'tools/release/release_variant.sh'
       - 'tools/release/build_release.sh'
   workflow_dispatch:
@@ -194,6 +198,39 @@ jobs:
       with:
         name: build-manifest-panda_host_tests
         path: build-manifest/panda_host_tests.json
+
+  structural_coverage:
+    name: safety structural coverage (branch, MC/DC)
+    # Branch and MC/DC coverage of U-SAF-CORE, -LAT, -LONG and -TOY on the reference build (WP-W-06 §4, OI-3).
+    # LLVM source-based MC/DC is the measurement (WP-P-07 TL-42); gcc 14 condition coverage is the independent
+    # cross-check (TL-43). Fails when a unit has more uncovered branches or conditions than the committed baseline.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@v7
+    - name: Checkout opendbc submodule
+      run: git submodule update --init --depth 1 opendbc_repo
+    - name: Install the coverage toolchains
+      run: |
+        sudo apt-get update -q
+        sudo apt-get install -y -q clang-18 llvm-18 libclang-rt-18-dev gcc-14
+    - name: Measure with LLVM (MC/DC) and gcc 14 (condition coverage)
+      run: |
+        python3 tools/ci/coverage/structural_coverage.py run --tool llvm --out coverage-out
+        python3 tools/ci/coverage/structural_coverage.py run --tool gcc --out coverage-out
+    - name: Compare with the baseline and write the report
+      run: python3 tools/ci/coverage/structural_coverage.py report coverage-out --check --md coverage-out/structural-coverage.md
+    - name: Build manifest and tool versions (WP-W-01 ENV-01)
+      if: always()
+      run: python3 tools/ci/build_manifest.py build-manifest/structural_coverage.json
+    - name: Upload report and manifest
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: structural-coverage
+        path: |
+          coverage-out/
+          build-manifest/structural_coverage.json
 
   mutation:
     name: safety mutation tests

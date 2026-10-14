@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="412" viewBox="0 0 1280 412" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 9-1. Safety anomaly handling (WP-M-02 §9)</title>
+<desc>Steps Report, Triage, Immediate action, Resolution, Closure. Gate rule: No gate passes with an open anomaly classified as potential safety goal violation unless the safety manager records an accepted rationale and the assessor is informed</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="412" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 9-1 · Safety anomaly handling: from report to closure</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The steps of §9 in order, each with the rule written in its row; the gate rule applies at every gate review</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-M-02 §9</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="108" width="219.2" height="215.5" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="52" y="130" font-size="12.5" fill="#0F172A" font-weight="700">1 · Report</text>
+<text x="52" y="150" font-size="10" fill="#475569">Anyone can report, through the GitHub</text>
+<text x="52" y="163.5" font-size="10" fill="#475569">issue forms "Problem report" or "Field</text>
+<text x="52" y="177" font-size="10" fill="#475569">report" (WP-P-03 §3), which open the</text>
+<text x="52" y="190.5" font-size="10" fill="#475569">issue with the triage label.</text>
+<text x="52" y="204" font-size="10" fill="#475569">Security-sensitive reports go through</text>
+<text x="52" y="217.5" font-size="10" fill="#475569">GitHub private vulnerability reporting</text>
+<text x="52" y="231" font-size="10" fill="#475569">instead (SECURITY.md, WP-O-05).</text>
+<text x="52" y="244.5" font-size="10" fill="#475569">No-blame reporting applies (WP-M-04)</text>
+<line x1="262.2" y1="126" x2="277.2" y2="126" stroke="#475569" stroke-width="2"/>
+<path d="M283.2 126 l-7 -5 l0 10 z" fill="#475569"/>
+<rect x="285.2" y="108" width="219.2" height="215.5" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="297.2" y="130" font-size="12.5" fill="#0F172A" font-weight="700">2 · Triage</text>
+<text x="297.2" y="150" font-size="10" fill="#475569">Safety manager triages within 1 working</text>
+<text x="297.2" y="163.5" font-size="10" fill="#475569">day when any safety triage box on the</text>
+<text x="297.2" y="177" font-size="10" fill="#475569">form is ticked, otherwise within 10</text>
+<text x="297.2" y="190.5" font-size="10" fill="#475569">working days (WP-P-03 §3.3; targets not</text>
+<text x="297.2" y="204" font-size="10" fill="#475569">yet demonstrated). Classifies as:</text>
+<text x="297.2" y="217.5" font-size="10" fill="#475569">potential safety goal violation / work</text>
+<text x="297.2" y="231" font-size="10" fill="#475569">product error / process deviation / not</text>
+<text x="297.2" y="244.5" font-size="10" fill="#475569">safety-relevant, and sets the WP-P-03</text>
+<text x="297.2" y="258" font-size="10" fill="#475569">category (cat-) and severity (sev-)</text>
+<text x="297.2" y="271.5" font-size="10" fill="#475569">labels. Every issue classified as</text>
+<text x="297.2" y="285" font-size="10" fill="#475569">anything other than not safety-relevant</text>
+<text x="297.2" y="298.5" font-size="10" fill="#475569">also gets the safety-anomaly label, which</text>
+<text x="297.2" y="312" font-size="10" fill="#475569">is what WP-M-04 and the release …</text>
+<line x1="507.4" y1="126" x2="522.4" y2="126" stroke="#475569" stroke-width="2"/>
+<path d="M528.4 126 l-7 -5 l0 10 z" fill="#475569"/>
+<rect x="530.4" y="108" width="219.2" height="215.5" rx="8" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="542.4" y="130" font-size="12.5" fill="#D2553F" font-weight="700">3 · Immediate action</text>
+<text x="542.4" y="150" font-size="10" fill="#475569">A potential safety goal violation stops</text>
+<text x="542.4" y="163.5" font-size="10" fill="#475569">vehicle testing on the affected</text>
+<text x="542.4" y="177" font-size="10" fill="#475569">configuration until the safety manager</text>
+<text x="542.4" y="190.5" font-size="10" fill="#475569">releases it. Any test driver may stop</text>
+<text x="542.4" y="204" font-size="10" fill="#475569">testing at any time</text>
+<line x1="752.6" y1="126" x2="767.6" y2="126" stroke="#475569" stroke-width="2"/>
+<path d="M773.6 126 l-7 -5 l0 10 z" fill="#475569"/>
+<rect x="775.6" y="108" width="219.2" height="215.5" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="787.6" y="130" font-size="12.5" fill="#0F172A" font-weight="700">4 · Resolution</text>
+<text x="787.6" y="150" font-size="10" fill="#475569">Through WP-P-03, with impact analysis</text>
+<text x="787.6" y="163.5" font-size="10" fill="#475569">through WP-P-02</text>
+<line x1="997.8" y1="126" x2="1012.8" y2="126" stroke="#475569" stroke-width="2"/>
+<path d="M1018.8 126 l-7 -5 l0 10 z" fill="#475569"/>
+<rect x="1020.8" y="108" width="219.2" height="215.5" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1032.8" y="130" font-size="12.5" fill="#0F172A" font-weight="700">5 · Closure</text>
+<text x="1032.8" y="150" font-size="10" fill="#475569">Closure needs verification evidence and,</text>
+<text x="1032.8" y="163.5" font-size="10" fill="#475569">for safety goal violations, review by</text>
+<text x="1032.8" y="177" font-size="10" fill="#475569">someone other than the person who fixed</text>
+<text x="1032.8" y="190.5" font-size="10" fill="#475569">it</text>
+<rect x="40" y="341.5" width="1200" height="29" rx="8" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1.2"/>
+<text x="56" y="360.5" font-size="10.5" fill="#D97706" font-weight="600">Gate rule: No gate passes with an open anomaly classified as potential safety goal violation unless the safety manager records an accepted rationale and the assessor is informed</text>
+<text x="1240" y="396.5" font-size="10" fill="#94A3B8" text-anchor="end">Generated by fig_m_management.py</text>
+</svg>

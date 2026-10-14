@@ -1,0 +1,375 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="686" viewBox="0 0 1280 686" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3-1. RACI per activity with role holders (WP-M-02 §3.1, §3.2)</title>
+<desc>RACI of 14 activities over 10 roles. Named holders: SM Jherrod Thomas (acting), PM Jherrod Thomas, CSM Jherrod Thomas (acting); permanent holder TBD, SL Jherrod Thomas (acting); permanent holder TBD, ML Jherrod Thomas (acting); permanent holder TBD, ENG Jherrod Thomas; additional contributors TBD. TBD: HW, VR, QA, EA. 12 activities lack a named independent reviewer, auditor or assessor.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="686" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-1 · Who does what (RACI), and who holds each role today</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">§3.2 grid; above each column its holder from §3.1. The last column asks whether the review, audit or assessment the activity needs has a named person who is not its author</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-M-02 §3.1, §3.2</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="338" y="112" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">SM</text>
+<rect x="325" y="122" width="26.1" height="16" rx="8" fill="#C2410C" stroke="none" stroke-width="1"/>
+<text x="338" y="133.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">JT</text>
+<text x="338" y="150" font-size="8.5" fill="#94A3B8" text-anchor="middle">by G0</text>
+<text x="414" y="112" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">PM</text>
+<rect x="401" y="122" width="26.1" height="16" rx="8" fill="#C2410C" stroke="none" stroke-width="1"/>
+<text x="414" y="133.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">JT</text>
+<text x="414" y="150" font-size="8.5" fill="#94A3B8" text-anchor="middle">by G0</text>
+<text x="490" y="112" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">CSM</text>
+<rect x="477" y="122" width="26.1" height="16" rx="8" fill="#C2410C" stroke="none" stroke-width="1"/>
+<text x="490" y="133.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">JT</text>
+<text x="490" y="150" font-size="8.5" fill="#94A3B8" text-anchor="middle">by G1</text>
+<text x="566" y="112" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">SL</text>
+<rect x="553" y="122" width="26.1" height="16" rx="8" fill="#C2410C" stroke="none" stroke-width="1"/>
+<text x="566" y="133.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">JT</text>
+<text x="566" y="150" font-size="8.5" fill="#94A3B8" text-anchor="middle">by G1</text>
+<text x="642" y="112" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">ML</text>
+<rect x="629" y="122" width="26.1" height="16" rx="8" fill="#C2410C" stroke="none" stroke-width="1"/>
+<text x="642" y="133.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">JT</text>
+<text x="642" y="150" font-size="8.5" fill="#94A3B8" text-anchor="middle">by G1</text>
+<text x="718" y="112" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">ENG</text>
+<rect x="705" y="122" width="26.1" height="16" rx="8" fill="#C2410C" stroke="none" stroke-width="1"/>
+<text x="718" y="133.5" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">JT</text>
+<text x="718" y="150" font-size="8.5" fill="#94A3B8" text-anchor="middle">by G2</text>
+<text x="794" y="112" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">HW</text>
+<rect x="777.4" y="122" width="33.1" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="794" y="133.5" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">TBD</text>
+<text x="794" y="150" font-size="8.5" fill="#94A3B8" text-anchor="middle">by G2</text>
+<text x="870" y="112" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">VR</text>
+<rect x="853.4" y="122" width="33.1" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="870" y="133.5" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">TBD</text>
+<text x="870" y="150" font-size="8.5" fill="#94A3B8" text-anchor="middle">by G0</text>
+<text x="946" y="112" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">QA</text>
+<rect x="929.4" y="122" width="33.1" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="946" y="133.5" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">TBD</text>
+<text x="946" y="150" font-size="8.5" fill="#94A3B8" text-anchor="middle">by G0</text>
+<text x="1022" y="112" font-size="12" fill="#0F172A" font-weight="700" text-anchor="middle">EA</text>
+<rect x="1005.4" y="122" width="33.1" height="16" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="1022" y="133.5" font-size="9.5" fill="#475569" font-weight="700" text-anchor="middle">TBD</text>
+<text x="1022" y="150" font-size="8.5" fill="#94A3B8" text-anchor="middle">by G1</text>
+<text x="1080" y="122" font-size="10.5" fill="#475569" font-weight="700">Independent</text>
+<text x="1080" y="136" font-size="10.5" fill="#475569" font-weight="700">party named?</text>
+<text x="40" y="176" font-size="11.5" fill="#0F172A">Safety plan and updates</text>
+<rect x="303" y="159" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="338" y="176" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A/R</text>
+<rect x="379" y="159" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="414" y="176" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="455" y="159" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="490" y="176" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="531" y="159" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="566" y="176" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="607" y="159" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="642" y="176" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="683" y="159" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="718" y="176" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="759" y="159" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="794" y="176" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="835" y="159" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="870" y="176" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R (review)</text>
+<rect x="911" y="159" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="946" y="176" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="987" y="159" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="176" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C (CR)</text>
+<text x="1080" y="176" font-size="10.5" fill="#D2553F" font-weight="700">no: VR TBD</text>
+<text x="40" y="208" font-size="11.5" fill="#0F172A">Impact analysis (WP-M-12)</text>
+<rect x="303" y="191" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="338" y="208" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A</text>
+<rect x="379" y="191" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="414" y="208" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="455" y="191" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="490" y="208" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="531" y="191" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="566" y="208" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="607" y="191" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="642" y="208" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="683" y="191" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="718" y="208" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="759" y="191" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="794" y="208" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="835" y="191" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="870" y="208" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="911" y="191" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="946" y="208" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="987" y="191" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="208" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R (CR)</text>
+<text x="1080" y="208" font-size="10.5" fill="#D2553F" font-weight="700">no: VR, EA TBD</text>
+<text x="40" y="240" font-size="11.5" fill="#0F172A">Item definition, HARA</text>
+<rect x="303" y="223" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="338" y="240" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A/R</text>
+<rect x="379" y="223" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="414" y="240" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="455" y="223" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="490" y="240" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="531" y="223" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="566" y="240" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="607" y="223" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="642" y="240" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="683" y="223" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="718" y="240" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="759" y="223" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="794" y="240" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="835" y="223" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="870" y="240" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="911" y="223" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="946" y="240" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="987" y="223" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="240" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R (CR)</text>
+<text x="1080" y="240" font-size="10.5" fill="#D2553F" font-weight="700">no: VR, EA TBD</text>
+<text x="40" y="272" font-size="11.5" fill="#0F172A">FSC / TSC</text>
+<rect x="303" y="255" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="338" y="272" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A</text>
+<rect x="379" y="255" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="414" y="272" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="455" y="255" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="490" y="272" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="531" y="255" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="566" y="272" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="607" y="255" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="642" y="272" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="683" y="255" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="718" y="272" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="759" y="255" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="794" y="272" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="835" y="255" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="870" y="272" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="911" y="255" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="946" y="272" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="987" y="255" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="272" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R (CR)</text>
+<text x="1080" y="272" font-size="10.5" fill="#D2553F" font-weight="700">no: VR, EA TBD</text>
+<text x="40" y="304" font-size="11.5" fill="#0F172A">Safety analyses (FFI, DFA, FTA/FMEA)</text>
+<rect x="303" y="287" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="338" y="304" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A</text>
+<rect x="379" y="287" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="414" y="304" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="455" y="287" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="490" y="304" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="531" y="287" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="566" y="304" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="607" y="287" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="642" y="304" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="683" y="287" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="718" y="304" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="759" y="287" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="794" y="304" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="835" y="287" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="870" y="304" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="911" y="287" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="946" y="304" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="987" y="287" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="304" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R (CR)</text>
+<text x="1080" y="304" font-size="10.5" fill="#D2553F" font-weight="700">no: VR, EA TBD</text>
+<text x="40" y="336" font-size="11.5" fill="#0F172A">Envelope SW requirements, design, code …</text>
+<rect x="303" y="319" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="338" y="336" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A</text>
+<rect x="379" y="319" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="414" y="336" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="455" y="319" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="490" y="336" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="531" y="319" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="566" y="336" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="607" y="319" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="642" y="336" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="683" y="319" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="718" y="336" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="759" y="319" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="794" y="336" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="835" y="319" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="870" y="336" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="911" y="319" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="946" y="336" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="987" y="319" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="336" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<text x="1080" y="336" font-size="10.5" fill="#D2553F" font-weight="700">no: VR TBD</text>
+<text x="40" y="368" font-size="11.5" fill="#0F172A">HW FMEDA, metrics, qualification</text>
+<rect x="303" y="351" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="338" y="368" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A</text>
+<rect x="379" y="351" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="414" y="368" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="455" y="351" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="490" y="368" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="531" y="351" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="566" y="368" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="607" y="351" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="642" y="368" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="683" y="351" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="718" y="368" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="759" y="351" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="794" y="368" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="835" y="351" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="870" y="368" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="911" y="351" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="946" y="368" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="987" y="351" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="368" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R (CR)</text>
+<text x="1080" y="368" font-size="10.5" fill="#D2553F" font-weight="700">no: VR, EA TBD</text>
+<text x="40" y="400" font-size="11.5" fill="#0F172A">Integration, HIL, fault injection</text>
+<rect x="303" y="383" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="338" y="400" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A</text>
+<rect x="379" y="383" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="414" y="400" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="455" y="383" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="490" y="400" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="531" y="383" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="566" y="400" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="607" y="383" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="642" y="400" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="683" y="383" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="718" y="400" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="759" y="383" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="794" y="400" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="835" y="383" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="870" y="400" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="911" y="383" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="946" y="400" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="987" y="383" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="400" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<text x="1080" y="400" font-size="10.5" fill="#D2553F" font-weight="700">no: VR TBD</text>
+<text x="40" y="432" font-size="11.5" fill="#0F172A">Safety validation (vehicle)</text>
+<rect x="303" y="415" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="338" y="432" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A</text>
+<rect x="379" y="415" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="414" y="432" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="455" y="415" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="490" y="432" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="531" y="415" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="566" y="432" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="607" y="415" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="642" y="432" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="683" y="415" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="718" y="432" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="759" y="415" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="794" y="432" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="835" y="415" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="870" y="432" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="911" y="415" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="946" y="432" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="987" y="415" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="432" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<text x="1080" y="432" font-size="10.5" fill="#D2553F" font-weight="700">no: VR TBD</text>
+<text x="40" y="464" font-size="11.5" fill="#0F172A">CM, change control</text>
+<rect x="303" y="447" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="338" y="464" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="379" y="447" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="414" y="464" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A</text>
+<rect x="455" y="447" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="490" y="464" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="531" y="447" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="566" y="464" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="607" y="447" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="642" y="464" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="683" y="447" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="718" y="464" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="759" y="447" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="794" y="464" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="835" y="447" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="870" y="464" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="911" y="447" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="946" y="464" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="987" y="447" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="464" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<text x="1080" y="464" font-size="10.5" fill="#94A3B8">—</text>
+<text x="40" y="496" font-size="11.5" fill="#0F172A">QA audits</text>
+<rect x="303" y="479" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="338" y="496" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="379" y="479" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="414" y="496" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A</text>
+<rect x="455" y="479" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="490" y="496" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="531" y="479" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="566" y="496" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="607" y="479" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="642" y="496" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="683" y="479" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="718" y="496" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="759" y="479" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="794" y="496" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="835" y="479" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="870" y="496" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="911" y="479" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="946" y="496" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="987" y="479" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="496" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<text x="1080" y="496" font-size="10.5" fill="#D2553F" font-weight="700">no: QA TBD</text>
+<text x="40" y="528" font-size="11.5" fill="#0F172A">Safety case</text>
+<rect x="303" y="511" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="338" y="528" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A/R</text>
+<rect x="379" y="511" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="414" y="528" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="455" y="511" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="490" y="528" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="531" y="511" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="566" y="528" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="607" y="511" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="642" y="528" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="683" y="511" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="718" y="528" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="759" y="511" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="794" y="528" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="835" y="511" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="870" y="528" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="911" y="511" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="946" y="528" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="987" y="511" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="528" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R (CR)</text>
+<text x="1080" y="528" font-size="10.5" fill="#D2553F" font-weight="700">no: VR, EA TBD</text>
+<text x="40" y="560" font-size="11.5" fill="#0F172A">Functional safety audit and assessment</text>
+<rect x="303" y="543" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="338" y="560" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="379" y="543" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="414" y="560" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A</text>
+<rect x="455" y="543" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="490" y="560" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="531" y="543" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="566" y="560" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="607" y="543" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="642" y="560" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="683" y="543" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="718" y="560" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="759" y="543" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="794" y="560" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="835" y="543" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="870" y="560" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="911" y="543" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="946" y="560" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="987" y="543" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="560" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<text x="1080" y="560" font-size="10.5" fill="#D2553F" font-weight="700">no: EA TBD</text>
+<text x="40" y="592" font-size="11.5" fill="#0F172A">Release decision</text>
+<rect x="303" y="575" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="338" y="592" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="379" y="575" width="70" height="26" rx="5" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="414" y="592" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">A</text>
+<rect x="455" y="575" width="70" height="26" rx="5" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="490" y="592" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">R</text>
+<rect x="531" y="575" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="566" y="592" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="607" y="575" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="642" y="592" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="683" y="575" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="718" y="592" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="759" y="575" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="794" y="592" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="835" y="575" width="70" height="26" rx="5" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="870" y="592" font-size="10" fill="#94A3B8" font-weight="700" text-anchor="middle">I</text>
+<rect x="911" y="575" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="946" y="592" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<rect x="987" y="575" width="70" height="26" rx="5" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="1022" y="592" font-size="10" fill="#4F46E5" font-weight="700" text-anchor="middle">C</text>
+<text x="1080" y="592" font-size="10.5" fill="#94A3B8">—</text>
+<rect x="40" y="614" width="1200" height="30" rx="8" fill="#FEF2F2" stroke="none" stroke-width="1.2"/>
+<text x="54" y="633" font-size="10.5" fill="#D2553F" font-weight="600">6 of 10 roles are held by Jherrod Thomas; 12 of 14 activities need a review, audit or assessment by someone not yet named. One person may hold several roles, but not review their own work (§3.1).</text>
+<rect x="40" y="656" width="14" height="12" rx="3" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="60" y="666" font-size="11" fill="#475569">A accountable</text>
+<rect x="147.1" y="656" width="14" height="12" rx="3" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="167.1" y="666" font-size="11" fill="#475569">R responsible</text>
+<rect x="251.3" y="656" width="14" height="12" rx="3" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="271.3" y="666" font-size="11" fill="#475569">C consulted</text>
+<rect x="346.4" y="656" width="14" height="12" rx="3" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<text x="366.4" y="666" font-size="11" fill="#475569">I informed</text>
+<rect x="434.9" y="656" width="14" height="12" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="454.9" y="666" font-size="11" fill="#475569">holder named (initials)</text>
+<rect x="582.4" y="656" width="14" height="12" rx="3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="602.4" y="666" font-size="11" fill="#475569">holder TBD</text>
+<text x="1240" y="666" font-size="10" fill="#94A3B8" text-anchor="end">Generated by fig_m_management.py</text>
+</svg>

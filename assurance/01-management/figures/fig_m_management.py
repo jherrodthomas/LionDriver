@@ -56,6 +56,7 @@ CL_NEEDS = {1: "L", 2: "F"}
 
 from figkit import *  # noqa: E402,F401,F403  (palette, SVG helpers, Markdown parsing; re-exported for fig_p_process.py)
 import fig_m_plans  # noqa: E402  (WP-M-03 planning figures, decision check, pinned figures)
+import fig_m_safety  # noqa: E402  (WP-M-02 safety plan figures)
 
 
 def missing_sources() -> list[str]:
@@ -630,6 +631,7 @@ def build() -> dict[str, str]:
     "fig-m07-4-1-risk-heat-map.svg": fig_m07(load_risks()),
     "fig-m13-6-1-capability-profile.svg": fig_m13(load_profile()),
     **fig_m_plans.build(),
+    **fig_m_safety.build(),
   }
 
 
@@ -644,7 +646,7 @@ def main(argv: list[str]) -> int:
       print(f"fig_m_management: re-pinned {n}")
     return 0
   check = "--check" in argv
-  missing = missing_sources() + fig_m_plans.missing_sources()
+  missing = missing_sources() + fig_m_plans.missing_sources() + fig_m_safety.missing_sources()
   if missing:
     for s in missing:
       print(f"source text no longer found: {s}", file=sys.stderr)
@@ -667,7 +669,7 @@ def main(argv: list[str]) -> int:
     if stale:
       print("run: python3 assurance/01-management/figures/fig_m_management.py", file=sys.stderr)
       return 1
-    print(f"fig_m_management: {len(outputs)} figure(s) current, {len(SRC) + len(fig_m_plans.SRC)} source texts found, "
+    print(f"fig_m_management: {len(outputs)} figure(s) current, {len(SRC) + len(fig_m_plans.SRC) + len(fig_m_safety.SRC)} source texts found, "
           f"decisions consistent, {len(fig_m_plans.PINNED)} pinned figure(s) current")
     return 0
   for n, c in outputs.items():
