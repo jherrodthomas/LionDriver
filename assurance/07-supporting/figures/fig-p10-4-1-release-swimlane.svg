@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1587" viewBox="0 0 1280 1587" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 4-1 · Release swimlane (WP-P-10)</title>
+<desc>Release swimlane (WP-P-10). Lanes: Release manager, Configuration manager, Verification lead, Validation lead, External assessor, Safety manager. Step 1: Create release/ld-vX.Y from liondriver-dev; announce freeze. From now only fixes enter, via PR to the release branch with CCB approval (WP-P-02 §7.3) (Release manager) → Release branch. Step 2: Freeze: all submodule pins on LionDriver fork protected branches; models pinned (LFS oids); lockfiles unchanged since freeze unless CCB-approved (Configuration manager) → Frozen baseline. Step 3: Tag ld-vX.Y.Z-rc1 (signed) (Release manager) → RC tag. Step 4: Build in a clean, recorded environment: host build, stripped release tree, panda RELEASE firmware (§6) (Release manager) → Artifacts + hashes. Step 5: Run the full verification set on the tag and archive results (§5) (Verification lead) → Evidence package. Step 6: Physical configuration audit (WP-P-01 §11) (Configuration manager; not the release manager where possible) → Audit record. Step 7: Vehicle validation per WP-V-01 on the RC (G5 only) (Validation lead) → Validation report. Step 8: Assessments / delta assessments (External assessor) → WP-K-04, WP-K-05. Step 9: Release decision meeting; sign release record (Safety manager; CS manager + maintainer) → WP-K-06. Step 10: Tag ld-vX.Y.Z on the same commit as the accepted RC; publish release notes and user information (WP-O-03); update distribution channel (WP-O-01) (Release manager) → Release.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1587" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-1 · Release swimlane (WP-P-10)</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">From release branch to published release, one row per step of the procedure</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-P-10 §4, §5</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="80" y="128" width="193.3" height="1423" rx="0" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="80" y="128" width="193.3" height="40" rx="0" fill="#F0FDFA" stroke="#E2E8F0" stroke-width="1"/>
+<text x="176.7" y="153" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">Release manager</text>
+<rect x="273.3" y="128" width="193.3" height="1423" rx="0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="273.3" y="128" width="193.3" height="40" rx="0" fill="#F0FDFA" stroke="#E2E8F0" stroke-width="1"/>
+<text x="370" y="153" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">Configuration manager</text>
+<rect x="466.7" y="128" width="193.3" height="1423" rx="0" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="466.7" y="128" width="193.3" height="40" rx="0" fill="#F0FDFA" stroke="#E2E8F0" stroke-width="1"/>
+<text x="563.3" y="153" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">Verification lead</text>
+<rect x="660" y="128" width="193.3" height="1423" rx="0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="660" y="128" width="193.3" height="40" rx="0" fill="#F0FDFA" stroke="#E2E8F0" stroke-width="1"/>
+<text x="756.7" y="153" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">Validation lead</text>
+<rect x="853.3" y="128" width="193.3" height="1423" rx="0" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="853.3" y="128" width="193.3" height="40" rx="0" fill="#F0FDFA" stroke="#E2E8F0" stroke-width="1"/>
+<text x="950" y="153" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">External assessor</text>
+<rect x="1046.7" y="128" width="193.3" height="1423" rx="0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="1046.7" y="128" width="193.3" height="40" rx="0" fill="#F0FDFA" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1143.3" y="153" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">Safety manager</text>
+<path d="M176.667 309 L176.667 324 L370 324 L370 332" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M370 339 L365 331 L375 331 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M370 458 L370 473 L176.667 473 L176.667 481" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M176.667 488 L171.667 480 L181.667 480 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M176.667 562 L176.667 585" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M176.667 592 L171.667 584 L181.667 584 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M176.667 711 L176.667 726 L563.333 726 L563.333 734" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M563.333 741 L558.333 733 L568.333 733 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M563.333 845 L563.333 860 L370 860 L370 868" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M370 875 L365 867 L375 867 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M370 992 L370 1007 L756.667 1007 L756.667 1015" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M756.667 1022 L751.667 1014 L761.667 1014 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M756.667 1126 L756.667 1141 L950 1141 L950 1149" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M950 1156 L945 1148 L955 1148 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M950 1245 L950 1260 L1143.33 1260 L1143.33 1268" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M1143.33 1275 L1138.33 1267 L1148.33 1267 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M1143.33 1380 L1143.33 1395 L176.667 1395 L176.667 1403" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M176.667 1410 L171.667 1402 L181.667 1402 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="94" y="190" width="165.3" height="119" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="102" y="198" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="123.5" y="209.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 1</text>
+<text x="102" y="230" font-size="11.5" fill="#0F172A">Create release/ld-vX.Y from</text>
+<text x="102" y="245" font-size="11.5" fill="#0F172A">liondriver-dev; announce</text>
+<text x="102" y="260" font-size="11.5" fill="#0F172A">freeze. From now only fixes</text>
+<text x="102" y="275" font-size="11.5" fill="#0F172A">enter, via PR to the …</text>
+<path d="M102 285 L251.333 285" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="102" y="299" font-size="10" fill="#475569">→ Release branch</text>
+<rect x="287.3" y="339" width="165.3" height="119" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="295.3" y="347" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="316.8" y="358.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 2</text>
+<text x="295.3" y="379" font-size="11.5" fill="#0F172A">Freeze: all submodule pins</text>
+<text x="295.3" y="394" font-size="11.5" fill="#0F172A">on LionDriver fork</text>
+<text x="295.3" y="409" font-size="11.5" fill="#0F172A">protected branches; models</text>
+<text x="295.3" y="424" font-size="11.5" fill="#0F172A">pinned (LFS oids) …</text>
+<path d="M295.333 434 L444.667 434" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="295.3" y="448" font-size="10" fill="#475569">→ Frozen baseline</text>
+<rect x="94" y="488" width="165.3" height="74" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="102" y="496" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="123.5" y="507.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 3</text>
+<text x="102" y="528" font-size="11.5" fill="#0F172A">Tag ld-vX.Y.Z-rc1 (signed)</text>
+<path d="M102 538 L251.333 538" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="102" y="552" font-size="10" fill="#475569">→ RC tag</text>
+<rect x="94" y="592" width="165.3" height="119" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="102" y="600" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="123.5" y="611.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 4</text>
+<text x="102" y="632" font-size="11.5" fill="#0F172A">Build in a clean, recorded</text>
+<text x="102" y="647" font-size="11.5" fill="#0F172A">environment: host build,</text>
+<text x="102" y="662" font-size="11.5" fill="#0F172A">stripped release tree,</text>
+<text x="102" y="677" font-size="11.5" fill="#0F172A">panda RELEASE …</text>
+<path d="M102 687 L251.333 687" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="102" y="701" font-size="10" fill="#475569">→ Artifacts + hashes</text>
+<rect x="480.7" y="741" width="165.3" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="488.7" y="749" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="510.2" y="760.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 5</text>
+<text x="488.7" y="781" font-size="11.5" fill="#0F172A">Run the full verification set</text>
+<text x="488.7" y="796" font-size="11.5" fill="#0F172A">on the tag and archive</text>
+<text x="488.7" y="811" font-size="11.5" fill="#0F172A">results (§5)</text>
+<path d="M488.667 821 L638 821" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="488.7" y="835" font-size="10" fill="#475569">→ Evidence package</text>
+<rect x="287.3" y="875" width="165.3" height="117" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="295.3" y="883" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="316.8" y="894.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 6</text>
+<text x="295.3" y="915" font-size="11.5" fill="#0F172A">Physical configuration</text>
+<text x="295.3" y="930" font-size="11.5" fill="#0F172A">audit (WP-P-01 §11)</text>
+<path d="M295.333 940 L444.667 940" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="295.3" y="954" font-size="10" fill="#475569">→ Audit record</text>
+<text x="295.3" y="970" font-size="9.5" fill="#475569" font-style="italic">not the release manager where</text>
+<text x="295.3" y="982" font-size="9.5" fill="#475569" font-style="italic">possible</text>
+<rect x="674" y="1022" width="165.3" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="682" y="1030" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="703.5" y="1041.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 7</text>
+<text x="682" y="1062" font-size="11.5" fill="#0F172A">Vehicle validation per</text>
+<text x="682" y="1077" font-size="11.5" fill="#0F172A">WP-V-01 on the RC (G5</text>
+<text x="682" y="1092" font-size="11.5" fill="#0F172A">only)</text>
+<path d="M682 1102 L831.333 1102" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="682" y="1116" font-size="10" fill="#475569">→ Validation report</text>
+<rect x="867.3" y="1156" width="165.3" height="89" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="875.3" y="1164" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="896.8" y="1175.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 8</text>
+<text x="875.3" y="1196" font-size="11.5" fill="#0F172A">Assessments / delta</text>
+<text x="875.3" y="1211" font-size="11.5" fill="#0F172A">assessments</text>
+<path d="M875.333 1221 L1024.67 1221" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="875.3" y="1235" font-size="10" fill="#475569">→ WP-K-04, WP-K-05</text>
+<rect x="1060.7" y="1275" width="165.3" height="105" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="1068.7" y="1283" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="1090.2" y="1294.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 9</text>
+<text x="1068.7" y="1315" font-size="11.5" fill="#0F172A">Release decision meeting;</text>
+<text x="1068.7" y="1330" font-size="11.5" fill="#0F172A">sign release record</text>
+<path d="M1068.67 1340 L1218 1340" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="1068.7" y="1354" font-size="10" fill="#475569">→ WP-K-06</text>
+<text x="1068.7" y="1370" font-size="9.5" fill="#475569" font-style="italic">CS manager + maintainer</text>
+<rect x="94" y="1410" width="165.3" height="119" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="102" y="1418" width="48.7" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="126.3" y="1429.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 10</text>
+<text x="102" y="1450" font-size="11.5" fill="#0F172A">Tag ld-vX.Y.Z on the same</text>
+<text x="102" y="1465" font-size="11.5" fill="#0F172A">commit as the accepted</text>
+<text x="102" y="1480" font-size="11.5" fill="#0F172A">RC; publish release notes</text>
+<text x="102" y="1495" font-size="11.5" fill="#0F172A">and user information …</text>
+<path d="M102 1505 L251.333 1505" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="102" y="1519" font-size="10" fill="#475569">→ Release</text>
+<path d="M1060.67 1327.5 L60 1327.5 L60 525 L87 525" stroke="#C2410C" stroke-width="1.5" fill="none" stroke-dasharray="5 3" stroke-linejoin="round"/>
+<path d="M94 525 L86 520 L86 530 Z" stroke="#C2410C" stroke-width="1" fill="#C2410C" stroke-linejoin="round"/>
+<g transform="translate(54 926.25) rotate(-90)"><text x="0" y="0" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="middle">Fix needed after step 3: tag a new RC (-rc2), repeat steps 4–9 for the affected scope</text></g>
+<text x="40" y="1575" font-size="10.5" fill="#475569">Generated by fig_p_process.py from the WP-P-10 §4 table; red dashed: the new-RC loop (text under the table).</text>
+</svg>
