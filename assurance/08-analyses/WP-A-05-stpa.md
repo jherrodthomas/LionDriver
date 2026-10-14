@@ -16,7 +16,7 @@
 
 The HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)), the FTA/FMEA ([WP-A-04](WP-A-04-system-fta-fmea.md), [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md), [`fmea/`](fmea/fmea-plan.md)) and the DFA ([WP-A-03](WP-A-03-dependent-failure-analysis.md)) start from component failures. STPA starts from the control structure. It finds hazards that arise when every component works as specified but the control actions are unsafe in context: wrong process models (the driver believes the item is off; openpilot believes the driver is attentive), missing or late feedback, conflicting controllers (driver, openpilot, EPS, PCM, stock ADAS), and unsafe interactions between modes.
 
-Scope: the reference configuration (2020 Corolla LE, TSS2, comma 3X with integrated panda, openpilot longitudinal, Chill Mode per D-08) while driving on public roads. The vehicle ECUs (EPS, PCM, brake ECU, stock ADAS camera, instrument cluster) are in the control structure as controllers outside the item; their unsafe control actions are recorded as assumptions, not analysed.
+Scope: the reference configuration CFG-001 (Corolla E210 · ZRE212 · US: US sedan, model years 2020–2022, 1.8 L CVT, TSS 2.0; comma 3X with integrated panda, openpilot longitudinal, Chill Mode per D-08) while driving on public roads. The vehicle ECUs (EPS, PCM, brake ECU, stock ADAS camera, instrument cluster) are in the control structure as controllers outside the item; their unsafe control actions are recorded as assumptions, not analysed.
 
 Not in scope here: cybersecurity attackers (TARA, [WP-C-09](../02-concept/WP-C-09-tara.md)), installation and service processes (PFMEA), Experimental Mode (excluded from claims, D-08).
 

@@ -17,6 +17,7 @@ on:
       - 'tools/severity/**'
       - 'tools/field_monitoring/**'
       - 'tools/safety/**'
+      - 'tools/vehicles/**'
       - 'README.md'
       - 'docs/CARS.md'
       - 'docs/liondriver/**'
@@ -31,6 +32,7 @@ on:
       - 'tools/severity/**'
       - 'tools/field_monitoring/**'
       - 'tools/safety/**'
+      - 'tools/vehicles/**'
       - 'README.md'
       - 'docs/CARS.md'
       - 'docs/liondriver/**'
@@ -142,6 +144,10 @@ jobs:
         python3 -m unittest discover -s tools/safety -p 'test_fmea_lint.py'
         python3 tools/safety/fmea_review_xlsx.py --check
         python3 tools/safety/test_fmea_review_xlsx.py
+    - name: Vehicle register page current, citing documents agree with it (and its tests)
+      run: |
+        python3 tools/vehicles/vehicle_register.py --check
+        python3 -m unittest discover -s tools/vehicles -p 'test_*.py' -v
     - name: FMEA review pages for GitHub (Markdown + SVG) current, diagram data valid (and tests)
       run: |
         python3 tools/safety/fmea_review_md.py --check

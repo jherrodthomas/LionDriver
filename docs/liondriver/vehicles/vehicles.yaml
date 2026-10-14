@@ -1,0 +1,73 @@
+# LionDriver vehicle register: the single source of vehicle facts.
+#
+# Engineering facts about the vehicles LionDriver targets (model codes, model years, powertrain, equipment,
+# platform, firmware, physical data). It makes no safety claim. Safety work products cite a family or
+# configuration by ID (VF-nnn, CFG-nnn) and take the facts from here instead of restating them:
+# WP-C-01 §1, the assurance configuration records (assurance/case/configurations/), the FMEA item
+# structure (assurance/08-analyses/fmea/item/variants.yaml) and the FMEA/FMEDA exports.
+#
+# Edit this file, then run `python3 tools/vehicles/vehicle_register.py` to regenerate README.md.
+# `--check` (CI) fails if README.md is stale or a citing document disagrees with this file.
+#
+# Owner: WP-W-09 (configuration and calibration data). Upstream inputs: docs/CARS.md and opendbc,
+# handled under WP-M-11. A value with `confirmed: false` is a working value awaiting its source.
+schema_version: 1
+
+families:
+  - id: VF-001
+    name: Toyota Corolla E210 (12th generation)
+    generation: E210
+    opendbc_platform: TOYOTA_COROLLA_TSS2
+    # Exact "Make Model" strings from docs/CARS.md: E210 Corollas on the platform.
+    members:
+      - Toyota Corolla 2020-22
+      - Toyota Corolla Hatchback 2019-22
+      - Toyota Corolla Hybrid 2020-22
+      - Toyota Corolla Hybrid (South America only) 2020-23
+    # Same opendbc platform (same safety model, parameters and limits), but not E210 Corollas.
+    platform_siblings:
+      - Toyota Corolla Cross (Non-US only) 2020-23
+      - Toyota Corolla Cross Hybrid (Non-US only) 2020-22
+      - Lexus UX Hybrid 2019-24
+    not_supported:
+      - item: E210 facelift, model year 2023 on (Toyota Safety Sense 3.0)
+        reason: Not in TOYOTA_COROLLA_TSS2 or any other opendbc platform at the pinned version (docs/CARS.md lists Corolla 2020-22 only)
+
+configurations:
+  - id: CFG-001
+    aliases: [AC-001]
+    family: VF-001
+    codename: Corolla E210 · ZRE212 · US
+    slug: toyota-corolla-e210-zre212-us
+    cars_md_member: Toyota Corolla 2020-22
+    make: Toyota
+    model: Corolla
+    body: sedan
+    market: US
+    model_years: {first: 2020, last: 2022}
+    model_years_note: Pre-facelift. The US sedan moved to E210 for model year 2020; the 2023 facelift is not supported
+    model_code: {value: ZRE212, confirmed: true, source: "Toyota parts catalogue (EPC) entries for US 2020 Corolla sedans, VIN prefixes 5YFEPRAE and JTDEPRAE"}
+    engine: {value: 2ZR-FAE 1.8 L petrol, confirmed: true, source: "Same EPC entries"}
+    transmission: {value: CVT, confirmed: true, source: "Same EPC entries"}
+    trims: {value: "L, LE, XLE", confirmed: false, source: "1.8 L trims of the US sedan; confirm per model year (WP-C-01 OI-9)"}
+    adas: Toyota Safety Sense 2.0
+    opendbc_platform: TOYOTA_COROLLA_TSS2
+    safety_mode: toyota
+    harness: Toyota A connector
+    device: comma 3X or comma four with integrated panda (STM32H7)
+    physical:
+      curb_mass_kg: {min: 1320, max: 1388, confirmed: false, source: "min: 2020 LE listings 2,910-2,955 lb (TrueDelta, AutoPadre; Toyota's own sheet not reached); max: opendbc CarSpecs 3,060 lb"}
+      width_mm: {value: 1781, confirmed: false, source: "Listings for the 2020 sedan; used by WP-V-02 §3.5 and tools/severity"}
+      seats: {value: 5, confirmed: true, source: "Listings"}
+    firmware_fingerprints:
+      status: to-be-recorded
+      note: "The scope boundary: a car is covered only if its ECU firmware is in this set. Record engine 0x700/0x7e0, EPS 0x7a1, ABS 0x7b0, radar 0x750/0xf and camera 0x750/0x6d versions per model year (WP-C-01 OI-1, OI-9; WP-W-09)"
+      versions: []
+    excluded:
+      - 2023 and later model years (E210 facelift, Toyota Safety Sense 3.0; not supported by openpilot)
+      - 2.0 L petrol trims (SE, XSE) and the manual transmission
+      - Corolla Hybrid
+      - Corolla Hatchback
+      - Corolla Cross, Lexus UX and other platform siblings
+      - GR Corolla
+      - Markets other than the US

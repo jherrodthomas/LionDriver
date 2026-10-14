@@ -14,7 +14,6 @@ import re
 import sys
 from pathlib import Path
 
-import yaml
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 
@@ -98,7 +97,7 @@ def kv_sheet(wb, name, pairs):
 def build(root: Path) -> Workbook:
   md = (root / ITEM).read_text()
   meta = kv_table(md.split("\n---\n")[0])
-  variants = yaml.safe_load((root / gen_vehicle_catalog.VARIANTS).read_text())
+  variants = gen_vehicle_catalog.load_variants(root)
   cars = gen_vehicle_catalog.parse_cars((root / gen_vehicle_catalog.CARS).read_text())
   status, _ = gen_vehicle_catalog.classify(cars, variants)
 

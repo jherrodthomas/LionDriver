@@ -89,7 +89,7 @@ The failure chains (element → function → failure mode → causes) are drawn 
 
 | Element | Kind | Functions |
 |---|---|---|
-| `DFM-SE-001` Item hardware: comma 3X with integrated panda, Toyota harness and relay box, installed in a 2020 Corolla LE | system | — |
+| `DFM-SE-001` Item hardware: comma 3X with integrated panda, Toyota harness and relay box, installed in a Corolla E210 · ZRE212 · US (CFG-001) | system | — |
 | &nbsp;&nbsp;&nbsp;`DFM-SE-002` Safety MCU STM32H725: core, flash, SRAM | subsystem | `DFM-FN-001` Execute the safety model and hold its code, constants and state without corruption |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`DFM-SE-003` MCU clock and independent watchdog (HSE, PLL, LSI, IWDG) | component | `DFM-FN-002` Provide an accurate time base for all timeouts, and reset the MCU (releasing the relay) within 0.1 s if execution stops |
 | &nbsp;&nbsp;&nbsp;`DFM-SE-004` MCU power supply and supervision (board regulator, SMPS/LDO, BOR, PVD) | component | `DFM-FN-003` Supply the MCU within its operating range, or hold it in reset |
