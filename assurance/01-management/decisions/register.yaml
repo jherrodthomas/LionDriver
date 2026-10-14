@@ -30,8 +30,9 @@
       title: "Lock the reference car to Chill and hide the toggle"
       detail: "Strongest guarantee. Cost: removes owner choice and needs UI changes; harder to undo."
   sources: ["WP-M-07 D-08 / R-17", "WP-M-03 B-06", "WP-A-05 LS-31", "openpilot/common/params_keys.h:43"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 38d3320, record: "WP-M-07 D-08; change record change-2026-10-14-chill-mode-default.md", at: 2026-10-14}
 
 - id: DQ-002
   ref: F-3
@@ -61,8 +62,9 @@
       title: "Defer until supplier failure rates exist"
       detail: "Do it once at the hardware gate. Cost: F-3 stays open through G1 and G2."
   sources: ["fta-fmea-mapping.md F-3", "fmeda-sg001.yaml FMD-002, FMD-010", "fmea-plan.md §metrics", "WP-C-03 SG-04"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 38d3320, record: "fta-fmea-mapping.md F-3; fmeda-sg001.yaml FMD-002, FMD-010", at: 2026-10-14}
 
 - id: DQ-003
   ref: OI-1
@@ -88,8 +90,9 @@
       title: "Ask the assessor first"
       detail: "Bundle it with OI-3 into the I3 confirmation review and decide after. Cost: the HARA baseline waits for that review."
   sources: ["WP-A-05 §2 H-STPA-1, OI-1", "WP-C-04 §7 (driver monitoring not given an ASIL; OI-3)", "WP-C-08 MC-01…MC-03"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: 38d3320, record: "WP-C-08 §6.1; WP-A-05 OI-1", at: 2026-10-14}
 
 - id: DQ-004
   ref: SNAP-1
