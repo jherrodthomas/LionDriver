@@ -71,6 +71,34 @@ BASE_URL = "https://raw.githubusercontent.com/commaai/ci-artifacts/refs/heads/pr
 REF_COMMIT_FN = os.path.join(PROC_REPLAY_DIR, "ref_commit")
 EXCLUDED_PROCS = {"modeld", "dmonitoringmodeld"}
 
+# LionDriver: diffs against comma's reference logs that a LionDriver change explains. Those references can't be
+# re-baselined until LionDriver hosts its own (GAP-30), so each entry excludes only the listed fields and sendcan
+# addresses, for one process on one segment, and cites the change-impact record that explains it.
+EXPLAINED_DIFFS: dict[tuple[str, str], dict[str, list]] = {
+  # CA-001 (LD-FSR-001): alpha longitudinal is refused on vehicles, so card runs stock longitudinal on this Tesla
+  # route and sends no longitudinal frames (0x2B9).
+  # assurance/07-supporting/impact/change-2026-10-14-ca001-alpha-long-interlock.md
+  ("aebd8f1d4ea16066|000002d8--5850d3ea5c--2", "card"): {
+    "fields": ["carParams.openpilotLongitudinalControl", "carParams.safetyConfigs.0.safetyParam"],
+    "sendcan_addresses": [0x2B9],
+  },
+}
+
+
+def drop_sendcan_addresses(msgs, addresses):
+  """Copy of msgs with sendcan frames to the given addresses removed."""
+  out = []
+  for msg in msgs:
+    if msg.which() == "sendcan" and any(c.address in addresses for c in msg.sendcan):
+      builder = msg.as_builder()
+      kept = [c for c in msg.sendcan if c.address not in addresses]
+      frames = builder.init("sendcan", len(kept))
+      for i, c in enumerate(kept):
+        frames[i] = c
+      msg = builder.as_reader()
+    out.append(msg)
+  return out
+
 
 def run_test_process(data):
   segment, cfg, args, cur_log_fn, ref_log_path, lr_dat = data
@@ -121,8 +149,13 @@ def test_process(cfg, lr, segment, ref_log_msgs, new_log_path, ignore_fields=Non
     if seen_msgs != expected_msgs:
       return f"Expected messages: {expected_msgs}, but got: {seen_msgs}", log_msgs
 
+  explained = EXPLAINED_DIFFS.get((segment, cfg.proc_name), {})
+  ref_cmp, new_cmp = ref_log_msgs, log_msgs
+  if explained.get("sendcan_addresses"):
+    ref_cmp, new_cmp = (drop_sendcan_addresses(m, explained["sendcan_addresses"]) for m in (ref_log_msgs, log_msgs))
+
   try:
-    return compare_logs(ref_log_msgs, log_msgs, ignore_fields + cfg.ignore, ignore_msgs, cfg.tolerance), log_msgs
+    return compare_logs(ref_cmp, new_cmp, ignore_fields + cfg.ignore + explained.get("fields", []), ignore_msgs, cfg.tolerance), log_msgs
   except Exception as e:
     return str(e), log_msgs
 

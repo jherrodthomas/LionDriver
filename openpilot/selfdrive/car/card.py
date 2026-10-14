@@ -20,6 +20,7 @@ from opendbc.car.car_helpers import get_car, interfaces
 from opendbc.car.interfaces import CarInterfaceBase, RadarInterfaceBase
 from openpilot.selfdrive.pandad import can_capnp_to_list, can_list_to_can_capnp
 from openpilot.selfdrive.car.cruise import VCruiseHelper
+from openpilot.selfdrive.car import stock_aeb_interlock
 
 REPLAY = "REPLAY" in os.environ
 
@@ -82,6 +83,9 @@ class Car:
 
     is_release = self.params.get_bool("IsReleaseBranch")
 
+    # LD-FSR-001: cleared if the car interface could disable stock AEB
+    self.stock_aeb_preserved = True
+
     if CI is None:
       # wait for one pandaState and one CAN packet
       print("Waiting for CAN messages...")
@@ -90,7 +94,10 @@ class Car:
         if len(can.can) > 0:
           break
 
-      alpha_long_allowed = self.params.get_bool("AlphaLongitudinalEnabled")
+      alpha_long_requested = self.params.get_bool("AlphaLongitudinalEnabled")
+      alpha_long_allowed = stock_aeb_interlock.alpha_long_allowed(alpha_long_requested)
+      if alpha_long_requested and not alpha_long_allowed:
+        self.params.remove("AlphaLongitudinalEnabled")
 
       cached_params = None
       cached_params_raw = self.params.get("CarParamsCache")
@@ -102,6 +109,10 @@ class Car:
       self.RI = interfaces[self.CI.CP.carFingerprint].RadarInterface(self.CI.CP)
       self.CP = self.CI.CP
 
+      self.stock_aeb_preserved = stock_aeb_interlock.stock_aeb_preserved(self.CP)
+      if not self.stock_aeb_preserved:
+        cloudlog.error("LD-FSR-001: car interface may disable stock AEB, forcing passive mode")
+
       # continue onto next fingerprinting step in pandad
       self.params.put_bool("FirmwareQueryDone", True, block=True)
     else:
@@ -110,7 +121,7 @@ class Car:
 
     self.CP.alternativeExperience = 0
     openpilot_enabled_toggle = self.params.get_bool("OpenpilotEnabledToggle")
-    controller_available = self.CI.CC is not None and openpilot_enabled_toggle and not self.CP.dashcamOnly
+    controller_available = self.CI.CC is not None and openpilot_enabled_toggle and not self.CP.dashcamOnly and self.stock_aeb_preserved
     self.CP.passive = not controller_available or self.CP.dashcamOnly
     if self.CP.passive:
       safety_config = structs.CarParams.SafetyConfig()
@@ -227,7 +238,9 @@ class Car:
     if not self.initialized_prev:
       # Initialize CarInterface, once controls are ready
       # TODO: this can make us miss at least a few cycles when doing an ECU knockout
-      self.CI.init(self.CP, *self.can_callbacks)
+      # LD-FSR-001: skip init, which can knock out the stock radar/ADAS ECU
+      if self.stock_aeb_preserved:
+        self.CI.init(self.CP, *self.can_callbacks)
       # signal pandad to switch to car safety mode
       self.params.put_bool("ControlsReady", True)
 

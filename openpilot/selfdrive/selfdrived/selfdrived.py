@@ -23,6 +23,8 @@ from openpilot.selfdrive.selfdrived.events import Events, ET
 from openpilot.selfdrive.selfdrived.helpers import ExcessiveActuationCheck
 from openpilot.selfdrive.selfdrived.state import StateMachine
 from openpilot.selfdrive.selfdrived.alertmanager import AlertManager, set_offroad_alert
+from openpilot.selfdrive.selfdrived import assured_config
+from openpilot.selfdrive.selfdrived.assured_config import AssuredConfigStatus
 
 from openpilot.common.version import get_build_metadata
 from openpilot.common.hardware import HARDWARE
@@ -32,6 +34,8 @@ SIMULATION = "SIMULATION" in os.environ
 TESTING_CLOSET = "TESTING_CLOSET" in os.environ
 
 LONGITUDINAL_PERSONALITY_MAP = {v: k for k, v in log.LongitudinalPersonality.schema.enumerants.items()}
+# LionDriver CA-011: the assured configuration follows at the relaxed distance (FI-2026-001, HZ-008)
+ASSURED_PERSONALITY = log.LongitudinalPersonality.relaxed
 
 ThermalStatus = log.DeviceState.ThermalStatus
 State = log.SelfdriveState.OpenpilotState
@@ -66,6 +70,11 @@ class SelfdriveD:
       cloudlog.info("selfdrived got CarParams")
     else:
       self.CP = CP
+
+    # LionDriver CA-008: identify drives outside the assured configuration
+    self.build_metadata = build_metadata
+    self.assured_config: AssuredConfigStatus | None = None
+    self.update_assured_config()
 
     self.car_events = CarEvents(self.CP)
 
@@ -134,7 +143,8 @@ class SelfdriveD:
     self.logged_comm_issue = None
     self.not_running_prev = None
     self.experimental_mode = False
-    self.personality = self.params.get("LongitudinalPersonality", return_default=True)
+    self.personality = ASSURED_PERSONALITY
+    self.set_personality(self.params.get("LongitudinalPersonality", return_default=True))
     self.recalibrating_seen = False
     self.dm_lockout_set = False
     self.dm_uncertain_alerted = False
@@ -491,7 +501,7 @@ class SelfdriveD:
     # Decrement personality on distance button press
     if self.CP.openpilotLongitudinalControl:
       if any(not be.pressed and be.type == ButtonType.gapAdjustCruise for be in CS.buttonEvents):
-        self.personality = (self.personality - 1) % 3
+        self.set_personality((self.personality - 1) % 3)
         self.params.put('LongitudinalPersonality', self.personality)
         self.events.add(EventName.personalityChanged)
 
@@ -594,13 +604,28 @@ class SelfdriveD:
 
     self.CS_prev = CS
 
+  def set_personality(self, personality):
+    if personality != self.personality and personality != ASSURED_PERSONALITY:
+      cloudlog.event("following distance outside assured configuration", personality=LONGITUDINAL_PERSONALITY_MAP.get(personality, personality))
+    self.personality = personality
+
+  def update_assured_config(self):
+    op = self.build_metadata.openpilot
+    status = assured_config.evaluate(self.CP.carFingerprint, assured_config.read_params(self.params),
+                                     op.git_commit, op.git_origin, op.is_dirty)
+    if status != self.assured_config:
+      cloudlog.event("assured configuration", **status.to_dict())
+      self.params.put("AssuredConfiguration", status.to_dict(), block=True)
+      self.assured_config = status
+
   def params_thread(self, evt):
     while not evt.is_set():
       self.is_metric = self.params.get_bool("IsMetric")
       self.is_ldw_enabled = self.params.get_bool("IsLdwEnabled")
       self.disengage_on_accelerator = self.params.get_bool("DisengageOnAccelerator")
       self.experimental_mode = self.params.get_bool("ExperimentalMode") and self.CP.openpilotLongitudinalControl
-      self.personality = self.params.get("LongitudinalPersonality", return_default=True)
+      self.set_personality(self.params.get("LongitudinalPersonality", return_default=True))
+      self.update_assured_config()
       time.sleep(0.1)
 
   def run(self):

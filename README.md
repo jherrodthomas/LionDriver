@@ -108,6 +108,7 @@ Status is taken from what exists in the repository. "Draft" means the work produ
 | **2 · Safety Engineering** | [Hazard analysis](assurance/02-concept/WP-C-03-hara.md) and [functional safety concept](assurance/02-concept/WP-C-04-functional-safety-concept.md) | Draft |
 | | [SOTIF analysis](assurance/02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md), [cybersecurity analysis](assurance/02-concept/WP-C-09-tara.md), [AI safety requirements](assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) | Draft |
 | | [Architecture analysis](assurance/03-system/WP-S-03-technical-safety-concept-architecture.md) | Draft |
+| | [Field monitoring, safety anomaly and root cause analysis process](docs/safety/field-monitoring/README.md), first case FI-2026-001 (NHTSA PE26007) | Draft |
 | **3 · Implementation and Verification** | Safety mechanisms from the technical safety requirements | Planned |
 | | [ISO 26262-6 software lifecycle](assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md) (Clauses 5–11) | Specified; starts after the Part 2–4 work products and supporting processes are approved |
 | | Automated verification of the inherited safety code (unit tests, coverage gate, MISRA, mutation) | Running in [CI](.github/workflows/safety.yaml); not yet reviewed as evidence |
