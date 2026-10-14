@@ -26,8 +26,8 @@ question waits for an answer too, but can be reopened at the gate named in `gate
 `decider: claude` marks a reversible technical choice: Claude goes with the recommended option when the work
 reaches it (as `assumed`, so the lead can change it) unless the lead objects. Everything else is the lead's.
 
-Keep the open questions few: ask the handful that unblock the most, and move a queued entry to `open` when the
-questions in its `after` are settled or its gate gets close. Rewrite its wording to the standard of the open cards
+Ask in batches of ten: keep about ten questions `open`, and when the lead has answered a batch, move the next ten
+queued entries to `open`, those that unblock the most first (earliest gate, nothing left in `after`). Rewrite its wording to the standard of the open cards
 when it moves.
 
 The queue was seeded on 2026-10-14 from a sweep of every open item in `assurance/` (676 rows). 433 were tasks, not

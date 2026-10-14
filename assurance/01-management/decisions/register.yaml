@@ -90,9 +90,9 @@
       title: "Ask the assessor first"
       detail: "Bundle it with OI-3 into the I3 confirmation review and decide after. Cost: the HARA baseline waits for that review."
   sources: ["WP-A-05 §2 H-STPA-1, OI-1", "WP-C-04 §7 (driver monitoring not given an ASIL; OI-3)", "WP-C-08 MC-01…MC-03"]
-  status: applied
-  answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
-  applied: {ref: 38d3320, record: "WP-C-08 §6.1; WP-A-05 OI-1", at: 2026-10-14}
+  status: answered
+  answer: {choice: other, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g, note: "Both SOTIF and HARA Foreseeable Misuse"}
+  note: "Supersedes the first answer (B, SOTIF only), which was applied in 38d3320; the record there needs updating to cover the HARA side too."
 
 - id: DQ-004
   ref: SNAP-1
@@ -410,72 +410,76 @@
   status: queued
 
 - id: DQ-020
-  question: "Which remote features are switched off in the reference configuration (SSH while driving, athena remote access, uploads, developer modes)?"
-  context: "Several cybersecurity goals (CSG-03/CSG-06) and TARA feasibility ratings (TS-07/TS-08) stay provisional until the maintainer fixes the feature set. WP-S-07 §3.7 proposes athenad off unless the owner opts in, SSH off and no new SSH sessions onroad (CSR-104, CSR-111), developer modes off; Experimental Mode is already off by D-08."
+  question: "Which remote features are switched off in the reference car?"
+  context: "Remote access (athena), SSH, uploads to comma's servers and developer modes are each a way into the car's computer. The cybersecurity goals and two threat ratings stay provisional until you fix this set. The proposal turns them off by default, with remote access as an owner opt-in."
   reversibility: easy
-  blocks: "CSG-03/CSG-06 firmness; TARA TS-07/TS-08 finalisation; CSR-104/CSR-111; TSR-806 release record"
+  blocks: "TARA and cybersecurity goals CSG-03/CSG-06 (G1)"
   gate: G1
+  asked: 2026-10-14
   options:
     - key: A
       recommended: true
-      title: "Adopt the WP-S-07 §3.7 proposal"
-      detail: "Smaller attack surface; owners lose default remote access/uploads unless they opt in; TARA can be finalised."
+      title: "Switch them off by default; remote access only if the owner opts in"
+      detail: "Smaller attack surface; the TARA can be finalised. Cost: no remote access or log uploads unless turned on."
     - key: B
-      title: "Keep upstream defaults and retain the risk"
-      detail: "No user-facing change; TS-07/TS-08 risk stays higher and must be accepted as a cybersecurity claim."
+      title: "Keep upstream defaults and accept the risk"
+      detail: "Nothing changes for owners. Cost: higher threat ratings that must be accepted as a cybersecurity claim."
   sources: ["assurance/02-concept/WP-C-10-cybersecurity-goals-and-concept.md OI-2", "assurance/01-management/WP-M-09-cybersecurity-plan.md OI-2", "assurance/07-supporting/WP-P-08-software-component-qualification.md OI-5"]
-  status: queued
+  status: open
 
 - id: DQ-021
-  question: "Should the optional 'Chestnut' big-model eGPU be excluded from the reference configuration?"
-  context: "Chestnut is an optional external GPU running a large comma-compiled driving model (no source, changes often). Including it adds an unanalysed fallback hazard path (GAP-17) and a cyber attack surface; WP-C-01, WP-C-07 FM-02, WP-C-10 CSC-05 and WP-C-11 AIR-30 all assume exclusion, but the maintainer decision is not recorded."
+  question: "Should the optional external GPU (\"Chestnut\") be excluded from the reference car?"
+  context: "Chestnut runs a larger driving model on an external GPU. The model has no source and changes often. Every concept document already assumes it is excluded; including it adds an unanalysed fallback path (GAP-17) and another attack surface."
   reversibility: easy
-  blocks: "Item boundary (E-06); FM-02; AIR-30; CSC-05; G1 item definition"
+  blocks: "Item definition and AI safety plan scope (G1)"
   gate: G1
+  asked: 2026-10-14
   options:
     - key: A
       recommended: true
-      title: "Exclude Chestnut (recommended)"
-      detail: "Removes GAP-17 path and eGPU threats; implements FM-02/AIR-30; low effort."
+      title: "Exclude it"
+      detail: "Matches every analysis so far; little work. Cost: none for the reference car."
     - key: B
-      title: "Include it after AIR-12/21/22/25 are met for it"
-      detail: "Large AI validation and provenance effort for a model without source."
+      title: "Include it once its AI requirements are met"
+      detail: "Access to the larger model. Cost: a large validation and provenance effort for a model without source."
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-4", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-2"]
-  status: queued
+  status: open
 
 - id: DQ-022
-  question: "Should pressing the accelerator disengage LionDriver in the reference build (DisengageOnAccelerator), and what default driving personality should it use?"
-  context: "Upstream default is that gas overrides longitudinal control without disengaging; drivers may think the system is off and be surprised when ACC resumes (misuse MC-08, hazard SH-05). WP-S-01 SYS-042 and TSR-305 are written for the override-without-disengage setting. WP-S-01 OI-3 also asks for the default following-distance personality."
+  question: "Should pressing the accelerator switch LionDriver off, or only pause its speed control?"
+  context: "Today, pressing the gas overrides speed control while steering stays on, and cruise resumes when you lift off. A driver who thinks the system went off can be surprised when it brakes or accelerates again (misuse MC-08). The requirements (SYS-042, TSR-305) are written for today's behaviour. **The default following distance is a separate question.**"
   reversibility: easy
-  blocks: "TSR-806 parameter set; SYS-042; MC-08 closure"
+  blocks: "Driver-interaction analysis and user information (WP-C-08, WP-O-03)"
   gate: G1
+  asked: 2026-10-14
   options:
     - key: A
       recommended: true
-      title: "Keep upstream default (gas overrides, no disengage)"
-      detail: "Consistent with SYS-042/TSR-305; MC-08 mitigated by override alert and HMI clinic evidence (V-2)."
+      title: "Keep today's behaviour: gas pauses speed control only"
+      detail: "Matches the written requirements; an on-screen override alert covers the confusion, to be checked in the HMI clinic. Cost: the surprise case stays and needs that evidence."
     - key: B
-      title: "Gas disengages (DisengageOnAccelerator = 1)"
-      detail: "Clearer mode model; requires changing SYS-042, TSR-305 and TSR-806 release record."
+      title: "Gas switches LionDriver off"
+      detail: "A simpler mental model. Cost: changes SYS-042, TSR-305 and the release record; more disengagements in daily use."
   sources: ["assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md OI-4", "assurance/09-production-operation/WP-O-03-user-information-safety-warnings.md OI-3", "assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md OI-3"]
-  status: queued
+  status: open
 
 - id: DQ-023
-  question: "Should arterial and rural roads (ODD-A) stay in the reference ODD, or should LionDriver be highway-only?"
-  context: "The reference ODD has a highway part (ODD-H) and an arterial/rural part (ODD-A). The HARA exposure ratings for OS-03/OS-04 assume ODD-A is included; dropping it changes exposure classes and the validation distance per ODD part."
+  question: "Should LionDriver cover arterial and rural roads, or highways only?"
+  context: "The ODD has a highway part and an arterial/rural part (ODD-A). ODD-A brings in head-on crashes on undivided roads (OS-03) and pedestrians and cyclists near the lane (OS-04). **Dropping it shrinks validation but does not lower the steering goal**: the highway case is rated ASIL C too."
   reversibility: revisit
-  blocks: "HARA exposure for OS-03/OS-04; WP-V-02 target distances"
+  blocks: "HARA exposure ratings, validation distances per ODD part"
   gate: G1
+  asked: 2026-10-14
   options:
     - key: A
       recommended: true
-      title: "Keep ODD-A"
-      detail: "HARA exposure ratings stand; validation must cover both ODD parts."
+      title: "Keep arterial and rural roads"
+      detail: "The HARA and ODD stand as written. Cost: validation must cover both road types, including undivided roads with oncoming traffic."
     - key: B
-      title: "Drop ODD-A (highway only)"
-      detail: "Smaller ODD and validation effort; OS-03/OS-04 exposure must be re-rated."
+      title: "Highways only"
+      detail: "Less validation; OS-03/OS-04 drop out of the HARA. Cost: the system must refuse or warn off-highway, which makes it less useful."
   sources: ["assurance/02-concept/WP-C-02-odd-and-intended-functionality.md OI-4", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md OI-2"]
-  status: queued
+  status: open
 
 - id: DQ-024
   question: "Should LionDriver engage an independent cybersecurity assessor now to review the TARA and agree the CAL levels and crediting principles?"
@@ -735,21 +739,22 @@
   status: queued
 
 - id: DQ-039
-  question: "Is a Toyota Corolla E210 test vehicle available, owned, and insured for test use?"
-  context: "AoU characterisation (EPS limits, override force) and all validation depend on a vehicle; ownership and insurance are not recorded (R-19). This is also the input for RD-1's measurement."
+  question: "Do you have a 2020 Corolla to test with?"
+  context: "Measuring the EPS torque limit and override force, which the steering ratings depend on, and every validation drive need the reference car. Who owns it and whether it is insured for testing is not recorded (risk R-19). **Insurance for development testing is asked separately.**"
   reversibility: revisit
-  blocks: "R-19; RD-1 measurement; WP-V-01, WP-V-07"
+  blocks: "AoU measurements, controllability rating, all vehicle tests"
   gate: G1
+  asked: 2026-10-14
   options:
     - key: A
       recommended: true
-      title: "Confirm own vehicle and test insurance"
-      detail: "Unblocks AoU measurement and WP-V-07 drives."
+      title: "Yes, I own one I can use for testing"
+      detail: "Measurements can be planned now. Cost: wear and test risk on your own car."
     - key: B
-      title: "Arrange access to another vehicle"
-      detail: "Rental/loan contract and insurance cost."
+      title: "No, arrange access to another car"
+      detail: "Keeps your car out of testing. Cost: a rental or loan contract and its insurance."
   sources: ["assurance/01-management/WP-M-03-project-plan.md OI-4"]
-  status: queued
+  status: open
 
 - id: DQ-040
   question: "Will LionDriver create a legal entity (or other structure) to sign contracts for the assessor, pen test and insurance?"

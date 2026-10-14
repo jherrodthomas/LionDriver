@@ -17,7 +17,8 @@ Every question for the lead lives in the decision register,
    words, two or three lines on what is at stake, two to four options with what each does and costs, the
    recommendation first, how hard it is to undo, what it blocks, and its sources. Add one picture when it shows the
    difference between the options; skip it when it would only decorate.
-3. **Few open at once.** Ask the handful that unblock the most. Everything else waits as `queued`.
+3. **Batches of ten.** Keep about ten questions open, those that unblock the most. When the lead has answered a
+   batch, open the next ten from the queue and rewrite each to the standard above. Everything else waits as `queued`.
 4. **Start of a session:** read the inbox page's `answers` and `explain` collections, copy them into the register, and
    answer explanation requests before asking anything new.
 5. **In chat**, name a decision by its question, not its ID. Ask in chat only when blocked right now: multiple choice
