@@ -1,0 +1,336 @@
+# Diagram data for the System FMEA (assurance/08-analyses/fmea/analyses/system-fmea.yaml, rev 0.6, BL-004).
+# Facts from WP-C-01 v0.8, WP-S-03, WP-S-05, WP-C-02, WP-C-06, WP-C-08, WP-S-02 and WP-C-07; cited per entry.
+# ODD: the project lead decided highways only (ODD-H of WP-C-02 §3.1) in the decision register on 2026-10-14
+# (DQ-023). WP-C-02 still lists ODD-H + ODD-A until that decision is carried into it.
+schema_version: 1
+analysis: SFM
+
+block_diagram:
+  title: "LionDriver item boundary, 2020 Corolla LE"
+  boundary: "LD-SDA item: comma 3X, integrated panda, harness"
+  blocks:
+    # outside, driver side (column 0)
+    - id: B01
+      name: "Driver"
+      detail: "Supervises, overrides, answers alerts"
+      inside: false
+      element: SFM-SE-034
+      column: 0
+      row: 1
+    - id: B02
+      name: "Road environment"
+      detail: "Highway scene, lanes, leads, weather, light"
+      inside: false
+      column: 0
+      row: 3
+    - id: B03
+      name: "Toyota forward radar"
+      detail: "Lead tracks on radar CAN (panda bus 1)"
+      inside: false
+      column: 0
+      row: 5
+    # inside: comma 3X software (columns 1-2)
+    - id: B04
+      name: "HMI"
+      detail: "ui, soundd, display, speaker"
+      inside: true
+      element: SFM-SE-018
+      column: 1
+      row: 0
+    - id: B05
+      name: "Supervision + DM"
+      detail: "selfdrived, dmonitoringmodeld/d"
+      inside: true
+      element: SFM-SE-014
+      column: 1
+      row: 2
+    - id: B06
+      name: "Perception + planning"
+      detail: "camerad, modeld, locationd, plannerd, radard"
+      inside: true
+      element: SFM-SE-010
+      column: 1
+      row: 4
+    - id: B07
+      name: "Control"
+      detail: "controlsd, lateral/longitudinal controllers"
+      inside: true
+      element: SFM-SE-013
+      column: 2
+      row: 4
+    - id: B08
+      name: "Car interface + pandad"
+      detail: "card, opendbc Toyota port, pandad"
+      inside: true
+      element: SFM-SE-016
+      column: 2
+      row: 2
+    # inside: safety envelope and harness (column 3)
+    - id: B09
+      name: "Panda safety model"
+      detail: "STM32H7, opendbc safety Toyota mode"
+      inside: true
+      element: SFM-SE-003
+      column: 3
+      row: 2
+    - id: B10
+      name: "Harness + relay"
+      detail: "Toyota A connector, harness box, power"
+      inside: true
+      element: SFM-SE-004
+      column: 3
+      row: 4
+    # outside, vehicle side (column 4)
+    - id: B11
+      name: "Toyota EPS"
+      detail: "LKA torque interface, driver torque sensor"
+      inside: false
+      element: SFM-SE-030
+      column: 4
+      row: 0
+    - id: B12
+      name: "Powertrain + brake (ACC)"
+      detail: "ECM/PCM, ABS/VSC via PCM ACC interface"
+      inside: false
+      element: SFM-SE-031
+      column: 4
+      row: 1
+    - id: B13
+      name: "Stock ADAS camera (TSS2)"
+      detail: "LKA/ACC intercepted, PCS forwarded"
+      inside: false
+      element: SFM-SE-032
+      column: 4
+      row: 3
+    - id: B14
+      name: "Vehicle CAN + 12 V"
+      detail: "Car-side CAN bus 0, cluster, 12 V, ignition"
+      inside: false
+      element: SFM-SE-033
+      column: 4
+      row: 5
+  interfaces:
+    - id: I01
+      from: B02
+      to: B06
+      type: data
+      label: "Road camera images"
+      both_ways: false
+      ref: "assurance/02-concept/WP-C-01-item-definition.md §3.4 IF-05"
+    - id: I02
+      from: B01
+      to: B05
+      type: data
+      label: "Driver camera (IR)"
+      both_ways: false
+      ref: "assurance/02-concept/WP-C-01-item-definition.md §3.4 IF-06"
+    - id: I03
+      from: B03
+      to: B09
+      type: data
+      label: "Radar tracks 0x180-0x19F"
+      both_ways: false
+      ref: "assurance/02-concept/WP-C-01-item-definition.md §3.4 IF-02"
+    - id: I04
+      from: B06
+      to: B07
+      type: data
+      label: "modelV2 + long. plan"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-03-technical-safety-concept-architecture.md §9"
+    - id: I05
+      from: B07
+      to: B08
+      type: data
+      label: "carControl 100 Hz"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-03-technical-safety-concept-architecture.md §9"
+    - id: I06
+      from: B08
+      to: B05
+      type: data
+      label: "carState, pandaStates"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-03-technical-safety-concept-architecture.md §9"
+    - id: I07
+      from: B05
+      to: B07
+      type: data
+      label: "selfdriveState, DM"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-03-technical-safety-concept-architecture.md §9"
+    - id: I08
+      from: B05
+      to: B04
+      type: data
+      label: "Alerts, engaged state"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-03-technical-safety-concept-architecture.md §3.3 IF-07"
+    - id: I09
+      from: B04
+      to: B01
+      type: data
+      label: "Display, sounds"
+      both_ways: false
+      ref: "assurance/02-concept/WP-C-01-item-definition.md §3.4 IF-07"
+    - id: I10
+      from: B08
+      to: B09
+      type: data
+      label: "SPI: CAN, 0xf3 heartbeat"
+      both_ways: true
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §2 HSI-01..03, §11.2 S-16..S-21"
+    - id: I11
+      from: B09
+      to: B11
+      type: data
+      label: "0x2E4 STEERING_LKA"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §11.1 S-01, S-02"
+    - id: I12
+      from: B11
+      to: B09
+      type: data
+      label: "0x260 torque, 0x262 EPS"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §11.1 S-07, S-08, S-12"
+    - id: I13
+      from: B09
+      to: B12
+      type: data
+      label: "0x343 ACC_CONTROL"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §11.1 S-03, S-04"
+    - id: I14
+      from: B12
+      to: B09
+      type: data
+      label: "0x1D2/0x226/0xAA status"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §11.1 S-06, S-09..S-11"
+    - id: I15
+      from: B13
+      to: B09
+      type: data
+      label: "Bus 2 fwd (PCS 0x283)"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §11.1 S-15; WP-C-01 §3.4 IF-03"
+    - id: I16
+      from: B09
+      to: B14
+      type: data
+      label: "0x412 LKAS_HUD cluster"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §11.1 S-05"
+    - id: I17
+      from: B09
+      to: B10
+      type: data
+      label: "Relay drive GPIO"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §6, §11.3 S-22"
+    - id: I18
+      from: B10
+      to: B14
+      type: physical
+      label: "CAN intercept bus 0/2"
+      both_ways: true
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §5"
+    - id: I19
+      from: B14
+      to: B10
+      type: energy
+      label: "12 V + ignition line"
+      both_ways: false
+      ref: "assurance/02-concept/WP-C-01-item-definition.md §3.4 IF-08; WP-S-05 §11.3 S-24"
+    - id: I20
+      from: B09
+      to: B01
+      type: data
+      label: "Panda siren (SM-23)"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §11.3 S-27; WP-S-02 TSR-516"
+    - id: I21
+      from: B01
+      to: B11
+      type: physical
+      label: "Steering wheel torque"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-03-technical-safety-concept-architecture.md §2 AP-6"
+    - id: I22
+      from: B01
+      to: B12
+      type: physical
+      label: "Brake, gas, cruise stalk"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-03-technical-safety-concept-architecture.md §2 AP-6; WP-C-01 §3.2"
+
+p_diagram:
+  title: "L2 ACC + ALC on the Corolla, highway ODD"
+  focus: "LD-SDA L2 ACC + ALC on a 2020 Corolla LE, highway ODD (ODD-H)"
+  functions: [SFM-FN-001, SFM-FN-002, SFM-FN-003, SFM-FN-004, SFM-FN-005, SFM-FN-007]
+  inputs:
+    - "Road scene images (road/wide camera)"
+    - "Radar lead tracks 0x180-0x19F"
+    - "Vehicle state: 0xAA, 0x260, 0x1D2, 0x226"
+    - "Driver cruise buttons, pedals, steering"
+    - "Driver face images (IR camera)"
+    - "Vehicle 12 V supply and ignition"
+  ideal_outputs:
+    - "Lane-centred steering torque in envelope"
+    - "Accel -3.5..+2.0 m/s² for set speed/gap"
+    - "Engage on request only; release on brake"
+    - "Timely take-over alerts, DM escalation"
+    - "Stock PCS/AEB kept available"
+  error_states:
+    - text: "Unintended, excessive or wrong-way steering"
+      failure_modes: [SFM-001, SFM-002, SFM-003, SFM-029, SFM-030]
+    - text: "Lane drift: weak, lost, frozen or oscillating"
+      failure_modes: [SFM-004, SFM-005, SFM-006, SFM-007]
+    - text: "Unintended acceleration or phantom braking"
+      failure_modes: [SFM-008, SFM-009]
+    - text: "Too little or too late braking for a lead"
+      failure_modes: [SFM-010, SFM-011, SFM-012]
+    - text: "Engages wrongly or does not yield to driver"
+      failure_modes: [SFM-013, SFM-014, SFM-017, SFM-018, SFM-019, SFM-020, SFM-021]
+    - text: "Inattention missed or take-over not perceived"
+      failure_modes: [SFM-022, SFM-023, SFM-025, SFM-026, SFM-027]
+  noise_factors:
+    piece_to_piece:
+      - "EPS/ECM/camera firmware by E210 year (OI-9)"
+      - "Device and harness revision (OI-2)"
+      - "Mount position per installation (AOU-08)"
+      - "Tyres, alignment, steer ratio (AOU-09)"
+    change_over_time:
+      - "Mount shift after calibration (TC-19)"
+      - "Online learners drift (paramsd, torqued)"
+      - "Upstream update changes defaults (GAP-18)"
+      - "Harness relay contact wear (DFM-010)"
+    customer_usage:
+      - "Hands-off, phone use, drowsy (MC-01..03)"
+      - "DM defeat: cam covered, nudgers (MC-04/06)"
+      - "Use outside ODD, > 120 km/h (MC-07)"
+      - "Gas override taken as disengage (MC-08)"
+    external_environment:
+      - "Low sun, glare, rain and spray (TC-01..03)"
+      - "Faded markings, exit lane splits (TC-05/31)"
+      - "Cut-in, stopped car, cut-out (TC-07..09)"
+      - "Tight curve, banking, crosswind (TC-14/15)"
+    system_interaction:
+      - "Stock camera LKA/ACC on bus if relay fails"
+      - "PCM ignores cancel or bounds ACC (AOU-05)"
+      - "EPS torque cap, fault or lockout (AOU-01)"
+      - "SoC load, throttling, msg delays (TC-23)"
+  control_factors:
+    - text: "Torque 1500 raw, rate +15/-25 per frame"
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §11.1 S-02; WP-S-02 TSR-101..104"
+    - text: "Accel bounds -3.5..+2.0 m/s² in envelope"
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §11.1 S-03; WP-S-02 TSR-201"
+    - text: "Authority on PCM cruise edge + heartbeat"
+      ref: "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-301; WP-S-03 §6 SM-04, SM-29"
+    - text: "DM escalation 5/8/13 s, decel, lockout"
+      ref: "assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md §5.1; WP-S-02 TSR-608"
+    - text: "Chill mode by default (Experimental off)"
+      ref: "assurance/01-management/WP-M-07-risk-management.md D-08; WP-C-07 FM-01"
+    - text: "Fail-silent fault reaction + panda siren"
+      ref: "assurance/03-system/WP-S-03-technical-safety-concept-architecture.md §2 AP-2; WP-S-02 TSR-516"

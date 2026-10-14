@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 896" width="980" height="896" role="img">
+<title>L2 ACC + ALC on the Corolla, highway ODD</title>
+<style>
+.bg{fill:#ffffff}.ink{fill:#1f2328}.mut{fill:#59636e}.acc{fill:#0969da}.surf{fill:#f6f8fa}.box{fill:#ffffff;stroke:#d1d9e0}
+.in{fill:#ddf4ff;stroke:#54aeff}.out{fill:#f6f8fa;stroke:#d1d9e0}.bd{fill:none;stroke:#0969da;stroke-dasharray:6 4}.frame{fill:none;stroke:#d1d9e0}
+.hS{fill:#ffebe9}.h{fill:#cf222e}.mS{fill:#fff8c5}.m{fill:#9a6700}.lS{fill:#dafbe1}.l{fill:#1a7f37}
+.hB{fill:#ffebe9;stroke:#ff8182}.lB{fill:#dafbe1;stroke:#4ac26b}.nB{fill:#fbefff;stroke:#c297ff}.n{fill:#8250df}
+.ln{stroke:#59636e;fill:none}.data{stroke:#0969da;fill:none}.energy{stroke:#bc4c00;fill:none;stroke-width:2.2}
+.physical{stroke:#59636e;fill:none;stroke-dasharray:5 3}.material{stroke:#1a7f37;fill:none;stroke-dasharray:1.5 3}
+.ah{fill:#59636e}.lbl{fill:#ffffff}.lane{fill:#f6f8fa}.laneT{fill:#59636e}
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif}
+.mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
+@media (prefers-color-scheme: dark){
+.bg{fill:#0d1117}.ink{fill:#e6edf3}.mut{fill:#9198a1}.acc{fill:#4493f8}.surf{fill:#151b23}.box{fill:#0d1117;stroke:#3d444d}
+.in{fill:#0c2d6b;stroke:#1f6feb}.out{fill:#151b23;stroke:#3d444d}.bd{stroke:#4493f8}.frame{stroke:#3d444d}
+.hS{fill:#3c1618}.h{fill:#ff7b72}.mS{fill:#3a2a0c}.m{fill:#d29922}.lS{fill:#12261a}.l{fill:#3fb950}
+.hB{fill:#3c1618;stroke:#da3633}.lB{fill:#12261a;stroke:#238636}.nB{fill:#271052;stroke:#8957e5}.n{fill:#ab7df8}
+.ln{stroke:#9198a1}.data{stroke:#4493f8}.energy{stroke:#f0883e}.physical{stroke:#9198a1}.material{stroke:#3fb950}
+.ah{fill:#9198a1}.lbl{fill:#0d1117}.lane{fill:#151b23}.laneT{fill:#9198a1}}
+</style>
+<rect class="bg" x="0" y="0" width="980" height="896" rx="8"/>
+<text x="24.0" y="30.0" class="ink" font-size="15" font-weight="600" text-anchor="start">L2 ACC + ALC on the Corolla, highway ODD</text>
+<rect x="26.0" y="50.0" width="176.0" height="146.0" rx="6" class="nB"/>
+<text x="36.0" y="69.0" class="n" font-size="12" font-weight="700" text-anchor="start">Piece to piece</text>
+<text x="36.0" y="88.0" class="ink" font-size="11" text-anchor="start">• EPS/ECM/camera firmware</text>
+<text x="36.0" y="102.0" class="ink" font-size="11" text-anchor="start">by E210 year (OI-9)</text>
+<text x="36.0" y="116.0" class="ink" font-size="11" text-anchor="start">• Device and harness</text>
+<text x="36.0" y="130.0" class="ink" font-size="11" text-anchor="start">revision (OI-2)</text>
+<text x="36.0" y="144.0" class="ink" font-size="11" text-anchor="start">• Mount position per</text>
+<text x="36.0" y="158.0" class="ink" font-size="11" text-anchor="start">installation (AOU-08)</text>
+<text x="36.0" y="172.0" class="ink" font-size="11" text-anchor="start">• Tyres, alignment, steer</text>
+<text x="36.0" y="186.0" class="ink" font-size="11" text-anchor="start">ratio (AOU-09)</text>
+<rect x="214.0" y="50.0" width="176.0" height="146.0" rx="6" class="nB"/>
+<text x="224.0" y="69.0" class="n" font-size="12" font-weight="700" text-anchor="start">Change over time</text>
+<text x="224.0" y="88.0" class="ink" font-size="11" text-anchor="start">• Mount shift after</text>
+<text x="224.0" y="102.0" class="ink" font-size="11" text-anchor="start">calibration (TC-19)</text>
+<text x="224.0" y="116.0" class="ink" font-size="11" text-anchor="start">• Online learners drift</text>
+<text x="224.0" y="130.0" class="ink" font-size="11" text-anchor="start">(paramsd, torqued)</text>
+<text x="224.0" y="144.0" class="ink" font-size="11" text-anchor="start">• Upstream update changes</text>
+<text x="224.0" y="158.0" class="ink" font-size="11" text-anchor="start">defaults (GAP-18)</text>
+<text x="224.0" y="172.0" class="ink" font-size="11" text-anchor="start">• Harness relay contact</text>
+<text x="224.0" y="186.0" class="ink" font-size="11" text-anchor="start">wear (DFM-010)</text>
+<rect x="402.0" y="50.0" width="176.0" height="146.0" rx="6" class="nB"/>
+<text x="412.0" y="69.0" class="n" font-size="12" font-weight="700" text-anchor="start">Customer usage</text>
+<text x="412.0" y="88.0" class="ink" font-size="11" text-anchor="start">• Hands-off, phone use,</text>
+<text x="412.0" y="102.0" class="ink" font-size="11" text-anchor="start">drowsy (MC-01..03)</text>
+<text x="412.0" y="116.0" class="ink" font-size="11" text-anchor="start">• DM defeat: cam covered,</text>
+<text x="412.0" y="130.0" class="ink" font-size="11" text-anchor="start">nudgers (MC-04/06)</text>
+<text x="412.0" y="144.0" class="ink" font-size="11" text-anchor="start">• Use outside ODD, &gt; 120</text>
+<text x="412.0" y="158.0" class="ink" font-size="11" text-anchor="start">km/h (MC-07)</text>
+<text x="412.0" y="172.0" class="ink" font-size="11" text-anchor="start">• Gas override taken as</text>
+<text x="412.0" y="186.0" class="ink" font-size="11" text-anchor="start">disengage (MC-08)</text>
+<rect x="590.0" y="50.0" width="176.0" height="146.0" rx="6" class="nB"/>
+<text x="600.0" y="69.0" class="n" font-size="12" font-weight="700" text-anchor="start">External environment</text>
+<text x="600.0" y="88.0" class="ink" font-size="11" text-anchor="start">• Low sun, glare, rain and</text>
+<text x="600.0" y="102.0" class="ink" font-size="11" text-anchor="start">spray (TC-01..03)</text>
+<text x="600.0" y="116.0" class="ink" font-size="11" text-anchor="start">• Faded markings, exit lane</text>
+<text x="600.0" y="130.0" class="ink" font-size="11" text-anchor="start">splits (TC-05/31)</text>
+<text x="600.0" y="144.0" class="ink" font-size="11" text-anchor="start">• Cut-in, stopped car,</text>
+<text x="600.0" y="158.0" class="ink" font-size="11" text-anchor="start">cut-out (TC-07..09)</text>
+<text x="600.0" y="172.0" class="ink" font-size="11" text-anchor="start">• Tight curve, banking,</text>
+<text x="600.0" y="186.0" class="ink" font-size="11" text-anchor="start">crosswind (TC-14/15)</text>
+<rect x="778.0" y="50.0" width="176.0" height="146.0" rx="6" class="nB"/>
+<text x="788.0" y="69.0" class="n" font-size="12" font-weight="700" text-anchor="start">System interaction</text>
+<text x="788.0" y="88.0" class="ink" font-size="11" text-anchor="start">• Stock camera LKA/ACC on</text>
+<text x="788.0" y="102.0" class="ink" font-size="11" text-anchor="start">bus if relay fails</text>
+<text x="788.0" y="116.0" class="ink" font-size="11" text-anchor="start">• PCM ignores cancel or</text>
+<text x="788.0" y="130.0" class="ink" font-size="11" text-anchor="start">bounds ACC (AOU-05)</text>
+<text x="788.0" y="144.0" class="ink" font-size="11" text-anchor="start">• EPS torque cap, fault or</text>
+<text x="788.0" y="158.0" class="ink" font-size="11" text-anchor="start">lockout (AOU-01)</text>
+<text x="788.0" y="172.0" class="ink" font-size="11" text-anchor="start">• SoC load, throttling, msg</text>
+<text x="788.0" y="186.0" class="ink" font-size="11" text-anchor="start">delays (TC-23)</text>
+<text x="490.0" y="216.0" class="n" font-size="11" font-weight="700" text-anchor="middle">NOISE FACTORS</text>
+<rect x="24.0" y="400.0" width="230.0" height="202.0" rx="6" class="box"/>
+<text x="36.0" y="420.0" class="acc" font-size="11" font-weight="700" text-anchor="start">INPUTS</text>
+<text x="36.0" y="438.0" class="ink" font-size="11" text-anchor="start">• Road scene images (road/wide</text>
+<text x="36.0" y="452.0" class="ink" font-size="11" text-anchor="start">camera)</text>
+<text x="36.0" y="466.0" class="ink" font-size="11" text-anchor="start">• Radar lead tracks</text>
+<text x="36.0" y="480.0" class="ink" font-size="11" text-anchor="start">0x180-0x19F</text>
+<text x="36.0" y="494.0" class="ink" font-size="11" text-anchor="start">• Vehicle state: 0xAA, 0x260,</text>
+<text x="36.0" y="508.0" class="ink" font-size="11" text-anchor="start">0x1D2, 0x226</text>
+<text x="36.0" y="522.0" class="ink" font-size="11" text-anchor="start">• Driver cruise buttons,</text>
+<text x="36.0" y="536.0" class="ink" font-size="11" text-anchor="start">pedals, steering</text>
+<text x="36.0" y="550.0" class="ink" font-size="11" text-anchor="start">• Driver face images (IR</text>
+<text x="36.0" y="564.0" class="ink" font-size="11" text-anchor="start">camera)</text>
+<text x="36.0" y="578.0" class="ink" font-size="11" text-anchor="start">• Vehicle 12 V supply and</text>
+<text x="36.0" y="592.0" class="ink" font-size="11" text-anchor="start">ignition</text>
+<rect x="300.0" y="236.0" width="290.0" height="530.0" rx="10" class="in"/>
+<text x="445.0" y="461.0" class="ink" font-size="14" font-weight="700" text-anchor="middle">LD-SDA L2 ACC + ALC on a</text>
+<text x="445.0" y="478.0" class="ink" font-size="14" font-weight="700" text-anchor="middle">2020 Corolla LE, highway</text>
+<text x="445.0" y="495.0" class="ink" font-size="14" font-weight="700" text-anchor="middle">ODD (ODD-H)</text>
+<text x="316.0" y="520.0" class="mut" font-size="10.5" text-anchor="start">Functions covered:</text>
+<text x="316.0" y="533.0" class="mut" font-size="10.5" text-anchor="start">SFM-FN-001, SFM-FN-002, SFM-FN-003,</text>
+<text x="316.0" y="546.0" class="mut" font-size="10.5" text-anchor="start">SFM-FN-004, SFM-FN-005, SFM-FN-007</text>
+<rect x="636.0" y="236.0" width="230.0" height="160.0" rx="6" class="lB"/>
+<text x="648.0" y="256.0" class="l" font-size="11" font-weight="700" text-anchor="start">IDEAL FUNCTION (OUTPUTS)</text>
+<text x="648.0" y="274.0" class="ink" font-size="11" text-anchor="start">• Lane-centred steering torque</text>
+<text x="648.0" y="288.0" class="ink" font-size="11" text-anchor="start">in envelope</text>
+<text x="648.0" y="302.0" class="ink" font-size="11" text-anchor="start">• Accel -3.5..+2.0 m/s² for</text>
+<text x="648.0" y="316.0" class="ink" font-size="11" text-anchor="start">set speed/gap</text>
+<text x="648.0" y="330.0" class="ink" font-size="11" text-anchor="start">• Engage on request only;</text>
+<text x="648.0" y="344.0" class="ink" font-size="11" text-anchor="start">release on brake</text>
+<text x="648.0" y="358.0" class="ink" font-size="11" text-anchor="start">• Timely take-over alerts, DM</text>
+<text x="648.0" y="372.0" class="ink" font-size="11" text-anchor="start">escalation</text>
+<text x="648.0" y="386.0" class="ink" font-size="11" text-anchor="start">• Stock PCS/AEB kept available</text>
+<rect x="636.0" y="410.0" width="230.0" height="356.0" rx="6" class="hB"/>
+<text x="648.0" y="430.0" class="h" font-size="11" font-weight="700" text-anchor="start">ERROR STATES → FAILURE MODES</text>
+<text x="648.0" y="448.0" class="ink" font-size="11" text-anchor="start">• Unintended, excessive or</text>
+<text x="648.0" y="462.0" class="ink" font-size="11" text-anchor="start">wrong-way steering</text>
+<text x="648.0" y="476.0" class="mut mono" font-size="10.5" text-anchor="start">   SFM-001, SFM-002, SFM-003,</text>
+<text x="648.0" y="490.0" class="mut mono" font-size="10.5" text-anchor="start">   SFM-029, SFM-030</text>
+<text x="648.0" y="504.0" class="ink" font-size="11" text-anchor="start">• Lane drift: weak, lost,</text>
+<text x="648.0" y="518.0" class="ink" font-size="11" text-anchor="start">frozen or oscillating</text>
+<text x="648.0" y="532.0" class="mut mono" font-size="10.5" text-anchor="start">   SFM-004, SFM-005, SFM-006,</text>
+<text x="648.0" y="546.0" class="mut mono" font-size="10.5" text-anchor="start">   SFM-007</text>
+<text x="648.0" y="560.0" class="ink" font-size="11" text-anchor="start">• Unintended acceleration or</text>
+<text x="648.0" y="574.0" class="ink" font-size="11" text-anchor="start">phantom braking</text>
+<text x="648.0" y="588.0" class="mut mono" font-size="10.5" text-anchor="start">   SFM-008, SFM-009</text>
+<text x="648.0" y="602.0" class="ink" font-size="11" text-anchor="start">• Too little or too late</text>
+<text x="648.0" y="616.0" class="ink" font-size="11" text-anchor="start">braking for a lead</text>
+<text x="648.0" y="630.0" class="mut mono" font-size="10.5" text-anchor="start">   SFM-010, SFM-011, SFM-012</text>
+<text x="648.0" y="644.0" class="ink" font-size="11" text-anchor="start">• Engages wrongly or does not</text>
+<text x="648.0" y="658.0" class="ink" font-size="11" text-anchor="start">yield to driver</text>
+<text x="648.0" y="672.0" class="mut mono" font-size="10.5" text-anchor="start">   SFM-013, SFM-014, SFM-017,</text>
+<text x="648.0" y="686.0" class="mut mono" font-size="10.5" text-anchor="start">   SFM-018, SFM-019, SFM-020,</text>
+<text x="648.0" y="700.0" class="mut mono" font-size="10.5" text-anchor="start">   SFM-021</text>
+<text x="648.0" y="714.0" class="ink" font-size="11" text-anchor="start">• Inattention missed or</text>
+<text x="648.0" y="728.0" class="ink" font-size="11" text-anchor="start">take-over not perceived</text>
+<text x="648.0" y="742.0" class="mut mono" font-size="10.5" text-anchor="start">   SFM-022, SFM-023, SFM-025,</text>
+<text x="648.0" y="756.0" class="mut mono" font-size="10.5" text-anchor="start">   SFM-026, SFM-027</text>
+<path d="M254.0 501.0 L300.0 501.0" class="ln" stroke-width="2"/><path d="M300.0 501.0 L293.6 503.7 L293.6 498.3 Z" class="ah"/>
+<path d="M590.0 316.0 L636.0 316.0" class="ln" stroke-width="2"/><path d="M636.0 316.0 L629.6 318.7 L629.6 313.3 Z" class="ah"/>
+<path d="M590.0 588.0 L636.0 588.0" class="ln" stroke-width="2"/><path d="M636.0 588.0 L629.6 590.7 L629.6 585.3 Z" class="ah"/>
+<path d="M445.0 224.0 L445.0 236.0" class="ln" stroke-width="2"/><path d="M445.0 236.0 L442.3 229.6 L447.7 229.6 Z" class="ah"/>
+<path d="M445.0 800.0 L445.0 766.0" class="ln" stroke-width="2"/><path d="M445.0 766.0 L447.7 772.4 L442.3 772.4 Z" class="ah"/>
+<rect x="24.0" y="800.0" width="842.0" height="76.0" rx="6" class="surf"/>
+<text x="36.0" y="820.0" class="acc" font-size="11" font-weight="700" text-anchor="start">CONTROL FACTORS (WHAT THE DESIGN SETS)</text>
+<text x="36.0" y="838.0" class="ink" font-size="11" text-anchor="start">• Torque 1500 raw, rate +15/-25 per frame</text>
+<text x="36.0" y="852.0" class="ink" font-size="11" text-anchor="start">• Accel bounds -3.5..+2.0 m/s² in envelope</text>
+<text x="36.0" y="866.0" class="ink" font-size="11" text-anchor="start">• Authority on PCM cruise edge + heartbeat</text>
+<text x="451.0" y="838.0" class="ink" font-size="11" text-anchor="start">• DM escalation 5/8/13 s, decel, lockout</text>
+<text x="451.0" y="852.0" class="ink" font-size="11" text-anchor="start">• Chill mode by default (Experimental off)</text>
+<text x="451.0" y="866.0" class="ink" font-size="11" text-anchor="start">• Fail-silent fault reaction + panda siren</text>
+</svg>
