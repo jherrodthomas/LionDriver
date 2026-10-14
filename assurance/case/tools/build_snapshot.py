@@ -2,15 +2,17 @@
 """Build a dated, versioned snapshot of the safety case: one self-contained HTML document plus a manifest.
 
 The snapshot is what the README button downloads (as PDF, printed from this HTML by
-render_snapshot.mjs in the safety-case-snapshot workflow). Every value in it is read from the
+render_snapshot.cjs in the safety-case-snapshot workflow). Every value in it is read from the
 records, the work products and git; nothing is typed here except headings and fixed notices.
 
 Usage:
-  python3 assurance/case/tools/build_snapshot.py [--out DIR] [--previous MANIFEST] [--tag bl-NNN]
+  python3 assurance/case/tools/build_snapshot.py [--out DIR] [--previous MANIFEST] [--tag bl-NNN] [--copy CC-YYYY-NNN]
 
   --out       output directory (default build/snapshot)
   --previous  manifest.json of the previous snapshot, for "changes since the previous snapshot"
   --tag       build a baseline release for this tag instead of a living snapshot
+  --copy      stamp the snapshot as this controlled copy; the copy must already be in
+              assurance/case/distribution.yaml (distribution.py), so no copy exists without its record
 
 Outputs: <out>/LionDriver-safety-case.html and <out>/manifest.json. The output depends only on the
 commit and the previous manifest (the date is the commit date), so a rebuild gives the same bytes.
@@ -22,6 +24,7 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -32,6 +35,7 @@ from caselib import ASSURANCE_DIR, CASE_DIR, REPO_ROOT, load_case, release_statu
 
 sys.path.insert(0, str(ASSURANCE_DIR / "trace" / "tools"))
 import vmodel
+import distribution
 
 GENERATOR_VERSION = "1.0"
 REPO_SLUG = "jherrodthomas/LionDriver"
@@ -43,6 +47,10 @@ WP_M_02 = ASSURANCE_DIR / "01-management" / "WP-M-02-safety-plan.md"
 WP_M_01 = ASSURANCE_DIR / "01-management" / "WP-M-01-assurance-strategy.md"
 WP_M_06 = next((ASSURANCE_DIR / "01-management").glob("WP-M-06-*.md"))
 WP_C_01 = ASSURANCE_DIR / "02-concept" / "WP-C-01-item-definition.md"
+WP_K_01 = ASSURANCE_DIR / "10-safety-case" / "WP-K-01-safety-case.md"
+WP_P_04 = ASSURANCE_DIR / "07-supporting" / "WP-P-04-documentation-management.md"
+REFERENCE_CFG = "CFG-001"
+REFERENCE_BUILD = "reference build (LIONDRIVER_REFERENCE=1)"
 CONFIRMATION_DIR = ASSURANCE_DIR / "10-safety-case" / "confirmation"
 GSN_DIR = ASSURANCE_DIR / "10-safety-case" / "gsn"
 FIGURES = [
@@ -62,7 +70,8 @@ ABBREVIATIONS = [
 # ---------------------------------------------------------------- sources
 
 def git(*args: str) -> str:
-  return subprocess.run(["git", *args], cwd=REPO_ROOT, check=True, capture_output=True, text=True).stdout.strip()
+  env = {**os.environ, "TZ": "UTC"}
+  return subprocess.run(["git", *args], cwd=REPO_ROOT, check=True, capture_output=True, text=True, env=env).stdout.strip()
 
 
 def plain(md: str) -> str:
@@ -91,9 +100,27 @@ def md_table(path: Path, heading: str) -> list[dict]:
   return rows
 
 
-def identity(tag: str | None, previous: dict | None) -> dict:
+def wp_version(path: Path) -> str:
+  """The version in a work product's control header ("| Version | 0.4 (...)" gives "0.4")."""
+  m = re.search(r"^\|\s*Version\s*\|\s*([0-9]+\.[0-9]+(?:\.[0-9]+)?)", path.read_text(encoding="utf-8"), re.M)
+  if not m:
+    raise SystemExit(f"no version in the control header of {path.name}")
+  return m.group(1)
+
+
+def retention(kind: str) -> str:
+  """The WP-P-04 §10 retention period for this kind of snapshot."""
+  key = "Work products, review" if kind == "baseline release" else "Records of unreleased baselines"
+  row = next((r for r in md_table(WP_P_04, "## 10.") if plain(r["Record"]).startswith(key)), None)
+  if row is None:
+    raise SystemExit(f"WP-P-04 §10 has no retention row starting {key!r}")
+  return plain(row["Retention"])
+
+
+def identity(tag: str | None, previous: dict | None, copy: dict | None = None) -> dict:
   commit = git("rev-parse", "HEAD")
   date = git("-c", "log.showSignature=false", "log", "-1", "--format=%cd", "--date=format-local:%Y-%m-%d")
+  issued = git("-c", "log.showSignature=false", "log", "-1", "--format=%cd", "--date=format-local:%Y-%m-%d %H:%M") + " UTC"
   pins = {}
   for name in SUBMODULES:
     entry = git("ls-tree", "HEAD", name).split()
@@ -104,9 +131,35 @@ def identity(tag: str | None, previous: dict | None) -> dict:
     sid, kind = f"{tag.upper()}-{commit[:7]}", "baseline release"
   else:
     sid, kind = f"SC-{date.replace('-', '.')}-{commit[:7]}", "living snapshot"
-  return {"id": sid, "kind": kind, "tag": tag, "date": date, "commit": commit, "commit_short": commit[:7], "pins": pins,
+  return {"id": sid, "kind": kind, "tag": tag, "date": date, "issued": issued, "commit": commit, "commit_short": commit[:7],
+          "pins": pins, "version": wp_version(WP_K_01), "retention": retention(kind), "copy": copy,
           "previous": previous["snapshot"]["id"] if previous else None,
           "previous_commit": previous["snapshot"]["commit"] if previous else None}
+
+
+def copy_line(ident: dict) -> str:
+  c = ident["copy"]
+  if c:
+    return f"Controlled copy {c['id']} for {c['recipient']} ({c['purpose']}), issued by @{c['issued_by']} {c['issued_at']}"
+  return "Uncontrolled copy: public download, not recorded"
+
+
+def running_header(ident: dict, rs: dict, s: dict, cfg: dict) -> dict:
+  """Header and footer of every printed page (render_snapshot.cjs): identity, status, configuration and copy."""
+  bl = s["baseline"]
+  copy = f"CONTROLLED COPY {ident['copy']['id']}" if ident["copy"] else "UNCONTROLLED"
+  pins = " · ".join(f"{k.replace('_repo', '')} {v}" for k, v in ident["pins"].items())
+  short_cfg = re.sub(r"\s*\(reference configuration\)", "", cfg["title"]).replace("Toyota Safety Sense", "TSS")
+  short_cfg = re.sub(r",\s*[^,(]*\((\w+)\),", r" \1", short_cfg)
+  return {
+    "left": f"WP-K-01 Safety case · v{ident['version']} · {ident['id']}",
+    "right": f"{rs['label']} · PUBLIC · {copy}",
+    "footer": f"{cfg['id']} {short_cfg} · {REFERENCE_BUILD} · liondriver-dev @ {ident['commit_short']} · {pins} · "
+              f"baseline {bl['id']} ({bl['lifecycle_status'].replace('-', ' ')})",
+    "footer2": f"Issued {ident['issued']} · Retain: {ident['retention']} (WP-P-04 §10)",
+    "footer3": copy_line(ident),
+    "verify": RELEASES_URL,
+  }
 
 
 def changes(previous_commit: str | None) -> list[dict]:
@@ -219,8 +272,8 @@ REVIEW_TONE = {"accepted": "ok", "in-review": "am", "changes-requested": "am", "
 EVID_TONE = {"available": "ok", "partial": "am", "missing": "red"}
 
 CSS = """
-@page{size:A4;margin:20mm 16mm 18mm}
-@page land{size:A4 landscape;margin:16mm 16mm 16mm}
+@page{size:A4;margin:20mm 16mm 24mm}
+@page land{size:A4 landscape;margin:16mm 16mm 22mm}
 :root{--ink:#0F172A;--mut:#475569;--line:#E2E8F0;--b2:#CBD5E1;--or:#C2410C;--orf:#FFF7ED;--amf:#FFFBEB;--red:#D2553F}
 *{box-sizing:border-box}
 html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -237,7 +290,7 @@ section.land h1+figure,section.land .lead+figure{break-before:auto}
 h1{font-size:19pt;margin:0 0 2mm;letter-spacing:-.01em}
 h2{font-size:12pt;margin:6mm 0 2mm}
 .lead{color:var(--mut);font-size:9pt;margin:0 0 3mm}
-.sect{font-size:7.6pt;font-weight:700;letter-spacing:.1em;color:#64748B;margin:6mm 0 2mm;text-transform:uppercase}
+.sect{font-size:7.6pt;font-weight:700;letter-spacing:.1em;color:#64748B;margin:6mm 0 2mm;text-transform:uppercase;break-after:avoid;page-break-after:avoid}
 .chip{display:inline-block;font-size:7.4pt;font-weight:700;border-radius:8px;padding:0 6px;white-space:nowrap;line-height:1.6}
 .chip.am{background:var(--amf);color:#92400E;border:1px solid #FCD34D}.chip.red{background:#FEF2F2;color:#991B1B;border:1px solid #FCA5A5}
 .chip.g{background:#F1F5F9;color:#334155;border:1px solid var(--b2)}.chip.ok{background:#ECFDF5;color:#065F46;border:1px solid #6EE7B7}
@@ -321,6 +374,7 @@ Reference configuration: Toyota Corolla, 12th generation (E210), TSS 2.0</div>
 <div class="idg">
 <div>Snapshot</div><div class="mono"><b>{e(ident['id'])}</b></div>
 <div>Kind</div><div>{e(ident['kind'].capitalize())} {kind_chip}</div>
+<div>Version</div><div>{e(ident['version'])}</div>
 <div>Date</div><div>{e(ident['date'])} (commit date, UTC)</div>
 <div>Source</div><div class="mono">liondriver-dev @ {e(ident['commit_short'])}</div>
 <div>Engineering baseline</div><div>{e(bl['id'])} {chip(bl['lifecycle_status'].replace('-', ' '), 'ok' if bl['lifecycle_status'] == 'frozen' else 'am')}</div>
@@ -329,7 +383,7 @@ Reference configuration: Toyota Corolla, 12th generation (E210), TSS 2.0</div>
 <div class="banner{' ok' if rs['approved'] else ''}"><span class="pill">{e(rs['label'])}</span><div>{banner_text}</div></div>
 <div class="std"><span>ISO 26262:2018</span><span>ISO 21448:2022</span><span>ISO/SAE 21434:2021</span><span>ISO/PAS 8800</span>
 <span>Automotive SPICE 4.0</span></div>
-<div class="cfoot">Public · MIT licence · uncontrolled when downloaded. Current version and verification: {e(RELEASES_URL)}<br>
+<div class="cfoot">Public · MIT licence · {e(f"controlled copy {ident['copy']['id']} for {ident['copy']['recipient']}" if ident['copy'] else "uncontrolled when downloaded")}. Current version and verification: {e(RELEASES_URL)}<br>
 Generated by assurance/case/tools/build_snapshot.py {GENERATOR_VERSION} from the records; not edited by hand.</div>
 </section>"""
 
@@ -373,8 +427,21 @@ A living snapshot never does.</div>
 
 
 def document_control(ident: dict, s: dict, prev: dict | None, contrib: dict) -> str:
+  c = ident["copy"]
+  cfg = next((x for x in load_case().of_kind("configuration") if x["id"] == REFERENCE_CFG), {"id": REFERENCE_CFG, "title": ""})
   rows = [["Document", "WP-K-01 Safety case (ISO 26262-2 §6.4.8, ISO 21448 §13, ISO/SAE 21434 §6.4.8)"],
+          ["Version", f"{e(ident['version'])} (WP-K-01 control header; WP-P-04 §5)"],
+          ["Status", f"{e(release_status(s)['label'])}: {e(release_status(s)['detail'])}"],
           ["This snapshot", f"<span class='mono'>{e(ident['id'])}</span>"],
+          ["Issued", f"{e(ident['issued'])} (commit time)"],
+          ["Configuration", f"<span class='mono'>{e(cfg['id'])}</span> {e(cfg['title'])}; {e(REFERENCE_BUILD)}"],
+          ["Classification", "Public (MIT licence)"],
+          ["Copy", (f"<b>Controlled copy <span class='mono'>{e(c['id'])}</span></b> for {e(c['recipient'])}; purpose: {e(c['purpose'])}; "
+                    f"issued by @{e(c['issued_by'])} at {e(c['issued_at'])}") if c else
+                   "Uncontrolled: public download, not recorded. Controlled copies are issued and recorded as described in Annex C"],
+          ["Distribution record", f"<span class='mono'>assurance/case/distribution.yaml</span>: {len(distribution.load())} controlled "
+                                  f"cop{'y' if len(distribution.load()) == 1 else 'ies'} recorded at this commit"],
+          ["Retention", f"{e(ident['retention'])} (WP-P-04 §10)"],
           ["Previous snapshot", f"<span class='mono'>{e(ident['previous'])}</span>" if ident["previous"] else "none (first snapshot)"],
           ["Last approved baseline", "none" if not release_status(s)["approved"] else e(s["baseline"]["id"])],
           ["Pins", " · ".join(f"{e(k)} <span class='mono'>{e(v)}</span>" for k, v in ident["pins"].items())],
@@ -390,11 +457,14 @@ def document_control(ident: dict, s: dict, prev: dict | None, contrib: dict) -> 
 <div class="sect">{e(title)}</div>{table(["Commit", "Date", "Change"], change_rows)}
 <div class="sect">Status change since the previous snapshot</div><div class="delta">{delta}</div>
 <div class="sect">Notice</div>
-<div class="box"><b>Uncontrolled copy.</b> The controlled version is the repository at the commit above.
+<div class="box">{(f"<b>Controlled copy {e(c['id'])}.</b> Issued to the recipient above and recorded in the distribution record. "
+  "It is not updated when the safety case changes; the current version is the repository and the newest release.") if c else
+  "<b>Uncontrolled copy.</b> The controlled version is the repository at the commit above."}
 Check that this copy is current, and that it is genuine, as described in Annex C.<br>
 <b>AI-assisted authoring.</b> {contrib['ai_involved']} of {contrib['total']} commits to the assurance set since {e(contrib['since'])}
 are AI-authored or AI co-authored. The AI assistant is a contributor, never a reviewer (WP-M-02 §3.3).<br>
-<b>Distribution.</b> Public, through GitHub releases.</div>
+<b>Distribution.</b> Public, through GitHub releases (anonymous, not recorded). Controlled copies are recorded by
+recipient in the distribution record (ISO 9001 §7.5.3.2; IATF 16949 §7.5.3.2.1).</div>
 </section>"""
 
 
@@ -643,7 +713,10 @@ baseline releases are tagged <span class="mono">bl-NNN</span> and never replaced
 <span class="mono">safety-case-snapshot.yaml</span> workflow and the commit <span class="mono">{e(ident['commit_short'])}</span>.</li>
 <li>Check that it is current: compare the snapshot ID with the newest release. An older ID is superseded.</li>
 <li>Rebuild it yourself: check out <span class="mono">{e(ident['commit_short'])}</span> and run
-<span class="mono">python3 assurance/case/tools/build_snapshot.py</span>; the HTML is identical byte for byte.</li></ol>"""
+<span class="mono">python3 assurance/case/tools/build_snapshot.py</span>; the HTML is identical byte for byte.</li>
+<li>For a controlled copy: find its <span class="mono">CC-YYYY-NNN</span> in <span class="mono">assurance/case/distribution.yaml</span>.
+The entry names the recipient, the purpose, who issued it and the workflow run. Copies are issued only by the
+<span class="mono">safety-case-controlled-copy.yaml</span> workflow, which records the copy before it prints it.</li></ol>"""
   return f"""<section id="annex-a"><h1>A Revision history</h1><p class="lead">Every commit that changed assurance/, newest first.</p>
 {table(["Commit", "Date", "Change"], hist)}</section>
 <section id="annex-b"><h1>B Abbreviations</h1>{table(["Term", "Meaning"], abbr)}</section>
@@ -652,7 +725,7 @@ baseline releases are tagged <span class="mono">bl-NNN</span> and never replaced
 
 # ---------------------------------------------------------------- build
 
-def build(tag: str | None, previous: dict | None) -> tuple[str, dict]:
+def build(tag: str | None, previous: dict | None, copy_id: str | None = None) -> tuple[str, dict]:
   case = load_case()
   rep = validate(case)
   if rep.errors:
@@ -661,7 +734,11 @@ def build(tag: str | None, previous: dict | None) -> tuple[str, dict]:
     raise SystemExit("FAIL: records are invalid; no snapshot built")
   s = summarize(case)
   rs = release_status(s)
-  ident = identity(tag, previous)
+  errs = distribution.check(distribution.load())
+  if errs:
+    raise SystemExit("FAIL: distribution record: " + "; ".join(errs))
+  ident = identity(tag, previous, distribution.find(copy_id) if copy_id else None)
+  cfg = next(c for c in case.of_kind("configuration") if c["id"] == REFERENCE_CFG)
   contrib, reviews = contributors(), review_records()
   vd = vmodel.load()
   body = "".join([
@@ -678,28 +755,26 @@ def build(tag: str | None, previous: dict | None) -> tuple[str, dict]:
 """
   manifest = {
     "schema": 1,
-    "snapshot": {k: ident[k] for k in ("id", "kind", "tag", "date", "commit", "pins", "previous")},
+    "snapshot": {k: ident[k] for k in ("id", "kind", "tag", "date", "issued", "version", "commit", "pins", "previous", "copy")},
     "release_status": rs,
     "status": s,
     "generator": {"tool": "assurance/case/tools/build_snapshot.py", "version": GENERATOR_VERSION},
     "files": {HTML_NAME: hashlib.sha256(html.encode()).hexdigest()},
-    "header": {"left": f"{ident['id']} · WP-K-01 Safety case",
-               "right": "UNCONTROLLED WHEN DOWNLOADED" if rs["approved"] else f"{rs['label']} · UNCONTROLLED WHEN DOWNLOADED",
-               "footer": f"Verify and check currency at {RELEASES_URL}"},
+    "header": running_header(ident, rs, s, cfg),
   }
   return html, manifest
 
 
 def main(argv: list[str]) -> int:
   args = dict(zip(argv[::2], argv[1::2], strict=False))
-  unknown = set(args) - {"--out", "--previous", "--tag"}
+  unknown = set(args) - {"--out", "--previous", "--tag", "--copy"}
   if unknown or len(argv) % 2:
     print(__doc__)
     return 2
   out = Path(args.get("--out", REPO_ROOT / "build" / "snapshot"))
   prev_path = args.get("--previous")
   previous = json.loads(Path(prev_path).read_text(encoding="utf-8")) if prev_path and Path(prev_path).exists() else None
-  html, manifest = build(args.get("--tag"), previous)
+  html, manifest = build(args.get("--tag"), previous, args.get("--copy"))
   out.mkdir(parents=True, exist_ok=True)
   (out / HTML_NAME).write_text(html, encoding="utf-8")
   (out / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")

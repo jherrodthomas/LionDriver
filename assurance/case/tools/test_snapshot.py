@@ -6,12 +6,14 @@ import base64
 import hashlib
 import re
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import build_snapshot as bs
+import distribution as dist
 from caselib import release_status
 
 ORDER = ["approval", "control", "contents", "roles", "raci", "contributors", "status", "traceability", "scope", "hierarchy", "argument",
@@ -158,6 +160,84 @@ class Snapshot(unittest.TestCase):
     self.assertTrue(manifest["snapshot"]["id"].startswith("BL-002-"))
     with self.assertRaises(SystemExit):
       bs.build("v1.0", None)
+
+  def test_running_header_and_footer(self):
+    h, snap = self.manifest["header"], self.manifest["snapshot"]
+    self.assertEqual(h["left"], f"WP-K-01 Safety case · v{bs.wp_version(bs.WP_K_01)} · {snap['id']}")
+    self.assertEqual(h["right"], "DRAFT · PUBLIC · UNCONTROLLED")
+    for part in ("CFG-001", "LIONDRIVER_REFERENCE=1", snap["commit"][:7], *snap["pins"].values(), "baseline BL-"):
+      self.assertIn(part, h["footer"])
+    self.assertIn(snap["issued"], h["footer2"])
+    self.assertIn(bs.retention("living snapshot"), h["footer2"])
+    self.assertTrue(h["footer3"].startswith("Uncontrolled"))
+    self.assertEqual(h["verify"], bs.RELEASES_URL)
+
+  def test_retention_follows_wp_p_04(self):
+    self.assertIn("5 years", bs.retention("living snapshot"))
+    self.assertIn("15 years", bs.retention("baseline release"))
+
+  def test_document_control_fields(self):
+    control = self.html[self.html.find('id="control"'):self.html.find('id="contents"')]
+    for field in ("Version", "Status", "Issued", "Configuration", "Classification", "Copy", "Distribution record", "Retention"):
+      self.assertIn(f"<td>{field}</td>", control)
+    self.assertIn("Uncontrolled", control)
+
+  def test_controlled_copy(self):
+    entry = {"id": "CC-2026-007", "issued_at": "2026-10-14T09:30Z", "issued_by": "someone", "recipient": "Assessor <A&B>",
+             "purpose": "G1 review", "based_on": "0" * 40, "run": "", "status": "issued"}
+    real = dist.load
+    dist.load = lambda path=dist.PATH: [entry]
+    try:
+      html, manifest = bs.build(None, None, "CC-2026-007")
+      with self.assertRaises(SystemExit):
+        bs.build(None, None, "CC-2026-008")
+    finally:
+      dist.load = real
+    self.assertEqual(manifest["header"]["right"], "DRAFT · PUBLIC · CONTROLLED COPY CC-2026-007")
+    self.assertIn("for Assessor <A&B> (G1 review)", manifest["header"]["footer3"])
+    self.assertIn("Assessor &lt;A&amp;B&gt;", html)
+    self.assertNotIn("Assessor <A&B>", html)
+    self.assertEqual(manifest["snapshot"]["copy"]["id"], "CC-2026-007")
+
+
+class Distribution(unittest.TestCase):
+  def setUp(self):
+    self.tmp = tempfile.TemporaryDirectory()
+    self.path = Path(self.tmp.name) / "distribution.yaml"
+
+  def tearDown(self):
+    self.tmp.cleanup()
+
+  def test_record_is_valid(self):
+    self.assertEqual(dist.check(dist.load()), [])
+
+  def test_issue_appends_numbered_entries(self):
+    a = dist.issue("Jane Doe, assessor", "G1  review", "lead", "a" * 40, at="2026-10-14T09:30Z", path=self.path)
+    b = dist.issue("Supplier: \"X\"", "audit", "lead", "b" * 40, at="2026-11-01T10:00Z", path=self.path)
+    c = dist.issue("Next year", "audit", "lead", "c" * 40, at="2027-01-02T08:00Z", path=self.path)
+    self.assertEqual((a, b, c), ("CC-2026-001", "CC-2026-002", "CC-2027-001"))
+    copies = dist.load(self.path)
+    self.assertEqual(dist.check(copies), [])
+    self.assertEqual(copies[0]["purpose"], "G1 review")
+    self.assertEqual(copies[1]["recipient"], 'Supplier: "X"')
+
+  def test_rules(self):
+    ok = {"id": "CC-2026-001", "issued_at": "2026-10-14T09:30Z", "issued_by": "x", "recipient": "r", "purpose": "p",
+          "based_on": "a" * 40, "run": "", "status": "issued"}
+    self.assertEqual(dist.check([ok]), [])
+    self.assertTrue(dist.check([{**ok, "id": "CC-2025-001"}]))
+    self.assertTrue(dist.check([{**ok, "status": "withdrawn"}]))
+    self.assertEqual(dist.check([{**ok, "status": "withdrawn", "withdrawn_at": "2026-10-15T00:00Z", "reason": "superseded"}]), [])
+    self.assertTrue(dist.check([ok, ok]))
+    self.assertTrue(dist.check([{**ok, "based_on": "abc"}]))
+    with self.assertRaises(SystemExit):
+      dist.clean("x" * (dist.MAX_TEXT + 1))
+    with self.assertRaises(SystemExit):
+      dist.clean("   ")
+
+  def test_withdrawn_copy_cannot_be_printed(self):
+    with self.assertRaises(SystemExit):
+      dist.find("CC-2026-001", [{"id": "CC-2026-001", "status": "withdrawn"}])
 
 
 if __name__ == "__main__":
