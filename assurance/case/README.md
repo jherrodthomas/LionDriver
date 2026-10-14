@@ -119,6 +119,7 @@ The front-page README carries a button, a badge drawn from [`badge.json`](badge.
 |---|---|---|---|---|
 | Living snapshot | Every merge to `liondriver-dev` that touches `assurance/` | `snapshot-latest` (pre-release) | `SC-<commit date>-<commit>` | Replaced by the next one |
 | Baseline release | A pushed tag `bl-NNN` | `bl-NNN` | `BL-NNN-<commit>` | Permanently |
+| Controlled copy | Run of [`safety-case-controlled-copy.yaml`](../../.github/workflows/safety-case-controlled-copy.yaml) by someone with write access, naming a recipient and a purpose | Workflow artifact `CC-YYYY-NNN` (90 days; rebuildable from the record commit) | The living snapshot ID, stamped `CONTROLLED COPY CC-YYYY-NNN` | The record in [`distribution.yaml`](distribution.yaml), permanently |
 
 Rules:
 
@@ -127,6 +128,8 @@ Rules:
 3. **Reproducible.** The date is the commit date, so rebuilding a commit gives the same HTML byte for byte ([`test_snapshot.py`](tools/test_snapshot.py)).
 4. **Verifiable.** Each release carries `SHA256SUMS` and a GitHub build attestation, so `gh attestation verify LionDriver-safety-case.pdf -R jherrodthomas/LionDriver` shows that a copy was built by the workflow from the stated commit.
 5. **No signatures on paper.** Approvals are repository records. The approval page lists them and states that a signature added to a downloaded copy is not valid.
+6. **Every page identifies itself.** The running header gives the document, its version (from the WP-K-01 control header), the snapshot ID and `DRAFT` or `APPROVED · PUBLIC · UNCONTROLLED` (or `CONTROLLED COPY CC-…`). The footer gives the configuration (CFG-001, reference build), the commit, the submodule pins, the baseline, the issue time (commit time, UTC), the copy line, the retention period from [WP-P-04 §10](../07-supporting/WP-P-04-documentation-management.md#10-retention), a QR code of the verification URL and the page number ([`build_snapshot.running_header`](tools/build_snapshot.py)).
+7. **Downloads are anonymous; controlled copies are recorded.** GitHub reports only a download count for a release, so a public download is marked uncontrolled. A controlled copy exists only after [`distribution.py`](tools/distribution.py) has appended its entry (recipient, purpose, the GitHub login that issued it, the source commit and the run) to the public [`distribution.yaml`](distribution.yaml) and the workflow has pushed it; `build_snapshot.py --copy` refuses a copy number without a record ([WP-P-04 §9.1](../07-supporting/WP-P-04-documentation-management.md#91-distribution-of-the-safety-case)).
 
 Content, in order: cover (identity only), approval, document control (changes and status since the previous snapshot), contents, roles (WP-M-02 §3.1), RACI (WP-M-02 §3.2, landscape), contributors (git, with AI co-authorship counted) with review records and confirmation measures (WP-M-06 §9), then 1 status at a glance, 2 scope and element hierarchy, 3 GSN argument, 4 claims, 5 evidence, 6 open defeaters, 7 gates and decisions, 8 configuration and pins, and annexes A revision history, B abbreviations and C how to verify.
 
@@ -134,7 +137,7 @@ To build one locally (the PDF needs Node and Playwright with Chromium):
 
 ```sh
 python3 assurance/case/tools/build_snapshot.py --out build/snapshot          # HTML and manifest.json
-node assurance/case/tools/render_snapshot.cjs build/snapshot                   # PDF
+node assurance/case/tools/render_snapshot.cjs build/snapshot                   # PDF (QR code when the qrcode package is installed)
 ```
 
 ## 6. Updating the records

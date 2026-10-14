@@ -1,0 +1,29 @@
+<svg viewBox="0 0 640 260" role="img" aria-labelledby="oi1t">
+  <title id="oi1t">What follows from each choice for the hazard of a driver who stops supervising</title>
+  <rect x="0" y="0" width="640" height="44" rx="6" class="s-surface" stroke="var(--line)"/>
+  <text x="320" y="20" text-anchor="middle" class="s-ink" font-size="14" font-weight="700">H-STPA-1: engaged while the driver is not supervising</text>
+  <text x="320" y="36" text-anchor="middle" class="s-muted" font-size="12">Almost every HARA rating (C2) assumes a supervising driver</text>
+  <path d="M160 46 V70" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah2)"/>
+  <path d="M480 46 V70" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah2)"/>
+  <text x="160" y="90" text-anchor="middle" class="s-ink" font-size="13" font-weight="700">A · Rated hazard in the HARA</text>
+  <text x="480" y="90" text-anchor="middle" class="s-ink" font-size="13" font-weight="700">B · Misuse hazard under SOTIF</text>
+  
+    <rect x="10" y="100" width="300" height="30" rx="5" class="s-surface" stroke="var(--line)"/>
+    <text x="160" y="120" text-anchor="middle" class="s-ink" font-size="12">Gets S/E/C, likely ASIL B–C</text>
+    <rect x="10" y="138" width="300" height="30" rx="5" class="s-surface" stroke="var(--line)"/>
+    <text x="160" y="158" text-anchor="middle" class="s-ink" font-size="12">Driver monitoring inherits that ASIL</text>
+    <rect x="10" y="176" width="300" height="30" rx="5" class="s-surface" stroke="var(--line)"/>
+    <text x="160" y="196" text-anchor="middle" class="s-ink" font-size="12">DM hardware is QM; no ASIL monitor exists</text>
+    <rect x="10" y="214" width="300" height="30" rx="5" class="s-badsoft" stroke="var(--line)"/>
+    <text x="160" y="234" text-anchor="middle" class="s-bad" font-size="12" font-weight="700">Restrict the ODD (e.g. hands-on) or add new hardware</text>
+  
+    <rect x="330" y="100" width="300" height="30" rx="5" class="s-surface" stroke="var(--line)"/>
+    <text x="480" y="120" text-anchor="middle" class="s-ink" font-size="12">Recorded in WP-C-08 with MC-01…03</text>
+    <rect x="330" y="138" width="300" height="30" rx="5" class="s-surface" stroke="var(--line)"/>
+    <text x="480" y="158" text-anchor="middle" class="s-ink" font-size="12">DM stays QM (FSC §7 proposal)</text>
+    <rect x="330" y="176" width="300" height="30" rx="5" class="s-surface" stroke="var(--line)"/>
+    <text x="480" y="196" text-anchor="middle" class="s-ink" font-size="12">Needs the I3 reviewer to accept it (OI-3)</text>
+    <rect x="330" y="214" width="300" height="30" rx="5" class="s-accsoft" stroke="var(--line)"/>
+    <text x="480" y="234" text-anchor="middle" class="s-acc" font-size="12" font-weight="700">If the reviewer disagrees: back to A</text>
+  <defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--muted)"/></marker></defs>
+</svg>

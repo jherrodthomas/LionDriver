@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-08 Driver interaction, HMI and reasonably foreseeable misuse analysis |
 | Standard reference | ISO 26262-3:2018 §6 (controllability basis); ISO 21448:2022 §6 and Annex B (misuse, informative); UNECE R79 and R171 (informative benchmarks, WP-M-01 T-13); RESPONSE 3 Code of Practice for ADAS (informative) |
-| Version | 0.1 |
+| Version | 0.2 (§6.1: H-STPA-1 classified as a misuse hazard under SOTIF, decision register DQ-003; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF; backs the HARA C2 ratings (SG-01…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -116,10 +116,23 @@ These regulations are not binding in the US (WP-M-01 T-13). Values must be check
 | MC-06 | Defeat devices: steering-wheel weights, periodic nudgers, fake faces/photos | Medium | Wheel-touch fallback defeated; vision possibly fooled | Partial (vision primary) | FM-05; liveness checks in DM model (WP-C-11) | SH-12 |
 | MC-07 | Use outside the ODD (snow, construction, city streets, > 120 km/h) | High | SH-13; higher rates of SH-01…SH-06 | `speedTooHigh` warning; some diagnostics | FM-07, FM-08; user info | SH-13 |
 | MC-08 | Gas override mistaken for disengagement | Medium | Driver releases gas expecting manual control; system resumes ACC (or the reverse expectation) | Override alert | HMI clinic (§8); review default of `DisengageOnAccelerator` for reference build | SH-05 |
-| MC-09 | Over-trust after Experimental Mode default (expects stops at lights/signs; transfers this expectation to Chill mode) | High if default kept | Red-light running, missed stop signs | UI text "Mistakes should be expected" | FM-01; user info | SH-09 |
+| MC-09 | Over-trust after Experimental Mode default (expects stops at lights/signs; transfers this expectation to Chill mode) | Lower since the default is Chill mode (B-06, 2026-10-14); still high for drivers who used Experimental mode before | Red-light running, missed stop signs | UI text "Mistakes should be expected" | FM-01; user info | SH-09 |
 | MC-10 | Lane change without blind-spot check, relying on the system | Medium | Side collision | `LIMITATIONS.md:6` | User info; validation of abort controllability | SH-10 |
 | MC-11 | Installing on a different vehicle or with modified software (unsupported configuration) | Medium | Outside claimed scope | Fingerprinting; dashcam mode for unknown cars | Configuration control (WP-O-01) | — |
 | MC-12 | Ignoring or silencing alerts (volume low, device muted) | Medium | Take-over requests missed | Panda buzzer only on SoC loss | Minimum alert volume not user-adjustable below a floor (to check) | SH-02, SH-06 |
+
+### 6.1 Classification of H-STPA-1
+
+The STPA hazard H-STPA-1, "the vehicle is driven with the item engaged while the driver is not supervising it" ([WP-A-05](../08-analyses/WP-A-05-stpa.md) §2), is a **misuse hazard under SOTIF**, recorded here through MC-01, MC-02 and MC-03. It is not a rated hazardous event in the HARA ([WP-C-03](WP-C-03-hara.md)).
+
+| Field | Value |
+|---|---|
+| Decision | Keep H-STPA-1 as a SOTIF misuse hazard (option B of the decision register entry [DQ-003](../01-management/decisions/register.yaml)) |
+| Decided by, date | Project lead, 2026-10-14, on the decision inbox |
+| Rationale | The HARA ratings assume a supervising driver (C2). Driver monitoring is the measure against MC-01…MC-03 and stays QM, as proposed in [WP-C-04](WP-C-04-functional-safety-concept.md) §7. Rating H-STPA-1 in the HARA would give driver monitoring an ASIL that the current hardware cannot meet |
+| Alternatives not taken | (A) a rated HARA hazard, which would require an ODD restriction such as hands-on driving or new monitoring hardware; (C) waiting for the assessor before deciding |
+| Condition | The I3 confirmation review must accept that the C2 ratings do not depend on driver monitoring ([WP-C-04](WP-C-04-functional-safety-concept.md) OI-3). If it does not, this decision is reopened as option A |
+| Measures | §5.3 DM performance targets (DMP-01…DMP-04), §8 controllability validation, user information |
 
 ## 7. Controllability assumptions to be backed up
 

@@ -1,0 +1,100 @@
+name: safety case controlled copy
+
+# Issues a controlled copy of the safety case (WP-K-01) to a named recipient (ISO 9001 §7.5.3.2,
+# IATF 16949 §7.5.3.2.1). Only people with write access can run it. The run:
+#   1. appends the next CC-YYYY-NNN entry to assurance/case/distribution.yaml, with the recipient,
+#      the purpose and the GitHub login that started the run, and pushes that record to liondriver-dev;
+#   2. builds the snapshot from the commit that holds the record, stamped with the copy number on
+#      every page (build_snapshot.py --copy), prints it, hashes and attests it;
+#   3. uploads the copy as a workflow artifact named after the copy number.
+# No copy is printed without its record: if the record cannot be pushed, the run stops.
+# The public snapshot download (safety-case-snapshot.yaml) stays anonymous and uncontrolled.
+
+on:
+  workflow_dispatch:
+    inputs:
+      recipient:
+        description: "Recipient (name and organization; up to 80 characters)"
+        required: true
+        type: string
+      purpose:
+        description: "Purpose (for example G1 confirmation review; up to 80 characters)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: safety-case-controlled-copy   # one copy number at a time
+  cancel-in-progress: false
+
+env:
+  PLAYWRIGHT_VERSION: 1.48.2
+  QRCODE_VERSION: 1.5.4
+  OUT: build/controlled-copy
+
+jobs:
+  copy:
+    name: issue controlled copy
+    if: github.ref == 'refs/heads/liondriver-dev'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write        # push the distribution record
+      id-token: write        # sign the build attestation (Sigstore, GitHub OIDC)
+      attestations: write
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        fetch-depth: 0
+    - name: Check the records, trace, links and distribution record first
+      run: |
+        python3 assurance/case/tools/validate.py
+        python3 assurance/trace/tools/check_trace.py
+        python3 assurance/trace/tools/check_links.py
+        python3 assurance/case/tools/distribution.py --check
+    - name: Record the copy in the distribution record
+      id: record
+      env:
+        RECIPIENT: ${{ inputs.recipient }}
+        PURPOSE: ${{ inputs.purpose }}
+        RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      run: |
+        based_on=$(git rev-parse HEAD)
+        id=$(cd assurance/case/tools && python3 distribution.py issue --recipient "$RECIPIENT" --purpose "$PURPOSE" \
+          --issuer "$GITHUB_ACTOR" --based-on "$based_on" --run "$RUN_URL")
+        echo "id=$id" >> "$GITHUB_OUTPUT"
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add assurance/case/distribution.yaml
+        git commit -m "Distribution record: controlled copy $id issued by @$GITHUB_ACTOR"
+        git push origin HEAD:liondriver-dev
+    - name: Build the copy (HTML and manifest)
+      run: python3 assurance/case/tools/build_snapshot.py --out "$OUT" --copy "${{ steps.record.outputs.id }}"
+    - name: Install Chromium and the QR code package for printing
+      run: |
+        npm install --no-save --no-audit --no-fund "playwright@$PLAYWRIGHT_VERSION" "qrcode@$QRCODE_VERSION"
+        npx playwright install --with-deps chromium
+    - name: Print the PDF
+      run: node assurance/case/tools/render_snapshot.cjs "$OUT"
+    - name: Name and hash the files
+      run: |
+        cd "$OUT"
+        id="${{ steps.record.outputs.id }}"
+        mv LionDriver-safety-case.pdf "LionDriver-safety-case-$id.pdf"
+        mv LionDriver-safety-case.html "LionDriver-safety-case-$id.html"
+        sha256sum "LionDriver-safety-case-$id.pdf" "LionDriver-safety-case-$id.html" manifest.json > SHA256SUMS
+        cat SHA256SUMS
+    - name: Attest the build
+      uses: actions/attest-build-provenance@v2
+      with:
+        subject-path: |
+          ${{ env.OUT }}/*.pdf
+          ${{ env.OUT }}/*.html
+          ${{ env.OUT }}/manifest.json
+    - uses: actions/upload-artifact@v7
+      with:
+        name: ${{ steps.record.outputs.id }}
+        path: ${{ env.OUT }}
+        retention-days: 90

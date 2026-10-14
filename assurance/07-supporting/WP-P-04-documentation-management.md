@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-04 Documentation management |
 | Standard reference | ISO 26262-8:2018 §10; ISO/SAE 21434:2021 §5 (documentation management); ASPICE 4.0 SUP.7 (informative), SUP.8 |
-| Version | 0.1 |
+| Version | 0.2 (§9.1 distribution of the safety case: uncontrolled public snapshots and recorded controlled copies; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -95,6 +95,17 @@ A comment such as "LGTM" with no checklist reference is not accepted as a verifi
 | Project members | Read/write via PR |
 | External reviewers and assessor | Read access to the repository, or the export archive (§8) |
 | Public | The repository is public today; content that must not be public (unfixed vulnerabilities, personal data from drive logs, private keys) is never committed. Embargoed CS content lives in private security advisories per [WP-O-05](../09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md) |
+
+### 9.1 Distribution of the safety case
+
+ISO 9001:2015 §7.5.3.2 and IATF 16949 §7.5.3.2.1 ask for control of the distribution of documented information. For the safety case (WP-K-01):
+
+| Copy | How it is made | Record | Marking on every page |
+|---|---|---|---|
+| Public snapshot | Released automatically on each merge or baseline tag ([`assurance/case/README.md` §5.1](../case/README.md#51-downloadable-snapshot)) | None: GitHub reports only a download count, so who downloads it is not known | `UNCONTROLLED`, with the snapshot ID, version, configuration, commit, pins, issue time and retention |
+| Controlled copy | The `safety-case-controlled-copy` workflow, run by someone with write access, naming the recipient and the purpose | An entry `CC-YYYY-NNN` in the public [`distribution.yaml`](../case/distribution.yaml): recipient, purpose, the GitHub login that issued it, the source commit and the run, written and pushed before the copy is printed | `CONTROLLED COPY CC-YYYY-NNN`, and the recipient and purpose in the footer |
+
+A controlled copy is not updated when the safety case changes. It is withdrawn by setting its entry to `withdrawn` with the date and reason; entries are never deleted. The current version is always the repository and the newest release.
 
 ## 10. Retention
 

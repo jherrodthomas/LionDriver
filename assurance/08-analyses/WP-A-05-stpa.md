@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-05 System-theoretic process analysis (STPA) of the reference configuration |
 | Standard reference | STPA Handbook (Leveson and Thomas, 2018), steps 1–4; ISO 21448:2022 §6–§7 (STPA as a method for hazards from functional insufficiencies and reasonably foreseeable misuse); ISO 26262-9:2018 §8 (supplementary system-level analysis); ISO/PAS 8800:2024 (control-structure view of the ML stack) |
-| Version | 0.3.1 (LS-06 covered: PCM-edge authority gated on the heartbeat's engaged flag, TSR-301, opendbc `9a13f60`; OI-9 closed; 2026-10-14). 0.3 (step 4 for every UCA, re-checked against the current code; step 3 extended to openpilot internals, configuration, calibration and updates (OI-7); loss scenarios linked to the fault trees, FMEAs and TSRs in [stpa-map.yaml](stpa-map.yaml), checked by `fmea_lint.py`; six new findings, OI-9…OI-11; 2026-10-13). 0.2 (§3.1 control-structure diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.1 |
+| Version | 0.3.2 (OI-1 closed: H-STPA-1 a SOTIF misuse hazard, WP-C-08 §6.1; LS-31 covered by the Chill mode default, B-06; decision register DQ-001, DQ-003; 2026-10-14). 0.3.1 (LS-06 covered: PCM-edge authority gated on the heartbeat's engaged flag, TSR-301, opendbc `9a13f60`; OI-9 closed; 2026-10-14). 0.3 (step 4 for every UCA, re-checked against the current code; step 3 extended to openpilot internals, configuration, calibration and updates (OI-7); loss scenarios linked to the fault trees, FMEAs and TSRs in [stpa-map.yaml](stpa-map.yaml), checked by `fmea_lint.py`; six new findings, OI-9…OI-11; 2026-10-13). 0.2 (§3.1 control-structure diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.1 |
 | Status | Draft (steps 1–4 complete for every UCA of §4; external UCAs rest on assumptions of use) |
 | ASIL / scope | SG-01 (ASIL C ⚠) … SG-07; SOTIF (SH-) and misuse (WP-C-08) |
 | Author | Claude (AI-assisted draft) |
@@ -47,7 +47,7 @@ The functional-safety hazards of the HARA are used as the system-level hazards, 
 | H-06 | Unannounced loss of longitudinal deceleration | L-1, L-2, L-3 | SG-06 |
 | H-07 | Displayed system state differs from actual state (mode confusion) | L-1, L-2, L-3 | (rated within H-02, H-05, H-06) |
 | H-08 | Suppression of the vehicle's stock pre-collision braking | L-4, L-1, L-2 | SG-07 |
-| H-STPA-1 | The vehicle is driven with the item engaged while the driver is not supervising it | L-1, L-2, L-3 | none: SOTIF and misuse ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md)); see OI-1 |
+| H-STPA-1 | The vehicle is driven with the item engaged while the driver is not supervising it | L-1, L-2, L-3 | none: SOTIF misuse hazard, decided 2026-10-14 ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §6.1, decision register DQ-003); subject to the I3 review (WP-C-04 OI-3) |
 
 ### 2.3 System-level constraints
 
@@ -329,7 +329,7 @@ Every scenario is linked to fault-tree events of [WP-A-04](WP-A-04-system-fta-fm
 | LS-28 | UCA-59 | A pandad defect or a compromised SoC requests ELM327, power save or a mode change while driving, or asserts reset or BOOT0. The panda refuses mode changes in a car mode (reference lock), refuses ELM327 until the ignition is off, and refuses `0xe7` in a car mode. Reset and BOOT0 are GPIO lines from the SoC, which the panda cannot refuse; the relay is released, and control ends with the SoC's own alert only | Unsafe control input (C2.7) | TSR-511, TSR-512, TSR-513; SWF-013, SWF-015, DFM-016; BE-1.08, BE-1.09, BE-2.06, BE-7.02 | Covered for commands; known gap for reset and BOOT0 (GAP-38) |
 | LS-29 | UCA-60 | A release bundles a panda image built without the reference flag, or a rollback brings an older one. pandad flashes whatever matches the bundled signature (`pandad.py:20-51`), then refuses to configure a car mode, because the reference-build flag is missing (`panda_safety.cc:73-81`). A DEBUG image with the flag set would pass | Flawed process (release) | TSR-514, TSR-619; SWF-028, PFM-001, PFM-002, PFM-017; BE-1.18 | Covered for a non-reference image (item unavailable, safe); known gap for a DEBUG reference image (PFM-001) |
 | LS-30 | UCA-61 | The owner installs from the upstream installer or a development branch, or `updated` pulls a branch that is not a release. `updated` runs only offroad and swaps at reboot (`process_config.py:114`), so no partial update reaches a drive, but nothing checks that the software is an approved release | Flawed process (installation, update) | PFM-005, PFM-016 | Known gap (PFMEA) |
-| LS-31 | UCA-62 | `ExperimentalMode` still defaults to on (`params_keys.h:43`). A device that has not been set up per the release instructions starts in Experimental Mode, outside the reference configuration (D-08) | Flawed process model (C7) | PFM-011, PFM-015 | Known gap: B-06 open (Chill Mode default needs approval) |
+| LS-31 | UCA-62 | `ExperimentalMode` still defaults to on (`params_keys.h:43`). A device that has not been set up per the release instructions starts in Experimental Mode, outside the reference configuration (D-08) | Flawed process model (C7) | PFM-011, PFM-015 | Default set to off 2026-10-14 (B-06, decision register DQ-001, [change record](../07-supporting/impact/change-2026-10-14-chill-mode-default.md)). Residual: devices set up before the change keep a stored `1` (release checklist) |
 
 ## 6. Results
 
@@ -357,7 +357,7 @@ v0.3.1 result, from `fmea_lint.py --report`: *39 UCAs (37 with a loss scenario, 
 **Corrections found by the cross-check.** The map check found that five UCAs named too few hazards: their scenarios need fault-tree events that sit in other goals' trees. UCA-02 now includes H-05, UCA-19 H-01 and H-04, UCA-31 H-01 and H-03, and UCA-59 H-01 and H-03. LS-25 showed that the masking event BE-1.20 lives only in the SG-01 tree. Since `controlsd` drops actuation on stale inputs, its effect is now an SG-02 loss without alert.
 
 **Unchanged from v0.1:**
-- **H-STPA-1** (unsupervised driver while engaged) is still not rated by the HARA (OI-1).
+- **H-STPA-1** (unsupervised driver while engaged) is a SOTIF misuse hazard, not rated by the HARA (OI-1, decided 2026-10-14 in WP-C-08 §6.1; the I3 review can reopen it).
 - **Still open by design:** LS-08 (stock camera behaviour) and LS-09 (DM escalation times).
 - **Most scenarios (25 of 31) are covered or known gaps** recorded by the HARA, the FSC/TSC, the FTA/FMEA, the DFA or WP-C-08. That gives those items independent support from a method that does not start from component failures.
 
@@ -365,7 +365,7 @@ v0.3.1 result, from `fmea_lint.py --report`: *39 UCAs (37 with a loss scenario, 
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Decide whether H-STPA-1 becomes a hazard in WP-C-03 / WP-C-05 or stays a SOTIF hazard; record in WP-C-08 | Safety engineer | G1 |
+| OI-1 | **Closed 2026-10-14:** H-STPA-1 stays a SOTIF misuse hazard, recorded in [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §6.1 (decision register DQ-003). Reopened if the I3 review rejects WP-C-04 §7 (OI-3) | Safety engineer | G1 |
 | OI-2 | LS-01/LS-02: add a SoC-side counterpart to TSR-304 (stop or reduce commanded torque during a driver override) and decide how to treat sub-threshold driver torque (CC-1); add an override indication to the HMI requirements (CC-2) | Safety engineer | G2 |
 | OI-3 | LS-04 (v0.3: the code shows it cannot; the SoC alert within 0.5 s is the only reaction): confirm on the bench whether the siren sounds after a watchdog reset while engaged; if not, keep an engagement flag across reset (e.g. backup SRAM or a reset-cause check) or amend TSR-516; specify the SoC alert time for this path against SG-02/SG-06 | Safety engineer | G2 |
 | OI-4 | LS-06: measure whether the PCM honours CANCEL_REQ and what it does with cruise engaged and no `0x343` from openpilot (hold, coast, fault). v0.3: the 1 s alert of TSR-308 is implemented | Safety engineer | G2 |

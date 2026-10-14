@@ -85,7 +85,7 @@ P/I/E = probability / impact / exposure. Status at baseline: all **Open**; no tr
 | R-14 | Structural coverage beyond line coverage (branch, MC/DC) and target-level testing require new tooling and test effort | GAP-13 | 3 | 3 | 9 | Mitigate: evaluate coverage tools in P2; run tests on Cortex-M7 via HIL | ENG | No MC/DC-capable tool selected by G2 | G2 |
 | R-15 | Firmware signing remains RSA-1024/SHA-1 with debug key acceptance → CS goals for firmware authenticity not met | GAP-24, GAP-25 | 3 | 4 | 12 | Mitigate: LionDriver key with modern algorithm, release build pipeline, RDP/WRP (WBS 4.4) | CSM | Bootstub change bricks devices in test | G3 |
 | R-16 | Remote access and OTA surface (athena, SSH, git-based updates) cannot be constrained without breaking user expectations → large TARA residual risk | GAP-26, GAP-27 | 3 | 3 | 9 | Mitigate: disable or constrain in reference configuration; document in user information | CSM | Constraint rejected by users / maintainers | G2 |
-| R-17 | Experimental Mode on by default (upstream `f21bfc3`) stays enabled → unassessed end-to-end longitudinal behaviour in the reference configuration | GAP-18; D-08 | 3 | 4 | 12 | Avoid: disable by default for the reference configuration pending SOTIF assessment (B-06) | SL | Default still on at G1 | G1 |
+| R-17 | Experimental Mode on by default (upstream `f21bfc3`) stays enabled → unassessed end-to-end longitudinal behaviour in the reference configuration | GAP-18; D-08 | 3 | 4 | 12 | Avoid: disable by default for the reference configuration pending SOTIF assessment (B-06; default set to off 2026-10-14, devices set up earlier keep their stored value) | SL | Default still on at G1 | G1 |
 | R-18 | Public-road testing happens before the analyses and test procedures are done → harm to third parties; project credibility lost | WP-M-01 §9; gap §9 action 10 | 2 | 5 | 10 | Avoid: hold point in WP-M-02 §4 and WP-M-04 OR-5; trained safety drivers only | SM | Any LionDriver road test before G1 | G1 |
 | R-19 | No test vehicle access or insurance for test use → no AoU characterisation, no validation | WP-M-03 §6 | 3 | 4 | 12 | Mitigate: confirm vehicle and insurance in P1 (WP-M-03 OI-4) | PM | Not confirmed by mid-P1 | G1 |
 | R-20 | Funding for external assessor, pen test and HIL hardware not available → G1/G5 confirmation and CS validation cannot be done | WP-M-03 §4.2 | 3 | 5 | 15 | Mitigate: funding decision in P0; phase external spend by gate | PM | No funding source by G0 | G0 |
@@ -127,7 +127,7 @@ Each decision is tracked as a GitHub issue labelled `decision:D-nn`. A decision 
 | D-05 | Model update policy | Pin weights per release; model change re-runs scenario evaluations | Open | PM / ML | G1 | R-24 |
 | D-06 | External assessor | Engage an independent FuSa assessor for the G1 HARA confirmation review | Open | PM | G0 | R-08, R-20 |
 | D-07 | Work product format | Markdown docs-as-code; machine-readable requirements in `trace/`; PR review | Open (de facto in use; not formally decided) | PM | G0 | — |
-| D-08 | Default enablement of Experimental Mode | Disabled for the reference configuration until validated | **Decided** 2026-10-10: Chill Mode (Experimental Mode off) for the reference configuration until validated; code change B-06 open | PM / SL | G1 | R-17 |
+| D-08 | Default enablement of Experimental Mode | Disabled for the reference configuration until validated | **Decided** 2026-10-10: Chill Mode (Experimental Mode off) for the reference configuration until validated. Code change B-06: default set to off 2026-10-14 (decision register DQ-001; [change record](../07-supporting/impact/change-2026-10-14-chill-mode-default.md)) | PM / SL | G1 | R-17 |
 | D-09 | Panda release signing key | Offline key held by the maintainer; sign after the panda release gate | **Decided** 2026-10-10 as recommended; modern algorithm, no debug key in release builds | PM / CSM | G3 | R-15 |
 | D-10 | Panda flash protection | WRP + RDP1 after verification on a sacrificial unit | **Decided** 2026-10-10 as recommended; implementation with the pandad recovery change (GAP-38) | PM / HW | G3 | R-15 |
 | D-11 | Vehicle lock (VIN) | Report only until a panda-side VIN read exists | **Decided** 2026-10-10 as recommended | PM / SL | G3 | — |
@@ -138,6 +138,7 @@ Each decision is tracked as a GitHub issue labelled `decision:D-nn`. A decision 
 
 - This document (register and decision log), versioned in git.
 - GitHub issues labelled `risk` and `decision:D-nn`, with review comments.
+- The decision register [`decisions/register.yaml`](decisions/register.yaml): questions waiting on the project lead, their answers, and where each applied decision is recorded ([`decisions/README.md`](decisions/README.md)).
 - Monthly review notes on the milestone tracking issue (WP-M-03 §8).
 
 ## 7. Open items
