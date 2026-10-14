@@ -932,6 +932,84 @@ def check_fta_fmea_map(name, doc, ctx, res: Result):
       res.warn(f"{name} {eid}", "mapped, but not in the tree of any goal in scope")
 
 
+STPA_STATUS = ("covered", "known_gap", "new", "open_test")
+STPA_UCA_RE = re.compile(r"^\| (UCA-\d+) \|", re.M)
+STPA_LS_RE = re.compile(r"^\| (LS-\d+) \|", re.M)
+STPA_HAZARD_RE = re.compile(r"^\| (H-\d+|H-STPA-\d+) \|", re.M)
+TSR_RE = re.compile(r"^\| (TSR-\d+) \|", re.M)
+
+
+def check_stpa_map(name, doc, ctx, res: Result):
+  """STPA loss scenarios <-> fault-tree events, FMEA failure modes and TSRs (WP-A-05 step 4 cross-check)."""
+  text = (ctx.root / doc["source"]).read_text(encoding="utf-8")
+  doc_ucas, doc_ls = set(STPA_UCA_RE.findall(text)), set(STPA_LS_RE.findall(text))
+  doc_hazards = set(STPA_HAZARD_RE.findall(text))
+  fd = _fta_module(ctx.root)
+  trees = fd.parse_document((ctx.root / doc["fta_source"]).read_text(encoding="utf-8"))
+  fd.resolve(trees)
+  goal_events = {t.goal: {n.ident for n in fta_reach(fd, t)[0]} for t in trees}
+  all_events = set().union(*goal_events.values())
+  tsrs = set(TSR_RE.findall((ctx.root / doc["tsr_source"]).read_text(encoding="utf-8")))
+
+  hazards = doc["hazards"]
+  for hid, goals in hazards.items():
+    if hid not in doc_hazards:
+      res.error(f"{name} {hid}", "hazard not in the STPA hazard table")
+    for g in goals:
+      if g not in goal_events:
+        res.error(f"{name} {hid}", f"goal {g} has no fault tree")
+  for hid in sorted(doc_hazards - set(hazards)):
+    res.error(f"{name} {hid}", "STPA hazard not mapped to safety goals")
+
+  scenarios = {s["id"]: s for s in doc["scenarios"]}
+  external = {u["uca"]: u for u in doc.get("external_ucas", [])}
+  for lid in sorted(doc_ls - set(scenarios), key=fd_sort_key):
+    res.error(f"{name} {lid}", "loss scenario in WP-A-05 but not in the map")
+  for lid in sorted(set(scenarios) - doc_ls, key=fd_sort_key):
+    res.error(f"{name} {lid}", "mapped, but no such loss scenario in WP-A-05")
+  covered_ucas = {u for s in scenarios.values() for u in s["ucas"]}
+  for uid in sorted(doc_ucas - covered_ucas - set(external), key=fd_sort_key):
+    res.error(f"{name} {uid}", "UCA has no loss scenario and is not recorded as an external assumption")
+  for uid in sorted((covered_ucas | set(external)) - doc_ucas, key=fd_sort_key):
+    res.error(f"{name} {uid}", "cited, but no such UCA in WP-A-05")
+  for uid, u in external.items():
+    if not u.get("assumption"):
+      res.error(f"{name} {uid}", "external UCA needs the assumption it rests on")
+
+  counts = dict.fromkeys(STPA_STATUS, 0)
+  for lid, s in scenarios.items():
+    where = f"{name} {lid}"
+    st = s.get("status")
+    if st not in STPA_STATUS:
+      res.error(where, f"status {st} not one of {', '.join(STPA_STATUS)}")
+      continue
+    counts[st] += 1
+    for h in s["hazards"]:
+      if h not in hazards:
+        res.error(where, f"hazard {h} not mapped")
+    for e in s.get("fta", []):
+      if e not in all_events:
+        res.error(where, f"fault-tree event {e} not found in {doc['fta_source']}")
+    for f in s.get("fmea", []):
+      if f not in ctx.fm_index:
+        res.error(where, f"FMEA failure mode {f} not found")
+    for r in s.get("requirements", []):
+      if r not in tsrs:
+        res.error(where, f"requirement {r} not found in {doc['tsr_source']}")
+    goals = {g for h in s["hazards"] for g in hazards.get(h, [])}
+    for e in s.get("fta", []):
+      if goals and e in all_events and not any(e in goal_events[g] for g in goals):
+        res.warn(where, f"{e} is in no fault tree of {', '.join(sorted(goals))} (the scenario's hazards)")
+    refs = s.get("fta", []) + s.get("fmea", [])
+    if st in ("covered", "known_gap") and not refs:
+      res.error(where, f"status {st} needs at least one fault-tree event or FMEA failure mode")
+    if st == "new" and not s.get("finding"):
+      res.error(where, "status new needs a finding")
+  status_counts = ", ".join(f"{k.replace('_', ' ')} {v}" for k, v in counts.items())
+  uca_counts = f"{len(covered_ucas & doc_ucas)} with a loss scenario, {len(set(external) & doc_ucas)} external"
+  res.report.append(f"STPA map: {len(doc_ucas)} UCAs ({uca_counts}); {len(scenarios)} loss scenarios ({status_counts})")
+
+
 def fd_sort_key(ident: str):
   return [int(x) if x.isdigit() else x for x in re.split(r"[-.]", ident)]
 
@@ -1045,6 +1123,9 @@ def lint(root: Path = ROOT) -> Result:
   if mapping.exists():
     check_hara_mapping(mapping.relative_to(root).as_posix(), load_yaml(mapping.read_text()), ctx, res)
 
+  stpa_map = root / "assurance" / "08-analyses" / "stpa-map.yaml"
+  if stpa_map.exists():
+    check_stpa_map(stpa_map.relative_to(root).as_posix(), load_yaml(stpa_map.read_text()), ctx, res)
   fta_map = root / "assurance" / "08-analyses" / "fta-fmea-map.yaml"
   if fta_map.exists():
     check_fta_fmea_map(fta_map.relative_to(root).as_posix(), load_yaml(fta_map.read_text()), ctx, res)
