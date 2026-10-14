@@ -287,7 +287,7 @@ SH-11 (no reaction to a pedestrian or cyclist, HE-01.3, HE-03.2) moves from the 
 
 | Input | Was | Evidence | Now |
 |---|---|---|---|
-| Ego mass | 1,400 kg (unchecked) | Reference vehicle (Corolla E210, US 1.8 L ICE sedan): 2020 LE curb weight 2,910–2,955 lb (1,320–1,340 kg; TrueDelta and AutoPadre listings, search summaries; Toyota's own sheet not reached). opendbc `TOYOTA_COROLLA_TSS2` CarSpecs: 3,060 lb (1,388 kg) for the whole platform, hybrids included. With five occupants about 1,720 kg. Other E210 model years and trims are not checked (WP-C-01 OI-9) | **1,320 kg**: the lightest ego has the largest Δv, and the ego's occupants drive every SH-03 and SH-04 bound |
+| Ego mass | 1,400 kg (unchecked) | Reference configuration CFG-001 (Corolla E210 · ZRE212 · US, MY2020–2022; [vehicle register](../../docs/liondriver/vehicles/README.md)): 2020 LE listing curb weight 2,910–2,955 lb (1,320–1,340 kg; TrueDelta and AutoPadre listings, search summaries; Toyota's own sheet not reached). opendbc `TOYOTA_COROLLA_TSS2` CarSpecs: 3,060 lb (1,388 kg) for the whole platform, hybrids included. With five occupants about 1,720 kg. Other E210 model years and trims are not checked (WP-C-01 OI-9) | **1,320 kg**: the lightest ego has the largest Δv, and the ego's occupants drive every SH-03 and SH-04 bound |
 | Ego occupants | 5 | Every E210 sedan seats 5 | 5 (confirmed) |
 | Ego width | 1.78 m (WP-S-04) | 1,781 mm | Confirmed |
 | Passenger car | 1,500 kg, 5 occupants | Grid 1,100–2,700 kg | Kept: the car never sets a worst case (the truck does) |

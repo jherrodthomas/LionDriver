@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1292" viewBox="0 0 1280 1292" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 5-1 · Change request swimlane (WP-P-02)</title>
+<desc>Change request swimlane (WP-P-02). Lanes: Requester, Author, Maintainer, Reviewers. Step 1: Raise CR (issue) or open PR with CR section (Requester) → CR ID = issue or PR number. Step 2: Classify (§4) (Author; checked by reviewer) → Label. Step 3: Impact analysis (§6) for SR-A/SR-Q/SR-T (Author) → Completed checklist in PR. Step 4: Decide: accept / reject / defer (Maintainer; CCB, §7.3) → Decision comment. Step 5: Implement on a work branch; update affected work products and assurance/trace/ in the same PR (Author) → Commits. Step 6: Verify: CI green; required additional verification from impact analysis done and linked (Author; verifier) → CI run, test records. Step 7: Review and approve per §7 (Reviewers) → Approvals. Step 8: Merge (squash or merge commit; no force push) (Maintainer) → Merge commit. Step 9: Close CR; update status in WP-M-00 if a WP changed (Author) → Closed issue.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1292" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-1 · Change request swimlane (WP-P-02)</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">Who does each step of a change, from the CR to its closure; accept continues down</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-P-02 §5, §7</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="80" y="128" width="290" height="1128" rx="0" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="80" y="128" width="290" height="40" rx="0" fill="#F0FDFA" stroke="#E2E8F0" stroke-width="1"/>
+<text x="225" y="153" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">Requester</text>
+<rect x="370" y="128" width="290" height="1128" rx="0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="370" y="128" width="290" height="40" rx="0" fill="#F0FDFA" stroke="#E2E8F0" stroke-width="1"/>
+<text x="515" y="153" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">Author</text>
+<rect x="660" y="128" width="290" height="1128" rx="0" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="660" y="128" width="290" height="40" rx="0" fill="#F0FDFA" stroke="#E2E8F0" stroke-width="1"/>
+<text x="805" y="153" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">Maintainer</text>
+<rect x="950" y="128" width="290" height="1128" rx="0" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="950" y="128" width="290" height="40" rx="0" fill="#F0FDFA" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1095" y="153" font-size="12.5" fill="#0F766E" font-weight="700" text-anchor="middle">Reviewers</text>
+<path d="M225 264 L225 279 L515 279 L515 287" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M515 294 L510 286 L520 286 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M515 384 L515 407" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M515 414 L510 406 L520 406 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M515 488 L515 503 L805 503 L805 511" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M805 518 L800 510 L810 510 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M805 608 L805 623 L515 623 L515 631" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M515 638 L510 630 L520 630 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<text x="811" y="620" font-size="10" fill="#D97706" font-weight="700">accept</text>
+<path d="M515 742 L515 765" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M515 772 L510 764 L520 764 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M515 892 L515 907 L1095 907 L1095 915" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M1095 922 L1090 914 L1100 914 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M1095 996 L1095 1011 L805 1011 L805 1019" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M805 1026 L800 1018 L810 1018 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<path d="M805 1115 L805 1130 L515 1130 L515 1138" stroke="#475569" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+<path d="M515 1145 L510 1137 L520 1137 Z" stroke="#475569" stroke-width="1" fill="#475569" stroke-linejoin="round"/>
+<rect x="94" y="190" width="262" height="74" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="102" y="198" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="123.5" y="209.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 1</text>
+<text x="102" y="230" font-size="11.5" fill="#0F172A">Raise CR (issue) or open PR with CR section</text>
+<path d="M102 240 L348 240" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="102" y="254" font-size="10" fill="#475569">→ CR ID = issue or PR number</text>
+<rect x="384" y="294" width="262" height="90" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="392" y="302" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="413.5" y="313.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 2</text>
+<text x="392" y="334" font-size="11.5" fill="#0F172A">Classify (§4)</text>
+<path d="M392 344 L638 344" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="392" y="358" font-size="10" fill="#475569">→ Label</text>
+<text x="392" y="374" font-size="9.5" fill="#475569" font-style="italic">checked by reviewer</text>
+<rect x="384" y="414" width="262" height="74" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="392" y="422" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="413.5" y="433.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 3</text>
+<text x="392" y="454" font-size="11.5" fill="#0F172A">Impact analysis (§6) for SR-A/SR-Q/SR-T</text>
+<path d="M392 464 L638 464" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="392" y="478" font-size="10" fill="#475569">→ Completed checklist in PR</text>
+<rect x="674" y="518" width="262" height="90" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<rect x="682" y="526" width="43" height="16" rx="8.0" fill="#D97706" stroke="none" stroke-width="1"/>
+<text x="703.5" y="537.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 4</text>
+<text x="682" y="558" font-size="11.5" fill="#0F172A">Decide: accept / reject / defer</text>
+<path d="M682 568 L928 568" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="682" y="582" font-size="10" fill="#475569">→ Decision comment</text>
+<text x="682" y="598" font-size="9.5" fill="#475569" font-style="italic">CCB, §7.3</text>
+<rect x="384" y="638" width="262" height="104" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="392" y="646" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="413.5" y="657.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 5</text>
+<text x="392" y="678" font-size="11.5" fill="#0F172A">Implement on a work branch; update affected</text>
+<text x="392" y="693" font-size="11.5" fill="#0F172A">work products and assurance/trace/ in the</text>
+<text x="392" y="708" font-size="11.5" fill="#0F172A">same PR</text>
+<path d="M392 718 L638 718" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="392" y="732" font-size="10" fill="#475569">→ Commits</text>
+<rect x="384" y="772" width="262" height="120" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="392" y="780" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="413.5" y="791.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 6</text>
+<text x="392" y="812" font-size="11.5" fill="#0F172A">Verify: CI green; required additional</text>
+<text x="392" y="827" font-size="11.5" fill="#0F172A">verification from impact analysis done and</text>
+<text x="392" y="842" font-size="11.5" fill="#0F172A">linked</text>
+<path d="M392 852 L638 852" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="392" y="866" font-size="10" fill="#475569">→ CI run, test records</text>
+<text x="392" y="882" font-size="9.5" fill="#475569" font-style="italic">verifier</text>
+<rect x="964" y="922" width="262" height="74" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="972" y="930" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="993.5" y="941.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 7</text>
+<text x="972" y="962" font-size="11.5" fill="#0F172A">Review and approve per §7</text>
+<path d="M972 972 L1218 972" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="972" y="986" font-size="10" fill="#475569">→ Approvals</text>
+<rect x="674" y="1026" width="262" height="89" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="682" y="1034" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="703.5" y="1045.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 8</text>
+<text x="682" y="1066" font-size="11.5" fill="#0F172A">Merge (squash or merge commit; no force</text>
+<text x="682" y="1081" font-size="11.5" fill="#0F172A">push)</text>
+<path d="M682 1091 L928 1091" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="682" y="1105" font-size="10" fill="#475569">→ Merge commit</text>
+<rect x="384" y="1145" width="262" height="89" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<rect x="392" y="1153" width="43" height="16" rx="8.0" fill="#0F766E" stroke="none" stroke-width="1"/>
+<text x="413.5" y="1164.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">Step 9</text>
+<text x="392" y="1185" font-size="11.5" fill="#0F172A">Close CR; update status in WP-M-00 if a WP</text>
+<text x="392" y="1200" font-size="11.5" fill="#0F172A">changed</text>
+<path d="M392 1210 L638 1210" stroke="#E2E8F0" stroke-width="1" fill="none" stroke-linejoin="round"/>
+<text x="392" y="1224" font-size="10" fill="#475569">→ Closed issue</text>
+<rect x="964" y="536" width="262" height="54" rx="8" fill="#FFFFFF" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="972" y="553" font-size="10.5" fill="#D97706" font-weight="700">Reject / defer</text>
+<text x="972" y="567" font-size="10" fill="#475569">A rejected or deferred CR stays as a closed or</text>
+<text x="972" y="580" font-size="10" fill="#475569">open issue with its reason; it is never deleted.</text>
+<path d="M936 563 L957 563" stroke="#D97706" stroke-width="1.4" fill="none" stroke-dasharray="4 3" stroke-linejoin="round"/>
+<path d="M964 563 L956 558 L956 568 Z" stroke="#D97706" stroke-width="1" fill="#D97706" stroke-linejoin="round"/>
+<text x="40" y="1280" font-size="10.5" fill="#475569">Generated by fig_p_process.py from the WP-P-02 §5 table; amber: the decision step and its exit (text under the table).</text>
+</svg>

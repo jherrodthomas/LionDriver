@@ -29,7 +29,7 @@ analysis:
   rating_tables: RT-2
   msr: partial
   scope: >-
-    LionDriver as installed on a 2020 Toyota Corolla LE (US) with comma 3X and integrated panda,
+    LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda,
     software BL-004 (structure and failure analysis written at BL-001, risk analysis at BL-004), while the vehicle is driven on public roads by a licensed driver.
     Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are
     preserved), added because the harness intercepts the stock ADAS camera.
@@ -2274,7 +2274,7 @@ failure_modes:
         - SFM-ACT-006
         rationale: Rated, and actioned where needed, in the SW FMEA (SWF-011.C1); this row inherits that rating
     notes: >-
-      Open question: which stock TSS2 functions remain on the 2020 Corolla with openpilot longitudinal
+      Open question: which stock TSS2 functions remain on the reference configuration with openpilot longitudinal
       enabled. Must be established from the opendbc Toyota port and in-vehicle test before the HARA.
       HARA input: loss of stock AEB/FCW.
 

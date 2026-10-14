@@ -24,7 +24,9 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "vehicles"))
 import fmea_lint
+import vehicle_register
 
 ANALYSES = Path("assurance/08-analyses/fmea/analyses")
 EXPORTS = Path("assurance/08-analyses/fmea/exports")
@@ -68,7 +70,7 @@ def build(doc: dict, source: str) -> Workbook:
   ws.title = "00_Title_Page"
   ws["A1"] = hdr["title"]
   ws["A1"].font = Font(bold=True, size=14)
-  kv(ws, [("Project", "LionDriver: openpilot fork, reference configuration 2020 Toyota Corolla LE (AC-001)"),
+  kv(ws, [("Project", f"LionDriver: openpilot fork, reference configuration {vehicle_register.reference_label()}"),
           ("Document ID", f"LD-FMD-{hdr['safety_goal']}"), ("Revision", hdr["revision"]), ("Status", hdr["status"].title()),
           ("Baseline", hdr["baseline"]), ("Safety goal", hdr["safety_goal"]), ("Target ASIL", asil or ""),
           ("Author", "Claude (AI-assisted draft)"), ("Approver", "Jherrod Thomas (project maintainer); not yet reviewed"),

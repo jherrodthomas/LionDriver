@@ -38,7 +38,7 @@ analysis:
   updated: 2026-10-14
 structure:
 - id: DFM-SE-001
-  name: 'Item hardware: comma 3X with integrated panda, Toyota harness and relay box, installed in a 2020 Corolla LE'
+  name: 'Item hardware: comma 3X with integrated panda, Toyota harness and relay box, installed in a Corolla E210 · ZRE212 · US (CFG-001)'
   kind: system
   parent: null
   description: Hardware part of FSC elements EL-07 (panda) and EL-08 (harness); System FMEA SFM-SE-003/004
