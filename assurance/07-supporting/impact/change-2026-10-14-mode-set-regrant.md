@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Proposed 2026-10-14**: opendbc branch `claude/atc-20-tx-rate-reengagement` (second commit, after ATC-20); LionDriver pin unchanged until it is merged; not verified on hardware; not reviewed independently |
+| Status | **Proposed 2026-10-14**: opendbc commit `3ed789a` on branch `claude/atc-20-tx-rate-reengagement`, [jherrodthomas/opendbc#15](https://github.com/jherrodthomas/opendbc/pull/15); LionDriver pin unchanged until it is merged; not verified on hardware; not reviewed independently |
 | Change requests | WP-W-03 ATC-25; back-to-back candidate finding BB-C-01 ([`assurance/models/b2b`](../../models/b2b/README.md)) |
 | Decision | Delegated decision of the project maintainer, 2026-10-14 ("go with your recommendation"): resolve the SWSR-301/SWSR-311 conflict by amending SWSR-311 so the cruise edge state resets to "not yet seen disengaged"; the alternative (accept and document) was not taken |
 | Requirement | SWSR-311 as amended in WP-W-02 v0.21; SWSR-301 unchanged |
@@ -23,7 +23,7 @@ A safety-mode change can come from the host (`0xdc`), from a heartbeat loss and 
 
 | Commit(s) | Files | Summary of behaviour change | FuSa | SOTIF | AI | CS | Hazards / findings affected | WPs affected | Verification to re-run | Decision |
 |---|---|---|---|---|---|---|---|---|---|---|
-| opendbc branch `claude/atc-20-tx-rate-reengagement` (BB-C-01 commit) | `opendbc/safety/safety.h` | Reference build only. New flag `pcm_cruise_seen_disengaged`, cleared by `set_safety_hooks` and set by `pcm_cruise_check` when CRUISE_ACTIVE = 0 is received. A rising edge grants authority only if the flag is set. `rx_checks_allow_engagement()` is still called on every rising edge (its side effects stay unchanged), and the flag is combined after the call (MISRA 13.5) | Yes | Yes (after a mode change with cruise held, the driver must switch cruise off and on to engage) | No | Yes (a host cannot regain authority by re-setting the safety mode while cruise stays on) | BB-C-01; SG-01, SG-03, SG-04; TSR-301, TSR-311; SWSR-301, SWSR-311 | WP-W-02 (SWSR-311, done), WP-W-03 ATC-25 (done), WP-W-05 §5.2 (`sm-toy-auth.yaml` T1/T7, at the pin bump), WP-W-06 (new unit test) | Safety unit tests (both variants, UBSan, 100 % line coverage); opendbc and panda MISRA; B2B test at the pin bump (BB-08b should then agree) | Proposed |
+| opendbc `3ed789a` | `opendbc/safety/safety.h` | Reference build only. New flag `pcm_cruise_seen_disengaged`, cleared by `set_safety_hooks` and set by `pcm_cruise_check` when CRUISE_ACTIVE = 0 is received. A rising edge grants authority only if the flag is set. `rx_checks_allow_engagement()` is still called on every rising edge (its side effects stay unchanged), and the flag is combined after the call (MISRA 13.5) | Yes | Yes (after a mode change with cruise held, the driver must switch cruise off and on to engage) | No | Yes (a host cannot regain authority by re-setting the safety mode while cruise stays on) | BB-C-01; SG-01, SG-03, SG-04; TSR-301, TSR-311; SWSR-301, SWSR-311 | WP-W-02 (SWSR-311, done), WP-W-03 ATC-25 (done), WP-W-05 §5.2 (`sm-toy-auth.yaml` T1/T7, at the pin bump), WP-W-06 (new unit test) | Safety unit tests (both variants, UBSan, 100 % line coverage); opendbc and panda MISRA; B2B test at the pin bump (BB-08b should then agree) | Proposed |
 | same | `opendbc/safety/tests/test_toyota.py` | New `test_no_grant_after_mode_set_without_new_engagement`: engage, set the safety mode again, receive every other RX check, then PCM_CRUISE with CRUISE_ACTIVE still 1 three times (no grant), then off and on (grant) | — | — | — | — | — | — | — | — |
 | same | `test_ford.py`, `test_tesla.py` | Two upstream brand tests engaged on the first cruise frame of a mode, which the reference rule now refuses. Each now sends one cruise-off frame first. The upstream build behaves the same with or without that frame; the brands themselves cannot run in the reference build (safety-mode lock) | — | — | — | — | — | — | — | — |
 
@@ -35,7 +35,7 @@ Applies to every mode that uses the shared `pcm_cruise_check` in the reference b
 |---|---|
 | New unit test, reference build | Pass in the 4 applicable Toyota classes (LKA, LTA, each with and without stock longitudinal); skipped for SecOC and alt-brake |
 | Same test with the flag check removed | Fails in all 4, as intended |
-| Full safety suite, both variants (UBSan run, coverage run, 100 % line gate) | See the opendbc commit message |
+| Full safety suite, both variants (UBSan run, coverage run, 100 % line gate) | Pass; 100 % line coverage (upstream 2365/2365, reference 2482/2482) |
 | opendbc MISRA | **Not established locally** (see [change-2026-10-13-tx-rate-reengagement](change-2026-10-13-tx-rate-reengagement.md) §4); the opendbc and panda MISRA CI jobs are authoritative |
 | B2B | Not yet: the LionDriver pin still points to `a57b667`. At the pin bump, BB-08b should agree and `KNOWN` loses BB-C-01 |
 | HIL | **Not run** (D-04) |

@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Proposed 2026-10-13**: opendbc branch `claude/atc-20-tx-rate-reengagement`, commit `a0938fa` (from `a57b667`); LionDriver pin unchanged until it is merged; not verified on hardware; not reviewed independently |
+| Status | **Proposed 2026-10-13**: opendbc branch `claude/atc-20-tx-rate-reengagement`, commit `a0938fa` (from `a57b667`), [jherrodthomas/opendbc#15](https://github.com/jherrodthomas/opendbc/pull/15); LionDriver pin unchanged until it is merged; not verified on hardware; not reviewed independently |
 | Change requests | WP-W-03 ATC-20; [RR-2026-009](../../05-software/reviews/RR-2026-009.md) F-34 (decision §7: amend SWSR-518, then change the code); WP-W-02 OI-11 (closed by the amendment) |
 | Requirement | SWSR-518 as amended in WP-W-02 v0.20: "…after such a revocation, authority shall not be granted again until one full 250 ms window has passed without a rejected frame" |
 | Range | opendbc `a57b667..a0938fa`: `opendbc/safety/safety.h`, `opendbc/safety/tests/test_toyota.py` |
