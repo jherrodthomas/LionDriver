@@ -1612,6 +1612,7 @@
   reversibility: easy
   blocks: "SWSR-518, ATC-20"
   gate: G3
+  asked: 2026-10-12
   options:
     - key: A
       recommended: true
@@ -1624,7 +1625,9 @@
       title: "Keep current behaviour"
       detail: "No change; a misbehaving host can be re-granted on the next driver engagement."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-11"]
-  status: queued
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-12, note: "Delegated to the recommendation (RR-2026-009 §7 F-34: amend SWSR-518, then change the code); confirmed in chat on 2026-10-13 when the work started."}
+  note: "SWSR-518 amended in WP-W-02 v0.24 (jherrodthomas/LionDriver#80); code in jherrodthomas/opendbc#15 (ATC-20). Set to applied when both are merged."
 
 - id: DQ-080
   question: "After a safety reset while cruise stays on, should steering come back by itself, or only after you switch cruise off and on?"
@@ -1643,7 +1646,9 @@
       title: "Keep the automatic return"
       detail: "No change. Cost: steering comes back after a fault without the driver acting."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-14"]
-  status: open
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-14, note: "Agreed in chat to the recommended option (require cruise off and on again)."}
+  note: "SWSR-311 amended in WP-W-02 v0.24, OI-14 closed (jherrodthomas/LionDriver#80); code in jherrodthomas/opendbc#15 (ATC-26). Set to applied when both are merged."
 
 - id: DQ-081
   question: "What numeric values should the envelope use for jerk limits, driver-override torque/time, frozen-signal time, SPI error count and the SWSR-405 plausibility tolerances?"
