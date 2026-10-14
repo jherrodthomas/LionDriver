@@ -62,7 +62,7 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "0.6"
+  revision: "0.7"
   status: draft
   baseline: BL-004
   rating_tables: RT-1
@@ -590,6 +590,19 @@ functions:
   description: Deliver every 10 ms control step to the vehicle, and stop sending item frames when carControl is no longer received
   requirements:
   - FSR-016
+- id: SWF-FN-048
+  element: SWF-SE-041
+  description: Command deceleration that traffic does not require (driver-monitoring no-response, soft-disable force deceleration) only
+    after it has been announced, and keep it announced while it lasts (TSR-624)
+  requirements: [FSR-021, FSR-023]
+- id: SWF-FN-049
+  element: SWF-SE-032
+  description: Raise the forward collision warning only from fresh and valid modelV2 and longitudinalPlan inputs (TSR-625)
+  requirements: [FSR-021]
+- id: SWF-FN-050
+  element: SWF-SE-045
+  description: Send the inactive acceleration in ACC_CONTROL whenever longitudinal control is not active
+  requirements: [FSR-021, FSR-022]
 failure_modes:
 - id: SWF-001
   element: SWF-SE-006
@@ -737,6 +750,21 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-002
+  - id: SWF-003.C3
+    description: Panda lower bound -3.5 m/s² (toyota.h:335) equals the SoC ACCEL_MIN and is not derived from the controllability of
+      following traffic (HE-04.1) or a validated Corolla deceleration envelope; no margin between controller and envelope
+    element: SWF-SE-008
+    prevention_controls:
+    - description: Panda limit taken from the platform minimum, not a vehicle envelope (assurance GAP-04, TSR-202 without rationale, WP-A-03
+        DFI-14 / DM-10)
+      ref: opendbc_repo/opendbc/safety/modes/toyota.h:333-336
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 6
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-003
   safety_mechanisms:
   - description: Panda acceleration range check blocks the frame
     ref: opendbc_repo/opendbc/safety/longitudinal.h
@@ -823,6 +851,10 @@ failure_modes:
     description: Contributes to HZ-002
     hazard: HZ-002
     severity: 10
+  - level: end
+    description: Contributes to HZ-006 (stale cruise state keeps authority; braking while not engaged, HE-04.4)
+    hazard: HZ-006
+    severity: 10
   severity: 10
   causes:
   - id: SWF-006.C1
@@ -856,6 +888,10 @@ failure_modes:
   - level: end
     description: Unintended engagement
     hazard: HZ-010
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006 (braking while not engaged, HE-04.4)
+    hazard: HZ-006
     severity: 10
   severity: 10
   causes:
@@ -1022,6 +1058,10 @@ failure_modes:
   - level: end
     description: Erratic or excessive steering
     hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006 (stock ACC and item 0x343 combine on the bus)
+    hazard: HZ-006
     severity: 10
   severity: 10
   causes:
@@ -1456,6 +1496,10 @@ failure_modes:
     description: Contributes to HZ-008 (wrong brake source via the ALT_BRAKE flag, SWF-008.C1)
     hazard: HZ-008
     severity: 10
+  - level: end
+    description: Contributes to HZ-006 (deceleration checked against a wrong envelope)
+    hazard: HZ-006
+    severity: 10
   severity: 10
   safety_mechanisms:
   - description: 'selfdrived controlsMismatch after 10 s compares pandaStates mode, param and alternative experience against CarParams (QM). Both come from the same
@@ -1775,6 +1819,10 @@ failure_modes:
   - level: end
     description: Contributes to HZ-005
     hazard: HZ-005
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006 (deceleration checked by an unlocked envelope)
+    hazard: HZ-006
     severity: 10
   severity: 10
   safety_mechanisms:
@@ -2907,6 +2955,145 @@ failure_modes:
   - description: lateral_maneuversd aborts on steering or gas press; processNotRunning soft-disable if it crashes while the toggle is set;
       panda torque limits
   notes: Occurrence rated on the prevention controls (none technical), not on how often a user enables developer mode.
+- id: SWF-050
+  element: SWF-SE-041
+  function: SWF-FN-048
+  failure_mode: Item-initiated deceleration starts without a prior announcement
+  guideword: omission
+  effects:
+  - level: local
+    description: forceDecel set in the same cycle as softDisabling or noResponseForceDecel (controlsd.py:235-236); the planner sets the
+      cruise target to 0 at once (longitudinal_planner.py:84-85)
+  - level: next_higher
+    description: Vehicle slows toward standstill; the soft-disable alert and the deceleration begin together
+  - level: end
+    description: Unannounced item-initiated deceleration; rear-end collision by following traffic (HE-04.3)
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-050.C1
+    description: No lead time between the announcement and the onset of a fault soft-disable deceleration. Only the driver-monitoring
+      no-response deceleration is preceded by escalating alerts (driverUnresponsive1..3); TSR-624 is recorded as partial
+    element: SWF-SE-041
+    prevention_controls:
+    - description: DM escalation alerts precede the no-response deceleration; nothing precedes a fault soft-disable deceleration
+      ref: openpilot/selfdrive/monitoring/policy.py
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 8
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-050
+  safety_mechanisms:
+  - description: Soft-disable alert (audible, 3 s) at onset; panda deceleration bound -3.5 m/s² (SWF-003). No jerk bound (SWF-004)
+  notes: WP-A-04 BE-4.10 (SG-04 G4.4); SFM-026 covers an alert that is not presented at all.
+- id: SWF-051
+  element: SWF-SE-032
+  function: SWF-FN-049
+  failure_mode: Forward collision warning raised from stale or invalid model or planner input
+  guideword: value_stale
+  effects:
+  - level: local
+    description: fcw event from modelV2.meta.hardBrakePredicted or longitudinalPlan.fcw with no alive, valid or age check of its own
+      (selfdrived.py:470-475)
+  - level: next_higher
+    description: False forward collision warning
+  - level: end
+    description: Reflex hard braking by the driver with a close follower (HE-04.5)
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-051.C1
+    description: The FCW condition reads the last received modelV2 and longitudinalPlan; a held or invalid message keeps raising FCW in
+      the same cycle in which commIssue is raised (TSR-625 freshness gate not implemented)
+    element: SWF-SE-032
+    prevention_controls:
+    - description: Upstream design, reviewed; no derived freshness requirement for FCW inputs at BL-004
+      ref: openpilot/selfdrive/selfdrived/selfdrived.py
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 7
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-051
+  safety_mechanisms:
+  - description: None for FCW; commIssue soft-disables control when modelV2 or longitudinalPlan is not alive or not valid
+  notes: WP-A-04 BE-4.11 (SG-04 G4.5). False leads that trigger a valid FCW are SOTIF (SFM-009.C1, WP-C-06).
+- id: SWF-052
+  element: SWF-SE-045
+  function: SWF-FN-050
+  failure_mode: Negative acceleration sent in ACC_CONTROL while longitudinal control is not active
+  guideword: commission
+  effects:
+  - level: local
+    description: 0x343 ACCEL_CMD below 0 while CC.longActive is false
+  - level: next_higher
+    description: The panda refuses it while controls are not allowed (SWF-FN-003); with a false authority (SWF-006, SWF-007, SWF-013) the
+      PCM brakes
+  - level: end
+    description: Braking while not engaged (HE-04.4)
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-052.C1
+    description: The Toyota CarController takes pcm_accel_cmd from actuators.accel with no longActive gate (carcontroller.py:197-250); the
+      inactive value relies on LongControl returning 0 in its off state (longcontrol.py:56-58), so a defect or stale carControl upstream
+      passes through
+    element: SWF-SE-045
+    prevention_controls:
+    - description: Upstream review, ruff and ty in CI; no requirement for the inactive value on the host
+      ref: opendbc_repo/opendbc/car/toyota/carcontroller.py
+    detection_controls:
+    - description: process_replay covers card on the Corolla segment; not designed for a non-zero request while not engaged
+      ref: openpilot/selfdrive/test/process_replay/test_processes.py
+    occurrence: 6
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-052
+  safety_mechanisms:
+  - description: Panda refuses any acceleration other than the inactive value while controls are not allowed (longitudinal_accel_checks)
+    ref: opendbc_repo/opendbc/safety/longitudinal.h
+  notes: WP-A-04 BE-4.13 (SG-04 G4.6).
+- id: SWF-053
+  element: SWF-SE-007
+  function: SWF-FN-003
+  failure_mode: Active deceleration request ends in one step when authority is revoked
+  guideword: early
+  effects:
+  - level: local
+    description: Once controls_allowed clears, only the inactive acceleration passes (longitudinal.h:8-12, toyota.h:349), so the request
+      goes from the active deceleration to the inactive value in one frame
+  - level: next_higher
+    description: Step in the requested acceleration at the transition to the safe state; the PCM's own ramp is not characterised (AOU-05R)
+  - level: end
+    description: Uncontrolled change of deceleration at disengagement (FSR-04.03)
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-053.C1
+    description: By design, the envelope has no ramp-out state after revocation, and the host stops its own request in the same cycle
+      (LongControl off); FSR-04.03 relies on the PCM (TSR-208)
+    element: SWF-SE-007
+    prevention_controls:
+    - description: None in the item; PCM coasting behaviour assumed (TSR-208, AOU-05R, unverified)
+      ref: opendbc_repo/opendbc/safety/longitudinal.h
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 8
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-053
+  safety_mechanisms:
+  - description: None in the item; PCM ramp to coasting assumed (TSR-208)
+  notes: WP-A-04 BE-4.14 (SG-04 G4.7).
 actions:
 - id: SWF-ACT-001
   kind: detection
@@ -3193,5 +3380,28 @@ actions:
 - id: SWF-ACT-049
   kind: detection
   description: Vehicle test of PCM cancel and cluster state on each host disengagement path (fault disable, cancel button, brake, selfdrived loss)
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-050
+  kind: design_change
+  description: 'Implement TSR-624: announce deceleration that traffic does not require at least 1 s before its onset, and ramp it within
+    a_min and j_down'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-051
+  kind: design_change
+  description: 'Implement TSR-625: gate FCW on fresh and valid modelV2 and longitudinalPlan, with a unit test for a stale and an invalid
+    input'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-052
+  kind: design_change
+  description: Send the inactive acceleration from the Toyota CarController whenever CC.longActive is false, with a unit test
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-053
+  kind: detection
+  description: Vehicle test of the PCM response when the inactive value replaces an active deceleration (TSR-208, AOU-05R); if the PCM
+    steps, specify an item-side ramp after revocation (FSR-04.03)
   owner: Jherrod Thomas
   status: open

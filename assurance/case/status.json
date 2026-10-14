@@ -4,7 +4,8 @@
   "baseline": {
     "id": "BL-002",
     "lifecycle_status": "under-development",
-    "source_revision": "bf6ce8c"
+    "source_revision": "bf6ce8c",
+    "tag": null
   },
   "claims": {
     "accepted": 0,
@@ -30,6 +31,9 @@
     "missing": 15,
     "partial": 35,
     "registered": 50
+  },
+  "gates": {
+    "records": []
   },
   "lifecycle_areas": [
     {
@@ -93,6 +97,6 @@
       "title": "Safety Case and Review"
     }
   ],
-  "records_digest": "115222261c5f",
+  "records_digest": "255807d18686",
   "reviews": 0
 }

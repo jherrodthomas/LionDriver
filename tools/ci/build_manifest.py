@@ -31,6 +31,9 @@ def run(cmd: list[str]) -> str:
     out = subprocess.run(cmd, cwd=REPO, capture_output=True, text=True, timeout=30, check=False)
   except (OSError, subprocess.TimeoutExpired) as e:
     return f"error: {e}"
+  if out.returncode != 0:
+    lines = (out.stderr or out.stdout).strip().splitlines()
+    return f"error: exit {out.returncode}: {lines[0] if lines else ''}"
   return (out.stdout or out.stderr).strip()
 
 
@@ -42,8 +45,11 @@ def tool_version(name: str) -> str:
 
 
 def submodules() -> dict[str, str]:
+  status = run(["git", "submodule", "status"])
+  if status.startswith("error: "):
+    return {"(error)": status}  # never parse an error message as submodule lines
   out: dict[str, str] = {}
-  for line in run(["git", "submodule", "status"]).splitlines():
+  for line in status.splitlines():
     parts = line.strip().lstrip("-+U").split()
     if len(parts) >= 2:
       state = {"-": "not checked out", "+": "differs from pin", "U": "conflict"}.get(line[:1], "at pin")

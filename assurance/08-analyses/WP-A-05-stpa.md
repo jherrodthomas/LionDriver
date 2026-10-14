@@ -4,19 +4,19 @@
 |---|---|
 | Work product | WP-A-05 System-theoretic process analysis (STPA) of the reference configuration |
 | Standard reference | STPA Handbook (Leveson and Thomas, 2018), steps 1–4; ISO 21448:2022 §6–§7 (STPA as a method for hazards from functional insufficiencies and reasonably foreseeable misuse); ISO 26262-9:2018 §8 (supplementary system-level analysis); ISO/PAS 8800:2024 (control-structure view of the ML stack) |
-| Version | 0.2 (§3.1 control-structure diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.1 |
-| Status | Draft (steps 1–3 complete for the control actions below; step 4 for the highest-priority UCAs only) |
+| Version | 0.3.2 (OI-1 decided: H-STPA-1 foreseeable misuse in SOTIF and the HARA, WP-C-08 §6.1, HARA entry open; LS-31 covered by the Chill mode default, B-06; decision register DQ-001, DQ-003; 2026-10-14). 0.3.1 (LS-06 covered: PCM-edge authority gated on the heartbeat's engaged flag, TSR-301, opendbc `9a13f60`; OI-9 closed; 2026-10-14). 0.3 (step 4 for every UCA, re-checked against the current code; step 3 extended to openpilot internals, configuration, calibration and updates (OI-7); loss scenarios linked to the fault trees, FMEAs and TSRs in [stpa-map.yaml](stpa-map.yaml), checked by `fmea_lint.py`; six new findings, OI-9…OI-11; 2026-10-13). 0.2 (§3.1 control-structure diagram redrawn as Figure 3-1; text version kept; 2026-10-13). 0.1 |
+| Status | Draft (steps 1–4 complete for every UCA of §4; external UCAs rest on assumptions of use) |
 | ASIL / scope | SG-01 (ASIL C ⚠) … SG-07; SOTIF (SH-) and misuse (WP-C-08) |
 | Author | Claude (AI-assisted draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Safety manager |
-| Baseline | BL-003 code (panda `c2e5d93`, opendbc `5b5a4ba`, LionDriver `liondriver-dev` #32). The control structure is the same as at `8b8c6ae` |
+| Baseline | Steps 1–3 written at BL-003 (panda `c2e5d93`, opendbc `5b5a4ba`); v0.3 re-checked against `liondriver-dev` `26104ab` (panda `a55bdfc`, opendbc `a57b667`, reference build default). The control structure is the same as at `8b8c6ae` |
 
 ## 1. Purpose and scope
 
 The HARA ([WP-C-03](../02-concept/WP-C-03-hara.md)), the FTA/FMEA ([WP-A-04](WP-A-04-system-fta-fmea.md), [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md), [`fmea/`](fmea/fmea-plan.md)) and the DFA ([WP-A-03](WP-A-03-dependent-failure-analysis.md)) start from component failures. STPA starts from the control structure. It finds hazards that arise when every component works as specified but the control actions are unsafe in context: wrong process models (the driver believes the item is off; openpilot believes the driver is attentive), missing or late feedback, conflicting controllers (driver, openpilot, EPS, PCM, stock ADAS), and unsafe interactions between modes.
 
-Scope: the reference configuration (2020 Corolla LE, TSS2, comma 3X with integrated panda, openpilot longitudinal, Chill Mode per D-08) while driving on public roads. The vehicle ECUs (EPS, PCM, brake ECU, stock ADAS camera, instrument cluster) are in the control structure as controllers outside the item; their unsafe control actions are recorded as assumptions, not analysed.
+Scope: the reference configuration CFG-001 (Corolla E210 · ZRE212 · US: US sedan, model years 2020–2022, 1.8 L CVT, TSS 2.0; comma 3X with integrated panda, openpilot longitudinal, Chill Mode per D-08) while driving on public roads. The vehicle ECUs (EPS, PCM, brake ECU, stock ADAS camera, instrument cluster) are in the control structure as controllers outside the item; their unsafe control actions are recorded as assumptions, not analysed.
 
 Not in scope here: cybersecurity attackers (TARA, [WP-C-09](../02-concept/WP-C-09-tara.md)), installation and service processes (PFMEA), Experimental Mode (excluded from claims, D-08).
 
@@ -47,7 +47,7 @@ The functional-safety hazards of the HARA are used as the system-level hazards, 
 | H-06 | Unannounced loss of longitudinal deceleration | L-1, L-2, L-3 | SG-06 |
 | H-07 | Displayed system state differs from actual state (mode confusion) | L-1, L-2, L-3 | (rated within H-02, H-05, H-06) |
 | H-08 | Suppression of the vehicle's stock pre-collision braking | L-4, L-1, L-2 | SG-07 |
-| H-STPA-1 | The vehicle is driven with the item engaged while the driver is not supervising it | L-1, L-2, L-3 | none: SOTIF and misuse ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md)); see OI-1 |
+| H-STPA-1 | The vehicle is driven with the item engaged while the driver is not supervising it | L-1, L-2, L-3 | none yet: foreseeable misuse in both SOTIF and the HARA, decided 2026-10-14 ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §6.1, decision register DQ-003); the HARA entry is open (WP-C-08 OI-4) |
 
 ### 2.3 System-level constraints
 
@@ -144,6 +144,39 @@ The functional-safety hazards of the HARA are used as the system-level hazards, 
 | FB-06 | Road cameras, model outputs | → C2 |
 | FB-07 | Driver camera (face, eyes, phone) and wheel touch | C1 → C2 |
 
+### 3.4 Inside openpilot, configuration, calibration and updates (v0.3, OI-7)
+
+The structure of §3.1–§3.3 treats openpilot (C2) as one controller. Version 0.3 opens it up along the ML control loop (ISO/PAS 8800: model → planner → controller) and adds the control actions that configure the item rather than move the vehicle. These do not change Figure 3-1; they refine C2 and add one controller outside the vehicle (C7).
+
+| ID | Sub-controller | Processes | Responsibilities | Process-model variables that matter |
+|---|---|---|---|---|
+| C2.1 | Driving model | `modeld` | Desired curvature and acceleration (`modelV2.action`), lead estimates, hard-brake and gas-press predictions | Camera image valid; calibration; model confidence |
+| C2.2 | Longitudinal planner | `radard`, `plannerd` | Lead tracks and longitudinal plan (`aTarget`, `shouldStop`, `fcw`, `allowThrottle`). The Corolla TSS2 has no radar parsed (`radarUnavailable`), so leads come from the same model as the path (`toyota/interface.py:91`) | Leads present and distance; set speed; personality |
+| C2.3 | Controller | `controlsd`, Toyota `CarController` | Turn the plan into torque and acceleration requests while `latActive`/`longActive` | Inputs fresh and finite; engagement state; learned vehicle parameters |
+| C2.4 | Supervisor | `selfdrived` | Engagement state machine, events, alerts; gates `latActive`/`longActive` | Panda state; process health; driver state; PCM cruise |
+| C2.5 | Driver monitoring | `dmonitoringmodeld`, `dmonitoringd` | Awareness estimate and escalation | Face and eye visibility; wheel touch |
+| C2.6 | Calibration and learning | `calibrationd`, `paramsd`, `torqued`, `lagd` | Camera extrinsics; steer ratio, stiffness and angle offset; lateral acceleration factor and friction; actuator lag | Calibration status; estimator validity |
+| C2.7 | Panda interface | `pandad` | Flash the panda firmware at start; configure the safety mode, parameter and alternative experience; heartbeat; forward `sendcan` | Panda signature and reference-build flag; CarParams; onroad state |
+| C7 | Updater and owner settings (outside the vehicle loop) | `updated`; the owner through the settings UI | Install software updates (offroad only, swapped in at reboot); set driving mode, personality and toggles | Release identity; parameter values |
+
+| ID | Control action | From → to | Channel |
+|---|---|---|---|
+| CA-14 | Desired curvature and acceleration, lead estimates | C2.1 → C2.2, C2.3 | `modelV2` (`action.desiredCurvature`, `action.desiredAcceleration`, leads, `meta`) |
+| CA-15 | Longitudinal plan | C2.2 → C2.3 | `longitudinalPlan` (`aTarget`, `shouldStop`, `allowThrottle`, `fcw`) |
+| CA-16 | Lateral and longitudinal activation | C2.4 → C2.3 | `selfdriveState` (enabled, active); `latActive`/`longActive` in `controlsd.py:110-131` |
+| CA-17 | Calibration and learned parameters | C2.6 → C2.1, C2.3 | `liveCalibration`, `liveParameters`, `liveTorqueParameters`, `liveDelay` |
+| CA-18 | Safety configuration requests: ELM327 for fingerprinting, car safety mode with parameter and alternative experience, NOOUTPUT offroad, power save | C2.7 → C3 | SPI `0xdc`, `0xdf`, `0xe7` (`panda_safety.cc:5-88`) |
+| CA-19 | Flash the panda firmware | C2.7 → C3 | Bootloader over SPI, at pandad start (`pandad.py:20-51`) |
+| CA-20 | Install a software update | C7 → C2, C3 (through CA-19 at the next start) | `updated` (offroad only, `process_config.py:114`), swap at reboot |
+| CA-21 | Driving mode, personality and toggles | C7 (owner) → C2 | Params (`ExperimentalMode`, `LongitudinalPersonality`, `DisengageOnAccelerator`, …) |
+
+| ID | Feedback | From → to |
+|---|---|---|
+| FB-08 | Model and plan validity (message `valid`, alive, age; model confidence) | C2.1, C2.2 → C2.3, C2.4 |
+| FB-09 | Calibration and estimator status (`calStatus`, `vehicleParameters.valid`, `lateralTorqueParameters.valid`) | C2.6 → C2.4 |
+| FB-10 | Panda signature, reference-build flag, configured safety mode and parameter | C3 → C2.7, C2.4 |
+| FB-11 | Update and release state (installed version, update failed, offroad alerts) | C7 → C1 |
+
 ## 4. Step 3 — Unsafe control actions
 
 Types: **N** not provided causes hazard; **P** provided causes hazard; **T** too early, too late or wrong order; **D** stopped too soon or applied too long.
@@ -153,7 +186,7 @@ Types: **N** not provided causes hazard; **P** provided causes hazard; **T** too
 | UCA | Type | Unsafe control action | Hazards |
 |---|---|---|---|
 | UCA-01 | P | Driver engages in conditions outside what the item handles (tight curve, construction, faded lines, low sun) | H-01, H-02, H-STPA-1 |
-| UCA-02 | N | Driver does not disengage (brake or cancel) when the item steers or accelerates unexpectedly | H-01, H-03 |
+| UCA-02 | N | Driver does not disengage (brake or cancel) when the item steers or accelerates unexpectedly | H-01, H-03, H-05 |
 | UCA-03 | T | Driver brakes or steers too late after a take-over request or after a silent loss of control | H-02, H-06 |
 | UCA-04 | P | Driver applies steering torque below the override threshold while the item keeps commanding the opposite way, and believes the item has yielded | H-05, H-07 |
 | UCA-05 | N | Driver does not supervise (looks away, hands off for long periods) while engaged | H-STPA-1 |
@@ -172,7 +205,7 @@ Types: **N** not provided causes hazard; **P** provided causes hazard; **T** too
 | UCA-16 | P | Hard deceleration commanded without a real obstacle (false positive) | H-04 |
 | UCA-17 | N | Take-over alert not given, or given after the driver can react, when lateral or longitudinal control is lost | H-02, H-06, H-07 |
 | UCA-18 | N | No escalation when the driver stops supervising (DM fails to detect, or escalation slower than the situation needs) | H-STPA-1 |
-| UCA-19 | P | Acceleration or torque commanded while openpilot is not engaged but PCM cruise is (state mismatch) | H-03, H-07 |
+| UCA-19 | P | Acceleration or torque commanded while openpilot is not engaged but PCM cruise is (state mismatch) | H-01, H-03, H-04, H-07 |
 | UCA-20 | P | Wrong safety mode or parameter sent to the panda (wrong fingerprint) | H-01, H-03, H-05 |
 
 ### 4.3 panda safety model (C3)
@@ -180,7 +213,7 @@ Types: **N** not provided causes hazard; **P** provided causes hazard; **T** too
 | UCA | Type | Unsafe control action | Hazards |
 |---|---|---|---|
 | UCA-30 | P | Passes a torque or acceleration request outside the controllable envelope (limits not derived from the vehicle) | H-01, H-03, H-04 |
-| UCA-31 | P | Keeps authority after the driver brakes or cancels | H-05 |
+| UCA-31 | P | Keeps authority after the driver brakes or cancels | H-05, H-01, H-03 |
 | UCA-32 | D | Keeps authority too long after SoC loss or stale vehicle data | H-01, H-02 |
 | UCA-33 | P | Drives the relay (or keeps it driven) while not forwarding stock PCS messages | H-08 |
 | UCA-34 | N | Does not block stock camera LKA/ACC messages the item replaces while it transmits | H-01, H-04 |
@@ -207,43 +240,139 @@ Types: **N** not provided causes hazard; **P** provided causes hazard; **T** too
 | CC-7 | User information shall state what the item does not handle in Chill Mode (lights, stop signs, stopped vehicles at speed, sharp curves) | UCA-01, UCA-06 |
 | CC-8 | The relay shall be driven only while the panda forwards every non-replaced stock message, and released otherwise | UCA-33 |
 
-## 5. Step 4 — Loss scenarios (priority UCAs)
+### 4.6 Inside openpilot, configuration, calibration and updates (v0.3, OI-7)
 
-Priority: UCAs that the component-failure analyses do not already cover, and UCAs of the panda that the ASIL claims rest on. Each scenario names where it is covered today, or **new**.
+UCAs of the control actions of §3.4. Several restate, at sub-controller level, UCAs of §4.2 (noted in the last column); they are kept because the causes, and so the constraints, sit in a different process.
+
+| UCA | Controller | Type | Unsafe control action | Hazards | Refines |
+|---|---|---|---|---|---|
+| UCA-50 | C2.1 | P | Desired curvature or acceleration provided from a degraded input (occluded or blinded camera, calibration invalid or wrong) with no drop in the confidence that gates its use | H-01, H-03, H-04 | UCA-11, UCA-14, UCA-16 |
+| UCA-51 | C2.1, C2.2 | N | A lead is not provided (missed or late detection). Planner braking and the FCW both depend on it, because on the Corolla the leads come from the same model as the path | H-06 | UCA-15, UCA-17 |
+| UCA-52 | C2.2 | P | `allowThrottle` provided from a wrong gas-press prediction, so positive acceleration is planned towards a slower lead | H-03 | UCA-14 |
+| UCA-53 | C2.1, C2.2 | D | Plan or model output held after its publisher stops or lags | H-01, H-03, H-04, H-06 | UCA-13 |
+| UCA-54 | C2.4 | P | `latActive`/`longActive` provided while the panda does not grant authority, or while the PCM cruise state differs | H-07, H-02, H-06 | UCA-19 |
+| UCA-55 | C2.4 | N | Disengagement not provided when a supervised input is invalid, because its event is masked (big-model loading) | H-02, H-06 | UCA-17 |
+| UCA-56 | C2.6 | P | Learned steer ratio, stiffness, angle offset or lateral acceleration factor applied while wrong; bounded only to 0.5–2× the platform value (`paramsd.py:47`) | H-01, H-02 | UCA-11, UCA-12 |
+| UCA-57 | C2.6 | P | Camera calibration kept after the device has moved on its mount by less than the recalibration threshold (spread above 4° pitch or 2° yaw, `calibrationd.py:35-36, 164-167`) | H-01, H-04 | UCA-11 |
+| UCA-58 | C2.7 | P | A car safety mode or parameter requested for the wrong vehicle (fingerprint) or before the panda firmware is confirmed as the reference build | H-01, H-03, H-05 | UCA-20 |
+| UCA-59 | C2.7 | P | ELM327, power save, a mode change or a reset/boot-mode request provided while driving | H-01, H-03, H-02, H-06, H-08 | — |
+| UCA-60 | C2.7 | P | Panda flashed with firmware other than the assured reference build (the bundled image is wrong, or a rollback brings an older one) | H-01, H-03, H-05, H-08 | — |
+| UCA-61 | C7 | P | Update installed that is not an approved LionDriver release, or that swaps in partly | All | — |
+| UCA-62 | C7 (owner) | P | Driving mode or toggles set outside the reference configuration (Experimental Mode, aggressive personality, developer toggles) | H-03, H-04, H-06, H-STPA-1 | UCA-06 |
+
+Controller constraints added for these UCAs:
+
+| ID | Constraint | From UCA |
+|---|---|---|
+| CC-9 | openpilot shall not actuate on model or plan outputs that are stale, invalid or produced from an invalid calibration, and shall announce the resulting loss of control | UCA-50, UCA-53, UCA-55 |
+| CC-10 | Learned vehicle parameters shall be bounded to ranges validated for the reference vehicle, and leaving the range shall be treated as a fault | UCA-56 |
+| CC-11 | A change of device attitude after calibration shall be detected and shall prevent engagement until recalibrated | UCA-57 |
+| CC-12 | A car safety mode shall be configured only on a reference panda and only for the reference vehicle; diagnostic, power-save and reset requests shall be refused while a car mode is active | UCA-58, UCA-59 |
+| CC-13 | Only approved releases shall be installed, and the panda firmware shall match the release record | UCA-60, UCA-61 |
+| CC-14 | The reference configuration shall be enforced, or deviations shown to the driver, at every start | UCA-62 |
+
+## 5. Step 4 — Loss scenarios
+
+v0.1 wrote scenarios for the priority UCAs only. v0.3 re-checks those against the current code and adds a scenario for every other UCA of §4.1–§4.3 and §4.6. The UCAs of external controllers (§4.4) rest on assumptions of use, except UCA-42, whose behaviour has a scenario because the item causes it.
+
+**Code basis (v0.3):** `liondriver-dev` `26104ab`, panda `a55bdfc`, opendbc `a57b667`. Since BL-003 the reference build has become the default build (`SConstruct:274-283`). Its features are therefore credited here, and the status records which scenarios they change.
+
+**Status:**
+- *covered*: a requirement, mechanism or analysis row exists and the scenario is controlled, or will be once the requirement is implemented.
+- *known gap*: another analysis already records the gap.
+- *new*: no other analysis records it (§6).
+- *open test*: it can only be settled on the vehicle or the bench.
+
+Every scenario is linked to fault-tree events of [WP-A-04](WP-A-04-system-fta-fmea.md), FMEA failure modes and TSRs in [stpa-map.yaml](stpa-map.yaml). `tools/safety/fmea_lint.py` checks that every UCA has a scenario, that every link exists, and that each cited event lies in the fault tree of the scenario's hazard.
+
+### 5.1 Priority scenarios of v0.1, re-checked
+
+| ID | UCA | Scenario (current code) | Type | Covered by | Status |
+|---|---|---|---|---|---|
+| LS-01 | UCA-10 | The driver steers against the item to avoid an obstacle. `steeringPressed` (driver torque above 100 raw) still only freezes the torque integrator (`latcontrol_torque.py:92`). It moves the state machine to `overriding`, which is an active state (`state.py:8, 43-45`), so `latActive` stays true (`controlsd.py:114-115`). The panda's LKA limits have no driver-torque term (`toyota.h:298-303`). The freshness and finiteness gates added since BL-003 do not use driver torque | Inadequate control algorithm | TSR-304; SWF-038, SWF-044, SFM-018; BE-5.05, BE-5.06 | Known gap, unchanged (OI-2) |
+| LS-02 | UCA-04 | The driver applies corrective torque below the 100-raw threshold (`values.py:585`). No override is detected, so the item neither yields nor shows anything. Above the threshold the only cue is the grey border of the `overriding` state (`ui_state.py:189-190`), which gas override and pre-enable share; `steerOverride` has no text or sound (`events.py:741-747`). *v0.1 said there was no cue at all; corrected* | Inadequate feedback | SFM-018, SFM-028; BE-5.10 | New (sub-threshold case; CC-1, CC-2) |
+| LS-03 | UCA-06 | The driver has used Experimental Mode before (it was the upstream default), or reads upstream docs, and expects stops at lights; the reference configuration runs Chill Mode (D-08) | Flawed process model | WP-C-08 MC-09; D-08, B-06; PFM-011, PFM-015 | Known gap; depends on B-06 and user information (CC-7). See LS-31 |
+| LS-04 | UCA-35 | The panda watchdog resets the MCU while engaged (SWF-019). The MCU boots in SILENT with the siren off, and every siren source needs `controls_allowed` or a counter that the reset clears (`main.c:145-162, 347-353`); nothing survives the reset but its cause (`main.c:389-393`). Since BL-003 the SoC reacts. The panda reports SILENT/NO_OUTPUT and `controlsAllowed` false, so `controlsMismatch` gives an immediate-disable alert within 0.5 s of the first post-reset `pandaStates` (`selfdrived.py:50-51, 338-350, 536-538`). `pandaWatchdogReset` itself is only a permanent alert. The SPI reconnect time after the reset is not measured | Component failure; inadequate feedback | TSR-516, TSR-621; SWF-019, SWF-029, SWF-034, SFM-015, DFM-017; BE-2.14 | Partly mitigated: SoC alert only; the SoC-independent siren still cannot sound (OI-3) |
+| LS-05 | UCA-32, UCA-13 | `controlsd` stalls while `pandad` keeps sending heartbeats. `card` repeats the last `carControl` only while it is alive, about 0.1 s (`card.py:234-238`). After that the actuation frames stop and the TX-arrival check revokes authority 50 ms later for `0x2E4` (100 ms for `0x343`) (`toyota.h:600-611`), about 0.16 s in all. `controlsd` itself stops actuating on stale inputs (`controlsd.py:118-120`). Heartbeat loss revokes in 0.3 s with a siren. What is left: about 0.1 s of a repeated in-limit command (BE-1.23, by design); no siren on an arrival revocation | Component failure (control loop) | TSR-407, TSR-408, TSR-602; SWF-020, SWF-023, SWF-040, SWF-043, SWF-047, SFM-006; BE-1.19, BE-1.21, BE-1.22, BE-2.17 | Covered (reference build, default since `e84f850`); not verified on the vehicle |
+| LS-06 | UCA-19 | The driver presses SET while openpilot is not ready; the PCM engages cruise but openpilot stays disengaged. `controlsd` requests cancel at once (`controlsd.py:194`; CANCEL_REQ every third `0x343` frame, `carcontroller.py:187, 253, 269-273`) and `cruiseMismatch` alerts after 1.0 s (`selfdrived.py:52, 447-452`; a prompt, not a disable). **Also:** the panda grants `controls_allowed` on the PCM rising edge whatever openpilot's state (`safety.h:655-657`). Only the engaged-mismatch check, three 1 Hz ticks (`main.c:240-244`), or the cancel taking effect removes it. During that window a QM host fault could actuate | Flawed process model (C3); unsafe external controller | TSR-308; SWF-039, SWF-048, SFM-021; BE-3.13, BE-4.13, BE-5.10 | Covered (v0.3.1): since opendbc `9a13f60` the reference build grants authority on the PCM edge only once the heartbeat reports openpilot engaged, within 1 s (TSR-301; OI-9 closed). Alert at 1 s (TSR-308); open test for the PCM response (OI-4) |
+| LS-07 | UCA-33 | The panda hangs with the relay driven. The independent watchdog starts at the first relay drive (`harness.h:15-20`), times out after about 90 ms in window mode and is fed only after main-loop progress (`hw_watchdog.h:19-37, 66-75`). The reset releases the relay. A forwarding failure with the MCU still running (queue overflow, camera-side bus fault) is not caught | Component failure | TSR-501, TSR-706, TSR-707, TSR-711; DFM-004, DFM-006, SWF-018; BE-7.01, BE-7.04, BE-7.06, BE-7.10 | Covered for a hang (bench confirmation and relay drive circuit open, DFM-ACT-003); known gap for forwarding stalls |
+| LS-08 | UCA-42 | The stock camera receives no feedback for its blocked LKA/ACC messages and sets a fault that also disables PCS | Unsafe behaviour of an external controller | AOU-04, HARA SG-07; SFM-033; UE-7.14 | Open test: needs a vehicle test (OI-5) |
+| LS-09 | UCA-18, UCA-05 | Sunglasses or low light lower DM confidence; the policy falls back to wheel touch (5/15/25 s) while the driver is looking at a phone; at motorway speed 25 s is several hundred metres unsupervised | Inadequate feedback (sensor) | WP-A-03 DFI-21; SOTIF; SFM-022, SFM-023 | Known gap under SOTIF; escalation-time budget not derived (OI-6) |
+| LS-10 | UCA-11 | Lane lines are faded or misleading (construction); the model plans a wrong curvature; torque stays within the envelope, so the panda does not act; the driver is the only control | Inadequate control algorithm (ML) | SOTIF WP-C-06, WP-C-05; SFM-003; BE-1.03 | Known gap under SOTIF |
+| LS-11 | UCA-30 | Envelope limits still equal the controller limits: torque 1500, rate 15/25, error 350 (`toyota.h:298-303` against `values.py:20-21, 46-47`); deceleration −3.5 m/s² on both sides. Only the acceleration bound differs (+2.0 in the panda, ACCEL_MAX 1.5 without RAISED_ACCEL_LIMIT) | Inadequate control algorithm (design) | TSR-202, TSR-605; SWF-001, SWF-003, SFM-029; BE-1.01, BE-3.01, BE-4.01 | Known gap, unchanged (DFI-08, DFI-14) |
+| LS-12 | UCA-20, UCA-58 | A wrong fingerprint selects another platform. The reference build is now the default: pandad configures a car mode only on a reference panda (`panda_safety.cc:73-81`), and the panda accepts only TOYOTA with parameter 73 (`reference_lock.h`). A wrong brand or parameter therefore leaves the panda in NOOUTPUT, and `controlsMismatch` prevents engagement. What is left: another Toyota with EPS scale 73 and no flags gets the same parameter, so the envelope is right but the host tuning is wrong; and a build with `LIONDRIVER_REFERENCE=` empty removes the lock | Flawed process model (C2) | TSR-512, TSR-514, TSR-619; SWF-013, SWF-022, SWF-028, SFM-032, PFM-013; BE-1.05, BE-1.08 | Covered in the default build; known gap for same-parameter Toyotas (host only) and for the opt-out build (release process, PFM-001) |
+
+### 5.2 Scenarios for the other UCAs of §4.1–§4.3
 
 | ID | UCA | Scenario | Type | Covered by | Status |
 |---|---|---|---|---|---|
-| LS-01 | UCA-10 | The driver steers against the item to avoid an obstacle. `steeringPressed` (driver torque above 100 raw) only freezes the torque integrator (`latcontrol_torque.py:92`); `latActive` stays true (`controlsd.py:100`), so the SoC keeps commanding torque up to the panda limit and the driver fights the item for the whole manoeuvre | Inadequate control algorithm | FSR-05.03, TSR-304 (envelope reduces opposing torque); AOU-02 | Known gap: TSR-304 not implemented (WP-W-04 SWF-07, GAP-02). STPA adds that the SoC side keeps commanding too (OI-2) |
-| LS-02 | UCA-04 | The driver applies corrective torque below the 100-raw threshold. No override is detected, so the item neither yields nor shows anything; the driver concludes it has yielded or will yield. Above the threshold `steerOverride` exists but has no HMI indication (WP-C-08 §4) | Flawed process model (driver) via missing feedback | WP-C-08 (steerOverride row, no indication) | **New:** the sub-threshold case cannot be indicated at all (CC-1, CC-2) |
-| LS-03 | UCA-06 | The driver has used Experimental Mode before (it was the upstream default), or reads upstream docs, and expects stops at lights; the reference configuration runs Chill Mode (D-08) | Flawed process model | WP-C-08 MC-09; D-08, B-06 | Covered; depends on B-06 and user information (CC-7) |
-| LS-04 | UCA-35 | The panda watchdog resets the MCU while engaged (SW FMEA SWF-019). Steering and ACC stop. The MCU restarts in SILENT with its engagement memory cleared, so the SoC-independent siren of TSR-516(b) is unlikely to sound; only the SoC alert added in #30 (`watchdogReset`) remains | Feedback missing after the controller restarts | TSR-516, SWF-019, panda#6 | **New:** TSR-516(b) cannot be met across an MCU reset as designed; confirm on the bench (OI-3) |
-| LS-05 | UCA-32, UCA-13 | `controlsd` stalls but `pandad` keeps sending heartbeats with `engaged=1`; the last frames repeat or stop; the panda keeps authority until the heartbeat logic sees an engaged mismatch (about 3 s). Heartbeat loss itself is caught in 0.3 s since panda#7, but the heartbeat only shows that pandad is alive | Feedback (process model of C3 not updated) | WP-W-04 SWF-25, SWF-28; SW FMEA SWF-014.C2 | Covered as a gap (TSR-307a, SWSR-408/409) |
-| LS-06 | UCA-19 | The driver presses SET while openpilot is not ready; the PCM engages cruise but openpilot stays disengaged. With openpilot longitudinal the stock ACC commands are blocked, so the PCM shows cruise on with no acceleration command until `cruiseMismatch` after 6 s (`selfdrived.py:423-426`) | Conflicting controllers | FSR-05.06, TSR-308 (≤ 1 s) | Known gap: TSR-308 not met (GAP-19); PCM behaviour without `0x343` unknown (OI-4) |
-| LS-07 | UCA-33 | The panda hangs with the relay driven; stock PCS frames no longer reach the car | Component failure (control action not executed) | DFMEA DFM-004, watchdog at BL-002 | Covered (watchdog); relay drive-circuit behaviour unconfirmed (DFM-ACT-003) |
-| LS-08 | UCA-42 | The stock camera receives no feedback for its blocked LKA/ACC messages and sets a fault that also disables PCS | Unsafe behaviour of an external controller | AOU-04, HARA SG-07 | Open: needs a vehicle test (OI-5) |
-| LS-09 | UCA-18, UCA-05 | Sunglasses or low light lower DM confidence; the policy falls back to wheel touch (5/15/25 s) while the driver is looking at a phone; at motorway speed 25 s is several hundred metres unsupervised | Inadequate feedback (sensor) | WP-A-03 DFI-21; SOTIF | Covered under SOTIF; escalation-time budget not derived (OI-6) |
-| LS-10 | UCA-11 | Lane lines are faded or misleading (construction); the model plans a wrong curvature; torque stays within the envelope, so the panda does not act; the driver is the only control | Inadequate control algorithm (ML) | SOTIF WP-C-06, WP-C-05 | Covered under SOTIF |
-| LS-11 | UCA-30 | Envelope limits equal the controller limits (copied constants), so a wrong value is not caught by either | Inadequate control algorithm (design) | WP-A-03 DFI-08; SW FMEA SWF-001.C1 | Covered as a gap |
-| LS-12 | UCA-20 | A wrong fingerprint selects another platform; in a non-reference build the panda accepts any mode and parameter | Flawed process model (C2) | SW FMEA SWF-013.C2; mode lock (reference build) | Covered as a gap until the reference build is the only build (SWF-ACT-009) |
+| LS-13 | UCA-01 | The driver engages on a road the item does not handle (tight curve, roadworks, low sun). Engagement needs only a PCM rising edge and no NO_ENTRY event (`car_events.py:184-187`, `safety.h:655-657`). Nothing checks curve radius, road type or glare before entry | Flawed process model (C1); no ODD gate | SFM-013; SOTIF WP-C-06; BE-1.03 | Known gap under SOTIF (CC-6, CC-7) |
+| LS-14 | UCA-02 | The driver steers against the item and expects that to disengage it. By design steering only overrides (`state.py:43`), so torque continues as in LS-01, and the driver never brakes or cancels | Flawed process model (C1) | TSR-304; SFM-018, SFM-028, SWF-038; BE-5.05, BE-5.10 | Known gap (with LS-01, OI-2) |
+| LS-15 | UCA-03, UCA-12 | An EPS temporary fault starts while the driver touches the wheel. `car_events` then adds no event at all (`no_steer_warning`, `car_events.py:163-168`), or only the silent variant within 1.5 s of steering (`car_events.py:171-173`), while `latActive` drops (`controlsd.py:114`). The only cue is the EPS-fault siren after 1 s persistence, worst case 1.26 s (`eps_fault_siren.h:17`), and only for fault codes the panda decodes | Inadequate feedback | TSR-110, TSR-516; SFM-005, SWF-032; BE-2.01, BE-2.08 | New: no FMEA cause names the suppressed take-over alert (§6) |
+| LS-16 | UCA-12 | The item stops steering in a curve without an alert: the saturation warning needs undershoot above 1.2, lateral acceleration above 1.0 and a saturated controller, and is suppressed for 2 s after any `steeringPressed` (`selfdrived.py:455-470`). A non-finite target drops `latActive` for that step without an event (`controlsd.py:125-128`) | Inadequate control algorithm; inadequate feedback | TSR-604; SFM-004, SFM-005, SWF-045; BE-2.04, BE-2.11 | Known gap |
+| LS-17 | UCA-14, UCA-52 | The model misses a stationary or slower lead in Chill Mode (or `allowThrottle` is set from a wrong gas-press prediction, `longitudinal_planner.py:95-97`). The planner plans acceleration, and the panda passes up to +2.0 m/s² while authority is granted, because it knows nothing of leads (`toyota.h:333-336`) | Inadequate control algorithm (ML) | TSR-201; SFM-008, SFM-010, SWF-046; BE-3.02, BE-3.06, BE-3.07 | Known gap under SOTIF |
+| LS-18 | UCA-15, UCA-51 | A cut-in or a slowing lead is detected late. On the Corolla the leads come from the driving model (no radar parsed, `toyota/interface.py:91`), so the same miss removes planner braking and the FCW together (DFI-26). Deceleration is capped at −3.5 m/s² (`values.py:43`); beyond that the item relies on stock PCS being forwarded (AOU-04) | Inadequate control algorithm (ML); common cause | SFM-010, SFM-012; SOTIF; BE-6.01 | New: the SG-06 tree has events for a lost plan, not a late one (§6) |
+| LS-19 | UCA-16 | A false lead brakes hard. The envelope passes any in-bound step (BE-4.07). The host jerk limit is applied before pitch compensation and the PID (BE-4.17), and the envelope has no jerk limit (BE-4.05) | Inadequate control algorithm | TSR-205, TSR-605; SFM-009, SWF-046; BE-4.05, BE-4.06, BE-4.07, BE-4.17 | Known gap (WP-A-04 v0.9) |
+| LS-20 | UCA-17 | A take-over request is not perceived. `pandaWatchdogReset`, `controlsMismatch` and `commIssue` all reach the driver through `ui` and `soundd`, so a hung HMI mutes them all. The panda siren covers only heartbeat loss and an EPS fault, not an RX-timeout or arrival revocation. `commIssue` is a soft disable, so actuation continues for 3 s (`events.py:858-860`) | Inadequate feedback | TSR-516, TSR-622, TSR-623; SFM-026, SFM-027, SWF-035; BE-2.12, BE-2.13, BE-2.14, BE-2.15 | Known gap (SPF-09, DFI-25) |
+| LS-21 | UCA-31 | The brake frame `0x226` has no checksum or counter (`toyota.h:70`), so a stuck "not pressed" value with live timing passes, and the panda keeps authority while the driver brakes. A stuck `0x1D2` CRUISE_ACTIVE is now caught against MAIN_ON (`toyota.h:122-145`), but not if MAIN_ON is stuck too | Component failure; flawed process model (C3) | TSR-401, TSR-405; SWF-005, SWF-008, SWF-009, SFM-017; BE-1.16, BE-1.17, BE-5.01, BE-5.03 | Known gap (GAP-01) |
+| LS-22 | UCA-34 | The relay stays released while the item transmits (DFM-011), so stock and item `0x2E4`/`0x343` both reach the car. The stock-ECU check acts only after the 1 s relay transition time (`safety.h:496-500`) | Component failure | TSR-506; DFM-011, SWF-010, SWF-012, SFM-034; BE-4.19, BE-4.20, BE-4.21 | Known gap (GAP-12; WP-A-04 G4.8) |
+
+### 5.3 Scenarios for the UCAs of §4.6
+
+| ID | UCA | Scenario | Type | Covered by | Status |
+|---|---|---|---|---|---|
+| LS-23 | UCA-53 | `modeld` or `plannerd` stops or lags while engaged. `controlsd` now drops `latActive`/`longActive` when `modelV2` or `longitudinalPlan` is older than 0.5 s (`controlsd.py:33-38, 118-120`), and `selfdrived` raises `commIssue` from the same checks | Component failure (control loop) | TSR-602; SWF-043, SFM-006; BE-1.19, BE-4.18, BE-6.05 | Covered (#51); `commIssue` stays a soft disable (LS-20) |
+| LS-24 | UCA-54 | The panda revokes authority (RX timeout, arrival check) while `selfdriveState` is still engaged. Since #51 two consecutive `pandaStates` with `controlsAllowed` false, at most 0.5 s, give `controlsMismatch`, an immediate disable (`selfdrived.py:50-51, 534-538`) | Inadequate feedback | TSR-621; SWF-034, SFM-028; BE-2.02, BE-2.09, BE-6.02 | Covered (#51); not verified on the vehicle |
+| LS-25 | UCA-55 | While the external big model (E-06) loads or warms up, `selfdrived` suppresses `commIssue` and the localizer checks (`selfdrived.py:413-414, 433`). `controlsd` drops actuation on the stale model, so control ends without a take-over alert | Inadequate feedback | TSR-603; SWF-043, SFM-005; BE-2.03 | Known gap; does not arise if E-06 stays out of the reference configuration (WP-C-01 OI-4). The masking is BE-1.20 in the SG-01 tree (stale torque held); since `controlsd` drops actuation itself, its effect is now an SG-02 loss without alert, for which the SG-02 tree has no masking event |
+| LS-26 | UCA-56 | After a tyre, alignment or load change, `paramsd` and `torqued` learn a steer ratio, stiffness or lateral-acceleration factor that is wrong for the moment. They are bounded only to 0.5–2× the platform value (`paramsd.py:47`) and by validity flags. The panda bounds the torque, not the tracking, so the vehicle under- or over-steers in curves within the envelope | Flawed process model (C2.6) | SWF-042, SFM-004; BE-1.02, BE-2.03 | New: no FMEA cause and no requirement covers learned-parameter bounds (CC-10, §6) |
+| LS-27 | UCA-50, UCA-57 | The device moves on its windscreen mount (heat, a knock) by less than the recalibration threshold (`calibrationd.py:35-36, 164-167`), or the road camera is partly blinded. The model output keeps its confidence, and the path is biased within the envelope | Flawed process model (C2.1, C2.6); inadequate feedback | SFM-003, PFM-009; SOTIF; BE-1.03 | New: no FMEA row for calibration that goes wrong in operation (§6) |
+| LS-28 | UCA-59 | A pandad defect or a compromised SoC requests ELM327, power save or a mode change while driving, or asserts reset or BOOT0. The panda refuses mode changes in a car mode (reference lock), refuses ELM327 until the ignition is off, and refuses `0xe7` in a car mode. Reset and BOOT0 are GPIO lines from the SoC, which the panda cannot refuse; the relay is released, and control ends with the SoC's own alert only | Unsafe control input (C2.7) | TSR-511, TSR-512, TSR-513; SWF-013, SWF-015, DFM-016; BE-1.08, BE-1.09, BE-2.06, BE-7.02 | Covered for commands; known gap for reset and BOOT0 (GAP-38) |
+| LS-29 | UCA-60 | A release bundles a panda image built without the reference flag, or a rollback brings an older one. pandad flashes whatever matches the bundled signature (`pandad.py:20-51`), then refuses to configure a car mode, because the reference-build flag is missing (`panda_safety.cc:73-81`). A DEBUG image with the flag set would pass | Flawed process (release) | TSR-514, TSR-619; SWF-028, PFM-001, PFM-002, PFM-017; BE-1.18 | Covered for a non-reference image (item unavailable, safe); known gap for a DEBUG reference image (PFM-001) |
+| LS-30 | UCA-61 | The owner installs from the upstream installer or a development branch, or `updated` pulls a branch that is not a release. `updated` runs only offroad and swaps at reboot (`process_config.py:114`), so no partial update reaches a drive, but nothing checks that the software is an approved release | Flawed process (installation, update) | PFM-005, PFM-016 | Known gap (PFMEA) |
+| LS-31 | UCA-62 | `ExperimentalMode` still defaults to on (`params_keys.h:43`). A device that has not been set up per the release instructions starts in Experimental Mode, outside the reference configuration (D-08) | Flawed process model (C7) | PFM-011, PFM-015 | Default set to off 2026-10-14 (B-06, decision register DQ-001, [change record](../07-supporting/impact/change-2026-10-14-chill-mode-default.md)). Residual: devices set up before the change keep a stored `1` (release checklist) |
 
 ## 6. Results
 
-- **Most scenarios confirm known gaps.** LS-01, LS-03, LS-05, LS-06, LS-07, LS-11 and LS-12 reach requirements or gaps that the HARA, FSC/TSC, WP-C-08, the FMEAs or the DFA already record (TSR-304, TSR-308, MC-09, SWF-014, DFM-004, DFI-08, SWF-013.C2). That gives those items independent support from a method that does not start from component failures.
-- **New findings:**
-  - LS-02: steering corrections below the override threshold are never detected, so no HMI can show them.
-  - LS-04: the SoC-independent siren (TSR-516(b)) cannot sound after a watchdog reset, because the reset clears the panda's engagement memory.
-- **Hazard not rated by the HARA:** H-STPA-1 (unsupervised driver while engaged). The HARA treats driver-monitoring failure as a latent fault of a measure that controllability relies on (WP-C-04 §7). STPA shows it as a hazard with its own control loop (C2 → C1 → C2), which matters for SOTIF and for UL 4600-style arguments.
-- **Open by design:** LS-08 (stock camera behaviour with its messages blocked) and LS-09 (DM escalation times) need vehicle tests and SOTIF work.
+v0.3.1 result, from `fmea_lint.py --report`: *39 UCAs (37 with a loss scenario, 2 external); 31 loss scenarios (covered 8, known gap 17, new 5, open test 1)*. v0.3 had covered 7, new 6; LS-06 is covered since the heartbeat gate (OI-9).
+
+**Changes since v0.1, from the re-check against the current code (§5.1):**
+- **LS-05 is now covered.** In the reference build, now the default, TX-arrival supervision revokes authority about 0.16 s after a `controlsd` stall.
+- **LS-12 is covered in the default build.** The panda refuses a wrong mode or parameter, and pandad configures a car mode only on a reference panda.
+- **LS-07 is covered for a hang.** The watchdog releases the relay in about 90 ms.
+- **LS-04 is partly mitigated.** The SoC now gives an immediate-disable alert within 0.5 s, but the SoC-independent siren still cannot sound after a reset (OI-3).
+- **LS-06:** the alert now comes after 1 s instead of 6 s.
+- **LS-02 corrected:** an above-threshold override does have a cue, a generic grey border.
+
+**New findings (status *new* in [stpa-map.yaml](stpa-map.yaml)):**
+
+| Scenario | Finding | Goes to |
+|---|---|---|
+| LS-02 | Steering corrections below the override threshold are never detected; above it the only cue is a grey border shared with other states | TSR-304 / OI-2; HMI requirements (CC-2) |
+| LS-06 | The panda grants authority on the PCM rising edge whatever openpilot's state. For up to 3 s, until the engaged-mismatch check or the cancel acts, a QM host fault could actuate while the driver sees openpilot disengaged | WP-S-02 (gate the PCM edge on the heartbeat's engaged flag, or shorten the mismatch window); WP-A-04 SG-03/SG-04 G3.3.1/G4.6.1 **Closed in v0.3.1:** TSR-301 heartbeat condition, opendbc `9a13f60` |
+| LS-15 | An EPS temporary fault that starts while the driver touches the wheel suppresses the take-over alert by design; the EPS-fault siren after 1 s is the only cue | SW FMEA (cause under SWF-032); TSR-516 timing |
+| LS-18 | One model provides the path, the leads and the FCW, so one late detection removes braking and the warning together; the SG-06 tree models a lost plan, not a late one | WP-C-06; WP-A-03 DFI-26 |
+| LS-26 | Learned vehicle parameters are bounded only to 0.5–2× the platform value; no FMEA cause, TSR or fault-tree event covers a learned value wrong for the vehicle | System and SW FMEA; WP-S-02 (CC-10) |
+| LS-27 | Calibration that becomes wrong in operation has no FMEA row; PFM-009 covers only the installation tolerance | System FMEA; CC-11 |
+
+**Corrections found by the cross-check.** The map check found that five UCAs named too few hazards: their scenarios need fault-tree events that sit in other goals' trees. UCA-02 now includes H-05, UCA-19 H-01 and H-04, UCA-31 H-01 and H-03, and UCA-59 H-01 and H-03. LS-25 showed that the masking event BE-1.20 lives only in the SG-01 tree. Since `controlsd` drops actuation on stale inputs, its effect is now an SG-02 loss without alert.
+
+**Unchanged from v0.1:**
+- **H-STPA-1** (unsupervised driver while engaged) is to be treated as foreseeable misuse in both SOTIF and the HARA (OI-1, decided 2026-10-14, WP-C-08 §6.1). The SOTIF side is recorded; the HARA has not rated it yet (WP-C-08 OI-4).
+- **Still open by design:** LS-08 (stock camera behaviour) and LS-09 (DM escalation times).
+- **Most scenarios (25 of 31) are covered or known gaps** recorded by the HARA, the FSC/TSC, the FTA/FMEA, the DFA or WP-C-08. That gives those items independent support from a method that does not start from component failures.
 
 ## 7. Open items
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Decide whether H-STPA-1 becomes a hazard in WP-C-03 / WP-C-05 or stays a SOTIF hazard; record in WP-C-08 | Safety engineer | G1 |
+| OI-1 | Decided 2026-10-14 (decision register DQ-003): H-STPA-1 is foreseeable misuse in both SOTIF and the HARA, recorded in [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §6.1. Open until the HARA entry exists (WP-C-08 OI-4) | Safety engineer | G1 |
 | OI-2 | LS-01/LS-02: add a SoC-side counterpart to TSR-304 (stop or reduce commanded torque during a driver override) and decide how to treat sub-threshold driver torque (CC-1); add an override indication to the HMI requirements (CC-2) | Safety engineer | G2 |
-| OI-3 | LS-04: confirm on the bench whether the siren sounds after a watchdog reset while engaged; if not, keep an engagement flag across reset (e.g. backup SRAM or a reset-cause check) or amend TSR-516; specify the SoC alert time for this path against SG-02/SG-06 | Safety engineer | G2 |
-| OI-4 | LS-06: measure what the PCM does with cruise engaged and no `0x343` from openpilot (hold, coast, fault); input to closing TSR-308 (1 s) | Safety engineer | G2 |
+| OI-3 | LS-04 (v0.3: the code shows it cannot; the SoC alert within 0.5 s is the only reaction): confirm on the bench whether the siren sounds after a watchdog reset while engaged; if not, keep an engagement flag across reset (e.g. backup SRAM or a reset-cause check) or amend TSR-516; specify the SoC alert time for this path against SG-02/SG-06 | Safety engineer | G2 |
+| OI-4 | LS-06: measure whether the PCM honours CANCEL_REQ and what it does with cruise engaged and no `0x343` from openpilot (hold, coast, fault). v0.3: the 1 s alert of TSR-308 is implemented | Safety engineer | G2 |
 | OI-5 | LS-08: vehicle test that stock PCS stays available with the relay driven and openpilot longitudinal active (also HARA, AOU-04) | Safety engineer | G2 |
 | OI-6 | LS-09: derive DM escalation times from speed and road type instead of fixed 5/15/25 s | SOTIF lead | G3 |
-| OI-7 | Extend step 3 to the remaining control actions (pandad configuration requests, calibration, updates) and to the ML-internal control loop (model → planner → controller, ISO/PAS 8800) | Safety engineer | G3 |
+| OI-7 | ~~Extend step 3 to the remaining control actions and to the ML-internal control loop~~ **Closed in v0.3** (§3.4, §4.6, §5.3) | Safety engineer | G3 |
 | OI-8 | Independent (I1) review of this analysis | Safety manager | G2 |
+| OI-9 | ~~LS-06: decide how to remove the window in which the panda grants authority on the PCM edge without openpilot (gate on the heartbeat's engaged flag, or a shorter mismatch time) and add the requirement to WP-S-02~~ **Closed 2026-10-14:** heartbeat gate chosen and implemented (TSR-301, opendbc `9a13f60`, `change-2026-10-14-pcm-engage-heartbeat-gate.md`); not verified on the vehicle | Safety engineer | G2 |
+| OI-10 | LS-15, LS-26, LS-27: add the FMEA causes and failure modes these scenarios found (suppressed EPS-fault alert, learned-parameter bounds, calibration in operation) | Safety engineer | G2 |
+| OI-11 | LS-18: add late lead detection, and its common cause with the FCW, to WP-C-06 and WP-A-03 DFI-26 | SOTIF lead | G3 |

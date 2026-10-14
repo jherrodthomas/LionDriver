@@ -1,0 +1,587 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1192" viewBox="0 0 1280 1192" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 3-1 · Work-product status by gate (WP-M-00)</title>
+<desc>Heat map of the 88 work products of the WP-M-00 register by gate G0 to G6. Status totals: Skeleton 4, Draft 84, In review 0, Approved 0, Baselined 0, tailored out 0. Per gate: G0 21, G1 14, G2 16, G3 21, G4 10, G5 14, G6 2.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="1192" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-1 · Work-product status by gate</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">88 work products of the register (§3.1–§3.11), each at the gate(s) that need it, coloured by its status</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-M-00 §2, §3</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="112" font-size="12" fill="#0F172A" font-weight="700">Status totals</text>
+<rect x="160" y="99" width="25.5" height="18" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<rect x="185.5" y="99" width="534.5" height="18" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="193.5" y="112" font-size="10.5" fill="#FFFFFF" font-weight="700">D Draft 84</text>
+<text x="734" y="112" font-size="10.5" fill="#0F172A" font-weight="700">S Skeleton: 4</text>
+<text x="818.7" y="112" font-size="10.5" fill="#475569">R In review: 0</text>
+<text x="904.7" y="112" font-size="10.5" fill="#475569">A Approved: 0</text>
+<text x="988.2" y="112" font-size="10.5" fill="#475569">B Baselined: 0</text>
+<text x="1073.8" y="112" font-size="10.5" fill="#475569">N/A tailored out: 0</text>
+<rect x="42" y="136" width="167.4" height="40" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="50" y="152" font-size="11" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G0</text>
+<text x="74" y="152" font-size="10.5" fill="#0F172A" font-weight="700">21 WPs (21 D)</text>
+<text x="50" y="168" font-size="10" fill="#475569">Governance</text>
+<rect x="213.4" y="136" width="167.4" height="40" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="221.4" y="152" font-size="11" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G1</text>
+<text x="245.4" y="152" font-size="10.5" fill="#0F172A" font-weight="700">14 WPs (14 D)</text>
+<text x="221.4" y="168" font-size="10" fill="#475569">Concept</text>
+<rect x="384.9" y="136" width="167.4" height="40" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="392.9" y="152" font-size="11" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G2</text>
+<text x="416.9" y="152" font-size="10.5" fill="#0F172A" font-weight="700">16 WPs (16 D)</text>
+<text x="392.9" y="168" font-size="10" fill="#475569">System design</text>
+<rect x="556.3" y="136" width="167.4" height="40" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="564.3" y="152" font-size="11" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G3</text>
+<text x="588.3" y="152" font-size="10.5" fill="#0F172A" font-weight="700">21 WPs (21 D)</text>
+<text x="564.3" y="168" font-size="10" fill="#475569">HW/SW development</text>
+<rect x="727.7" y="136" width="167.4" height="40" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="735.7" y="152" font-size="11" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G4</text>
+<text x="759.7" y="152" font-size="10.5" fill="#0F172A" font-weight="700">10 WPs (10 D)</text>
+<text x="735.7" y="168" font-size="10" fill="#475569">Integration and verification</text>
+<rect x="899.1" y="136" width="167.4" height="40" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="907.1" y="152" font-size="11" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G5</text>
+<text x="931.1" y="152" font-size="10.5" fill="#0F172A" font-weight="700">14 WPs (4 S · 10 D)</text>
+<text x="907.1" y="168" font-size="10" fill="#475569">Validation and release</text>
+<rect x="1070.6" y="136" width="167.4" height="40" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="1078.6" y="152" font-size="11" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G6</text>
+<text x="1102.6" y="152" font-size="10.5" fill="#0F172A" font-weight="700">2 WPs (2 D)</text>
+<text x="1078.6" y="168" font-size="10" fill="#475569">Operation</text>
+<text x="459" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G0</text>
+<text x="485" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G1</text>
+<text x="511" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G2</text>
+<text x="537" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G3</text>
+<text x="563" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G4</text>
+<text x="589" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G5</text>
+<text x="615" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G6</text>
+<text x="40" y="200" font-size="10" fill="#475569" font-weight="700">ID</text>
+<text x="102" y="200" font-size="10" fill="#475569" font-weight="700">Work product</text>
+<rect x="40" y="208" width="588" height="18" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="48" y="221" font-size="11" fill="#0F172A" font-weight="700">§3.1 Management</text>
+<text x="620" y="221" font-size="10" fill="#475569" text-anchor="end">15 WPs · 15 D</text>
+<line x1="446" y1="228" x2="446" y2="455" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="472" y1="228" x2="472" y2="455" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="498" y1="228" x2="498" y2="455" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="524" y1="228" x2="524" y2="455" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="550" y1="228" x2="550" y2="455" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="576" y1="228" x2="576" y2="455" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="602" y1="228" x2="602" y2="455" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="628" y1="228" x2="628" y2="455" stroke="#E2E8F0" stroke-width="1"/>
+<text x="42" y="241" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-00</text>
+<text x="102" y="241" font-size="10" fill="#0F172A">Work product register</text>
+<rect x="448" y="231.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="240.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="245" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="256" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-01</text>
+<text x="102" y="256" font-size="10" fill="#0F172A">Assurance strategy and lifecycle tailoring</text>
+<rect x="448" y="246.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="255.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="271" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-02</text>
+<text x="102" y="271" font-size="10" fill="#0F172A">Functional safety plan</text>
+<rect x="448" y="261.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="270.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="275" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="286" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-03</text>
+<text x="102" y="286" font-size="10" fill="#0F172A">Project plan (scope, WBS, schedule, resources)</text>
+<rect x="448" y="276.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="285.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="301" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-04</text>
+<text x="102" y="301" font-size="10" fill="#0F172A">Organization-specific rules, safety culture, competence …</text>
+<rect x="448" y="291.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="300.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="305" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="316" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-05</text>
+<text x="102" y="316" font-size="10" fill="#0F172A">Quality management and quality assurance plan</text>
+<rect x="448" y="306.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="315.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="331" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-06</text>
+<text x="102" y="331" font-size="10" fill="#0F172A">Confirmation measures plan (reviews, audit, assessment …</text>
+<rect x="448" y="321.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="330.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="335" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="346" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-07</text>
+<text x="102" y="346" font-size="10" fill="#0F172A">Project risk management plan and register</text>
+<rect x="448" y="336.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="345.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="361" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-08</text>
+<text x="102" y="361" font-size="10" fill="#0F172A">SOTIF plan</text>
+<rect x="448" y="351.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="360.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="365" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="376" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-09</text>
+<text x="102" y="376" font-size="10" fill="#0F172A">Cybersecurity plan</text>
+<rect x="448" y="366.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="375.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="391" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-10</text>
+<text x="102" y="391" font-size="10" fill="#0F172A">AI safety management plan</text>
+<rect x="448" y="381.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="390.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="395" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="406" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-11</text>
+<text x="102" y="406" font-size="10" fill="#0F172A">Upstream (comma.ai) and supplier management, development …</text>
+<rect x="448" y="396.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="405.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="421" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-12</text>
+<text x="102" y="421" font-size="10" fill="#0F172A">Impact analysis of the openpilot-derived baseline (modification …</text>
+<rect x="448" y="411.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="420.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="425" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="436" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-13</text>
+<text x="102" y="436" font-size="10" fill="#0F172A">ASPICE capability baseline (self-assessment)</text>
+<rect x="448" y="426.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="459" y="435.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="451" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-M-14</text>
+<text x="102" y="451" font-size="10" fill="#0F172A">ISO 26262-6 software lifecycle implementation specification … *</text>
+<rect x="500" y="441.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="511" y="450.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="526" y="441.5" width="48" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="550" y="450.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="463" width="588" height="18" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="48" y="476" font-size="11" fill="#0F172A" font-weight="700">§3.2 Concept phase</text>
+<text x="620" y="476" font-size="10" fill="#475569" text-anchor="end">11 WPs · 11 D</text>
+<line x1="446" y1="483" x2="446" y2="650" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="472" y1="483" x2="472" y2="650" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="498" y1="483" x2="498" y2="650" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="524" y1="483" x2="524" y2="650" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="550" y1="483" x2="550" y2="650" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="576" y1="483" x2="576" y2="650" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="602" y1="483" x2="602" y2="650" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="628" y1="483" x2="628" y2="650" stroke="#E2E8F0" stroke-width="1"/>
+<text x="42" y="496" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-C-01</text>
+<text x="102" y="496" font-size="10" fill="#0F172A">Item definition</text>
+<rect x="474" y="486.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="485" y="495.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="500" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="511" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-C-02</text>
+<text x="102" y="511" font-size="10" fill="#0F172A">ODD and intended functionality specification</text>
+<rect x="474" y="501.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="485" y="510.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="526" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-C-03</text>
+<text x="102" y="526" font-size="10" fill="#0F172A">Hazard analysis and risk assessment, safety goals</text>
+<rect x="474" y="516.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="485" y="525.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="530" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="541" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-C-04</text>
+<text x="102" y="541" font-size="10" fill="#0F172A">Functional safety concept (FSRs, allocation, AoUs)</text>
+<rect x="474" y="531.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="485" y="540.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="556" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-C-05</text>
+<text x="102" y="556" font-size="10" fill="#0F172A">SOTIF hazard identification and risk evaluation, acceptance …</text>
+<rect x="474" y="546.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="485" y="555.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="560" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="571" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-C-06</text>
+<text x="102" y="571" font-size="10" fill="#0F172A">Functional insufficiencies and triggering conditions analysis</text>
+<rect x="474" y="561.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="485" y="570.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="586" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-C-07</text>
+<text x="102" y="586" font-size="10" fill="#0F172A">Functional modifications addressing SOTIF risk</text>
+<rect x="474" y="576.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="485" y="585.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="590" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="601" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-C-08</text>
+<text x="102" y="601" font-size="10" fill="#0F172A">Driver interaction, HMI and reasonably foreseeable misuse …</text>
+<rect x="474" y="591.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="485" y="600.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="616" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-C-09</text>
+<text x="102" y="616" font-size="10" fill="#0F172A">Threat analysis and risk assessment (TARA)</text>
+<rect x="474" y="606.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="485" y="615.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="620" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="631" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-C-10</text>
+<text x="102" y="631" font-size="10" fill="#0F172A">Cybersecurity goals, claims and concept</text>
+<rect x="474" y="621.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="485" y="630.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="646" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-C-11</text>
+<text x="102" y="646" font-size="10" fill="#0F172A">AI system definition and AI safety requirements</text>
+<rect x="474" y="636.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="485" y="645.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="658" width="588" height="18" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="48" y="671" font-size="11" fill="#0F172A" font-weight="700">§3.3 System level</text>
+<text x="620" y="671" font-size="10" fill="#475569" text-anchor="end">9 WPs · 9 D</text>
+<line x1="446" y1="678" x2="446" y2="815" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="472" y1="678" x2="472" y2="815" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="498" y1="678" x2="498" y2="815" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="524" y1="678" x2="524" y2="815" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="550" y1="678" x2="550" y2="815" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="576" y1="678" x2="576" y2="815" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="602" y1="678" x2="602" y2="815" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="628" y1="678" x2="628" y2="815" stroke="#E2E8F0" stroke-width="1"/>
+<text x="42" y="691" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-S-01</text>
+<text x="102" y="691" font-size="10" fill="#0F172A">System requirements specification (functional, non-safety)</text>
+<rect x="500" y="681.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="511" y="690.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="695" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="706" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-S-02</text>
+<text x="102" y="706" font-size="10" fill="#0F172A">Technical safety requirements specification</text>
+<rect x="500" y="696.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="511" y="705.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="721" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-S-03</text>
+<text x="102" y="721" font-size="10" fill="#0F172A">Technical safety concept and system architectural design</text>
+<rect x="500" y="711.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="511" y="720.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="725" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="736" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-S-04</text>
+<text x="102" y="736" font-size="10" fill="#0F172A">Timing analysis: FTTI, fault detection and reaction budget</text>
+<rect x="500" y="726.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="511" y="735.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="751" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-S-05</text>
+<text x="102" y="751" font-size="10" fill="#0F172A">Hardware-software interface specification</text>
+<rect x="500" y="741.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="511" y="750.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="755" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="766" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-S-06</text>
+<text x="102" y="766" font-size="10" fill="#0F172A">Requirements for production, operation, service and …</text>
+<rect x="500" y="756.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="511" y="765.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="781" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-S-07</text>
+<text x="102" y="781" font-size="10" fill="#0F172A">Cybersecurity requirements and architectural design</text>
+<rect x="500" y="771.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="511" y="780.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="785" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="796" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-S-08</text>
+<text x="102" y="796" font-size="10" fill="#0F172A">System integration and test strategy, specification and report</text>
+<rect x="552" y="786.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="563" y="795.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="811" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-S-09</text>
+<text x="102" y="811" font-size="10" fill="#0F172A">System verification (qualification) specification and report</text>
+<rect x="552" y="801.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="563" y="810.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="823" width="588" height="18" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="48" y="836" font-size="11" fill="#0F172A" font-weight="700">§3.4 Hardware level</text>
+<text x="620" y="836" font-size="10" fill="#475569" text-anchor="end">7 WPs · 7 D</text>
+<line x1="446" y1="843" x2="446" y2="950" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="472" y1="843" x2="472" y2="950" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="498" y1="843" x2="498" y2="950" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="524" y1="843" x2="524" y2="950" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="550" y1="843" x2="550" y2="950" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="576" y1="843" x2="576" y2="950" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="602" y1="843" x2="602" y2="950" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="628" y1="843" x2="628" y2="950" stroke="#E2E8F0" stroke-width="1"/>
+<text x="42" y="856" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-H-01</text>
+<text x="102" y="856" font-size="10" fill="#0F172A">Hardware safety requirements specification</text>
+<rect x="526" y="846.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="537" y="855.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="860" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="871" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-H-02</text>
+<text x="102" y="871" font-size="10" fill="#0F172A">Hardware architectural and detailed design (device, panda MCU …</text>
+<rect x="526" y="861.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="537" y="870.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="886" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-H-03</text>
+<text x="102" y="886" font-size="10" fill="#0F172A">Hardware safety analysis (FMEA/FMEDA)</text>
+<rect x="526" y="876.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="537" y="885.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="890" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="901" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-H-04</text>
+<text x="102" y="901" font-size="10" fill="#0F172A">Hardware architectural metrics (SPFM, LFM)</text>
+<rect x="526" y="891.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="537" y="900.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="916" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-H-05</text>
+<text x="102" y="916" font-size="10" fill="#0F172A">Evaluation of safety goal violations due to random HW failures …</text>
+<rect x="526" y="906.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="537" y="915.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="40" y="920" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="42" y="931" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-H-06</text>
+<text x="102" y="931" font-size="10" fill="#0F172A">Hardware integration and verification specification and report</text>
+<rect x="552" y="921.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="563" y="930.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="42" y="946" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-H-07</text>
+<text x="102" y="946" font-size="10" fill="#0F172A">Qualification of hardware components (comma device, STM32H7 …</text>
+<rect x="526" y="936.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="537" y="945.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="1071" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G0</text>
+<text x="1097" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G1</text>
+<text x="1123" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G2</text>
+<text x="1149" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G3</text>
+<text x="1175" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G4</text>
+<text x="1201" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G5</text>
+<text x="1227" y="200" font-size="10" fill="#475569" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">G6</text>
+<text x="652" y="200" font-size="10" fill="#475569" font-weight="700">ID</text>
+<text x="714" y="200" font-size="10" fill="#475569" font-weight="700">Work product</text>
+<rect x="652" y="208" width="588" height="18" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="660" y="221" font-size="11" fill="#0F172A" font-weight="700">§3.5 Software level</text>
+<text x="1232" y="221" font-size="10" fill="#475569" text-anchor="end">11 WPs · 11 D</text>
+<line x1="1058" y1="228" x2="1058" y2="395" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1084" y1="228" x2="1084" y2="395" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1110" y1="228" x2="1110" y2="395" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1136" y1="228" x2="1136" y2="395" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1162" y1="228" x2="1162" y2="395" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1188" y1="228" x2="1188" y2="395" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1214" y1="228" x2="1214" y2="395" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1240" y1="228" x2="1240" y2="395" stroke="#E2E8F0" stroke-width="1"/>
+<text x="654" y="241" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-W-01</text>
+<text x="714" y="241" font-size="10" fill="#0F172A">SW development environment, languages and coding guidelines</text>
+<rect x="1138" y="231.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="240.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="245" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="256" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-W-02</text>
+<text x="714" y="256" font-size="10" fill="#0F172A">Software safety requirements specification</text>
+<rect x="1138" y="246.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="255.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="271" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-W-03</text>
+<text x="714" y="271" font-size="10" fill="#0F172A">Software architectural design</text>
+<rect x="1138" y="261.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="270.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="275" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="286" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-W-04</text>
+<text x="714" y="286" font-size="10" fill="#0F172A">Software safety analysis and software-level DFA</text>
+<rect x="1138" y="276.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="285.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="301" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-W-05</text>
+<text x="714" y="301" font-size="10" fill="#0F172A">Software unit design and implementation</text>
+<rect x="1138" y="291.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="300.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="305" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="316" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-W-06</text>
+<text x="714" y="316" font-size="10" fill="#0F172A">Software unit verification specification and report (static …</text>
+<rect x="1138" y="306.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="315.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="331" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-W-07</text>
+<text x="714" y="331" font-size="10" fill="#0F172A">Software integration and verification specification and report</text>
+<rect x="1164" y="321.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1175" y="330.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="335" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="346" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-W-08</text>
+<text x="714" y="346" font-size="10" fill="#0F172A">Testing of the embedded software (SW qualification, HIL)</text>
+<rect x="1164" y="336.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1175" y="345.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="361" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-W-09</text>
+<text x="714" y="361" font-size="10" fill="#0F172A">Safety-related configuration and calibration data (car params …</text>
+<rect x="1138" y="351.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="360.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="365" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="376" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-W-10</text>
+<text x="714" y="376" font-size="10" fill="#0F172A">ML engineering: model requirements, data management, training …</text>
+<rect x="1138" y="366.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="375.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="391" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-W-11</text>
+<text x="714" y="391" font-size="10" fill="#0F172A">Cybersecurity implementation and verification</text>
+<rect x="1138" y="381.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="390.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="403" width="588" height="18" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="660" y="416" font-size="11" fill="#0F172A" font-weight="700">§3.6 Validation</text>
+<text x="1232" y="416" font-size="10" fill="#475569" text-anchor="end">7 WPs · 7 D</text>
+<line x1="1058" y1="423" x2="1058" y2="530" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1084" y1="423" x2="1084" y2="530" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1110" y1="423" x2="1110" y2="530" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1136" y1="423" x2="1136" y2="530" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1162" y1="423" x2="1162" y2="530" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1188" y1="423" x2="1188" y2="530" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1214" y1="423" x2="1214" y2="530" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1240" y1="423" x2="1240" y2="530" stroke="#E2E8F0" stroke-width="1"/>
+<text x="654" y="436" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-V-01</text>
+<text x="714" y="436" font-size="10" fill="#0F172A">Safety validation plan, specification and report</text>
+<rect x="1190" y="426.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1201" y="435.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="440" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="451" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-V-02</text>
+<text x="714" y="451" font-size="10" fill="#0F172A">SOTIF verification and validation strategy, validation targets</text>
+<rect x="1112" y="441.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1123" y="450.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="466" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-V-03</text>
+<text x="714" y="466" font-size="10" fill="#0F172A">Evaluation of known hazardous scenarios</text>
+<rect x="1164" y="456.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1175" y="465.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="470" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="481" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-V-04</text>
+<text x="714" y="481" font-size="10" fill="#0F172A">Evaluation of unknown hazardous scenarios</text>
+<rect x="1190" y="471.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1201" y="480.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="496" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-V-05</text>
+<text x="714" y="496" font-size="10" fill="#0F172A">Fault injection test specification and report</text>
+<rect x="1164" y="486.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1175" y="495.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="500" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="511" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-V-06</text>
+<text x="714" y="511" font-size="10" fill="#0F172A">Cybersecurity validation and penetration testing</text>
+<rect x="1190" y="501.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1201" y="510.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="526" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-V-07</text>
+<text x="714" y="526" font-size="10" fill="#0F172A">Vehicle test operations and safety-driver procedures</text>
+<rect x="1086" y="516.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1097" y="525.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="538" width="588" height="18" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="660" y="551" font-size="11" fill="#0F172A" font-weight="700">§3.7 Supporting processes</text>
+<text x="1232" y="551" font-size="10" fill="#475569" text-anchor="end">11 WPs · 11 D</text>
+<line x1="1058" y1="558" x2="1058" y2="725" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1084" y1="558" x2="1084" y2="725" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1110" y1="558" x2="1110" y2="725" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1136" y1="558" x2="1136" y2="725" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1162" y1="558" x2="1162" y2="725" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1188" y1="558" x2="1188" y2="725" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1214" y1="558" x2="1214" y2="725" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1240" y1="558" x2="1240" y2="725" stroke="#E2E8F0" stroke-width="1"/>
+<text x="654" y="571" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-P-01</text>
+<text x="714" y="571" font-size="10" fill="#0F172A">Configuration management plan (incl. safety-relevant file list …</text>
+<rect x="1060" y="561.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1071" y="570.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="575" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="586" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-P-02</text>
+<text x="714" y="586" font-size="10" fill="#0F172A">Change management plan</text>
+<rect x="1060" y="576.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1071" y="585.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="601" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-P-03</text>
+<text x="714" y="601" font-size="10" fill="#0F172A">Problem resolution management</text>
+<rect x="1060" y="591.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1071" y="600.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="605" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="616" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-P-04</text>
+<text x="714" y="616" font-size="10" fill="#0F172A">Documentation management</text>
+<rect x="1060" y="606.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1071" y="615.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="631" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-P-05</text>
+<text x="714" y="631" font-size="10" fill="#0F172A">Verification and review procedure</text>
+<rect x="1060" y="621.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1071" y="630.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="635" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="646" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-P-06</text>
+<text x="714" y="646" font-size="10" fill="#0F172A">Requirements management and traceability procedure</text>
+<rect x="1060" y="636.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1071" y="645.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="661" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-P-07</text>
+<text x="714" y="661" font-size="10" fill="#0F172A">Software tool classification and qualification</text>
+<rect x="1138" y="651.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="660.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="665" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="676" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-P-08</text>
+<text x="714" y="676" font-size="10" fill="#0F172A">Qualification of software components (third-party and upstream …</text>
+<rect x="1138" y="666.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="675.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="691" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-P-09</text>
+<text x="714" y="691" font-size="10" fill="#0F172A">Proven-in-use argument evaluation</text>
+<rect x="1138" y="681.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="690.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="695" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="706" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-P-10</text>
+<text x="714" y="706" font-size="10" fill="#0F172A">Release management and baseline procedure</text>
+<rect x="1190" y="696.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1201" y="705.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="721" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-P-11</text>
+<text x="714" y="721" font-size="10" fill="#0F172A">Integrated process model and generated process maps (all …</text>
+<rect x="1060" y="711.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1071" y="720.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="733" width="588" height="18" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="660" y="746" font-size="11" fill="#0F172A" font-weight="700">§3.8 Safety analyses</text>
+<text x="1232" y="746" font-size="10" fill="#475569" text-anchor="end">5 WPs · 5 D</text>
+<line x1="1058" y1="753" x2="1058" y2="830" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1084" y1="753" x2="1084" y2="830" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1110" y1="753" x2="1110" y2="830" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1136" y1="753" x2="1136" y2="830" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1162" y1="753" x2="1162" y2="830" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1188" y1="753" x2="1188" y2="830" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1214" y1="753" x2="1214" y2="830" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1240" y1="753" x2="1240" y2="830" stroke="#E2E8F0" stroke-width="1"/>
+<text x="654" y="766" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-A-01</text>
+<text x="714" y="766" font-size="10" fill="#0F172A">ASIL decomposition rationale</text>
+<rect x="1112" y="756.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1123" y="765.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="770" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="781" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-A-02</text>
+<text x="714" y="781" font-size="10" fill="#0F172A">Coexistence of elements and freedom from interference</text>
+<rect x="1112" y="771.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1123" y="780.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="796" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-A-03</text>
+<text x="714" y="796" font-size="10" fill="#0F172A">Dependent failure analysis</text>
+<rect x="1112" y="786.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1123" y="795.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="800" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="811" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-A-04</text>
+<text x="714" y="811" font-size="10" fill="#0F172A">System-level safety analyses (FTA, FMEA)</text>
+<rect x="1112" y="801.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1123" y="810.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="826" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-A-05</text>
+<text x="714" y="826" font-size="10" fill="#0F172A">System-theoretic process analysis (STPA)</text>
+<rect x="1112" y="816.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1123" y="825.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="838" width="588" height="18" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="660" y="851" font-size="11" fill="#0F172A" font-weight="700">§3.9 Production, operation and decommissioning</text>
+<text x="1232" y="851" font-size="10" fill="#475569" text-anchor="end">5 WPs · 5 D</text>
+<line x1="1058" y1="858" x2="1058" y2="935" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1084" y1="858" x2="1084" y2="935" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1110" y1="858" x2="1110" y2="935" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1136" y1="858" x2="1136" y2="935" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1162" y1="858" x2="1162" y2="935" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1188" y1="858" x2="1188" y2="935" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1214" y1="858" x2="1214" y2="935" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1240" y1="858" x2="1240" y2="935" stroke="#E2E8F0" stroke-width="1"/>
+<text x="654" y="871" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-O-01</text>
+<text x="714" y="871" font-size="10" fill="#0F172A">Installation, provisioning and production control</text>
+<rect x="1190" y="861.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1201" y="870.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="875" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="886" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-O-02</text>
+<text x="714" y="886" font-size="10" fill="#0F172A">Operation, service (maintenance, repair) and decommissioning</text>
+<rect x="1190" y="876.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1201" y="885.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="901" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-O-03</text>
+<text x="714" y="901" font-size="10" fill="#0F172A">User information and safety warnings</text>
+<rect x="1190" y="891.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1201" y="900.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="905" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="916" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-O-04</text>
+<text x="714" y="916" font-size="10" fill="#0F172A">Field monitoring (safety, SOTIF and AI) and crash reporting</text>
+<rect x="1216" y="906.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1227" y="915.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="654" y="931" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-O-05</text>
+<text x="714" y="931" font-size="10" fill="#0F172A">Cybersecurity incident response, vulnerability management and …</text>
+<rect x="1216" y="921.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1227" y="930.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="943" width="588" height="18" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="660" y="956" font-size="11" fill="#0F172A" font-weight="700">§3.10 Assurance cases and release</text>
+<text x="1232" y="956" font-size="10" fill="#475569" text-anchor="end">6 WPs · 4 S · 2 D</text>
+<line x1="1058" y1="963" x2="1058" y2="1055" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1084" y1="963" x2="1084" y2="1055" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1110" y1="963" x2="1110" y2="1055" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1136" y1="963" x2="1136" y2="1055" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1162" y1="963" x2="1162" y2="1055" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1188" y1="963" x2="1188" y2="1055" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1214" y1="963" x2="1214" y2="1055" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1240" y1="963" x2="1240" y2="1055" stroke="#E2E8F0" stroke-width="1"/>
+<text x="654" y="976" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-K-01</text>
+<text x="714" y="976" font-size="10" fill="#0F172A">Safety case (GSN, integrated FuSa, SOTIF and AI argument) *</text>
+<rect x="1086" y="966.5" width="126" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="975.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="980" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="991" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-K-02</text>
+<text x="714" y="991" font-size="10" fill="#0F172A">SOTIF achievement evaluation and release recommendation</text>
+<rect x="1190" y="981.5" width="22" height="12" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="1201" y="990.8" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">S</text>
+<text x="654" y="1006" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-K-03</text>
+<text x="714" y="1006" font-size="10" fill="#0F172A">Cybersecurity case</text>
+<rect x="1190" y="996.5" width="22" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1201" y="1005.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<rect x="652" y="1010" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="1021" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-K-04</text>
+<text x="714" y="1021" font-size="10" fill="#0F172A">Functional safety assessment report (performed independently, I3)</text>
+<rect x="1190" y="1011.5" width="22" height="12" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="1201" y="1020.8" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">S</text>
+<text x="654" y="1036" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-K-05</text>
+<text x="714" y="1036" font-size="10" fill="#0F172A">Cybersecurity assessment report (performed independently)</text>
+<rect x="1190" y="1026.5" width="22" height="12" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="1201" y="1035.8" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">S</text>
+<rect x="652" y="1040" width="402" height="15" rx="0" fill="#F8FAFC" stroke="none" stroke-width="0"/>
+<text x="654" y="1051" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-K-06</text>
+<text x="714" y="1051" font-size="10" fill="#0F172A">Release for production / release record</text>
+<rect x="1190" y="1041.5" width="22" height="12" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="1201" y="1050.8" font-size="9" fill="#475569" font-weight="700" text-anchor="middle">S</text>
+<rect x="652" y="1063" width="588" height="18" rx="4" fill="#F1F5F9" stroke="none" stroke-width="0"/>
+<text x="660" y="1076" font-size="11" fill="#0F172A" font-weight="700">§3.11 Traceability</text>
+<text x="1232" y="1076" font-size="10" fill="#475569" text-anchor="end">1 WPs · 1 D</text>
+<line x1="1058" y1="1083" x2="1058" y2="1100" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1084" y1="1083" x2="1084" y2="1100" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1110" y1="1083" x2="1110" y2="1100" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1136" y1="1083" x2="1136" y2="1100" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1162" y1="1083" x2="1162" y2="1100" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1188" y1="1083" x2="1188" y2="1100" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1214" y1="1083" x2="1214" y2="1100" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1240" y1="1083" x2="1240" y2="1100" stroke="#E2E8F0" stroke-width="1"/>
+<text x="654" y="1096" font-size="9.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">WP-T-01</text>
+<text x="714" y="1096" font-size="10" fill="#0F172A">Requirements and traceability data (machine-readable) … *</text>
+<rect x="1086" y="1086.5" width="126" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+<text x="1149" y="1095.8" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">D</text>
+<text x="40" y="1118" font-size="10.5" fill="#475569">* Gate column not a single gate: WP-M-14 G2 (activation), G3–G4 (use) · WP-K-01 G1→G5 (living) · WP-T-01 G1→G5 (drawn over every gate named).</text>
+<text x="40" y="1136" font-size="10.5" fill="#475569">Status letter = Status column of the register, legend of §3. A WP spanning several gates is counted at each gate in the gate key. No work product is in review, approved, baselined or tailored out.</text>
+<line x1="40" y1="1152" x2="1240" y2="1152" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="1164" width="14" height="12" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="60" y="1174" font-size="11" fill="#475569">S Skeleton</text>
+<rect x="130.7" y="1164" width="14" height="12" rx="3" fill="#D97706" stroke="#D97706" stroke-width="1.2"/>
+<text x="150.7" y="1174" font-size="11" fill="#475569">D Draft</text>
+<text x="1240" y="1174" font-size="10.5" fill="#94A3B8" text-anchor="end">Generated by fig_m_management.py</text>
+</svg>

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-04 System-level safety analyses (FTA, FMEA) |
 | Standard reference | ISO 26262-9:2018 §8 (safety analyses); ISO 26262-4:2018 §6 (safety analysis of the system architectural design, to support the TSC); ISO 21448:2022 §7 (input on insufficiencies, informative here); ASPICE 4.0 SYS.3 |
-| Version | 0.8 (§11: basic events linked to the FMEAs, SG-04 pilot, [fta-fmea-mapping.md](fta-fmea-mapping.md); 2026-10-13). 0.7 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.6 (2026-10-12 reference-build status notes, drafted on a parallel branch as 0.4, re-applied to the 0.5 trees: G5.2.1 with UE-5.13 and MCS-05.8 for BE-5.12 (found by `fta_cutsets.py`: BE-5.12 under the G5.2 OR was a single-event cut set), BE-1.16, BE-1.22 (incl. TSR-408), BE-2.08, BE-2.14, MCS-01.8, MCS-02.1, Obs-01; BE-5.12, cut sets and SFMEA notes kept; 2026-10-13). 0.5 (trees restructured to resolve CS-01…CS-07: SG-01 G1.2.2/G1.3.2, SG-03 G3.3, SG-02 and SG-06 per cause; tables completed; SPF-14; OI-9 closed, OI-10; 2026-10-12). 0.4 (§9.1 computed minimal cut sets and findings CS-01…CS-07; BE-2.14 tagged latent at the baseline, as §4 states; fault tree diagrams in [fta/](fta/README.md); OI-9; 2026-10-12). 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
+| Version | 0.9 (§5 SG-04 tree and §5.1 cut sets corrected from the FTA↔FMEA pilot findings F-1, F-5…F-8: own longitudinal envelope gate G-LENV with BE-4.16; G4.2 needs the host step BE-4.17; G4.3.1 adds stale or replayed braking BE-4.18; new G4.8 (stock ACC and item 0x343 together) and G4.9 (braking during accelerator override); MCS-04.3, -04.4, -04.9 revised, MCS-04.11 and -04.12 added; SPF-14 extended to SG-04; 21 computed cut sets, 12 rows, all match; 2026-10-13). 0.8 (§11: basic events linked to the FMEAs, SG-04 pilot, [fta-fmea-mapping.md](fta-fmea-mapping.md); 2026-10-13). 0.7 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.6 (2026-10-12 reference-build status notes, drafted on a parallel branch as 0.4, re-applied to the 0.5 trees: G5.2.1 with UE-5.13 and MCS-05.8 for BE-5.12 (found by `fta_cutsets.py`: BE-5.12 under the G5.2 OR was a single-event cut set), BE-1.16, BE-1.22 (incl. TSR-408), BE-2.08, BE-2.14, MCS-01.8, MCS-02.1, Obs-01; BE-5.12, cut sets and SFMEA notes kept; 2026-10-13). 0.5 (trees restructured to resolve CS-01…CS-07: SG-01 G1.2.2/G1.3.2, SG-03 G3.3, SG-02 and SG-06 per cause; tables completed; SPF-14; OI-9 closed, OI-10; 2026-10-12). 0.4 (§9.1 computed minimal cut sets and findings CS-01…CS-07; BE-2.14 tagged latent at the baseline, as §4 states; fault tree diagrams in [fta/](fta/README.md); OI-9; 2026-10-12). 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Fault trees for all seven safety goals: SG-01 (ASIL C ⚠), SG-02…SG-07 (ASIL B); system FMEA covering SG-01…SG-07. Qualitative only |
 | Author | Assurance team (initial draft) |
@@ -276,15 +276,25 @@ TE-04 Uncontrollable deceleration                                               
 │   │   │          CCF → DFI-08)                                    (SPF, systematic)
 │   │   ├── G4.1.1.a SoC excessive deceleration AND envelope fails to clamp           [AND]
 │   │   │   ├── BE-4.02 Planner or controller fault (QM), false lead [SOTIF]
-│   │   │   └── G-ENV (as SG-01: BE-1.06…1.09)
+│   │   │   └── G-LENV Longitudinal envelope does not clamp                             [OR]
+│   │   │       ├── BE-4.16 Envelope software defect in the longitudinal checks
+│   │   │       │          (longitudinal_accel_checks, longitudinal.h:8-12)
+│   │   │       └── BE-1.07, BE-1.08, BE-1.09 (MCU fault, mode/param change, envelope
+│   │   │                  replaced; as SG-01)
 │   │   └── BE-4.03 Frame corrupted after the TX hook (as BE-1.10; TSR-517)  (SPF, random HW)
 │   └── UE-4.04 PCM executes the request without its own bound (AOU-05R fails)
 ├── G4.2 Deceleration step within the bound                                            [AND]
+│   ├── BE-4.17 Host sends a step: the CarController jerk limit is applied before
+│   │          pitch compensation and the PID (carcontroller.py:197-238)
 │   ├── BE-4.05 No negative-jerk limit in the envelope: step to −3.5 m/s² allowed
 │   │          (GAP-04; FSR-04.02 not implemented)
 │   └── UE-4.04
 ├── G4.3 Unwarranted braking within the bound                                          [AND]
-│   ├── BE-4.06 SoC requests braking without cause (phantom or false lead)   [SOTIF]/QM
+│   ├── G4.3.1 SoC requests braking without cause                                       [OR]
+│   │   ├── BE-4.06 Phantom braking or false lead                              [SOTIF]/QM
+│   │   └── BE-4.18 Stale or replayed command, or a frozen planner output, held as
+│   │              braking (sendcan age gate 1 s, no freshness check in controlsd;
+│   │              GAP-10, GAP-16)
 │   ├── BE-4.07 Envelope passes any in-bound value while authority is granted (by design)
 │   └── UE-4.08 Following traffic closer than the controllability assumption
 ├── G4.4 Item-initiated deceleration not announced                                     [AND]
@@ -303,10 +313,22 @@ TE-04 Uncontrollable deceleration                                               
 │   │   ├── BE-1.12, BE-1.13, BE-1.14 (false authority, as SG-01)
 │   │   └── BE-3.10 (mode or param change bypasses the check)        [FFI → FFI-CM-06]
 │   └── BE-4.13 SoC sends a negative acceleration while not engaged (QM)
-└── G4.7 Deceleration step at the transition to the safe state (FSR-04.03)            [AND]
-    ├── BE-4.14 Authority revoked: envelope accepts only the inactive value at once,
-    │          with no ramp on the item side
-    └── UE-4.15 PCM steps to the inactive value without its own ramp (AOU-05R)
+├── G4.7 Deceleration step at the transition to the safe state (FSR-04.03)            [AND]
+│   ├── BE-4.14 Authority revoked: envelope accepts only the inactive value at once,
+│   │          with no ramp on the item side
+│   └── UE-4.15 PCM steps to the inactive value without its own ramp (AOU-05R)
+├── G4.8 Stock ACC and item 0x343 on the car bus together while engaged                 [AND]
+│   ├── G4.8.1 Stock camera ACC_CONTROL reaches the car side                            [OR]
+│   │   ├── BE-4.19 Relay stays released when commanded to intercept      (random HW)
+│   │   └── BE-4.20 Stock 0x343 forwarded from the camera side while the item
+│   │              transmits (check_relay entry or forwarding hook defect)
+│   └── BE-4.21 Relay malfunction not detected, or detected after the stock and
+│              item commands have combined (detection 1–2 s; GAP-12)
+└── G4.9 Item deceleration during accelerator override                                  [AND]
+    ├── BE-4.22 Host keeps commanding deceleration while the driver presses the
+    │          accelerator (gasPressed parsed wrong or override not applied)
+    └── BE-4.23 Envelope passes a non-inactive acceleration while the accelerator
+               is pressed (get_longitudinal_allowed or GAS_RELEASED decoding defect)
 ```
 
 ### 5.1 SG-04 minimal cut sets (qualitative)
@@ -315,14 +337,16 @@ TE-04 Uncontrollable deceleration                                               
 |---|---|---|---|
 | MCS-04.1 | 1 + ext. | {BE-4.01, UE-4.04} | Systematic single point (SPF-01) |
 | MCS-04.2 | 1 + ext. | {BE-4.03, UE-4.04} | Random single point after the TX hook (SPF-02; TSR-517 specified, not implemented) |
-| MCS-04.3 | 1 + ext. | {BE-4.05, UE-4.04} | Step deceleration within the bound. TSR-205 (GAP-04) |
-| MCS-04.4 | 2 + traffic | {BE-4.06, BE-4.07, UE-4.08} | By design; managed by SOTIF and the controllability of the bound |
+| MCS-04.3 | 2 + ext. | {BE-4.17, BE-4.05, UE-4.04} | Step deceleration within the bound: the host sends a step (jerk limit applied before pitch compensation and the PID, SWF-046) and the envelope has no jerk limit. TSR-205 (GAP-04), TSR-605. The host step is a design property (SWF-046.C1), so the envelope limit is the barrier that is missing |
+| MCS-04.4 | 2 + traffic | {BE-4.06 or BE-4.18, BE-4.07, UE-4.08} | By design (BE-4.07); phantom braking is managed by SOTIF and the controllability of the bound. A stale or replayed braking command (BE-4.18) is the SG-04 case of SPF-14: TSR-407…TSR-409, TSR-411, TSR-602 |
 | MCS-04.5 | 2 | {BE-4.09, BE-4.10 or BE-2.12/2.13} | Unannounced item braking. TSR-624, TSR-622, TSR-623 |
 | MCS-04.6 | 1 + driver | {BE-4.11, UE-4.12} | QM SoC only; FSR-04.06 carries ASIL A on a QM element (WP-C-04 OI-9) |
 | MCS-04.7 | 2 | {BE-1.12 or BE-1.13 or BE-1.14, BE-4.13} | As MCS-01.4/01.7 for the longitudinal path |
 | MCS-04.8 | 1 + ext. | {BE-4.14, UE-4.15} | Item side cannot ramp after revocation. PCM coasting behaviour to verify (TSR-208) |
-| MCS-04.9 | 2 + ext. | {BE-4.02, BE-1.06 or BE-1.07 or BE-1.08 or BE-1.09, UE-4.04} | Intended envelope pattern, as MCS-01.6; with BE-1.08/BE-1.09 effective 1 through DFI-13 |
+| MCS-04.9 | 2 + ext. | {BE-4.02, BE-4.16 or BE-1.07 or BE-1.08 or BE-1.09, UE-4.04} | Intended envelope pattern, as MCS-01.6, with the longitudinal check defect BE-4.16 in place of the lateral BE-1.06 (v0.9); with BE-1.08/BE-1.09 effective 1 through DFI-13 |
 | MCS-04.10 | 2 | {BE-3.10, BE-4.13} | Mode or param change bypasses the inactive-value check while the SoC brakes. TSR-513 |
+| MCS-04.11 | 2 | {BE-4.19 or BE-4.20, BE-4.21} | Stock ACC_CONTROL and the item's 0x343 combine on the car bus. The relay-malfunction check acts only after 1–2 s and in one direction, so the commands combine until then: TSR-506 (relay readback), GAP-12 |
+| MCS-04.12 | 2 | {BE-4.22, BE-4.23} | Item braking against the driver's accelerator input. The panda refuses non-inactive acceleration while the accelerator is pressed (FSR-024, SWF-017) |
 
 ## 6. FTA — SG-05: no release on driver brake, cancel or steering override
 
@@ -515,7 +539,7 @@ TE-07 Stock PCS/AEB suppressed, delayed or altered                              
 | SPF-11 | **SoC crash removes control and the SoC warning together**; the independent siren comes after 5 s. 2026-10-13: when the crash stops the heartbeat and authority was granted, the siren now sounds ≈ 0.56 s after the last heartbeat, in all builds (panda `c33343b`; WP-S-04 T-07a); not verified on hardware | SG-02, SG-06 | Common cause (DFI-14) | Heartbeat timeout and siren within the warning budget (implemented 2026-10-13, not verified) | TSR-407, TSR-516; GAP-06 |
 | SPF-12 | **No driver steering override check in the envelope** on the LKA path; release rests on the QM host check and the EPS (AOU-02R) | SG-05 | Design | Driver-override check and torque reduction in the envelope | TSR-304; GAP-02 |
 | SPF-13 | **Camera-to-car forwarding is single-channel with no supervision that releases the relay.** An MCU hang, a camera-side bus fault, a QM configuration command or queue overflow stops PCS forwarding while the relay intercepts | SG-07 | Random HW / FFI | IWDG (≤ 0.1 s) and relay release on fault; reject configuration commands in car modes; forwarding supervision with relay release within the SG-07 budget | TSR-501, TSR-502, TSR-513, TSR-706, TSR-707, TSR-711 (added in WP-S-02 v0.3) |
-| SPF-14 | **A stale SoC command is held.** Nothing in the envelope supervises command freshness at the baseline (BE-1.22: the heartbeat shows only pandad liveness), and the value checks cannot see a stale in-limit value (BE-1.23). A SoC that stops updating while its link stays alive (BE-1.19…BE-1.21, BE-6.05) holds torque or acceleration beyond the FTTI | SG-01, SG-03, SG-06 | Systematic (design) | Command freshness supervised in the envelope within the FTTI (sequence counter or age) | TSR-407…TSR-409, TSR-411; GAP-06, GAP-10, GAP-16 |
+| SPF-14 | **A stale SoC command is held.** Nothing in the envelope supervises command freshness at the baseline (BE-1.22: the heartbeat shows only pandad liveness), and the value checks cannot see a stale in-limit value (BE-1.23). A SoC that stops updating while its link stays alive (BE-1.19…BE-1.21, BE-6.05) holds torque or acceleration beyond the FTTI; a stale or replayed braking command (BE-4.18, v0.9) holds deceleration | SG-01, SG-03, SG-04, SG-06 | Systematic (design) | Command freshness supervised in the envelope within the FTTI (sequence counter or age) | TSR-407…TSR-409, TSR-411; GAP-06, GAP-10, GAP-16 |
 | Obs-01 | MCS-01.6 is the only truly dual-point cut set that the envelope pattern intends. It stays dual only if MCU faults (BE-1.07) are detected; today there is no IWDG, MPU or ECC reaction, so latent MCU faults can accumulate. 2026-10-12: IWDG implemented (TSR-501, hangs only); MPU and ECC reactions still open | SG-01 | Latent | Latent-fault diagnostics at start-up and run time | TSR-501, TSR-503, TSR-507 |
 | Obs-02 | Every SG-01, SG-03 and SG-04 path ends in an EPS or PCM AND-input (UE-1.11, UE-3.05, UE-4.04). These are unverified AoUs. The trees must not be read as "dual" until AOU-01R/AOU-05R are verified | SG-01, SG-03, SG-04 | AoU | Vehicle characterisation (WP-S-09) | GAP-05 |
 | Obs-03 | SG-07 had no numeric FTTI. [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) v0.2 §3.6 sets a preliminary 0.2 s for loss of forwarding (FDTI ≤ 0.1 s, FRTI ≤ 0.1 s, zero margin), which tightened the watchdog timeout (TSR-501) to ≤ 0.1 s and added forwarding supervision (TSR-711) | SG-07 | Timing | Measure the PCS timing and confirm the FTTI (WP-S-04 OI-4, OI-7) | RR-2026-004 F-04; RR-2026-005 F-02 |
@@ -552,12 +576,14 @@ Every cut set of effective order ≤ 1 at v0.5 has a table row:
 - **SG-01:** MCS-01.1, 01.2 (+ EPS), 01.5, 01.8 (stale command, SPF-14).
 - **SG-02:** MCS-02.4, 02.5, 02.7 (+ driver).
 - **SG-03:** MCS-03.1…03.4 (+ PCM or driver), 03.7 (SPF-14), 03.11 (+ PCM).
-- **SG-04:** MCS-04.1…04.4, 04.6, 04.8 (+ PCM, driver or traffic).
+- **SG-04:** MCS-04.1, 04.2, 04.4 (incl. the stale command BE-4.18, SPF-14), 04.6, 04.8 (+ PCM, driver or traffic). v0.9: MCS-04.3 is order 2 + ext., since the tree now needs the host step BE-4.17.
 - **SG-05:** MCS-05.2…05.6.
 - **SG-06:** MCS-06.4…06.6.
 - **SG-07:** MCS-07.1…07.7, 07.9…07.11.
 
 The rows with no external event are the single points of §9.
+
+v0.9 changes only SG-04: 21 computed cut sets (was 17), 6 of effective order ≤ 1, 12 table rows, all match ([`fta/cut-sets.md`](fta/cut-sets.md)).
 
 ## 10. System FMEA
 
@@ -615,7 +641,7 @@ Severity of the vehicle effect is expressed by the affected SG. Detection = mech
 | [WP-H-03](../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) | SFMEA-17, -22…-26, -39 as FMEDA inputs |
 | [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md) | SFMEA-12, -13, -16, -18, -19, -38, -40 as software safety analysis inputs |
 | [WP-V-05](../06-validation/WP-V-05-fault-injection.md) | Every BE marked SPF and every SFMEA row with a mechanism gets a fault-injection case |
-| [FMEAs](fmea/analyses/) | Basic events are linked to FMEA failure modes in [fta-fmea-map.yaml](fta-fmea-map.yaml) and checked both ways; SG-04 pilot findings F-1…F-10 in [fta-fmea-mapping.md](fta-fmea-mapping.md) §3 (2026-10-13) |
+| [FMEAs](fmea/analyses/) | Basic events are linked to FMEA failure modes in [fta-fmea-map.yaml](fta-fmea-map.yaml) and checked both ways; SG-04 pilot findings F-1…F-10 in [fta-fmea-mapping.md](fta-fmea-mapping.md) §3 (2026-10-13), resolved in v0.9 (tree) and SW FMEA rev 0.7, DFMEA rev 0.3, System FMEA rev 0.6, PFMEA rev 0.3 |
 
 ## 12. Open items
 

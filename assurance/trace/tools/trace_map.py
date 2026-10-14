@@ -34,6 +34,7 @@ import check_trace as ct
 TRACE_DIR = HERE.parent
 ASSURANCE_DIR = TRACE_DIR.parent
 OUT = TRACE_DIR / "maps" / "aspice-trace-map.md"
+FIG = TRACE_DIR / "maps" / "fig-1-aspice-v-model.svg"
 
 # Kinds in the trace data, by ID prefix.
 YAML_KIND = {"hazard": "H", "hazardous-event": "HE", "safety-goal": "SG", "aou": "AOU", "fsr": "FSR",
@@ -113,7 +114,7 @@ PAIRS = [
   ("MLE1", "MLE4", ("AIR", "DSR")),
   ("SWE2", "SWE5", ("SWSR",)),
   ("HWE2", "HWE3", ("HWSR",)),
-  ("SWE3", "SWE4", ("TSR",)),
+  ("SWE3", "SWE4", ("SWSR",)),
 ]
 # Derivation links on the left, from the trace data: (parent kind, child kind, label, parents that need a child).
 DERIVATIONS = [
@@ -125,12 +126,14 @@ DERIVATIONS = [
   ("TSR", "HWSR", "TSR -> HWSR (HW-allocated TSRs)", ct.HW_ALLOC),
 ]
 ALLOC = {(d[0], d[1]): d[3] for d in DERIVATIONS}
-STATUS_FILL = {"full": "#DCFCE7", "partial": "#FEF3C7", "none": "#FEE2E2", "untraced": "#F1F5F9"}
-STATUS_STROKE = {"full": "#16A34A", "partial": "#D97706", "none": "#DC2626", "untraced": "#94A3B8"}
+# One colour rule with vmodel.py: a case naming an item is a specified link, never green (green is approved or passed).
+STATUS_FILL = {"full": "#EFF6FF", "partial": "#FFFBEB", "none": "#FEF2F2", "untraced": "#F8FAFC"}
+STATUS_STROKE = {"full": "#2563EB", "partial": "#D97706", "none": "#D2553F", "untraced": "#94A3B8"}
 STATUS_WORD = {"full": "complete", "partial": "partial", "none": "missing", "untraced": "not in trace data"}
 
-ID_RE = re.compile(r"\b(SG|FSR|TSR|SWSR|HWSR|SYS|AIR|DSR|MLR|SH|TC|FI|FM|CSR|CSG|TS|AOU|HE|H)-(\d{2,3}(?:\.\d{1,2})?)([a-z]?)\b(?!\.xx)")
-WILD_RE = re.compile(r"\bFSR-(\d{2})\.xx(?:\s*…\s*(\d{2})\.xx)?")  # "FSR-01.xx…07.xx": every FSR of goals 01…07
+ID_RE = re.compile(r"\b(SG|FSR|TSR|SWSR|HWSR|SYS|AIR|DSR|MLR|SH|TC|FI|FM|CSR|CSG|TS|AOU|HE|H)-(\d{2,3}(?:\.\d{1,2})?)([a-z]?)\b(?!\.x)")
+# "FSR-01.xx…07.xx": every FSR of goals 01…07; "HE-01.x": every hazardous event of hazard H-01
+WILD_RE = re.compile(r"\b(FSR|HE)-(\d{2})\.xx?(?:\s*…\s*(?:\1-)?(\d{2})\.xx?)?")
 RANGE_RE = re.compile(r"\b(TSR|SWSR|HWSR|SYS|AIR|DSR|CSR)-(\d{3}|\d{2})\s*[…–-]\s*(?:\1-)?(\d{3}|\d{2})\b")
 BARE_RE = re.compile(r"(?<![\w.-])(\d{3})([a-z]?)(?:\s*[–…]\s*(\d{3}))?(?![\w.])")
 ROW_ID_RE = re.compile(r"^\|\s*\*{0,2}([A-Z]{1,4}-\d{2,3}(?:\.\d{1,2})?[a-z]?)\*{0,2}\s*\|")
@@ -176,9 +179,9 @@ def header_kind(header: str) -> str | None:
 def refs_in(text: str, bare_kind: str | None, known: set[str]) -> set[str]:
   """Requirement IDs named in a cell: prefixed IDs, prefixed ranges, and bare numbers in a typed column."""
   found = {f"{k}-{n}{s}" for k, n, s in ID_RE.findall(text)}
-  for lo, hi in WILD_RE.findall(text):
+  for kind, lo, hi in WILD_RE.findall(text):
     groups = range(int(lo), int(hi or lo) + 1)
-    found |= {i for i in known if i.startswith("FSR-") and int(i[4:6]) in groups}
+    found |= {i for i in known if i.startswith(f"{kind}-") and int(i.split("-")[1][:2]) in groups}
   for kind, lo, hi in RANGE_RE.findall(text):
     for n in range(int(lo), int(hi) + 1):
       cand = f"{kind}-{n:0{len(lo)}d}"
@@ -266,12 +269,10 @@ def derivation(m: Model, parent: str, child: str, alloc: tuple[str, ...] | None)
 
 def pool_for(m: Model, right: str, kind: str) -> list[str]:
   """Items a verification level is expected to name: TSRs allocated to operation (OPS, WP-S-06) are verified in
-  production and operation, not on the V; unit verification only covers TSRs allocated to software."""
+  production and operation, not on the V."""
   pool = sorted(m.ids.get(kind, set()))
   if kind == "TSR":
     pool = [t for t in pool if m.items[t].get("allocated_to") != "OPS"]
-    if right == "SWE4":
-      pool = [t for t in pool if any(a in m.items[t].get("allocated_to", "") for a in ct.SW_ALLOC)]
   return pool
 
 
@@ -317,8 +318,8 @@ def left_status(m: Model, lv: Level) -> str:
 
 # ---------------------------------------------------------------- rendering
 
-LEFT_STYLE = {"all": "fill:#DBEAFE,stroke:#2563EB", "some": "fill:#EFF6FF,stroke:#2563EB,stroke-dasharray:4 3",
-              "none": "fill:#F1F5F9,stroke:#94A3B8,stroke-dasharray:4 3"}
+LEFT_STYLE = {"all": "fill:#EFF6FF,stroke:#2563EB", "some": "fill:#FFFBEB,stroke:#D97706",
+              "none": "fill:#F8FAFC,stroke:#94A3B8,stroke-dasharray:5 4"}
 
 
 def para(*parts: str) -> str:
@@ -397,6 +398,14 @@ def stack(m: Model, group: str, keys: list[str], label) -> str:
   return f"  block:{group}\n    columns 1\n{inner}\n  end"
 
 
+# ---------------------------------------------------------------- SVG (Figure 1)
+
+def svg_v_model(m: Model) -> str:
+  """Figure 1: the system V of vmodel.py, trace lens, full size (the same component the figures and the snapshot use)."""
+  import vmodel  # imports this module; imported here to avoid a cycle
+  return vmodel.render("trace", "full", model=m)
+
+
 LANES = [  # standard, item kinds in the lane, links (parent -> child)
   ("ISO 26262", ["H", "HE", "SG", "FSR", "TSR", "SWSR", "HWSR", "AOU"],
    [("H", "HE"), ("HE", "SG"), ("SG", "FSR"), ("FSR", "TSR"), ("TSR", "SWSR"), ("TSR", "HWSR"), ("AOU", "SG")]),
@@ -461,19 +470,32 @@ def render(m: Model) -> str:
     "## 1. The V-model",
     "",
     para("Specification on the left, verification on the right. Each verification process sits opposite the process whose",
-         "work products it verifies (ASPICE 4.0). Every box names its process, its work products and the items it holds;",
-         "`*` marks kinds defined in the work products but not yet in the trace data; \"from SG: 7/7\" counts the parents",
-         "with at least one child in the trace data. The work products of each process are listed in §2. Arrows down",
-         "the left follow the decomposition; arrows across the V are verification links, labelled with how many items",
-         "of the paired level at least one test case names."),
+         "work products it verifies (ASPICE 4.0): the system trunk (SYS.1–SYS.3, SYS.4, SYS.5 and VAL.1) steps inward, then",
+         "one dashed bracket holds the software, hardware and machine-learning arms side by side. Each specification box",
+         "lists the items its process holds (`*`: kinds defined in the work products but not yet in the trace data) and,",
+         "where the trace data has the link, \"from SG 7/7\": the parents with at least one child. Each verification box",
+         "lists the cases of its test specifications, then the items of the paired level they name. Arrows down the left",
+         "and up the right follow decomposition and integration; dashed arrows across the V are verification links,",
+         "labelled with the same counts in the trunk. The work products of each process are listed in §2."),
+    "",
+    f"![Figure 1: ASPICE 4.0 system V, trace lens: item counts per process and verification coverage across the V]({FIG.name})",
+    "",
+    para("*Figure 1.* The system V of [`tools/vmodel.py`](../tools/vmodel.py), trace lens, drawn from the same data as the",
+         "tables below; the same component draws the status and per-goal Vs of the README and the safety case snapshot. Source:",
+         f"[`{FIG.name}`]({FIG.name}); the Mermaid version follows as a text alternative."),
+    "",
+    "<details><summary>Mermaid version of Figure 1</summary>",
     "",
     "```mermaid",
     v_model(m),
     "```",
     "",
-    para("Verification boxes: green when every item of the paired level is named by a case, amber when some are, red when",
-         "none is. Specification boxes: solid blue when all their item kinds are in the trace data, dashed blue when some",
-         "are, dashed grey when none are or the level holds no item kind yet."),
+    "</details>",
+    "",
+    para("One colour rule for every V: blue when every item of the level is in the trace data, or every item of the",
+         "paired level is named by a case (done in the design, not verified); amber when some are; red when none is;",
+         "dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification;",
+         "nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet)."),
     "",
     para(f"A named item is a **specified** link, not a passed test. {verified} of {len(m.items)} traced items carry status",
          "`verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the",
@@ -515,7 +537,7 @@ def render(m: Model) -> str:
           para("Items named by at least one case of the paired test specification. A case names an item by its ID, by a",
                "range (`TSR-101…105`), by `FSR-01.xx…07.xx`, or by a bare number in a column headed with the kind",
                "(`SWSRs`). Bare ranges include only IDs without a letter suffix. TSRs allocated to operation (`OPS`,",
-               "WP-S-06) are left out, and SWE.4 counts only TSRs allocated to software (`P-SW`, `SoC`)."),
+               "WP-S-06) are left out."),
           ""]
   rows = []
   for left, right, kinds in PAIRS:
@@ -545,16 +567,19 @@ def render(m: Model) -> str:
 
 
 def main(argv: list[str]) -> int:
-  text = render(build())
+  m = build()
+  outputs = {OUT: render(m), FIG: svg_v_model(m)}
   if "--check" in argv:
-    if not OUT.exists() or OUT.read_text(encoding="utf-8") != text:
-      print(f"{OUT.relative_to(ASSURANCE_DIR.parent)} is stale; run assurance/trace/tools/trace_map.py")
-      return 1
-    print("trace map: up to date")
-    return 0
+    stale = [p for p, text in outputs.items() if not p.exists() or p.read_text(encoding="utf-8") != text]
+    for p in stale:
+      print(f"{p.relative_to(ASSURANCE_DIR.parent)} is stale; run assurance/trace/tools/trace_map.py")
+    if not stale:
+      print("trace map: up to date")
+    return 1 if stale else 0
   OUT.parent.mkdir(exist_ok=True)
-  OUT.write_text(text, encoding="utf-8")
-  print(f"wrote {OUT.relative_to(ASSURANCE_DIR.parent)}")
+  for p, text in outputs.items():
+    p.write_text(text, encoding="utf-8")
+    print(f"wrote {p.relative_to(ASSURANCE_DIR.parent)}")
   return 0
 
 

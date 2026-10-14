@@ -1,0 +1,241 @@
+# STPA loss scenarios <-> fault trees, FMEA and TSRs (WP-A-05 step 4 cross-check).
+#
+# Each loss scenario of WP-A-05 §5 is linked to the fault-tree events (WP-A-04), FMEA failure modes and technical safety
+# requirements (WP-S-02) that cover it. Checked by tools/safety/fmea_lint.py:
+#   - every UCA of WP-A-05 has a loss scenario here, or is an external UCA with the assumption it rests on
+#   - the scenario set matches WP-A-05; every cited event, failure mode and TSR exists
+#   - a cited fault-tree event lies in the tree of a safety goal of the scenario's hazards (warning otherwise)
+#   - status covered / known_gap needs at least one event or failure mode; status new needs a finding
+# Status: draft, AI-assisted, 2026-10-13; each link needs review.
+schema_version: 1
+source: assurance/08-analyses/WP-A-05-stpa.md
+fta_source: assurance/08-analyses/WP-A-04-system-fta-fmea.md
+tsr_source: assurance/03-system/WP-S-02-technical-safety-requirements.md
+
+hazards:   # STPA system-level hazard -> safety goals whose fault trees cover it
+  H-01: [SG-01]
+  H-02: [SG-02]
+  H-03: [SG-03]
+  H-04: [SG-04]
+  H-05: [SG-05]
+  H-06: [SG-06]
+  H-07: [SG-02, SG-05, SG-06]
+  H-08: [SG-07]
+  H-STPA-1: []
+
+external_ucas:
+  - {uca: UCA-40, assumption: AOU-01, note: EPS limits LKA torque to an overpowerable level and shows LKA loss}
+  - {uca: UCA-41, assumption: AOU-05, note: PCM bounds ACC requests, honours CANCEL_REQ and cancels cruise on brake}
+scenarios:
+  - id: LS-01
+    ucas: [UCA-10]
+    hazards: [H-05]
+    status: known_gap
+    fta: [BE-5.05, BE-5.06]
+    fmea: [SFM-018, SWF-038, SWF-044]
+    requirements: [TSR-304]
+  - id: LS-02
+    ucas: [UCA-04]
+    hazards: [H-05, H-07]
+    status: new
+    fta: [BE-5.10]
+    fmea: [SFM-018, SFM-028]
+    finding: >-
+      Steering corrections below the 100-raw override threshold are never detected, and above it the only cue is a grey border shared with other states. No FMEA cause or requirement covers the sub-threshold case or a lateral-override indication (CC-1, CC-2; OI-2).
+  - id: LS-03
+    ucas: [UCA-06]
+    hazards: [H-06, H-07, H-STPA-1]
+    status: known_gap
+    fmea: [PFM-011, PFM-015]
+  - id: LS-04
+    ucas: [UCA-35]
+    hazards: [H-02, H-06, H-07]
+    status: known_gap
+    fta: [BE-2.14]
+    fmea: [DFM-017, SFM-015, SWF-019, SWF-029, SWF-034]
+    requirements: [TSR-516, TSR-621]
+  - id: LS-05
+    ucas: [UCA-32, UCA-13]
+    hazards: [H-01, H-02]
+    status: covered
+    fta: [BE-1.19, BE-1.21, BE-1.22, BE-2.17]
+    fmea: [SFM-006, SWF-020, SWF-023, SWF-040, SWF-043, SWF-047]
+    requirements: [TSR-407, TSR-408, TSR-602]
+  - id: LS-06
+    ucas: [UCA-19]
+    hazards: [H-01, H-03, H-04, H-07]
+    status: covered
+    fta: [BE-3.13, BE-4.13, BE-5.10]
+    fmea: [SFM-021, SWF-039, SWF-048]
+    requirements: [TSR-301, TSR-308]
+  - id: LS-07
+    ucas: [UCA-33]
+    hazards: [H-08]
+    status: covered
+    fta: [BE-7.01, BE-7.04, BE-7.06, BE-7.10]
+    fmea: [DFM-004, DFM-006, SWF-018]
+    requirements: [TSR-501, TSR-706, TSR-707, TSR-711]
+  - id: LS-08
+    ucas: [UCA-42]
+    hazards: [H-08]
+    status: open_test
+    fta: [UE-7.14]
+    fmea: [SFM-033]
+  - id: LS-09
+    ucas: [UCA-18, UCA-05]
+    hazards: [H-STPA-1]
+    status: known_gap
+    fmea: [SFM-022, SFM-023]
+  - id: LS-10
+    ucas: [UCA-11]
+    hazards: [H-01]
+    status: known_gap
+    fta: [BE-1.03]
+    fmea: [SFM-003]
+  - id: LS-11
+    ucas: [UCA-30]
+    hazards: [H-01, H-03, H-04]
+    status: known_gap
+    fta: [BE-1.01, BE-3.01, BE-4.01]
+    fmea: [SFM-029, SWF-001, SWF-003]
+    requirements: [TSR-202, TSR-605]
+  - id: LS-12
+    ucas: [UCA-20, UCA-58]
+    hazards: [H-01, H-03, H-05]
+    status: covered
+    fta: [BE-1.05, BE-1.08]
+    fmea: [PFM-013, SFM-032, SWF-013, SWF-022, SWF-028]
+    requirements: [TSR-512, TSR-514, TSR-619]
+  - id: LS-13
+    ucas: [UCA-01]
+    hazards: [H-01, H-02, H-STPA-1]
+    status: known_gap
+    fta: [BE-1.03]
+    fmea: [SFM-013]
+  - id: LS-14
+    ucas: [UCA-02]
+    hazards: [H-01, H-03, H-05]
+    status: known_gap
+    fta: [BE-5.05, BE-5.10]
+    fmea: [SFM-018, SFM-028, SWF-038]
+    requirements: [TSR-304]
+  - id: LS-15
+    ucas: [UCA-03, UCA-12]
+    hazards: [H-02, H-06]
+    status: new
+    fta: [BE-2.01, BE-2.08]
+    fmea: [SFM-005, SWF-032]
+    requirements: [TSR-110, TSR-516]
+    finding: >-
+      An EPS temporary fault that starts while the driver touches the wheel suppresses the take-over alert entirely (no_steer_warning, car_events.py:163-168). SFM-005 and SWF-032 have no cause for an alert that the event logic suppresses by design; the EPS-fault siren (1 s persistence) is then the only cue.
+  - id: LS-16
+    ucas: [UCA-12]
+    hazards: [H-02]
+    status: known_gap
+    fta: [BE-2.04, BE-2.11]
+    fmea: [SFM-004, SFM-005, SWF-045]
+    requirements: [TSR-604]
+  - id: LS-17
+    ucas: [UCA-14, UCA-52]
+    hazards: [H-03]
+    status: known_gap
+    fta: [BE-3.02, BE-3.06, BE-3.07]
+    fmea: [SFM-008, SFM-010, SWF-046]
+    requirements: [TSR-201]
+  - id: LS-18
+    ucas: [UCA-15, UCA-51]
+    hazards: [H-06]
+    status: new
+    fta: [BE-6.01]
+    fmea: [SFM-010, SFM-012]
+    finding: >-
+      Leads, planner braking and the FCW all come from one model on the Corolla (no radar parsed), so one late detection removes braking and the warning together. The SG-06 fault tree models a lost plan (BE-6.01), not a late one; WP-C-06 must carry the late-detection case and DFI-26 its common cause.
+  - id: LS-19
+    ucas: [UCA-16]
+    hazards: [H-04]
+    status: known_gap
+    fta: [BE-4.05, BE-4.06, BE-4.07, BE-4.17]
+    fmea: [SFM-009, SWF-046]
+    requirements: [TSR-205, TSR-605]
+  - id: LS-20
+    ucas: [UCA-17]
+    hazards: [H-02, H-06, H-07]
+    status: known_gap
+    fta: [BE-2.12, BE-2.13, BE-2.14, BE-2.15]
+    fmea: [SFM-026, SFM-027, SWF-035]
+    requirements: [TSR-516, TSR-622, TSR-623]
+  - id: LS-21
+    ucas: [UCA-31]
+    hazards: [H-01, H-03, H-05]
+    status: known_gap
+    fta: [BE-1.16, BE-1.17, BE-5.01, BE-5.03]
+    fmea: [SFM-017, SWF-005, SWF-008, SWF-009]
+    requirements: [TSR-401, TSR-405]
+  - id: LS-22
+    ucas: [UCA-34]
+    hazards: [H-01, H-04]
+    status: known_gap
+    fta: [BE-4.19, BE-4.20, BE-4.21]
+    fmea: [DFM-011, SFM-034, SWF-010, SWF-012]
+    requirements: [TSR-506]
+  - id: LS-23
+    ucas: [UCA-53]
+    hazards: [H-01, H-03, H-04, H-06]
+    status: covered
+    fta: [BE-1.19, BE-4.18, BE-6.05]
+    fmea: [SFM-006, SWF-043]
+    requirements: [TSR-602]
+  - id: LS-24
+    ucas: [UCA-54]
+    hazards: [H-02, H-06, H-07]
+    status: covered
+    fta: [BE-2.02, BE-2.09, BE-6.02]
+    fmea: [SFM-028, SWF-034]
+    requirements: [TSR-621]
+  - id: LS-25
+    ucas: [UCA-55]
+    hazards: [H-02, H-06]
+    status: known_gap
+    fta: [BE-2.03]
+    fmea: [SFM-005, SWF-043]
+    requirements: [TSR-603]
+  - id: LS-26
+    ucas: [UCA-56]
+    hazards: [H-01, H-02]
+    status: new
+    fta: [BE-1.02, BE-2.03]
+    fmea: [SFM-004, SWF-042]
+    finding: >-
+      Learned vehicle parameters (paramsd, torqued) are bounded only to 0.5-2x the platform value. No FMEA cause, TSR or fault-tree event covers a learned parameter that is wrong for the vehicle (CC-10).
+  - id: LS-27
+    ucas: [UCA-50, UCA-57]
+    hazards: [H-01, H-03, H-04]
+    status: new
+    fta: [BE-1.03]
+    fmea: [PFM-009, SFM-003]
+    finding: >-
+      Calibration that becomes wrong in operation (mount shift below the recalibration threshold, partly blinded camera) has no FMEA row; PFM-009 covers only the installation tolerance (CC-11).
+  - id: LS-28
+    ucas: [UCA-59]
+    hazards: [H-01, H-02, H-03, H-06, H-08]
+    status: covered
+    fta: [BE-1.08, BE-1.09, BE-2.06, BE-7.02]
+    fmea: [DFM-016, SWF-013, SWF-015]
+    requirements: [TSR-511, TSR-512, TSR-513]
+  - id: LS-29
+    ucas: [UCA-60]
+    hazards: [H-01, H-03, H-05, H-08]
+    status: covered
+    fta: [BE-1.18]
+    fmea: [PFM-001, PFM-002, PFM-017, SWF-028]
+    requirements: [TSR-514, TSR-619]
+  - id: LS-30
+    ucas: [UCA-61]
+    hazards: [H-01, H-02, H-03, H-04, H-05, H-06, H-07, H-08]
+    status: known_gap
+    fmea: [PFM-005, PFM-016]
+  - id: LS-31
+    ucas: [UCA-62]
+    hazards: [H-03, H-04, H-06, H-STPA-1]
+    status: known_gap
+    fmea: [PFM-011, PFM-015]

@@ -10,7 +10,7 @@ analysis:
   id: PFM
   type: pfmea
   title: "PFMEA — build, release, install, calibration, OTA"
-  revision: "0.2"
+  revision: "0.3"
   status: draft
   baseline: BL-003
   rating_tables: RT-1
@@ -156,6 +156,10 @@ failure_modes:
   - level: end
     description: Contributes to HZ-005
     hazard: HZ-005
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006
+    hazard: HZ-006
     severity: 10
   severity: 10
   causes:

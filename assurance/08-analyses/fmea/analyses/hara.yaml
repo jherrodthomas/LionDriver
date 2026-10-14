@@ -7,15 +7,15 @@ schema_version: 1
 analysis:
   id: HARA
   type: hara
-  title: "HARA — LionDriver L2 ACC/ALC on 2020 Toyota Corolla LE (US)"
+  title: "HARA — LionDriver L2 ACC/ALC on Corolla E210 · ZRE212 · US (CFG-001)"
   doc_id: LD-HARA-001
-  revision: "0.3"
+  revision: "0.4"
   status: draft
   approver: Jherrod Thomas (pending)
   baseline: BL-001
   scope: >-
     The item is defined in LD-ITEM-001 (assurance/08-analyses/fmea/item-definition.md). This HARA covers assured configuration
-    AC-001: variant family VF-001 (Toyota Corolla E210), 2020 Corolla LE sedan, US market, comma 3X, baseline
+    AC-001 (= CFG-001, Corolla E210 · ZRE212 · US): variant family VF-001 (Toyota Corolla E210), US sedan MY2020-2022, 1.8 L CVT, comma 3X, baseline
     BL-001. Extension to other VF-001 members or other vehicles requires a variant impact analysis
     (LD-ITEM-001 section A.10, IOI-002, IOI-004).
   method: >-
@@ -32,11 +32,12 @@ analysis:
     - assurance/08-analyses/fmea/fmea-plan.md
     - docs/SAFETY.md
     - ISO 26262-3:2018 clause 6 and Annex B
-  updated: 2026-10-10
+  updated: 2026-10-13
   history:
     - {revision: "0.1", date: 2026-10-09, author: Claude (AI-assisted draft), change: Initial draft from System FMEA rev 0.2 end effects}
     - {revision: "0.2", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Closed OI-009..OI-011 from pre-check: guide-word matrix, situation coverage, weather/night situations, HE-019"}
     - {revision: "0.3", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Scope references item definition LD-ITEM-001; HARA applies to assured configuration AC-001"}
+    - {revision: "0.4", date: 2026-10-13, author: Claude (AI-assisted draft), change: "HZ-006 sfm_refs gains SFM-026 (unannounced item-initiated deceleration, HE-04.3; FTA-FMEA mapping F-9). No rating changed"}
 
 assumptions:
   - id: HA-001
@@ -202,7 +203,7 @@ hazards:
     description: Unintended or excessive deceleration
     guidewords: [M03, M01, M02, M04, M05, M06, M07, M08, M09, M10, M11, M12, M13]
     functions: [SFM-FN-002, SFM-FN-007, SFM-FN-008]
-    sfm_refs: [SFM-009, SFM-014, SFM-020, SFM-029, SFM-030, SFM-032, SFM-034]
+    sfm_refs: [SFM-009, SFM-014, SFM-020, SFM-026, SFM-029, SFM-030, SFM-032, SFM-034]
   - id: HZ-007
     description: Insufficient or late deceleration for a lead vehicle while engaged
     guidewords: [M06, M01, M02, M03, M04, M05, M08, M09, M10, M11]

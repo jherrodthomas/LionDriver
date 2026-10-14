@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="632" viewBox="0 0 1280 632" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 8-1 · Inherited actuation envelope</title>
+<desc>Small multiples of the inherited actuation envelope from WP-C-01 §8: steering torque request at most 1500 raw (physical value to be determined, GAP-04); torque rate +15 / −25 raw per 10 ms frame and at most 450 raw per 250 ms; lateral acceleration at most 3.0 m/s² and jerk at most 5 m/s³; acceleration command −3.5 to +2.0 m/s²; engagement from standstill (OI-7) and a warning at about 149 km/h without disengagement. All inherited, none verified.</desc>
+<defs><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F766E"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern><pattern id="hatch-amber" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FFFBEB"/><line x1="0" y1="0" x2="0" y2="8" stroke="#FCD34D" stroke-width="1.4"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="632" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 8-1 · Inherited actuation envelope</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">The limits that define the actuation envelope today, as the §8 table states them. They are inherited from upstream; targets are in WP-S-01.</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-01 §8</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="104" width="384" height="224" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="56" y="128" font-size="12.5" fill="#0F172A" font-weight="700">Max steering torque request</text>
+<rect x="284.2" y="114" width="123.8" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="346.1" y="126.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">inherited · not verified</text>
+<text x="56" y="148" font-size="10.5" fill="#475569">1500 raw (physical value to be determined, GAP-04)</text>
+<text x="56" y="316" font-size="9.5" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">toyota.h:173</text>
+<rect x="64" y="196" width="275" height="18" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<line x1="339" y1="188" x2="339" y2="222" stroke="#C2410C" stroke-width="2"/>
+<text x="333" y="186" font-size="11" fill="#C2410C" font-weight="700" text-anchor="end">|request| ≤ 1500 raw</text>
+<line x1="64" y1="222" x2="394" y2="222" stroke="#94A3B8" stroke-width="1"/>
+<line x1="64" y1="222" x2="64" y2="226" stroke="#94A3B8" stroke-width="1"/>
+<text x="64" y="238" font-size="10" fill="#475569" text-anchor="middle">0</text>
+<line x1="155.7" y1="222" x2="155.7" y2="226" stroke="#94A3B8" stroke-width="1"/>
+<text x="155.7" y="238" font-size="10" fill="#475569" text-anchor="middle">500</text>
+<line x1="247.3" y1="222" x2="247.3" y2="226" stroke="#94A3B8" stroke-width="1"/>
+<text x="247.3" y="238" font-size="10" fill="#475569" text-anchor="middle">1000</text>
+<line x1="339" y1="222" x2="339" y2="226" stroke="#94A3B8" stroke-width="1"/>
+<text x="339" y="238" font-size="10" fill="#475569" text-anchor="middle">1500</text>
+<text x="394" y="252" font-size="10" fill="#475569" text-anchor="end">raw units</text>
+<rect x="64" y="258" width="330" height="20" rx="3" fill="url(#hatch-amber)" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="229" y="272" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="middle">N·m at the wheel: to be determined (GAP-04)</text>
+<rect x="448" y="104" width="384" height="224" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="464" y="128" font-size="12.5" fill="#0F172A" font-weight="700">Torque rate</text>
+<rect x="692.2" y="114" width="123.8" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="754.1" y="126.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">inherited · not verified</text>
+<text x="464" y="148" font-size="10.5" fill="#475569">+15 / −25 raw per 10 ms frame; ≤ 450 raw per 250 ms</text>
+<text x="464" y="316" font-size="9.5" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">toyota.h:174-177</text>
+<text x="472" y="186" font-size="10" fill="#475569" font-weight="600">per 10 ms frame</text>
+<rect x="640" y="192" width="84" height="16" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="500" y="192" width="140" height="16" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="718" y="204" font-size="10.5" fill="#C2410C" font-weight="700" text-anchor="end">+15 up</text>
+<text x="506" y="204" font-size="10.5" fill="#C2410C" font-weight="700">−25 down</text>
+<line x1="640" y1="188" x2="640" y2="212" stroke="#0F172A" stroke-width="1"/>
+<line x1="472" y1="214" x2="808" y2="214" stroke="#94A3B8" stroke-width="1"/>
+<line x1="472" y1="214" x2="472" y2="218" stroke="#94A3B8" stroke-width="1"/>
+<text x="472" y="230" font-size="10" fill="#475569" text-anchor="middle">−30</text>
+<line x1="556" y1="214" x2="556" y2="218" stroke="#94A3B8" stroke-width="1"/>
+<text x="556" y="230" font-size="10" fill="#475569" text-anchor="middle">−15</text>
+<line x1="640" y1="214" x2="640" y2="218" stroke="#94A3B8" stroke-width="1"/>
+<text x="640" y="230" font-size="10" fill="#475569" text-anchor="middle">0</text>
+<line x1="724" y1="214" x2="724" y2="218" stroke="#94A3B8" stroke-width="1"/>
+<text x="724" y="230" font-size="10" fill="#475569" text-anchor="middle">15</text>
+<line x1="808" y1="214" x2="808" y2="218" stroke="#94A3B8" stroke-width="1"/>
+<text x="808" y="230" font-size="10" fill="#475569" text-anchor="middle">30</text>
+<text x="808" y="244" font-size="10" fill="#475569" text-anchor="end">raw / frame</text>
+<text x="472" y="252" font-size="10" fill="#475569" font-weight="600">per 250 ms window</text>
+<rect x="472" y="258" width="252" height="14" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="730" y="269" font-size="10.5" fill="#C2410C" font-weight="700">≤ 450 raw</text>
+<line x1="472" y1="276" x2="808" y2="276" stroke="#94A3B8" stroke-width="1"/>
+<line x1="472" y1="276" x2="472" y2="280" stroke="#94A3B8" stroke-width="1"/>
+<text x="472" y="292" font-size="10" fill="#475569" text-anchor="middle">0</text>
+<line x1="556" y1="276" x2="556" y2="280" stroke="#94A3B8" stroke-width="1"/>
+<text x="556" y="292" font-size="10" fill="#475569" text-anchor="middle">150</text>
+<line x1="640" y1="276" x2="640" y2="280" stroke="#94A3B8" stroke-width="1"/>
+<text x="640" y="292" font-size="10" fill="#475569" text-anchor="middle">300</text>
+<line x1="724" y1="276" x2="724" y2="280" stroke="#94A3B8" stroke-width="1"/>
+<text x="724" y="292" font-size="10" fill="#475569" text-anchor="middle">450</text>
+<line x1="808" y1="276" x2="808" y2="280" stroke="#94A3B8" stroke-width="1"/>
+<text x="808" y="292" font-size="10" fill="#475569" text-anchor="middle">600</text>
+<text x="808" y="306" font-size="10" fill="#475569" text-anchor="end">raw / window</text>
+<rect x="856" y="104" width="384" height="224" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="872" y="128" font-size="12.5" fill="#0F172A" font-weight="700">Lateral acceleration (controller)</text>
+<rect x="1100.2" y="114" width="123.8" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="1162.1" y="126.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">inherited · not verified</text>
+<text x="872" y="148" font-size="10.5" fill="#475569">≤ 3.0 m/s² (roll-compensated); jerk ≤ 5 m/s³</text>
+<text x="872" y="316" font-size="9.5" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">controls/lib/drive_helpers.py:13-14</text>
+<text x="880" y="186" font-size="10" fill="#475569" font-weight="600">lateral acceleration</text>
+<rect x="880" y="192" width="252" height="14" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="1138" y="203" font-size="10.5" fill="#C2410C" font-weight="700">≤ 3.0 m/s²</text>
+<line x1="880" y1="210" x2="1216" y2="210" stroke="#94A3B8" stroke-width="1"/>
+<line x1="880" y1="210" x2="880" y2="214" stroke="#94A3B8" stroke-width="1"/>
+<text x="880" y="226" font-size="10" fill="#475569" text-anchor="middle">0</text>
+<line x1="964" y1="210" x2="964" y2="214" stroke="#94A3B8" stroke-width="1"/>
+<text x="964" y="226" font-size="10" fill="#475569" text-anchor="middle">1</text>
+<line x1="1048" y1="210" x2="1048" y2="214" stroke="#94A3B8" stroke-width="1"/>
+<text x="1048" y="226" font-size="10" fill="#475569" text-anchor="middle">2</text>
+<line x1="1132" y1="210" x2="1132" y2="214" stroke="#94A3B8" stroke-width="1"/>
+<text x="1132" y="226" font-size="10" fill="#475569" text-anchor="middle">3</text>
+<line x1="1216" y1="210" x2="1216" y2="214" stroke="#94A3B8" stroke-width="1"/>
+<text x="1216" y="226" font-size="10" fill="#475569" text-anchor="middle">4</text>
+<text x="880" y="252" font-size="10" fill="#475569" font-weight="600">jerk</text>
+<rect x="880" y="258" width="280" height="14" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="1166" y="269" font-size="10.5" fill="#C2410C" font-weight="700">≤ 5 m/s³</text>
+<line x1="880" y1="276" x2="1216" y2="276" stroke="#94A3B8" stroke-width="1"/>
+<line x1="880" y1="276" x2="880" y2="280" stroke="#94A3B8" stroke-width="1"/>
+<text x="880" y="292" font-size="10" fill="#475569" text-anchor="middle">0</text>
+<line x1="992" y1="276" x2="992" y2="280" stroke="#94A3B8" stroke-width="1"/>
+<text x="992" y="292" font-size="10" fill="#475569" text-anchor="middle">2</text>
+<line x1="1104" y1="276" x2="1104" y2="280" stroke="#94A3B8" stroke-width="1"/>
+<text x="1104" y="292" font-size="10" fill="#475569" text-anchor="middle">4</text>
+<line x1="1216" y1="276" x2="1216" y2="280" stroke="#94A3B8" stroke-width="1"/>
+<text x="1216" y="292" font-size="10" fill="#475569" text-anchor="middle">6</text>
+<rect x="40" y="346" width="384" height="224" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="56" y="370" font-size="12.5" fill="#0F172A" font-weight="700">Acceleration command</text>
+<rect x="284.2" y="356" width="123.8" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="346.1" y="368.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">inherited · not verified</text>
+<text x="56" y="390" font-size="10.5" fill="#475569">−3.5 … +2.0 m/s²</text>
+<text x="56" y="558" font-size="9.5" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">toyota.h:207-210</text>
+<rect x="88" y="442" width="264" height="22" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<line x1="256" y1="436" x2="256" y2="470" stroke="#0F172A" stroke-width="1"/>
+<text x="88" y="434" font-size="11" fill="#C2410C" font-weight="700">−3.5 m/s²</text>
+<text x="352" y="434" font-size="11" fill="#C2410C" font-weight="700" text-anchor="end">+2.0 m/s²</text>
+<text x="172" y="457" font-size="10" fill="#475569" text-anchor="middle">braking</text>
+<text x="304" y="457" font-size="10" fill="#475569" text-anchor="middle">accelerating</text>
+<line x1="64" y1="470" x2="400" y2="470" stroke="#94A3B8" stroke-width="1"/>
+<line x1="64" y1="470" x2="64" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="64" y="486" font-size="10" fill="#475569" text-anchor="middle">−4</text>
+<line x1="112" y1="470" x2="112" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="112" y="486" font-size="10" fill="#475569" text-anchor="middle">−3</text>
+<line x1="160" y1="470" x2="160" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="160" y="486" font-size="10" fill="#475569" text-anchor="middle">−2</text>
+<line x1="208" y1="470" x2="208" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="208" y="486" font-size="10" fill="#475569" text-anchor="middle">−1</text>
+<line x1="256" y1="470" x2="256" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="256" y="486" font-size="10" fill="#475569" text-anchor="middle">0</text>
+<line x1="304" y1="470" x2="304" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="304" y="486" font-size="10" fill="#475569" text-anchor="middle">1</text>
+<line x1="352" y1="470" x2="352" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="352" y="486" font-size="10" fill="#475569" text-anchor="middle">2</text>
+<line x1="400" y1="470" x2="400" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="400" y="486" font-size="10" fill="#475569" text-anchor="middle">3</text>
+<text x="400" y="500" font-size="10" fill="#475569" text-anchor="end">m/s²</text>
+<rect x="448" y="346" width="384" height="224" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.3"/>
+<text x="464" y="370" font-size="12.5" fill="#0F172A" font-weight="700">Engagement and control speed</text>
+<rect x="692.2" y="356" width="123.8" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="754.1" y="368.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">inherited · not verified</text>
+<text x="464" y="390" font-size="10.5" fill="#475569">from standstill (OI-7); ≈ 149 km/h warning (MAX_CTRL_SPEED), no</text>
+<text x="464" y="403" font-size="10.5" fill="#475569">disengage</text>
+<text x="464" y="558" font-size="9.5" fill="#94A3B8" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">car_events.py:59-72 · selfdrive/car/car_events.py:126</text>
+<rect x="472" y="442" width="278.1" height="22" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<rect x="750.1" y="442" width="57.9" height="22" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<line x1="750.1" y1="434" x2="750.1" y2="470" stroke="#D97706" stroke-width="2"/>
+<text x="745.1" y="432" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="end">≈ 149 km/h: warning</text>
+<text x="755.1" y="432" font-size="10" fill="#475569">no disengage</text>
+<text x="478" y="457" font-size="10" fill="#C2410C">engage from 0 (verify, OI-7)</text>
+<line x1="472" y1="470" x2="808" y2="470" stroke="#94A3B8" stroke-width="1"/>
+<line x1="472" y1="470" x2="472" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="472" y="486" font-size="10" fill="#475569" text-anchor="middle">0</text>
+<line x1="528" y1="470" x2="528" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="528" y="486" font-size="10" fill="#475569" text-anchor="middle">30</text>
+<line x1="584" y1="470" x2="584" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="584" y="486" font-size="10" fill="#475569" text-anchor="middle">60</text>
+<line x1="640" y1="470" x2="640" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="640" y="486" font-size="10" fill="#475569" text-anchor="middle">90</text>
+<line x1="696" y1="470" x2="696" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="696" y="486" font-size="10" fill="#475569" text-anchor="middle">120</text>
+<line x1="752" y1="470" x2="752" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="752" y="486" font-size="10" fill="#475569" text-anchor="middle">150</text>
+<line x1="808" y1="470" x2="808" y2="474" stroke="#94A3B8" stroke-width="1"/>
+<text x="808" y="486" font-size="10" fill="#475569" text-anchor="middle">180</text>
+<text x="808" y="500" font-size="10" fill="#475569" text-anchor="end">km/h</text>
+<rect x="856" y="346" width="384" height="224" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="872" y="370" font-size="12.5" fill="#0F172A" font-weight="700">Reading this figure</text>
+<text x="872" y="394" font-size="10.5" fill="#475569">Each bar is the limit as the §8 Value cell states it, drawn</text>
+<text x="872" y="409" font-size="10.5" fill="#475569">from the numbers in that cell. The limits are inherited code</text>
+<text x="872" y="424" font-size="10.5" fill="#475569">limits, not verified on the reference vehicle. The physical</text>
+<text x="872" y="439" font-size="10.5" fill="#475569">steering torque is unknown (GAP-04); its scale is hatched, not</text>
+<text x="872" y="454" font-size="10.5" fill="#475569">drawn as a number. Above the control-speed warning the item</text>
+<text x="872" y="469" font-size="10.5" fill="#475569">warns but does not disengage.</text>
+<line x1="40" y1="592" x2="1240" y2="592" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="600" width="22" height="12" rx="3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
+<text x="68" y="610" font-size="11" fill="#475569">within the inherited limit</text>
+<rect x="240" y="600" width="22" height="12" rx="3" fill="url(#hatch-amber)" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="268" y="610" font-size="11" fill="#475569">to be determined (placeholder)</text>
+<rect x="470" y="600" width="22" height="12" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="498" y="610" font-size="11" fill="#475569">warning only, control continues</text>
+<rect x="700" y="597" width="123.8" height="18" rx="9" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="761.9" y="609.5" font-size="9" fill="#D97706" font-weight="700" text-anchor="middle">inherited · not verified</text>
+<text x="840" y="610" font-size="11" fill="#475569">Source: §8 table (Value and Source columns)</text>
+</svg>

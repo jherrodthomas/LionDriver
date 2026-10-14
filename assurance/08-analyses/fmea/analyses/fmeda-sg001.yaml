@@ -27,7 +27,7 @@ analysis:
   - assurance/08-analyses/fmea/analyses/dfmea.yaml
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
-  updated: '2026-10-12'
+  updated: '2026-10-14'
 safety_mechanisms:
 - id: FMD-SM-001
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
@@ -83,10 +83,10 @@ components:
     distribution: 0.05
     violates_sg_directly: true
     mpf_potential: false
-    dfmea_ref: DFM-001
+    dfmea_ref: DFM-019
     safety_mechanism_spf: FMD-SM-004
     dc_spf: 0.6
-    notes: Only the software-queue part is covered by the XOR; the FDCAN copy and message RAM are not (TSR-517)
+    notes: 'Only the software-queue part is covered by the XOR; the FDCAN copy and message RAM are not (TSR-517). Also covers SG-04 (deceleration): 0x343 leaves through the same TX path as 0x2E4, so this row and its rates stand for FTA event BE-4.03 too (decision register DQ-002, 2026-10-14)'
   - id: FMD-003
     mode: Hang or unexpected exception (no TX)
     distribution: 0.4
@@ -161,9 +161,10 @@ components:
     distribution: 0.02
     violates_sg_directly: true
     mpf_potential: false
-    dfmea_ref: DFM-003
+    dfmea_ref: DFM-019
     safety_mechanism_spf: FMD-SM-004
     dc_spf: 0.6
+    notes: Also covers SG-04 (deceleration), as FMD-002 (decision register DQ-002, 2026-10-14)
   - id: FMD-011
     mode: 'Multi-bit upset elsewhere (stack, buffers: crash or dropped frame)'
     distribution: 0.04

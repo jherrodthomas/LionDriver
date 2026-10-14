@@ -1,0 +1,359 @@
+# Diagram data for the DFMEA (hardware), analysis DFM, dfmea.yaml rev 0.3 at BL-002.
+# Sources: assurance/08-analyses/fmea/analyses/dfmea.yaml; assurance/04-hardware/WP-H-02-hardware-design.md;
+# assurance/03-system/WP-S-05-hsi-specification.md; assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md;
+# assurance/08-analyses/WP-A-03-dependent-failure-analysis.md; assurance/08-analyses/fmea/analyses/fmeda-sg001.yaml;
+# assurance/02-concept/WP-C-01-item-definition.md.
+# Pins are given for the tres board (comma 3X); cuatro differs (WP-S-05 §6). Reference board still open (WP-S-05 OI-6).
+schema_version: 1
+analysis: DFM
+
+block_diagram:
+  title: "Item hardware: comma 3X panda, harness, relay"
+  boundary: "Item hardware (DFMEA scope, DFM-SE-001)"
+  blocks:
+    - id: B01
+      name: "comma SoC (SD845, QM)"
+      detail: "AGNOS + openpilot, pandad; E-01"
+      inside: false
+      column: 0
+      row: 1
+    - id: B02
+      name: "SoC-MCU interface"
+      detail: "SPI4 + DMA2, STM_RST_N, STM_BOOT0 (HE-11/12)"
+      inside: true
+      element: DFM-SE-008
+      column: 1
+      row: 1
+    - id: B03
+      name: "Safety MCU STM32H725"
+      detail: "Cortex-M7 240 MHz, 1 MB flash, SRAM (HE-01..03)"
+      inside: true
+      element: DFM-SE-002
+      column: 2
+      row: 1
+    - id: B04
+      name: "Clock and watchdog"
+      detail: "25 MHz HSE, PLL1, LSI, IWDG1 (HE-04, HE-06)"
+      inside: true
+      element: DFM-SE-003
+      column: 2
+      row: 0
+    - id: B05
+      name: "MCU supply and supervision"
+      detail: "Board regulator, SMPS/LDO, BOR, PVD (HE-05)"
+      inside: true
+      element: DFM-SE-004
+      column: 2
+      row: 4
+    - id: B06
+      name: "CAN transceivers XCVR1-4"
+      detail: "Buses 0/1/2, active-low enables (HE-07)"
+      inside: true
+      element: DFM-SE-005
+      column: 3
+      row: 1
+    - id: B07
+      name: "Intercept relay + driver"
+      detail: "In harness box; no readback (HE-08)"
+      inside: true
+      element: DFM-SE-006
+      column: 3
+      row: 2
+    - id: B08
+      name: "Harness and connector"
+      detail: "SBU1/SBU2, ignition, CAN, 12 V (HE-09/10)"
+      inside: true
+      element: DFM-SE-007
+      column: 3
+      row: 4
+    - id: B09
+      name: "Siren path"
+      detail: "I2C5 codec (tres); topology UK-07 (HE-17)"
+      inside: true
+      element: DFM-SE-009
+      column: 1
+      row: 3
+    - id: B10
+      name: "Enclosure and cooling"
+      detail: "Windscreen mount, fan TIM3, DTS (HE-15/16)"
+      inside: true
+      element: DFM-SE-010
+      column: 1
+      row: 5
+    - id: B11
+      name: "Driver and cabin"
+      detail: "Hears warning; sun-loaded windscreen"
+      inside: false
+      column: 0
+      row: 4
+    - id: B12
+      name: "Toyota EPS / PCM (bus 0)"
+      detail: "EPS, ECM/PCM, ABS/VSC on car-side CAN"
+      inside: false
+      column: 4
+      row: 1
+    - id: B13
+      name: "Stock ADAS camera (bus 2)"
+      detail: "Forward camera: LKA/ACC/PCS frames"
+      inside: false
+      column: 4
+      row: 2
+    - id: B14
+      name: "Vehicle 12 V and ignition"
+      detail: "E210 Corolla supply via harness (IF-08)"
+      inside: false
+      column: 4
+      row: 4
+  interfaces:
+    - id: I01
+      from: B01
+      to: B02
+      type: data
+      label: "SPI: CAN TX, 0xf3, 0xdc"
+      both_ways: true
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §4.1, §4.2 (HSI-01..03)"
+    - id: I02
+      from: B01
+      to: B02
+      type: data
+      label: "STM_RST_N / STM_BOOT0"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §7, §11.3 S-25 (HSI-08)"
+    - id: I03
+      from: B02
+      to: B03
+      type: data
+      label: "SPI4 DMA2 to SRAM1/2"
+      both_ways: true
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §2 HSI-01, §8"
+    - id: I04
+      from: B02
+      to: B03
+      type: data
+      label: "NRST / BOOT0 pins"
+      both_ways: false
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.1, §3.2 HE-12"
+    - id: I05
+      from: B04
+      to: B03
+      type: data
+      label: "PLL1 clock; IWDG reset"
+      both_ways: false
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §2, §3.2 HE-04/HE-06, §4"
+    - id: I06
+      from: B05
+      to: B03
+      type: energy
+      label: "MCU rail (SMPS/LDO)"
+      both_ways: false
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.2 HE-05, §3.4"
+    - id: I07
+      from: B03
+      to: B06
+      type: data
+      label: "FDCAN1-3 TX/RX"
+      both_ways: true
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.3"
+    - id: I08
+      from: B03
+      to: B06
+      type: data
+      label: "XCVR enables PG11/PB10"
+      both_ways: false
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.2 HE-07; WP-S-05 §5"
+    - id: I09
+      from: B03
+      to: B07
+      type: data
+      label: "Relay drive PA8/PA3 OD"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §6, §11.3 S-22 (HSI-05)"
+    - id: I10
+      from: B08
+      to: B07
+      type: energy
+      label: "Coil supply (UK-03)"
+      both_ways: false
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.4, §5 UK-03"
+    - id: I11
+      from: B06
+      to: B08
+      type: data
+      label: "CAN bus 0/1/2 pairs"
+      both_ways: true
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.1, §3.3"
+    - id: I12
+      from: B08
+      to: B12
+      type: data
+      label: "Bus 0: 0x2E4,0x343,0x260"
+      both_ways: true
+      ref: "assurance/02-concept/WP-C-01-item-definition.md §3.4 IF-01, IF-02"
+    - id: I13
+      from: B13
+      to: B07
+      type: data
+      label: "Bus 2 camera CAN (IF-03)"
+      both_ways: true
+      ref: "assurance/02-concept/WP-C-01-item-definition.md §3.4 IF-03; WP-H-02 §3.1"
+    - id: I14
+      from: B07
+      to: B12
+      type: data
+      label: "Stock path 0x283 PCS"
+      both_ways: true
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.1 (relay de-energised); WP-S-05 §11.1 S-15"
+    - id: I15
+      from: B14
+      to: B08
+      type: energy
+      label: "12 V + GND (IF-08)"
+      both_ways: false
+      ref: "assurance/02-concept/WP-C-01-item-definition.md §3.4 IF-08"
+    - id: I16
+      from: B14
+      to: B08
+      type: data
+      label: "Ignition line (SBU)"
+      both_ways: false
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.1, §3.2 HE-10"
+    - id: I17
+      from: B08
+      to: B03
+      type: data
+      label: "SBU1/2 sense PC4/PA1"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §6, §11.3 S-23, S-24 (HSI-06/07)"
+    - id: I18
+      from: B08
+      to: B05
+      type: energy
+      label: "12 V device input"
+      both_ways: false
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.4"
+    - id: I19
+      from: B05
+      to: B01
+      type: energy
+      label: "SoC/PMIC rail, shared?"
+      both_ways: false
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.4, §5 UK-05; WP-A-03 DFI-01"
+    - id: I20
+      from: B03
+      to: B09
+      type: data
+      label: "Siren I2C5 PC10/PC11"
+      both_ways: false
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.2 HE-17; WP-S-05 §11.3 S-27"
+    - id: I21
+      from: B01
+      to: B09
+      type: data
+      label: "Shared codec/amp? UK-07"
+      both_ways: false
+      ref: "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md §4.3 DFI-23"
+    - id: I22
+      from: B09
+      to: B11
+      type: energy
+      label: "Acoustic warning 4 Hz"
+      both_ways: false
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §7, §11.3 S-27"
+    - id: I23
+      from: B10
+      to: B03
+      type: energy
+      label: "Cooling; DTS die temp"
+      both_ways: false
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.2 HE-15, HE-16"
+    - id: I24
+      from: B01
+      to: B10
+      type: energy
+      label: "SoC heat (DFI-04)"
+      both_ways: false
+      ref: "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md §4.1 DFI-04"
+    - id: I25
+      from: B11
+      to: B10
+      type: energy
+      label: "Sun load on windscreen"
+      both_ways: false
+      ref: "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md §4.1 DFI-04"
+    - id: I26
+      from: B10
+      to: B11
+      type: physical
+      label: "Windscreen mount"
+      both_ways: false
+      ref: "assurance/08-analyses/fmea/analyses/dfmea.yaml DFM-SE-010, DFM-FN-009"
+
+p_diagram:
+  title: "Panda safety path hardware"
+  focus: "Panda safety path: MCU, clock/IWDG, supply, transceivers, relay"
+  functions: [DFM-FN-001, DFM-FN-002, DFM-FN-003, DFM-FN-004, DFM-FN-005]
+  inputs:
+    - "SoC CAN TX and heartbeat over SPI4"
+    - "Vehicle bus 0 RX: 0x260, 0xAA, 0x1D2"
+    - "Camera bus 2 frames (0x283 PCS)"
+    - "12 V supply via harness (IF-08)"
+    - "Ignition line and SBU orientation sense"
+    - "25 MHz HSE and LSI clocks"
+  ideal_outputs:
+    - "Only in-envelope 0x2E4/0x343 on bus 0"
+    - "Camera frames forwarded bus 2 to bus 0"
+    - "Relay released on fault, reset, no power"
+    - "MCU reset within 0.1 s of a hang"
+    - "Vehicle bus never disturbed by the item"
+  error_states:
+    - text: "Out-of-envelope frame passes or is altered"
+      failure_modes: [DFM-001, DFM-002, DFM-003, DFM-019]
+    - text: "Hang with relay energised; no watchdog reset"
+      failure_modes: [DFM-004, DFM-006]
+    - text: "Timeouts stretched by a wrong time base"
+      failure_modes: [DFM-005]
+    - text: "MCU keeps running in the brown-out zone"
+      failure_modes: [DFM-007]
+    - text: "Vehicle bus blocked or bus 0 RX lost"
+      failure_modes: [DFM-008, DFM-009]
+    - text: "Relay stuck intercepting or stuck released"
+      failure_modes: [DFM-010, DFM-011]
+  noise_factors:
+    piece_to_piece:
+      - "Part grades unknown, no BOM (UK-02)"
+      - "HSE crystal tolerance and load (FM-CLK-02)"
+      - "LSI tolerance sets IWDG timeout"
+      - "Board revision tres/cuatro (UK-09)"
+    change_over_time:
+      - "Relay contact wear with switching cycles"
+      - "Flash cell degradation, multi-bit errors"
+      - "HSE crystal ageing (drift)"
+      - "7,500 operating h over 15 years"
+    customer_usage:
+      - "Connector not fully latched at install"
+      - "Harness orientation swaps SBU/CAN mapping"
+      - "Wrong harness variant or poor mount"
+      - "Owner self-install, no install check yet"
+    external_environment:
+      - "Ambient to +85 °C, Tj to about +105 °C"
+      - "EMC/ESD bursts on the CAN harness"
+      - "12 V dips: cranking, alternator fault"
+      - "Vibration loosens the harness connector"
+    system_interaction:
+      - "SoC drives STM_RST_N/BOOT0, reflashes MCU"
+      - "Corrupted SPI transfer from the SoC"
+      - "SoC heat in the shared enclosure"
+      - "Supply and clock shared with SoC? (UK-05)"
+  control_factors:
+    - text: "IWDG1 window, ~90 ms (RLR 719, WINR 679)"
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §4; panda/board/drivers/hw_watchdog.h (TSR-501)"
+    - text: "Relay open-drain; high or reset = released"
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §6, §11.3 S-22 (TSR-506, TSR-706)"
+    - text: "BOR level and PVD reaction (DC-07, open)"
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §4, §6 DC-07 (TSR-505); DFM-ACT-005"
+    - text: "Bootstub signature check at power-up"
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §7 (TSR-511); panda/board/bootstub.c"
+    - text: "TX hook envelope + XOR before FDCAN load"
+      ref: "assurance/03-system/WP-S-05-hsi-specification.md §4.3, §11.2 S-17 (TSR-108, TSR-517)"
+    - text: "CSS on HSE loss: NMI, then reset"
+      ref: "assurance/04-hardware/WP-H-02-hardware-design.md §3.5, §4 (TSR-504); panda/board/stm32h7/clock.h"

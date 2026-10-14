@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1055" viewBox="0 0 1280 1055" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-3. DFMEA structure tree (DFM)</title>
-  <desc id="d">DFMEA structure tree (DFM rev 0.2, BL-002): 10 structure elements in 1 root(s), 9 functions with the number of failure modes analyzed for each.</desc>
+  <desc id="d">DFMEA structure tree (DFM rev 0.4, BL-002): 10 structure elements in 1 root(s), 9 functions with the number of failure modes analyzed for each.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="1055" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-3 · DFMEA structure and function tree</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">DFM rev 0.2 · BL-002 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">DFM rev 0.4 · BL-002 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.2</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/dfmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -40,13 +40,13 @@
   <rect x="136.1" y="517.5" width="47.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="159.7" y="528.4" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">system</text>
   <text x="49" y="543.1" font-size="10.5" fill="#0F172A" font-weight="600">Item hardware: comma 3X with</text>
   <text x="49" y="557.1" font-size="10.5" fill="#0F172A" font-weight="600">integrated panda, Toyota harness</text>
-  <text x="49" y="571.2" font-size="10.5" fill="#0F172A" font-weight="600">and relay box, installed in a 2020…</text>
+  <text x="49" y="571.2" font-size="10.5" fill="#0F172A" font-weight="600">and relay box, installed in a Corolla…</text>
   <rect x="284" y="167.2" width="210" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="293" y="186.7" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-002</text>
   <rect x="380.1" y="175.7" width="64.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="412.2" y="186.6" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">subsystem</text>
   <text x="293" y="201.2" font-size="10.5" fill="#0F172A" font-weight="600">Safety MCU STM32H725: core,</text>
   <text x="293" y="215.3" font-size="10.5" fill="#0F172A" font-weight="600">flash, SRAM</text>
-  <text x="293" y="228" font-size="9.5" fill="#475569">3 failure modes · 4 causes located here</text>
+  <text x="293" y="228" font-size="9.5" fill="#475569">4 failure modes · 5 causes located here</text>
   <rect x="528" y="126.6" width="210" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="537" y="146.1" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-003</text>
   <rect x="624.1" y="135.1" width="64.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="656.2" y="146.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">component</text>
@@ -88,10 +88,10 @@
   <rect x="380.1" y="418.6" width="64.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="412.2" y="429.6" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">component</text>
   <text x="293" y="444.2" font-size="10.5" fill="#0F172A" font-weight="600">CAN transceivers XCVR1-4 and</text>
   <text x="293" y="458.3" font-size="10.5" fill="#0F172A" font-weight="600">enables</text>
-  <text x="293" y="471" font-size="9.5" fill="#475569">2 failure modes · 2 causes located here</text>
+  <text x="293" y="471" font-size="9.5" fill="#475569">2 failure modes · 3 causes located here</text>
   <rect x="772" y="412.5" width="468" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="781" y="432" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-004</text>
-  <rect x="1192.7" y="421" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="432" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">2 FM</text>
+  <rect x="1192.7" y="421" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="432" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">3 FM</text>
   <text x="781" y="446.6" font-size="10.5" fill="#0F172A">Transmit and receive on buses 0, 1 and 2 without disturbing the vehicle bus</text>
   <text x="781" y="463.6" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
   <rect x="829.3" y="452.6" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="857" y="463.5" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-005</text>

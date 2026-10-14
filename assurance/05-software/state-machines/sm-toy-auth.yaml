@@ -5,16 +5,16 @@
 # code that implements it; "swsr" lists the requirements it realises or is meant to realise. Implementation
 # state is NOT stored here: the checker reads it from the WP-W-02 Baseline column (trace/items/swsr.yaml).
 # build: all = every build; reference = only with LIONDRIVER_REFERENCE=1.
-# Drafting origin: ai-assisted (Claude), not reviewed (RR-2026-009 F-16). T10c guard corrected 2026-10-13 to match the code
-# (back-to-back candidate BB-C-02, assurance/models/b2b; record fix by delegated decision, no code change).
+# Drafting origin: ai-assisted (Claude), not reviewed (RR-2026-009 F-16). The immediate refusal of cruise while main is off
+# (back-to-back findings B2B-03 / BB-C-02) is in the T1/T8 guards (SWSR-405(c)); T10c keeps the 150 ms rule.
 machine: SM-TOY-AUTH
 title: Toyota authority (controls_allowed)
 units: [U-SAF-CORE, U-SAF-TOY, U-PND-MAIN]
 initial: NOT_ALLOWED
 states: [NOT_ALLOWED, ALLOWED]
 transitions:
-  - {id: T1, from: NOT_ALLOWED, event: "0x1D2 valid", guard: "CRUISE_ACTIVE 0→1 and rx_checks_allow_engagement()", action: set, to: ALLOWED, build: all, swsr: [SWSR-301, SWSR-306], exclusive_with: [T8], code: "opendbc safety.h:606-608 (pcm_cruise_check)"}
-  - {id: T8, from: NOT_ALLOWED, event: "0x1D2 valid", guard: "CRUISE_ACTIVE held 1, or 0→1 with an RX check failing", action: none, to: NOT_ALLOWED, build: all, swsr: [SWSR-301, SWSR-306], exclusive_with: [T1], code: "opendbc safety.h:606-608"}
+  - {id: T1, from: NOT_ALLOWED, event: "0x1D2 valid", guard: "CRUISE_ACTIVE 0→1 and rx_checks_allow_engagement(); reference build also MAIN_ON = 1", action: set, to: ALLOWED, build: all, swsr: [SWSR-301, SWSR-306, SWSR-405], exclusive_with: [T8], code: "opendbc safety.h:606-608 (pcm_cruise_check); reference build modes/toyota.h:134-137, 246-247 (grant cleared in the same call)"}
+  - {id: T8, from: NOT_ALLOWED, event: "0x1D2 valid", guard: "CRUISE_ACTIVE held 1, or 0→1 with an RX check failing, or (reference build) 0→1 while MAIN_ON = 0", action: none, to: NOT_ALLOWED, build: all, swsr: [SWSR-301, SWSR-306, SWSR-405], exclusive_with: [T1], code: "opendbc safety.h:606-608; modes/toyota.h:134-137"}
   - {id: T2, from: ALLOWED, event: "0x1D2 valid", guard: "CRUISE_ACTIVE = 0", action: clear, to: NOT_ALLOWED, build: all, swsr: [SWSR-301], code: "opendbc safety.h:603-605"}
   - {id: T3, from: ALLOWED, event: "any RX", guard: "brake rising, or pressed while moving", action: clear, to: NOT_ALLOWED, build: all, swsr: [SWSR-302], code: "opendbc safety.h:430-432 (generic_rx_checks)"}
   - {id: T4, from: ALLOWED, event: "RX of checked message", guard: "checksum, quality flag or counter invalid", action: clear, to: NOT_ALLOWED, build: all, swsr: [SWSR-402, SWSR-406], code: "opendbc safety.h:117-120 (is_msg_valid)"}
@@ -23,8 +23,8 @@ transitions:
   - {id: T7, from: any, event: "safety mode set (0xdc, heartbeat loss, harness change)", guard: "", action: clear, to: NOT_ALLOWED, build: all, swsr: [SWSR-311], code: "opendbc safety.h:534 (set_safety_hooks)"}
   - {id: T9, from: ALLOWED, event: "TX frame rejected by a content check", guard: "", action: "clear, reason", to: NOT_ALLOWED, build: all, swsr: [SWSR-108], code: "not implemented: the frame is dropped, authority kept (opendbc safety.h safety_tx_hook)"}
   - {id: T10a, from: ALLOWED, event: "safety task: heartbeat check", guard: "no SoC heartbeat for > 0.3 s in a car mode", action: "clear; siren 3 s when authority was granted (panda c33343b)", to: NOT_ALLOWED, build: all, swsr: [SWSR-407, SWSR-516], code: "panda main.c:135-137 (heartbeat_monitor_tick); heartbeat_siren.h at panda c33343b"}
-  - {id: T10b, from: ALLOWED, event: "safety task: command freshness check", guard: "no accepted 0x2E4/0x343 for 50/100 ms", action: "clear, reason", to: NOT_ALLOWED, build: reference, swsr: [SWSR-408], code: "opendbc 273f44e safety.h (tx_arrival_checks; merged from the base, lines not re-read)"}
-  - {id: T10c, from: ALLOWED, event: "0x1D2 / 0x1D3", guard: "CRUISE_ACTIVE while MAIN_ON is off: at once if the mismatch is first seen on 0x1D2, otherwise once it lasts > 150 ms", action: clear, to: NOT_ALLOWED, build: reference, swsr: [SWSR-405], code: "opendbc modes/toyota.h:126-143 (toyota_cruise_main_check)"}
+  - {id: T10b, from: ALLOWED, event: "safety task: command freshness check", guard: "no accepted 0x2E4/0x343 for 50/100 ms", action: "clear, reason", to: NOT_ALLOWED, build: reference, swsr: [SWSR-408], code: "opendbc 273f44e safety.h:245-252 (arrival noted for every whitelisted frame, :300), :421-440 (tx_arrival_ok; window starts at the first safety task that finds authority granted), :459-462; modes/toyota.h:559-571; no reason is reported"}
+  - {id: T10c, from: ALLOWED, event: "0x1D2 / 0x1D3", guard: "CRUISE_ACTIVE while MAIN_ON is off for > 150 ms", action: clear, to: NOT_ALLOWED, build: reference, swsr: [SWSR-405], code: "opendbc modes/toyota.h:126-143 (toyota_cruise_main_check)"}
   - {id: T10d, from: ALLOWED, event: "platform fault", guard: "", action: "clear, SS-S", to: NOT_ALLOWED, build: all, swsr: [SWSR-502], code: "not implemented: faults are reported only"}
   - {id: T10e, from: ALLOWED, event: "driver steering override", guard: "", action: "clear, reason", to: NOT_ALLOWED, build: all, swsr: [SWSR-304], code: "not implemented for Toyota LKA"}
   - {id: T11, from: ALLOWED, event: "TX frame over the per-ID rate budget", guard: "3 rejected frames in one 125 ms half-window", action: "clear, report txRateExceeded", to: NOT_ALLOWED, build: reference, swsr: [SWSR-518], code: "opendbc safety.h:264-272 (tx_rate_check)"}

@@ -3,6 +3,8 @@
 # Dependent Failure Analysis (ISO 26262-9 clause 7) of the panda/SoC decompositions in FSC rev 0.1.
 # A decomposition is accepted only when every DFI affecting it is assessed sufficient or safe_by_design;
 # tools/safety/fmea_lint.py derives and checks each decomposition status from its DFIs.
+# 2026-10-13: fsc_revision 0.2 -> 0.3. FSC rev 0.3 only re-bases on HARA rev 0.4 (an HZ-006 back-link); no FSR or
+# decomposition changed, so no DFI was re-assessed.
 schema_version: 1
 analysis:
   id: DFA
@@ -12,10 +14,10 @@ analysis:
   revision: "0.5"
   status: draft
   baseline: BL-004
-  fsc_revision: "0.2"
+  fsc_revision: "0.3"
   approver: Jherrod Thomas (pending)
   scope: >-
-    The 11 ASIL decompositions of LD-FSC-001 rev 0.2 (assured configuration AC-001), each splitting a requirement between the panda safety
+    The 11 ASIL decompositions of LD-FSC-001 rev 0.3 (assured configuration AC-001), each splitting a requirement between the panda safety
     model (EL-07, with the harness relay EL-08) and SoC software (EL-03..EL-06), or between the SoC and the
     vehicle instrument cluster (XM-04). Common-cause and cascading failure initiators are taken from the
     BL-001 code and hardware as they exist; panda firmware behavior that could not be inspected (submodule

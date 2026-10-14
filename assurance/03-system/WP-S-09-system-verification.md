@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-09 System verification (qualification) specification and report |
 | Standard reference | ISO 26262-4:2018 §7 (integration and testing at vehicle level, verification of the technical safety requirements and of AoU on external measures); ISO 21448:2022 §10 (verification of the SOTIF-related functions, interface to WP-V-03); ASPICE 4.0 SYS.5 (system verification) |
-| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.3 (VS-SQ-16 names the requirements it covers explicitly: lane change runs in modeld, which process replay does not replay; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft (specification). **Results: not yet executed** |
 | ASIL / scope | ASIL C (SG-01 until re-rated), ASIL B (SG-02…SG-07); reference configuration (Toyota Corolla, 12th generation (E210), TSS 2.0, `TOYOTA_COROLLA_TSS2`) |
 | Author | Assurance team (initial draft) |
@@ -87,7 +87,7 @@ Verification versus validation: this document checks that the item meets its spe
 
 | ID | Title | Trace | Procedure (summary) | Pass criteria |
 |---|---|---|---|---|
-| VS-SQ-16 | Process replay regression | TSR-601…TSR-618 (regression); SYS-001…SYS-008, SYS-020…SYS-026 (regression) | Run `test_processes.py` for controlsd, plannerd, radard, dmonitoringd, calibrationd, locationd, paramsd, torqued against fork-owned references of the previous release | No unexplained differences; each explained difference has an approved change request |
+| VS-SQ-16 | Process replay regression | TSR-601…TSR-618 (regression); SYS-001…SYS-004, SYS-007, SYS-008, SYS-020…SYS-026 (regression; the lane-change requirements are not covered: lane change runs in modeld, which is not replayed) | Run `test_processes.py` for controlsd, plannerd, radard, dmonitoringd, calibrationd, locationd, paramsd, torqued against fork-owned references of the previous release | No unexplained differences; each explained difference has an approved change request |
 | VS-SQ-17 | Safety replay of the full Corolla log set | FSR-01.xx…07.xx; TSR-101…TSR-110, TSR-201…TSR-207, TSR-301…TSR-311, TSR-401…TSR-406 | Run `safety_replay/replay_drive.py` over all fork-owned logs with the release safety model | Zero TX violations from the release host; every `controls_allowed` transition explained by a PCM/brake event |
 | VS-SQ-18 | Controller margin to envelope | FSR-01.14; TSR-605; WP-A-03 DFI-08; SYS-120 | From the replay of VS-SQ-17, compute the distribution of commanded torque, torque rate and accel relative to the envelope limits | Commanded values stay below the margin target (e.g. ≤ 90 % of envelope bound) in ≥ 99.9 % of frames; time at the bound recorded. **Expected to fail today** (identical limits, `opendbc_repo/opendbc/car/toyota/values.py:20-21`) |
 

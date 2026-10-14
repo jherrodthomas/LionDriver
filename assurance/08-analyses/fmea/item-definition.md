@@ -15,7 +15,7 @@ This document defines the item at three levels:
 
 - **Part A — Platform.** LionDriver on every vehicle BL-001 supports: 334 road vehicles from 26 makes.
 - **Part B — Variant family.** The Toyota Corolla E210.
-- **Part C — Assured configuration.** The 2020 Corolla LE sedan, the only configuration the current safety analyses cover.
+- **Part C — Assured configuration.** AC-001 = CFG-001, Corolla E210 · ZRE212 · US (US sedan, model years 2020–2022, 1.8 L CVT), the only configuration the current safety analyses cover. Its facts are in the [vehicle register](../../../docs/liondriver/vehicles/README.md).
 
 ---
 
@@ -272,12 +272,12 @@ The identical panda and SoC steering limits under P2 are concrete evidence for D
 
 | | |
 |---|---|
-| **Vehicle** | 2020 Toyota Corolla LE, sedan, gasoline, US market (VF-001 member "Toyota Corolla 2020-22") |
+| **Vehicle** | Corolla E210 · ZRE212 · US: sedan, gasoline 1.8 L CVT, US market, model years 2020–2022 (VF-001 member "Toyota Corolla 2020-22"); trims, firmware set and exclusions in the [vehicle register](../../../docs/liondriver/vehicles/README.md) (CFG-001) |
 | **Device** | comma 3X with integrated panda |
 | **Harness** | Toyota A connector, harness box, comma power v3 |
 | **Software** | BL-001 (`baseline.yaml`) |
 | **Configuration** | Experimental Mode on (BL-001 default); openpilot longitudinal; safety model `SAFETY_TOYOTA`, parameter 73 |
-| **Analyses** | System FMEA rev 0.4, HARA rev 0.3, FSC rev 0.2, DFA rev 0.3 |
+| **Analyses** | System FMEA rev 0.6, HARA rev 0.4, FSC rev 0.3, DFA rev 0.5 |
 
 ---
 

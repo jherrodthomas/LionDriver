@@ -805,6 +805,18 @@ class TestFtaFmeaMap(unittest.TestCase):
     res = self.check(doc, [self.fm("SWF-001"), self.fm("DFM-001", detection=3)])
     self.assertTrue(any("BE-1.03" in w and "single point" in w for w in res.warnings))
 
+  def test_not_in_fta_row_for_a_cited_mode(self):
+    doc = self.doc(not_in_fta=[{"fm": "SWF-001", "goal": "SG-01", "kind": "tree_gap", "reason": "branch missing"}])
+    self.assertTrue(any("SWF-001 is in not_in_fta for SG-01 but an event or gate of the tree cites it" in e
+                        for e in self.check(doc).errors))
+
+  def test_event_outside_the_scoped_trees_warns(self):
+    doc = self.doc()
+    doc["events"].append({"id": "BE-9.01", "class": "systematic_sw", "fmea": ["SWF-001"]})
+    res = self.check(doc)
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("BE-9.01" in w and "not in the tree of any goal in scope" in w for w in res.warnings))
+
   def test_real_map_is_clean(self):
     res = fmea_lint.lint()
     self.assertEqual([e for e in res.errors if "fta-fmea-map" in e], [])
@@ -812,6 +824,94 @@ class TestFtaFmeaMap(unittest.TestCase):
 
 if __name__ == "__main__":
   unittest.main()
+
+
+class TestStpaMap(unittest.TestCase):
+  """STPA loss scenarios <-> fault trees, FMEA and TSRs (stpa-map.yaml)."""
+  STPA = "\n".join([
+    "| H-01 | Lateral motion | L-1 | SG-01 |",
+    "| H-STPA-1 | Unsupervised | L-1 | none |",
+    "| UCA-01 | P | Engages badly | H-01 |",
+    "| UCA-40 | C4 EPS | Overpowers | H-01 | AOU-01 |",
+    "| LS-01 | UCA-01 | Scenario | Type | x | y |",
+  ])
+  FTA = TestFtaFmeaMap.FTA
+  TSR = "| TSR-101 | limit |\n"
+
+  def doc(self, **over):
+    d = {"schema_version": 1, "source": "stpa.md", "fta_source": "fta.md", "tsr_source": "tsr.md",
+         "hazards": {"H-01": ["SG-01"], "H-STPA-1": []},
+         "external_ucas": [{"uca": "UCA-40", "assumption": "AOU-01"}],
+         "scenarios": [{"id": "LS-01", "ucas": ["UCA-01"], "hazards": ["H-01"], "status": "covered",
+                        "fta": ["BE-1.01"], "fmea": ["SWF-001"], "requirements": ["TSR-101"]}]}
+    d.update(over)
+    return d
+
+  def check(self, doc):
+    with tempfile.TemporaryDirectory() as d:
+      root = Path(d)
+      fta_dir = root / "assurance" / "08-analyses" / "fta"
+      fta_dir.mkdir(parents=True)
+      shutil.copy(fmea_lint.ROOT / "assurance" / "08-analyses" / "fta" / "fta_diagrams.py", fta_dir)
+      (root / "stpa.md").write_text(self.STPA)
+      (root / "fta.md").write_text(self.FTA)
+      (root / "tsr.md").write_text(self.TSR)
+      ctx = fmea_lint.Context(root)
+      ctx.fm_index["SWF-001"] = {"id": "SWF-001", "effects": [], "causes": []}
+      res = fmea_lint.Result()
+      sys.modules.pop("fta_diagrams", None)
+      fmea_lint.check_stpa_map("map", doc, ctx, res)
+      sys.modules.pop("fta_diagrams", None)
+      return res
+
+  def test_valid(self):
+    res = self.check(self.doc())
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("STPA map: 2 UCAs (1 with a loss scenario, 1 external); 1 loss scenarios" in r for r in res.report))
+
+  def test_uca_without_scenario(self):
+    errors = " ".join(self.check(self.doc(external_ucas=[])).errors)
+    self.assertIn("UCA-40", errors)
+    self.assertIn("no loss scenario", errors)
+
+  def test_scenario_sets_match_the_document(self):
+    doc = self.doc()
+    doc["scenarios"].append(dict(doc["scenarios"][0], id="LS-99"))
+    self.assertTrue(any("LS-99" in e and "no such loss scenario" in e for e in self.check(doc).errors))
+    self.assertTrue(any("LS-01" in e and "not in the map" in e for e in self.check(self.doc(scenarios=[])).errors))
+
+  def test_unknown_references(self):
+    doc = self.doc()
+    doc["scenarios"][0].update(fta=["BE-9.99"], fmea=["SWF-999"], requirements=["TSR-999"])
+    errors = " ".join(self.check(doc).errors)
+    for ref in ("BE-9.99", "SWF-999", "TSR-999"):
+      self.assertIn(ref, errors)
+
+  def test_status_rules(self):
+    doc = self.doc()
+    doc["scenarios"][0].update(fta=[], fmea=[])
+    self.assertTrue(any("needs at least one" in e for e in self.check(doc).errors))
+    doc["scenarios"][0].update(status="new")
+    self.assertTrue(any("needs a finding" in e for e in self.check(doc).errors))
+    doc["scenarios"][0]["finding"] = "no row anywhere"
+    self.assertEqual(self.check(doc).errors, [])
+
+  def test_event_outside_the_hazards_tree_warns(self):
+    second = "\n".join(["## 3. FTA — SG-02: other goal", "", "```",
+                         "TE-02 Top                                                   [OR]",
+                         "├── BE-2.01 One", "└── BE-2.02 Two", "```", ""])
+    self.FTA = TestFtaFmeaMap.FTA + second
+    self.STPA = TestStpaMap.STPA + "\n| H-02 | Other | L-1 | SG-02 |"
+    doc = self.doc(hazards={"H-01": ["SG-01"], "H-02": ["SG-02"], "H-STPA-1": []})
+    self.assertEqual(self.check(doc).warnings, [])
+    doc["scenarios"][0]["hazards"] = ["H-02"]
+    res = self.check(doc)
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("BE-1.01 is in no fault tree of SG-02" in w for w in res.warnings))
+
+  def test_real_map_is_clean(self):
+    res = fmea_lint.lint()
+    self.assertEqual([e for e in res.errors if "stpa-map" in e], [])
 
 
 class TestHaraMapping(unittest.TestCase):
@@ -876,3 +976,187 @@ class TestHaraMapping(unittest.TestCase):
     self.assertEqual(self.check(doc), [])
     doc["hazards"][0] = {"second": "HZ-001", "wp_c03": [], "events": []}
     self.assertTrue(any("needs a note" in e for e in self.check(doc)))
+
+
+WP_S04_TEXT = """# WP-S-04
+
+### 3.7 Summary of FTTIs and budgets
+
+| SG / fault class | FTTI | FDTI budget | FRTI budget | Margin |
+|---|---|---|---|---|
+| SG-01 continuous limits | per frame | 0 | ≤ 10 ms | — |
+| SG-01 MCU execution fault | 0.5 s | ≤ 0.1 s | ≤ 0.1 s | ≥ 0.3 s |
+| SG-05 brake/cancel | 200 ms | ≤ 30 ms | ≤ 10 ms | TBD |
+
+## 4. Current detection and reaction times
+"""
+
+
+def msr_sfm(**msr_overrides):
+  """System FMEA fixture whose cause carries an MSR row rated M 6 on code-derived timing (S10 F5 M6 -> H, with an action)."""
+  doc = copy.deepcopy(SFM)
+  doc["analysis"]["rating_tables"] = "RT-2"
+  fm = doc["failure_modes"][0]
+  fm["safety_mechanisms"] = [{"description": "IWDG resets the MCU; relay releases", "ref": "openpilot/selfdrive/controls/controlsd.py"}]
+  msr = {
+    "mechanisms": [1], "diagnostic": "IWDG expires", "system_response": "MCU reset and relay release",
+    "effect_after_response": "Assist lost with alert", "severity_after": 8, "frequency": 5, "monitoring": 6, "ap": "H",
+    "timing": {"ftti_ref": "SG-01 MCU execution fault", "ftti_ms": 500, "fdti_ms": 90, "frti_ms": 100, "basis": "code_derived"},
+    "evidence": [{"description": "watchdog test", "test": "openpilot/selfdrive/controls/tests/test_latcontrol.py"}],
+    "actions": ["SFM-ACT-002"],
+  }
+  msr.update(msr_overrides)
+  fm["causes"][0]["msr"] = msr
+  doc["actions"].append({"id": "SFM-ACT-002", "kind": "monitoring", "description": "Measure IWDG reaction on HIL", "status": "open"})
+  return doc
+
+
+class TestMsrActionPriority(unittest.TestCase):
+  def test_provisional_table_is_section_5_with_f_and_m(self):
+    self.assertTrue(fmea_lint.AP_MSR_PROVISIONAL)
+    for s in range(1, 11):
+      for f in range(1, 11):
+        for m in range(2, 11):
+          self.assertEqual(fmea_lint.compute_ap_msr(s, 1, f, m), fmea_lint.compute_ap(s, f, m), f"S{s} F{f} M{m}")
+
+  def test_m1_rates_severity_after_response(self):
+    self.assertEqual(fmea_lint.compute_ap_msr(10, 8, 9, 1), fmea_lint.compute_ap(8, 9, 1))
+    self.assertEqual(fmea_lint.compute_ap_msr(10, 8, 9, 2), fmea_lint.compute_ap(10, 9, 2))
+
+  def test_out_of_range(self):
+    with self.assertRaises(ValueError):
+      fmea_lint.compute_ap_msr(10, 0, 5, 5)
+
+  def test_ftti_rows(self):
+    rows = fmea_lint.parse_ftti_rows(WP_S04_TEXT)
+    self.assertEqual(rows, {"SG-01 continuous limits": None, "SG-01 MCU execution fault": 500.0, "SG-05 brake/cancel": 200.0})
+
+  def test_repository_wp_s04_parses(self):
+    rows = fmea_lint.parse_ftti_rows((REPO / fmea_lint.WP_S04).read_text())
+    self.assertEqual(rows.get("SG-01 MCU execution fault"), 500.0)
+
+  def test_rating_tables_document_section_7(self):
+    text = (REPO / "assurance/08-analyses/fmea/rating-tables.md").read_text()
+    self.assertIn("## 7. FMEA-MSR", text)
+    self.assertEqual(fmea_lint.sod_unchanged_since(REPO), "RT-1")
+
+
+class TestMsrRules(LintFixture):
+  def setUp(self):
+    super().setUp()
+    wp = self.tmp / fmea_lint.WP_S04
+    wp.parent.mkdir(parents=True, exist_ok=True)
+    wp.write_text(WP_S04_TEXT)
+    rt = self.tmp / "assurance/08-analyses/fmea/rating-tables.md"
+    self.assertIn("RT-2", rt.read_text())
+
+  def errors(self, doc, **more):
+    return self.lint(sfm=doc, **more).errors
+
+  def test_valid_row(self):
+    res = self.lint(sfm=msr_sfm())
+    self.assertEqual(res.errors, [])
+    self.assertIn("FMEA-MSR: 1 of 1 in-scope causes rated (H=1 M=0 L=0)", res.report[1])
+
+  def test_wrong_ap(self):
+    self.assertError(self.lint(sfm=msr_sfm(ap="L")), "msr ap is L, table gives H")
+
+  def test_ap_h_needs_action_or_rationale(self):
+    doc = msr_sfm(actions=[])
+    doc["actions"].pop()
+    self.assertError(self.lint(sfm=doc), "MSR AP=H requires")
+    doc["failure_modes"][0]["causes"][0]["msr"]["rationale"] = "Bounded by the relay release"
+    self.assertEqual(self.errors(doc), [])
+
+  def test_unknown_timing_caps_monitoring(self):
+    self.assertError(self.lint(sfm=msr_sfm(timing={"basis": "unknown"})), "timing basis unknown")
+    self.assertEqual(self.errors(msr_sfm(timing={"basis": "unknown"}, monitoring=7, ap="H")), [])
+
+  def test_timing_must_fit_ftti(self):
+    t = {"ftti_ref": "SG-01 MCU execution fault", "ftti_ms": 500, "fdti_ms": 400, "frti_ms": 200, "basis": "code_derived"}
+    self.assertError(self.lint(sfm=msr_sfm(timing=t)), "exceeds the FTTI")
+
+  def test_ftti_must_match_wp_s04(self):
+    t = {"ftti_ref": "SG-01 MCU execution fault", "ftti_ms": 1000, "fdti_ms": 90, "frti_ms": 100, "basis": "code_derived"}
+    self.assertError(self.lint(sfm=msr_sfm(timing=t)), "!= 500 ms in WP-S-04")
+    t["ftti_ref"] = "SG-09 nothing"
+    self.assertError(self.lint(sfm=msr_sfm(timing=t)), "is not a row of WP-S-04")
+    t.update(ftti_ref="SG-01 continuous limits", ftti_ms=500)
+    self.assertError(self.lint(sfm=msr_sfm(timing=t)), "no FTTI in time units")
+
+  def test_per_frame_row(self):
+    t = {"ftti_ref": "SG-01 continuous limits", "fdti_ms": 0, "frti_ms": 10, "basis": "code_derived"}
+    self.assertEqual(self.errors(msr_sfm(timing=t)), [])
+    t["fdti_ms"] = 20
+    self.assertError(self.lint(sfm=msr_sfm(timing=t)), "per-frame WP-S-04 row needs fdti_ms 0")
+
+  def test_good_monitoring_needs_timing_and_test(self):
+    self.assertError(self.lint(sfm=msr_sfm(timing={"basis": "code_derived"})), "needs timing ftti_ref, ftti_ms, fdti_ms, frti_ms")
+    self.assertError(self.lint(sfm=msr_sfm(evidence=[])), "needs an evidence entry with a `test` path")
+
+  def test_m4_needs_measurement(self):
+    res = self.lint(sfm=msr_sfm(monitoring=4, ap="H"))
+    self.assertError(res, "needs measured timing")
+    self.assertError(res, "evidence `ref` to the timing measurement")
+    t = {"ftti_ref": "SG-01 MCU execution fault", "ftti_ms": 500, "fdti_ms": 90, "frti_ms": 100, "basis": "measured"}
+    ev = [{"description": "HIL run", "ref": "WP-V-05 run 1", "test": "openpilot/selfdrive/controls/tests/test_latcontrol.py"}]
+    self.assertEqual(self.errors(msr_sfm(monitoring=4, ap="H", timing=t, evidence=ev)), [])
+
+  def test_severity_after_bounded(self):
+    doc = msr_sfm()
+    doc["failure_modes"][0]["causes"][0]["msr"]["severity_after"] = 10
+    self.assertEqual(self.errors(doc), [])
+    doc["failure_modes"][0]["effects"][0].update(hazard=None, severity=9)
+    del doc["failure_modes"][0]["effects"][0]["hazard"]
+    doc["failure_modes"][0]["severity"] = 9
+    self.assertError(self.lint(sfm=doc), "exceeds the failure mode severity 9")
+
+  def test_mechanism_must_exist_and_be_cited(self):
+    self.assertError(self.lint(sfm=msr_sfm(mechanisms=[2])), "not in the failure mode's safety_mechanisms")
+    doc = msr_sfm()
+    del doc["failure_modes"][0]["safety_mechanisms"][0]["ref"]
+    self.assertError(self.lint(sfm=doc), "has no ref or test")
+
+  def test_not_in_sw_fmea(self):
+    doc = copy.deepcopy(SWF)
+    doc["analysis"]["rating_tables"] = "RT-2"
+    doc["failure_modes"][0]["safety_mechanisms"] = [{"description": "x", "ref": "y"}]
+    doc["failure_modes"][0]["causes"][0]["msr"] = msr_sfm()["failure_modes"][0]["causes"][0]["msr"]
+    self.assertError(self.lint(swf=doc), "msr rows belong in the System FMEA or DFMEA")
+
+  def test_msr_needs_current_rating_tables(self):
+    doc = msr_sfm()
+    doc["analysis"]["rating_tables"] = "RT-1"
+    self.assertError(self.lint(sfm=doc), "re-rate")
+    self.assertEqual(self.errors(copy.deepcopy(SFM)), [])  # RT-1 without MSR rows is still current for S/O/D
+
+  def test_complete_requires_every_in_scope_cause(self):
+    doc = copy.deepcopy(SFM)
+    doc["analysis"].update(rating_tables="RT-2", msr="complete")
+    doc["failure_modes"][0]["safety_mechanisms"] = [{"description": "x", "ref": "y"}]
+    self.assertError(self.lint(sfm=doc), "needs an msr row or msr_exempt")
+    doc["failure_modes"][0]["causes"][0]["msr_exempt"] = "Mechanism acts on a different cause"
+    res = self.lint(sfm=doc)
+    self.assertEqual(res.errors, [])
+    self.assertIn("1 exempt", res.report[1])
+
+  def test_msr_and_exempt_are_exclusive(self):
+    doc = msr_sfm()
+    doc["failure_modes"][0]["causes"][0]["msr_exempt"] = "x"
+    self.assertError(self.lint(sfm=doc), "schema")
+
+  def test_dfmea_good_monitoring_checks_fmeda(self):
+    dfm = yaml.safe_load(yaml.safe_dump(msr_sfm()).replace("SFM-", "DFM-").replace("excessive", "stuck"))
+    dfm["analysis"].update(id="DFM", type="dfmea")
+    msr = dfm["failure_modes"][0]["causes"][0]["msr"]
+    msr.update(monitoring=4, timing={**msr["timing"], "basis": "measured"},
+               evidence=[{"description": "HIL", "ref": "WP-V-05 run 1", "test": "openpilot/selfdrive/controls/tests/test_latcontrol.py"}])
+    res = self.lint(dfm=dfm)
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("no msr.fmeda link" in w for w in res.warnings))
+    msr["fmeda"] = "fmeda-x/FMD-001"  # dc_spf 0.99
+    res = self.lint(dfm=dfm, **{"fmeda-x": FMEDA})
+    self.assertEqual(res.errors, [])
+    self.assertFalse(any("FMEDA failure mode with DC" in w for w in res.warnings))
+    msr["fmeda"] = "fmeda-x/FMD-404"
+    self.assertError(self.lint(dfm=dfm, **{"fmeda-x": FMEDA}), "msr fmeda fmeda-x/FMD-404 not found")

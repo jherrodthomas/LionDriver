@@ -24,6 +24,7 @@ SCHEMA_PATH = CASE_DIR / "schema" / "case-schema.json"
 TRACE_ITEMS_DIR = ASSURANCE_DIR / "trace" / "items"
 SAFETY_CASE_MD = ASSURANCE_DIR / "10-safety-case" / "WP-K-01-safety-case.md"
 CARS_MD = REPO_ROOT / "docs" / "CARS.md"
+GATES_DIR = ASSURANCE_DIR / "10-safety-case" / "gates"
 
 sys.path.insert(0, str(ASSURANCE_DIR / "trace" / "tools"))
 from check_trace import _load_subset
@@ -306,12 +307,41 @@ def upstream_compatibility() -> dict:
 
 def records_digest() -> str:
   h = hashlib.sha256()
-  paths = [SCHEMA_PATH] + sorted(p for p in CASE_DIR.rglob("*.yaml"))
+  # distribution.yaml records who got a copy, not what the case says, so issuing a copy does not change the digest
+  paths = [SCHEMA_PATH] + sorted(p for p in CASE_DIR.rglob("*.yaml") if p.name != "distribution.yaml")
   for p in paths:
     h.update(rel(p).encode())
     h.update(b"\0")
     h.update(p.read_bytes())
   return h.hexdigest()[:12]
+
+
+GATE_RECORD_RE = re.compile(r"^(G[0-6])-([0-9]{4}-[0-9]{2}-[0-9]{2})\.md$")
+OUTCOME_RE = re.compile(r"-\s*\[[xX]\]\s*(Pass with conditions|Pass|Fail)")
+
+
+def gate_records() -> list[dict]:
+  """Gate review records G<n>-<date>.md (WP-K gates README), with the ticked outcome, if any."""
+  out = []
+  for path in sorted(GATES_DIR.glob("G*-*.md")) if GATES_DIR.exists() else []:
+    m = GATE_RECORD_RE.match(path.name)
+    if not m:
+      continue
+    ticked = OUTCOME_RE.findall(path.read_text(encoding="utf-8"))
+    outcome = ticked[0].lower() if len(ticked) == 1 else "not decided"
+    out.append({"gate": m.group(1), "date": m.group(2), "record": rel(path), "outcome": outcome})
+  return out
+
+
+def release_status(s: dict) -> dict:
+  """The one status line every generated view uses. Approved only with a passed gate and a frozen, tagged baseline."""
+  passed = sorted({g["gate"] for g in s["gates"]["records"] if g["outcome"].startswith("pass")})
+  bl = s["baseline"] or {}
+  approved = bool(passed) and bl.get("lifecycle_status") == "frozen" and bool(bl.get("tag"))
+  if approved:
+    return {"approved": True, "label": "APPROVED", "detail": f"{passed[-1]} passed", "color": "2e9e6a"}
+  return {"approved": False, "label": "DRAFT", "detail": f"{passed[-1]} passed, baseline not frozen" if passed else "no gate passed",
+          "color": "c2410c"}
 
 
 def area_status(items: list[dict], claims: list[dict]) -> str:
@@ -357,7 +387,9 @@ def summarize(case: Case) -> dict:
   current = baselines[-1] if baselines else None
   return {
     "assurance_state": state,
-    "baseline": {"id": current["id"], "source_revision": current["source_revision"], "lifecycle_status": current["lifecycle_status"]} if current else None,
+    "baseline": {"id": current["id"], "source_revision": current["source_revision"], "lifecycle_status": current["lifecycle_status"],
+                 "tag": current.get("tag")} if current else None,
+    "gates": {"records": gate_records()},
     "records_digest": records_digest(),
     "claims": {
       "registered": len(claims),

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-01 System requirements specification (functional, non-safety) |
 | Standard reference | ASPICE 4.0 SYS.2; ISO 21448:2022 §5 (specification of the intended functionality); ISO 15622, ISO 22179, ISO 11270 as informative performance references |
-| Version | 0.3 (reference configuration named by generation, E210; 2026-10-12). History: 0.2 (status update 2026-10-12: SYS-120 metric excludes frames refused by design in the reference build; SYS-121 evidence lists the health fields added at `bf6ce8c`). 0.1 |
+| Version | 0.4 (§10.1 allocation of every SYS requirement to architecture elements, read by the SysML model; SYS-027 updated for the Chill-mode default; 2026-10-14). 0.3 (reference configuration named by generation, E210; 2026-10-12). History: 0.2 (status update 2026-10-12: SYS-120 metric excludes frames refused by design in the reference build; SYS-121 evidence lists the health fields added at `bf6ce8c`). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM / SOTIF (safety requirements are in [WP-S-02](WP-S-02-technical-safety-requirements.md)) |
 | Author | Assurance team (initial draft) |
@@ -53,7 +53,7 @@ Paths are under `openpilot/` unless prefixed.
 | SYS-024 | The system shall bring the vehicle to a stop behind a stopping lead, keeping a stopped distance of about 6 m, and hold it at standstill. | F/P | stop distance 6 m ± **TBD** | T-VEH | `STOP_DISTANCE = 6.0` (`long_mpc.py:57`); standstill/permit braking `opendbc_repo/opendbc/car/toyota/carcontroller.py:179-186, 244-248` | — |
 | SYS-025 | After a standstill, the system shall resume automatically when the lead moves off, within **TBD** s; without a lead, it shall not move off without a driver action. | F | as stated | T-VEH | Stop-and-go for TSS2 (`opendbc_repo/opendbc/car/toyota/interface.py:52, 107, 115`) | Resume latency needs measurement; resume-without-lead behaviour to be verified for HE-03.2 |
 | SYS-026 | Comfort: in normal following, the commanded acceleration shall stay within the cruise limits (1.6→0.6 m/s² by speed, −1.2 m/s² cruise braking) and use stronger braking only for lead-following, down to −3.5 m/s². | P | as stated | T-SIL | `longitudinal_planner.py:19-22, 37-50, 149` | — |
-| SYS-027 | Experimental Mode (end-to-end longitudinal) shall be disabled and not selectable in the reference configuration until decision D-08 includes it. | C | Param default "0", toggle disabled | R, T-SIL | Default "1" (`common/params_keys.h:43`, GAP-18) | Decision pending (WP-C-02 §6.4) |
+| SYS-027 | Experimental Mode (end-to-end longitudinal) shall be disabled and not selectable in the reference configuration until decision D-08 includes it. | C | Param default "0", toggle disabled | R, T-SIL | Default "0" since 2026-10-14 (`common/params_keys.h:43`, B-06, decision register DQ-001); the toggle is still selectable | Not selectable: open (D-08 covers the default only) |
 
 ## 4. F-03 Engagement and mode management
 
@@ -122,6 +122,52 @@ The safety requirements of F-08 are TSR-1xx…7xx in [WP-S-02](WP-S-02-technical
 | SYS-100…102 | F-06, F-07 | QM (HARA §5.8) |
 | SYS-120…121 | F-08 | TSR-108, 406, 615 |
 | SYS-140…145 | F-09 | TSR-813; WP-O-04; WP-S-07 |
+
+### 10.1 Allocation to architecture elements
+
+Each requirement is allocated to the architecture elements that satisfy it, named as in the SysML model ([`assurance/models/sysml`](../models/sysml/README.md)): host processes `host.*`, the safety layer `E-03a` and platform firmware `E-03b`, and the grouped host parts `estimators`, `hardwared` and `remoteAndLogging` of WP-S-03 §8. The model turns each row into `satisfy` relationships and checks that every name resolves (check R2).
+
+| SYS | Allocated to |
+|---|---|
+| SYS-001 | `host.modeld`, `host.controlsd` |
+| SYS-002 | `host.controlsd` |
+| SYS-003 | `host.controlsd`, `host.selfdrived` |
+| SYS-004 | `host.selfdrived`, `host.hmi` |
+| SYS-005 | `host.modeld` |
+| SYS-006 | `host.modeld` |
+| SYS-007 | `host.controlsd` |
+| SYS-008 | `host.controlsd`, `estimators` |
+| SYS-020 | `host.plannerd` |
+| SYS-021 | `host.card` |
+| SYS-022 | `host.plannerd` |
+| SYS-023 | `host.manager` |
+| SYS-024 | `host.plannerd`, `host.card` |
+| SYS-025 | `host.card` |
+| SYS-026 | `host.plannerd` |
+| SYS-027 | `host.manager`, `host.hmi` |
+| SYS-040 | `host.selfdrived` |
+| SYS-041 | `host.card` |
+| SYS-042 | `host.selfdrived` |
+| SYS-043 | `host.selfdrived`, `hardwared` |
+| SYS-060 | `host.dm` |
+| SYS-061 | `host.dm` |
+| SYS-062 | `host.dm` |
+| SYS-063 | `host.dm`, `host.controlsd` |
+| SYS-080 | `host.hmi`, `host.card` |
+| SYS-081 | `host.selfdrived`, `host.hmi` |
+| SYS-082 | `host.selfdrived` |
+| SYS-083 | `host.hmi` |
+| SYS-100 | `host.selfdrived`, `host.modeld` |
+| SYS-101 | `host.selfdrived` |
+| SYS-102 | `host.plannerd` |
+| SYS-120 | `E-03a` |
+| SYS-121 | `E-03b`, `host.pandad` |
+| SYS-140 | `remoteAndLogging` |
+| SYS-141 | `remoteAndLogging` |
+| SYS-142 | `remoteAndLogging` |
+| SYS-143 | `remoteAndLogging` |
+| SYS-144 | `remoteAndLogging`, `host.manager` |
+| SYS-145 | `remoteAndLogging`, `hardwared` |
 
 ## 11. Open items
 

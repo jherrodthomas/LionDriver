@@ -13,7 +13,7 @@ Row results: *match* = a computed cut set; *effective* = omits only latent event
 | SG-01 | 27 | 6 | 9 | 7 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-02 | 33 | 3 | 8 | 1 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-03 | 16 | 7 | 11 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| SG-04 | 17 | 6 | 10 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SG-04 | 21 | 6 | 12 | 12 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-05 | 7 | 6 | 8 | 7 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
 | SG-06 | 32 | 3 | 8 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-07 | 11 | 10 | 11 | 10 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -166,7 +166,7 @@ Top event TE-03. 16 minimal cut sets.
 
 ## SG-04: deceleration beyond what following traffic and the driver can control
 
-Top event TE-04. 17 minimal cut sets.
+Top event TE-04. 21 minimal cut sets.
 
 ### Computed cut sets
 
@@ -180,15 +180,19 @@ Top event TE-04. 17 minimal cut sets.
 | 6 | 2 BE + 0 UE | 2 | {BE-3.10, BE-4.13} |  | MCS-04.10 |
 | 7 | 1 BE + 1 UE | 1 | {BE-4.01, UE-4.04} | C | MCS-04.1 |
 | 8 | 1 BE + 1 UE | 1 | {BE-4.03, UE-4.04} |  | MCS-04.2 |
-| 9 | 1 BE + 1 UE | 1 | {BE-4.05, UE-4.04} |  | MCS-04.3 |
-| 10 | 2 BE + 0 UE | 2 | {BE-4.09, BE-4.10} |  | MCS-04.5 |
-| 11 | 1 BE + 1 UE | 1 | {BE-4.11, UE-4.12} | S | MCS-04.6 |
-| 12 | 1 BE + 1 UE | 1 | {BE-4.14, UE-4.15} |  | MCS-04.8 |
-| 13 | 2 BE + 1 UE | 2 | {BE-1.06, BE-4.02, UE-4.04} | S | MCS-04.9 |
-| 14 | 2 BE + 1 UE | 2 | {BE-1.07, BE-4.02, UE-4.04} | S | MCS-04.9 |
-| 15 | 2 BE + 1 UE | 2 | {BE-1.08, BE-4.02, UE-4.04} | C S | MCS-04.9 |
-| 16 | 2 BE + 1 UE | 2 | {BE-1.09, BE-4.02, UE-4.04} | C S | MCS-04.9 |
-| 17 | 2 BE + 1 UE | 1 | {BE-4.06, BE-4.07, UE-4.08} | L S | MCS-04.4 |
+| 9 | 2 BE + 0 UE | 2 | {BE-4.09, BE-4.10} |  | MCS-04.5 |
+| 10 | 1 BE + 1 UE | 1 | {BE-4.11, UE-4.12} | S | MCS-04.6 |
+| 11 | 1 BE + 1 UE | 1 | {BE-4.14, UE-4.15} |  | MCS-04.8 |
+| 12 | 2 BE + 0 UE | 2 | {BE-4.19, BE-4.21} |  | MCS-04.11 |
+| 13 | 2 BE + 0 UE | 2 | {BE-4.20, BE-4.21} |  | MCS-04.11 |
+| 14 | 2 BE + 0 UE | 2 | {BE-4.22, BE-4.23} |  | MCS-04.12 |
+| 15 | 2 BE + 1 UE | 2 | {BE-1.07, BE-4.02, UE-4.04} | S | MCS-04.9 |
+| 16 | 2 BE + 1 UE | 2 | {BE-1.08, BE-4.02, UE-4.04} | C S | MCS-04.9 |
+| 17 | 2 BE + 1 UE | 2 | {BE-1.09, BE-4.02, UE-4.04} | C S | MCS-04.9 |
+| 18 | 2 BE + 1 UE | 2 | {BE-4.02, BE-4.16, UE-4.04} | S | MCS-04.9 |
+| 19 | 2 BE + 1 UE | 2 | {BE-4.05, BE-4.17, UE-4.04} |  | MCS-04.3 |
+| 20 | 2 BE + 1 UE | 1 | {BE-4.06, BE-4.07, UE-4.08} | L S | MCS-04.4 |
+| 21 | 2 BE + 1 UE | 1 | {BE-4.07, BE-4.18, UE-4.08} | L | MCS-04.4 |
 
 ### Table rows of WP-A-04
 
@@ -196,14 +200,16 @@ Top event TE-04. 17 minimal cut sets.
 |---|---|---|---|---|
 | MCS-04.1 | 1 + ext. | {BE-4.01, UE-4.04} | match | — |
 | MCS-04.2 | 1 + ext. | {BE-4.03, UE-4.04} | match | — |
-| MCS-04.3 | 1 + ext. | {BE-4.05, UE-4.04} | match | — |
-| MCS-04.4 | 2 + traffic | {BE-4.06, BE-4.07, UE-4.08} | match | — |
+| MCS-04.3 | 2 + ext. | {BE-4.17, BE-4.05, UE-4.04} | match | — |
+| MCS-04.4 | 2 + traffic | {BE-4.06 or BE-4.18, BE-4.07, UE-4.08} | match | — |
 | MCS-04.5 | 2 | {BE-4.09, BE-4.10 or BE-2.12/2.13} | match | — |
 | MCS-04.6 | 1 + driver | {BE-4.11, UE-4.12} | match | — |
 | MCS-04.7 | 2 | {BE-1.12 or BE-1.13 or BE-1.14, BE-4.13} | match | — |
 | MCS-04.8 | 1 + ext. | {BE-4.14, UE-4.15} | match | — |
-| MCS-04.9 | 2 + ext. | {BE-4.02, BE-1.06 or BE-1.07 or BE-1.08 or BE-1.09, UE-4.04} | match | — |
+| MCS-04.9 | 2 + ext. | {BE-4.02, BE-4.16 or BE-1.07 or BE-1.08 or BE-1.09, UE-4.04} | match | — |
 | MCS-04.10 | 2 | {BE-3.10, BE-4.13} | match | — |
+| MCS-04.11 | 2 | {BE-4.19 or BE-4.20, BE-4.21} | match | — |
+| MCS-04.12 | 2 | {BE-4.22, BE-4.23} | match | — |
 
 ## SG-05: no release on driver brake, cancel or steering override
 

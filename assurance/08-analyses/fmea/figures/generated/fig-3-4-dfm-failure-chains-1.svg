@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1665" viewBox="0 0 1280 1665" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1688" viewBox="0 0 1280 1688" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-4. DFMEA failure chains — sheet 1 of 2 (DFM)</title>
-  <desc id="d">DFMEA failure chains, sheet 1 of 2 (DFM rev 0.2): failure modes DFM-001 to DFM-012 (12 failure modes, 14 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">DFMEA failure chains, sheet 1 of 2 (DFM rev 0.4): failure modes DFM-001 to DFM-010 (11 failure modes, 14 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="1665" fill="#FFFFFF"/>
+  <rect width="1280" height="1688" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-4 · DFMEA failure chains — sheet 1 of 2</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">DFM rev 0.2 · BL-002 · draft · DFM-001 … DFM-012 · 14 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">DFM rev 0.4 · BL-002 · draft · DFM-001 … DFM-010 · 14 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.2</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/dfmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -17,7 +17,8 @@
   <text x="250" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FUNCTION (STEP 3)</text>
   <text x="520" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE MODE · S · END EFFECT (STEP 4)</text>
   <text x="876" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE CAUSE · O · D · AP · ACTIONS (STEPS 4–6)</text>
-  <path d="M220 295.2H235V296.9H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 412.6H235V296.9H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 412.6H235V608.4H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M490 296.9H505V144H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M490 296.9H505V255.3H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M490 296.9H505V394.6H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
@@ -25,36 +26,34 @@
   <path d="M846 255.3H861V248.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 394.6H861V352.5H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 394.6H861V450.8H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 659.1H235V660.8H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 660.8H505V564.1H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 660.8H505V668.3H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 660.8H505V772.6H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 564.1H861V557H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 668.3H861V661.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 772.6H861V765.6H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 885.8H235V894.6H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 894.6H505V895.1H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 895.1H861V888H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 1053.4H235V1055.1H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1055.1H505V1010.5H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1055.1H505V1100.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1010.5H861V1010.5H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1100.7H861V1100.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 1298.9H235V1286.6H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1286.6H505V1249H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1286.6H505V1381.3H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1249H861V1206.9H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1249H861V1291.1H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1381.3H861V1381.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 1492.8H235V1487.5H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1487.5H505V1495H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1495H861V1495H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <rect x="40" y="273.2" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="292.7" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-002</text>
-  <text x="49" y="307.3" font-size="10.5" fill="#0F172A" font-weight="600">Safety MCU STM32H725:</text>
-  <text x="49" y="321.3" font-size="10.5" fill="#0F172A" font-weight="600">core, flash, SRAM</text>
-  <text x="49" y="334.1" font-size="9.5" fill="#475569">subsystem</text>
-  <text x="49" y="346.8" font-size="9.5" fill="#475569">in DFM-SE-001</text>
+  <path d="M490 608.4H505V608.2H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 608.2H861V545H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 608.2H861V657.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 893.8H235V895.5H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 895.5H505V798.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 895.5H505V903H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 895.5H505V1007.3H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 798.7H861V791.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 903H861V896H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1007.3H861V1000.2H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 1120.5H235V1129.3H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1129.3H505V1129.8H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1129.8H861V1122.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 1288.1H235V1289.8H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1289.8H505V1245.2H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1289.8H505V1335.4H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1245.2H861V1245.2H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1335.4H861V1335.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 1488.5H235V1476.2H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1476.2H505V1483.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1483.7H861V1441.6H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1483.7H861V1525.8H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <rect x="40" y="390.6" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="410.1" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-002</text>
+  <text x="49" y="424.6" font-size="10.5" fill="#0F172A" font-weight="600">Safety MCU STM32H725:</text>
+  <text x="49" y="438.7" font-size="10.5" fill="#0F172A" font-weight="600">core, flash, SRAM</text>
+  <text x="49" y="451.4" font-size="9.5" fill="#475569">subsystem</text>
+  <text x="49" y="464.2" font-size="9.5" fill="#475569">in DFM-SE-001</text>
   <rect x="250" y="274.9" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="259" y="294.4" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-001</text>
   <text x="259" y="309" font-size="10.5" fill="#0F172A">Execute the safety model and hold its code,</text>
@@ -72,6 +71,7 @@
   <text x="529" y="200.3" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
   <rect x="566.3" y="189.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="200.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
   <rect x="618.8" y="189.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="200.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="671.3" y="189.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="695.6" y="200.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
   <rect x="876" y="122" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="141.5" font-size="12" fill="#0F172A" font-weight="700">DFM-001.C1</text>
   <rect x="1194.5" y="130.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="141.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
@@ -106,6 +106,7 @@
   <rect x="566.3" y="439.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="450.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-001</text>
   <rect x="618.8" y="439.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="450.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
   <rect x="671.3" y="439.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="695.6" y="450.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="723.8" y="439.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="748" y="450.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
   <rect x="876" y="330.5" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="350" font-size="12" fill="#0F172A" font-weight="700">DFM-003.C1</text>
   <rect x="1194.5" y="339" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="350" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
@@ -119,219 +120,211 @@
   <text x="885" y="462.9" font-size="10.5" fill="#0F172A">Wrong-address write by the SPI DMA (no MPU)</text>
   <text x="885" y="476" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-002</text>
   <rect x="885" y="482" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="492.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-002 open</text>
-  <rect x="40" y="637.1" width="180" height="96.7" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="656.6" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-003</text>
-  <text x="49" y="671.2" font-size="10.5" fill="#0F172A" font-weight="600">MCU clock and independent</text>
-  <text x="49" y="685.2" font-size="10.5" fill="#0F172A" font-weight="600">watchdog (HSE, PLL, LSI,</text>
-  <text x="49" y="699.3" font-size="10.5" fill="#0F172A" font-weight="600">IWDG)</text>
-  <text x="49" y="712" font-size="9.5" fill="#475569">component</text>
-  <text x="49" y="724.8" font-size="9.5" fill="#475569">in DFM-SE-001 › DFM-SE-002</text>
-  <rect x="250" y="638.8" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="658.3" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-002</text>
-  <text x="259" y="672.9" font-size="10.5" fill="#0F172A">Provide an accurate time base for all</text>
-  <text x="259" y="687" font-size="10.5" fill="#0F172A">timeouts, and reset the MCU (releasing the</text>
-  <text x="259" y="701" font-size="10.5" fill="#0F172A">relay) within 0.1 s if execution stops</text>
-  <rect x="259" y="707" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="718" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-007</text>
-  <rect x="318.4" y="707" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="718" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
-  <rect x="520" y="542.1" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="561.6" font-size="12" fill="#0F172A" font-weight="700">DFM-004</text>
-  <rect x="593.9" y="550.6" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="561.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="550.6" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="561.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">stuck</text>
-  <text x="529" y="576.1" font-size="10.5" fill="#0F172A" font-weight="600">MCU execution stops with the relay energised</text>
-  <text x="529" y="589.3" font-size="9.8" fill="#475569" font-style="italic">End effect: Stock AEB unavailable until power cycle</text>
-  <text x="529" y="606.3" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="595.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="606.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
-  <rect x="876" y="535" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="554.5" font-size="12" fill="#0F172A" font-weight="700">DFM-004.C1</text>
-  <rect x="1194.5" y="543.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="554.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="569.1" font-size="10.5" fill="#0F172A">Hang in an ISR or main loop, unused vector to Default_Handler, or</text>
-  <text x="885" y="583.2" font-size="10.5" fill="#0F172A">assert_fatal loop</text>
-  <text x="885" y="596.3" font-size="9.8" fill="#475569" font-weight="600">O3 · D8 · in DFM-SE-003</text>
-  <rect x="885" y="602.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="613.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-003 open</text>
-  <rect x="520" y="646.3" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="665.8" font-size="12" fill="#0F172A" font-weight="700">DFM-005</text>
-  <rect x="593.9" y="654.8" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="665.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="654.8" width="31.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="645.3" y="665.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">drift</text>
-  <text x="529" y="680.4" font-size="10.5" fill="#0F172A" font-weight="600">MCU time base wrong</text>
-  <text x="529" y="693.5" font-size="9.8" fill="#475569" font-style="italic">End effect: Stale data used beyond the detection budget</text>
-  <text x="529" y="710.5" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="699.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="710.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
-  <rect x="618.8" y="699.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="710.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-008</text>
-  <rect x="876" y="639.3" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="658.8" font-size="12" fill="#0F172A" font-weight="700">DFM-005.C1</text>
-  <rect x="1194.5" y="647.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="658.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="673.4" font-size="10.5" fill="#0F172A">HSE crystal drift or PLL misconfiguration; no cross-check against</text>
-  <text x="885" y="687.4" font-size="10.5" fill="#0F172A">an independent oscillator</text>
-  <text x="885" y="700.6" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-003</text>
-  <rect x="885" y="706.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="717.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-004 open</text>
-  <rect x="520" y="750.6" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="770.1" font-size="12" fill="#0F172A" font-weight="700">DFM-006</text>
-  <rect x="593.9" y="759.1" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="770" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="759.1" width="31.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="645.3" y="770" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">loss</text>
-  <text x="529" y="784.7" font-size="10.5" fill="#0F172A" font-weight="600">Watchdog does not reset the MCU when execution stops</text>
-  <text x="529" y="797.8" font-size="9.8" fill="#475569" font-style="italic">End effect: Stock AEB unavailable until power cycle</text>
-  <text x="529" y="814.8" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="803.8" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="814.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
-  <rect x="876" y="743.6" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="763.1" font-size="12" fill="#0F172A" font-weight="700">DFM-006.C1</text>
-  <rect x="1194.5" y="752.1" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="763" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="777.6" font-size="10.5" fill="#0F172A">LSI oscillator failure or IWDG fault; reset path never proven in</text>
-  <text x="885" y="791.7" font-size="10.5" fill="#0F172A">operation</text>
-  <text x="885" y="804.8" font-size="9.8" fill="#475569" font-weight="600">O2 · D8 · in DFM-SE-003</text>
-  <rect x="885" y="810.8" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="821.8" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-003 open</text>
-  <rect x="40" y="863.8" width="180" height="96.7" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="883.3" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-004</text>
-  <text x="49" y="897.9" font-size="10.5" fill="#0F172A" font-weight="600">MCU power supply and</text>
-  <text x="49" y="912" font-size="10.5" fill="#0F172A" font-weight="600">supervision (board regulator,</text>
-  <text x="49" y="926" font-size="10.5" fill="#0F172A" font-weight="600">SMPS/LDO, BOR, PVD)</text>
-  <text x="49" y="938.8" font-size="9.5" fill="#475569">component</text>
-  <text x="49" y="951.5" font-size="9.5" fill="#475569">in DFM-SE-001</text>
-  <rect x="250" y="872.6" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="892.1" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-003</text>
-  <text x="259" y="906.7" font-size="10.5" fill="#0F172A">Supply the MCU within its operating range,</text>
-  <text x="259" y="920.7" font-size="10.5" fill="#0F172A">or hold it in reset</text>
-  <rect x="259" y="926.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="937.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-002</text>
-  <rect x="318.4" y="926.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="937.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
-  <rect x="520" y="873.1" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="892.6" font-size="12" fill="#0F172A" font-weight="700">DFM-007</text>
-  <rect x="593.9" y="881.6" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="892.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="881.6" width="65.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="662.3" y="892.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">insufficient</text>
-  <text x="529" y="907.1" font-size="10.5" fill="#0F172A" font-weight="600">MCU operates in the brown-out zone</text>
-  <text x="529" y="920.3" font-size="9.8" fill="#475569" font-style="italic">End effect: Unintended steering or acceleration</text>
-  <text x="529" y="937.3" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="926.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="937.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
-  <rect x="618.8" y="926.3" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="937.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
-  <rect x="876" y="866" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="885.5" font-size="12" fill="#0F172A" font-weight="700">DFM-007.C1</text>
-  <rect x="1194.5" y="874.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="885.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="900.1" font-size="10.5" fill="#0F172A">Vehicle supply dip (cranking, alternator fault) with BOR level not set</text>
-  <text x="885" y="914.2" font-size="10.5" fill="#0F172A">and PVD not enabled</text>
-  <text x="885" y="927.3" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in DFM-SE-004</text>
-  <rect x="885" y="933.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="944.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-005 open</text>
-  <rect x="40" y="1031.4" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="1050.9" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-005</text>
-  <text x="49" y="1065.5" font-size="10.5" fill="#0F172A" font-weight="600">CAN transceivers XCVR1-4</text>
-  <text x="49" y="1079.5" font-size="10.5" fill="#0F172A" font-weight="600">and enables</text>
-  <text x="49" y="1092.3" font-size="9.5" fill="#475569">component</text>
-  <text x="49" y="1105" font-size="9.5" fill="#475569">in DFM-SE-001</text>
-  <rect x="250" y="1033.1" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="1052.6" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-004</text>
-  <text x="259" y="1067.2" font-size="10.5" fill="#0F172A">Transmit and receive on buses 0, 1 and 2</text>
-  <text x="259" y="1081.3" font-size="10.5" fill="#0F172A">without disturbing the vehicle bus</text>
-  <rect x="259" y="1087.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1098.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-005</text>
-  <rect x="318.4" y="1087.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1098.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
-  <rect x="520" y="988.5" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1008" font-size="12" fill="#0F172A" font-weight="700">DFM-008</text>
-  <rect x="593.9" y="997" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1007.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="997" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="1007.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">stuck</text>
-  <text x="529" y="1022.6" font-size="10.5" fill="#0F172A" font-weight="600">Car-side transceiver holds the bus dominant</text>
-  <text x="529" y="1035.7" font-size="9.8" fill="#475569" font-style="italic">End effect: Loss of assist and stock functions</text>
-  <text x="529" y="1052.7" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1041.7" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1052.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
-  <rect x="618.8" y="1041.7" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="1052.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
-  <rect x="876" y="988.5" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1008" font-size="12" fill="#0F172A" font-weight="700">DFM-008.C1</text>
-  <rect x="1194.5" y="997" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1007.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1022.6" font-size="10.5" fill="#0F172A">XCVR1 TX driver fault or TXD stuck low</text>
-  <text x="885" y="1035.7" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-005</text>
-  <rect x="885" y="1041.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1052.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-006 open</text>
-  <rect x="520" y="1078.7" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1098.2" font-size="12" fill="#0F172A" font-weight="700">DFM-009</text>
-  <rect x="593.9" y="1087.2" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1098.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="1087.2" width="34.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="646.8" y="1098.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">open</text>
-  <text x="529" y="1112.8" font-size="10.5" fill="#0F172A" font-weight="600">Car-side transceiver receives nothing</text>
-  <text x="529" y="1125.9" font-size="9.8" fill="#475569" font-style="italic">End effect: Item disengages; loss of lateral control</text>
-  <text x="529" y="1142.9" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1131.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1142.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
-  <rect x="876" y="1078.7" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1098.2" font-size="12" fill="#0F172A" font-weight="700">DFM-009.C1</text>
-  <rect x="1194.5" y="1087.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1098.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1112.8" font-size="10.5" fill="#0F172A">XCVR1 RX open or stuck recessive</text>
-  <text x="885" y="1125.9" font-size="9.8" fill="#475569" font-weight="600">O3 · D9 · in DFM-SE-005</text>
-  <rect x="885" y="1131.9" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1142.8" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-006 open</text>
-  <rect x="40" y="1276.9" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="1296.4" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-006</text>
-  <text x="49" y="1311" font-size="10.5" fill="#0F172A" font-weight="600">Intercept relay and relay driver</text>
-  <text x="49" y="1323.7" font-size="9.5" fill="#475569">component</text>
-  <text x="49" y="1336.5" font-size="9.5" fill="#475569">in DFM-SE-001</text>
-  <rect x="250" y="1264.6" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="1284.1" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-005</text>
-  <text x="259" y="1298.7" font-size="10.5" fill="#0F172A">Separate the camera from the car bus only</text>
-  <text x="259" y="1312.7" font-size="10.5" fill="#0F172A">while energised; restore the stock camera</text>
-  <text x="259" y="1326.8" font-size="10.5" fill="#0F172A">path whenever de-energised</text>
-  <rect x="259" y="1332.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1343.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-008</text>
-  <rect x="318.4" y="1332.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1343.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
-  <rect x="377.8" y="1332.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="405.5" y="1343.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
-  <rect x="520" y="1227" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1246.5" font-size="12" fill="#0F172A" font-weight="700">DFM-010</text>
-  <rect x="593.9" y="1235.5" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1246.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="1235.5" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="1246.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">stuck</text>
-  <text x="529" y="1261.1" font-size="10.5" fill="#0F172A" font-weight="600">Relay stays intercepting when commanded released</text>
-  <text x="529" y="1274.2" font-size="9.8" fill="#475569" font-style="italic">End effect: Stock AEB unavailable</text>
-  <text x="529" y="1291.2" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1280.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1291.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
-  <rect x="876" y="1184.9" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1204.4" font-size="12" fill="#0F172A" font-weight="700">DFM-010.C1</text>
-  <rect x="1194.5" y="1193.4" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1204.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1219" font-size="10.5" fill="#0F172A">Relay contacts welded in the intercept position</text>
-  <text x="885" y="1232.1" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-006</text>
-  <rect x="885" y="1238.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1249" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 open</text>
-  <rect x="876" y="1269.1" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1288.6" font-size="12" fill="#0F172A" font-weight="700">DFM-010.C2</text>
-  <rect x="1194.5" y="1277.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1288.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1303.2" font-size="10.5" fill="#0F172A">Relay driver output (MCU pin or transistor) stuck on</text>
-  <text x="885" y="1316.3" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-006</text>
-  <rect x="885" y="1322.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1333.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 open</text>
-  <rect x="520" y="1359.3" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1378.8" font-size="12" fill="#0F172A" font-weight="700">DFM-011</text>
-  <rect x="593.9" y="1367.8" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1378.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="1367.8" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="1378.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">stuck</text>
-  <text x="529" y="1393.4" font-size="10.5" fill="#0F172A" font-weight="600">Relay stays released when commanded to intercept</text>
-  <text x="529" y="1406.5" font-size="9.8" fill="#475569" font-style="italic">End effect: Erratic or excessive steering or braking</text>
-  <text x="529" y="1423.5" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1412.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1423.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
-  <rect x="618.8" y="1412.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="1423.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
-  <rect x="876" y="1359.3" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1378.8" font-size="12" fill="#0F172A" font-weight="700">DFM-011.C1</text>
-  <rect x="1194.5" y="1367.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1378.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1393.4" font-size="10.5" fill="#0F172A">Relay coil or driver open, or contacts welded in the stock position</text>
-  <text x="885" y="1406.5" font-size="9.8" fill="#475569" font-weight="600">O3 · D9 · in DFM-SE-006</text>
-  <rect x="885" y="1412.5" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1423.4" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 open</text>
-  <rect x="40" y="1470.8" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="1490.3" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-007</text>
-  <text x="49" y="1504.9" font-size="10.5" fill="#0F172A" font-weight="600">Harness, connectors, SBU</text>
-  <text x="49" y="1519" font-size="10.5" fill="#0F172A" font-weight="600">orientation and ignition sense</text>
-  <text x="49" y="1531.7" font-size="9.5" fill="#475569">interface</text>
-  <text x="49" y="1544.4" font-size="9.5" fill="#475569">in DFM-SE-001</text>
-  <rect x="250" y="1465.5" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="1485" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-006</text>
-  <text x="259" y="1499.6" font-size="10.5" fill="#0F172A">Connect the device to the vehicle buses,</text>
-  <text x="259" y="1513.7" font-size="10.5" fill="#0F172A">power and ignition, and report harness</text>
-  <text x="259" y="1527.7" font-size="10.5" fill="#0F172A">orientation correctly</text>
-  <rect x="259" y="1533.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1544.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-010</text>
-  <rect x="318.4" y="1533.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1544.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
-  <rect x="520" y="1473" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1492.5" font-size="12" fill="#0F172A" font-weight="700">DFM-012</text>
-  <rect x="593.9" y="1481.5" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1492.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="1481.5" width="64" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="661.4" y="1492.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">connection</text>
-  <text x="529" y="1507.1" font-size="10.5" fill="#0F172A" font-weight="600">Harness disconnected or intermittent while driving</text>
-  <text x="529" y="1520.2" font-size="9.8" fill="#475569" font-style="italic">End effect: Loss of lateral control while engaged</text>
-  <text x="529" y="1537.2" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1526.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1537.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
-  <rect x="876" y="1473" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1492.5" font-size="12" fill="#0F172A" font-weight="700">DFM-012.C1</text>
-  <rect x="1194.5" y="1481.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1492.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1507.1" font-size="10.5" fill="#0F172A">Connector not fully latched at installation, or vibration loosens it</text>
-  <text x="885" y="1520.2" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in DFM-SE-007</text>
-  <rect x="885" y="1526.2" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1537.1" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-008 open</text>
-  <line x1="40" y1="1584.7" x2="1240" y2="1584.7" stroke="#E2E8F0" stroke-width="1"/>
-  <text x="40" y="1606.7" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
-  <rect x="96" y="1595.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="1606.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <rect x="136.5" y="1595.7" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="1606.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
-  <rect x="179.4" y="1595.7" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1606.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
-  <text x="223.9" y="1606.7" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
-  <rect x="455.4" y="1595.7" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1606.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
-  <text x="522.7" y="1606.7" font-size="10.5" fill="#0F172A">action status (step 6)</text>
-  <text x="40" y="1626.7" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
-  <text x="40" y="1644.7" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/dfmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <rect x="250" y="586.4" width="240" height="91.9" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="605.9" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-004</text>
+  <text x="259" y="620.5" font-size="10.5" fill="#0F172A">Transmit and receive on buses 0, 1 and 2</text>
+  <text x="259" y="634.6" font-size="10.5" fill="#0F172A">without disturbing the vehicle bus</text>
+  <text x="259" y="647.3" font-size="9.5" fill="#475569" font-weight="600">function of DFM-SE-005</text>
+  <rect x="259" y="653.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="664.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-005</text>
+  <rect x="318.4" y="653.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="664.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
+  <rect x="520" y="586.2" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="605.7" font-size="12" fill="#0F172A" font-weight="700">DFM-019</text>
+  <rect x="593.9" y="594.7" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="605.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="594.7" width="67.6" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="663.2" y="605.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">intermittent</text>
+  <text x="529" y="620.3" font-size="10.5" fill="#0F172A" font-weight="600">Approved CAN frame altered between the TX check and</text>
+  <text x="529" y="634.4" font-size="10.5" fill="#0F172A" font-weight="600">the bus</text>
+  <text x="529" y="647.5" font-size="9.8" fill="#475569" font-style="italic">End effect: Steering torque above the controllable bound</text>
+  <text x="529" y="664.5" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="653.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="664.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="618.8" y="653.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="664.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="671.3" y="653.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="695.6" y="664.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
+  <rect x="876" y="523" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="542.5" font-size="12" fill="#0F172A" font-weight="700">DFM-019.C1</text>
+  <rect x="1194.5" y="531.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="542.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="557.1" font-size="10.5" fill="#0F172A">Soft error or permanent fault in the copy into FDCAN message RAM,</text>
+  <text x="885" y="571.2" font-size="10.5" fill="#0F172A">the message RAM or the FDCAN core. The packet XOR is checked</text>
+  <text x="885" y="585.2" font-size="10.5" fill="#0F172A">at the FDCAN load (fdcan.h:100) and covers only the software…</text>
+  <text x="885" y="598.4" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-002</text>
+  <rect x="885" y="604.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="615.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-013 open</text>
+  <rect x="876" y="635.4" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="654.9" font-size="12" fill="#0F172A" font-weight="700">DFM-019.C2</text>
+  <rect x="1194.5" y="643.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="654.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="669.4" font-size="10.5" fill="#0F172A">Transceiver fault that changes bits on TX without a CAN error (not</text>
+  <text x="885" y="683.5" font-size="10.5" fill="#0F172A">credible for a single bit, which the CAN CRC and the bit monitoring</text>
+  <text x="885" y="697.6" font-size="10.5" fill="#0F172A">of the transmitting controller detect; kept until the transceiver part…</text>
+  <text x="885" y="710.7" font-size="9.8" fill="#475569" font-weight="600">O2 · D10 · in DFM-SE-005</text>
+  <rect x="885" y="716.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="727.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-013 open</text>
+  <rect x="40" y="871.8" width="180" height="96.7" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="891.3" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-003</text>
+  <text x="49" y="905.8" font-size="10.5" fill="#0F172A" font-weight="600">MCU clock and independent</text>
+  <text x="49" y="919.9" font-size="10.5" fill="#0F172A" font-weight="600">watchdog (HSE, PLL, LSI,</text>
+  <text x="49" y="934" font-size="10.5" fill="#0F172A" font-weight="600">IWDG)</text>
+  <text x="49" y="946.7" font-size="9.5" fill="#475569">component</text>
+  <text x="49" y="959.4" font-size="9.5" fill="#475569">in DFM-SE-001 › DFM-SE-002</text>
+  <rect x="250" y="873.5" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="893" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-002</text>
+  <text x="259" y="907.6" font-size="10.5" fill="#0F172A">Provide an accurate time base for all</text>
+  <text x="259" y="921.6" font-size="10.5" fill="#0F172A">timeouts, and reset the MCU (releasing the</text>
+  <text x="259" y="935.7" font-size="10.5" fill="#0F172A">relay) within 0.1 s if execution stops</text>
+  <rect x="259" y="941.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="952.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-007</text>
+  <rect x="318.4" y="941.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="952.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="520" y="776.7" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="796.2" font-size="12" fill="#0F172A" font-weight="700">DFM-004</text>
+  <rect x="593.9" y="785.2" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="796.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="785.2" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="796.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">stuck</text>
+  <text x="529" y="810.8" font-size="10.5" fill="#0F172A" font-weight="600">MCU execution stops with the relay energised</text>
+  <text x="529" y="823.9" font-size="9.8" fill="#475569" font-style="italic">End effect: Stock AEB unavailable until power cycle</text>
+  <text x="529" y="840.9" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="829.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="840.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="876" y="769.7" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="789.2" font-size="12" fill="#0F172A" font-weight="700">DFM-004.C1</text>
+  <rect x="1194.5" y="778.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="789.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="803.8" font-size="10.5" fill="#0F172A">Hang in an ISR or main loop, unused vector to Default_Handler, or</text>
+  <text x="885" y="817.8" font-size="10.5" fill="#0F172A">assert_fatal loop</text>
+  <text x="885" y="831" font-size="9.8" fill="#475569" font-weight="600">O3 · D8 · in DFM-SE-003</text>
+  <rect x="885" y="837" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="847.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-003 open</text>
+  <rect x="520" y="881" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="900.5" font-size="12" fill="#0F172A" font-weight="700">DFM-005</text>
+  <rect x="593.9" y="889.5" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="900.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="889.5" width="31.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="645.3" y="900.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">drift</text>
+  <text x="529" y="915.1" font-size="10.5" fill="#0F172A" font-weight="600">MCU time base wrong</text>
+  <text x="529" y="928.2" font-size="9.8" fill="#475569" font-style="italic">End effect: Stale data used beyond the detection budget</text>
+  <text x="529" y="945.2" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="934.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="945.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="618.8" y="934.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="945.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-008</text>
+  <rect x="876" y="874" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="893.5" font-size="12" fill="#0F172A" font-weight="700">DFM-005.C1</text>
+  <rect x="1194.5" y="882.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="893.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="908" font-size="10.5" fill="#0F172A">HSE crystal drift or PLL misconfiguration; no cross-check against</text>
+  <text x="885" y="922.1" font-size="10.5" fill="#0F172A">an independent oscillator</text>
+  <text x="885" y="935.2" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-003</text>
+  <rect x="885" y="941.2" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="952.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-004 open</text>
+  <rect x="520" y="985.3" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1004.8" font-size="12" fill="#0F172A" font-weight="700">DFM-006</text>
+  <rect x="593.9" y="993.8" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1004.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="993.8" width="31.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="645.3" y="1004.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">loss</text>
+  <text x="529" y="1019.4" font-size="10.5" fill="#0F172A" font-weight="600">Watchdog does not reset the MCU when execution stops</text>
+  <text x="529" y="1032.5" font-size="9.8" fill="#475569" font-style="italic">End effect: Stock AEB unavailable until power cycle</text>
+  <text x="529" y="1049.5" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1038.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1049.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="876" y="978.2" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="997.7" font-size="12" fill="#0F172A" font-weight="700">DFM-006.C1</text>
+  <rect x="1194.5" y="986.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="997.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1012.3" font-size="10.5" fill="#0F172A">LSI oscillator failure or IWDG fault; reset path never proven in</text>
+  <text x="885" y="1026.4" font-size="10.5" fill="#0F172A">operation</text>
+  <text x="885" y="1039.5" font-size="9.8" fill="#475569" font-weight="600">O2 · D8 · in DFM-SE-003</text>
+  <rect x="885" y="1045.5" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1056.4" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-003 open</text>
+  <rect x="40" y="1098.5" width="180" height="96.7" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1118" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-004</text>
+  <text x="49" y="1132.6" font-size="10.5" fill="#0F172A" font-weight="600">MCU power supply and</text>
+  <text x="49" y="1146.7" font-size="10.5" fill="#0F172A" font-weight="600">supervision (board regulator,</text>
+  <text x="49" y="1160.7" font-size="10.5" fill="#0F172A" font-weight="600">SMPS/LDO, BOR, PVD)</text>
+  <text x="49" y="1173.5" font-size="9.5" fill="#475569">component</text>
+  <text x="49" y="1186.2" font-size="9.5" fill="#475569">in DFM-SE-001</text>
+  <rect x="250" y="1107.3" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1126.8" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-003</text>
+  <text x="259" y="1141.4" font-size="10.5" fill="#0F172A">Supply the MCU within its operating range,</text>
+  <text x="259" y="1155.4" font-size="10.5" fill="#0F172A">or hold it in reset</text>
+  <rect x="259" y="1161.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1172.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-002</text>
+  <rect x="318.4" y="1161.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1172.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="520" y="1107.8" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1127.3" font-size="12" fill="#0F172A" font-weight="700">DFM-007</text>
+  <rect x="593.9" y="1116.3" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1127.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1116.3" width="65.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="662.3" y="1127.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">insufficient</text>
+  <text x="529" y="1141.8" font-size="10.5" fill="#0F172A" font-weight="600">MCU operates in the brown-out zone</text>
+  <text x="529" y="1155" font-size="9.8" fill="#475569" font-style="italic">End effect: Unintended steering or acceleration</text>
+  <text x="529" y="1172" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1161" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1171.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="618.8" y="1161" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="1171.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="876" y="1100.7" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1120.2" font-size="12" fill="#0F172A" font-weight="700">DFM-007.C1</text>
+  <rect x="1194.5" y="1109.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1120.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1134.8" font-size="10.5" fill="#0F172A">Vehicle supply dip (cranking, alternator fault) with BOR level not set</text>
+  <text x="885" y="1148.9" font-size="10.5" fill="#0F172A">and PVD not enabled</text>
+  <text x="885" y="1162" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in DFM-SE-004</text>
+  <rect x="885" y="1168" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1178.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-005 open</text>
+  <rect x="40" y="1266.1" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1285.6" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-005</text>
+  <text x="49" y="1300.2" font-size="10.5" fill="#0F172A" font-weight="600">CAN transceivers XCVR1-4</text>
+  <text x="49" y="1314.2" font-size="10.5" fill="#0F172A" font-weight="600">and enables</text>
+  <text x="49" y="1327" font-size="9.5" fill="#475569">component</text>
+  <text x="49" y="1339.7" font-size="9.5" fill="#475569">in DFM-SE-001</text>
+  <rect x="250" y="1267.8" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1287.3" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-004</text>
+  <text x="259" y="1301.9" font-size="10.5" fill="#0F172A">Transmit and receive on buses 0, 1 and 2</text>
+  <text x="259" y="1316" font-size="10.5" fill="#0F172A">without disturbing the vehicle bus</text>
+  <rect x="259" y="1322" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1332.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-005</text>
+  <rect x="318.4" y="1322" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1332.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
+  <rect x="520" y="1223.2" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1242.7" font-size="12" fill="#0F172A" font-weight="700">DFM-008</text>
+  <rect x="593.9" y="1231.7" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1242.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1231.7" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="1242.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">stuck</text>
+  <text x="529" y="1257.3" font-size="10.5" fill="#0F172A" font-weight="600">Car-side transceiver holds the bus dominant</text>
+  <text x="529" y="1270.4" font-size="9.8" fill="#475569" font-style="italic">End effect: Loss of assist and stock functions</text>
+  <text x="529" y="1287.4" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1276.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1287.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="618.8" y="1276.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="1287.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="876" y="1223.2" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1242.7" font-size="12" fill="#0F172A" font-weight="700">DFM-008.C1</text>
+  <rect x="1194.5" y="1231.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1242.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1257.3" font-size="10.5" fill="#0F172A">XCVR1 TX driver fault or TXD stuck low</text>
+  <text x="885" y="1270.4" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-005</text>
+  <rect x="885" y="1276.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1287.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-006 open</text>
+  <rect x="520" y="1313.4" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1332.9" font-size="12" fill="#0F172A" font-weight="700">DFM-009</text>
+  <rect x="593.9" y="1321.9" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1332.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1321.9" width="34.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="646.8" y="1332.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">open</text>
+  <text x="529" y="1347.5" font-size="10.5" fill="#0F172A" font-weight="600">Car-side transceiver receives nothing</text>
+  <text x="529" y="1360.6" font-size="9.8" fill="#475569" font-style="italic">End effect: Item disengages; loss of lateral control</text>
+  <text x="529" y="1377.6" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1366.6" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1377.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="876" y="1313.4" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1332.9" font-size="12" fill="#0F172A" font-weight="700">DFM-009.C1</text>
+  <rect x="1194.5" y="1321.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1332.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1347.5" font-size="10.5" fill="#0F172A">XCVR1 RX open or stuck recessive</text>
+  <text x="885" y="1360.6" font-size="9.8" fill="#475569" font-weight="600">O3 · D9 · in DFM-SE-005</text>
+  <rect x="885" y="1366.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1377.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-006 open</text>
+  <rect x="40" y="1466.5" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1486" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-006</text>
+  <text x="49" y="1500.6" font-size="10.5" fill="#0F172A" font-weight="600">Intercept relay and relay driver</text>
+  <text x="49" y="1513.3" font-size="9.5" fill="#475569">component</text>
+  <text x="49" y="1526.1" font-size="9.5" fill="#475569">in DFM-SE-001</text>
+  <rect x="250" y="1454.2" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1473.7" font-size="12" fill="#0F172A" font-weight="700">DFM-FN-005</text>
+  <text x="259" y="1488.3" font-size="10.5" fill="#0F172A">Separate the camera from the car bus only</text>
+  <text x="259" y="1502.3" font-size="10.5" fill="#0F172A">while energised; restore the stock camera</text>
+  <text x="259" y="1516.4" font-size="10.5" fill="#0F172A">path whenever de-energised</text>
+  <rect x="259" y="1522.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1533.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-008</text>
+  <rect x="318.4" y="1522.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1533.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-037</text>
+  <rect x="377.8" y="1522.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="405.5" y="1533.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-038</text>
+  <rect x="520" y="1461.7" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1481.2" font-size="12" fill="#0F172A" font-weight="700">DFM-010</text>
+  <rect x="593.9" y="1470.2" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1481.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1470.2" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="1481.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">stuck</text>
+  <text x="529" y="1495.8" font-size="10.5" fill="#0F172A" font-weight="600">Relay stays intercepting when commanded released</text>
+  <text x="529" y="1508.9" font-size="9.8" fill="#475569" font-style="italic">End effect: Stock AEB unavailable</text>
+  <text x="529" y="1525.9" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1514.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1525.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-011</text>
+  <rect x="876" y="1419.6" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1439.1" font-size="12" fill="#0F172A" font-weight="700">DFM-010.C1</text>
+  <rect x="1194.5" y="1428.1" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1439" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1453.7" font-size="10.5" fill="#0F172A">Relay contacts welded in the intercept position</text>
+  <text x="885" y="1466.8" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-006</text>
+  <rect x="885" y="1472.8" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1483.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 open</text>
+  <rect x="876" y="1503.8" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1523.3" font-size="12" fill="#0F172A" font-weight="700">DFM-010.C2</text>
+  <rect x="1194.5" y="1512.3" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1523.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1537.9" font-size="10.5" fill="#0F172A">Relay driver output (MCU pin or transistor) stuck on</text>
+  <text x="885" y="1551" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in DFM-SE-006</text>
+  <rect x="885" y="1557" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1567.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-007 open</text>
+  <line x1="40" y1="1608" x2="1240" y2="1608" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="1630" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
+  <rect x="96" y="1619" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="1629.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <rect x="136.5" y="1619" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="1629.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
+  <rect x="179.4" y="1619" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1629.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="223.9" y="1630" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
+  <rect x="455.4" y="1619" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1629.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
+  <text x="522.7" y="1630" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <text x="40" y="1650" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
+  <text x="40" y="1668" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/dfmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

@@ -575,7 +575,7 @@
   acceptance: "All state variables of WP-W-05 §5.1 at reset values after `set_safety_hooks`"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `safety.h:57, 425-460`. Edge state \"not yet seen disengaged\" (amendment, ATC-25): not at the pinned opendbc; proposed change change-2026-10-14-mode-set-regrant (assurance/07-supporting/impact/change-2026-10-14-mode-set-regrant.md)"
+  baseline_impl: "Impl: `safety.h:57, 425-460`. Edge state \"not yet seen disengaged\" (amendment, ATC-26): not at the pinned opendbc; proposed change change-2026-10-14-mode-set-regrant (assurance/07-supporting/impact/change-2026-10-14-mode-set-regrant.md)"
   status: proposed
   source: WP-W-02
 
@@ -661,7 +661,7 @@
 
 - id: SWSR-405
   kind: swsr
-  text: "The envelope shall flag an RX fault when (a) mean wheel speed from `0xAA` and SPEED from `0xB4` differ by > 2 m/s, (b) BRAKE_PRESSED in `0x226` and in `0x1D3` disagree (the envelope then treats the brake as pressed), (c) CRUISE_ACTIVE = 1 with `0x1D3` MAIN_ON = 0, or (d) with authority granted, measured EPS torque does not follow the accepted command within the EPS-response tolerance, each for longer than its tolerance time."
+  text: "The envelope shall flag an RX fault when (a) mean wheel speed from `0xAA` and SPEED from `0xB4` differ by > 2 m/s, (b) BRAKE_PRESSED in `0x226` and in `0x1D3` disagree (the envelope then treats the brake as pressed), (c) CRUISE_ACTIVE = 1 with `0x1D3` MAIN_ON = 0, or (d) with authority granted, measured EPS torque does not follow the accepted command within the EPS-response tolerance, each for longer than its tolerance time. For (c), CRUISE_ACTIVE changing to 1 while MAIN_ON = 0 shall be an RX fault at once, without tolerance."
   asil: "B‡"
   parents: [TSR-405]
   parent_text: "TSR-405"

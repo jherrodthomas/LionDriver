@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="826" viewBox="0 0 900 826" role="img" aria-labelledby="t d">
+<title id="t">SM-SAFETY-MODE state chart</title>
+<desc id="d">Stateflow-style chart of SM-SAFETY-MODE with 5 states and 8 transitions, generated from sm-safety-mode.yaml; the table below the chart lists every transition.</desc>
+<style>
+svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de;
+       --edge:#3d3c39; --shade:#d9d8d3; --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --hi:#f4f3ef;
+       --c1:#2a78d6; --f1:#dde9f8; --c2:#eb6834; --f2:#fce7df; --c3:#1baf7a; --f3:#dbf2ea; --c4:#eda100; --f4:#fcf0d6; --c6:#008300; --f6:#d6ebd6; --c7:#6250d6; --f7:#e6e3f8; --c8:#e34948; --f8:#fbe2e2; }
+@media (prefers-color-scheme: dark) {
+  svg { --surface:#1a1a19; --panel:#232322; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f;
+         --edge:#c3c2b7; --shade:#0e0e0d; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --hi:#2b2b29;
+         --c1:#3987e5; --f1:#2a415c; --c2:#d95926; --f2:#5a3323; --c3:#199e70; --f3:#204839; --c4:#c98500; --f4:#554018; --c6:#008300; --f6:#184018; --c7:#9085e9; --f7:#44405e; --c8:#e66767; --f8:#5e3737; }
+}
+.bg { fill:var(--surface); }
+.t { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:11.5px; fill:var(--ink); }
+.t2 { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:11.5px; fill:var(--ink2); }
+.tm { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:10.5px; fill:var(--ink2); }
+.tb { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:12.5px; font-weight:600; fill:var(--ink); }
+.th { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:15px; font-weight:600; fill:var(--ink); }
+.ts { font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:10.5px; fill:var(--ink3); }
+.box { fill:var(--panel); stroke:var(--edge); stroke-width:1.2; }
+.shadow { fill:var(--shade); }
+.hi { fill:var(--hi); }
+.edge { fill:none; stroke:var(--edge); stroke-width:1.2; }
+.edge.thin { stroke-width:0.8; }
+.edge.target { stroke:var(--ink3); stroke-dasharray:5 4; }
+.grid { stroke:var(--grid); stroke-width:1; }
+.axis { stroke:var(--ink3); stroke-width:1; }
+.s1 { fill:none; stroke:var(--s1); stroke-width:2; }
+.s2 { fill:none; stroke:var(--s2); stroke-width:2; stroke-dasharray:6 3; }
+.s3 { fill:none; stroke:var(--s3); stroke-width:2; }
+.band { fill:var(--f1); }
+.edge.todo { stroke:var(--s2); stroke-dasharray:5 4; }
+.arrow.todo { fill:var(--s2); }
+.k1 { fill:var(--f1); stroke:var(--c1); stroke-width:1.4; }
+.k2 { fill:var(--f2); stroke:var(--c2); stroke-width:1.4; }
+.k3 { fill:var(--f3); stroke:var(--c3); stroke-width:1.4; }
+.k4 { fill:var(--f4); stroke:var(--c4); stroke-width:1.4; }
+.k6 { fill:var(--f6); stroke:var(--c6); stroke-width:1.4; }
+.k7 { fill:var(--f7); stroke:var(--c7); stroke-width:1.4; }
+.k8 { fill:var(--f8); stroke:var(--c8); stroke-width:1.4; }
+.m1 { fill:var(--s1); }
+.m2 { fill:var(--s2); }
+.m3 { fill:var(--s3); }
+.arrow { fill:var(--edge); }
+.arrow.target { fill:var(--ink3); }
+.dot { fill:var(--edge); }
+.lbl { fill:var(--surface); }
+</style>
+<rect class="bg" x="0" y="0" width="900" height="826"/>
+<text x="20.0" y="26.0" class="th" text-anchor="start">SM-SAFETY-MODE: Panda safety mode</text>
+<text x="20.0" y="44.0" class="ts" text-anchor="start">Stateflow-style chart generated from state-machines/sm-safety-mode.yaml by diagrams/make_diagrams.py.</text>
+<text x="20.0" y="58.0" class="ts" text-anchor="start">Solid grey: in the code. Dashed orange: not in the code. Fill: state role (legend). Status: WP-W-02 Baseline of the cited SWSRs.</text>
+<path class="edge" d="M385.0,134.3 Q300.0,140.0 215.0,145.7"/>
+<path class="arrow" d="M215.0,145.7 L221.8,142.1 L222.2,148.3 Z"/>
+<rect class="lbl" x="277.8" y="131.5" width="44.5" height="17.0" rx="3"/>
+<text x="300.0" y="142.5" class="tm" text-anchor="middle">M1, M3</text>
+<path class="edge" d="M685.0,160.4 Q450.0,198.0 215.0,160.4"/>
+<path class="arrow" d="M215.0,160.4 L222.4,158.4 L221.4,164.6 Z"/>
+<rect class="lbl" x="427.8" y="170.7" width="44.5" height="17.0" rx="3"/>
+<text x="450.0" y="181.7" class="tm" text-anchor="middle">M1, M3</text>
+<path class="edge" d="M258.9,404.0 Q210.0,290.0 161.1,176.0"/>
+<path class="arrow" d="M161.1,176.0 L166.8,181.2 L161.0,183.7 Z"/>
+<rect class="lbl" x="175.6" y="281.5" width="68.8" height="17.0" rx="3"/>
+<text x="210.0" y="292.5" class="tm" text-anchor="middle">M1, M3, M7</text>
+<path class="edge" d="M585.4,404.0 Q390.0,290.0 194.6,176.0"/>
+<path class="arrow" d="M194.6,176.0 L202.2,176.8 L199.0,182.2 Z"/>
+<rect class="lbl" x="355.6" y="281.5" width="68.8" height="17.0" rx="3"/>
+<text x="390.0" y="292.5" class="tm" text-anchor="middle">M1, M3, M7</text>
+<path class="edge" d="M207.8,176.0 Q300.0,217.5 443.0,281.9"/>
+<path class="arrow" d="M443.0,281.9 L435.3,281.9 L437.9,276.1 Z"/>
+<rect class="lbl" x="290.5" y="214.7" width="44.5" height="17.0" rx="3"/>
+<text x="312.7" y="225.7" class="tm" text-anchor="middle">M2, M4</text>
+<path class="edge" d="M450.0,156.0 Q450.0,207.5 450.0,278.0"/>
+<path class="arrow" d="M450.0,278.0 L446.9,271.0 L453.1,271.0 Z"/>
+<rect class="lbl" x="427.8" y="203.8" width="44.5" height="17.0" rx="3"/>
+<text x="450.0" y="214.8" class="tm" text-anchor="middle">M2, M4</text>
+<path class="edge" d="M692.2,176.0 Q600.0,217.5 457.0,281.9"/>
+<path class="arrow" d="M457.0,281.9 L462.1,276.1 L464.7,281.9 Z"/>
+<rect class="lbl" x="565.1" y="214.7" width="44.5" height="17.0" rx="3"/>
+<text x="587.3" y="225.7" class="tm" text-anchor="middle">M2, M4</text>
+<path class="edge" d="M302.3,404.0 Q360.0,357.5 443.0,290.6"/>
+<path class="arrow" d="M443.0,290.6 L439.5,297.5 L435.6,292.6 Z"/>
+<rect class="lbl" x="344.1" y="343.9" width="44.5" height="17.0" rx="3"/>
+<text x="366.3" y="354.9" class="tm" text-anchor="middle">M2, M5</text>
+<path class="edge" d="M597.7,404.0 Q540.0,357.5 457.0,290.6"/>
+<path class="arrow" d="M457.0,290.6 L464.4,292.6 L460.5,297.5 Z"/>
+<rect class="lbl" x="523.6" y="343.9" width="20.2" height="17.0" rx="3"/>
+<text x="533.7" y="354.9" class="tm" text-anchor="middle">M2</text>
+<path class="edge" d="M117.5,124.0 C117.5,84.4 182.5,84.4 182.5,124.0"/>
+<path class="arrow" d="M182.5,124.0 L179.3,117.0 L185.7,117.0 Z"/>
+<rect class="lbl" x="103.4" y="85.8" width="93.1" height="17.0" rx="3"/>
+<text x="150.0" y="96.8" class="tm" text-anchor="middle">M1, M3, M6, M8</text>
+<path class="edge" d="M417.5,104.0 C417.5,64.4 482.5,64.4 482.5,104.0"/>
+<path class="arrow" d="M482.5,104.0 L479.4,97.0 L485.6,97.0 Z"/>
+<rect class="lbl" x="427.8" y="65.8" width="44.5" height="17.0" rx="3"/>
+<text x="450.0" y="76.8" class="tm" text-anchor="middle">M6, M8</text>
+<path class="edge" d="M717.5,124.0 C717.5,84.4 782.5,84.4 782.5,124.0"/>
+<path class="arrow" d="M782.5,124.0 L779.4,117.0 L785.6,117.0 Z"/>
+<rect class="lbl" x="727.8" y="85.8" width="44.5" height="17.0" rx="3"/>
+<text x="750.0" y="96.8" class="tm" text-anchor="middle">M6, M8</text>
+<path class="edge" d="M237.5,404.0 C237.5,364.4 302.5,364.4 302.5,404.0"/>
+<path class="arrow" d="M302.5,404.0 L299.4,397.0 L305.6,397.0 Z"/>
+<rect class="lbl" x="247.8" y="365.8" width="44.5" height="17.0" rx="3"/>
+<text x="270.0" y="376.8" class="tm" text-anchor="middle">M6, M8</text>
+<path class="edge" d="M597.5,404.0 C597.5,364.4 662.5,364.4 662.5,404.0"/>
+<path class="arrow" d="M662.5,404.0 L659.4,397.0 L665.6,397.0 Z"/>
+<rect class="lbl" x="607.8" y="365.8" width="44.5" height="17.0" rx="3"/>
+<text x="630.0" y="376.8" class="tm" text-anchor="middle">M6, M8</text>
+<path class="edge thin" d="M450.0,285.0 L207.8,176.0"/>
+<path class="arrow" d="M207.8,176.0 L213.3,176.0 L211.4,180.1 Z"/>
+<path class="edge thin" d="M450.0,285.0 L450.0,156.0"/>
+<path class="arrow" d="M450.0,156.0 L452.2,161.0 L447.8,161.0 Z"/>
+<path class="edge thin" d="M450.0,285.0 L692.2,176.0"/>
+<path class="arrow" d="M692.2,176.0 L688.6,180.1 L686.7,176.0 Z"/>
+<path class="edge thin" d="M450.0,285.0 L302.3,404.0"/>
+<path class="arrow" d="M302.3,404.0 L304.8,399.1 L307.6,402.6 Z"/>
+<path class="edge thin" d="M450.0,285.0 L597.7,404.0"/>
+<path class="arrow" d="M597.7,404.0 L592.4,402.6 L595.2,399.1 Z"/>
+<circle class="box" cx="450" cy="285" r="7"/>
+<rect class="lbl" x="467.6" y="278.5" width="68.8" height="17.0" rx="3"/>
+<text x="502.0" y="289.5" class="tm" text-anchor="middle">[mode = m]</text>
+<rect class="shadow" x="88.0" y="127.0" width="130.0" height="52.0" rx="12"/>
+<rect class="box" x="85.0" y="124.0" width="130.0" height="52.0" rx="12"/>
+<text x="95.0" y="142.0" class="tb" text-anchor="start">SILENT</text>
+<rect class="shadow" x="388.0" y="107.0" width="130.0" height="52.0" rx="12"/>
+<rect class="box" x="385.0" y="104.0" width="130.0" height="52.0" rx="12"/>
+<text x="395.0" y="122.0" class="tb" text-anchor="start">NOOUTPUT</text>
+<rect class="shadow" x="688.0" y="127.0" width="130.0" height="52.0" rx="12"/>
+<rect class="k3" x="685.0" y="124.0" width="130.0" height="52.0" rx="12"/>
+<text x="695.0" y="142.0" class="tb" text-anchor="start">ELM327</text>
+<rect class="shadow" x="208.0" y="407.0" width="130.0" height="52.0" rx="12"/>
+<rect class="k1" x="205.0" y="404.0" width="130.0" height="52.0" rx="12"/>
+<text x="215.0" y="422.0" class="tb" text-anchor="start">TOYOTA</text>
+<rect class="shadow" x="568.0" y="407.0" width="130.0" height="52.0" rx="12"/>
+<rect class="k1" x="565.0" y="404.0" width="130.0" height="52.0" rx="12"/>
+<text x="575.0" y="422.0" class="tb" text-anchor="start">OTHER_CAR</text>
+<circle class="dot" cx="39.0" cy="150.0" r="4"/>
+<path class="edge" d="M39.0,150.0 L85.0,150.0"/>
+<path class="arrow" d="M85.0,150.0 L78.0,153.2 L78.0,146.8 Z"/>
+<rect class="box" x="20" y="492" width="22" height="14" rx="4"/>
+<text x="48.0" y="503.0" class="t2" text-anchor="start">no actuation output</text>
+<rect class="k3" x="191.60000000000002" y="492" width="22" height="14" rx="4"/>
+<text x="219.6" y="503.0" class="t2" text-anchor="start">diagnostic</text>
+<rect class="k1" x="305.6" y="492" width="22" height="14" rx="4"/>
+<text x="333.6" y="503.0" class="t2" text-anchor="start">car mode: actuation possible with authority</text>
+<path class="edge" d="M20,518 L46,518"/>
+<text x="52.0" y="522.0" class="t2" text-anchor="start">in the code</text>
+<path class="edge todo" d="M150,518 L176,518"/>
+<text x="182.0" y="522.0" class="t2" text-anchor="start">not in the code (target state)</text>
+<text x="20.0" y="552.0" class="tb" text-anchor="start">Transitions (Stateflow label notation: event [guard] / {action})</text>
+<line class="grid" x1="20" y1="566" x2="880" y2="566"/>
+<text x="20.0" y="580.0" class="t2" text-anchor="start">ID</text>
+<text x="70.0" y="580.0" class="t2" text-anchor="start">Transition</text>
+<text x="620.0" y="580.0" class="t2" text-anchor="start">Build</text>
+<text x="690.0" y="580.0" class="t2" text-anchor="start">WP-W-02 status</text>
+<line class="grid" x1="20" y1="590" x2="880" y2="590"/>
+<text x="20.0" y="603.0" class="tb" text-anchor="start">M1</text>
+<text x="70.0" y="603.0" class="t" text-anchor="start">any → SILENT: reset / {set_safety_mode(SILENT)}</text>
+<text x="620.0" y="603.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="603.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="610" x2="880" y2="610"/>
+<text x="20.0" y="623.0" class="tb" text-anchor="start">M2</text>
+<text x="70.0" y="623.0" class="t" text-anchor="start">any → m: 0xdc (m, p) [m in the registry] / {reset state; relay per m; CAN re-init}</text>
+<text x="620.0" y="623.0" class="t2" text-anchor="start">upstream</text>
+<text x="690.0" y="623.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="630" x2="880" y2="630"/>
+<text x="20.0" y="643.0" class="tb" text-anchor="start">M3</text>
+<text x="70.0" y="643.0" class="t" text-anchor="start">any → SILENT: 0xdc (m, p) [m unknown (set_safety_hooks fails); in the reference</text>
+<text x="70.0" y="657.0" class="t" text-anchor="start">build an unknown m is refused by M6 first] / {fall back}</text>
+<text x="620.0" y="643.0" class="t2" text-anchor="start">upstream</text>
+<text x="690.0" y="643.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="664" x2="880" y2="664"/>
+<text x="20.0" y="677.0" class="tb" text-anchor="start">M4</text>
+<text x="70.0" y="677.0" class="t" text-anchor="start">SILENT, NOOUTPUT, ELM327 → m: 0xdc (m, p) [m ∈ {SILENT, NOOUTPUT, ELM327}, or m =</text>
+<text x="70.0" y="691.0" class="t" text-anchor="start">TOYOTA with p = 73] / {reset state; relay per m}</text>
+<text x="620.0" y="677.0" class="t2" text-anchor="start">reference</text>
+<text x="690.0" y="677.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="698" x2="880" y2="698"/>
+<text x="20.0" y="711.0" class="tb" text-anchor="start">M5</text>
+<text x="70.0" y="711.0" class="t" text-anchor="start">TOYOTA → m: 0xdc (m, p) [m ∈ {NOOUTPUT, SILENT}] / {reset state; relay released}</text>
+<text x="620.0" y="711.0" class="t2" text-anchor="start">reference</text>
+<text x="690.0" y="711.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="718" x2="880" y2="718"/>
+<text x="20.0" y="731.0" class="tb" text-anchor="start">M6</text>
+<text x="70.0" y="731.0" class="t" text-anchor="start">any → same: 0xdc (m, p) [any other (m, p)] / {request refused, counted in</text>
+<text x="70.0" y="745.0" class="t" text-anchor="start">requests_rejected_pkt}</text>
+<text x="620.0" y="731.0" class="t2" text-anchor="start">reference</text>
+<text x="690.0" y="731.0" class="t2" text-anchor="start">Implemented</text>
+<line class="grid" x1="20" y1="752" x2="880" y2="752"/>
+<text x="20.0" y="765.0" class="tb" text-anchor="start">M7</text>
+<text x="70.0" y="765.0" class="t" text-anchor="start">TOYOTA, OTHER_CAR → SILENT: 1 Hz tick [heartbeat counter ≥ 5 (ignition on) / 2</text>
+<text x="70.0" y="779.0" class="t" text-anchor="start">(off)] / {siren if recently engaged; heartbeat_lost}</text>
+<text x="620.0" y="765.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="765.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="786" x2="880" y2="786"/>
+<text x="20.0" y="799.0" class="tb" text-anchor="start">M8</text>
+<text x="70.0" y="799.0" class="t" text-anchor="start">any → same: harness status change / {set_safety_mode(current) (state reset)}</text>
+<text x="620.0" y="799.0" class="t2" text-anchor="start">all</text>
+<text x="690.0" y="799.0" class="t2" text-anchor="start">Implemented</text>
+</svg>

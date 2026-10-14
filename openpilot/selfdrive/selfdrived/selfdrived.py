@@ -49,6 +49,7 @@ IGNORED_SAFETY_MODES = (SafetyModel.silent, SafetyModel.noOutput)
 # LionDriver host supervision (TSR-621, TSR-308)
 MISMATCH_SAMPLES = 2         # consecutive pandaStates samples with controlsAllowed false while enabled
 MISMATCH_MAX_TIME = 0.5      # s from the first mismatched frame, whatever the pandaStates rate
+MISMATCH_ENGAGE_GRACE = 0.3  # s after engaging in which samples are not counted: the panda grants on the heartbeat (LS-06)
 CRUISE_MISMATCH_TIME = 1.0   # s of stock cruise engaged while the item is not
 
 
@@ -123,7 +124,7 @@ class SelfdriveD:
     self.initialized = False
     self.enabled = False
     self.active = False
-    self.controls_mismatch = ControlsMismatch(MISMATCH_SAMPLES, MISMATCH_MAX_TIME, DT_CTRL)  # TSR-621
+    self.controls_mismatch = ControlsMismatch(MISMATCH_SAMPLES, MISMATCH_MAX_TIME, DT_CTRL, MISMATCH_ENGAGE_GRACE)  # TSR-621
     self.tx_blocked = TxBlockedMonitor()  # TSR-615
     self.cruise_mismatch_counter = 0
     self.last_steering_pressed_frame = 0
@@ -535,7 +536,7 @@ class SelfdriveD:
     # must be consecutive; a sample with controlsAllowed true, or disengaging, starts the count again
     mismatch = self.enabled and any(not ps.controlsAllowed for ps in self.sm['pandaStates']
                                     if ps.safetyModel not in IGNORED_SAFETY_MODES)
-    self.controls_mismatch.update(mismatch, self.sm.updated['pandaStates'], self.sm.frame)
+    self.controls_mismatch.update(mismatch, self.sm.updated['pandaStates'], self.sm.frame, self.enabled)
 
     return CS
 

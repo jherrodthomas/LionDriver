@@ -35,6 +35,10 @@ class TestRefs(unittest.TestCase):
   def test_fsr_wildcard_range(self):
     self.assertEqual(tm.refs_in("FSR-01.xx…02.xx", None, self.KNOWN), {"FSR-01.01", "FSR-02.01"})
 
+  def test_hazardous_event_wildcard(self):
+    known = {"HE-01.1", "HE-01.2", "HE-02.1"}
+    self.assertEqual(tm.refs_in("sets the C-class for HE-01.x", None, known), {"HE-01.1", "HE-01.2"})
+
   def test_header_kind(self):
     self.assertEqual(tm.header_kind("SWSRs"), "SWSR")
     self.assertIsNone(tm.header_kind("Parent TSR (WP-S-02) / FSR"))  # prefixed IDs there; bare numbers not read
@@ -85,7 +89,25 @@ class TestCommittedMap(unittest.TestCase):
     self.assertEqual({p[1] for p in tm.PAIRS}, rights)
 
   def test_committed_map_is_current(self):
-    self.assertEqual(tm.OUT.read_text(encoding="utf-8"), tm.render(tm.build()))
+    m = tm.build()
+    self.assertEqual(tm.OUT.read_text(encoding="utf-8"), tm.render(m))
+    self.assertEqual(tm.FIG.read_text(encoding="utf-8"), tm.svg_v_model(m))
+
+  def test_svg_has_every_level_once(self):
+    svg = tm.svg_v_model(tm.build())
+    for lv in tm.LEFT + tm.RIGHT:
+      self.assertEqual(svg.count(f">{lv.process}</text>"), 1, lv.process)
+
+  def test_figure_1_is_the_trace_lens_of_the_system_v(self):
+    import vmodel
+    m = tm.build()
+    self.assertEqual(tm.svg_v_model(m), vmodel.render("trace", "full", model=m))
+    self.assertIn("TRACE LENS", tm.svg_v_model(m))
+
+  def test_map_text_describes_the_component(self):
+    text = tm.render(tm.build())
+    self.assertIn("tools/vmodel.py", text)
+    self.assertNotIn("green when every item", text)
 
 
 if __name__ == "__main__":
