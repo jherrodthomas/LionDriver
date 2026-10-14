@@ -16,8 +16,9 @@ import build_snapshot as bs
 import distribution as dist
 from caselib import release_status
 
-ORDER = ["approval", "control", "contents", "roles", "raci", "contributors", "status", "traceability", "scope", "hierarchy", "argument",
-         "claims", "evidence", "defeaters", "gates", "config", "annex-a", "annex-b", "annex-c"]
+ORDER = ["approval", "control", "contents", "documents", "distribution", "roles", "raci", "contributors", "status", "traceability",
+         "coverage", "lifecycle", "vv", "freshness", "scope", "hierarchy", "argument",
+         "claims", "evidence", "defeaters", "gates", "config", "annex-a", "annex-b", "annex-c", "annex-d"]
 
 
 def _status(gates=(), lifecycle="under-development", tag=None):
@@ -198,6 +199,42 @@ class Snapshot(unittest.TestCase):
     self.assertIn("Assessor &lt;A&amp;B&gt;", html)
     self.assertNotIn("Assessor <A&B>", html)
     self.assertEqual(manifest["snapshot"]["copy"]["id"], "CC-2026-007")
+
+  def test_new_pages_follow_their_sources(self):
+    import snapshot_pages as sp
+    import trace_map as tm
+    m = tm.build()
+    rtm = self.html[self.html.find('id="annex-d"'):]
+    for iid in m.items:
+      if iid.split("-")[0] in sp.RTM_KINDS:
+        self.assertIn(f">{iid}<", rtm)
+    cov = self.html[self.html.find('id="coverage"'):self.html.find('id="lifecycle"')]
+    for parent, child, _, alloc in tm.DERIVATIONS:
+      done, total, _ = tm.derivation(m, parent, child, alloc)
+      self.assertIn(f">{done}/{total}<", cov)
+    life = self.html[self.html.find('id="lifecycle"'):self.html.find('id="vv"')]
+    for aid in sp.pm.load_model().activities:
+      self.assertIn(f">{aid}<", life)
+    docs = self.html[self.html.find('id="documents"'):self.html.find('id="distribution"')]
+    for r in sp.register_rows():
+      self.assertIn(f">{r['wp']}<", docs)
+
+  def test_nothing_green_without_a_pass_or_approval(self):
+    import snapshot_pages as sp
+    green_bg = sp.TONE["ok"][0]
+    part = self.html[self.html.find('id="coverage"'):self.html.find('id="scope"')] + self.html[self.html.find('id="annex-d"'):]
+    approved = any(r["status"] in ("A", "B") for r in sp.register_rows())
+    if not approved:
+      self.assertNotIn(f"background:{green_bg}", part)
+
+  def test_freshness_counts_every_evidence_record(self):
+    from caselib import load_case
+    fresh = self.html[self.html.find('id="freshness"'):self.html.find('id="scope"')]
+    n = len(load_case().of_kind("evidence"))
+    m = re.search(r"(\d+) of (\d+) unchanged since recorded · (\d+) changed since · (\d+) without", fresh)
+    self.assertIsNotNone(m)
+    self.assertEqual(int(m.group(2)), n)
+    self.assertLessEqual(int(m.group(1)) + int(m.group(3)) + int(m.group(4)), n)
 
 
 class Distribution(unittest.TestCase):
