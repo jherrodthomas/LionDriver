@@ -86,6 +86,8 @@ jobs:
         python3 assurance/03-system/figures/test_fig_s03_defence_in_depth.py
         python3 assurance/06-validation/figures/fig_v02_validation_targets.py --check
         python3 assurance/06-validation/figures/test_fig_v02_validation_targets.py
+        python3 assurance/07-supporting/figures/fig_p_process.py --check
+        python3 assurance/07-supporting/figures/test_fig_p_process.py
         python3 assurance/06-validation/figures/fig_v05_fault_coverage.py --check
         python3 assurance/06-validation/figures/test_fig_v05_fault_coverage.py
     - name: Traceability figures of WP-T-01 match the data (and their tests)
