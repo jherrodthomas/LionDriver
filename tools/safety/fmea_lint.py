@@ -295,9 +295,10 @@ def check_msr_cause(doc, fm, c, cwhere, actions, referenced_actions, ctx, res: R
       res.error(cwhere, f"msr ftti_ref {t['ftti_ref']!r} is not a row of WP-S-04 section 3.7")
     else:
       ftti_row = ctx.ftti_rows[t["ftti_ref"]]
-      if ftti_row is None:
-        res.error(cwhere, f"WP-S-04 row {t['ftti_ref']!r} has no FTTI in time units; it cannot back a timing claim")
-      elif t.get("ftti_ms") is not None and t["ftti_ms"] != ftti_row:
+      per_frame = ftti_row is None  # e.g. "per frame": the check acts on every frame before it is sent
+      if per_frame and t.get("ftti_ms") is not None:
+        res.error(cwhere, f"WP-S-04 row {t['ftti_ref']!r} has no FTTI in time units; omit ftti_ms and give fdti_ms 0")
+      elif not per_frame and t.get("ftti_ms") is not None and t["ftti_ms"] != ftti_row:
         res.error(cwhere, f"msr ftti_ms {t['ftti_ms']} != {ftti_row:g} ms in WP-S-04 row {t['ftti_ref']!r}")
 
   if m is not None:
@@ -306,7 +307,13 @@ def check_msr_cause(doc, fm, c, cwhere, actions, referenced_actions, ctx, res: R
       ctx.check_path(e["test"], cwhere, res)
     if t["basis"] == "unknown" and m < 7:
       res.error(cwhere, f"monitoring {m} with timing basis unknown; unknown timing rates M 7 or worse (rating-tables 7.3)")
-    if m <= 6:
+    per_frame = t.get("ftti_ref") in (ctx.ftti_rows or {}) and ctx.ftti_rows[t["ftti_ref"]] is None
+    if m <= 6 and per_frame:
+      if t.get("fdti_ms") != 0 or t.get("frti_ms") is None:
+        res.error(cwhere, f"monitoring {m} on a per-frame WP-S-04 row needs fdti_ms 0 and frti_ms (rating-tables 7.3)")
+      if not tests:
+        res.error(cwhere, f"monitoring {m} needs an evidence entry with a `test` path for the diagnostic (rating-tables 7.3)")
+    elif m <= 6:
       missing = [k for k in ("ftti_ref", "ftti_ms", "fdti_ms", "frti_ms") if t.get(k) is None]
       if missing:
         res.error(cwhere, f"monitoring {m} needs timing {', '.join(missing)} (rating-tables 7.3)")

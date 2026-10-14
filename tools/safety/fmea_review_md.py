@@ -150,6 +150,71 @@ def summary_svg(name: str, doc: dict, c: dict) -> str:
   return svg(w, h, f"{SHORT[name]} summary: action priority of {c['causes']} causes", b)
 
 
+def msr_rows(doc) -> list[tuple[dict, dict]]:
+  return [(fm, cz) for fm in doc["failure_modes"] for cz in fm["causes"] if cz.get("msr")]
+
+
+def msr_coverage(name: str, doc: dict) -> dict:
+  kind = doc["analysis"]["type"]
+  scope = [cz for fm in doc["failure_modes"] for cz in fm["causes"] if fmea_lint.msr_in_scope(kind, fm)]
+  rated = msr_rows(doc)
+  return {"in_scope": len(scope), "rated": len(rated), "exempt": sum(1 for cz in scope if cz.get("msr_exempt")),
+          "applies": kind in fmea_lint.MSR_TYPES}
+
+
+def msr_svg(name: str, doc: dict) -> str:
+  """Frequency x monitoring grid of the MSR rows; cell colour = MSR AP at S 10, number = causes in the cell."""
+  rows = msr_rows(doc)
+  cell_w, cell_h, x0, y0 = 58, 26, 92, 74
+  w, h = x0 + 10 * cell_w + 196, y0 + 10 * cell_h + 66
+  b = text(24, 32, f"{SHORT[name]}: {len(rows)} monitoring and system response ratings by frequency and monitoring", "ink", 15, 600)
+  b += text(24, 52, "Cell colour: MSR action priority at S 9–10 (provisional table). Number: causes rated in that cell.", "mut", 12)
+  grid: dict = {}
+  for _fm, cz in rows:
+    m = cz["msr"]
+    grid[(m["frequency"], m["monitoring"])] = grid.get((m["frequency"], m["monitoring"]), 0) + 1
+  cls = {"H": "h", "M": "m", "L": "l"}
+  for fi, f in enumerate(range(10, 0, -1)):
+    y = y0 + fi * cell_h
+    b += text(x0 - 10, y + 17, f"F {f}", "mut", 11, anchor="end")
+    for m in range(1, 11):
+      x = x0 + (m - 1) * cell_w
+      ap = fmea_lint.compute_ap_msr(10, 10, f, m)
+      b += f'<rect x="{x:.1f}" y="{y:.1f}" width="{cell_w - 2}" height="{cell_h - 2}" rx="3" class="{cls[ap]}S"/>\n'
+      n = grid.get((f, m))
+      if n:
+        b += text(x + (cell_w - 2) / 2, y + 17, n, cls[ap], 13, 700, anchor="middle")
+  for m in range(1, 11):
+    b += text(x0 + (m - 1) * cell_w + (cell_w - 2) / 2, y0 + 10 * cell_h + 16, f"M {m}", "mut", 11, anchor="middle")
+  bands = [(1, 4, "measured timing"), (5, 6, "code-derived timing"), (7, 8, "not shown or too slow"), (9, 10, "no monitor")]
+  for lo, hi, lab in bands:
+    xa, xb = x0 + (lo - 1) * cell_w, x0 + hi * cell_w - 2
+    yb = y0 + 10 * cell_h + 26
+    b += f'<path d="M{xa:.1f} {yb} L{xb:.1f} {yb}" class="ln" stroke-width="1.5"/>\n'
+    b += text((xa + xb) / 2, yb + 16, lab, "mut", 11, anchor="middle")
+  lx = x0 + 10 * cell_w + 22
+  b += text(lx, y0 + 12, "Reads left to right:", "ink", 12, 600)
+  b += lines_at(lx, y0 + 32, wrap("better monitoring moves a cause left; only M 1 rates the severity after the response.", 26, 4),
+                "mut", 11)
+  for i, (k, lab) in enumerate((("H", "priority H"), ("M", "priority M"), ("L", "priority L"))):
+    yy = y0 + 112 + i * 24
+    b += f'<rect x="{lx}" y="{yy}" width="16" height="16" rx="3" class="{cls[k]}S"/>\n' + text(lx + 24, yy + 13, lab, "ink", 12)
+  return svg(w, h, f"{SHORT[name]} FMEA-MSR: frequency by monitoring", b)
+
+
+def msr_timing(t: dict) -> str:
+  basis = {"measured": "measured", "code_derived": "code-derived", "unknown": "unknown"}[t["basis"]]
+  if t.get("ftti_ref") and t.get("ftti_ms") is None:
+    return f"per frame; reaction {t.get('frti_ms', '?'):g} ms ({basis})"
+  if t.get("fdti_ms") is not None and t.get("frti_ms") is not None:
+    total = t["fdti_ms"] + t["frti_ms"]
+    vs = ""
+    if t.get("ftti_ms") is not None:
+      vs = f" vs FTTI {t['ftti_ms']:g} ms " + ("✅" if total <= t["ftti_ms"] else "❌")
+    return f"{t['fdti_ms']:g} + {t['frti_ms']:g} ms{vs} ({basis})"
+  return basis
+
+
 def block_svg(name: str, bd: dict) -> str:
   blocks = {b["id"]: b for b in bd["blocks"]}
   cols = max(b["column"] for b in blocks.values()) + 1
@@ -426,6 +491,9 @@ def page(name: str, doc: dict, dg: dict | None, c: dict) -> str:
   if dg and dg.get("p_diagram"):
     sections.append("2. P-diagram")
   sections += ["3. Structure and functions", "4. Worksheet", "5. Actions", "6. Priority H causes without a completed action"]
+  mc = msr_coverage(name, doc)
+  if mc["applies"]:
+    sections.append("7. Monitoring and system response")
   for s in sections:
     title = s.split(". ", 1)[1]
     L.append(f"- [{title}](#{anchor(s)})")
@@ -503,7 +571,17 @@ def page(name: str, doc: dict, dg: dict | None, c: dict) -> str:
                  f"{AP_BADGE.get(cz.get('ap'), cz.get('ap', ''))} | {al} |")
       sm = fm.get("safety_mechanisms") or []
       if sm:
-        L += ["", "Safety mechanisms: " + " · ".join(one(s["description"]) for s in sm)]
+        L += ["", "Safety mechanisms: " + " · ".join(f"({i}) {one(s['description'])}" for i, s in enumerate(sm, 1))]
+      msr_lines = []
+      for cz in fm["causes"]:
+        if cz.get("msr"):
+          m = cz["msr"]
+          msr_lines.append(f"`{cz['id']}` mechanism {', '.join(str(i) for i in m['mechanisms'])}: M {m['monitoring']} · " +
+                           f"F {m['frequency']} · S after response {m['severity_after']} → {AP_BADGE.get(m['ap'], m['ap'])}")
+        elif cz.get("msr_exempt"):
+          msr_lines.append(f"`{cz['id']}` not rated here: {one(cz['msr_exempt'])}")
+      if msr_lines:
+        L += ["", f"[Monitoring and system response](#{anchor('7. Monitoring and system response')}): " + "<br>".join(msr_lines)]
       if fm.get("notes"):
         L += ["", f"<sub>Note: {one(fm['notes'])}</sub>"]
       L.append("")
@@ -530,6 +608,34 @@ def page(name: str, doc: dict, dg: dict | None, c: dict) -> str:
   else:
     L.append("None.")
   L.append("")
+  if mc["applies"]:
+    L += ["## 7. Monitoring and system response", "",
+          "FMEA-MSR rates what happens in the car when a cause occurs: does a diagnostic catch it, and does the system reach a " +
+          "safe state within the fault-tolerant time interval (FTTI)? It adds frequency (F), monitoring (M) and the severity " +
+          "after the response, with its own action priority; S, O, D and AP above are unchanged. Scales: " +
+          "[rating-tables.md §7](../../rating-tables.md#7-fmea-msr--monitoring-and-system-response-added-in-rt-2); scope and " +
+          "plan: [msr-plan.md](../../msr-plan.md); FTTI rows: " +
+          "[WP-S-04 §3.7](../../../../03-system/WP-S-04-timing-ftti-budget.md#37-summary-of-fttis-and-budgets).", "",
+          f"**Coverage:** {mc['rated']} of {mc['in_scope']} in-scope causes rated, {mc['exempt']} rated elsewhere " +
+          f"(`msr: {doc['analysis'].get('msr', 'none')}`).", ""]
+    if fmea_lint.AP_MSR_PROVISIONAL:
+      L += ["> [!WARNING]", "> The MSR action priority uses a provisional table until the AIAG-VDA handbook table is " +
+            "transcribed (rating-tables §7.4). Read the M and F columns; the AP column will be re-rated.", ""]
+    rated = msr_rows(doc)
+    if rated:
+      L += [f"![Frequency by monitoring](figures/{name}-msr.svg)", "",
+            "Sorted by monitoring, weakest first. Timing is detection + reaction time against the FTTI of the cited WP-S-04 row.", "",
+            "| Cause | Diagnostic → system response | Timing | S after | F | M | MSR AP | Actions |",
+            "|---|---|---|:-:|:-:|:-:|:-:|---|"]
+      for _fm, cz in sorted(rated, key=lambda r: (-r[1]["msr"]["monitoring"], -r[1]["msr"]["frequency"], r[1]["id"])):
+        m = cz["msr"]
+        act = ", ".join(m.get("actions", [])) or (f"<sub>{one(m['rationale'])}</sub>" if m.get("rationale") else "—")
+        L.append(f"| `{cz['id']}` {one(cz['description'])} | {one(m['diagnostic'])} → {one(m['system_response'])} | " +
+                 f"{msr_timing(m['timing'])} | {m['severity_after']} | {m['frequency']} | **{m['monitoring']}** | " +
+                 f"{AP_BADGE.get(m['ap'], m['ap'])} | {act} |")
+      L.append("")
+    else:
+      L += ["No cause is rated yet.", ""]
   return "\n".join(L)
 
 
@@ -538,12 +644,12 @@ def index(all_counts: dict, docs: dict) -> str:
        f"Generated by `{GENERATOR}` from the analyses in [`../../analyses/`](../../analyses/). Each page reads in " +
        "GitHub's web view: diagrams, then the AIAG-VDA worksheet, then actions. The `.xlsx` files hold the same data " +
        "as styled workbooks for offline review.", "",
-       "| Analysis | Revision | Failure modes | Causes | AP H | H without completed action | Actions open | Workbook |",
-       "|---|---|---:|---:|---:|---:|---:|---|"]
+       "| Analysis | Revision | Failure modes | Causes | AP H | H without completed action | Actions open | MSR rated | Workbook |",
+       "|---|---|---:|---:|---:|---:|---:|---:|---|"]
   for n in SOURCES:
     c, a = all_counts[n], docs[n]["analysis"]
     L.append(f"| [{SHORT[n]}]({n}.md) | {a.get('revision', '')} ({a.get('status', '')}) | {c['fm']} | {c['causes']} | {c['ap']['H']} | " +
-             f"{c['h_open']} | {c['open']}/{c['actions']} | [xlsx]({n}-review.xlsx) |")
+             f"{c['h_open']} | {c['open']}/{c['actions']} | {c['msr']} | [xlsx]({n}-review.xlsx) |")
   L += ["", "Ratings and the action-priority table: [rating-tables.md](../../rating-tables.md). The plan and method: " +
         "[fmea-plan.md](../../fmea-plan.md).", ""]
   return "\n".join(L)
@@ -625,8 +731,12 @@ def build_all() -> tuple[dict[Path, str], list[str]]:
     if dg:
       errs += check_diagram(name, doc, dg)
     c = counts(doc)
+    mc = msr_coverage(name, doc)
+    c["msr"] = f"{mc['rated']} of {mc['in_scope']}" if mc["applies"] else "—"
     allc[name] = c
     files[FIG / f"{name}-summary.svg"] = summary_svg(name, doc, c)
+    if msr_rows(doc):
+      files[FIG / f"{name}-msr.svg"] = msr_svg(name, doc)
     if dg and not errs:
       fn_titles = {f["id"]: one(f["description"]) for f in doc["functions"]}
       if dg.get("block_diagram"):

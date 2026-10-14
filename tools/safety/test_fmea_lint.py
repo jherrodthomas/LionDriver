@@ -1084,6 +1084,12 @@ class TestMsrRules(LintFixture):
     t.update(ftti_ref="SG-01 continuous limits", ftti_ms=500)
     self.assertError(self.lint(sfm=msr_sfm(timing=t)), "no FTTI in time units")
 
+  def test_per_frame_row(self):
+    t = {"ftti_ref": "SG-01 continuous limits", "fdti_ms": 0, "frti_ms": 10, "basis": "code_derived"}
+    self.assertEqual(self.errors(msr_sfm(timing=t)), [])
+    t["fdti_ms"] = 20
+    self.assertError(self.lint(sfm=msr_sfm(timing=t)), "per-frame WP-S-04 row needs fdti_ms 0")
+
   def test_good_monitoring_needs_timing_and_test(self):
     self.assertError(self.lint(sfm=msr_sfm(timing={"basis": "code_derived"})), "needs timing ftti_ref, ftti_ms, fdti_ms, frti_ms")
     self.assertError(self.lint(sfm=msr_sfm(evidence=[])), "needs an evidence entry with a `test` path")

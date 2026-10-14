@@ -11,15 +11,20 @@
 # - In-field diagnostics are listed as safety_mechanisms (they reduce S or O through the design, not D; RT-1 §3).
 # Every failure mode reaches a HARA hazard, so S=10 and AP is H throughout; the value of this revision is the cause and
 # action list, not the AP distribution.
+# Rev 0.4 (2026-10-14, RT-2): FMEA-MSR rows (msr-plan.md M1) on all 15 in-scope causes, at BL-002. F from the FMEDA SG-001
+# failure rate of the matching failure mode (rating-tables 7.2), else the DFMEA O. M from WP-S-04 timing: nothing is
+# measured, so no row is better than M 7; DFM-009, DFM-011 and DFM-008 react too slowly or incompletely (M 8). MSR AP is
+# provisional (rating-tables 7.4).
 schema_version: 1
 analysis:
   id: DFM
   type: dfmea
   title: "DFMEA — device, integrated panda, harness, vehicle interfaces"
-  revision: "0.3"
+  revision: "0.4"
   status: draft
   baseline: BL-002
-  rating_tables: RT-1
+  rating_tables: RT-2
+  msr: complete
   scope: "Safety-relevant hardware of AC-001 at BL-002: comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03)."
   team:
     - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
@@ -30,7 +35,7 @@ analysis:
     - assurance/04-hardware/WP-H-02-hardware-design.md
     - assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
     - assurance/08-analyses/WP-A-03-dependent-failure-analysis.md
-  updated: 2026-10-12
+  updated: 2026-10-14
 structure:
 - id: DFM-SE-001
   name: 'Item hardware: comma 3X with integrated panda, Toyota harness and relay box, installed in a 2020 Corolla LE'
@@ -177,6 +182,21 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-001
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: None in the MCU at BL-002. The host compares controls_allowed after about 2 s (QM); it does not check limits
+      system_response: None for a wrong limit result
+      effect_after_response: 'Unchanged: a wrong check result lets an over-limit or unauthorised frame through'
+      severity_after: 10
+      frequency: 6
+      monitoring: 9
+      ap: H
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg001/FMD-001
+      actions:
+      - DFM-ACT-001
   safety_mechanisms:
   - description: None in the MCU at BL-002. Host compares controls_allowed after about 2 s (QM, does not check limits). EPS and PCM own limits (AOU-01, AOU-05)
     ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
@@ -214,6 +234,21 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-002
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: Bootstub signature check at power-up only; no periodic code CRC in the pinned firmware
+      system_response: None during the drive
+      effect_after_response: Unchanged until the next power-up
+      severity_after: 10
+      frequency: 4
+      monitoring: 9
+      ap: H
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg001/FMD-006
+      actions:
+      - DFM-ACT-002
   safety_mechanisms:
   - description: Boot-time signature only. Periodic code CRC exists on panda branch liondriver/g1-layer1 (TSR-MCU-09), not pinned at BL-002
     ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
@@ -257,6 +292,21 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-002
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None at BL-002: RAMECC monitors not configured, no redundant storage'
+      system_response: None
+      effect_after_response: Unchanged
+      severity_after: 10
+      frequency: 5
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg001/FMD-009
+      actions:
+      - DFM-ACT-002
   - id: DFM-003.C2
     description: Wrong-address write by the SPI DMA (no MPU)
     element: DFM-SE-002
@@ -268,6 +318,20 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-002
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None at BL-002: no MPU and no redundant storage of the safety state'
+      system_response: None
+      effect_after_response: Unchanged
+      severity_after: 10
+      frequency: 3
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      actions:
+      - DFM-ACT-002
   safety_mechanisms:
   - description: None at BL-002. RAMECC handling, redundant storage and start-up RAM test exist on panda branch liondriver/g1-layer1 (TSR-MCU-07, -08, -10), not pinned
     ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
@@ -303,6 +367,26 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-003
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: IWDG expires about 90 ms after the last feed (T-09a). Timing fits on paper, but whether the reset releases the
+        relay is unconfirmed (HWSR-502, UK-06) and the LSI tolerance leaves no shown margin (OI-7), so the response is not credited
+      system_response: MCU reset; relay de-energised if the drive circuit is de-energise-to-safe; stock camera CAN restored
+      effect_after_response: Stock PCS/AEB restored and assist lost, if the relay releases
+      severity_after: 10
+      frequency: 6
+      monitoring: 7
+      ap: H
+      timing:
+        ftti_ref: SG-07 forwarding loss
+        ftti_ms: 200
+        fdti_ms: 90
+        frti_ms: 100
+        basis: code_derived
+      fmeda: fmeda-sg001/FMD-003
+      actions:
+      - DFM-ACT-003
   safety_mechanisms:
   - description: IWDG reset releases the relay if the drive circuit is de-energise-to-safe (HWSR-502, unconfirmed, UK-06)
     ref: panda/board/drivers/hw_watchdog.h
@@ -402,6 +486,21 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-005
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None at BL-002: PVD handler is a stub and the BOR level is unknown (UK-04)'
+      system_response: None
+      effect_after_response: 'Unchanged: erratic MCU behaviour in the brown-out zone'
+      severity_after: 10
+      frequency: 5
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg001/FMD-015
+      actions:
+      - DFM-ACT-005
   safety_mechanisms:
   - description: None at BL-002 (PVD handler stub; BOR level unknown, UK-04)
     ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
@@ -437,6 +536,22 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-006
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: FDCAN error counters; core reset on bus-off. The transceiver dominant timeout is part dependent and unknown
+      system_response: A core reset does not release a transceiver that holds the bus dominant; no safe-state reaction
+      effect_after_response: 'Car bus blocked: loss of assist and of stock CAN functions until the transceiver times out, if it
+        does'
+      severity_after: 10
+      frequency: 5
+      monitoring: 8
+      ap: H
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg001/FMD-017
+      actions:
+      - DFM-ACT-006
   safety_mechanisms:
   - description: Transceiver dominant-timeout (part dependent, unknown); FDCAN error counters read, core reset on bus-off; no safety reaction
     ref: panda/board/drivers/fdcan.h
@@ -470,6 +585,28 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-006
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: RX timeout after 5 periods (about 0.16 s) withdraws controls_allowed; the host warns through the 2 s controlsMismatch
+        counter (T-17)
+      system_response: Authority withdrawn at once; warning about 2.2 s after onset, beyond the 1 s budget to warning
+      effect_after_response: Assist lost; warning late
+      severity_after: 10
+      frequency: 5
+      monitoring: 8
+      ap: H
+      timing:
+        ftti_ref: SG-02/06 loss without warning
+        ftti_ms: 1000
+        fdti_ms: 160
+        frti_ms: 2000
+        basis: code_derived
+      fmeda: fmeda-sg001/FMD-018
+      actions:
+      - DFM-ACT-006
+      rationale: The panda side reacts in about 0.16 s; the warning depends on the host 2 s controlsMismatch counter. SFM-ACT-010
+        (alert at once when the panda withdraws authority while engaged) brings it inside the 1 s budget
   safety_mechanisms:
   - description: RX timeout after 5 periods (BL-002, about 0.16 s) withdraws controls; SoC alerts on panda state
     ref: opendbc_repo/opendbc/safety/safety.h
@@ -501,6 +638,21 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-007
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None: no relay readback (GAP-12)'
+      system_response: None
+      effect_after_response: 'Unchanged: stock camera stays cut off after release is commanded'
+      severity_after: 10
+      frequency: 5
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg001/FMD-021
+      actions:
+      - DFM-ACT-007
   - id: DFM-010.C2
     description: Relay driver output (MCU pin or transistor) stuck on
     element: DFM-SE-006
@@ -512,6 +664,21 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-007
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None: no relay readback (GAP-12)'
+      system_response: None
+      effect_after_response: 'Unchanged: stock camera stays cut off after release is commanded'
+      severity_after: 10
+      frequency: 5
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg001/FMD-021
+      actions:
+      - DFM-ACT-007
   safety_mechanisms:
   - description: 'None: no relay readback (GAP-12)'
     ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
@@ -549,6 +716,25 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-007
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'Relay malfunction: a stock camera frame on the car side after the 1 s grace blocks all TX (T-08, 1-2 s)'
+      system_response: All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE)
+      effect_after_response: Up to 2 s of stock LKA and item commands on the bus together, then no item output
+      severity_after: 10
+      frequency: 5
+      monitoring: 8
+      ap: H
+      timing:
+        ftti_ref: SG-01 relay stuck
+        ftti_ms: 500
+        fdti_ms: 2000
+        frti_ms: 10
+        basis: code_derived
+      fmeda: fmeda-sg001/FMD-020
+      actions:
+      - DFM-ACT-007
   safety_mechanisms:
   - description: 'Relay malfunction detection: stock camera message on the car side after a 1 s grace blocks all TX (safety.h stock_ecu_check)'
     ref: opendbc_repo/opendbc/safety/safety.h
@@ -581,6 +767,21 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-008
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: RX timeouts and host canBusMissing cover a partial disconnect only; a full disconnect also removes the device
+        supply, so nothing warns
+      system_response: Relay drops out with the supply; stock camera restored
+      effect_after_response: Assist lost without a LionDriver warning
+      severity_after: 10
+      frequency: 5
+      monitoring: 9
+      ap: H
+      timing:
+        basis: unknown
+      actions:
+      - DFM-ACT-008
   safety_mechanisms:
   - description: RX timeouts and host canBusMissing alert
     ref: opendbc_repo/opendbc/safety/safety.h
@@ -703,6 +904,20 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-010
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: Bootstub signature check exists but accepts the debug key in debug builds; RDP and WRP not set (GAP-24)
+      system_response: None for a signed debug image
+      effect_after_response: Unchanged
+      severity_after: 10
+      frequency: 4
+      monitoring: 9
+      ap: H
+      timing:
+        basis: unknown
+      actions:
+      - DFM-ACT-010
   safety_mechanisms:
   - description: Bootstub signature check, but the debug key is accepted in debug builds and RDP/WRP are not set (GAP-24, GAP-38). D-09/D-10 decided, not implemented
     ref: panda/board/bootstub.c
@@ -822,6 +1037,21 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-013
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None after the FDCAN load: no TX read-back (TSR-517 not implemented)'
+      system_response: None
+      effect_after_response: Unchanged
+      severity_after: 10
+      frequency: 4
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      fmeda: fmeda-sg001/FMD-002
+      actions:
+      - DFM-ACT-013
   - id: DFM-019.C2
     description: Transceiver fault that changes bits on TX without a CAN error (not credible for a single bit, which the CAN CRC and the
       bit monitoring of the transmitting controller detect; kept until the transceiver part is known, WP-H-02 UK-01)
@@ -834,6 +1064,20 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-013
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None: no TX read-back (TSR-517 not implemented)'
+      system_response: None
+      effect_after_response: Unchanged
+      severity_after: 10
+      frequency: 2
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      actions:
+      - DFM-ACT-013
   safety_mechanisms:
   - description: None after the FDCAN load (SPF-02). TSR-517 specifies a TX read-back of own frames; not implemented at BL-002
     ref: assurance/03-system/WP-S-02-technical-safety-requirements.md

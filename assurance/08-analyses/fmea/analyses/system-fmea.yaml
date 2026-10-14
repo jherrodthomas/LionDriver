@@ -11,6 +11,10 @@
 #   (D 8), process_replay is a generic regression check (D 9), and no vehicle, HIL or system test has been executed (D 10).
 # - Result: 79 causes AP H, 1 AP M (SFM-024.C1, nuisance alerts). Actions SFM-ACT-001..011 (no 004).
 # `safety_mechanisms` lists the in-field mechanisms in the code; they are design facts and are not credited as detection.
+# Rev 0.7 (2026-10-14, RT-2): FMEA-MSR pilot (msr-plan.md M1) on the SG-01 lateral chain, SFM-001/002/003/006/029/034, at
+# BL-004: 17 causes rated, 3 hardware causes rated in the DFMEA. F = the cause's O. Best monitoring is M 5: the panda
+# per-frame steering checks, mutation-tested, on code-derived timing. Actions SFM-ACT-012..015 (kind monitoring).
+# Host supervision added after BL-004 (TSR-615, TSR-621) is not credited; it is re-rated with the next baseline.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -19,10 +23,11 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.6"
+  revision: "0.7"
   status: draft
   baseline: BL-004
-  rating_tables: RT-1
+  rating_tables: RT-2
+  msr: partial
   scope: >-
     LionDriver as installed on a 2020 Toyota Corolla LE (US) with comma 3X and integrated panda,
     software BL-004 (structure and failure analysis written at BL-001, risk analysis at BL-004), while the vehicle is driven on public roads by a licensed driver.
@@ -42,7 +47,7 @@ analysis:
     - assurance/08-analyses/fmea/fmea-plan.md
     - assurance/08-analyses/fmea/rating-tables.md
     - docs/SAFETY.md
-  updated: 2026-10-13
+  updated: 2026-10-14
 
 # ---------------------------------------------------------------------------
 # Step 2 — Structure
@@ -210,6 +215,31 @@ failure_modes:
         detection: 8
         ap: H
         rationale: Rated, and actioned, in the SW FMEA (SWF-030.C1, SWF-ACT-030); this row inherits that rating
+        msr:
+          mechanisms:
+          - 2
+          diagnostic: 'Panda Toyota safety model checks every STEERING_LKA frame: a torque request while controls_allowed is false
+            is refused. controls_allowed needs PCM cruise engaged on the car bus and the heartbeat engaged state, so a wrong host
+            state alone does not grant it'
+          system_response: Frame not sent; no torque request reaches the EPS
+          effect_after_response: No assist torque while not engaged; manual steering unaffected. Whether refused frames set an EPS
+            LKA fault indication is to be confirmed on the reference car (SFM-ACT-012)
+          severity_after: 4
+          frequency: 6
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-01 continuous limits
+            fdti_ms: 0
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: Toyota steering checks (torque with controls not allowed, magnitude and rate limits) tested on every PR and
+              mutation-tested in CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          actions:
+          - SFM-ACT-012
       - id: SFM-001.C2
         element: SFM-SE-003
         linked_failure_mode: SWF-002
@@ -225,6 +255,21 @@ failure_modes:
         detection: 3
         ap: H
         rationale: Rated, and actioned where needed, in the SW FMEA (SWF-002.C1, SWF-ACT-002); this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: None for this cause. controlsd sends torque only while latActive, so the host channel masks the panda fault
+            but nothing detects it; the BL-004 mismatch counter checks only the opposite direction (enabled, panda not allowed)
+          system_response: None; the fault stays latent until the host also commands torque
+          effect_after_response: 'Unchanged: torque while not engaged once the host also fails (dual-point, DFA/FTA)'
+          severity_after: 10
+          frequency: 5
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-013
       - id: SFM-001.C3
         element: SFM-SE-016
         description: Steering message packed with non-zero torque/request bit while latActive is false
@@ -241,6 +286,30 @@ failure_modes:
         ap: H
         rationale: The panda refuses steering torque while controls are not allowed (SWF-002, D 3), so this cause leads to the end effect only together with SFM-001.C2;
           no separate action
+        msr:
+          mechanisms:
+          - 2
+          diagnostic: Panda refuses a STEERING_LKA frame carrying torque or the request bit while controls_allowed is false (checked
+            on every frame)
+          system_response: Frame not sent; no torque request reaches the EPS
+          effect_after_response: No assist torque while not engaged; manual steering unaffected (EPS reaction to refused frames to
+            confirm, SFM-ACT-012)
+          severity_after: 4
+          frequency: 6
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-01 continuous limits
+            fdti_ms: 0
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: Toyota steering checks (torque with controls not allowed, magnitude and rate limits) tested on every PR and
+              mutation-tested in CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          actions:
+          - SFM-ACT-012
     notes: "HARA input: unintended steering intervention during manual driving."
 
   - id: SFM-002
@@ -276,6 +345,29 @@ failure_modes:
         actions:
         - SFM-ACT-001
         rationale: Rated, and actioned, in the SW FMEA (SWF-042.C1, SWF-ACT-042, SWF-ACT-043); this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: Panda checks torque magnitude and rate of every STEERING_LKA frame against the Toyota limits
+          system_response: Over-limit frame refused; torque stays inside the envelope
+          effect_after_response: Torque bounded by the panda envelope. Repeated refusals interrupt LKA frames and assist may drop
+            without a LionDriver alert at BL-004; the envelope itself is not yet derived from vehicle measurements (SFM-ACT-001)
+          severity_after: 10
+          frequency: 7
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-01 continuous limits
+            fdti_ms: 0
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: Toyota steering checks (torque with controls not allowed, magnitude and rate limits) tested on every PR and
+              mutation-tested in CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          actions:
+          - SFM-ACT-012
       - id: SFM-002.C2
         element: SFM-SE-010
         description: Model outputs excessive desired curvature
@@ -291,6 +383,29 @@ failure_modes:
         actions:
         - SFM-ACT-001
         - SFM-ACT-009
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: Panda checks torque magnitude and rate of every STEERING_LKA frame; an excessive curvature request is bounded
+            where it becomes torque
+          system_response: Over-limit frame refused; torque stays inside the envelope
+          effect_after_response: Torque bounded by the panda envelope; an in-envelope wrong curvature still steers (SOTIF, SFM-ACT-009)
+          severity_after: 10
+          frequency: 7
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-01 continuous limits
+            fdti_ms: 0
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: Toyota steering checks (torque with controls not allowed, magnitude and rate limits) tested on every PR and
+              mutation-tested in CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          actions:
+          - SFM-ACT-012
       - id: SFM-002.C3
         element: SFM-SE-003
         linked_failure_mode: SWF-001
@@ -311,6 +426,24 @@ failure_modes:
         actions:
         - SFM-ACT-001
         rationale: Rated, and actioned where needed, in the SW FMEA (SWF-001.C1 O6 D9 and SWF-001.C2 O5 D3; the worse is used); this row inherits that rating
+        msr:
+          mechanisms:
+          - 2
+          diagnostic: 'With the panda limits themselves wrong, only the host excessive-actuation check remains: lateral acceleration
+            above 2x the ISO 11270 limit for 0.25 s (WP-S-04 T-21)'
+          system_response: 'SOFT_DISABLE: actuation continues for up to 3 s while the alert counts down (T-16); 3.25 s exceeds the
+            0.5 s SG-01 FTTI'
+          effect_after_response: Excessive torque continues for up to 3.25 s before disengagement
+          severity_after: 10
+          frequency: 6
+          monitoring: 8
+          ap: H
+          timing:
+            fdti_ms: 250
+            frti_ms: 3000
+            basis: code_derived
+          actions:
+          - SFM-ACT-010
       - id: SFM-002.C4
         element: SFM-SE-011
         description: Wrong vehicle parameters (steer ratio, lateral accel factor, torque offsets) from online learners
@@ -330,6 +463,29 @@ failure_modes:
         actions:
         - SFM-ACT-001
         - SFM-ACT-002
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: Panda torque magnitude and rate limits are opendbc constants, independent of the learned vehicle parameters,
+            and are checked on every frame
+          system_response: Over-limit frame refused; torque stays inside the envelope
+          effect_after_response: Torque bounded by the panda envelope; in-envelope tracking error remains (SFM-004)
+          severity_after: 10
+          frequency: 6
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-01 continuous limits
+            fdti_ms: 0
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: Toyota steering checks (torque with controls not allowed, magnitude and rate limits) tested on every PR and
+              mutation-tested in CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          actions:
+          - SFM-ACT-012
     notes: "HARA input: excessive steering intervention while engaged."
 
   - id: SFM-003
@@ -365,6 +521,22 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-003
+        msr:
+          mechanisms:
+          - 1
+          - 2
+          diagnostic: 'None detects the direction: the panda rate limit bounds how fast the deviation grows, and only the driver notices
+            it'
+          system_response: None automatic; steerOverride hands lateral control to the driver once the driver steers
+          effect_after_response: 'Unchanged: deviation away from the lane centre at the limited rate until the driver overrides'
+          severity_after: 10
+          frequency: 6
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-014
       - id: SFM-003.C2
         element: SFM-SE-016
         description: Sign convention error in steering signal parse or pack for this car
@@ -381,6 +553,22 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-003
+        msr:
+          mechanisms:
+          - 1
+          - 2
+          diagnostic: 'None detects the direction: the panda rate limit bounds how fast the deviation grows, and only the driver notices
+            it'
+          system_response: None automatic; steerOverride hands lateral control to the driver once the driver steers
+          effect_after_response: 'Unchanged: deviation away from the lane centre at the limited rate until the driver overrides'
+          severity_after: 10
+          frequency: 6
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-014
       - id: SFM-003.C3
         element: SFM-SE-010
         description: Model desired curvature has wrong sign (corrupted frame, wrong camera stream)
@@ -397,6 +585,22 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-009
+        msr:
+          mechanisms:
+          - 1
+          - 2
+          diagnostic: 'None detects the direction: the panda rate limit bounds how fast the deviation grows, and only the driver notices
+            it'
+          system_response: None automatic; steerOverride hands lateral control to the driver once the driver steers
+          effect_after_response: 'Unchanged: deviation away from the lane centre at the limited rate until the driver overrides'
+          severity_after: 10
+          frequency: 6
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-014
       - id: SFM-003.C4
         element: SFM-SE-002
         description: Device mount moved after calibration
@@ -413,6 +617,22 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-003
+        msr:
+          mechanisms:
+          - 1
+          - 2
+          diagnostic: 'None detects the direction: the panda rate limit bounds how fast the deviation grows, and only the driver notices
+            it'
+          system_response: None automatic; steerOverride hands lateral control to the driver once the driver steers
+          effect_after_response: 'Unchanged: deviation away from the lane centre at the limited rate until the driver overrides'
+          severity_after: 10
+          frequency: 5
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-014
     notes: "HARA input: steering away from lane while engaged."
 
   - id: SFM-004
@@ -567,6 +787,26 @@ failure_modes:
         detection: 10
         ap: H
         rationale: Rated, and actioned, in the SW FMEA (SWF-047.C1, SWF-ACT-041, SWF-ACT-044); this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: selfdrived liveness check on controlsState (10 missed periods at 100 Hz, T-14); card stops sending once carControl
+            is 0.1 s old (T-13). The panda has no command-freshness check at BL-004 (TSR-408)
+          system_response: commIssue SOFT_DISABLE (3 s, T-16); after card stops, the EPS drops LKA in about 2 s (T-23)
+          effect_after_response: Last torque command held about 0.1 s, then LKA frames stop and assist decays over about 2 s without
+            a defined active zero frame
+          severity_after: 10
+          frequency: 6
+          monitoring: 8
+          ap: H
+          timing:
+            ftti_ref: SG-01 SoC command stall
+            ftti_ms: 500
+            fdti_ms: 100
+            frti_ms: 3000
+            basis: code_derived
+          actions:
+          - SFM-ACT-015
       - id: SFM-006.C2
         element: SFM-SE-010
         description: modeld output frozen (stale frame) but still published as valid
@@ -583,6 +823,21 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-002
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'Liveness and frequency checks pass: the frozen model output is still published on time and marked valid. No
+            frozen-content or age check on model outputs at BL-004 (TSR-602)'
+          system_response: None until another check trips
+          effect_after_response: 'Unchanged: steering follows a frozen path'
+          severity_after: 10
+          frequency: 6
+          monitoring: 9
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-015
       - id: SFM-006.C3
         element: SFM-SE-019
         description: Messaging delivers stale data with fresh timestamps
@@ -599,6 +854,20 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-002
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: Liveness checks use arrival and timestamps, so stale data with fresh timestamps passes them
+          system_response: None until another check trips
+          effect_after_response: 'Unchanged: control acts on stale data'
+          severity_after: 10
+          frequency: 5
+          monitoring: 9
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-015
     notes: "HARA input: constant steering command not following road."
 
   - id: SFM-007
@@ -1751,6 +2020,23 @@ failure_modes:
         ap: H
         rationale: Rated, and actioned where needed, in the SW FMEA (SWF-013.C2 O8 D9, SWF-ACT-009; open LionDriver#36/#41 set and check the reference build);
           this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'controlsMismatch compares the panda safety model and parameter with CarParams, only from 10 s after start (T-18).
+            Not compared with an FTTI: the fault is present from power-up'
+          system_response: IMMEDIATE_DISABLE with alert; engagement refused while the mismatch persists
+          effect_after_response: Item disengaged with an alert
+          severity_after: 8
+          frequency: 8
+          monitoring: 7
+          ap: H
+          timing:
+            fdti_ms: 10000
+            frti_ms: 10
+            basis: code_derived
+          actions:
+          - SFM-ACT-008
       - id: SFM-029.C2
         element: SFM-SE-003
         linked_failure_mode: SWF-001
@@ -1771,6 +2057,21 @@ failure_modes:
         actions:
         - SFM-ACT-001
         rationale: Rated, and actioned where needed, in the SW FMEA (SWF-001.C1 O6 D9 and SWF-001.C2 O5 D3; the worse is used); this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: controlsMismatch checks which safety model is active, not its limit values; the limit code is itself
+            the monitor that has failed'
+          system_response: None
+          effect_after_response: 'Unchanged: commands beyond the intended envelope reach the EPS'
+          severity_after: 10
+          frequency: 6
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-001
       - id: SFM-029.C3
         element: SFM-SE-003
         linked_failure_mode: DFM-001
@@ -1786,6 +2087,7 @@ failure_modes:
         detection: 10
         ap: H
         rationale: Hardware fault rated in the DFMEA (DFM-001, FMEDA SG-001); this row inherits that rating
+        msr_exempt: Hardware cause; rated once in the DFMEA (DFM-001.C1)
       - id: SFM-029.C4
         element: SFM-SE-004
         description: Harness allows the device to reach a bus without passing the panda filter
@@ -1802,6 +2104,20 @@ failure_modes:
         ap: H
         rationale: Excluded by the hardware architecture if the stated assumption holds; confirm in the DFMEA when hardware documentation is obtained. No further
           action
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: controlsMismatch cannot see a path that bypasses the panda'
+          system_response: None
+          effect_after_response: Unchanged
+          severity_after: 10
+          frequency: 2
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          rationale: Only the harness design keeps the device behind the panda; no in-field monitor can see a bypass. The barrier
+            is checked at installation (PFMEA, WP-O-01). Kept as a known gap with F 2
     notes: "Latent-fault candidate: an unenforced limit has no effect until a second fault occurs. Key input for FMEDA LFM."
 
   - id: SFM-030
@@ -1994,6 +2310,7 @@ failure_modes:
         ap: H
         rationale: Hardware fault rated in the DFMEA (DFM-010 O3 D10, DFM-011 O3 D9); this row inherits that rating; relayMalfunction (SWF-012) is the in-field
           mechanism
+        msr_exempt: Hardware cause; rated once in the DFMEA (DFM-010.C1)
       - id: SFM-034.C2
         element: SFM-SE-003
         linked_failure_mode: DFM-011
@@ -2009,6 +2326,7 @@ failure_modes:
         detection: 10
         ap: H
         rationale: Hardware fault rated in the DFMEA (DFM-011, DFM-010); this row inherits that rating
+        msr_exempt: Hardware cause; rated once in the DFMEA (DFM-011.C1)
 
 actions:
   - id: SFM-ACT-001
@@ -2073,3 +2391,23 @@ actions:
     owner: Jherrod Thomas
     status: completed
     evidence: "cruiseMismatch now alerts after 1 s (change-2026-10-13-host-supervision.md); see SWF-ACT-034"
+  - id: SFM-ACT-012
+    kind: monitoring
+    status: open
+    description: Measure on the HIL bench and the reference car (WP-V-05) how the panda reacts to over-limit and not-engaged
+      torque frames, and what the EPS does when frames are refused; re-rate the MSR rows from code-derived to measured timing
+  - id: SFM-ACT-013
+    kind: monitoring
+    status: open
+    description: Check on the host, within the SG-01 FTTI, that the panda reports controls_allowed false while the item is disengaged
+      (the reverse of the BL-004 controlsMismatch counter), with a disable and an alert
+  - id: SFM-ACT-014
+    kind: monitoring
+    status: open
+    description: Specify in the TSC a steering-direction plausibility monitor (commanded torque sign against measured yaw rate
+      and lane-relative lateral motion), or justify its absence against HZ-003
+  - id: SFM-ACT-015
+    kind: monitoring
+    status: open
+    description: 'Detect stale commands and inputs within the SG-01 FTTI: command-frame freshness in the MCU with an active
+      zero frame (TSR-408, TSR-109) and frozen-content and age checks on model outputs in controlsd (TSR-602, AIR-17)'

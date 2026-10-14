@@ -1,6 +1,6 @@
 # LionDriver — FMEA-MSR: audit and plan
 
-**Status:** Draft v0.2, 2026-10-14. Step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
+**Status:** Draft v0.3, 2026-10-14. Step M1 pilot done (§4.7): 32 causes rated (DFMEA complete, System FMEA SG-01 lateral chain), MSR line and §7 in the review pages. v0.2: step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
 **Basis:** AIAG & VDA FMEA Handbook (2019), Supplemental FMEA for Monitoring and System Response (FMEA-MSR), ISO 26262-4 §6 (FTTI) and ISO 26262-5 §8 (diagnostic coverage), by reference.
 **Related:** [fmea-plan.md](fmea-plan.md), [rating-tables.md](rating-tables.md) (RT-1), [WP-S-04 timing and FTTI budget](../../03-system/WP-S-04-timing-ftti-budget.md), [WP-V-05 fault injection](../../06-validation/WP-V-05-fault-injection.md).
 
@@ -131,15 +131,30 @@ A cause carries `msr` or `msr_exempt` (a reason), never both. The header gets `m
 | Step | Deliverable | Depends on |
 |---|---|---|
 | M0 | RT-2 (§7 tables), schema `msr` block, linter rules and tests; no rows — **done 2026-10-14** | This plan |
-| M1 | Pilot: SG-01 lateral chain, about 15 causes in System FMEA and DFMEA | M0, WP-S-04 rev 0.5 |
+| M1 | Pilot: SG-01 lateral chain in the System FMEA (17 rated, 3 rated in the DFMEA) and all 15 DFMEA causes — **done 2026-10-14** | M0, WP-S-04 rev 0.5 |
 | M2 | Remaining System FMEA and DFMEA in-scope causes | M1 review |
-| M3 | Review pages, Figure 4-2, CI check | M1 |
+| M3 | Review pages (MSR line per failure mode, §7 table and frequency × monitoring map — **done with M1**), Figure 4-2, MSR columns in the review workbooks | M1 |
 | M4 | Re-rate M as WP-V-05 measurements land (code-derived → measured) | WP-V-05 |
 | M5 | Independent review of the MSR rows with the FMEA set | M2 |
 
 **Expected first result:** most M ratings will start at 5–8 because no timing has been measured yet. That is the honest picture, and it ranks the WP-V-05 measurements by safety value.
 
-### 4.7 Risks
+### 4.7 Pilot result (M1)
+
+| | System FMEA (BL-004) | DFMEA (BL-002) |
+|---|---|---|
+| Rated / in scope | 17 / 64 (3 more rated in the DFMEA) | 15 / 15 |
+| Best monitoring | M 5: panda per-frame steering checks (not engaged, torque magnitude and rate), mutation-tested, code-derived timing | M 7: IWDG reset, response unconfirmed (relay release UK-06, LSI margin OI-7) |
+| Reacts, but too slowly or incompletely (M 7–8) | Excessive-actuation check plus 3 s soft disable against a 0.5 s FTTI (SFM-002.C3); command stall held 0.1 s, then about 2 s of EPS decay (SFM-006.C1); safety-model mismatch only after 10 s (SFM-029.C1) | RX loss warns after about 2.2 s against 1 s (DFM-009); relay stuck released found after 1–2 s against 0.5 s (DFM-011); stuck-dominant transceiver not released (DFM-008) |
+| No monitor (M 9–10) | Wrong steering direction (SFM-003, 4 causes); panda authority wrong while disengaged (SFM-001.C2); frozen model output and stale messages (SFM-006.C2/C3); limit-code defect (SFM-029.C2); harness bypass (SFM-029.C4) | CPU, flash, SRAM, brown-out, relay readback, TX read-back, harness disconnect, bootloader (10 causes) |
+
+**What it shows:**
+- The MSR rows put on one page what WP-S-04 §5 lists as "not met", against the failure causes they leave open.
+- New monitoring actions: SFM-ACT-012 (measure the panda reaction on HIL), SFM-ACT-013 (host check of panda authority while disengaged), SFM-ACT-014 (steering-direction plausibility monitor), SFM-ACT-015 (command and input freshness, TSR-408/602). The DFMEA rows reuse the existing DFM-ACT actions.
+- **Every MSR AP is H.** With S 10 and F ≥ 4, the provisional table gives H at every M except M 1. So M, not the MSR AP, is what ranks the work: the review pages sort by M. Whether the handbook table separates these rows better is open until it is transcribed (decision register).
+- Host supervision added after BL-004 (TSR-615 panda TX blocked, TSR-621 mismatch timing) and the heartbeat-loss siren are not credited. They are re-rated with the next System FMEA baseline.
+
+### 4.8 Risks
 
 1. **Double counting** with FMEDA DC: handled by the cross-check (§4.4) and by keeping FMEDA as the source for hardware λ and DC.
 2. **Optimistic severity after response:** S after response may drop below 10 only if the FSC safe state is reached without driver action, or with a driver action the HARA rates controllable (C ≤ 2 within the warning time).

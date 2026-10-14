@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.3 | draft | BL-002 | RT-1 | 2026-10-12 |
+| 0.4 | draft | BL-002 | RT-2 | 2026-10-14 |
 
 **Scope.** Safety-relevant hardware of AC-001 at BL-002: comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
 
@@ -24,6 +24,7 @@ Read the diagrams first, then the worksheet. Comment on this page's lines in a p
 - [Worksheet](#4-worksheet)
 - [Actions](#5-actions)
 - [Priority H causes without a completed action](#6-priority-h-causes-without-a-completed-action)
+- [Monitoring and system response](#7-monitoring-and-system-response)
 
 ## 1. Block and boundary diagram
 
@@ -122,7 +123,9 @@ Effects:
 |---|---|---|:-:|:-:|:-:|---|
 | `DFM-001.C1` Permanent fault in the Cortex-M7 core or bus matrix; single core, no lockstep, no CPU self-test | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-001 |
 
-Safety mechanisms: None in the MCU at BL-002. Host compares controls_allowed after about 2 s (QM, does not check limits). EPS and PCM own limits (AOU-01, AOU-05)
+Safety mechanisms: (1) None in the MCU at BL-002. Host compares controls_allowed after about 2 s (QM, does not check limits). EPS and PCM own limits (AOU-01, AOU-05)
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-001.C1` mechanism 1: M 9 · F 6 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-CPU-01. High diagnostic coverage is not credible without hardware redundancy.</sub>
 
@@ -141,7 +144,9 @@ Effects:
 |---|---|---|:-:|:-:|:-:|---|
 | `DFM-002.C1` Multi-bit flash error or cell degradation; double-error ECC flag not handled; image signature checked at boot only | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub><br>• Bootstub signature check at power-up (bootstub.c:47-72); flash ECC corrects single bits in silicon <sub>panda/board/bootstub.c</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 2 | 10 | 🔴 **H** | DFM-ACT-002 |
 
-Safety mechanisms: Boot-time signature only. Periodic code CRC exists on panda branch liondriver/g1-layer1 (TSR-MCU-09), not pinned at BL-002
+Safety mechanisms: (1) Boot-time signature only. Periodic code CRC exists on panda branch liondriver/g1-layer1 (TSR-MCU-09), not pinned at BL-002
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-002.C1` mechanism 1: M 9 · F 4 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-FLS-02.</sub>
 
@@ -163,7 +168,9 @@ Effects:
 | `DFM-003.C1` Double-bit soft error or permanent SRAM fault; RAMECC monitors not configured, ECC interrupt not registered | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-002 |
 | `DFM-003.C2` Wrong-address write by the SPI DMA (no MPU) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-002 |
 
-Safety mechanisms: None at BL-002. RAMECC handling, redundant storage and start-up RAM test exist on panda branch liondriver/g1-layer1 (TSR-MCU-07, -08, -10), not pinned
+Safety mechanisms: (1) None at BL-002. RAMECC handling, redundant storage and start-up RAM test exist on panda branch liondriver/g1-layer1 (TSR-MCU-07, -08, -10), not pinned
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-003.C1` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-003.C2` mechanism 1: M 10 · F 3 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-RAM-02/03, FM-CPU-07.</sub>
 
@@ -184,7 +191,9 @@ Effects:
 | `DFM-019.C1` Soft error or permanent fault in the copy into FDCAN message RAM, the message RAM or the FDCAN core. The packet XOR is checked at the FDCAN load (fdcan.h:100) and covers only the software queue; the CAN CRC is computed after the fault | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub><br>• Packet XOR checked before the FDCAN load (software queue only) <sub>panda/board/drivers/fdcan.h</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-013 |
 | `DFM-019.C2` Transceiver fault that changes bits on TX without a CAN error (not credible for a single bit, which the CAN CRC and the bit monitoring of the transmitting controller detect; kept until the transceiver part is known, WP-H-02 UK-01) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 2 | 10 | 🔴 **H** | DFM-ACT-013 |
 
-Safety mechanisms: None after the FDCAN load (SPF-02). TSR-517 specifies a TX read-back of own frames; not implemented at BL-002
+Safety mechanisms: (1) None after the FDCAN load (SPF-02). TSR-517 specifies a TX read-back of own frames; not implemented at BL-002
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-019.C1` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**<br>`DFM-019.C2` mechanism 1: M 10 · F 2 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-A-04 BE-1.10 and BE-4.03 (SPF-02); FMEDA SG-001 FMD-002 and FMD-010. The same TX path carries 0x2E4 and 0x343, so the rates of the SG-001 rows apply to the longitudinal path; SG-04 has no FMEDA of its own yet.</sub>
 
@@ -204,7 +213,9 @@ Effects:
 |---|---|---|:-:|:-:|:-:|---|
 | `DFM-004.C1` Hang in an ISR or main loop, unused vector to Default_Handler, or assert_fatal loop | • IWDG (LSI), 90 ms nominal, window mode, started on every relay drive and fed only after safety-task and main-loop progress (BL-002, panda#1, #3); a reset floats the relay GPIO <sub>panda/board/drivers/hw_watchdog.h</sub> | • Watchdog HIL test with injected hangs (FAULT_INJECTION build); targeted, not yet run (no HIL bench, D-04) <sub>panda/tests/hitl/test_10_hw_watchdog.py</sub> | 3 | 8 | 🔴 **H** | DFM-ACT-003 |
 
-Safety mechanisms: IWDG reset releases the relay if the drive circuit is de-energise-to-safe (HWSR-502, unconfirmed, UK-06)
+Safety mechanisms: (1) IWDG reset releases the relay if the drive circuit is de-energise-to-safe (HWSR-502, unconfirmed, UK-06)
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-004.C1` mechanism 1: M 7 · F 6 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-CPU-03/05. Before BL-002 there was no reset path (O was 7).</sub>
 
@@ -258,7 +269,9 @@ Effects:
 |---|---|---|:-:|:-:|:-:|---|
 | `DFM-007.C1` Vehicle supply dip (cranking, alternator fault) with BOR level not set and PVD not enabled | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 5 | 10 | 🔴 **H** | DFM-ACT-005 |
 
-Safety mechanisms: None at BL-002 (PVD handler stub; BOR level unknown, UK-04)
+Safety mechanisms: (1) None at BL-002 (PVD handler stub; BOR level unknown, UK-04)
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-007.C1` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-PWR-02; WP-A-03 DFI-01, DFI-06 (common cause with the EPS and the SoC).</sub>
 
@@ -279,7 +292,9 @@ Effects:
 |---|---|---|:-:|:-:|:-:|---|
 | `DFM-008.C1` XCVR1 TX driver fault or TXD stuck low | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-006 |
 
-Safety mechanisms: Transceiver dominant-timeout (part dependent, unknown); FDCAN error counters read, core reset on bus-off; no safety reaction
+Safety mechanisms: (1) Transceiver dominant-timeout (part dependent, unknown); FDCAN error counters read, core reset on bus-off; no safety reaction
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-008.C1` mechanism 1: M 8 · F 5 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-CAN-01. Vehicle ECUs detect the bus failure themselves.</sub>
 
@@ -297,7 +312,9 @@ Effects:
 |---|---|---|:-:|:-:|:-:|---|
 | `DFM-009.C1` XCVR1 RX open or stuck recessive | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • Per-message RX timeout test (opendbc, CI) verifies the reaction in software, not the transceiver fault <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 3 | 9 | 🔴 **H** | DFM-ACT-006 |
 
-Safety mechanisms: RX timeout after 5 periods (BL-002, about 0.16 s) withdraws controls; SoC alerts on panda state
+Safety mechanisms: (1) RX timeout after 5 periods (BL-002, about 0.16 s) withdraws controls; SoC alerts on panda state
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-009.C1` mechanism 1: M 8 · F 5 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-CAN-02. Detected and safe-direction; severity stays 10 because the end effect is loss of lateral control while engaged.</sub>
 
@@ -318,7 +335,9 @@ Effects:
 | `DFM-010.C1` Relay contacts welded in the intercept position | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-007 |
 | `DFM-010.C2` Relay driver output (MCU pin or transistor) stuck on | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-007 |
 
-Safety mechanisms: None: no relay readback (GAP-12)
+Safety mechanisms: (1) None: no relay readback (GAP-12)
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-010.C1` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-010.C2` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-REL-02/04: a single-point path for the PCS goal that no firmware change can close.</sub>
 
@@ -337,7 +356,9 @@ Effects:
 |---|---|---|:-:|:-:|:-:|---|
 | `DFM-011.C1` Relay coil or driver open, or contacts welded in the stock position | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • Relay-malfunction tests in the opendbc suite exercise the software reaction, not the relay <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 3 | 9 | 🔴 **H** | DFM-ACT-007 |
 
-Safety mechanisms: Relay malfunction detection: stock camera message on the car side after a 1 s grace blocks all TX (safety.h stock_ecu_check)
+Safety mechanisms: (1) Relay malfunction detection: stock camera message on the car side after a 1 s grace blocks all TX (safety.h stock_ecu_check)
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-011.C1` mechanism 1: M 8 · F 5 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-REL-01.</sub>
 
@@ -357,7 +378,9 @@ Effects:
 |---|---|---|:-:|:-:|:-:|---|
 | `DFM-012.C1` Connector not fully latched at installation, or vibration loosens it | • Owner installation per comma instructions; no LionDriver installation check yet (WP-O-01) <sub>assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 5 | 10 | 🔴 **H** | DFM-ACT-008 |
 
-Safety mechanisms: RX timeouts and host canBusMissing alert
+Safety mechanisms: (1) RX timeouts and host canBusMissing alert
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-012.C1` mechanism 1: M 9 · F 5 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-HAR-01; WP-A-03 DFI-20.</sub>
 
@@ -426,7 +449,9 @@ Effects:
 |---|---|---|:-:|:-:|:-:|---|
 | `DFM-016.C1` SoC drives STM_BOOT0/STM_RST_N (fault or compromise); no RDP/WRP; pandad recovery flashes a development bootstub | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 4 | 10 | 🔴 **H** | DFM-ACT-010 |
 
-Safety mechanisms: Bootstub signature check, but the debug key is accepted in debug builds and RDP/WRP are not set (GAP-24, GAP-38). D-09/D-10 decided, not implemented
+Safety mechanisms: (1) Bootstub signature check, but the debug key is accepted in debug builds and RDP/WRP are not set (GAP-24, GAP-38). D-09/D-10 decided, not implemented
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-016.C1` mechanism 1: M 9 · F 4 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-BT0-01; LD-DES-001.</sub>
 
@@ -514,3 +539,34 @@ Effects:
 | `DFM-018.C1` | MCU runs above its temperature rating | 10/4/10 | DFM-ACT-012 |
 | `DFM-019.C1` | Approved CAN frame altered between the TX check and the bus | 10/3/10 | DFM-ACT-013 |
 | `DFM-019.C2` | Approved CAN frame altered between the TX check and the bus | 10/2/10 | DFM-ACT-013 |
+
+## 7. Monitoring and system response
+
+FMEA-MSR rates what happens in the car when a cause occurs: does a diagnostic catch it, and does the system reach a safe state within the fault-tolerant time interval (FTTI)? It adds frequency (F), monitoring (M) and the severity after the response, with its own action priority; S, O, D and AP above are unchanged. Scales: [rating-tables.md §7](../../rating-tables.md#7-fmea-msr--monitoring-and-system-response-added-in-rt-2); scope and plan: [msr-plan.md](../../msr-plan.md); FTTI rows: [WP-S-04 §3.7](../../../../03-system/WP-S-04-timing-ftti-budget.md#37-summary-of-fttis-and-budgets).
+
+**Coverage:** 15 of 15 in-scope causes rated, 0 rated elsewhere (`msr: complete`).
+
+> [!WARNING]
+> The MSR action priority uses a provisional table until the AIAG-VDA handbook table is transcribed (rating-tables §7.4). Read the M and F columns; the AP column will be re-rated.
+
+![Frequency by monitoring](figures/dfmea-msr.svg)
+
+Sorted by monitoring, weakest first. Timing is detection + reaction time against the FTTI of the cited WP-S-04 row.
+
+| Cause | Diagnostic → system response | Timing | S after | F | M | MSR AP | Actions |
+|---|---|---|:-:|:-:|:-:|:-:|---|
+| `DFM-003.C1` Double-bit soft error or permanent SRAM fault; RAMECC monitors not configured, ECC interrupt not registered | None at BL-002: RAMECC monitors not configured, no redundant storage → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-002 |
+| `DFM-007.C1` Vehicle supply dip (cranking, alternator fault) with BOR level not set and PVD not enabled | None at BL-002: PVD handler is a stub and the BOR level is unknown (UK-04) → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-005 |
+| `DFM-010.C1` Relay contacts welded in the intercept position | None: no relay readback (GAP-12) → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-007 |
+| `DFM-010.C2` Relay driver output (MCU pin or transistor) stuck on | None: no relay readback (GAP-12) → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-007 |
+| `DFM-019.C1` Soft error or permanent fault in the copy into FDCAN message RAM, the message RAM or the FDCAN core. The packet XOR is checked at the FDCAN load (fdcan.h:100) and covers only the software queue; the CAN CRC is computed after the fault | None after the FDCAN load: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-013 |
+| `DFM-003.C2` Wrong-address write by the SPI DMA (no MPU) | None at BL-002: no MPU and no redundant storage of the safety state → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-002 |
+| `DFM-019.C2` Transceiver fault that changes bits on TX without a CAN error (not credible for a single bit, which the CAN CRC and the bit monitoring of the transmitting controller detect; kept until the transceiver part is known, WP-H-02 UK-01) | None: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 2 | **10** | 🔴 **H** | DFM-ACT-013 |
+| `DFM-001.C1` Permanent fault in the Cortex-M7 core or bus matrix; single core, no lockstep, no CPU self-test | None in the MCU at BL-002. The host compares controls_allowed after about 2 s (QM); it does not check limits → None for a wrong limit result | unknown | 10 | 6 | **9** | 🔴 **H** | DFM-ACT-001 |
+| `DFM-012.C1` Connector not fully latched at installation, or vibration loosens it | RX timeouts and host canBusMissing cover a partial disconnect only; a full disconnect also removes the device supply, so nothing warns → Relay drops out with the supply; stock camera restored | unknown | 10 | 5 | **9** | 🔴 **H** | DFM-ACT-008 |
+| `DFM-002.C1` Multi-bit flash error or cell degradation; double-error ECC flag not handled; image signature checked at boot only | Bootstub signature check at power-up only; no periodic code CRC in the pinned firmware → None during the drive | unknown | 10 | 4 | **9** | 🔴 **H** | DFM-ACT-002 |
+| `DFM-016.C1` SoC drives STM_BOOT0/STM_RST_N (fault or compromise); no RDP/WRP; pandad recovery flashes a development bootstub | Bootstub signature check exists but accepts the debug key in debug builds; RDP and WRP not set (GAP-24) → None for a signed debug image | unknown | 10 | 4 | **9** | 🔴 **H** | DFM-ACT-010 |
+| `DFM-008.C1` XCVR1 TX driver fault or TXD stuck low | FDCAN error counters; core reset on bus-off. The transceiver dominant timeout is part dependent and unknown → A core reset does not release a transceiver that holds the bus dominant; no safe-state reaction | unknown | 10 | 5 | **8** | 🔴 **H** | DFM-ACT-006 |
+| `DFM-009.C1` XCVR1 RX open or stuck recessive | RX timeout after 5 periods (about 0.16 s) withdraws controls_allowed; the host warns through the 2 s controlsMismatch counter (T-17) → Authority withdrawn at once; warning about 2.2 s after onset, beyond the 1 s budget to warning | 160 + 2000 ms vs FTTI 1000 ms ❌ (code-derived) | 10 | 5 | **8** | 🔴 **H** | DFM-ACT-006 |
+| `DFM-011.C1` Relay coil or driver open, or contacts welded in the stock position | Relay malfunction: a stock camera frame on the car side after the 1 s grace blocks all TX (T-08, 1-2 s) → All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE) | 2000 + 10 ms vs FTTI 500 ms ❌ (code-derived) | 10 | 5 | **8** | 🔴 **H** | DFM-ACT-007 |
+| `DFM-004.C1` Hang in an ISR or main loop, unused vector to Default_Handler, or assert_fatal loop | IWDG expires about 90 ms after the last feed (T-09a). Timing fits on paper, but whether the reset releases the relay is unconfirmed (HWSR-502, UK-06) and the LSI tolerance leaves no shown margin (OI-7), so the response is not credited → MCU reset; relay de-energised if the drive circuit is de-energise-to-safe; stock camera CAN restored | 90 + 100 ms vs FTTI 200 ms ✅ (code-derived) | 10 | 6 | **7** | 🔴 **H** | DFM-ACT-003 |
