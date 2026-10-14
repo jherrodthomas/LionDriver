@@ -290,7 +290,7 @@
 
 - id: TSR-301
   kind: tsr
-  text: "The envelope shall grant actuation authority only on the rising edge of PCM_CRUISE (`0x1D2`) CRUISE_ACTIVE and shall revoke it in the same frame in which CRUISE_ACTIVE is received false (cancel, main switch off, PCM-internal drop)."
+  text: "The envelope shall grant actuation authority only on the rising edge of PCM_CRUISE (`0x1D2`) CRUISE_ACTIVE, and only once the SoC heartbeat reports the item engaged within 1 s of that edge (otherwise not until the next rising edge), and shall revoke it in the same frame in which CRUISE_ACTIVE is received false (cancel, main switch off, PCM-internal drop)."
   asil: "B‡"
   parents: [FSR-01.05, FSR-05.02]
   parent_text: "FSR-01.05, FSR-05.02"
@@ -299,7 +299,7 @@
   mechanism: "GATE"
   timing: "detect ≤ 1 period (30 ms at 33 Hz) / same frame"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Implemented: `safety.h:518-527`; `modes/toyota.h:143-146`. `0x1D2` has a checksum but no counter (GAP-01) → TSR-402…405"
+  baseline_impl: "Implemented: `safety.h:518-527`; `modes/toyota.h:143-146`. `0x1D2` has a checksum but no counter (GAP-01) → TSR-402…405. 2026-10-14, reference build: the heartbeat condition (WP-A-05 LS-06): the edge opens a 1 s window, the grant is made in the safety task once `heartbeat_engaged` is set; cancelled by cruise off, brake, an RX fault or a mode change (opendbc `9a13f60`, jherrodthomas/opendbc#14 (https://github.com/jherrodthomas/opendbc/pull/14)); unit-tested, not verified on the vehicle"
   status: proposed
   source: WP-S-02
 
@@ -1244,7 +1244,7 @@
   mechanism: "PLB"
   timing: "≤ 0.5 s / ≤ 0.5 s to warning"
   verification: "T-SIL, FI"
-  baseline_impl: "Implemented, not verified on the vehicle: `controlsMismatch` after 2 consecutive mismatched `pandaStates` samples and at most 0.5 s after the first mismatched frame (`selfdrive/selfdrived/supervision.py`, unit tests)"
+  baseline_impl: "Implemented, not verified on the vehicle: `controlsMismatch` after 2 consecutive mismatched `pandaStates` samples and at most 0.5 s after the first mismatched frame (`selfdrive/selfdrived/supervision.py`, unit tests). 2026-10-14: samples in the first 0.3 s after engaging are not counted, because the panda grants authority only on the heartbeat (TSR-301); the 0.5 s bound from the first mismatched frame is unchanged"
   status: proposed
   source: WP-S-02
 
