@@ -17,7 +17,7 @@ on:
       - '.github/workflows/safety.yaml'
       - 'tools/ci/build_manifest.py'
       - 'tools/ci/coverage/**'
-      - 'assurance/05-software/coverage/structural-baseline.json'
+      - 'assurance/05-software/coverage/**'
       - 'tools/release/release_variant.sh'
       - 'tools/release/build_release.sh'
   pull_request:
@@ -27,7 +27,7 @@ on:
       - '.github/workflows/safety.yaml'
       - 'tools/ci/build_manifest.py'
       - 'tools/ci/coverage/**'
-      - 'assurance/05-software/coverage/structural-baseline.json'
+      - 'assurance/05-software/coverage/**'
       - 'tools/release/release_variant.sh'
       - 'tools/release/build_release.sh'
   workflow_dispatch:

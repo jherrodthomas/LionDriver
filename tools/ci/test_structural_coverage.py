@@ -86,6 +86,34 @@ class TestStructuralCoverage(unittest.TestCase):
                       .read_text())
     self.assertEqual(sorted(base["units"]), sorted(sc.UNITS))
 
+  def test_gap_matching(self):
+    j = self.tmp / "j.md"
+    j.write_text("| ID | Unit | Function | Decision | Class | Rationale |\n|---|---|---|---|---|---|\n"
+                 "| CJ-01 | U-SAF-TOY | f | * | N | not called |\n"
+                 "| CJ-02 | U-SAF-TOY | g | if (a \\|\\| b) { | C | constant |\n"
+                 "| CJ-03 | U-SAF-TOY | h | * | N | stale |\n")
+    rows = sc.load_justifications(j)
+    self.assertEqual(rows[1]["decision"], "if (a || b) {")
+    d = llvm()
+    d["units"]["U-SAF-TOY"]["gaps"] = [{"function": "f", "decision": "*"},
+                                       {"function": "g", "decision": "if (a ||   b) {", "line": 3},
+                                       {"function": "k", "decision": "x;", "line": 9}]
+    matched, missing, stale = sc.match_gaps(d, rows)
+    self.assertEqual([r["id"] for _, _, r in matched], ["CJ-01", "CJ-02"])
+    self.assertEqual([g["function"] for _, g in missing], ["k"])
+    self.assertEqual([r["id"] for r in stale], ["CJ-03"])
+
+  def test_malformed_justification_row_is_refused(self):
+    j = self.tmp / "j.md"
+    j.write_text("| CJ-01 | U-SAF-TOY | f | * | X | bad class |\n")
+    with self.assertRaises(sc.CoverageError):
+      sc.load_justifications(j)
+
+  def test_committed_justifications_parse(self):
+    rows = sc.load_justifications()
+    self.assertEqual(len(rows), len({r["id"] for r in rows}))
+    self.assertTrue(all(r["unit"] in sc.UNITS for r in rows))
+
 
 if __name__ == "__main__":
   unittest.main()
