@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Proposed 2026-10-13: unit-tested, CI process replay to confirm; not verified on the vehicle or the HIL bench; not reviewed independently** |
+| Status | **Integrated 2026-10-13 (LionDriver #51, `824a0b0`): unit-tested, process replay run in CI; not verified on the vehicle or the HIL bench; not reviewed independently** |
 | Change request | Pull request from branch `claude/host-supervision` to `liondriver-dev` |
 | Origin | SW FMEA rev 0.6 host rows (SWF-032, SWF-034, SWF-039, SWF-040, SWF-043, SWF-045) and System FMEA actions SFM-ACT-010 / SFM-ACT-011 |
 | Reference configuration affected | Yes: the item disengages, with an alert, in fault cases where it previously continued or reacted later |

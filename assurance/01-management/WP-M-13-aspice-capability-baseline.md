@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-13 ASPICE capability baseline (self-assessment) |
 | Standard reference | Automotive SPICE PAM 4.0: process capability levels 1–2 (PA 1.1, PA 2.1, PA 2.2); processes per WP-M-01 T-12 |
-| Version | 0.2 (Figure 6-1 added, generated from §2–§6; 2026-10-13). 0.1 |
+| Version | 0.3 (§9 lists evidence that moved after the rating baseline, no re-rating; open items with owner and due gate; 2026-10-14). 0.2 (Figure 6-1 added, generated from §2–§6; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | Process (all) |
 | Author | Assurance team (initial draft) |
@@ -162,12 +162,27 @@ Even the processes with CL1 (SWE.3/SWE.4 safety code, SWE.5, SUP.8) do not reach
 
 The self-assessment is repeated at each gate (G0…G5) and its result recorded as a new version of this document. Before any capability claim is made externally, a formal assessment by a certified assessor is required (OI-1).
 
+## 9. Changes since the rating baseline (2026-10-14)
+
+The ratings in §4–§6 are at `8b8c6ae` and are **not** changed here. Re-rating is an assessment; it is due at the next gate review, G0 (§8). Evidence has moved since `8b8c6ae` for these processes:
+
+| Process | What changed | Evidence | Still open at 2026-10-14 |
+|---|---|---|---|
+| SUP.8 | D-01 done 2026-10-10: panda, opendbc, msgq, rednose and teleoprtc point at LionDriver forks with absolute URLs; tinygrad is pinned by commit, not `master`. Current pins: panda `a55bdfc`, opendbc `9a13f60` | `.gitmodules`; `git ls-tree HEAD panda opendbc_repo`; [WP-M-07 §5](WP-M-07-risk-management.md#5-decision-log-strategic-decisions-from-wp-m-01-8) D-01 | Version still `0.11.2` (`openpilot/common/version.h:1`, GAP-35); no release tag; baseline BL-001 `under-development` (`case/baselines/bl-001.yaml`) |
+| SUP.10 | 16 CT-1 change records (10 dated 2026-10-12, 4 dated 2026-10-13, 2 dated 2026-10-14) and 2 upstream sync reports, each with an impact analysis on the [WP-M-12 §7.3](WP-M-12-impact-analysis.md#73-template) template. `stale.yaml` auto-close removed (D-03) | [`07-supporting/impact/`](../07-supporting/impact/README.md) | None of the records has had an independent review ([WP-M-12 §7.2](WP-M-12-impact-analysis.md#72-procedure) deviation, R-26); no CODEOWNERS or PR template |
+| MAN.5 | Risk register with scores, owners and triggers, kept up to date (R-17 updated 2026-10-14); decision log; decision register for the lead's questions | [WP-M-07](WP-M-07-risk-management.md); [`decisions/register.yaml`](decisions/register.yaml) | Scores are single-author judgement (WP-M-07 OI-2) |
+| SUP.9 | LionDriver `SECURITY.md` (private reporting, response times, scope); problem and field report issue forms that route to the fork | `SECURITY.md`; `.github/ISSUE_TEMPLATE/problem_report.yml`, `field_report.yml`; [WP-M-09](WP-M-09-cybersecurity-plan.md) OI-5 | Private vulnerability reporting not yet enabled in the repository settings (B-07) |
+| SWE.3, SWE.4 (safety code) | Safety tests, MISRA (opendbc and panda) and mutation run in fork CI (D-03 mostly done) | `.github/workflows/safety.yaml` | Fork-owned replay references (D-03); line coverage only |
+
+The §2 method counted no `assurance/` work product, because none was tracked at `8b8c6ae`. They are tracked now. The re-rating has to decide which of them show performed practice and which only describe intended practice.
+
 ## Open items
 
-| ID | Item |
-|---|---|
-| OI-1 | Decide whether and when to commission a formal ASPICE assessment, and by whom |
-| OI-2 | Set targets for the informative processes SEC.1–SEC.4 and SUP.11 (and decide whether VAL.1, ACQ.4 and MAN.7 join the scope) |
-| OI-3 | Verify process names and base-practice content against the licensed PAM 4.0 |
-| OI-4 | Agree how upstream-only practices (comma Jenkins tests) are treated once the fork has its own equivalents |
-| OI-5 | MLE.3 cannot be performed by LionDriver; agree with the assessor whether the CL1 target for MLE.3 is achievable with substitute evidence or must be tailored |
+| ID | Open item | Owner | Due |
+|---|---|---|---|
+| OI-1 | Decide whether and when to commission a formal ASPICE assessment, and by whom | PM | G2 |
+| OI-2 | Set targets for the informative processes SEC.1–SEC.4 and SUP.11 (and decide whether VAL.1, ACQ.4 and MAN.7 join the scope) | PM / CSM | G1 |
+| OI-3 | Verify process names and base-practice content against the licensed PAM 4.0 | PM | G1 |
+| OI-4 | Agree how upstream-only practices (comma Jenkins tests) are treated once the fork has its own equivalents | PM | G1 |
+| OI-5 | MLE.3 cannot be performed by LionDriver; agree with the assessor whether the CL1 target for MLE.3 is achievable with substitute evidence or must be tailored | ML | G1 |
+| OI-6 | Re-rate §4–§6 at the G0 gate review against the evidence in §9 | PM | G0 |

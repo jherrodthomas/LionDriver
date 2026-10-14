@@ -3911,3 +3911,24 @@
       detail: "No cost now. The MSR results stay provisional, and an assessor will ask for the official table."
   sources: ["assurance/08-analyses/fmea/rating-tables.md", "assurance/08-analyses/fmea/msr-plan.md"]
   status: queued
+
+- id: DQ-208
+  question: "How much of your time goes to LionDriver, and from what date should the schedule count?"
+  context: "The project plan gives each phase a length in months at one full-time person, so the Gantt chart can only say “month 0 to month 28–44”. With your weekly hours and a start date it becomes a dated schedule with gate dates. The total work is about 105–185 person-weeks before release."
+  reversibility: easy
+  blocks: "A dated schedule and gate dates (WP-M-03 OI-1, Figure 5-2); monthly progress tracking"
+  gate: G0
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Give a rough figure now, e.g. 10 hours a week from 1 November 2026"
+      detail: "The Gantt gets real dates at once and is re-dated whenever the figure changes. Cost: the dates move if the hours do."
+    - key: B
+      title: "Full time from a date you name"
+      detail: "Gives the shortest schedule (G5 in about 2.3–3.7 years). Cost: commits you to a pace that may not hold."
+    - key: C
+      title: "Keep relative months until a second person joins"
+      detail: "No commitment now. Cost: no gate dates, so slippage cannot be seen."
+  sources: ["assurance/01-management/WP-M-03-project-plan.md OI-1", "assurance/01-management/WP-M-03-project-plan.md §4.3, §5"]
+  status: queued

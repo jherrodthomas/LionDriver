@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-M-08 SOTIF plan |
 | Standard reference | ISO 21448:2022 §4 (management of SOTIF activities), §5–§13; ISO/PAS 8800:2024 (interface for AI-related insufficiencies); ASPICE 4.0 MAN.3 |
-| Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.3 (status in §4 from WP-M-00; Experimental Mode default off since 2026-10-14 in §2 and §8; open items with owner and due gate; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); SOTIF acceptance criteria and validation targets also reviewed by the external assessor (D-06) |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` |
+| Baseline | `8b8c6ae`; §4 status, §2 GAP-18 and §8 CM-1 updated at `bd85eff` (2026-10-14) |
 
 ## 1. Purpose and scope
 
@@ -22,12 +22,12 @@ Out of scope: hazards caused by E/E malfunctions (handled by the [functional saf
 
 ## 2. Why SOTIF is a primary concern for LionDriver
 
-The inherited stack has no SOTIF work products. The [gap assessment](../00-assessment/gap-assessment.md) records:
+The inherited stack has no SOTIF work products. The [gap assessment](../00-assessment/gap-assessment.md) records (line references at `8b8c6ae`):
 
 | Finding | SOTIF relevance |
 |---|---|
 | End-to-end ML driving (`openpilot/selfdrive/modeld/modeld.py`), trained by comma.ai on data LionDriver cannot see | Functional insufficiencies cannot be bounded from the training side; only black-box evaluation and architecture can bound them ([WP-M-10](WP-M-10-ai-safety-plan.md)) |
-| GAP-18: Experimental Mode on by default (`openpilot/common/params_keys.h:43`, upstream `f21bfc3`) | Makes model-controlled longitudinal behaviour the default, with no recorded hazard re-assessment. Conflicts with `docs/LIMITATIONS.md:35` |
+| GAP-18: Experimental Mode on by default (`openpilot/common/params_keys.h:43`, upstream `f21bfc3`) | Makes model-controlled longitudinal behaviour the default, with no recorded hazard re-assessment. Conflicts with `docs/LIMITATIONS.md:35`. Status 2026-10-14: the default is off again (`"0"` at `params_keys.h:43`, commit `38d3320`; decision register DQ-001 option A; [change record](../07-supporting/impact/change-2026-10-14-chill-mode-default.md)). The record is Proposed and not reviewed independently. Devices set up earlier keep their stored value, and the toggle stays |
 | GAP-16: 3 s soft disable that keeps actuating on failed inputs (`openpilot/selfdrive/selfdrived/state.py:7`) | Exposure window for degraded inputs |
 | GAP-17: diagnostics suppressed around the big-model fallback (`openpilot/selfdrive/selfdrived/selfdrived.py:383-384, 403, 457`) | Insufficiency of the monitoring function |
 | GAP-21: driver-monitoring weaknesses (`openpilot/selfdrive/monitoring/policy.py:29, 335`) | Controllability assumptions in HARA and SOTIF depend on an attentive driver |
@@ -49,20 +49,20 @@ The project has one maintainer today (WP-M-01 §9). Roles are listed separately 
 
 ## 4. SOTIF activities by clause
 
-Gates are defined in [WP-M-00 §2](WP-M-00-work-product-register.md#2-gates). "Status today" describes the baseline `8b8c6ae`, not intent.
+Gates are defined in [WP-M-00 §2](WP-M-00-work-product-register.md#2-gates). "Status today" describes the repository on 2026-10-14, not intent. Work product status is taken from the [WP-M-00 §3](WP-M-00-work-product-register.md#3-register) Status column. Draft means written and not reviewed.
 
 | ISO 21448 clause | Activity | Output work products | Gate | Inputs | Status today |
 |---|---|---|---|---|---|
 | §4 | Plan and manage SOTIF activities; integrate with FuSa and CS plans; define acceptance criteria approach | This plan (WP-M-08) | G0 | WP-M-01 | This draft |
-| §5 | Specify the intended functionality, the ODD, system and element functions, known performance limitations, and the driver's role | [WP-C-01](../02-concept/WP-C-01-item-definition.md), [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md), [WP-S-01](../03-system/WP-S-01-system-requirements.md) | G1 | `docs/LIMITATIONS.md`, `docs/SAFETY.md`, `docs/INTEGRATION.md`, code behaviour | Not started. Only upstream prose exists |
-| §6 | Identify hazards from insufficiencies and misuse; evaluate severity and controllability (reusing HARA ratings); set acceptance criteria | [WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md), [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md); hazard log in [WP-C-03](../02-concept/WP-C-03-hara.md) | G1 | WP-C-02, WP-C-03 | Not started |
-| §7 | Identify functional insufficiencies (specification and performance) and triggering conditions, including ML error causes; estimate acceptability of system response | [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md), [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) | G1 (initial), refined at G2 and G4 | WP-C-05, WP-A-04, model output description in `openpilot/selfdrive/modeld/parse_model_outputs.py` | Not started |
-| §8 | Define functional modifications that reduce SOTIF risk (restrict ODD, change defaults, add monitors, change HMI) | [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md), reflected in [WP-S-03](../03-system/WP-S-03-technical-safety-concept-architecture.md) | G1 / G2 | WP-C-06; gap actions 3 and 8 | Candidate modifications listed in §8 below |
-| §9 | Define the verification and validation strategy, validation targets and their rationale | [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) | G2 | Acceptance criteria (§5 of this plan), WP-C-06 | Not started |
-| §10 | Evaluate known hazardous scenarios (verification of the modifications, scenario-based testing) | [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md) | G4 | WP-V-02, scenario catalogue | Not started. Upstream maneuver tests exist (`openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py`) but have no link to hazards |
-| §11 | Evaluate unknown hazardous scenarios (exploratory driving, log mining, randomized simulation) | [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) | G5 | WP-V-02, WP-V-07 | Not started |
+| §5 | Specify the intended functionality, the ODD, system and element functions, known performance limitations, and the driver's role | [WP-C-01](../02-concept/WP-C-01-item-definition.md), [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md), [WP-S-01](../03-system/WP-S-01-system-requirements.md) | G1 | `docs/LIMITATIONS.md`, `docs/SAFETY.md`, `docs/INTEGRATION.md`, code behaviour | Draft (WP-C-01, WP-C-02, WP-S-01) |
+| §6 | Identify hazards from insufficiencies and misuse; evaluate severity and controllability (reusing HARA ratings); set acceptance criteria | [WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md), [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md); hazard log in [WP-C-03](../02-concept/WP-C-03-hara.md) | G1 | WP-C-02, WP-C-03 | Draft (WP-C-05, WP-C-08, WP-C-03) |
+| §7 | Identify functional insufficiencies (specification and performance) and triggering conditions, including ML error causes; estimate acceptability of system response | [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md), [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) | G1 (initial), refined at G2 and G4 | WP-C-05, WP-A-04, model output description in `openpilot/selfdrive/modeld/parse_model_outputs.py` | Draft (WP-C-06, WP-C-11) |
+| §8 | Define functional modifications that reduce SOTIF risk (restrict ODD, change defaults, add monitors, change HMI) | [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md), reflected in [WP-S-03](../03-system/WP-S-03-technical-safety-concept-architecture.md) | G1 / G2 | WP-C-06; gap actions 3 and 8 | WP-C-07 Draft. Candidates in §8 below. CM-1 (default off) changed in code on 2026-10-14, not reviewed |
+| §9 | Define the verification and validation strategy, validation targets and their rationale | [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) | G2 | Acceptance criteria (§5 of this plan), WP-C-06 | Draft (WP-V-02) |
+| §10 | Evaluate known hazardous scenarios (verification of the modifications, scenario-based testing) | [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md) | G4 | WP-V-02, scenario catalogue | Draft (WP-V-03 specification); not executed. Upstream maneuver tests exist (`openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py`) but have no link to hazards |
+| §11 | Evaluate unknown hazardous scenarios (exploratory driving, log mining, randomized simulation) | [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) | G5 | WP-V-02, WP-V-07 | Draft (WP-V-04 method); not executed |
 | §12 | Evaluate SOTIF achievement; recommend release (or release with restrictions, or no release) | [WP-K-02](../10-safety-case/WP-K-02-sotif-release-argument.md), contributes to [WP-K-01](../10-safety-case/WP-K-01-safety-case.md) and [WP-K-06](../10-safety-case/WP-K-06-release-record.md) | G5 | WP-V-03, WP-V-04, open-issue list | Skeleton only |
-| §13 | Operation phase: field monitoring, re-evaluation on new triggering conditions, user information | [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md), [WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md), [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md) | G6 | Fleet logs (LionDriver-owned only) | Not started |
+| §13 | Operation phase: field monitoring, re-evaluation on new triggering conditions, user information | [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md), [WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md), [WP-P-03](../07-supporting/WP-P-03-problem-resolution.md) | G6 | Fleet logs (LionDriver-owned only) | Draft (WP-O-03, WP-O-04, WP-P-03); no field operation yet |
 
 ### 4.1 Sequencing rules
 
@@ -100,7 +100,7 @@ Surrogate measures (driver takeovers, disengagements, FCW events, envelope limit
 ### 5.3 What LionDriver cannot claim
 
 - No claim can be built on comma.ai's fleet mileage or internal validation: LionDriver has no access to that data and T-06 rules out proven-in-use credit.
-- No claim covers configurations outside WP-M-01 §3.1. In particular, Experimental Mode and the Chestnut big-model path are excluded from claims until WP-C-07 decides otherwise (D-08; gap action 8).
+- No claim covers configurations outside WP-M-01 §3.1. In particular, Experimental Mode and the Chestnut big-model path are excluded from claims until WP-C-07 decides otherwise (D-08, decided 2026-10-10: Chill mode for the reference configuration; gap action 8).
 
 ## 6. Interface with the HARA and other analyses
 
@@ -108,7 +108,7 @@ Surrogate measures (driver takeovers, disengagements, FCW events, envelope limit
 |---|---|
 | Shared hazard log | One hazard log lives in [WP-C-03](../02-concept/WP-C-03-hara.md). SOTIF hazardous behaviours (SH-nn), triggering conditions (TC-nn) and functional insufficiencies (FI-nn) are added there and cross-referenced to H-nn / HS-nn. A hazardous event is rated once; SOTIF reuses the severity and controllability ratings |
 | Controllability and misuse | WP-C-08 provides the driver-interaction basis for both the HARA controllability ratings and the SOTIF misuse analysis. DM effectiveness (GAP-21) is analysed once and referenced from both |
-| Safety envelope | Envelope limits (`opendbc_repo/opendbc/safety/modes/toyota.h:173-210`) bound the consequence of any insufficiency of the QM stack. WP-C-06 records, for each FI, whether the envelope bounds it and whether the bounded behaviour is still controllable (GAP-04 must be closed for this to hold) |
+| Safety envelope | Envelope limits (`opendbc_repo/opendbc/safety/modes/toyota.h:298-336` at opendbc `9a13f60`) bound the consequence of any insufficiency of the QM stack. WP-C-06 records, for each FI, whether the envelope bounds it and whether the bounded behaviour is still controllable (GAP-04 must be closed for this to hold) |
 | TARA | Attacks that produce a SOTIF-type hazardous behaviour (e.g. manipulated parameters, GAP-20) are analysed in [WP-C-09](../02-concept/WP-C-09-tara.md) and linked to the same SH-nn |
 | AI | ML error causes (data coverage, distribution shift, robustness) enter WP-C-06 as FI-nn via [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) |
 | System safety analyses | WP-A-04 (FTA/FMEA) includes insufficiency-driven branches so that the same top events serve FuSa and SOTIF |
@@ -121,7 +121,7 @@ All tools below need classification under [WP-P-07](../07-supporting/WP-P-07-too
 |---|---|---|---|
 | Process replay | `openpilot/selfdrive/test/process_replay/test_processes.py`, `process_replay.py`, `compare_logs.py` | Regression oracle: shows that a change does not alter control outputs on recorded routes | Reference logs come from `commaai/ci-artifacts` (`test_processes.py:70`). LionDriver needs fork-owned references including Corolla routes |
 | Model replay | `openpilot/selfdrive/test/process_replay/model_replay.py` | Compares model outputs before/after a model or runtime change (§9) | Runs upstream only on comma's Jenkins device pool (`Jenkinsfile:297-299`, `tizi-replay`); test route fetched via `openpilot/tools/lib/openpilotci.py` (`model_replay.py:222-239`). Needs a fork-owned route set and runner |
-| Closed-loop simulation | `openpilot/tools/sim/` (MetaDrive bridge, `run_bridge.py`) | Scenario-based testing of known scenarios (§10), randomized exploration for §11 | CI job disabled upstream (`.github/workflows/tests.yaml:185`, `if: false  # FIXME`). Scenario fidelity (camera rendering, vehicle dynamics vs Corolla) must be argued before use as evidence |
+| Closed-loop simulation | `openpilot/tools/sim/` (MetaDrive bridge, `run_bridge.py`) | Scenario-based testing of known scenarios (§10), randomized exploration for §11 | CI job still disabled in the fork (`.github/workflows/tests.yaml:186`, `if: false  # FIXME`). Scenario fidelity (camera rendering, vehicle dynamics vs Corolla) must be argued before use as evidence |
 | Longitudinal maneuver tests | `openpilot/selfdrive/test/longitudinal_maneuvers/` (plant model) | Planner-level checks for lead/stop scenarios | No traceability to hazards; plant is not a Corolla model |
 | Safety replay | `opendbc_repo/opendbc/safety/safety_replay/` | Checks recorded drives against the envelope; detects envelope limit hits in real drives | Needs LionDriver-recorded Corolla logs |
 | Drive-log mining | Logs recorded by `openpilot/system/loggerd`; log tools in `openpilot/tools/` (e.g. jotpluggler) | Search for takeovers, near misses, FCW, envelope hits, DM events to discover unknown scenarios (§11) and monitor the field (§13) | LionDriver has no log store; logs today upload to comma's servers. A LionDriver-controlled log pipeline is required ([WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md)) |
@@ -134,7 +134,7 @@ These are candidates only. WP-C-07 decides each one with rationale and owns the 
 
 | # | Candidate | Addresses | WP-C-07 ID |
 |---|---|---|---|
-| CM-1 | Restore Experimental Mode default to off (or remove the toggle) for the reference configuration | GAP-18, D-08 | FM-01 |
+| CM-1 | Restore Experimental Mode default to off (or remove the toggle) for the reference configuration. Default set to off on 2026-10-14 (DQ-001 option A, [change record](../07-supporting/impact/change-2026-10-14-chill-mode-default.md)); the toggle stays; not reviewed independently | GAP-18, D-08 | FM-01 |
 | CM-2 | Exclude the Chestnut big-model path from the reference configuration, or remove the diagnostic suppression around fallback | GAP-17 | FM-02 |
 | CM-3 | Shorten or condition the soft-disable actuation window when the failed input is the one being acted on | GAP-16 | FM-03 |
 | CM-4 | Add a runtime monitor on model uncertainty / output plausibility that degrades to driver handover | GAP-22 | FM-09 |
@@ -169,13 +169,13 @@ Dates are set in [WP-M-03](WP-M-03-project-plan.md). The ordering is: §4 (G0) �
 
 ## Open items
 
-| ID | Item |
-|---|---|
-| OI-1 | Select and justify the B1 human-driver baseline data set and filtering to the ODD (WP-V-02) |
-| OI-2 | Define how the B2 stock-TSS2 comparison is executed on the reference vehicle (scenario list, test site, measurement) |
-| OI-3 | Decide whether MetaDrive-based simulation (`openpilot/tools/sim`) has sufficient fidelity to count as evidence, and on which scenarios; re-enable the CI job in the fork |
-| OI-4 | Build a LionDriver-controlled log store so that drive logs do not depend on comma servers (shared with WP-O-04, WP-M-09) |
-| OI-5 | Generate fork-owned process-replay and model-replay reference sets, including Corolla routes (shared with D-03) |
-| OI-6 | Appoint an external HMI / human-factors reviewer for WP-C-08 |
-| OI-7 | Confirm with the assessor that excluding Experimental Mode and Chestnut from claims is an acceptable scoping (D-08) |
-| OI-8 | Agree which surrogate measures may stand in for harm events, and the argument linking them |
+| ID | Open item | Owner | Due |
+|---|---|---|---|
+| OI-1 | Select and justify the B1 human-driver baseline data set and filtering to the ODD (WP-V-02) | SL | G2 |
+| OI-2 | Define how the B2 stock-TSS2 comparison is executed on the reference vehicle (scenario list, test site, measurement) | SL | G2 |
+| OI-3 | Decide whether MetaDrive-based simulation (`openpilot/tools/sim`) has sufficient fidelity to count as evidence, and on which scenarios; re-enable the CI job in the fork | SL | G2 |
+| OI-4 | Build a LionDriver-controlled log store so that drive logs do not depend on comma servers (shared with WP-O-04, WP-M-09) | PM | G4 |
+| OI-5 | Generate fork-owned process-replay and model-replay reference sets, including Corolla routes (shared with D-03) | PM / ML | G0 (process replay, with D-03); G2 (model replay, Corolla routes) |
+| OI-6 | Appoint an external HMI / human-factors reviewer for WP-C-08 | PM | G1 |
+| OI-7 | Confirm with the assessor that excluding Experimental Mode and Chestnut from claims is an acceptable scoping (D-08) | SL | G1 |
+| OI-8 | Agree which surrogate measures may stand in for harm events, and the argument linking them | SL | G2 |

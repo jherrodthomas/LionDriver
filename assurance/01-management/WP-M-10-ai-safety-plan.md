@@ -4,13 +4,13 @@
 |---|---|
 | Work product | WP-M-10 AI safety management plan |
 | Standard reference | ISO/PAS 8800:2024 (AI safety management, AI safety lifecycle, data, V&V, operation phase, assurance argument); ISO 21448:2022 §7, §10, §13 (interface); ASPICE 4.0 MLE.1–MLE.4, SUP.11 |
-| Version | 0.1 |
+| Version | 0.2 (status update: OI-7 closed 2026-10-12 recorded; §6.1 status of the work products that now exist as Draft; §3 and OI-2 AI-2 exclusion decided; owner and due gate for each open item, the lead's answers of 2026-10-14 noted at OI-2, OI-3 and OI-5; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM (FuSa) / SOTIF for driving models; safety-relevant for controllability (DM model, QM allocation proposed in WP-C-04 §7) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); route for pre-trained models (§5) confirmed by the external assessor |
 | Approver | Project maintainer (acting safety manager) |
-| Baseline | `8b8c6ae` |
+| Baseline | `bd85eff` (status update 2026-10-14) |
 
 ## 1. Purpose and scope
 
@@ -38,7 +38,7 @@ Upstream history in the baseline window shows how often AI-2 changes: `4bcf732`,
 | Component | ISO 26262 allocation | SOTIF / PAS 8800 role | Rationale |
 |---|---|---|---|
 | AI-1 | QM | Primary source of functional insufficiencies for lateral and longitudinal behaviour | Every command it produces passes through controlsd and then the panda safety envelope (`opendbc_repo/opendbc/safety/modes/toyota.h:173-210`). The FuSa argument does not depend on its correctness ([WP-M-01 §4](WP-M-01-assurance-strategy.md#4-safety-architecture-argument-the-central-strategy)) |
-| AI-2 | QM | As AI-1, plus a fallback transition that is itself a hazard source (GAP-17) | **Proposed exclusion from the reference configuration** (decision in [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md); gap action 8) |
+| AI-2 | QM | As AI-1, plus a fallback transition that is itself a hazard source (GAP-17) | **Excluded from the reference configuration** by the lead's decision of 2026-10-14 (decision register DQ-021; [WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md) FM-02; gap action 8). Recording it in WP-C-01 and WP-C-07 is open (OI-2) |
 | AI-3 | QM proposed in the FSC ([WP-C-04](../02-concept/WP-C-04-functional-safety-concept.md) §7), following HARA §6.1 obs. 3 ([WP-C-03](../02-concept/WP-C-03-hara.md)); confirmation at G1 | Safety-relevant: it supports the controllability assumption (attentive driver) used by both HARA and SOTIF | If HARA allocates a safety goal or FSR to driver-attention enforcement, the DM function chain inherits integrity requirements. The ML model itself cannot be argued to an ASIL by development evidence, so the allocation must rest on architecture (wheel-touch fallback, timers in `policy.py`, independent checks) with the model as a QM contributor. WP-C-04 §7 proposes no ASIL for DM (FSR-02.06…02.09 QM, managed under ISO 21448 as misuse measures) with required integrity-supporting attributes |
 
 ## 4. Roles
@@ -73,15 +73,15 @@ ISO/PAS 8800 assumes that the developer of the AI system controls its data and t
 
 | Activity | Work product | Gate | ASPICE | Status today |
 |---|---|---|---|---|
-| Define AI system boundary, input space (ODD-based) and AI safety requirements, including performance, robustness, uncertainty and timing | [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) | G1 | MLE.1 | Not started |
-| Feed AI error causes into insufficiency and triggering-condition analysis | [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) | G1 | — | Not started |
-| Describe AI architecture as received; define runtime monitors and fallbacks | [WP-W-10](../05-software/WP-W-10-ml-engineering.md), [WP-S-03](../03-system/WP-S-03-technical-safety-concept-architecture.md) | G2/G3 | MLE.2 | Not started |
-| Record provenance of each pinned model artefact | [WP-W-10](../05-software/WP-W-10-ml-engineering.md), [WP-W-09](../05-software/WP-W-09-configuration-calibration-data.md) | G3 | MLE.3 (substitute) | Not started. Hashes exist only as LFS pointers |
-| Specify, collect and control LionDriver evaluation datasets | [WP-W-10](../05-software/WP-W-10-ml-engineering.md) | G3 | SUP.11 | Not started. No LionDriver data exists |
-| Model testing against AI safety requirements | [WP-W-10](../05-software/WP-W-10-ml-engineering.md) | G3/G4 | MLE.4 | Not started. Upstream `model_replay.py` is a regression comparison, not requirements-based testing |
-| Scenario-level evaluation of AI-driven behaviour | [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) | G4/G5 | VAL.1 | Not started |
-| Operation-phase monitoring of AI behaviour | [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) | G6 | — | Not started |
-| Tool confidence for the model toolchain (tinygrad compiler and runtime, ONNX) | [WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md) | G3 | — | Not started (GAP-34) |
+| Define AI system boundary, input space (ODD-based) and AI safety requirements, including performance, robustness, uncertainty and timing | [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) | G1 | MLE.1 | Draft (WP-C-11 v0.2) |
+| Feed AI error causes into insufficiency and triggering-condition analysis | [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) | G1 | — | Draft (WP-C-06 v0.2) |
+| Describe AI architecture as received; define runtime monitors and fallbacks | [WP-W-10](../05-software/WP-W-10-ml-engineering.md), [WP-S-03](../03-system/WP-S-03-technical-safety-concept-architecture.md) | G2/G3 | MLE.2 | Draft (WP-W-10 v0.3, WP-S-03 v0.8). Runtime monitors RM-1…RM-5 not implemented as specified. Related consumer-side checks in `controlsd` (`modelV2` freshness, non-finite curvature turns lateral control off; [change record](../07-supporting/impact/change-2026-10-13-host-supervision.md)) are unit-tested, not verified |
+| Record provenance of each pinned model artefact | [WP-W-10](../05-software/WP-W-10-ml-engineering.md), [WP-W-09](../05-software/WP-W-09-configuration-calibration-data.md) | G3 | MLE.3 (substitute) | Method defined in WP-W-10 (Draft). No provenance record exists; hashes exist only as LFS pointers |
+| Specify, collect and control LionDriver evaluation datasets | [WP-W-10](../05-software/WP-W-10-ml-engineering.md) | G3 | SUP.11 | Dataset requirements drafted in WP-C-11 §7. No LionDriver data exists |
+| Model testing against AI safety requirements | [WP-W-10](../05-software/WP-W-10-ml-engineering.md) | G3/G4 | MLE.4 | Planned in WP-W-10 (Draft); not executed. Upstream `model_replay.py` is a regression comparison, not requirements-based testing |
+| Scenario-level evaluation of AI-driven behaviour | [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) | G4/G5 | VAL.1 | Draft specifications (WP-V-03, WP-V-04 v0.1); not executed |
+| Operation-phase monitoring of AI behaviour | [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) | G6 | — | Draft (WP-O-04 v0.1); not running |
+| Tool confidence for the model toolchain (tinygrad compiler and runtime, ONNX) | [WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md) | G3 | — | Draft: tinygrad classified as TL-09 in WP-P-07 (v0.6); no confidence measure executed (GAP-34) |
 
 ### 6.2 Candidate AI safety requirement areas (input to WP-C-11)
 
@@ -142,12 +142,12 @@ The AI argument is the G3 branch of the [safety case (WP-K-01)](../10-safety-cas
 
 ## Open items
 
-| ID | Item |
-|---|---|
-| OI-1 | Assessor confirmation that the acquired-model route (§5) is acceptable, and what additional evidence it requires |
-| OI-2 | Decide exclusion of AI-2 (Chestnut) from the reference configuration (WP-C-07, gap action 8) |
-| OI-3 | Confirm at G1 the QM allocation of the DM function chain (AI-3) proposed in WP-C-04 §7 |
-| OI-4 | Obtain LFS objects for the pinned models and record their hashes and sizes in the release manifest (this checkout holds pointers only) |
-| OI-5 | Define the LionDriver evaluation dataset specification and storage, including the policy on uploading to comma servers (§6.3) |
-| OI-6 | Decide a replacement for `pickle`-based model loading, or a verified-hash precondition (RM-1) |
-| OI-7 | Closed (2026-10-12): no request was sent. By decision of the maintainer the question is answered from comma.ai's public statements, recorded in [WP-M-11 §3.5](WP-M-11-upstream-and-supplier-management.md#35-public-information-on-the-ml-models-wp-m-10-oi-7). Training-data source is known in kind (uploaded user drives); no model card, dataset description or evaluation report is published |
+| ID | Item | Owner | Due |
+|---|---|---|---|
+| OI-1 | Assessor confirmation that the acquired-model route (§5) is acceptable, and what additional evidence it requires | ML | G1 |
+| OI-2 | Decide exclusion of AI-2 (Chestnut) from the reference configuration (WP-C-07, gap action 8). Decided by the lead 2026-10-14 (decision register DQ-021): exclude. Open: record the exclusion in WP-C-01 and WP-C-07 | ML | G1 |
+| OI-3 | Confirm at G1 the QM allocation of the DM function chain (AI-3) proposed in WP-C-04 §7. The lead answered on 2026-10-14 (decision register DQ-205) that the unresponsive driver becomes its own hazard (H-09) with an ASIL A goal; the DM allocation must be re-checked against it once WP-C-03 and WP-C-04 are updated | SM | G1 |
+| OI-4 | Obtain LFS objects for the pinned models and record their hashes and sizes in the release manifest (this checkout holds pointers only) | ML | G3 |
+| OI-5 | Define the LionDriver evaluation dataset specification and storage, including the policy on uploading to comma servers (§6.3). Upload policy answered by the lead 2026-10-14 (decision register DQ-084): no uploads, LionDriver keeps its own logs. Open: dataset specification and storage | ML | G3 |
+| OI-6 | Decide a replacement for `pickle`-based model loading, or a verified-hash precondition (RM-1). Queued for the lead (decision register DQ-170) | ML | G3 |
+| OI-7 | Closed (2026-10-12): no request was sent. By decision of the maintainer the question is answered from comma.ai's public statements, recorded in [WP-M-11 §3.5](WP-M-11-upstream-and-supplier-management.md#35-public-information-on-the-ml-models-wp-m-10-oi-7). Training-data source is known in kind (uploaded user drives); no model card, dataset description or evaluation report is published | ML | G1 |
