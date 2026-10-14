@@ -28,6 +28,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -39,6 +40,8 @@ ROOT = Path(__file__).resolve().parents[3]
 OPENDBC = ROOT / "opendbc_repo"
 TESTS = OPENDBC / "opendbc" / "safety" / "tests"
 BASELINE = ROOT / "assurance" / "05-software" / "coverage" / "structural-baseline.json"
+JUSTIFICATIONS = ROOT / "assurance" / "05-software" / "coverage" / "justifications.md"
+CLASSES = {"N": "not called", "C": "configuration constant", "I": "infeasible", "T": "test needed"}
 
 # Units of WP-W-06 §2 in the opendbc fork (U-SAF-CORE, -LAT, -LONG, -TOY)
 UNITS = {
@@ -130,6 +133,31 @@ def unit_of(filename: str) -> str | None:
   return None
 
 
+def norm(src: str) -> str:
+  return " ".join(src.split())
+
+
+def gaps_of(f: dict, functions: list[dict], lines: list[int]) -> list[dict]:
+  """The uncovered items of one file: functions never entered, and decisions with an uncovered branch or condition
+  inside functions that ran. A decision is named by its function and its normalized source line, so a justification
+  survives line shifts."""
+  path = f["filename"]
+  src = Path(path).read_text(encoding="utf-8").splitlines() if Path(path).exists() else []
+  spans = []
+  for fn in functions:
+    idx = [i for i, name in enumerate(fn["filenames"]) if name == path]
+    regs = [r for r in fn["regions"] if r[5] in idx]
+    if regs:
+      spans.append((min(r[0] for r in regs), max(r[2] for r in regs), fn["name"].split(":")[-1], fn["count"]))
+  gaps = [{"function": n, "decision": "*"} for _, _, n, c in sorted(spans) if c == 0]
+  for ln in lines:
+    owner = sorted((e - b, n, c) for b, e, n, c in spans if b <= ln <= e)
+    if not owner or owner[0][2] == 0:
+      continue   # inside a function that never ran: covered by its "*" entry
+    gaps.append({"function": owner[0][1], "decision": norm(src[ln - 1]) if ln <= len(src) else f"line {ln}", "line": ln})
+  return gaps
+
+
 def measure_llvm(work: Path, outputs: list[str]) -> dict:
   profdata, llvm_cov = TOOLS["llvm"]
   raws = sorted((work / "prof").glob("*.profraw"))
@@ -151,7 +179,8 @@ def measure_llvm(work: Path, outputs: list[str]) -> dict:
       unc_mc = sorted({r[0] for r in f.get("mcdc_records", []) if not all(r[-1])})
       units[u] = {"file": UNITS[u],
                   "branches": {"total": s["branches"]["count"], "covered": s["branches"]["covered"], "uncovered_lines": unc_br},
-                  "mcdc": {"total": s["mcdc"]["count"], "covered": s["mcdc"]["covered"], "uncovered_lines": unc_mc}}
+                  "mcdc": {"total": s["mcdc"]["count"], "covered": s["mcdc"]["covered"], "uncovered_lines": unc_mc},
+                  "gaps": gaps_of(f, exp["data"][0]["functions"], sorted(set(unc_br) | set(unc_mc)))}
     for o in outputs:
       Path(o).unlink(missing_ok=True)
   return units
@@ -227,6 +256,21 @@ def cross_check(llvm: dict, gcc: dict | None) -> dict[str, dict]:
   return out
 
 
+def gap_section(llvm: dict) -> list[str]:
+  if not any("gaps" in v for v in llvm["units"].values()) or not JUSTIFICATIONS.exists():
+    return []
+  matched, missing, stale = match_gaps(llvm, load_justifications())
+  out = ["## Gaps and their justifications", "", "| Unit | Function | Decision | Row | Class |", "|---|---|---|---|---|"]
+  for u, g, r in matched:
+    out.append(f"| {u} | `{g['function']}` | {'whole function' if g['decision'] == '*' else '`' + g['decision'][:70].replace('|', '\\|') + '`'} | "
+               f"{r['id']} | {CLASSES[r['class']]} |")
+  for u, g in missing:
+    out.append(f"| {u} | `{g['function']}` | `{g['decision'][:70].replace('|', '\\|')}` | **none** | unjustified |")
+  for r in stale:
+    out.append(f"| {r['unit']} | `{r['function']}` | (no longer a gap) | {r['id']} | stale row |")
+  return out + [""]
+
+
 def render_md(llvm: dict, gcc: dict | None) -> str:
   cc = cross_check(llvm, gcc)
   lines = ["# Structural coverage of the envelope's opendbc units", "",
@@ -247,8 +291,38 @@ def render_md(llvm: dict, gcc: dict | None) -> str:
                  f"{', '.join(map(str, c['gcc_only'])) or '—'} |")
   lines += ["", "LLVM counts each condition of a decision with two or more conditions once; gcc counts both outcomes of "
             "each condition. A line in only one column is a disagreement to review (WP-P-07 TQR-42).", "",
+            *gap_section(llvm),
             "Tool versions: " + "; ".join(f"{k}: {v}" for k, v in {**llvm["versions"], **(gcc or {}).get("versions", {})}.items()), ""]
   return "\n".join(lines)
+
+
+def load_justifications(path: Path | None = None) -> list[dict]:
+  """Rows of the justification table: ID | Unit | Function | Decision | Class | Rationale."""
+  rows = []
+  for ln in (path or JUSTIFICATIONS).read_text(encoding="utf-8").splitlines():
+    if not ln.startswith("| CJ-"):
+      continue
+    cells = [c.strip().replace("\\|", "|") for c in re.split(r"(?<!\\)\|", ln.strip())[1:-1]]
+    if len(cells) != 6 or cells[4] not in CLASSES:
+      raise CoverageError(f"justification row malformed: {ln[:80]}")
+    rows.append({"id": cells[0], "unit": cells[1], "function": cells[2], "decision": norm(cells[3]),
+                 "class": cells[4], "rationale": cells[5]})
+  return rows
+
+
+def match_gaps(llvm: dict, rows: list[dict]) -> tuple[list[tuple[str, dict, dict]], list[tuple[str, dict]], list[dict]]:
+  """(matched (unit, gap, row), unjustified (unit, gap), stale rows)."""
+  index = {(r["unit"], r["function"], r["decision"]): r for r in rows}
+  matched, missing, used = [], [], set()
+  for u, v in llvm["units"].items():
+    for g in v.get("gaps", []):
+      r = index.get((u, g["function"], norm(g["decision"])))
+      if r:
+        matched.append((u, g, r))
+        used.add(r["id"])
+      else:
+        missing.append((u, g))
+  return matched, missing, [r for r in rows if r["id"] not in used]
 
 
 def cmd_report(d: Path, check: bool, write: bool, md: Path | None) -> int:
@@ -283,6 +357,16 @@ def cmd_report(d: Path, check: bool, write: bool, md: Path | None) -> int:
   if current["opendbc"] != base["opendbc"] and current["units"] != base["units"]:
     problems.append(f"opendbc pin {base['opendbc']} -> {current['opendbc']} changed the measured units; "
                     "re-record the baseline (--write-baseline) and review the change in WP-W-06 §4")
+  if any("gaps" in v for v in llvm["units"].values()):
+    matched, missing, stale = match_gaps(llvm, load_justifications())
+    for u, g in missing:
+      problems.append(f"{u} {g['function']}: gap without a justification row: {g['decision'][:80]}")
+    for r in stale:
+      problems.append(f"{r['id']}: no longer matches a gap (closed by a test or the code changed); remove or update it")
+    by = {}
+    for _, _, r in matched:
+      by[r["class"]] = by.get(r["class"], 0) + 1
+    print("structural_coverage: gaps by class: " + ", ".join(f"{CLASSES[k]} {by.get(k, 0)}" for k in CLASSES))
   for p in problems:
     print(f"structural_coverage: {p}", file=sys.stderr)
   if problems:
