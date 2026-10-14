@@ -35,6 +35,16 @@ AP_TABLE = {
   (1, 1): ("LLLL", "LLLL", "LLLL", "LLLL", "LLLL"),
 }
 
+# FMEA-MSR (rating-tables.md section 7). PROVISIONAL: the AIAG-VDA MSR action priority table is not transcribed yet
+# (the handbook is not in the repository). Until it is, the table above is applied with frequency in place of occurrence
+# and monitoring in place of detection, and every MSR rating is provisional (rating-tables.md section 7.4).
+F_BANDS = O_BANDS
+M_BANDS = D_BANDS
+AP_MSR_TABLE = AP_TABLE
+AP_MSR_PROVISIONAL = True
+MSR_TYPES = ("system_fmea", "dfmea")  # msr-plan.md section 3
+WP_S04 = Path("assurance/03-system/WP-S-04-timing-ftti-budget.md")
+
 # ISO 26262-3 Table 4: for S1-S3, E1-E4, C1-C3 the ASIL depends only on S+E+C.
 ASIL_BY_SUM = {10: "D", 9: "C", 8: "B", 7: "A"}
 ASIL_ORDER = ("QM", "A", "B", "C", "D")
@@ -55,6 +65,29 @@ def compute_ap(s: int, o: int, d: int) -> str:
     if not 1 <= v <= 10:
       raise ValueError(f"rating out of range: {v}")
   return AP_TABLE[S_BANDS[_band(s, S_BANDS)]][_band(o, O_BANDS)][_band(d, D_BANDS)]
+
+
+def compute_ap_msr(s: int, s_after: int, f: int, m: int) -> str:
+  """MSR action priority. With monitoring 1 (diagnosis and response always effective) the severity after the system
+  response is rated instead of the original severity (AIAG-VDA MSR logic)."""
+  for v in (s, s_after, f, m):
+    if not 1 <= v <= 10:
+      raise ValueError(f"rating out of range: {v}")
+  rated = s_after if m == 1 else s
+  return AP_MSR_TABLE[S_BANDS[_band(rated, S_BANDS)]][_band(f, F_BANDS)][_band(m, M_BANDS)]
+
+
+def parse_ftti_rows(text: str) -> dict[str, float | None]:
+  """WP-S-04 section 3.7: row label -> FTTI in ms (None when the FTTI is not a time, e.g. 'per frame')."""
+  section = text.split("### 3.7", 1)[1].split("\n## ", 1)[0] if "### 3.7" in text else ""
+  rows = {}
+  for line in section.splitlines():
+    cells = [c.strip() for c in line.strip().strip("|").split("|")]
+    if len(cells) < 2 or not cells[0] or cells[0] == "SG / fault class" or set(cells[0]) <= set("-: "):
+      continue
+    m = re.match(r"([0-9]+(?:\.[0-9]+)?)\s*(ms|s)\b", cells[1])
+    rows[cells[0]] = (float(m.group(1)) * (1 if m.group(2) == "ms" else 1000)) if m else None
+  return rows
 
 
 def compute_asil(s: str, e: str, c: str) -> str:
@@ -87,6 +120,14 @@ class Result:
 def rating_tables_version(root: Path) -> str | None:
   text = (root / SAFETY_DIR / "rating-tables.md").read_text()
   m = re.search(r"\*\*Version:\*\*\s*(RT-\d+)", text)
+  return m.group(1) if m else None
+
+
+def sod_unchanged_since(root: Path) -> str | None:
+  """Oldest rating-tables version whose S/O/D and AP tables equal the current ones; a file rated against it needs no
+  re-rating unless it uses tables added later (FMEA-MSR from RT-2)."""
+  text = (root / SAFETY_DIR / "rating-tables.md").read_text()
+  m = re.search(r"\*\*S/O/D unchanged since:\*\*\s*(RT-\d+)", text)
   return m.group(1) if m else None
 
 
@@ -189,6 +230,7 @@ def check_fmea(name, doc, ctx, res: Result):
         referenced_actions.add(a)
         if a not in actions:
           res.error(cwhere, f"action {a} not found")
+      check_msr_cause(doc, fm, c, cwhere, actions, referenced_actions, ctx, res)
 
       o, d, ap = c["occurrence"], c["detection"], c["ap"]
       if None in (s, o, d):
@@ -209,6 +251,101 @@ def check_fmea(name, doc, ctx, res: Result):
   for a in actions:
     if a not in referenced_actions:
       res.warn(f"{name} {a}", "action not referenced by any cause")
+
+
+def msr_in_scope(kind: str, fm: dict) -> bool:
+  """msr-plan.md section 3: System FMEA and DFMEA causes of a failure mode with S >= 9 that lists an in-field mechanism."""
+  return kind in MSR_TYPES and (fm.get("severity") or 0) >= 9 and bool(fm.get("safety_mechanisms"))
+
+
+def check_msr_cause(doc, fm, c, cwhere, actions, referenced_actions, ctx, res: Result):
+  kind = doc["analysis"]["type"]
+  status = doc["analysis"]["status"]
+  in_scope = msr_in_scope(kind, fm)
+  msr = c.get("msr")
+  if in_scope:
+    ctx.msr_counts["in_scope"] += 1
+    if c.get("msr_exempt"):
+      ctx.msr_counts["exempt"] += 1
+    elif not msr and doc["analysis"].get("msr") == "complete":
+      res.error(cwhere, "analysis declares msr: complete; this in-scope cause needs an msr row or msr_exempt")
+  if not msr:
+    return
+  if kind not in MSR_TYPES:
+    res.error(cwhere, f"msr rows belong in the System FMEA or DFMEA, not {kind} (msr-plan.md section 3)")
+    return
+
+  mechs = fm.get("safety_mechanisms") or []
+  for i in msr["mechanisms"]:
+    if i > len(mechs):
+      res.error(cwhere, f"msr mechanism {i} not in the failure mode's safety_mechanisms (it lists {len(mechs)})")
+    elif not (mechs[i - 1].get("ref") or mechs[i - 1].get("test")):
+      res.error(cwhere, f"msr mechanism {i} has no ref or test; an uncited mechanism cannot be rated")
+
+  s, sa, f, m, ap = fm["severity"], msr["severity_after"], msr["frequency"], msr["monitoring"], msr["ap"]
+  if s is not None and sa is not None and sa > s:
+    res.error(cwhere, f"msr severity_after {sa} exceeds the failure mode severity {s}")
+
+  t = msr["timing"]
+  ftti_row = None
+  if t.get("ftti_ref"):
+    if ctx.ftti_rows is None:
+      res.error(cwhere, f"msr timing cites {t['ftti_ref']!r} but {WP_S04.as_posix()} was not found")
+    elif t["ftti_ref"] not in ctx.ftti_rows:
+      res.error(cwhere, f"msr ftti_ref {t['ftti_ref']!r} is not a row of WP-S-04 section 3.7")
+    else:
+      ftti_row = ctx.ftti_rows[t["ftti_ref"]]
+      if ftti_row is None:
+        res.error(cwhere, f"WP-S-04 row {t['ftti_ref']!r} has no FTTI in time units; it cannot back a timing claim")
+      elif t.get("ftti_ms") is not None and t["ftti_ms"] != ftti_row:
+        res.error(cwhere, f"msr ftti_ms {t['ftti_ms']} != {ftti_row:g} ms in WP-S-04 row {t['ftti_ref']!r}")
+
+  if m is not None:
+    tests = [e for e in msr.get("evidence", []) if e.get("test")]
+    for e in tests:
+      ctx.check_path(e["test"], cwhere, res)
+    if t["basis"] == "unknown" and m < 7:
+      res.error(cwhere, f"monitoring {m} with timing basis unknown; unknown timing rates M 7 or worse (rating-tables 7.3)")
+    if m <= 6:
+      missing = [k for k in ("ftti_ref", "ftti_ms", "fdti_ms", "frti_ms") if t.get(k) is None]
+      if missing:
+        res.error(cwhere, f"monitoring {m} needs timing {', '.join(missing)} (rating-tables 7.3)")
+      elif t["fdti_ms"] + t["frti_ms"] > t["ftti_ms"]:
+        res.error(cwhere, f"monitoring {m} but FDTI {t['fdti_ms']:g} + FRTI {t['frti_ms']:g} ms exceeds the FTTI {t['ftti_ms']:g} ms")
+      if not tests:
+        res.error(cwhere, f"monitoring {m} needs an evidence entry with a `test` path for the diagnostic (rating-tables 7.3)")
+    if m <= 4:
+      if t["basis"] != "measured":
+        res.error(cwhere, f"monitoring {m} needs measured timing; basis is {t['basis']} (rating-tables 7.3)")
+      if not any(e.get("ref") for e in msr.get("evidence", [])):
+        res.error(cwhere, f"monitoring {m} needs an evidence `ref` to the timing measurement (rating-tables 7.3)")
+      if kind == "dfmea":
+        dc = ctx.fmeda_dc.get(msr["fmeda"]) if msr.get("fmeda") else None
+        if dc is None or dc < 0.9:
+          res.warn(cwhere, f"monitoring {m} on a hardware cause is not backed by an FMEDA failure mode with DC >= 90 %"
+                   + (f" ({msr['fmeda']}: {dc})" if msr.get("fmeda") else " (no msr.fmeda link)"))
+  if msr.get("fmeda") and msr["fmeda"] not in ctx.fmeda_dc:
+    res.error(cwhere, f"msr fmeda {msr['fmeda']} not found")
+
+  for a in msr.get("actions", []):
+    referenced_actions.add(a)
+    if a not in actions:
+      res.error(cwhere, f"msr action {a} not found")
+
+  if None in (s, sa, f, m):
+    if ap is not None:
+      res.error(cwhere, "msr ap set but severity/severity_after/frequency/monitoring incomplete")
+    if status == "released":
+      res.error(cwhere, "released analysis requires complete msr ratings")
+    return
+  expected = compute_ap_msr(s, sa, f, m)
+  if ap != expected:
+    res.error(cwhere, f"msr ap is {ap}, table gives {expected} for S{s} (after response S{sa}) F{f} M{m}")
+  ctx.msr_counts[expected] += 1
+  if expected == "H" and not msr.get("actions") and not msr.get("rationale"):
+    res.error(cwhere, "MSR AP=H requires an msr action or rationale")
+  elif expected == "M" and not msr.get("actions") and not msr.get("rationale"):
+    res.warn(cwhere, "MSR AP=M: action or rationale recommended")
 
 
 def fmeda_metrics(doc):
@@ -1030,6 +1167,10 @@ class Context:
     self.hara_open_items: set[str] = set()
     self.fsc: dict | None = None
     self.ap_counts = {"H": 0, "M": 0, "L": 0}
+    self.msr_counts = {"in_scope": 0, "exempt": 0, "H": 0, "M": 0, "L": 0}
+    self.fmeda_dc: dict[str, float | None] = {}  # "<fmeda file stem>/<failure mode id>" -> dc_spf
+    wp = root / WP_S04
+    self.ftti_rows = parse_ftti_rows(wp.read_text()) if wp.exists() else None
 
   def check_path(self, path, where, res: Result):
     if (self.root / path).exists():
@@ -1056,6 +1197,7 @@ def lint(root: Path = ROOT) -> Result:
     res.error("baseline.yaml", "missing")
 
   rt = rating_tables_version(root)
+  rt_sod = sod_unchanged_since(root)
   schemas = {kind: load_schema(root, f"{kind}.schema.json") for kind in ("fmea", "fmeda", "hara", "fsc", "dfa")}
 
   docs = []
@@ -1072,7 +1214,10 @@ def lint(root: Path = ROOT) -> Result:
     if hdr["baseline"] not in baseline_ids:
       res.error(name, f"baseline {hdr['baseline']} not in baseline.yaml")
     if kind not in ("hara", "fsc", "dfa") and hdr["rating_tables"] != rt:
-      res.error(name, f"rating_tables {hdr['rating_tables']} != current {rt}; re-rate against the current tables")
+      uses_msr = kind in FMEA_TYPES and (hdr.get("msr") in ("partial", "complete")
+                                         or any(c.get("msr") for fm in doc["failure_modes"] for c in fm["causes"]))
+      if hdr["rating_tables"] != rt_sod or uses_msr:
+        res.error(name, f"rating_tables {hdr['rating_tables']} != current {rt}; re-rate against the current tables")
 
     # FMEA ids are global (cross-linked between files); FMEDA ids are per file (one FMEDA per safety goal).
     if kind == "fmeda":
@@ -1081,6 +1226,7 @@ def lint(root: Path = ROOT) -> Result:
       ids += [c["id"] for c in doc["components"]]
       ids += [fm["id"] for c in doc["components"] for fm in c["failure_modes"]]
       ctx.fmeda_ids[path.stem] = {fm["id"] for c in doc["components"] for fm in c["failure_modes"]}
+      ctx.fmeda_dc.update((f"{path.stem}/{fm['id']}", fm.get("dc_spf")) for c in doc["components"] for fm in c["failure_modes"])
     elif kind == "hara":
       scope = seen_ids
       ids = [x["id"] for k in ("assumptions", "operational_situations", "hazards", "hazardous_events", "safety_goals", "open_items")
@@ -1131,6 +1277,11 @@ def lint(root: Path = ROOT) -> Result:
     check_fta_fmea_map(fta_map.relative_to(root).as_posix(), load_yaml(fta_map.read_text()), ctx, res)
 
   res.report.insert(0, f"rated causes by AP: H={ctx.ap_counts['H']} M={ctx.ap_counts['M']} L={ctx.ap_counts['L']}")
+  mc = ctx.msr_counts
+  rated = mc["H"] + mc["M"] + mc["L"]
+  provisional = " [provisional MSR AP table]" if AP_MSR_PROVISIONAL else ""
+  res.report.insert(1, f"FMEA-MSR: {rated} of {mc['in_scope']} in-scope causes rated "
+                    + f"(H={mc['H']} M={mc['M']} L={mc['L']}), {mc['exempt']} exempt{provisional}")
   return res
 
 

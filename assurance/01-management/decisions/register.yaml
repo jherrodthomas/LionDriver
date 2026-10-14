@@ -3889,3 +3889,24 @@
       detail: "Fastest. Timing derived from the code is accepted without measurement. An assessor is likely to challenge it."
   sources: ["assurance/08-analyses/fmea/msr-plan.md", "assurance/03-system/WP-S-04-timing-ftti-budget.md", "assurance/08-analyses/fmea/rating-tables.md"]
   status: queued
+
+- id: DQ-207
+  question: "Can you get the official AIAG-VDA priority table for monitoring-and-response ratings into the project?"
+  context: "The new FMEA-MSR ratings need the handbook's own priority table (severity × frequency × monitoring). It is not in the repository and is not published online. Until it arrives, the linter uses a **stand-in**: the ordinary priority table with frequency and monitoring swapped in. Every result is marked provisional and must be re-rated once the real table is in."
+  reversibility: easy
+  blocks: "FMEA-MSR ratings becoming final (rating tables RT-3)"
+  gate: G3
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Send the MSR priority table pages from a handbook you or a colleague have"
+      detail: "A photo or scan of the one table is enough. Claude transcribes it and pins every cell with a test. Cost: none if a copy is at hand."
+    - key: B
+      title: "Buy the AIAG-VDA FMEA Handbook (2019)"
+      detail: "Gives the table and the official wording of every rating scale. Cost: the handbook licence."
+    - key: C
+      title: "Keep the stand-in table until the assessor review"
+      detail: "No cost now. The MSR results stay provisional, and an assessor will ask for the official table."
+  sources: ["assurance/08-analyses/fmea/rating-tables.md", "assurance/08-analyses/fmea/msr-plan.md"]
+  status: queued

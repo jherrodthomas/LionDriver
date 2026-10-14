@@ -1,6 +1,6 @@
 # LionDriver — FMEA-MSR: audit and plan
 
-**Status:** Draft v0.1, 2026-10-14. Nothing rated yet; this document decides whether to add FMEA-MSR and how.
+**Status:** Draft v0.2, 2026-10-14. Step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
 **Basis:** AIAG & VDA FMEA Handbook (2019), Supplemental FMEA for Monitoring and System Response (FMEA-MSR), ISO 26262-4 §6 (FTTI) and ISO 26262-5 §8 (diagnostic coverage), by reference.
 **Related:** [fmea-plan.md](fmea-plan.md), [rating-tables.md](rating-tables.md) (RT-1), [WP-S-04 timing and FTTI budget](../../03-system/WP-S-04-timing-ftti-budget.md), [WP-V-05 fault injection](../../06-validation/WP-V-05-fault-injection.md).
 
@@ -71,7 +71,7 @@ Adding MSR tables increments the version to **RT-2**. S/O/D and AP do not change
   | 9–10 | No in-field diagnostic, or it depends on the driver noticing. |
 
   The exact wording is transcribed from the handbook at implementation time; the table above sets how evidence maps onto it.
-- **MSR AP table**: the AIAG-VDA S × F × M table, transcribed from the handbook into `fmea_lint.py` as `AP_MSR_TABLE`, with a unit test per row, as was done for `AP_TABLE`.
+- **MSR AP table**: the AIAG-VDA S × F × M table belongs in `fmea_lint.py` as `AP_MSR_TABLE`. The handbook is not in the repository and the table is not published elsewhere, so RT-2 uses a **provisional** table: the §5 AP table with F for O and M for D, and with M 1 the severity after the response. The linter report says so on every run. Transcribing the handbook table makes RT-3 and re-rates the MSR rows; getting the table is in the decision register.
 
 ### 4.2 Schema (`schema/fmea.schema.json`, `schema_version` stays 1, additive)
 
@@ -79,20 +79,22 @@ An optional `msr` object on a cause:
 
 ```yaml
 msr:
-  mechanisms: [ ... ]           # indexes or refs into the failure mode's safety_mechanisms
+  mechanisms: [1, 2]            # 1-based positions in the failure mode's safety_mechanisms; each must cite a ref or test
   diagnostic: "IWDG expires after 90 ms without refresh"
   system_response: "MCU reset; relay de-energised; stock camera CAN restored"
-  timing: {goal: SG-01, ftti_ref: "WP-S-04 §3.7 SG-01 MCU execution fault", fdti_ms: 90, frti_ms: 100, basis: code_derived}  # measured | code_derived | unknown
   effect_after_response: "Steering assist lost with alert; driver steers"
-  severity: 8
+  severity_after: 8
   frequency: 3
-  monitoring: 5
-  ap: M
-  evidence: [ ... ]             # tests, WP-V-05 runs
+  monitoring: 6
+  ap: H
+  timing: {ftti_ref: "SG-01 MCU execution fault", ftti_ms: 500, fdti_ms: 90, frti_ms: 100, basis: code_derived}  # measured | code_derived | unknown
+  fmeda: fmeda-sg001/FMD-012    # DFMEA rows: the FMEDA failure mode whose DC backs M
+  evidence: [ ... ]             # controls: `test` for the diagnostic, `ref` for a timing measurement (WP-V-05)
+  actions: [ ... ]              # kind: monitoring
   rationale: ...
 ```
 
-The header gets `msr: true|false`. Actions stay in the shared `actions` list and are marked `kind: msr` where they target monitoring.
+A cause carries `msr` or `msr_exempt` (a reason), never both. The header gets `msr: none|partial|complete`; with `complete`, an in-scope cause without either is an error. Actions stay in the shared `actions` list with the new `kind: monitoring`.
 
 ### 4.3 Where each piece comes from
 
@@ -107,12 +109,12 @@ The header gets `msr: true|false`. Actions stay in the shared `actions` list and
 ### 4.4 Linter (`tools/safety/fmea_lint.py`) and tests
 
 - `msr.ap` equals `AP_MSR_TABLE[S, F, M]`.
-- `msr.severity` ≤ the failure mode's severity.
+- `msr.severity_after` ≤ the failure mode's severity.
 - M ≤ 6 requires `timing` with `fdti_ms + frti_ms ≤` the FTTI of the referenced WP-S-04 row.
 - M ≤ 4 also requires `basis: measured` and evidence.
 - `basis: unknown` forces M ≥ 7.
-- Every `mechanisms` entry resolves to a `safety_mechanisms` item that has a `ref`.
-- **Scope check:** every in-scope cause (§3) either has an `msr` block or an `msr_exempt` rationale.
+- Every `mechanisms` entry resolves to a `safety_mechanisms` item that has a `ref` or `test`; `ftti_ms` equals the cited WP-S-04 row.
+- **Scope check:** every in-scope cause (§3) either has an `msr` block or an `msr_exempt` rationale (an error once the header says `msr: complete`; reported as coverage before that).
 - **FMEDA cross-check (DFMEA):** an M of 4 or better on a hardware cause needs an FMEDA mechanism with DC ≥ 90 %. This is a warning only while the FMEDA is generic.
 - MSR AP H follows the same rule as RT-1: an action or an approved rationale.
 
@@ -128,7 +130,7 @@ The header gets `msr: true|false`. Actions stay in the shared `actions` list and
 
 | Step | Deliverable | Depends on |
 |---|---|---|
-| M0 | RT-2 (§7 tables), schema `msr` block, linter rules and tests; no rows | This plan |
+| M0 | RT-2 (§7 tables), schema `msr` block, linter rules and tests; no rows — **done 2026-10-14** | This plan |
 | M1 | Pilot: SG-01 lateral chain, about 15 causes in System FMEA and DFMEA | M0, WP-S-04 rev 0.5 |
 | M2 | Remaining System FMEA and DFMEA in-scope causes | M1 review |
 | M3 | Review pages, Figure 4-2, CI check | M1 |
