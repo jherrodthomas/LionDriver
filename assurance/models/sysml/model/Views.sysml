@@ -31,6 +31,28 @@ package LionDriverViews {
         render Views::asInterconnectionDiagram;
     }
 
+    view <'V-05'> requirementThread : ThreadView {
+        doc /* TSR-407 (heartbeat loss) from its safety goals to its verification cases. */
+        expose LionDriverRequirements::tsr_407;
+        render Views::asTreeDiagram;
+    }
+
+    view <'V-06'> f01Requirements : RequirementView {
+        doc /* System requirements of F-01 lateral control (WP-S-01 §2), their satisfying elements and verification cases. */
+        expose LionDriverRequirements::*;
+        expose LionDriverSatisfaction::*;
+        expose LionDriverVerification::*;
+        render Views::asTreeDiagram;
+    }
+
+    view <'V-07'> systemRequirementMatrix : RequirementMatrixView {
+        doc /* All system requirements of WP-S-01 against satisfying elements and verification cases. */
+        expose LionDriverRequirements::*;
+        expose LionDriverSatisfaction::*;
+        expose LionDriverVerification::*;
+        render Views::asElementTable;
+    }
+
     view <'V-04'> mechanismAllocation : AllocationView {
         doc /* Safety mechanisms SM-01 to SM-43 against the elements that perform them. */
         expose LionDriverMechanisms::*;

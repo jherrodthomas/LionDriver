@@ -13,10 +13,16 @@ so a change to one without the other fails CI (assurance/models/sysml/README.md 
   M7  integrity rules: every element inside the item has an integrity; a connection between
       a QM element and an ASIL element inside the item declares the FFI claims it crosses
   M8  the allocation-resolution report (generated/allocation-resolution.md) is up to date
+  R1  Requirements, Satisfaction and Verification (.sysml) match the work products they are generated from
+  R2  every satisfy relationship ends on an element inside the item; every SYS requirement of WP-S-01 is
+      satisfied and every name in WP-S-01 §10.1 resolves
+  R3  every verification case that names a requirement verifies it in the model (ranges expanded)
+  R4  the requirements-coverage report (generated/requirements-coverage.md) is up to date: satisfied,
+      verified and derived, per kind, with the requirements that are not (informational)
 
 Usage:
   check_model.py            run all checks
-  check_model.py --write    regenerate generated/allocation-resolution.md, then check
+  check_model.py --write    regenerate generated/allocation-resolution.md and requirements-coverage.md, then check
 """
 from __future__ import annotations
 
@@ -36,6 +42,12 @@ WP_S03 = ASSURANCE / "03-system" / "WP-S-03-technical-safety-concept-architectur
 WP_W03 = ASSURANCE / "05-software" / "WP-W-03-software-architecture.md"
 ITEMS = ASSURANCE / "trace" / "items"
 REPORT = SYSML_DIR / "generated" / "allocation-resolution.md"
+COVERAGE = SYSML_DIR / "generated" / "requirements-coverage.md"
+KIND_NAMES = {"SG": "Safety goals (WP-C-03)", "FSR": "Functional safety requirements (WP-C-04)",
+              "TSR": "Technical safety requirements (WP-S-02, WP-S-06)", "SYS": "System requirements (WP-S-01)",
+              "CSR": "Cybersecurity requirements (WP-S-07)"}
+OUTSIDE = {"EXT": "outside the item (AoU)", "OPS": "operations (WP-S-06)", "ENV": "release environment",
+           "USR": "owner or service"}
 
 INTEGRITY_RANK = {"AoU": 0, "Untrusted": 0, "QM": 1, "QMBsup": 2, "B": 3, "BDagger": 4}
 ASIL = {"B", "BDagger"}
@@ -389,6 +401,90 @@ def allocation_report(m: sysml_lite.Model) -> str:
   return "\n".join(out).rstrip() + "\n"
 
 
+# ---------------------------------------------------------------- requirements (R1-R4)
+
+def check_requirements(m: sysml_lite.Model, rep: Report) -> None:
+  import gen_requirements
+  for key, text in gen_requirements.build().items():
+    f = gen_requirements.OUT[key]
+    if not f.exists() or f.read_text(encoding="utf-8") != text:
+      rep.err("R1", f"{f.relative_to(REPO)} does not match the work products; run tools/gen_requirements.py")
+  for r in m.requirements.values():
+    for p in r.satisfied_by:
+      if m.elements[p].scope() != "inside":
+        rep.err("R2", f"{r.short} is satisfied by {p}, which is not inside the item")
+    if r.short.startswith("SYS-"):
+      if not r.satisfied_by:
+        rep.err("R2", f"{r.short} has no satisfying element (WP-S-01 §10.1)")
+      for name in re.findall(r"`([^`]+)`", str(r.values.get("allocText", ""))):
+        if m.find(name) is None and sum(1 for e in m.elements.values() if e.kind == "part" and e.name == name) != 1:
+          rep.err("R2", f"{r.short}: {name!r} in WP-S-01 §10.1 names no element of the model")
+  for v in m.verifications.values():
+    for r in v.verifies:
+      if v.short not in m.requirements[r].verified_by:
+        rep.err("R3", f"{v.short} verifies {r} but {r} does not list it")
+
+
+def outside_reason(text: str) -> str | None:
+  toks = [t for t in re.split(r"[^A-Z]+", text) if t]
+  hits = [OUTSIDE[t] for t in toks if t in OUTSIDE]
+  return hits[0] if hits else None
+
+
+def coverage_report(m: sysml_lite.Model) -> str:
+  kinds: dict[str, list] = defaultdict(list)
+  for r in m.requirements.values():
+    kinds[r.short.split("-")[0]].append(r)
+  rows, lists = [], []
+  for k, label in KIND_NAMES.items():
+    rs = kinds.get(k, [])
+    sat = [r for r in rs if r.satisfied_by]
+    out_ = [r for r in rs if not r.satisfied_by and outside_reason(str(r.values.get("allocText", "")))]
+    none = [r for r in rs if not r.satisfied_by and r not in out_]
+    ver = [r for r in rs if r.verified_by]
+    der = [r for r in rs if r.derived_from]
+    rows.append(f"| {label} | {len(rs)} | {len(sat)} | {len(out_)} | {len(none)} | {len(ver)} | " +
+                (f"{len(der)} |" if k in ("FSR", "TSR") else "— |"))
+    if none:
+      lists.append((f"{k}: no satisfying element", [f"{r.short} (`{r.values.get('allocText', '') or 'no allocation'}`)" for r in none]))
+    unver = [r.short for r in rs if not r.verified_by]
+    if unver:
+      lists.append((f"{k}: not verified by any case", unver))
+    if k in ("FSR", "TSR"):
+      underived = [r.short for r in rs if not r.derived_from]
+      if underived:
+        lists.append((f"{k}: no parent requirement in the model", underived))
+  cases = list(m.verifications.values())
+  naming = [v for v in cases if v.verifies]
+  out = [
+    "# Requirements coverage",
+    "",
+    "Generated by `assurance/models/sysml/tools/check_model.py --write` — do not edit by hand.",
+    "",
+    "Read from the SysML model: the requirements of [`Requirements.sysml`](../model/Requirements.sysml), the `satisfy` " +
+    "relationships of [`Satisfaction.sysml`](../model/Satisfaction.sysml) and the verification cases of " +
+    "[`Verification.sysml`](../model/Verification.sysml), all generated from the work products by " +
+    "`tools/gen_requirements.py`. **Satisfied** means a `satisfy` relationship to an element inside the item; " +
+    "**outside the item** means the allocation is EXT, OPS, ENV or USR; **verified** means at least one case of a " +
+    "test specification names the requirement. A verified requirement has a specified case, not a passed one.",
+    "",
+    "This report is informational: it does not fail CI, but CI asks for it to be regenerated whenever a " +
+    "requirement, an allocation or a test specification changes, so a new gap shows up in review.",
+    "",
+    "## Summary",
+    "",
+    "| Kind | Requirements | Satisfied | Outside the item | No satisfying element | Verified by ≥ 1 case | Derived from a parent |",
+    "|---|---|---|---|---|---|---|",
+    *rows,
+    "",
+    f"{len(cases)} verification cases; {len(naming)} name at least one modelled requirement.",
+    "",
+  ]
+  for title, ids in lists:
+    out += [f"## {title} ({len(ids)})", "", ", ".join(ids), ""]
+  return "\n".join(out).rstrip() + "\n"
+
+
 # ---------------------------------------------------------------- main
 
 def main(argv: list[str]) -> int:
@@ -399,7 +495,7 @@ def main(argv: list[str]) -> int:
     print(f"FAIL model: {e}")
     return 1
   for check in (check_elements, check_firmware, check_host, check_interfaces, check_mechanisms, check_flows,
-                check_integrity_rules):
+                check_integrity_rules, check_requirements):
     try:
       check(m, rep)
     except sysml_lite.ModelError as e:
@@ -411,6 +507,11 @@ def main(argv: list[str]) -> int:
     REPORT.write_text(text, encoding="utf-8")
   elif not REPORT.exists() or REPORT.read_text(encoding="utf-8") != text:
     rep.err("M8", f"{REPORT.relative_to(REPO)} is out of date; run check_model.py --write")
+  cov = coverage_report(m)
+  if "--write" in argv:
+    COVERAGE.write_text(cov, encoding="utf-8")
+  elif not COVERAGE.exists() or COVERAGE.read_text(encoding="utf-8") != cov:
+    rep.err("R4", f"{COVERAGE.relative_to(REPO)} is out of date; run check_model.py --write")
 
   parts = sum(1 for e in m.elements.values() if e.kind == "part")
   print(f"sysml model: {parts} parts, {len(m.connections)} connections, {len(m.mechanisms)} mechanisms, " +
@@ -424,7 +525,11 @@ def main(argv: list[str]) -> int:
   if rep.errors:
     print(f"{len(rep.errors)} problem(s)")
     return 1
-  print("OK: M1-M8 passed")
+  print(f"requirements: {len(m.requirements)} in the model, " +
+        f"{sum(1 for r in m.requirements.values() if r.satisfied_by)} satisfied, " +
+        f"{sum(1 for r in m.requirements.values() if r.verified_by)} verified by a case " +
+        f"(informational, {COVERAGE.name})")
+  print("OK: M1-M8 and R1-R4 passed")
   return 0
 
 

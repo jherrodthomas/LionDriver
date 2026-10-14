@@ -168,4 +168,13 @@ package LionDriverLibrary {
     view def AllocationView {
         doc /* Which element performs which safety mechanism. */
     }
+    view def ThreadView {
+        doc /* One requirement with everything related to it: what it derives from, what satisfies it, the mechanisms that cite it and the cases that verify it. */
+    }
+    view def RequirementView {
+        doc /* The requirements of one function with their satisfying elements and verification cases. */
+    }
+    view def RequirementMatrixView {
+        doc /* Requirements against the elements that satisfy them and the cases that verify them. */
+    }
 }
