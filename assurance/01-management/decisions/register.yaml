@@ -774,7 +774,7 @@
 
 - id: DQ-037
   question: "Should LionDriver stay scoped to the single Corolla, or move to a platform covering many vehicles?"
-  context: "The plans claim only the 2020 Corolla and add vehicles one impact analysis at a time. Some drafts already treat a platform covering hundreds of vehicles. **Today the documents disagree.**"
+  context: "The plans claim only the reference Corolla (CFG-001, Corolla E210 · ZRE212 · US, model years 2020–2022) and add vehicles one impact analysis at a time. Some drafts already treat a platform covering hundreds of vehicles. **Today the documents disagree.**"
   reversibility: revisit
   blocks: "Scope method (WP-M-01, WP-M-12)"
   gate: G1
@@ -812,7 +812,7 @@
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-039
-  question: "Do you have a 2020 Corolla to test with?"
+  question: "Do you have a Corolla of the reference configuration (US 1.8 L sedan, model year 2020–2022) to test with?"
   context: "Measuring the EPS torque limit and override force, which the steering ratings depend on, and every validation drive need the reference car. Who owns it and whether it is insured for testing is not recorded (risk R-19). **Insurance for development testing is asked separately.**"
   reversibility: revisit
   blocks: "AoU measurements, controllability rating, all vehicle tests"
