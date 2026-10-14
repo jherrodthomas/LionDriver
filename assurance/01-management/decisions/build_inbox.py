@@ -74,10 +74,20 @@ def page_entry(d: dict, base: Path) -> dict:
   }
 
 
+def queue_entry(d: dict) -> dict:
+  rec = next(o for o in d["options"] if o.get("recommended"))
+  return {"id": d["id"], "q": html.escape(d["question"], quote=False), "gate": d.get("gate") or "",
+          "claude": d.get("decider") == "claude", "after": d.get("after") or [],
+          "blocks": html.escape(d["blocks"], quote=False), "rec": html.escape(rec["title"], quote=False)}
+
+
 def build(entries: list[dict], base: Path = HERE) -> str:
-  data = [page_entry(d, base) for d in entries]
+  data = [page_entry(d, base) for d in entries if d["status"] != "queued"]
+  queue = [queue_entry(d) for d in entries if d["status"] == "queued"]
   payload = json.dumps(data, ensure_ascii=False, indent=1).replace("</", "<\\/")
-  return TEMPLATE.replace("/*__REGISTER__*/[]", payload).replace("__BUILT__", dt.date.today().isoformat())
+  qpayload = json.dumps(queue, ensure_ascii=False).replace("</", "<\\/")
+  return (TEMPLATE.replace("/*__REGISTER__*/[]", payload).replace("/*__QUEUE__*/[]", qpayload)
+          .replace("__BUILT__", dt.date.today().isoformat()))
 
 
 def main(argv: list[str]) -> int:
@@ -180,6 +190,13 @@ details.src summary{cursor:pointer}
 .mono{font-family:var(--font-mono);font-size:12.5px}
 .notice{font-size:14px;color:var(--muted);border:1px dashed var(--line);border-radius:8px;padding:10px 12px}
 .foot{font-size:13px;color:var(--muted)}
+details.queue{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+details.queue summary{cursor:pointer;font:700 16px var(--font-display)}
+details.queue .why{margin-top:8px;font-size:14.5px}
+.qlist{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.qlist li{border-top:1px solid var(--line);padding-top:10px;font-size:15px}
+.qlist li:first-child{border-top:0;padding-top:0}
+.qmeta{color:var(--muted);font-size:13.5px}
 /* SVG tokens used by the register figures */
 .s-ink{fill:var(--ink)} .s-muted{fill:var(--muted)} .s-line{stroke:var(--line)} .s-surface{fill:var(--surface)}
 .s-ok{fill:var(--ok)} .s-oksoft{fill:var(--ok-soft)} .s-bad{fill:var(--bad)} .s-badsoft{fill:var(--bad-soft)}
@@ -198,11 +215,21 @@ svg text{font-family:var(--font-body)} svg .mono{font-family:var(--font-mono)}
   <section class="group" id="g-claude"><h2>Answered · Claude applies next session</h2></section>
   <section class="group" id="g-assumed"><h2>Claude went ahead · you can still change it</h2></section>
   <section class="group" id="g-done"><h2>Done</h2></section>
+  <section class="group" id="g-queue" hidden>
+    <details class="queue"><summary id="q-lead"></summary>
+      <p class="why">Not asked yet. Each becomes a card when the decisions it waits on are made or its gate gets close.</p>
+      <ul class="qlist" id="ql-lead"></ul></details>
+    <details class="queue"><summary id="q-claude"></summary>
+      <p class="why">Reversible technical choices. Claude goes with the recommendation when the work reaches them; it tells you, and you
+      can still change it.</p>
+      <ul class="qlist" id="ql-claude"></ul></details>
+  </section>
   <p class="foot">Built __BUILT__ from <span class="mono">assurance/01-management/decisions/register.yaml</span>.</p>
 </div>
 
 <script>
 const REG = /*__REGISTER__*/[];
+const QUEUE = /*__QUEUE__*/[];
 const REV = {easy:'Easy to undo', revisit:'Can revisit at the gate', hard:'Hard to undo'};
 const RANK = {hard:0, revisit:1, easy:2};
 const S = {answers:{}, explain:{}, db:null, uid:null, editing:{}, asking:{}, drafts:{}, msgs:{}};
@@ -326,6 +353,20 @@ function render(){
   $('#counts').innerHTML = `<span><b>${n.you}</b> need you (${blocking} blocking)</span><span><b>${n.claude}</b> waiting for Claude</span><span><b>${n.assumed}</b> Claude went ahead</span><span><b>${n.done}</b> done</span>`;
 }
 
+function renderQueue(){
+  const gnum = g => g ? +g.slice(1) : 9;
+  const meta = d => (d.gate ? 'Gate ' + d.gate + ' · ' : '') + (d.after.length ? 'after ' + d.after.join(', ') + ' · ' : '')
+    + (d.claude ? 'Claude goes with: ' + d.rec : d.blocks);
+  const row = d => `<li><span class="tag id">${d.id}</span> ${d.q}<br><span class="qmeta">${meta(d)}</span></li>`;
+  const lead = QUEUE.filter(d => !d.claude).sort((a, b) => gnum(a.gate) - gnum(b.gate));
+  const cl = QUEUE.filter(d => d.claude).sort((a, b) => gnum(a.gate) - gnum(b.gate));
+  $('#g-queue').hidden = !QUEUE.length;
+  $('#q-lead').textContent = `Queued for you later (${lead.length})`;
+  $('#q-claude').textContent = `Claude decides unless you object (${cl.length})`;
+  $('#ql-lead').innerHTML = lead.map(row).join('');
+  $('#ql-claude').innerHTML = cl.map(row).join('');
+}
+
 function setMsg(id, cls, text){ S.msgs[id] = text ? {cls, text} : null; render(); }
 
 document.addEventListener('click', async e => {
@@ -362,6 +403,7 @@ document.addEventListener('click', async e => {
 });
 
 render();
+renderQueue();
 (async () => {
   try{
     const [db, user] = await Promise.all([window.claude?.use?.('db'), window.claude?.use?.('user')]);
