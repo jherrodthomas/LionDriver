@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-W-06 Software unit verification specification and report (static analysis, MISRA, coverage, mutation) |
 | Standard reference | ISO 26262-6:2018 §9 (software unit verification; methods, test-case derivation and structural coverage tables of §9); ISO 26262-8:2018 §9 (verification), §11 (tools, by reference to WP-P-07); ISO/SAE 21434:2021 §10 (verification of implementation); ASPICE 4.0 SWE.4 |
-| Version | 0.4 (merge of PR #47 software alignment with the base; 2026-10-13: §4 keeps the @229dc70 figures and gains §4.9 with the base's LionDriver test assets (at `bf6ce8c`, panda `c33343b`); §2 keeps PR #47's unit split, the base's per-header units noted there; §6 existing basis extended with the HIL tests 10…15 and the heartbeat-siren and EPS-fault-siren host suites; VS-UV-18 corrected to the whitelist at all builds; OI-4 done). It carries PR #47's drafts, numbered 0.2–0.3 there: 0.3 ([RR-2026-009](reviews/RR-2026-009.md) F-22: §4 figures labelled @229dc70; F-23: §6 parent column now cites SWSRs; F-28: author; 2026-10-12). 0.2 (alignment pass: §6 "existing basis" and expected outcomes rechecked against the WP-W-02 baseline column at opendbc `7993399`, panda `8aa8671`; VS-UV-23 for SWSR-518; units and modules updated; report template per [WP-M-14 §8.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#83-evidence-binding); 2026-10-12). History on the base: 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.5 (branch and MC/DC coverage measured: §3.2 and §4.2 updated with the 2026-10-14 figures at opendbc `9a13f60`, new §4.2.1; UV-G1 narrowed; OI-3 closed, OI-11 added; DQ-159; 2026-10-14). 0.4 (merge of PR #47 software alignment with the base; 2026-10-13: §4 keeps the @229dc70 figures and gains §4.9 with the base's LionDriver test assets (at `bf6ce8c`, panda `c33343b`); §2 keeps PR #47's unit split, the base's per-header units noted there; §6 existing basis extended with the HIL tests 10…15 and the heartbeat-siren and EPS-fault-siren host suites; VS-UV-18 corrected to the whitelist at all builds; OI-4 done). It carries PR #47's drafts, numbered 0.2–0.3 there: 0.3 ([RR-2026-009](reviews/RR-2026-009.md) F-22: §4 figures labelled @229dc70; F-23: §6 parent column now cites SWSRs; F-28: author; 2026-10-12). 0.2 (alignment pass: §6 "existing basis" and expected outcomes rechecked against the WP-W-02 baseline column at opendbc `7993399`, panda `8aa8671`; VS-UV-23 for SWSR-518; units and modules updated; report template per [WP-M-14 §8.3](../01-management/WP-M-14-iso26262-6-implementation-specification.md#83-evidence-binding); 2026-10-12). History on the base: 0.3 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section **Not yet executed** |
 | ASIL / scope | Envelope (E-03) units: ASIL C provisional (B expected after SG-01 re-rating, [WP-C-04 §4.2](../02-concept/WP-C-04-functional-safety-concept.md)). Host (E-01) units: QM, summarised only |
 | Author | Assurance team (AI-assisted draft, Claude) |
@@ -78,8 +78,8 @@ Test-case derivation methods applied to every requirements-based test: analysis 
 | Metric | E-03 target (ASIL C prov.) | At ASIL B | Today | Tool |
 |---|---|---|---|---|
 | Statement (line) coverage | 100 % of E-03 units in the release configuration, with justified exclusions | 100 % | 100 % **line** coverage gate over `opendbc/safety/**` excluding `libsafety` (`tests/test.sh:36`), in the `ALLOW_DEBUG` configuration | gcovr 8.6 (TL-05) |
-| Branch coverage | 100 % with justified exclusions | 100 % with justified exclusions | Not measured (GAP-13, WP-P-07 K-3) | gcovr `--fail-under-branch` |
-| MC/DC | 100 % of decisions in U-SAF-CORE, U-SAF-LAT, U-SAF-LONG, U-SAF-TOY, U-PND-MAIN, U-PND-COMMS, or a documented justification per decision | Not required; branch coverage suffices (check licensed table) | Not measured | Tool to select (e.g. gcc 14 `-fcondition-coverage` or a qualified commercial tool), OI-3 |
+| Branch coverage | 100 % with justified exclusions | 100 % with justified exclusions | Measured on the reference build since 2026-10-14 (§4.2.1): U-SAF-TOY 99.0 %, U-SAF-CORE 78.6 %, U-SAF-LAT 42.9 %, U-SAF-LONG 42.9 %; CI fails if a unit's gaps grow | LLVM 18 source-based coverage (TL-42) |
+| MC/DC | 100 % of decisions in U-SAF-CORE, U-SAF-LAT, U-SAF-LONG, U-SAF-TOY, U-PND-MAIN, U-PND-COMMS, or a documented justification per decision | Not required; branch coverage suffices (check licensed table) | Measured for the four opendbc units since 2026-10-14 (§4.2.1): U-SAF-TOY 100 % (36 of 36 conditions), U-SAF-CORE 69.6 %, U-SAF-LONG 42.9 %, U-SAF-LAT 40.0 %. Panda units not yet measured (OI-11) | LLVM 18 `-fcoverage-mcdc` (TL-42), cross-checked with gcc 14 `-fcondition-coverage` (TL-43) |
 | Function coverage (integration) | See [WP-W-07](WP-W-07-software-integration-verification.md) | | | |
 
 Coverage is measured on the host build. Because of the host/target differences in [WP-W-01 §7.3](WP-W-01-software-development-environment-guidelines.md), host coverage is accepted only together with the back-to-back target run VS-UV-20.
@@ -156,7 +156,20 @@ Note: tests assert constants copied into the test classes (`test_toyota.py:139-1
 | Threshold | 100 % of executable lines in `opendbc/safety/**` (excluding `libsafety/`) | `test.sh:36` |
 | Exclusions | `GCOV_EXCL` blocks in `modes/defaults.h:5-10, 18-24` | |
 | Configuration measured | `ALLOW_DEBUG` (debug superset) | `libsafety_py.py:30-31` |
-| Branch / MC/DC | Not measured | GAP-13 |
+| Branch / MC/DC | Measured separately on the reference build by `tools/ci/coverage/structural_coverage.py` (§4.2.1) | `safety.yaml` job `structural_coverage` |
+
+#### 4.2.1 Branch and MC/DC coverage (measured 2026-10-14)
+
+`tools/ci/coverage/structural_coverage.py` runs `test_toyota`, `test_defaults` and `test_elm327` (the modes the reference configuration uses) on the reference build (`LIONDRIVER_REFERENCE=1`) twice: once compiled by clang 18 with source-based coverage and MC/DC, once by gcc 14 with condition coverage. A `cc` wrapper on `PATH` adds the flags, so the opendbc fork is unchanged; UBSan is left out of these runs, as `test.sh` does for its line coverage. The `structural_coverage` job in `safety.yaml` runs it on every change to the fork pin or the tool, uploads the report, and fails when a unit has more uncovered branches or MC/DC conditions than [`coverage/structural-baseline.json`](coverage/structural-baseline.json). The baseline is a ratchet, not a pass criterion: the §3.2 target stays 100 % or a justification per decision.
+
+| Unit | Branches | MC/DC conditions (decisions with ≥ 2 conditions) | Lines with an uncovered multi-condition decision (both tools agree) |
+|---|---|---|---|
+| U-SAF-TOY `modes/toyota.h` | 200 / 202 (99.0 %) | 36 / 36 (100 %) | — |
+| U-SAF-CORE `safety.h` | 195 / 248 (78.6 %) | 39 / 56 (69.6 %) | 117, 130, 175, 184, 192, 340, 347, 476, 513, 519, 634 |
+| U-SAF-LAT `lateral.h` | 79 / 184 (42.9 %) | 10 / 25 (40.0 %) | 256, 275, 324, 325, 329, 365, 404 |
+| U-SAF-LONG `longitudinal.h` | 12 / 28 (42.9 %) | 6 / 14 (42.9 %) | 15, 19, 21, 26 |
+
+Measured at opendbc `9a13f60` with clang 18.1.3 and gcc 14.2.0. Much of the gap in `lateral.h` and `longitudinal.h` is code the Toyota mode does not call (angle and curvature checks, other brands' longitudinal paths); each such decision still needs a recorded justification or a test, and the shared decisions in `safety.h` need tests (OI-11). The two tools agree on every line with an uncovered multi-condition decision. clang 18 measures MC/DC only for decisions of at most six conditions; no decision in these units exceeds that, and the tool fails if one ever does.
 
 ### 4.3 MISRA C:2012 static analysis
 
@@ -254,7 +267,7 @@ Recorded on the base at `bf6ce8c` (opendbc `7993399`, panda `b790fca`), with the
 
 | # | Gap | Effect | GAP | Closure |
 |---|---|---|---|---|
-| UV-G1 | Line coverage only; no branch, no MC/DC | ASIL C structural coverage not demonstrated | GAP-13 | Add branch gate; select and qualify MC/DC tool (OI-3) |
+| UV-G1 | Branch and MC/DC are measured (§4.2.1) but below 100 % in U-SAF-CORE, -LAT and -LONG, with no justification per decision yet; panda units not measured | ASIL C structural coverage not demonstrated | GAP-13 | Close each gap of §4.2.1 by a test or a recorded justification; measure the panda units (OI-11) |
 | UV-G2 | Tests run on x86/arm64 host, `-O0`; target Cortex-M7 `-Os` never tested by unit tests | Compiler (TL-01 TCL3) and target-specific defects undetected | GAP-13, GAP-30 | VS-UV-20 on HIL (D-04) |
 | UV-G3 | Tested configuration is `ALLOW_DEBUG`; release configuration only compiled | Tested ≠ shipped | GAP-41 | VS-UV-19 |
 | UV-G4 | Envelope verification not run in LionDriver CI | Partly closed: `safety.yaml` runs the opendbc safety tests (incl. the reference-build variant), MISRA and mutation on `liondriver-dev` and PRs. The panda host suites (`panda_host_tests`) and the reference-variant mutation (`mutation_reference`, #44) run there too. Results are not yet archived as evidence | GAP-39 | OI-4 |
@@ -345,7 +358,7 @@ Static verification items (not tests):
 |---|---|---|---|
 | OI-1 | Check method and coverage recommendation levels for ASIL B and C against the licensed ISO 26262-6 §9 tables; adjust §3 decisions | Safety engineer | G3 |
 | OI-2 | Select and classify (WP-P-07) an abstract-interpretation or bounded-model-checking tool for VS-UV-S3 | Maintainer | G3 |
-| OI-3 | Select and qualify an MC/DC measurement approach; add branch gate (`--fail-under-branch`) to `test.sh` in the opendbc fork | Maintainer | G3 |
+| OI-3 | Closed 2026-10-14 (DQ-159, agreed in chat): LLVM source-based MC/DC (TL-42) with gcc 14 condition coverage as the cross-check (TL-43), run in LionDriver CI without changing the opendbc fork; a ratchet stops gaps from growing (§4.2.1). Tool qualification is WP-P-07 TQR-42/43 | Maintainer | G3 |
 | OI-4 | ~~Add the opendbc `safety`, `mutation` and MISRA jobs and the panda MISRA job to LionDriver CI~~ Done 2026-10-12: `safety.yaml` (`safety_tests`, `misra`, `panda_misra`, `mutation`, `mutation_reference` (#44), `panda_host_tests`), triggered on `liondriver-dev`. Remaining: record the first run as evidence in §8 (GAP-39, WP-P-01 OI-7/OI-8) | Maintainer | G3 |
 | OI-5 | Write justification records for the 3 accepted mutation survivors and add a mutation-score report | Safety engineer | G3 |
 | OI-6 | §6 now cites SWSRs (F-23). Remaining: re-trace §4.1 test methods to SWSRs and re-check §6 when WP-W-02 is agreed | Safety engineer | G3 |
@@ -353,5 +366,6 @@ Static verification items (not tests):
 | OI-8 | HIL bench (D-04) for ENV-T | Maintainer | G4 |
 | OI-9 | Fork-owned drive logs for `safety_replay/replay_drive.py` and `test_models.py` | Maintainer | G4 |
 | OI-10 | Make the XZACT equivalence check (§4.8) reproducible: pin the XZACT revision, store the trace generator and results with this WP, and classify XZACT under WP-P-07 as a verification tool | Maintainer | G3 |
+| OI-11 | Close or justify every gap listed in §4.2.1, and measure branch and MC/DC for U-PND-MAIN and U-PND-COMMS once OI-7 gives them host tests | Maintainer | G3 |
 
 > Note from the consistency pass: U-PND-PLAT, U-PND-PWR and U-PND-HK were added to §2 in v0.2; U-PND-USB is still missing. Their VS-UV cases are not yet specified. "ASIL C provisional" in this document equals the B‡ notation used in WP-W-02 and WP-S-02.

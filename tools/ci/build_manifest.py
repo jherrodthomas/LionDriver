@@ -22,7 +22,8 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
-TOOLS = ["cc", "gcc", "clang", "arm-none-eabi-gcc", "cppcheck", "python3", "scons", "uv", "git"]
+TOOLS = ["cc", "gcc", "clang", "arm-none-eabi-gcc", "cppcheck", "python3", "scons", "uv", "git",
+         "clang-18", "llvm-cov-18", "gcc-14", "gcov-14"]
 FLAGS = ["RELEASE", "LIONDRIVER_REFERENCE"]
 
 

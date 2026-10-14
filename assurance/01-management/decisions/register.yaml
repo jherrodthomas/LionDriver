@@ -3067,7 +3067,10 @@
       title: "Branch only, argue MC/DC not needed at ASIL B"
       detail: "Less effort; depends on SG-01 ASIL."
   sources: ["assurance/05-software/WP-W-06-software-unit-verification.md OI-3"]
-  status: queued
+  asked: 2026-10-14
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-14, note: "Agreed in chat: LLVM source-based MC/DC as the measurement, gcc 14 condition coverage as the independent cross-check, and a branch and MC/DC ratchet in CI now; 100 % or a justification per decision stays the WP-W-06 target."}
+  applied: {ref: "jherrodthomas/LionDriver#83", record: "WP-W-06 §4 and OI-3; WP-P-07 TL-42, TL-43; tools/ci/coverage/structural_coverage.py; .github/workflows/safety.yaml structural_coverage", at: 2026-10-14}
 
 - id: DQ-160
   question: "Which abstract-interpretation or bounded-model-checking tool should be used for VS-UV-S3?"
@@ -3837,7 +3840,10 @@
       title: "Go straight to MC/DC tooling"
       detail: "Highest rigour; tool qualification effort before ASIL is known."
   sources: ["assurance/07-supporting/WP-P-07-tool-classification-qualification.md OI-5"]
-  status: queued
+  gate: G3
+  asked: 2026-10-14
+  status: withdrawn
+  note: "Same question as DQ-159, answered in chat on 2026-10-14 and applied in jherrodthomas/LionDriver#83 (branch and MC/DC measured now with two tools, ratchet in CI)."
 
 - id: DQ-204
   question: "How should the host react to panda fault flags other than relayMalfunction and SPI error bursts (TSR-615)?"
