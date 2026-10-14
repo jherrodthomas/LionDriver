@@ -15,6 +15,9 @@
 # BL-004: 17 causes rated, 3 hardware causes rated in the DFMEA. F = the cause's O. Best monitoring is M 5: the panda
 # per-frame steering checks, mutation-tested, on code-derived timing. Actions SFM-ACT-012..015 (kind monitoring).
 # Host supervision added after BL-004 (TSR-615, TSR-621) is not credited; it is re-rated with the next baseline.
+# Rev 0.8 (2026-10-14, RT-2): FMEA-MSR complete (msr-plan.md M2): 60 causes rated, 4 hardware causes rated in the DFMEA.
+# Monitoring: M 5 on 12 causes (panda per-frame checks, driver brake/gas/cancel revocation), M 7-8 on 16 (warning only, no
+# FTTI row, or too slow), M 9-10 on 32 (no monitor). Actions SFM-ACT-016..018 (kind monitoring).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -23,11 +26,11 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.7"
+  revision: "0.8"
   status: draft
   baseline: BL-004
   rating_tables: RT-2
-  msr: partial
+  msr: complete
   scope: >-
     LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda,
     software BL-004 (structure and failure analysis written at BL-001, risk analysis at BL-004), while the vehicle is driven on public roads by a licensed driver.
@@ -666,6 +669,22 @@ failure_modes:
         actions:
         - SFM-ACT-001
         rationale: Largely a designed limitation (SOTIF, WP-C-06); the in-field steerSaturated alert and the driver are the mitigation
+        msr:
+          mechanisms:
+          - 1
+          - 2
+          diagnostic: steerSaturated warns when the controller is saturated and undershoots the curve by more than 1.2x; the lane
+            departure warning fires as the car nears the line
+          system_response: Audible and visual warning; lateral control stays active, the driver steers
+          effect_after_response: Driver warned and takes over; no FTTI defined for the warning path
+          severity_after: 10
+          frequency: 6
+          monitoring: 7
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-017
       - id: SFM-004.C2
         element: SFM-SE-030
         description: EPS limits or rejects torque request (EPS fault, torque limit, lockout)
@@ -680,6 +699,22 @@ failure_modes:
         - SFM-ACT-003
         rationale: EPS lockouts and torque limiting are signalled on CAN (LKA_STATE) and raise steerTempUnavailable / steerUnavailable; occurrence 5 because lockouts
           occur in normal use
+        msr:
+          mechanisms:
+          - 1
+          - 2
+          diagnostic: steerSaturated warns when the controller is saturated and undershoots the curve by more than 1.2x; the lane
+            departure warning fires as the car nears the line; an EPS fault signal also raises steerUnavailable
+          system_response: Audible and visual warning; lateral control stays active, the driver steers
+          effect_after_response: Driver warned and takes over; no FTTI defined for the warning path
+          severity_after: 10
+          frequency: 5
+          monitoring: 7
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-017
       - id: SFM-004.C3
         element: SFM-SE-013
         description: Controller tuning or torque model too weak for vehicle state
@@ -697,6 +732,22 @@ failure_modes:
         - SFM-ACT-002
         - SFM-ACT-003
         rationale: Partly a designed limitation (SOTIF); steerSaturated warns in the field
+        msr:
+          mechanisms:
+          - 1
+          - 2
+          diagnostic: steerSaturated warns when the controller is saturated and undershoots the curve by more than 1.2x; the lane
+            departure warning fires as the car nears the line
+          system_response: Audible and visual warning; lateral control stays active, the driver steers
+          effect_after_response: Driver warned and takes over; no FTTI defined for the warning path
+          severity_after: 10
+          frequency: 6
+          monitoring: 7
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-017
     notes: "Mostly a designed limitation: overlaps SOTIF. Kept here for the failure path (EPS/controller fault)."
 
   - id: SFM-005
@@ -729,6 +780,20 @@ failure_modes:
         - SFM-ACT-003
         rationale: 'Internal failure of a Toyota ECU, outside the item (scope: interface only). Covered by the assumption that the OEM ECU meets its own safety
           requirements (AOU) and by the in-field mechanisms listed for this failure mode; LionDriver can only characterize the interface behaviour (SFM-ACT-003)'
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: steerUnavailable needs an EPS fault signal, which this cause does not produce'
+          system_response: None
+          effect_after_response: 'Unchanged: assist lost silently; only the driver notices'
+          severity_after: 10
+          frequency: 3
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-018
       - id: SFM-005.C2
         element: SFM-SE-017
         linked_failure_mode: SWF-024
@@ -741,6 +806,25 @@ failure_modes:
         detection: 10
         ap: H
         rationale: Rated, and actioned, in the SW FMEA (SWF-024.C1, SWF-ACT-023, SWF-ACT-026, SWF-ACT-024); this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: No TX supervision at BL-004. The EPS faults LKA once frames stop (about 2 s, T-23) and the host raises steerTempUnavailable
+            after its 1.5 s hysteresis (T-25)
+          system_response: SOFT_DISABLE alert about 3.5 s after onset, beyond the 1 s budget to warning
+          effect_after_response: Assist lost; warning late
+          severity_after: 10
+          frequency: 5
+          monitoring: 8
+          ap: H
+          timing:
+            ftti_ref: SG-02/06 loss without warning
+            ftti_ms: 1000
+            fdti_ms: 2000
+            frti_ms: 1500
+            basis: code_derived
+          actions:
+          - SFM-ACT-018
       - id: SFM-005.C3
         element: SFM-SE-019
         description: Process crash or hang not detected by liveness checks
@@ -757,6 +841,20 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-002
+        msr:
+          mechanisms:
+          - 2
+          diagnostic: 'None: by definition the hang escapes the liveness and frequency checks'
+          system_response: None
+          effect_after_response: 'Unchanged: assist frozen or lost without an alert'
+          severity_after: 10
+          frequency: 6
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-018
     notes: "With a correct alert the effect is a controlled handback (S 8 per RT-1). Without one it is a HARA candidate."
 
   - id: SFM-006
@@ -951,6 +1049,23 @@ failure_modes:
         actions:
         - SFM-ACT-001
         - SFM-ACT-002
+        msr:
+          mechanisms:
+          - 1
+          - 3
+          diagnostic: The panda bounds the acceleration request to the Toyota maximum but cannot tell a wrong target inside it; the
+            driver's brake press revokes control
+          system_response: Panda revokes control on a brake press
+          effect_after_response: Unchanged until the driver brakes
+          severity_after: 10
+          frequency: 6
+          monitoring: 9
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-001
+          - SFM-ACT-002
       - id: SFM-008.C2
         element: SFM-SE-013
         linked_failure_mode: SWF-046
@@ -967,6 +1082,30 @@ failure_modes:
         actions:
         - SFM-ACT-001
         rationale: Rated, and actioned, in the SW FMEA (SWF-046.C2, SWF-ACT-045); this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: Panda checks every ACC_CONTROL frame against the acceleration limits and blocks it unless control is allowed
+            and the gas is not pressed
+          system_response: Over-limit frame refused
+          effect_after_response: Acceleration bounded by the panda limit; an in-limit overshoot remains
+          severity_after: 10
+          frequency: 7
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-03/04
+            ftti_ms: 1000
+            fdti_ms: 0
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: Toyota safety tests (driver brake, gas, PCM cruise, acceleration limits) on every PR, mutation-tested in
+              CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          actions:
+          - SFM-ACT-012
       - id: SFM-008.C3
         element: SFM-SE-016
         description: Wrong scaling of acceleration request for this car
@@ -985,6 +1124,30 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-003
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: Panda decodes the packed acceleration request with its own scaling and checks it against the limits on every
+            frame, independently of the host packing
+          system_response: Over-limit frame refused
+          effect_after_response: Acceleration bounded by the panda limit
+          severity_after: 10
+          frequency: 6
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-03/04
+            ftti_ms: 1000
+            fdti_ms: 0
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: Toyota safety tests (driver brake, gas, PCM cruise, acceleration limits) on every PR, mutation-tested in
+              CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          actions:
+          - SFM-ACT-012
       - id: SFM-008.C4
         element: SFM-SE-031
         description: Powertrain applies more acceleration than requested
@@ -999,6 +1162,24 @@ failure_modes:
         - SFM-ACT-003
         rationale: 'Internal failure of a Toyota ECU, outside the item (scope: interface only). Covered by the assumption that the OEM ECU meets its own safety
           requirements (AOU) and by the in-field mechanisms listed for this failure mode; LionDriver can only characterize the interface behaviour (SFM-ACT-003)'
+        msr:
+          mechanisms:
+          - 2
+          diagnostic: Excessive longitudinal acceleration check on measured acceleration (> 2x ACCEL_MAX for 0.25 s, T-21)
+          system_response: 'SOFT_DISABLE: actuation continues for up to 3 s (T-16); 3.25 s exceeds the 1 s FTTI'
+          effect_after_response: Excess acceleration for up to 3.25 s
+          severity_after: 10
+          frequency: 3
+          monitoring: 8
+          ap: H
+          timing:
+            ftti_ref: SG-03/04
+            ftti_ms: 1000
+            fdti_ms: 250
+            frti_ms: 3000
+            basis: code_derived
+          actions:
+          - SFM-ACT-003
     notes: "HARA input: unintended acceleration while engaged."
 
   - id: SFM-009
@@ -1038,6 +1219,22 @@ failure_modes:
         actions:
         - SFM-ACT-009
         rationale: False positives without a fault belong to SOTIF (WP-C-06); this row covers fault-induced false leads
+        msr:
+          mechanisms:
+          - 1
+          - 3
+          diagnostic: The panda bounds deceleration to the Toyota minimum but cannot tell a false lead; the panda blocks acceleration
+            requests while the driver presses the gas
+          system_response: Driver overrides with the gas
+          effect_after_response: Unchanged until the driver presses the gas
+          severity_after: 10
+          frequency: 7
+          monitoring: 9
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-009
       - id: SFM-009.C2
         element: SFM-SE-013
         linked_failure_mode: SWF-046
@@ -1054,6 +1251,29 @@ failure_modes:
         actions:
         - SFM-ACT-001
         rationale: Rated, and actioned, in the SW FMEA (SWF-046.C2, SWF-ACT-045); this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: Panda checks every ACC_CONTROL frame against the minimum acceleration limit
+          system_response: Over-limit frame refused
+          effect_after_response: Deceleration bounded by the panda limit; in-limit overshoot remains
+          severity_after: 10
+          frequency: 7
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-03/04
+            ftti_ms: 1000
+            fdti_ms: 0
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: Toyota safety tests (driver brake, gas, PCM cruise, acceleration limits) on every PR, mutation-tested in
+              CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          actions:
+          - SFM-ACT-012
       - id: SFM-009.C3
         element: SFM-SE-016
         description: Wrong vEgo/aEgo from CAN parse
@@ -1070,6 +1290,21 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-003
+        msr:
+          mechanisms:
+          - 1
+          - 3
+          diagnostic: Limits bound the request but cannot tell wrong vehicle speed or acceleration inputs
+          system_response: Driver overrides with the gas
+          effect_after_response: Unchanged until the driver presses the gas
+          severity_after: 10
+          frequency: 6
+          monitoring: 9
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-003
     notes: "HARA input: unexpected hard braking. False-positive perception without a fault belongs to SOTIF."
 
   - id: SFM-010
@@ -1106,6 +1341,20 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-009
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: FCW comes from the same planner and model that missed the lead, so it is not designed to catch this cause
+          system_response: None
+          effect_after_response: 'Unchanged: stock PCS/AEB is the remaining measure (SFM-ACT-006)'
+          severity_after: 10
+          frequency: 7
+          monitoring: 9
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-009
       - id: SFM-010.C2
         element: SFM-SE-003
         description: Safety model minimum accel limit prevents required braking (by design)
@@ -1122,6 +1371,21 @@ failure_modes:
         - SFM-ACT-006
         rationale: 'Design limit (-3.5 m/s²): at L2 the driver remains responsible for emergency braking, and the stock pre-collision system is meant to stay
           available (SFM-033); handled in SOTIF'
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: FCW warns when the planner sees that the lead needs more deceleration than the limit allows
+          system_response: Audible forward-collision warning; the driver brakes
+          effect_after_response: Driver warned; no FTTI compared
+          severity_after: 10
+          frequency: 6
+          monitoring: 7
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-006
+          - SFM-ACT-017
       - id: SFM-010.C3
         element: SFM-SE-031
         description: Brake system does not achieve requested deceleration
@@ -1136,6 +1400,21 @@ failure_modes:
         - SFM-ACT-003
         rationale: 'Internal failure of a Toyota ECU, outside the item (scope: interface only). Covered by the assumption that the OEM ECU meets its own safety
           requirements (AOU) and by the in-field mechanisms listed for this failure mode; LionDriver can only characterize the interface behaviour (SFM-ACT-003)'
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: FCW warns as the gap closes faster than planned
+          system_response: Audible forward-collision warning; the driver brakes
+          effect_after_response: Driver warned; no FTTI compared
+          severity_after: 10
+          frequency: 3
+          monitoring: 7
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-003
+          - SFM-ACT-017
     notes: "HARA input: insufficient braking for lead while engaged."
 
   - id: SFM-011
@@ -1168,6 +1447,20 @@ failure_modes:
         - SFM-ACT-003
         rationale: 'Internal failure of a Toyota ECU, outside the item (scope: interface only). Covered by the assumption that the OEM ECU meets its own safety
           requirements (AOU) and by the in-field mechanisms listed for this failure mode; LionDriver can only characterize the interface behaviour (SFM-ACT-003)'
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: accFaulted needs a PCM fault signal, which this cause does not produce'
+          system_response: None
+          effect_after_response: 'Unchanged: longitudinal control lost silently'
+          severity_after: 10
+          frequency: 3
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-018
       - id: SFM-011.C2
         element: SFM-SE-017
         linked_failure_mode: SWF-024
@@ -1180,6 +1473,21 @@ failure_modes:
         detection: 10
         ap: H
         rationale: Rated, and actioned, in the SW FMEA (SWF-024.C1, SWF-ACT-023, SWF-ACT-026, SWF-ACT-024); this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: No TX supervision at BL-004; the PCM is expected to fault ACC once ACC_CONTROL frames stop and the host raises
+            accFaulted (IMMEDIATE_DISABLE). PCM timing unknown
+          system_response: IMMEDIATE_DISABLE with alert once the PCM reports the fault
+          effect_after_response: Longitudinal control lost; warning time unknown
+          severity_after: 10
+          frequency: 5
+          monitoring: 7
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-018
     notes: "With a correct alert, S 8 per RT-1. Without one, HARA candidate."
 
   - id: SFM-012
@@ -1212,6 +1520,22 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-003
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: selfdrivedLagging and modeldLagging after about 1 s of averaging (T-20), commIssueAvgFreq over 1-10 s (T-15)
+          system_response: SOFT_DISABLE (3 s)
+          effect_after_response: Driver warned; no FTTI compared for late reaction
+          severity_after: 10
+          frequency: 6
+          monitoring: 7
+          ap: H
+          timing:
+            fdti_ms: 1000
+            frti_ms: 3000
+            basis: code_derived
+          actions:
+          - SFM-ACT-017
       - id: SFM-012.C2
         element: SFM-SE-012
         description: Lead state filtered too slowly (radard)
@@ -1227,6 +1551,20 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-009
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: slow filtering in radard keeps message rates normal'
+          system_response: None
+          effect_after_response: 'Unchanged: late braking until FCW or the driver acts'
+          severity_after: 10
+          frequency: 6
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-009
 
   # ----- F3 Engagement management -----
   - id: SFM-013
@@ -1260,6 +1598,23 @@ failure_modes:
         detection: 8
         ap: H
         rationale: Rated, and actioned, in the SW FMEA (SWF-030.C1, SWF-ACT-030); this row inherits that rating
+        msr:
+          mechanisms:
+          - 2
+          diagnostic: Panda grants control only on the PCM cruise engage edge read from the car bus, so a wrong host state alone does
+            not grant actuation; frames are refused on every cycle. WP-S-04 has no FTTI row for SG-008, so the timing is not compared
+          system_response: Frames refused; no actuation
+          effect_after_response: No actuation without PCM cruise
+          severity_after: 4
+          frequency: 6
+          monitoring: 7
+          ap: H
+          timing:
+            fdti_ms: 0
+            frti_ms: 10
+            basis: code_derived
+          actions:
+          - SFM-ACT-017
       - id: SFM-013.C2
         element: SFM-SE-016
         description: Cruise state or button parsed incorrectly (spurious enable)
@@ -1277,6 +1632,23 @@ failure_modes:
         actions:
         - SFM-ACT-003
         rationale: The panda independently requires a rising edge of PCM_CRUISE CRUISE_ACTIVE before it allows controls (SWF-007, D 3)
+        msr:
+          mechanisms:
+          - 2
+          diagnostic: Panda parses the PCM cruise state itself and grants control only on its engage edge; a host parsing error does
+            not grant actuation. No SG-008 FTTI row in WP-S-04
+          system_response: Frames refused; no actuation
+          effect_after_response: No actuation without PCM cruise
+          severity_after: 4
+          frequency: 6
+          monitoring: 7
+          ap: H
+          timing:
+            fdti_ms: 0
+            frti_ms: 10
+            basis: code_derived
+          actions:
+          - SFM-ACT-017
     notes: "HARA input: unintended engagement."
 
   - id: SFM-014
@@ -1308,6 +1680,20 @@ failure_modes:
         detection: 10
         ap: H
         rationale: Rated, and actioned, in the SW FMEA (SWF-032.C1, SWF-ACT-033); this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: with no event for the fault, the heartbeat still reports engaged'
+          system_response: None
+          effect_after_response: 'Unchanged: control continues on the faulted input'
+          severity_after: 10
+          frequency: 8
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          rationale: A missing event cannot be detected in operation. Its prevention is the event-coverage review in the SW FMEA (SWF-032);
+            the panda's own driver-input and PCM checks still apply
       - id: SFM-014.C2
         element: SFM-SE-014
         linked_failure_mode: SWF-033
@@ -1324,6 +1710,20 @@ failure_modes:
         actions:
         - SFM-ACT-010
         rationale: Rated, and actioned, in the SW FMEA (SWF-033.C1, SWF-ACT-035); this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: the wrong reaction type is the monitor that has failed'
+          system_response: None
+          effect_after_response: 'Unchanged: a fault that needs IMMEDIATE_DISABLE gets a weaker reaction'
+          severity_after: 10
+          frequency: 8
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-010
       - id: SFM-014.C3
         element: SFM-SE-014
         description: Catch-all commIssue suppressed by the no_system_errors logic while another event is active
@@ -1341,6 +1741,19 @@ failure_modes:
         ap: H
         rationale: Code review at BL-004 (selfdrived.py:384-388) shows the suppression cannot remove the disable reaction, so the cause does not lead to the failure
           mode; no action. The big-model suppression of commIssue is a different cause (SWF-032.C2)
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: the catch-all is itself suppressed'
+          system_response: None
+          effect_after_response: Unchanged
+          severity_after: 10
+          frequency: 2
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          rationale: Masking of the catch-all is a design property rated in the SW FMEA; no in-field monitor can see it. F 2
     notes: "HARA input: continued actuation after fault detection."
 
   - id: SFM-015
@@ -1372,6 +1785,20 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-007
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None at BL-004: the alert is appended but nothing checks that it was shown or played'
+          system_response: None
+          effect_after_response: 'Unchanged: disengagement without a perceived alert'
+          severity_after: 10
+          frequency: 6
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-007
       - id: SFM-015.C2
         element: SFM-SE-003
         description: Panda drops controls_allowed on its own (e.g. safety violation) and selfdrived reacts late
@@ -1389,6 +1816,24 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-010
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'Host mismatch counter: enabled while the panda does not allow control for 200 cycles (2 s, T-17)'
+          system_response: controlsMismatch IMMEDIATE_DISABLE with alert, about 2 s after the panda dropped control
+          effect_after_response: Warning about 2 s late against the 1 s budget
+          severity_after: 10
+          frequency: 6
+          monitoring: 8
+          ap: H
+          timing:
+            ftti_ref: SG-02/06 loss without warning
+            ftti_ms: 1000
+            fdti_ms: 2000
+            frti_ms: 10
+            basis: code_derived
+          actions:
+          - SFM-ACT-010
       - id: SFM-015.C3
         element: SFM-SE-033
         linked_failure_mode: DFM-012
@@ -1406,6 +1851,7 @@ failure_modes:
         actions:
         - SFM-ACT-003
         rationale: Hardware fault rated in the DFMEA (DFM-012; no SoC-independent warning exists, DFM-017); this row inherits that rating
+        msr_exempt: Hardware cause; rated once in the DFMEA (DFM-012.C1)
 
   - id: SFM-016
     element: SFM-SE-001
@@ -1487,6 +1933,30 @@ failure_modes:
         actions:
         - SFM-ACT-003
         rationale: The panda independently withdraws controls on brake press (SWF-008, D 3)
+        msr:
+          mechanisms:
+          - 2
+          diagnostic: Panda parses the brake signal itself and revokes control on the brake press (T-04, 25 ms), independently of
+            the host parse
+          system_response: Steering and acceleration frames refused from the next cycle
+          effect_after_response: Control released within about 35 ms; the host alert follows later
+          severity_after: 3
+          frequency: 6
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-05 brake/cancel
+            ftti_ms: 200
+            fdti_ms: 25
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: Toyota safety tests (driver brake, gas, PCM cruise, acceleration limits) on every PR, mutation-tested in
+              CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          actions:
+          - SFM-ACT-012
       - id: SFM-017.C2
         element: SFM-SE-014
         linked_failure_mode: SWF-031
@@ -1503,6 +1973,29 @@ failure_modes:
         detection: 8
         ap: H
         rationale: Rated, and actioned, in the SW FMEA (SWF-031.C2, SWF-ACT-030); this row inherits that rating
+        msr:
+          mechanisms:
+          - 2
+          diagnostic: Panda revokes control on the brake press from its own CAN parse, whatever the host does with canValid
+          system_response: Steering and acceleration frames refused from the next cycle
+          effect_after_response: Control released within about 35 ms
+          severity_after: 3
+          frequency: 7
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-05 brake/cancel
+            ftti_ms: 200
+            fdti_ms: 25
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: Toyota safety tests (driver brake, gas, PCM cruise, acceleration limits) on every PR, mutation-tested in
+              CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          actions:
+          - SFM-ACT-012
     notes: "HARA input: driver brake does not cancel automation. Directly tied to SAFETY.md requirement 1."
 
   - id: SFM-018
@@ -1537,6 +2030,21 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-003
+        msr:
+          mechanisms:
+          - 2
+          diagnostic: 'None at BL-004: the panda does not supervise driver override (WP-S-04 §5, TSR-304); the EPS torque limit lets
+            the driver overpower the request but detects nothing'
+          system_response: None
+          effect_after_response: 'Unchanged: driver steers against the bounded torque'
+          severity_after: 10
+          frequency: 6
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-016
       - id: SFM-018.C2
         element: SFM-SE-013
         linked_failure_mode: SWF-038
@@ -1551,6 +2059,20 @@ failure_modes:
         detection: 9
         ap: H
         rationale: 'Rated, and actioned, in the SW FMEA (SWF-038.C1, SWF-ACT-039); this row inherits that rating. Same behaviour from the controlsd side: SWF-044'
+        msr:
+          mechanisms:
+          - 2
+          diagnostic: 'None at BL-004: no override supervision in the panda (TSR-304)'
+          system_response: None
+          effect_after_response: 'Unchanged: driver steers against the bounded torque'
+          severity_after: 10
+          frequency: 8
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-016
     notes: "HARA input: automation resists evasive steering."
 
   - id: SFM-019
@@ -1584,6 +2106,30 @@ failure_modes:
         actions:
         - SFM-ACT-003
         rationale: The brake remains an independent disengagement path (SFM-017)
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: Cancel turns PCM cruise off; the panda reads PCM cruise from the car bus and revokes control (T-04, 30 ms),
+            independently of the host button parse
+          system_response: Frames refused from the next cycle
+          effect_after_response: Control released within about 40 ms
+          severity_after: 3
+          frequency: 6
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-05 brake/cancel
+            ftti_ms: 200
+            fdti_ms: 30
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: Toyota safety tests (driver brake, gas, PCM cruise, acceleration limits) on every PR, mutation-tested in
+              CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          actions:
+          - SFM-ACT-012
 
   - id: SFM-020
     element: SFM-SE-001
@@ -1616,6 +2162,30 @@ failure_modes:
         actions:
         - SFM-ACT-003
         rationale: The panda independently refuses non-inactive acceleration while the accelerator is pressed (SWF-017, D 3)
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: Panda parses the gas pedal itself and refuses acceleration requests while it is pressed (longitudinal allowed
+            only without gas)
+          system_response: ACC_CONTROL frames with a request refused
+          effect_after_response: No item deceleration while the driver presses the gas
+          severity_after: 3
+          frequency: 6
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-03/04
+            ftti_ms: 1000
+            fdti_ms: 33
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: Toyota safety tests (driver brake, gas, PCM cruise, acceleration limits) on every PR, mutation-tested in
+              CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          actions:
+          - SFM-ACT-012
 
   - id: SFM-021
     element: SFM-SE-001
@@ -1647,6 +2217,20 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-011
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: cruiseMismatch is detected after 6 s but has no reaction at BL-004 (T-19)
+          system_response: None
+          effect_after_response: 'Unchanged: stock cruise keeps controlling speed'
+          severity_after: 10
+          frequency: 6
+          monitoring: 9
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-011
       - id: SFM-021.C2
         element: SFM-SE-031
         description: PCM ignores cancel request
@@ -1661,6 +2245,20 @@ failure_modes:
         - SFM-ACT-011
         rationale: 'Internal failure of a Toyota ECU, outside the item (scope: interface only). Covered by the assumption that the OEM ECU meets its own safety
           requirements (AOU) and by the in-field mechanisms listed for this failure mode; LionDriver can only characterize the interface behaviour (SFM-ACT-003)'
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: cruiseMismatch is detected after 6 s but has no reaction at BL-004 (T-19)
+          system_response: None
+          effect_after_response: 'Unchanged: stock cruise keeps controlling speed'
+          severity_after: 10
+          frequency: 3
+          monitoring: 9
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-011
     notes: >-
       Observation: selfdrived raises cruiseMismatch after 6 s of mismatch, but events.py maps
       cruiseMismatch to no reaction (its ET.PERMANENT alert is commented out). Mismatch is logged, not
@@ -1697,6 +2295,20 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-009
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: Fallback to the wheel-touch policy only when the model is uncertain; a confident false negative is not caught
+          system_response: None
+          effect_after_response: 'Unchanged: escalation does not start'
+          severity_after: 10
+          frequency: 7
+          monitoring: 9
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-009
       - id: SFM-022.C2
         element: SFM-SE-015
         description: Pose thresholds/calibration wrong for driver or mount
@@ -1713,6 +2325,20 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-009
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: Fallback to the wheel-touch policy only when the model is uncertain; wrong thresholds give confident outputs
+          system_response: None
+          effect_after_response: 'Unchanged: escalation does not start'
+          severity_after: 10
+          frequency: 6
+          monitoring: 9
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-009
       - id: SFM-022.C3
         element: SFM-SE-002
         description: Driver camera or IR illumination degraded
@@ -1729,6 +2355,22 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-003
+        msr:
+          mechanisms:
+          - 1
+          - 2
+          diagnostic: A dead camera raises cameraMalfunction; a degraded image makes the model uncertain and falls back to the wheel-touch
+            policy after 10 s
+          system_response: SOFT_DISABLE, or wheel-touch escalation
+          effect_after_response: Driver monitored by wheel touch; no FTTI defined for DM
+          severity_after: 10
+          frequency: 5
+          monitoring: 7
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-017
     notes: "HARA input: loss of the driver as the fallback (L2 safety argument depends on it). DM model performance is also SOTIF/PAS 8800."
 
   - id: SFM-023
@@ -1831,6 +2473,20 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-005
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: the lockout acts only after disengagement; the terminal alert has no disable reaction'
+          system_response: None
+          effect_after_response: 'Unchanged: control continues with an unresponsive driver'
+          severity_after: 10
+          frequency: 8
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-005
     notes: >-
       Observation: in BL-001, events.py maps driverDistracted3 and driverUnresponsive3 only to an
       ET.PERMANENT alert; no SOFT_DISABLE/IMMEDIATE_DISABLE is attached, so reaching awareness 0 does not
@@ -1868,6 +2524,20 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-007
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None at BL-004: the audio channel masks a hung UI but nothing detects it'
+          system_response: None
+          effect_after_response: Alert audible only
+          severity_after: 10
+          frequency: 6
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-007
       - id: SFM-026.C2
         element: SFM-SE-018
         description: soundd failure or volume too low for cabin noise
@@ -1886,6 +2556,20 @@ failure_modes:
         actions:
         - SFM-ACT-007
         - SFM-ACT-003
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None at BL-004: the screen masks a soundd failure but nothing detects it'
+          system_response: None
+          effect_after_response: Alert visual only
+          severity_after: 10
+          frequency: 6
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-007
       - id: SFM-026.C3
         element: SFM-SE-002
         description: Speaker or display hardware failure
@@ -1900,6 +2584,20 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-007
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: no self-test of speaker or display'
+          system_response: None
+          effect_after_response: Alert on one channel or none
+          severity_after: 10
+          frequency: 4
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-007
     notes: "HARA input: failure to warn the driver of handback."
 
   - id: SFM-027
@@ -2227,6 +2925,21 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-008
+        msr:
+          mechanisms:
+          - 2
+          diagnostic: controlsMismatch compares the panda with CarParams, which share the same wrong platform; carUnrecognized does
+            not fire on a fuzzy match
+          system_response: None
+          effect_after_response: 'Unchanged: limits of a similar platform apply'
+          severity_after: 10
+          frequency: 5
+          monitoring: 9
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-008
     notes: "Also a PFMEA topic (car port selection, PFMEA scope item 6)."
 
   # ----- F8 Stock function preservation -----
@@ -2395,7 +3108,8 @@ actions:
     kind: monitoring
     status: open
     description: Measure on the HIL bench and the reference car (WP-V-05) how the panda reacts to over-limit and not-engaged
-      torque frames, and what the EPS does when frames are refused; re-rate the MSR rows from code-derived to measured timing
+      steering and acceleration frames and to driver brake, gas and cancel inputs, and what the EPS and PCM do when frames are
+      refused; re-rate the MSR rows from code-derived to measured timing
   - id: SFM-ACT-013
     kind: monitoring
     status: open
@@ -2411,3 +3125,18 @@ actions:
     status: open
     description: 'Detect stale commands and inputs within the SG-01 FTTI: command-frame freshness in the MCU with an active
       zero frame (TSR-408, TSR-109) and frozen-content and age checks on model outputs in controlsd (TSR-602, AIR-17)'
+  - id: SFM-ACT-016
+    kind: monitoring
+    status: open
+    description: 'Supervise driver override in the panda: driver steering torque above the override threshold limits or revokes
+      lateral authority within the SG-05 0.2 s budget (TSR-304)'
+  - id: SFM-ACT-017
+    kind: monitoring
+    status: open
+    description: Add WP-S-04 FTTI rows for the warning paths without one (insufficient lateral control, late or insufficient
+      braking warnings, SG-008 unintended engagement, driver monitoring), so these mechanisms can be compared with a time budget
+  - id: SFM-ACT-018
+    kind: monitoring
+    status: open
+    description: 'Detect silent loss of the actuation path: report forwarded and refused TX frames from the panda, and compare
+      EPS and PCM acceptance (LKA_STATE, ACC status) with the commands, warning within the SG-02/06 1 s budget'

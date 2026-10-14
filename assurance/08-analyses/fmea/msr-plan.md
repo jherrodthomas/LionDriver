@@ -1,6 +1,6 @@
 # LionDriver — FMEA-MSR: audit and plan
 
-**Status:** Draft v0.3, 2026-10-14. Step M1 pilot done (§4.7): 32 causes rated (DFMEA complete, System FMEA SG-01 lateral chain), MSR line and §7 in the review pages. v0.2: step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
+**Status:** Draft v0.4, 2026-10-14. Step M2 done: every in-scope cause is rated or pointed at the DFMEA (75 rated, 4 exempt; both files `msr: complete`); results in §4.7. v0.3: step M1 pilot done: 32 causes rated (DFMEA complete, System FMEA SG-01 lateral chain), MSR line and §7 in the review pages. v0.2: step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
 **Basis:** AIAG & VDA FMEA Handbook (2019), Supplemental FMEA for Monitoring and System Response (FMEA-MSR), ISO 26262-4 §6 (FTTI) and ISO 26262-5 §8 (diagnostic coverage), by reference.
 **Related:** [fmea-plan.md](fmea-plan.md), [rating-tables.md](rating-tables.md) (RT-1), [WP-S-04 timing and FTTI budget](../../03-system/WP-S-04-timing-ftti-budget.md), [WP-V-05 fault injection](../../06-validation/WP-V-05-fault-injection.md).
 
@@ -132,7 +132,7 @@ A cause carries `msr` or `msr_exempt` (a reason), never both. The header gets `m
 |---|---|---|
 | M0 | RT-2 (§7 tables), schema `msr` block, linter rules and tests; no rows — **done 2026-10-14** | This plan |
 | M1 | Pilot: SG-01 lateral chain in the System FMEA (17 rated, 3 rated in the DFMEA) and all 15 DFMEA causes — **done 2026-10-14** | M0, WP-S-04 rev 0.5 |
-| M2 | Remaining System FMEA and DFMEA in-scope causes | M1 review |
+| M2 | Remaining System FMEA and DFMEA in-scope causes — **done 2026-10-14** (System FMEA rev 0.8: 60 rated, 4 in the DFMEA) | M1 review |
 | M3 | Review pages (MSR line per failure mode, §7 table and frequency × monitoring map — **done with M1**), Figure 4-2, MSR columns in the review workbooks | M1 |
 | M4 | Re-rate M as WP-V-05 measurements land (code-derived → measured) | WP-V-05 |
 | M5 | Independent review of the MSR rows with the FMEA set | M2 |
@@ -153,6 +153,20 @@ A cause carries `msr` or `msr_exempt` (a reason), never both. The header gets `m
 - New monitoring actions: SFM-ACT-012 (measure the panda reaction on HIL), SFM-ACT-013 (host check of panda authority while disengaged), SFM-ACT-014 (steering-direction plausibility monitor), SFM-ACT-015 (command and input freshness, TSR-408/602). The DFMEA rows reuse the existing DFM-ACT actions.
 - **Every MSR AP is H.** With S 10 and F ≥ 4, the provisional table gives H at every M except M 1. So M, not the MSR AP, is what ranks the work: the review pages sort by M. Whether the handbook table separates these rows better is open until it is transcribed (decision register).
 - Host supervision added after BL-004 (TSR-615 panda TX blocked, TSR-621 mismatch timing) and the heartbeat-loss siren are not credited. They are re-rated with the next System FMEA baseline.
+
+**After M2 (all in-scope causes):**
+
+| Monitoring | System FMEA (60) | DFMEA (15) | What sits there |
+|---|---:|---:|---|
+| M 1–4 (measured) | 0 | 0 | Nothing is measured yet (WP-V-05) |
+| M 5–6 (code-derived, within FTTI) | 12 | 0 | Panda per-frame steering and acceleration checks; panda revocation on driver brake, cancel and gas |
+| M 7–8 (warning only, no FTTI row, or too slow) | 16 | 4 | Saturation, lane-departure and FCW warnings; soft disables after excessive actuation; EPS drop-out and mismatch warnings at about 2–3.5 s against 1 s |
+| M 9–10 (no monitor) | 32 | 11 | Wrong targets inside the limits, steering direction, driver override in the panda, silent EPS/PCM non-acceptance, alert-channel supervision, DM false negatives, the zero-awareness reaction, MCU memory and relay faults |
+
+M2 adds three monitoring actions:
+- SFM-ACT-016: driver-override supervision in the panda (TSR-304).
+- SFM-ACT-017: FTTI rows for the warning paths that have none, so they can be credited.
+- SFM-ACT-018: detection of a silent loss of the actuation path.
 
 ### 4.8 Risks
 
