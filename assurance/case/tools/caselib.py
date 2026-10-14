@@ -307,7 +307,8 @@ def upstream_compatibility() -> dict:
 
 def records_digest() -> str:
   h = hashlib.sha256()
-  paths = [SCHEMA_PATH] + sorted(p for p in CASE_DIR.rglob("*.yaml"))
+  # distribution.yaml records who got a copy, not what the case says, so issuing a copy does not change the digest
+  paths = [SCHEMA_PATH] + sorted(p for p in CASE_DIR.rglob("*.yaml") if p.name != "distribution.yaml")
   for p in paths:
     h.update(rel(p).encode())
     h.update(b"\0")
