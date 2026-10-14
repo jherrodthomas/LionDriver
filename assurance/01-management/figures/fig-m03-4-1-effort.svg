@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="752" viewBox="0 0 1280 752" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 4-1. Effort, external effort and staffing (WP-M-03 §4.2, §4.3)</title>
+<desc>Effort per phase: P0 Governance 6–10 pw; P1 Concept 14–24 pw; P2 System design 14–22 pw; P3 HW/SW development 30–55 pw; P4 Integration and verification 20–35 pw; P5 Validation and release 20–40 pw; total 104–186 pw. External: FuSa assessor: confirmation reviews G0–G4 10–20 assessor-days; FuSa assessor: interim assessments G1, G2; audits 10–15 assessor-days; FuSa assessor: final assessment G5 15–30 assessor-days; Cybersecurity assessor 10–20 assessor-days; Penetration test (device, firmware, OTA, remote access) 10–20 tester-days. Added staff needed: envelope engineer or reviewer from P0; SOTIF/ML person from P1; hardware safety engineer from P3; test driver from P1.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="752" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-1 · Effort by phase, external effort and the staff the estimate assumes</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">§4.2 estimate in person-weeks (low to high) with the running total; §4.2 external effort in days; §4.3 minimum added staff by the phase they are needed from</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-M-03 §4.2, §4.3</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="112" font-size="12.5" fill="#0F172A" font-weight="700">Effort per phase (pw)</text>
+<text x="900" y="112" font-size="12.5" fill="#0F172A" font-weight="700">Running total (pw)</text>
+<text x="40" y="141" font-size="11.5" fill="#0F172A" font-weight="600">P0 Governance</text>
+<text x="40" y="155" font-size="9.2" fill="#475569">19 plans/procedures; fork and CI setup</text>
+<rect x="330" y="132" width="50.3" height="14" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<rect x="380.3" y="132" width="33.5" height="14" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1"/>
+<text x="421.8" y="143" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">6–10</text>
+<text x="900" y="143" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">6–10</text>
+<rect x="1000" y="134" width="11.8" height="10" rx="3" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<rect x="1000" y="134" width="7.1" height="10" rx="3" fill="#475569" stroke="none" stroke-width="1.2"/>
+<text x="40" y="181" font-size="11.5" fill="#0F172A" font-weight="600">P1 Concept</text>
+<text x="40" y="195" font-size="9.2" fill="#475569">HARA and FSC from scratch; SOTIF analysis of an …</text>
+<rect x="330" y="172" width="117.3" height="14" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<rect x="447.3" y="172" width="83.8" height="14" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1"/>
+<text x="539.1" y="183" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">14–24</text>
+<text x="900" y="183" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">20–34</text>
+<rect x="1000" y="174" width="40.2" height="10" rx="3" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<rect x="1000" y="174" width="23.7" height="10" rx="3" fill="#475569" stroke="none" stroke-width="1.2"/>
+<text x="40" y="221" font-size="11.5" fill="#0F172A" font-weight="600">P2 System design</text>
+<text x="40" y="235" font-size="9.2" fill="#475569">Requirements back-fill from code; FFI and DFA on a …</text>
+<rect x="330" y="212" width="117.3" height="14" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<rect x="447.3" y="212" width="67" height="14" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1"/>
+<text x="522.3" y="223" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">14–22</text>
+<text x="900" y="223" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">34–56</text>
+<rect x="1000" y="214" width="66.2" height="10" rx="3" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<rect x="1000" y="214" width="40.2" height="10" rx="3" fill="#475569" stroke="none" stroke-width="1.2"/>
+<text x="40" y="261" font-size="11.5" fill="#0F172A" font-weight="600">P3 HW/SW development</text>
+<text x="40" y="275" font-size="9.2" fill="#475569">FMEDA without supplier data; envelope hardening …</text>
+<rect x="330" y="252" width="251.4" height="14" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<rect x="581.4" y="252" width="209.5" height="14" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1"/>
+<text x="798.9" y="263" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">30–55</text>
+<text x="900" y="263" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">64–111</text>
+<rect x="1000" y="254" width="131.3" height="10" rx="3" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<rect x="1000" y="254" width="75.7" height="10" rx="3" fill="#475569" stroke="none" stroke-width="1.2"/>
+<text x="40" y="301" font-size="11.5" fill="#0F172A" font-weight="600">P4 Integration and verification</text>
+<text x="40" y="315" font-size="9.2" fill="#475569">HIL bench build (4–8 pw of this); fault injection; replay …</text>
+<rect x="330" y="292" width="167.6" height="14" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<rect x="497.6" y="292" width="125.7" height="14" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1"/>
+<text x="631.3" y="303" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">20–35</text>
+<text x="900" y="303" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">84–146</text>
+<rect x="1000" y="294" width="172.7" height="10" rx="3" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<rect x="1000" y="294" width="99.4" height="10" rx="3" fill="#475569" stroke="none" stroke-width="1.2"/>
+<text x="40" y="341" font-size="11.5" fill="#0F172A" font-weight="600">P5 Validation and release</text>
+<text x="40" y="355" font-size="9.2" fill="#475569">Validation driving and data analysis; safety case …</text>
+<rect x="330" y="332" width="167.6" height="14" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<rect x="497.6" y="332" width="167.6" height="14" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1"/>
+<text x="673.2" y="343" font-size="10.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">20–40</text>
+<text x="900" y="343" font-size="11" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">104–186</text>
+<rect x="1000" y="334" width="220" height="10" rx="3" fill="#F1F5F9" stroke="none" stroke-width="1.2"/>
+<rect x="1000" y="334" width="123" height="10" rx="3" fill="#475569" stroke="none" stroke-width="1.2"/>
+<line x1="40" y1="366" x2="1240" y2="366" stroke="#E2E8F0" stroke-width="1"/>
+<text x="40" y="386" font-size="11" fill="#0F172A" font-weight="700">Total P0–P5: 104–186 pw summed (§4.2 states ≈ 105–185); about 2.3–4.0 person-years at 46 working weeks</text>
+<text x="40" y="412" font-size="12.5" fill="#0F172A" font-weight="700">External effort (§4.2)</text>
+<text x="40" y="439" font-size="10.5" fill="#0F172A">FuSa assessor: confirmation reviews G0–G4</text>
+<rect x="330" y="429" width="153.6" height="12" rx="3" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<rect x="483.6" y="429" width="153.6" height="12" rx="3" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="645.2" y="439" font-size="10" fill="#475569">10–20 assessor-days</text>
+<text x="40" y="463" font-size="10.5" fill="#0F172A">FuSa assessor: interim assessments G1, G2; audits</text>
+<rect x="330" y="453" width="153.6" height="12" rx="3" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<rect x="483.6" y="453" width="76.8" height="12" rx="3" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="568.4" y="463" font-size="10" fill="#475569">10–15 assessor-days</text>
+<text x="40" y="487" font-size="10.5" fill="#0F172A">FuSa assessor: final assessment G5</text>
+<rect x="330" y="477" width="230.4" height="12" rx="3" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<rect x="560.4" y="477" width="230.4" height="12" rx="3" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="798.9" y="487" font-size="10" fill="#475569">15–30 assessor-days</text>
+<text x="40" y="511" font-size="10.5" fill="#0F172A">Cybersecurity assessor</text>
+<rect x="330" y="501" width="153.6" height="12" rx="3" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<rect x="483.6" y="501" width="153.6" height="12" rx="3" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="645.2" y="511" font-size="10" fill="#475569">10–20 assessor-days</text>
+<text x="40" y="535" font-size="10.5" fill="#0F172A">Penetration test (device, firmware, OTA, remote access)</text>
+<rect x="330" y="525" width="153.6" height="12" rx="3" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<rect x="483.6" y="525" width="153.6" height="12" rx="3" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+<text x="645.2" y="535" font-size="10" fill="#475569">10–20 tester-days</text>
+<text x="40" y="562" font-size="12.5" fill="#0F172A" font-weight="700">Staff the estimate assumes (§4.3): the maintainer plus at least</text>
+<text x="378.3" y="586" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">P0</text>
+<text x="535" y="586" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">P1</text>
+<text x="691.7" y="586" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">P2</text>
+<text x="848.3" y="586" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">P3</text>
+<text x="1005" y="586" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">P4</text>
+<text x="1161.7" y="586" font-size="10.5" fill="#475569" font-weight="700" text-anchor="middle">P5</text>
+<text x="40" y="607" font-size="10.5" fill="#0F172A" font-weight="600">Maintainer (all roles today)</text>
+<rect x="302" y="596" width="936" height="16" rx="8" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="310" y="608" font-size="9.5" fill="#FFFFFF" font-weight="700">named</text>
+<text x="40" y="631" font-size="10.5" fill="#0F172A">Envelope engineer or reviewer</text>
+<rect x="302" y="620" width="936" height="16" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="310" y="632" font-size="9.5" fill="#D2553F" font-weight="700">not named (TBD)</text>
+<text x="40" y="655" font-size="10.5" fill="#0F172A">SOTIF/ML person</text>
+<rect x="458.7" y="644" width="779.3" height="16" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="466.7" y="656" font-size="9.5" fill="#D2553F" font-weight="700">not named (TBD)</text>
+<text x="40" y="679" font-size="10.5" fill="#0F172A">Hardware safety engineer</text>
+<rect x="772" y="668" width="466" height="16" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="780" y="680" font-size="9.5" fill="#D2553F" font-weight="700">not named (TBD)</text>
+<text x="40" y="703" font-size="10.5" fill="#0F172A">Test driver</text>
+<rect x="458.7" y="692" width="779.3" height="16" rx="8" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="466.7" y="704" font-size="9.5" fill="#D2553F" font-weight="700">not named (TBD)</text>
+<rect x="40" y="722" width="14" height="12" rx="3" fill="#C2410C" stroke="none" stroke-width="1.2"/>
+<text x="60" y="732" font-size="11" fill="#475569">low estimate</text>
+<rect x="137.7" y="722" width="14" height="12" rx="3" fill="url(#hatch)" stroke="#C2410C" stroke-width="1.2"/>
+<text x="157.7" y="732" font-size="11" fill="#475569">up to high estimate</text>
+<rect x="269.8" y="722" width="14" height="12" rx="3" fill="#4F46E5" stroke="none" stroke-width="1.2"/>
+<text x="289.8" y="732" font-size="11" fill="#475569">external, low</text>
+<rect x="368.9" y="722" width="14" height="12" rx="3" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.2"/>
+<text x="388.9" y="732" font-size="11" fill="#475569">external, up to high</text>
+<rect x="502.5" y="722" width="14" height="12" rx="3" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="522.5" y="732" font-size="11" fill="#475569">needed, not named</text>
+<text x="1240" y="732" font-size="10" fill="#94A3B8" text-anchor="end">Generated by fig_m_management.py</text>
+</svg>

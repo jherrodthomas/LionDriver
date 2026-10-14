@@ -1,0 +1,224 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="651" viewBox="0 0 1280 651" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<title>Figure 4-1. Safety lifecycle per phase (WP-M-02 §4, §8, §11)</title>
+<desc>7 phases P0 Governance, P1 Concept, P2 System design, P3 HW/SW development, P4 Integration and verification, P5 Validation and release, P6 Operation, each with its activities, responsible roles and key outputs, the confirmation measures and safety case content due at its gate, and the hold point at G1.</desc>
+<defs><pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
+<rect x="0" y="0" width="1280" height="651" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4-1 · Safety lifecycle at a glance: phases, gates, confirmation and the safety case</text>
+<text x="40" y="66" font-size="12.5" fill="#475569">One column per phase of §4. Each phase ends at its gate; the confirmation measures (§8) and the safety case content (§11) are those due at that gate</text>
+<text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-M-02 §4, §8, §11</text>
+<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="173" y="100" width="146.9" height="42" rx="8" fill="#0F172A" stroke="#0F172A" stroke-width="1.2"/>
+<text x="183" y="118" font-size="13" fill="#FFFFFF" font-weight="700">P0</text>
+<text x="183" y="133" font-size="10" fill="#CBD5E1">Governance</text>
+<path d="M319.9 113 l8 8 l-8 8 l-8 -8 z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 2"/>
+<text x="319.9" y="154" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">G0</text>
+<rect x="325.9" y="100" width="146.9" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="335.9" y="118" font-size="13" fill="#0F172A" font-weight="700">P1</text>
+<text x="335.9" y="133" font-size="10" fill="#475569">Concept</text>
+<path d="M472.7 113 l8 8 l-8 8 l-8 -8 z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 2"/>
+<text x="472.7" y="154" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">G1</text>
+<rect x="478.7" y="100" width="146.9" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="488.7" y="118" font-size="13" fill="#0F172A" font-weight="700">P2</text>
+<text x="488.7" y="133" font-size="10" fill="#475569">System design</text>
+<path d="M625.6 113 l8 8 l-8 8 l-8 -8 z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 2"/>
+<text x="625.6" y="154" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">G2</text>
+<rect x="631.6" y="100" width="146.9" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="641.6" y="118" font-size="13" fill="#0F172A" font-weight="700">P3</text>
+<text x="641.6" y="133" font-size="10" fill="#475569">HW/SW development</text>
+<path d="M778.4 113 l8 8 l-8 8 l-8 -8 z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 2"/>
+<text x="778.4" y="154" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">G3</text>
+<rect x="784.4" y="100" width="146.9" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="794.4" y="118" font-size="13" fill="#0F172A" font-weight="700">P4</text>
+<text x="794.4" y="133" font-size="10" fill="#475569">Integration and …</text>
+<path d="M931.3 113 l8 8 l-8 8 l-8 -8 z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 2"/>
+<text x="931.3" y="154" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">G4</text>
+<rect x="937.3" y="100" width="146.9" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="947.3" y="118" font-size="13" fill="#0F172A" font-weight="700">P5</text>
+<text x="947.3" y="133" font-size="10" fill="#475569">Validation and release</text>
+<path d="M1084.1 113 l8 8 l-8 8 l-8 -8 z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 2"/>
+<text x="1084.1" y="154" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">G5</text>
+<rect x="1090.1" y="100" width="146.9" height="42" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+<text x="1100.1" y="118" font-size="13" fill="#0F172A" font-weight="700">P6</text>
+<text x="1100.1" y="133" font-size="10" fill="#475569">Operation</text>
+<path d="M1237 113 l8 8 l-8 8 l-8 -8 z" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="2 2"/>
+<text x="1237" y="154" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="middle">G6</text>
+<text x="40" y="182" font-size="11" fill="#475569" font-weight="700">Activities (§4)</text>
+<rect x="173" y="166" width="146.9" height="142" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="180" y="181" font-size="9.5" fill="#0F172A">Approve plans; assign roles;</text>
+<text x="180" y="194" font-size="9.5" fill="#0F172A">take configuration control of</text>
+<text x="180" y="207" font-size="9.5" fill="#0F172A">opendbc and panda (D-01,</text>
+<text x="180" y="220" font-size="9.5" fill="#0F172A">done #3); upstream sync once</text>
+<text x="180" y="233" font-size="9.5" fill="#0F172A">per minor release with impact</text>
+<text x="180" y="246" font-size="9.5" fill="#0F172A">analysis (D-02, done #4,</text>
+<text x="180" y="259" font-size="9.5" fill="#0F172A">WP-M-11 §5); make fork CI</text>
+<text x="180" y="272" font-size="9.5" fill="#0F172A">meaningful (D-03, done #6</text>
+<text x="180" y="285" font-size="9.5" fill="#0F172A">except CR-CI-08); set up</text>
+<text x="180" y="298" font-size="9.5" fill="#0F172A">review rules …</text>
+<rect x="325.9" y="166" width="146.9" height="142" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="332.9" y="181" font-size="9.5" fill="#0F172A">Item definition and AoUs on</text>
+<text x="332.9" y="194" font-size="9.5" fill="#0F172A">Toyota ECUs; ODD; HARA</text>
+<text x="332.9" y="207" font-size="9.5" fill="#0F172A">and safety goals; driver/HMI</text>
+<text x="332.9" y="220" font-size="9.5" fill="#0F172A">misuse analysis; FSC with</text>
+<text x="332.9" y="233" font-size="9.5" fill="#0F172A">FSR allocation; vehicle test</text>
+<text x="332.9" y="246" font-size="9.5" fill="#0F172A">procedures before any</text>
+<text x="332.9" y="259" font-size="9.5" fill="#0F172A">LionDriver-specific road test;</text>
+<text x="332.9" y="272" font-size="9.5" fill="#0F172A">initial safety case argument</text>
+<rect x="478.7" y="166" width="146.9" height="142" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="485.7" y="181" font-size="9.5" fill="#0F172A">Back-fill TSRs from envelope</text>
+<text x="485.7" y="194" font-size="9.5" fill="#0F172A">code; TSC and architecture;</text>
+<text x="485.7" y="207" font-size="9.5" fill="#0F172A">FTTI and detection-time</text>
+<text x="485.7" y="220" font-size="9.5" fill="#0F172A">budget (GAP-06); HSI; FFI</text>
+<text x="485.7" y="233" font-size="9.5" fill="#0F172A">and DFA, including the</text>
+<text x="485.7" y="246" font-size="9.5" fill="#0F172A">SoC-configures-panda</text>
+<text x="485.7" y="259" font-size="9.5" fill="#0F172A">weakness (GAP-09); system</text>
+<text x="485.7" y="272" font-size="9.5" fill="#0F172A">FTA/FMEA; ASIL</text>
+<text x="485.7" y="285" font-size="9.5" fill="#0F172A">decomposition if needed</text>
+<rect x="631.6" y="166" width="146.9" height="142" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="638.6" y="181" font-size="9.5" fill="#0F172A">HW safety requirements,</text>
+<text x="638.6" y="194" font-size="9.5" fill="#0F172A">FMEDA, metrics and PMHF;</text>
+<text x="638.6" y="207" font-size="9.5" fill="#0F172A">component qualification of</text>
+<text x="638.6" y="220" font-size="9.5" fill="#0F172A">the comma device and</text>
+<text x="638.6" y="233" font-size="9.5" fill="#0F172A">STM32H7; SW safety</text>
+<text x="638.6" y="246" font-size="9.5" fill="#0F172A">requirements, architecture,</text>
+<text x="638.6" y="259" font-size="9.5" fill="#0F172A">safety analysis, unit design;</text>
+<text x="638.6" y="272" font-size="9.5" fill="#0F172A">envelope hardening (IWDG,</text>
+<text x="638.6" y="285" font-size="9.5" fill="#0F172A">fault → safe state, mode lock,</text>
+<text x="638.6" y="298" font-size="9.5" fill="#0F172A">E2E, driver-torque and …</text>
+<rect x="784.4" y="166" width="146.9" height="142" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="791.4" y="181" font-size="9.5" fill="#0F172A">Build the HIL bench (D-04);</text>
+<text x="791.4" y="194" font-size="9.5" fill="#0F172A">SW and HW integration tests</text>
+<text x="791.4" y="207" font-size="9.5" fill="#0F172A">on the Cortex-M7 target;</text>
+<text x="791.4" y="220" font-size="9.5" fill="#0F172A">system integration; fault</text>
+<text x="791.4" y="233" font-size="9.5" fill="#0F172A">injection campaign;</text>
+<text x="791.4" y="246" font-size="9.5" fill="#0F172A">fork-owned process-replay</text>
+<text x="791.4" y="259" font-size="9.5" fill="#0F172A">references</text>
+<rect x="937.3" y="166" width="146.9" height="142" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="944.3" y="181" font-size="9.5" fill="#0F172A">Safety validation in the</text>
+<text x="944.3" y="194" font-size="9.5" fill="#0F172A">vehicle under WP-V-07;</text>
+<text x="944.3" y="207" font-size="9.5" fill="#0F172A">SOTIF residual risk</text>
+<text x="944.3" y="220" font-size="9.5" fill="#0F172A">acceptance (with SL); safety</text>
+<text x="944.3" y="233" font-size="9.5" fill="#0F172A">case completion; functional</text>
+<text x="944.3" y="246" font-size="9.5" fill="#0F172A">safety assessment; release</text>
+<text x="944.3" y="259" font-size="9.5" fill="#0F172A">record</text>
+<rect x="1090.1" y="166" width="146.9" height="142" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="1097.1" y="181" font-size="9.5" fill="#0F172A">Field monitoring, safety</text>
+<text x="1097.1" y="194" font-size="9.5" fill="#0F172A">anomaly handling after</text>
+<text x="1097.1" y="207" font-size="9.5" fill="#0F172A">release, controlled updates,</text>
+<text x="1097.1" y="220" font-size="9.5" fill="#0F172A">incident response</text>
+<text x="40" y="332" font-size="11" fill="#475569" font-weight="700">Responsible</text>
+<rect x="173" y="316" width="146.9" height="38" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="180" y="331" font-size="9.5" fill="#475569">SM, PM</text>
+<rect x="325.9" y="316" width="146.9" height="38" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="332.9" y="331" font-size="9.5" fill="#475569">SM (HARA, FSC), SL</text>
+<text x="332.9" y="344" font-size="9.5" fill="#475569">(SOTIF inputs), CSM …</text>
+<rect x="478.7" y="316" width="146.9" height="38" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="485.7" y="331" font-size="9.5" fill="#475569">ENG, SM, HW</text>
+<rect x="631.6" y="316" width="146.9" height="38" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="638.6" y="331" font-size="9.5" fill="#475569">ENG, HW, SM</text>
+<rect x="784.4" y="316" width="146.9" height="38" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="791.4" y="331" font-size="9.5" fill="#475569">ENG, HIL bench owner</text>
+<rect x="937.3" y="316" width="146.9" height="38" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="944.3" y="331" font-size="9.5" fill="#475569">SM, SL, EA</text>
+<rect x="1090.1" y="316" width="146.9" height="38" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.2"/>
+<text x="1097.1" y="331" font-size="9.5" fill="#475569">SM, CSM</text>
+<text x="40" y="378" font-size="11" fill="#475569" font-weight="700">Key outputs</text>
+<rect x="173" y="362" width="146.9" height="51" rx="8" fill="#F0FDFA" stroke="none" stroke-width="1.2"/>
+<text x="180" y="377" font-size="9.5" fill="#0F766E">WP-M-00…M-13,</text>
+<text x="180" y="390" font-size="9.5" fill="#0F766E">WP-P-01…P-06</text>
+<rect x="325.9" y="362" width="146.9" height="51" rx="8" fill="#F0FDFA" stroke="none" stroke-width="1.2"/>
+<text x="332.9" y="377" font-size="9.5" fill="#0F766E">WP-C-01…C-11, WP-V-07,</text>
+<text x="332.9" y="390" font-size="9.5" fill="#0F766E">WP-K-01 v1</text>
+<rect x="478.7" y="362" width="146.9" height="51" rx="8" fill="#F0FDFA" stroke="none" stroke-width="1.2"/>
+<text x="485.7" y="377" font-size="9.5" fill="#0F766E">WP-S-01…S-07,</text>
+<text x="485.7" y="390" font-size="9.5" fill="#0F766E">WP-A-01…A-04, WP-V-02</text>
+<rect x="631.6" y="362" width="146.9" height="51" rx="8" fill="#F0FDFA" stroke="none" stroke-width="1.2"/>
+<text x="638.6" y="377" font-size="9.5" fill="#0F766E">WP-H-01…H-05, H-07,</text>
+<text x="638.6" y="390" font-size="9.5" fill="#0F766E">WP-W-01…W-06, W-09…W-11,</text>
+<text x="638.6" y="403" font-size="9.5" fill="#0F766E">WP-P-07…P-09</text>
+<rect x="784.4" y="362" width="146.9" height="51" rx="8" fill="#F0FDFA" stroke="none" stroke-width="1.2"/>
+<text x="791.4" y="377" font-size="9.5" fill="#0F766E">WP-S-08, S-09, H-06, W-07,</text>
+<text x="791.4" y="390" font-size="9.5" fill="#0F766E">W-08, WP-V-03, V-05</text>
+<rect x="937.3" y="362" width="146.9" height="51" rx="8" fill="#F0FDFA" stroke="none" stroke-width="1.2"/>
+<text x="944.3" y="377" font-size="9.5" fill="#0F766E">WP-V-01, V-04, V-06,</text>
+<text x="944.3" y="390" font-size="9.5" fill="#0F766E">WP-K-01…K-06,</text>
+<text x="944.3" y="403" font-size="9.5" fill="#0F766E">WP-O-01…O-03</text>
+<rect x="1090.1" y="362" width="146.9" height="51" rx="8" fill="#F0FDFA" stroke="none" stroke-width="1.2"/>
+<text x="1097.1" y="377" font-size="9.5" fill="#0F766E">WP-O-04, O-05, WP-P-03</text>
+<text x="40" y="437" font-size="11" fill="#475569" font-weight="700">Confirmation at the</text>
+<text x="40" y="451" font-size="11" fill="#475569" font-weight="700">gate (§8)</text>
+<rect x="173" y="421" width="146.9" height="64" rx="8" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="180" y="436" font-size="9.5" fill="#4F46E5">Confirmation review of this</text>
+<text x="180" y="449" font-size="9.5" fill="#4F46E5">plan, the impact analysis and</text>
+<text x="180" y="462" font-size="9.5" fill="#4F46E5">the tailoring rationale</text>
+<rect x="325.9" y="421" width="146.9" height="64" rx="8" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="332.9" y="436" font-size="9.5" fill="#4F46E5">Confirmation review of the</text>
+<text x="332.9" y="449" font-size="9.5" fill="#4F46E5">HARA (I3) and the FSC;</text>
+<text x="332.9" y="462" font-size="9.5" fill="#4F46E5">interim functional safety</text>
+<text x="332.9" y="475" font-size="9.5" fill="#4F46E5">assessment</text>
+<rect x="478.7" y="421" width="146.9" height="64" rx="8" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="485.7" y="436" font-size="9.5" fill="#4F46E5">Confirmation review of the</text>
+<text x="485.7" y="449" font-size="9.5" fill="#4F46E5">TSC and safety analyses;</text>
+<text x="485.7" y="462" font-size="9.5" fill="#4F46E5">interim assessment; first</text>
+<text x="485.7" y="475" font-size="9.5" fill="#4F46E5">functional safety audit</text>
+<rect x="631.6" y="421" width="146.9" height="64" rx="8" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="638.6" y="436" font-size="9.5" fill="#4F46E5">Confirmation reviews of</text>
+<text x="638.6" y="449" font-size="9.5" fill="#4F46E5">HW/SW analyses, tool</text>
+<text x="638.6" y="462" font-size="9.5" fill="#4F46E5">qualification, component</text>
+<text x="638.6" y="475" font-size="9.5" fill="#4F46E5">qualification; audit</text>
+<rect x="784.4" y="421" width="146.9" height="64" rx="8" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="791.4" y="436" font-size="9.5" fill="#4F46E5">Confirmation reviews of</text>
+<text x="791.4" y="449" font-size="9.5" fill="#4F46E5">HW/SW analyses, tool</text>
+<text x="791.4" y="462" font-size="9.5" fill="#4F46E5">qualification, component</text>
+<text x="791.4" y="475" font-size="9.5" fill="#4F46E5">qualification; audit</text>
+<rect x="937.3" y="421" width="146.9" height="64" rx="8" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="944.3" y="436" font-size="9.5" fill="#4F46E5">Confirmation review of the</text>
+<text x="944.3" y="449" font-size="9.5" fill="#4F46E5">safety case; final functional</text>
+<text x="944.3" y="462" font-size="9.5" fill="#4F46E5">safety assessment</text>
+<rect x="1090.1" y="421" width="146.9" height="64" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" stroke-dasharray="3 3"/>
+<text x="1097.1" y="436" font-size="9.5" fill="#94A3B8" font-style="italic">none at this gate</text>
+<text x="40" y="509" font-size="11" fill="#475569" font-weight="700">Safety case at the</text>
+<text x="40" y="523" font-size="11" fill="#475569" font-weight="700">gate (§11)</text>
+<rect x="173" y="493" width="146.9" height="64" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" stroke-dasharray="3 3"/>
+<text x="180" y="508" font-size="9.5" fill="#94A3B8" font-style="italic">none at this gate</text>
+<rect x="325.9" y="493" width="146.9" height="64" rx="8" fill="#FFF7ED" stroke="none" stroke-width="1.2"/>
+<text x="332.9" y="508" font-size="9.5" fill="#C2410C">Argument structure (GSN) for</text>
+<text x="332.9" y="521" font-size="9.5" fill="#C2410C">G0 and G1–G5; safety goals;</text>
+<text x="332.9" y="534" font-size="9.5" fill="#C2410C">evidence slots linked to</text>
+<text x="332.9" y="547" font-size="9.5" fill="#C2410C">planned work products; …</text>
+<rect x="478.7" y="493" width="146.9" height="64" rx="8" fill="#FFF7ED" stroke="none" stroke-width="1.2"/>
+<text x="485.7" y="508" font-size="9.5" fill="#C2410C">Envelope argument (FFI,</text>
+<text x="485.7" y="521" font-size="9.5" fill="#C2410C">DFA, TSC) with evidence for</text>
+<text x="485.7" y="534" font-size="9.5" fill="#C2410C">the architecture</text>
+<rect x="631.6" y="493" width="146.9" height="64" rx="8" fill="#FFF7ED" stroke="none" stroke-width="1.2"/>
+<text x="638.6" y="508" font-size="9.5" fill="#C2410C">Verification and qualification</text>
+<text x="638.6" y="521" font-size="9.5" fill="#C2410C">evidence linked; residual</text>
+<text x="638.6" y="534" font-size="9.5" fill="#C2410C">gaps recorded as</text>
+<text x="638.6" y="547" font-size="9.5" fill="#C2410C">counter-evidence or …</text>
+<rect x="784.4" y="493" width="146.9" height="64" rx="8" fill="#FFF7ED" stroke="none" stroke-width="1.2"/>
+<text x="791.4" y="508" font-size="9.5" fill="#C2410C">Verification and qualification</text>
+<text x="791.4" y="521" font-size="9.5" fill="#C2410C">evidence linked; residual</text>
+<text x="791.4" y="534" font-size="9.5" fill="#C2410C">gaps recorded as</text>
+<text x="791.4" y="547" font-size="9.5" fill="#C2410C">counter-evidence or …</text>
+<rect x="937.3" y="493" width="146.9" height="64" rx="8" fill="#FFF7ED" stroke="none" stroke-width="1.2"/>
+<text x="944.3" y="508" font-size="9.5" fill="#C2410C">Complete argument incl.</text>
+<text x="944.3" y="521" font-size="9.5" fill="#C2410C">SOTIF (WP-K-02) and</text>
+<text x="944.3" y="534" font-size="9.5" fill="#C2410C">cybersecurity (WP-K-03)</text>
+<text x="944.3" y="547" font-size="9.5" fill="#C2410C">links; input to the FSA</text>
+<rect x="1090.1" y="493" width="146.9" height="64" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" stroke-dasharray="3 3"/>
+<text x="1097.1" y="508" font-size="9.5" fill="#94A3B8" font-style="italic">none at this gate</text>
+<rect x="376.7" y="571" width="192" height="38" rx="8" fill="#D2553F" stroke="none" stroke-width="1.2"/>
+<text x="472.7" y="586" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">HOLD POINT at G1 (§4)</text>
+<text x="472.7" y="600" font-size="9" fill="#FFFFFF" text-anchor="middle">no public-road use before G1 and WP-V-07</text>
+<rect x="40" y="571" width="120" height="38" rx="8" fill="#0F172A" stroke="none" stroke-width="1.2"/>
+<text x="50" y="586" font-size="10.5" fill="#FFFFFF" font-weight="700">Today: P0</text>
+<text x="50" y="600" font-size="9" fill="#CBD5E1">no gate passed</text>
+<rect x="40" y="621" width="14" height="12" rx="3" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="60" y="631" font-size="11" fill="#475569">gate, not passed</text>
+<rect x="159.5" y="621" width="14" height="12" rx="3" fill="#F0FDFA" stroke="none" stroke-width="1.2"/>
+<text x="179.5" y="631" font-size="11" fill="#475569">work products</text>
+<rect x="265.4" y="621" width="14" height="12" rx="3" fill="#EEF2FF" stroke="none" stroke-width="1.2"/>
+<text x="285.4" y="631" font-size="11" fill="#475569">confirmation measure</text>
+<rect x="407.3" y="621" width="14" height="12" rx="3" fill="#FFF7ED" stroke="none" stroke-width="1.2"/>
+<text x="427.3" y="631" font-size="11" fill="#475569">safety case content</text>
+<text x="1240" y="631" font-size="10" fill="#94A3B8" text-anchor="end">Generated by fig_m_management.py</text>
+</svg>

@@ -38,6 +38,8 @@ SRC = {
   "m03_longlead": (WP_M_03, "Long-lead items to start early: assessor engagement (P0), HIL bench parts (P2), test vehicle "
                    "access and safety driver training (P1), pen-test procurement (P4)."),
   "m03_no_dates": (WP_M_03, "No calendar dates are set until staffing is known (OI-1)."),
+  "m03_staff": (WP_M_03, "Realistic delivery needs at least: one additional envelope engineer or reviewer (from P0), a "
+                "SOTIF/ML person (from P1), a hardware safety engineer (P3, can be external), and a test driver (P1)."),
   "m03_no_milestones": (WP_M_03, "None of these milestones, labels or issues exist yet; creating them is backlog item B-01."),
 }
 # Long-lead items of SRC m03_longlead: (item as written, §6 resource row, word of the §5 "Depends on" cell that
@@ -487,6 +489,160 @@ def fig_m03_schedule(pl: Plan) -> str:
   return svg(W, int(y + 20), "Figure 5-2. Relative schedule (WP-M-03 §4.2, §5)", desc, body)
 
 
+# ================================================================ Figure 3-1 work breakdown structure
+
+def fig_m03_wbs(md: str | None = None) -> str:
+  md = md if md is not None else WP_M_03.read_text(encoding="utf-8")
+  head, rows = table(section(md, "## 3. Work breakdown structure"), "WBS")
+  tops, kids = [], {}
+  for r in rows:
+    wbs, el_, content, ex = plain(r[0]), plain(r[1]), plain(r[2]), plain(r[3])
+    if "." not in wbs:
+      tops.append((wbs, el_, content, ex))
+      kids.setdefault(wbs, [])
+    else:
+      kids.setdefault(wbs.split(".")[0], []).append((wbs, el_, content))
+  W = 1280
+  n = len(tops)
+  body = header(W, "3-1", "Work breakdown structure",
+                "WBS elements of §3 by phase, each with its exit gate; under each element the work products or content "
+                "named in its row", "WP-M-03 §3")
+  cx = W / 2
+  body.append(rect(cx - 170, 100, 340, 34, fill=INK, stroke="none", rx=8))
+  body.append(text(cx, 122, "LionDriver assurance path (WP-M-01)", size=12.5, weight=700, fill="#FFFFFF", anchor="middle"))
+  gap = 8
+  cw = (W - 80 - (n - 1) * gap) / n
+  ytop = 170
+  body.append(line(cx, 134, cx, 152, stroke=MUTED, sw=1.4))
+  body.append(line(40 + cw / 2, 152, 40 + (n - 1) * (cw + gap) + cw / 2, 152, stroke=MUTED, sw=1.4))
+  ymax = ytop
+  for i, (wbs, el_, content, ex) in enumerate(tops):
+    x = 40 + i * (cw + gap)
+    body.append(line(x + cw / 2, 152, x + cw / 2, ytop, stroke=MUTED, sw=1.4))
+    cont = "continuous" in el_.lower() or not ex or ex == "—"
+    body.append(rect(x, ytop, cw, 56, fill=SAFETY_BG if not cont else GREY_BG, stroke=SAFETY if not cont else LINE, rx=8))
+    body.append(text(x + 10, ytop + 18, wbs, size=12, weight=700, fill=SAFETY if not cont else MUTED))
+    for k, ln in enumerate(wrap(el_.replace(" (continuous)", ""), cw - 20, 10.5, 2)):
+      body.append(text(x + 10, ytop + 33 + k * 12, ln, size=10.5, weight=600))
+    if ex and ex != "—":
+      pl_, _ = pill(x + cw - 34, ytop + 6, ex, RED, size=9)
+      body += pl_
+    elif cont:
+      body.append(text(x + cw - 10, ytop + 18, "ongoing", size=9, fill=MUTED, anchor="end"))
+    y = ytop + 66
+    for wid, name, cnt in sorted(kids.get(wbs, []), key=lambda t: [int(v) for v in t[0].split(".")]):
+      lines_ = wrap(cnt, cw - 22, 8.8, 3)
+      tl = wrap(f"{wid} {name}", cw - 26, 9.8, 2)
+      h = 8 + 12 * len(tl) + 11 * len(lines_)
+      body.append(line(x + 6, y - 10, x + 6, y + h / 2, stroke=LINE, sw=1.2))
+      body.append(line(x + 6, y + h / 2, x + 10, y + h / 2, stroke=LINE, sw=1.2))
+      body.append(rect(x + 10, y, cw - 10, h, fill="#FFFFFF", stroke=LINE, rx=6))
+      for k, ln in enumerate(tl):
+        body.append(text(x + 18, y + 14 + k * 12, ln, size=9.8, weight=700))
+      for k, ln in enumerate(lines_):
+        body.append(text(x + 18, y + 15 + 12 * len(tl) + k * 11, ln, size=8.8, fill=MUTED))
+      y += h + 6
+    if not kids.get(wbs) and content:
+      for k, ln in enumerate(wrap(content, cw - 20, 9, 6)):
+        body.append(text(x + 10, y + 4 + k * 12, ln, size=9, fill=MUTED))
+      y += 12 * min(6, len(wrap(content, cw - 20, 9, 6))) + 6
+    ymax = max(ymax, y)
+  y = ymax + 16
+  lg, _ = legend(40, y, [(SAFETY_BG, SAFETY, "phase element, exit gate in red"), (GREY_BG, LINE, "continuous element"),
+                         ("#FFFFFF", LINE, "work package and its content")])
+  body += lg
+  body.append(text(W - 40, y, GENERATED, size=10, fill=FAINT, anchor="end"))
+  desc = "WBS: " + "; ".join(f"{w} {e} ({len(kids.get(w, []))} packages, exit {x or 'none'})" for w, e, _, x in tops)
+  return svg(W, int(y + 20), "Figure 3-1. Work breakdown structure (WP-M-03 §3)", desc, body)
+
+
+# ================================================================ Figure 4-1 effort and staffing
+
+def fig_m03_effort(md: str | None = None) -> str:
+  md = md if md is not None else WP_M_03.read_text(encoding="utf-8")
+  _, est = table(section(md, "### 4.2 Estimate"), "Phase")
+  ext_head, ext = table(section(md, "### 4.2 Estimate").split("| External effort")[1].join(["| External effort", ""]) , "External effort")
+  phases, total = [], None
+  for r in est:
+    ph = plain(r[0])
+    lo, hi = plain(r[1]).lstrip("≈ "), plain(r[2]).lstrip("≈ ")
+    if ph.startswith("Total"):
+      total = (lo, hi)
+    elif re.match(r"P\d ", ph) and re.match(r"\d+$", lo) and re.match(r"\d+$", hi):
+      phases.append((ph, int(lo), int(hi), plain(r[3])))
+  staff = SRC["m03_staff"][1]
+  needs = re.findall(r"(?:one additional |an? )([^,(]+?) \((?:from )?(P\d)", staff)
+  W = 1280
+  body = header(W, "4-1", "Effort by phase, external effort and the staff the estimate assumes",
+                "§4.2 estimate in person-weeks (low to high) with the running total; §4.2 external effort in days; "
+                "§4.3 minimum added staff by the phase they are needed from", "WP-M-03 §4.2, §4.3")
+  X0, X1 = 330, 860
+  hi_max = max(h for _, _, h, _ in phases)
+  sc = (X1 - X0) / (hi_max * 1.15)
+  y = 112
+  body.append(text(40, y, "Effort per phase (pw)", size=12.5, weight=700))
+  body.append(text(X1 + 40, y, "Running total (pw)", size=12.5, weight=700))
+  y += 14
+  run_lo = run_hi = 0
+  grand = sum(h for _, _, h, _ in phases)
+  for ph, lo, hi, drv in phases:
+    run_lo += lo
+    run_hi += hi
+    body.append(text(40, y + 15, fit(ph, 270, 11.5, True), size=11.5, weight=600))
+    body.append(text(40, y + 29, fit(drv, 270, 9.2), size=9.2, fill=MUTED))
+    body.append(rect(X0, y + 6, lo * sc, 14, fill=SAFETY, stroke="none", rx=3))
+    body.append(rect(X0 + lo * sc, y + 6, (hi - lo) * sc, 14, fill="url(#hatch)", stroke=SAFETY, sw=1, rx=3))
+    body.append(text(X0 + hi * sc + 8, y + 17, f"{lo}–{hi}", size=10.5, weight=700, family=MONO))
+    body.append(text(X1 + 40, y + 17, f"{run_lo}–{run_hi}", size=11, family=MONO))
+    body.append(rect(X1 + 140, y + 8, 220 * run_hi / grand, 10, fill=GREY_BG, stroke="none", rx=3))
+    body.append(rect(X1 + 140, y + 8, 220 * run_lo / grand, 10, fill=MUTED, stroke="none", rx=3))
+    y += 40
+  body.append(line(40, y, W - 40, y, stroke=HAIR, sw=1))
+  tl, th = total or ("?", "?")
+  body.append(text(40, y + 20, f"Total P0–P5: {run_lo}–{run_hi} pw summed (§4.2 states ≈ {tl}–{th}); about "
+                   f"{run_lo / 46:.1f}–{run_hi / 46:.1f} person-years at 46 working weeks", size=11, weight=700))
+  y += 46
+  body.append(text(40, y, "External effort (§4.2)", size=12.5, weight=700))
+  y += 12
+  ext_rows = [(plain(r[0]), rng(plain(r[1])), plain(r[1])) for r in ext]
+  emax = max(b for _, (a, b), _ in ext_rows)
+  esc = (X1 - X0) / (emax * 1.15)
+  for name, (a, b), raw in ext_rows:
+    body.append(text(40, y + 15, fit(name, 280, 10.5), size=10.5))
+    body.append(rect(X0, y + 5, a * esc, 12, fill=HW, stroke="none", rx=3))
+    body.append(rect(X0 + a * esc, y + 5, (b - a) * esc, 12, fill=HW_BG, stroke=HW, sw=1, rx=3))
+    body.append(text(X0 + b * esc + 8, y + 15, raw, size=10, fill=MUTED))
+    y += 24
+  y += 18
+  body.append(text(40, y, "Staff the estimate assumes (§4.3): the maintainer plus at least", size=12.5, weight=700))
+  y += 14
+  pids = [p.split()[0] for p, *_ in phases]
+  cwp = (W - 80 - 260) / len(pids)
+  for j, pid in enumerate(pids):
+    body.append(text(300 + j * cwp + cwp / 2, y + 10, pid, size=10.5, weight=700, fill=MUTED, anchor="middle"))
+  y += 18
+  rows_ = [("Maintainer (all roles today)", "P0", True)] + [(nm[0].upper() + nm[1:], ph, False) for nm, ph in needs]
+  for nm, start, have in rows_:
+    body.append(text(40, y + 13, fit(nm, 250, 10.5), size=10.5, weight=600 if have else ""))
+    s = pids.index(start) if start in pids else 0
+    xs = 300 + s * cwp
+    body.append(rect(xs + 2, y + 2, (len(pids) - s) * cwp - 4, 16, fill=SAFETY if have else "#FFFFFF",
+                     stroke="none" if have else RED, dash="" if have else "3 2", rx=8))
+    body.append(text(xs + 10, y + 14, "named" if have else "not named (TBD)", size=9.5, weight=700,
+                     fill="#FFFFFF" if have else RED))
+    y += 24
+  y += 18
+  lg, _ = legend(40, y, [(SAFETY, "none", "low estimate"), ("url(#hatch)", SAFETY, "up to high estimate"),
+                         (HW, "none", "external, low"), (HW_BG, HW, "external, up to high"),
+                         ("#FFFFFF", RED + " dashed", "needed, not named")])
+  body += lg
+  body.append(text(W - 40, y, GENERATED, size=10, fill=FAINT, anchor="end"))
+  desc = (f"Effort per phase: {'; '.join(f'{p} {a}–{b} pw' for p, a, b, _ in phases)}; total {run_lo}–{run_hi} pw. "
+          f"External: {'; '.join(f'{n} {r}' for n, _, r in ext_rows)}. Added staff needed: "
+          f"{'; '.join(f'{n} from {p}' for n, p in needs)}.")
+  return svg(W, int(y + 20), "Figure 4-1. Effort, external effort and staffing (WP-M-03 §4.2, §4.3)", desc, body)
+
+
 # ================================================================ decision check
 
 def decision_word(s: str) -> str:
@@ -553,7 +709,8 @@ def missing_sources() -> list[str]:
 
 def build() -> dict[str, str]:
   pl = load_plan()
-  return {"fig-m03-5-1-gate-roadmap.svg": fig_m03_roadmap(pl), "fig-m03-5-2-schedule.svg": fig_m03_schedule(pl)}
+  return {"fig-m03-3-1-wbs.svg": fig_m03_wbs(), "fig-m03-4-1-effort.svg": fig_m03_effort(),
+          "fig-m03-5-1-gate-roadmap.svg": fig_m03_roadmap(pl), "fig-m03-5-2-schedule.svg": fig_m03_schedule(pl)}
 
 
 def problems() -> list[str]:
