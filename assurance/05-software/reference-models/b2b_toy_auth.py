@@ -223,6 +223,17 @@ def directed(reference: bool) -> dict[str, list]:
     f.sig["CRUISE_ACTIVE"] = 0; f.run(200_000); f.sig["CRUISE_ACTIVE"] = 1; f.emit(f.frame(0x1D2)); f.run(100_000)
     S["D13c T11 revoked, then a new cruise edge (F-34)"] = f.events
 
+    # SWSR-518 v0.24 (F-34, DQ-079): new cruise edges while the flood goes on are refused; after one full window
+    # without a rejected frame the next edge grants again
+    f = new(); f.engage(); f.tx_muted = {0x2E4}
+    for k in range(160):                       # 0x2E4 at 2x for 0.8 s
+      f.emit(Tx(0x2E4, dlc=5), at=f.now + k * 5_000)
+    f.run(300_000)
+    f.sig["CRUISE_ACTIVE"] = 0; f.run(100_000); f.sig["CRUISE_ACTIVE"] = 1; f.emit(f.frame(0x1D2)); f.run(100_000)
+    f.sig["CRUISE_ACTIVE"] = 0; f.run(550_000); f.tx_muted = set()
+    f.sig["CRUISE_ACTIVE"] = 1; f.emit(f.frame(0x1D2)); f.run(100_000)
+    S["D13d T11 revoked; new cruise edges during the flood and after it stops (SWSR-518 v0.24, F-34)"] = f.events
+
     for a, limit in sorted(M.TX_ARRIVAL_US.items()):
       f = new(); f.engage(); f.run(100_000); f.tx_muted = {a}; f.run(limit + 100_000)
       S[f"D18 T10b {a:#x} stops while allowed (limit {limit // 1000} ms)"] = f.events

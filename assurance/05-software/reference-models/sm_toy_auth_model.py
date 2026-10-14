@@ -62,6 +62,13 @@ DEVIATIONS = {
   # SWSR-408 / MA-08: supervision starts when authority is granted (B2B-04). Option: it starts at the first safety task that
   # finds authority granted, and "granted before" is what the previous safety task saw.
   "arrival_from_first_tick": False,
+  # SWSR-311 v0.24 (B2B-06, DQ-080): after a mode set, authority needs CRUISE_ACTIVE = 0 to be received before a rising
+  # edge counts. Option: the edge memory is simply cleared, so a CRUISE_ACTIVE held through the mode set is a new edge
+  # (the C before ATC-26, jherrodthomas/opendbc#15). Remove at the pin bump that brings ATC-26.
+  "mode_set_regrant": False,
+  # SWSR-518 v0.24 (F-34, DQ-079): after a TX-rate revocation, no grant until one full window has passed without a
+  # rejected frame. Option: no such block (the C before ATC-20, jherrodthomas/opendbc#15). Remove at the same pin bump.
+  "tx_rate_regrant": False,
 }
 
 
@@ -133,7 +140,8 @@ class SmToyAuth:
     self.now = 0
     self.reset()
 
-  # T7, SWSR-311: authority false, all edge, sample and limiter state reset
+  # T7, SWSR-311: authority false, all edge, sample and limiter state reset; the cruise edge state is "not yet seen
+  # disengaged" (SWSR-311 v0.24)
   def reset(self) -> None:
     rx = dict(RX_SET_COMMON)
     if self.reference:
@@ -143,6 +151,9 @@ class SmToyAuth:
     self.allowed = False
     self.tx_rate_exceeded = False
     self.cruise_active = False      # last valid 0x1D2 CRUISE_ACTIVE (edge reference)
+    self.seen_disengaged = False    # CRUISE_ACTIVE = 0 received since the last mode set (SWSR-311 v0.24)
+    self.tx_block = False           # SWSR-518 v0.24: a TX-rate revocation blocks the next grants
+    self.last_reject_ts: int | None = None
     self.main_on = False            # last valid 0x1D3 MAIN_ON
     self.brake = False              # last valid 0x226 BRAKE_PRESSED
     self.brake_prev = False
@@ -160,6 +171,12 @@ class SmToyAuth:
 
   def _all_checks_ok(self) -> bool:
     return all(self._check_ok(c) for c in self.rx.values())
+
+  def _tx_block_holds(self) -> bool:
+    """SWSR-518 v0.24: after a revocation, no grant until a full window without a rejected frame (the block ends then)."""
+    if self.tx_block and self.last_reject_ts is not None and self.now - self.last_reject_ts >= TX_WINDOW_US:
+      self.tx_block = False
+    return self.tx_block and not self.dev["tx_rate_regrant"]
 
   def _moving(self) -> bool:
     if self.dev["moving_from_sum"]:
@@ -225,9 +242,11 @@ class SmToyAuth:
       row.ts_last = self.now
     if row.msgs + row.msgs_prev >= tx_budget(freq, burst):
       row.rejected += 1
+      self.last_reject_ts = self.now
       if self.allowed and row.rejected >= TX_REVOKE_REJECTED:
         self.allowed = False
         self.tx_rate_exceeded = True
+        self.tx_block = True
         return ["T11"]
     else:
       row.msgs += 1
@@ -266,10 +285,15 @@ class SmToyAuth:
         if not cruise:
           clear = True
           fired.append("T2")
+          self.seen_disengaged = True
         elif not self.cruise_active:
           # rising edge: T1 if every RX check passes now (SWSR-306) and, in the reference build, MAIN_ON = 1
-          # (SWSR-405(c) v0.20: cruise becoming active while main is off is an RX fault at once); else T8
-          if self._all_checks_ok() and not (self.reference and not self.main_on):
+          # (SWSR-405(c) v0.20: cruise becoming active while main is off is an RX fault at once); else T8.
+          # Reference build, v0.24: also CRUISE_ACTIVE = 0 seen since the mode set (SWSR-311) and no TX-rate block
+          # (SWSR-518). Both are LIONDRIVER_REFERENCE changes; the upstream build keeps the old behaviour
+          tx_blocked = self.reference and self._tx_block_holds()
+          edge_counts = (not self.reference) or self.seen_disengaged or self.dev["mode_set_regrant"]
+          if self._all_checks_ok() and not (self.reference and not self.main_on) and edge_counts and not tx_blocked:
             grant = True
             fired.append("T1")
           else:
