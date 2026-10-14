@@ -55,17 +55,11 @@ class TestAssuredConfig(OpenpilotTestCase):
     self.assertNotEqual(evaluate().config_hash, evaluate(commit="def456").config_hash)
     self.assertNotEqual(evaluate().config_hash, evaluate(params={"ExperimentalMode": True}).config_hash)
 
-  def test_fresh_device_params(self):
-    """A fresh device matches the assured params except ExperimentalMode, which upstream defaults on.
-
-    Known deviation (CA-008 finding): the CA-002 / CA-004 analyses ran without experimental mode.
-    Update this test if the default or the assured configuration changes.
-    """
+  def test_fresh_device_params_are_assured(self):
+    """Param defaults put a fresh device in the assured configuration (CA-011, and ExperimentalMode off)."""
     values = assured_config.read_params(Params())
-    self.assertEqual(values, {**ASSURED_VALUES, "ExperimentalMode": True})
-    status = evaluate(params=values)
-    self.assertEqual(len(status.deviations), 1)
-    assert "ExperimentalMode" in status.deviations[0]
+    self.assertEqual(values, ASSURED_VALUES)
+    self.assertTrue(evaluate(params=values).in_scope)
 
   def test_selfdrived_logs_and_stores_on_change(self):
     params = Params()

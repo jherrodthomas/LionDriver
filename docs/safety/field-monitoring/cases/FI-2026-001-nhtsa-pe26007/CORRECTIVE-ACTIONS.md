@@ -245,7 +245,7 @@ Full study: [`evidence/CA-004-BRAKING-AUTHORITY-STUDY.md`](evidence/CA-004-BRAKI
 **Finding: experimental mode is on by default.** Upstream defaults `ExperimentalMode` to on (`params_keys.h`), and the manager writes defaults at startup. So on a fresh 2020 Corolla, openpilot runs **experimental (end-to-end) longitudinal by default**, and the device is out of the assured configuration from the start.
 - What the CA-002 / CA-004 results still say: in experimental mode the planner takes the *minimum* of the MPC and end-to-end accelerations (`longitudinal_planner.py:142-147`). So braking for a lead is never weaker than simulated, and those results stay a valid lower bound.
 - What they don't cover: behavior specific to the end-to-end model, such as model-initiated stops and possible phantom braking (HZ-006). The harness can't represent that without the driving model's outputs.
-- **Decision needed:** either default `ExperimentalMode` off in LionDriver, or extend the analyses to experimental mode (needs logged model outputs or a rendering simulator). Until then the test records this as a known deviation.
+- **Decision (approved by the project maintainer, 2026-10-14):** `ExperimentalMode` now defaults to off in LionDriver (`params_keys.h`). Fresh devices start in the assured configuration, and `test_fresh_device_params_are_assured` checks it. Devices with a saved setting keep it, and drivers can still turn experimental mode on; CA-008 flags those drives as out of scope. Extending the analyses to experimental mode stays a candidate for later.
 
 **Not done:**
 - Showing the configuration hash and scope in the UI (onroad or settings).
