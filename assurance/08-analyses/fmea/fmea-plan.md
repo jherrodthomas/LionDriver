@@ -243,7 +243,8 @@ assurance/08-analyses/fmea/
     sw-fmea.yaml
     pfmea.yaml
     fmeda-<goal>.yaml          (one FMEDA per safety goal: fmeda-sg001.yaml lateral, fmeda-sg009.yaml stock AEB)
-  exports/                     (generated .xlsx for review; git-ignored, regenerate)
+  exports/                     (generated .xlsx; git-ignored, regenerate)
+  exports/review/              (reviewer workbooks, AIAG-VDA worksheet per FMEA; committed, checked in CI; tools/safety/fmea_review_xlsx.py)
   reviews/                     (review records, e.g. hara-r0.1-precheck.md)
   design/                      (safety design specifications, e.g. LD-DES-001 panda configuration lock)
 tools/safety/

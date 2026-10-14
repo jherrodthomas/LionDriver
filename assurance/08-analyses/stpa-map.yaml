@@ -64,14 +64,10 @@ scenarios:
   - id: LS-06
     ucas: [UCA-19]
     hazards: [H-01, H-03, H-04, H-07]
-    status: new
+    status: covered
     fta: [BE-3.13, BE-4.13, BE-5.10]
     fmea: [SFM-021, SWF-039, SWF-048]
-    requirements: [TSR-308]
-    finding: >-
-      The panda grants controls_allowed on the PCM cruise rising edge whatever openpilot's state (safety.h:655-657); only the
-      engaged-mismatch check (three 1 Hz ticks, main.c:240-244) or the cancel taking effect removes it. For up to 3 s a QM host
-      fault could actuate while the driver sees openpilot disengaged. No FMEA cause, TSR or fault-tree gate states this window.
+    requirements: [TSR-301, TSR-308]
   - id: LS-07
     ucas: [UCA-33]
     hazards: [H-08]

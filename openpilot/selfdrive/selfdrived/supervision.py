@@ -4,22 +4,33 @@
 class ControlsMismatch:
   """TSR-621: controlsAllowed false while engaged triggers after `samples` consecutive pandaStates samples (transport skew
   between the CAN and pandaStates sockets), and in any case `max_time` after the first mismatched frame (stale pandaStates).
-  A sample with controlsAllowed true, or disengaging, starts the count again."""
+  A sample with controlsAllowed true, or disengaging, starts the count again.
 
-  def __init__(self, samples: int, max_time: float, dt: float):
+  `engage_grace`: samples taken within this time after engaging are not counted, because the panda grants authority only
+  once the heartbeat reports openpilot engaged (WP-A-05 LS-06), which takes up to two pandad periods. The `max_time`
+  bound still runs from the first mismatched frame, so a panda that never grants is detected within `max_time`."""
+
+  def __init__(self, samples: int, max_time: float, dt: float, engage_grace: float = 0.0):
     self.samples = samples
     self.max_frames = round(max_time / dt)
+    self.grace_frames = round(engage_grace / dt)
     self.count = 0
     self.start_frame: int | None = None
+    self.enabled_prev = False
+    self.enabled_frame: int | None = None
 
-  def update(self, mismatch: bool, new_sample: bool, frame: int) -> None:
+  def update(self, mismatch: bool, new_sample: bool, frame: int, enabled: bool = True) -> None:
+    if enabled and not self.enabled_prev:
+      self.enabled_frame = frame
+    self.enabled_prev = enabled
     if not mismatch:
       self.count = 0
       self.start_frame = None
       return
     if self.start_frame is None:
       self.start_frame = frame
-    if new_sample:
+    in_grace = self.enabled_frame is not None and frame - self.enabled_frame < self.grace_frames
+    if new_sample and not in_grace:
       self.count += 1
 
   def triggered(self, frame: int) -> bool:
