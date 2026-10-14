@@ -136,8 +136,9 @@
       title: "GitHub username only"
       detail: "Every recipient is a verified account. Cost: excludes anyone without one."
   sources: ["WP-P-04 §4–§10", "IATF 16949 §7.5.3.2.1"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-14, note: "Agreed in chat to the recommended option for all three snapshot questions."}
+  applied: {ref: 0bcbed8, record: "WP-P-04 §9.1; assurance/case/README.md §5.1", at: 2026-10-14}
 
 - id: DQ-006
   ref: SNAP-3
@@ -158,5 +159,6 @@
       title: "Everything in one PR"
       detail: "One review. Cost: a very large PR that is hard to review."
   sources: ["assurance/case/tools/build_snapshot.py"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-14, note: "Agreed in chat to the recommended option for all three snapshot questions."}
+  applied: {ref: 0bcbed8, record: "assurance/case/README.md §5.1 (header, footer and front matter built first)", at: 2026-10-14}
