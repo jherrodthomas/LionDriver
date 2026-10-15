@@ -88,7 +88,7 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helveti
 <rect x="300.0" y="250.0" width="290.0" height="488.0" rx="10" class="in"/>
 <text x="445.0" y="454.0" class="ink" font-size="14" font-weight="700" text-anchor="middle">Panda safety path: MCU,</text>
 <text x="445.0" y="471.0" class="ink" font-size="14" font-weight="700" text-anchor="middle">clock/IWDG, supply,</text>
-<text x="445.0" y="488.0" class="ink" font-size="14" font-weight="700" text-anchor="middle">transceivers, relay</text>
+<text x="445.0" y="488.0" class="ink" font-size="14" font-weight="700" text-anchor="middle">transceivers, intercept…</text>
 <text x="316.0" y="513.0" class="mut" font-size="10.5" text-anchor="start">Functions covered:</text>
 <text x="316.0" y="526.0" class="mut" font-size="10.5" text-anchor="start">DFM-FN-001, DFM-FN-002, DFM-FN-003,</text>
 <text x="316.0" y="539.0" class="mut" font-size="10.5" text-anchor="start">DFM-FN-004, DFM-FN-005</text>

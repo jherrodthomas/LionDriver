@@ -11,20 +11,19 @@ This report is informational: it does not fail CI. It changes, and CI asks for i
 | Requirement kind | Allocations | Resolved | Partly resolved | Not resolved |
 |---|---|---|---|---|
 | fsr | 54 | 53 | 0 | 1 |
-| hwsr | 45 | 3 | 0 | 42 |
+| hwsr | 46 | 3 | 0 | 43 |
 | swsr | 134 | 124 | 0 | 10 |
 | tsr | 118 | 118 | 0 | 0 |
-| **all** | **351** | **298** | **0** | **53** |
+| **all** | **352** | **298** | **0** | **54** |
 
-161 distinct `allocated_to` values.
+163 distinct `allocated_to` values.
 
-## Not resolved (49 values)
+## Not resolved (51 values)
 
 | `allocated_to` | Requirements | Identifiers not in the model |
 |---|---|---|
 | Firmware | HWSR-506b, HWSR-506c, HWSR-701a | no element identifier in the text |
 | Cortex-M7 MPU | HWSR-507, SWSR-507a | no element identifier in the text |
-| Relay part | HWSR-506d, HWSR-711a | no element identifier in the text |
 | ADC on input divider | HWSR-505b | no element identifier in the text |
 | Analysis | HWSR-510a | no element identifier in the text |
 | Boot pins, option bytes (RDP/WRP), relay driver | HWSR-502c | no element identifier in the text |
@@ -46,8 +45,12 @@ This report is informational: it does not fail CI. It changes, and CI asks for i
 | GPIO (relay SBU1/SBU2), transceiver enable | SWSR-502c | no element identifier in the text |
 | GPIO reset state, relay driver circuit, transceiver standby pins | HWSR-502 | no element identifier in the text |
 | Harness SBU ignition line, MCU input | HWSR-510 | no element identifier in the text |
+| Harness box (R2/R3), or a LionDriver adapter (DC-03) | HWSR-506e | no element identifier in the text |
 | Harness relay | HWSR-702 | no element identifier in the text |
 | IWDG option bytes (IWDG_SW, freeze in stop/standby) | HWSR-501c | no element identifier in the text |
+| Intercept switch (harness box U1/U2), R2/R3, box supply | HWSR-502a | no element identifier in the text |
+| Intercept switch U1/U2 | HWSR-711a | no element identifier in the text |
+| Intercept switch U1/U2 (DG419LE), D1, D4 | HWSR-506d | no element identifier in the text |
 | Interrupt-rate monitor | HWSR-508c | no element identifier in the text |
 | LSI/HSI, timers | SWSR-504a | no element identifier in the text |
 | NVIC, DWT | HWSR-519 | no element identifier in the text |
@@ -56,7 +59,6 @@ This report is informational: it does not fail CI. It changes, and CI asks for i
 | RAMECC + flash ECC flags | HWSR-503a | no element identifier in the text |
 | RAMECC, flash ECC | SWSR-503c | no element identifier in the text |
 | RCC CSS on HSE | HWSR-504 | no element identifier in the text |
-| Relay (harness), coil supply | HWSR-502a | no element identifier in the text |
 | Relay auxiliary contact or bus-sense circuit | HWSR-506a | no element identifier in the text |
 | Relay driver, relay, harness | HWSR-506 | no element identifier in the text |
 | Relay readback input (to be added) | SWSR-506b | no element identifier in the text |

@@ -1,12 +1,14 @@
 # yaml-language-server: $schema=../schema/fmeda.schema.json
 # FMEDA for SG-001 (lateral) at BL-002 with GENERIC failure rates (no BOM, no supplier data). The metrics show where the
 # architecture falls short; they are not evidence of compliance. Classification per rating-tables §6.1; DC per §6.2.
+# Rev 0.3 (2026-10-15, RR-2026-010): FMD-C-007 re-based from a relay to the harness box analog switches U1/U2, and FMD-C-008 added
+# for the SBU1 pull-down R2/R3. Rates are generic for the part class.
 schema_version: 1
 analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-001 lateral (panda safety path), generic failure rates
-  revision: '0.2'
+  revision: '0.3'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -254,16 +256,17 @@ components:
     dc_lf: 0.99
     notes: CAN CRC
 - id: FMD-C-007
-  part: Intercept relay and relay driver
+  ref_des: U1, U2 (harness box)
+  part: 'Intercept switch: 2 × DG419LE CMOS analog SPDT (harness box)'
   dfmea_element: DFM-SE-006
-  failure_rate_fit: 15
-  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
-    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  failure_rate_fit: 10
+  failure_rate_source: Generic estimate for the part class (CMOS analog switch IC, 2 × about 5 FIT) at the mission profile below. The part numbers are known from
+    the harness box v3 drawing (RR-2026-010 HB-01..HB-06), but the rates were not looked up in IEC 61709 / SN 29500-2, and the shipped parts are unconfirmed (VS-HW-02)
   safety_related: true
   failure_modes:
   - id: FMD-020
-    mode: Stuck released while commanded to intercept (stock LKA and item commands both reach the EPS)
-    distribution: 0.4
+    mode: Stuck in pass-through while driven (stock LKA and item commands both reach the EPS)
+    distribution: 0.35
     violates_sg_directly: true
     mpf_potential: false
     dfmea_ref: DFM-011
@@ -271,18 +274,43 @@ components:
     dc_spf: 0.9
     notes: Usually detected after the mode change and before engagement; detection inside the FTTI while engaged is not shown
   - id: FMD-021
-    mode: Stuck intercepting, driver stuck on
-    distribution: 0.4
+    mode: Stuck in intercept, or IN input damaged high
+    distribution: 0.35
     violates_sg_directly: false
     mpf_potential: false
     dfmea_ref: DFM-010
     notes: No effect on SG-001; see SG-009
   - id: FMD-022
-    mode: Intermittent contact
-    distribution: 0.2
+    mode: Channel open, increased on-resistance, leakage or latch-up
+    distribution: 0.3
     violates_sg_directly: false
     mpf_potential: true
-    dfmea_ref: DFM-011
+    dfmea_ref: DFM-013
     safety_mechanism_lf: FMD-SM-008
     dc_lf: 0.9
     notes: RX timeouts and CAN errors
+- id: FMD-C-008
+  ref_des: R2, R3 (harness box)
+  part: 'SBU1 pull-down: 2 × 120 Ω thick-film resistor in series'
+  dfmea_element: DFM-SE-006
+  failure_rate_fit: 0.4
+  failure_rate_source: Generic estimate for the part class (SMD thick-film resistor, 2 × about 0.2 FIT) at the mission profile below. The part numbers are known from
+    the harness box v3 drawing (RR-2026-010 HB-01..HB-06), but the rates were not looked up in IEC 61709 / SN 29500-2, and the shipped parts are unconfirmed (VS-HW-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-023
+    mode: Short (SBU1 held low, so the switch cannot reach intercept)
+    distribution: 0.4
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-011
+    safety_mechanism_spf: FMD-SM-006
+    dc_spf: 0.9
+    notes: 'Same effect as FMD-020: stock path stays joined while driven'
+  - id: FMD-024
+    mode: Open (IN floats when SBU1 is undriven)
+    distribution: 0.6
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-010
+    notes: No effect on SG-001; latent for SG-009

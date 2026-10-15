@@ -67,7 +67,7 @@
 <text x="990.0" y="231.5" fill="#fff" text-anchor="middle" class="tag">E-05</text>
 <text x="1230" y="233" class="m xs b" text-anchor="end">HW</text>
 <text x="970" y="256" class="t b" font-size="12.5">Harness</text>
-<text x="970" y="272" class="m xs">Toyota TSS2 harness with relay box</text>
+<text x="970" y="272" class="m xs">Toyota TSS2 harness with harness box</text>
 <text x="970" y="288" class="m xs">camera ↔ vehicle CAN; vehicle 12 V</text>
 <polygon points="182,302 188,311 182,320 176,311" class="dia"/>
 <rect x="200" y="334" width="740" height="342" rx="10" class="pan"/>
@@ -266,12 +266,12 @@
 <rect x="968" y="342" width="264" height="160" rx="7" fill="#FFFFFF" stroke="#C2410C" stroke-width="1.3"/>
 <rect x="976" y="348" width="44" height="16" rx="8" fill="#C2410C"/>
 <text x="998.0" y="359.5" fill="#fff" text-anchor="middle" class="tag">HE-08</text>
-<text x="1026" y="360" class="t b" font-size="11">Intercept relay + driver</text>
+<text x="1026" y="360" class="t b" font-size="11">Intercept switch + drive</text>
 <text x="978" y="374" class="m sb" font-size="9.5">SG-01, SG-07 · stock path when released</text>
 <rect x="1192" y="364" width="32" height="13" rx="3" fill="#F1F5F9" stroke="#64748B" stroke-width=".8"/>
 <text x="1208" y="374" text-anchor="middle" font-size="8.5" font-weight="700" fill="#475569">§2 V</text>
 <text x="978" y="388" class="t" font-size="10">breaks camera→car for LKA/ACC messages</text>
-<text x="978" y="402" class="t" font-size="10">relay in harness box; driven by 2 open-drain</text>
+<text x="978" y="402" class="t" font-size="10">2× DG419LE in harness box; 2 open-drain</text>
 <text x="978" y="416" class="t" font-size="10">active-low panda MCU outputs (E-04)</text>
 <text x="978" y="430" class="t" font-size="10">no readback (GAP-12) · de-energised: AOU-13</text>
 <text x="978" y="444" class="req" font-size="10">→ HWSR-502, -502a, -506, -506a, -506c</text>
@@ -297,7 +297,7 @@
 <text x="978" y="640" class="t" font-size="10">active-low input on the SBU line</text>
 <text x="978" y="654" class="t" font-size="10">selected by harness orientation</text>
 <rect x="960" y="692" width="280" height="60" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-dasharray="4 3"/>
-<text x="972" y="710" font-size="10.5" fill="#92400E" font-weight="700">UK-03 · harness schematic and relay part</text>
+<text x="972" y="710" font-size="10.5" fill="#92400E" font-weight="700">UK-03 · partly answered (RR-2026-010)</text>
 <text x="972" y="726" font-size="10" fill="#92400E">number to be obtained (comma.ai, teardown,</text>
 <text x="972" y="740" font-size="10" fill="#92400E">continuity test VS-HW-02 in WP-H-06; OI-1)</text>
 <rect x="960" y="766" width="280" height="112" rx="8" fill="url(#hatch)" stroke="#94A3B8" stroke-dasharray="5 3"/>

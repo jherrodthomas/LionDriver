@@ -8,7 +8,7 @@ schema_version: 1
 analysis: DFM
 
 block_diagram:
-  title: "Item hardware: comma 3X panda, harness, relay"
+  title: "Item hardware: comma 3X panda, harness, intercept switch"
   boundary: "Item hardware (DFMEA scope, DFM-SE-001)"
   blocks:
     - id: B01
@@ -53,7 +53,7 @@ block_diagram:
       column: 3
       row: 1
     - id: B07
-      name: "Intercept relay + driver"
+      name: "Intercept switch (box U1/U2) + drive"
       detail: "In harness box; no readback (HE-08)"
       inside: true
       element: DFM-SE-006
@@ -290,7 +290,7 @@ block_diagram:
 
 p_diagram:
   title: "Panda safety path hardware"
-  focus: "Panda safety path: MCU, clock/IWDG, supply, transceivers, relay"
+  focus: "Panda safety path: MCU, clock/IWDG, supply, transceivers, intercept switch"
   functions: [DFM-FN-001, DFM-FN-002, DFM-FN-003, DFM-FN-004, DFM-FN-005]
   inputs:
     - "SoC CAN TX and heartbeat over SPI4"

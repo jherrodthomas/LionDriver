@@ -346,10 +346,10 @@ package LionDriverVerification {
         :>> names = "AOU-13, HWSR-502";
     }
     verification <'VS-HW-02'> vs_hw_02 : VerificationCase {
-        doc /* Harness relay inspection */
+        doc /* Harness box inspection against the published v3 drawing */
         :>> spec = "WP-H-06 §3";
         :>> level = "VS-HW";
-        :>> names = "HWSR-502a";
+        :>> names = "HWSR-502a, HWSR-702";
     }
     verification <'VS-HW-03'> vs_hw_03 : VerificationCase {
         doc /* Relay failure detection — stuck released */
@@ -476,6 +476,24 @@ package LionDriverVerification {
         objective {
             verify LionDriverRequirements::fsr_02_05;
         }
+    }
+    verification <'VS-HW-22'> vs_hw_22 : VerificationCase {
+        doc /* Stock path with the harness box unpowered */
+        :>> spec = "WP-H-06 §3";
+        :>> level = "VS-HW";
+        :>> names = "HWSR-502a";
+    }
+    verification <'VS-HW-23'> vs_hw_23 : VerificationCase {
+        doc /* Release default with the pull-down open */
+        :>> spec = "WP-H-06 §3";
+        :>> level = "VS-HW";
+        :>> names = "HWSR-506";
+    }
+    verification <'VS-HW-24'> vs_hw_24 : VerificationCase {
+        doc /* Switch supply stress and pass-through signal integrity */
+        :>> spec = "WP-H-06 §3";
+        :>> level = "VS-HW";
+        :>> names = "HWSR-506d";
     }
     verification <'VS-ML-01'> vs_ml_01 : VerificationCase {
         doc /* Compile equivalence */
