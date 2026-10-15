@@ -76,6 +76,7 @@ Details: [Living Safety Case records](case/README.md).
 | Document | Why read it |
 |---|---|
 | [00-assessment/gap-assessment.md](00-assessment/gap-assessment.md) | Baseline review of the inherited openpilot code and process against the target standards |
+| [ISO 26262 documentary audit package](00-assessment/iso26262-2018/README.md) | Source-linked workbook, diagrams and author actions at an immutable baseline; AI-assisted I0 pre-review, with complete normative clause coverage and human verification pending |
 | [01-management/WP-M-01-assurance-strategy.md](01-management/WP-M-01-assurance-strategy.md) | The assurance path: tailoring, safety architecture argument, phases and gates |
 | [01-management/WP-M-00-work-product-register.md](01-management/WP-M-00-work-product-register.md) | Every required work product, its source clause, owner, gate and status |
 | [02-concept/WP-C-01-item-definition.md](02-concept/WP-C-01-item-definition.md) | What the item is, where its boundary is, and what it assumes about the vehicle |

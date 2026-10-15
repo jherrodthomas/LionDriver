@@ -1,0 +1,1382 @@
+{
+  "engine": "Lion of Functional Safety Engine\u2122 \u2014 Standard-Agnostic Compliance Checker v2.1",
+  "check_date": "2026-10-14T23:48:01.670871",
+  "standard_source": "/tmp/compliance-checker-algo/examples/synthetic_standard",
+  "artifact_source": "/tmp/compliance-checker-algo/examples/synthetic_artifact.json",
+  "discovered_schema": {
+    "text_field": "text",
+    "id_field": "section",
+    "title_field": "title",
+    "risk_field": "asil_level",
+    "risk_scale": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "tag_field": "tags",
+    "requirement_nodes": 12,
+    "guideline_nodes": 3,
+    "glossary_entries": 5,
+    "method_tables": 0,
+    "traceability_rules": 1,
+    "unique_tags": 38,
+    "cross_references": 0,
+    "groups": 4
+  },
+  "target_risk_level": "B",
+  "compliance_score": 30.0,
+  "grade": "F \u2014 Non-Compliant",
+  "layer_results": {
+    "node_coverage": {
+      "layer": "node_coverage",
+      "algorithm": "Decision Tree",
+      "findings": [
+        {
+          "type": "MISSING_COVERAGE",
+          "severity": "CRITICAL",
+          "node_id": "5.2",
+          "group": "part_2",
+          "title": "Documentation management",
+          "risk": "all",
+          "message": "[part_2] \u00a7 5.2 'Documentation management' \u2014 no artifact addresses this requirement.",
+          "_source_layer": "node_coverage"
+        },
+        {
+          "type": "MISSING_COVERAGE",
+          "severity": "CRITICAL",
+          "node_id": "6.1",
+          "group": "part_2",
+          "title": "Competence management",
+          "risk": "B",
+          "message": "[part_2] \u00a7 6.1 'Competence management' \u2014 no artifact addresses this requirement.",
+          "_source_layer": "node_coverage"
+        },
+        {
+          "type": "MISSING_COVERAGE",
+          "severity": "CRITICAL",
+          "node_id": "6.1",
+          "group": "part_3",
+          "title": "Identification of operational situations",
+          "risk": "all",
+          "message": "[part_3] \u00a7 6.1 'Identification of operational situations' \u2014 no artifact addresses this requirement.",
+          "_source_layer": "node_coverage"
+        },
+        {
+          "type": "PARTIAL_COVERAGE",
+          "severity": "WARNING",
+          "node_id": "8.1",
+          "group": "part_3",
+          "title": "Functional safety concept",
+          "message": "[part_3] \u00a7 8.1 'Functional safety concept' \u2014 partially covered or incomplete.",
+          "_source_layer": "node_coverage"
+        },
+        {
+          "type": "MISSING_COVERAGE",
+          "severity": "CRITICAL",
+          "node_id": "6.1",
+          "group": "part_4",
+          "title": "System design specification",
+          "risk": "all",
+          "message": "[part_4] \u00a7 6.1 'System design specification' \u2014 no artifact addresses this requirement.",
+          "_source_layer": "node_coverage"
+        },
+        {
+          "type": "PARTIAL_COVERAGE",
+          "severity": "WARNING",
+          "node_id": "8.1",
+          "group": "part_4",
+          "title": "Safety validation",
+          "message": "[part_4] \u00a7 8.1 'Safety validation' \u2014 partially covered or incomplete.",
+          "_source_layer": "node_coverage"
+        }
+      ],
+      "score": 58.3,
+      "applicable_nodes": 12,
+      "covered_nodes": 7.0
+    },
+    "content_alignment": {
+      "layer": "content_alignment",
+      "algorithm": "TF-IDF + Cosine Similarity",
+      "findings": [
+        {
+          "type": "LOW_CONTENT_ALIGNMENT",
+          "severity": "WARNING",
+          "node_id": "5.2",
+          "title": "Documentation management",
+          "similarity": 8.0,
+          "message": "\u00a7 5.2 'Documentation management' \u2014 best content match is only 8.0%.",
+          "_source_layer": "content_alignment"
+        },
+        {
+          "type": "LOW_CONTENT_ALIGNMENT",
+          "severity": "MAJOR",
+          "node_id": "6.1",
+          "title": "Competence management",
+          "similarity": 4.1,
+          "message": "\u00a7 6.1 'Competence management' \u2014 best content match is only 4.1%.",
+          "_source_layer": "content_alignment"
+        },
+        {
+          "type": "LOW_CONTENT_ALIGNMENT",
+          "severity": "WARNING",
+          "node_id": "5.1",
+          "title": "Item definition",
+          "similarity": 5.3,
+          "message": "\u00a7 5.1 'Item definition' \u2014 best content match is only 5.3%.",
+          "_source_layer": "content_alignment"
+        },
+        {
+          "type": "LOW_CONTENT_ALIGNMENT",
+          "severity": "WARNING",
+          "node_id": "6.2",
+          "title": "Hazard analysis and risk assessment",
+          "similarity": 12.7,
+          "message": "\u00a7 6.2 'Hazard analysis and risk assessment' \u2014 best content match is only 12.7%.",
+          "_source_layer": "content_alignment"
+        },
+        {
+          "type": "LOW_CONTENT_ALIGNMENT",
+          "severity": "WARNING",
+          "node_id": "7.1",
+          "title": "Safety goals",
+          "similarity": 7.7,
+          "message": "\u00a7 7.1 'Safety goals' \u2014 best content match is only 7.7%.",
+          "_source_layer": "content_alignment"
+        },
+        {
+          "type": "LOW_CONTENT_ALIGNMENT",
+          "severity": "WARNING",
+          "node_id": "8.1",
+          "title": "Functional safety concept",
+          "similarity": 13.1,
+          "message": "\u00a7 8.1 'Functional safety concept' \u2014 best content match is only 13.1%.",
+          "_source_layer": "content_alignment"
+        },
+        {
+          "type": "LOW_CONTENT_ALIGNMENT",
+          "severity": "WARNING",
+          "node_id": "5.1",
+          "title": "Technical safety concept",
+          "similarity": 9.7,
+          "message": "\u00a7 5.1 'Technical safety concept' \u2014 best content match is only 9.7%.",
+          "_source_layer": "content_alignment"
+        },
+        {
+          "type": "LOW_CONTENT_ALIGNMENT",
+          "severity": "WARNING",
+          "node_id": "6.1",
+          "title": "System design specification",
+          "similarity": 10.2,
+          "message": "\u00a7 6.1 'System design specification' \u2014 best content match is only 10.2%.",
+          "_source_layer": "content_alignment"
+        },
+        {
+          "type": "LOW_CONTENT_ALIGNMENT",
+          "severity": "WARNING",
+          "node_id": "7.1",
+          "title": "System integration and testing",
+          "similarity": 12.9,
+          "message": "\u00a7 7.1 'System integration and testing' \u2014 best content match is only 12.9%.",
+          "_source_layer": "content_alignment"
+        },
+        {
+          "type": "LOW_CONTENT_ALIGNMENT",
+          "severity": "WARNING",
+          "node_id": "8.1",
+          "title": "Safety validation",
+          "similarity": 6.9,
+          "message": "\u00a7 8.1 'Safety validation' \u2014 best content match is only 6.9%.",
+          "_source_layer": "content_alignment"
+        }
+      ],
+      "scores": {
+        "5.1": 9.7,
+        "5.2": 8.0,
+        "6.1": 10.2,
+        "6.2": 12.7,
+        "7.1": 12.9,
+        "8.1": 6.9
+      },
+      "score": 14.1
+    },
+    "semantic_matching": {
+      "layer": "semantic_matching",
+      "algorithm": "Ratcliff/Obershelp",
+      "findings": [
+        {
+          "type": "LOW_SEMANTIC_MATCH",
+          "severity": "WARNING",
+          "node_id": "5.1",
+          "title": "Safety plan",
+          "score": 6.5,
+          "message": "\u00a7 5.1 \u2014 semantic alignment 6.5%.",
+          "_source_layer": "semantic_matching"
+        },
+        {
+          "type": "LOW_SEMANTIC_MATCH",
+          "severity": "WARNING",
+          "node_id": "5.2",
+          "title": "Documentation management",
+          "score": 5.8,
+          "message": "\u00a7 5.2 \u2014 semantic alignment 5.8%.",
+          "_source_layer": "semantic_matching"
+        },
+        {
+          "type": "LOW_SEMANTIC_MATCH",
+          "severity": "WARNING",
+          "node_id": "6.1",
+          "title": "Competence management",
+          "score": 6.8,
+          "message": "\u00a7 6.1 \u2014 semantic alignment 6.8%.",
+          "_source_layer": "semantic_matching"
+        },
+        {
+          "type": "LOW_SEMANTIC_MATCH",
+          "severity": "WARNING",
+          "node_id": "5.1",
+          "title": "Item definition",
+          "score": 4.7,
+          "message": "\u00a7 5.1 \u2014 semantic alignment 4.7%.",
+          "_source_layer": "semantic_matching"
+        },
+        {
+          "type": "LOW_SEMANTIC_MATCH",
+          "severity": "WARNING",
+          "node_id": "6.1",
+          "title": "Identification of operational situations",
+          "score": 6.0,
+          "message": "\u00a7 6.1 \u2014 semantic alignment 6.0%.",
+          "_source_layer": "semantic_matching"
+        },
+        {
+          "type": "LOW_SEMANTIC_MATCH",
+          "severity": "WARNING",
+          "node_id": "6.2",
+          "title": "Hazard analysis and risk assessment",
+          "score": 8.0,
+          "message": "\u00a7 6.2 \u2014 semantic alignment 8.0%.",
+          "_source_layer": "semantic_matching"
+        },
+        {
+          "type": "LOW_SEMANTIC_MATCH",
+          "severity": "WARNING",
+          "node_id": "7.1",
+          "title": "Safety goals",
+          "score": 6.6,
+          "message": "\u00a7 7.1 \u2014 semantic alignment 6.6%.",
+          "_source_layer": "semantic_matching"
+        },
+        {
+          "type": "LOW_SEMANTIC_MATCH",
+          "severity": "WARNING",
+          "node_id": "8.1",
+          "title": "Functional safety concept",
+          "score": 6.8,
+          "message": "\u00a7 8.1 \u2014 semantic alignment 6.8%.",
+          "_source_layer": "semantic_matching"
+        },
+        {
+          "type": "LOW_SEMANTIC_MATCH",
+          "severity": "WARNING",
+          "node_id": "5.1",
+          "title": "Technical safety concept",
+          "score": 7.0,
+          "message": "\u00a7 5.1 \u2014 semantic alignment 7.0%.",
+          "_source_layer": "semantic_matching"
+        },
+        {
+          "type": "LOW_SEMANTIC_MATCH",
+          "severity": "WARNING",
+          "node_id": "6.1",
+          "title": "System design specification",
+          "score": 5.2,
+          "message": "\u00a7 6.1 \u2014 semantic alignment 5.2%.",
+          "_source_layer": "semantic_matching"
+        },
+        {
+          "type": "LOW_SEMANTIC_MATCH",
+          "severity": "WARNING",
+          "node_id": "7.1",
+          "title": "System integration and testing",
+          "score": 4.5,
+          "message": "\u00a7 7.1 \u2014 semantic alignment 4.5%.",
+          "_source_layer": "semantic_matching"
+        },
+        {
+          "type": "LOW_SEMANTIC_MATCH",
+          "severity": "WARNING",
+          "node_id": "8.1",
+          "title": "Safety validation",
+          "score": 6.6,
+          "message": "\u00a7 8.1 \u2014 semantic alignment 6.6%.",
+          "_source_layer": "semantic_matching"
+        }
+      ],
+      "score": 6.2
+    },
+    "concept_coverage": {
+      "layer": "concept_coverage",
+      "algorithm": "Set Intersection",
+      "findings": [
+        {
+          "type": "MISSING_CONCEPTS",
+          "severity": "WARNING",
+          "count": 15,
+          "concepts": [
+            "architecture",
+            "competence",
+            "context",
+            "documentation",
+            "functional safety concept",
+            "qualification",
+            "record keeping",
+            "safety mechanisms",
+            "system design",
+            "testing",
+            "training",
+            "use cases",
+            "validation",
+            "vehicle level",
+            "verification"
+          ],
+          "message": "15 required concepts not addressed: architecture, competence, context, documentation, functional safety concept, qualification, record keeping, safety mechanisms, system design, testing....",
+          "_source_layer": "concept_coverage"
+        }
+      ],
+      "score": 55.9,
+      "required": 34,
+      "covered": 19,
+      "missing_concepts": [
+        "architecture",
+        "competence",
+        "context",
+        "documentation",
+        "functional safety concept",
+        "qualification",
+        "record keeping",
+        "safety mechanisms",
+        "system design",
+        "testing",
+        "training",
+        "use cases",
+        "validation",
+        "vehicle level",
+        "verification"
+      ]
+    },
+    "reference_integrity": {
+      "layer": "reference_integrity",
+      "algorithm": "Graph BFS",
+      "findings": [],
+      "score": 0.0,
+      "total_refs": 0,
+      "satisfied": 0
+    },
+    "method_audit": {
+      "layer": "method_audit",
+      "algorithm": "Risk-Aware Method Matching",
+      "findings": [],
+      "score": 100.0
+    },
+    "traceability_chain": {
+      "layer": "traceability_chain",
+      "algorithm": "Directed Graph Walk",
+      "findings": [
+        {
+          "type": "MISSING_TRACE_LINK",
+          "severity": "MAJOR",
+          "from": "",
+          "to": "",
+          "message": "Traceability '' \u2192 '' not established.",
+          "_source_layer": "traceability_chain"
+        }
+      ],
+      "score": 0.0,
+      "required": 1,
+      "satisfied": 0
+    }
+  },
+  "gap_analysis": {
+    "layer": "gap_analysis",
+    "algorithm": "Ensemble + Bayesian Risk",
+    "gaps": [
+      {
+        "key": "6.1",
+        "count": 8,
+        "base_severity": 43,
+        "risk_weighted": 86,
+        "priority": "HIGH",
+        "findings": [
+          {
+            "type": "MISSING_COVERAGE",
+            "severity": "CRITICAL",
+            "node_id": "6.1",
+            "group": "part_2",
+            "title": "Competence management",
+            "risk": "B",
+            "message": "[part_2] \u00a7 6.1 'Competence management' \u2014 no artifact addresses this requirement.",
+            "_source_layer": "node_coverage"
+          },
+          {
+            "type": "MISSING_COVERAGE",
+            "severity": "CRITICAL",
+            "node_id": "6.1",
+            "group": "part_3",
+            "title": "Identification of operational situations",
+            "risk": "all",
+            "message": "[part_3] \u00a7 6.1 'Identification of operational situations' \u2014 no artifact addresses this requirement.",
+            "_source_layer": "node_coverage"
+          },
+          {
+            "type": "MISSING_COVERAGE",
+            "severity": "CRITICAL",
+            "node_id": "6.1",
+            "group": "part_4",
+            "title": "System design specification",
+            "risk": "all",
+            "message": "[part_4] \u00a7 6.1 'System design specification' \u2014 no artifact addresses this requirement.",
+            "_source_layer": "node_coverage"
+          },
+          {
+            "type": "LOW_CONTENT_ALIGNMENT",
+            "severity": "MAJOR",
+            "node_id": "6.1",
+            "title": "Competence management",
+            "similarity": 4.1,
+            "message": "\u00a7 6.1 'Competence management' \u2014 best content match is only 4.1%.",
+            "_source_layer": "content_alignment"
+          },
+          {
+            "type": "LOW_CONTENT_ALIGNMENT",
+            "severity": "WARNING",
+            "node_id": "6.1",
+            "title": "System design specification",
+            "similarity": 10.2,
+            "message": "\u00a7 6.1 'System design specification' \u2014 best content match is only 10.2%.",
+            "_source_layer": "content_alignment"
+          },
+          {
+            "type": "LOW_SEMANTIC_MATCH",
+            "severity": "WARNING",
+            "node_id": "6.1",
+            "title": "Competence management",
+            "score": 6.8,
+            "message": "\u00a7 6.1 \u2014 semantic alignment 6.8%.",
+            "_source_layer": "semantic_matching"
+          },
+          {
+            "type": "LOW_SEMANTIC_MATCH",
+            "severity": "WARNING",
+            "node_id": "6.1",
+            "title": "Identification of operational situations",
+            "score": 6.0,
+            "message": "\u00a7 6.1 \u2014 semantic alignment 6.0%.",
+            "_source_layer": "semantic_matching"
+          },
+          {
+            "type": "LOW_SEMANTIC_MATCH",
+            "severity": "WARNING",
+            "node_id": "6.1",
+            "title": "System design specification",
+            "score": 5.2,
+            "message": "\u00a7 6.1 \u2014 semantic alignment 5.2%.",
+            "_source_layer": "semantic_matching"
+          }
+        ]
+      },
+      {
+        "key": "5.2",
+        "count": 3,
+        "base_severity": 14,
+        "risk_weighted": 28,
+        "priority": "MEDIUM",
+        "findings": [
+          {
+            "type": "MISSING_COVERAGE",
+            "severity": "CRITICAL",
+            "node_id": "5.2",
+            "group": "part_2",
+            "title": "Documentation management",
+            "risk": "all",
+            "message": "[part_2] \u00a7 5.2 'Documentation management' \u2014 no artifact addresses this requirement.",
+            "_source_layer": "node_coverage"
+          },
+          {
+            "type": "LOW_CONTENT_ALIGNMENT",
+            "severity": "WARNING",
+            "node_id": "5.2",
+            "title": "Documentation management",
+            "similarity": 8.0,
+            "message": "\u00a7 5.2 'Documentation management' \u2014 best content match is only 8.0%.",
+            "_source_layer": "content_alignment"
+          },
+          {
+            "type": "LOW_SEMANTIC_MATCH",
+            "severity": "WARNING",
+            "node_id": "5.2",
+            "title": "Documentation management",
+            "score": 5.8,
+            "message": "\u00a7 5.2 \u2014 semantic alignment 5.8%.",
+            "_source_layer": "semantic_matching"
+          }
+        ]
+      },
+      {
+        "key": "8.1",
+        "count": 6,
+        "base_severity": 12,
+        "risk_weighted": 24,
+        "priority": "MEDIUM",
+        "findings": [
+          {
+            "type": "PARTIAL_COVERAGE",
+            "severity": "WARNING",
+            "node_id": "8.1",
+            "group": "part_3",
+            "title": "Functional safety concept",
+            "message": "[part_3] \u00a7 8.1 'Functional safety concept' \u2014 partially covered or incomplete.",
+            "_source_layer": "node_coverage"
+          },
+          {
+            "type": "PARTIAL_COVERAGE",
+            "severity": "WARNING",
+            "node_id": "8.1",
+            "group": "part_4",
+            "title": "Safety validation",
+            "message": "[part_4] \u00a7 8.1 'Safety validation' \u2014 partially covered or incomplete.",
+            "_source_layer": "node_coverage"
+          },
+          {
+            "type": "LOW_CONTENT_ALIGNMENT",
+            "severity": "WARNING",
+            "node_id": "8.1",
+            "title": "Functional safety concept",
+            "similarity": 13.1,
+            "message": "\u00a7 8.1 'Functional safety concept' \u2014 best content match is only 13.1%.",
+            "_source_layer": "content_alignment"
+          },
+          {
+            "type": "LOW_CONTENT_ALIGNMENT",
+            "severity": "WARNING",
+            "node_id": "8.1",
+            "title": "Safety validation",
+            "similarity": 6.9,
+            "message": "\u00a7 8.1 'Safety validation' \u2014 best content match is only 6.9%.",
+            "_source_layer": "content_alignment"
+          },
+          {
+            "type": "LOW_SEMANTIC_MATCH",
+            "severity": "WARNING",
+            "node_id": "8.1",
+            "title": "Functional safety concept",
+            "score": 6.8,
+            "message": "\u00a7 8.1 \u2014 semantic alignment 6.8%.",
+            "_source_layer": "semantic_matching"
+          },
+          {
+            "type": "LOW_SEMANTIC_MATCH",
+            "severity": "WARNING",
+            "node_id": "8.1",
+            "title": "Safety validation",
+            "score": 6.6,
+            "message": "\u00a7 8.1 \u2014 semantic alignment 6.6%.",
+            "_source_layer": "semantic_matching"
+          }
+        ]
+      },
+      {
+        "key": "5.1",
+        "count": 5,
+        "base_severity": 10,
+        "risk_weighted": 20,
+        "priority": "MEDIUM",
+        "findings": [
+          {
+            "type": "LOW_CONTENT_ALIGNMENT",
+            "severity": "WARNING",
+            "node_id": "5.1",
+            "title": "Item definition",
+            "similarity": 5.3,
+            "message": "\u00a7 5.1 'Item definition' \u2014 best content match is only 5.3%.",
+            "_source_layer": "content_alignment"
+          },
+          {
+            "type": "LOW_CONTENT_ALIGNMENT",
+            "severity": "WARNING",
+            "node_id": "5.1",
+            "title": "Technical safety concept",
+            "similarity": 9.7,
+            "message": "\u00a7 5.1 'Technical safety concept' \u2014 best content match is only 9.7%.",
+            "_source_layer": "content_alignment"
+          },
+          {
+            "type": "LOW_SEMANTIC_MATCH",
+            "severity": "WARNING",
+            "node_id": "5.1",
+            "title": "Safety plan",
+            "score": 6.5,
+            "message": "\u00a7 5.1 \u2014 semantic alignment 6.5%.",
+            "_source_layer": "semantic_matching"
+          },
+          {
+            "type": "LOW_SEMANTIC_MATCH",
+            "severity": "WARNING",
+            "node_id": "5.1",
+            "title": "Item definition",
+            "score": 4.7,
+            "message": "\u00a7 5.1 \u2014 semantic alignment 4.7%.",
+            "_source_layer": "semantic_matching"
+          },
+          {
+            "type": "LOW_SEMANTIC_MATCH",
+            "severity": "WARNING",
+            "node_id": "5.1",
+            "title": "Technical safety concept",
+            "score": 7.0,
+            "message": "\u00a7 5.1 \u2014 semantic alignment 7.0%.",
+            "_source_layer": "semantic_matching"
+          }
+        ]
+      },
+      {
+        "key": "7.1",
+        "count": 4,
+        "base_severity": 8,
+        "risk_weighted": 16,
+        "priority": "LOW",
+        "findings": [
+          {
+            "type": "LOW_CONTENT_ALIGNMENT",
+            "severity": "WARNING",
+            "node_id": "7.1",
+            "title": "Safety goals",
+            "similarity": 7.7,
+            "message": "\u00a7 7.1 'Safety goals' \u2014 best content match is only 7.7%.",
+            "_source_layer": "content_alignment"
+          },
+          {
+            "type": "LOW_CONTENT_ALIGNMENT",
+            "severity": "WARNING",
+            "node_id": "7.1",
+            "title": "System integration and testing",
+            "similarity": 12.9,
+            "message": "\u00a7 7.1 'System integration and testing' \u2014 best content match is only 12.9%.",
+            "_source_layer": "content_alignment"
+          },
+          {
+            "type": "LOW_SEMANTIC_MATCH",
+            "severity": "WARNING",
+            "node_id": "7.1",
+            "title": "Safety goals",
+            "score": 6.6,
+            "message": "\u00a7 7.1 \u2014 semantic alignment 6.6%.",
+            "_source_layer": "semantic_matching"
+          },
+          {
+            "type": "LOW_SEMANTIC_MATCH",
+            "severity": "WARNING",
+            "node_id": "7.1",
+            "title": "System integration and testing",
+            "score": 4.5,
+            "message": "\u00a7 7.1 \u2014 semantic alignment 4.5%.",
+            "_source_layer": "semantic_matching"
+          }
+        ]
+      },
+      {
+        "key": "traceability_chain",
+        "count": 1,
+        "base_severity": 5,
+        "risk_weighted": 10,
+        "priority": "LOW",
+        "findings": [
+          {
+            "type": "MISSING_TRACE_LINK",
+            "severity": "MAJOR",
+            "from": "",
+            "to": "",
+            "message": "Traceability '' \u2192 '' not established.",
+            "_source_layer": "traceability_chain"
+          }
+        ]
+      },
+      {
+        "key": "6.2",
+        "count": 2,
+        "base_severity": 4,
+        "risk_weighted": 8,
+        "priority": "LOW",
+        "findings": [
+          {
+            "type": "LOW_CONTENT_ALIGNMENT",
+            "severity": "WARNING",
+            "node_id": "6.2",
+            "title": "Hazard analysis and risk assessment",
+            "similarity": 12.7,
+            "message": "\u00a7 6.2 'Hazard analysis and risk assessment' \u2014 best content match is only 12.7%.",
+            "_source_layer": "content_alignment"
+          },
+          {
+            "type": "LOW_SEMANTIC_MATCH",
+            "severity": "WARNING",
+            "node_id": "6.2",
+            "title": "Hazard analysis and risk assessment",
+            "score": 8.0,
+            "message": "\u00a7 6.2 \u2014 semantic alignment 8.0%.",
+            "_source_layer": "semantic_matching"
+          }
+        ]
+      },
+      {
+        "key": "concept_coverage",
+        "count": 1,
+        "base_severity": 2,
+        "risk_weighted": 4,
+        "priority": "LOW",
+        "findings": [
+          {
+            "type": "MISSING_CONCEPTS",
+            "severity": "WARNING",
+            "count": 15,
+            "concepts": [
+              "architecture",
+              "competence",
+              "context",
+              "documentation",
+              "functional safety concept",
+              "qualification",
+              "record keeping",
+              "safety mechanisms",
+              "system design",
+              "testing",
+              "training",
+              "use cases",
+              "validation",
+              "vehicle level",
+              "verification"
+            ],
+            "message": "15 required concepts not addressed: architecture, competence, context, documentation, functional safety concept, qualification, record keeping, safety mechanisms, system design, testing....",
+            "_source_layer": "concept_coverage"
+          }
+        ]
+      }
+    ],
+    "severity_counts": {
+      "CRITICAL": 4,
+      "WARNING": 24,
+      "MAJOR": 2
+    },
+    "total_risk": 196.0,
+    "recommendations": [
+      "[HIGH] 6.1: Create artifact for this requirement. Strengthen content to address requirement.",
+      "[MEDIUM] 5.2: Create artifact for this requirement. Strengthen content to address requirement.",
+      "[MEDIUM] 8.1: Strengthen content to address requirement.",
+      "[MEDIUM] 5.1: Strengthen content to address requirement.",
+      "[LOW] 7.1: Strengthen content to address requirement.",
+      "[LOW] traceability_chain: Establish traceability links.",
+      "[LOW] 6.2: Strengthen content to address requirement.",
+      "[LOW] concept_coverage: Address missing concept areas."
+    ]
+  },
+  "summary": {
+    "total_findings": 30,
+    "risk_score": 196.0,
+    "top_recommendations": [
+      "[HIGH] 6.1: Create artifact for this requirement. Strengthen content to address requirement.",
+      "[MEDIUM] 5.2: Create artifact for this requirement. Strengthen content to address requirement.",
+      "[MEDIUM] 8.1: Strengthen content to address requirement.",
+      "[MEDIUM] 5.1: Strengthen content to address requirement.",
+      "[LOW] 7.1: Strengthen content to address requirement.",
+      "[LOW] traceability_chain: Establish traceability links.",
+      "[LOW] 6.2: Strengthen content to address requirement.",
+      "[LOW] concept_coverage: Address missing concept areas."
+    ]
+  },
+  "work_product_register": [
+    {
+      "name": "Safety Plan",
+      "id": "WP-001",
+      "format": "unknown",
+      "mapped_parts": [],
+      "mapped_clauses": [
+        "5.1"
+      ],
+      "sections_count": 0,
+      "content_length": 282,
+      "tags_count": 4,
+      "methods_count": 0,
+      "status": "Compliant",
+      "findings_count": 5,
+      "critical_count": 0,
+      "major_count": 0
+    },
+    {
+      "name": "Item Definition \u2014 Smart Thermostat",
+      "id": "WP-002",
+      "format": "unknown",
+      "mapped_parts": [],
+      "mapped_clauses": [
+        "5.1"
+      ],
+      "sections_count": 0,
+      "content_length": 430,
+      "tags_count": 4,
+      "methods_count": 0,
+      "status": "Compliant",
+      "findings_count": 5,
+      "critical_count": 0,
+      "major_count": 0
+    },
+    {
+      "name": "Hazard Analysis and Risk Assessment",
+      "id": "WP-003",
+      "format": "unknown",
+      "mapped_parts": [],
+      "mapped_clauses": [
+        "6.2"
+      ],
+      "sections_count": 0,
+      "content_length": 296,
+      "tags_count": 4,
+      "methods_count": 1,
+      "status": "Compliant",
+      "findings_count": 2,
+      "critical_count": 0,
+      "major_count": 0
+    },
+    {
+      "name": "Safety Goals",
+      "id": "WP-004",
+      "format": "unknown",
+      "mapped_parts": [],
+      "mapped_clauses": [
+        "7.1"
+      ],
+      "sections_count": 0,
+      "content_length": 239,
+      "tags_count": 3,
+      "methods_count": 0,
+      "status": "Compliant",
+      "findings_count": 4,
+      "critical_count": 0,
+      "major_count": 0
+    },
+    {
+      "name": "Technical Safety Concept",
+      "id": "WP-005",
+      "format": "unknown",
+      "mapped_parts": [],
+      "mapped_clauses": [
+        "5.1"
+      ],
+      "sections_count": 0,
+      "content_length": 334,
+      "tags_count": 4,
+      "methods_count": 2,
+      "status": "Compliant",
+      "findings_count": 5,
+      "critical_count": 0,
+      "major_count": 0
+    }
+  ],
+  "traceability_matrix": {
+    "chains": [
+      {
+        "requirement_id": "5.1",
+        "artifact_id": "WP-001",
+        "artifact_name": "Safety Plan",
+        "has_verification": false,
+        "verification_methods": []
+      },
+      {
+        "requirement_id": "5.1",
+        "artifact_id": "WP-002",
+        "artifact_name": "Item Definition \u2014 Smart Thermostat",
+        "has_verification": false,
+        "verification_methods": []
+      },
+      {
+        "requirement_id": "6.2",
+        "artifact_id": "WP-003",
+        "artifact_name": "Hazard Analysis and Risk Assessment",
+        "has_verification": true,
+        "verification_methods": [
+          "failure modes and effects analysis (fmea)"
+        ]
+      },
+      {
+        "requirement_id": "7.1",
+        "artifact_id": "WP-004",
+        "artifact_name": "Safety Goals",
+        "has_verification": false,
+        "verification_methods": []
+      },
+      {
+        "requirement_id": "5.1",
+        "artifact_id": "WP-005",
+        "artifact_name": "Technical Safety Concept",
+        "has_verification": true,
+        "verification_methods": [
+          "safety analysis",
+          "fault tree analysis (fta)"
+        ]
+      }
+    ],
+    "coverage_summary": {
+      "total_requirements": 12,
+      "traced_requirements": 3,
+      "trace_coverage_pct": 25.0,
+      "total_artifacts": 5,
+      "artifacts_with_traces": 5,
+      "total_chains": 5,
+      "orphan_requirements_count": 3,
+      "orphan_artifacts_count": 0
+    },
+    "orphan_requirements": [
+      "5.2",
+      "6.1",
+      "8.1"
+    ],
+    "orphan_artifacts": []
+  },
+  "assessment_decision": {
+    "verdict": "NOT COMPLIANT",
+    "description": "The assessed work products do not demonstrate sufficient compliance with the applicable requirements. Significant gaps in coverage, traceability, or methodology have been identified. A comprehensive remediation effort is required before re-assessment.",
+    "conditions": [],
+    "score": 30.0,
+    "critical_findings": 4,
+    "major_findings": 2,
+    "total_findings": 30
+  },
+  "iso26262_wp_reference": {
+    "Part 2 - Management": [
+      "2-6.4.1: Safety plan",
+      "2-6.4.2: Safety case",
+      "2-6.4.4: Project plan (safety-related)",
+      "2-6.4.6: Confirmation review report",
+      "2-6.4.7: Functional safety audit report",
+      "2-6.4.8: Functional safety assessment report"
+    ],
+    "Part 3 - Concept Phase": [
+      "3-5: Item definition",
+      "3-6: Hazard analysis and risk assessment (HARA)",
+      "3-7: Safety goals",
+      "3-8: Functional safety concept"
+    ],
+    "Part 4 - System Level": [
+      "4-6: Technical safety concept (TSC)",
+      "4-7: System design specification",
+      "4-7.4: Technical safety requirements (TSR)",
+      "4-8: HW-SW interface specification (HSI)",
+      "4-9: System integration and testing report"
+    ],
+    "Part 5 - Hardware Level": [
+      "5-6: Hardware safety requirements specification",
+      "5-7: Hardware design specification",
+      "5-8: Hardware safety analysis report",
+      "5-9: HW metrics report (SPFM, LFM, PMHF)",
+      "5-10: Hardware integration and testing report"
+    ],
+    "Part 6 - Software Level": [
+      "6-5: Software safety requirements specification",
+      "6-6: Software architectural design specification",
+      "6-7: Software unit design and implementation",
+      "6-8: Software unit verification report",
+      "6-9: Software integration and testing report",
+      "6-10: Software qualification testing report"
+    ],
+    "Part 7 - Production & Operation": [
+      "7-5: Production plan (safety-related)",
+      "7-6: Field monitoring plan"
+    ],
+    "Part 8 - Supporting Processes": [
+      "8-6: Configuration management plan",
+      "8-7: Change management plan",
+      "8-8: Verification plan",
+      "8-9: Documentation management plan"
+    ],
+    "Part 9 - Safety Analyses": [
+      "9-5: Quantitative FTA report",
+      "9-6: FMEA/FMEDA report",
+      "9-7: Dependent failure analysis (DFA)",
+      "9-8: Safety analysis report"
+    ]
+  },
+  "confirmation_review": {
+    "target_asil": "B",
+    "required_independence": "I1",
+    "checklist": [
+      {
+        "id": "CR-01",
+        "item": "Completeness",
+        "description": "All required work products per safety plan are present",
+        "status": "Partial",
+        "evidence": "Only 7.0/12 work products present (58%)"
+      },
+      {
+        "id": "CR-02",
+        "item": "Compliance with standard",
+        "description": "Work products comply with applicable parts of ISO 26262",
+        "status": "Fail",
+        "evidence": "Overall compliance score 30.0% \u2014 significant non-compliance"
+      },
+      {
+        "id": "CR-03",
+        "item": "Consistency",
+        "description": "No contradictions between related work products",
+        "status": "Fail",
+        "evidence": "Reference integrity score 0% \u2014 significant inconsistencies"
+      },
+      {
+        "id": "CR-04",
+        "item": "Traceability",
+        "description": "Bidirectional traceability between safety goals, FSR, TSR, and verification evidence",
+        "status": "Fail",
+        "evidence": "Traceability score 0% \u2014 traceability gaps critical"
+      },
+      {
+        "id": "CR-05",
+        "item": "Adequacy of safety analyses",
+        "description": "FMEA/FTA/DFA performed with appropriate coverage",
+        "status": "Fail",
+        "evidence": "No safety analysis evidence found in submitted work products"
+      },
+      {
+        "id": "CR-06",
+        "item": "Adequacy of verification",
+        "description": "Verification methods appropriate for ASIL level",
+        "status": "Pass",
+        "evidence": "Method audit score 100% \u2014 verification methods adequate for ASIL"
+      },
+      {
+        "id": "CR-07",
+        "item": "Configuration management",
+        "description": "Artifacts under configuration control with version tracking",
+        "status": "Fail",
+        "evidence": "No configuration management evidence in work products"
+      },
+      {
+        "id": "CR-08",
+        "item": "Change management",
+        "description": "Safety impact analysis performed for all changes",
+        "status": "Fail",
+        "evidence": "No change management evidence in work products"
+      },
+      {
+        "id": "CR-09",
+        "item": "Safety case argument",
+        "description": "Safety case provides convincing argument for residual risk acceptance",
+        "status": "Fail",
+        "evidence": "No safety case or safety argument evidence found"
+      },
+      {
+        "id": "CR-10",
+        "item": "Compliance with safety plan",
+        "description": "Development activities follow the safety plan",
+        "status": "Pass",
+        "evidence": "Safety plan reference found in work products"
+      }
+    ],
+    "summary": {
+      "total_items": 10,
+      "pass": 2,
+      "partial": 1,
+      "fail": 7,
+      "pass_rate": 20.0,
+      "result": "FAILED"
+    }
+  },
+  "verification_review": {
+    "target_asil": "B",
+    "asil_key": "B",
+    "work_products": [
+      {
+        "name": "Safety Plan",
+        "id": "WP-001",
+        "wp_type": "generic",
+        "status": "Insufficient",
+        "methods_found": [],
+        "methods_missing": [
+          "Inspection",
+          "Walk-through"
+        ],
+        "method_details": [
+          {
+            "method": "Inspection",
+            "recommendation": "+",
+            "applied": false,
+            "required": true
+          },
+          {
+            "method": "Walk-through",
+            "recommendation": "+",
+            "applied": false,
+            "required": true
+          }
+        ],
+        "coverage_pct": 0.0
+      },
+      {
+        "name": "Item Definition \u2014 Smart Thermostat",
+        "id": "WP-002",
+        "wp_type": "generic",
+        "status": "Insufficient",
+        "methods_found": [],
+        "methods_missing": [
+          "Inspection",
+          "Walk-through"
+        ],
+        "method_details": [
+          {
+            "method": "Inspection",
+            "recommendation": "+",
+            "applied": false,
+            "required": true
+          },
+          {
+            "method": "Walk-through",
+            "recommendation": "+",
+            "applied": false,
+            "required": true
+          }
+        ],
+        "coverage_pct": 0.0
+      },
+      {
+        "name": "Hazard Analysis and Risk Assessment",
+        "id": "WP-003",
+        "wp_type": "hara",
+        "status": "Insufficient",
+        "methods_found": [],
+        "methods_missing": [
+          "Analysis of requirements",
+          "Inspection",
+          "Walk-through"
+        ],
+        "method_details": [
+          {
+            "method": "Analysis of requirements",
+            "recommendation": "++",
+            "applied": false,
+            "required": true
+          },
+          {
+            "method": "Inspection",
+            "recommendation": "+",
+            "applied": false,
+            "required": true
+          },
+          {
+            "method": "Walk-through",
+            "recommendation": "+",
+            "applied": false,
+            "required": true
+          }
+        ],
+        "coverage_pct": 0.0
+      },
+      {
+        "name": "Safety Goals",
+        "id": "WP-004",
+        "wp_type": "safety_goals",
+        "status": "Insufficient",
+        "methods_found": [],
+        "methods_missing": [
+          "Analysis of requirements",
+          "Inspection"
+        ],
+        "method_details": [
+          {
+            "method": "Analysis of requirements",
+            "recommendation": "++",
+            "applied": false,
+            "required": true
+          },
+          {
+            "method": "Inspection",
+            "recommendation": "+",
+            "applied": false,
+            "required": true
+          }
+        ],
+        "coverage_pct": 0.0
+      },
+      {
+        "name": "Technical Safety Concept",
+        "id": "WP-005",
+        "wp_type": "technical_safety_concept",
+        "status": "Insufficient",
+        "methods_found": [],
+        "methods_missing": [
+          "Analysis of requirements",
+          "Inspection",
+          "Semi-formal verification"
+        ],
+        "method_details": [
+          {
+            "method": "Analysis of requirements",
+            "recommendation": "++",
+            "applied": false,
+            "required": true
+          },
+          {
+            "method": "Inspection",
+            "recommendation": "+",
+            "applied": false,
+            "required": true
+          },
+          {
+            "method": "Semi-formal verification",
+            "recommendation": "+",
+            "applied": false,
+            "required": true
+          }
+        ],
+        "coverage_pct": 0.0
+      }
+    ],
+    "method_recommendations": [
+      {
+        "method": "Walk-through",
+        "asil_a": "+",
+        "asil_b": "+",
+        "asil_c": "+",
+        "asil_d": "+",
+        "applicable": "+"
+      },
+      {
+        "method": "Inspection",
+        "asil_a": "+",
+        "asil_b": "+",
+        "asil_c": "++",
+        "asil_d": "++",
+        "applicable": "+"
+      },
+      {
+        "method": "Semi-formal verification",
+        "asil_a": "o",
+        "asil_b": "+",
+        "asil_c": "+",
+        "asil_d": "++",
+        "applicable": "+"
+      },
+      {
+        "method": "Formal verification",
+        "asil_a": "o",
+        "asil_b": "o",
+        "asil_c": "+",
+        "asil_d": "++",
+        "applicable": "o"
+      },
+      {
+        "method": "Requirements-based testing",
+        "asil_a": "++",
+        "asil_b": "++",
+        "asil_c": "++",
+        "asil_d": "++",
+        "applicable": "++"
+      },
+      {
+        "method": "Interface testing",
+        "asil_a": "+",
+        "asil_b": "+",
+        "asil_c": "++",
+        "asil_d": "++",
+        "applicable": "+"
+      },
+      {
+        "method": "Fault injection testing",
+        "asil_a": "o",
+        "asil_b": "+",
+        "asil_c": "+",
+        "asil_d": "++",
+        "applicable": "+"
+      },
+      {
+        "method": "Back-to-back testing",
+        "asil_a": "o",
+        "asil_b": "+",
+        "asil_c": "+",
+        "asil_d": "++",
+        "applicable": "+"
+      },
+      {
+        "method": "Simulation",
+        "asil_a": "+",
+        "asil_b": "+",
+        "asil_c": "+",
+        "asil_d": "++",
+        "applicable": "+"
+      },
+      {
+        "method": "Analysis of requirements",
+        "asil_a": "++",
+        "asil_b": "++",
+        "asil_c": "++",
+        "asil_d": "++",
+        "applicable": "++"
+      },
+      {
+        "method": "Boundary value analysis",
+        "asil_a": "+",
+        "asil_b": "+",
+        "asil_c": "++",
+        "asil_d": "++",
+        "applicable": "+"
+      },
+      {
+        "method": "Equivalence classes",
+        "asil_a": "+",
+        "asil_b": "+",
+        "asil_c": "+",
+        "asil_d": "++",
+        "applicable": "+"
+      },
+      {
+        "method": "Error guessing",
+        "asil_a": "+",
+        "asil_b": "+",
+        "asil_c": "+",
+        "asil_d": "+",
+        "applicable": "+"
+      }
+    ],
+    "summary": {
+      "total_work_products": 5,
+      "adequate": 0,
+      "partial": 0,
+      "insufficient": 5,
+      "adequacy_rate": 0.0,
+      "result": "FAILED"
+    }
+  },
+  "standards_assessed": [
+    "part_1_glossary.json",
+    "part_2_management.json",
+    "part_3_concept.json",
+    "part_4_system.json"
+  ],
+  "artifacts_assessed": [
+    {
+      "name": "Safety Plan",
+      "id": "WP-001"
+    },
+    {
+      "name": "Item Definition \u2014 Smart Thermostat",
+      "id": "WP-002"
+    },
+    {
+      "name": "Hazard Analysis and Risk Assessment",
+      "id": "WP-003"
+    },
+    {
+      "name": "Safety Goals",
+      "id": "WP-004"
+    },
+    {
+      "name": "Technical Safety Concept",
+      "id": "WP-005"
+    }
+  ]
+}

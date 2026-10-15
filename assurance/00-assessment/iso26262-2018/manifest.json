@@ -1,0 +1,491 @@
+{
+  "subject_head": "20569e916c9359243739b71e4dc79876aec48cc0",
+  "submodule_pins": [
+    "160000 commit 0e266c1dbcf7328beee3e57b4a8688555387c877\tmsgq_repo",
+    "160000 commit 9a13f6045388cd522b40b4dd60acbf681ad1c9e2\topendbc_repo",
+    "160000 commit a55bdfc734ee7900de1cabbad453e72130e14f51\tpanda",
+    "160000 commit 8671c17c3a4cdc4be5df07a068039e2da5b94eaa\trednose_repo",
+    "160000 commit 1aa8fc433bef1519a95c0700c96258c3be6dfb34\tteleoprtc_repo",
+    "160000 commit d3f09c9bbd542fbfbe68c8569a1173550c408969\ttinygrad_repo"
+  ],
+  "source_work_products": [
+    {
+      "id": "WP-M-00",
+      "path": "assurance/01-management/WP-M-00-work-product-register.md",
+      "sha256": "6f9bafadae02b199b1d108b6d3f74697757abb1760d3e5a508105dd0e0373069"
+    },
+    {
+      "id": "WP-M-01",
+      "path": "assurance/01-management/WP-M-01-assurance-strategy.md",
+      "sha256": "ab1ac5192262634e30a6e723a378a0b5c9a4275b801b478ef1413ee4b196f037"
+    },
+    {
+      "id": "WP-M-02",
+      "path": "assurance/01-management/WP-M-02-safety-plan.md",
+      "sha256": "212d14b034a90bacf59f5ca29224086382be36bc5e4e7af0409beae2d4e99525"
+    },
+    {
+      "id": "WP-M-03",
+      "path": "assurance/01-management/WP-M-03-project-plan.md",
+      "sha256": "d5a5cad26b8680022d85af598106389f78b79382b231a330967a49d852715f49"
+    },
+    {
+      "id": "WP-M-04",
+      "path": "assurance/01-management/WP-M-04-organization-competence-safety-culture.md",
+      "sha256": "20b15a6ed5143f3c3fd7f06150a825417ac974a82db191028aaa3d5c9e7b37e1"
+    },
+    {
+      "id": "WP-M-05",
+      "path": "assurance/01-management/WP-M-05-quality-assurance-plan.md",
+      "sha256": "12668f16d3e095b0707d2a316e0976ba5bd27cef390a8e987233c68dc4d57aa2"
+    },
+    {
+      "id": "WP-M-06",
+      "path": "assurance/01-management/WP-M-06-confirmation-measures-plan.md",
+      "sha256": "7a21209166c270af570bdc7b626a3464b68d187dc1d3e7b73950356f0546d039"
+    },
+    {
+      "id": "WP-M-07",
+      "path": "assurance/01-management/WP-M-07-risk-management.md",
+      "sha256": "2c12c791ad4ec78213d22062d3e6622dab8ab223bf351d072f039ef3bfa6a32b"
+    },
+    {
+      "id": "WP-M-08",
+      "path": "assurance/01-management/WP-M-08-sotif-plan.md",
+      "sha256": "39d7e1ca7f95bb0222518baf23f907d2686a0ae8ce01c770dcf73000c4fa0c7e"
+    },
+    {
+      "id": "WP-M-09",
+      "path": "assurance/01-management/WP-M-09-cybersecurity-plan.md",
+      "sha256": "a46d03c760984eab9b852889c55ebedc4f7be7e9eef592b47e4545fae60f4304"
+    },
+    {
+      "id": "WP-M-10",
+      "path": "assurance/01-management/WP-M-10-ai-safety-plan.md",
+      "sha256": "fdf91ef0c08709ec998fff744b0355ee0e36b8d68dbaf1dc1d66f43c2c3567e2"
+    },
+    {
+      "id": "WP-M-11",
+      "path": "assurance/01-management/WP-M-11-upstream-and-supplier-management.md",
+      "sha256": "603da9d394a21eb1f58bdb40f34e4cdec6264af62c234636e7d9dcf203a2a96a"
+    },
+    {
+      "id": "WP-M-12",
+      "path": "assurance/01-management/WP-M-12-impact-analysis.md",
+      "sha256": "75e3591be9230eea0f5a4f25fcea89cbb3ac715682e2cd679a8261adc7b49c68"
+    },
+    {
+      "id": "WP-M-13",
+      "path": "assurance/01-management/WP-M-13-aspice-capability-baseline.md",
+      "sha256": "ea9009dc6de458b66131f128201c02b7a9ddd46a16c922cf8ea69621cd82883f"
+    },
+    {
+      "id": "WP-M-14",
+      "path": "assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md",
+      "sha256": "eaf41e9fd378b0b051e721c6d3e2f3b0071359512d3f095e83703a47ad71c91d"
+    },
+    {
+      "id": "WP-C-01",
+      "path": "assurance/02-concept/WP-C-01-item-definition.md",
+      "sha256": "ce8cf738453aef3c511c68ad8a507d27c79e7069b6f3d5831f0560e55095e594"
+    },
+    {
+      "id": "WP-C-02",
+      "path": "assurance/02-concept/WP-C-02-odd-and-intended-functionality.md",
+      "sha256": "d57b68f27594c0b2bb783a921bac90ad678d37aca0652595c384465f5a1c9a55"
+    },
+    {
+      "id": "WP-C-03",
+      "path": "assurance/02-concept/WP-C-03-hara.md",
+      "sha256": "9934f123a47eadb97fb13bca85a3433b0dbc48f261055b55dc4303bed5f9f5cb"
+    },
+    {
+      "id": "WP-C-04",
+      "path": "assurance/02-concept/WP-C-04-functional-safety-concept.md",
+      "sha256": "8aae91aba87aad2b800c6635c121d5a9a407f1cf28542a5604ef920596573ac3"
+    },
+    {
+      "id": "WP-C-05",
+      "path": "assurance/02-concept/WP-C-05-sotif-hazard-identification.md",
+      "sha256": "f86b38e94ea53520d0e72226f8d33d51c871707686c2dfbe54a1f17a44033f4e"
+    },
+    {
+      "id": "WP-C-06",
+      "path": "assurance/02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md",
+      "sha256": "1ad284b6592108d39de837dfef09a9ecdeb64dfd0eccf6d65ccc4dfbecbe5f67"
+    },
+    {
+      "id": "WP-C-07",
+      "path": "assurance/02-concept/WP-C-07-sotif-functional-modifications.md",
+      "sha256": "8679890c0c1b929eb24e17c12fc7afc03847858aa26d5549c2b6a5aec57149eb"
+    },
+    {
+      "id": "WP-C-08",
+      "path": "assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md",
+      "sha256": "b3bc47732f91fb1e82776bc21de731b4c55c4b79fbedf7ffc64dcfaa20524fa2"
+    },
+    {
+      "id": "WP-C-09",
+      "path": "assurance/02-concept/WP-C-09-tara.md",
+      "sha256": "bcdd1e9dcdf31430d8c461bfe37d9cec92ef5b4180e3d5e00bc88d636746dabe"
+    },
+    {
+      "id": "WP-C-10",
+      "path": "assurance/02-concept/WP-C-10-cybersecurity-goals-and-concept.md",
+      "sha256": "2071ca8783e45b187078d563f869d08bf8c3c254d12135d427748579c80d7a50"
+    },
+    {
+      "id": "WP-C-11",
+      "path": "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md",
+      "sha256": "9e05c0003f14f2a8fcf63fc69c519c20380ab68d3134d03cb833dd314b6e4c01"
+    },
+    {
+      "id": "WP-S-01",
+      "path": "assurance/03-system/WP-S-01-system-requirements.md",
+      "sha256": "94514ece5aa611d84ce77dee09c246d215beed3c09afae75ac487f86abec4ac7"
+    },
+    {
+      "id": "WP-S-02",
+      "path": "assurance/03-system/WP-S-02-technical-safety-requirements.md",
+      "sha256": "ee842df926a4092cd1faf3ec7972d95962d7f0f562c6ac4b0bd588eef8a59aa4"
+    },
+    {
+      "id": "WP-S-03",
+      "path": "assurance/03-system/WP-S-03-technical-safety-concept-architecture.md",
+      "sha256": "48702e1d5d147d8486833416858b760fc1c52e4dbbef69e34bc1b54d0ba11430"
+    },
+    {
+      "id": "WP-S-04",
+      "path": "assurance/03-system/WP-S-04-timing-ftti-budget.md",
+      "sha256": "0a85dd04490e185ec70e004aaf06fa07c693056f05ebcd32ff42103245008389"
+    },
+    {
+      "id": "WP-S-05",
+      "path": "assurance/03-system/WP-S-05-hsi-specification.md",
+      "sha256": "2a146f9911f23728867b1dbca0bc56c3435d703a0bb1fe7c68888af877e0d173"
+    },
+    {
+      "id": "WP-S-06",
+      "path": "assurance/03-system/WP-S-06-requirements-production-operation.md",
+      "sha256": "7e42251f6bcf038b961da0b3522bee72ede3c24e3dc6223f3a02db970d4ed427"
+    },
+    {
+      "id": "WP-S-07",
+      "path": "assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md",
+      "sha256": "e600f476898be6dfe5ea930abed719c19b2a00bb2c6e48bd5ad9a66163624e7b"
+    },
+    {
+      "id": "WP-S-08",
+      "path": "assurance/03-system/WP-S-08-system-integration-test.md",
+      "sha256": "1fedfe2e582a2a0d3619a22a924a4dc88508d5a373c721582872812345f2d871"
+    },
+    {
+      "id": "WP-S-09",
+      "path": "assurance/03-system/WP-S-09-system-verification.md",
+      "sha256": "cb38e3b5992b103ad2ffd5a4e667bec9c69c2b10a1904c0f28e7bd68572ac85b"
+    },
+    {
+      "id": "WP-H-01",
+      "path": "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md",
+      "sha256": "782e6fca2ae317b185f099e6e28262f9f8bd4c75f7c4d46a37fc82d0196d5c64"
+    },
+    {
+      "id": "WP-H-02",
+      "path": "assurance/04-hardware/WP-H-02-hardware-design.md",
+      "sha256": "4b3b788a26efee695bebf212b4de5e7f3713e0baa5ade4a1e6fefde94f2cc43f"
+    },
+    {
+      "id": "WP-H-03",
+      "path": "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md",
+      "sha256": "f7de346a3bf52c9b3fb8695458d562231d086b1a7d71e730159fd1a857c95be4"
+    },
+    {
+      "id": "WP-H-04",
+      "path": "assurance/04-hardware/WP-H-04-hardware-metrics.md",
+      "sha256": "4377bca66464a0da62df8145c41d4e2d7f5285675ae388cae608091dcdaf7191"
+    },
+    {
+      "id": "WP-H-05",
+      "path": "assurance/04-hardware/WP-H-05-random-hardware-failures-pmhf.md",
+      "sha256": "2eb8bd6c23af224bffeabe42a1d92b45f38d1b75b02629c82e0368c782409e79"
+    },
+    {
+      "id": "WP-H-06",
+      "path": "assurance/04-hardware/WP-H-06-hardware-integration-verification.md",
+      "sha256": "20c8e2604cefabd0847233fdbd2db61ccf8d503b92a270fa5e133287c449bd6e"
+    },
+    {
+      "id": "WP-H-07",
+      "path": "assurance/04-hardware/WP-H-07-hardware-component-qualification.md",
+      "sha256": "54804773726c3c7c00d02dd939969aa36d87a2776ad45db4a0f4a83c99ea0ccc"
+    },
+    {
+      "id": "WP-W-01",
+      "path": "assurance/05-software/WP-W-01-software-development-environment-guidelines.md",
+      "sha256": "c4893ee50f68dcb6b66c185ae727358bd4d6c7a8dc3f46e8a7ed679297af52b9"
+    },
+    {
+      "id": "WP-W-02",
+      "path": "assurance/05-software/WP-W-02-software-safety-requirements.md",
+      "sha256": "813fd21a7dadaebf9cdd305a7251963d85ca28665dceb22a533479f3ba7b2b6e"
+    },
+    {
+      "id": "WP-W-03",
+      "path": "assurance/05-software/WP-W-03-software-architecture.md",
+      "sha256": "b249629487a5fd5825ca05c442d03f5cf99edf087db93332f25220b23ef12ff9"
+    },
+    {
+      "id": "WP-W-04",
+      "path": "assurance/05-software/WP-W-04-software-safety-analysis.md",
+      "sha256": "84feb135954b6f80c660de8c2e6516ddd93abbf2cabfcaa36c24a24125bbbcbc"
+    },
+    {
+      "id": "WP-W-05",
+      "path": "assurance/05-software/WP-W-05-software-unit-design.md",
+      "sha256": "717b076e14fde8a2a8f77622a669ecd2456abfc2afeed4a046ff90d287d8930f"
+    },
+    {
+      "id": "WP-W-06",
+      "path": "assurance/05-software/WP-W-06-software-unit-verification.md",
+      "sha256": "8f53c5eceb4191898869d3cc0956e7d1c9c4d4c52c63e75ab3f9c61215770808"
+    },
+    {
+      "id": "WP-W-07",
+      "path": "assurance/05-software/WP-W-07-software-integration-verification.md",
+      "sha256": "7d6a5abf026d948292c7fd768d84ccc70335f1bf4d0ce8cc7bf1c57c3fa59853"
+    },
+    {
+      "id": "WP-W-08",
+      "path": "assurance/05-software/WP-W-08-embedded-software-testing.md",
+      "sha256": "ddfc9ab5bfa5193eb6cf870ea057720008e29c7f34f86bfa437e0589d0787593"
+    },
+    {
+      "id": "WP-W-09",
+      "path": "assurance/05-software/WP-W-09-configuration-calibration-data.md",
+      "sha256": "c6e1ba272c66177c6788b19a378b2290457259256258a919637bd7c7bc79207b"
+    },
+    {
+      "id": "WP-W-10",
+      "path": "assurance/05-software/WP-W-10-ml-engineering.md",
+      "sha256": "f7993d344a269f1a915d3d072caf94e8356ab2f10761dbc567c5db18d26f1d24"
+    },
+    {
+      "id": "WP-W-11",
+      "path": "assurance/05-software/WP-W-11-cybersecurity-implementation-verification.md",
+      "sha256": "751e92c2ce7a131ce3e76759461de66de0585efb9aadeeb9a1b9e0162839019e"
+    },
+    {
+      "id": "WP-V-01",
+      "path": "assurance/06-validation/WP-V-01-safety-validation.md",
+      "sha256": "af8ff4e5d3765ed1337aa3f34747a1eb9cdd9c7f851042364ac672a5d2c84eeb"
+    },
+    {
+      "id": "WP-V-02",
+      "path": "assurance/06-validation/WP-V-02-sotif-vv-strategy.md",
+      "sha256": "6c0d58eff1b570837e9931543a3320c6949bdef2e8e83ac38f7bbf283c2622b8"
+    },
+    {
+      "id": "WP-V-03",
+      "path": "assurance/06-validation/WP-V-03-sotif-known-scenarios.md",
+      "sha256": "4072429d6ac50da8d719a29485e352c40cfed4ce133700362074ba721b33e83d"
+    },
+    {
+      "id": "WP-V-04",
+      "path": "assurance/06-validation/WP-V-04-sotif-unknown-scenarios.md",
+      "sha256": "1691189fd5f06f1657dc78a5d74424d53cfe7e5f2ed023bd914a0804bf7b077b"
+    },
+    {
+      "id": "WP-V-05",
+      "path": "assurance/06-validation/WP-V-05-fault-injection.md",
+      "sha256": "aea6b4316d558dd78d7c6dcc92661f08c9be93ac72863475ef98752a5f46591c"
+    },
+    {
+      "id": "WP-V-06",
+      "path": "assurance/06-validation/WP-V-06-cybersecurity-validation.md",
+      "sha256": "27745f1160930425fa19a1543b72d604498a35d2bed06c37bdb9f0096a527bd0"
+    },
+    {
+      "id": "WP-V-07",
+      "path": "assurance/06-validation/WP-V-07-vehicle-test-operations.md",
+      "sha256": "f9115bf56c5603a488bbff988bd1a9cec8e77fd62910e75a66a903f222480803"
+    },
+    {
+      "id": "WP-P-01",
+      "path": "assurance/07-supporting/WP-P-01-configuration-management-plan.md",
+      "sha256": "4e076d632263dd23cb03c68a44d2dfcd168a080a5ae50f9c26b94b65f3b02d5a"
+    },
+    {
+      "id": "WP-P-02",
+      "path": "assurance/07-supporting/WP-P-02-change-management.md",
+      "sha256": "e289d6b3d248783d277a5107ba7769225301399c045e6ad286555672c1287839"
+    },
+    {
+      "id": "WP-P-03",
+      "path": "assurance/07-supporting/WP-P-03-problem-resolution.md",
+      "sha256": "a82f0c6b8783c5c2c600aacc90a1df0d7fdee064ceccbd09a2ba5f609846cacf"
+    },
+    {
+      "id": "WP-P-04",
+      "path": "assurance/07-supporting/WP-P-04-documentation-management.md",
+      "sha256": "0806d2048495916e54955dc5e52ef3e365e129ddc670604437d5a0b778227738"
+    },
+    {
+      "id": "WP-P-05",
+      "path": "assurance/07-supporting/WP-P-05-verification-review-procedure.md",
+      "sha256": "0329198bf3f79af9d05e1ac3a0c0aae0bb98f7975453cef9a25aaedea6a33e74"
+    },
+    {
+      "id": "WP-P-06",
+      "path": "assurance/07-supporting/WP-P-06-requirements-management-traceability.md",
+      "sha256": "fd4a98876bab24aeae4c39211614200efd3fc9aa0f2e1e5bfa3bb31c843df6d4"
+    },
+    {
+      "id": "WP-P-07",
+      "path": "assurance/07-supporting/WP-P-07-tool-classification-qualification.md",
+      "sha256": "a986bec6bb9e259f6773f665bd46369adf0e2fcd32a382660f07abc38e1f55af"
+    },
+    {
+      "id": "WP-P-08",
+      "path": "assurance/07-supporting/WP-P-08-software-component-qualification.md",
+      "sha256": "46e2b8c5b8b8d77ff23263999e5a15c2a086058bf48dc186e45085b17d289b47"
+    },
+    {
+      "id": "WP-P-09",
+      "path": "assurance/07-supporting/WP-P-09-proven-in-use.md",
+      "sha256": "c22898b0ef8ed0c87f04118972c96b5c2f0c7c0a8e83cc88aa95b12a9851e2f1"
+    },
+    {
+      "id": "WP-P-10",
+      "path": "assurance/07-supporting/WP-P-10-release-management.md",
+      "sha256": "d72e3439079abb7847085111c1cbc771919f8b7e7c57ddd933e2da6e26f1caac"
+    },
+    {
+      "id": "WP-A-01",
+      "path": "assurance/08-analyses/WP-A-01-asil-decomposition.md",
+      "sha256": "537f696bf8937abcefac076d7f430af6b4c880d720e1135826e22909b306a544"
+    },
+    {
+      "id": "WP-A-02",
+      "path": "assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md",
+      "sha256": "f018b68bd2b10fe24be7f28f435d3908e0560adbc271c6c93a4a55bade4a31f6"
+    },
+    {
+      "id": "WP-A-03",
+      "path": "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md",
+      "sha256": "3568e02f9bfc73db3fba68a549c436b9d50c671cc92dddc7373bb8ea798cd155"
+    },
+    {
+      "id": "WP-A-04",
+      "path": "assurance/08-analyses/WP-A-04-system-fta-fmea.md",
+      "sha256": "be43ae941e059baf67762f1d2b34034ee7e92183ba96fe97d7bdd1e5c5e6fea4"
+    },
+    {
+      "id": "WP-A-05",
+      "path": "assurance/08-analyses/WP-A-05-stpa.md",
+      "sha256": "0802b2001e18825e1e91dab2b9fa42ee10e2f09c2e2b6a9f7ece1ac47b155668"
+    },
+    {
+      "id": "WP-O-01",
+      "path": "assurance/09-production-operation/WP-O-01-installation-and-provisioning-control.md",
+      "sha256": "40d55f0eab2448a76c55dc2b76b8d6579301cd815abeb1322933b2e177b06d76"
+    },
+    {
+      "id": "WP-O-02",
+      "path": "assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md",
+      "sha256": "135382119e4f82fdb1ae82e36aeb7a4e4b2227dd0ec0e738f5443acbaace3359"
+    },
+    {
+      "id": "WP-O-03",
+      "path": "assurance/09-production-operation/WP-O-03-user-information-safety-warnings.md",
+      "sha256": "a40f1c2973e344bb50343e04bf25b72df44d867857fb3f82922e8ca627fb4761"
+    },
+    {
+      "id": "WP-O-04",
+      "path": "assurance/09-production-operation/WP-O-04-field-monitoring.md",
+      "sha256": "78c4209f8188a2c03deb777e36d7b474ca7263806d5499645ee65de9025676e0"
+    },
+    {
+      "id": "WP-O-05",
+      "path": "assurance/09-production-operation/WP-O-05-cybersecurity-incident-response-updates.md",
+      "sha256": "fe266712b1aabc221f665205ebb268e7b183f1a38c9ad8363ab17a81129e6b7d"
+    },
+    {
+      "id": "WP-K-01",
+      "path": "assurance/10-safety-case/WP-K-01-safety-case.md",
+      "sha256": "c42cbf616d58e696f97a0bd99f3cb7815ffb1b9e7845e3b3176cb2a491ead836"
+    },
+    {
+      "id": "WP-K-02",
+      "path": "assurance/10-safety-case/WP-K-02-sotif-release-argument.md",
+      "sha256": "59e5a31c0bc539e98cdb63bed295fb3697606ad3f4ce51d31c621d65f727d614"
+    },
+    {
+      "id": "WP-K-03",
+      "path": "assurance/10-safety-case/WP-K-03-cybersecurity-case.md",
+      "sha256": "c05e5d1daa793431dfd4ecfdfcd6c78aa161f1112698d9169a4c3d9742f63058"
+    },
+    {
+      "id": "WP-K-04",
+      "path": "assurance/10-safety-case/WP-K-04-functional-safety-assessment.md",
+      "sha256": "43c625d98ef1d386163f86a260b3a1a4987a7dce8c5bdd738059dac394b8af2b"
+    },
+    {
+      "id": "WP-K-05",
+      "path": "assurance/10-safety-case/WP-K-05-cybersecurity-assessment.md",
+      "sha256": "370aad63b40564284ee24496c5a36291bc22533daba2f2cf20a05dc80c0e74bf"
+    },
+    {
+      "id": "WP-K-06",
+      "path": "assurance/10-safety-case/WP-K-06-release-record.md",
+      "sha256": "5f8ba75c92fbef409ae01112a832f98bace7723daafb44af3be1486d99d31d46"
+    },
+    {
+      "id": "WP-P-11",
+      "path": "assurance/process/README.md",
+      "sha256": "c3b7a076e75f85aacfd6cd2e379df2d92f99001e52a6b5f211aec74af6ff5e00"
+    },
+    {
+      "id": "WP-T-01",
+      "path": "assurance/trace/README.md",
+      "sha256": "1d6df73f3b5587bb3835ebb6c1ccea07d66c6969f2f4fcc4e009d339d7449328"
+    }
+  ],
+  "document_control": {
+    "record": "ARA-26262-2018-001",
+    "revision": "0.1",
+    "status": "Draft",
+    "artifact_author": "Codex (OpenAI AI assistant)",
+    "independence_credit": "I0 only; no qualified third-party assessor appointment",
+    "approval": "Pending"
+  },
+  "artifact_sha256": {
+    "01_evidence_ladder.svg": "a0512cfdba5759b7fa8250c58ad1a5e8ba81501b3b31d98306b31ac3b3ef457a",
+    "02_argument_dependencies.svg": "b6fac7c32c4213fa6391a4e1bb568e6eef77e17c0086e7bb970cea8fae653b84",
+    "03_parts_coverage.svg": "e58f9e41ce020ae9cee51795bd780bb20f8cf01e2250d5f8a6c077cf768aadf8",
+    "04_closure_workflow.svg": "a58710e62cec5772df4d73720c84d017c043e3b521f546e68b67ffeee2b3ce46",
+    "05_checker_boundary.svg": "a3d2c08ba6ffd41647c215db0fbe9c39f306541b84915e6cbc5d629d66a618e6",
+    "Audit_report.md": "dd1d4ad4cc2529aef5a5d377a78711164c4b0b9ccc634106a921d3eaa85e8918",
+    "GENERATED_VIEW_GUIDE.md": "d12439ea239bcdd9c6a8aec954df25e562c507b96e10b962ac10b353754b5f7c",
+    "LionDriver_ISO26262_Audit.xlsx": "e852b087166d67a0d8deedee76596afab7c2335889d03ea9da0d34fd85fe4739",
+    "README.md": "10a77ba8c2f95874200915a3783ac46818fd70b0c19a59e2ea223954d36e416a",
+    "Review_board.html": "e85b075ecadccc69d9f4d428ab610fe77835e88dfbd93099a372687204b59721",
+    "audit_data.json": "037a57cbec3d48d6fcb4e8d309bb000ed567315e751467c60dc4e10bee6454fd",
+    "build_audit.py": "ef615c8fba4618d53e0fea6dc39152e344e6ec8b28f08d118917dc013851eadc",
+    "checks.json": "692d0332bd4a8c6b2a72654ec10e6a32ea26bb782c86289ef96a94af57f25834",
+    "clause-map.csv": "65702a7e4714c70aca530db7250e0db2fee9fbf930153a3c7b5a74494f6501b2",
+    "engine_review.json": "594a3e4eb1cca66e800d5c5a6602c18c33b38e727058b684b36f5155c2d5d57c",
+    "engine_synthetic_report.json": "bac30be3bdd6c9f0c611b355f955bc055b70f1a583598cb7f8c4bf8d5ce2b98f",
+    "findings.csv": "bd3231000d94df097f21b3ee0f5f393d473c9e32f5106b1a692d572f8e2302ed",
+    "licensed_clause_inventory.csv": "4d1e1cfc19d2931e92a3864e053c259102f9a5d370c3c7d500cde2b56f2c945f",
+    "logs/case_validation.log": "e9bc6584ba945d83e7cc22005897fe27dec87256b2f601f43a32e037b846eb65",
+    "logs/dashboard_consistency.log": "395d7e793f4a8b11cb28c5748d21aa8ae9ced5a997a934a8c4fd67113a2ac34d",
+    "logs/engine_synthetic.log": "ec4dca77270a210452c2d678cda0c6d415f20a0c07d825af3c4f7ea77f9a2476",
+    "logs/hara_model_tests.log": "7ce5636601cd336ab333632cca49231e668256ae307e41168258d5f059c148ec",
+    "logs/requirements_trace.log": "43c8d9a621dd226776a4142be7047c16b930d2b20fe60e208ea2344f8d1ea801",
+    "logs/state_machine_consistency.log": "b1077a2c70cca1a46948a342a25fcc6ba896472758c6d322620e453f785dc969",
+    "logs/trace_tool_tests.log": "a99fc6e33b28df1e5c3b9d078334aa474ad06c0a368f68ee6ea57ac3022ccf60",
+    "regenerate.sh": "67084c404cf7af85e2796de4c26cd5d217edfdafccbf6fb433dcd3eb73edf06e",
+    "requirements.lock.txt": "d5b40741c3a5df1be44e5bcd4823f01dc05888255916d28aa03a6e4b210d4e42",
+    "verify_package.py": "737c48f7f423ee81c80bdfe85cf0eb06751739af340bd7cce79c9e4dfbc3bf7a"
+  }
+}

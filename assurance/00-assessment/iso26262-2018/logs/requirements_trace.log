@@ -1,0 +1,2 @@
+trace: 7 files, 411 items aou=15, fsr=54, hazard=8, hazardous-event=30, hwsr=45, safety-goal=7, swsr=134, tsr=118
+OK: all implemented checks passed
