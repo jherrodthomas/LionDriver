@@ -4,7 +4,7 @@
 |---|---|
 | Record | ARA-26262-2018-001; supporting assessment aid, not a new registered work product |
 | Standard scope | ISO 26262:2018, Parts 1–12; authoritative requirement inventory pending |
-| Revision | 0.1 |
+| Revision | 0.2 |
 | Status | Draft — submitted for human verification; no approval recorded |
 | Author / documentary assessor | Codex (OpenAI AI assistant), I0 AI-assisted documentary assessor |
 | Qualified independent third-party assessor | Not appointed by this record; competence and organizational independence are not established for an AI assistant |
@@ -35,8 +35,10 @@ The project record does not demonstrate ISO 26262 compliance or support a releas
 | [checks.json](checks.json), [logs](logs/) | Exact commands and raw results of six checks run on the assessed baseline; local execution, not accepted safety evidence |
 | [engine_review.json](engine_review.json), [synthetic run](engine_synthetic_report.json) | Four diagnostic probes and fictional-standard smoke output for compliance-checker-algo; not an ISO compliance result |
 | [licensed_clause_inventory.csv](licensed_clause_inventory.csv) | Empty intake template; complete clause/table/annex and requirement-level review awaits source access |
+| [Authoring protocol](AUTHORING_PROTOCOL.md), [task queue](AUTHOR_HANDOFF.md), [author_tasks.json](author_tasks.json) | Bounded update recipes, dependencies, required outputs and human closure controls for authoring AI agents |
+| [Annotated document review](Annotated_review.html), [annotations.json](annotations.json) | Read-only highlights, rounded callout borders and circled finding IDs attached to exact source quotes and hashes |
 | [Audit report](Audit_report.md) | Generated narrative view of the documentary assessment and its limitations |
-| [Audit workbook](LionDriver_ISO26262_Audit.xlsx) | Generated 16-sheet author review view; Excel edits are not controlled source changes |
+| [Audit workbook](LionDriver_ISO26262_Audit.xlsx) | Generated 17-sheet author review view; Excel edits are not controlled source changes |
 | [Review board](Review_board.html) | Generated offline HTML view with five embedded diagrams and searchable findings; GitHub may download rather than render it |
 | [manifest.json](manifest.json) | SHA-256 binding of source work products and package artifacts; immutable subject revision and submodule gitlinks |
 | [build_audit.py](build_audit.py), [regenerate.sh](regenerate.sh), [requirements](requirements.lock.txt) | Rendering source, archived-subject reproduction instructions and assessor-only dependency pins |
@@ -44,6 +46,10 @@ The project record does not demonstrate ISO 26262 compliance or support a releas
 Diagram views: [evidence maturity](01_evidence_ladder.svg), [argument dependencies](02_argument_dependencies.svg), [all-parts coverage boundaries](03_parts_coverage.svg), [finding closure](04_closure_workflow.svg), [checker authority boundary](05_checker_boundary.svg). SVG sources are committed as text under the repository's existing assurance artwork rule; PNG exports are unnecessary duplicate views.
 
 The CSV and JSON records form one controlled revision. A disposition change must update both representations and the report/workbook in a reviewed PR. Do not treat an edited Excel cell as approval. The renderer intentionally reconstructs this frozen assessment from the original subject revision; it does not silently audit the publication branch or accept new dispositions. A new baseline, licensed requirement inventory, or reviewer disposition needs an explicit new package revision and corresponding renderer/input update.
+
+Authoring agents must read [assurance/AGENTS.md](../../AGENTS.md) and the protocol. Visual marks identify documentary evidence and the requested author action; they do not declare normative noncompliance or modify the original document. The 22 task entries are unassigned. Measurement, staffing and safety-strategy prerequisites remain visible; generating text cannot satisfy them.
+
+![Example: the exact A09 source passage with circles around timing figures and an author preparation callout](06_annotation_example.svg)
 
 ## 3. Reproduction and verification
 
@@ -78,3 +84,4 @@ The Git source revision, file hashes and revision history identify the controlle
 | Revision | Date | Change request | Summary | Approval |
 |---|---|---|---|---|
 | 0.1 | 2026-10-14 | `codex/controlled-iso26262-audit` PR | Initial baseline-bound documentary assessment aid; CSV/JSON source, workbook, diagrams, checks and I0 attribution | Pending; no approval or baselining recorded |
+| 0.2 | 2026-10-14 | `codex/controlled-iso26262-audit` PR | Bounded AI-author handoff, exact-source annotation ledger, visual document markup and automatic assurance-agent instructions | Pending; source work products and findings remain unaccepted |

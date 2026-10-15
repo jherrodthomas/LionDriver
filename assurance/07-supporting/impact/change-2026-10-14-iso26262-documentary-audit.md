@@ -4,7 +4,7 @@
 |---|---|
 | Record | Change request carried by the `codex/controlled-iso26262-audit` PR |
 | Type / classification | CT-6; conservative SR-A assurance content and SR-T generated-view tooling |
-| Revision / status | 0.1 / Draft — approval pending |
+| Revision / status | 0.2 / Draft — approval pending |
 | Author | Codex (OpenAI AI assistant), I0 |
 | Subject baseline | `20569e916c9359243739b71e4dc79876aec48cc0` |
 | Package | [ARA-26262-2018-001](../../00-assessment/iso26262-2018/README.md) |
@@ -16,6 +16,8 @@
 The user requested a GitHub-hosted spreadsheet and diagrams for assessing the assurance documents against ISO 26262:2018, with QMS revision and document control. This change publishes the completed documentary review as a supporting assessment package, not a replacement safety case or a signed functional safety assessment.
 
 The user also requested independent third-party assessor attribution. Codex is identified truthfully as the AI-assisted documentary assessor and artifact author at I0. Organizational independence, human competence and I3 confirmation are not claimed. The existing rules of WP-M-02 §3.3, WP-M-01 T-09 and WP-M-06 remain authoritative.
+
+Revision 0.2 adds a bounded authoring-agent protocol, unassigned task/dependency records and read-only visual markup over the frozen source. Agent instructions apply to future assigned assurance edits; they do not initiate remediation, override human decisions or accept findings. Annotation hashes and exact quotes must match the assessed Git objects; current-version source drift must be evaluated before an author uses the proposed task.
 
 ## 2. Impact analysis
 
@@ -47,3 +49,4 @@ Implementation submitted for review. Approval, independent confirmation and norm
 | Revision | Date | Change request | Summary | Approval |
 |---|---|---|---|---|
 | 0.1 | 2026-10-14 | `codex/controlled-iso26262-audit` PR | Initial impact analysis for publication of ARA-26262-2018-001 | Pending |
+| 0.2 | 2026-10-14 | `codex/controlled-iso26262-audit` PR | Bounded author-agent guidance and exact-source visual annotation views | Pending |

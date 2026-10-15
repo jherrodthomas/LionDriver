@@ -48,6 +48,37 @@ def verify():
   with zipfile.ZipFile(package / 'LionDriver_ISO26262_Audit.xlsx') as book:
     assert book.testzip() is None, 'Workbook ZIP corruption'
   assert (package / 'Review_board.html').read_text().count('<svg ') == 5
+  annotations = json.loads((package / 'annotations.json').read_text())
+  tasks = json.loads((package / 'author_tasks.json').read_text())
+  assert annotations['subject_revision'] == tasks['subject_revision'] == subject
+  assert annotations['revision'] == tasks['revision'] == manifest['document_control']['revision'] == '0.2'
+  assert len(annotations['annotations']) == len(tasks['tasks']) == 22
+  annotation_ids = {a['id'] for a in annotations['annotations']}
+  task_map = {t['id']: t for t in tasks['tasks']}
+  assert len(annotation_ids) == len(task_map) == 22
+  for annotation in annotations['annotations']:
+    source = subprocess.check_output(['git', 'show', subject + ':' + annotation['source_path']], cwd=root)
+    assert hashlib.sha256(source).hexdigest() == annotation['source_sha256']
+    assert source.decode().splitlines()[annotation['line_start'] - 1] == annotation['quote_exact'], 'Annotation source text mismatch'
+    for span in annotation['focus_spans']:
+      assert annotation['quote_exact'][span['start'] : span['end']] == span['text'], 'Focus markup changed the source quote'
+  for task in tasks['tasks']:
+    assert task['annotation_id'] in annotation_ids
+    assert task['assigned_agent'] is None
+    assert task['subject_revision'] == subject
+    assert all(dependency in task_map for dependency in task['preparatory_dependencies'])
+  completed = set()
+
+  def visit(task_id, ancestors):
+    assert task_id not in ancestors, 'Author-task dependency cycle'
+    if task_id not in completed:
+      for dependency in task_map[task_id]['preparatory_dependencies']:
+        visit(dependency, ancestors | {task_id})
+      completed.add(task_id)
+
+  for task_id in task_map:
+    visit(task_id, set())
+  assert (package / 'Annotated_review.html').read_text().count('<article data-category=') == 22
   print('PASS: source objects, 88 WPs, 22 findings, 368 source associations, hashes, logs and generated views agree.')
   print('No normative completeness, acceptance, independent confirmation or QMS approval inferred.')
 

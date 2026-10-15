@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Record | ARA-26262-2018-001 (supporting assessment aid) |
-| Revision | 0.1 |
+| Revision | 0.2 |
 | Status | Draft — awaiting human verification |
 | Author / documentary assessor | Codex (OpenAI AI assistant), I0 |
 | Qualified independent assessor | Not appointed by this record |

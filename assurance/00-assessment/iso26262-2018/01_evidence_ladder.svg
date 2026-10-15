@@ -39,7 +39,7 @@ Q 65.79 98.1216 65.79 100.3392
 L 65.79 157.9968
 Q 65.79 160.2144 69.696 160.2144
 z
-" clip-path="url(#p694341f923)" style="fill: #ffffff; stroke: #376c95; stroke-width: 1.8; stroke-linejoin: miter"/>
+" clip-path="url(#peb20229892)" style="fill: #ffffff; stroke: #376c95; stroke-width: 1.8; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
     <path d="M 69.696 235.6128
@@ -52,7 +52,7 @@ Q 65.79 173.52 65.79 175.7376
 L 65.79 233.3952
 Q 65.79 235.6128 69.696 235.6128
 z
-" clip-path="url(#p694341f923)" style="fill: #ffffff; stroke: #a46c15; stroke-width: 1.8; stroke-linejoin: miter"/>
+" clip-path="url(#peb20229892)" style="fill: #ffffff; stroke: #a46c15; stroke-width: 1.8; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
     <path d="M 69.696 311.0112
@@ -65,7 +65,7 @@ Q 65.79 248.9184 65.79 251.136
 L 65.79 308.7936
 Q 65.79 311.0112 69.696 311.0112
 z
-" clip-path="url(#p694341f923)" style="fill: #ffffff; stroke: #376c95; stroke-width: 1.8; stroke-linejoin: miter"/>
+" clip-path="url(#peb20229892)" style="fill: #ffffff; stroke: #376c95; stroke-width: 1.8; stroke-linejoin: miter"/>
    </g>
    <g id="patch_5">
     <path d="M 69.696 386.4096
@@ -78,7 +78,7 @@ Q 65.79 324.3168 65.79 326.5344
 L 65.79 384.192
 Q 65.79 386.4096 69.696 386.4096
 z
-" clip-path="url(#p694341f923)" style="fill: #ffffff; stroke: #ac3941; stroke-width: 1.8; stroke-linejoin: miter"/>
+" clip-path="url(#peb20229892)" style="fill: #ffffff; stroke: #ac3941; stroke-width: 1.8; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
     <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #14263d" x="22.824" y="34.942631" transform="rotate(-0 22.824 34.942631)">What the records establish</text>
@@ -87,7 +87,7 @@ z
     <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #718096" x="22.824" y="59.150437" transform="rotate(-0 22.824 59.150437)">Document presence, reproducibility and acceptance are separate layers.</text>
    </g>
    <g id="text_3">
-    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #718096" x="22.824" y="446.2848" transform="rotate(-0 22.824 446.2848)">ARA-26262-2018-001 v0.1 | UNCONTROLLED | 20569e916c93 | Codex / AI-assisted I0 review</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #718096" x="22.824" y="446.2848" transform="rotate(-0 22.824 446.2848)">ARA-26262-2018-001 v0.2 | UNCONTROLLED | 20569e916c93 | Codex / AI-assisted I0 review</text>
    </g>
    <g id="text_4">
     <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #376c95" x="79.0704" y="117.567881" transform="rotate(-0 79.0704 117.567881)">88 work products</text>
@@ -116,7 +116,7 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="p694341f923">
+  <clipPath id="peb20229892">
    <rect x="7.2" y="7.2" width="781.2" height="443.52"/>
   </clipPath>
  </defs>

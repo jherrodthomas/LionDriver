@@ -1,0 +1,390 @@
+{
+  "record": "ARA-26262-2018-001",
+  "revision": "0.2",
+  "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+  "normative_completeness": false,
+  "annotations": [
+    {
+      "id": "AN-A01",
+      "finding_id": "A01",
+      "category": "Source verification",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md",
+      "source_sha256": "eaf41e9fd378b0b051e721c6d3e2f3b0071359512d3f095e83703a47ad71c91d",
+      "line_start": 546,
+      "line_end": 546,
+      "quote_exact": "| OI-2 | Check every clause reference and the principal work product lists in \u00a74 against the licensed ISO 26262-6:2018 | Reviewer | G2 |",
+      "meaning": "Repository cross-references cannot establish that every requirement, table and annex is covered. User confirms licensed 2018 source exists; the supplied Windows search link is not accessible from this cloud machine.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md#L546",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A02",
+      "finding_id": "A02",
+      "category": "Decision required",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/01-management/WP-M-02-safety-plan.md",
+      "source_sha256": "212d14b034a90bacf59f5ca29224086382be36bc5e4e7af0409beae2d4e99525",
+      "line_start": 275,
+      "line_end": 275,
+      "quote_exact": "| OI-3 | Engage an external functional safety assessor (D-06) and agree scope and schedule. The lead answered on 2026-10-14: no assessor for now (DQ-009 option C). While that holds, G0 cannot pass, because CR-01 and CR-03 are due at G0 at I3 (WP-M-06 \u00a79); the plan must be re-planned or the answer revisited | PM | G0 |",
+      "meaning": "The safety plan explicitly says the no-assessor decision prevents G0 under its existing CR-01/CR-03 plan. AI review cannot silently satisfy that requirement.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/01-management/WP-M-02-safety-plan.md#L275",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A03",
+      "finding_id": "A03",
+      "category": "Authority boundary",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/01-management/WP-M-02-safety-plan.md",
+      "source_sha256": "212d14b034a90bacf59f5ca29224086382be36bc5e4e7af0409beae2d4e99525",
+      "line_start": 100,
+      "line_end": 100,
+      "quote_exact": "- AI drafting is not a verification activity. An AI-produced audit or checklist run (for example RR-2026-005\u2026008) is an author-side pre-review audit at I0. It gives no review credit at I1 or above.",
+      "meaning": "This workbook is an assessment aid. The project explicitly assigns AI audits I0; this deliverable cannot be counted as an I1/I3 confirmation or signed FSA.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/01-management/WP-M-02-safety-plan.md#L100",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A04",
+      "finding_id": "A04",
+      "category": "Evidence needed",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/02-concept/WP-C-03-hara.md",
+      "source_sha256": "9934f123a47eadb97fb13bca85a3433b0dbc48f261055b55dc4303bed5f9f5cb",
+      "line_start": 154,
+      "line_end": 154,
+      "quote_exact": "| HE-01.1 | OS-03 undivided road, oncoming traffic, 60\u201390 km/h | Departure into the oncoming lane; head-on collision | S3 | E4 | C2 \u26a0 | **C** | S3: head-on at combined speeds > 100 km/h, life-threatening. E4: undivided roads make up a large share of driving. C2 \u26a0: credits AOU-01/AOU-02 (EPS limits LKA torque to an overpowerable level). A supervising driver with hands near the wheel corrects a sustained limited-torque deviation within ~1 s in most cases (\u2265 90%). **If AOU-01/02 are not verified: C3 \u2192 ASIL D** |",
+      "meaning": "The HARA explicitly increases the steering case from C to D if credited EPS assumptions are not verified. Current lower targets cannot be treated as established.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/02-concept/WP-C-03-hara.md#L154",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": [
+        {
+          "start": 468,
+          "end": 497,
+          "text": "If AOU-01/02 are not verified"
+        }
+      ]
+    },
+    {
+      "id": "AN-A05",
+      "finding_id": "A05",
+      "category": "Decision required",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/02-concept/WP-C-04-functional-safety-concept.md",
+      "source_sha256": "8aae91aba87aad2b800c6635c121d5a9a407f1cf28542a5604ef920596573ac3",
+      "line_start": 61,
+      "line_end": 61,
+      "quote_exact": "SG-01 at ASIL C (D if the EPS assumptions fail) drives the integrity of the envelope. The HARA lists three options. This section evaluates them and recommends one. **The decision belongs to the maintainer (acting safety manager); this section is a recommendation.**",
+      "meaning": "Option (c) requires measured controllability and speed-dependent limits before re-rating; ASIL reduction and decomposition are different arguments.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/02-concept/WP-C-04-functional-safety-concept.md#L61",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A06",
+      "finding_id": "A06",
+      "category": "Evidence needed",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/02-concept/WP-C-01-item-definition.md",
+      "source_sha256": "ce8cf738453aef3c511c68ad8a507d27c79e7069b6f3d5831f0560e55095e594",
+      "line_start": 218,
+      "line_end": 218,
+      "quote_exact": "| OI-1 | Record the reference vehicle VIN, ECU firmware versions (fingerprint query output), options, tyre size | Maintainer | G1 |",
+      "meaning": "VIN, ECU firmware, device revision and harness identity are still open items. A generation-level vehicle label is insufficient to bind physical evidence.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/02-concept/WP-C-01-item-definition.md#L218",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A07",
+      "finding_id": "A07",
+      "category": "Evidence needed",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/04-hardware/WP-H-04-hardware-metrics.md",
+      "source_sha256": "4377bca66464a0da62df8145c41d4e2d7f5285675ae388cae608091dcdaf7191",
+      "line_start": 104,
+      "line_end": 104,
+      "quote_exact": "| 5 Calculation | **Cannot be computed: no BOM** |",
+      "meaning": "WP-H-04 lacks BOM-based calculation; WP-H-03 has generic estimates, not part-specific compliance evidence. Generic results cannot close the metric obligation.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/04-hardware/WP-H-04-hardware-metrics.md#L104",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": [
+        {
+          "start": 20,
+          "end": 38,
+          "text": "Cannot be computed"
+        }
+      ]
+    },
+    {
+      "id": "AN-A08",
+      "finding_id": "A08",
+      "category": "Evidence needed",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md",
+      "source_sha256": "f7de346a3bf52c9b3fb8695458d562231d086b1a7d71e730159fd1a857c95be4",
+      "line_start": 260,
+      "line_end": 260,
+      "quote_exact": "The rates are order-of-magnitude estimates per part type, not values looked up for the actual parts. The results show where the architecture falls short. **They are not evidence of compliance.**",
+      "meaning": "Generic SG-01 SPFM 96.9% and SG-07 86.8% miss the document targets; improved planned-measure values assume implementation and coverage. These are planning warnings, not verified pass/fail results.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md#L260",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": [
+        {
+          "start": 165,
+          "end": 191,
+          "text": "not evidence of compliance"
+        }
+      ]
+    },
+    {
+      "id": "AN-A09",
+      "finding_id": "A09",
+      "category": "Documented discrepancy",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/03-system/WP-S-04-timing-ftti-budget.md",
+      "source_sha256": "0a85dd04490e185ec70e004aaf06fa07c693056f05ebcd32ff42103245008389",
+      "line_start": 267,
+      "line_end": 267,
+      "quote_exact": "| OI-8 | EPS-fault siren latency \u2264 1.26 s worst case from fault onset (T-28; corrected 2026-10-13 from \u2248 1.14 s: the speaker sounds only on every other 8 Hz tick) exceeds the SG-02 1 s warning budget (\u00a73.7). TSR-516's \u2264 0.5 s after detection is met (\u2264 0.26 s) only because WP-S-02 v0.14 defines detection as the 1 s persistence; measured from the first fault frame it is not. Caused by the maintainer decision of 2026-10-12 (persistent faults only, 1 s; EPS-fault impact record \u00a77). Options: shorten the persistence (e.g. 0.7 s), or justify that LKA actuation is already refused from the first fault frame (lateral authority removed at onset; the warning is for a lasting loss). **Decision needed.** No requirement changed here (added 2026-10-12) | Safety manager | G2 |",
+      "meaning": "The document records up to 1.26 s against SG-02 1 s; starting the clock after 1 s persistence can conceal end-to-end delay. This is a documented requirement discrepancy, not a new hardware measurement.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/03-system/WP-S-04-timing-ftti-budget.md#L267",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": [
+        {
+          "start": 35,
+          "end": 41,
+          "text": "1.26 s"
+        },
+        {
+          "start": 181,
+          "end": 199,
+          "text": "1 s warning budget"
+        }
+      ]
+    },
+    {
+      "id": "AN-A10",
+      "finding_id": "A10",
+      "category": "Documented discrepancy",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/03-system/WP-S-04-timing-ftti-budget.md",
+      "source_sha256": "0a85dd04490e185ec70e004aaf06fa07c693056f05ebcd32ff42103245008389",
+      "line_start": 86,
+      "line_end": 86,
+      "quote_exact": "The physical time to departure in a curve (\u2248 0.7 s) is shorter than driver reaction, so SG-02 in curves at the ODD bound relies on the warning being given at once and on torque being ramped rather than cut (FSR-02.04). **Warning budget: \u2264 0.5 s detection + \u2264 0.5 s to warning (FSC \u00a78) is not sufficient alone for curves at the ODD bound;** it is sufficient on straight roads and gentle curves. This is a controllability and ODD question (OI-2), recorded for the HARA owner. For SG-06 (stationary lead at 30 m/s, decel need 3.5 m/s\u00b2), the margin depends on distance; the 1 s budget is kept.",
+      "meaning": "The repository estimates roughly 0.7 s at the ODD bound and itself requests a controllability re-rating or tighter ODD. Driver supervision is not an automatic mitigation.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/03-system/WP-S-04-timing-ftti-budget.md#L86",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": [
+        {
+          "start": 45,
+          "end": 50,
+          "text": "0.7 s"
+        },
+        {
+          "start": 55,
+          "end": 83,
+          "text": "shorter than driver reaction"
+        }
+      ]
+    },
+    {
+      "id": "AN-A11",
+      "finding_id": "A11",
+      "category": "Documented discrepancy",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/03-system/WP-S-04-timing-ftti-budget.md",
+      "source_sha256": "0a85dd04490e185ec70e004aaf06fa07c693056f05ebcd32ff42103245008389",
+      "line_start": 264,
+      "line_end": 264,
+      "quote_exact": "| OI-7 | SG-07 forwarding loss has zero margin (FDTI + FRTI = FTTI). Decide whether to shorten the watchdog and forwarding-supervision times below 0.1 s once the PCS timing is measured | Safety engineer | G2 |",
+      "meaning": "The stated sum of detection and reaction equals FTTI before measured PCS timing. A watchdog nominal setting is insufficient to prove the end-to-end budget.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/03-system/WP-S-04-timing-ftti-budget.md#L264",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": [
+        {
+          "start": 35,
+          "end": 46,
+          "text": "zero margin"
+        }
+      ]
+    },
+    {
+      "id": "AN-A12",
+      "finding_id": "A12",
+      "category": "Evidence needed",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md",
+      "source_sha256": "f018b68bd2b10fe24be7f28f435d3908e0560adbc271c6c93a4a55bade4a31f6",
+      "line_start": 164,
+      "line_end": 164,
+      "quote_exact": "| L-MCU spatial | **Not shown** | No MPU; QM-triggered paths execute in the same address space; SPI length unbounded (mitigated by memory-bank separation, unconfirmed) |",
+      "meaning": "The current verdicts include not shown and partially shown; the envelope-only ASIL allocation depends on resolving spatial, timing, communication and boot interference.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md#L164",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A13",
+      "finding_id": "A13",
+      "category": "Decision required",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md",
+      "source_sha256": "eaf41e9fd378b0b051e721c6d3e2f3b0071359512d3f095e83703a47ad71c91d",
+      "line_start": 148,
+      "line_end": 148,
+      "quote_exact": "Conclusion of the snapshot: **no entry criterion is met.** All the prerequisites exist as drafts, and the requirement chain from FSR to SWSR is populated and checked. None is approved or confirmed and no review record exists. Part 6 stays deferred, and the pre-entry track (\u00a72.3) continues.",
+      "meaning": "The specification explicitly says entry prerequisites are draft/unapproved and Part 6 stays deferred. Existing code and host tests do not establish lifecycle completion.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md#L148",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": [
+        {
+          "start": 30,
+          "end": 55,
+          "text": "no entry criterion is met"
+        }
+      ]
+    },
+    {
+      "id": "AN-A14",
+      "finding_id": "A14",
+      "category": "Evidence needed",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/01-management/WP-M-02-safety-plan.md",
+      "source_sha256": "212d14b034a90bacf59f5ca29224086382be36bc5e4e7af0409beae2d4e99525",
+      "line_start": 280,
+      "line_end": 280,
+      "quote_exact": "| OI-8 | Give a verification review at I1 or above to every at-risk envelope change in \u00a74.1, and add their HIL campaign (`REFERENCE_BUILD=1`) to the bench plan. The lead answered on 2026-10-14: defer the HIL bench (DQ-049 option B), so condition (c) of \u00a74.1 cannot be met until the bench is built | SM, VR | G2 |",
+      "meaning": "The safety plan records deferred HIL and says early-implementation credit cannot be earned until its conditions are met. Plans and host unit tests cannot replace target timing/fault-injection evidence.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/01-management/WP-M-02-safety-plan.md#L280",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A15",
+      "finding_id": "A15",
+      "category": "Evidence needed",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/07-supporting/WP-P-07-tool-classification-qualification.md",
+      "source_sha256": "a986bec6bb9e259f6773f665bd46369adf0e2fcd32a382660f07abc38e1f55af",
+      "line_start": 146,
+      "line_end": 146,
+      "quote_exact": "| OI-13 | Validation suites done 2026-10-13 for TL-36 (`hara/test_hara_model.py`), TL-37 (`fsc/test_fsc_model.py`) and TL-38 (`tools/ci/test_build_manifest.py`), all in CI; 21 of 22 hand-planted faults detected, the survivor is equivalent (a removed `E0 \u2192 QM` branch that the table lookup already covers). **Open:** write TQR-28 and TQR-32\u2026TQR-40, and review the in-house tools as SR-T code |",
+      "meaning": "In-house safety-relevant tools have open TQR records and review work; compiler/runner pinning is also open. Agreement between tools sharing assumptions does not authenticate the standard.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/07-supporting/WP-P-07-tool-classification-qualification.md#L146",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A16",
+      "finding_id": "A16",
+      "category": "Evidence needed",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/07-supporting/WP-P-08-software-component-qualification.md",
+      "source_sha256": "46e2b8c5b8b8d77ff23263999e5a15c2a086058bf48dc186e45085b17d289b47",
+      "line_start": 91,
+      "line_end": 91,
+      "quote_exact": "One record per safety-relevant software component, with the fields of [WP-M-14 \u00a76](../01-management/WP-M-14-iso26262-6-implementation-specification.md). \"Not confirmed\" means the statement could not be checked against the code or a record for this draft. No record is reviewed: the Review field is TBD everywhere. \"Existing verification evidence\" lists what is defined and where it runs; no LionDriver run is recorded as evidence yet ([WP-W-06](../05-software/WP-W-06-software-unit-verification.md) results section: not yet executed), and no HIL test has been run ([WP-W-08](../05-software/WP-W-08-embedded-software-testing.md), bench D-04).",
+      "meaning": "The work product requests review of RA-01\u2026RA-09 and records for remaining safety-relevant components; initialized submodules establish access, not qualification.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/07-supporting/WP-P-08-software-component-qualification.md#L91",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A17",
+      "finding_id": "A17",
+      "category": "Source verification",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/01-management/WP-M-06-confirmation-measures-plan.md",
+      "source_sha256": "7a21209166c270af570bdc7b626a3464b68d187dc1d3e7b73950356f0546d039",
+      "line_start": 54,
+      "line_end": 54,
+      "quote_exact": "| CR-07 | Evaluation of hardware architectural metrics and random HW failure targets | [WP-H-04](../04-hardware/WP-H-04-hardware-metrics.md), [WP-H-05](../04-hardware/WP-H-05-random-hardware-failures-pmhf.md) | Check whether a separate row exists in the licensed edition; otherwise covered by CR-06 and the FSA | I3 | External FuSa assessor | G3 |",
+      "meaning": "The plan itself questions whether several rows are required in the licensed edition. Planned I3 rigor does not validate the underlying table transcription.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/01-management/WP-M-06-confirmation-measures-plan.md#L54",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A18",
+      "finding_id": "A18",
+      "category": "Editorial clarification",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/01-management/WP-M-01-assurance-strategy.md",
+      "source_sha256": "ab1ac5192262634e30a6e723a378a0b5c9a4275b801b478ef1413ee4b196f037",
+      "line_start": 31,
+      "line_end": 31,
+      "quote_exact": "- LionDriver is upstream openpilot (\u2248 v0.11.2). The only change so far is to `README.md`. The safety-enforcement code (`opendbc_repo/opendbc/safety`, `panda/board`) comes in through git submodules that point at upstream `commaai` repositories.",
+      "meaning": "WP-M-01 already identifies this as a historical starting point, but its old facts could be read as current status. Current assurance records and safety.yaml differ. This is a clarity observation, not proof of an incorrect historical assessment.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/01-management/WP-M-01-assurance-strategy.md#L31",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A19",
+      "finding_id": "A19",
+      "category": "Editorial clarification",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/10-safety-case/WP-K-04-functional-safety-assessment.md",
+      "source_sha256": "43c625d98ef1d386163f86a260b3a1a4987a7dce8c5bdd738059dac394b8af2b",
+      "line_start": 17,
+      "line_end": 17,
+      "quote_exact": "The functional safety assessment (FSA) judges whether the functional safety achieved by LD-SDA is adequate. It is performed by an assessor independent of the project at **I3** ([WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md); tailoring T-09). This file holds the plan (\u00a72\u2013\u00a75) and the report template (\u00a76\u2013\u00a79). Interim assessments FSA-I1 (G1) and FSA-I2 (G2) use the same template and are stored as `10-safety-case/confirmation/FSA-I1.md` and `FSA-I2.md` (folder to be created, [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) OI-6); the final FSA-F (G5) is written into this file.",
+      "meaning": "WP-K-04 says the confirmation folder is to be created via OI-6, although the folder exists and WP-M-02 OI-5 reports closure; no FSA is actually executed.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/10-safety-case/WP-K-04-functional-safety-assessment.md#L17",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A20",
+      "finding_id": "A20",
+      "category": "Evidence needed",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/10-safety-case/WP-K-01-safety-case.md",
+      "source_sha256": "c42cbf616d58e696f97a0bd99f3cb7815ffb1b9e7845e3b3176cb2a491ead836",
+      "line_start": 8,
+      "line_end": 8,
+      "quote_exact": "| Status | Draft \u2014 **living document. At this baseline the argument structure is defined; almost all evidence is missing or partial. This safety case does not support any release or public-road claim** |",
+      "meaning": "The work product explicitly disclaims a release claim; machine-readable records show 0 accepted claims, 0 accepted evidence and 41 open defeaters. Structural validity is not evidence sufficiency.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/10-safety-case/WP-K-01-safety-case.md#L8",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A21",
+      "finding_id": "A21",
+      "category": "Decision required",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/01-management/WP-M-01-assurance-strategy.md",
+      "source_sha256": "ab1ac5192262634e30a6e723a378a0b5c9a4275b801b478ef1413ee4b196f037",
+      "line_start": 132,
+      "line_end": 132,
+      "quote_exact": "| T-07 | Production (Part 7) | Tailored to installation, provisioning and configuration control of the retrofit ([WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md)). LionDriver does not manufacture hardware | Production is comma's. LionDriver controls installation, firmware load and configuration |",
+      "meaning": "The strategy tails production to installation and distributed development to upstream reuse. These are proposed project arguments; supplier responsibilities and applicable obligations need source-based review.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/01-management/WP-M-01-assurance-strategy.md#L132",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    },
+    {
+      "id": "AN-A22",
+      "finding_id": "A22",
+      "category": "Source verification",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_path": "assurance/07-supporting/WP-P-09-proven-in-use.md",
+      "source_sha256": "c22898b0ef8ed0c87f04118972c96b5c2f0c7c0a8e83cc88aa95b12a9851e2f1",
+      "line_start": 17,
+      "line_end": 17,
+      "quote_exact": "Evaluates whether a proven-in-use (PIU) argument under ISO 26262-8 \u00a714 could be made for any openpilot or panda element, and records the conclusion that supports tailoring T-06 in [WP-M-01](../01-management/WP-M-01-assurance-strategy.md#5-tailoring): **no PIU claim is made**. The openpilot field history is used only as supporting, non-credited evidence.",
+      "meaning": "The project deliberately makes no proven-in-use claim. Likewise, ASIL decomposition is not automatically mandatory. Requirement applicability needs an approved rationale.",
+      "source_link": "https://github.com/jherrodthomas/LionDriver/blob/20569e916c9359243739b71e4dc79876aec48cc0/assurance/07-supporting/WP-P-09-proven-in-use.md#L17",
+      "normative_verdict": "Not assessed; licensed requirement verification pending",
+      "focus_spans": []
+    }
+  ]
+}

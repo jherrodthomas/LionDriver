@@ -3,6 +3,7 @@
 
 from pathlib import Path
 import os
+import runpy
 import csv
 import hashlib
 import html
@@ -20,7 +21,7 @@ import matplotlib
 
 matplotlib.use('Agg')
 matplotlib.rcParams['svg.fonttype'] = 'none'
-matplotlib.rcParams['svg.hashsalt'] = 'ARA-26262-2018-001-v0.1'
+matplotlib.rcParams['svg.hashsalt'] = 'ARA-26262-2018-001-v0.2'
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 
@@ -725,6 +726,9 @@ summary = {
   )
 )
 
+author_renderer = runpy.run_path(str(Path(__file__).resolve().with_name('build_author_views.py')))
+author_renderer['build'](Path(__file__).resolve().parent, OUT, GIT_REPO)
+author_tasks = json.loads((OUT / 'author_tasks.json').read_text())['tasks']
 workbook = xlsxwriter.Workbook(OUT / 'LionDriver_ISO26262_Audit.xlsx', {'strings_to_formulas': False, 'strings_to_urls': False})
 workbook.set_properties(
   {
@@ -756,7 +760,7 @@ def sheet(name, headers, rows, widths=None, editable=None):
     0,
     1,
     len(headers) - 1,
-    'ARA-26262-2018-001 | v0.1 | Draft / uncontrolled generated view | ISO 26262:2018 | baseline '
+    'ARA-26262-2018-001 | v0.2 | Draft / uncontrolled generated view | ISO 26262:2018 | baseline '
     + HEAD[:12]
     + ' | documentary audit; normative verdicts and complete clause inventory pending licensed source',
     formats['note'],
@@ -783,7 +787,7 @@ def sheet(name, headers, rows, widths=None, editable=None):
   ws.fit_to_pages(1, 0)
   ws.repeat_rows(0, 3)
   ws.set_paper(9)
-  ws.set_footer('&LARA-26262-2018-001 v0.1 | UNCONTROLLED&C&P / &N&R' + HEAD[:12])
+  ws.set_footer('&LARA-26262-2018-001 v0.2 | UNCONTROLLED&C&P / &N&R' + HEAD[:12])
   if editable:
     for j, choices in editable.items():
       ws.data_validation(
@@ -803,9 +807,14 @@ def sheet(name, headers, rows, widths=None, editable=None):
 
 method_rows = [
   (
+    'AI-author handoff',
+    'Version 0.2 provides 22 unassigned bounded tasks and exact-source visual annotations. '
+    + 'Read AUTHORING_PROTOCOL.md and AUTHOR_HANDOFF.md before drafting. Do not close findings or invent missing evidence.',
+  ),
+  (
     'Document control',
     (
-      'ARA-26262-2018-001 v0.1; Draft. Codex (OpenAI AI assistant), I0 documentary assessor and artifact au'
+      'ARA-26262-2018-001 v0.2; Draft. Codex (OpenAI AI assistant), I0 documentary assessor and artifact au'
       + 'thor. Not a qualified independent I3 assessor. Published downloads are uncontrolled generated views;'
       + ' controlled source/revision history is in this package README and JSON/CSV records.'
     ),
@@ -1232,6 +1241,43 @@ sheet(
   {1: 95, 5: 65, 7: 90},
 )
 sheet(
+  'Author tasks',
+  [
+    'Task',
+    'Finding',
+    'Category',
+    'Owner role (proposed)',
+    'Source document',
+    'Source line',
+    'Dependencies',
+    'Allowed preparation',
+    'Required author action',
+    'Closure evidence',
+    'Target gate',
+    'State',
+    'Human review',
+  ],
+  [
+    [
+      t['id'],
+      t['finding_id'],
+      t['category'],
+      t['proposed_owner_role'],
+      t['primary_document'],
+      t['source_line'],
+      t['preparatory_dependencies'],
+      t['allowed_preparation'],
+      t['required_author_action'],
+      t['closure_evidence'],
+      t['target_gate'],
+      t['state'],
+      t['human_review'],
+    ]
+    for t in author_tasks
+  ],
+  {4: 70, 7: 85, 8: 85, 9: 85, 11: 65, 12: 65},
+)
+sheet(
   'Engine review',
   ['Issue', 'Type', 'Diagnostic / source observation', 'Observed engine result', 'Risk and required control', 'Source link', 'Evidence basis'],
   engine_rows,
@@ -1340,7 +1386,7 @@ def setup_plot(title, subtitle, w=14, h=8):
   ax.axis('off')
   ax.text(2, 97, title, fontsize=19, fontweight='bold', color=NAVY, va='top')
   ax.text(2, 90, subtitle, fontsize=10, color=GRAY, va='top')
-  ax.text(2, 1, f'ARA-26262-2018-001 v0.1 | UNCONTROLLED | {HEAD[:12]} | Codex / AI-assisted I0 review', fontsize=8, color=GRAY)
+  ax.text(2, 1, f'ARA-26262-2018-001 v0.2 | UNCONTROLLED | {HEAD[:12]} | Codex / AI-assisted I0 review', fontsize=8, color=GRAY)
   return fig, ax
 
 
@@ -1523,7 +1569,7 @@ page = page.replace('BASELINE', html.escape(HEAD)).replace('CARDS', cards).repla
 
 report = (
   '# LionDriver ISO 26262:2018 documentary audit\n\n| Field | Value |\n|---|---|\n| Record | ARA-26262-2018'
-  + '-001 (supporting assessment aid) |\n| Revision | 0.1 |\n| Status | Draft — awaiting human verification'
+  + '-001 (supporting assessment aid) |\n| Revision | 0.2 |\n| Status | Draft — awaiting human verification'
   + ' |\n| Author / documentary assessor | Codex (OpenAI AI assistant), I0 |\n| Qualified independent asses'
   + 'sor | Not appointed by this record |\n| Approver | Project maintainer / safety manager; approval pend'
   + 'ing |\n| Distribution | Uncontrolled generated public view |\n| Document control | Package README, fin'
@@ -1673,7 +1719,7 @@ manifest = {
   'source_work_products': [{k: d[k] for k in ('id', 'path', 'sha256')} for d in docs],
   'document_control': {
     'record': 'ARA-26262-2018-001',
-    'revision': '0.1',
+    'revision': '0.2',
     'status': 'Draft',
     'artifact_author': 'Codex (OpenAI AI assistant)',
     'independence_credit': 'I0 only; no qualified third-party assessor appointment',
