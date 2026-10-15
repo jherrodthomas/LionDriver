@@ -1,0 +1,2 @@
+# Preserve recorded stdout/stderr, including intentional blank lines at EOF.
+logs/*.log -whitespace

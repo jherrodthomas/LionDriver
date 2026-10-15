@@ -19,6 +19,8 @@ os.environ.setdefault('XDG_CACHE_HOME', '/tmp/liondriver-assessor-cache')
 import matplotlib
 
 matplotlib.use('Agg')
+matplotlib.rcParams['svg.fonttype'] = 'none'
+matplotlib.rcParams['svg.hashsalt'] = 'ARA-26262-2018-001-v0.1'
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 
@@ -1353,7 +1355,9 @@ def arrow(ax, a, b):
 
 
 def save(fig, name):
-  fig.savefig(OUT / f'{name}.svg', bbox_inches='tight')
+  svg_path = OUT / f'{name}.svg'
+  fig.savefig(svg_path, bbox_inches='tight', metadata={'Date': None})
+  svg_path.write_text('\n'.join(line.rstrip() for line in svg_path.read_text().splitlines()) + '\n')
   if os.environ.get('AUDIT_RENDER_PNG', '1') != '0':
     fig.savefig(OUT / f'{name}.png', dpi=160, bbox_inches='tight')
   plt.close(fig)
