@@ -1,25 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1250" viewBox="0 0 1280 1250" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1550" viewBox="0 0 1280 1550" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-11. FMEDA SG-009 metrics against ASIL B (estimate)</title>
-  <desc id="d">FMEDA for SG-009 (ASIL B target, FMD rev 0.2, BL-002, draft) with generic estimated failure rates: SPFM 86.78 % against ≥ 90 % (missed), LFM 98.90 % against ≥ 60 % (met on the estimate, not verified), λSPF+λRF 32 FIT against PMHF &lt; 100 FIT (below, partial PMHF only, not verified); failure-rate split per component and failure mode, and the safety mechanisms with the failure modes they are credited on.</desc>
+  <desc id="d">FMEDA for SG-009 (ASIL B target, FMD rev 0.3, BL-002, draft) with generic estimated failure rates: SPFM 85.89 % against ≥ 90 % (missed), LFM 97.58 % against ≥ 60 % (met on the estimate, not verified), λSPF+λRF 34.9 FIT against PMHF &lt; 100 FIT (below, partial PMHF only, not verified); failure-rate split per component and failure mode, and the safety mechanisms with the failure modes they are credited on.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="1250" fill="#FFFFFF"/>
+  <rect width="1280" height="1550" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-11 · FMEDA SG-009 — metrics against the ASIL B target</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">FMD rev 0.2 · BL-002 · draft · FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">FMD rev 0.3 · BL-002 · draft · FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.5</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/fmeda-sg009.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
   <rect x="40" y="98" width="1200" height="29" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="6 4"/>
-  <text x="56" y="117" font-size="11" fill="#92400E" font-weight="600">ESTIMATE · DRAFT — 9 of 9 failure rates are generic estimates (failure_rate_source: no BOM or supplier data). The metrics below are not verified and are not evidence that the target is met.</text>
+  <text x="56" y="117" font-size="11" fill="#92400E" font-weight="600">ESTIMATE · DRAFT — 13 of 13 failure rates are generic estimates (failure_rate_source: no BOM or supplier data). The metrics below are not verified and are not evidence that the target is met.</text>
   <text x="40" y="153" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">HARDWARE ARCHITECTURAL METRICS AGAINST THE ASIL B TARGET (rating-tables §6.3)</text>
   <text x="40" y="185" font-size="15" fill="#0F172A" font-weight="700">SPFM</text>
   <text x="40" y="200" font-size="10" fill="#475569">single-point fault metric = 1 − (λSPF + λRF) / λ</text>
   <rect x="290" y="173" width="600" height="24" fill="#F1F5F9" rx="4"/>
-  <rect x="290" y="173" width="441.3" height="24" fill="#D2553F" rx="4"/>
+  <rect x="290" y="173" width="430.7" height="24" fill="#D2553F" rx="4"/>
   <line x1="770" y1="167" x2="770" y2="203" stroke="#0F172A" stroke-width="1.6" stroke-dasharray="4 3"/>
   <text x="770" y="164" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B ≥ 90 %</text>
   <line x1="290" y1="197" x2="290" y2="201" stroke="#94A3B8" stroke-width="1"/>
@@ -34,13 +34,13 @@
   <text x="770" y="212" font-size="9" fill="#475569" text-anchor="middle">90 %</text>
   <line x1="890" y1="197" x2="890" y2="201" stroke="#94A3B8" stroke-width="1"/>
   <text x="890" y="212" font-size="9" fill="#475569" text-anchor="middle">100 %</text>
-  <text x="910" y="184" font-size="15" fill="#D2553F" font-weight="700">86.78 %</text>
+  <text x="910" y="184" font-size="15" fill="#D2553F" font-weight="700">85.89 %</text>
   <rect x="910" y="190" width="92.5" height="15" rx="7.5" fill="#D2553F"/><text x="956.3" y="200.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">TARGET MISSED</text>
   <text x="40" y="251" font-size="15" fill="#0F172A" font-weight="700">LFM</text>
   <text x="40" y="266" font-size="10" fill="#475569">latent fault metric = 1 − λMPF,latent / (λ −</text>
   <text x="40" y="278" font-size="10" fill="#475569">λSPF − λRF)</text>
   <rect x="290" y="239" width="600" height="24" fill="#F1F5F9" rx="4"/>
-  <rect x="290" y="239" width="586.8" height="24" fill="#D97706" rx="4"/>
+  <rect x="290" y="239" width="570.9" height="24" fill="#D97706" rx="4"/>
   <line x1="410" y1="233" x2="410" y2="269" stroke="#0F172A" stroke-width="1.6" stroke-dasharray="4 3"/>
   <text x="410" y="230" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B ≥ 60 %</text>
   <line x1="290" y1="263" x2="290" y2="267" stroke="#94A3B8" stroke-width="1"/>
@@ -55,14 +55,14 @@
   <text x="770" y="278" font-size="9" fill="#475569" text-anchor="middle">90 %</text>
   <line x1="890" y1="263" x2="890" y2="267" stroke="#94A3B8" stroke-width="1"/>
   <text x="890" y="278" font-size="9" fill="#475569" text-anchor="middle">100 %</text>
-  <text x="910" y="250" font-size="15" fill="#D97706" font-weight="700">98.90 %</text>
+  <text x="910" y="250" font-size="15" fill="#D97706" font-weight="700">97.58 %</text>
   <rect x="910" y="256" width="230.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="1025.4" y="266.7" font-size="9" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">meets the target on this estimate · not verified</text>
   <text x="40" y="317" font-size="15" fill="#0F172A" font-weight="700">λSPF + λRF</text>
   <text x="40" y="332" font-size="10" fill="#475569">single-point + residual part of PMHF only; the</text>
   <text x="40" y="344" font-size="10" fill="#475569">dual-point term is not computed (rating-tables</text>
   <text x="40" y="356" font-size="10" fill="#475569">§6.3), so this is not a full PMHF</text>
   <rect x="290" y="305" width="600" height="24" fill="#F1F5F9" rx="4"/>
-  <rect x="290" y="305" width="128" height="24" fill="#D97706" rx="4"/>
+  <rect x="290" y="305" width="139.6" height="24" fill="#D97706" rx="4"/>
   <line x1="690" y1="299" x2="690" y2="335" stroke="#0F172A" stroke-width="1.6" stroke-dasharray="4 3"/>
   <text x="690" y="296" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">PMHF &lt; 100 FIT</text>
   <line x1="290" y1="329" x2="290" y2="333" stroke="#94A3B8" stroke-width="1"/>
@@ -81,7 +81,7 @@
   <text x="770" y="344" font-size="9" fill="#475569" text-anchor="middle">120</text>
   <line x1="850" y1="329" x2="850" y2="333" stroke="#94A3B8" stroke-width="1"/>
   <text x="850" y="344" font-size="9" fill="#475569" text-anchor="middle">140</text>
-  <text x="910" y="316" font-size="15" fill="#D97706" font-weight="700">32 FIT</text>
+  <text x="910" y="316" font-size="15" fill="#D97706" font-weight="700">34.9 FIT</text>
   <rect x="910" y="322" width="230.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="1025.4" y="332.7" font-size="9" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">meets the target on this estimate · not verified</text>
   <line x1="40" y1="379" x2="1240" y2="379" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="401" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE-RATE SPLIT PER COMPONENT (FIT) — CLASSIFICATION PER rating-tables §6.1</text>
@@ -170,69 +170,116 @@
   <rect x="544.3" y="801" width="78.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="583.7" y="811.7" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">FMD-018 safe</text>
   <line x1="40" y1="839" x2="1240" y2="839" stroke="#F1F5F9" stroke-width="1"/>
   <text x="40" y="857" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-007</text>
-  <text x="116.4" y="857" font-size="11" fill="#475569" font-weight="600">λ = 15 FIT</text>
-  <text x="40" y="871" font-size="10" fill="#475569">Intercept relay and relay driver</text>
-  <text x="40" y="883" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006</text>
-  <rect x="360" y="847" width="96" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
-  <rect x="360" y="847" width="57.6" height="14" fill="#D2553F"/>
-  <rect x="417.6" y="847" width="38.4" height="14" fill="#E2E8F0"/>
-  <text x="464" y="858" font-size="10" fill="#0F172A" font-weight="600">SPF 9</text>
-  <rect x="360" y="867" width="102.7" height="15" rx="7.5" fill="#D2553F"/><text x="411.4" y="877.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-019 SPF 3.75</text>
-  <rect x="466.7" y="867" width="102.7" height="15" rx="7.5" fill="#D2553F"/><text x="518.1" y="877.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-020 SPF 2.25</text>
-  <rect x="573.4" y="867" width="78.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="612.8" y="877.7" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">FMD-021 safe</text>
-  <rect x="656.2" y="867" width="88.2" height="15" rx="7.5" fill="#D2553F"/><text x="700.3" y="877.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-022 SPF 3</text>
-  <line x1="40" y1="905" x2="1240" y2="905" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="923" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-008</text>
-  <text x="116.4" y="923" font-size="11" fill="#475569" font-weight="600">λ = 10 FIT</text>
-  <text x="40" y="937" font-size="10" fill="#475569">Harness connector and relay-box stock path</text>
-  <text x="40" y="949" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-007</text>
-  <rect x="360" y="913" width="64" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
-  <rect x="360" y="913" width="19.2" height="14" fill="#D2553F"/>
-  <rect x="379.2" y="913" width="44.8" height="14" fill="#E2E8F0"/>
-  <text x="432" y="924" font-size="10" fill="#0F172A" font-weight="600">SPF 3</text>
-  <rect x="360" y="933" width="88.2" height="15" rx="7.5" fill="#D2553F"/><text x="404.1" y="943.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-023 SPF 3</text>
-  <rect x="452.2" y="933" width="78.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="491.5" y="943.7" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">FMD-024 safe</text>
-  <line x1="40" y1="971" x2="1240" y2="971" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="989" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-009</text>
-  <text x="116.4" y="989" font-size="11" fill="#475569" font-weight="600">λ = 2 FIT</text>
-  <text x="40" y="1003" font-size="10" fill="#475569">Independent watchdog: LSI oscillator and IWDG</text>
-  <text x="40" y="1015" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-003</text>
-  <rect x="360" y="979" width="12.8" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
-  <rect x="360" y="979" width="6.4" height="14" fill="#D97706"/>
-  <rect x="366.4" y="979" width="6.4" height="14" fill="#E2E8F0"/>
-  <text x="380.8" y="990" font-size="10" fill="#0F172A" font-weight="600">latent 1</text>
-  <rect x="360" y="999" width="137.3" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="428.6" y="1009.7" font-size="9" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">FMD-025 latent 1 · no SM</text>
-  <rect x="501.3" y="999" width="78.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="540.7" y="1009.7" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">FMD-026 safe</text>
-  <line x1="40" y1="1037" x2="1240" y2="1037" stroke="#F1F5F9" stroke-width="1"/>
-  <rect x="40" y="1045" width="14" height="12" fill="#D2553F"/>
-  <text x="59" y="1055" font-size="10" fill="#0F172A">λSPF single-point</text>
-  <rect x="161.4" y="1045" width="14" height="12" fill="#C2410C"/>
-  <text x="180.4" y="1055" font-size="10" fill="#0F172A">λRF residual</text>
-  <rect x="258.4" y="1045" width="14" height="12" fill="#FDBA74"/>
-  <text x="277.4" y="1055" font-size="10" fill="#0F172A">detected by the SPF mechanism</text>
-  <rect x="450.8" y="1045" width="14" height="12" fill="#D97706"/>
-  <text x="469.8" y="1055" font-size="10" fill="#0F172A">λMPF latent</text>
-  <rect x="546.8" y="1045" width="14" height="12" fill="#FCE7C2" stroke="#CBD5E1" stroke-width="1"/>
-  <text x="565.8" y="1055" font-size="10" fill="#0F172A">λMPF detected/perceived</text>
-  <rect x="706.2" y="1045" width="14" height="12" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="1"/>
-  <text x="725.2" y="1055" font-size="10" fill="#0F172A">λS safe</text>
-  <text x="40" y="1071" font-size="10" fill="#475569">Totals: λ 242 FIT · λSPF 27.5 · λRF 4.5 · λMPF,latent 2.31 FIT. Chip = failure mode with its class, FIT and the credited safety mechanism with its DC.</text>
-  <line x1="40" y1="1097" x2="1240" y2="1097" stroke="#E2E8F0" stroke-width="1"/>
-  <text x="40" y="1119" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">SAFETY MECHANISMS (DC CLAIMED PER FAILURE MODE)</text>
-  <text x="40" y="1136" font-size="10.5" fill="#0F172A" font-weight="700">FMD-SM-001</text>
-  <text x="124" y="1136" font-size="10.5" fill="#0F172A">Flash ECC (single-error correction in silicon; corrected reads are transparent)</text>
-  <text x="780" y="1136" font-size="10" fill="#475569" font-weight="600">credited on FMD-004 (99 %)</text>
-  <text x="40" y="1153" font-size="10.5" fill="#0F172A" font-weight="700">FMD-SM-002</text>
-  <text x="124" y="1153" font-size="10.5" fill="#0F172A">SRAM ECC (single-error correction in silicon); double errors flagged but not handled at BL-002 [TSR-503]</text>
-  <text x="780" y="1153" font-size="10" fill="#475569" font-weight="600">credited on FMD-007 (99 %)</text>
-  <text x="40" y="1170" font-size="10.5" fill="#0F172A" font-weight="700">FMD-SM-003</text>
-  <text x="124" y="1170" font-size="10.5" fill="#0F172A">Bootstub signature check of the application image at every power-up</text>
-  <text x="780" y="1170" font-size="10" fill="#475569" font-weight="600">credited on FMD-006 (90 %)</text>
-  <text x="40" y="1187" font-size="10.5" fill="#0F172A" font-weight="700">FMD-SM-005</text>
-  <text x="124" y="1187" font-size="10.5" fill="#0F172A">Clock security system on HSE loss: NMI and reset [TSR-504]</text>
-  <text x="780" y="1187" font-size="10" fill="#475569" font-weight="600">credited on FMD-010 (99 %)</text>
-  <text x="40" y="1204" font-size="10.5" fill="#0F172A" font-weight="700">FMD-SM-007</text>
-  <text x="124" y="1204" font-size="10.5" fill="#0F172A">Independent window watchdog (IWDG from LSI), 90 ms, fed only after safety-task and main-loop progress; reset releases the…</text>
-  <text x="780" y="1204" font-size="10" fill="#475569" font-weight="600">credited on FMD-001 (90 %), FMD-005 (90 %), FMD-008 (90 %), FMD-014 (60 %)</text>
-  <text x="40" y="1230" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/fmeda-sg009.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <text x="116.4" y="857" font-size="11" fill="#475569" font-weight="600">λ = 10 FIT</text>
+  <text x="40" y="871" font-size="10" fill="#475569">Intercept switch: 2 × DG419LE CMOS analog SPDT (harness</text>
+  <text x="40" y="883" font-size="10" fill="#475569">box)</text>
+  <text x="40" y="895" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · U1, U2 (harness box)</text>
+  <rect x="360" y="847" width="64" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <rect x="360" y="847" width="44.8" height="14" fill="#D2553F"/>
+  <rect x="404.8" y="847" width="19.2" height="14" fill="#E2E8F0"/>
+  <text x="432" y="858" font-size="10" fill="#0F172A" font-weight="600">SPF 7</text>
+  <rect x="360" y="867" width="88.2" height="15" rx="7.5" fill="#D2553F"/><text x="404.1" y="877.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-019 SPF 3</text>
+  <rect x="452.2" y="867" width="78.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="491.5" y="877.7" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">FMD-021 safe</text>
+  <rect x="534.9" y="867" width="88.2" height="15" rx="7.5" fill="#D2553F"/><text x="579" y="877.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-022 SPF 4</text>
+  <line x1="40" y1="917" x2="1240" y2="917" stroke="#F1F5F9" stroke-width="1"/>
+  <text x="40" y="935" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-010</text>
+  <text x="116.4" y="935" font-size="11" fill="#475569" font-weight="600">λ = 5 FIT</text>
+  <text x="40" y="949" font-size="10" fill="#475569">SBU1 drive circuit in the comma device</text>
+  <text x="40" y="961" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · Device side (unknown, UK-06)</text>
+  <rect x="360" y="925" width="32" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <rect x="360" y="925" width="16" height="14" fill="#D2553F"/>
+  <rect x="376" y="925" width="16" height="14" fill="#E2E8F0"/>
+  <text x="400" y="936" font-size="10" fill="#0F172A" font-weight="600">SPF 2.5</text>
+  <rect x="360" y="945" width="96.7" height="15" rx="7.5" fill="#D2553F"/><text x="408.4" y="955.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-020 SPF 2.5</text>
+  <rect x="460.7" y="945" width="78.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="500.1" y="955.7" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">FMD-027 safe</text>
+  <line x1="40" y1="983" x2="1240" y2="983" stroke="#F1F5F9" stroke-width="1"/>
+  <text x="40" y="1001" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-011</text>
+  <text x="116.4" y="1001" font-size="11" fill="#475569" font-weight="600">λ = 0.4 FIT</text>
+  <text x="40" y="1015" font-size="10" fill="#475569">SBU1 pull-down: 2 × 120 Ω thick-film resistor in series</text>
+  <text x="40" y="1027" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · R2, R3 (harness box)</text>
+  <rect x="360" y="991" width="2.6" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <rect x="360" y="991" width="1.5" height="14" fill="#D97706"/>
+  <rect x="361.5" y="991" width="1" height="14" fill="#E2E8F0"/>
+  <text x="370.6" y="1002" font-size="10" fill="#0F172A" font-weight="600">latent 0.24</text>
+  <rect x="360" y="1011" width="151.8" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="435.9" y="1021.7" font-size="9" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">FMD-028 latent 0.24 · no SM</text>
+  <rect x="515.8" y="1011" width="78.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="555.2" y="1021.7" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">FMD-029 safe</text>
+  <line x1="40" y1="1049" x2="1240" y2="1049" stroke="#F1F5F9" stroke-width="1"/>
+  <text x="40" y="1067" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-012</text>
+  <text x="116.4" y="1067" font-size="11" fill="#475569" font-weight="600">λ = 3 FIT</text>
+  <text x="40" y="1081" font-size="10" fill="#475569">Box supply: D1 Schottky STPS2H100ZFY from ignition, D4</text>
+  <text x="40" y="1093" font-size="10" fill="#475569">TVS SMF16A</text>
+  <text x="40" y="1105" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · D1, D4 (harness box)</text>
+  <rect x="360" y="1057" width="19.2" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <rect x="360" y="1057" width="11.5" height="14" fill="#D2553F"/>
+  <rect x="371.5" y="1057" width="7.7" height="14" fill="#D97706"/>
+  <text x="387.2" y="1068" font-size="10" fill="#0F172A" font-weight="600">SPF 1.8 · latent 1.2</text>
+  <rect x="360" y="1077" width="96.7" height="15" rx="7.5" fill="#D2553F"/><text x="408.4" y="1087.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-030 SPF 1.2</text>
+  <rect x="460.7" y="1077" width="96.7" height="15" rx="7.5" fill="#D2553F"/><text x="509.1" y="1087.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-031 SPF 0.6</text>
+  <rect x="561.5" y="1077" width="145.9" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="634.4" y="1087.7" font-size="9" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">FMD-032 latent 1.2 · no SM</text>
+  <line x1="40" y1="1127" x2="1240" y2="1127" stroke="#F1F5F9" stroke-width="1"/>
+  <text x="40" y="1145" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-013</text>
+  <text x="116.4" y="1145" font-size="11" fill="#475569" font-weight="600">λ = 2 FIT</text>
+  <text x="40" y="1159" font-size="10" fill="#475569">Bus clamps: 2 × BAS40SDW Schottky pairs on CAN0 and</text>
+  <text x="40" y="1171" font-size="10" fill="#475569">CAN2</text>
+  <text x="40" y="1183" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · D2, D3 (harness box)</text>
+  <rect x="360" y="1135" width="12.8" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <rect x="360" y="1135" width="3.8" height="14" fill="#D2553F"/>
+  <rect x="363.8" y="1135" width="9" height="14" fill="#D97706"/>
+  <text x="380.8" y="1146" font-size="10" fill="#0F172A" font-weight="600">SPF 0.6 · latent 1.4</text>
+  <rect x="360" y="1155" width="96.7" height="15" rx="7.5" fill="#D2553F"/><text x="408.4" y="1165.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-033 SPF 0.6</text>
+  <rect x="460.7" y="1155" width="145.9" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="533.7" y="1165.7" font-size="9" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">FMD-034 latent 1.4 · no SM</text>
+  <line x1="40" y1="1205" x2="1240" y2="1205" stroke="#F1F5F9" stroke-width="1"/>
+  <text x="40" y="1223" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-008</text>
+  <text x="116.4" y="1223" font-size="11" fill="#475569" font-weight="600">λ = 10 FIT</text>
+  <text x="40" y="1237" font-size="10" fill="#475569">Harness connector and harness-box wiring in the stock path</text>
+  <text x="40" y="1249" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-007</text>
+  <rect x="360" y="1213" width="64" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <rect x="360" y="1213" width="19.2" height="14" fill="#D2553F"/>
+  <rect x="379.2" y="1213" width="44.8" height="14" fill="#E2E8F0"/>
+  <text x="432" y="1224" font-size="10" fill="#0F172A" font-weight="600">SPF 3</text>
+  <rect x="360" y="1233" width="88.2" height="15" rx="7.5" fill="#D2553F"/><text x="404.1" y="1243.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-023 SPF 3</text>
+  <rect x="452.2" y="1233" width="78.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="491.5" y="1243.7" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">FMD-024 safe</text>
+  <line x1="40" y1="1271" x2="1240" y2="1271" stroke="#F1F5F9" stroke-width="1"/>
+  <text x="40" y="1289" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-009</text>
+  <text x="116.4" y="1289" font-size="11" fill="#475569" font-weight="600">λ = 2 FIT</text>
+  <text x="40" y="1303" font-size="10" fill="#475569">Independent watchdog: LSI oscillator and IWDG</text>
+  <text x="40" y="1315" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-003</text>
+  <rect x="360" y="1279" width="12.8" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <rect x="360" y="1279" width="6.4" height="14" fill="#D97706"/>
+  <rect x="366.4" y="1279" width="6.4" height="14" fill="#E2E8F0"/>
+  <text x="380.8" y="1290" font-size="10" fill="#0F172A" font-weight="600">latent 1</text>
+  <rect x="360" y="1299" width="137.3" height="15" rx="7.5" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/><text x="428.6" y="1309.7" font-size="9" font-weight="700" fill="#92400E" text-anchor="middle" letter-spacing=".02em">FMD-025 latent 1 · no SM</text>
+  <rect x="501.3" y="1299" width="78.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="540.7" y="1309.7" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">FMD-026 safe</text>
+  <line x1="40" y1="1337" x2="1240" y2="1337" stroke="#F1F5F9" stroke-width="1"/>
+  <rect x="40" y="1345" width="14" height="12" fill="#D2553F"/>
+  <text x="59" y="1355" font-size="10" fill="#0F172A">λSPF single-point</text>
+  <rect x="161.4" y="1345" width="14" height="12" fill="#C2410C"/>
+  <text x="180.4" y="1355" font-size="10" fill="#0F172A">λRF residual</text>
+  <rect x="258.4" y="1345" width="14" height="12" fill="#FDBA74"/>
+  <text x="277.4" y="1355" font-size="10" fill="#0F172A">detected by the SPF mechanism</text>
+  <rect x="450.8" y="1345" width="14" height="12" fill="#D97706"/>
+  <text x="469.8" y="1355" font-size="10" fill="#0F172A">λMPF latent</text>
+  <rect x="546.8" y="1345" width="14" height="12" fill="#FCE7C2" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="565.8" y="1355" font-size="10" fill="#0F172A">λMPF detected/perceived</text>
+  <rect x="706.2" y="1345" width="14" height="12" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="725.2" y="1355" font-size="10" fill="#0F172A">λS safe</text>
+  <text x="40" y="1371" font-size="10" fill="#475569">Totals: λ 247.4 FIT · λSPF 30.4 · λRF 4.5 · λMPF,latent 5.15 FIT. Chip = failure mode with its class, FIT and the credited safety mechanism with its DC.</text>
+  <line x1="40" y1="1397" x2="1240" y2="1397" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="1419" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">SAFETY MECHANISMS (DC CLAIMED PER FAILURE MODE)</text>
+  <text x="40" y="1436" font-size="10.5" fill="#0F172A" font-weight="700">FMD-SM-001</text>
+  <text x="124" y="1436" font-size="10.5" fill="#0F172A">Flash ECC (single-error correction in silicon; corrected reads are transparent)</text>
+  <text x="780" y="1436" font-size="10" fill="#475569" font-weight="600">credited on FMD-004 (99 %)</text>
+  <text x="40" y="1453" font-size="10.5" fill="#0F172A" font-weight="700">FMD-SM-002</text>
+  <text x="124" y="1453" font-size="10.5" fill="#0F172A">SRAM ECC (single-error correction in silicon); double errors flagged but not handled at BL-002 [TSR-503]</text>
+  <text x="780" y="1453" font-size="10" fill="#475569" font-weight="600">credited on FMD-007 (99 %)</text>
+  <text x="40" y="1470" font-size="10.5" fill="#0F172A" font-weight="700">FMD-SM-003</text>
+  <text x="124" y="1470" font-size="10.5" fill="#0F172A">Bootstub signature check of the application image at every power-up</text>
+  <text x="780" y="1470" font-size="10" fill="#475569" font-weight="600">credited on FMD-006 (90 %)</text>
+  <text x="40" y="1487" font-size="10.5" fill="#0F172A" font-weight="700">FMD-SM-005</text>
+  <text x="124" y="1487" font-size="10.5" fill="#0F172A">Clock security system on HSE loss: NMI and reset [TSR-504]</text>
+  <text x="780" y="1487" font-size="10" fill="#475569" font-weight="600">credited on FMD-010 (99 %)</text>
+  <text x="40" y="1504" font-size="10.5" fill="#0F172A" font-weight="700">FMD-SM-007</text>
+  <text x="124" y="1504" font-size="10.5" fill="#0F172A">Independent window watchdog (IWDG from LSI), 90 ms, fed only after safety-task and main-loop progress; reset releases the…</text>
+  <text x="780" y="1504" font-size="10" fill="#475569" font-weight="600">credited on FMD-001 (90 %), FMD-005 (90 %), FMD-008 (90 %), FMD-014 (60 %)</text>
+  <text x="40" y="1530" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/fmeda-sg009.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

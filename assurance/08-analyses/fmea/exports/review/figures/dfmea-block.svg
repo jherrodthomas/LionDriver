@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1092 758" width="1092" height="758" role="img">
-<title>Item hardware: comma 3X panda, harness, relay</title>
+<title>Item hardware: comma 3X panda, harness, intercept switch</title>
 <style>
 .bg{fill:#ffffff}.ink{fill:#1f2328}.mut{fill:#59636e}.acc{fill:#0969da}.surf{fill:#f6f8fa}.box{fill:#ffffff;stroke:#d1d9e0}
 .in{fill:#ddf4ff;stroke:#54aeff}.out{fill:#f6f8fa;stroke:#d1d9e0}.bd{fill:none;stroke:#0969da;stroke-dasharray:6 4}.frame{fill:none;stroke:#d1d9e0}
@@ -19,7 +19,7 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helveti
 .ah{fill:#9198a1}.lbl{fill:#0d1117}.lane{fill:#151b23}.laneT{fill:#9198a1}}
 </style>
 <rect class="bg" x="0" y="0" width="1092" height="758" rx="8"/>
-<text x="30.0" y="30.0" class="ink" font-size="15" font-weight="600" text-anchor="start">Item hardware: comma 3X panda, harness, relay</text>
+<text x="30.0" y="30.0" class="ink" font-size="15" font-weight="600" text-anchor="start">Item hardware: comma 3X panda, harness, intercept switch</text>
 <rect x="232" y="48" width="628" height="614" rx="10" class="bd"/>
 <text x="242.0" y="62.0" class="acc" font-size="11" font-weight="600" text-anchor="start">Item hardware (DFMEA scope, DFM-SE-001)</text>
 <path d="M198.0 203.0 L246.0 203.0" class="data"/>
@@ -106,9 +106,9 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helveti
 <text x="688.0" y="209.0" class="mut" font-size="10.5" text-anchor="start">Buses 0/1/2, active-low</text>
 <text x="688.0" y="221.5" class="mut" font-size="10.5" text-anchor="start">enables (HE-07)</text>
 <rect x="678.0" y="278.0" width="168.0" height="58.0" rx="6" class="in"/>
-<text x="688.0" y="299.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Intercept relay + driver</text>
-<text x="688.0" y="313.0" class="mut" font-size="10.5" text-anchor="start">In harness box; no readback</text>
-<text x="688.0" y="325.5" class="mut" font-size="10.5" text-anchor="start">(HE-08)</text>
+<text x="688.0" y="299.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Intercept switch (box</text>
+<text x="688.0" y="313.0" class="ink" font-size="12" font-weight="600" text-anchor="start">U1/U2) + drive</text>
+<text x="688.0" y="327.0" class="mut" font-size="10.5" text-anchor="start">In harness box; no readback…</text>
 <rect x="678.0" y="486.0" width="168.0" height="58.0" rx="6" class="in"/>
 <text x="688.0" y="507.0" class="ink" font-size="12" font-weight="600" text-anchor="start">Harness and connector</text>
 <text x="688.0" y="521.0" class="mut" font-size="10.5" text-anchor="start">SBU1/SBU2, ignition, CAN, 12</text>

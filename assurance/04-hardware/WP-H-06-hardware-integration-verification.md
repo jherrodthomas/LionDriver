@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-06 Hardware integration and verification specification and report |
 | Standard reference | ISO 26262-5:2018 §10 (hardware integration and verification); ISO 26262-8:2018 §9 (verification), §13 (qualification tests of HW components); ASPICE 4.0 HWE.3, HWE.4 |
-| Version | 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.4 (harness box v3 drawing: VS-HW-02 re-scoped, VS-HW-22…24 added for the analog-switch failure behaviour; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section is a template — **Not yet executed** |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -100,7 +100,7 @@ safe state on the scope/CAN log.
 | ID | Title | Verifies | Preconditions | Procedure (summary) | Pass criteria | Method | Depends on |
 |---|---|---|---|---|---|---|---|
 | VS-HW-01 | Relay switching and default state | HWSR-502, -502a, -506, -702; AOU-13 | Device in harness, bench powered | (1) Unpowered: measure camera↔car continuity. (2) Power on, SILENT: measure. (3) Car safety mode: measure. (4) Remove device power while relay energised. (5) Hold MCU in reset (NRST) while relay energised | (1),(2),(4),(5): stock path closed, camera↔car continuity. (3): stock path open, camera↔panda bus 2 and panda bus 0↔car closed. Switching time recorded | T-HIL | — |
-| VS-HW-02 | Harness relay inspection | HWSR-502a, -506, -506d, -702 | Spare harness | Open relay box; identify relay part number, contact form, coil drive, any other active parts in the stock path | Relay type, ratings and de-energised state documented; no active part in the stock path | Inspection (A) | — |
+| VS-HW-02 | Harness box inspection against the published v3 drawing | HWSR-502a, -506, -506d, -506e, -702 | Spare harness box | Open the box; compare parts and wiring with the v3 drawing ([RR-2026-010](reviews/RR-2026-010.md) HB-01…HB-06): U1/U2 part number and marking, R2/R3 values, D1–D4, Q6, switch supply from VIN | Box matches the drawing, or the differences are recorded and the DFMEA/FMEDA updated. *Expected result for HWSR-702: fail* (two powered analog switches in the stock path, RR-2026-010 F-01) | Inspection (A) | — |
 | VS-HW-03 | Relay failure detection — stuck released | HWSR-506a, -506b; FSR-01.11 | Car mode, engaged, stock camera traffic on bus 2 | Bridge the relay contacts in the stock position (or open coil) | Relay malfunction detected and all actuation TX blocked; **today**: within 1–2 s (`opendbc_repo/opendbc/safety/safety.h:372-380`); **target**: ≤ 0.3 s (HWSR-506a, after DC-03). Reported to SoC; host immediate-disable | T-HIL, FI | DC-03 for target |
 | VS-HW-04 | Relay failure detection — stuck intercepting | HWSR-506a, -702; SG-07 | SILENT mode, camera PCS traffic on bus 2 | Force relay energised (coil supplied externally) while firmware commands release | Mismatch detected and reported within ≤ 0.3 s. **Expected today: not detected** (GAP-12) | T-HIL, FI | DC-03 |
 | VS-HW-05 | Debug relay command gated | HWSR-506c | Release build | Send `0xc5` | Relay state unchanged; command rejected | T-HIL | DC-09 |
@@ -120,6 +120,9 @@ safe state on the scope/CAN log.
 | VS-HW-19 | SoC reset / boot-mode control | HWSR-502, -502c | Car mode, relay energised | Assert `STM_RST_N`; assert `STM_BOOT0` + reset (via `openpilot/common/hardware/comma/hardware.py:401-419`) | Relay released and no TX during reset and in ROM bootloader | T-HIL | — |
 | VS-HW-20 | Register divergence reaction | HWSR-503d | Fault-injection build | Overwrite a monitored register (e.g. relay GPIO mode) via SWD | Detected within the check period and safe state (after DC-04); today: report-only (`panda/board/drivers/registers.h:56-70`) | T-HIL, FI | DC-04 |
 | VS-HW-21 | SoC-independent warning (siren) | FSR-02.05 | Car mode, engaged | Stop the SoC heartbeat | Acoustic warning audible within the FSC timing; check whether it works with the SoC powered down (independence of the audio path, WP-H-02 UK-07) | T-HIL | — |
+| VS-HW-22 | Stock path with the harness box unpowered | HWSR-502a, -702; DFM-020 | Camera and car (or bench nodes) powered; box VIN removed (ignition branch open, no comma power) | Measure camera↔car CAN continuity and CAN0/CAN2 levels; exchange frames between camera and car nodes | Stock path works and car-side bus levels stay within ISO 11898-2, or the failure is recorded as confirming RR-2026-010 F-02 | T (bench) | VS-HW-02 |
+| VS-HW-23 | Release default with the pull-down open | HWSR-506, -506e; DFM-010.C3 | Box with R2 or R3 lifted; device driving SBU1 (intercept) | Stop driving SBU1 (MCU held in reset, cable unplugged); record the switch state over 10 min and across temperature | Pass-through restored, or the floating-IN behaviour is recorded as confirming RR-2026-010 F-03 | T (bench, fault injection) | VS-HW-02 |
+| VS-HW-24 | Switch supply stress and pass-through signal integrity | HWSR-506d, -711a; DFM-021 | Box on a programmable supply | (a) VIN at 12, 14, 16 V and an ISO 16750-2 style transient profile; (b) CAN eye and bit timing through U1/U2 at 500 kbit/s with ground offset; (c) clamp diode D2 forced short | (a) within the DG419LE ratings read from the datasheet; (b) ISO 11898-2 levels and timing met; (c) effect recorded against DFM-021 | T (bench) | VS-HW-02, DG419LE datasheet |
 
 ## 4. Integration sequence
 
@@ -190,6 +193,9 @@ safe state on the scope/CAN log.
 | VS-HW-19 | — | — | — | — | **Not yet executed** | — | — | — |
 | VS-HW-20 | — | — | — | — | **Not yet executed** | — | — | — |
 | VS-HW-21 | — | — | — | — | **Not yet executed** | — | — | — |
+| VS-HW-22 | — | — | — | — | **Not yet executed** | — | — | — |
+| VS-HW-23 | — | — | — | — | **Not yet executed** | — | — | — |
+| VS-HW-24 | — | — | — | — | **Not yet executed** | — | — | — |
 
 Verification report summary (to be written after execution): requirements covered, failed,
 blocked; deviations and their problem reports ([WP-P-03](../07-supporting/WP-P-03-problem-resolution.md)).

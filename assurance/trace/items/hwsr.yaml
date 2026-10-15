@@ -108,10 +108,10 @@
   parents: [FSR-07.03, TSR-706]
   parent_text: "FSR-07.03 / TSR-706"
   other_parents: false
-  allocated_to: "Relay (harness), coil supply"
+  allocated_to: "Intercept switch (harness box U1/U2), R2/R3, box supply"
   hw_kind: "HW"
   verification: "A, T-HIL"
-  baseline_impl: "Unverified (AOU-13)"
+  baseline_impl: "**Partly met by design** (harness box v3 drawing, RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) HB-02, HB-03): device power loss leaves SBU1 undriven and R2+R3 select pass-through. A box supply interruption (ignition branch or D1 open, no comma power) leaves U1/U2 unpowered, so pass-through is not guaranteed (F-02, to confirm on the bench). Shipped box against the drawing unverified (VS-HW-02)"
   status: proposed
   source: WP-H-01
 
@@ -307,7 +307,7 @@
   allocated_to: "Relay driver, relay, harness"
   hw_kind: "HW"
   verification: "A (schematic), T-HIL"
-  baseline_impl: "Relay outputs are open-drain, active-low (`drivers/harness.h:22-28, 98-101`); \"released\" = output high/open. Driver circuit unknown (AOU-13)"
+  baseline_impl: "Relay outputs are open-drain, active-low (`drivers/harness.h:22-28, 98-101`); \"released\" = output high/open. Device-side driver circuit unknown (AOU-13, UK-06). **Harness box side de-energise-to-safe by design:** an undriven SBU1 is pulled to GND through R2+R3 (240 Ω), selecting pass-through (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) HB-02); an open R2/R3 defeats it (HWSR-506e)"
   status: proposed
   source: WP-H-01
 
@@ -321,7 +321,7 @@
   allocated_to: "Relay auxiliary contact or bus-sense circuit"
   hw_kind: "ADD"
   verification: "A, T-HIL, FI"
-  baseline_impl: "**Not implemented (GAP-12).** Current detection is indirect and one-directional: camera control messages seen on the car side after a 1 s transition timeout (`safety.h:372-380`), checked at 1 Hz in `safety_tick` (so 1–2 s). \"Stuck intercepting while commanded released\" is not detected at all"
+  baseline_impl: "**Not implemented (GAP-12).** Current detection is indirect and one-directional: camera control messages seen on the car side after a 1 s transition timeout (`safety.h:372-380`), checked at 1 Hz in `safety_tick` (so 1–2 s). \"Stuck intercepting while commanded released\" is not detected at all. The harness box v3 has no state feedback line, so readback needs a hardware change (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-06)"
   status: proposed
   source: WP-H-01
 
@@ -355,15 +355,29 @@
 
 - id: HWSR-506d
   kind: hwsr
-  text: "The relay's rated contact life, switching current and coil characteristics shall cover the expected number of engage/release cycles over the vehicle life with margin."
+  text: "The intercept switch parts (U1/U2, harness box) shall be rated for the box supply over the full vehicle voltage range including transients (absolute maximum, operating range, logic thresholds at the actual VL) and qualified for the mission profile. *Until RR-2026-010 this requirement covered relay contact life and coil, which do not exist in the v3 harness box.*"
   asil: "B"
   parents: [TSR-506]
   parent_text: "TSR-506"
   other_parents: false
-  allocated_to: "Relay part"
+  allocated_to: "Intercept switch U1/U2 (DG419LE), D1, D4"
   hw_kind: "HW"
-  verification: "A (datasheet)"
-  baseline_impl: "Part number unknown (WP-H-07 (assurance/04-hardware/WP-H-07-hardware-component-qualification.md) QE-05)"
+  verification: "A (datasheet), T (bench at 14–16 V)"
+  baseline_impl: "**Not shown.** The DG419L family is specified for 2.7–12 V single supply; here V+ = VL = VIN ≈ vehicle voltage minus one Schottky drop, with transients up to the SMF16A clamp (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-05, datasheet to read)"
+  status: proposed
+  source: WP-H-01
+
+- id: HWSR-506e
+  kind: hwsr
+  text: "The pass-through (stock) state of the intercept switch shall not depend on a single passive part without a check of that part, so that an open pull-down cannot leave the switch in intercept when the device stops driving it."
+  asil: "B"
+  parents: [FSR-07.03, TSR-506]
+  parent_text: "FSR-07.03 / TSR-506"
+  other_parents: false
+  allocated_to: "Harness box (R2/R3), or a LionDriver adapter (DC-03)"
+  hw_kind: "HW"
+  verification: "A (schematic), T-HIL (pull-down forced open)"
+  baseline_impl: "**Not met:** the default rests on R2+R3 in series (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-03); decision DQ-209"
   status: proposed
   source: WP-H-01
 
@@ -545,7 +559,7 @@
   allocated_to: "Harness relay"
   hw_kind: "HW"
   verification: "A (inspection), T-HIL"
-  baseline_impl: "Unverified (AOU-13, FSC OI-6). Code comment \"keep buses connected by default\" (`drivers/harness.h:106`) supports this but is not evidence"
+  baseline_impl: "**Not met by design with the comma harness box v3:** the stock path runs through two powered CMOS analog switches (DG419LE) and Schottky clamps (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-01). Decision DQ-209 (accept and test, or a LionDriver adapter with a passive fail-safe relay)"
   status: proposed
   source: WP-H-01
 
@@ -584,10 +598,10 @@
   parents: [FSR-07.03, TSR-706, TSR-711]
   parent_text: "FSR-07.03 / TSR-706, TSR-711"
   other_parents: false
-  allocated_to: "Relay part"
+  allocated_to: "Intercept switch U1/U2"
   hw_kind: "HW"
   verification: "A (datasheet), T-HIL"
-  baseline_impl: "Part number unknown (WP-H-02); assumption A-PCS-2 of WP-S-04 §3.6"
+  baseline_impl: "**Met by design while the box is powered** (to confirm from the DG419LE datasheet): an analog switch changes over in microseconds, with no contact bounce (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-04). Not met if the box supply is lost (HWSR-502a)"
   status: proposed
   source: WP-H-01
 

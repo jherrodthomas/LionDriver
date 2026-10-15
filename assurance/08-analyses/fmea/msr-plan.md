@@ -156,12 +156,12 @@ A cause carries `msr` or `msr_exempt` (a reason), never both. The header gets `m
 
 **After M2 (all in-scope causes):**
 
-| Monitoring | System FMEA (60) | DFMEA (15) | What sits there |
+| Monitoring | System FMEA (60) | DFMEA (19) | What sits there |
 |---|---:|---:|---|
 | M 1–4 (measured) | 0 | 0 | Nothing is measured yet (WP-V-05) |
 | M 5–6 (code-derived, within FTTI) | 12 | 0 | Panda per-frame steering and acceleration checks; panda revocation on driver brake, cancel and gas |
-| M 7–8 (warning only, no FTTI row, or too slow) | 16 | 4 | Saturation, lane-departure and FCW warnings; soft disables after excessive actuation; EPS drop-out and mismatch warnings at about 2–3.5 s against 1 s |
-| M 9–10 (no monitor) | 32 | 11 | Wrong targets inside the limits, steering direction, driver override in the panda, silent EPS/PCM non-acceptance, alert-channel supervision, DM false negatives, the zero-awareness reaction, MCU memory and relay faults |
+| M 7–8 (warning only, no FTTI row, or too slow) | 16 | 5 | Saturation, lane-departure and FCW warnings; soft disables after excessive actuation; EPS drop-out and mismatch warnings at about 2–3.5 s against 1 s; harness-box clamp-diode short (bus lost, stock path not restored) |
+| M 9–10 (no monitor) | 32 | 14 | Wrong targets inside the limits, steering direction, driver override in the panda, silent EPS/PCM non-acceptance, alert-channel supervision, DM false negatives, the zero-awareness reaction, MCU memory and intercept-switch faults, harness-box supply loss and pull-down open (RR-2026-010) |
 
 M2 adds three monitoring actions:
 - SFM-ACT-016: driver-override supervision in the panda (TSR-304).

@@ -15,12 +15,18 @@
 # failure rate of the matching failure mode (rating-tables 7.2), else the DFMEA O. M from WP-S-04 timing: nothing is
 # measured, so no row is better than M 7; DFM-009, DFM-011 and DFM-008 react too slowly or incompletely (M 8). MSR AP is
 # provisional (rating-tables 7.4).
+# Rev 0.5 (2026-10-15, RR-2026-010): DFM-SE-006 re-based on the published harness box v3 drawing. The intercept "relay" is
+# two DG419LE CMOS analog switches (U1 CAN_H, U2 CAN_L) controlled by SBU1, pulled to pass-through by R2+R3 (240 ohm) and
+# powered from the box VIN (ignition via D1, or comma power), with Schottky clamps D2/D3 on both buses. DFM-010/011/013
+# causes re-written for switch modes; new causes DFM-010.C3 (pull-down open) and DFM-014.C2 (Q6 short); new failure modes
+# DFM-020 (box supply lost while driving) and DFM-021 (clamp diode short). Effects of DFM-020 are derived from the drawing
+# and wait for the bench test (DFM-ACT-014).
 schema_version: 1
 analysis:
   id: DFM
   type: dfmea
   title: "DFMEA — device, integrated panda, harness, vehicle interfaces"
-  revision: "0.4"
+  revision: "0.5"
   status: draft
   baseline: BL-002
   rating_tables: RT-2
@@ -63,10 +69,12 @@ structure:
   parent: DFM-SE-001
   description: WP-H-02 HE-07, §3.3
 - id: DFM-SE-006
-  name: Intercept relay and relay driver
+  name: Intercept switch (harness box U1/U2) and its drive
   kind: component
   parent: DFM-SE-001
-  description: WP-H-02 HE-08; relay part and coil supply unknown (UK-03)
+  description: 'WP-H-02 HE-08. Harness box v3 drawing (RR-2026-010 HB-01..HB-05): two DG419LE analog SPDT switches controlled by SBU1,
+    R2+R3 pull-down to pass-through, supply from box VIN (D1 from ignition, or comma power), clamps D2/D3, TVS D4. Device-side SBU1
+    driver unknown (UK-06)'
 - id: DFM-SE-007
   name: Harness, connectors, SBU orientation and ignition sense
   kind: interface
@@ -614,7 +622,7 @@ failure_modes:
 - id: DFM-010
   element: DFM-SE-006
   function: DFM-FN-005
-  failure_mode: Relay stays intercepting when commanded released
+  failure_mode: Intercept switch stays in intercept when released
   guideword: stuck
   effects:
   - level: local
@@ -628,7 +636,7 @@ failure_modes:
   severity: 10
   causes:
   - id: DFM-010.C1
-    description: Relay contacts welded in the intercept position
+    description: Analog switch U1 or U2 stuck in the intercept (NO) position, or its IN input damaged high
     element: DFM-SE-006
     prevention_controls:
     - *id001
@@ -654,7 +662,7 @@ failure_modes:
       actions:
       - DFM-ACT-007
   - id: DFM-010.C2
-    description: Relay driver output (MCU pin or transistor) stuck on
+    description: SBU1 drive stuck high (device-side driver or MCU pin, UK-06)
     element: DFM-SE-006
     prevention_controls:
     - *id001
@@ -679,14 +687,42 @@ failure_modes:
       fmeda: fmeda-sg001/FMD-021
       actions:
       - DFM-ACT-007
+  - id: DFM-010.C3
+    description: Pull-down R2 or R3 open, so IN floats when the device stops driving SBU1 (reset, watchdog, hang, unplugged cable)
+    element: DFM-SE-006
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-007
+    - DFM-ACT-014
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None: the open pull-down is latent while the device drives SBU1, and no readback exists (GAP-12)'
+      system_response: None
+      effect_after_response: 'Unchanged: the switch may stay in intercept with the device silent, so the stock camera stays cut off'
+      severity_after: 10
+      frequency: 2
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      actions:
+      - DFM-ACT-007
+      - DFM-ACT-014
   safety_mechanisms:
   - description: 'None: no relay readback (GAP-12)'
     ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
-  notes: 'WP-H-03 FM-REL-02/04: a single-point path for the PCS goal that no firmware change can close.'
+  notes: 'WP-H-03 FM-REL-02/04: a single-point path for the PCS goal that no firmware change can close. RR-2026-010 F-03: the release
+    default rests on R2+R3 (HWSR-506e).'
 - id: DFM-011
   element: DFM-SE-006
   function: DFM-FN-005
-  failure_mode: Relay stays released when commanded to intercept
+  failure_mode: Intercept switch stays in pass-through when driven
   guideword: stuck
   effects:
   - level: local
@@ -704,7 +740,7 @@ failure_modes:
   severity: 10
   causes:
   - id: DFM-011.C1
-    description: Relay coil or driver open, or contacts welded in the stock position
+    description: Analog switch U1 or U2 stuck in the pass-through (NC) position, or SBU1 drive lost or held low (driver open, R2/R3 short)
     element: DFM-SE-006
     prevention_controls:
     - *id001
@@ -789,7 +825,7 @@ failure_modes:
 - id: DFM-013
   element: DFM-SE-007
   function: DFM-FN-006
-  failure_mode: Stock camera path open inside the relay box
+  failure_mode: Stock camera path open inside the harness box
   guideword: open
   effects:
   - level: local
@@ -803,7 +839,7 @@ failure_modes:
   severity: 10
   causes:
   - id: DFM-013.C1
-    description: Open circuit in the relay box stock path (solder joint, contact)
+    description: Open in the harness box stock path (U1/U2 channel open, solder joint, connector contact)
     element: DFM-SE-006
     prevention_controls:
     - *id001
@@ -841,6 +877,18 @@ failure_modes:
     ap: H
     actions:
     - DFM-ACT-008
+  - id: DFM-014.C2
+    description: Ignition-sense transistor Q6 (DMN3200U, harness box) drain-source short, holding SBU2 low
+    element: DFM-SE-007
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-008
+    - DFM-ACT-014
   notes: WP-H-03 FM-IGN-02. Line open is the safe direction (2 s timeout).
 - id: DFM-015
   element: DFM-SE-008
@@ -1083,6 +1131,131 @@ failure_modes:
     ref: assurance/03-system/WP-S-02-technical-safety-requirements.md
   notes: WP-A-04 BE-1.10 and BE-4.03 (SPF-02); FMEDA SG-001 FMD-002 and FMD-010. The same TX path carries 0x2E4 and 0x343, so the
     rates of the SG-001 rows apply to the longitudinal path; SG-04 has no FMEDA of its own yet.
+- id: DFM-020
+  element: DFM-SE-006
+  function: DFM-FN-005
+  failure_mode: Harness box loses its supply while the car is on
+  guideword: loss
+  effects:
+  - level: local
+    description: 'U1/U2 unpowered, so pass-through is not guaranteed; D2/D3 clamp CAN0 and CAN2 towards the dead VIN rail, which the
+      device input loads (derived from the v3 drawing, to confirm on the bench)'
+  - level: next_higher
+    description: Stock camera cut off from the car and the car-side ADAS CAN disturbed; the device is also unpowered
+  - level: end
+    description: Stock AEB unavailable
+    hazard: HZ-011
+    severity: 10
+  - level: end
+    description: Lateral assist lost without a LionDriver warning
+    hazard: HZ-004
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-020.C1
+    description: Ignition branch to the box open (crimp, connector) or D1 open, without comma power installed
+    element: DFM-SE-006
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 5
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-014
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None: the box supply is not supervised, and the device loses power with it'
+      system_response: None
+      effect_after_response: Unchanged
+      severity_after: 10
+      frequency: 5
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      actions:
+      - DFM-ACT-014
+  - id: DFM-020.C2
+    description: Box VIN shorted to ground (TVS D4 short, connector or wiring)
+    element: DFM-SE-006
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-014
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None: the box supply is not supervised, and the device loses power with it'
+      system_response: None
+      effect_after_response: Unchanged
+      severity_after: 10
+      frequency: 3
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      actions:
+      - DFM-ACT-014
+  safety_mechanisms:
+  - description: 'None: no supervision of the harness box supply (RR-2026-010 F-02)'
+    ref: assurance/04-hardware/reviews/RR-2026-010.md
+  notes: RR-2026-010 F-02. HWSR-502a holds for device power loss only. Comma power keeps the box supplied from a second source
+    (DQ-209 option C).
+- id: DFM-021
+  element: DFM-SE-006
+  function: DFM-FN-005
+  failure_mode: Clamp diode short loads or grounds a vehicle bus in the harness box
+  guideword: short
+  effects:
+  - level: local
+    description: D2 (car side, CAN0) or D3 (camera side, CAN2) shorts a CAN line to GND or VIN in either switch state
+  - level: next_higher
+    description: Car-side ADAS CAN or the camera bus cannot communicate; stock PCS messages lost
+  - level: end
+    description: Stock AEB unavailable
+    hazard: HZ-011
+    severity: 10
+  - level: end
+    description: Loss of lateral control with a late or no warning
+    hazard: HZ-004
+    severity: 10
+  severity: 10
+  causes:
+  - id: DFM-021.C1
+    description: Schottky clamp D2 or D3 (BAS40SDW) short or leaky
+    element: DFM-SE-006
+    prevention_controls:
+    - *id001
+    detection_controls: *id002
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-014
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: RX timeouts withdraw control and the host raises CAN errors; nothing restores the bus
+      system_response: Authority withdrawn and the driver warned; the stock camera path stays broken
+      effect_after_response: Item disengaged, but stock AEB stays unavailable
+      severity_after: 10
+      frequency: 3
+      monitoring: 8
+      ap: H
+      timing:
+        basis: unknown
+      actions:
+      - DFM-ACT-014
+  safety_mechanisms:
+  - description: RX timeouts withdraw control; host canError and canBusMissing alerts
+    ref: opendbc_repo/opendbc/safety/safety.h
+  notes: RR-2026-010 F-07.
 actions:
 - id: DFM-ACT-001
   kind: prevention
@@ -1150,5 +1323,12 @@ actions:
   kind: design_change
   description: 'Implement TSR-517: read back the item''s own TX frames from the bus and compare with the approved frame, revoking on a
     mismatch; enable RAMECC handling for the FDCAN message RAM if the H725 provides it'
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-014
+  kind: detection
+  description: 'Bench-test the harness box failure behaviour (RR-2026-010): box unpowered with car and camera powered; R2/R3 forced
+    open with the device silent; supply at 14-16 V against the DG419LE ratings; pass-through signal integrity; clamp-diode short
+    on CAN0; confirm the shipped box matches the v3 drawing (VS-HW-02)'
   owner: Jherrod Thomas
   status: open

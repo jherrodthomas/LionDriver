@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.4 | draft | BL-002 | RT-2 | 2026-10-14 |
+| 0.5 | draft | BL-002 | RT-2 | 2026-10-14 |
 
 **Scope.** Safety-relevant hardware of AC-001 at BL-002: comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
 
@@ -28,7 +28,7 @@ Read the diagrams first, then the worksheet. Comment on this page's lines in a p
 
 ## 1. Block and boundary diagram
 
-![Item hardware: comma 3X panda, harness, relay](figures/dfmea-block.svg)
+![Item hardware: comma 3X panda, harness, intercept switch](figures/dfmea-block.svg)
 
 **Interface matrix.** Each line in the diagram, with what crosses it.
 
@@ -42,12 +42,12 @@ Read the diagrams first, then the worksheet. Comment on this page's lines in a p
 | I06 | MCU supply and supervision | Safety MCU STM32H725 | energy | MCU rail (SMPS/LDO) | <sub>assurance/04-hardware/WP-H-02-hardware-design.md §3.2 HE-05, §3.4</sub> |
 | I07 | Safety MCU STM32H725 | CAN transceivers XCVR1-4 | data ⇄  | FDCAN1-3 TX/RX | <sub>assurance/04-hardware/WP-H-02-hardware-design.md §3.3</sub> |
 | I08 | Safety MCU STM32H725 | CAN transceivers XCVR1-4 | data | XCVR enables PG11/PB10 | <sub>assurance/04-hardware/WP-H-02-hardware-design.md §3.2 HE-07; WP-S-05 §5</sub> |
-| I09 | Safety MCU STM32H725 | Intercept relay + driver | data | Relay drive PA8/PA3 OD | <sub>assurance/03-system/WP-S-05-hsi-specification.md §6, §11.3 S-22 (HSI-05)</sub> |
-| I10 | Harness and connector | Intercept relay + driver | energy | Coil supply (UK-03) | <sub>assurance/04-hardware/WP-H-02-hardware-design.md §3.4, §5 UK-03</sub> |
+| I09 | Safety MCU STM32H725 | Intercept switch (box U1/U2) + drive | data | Relay drive PA8/PA3 OD | <sub>assurance/03-system/WP-S-05-hsi-specification.md §6, §11.3 S-22 (HSI-05)</sub> |
+| I10 | Harness and connector | Intercept switch (box U1/U2) + drive | energy | Coil supply (UK-03) | <sub>assurance/04-hardware/WP-H-02-hardware-design.md §3.4, §5 UK-03</sub> |
 | I11 | CAN transceivers XCVR1-4 | Harness and connector | data ⇄  | CAN bus 0/1/2 pairs | <sub>assurance/04-hardware/WP-H-02-hardware-design.md §3.1, §3.3</sub> |
 | I12 | Harness and connector | Toyota EPS / PCM (bus 0) | data ⇄  | Bus 0: 0x2E4,0x343,0x260 | <sub>assurance/02-concept/WP-C-01-item-definition.md §3.4 IF-01, IF-02</sub> |
-| I13 | Stock ADAS camera (bus 2) | Intercept relay + driver | data ⇄  | Bus 2 camera CAN (IF-03) | <sub>assurance/02-concept/WP-C-01-item-definition.md §3.4 IF-03; WP-H-02 §3.1</sub> |
-| I14 | Intercept relay + driver | Toyota EPS / PCM (bus 0) | data ⇄  | Stock path 0x283 PCS | <sub>assurance/04-hardware/WP-H-02-hardware-design.md §3.1 (relay de-energised); WP-S-05 §11.1 S-15</sub> |
+| I13 | Stock ADAS camera (bus 2) | Intercept switch (box U1/U2) + drive | data ⇄  | Bus 2 camera CAN (IF-03) | <sub>assurance/02-concept/WP-C-01-item-definition.md §3.4 IF-03; WP-H-02 §3.1</sub> |
+| I14 | Intercept switch (box U1/U2) + drive | Toyota EPS / PCM (bus 0) | data ⇄  | Stock path 0x283 PCS | <sub>assurance/04-hardware/WP-H-02-hardware-design.md §3.1 (relay de-energised); WP-S-05 §11.1 S-15</sub> |
 | I15 | Vehicle 12 V and ignition | Harness and connector | energy | 12 V + GND (IF-08) | <sub>assurance/02-concept/WP-C-01-item-definition.md §3.4 IF-08</sub> |
 | I16 | Vehicle 12 V and ignition | Harness and connector | data | Ignition line (SBU) | <sub>assurance/04-hardware/WP-H-02-hardware-design.md §3.1, §3.2 HE-10</sub> |
 | I17 | Harness and connector | Safety MCU STM32H725 | data | SBU1/2 sense PC4/PA1 | <sub>assurance/03-system/WP-S-05-hsi-specification.md §6, §11.3 S-23, S-24 (HSI-06/07)</sub> |
@@ -95,7 +95,7 @@ The failure chains (element → function → failure mode → causes) are drawn 
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`DFM-SE-003` MCU clock and independent watchdog (HSE, PLL, LSI, IWDG) | component | `DFM-FN-002` Provide an accurate time base for all timeouts, and reset the MCU (releasing the relay) within 0.1 s if execution stops |
 | &nbsp;&nbsp;&nbsp;`DFM-SE-004` MCU power supply and supervision (board regulator, SMPS/LDO, BOR, PVD) | component | `DFM-FN-003` Supply the MCU within its operating range, or hold it in reset |
 | &nbsp;&nbsp;&nbsp;`DFM-SE-005` CAN transceivers XCVR1-4 and enables | component | `DFM-FN-004` Transmit and receive on buses 0, 1 and 2 without disturbing the vehicle bus |
-| &nbsp;&nbsp;&nbsp;`DFM-SE-006` Intercept relay and relay driver | component | `DFM-FN-005` Separate the camera from the car bus only while energised; restore the stock camera path whenever de-energised |
+| &nbsp;&nbsp;&nbsp;`DFM-SE-006` Intercept switch (harness box U1/U2) and its drive | component | `DFM-FN-005` Separate the camera from the car bus only while energised; restore the stock camera path whenever de-energised |
 | &nbsp;&nbsp;&nbsp;`DFM-SE-007` Harness, connectors, SBU orientation and ignition sense | interface | `DFM-FN-006` Connect the device to the vehicle buses, power and ignition, and report harness orientation correctly |
 | &nbsp;&nbsp;&nbsp;`DFM-SE-008` SoC-MCU interface: SPI link, STM_RST_N, STM_BOOT0 | interface | `DFM-FN-007` Carry commands, CAN frames and heartbeat between SoC and MCU intact; keep the MCU running the signed application |
 | &nbsp;&nbsp;&nbsp;`DFM-SE-009` SoC-independent acoustic warning path (siren) | component | `DFM-FN-008` Sound a warning when the SoC is lost while engaged, independently of the SoC audio |
@@ -318,9 +318,9 @@ Safety mechanisms: (1) RX timeout after 5 periods (BL-002, about 0.16 s) withdra
 
 <sub>Note: WP-H-03 FM-CAN-02. Detected and safe-direction; severity stays 10 because the end effect is loss of lateral control while engaged.</sub>
 
-### `DFM-SE-006` Intercept relay and relay driver
+### `DFM-SE-006` Intercept switch (harness box U1/U2) and its drive
 
-#### DFM-010 · Relay stays intercepting when commanded released
+#### DFM-010 · Intercept switch stays in intercept when released
 
 🔴 **H** · **S 10** · guideword *stuck* · function `DFM-FN-005` Separate the camera from the car bus only while energised; restore the stock camera path whenever de-energised
 
@@ -332,16 +332,17 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `DFM-010.C1` Relay contacts welded in the intercept position | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-007 |
-| `DFM-010.C2` Relay driver output (MCU pin or transistor) stuck on | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-007 |
+| `DFM-010.C1` Analog switch U1 or U2 stuck in the intercept (NO) position, or its IN input damaged high | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-007 |
+| `DFM-010.C2` SBU1 drive stuck high (device-side driver or MCU pin, UK-06) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-007 |
+| `DFM-010.C3` Pull-down R2 or R3 open, so IN floats when the device stops driving SBU1 (reset, watchdog, hang, unplugged cable) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-007, DFM-ACT-014 |
 
 Safety mechanisms: (1) None: no relay readback (GAP-12)
 
-[Monitoring and system response](#7-monitoring-and-system-response): `DFM-010.C1` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-010.C2` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-010.C1` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-010.C2` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-010.C3` mechanism 1: M 10 · F 2 · S after response 10 → 🔴 **H**
 
-<sub>Note: WP-H-03 FM-REL-02/04: a single-point path for the PCS goal that no firmware change can close.</sub>
+<sub>Note: WP-H-03 FM-REL-02/04: a single-point path for the PCS goal that no firmware change can close. RR-2026-010 F-03: the release default rests on R2+R3 (HWSR-506e).</sub>
 
-#### DFM-011 · Relay stays released when commanded to intercept
+#### DFM-011 · Intercept switch stays in pass-through when driven
 
 🔴 **H** · **S 10** · guideword *stuck* · function `DFM-FN-005` Separate the camera from the car bus only while energised; restore the stock camera path whenever de-energised
 
@@ -354,13 +355,56 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `DFM-011.C1` Relay coil or driver open, or contacts welded in the stock position | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • Relay-malfunction tests in the opendbc suite exercise the software reaction, not the relay <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 3 | 9 | 🔴 **H** | DFM-ACT-007 |
+| `DFM-011.C1` Analog switch U1 or U2 stuck in the pass-through (NC) position, or SBU1 drive lost or held low (driver open, R2/R3 short) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • Relay-malfunction tests in the opendbc suite exercise the software reaction, not the relay <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 3 | 9 | 🔴 **H** | DFM-ACT-007 |
 
 Safety mechanisms: (1) Relay malfunction detection: stock camera message on the car side after a 1 s grace blocks all TX (safety.h stock_ecu_check)
 
 [Monitoring and system response](#7-monitoring-and-system-response): `DFM-011.C1` mechanism 1: M 8 · F 5 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-REL-01.</sub>
+
+#### DFM-020 · Harness box loses its supply while the car is on
+
+🔴 **H** · **S 10** · guideword *loss* · function `DFM-FN-005` Separate the camera from the car bus only while energised; restore the stock camera path whenever de-energised
+
+Effects:
+
+- **End:** Stock AEB unavailable (HZ-011, S 10)
+- **End:** Lateral assist lost without a LionDriver warning (HZ-004, S 10)
+- **Next higher:** Stock camera cut off from the car and the car-side ADAS CAN disturbed; the device is also unpowered
+- **Local:** U1/U2 unpowered, so pass-through is not guaranteed; D2/D3 clamp CAN0 and CAN2 towards the dead VIN rail, which the device input loads (derived from the v3 drawing, to confirm on the bench)
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `DFM-020.C1` Ignition branch to the box open (crimp, connector) or D1 open, without comma power installed | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 5 | 10 | 🔴 **H** | DFM-ACT-014 |
+| `DFM-020.C2` Box VIN shorted to ground (TVS D4 short, connector or wiring) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-014 |
+
+Safety mechanisms: (1) None: no supervision of the harness box supply (RR-2026-010 F-02)
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-020.C1` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-020.C2` mechanism 1: M 10 · F 3 · S after response 10 → 🔴 **H**
+
+<sub>Note: RR-2026-010 F-02. HWSR-502a holds for device power loss only. Comma power keeps the box supplied from a second source (DQ-209 option C).</sub>
+
+#### DFM-021 · Clamp diode short loads or grounds a vehicle bus in the harness box
+
+🔴 **H** · **S 10** · guideword *short* · function `DFM-FN-005` Separate the camera from the car bus only while energised; restore the stock camera path whenever de-energised
+
+Effects:
+
+- **End:** Stock AEB unavailable (HZ-011, S 10)
+- **End:** Loss of lateral control with a late or no warning (HZ-004, S 10)
+- **Next higher:** Car-side ADAS CAN or the camera bus cannot communicate; stock PCS messages lost
+- **Local:** D2 (car side, CAN0) or D3 (camera side, CAN2) shorts a CAN line to GND or VIN in either switch state
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `DFM-021.C1` Schottky clamp D2 or D3 (BAS40SDW) short or leaky | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-014 |
+
+Safety mechanisms: (1) RX timeouts withdraw control; host canError and canBusMissing alerts
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-021.C1` mechanism 1: M 8 · F 3 · S after response 10 → 🔴 **H**
+
+<sub>Note: RR-2026-010 F-07.</sub>
 
 ### `DFM-SE-007` Harness, connectors, SBU orientation and ignition sense
 
@@ -384,7 +428,7 @@ Safety mechanisms: (1) RX timeouts and host canBusMissing alert
 
 <sub>Note: WP-H-03 FM-HAR-01; WP-A-03 DFI-20.</sub>
 
-#### DFM-013 · Stock camera path open inside the relay box
+#### DFM-013 · Stock camera path open inside the harness box
 
 🔴 **H** · **S 10** · guideword *open* · function `DFM-FN-006` Connect the device to the vehicle buses, power and ignition, and report harness orientation correctly
 
@@ -396,7 +440,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `DFM-013.C1` Open circuit in the relay box stock path (solder joint, contact) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-008 |
+| `DFM-013.C1` Open in the harness box stock path (U1/U2 channel open, solder joint, connector contact) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-008 |
 
 <sub>Note: WP-H-03 FM-HAR-04.</sub>
 
@@ -413,6 +457,7 @@ Effects:
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
 | `DFM-014.C1` Ignition sense line shorted | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-008 |
+| `DFM-014.C2` Ignition-sense transistor Q6 (DMN3200U, harness box) drain-source short, holding SBU2 low | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-008, DFM-ACT-014 |
 
 <sub>Note: WP-H-03 FM-IGN-02. Line open is the safe direction (2 s timeout).</sub>
 
@@ -504,13 +549,14 @@ Effects:
 | DFM-ACT-004 | design_change | Cross-check the HSE-derived time base against LSI or HSI and react on deviation (HWSR-504a) | Jherrod Thomas | open | DFM-005.C1 | — |
 | DFM-ACT-005 | design_change | Set the BOR level in the option bytes and enable PVD with a safe-state reaction (WP-H-02 DC-07); read the option bytes of a reference device (UK-04) | Jherrod Thomas | open | DFM-007.C1 | — |
 | DFM-ACT-006 | design_change | Disable a transceiver and enter the safe state on persistent error or bus-off (HWSR-508, WP-H-02 DC-04) | Jherrod Thomas | open | DFM-008.C1, DFM-009.C1 | — |
-| DFM-ACT-007 | design_change | Add relay readback in a LionDriver harness adapter (WP-H-02 DC-03) and confirm the de-energised contact state (UK-03) | Jherrod Thomas | open | DFM-010.C1, DFM-010.C2, DFM-011.C1 | — |
-| DFM-ACT-008 | detection | Define the installation check, including a stock PCS/AEB function check and a harness latch check (WP-O-01, TSR-805) | Jherrod Thomas | open | DFM-012.C1, DFM-013.C1, DFM-014.C1 | — |
+| DFM-ACT-007 | design_change | Add relay readback in a LionDriver harness adapter (WP-H-02 DC-03) and confirm the de-energised contact state (UK-03) | Jherrod Thomas | open | DFM-010.C1, DFM-010.C2, DFM-010.C3, DFM-011.C1 | — |
+| DFM-ACT-008 | detection | Define the installation check, including a stock PCS/AEB function check and a harness latch check (WP-O-01, TSR-805) | Jherrod Thomas | open | DFM-012.C1, DFM-013.C1, DFM-014.C1, DFM-014.C2 | — |
 | DFM-ACT-009 | design_change | Replace the 8-bit XOR with a CRC and add a sequence counter on the SoC-MCU link (GAP-10) | Jherrod Thomas | open | DFM-015.C1 | — |
 | DFM-ACT-010 | design_change | Implement D-09/D-10: LionDriver signing key, no debug key in release builds, WRP + RDP1, remove the development-bootstub recovery (LD-DES-001 DR-10..DR-16) | Jherrod Thomas | open | DFM-016.C1 | — |
 | DFM-ACT-011 | detection | Confirm the siren audio topology (UK-07) and add a start-up siren self-test (TSR-515/516) | Jherrod Thomas | open | DFM-017.C1, DFM-017.C2 | — |
 | DFM-ACT-012 | design_change | React to MCU DTS out of range with the safe state (HWSR-509, DC-10); obtain the MCU temperature grade (UK-02) | Jherrod Thomas | open | DFM-018.C1 | — |
 | DFM-ACT-013 | design_change | Implement TSR-517: read back the item's own TX frames from the bus and compare with the approved frame, revoking on a mismatch; enable RAMECC handling for the FDCAN message RAM if the H725 provides it | Jherrod Thomas | open | DFM-019.C1, DFM-019.C2 | — |
+| DFM-ACT-014 | detection | Bench-test the harness box failure behaviour (RR-2026-010): box unpowered with car and camera powered; R2/R3 forced open with the device silent; supply at 14-16 V against the DG419LE ratings; pass-through signal integrity; clamp-diode short on CAN0; confirm the shipped box matches the v3 drawing (VS-HW-02) | Jherrod Thomas | open | DFM-010.C3, DFM-014.C2, DFM-020.C1, DFM-020.C2, DFM-021.C1 | — |
 
 ## 6. Priority H causes without a completed action
 
@@ -526,12 +572,14 @@ Effects:
 | `DFM-007.C1` | MCU operates in the brown-out zone | 10/5/10 | DFM-ACT-005 |
 | `DFM-008.C1` | Car-side transceiver holds the bus dominant | 10/3/10 | DFM-ACT-006 |
 | `DFM-009.C1` | Car-side transceiver receives nothing | 10/3/9 | DFM-ACT-006 |
-| `DFM-010.C1` | Relay stays intercepting when commanded released | 10/3/10 | DFM-ACT-007 |
-| `DFM-010.C2` | Relay stays intercepting when commanded released | 10/3/10 | DFM-ACT-007 |
-| `DFM-011.C1` | Relay stays released when commanded to intercept | 10/3/9 | DFM-ACT-007 |
+| `DFM-010.C1` | Intercept switch stays in intercept when released | 10/3/10 | DFM-ACT-007 |
+| `DFM-010.C2` | Intercept switch stays in intercept when released | 10/3/10 | DFM-ACT-007 |
+| `DFM-010.C3` | Intercept switch stays in intercept when released | 10/3/10 | DFM-ACT-007, DFM-ACT-014 |
+| `DFM-011.C1` | Intercept switch stays in pass-through when driven | 10/3/9 | DFM-ACT-007 |
 | `DFM-012.C1` | Harness disconnected or intermittent while driving | 10/5/10 | DFM-ACT-008 |
-| `DFM-013.C1` | Stock camera path open inside the relay box | 10/3/10 | DFM-ACT-008 |
+| `DFM-013.C1` | Stock camera path open inside the harness box | 10/3/10 | DFM-ACT-008 |
 | `DFM-014.C1` | Ignition sense reads on when the ignition is off | 10/3/10 | DFM-ACT-008 |
+| `DFM-014.C2` | Ignition sense reads on when the ignition is off | 10/3/10 | DFM-ACT-008, DFM-ACT-014 |
 | `DFM-015.C1` | Corrupted SoC-to-MCU transfer accepted | 10/4/10 | DFM-ACT-009 |
 | `DFM-016.C1` | MCU forced into the ROM bootloader or reflashed by the SoC | 10/4/10 | DFM-ACT-010 |
 | `DFM-017.C1` | No SoC-independent warning on SoC loss | 10/5/10 | DFM-ACT-011 |
@@ -539,12 +587,15 @@ Effects:
 | `DFM-018.C1` | MCU runs above its temperature rating | 10/4/10 | DFM-ACT-012 |
 | `DFM-019.C1` | Approved CAN frame altered between the TX check and the bus | 10/3/10 | DFM-ACT-013 |
 | `DFM-019.C2` | Approved CAN frame altered between the TX check and the bus | 10/2/10 | DFM-ACT-013 |
+| `DFM-020.C1` | Harness box loses its supply while the car is on | 10/5/10 | DFM-ACT-014 |
+| `DFM-020.C2` | Harness box loses its supply while the car is on | 10/3/10 | DFM-ACT-014 |
+| `DFM-021.C1` | Clamp diode short loads or grounds a vehicle bus in the harness box | 10/3/10 | DFM-ACT-014 |
 
 ## 7. Monitoring and system response
 
 FMEA-MSR rates what happens in the car when a cause occurs: does a diagnostic catch it, and does the system reach a safe state within the fault-tolerant time interval (FTTI)? It adds frequency (F), monitoring (M) and the severity after the response, with its own action priority; S, O, D and AP above are unchanged. Scales: [rating-tables.md §7](../../rating-tables.md#7-fmea-msr--monitoring-and-system-response-added-in-rt-2); scope and plan: [msr-plan.md](../../msr-plan.md); FTTI rows: [WP-S-04 §3.7](../../../../03-system/WP-S-04-timing-ftti-budget.md#37-summary-of-fttis-and-budgets).
 
-**Coverage:** 15 of 15 in-scope causes rated, 0 rated elsewhere (`msr: complete`).
+**Coverage:** 19 of 19 in-scope causes rated, 0 rated elsewhere (`msr: complete`).
 
 > [!WARNING]
 > The MSR action priority uses a provisional table until the AIAG-VDA handbook table is transcribed (rating-tables §7.4). Read the M and F columns; the AP column will be re-rated.
@@ -557,10 +608,13 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 |---|---|---|:-:|:-:|:-:|:-:|---|
 | `DFM-003.C1` Double-bit soft error or permanent SRAM fault; RAMECC monitors not configured, ECC interrupt not registered | None at BL-002: RAMECC monitors not configured, no redundant storage → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-002 |
 | `DFM-007.C1` Vehicle supply dip (cranking, alternator fault) with BOR level not set and PVD not enabled | None at BL-002: PVD handler is a stub and the BOR level is unknown (UK-04) → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-005 |
-| `DFM-010.C1` Relay contacts welded in the intercept position | None: no relay readback (GAP-12) → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-007 |
-| `DFM-010.C2` Relay driver output (MCU pin or transistor) stuck on | None: no relay readback (GAP-12) → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-007 |
+| `DFM-010.C1` Analog switch U1 or U2 stuck in the intercept (NO) position, or its IN input damaged high | None: no relay readback (GAP-12) → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-007 |
+| `DFM-010.C2` SBU1 drive stuck high (device-side driver or MCU pin, UK-06) | None: no relay readback (GAP-12) → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-007 |
+| `DFM-020.C1` Ignition branch to the box open (crimp, connector) or D1 open, without comma power installed | None: the box supply is not supervised, and the device loses power with it → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-014 |
 | `DFM-019.C1` Soft error or permanent fault in the copy into FDCAN message RAM, the message RAM or the FDCAN core. The packet XOR is checked at the FDCAN load (fdcan.h:100) and covers only the software queue; the CAN CRC is computed after the fault | None after the FDCAN load: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-013 |
 | `DFM-003.C2` Wrong-address write by the SPI DMA (no MPU) | None at BL-002: no MPU and no redundant storage of the safety state → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-002 |
+| `DFM-020.C2` Box VIN shorted to ground (TVS D4 short, connector or wiring) | None: the box supply is not supervised, and the device loses power with it → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-014 |
+| `DFM-010.C3` Pull-down R2 or R3 open, so IN floats when the device stops driving SBU1 (reset, watchdog, hang, unplugged cable) | None: the open pull-down is latent while the device drives SBU1, and no readback exists (GAP-12) → None | unknown | 10 | 2 | **10** | 🔴 **H** | DFM-ACT-007, DFM-ACT-014 |
 | `DFM-019.C2` Transceiver fault that changes bits on TX without a CAN error (not credible for a single bit, which the CAN CRC and the bit monitoring of the transmitting controller detect; kept until the transceiver part is known, WP-H-02 UK-01) | None: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 2 | **10** | 🔴 **H** | DFM-ACT-013 |
 | `DFM-001.C1` Permanent fault in the Cortex-M7 core or bus matrix; single core, no lockstep, no CPU self-test | None in the MCU at BL-002. The host compares controls_allowed after about 2 s (QM); it does not check limits → None for a wrong limit result | unknown | 10 | 6 | **9** | 🔴 **H** | DFM-ACT-001 |
 | `DFM-012.C1` Connector not fully latched at installation, or vibration loosens it | RX timeouts and host canBusMissing cover a partial disconnect only; a full disconnect also removes the device supply, so nothing warns → Relay drops out with the supply; stock camera restored | unknown | 10 | 5 | **9** | 🔴 **H** | DFM-ACT-008 |
@@ -568,5 +622,6 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `DFM-016.C1` SoC drives STM_BOOT0/STM_RST_N (fault or compromise); no RDP/WRP; pandad recovery flashes a development bootstub | Bootstub signature check exists but accepts the debug key in debug builds; RDP and WRP not set (GAP-24) → None for a signed debug image | unknown | 10 | 4 | **9** | 🔴 **H** | DFM-ACT-010 |
 | `DFM-008.C1` XCVR1 TX driver fault or TXD stuck low | FDCAN error counters; core reset on bus-off. The transceiver dominant timeout is part dependent and unknown → A core reset does not release a transceiver that holds the bus dominant; no safe-state reaction | unknown | 10 | 5 | **8** | 🔴 **H** | DFM-ACT-006 |
 | `DFM-009.C1` XCVR1 RX open or stuck recessive | RX timeout after 5 periods (about 0.16 s) withdraws controls_allowed; the host warns through the 2 s controlsMismatch counter (T-17) → Authority withdrawn at once; warning about 2.2 s after onset, beyond the 1 s budget to warning | 160 + 2000 ms vs FTTI 1000 ms ❌ (code-derived) | 10 | 5 | **8** | 🔴 **H** | DFM-ACT-006 |
-| `DFM-011.C1` Relay coil or driver open, or contacts welded in the stock position | Relay malfunction: a stock camera frame on the car side after the 1 s grace blocks all TX (T-08, 1-2 s) → All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE) | 2000 + 10 ms vs FTTI 500 ms ❌ (code-derived) | 10 | 5 | **8** | 🔴 **H** | DFM-ACT-007 |
+| `DFM-011.C1` Analog switch U1 or U2 stuck in the pass-through (NC) position, or SBU1 drive lost or held low (driver open, R2/R3 short) | Relay malfunction: a stock camera frame on the car side after the 1 s grace blocks all TX (T-08, 1-2 s) → All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE) | 2000 + 10 ms vs FTTI 500 ms ❌ (code-derived) | 10 | 5 | **8** | 🔴 **H** | DFM-ACT-007 |
+| `DFM-021.C1` Schottky clamp D2 or D3 (BAS40SDW) short or leaky | RX timeouts withdraw control and the host raises CAN errors; nothing restores the bus → Authority withdrawn and the driver warned; the stock camera path stays broken | unknown | 10 | 3 | **8** | 🔴 **H** | DFM-ACT-014 |
 | `DFM-004.C1` Hang in an ISR or main loop, unused vector to Default_Handler, or assert_fatal loop | IWDG expires about 90 ms after the last feed (T-09a). Timing fits on paper, but whether the reset releases the relay is unconfirmed (HWSR-502, UK-06) and the LSI tolerance leaves no shown margin (OI-7), so the response is not credited → MCU reset; relay de-energised if the drive circuit is de-energise-to-safe; stock camera CAN restored | 90 + 100 ms vs FTTI 200 ms ✅ (code-derived) | 10 | 6 | **7** | 🔴 **H** | DFM-ACT-003 |

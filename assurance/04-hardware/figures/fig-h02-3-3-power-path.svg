@@ -21,7 +21,7 @@
 
   <!-- header -->
   <text x="40" y="44" class="t b" font-size="20">Figure 3-3 · Power path</text>
-  <text x="40" y="66" class="m" font-size="12.5">Vehicle 12 V to SoC, panda MCU and relay coil · dashed boxes are unknown or unconfirmed</text>
+  <text x="40" y="66" class="m" font-size="12.5">Vehicle 12 V to SoC, panda MCU and intercept switch · dashed boxes are unknown or unconfirmed</text>
   <text x="960" y="44" class="m s" text-anchor="end">WP-H-02 §3.4</text>
   <text x="960" y="62" class="m s" text-anchor="end">elements §3.2 · unknowns §5</text>
   <line x1="40" y1="82" x2="960" y2="82" stroke="#E2E8F0"/>
@@ -69,11 +69,11 @@
 
   <!-- row 3: relay coil (outside the device) -->
   <rect x="560" y="414" width="160" height="48" rx="8" class="unk"/>
-  <text x="640" y="434" class="t sb" font-size="12" text-anchor="middle">Relay coil supply</text>
+  <text x="640" y="434" class="t sb" font-size="12" text-anchor="middle">Switch supply (box VIN)</text>
   <text x="640" y="450" class="m xs" text-anchor="middle">in harness box? UK-03</text>
   <rect x="770" y="414" width="170" height="48" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
   <text x="855" y="434" class="t sb" font-size="12" text-anchor="middle">Relay coil <tspan class="he">HE-08</tspan></text>
-  <text x="855" y="450" class="m xs" text-anchor="middle">E-05 harness relay box</text>
+  <text x="855" y="450" class="m xs" text-anchor="middle">E-05 harness box</text>
 
   <!-- ===== power connections ===== -->
   <path d="M150 228 H208" class="pw" marker-end="url(#aY)"/>

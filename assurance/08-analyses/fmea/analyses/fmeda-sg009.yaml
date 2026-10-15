@@ -1,12 +1,15 @@
 # yaml-language-server: $schema=../schema/fmeda.schema.json
 # FMEDA for SG-009 (stock AEB availability) at BL-002 with GENERIC failure rates (no BOM, no supplier data). The metrics show where the
 # architecture falls short; they are not evidence of compliance. Classification per rating-tables §6.1; DC per §6.2.
+# Rev 0.3 (2026-10-15, RR-2026-010): the relay replaced by the harness box design. FMD-C-007 is now the analog switches U1/U2;
+# FMD-C-010 (device SBU1 driver), FMD-C-011 (pull-down R2/R3), FMD-C-012 (box supply D1/D4) and FMD-C-013 (bus clamps D2/D3) added.
+# Rates are generic for the part class.
 schema_version: 1
 analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates
-  revision: '0.2'
+  revision: '0.3'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -27,7 +30,7 @@ analysis:
   - assurance/08-analyses/fmea/analyses/dfmea.yaml
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
-  updated: '2026-10-12'
+  updated: '2026-10-15'
 safety_mechanisms:
 - id: FMD-SM-001
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
@@ -233,42 +236,137 @@ components:
     violates_sg_directly: false
     mpf_potential: false
 - id: FMD-C-007
-  part: Intercept relay and relay driver
+  ref_des: U1, U2 (harness box)
+  part: 'Intercept switch: 2 × DG419LE CMOS analog SPDT (harness box)'
   dfmea_element: DFM-SE-006
-  failure_rate_fit: 15
-  failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
-    looked up for the actual part. No BOM or supplier data available (WP-H-02 UK-02)
+  failure_rate_fit: 10
+  failure_rate_source: Generic estimate for the part class (CMOS analog switch IC, 2 × about 5 FIT) at the mission profile below. The part numbers are known from
+    the harness box v3 drawing (RR-2026-010 HB-01..HB-06), but the rates were not looked up in IEC 61709 / SN 29500-2, and the shipped parts are unconfirmed (VS-HW-02)
   safety_related: true
   failure_modes:
   - id: FMD-019
-    mode: Contacts welded in the intercept position
-    distribution: 0.25
+    mode: Stuck in intercept, or IN input damaged high
+    distribution: 0.3
     violates_sg_directly: true
     mpf_potential: false
     dfmea_ref: DFM-010
-    notes: No relay readback (TSR-506, DFM-ACT-007)
-  - id: FMD-020
-    mode: Driver transistor or MCU pin stuck on
-    distribution: 0.15
-    violates_sg_directly: true
-    mpf_potential: false
-    dfmea_ref: DFM-010
-    notes: No readback; a watchdog reset does not release a shorted driver
+    notes: No readback (TSR-506, DFM-ACT-007)
   - id: FMD-021
-    mode: Stuck released or coil open
-    distribution: 0.4
+    mode: Stuck in pass-through
+    distribution: 0.3
     violates_sg_directly: false
     mpf_potential: false
     dfmea_ref: DFM-011
     notes: 'Stock path stays connected: safe for SG-009'
   - id: FMD-022
-    mode: Intermittent contact
+    mode: Channel open, increased on-resistance, leakage or latch-up in the stock path
+    distribution: 0.4
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-013
+    notes: Installation check only (DFM-ACT-008); no in-field detection of the stock path
+- id: FMD-C-010
+  ref_des: Device side (unknown, UK-06)
+  part: SBU1 drive circuit in the comma device
+  dfmea_element: DFM-SE-006
+  failure_rate_fit: 5
+  failure_rate_source: Generic estimate for a small-signal driver stage; circuit unknown (WP-H-02 UK-01, UK-06)
+  safety_related: true
+  failure_modes:
+  - id: FMD-020
+    mode: Driver stuck on (SBU1 held high)
+    distribution: 0.5
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-010
+    notes: No readback; a watchdog reset does not release a shorted driver
+  - id: FMD-027
+    mode: Driver open (SBU1 undriven)
+    distribution: 0.5
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-011
+    notes: 'Pull-down selects pass-through: safe for SG-009'
+- id: FMD-C-011
+  ref_des: R2, R3 (harness box)
+  part: 'SBU1 pull-down: 2 × 120 Ω thick-film resistor in series'
+  dfmea_element: DFM-SE-006
+  failure_rate_fit: 0.4
+  failure_rate_source: Generic estimate for the part class (SMD thick-film resistor, 2 × about 0.2 FIT) at the mission profile below. The part numbers are known from
+    the harness box v3 drawing (RR-2026-010 HB-01..HB-06), but the rates were not looked up in IEC 61709 / SN 29500-2, and the shipped parts are unconfirmed (VS-HW-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-028
+    mode: Open (IN floats when SBU1 is undriven)
+    distribution: 0.6
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-010
+    notes: 'Latent: violates SG-009 only together with a device that stops driving SBU1 while intercepting (reset, hang); no check (HWSR-506e)'
+  - id: FMD-029
+    mode: Short (SBU1 held low)
+    distribution: 0.4
+    violates_sg_directly: false
+    mpf_potential: false
+    dfmea_ref: DFM-011
+    notes: 'Pass-through: safe for SG-009'
+- id: FMD-C-012
+  ref_des: D1, D4 (harness box)
+  part: 'Box supply: D1 Schottky STPS2H100ZFY from ignition, D4 TVS SMF16A'
+  dfmea_element: DFM-SE-006
+  failure_rate_fit: 3
+  failure_rate_source: Generic estimate for the part class (power Schottky about 2 FIT, TVS about 1 FIT) at the mission profile below. The part numbers are known
+    from the harness box v3 drawing (RR-2026-010 HB-01..HB-06), but the rates were not looked up in IEC 61709 / SN 29500-2, and the shipped parts are unconfirmed
+    (VS-HW-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-030
+    mode: 'D1 open: box unpowered without comma power'
+    distribution: 0.4
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-020
+    notes: Switch unpowered, pass-through not guaranteed (RR-2026-010 F-02, to confirm on the bench)
+  - id: FMD-031
+    mode: 'D4 short: box VIN to ground'
     distribution: 0.2
     violates_sg_directly: true
     mpf_potential: false
-    dfmea_ref: DFM-011
+    dfmea_ref: DFM-020
+    notes: As FMD-030
+  - id: FMD-032
+    mode: 'Other (D1 short, D4 open: protection lost)'
+    distribution: 0.4
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-020
+    notes: Latent loss of reverse or transient protection
+- id: FMD-C-013
+  ref_des: D2, D3 (harness box)
+  part: 'Bus clamps: 2 × BAS40SDW Schottky pairs on CAN0 and CAN2'
+  dfmea_element: DFM-SE-006
+  failure_rate_fit: 2
+  failure_rate_source: Generic estimate for the part class (small-signal Schottky array, 2 × about 1 FIT) at the mission profile below. The part numbers are known
+    from the harness box v3 drawing (RR-2026-010 HB-01..HB-06), but the rates were not looked up in IEC 61709 / SN 29500-2, and the shipped parts are unconfirmed
+    (VS-HW-02)
+  safety_related: true
+  failure_modes:
+  - id: FMD-033
+    mode: Short or leakage on a CAN line
+    distribution: 0.3
+    violates_sg_directly: true
+    mpf_potential: false
+    dfmea_ref: DFM-021
+    notes: Car or camera bus loaded in either switch state (RR-2026-010 F-07)
+  - id: FMD-034
+    mode: Open (clamp lost)
+    distribution: 0.7
+    violates_sg_directly: false
+    mpf_potential: true
+    dfmea_ref: DFM-021
+    notes: Latent loss of bus protection
 - id: FMD-C-008
-  part: Harness connector and relay-box stock path
+  part: Harness connector and harness-box wiring in the stock path
   dfmea_element: DFM-SE-007
   failure_rate_fit: 10
   failure_rate_source: Generic estimate, order of magnitude of handbook values (SN 29500 / IEC TR 62380 class) for this part type at the mission profile below; not
@@ -288,7 +386,7 @@ components:
     violates_sg_directly: false
     mpf_potential: false
     dfmea_ref: DFM-012
-    notes: Relay de-energises; stock path restored
+    notes: SBU1 undriven, the pull-down selects pass-through and the stock path is restored, if the box stays powered
 - id: FMD-C-009
   part: 'Independent watchdog: LSI oscillator and IWDG'
   dfmea_element: DFM-SE-003

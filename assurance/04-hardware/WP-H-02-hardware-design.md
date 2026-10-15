@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay) |
 | Standard reference | ISO 26262-5:2018 §7 (hardware design: architectural and detailed design, safety-related HW elements); ISO 26262-8:2018 §13; ASPICE 4.0 HWE.2 |
-| Version | 0.6 (§3.2 element hierarchy added as Figure 3-2; power-path diagram renumbered Figure 3-3; 2026-10-13). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
+| Version | 0.7 (harness box from the published v3 drawing: the intercept "relay" is two DG419LE analog switches powered from the box supply; HE-08, §3.1, §3.4, UK-03 updated; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.6 (§3.2 element hierarchy added as Figure 3-2; power-path diagram renumbered Figure 3-3; 2026-10-13). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
 | Status | Draft |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-07) |
 | Author | Assurance team (initial draft) |
@@ -44,7 +44,7 @@ this document covers both boards (WP-H-01 OI-7).
 
 ![Figure 3-1: recovered hardware block diagram with vehicle 12 V, forward camera and vehicle CAN; E-05 harness with intercept relay HE-08, ignition line HE-10 and harness connector HE-09; E-04 comma device with power input, QM application SoC and peripherals, and the panda safety MCU STM32H725 with CAN transceivers HE-07 on buses 0/1/2, relay drive, SPI IF-04 and HE-01 to HE-17](figures/fig-h02-3-1-hardware-block-diagram.svg)
 
-*Figure 3-1.* The recovered hardware architecture: harness relay (drawn de-energised, stock path closed), the harness connector lines, the QM SoC with its peripherals and the panda safety MCU with its CAN transceivers and internal resources. Safety-relevant elements are outlined in orange and tagged with their HE-ID from §3.2; buses carry the Toyota-mode numbers and the WP-C-01 interface IDs. Source: [`figures/fig-h02-3-1-hardware-block-diagram.svg`](figures/fig-h02-3-1-hardware-block-diagram.svg); change it together with §3.2 and §3.3.
+*Figure 3-1.* The recovered hardware architecture: harness intercept switch (drawn undriven, stock path closed; it is two powered analog switches, not a relay, per the v3 drawing, [RR-2026-010](reviews/RR-2026-010.md)), the harness connector lines, the QM SoC with its peripherals and the panda safety MCU with its CAN transceivers and internal resources. Safety-relevant elements are outlined in orange and tagged with their HE-ID from §3.2; buses carry the Toyota-mode numbers and the WP-C-01 interface IDs. Source: [`figures/fig-h02-3-1-hardware-block-diagram.svg`](figures/fig-h02-3-1-hardware-block-diagram.svg); change it together with §3.2 and §3.3.
 
 <details><summary>Text version of Figure 3-1</summary>
 
@@ -54,11 +54,11 @@ this document covers both boards (WP-H-01 OI-7).
           │ camera-side CAN                                │ car-side CAN
           │                                                │
  ┌────────┴──────────────── E-05 Harness ──────────────────┴────────────┐
- │   ┌───────────── Intercept relay (in harness box) ──────────┐        │
- │   │ de-energised: camera ⇄ car (stock path)  [AOU-13]       │        │
- │   │ energised:    camera ⇄ panda bus 2 ; panda bus 0 ⇄ car  │        │
- │   └─────────────▲───────────────────────────────────────────┘        │
- │                 │ relay coil drive (SBU relay line)                   │
+ │   ┌──── Intercept switch (harness box: 2 × DG419LE, powered from VIN) ────┐
+ │   │ SBU1 undriven: camera ⇄ car through U1/U2 (stock path, 240 Ω pull-down)│
+ │   │ SBU1 = 5 V:    camera ⇄ panda bus 2 ; panda bus 0 ⇄ car                │
+ │   └─────────────▲──────────────────────────────────────────────────────┘
+ │                 │ switch drive (SBU1)                                 │
  │   12 V + GND    │   ignition line (SBU ign)   CAN pairs              │
  └──────┬──────────┼──────────────┬──────────────┬─────────────────────┘
         │          │ USB-C-type harness connector (SBU1/SBU2 + CAN + power) 
@@ -103,7 +103,7 @@ Bus numbering is that of the Toyota safety mode: bus 0 = car side, bus 2 = camer
 | HE-05 | MCU power: SMPS/LDO of the STM32H7 and the board regulator feeding it | Supply | all | SMPS or LDO chosen by package; board regulator unknown | `stm32h7/clock.h:61-69` |
 | HE-06 | IWDG1 | Independent watchdog | SG-01…07 | **Used** (since 2026-10-12, panda `9f60e17`): IWDG1, started at the first relay drive, window mode, ≈ 90 ms nominal; not verified on hardware. *As found: present in silicon, not used (GAP-07)* | `stm32h7/stm32h7_config.h:48`; `drivers/hw_watchdog.h`; `drivers/harness.h:17-20` |
 | HE-07 | CAN transceivers XCVR1–4 | Physical layer for buses 0/1/2 | SG-01, SG-03…07 | Active-low enables per transceiver. tres: XCVR1 and XCVR3 share one enable pair (PG11, PD7) "CAN0 and 2 are tied"; XCVR2 PB10, XCVR4 PB11. cuatro: PB7, PB10, PD8, PB11. Part numbers unknown | `boards/tres.h:32-56`; `boards/cuatro.h:9-26` |
-| HE-08 | Intercept relay (harness) and its driver | Breaks the camera→car link for LKA/ACC messages; restores stock path when released | SG-01, SG-07 | Two open-drain, active-low outputs (relay, and an "ignition relay" used only for testing). Assignment swaps with harness orientation. No readback | `drivers/harness.h:7-33, 96-107`; pins tres PA8/PA3, cuatro PA9/PA3 (`boards/tres.h:138-149`, `boards/cuatro.h:99-110`) |
+| HE-08 | Intercept switch (harness box) and its drive | Breaks the camera→car link for LKA/ACC messages; restores stock path when released | SG-01, SG-07 | **Harness box (v3 drawing):** two Vishay DG419LE CMOS SPDT analog switches, U1 on CAN_H and U2 on CAN_L, both controlled by SBU1. SBU1 high (5 V) = intercept; SBU1 undriven = pass-through through the 240 Ω pull-down R2+R3. Switch supply V+ = VL = box VIN (ignition via Schottky D1, or comma power); Schottky clamps D2/D3 on both buses; no state feedback ([RR-2026-010](reviews/RR-2026-010.md) HB-01…HB-05). **Device side:** two open-drain, active-low outputs (relay, and an "ignition relay" used only for testing); the driver that turns them into a 5 V SBU1 drive is unknown (UK-06). Assignment swaps with harness orientation. No readback | `drivers/harness.h:7-33, 96-107`; pins tres PA8/PA3, cuatro PA9/PA3 (`boards/tres.h:138-149`, `boards/cuatro.h:99-110`) |
 | HE-09 | Harness connector, SBU lines | Orientation detection, ignition sense, relay drive | SG-07 | SBU1/SBU2 read by ADC (PC4 ch4 / PA1 ch17), threshold `avdd_mV/2` = 900 mV; pins not 5 V tolerant in ADC mode | `drivers/harness.h:54-90`; `boards/tres.h:155` |
 | HE-10 | Ignition sense | Ignition from harness line | SG-07, availability | Digital input on the SBU line selected by orientation, active-low | `drivers/harness.h:35-52` |
 | HE-11 | SPI link SoC↔MCU | Commands, heartbeat, safety-mode set | SG-01…06 (FFI) | SPI4 with DMA2 streams 2/3; 8-bit XOR on header/data | `stm32h7/llspi.h:86-88`; `drivers/spi.h:97-104` |
@@ -139,21 +139,23 @@ disturb the stock path (WP-H-03 FM-CAN-03).
 
 ![Figure 3-3: power path from vehicle 12 V through the E-05 harness and the device input to the SoC/PMIC rail (DC_IN enable PC11 on cuatro), the MCU regulator and STM32H7 SMPS/LDO (HE-05), and the relay coil supply (HE-08), with unknowns UK-03, UK-05 and UK-08](figures/fig-h02-3-3-power-path.svg)
 
-*Figure 3-3.* Supply branches from the vehicle 12 V input to the SoC rail, the MCU rail and the relay coil. Dashed boxes are unknown or unconfirmed; the bootkick line (HE-13) shows that the MCU can switch SoC power. Source: [`figures/fig-h02-3-3-power-path.svg`](figures/fig-h02-3-3-power-path.svg); change it together with §3.2, §3.4 and §5.
+*Figure 3-3.* Supply branches from the vehicle 12 V input to the SoC rail, the MCU rail and the intercept switch. Per the v3 harness box drawing the switch has no coil: it is powered from the box VIN, which also feeds the device, so a loss of box supply removes both ([RR-2026-010](reviews/RR-2026-010.md) F-02). Dashed boxes are unknown or unconfirmed; the bootkick line (HE-13) shows that the MCU can switch SoC power. Source: [`figures/fig-h02-3-3-power-path.svg`](figures/fig-h02-3-3-power-path.svg); change it together with §3.2, §3.4 and §5.
 
 <details><summary>Text version of Figure 3-3</summary>
 
 ```
 Vehicle 12 V ─ harness ─ device input ─┬─ (cuatro) DC_IN enable PC11 ── SoC/PMIC rail
                                        ├─ MCU regulator (unknown) ── STM32H7 (SMPS or LDO internal)
-                                       └─ relay coil supply (in harness box? unknown)
+Vehicle IGN ─ harness ─ D1 (Schottky) ─ box VIN ─┬─ intercept switch U1/U2 supply (V+ = VL)
+                                                └─ OBD-C VBUS ─ device input (above)
+            (comma power J2 also feeds box VIN; Toyota A harness has no 12 V wire)
 ```
 
 </details>
 
 Known: the MCU keeps running with the SoC off (stop mode with CAN/SBU wake on cuatro,
 `main.c:353-356`); the MCU can switch SoC power (bootkick). Unknown: whether MCU and SoC share a
-regulator, whether there is a supply supervisor, where the relay coil gets its supply, and the
+regulator, whether there is a supply supervisor, and the
 input protection (load dump, reverse polarity). These determine common-cause failures with the
 QM SoC (GAP-11) and HWSR-502a.
 
@@ -202,7 +204,7 @@ main motivation for HWSR-501 (IWDG) and HWSR-506a.
 |---|---|---|---|
 | UK-01 | Device schematic (panda section, power, relay driver, transceivers) | HWSR-502/505/506/508; FMEDA structure | comma.ai (request); otherwise board-level reverse engineering |
 | UK-02 | BOM with manufacturer part numbers (MCU ordering code and temperature grade, transceivers, regulators, relay, connector, crystal) | Failure rates (WP-H-03/05), qualification (WP-H-07) | comma.ai; teardown and part marking |
-| UK-03 | Harness schematic, relay part number, coil drive and supply, de-energised contact state | AOU-13, HWSR-502a, -506, -702 | comma.ai shop / harness teardown and continuity test (VS-HW-02 in WP-H-06) |
+| UK-03 | Harness schematic, relay part number, coil drive and supply, de-energised contact state. **Partly answered** by the published harness box v3 drawing (2× DG419LE, SBU1 high = intercept, 240 Ω pull-down to pass-through, supply from VIN; [RR-2026-010](reviews/RR-2026-010.md) F-10). Open: whether the shipped box matches the drawing, and the DG419LE ratings against VIN (F-05) | AOU-13, HWSR-502a, -506, -702 | comma.ai shop / harness teardown and continuity test (VS-HW-02 in WP-H-06) |
 | UK-04 | MCU option-byte state on shipped devices (RDP, WRP, BOR level, IWDG_SW, IWDG freeze) | HWSR-501c, -505, -502c | Read out from a reference device with ST tools (read-only) |
 | UK-05 | Whether MCU and SoC share supply rails and clock sources | DFA, GAP-11 | UK-01, measurement |
 | UK-06 | Board pull-ups/pull-downs on relay drive and transceiver enable lines (behaviour at high-Z during reset) | HWSR-502, -508 | UK-01 or measurement with MCU held in reset |
