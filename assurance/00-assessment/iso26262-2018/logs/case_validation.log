@@ -1,0 +1,3 @@
+case: action=6, argument=6, baseline=2, claim=36, configuration=1, defeater=41, evidence=50
+state: Development; claims accepted 0/36; evidence accepted 0/50
+OK: assurance case records are valid

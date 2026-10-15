@@ -1,0 +1,17 @@
+SM-SAFETY-MODE: 5 states, 8 transitions, 0 errors, 0 findings
+SM-SELFDRIVED: 5 states, 13 transitions, 0 errors, 9 findings
+  finding S7 SM-SELFDRIVED X2: no SWSR (gap: no host SWSR for driver-initiated disengagement (cruise off, brake, cancel button); the envelope side is SWSR-301/302)
+  finding S7 SM-SELFDRIVED E2: no SWSR (gap: no host SWSR for driver override while engaged; the envelope side is SWSR-305 (gas blocks longitudinal))
+  finding S7 SM-SELFDRIVED P1: no SWSR (gap: no SWSR for the pre-enable phase (engagement requested while e.g. the brake is held); SOFT_DISABLE is not acted on in preEnabled)
+  finding S7 SM-SELFDRIVED O2: no SWSR (gap: no host SWSR for driver override while engaged (see E2))
+  finding S5 SM-SELFDRIVED SD1: code cited (openpilot selfdrived/state.py:49-51) but WP-W-02 says not implemented for SWSR-601 (the transition exists but does not meet the SWSR)
+  finding S5 SM-SELFDRIVED N1: code cited (openpilot selfdrived/state.py:79-81) but WP-W-02 says not implemented for SWSR-514h, SWSR-610, SWSR-619, SWSR-620, SWSR-623 (the transition exists but does not meet the SWSR)
+  finding S5 SM-SELFDRIVED D1: code cited (openpilot selfdrived/state.py:84-85, 90) but WP-W-02 says not implemented for SWSR-514h, SWSR-610, SWSR-619, SWSR-620, SWSR-623 (the transition exists but does not meet the SWSR)
+  finding S5 SM-SELFDRIVED D2: code cited (openpilot selfdrived/state.py:86-87, 90) but WP-W-02 says not implemented for SWSR-514h, SWSR-610, SWSR-619, SWSR-620, SWSR-623 (the transition exists but does not meet the SWSR)
+  finding S5 SM-SELFDRIVED D3: code cited (openpilot selfdrived/state.py:88-90) but WP-W-02 says not implemented for SWSR-514h, SWSR-610, SWSR-619, SWSR-620, SWSR-623 (the transition exists but does not meet the SWSR)
+SM-TOY-AUTH: 2 states, 19 transitions, 0 errors, 4 findings
+  finding S5 SM-TOY-AUTH T6: code cited (panda main.c:225-229) but WP-W-02 says not implemented for SWSR-307 (the transition exists but does not meet the SWSR)
+  finding S5 SM-TOY-AUTH T13: code says not implemented, WP-W-02 says Partial for SWSR-413
+  finding S5 SM-TOY-AUTH T14: code says not implemented, WP-W-02 says Partial for SWSR-508
+  finding S6 SM-TOY-AUTH: SWSR-110 requires clearing authority but no transition realises it (the code only does: lateral frames with torque or steer request refused; authority kept)
+OK: state machines consistent

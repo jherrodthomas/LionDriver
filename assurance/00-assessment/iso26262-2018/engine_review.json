@@ -1,0 +1,49 @@
+{
+  "reference_head": "80547e3e544eb3727489093f752f95875c8ea091",
+  "synthetic_execution": "Completed; fictional standard only, no LionDriver or ISO verdict inferred",
+  "probes": [
+    {
+      "id": "E01",
+      "case": "Same local clause number in different parts; only one artifact mapped",
+      "observed": {
+        "layer": "node_coverage",
+        "algorithm": "Decision Tree",
+        "findings": [],
+        "score": 100.0,
+        "applicable_nodes": 2,
+        "covered_nodes": 2.0
+      },
+      "implication": "IDs must include edition+part+clause+requirement; naked 5.1 maps both parts."
+    },
+    {
+      "id": "E02",
+      "case": "Artifact explicitly states MC/DC was not performed",
+      "observed": {
+        "layer": "method_audit",
+        "algorithm": "Risk-Aware Method Matching",
+        "findings": [],
+        "score": 100.0,
+        "required_count": 2,
+        "matched_count": 2
+      },
+      "implication": "Method-name presence does not establish performance or results; negation must not pass."
+    },
+    {
+      "id": "E03",
+      "case": "No parsed method tables and no artifacts",
+      "observed": {
+        "layer": "method_audit",
+        "algorithm": "Risk-Aware Method Matching",
+        "findings": [],
+        "score": 100.0
+      },
+      "implication": "Absence of method data is scored 100%; should be unknown/not assessed unless authoritative N/A decision exists."
+    },
+    {
+      "id": "E04",
+      "case": "grade(90) from generic aggregate",
+      "observed": "A \u2014 Compliant",
+      "implication": "Aggregate similarity percentages must not become normative compliance verdicts."
+    }
+  ]
+}

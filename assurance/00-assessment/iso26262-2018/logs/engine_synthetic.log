@@ -1,0 +1,101 @@
+
+======================================================================
+  STANDARD-AGNOSTIC COMPLIANCE CHECKER
+======================================================================
+
+  Loaded 4 standard files from: /tmp/compliance-checker-algo/examples/synthetic_standard
+  Loaded meta config: /tmp/compliance-checker-algo/examples/synthetic_meta.json
+
+  Discovering schema structure...
+    Discovered fields: text='text', id='section', title='title', risk='asil_level', tags='tags'
+    Risk scale: ['A', 'B', 'C', 'D']
+    Found: 12 requirements, 3 guidelines, 5 glossary terms
+    Methods: 0 tables  |  Tags: 38 unique  |  Cross-refs: 0  |  Trace rules: 1
+    Groups: ['part_1_glossary', 'part_2', 'part_3', 'part_4']
+
+  Ingesting artifact: /tmp/compliance-checker-algo/examples/synthetic_artifact.json
+    Loaded 5 work product(s)
+      [complete] WP-001: Safety Plan (282 chars, 1 mapped nodes, 4 tags, 0 methods)
+      [complete] WP-002: Item Definition — Smart Thermostat (430 chars, 1 mapped nodes, 4 tags, 0 methods)
+      [complete] WP-003: Hazard Analysis and Risk Assessment (296 chars, 1 mapped nodes, 4 tags, 1 methods)
+      [complete] WP-004: Safety Goals (239 chars, 1 mapped nodes, 3 tags, 0 methods)
+      [complete] WP-005: Technical Safety Concept (334 chars, 1 mapped nodes, 4 tags, 2 methods)
+
+  Target risk level: B
+  In-scope groups: ['part_2', 'part_3', 'part_4']
+
+──────────────────────────────────────────────────────────────────────
+  RUNNING 8-LAYER ALGORITHM PIPELINE
+──────────────────────────────────────────────────────────────────────
+
+  [1/8 Node Coverage (Decision Tree)]
+    Score: 58.3%  |  Findings: 6
+      [CRITICAL] [part_2] § 5.2 'Documentation management' — no artifact addresses this requireme...
+      [CRITICAL] [part_2] § 6.1 'Competence management' — no artifact addresses this requirement....
+      ... +4 more
+
+  [2/8 Content Alignment (TF-IDF + Cosine)]
+    Score: 14.1%  |  Findings: 10
+      [WARNING] § 5.2 'Documentation management' — best content match is only 8.0%....
+      [MAJOR] § 6.1 'Competence management' — best content match is only 4.1%....
+      ... +8 more
+
+  [3/8 Semantic Matching (Ratcliff/Obershelp)]
+    Score: 6.2%  |  Findings: 12
+      [WARNING] § 5.1 — semantic alignment 6.5%....
+      [WARNING] § 5.2 — semantic alignment 5.8%....
+      ... +10 more
+
+  [4/8 Concept Coverage (Set Analysis)]
+    Score: 55.9%  |  Findings: 1
+      [WARNING] 15 required concepts not addressed: architecture, competence, context, documenta...
+
+  [5/8 Reference Integrity (Graph BFS)]
+    Score: 0.0%  |  Findings: 0
+
+  [6/8 Method Audit (Risk-Aware Rules)]
+    Score: 100.0%  |  Findings: 0
+
+  [7/8 Traceability Chain (Graph Walk)]
+    Score: 0.0%  |  Findings: 1
+      [MAJOR] Traceability '' → '' not established....
+
+  [8/8 Gap Analysis + Risk Scoring]
+    Risk Score: 196.0  |  Severity: {'CRITICAL': 4, 'WARNING': 24, 'MAJOR': 2}
+    → [HIGH] 6.1: Create artifact for this requirement. Strengthen content to address ...
+    → [MEDIUM] 5.2: Create artifact for this requirement. Strengthen content to addres...
+    → [MEDIUM] 8.1: Strengthen content to address requirement....
+
+  Building work product register...
+  Building traceability matrix...
+  Computing assessment decision...
+  Computing confirmation review assessment...
+  Computing verification review assessment...
+======================================================================
+  COMPLIANCE SCORE: 30.0%
+  GRADE: F — Non-Compliant
+======================================================================
+
+  Layer Breakdown:
+    node_coverage              58.3% (×20%) |###########
+    content_alignment          14.1% (×15%) |##
+    semantic_matching           6.2% (×10%) |#
+    concept_coverage           55.9% (×10%) |###########
+    reference_integrity         0.0% (×15%) |
+    method_audit              100.0% (×10%) |####################
+    traceability_chain          0.0% (×20%) |
+
+  Total Risk: 196.0  |  Findings: 30
+
+  Priority Actions:
+    1. [HIGH] 6.1: Create artifact for this requirement. Strengthen content to address requirement.
+    2. [MEDIUM] 5.2: Create artifact for this requirement. Strengthen content to address requirement.
+    3. [MEDIUM] 8.1: Strengthen content to address requirement.
+    4. [MEDIUM] 5.1: Strengthen content to address requirement.
+    5. [LOW] 7.1: Strengthen content to address requirement.
+    6. [LOW] traceability_chain: Establish traceability links.
+    7. [LOW] 6.2: Strengthen content to address requirement.
+    8. [LOW] concept_coverage: Address missing concept areas.
+
+======================================================================
+

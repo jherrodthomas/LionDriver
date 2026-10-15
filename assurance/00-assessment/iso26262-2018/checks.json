@@ -1,0 +1,56 @@
+[
+  {
+    "id": "case_validation",
+    "command": "python assurance/case/tools/validate.py",
+    "cwd": "/workspace/LionDriver",
+    "started_utc": "2026-10-14T23:41:40.714550+00:00",
+    "exit_code": 0,
+    "log": "logs/case_validation.log",
+    "summary": "OK: assurance case records are valid"
+  },
+  {
+    "id": "dashboard_consistency",
+    "command": "python assurance/case/tools/generate_dashboard.py --check",
+    "cwd": "/workspace/LionDriver",
+    "started_utc": "2026-10-14T23:41:40.822403+00:00",
+    "exit_code": 0,
+    "log": "logs/dashboard_consistency.log",
+    "summary": "OK: dashboard outputs match the records"
+  },
+  {
+    "id": "requirements_trace",
+    "command": "python assurance/trace/tools/check_trace.py",
+    "cwd": "/workspace/LionDriver",
+    "started_utc": "2026-10-14T23:41:40.930051+00:00",
+    "exit_code": 0,
+    "log": "logs/requirements_trace.log",
+    "summary": "OK: all implemented checks passed"
+  },
+  {
+    "id": "state_machine_consistency",
+    "command": "python assurance/trace/tools/check_state_machines.py --check",
+    "cwd": "/workspace/LionDriver",
+    "started_utc": "2026-10-14T23:41:41.046962+00:00",
+    "exit_code": 0,
+    "log": "logs/state_machine_consistency.log",
+    "summary": "OK: state machines consistent"
+  },
+  {
+    "id": "trace_tool_tests",
+    "command": "python -m unittest discover -s assurance/trace/tools -p test_*.py",
+    "cwd": "/workspace/LionDriver",
+    "started_utc": "2026-10-14T23:41:41.089775+00:00",
+    "exit_code": 0,
+    "log": "logs/trace_tool_tests.log",
+    "summary": "OK (skipped=2)"
+  },
+  {
+    "id": "hara_model_tests",
+    "command": "python assurance/02-concept/hara/test_hara_model.py",
+    "cwd": "/workspace/LionDriver",
+    "started_utc": "2026-10-14T23:41:43.166072+00:00",
+    "exit_code": 0,
+    "log": "logs/hara_model_tests.log",
+    "summary": "OK"
+  }
+]

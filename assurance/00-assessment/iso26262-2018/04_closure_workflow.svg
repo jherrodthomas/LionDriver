@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="795.6pt" height="457.92pt" viewBox="0 0 795.6 457.92" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 457.92
+L 795.6 457.92
+L 795.6 0
+L 0 0
+z
+" style="fill: #f7f9fc"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 61.884 142.4736
+L 733.716 142.4736
+Q 737.622 142.4736 737.622 140.256
+L 737.622 95.904
+Q 737.622 93.6864 733.716 93.6864
+L 61.884 93.6864
+Q 57.978 93.6864 57.978 95.904
+L 57.978 140.256
+Q 57.978 142.4736 61.884 142.4736
+z
+" clip-path="url(#peb20229892)" style="fill: #ffffff; stroke: #376c95; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 397.8 142.253789
+Q 397.8 146.906942 397.8 149.883044
+" clip-path="url(#peb20229892)" style="fill: none; stroke: #718096; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 400.6 144.283044
+L 397.8 149.883044
+L 395 144.283044
+z
+" clip-path="url(#peb20229892)" style="fill: #718096; stroke: #718096; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 61.884 200.1312
+L 733.716 200.1312
+Q 737.622 200.1312 737.622 197.9136
+L 737.622 153.5616
+Q 737.622 151.344 733.716 151.344
+L 61.884 151.344
+Q 57.978 151.344 57.978 153.5616
+L 57.978 197.9136
+Q 57.978 200.1312 61.884 200.1312
+z
+" clip-path="url(#peb20229892)" style="fill: #ffffff; stroke: #376c95; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 397.8 199.911389
+Q 397.8 204.564542 397.8 207.540644
+" clip-path="url(#peb20229892)" style="fill: none; stroke: #718096; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 400.6 201.940644
+L 397.8 207.540644
+L 395 201.940644
+z
+" clip-path="url(#peb20229892)" style="fill: #718096; stroke: #718096; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 61.884 257.7888
+L 733.716 257.7888
+Q 737.622 257.7888 737.622 255.5712
+L 737.622 211.2192
+Q 737.622 209.0016 733.716 209.0016
+L 61.884 209.0016
+Q 57.978 209.0016 57.978 211.2192
+L 57.978 255.5712
+Q 57.978 257.7888 61.884 257.7888
+z
+" clip-path="url(#peb20229892)" style="fill: #ffffff; stroke: #376c95; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 397.8 257.568989
+Q 397.8 262.222142 397.8 265.198244
+" clip-path="url(#peb20229892)" style="fill: none; stroke: #718096; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 400.6 259.598244
+L 397.8 265.198244
+L 395 259.598244
+z
+" clip-path="url(#peb20229892)" style="fill: #718096; stroke: #718096; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 61.884 315.4464
+L 733.716 315.4464
+Q 737.622 315.4464 737.622 313.2288
+L 737.622 268.8768
+Q 737.622 266.6592 733.716 266.6592
+L 61.884 266.6592
+Q 57.978 266.6592 57.978 268.8768
+L 57.978 313.2288
+Q 57.978 315.4464 61.884 315.4464
+z
+" clip-path="url(#peb20229892)" style="fill: #ffffff; stroke: #376c95; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 397.8 315.226589
+Q 397.8 319.879742 397.8 322.855844
+" clip-path="url(#peb20229892)" style="fill: none; stroke: #718096; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 400.6 317.255844
+L 397.8 322.855844
+L 395 317.255844
+z
+" clip-path="url(#peb20229892)" style="fill: #718096; stroke: #718096; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 61.884 373.104
+L 733.716 373.104
+Q 737.622 373.104 737.622 370.8864
+L 737.622 326.5344
+Q 737.622 324.3168 733.716 324.3168
+L 61.884 324.3168
+Q 57.978 324.3168 57.978 326.5344
+L 57.978 370.8864
+Q 57.978 373.104 61.884 373.104
+z
+" clip-path="url(#peb20229892)" style="fill: #ffffff; stroke: #376c95; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #14263d" x="22.824" y="34.942631" transform="rotate(-0 22.824 34.942631)">How an author closes an audit finding</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #718096" x="22.824" y="59.150437" transform="rotate(-0 22.824 59.150437)">Compliance status changes only after requirement, applicability, evidence and review are linked.</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #718096" x="22.824" y="446.2848" transform="rotate(-0 22.824 446.2848)">ARA-26262-2018-001 v0.2 | UNCONTROLLED | 20569e916c93 | Codex / AI-assisted I0 review</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #376c95" x="71.2584" y="113.132681" transform="rotate(-0 71.2584 113.132681)">1 • Verify requirement</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #14263d" x="71.2584" y="133.788994" transform="rotate(-0 71.2584 133.788994)">Licensed clause, table/annex, ASIL and page citation.</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #376c95" x="71.2584" y="170.790281" transform="rotate(-0 71.2584 170.790281)">2 • Decide applicability</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #14263d" x="71.2584" y="191.446594" transform="rotate(-0 71.2584 191.446594)">Configuration-specific rationale; no automatic N/A.</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #376c95" x="71.2584" y="228.447881" transform="rotate(-0 71.2584 228.447881)">3 • Locate actual evidence</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #14263d" x="71.2584" y="249.104194" transform="rotate(-0 71.2584 249.104194)">Analysis + baseline-bound execution, anomalies and results.</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #376c95" x="71.2584" y="286.105481" transform="rotate(-0 71.2584 286.105481)">4 • Evaluate sufficiency</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #14263d" x="71.2584" y="306.761794" transform="rotate(-0 71.2584 306.761794)">Correctness, independence, assumptions, margins and completeness.</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #376c95" x="71.2584" y="343.763081" transform="rotate(-0 71.2584 343.763081)">5 • Close with review</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #14263d" x="71.2584" y="364.419394" transform="rotate(-0 71.2584 364.419394)">Assigned qualified reviewer and documented disposition.</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #ac3941" x="69.696" y="424.1088" transform="rotate(-0 69.696 424.1088)">A draft, a passing checker or an author-side AI review cannot jump directly to compliant.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="peb20229892">
+   <rect x="7.2" y="7.2" width="781.2" height="443.52"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="795.6pt" height="404.401875pt" viewBox="0 0 795.6 404.401875" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 404.401875
+L 795.6 404.401875
+L 795.6 0
+L 0 0
+z
+" style="fill: #f7f9fc"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 215.652 120.571952
+C 221.253089 120.571952 226.625527 119.744594 230.586095 118.272094
+C 234.546664 116.799594 236.772 114.802175 236.772 112.719745
+C 236.772 110.637316 234.546664 108.639897 230.586095 107.167396
+C 226.625527 105.694896 221.253089 104.867538 215.652 104.867538
+C 210.050911 104.867538 204.678473 105.694896 200.717905 107.167396
+C 196.757336 108.639897 194.532 110.637316 194.532 112.719745
+C 194.532 114.802175 196.757336 116.799594 200.717905 118.272094
+C 204.678473 119.744594 210.050911 120.571952 215.652 120.571952
+L 215.652 120.571952
+z
+" clip-path="url(#p25cd7ae3a9)" style="fill: none; stroke: #ac3941; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 400.452 144.09
+C 414.454724 144.09 427.885817 143.283948 437.787238 141.849367
+C 447.688659 140.414786 453.252 138.468804 453.252 136.44
+C 453.252 134.411196 447.688659 132.465214 437.787238 131.030633
+C 427.885817 129.596052 414.454724 128.79 400.452 128.79
+C 386.449276 128.79 373.018183 129.596052 363.116762 131.030633
+C 353.215341 132.465214 347.652 134.411196 347.652 136.44
+C 347.652 138.468804 353.215341 140.414786 363.116762 141.849367
+C 373.018183 143.283948 386.449276 144.09 400.452 144.09
+L 400.452 144.09
+z
+" clip-path="url(#p25cd7ae3a9)" style="fill: none; stroke: #ac3941; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 20px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #14263d" x="15.012" y="34.039275" transform="rotate(-0 15.012 34.039275)">A09 • Annotated source example</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #ac3941" x="15.012" y="53.7696" transform="rotate(-0 15.012 53.7696)">Documented timing discrepancy; normative ISO verdict remains unassessed.</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #376c95" x="15.012" y="80.9352" transform="rotate(-0 15.012 80.9352)">assurance/03-system/WP-S-04-timing-ftti-budget.md:267</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans Mono'; text-anchor: start; fill: #14263d" x="15.012" y="114.987206" transform="rotate(-0 15.012 114.987206)">| OI-8 | EPS-fault siren latency ≤ 1.26 s worst case from fault onset (T-28; corrected 2026-10-13 from ≈ 1.14 s: the </text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans Mono'; text-anchor: start; fill: #14263d" x="15.012" y="138.826406" transform="rotate(-0 15.012 138.826406)">speaker sounds only on every other 8 Hz tick) exceeds the SG-02 1 s warning budget (§3.7). TSR-516's ≤ 0.5 s after </text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans Mono'; text-anchor: start; fill: #14263d" x="15.012" y="162.665606" transform="rotate(-0 15.012 162.665606)">detection is met (≤ 0.26 s) only because WP-S-02 v0.14 defines detection as the 1 s persistence; measured from the </text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans Mono'; text-anchor: start; fill: #14263d" x="15.012" y="186.504806" transform="rotate(-0 15.012 186.504806)">first fault frame it is not. Caused by the maintainer decision of 2026-10-12 (persistent faults only, 1 s; EPS-fault </text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans Mono'; text-anchor: start; fill: #14263d" x="15.012" y="210.344006" transform="rotate(-0 15.012 210.344006)">impact record §7). Options: shorten the persistence (e.g. 0.7 s), or justify that LKA actuation is already refused </text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans Mono'; text-anchor: start; fill: #14263d" x="15.012" y="234.183206" transform="rotate(-0 15.012 234.183206)">from the first fault frame (lateral authority removed at onset; the warning is for a lasting loss). **Decision </text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans Mono'; text-anchor: start; fill: #14263d" x="15.012" y="258.013969" transform="rotate(-0 15.012 258.013969)">needed.** No requirement changed here (added 2026-10-12) | Safety manager | G2 |</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #376c95" x="15.012" y="309.9024" transform="rotate(-0 15.012 309.9024)">Author preparation</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; fill: #14263d" transform="translate(15.012 319.984192)">Separate fault onset, persistence, detection, reaction and warning clocks.</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; fill: #14263d" transform="translate(15.012 333.1872)">Propose remedy options; do not redefine the budget to hide the discrepancy.</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #ac3941" x="15.012" y="375.876" transform="rotate(-0 15.012 375.876)">Closure needs an approved timing decision and real end-to-end measurement evidence.</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start; fill: #718096" x="15.012" y="395.28" transform="rotate(-0 15.012 395.28)">ARA-26262-2018-001 v0.2 | UNCONTROLLED | Exact source quote, wrapped for display | I0</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p25cd7ae3a9">
+   <rect x="7.2" y="7.2" width="781.2" height="388.08"/>
+  </clipPath>
+ </defs>
+</svg>

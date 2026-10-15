@@ -1,0 +1,742 @@
+{
+  "record": "ARA-26262-2018-001",
+  "revision": "0.2",
+  "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+  "normative_completeness": false,
+  "tasks": [
+    {
+      "id": "TASK-A01",
+      "finding_id": "A01",
+      "category": "Source verification",
+      "proposed_owner_role": "Assessor + standards custodian",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "eaf41e9fd378b0b051e721c6d3e2f3b0071359512d3f095e83703a47ad71c91d",
+      "primary_document": "assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md",
+      "source_line": 546,
+      "annotation_id": "AN-A01",
+      "preparatory_dependencies": [],
+      "allowed_preparation": "Prepare the licensed-source intake and requirement inventory; verify clause/table/annex counts after source access.",
+      "required_author_action": "Obtain all 12 parts; build a verified requirement-level inventory with page provenance, normative/informative classification and ASIL applicability.",
+      "closure_evidence": "Source verified, all inventory entries counted, and independent coverage reconciliation completed.",
+      "target_gate": "Before normative verdicts",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A02",
+      "finding_id": "A02",
+      "category": "Decision required",
+      "proposed_owner_role": "Safety manager / project maintainer",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "212d14b034a90bacf59f5ca29224086382be36bc5e4e7af0409beae2d4e99525",
+      "primary_document": "assurance/01-management/WP-M-02-safety-plan.md",
+      "source_line": 275,
+      "annotation_id": "AN-A02",
+      "preparatory_dependencies": [],
+      "allowed_preparation": "Draft options reconciling staffing and the existing gate plan; retain the gate blocker until the safety manager decides.",
+      "required_author_action": "Reconcile staffing decision and confirmation plan; appoint qualified reviewers and assessor or formally re-plan without claiming gate completion.",
+      "closure_evidence": "Named roles, competence/conflict declarations, approved plan and signed confirmation records.",
+      "target_gate": "G0",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A03",
+      "finding_id": "A03",
+      "category": "Authority boundary",
+      "proposed_owner_role": "Safety manager",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "212d14b034a90bacf59f5ca29224086382be36bc5e4e7af0409beae2d4e99525",
+      "primary_document": "assurance/01-management/WP-M-02-safety-plan.md",
+      "source_line": 100,
+      "annotation_id": "AN-A03",
+      "preparatory_dependencies": [],
+      "allowed_preparation": "Keep AI-generated findings separate from human verification and confirmation; name actual reviewers only after appointment.",
+      "required_author_action": "Arrange human review appropriate to the approved ASIL and maintain a separate evidence acceptance trail.",
+      "closure_evidence": "Qualified reviewer signs baseline-specific findings and disposition; independence is evidenced.",
+      "target_gate": "G0\u2013G5",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A04",
+      "finding_id": "A04",
+      "category": "Evidence needed",
+      "proposed_owner_role": "HARA owner / vehicle test lead",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "9934f123a47eadb97fb13bca85a3433b0dbc48f261055b55dc4303bed5f9f5cb",
+      "primary_document": "assurance/02-concept/WP-C-03-hara.md",
+      "source_line": 154,
+      "annotation_id": "AN-A04",
+      "preparatory_dependencies": [
+        "TASK-A06"
+      ],
+      "allowed_preparation": "Prepare a configuration-specific AoU verification matrix and failed-assumption ASIL variants; retain provisional ratings.",
+      "required_author_action": "Verify assumptions per exact ECU/configuration; challenge S/E/C rationale and document both credited and failed-assumption variants.",
+      "closure_evidence": "Approved HARA, witnessed characterization records, configuration binding and independent confirmation.",
+      "target_gate": "G1",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A05",
+      "finding_id": "A05",
+      "category": "Decision required",
+      "proposed_owner_role": "Safety manager / HARA owner",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "8aae91aba87aad2b800c6635c121d5a9a407f1cf28542a5604ef920596573ac3",
+      "primary_document": "assurance/02-concept/WP-C-04-functional-safety-concept.md",
+      "source_line": 61,
+      "annotation_id": "AN-A05",
+      "preparatory_dependencies": [
+        "TASK-A04"
+      ],
+      "allowed_preparation": "Prepare strategy alternatives and their controllability evidence needs; distinguish re-rating from decomposition.",
+      "required_author_action": "Record the strategy decision, validate limits and re-rate only after justified controllability; preserve original integrity demands until then.",
+      "closure_evidence": "Signed strategy plus validated limit data, revised allocations and confirmed HARA.",
+      "target_gate": "G1\u2013G2",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A06",
+      "finding_id": "A06",
+      "category": "Evidence needed",
+      "proposed_owner_role": "Configuration manager / maintainer",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "ce8cf738453aef3c511c68ad8a507d27c79e7069b6f3d5831f0560e55095e594",
+      "primary_document": "assurance/02-concept/WP-C-01-item-definition.md",
+      "source_line": 218,
+      "annotation_id": "AN-A06",
+      "preparatory_dependencies": [],
+      "allowed_preparation": "Create an explicit configuration record with unknown fields marked TBD; populate only identities supported by actual records.",
+      "required_author_action": "Freeze an assessed configuration including hardware serial/revision, ECU firmware, software/submodules, models and calibration.",
+      "closure_evidence": "Complete configuration record and matching manifests for every cited result.",
+      "target_gate": "G1",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A07",
+      "finding_id": "A07",
+      "category": "Evidence needed",
+      "proposed_owner_role": "Hardware safety lead",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "4377bca66464a0da62df8145c41d4e2d7f5285675ae388cae608091dcdaf7191",
+      "primary_document": "assurance/04-hardware/WP-H-04-hardware-metrics.md",
+      "source_line": 104,
+      "annotation_id": "AN-A07",
+      "preparatory_dependencies": [
+        "TASK-A06"
+      ],
+      "allowed_preparation": "List BOM, rates, mission profile and diagnostic-coverage inputs needed per safety goal; retain uncomputed result fields.",
+      "required_author_action": "Acquire BOM/mission profile/failure-rate evidence, validate fault classes and diagnostic coverage, compute per-goal metrics and sensitivity.",
+      "closure_evidence": "Reviewed FMEDA and reproducible part-specific SPFM/LFM/PMHF with traceable inputs and valid targets.",
+      "target_gate": "G3",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A08",
+      "finding_id": "A08",
+      "category": "Evidence needed",
+      "proposed_owner_role": "Hardware safety lead",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "f7de346a3bf52c9b3fb8695458d562231d086b1a7d71e730159fd1a857c95be4",
+      "primary_document": "assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md",
+      "source_line": 260,
+      "annotation_id": "AN-A08",
+      "preparatory_dependencies": [
+        "TASK-A07"
+      ],
+      "allowed_preparation": "Reconcile the generic-estimate and part-specific result sections with clear provenance, assumptions and separate status labels.",
+      "required_author_action": "Label estimates, planned architecture and measured results separately; reconcile WP-H-03 with WP-H-04/05 and confirm target authority.",
+      "closure_evidence": "One configuration-consistent calculation set; planned mechanisms excluded until coverage is substantiated.",
+      "target_gate": "G2\u2013G3",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A09",
+      "finding_id": "A09",
+      "category": "Documented discrepancy",
+      "proposed_owner_role": "Safety manager / system lead",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "0a85dd04490e185ec70e004aaf06fa07c693056f05ebcd32ff42103245008389",
+      "primary_document": "assurance/03-system/WP-S-04-timing-ftti-budget.md",
+      "source_line": 267,
+      "annotation_id": "AN-A09",
+      "preparatory_dependencies": [],
+      "allowed_preparation": "Draft an end-to-end timing discrepancy table and remedy options; include onset, detection, reaction and warning clocks.",
+      "required_author_action": "Resolve the requirement/detection-time definition and measure fault onset through actuation removal and audible warning under worst-case load.",
+      "closure_evidence": "Approved consistent timing budget and witnessed end-to-end traces including tolerance and jitter.",
+      "target_gate": "G2",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A10",
+      "finding_id": "A10",
+      "category": "Documented discrepancy",
+      "proposed_owner_role": "HARA owner / dynamics lead",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "0a85dd04490e185ec70e004aaf06fa07c693056f05ebcd32ff42103245008389",
+      "primary_document": "assurance/03-system/WP-S-04-timing-ftti-budget.md",
+      "source_line": 86,
+      "annotation_id": "AN-A10",
+      "preparatory_dependencies": [
+        "TASK-A04"
+      ],
+      "allowed_preparation": "Prepare the curve-bound controllability/ODD decision with dynamics validation needs; do not silently tighten the ODD or lower ASIL.",
+      "required_author_action": "Validate dynamics at the boundary; revise ODD, authority or hazard controllability and flow changes through FSC/TSRs.",
+      "closure_evidence": "Measured validated model, updated ODD and accepted HARA/FTTI rationale.",
+      "target_gate": "G2",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A11",
+      "finding_id": "A11",
+      "category": "Documented discrepancy",
+      "proposed_owner_role": "System / hardware test lead",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "0a85dd04490e185ec70e004aaf06fa07c693056f05ebcd32ff42103245008389",
+      "primary_document": "assurance/03-system/WP-S-04-timing-ftti-budget.md",
+      "source_line": 264,
+      "annotation_id": "AN-A11",
+      "preparatory_dependencies": [],
+      "allowed_preparation": "Document all terms and tolerances in the forwarding-loss budget and the measurement needed to establish margin.",
+      "required_author_action": "Measure forwarding-loss response and PCS effects; include oscillator tolerance, scheduling, bus delay and safe-state behavior.",
+      "closure_evidence": "Worst-case FDTI+FRTI substantiated with positive justified margin or an explicitly accepted alternative safety argument.",
+      "target_gate": "G2\u2013G4",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A12",
+      "finding_id": "A12",
+      "category": "Evidence needed",
+      "proposed_owner_role": "Software architect / safety analyst",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "f018b68bd2b10fe24be7f28f435d3908e0560adbc271c6c93a4a55bade4a31f6",
+      "primary_document": "assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md",
+      "source_line": 164,
+      "annotation_id": "AN-A12",
+      "preparatory_dependencies": [
+        "TASK-A06"
+      ],
+      "allowed_preparation": "Prepare an interference-channel evidence matrix at the actual pins; retain not-shown/partial verdicts until supported.",
+      "required_author_action": "Reconcile analysis to current pins, bound QM-triggered paths, document separation properties and verify adverse inputs and boot integrity.",
+      "closure_evidence": "Reviewed FFI/DFA with traceable evidence for every interference channel and justified ASIL allocation.",
+      "target_gate": "G2",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A13",
+      "finding_id": "A13",
+      "category": "Decision required",
+      "proposed_owner_role": "Safety manager / software lead",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "eaf41e9fd378b0b051e721c6d3e2f3b0071359512d3f095e83703a47ad71c91d",
+      "primary_document": "assurance/01-management/WP-M-14-iso26262-6-implementation-specification.md",
+      "source_line": 148,
+      "annotation_id": "AN-A13",
+      "preparatory_dependencies": [
+        "TASK-A02",
+        "TASK-A05",
+        "TASK-A12"
+      ],
+      "allowed_preparation": "Prepare the E-01\u2026E-15 entry checklist with links to actual approvals and unresolved prerequisites; do not activate Part 6.",
+      "required_author_action": "Close E-01\u2026E-15 prerequisites and record the authorized lifecycle baseline and activation decision.",
+      "closure_evidence": "Approved entry checklist, input baselines, confirmation records and activation decision.",
+      "target_gate": "G2",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A14",
+      "finding_id": "A14",
+      "category": "Evidence needed",
+      "proposed_owner_role": "Test lead / maintainer",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "212d14b034a90bacf59f5ca29224086382be36bc5e4e7af0409beae2d4e99525",
+      "primary_document": "assurance/01-management/WP-M-02-safety-plan.md",
+      "source_line": 280,
+      "annotation_id": "AN-A14",
+      "preparatory_dependencies": [],
+      "allowed_preparation": "Reconcile HIL deferral with test/gate status and prepare the missing campaign specifications; retain unexecuted results.",
+      "required_author_action": "Resource a controlled target bench and execute baseline-bound campaigns; if deferred, keep associated gate claims explicitly open.",
+      "closure_evidence": "Target test logs, environment/calibration records, anomaly disposition and independent review.",
+      "target_gate": "G2\u2013G4",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A15",
+      "finding_id": "A15",
+      "category": "Evidence needed",
+      "proposed_owner_role": "Tool qualification owner",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "a986bec6bb9e259f6773f665bd46369adf0e2fcd32a382660f07abc38e1f55af",
+      "primary_document": "assurance/07-supporting/WP-P-07-tool-classification-qualification.md",
+      "source_line": 146,
+      "annotation_id": "AN-A15",
+      "preparatory_dependencies": [],
+      "allowed_preparation": "Prepare use-case-specific TI/TD/TCL and TQR completion tasks with independent error-detection criteria and version pins.",
+      "required_author_action": "Complete TI/TD/TCL decisions and applicable qualification records; test error detection against independently sourced criteria and pin the toolchain.",
+      "closure_evidence": "Reviewed use-case-specific tool qualification, known limitations, detection evidence and immutable versions.",
+      "target_gate": "G3",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A16",
+      "finding_id": "A16",
+      "category": "Evidence needed",
+      "proposed_owner_role": "Software lead / supplier manager",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "46e2b8c5b8b8d77ff23263999e5a15c2a086058bf48dc186e45085b17d289b47",
+      "primary_document": "assurance/07-supporting/WP-P-08-software-component-qualification.md",
+      "source_line": 91,
+      "annotation_id": "AN-A16",
+      "preparatory_dependencies": [
+        "TASK-A06"
+      ],
+      "allowed_preparation": "Prepare component-specific reuse/qualification records and trace to their real uses; initialization is not qualification.",
+      "required_author_action": "Review component use cases, interfaces, failure modes and configuration; close reuse assessments and safety component evidence needs.",
+      "closure_evidence": "Reviewed SCQ/RA records and traceable component qualification evidence for the actual use.",
+      "target_gate": "G3",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A17",
+      "finding_id": "A17",
+      "category": "Source verification",
+      "proposed_owner_role": "Assessor / safety manager",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "7a21209166c270af570bdc7b626a3464b68d187dc1d3e7b73950356f0546d039",
+      "primary_document": "assurance/01-management/WP-M-06-confirmation-measures-plan.md",
+      "source_line": 54,
+      "annotation_id": "AN-A17",
+      "preparatory_dependencies": [
+        "TASK-A01"
+      ],
+      "allowed_preparation": "Prepare the confirmation-measure/source-page comparison matrix; verify the licensed requirements before changing it.",
+      "required_author_action": "Verify every measure, applicable ASIL and independence requirement directly against Part 2; reconcile the CR list and schedule.",
+      "closure_evidence": "Source/page-referenced approved confirmation matrix with signed results at required gates.",
+      "target_gate": "G0\u2013G1",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A18",
+      "finding_id": "A18",
+      "category": "Editorial clarification",
+      "proposed_owner_role": "Configuration manager / document authors",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "ab1ac5192262634e30a6e723a378a0b5c9a4275b801b478ef1413ee4b196f037",
+      "primary_document": "assurance/01-management/WP-M-01-assurance-strategy.md",
+      "source_line": 31,
+      "annotation_id": "AN-A18",
+      "preparatory_dependencies": [],
+      "allowed_preparation": "Make the historical starting-point baseline unmistakable and add current-status cross-references; preserve history.",
+      "required_author_action": "Mark historical observations and reconcile assessment baselines, software pins, current status and impact records without rewriting history.",
+      "closure_evidence": "Baseline crosswalk plus reviewed current-status statements and supersession links.",
+      "target_gate": "G0\u2013G2",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A19",
+      "finding_id": "A19",
+      "category": "Editorial clarification",
+      "proposed_owner_role": "Safety case owner",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "43c625d98ef1d386163f86a260b3a1a4987a7dce8c5bdd738059dac394b8af2b",
+      "primary_document": "assurance/10-safety-case/WP-K-04-functional-safety-assessment.md",
+      "source_line": 17,
+      "annotation_id": "AN-A19",
+      "preparatory_dependencies": [],
+      "allowed_preparation": "Correct stale folder/coordination references after checking the source baseline; keep the assessment unperformed.",
+      "required_author_action": "Update template coordination links through normal document control, leaving execution/approval fields explicitly unperformed.",
+      "closure_evidence": "Correct reference and folder state with reviewed revision; no fabricated assessor signature or result.",
+      "target_gate": "Before assessment kickoff",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A20",
+      "finding_id": "A20",
+      "category": "Evidence needed",
+      "proposed_owner_role": "Safety case owner / safety manager",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "c42cbf616d58e696f97a0bd99f3cb7815ffb1b9e7845e3b3176cb2a491ead836",
+      "primary_document": "assurance/10-safety-case/WP-K-01-safety-case.md",
+      "source_line": 8,
+      "annotation_id": "AN-A20",
+      "preparatory_dependencies": [
+        "TASK-A04",
+        "TASK-A07",
+        "TASK-A09",
+        "TASK-A12",
+        "TASK-A14"
+      ],
+      "allowed_preparation": "Prepare claim-to-evidence-to-defeater closure tasks and missing review links; keep release unsupported.",
+      "required_author_action": "Close safety-critical defeaters with configuration-bound evidence; obtain applicable verification, confirmation and assessment before release.",
+      "closure_evidence": "Accepted claim/evidence chains, dispositioned defeaters, FSA and signed release record.",
+      "target_gate": "G5",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A21",
+      "finding_id": "A21",
+      "category": "Decision required",
+      "proposed_owner_role": "Supplier manager / operations lead",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "ab1ac5192262634e30a6e723a378a0b5c9a4275b801b478ef1413ee4b196f037",
+      "primary_document": "assurance/01-management/WP-M-01-assurance-strategy.md",
+      "source_line": 132,
+      "annotation_id": "AN-A21",
+      "preparatory_dependencies": [
+        "TASK-A01"
+      ],
+      "allowed_preparation": "Prepare an obligation/responsibility allocation proposal for retrofit and supplier activities; tailoring needs approval.",
+      "required_author_action": "Map each applicable Part 7/8 requirement to installer, upstream supplier or LionDriver; justify retained/allocated/tailored obligations.",
+      "closure_evidence": "Approved obligation allocation, installation/process evidence and residual-risk disposition.",
+      "target_gate": "G0\u2013G5",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    },
+    {
+      "id": "TASK-A22",
+      "finding_id": "A22",
+      "category": "Source verification",
+      "proposed_owner_role": "Safety manager / assessor",
+      "assigned_agent": null,
+      "state": "Unassigned; preparation permitted only when the user assigns the task",
+      "subject_revision": "20569e916c9359243739b71e4dc79876aec48cc0",
+      "source_sha256": "c22898b0ef8ed0c87f04118972c96b5c2f0c7c0a8e83cc88aa95b12a9851e2f1",
+      "primary_document": "assurance/07-supporting/WP-P-09-proven-in-use.md",
+      "source_line": 17,
+      "annotation_id": "AN-A22",
+      "preparatory_dependencies": [
+        "TASK-A01"
+      ],
+      "allowed_preparation": "Document why optional assurance routes are not used; require approved applicability before an N/A verdict.",
+      "required_author_action": "Keep the alternative routes visible and justify non-use; do not count an unused route as complied with or mark it failed solely because no artifact exists.",
+      "closure_evidence": "Source-verified applicability/tailoring decisions and no contradictory reuse/decomposition claims.",
+      "target_gate": "G1\u2013G3",
+      "required_outputs": [
+        "Evidence-linked proposed change and exact source/version crosswalk",
+        "Actual executed checks, unrun checks, limitations and anomaly dispositions",
+        "Impact analysis plus changed-document revision history",
+        "Human-review request; no self-acceptance or confirmation credit"
+      ],
+      "forbidden_shortcuts": [
+        "Invent measurements, identities, source clauses, reviews, signatures or results",
+        "Lower ASIL or change ODD, FTTI, detection clocks, targets or allocations to make a finding disappear",
+        "Close evidence/claims/defeaters or pass gates without the required human review and real evidence",
+        "Treat keyword coverage or a similarity score as a compliance verdict",
+        "Modify unrelated work products or solve a staffing/resource decision on behalf of the safety manager"
+      ],
+      "human_review": "Required before closure; I0 drafting is not independent verification"
+    }
+  ]
+}
