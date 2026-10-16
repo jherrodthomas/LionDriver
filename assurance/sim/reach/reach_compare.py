@@ -168,7 +168,8 @@ def table(b: dict, s: dict, m: dict, ex: dict) -> str:
   for k in models:
     r = b["ct"][k]
     if "error" in r:
-      lines.append(f"| `{k}` | failed: {r['error'].splitlines()[0].replace('|', '/')} |")
+      msg = " ".join(r["error"].split())[:200].replace("|", "/")
+      lines.append(f"| `{k}` | failed: {msg} … |")
     else:
       y = mag(r, "y", i_tk)
       lines.append(f"| `{k}` | y bound at the takeover {g(y)} m, {g(y / ex['ct']['y'][i_tk])}× the exact value |")

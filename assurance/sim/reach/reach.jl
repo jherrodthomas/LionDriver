@@ -13,7 +13,8 @@
 #       computed with LazySets without order reduction, so with no over-approximation.
 #   ct  Continuous time, any measurable u within the envelope (covers commands that change between plant steps):
 #       ReachabilityAnalysis.jl GLGM06 over consecutive segments with a constant input box (the envelope's value at the
-#       segment end). Each discretisation model in CT_MODELS is tried; a failure is recorded, not fatal.
+#       segment end). Each discretisation model in CT_MODELS is tried (also the package default); a failure is
+#       recorded, not fatal.
 # Bounds of y and psi are written per output grid step. Synthetic data (DSR-12), no evidence credit (WP-V-02 §5.3).
 
 using ReachabilityAnalysis, LazySets, JSON
@@ -84,7 +85,8 @@ function reach_ct(approx)
     while t0 < H - 1e-9
         ub = envelope_ct(t0 + SEG)
         T = ub >= umax ? H - t0 : SEG
-        sol = solve(IVP(sys(ub), X0); T=T, alg=GLGM06(δ=δ, approx_model=approx))
+        alg = approx === nothing ? GLGM06(δ=δ) : GLGM06(δ=δ, approx_model=approx)
+        sol = solve(IVP(sys(ub), X0); T=T, alg=alg)
         bounds!(lo, hi, sol, t0)
         X0 = reduce_order(set(sol[end]), ORDER)    # contains the state at t0 + T
         t0 += T
@@ -102,7 +104,9 @@ t_dt = time() - t_start
 println("reach dt: ", gens, " generators, ", round(t_dt, digits=2), " s; y bound at 0.2 / 1.0 / ", H, " s: ",
         at(hi_d, 0.2), " / ", at(hi_d, 1.0), " / ", at(hi_d, H), " m")
 
-CT_MODELS = [("forward", () -> Forward()), ("correction-hull", () -> CorrectionHull(order=10))]
+# "glgm06-default": GLGM06(δ) without an approx_model argument, i.e. the package's own default
+CT_MODELS = [("glgm06-default", () -> nothing), ("forward", () -> Forward()),
+             ("correction-hull", () -> CorrectionHull(order=10))]
 ct = Dict{String,Any}()
 for (name, make) in CT_MODELS
     try
