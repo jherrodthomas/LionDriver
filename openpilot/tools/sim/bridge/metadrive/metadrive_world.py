@@ -58,18 +58,13 @@ class MetaDriveWorld(World):
     self.reset_time = 0
     self.should_reset = False
 
-  def apply_controls(self, steer_angle, throttle_out, brake_out):
+  def apply_controls(self, curvature: float, accel: float):
+    """The car's response from the plant (simulated_car): path curvature (1/m) and acceleration (m/s^2). The MetaDrive
+    process moves the ego kinematically with them, so MetaDrive's own vehicle dynamics play no part."""
     if (time.monotonic() - self.reset_time) > 2:
-      self.vc[0] = steer_angle
-
-      if throttle_out:
-        self.vc[1] = throttle_out
-      else:
-        self.vc[1] = -brake_out
+      self.vc = [curvature, accel]
     else:
-      self.vc[0] = 0
-      self.vc[1] = 0
-
+      self.vc = [0.0, 0.0]
     self.controls_send.send([*self.vc, self.should_reset])
     self.should_reset = False
 

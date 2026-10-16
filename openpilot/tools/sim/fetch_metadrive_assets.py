@@ -4,6 +4,12 @@
 The minimal branch ships without vehicle models, so traffic cannot be spawned or rendered. The models are taken from
 the upstream MetaDrive release of the same asset version, pinned by SHA-256. Only model folders are extracted; nothing
 executable comes from the archive.
+
+Only folders whose license.txt in the archive grants CC-BY-4.0 (commercial use allowed, author credited) are
+installed: the other model folders of the archive (ferra, lada, truck, traffic_cone, tollgate, ...) carry no licence
+file, so LionDriver does not use them (free and open source only; licence checked 2026-10-16). The credits are
+written to ATTRIBUTION.txt next to the models. Traffic therefore uses MetaDrive's MVehicle (model "130") and SVehicle
+("beetle") only.
 """
 import argparse
 import hashlib
@@ -18,7 +24,7 @@ from pathlib import Path
 ASSET_VERSION = "0.4.2.3"
 ASSET_URL = f"https://github.com/metadriverse/metadrive/releases/download/MetaDrive-{ASSET_VERSION}/assets.zip"
 ASSET_SHA256 = "3a298c9b3f46467d572a8c49c5866f742951b9e2847cc958d098a5652f7f1591"
-MODEL_DIRS = ("130", "beetle", "lada", "ferra", "truck", "pedestrian", "bicycle", "traffic_cone", "barrier", "warning")
+MODEL_DIRS = ("130", "beetle", "pedestrian", "bicycle", "barrier")   # each has a CC-BY-4.0 license.txt in the archive
 
 
 def metadrive_assets_dir() -> Path:
@@ -31,6 +37,10 @@ def installed(assets: Path) -> bool:
 
 
 def fetch(zip_path: Path | None, assets: Path) -> None:
+  if not (assets / "version.txt").exists():
+    # the minimal package pulls its own base assets (commaai's MetaDrive-minimal release) on first use
+    from metadrive.pull_asset import pull_asset
+    pull_asset(False)
   version = (assets / "version.txt").read_text().strip()
   if version != ASSET_VERSION:
     sys.exit(f"metadrive asset version is {version}, this script pins {ASSET_VERSION}")
@@ -54,13 +64,19 @@ def fetch(zip_path: Path | None, assets: Path) -> None:
           continue
         zf.extract(name, out)
 
+    credits = []
     for d in MODEL_DIRS:
       src, dst = out / "assets" / "models" / d, assets / "models" / d
       if not src.is_dir():
         sys.exit(f"model folder {d} missing from the archive")
+      lic = (src / "license.txt").read_text(encoding="utf-8", errors="replace")
+      if "CC-BY-4.0" not in lic:
+        sys.exit(f"model folder {d}: license.txt does not grant CC-BY-4.0")
+      credits.append(f"== {d}\n{lic.strip()}\n")
       if dst.exists():
         shutil.rmtree(dst)
       shutil.copytree(src, dst)
+    (assets / "models" / "ATTRIBUTION.txt").write_text("\n".join(credits), encoding="utf-8")
   print(f"installed {len(MODEL_DIRS)} model folders into {assets / 'models'}")
 
 
