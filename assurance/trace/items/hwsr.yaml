@@ -321,7 +321,7 @@
   allocated_to: "Relay auxiliary contact or bus-sense circuit"
   hw_kind: "ADD"
   verification: "A, T-HIL, FI"
-  baseline_impl: "**Not implemented (GAP-12).** Current detection is indirect and one-directional: camera control messages seen on the car side after a 1 s transition timeout (`safety.h:372-380`), checked at 1 Hz in `safety_tick` (so 1–2 s). \"Stuck intercepting while commanded released\" is not detected at all. The harness box v3 has no state feedback line, so readback needs a hardware change (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-06). The lead chose to keep comma's box (DQ-209 option A, 2026-10-16), so no readback hardware is planned: this requirement stays not met and its residual is part of the SG-07 deviation argument (DQ-261, queued)"
+  baseline_impl: "**Not implemented (GAP-12).** Current detection is indirect and one-directional: camera control messages seen on the car side after a 1 s transition timeout (`safety.h:372-380`), checked at 1 Hz in `safety_tick` (so 1–2 s). \"Stuck intercepting while commanded released\" is not detected at all. The harness box v3 has no state feedback line, so readback needs a hardware change (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-06). The lead chose to keep comma's box (DQ-209 option A, 2026-10-16), so no readback hardware is planned: this requirement stays not met and its residual is part of the SG-07 deviation argument (DQ-320, queued)"
   status: proposed
   source: WP-H-01
 

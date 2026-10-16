@@ -3981,7 +3981,7 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-16}
   applied: {ref: 2c9c67f2e, record: "WP-H-01 HWSR-702, -506a, -506e, OI-6; WP-H-02 OI-4 (DC-03 not pursued); WP-H-06 §3.1; RR-2026-010 §5; DFMEA DFM-ACT-007 not_implemented, DFM-ACT-014", at: 2026-10-16}
-  note: "Hardware part applied. Left for other sessions: AOU-13 wording in WP-C-01 and WP-C-04 (concept), TSR-702 status (system), DFA IC-05 / DFI-27, DFI-28 (DFA). Follow-up question for the SG-07 metric shortfall: DQ-261."
+  note: "Hardware part applied. Left for other sessions: AOU-13 wording in WP-C-01 and WP-C-04 (concept), TSR-702 status (system), DFA IC-05 / DFI-27, DFI-28 (DFA). Follow-up question for the SG-07 metric shortfall: DQ-320."
 
 - id: DQ-260
   question: "Should the highway ODD stop at 110 km/h, the highest speed at which the driver's control of a steering fault will be tested?"
@@ -4005,7 +4005,7 @@
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3 item 3", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-07", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md §3 speed"]
   status: queued
 
-- id: DQ-261
+- id: DQ-320
   question: "With comma's harness box kept, the stock-emergency-braking hardware metric is about 78 % against a 90 % target. Accept that as a recorded deviation once the bench tests pass?"
   context: "You chose to keep comma's box and bench-test it (DQ-209). Without switch readback, the FMEDA for the stock emergency-braking goal (SG-07) gives **SPFM 78.1 % against 90 %** on current rates, mostly from the two analog switches sticking or opening. Readback plus a stock-path check would bring it to about 95 %. The rates are still partly generic, so the number can move either way."
   reversibility: revisit

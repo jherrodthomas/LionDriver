@@ -266,7 +266,7 @@ The rates are order-of-magnitude estimates per part type, not values looked up f
 | Goal | Target used | λ (FIT) | SPFM | LFM | λSPF + λRF (FIT) | Result |
 |---|---|---|---|---|---|---|
 | SG-01 lateral | ASIL D (LD-HARA-001); ASIL C here, ASIL B shown alongside (DQ-063) | 255 | 96.8 % | 88.9 % | 8.1 | Misses D on SPFM and LFM. Misses C on SPFM (97 %) by 0.2 points; meets C on LFM. Meets B (90 % / 60 %) |
-| SG-07 stock PCS | ASIL B | 287 | 78.1 % | 97.7 % | 62.9 | Misses B on SPFM (90 %). Accepted by the lead as a recorded deviation, conditional on the harness box bench tests ([WP-H-04](WP-H-04-hardware-metrics.md) §5.3, DQ-261) |
+| SG-07 stock PCS | ASIL B | 287 | 78.1 % | 97.7 % | 62.9 | Misses B on SPFM (90 %). Accepted by the lead as a recorded deviation, conditional on the harness box bench tests ([WP-H-04](WP-H-04-hardware-metrics.md) §5.3, DQ-320) |
 
 The SG-07 drop from 85.9 % (rev 0.3) to 78.1 % comes entirely from the switch rate: 2 × 5 FIT generic became 2 × 25 FIT. With no readback and no stock-path check, 70 % of that rate is single-point for SG-07.
 
