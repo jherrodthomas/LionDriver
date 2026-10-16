@@ -1,6 +1,6 @@
 # LionDriver — FMEA-MSR: audit and plan
 
-**Status:** Draft v0.4, 2026-10-14. Step M2 done: every in-scope cause is rated or pointed at the DFMEA (75 rated, 4 exempt; both files `msr: complete`); results in §4.7. v0.3: step M1 pilot done: 32 causes rated (DFMEA complete, System FMEA SG-01 lateral chain), MSR line and §7 in the review pages. v0.2: step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
+**Status:** Draft v0.5, 2026-10-16. System FMEA MSR rows re-rated at baseline BL-005, crediting the host supervision (TSR-615, TSR-621), TX arrival (TSR-408), the cruise-mismatch alert (TSR-308) and the reference lock, now built by default; results in §4.7. v0.4, 2026-10-14. Step M2 done: every in-scope cause is rated or pointed at the DFMEA (75 rated, 4 exempt; both files `msr: complete`); results in §4.7. v0.3: step M1 pilot done: 32 causes rated (DFMEA complete, System FMEA SG-01 lateral chain), MSR line and §7 in the review pages. v0.2: step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
 **Basis:** AIAG & VDA FMEA Handbook (2019), Supplemental FMEA for Monitoring and System Response (FMEA-MSR), ISO 26262-4 §6 (FTTI) and ISO 26262-5 §8 (diagnostic coverage), by reference.
 **Related:** [fmea-plan.md](fmea-plan.md), [rating-tables.md](rating-tables.md) (RT-1), [WP-S-04 timing and FTTI budget](../../03-system/WP-S-04-timing-ftti-budget.md), [WP-V-05 fault injection](../../06-validation/WP-V-05-fault-injection.md).
 
@@ -152,7 +152,7 @@ A cause carries `msr` or `msr_exempt` (a reason), never both. The header gets `m
 - The MSR rows put on one page what WP-S-04 §5 lists as "not met", against the failure causes they leave open.
 - New monitoring actions: SFM-ACT-012 (measure the panda reaction on HIL), SFM-ACT-013 (host check of panda authority while disengaged), SFM-ACT-014 (steering-direction plausibility monitor), SFM-ACT-015 (command and input freshness, TSR-408/602). The DFMEA rows reuse the existing DFM-ACT actions.
 - **Every MSR AP is H.** With S 10 and F ≥ 4, the provisional table gives H at every M except M 1. So M, not the MSR AP, is what ranks the work: the review pages sort by M. Whether the handbook table separates these rows better is open until it is transcribed (decision register).
-- Host supervision added after BL-004 (TSR-615 panda TX blocked, TSR-621 mismatch timing) and the heartbeat-loss siren are not credited. They are re-rated with the next System FMEA baseline.
+- Host supervision added after BL-004 (TSR-615 panda TX blocked, TSR-621 mismatch timing) and the heartbeat-loss siren were not credited at BL-004. They are credited at BL-005 (below).
 
 **After M2 (all in-scope causes):**
 
@@ -167,6 +167,23 @@ M2 adds three monitoring actions:
 - SFM-ACT-016: driver-override supervision in the panda (TSR-304).
 - SFM-ACT-017: FTTI rows for the warning paths that have none, so they can be credited.
 - SFM-ACT-018: detection of a silent loss of the actuation path.
+
+**At BL-005 (System FMEA rev 0.9, 2026-10-16).** The reference build is the default at BL-005, so its panda checks count. Every claim was re-checked against the code at liondriver-dev `1033d98`, panda `a55bdfc`, opendbc `9a13f60`.
+
+| Monitoring | System FMEA, BL-004 | System FMEA, BL-005 | What moved |
+|---|---:|---:|---|
+| M 1–4 (measured) | 0 | 0 | Still nothing measured (WP-V-05, SFM-ACT-012) |
+| M 5–6 | 12 | 15 | SFM-015.C2 (controlsMismatch within 0.5 s, TSR-621), SFM-005.C2 and SFM-011.C2 (TX arrival 50/100 ms, TSR-408, then controlsMismatch) |
+| M 7–8 | 16 | 16 | In: SFM-021.C1/C2 (cruiseMismatch alert after 1 s, TSR-308; no FTTI row) and SFM-032.C1 (reference lock refuses another safety parameter). Out: the three causes above |
+| M 9–10 | 32 | 29 | The three causes that moved to M 7–8 |
+
+What did not move, and why:
+- **Refused over-limit frames** (SFM-002, SFM-008, SFM-009): a refusal while engaged now also disengages with an alert (`pandaTxBlocked`, TSR-615), but M stays 5 and S after the response stays 10, because the envelope is not yet derived from the vehicle (SFM-ACT-001).
+- **SFM-006.C1** (controlsd hangs): the driver is now warned within about 0.66 s, but no frame follows the stall, so the torque ends only when the EPS drops LKA, about 2 s later; with no active zero frame (TSR-109) it stays M 8.
+- **`pandaHeartbeatLost`, `pandaTxRateExceeded`** (TSR-615) are not the main monitor of any System FMEA cause. They name the cause when the panda revokes authority (SFM-015.C2). Heartbeat loss from a hung `pandad` can't reach the host anyway: the panda's own siren covers that case (WP-S-04 T-07a).
+- **SFM-001.C2** (panda grants authority while disengaged): TSR-621 still checks only the other direction (SFM-ACT-013).
+
+WP-S-04 §4 still gives the BL-004 values for T-17 (`controlsMismatch`, 2 s) and T-19 (`cruiseMismatch`, 6 s) and has no row for TX arrival (TSR-408). The MSR rows cite the code for these times; the WP-S-04 update is listed for its owner.
 
 ### 4.8 Risks
 

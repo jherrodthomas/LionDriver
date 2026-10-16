@@ -3948,7 +3948,7 @@
   question: "The stock emergency-braking path runs through powered electronics in comma's harness box. Accept that and test it, or build our own adapter with a passive fail-safe relay?"
   context: "comma's published harness box drawing shows no relay. The camera-to-car link passes through two **powered analog switches** and clamp diodes. If the box loses power while driving (for example a broken ignition wire), the stock camera may be cut off and stock PCS/AEB lost. Nothing reports the switch position back. Our requirement that the stock path has no active parts (HWSR-702) cannot be met with this box."
   reversibility: revisit
-  blocks: "HWSR-702, HWSR-506a, DFMEA harness element rework, FMEDA SG-009"
+  blocks: "HWSR-702, HWSR-506a, DFMEA harness element rework, FMEDA SG-009, DFA IC-05 (DFI-27, DFI-28)"
   gate: G2
   decider: lead
   options:
@@ -3962,5 +3962,5 @@
     - key: C
       title: "Require comma power on every install so the box is always powered"
       detail: "Removes the broken-ignition-wire cause only; switch, pull-down and clamp faults remain. Cost: one extra part per install."
-  sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03"]
+  sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03", "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md OI-9"]
   status: queued
