@@ -4028,5 +4028,5 @@
   after: [DQ-209]
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-16}
-  applied: {ref: PENDING, record: "WP-H-04 §5.3 (deviation record); WP-H-03 §6.3; RR-2026-010 §5", at: 2026-10-16}
+  applied: {ref: 5782d0d39, record: "WP-H-04 §5.3 (deviation record); WP-H-03 §6.3; RR-2026-010 §5", at: 2026-10-16}
   note: "Conditional on the harness box bench tests (VS-HW-02, VS-HW-22…24). Left for the safety-case session: state the deviation in the SG-07 argument."
