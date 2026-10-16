@@ -130,6 +130,13 @@ def parse(md: str) -> list[Goal]:
     goals[goal].fsrs.append(f)
   sgs = list(goals)
   for line in _section(md, 9).splitlines():
+    if line.startswith("| FSR |"):
+      # The header may name goals that have no FSR section of their own yet (SG-08, HARA v0.4); they are traced only.
+      head = _cells(line)[1:]
+      if head[:len(goals)] != list(goals):
+        raise FigureError(f"§9 header {head} does not start with the §5 goals {list(goals)}")
+      sgs = head
+      continue
     if not line.startswith("| FSR-"):
       continue
     c = _cells(line)

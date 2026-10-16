@@ -47,7 +47,7 @@ The functional-safety hazards of the HARA are used as the system-level hazards, 
 | H-06 | Unannounced loss of longitudinal deceleration | L-1, L-2, L-3 | SG-06 |
 | H-07 | Displayed system state differs from actual state (mode confusion) | L-1, L-2, L-3 | (rated within H-02, H-05, H-06) |
 | H-08 | Suppression of the vehicle's stock pre-collision braking | L-4, L-1, L-2 | SG-07 |
-| H-STPA-1 | The vehicle is driven with the item engaged while the driver is not supervising it | L-1, L-2, L-3 | none yet: foreseeable misuse in both SOTIF and the HARA, decided 2026-10-14 ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §6.1, decision register DQ-003); the HARA entry is open (WP-C-08 OI-4) |
+| H-STPA-1 | The vehicle is driven with the item engaged while the driver is not supervising it | L-1, L-2, L-3 | H-09 (WP-C-03 v0.4, situations OS-17/OS-18, SG-08 ASIL A): foreseeable misuse in both SOTIF and the HARA, decided 2026-10-14 ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §6.1, decision register DQ-003, DQ-205) |
 
 ### 2.3 System-level constraints
 
@@ -397,7 +397,7 @@ v0.4 result, from `fmea_lint.py --report`: *41 UCAs (39 with a loss scenario, 2 
 **Corrections found by the cross-check.** The map check found that five UCAs named too few hazards: their scenarios need fault-tree events that sit in other goals' trees. UCA-02 now includes H-05, UCA-19 H-01 and H-04, UCA-31 H-01 and H-03, and UCA-59 H-01 and H-03. LS-25 showed that the masking event BE-1.20 lives only in the SG-01 tree. Since `controlsd` drops actuation on stale inputs, its effect is now an SG-02 loss without alert.
 
 **Unchanged from v0.1:**
-- **H-STPA-1** (unsupervised driver while engaged) is to be treated as foreseeable misuse in both SOTIF and the HARA (OI-1, decided 2026-10-14, WP-C-08 §6.1). The SOTIF side is recorded; the HARA has not rated it yet (WP-C-08 OI-4).
+- **H-STPA-1** (unsupervised driver while engaged) is to be treated as foreseeable misuse in both SOTIF and the HARA (OI-1, decided 2026-10-14, WP-C-08 §6.1). Both sides are recorded: the HARA rates it as OS-17/OS-18 with hazard H-09 and SG-08, ASIL A (WP-C-03 v0.4).
 - **Still open by design:** LS-08 (stock camera behaviour) and LS-09 (DM escalation times).
 - **Most scenarios (28 of 34 at v0.4; 25 of 31 at v0.3) are covered or known gaps** recorded by the HARA, the FSC/TSC, the FTA/FMEA, the DFA or WP-C-08. That gives those items independent support from a method that does not start from component failures.
 
@@ -405,7 +405,7 @@ v0.4 result, from `fmea_lint.py --report`: *41 UCAs (39 with a loss scenario, 2 
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Decided 2026-10-14 (decision register DQ-003): H-STPA-1 is foreseeable misuse in both SOTIF and the HARA, recorded in [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §6.1. Open until the HARA entry exists (WP-C-08 OI-4) | Safety engineer | G1 |
+| OI-1 | Decided 2026-10-14 (decision register DQ-003): H-STPA-1 is foreseeable misuse in both SOTIF and the HARA, recorded in [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §6.1. HARA entry added in WP-C-03 v0.4 (H-09, SG-08); closed | Safety engineer | G1 |
 | OI-2 | LS-01/LS-02: add a SoC-side counterpart to TSR-304 (stop or reduce commanded torque during a driver override) and decide how to treat sub-threshold driver torque (CC-1); add an override indication to the HMI requirements (CC-2) | Safety engineer | G2 |
 | OI-3 | LS-04 (v0.3: the code shows it cannot; the SoC alert within 0.5 s is the only reaction): confirm on the bench whether the siren sounds after a watchdog reset while engaged; if not, keep an engagement flag across reset (e.g. backup SRAM or a reset-cause check) or amend TSR-516; specify the SoC alert time for this path against SG-02/SG-06 | Safety engineer | G2 |
 | OI-4 | LS-06: measure whether the PCM honours CANCEL_REQ and what it does with cruise engaged and no `0x343` from openpilot (hold, coast, fault). v0.3: the 1 s alert of TSR-308 is implemented | Safety engineer | G2 |
