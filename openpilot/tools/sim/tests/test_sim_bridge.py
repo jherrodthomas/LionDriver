@@ -27,6 +27,9 @@ class TestSimBridgeBase(OpenpilotTestCase):
     self.processes.append(p_manager)
 
     sm = messaging.SubMaster(['selfdriveState', 'onroadEvents', 'managerState'])
+    # LionDriver: read-only diagnostics for the failure message (the camera odometry -> calibration -> localizer chain)
+    diag = messaging.SubMaster(['modelV2', 'cameraOdometry', 'extrinsicsCalibration', 'deviceMotion'])
+    seen = {k: [0, 0] for k in ('cameraOdometry', 'extrinsicsCalibration', 'deviceMotion')}  # [valid, received]
     q = Queue()
     bridge = self.create_bridge()
     p_bridge = bridge.run(q, retries=10)
@@ -46,6 +49,11 @@ class TestSimBridgeBase(OpenpilotTestCase):
     not_running = []
     while time.monotonic() < start_time + max_time_per_step:
       sm.update()
+      diag.update(0)
+      for k in seen:
+        if diag.updated[k]:
+          seen[k][0] += diag.valid[k]
+          seen[k][1] += 1
 
       not_running = [p.name for p in sm['managerState'].processes if not p.running and p.shouldBeRunning]
       car_event_issues = [event.name for event in sm['onroadEvents'] if any([event.noEntry, event.softDisable, event.immediateDisable])]
@@ -54,8 +62,11 @@ class TestSimBridgeBase(OpenpilotTestCase):
         no_car_events_issues_once = True
         break
 
+    diagnostics = (f"valid/received {seen}; modelV2.frameDropPerc {diag['modelV2'].frameDropPerc:.1f}; " +
+                   f"calStatus {diag['extrinsicsCalibration'].calStatus}; deviceMotion.inputsOK {diag['deviceMotion'].inputsOK}")
+    print(f"bridge test diagnostics: {diagnostics}")
     assert no_car_events_issues_once, \
-                    f"Failed because no messages received, or CarEvents '{car_event_issues}' or processes not running '{not_running}'"
+                    f"Failed because no messages received, or CarEvents '{car_event_issues}' or processes not running '{not_running}'; {diagnostics}"
 
     start_time = time.monotonic()
     min_counts_control_active = 100
