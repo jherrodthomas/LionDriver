@@ -104,7 +104,7 @@
   <text x="885" y="499.1" font-size="10.5" fill="#0F172A">By design the six driver-monitoring events are PERMANENT alerts</text>
   <text x="885" y="513.2" font-size="10.5" fill="#0F172A">only, with no SOFT_DISABLE or IMMEDIATE_DISABLE</text>
   <text x="885" y="527.2" font-size="10.5" fill="#0F172A">(events.py:524-570); the terminal reaction is the forced deceleratio…</text>
-  <text x="885" y="540.4" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-062</text>
+  <text x="885" y="540.4" font-size="9.8" fill="#475569" font-weight="600">O8 · D9 · in SWF-SE-062</text>
   <rect x="885" y="546.4" width="166.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="968.2" y="557.3" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">SWF-ACT-059 decision pending</text>
   <rect x="40" y="666.7" width="180" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="49" y="686.2" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-070</text>

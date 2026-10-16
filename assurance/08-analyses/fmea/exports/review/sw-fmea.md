@@ -1407,7 +1407,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SWF-062.C1` By design the six driver-monitoring events are PERMANENT alerts only, with no SOFT_DISABLE or IMMEDIATE_DISABLE (events.py:524-570); the terminal reaction is the forced deceleration with lateral control kept. Whether that is the SG-010 safe state of FSR-040 is not recorded; it is queued for the lead (DQ-220) | • Upstream design; FSR-040 names a safe state that the FSC does not define for this path <sub>assurance/08-analyses/fmea/analyses/fsc.yaml</sub> | • test_longitudinal runs the force_decel maneuver in CI and test_monitoring checks the alert levels; neither checks that the reaction meets FSR-040 <sub>openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-059 |
+| `SWF-062.C1` By design the six driver-monitoring events are PERMANENT alerts only, with no SOFT_DISABLE or IMMEDIATE_DISABLE (events.py:524-570); the terminal reaction is the forced deceleration with lateral control kept. Whether that is the SG-010 safe state of FSR-040 is not recorded; it is queued for the lead (DQ-220) | • Upstream design; FSR-040 names a safe state that the FSC does not define for this path. Requirements not documented and no field-exposure evidence cited, so O 8 (RT-2 §2), as SWF-083.C1 and SFM-025.C1 <sub>assurance/08-analyses/fmea/analyses/fsc.yaml</sub> | • test_longitudinal runs the force_decel maneuver in CI and test_monitoring checks the alert levels; neither checks that the reaction meets FSR-040 <sub>openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py</sub> | 8 | 9 | 🔴 **H** | SWF-ACT-059 |
 
 Safety mechanisms: (1) Forced deceleration to standstill after 5 s at the terminal level (policy.py:379-380, 398; controlsd.py:235; longitudinal_planner.py:84-85); lockout (NO_ENTRY) after 2 terminal events or 1 no-response
 
@@ -1971,7 +1971,7 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | `SWF-061.C1` | Escalation of an inattentive or unresponsive driver later than the policy times | 10/5/9 | SWF-ACT-058 |
 | `SWF-061.C2` | Escalation of an inattentive or unresponsive driver later than the policy times | 10/6/8 | SWF-ACT-058 |
 | `SWF-061.C3` | Escalation of an inattentive or unresponsive driver later than the policy times | 10/6/9 | SWF-ACT-058 |
-| `SWF-062.C1` | Terminal unresponsive-driver state reached without the item reaching the SG-010 safe state | 10/6/9 | SWF-ACT-059 |
+| `SWF-062.C1` | Terminal unresponsive-driver state reached without the item reaching the SG-010 safe state | 10/8/9 | SWF-ACT-059 |
 | `SWF-063.C1` | Driver state stale, frozen or non-finite while dmonitoringd treats it as valid | 10/4/10 | SWF-ACT-058, SWF-ACT-060 |
 | `SWF-063.C2` | Driver state stale, frozen or non-finite while dmonitoringd treats it as valid | 10/4/10 | SWF-ACT-058 |
 | `SWF-064.C1` | dmonitoringd or dmonitoringmodeld stops while engaged | 8/5/9 | SWF-ACT-058 |
