@@ -504,11 +504,11 @@
     - key: B
       title: "Gas switches LionDriver off"
       detail: "A simpler mental model. Cost: changes SYS-042, TSR-305 and the release record; more disengagements in daily use."
-  sources: ["assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md OI-4", "assurance/09-production-operation/WP-O-03-user-information-safety-warnings.md OI-3", "assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md OI-3"]
-  status: answered
+  sources: ["assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md OI-7 (was a second OI-4)", "assurance/09-production-operation/WP-O-03-user-information-safety-warnings.md OI-3", "assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md OI-3"]
+  status: applied
+  applied: {ref: "PENDING-PR", record: "WP-C-08 v0.4 MC-08 and OI-7 (the duplicate OI-4)", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
-  note: "STPA part applied in WP-A-05 v0.5: new UCA-07 and LS-36 (release after a gas override), CC-2 (on-screen override alert). Left: the override alert and the HMI clinic (WP-C-08 MC-08, WP-O-03 user information)."
-
+  note: "Left: the user information (WP-O-03 OI-3) and change record change-2026-10-12-panda-safety-mode-lock OI-3, for their owners; the HMI clinic evidence (WP-C-08 §8 V-2)."
 - id: DQ-023
   question: "Should LionDriver cover arterial and rural roads, or highways only?"
   context: "The ODD has a highway part and an arterial/rural part (ODD-A). ODD-A brings in head-on crashes on undivided roads (OS-03) and pedestrians and cyclists near the lane (OS-04). **Dropping it shrinks validation but does not lower the steering goal**: the highway case is rated ASIL C too."
@@ -605,7 +605,8 @@
       title: "You review it now, marked not independent"
       detail: "Progress now. Cost: needs a second, independent review later anyway."
   sources: ["assurance/08-analyses/fmea/item-definition.md IOI-006"]
-  status: answered
+  status: applied
+  applied: {ref: "PENDING-PR", record: "WP-C-01 v0.12 header (Reviewer); LD-ITEM-001 rev 0.4 status and IOI-006", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-028
@@ -1883,7 +1884,7 @@
       title: "Cap the ODD at 90 km/h"
       detail: "No high-speed testing. Cost: the system must refuse or warn above 90 km/h, which limits it on most highways."
   sources: ["assurance/process/README.md “4. **The SOTIF release argument waits on evidence from other”"]
-  note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-260 queued for the ODD bound). ODD side applied in #96: WP-C-02 v0.4 speed row and OI-8, which waits on DQ-260. Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
+  note: "SOTIF part applied in aae16af (WP-V-02 §3.3). ODD side applied: the bound is 110 km/h, the tested speed (DQ-260 A; WP-C-02 v0.5). Left: the 110 km/h test risk review and the VS-VAL-10 plan in WP-V-01 (validation session)."
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
   note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-260 queued for the ODD bound). Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
@@ -4199,10 +4200,10 @@
       detail: "Evidence for the whole range. Cost: a second, higher-risk test review and a site that allows 120 km/h."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3 item 3", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-07", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md §3 speed"]
   asked: 2026-10-16
-  status: answered
+  status: applied
+  applied: {ref: "PENDING-PR", record: "WP-C-02 v0.5 §3.1 speed row, §5.2, OI-8; WP-C-03 v0.4.2 §3; WP-C-07 FM-07 and WP-V-02 §3.3 (SOTIF part)", at: 2026-10-16}
   answer: {choice: A, via: chat, at: 2026-10-16}
-  note: "SOTIF part applied (WP-C-05 SH-13, WP-C-06 TC-20, WP-C-07 FM-07, WP-C-11 §3, WP-V-02 §3.3/§3.4/§4, WP-V-03 KS-25). Left: the speed row of WP-C-02 §3.1 and its figures (ODD session), FM-07 implementation (software), VS-VAL-10 at 110 km/h (validation session)."
-
+  note: "SOTIF part applied (WP-C-05 SH-13, WP-C-06 TC-20, WP-C-07 FM-07, WP-C-11 §3, WP-V-02 §3.3/§3.4/§4, WP-V-03 KS-25). ODD and HARA parts applied: WP-C-02 v0.5 speed row, §5.2 and Figure 3-2, OI-8 closed; WP-C-03 v0.4.2 engaged situations end at 110 km/h. Left: FM-07 implementation (software) and VS-VAL-10 at 110 km/h (validation session)."
 - id: DQ-261
   question: "Should LionDriver pay for a GPU machine to run the CARLA simulator for lighting and weather scenarios?"
   context: "MetaDrive runs on ordinary CPUs but cannot show low sun, glare, night or rain, and has no radar model (WP-V-02 §5.3.2). CARLA with ScenarioRunner can, using a standard scenario format an assessor can rerun, but **it needs a GPU, which costs money every month** (not yet quoted), plus a new bridge and its own fidelity case. Those scenarios otherwise need real drives in those conditions."
