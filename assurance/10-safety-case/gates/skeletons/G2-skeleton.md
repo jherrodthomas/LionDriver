@@ -36,7 +36,7 @@
 | [WP-S-03](../../../03-system/WP-S-03-technical-safety-concept-architecture.md) Technical safety concept and system architectural design | DES-05 | Draft | 5 | |
 | [WP-S-05](../../../03-system/WP-S-05-hsi-specification.md) Hardware-software interface specification | DES-06 | Draft | 7 | |
 | [WP-A-02](../../../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) Coexistence of elements and freedom from interference | DES-07 | Draft | 5 | |
-| [WP-A-03](../../../08-analyses/WP-A-03-dependent-failure-analysis.md) Dependent failure analysis | DES-08 | Draft | 6 | |
+| [WP-A-03](../../../08-analyses/WP-A-03-dependent-failure-analysis.md) Dependent failure analysis | DES-08 | Draft | 8 | |
 | [WP-A-01](../../../08-analyses/WP-A-01-asil-decomposition.md) ASIL decomposition rationale | DES-09 | Draft | 5 | |
 | [WP-A-04](../../../08-analyses/WP-A-04-system-fta-fmea.md) System-level safety analyses (FTA, FMEA) | DES-10 | Draft | 6 | |
 | [WP-V-02](../../../06-validation/WP-V-02-sotif-vv-strategy.md) SOTIF verification and validation strategy, validation targets | DES-11 | Draft | 7 | |
