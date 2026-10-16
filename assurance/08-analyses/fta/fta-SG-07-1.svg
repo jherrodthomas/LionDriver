@@ -162,8 +162,8 @@
 <text x="1940" y="489.5" class="kind">BASIC</text>
 <text x="1748" y="504.0" class="d">Item sends an ACC request during</text>
 <text x="1748" y="518.5" class="d">a PCS event</text>
-<rect x="1748.0" y="526.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="1775.0" y="538.0" class="chip" fill="#c62828">no FMEA</text>
+<rect x="1748.0" y="526.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1775.0" y="538.0" class="chip" fill="#fff">SFM-036</text>
 <circle cx="1844.0" cy="574.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
 <rect x="1977.5" y="467.0" width="220" height="71.0" rx="9" class="shadow"/>
 <rect x="1976" y="464.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>

@@ -50,6 +50,8 @@
 # Rev 0.13 (2026-10-16): new SFM-035 (item sends a frame that alters the stock pre-collision function), the System FMEA backing
 # for FTA BE-7.08 (WP-A-04 SG-07, F-17). C1: host QM fault, M 5 on the panda per-frame gate. C3: the gate itself lets the frame
 # through, M 10 (dual point with C1).
+# Also rev 0.13: new SFM-036 (item keeps requesting acceleration while stock PCS brakes), backing FTA BE-7.13; action SFM-ACT-020
+# waits on the lead (DQ-300, queued).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -3371,6 +3373,88 @@ failure_modes:
     notes: >-
       Backs FTA BE-7.08 (WP-A-04 SG-07, F-17): the SoC sends a PCS-relevant frame. WP-A-04 §10 SFMEA-05 is the same mode.
 
+  - id: SFM-036
+    element: SFM-SE-001
+    function: SFM-FN-008
+    failure_mode: Item keeps requesting acceleration while stock PCS brakes
+    guideword: unintended
+    effects:
+      - {level: local, description: "ACC_CONTROL keeps carrying the planner's acceleration request while the stock camera reports a PCS braking event"}
+      - {level: next_higher, description: "PCS braking depends on the PCM giving it priority over the item's request (AOU-04R, unverified)"}
+      - {level: end, description: "Stock AEB deceleration reduced or delayed if the PCM arbitrates otherwise", hazard: HZ-011, severity: 10}
+    severity: 10
+    safety_mechanisms:
+      - description: 'stockAeb (PRE_COLLISION PRECOLLISION_ACTIVE with negative FORCE) raises a PERMANENT "BRAKE!" alert and blocks engagement (NO_ENTRY);
+          it has no disable reaction and does not change the longitudinal request'
+        ref: openpilot/selfdrive/selfdrived/events.py
+      - description: Driver brake press revokes longitudinal authority in the panda (T-04)
+        ref: opendbc_repo/opendbc/safety/safety.h
+        test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+    causes:
+      - id: SFM-036.C1
+        element: SFM-SE-013
+        description: The item has no reaction to a stock PCS event on its longitudinal command; controlsd keeps requesting the planner's
+          acceleration (design gap, FTA BE-7.13)
+        prevention_controls:
+        - description: 'None in the item: FSR-07.04 places PCS priority in the PCM as an external measure (AOU-04R)'
+          ref: assurance/02-concept/WP-C-04-functional-safety-concept.md
+        detection_controls:
+        - description: No pre-release test targets this cause
+        occurrence: 8
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-020
+        msr:
+          mechanisms:
+          - 1
+          - 2
+          diagnostic: stockAeb detects the PCS event from the stock camera's PRE_COLLISION frame and raises an alert
+          system_response: Alert only; the longitudinal request continues until the driver brakes (panda revokes on the brake press)
+          effect_after_response: 'Unchanged unless the PCM gives PCS priority (AOU-04R): the item may still oppose stock braking'
+          severity_after: 10
+          frequency: 8
+          monitoring: 8
+          ap: H
+          timing:
+            basis: unknown
+          rationale: 'M 8: the diagnostic targets this cause, but the response does not reach a safe state; the PCS case has no WP-S-04
+            FTTI row for the item side (SG-07 budgets cover forwarding only)'
+          actions:
+          - SFM-ACT-020
+      - id: SFM-036.C2
+        element: SFM-SE-031
+        description: The PCM does not give stock PCS braking priority over the item's ACC_CONTROL request (AOU-04R not met)
+        prevention_controls:
+        - description: Series-production Toyota ECU; PCS priority over 0x343 assumed (AOU-04R), not verified by LionDriver
+        detection_controls:
+        - description: No pre-release test targets this cause; AOU-04R needs a message review and a PCS target test (WP-C-04)
+        occurrence: 3
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-006
+        rationale: 'Internal behaviour of a Toyota ECU, outside the item (scope: interface only); characterised by the AOU-04R vehicle test
+          (SFM-ACT-006)'
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: the item cannot see how the PCM arbitrates'
+          system_response: None
+          effect_after_response: 'Unchanged: stock braking reduced while the item requests acceleration'
+          severity_after: 10
+          frequency: 3
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-020
+    notes: >-
+      Backs FTA BE-7.13 (WP-A-04 SG-07, F-17); the PCM side is UE-7.14 (AOU-04R). Cut set MCS-07.10 = {BE-7.13, UE-7.14}: at the
+      baseline BE-7.13 is always true (C1), so the PCM assumption carries the goal alone. Whether the item should stand down on a stock
+      PCS event is a vehicle behaviour question for the lead (decision register DQ-300).
+
 actions:
   - id: SFM-ACT-001
     kind: design_change
@@ -3486,3 +3570,9 @@ actions:
     description: 'Revoke lateral authority in the panda when it rejects a steering frame while authority is granted, and keep
       it revoked until a new valid engagement (TSR-108; lead decision DQ-060, option A). At BL-005 the frame is dropped and
       only the host disengages (pandaTxBlocked)'
+  - id: SFM-ACT-020
+    kind: design_change
+    status: decision_pending
+    description: 'React to a stock PCS event on the longitudinal command (for example a neutral or zero acceleration request, or a
+      longitudinal disable, while stockAeb is set), so stock AEB does not depend on PCM arbitration alone (AOU-04R); or keep today''s
+      behaviour and rely on the AOU-04R vehicle test. Lead decision DQ-300'

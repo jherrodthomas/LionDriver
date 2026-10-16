@@ -304,8 +304,10 @@ events:
     fmeda: [fmeda-sg009:FMD-022, fmeda-sg009:FMD-023]
   - id: BE-7.13
     class: systematic_sw
-    gap: >-
-      No SW FMEA mode for an ACC request sent during a stock PCS event (AOU-04R covers the PCM side). F-17
+    fmea: [SFM-036]
+    note: >-
+      SFM-036.C1: no item reaction to a stock PCS event on the longitudinal command (always true at the baseline; SFM-ACT-020,
+      DQ-300). The PCM side is UE-7.14 and SFM-036.C2 (AOU-04R). F-17 closed for the System FMEA, 2026-10-16
   - id: UE-7.14
     class: external
     ref: AOU-04R

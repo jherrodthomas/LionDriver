@@ -228,7 +228,7 @@ hazards:
     description: Stock AEB/FCW unavailable or degraded while the item is installed
     guidewords: [M01, M02, M04, M06, M08, M09, M11, M13]
     functions: [SFM-FN-008]
-    sfm_refs: [SFM-033, SFM-034, SFM-035]
+    sfm_refs: [SFM-033, SFM-034, SFM-035, SFM-036]
   - id: HZ-012
     description: Driver misinformed about automation state (missing or late handback warning, wrong displayed state, stock cruise active unknowingly)
     guidewords: [M01, M02, M04, M06, M08, M09, M10, M11, M12, M13]

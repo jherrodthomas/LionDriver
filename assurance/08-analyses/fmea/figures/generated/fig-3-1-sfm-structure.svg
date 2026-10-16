@@ -25,7 +25,7 @@
   <text x="292" y="1821.4" font-size="10.5" fill="#0F172A" font-weight="600">Toyota powertrain and brake control</text>
   <text x="292" y="1835.5" font-size="10.5" fill="#0F172A" font-weight="600">(receives ACC acceleration</text>
   <text x="292" y="1849.6" font-size="10.5" fill="#0F172A" font-weight="600">requests)</text>
-  <text x="292" y="1862.3" font-size="9.5" fill="#475569">4 causes located here</text>
+  <text x="292" y="1862.3" font-size="9.5" fill="#475569">5 causes located here</text>
   <rect x="526" y="1787.4" width="230" height="83.9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.3" rx="8" stroke-dasharray="5 3"/>
   <text x="535" y="1806.9" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-032</text>
   <rect x="622.1" y="1795.9" width="50.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="647.5" y="1806.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">external</text>
@@ -69,7 +69,7 @@
   <rect x="136.1" y="907.2" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="152.5" y="918.2" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">item</text>
   <text x="49" y="932.8" font-size="10.5" fill="#0F172A" font-weight="600">LionDriver item (L2 ACC + ALC +</text>
   <text x="49" y="946.9" font-size="10.5" fill="#0F172A" font-weight="600">driver monitoring)</text>
-  <text x="49" y="959.6" font-size="9.5" fill="#475569">35 failure modes</text>
+  <text x="49" y="959.6" font-size="9.5" fill="#475569">36 failure modes</text>
   <rect x="284" y="567.3" width="210" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="293" y="586.8" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-002</text>
   <rect x="380.1" y="575.8" width="47.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="403.7" y="586.7" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">system</text>
@@ -103,7 +103,7 @@
   <rect x="624.1" y="483.9" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="494.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
   <text x="537" y="509.5" font-size="10.5" fill="#0F172A" font-weight="600">Control (controlsd,</text>
   <text x="537" y="523.6" font-size="10.5" fill="#0F172A" font-weight="600">lateral/longitudinal controllers)</text>
-  <text x="537" y="536.3" font-size="9.5" fill="#475569">7 causes located here</text>
+  <text x="537" y="536.3" font-size="9.5" fill="#475569">8 causes located here</text>
   <rect x="528" y="567.3" width="210" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="537" y="586.8" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-014</text>
   <rect x="624.1" y="575.8" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="586.7" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
@@ -181,7 +181,7 @@
   <text x="781" y="1663.2" font-size="10.5" fill="#0F172A">actuation</text>
   <rect x="772" y="1688.2" width="468" height="57.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="781" y="1707.7" font-size="12" fill="#0F172A" font-weight="700">SFM-FN-008</text>
-  <rect x="1192.7" y="1696.7" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="1707.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">3 FM</text>
+  <rect x="1192.7" y="1696.7" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="1707.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">4 FM</text>
   <text x="781" y="1722.3" font-size="10.5" fill="#0F172A">F8 Stock function preservation: keep stock vehicle safety functions not replaced by the</text>
   <text x="781" y="1736.4" font-size="10.5" fill="#0F172A">item available</text>
   <line x1="40" y1="1953.4" x2="1240" y2="1953.4" stroke="#E2E8F0" stroke-width="1"/>
