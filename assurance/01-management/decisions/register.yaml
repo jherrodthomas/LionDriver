@@ -4048,6 +4048,7 @@
   reversibility: revisit
   blocks: "Envelope ASIL in WP-S-02/WP-S-03 and the SysML model; SWSR and HWSR ASILs; hardware metric targets; DEC-01 scope"
   gate: G2
+  asked: 2026-10-16
   decider: lead
   after: [DQ-007, DQ-063]
   options:
@@ -4062,7 +4063,9 @@
       title: "Decide after the first hardware metric results (WP-H-04)"
       detail: "No commitment now; requirements are written to C meanwhile. Cost: the software process level stays uncertain, and work done to B-level rigour may need redoing."
   sources: ["assurance/02-concept/WP-C-04-functional-safety-concept.md §3, §4", "assurance/02-concept/WP-C-03-hara.md §5 (v0.4)", "assurance/08-analyses/WP-A-01-asil-decomposition.md §3, DEC-01", "assurance/03-system/WP-S-02-technical-safety-requirements.md §2.1", "assurance/04-hardware/WP-H-04-hardware-metrics.md"]
-  status: queued
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-16, note: "Harden to ASIL C."}
+  applied: {ref: 27cf8ca6d, record: "WP-C-04 v0.9 §4 and §10, WP-S-02 v0.25 §2.1, WP-S-03 v0.11 (scope, OI-6), WP-A-01 v0.6 §3 and OI-3", at: 2026-10-16}
 
 - id: DQ-210
   question: "Closing on slower traffic is now rated E4, as you chose. That also raises the goal against silently lost braking (SG-06) to ASIL C. Accept it?"
