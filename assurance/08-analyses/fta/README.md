@@ -4,7 +4,7 @@ Generated from the text trees in [WP-A-04](../WP-A-04-system-fta-fmea.md) by `ft
 
 | Goal | Top event | Sheets |
 |---|---|---|
-| SG-01 | TE-01 uncontrollable lateral motion, or steering actuation while not engaged | [1: TE-01](fta-SG-01-1.svg), [2: G1.1](fta-SG-01-2.svg), [3: G1.2](fta-SG-01-3.svg), [4: G1.1.1](fta-SG-01-4.svg) |
+| SG-01 | TE-01 uncontrollable lateral motion, or steering actuation while not engaged | [1: TE-01](fta-SG-01-1.svg), [2: G1.1](fta-SG-01-2.svg), [3: G1.2](fta-SG-01-3.svg), [4: G1.1.1](fta-SG-01-4.svg), [5: G1.2.1](fta-SG-01-5.svg), [6: G1.1.1.a](fta-SG-01-6.svg) |
 | SG-02 | TE-02 loss or degradation of lateral control without adequate take-over warning | [1: TE-02](fta-SG-02-1.svg), [2: G2.1](fta-SG-02-2.svg), [3: G2.2](fta-SG-02-3.svg), [4: G2.3](fta-SG-02-4.svg), [5: G2.4](fta-SG-02-5.svg), [6: G2.6](fta-SG-02-6.svg) |
 | SG-03 | TE-03 unintended acceleration | [1: TE-03](fta-SG-03-1.svg), [2: G3.1](fta-SG-03-2.svg), [3: G3.3](fta-SG-03-3.svg) |
 | SG-04 | TE-04 deceleration beyond what following traffic and the driver can control | [1: TE-04](fta-SG-04-1.svg), [2: G4.1](fta-SG-04-2.svg), [3: G4.6](fta-SG-04-3.svg), [4: G4.3](fta-SG-04-4.svg), [5: G4.4](fta-SG-04-5.svg), [6: G4.2](fta-SG-04-6.svg), [7: G4.8](fta-SG-04-7.svg), [8: G4.5](fta-SG-04-8.svg), [9: G4.7](fta-SG-04-9.svg) |
