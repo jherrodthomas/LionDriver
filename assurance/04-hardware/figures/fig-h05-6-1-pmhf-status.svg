@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="836" viewBox="0 0 1280 836" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 6-1. PMHF: status of the evaluation against the targets (WP-H-05 §4, §6, §8)</title>
-  <desc id="d">Top: the inputs to the PMHF evaluation with their status from §6: method proposed but not approved, mission profile proposed in part, no failure rates because there is no BOM, FMEDA qualitative at block level only, PMHF per safety goal cannot be computed, and verification of the vehicle external measures AOU-01R, AOU-04R and AOU-05R not started. Bottom: for each row of the §8 results template (SG-01 and SG-03/SG-04 in two variants, with and without external measures; SG-02/SG-06, SG-05 and SG-07) the terms single-point plus residual, dual-point and PMHF are all to be determined, the target is below 100 FIT (10 to the minus 7 per hour) and the result is not yet computed. The expected dominant contributors of §5.1 and the external measures of §5 are listed per row.</desc>
+  <desc id="d">Top: the inputs to the PMHF evaluation with their status from §6: method proposed but not approved, mission profile proposed in part with working values in use (15 years, 7,500 operating hours, ambient up to 85 degrees C), no part-level failure rates because there is no BOM (generic rates only, the harness box switches at the SN 29500-2 reference value), FMEDA qualitative at block level plus a generic-rate block FMEDA, PMHF per safety goal cannot be computed, and verification of the vehicle external measures AOU-01R, AOU-04R and AOU-05R not started. Bottom: for each row of the §8 results template (SG-01 and SG-03/SG-04 in two variants, with and without external measures; SG-02/SG-06, SG-05 and SG-07) the terms single-point plus residual, dual-point and PMHF are all to be determined, the target is below 100 FIT (10 to the minus 7 per hour) and the result is not yet computed. The expected dominant contributors of §5.1 and the external measures of §5 are listed per row.</desc>
   <defs>
     <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
     <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
@@ -37,19 +37,19 @@
   <rect x="242" y="132" width="6" height="76" rx="3" fill="#D97706"/>
   <text x="258" y="154" class="t b" font-size="12">Mission profile</text>
   <text x="422" y="154" class="m" font-size="10" text-anchor="end" font-weight="600">OI-2</text>
-  <text x="258" y="176" class="m" font-size="10.5">15-year life proposed;</text>
-  <text x="258" y="190" class="m" font-size="10.5">other values TBD</text>
+  <text x="258" y="176" class="m" font-size="10.5">15 y · 7,500 h · 85 °C</text>
+  <text x="258" y="190" class="m" font-size="10.5">working values, TBD</text>
   <rect x="444" y="132" width="190" height="76" rx="10" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6"/>
   <rect x="444" y="132" width="6" height="76" rx="3" fill="#D2553F"/>
   <text x="460" y="154" class="t b" font-size="12">Failure rates</text>
   <text x="624" y="154" class="m" font-size="10" text-anchor="end" font-weight="600">OI-5</text>
-  <text x="460" y="176" class="m" font-size="10.5">None — requires BOM</text>
-  <text x="460" y="190" class="m" font-size="10.5">(ST data: WP-H-07 QE-02)</text>
+  <text x="460" y="176" class="m" font-size="10.5">Generic only; no BOM</text>
+  <text x="460" y="190" class="m" font-size="10.5">(U1/U2: SN 29500-2)</text>
   <rect x="646" y="132" width="190" height="76" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.6"/>
   <rect x="646" y="132" width="6" height="76" rx="3" fill="#D97706"/>
   <text x="662" y="154" class="t b" font-size="12">FMEDA</text>
-  <text x="662" y="176" class="m" font-size="10.5">Qualitative block level</text>
-  <text x="662" y="190" class="m" font-size="10.5">only (WP-H-03)</text>
+  <text x="662" y="176" class="m" font-size="10.5">Qualitative + generic-</text>
+  <text x="662" y="190" class="m" font-size="10.5">rate block (H-03 §6.3)</text>
   <rect x="848" y="132" width="190" height="76" rx="10" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.6"/>
   <rect x="848" y="132" width="6" height="76" rx="3" fill="#D2553F"/>
   <text x="864" y="154" class="t b" font-size="12">PMHF per SG</text>

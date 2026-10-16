@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.9 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.10 | draft | BL-005 | RT-2 | 2026-10-16 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven on public roads by a licensed driver. Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -147,16 +147,16 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SFM-002.C1` Lateral controller output too high (gain, torque model, saturation logic) | • Upstream review and lint; LatControlCurvature does reset its PID (latcontrol_curvature.py:28-31), so the omission may be an oversight or deliberate upstream; no requirement states either <sub>openpilot/selfdrive/controls/lib/latcontrol_curvature.py</sub> | • test_latcontrol.py covers saturation only; test_latcontrol_torque_buffer.py covers the request buffer only; nothing checks controller state across disengagement | 7 | 10 | 🔴 **H** | SFM-ACT-001 |
-| `SFM-002.C2` Model outputs excessive desired curvature | • Upstream neural network trained and validated by comma.ai; no development or validation evidence is available to LionDriver (SOTIF / ISO PAS 8800 scope, WP-C-06) <sub>openpilot/selfdrive/modeld</sub> | • No pre-release test targets this cause | 7 | 10 | 🔴 **H** | SFM-ACT-001, SFM-ACT-009 |
+| `SFM-002.C1` Lateral controller output too high (gain, torque model, saturation logic) | • Upstream review and lint; LatControlCurvature does reset its PID (latcontrol_curvature.py:28-31), so the omission may be an oversight or deliberate upstream; no requirement states either <sub>openpilot/selfdrive/controls/lib/latcontrol_curvature.py</sub> | • test_latcontrol.py covers saturation only; test_latcontrol_torque_buffer.py covers the request buffer only; nothing checks controller state across disengagement | 7 | 10 | 🔴 **H** | SFM-ACT-001, SFM-ACT-019 |
+| `SFM-002.C2` Model outputs excessive desired curvature | • Upstream neural network trained and validated by comma.ai; no development or validation evidence is available to LionDriver (SOTIF / ISO PAS 8800 scope, WP-C-06) <sub>openpilot/selfdrive/modeld</sub> | • No pre-release test targets this cause | 7 | 10 | 🔴 **H** | SFM-ACT-001, SFM-ACT-009, SFM-ACT-019 |
 | `SFM-002.C3` Safety model torque/rate limits wrong for this vehicle or not enforced | • Panda limits are copied from upstream vehicle tuning (same constants as the SoC side); no independent envelope derived from vehicle measurements (FSC FOI-001) <sub>opendbc_repo/opendbc/safety/modes/toyota.h</sub><br>• Panda safety code: MISRA C:2012, 100% line coverage, review; rated in the SW FMEA <sub>assurance/08-analyses/fmea/analyses/sw-fmea.yaml</sub> | • opendbc safety suite with 100% line coverage and mutation tests, run by CI on every change (proven, early, test-to-fail) <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 6 | 9 | 🔴 **H** | SFM-ACT-001 |
-| `SFM-002.C4` Wrong vehicle parameters (steer ratio, lateral accel factor, torque offsets) from online learners | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job); unit tests are not requirements-based; no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2) <sub>scripts/lint/lint.sh</sub><br>• paramsd bounds the learned steer ratio to 0.5-2x CarParams and rate-limits offsets; torqued accepts estimates only within sanity bounds of the CarParams values <sub>openpilot/selfdrive/locationd/paramsd.py:47</sub> | • paramsd and torqued unit tests (estimate bounds and convergence); targeted, not proven by fault injection <sub>openpilot/selfdrive/locationd/test/test_paramsd.py</sub> | 6 | 8 | 🔴 **H** | SFM-ACT-001, SFM-ACT-002 |
+| `SFM-002.C4` Wrong vehicle parameters (steer ratio, lateral accel factor, torque offsets) from online learners | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job); unit tests are not requirements-based; no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2) <sub>scripts/lint/lint.sh</sub><br>• paramsd bounds the learned steer ratio to 0.5-2x CarParams and rate-limits offsets; torqued accepts estimates only within sanity bounds of the CarParams values <sub>openpilot/selfdrive/locationd/paramsd.py:47</sub> | • paramsd and torqued unit tests (estimate bounds and convergence); targeted, not proven by fault injection <sub>openpilot/selfdrive/locationd/test/test_paramsd.py</sub> | 6 | 8 | 🔴 **H** | SFM-ACT-001, SFM-ACT-002, SFM-ACT-019 |
 
 Safety mechanisms: (1) Panda/opendbc Toyota safety model limits steering torque magnitude and rate on TX · (2) Excessive lateral acceleration check (> 2x ISO lateral accel for 0.25 s) raises excessiveActuation (SOFT_DISABLE) · (3) BL-005: selfdrived raises pandaTxBlocked (IMMEDIATE_DISABLE) when a panda's safetyTxBlocked count rises between two pandaStates samples while engaged, i.e. when the panda refused a frame the SoC sent (TSR-615)
 
 [Monitoring and system response](#7-monitoring-and-system-response): `SFM-002.C1` mechanism 1, 3: M 5 · F 7 · S after response 10 → 🔴 **H**<br>`SFM-002.C2` mechanism 1, 3: M 5 · F 7 · S after response 10 → 🔴 **H**<br>`SFM-002.C3` mechanism 2: M 8 · F 6 · S after response 10 → 🔴 **H**<br>`SFM-002.C4` mechanism 1, 3: M 5 · F 6 · S after response 10 → 🔴 **H**
 
-<sub>Note: HARA input: excessive steering intervention while engaged.</sub>
+<sub>Note: HARA input: excessive steering intervention while engaged. Lead decision DQ-060 (2026-10-14, option A): when the envelope rejects a steering command, steering switches off until the driver re-engages (TSR-108). At BL-005 the host already disengages on the first refused frame while engaged (pandaTxBlocked, TSR-615); the panda itself only drops the frame. The firmware half is SFM-ACT-019.</sub>
 
 #### SFM-003 · Steering in the wrong direction (away from lane center)
 
@@ -492,7 +492,7 @@ Safety mechanisms: (1) steerOverride -> OVERRIDE_LATERAL state · (2) EPS torque
 
 [Monitoring and system response](#7-monitoring-and-system-response): `SFM-018.C1` mechanism 2: M 10 · F 6 · S after response 10 → 🔴 **H**<br>`SFM-018.C2` mechanism 2: M 10 · F 8 · S after response 10 → 🔴 **H**
 
-<sub>Note: HARA input: automation resists evasive steering.</sub>
+<sub>Note: HARA input: automation resists evasive steering. Lead decision DQ-053 (2026-10-14, option A): when the driver steers against LionDriver it backs off and shows a cue; SFM-ACT-016 carries the design.</sub>
 
 #### SFM-019 · Cancel button does not disengage
 
@@ -529,6 +529,8 @@ Effects:
 Safety mechanisms: (1) gasPressedOverride -> OVERRIDE_LONGITUDINAL; longActive false during override
 
 [Monitoring and system response](#7-monitoring-and-system-response): `SFM-020.C1` mechanism 1: M 5 · F 6 · S after response 3 → 🔴 **H**
+
+<sub>Note: Lead decision DQ-022 (2026-10-14, option A): pressing the accelerator pauses longitudinal control only and does not disengage (today's behaviour, gasPressedOverride). The effects above assume this default; the on-screen override cue is to be checked in the HMI clinic (WP-C-08).</sub>
 
 #### SFM-021 · Stock cruise stays engaged after LionDriver disengages
 
@@ -620,7 +622,7 @@ Safety mechanisms: (1) Lockout after repeated non-response prevents re-engagemen
 
 [Monitoring and system response](#7-monitoring-and-system-response): `SFM-025.C1` mechanism 1: M 10 · F 8 · S after response 10 → 🔴 **H**
 
-<sub>Note: Observation: in BL-001, events.py maps driverDistracted3 and driverUnresponsive3 only to an ET.PERMANENT alert; no SOFT_DISABLE/IMMEDIATE_DISABLE is attached, so reaching awareness 0 does not by itself disengage. This may be a deliberate design choice (avoid dropping control on an incapacitated driver). It needs an explicit safety-concept decision (SFM-ACT-005); unchanged at BL-004. HARA input: driver incapacitated while engaged.</sub>
+<sub>Note: Observation: in BL-001, events.py maps driverDistracted3 and driverUnresponsive3 only to an ET.PERMANENT alert; no SOFT_DISABLE/IMMEDIATE_DISABLE is attached, so reaching awareness 0 does not by itself disengage. This may be a deliberate design choice (avoid dropping control on an incapacitated driver). It needs an explicit safety-concept decision (SFM-ACT-005); unchanged at BL-004 and BL-005. HARA input: driver incapacitated while engaged. Lead decision DQ-205 (2026-10-14, option A): the unresponsive driver is its own hazard with an ASIL A goal (here HZ-013, SG-010; H-09 in WP-C-03 once the HARA adds it), and its safe state is defined together with the zero-awareness reaction.</sub>
 
 #### SFM-026 · Takeover or disengagement alert not presented
 
@@ -802,7 +804,7 @@ Safety mechanisms: (1) relayMalfunction fault from panda -> IMMEDIATE_DISABLE
 | SFM-ACT-001 | design_change | Derive steering and acceleration envelopes from measurements on the reference vehicle and set the panda limits from them, independently of the SoC limits (same as SWF-ACT-003, FSC FOI-001) | Jherrod Thomas | open | SFM-002.C1, SFM-002.C2, SFM-002.C3, SFM-002.C4, SFM-004.C1, SFM-008.C1, SFM-008.C2, SFM-009.C2, SFM-029.C2 | — |
 | SFM-ACT-002 | detection | Requirements-based tests for the host safety-relevant functions (selfdrived, controlsd, pandad, car interface, locationd bounds, monitoring policy), proven by mutation or fault injection and run as a CI gate (see SWF host actions) | Jherrod Thomas | open | SFM-002.C4, SFM-004.C3, SFM-005.C3, SFM-006.C2, SFM-006.C3, SFM-008.C1, SFM-023.C1, SFM-023.C2, SFM-030.C1 | — |
 | SFM-ACT-003 | detection | Execute system integration and vehicle verification on the reference car (WP-S-08, WP-S-09) and the HIL bench (D-04): steering sign and torque response, EPS and powertrain interface behaviour (lockouts, ignored requests), brake, accelerator and cancel paths, relay and harness faults, 12 V interruptions, alert latency and audibility, CPU-load soak | Jherrod Thomas | open | SFM-003.C1, SFM-003.C2, SFM-003.C4, SFM-004.C2, SFM-004.C3, SFM-005.C1, SFM-007.C2, SFM-008.C3, SFM-008.C4, SFM-009.C3, SFM-010.C3, SFM-011.C1, SFM-012.C1, SFM-013.C2, SFM-015.C3, SFM-017.C1, SFM-018.C1, SFM-019.C1, SFM-020.C1, SFM-022.C3, SFM-026.C2, SFM-027.C1, SFM-028.C2, SFM-031.C1 | — |
-| SFM-ACT-005 | design_change | Decide in the FSC how the item reacts when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction at BL-004) and implement the decision | Jherrod Thomas | decision_pending | SFM-025.C1 | — |
+| SFM-ACT-005 | design_change | Decide in the FSC how the item reacts when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction at BL-004 or BL-005) and implement the decision. DQ-205 (answered) makes this the safe state of SG-010 (ASIL A); the reaction itself is still to be decided | Jherrod Thomas | decision_pending | SFM-025.C1 | — |
 | SFM-ACT-006 | detection | Establish on the reference car which stock TSS2 functions (PCS/AEB, FCW) remain available with LionDriver installed and longitudinal control enabled, and verify the stock pre-collision path after installation (PFMEA PFM-014) | Jherrod Thomas | open | SFM-010.C2, SFM-033.C1, SFM-033.C2 | — |
 | SFM-ACT-007 | design_change | Supervise the alert channels: treat loss of ui or soundd liveness, or a stale displayed state, as a fault that escalates (audible fallback, disengagement) instead of continuing silently | Jherrod Thomas | open | SFM-015.C1, SFM-026.C1, SFM-026.C2, SFM-026.C3, SFM-028.C1 | — |
 | SFM-ACT-008 | design_change | Allow engagement only when the fingerprint, CarParams and panda safety parameter match the reference configuration AC-001 (refuse fuzzy matches in the reference build); see PFMEA PFM-013 | Jherrod Thomas | in_progress | SFM-032.C1 | — |
@@ -813,9 +815,10 @@ Safety mechanisms: (1) relayMalfunction fault from panda -> IMMEDIATE_DISABLE
 | SFM-ACT-013 | monitoring | Check on the host, within the SG-01 FTTI, that the panda reports controls_allowed false while the item is disengaged (the reverse of the controlsMismatch check, which at BL-005 still covers only engaged with authority withdrawn), with a disable and an alert |  | open | — | — |
 | SFM-ACT-014 | monitoring | Specify in the TSC a steering-direction plausibility monitor (commanded torque sign against measured yaw rate and lane-relative lateral motion), or justify its absence against HZ-003 |  | open | — | — |
 | SFM-ACT-015 | monitoring | Detect stale commands and inputs within the SG-01 FTTI: command-frame freshness in the MCU with an active zero frame (TSR-408, TSR-109) and frozen-content and age checks on model outputs in controlsd (TSR-602, AIR-17) |  | in_progress | — | — |
-| SFM-ACT-016 | monitoring | Supervise driver override in the panda: driver steering torque above the override threshold limits or revokes lateral authority within the SG-05 0.2 s budget (TSR-304) |  | open | — | — |
+| SFM-ACT-016 | monitoring | Supervise driver override in the panda: driver steering torque above the override threshold limits or revokes lateral authority within the SG-05 0.2 s budget (TSR-304). Behaviour decided by the lead (DQ-053, option A): back off on override and show a cue |  | open | — | — |
 | SFM-ACT-017 | monitoring | Add WP-S-04 FTTI rows for the warning paths without one (insufficient lateral control, late or insufficient braking warnings, SG-008 unintended engagement, driver monitoring), so these mechanisms can be compared with a time budget |  | open | — | — |
 | SFM-ACT-018 | monitoring | Detect silent loss of the actuation path: report forwarded and refused TX frames from the panda, and compare EPS and PCM acceptance (LKA_STATE, ACC status) with the commands, warning within the SG-02/06 1 s budget |  | in_progress | — | — |
+| SFM-ACT-019 | design_change | Revoke lateral authority in the panda when it rejects a steering frame while authority is granted, and keep it revoked until a new valid engagement (TSR-108; lead decision DQ-060, option A). At BL-005 the frame is dropped and only the host disengages (pandaTxBlocked) |  | open | SFM-002.C1, SFM-002.C2, SFM-002.C4 | — |
 
 ## 6. Priority H causes without a completed action
 
@@ -824,10 +827,10 @@ Safety mechanisms: (1) relayMalfunction fault from panda -> IMMEDIATE_DISABLE
 | `SFM-001.C1` | Steering torque applied when not engaged | 10/6/8 | **none** |
 | `SFM-001.C2` | Steering torque applied when not engaged | 10/5/3 | **none** |
 | `SFM-001.C3` | Steering torque applied when not engaged | 10/6/9 | **none** |
-| `SFM-002.C1` | Steering torque or torque rate above limits | 10/7/10 | SFM-ACT-001 |
-| `SFM-002.C2` | Steering torque or torque rate above limits | 10/7/10 | SFM-ACT-001, SFM-ACT-009 |
+| `SFM-002.C1` | Steering torque or torque rate above limits | 10/7/10 | SFM-ACT-001, SFM-ACT-019 |
+| `SFM-002.C2` | Steering torque or torque rate above limits | 10/7/10 | SFM-ACT-001, SFM-ACT-009, SFM-ACT-019 |
 | `SFM-002.C3` | Steering torque or torque rate above limits | 10/6/9 | SFM-ACT-001 |
-| `SFM-002.C4` | Steering torque or torque rate above limits | 10/6/8 | SFM-ACT-001, SFM-ACT-002 |
+| `SFM-002.C4` | Steering torque or torque rate above limits | 10/6/8 | SFM-ACT-001, SFM-ACT-002, SFM-ACT-019 |
 | `SFM-003.C1` | Steering in the wrong direction (away from lane center) | 10/6/8 | SFM-ACT-003 |
 | `SFM-003.C2` | Steering in the wrong direction (away from lane center) | 10/6/8 | SFM-ACT-003 |
 | `SFM-003.C3` | Steering in the wrong direction (away from lane center) | 10/6/10 | SFM-ACT-009 |

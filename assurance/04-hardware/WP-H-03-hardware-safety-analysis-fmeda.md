@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-03 Hardware safety analysis (FMEA/FMEDA) |
 | Standard reference | ISO 26262-5:2018 §7 (safety analyses on HW design), §8 (metrics input), Annex D (diagnostic coverage of safety mechanisms, informative); ISO 26262-9:2018 §8 (safety analyses); ISO 26262-11:2018 (semiconductor failure modes, informative); ASPICE 4.0 HWE.2 |
-| Version | 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
+| Version | 0.4 (§6.3 recomputed with FMEDA rev 0.4: U1/U2 at the SN 29500-2 reference value, 2 × 25 FIT, SG-07 SPFM 78.1 %; planned-measure cases recomputed with stated DC assumptions; §2.3 source status; 2026-10-16). 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
 | Status | Draft (qualitative FMEA); quantitative FMEDA: generic-rate estimate in §6.3, part-level template TBD |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -70,6 +70,8 @@ licensed text**. A coverage claim above "low" requires justification (analysis o
 
 One source per class is used throughout; mixing handbooks within one class is avoided. The
 choice is to be confirmed by the safety manager (OI-2).
+
+*Status 2026-10-16:* neither SN 29500 nor IEC 61709 is held by the project, and neither could be reached from the analysis environment. The FMEDA uses one secondary quote of SN 29500-2 (CMOS analog ICs, §6.3) and generic rates elsewhere. Each harness box part has its SN 29500 class recorded so that the values can be filled in once the standard is available.
 
 ### 2.4 Mission profile (placeholder)
 
@@ -159,12 +161,14 @@ verified.
 
 ### 4.7 Relay and relay driver
 
+Since [RR-2026-010](reviews/RR-2026-010.md) the "relay" is the harness box intercept switch: two DG419LE CMOS analog switches (U1 CAN_H, U2 CAN_L), driven by SBU1, pulled to pass-through by R2 + R3, and powered from the box VIN. The FM-REL IDs are kept; their wording below follows the switch (rev 0.4). Contact welding, coil faults and chatter do not apply.
+
 | FM-ID | Failure mode | Local effect | SG effect | Class (today) | Existing diagnostic | DC today | Planned | DC planned |
 |---|---|---|---|---|---|---|---|---|
-| FM-REL-01 | Relay stuck released (contacts welded in stock position, coil open, driver open) while commanded to intercept | Stock camera LKA/ACC messages reach the car together with panda TX | SG-01, SG-03 (conflicting commands) | MPF-D (slow) | Stock-message-on-car-side check after 1 s grace, at 1 Hz (`safety.h:372-380`; `main.c:242`) → TX blocked (`safety.h:252`) | Medium (detected, 1–2 s latency, GAP-12) | Readback (DC-03, HWSR-506a) | High |
-| FM-REL-02 | Relay stuck intercepting (contacts welded, driver shorted) while commanded released (SILENT, power-save, after fault) | Camera disconnected from car while panda forwards nothing or is off | **SG-07** (PCS messages lost) | **SPF** | None | None | Readback (DC-03); harness design check (HWSR-702) | High |
-| FM-REL-03 | Relay contact intermittent / chatter | Bus interruptions | SG-07 (intermittent), SG-01 (RX timeouts) | RF | RX timeouts, CAN errors | Low | Readback | Medium |
-| FM-REL-04 | Relay driver output stuck (MCU pin or driver transistor) "on" | As FM-REL-02 | SG-07 | SPF | None | None | Readback; external supervisor cut (DC-02) | High |
+| FM-REL-01 | Switch stuck in pass-through (U1/U2 stuck on NC, SBU1 drive lost, R2/R3 short, or 5 V drive below the logic threshold with VL at VIN) while commanded to intercept | Stock camera LKA/ACC messages reach the car together with panda TX | SG-01, SG-03 (conflicting commands) | MPF-D (slow) | Stock-message-on-car-side check after 1 s grace, at 1 Hz (`safety.h:372-380`; `main.c:242`) → TX blocked (`safety.h:252`) | Medium (detected, 1–2 s latency, GAP-12) | Readback (DC-03, HWSR-506a) | High |
+| FM-REL-02 | Switch stuck in intercept (U1/U2 stuck on NO, IN damaged high, or R2/R3 open with SBU1 undriven) while commanded released (SILENT, power-save, after fault) | Camera disconnected from car while panda forwards nothing or is off | **SG-07** (PCS messages lost) | **SPF** | None | None | Readback (DC-03); harness design check (HWSR-702) | High |
+| FM-REL-03 | Switch channel open, high on-resistance, leakage or latch-up; box supply lost (RR-2026-010 F-02) | Bus interruptions or stock path broken | SG-07 (stock path), SG-01 (RX timeouts) | SPF for SG-07 | RX timeouts, CAN errors (item side only) | Low | Readback with stock-path continuity | Medium |
+| FM-REL-04 | SBU1 driver output stuck (MCU pin or device-side driver, UK-06) "on" | As FM-REL-02 | SG-07 | SPF | None | None | Readback; external supervisor cut (DC-02) | High |
 | FM-REL-05 | Debug command drives relay (`0xc5`, `main_comms.h:164-166`) | Systematic, listed for completeness | SG-07 | n/a (systematic, GAP-09) | 2026-10-12: refused in a car mode in the reference build (`reference_lock.h`); still operable in SILENT/NOOUTPUT | — | DC-09 | — |
 
 ### 4.8 SPI link (SoC↔MCU)
@@ -257,50 +261,54 @@ All quantitative columns: **TBD — requires BOM** (WP-H-02 UK-02).
 
 §6.1 and §6.2 stay TBD until the BOM is known. Meanwhile a block-level FMEDA with **generic** failure rates is kept as YAML in [`../08-analyses/fmea/analyses/fmeda-sg001.yaml`](../08-analyses/fmea/analyses/fmeda-sg001.yaml) and [`fmeda-sg009.yaml`](../08-analyses/fmea/analyses/fmeda-sg009.yaml) (SG IDs of LD-HARA-001: SG-001 = SG-01 here, SG-009 = SG-07). The metrics are computed by `tools/safety/fmea_lint.py`, and the same formulas are used in the workbooks from `tools/safety/export_fmeda_xlsx.py`.
 
-The rates are order-of-magnitude estimates per part type, not values looked up for the actual parts. The results show where the architecture falls short. **They are not evidence of compliance.**
+The rates are order-of-magnitude estimates per part type, not values looked up for the actual parts, with one exception from rev 0.4 (2026-10-16): the harness box analog switches U1/U2 (DG419LE) take the SN 29500-2 reference value for CMOS analog and mixed-signal ICs, 25 FIT per IC at θVJ = 55 °C. That value is quoted from TI functional-safety FIT reports (TPS1663, LM73605, LMR36015-Q1; two other TI reports quote 20 FIT, and the higher value is used). The standard itself was not read, and no stress conversion to the mission profile is applied. The other harness box parts (BAS40SDW, STPS2H100ZFY, SMF16A, DMN3200U, the resistors) are known from the v3 drawing and their SN 29500 class is named in the YAML. No reference value for them could be reached from the analysis environment, so they keep generic rates until the source is confirmed (OI-2). The results show where the architecture falls short. **They are not evidence of compliance.**
 
 | Goal | Target used | λ (FIT) | SPFM | LFM | λSPF + λRF (FIT) | Result |
 |---|---|---|---|---|---|---|
-| SG-01 lateral | ASIL D (LD-HARA-001); ASIL C here | 220 | 96.9 % | 87.7 % | 6.9 | Misses D on SPFM and LFM; misses C on SPFM (97 %) by 0.1 point |
-| SG-07 stock PCS | ASIL B | 242 | 86.8 % | 98.9 % | 32.0 | Misses B on SPFM |
+| SG-01 lateral | ASIL D (LD-HARA-001); ASIL C here, ASIL B shown alongside (DQ-063) | 255 | 96.8 % | 88.9 % | 8.1 | Misses D on SPFM and LFM. Misses C on SPFM (97 %) by 0.2 points; meets C on LFM. Meets B (90 % / 60 %) |
+| SG-07 stock PCS | ASIL B | 287 | 78.1 % | 97.7 % | 62.9 | Misses B on SPFM (90 %) |
+
+The SG-07 drop from 85.9 % (rev 0.3) to 78.1 % comes entirely from the switch rate: 2 × 5 FIT generic became 2 × 25 FIT. With no readback and no stock-path check, 70 % of that rate is single-point for SG-07.
 
 Largest contributors:
 - **SG-01:**
   - wrong result of a CPU limit or authority check, fully latent (12.5 FIT λMPF,L);
   - clock drift with no cross-check (5.0);
-  - supply in the brown-out zone (4.5 FIT λSPF).
+  - supply in the brown-out zone (4.5 FIT λSPF);
+  - intercept switch stuck in pass-through while driven (1.75 FIT λRF after the relay-malfunction check).
 - **SG-07:**
-  - CAN transceiver faults with the relay driven (12.0 FIT λSPF);
-  - relay welded or driver stuck on (6.0);
-  - stock-path open in the relay box (3.0);
-  - intermittent relay contact (3.0).
+  - intercept switch channel open, high on-resistance, leakage or latch-up in the stock path (20.0 FIT λSPF);
+  - intercept switch stuck in intercept (15.0);
+  - CAN transceiver TX stuck dominant or RX open with the switch driven (6.0 each);
+  - stock-path open in the harness or connector (3.0);
+  - SBU1 driver stuck on, and wrong forwarding decision (2.5 each).
 
-**Sensitivity.** About 90 of the 220 FIT are single-bit SRAM upsets that ECC corrects. They count as covered multiple-point faults and so raise SPFM. With the SRAM soft-error rate at 10, 100 and 500 FIT for the 64 KB considered, the results move as follows:
+**Sensitivity.** About 90 of the 255 FIT are single-bit SRAM upsets that ECC corrects. They count as covered multiple-point faults and so raise SPFM. With the SRAM soft-error rate at 10, 100 and 500 FIT for the 64 KB considered, the results move as follows:
 
 | SRAM rate (FIT) | SG-01 SPFM | SG-07 SPFM |
 |---|---|---|
-| 10 | 95.3 % | 79.2 % |
-| 100 | 96.9 % | 86.8 % |
-| 500 | 98.4 % | 94.7 % |
+| 10 | 95.6 % | 68.4 % |
+| 100 | 96.8 % | 78.1 % |
+| 500 | 98.3 % | 90.6 % |
 
-A real SER figure for the STM32H725 (OI-3) therefore matters as much as the part list.
+The switch rate matters as much: SG-07 SPFM is 85.9 % at 5 FIT per IC and 78.1 % at 25 FIT per IC. A real SER figure for the STM32H725 (OI-3) and a confirmed reference value for the DG419LE therefore matter as much as the part list.
 
-**With the planned measures**, using conservative DC values:
-- **SG-01**, measures added in this order:
-  - BOR/PVD reaction (DFM-ACT-005);
-  - RAMECC double-error reaction (DFM-ACT-002);
-  - clock cross-check (DFM-ACT-004);
-  - a low-coverage CPU self-test (DFM-ACT-001);
-  - TX read-back (TSR-517).
+**With the planned measures.** The DC values below are assumptions for this estimate, chosen conservatively from Annex D. They are not claims.
+- **SG-01**, all of these together:
+  - BOR/PVD reaction (DFM-ACT-005): DC 90 % on the brown-out mode;
+  - RAMECC double-error reaction (DFM-ACT-002): DC 90 % latent on multi-bit upsets in authority variables;
+  - clock cross-check (DFM-ACT-004): DC 90 % latent on drift;
+  - a low-coverage CPU self-test (DFM-ACT-001): DC 60 % latent on wrong check results;
+  - TX read-back (TSR-517): DC 99 % on frames altered after the check.
 
-  Result: SPFM 99.3 %, LFM 95.3 %, λSPF + λRF 1.5 FIT, which meets ASIL D on generic rates.
-- **SG-07**, measures added in this order:
-  - relay readback (DFM-ACT-007, DC-03);
-  - releasing the relay on a transceiver fault (DFM-ACT-006);
-  - a readback that also checks stock-path continuity.
+  Result: SPFM 99.1 %, LFM 95.4 %, λSPF + λRF 2.3 FIT. That meets ASIL D on generic rates, and so ASIL C and B.
+- **SG-07**, added in this order, each with DC 90 %:
+  - switch position readback (DFM-ACT-007, DC-03) on stuck in intercept and SBU1 driver stuck on: SPFM 83.6 %;
+  - releasing the switch on a transceiver fault (DFM-ACT-006) on TX stuck dominant and RX open: 87.4 %;
+  - a readback that also checks stock-path continuity, on channel open and harness open: **94.6 %**, λSPF + λRF 15.6 FIT. That meets ASIL B.
 
-  Result: SPFM 96.0 %, λSPF + λRF 9.6 FIT, which meets ASIL B. Readback alone reaches 90.5 %.
-- **Caveat for SG-07:** a welded relay cannot be released. The readback can only warn that stock AEB is unavailable, so the safe state for that case has to be a warning (OI-9).
+  Position readback alone no longer reaches 90 % (it did at rev 0.3). The stock-path continuity check is needed.
+- **Caveat for SG-07:** a switch stuck in intercept cannot be released. The readback can only warn that stock AEB is unavailable and refuse to engage. The lead accepted that as the degraded state ([DQ-064](../01-management/decisions/register.yaml), OI-9).
 
 ## 7. Open items
 
@@ -315,4 +323,4 @@ A real SER figure for the STM32H725 (OI-3) therefore matters as much as the part
 | OI-7 | Analyse the harness relay design to confirm or refute FM-REL-02/04 plausibility (relay type, coil drive) | G2 |
 | OI-8 | Re-run the FMEA after each WP-H-02 §6 change is implemented | G3 |
 | OI-9 | ~~SG-07: decide the safe state when relay readback finds the relay welded in the intercept position~~ **Decided** ([DQ-064](../01-management/decisions/register.yaml), option A, 2026-10-14): warn the driver that stock AEB is unavailable and refuse to engage; accepted as the degraded state. It applies only once readback exists (DC-03, HWSR-506a, DQ-209); with the v3 box the same case is a switch stuck in intercept (FM-REL-02/04). The HMI warning requirement belongs to the FSC and TSR owners | G2 |
-| OI-10 | Replace the generic rates of §6.3 with part-specific values (BOM, ST data, SER) and add the dual-point PMHF term | G3 |
+| OI-10 | Replace the generic rates of §6.3 with part-specific values (BOM, ST data, SER) and add the dual-point PMHF term. 2026-10-16: U1/U2 at the SN 29500-2 reference value (secondary source); the other harness box parts are classed but still generic | G3 |

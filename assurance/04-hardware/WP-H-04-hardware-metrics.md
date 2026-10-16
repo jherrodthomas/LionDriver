@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-04 Hardware architectural metrics (SPFM, LFM) |
 | Standard reference | ISO 26262-5:2018 §8 (evaluation of the hardware architectural metrics), Annex C (metric definitions, informative), Annex D (diagnostic coverage, informative); ISO 26262-11:2018 (semiconductors, informative) |
-| Version | 0.4 (decisions applied: SG-01 target C with B alongside, DQ-063; route to the BOM, DQ-065; added hardware allowed in principle, DQ-051; HIL bench deferred, DQ-049; IWDG credit conditional, DQ-114; 2026-10-16). 0.3 (§5 status and §4 targets drawn as Figure 5-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
+| Version | 0.5 (§5.2 generic-rate estimate from FMEDA rev 0.4 with SG-01 shown against C and B; Figure 5-1 marks the estimates; 2026-10-16). 0.4 (decisions applied: SG-01 target C with B alongside, DQ-063; route to the BOM, DQ-065; added hardware allowed in principle, DQ-051; HIL bench deferred, DQ-049; IWDG credit conditional, DQ-114; 2026-10-16). 0.3 (§5 status and §4 targets drawn as Figure 5-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
 | Status | Draft (method and plan; no metric computed) |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -99,7 +99,7 @@ Applicable targets ([WP-H-01](WP-H-01-hardware-safety-requirements.md) §3). For
 | Step (§3.2) | Status |
 |---|---|
 | 1 Configuration frozen | No: reference device revision not fixed (WP-H-01 OI-7) |
-| 2 FMEDA filled | No: qualitative block-level FMEA only (WP-H-03 §4) |
+| 2 FMEDA filled | No: qualitative block-level FMEA (WP-H-03 §4) and a generic-rate block FMEDA (§5.2); no part-level rates |
 | 3–4 Classification and DC | Qualitative only |
 | 5 Calculation | **Cannot be computed: no BOM** |
 | 6 Sensitivity | Not started |
@@ -141,7 +141,20 @@ channel. This supports the FSC recommendation of option (c).
 
 ![Figure 5-1: SPFM and LFM status: calculation steps 1 to 7 not done or qualitative only for lack of a BOM, and for SG-01, SG-03/SG-04, SG-05, SG-02/SG-06 and SG-07 the ASIL targets marked with no computed value](figures/fig-h04-5-1-metric-status.svg)
 
-*Figure 5-1.* Top: the calculation steps of §3.2 with their status from the §5 table. Bottom: the §4 targets per safety-goal row of §7 on a 50–100 % scale; the hatched track means no value exists (every “Met?” cell in §7 is “Not yet computed”). The right column repeats the engineering judgement of §5.1, which is not a metric. Drawn from §4, §5, §5.1 and §7. Source: [`figures/fig-h04-5-1-metric-status.svg`](figures/fig-h04-5-1-metric-status.svg); change it together with §4, §5 and §7.
+*Figure 5-1.* Top: the calculation steps of §3.2 with their status from the §5 table. Bottom: the §4 targets per safety-goal row of §7 on a 50–100 % scale; the hatched track means no metric exists (every “Met?” cell in §7 is “Not yet computed”). Hollow diamonds mark the generic-rate estimates of §5.2, which are not metrics. The right column repeats the engineering judgement of §5.1, which is not a metric. Drawn from §4, §5, §5.1, §5.2 and §7. Source: [`figures/fig-h04-5-1-metric-status.svg`](figures/fig-h04-5-1-metric-status.svg); change it together with §4, §5 and §7.
+
+### 5.2 Generic-rate estimate (not a metric)
+
+[WP-H-03](WP-H-03-hardware-safety-analysis-fmeda.md) §6.3 keeps a block-level FMEDA with generic failure rates, plus one secondary-source rate: the harness box switches U1/U2 at the SN 29500-2 reference value. It is computed by `tools/safety/fmea_lint.py` from [`fmeda-sg001.yaml`](../08-analyses/fmea/analyses/fmeda-sg001.yaml) and [`fmeda-sg009.yaml`](../08-analyses/fmea/analyses/fmeda-sg009.yaml), rev 0.4, 2026-10-16. It shows where the architecture falls short. **It is not a metric and does not fill §7.**
+
+| SG | λ (FIT) | SPFM | LFM | Against the current ASIL | Against ASIL B (DQ-063) |
+|---|---|---|---|---|---|
+| SG-01 | 255 | 96.8 % | 88.9 % | C: misses SPFM (97 %) by 0.2 points; LFM met | B: both met |
+| SG-07 | 287 | 78.1 % | 97.7 % | B: misses SPFM (90 %) | — |
+
+With the planned measures and the DC assumptions stated in WP-H-03 §6.3, the estimates are:
+- SG-01: 99.1 % / 95.4 %.
+- SG-07: 94.6 %. This needs switch readback, the transceiver release and a stock-path continuity check; position readback alone gives 83.6 %.
 
 ## 6. Plan
 
