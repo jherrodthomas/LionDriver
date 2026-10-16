@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-02 SOTIF verification and validation strategy, validation targets |
 | Standard reference | ISO 21448:2022 §9 (V&V strategy, validation targets), Annex C (informative, validation target derivation); ISO/PAS 8800:2024 (AI V&V); ASPICE 4.0 VAL.1 |
-| Version | 0.5.1 (§5.3.1 simulator status brought up to date by the simulation session at the SOTIF session's request: bridge PR #124, scenario files, plant model; no plan or target changed; 2026-10-16). 0.5 (ODD speed bound 110 km/h, decision register DQ-260: §3.3, §3.4, §4; 2026-10-16). 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
+| Version | 0.6 (the lead's decisions: simulation credit per scenario family once its fidelity case is approved, DQ-139; CARLA not now, revisit at G3, DQ-261; §5.3, §5.4, OI-4; 2026-10-16). 0.5.1 (§5.3.1 simulator status brought up to date by the simulation session at the SOTIF session's request: bridge PR #124, scenario files, plant model; no plan or target changed; 2026-10-16). 0.5 (ODD speed bound 110 km/h, decision register DQ-260: §3.3, §3.4, §4; 2026-10-16). 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -421,7 +421,7 @@ Result: eight values are confirmed or replaced (C). AIR-11 and AIR-14 are confir
 
 ### 5.3 Simulation fidelity case (required before M4 gets credit)
 
-**Rule.** A simulation result gets no credit toward any target until the fidelity case for its scenario family is approved. Whether MetaDrive counts as evidence at all, and for which families, is a lead decision at G2 (WP-M-08 OI-3, decision register DQ-139). Until then, M4 is used for exploration and to choose closed-course parameter points. Every M4 result is labelled as synthetic data (§5.3.5).
+**Rule.** A simulation result gets no credit toward any target until the fidelity case for its scenario family is approved. The project lead decided this rule on 2026-10-16 (decision register DQ-139 option A, WP-M-08 OI-3): credit is given per scenario family, and only once that family's fidelity case passes and is approved. A family without an approved case is used only for exploration and to choose closed-course parameter points. Every M4 result is labelled as synthetic data (§5.3.5).
 
 This section is the plan for building that case. Nothing in it has been executed.
 
@@ -499,7 +499,7 @@ Costs:
 - **A new bridge:** upstream openpilot dropped its CARLA bridge in favour of MetaDrive, so LionDriver would build and maintain one, reusing the simulated car and panda of §5.3.1.
 - **Its own fidelity case** under the rules above.
 
-Recommendation: **do not build it now.** First finish MetaDrive and its fidelity case. Revisit at G3, when the fidelity case shows which families MetaDrive cannot carry and the lighting and weather scenarios are scheduled. The decision is the lead's, because it spends money (decision register DQ-261).
+Recommendation: **do not build it now.** First finish MetaDrive and its fidelity case. Revisit at G3, when the fidelity case shows which families MetaDrive cannot carry and the lighting and weather scenarios are scheduled. The project lead accepted this on 2026-10-16 (decision register DQ-261 option A): no GPU and no CARLA work now; the question returns at G3.
 
 ## 6. Coverage of triggering conditions
 
@@ -561,7 +561,7 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 | OI-1 | Keep the §6 TC table in step with WP-C-06 revisions (new TCs need a KS entry) |
 | OI-2 | Select B1 data set and filter to the ODD; replace the illustrative rates of §3.1 (shared with WP-M-08 OI-1) |
 | OI-3 | Approve numeric targets VT-01…VT-15 with the assessor before collecting evidence, together with the derivations of §4.2 and §4.3 |
-| OI-4 | Execute the fidelity-case plan of §5.3 (matched M8 points per family, plant constants from VS-VAL-08 and lateral step tests, radar comparison); which families get credit is the lead's decision at G2 (WP-M-08 OI-3, DQ-139). CARLA is assessed in §5.4 and waits on DQ-261 |
+| OI-4 | Execute the fidelity-case plan of §5.3 (matched M8 points per family, plant constants from VS-VAL-08 and lateral step tests, radar comparison); credit per family once its case is approved (DQ-139 option A). CARLA: not now, revisit at G3 (§5.4, DQ-261 option A) |
 | OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
 | OI-7 | Fit the rear-facing camera now listed in the [WP-V-01](WP-V-01-safety-validation.md) §2 equipment (procurement: WP-V-01 OI-6), and annotate following vehicles from its recordings, so that P(E-situation) for SH-04 (following vehicle, OS-08) is measured (§3.4). Blocks driven before it is fitted give no SH-04 data |
 | OI-8 | Extract P(severity class) per SH from FARS/CRSS (and injury-risk curves where §3.5 item 3 requires them) for the selected B1 data set (OI-2); record the values and bounds per §3.5 item 4. The extraction tool is [`tools/severity/`](../../tools/severity/README.md); its variable codes must be checked against the NHTSA manual of the release year first. The same download gives the weighted mean age of pedestrians aged 15 and older struck in 2007–2009 (GES person file), which fixes the reference age of the SH-11 age shift (§3.5). Not run yet: the NHTSA download hosts are not reachable from the project's cloud environment |

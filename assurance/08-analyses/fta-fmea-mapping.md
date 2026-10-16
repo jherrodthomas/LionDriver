@@ -158,6 +158,6 @@ These were review input for WP-A-04 and the FMEAs. F-1…F-10 (SG-04) are resolv
 
 1. Review the SG-04 links, the F-1…F-10 resolutions and the new FMEA rows (SWF-050…053, SWF-003.C3, DFM-019); F-3 decided 2026-10-14 (DQ-002).
 2. Review the SG-01 links and F-11…F-13 (WP-A-04 v1.0). The FMEA owners decide F-14 and F-15.
-3. Review the SG-07 links and the re-based tree (WP-A-04 v1.1). The FMEA owners decide F-17…F-19. When the lead decides DQ-209 (accept comma's box, or build a LionDriver adapter), re-draw G7.3 and G7.4 for the chosen design.
+3. Review the SG-07 links and the re-based tree (WP-A-04 v1.1). The FMEA owners decide F-17…F-19. DQ-209 was answered on 2026-10-16 (option A: keep comma's box and bench-test it). WP-A-04 v1.4 applies it without changing the tree: readback is not pursued, so MCS-07.8 stays undetected, and the bench tests VS-HW-22…24 decide BE-7.16 and BE-7.17.
 4. Review the SG-02, SG-03, SG-05 and SG-06 links and the v1.2 tree changes. The FMEA owners decide F-25…F-28 and F-31; the lead DQ-360…DQ-364. Review the SG-08 tree (WP-A-04 §13) and its mapping; the lead decides DQ-365, and the FSC decides how SG-08's ASIL A is met on the QM DM chain (SPF-18).
 5. Retire the SFMEA-01…SFMEA-39 table of WP-A-04 §10 in favour of [system-fmea.yaml](fmea/analyses/system-fmea.yaml), so the map has one System FMEA to point at.

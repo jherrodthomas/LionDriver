@@ -10,6 +10,8 @@ Figures (numbered for fmea-plan.md):
   3-1/3-3/3-5/3-8   structure tree (AIAG-VDA step 2-3) of the System FMEA, DFMEA, SW FMEA, PFMEA
   3-2/3-4/3-6/3-9   failure chains (steps 4-6): element -> function -> failure mode -> causes
   3-7   SW FMEA: effect of the actions that carry a predicted ("revised") rating
+  3-12  SW FMEA: occurrence x detection grid per element, with predicted moves
+  3-13  SW FMEA: detection evidence per cause (cited test run in CI, hardware only, not run) and the cited test files
   3-10/3-11  FMEDA SG-001 / SG-009: SPFM, LFM, lambda SPF+RF against the ASIL target
   4-1   Action Priority overview of the four FMEAs (O x D grid, AP counts, treatment of AP=H)
   4-2   FMEA-MSR overview of the System FMEA and DFMEA (F x M grid, monitoring bands, timing basis, monitoring actions)
@@ -1332,6 +1334,307 @@ def render_action_effect(f: Fmea, fig: str) -> str:
                  "fmea-plan.md §3.3", f.source, body)
 
 
+# ---------------------------------------------------------------- SW FMEA: O x D per element (step 5)
+
+def _cause_element(fm: dict, c: dict) -> str:
+  return c.get("element") or fm["element"]
+
+
+def _causes_by_element(f: Fmea) -> list[tuple[dict, list[tuple[dict, dict]]]]:
+  """Elements that carry causes, in structure order, with their (failure mode, cause) pairs."""
+  els = f.elements()
+  by: dict[str, list] = {}
+  for fm, c in f.causes():
+    k = _cause_element(fm, c)
+    if k not in els:
+      raise FigError(f"{f.key}: {c['id']} names unknown element {k}")
+    by.setdefault(k, []).append((fm, c))
+  return [(els[k], by[k]) for k in _ordered_elements(f) if k in by]
+
+
+def render_od_elements(f: Fmea, fig: str) -> str:
+  pred = _predicted(f)
+  groups = _causes_by_element(f)
+  body: list[str] = []
+  cols, cell = 8, 11
+  pw, gx_off = 150, 22          # panel width; grid offset inside the panel (room for the O axis)
+  gw = 10 * cell
+  y = 100
+  rated = [(fm, c) for fm, c in f.causes() if c.get("ap")]
+  hs = [(fm, c) for fm, c in rated if c["ap"] == "H"]
+  hd = {"D 9–10": sum(1 for _, c in hs if c["detection"] >= 9), "D 5–8": sum(1 for _, c in hs if 5 <= c["detection"] <= 8),
+        "D 1–4": sum(1 for _, c in hs if c["detection"] <= 4)}
+  body.append(txt(40, y + 4, f"{len(rated)} rated causes on {len(groups)} elements · AP H {len(hs)}, of which "
+                  + ", ".join(f"{v} at {k}" for k, v in hd.items()) + ". Each panel is one element: where its causes sit in "
+                  "the AP table, and where the actions with a predicted rating would move them.", 11, INK, 600))
+  y += 26
+  ph = 18 + 16 + gw + 22        # id line, name line, grid, D axis
+  grids: dict[int, str] = {}    # one AP background per severity, drawn once in <defs> and reused
+  for i, (el, pairs) in enumerate(groups):
+    r, k = divmod(i, cols)
+    x0 = 40 + k * pw
+    y0 = y + r * (ph + 18)
+    s_max = max(fm["severity"] for fm, _ in pairs)
+    nh = sum(1 for _, c in pairs if c.get("ap") == "H")
+    body.append(txt(x0, y0 + 11, el["id"].replace("SWF-SE-", "SE-"), 10.5, INK, 700))
+    tag = f"{len(pairs)} · H {nh}" + (f" · S{s_max}" if s_max < 9 else "")
+    body.append(txt(x0 + gx_off + gw, y0 + 11, tag, 9.5, RED if nh else MUTED, 700, anchor="end"))
+    body.append(txt(x0, y0 + 25, fit(el["name"], gx_off + gw, 9), 9, MUTED))
+    gy = y0 + 34
+    gx = x0 + gx_off
+    if s_max not in grids:
+      grids[s_max] = "".join(rect((d - 1) * cell, oi * cell, cell, cell, AP_TINT[compute_ap(s_max, o, d)], "#FFFFFF", 0.8)
+                             for oi, o in enumerate(range(10, 0, -1)) for d in range(1, 11))
+    body.append(f'<use href="#odg{s_max}" x="{n(gx)}" y="{n(gy)}"/>')
+    for o in (10, 5, 1):
+      body.append(txt(gx - 4, gy + (10 - o) * cell + cell / 2 + 3, str(o), 8, MUTED, anchor="end"))
+    for d in (1, 5, 10):
+      body.append(txt(gx + (d - 0.5) * cell, gy + gw + 10, str(d), 8, MUTED, anchor="middle"))
+
+    def ctr(o, d, gx=gx, gy=gy):
+      return gx + (d - 0.5) * cell, gy + (10 - o + 0.5) * cell
+
+    # predicted moves first, under the markers
+    for _, c in pairs:
+      if c["id"] in pred:
+        rv = pred[c["id"]][0]
+        (ax, ay), (bx, by) = ctr(c["occurrence"], c["detection"]), ctr(rv["occurrence"], rv["detection"])
+        if (ax, ay) != (bx, by):
+          body.append(f'<path d="M{n(ax)} {n(ay)}L{n(bx)} {n(by)}" fill="none" stroke="#475569" stroke-width="1" '
+                      'stroke-dasharray="2.5 2"/>')
+        body.append(f'<circle cx="{n(bx)}" cy="{n(by)}" r="3.6" fill="#FFFFFF" stroke="{AP_COL[rv["ap"]]}" '
+                    'stroke-width="1.4" stroke-dasharray="2 1.4"/>')
+    cnt: dict[tuple[int, int], list[dict]] = {}
+    for _, c in pairs:
+      cnt.setdefault((c["occurrence"], c["detection"]), []).append(c)
+    for (o, d), cs in sorted(cnt.items()):
+      cx, cy = ctr(o, d)
+      ap = min((c["ap"] for c in cs), key="HML".index)
+      tip = "; ".join(f"{c['id']} O{o} D{d} AP {c['ap']}" for c in cs)
+      body.append(f'<circle cx="{n(cx)}" cy="{n(cy)}" r="{4.6 if len(cs) == 1 else 5.4}" fill="{AP_COL[ap]}">'
+                  f'<title>{e(tip)}</title></circle>')
+      if len(cs) > 1:
+        body.append(txt(cx, cy + 2.9, str(len(cs)), 7.5, "#FFFFFF", 700, anchor="middle"))
+  body.insert(0, "<defs>" + "".join(f'<g id="odg{s}">{g}</g>' for s, g in sorted(grids.items())) + "</defs>")
+  rows = (len(groups) + cols - 1) // cols
+  y += rows * (ph + 18) + 6
+  body.append(line(40, y, 1240, y))
+  y += 22
+  lx = 40
+  for ap in "HML":
+    body.append(rect(lx, y - 11, 14, 14, AP_TINT[ap]))
+    body.append(f'<circle cx="{n(lx + 26)}" cy="{n(y - 4)}" r="5" fill="{AP_COL[ap]}"/>')
+    lab = f"AP {ap} region / cause rated {ap}"
+    body.append(txt(lx + 38, y, lab, 10.5, INK))
+    lx += 38 + tw(lab, 10.5) + 22
+  body.append(f'<circle cx="{n(lx + 6)}" cy="{n(y - 4)}" r="3.6" fill="#FFFFFF" stroke="{AMBER}" stroke-width="1.4" '
+              'stroke-dasharray="2 1.4"/>')
+  body.append(f'<path d="M{n(lx + 16)} {n(y - 4)}H{n(lx + 34)}" stroke="#475569" stroke-dasharray="2.5 2"/>')
+  body.append(txt(lx + 40, y, "predicted by an action's `revised` rating (not achieved, not verified)", 10.5, INK))
+  y += 18
+  body.append(txt(40, y, "Rows: occurrence O 10 (top) to 1; columns: detection D 1 to 10. Background = AP from the AIAG-VDA table "
+                  "(rating-tables §5) at the element's highest severity; a number in a marker counts causes at that O and D; "
+                  "the tag gives causes · AP H.", 10, MUTED))
+  y += 15
+  body.append(txt(40, y, "A cause far right (D 9–10) is high because no targeted test detects it; far up, because the code is "
+                  "likely to be wrong. AP values are those stored in the YAML (fmea_lint checks them against the table).",
+                  10, MUTED))
+  y += 18
+  body += footer(y, 1280, f.source)
+  desc = (f"SW FMEA ({f.a['id']} rev {f.a['revision']}): one occurrence by detection grid per element, {len(groups)} elements, "
+          f"{len(rated)} rated causes, AP H {len(hs)} ({', '.join(f'{k} {v}' for k, v in hd.items())}). Dashed markers show "
+          f"the predicted rating of {len(pred)} causes whose actions record a revised rating; none is achieved.")
+  return svg_doc(1280, y + 20, f"Figure {fig}. SW FMEA occurrence and detection by element", desc, fig,
+                 "SW FMEA — occurrence × detection, element by element",
+                 f"{f.tag} · why each cause has its priority, and what the planned actions are predicted to change",
+                 "fmea-plan.md §3.3", f.source, body)
+
+
+# ---------------------------------------------------------------- SW FMEA: what each D rating rests on
+
+WORKFLOWS = ROOT / ".github" / "workflows"
+# Submodules are not checked out in the assurance CI job, so their tests are classified by path, never read.
+PANDA_SUITES_RE = re.compile(r"for suite in ([a-z0-9_ ]+); do")
+EVIDENCE = (  # key, label, fill, fg
+  ("proven", "Test run in CI, D 1–4 (rated as proven: mutation or fault injection)", GREEN, "#FFFFFF"),
+  ("targeted", "Targeted test run in CI, not proven (D 5–8)", TEAL, "#FFFFFF"),
+  ("generic", "Only a generic test run in CI (D 9–10)", "#94A3B8", "#FFFFFF"),
+  ("not_run", "Test cited, but CI does not run it", ORANGE, "#FFFFFF"),
+  ("hardware", "Test runs only on a device or HITL rig", "#6D5BD0", "#FFFFFF"),
+  ("none", "No test cited", "#FFFFFF", RED),
+)
+EV_COL = {k: (fill, fg) for k, _, fill, fg in EVIDENCE}
+TEST_STATE = {"ci": ("run in CI", TEAL), "not_run": ("not run in CI", ORANGE), "hardware": ("hardware only", "#6D5BD0"),
+              "missing": ("file not found", RED)}
+
+
+@dataclass
+class TestIndex:
+  """How CI treats each cited test file, worked out from the repository (not from the analysis text)."""
+  workflows: str
+  ignored: list[str]
+  native: str
+  panda_suites: set[str]
+
+  @classmethod
+  def load(cls) -> TestIndex:
+    wf = "\n".join(p.read_text() for p in sorted(WORKFLOWS.glob("*.y*ml")))
+    runner = (ROOT / "tools" / "test_runner.py").read_text()
+    m = re.search(r"IGNORED = \((.*?)\n\)", runner, re.S)
+    ignored = re.findall(r'ROOT / "([^"]+)"', m.group(1)) if m else []
+    native_p = ROOT / "openpilot" / "test_native.py"
+    suites = set()
+    sm = PANDA_SUITES_RE.search((WORKFLOWS / "safety.yaml").read_text()) if (WORKFLOWS / "safety.yaml").exists() else None
+    if sm:
+      suites = set(sm.group(1).split())
+    return cls(wf, ignored, native_p.read_text() if native_p.exists() else "", suites)
+
+  def classify(self, path: str) -> tuple[str, str]:
+    """(state, reason) with state in ci / not_run / hardware / missing."""
+    if path.startswith(".github/workflows/"):
+      return ("ci", "a CI workflow") if (ROOT / path).exists() else ("missing", "workflow not found")
+    if path in self.workflows:
+      return "ci", "named in a CI workflow"
+    if path.startswith("opendbc_repo/opendbc/safety/tests/"):
+      return "ci", "opendbc safety suite, run by safety.yaml"
+    if path.startswith("panda/tests/"):
+      suite = path.split("/")[2]
+      if suite == "hitl":
+        return "hardware", "panda HITL, needs a rig"
+      if suite in self.panda_suites:
+        return "ci", f"panda suite {suite}, run by safety.yaml"
+      return "not_run", "panda suite not in safety.yaml"
+    if not path.startswith("openpilot/"):
+      return "not_run", "submodule test outside LionDriver CI"
+    p = ROOT / path
+    if not p.exists():
+      return "missing", "cited file not found"
+    if p.suffix == ".cc":
+      if path.removesuffix(".cc") in self.native:
+        return "ci", "native test, run by test_native.py"
+      return "not_run", "native test not in test_native.py"
+    if any(path == i or path.startswith(i.rstrip("/") + "/") for i in self.ignored):
+      return "not_run", "excluded by tools/test_runner.py"
+    src = p.read_text()
+    if re.search(r"COMMA_HARDWARE_TEST\s*=\s*True|skipUnless\(\s*HARDWARE", src):
+      return "hardware", "skipped off device"
+    if not re.search(r"^class \w+\([^)]*TestCase", src, re.M):
+      return "not_run", "no TestCase: the unittest runner collects 0 tests"
+    return "ci", "unit test, collected by tools/test_runner.py"
+
+
+def _cause_tests(c: dict) -> list[str]:
+  return [dc["test"] for dc in c.get("detection_controls", []) if dc.get("test")]
+
+
+def cause_evidence(c: dict, idx: TestIndex) -> str:
+  states = {idx.classify(t)[0] for t in _cause_tests(c)}
+  if "ci" in states:
+    d = c["detection"]
+    return "proven" if d <= 4 else "targeted" if d <= 8 else "generic"
+  if "hardware" in states:
+    return "hardware"
+  return "not_run" if states else "none"
+
+
+def render_detection_evidence(f: Fmea, fig: str, idx: TestIndex | None = None) -> str:
+  idx = idx or TestIndex.load()
+  groups = _causes_by_element(f)
+  order = [k for k, *_ in EVIDENCE]
+  body: list[str] = []
+  allc = [c for _, c in f.causes()]
+  ev = {c["id"]: cause_evidence(c, idx) for c in allc}
+  tot = {k: sum(1 for v in ev.values() if v == k) for k in order}
+  y = 100
+  body.append(txt(40, y + 4, "ALL CAUSES BY WHAT THEIR DETECTION RATING RESTS ON", 9.5, MUTED, 700,
+                  extra=' letter-spacing=".06em"'))
+  y += 14
+  x, bw = 40.0, 1200
+  for k in order:
+    if not tot[k]:
+      continue
+    w = bw * tot[k] / len(allc)
+    fill, fg = EV_COL[k]
+    body.append(rect(x, y, w, 22, fill, RED if k == "none" else None, 1.2))
+    if tw(str(tot[k]), 10.5, 700) + 6 < w:
+      body.append(txt(x + w / 2, y + 15, str(tot[k]), 10.5, fg, 700, anchor="middle"))
+    x += w
+  y += 42
+  lx, ly = 40, y
+  for k, lab, fill, _ in EVIDENCE:
+    lab = f"{lab} · {tot[k]}"
+    if lx + 20 + tw(lab, 10.5) > 1240:
+      lx, ly = 40, ly + 18
+    body.append(rect(lx, ly - 11, 13, 13, fill, RED if k == "none" else None, 1.2, 2))
+    body.append(txt(lx + 19, ly, lab, 10.5, INK))
+    lx += 19 + tw(lab, 10.5) + 22
+  y = ly + 22
+  body.append(line(40, y, 1240, y))
+  y += 22
+  # left: one row per element; right: the cited test files
+  body.append(txt(40, y, "CAUSES PER ELEMENT", 9.5, MUTED, 700, extra=' letter-spacing=".06em"'))
+  rx = 640
+  body.append(txt(rx, y, "CITED TEST FILES · HOW CI TREATS THEM · CAUSES CITING", 9.5, MUTED, 700,
+                  extra=' letter-spacing=".06em"'))
+  y += 12
+  top = y
+  sq, lab_w = 15, 300
+  for el, pairs in groups:
+    body.append(txt(40, y + 12, el["id"].replace("SWF-SE-", "SE-"), 10, INK, 700))
+    body.append(txt(86, y + 12, fit(el["name"], lab_w - 54, 10), 10, MUTED))
+    cs = sorted((c for _, c in pairs), key=lambda c: (order.index(ev[c["id"]]), c["id"]))
+    for j, c in enumerate(cs):
+      fill, _ = EV_COL[ev[c["id"]]]
+      tests = _cause_tests(c)
+      tip = f"{c['id']} D{c['detection']} AP {c['ap']}: " + (", ".join(f"{t} ({idx.classify(t)[1]})" for t in tests)
+                                                            if tests else "no test cited")
+      sqr = rect(40 + lab_w + j * sq, y + 2, sq - 3, 14, fill, RED if ev[c["id"]] == "none" else None, 1.2, 2)
+      body.append(sqr[:-2] + f"><title>{e(tip)}</title></rect>")
+    body.append(txt(40 + lab_w + len(cs) * sq + 4, y + 13, str(len(cs)), 9.5, MUTED))
+    y += 20
+  left_end = y
+  # test file table
+  cites: dict[str, list[str]] = {}
+  for c in allc:
+    for t in dict.fromkeys(_cause_tests(c)):
+      cites.setdefault(t, []).append(c["id"])
+  st_order = ["not_run", "missing", "hardware", "ci"]
+  rows = sorted(cites, key=lambda t: (st_order.index(idx.classify(t)[0]), t))
+  ty = top
+  for t in rows:
+    st, why = idx.classify(t)
+    lab, col = TEST_STATE[st]
+    p, w = pill(rx, ty + 2, lab, col if st != "missing" else "#FFFFFF", "#FFFFFF" if st != "missing" else RED,
+                RED if st == "missing" else None)
+    body.append(p)
+    body.append(txt(rx + 92, ty + 13, fit(t.removeprefix("openpilot/"), 600 - 92 - 30, 10), 10, INK, 600))
+    body.append(txt(1240, ty + 13, str(len(cites[t])), 10, MUTED, 700, anchor="end"))
+    body.append(txt(rx + 92, ty + 26, fit(why, 600 - 92, 9.5), 9.5, MUTED, italic=True))
+    ty += 32
+  y = max(left_end, ty) + 12
+  body.append(line(40, y, 1240, y))
+  y += 20
+  for ln in ("Each square is one cause, coloured by its strongest cited test (detection_controls[].test) and its D rating; hover "
+             "for the cause and its tests. How CI treats a file is worked out from the repository, not from the analysis text:",
+             "unit tests need a unittest TestCase that tools/test_runner.py collects; COMMA_HARDWARE_TEST or a device skip means "
+             "hardware only; panda suites count when safety.yaml runs them; opendbc safety tests and files named in a workflow "
+             "count as CI.",
+             "Green means the D rating claims proof, not that this figure checked the proof. A test run in CI says nothing "
+             "about whether it would fail on the fault."):
+    body.append(txt(40, y, ln, 10, MUTED))
+    y += 15
+  y += 3
+  body += footer(y, 1280, f"{f.source}, .github/workflows/, tools/test_runner.py")
+  desc = (f"SW FMEA ({f.a['id']} rev {f.a['revision']}): {len(allc)} causes by the evidence behind their detection rating: "
+          + ", ".join(f"{k.replace('_', ' ')} {tot[k]}" for k in order) +
+          f". One row per element, and the {len(rows)} cited test files with how CI treats each "
+          f"({sum(1 for t in rows if idx.classify(t)[0] == 'not_run')} not run in CI).")
+  return svg_doc(1280, y + 20, f"Figure {fig}. SW FMEA detection evidence", desc, fig,
+                 "SW FMEA — what each detection rating rests on",
+                 f"{f.tag} · is the cited test run in CI, only on hardware, or not run at all",
+                 "fmea-plan.md §3.3", f.source, body)
+
+
 # ---------------------------------------------------------------- AP overview (all four FMEAs)
 
 def render_ap_overview(fmeas: list[Fmea], fig: str) -> str:
@@ -2103,6 +2406,14 @@ def build(docs: dict[str, dict] | None = None) -> dict[str, str]:
       outputs[name] = render_action_effect(f, "3-7")
       index.append(("3-7", "SW FMEA: Action Priority as rated and as predicted by the planned actions (not achieved)",
                     f.source, [name]))
+      name = "fig-3-12-swf-od-elements.svg"
+      outputs[name] = render_od_elements(f, "3-12")
+      index.append(("3-12", "SW FMEA: occurrence × detection per element, with the moves predicted by planned actions",
+                    f.source, [name]))
+      name = "fig-3-13-swf-detection-evidence.svg"
+      outputs[name] = render_detection_evidence(f, "3-13")
+      index.append(("3-13", "SW FMEA: what each detection rating rests on (test run in CI, hardware only, not run, none)",
+                    f"{f.source}, .github/workflows/, tools/test_runner.py", [name]))
 
   for key, fig in (("fmeda-sg001", "3-10"), ("fmeda-sg009", "3-11")):
     name = f"fig-{fig}-{key}-metrics.svg"

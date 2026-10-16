@@ -65,6 +65,11 @@
 #   its latent fault is SFM-001.C2 (SFM-ACT-013, TSR-630).
 # - SFM-022.C3: M 7 kept; no FTTI until the H-09 goal has one (§3.8.4). Follow-up moves to SFM-ACT-005.
 # The TSRs are not implemented at BL-005 and are not credited.
+# Rev 0.16 (2026-10-16): two rows inherited from the SW FMEA now follow its BL-005 ratings (rev 0.8-1.0, #95, #111, #112):
+# - SFM-016.C2 (late disengagement, SWF-034.C1): O 8 -> 5, D 10 -> 8; the BL-005 controlsMismatch supervision (TSR-621). AP H.
+# - SFM-029.C1 (wrong safety model or parameter, SWF-013.C2): O 8 -> 3, D 9 -> 4; the reference build is the default and checked
+#   in CI (SWF-ACT-009 completed). AP H -> L. MSR F 8 -> 3 (F = O), M 7 kept.
+# Scope: the ODD speed bound of 110 km/h (DQ-260). Every other inherited row matches its source.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -73,14 +78,14 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.15"
+  revision: "0.16"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
   msr: complete
   scope: >-
     LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda,
-    software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023).
+    software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260).
     Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are
     preserved), added because the harness intercepts the stock ADAS camera.
   out_of_scope:
@@ -2122,18 +2127,21 @@ failure_modes:
       - id: SFM-016.C2
         element: SFM-SE-014
         linked_failure_mode: SWF-034
-        description: Debounce/counters too long (e.g. excessive actuation 0.25 s, mismatch counter 200 frames)
+        description: Debounce or counters too long (e.g. excessive actuation 0.25 s); at BL-005 a defect in the controlsMismatch supervision
+          (2 consecutive samples, at most 0.5 s, TSR-621), which replaced the upstream 200-frame counter
         prevention_controls:
-        - description: Upstream threshold; TSR-621 records it as partial
-          ref: openpilot/selfdrive/selfdrived/selfdrived.py:504-514
+        - description: New LionDriver supervision code (#51, TSR-621); rated in the SW FMEA
+          ref: openpilot/selfdrive/selfdrived/supervision.py
         detection_controls:
-        - description: No test targets this cause
-        occurrence: 8
-        detection: 10
+        - description: 'test_supervision.py targets the cause (consecutive samples, 0.5 s bound, engagement grace); not run in CI at BL-005
+            and not proven by mutation (SWF-ACT-055)'
+          test: openpilot/selfdrive/selfdrived/tests/test_supervision.py
+        occurrence: 5
+        detection: 8
         ap: H
         actions:
         - SFM-ACT-010
-        rationale: Rated, and actioned, in the SW FMEA (SWF-034.C1, SWF-ACT-033); this row inherits that rating
+        rationale: Rated, and actioned, in the SW FMEA (SWF-034.C1 O5 D8 at BL-005, SWF-ACT-033, SWF-ACT-055); this row inherits that rating
     notes: "Needs FTTI from the HARA/FSC to judge. Each SOFT_DISABLE event should be justified against FTTI."
 
   # ----- F4 Driver override -----
@@ -2974,16 +2982,18 @@ failure_modes:
         linked_failure_mode: SWF-013
         description: Wrong safety model or parameter set for this car
         prevention_controls:
-        - description: 'Panda safety code: MISRA C:2012, 100% line coverage, review; rated in the SW FMEA'
+        - description: 'The openpilot build and the release script select the reference build (LIONDRIVER_REFERENCE=1) by default, and pandad sets
+            a car mode only on a panda that reports it (TSR-619); rated in the SW FMEA'
           ref: assurance/08-analyses/fmea/analyses/sw-fmea.yaml
         detection_controls:
-        - description: 'As rated in the SW FMEA: no test covers the build configuration'
-          ref: assurance/08-analyses/fmea/analyses/sw-fmea.yaml
-        occurrence: 8
-        detection: 9
-        ap: H
-        rationale: Rated, and actioned where needed, in the SW FMEA (SWF-013.C2 O8 D9, SWF-ACT-009; open LionDriver#36/#41 set and check the reference build);
-          this row inherits that rating
+        - description: 'CI job panda_reference_release_build checks every firmware compile for -DLIONDRIVER_REFERENCE; host test of the reference-build
+            health flag. Checks the build configuration, not the signed release image (PFMEA PFM-001)'
+          test: .github/workflows/safety.yaml
+          ref: tools/release/release_variant.sh
+        occurrence: 3
+        detection: 4
+        ap: L
+        rationale: Rated, and actioned, in the SW FMEA (SWF-013.C2 O3 D4 at BL-005, SWF-ACT-009 completed); this row inherits that rating
         msr:
           mechanisms:
           - 1
@@ -2995,7 +3005,7 @@ failure_modes:
           system_response: IMMEDIATE_DISABLE with alert; engagement refused while the mismatch persists
           effect_after_response: Item disengaged with an alert
           severity_after: 8
-          frequency: 8
+          frequency: 3
           monitoring: 7
           ap: H
           timing:

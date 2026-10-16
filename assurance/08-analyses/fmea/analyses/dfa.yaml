@@ -11,6 +11,7 @@
 # release tooling of #80. All stay insufficient. Rev 0.8 records DQ-007 C on DFI-14 and DM-10.
 # Rev 0.9 takes in shared root causes reported by the SW FMEA (PR #95, #111): DFI-07 open -> insufficient
 # (a mode cycle clears the panda's latched fault reactions), DM-25; DFI-05 note on the host side.
+# Rev 0.11: SW FMEA references point at the merged rows SWF-054..057 (sw-fmea.yaml rev 1.0).
 # Rev 0.10 applies lead decision DQ-209 option A (keep comma's harness box, bench-test it) to DFI-20, DFI-21 and DOI-008.
 # 2026-10-16: fsc_revision 0.3 -> 0.4. FSC rev 0.4 only adds notes on two lead decisions (DQ-053, DQ-064) to
 # FSR-031 and FSR-038; no statement, ASIL, allocation or decomposition changed, so no DFI changes.
@@ -20,7 +21,7 @@ analysis:
   type: dfa
   doc_id: LD-DFA-001
   title: "Dependent Failure Analysis — panda/SoC decompositions (LD-FSC-001)"
-  revision: "0.10"
+  revision: "0.11"
   status: draft
   baseline: BL-004
   fsc_revision: "0.4"
@@ -53,6 +54,7 @@ analysis:
     - {revision: "0.8", date: 2026-10-16, author: Claude (AI-assisted draft), change: "Answered lead decision DQ-007 C (lower steering authority, limits derived physically per speed) recorded on DFI-14 and DM-10 as the route for the shared-envelope coupling. No assessment changed"}
     - {revision: "0.9", date: 2026-10-16, author: Claude (AI-assisted draft), change: "Shared root causes from the SW FMEA (PR #95 SWF-054/055, PR #111 SWF-056/057, both not yet merged), each checked in the code at opendbc 9a13f60 and panda a55bdfc. DFI-07 open -> insufficient: the reference lock lets the SoC go TOYOTA -> NOOUTPUT -> TOYOTA at any time, and set_safety_hooks() clears the cruise edge state and the latched TX-rate, EPS-fault, RX-check and relay-malfunction flags, so a faulty SoC can undo the panda's fault reaction while cruise stays on; the rev 0.5 statement that the SoC can only downgrade is corrected. New DM-25 (required). DFI-05: the host has no counter check on these messages either (SW FMEA); the decoding code is diverse, the signal definitions are shared. Decomposition statuses unchanged"}
     - {revision: "0.10", date: 2026-10-16, author: Claude (AI-assisted draft), change: "Lead decision DQ-209 option A applied: comma's harness box is kept and bench-tested, no adapter, no readback, comma power not required. DFI-20 stays safe by design; DFI-21 stays open, now closed only by the bench test and the cluster observation (options B and C are no longer routes). DOI-008 reworded. No assessment or decomposition status changed"}
+    - {revision: "0.11", date: 2026-10-16, author: Claude (AI-assisted draft), change: "References to the SW FMEA pull requests (#95, #111) replaced by the merged rows SWF-054, SWF-055 (DFI-07) and SWF-056, SWF-057 (DFI-05) of sw-fmea.yaml rev 1.0. Each row checked to describe the coupling cited. No content change"}
 
 categories:
   - {id: CAT-01, name: Shared power supply, applicable: true, rationale: "Panda and SoC are on the same comma 3X board, powered from the same 12 V input. On the Toyota harness that input is the harness-box supply VIN (ignition through D1, or comma power), which also powers both intercept switches; the ignition sense hangs on the same ignition line (RR-2026-010 HB-03, HB-06)."}
@@ -191,7 +193,7 @@ dfis:
       Rev 0.7 (opendbc 9a13f60): b9f7451 makes a PCM cruise edge grant authority only together with the heartbeat's
       engaged flag (STPA LS-06). That adds a SoC condition to engagement, not a vehicle input diverse from the shared
       brake, cruise or torque messages, so the coupling is unchanged.
-      Rev 0.9: the SW FMEA (PR #111, SWF-056/057) reports the host side. The host also checks no counter on the Toyota
+      Rev 0.9: the SW FMEA (sw-fmea.yaml SWF-056, SWF-057) reports the host side. The host also checks no counter on the Toyota
       RX messages, and BRAKE_MODULE has no checksum, so a frozen frame with a valid checksum passes both channels
       (the panda sets ignore_counter on 0x260, 0x1D2 and 0x226, toyota.h:48-69). The decoding code is diverse: the
       panda extracts bits by hand in C, the host decodes through the DBC. What both share is the signal definition
@@ -235,7 +237,7 @@ dfis:
       required only beyond AC-001). Open, not sufficient: the gate is unit-tested in CI
       (panda/tests/reference_lock) but its effect on the board is not verified (HIL test_11_reference_lock not
       run). Needed for sufficient: run the HIL test and the DM-22 integration check on the bench.
-      Rev 0.9 (opendbc 9a13f60, panda a55bdfc; SW FMEA SWF-054/055, PR #95): open -> insufficient. "The SoC can only
+      Rev 0.9 (opendbc 9a13f60, panda a55bdfc; sw-fmea.yaml SWF-054, SWF-055): open -> insufficient. "The SoC can only
       downgrade" was wrong. In TOYOTA the lock accepts NOOUTPUT or SILENT, and from there TOYOTA with parameter 73 at
       any time (reference_lock.h:56-62, no ignition or speed condition). Every mode set runs set_safety_hooks()
       (safety.h:578-620), which clears cruise_engaged_prev, safety_tx_rate_exceeded, safety_eps_fault,
