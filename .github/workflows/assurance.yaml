@@ -144,6 +144,10 @@ jobs:
         python3 -m unittest discover -s tools/safety -p 'test_fmea_lint.py'
         python3 tools/safety/fmea_review_xlsx.py --check
         python3 tools/safety/test_fmea_review_xlsx.py
+    - name: STPA figures match WP-A-05, stpa-map.yaml and the decision register (and their tests)
+      run: |
+        python3 assurance/08-analyses/figures/fig_a05_stpa.py --check
+        python3 assurance/08-analyses/figures/test_fig_a05_stpa.py
     - name: Vehicle register page current, citing documents agree with it (and its tests)
       run: |
         python3 tools/vehicles/vehicle_register.py --check
