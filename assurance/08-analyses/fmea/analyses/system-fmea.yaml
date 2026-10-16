@@ -77,6 +77,11 @@
 # O falls on 6 causes (SW FMEA has the narrower cause), rises on SFM-008.C1 (6 -> 7); D 8 -> 9 on 11 causes (the SW FMEA credits
 # their tests less, e.g. the opendbc car tests are not run by LionDriver CI). MSR F follows O. Every AP stays H. Partial matches are not linked; SFM-025.C1 (O 8) and SWF-062.C1
 # (O 6) rate the same design gap differently, raised with the SW FMEA owner.
+# Rev 0.18 (2026-10-16): SFM-025.C1 links to SWF-062.C1, now O 8 in the SW FMEA (#144): D 10 -> 9 (test_longitudinal and
+# test_monitoring run the forced deceleration and alert levels in CI, not designed for FSR-040). O 8 and AP H unchanged.
+# Rev 0.19 (2026-10-16): simulation evidence (no rating credit, msr-plan §4.2) from WP-S-04 v0.11 §3.9 (#145): the steering-override
+# run on SFM-018.C1/C2 (host drops LKA within 0.2 s in 18 of 36 runs, never in 8) and N-3 on SFM-004.C1-C3 (saturation at the ODD
+# curve bound). No rating changes.
 # Rev 0.20 (2026-10-16): SFM-026 (alert not presented) and SFM-027 (alert late) also end in HZ-013: the driver-monitoring escalation
 # goes through the same HMI path (FTA F-37; SW FMEA SWF-035, SWF-082, #146). Severity stays 10; no rating changes.
 # Rev 0.21 (2026-10-16): end effects the fault trees already rely on (fta-fmea-map warnings): HZ-005 on SFM-013 (unintended
@@ -803,6 +808,9 @@ failure_modes:
             and 1.05 s at 0.5 m/s², against a reaction time of 0.75-1.5 s (WP-S-04 §3.8.1). At the ODD curve bound the envelope
             gives about 1.99 m/s² against 2.5-3.0 m/s² needed, so a deficit of 0.5-1.0 m/s² is credible and the warning is
             late. FDTI and FRTI end at the alert; the driver reaction is not in them'
+          evidence:
+          - description: 'Plant model N-3: no fault, curve at the ODD bound at 110 km/h; the controller saturates and the car drifts 1.13 m, reaching the lane line 4.09 s (3.0 m lane) after curve entry. Simulation cross-check, no rating credit (msr-plan §4.2); supports the §3.8.1 late-warning finding behind M 8'
+            ref: assurance/sim/results/plant-results.md N-3 (plant cb03970)
           actions:
           - SFM-ACT-017
           - SFM-ACT-021
@@ -842,6 +850,9 @@ failure_modes:
             and 1.05 s at 0.5 m/s², against a reaction time of 0.75-1.5 s (WP-S-04 §3.8.1). At the ODD curve bound the envelope
             gives about 1.99 m/s² against 2.5-3.0 m/s² needed, so a deficit of 0.5-1.0 m/s² is credible and the warning is
             late. FDTI and FRTI end at the alert; the driver reaction is not in them'
+          evidence:
+          - description: 'Plant model N-3: no fault, curve at the ODD bound at 110 km/h; the controller saturates and the car drifts 1.13 m, reaching the lane line 4.09 s (3.0 m lane) after curve entry. Simulation cross-check, no rating credit (msr-plan §4.2); supports the §3.8.1 late-warning finding behind M 8'
+            ref: assurance/sim/results/plant-results.md N-3 (plant cb03970)
           actions:
           - SFM-ACT-017
           - SFM-ACT-021
@@ -884,6 +895,9 @@ failure_modes:
             and 1.05 s at 0.5 m/s², against a reaction time of 0.75-1.5 s (WP-S-04 §3.8.1). At the ODD curve bound the envelope
             gives about 1.99 m/s² against 2.5-3.0 m/s² needed, so a deficit of 0.5-1.0 m/s² is credible and the warning is
             late. FDTI and FRTI end at the alert; the driver reaction is not in them'
+          evidence:
+          - description: 'Plant model N-3: no fault, curve at the ODD bound at 110 km/h; the controller saturates and the car drifts 1.13 m, reaching the lane line 4.09 s (3.0 m lane) after curve entry. Simulation cross-check, no rating credit (msr-plan §4.2); supports the §3.8.1 late-warning finding behind M 8'
+            ref: assurance/sim/results/plant-results.md N-3 (plant cb03970)
           actions:
           - SFM-ACT-017
           - SFM-ACT-021
@@ -2344,6 +2358,9 @@ failure_modes:
           ap: H
           timing:
             basis: unknown
+          evidence:
+          - description: 'Steering-override simulation (L2 column, real panda code, host MAX_USER_TORQUE rule; LKA torque and host threshold swept as assumptions): the host drops LKA within the 0.2 s SG-05 budget in 18 of 36 runs and never in 8 (light driver input against a high threshold). Simulation cross-check, no rating credit (msr-plan §4.2); supports SFM-ACT-016 (TSR-304) and measurement M-08'
+            ref: assurance/sim/results/override-l2.md (plant cb03970)
           actions:
           - SFM-ACT-016
       - id: SFM-018.C2
@@ -2372,6 +2389,9 @@ failure_modes:
           ap: H
           timing:
             basis: unknown
+          evidence:
+          - description: 'Steering-override simulation (L2 column, real panda code, host MAX_USER_TORQUE rule; LKA torque and host threshold swept as assumptions): the host drops LKA within the 0.2 s SG-05 budget in 18 of 36 runs and never in 8; the panda does not act. Simulation cross-check, no rating credit (msr-plan §4.2); supports SFM-ACT-016 (TSR-304)'
+            ref: assurance/sim/results/override-l2.md (plant cb03970)
           actions:
           - SFM-ACT-016
     notes: >-
@@ -2805,17 +2825,21 @@ failure_modes:
     causes:
       - id: SFM-025.C1
         element: SFM-SE-014
+        linked_failure_mode: SWF-062
         description: driverDistracted3 / driverUnresponsive3 mapped only to ET.PERMANENT (no disable reaction)
         prevention_controls:
         - description: Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job); unit tests are not requirements-based;
             no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2)
           ref: scripts/lint/lint.sh
         detection_controls:
+        - description: 'As rated in the SW FMEA (SWF-062.C1, D 9 at BL-005): test_longitudinal runs the force_decel maneuver in CI and test_monitoring checks the alert levels; neither checks that the reaction meets FSR-040'
+          test: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py
         - description: Present by design and known; no test, because no requirement says what the reaction should be
           ref: openpilot/selfdrive/selfdrived/events.py
         occurrence: 8
-        detection: 10
+        detection: 9
         ap: H
+        rationale: Rated in the SW FMEA (SWF-062.C1, O 8 D 9 at BL-005); this row inherits that rating
         actions:
         - SFM-ACT-005
         msr:
