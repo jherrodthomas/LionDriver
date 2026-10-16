@@ -40,6 +40,16 @@ Straight road, 120 km/h; lead at a 1.5 s gap (KS-08) at constant speed; follower
 | L-03 | Deceleration request at the envelope minimum (-3.5 m/s², step) (SFM-009, SWF-004; VS-FI-14) | frames refused 1.560 | acceleration 0.05 → 1.55 | 45.6 / 45.6 / -1.32 | 28.6 / 20.6 | §3.4: collision if follower t_r ≥ time gap with equal deceleration |
 | L-04 | Deceleration request above the envelope (-6.0 m/s²) (SFM-009, SFM-029, SWF-003; VS-FI-14) | frames refused 0.000 | none | 45.6 / 45.6 / 0.00 | 28.6 / 28.6 | — |
 
+## Stock PCS path (SG-07)
+
+The stock camera sends a PCS braking request at the fault onset. It reaches the car directly when the harness switches pass it through, or through the panda when the panda's forwarding hook allows it (real code, `safety_fwd_hook`). Cases P-01…P-03 come from the safety-concept session's handover (branch `claude/fault-sim-plant`, 3b6936b). The lost speed reduction is a_PCS × delay, as in WP-S-04 §3.6.
+
+| Case | Fault (FMEA; WP-V-05) | TSR | Panda reaction (s) | PCS request reaches the car (s) | Speed reduction lost at 6 m/s² (km/h) | Against SG-07 FTTI 0.2 s (WP-S-04 §3.6) |
+|---|---|---|---|---|---|---|
+| P-01 | Stock PCS braking request, no fault (reference) (SFM-033; VS-FI-24) | TSR-704, TSR-707 | none | 0.00 | 0.0 | within |
+| P-02 | Stock PCS braking request during an MCU hang (DFM-004, SFM-033; VS-FI-17, VS-FI-24) | TSR-501, TSR-706, TSR-711 | no frames (hang) 0.000; IWDG reset 0.083 | 0.08 | 1.8 | within |
+| P-03 | Stock PCS braking request during an MCU hang, switch stuck in intercept (DFM-004, DFM-010, SFM-033; VS-FI-21, VS-FI-17) | TSR-506, TSR-706 | no frames (hang) 0.000; IWDG reset 0.083 | — | never reaches | not reached in the run |
+
 ## Event log per case
 
 | Case | Events (s from fault onset) |
@@ -68,6 +78,9 @@ Straight road, 120 km/h; lead at a 1.5 s gap (KS-08) at constant speed; follower
 | L-02 | fault 0.000; panda refuses ACC_CONTROL 0.000 |
 | L-03 | fault 0.000; driver cue (acceleration) 0.046; driver correction 1.546; panda refuses ACC_CONTROL 1.560 |
 | L-04 | fault 0.000; panda refuses ACC_CONTROL 0.000 |
+| P-01 | fault 0.000; PCS request reaches the car 0.000 |
+| P-02 | fault 0.000; MCU hung: no frame reaches the car 0.000; IWDG reset, switch to pass-through 0.083; PCS request reaches the car 0.084 |
+| P-03 | fault 0.000; MCU hung: no frame reaches the car 0.000; IWDG reset, switch stays in intercept 0.083 |
 
 ## Model inputs
 
@@ -99,4 +112,5 @@ Straight road, 120 km/h; lead at a 1.5 s gap (KS-08) at constant speed; follower
 | driver_ay_max | 4 | the driver's correction is limited to 4 m/s2 of lateral acceleration and builds up over 0.2 s; it steers back to the lane centre as a critically damped second-order loop at 1.5 rad/s. No source |
 | driver_brake | 3 | a braking driver adds -3 m/s2, built up over 0.3 s. No source |
 | camera_lka | 0 | stock camera LKA is off: its STEERING_LKA frames carry STEER_REQUEST 0 and torque 0 |
+| a_pcs | 6 | stock PCS braking deceleration, assumption A-PCS-1 of WP-S-04 §3.6, to be measured (OI-4) |
 | speaker_phase | 0 | the 8 Hz tick starts at t = 3 ms; the siren can come up to 125 ms later at another phase |

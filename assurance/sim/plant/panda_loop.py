@@ -120,6 +120,12 @@ class Panda:
       return False
     return bool(self.lib.safety_tx_hook(libsafety_py.make_CANPacket(addr, bus, dat)))
 
+  def forward(self, bus: int, addr: int) -> int:
+    """Destination bus of a frame from `bus` (real code: safety_fwd_hook); -1 when blocked or the MCU is hung."""
+    if self.hung or not self.relay_driven:
+      return -1
+    return int(self.lib.safety_fwd_hook(bus, addr))
+
   def heartbeat(self, engaged: bool):
     if not self.hung and self.relay_driven:
       self.lib.sim_heartbeat(engaged)
