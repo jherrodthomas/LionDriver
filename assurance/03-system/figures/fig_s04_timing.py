@@ -359,7 +359,7 @@ def figure_5_2() -> str:
   siren = p + k + s
   out.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W2}" height="{H}" viewBox="0 0 {W2} {H}" font-family="{FONT}" role="img" aria-labelledby="t d">')
   out.append('<title id="t">Figure 5-2. EPS-fault warning chain of the reference build against the SG-02 1 s warning budget (WP-S-04 T-28, OI-8)</title>')
-  out.append('<desc id="d">Time axis from the first EPS fault frame. The envelope refuses STEERING_LKA with torque on receipt of the fault frame (TSR-110). The panda 100 Hz safety task counts 1 s of persistence while controls are allowed, adds up to 10 ms of task period, and the 8 Hz tick drives the speaker only on every other tick, adding up to 250 ms, so the siren starts at most 1.26 s after fault onset. Measured from fault onset this exceeds the SG-02 1 s warning budget by up to 0.26 s. Measured from detection as defined in WP-S-02 v0.14 (the end of the 1 s persistence) it is at most 0.26 s, inside TSR-516 0.5 s. OI-8 needs a decision. Not verified on hardware.</desc>')
+  out.append('<desc id="d">Time axis from the first EPS fault frame. The envelope refuses STEERING_LKA with torque on receipt of the fault frame (TSR-110). The panda 100 Hz safety task counts 1 s of persistence while controls are allowed, adds up to 10 ms of task period, and the 8 Hz tick drives the speaker only on every other tick, adding up to 250 ms, so the siren starts at most 1.26 s after fault onset. Measured from fault onset this exceeds the SG-02 1 s warning budget by up to 0.26 s. Measured from detection as defined in WP-S-02 v0.14 (the end of the 1 s persistence) it is at most 0.26 s, inside TSR-516 0.5 s. OI-8 was decided on 2026-10-14 (DQ-048): the persistence is to be shortened to about 0.7 s, which gives at most 0.96 s from onset; the firmware has not yet been changed. Not verified on hardware.</desc>')
   out.append(DEFS)
   header(out, W2, "Figure 5-2 · EPS-fault warning chain (T-28) vs the SG-02 warning budget",
          "Reference build bf6ce8c (opendbc 338f5fc, panda 6a7f2fb) · upper bounds from §4 T-28 · drawn to scale · not verified on hardware",
@@ -434,8 +434,8 @@ def figure_5_2() -> str:
           "detection defined as the end of the 1 s persistence", anchor_x=P(siren) - 200)
   # OI-8 note box on the left under lanes
   out.append(rect(40, 440, 236, 96, "#FEF2F2", RED, 1.2, rx=8))
-  out.append(t(54, 460, "OI-8 · decision needed", 12, RED, 700))
-  for i, s_ in enumerate(["Options in WP-S-04 §7:", "• shorten the persistence (e.g. 0.7 s)", "• or justify: lateral authority is", "  removed at the first fault frame"]):
+  out.append(t(54, 460, "OI-8 · decided (DQ-048)", 12, RED, 700))
+  for i, s_ in enumerate(["Lead decision 2026-10-14:", "• shorten the persistence to ≈ 0.7 s", "  → siren ≤ 0.96 s from onset", "• firmware not yet changed"]):
     out.append(t(54, 478 + i * 14, s_, 10, INK))
   out.append("</svg>")
   return "\n".join(out) + "\n"

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-11 AI system definition and AI safety requirements |
 | Standard reference | ISO/PAS 8800:2024 (AI system definition, input space, AI safety requirements, data requirements); ISO 21448:2022 §5, §7; ASPICE 4.0 MLE.1, SUP.11 (data requirements) |
-| Version | 0.3 (input space follows the highway-only ODD, decision register DQ-023; DSR-05 upload policy decided, DQ-084; AIR-24 rests on D-05 as adopted, DQ-038; 2026-10-16). 0.2 (§2.2 AI system boundary diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.1 |
+| Version | 0.5 (speed bound 110 km/h, decision register DQ-260; 2026-10-16). 0.4 (DSR-12 status: labelling rule in WP-V-02 §5.3.5; 2026-10-16). 0.3 (input space follows the highway-only ODD, decision register DQ-023; DSR-05 upload policy decided, DQ-084; AIR-24 rests on D-05 as adopted, DQ-038; 2026-10-16). 0.2 (§2.2 AI system boundary diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM (FuSa) / SOTIF for AI-1 and AI-2; AI-3 / DM chain QM per the [WP-C-04 §7](WP-C-04-functional-safety-concept.md) proposal (SOTIF misuse measure) |
 | Author | Assurance team (initial draft) |
@@ -18,7 +18,7 @@ This document defines the AI systems inside LD-SDA, the space of inputs they are
 
 It implements the MLE.1 / "AI safety requirements" activity of the [AI safety plan (WP-M-10 §6.1)](../01-management/WP-M-10-ai-safety-plan.md). Because LionDriver does not train models (acquired, pre-trained model route, WP-M-10 §5), the AIRs are **acceptance criteria for an existing artefact plus requirements on the surrounding software** (pre/post-processing, runtime monitors, integrity, fallbacks). They do not steer a training process.
 
-Inputs: [WP-C-01](WP-C-01-item-definition.md) (E-02, E-06, F-01…F-06), [WP-C-03](WP-C-03-hara.md) (SG-01…SG-07), [WP-M-08](../01-management/WP-M-08-sotif-plan.md), [WP-M-10](../01-management/WP-M-10-ai-safety-plan.md), the gap assessment (GAP-17, GAP-18, GAP-21, GAP-22). [WP-C-02](WP-C-02-odd-and-intended-functionality.md) (ODD-H, ODD-A), [WP-C-04](WP-C-04-functional-safety-concept.md) (FSR-02.02…02.09, FSR-06.01…06.04), [WP-C-05](WP-C-05-sotif-hazard-identification.md) (SH-01…SH-13), [WP-C-06](WP-C-06-sotif-insufficiencies-triggering-conditions.md) (FI-01…FI-22, TC-01…TC-33), [WP-C-07](WP-C-07-sotif-functional-modifications.md) (FM-01…FM-11) and [WP-C-08](WP-C-08-driver-hmi-misuse-analysis.md) (DMP-01…DMP-04).
+Inputs: [WP-C-01](WP-C-01-item-definition.md) (E-02, E-06, F-01…F-06), [WP-C-03](WP-C-03-hara.md) (SG-01…SG-08), [WP-M-08](../01-management/WP-M-08-sotif-plan.md), [WP-M-10](../01-management/WP-M-10-ai-safety-plan.md), the gap assessment (GAP-17, GAP-18, GAP-21, GAP-22). [WP-C-02](WP-C-02-odd-and-intended-functionality.md) (ODD-H, ODD-A), [WP-C-04](WP-C-04-functional-safety-concept.md) (FSR-02.02…02.09, FSR-06.01…06.04), [WP-C-05](WP-C-05-sotif-hazard-identification.md) (SH-01…SH-13), [WP-C-06](WP-C-06-sotif-insufficiencies-triggering-conditions.md) (FI-01…FI-22, TC-01…TC-33), [WP-C-07](WP-C-07-sotif-functional-modifications.md) (FM-01…FM-11) and [WP-C-08](WP-C-08-driver-hmi-misuse-analysis.md) (DMP-01…DMP-04).
 
 ## 2. AI system and component definition
 
@@ -111,7 +111,7 @@ The input space is the set of input conditions under which the AIRs in §6 are c
 | Road type | ODD-H: limited-access divided highway. Arterials, rural roads and intersections are outside the input space since DQ-023 | WP-C-02 §3.1 road type, intersections; HARA OS-01…OS-07 | Partially (map/GNSS not used for gating today) | `docs/LIMITATIONS.md:14-19` |
 | Lane marking quality | Visible longitudinal markings on at least one side (US MUTCD); no long faded sections, no conflicting old/new markings, no work-zone markings (TC-05, TC-06) | WP-C-02 §3.1 lane markings | Partially (`laneLineProbs`) | `LIMITATIONS.md:15` |
 | Curvature | R ≥ v²/2.5 m/s² (R_ODD, 0.5 m/s² margin below the 3.0 m/s² controller limit, `drive_helpers.py:9-14`); grade and banking ≤ 6 % (TC-14…TC-16) | WP-C-02 §3.1, §3.2 | Yes (vehicle state) | `LIMITATIONS.md:14` |
-| Speed | ODD-H 0–120 km/h, not above the posted limit (controllability tested only to 110 km/h, DQ-091; the bound may be lowered, DQ-260); upstream allows engagement up to ≈ 149 km/h and only warns (GAP-19, TC-20, FM-07) | WP-C-02 §3.1 speed | Yes | `events.py:989-996` |
+| Speed | ODD-H 0–110 km/h, not above the posted limit (bound lowered from 120 km/h to the tested speed, DQ-260); upstream allows engagement up to ≈ 149 km/h and only warns (GAP-19, TC-20, FM-07) | WP-C-02 §3.1 speed | Yes | `events.py:989-996` |
 | Illumination | Day, dusk/dawn, night with headlights; excludes low sun directly in the camera field of view, oncoming high-beam glare and tunnels until validated (TC-01, TC-02, TC-18) | WP-C-02 §3.1 lighting | Partially (camera exposure stats) | `LIMITATIONS.md:18` |
 | Weather / visibility | None or light rain; visibility ≥ 200 m; no snow, fog, moderate/heavy rain (TC-03, TC-04) | WP-C-02 §3.1 weather | No direct detector | `LIMITATIONS.md:10` |
 | Optical path | Clean windscreen; no obstruction in the camera area | AOU-08, OPS-03 ([WP-O-02](../09-production-operation/WP-O-02-operation-service-decommissioning.md)) | No dedicated detector | `LIMITATIONS.md:11-12` |
@@ -238,7 +238,7 @@ IDs AIR-01…AIR-30 are allocated in this document.
 | DSR-09 | The dataset shall contain instances of every known triggering condition and known scenario of [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md) that is inside the ODD | AIR-14, WP-C-06 | Coverage report | Not started |
 | DSR-10 | DM evaluation data shall cover day and night, low sun / glare, glasses and sunglasses, hats, a range of driver ages, skin tones and seating positions, with documented informed consent of every recorded person | AIR-07, AIR-08 | Coverage report, consent records | Not started |
 | DSR-11 | Data used to choose runtime-monitor thresholds (AIR-14, AIR-18) shall be disjoint (by drive) from data used to verify them | AIR-14 | REV | Not started |
-| DSR-12 | Simulated or synthetic data (MetaDrive, perturbed replays) shall be labelled as such, kept in separate datasets and never pooled into real-world rate estimates | WP-V-02 | REV | Not started |
+| DSR-12 | Simulated or synthetic data (MetaDrive, perturbed replays) shall be labelled as such, kept in separate datasets and never pooled into real-world rate estimates | WP-V-02 | REV | Labelling rule defined (WP-V-02 §5.3.5); not yet implemented in the simulator's result files |
 | DSR-13 | Personal data (cabin video, faces and plates of third parties, location traces) shall be handled per the data-protection rules of [WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) and [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md) §11: access control, encryption at rest, retention limits, deletion on request | Privacy | Audit | Not started |
 
 ## 8. Traceability summary

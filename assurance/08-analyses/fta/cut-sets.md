@@ -11,12 +11,13 @@ Row results: *match* = a computed cut set; *effective* = omits only latent event
 | Goal | Cut sets | Effective order ≤ 1 | Table rows | match | effective | argued | outside tree | reduced | not minimal | unrelated | in words | Cut sets not in the table |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | SG-01 | 36 | 6 | 11 | 9 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
-| SG-02 | 33 | 3 | 8 | 1 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| SG-03 | 16 | 7 | 11 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SG-02 | 100 | 5 | 12 | 1 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SG-03 | 22 | 6 | 12 | 12 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-04 | 21 | 6 | 12 | 12 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| SG-05 | 7 | 6 | 8 | 7 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
-| SG-06 | 32 | 3 | 8 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| SG-07 | 11 | 10 | 11 | 10 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SG-05 | 12 | 11 | 11 | 10 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| SG-06 | 85 | 7 | 11 | 1 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SG-07 | 17 | 14 | 16 | 15 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SG-08 | 11 | 11 | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## SG-01: uncontrollable lateral motion, or steering actuation while not engaged
 
@@ -81,7 +82,7 @@ Top event TE-01. 36 minimal cut sets.
 
 ## SG-02: loss or degradation of lateral control without adequate take-over warning
 
-Top event TE-02. 33 minimal cut sets.
+Top event TE-02. 100 minimal cut sets.
 
 ### Computed cut sets
 
@@ -90,53 +91,124 @@ Top event TE-02. 33 minimal cut sets.
 | 1 | 1 BE + 1 UE | 1 | {BE-2.07, UE-2.18} |  | MCS-02.7 |
 | 2 | 3 BE + 0 UE | 1 | {BE-2.05, BE-2.14, BE-2.16} | C L | MCS-02.5 |
 | 3 | 3 BE + 0 UE | 2 | {BE-2.05, BE-2.15, BE-2.16} | C L | MCS-02.5 |
-| 4 | 4 BE + 0 UE | 2 | {BE-2.01, BE-2.08, BE-2.14, BE-2.16} | C L | MCS-02.1 |
-| 5 | 4 BE + 0 UE | 3 | {BE-2.01, BE-2.08, BE-2.15, BE-2.16} | C L | MCS-02.1 |
-| 6 | 4 BE + 0 UE | 2 | {BE-2.01, BE-2.12, BE-2.14, BE-2.16} | C L | MCS-02.6 |
-| 7 | 4 BE + 0 UE | 3 | {BE-2.01, BE-2.12, BE-2.15, BE-2.16} | C L | MCS-02.6 |
-| 8 | 4 BE + 0 UE | 2 | {BE-2.01, BE-2.13, BE-2.14, BE-2.16} | C L | MCS-02.6 |
-| 9 | 4 BE + 0 UE | 3 | {BE-2.01, BE-2.13, BE-2.15, BE-2.16} | C L | MCS-02.6 |
-| 10 | 4 BE + 0 UE | 2 | {BE-2.02, BE-2.09, BE-2.14, BE-2.16} | C L | MCS-02.2 |
-| 11 | 4 BE + 0 UE | 3 | {BE-2.02, BE-2.09, BE-2.15, BE-2.16} | C L | MCS-02.2 |
-| 12 | 4 BE + 0 UE | 2 | {BE-2.02, BE-2.12, BE-2.14, BE-2.16} | C L | MCS-02.6 |
-| 13 | 4 BE + 0 UE | 3 | {BE-2.02, BE-2.12, BE-2.15, BE-2.16} | C L | MCS-02.6 |
-| 14 | 4 BE + 0 UE | 2 | {BE-2.02, BE-2.13, BE-2.14, BE-2.16} | C L | MCS-02.6 |
-| 15 | 4 BE + 0 UE | 3 | {BE-2.02, BE-2.13, BE-2.15, BE-2.16} | C L | MCS-02.6 |
-| 16 | 4 BE + 0 UE | 2 | {BE-2.03, BE-2.10, BE-2.14, BE-2.16} | C L | MCS-02.3 |
-| 17 | 4 BE + 0 UE | 3 | {BE-2.03, BE-2.10, BE-2.15, BE-2.16} | C L | MCS-02.3 |
-| 18 | 4 BE + 0 UE | 2 | {BE-2.03, BE-2.12, BE-2.14, BE-2.16} | C L | MCS-02.6 |
-| 19 | 4 BE + 0 UE | 3 | {BE-2.03, BE-2.12, BE-2.15, BE-2.16} | C L | MCS-02.6 |
-| 20 | 4 BE + 0 UE | 2 | {BE-2.03, BE-2.13, BE-2.14, BE-2.16} | C L | MCS-02.6 |
-| 21 | 4 BE + 0 UE | 3 | {BE-2.03, BE-2.13, BE-2.15, BE-2.16} | C L | MCS-02.6 |
-| 22 | 4 BE + 0 UE | 1 | {BE-2.04, BE-2.11, BE-2.14, BE-2.16} | C L | MCS-02.4 |
-| 23 | 4 BE + 0 UE | 2 | {BE-2.04, BE-2.11, BE-2.15, BE-2.16} | C L | MCS-02.4 |
-| 24 | 4 BE + 0 UE | 2 | {BE-2.04, BE-2.12, BE-2.14, BE-2.16} | C L | MCS-02.4 |
-| 25 | 4 BE + 0 UE | 3 | {BE-2.04, BE-2.12, BE-2.15, BE-2.16} | C L | MCS-02.4 |
-| 26 | 4 BE + 0 UE | 2 | {BE-2.04, BE-2.13, BE-2.14, BE-2.16} | C L | MCS-02.4 |
-| 27 | 4 BE + 0 UE | 3 | {BE-2.04, BE-2.13, BE-2.15, BE-2.16} | C L | MCS-02.4 |
-| 28 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.12, BE-2.14, BE-2.16} | C L | MCS-02.6 |
-| 29 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.12, BE-2.15, BE-2.16} | C L | MCS-02.6 |
-| 30 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.13, BE-2.14, BE-2.16} | C L | MCS-02.6 |
-| 31 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.13, BE-2.15, BE-2.16} | C L | MCS-02.6 |
-| 32 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.14, BE-2.16, BE-2.17} | C L | MCS-02.8 |
-| 33 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.15, BE-2.16, BE-2.17} | C L | MCS-02.8 |
+| 4 | 3 BE + 0 UE | 2 | {BE-2.05, BE-2.16, BE-2.22} | C L | MCS-02.5 |
+| 5 | 3 BE + 0 UE | 1 | {BE-2.14, BE-2.16, BE-2.21} | C L | MCS-02.9 |
+| 6 | 3 BE + 0 UE | 2 | {BE-2.15, BE-2.16, BE-2.21} | C L | MCS-02.9 |
+| 7 | 3 BE + 0 UE | 2 | {BE-2.16, BE-2.21, BE-2.22} | C L | MCS-02.9 |
+| 8 | 4 BE + 0 UE | 2 | {BE-1.20, BE-2.03, BE-2.14, BE-2.16} | C L | MCS-02.3 |
+| 9 | 4 BE + 0 UE | 3 | {BE-1.20, BE-2.03, BE-2.15, BE-2.16} | C L | MCS-02.3 |
+| 10 | 4 BE + 0 UE | 3 | {BE-1.20, BE-2.03, BE-2.16, BE-2.22} | C L | MCS-02.3 |
+| 11 | 4 BE + 0 UE | 2 | {BE-2.01, BE-2.08, BE-2.14, BE-2.16} | C L | MCS-02.1 |
+| 12 | 4 BE + 0 UE | 3 | {BE-2.01, BE-2.08, BE-2.15, BE-2.16} | C L | MCS-02.1 |
+| 13 | 4 BE + 0 UE | 3 | {BE-2.01, BE-2.08, BE-2.16, BE-2.22} | C L | MCS-02.1 |
+| 14 | 4 BE + 0 UE | 2 | {BE-2.01, BE-2.12, BE-2.14, BE-2.16} | C L | MCS-02.6 |
+| 15 | 4 BE + 0 UE | 3 | {BE-2.01, BE-2.12, BE-2.15, BE-2.16} | C L | MCS-02.6 |
+| 16 | 4 BE + 0 UE | 3 | {BE-2.01, BE-2.12, BE-2.16, BE-2.22} | C L | MCS-02.6 |
+| 17 | 4 BE + 0 UE | 2 | {BE-2.01, BE-2.13, BE-2.14, BE-2.16} | C L | MCS-02.6 |
+| 18 | 4 BE + 0 UE | 3 | {BE-2.01, BE-2.13, BE-2.15, BE-2.16} | C L | MCS-02.6 |
+| 19 | 4 BE + 0 UE | 3 | {BE-2.01, BE-2.13, BE-2.16, BE-2.22} | C L | MCS-02.6 |
+| 20 | 4 BE + 0 UE | 2 | {BE-2.01, BE-2.14, BE-2.16, BE-2.25} | C L | MCS-02.6 |
+| 21 | 3 BE + 1 UE | 1 | {BE-2.01, BE-2.14, BE-2.16, UE-2.19} | C L | MCS-02.10 |
+| 22 | 4 BE + 0 UE | 3 | {BE-2.01, BE-2.15, BE-2.16, BE-2.25} | C L | MCS-02.6 |
+| 23 | 3 BE + 1 UE | 2 | {BE-2.01, BE-2.15, BE-2.16, UE-2.19} | C L | MCS-02.10 |
+| 24 | 4 BE + 0 UE | 3 | {BE-2.01, BE-2.16, BE-2.22, BE-2.25} | C L | MCS-02.6 |
+| 25 | 3 BE + 1 UE | 2 | {BE-2.01, BE-2.16, BE-2.22, UE-2.19} | C L | MCS-02.10 |
+| 26 | 4 BE + 0 UE | 2 | {BE-2.02, BE-2.09, BE-2.14, BE-2.16} | C L | MCS-02.2 |
+| 27 | 4 BE + 0 UE | 3 | {BE-2.02, BE-2.09, BE-2.15, BE-2.16} | C L | MCS-02.2 |
+| 28 | 4 BE + 0 UE | 3 | {BE-2.02, BE-2.09, BE-2.16, BE-2.22} | C L | MCS-02.2 |
+| 29 | 4 BE + 0 UE | 2 | {BE-2.02, BE-2.12, BE-2.14, BE-2.16} | C L | MCS-02.6 |
+| 30 | 4 BE + 0 UE | 3 | {BE-2.02, BE-2.12, BE-2.15, BE-2.16} | C L | MCS-02.6 |
+| 31 | 4 BE + 0 UE | 3 | {BE-2.02, BE-2.12, BE-2.16, BE-2.22} | C L | MCS-02.6 |
+| 32 | 4 BE + 0 UE | 2 | {BE-2.02, BE-2.13, BE-2.14, BE-2.16} | C L | MCS-02.6 |
+| 33 | 4 BE + 0 UE | 3 | {BE-2.02, BE-2.13, BE-2.15, BE-2.16} | C L | MCS-02.6 |
+| 34 | 4 BE + 0 UE | 3 | {BE-2.02, BE-2.13, BE-2.16, BE-2.22} | C L | MCS-02.6 |
+| 35 | 4 BE + 0 UE | 2 | {BE-2.02, BE-2.14, BE-2.16, BE-2.25} | C L | MCS-02.6 |
+| 36 | 4 BE + 0 UE | 3 | {BE-2.02, BE-2.15, BE-2.16, BE-2.25} | C L | MCS-02.6 |
+| 37 | 4 BE + 0 UE | 3 | {BE-2.02, BE-2.16, BE-2.22, BE-2.25} | C L | MCS-02.6 |
+| 38 | 4 BE + 0 UE | 2 | {BE-2.03, BE-2.10, BE-2.14, BE-2.16} | C L | MCS-02.3 |
+| 39 | 4 BE + 0 UE | 3 | {BE-2.03, BE-2.10, BE-2.15, BE-2.16} | C L | MCS-02.3 |
+| 40 | 4 BE + 0 UE | 3 | {BE-2.03, BE-2.10, BE-2.16, BE-2.22} | C L | MCS-02.3 |
+| 41 | 4 BE + 0 UE | 2 | {BE-2.03, BE-2.12, BE-2.14, BE-2.16} | C L | MCS-02.6 |
+| 42 | 4 BE + 0 UE | 3 | {BE-2.03, BE-2.12, BE-2.15, BE-2.16} | C L | MCS-02.6 |
+| 43 | 4 BE + 0 UE | 3 | {BE-2.03, BE-2.12, BE-2.16, BE-2.22} | C L | MCS-02.6 |
+| 44 | 4 BE + 0 UE | 2 | {BE-2.03, BE-2.13, BE-2.14, BE-2.16} | C L | MCS-02.6 |
+| 45 | 4 BE + 0 UE | 3 | {BE-2.03, BE-2.13, BE-2.15, BE-2.16} | C L | MCS-02.6 |
+| 46 | 4 BE + 0 UE | 3 | {BE-2.03, BE-2.13, BE-2.16, BE-2.22} | C L | MCS-02.6 |
+| 47 | 4 BE + 0 UE | 2 | {BE-2.03, BE-2.14, BE-2.16, BE-2.25} | C L | MCS-02.6 |
+| 48 | 4 BE + 0 UE | 3 | {BE-2.03, BE-2.15, BE-2.16, BE-2.25} | C L | MCS-02.6 |
+| 49 | 4 BE + 0 UE | 3 | {BE-2.03, BE-2.16, BE-2.22, BE-2.25} | C L | MCS-02.6 |
+| 50 | 4 BE + 0 UE | 1 | {BE-2.04, BE-2.11, BE-2.14, BE-2.16} | C L | MCS-02.4 |
+| 51 | 4 BE + 0 UE | 2 | {BE-2.04, BE-2.11, BE-2.15, BE-2.16} | C L | MCS-02.4 |
+| 52 | 4 BE + 0 UE | 2 | {BE-2.04, BE-2.11, BE-2.16, BE-2.22} | C L | MCS-02.4 |
+| 53 | 4 BE + 0 UE | 2 | {BE-2.04, BE-2.12, BE-2.14, BE-2.16} | C L | MCS-02.4 |
+| 54 | 4 BE + 0 UE | 3 | {BE-2.04, BE-2.12, BE-2.15, BE-2.16} | C L | MCS-02.4 |
+| 55 | 4 BE + 0 UE | 3 | {BE-2.04, BE-2.12, BE-2.16, BE-2.22} | C L | MCS-02.4 |
+| 56 | 4 BE + 0 UE | 2 | {BE-2.04, BE-2.13, BE-2.14, BE-2.16} | C L | MCS-02.4 |
+| 57 | 4 BE + 0 UE | 3 | {BE-2.04, BE-2.13, BE-2.15, BE-2.16} | C L | MCS-02.4 |
+| 58 | 4 BE + 0 UE | 3 | {BE-2.04, BE-2.13, BE-2.16, BE-2.22} | C L | MCS-02.4 |
+| 59 | 4 BE + 0 UE | 2 | {BE-2.04, BE-2.14, BE-2.16, BE-2.25} | C L | MCS-02.4 |
+| 60 | 4 BE + 0 UE | 3 | {BE-2.04, BE-2.15, BE-2.16, BE-2.25} | C L | MCS-02.4 |
+| 61 | 4 BE + 0 UE | 3 | {BE-2.04, BE-2.16, BE-2.22, BE-2.25} | C L | MCS-02.4 |
+| 62 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.12, BE-2.14, BE-2.16} | C L | MCS-02.6 |
+| 63 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.12, BE-2.15, BE-2.16} | C L | MCS-02.6 |
+| 64 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.12, BE-2.16, BE-2.22} | C L | MCS-02.6 |
+| 65 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.13, BE-2.14, BE-2.16} | C L | MCS-02.6 |
+| 66 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.13, BE-2.15, BE-2.16} | C L | MCS-02.6 |
+| 67 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.13, BE-2.16, BE-2.22} | C L | MCS-02.6 |
+| 68 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.14, BE-2.16, BE-2.17} | C L | MCS-02.8 |
+| 69 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.14, BE-2.16, BE-2.25} | C L | MCS-02.6 |
+| 70 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.15, BE-2.16, BE-2.17} | C L | MCS-02.8 |
+| 71 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.15, BE-2.16, BE-2.25} | C L | MCS-02.6 |
+| 72 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.16, BE-2.17, BE-2.22} | C L | MCS-02.8 |
+| 73 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.16, BE-2.22, BE-2.25} | C L | MCS-02.6 |
+| 74 | 4 BE + 0 UE | 2 | {BE-2.12, BE-2.14, BE-2.16, BE-2.23} | C L S | MCS-02.6 |
+| 75 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.15, BE-2.16, BE-2.23} | C L S | MCS-02.6 |
+| 76 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.16, BE-2.22, BE-2.23} | C L S | MCS-02.6 |
+| 77 | 4 BE + 0 UE | 2 | {BE-2.13, BE-2.14, BE-2.16, BE-2.23} | C L S | MCS-02.6 |
+| 78 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.15, BE-2.16, BE-2.23} | C L S | MCS-02.6 |
+| 79 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.16, BE-2.22, BE-2.23} | C L S | MCS-02.6 |
+| 80 | 4 BE + 0 UE | 2 | {BE-2.14, BE-2.16, BE-2.23, BE-2.24} | C L S | MCS-02.12 |
+| 81 | 4 BE + 0 UE | 2 | {BE-2.14, BE-2.16, BE-2.23, BE-2.25} | C L S | MCS-02.6 |
+| 82 | 4 BE + 0 UE | 3 | {BE-2.15, BE-2.16, BE-2.23, BE-2.24} | C L S | MCS-02.12 |
+| 83 | 4 BE + 0 UE | 3 | {BE-2.15, BE-2.16, BE-2.23, BE-2.25} | C L S | MCS-02.6 |
+| 84 | 4 BE + 0 UE | 3 | {BE-2.16, BE-2.22, BE-2.23, BE-2.24} | C L S | MCS-02.12 |
+| 85 | 4 BE + 0 UE | 3 | {BE-2.16, BE-2.22, BE-2.23, BE-2.25} | C L S | MCS-02.6 |
+| 86 | 5 BE + 0 UE | 3 | {BE-2.08, BE-2.14, BE-2.16, BE-2.20, BE-7.20} | C L | MCS-02.11 |
+| 87 | 5 BE + 0 UE | 4 | {BE-2.08, BE-2.15, BE-2.16, BE-2.20, BE-7.20} | C L | MCS-02.11 |
+| 88 | 5 BE + 0 UE | 4 | {BE-2.08, BE-2.16, BE-2.20, BE-2.22, BE-7.20} | C L | MCS-02.11 |
+| 89 | 5 BE + 0 UE | 3 | {BE-2.12, BE-2.14, BE-2.16, BE-2.20, BE-7.20} | C L | MCS-02.11 |
+| 90 | 5 BE + 0 UE | 4 | {BE-2.12, BE-2.15, BE-2.16, BE-2.20, BE-7.20} | C L | MCS-02.11 |
+| 91 | 5 BE + 0 UE | 4 | {BE-2.12, BE-2.16, BE-2.20, BE-2.22, BE-7.20} | C L | MCS-02.11 |
+| 92 | 5 BE + 0 UE | 3 | {BE-2.13, BE-2.14, BE-2.16, BE-2.20, BE-7.20} | C L | MCS-02.11 |
+| 93 | 5 BE + 0 UE | 4 | {BE-2.13, BE-2.15, BE-2.16, BE-2.20, BE-7.20} | C L | MCS-02.11 |
+| 94 | 5 BE + 0 UE | 4 | {BE-2.13, BE-2.16, BE-2.20, BE-2.22, BE-7.20} | C L | MCS-02.11 |
+| 95 | 5 BE + 0 UE | 3 | {BE-2.14, BE-2.16, BE-2.20, BE-2.25, BE-7.20} | C L | MCS-02.11 |
+| 96 | 4 BE + 1 UE | 2 | {BE-2.14, BE-2.16, BE-2.20, BE-7.20, UE-2.19} | C L | MCS-02.11 |
+| 97 | 5 BE + 0 UE | 4 | {BE-2.15, BE-2.16, BE-2.20, BE-2.25, BE-7.20} | C L | MCS-02.11 |
+| 98 | 4 BE + 1 UE | 3 | {BE-2.15, BE-2.16, BE-2.20, BE-7.20, UE-2.19} | C L | MCS-02.11 |
+| 99 | 5 BE + 0 UE | 4 | {BE-2.16, BE-2.20, BE-2.22, BE-2.25, BE-7.20} | C L | MCS-02.11 |
+| 100 | 4 BE + 1 UE | 3 | {BE-2.16, BE-2.20, BE-2.22, BE-7.20, UE-2.19} | C L | MCS-02.11 |
 
 ### Table rows of WP-A-04
 
 | Row | Order stated | Events stated | Result | Detail |
 |---|---|---|---|---|
-| MCS-02.1 | 2 (effective 1 + latent at the baseline) | {BE-2.01, BE-2.08, BE-2.14 or BE-2.15} | effective | {BE-2.01, BE-2.08, BE-2.14}: omits latent BE-2.16 (computed {BE-2.01, BE-2.08, BE-2.14, BE-2.16})<br>{BE-2.01, BE-2.08, BE-2.15}: omits latent BE-2.16 (computed {BE-2.01, BE-2.08, BE-2.15, BE-2.16}) |
+| MCS-02.1 | 2 (effective 1 + latent at the baseline) | {BE-2.01, BE-2.08, BE-2.14 or BE-2.15 or BE-2.22} | effective | {BE-2.01, BE-2.08, BE-2.14}: omits latent BE-2.16 (computed {BE-2.01, BE-2.08, BE-2.14, BE-2.16})<br>{BE-2.01, BE-2.08, BE-2.15}: omits latent BE-2.16 (computed {BE-2.01, BE-2.08, BE-2.15, BE-2.16})<br>{BE-2.01, BE-2.08, BE-2.22}: omits latent BE-2.16 (computed {BE-2.01, BE-2.08, BE-2.16, BE-2.22}) |
 | MCS-02.2 | 2 | {BE-2.02, BE-2.09} | effective | {BE-2.02, BE-2.09}: omits latent BE-2.14, BE-2.16 (computed {BE-2.02, BE-2.09, BE-2.14, BE-2.16}) |
-| MCS-02.3 | 2 (effective 1 + latent at the baseline) | {BE-2.03, BE-2.10, BE-2.14 or BE-2.15} | effective | {BE-2.03, BE-2.10, BE-2.14}: omits latent BE-2.16 (computed {BE-2.03, BE-2.10, BE-2.14, BE-2.16})<br>{BE-2.03, BE-2.10, BE-2.15}: omits latent BE-2.16 (computed {BE-2.03, BE-2.10, BE-2.15, BE-2.16}) |
+| MCS-02.3 | 2 (effective 1 + latent at the baseline) | {BE-2.03, BE-2.10 or BE-1.20, BE-2.14 or BE-2.15 or BE-2.22} | effective | {BE-1.20, BE-2.03, BE-2.14}: omits latent BE-2.16 (computed {BE-1.20, BE-2.03, BE-2.14, BE-2.16})<br>{BE-1.20, BE-2.03, BE-2.15}: omits latent BE-2.16 (computed {BE-1.20, BE-2.03, BE-2.15, BE-2.16})<br>{BE-1.20, BE-2.03, BE-2.22}: omits latent BE-2.16 (computed {BE-1.20, BE-2.03, BE-2.16, BE-2.22})<br>{BE-2.03, BE-2.10, BE-2.14}: omits latent BE-2.16 (computed {BE-2.03, BE-2.10, BE-2.14, BE-2.16})<br>{BE-2.03, BE-2.10, BE-2.15}: omits latent BE-2.16 (computed {BE-2.03, BE-2.10, BE-2.15, BE-2.16})<br>{BE-2.03, BE-2.10, BE-2.22}: omits latent BE-2.16 (computed {BE-2.03, BE-2.10, BE-2.16, BE-2.22}) |
 | MCS-02.4 | 1 (effective) | {BE-2.04} | effective | {BE-2.04}: omits latent BE-2.11, BE-2.14, BE-2.16 (computed {BE-2.04, BE-2.11, BE-2.14, BE-2.16}) |
 | MCS-02.5 | 1 (effective) | {BE-2.05} | effective | {BE-2.05}: omits latent BE-2.14, BE-2.16 (computed {BE-2.05, BE-2.14, BE-2.16}) |
-| MCS-02.6 | 2 | {BE-2.01 or BE-2.02 or BE-2.03 or BE-2.06, BE-2.12 or BE-2.13} | effective | {BE-2.01, BE-2.12}: omits latent BE-2.14, BE-2.16 (computed {BE-2.01, BE-2.12, BE-2.14, BE-2.16})<br>{BE-2.01, BE-2.13}: omits latent BE-2.14, BE-2.16 (computed {BE-2.01, BE-2.13, BE-2.14, BE-2.16})<br>{BE-2.02, BE-2.12}: omits latent BE-2.14, BE-2.16 (computed {BE-2.02, BE-2.12, BE-2.14, BE-2.16})<br>{BE-2.02, BE-2.13}: omits latent BE-2.14, BE-2.16 (computed {BE-2.02, BE-2.13, BE-2.14, BE-2.16})<br>{BE-2.03, BE-2.12}: omits latent BE-2.14, BE-2.16 (computed {BE-2.03, BE-2.12, BE-2.14, BE-2.16})<br>{BE-2.03, BE-2.13}: omits latent BE-2.14, BE-2.16 (computed {BE-2.03, BE-2.13, BE-2.14, BE-2.16})<br>{BE-2.06, BE-2.12}: omits latent BE-2.14, BE-2.16 (computed {BE-2.06, BE-2.12, BE-2.14, BE-2.16})<br>{BE-2.06, BE-2.13}: omits latent BE-2.14, BE-2.16 (computed {BE-2.06, BE-2.13, BE-2.14, BE-2.16}) |
+| MCS-02.6 | 2 | {BE-2.01 or BE-2.02 or BE-2.03 or BE-2.06 or BE-2.23, BE-2.12 or BE-2.13 or BE-2.25} | effective | {BE-2.01, BE-2.12}: omits latent BE-2.14, BE-2.16 (computed {BE-2.01, BE-2.12, BE-2.14, BE-2.16})<br>{BE-2.01, BE-2.13}: omits latent BE-2.14, BE-2.16 (computed {BE-2.01, BE-2.13, BE-2.14, BE-2.16})<br>{BE-2.01, BE-2.25}: omits latent BE-2.14, BE-2.16 (computed {BE-2.01, BE-2.14, BE-2.16, BE-2.25})<br>{BE-2.02, BE-2.12}: omits latent BE-2.14, BE-2.16 (computed {BE-2.02, BE-2.12, BE-2.14, BE-2.16})<br>{BE-2.02, BE-2.13}: omits latent BE-2.14, BE-2.16 (computed {BE-2.02, BE-2.13, BE-2.14, BE-2.16})<br>{BE-2.02, BE-2.25}: omits latent BE-2.14, BE-2.16 (computed {BE-2.02, BE-2.14, BE-2.16, BE-2.25})<br>{BE-2.03, BE-2.12}: omits latent BE-2.14, BE-2.16 (computed {BE-2.03, BE-2.12, BE-2.14, BE-2.16})<br>{BE-2.03, BE-2.13}: omits latent BE-2.14, BE-2.16 (computed {BE-2.03, BE-2.13, BE-2.14, BE-2.16})<br>{BE-2.03, BE-2.25}: omits latent BE-2.14, BE-2.16 (computed {BE-2.03, BE-2.14, BE-2.16, BE-2.25})<br>{BE-2.06, BE-2.12}: omits latent BE-2.14, BE-2.16 (computed {BE-2.06, BE-2.12, BE-2.14, BE-2.16})<br>{BE-2.06, BE-2.13}: omits latent BE-2.14, BE-2.16 (computed {BE-2.06, BE-2.13, BE-2.14, BE-2.16})<br>{BE-2.06, BE-2.25}: omits latent BE-2.14, BE-2.16 (computed {BE-2.06, BE-2.14, BE-2.16, BE-2.25})<br>{BE-2.12, BE-2.23}: omits latent BE-2.14, BE-2.16 (computed {BE-2.12, BE-2.14, BE-2.16, BE-2.23})<br>{BE-2.13, BE-2.23}: omits latent BE-2.14, BE-2.16 (computed {BE-2.13, BE-2.14, BE-2.16, BE-2.23})<br>{BE-2.23, BE-2.25}: omits latent BE-2.14, BE-2.16 (computed {BE-2.14, BE-2.16, BE-2.23, BE-2.25}) |
 | MCS-02.7 | 1 + ext. | {BE-2.07, UE-2.18} | match | — |
 | MCS-02.8 | 2 | {BE-2.06, BE-2.17} | effective | {BE-2.06, BE-2.17}: omits latent BE-2.14, BE-2.16 (computed {BE-2.06, BE-2.14, BE-2.16, BE-2.17}) |
+| MCS-02.9 | 1 (effective) | {BE-2.21} | effective | {BE-2.21}: omits latent BE-2.14, BE-2.16 (computed {BE-2.14, BE-2.16, BE-2.21}) |
+| MCS-02.10 | 1 + ext. (effective) | {BE-2.01, UE-2.19} | effective | {BE-2.01, UE-2.19}: omits latent BE-2.14, BE-2.16 (computed {BE-2.01, BE-2.14, BE-2.16, UE-2.19}) |
+| MCS-02.11 | 2 (effective 1 + latent) | {BE-2.20, BE-7.20, BE-2.08 or BE-2.12 or BE-2.13 or BE-2.25 or UE-2.19} | effective | {BE-2.08, BE-2.20, BE-7.20}: omits latent BE-2.14, BE-2.16 (computed {BE-2.08, BE-2.14, BE-2.16, BE-2.20, BE-7.20})<br>{BE-2.12, BE-2.20, BE-7.20}: omits latent BE-2.14, BE-2.16 (computed {BE-2.12, BE-2.14, BE-2.16, BE-2.20, BE-7.20})<br>{BE-2.13, BE-2.20, BE-7.20}: omits latent BE-2.14, BE-2.16 (computed {BE-2.13, BE-2.14, BE-2.16, BE-2.20, BE-7.20})<br>{BE-2.20, BE-2.25, BE-7.20}: omits latent BE-2.14, BE-2.16 (computed {BE-2.14, BE-2.16, BE-2.20, BE-2.25, BE-7.20})<br>{BE-2.20, BE-7.20, UE-2.19}: omits latent BE-2.14, BE-2.16 (computed {BE-2.14, BE-2.16, BE-2.20, BE-7.20, UE-2.19}) |
+| MCS-02.12 | 2 | {BE-2.23, BE-2.24} | effective | {BE-2.23, BE-2.24}: omits latent BE-2.14, BE-2.16 (computed {BE-2.14, BE-2.16, BE-2.23, BE-2.24}) |
 
 ## SG-03: unintended acceleration
 
-Top event TE-03. 16 minimal cut sets.
+Top event TE-03. 22 minimal cut sets.
 
 ### Computed cut sets
 
@@ -148,16 +220,22 @@ Top event TE-03. 16 minimal cut sets.
 | 4 | 2 BE + 0 UE | 1 | {BE-1.19, BE-1.22} | L | MCS-03.7 |
 | 5 | 2 BE + 0 UE | 1 | {BE-1.21, BE-1.22} | L | MCS-03.7 |
 | 6 | 1 BE + 1 UE | 1 | {BE-3.01, UE-3.05} | C | MCS-03.1 |
-| 7 | 1 BE + 1 UE | 1 | {BE-3.03, UE-3.05} |  | MCS-03.3 |
-| 8 | 1 BE + 1 UE | 1 | {BE-3.04, UE-3.05} |  | MCS-03.2 |
-| 9 | 2 BE + 0 UE | 2 | {BE-3.09, BE-3.13} | C | MCS-03.6 |
-| 10 | 2 BE + 0 UE | 2 | {BE-3.10, BE-3.13} | C | MCS-03.10 |
-| 11 | 1 BE + 1 UE | 1 | {BE-3.11, UE-3.12} |  | MCS-03.11 |
-| 12 | 2 BE + 1 UE | 2 | {BE-1.06, BE-3.02, UE-3.05} | S | MCS-03.8 |
-| 13 | 2 BE + 1 UE | 2 | {BE-1.07, BE-3.02, UE-3.05} | S | MCS-03.8 |
-| 14 | 2 BE + 1 UE | 2 | {BE-1.08, BE-3.02, UE-3.05} | C S | MCS-03.5, MCS-03.8 |
-| 15 | 2 BE + 1 UE | 2 | {BE-1.09, BE-3.02, UE-3.05} | C S | MCS-03.5, MCS-03.8 |
-| 16 | 2 BE + 1 UE | 1 | {BE-3.06, BE-3.07, UE-3.08} | L S | MCS-03.4 |
+| 7 | 1 BE + 1 UE | 1 | {BE-3.04, UE-3.05} |  | MCS-03.2 |
+| 8 | 2 BE + 0 UE | 2 | {BE-3.09, BE-3.13} | C | MCS-03.6 |
+| 9 | 2 BE + 0 UE | 2 | {BE-3.10, BE-3.13} | C | MCS-03.10 |
+| 10 | 1 BE + 1 UE | 1 | {BE-3.11, UE-3.12} |  | MCS-03.11 |
+| 11 | 2 BE + 0 UE | 2 | {BE-4.19, BE-4.21} |  | MCS-03.12 |
+| 12 | 2 BE + 0 UE | 2 | {BE-4.20, BE-4.21} |  | MCS-03.12 |
+| 13 | 2 BE + 1 UE | 2 | {BE-1.05, BE-1.07, UE-3.05} | C | MCS-03.8 |
+| 14 | 2 BE + 1 UE | 2 | {BE-1.05, BE-1.08, UE-3.05} | C | MCS-03.8 |
+| 15 | 2 BE + 1 UE | 2 | {BE-1.05, BE-1.09, UE-3.05} | C | MCS-03.8 |
+| 16 | 2 BE + 1 UE | 2 | {BE-1.05, BE-4.16, UE-3.05} | C | MCS-03.8 |
+| 17 | 2 BE + 1 UE | 2 | {BE-1.07, BE-3.02, UE-3.05} | S | MCS-03.8 |
+| 18 | 2 BE + 1 UE | 2 | {BE-1.08, BE-3.02, UE-3.05} | C S | MCS-03.5, MCS-03.8 |
+| 19 | 2 BE + 1 UE | 2 | {BE-1.09, BE-3.02, UE-3.05} | C S | MCS-03.5, MCS-03.8 |
+| 20 | 2 BE + 1 UE | 2 | {BE-3.02, BE-4.16, UE-3.05} | S | MCS-03.8 |
+| 21 | 2 BE + 1 UE | 2 | {BE-3.03, BE-4.17, UE-3.05} |  | MCS-03.3 |
+| 22 | 2 BE + 1 UE | 1 | {BE-3.06, BE-3.07, UE-3.08} | L S | MCS-03.4 |
 
 ### Table rows of WP-A-04
 
@@ -165,15 +243,16 @@ Top event TE-03. 16 minimal cut sets.
 |---|---|---|---|---|
 | MCS-03.1 | 1 + ext. | {BE-3.01, UE-3.05} | match | — |
 | MCS-03.2 | 1 + ext. | {BE-3.04, UE-3.05} | match | — |
-| MCS-03.3 | 1 + ext. | {BE-3.03, UE-3.05} | match | — |
+| MCS-03.3 | 2 + ext. | {BE-4.17, BE-3.03, UE-3.05} | match | — |
 | MCS-03.4 | 2 + driver | {BE-3.06, BE-3.07, UE-3.08} | match | — |
 | MCS-03.5 | 1 (effective, DFI-13) | {BE-3.02, BE-1.08 or BE-1.09, UE-3.05} (one SoC fault → command + mode/param change) | match | — |
 | MCS-03.6 | 2 (BE-3.09 is two conditions; BE-3.13 effective through DFI-10) | {BE-3.09, BE-3.13} (BE-3.09 = {`0x226` undetected, PCM no cancel}) | match | — |
 | MCS-03.7 | 2 (effective 1 + latent at the baseline) | {BE-1.19/1.21, BE-1.22} | match | — |
-| MCS-03.8 | 2 + ext. | {BE-3.02, BE-1.06 or BE-1.07 or BE-1.08 or BE-1.09, UE-3.05} | match | — |
+| MCS-03.8 | 2 + ext. | {BE-3.02 or BE-1.05, BE-4.16 or BE-1.07 or BE-1.08 or BE-1.09, UE-3.05} | match | — |
 | MCS-03.9 | 2 (effective 1 through DFI-10 for BE-1.13) | {BE-1.12 or BE-1.13 or BE-1.14, BE-3.13} | match | — |
 | MCS-03.10 | 2 | {BE-3.10, BE-3.13} | match | — |
 | MCS-03.11 | 1 + ext. | {BE-3.11, UE-3.12} | match | — |
+| MCS-03.12 | 2 | {BE-4.19 or BE-4.20, BE-4.21} | match | — |
 
 ## SG-04: deceleration beyond what following traffic and the driver can control
 
@@ -224,19 +303,24 @@ Top event TE-04. 21 minimal cut sets.
 
 ## SG-05: no release on driver brake, cancel or steering override
 
-Top event TE-05. 7 minimal cut sets.
+Top event TE-05. 12 minimal cut sets.
 
 ### Computed cut sets
 
 | # | Order | Effective | Events | Tags | Table row |
 |---|---|---|---|---|---|
-| 1 | 1 BE + 0 UE | 1 | {BE-5.02} |  | MCS-05.4 |
-| 2 | 1 BE + 0 UE | 1 | {BE-5.03} |  | MCS-05.2 |
-| 3 | 1 BE + 1 UE | 1 | {BE-5.01, UE-5.04} |  | MCS-05.3 |
-| 4 | 1 BE + 1 UE | 1 | {BE-5.08, UE-5.09} |  | MCS-05.6 |
-| 5 | 2 BE + 0 UE | 2 | {BE-5.10, BE-5.11} | C | MCS-05.7 |
-| 6 | 1 BE + 1 UE | 0 | {BE-5.12, UE-5.13} | L | MCS-05.8 |
-| 7 | 2 BE + 1 UE | 1 | {BE-5.05, BE-5.06, UE-5.07} | L | MCS-05.5 |
+| 1 | 1 BE + 0 UE | 1 | {BE-1.08} | C | MCS-05.10 |
+| 2 | 1 BE + 0 UE | 1 | {BE-1.09} | C | MCS-05.10 |
+| 3 | 1 BE + 0 UE | 1 | {BE-1.18} |  | MCS-05.10 |
+| 4 | 1 BE + 0 UE | 1 | {BE-5.02} |  | MCS-05.4 |
+| 5 | 1 BE + 0 UE | 1 | {BE-5.03} |  | MCS-05.2 |
+| 6 | 1 BE + 0 UE | 1 | {BE-5.15} |  | MCS-05.9 |
+| 7 | 1 BE + 1 UE | 1 | {BE-5.01, UE-5.04} |  | MCS-05.3 |
+| 8 | 1 BE + 1 UE | 1 | {BE-5.08, UE-5.09} |  | MCS-05.6 |
+| 9 | 2 BE + 0 UE | 2 | {BE-5.10, BE-5.11} | C | MCS-05.7 |
+| 10 | 1 BE + 1 UE | 0 | {BE-5.12, UE-5.13} | L | MCS-05.8 |
+| 11 | 1 BE + 1 UE | 1 | {BE-5.14, UE-5.04} |  | MCS-05.11 |
+| 12 | 2 BE + 1 UE | 0 | {BE-5.05, BE-5.06, UE-5.07} | L | MCS-05.5 |
 
 ### Table rows of WP-A-04
 
@@ -246,68 +330,127 @@ Top event TE-05. 7 minimal cut sets.
 | MCS-05.2 | 1 | {BE-5.03} | match | — |
 | MCS-05.3 | 2 | {BE-5.01, UE-5.04} | match | — |
 | MCS-05.4 | 1 (effective) | {BE-5.02} | match | — |
-| MCS-05.5 | 1 + ext. | {BE-5.05 (latent), BE-5.06, UE-5.07} | match | — |
+| MCS-05.5 | 0 + ext. (effective: both item events latent) | {BE-5.05 (latent), BE-5.06, UE-5.07} | match | — |
 | MCS-05.6 | 1 + ext. | {BE-5.08, UE-5.09} | match | — |
 | MCS-05.7 | 2 | {BE-5.10, BE-5.11} | match | — |
 | MCS-05.8 | 1 + ext. (latent at the baseline) | {UE-5.13, BE-5.12} | match | — |
+| MCS-05.9 | 1 | {BE-5.15} | match | — |
+| MCS-05.10 | 1 (effective) | {BE-1.08 or BE-1.09 or BE-1.18} | match | — |
+| MCS-05.11 | 1 + ext. | {BE-5.14, UE-5.04} | match | — |
 
 ## SG-06: loss of longitudinal deceleration without take-over warning
 
-Top event TE-06. 32 minimal cut sets.
+Top event TE-06. 85 minimal cut sets.
 
 ### Computed cut sets
 
 | # | Order | Effective | Events | Tags | Table row |
 |---|---|---|---|---|---|
-| 1 | 3 BE + 0 UE | 1 | {BE-2.05, BE-2.14, BE-6.06} | C L | MCS-06.5 |
-| 2 | 3 BE + 0 UE | 2 | {BE-2.05, BE-2.15, BE-6.06} | C L | MCS-06.5 |
-| 3 | 4 BE + 0 UE | 1 | {BE-1.22, BE-2.14, BE-6.05, BE-6.06} | L | MCS-06.6 |
-| 4 | 4 BE + 0 UE | 2 | {BE-1.22, BE-2.15, BE-6.05, BE-6.06} | C L | MCS-06.6 |
-| 5 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.12, BE-2.14, BE-6.06} | C L | MCS-06.8 |
-| 6 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.12, BE-2.15, BE-6.06} | C L | MCS-06.8 |
-| 7 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.13, BE-2.14, BE-6.06} | L | MCS-06.8 |
-| 8 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.13, BE-2.15, BE-6.06} | C L | MCS-06.8 |
-| 9 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.14, BE-2.17, BE-6.06} | L | MCS-06.7 |
-| 10 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.15, BE-2.17, BE-6.06} | C L | MCS-06.7 |
-| 11 | 4 BE + 0 UE | 2 | {BE-2.09, BE-2.14, BE-6.02, BE-6.06} | C L | MCS-06.2 |
-| 12 | 4 BE + 0 UE | 3 | {BE-2.09, BE-2.15, BE-6.02, BE-6.06} | C L | MCS-06.2 |
-| 13 | 4 BE + 0 UE | 2 | {BE-2.10, BE-2.14, BE-6.01, BE-6.06} | L | MCS-06.1 |
-| 14 | 4 BE + 0 UE | 3 | {BE-2.10, BE-2.15, BE-6.01, BE-6.06} | C L | MCS-06.1 |
-| 15 | 4 BE + 0 UE | 1 | {BE-2.11, BE-2.14, BE-6.04, BE-6.06} | L | MCS-06.4 |
-| 16 | 4 BE + 0 UE | 2 | {BE-2.11, BE-2.15, BE-6.04, BE-6.06} | C L | MCS-06.4 |
-| 17 | 4 BE + 0 UE | 2 | {BE-2.12, BE-2.14, BE-6.01, BE-6.06} | C L | MCS-06.8 |
-| 18 | 4 BE + 0 UE | 2 | {BE-2.12, BE-2.14, BE-6.02, BE-6.06} | C L | MCS-06.8 |
-| 19 | 4 BE + 0 UE | 2 | {BE-2.12, BE-2.14, BE-6.03, BE-6.06} | C L | MCS-06.3 |
-| 20 | 4 BE + 0 UE | 2 | {BE-2.12, BE-2.14, BE-6.04, BE-6.06} | C L | MCS-06.4 |
-| 21 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.15, BE-6.01, BE-6.06} | C L | MCS-06.8 |
-| 22 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.15, BE-6.02, BE-6.06} | C L | MCS-06.8 |
-| 23 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.15, BE-6.03, BE-6.06} | C L | MCS-06.3 |
-| 24 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.15, BE-6.04, BE-6.06} | C L | MCS-06.4 |
-| 25 | 4 BE + 0 UE | 2 | {BE-2.13, BE-2.14, BE-6.01, BE-6.06} | L | MCS-06.8 |
-| 26 | 4 BE + 0 UE | 2 | {BE-2.13, BE-2.14, BE-6.02, BE-6.06} | L | MCS-06.8 |
-| 27 | 4 BE + 0 UE | 2 | {BE-2.13, BE-2.14, BE-6.03, BE-6.06} | C L | MCS-06.3 |
-| 28 | 4 BE + 0 UE | 2 | {BE-2.13, BE-2.14, BE-6.04, BE-6.06} | L | MCS-06.4 |
-| 29 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.15, BE-6.01, BE-6.06} | C L | MCS-06.8 |
-| 30 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.15, BE-6.02, BE-6.06} | C L | MCS-06.8 |
-| 31 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.15, BE-6.03, BE-6.06} | C L | MCS-06.3 |
-| 32 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.15, BE-6.04, BE-6.06} | C L | MCS-06.4 |
+| 1 | 1 BE + 1 UE | 1 | {BE-2.07, UE-6.07} |  | MCS-06.9 |
+| 2 | 3 BE + 0 UE | 1 | {BE-2.05, BE-2.14, BE-6.06} | C L | MCS-06.5 |
+| 3 | 3 BE + 0 UE | 2 | {BE-2.05, BE-2.15, BE-6.06} | C L | MCS-06.5 |
+| 4 | 3 BE + 0 UE | 2 | {BE-2.05, BE-2.22, BE-6.06} | C L | MCS-06.5 |
+| 5 | 3 BE + 0 UE | 1 | {BE-2.14, BE-2.21, BE-6.06} | L | MCS-06.5 |
+| 6 | 3 BE + 0 UE | 2 | {BE-2.15, BE-2.21, BE-6.06} | C L | MCS-06.5 |
+| 7 | 3 BE + 0 UE | 2 | {BE-2.21, BE-2.22, BE-6.06} | L | MCS-06.5 |
+| 8 | 4 BE + 0 UE | 2 | {BE-1.20, BE-2.14, BE-6.01, BE-6.06} | L | MCS-06.1 |
+| 9 | 4 BE + 0 UE | 3 | {BE-1.20, BE-2.15, BE-6.01, BE-6.06} | C L | MCS-06.1 |
+| 10 | 4 BE + 0 UE | 3 | {BE-1.20, BE-2.22, BE-6.01, BE-6.06} | L | MCS-06.1 |
+| 11 | 4 BE + 0 UE | 1 | {BE-1.22, BE-2.14, BE-6.05, BE-6.06} | L | MCS-06.6 |
+| 12 | 4 BE + 0 UE | 2 | {BE-1.22, BE-2.15, BE-6.05, BE-6.06} | C L | MCS-06.6 |
+| 13 | 4 BE + 0 UE | 2 | {BE-1.22, BE-2.22, BE-6.05, BE-6.06} | L | MCS-06.6 |
+| 14 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.12, BE-2.14, BE-6.06} | C L | MCS-06.8 |
+| 15 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.12, BE-2.15, BE-6.06} | C L | MCS-06.8 |
+| 16 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.12, BE-2.22, BE-6.06} | C L | MCS-06.8 |
+| 17 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.13, BE-2.14, BE-6.06} | L | MCS-06.8 |
+| 18 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.13, BE-2.15, BE-6.06} | C L | MCS-06.8 |
+| 19 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.13, BE-2.22, BE-6.06} | L | MCS-06.8 |
+| 20 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.14, BE-2.17, BE-6.06} | L | MCS-06.7 |
+| 21 | 4 BE + 0 UE | 2 | {BE-2.06, BE-2.14, BE-2.25, BE-6.06} | L | MCS-06.8 |
+| 22 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.15, BE-2.17, BE-6.06} | C L | MCS-06.7 |
+| 23 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.15, BE-2.25, BE-6.06} | C L | MCS-06.8 |
+| 24 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.17, BE-2.22, BE-6.06} | L | MCS-06.7 |
+| 25 | 4 BE + 0 UE | 3 | {BE-2.06, BE-2.22, BE-2.25, BE-6.06} | L | MCS-06.8 |
+| 26 | 4 BE + 0 UE | 2 | {BE-2.09, BE-2.14, BE-6.02, BE-6.06} | C L | MCS-06.2 |
+| 27 | 4 BE + 0 UE | 3 | {BE-2.09, BE-2.15, BE-6.02, BE-6.06} | C L | MCS-06.2 |
+| 28 | 4 BE + 0 UE | 3 | {BE-2.09, BE-2.22, BE-6.02, BE-6.06} | C L | MCS-06.2 |
+| 29 | 4 BE + 0 UE | 2 | {BE-2.10, BE-2.14, BE-6.01, BE-6.06} | L | MCS-06.1 |
+| 30 | 4 BE + 0 UE | 3 | {BE-2.10, BE-2.15, BE-6.01, BE-6.06} | C L | MCS-06.1 |
+| 31 | 4 BE + 0 UE | 3 | {BE-2.10, BE-2.22, BE-6.01, BE-6.06} | L | MCS-06.1 |
+| 32 | 4 BE + 0 UE | 1 | {BE-2.11, BE-2.14, BE-6.04, BE-6.06} | L | MCS-06.4 |
+| 33 | 4 BE + 0 UE | 2 | {BE-2.11, BE-2.15, BE-6.04, BE-6.06} | C L | MCS-06.4 |
+| 34 | 4 BE + 0 UE | 2 | {BE-2.11, BE-2.22, BE-6.04, BE-6.06} | L | MCS-06.4 |
+| 35 | 4 BE + 0 UE | 2 | {BE-2.12, BE-2.14, BE-6.01, BE-6.06} | C L | MCS-06.8 |
+| 36 | 4 BE + 0 UE | 2 | {BE-2.12, BE-2.14, BE-6.02, BE-6.06} | C L | MCS-06.8 |
+| 37 | 4 BE + 0 UE | 2 | {BE-2.12, BE-2.14, BE-6.03, BE-6.06} | C L | MCS-06.3 |
+| 38 | 4 BE + 0 UE | 2 | {BE-2.12, BE-2.14, BE-6.04, BE-6.06} | C L | MCS-06.4 |
+| 39 | 4 BE + 0 UE | 2 | {BE-2.12, BE-2.14, BE-6.06, BE-6.09} | C L S | MCS-06.8, MCS-06.10 |
+| 40 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.15, BE-6.01, BE-6.06} | C L | MCS-06.8 |
+| 41 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.15, BE-6.02, BE-6.06} | C L | MCS-06.8 |
+| 42 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.15, BE-6.03, BE-6.06} | C L | MCS-06.3 |
+| 43 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.15, BE-6.04, BE-6.06} | C L | MCS-06.4 |
+| 44 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.15, BE-6.06, BE-6.09} | C L S | MCS-06.8, MCS-06.10 |
+| 45 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.22, BE-6.01, BE-6.06} | C L | MCS-06.8 |
+| 46 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.22, BE-6.02, BE-6.06} | C L | MCS-06.8 |
+| 47 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.22, BE-6.03, BE-6.06} | C L | MCS-06.3 |
+| 48 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.22, BE-6.04, BE-6.06} | C L | MCS-06.4 |
+| 49 | 4 BE + 0 UE | 3 | {BE-2.12, BE-2.22, BE-6.06, BE-6.09} | C L S | MCS-06.8, MCS-06.10 |
+| 50 | 4 BE + 0 UE | 2 | {BE-2.13, BE-2.14, BE-6.01, BE-6.06} | L | MCS-06.8 |
+| 51 | 4 BE + 0 UE | 2 | {BE-2.13, BE-2.14, BE-6.02, BE-6.06} | L | MCS-06.8 |
+| 52 | 4 BE + 0 UE | 2 | {BE-2.13, BE-2.14, BE-6.03, BE-6.06} | C L | MCS-06.3 |
+| 53 | 4 BE + 0 UE | 2 | {BE-2.13, BE-2.14, BE-6.04, BE-6.06} | L | MCS-06.4 |
+| 54 | 4 BE + 0 UE | 2 | {BE-2.13, BE-2.14, BE-6.06, BE-6.09} | L S | MCS-06.8, MCS-06.10 |
+| 55 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.15, BE-6.01, BE-6.06} | C L | MCS-06.8 |
+| 56 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.15, BE-6.02, BE-6.06} | C L | MCS-06.8 |
+| 57 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.15, BE-6.03, BE-6.06} | C L | MCS-06.3 |
+| 58 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.15, BE-6.04, BE-6.06} | C L | MCS-06.4 |
+| 59 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.15, BE-6.06, BE-6.09} | C L S | MCS-06.8, MCS-06.10 |
+| 60 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.22, BE-6.01, BE-6.06} | L | MCS-06.8 |
+| 61 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.22, BE-6.02, BE-6.06} | L | MCS-06.8 |
+| 62 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.22, BE-6.03, BE-6.06} | C L | MCS-06.3 |
+| 63 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.22, BE-6.04, BE-6.06} | L | MCS-06.4 |
+| 64 | 4 BE + 0 UE | 3 | {BE-2.13, BE-2.22, BE-6.06, BE-6.09} | L S | MCS-06.8, MCS-06.10 |
+| 65 | 4 BE + 0 UE | 2 | {BE-2.14, BE-2.25, BE-6.01, BE-6.06} | L | MCS-06.8 |
+| 66 | 4 BE + 0 UE | 2 | {BE-2.14, BE-2.25, BE-6.02, BE-6.06} | L | MCS-06.8 |
+| 67 | 4 BE + 0 UE | 2 | {BE-2.14, BE-2.25, BE-6.03, BE-6.06} | C L | MCS-06.3 |
+| 68 | 4 BE + 0 UE | 2 | {BE-2.14, BE-2.25, BE-6.04, BE-6.06} | L | MCS-06.4 |
+| 69 | 4 BE + 0 UE | 2 | {BE-2.14, BE-2.25, BE-6.06, BE-6.09} | L S | MCS-06.8, MCS-06.10 |
+| 70 | 3 BE + 1 UE | 1 | {BE-2.14, BE-6.03, BE-6.06, UE-6.08} | C L | MCS-06.11 |
+| 71 | 4 BE + 0 UE | 1 | {BE-2.14, BE-6.06, BE-6.09, BE-6.10} | L S | MCS-06.10 |
+| 72 | 4 BE + 0 UE | 3 | {BE-2.15, BE-2.25, BE-6.01, BE-6.06} | C L | MCS-06.8 |
+| 73 | 4 BE + 0 UE | 3 | {BE-2.15, BE-2.25, BE-6.02, BE-6.06} | C L | MCS-06.8 |
+| 74 | 4 BE + 0 UE | 3 | {BE-2.15, BE-2.25, BE-6.03, BE-6.06} | C L | MCS-06.3 |
+| 75 | 4 BE + 0 UE | 3 | {BE-2.15, BE-2.25, BE-6.04, BE-6.06} | C L | MCS-06.4 |
+| 76 | 4 BE + 0 UE | 3 | {BE-2.15, BE-2.25, BE-6.06, BE-6.09} | C L S | MCS-06.8, MCS-06.10 |
+| 77 | 3 BE + 1 UE | 2 | {BE-2.15, BE-6.03, BE-6.06, UE-6.08} | C L | MCS-06.11 |
+| 78 | 4 BE + 0 UE | 2 | {BE-2.15, BE-6.06, BE-6.09, BE-6.10} | C L S | MCS-06.10 |
+| 79 | 4 BE + 0 UE | 3 | {BE-2.22, BE-2.25, BE-6.01, BE-6.06} | L | MCS-06.8 |
+| 80 | 4 BE + 0 UE | 3 | {BE-2.22, BE-2.25, BE-6.02, BE-6.06} | L | MCS-06.8 |
+| 81 | 4 BE + 0 UE | 3 | {BE-2.22, BE-2.25, BE-6.03, BE-6.06} | C L | MCS-06.3 |
+| 82 | 4 BE + 0 UE | 3 | {BE-2.22, BE-2.25, BE-6.04, BE-6.06} | L | MCS-06.4 |
+| 83 | 4 BE + 0 UE | 3 | {BE-2.22, BE-2.25, BE-6.06, BE-6.09} | L S | MCS-06.8, MCS-06.10 |
+| 84 | 3 BE + 1 UE | 2 | {BE-2.22, BE-6.03, BE-6.06, UE-6.08} | C L | MCS-06.11 |
+| 85 | 4 BE + 0 UE | 2 | {BE-2.22, BE-6.06, BE-6.09, BE-6.10} | L S | MCS-06.10 |
 
 ### Table rows of WP-A-04
 
 | Row | Order stated | Events stated | Result | Detail |
 |---|---|---|---|---|
-| MCS-06.1 | 2 (effective 1 + latent) | {BE-6.01, BE-2.10, BE-2.14 or BE-2.15} | effective | {BE-2.10, BE-2.14, BE-6.01}: omits latent BE-6.06 (computed {BE-2.10, BE-2.14, BE-6.01, BE-6.06})<br>{BE-2.10, BE-2.15, BE-6.01}: omits latent BE-6.06 (computed {BE-2.10, BE-2.15, BE-6.01, BE-6.06}) |
+| MCS-06.1 | 2 (effective 1 + latent) | {BE-6.01, BE-2.10 or BE-1.20, BE-2.14 or BE-2.15 or BE-2.22} | effective | {BE-1.20, BE-2.14, BE-6.01}: omits latent BE-6.06 (computed {BE-1.20, BE-2.14, BE-6.01, BE-6.06})<br>{BE-1.20, BE-2.15, BE-6.01}: omits latent BE-6.06 (computed {BE-1.20, BE-2.15, BE-6.01, BE-6.06})<br>{BE-1.20, BE-2.22, BE-6.01}: omits latent BE-6.06 (computed {BE-1.20, BE-2.22, BE-6.01, BE-6.06})<br>{BE-2.10, BE-2.14, BE-6.01}: omits latent BE-6.06 (computed {BE-2.10, BE-2.14, BE-6.01, BE-6.06})<br>{BE-2.10, BE-2.15, BE-6.01}: omits latent BE-6.06 (computed {BE-2.10, BE-2.15, BE-6.01, BE-6.06})<br>{BE-2.10, BE-2.22, BE-6.01}: omits latent BE-6.06 (computed {BE-2.10, BE-2.22, BE-6.01, BE-6.06}) |
 | MCS-06.2 | 2 | {BE-6.02, BE-2.09} | effective | {BE-2.09, BE-6.02}: omits latent BE-2.14, BE-6.06 (computed {BE-2.09, BE-2.14, BE-6.02, BE-6.06}) |
-| MCS-06.3 | 2 | {BE-6.03, BE-2.12 or BE-2.13} | effective | {BE-2.12, BE-6.03}: omits latent BE-2.14, BE-6.06 (computed {BE-2.12, BE-2.14, BE-6.03, BE-6.06})<br>{BE-2.13, BE-6.03}: omits latent BE-2.14, BE-6.06 (computed {BE-2.13, BE-2.14, BE-6.03, BE-6.06}) |
+| MCS-06.3 | 2 | {BE-6.03, BE-2.12 or BE-2.13 or BE-2.25} | effective | {BE-2.12, BE-6.03}: omits latent BE-2.14, BE-6.06 (computed {BE-2.12, BE-2.14, BE-6.03, BE-6.06})<br>{BE-2.13, BE-6.03}: omits latent BE-2.14, BE-6.06 (computed {BE-2.13, BE-2.14, BE-6.03, BE-6.06})<br>{BE-2.25, BE-6.03}: omits latent BE-2.14, BE-6.06 (computed {BE-2.14, BE-2.25, BE-6.03, BE-6.06}) |
 | MCS-06.4 | 1 (effective) | {BE-6.04} | effective | {BE-6.04}: omits latent BE-2.11, BE-2.14, BE-6.06 (computed {BE-2.11, BE-2.14, BE-6.04, BE-6.06}) |
-| MCS-06.5 | 1 (effective) | {BE-2.05} | effective | {BE-2.05}: omits latent BE-2.14, BE-6.06 (computed {BE-2.05, BE-2.14, BE-6.06}) |
+| MCS-06.5 | 1 (effective) | {BE-2.05 or BE-2.21} | effective | {BE-2.05}: omits latent BE-2.14, BE-6.06 (computed {BE-2.05, BE-2.14, BE-6.06})<br>{BE-2.21}: omits latent BE-2.14, BE-6.06 (computed {BE-2.14, BE-2.21, BE-6.06}) |
 | MCS-06.6 | 2 (effective 1 + latent at the baseline) | {BE-6.05, BE-1.22} | effective | {BE-1.22, BE-6.05}: omits latent BE-2.14, BE-6.06 (computed {BE-1.22, BE-2.14, BE-6.05, BE-6.06}) |
 | MCS-06.7 | 2 | {BE-2.06, BE-2.17} | effective | {BE-2.06, BE-2.17}: omits latent BE-2.14, BE-6.06 (computed {BE-2.06, BE-2.14, BE-2.17, BE-6.06}) |
-| MCS-06.8 | 2 | {BE-6.01 or BE-6.02 or BE-2.06, BE-2.12 or BE-2.13} | effective | {BE-2.06, BE-2.12}: omits latent BE-2.14, BE-6.06 (computed {BE-2.06, BE-2.12, BE-2.14, BE-6.06})<br>{BE-2.06, BE-2.13}: omits latent BE-2.14, BE-6.06 (computed {BE-2.06, BE-2.13, BE-2.14, BE-6.06})<br>{BE-2.12, BE-6.01}: omits latent BE-2.14, BE-6.06 (computed {BE-2.12, BE-2.14, BE-6.01, BE-6.06})<br>{BE-2.12, BE-6.02}: omits latent BE-2.14, BE-6.06 (computed {BE-2.12, BE-2.14, BE-6.02, BE-6.06})<br>{BE-2.13, BE-6.01}: omits latent BE-2.14, BE-6.06 (computed {BE-2.13, BE-2.14, BE-6.01, BE-6.06})<br>{BE-2.13, BE-6.02}: omits latent BE-2.14, BE-6.06 (computed {BE-2.13, BE-2.14, BE-6.02, BE-6.06}) |
+| MCS-06.8 | 2 | {BE-6.01 or BE-6.02 or BE-2.06 or BE-6.09, BE-2.12 or BE-2.13 or BE-2.25} | effective | {BE-2.06, BE-2.12}: omits latent BE-2.14, BE-6.06 (computed {BE-2.06, BE-2.12, BE-2.14, BE-6.06})<br>{BE-2.06, BE-2.13}: omits latent BE-2.14, BE-6.06 (computed {BE-2.06, BE-2.13, BE-2.14, BE-6.06})<br>{BE-2.06, BE-2.25}: omits latent BE-2.14, BE-6.06 (computed {BE-2.06, BE-2.14, BE-2.25, BE-6.06})<br>{BE-2.12, BE-6.01}: omits latent BE-2.14, BE-6.06 (computed {BE-2.12, BE-2.14, BE-6.01, BE-6.06})<br>{BE-2.12, BE-6.02}: omits latent BE-2.14, BE-6.06 (computed {BE-2.12, BE-2.14, BE-6.02, BE-6.06})<br>{BE-2.12, BE-6.09}: omits latent BE-2.14, BE-6.06 (computed {BE-2.12, BE-2.14, BE-6.06, BE-6.09})<br>{BE-2.13, BE-6.01}: omits latent BE-2.14, BE-6.06 (computed {BE-2.13, BE-2.14, BE-6.01, BE-6.06})<br>{BE-2.13, BE-6.02}: omits latent BE-2.14, BE-6.06 (computed {BE-2.13, BE-2.14, BE-6.02, BE-6.06})<br>{BE-2.13, BE-6.09}: omits latent BE-2.14, BE-6.06 (computed {BE-2.13, BE-2.14, BE-6.06, BE-6.09})<br>{BE-2.25, BE-6.01}: omits latent BE-2.14, BE-6.06 (computed {BE-2.14, BE-2.25, BE-6.01, BE-6.06})<br>{BE-2.25, BE-6.02}: omits latent BE-2.14, BE-6.06 (computed {BE-2.14, BE-2.25, BE-6.02, BE-6.06})<br>{BE-2.25, BE-6.09}: omits latent BE-2.14, BE-6.06 (computed {BE-2.14, BE-2.25, BE-6.06, BE-6.09}) |
+| MCS-06.9 | 1 + ext. | {BE-2.07, UE-6.07} | match | — |
+| MCS-06.10 | 1 (effective) | {BE-6.09} | effective | {BE-6.09}: omits latent BE-2.14, BE-6.06, BE-6.10 (computed {BE-2.14, BE-6.06, BE-6.09, BE-6.10}) |
+| MCS-06.11 | 1 + ext. (effective) | {BE-6.03, UE-6.08} | effective | {BE-6.03, UE-6.08}: omits latent BE-2.14, BE-6.06 (computed {BE-2.14, BE-6.03, BE-6.06, UE-6.08}) |
 
 ## SG-07: suppression, delay or alteration of the stock PCS/AEB
 
-Top event TE-07. 11 minimal cut sets.
+Top event TE-07. 17 minimal cut sets.
 
 ### Computed cut sets
 
@@ -321,9 +464,15 @@ Top event TE-07. 11 minimal cut sets.
 | 6 | 1 BE + 0 UE | 1 | {BE-7.06} |  | MCS-07.6 |
 | 7 | 1 BE + 0 UE | 1 | {BE-7.11} |  | MCS-07.9 |
 | 8 | 1 BE + 0 UE | 1 | {BE-7.12} |  | MCS-07.11 |
-| 9 | 2 BE + 0 UE | 1 | {BE-7.07, BE-7.08} | L | MCS-07.7 |
-| 10 | 2 BE + 0 UE | 2 | {BE-7.09, BE-7.10} |  | MCS-07.8 |
-| 11 | 1 BE + 1 UE | 1 | {BE-7.13, UE-7.14} |  | MCS-07.10 |
+| 9 | 1 BE + 0 UE | 1 | {BE-7.17} |  | MCS-07.12 |
+| 10 | 1 BE + 0 UE | 1 | {BE-7.18} |  | MCS-07.13 |
+| 11 | 1 BE + 0 UE | 1 | {BE-7.19} |  | MCS-07.14 |
+| 12 | 2 BE + 0 UE | 1 | {BE-7.07, BE-7.08} | L | MCS-07.7 |
+| 13 | 2 BE + 0 UE | 2 | {BE-7.09, BE-7.10} |  | MCS-07.8 |
+| 14 | 2 BE + 0 UE | 2 | {BE-7.10, BE-7.15} |  | MCS-07.15 |
+| 15 | 2 BE + 0 UE | 1 | {BE-7.10, BE-7.16} | L | MCS-07.15 |
+| 16 | 1 BE + 1 UE | 1 | {BE-7.13, UE-7.14} |  | MCS-07.10 |
+| 17 | 2 BE + 0 UE | 2 | {BE-7.20, BE-7.21} |  | MCS-07.16 |
 
 ### Table rows of WP-A-04
 
@@ -340,3 +489,41 @@ Top event TE-07. 11 minimal cut sets.
 | MCS-07.9 | 1 | {BE-7.11} | match | — |
 | MCS-07.10 | 1 + ext. | {BE-7.13, UE-7.14} | match | — |
 | MCS-07.11 | 1 | {BE-7.12} | match | — |
+| MCS-07.12 | 1 | {BE-7.17} | match | — |
+| MCS-07.13 | 1 | {BE-7.18} | match | — |
+| MCS-07.14 | 1 | {BE-7.19} | match | — |
+| MCS-07.15 | 2 (BE-7.16 effective 1 + latent) | {BE-7.15 or BE-7.16, BE-7.10} | match | — |
+| MCS-07.16 | 2 (effective 1 + latent) | {BE-7.20, BE-7.21} | match | — |
+
+## SG-08: automated control continues with a driver who is not supervising or not responding
+
+Top event TE-08. 11 minimal cut sets.
+
+### Computed cut sets
+
+| # | Order | Effective | Events | Tags | Table row |
+|---|---|---|---|---|---|
+| 1 | 1 BE + 0 UE | 1 | {BE-2.12} | C | MCS-08.6 |
+| 2 | 1 BE + 0 UE | 1 | {BE-2.13} |  | MCS-08.6 |
+| 3 | 1 BE + 0 UE | 1 | {BE-2.25} |  | MCS-08.6 |
+| 4 | 1 BE + 0 UE | 1 | {BE-8.01} | S | MCS-08.1 |
+| 5 | 1 BE + 0 UE | 1 | {BE-8.02} |  | MCS-08.2 |
+| 6 | 1 BE + 0 UE | 1 | {BE-8.06} |  | MCS-08.4 |
+| 7 | 1 BE + 0 UE | 1 | {BE-8.07} |  | MCS-08.5 |
+| 8 | 1 BE + 0 UE | 1 | {BE-8.08} |  | MCS-08.7 |
+| 9 | 0 BE + 1 UE | 0 | {UE-8.09} |  | MCS-08.8 |
+| 10 | 2 BE + 0 UE | 1 | {BE-8.03, BE-8.04} | L | MCS-08.3 |
+| 11 | 2 BE + 0 UE | 1 | {BE-8.03, BE-8.05} | L | MCS-08.3 |
+
+### Table rows of WP-A-04
+
+| Row | Order stated | Events stated | Result | Detail |
+|---|---|---|---|---|
+| MCS-08.1 | 1 | {BE-8.01} | match | — |
+| MCS-08.2 | 1 | {BE-8.02} | match | — |
+| MCS-08.3 | 1 (effective, both inputs of G8.1.2 latent) | {BE-8.03, BE-8.04 or BE-8.05} | match | — |
+| MCS-08.4 | 1 | {BE-8.06} | match | — |
+| MCS-08.5 | 1 | {BE-8.07} | match | — |
+| MCS-08.6 | 1 | {BE-2.12 or BE-2.13 or BE-2.25} | match | — |
+| MCS-08.7 | 1 | {BE-8.08} | match | — |
+| MCS-08.8 | 0 + ext. | {UE-8.09} | match | — |

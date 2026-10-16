@@ -29,11 +29,11 @@
 
 | Work product | Activity | Status in WP-M-00 | Open items | Verification review (WP-P-05) |
 |---|---|---|---|---|
-| [WP-C-01](../../../02-concept/WP-C-01-item-definition.md) Item definition | CON-01 | Draft | 9 | |
-| [WP-C-02](../../../02-concept/WP-C-02-odd-and-intended-functionality.md) ODD and intended functionality specification | CON-02 | Draft | 6 | |
+| [WP-C-01](../../../02-concept/WP-C-01-item-definition.md) Item definition | CON-01 | Draft | 8 | |
+| [WP-C-02](../../../02-concept/WP-C-02-odd-and-intended-functionality.md) ODD and intended functionality specification | CON-02 | Draft | 7 | |
 | [WP-C-08](../../../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) Driver interaction, HMI and reasonably foreseeable misuse analysis | CON-03 | Draft | 6 | |
-| [WP-C-03](../../../02-concept/WP-C-03-hara.md) Hazard analysis and risk assessment, safety goals | CON-04 | Draft | 8 | |
-| [WP-C-04](../../../02-concept/WP-C-04-functional-safety-concept.md) Functional safety concept (FSRs, allocation, AoUs) | CON-05 | Draft | 8 | |
+| [WP-C-03](../../../02-concept/WP-C-03-hara.md) Hazard analysis and risk assessment, safety goals | CON-04 | Draft | 9 | |
+| [WP-C-04](../../../02-concept/WP-C-04-functional-safety-concept.md) Functional safety concept (FSRs, allocation, AoUs) | CON-05 | Draft | 7 | |
 | [WP-C-05](../../../02-concept/WP-C-05-sotif-hazard-identification.md) SOTIF hazard identification and risk evaluation, acceptance criteria | CON-06 | Draft | 4 | |
 | [WP-C-06](../../../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) Functional insufficiencies and triggering conditions analysis | CON-07 | Draft | 4 | |
 | [WP-C-07](../../../02-concept/WP-C-07-sotif-functional-modifications.md) Functional modifications addressing SOTIF risk | CON-08 | Draft | 5 | |

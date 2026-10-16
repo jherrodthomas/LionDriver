@@ -1307,6 +1307,7 @@ Safety mechanisms: (1) Panda torque, rate and acceleration checks on the packed 
 Effects:
 
 - **End:** Loss of lateral and longitudinal control with an alert (HZ-004, S 10)
+- **End:** Contributes to HZ-007 (ACC requests stop while engaged, as SWF-021) (HZ-007, S 10)
 - **Next higher:** The panda revokes 50 ms after the last STEERING_LKA (TSR-408); selfdrived raises controlsMismatch, commIssue and processNotRunning; manager does not restart card
 - **Local:** No carState and no sendcan
 

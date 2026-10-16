@@ -6,7 +6,7 @@
 | Standard reference | ISO/SAE 21434:2021 §9.4 (cybersecurity goals and claims), §9.5 (cybersecurity concept); ASPICE 4.0 SEC.1 |
 | Version | 0.2 (status update 2026-10-12: implementation status of CSR-C-01 and CSR-C-02 in the reference build at `bf6ce8c`; not verified). History: 0.1 |
 | Status | Draft — goals and CAL proposals are for review; not approved until the preliminary cybersecurity assessment passes |
-| ASIL / scope | CS (cybersecurity); safety relation traced to SG-01…SG-07 |
+| ASIL / scope | CS (cybersecurity); safety relation traced to SG-01…SG-08 |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); preliminary cybersecurity assessment by an independent assessor |
 | Approver | Project maintainer (acting cybersecurity manager) |

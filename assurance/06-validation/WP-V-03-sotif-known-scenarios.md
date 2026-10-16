@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-03 Evaluation of known hazardous scenarios (specification and results) |
 | Standard reference | ISO 21448:2022 §10 (verification of the SOTIF, known hazardous scenarios); ISO/PAS 8800:2024 (AI V&V); ASPICE 4.0 SYS.5, VAL.1 |
-| Version | 0.2 (the lead's decisions applied: highways only, decision register DQ-023, KS-22 re-scoped to the highway shoulder and OI-2 closed; public-road limits, DQ-046; closed-course speeds to 110 km/h, DQ-091; logs kept by LionDriver, DQ-084; model-change re-runs, DQ-038; 2026-10-16). 0.1 |
+| Version | 0.5 (KS-25 at the 110 km/h ODD bound, decision register DQ-260; 2026-10-16). 0.4 (§5.4: first simulation result recorded as synthetic data with no credit, SIM-2026-001 from the layer-1 plant model; OI-7; 2026-10-16). 0.3 (simulation rule: synthetic-data labelling and scenario families per WP-V-02 §5.3; 2026-10-16). 0.2 (the lead's decisions applied: highways only, decision register DQ-023, KS-22 re-scoped to the highway shoulder and OI-2 closed; public-road limits, DQ-046; closed-course speeds to 110 km/h, DQ-091; logs kept by LionDriver, DQ-084; model-change re-runs, DQ-038; 2026-10-16). 0.1 |
 | Status | Draft (specification). Results section is a template: **Not yet executed** |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -40,7 +40,7 @@ Scope: reference configuration, Chill longitudinal mode. Experimental Mode scena
 | B2 comparison | Where marked "B2", the same trial is repeated with LD-SDA disengaged and the stock TSS2 functions active (Lane Tracing Assist / DRCC) — this needs the harness removed or the item in a mode where the stock functions are restored, recorded per trial |
 | Trial count | Per VT-nn: zero-failure demonstration of p ≤ 5 % needs 59 trials, p ≤ 1 % needs 299 (95 % confidence). Closed-course trials start with an exploratory set of 10 per parameter point and are extended where the WP-V-02 target requires it |
 | Abort | Any trial is aborted by the safety driver per WP-V-07 §8; an aborted trial counts as a **failure** unless the abort cause is unrelated to the item (recorded) |
-| Simulation | MetaDrive (M4) results are recorded but get no credit until the WP-V-02 §5.3 fidelity case is approved for that scenario family |
+| Simulation | MetaDrive (M4) results are recorded but get no credit until the WP-V-02 §5.3 fidelity case is approved for that scenario family (lead decision, DQ-139). Each result is labelled as synthetic (WP-V-02 §5.3.5, DSR-12), reported on its own line and never pooled with real-world trials. Families and the scenarios MetaDrive cannot represent: WP-V-02 §5.3.2 |
 
 Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaDrive simulation, M5 longitudinal planner maneuver tests (`openpilot/selfdrive/test/longitudinal_maneuvers/`), M8 closed course, M9 public road with safety driver. "Fail" means the pass criterion is not met in a trial.
 
@@ -94,7 +94,7 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 | KS-20 | Stock PCS activation with the item installed | SH-08 | — (AOU-04R) | Soft target, stock PCS speeds (e.g., 20–40 km/h); LD-SDA engaged, disengaged and not installed | M8 (B2) | PCS warning and braking occur at the same TTC ± 0.2 s as without the item (VT-07). Shared with WP-V-01 VS-VAL for AOU-04 | VT-07 |
 | KS-21 | Internal degradation while engaged: model lag, frame drops, stale model output, process crash, soft-disable window | SH-01, SH-02, SH-06 | TC-21, TC-23 | Induced by CPU load, process kill, camera stream interruption (bench and CC only) | M1, M4, M8 (with WP-V-05 fault-injection rules) | Take-over alert within the SG-02 budget; actuation during the soft-disable window stays within the lane (GAP-16); no actuation on stale (> AIR-17 limit) model output | VT-02 |
 | KS-24 | Exclusion check: Experimental Mode and Chestnut not active | SH-09, SH-12, SH-13 | TC-13, TC-22, TC-26 | Fresh install, parameter dump, ignition cycles, settings UI | Inspection | `ExperimentalMode` off and locked (FM-01); no big-model artefacts present (FM-02, AIR-30); debug, maneuver, joystick and DM demo modes cannot be set (FM-06) | AC-04 |
-| KS-25 | Speed above the ODD bound | SH-13 | TC-20 | Set speed and actual speed crossing the ODD-H bound (120 km/h; 110 km/h if lowered, DQ-260) on CC where the site allows, otherwise by M1 replay with synthetic `carState` | M1, M8 | With FM-07: engagement refused / take-over requested at the bound in every trial. Baseline behaviour (warning only above ≈ 149 km/h, `events.py:989-996`) is recorded as a known failure until FM-07 exists | VT-12 |
+| KS-25 | Speed above the ODD bound | SH-13 | TC-20 | Set speed and actual speed crossing the ODD-H bound (110 km/h, DQ-260) on CC where the site allows, otherwise by M1 replay with synthetic `carState` | M1, M8 | With FM-07: engagement refused / take-over requested at the bound in every trial. Baseline behaviour (warning only above ≈ 149 km/h, `events.py:989-996`) is recorded as a known failure until FM-07 exists | VT-12 |
 | KS-26 | PCM cruise stays active after an item disengagement | SH-05 | TC-30 | Injected `cruiseMismatch` condition on HIL, then CC | M1, M8 (WP-V-05 rules) | With FM-04: driver warned and cancel requested within the FSR-05.06 bound. Baseline (event without reaction, `events.py:458-460`) recorded as a known failure | VT-05 |
 
 ## 4. Scenario-to-requirement coverage
@@ -118,7 +118,7 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 
 ## 5. Results
 
-**Not yet executed.** No scenario in this catalogue has been run on LionDriver software. The upstream `longitudinal_maneuvers` tests exist but have not been run in LionDriver CI against a LionDriver baseline, and their results are not traced to these scenarios.
+**Not yet executed.** No scenario in this catalogue has been run on LionDriver software. §5.4 records simulation results, which are synthetic and give no credit. The upstream `longitudinal_maneuvers` tests exist but have not been run in LionDriver CI against a LionDriver baseline, and their results are not traced to these scenarios.
 
 ### 5.1 Campaign record template
 
@@ -172,6 +172,18 @@ Verdict values: Pass / Fail / Insufficient trials / Not yet executed. A Fail ope
 
 The suite (or the affected scenarios) is re-run after any change listed in [WP-W-10 §8](../05-software/WP-W-10-ml-engineering.md) and [WP-M-08 §9](../01-management/WP-M-08-sotif-plan.md#9-change-triggered-re-evaluation-including-model-changes), and when field monitoring adds a scenario. Every change of model weights or of the tinygrad runtime is such a change (D-05, adopted as written by the project lead on 2026-10-14, decision register DQ-038 option A).
 
+### 5.4 Simulation results (synthetic data, no credit)
+
+Results from the simulation track ([`assurance/sim/`](../sim/README.md)), recorded under the rule of §2 and [WP-V-02](WP-V-02-sotif-vv-strategy.md) §5.3.5. They are synthetic data (DSR-12): they are not pooled with the trials of §5.2, they set no verdict there, and they get **no evidence credit**. No scenario family has an approved fidelity case, and whether any may get one is the lead's decision (DQ-139). They are used to rank risks and to choose closed-course parameter points.
+
+| Run | Source | Layer and model | Scenario | Relates to | Result | Use |
+|---|---|---|---|---|---|---|
+| SIM-2026-001 | [`plant-results.md`](../sim/results/plant-results.md) case N-3, PR #104 (merged 2026-10-16) | Layer 1 fault-injection plant: the real panda safety code (reference build) in the loop. A stand-in lateral controller, **not openpilot**. Single-track vehicle model with the opendbc Corolla CarParams. EPS lag and driver model assumed | No fault; 120 km/h; clothoid into a left curve at the ODD bound R_ODD = v²/2.5 m/s² | KS-01 (TC-14, SH-02), VT-02; [WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md) OI-2 | The steering saturates: at full envelope torque, openpilot's torque map for this platform (`latAccelFactor` 1.99 m/s²) gives less lateral acceleration than R_ODD needs (2.5 m/s²). The car drifts outward, up to 0.80 m. Its body edge reaches the line of a 3.0 m lane 3.71 s after curve entry. It stays inside a 3.7 m lane. The model's driver notices at 2.10 s and corrects at 3.60 s | **Hypothesis to test, not a finding.** If the vehicle confirms it, R_ODD (WP-C-02 §3.2) is beyond the item's steering authority at this speed, and KS-01's 2.5 m/s² point is a beyond-capability point. KS-01 then needs the take-over alert before the outer wheel crosses the line (§3.1). Closed-course KS-01 points at 2.0 and 2.5 m/s² and the lateral step tests of WP-V-01 decide it (OI-7) |
+
+What the run cannot show:
+- openpilot's own lateral behaviour, or whether `steerSaturated` would alert in time: the controller is a stand-in;
+- the real EPS authority: the torque map is openpilot's fit, not a measurement on the reference vehicle (AOU-01, GAP-04).
+
 ## Open items
 
 | ID | Item |
@@ -182,3 +194,4 @@ The suite (or the affected scenarios) is re-run after any change listed in [WP-W
 | OI-4 | Define how B2 runs restore the stock TSS2 functions (harness removal procedure and time per swap) |
 | OI-5 | Port the relevant `longitudinal_maneuvers` cases into LionDriver CI with traceability to KS-05, KS-07, KS-08, KS-23 |
 | OI-6 | Confirm the (TBC) thresholds with WP-V-02 OI-3 before the first campaign |
+| OI-7 | Check SIM-2026-001 (§5.4) on the vehicle: measure the lateral acceleration at full envelope torque (WP-V-01 lateral step tests), and run KS-01 at 2.0 and 2.5 m/s² on the closed course. If the authority is below 2.5 m/s², R_ODD changes (WP-C-02 OI-2), and KS-01's pass criterion at that point becomes the take-over alert |
