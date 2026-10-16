@@ -4,7 +4,7 @@
 |---|---|
 | Purpose | Link the deductive fault trees of [WP-A-04](WP-A-04-system-fta-fmea.md) with the inductive FMEAs of [fmea/analyses/](fmea/analyses/) and check each against the other (ISO 26262-9:2018 §8, combination of FTA and FMEA) |
 | Data | [fta-fmea-map.yaml](fta-fmea-map.yaml), checked by `tools/safety/fmea_lint.py` in CI; drawn on the [fault tree sheets](fta/README.md) as dark tags under each event |
-| Status | **All seven goals mapped** (SG-02, SG-03, SG-05, SG-06 on 2026-10-16, WP-A-04 v1.2, findings F-20…F-36; five questions queued for the lead, DQ-360…DQ-364). SG-04 pilot 2026-10-13, findings F-1…F-10 resolved the same day (WP-A-04 v0.9; SW FMEA rev 0.7, DFMEA rev 0.3, System FMEA rev 0.6, PFMEA rev 0.3, HARA rev 0.4). SG-01 2026-10-16, findings F-11…F-16: tree findings resolved in WP-A-04 v1.0, FMEA findings F-14 and F-15 open for the FMEA owners. SG-07 2026-10-16, with its tree re-based on the harness box switches (WP-A-04 v1.1, RR-2026-010); findings F-17…F-19 open for the FMEA owners. Draft, AI-assisted; every link needs review. |
+| Status | **All eight goals mapped** (SG-08 added 2026-10-16 with its new tree, WP-A-04 v1.3, F-37, F-38, DQ-365). (SG-02, SG-03, SG-05, SG-06 on 2026-10-16, WP-A-04 v1.2, findings F-20…F-36; five questions queued for the lead, DQ-360…DQ-364). SG-04 pilot 2026-10-13, findings F-1…F-10 resolved the same day (WP-A-04 v0.9; SW FMEA rev 0.7, DFMEA rev 0.3, System FMEA rev 0.6, PFMEA rev 0.3, HARA rev 0.4). SG-01 2026-10-16, findings F-11…F-16: tree findings resolved in WP-A-04 v1.0, FMEA findings F-14 and F-15 open for the FMEA owners. SG-07 2026-10-16, with its tree re-based on the harness box switches (WP-A-04 v1.1, RR-2026-010); findings F-17…F-19 open for the FMEA owners. Draft, AI-assisted; every link needs review. |
 
 ## 1. Method
 
@@ -99,6 +99,12 @@ The cut sets of SG-02 and SG-06 triple because each cause is paired with every w
 
 The warnings `fmea_lint.py` reports for these goals are F-25…F-28 below. They stay until the FMEA owners decide them.
 
+## 2d. SG-08 result
+
+SG-08 (ASIL A, unresponsive driver) came with WP-C-03 v0.4, so its tree (WP-A-04 §13) was drawn and mapped together. `fmea_lint.py --report`: *FTA-FMEA map SG-08: 12 events (backed 6, by design 0, external 1, unbacked 5); 3 FMEA modes reach SG-08 (in the tree 3, justified 0, tree gaps 0)*. All 11 cut sets are single points (MCS-08.1…08.8; SPF-18).
+
+Only the System FMEA covers the driver-monitoring chain (SFM-022, SFM-023, SFM-025). No SW FMEA mode covers `dmonitoringmodeld` or `dmonitoringd`, and the DFMEA scope excludes the driver camera, so five of the twelve events are unbacked (F-37). The three G-HMI modes borrowed from SG-02 (SFM-026, SFM-027, SWF-035) do not cite HZ-013, and the lint warns on each (as F-26).
+
 ## 3. Findings
 
 These were review input for WP-A-04 and the FMEAs. F-1…F-10 (SG-04) are resolved in draft; of F-11…F-16 (SG-01), the tree findings are resolved in WP-A-04 v1.0 and the FMEA findings are open; F-17…F-19 (SG-07) are open for the FMEA owners; of F-20…F-36 (SG-02, SG-03, SG-05, SG-06), the tree findings are resolved in WP-A-04 v1.2, the FMEA findings are open, and five are queued for the lead (last column). Every resolution needs the same review as the links.
@@ -145,10 +151,13 @@ These were review input for WP-A-04 and the FMEAs. F-1…F-10 (SG-04) are resolv
 | F-35 | Modes justified outside the new trees: SG-02 and SG-06 PFM-015 (driver not briefed: a condition of use, AOU-06); SG-03 the four QM host monitors and four release modes (as F-16); SG-05 SWF-031 (host release on brake, QM) | — | **Justified** in `not_in_fta`. Same review as F-16 |
 | F-36 | Points for the reviewer, no change made: BE-2.02 and BE-2.06 group causes of several classes under one event; SFM-017/SFM-019 list only host causes; SFM-010.C2/C3 (braking needed beyond the ACC bound, OEM brake fault) are not drawn; HE-07.3 after a disengagement is covered through BE-6.06 rather than its own branch | WP-A-04 §4, §7; System FMEA | **Open, for review** |
 
+| F-37 | Five SG-08 events have no FMEA mode: BE-8.03 (driver camera or IR degraded, or `dmonitoringmodeld` stopped: no DFMEA or FMEDA, only SFM-022.C3), BE-8.04 (`driverStateV2` always valid at the source, GAP-21), BE-8.05 (wheel-touch reset on any input, GAP-21), BE-8.06 (DM demo mode, GAP-20), BE-8.08 (forced stop not set or not acted on). The G-HMI modes SFM-026, SFM-027 and SWF-035 reach SG-08 but cite no HZ-013 | SW FMEA, DFMEA, System FMEA | **Open, for the FMEA owners:** SW FMEA modes for the DM chain (`dmonitoringmodeld`, `dmonitoringd`, the forced-stop path), a DFMEA scope decision for the driver camera, and HZ-013 effects on the three HMI modes, or a reason why not |
+| F-38 | The records of the no-response reaction disagree with the code and with each other. In the code, about 5 s after alert level 3 `noResponseForceDecel` makes the planner stop the vehicle in lane (`policy.py:398`, `controlsd.py:235`, `longitudinal_planner.py:84`), but the item stays engaged: the level-3 alerts are `ET.PERMANENT` only, and the lockout starts only after a disengagement. SFM-025 says there is no reaction at all and does not credit the stop. TSR-611 is marked implemented for "decelerate, disengage and lock out", but disengagement is not implemented. The SG-08 safe state is not defined (WP-C-03 OI-10, SFM-ACT-005) | System FMEA, WP-S-02, WP-C-04 | **Queued for the lead: DQ-365** (what the item does when the driver does not respond). **For the System FMEA owner:** credit the forced stop in SFM-025. **For the WP-S-02 owner:** TSR-611 status is "partial: no disengagement" |
+
 ## 4. Next
 
 1. Review the SG-04 links, the F-1…F-10 resolutions and the new FMEA rows (SWF-050…053, SWF-003.C3, DFM-019); F-3 decided 2026-10-14 (DQ-002).
 2. Review the SG-01 links and F-11…F-13 (WP-A-04 v1.0). The FMEA owners decide F-14 and F-15.
 3. Review the SG-07 links and the re-based tree (WP-A-04 v1.1). The FMEA owners decide F-17…F-19. When the lead decides DQ-209 (accept comma's box, or build a LionDriver adapter), re-draw G7.3 and G7.4 for the chosen design.
-4. Review the SG-02, SG-03, SG-05 and SG-06 links and the v1.2 tree changes. The FMEA owners decide F-25…F-28 and F-31; the lead DQ-360…DQ-364. When the HARA adds the unresponsive-driver goal (DQ-205), give it a tree and map it.
+4. Review the SG-02, SG-03, SG-05 and SG-06 links and the v1.2 tree changes. The FMEA owners decide F-25…F-28 and F-31; the lead DQ-360…DQ-364. Review the SG-08 tree (WP-A-04 §13) and its mapping; the lead decides DQ-365, and the FSC decides how SG-08's ASIL A is met on the QM DM chain (SPF-18).
 5. Retire the SFMEA-01…SFMEA-39 table of WP-A-04 §10 in favour of [system-fmea.yaml](fmea/analyses/system-fmea.yaml), so the map has one System FMEA to point at.
