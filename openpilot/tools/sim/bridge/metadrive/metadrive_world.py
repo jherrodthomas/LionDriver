@@ -58,7 +58,7 @@ class MetaDriveWorld(World):
     self.reset_time = 0
     self.should_reset = False
 
-  def apply_controls(self, curvature: float, accel: float):
+  def apply_controls(self, curvature: float, accel: float, /):
     """The car's response from the plant (simulated_car): path curvature (1/m) and acceleration (m/s^2). The MetaDrive
     process moves the ego kinematically with them, so MetaDrive's own vehicle dynamics play no part."""
     if (time.monotonic() - self.reset_time) > 2:

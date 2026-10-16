@@ -6,8 +6,8 @@ the upstream MetaDrive release of the same asset version, pinned by SHA-256. Onl
 executable comes from the archive.
 
 Only folders whose license.txt in the archive grants CC-BY-4.0 (commercial use allowed, author credited) are
-installed: the other model folders of the archive (ferra, lada, truck, traffic_cone, tollgate, ...) carry no licence
-file, so LionDriver does not use them (free and open source only; licence checked 2026-10-16). The credits are
+installed: the other model folders of the archive (ferra, lada, truck, traffic_cone, tollgate, ...) carry no license
+file, so LionDriver does not use them (free and open source only; licenses checked 2026-10-16). The credits are
 written to ATTRIBUTION.txt next to the models. Traffic therefore uses MetaDrive's MVehicle (model "130") and SVehicle
 ("beetle") only.
 """
@@ -29,7 +29,7 @@ MODEL_DIRS = ("130", "beetle", "pedestrian", "bicycle", "barrier")   # each has 
 
 def metadrive_assets_dir() -> Path:
   import metadrive
-  return Path(metadrive.__file__).parent / "assets"
+  return Path(metadrive.__file__ or "").parent / "assets"
 
 
 def installed(assets: Path) -> bool:
@@ -64,7 +64,7 @@ def fetch(zip_path: Path | None, assets: Path) -> None:
           continue
         zf.extract(name, out)
 
-    credits = []
+    attributions = []
     for d in MODEL_DIRS:
       src, dst = out / "assets" / "models" / d, assets / "models" / d
       if not src.is_dir():
@@ -72,11 +72,11 @@ def fetch(zip_path: Path | None, assets: Path) -> None:
       lic = (src / "license.txt").read_text(encoding="utf-8", errors="replace")
       if "CC-BY-4.0" not in lic:
         sys.exit(f"model folder {d}: license.txt does not grant CC-BY-4.0")
-      credits.append(f"== {d}\n{lic.strip()}\n")
+      attributions.append(f"== {d}\n{lic.strip()}\n")
       if dst.exists():
         shutil.rmtree(dst)
       shutil.copytree(src, dst)
-    (assets / "models" / "ATTRIBUTION.txt").write_text("\n".join(credits), encoding="utf-8")
+    (assets / "models" / "ATTRIBUTION.txt").write_text("\n".join(attributions), encoding="utf-8")
   print(f"installed {len(MODEL_DIRS)} model folders into {assets / 'models'}")
 
 

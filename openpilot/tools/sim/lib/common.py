@@ -77,8 +77,8 @@ class World(ABC):
     self.exit_event = multiprocessing.Event()
 
   @abstractmethod
-  def apply_controls(self, steer_sim, throttle_out, brake_out, /):
-    pass
+  def apply_controls(self, curvature, accel, /):
+    """Move the ego with the car's response: path curvature (1/m) and acceleration (m/s^2)."""
 
   @abstractmethod
   def tick(self):
