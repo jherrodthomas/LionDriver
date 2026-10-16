@@ -2163,8 +2163,9 @@
       detail: "Less physical testing; needs fidelity evidence and assessor acceptance."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-4"]
   gate: G2
-  status: queued
-  note: "Duplicate of DQ-139, which asks the same question for the lead at G2 (WP-M-08 OI-3). Do not open it; withdraw it when DQ-139 is answered."
+  asked: 2026-10-16
+  status: withdrawn
+  note: "Duplicate of DQ-139, which asks the same question for the lead at G2 (WP-M-08 OI-3). Withdrawn 2026-10-16: DQ-139 was answered (option A)."
 
 - id: DQ-108
   question: "What discovery-trend criterion and target (R3) must unknown-scenario exploration meet before release?"
@@ -2749,7 +2750,9 @@
       title: "Credit planner-level results only (no camera in the loop)"
       detail: "Avoids the rendering question. Cost: perception, the main source of SOTIF risk, gets no simulated evidence."
   sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-3", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §5.3, OI-4", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md §2"]
-  status: queued
+  asked: 2026-10-16
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-16}
 
 - id: DQ-140
   question: "Which surrogate measures (takeovers, disengagements, FCW, envelope hits, DM alerts) may stand in for harm events, and what argument links them?"
@@ -4209,7 +4212,9 @@
       title: "Never; real drives cover lighting and weather"
       detail: "No simulator cost. Cost: those scenarios are seen only as often as the weather allows."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §5.4", "assurance/01-management/WP-M-08-sotif-plan.md OI-3"]
-  status: queued
+  asked: 2026-10-16
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-16}
 
 - id: DQ-300
   question: "When the car's own emergency braking (stock AEB) fires, should LionDriver stop asking for acceleration, or keep driving as now?"
