@@ -284,6 +284,7 @@
   sources: ["assurance/01-management/WP-M-11-upstream-and-supplier-management.md OI-5", "assurance/03-system/WP-S-05-hsi-specification.md OI-6", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md OI-7"]
   status: answered
   answer: {choice: other, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g, note: "not sure, we might have to review both 3x and four"}
+  note: "Hardware part applied in df2c0ed: both boards stay in scope (WP-H-01 OI-7, WP-H-02 OI-3, WP-H-04, DFMEA diagram data). Left: WP-M-11 OI-5 and WP-S-05 OI-6 (other sessions). The answer leaves the reference device open; a follow-up question may be needed before purchases."
 
 - id: DQ-012
   question: "How should the AI assistant that drafts most documents and code be classified as a tool?"
@@ -1035,6 +1036,7 @@
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md D-04", "assurance/05-software/hil-bench/README.md A-1"]
   status: answered
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "Hardware part applied in df2c0ed: WP-H-06 OI-1 and the T-HIL/FI cases marked blocked, WP-H-04 plan step 5, DFM-ACT-003. Left: hil-bench README A-1 and WP-M-01 D-04 (software and management sessions)."
 
 - id: DQ-050
   question: "If the controllability tests can't show that a driver always overpowers the steering, do we add a second independent steering limiter?"
@@ -1079,6 +1081,7 @@
   sources: ["assurance/01-management/WP-M-07-risk-management.md R-02", "assurance/00-assessment/docs-safety-reconciliation.md OI-3", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md OI-6"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "Hardware part applied in df2c0ed (WP-H-01 OI-6, WP-H-04 plan step 7). Left for the management session: WP-M-07 R-02 and docs-safety-reconciliation OI-3."
 
 - id: DQ-052
   question: "The false forward-collision warning carries ASIL A, but it runs on the non-safety computer. How should that be resolved?"
@@ -1325,8 +1328,9 @@
       title: "Compute both and decide at G3"
       detail: "No commitment. Cost: double reporting."
   sources: ["assurance/04-hardware/WP-H-04-hardware-metrics.md OI-2"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: df2c0ed, record: "WP-H-04 v0.4 §4 (SG-01 targets C with B alongside) and OI-2", at: 2026-10-16}
 
 - id: DQ-064
   question: "If the harness relay welds shut and blocks the car's own emergency braking, is a warning to the driver acceptable?"
@@ -1347,7 +1351,7 @@
   sources: ["assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md OI-9"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
-  applied: {ref: ebc9fea, record: "WP-C-04 FSR-07.06; WP-S-02 TSR-712; WP-S-03 SM-20 (needs harness readback, DQ-209)", at: 2026-10-16}
+  applied: {ref: "df2c0ed, ebc9fea", record: "WP-H-03 v0.3 OI-9; WP-C-04 FSR-07.06; WP-S-02 TSR-712; WP-S-03 SM-20 (needs harness readback, DQ-209)", at: 2026-10-16}
 
 - id: DQ-065
   question: "How should we get the device's schematic and parts list: ask comma, tear one down, or both?"
@@ -1369,8 +1373,9 @@
       title: "Tear one down now"
       detail: "Independent of comma. Cost: a device, and weaker evidence than a real schematic."
   sources: ["assurance/04-hardware/WP-H-02-hardware-design.md OI-1"]
-  status: answered
+  status: applied
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: df2c0ed, record: "WP-H-02 v0.8 OI-1; WP-H-01 OI-3; WP-H-04 plan step 2; WP-H-05 plan step 2; WP-H-07 OI-5", at: 2026-10-16}
 
 - id: DQ-066
   question: "Does the safety manager approve PMHF (overall failure probability) as the main random-hardware-failure method, with a per-cause check of the biggest contributors?"
@@ -2255,6 +2260,7 @@
   sources: ["assurance/07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md OI-5"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "Hardware part applied in df2c0ed: FMEDA SG-009 IWDG credit marked provisional, WP-H-04 status note. Left: the safety-case residuals and the impact record OI-5 (case and change sessions)."
 
 - id: DQ-115
   question: "Should the slower stale-input check (10 periods instead of the required 2) be accepted for now?"

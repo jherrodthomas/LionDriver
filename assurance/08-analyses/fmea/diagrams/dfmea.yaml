@@ -1,9 +1,10 @@
-# Diagram data for the DFMEA (hardware), analysis DFM, dfmea.yaml rev 0.3 at BL-002.
+# Diagram data for the DFMEA (hardware), analysis DFM, dfmea.yaml rev 0.6 at BL-002.
 # Sources: assurance/08-analyses/fmea/analyses/dfmea.yaml; assurance/04-hardware/WP-H-02-hardware-design.md;
 # assurance/03-system/WP-S-05-hsi-specification.md; assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md;
 # assurance/08-analyses/WP-A-03-dependent-failure-analysis.md; assurance/08-analyses/fmea/analyses/fmeda-sg001.yaml;
 # assurance/02-concept/WP-C-01-item-definition.md.
-# Pins are given for the tres board (comma 3X); cuatro differs (WP-S-05 §6). Reference board still open (WP-S-05 OI-6).
+# Pins are given for the tres board (comma 3X); cuatro differs (WP-S-05 §6). Reference board not fixed: the lead keeps both in
+# review (DQ-011), so both boards stay in scope.
 schema_version: 1
 analysis: DFM
 
@@ -325,7 +326,7 @@ p_diagram:
       - "LSI tolerance sets IWDG timeout"
       - "Board revision tres/cuatro (UK-09)"
     change_over_time:
-      - "Relay contact wear with switching cycles"
+      - "Switch IC stress from supply transients"
       - "Flash cell degradation, multi-bit errors"
       - "HSE crystal ageing (drift)"
       - "7,500 operating h over 15 years"
@@ -337,7 +338,7 @@ p_diagram:
     external_environment:
       - "Ambient to +85 °C, Tj to about +105 °C"
       - "EMC/ESD bursts on the CAN harness"
-      - "12 V dips: cranking, alternator fault"
+      - "12 V dips and surges: cranking, load dump"
       - "Vibration loosens the harness connector"
     system_interaction:
       - "SoC drives STM_RST_N/BOOT0, reflashes MCU"
