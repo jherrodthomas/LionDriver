@@ -619,7 +619,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SFM-025.C1` driverDistracted3 / driverUnresponsive3 mapped only to ET.PERMANENT (no disable reaction) | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job); unit tests are not requirements-based; no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2) <sub>scripts/lint/lint.sh</sub> | • Present by design and known; no test, because no requirement says what the reaction should be <sub>openpilot/selfdrive/selfdrived/events.py</sub> | 8 | 10 | 🔴 **H** | SFM-ACT-005 |
+| `SFM-025.C1` driverDistracted3 / driverUnresponsive3 mapped only to ET.PERMANENT (no disable reaction) | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job); unit tests are not requirements-based; no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2) <sub>scripts/lint/lint.sh</sub> | • As rated in the SW FMEA (SWF-062.C1, D 9 at BL-005): test_longitudinal runs the force_decel maneuver in CI and test_monitoring checks the alert levels; neither checks that the reaction meets FSR-040 <sub>openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py</sub><br>• Present by design and known; no test, because no requirement says what the reaction should be <sub>openpilot/selfdrive/selfdrived/events.py</sub> | 8 | 9 | 🔴 **H** | SFM-ACT-005 |
 
 Safety mechanisms: (1) Lockout after repeated non-response prevents re-engagement (1/5/15/30 min)
 
@@ -981,7 +981,7 @@ Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a f
 | `SFM-022.C3` | Inattentive driver not detected | 10/5/10 | SFM-ACT-003 |
 | `SFM-023.C1` | Distraction escalation too slow | 10/6/8 | SFM-ACT-002 |
 | `SFM-023.C2` | Distraction escalation too slow | 10/6/9 | SFM-ACT-002 |
-| `SFM-025.C1` | Terminal driver-unresponsive state does not bring the item to a safe state | 10/8/10 | SFM-ACT-005 |
+| `SFM-025.C1` | Terminal driver-unresponsive state does not bring the item to a safe state | 10/8/9 | SFM-ACT-005 |
 | `SFM-026.C1` | Takeover or disengagement alert not presented | 10/6/10 | SFM-ACT-007 |
 | `SFM-026.C2` | Takeover or disengagement alert not presented | 10/6/8 | SFM-ACT-007, SFM-ACT-003 |
 | `SFM-026.C3` | Takeover or disengagement alert not presented | 10/4/10 | SFM-ACT-007 |
