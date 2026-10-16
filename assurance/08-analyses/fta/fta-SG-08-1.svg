@@ -111,8 +111,8 @@
 <text x="780" y="992.5" class="d">GAP-21, TSR-609 not met)</text>
 <rect x="780.0" y="1000.5" width="93.8" height="16" rx="8" fill="#5f6368"/>
 <text x="826.9" y="1012.0" class="chip" fill="#fff">latent, design</text>
-<rect x="878.8" y="1000.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="905.8" y="1012.0" class="chip" fill="#c62828">no FMEA</text>
+<rect x="878.8" y="1000.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="905.8" y="1012.0" class="chip" fill="#fff">SWF-063</text>
 <circle cx="876.0" cy="1048.5" r="16" fill="#eceef1" stroke="#5f6368" stroke-width="1.7"/>
 <rect x="1009.5" y="912.0" width="220" height="122.0" rx="9" class="shadow"/>
 <rect x="1008" y="909.5" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
@@ -125,8 +125,8 @@
 <text x="1022" y="992.5" class="d">GAP-21, TSR-612 not met)</text>
 <rect x="1022.0" y="1000.5" width="93.8" height="16" rx="8" fill="#5f6368"/>
 <text x="1068.9" y="1012.0" class="chip" fill="#fff">latent, design</text>
-<rect x="1120.8" y="1000.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="1147.8" y="1012.0" class="chip" fill="#c62828">no FMEA</text>
+<rect x="1120.8" y="1000.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1147.8" y="1012.0" class="chip" fill="#fff">SWF-061</text>
 <circle cx="1118.0" cy="1048.5" r="16" fill="#eceef1" stroke="#5f6368" stroke-width="1.7"/>
 <rect x="1251.5" y="467.0" width="220" height="136.5" rx="9" class="shadow"/>
 <rect x="1250" y="464.5" width="220" height="136.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
@@ -165,6 +165,8 @@
 <text x="1506" y="547.5" class="d">monitoring below 10 km/h)</text>
 <rect x="1506.0" y="555.5" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="1533.0" y="567.0" class="chip" fill="#fff">SFM-023</text>
+<rect x="1564.9" y="555.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1591.9" y="567.0" class="chip" fill="#fff">SWF-061</text>
 <circle cx="1602.0" cy="603.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
 <rect x="1735.5" y="467.0" width="220" height="105.5" rx="9" class="shadow"/>
 <rect x="1734" y="464.5" width="220" height="105.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>

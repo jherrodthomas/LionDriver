@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="776" viewBox="0 0 1280 776" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-6. SW FMEA failure chains — sheet 10 of 10 (SWF)</title>
+  <desc id="d">SW FMEA failure chains, sheet 10 of 10 (SWF rev 0.9): failure modes SWF-070 to SWF-071 (2 failure modes, 5 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
+    <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
+    <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
+  </defs>
+  <rect width="1280" height="776" fill="#FFFFFF"/>
+  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 10 of 10</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 0.9 · BL-005 · draft · SWF-070 … SWF-071 · 5 causes on this sheet</text>
+  <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
+  <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
+  <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">STRUCTURE ELEMENT</text>
+  <text x="250" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FUNCTION (STEP 3)</text>
+  <text x="520" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE MODE · S · END EFFECT (STEP 4)</text>
+  <text x="876" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE CAUSE · O · D · AP · ACTIONS (STEPS 4–6)</text>
+  <path d="M220 376.5H235V364.2H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 364.2H505V270.4H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 364.2H505V550.2H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 270.4H861V144H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 270.4H861V256.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 270.4H861V368.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 550.2H861V487H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 550.2H861V599.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <rect x="40" y="354.5" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="374" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-081</text>
+  <text x="49" y="388.6" font-size="10.5" fill="#0F172A" font-weight="600">Lead selection and</text>
+  <text x="49" y="402.7" font-size="10.5" fill="#0F172A" font-weight="600">radar/vision fusion</text>
+  <text x="49" y="415.4" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="428.1" font-size="9.5" fill="#475569">in SWF-SE-080</text>
+  <rect x="250" y="342.2" width="240" height="107.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="361.7" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-080</text>
+  <text x="259" y="376.3" font-size="10.5" fill="#0F172A">Provide the lead state (distance, relative</text>
+  <text x="259" y="390.3" font-size="10.5" fill="#0F172A">speed and acceleration) from radar tracks</text>
+  <text x="259" y="404.4" font-size="10.5" fill="#0F172A">matched to model leads, and flag radar</text>
+  <text x="259" y="418.5" font-size="10.5" fill="#0F172A">faults</text>
+  <rect x="259" y="424.5" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="435.4" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-020</text>
+  <rect x="318.4" y="424.5" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="435.4" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-026</text>
+  <rect x="520" y="248.4" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="267.9" font-size="12" fill="#0F172A" font-weight="700">SWF-070</text>
+  <rect x="593.9" y="256.9" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="267.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="256.9" width="54.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="656.7" y="267.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">omission</text>
+  <text x="529" y="282.5" font-size="10.5" fill="#0F172A" font-weight="600">Lead missed or reported late while a lead is present</text>
+  <text x="529" y="295.6" font-size="9.8" fill="#475569" font-style="italic">End effect: Insufficient or late deceleration for a lead</text>
+  <text x="529" y="312.6" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="301.6" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="312.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
+  <rect x="876" y="122" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="141.5" font-size="12" fill="#0F172A" font-weight="700">SWF-070.C1</text>
+  <rect x="1194.5" y="130.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="141.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="156.1" font-size="10.5" fill="#0F172A">By design a radar track is used above 4 m/s only when matched to</text>
+  <text x="885" y="170.1" font-size="10.5" fill="#0F172A">a model lead with probability &gt; 0.5 and inside the match window</text>
+  <text x="885" y="184.2" font-size="10.5" fill="#0F172A">(radard.py:113-133, 156-157); a stationary target seen only by rad…</text>
+  <text x="885" y="197.3" font-size="9.8" fill="#475569" font-weight="600">O7 · D8 · in SWF-SE-081</text>
+  <rect x="885" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-064 open</text>
+  <rect x="876" y="234.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="253.8" font-size="12" fill="#0F172A" font-weight="700">SWF-070.C2</text>
+  <rect x="1194.5" y="242.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="253.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="268.4" font-size="10.5" fill="#0F172A">Radar faults reach the planner as data: plannerd uses the leads</text>
+  <text x="885" y="282.5" font-size="10.5" fill="#0F172A">whatever radarState.valid says, and radarFault /</text>
+  <text x="885" y="296.6" font-size="10.5" fill="#0F172A">radarTempUnavailable are SOFT_DISABLE (selfdrived.py:408-414…</text>
+  <text x="885" y="309.7" font-size="9.8" fill="#475569" font-weight="600">O5 · D8 · in SWF-SE-081</text>
+  <rect x="885" y="315.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="326.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-061 open</text>
+  <rect x="997.9" y="315.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="326.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-064 open</text>
+  <rect x="876" y="346.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="366.2" font-size="12" fill="#0F172A" font-weight="700">SWF-070.C3</text>
+  <rect x="1194.5" y="355.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="366.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="380.8" font-size="10.5" fill="#0F172A">radard stops: the Kalman filter asserts 0.01 &lt; dt &lt; 0.2</text>
+  <text x="885" y="394.8" font-size="10.5" fill="#0F172A">(radard.py:33), there is no try/except and manager does not restart</text>
+  <text x="885" y="408.9" font-size="10.5" fill="#0F172A">it; radarState then goes stale and the plan invalid (commIssue soft…</text>
+  <text x="885" y="422" font-size="9.8" fill="#475569" font-weight="600">O4 · D9 · in SWF-SE-081</text>
+  <rect x="885" y="428" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="438.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-064 open</text>
+  <rect x="520" y="528.2" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="547.7" font-size="12" fill="#0F172A" font-weight="700">SWF-071</text>
+  <rect x="593.9" y="536.7" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="547.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="536.7" width="68.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="663.8" y="547.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">commission</text>
+  <text x="529" y="562.3" font-size="10.5" fill="#0F172A" font-weight="600">False or wrong lead reported</text>
+  <text x="529" y="575.4" font-size="9.8" fill="#475569" font-style="italic">End effect: Unintended deceleration</text>
+  <text x="529" y="592.4" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="581.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="592.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
+  <rect x="876" y="465" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="484.5" font-size="12" fill="#0F172A" font-weight="700">SWF-071.C1</text>
+  <rect x="1194.5" y="473.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="484.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="499.1" font-size="10.5" fill="#0F172A">Low-speed override: below 4 m/s the closest radar track with |y| &lt;</text>
+  <text x="885" y="513.2" font-size="10.5" fill="#0F172A">1 m and 0.75 &lt; d &lt; 25 m becomes leadOne without model</text>
+  <text x="885" y="527.2" font-size="10.5" fill="#0F172A">confirmation (radard.py:24, 98-101, 167-174)</text>
+  <text x="885" y="540.4" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-081</text>
+  <rect x="885" y="546.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="557.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-064 open</text>
+  <rect x="876" y="577.4" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="596.9" font-size="12" fill="#0F172A" font-weight="700">SWF-071.C2</text>
+  <rect x="1194.5" y="585.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="596.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="611.4" font-size="10.5" fill="#0F172A">Wrong track matched to the model lead (adjacent lane) inside the</text>
+  <text x="885" y="625.5" font-size="10.5" fill="#0F172A">match window of max(25 %, 5 m) and 10 m/s (radard.py:113-133)</text>
+  <text x="885" y="638.6" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-081</text>
+  <rect x="885" y="644.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="655.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-064 open</text>
+  <line x1="40" y1="695.6" x2="1240" y2="695.6" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="717.6" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
+  <rect x="96" y="706.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="717.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <rect x="136.5" y="706.6" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="717.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
+  <rect x="179.4" y="706.6" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="717.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="223.9" y="717.6" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
+  <rect x="455.4" y="706.6" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="717.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
+  <text x="522.7" y="717.6" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <text x="40" y="737.6" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
+  <text x="40" y="755.6" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+</svg>
