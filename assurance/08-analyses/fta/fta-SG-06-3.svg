@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="970" viewBox="0 0 1180 970">
-<title>FTA SG-06 sheet 3 of 6: loss of longitudinal deceleration without take-over warning</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="1028" viewBox="0 0 1180 1028">
+<title>FTA SG-06 sheet 3 of 9: loss of longitudinal deceleration without take-over warning</title>
 <style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.n{font:italic 400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#6b7385}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.gl{font:700 7.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.06em;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.title2{font:600 17px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#9aa3b2;stroke-width:1.4;stroke-linecap:round}.wh{stroke:#c62828;stroke-width:3.2;stroke-linecap:round}.shadow{fill:#0f172a;opacity:.06}</style>
 <defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
 <rect width="100%" height="100%" fill="#f7f8fa"/>
-<rect y="78" width="100%" height="892" fill="url(#dots)"/>
+<rect y="78" width="100%" height="950" fill="url(#dots)"/>
 <rect width="100%" height="78" fill="#0f2a44"/>
 <text x="40" y="32" class="eyebrow">FTA · SG-06 · WP-A-04 §7</text>
 <text x="40" y="59" class="title">Loss of longitudinal deceleration without take-over warning</text>
 <rect x="904" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
-<text x="1022" y="44" class="hc">Sheet 3 of 6  ·  ASIL C</text>
+<text x="1022" y="44" class="hc">Sheet 3 of 9  ·  ASIL C</text>
 <rect x="404.5" y="116.5" width="220" height="107.5" rx="9" class="shadow"/>
 <rect x="403.0" y="114" width="220" height="107.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M412.0,114 H614.0 A9,9 0 0 1 623.0,123 V119 H403.0 V123 A9,9 0 0 1 412.0,114 Z" fill="#1d2433"/>
@@ -25,15 +25,23 @@
 <line x1="150.0" y1="282.5" x2="150.0" y2="307.5" class="w"/>
 <line x1="513.0" y1="282.5" x2="513.0" y2="307.5" class="w"/>
 <line x1="876.0" y1="282.5" x2="876.0" y2="307.5" class="w"/>
-<rect x="41.5" y="310.0" width="220" height="85.5" rx="9" class="shadow"/>
-<rect x="40" y="307.5" width="220" height="85.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<rect x="41.5" y="310.0" width="220" height="129.5" rx="9" class="shadow"/>
+<rect x="40" y="307.5" width="220" height="129.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M49,307.5 H251 A9,9 0 0 1 260,316.5 V312.5 H40 V316.5 A9,9 0 0 1 49,307.5 Z" fill="#64748b"/>
 <text x="54" y="332.5" class="id">BE-6.02</text>
 <text x="246" y="332.5" class="kind">BASIC</text>
 <text x="54" y="347.0" class="d">Envelope blocks longitudinal</text>
 <text x="54" y="361.5" class="d">authority while the SoC shows</text>
 <text x="54" y="376.0" class="d">engaged</text>
-<circle cx="150.0" cy="410.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="54.0" y="384.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="81.0" y="395.5" class="chip" fill="#fff">SWF-021</text>
+<rect x="112.9" y="384.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="139.8" y="395.5" class="chip" fill="#fff">SWF-027</text>
+<rect x="171.8" y="384.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="198.8" y="395.5" class="chip" fill="#fff">SWF-019</text>
+<rect x="54.0" y="406.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="81.0" y="417.5" class="chip" fill="#fff">DFM-009</text>
+<circle cx="150.0" cy="454.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="404.5" y="310.0" width="220" height="56.5" rx="9" class="shadow"/>
 <rect x="403.0" y="307.5" width="220" height="56.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M412.0,307.5 H614.0 A9,9 0 0 1 623.0,316.5 V312.5 H403.0 V316.5 A9,9 0 0 1 412.0,307.5 Z" fill="#1d2433"/>
@@ -43,34 +51,38 @@
 <path d="M493.0,402.0 Q513.0,393.0 533.0,402.0 Q531.0,375.0 513.0,364.0 Q495.0,375.0 493.0,402.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="513.0" y="394.0" class="gl" fill="#1d2433">OR</text>
 <line x1="392.0" y1="425.0" x2="634.0" y2="425.0" class="w"/>
 <line x1="513.0" y1="402.0" x2="513.0" y2="425.0" class="w"/>
-<line x1="392.0" y1="425.0" x2="392.0" y2="486.5" class="w"/>
-<line x1="634.0" y1="425.0" x2="634.0" y2="486.5" class="w"/>
-<rect x="283.5" y="489.0" width="220" height="163.5" rx="9" class="shadow"/>
-<rect x="282" y="486.5" width="220" height="163.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M291,486.5 H493 A9,9 0 0 1 502,495.5 V491.5 H282 V495.5 A9,9 0 0 1 291,486.5 Z" fill="#b45309"/>
-<text x="296" y="511.5" class="id">BE-2.09</text>
-<text x="488" y="511.5" class="kind">BASIC</text>
-<text x="296" y="526.0" class="d">Envelope blocking detected by</text>
-<text x="296" y="540.5" class="d">controlsMismatch after ≈2 s</text>
-<text x="296" y="555.0" class="d">(selfdrived.py:338, 508-510) or</text>
-<text x="296" y="569.5" class="d">not at all if pandaStates is</text>
-<text x="296" y="584.0" class="d">stale with authority shown</text>
-<text x="296" y="597.5" class="n">controlsMismatch after ≈2 s, as</text>
-<text x="296" y="611.0" class="n">SG-02</text>
-<rect x="296.0" y="619.0" width="71.0" height="16" rx="8" fill="#b45309"/>
-<text x="331.5" y="630.5" class="chip" fill="#fff">CCF DFI-24</text>
-<rect x="372.0" y="619.0" width="99.5" height="16" rx="8" fill="#e6e9ef"/>
-<text x="421.8" y="630.5" class="chip" fill="#334155">repeated, SG-02</text>
-<circle cx="392.0" cy="667.0" r="16" fill="#fdf0e1" stroke="#b45309" stroke-width="1.7"/>
-<rect x="525.5" y="489.0" width="220" height="78.5" rx="9" class="shadow"/>
-<rect x="524" y="486.5" width="220" height="78.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M533,486.5 H735 A9,9 0 0 1 744,495.5 V491.5 H524 V495.5 A9,9 0 0 1 533,486.5 Z" fill="#64748b"/>
-<text x="538" y="511.5" class="id">G-HMI</text>
-<text x="730" y="511.5" class="kind">TRANSFER IN</text>
-<text x="538" y="526.0" class="d">HMI does not deliver the warning</text>
-<rect x="538.0" y="534.0" width="99.5" height="16" rx="8" fill="#e6e9ef"/>
-<text x="587.8" y="545.5" class="chip" fill="#334155">→ SG-02 sheet 2</text>
-<path d="M634.0,565.0 L654.0,598.0 L614.0,598.0 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<line x1="392.0" y1="425.0" x2="392.0" y2="523.0" class="w"/>
+<line x1="634.0" y1="425.0" x2="634.0" y2="523.0" class="w"/>
+<rect x="283.5" y="525.5" width="220" height="185.5" rx="9" class="shadow"/>
+<rect x="282" y="523.0" width="220" height="185.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M291,523.0 H493 A9,9 0 0 1 502,532.0 V528.0 H282 V532.0 A9,9 0 0 1 291,523.0 Z" fill="#b45309"/>
+<text x="296" y="548.0" class="id">BE-2.09</text>
+<text x="488" y="548.0" class="kind">BASIC</text>
+<text x="296" y="562.5" class="d">Envelope blocking detected by</text>
+<text x="296" y="577.0" class="d">controlsMismatch after ≈2 s</text>
+<text x="296" y="591.5" class="d">(selfdrived.py:338, 508-510) or</text>
+<text x="296" y="606.0" class="d">not at all if pandaStates is</text>
+<text x="296" y="620.5" class="d">stale with authority shown</text>
+<text x="296" y="634.0" class="n">controlsMismatch after ≈2 s, as</text>
+<text x="296" y="647.5" class="n">SG-02</text>
+<rect x="296.0" y="655.5" width="71.0" height="16" rx="8" fill="#b45309"/>
+<text x="331.5" y="667.0" class="chip" fill="#fff">CCF DFI-24</text>
+<rect x="372.0" y="655.5" width="99.5" height="16" rx="8" fill="#e6e9ef"/>
+<text x="421.8" y="667.0" class="chip" fill="#334155">repeated, SG-02</text>
+<rect x="296.0" y="677.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="322.9" y="689.0" class="chip" fill="#fff">SWF-034</text>
+<rect x="354.9" y="677.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="381.8" y="689.0" class="chip" fill="#fff">SWF-032</text>
+<circle cx="392.0" cy="725.5" r="16" fill="#fdf0e1" stroke="#b45309" stroke-width="1.7"/>
+<rect x="525.5" y="525.5" width="220" height="78.5" rx="9" class="shadow"/>
+<rect x="524" y="523.0" width="220" height="78.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M533,523.0 H735 A9,9 0 0 1 744,532.0 V528.0 H524 V532.0 A9,9 0 0 1 533,523.0 Z" fill="#64748b"/>
+<text x="538" y="548.0" class="id">G-HMI</text>
+<text x="730" y="548.0" class="kind">TRANSFER IN</text>
+<text x="538" y="562.5" class="d">HMI does not deliver the warning</text>
+<rect x="538.0" y="570.5" width="99.5" height="16" rx="8" fill="#e6e9ef"/>
+<text x="587.8" y="582.0" class="chip" fill="#334155">→ SG-02 sheet 9</text>
+<path d="M634.0,601.5 L654.0,634.5 L614.0,634.5 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="767.5" y="310.0" width="220" height="93.0" rx="9" class="shadow"/>
 <rect x="766" y="307.5" width="220" height="93.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M775,307.5 H977 A9,9 0 0 1 986,316.5 V312.5 H766 V316.5 A9,9 0 0 1 775,307.5 Z" fill="#64748b"/>
@@ -81,76 +93,85 @@
 <rect x="780.0" y="369.5" width="65.3" height="16" rx="8" fill="#e6e9ef"/>
 <text x="812.6" y="381.0" class="chip" fill="#334155">→ sheet 2</text>
 <path d="M876.0,400.5 L896.0,433.5 L856.0,433.5 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<text x="40" y="748.0" class="lh">Symbols · IEC 61025</text>
-<rect x="46" y="768.0" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>
-<rect x="46" y="768.0" width="44" height="4" rx="2" fill="#1d2433"/>
-<text x="68" y="822.0" class="s" text-anchor="middle">Event</text>
-<path d="M128,802.0 Q148,793.0 168,802.0 Q166,775.0 148,764.0 Q130,775.0 128,802.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="148" y="794.0" class="gl" fill="#1d2433">OR</text>
-<text x="148" y="822.0" class="s" text-anchor="middle">OR gate</text>
-<path d="M208,802.0 L208,782.0 A20,18 0 0 1 248,782.0 L248,802.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="228" y="794.0" class="gl" fill="#1d2433">AND</text>
-<text x="228" y="822.0" class="s" text-anchor="middle">AND gate</text>
-<circle cx="308" cy="782.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<text x="308" y="822.0" class="s" text-anchor="middle">Basic event</text>
-<path d="M388,765.0 L410,782.0 L388,799.0 L366,782.0 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
-<text x="388" y="822.0" class="s" text-anchor="middle">Undeveloped</text>
-<path d="M468,764.0 L488,797.0 L448,797.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><line x1="478" y1="780.0" x2="502" y2="780.0" stroke="#1d2433" stroke-width="1.7" stroke-linecap="round"/>
-<text x="468" y="822.0" class="s" text-anchor="middle">Transfer out</text>
-<path d="M548,765.0 L568,798.0 L528,798.0 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<text x="548" y="822.0" class="s" text-anchor="middle">Transfer in</text>
-<rect x="40.0" y="840.0" width="31.1" height="16" rx="8" fill="#c62828"/>
-<text x="55.5" y="851.5" class="chip" fill="#fff">SPF</text>
-<rect x="77.1" y="840.0" width="48.2" height="16" rx="8" fill="#5f6368"/>
-<text x="101.2" y="851.5" class="chip" fill="#fff">latent</text>
-<rect x="131.3" y="840.0" width="42.5" height="16" rx="8" fill="#6a3fb5"/>
-<text x="152.6" y="851.5" class="chip" fill="#fff">SOTIF</text>
-<rect x="179.8" y="840.0" width="71.0" height="16" rx="8" fill="#b45309"/>
-<text x="215.3" y="851.5" class="chip" fill="#fff">CCF DFI-nn</text>
-<rect x="256.8" y="840.0" width="31.1" height="16" rx="8" fill="#1a5fb4"/>
-<text x="272.4" y="851.5" class="chip" fill="#fff">FFI</text>
-<rect x="293.9" y="840.0" width="82.4" height="16" rx="8" fill="#3d6b3d"/>
-<text x="335.1" y="851.5" class="chip" fill="#fff">outside item</text>
-<rect x="382.3" y="840.0" width="122.3" height="16" rx="8" fill="#e6e9ef"/>
-<text x="443.5" y="851.5" class="chip" fill="#334155">repeated / transfer</text>
-<rect x="510.6" y="840.0" width="105.2" height="16" rx="8" fill="#111827"/>
-<text x="563.2" y="851.5" class="chip" fill="#fff">FMEA / FMEDA row</text>
-<rect x="621.8" y="840.0" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="648.8" y="851.5" class="chip" fill="#c62828">no FMEA</text>
-<line x1="40" y1="874.0" x2="74" y2="874.0" class="wh"/>
-<text x="86" y="878.0" class="lb">Single-point path</text>
-<text x="86" y="894.0" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
-<text x="86" y="909.0" class="s">Computed from the gate logic (see cut-sets.md); the SPF tags are WP-A-04's own claims.</text>
-<rect x="640" y="734.0" width="500" height="196" rx="10" fill="#fff" stroke="#d9dee6"/>
-<line x1="640" y1="780.0" x2="1140" y2="780.0" stroke="#d9dee6"/>
-<line x1="958" y1="780.0" x2="958" y2="930.0" stroke="#d9dee6"/>
-<text x="658" y="763.0" class="tbh">LionDriver · FTA SG-06</text>
-<rect x="990" y="748.0" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
-<text x="1056" y="762.0" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
-<text x="658" y="806.0" class="k">TOP OF SHEET</text>
-<text x="756" y="806.0" class="v">G6.2</text>
-<text x="658" y="832.0" class="k">SINGLE-POINT</text>
-<text x="756" y="832.0" class="v">0 basic events on this sheet</text>
-<text x="658" y="858.0" class="k">SOURCE</text>
-<text x="756" y="858.0" class="v">WP-A-04 §7 (analysis of record)</text>
-<text x="658" y="884.0" class="k">GENERATED BY</text>
-<text x="756" y="884.0" class="v">fta_diagrams.py</text>
-<text x="658" y="910.0" class="k">EDIT</text>
-<text x="756" y="910.0" class="v">WP-A-04, not this file</text>
-<text x="974" y="804.0" class="k">SHEETS</text>
-<line x1="1049.0" y1="839.0" x2="984.2" y2="853.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="1049.0" y1="839.0" x2="1016.6" y2="853.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="1049.0" y1="839.0" x2="1049.0" y2="853.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="1049.0" y1="839.0" x2="1081.4" y2="853.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="1049.0" y1="839.0" x2="1113.8" y2="853.0" stroke="#9aa3b2" stroke-width="1.3"/>
-<rect x="1035.0" y="819.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1049.0" y="833.0" class="mm" fill="#0f2a44">1</text>
-<rect x="970.2" y="853.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="984.2" y="867.0" class="mm" fill="#0f2a44">2</text>
-<rect x="1002.6" y="853.0" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1016.6" y="867.0" class="mm" fill="#fff">3</text>
-<rect x="1035.0" y="853.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1049.0" y="867.0" class="mm" fill="#0f2a44">4</text>
-<rect x="1067.4" y="853.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1081.4" y="867.0" class="mm" fill="#0f2a44">5</text>
-<rect x="1099.8" y="853.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="1113.8" y="867.0" class="mm" fill="#0f2a44">6</text>
+<text x="40" y="806.5" class="lh">Symbols · IEC 61025</text>
+<rect x="46" y="826.5" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>
+<rect x="46" y="826.5" width="44" height="4" rx="2" fill="#1d2433"/>
+<text x="68" y="880.5" class="s" text-anchor="middle">Event</text>
+<path d="M128,860.5 Q148,851.5 168,860.5 Q166,833.5 148,822.5 Q130,833.5 128,860.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="148" y="852.5" class="gl" fill="#1d2433">OR</text>
+<text x="148" y="880.5" class="s" text-anchor="middle">OR gate</text>
+<path d="M208,860.5 L208,840.5 A20,18 0 0 1 248,840.5 L248,860.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="228" y="852.5" class="gl" fill="#1d2433">AND</text>
+<text x="228" y="880.5" class="s" text-anchor="middle">AND gate</text>
+<circle cx="308" cy="840.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="308" y="880.5" class="s" text-anchor="middle">Basic event</text>
+<path d="M388,823.5 L410,840.5 L388,857.5 L366,840.5 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
+<text x="388" y="880.5" class="s" text-anchor="middle">Undeveloped</text>
+<path d="M468,822.5 L488,855.5 L448,855.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><line x1="478" y1="838.5" x2="502" y2="838.5" stroke="#1d2433" stroke-width="1.7" stroke-linecap="round"/>
+<text x="468" y="880.5" class="s" text-anchor="middle">Transfer out</text>
+<path d="M548,823.5 L568,856.5 L528,856.5 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="548" y="880.5" class="s" text-anchor="middle">Transfer in</text>
+<rect x="40.0" y="898.5" width="31.1" height="16" rx="8" fill="#c62828"/>
+<text x="55.5" y="910.0" class="chip" fill="#fff">SPF</text>
+<rect x="77.1" y="898.5" width="48.2" height="16" rx="8" fill="#5f6368"/>
+<text x="101.2" y="910.0" class="chip" fill="#fff">latent</text>
+<rect x="131.3" y="898.5" width="42.5" height="16" rx="8" fill="#6a3fb5"/>
+<text x="152.6" y="910.0" class="chip" fill="#fff">SOTIF</text>
+<rect x="179.8" y="898.5" width="71.0" height="16" rx="8" fill="#b45309"/>
+<text x="215.3" y="910.0" class="chip" fill="#fff">CCF DFI-nn</text>
+<rect x="256.8" y="898.5" width="31.1" height="16" rx="8" fill="#1a5fb4"/>
+<text x="272.4" y="910.0" class="chip" fill="#fff">FFI</text>
+<rect x="293.9" y="898.5" width="82.4" height="16" rx="8" fill="#3d6b3d"/>
+<text x="335.1" y="910.0" class="chip" fill="#fff">outside item</text>
+<rect x="382.3" y="898.5" width="122.3" height="16" rx="8" fill="#e6e9ef"/>
+<text x="443.5" y="910.0" class="chip" fill="#334155">repeated / transfer</text>
+<rect x="510.6" y="898.5" width="105.2" height="16" rx="8" fill="#111827"/>
+<text x="563.2" y="910.0" class="chip" fill="#fff">FMEA / FMEDA row</text>
+<rect x="621.8" y="898.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
+<text x="648.8" y="910.0" class="chip" fill="#c62828">no FMEA</text>
+<line x1="40" y1="932.5" x2="74" y2="932.5" class="wh"/>
+<text x="86" y="936.5" class="lb">Single-point path</text>
+<text x="86" y="952.5" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
+<text x="86" y="967.5" class="s">Computed from the gate logic (see cut-sets.md); the SPF tags are WP-A-04's own claims.</text>
+<rect x="640" y="792.5" width="500" height="196" rx="10" fill="#fff" stroke="#d9dee6"/>
+<line x1="640" y1="838.5" x2="1140" y2="838.5" stroke="#d9dee6"/>
+<line x1="958" y1="838.5" x2="958" y2="988.5" stroke="#d9dee6"/>
+<text x="658" y="821.5" class="tbh">LionDriver · FTA SG-06</text>
+<rect x="990" y="806.5" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
+<text x="1056" y="820.5" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
+<text x="658" y="864.5" class="k">TOP OF SHEET</text>
+<text x="756" y="864.5" class="v">G6.2</text>
+<text x="658" y="890.5" class="k">SINGLE-POINT</text>
+<text x="756" y="890.5" class="v">0 basic events on this sheet</text>
+<text x="658" y="916.5" class="k">SOURCE</text>
+<text x="756" y="916.5" class="v">WP-A-04 §7 (analysis of record)</text>
+<text x="658" y="942.5" class="k">GENERATED BY</text>
+<text x="756" y="942.5" class="v">fta_diagrams.py</text>
+<text x="658" y="968.5" class="k">EDIT</text>
+<text x="756" y="968.5" class="v">WP-A-04, not this file</text>
+<text x="974" y="862.5" class="k">SHEETS</text>
+<line x1="1049.0" y1="897.5" x2="978.1" y2="911.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1049.0" y1="897.5" x2="998.4" y2="911.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1049.0" y1="897.5" x2="1018.6" y2="911.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1049.0" y1="897.5" x2="1038.9" y2="911.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1049.0" y1="897.5" x2="1059.1" y2="911.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1049.0" y1="897.5" x2="1079.4" y2="911.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1049.0" y1="897.5" x2="1099.6" y2="911.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1049.0" y1="897.5" x2="1119.9" y2="911.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<rect x="1035.0" y="877.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1049.0" y="891.5" class="mm" fill="#0f2a44">1</text>
+<rect x="964.1" y="911.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="978.1" y="925.5" class="mm" fill="#0f2a44">2</text>
+<rect x="984.4" y="911.5" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="998.4" y="925.5" class="mm" fill="#fff">3</text>
+<rect x="1004.6" y="911.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1018.6" y="925.5" class="mm" fill="#0f2a44">4</text>
+<rect x="1024.9" y="911.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1038.9" y="925.5" class="mm" fill="#0f2a44">5</text>
+<rect x="1045.1" y="911.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1059.1" y="925.5" class="mm" fill="#0f2a44">6</text>
+<rect x="1065.4" y="911.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1079.4" y="925.5" class="mm" fill="#0f2a44">7</text>
+<rect x="1085.6" y="911.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1099.6" y="925.5" class="mm" fill="#0f2a44">8</text>
+<rect x="1105.9" y="911.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1119.9" y="925.5" class="mm" fill="#0f2a44">9</text>
 </svg>
