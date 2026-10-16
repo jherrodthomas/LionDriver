@@ -43,8 +43,8 @@
 <text x="2076.5" y="403" class="cs">LionDriver release [WP-M-01…</text>
 <rect x="1978.5" y="432" width="196" height="110" rx="16" fill="#dfeaf6" stroke="#6f8fb5" stroke-width="1.2"/>
 <text x="2076.5" y="453" class="cid" fill="#2f557f">C4</text>
-<text x="2076.5" y="467" class="cs">Hazard log: H-01…H-06, H-08;</text>
-<text x="2076.5" y="481" class="cs">HE-01.1…HE-08.1; SG-01…SG-07</text>
+<text x="2076.5" y="467" class="cs">Hazard log: H-01…H-09;</text>
+<text x="2076.5" y="481" class="cs">HE-01.1…HE-09.2; SG-01…SG-08</text>
 <text x="2076.5" y="495" class="cs">[WP-C-03]; SH-01…SH-13</text>
 <text x="2076.5" y="509" class="cs">[WP-C-05]; TARA damage</text>
 <text x="2076.5" y="523" class="cs">scenarios [WP-C-09]</text>
@@ -110,7 +110,7 @@
 <text x="270" y="1155" class="kind">GOAL</text>
 <text x="54" y="1169" class="d">Hazards from E/E malfunctions of the</text>
 <text x="54" y="1183" class="d">item are reduced to a tolerable</text>
-<text x="54" y="1197" class="d">level: every safety goal SG-01…SG-07</text>
+<text x="54" y="1197" class="d">level: every safety goal SG-01…SG-08</text>
 <text x="54" y="1211" class="d">is met with the integrity of its</text>
 <text x="54" y="1225" class="d">ASIL.</text>
 <rect x="54.0" y="1233.0" width="65.3" height="16" rx="8" fill="#e6e9ef"/>
