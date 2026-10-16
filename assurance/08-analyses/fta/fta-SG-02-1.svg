@@ -8,7 +8,7 @@
 <text x="40" y="32" class="eyebrow">FTA · SG-02 · WP-A-04 §4</text>
 <text x="40" y="59" class="title">Loss or degradation of lateral control without adequate take-over warning</text>
 <rect x="1960" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
-<text x="2078" y="44" class="hc">Sheet 1 of 6  ·  ASIL B</text>
+<text x="2078" y="44" class="hc">Sheet 1 of 6  ·  ASIL C</text>
 <rect x="949.0" y="116.5" width="220" height="71.0" rx="9" class="shadow"/>
 <rect x="947.5" y="114" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
 <path d="M956.5,114 H1158.5 A9,9 0 0 1 1167.5,123 V119 H947.5 V123 A9,9 0 0 1 956.5,114 Z" fill="#0f2a44"/>

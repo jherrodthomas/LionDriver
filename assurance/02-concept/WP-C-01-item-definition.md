@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-01 Item definition |
 | Standard reference | ISO 26262-3:2018 §5; ISO 21448:2022 §5 (specification of the functionality and system); ISO/SAE 21434:2021 §9.3; ASPICE SYS.1 |
-| Version | 0.9 (reference vehicle cited as CFG-001 · Corolla E210 · ZRE212 · US, model years 2020–2022, from the new vehicle register; OI-9 narrowed to the firmware set; 2026-10-14). 0.8 (Figures 2-1, 3-3 and 8-1 added, generated from §2.2, §3.4 and §8; §3.4 IF-01/IF-02 corrected to the reference build: `0x262` checked in the reference build only, `0x1D3`, `0x191`, `0x283`, `0x750` added; §3.2 cluster row credits AOU-12; Figures 4-1 and 4-2 added, generated from §4 and the state-machine records; Figure 7-1 added, generated from §7; 2026-10-14). 0.7 (§3.1 element hierarchy added as Figure 3-1; boundary diagram renumbered Figure 3-2; 2026-10-13). 0.6 (§3.3 boundary diagram redrawn as Figure 3-1 with interface IDs; text version kept; 2026-10-13). 0.5 (reference configuration named by generation, E210; OI-9 added; 2026-10-12). History: 0.4 (AOU-15 added: reference build used on camera-ACC configurations only, `0x411` refused (TSR-705 D-1); 2026-10-12). 0.3 (AOU-14 added for the reference build's fixed alternative experience; 2026-10-12) |
+| Version | 0.10 (the lead's answers applied: Chestnut excluded, DQ-021; both comma 3X and comma four in scope, DQ-011; reference harness recorded as expected (Toyota A, box v3) and its confirmation asked, OI-2; ODD highways only, DQ-023; 2026-10-16). 0.9 (reference vehicle cited as CFG-001 · Corolla E210 · ZRE212 · US, model years 2020–2022, from the new vehicle register; OI-9 narrowed to the firmware set; 2026-10-14). 0.8 (Figures 2-1, 3-3 and 8-1 added, generated from §2.2, §3.4 and §8; §3.4 IF-01/IF-02 corrected to the reference build: `0x262` checked in the reference build only, `0x1D3`, `0x191`, `0x283`, `0x750` added; §3.2 cluster row credits AOU-12; Figures 4-1 and 4-2 added, generated from §4 and the state-machine records; Figure 7-1 added, generated from §7; 2026-10-14). 0.7 (§3.1 element hierarchy added as Figure 3-1; boundary diagram renumbered Figure 3-2; 2026-10-13). 0.6 (§3.3 boundary diagram redrawn as Figure 3-1 with interface IDs; text version kept; 2026-10-13). 0.5 (reference configuration named by generation, E210; OI-9 added; 2026-10-12). History: 0.4 (AOU-15 added: reference build used on camera-ACC configurations only, `0x411` refused (TSR-705 D-1); 2026-10-12). 0.3 (AOU-14 added for the reference build's fixed alternative experience; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Item level (ASIL determined in [WP-C-03](WP-C-03-hara.md)) |
 | Author | Assurance team (initial draft) |
@@ -21,12 +21,13 @@
 | Reference vehicle | **CFG-001 · Corolla E210 · ZRE212 · US**: Toyota Corolla, 12th generation (E210), sedan, US market, model years 2020–2022 (pre-facelift), 2ZR-FAE 1.8 L petrol with CVT, Toyota Safety Sense 2.0. Trims, physical data, the ECU firmware set and the exclusions (2023+ facelift, 2.0 L and manual trims, hybrid, hatchback) are in the [vehicle register](../../docs/liondriver/vehicles/README.md) (`docs/liondriver/vehicles/vehicles.yaml`), which this document cites instead of restating. The firmware set bounds the scope (OI-9) |
 | openpilot platform | `TOYOTA_COROLLA_TSS2` (`opendbc_repo/opendbc/car/toyota/values.py:201`), flags `TSS2 \| NO_DSU` |
 | Reference vehicle record | VIN, build date, ECU firmware versions (engine `0x700`/`0x7e0`, EPS `0x7a1`, ABS `0x7b0`, radar `0x750/0xf`, camera `0x750/0x6d`), options and tyre size: **to be recorded** (OI-1) |
-| Device | comma device (comma 3X or comma four) with integrated "panda" safety MCU (STM32H7) and Toyota TSS2 harness. Exact hardware revision, panda serial and harness type **to be recorded** (OI-2) |
+| Device | comma device with integrated "panda" safety MCU (STM32H7) and Toyota TSS2 harness. **Both comma 3X (tres board) and comma four (cuatro board) stay in scope**: the lead asked for both to be reviewed (decision register DQ-011, answer "other", 2026-10-14), so the analyses keep the rows of both boards. Exact hardware revision and panda serial of each unit **to be recorded** (OI-2) |
+| Harness | comma car harness for this vehicle: **Toyota A connector** per comma's car documentation for the Corolla 2020-22 (`docs/CARS.md`, vehicle register `harness`), with the harness box ("car harness v3" drawing, two DG419LE analog switches, no relay; [RR-2026-010](../04-hardware/reviews/RR-2026-010.md)). Not yet confirmed on the reference unit: the harness letter printed on it and the box revision (RR-2026-010 F-13, OI-2) |
 | Software | LionDriver release baseline: openpilot tree + submodules pinned by commit + model weights (LFS), per [WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md) |
 
 ## 2. Purpose and functional description
 
-LD-SDA helps the driver by controlling steering (lane centring) and speed (adaptive cruise with stop-and-go) on roads within its ODD ([WP-C-02](WP-C-02-odd-and-intended-functionality.md)). The driver stays responsible for the driving task at all times. The driver must supervise continuously and be ready to take over immediately. A driver monitoring function enforces attention.
+LD-SDA helps the driver by controlling steering (lane centring) and speed (adaptive cruise with stop-and-go) on limited-access highways, its ODD ([WP-C-02](WP-C-02-odd-and-intended-functionality.md); highways only since the lead's decision DQ-023). The driver stays responsible for the driving task at all times. The driver must supervise continuously and be ready to take over immediately. A driver monitoring function enforces attention.
 
 ### 2.1 Functions
 
@@ -66,8 +67,8 @@ LD-SDA helps the driver by controlling steering (lane centring) and speed (adapt
 | E-02 ML models | Driving model(s) and driver monitoring model (LFS artefacts under `selfdrive/modeld/models/`) |
 | E-03 Safety MCU firmware | panda firmware (`panda/board`) with the opendbc safety Toyota mode |
 | E-04 Device hardware | comma device: SoC, panda MCU, road and driver cameras, IMU, GNSS, display, speaker, power supply, CAN transceivers, enclosure, windscreen mount |
-| E-05 Harness | Toyota TSS2 harness with intercept relay between the forward camera and the vehicle CAN |
-| E-06 Optional external compute ("Chestnut" big-model eGPU over USB) | **Proposed for exclusion** from the reference configuration pending analysis of GAP-17. Not part of the item until OI-4 is decided |
+| E-05 Harness | Toyota TSS2 harness with intercept switch between the forward camera and the vehicle CAN (two analog switches in the harness box, not an electromechanical relay: [RR-2026-010](../04-hardware/reviews/RR-2026-010.md)) |
+| E-06 Optional external compute ("Chestnut" big-model eGPU over USB) | **Excluded** from the reference configuration (decision register DQ-021, option A, 2026-10-14). Not part of the item. GAP-17 (unanalysed fallback path) does not apply to the reference configuration while the exclusion is enforced; KS-24 ([WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md)) checks it |
 
 ![Figure 3-1: element hierarchy of LD-SDA: the item realizes F-01 to F-09 and consists of one system, whose components E-01 to E-05 consist of hardware parts and software units; E-06 is excluded](figures/fig-3-1-element-hierarchy.svg)
 
@@ -90,7 +91,7 @@ LD-SDA helps the driver by controlling steering (lane centring) and speed (adapt
 
 ![Figure 3-2: item boundary of LD-SDA, with elements E-01 to E-06 and interfaces IF-01 to IF-09](figures/fig-3-2-item-boundary.svg)
 
-*Figure 3-2.* The item boundary (dashed) contains E-01…E-05. E-06 is drawn outside because it is excluded pending OI-4. Each line carries the interface ID of §3.4. The source is [`figures/fig-3-2-item-boundary.svg`](figures/fig-3-2-item-boundary.svg); change the figure and §3.1, §3.2 and §3.4 together.
+*Figure 3-2.* The item boundary (dashed) contains E-01…E-05. E-06 is drawn outside because it is excluded (DQ-021). Each line carries the interface ID of §3.4. The source is [`figures/fig-3-2-item-boundary.svg`](figures/fig-3-2-item-boundary.svg); change the figure and §3.1, §3.2 and §3.4 together.
 
 <details><summary>Text version of Figure 3-2</summary>
 
@@ -216,9 +217,9 @@ Performance targets are specified in [WP-S-01](../03-system/WP-S-01-system-requi
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
 | OI-1 | Record the reference vehicle VIN, ECU firmware versions (fingerprint query output), options, tyre size | Maintainer | G1 |
-| OI-2 | Record the device hardware revision, panda hardware type and serial, harness type | Maintainer | G1 |
+| OI-2 | Record the device hardware revision, panda hardware type and serial of each unit (comma 3X and comma four, DQ-011), and the harness letter and box revision printed on the reference harness (RR-2026-010 F-13). Expected from comma's documentation: Toyota A, box v3; not confirmed on the unit. Asked of the lead in the decision register (DQ-211) | Maintainer | G1 |
 | OI-3 | Confirm which other TSS 2.0 functions (RSA, AHB, BSM if fitted) are affected by the harness | Safety engineer | G1 |
-| OI-4 | Decide whether to exclude Chestnut/eGPU from the reference configuration (recommended: exclude) | Maintainer | G1 |
+| OI-4 | Closed 2026-10-14: Chestnut/eGPU excluded from the reference configuration (decision register DQ-021, A). Its enforcement in reference builds is verified by KS-24 (WP-V-03) | Maintainer | — |
 | OI-5 | Define how debug, maneuver and joystick modes are disabled in reference-configuration builds | SW lead | G2 |
 | OI-6 | Confirm the legal status of L2 development testing in the state(s) where vehicle testing will take place | Maintainer | Before vehicle testing |
 | OI-7 | Confirm the minimum engagement speed and stop-and-go behaviour across the trims in scope | SW lead | G1 |

@@ -23,16 +23,16 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 6 performed: CR-02, CR-03@G1, CR-04, FSA-I1, SR-01, CS-I1 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 86 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 87 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
 | Work product | Activity | Status in WP-M-00 | Open items | Verification review (WP-P-05) |
 |---|---|---|---|---|
-| [WP-C-01](../../../02-concept/WP-C-01-item-definition.md) Item definition | CON-01 | Draft | 9 | |
-| [WP-C-02](../../../02-concept/WP-C-02-odd-and-intended-functionality.md) ODD and intended functionality specification | CON-02 | Draft | 6 | |
+| [WP-C-01](../../../02-concept/WP-C-01-item-definition.md) Item definition | CON-01 | Draft | 8 | |
+| [WP-C-02](../../../02-concept/WP-C-02-odd-and-intended-functionality.md) ODD and intended functionality specification | CON-02 | Draft | 7 | |
 | [WP-C-08](../../../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) Driver interaction, HMI and reasonably foreseeable misuse analysis | CON-03 | Draft | 6 | |
-| [WP-C-03](../../../02-concept/WP-C-03-hara.md) Hazard analysis and risk assessment, safety goals | CON-04 | Draft | 8 | |
+| [WP-C-03](../../../02-concept/WP-C-03-hara.md) Hazard analysis and risk assessment, safety goals | CON-04 | Draft | 9 | |
 | [WP-C-04](../../../02-concept/WP-C-04-functional-safety-concept.md) Functional safety concept (FSRs, allocation, AoUs) | CON-05 | Draft | 8 | |
 | [WP-C-05](../../../02-concept/WP-C-05-sotif-hazard-identification.md) SOTIF hazard identification and risk evaluation, acceptance criteria | CON-06 | Draft | 5 | |
 | [WP-C-06](../../../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) Functional insufficiencies and triggering conditions analysis | CON-07 | Draft | 4 | |

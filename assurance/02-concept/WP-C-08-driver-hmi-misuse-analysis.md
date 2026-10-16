@@ -4,9 +4,9 @@
 |---|---|
 | Work product | WP-C-08 Driver interaction, HMI and reasonably foreseeable misuse analysis |
 | Standard reference | ISO 26262-3:2018 §6 (controllability basis); ISO 21448:2022 §6 and Annex B (misuse, informative); UNECE R79 and R171 (informative benchmarks, WP-M-01 T-13); RESPONSE 3 Code of Practice for ADAS (informative) |
-| Version | 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
+| Version | 0.3 (§6.1 HARA side recorded: WP-C-03 v0.4 rates H-STPA-1 as OS-17/OS-18 and adds H-09 with SG-08, ASIL A, decision register DQ-003, DQ-205; OI-4 narrowed to the FSC follow-up; 2026-10-16). 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
 | Status | Draft |
-| ASIL / scope | SOTIF; backs the HARA C2 ratings (SG-01…SG-07) |
+| ASIL / scope | SOTIF; backs the HARA C2 ratings (SG-01…SG-08) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); HF specialist review recommended |
 | Approver | Safety manager |
@@ -108,7 +108,7 @@ These regulations are not binding in the US (WP-M-01 T-13). Values must be check
 
 | ID | Misuse | Likelihood / driver motive | Consequence | Current measures | Additional measures | Linked SH |
 |---|---|---|---|---|---|---|
-| MC-01 | Hands-off driving for long periods | High: system does not require hands on wheel | Longer reaction to lateral errors (SH-01, SH-02); C2 basis weakened | Vision DM | User info; controllability tests with hands-off posture (§8); consider hands-on requirement in ODD-A | SH-01, SH-02 |
+| MC-01 | Hands-off driving for long periods | High: system does not require hands on wheel | Longer reaction to lateral errors (SH-01, SH-02); C2 basis weakened | Vision DM | User info; controllability tests with hands-off posture (§8); consider a hands-on requirement (the ODD-A case is gone with the highway-only ODD, DQ-023) | SH-01, SH-02 |
 | MC-02 | Phone use, eyes off road | High | Late reaction to all SH | DM phone threshold 0.5; alerts > 10 km/h | DMP-02 validation; review below-10 km/h behaviour | SH-03, SH-06, SH-11 |
 | MC-03 | Sleeping / drowsy / impaired driver | Medium (long highway drives) | No reaction until force decel | DM sleep detection; no-response force decel; lockout | Validate force-decel scenario on highway; consider hazard lights | SH-02, SH-06 |
 | MC-04 | DM camera covered or driver out of view | Medium | DM falls back to wheel touch | Wheel-touch fallback (`policy.py:77-78`) | FM-05 (strict fallback, camera-blocked detection, no-entry if persistent) | SH-12 |
@@ -130,8 +130,8 @@ The STPA hazard H-STPA-1, "the vehicle is driven with the item engaged while the
 | Decision | "Both SOTIF and HARA foreseeable misuse" (decision register [DQ-003](../01-management/decisions/register.yaml), answer "other") |
 | Decided by, date | Project lead, 2026-10-14, on the decision inbox. This answer supersedes the first one the same day (option B, SOTIF only) |
 | SOTIF side | Recorded: MC-01…MC-03 in §6, DM performance targets DMP-01…DMP-04 in §5.3, controllability validation in §8 |
-| HARA side | **Open (OI-4):** WP-C-03 does not yet contain the misuse hazardous event. Adding it with S, E and C ratings decides whether driver monitoring is given an ASIL ([WP-C-04](WP-C-04-functional-safety-concept.md) §7, OI-3) |
-| Consequence to watch | If the HARA rating gives driver monitoring an ASIL, the current hardware cannot meet it: the ODD shrinks (for example hands-on driving) or new monitoring hardware is needed |
+| HARA side | **Recorded in WP-C-03 v0.4 (2026-10-16).** Two misuse situations: OS-17, the driver not supervising but still able to respond (E2), and OS-18, the driver unresponsive (E1). Every malfunction is crossed with them; the representative events are HE-01.5, HE-02.6, HE-03.6, HE-06.4 and HE-07.4 (ASIL A or B, none above its goal). A silent DM failure in these situations is the new hazard H-09 with SG-08, ASIL A (HE-09.1, HE-09.2; decision register DQ-205, A) |
+| Consequence | Driver monitoring now carries SG-08 at ASIL A, so the WP-C-04 §7 proposal (DM QM) has to be revised. ASIL A measures on the DM chain are a smaller step than the B the first reading feared, but the current DM runs on the QM SoC. If sustained non-supervision proves more common than 1 % of engaged time (OS-17 at E3), SG-08 becomes ASIL B (WP-C-03 §6.1) |
 
 ## 7. Controllability assumptions to be backed up
 
@@ -167,7 +167,7 @@ Method notes (RESPONSE 3 Code of Practice, informative): use naive subjects repr
 | OI-1 | Confirm benchmark values (R79, R171, EU 2025/1899) against licensed texts and finalise §5.2 | HF specialist | G1 |
 | OI-2 | Closed (2026-10-12): the numeric DM performance targets for DMP-01/02 were confirmed by the SOTIF lead and AI/ML safety lead (acting, one person) as proposed in WP-C-11 AIR-07/AIR-08, with the end-to-end alert time set at ≤ 6 s. Validation is VT-08 in WP-V-02. Assessor approval of the numeric validation targets is still WP-V-02 OI-3 | SOTIF lead | G2 |
 | OI-3 | Agree controllability pass criteria and sample size (CA-01…CA-07) with the external assessor | Safety manager | G1 |
-| OI-4 | Add H-STPA-1 to the HARA (WP-C-03) as reasonably foreseeable misuse with S, E and C ratings, per decision register DQ-003; then confirm or revise WP-C-04 §7 (driver monitoring QM) | Safety engineer | G1 |
+| OI-4 | HARA side done 2026-10-16: H-STPA-1 is rated in WP-C-03 v0.4 (OS-17, OS-18, H-09, SG-08 ASIL A; DQ-003, DQ-205). Left: revise WP-C-04 §7 (driver monitoring QM) for SG-08, and confirm the C2 of HE-09.1 with the DM clinic (§8 V-5) | Safety engineer | G1 |
 | OI-4 | Decide `DisengageOnAccelerator` default for the reference build (MC-08) | Maintainer | G1 |
 | OI-5 | Check whether alert volume can be reduced below an audible floor (MC-12) | SW lead | G2 |
 | OI-6 | Confirm whether the `mici` device-specific DM alerts (`events.py:1018+`) apply to the reference device | SW lead | G1 |

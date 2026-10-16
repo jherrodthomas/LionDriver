@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-05 · Requirement thread · TSR-407 heartbeat loss</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">Derived from its safety goals through FSR-01.07, satisfied by the safety MCU firmware, cited by SM-12 and verified by the cases that name it</text>
 <text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::requirementThread</text>
-<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">ThreadView · render asTreeDiagram · model da833696de50</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">ThreadView · render asTreeDiagram · model c4effe88a576</text>
 <line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
 <text x="40" y="114" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">DERIVED FROM · «derivation»</text>
 <text x="360" y="114" font-size="10.5" fill="#64748B" font-weight="700" letter-spacing="1.1">REQUIREMENT</text>
@@ -36,11 +36,11 @@
 <rect x="56" y="268" width="280" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
 <rect x="68" y="276" width="42.5" height="18" rx="9" fill="#C2410C"/><text x="89.2" y="288.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-02</text>
 <text x="117.5" y="289" font-size="12" fill="#0F172A" font-weight="600">The item shall not lose or degrade…</text>
-<text x="68" y="306" font-size="10.5" fill="#64748B">ASIL B · WP-C-03</text>
+<text x="68" y="306" font-size="10.5" fill="#64748B">ASIL C · WP-C-03</text>
 <rect x="56" y="332" width="280" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
 <rect x="68" y="340" width="42.5" height="18" rx="9" fill="#C2410C"/><text x="89.2" y="352.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-03</text>
 <text x="117.5" y="353" font-size="12" fill="#0F172A" font-weight="600">The item shall not cause unintend…</text>
-<text x="68" y="370" font-size="10.5" fill="#64748B">ASIL B · WP-C-03</text>
+<text x="68" y="370" font-size="10.5" fill="#64748B">ASIL C · WP-C-03</text>
 <rect x="56" y="396" width="280" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
 <rect x="68" y="404" width="42.5" height="18" rx="9" fill="#C2410C"/><text x="89.2" y="416.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-04</text>
 <text x="117.5" y="417" font-size="12" fill="#0F172A" font-weight="600">The item shall not cause decelera…</text>
@@ -48,7 +48,7 @@
 <rect x="56" y="460" width="280" height="54" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" filter="url(#lift)"/>
 <rect x="68" y="468" width="42.5" height="18" rx="9" fill="#C2410C"/><text x="89.2" y="480.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">SG-06</text>
 <text x="117.5" y="481" font-size="12" fill="#0F172A" font-weight="600">The item shall not lose longitudin…</text>
-<text x="68" y="498" font-size="10.5" fill="#64748B">ASIL B · WP-C-03</text>
+<text x="68" y="498" font-size="10.5" fill="#64748B">ASIL C · WP-C-03</text>
 <path d="M360 160L339.5 160Q338 160 338 158.5L338 158Q338 157 337 157L336 157" fill="none" stroke="#C2410C" stroke-width="1.3" marker-end="url(#rq-or)"/>
 <path d="M56 157L51 157Q46 157 46 162L46 226Q46 231 51 231L56 231" fill="none" stroke="#C2410C" stroke-width="1.1" marker-end="url(#rq-or)"/>
 <path d="M56 157L51 157Q46 157 46 162L46 290Q46 295 51 295L56 295" fill="none" stroke="#C2410C" stroke-width="1.1" marker-end="url(#rq-or)"/>
