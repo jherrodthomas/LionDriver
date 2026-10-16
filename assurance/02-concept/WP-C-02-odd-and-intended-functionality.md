@@ -214,5 +214,5 @@ Decision record: **pending** — maintainer decision under D-08 / WP-C-01 OI-8.
 | OI-4 | Closed 2026-10-16: ODD-A dropped (DQ-023, B); the HARA exposure is re-rated (WP-C-03 v0.4, OS-03/OS-04/OS-15/OS-16 foreseeable misuse at E2) | HARA owner | — |
 | OI-5 | Confirm grade and banking bounds (6 %) by vehicle test | Safety engineer | G2 |
 | OI-7 | Feed the ODD in driver-recognisable terms into WP-O-03 user information | Maintainer | G5 |
-| OI-8 | Highway speed range (DQ-091, A): hold the test risk review and test up to 110 km/h (WP-V-02, WP-V-07). Decide from the result whether 110–120 km/h is claimed by an evidence-based extension or the bound drops to 110 km/h | SOTIF lead | G1 |
+| OI-8 | Highway speed range (DQ-091, A): hold the test risk review and test up to 110 km/h (WP-V-02, WP-V-07). Decide from the result whether 110–120 km/h is claimed by an evidence-based extension or the bound drops to 110 km/h; the lead's question on the bound is DQ-260 | SOTIF lead | G1 |
 | OI-9 | Off-highway refusal or warning (FM-08): the highway-only ODD assumes it, and the HARA's E2 for engagement off the highway (assumption A-ODD) rests on it until it exists | SW lead | G2 |

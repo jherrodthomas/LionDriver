@@ -284,7 +284,7 @@
       title: "The comma four (cuatro board)"
       detail: "Longer support horizon. Cost: re-check the UI-dependent rows of the HMI analysis."
   sources: ["assurance/01-management/WP-M-11-upstream-and-supplier-management.md OI-5", "assurance/03-system/WP-S-05-hsi-specification.md OI-6", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md OI-7"]
-  note: "Item definitions updated: WP-C-01 v0.10 and LD-ITEM-001 rev 0.3 keep both devices in scope. Left for the hardware sessions: keep the tres and cuatro rows in WP-H-01, WP-S-05 and the HMI analysis; the unit count to buy is queued as DQ-212."
+  note: "Hardware part applied in df2c0ed: both boards stay in scope (WP-H-01 OI-7, WP-H-02 OI-3, WP-H-04, DFMEA diagram data). Item definitions applied in #96 (WP-C-01 v0.10, LD-ITEM-001 rev 0.3). Left: WP-M-11 OI-5 and WP-S-05 OI-6 (other sessions). The answer leaves the reference device open; the purchase follow-up is queued as DQ-212."
   status: answered
   answer: {choice: other, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g, note: "not sure, we might have to review both 3x and four"}
   note: "Hardware part applied in df2c0ed: both boards stay in scope (WP-H-01 OI-7, WP-H-02 OI-3, WP-H-04, DFMEA diagram data). Left: WP-M-11 OI-5 and WP-S-05 OI-6 (other sessions). The answer leaves the reference device open; a follow-up question may be needed before purchases."
@@ -524,7 +524,7 @@
       title: "Highways only"
       detail: "Less validation; OS-03/OS-04 drop out of the HARA. Cost: the system must refuse or warn off-highway, which makes it less useful."
   sources: ["assurance/02-concept/WP-C-02-odd-and-intended-functionality.md OI-4", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md OI-2"]
-  note: "ODD and HARA applied. Left: validation distances per ODD part (WP-V-03 OI-2, validation session); the off-highway refusal or warning the decision assumes (FM-08, WP-C-02 OI-9; SOTIF session); ODD-A mentions in WP-C-05 SH-11."
+  note: "SOTIF part applied in aae16af (WP-C-05/06/07/11, WP-V-02/03/04, WP-M-08). ODD and HARA parts applied in #96: WP-C-02 v0.4 §3 (ODD-H only, OI-4 closed) and WP-C-03 v0.4 §3 (OS-03, OS-04, OS-15, OS-16 foreseeable misuse at E2). Left: the off-highway refusal or warning the decision assumes (FM-08, WP-C-02 OI-9)."
   status: applied
   applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-02 v0.4 §3 (ODD-H only), OI-4 closed; WP-C-03 v0.4 §3 (OS-03, OS-04, OS-15, OS-16 foreseeable misuse at E2)", at: 2026-10-16}
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
@@ -1872,7 +1872,7 @@
       title: "Cap the ODD at 90 km/h"
       detail: "No high-speed testing. Cost: the system must refuse or warn above 90 km/h, which limits it on most highways."
   sources: ["assurance/process/README.md “4. **The SOTIF release argument waits on evidence from other”"]
-  note: "ODD side applied in WP-C-02 v0.4 (speed row, OI-8): the highway range stays 0–120 km/h, evidence planned to 110 km/h. Left for the validation session: the test risk review and the 110 km/h test plan (WP-V-02, WP-V-07); then OI-8 decides the 110–120 km/h band."
+  note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-260 queued for the ODD bound). ODD side applied in #96: WP-C-02 v0.4 speed row and OI-8, which waits on DQ-260. Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
   note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-260 queued for the ODD bound). Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
