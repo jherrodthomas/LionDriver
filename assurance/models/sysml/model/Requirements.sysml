@@ -235,7 +235,7 @@ package LionDriverRequirements {
         :>> verifMethod = "A, T-SIL";
     }
     requirement <'FSR-02.05'> fsr_02_05 : FunctionalSafetyRequirement {
-        doc /* On loss of communication with the SoC while engaged, the safety MCU shall give an acoustic warning that does not depend on the SoC. */
+        doc /* On loss of communication with the SoC while engaged, and on a reset of the safety MCU (watchdog or fault reset) that interrupts granted actuation authority, the safety MCU shall give an acoustic warning that does not depend on the SoC. The reset case was added 2026-10-14 (DQ-054: the engaged state is kept across the reset; TSR-516(d)). */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-03 (panda buzzer)";
         :>> asil = "B";
@@ -282,6 +282,13 @@ package LionDriverRequirements {
         :>> allocText = "E-01/HMI, E-03";
         :>> asil = "B";
         :>> verifMethod = "T-SIL, FI";
+    }
+    requirement <'FSR-02.12'> fsr_02_12 : FunctionalSafetyRequirement {
+        doc /* Before granting engagement, and while the item can engage, the item shall read the stored diagnostic trouble codes of the EPS and of the brake and stability control, and shall not allow engagement while a code that affects lateral or longitudinal control is set; the driver shall be told why. (Decided 2026-10-14, DQ-056: replaces reliance on the driver's dashboard lamp check, WP-O-02 OPS-01.) */
+        :>> workProduct = "WP-C-04";
+        :>> allocText = "E-01";
+        :>> asil = "QM (supports FSR-02.01, FSR-06.03)";
+        :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'FSR-03.01'> fsr_03_01 : FunctionalSafetyRequirement {
         doc /* The envelope shall limit the commanded acceleration to an upper bound derived from controllability for the reference vehicle. */
@@ -382,9 +389,9 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'FSR-05.03'> fsr_05_03 : FunctionalSafetyRequirement {
-        doc /* The envelope shall detect driver steering override (driver torque above a threshold) and reduce the LKA torque so it does not oppose the driver. */
+        doc /* The envelope shall detect driver steering override (driver torque above a threshold) and reduce the LKA torque toward zero at a bounded rate so it does not oppose the driver, for as long as the override lasts; the item shall show the driver that the override was noticed. (Decided 2026-10-14, DQ-053: back off on override and show a cue.) */
         :>> workProduct = "WP-C-04";
-        :>> allocText = "E-03";
+        :>> allocText = "E-03, E-01/HMI (cue)";
         :>> asil = "B";
         :>> verifMethod = "T-SIL, T-VEH";
     }
@@ -485,6 +492,13 @@ package LionDriverRequirements {
         :>> allocText = "E-01";
         :>> asil = "QM";
         :>> verifMethod = "T-SIL";
+    }
+    requirement <'FSR-07.06'> fsr_07_06 : FunctionalSafetyRequirement {
+        doc /* If the harness cannot return to the stock camera-to-vehicle connection (switch or relay stuck in intercept, detected by state readback), the item shall inhibit all actuation, warn the driver that stock PCS/AEB is unavailable, and refuse engagement until the harness is repaired. (Accepted 2026-10-14 as the degraded state, DQ-064; applies once readback exists.) */
+        :>> workProduct = "WP-C-04";
+        :>> allocText = "E-03 (detection), E-05 (readback), E-01/HMI (warning)";
+        :>> asil = "B";
+        :>> verifMethod = "T-HIL, FI";
     }
     requirement <'TSR-101'> tsr_101 : TechnicalSafetyRequirement {
         doc /* The envelope shall reject every STEERING_LKA (0x2E4) frame whose STEER_TORQUE_CMD magnitude exceeds the torque bound τ_max(v) of TSR-102. Until TSR-102 is implemented, τ_max is the baseline 1500 raw. */
@@ -685,12 +699,12 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-304'> tsr_304 : TechnicalSafetyRequirement {
-        doc /* The envelope shall monitor STEER_TORQUE_DRIVER (0x260) on the LKA path and (a) reject 0x2E4 frames that increase torque opposing the driver beyond a driver allowance (driver-limited check in addition to the measured-torque check of TSR-104), and (b) when the driver torque exceeds T_ovr for longer than t_ovr, revoke lateral authority or force the commanded torque to zero at the Δ_down rate. T_ovr, t_ovr and the allowance shall be derived from the override behaviour accepted in WP-C-08 (assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md) and from the EPS override threshold (AOU-02R). */
+        doc /* The envelope shall monitor STEER_TORQUE_DRIVER (0x260) on the LKA path and (a) reject 0x2E4 frames that increase torque opposing the driver beyond a driver allowance (driver-limited check in addition to the measured-torque check of TSR-104), and (b) when the driver torque exceeds T_ovr for longer than t_ovr, back off: accept only frames whose torque does not oppose the driver more than the previous frame, so that the commanded torque falls toward zero at no less than the Δ_down rate and stays there while the override lasts, and report the override state to the SoC (TSR-628). Lateral authority is kept, so assistance resumes when the driver releases (decided 2026-10-14, DQ-053: back off on override and show a cue; WP-A-05 LS-01, LS-02). T_ovr, t_ovr and the allowance shall be derived from the override behaviour accepted in WP-C-08 (assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md) and from the EPS override threshold (AOU-02R). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
         :>> asil = "B (SG-05); B‡ (SG-01, HE-05.2)";
         :>> mechanism = "PLB, GATE";
-        :>> timing = "detect ≤ 2 frames of 0x260 (40 ms) / torque decreasing next frame, zero ≤ 0.2 s";
+        :>> timing = "detect ≤ 2 frames of 0x260 (40 ms) + t_ovr, with t_ovr ≤ 0.1 s / torque decreasing the next frame, so the back-off starts ≤ 0.2 s after the driver's input (SG-05, WP-S-04 §3.7; SFM-ACT-016)";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-305'> tsr_305 : TechnicalSafetyRequirement {
@@ -1009,7 +1023,7 @@ package LionDriverRequirements {
         :>> verifMethod = "T-HIL, FI";
     }
     requirement <'TSR-516'> tsr_516 : TechnicalSafetyRequirement {
-        doc /* The safety MCU shall sound its own acoustic warning within ≤ 0.5 s of detection, without depending on SoC software, when (a) the SoC heartbeat is lost (TSR-407) while authority was granted within the last 5 s; (b) the envelope revokes authority while it is granted for any reason other than a driver action that the envelope itself observes (brake press, TSR-302; PCM cruise inactive, TSR-301), that is on an RX fault (TSR-406), an EPS fault state (TSR-110), a rejected command (TSR-108), a car-side TX failure or bus-off (TSR-508), a platform fault (TSR-502) or a heartbeat "not engaged" (TSR-307(a)); or (c) PCM cruise is still active more than 0.5 s after the SoC heartbeat first reported "not engaged" (a fault-induced disengagement whose ACC cancel, TSR-303, had no effect). */
+        doc /* The safety MCU shall sound its own acoustic warning within ≤ 0.5 s of detection, without depending on SoC software, when (a) the SoC heartbeat is lost (TSR-407) while authority was granted within the last 5 s; (b) the envelope revokes authority while it is granted for any reason other than a driver action that the envelope itself observes (brake press, TSR-302; PCM cruise inactive, TSR-301), that is on an RX fault (TSR-406), an EPS fault state (TSR-110), a rejected command (TSR-108), a car-side TX failure or bus-off (TSR-508), a platform fault (TSR-502) or a heartbeat "not engaged" (TSR-307(a)); or (c) PCM cruise is still active more than 0.5 s after the SoC heartbeat first reported "not engaged" (a fault-induced disengagement whose ACC cancel, TSR-303, had no effect); or (d) the safety MCU restarts after a watchdog or fault reset (TSR-501, TSR-502) that interrupted granted authority. For (b) on an EPS fault, detection is the first fault frame, and any persistence filter before the warning shall be ≤ 0.7 s so that the siren sounds within the SG-02 1 s warning budget from fault onset (decided 2026-10-14, DQ-048). For (d), the item's engaged state shall be kept across the reset in memory that the reset does not clear, and the siren shall sound ≤ 0.5 s after the restart (decided 2026-10-14, DQ-054). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, P-HW";
         :>> asil = "B";
@@ -1270,7 +1284,7 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, LOG";
     }
     requirement <'TSR-626'> tsr_626 : TechnicalSafetyRequirement {
-        doc /* While engaged, the SoC shall detect that the envelope does not actuate from evidence other than the envelope's own status report: (a) pandaStates older than 2 nominal periods (0.2 s) is treated as a controls mismatch (TSR-621); (b) with lateral control active, the EPS-applied torque (STEER_TORQUE_EPS in 0x260) not following a commanded torque above a threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration not following the requested acceleration beyond a tolerance for longer than t_blk. Each leads to immediate disable with a take-over request. Threshold, tolerance and t_blk (≤ 0.5 s) shall be set from fork-owned drive logs so that no false detection occurs in the reference log set. */
+        doc /* While engaged, the SoC shall detect that the envelope does not actuate from evidence other than the envelope's own status report: (a) pandaStates older than 2 nominal periods (0.2 s) is treated as a controls mismatch (TSR-621); (b) with lateral control active, the EPS-applied torque (STEER_TORQUE_EPS in 0x260) not following a commanded torque above a threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration not following the requested acceleration beyond a tolerance for longer than t_blk. (d) with lateral control active, EPS_STATUS (0x262) LKA_STATE not reporting LKA active, or with longitudinal control active, the PCM not reporting ACC in control, for longer than t_blk; (e) the transmitted-frame count of TSR-632 not advancing for a commanded actuation ID. Each leads to immediate disable with a take-over request, so that the warning falls within the SG-02/SG-06 1 s budget (SFM-ACT-018). Threshold, tolerance and t_blk (≤ 0.5 s) shall be set from fork-owned drive logs so that no false detection occurs in the reference log set. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
         :>> asil = "QM (B-sup: TSR-516)";
@@ -1286,6 +1300,60 @@ package LionDriverRequirements {
         :>> mechanism = "TMO";
         :>> timing = "within TSR-606";
         :>> verifMethod = "T-SIL (load), T-HIL";
+    }
+    requirement <'TSR-628'> tsr_628 : TechnicalSafetyRequirement {
+        doc /* While the envelope reports a driver override on the LKA path (TSR-304(b)), the SoC shall show an override cue on the device display within ≤ 0.2 s, so the driver sees that the steering backed off and why. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "QM";
+        :>> mechanism = "WRN";
+        :>> timing = "≤ 0.2 s";
+        :>> verifMethod = "T-SIL, T-VEH";
+    }
+    requirement <'TSR-629'> tsr_629 : TechnicalSafetyRequirement {
+        doc /* At start-up before the first engagement, and again at least every drive cycle, the SoC shall read the stored diagnostic trouble codes of the EPS and of the brake / stability control ECU, and shall prevent engagement with a no-entry alert naming the system while a code from the release-record list of codes affecting lateral or longitudinal control is set. A failed or incomplete read shall also prevent engagement. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "QM (supports TSR-110, TSR-618)";
+        :>> mechanism = "PLB, ST";
+        :>> timing = "before engagement";
+        :>> verifMethod = "T-SIL, T-VEH";
+    }
+    requirement <'TSR-630'> tsr_630 : TechnicalSafetyRequirement {
+        doc /* While a car safety mode is active and the item is not engaged, the SoC shall check that every panda reports controlsAllowed false. A report of true for more than 2 consecutive pandaStates samples, and in any case within ≤ 0.3 s, shall prevent engagement with a no-entry alert, be logged as an envelope fault, and request ACC cancel. (The reverse of TSR-621: it makes a latent panda authority fault visible before the host also commands torque.) */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "QM (B-sup: TSR-105, TSR-301)";
+        :>> mechanism = "PLB";
+        :>> timing = "≤ 0.3 s (within the SG-01 0.5 s FTTI)";
+        :>> verifMethod = "T-SIL, FI";
+    }
+    requirement <'TSR-631'> tsr_631 : TechnicalSafetyRequirement {
+        doc /* controlsd shall treat the driving-model output as stale, with the TSR-602 reaction, when (a) its frame ID does not advance for more than 2 nominal periods while messages keep arriving (frozen output), or (b) its age measured from the source camera frame timestamp, not the publish time, exceeds 2 nominal periods (stale content with fresh timestamps). */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "QM (B-sup: TSR-101, TSR-103 bound the effect; TSR-408 covers a stopped command stream)";
+        :>> mechanism = "TMO, PLB";
+        :>> timing = "≤ 0.1 s";
+        :>> verifMethod = "T-SIL, FI";
+    }
+    requirement <'TSR-632'> tsr_632 : TechnicalSafetyRequirement {
+        doc /* The safety MCU shall report to the SoC, for each supervised actuation ID (0x2E4, 0x343), the count of frames accepted by the envelope and transmitted on the car-side bus (transmit complete) and the count refused, in every health report. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "P-SW";
+        :>> asil = "B‡ (report content); QM for its use (TSR-626(e))";
+        :>> mechanism = "PLB";
+        :>> timing = "per health report (≤ 0.1 s)";
+        :>> verifMethod = "T-SIL, T-HIL";
+    }
+    requirement <'TSR-633'> tsr_633 : TechnicalSafetyRequirement {
+        doc /* When driver awareness has reached zero (terminal DM alert) and the driver has not responded for 5 s, the item shall bring the vehicle to the reaction decided for the unresponsive-driver goal (register DQ-340, queued; recommended: keep the lane, decelerate in lane to a standstill within a_min and j_down (TSR-202, TSR-205) with the terminal alert sounding, then hold, disengage and lock out re-engagement). It shall not leave lateral and longitudinal control active at the set speed. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "A (proposed: H-09 goal per DQ-205, to be added by the HARA owner; allocated to the QM SoC, open as for TSR-625)";
+        :>> mechanism = "FR, WRN";
+        :>> timing = "reaction starts ≤ 5 s after the terminal alert (WP-S-04 §3.8)";
+        :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-701'> tsr_701 : TechnicalSafetyRequirement {
         doc /* The harness orientation (normal, flipped, not connected) shall be detected before the relay is driven, and CAN routing and relay/ignition pin assignment shall follow it; loss or change of orientation while the relay is driven shall lead to SS-S. */
@@ -1384,6 +1452,15 @@ package LionDriverRequirements {
         :>> asil = "B";
         :>> mechanism = "TMO, FR";
         :>> timing = "detect ≤ 0.1 s / release ≤ 0.1 s (SG-07, WP-S-04 §3.6)";
+        :>> verifMethod = "T-HIL, FI";
+    }
+    requirement <'TSR-712'> tsr_712 : TechnicalSafetyRequirement {
+        doc /* If the harness state readback (TSR-506) shows that the camera path stays intercepted when the release is commanded, the envelope shall inhibit all actuation TX, keep the fault latched until power cycle and report it; the SoC shall then give a warning that stock PCS/AEB is unavailable and prevent engagement until the harness is repaired. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "P-SW, SoC";
+        :>> asil = "B (envelope detection and inhibit); QM (B-sup: TSR-506) for the SoC warning";
+        :>> mechanism = "PLB, FR, WRN";
+        :>> timing = "detect ≤ 0.3 s (TSR-506) / warn ≤ 1 s";
         :>> verifMethod = "T-HIL, FI";
     }
     requirement <'TSR-801'> tsr_801 : TechnicalSafetyRequirement {
@@ -2658,6 +2735,14 @@ package LionDriverRequirements {
         end #derive ::> fsr_02_11;
     }
     #derivation connection {
+        end #original ::> sg_02;
+        end #derive ::> fsr_02_12;
+    }
+    #derivation connection {
+        end #original ::> sg_06;
+        end #derive ::> fsr_02_12;
+    }
+    #derivation connection {
         end #original ::> sg_03;
         end #derive ::> fsr_03_01;
     }
@@ -2792,6 +2877,10 @@ package LionDriverRequirements {
     #derivation connection {
         end #original ::> sg_07;
         end #derive ::> fsr_07_05;
+    }
+    #derivation connection {
+        end #original ::> sg_07;
+        end #derive ::> fsr_07_06;
     }
     #derivation connection {
         end #original ::> fsr_01_01;
@@ -3294,6 +3383,38 @@ package LionDriverRequirements {
         end #derive ::> tsr_627;
     }
     #derivation connection {
+        end #original ::> fsr_05_03;
+        end #derive ::> tsr_628;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_12;
+        end #derive ::> tsr_629;
+    }
+    #derivation connection {
+        end #original ::> fsr_01_05;
+        end #derive ::> tsr_630;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_10;
+        end #derive ::> tsr_630;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_02;
+        end #derive ::> tsr_631;
+    }
+    #derivation connection {
+        end #original ::> fsr_06_01;
+        end #derive ::> tsr_631;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_10;
+        end #derive ::> tsr_632;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_09;
+        end #derive ::> tsr_633;
+    }
+    #derivation connection {
         end #original ::> fsr_07_03;
         end #derive ::> tsr_701;
     }
@@ -3340,6 +3461,10 @@ package LionDriverRequirements {
     #derivation connection {
         end #original ::> fsr_07_03;
         end #derive ::> tsr_711;
+    }
+    #derivation connection {
+        end #original ::> fsr_07_06;
+        end #derive ::> tsr_712;
     }
     #derivation connection {
         end #original ::> sg_01;
