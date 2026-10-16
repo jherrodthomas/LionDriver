@@ -6,7 +6,7 @@
 #   - the scenario set matches WP-A-05; every cited event, failure mode and TSR exists
 #   - a cited fault-tree event lies in the tree of a safety goal of the scenario's hazards (warning otherwise)
 #   - status covered / known_gap needs at least one event or failure mode; status new needs a finding
-# Status: draft, AI-assisted, 2026-10-13; each link needs review.
+# Status: draft, AI-assisted, 2026-10-13; v0.4 re-baseline and harness box (RR-2026-010) 2026-10-16; each link needs review.
 schema_version: 1
 source: assurance/08-analyses/WP-A-05-stpa.md
 fta_source: assurance/08-analyses/WP-A-04-system-fta-fmea.md
@@ -163,7 +163,7 @@ scenarios:
     status: known_gap
     fta: [BE-2.12, BE-2.13, BE-2.14, BE-2.15]
     fmea: [SFM-026, SFM-027, SWF-035]
-    requirements: [TSR-516, TSR-622, TSR-623]
+    requirements: [TSR-516, TSR-615, TSR-622, TSR-623]
   - id: LS-21
     ucas: [UCA-31]
     hazards: [H-01, H-03, H-05]
@@ -191,7 +191,7 @@ scenarios:
     status: covered
     fta: [BE-2.02, BE-2.09, BE-6.02]
     fmea: [SFM-028, SWF-034]
-    requirements: [TSR-621]
+    requirements: [TSR-621, TSR-615]
   - id: LS-25
     ucas: [UCA-55]
     hazards: [H-02, H-06]
@@ -239,3 +239,20 @@ scenarios:
     hazards: [H-03, H-04, H-06, H-STPA-1]
     status: known_gap
     fmea: [PFM-011, PFM-015]
+  - id: LS-32
+    ucas: [UCA-36]
+    hazards: [H-08]
+    status: known_gap
+    fta: [BE-7.12]
+    fmea: [DFM-020, DFM-021, SFM-033]
+  - id: LS-33
+    ucas: [UCA-33]
+    hazards: [H-08]
+    status: known_gap
+    fta: [BE-7.09, BE-7.10]
+    fmea: [DFM-010, SWF-018]
+  - id: LS-34
+    ucas: [UCA-63]
+    hazards: [H-08]
+    status: covered
+    fmea: [SFM-033, PFM-011]
