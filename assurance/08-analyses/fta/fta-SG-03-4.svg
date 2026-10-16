@@ -36,6 +36,8 @@
 <text x="54" y="390.5" class="d">(carcontroller.py:197-238)</text>
 <rect x="54.0" y="398.5" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="81.0" y="410.0" class="chip" fill="#fff">SWF-046</text>
+<rect x="112.9" y="398.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="139.8" y="410.0" class="chip" fill="#fff">SWF-066</text>
 <circle cx="150.0" cy="446.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="283.5" y="295.5" width="220" height="107.5" rx="9" class="shadow"/>
 <rect x="282" y="293.0" width="220" height="107.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
