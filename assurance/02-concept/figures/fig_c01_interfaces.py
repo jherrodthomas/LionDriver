@@ -125,7 +125,7 @@ FORWARD_BLOCKED = {
 }
 # Prose of the left-hand panel.
 PANEL_SRC = [(C01, "The de-energised harness relay connects the forward camera to the vehicle CAN"),
-             (C01, "| E-05 Harness | Toyota TSS2 harness with intercept relay between the forward camera and the vehicle CAN |"),
+             (C01, "| E-05 Harness | Toyota TSS2 harness with intercept switch between the forward camera and the vehicle CAN"),
              (S02, "| TSR-704 | The envelope shall forward every camera-side frame to the car side unchanged")]
 VERIFY_SRC = [(S05, "to be measured, OI-7")]
 # The §3.4 radar entry has no description; the meaning is taken from F-02 of §2.1.

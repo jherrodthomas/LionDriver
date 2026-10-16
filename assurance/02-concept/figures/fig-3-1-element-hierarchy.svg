@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1020" viewBox="0 0 1280 1020" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-1. LD-SDA element hierarchy (WP-C-01 §2.1, §3.1, §3.2)</title>
-  <desc id="d">The item LD-SDA realizes the functions F-01 to F-09. It consists of one system: sensors, controllers and an actuation output, whose actuators (EPS, ECM/PCM, ABS/VSC) are existing vehicle elements outside the item, reached through IF-01 and IF-02. The system consists of five components: E-04 device hardware, E-05 harness, E-03 safety MCU firmware, E-01 application SoC software and E-02 ML models. E-06 external compute is excluded pending OI-4. Each component consists of hardware parts or software units: E-04 of the SoC, panda MCU, cameras, IMU, GNSS, display, speaker, CAN transceivers, power supply and enclosure; E-05 of the harness wiring and intercept relay; E-03 of the panda firmware and the opendbc Toyota safety mode; E-01 of 23 openpilot processes; E-02 of the driving model and the driver monitoring model. E-01 and E-02 run on the SoC, E-03 on the panda MCU.</desc>
+  <desc id="d">The item LD-SDA realizes the functions F-01 to F-09. It consists of one system: sensors, controllers and an actuation output, whose actuators (EPS, ECM/PCM, ABS/VSC) are existing vehicle elements outside the item, reached through IF-01 and IF-02. The system consists of five components: E-04 device hardware, E-05 harness, E-03 safety MCU firmware, E-01 application SoC software and E-02 ML models. E-06 external compute is excluded (decision register DQ-021). Each component consists of hardware parts or software units: E-04 of the SoC, panda MCU, cameras, IMU, GNSS, display, speaker, CAN transceivers, power supply and enclosure; E-05 of the harness wiring and intercept relay; E-03 of the panda firmware and the opendbc Toyota safety mode; E-01 of 23 openpilot processes; E-02 of the driving model and the driver monitoring model. E-01 and E-02 run on the SoC, E-03 on the panda MCU.</desc>
   <defs>
     <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
     <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
@@ -197,8 +197,8 @@
   <rect x="1116" y="438" width="118" height="64" rx="7" fill="#FFFFFF" fill-opacity=".85"/>
   <rect x="1120" y="442" width="40" height="18" rx="9" fill="#94A3B8"/><text x="1140" y="455" fill="#fff" text-anchor="middle" class="tag">E-06</text>
   <text x="1124" y="476" class="m b" font-size="11">External compute</text>
-  <text x="1124" y="490" class="m xs">excluded pending</text>
-  <text x="1124" y="502" class="m xs">OI-4 (GAP-17)</text>
+  <text x="1124" y="490" class="m xs">excluded by the lead</text>
+  <text x="1124" y="502" class="m xs">DQ-021 (GAP-17)</text>
 
   <!-- ===== HW PARTS / SW UNITS ===== -->
   <!-- E-04 parts -->
