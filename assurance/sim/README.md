@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | Simulation for LionDriver; modelling-plan work item 4, the HIL plant ([models README](../models/README.md), MD-01, MD-04): fault-injection plant model (layer 1), known scenarios as OpenSCENARIO (layer 2), MetaDrive closed loop (layer 3), unknown-scenario search (layer 4) |
-| Version | 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
+| Version | 0.3 (reachability pilot, §3.6, 2026-10-16). 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. **No result here is evidence until the model is validated against Corolla logs; until then results rank risks and guide tests only** (§4) |
 | Feeds | [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) timing (owned by the safety-concept session); [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) M4, [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) (owned by the SOTIF session); previews [WP-V-05](../06-validation/WP-V-05-fault-injection.md) cases |
 
@@ -27,6 +27,7 @@ the figure tools of the other work products do. The MetaDrive bridge stays where
 | [`search/`](search/search.py) | Layer 4: failure search (Monte Carlo and cross-entropy) over the plant model |
 | [`results/search-curve-assist-loss.md`](results/search-curve-assist-loss.md) | Layer 4 search results (generated) |
 | [`figures/`](figures/) | Layer 1 figures, one per selected case (generated) |
+| [`reach/`](reach/reach.jl) | Reachability pilot (Julia, JuliaReach): bound of the drift under any LKA command the panda passes, and its check against sampled runs (§3.6) |
 | [`requirements.txt`](requirements.txt) | Pinned Python packages of the track |
 
 ```sh
@@ -155,6 +156,45 @@ swept, with the driver's peak torque and rise time. Under these assumptions ([ta
 
 Every column parameter is an assumption until M-02 (SIM-OI-7), and both scales are measurement items (SIM-OI-8).
 
+### 3.6 Reachability pilot: the drift under any LKA command the panda passes
+
+The fault-injection runs sample command sequences; a reachable set covers all of them. The pilot asks whether that
+bound is useful and whether Julia should stay in the toolchain (coordinator request, 2026-10-16).
+
+- **Case.** Straight road at 110 km/h (ODD-H bound), engaged, no driver input. From t = 0 a faulty host sends any LKA
+  command the panda passes. Horizon 3 s, past the driver's correction in the hard-over run (drift cue 0.2 m plus
+  reaction time 1.5 s, the plant's driver model: 2.64 s).
+- **Model.** The L1 plant (CommonRoad single-track Corolla, EPS lag, steering tracking) linearised numerically at that
+  speed, with the LKA command u as input ([`reach_inputs.py`](reach/reach_inputs.py) → `model.json`).
+- **Input set.** The panda (Toyota, torque-motor limited) lets |u| grow by at most 15 units per 10 ms frame from the 0
+  sent before the fault, and lets it fall toward 0 within one frame. A symmetric rate limit on u would therefore not
+  be sound; the sound description is the envelope |u(t)| ≤ min(1500, 15 + 1500 t).
+- **Reachability** ([`reach.jl`](reach/reach.jl), Julia, ReachabilityAnalysis.jl, GLGM06 zonotopes, tool TL-46). Two
+  sound sets, intersected: *amp* with |u| ≤ 1500 throughout, and *env* with the envelope, solved as 20 ms segments
+  with a constant input box.
+- **Checks** ([`reach_compare.py`](reach/reach_compare.py), [`test_reach.py`](reach/test_reach.py)):
+  - The set must contain every sampled run of the same linear model (62 runs with the real panda code in the loop:
+    the two hard-overs and 60 seeded random command sequences within what the panda passes).
+  - The set must not be tighter than the exact bound of that model. With one bounded input the exact bound is the
+    support function, computed by quadrature in Python independently of Julia.
+  - The nonlinear plant runs are compared with the set widened by the linearisation error measured on the same runs
+    (0.045 m in y). That comparison is measured, not proven.
+- **What the Python side already shows.** The exact bound under the panda envelope equals the hard-over run within
+  0.01 %: the hard-over is the worst case of this linear model, 3.27 m of lateral offset at the driver's correction.
+  Without the panda's ramp (*amp*) the exact bound is 5.17 m there, and 17 times the envelope bound at 0.2 s.
+
+Results (generated, once the CI job has run): `reach/results/reach.md` and `reach/results/reach-y.svg`. Julia runs only in CI, in the optional `sim-reach` job;
+`reach.jl`'s output is committed as `reach/bounds.json` and checked against each fresh run.
+
+```sh
+python3 assurance/sim/reach/reach_inputs.py                     # model.json and samples.json (about 7 s)
+julia --project=assurance/sim/reach assurance/sim/reach/reach.jl /tmp/bounds.json
+python3 assurance/sim/reach/reach_compare.py --bounds /tmp/bounds.json   # bounds.json, table and figure
+python3 assurance/sim/reach/test_reach.py
+```
+
+**Verdict.** Pending the first CI run (SIM-OI-9).
+
 ## 4. Credit and hand-back
 
 **Evidence rule.** No result of this track is evidence until the model is validated against Corolla logs (roadmap
@@ -185,6 +225,8 @@ Until then the results only rank risks and guide which tests to run on the bench
 | fmpy | 0.3.32 | BSD-2-Clause; its dependencies MIT, BSD-3-Clause, Apache-2.0 | running the FMU in the test |
 | OpenModelica (`omc`, conda-forge) | 1.27.1, build `hf6fb681_0`; explicit lock `plant/modelica/omc-linux-64.lock` | OSMC-PL 1.8, used under its AGPL-3 option; the simulation runtime compiled into the FMU is BSD-new (or AGPL-3/OSMC-PL), its solver SUNDIALS CVODE BSD-3 | exporting the L2 column FMU (TL-44) |
 | micromamba | 2.3.2-0, SHA-256 pinned in `assurance.yaml` | BSD-3-Clause | creating the OpenModelica environment from the lock in CI |
+| Julia (official Linux release tarball) | 1.11.7, SHA-256 pinned in `assurance.yaml` (`sim-reach`) | MIT | running the reachability pilot (TL-46) |
+| ReachabilityAnalysis.jl, LazySets.jl, JSON.jl | pinned with every dependency in `reach/Manifest.toml` | MIT | reach sets (GLGM06), set operations, reading and writing JSON |
 
 **Not used: Scenic and VerifAI.** Scenic 3.0.0–3.1.1 (BSD-3) requires `rv-ltl ~= 0.1`, imported by its core
 (`scenic/core/requirements.py`), and VerifAI 2.2 (BSD-3) requires and imports Scenic. rv-ltl 0.1.1 is published on PyPI
@@ -209,4 +251,5 @@ opendbc code is the project's own (MIT).
 | SIM-OI-6 | Scenic and VerifAI if rv-ltl is published with a licence (§5) |
 | SIM-OI-5 | KS-04 (lane split and merge) as an OpenDRIVE junction or lane-width polynomial |
 | SIM-OI-7 | L2 column parameters (§3.5) are assumed. Published column-EPS parameter tables were found but could not be read: their hosts are not reachable from the build environment. Check the values against those sources, then replace them with M-02 measurements |
+| SIM-OI-9 | Reachability pilot (§3.6): pin Julia's SHA-256 and the package Manifest from the first CI run, check the dependency licences in the Manifest, commit the bounds and results, and give the verdict |
 | SIM-OI-8 | Measure the N·m scale of STEER_TORQUE_DRIVER and of the LKA torque command on the reference Corolla; they decide whether the host's `MAX_USER_TORQUE` rule meets SG-05 (§3.5) |
