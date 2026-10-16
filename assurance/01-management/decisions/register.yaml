@@ -2751,8 +2751,9 @@
       detail: "Avoids the rendering question. Cost: perception, the main source of SOTIF risk, gets no simulated evidence."
   sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-3", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §5.3, OI-4", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md §2"]
   asked: 2026-10-16
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-16}
+  applied: {ref: 98f5e9966, record: "WP-M-08 OI-3; WP-V-02 §5.3", at: 2026-10-16}
 
 - id: DQ-140
   question: "Which surrogate measures (takeovers, disengagements, FCW, envelope hits, DM alerts) may stand in for harm events, and what argument links them?"
@@ -4213,8 +4214,9 @@
       detail: "No simulator cost. Cost: those scenarios are seen only as often as the weather allows."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §5.4", "assurance/01-management/WP-M-08-sotif-plan.md OI-3"]
   asked: 2026-10-16
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-16}
+  applied: {ref: 98f5e9966, record: "WP-V-02 §5.4; WP-M-08 OI-3", at: 2026-10-16}
 
 - id: DQ-300
   question: "When the car's own emergency braking (stock AEB) fires, should LionDriver stop asking for acceleration, or keep driving as now?"
