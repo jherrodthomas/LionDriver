@@ -8,14 +8,14 @@
 # 2026-10-16: rev 0.6 adds the harness-box supply (RR-2026-010 F-02, F-03): DFI-20, DFI-21; DM-02 re-based on the
 # DG419LE switches; DM-23, DM-24; DOI-008. No decomposition status changes.
 # 2026-10-16: rev 0.7 re-checks the insufficient DFIs (05, 09, 14, 18) against panda a55bdfc, opendbc 9a13f60 and the
-# release tooling of #80. All stay insufficient.
+# release tooling of #80. All stay insufficient. Rev 0.8 records DQ-007 C on DFI-14 and DM-10.
 schema_version: 1
 analysis:
   id: DFA
   type: dfa
   doc_id: LD-DFA-001
   title: "Dependent Failure Analysis — panda/SoC decompositions (LD-FSC-001)"
-  revision: "0.7"
+  revision: "0.8"
   status: draft
   baseline: BL-004
   fsc_revision: "0.3"
@@ -45,6 +45,7 @@ analysis:
     - {revision: "0.5", date: 2026-10-13, author: Claude (AI-assisted draft), change: "The seven insufficient DFIs re-checked against liondriver-dev 102224c (panda c33343b, opendbc 273f44e, after BL-004). DM-21 panda reference lock and DM-22 host reference-build check added (existing, unverified on hardware); DFI-07 insufficient -> open; DFI-05/08/09/14/18/19 stay insufficient, each rationale now names what is in the code and what is still needed; DM-20 runs in CI (DOI-001); DOI-007 progress; decomposition statuses unchanged. Then DM-12 (panda 4ac8e1c, ELM327 refused after the car mode until ignition off) and DM-11 (opendbc c393a04, assist-active LKAS_HUD refused without authority) implemented and unit-tested: DFI-08 and DFI-19 insufficient -> open"}
     - {revision: "0.6", date: 2026-10-16, author: Claude (AI-assisted draft), change: "Harness-box supply from RR-2026-010 (F-02, F-03, F-09). DM-02 re-based on the two DG419LE switches and the R2/R3 pull-down; it holds only while the box is powered. DFI-01 and DFI-03 no longer rely on DM-02 for the decompositions (fail-silence rests on DM-01 and DM-03). New DFI-20 (box supply loss, actuation decompositions, safe by design) and DFI-21 (box supply loss, warning decompositions FSR-015/025, open). DFI-08: DM-12 rests on one ignition wire (no CAN ignition on Toyota); DM-24 required. DM-23 (bench tests VS-HW-22/23) and DOI-008 added. Decomposition statuses unchanged"}
     - {revision: "0.7", date: 2026-10-16, author: Claude (AI-assisted draft), change: "The four insufficient DFIs (05, 09, 14, 18) re-checked against liondriver-dev 1033d98 (panda a55bdfc, opendbc 9a13f60, release tooling of #80). Since rev 0.5: the reference release variant builds the panda with RELEASE=1 and no ALLOW_DEBUG, checked in CI (safety.yaml panda_reference_release_build, ATC-19), so a release bootstub would no longer trust the debug key (DFI-09, DFI-18); opendbc b9f7451 grants authority on a PCM edge only with the heartbeat's engaged flag (no diverse input for DFI-05). All four stay insufficient; decomposition statuses unchanged"}
+    - {revision: "0.8", date: 2026-10-16, author: Claude (AI-assisted draft), change: "Answered lead decision DQ-007 C (lower steering authority, limits derived physically per speed) recorded on DFI-14 and DM-10 as the route for the shared-envelope coupling. No assessment changed"}
 
 categories:
   - {id: CAT-01, name: Shared power supply, applicable: true, rationale: "Panda and SoC are on the same comma 3X board, powered from the same 12 V input. On the Toyota harness that input is the harness-box supply VIN (ignition through D1, or comma power), which also powers both intercept switches; the ignition sense hangs on the same ignition line (RR-2026-010 HB-03, HB-06)."}
@@ -334,7 +335,9 @@ dfis:
       been derived from measurements. Needed for sufficient: DM-10, the bench and vehicle characterisation of
       AOU-01/AOU-02 (WP-C-01), which is also the evidence the HARA decision RD-1 depends on.
       Rev 0.7: unchanged; opendbc 9a13f60 changes no limit and no vehicle measurement exists yet. The reference car
-      will be a borrowed or rented one (DQ-039 B), so DM-10 waits on that arrangement.
+      will be a borrowed or rented one (DQ-039 B), so DM-10 waits on that arrangement. The lead chose to lower
+      steering authority, with limits derived physically per speed (DQ-007 C, 2026-10-14), which is DM-10's route
+      for the lateral limits.
   # --- CAT-10 development process
   - id: DFI-15
     category: CAT-10
@@ -462,7 +465,7 @@ measures:
   - {id: DM-07, description: "Panda-side configuration lock: accept only the safety model and parameter provisioned for the installed vehicle, reject changes while onroad, force alternative experience to 0 in release builds.", status: required, ref: "LD-DES-001 DR-01..DR-07", allocated_to: [EL-07]}
   - {id: DM-08, description: "Firmware authenticity: panda bootloader accepts only signed LionDriver release firmware, rejects downgrade, and flashing is allowed only offroad.", status: required, ref: "LD-DES-001 DR-10..DR-16", allocated_to: [EL-07]}
   - {id: DM-09, description: "Separate release gate for panda firmware and safety model (safety test suite, HIL, independent review), versioned independently of SoC software.", status: required, allocated_to: [process]}
-  - {id: DM-10, description: "Envelope derived from vehicle measurements independently of opendbc, with both channels' limits checked against it.", status: required, allocated_to: [process]}
+  - {id: DM-10, description: "Envelope derived from vehicle measurements independently of opendbc, with both channels' limits checked against it. For steering, authority limits derived physically per speed from controllability (lead decision DQ-007 C).", status: required, allocated_to: [process]}
   - {id: DM-11, description: "Panda blocks assist-active HUD and status bits when controls are not allowed. Reference build: LKAS_HUD with BARRIERS != 0 refused unless controls are allowed or were allowed within 1 s. Unit-tested; not verified on the vehicle.", status: existing_unverified, ref: opendbc_repo/opendbc/safety/modes/toyota.h, allocated_to: [EL-07]}
   - {id: DM-12, description: "Panda accepts diagnostic (ELM327) mode only offroad. Reference build: ELM327 refused once the car mode has been accepted, until the ignition is off (LD-DES-001 DR-05 without the stationary alternative). Unit-tested; HIL not run.", status: existing_unverified, ref: panda/board/reference_lock.h, allocated_to: [EL-07]}
   - {id: DM-13, description: "EMC/ESD immunity testing of device and harness (ISO 7637-2, ISO 11452, ISO 10605).", status: required, allocated_to: [process]}
