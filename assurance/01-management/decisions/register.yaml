@@ -3980,7 +3980,7 @@
   sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03", "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md OI-9"]
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-16}
-  applied: {ref: claude/hw-dq209, record: "WP-H-01 HWSR-702, -506a, -506e, OI-6; WP-H-02 OI-4 (DC-03 not pursued); WP-H-06 §3.1; RR-2026-010 §5; DFMEA DFM-ACT-007 not_implemented, DFM-ACT-014", at: 2026-10-16}
+  applied: {ref: 2c9c67f2e, record: "WP-H-01 HWSR-702, -506a, -506e, OI-6; WP-H-02 OI-4 (DC-03 not pursued); WP-H-06 §3.1; RR-2026-010 §5; DFMEA DFM-ACT-007 not_implemented, DFM-ACT-014", at: 2026-10-16}
   note: "Hardware part applied. Left for other sessions: AOU-13 wording in WP-C-01 and WP-C-04 (concept), TSR-702 status (system), DFA IC-05 / DFI-27, DFI-28 (DFA). Follow-up question for the SG-07 metric shortfall: DQ-261."
 
 - id: DQ-260
