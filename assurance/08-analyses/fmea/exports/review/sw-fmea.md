@@ -4,9 +4,9 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.8 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.9 | draft | BL-005 | RT-2 | 2026-10-16 |
 
-**Scope.** P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053).
+**Scope.** P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071).
 
 **Team.** Jherrod Thomas (Project maintainer, safety lead (reviewer/approver)); Claude (AI assistant) (Drafting assistance; ratings require human review)
 
@@ -125,6 +125,19 @@ The failure chains (element → function → failure mode → causes) are drawn 
 | &nbsp;&nbsp;&nbsp;`SWF-SE-044` Curvature limiter | sw_unit | `SWF-FN-043` Limit desired curvature to the lateral acceleration, lateral jerk and curvature bounds |
 | &nbsp;&nbsp;&nbsp;`SWF-SE-045` Toyota CarController | sw_unit | `SWF-FN-045` Apply torque magnitude, rate and measured-torque limits; send zero torque with the request bit cleared when lateral control is not active; send the ACC command within the acceleration range<br>`SWF-FN-050` Send the inactive acceleration in ACC_CONTROL whenever longitudinal control is not active |
 | &nbsp;&nbsp;&nbsp;`SWF-SE-046` card actuation hand-off | sw_unit | `SWF-FN-047` Deliver every 10 ms control step to the vehicle, and stop sending item frames when carControl is no longer received |
+| `SWF-SE-050` Car interface (card and the opendbc Toyota port, CAN parse and pack) | sw_element | — |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-051` CAN parser and Toyota carState | sw_unit | `SWF-FN-051` Provide brakePressed, gasPressed, steeringTorque/steeringPressed, cruise state, vEgo and EPS fault from current vehicle CAN, and report invalid or missing data as canValid false within the RX budget |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-052` Fingerprinting and CarParams | sw_unit | `SWF-FN-052` Identify the reference vehicle and produce its CarParams (TOYOTA_COROLLA_TSS2, safety parameter 73, openpilot longitudinal) |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-053` CAN packer and Toyota message construction | sw_unit | `SWF-FN-053` Pack actuation and HUD frames with the commanded values, the correct scaling, counter and checksum |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-054` card main loop and stock AEB interlock | sw_unit | `SWF-FN-054` Run the car interface every CAN cycle, publish carState, and actuate only the latest carControl |
+| `SWF-SE-060` Driver monitoring (dmonitoringmodeld, dmonitoringd) | sw_element | — |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-061` Driver-monitoring model process | sw_unit | `SWF-FN-060` Estimate face, eye and attention state of the driver for every cabin camera frame |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-062` Monitoring policy and dmonitoringd | sw_unit | `SWF-FN-061` Escalate an inattentive or unresponsive driver within the policy times (vision 5/8/13 s, wheel-touch 5/15/25 s) and request the terminal reaction |
+| `SWF-SE-070` Longitudinal planning (plannerd) | sw_element | — |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-071` Longitudinal planner and MPC | sw_unit | `SWF-FN-070` Plan an acceleration within the envelope that keeps the following distance to a lead and stops for a stopped lead |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-072` Forward collision warning decision | sw_unit | `SWF-FN-071` Raise a forward collision warning when a collision with the lead is predicted |
+| `SWF-SE-080` Lead estimation (radard and the Toyota radar interface) | sw_element | — |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-081` Lead selection and radar/vision fusion | sw_unit | `SWF-FN-080` Provide the lead state (distance, relative speed and acceleration) from radar tracks matched to model leads, and flag radar faults |
 
 ## 4. Worksheet
 
@@ -1198,6 +1211,334 @@ Effects:
 
 Safety mechanisms: (1) card stops actuating 0.1 s after carControl stops (card.py:234); selfdrived commIssue/processNotRunning soft-disable alert; EPS LKA message time-out (vehicle) · (2) Per-ID TX rate supervision (opendbc#10, panda#13) and TX arrival supervision (TSR-408): reference build, the default at BL-005; the panda revokes on a burst or a gap, and selfdrived reacts to txRateExceeded (pandaTxRateExceeded) and to the revocation (controlsMismatch within 0.5 s)
 
+### `SWF-SE-051` CAN parser and Toyota carState
+
+#### SWF-056 · Vehicle input lost, delayed or frozen while carState still reports it as current and valid
+
+🔴 **H** · **S 10** · guideword *value_stale* · function `SWF-FN-051` Provide brakePressed, gasPressed, steeringTorque/steeringPressed, cruise state, vEgo and EPS fault from current vehicle CAN, and report invalid or missing data as canValid false within the RX budget
+
+Effects:
+
+- **End:** Automated control not released on a driver brake or cancel seen only by the host (HZ-008, S 10)
+- **End:** Contributes to HZ-009 (driver steering not seen) and HZ-007 (old vEgo in planning) (HZ-009, S 10)
+- **Next higher:** selfdrived misses a brake or cancel edge; controlsd keeps steering against a driver input or plans with an old speed
+- **Local:** brakePressed, gasPressed, steeringPressed, cruise state or vEgo held at an old value with canValid true
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-056.C1` Frozen frames are not detectable on the host: no Toyota RX message carries a counter, and BRAKE_MODULE 0x226 and WHEEL_SPEEDS 0xAA carry neither checksum nor counter (toyota_nodsu_pt.dbc:18, _toyota_2017.dbc:67). A repeated frame keeps the parser alive and valid | • Vehicle-side design; the parser checks timing only for these messages <sub>opendbc_repo/opendbc/can/parser.py</sub> | • No test targets this cause | 3 | 10 | 🔴 **H** | SWF-ACT-056 |
+| `SWF-056.C2` Message timeouts are learned at run time. A message read by carstate.py is registered on first access with an assumed 1 Hz, i.e. a 10 s timeout, until more than 1 s of samples gives its rate (parser.py:77-81, 166-171). A message that stops in that first window is flagged after up to 10 s | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • opendbc can tests (test_packer_parser can_valid and timeout cases) exist but are not run by LionDriver CI <sub>opendbc_repo/opendbc/can/tests/test_packer_parser.py</sub> | 3 | 9 | 🔴 **H** | SWF-ACT-056, SWF-ACT-044 |
+| `SWF-056.C3` A frame with a bad checksum is dropped without a timestamp refresh, so the last good value stays in carState until the message times out (10 learned periods) and canValid then needs 5 consecutive invalid evaluations (parser.py:51-65, 184-199): about 0.3 s for BRAKE_MODULE before the host sees invalid data | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • As SWF-056.C2 (opendbc can tests not run by LionDriver CI) <sub>opendbc_repo/opendbc/can/tests/test_packer_parser.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-056, SWF-ACT-044 |
+
+Safety mechanisms: (1) Panda RX checks with a 5-period timeout and its own brake edge, gas and cruise-off handling withdraw authority independently of carState (SWF-006, SWF-008, SWF-009) · (2) selfdrived canError / canTimeout on canValid false (immediate disable, selfdrived.py:415-418)
+
+<sub>Note: The panda sees the same frames and has the same frozen-frame limit for 0x226 (SWF-005.C1). The host path matters for the release on brake when the panda grant is kept (selfdrived is the only USER_DISABLE path for the cancel button).</sub>
+
+#### SWF-057 · Safety-relevant carState field decoded with the wrong sign, scale or bit for the Corolla TSS2
+
+🔴 **H** · **S 10** · guideword *corrupted* · function `SWF-FN-051` Provide brakePressed, gasPressed, steeringTorque/steeringPressed, cruise state, vEgo and EPS fault from current vehicle CAN, and report invalid or missing data as canValid false within the RX budget
+
+Effects:
+
+- **End:** Automated control not released on brake or cancel (HZ-008, S 10)
+- **End:** Item resists driver steering (driver torque mis-read) (HZ-009, S 10)
+- **End:** Contributes to HZ-010 (spurious cruise enable) and HZ-007 (wrong vEgo) (HZ-010, S 10)
+- **Next higher:** Wrong engagement, override or disengagement decisions; wrong speed in planning and lateral limits
+- **Local:** brakePressed, gasPressed, steeringTorque, cruise state, EPS fault or vEgo wrong while valid
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-057.C1` Defect in the Toyota DBC or in carstate.py signal use (steeringTorque sign, GAS_RELEASED inversion, LKA_STATE fault codes, PCM_CRUISE decoding; carstate.py:19-22, 59-167) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • process_replay (CI) replays the TOYOTA3 Corolla TSS2 segment and compares with reference logs made from the same code, so it cannot find a defect already present at the baseline; not designed for this cause <sub>openpilot/selfdrive/test/process_replay/test_processes.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-044 |
+| `SWF-057.C2` Short frames are not rejected: the parser skips only frames over 64 bytes and reads missing bytes as 0 (parser.py:219, dbc.py:66), so a truncated BRAKE_MODULE reads BRAKE_PRESSED = 0 with no checksum to catch it. The panda-side length fault is proposed, not implemented (change-2026-10-13-opendbc-rx-length-fault) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No test targets this cause | 3 | 10 | 🔴 **H** | SWF-ACT-056 |
+
+Safety mechanisms: (1) Panda decodes brake, gas, cruise and EPS torque itself from the same frames (toyota.h rx hook), so a host-only decoding defect is bounded by the envelope; a DBC error shared by both is not (DFA)
+
+<sub>Note: Host side of System FMEA SFM-003.C2, SFM-009.C3, SFM-013.C2, SFM-017.C1, SFM-018.C1, SFM-019.C1, SFM-020.C1.</sub>
+
+### `SWF-SE-052` Fingerprinting and CarParams
+
+#### SWF-058 · CarParams of another platform or parameter set used on the reference car
+
+🔴 **H** · **S 10** · guideword *wrong_mode* · function `SWF-FN-052` Identify the reference vehicle and produce its CarParams (TOYOTA_COROLLA_TSS2, safety parameter 73, openpilot longitudinal)
+
+Effects:
+
+- **End:** Lateral or longitudinal control outside what the analyses assume, within the panda envelope (HZ-002, S 10)
+- **End:** Contributes to HZ-005 (HZ-005, S 10)
+- **Next higher:** Host controllers and CarController use limits and scaling of another car; the panda refuses a mode or parameter other than TOYOTA/73
+- **Local:** Wrong platform, tune, limits or flags in CarParams
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-058.C1` Fuzzy fingerprint: when no exact FW match is found, Toyota platform codes select a platform (fw_versions.py:146-170, values.py:449-480); the Corolla TSS2 shares its platform with the Lexus UX Hybrid and the Corolla Cross (values.py:201-215). CP.fuzzyFingerprint is recorded but nothing acts on it | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • opendbc test_fw_fingerprint exists but is not run by LionDriver CI <sub>opendbc_repo/opendbc/car/tests/test_fw_fingerprint.py</sub> | 4 | 9 | 🔴 **H** | SWF-ACT-057 |
+| `SWF-058.C2` The FINGERPRINT environment variable overrides identification, and cached CarParams FW are reused when the VIN is known, so a replaced ECU is not re-queried (car_helpers.py:93-98, 140-142) | • No launch path sets FINGERPRINT; the cache is upstream behaviour <sub>opendbc_repo/opendbc/car/car_helpers.py</sub> | • No test targets this cause | 2 | 10 | 🔴 **H** | SWF-ACT-057 |
+
+Safety mechanisms: (1) Panda reference lock: only TOYOTA with parameter 73 (SWF-013, default build at BL-005); pandad refuses a car mode on a non-reference panda · (2) assured_config logs a platform outside the assured scope (CA-008); logging only, no engagement block
+
+<sub>Note: No match gives MOCK (dashcamOnly, card passive), the safe direction. The CA-001 stock AEB interlock passes on the Corolla TSS2 (not RADAR_ACC, test_stock_aeb_interlock.py:75-80) and is not a cause here.</sub>
+
+### `SWF-SE-053` CAN packer and Toyota message construction
+
+#### SWF-059 · Actuation frame packed with a value other than the one commanded
+
+🔴 **H** · **S 10** · guideword *corrupted* · function `SWF-FN-053` Pack actuation and HUD frames with the commanded values, the correct scaling, counter and checksum
+
+Effects:
+
+- **End:** Steering torque other than commanded (HZ-002, S 10)
+- **End:** Acceleration other than commanded (HZ-005, S 10)
+- **Next higher:** The panda checks the packed value against its limits; an in-limit wrong value passes
+- **Local:** STEERING_LKA torque or ACC_CONTROL acceleration differs from the CarController output
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-059.C1` Scaling or signal-definition defect in the packer or toyotacan.py; out-of-range values are masked to the signal width without an error (packer.py:24-27, 62), so a scaling defect can wrap instead of saturating | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • process_replay (CI) replays the TOYOTA3 Corolla TSS2 segment and compares with reference logs made from the same code, so it cannot find a defect already present at the baseline; not designed for this cause; it compares sendcan <sub>openpilot/selfdrive/test/process_replay/test_processes.py</sub> | 4 | 9 | 🔴 **H** | SWF-ACT-044 |
+
+Safety mechanisms: (1) Panda torque, rate and acceleration checks on the packed frame (SWF-001, SWF-003)
+
+<sub>Note: Host side of System FMEA SFM-008.C3. Upstream clips torque and acceleration before packing (carcontroller.py:105-106, 250), so a wrap needs a scaling defect, not an out-of-range command.</sub>
+
+### `SWF-SE-054` card main loop and stock AEB interlock
+
+#### SWF-060 · card stops while engaged
+
+🔴 **H** · **S 10** · guideword *crash* · function `SWF-FN-054` Run the car interface every CAN cycle, publish carState, and actuate only the latest carControl
+
+Effects:
+
+- **End:** Loss of lateral and longitudinal control with an alert (HZ-004, S 10)
+- **End:** Contributes to HZ-007 (ACC requests stop while engaged, as SWF-021) (HZ-007, S 10)
+- **Next higher:** The panda revokes 50 ms after the last STEERING_LKA (TSR-408); selfdrived raises controlsMismatch, commIssue and processNotRunning; manager does not restart card
+- **Local:** No carState and no sendcan
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-060.C1` Unhandled exception: the loop has no exception handling (card.py:277-284). A non-finite torque or acceleration raises in the CarController (int(round(nan)), carcontroller.py:105; math.floor in packer.py:24); controlsd sanitises its actuators (controlsd.py:171-180), so the path needs a value made non-finite inside card (CarState or pitch compensation) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_car_interfaces fuzzes update and apply for all platforms in CI; generic, not designed for non-finite input. card is in the test_fuzzy NOT_TESTED list <sub>openpilot/selfdrive/car/tests/test_car_interfaces.py</sub> | 5 | 9 | 🔴 **H** | SWF-ACT-044 |
+
+Safety mechanisms: (1) Panda TX arrival supervision (TSR-408, reference build) and selfdrived controlsMismatch within 0.5 s (TSR-621)
+
+<sub>Note: card running on stale CAN is SWF-056; the carControl hand-off is SWF-047 (SWF-SE-046).</sub>
+
+### `SWF-SE-060` Driver monitoring (dmonitoringmodeld, dmonitoringd)
+
+#### SWF-064 · dmonitoringd or dmonitoringmodeld stops while engaged
+
+🔴 **H** · **S 8** · guideword *crash* · function `SWF-FN-061` Escalate an inattentive or unresponsive driver within the policy times (vision 5/8/13 s, wheel-touch 5/15/25 s) and request the terminal reaction
+
+Effects:
+
+- **End:** Disengagement after the 3 s soft disable with an alert; no driver monitoring for the rest of the drive
+- **Next higher:** selfdrived commIssue and processNotRunning (SOFT_DISABLE); manager does not restart the process
+- **Local:** No driverMonitoringState
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-064.C1` Unhandled exception: brakeDisengageProbs[0] is read without a length check (policy.py:447); model and warp loading have no error handling (dmonitoringmodeld.py:22-48); no try/except in either loop | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • dmonitoringd is replayed in process_replay (CI) on recorded inputs; generic. Both processes are in the test_fuzzy NOT_TESTED list <sub>openpilot/selfdrive/test/process_replay/test_processes.py</sub> | 5 | 9 | 🔴 **H** | SWF-ACT-058 |
+
+Safety mechanisms: (1) selfdrived commIssue / processNotRunning soft disable with alert (events.py:858-876)
+
+<sub>Note: Severity 8: the effect is a disengagement with an alert, not linked to a hazard (as SWF-025, SWF-029). The 3 s soft disable without monitoring is within the 13 s policy budget.</sub>
+
+### `SWF-SE-061` Driver-monitoring model process
+
+#### SWF-063 · Driver state stale, frozen or non-finite while dmonitoringd treats it as valid
+
+🔴 **H** · **S 10** · guideword *value_frozen* · function `SWF-FN-060` Estimate face, eye and attention state of the driver for every cabin camera frame
+
+Effects:
+
+- **End:** Automated control continues with an inattentive driver without escalation (HZ-013, S 10)
+- **Next higher:** The policy judges the driver attentive, or keeps an old attentive pose, so awareness does not count down
+- **Local:** Face pose, eyes or face probability held or NaN with driverStateV2.valid true
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-063.C1` No finiteness or validity check: driverStateV2 is always published valid (dmonitoringmodeld.py:99) and neither process checks for NaN. By code reading a NaN pose with a finite std compares false against the pose thresholds, so the driver counts as attentive (policy.py:228-246); a NaN face probability counts as no face (the conservative direction). Not tested | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No test injects non-finite model output; dmonitoringmodeld is excluded from process replay and test_fuzzy, and model_replay is not run in CI | 4 | 10 | 🔴 **H** | SWF-ACT-058, SWF-ACT-060 |
+| `SWF-063.C2` Empty face arrays make _update_states return early, so face_detected and the last pose stay as they were while the event logic runs (policy.py:264-266) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No test targets this cause | 4 | 10 | 🔴 **H** | SWF-ACT-058 |
+
+Safety mechanisms: (1) High model std (> 0.3) blocks the distracted decision and, after 10 s, falls back to the wheel-touch policy (policy.py:77-78, 277-308)
+
+<sub>Note: If dmonitoringmodeld stops, dmonitoringd publishes nothing (its loop waits on driverStateV2) and selfdrived raises commIssue and processNotRunning (soft disable); that path is SWF-064.</sub>
+
+### `SWF-SE-062` Monitoring policy and dmonitoringd
+
+#### SWF-061 · Escalation of an inattentive or unresponsive driver later than the policy times
+
+🔴 **H** · **S 10** · guideword *late* · function `SWF-FN-061` Escalate an inattentive or unresponsive driver within the policy times (vision 5/8/13 s, wheel-touch 5/15/25 s) and request the terminal reaction
+
+Effects:
+
+- **End:** Automated control continues with an inattentive driver longer than the policy allows (HZ-013, S 10)
+- **Next higher:** Driver warned late; forced deceleration and lockout later
+- **Local:** Pre-alert, alert or terminal step reached after more than 5/8/13 s (vision) or 5/15/25 s (wheel-touch)
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-061.C1` Timers count frames, not time: one awareness step of DT_DMON = 0.05 s per driverStateV2 message (policy.py:198, 207; dmonitoringd.py:21-23). A model running at 16 Hz still passes the frequency check and stretches the 13 s terminal to about 16 s | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_monitoring.py (13 policy scenarios, CI) steps the policy in frames, so it cannot see a rate error <sub>openpilot/selfdrive/monitoring/test_monitoring.py</sub> | 5 | 9 | 🔴 **H** | SWF-ACT-058 |
+| `SWF-061.C2` Defect in the awareness arithmetic, thresholds or recovery factor (1 - T1/T3, 1 - T2/T3, recovery 1.25-5; policy.py:31-47, 196-207, 354-369) | • Upstream code with policy unit tests that are not requirements-based; ruff and ty in CI <sub>openpilot/selfdrive/monitoring/policy.py</sub> | • test_monitoring.py scenarios (distracted, invisible, uncertain, last-second responder) in CI; targeted at the policy, not proven by mutation <sub>openpilot/selfdrive/monitoring/test_monitoring.py</sub> | 6 | 8 | 🔴 **H** | SWF-ACT-058 |
+| `SWF-061.C3` Exemptions reset or hold awareness: below 2.8 m/s awareness is held at the pre-alert level, and under the wheel-touch policy any steering or gas input resets it (policy.py:29, 335, 345, 446). A light accelerator touch satisfies the wheel-touch policy | • Upstream design, as FSR-039 states the wheel-touch times; whether a gas touch is acceptable evidence of attention is not recorded <sub>openpilot/selfdrive/monitoring/policy.py</sub> | • test_monitoring.py covers the wheel-touch fallback; not designed for this cause <sub>openpilot/selfdrive/monitoring/test_monitoring.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-058 |
+
+Safety mechanisms: (1) selfdrived commIssueAvgFreq when driverMonitoringState runs below 0.8 of its 20 Hz rate (SubMaster freq_ok)
+
+<sub>Note: Host side of System FMEA SFM-023.C1 and SFM-023.C2. Detection performance of the model is SOTIF (SFM-022.C1, SFM-024.C1).</sub>
+
+#### SWF-062 · Terminal unresponsive-driver state reached without the item reaching the SG-010 safe state
+
+🔴 **H** · **S 10** · guideword *omission* · function `SWF-FN-061` Escalate an inattentive or unresponsive driver within the policy times (vision 5/8/13 s, wheel-touch 5/15/25 s) and request the terminal reaction
+
+Effects:
+
+- **End:** Automated control continues with an unresponsive driver (HZ-013, S 10)
+- **Next higher:** After 5 s at the terminal level noResponseForceDecel sets v_cruise 0, so the car slows to a stop while lateral control continues
+- **Local:** driverDistracted3 / driverUnresponsive3 shown; the item stays engaged
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-062.C1` By design the six driver-monitoring events are PERMANENT alerts only, with no SOFT_DISABLE or IMMEDIATE_DISABLE (events.py:524-570); the terminal reaction is the forced deceleration with lateral control kept. Whether that is the SG-010 safe state of FSR-040 is not recorded; it is queued for the lead (DQ-220) | • Upstream design; FSR-040 names a safe state that the FSC does not define for this path <sub>assurance/08-analyses/fmea/analyses/fsc.yaml</sub> | • test_longitudinal runs the force_decel maneuver in CI and test_monitoring checks the alert levels; neither checks that the reaction meets FSR-040 <sub>openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-059 |
+
+Safety mechanisms: (1) Forced deceleration to standstill after 5 s at the terminal level (policy.py:379-380, 398; controlsd.py:235; longitudinal_planner.py:84-85); lockout (NO_ENTRY) after 2 terminal events or 1 no-response
+
+<sub>Note: controlsd also sets CC.driverMonitoringEscalation, which no Toyota code consumes (only Volkswagen).</sub>
+
+### `SWF-SE-070` Longitudinal planning (plannerd)
+
+#### SWF-068 · plannerd stops or runs late while engaged
+
+🔴 **H** · **S 10** · guideword *crash* · function `SWF-FN-070` Plan an acceleration within the envelope that keeps the following distance to a lead and stops for a stopped lead
+
+Effects:
+
+- **End:** No deceleration for a lead for up to 0.5 s, then coasting while the item is still shown engaged during the soft disable (HZ-007, S 10)
+- **Next higher:** controlsd ends longitudinal control 0.5 s after the last plan (TSR-602); the PCM then coasts; selfdrived commIssue / processNotRunning soft disable; no restart
+- **Local:** longitudinalPlan stale
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-068.C1` Unhandled exception: no try/except; an unknown personality value raises NotImplementedError in the MPC cost setup (long_mpc.py:60-79) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • plannerd is replayed in process_replay (CI); generic. plannerd is in the test_fuzzy NOT_TESTED list <sub>openpilot/selfdrive/test/process_replay/test_processes.py</sub> | 4 | 9 | 🔴 **H** | SWF-ACT-062 |
+| `SWF-068.C2` Slow MPC: the loop is paced by modelV2 (20 Hz) and solve_time is published but nothing acts on it (longitudinal_planner.py:161) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No test targets this cause; test_onroad timing checks are device-only | 4 | 10 | 🔴 **H** | SWF-ACT-048 |
+
+Safety mechanisms: (1) controlsd freshness gate on longitudinalPlan (TSR-602); selfdrived soft disable with alert; stock PCS/AEB
+
+### `SWF-SE-071` Longitudinal planner and MPC
+
+#### SWF-065 · Planned acceleration too high, or deceleration too low, for the lead
+
+🔴 **H** · **S 10** · guideword *value_high* · function `SWF-FN-070` Plan an acceleration within the envelope that keeps the following distance to a lead and stops for a stopped lead
+
+Effects:
+
+- **End:** Insufficient or late deceleration for a lead (HZ-007, S 10)
+- **End:** Contributes to HZ-005 (acceleration toward a lead) (HZ-005, S 10)
+- **Next higher:** controlsd requests the acceleration; the panda bounds only the range -3.5..2.0 m/s²
+- **Local:** aTarget above what the lead and the following distance allow
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-065.C1` Plans from invalid or stale inputs: plannerd has no validity gate of its own and uses the leads whatever radarState.valid says (long_mpc.py:313-314); longitudinalPlan.valid = sm.all_checks() is published, but controlsd does not read it, so the reaction is selfdrived commIssue (soft disable, 3 s of continued control) (longitudinal_planner.py:156; selfdrived.py:425-431) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • process_replay (CI) replays the TOYOTA3 Corolla TSS2 segment and compares with reference logs made from the same code, so it cannot find a defect already present at the baseline; not designed for this cause <sub>openpilot/selfdrive/test/process_replay/test_processes.py</sub> | 7 | 9 | 🔴 **H** | SWF-ACT-061, SWF-ACT-040 |
+| `SWF-065.C2` MPC failure: solution_status != 0 resets the solver and zeroes the trajectories, so the MPC candidate is 0 m/s² for that cycle and crash_cnt is cleared (long_mpc.py:221-242, 365-369); repeated failures lose the lead braking without an event | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_longitudinal maneuvers in CI exercise the MPC with leads; no solver-failure injection <sub>openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py</sub> | 5 | 9 | 🔴 **H** | SWF-ACT-061, SWF-ACT-062 |
+| `SWF-065.C3` If orientationNED is missing, the coast limit becomes ACCEL_MAX, which removes it (longitudinal_planner.py:76-79) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No test targets this cause | 4 | 10 | 🔴 **H** | SWF-ACT-061 |
+
+Safety mechanisms: (1) Panda acceleration range (SWF-003); stock PCS/AEB forwarded (SWF-011, SG-009); FCW (SWF-066); driver brake · (2) controlsd stops longitudinal control on a longitudinalPlan older than 0.5 s or a non-finite aTarget (TSR-602, SWF-045)
+
+<sub>Note: Host side of System FMEA SFM-008.C1 and SFM-012.C2. Following distances and MPC tuning (relaxed 1.75 s, CA-011) are SOTIF and FI-2026-001 topics, not rated here.</sub>
+
+#### SWF-066 · Planned acceleration changes in a step
+
+🔴 **H** · **S 10** · guideword *commission* · function `SWF-FN-070` Plan an acceleration within the envelope that keeps the following distance to a lead and stops for a stopped lead
+
+Effects:
+
+- **End:** Abrupt deceleration not required by traffic (HZ-006, S 10)
+- **Next higher:** The CarController limits the rate to 0.12 m/s² per frame only while longActive; the panda has no jerk check (SWF-004)
+- **Local:** aTarget jumps when the minimum switches between the MPC, cruise and e2e candidates
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-066.C1` By design the final aTarget = clip(min(candidates)) has no rate limit (longitudinal_planner.py:142-149); J_CRUISE limits the cruise candidate only and the MPC jerk is a cost, not a constraint (long_mpc.py:39, 267). TSR-624 (ramp within j_down) is not implemented | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_longitudinal maneuvers in CI; pass-fail on collisions, not designed for jerk <sub>openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py</sub> | 7 | 9 | 🔴 **H** | SWF-ACT-050, SWF-ACT-062 |
+
+Safety mechanisms: (1) CarController jerk limit ±0.12 m/s² per 33 Hz frame while longActive (carcontroller.py:21-22, 198-199)
+
+<sub>Note: Planner side of SWF-004 (panda) and SWF-046 (CarController).</sub>
+
+#### SWF-067 · Planning in a mode or following distance outside the assured configuration
+
+🔴 **H** · **S 10** · guideword *wrong_mode* · function `SWF-FN-070` Plan an acceleration within the envelope that keeps the following distance to a lead and stops for a stopped lead
+
+Effects:
+
+- **End:** Insufficient deceleration margin for a braking lead (HZ-007, S 10)
+- **Next higher:** Plans that the CA-002/CA-004/CA-011 analyses do not cover
+- **Local:** Experimental (e2e) candidate active, or a following time shorter than relaxed (1.45 s standard, 1.25 s aggressive)
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-067.C1` The driver can leave the assured configuration while driving: the distance button cycles the personality and saves it, and ExperimentalMode can be toggled; both are only logged (selfdrived.py:502-506, 607-626). Whether to refuse engagement outside the assured configuration is queued for the lead (DQ-221) | • Defaults set to the assured values; the deviation is logged with a configuration hash <sub>openpilot/selfdrive/selfdrived/assured_config.py</sub> | • test_assured_config.py checks that deviations are reported (CI); it is not designed to keep the configuration <sub>openpilot/selfdrive/selfdrived/tests/test_assured_config.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-063 |
+
+Safety mechanisms: (1) Defaults: ExperimentalMode off (DQ-001), LongitudinalPersonality relaxed (CA-011); assured_config and set_personality log a deviation (CA-008)
+
+<sub>Note: A user choice, not a defect; recorded because the analyses of record assume the assured values.</sub>
+
+### `SWF-SE-072` Forward collision warning decision
+
+#### SWF-069 · Forward collision warning not raised for a predicted collision
+
+🔴 **H** · **S 10** · guideword *omission* · function `SWF-FN-071` Raise a forward collision warning when a collision with the lead is predicted
+
+Effects:
+
+- **End:** Driver not warned of an imminent collision with a lead while engaged (HZ-007, S 10)
+- **Next higher:** No FCW alert from the item
+- **Local:** longitudinalPlan.fcw stays false
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-069.C1` FCW needs crash_cnt > 2 with leadOne.modelProb > 0.9 (long_mpc.py:338-342; longitudinal_planner.py:121): a radar-only lead (low-speed override, modelProb 0, radard.py:83, 174) never triggers it, and an MPC reset clears the counter (SWF-065.C2) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_stopped_vehicle checks that a collision is preceded by FCW in its scenarios (CI); targeted, not proven <sub>openpilot/selfdrive/test/stopped_vehicle/test_stopped_vehicle.py</sub> | 6 | 8 | 🔴 **H** | SWF-ACT-064 |
+
+Safety mechanisms: (1) Stock PCS/FCW/AEB of the TSS2 camera stays available (SWF-011, SG-009); the model hard-brake prediction also raises fcw (selfdrived.py:482-486)
+
+<sub>Note: FCW detection performance is SOTIF; this row covers the gating logic only. The fcw event is an alert (events.py:498-504); braking is left to the stock AEB.</sub>
+
+### `SWF-SE-081` Lead selection and radar/vision fusion
+
+#### SWF-070 · Lead missed or reported late while a lead is present
+
+🔴 **H** · **S 10** · guideword *omission* · function `SWF-FN-080` Provide the lead state (distance, relative speed and acceleration) from radar tracks matched to model leads, and flag radar faults
+
+Effects:
+
+- **End:** Insufficient or late deceleration for a lead (HZ-007, S 10)
+- **Next higher:** Planner keeps the cruise speed or brakes late; FCW not raised
+- **Local:** leadOne absent or at a wrong distance
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-070.C1` By design a radar track is used above 4 m/s only when matched to a model lead with probability > 0.5 and inside the match window (radard.py:113-133, 156-157); a stationary target seen only by radar is ignored (FI-2026-001 RC-02) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_stopped_vehicle test_radar_only_stationary_target reproduces the gap and is marked expectedFailure (CI) <sub>openpilot/selfdrive/test/stopped_vehicle/test_stopped_vehicle.py</sub> | 7 | 8 | 🔴 **H** | SWF-ACT-064 |
+| `SWF-070.C2` Radar faults reach the planner as data: plannerd uses the leads whatever radarState.valid says, and radarFault / radarTempUnavailable are SOFT_DISABLE (selfdrived.py:408-414; events.py:878-886), so a faulted lead is used for the 3 s soft disable | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_leads.py checks only that radarTracks are invalid without radar CAN (CI); targeted at the fault report, not at its use <sub>openpilot/selfdrive/controls/tests/test_leads.py</sub> | 5 | 8 | 🔴 **H** | SWF-ACT-061, SWF-ACT-064 |
+| `SWF-070.C3` radard stops: the Kalman filter asserts 0.01 < dt < 0.2 (radard.py:33), there is no try/except and manager does not restart it; radarState then goes stale and the plan invalid (commIssue soft disable) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • radard is fuzzed in test_fuzzy with the Corolla TSS2 fingerprint (CI, 10 examples); generic <sub>openpilot/selfdrive/test/process_replay/test_fuzzy.py</sub> | 4 | 9 | 🔴 **H** | SWF-ACT-064 |
+
+Safety mechanisms: (1) Stock PCS/AEB forwarded (SG-009); driver
+
+<sub>Note: Host side of System FMEA SFM-010.C1 and SFM-012.C2. Missed objects of the radar or the model are SOTIF (FI-2026-001 CA-002); the software part is the selection logic.</sub>
+
+#### SWF-071 · False or wrong lead reported
+
+🔴 **H** · **S 10** · guideword *commission* · function `SWF-FN-080` Provide the lead state (distance, relative speed and acceleration) from radar tracks matched to model leads, and flag radar faults
+
+Effects:
+
+- **End:** Unintended deceleration (HZ-006, S 10)
+- **Next higher:** Planner brakes for it
+- **Local:** leadOne present at a short distance where no lead is
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-071.C1` Low-speed override: below 4 m/s the closest radar track with \|y\| < 1 m and 0.75 < d < 25 m becomes leadOne without model confirmation (radard.py:24, 98-101, 167-174) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • process_replay (CI) replays the TOYOTA3 Corolla TSS2 segment and compares with reference logs made from the same code, so it cannot find a defect already present at the baseline; not designed for this cause <sub>openpilot/selfdrive/test/process_replay/test_processes.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-064 |
+| `SWF-071.C2` Wrong track matched to the model lead (adjacent lane) inside the match window of max(25 %, 5 m) and 10 m/s (radard.py:113-133) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • process_replay (CI) replays the TOYOTA3 Corolla TSS2 segment and compares with reference logs made from the same code, so it cannot find a defect already present at the baseline; not designed for this cause <sub>openpilot/selfdrive/test/process_replay/test_processes.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-064 |
+
+Safety mechanisms: (1) Panda deceleration bound -3.5 m/s² (SWF-003); driver can override with the accelerator (SWF-017)
+
+<sub>Note: Host side of System FMEA SFM-009.C1. Radar ghosts and model false positives are SOTIF.</sub>
+
 ## 5. Actions
 
 | ID | Kind | Action | Owner | Status | Causes | Revised S/O/D → AP |
@@ -1233,22 +1574,31 @@ Safety mechanisms: (1) card stops actuating 0.1 s after carControl stops (card.p
 | SWF-ACT-037 | design_change | selfdrived liveness: ui and soundd raise the critical takeover alert within 0.5 s of missing selfdriveState while engaged (EL-05 change, TSR-622); add a process watchdog for selfdrived; remove selfdrived from the fuzz NOT_TESTED list | Jherrod Thomas | open | SWF-036.C1, SWF-036.C2 | — |
 | SWF-ACT-038 | design_change | Revisit TSR-617: set excessive-actuation thresholds from the vehicle envelope and fork drive logs, bound the device_motion_valid reset, check longitudinal response during override, and add unit tests for helpers.py | Jherrod Thomas | open | SWF-037.C1, SWF-037.C2 | — |
 | SWF-ACT-039 | design_change | Resolve FSR-033 against the implementation: either revise FSR-033 to the actual yield strategy (integrator freeze, panda bound, override force verified by the FSR-031 vehicle test) or ramp the torque request down while steeringPressed | Jherrod Thomas | open | SWF-038.C1 | — |
-| SWF-ACT-040 | design_change | Implement TSR-602 in controlsd: check age and valid of selfdriveState, carState, modelV2, longitudinalPlan, vehicleParameters and deviceMotion before use (≤ 2 periods); set latActive/longActive false and raise an immediate-disable event when stale; derive carControl.valid from these checks and have card stop actuating on carControl.valid false; give cruiseMismatch a disable type | Jherrod Thomas | in_progress | SWF-040.C1, SWF-042.C3, SWF-043.C1, SWF-043.C2, SWF-048.C1 | 10/3/4 → 🟢 L |
+| SWF-ACT-040 | design_change | Implement TSR-602 in controlsd: check age and valid of selfdriveState, carState, modelV2, longitudinalPlan, vehicleParameters and deviceMotion before use (≤ 2 periods); set latActive/longActive false and raise an immediate-disable event when stale; derive carControl.valid from these checks and have card stop actuating on carControl.valid false; give cruiseMismatch a disable type | Jherrod Thomas | in_progress | SWF-040.C1, SWF-042.C3, SWF-043.C1, SWF-043.C2, SWF-048.C1, SWF-065.C1 | 10/3/4 → 🟢 L |
 | SWF-ACT-041 | design_change | Implement TSR-604: treat any non-finite input or actuator value as a fault (immediate disable with alert), reset desired_curvature and both controllers' state, and guard lateralDelay before the int() conversion | Jherrod Thomas | in_progress | SWF-045.C1, SWF-045.C2, SWF-047.C1 | 10/3/4 → 🟢 L |
 | SWF-ACT-042 | design_change | Reset the LatControlTorque PID (and LatControlPID) in reset(), or record why upstream carries the integrator over engagements; check against current upstream openpilot | Jherrod Thomas | open | SWF-042.C1 | — |
 | SWF-ACT-043 | detection | Requirements-based unit tests for controlsd and the Toyota CarController (latActive/longActive gating table per FSR-006, zero torque and request bit off when not active, controller reset across disengagement, cancel on every disengagement path, active-torque frames accepted by the panda model at the limits), run in LionDriver CI and proven by mutation | Jherrod Thomas | open | SWF-041.C1, SWF-042.C1, SWF-047.C3 | — |
-| SWF-ACT-044 | detection | Add NaN/inf and stale-input injection for controlsd and card (enable them in test_fuzzy.py with the Corolla fingerprint, or a dedicated test), and run the opendbc car tests (test_models, test_car_interfaces, test_lateral_limits) for Toyota in LionDriver CI | Jherrod Thomas | open | SWF-045.C1, SWF-045.C2, SWF-047.C1, SWF-047.C3 | — |
+| SWF-ACT-044 | detection | Add NaN/inf and stale-input injection for controlsd and card (enable them in test_fuzzy.py with the Corolla fingerprint, or a dedicated test), and run the opendbc car tests (test_models, test_car_interfaces, test_lateral_limits) for Toyota in LionDriver CI | Jherrod Thomas | open | SWF-045.C1, SWF-045.C2, SWF-047.C1, SWF-047.C3, SWF-056.C2, SWF-056.C3, SWF-057.C1, SWF-059.C1, SWF-060.C1 | — |
 | SWF-ACT-045 | design_change | Implement TSR-605 margins on the host: bound latAccelOffset and torque parameters in controlsd, apply the acceleration rate limit after pitch compensation and the CarController PID, gate pitch compensation on a valid calibrated pose, and keep host torque/accel limits below the panda limits | Jherrod Thomas | open | SWF-042.C2, SWF-042.C3, SWF-046.C1, SWF-046.C2 | — |
 | SWF-ACT-046 | design_change | SoC counterpart of TSR-304 (STPA OI-2, FSR-033) - ramp commanded torque toward zero while steeringPressed, or leave latActive during a lateral override, with the override threshold taken from WP-C-08 | Jherrod Thomas | open | SWF-044.C1 | — |
 | SWF-ACT-047 | design_change | Implement TSR-613: remove the lateralManeuverPlan subscription and the maneuver/joystick processes from the reference build | Jherrod Thomas | open | SWF-040.C1, SWF-049.C1 | — |
-| SWF-ACT-048 | detection | Bench or HIL fault injection (WP-V-05) - stop or stall selfdrived, modeld, plannerd and controlsd while engaged and measure time to zero torque/acceleration and to the alert; run test_onroad timing tests on a comma 3X for each release | Jherrod Thomas | open | SWF-043.C1, SWF-047.C2 | — |
+| SWF-ACT-048 | detection | Bench or HIL fault injection (WP-V-05) - stop or stall selfdrived, modeld, plannerd and controlsd while engaged and measure time to zero torque/acceleration and to the alert; run test_onroad timing tests on a comma 3X for each release | Jherrod Thomas | open | SWF-043.C1, SWF-047.C2, SWF-068.C2 | — |
 | SWF-ACT-049 | detection | Vehicle test of PCM cancel and cluster state on each host disengagement path (fault disable, cancel button, brake, selfdrived loss) | Jherrod Thomas | open | SWF-039.C1, SWF-048.C1 | — |
-| SWF-ACT-050 | design_change | Implement TSR-624: announce deceleration that traffic does not require at least 1 s before its onset, and ramp it within a_min and j_down | Jherrod Thomas | open | SWF-050.C1 | — |
+| SWF-ACT-050 | design_change | Implement TSR-624: announce deceleration that traffic does not require at least 1 s before its onset, and ramp it within a_min and j_down | Jherrod Thomas | open | SWF-050.C1, SWF-066.C1 | — |
 | SWF-ACT-051 | design_change | Implement TSR-625: gate FCW on fresh and valid modelV2 and longitudinalPlan, with a unit test for a stale and an invalid input | Jherrod Thomas | open | SWF-051.C1 | — |
 | SWF-ACT-052 | design_change | Send the inactive acceleration from the Toyota CarController whenever CC.longActive is false, with a unit test | Jherrod Thomas | open | SWF-052.C1 | — |
 | SWF-ACT-053 | detection | Vehicle test of the PCM response when the inactive value replaces an active deceleration (TSR-208, AOU-05R); if the PCM steps, specify an item-side ramp after revocation (FSR-04.03) | Jherrod Thomas | open | SWF-053.C1 | — |
 | SWF-ACT-055 | detection | Make the host supervision tests run in CI: test_supervision.py and test_input_freshness.py define plain classes, which tools/test_runner.py (unittest loader) collects as 0 tests. Derive them from unittest.TestCase (or the repo's test base class), check that the unit_tests job reports them, and prove them by a mutation of supervision.py and input_freshness.py so D can drop below 8 | Jherrod Thomas | open | SWF-034.C1 | — |
 | SWF-ACT-054 | design_change | Pin an opendbc commit that contains jherrodthomas/opendbc#15 (ATC-20, SWSR-518 amended per DQ-079; ATC-26, SWSR-311 amended per DQ-080), with its impact records moved to Integrated, and re-rate SWF-054 and SWF-055 at the new baseline. The fork merged it as 9859cb0 (master 515b9a2 also carries opendbc#16); the LionDriver pin is still 9a13f60 | Jherrod Thomas | open | SWF-054.C1, SWF-055.C1 | 10/3/4 → 🟢 L |
+| SWF-ACT-056 | design_change | carState input supervision for the reference car: fixed RX timeouts from the DBC rates instead of the learned 1 Hz default, reject frames shorter than the DBC length for every signal carState uses, and a plausibility cross-check for the messages without checksum or counter (BRAKE_MODULE against PCM_CRUISE, WHEEL_SPEEDS against the IMU); with unit tests in LionDriver CI | Jherrod Thomas | open | SWF-056.C1, SWF-056.C2, SWF-056.C3, SWF-057.C2 | — |
+| SWF-ACT-057 | design_change | Pin the reference identification: accept only an exact FW match to TOYOTA_COROLLA_TSS2 with the expected CarParams for the assured configuration (report a fuzzy match through assured_config), ignore FINGERPRINT in release builds, and re-query FW after a VIN-cache hit when an ECU version changed | Jherrod Thomas | open | SWF-058.C1, SWF-058.C2 | — |
+| SWF-ACT-058 | design_change | Driver monitoring robustness: time-based policy timers (monotonic clock), a finiteness and length check of driverStateV2 (non-finite or empty treated as uncertain, not attentive), a length check on brakeDisengageProbs, and unit tests for each in CI (NaN pose, 16 Hz model, empty arrays) | Jherrod Thomas | open | SWF-061.C1, SWF-061.C2, SWF-061.C3, SWF-063.C1, SWF-063.C2, SWF-064.C1 | — |
+| SWF-ACT-059 | design_change | Define the SG-010 safe state for FSR-040 (lead decision DQ-220) and, if it differs from the current forced deceleration with lateral kept, implement it with a terminal-alert test | Jherrod Thomas | decision_pending | SWF-062.C1 | — |
+| SWF-ACT-060 | detection | Run model_replay for dmonitoringmodeld and modeld in LionDriver CI, and add a non-finite / stale output injection test for dmonitoringd and modeld consumers | Jherrod Thomas | open | SWF-063.C1 | — |
+| SWF-ACT-061 | design_change | Longitudinal input validity: plannerd treats an invalid radarState as no lead plus a fault, and controlsd sets longActive false (with an event) when longitudinalPlan.valid is false; keep the coast limit when orientationNED is missing | Jherrod Thomas | open | SWF-065.C1, SWF-065.C2, SWF-065.C3, SWF-070.C2 | — |
+| SWF-ACT-062 | design_change | plannerd robustness: on an MPC failure keep the last valid solution for a bounded time and raise an event if it persists; rate-limit the final aTarget (TSR-624); handle an unknown personality as relaxed; add MPC-failure injection and plannerd fuzzing in CI | Jherrod Thomas | open | SWF-065.C2, SWF-066.C1, SWF-068.C1 | — |
+| SWF-ACT-063 | design_change | Apply the lead's decision on engagement outside the assured configuration (DQ-221): refuse engagement or keep logging, with a test | Jherrod Thomas | decision_pending | SWF-067.C1 | — |
+| SWF-ACT-064 | design_change | radard and FCW review against SG-005/SG-006 with the SOTIF analysis: catch the Kalman dt assertion (reset the filter), allow FCW from a confirmed radar-only lead, and decide the radar-only stationary target treatment (FI-2026-001 CA-002); tests for each | Jherrod Thomas | open | SWF-069.C1, SWF-070.C1, SWF-070.C2, SWF-070.C3, SWF-071.C1, SWF-071.C2 | — |
 
 ## 6. Priority H causes without a completed action
 
@@ -1330,3 +1680,32 @@ Safety mechanisms: (1) card stops actuating 0.1 s after carControl stops (card.p
 | `SWF-053.C1` | Active deceleration request ends in one step when authority is revoked | 10/8/9 | SWF-ACT-053 |
 | `SWF-054.C1` | Authority granted again after a TX-rate revocation while the host still exceeds the rate budget | 10/8/9 | SWF-ACT-054 |
 | `SWF-055.C1` | Authority returns after a safety-mode change without a new driver engagement | 10/8/9 | SWF-ACT-054 |
+| `SWF-056.C1` | Vehicle input lost, delayed or frozen while carState still reports it as current and valid | 10/3/10 | SWF-ACT-056 |
+| `SWF-056.C2` | Vehicle input lost, delayed or frozen while carState still reports it as current and valid | 10/3/9 | SWF-ACT-056, SWF-ACT-044 |
+| `SWF-056.C3` | Vehicle input lost, delayed or frozen while carState still reports it as current and valid | 10/6/9 | SWF-ACT-056, SWF-ACT-044 |
+| `SWF-057.C1` | Safety-relevant carState field decoded with the wrong sign, scale or bit for the Corolla TSS2 | 10/6/9 | SWF-ACT-044 |
+| `SWF-057.C2` | Safety-relevant carState field decoded with the wrong sign, scale or bit for the Corolla TSS2 | 10/3/10 | SWF-ACT-056 |
+| `SWF-058.C1` | CarParams of another platform or parameter set used on the reference car | 10/4/9 | SWF-ACT-057 |
+| `SWF-058.C2` | CarParams of another platform or parameter set used on the reference car | 10/2/10 | SWF-ACT-057 |
+| `SWF-059.C1` | Actuation frame packed with a value other than the one commanded | 10/4/9 | SWF-ACT-044 |
+| `SWF-060.C1` | card stops while engaged | 10/5/9 | SWF-ACT-044 |
+| `SWF-061.C1` | Escalation of an inattentive or unresponsive driver later than the policy times | 10/5/9 | SWF-ACT-058 |
+| `SWF-061.C2` | Escalation of an inattentive or unresponsive driver later than the policy times | 10/6/8 | SWF-ACT-058 |
+| `SWF-061.C3` | Escalation of an inattentive or unresponsive driver later than the policy times | 10/6/9 | SWF-ACT-058 |
+| `SWF-062.C1` | Terminal unresponsive-driver state reached without the item reaching the SG-010 safe state | 10/6/9 | SWF-ACT-059 |
+| `SWF-063.C1` | Driver state stale, frozen or non-finite while dmonitoringd treats it as valid | 10/4/10 | SWF-ACT-058, SWF-ACT-060 |
+| `SWF-063.C2` | Driver state stale, frozen or non-finite while dmonitoringd treats it as valid | 10/4/10 | SWF-ACT-058 |
+| `SWF-064.C1` | dmonitoringd or dmonitoringmodeld stops while engaged | 8/5/9 | SWF-ACT-058 |
+| `SWF-065.C1` | Planned acceleration too high, or deceleration too low, for the lead | 10/7/9 | SWF-ACT-061, SWF-ACT-040 |
+| `SWF-065.C2` | Planned acceleration too high, or deceleration too low, for the lead | 10/5/9 | SWF-ACT-061, SWF-ACT-062 |
+| `SWF-065.C3` | Planned acceleration too high, or deceleration too low, for the lead | 10/4/10 | SWF-ACT-061 |
+| `SWF-066.C1` | Planned acceleration changes in a step | 10/7/9 | SWF-ACT-050, SWF-ACT-062 |
+| `SWF-067.C1` | Planning in a mode or following distance outside the assured configuration | 10/6/9 | SWF-ACT-063 |
+| `SWF-068.C1` | plannerd stops or runs late while engaged | 10/4/9 | SWF-ACT-062 |
+| `SWF-068.C2` | plannerd stops or runs late while engaged | 10/4/10 | SWF-ACT-048 |
+| `SWF-069.C1` | Forward collision warning not raised for a predicted collision | 10/6/8 | SWF-ACT-064 |
+| `SWF-070.C1` | Lead missed or reported late while a lead is present | 10/7/8 | SWF-ACT-064 |
+| `SWF-070.C2` | Lead missed or reported late while a lead is present | 10/5/8 | SWF-ACT-061, SWF-ACT-064 |
+| `SWF-070.C3` | Lead missed or reported late while a lead is present | 10/4/9 | SWF-ACT-064 |
+| `SWF-071.C1` | False or wrong lead reported | 10/6/9 | SWF-ACT-064 |
+| `SWF-071.C2` | False or wrong lead reported | 10/6/9 | SWF-ACT-064 |
