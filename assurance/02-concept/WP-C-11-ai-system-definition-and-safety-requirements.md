@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-11 AI system definition and AI safety requirements |
 | Standard reference | ISO/PAS 8800:2024 (AI system definition, input space, AI safety requirements, data requirements); ISO 21448:2022 §5, §7; ASPICE 4.0 MLE.1, SUP.11 (data requirements) |
-| Version | 0.3 (input space follows the highway-only ODD, decision register DQ-023; DSR-05 upload policy decided, DQ-084; AIR-24 rests on D-05 as adopted, DQ-038; 2026-10-16). 0.2 (§2.2 AI system boundary diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.1 |
+| Version | 0.4 (DSR-12 status: labelling rule in WP-V-02 §5.3.5; 2026-10-16). 0.3 (input space follows the highway-only ODD, decision register DQ-023; DSR-05 upload policy decided, DQ-084; AIR-24 rests on D-05 as adopted, DQ-038; 2026-10-16). 0.2 (§2.2 AI system boundary diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM (FuSa) / SOTIF for AI-1 and AI-2; AI-3 / DM chain QM per the [WP-C-04 §7](WP-C-04-functional-safety-concept.md) proposal (SOTIF misuse measure) |
 | Author | Assurance team (initial draft) |
@@ -238,7 +238,7 @@ IDs AIR-01…AIR-30 are allocated in this document.
 | DSR-09 | The dataset shall contain instances of every known triggering condition and known scenario of [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md) that is inside the ODD | AIR-14, WP-C-06 | Coverage report | Not started |
 | DSR-10 | DM evaluation data shall cover day and night, low sun / glare, glasses and sunglasses, hats, a range of driver ages, skin tones and seating positions, with documented informed consent of every recorded person | AIR-07, AIR-08 | Coverage report, consent records | Not started |
 | DSR-11 | Data used to choose runtime-monitor thresholds (AIR-14, AIR-18) shall be disjoint (by drive) from data used to verify them | AIR-14 | REV | Not started |
-| DSR-12 | Simulated or synthetic data (MetaDrive, perturbed replays) shall be labelled as such, kept in separate datasets and never pooled into real-world rate estimates | WP-V-02 | REV | Not started |
+| DSR-12 | Simulated or synthetic data (MetaDrive, perturbed replays) shall be labelled as such, kept in separate datasets and never pooled into real-world rate estimates | WP-V-02 | REV | Labelling rule defined (WP-V-02 §5.3.5); not yet implemented in the simulator's result files |
 | DSR-13 | Personal data (cabin video, faces and plates of third parties, location traces) shall be handled per the data-protection rules of [WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) and [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md) §11: access control, encryption at rest, retention limits, deletion on request | Privacy | Audit | Not started |
 
 ## 8. Traceability summary
