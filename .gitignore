@@ -46,6 +46,8 @@ st[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z]
 *.pyxbldc
 *.vcd
 *.mo
+# Modelica sources of the simulation track (not gettext catalogues)
+!assurance/sim/**/*.mo
 *_pyx.cpp
 *.stats
 *.pkl
