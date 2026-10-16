@@ -507,6 +507,7 @@
   sources: ["assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md OI-4", "assurance/09-production-operation/WP-O-03-user-information-safety-warnings.md OI-3", "assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md OI-3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "STPA part applied in WP-A-05 v0.5: new UCA-07 and LS-36 (release after a gas override), CC-2 (on-screen override alert). Left: the override alert and the HMI clinic (WP-C-08 MC-08, WP-O-03 user information)."
 
 - id: DQ-023
   question: "Should LionDriver cover arterial and rural roads, or highways only?"
@@ -1145,6 +1146,7 @@
   sources: ["assurance/08-analyses/WP-A-05-stpa.md OI-2"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "STPA part applied in WP-A-05 v0.5: OI-2 decided, CC-1 and CC-2 reworded, LS-01/LS-02/LS-14 updated."
   applied: {ref: ebc9fea, record: "WP-C-04 FSR-05.03, §12.1; WP-S-02 TSR-304(b), TSR-628; WP-S-03 SM-05 (firmware, SWSR-304a and HMI open)", at: 2026-10-16}
 
 - id: DQ-054
@@ -1166,6 +1168,7 @@
   sources: ["assurance/08-analyses/WP-A-05-stpa.md OI-3"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "STPA part applied in WP-A-05 v0.5: OI-3 decided, LS-04 updated."
   applied: {ref: ebc9fea, record: "WP-C-04 FSR-02.05; WP-S-02 TSR-516(d) (bench test M-06, retained memory and firmware open)", at: 2026-10-16}
 
 - id: DQ-055
@@ -4040,7 +4043,9 @@
       title: "Disengage at once with the siren"
       detail: "No extra development. Cost: an unsupervised car with no steering and no braking from the item; the worst outcome for an unresponsive driver."
   sources: ["assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-ACT-005, SFM-025.C1", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7"]
-  status: queued
+  asked: 2026-10-16
+  status: withdrawn
+  note: "Same question as DQ-365 (reaction to an unresponsive driver at the last alert); merged into DQ-365, which now lists TSR-633 and SFM-ACT-005 in its blocks."
 
 - id: DQ-341
   question: "Three goals are now ASIL C, so the panda safety envelope needs ASIL C even if steering drops to B. Harden it to C, or plan a second independent checker?"
@@ -4063,9 +4068,10 @@
       title: "Decide after the first hardware metric results (WP-H-04)"
       detail: "No commitment now; requirements are written to C meanwhile. Cost: the software process level stays uncertain, and work done to B-level rigour may need redoing."
   sources: ["assurance/02-concept/WP-C-04-functional-safety-concept.md §3, §4", "assurance/02-concept/WP-C-03-hara.md §5 (v0.4)", "assurance/08-analyses/WP-A-01-asil-decomposition.md §3, DEC-01", "assurance/03-system/WP-S-02-technical-safety-requirements.md §2.1", "assurance/04-hardware/WP-H-04-hardware-metrics.md"]
-  status: answered
-  answer: {choice: A, via: chat, at: 2026-10-16}
-  note: "Architecture part applied: WP-S-03 v0.11 §3, §5 and Figures 3-1 and 3-2 (OI-6 closed), WP-W-03 v0.13 §3.1 and §3.3, and the SysML model (Integrity::C) show the envelope as ASIL C. Left: SWSR and HWSR ASILs, hardware metric targets (WP-H-04), DEC-01 scope."
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-16, note: "Harden to ASIL C."}
+  applied: {ref: 27cf8ca6d, record: "WP-C-04 v0.9 §4 and §10, WP-S-02 v0.25 §2.1, WP-S-03 v0.11 (scope, OI-6), WP-A-01 v0.6 §3 and OI-3", at: 2026-10-16}
+  note: "Architecture applied with OI-6: WP-S-03 v0.12 §3, §5 and Figures 3-1/3-2, WP-W-03 v0.13 §3.1 and §3.3, and the SysML model (Integrity::C) show the envelope as ASIL C."
 
 - id: DQ-210
   question: "Closing on slower traffic is now rated E4, as you chose. That also raises the goal against silently lost braking (SG-06) to ASIL C. Accept it?"
@@ -4083,7 +4089,10 @@
       title: "Rate OS-07 by frequency for acceleration only"
       detail: "SG-06 stays B. Cost: two exposures for one situation; an assessor is likely to reject it."
   sources: ["assurance/02-concept/WP-C-03-hara.md §6.1 observation 7, OI-9", "assurance/01-management/decisions/register.yaml DQ-036"]
-  status: queued
+  asked: 2026-10-16
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-16}
+  applied: {ref: "jherrodthomas/LionDriver#154", record: "WP-C-03 v0.4.1 §6.1 observation 7, OI-9 (SG-06 ASIL C, set in v0.4)", at: 2026-10-16}
 
 - id: DQ-211
   question: "What harness letter and harness-box revision are printed on the reference car's harness, and which device units (comma 3X, comma four) will be used?"
@@ -4101,6 +4110,7 @@
       title: "Assume Toyota A and box v3 until a harness is bought"
       detail: "The analyses stay on comma's drawing. Cost: if the unit differs, the hardware analyses are re-checked."
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-2", "assurance/04-hardware/reviews/RR-2026-010.md F-13"]
+  note: "The lead answered on 2026-10-16 that the labels will be read later; stays queued until then."
   status: queued
 
 - id: DQ-212
@@ -4123,7 +4133,10 @@
       title: "Settle on one device after all"
       detail: "Drop the other board's rows. Cost: none extra; the answer to DQ-011 changes."
   sources: ["assurance/01-management/decisions/register.yaml DQ-011", "assurance/02-concept/WP-C-01-item-definition.md §1"]
-  status: queued
+  asked: 2026-10-16
+  note: "Recorded in WP-C-01 v0.11 §1 (device row). Left: the purchase and the bench plan (WP-M-11 OI-5, WP-H-06; management and hardware sessions). Which board is on the car is DQ-211."
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-16}
 - id: DQ-220
   question: "When the driver stays unresponsive at the final driver-monitoring alert, should the car keep steering while it slows to a stop, or hand steering back?"
   context: "Today the final alert (\"DISENGAGE IMMEDIATELY\") is a warning only. After 5 s at that level the item slows the car to a stop **while it keeps steering**, and it never disengages by itself. FSR-040 asks for the SG-010 safe state, but nothing records which behaviour that is. This decides what the item does with a driver who may be asleep."
@@ -4146,7 +4159,9 @@
     - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062
     - assurance/08-analyses/fmea/analyses/fsc.yaml FSR-040
     - openpilot/selfdrive/monitoring/policy.py:379-400
-  status: queued
+  asked: 2026-10-16
+  status: withdrawn
+  note: "Same question as DQ-365 (reaction to an unresponsive driver at the last alert); merged into DQ-365, which now lists FSR-040, SWF-062 and SWF-ACT-059 in its blocks."
 - id: DQ-221
   question: "If the driver switches to a setting the safety analyses don't cover (shorter following distance, Experimental mode), should the item refuse to engage, or only log it?"
   context: "The defaults are the assured values: Chill mode (DQ-001) and the relaxed following distance (CA-011). While driving, the distance button still cycles the following distance and Experimental mode can be switched on, and **both are only logged**. The analyses of record assume the assured values, so a drive in another setting is unassured but allowed."
@@ -4346,23 +4361,27 @@
   question: "When the driver does not respond to the last driver-monitoring alert, what should LionDriver do: stop in the lane and stay stopped, or stop and then hand back control?"
   context: "Today, about 5 s after the last alert (≈ 18 s after the driver looks away), LionDriver slows the car to a stop in its lane. But it **stays engaged**: it never disengages, and the lockout that blocks re-engagement only starts after a disengagement. The new goal SG-08 (unresponsive driver, ASIL A) needs this reaction written down as its safe state, and the FTTI follows from it. What the car does when held at standstill under ACC has not been checked on the reference Corolla."
   reversibility: revisit
-  blocks: "SG-08 safe state and FTTI (WP-C-03 OI-10, WP-S-04); System FMEA SFM-ACT-005; TSR-611; WP-A-04 §13 (F-38)"
+  blocks: "SG-08 safe state and FTTI (WP-C-03 OI-10, WP-S-04); TSR-611, TSR-633; FSR-040 / FSR-02.09; System FMEA SFM-ACT-005; SW FMEA SWF-062 / SWF-ACT-059; WP-A-04 §13 (F-38)"
   gate: G1
+  asked: 2026-10-16
   decider: lead
   after: [DQ-205]
   options:
     - key: A
       recommended: true
       title: "Stop in lane and stay stopped, with re-engagement locked out"
-      detail: "Keep today's stop. Hold the car at standstill and lock out re-engagement until the driver responds, so the item cannot drive off again. Cost: a lockout change, and a vehicle test that the standstill hold lasts."
+      detail: "Keep today's stop: steering stays on while the car slows in its lane (about 10 s from 30 m/s at 3 m/s²) and the alert keeps sounding. Hold the car at standstill and lock out re-engagement until the driver responds, so the item cannot drive off again. Close to the minimum-risk manoeuvre of automated lane keeping (UN R157). Cost: a lockout change, possibly hazard lights, and a vehicle test that the standstill hold lasts."
     - key: B
       title: "Stop in lane, then disengage and hand back control"
       detail: "Once stopped, cancel ACC and lock out. Cost: what the car does after the cancel at standstill (hold or roll) must be tested, and an incapacitated driver may not hold the brake."
     - key: C
       title: "Disengage at the last alert without stopping"
       detail: "Simplest. Cost: an incapacitated driver gets an uncontrolled vehicle at highway speed; not recommended."
-  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-38", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §13", "assurance/02-concept/WP-C-03-hara.md OI-10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-025"]
-  status: queued
+  sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-35, UCA-21, CC-17", "assurance/08-analyses/fta-fmea-mapping.md F-38", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §13", "assurance/02-concept/WP-C-03-hara.md OI-10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-025, SFM-ACT-005", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7", "openpilot/selfdrive/monitoring/policy.py:379-400"]
+  note: "Also asked as DQ-220 (SW FMEA), DQ-281 (STPA) and DQ-340 (safety concept); merged here so the lead answers once."
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-16, note: "Stay stopped, held. The lead first answered the merged DQ-340 with its option A (keep the lane and stop); asked again in chat, chose DQ-365 A."}
+  applied: {ref: 07d70a667, record: "WP-C-04 v0.10 FSR-02.09, §3, §6, §7, §8; WP-S-02 v0.26 TSR-633; WP-S-04 v0.12 §3.7, §3.8.4, OI-11. Open for their owners: System FMEA SFM-ACT-005, SW FMEA SWF-062 / SWF-ACT-059, WP-C-03 OI-10, WP-A-04 §13 (F-38), TSR-611", at: 2026-10-16}
 
 - id: DQ-320
   question: "With comma's harness box kept, the stock-emergency-braking hardware metric is about 78 % against a 90 % target. Accept that as a recorded deviation once the bench tests pass?"
@@ -4389,3 +4408,25 @@
   answer: {choice: A, via: chat, at: 2026-10-16}
   applied: {ref: 5782d0d39, record: "WP-H-04 §5.3 (deviation record); WP-H-03 §6.3; RR-2026-010 §5", at: 2026-10-16}
   note: "Conditional on the harness box bench tests (VS-HW-02, VS-HW-22…24). Left for the safety-case session: state the deviation in the SG-07 argument."
+
+- id: DQ-280
+  question: "Off a highway, should LionDriver refuse to engage, or only warn the driver?"
+  context: "You chose highways only (DQ-023), which means the system \"must refuse or warn off-highway\". Today nothing checks the road: it engages wherever cruise does, on any street (STPA LS-13). **Which of the two you want sets the requirement and how much the system is used.**"
+  reversibility: revisit
+  blocks: "ODD entry requirement; STPA LS-13; user information on where to use it (WP-O-03)"
+  gate: G1
+  decider: lead
+  after: [DQ-023]
+  options:
+    - key: A
+      recommended: true
+      title: "Refuse to engage below a highway speed floor now; add road-type data later"
+      detail: "A speed floor (for example 60 km/h) is a check the system can make today, and it keeps it off most city streets. Cost: no use in highway stop-and-go traffic, and a fast arterial road still passes until road-type data exists (WP-C-07 FM-08)."
+    - key: B
+      title: "Refuse to engage unless map or road-type data confirms a highway"
+      detail: "The strongest match to the ODD. Cost: needs a road-type source that LionDriver does not have yet; until then the system cannot be used at all."
+    - key: C
+      title: "Allow engagement anywhere, show a warning off-highway, and rely on the driver and user information"
+      detail: "Most useful in daily driving. Cost: the ODD limit rests on the driver; LS-13 stays a known gap, and an assessor may ask why an ODD boundary has no technical check."
+  sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-13, OI-15", "assurance/01-management/decisions/register.yaml DQ-023", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-08"]
+  status: queued

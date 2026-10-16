@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="2015" viewBox="0 0 1280 2015" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-1. System FMEA structure tree (SFM)</title>
-  <desc id="d">System FMEA structure tree (SFM rev 0.17, BL-005): 19 structure elements in 1 root(s), 8 functions with the number of failure modes analyzed for each.</desc>
+  <desc id="d">System FMEA structure tree (SFM rev 0.23, BL-005): 19 structure elements in 1 root(s), 8 functions with the number of failure modes analyzed for each.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="2015" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-1 · System FMEA structure and function tree</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SFM rev 0.17 · BL-005 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SFM rev 0.23 · BL-005 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.1</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/system-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -69,7 +69,7 @@
   <rect x="136.1" y="907.2" width="32.7" height="15" rx="7.5" fill="#E2E8F0"/><text x="152.5" y="918.2" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">item</text>
   <text x="49" y="932.8" font-size="10.5" fill="#0F172A" font-weight="600">LionDriver item (L2 ACC + ALC +</text>
   <text x="49" y="946.9" font-size="10.5" fill="#0F172A" font-weight="600">driver monitoring)</text>
-  <text x="49" y="959.6" font-size="9.5" fill="#475569">36 failure modes</text>
+  <text x="49" y="959.6" font-size="9.5" fill="#475569">38 failure modes</text>
   <rect x="284" y="567.3" width="210" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="293" y="586.8" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-002</text>
   <rect x="380.1" y="575.8" width="47.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="403.7" y="586.7" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">system</text>
@@ -97,19 +97,19 @@
   <text x="537" y="417.1" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-012</text>
   <rect x="624.1" y="406.1" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="417" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
   <text x="537" y="431.7" font-size="10.5" fill="#0F172A" font-weight="600">Planning (plannerd, radard)</text>
-  <text x="537" y="444.4" font-size="9.5" fill="#475569">4 causes located here</text>
+  <text x="537" y="444.4" font-size="9.5" fill="#475569">5 causes located here</text>
   <rect x="528" y="475.4" width="210" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="537" y="494.9" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-013</text>
   <rect x="624.1" y="483.9" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="494.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
   <text x="537" y="509.5" font-size="10.5" fill="#0F172A" font-weight="600">Control (controlsd,</text>
   <text x="537" y="523.6" font-size="10.5" fill="#0F172A" font-weight="600">lateral/longitudinal controllers)</text>
-  <text x="537" y="536.3" font-size="9.5" fill="#475569">8 causes located here</text>
+  <text x="537" y="536.3" font-size="9.5" fill="#475569">9 causes located here</text>
   <rect x="528" y="567.3" width="210" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="537" y="586.8" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-014</text>
   <rect x="624.1" y="575.8" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="586.7" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
   <text x="537" y="601.4" font-size="10.5" fill="#0F172A" font-weight="600">Supervision (selfdrived state</text>
   <text x="537" y="615.4" font-size="10.5" fill="#0F172A" font-weight="600">machine, events, alert manager)</text>
-  <text x="537" y="628.2" font-size="9.5" fill="#475569">11 causes located here</text>
+  <text x="537" y="628.2" font-size="9.5" fill="#475569">12 causes located here</text>
   <rect x="528" y="659.1" width="210" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="537" y="678.6" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-015</text>
   <rect x="624.1" y="667.6" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="678.6" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
@@ -121,12 +121,12 @@
   <rect x="624.1" y="759.5" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="770.4" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
   <text x="537" y="785.1" font-size="10.5" fill="#0F172A" font-weight="600">Car interface (card, car_events,</text>
   <text x="537" y="799.2" font-size="10.5" fill="#0F172A" font-weight="600">opendbc Toyota port)</text>
-  <text x="537" y="811.9" font-size="9.5" fill="#475569">14 causes located here</text>
+  <text x="537" y="811.9" font-size="9.5" fill="#475569">15 causes located here</text>
   <rect x="528" y="842.9" width="210" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="537" y="862.4" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-017</text>
   <rect x="624.1" y="851.4" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="862.3" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
   <text x="537" y="877" font-size="10.5" fill="#0F172A" font-weight="600">Panda daemon (pandad)</text>
-  <text x="537" y="889.7" font-size="9.5" fill="#475569">2 causes located here</text>
+  <text x="537" y="889.7" font-size="9.5" fill="#475569">3 causes located here</text>
   <rect x="528" y="920.7" width="210" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="537" y="940.2" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-018</text>
   <rect x="624.1" y="929.2" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="940.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
@@ -137,7 +137,7 @@
   <rect x="624.1" y="1007" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="658" y="1017.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
   <text x="537" y="1032.6" font-size="10.5" fill="#0F172A" font-weight="600">Platform (manager, messaging,</text>
   <text x="537" y="1046.6" font-size="10.5" fill="#0F172A" font-weight="600">hardwared, OS)</text>
-  <text x="537" y="1059.4" font-size="9.5" fill="#475569">4 causes located here</text>
+  <text x="537" y="1059.4" font-size="9.5" fill="#475569">5 causes located here</text>
   <rect x="284" y="1090.4" width="210" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="293" y="1109.9" font-size="12" fill="#0F172A" font-weight="700">SFM-SE-004</text>
   <rect x="380.1" y="1098.9" width="64.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="412.2" y="1109.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">component</text>
@@ -151,7 +151,7 @@
   <text x="781" y="1224.4" font-size="10.5" fill="#0F172A">while engaged</text>
   <rect x="772" y="1249.4" width="468" height="57.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="781" y="1268.9" font-size="12" fill="#0F172A" font-weight="700">SFM-FN-002</text>
-  <rect x="1192.7" y="1257.9" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="1268.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">5 FM</text>
+  <rect x="1192.7" y="1257.9" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="1268.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">6 FM</text>
   <text x="781" y="1283.4" font-size="10.5" fill="#0F172A">F2 Longitudinal control: request acceleration/deceleration to hold set speed and follow</text>
   <text x="781" y="1297.5" font-size="10.5" fill="#0F172A">leads while engaged</text>
   <rect x="772" y="1322.5" width="468" height="57.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
@@ -171,7 +171,7 @@
   <text x="781" y="1516.9" font-size="10.5" fill="#0F172A">repeated non-response</text>
   <rect x="772" y="1541.9" width="468" height="57.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="781" y="1561.4" font-size="12" fill="#0F172A" font-weight="700">SFM-FN-006</text>
-  <rect x="1192.7" y="1550.4" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="1561.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">3 FM</text>
+  <rect x="1192.7" y="1550.4" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="1561.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">4 FM</text>
   <text x="781" y="1576" font-size="10.5" fill="#0F172A">F6 Alerting: inform the driver of engagement state, takeover requests and faults (visual</text>
   <text x="781" y="1590.1" font-size="10.5" fill="#0F172A">and audible)</text>
   <rect x="772" y="1615.1" width="468" height="57.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>

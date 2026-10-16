@@ -193,12 +193,12 @@ hazards:
     description: Loss or reduction of lateral control while engaged without timely driver warning
     guidewords: [M02, M01, M03, M04, M05, M06, M07, M08, M09, M10, M11, M13]
     functions: [SFM-FN-001, SFM-FN-003, SFM-FN-004, SFM-FN-007]
-    sfm_refs: [SFM-004, SFM-005, SFM-015]
+    sfm_refs: [SFM-004, SFM-005, SFM-015, SFM-038]
   - id: HZ-005
     description: Unintended acceleration
     guidewords: [M03, M01, M02, M04, M05, M06, M07, M08, M09, M10, M11, M12, M13]
     functions: [SFM-FN-002, SFM-FN-003, SFM-FN-007]
-    sfm_refs: [SFM-008, SFM-014, SFM-016, SFM-029, SFM-030, SFM-032]
+    sfm_refs: [SFM-008, SFM-013, SFM-014, SFM-016, SFM-017, SFM-029, SFM-030, SFM-032, SFM-034, SFM-037]
   - id: HZ-006
     description: Unintended or excessive deceleration
     guidewords: [M03, M01, M02, M04, M05, M06, M07, M08, M09, M10, M11, M12, M13]
@@ -208,12 +208,12 @@ hazards:
     description: Insufficient or late deceleration for a lead vehicle while engaged
     guidewords: [M06, M01, M02, M03, M04, M05, M08, M09, M10, M11]
     functions: [SFM-FN-002, SFM-FN-007]
-    sfm_refs: [SFM-010, SFM-011, SFM-012]
+    sfm_refs: [SFM-010, SFM-011, SFM-012, SFM-037]
   - id: HZ-008
     description: Automated control not released when the driver brakes or cancels
     guidewords: [M01, M02, M04, M06, M08, M11, M12]
     functions: [SFM-FN-003, SFM-FN-004]
-    sfm_refs: [SFM-017, SFM-019]
+    sfm_refs: [SFM-017, SFM-019, SFM-021, SFM-028]
   - id: HZ-009
     description: Item resists driver steering input
     guidewords: [M01, M02, M06, M08, M09, M11, M12, M13, M14]
@@ -238,7 +238,7 @@ hazards:
     description: Automated control continues with an inattentive or unresponsive driver
     guidewords: [M01, M02, M04, M06, M08, M09, M11, M12, M14]
     functions: [SFM-FN-005]
-    sfm_refs: [SFM-022, SFM-023, SFM-025]
+    sfm_refs: [SFM-022, SFM-023, SFM-025, SFM-026, SFM-027]
 
 # Function x guide word matrix (closes OI-009). Hazard functions/guidewords above are derived from it; the linter checks both agree.
 guideword_analysis:

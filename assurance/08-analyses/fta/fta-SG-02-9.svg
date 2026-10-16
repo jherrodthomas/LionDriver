@@ -37,8 +37,8 @@
 <text x="54" y="405.0" class="d">code and reports epsFault</text>
 <text x="54" y="419.5" class="d">(TSR-110); the SoC warning keeps</text>
 <text x="54" y="434.0" class="d">the host hysteresis</text>
-<rect x="54.0" y="442.0" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="81.0" y="453.5" class="chip" fill="#c62828">no FMEA</text>
+<rect x="54.0" y="442.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="81.0" y="453.5" class="chip" fill="#fff">SFM-038</text>
 <circle cx="150.0" cy="490.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="283.5" y="281.0" width="220" height="165.5" rx="9" class="shadow"/>
 <rect x="282" y="278.5" width="220" height="165.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>

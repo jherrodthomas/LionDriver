@@ -247,12 +247,12 @@
 
 - id: FSR-02.09
   kind: fsr
-  text: "If the driver does not respond to the highest DM warning, the item shall decelerate the vehicle in a controlled way, end automated control and prevent re-engagement for a lockout period. This is the SG-08 safe state (WP-C-03 v0.4: controlled deceleration in lane to a stop and lockout); whether steering stays on until standstill is queued for the lead (DQ-340)."
+  text: "If the driver does not respond to the highest DM warning, the item shall decelerate the vehicle in a controlled way in its lane to a standstill, keep it stopped and held, and prevent the item from driving off again or being re-engaged until the driver responds; after the driver responds, the lockout period applies. This is the SG-08 safe state (WP-C-03 v0.4), decided 2026-10-16, DQ-365 A: steering stays on while the vehicle decelerates in lane to a standstill within the envelope limits with the alert sounding; the vehicle then stays stopped and held, and the item cannot drive off again: re-engagement and resumption are locked out until the driver responds. Lateral and longitudinal control shall not stay active at the set speed."
   asil: "A"
   parents: [SG-02, SG-04, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: no-response force decel after 5 s at the terminal alert (`policy.py:39-44, 398`; `selfdrive/controls/controlsd.py:235`), but no disengagement, so the lockout of 1/5/15/30 min acts only after a later disengagement (System FMEA SFM-025.C1; corrected 2026-10-16). Refined by TSR-633; the reaction is queued for the lead (DQ-340)"
+  baseline_impl: "Partial: no-response force decel after 5 s at the terminal alert (`policy.py:39-44, 398`; `selfdrive/controls/controlsd.py:235`), but no disengagement, so the lockout of 1/5/15/30 min acts only after a later disengagement (System FMEA SFM-025.C1; corrected 2026-10-16). Refined by TSR-633; reaction decided (DQ-365, A); standstill hold and the lockout while stopped not implemented"
   status: proposed
   source: WP-C-04
 
