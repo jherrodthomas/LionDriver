@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Doc ID** | LD-ITEM-001 |
-| **Revision** | 0.2 (draft; §A.3 boundary diagram redrawn as Figure A-1, text version kept). 0.1 (draft) |
-| **Date** | 2026-10-13 |
+| **Revision** | 0.3 (draft; the lead's answers applied: Corolla Cross and Lexus UX Hybrid carried along as not assessed, DQ-099 A, IOI-003 closed; comma 3X and comma four both in scope, DQ-011). 0.2 (draft; §A.3 boundary diagram redrawn as Figure A-1, text version kept). 0.1 (draft) |
+| **Date** | 2026-10-16 |
 | **Status** | Draft — requires review by Jherrod Thomas; item-definition confirmation per ISO 26262-2 not yet performed |
 | **Standard** | ISO 26262-3:2018 clause 5 |
 | **Baseline** | BL-001 (LionDriver `8b8c6ae`, panda `92eb565`, opendbc `229dc70`, AGNOS 19.9) |
@@ -237,7 +237,7 @@ From the BL-001 catalog; all are on opendbc platform `TOYOTA_COROLLA_TSS2`.
 | E210 2023+ model years (US facelift) | Not in the BL-001 supported list |
 | E210 for markets not listed above | Not in the BL-001 supported list |
 | Toyota Corolla 2017-19 | Previous generation (E170) |
-| Corolla Cross, Corolla Cross Hybrid (non-US), Lexus UX Hybrid | Different models, but on the **same opendbc platform** as VF-001: they share its safety model, parameter, limits and vehicle specs. A change made for VF-001 changes these vehicles too (IOI-003). |
+| Corolla Cross, Corolla Cross Hybrid (non-US), Lexus UX Hybrid | Different models, but on the **same opendbc platform** as VF-001: they share its safety model, parameter, limits and vehicle specs. A change made for VF-001 changes these vehicles too. **Carried along, marked "not assessed"** (decision register DQ-099, option A, 2026-10-14): LionDriver does not split the platform, so its safety changes reach them without assessment. The vehicle catalog marks them so, and the user information must say it (WP-O-03). |
 
 ## B.4 Variant-sensitive parameters for VF-001 (BL-001 values)
 
@@ -273,8 +273,9 @@ The identical panda and SoC steering limits under P2 are concrete evidence for D
 | | |
 |---|---|
 | **Vehicle** | Corolla E210 · ZRE212 · US: sedan, gasoline 1.8 L CVT, US market, model years 2020–2022 (VF-001 member "Toyota Corolla 2020-22"); trims, firmware set and exclusions in the [vehicle register](../../../docs/liondriver/vehicles/README.md) (CFG-001) |
-| **Device** | comma 3X with integrated panda |
-| **Harness** | Toyota A connector, harness box, comma power v3 |
+| **Device** | comma 3X with integrated panda; the comma four is reviewed as well (decision register DQ-011: the lead asked for both devices to be reviewed). Units and revisions to be recorded (WP-C-01 OI-2) |
+| **Harness** | Toyota A connector, harness box, comma power v3 (from comma's documentation; harness letter and box revision of the reference unit not yet confirmed, WP-C-01 OI-2) |
+| **ODD** | Limited-access highways only (WP-C-02 v0.4, decision register DQ-023) |
 | **Software** | BL-001 (`baseline.yaml`) |
 | **Configuration** | Experimental Mode on (BL-001 default); openpilot longitudinal; safety model `SAFETY_TOYOTA`, parameter 73 |
 | **Analyses** | System FMEA rev 0.6, HARA rev 0.4, FSC rev 0.3, DFA rev 0.5 |
@@ -287,7 +288,7 @@ The identical panda and SoC steering limits under P2 are concrete evidence for D
 |---|---|---|
 | IOI-001 | Experimental Mode is on by default in BL-001, so F2 includes model-driven stopping for lights and stop signs. Confirm the HARA situations and the SOTIF analysis cover it explicitly, or set AC-001 to Chill Mode. | HARA, SOTIF, AC-001 configuration |
 | IOI-002 | Variant impact analysis for the other VF-001 members (hatchback, US hybrid, South America hybrid) against §A.10, starting with P3, P5, P7 and P8. | VF-001 |
-| IOI-003 | Changes to `TOYOTA_COROLLA_TSS2` (including LD-DES-001 vehicle lock records) also change the Corolla Cross and Lexus UX Hybrid. Decide whether LionDriver splits them into their own platform or carries them along as not assessed. | VF-001, LD-DES-001 |
+| IOI-003 | Closed 2026-10-14: the Corolla Cross and Lexus UX Hybrid stay on the shared `TOYOTA_COROLLA_TSS2` platform and are carried along as not assessed (decision register DQ-099, A). Changes to the platform, including LD-DES-001 vehicle lock records, reach them unassessed; WP-O-03 states it. | VF-001, LD-DES-001 |
 | IOI-004 | Platform-level HARA approach: confirm that the 13 hazards hold for all vehicles, and define how variant ratings are derived (P2, P3, P5, P7, P8 drive S/E/C). | PL-001 |
 | IOI-005 | Assess NHTSA Standing General Order 2021-01 and other reporting obligations for an owner-installed open-source L2 system. | §A.8 |
 | IOI-006 | Item-definition review and confirmation (ISO 26262-2). | LD-ITEM-001 |
