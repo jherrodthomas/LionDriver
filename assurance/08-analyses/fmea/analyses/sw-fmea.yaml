@@ -4940,6 +4940,10 @@ failure_modes:
     description: Unassured host and panda software drives the car
     hazard: HZ-002
     severity: 10
+  - level: end
+    description: Contributes to HZ-006 (deceleration checked by an unassured envelope)
+    hazard: HZ-006
+    severity: 10
   severity: 10
   safety_mechanisms:
   - description: updated runs offroad only and the swap happens at boot (launch_chffrplus.sh:46-62), so running software never changes while driving; the consistency flag is

@@ -1,0 +1,289 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2236" height="980" viewBox="0 0 2236 980">
+<title>FTA SG-01 sheet 6 of 6: uncontrollable lateral motion, or steering actuation while not engaged</title>
+<style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.n{font:italic 400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#6b7385}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.gl{font:700 7.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.06em;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.title2{font:600 17px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#9aa3b2;stroke-width:1.4;stroke-linecap:round}.wh{stroke:#c62828;stroke-width:3.2;stroke-linecap:round}.shadow{fill:#0f172a;opacity:.06}</style>
+<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
+<rect width="100%" height="100%" fill="#f7f8fa"/>
+<rect y="78" width="100%" height="902" fill="url(#dots)"/>
+<rect width="100%" height="78" fill="#0f2a44"/>
+<text x="40" y="32" class="eyebrow">FTA · SG-01 · WP-A-04 §2</text>
+<text x="40" y="59" class="title">Uncontrollable lateral motion, or steering actuation while not engaged</text>
+<rect x="1960" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
+<text x="2078" y="44" class="hc">Sheet 6 of 6  ·  ASIL C</text>
+<rect x="1070.0" y="116.5" width="220" height="93.0" rx="9" class="shadow"/>
+<rect x="1068.5" y="114" width="220" height="93.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1077.5,114 H1279.5 A9,9 0 0 1 1288.5,123 V119 H1068.5 V123 A9,9 0 0 1 1077.5,114 Z" fill="#1d2433"/>
+<text x="1082.5" y="139" class="id">G1.1.1.a</text>
+<text x="1274.5" y="139" class="kind">INTERMEDIATE</text>
+<text x="1082.5" y="153.5" class="d">SoC commands excessive torque</text>
+<text x="1082.5" y="168.0" class="d">AND envelope fails to clamp</text>
+<rect x="1082.5" y="176.0" width="82.4" height="16" rx="8" fill="#e6e9ef"/>
+<text x="1123.7" y="187.5" class="chip" fill="#334155">from sheet 4</text>
+<path d="M1158.5,245.0 L1158.5,225.0 A20,18 0 0 1 1198.5,225.0 L1198.5,245.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="1178.5" y="237.0" class="gl" fill="#1d2433">AND</text>
+<line x1="634.0" y1="268.0" x2="1723.0" y2="268.0" class="w"/>
+<line x1="1178.5" y1="245.0" x2="1178.5" y2="268.0" class="w"/>
+<line x1="634.0" y1="268.0" x2="634.0" y2="293.0" class="w"/>
+<line x1="1723.0" y1="268.0" x2="1723.0" y2="293.0" class="w"/>
+<rect x="525.5" y="295.5" width="220" height="56.5" rx="9" class="shadow"/>
+<rect x="524.0" y="293.0" width="220" height="56.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M533.0,293.0 H735.0 A9,9 0 0 1 744.0,302.0 V298.0 H524.0 V302.0 A9,9 0 0 1 533.0,293.0 Z" fill="#1d2433"/>
+<text x="538.0" y="318.0" class="id">G-SoC</text>
+<text x="730.0" y="318.0" class="kind">INTERMEDIATE</text>
+<text x="538.0" y="332.5" class="d">SoC command excessive or wrong</text>
+<path d="M614.0,387.5 Q634.0,378.5 654.0,387.5 Q652.0,360.5 634.0,349.5 Q616.0,360.5 614.0,387.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="634.0" y="379.5" class="gl" fill="#1d2433">OR</text>
+<line x1="150.0" y1="410.5" x2="1118.0" y2="410.5" class="w"/>
+<line x1="634.0" y1="387.5" x2="634.0" y2="410.5" class="w"/>
+<line x1="150.0" y1="410.5" x2="150.0" y2="457.5" class="w"/>
+<line x1="392.0" y1="410.5" x2="392.0" y2="457.5" class="w"/>
+<line x1="634.0" y1="410.5" x2="634.0" y2="457.5" class="w"/>
+<line x1="876.0" y1="410.5" x2="876.0" y2="457.5" class="w"/>
+<line x1="1118.0" y1="410.5" x2="1118.0" y2="457.5" class="w"/>
+<rect x="41.5" y="460.0" width="220" height="137.0" rx="9" class="shadow"/>
+<rect x="40" y="457.5" width="220" height="137.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M49,457.5 H251 A9,9 0 0 1 260,466.5 V462.5 H40 V466.5 A9,9 0 0 1 49,457.5 Z" fill="#64748b"/>
+<text x="54" y="482.5" class="id">BE-1.02</text>
+<text x="246" y="482.5" class="kind">BASIC</text>
+<text x="54" y="497.0" class="d">controlsd/card software fault</text>
+<text x="54" y="511.5" class="d">(QM)</text>
+<rect x="54.0" y="519.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="81.0" y="531.0" class="chip" fill="#fff">SFM-002</text>
+<rect x="112.9" y="519.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="139.8" y="531.0" class="chip" fill="#fff">SFM-003</text>
+<rect x="171.8" y="519.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="198.8" y="531.0" class="chip" fill="#fff">SWF-042</text>
+<rect x="54.0" y="541.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="81.0" y="553.0" class="chip" fill="#fff">SWF-059</text>
+<rect x="112.9" y="541.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="139.8" y="553.0" class="chip" fill="#fff">SWF-076</text>
+<rect x="171.8" y="541.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="198.8" y="553.0" class="chip" fill="#fff">SWF-077</text>
+<rect x="54.0" y="563.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="81.0" y="575.0" class="chip" fill="#fff">SWF-079</text>
+<circle cx="150.0" cy="611.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="283.5" y="460.0" width="220" height="115.0" rx="9" class="shadow"/>
+<rect x="282" y="457.5" width="220" height="115.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M291,457.5 H493 A9,9 0 0 1 502,466.5 V462.5 H282 V466.5 A9,9 0 0 1 291,457.5 Z" fill="#6a3fb5"/>
+<text x="296" y="482.5" class="id">BE-1.03</text>
+<text x="488" y="482.5" class="kind">BASIC</text>
+<text x="296" y="497.0" class="d">Wrong desired curvature from</text>
+<text x="296" y="511.5" class="d">model</text>
+<rect x="296.0" y="519.5" width="42.5" height="16" rx="8" fill="#6a3fb5"/>
+<text x="317.2" y="531.0" class="chip" fill="#fff">SOTIF</text>
+<rect x="343.5" y="519.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="370.4" y="531.0" class="chip" fill="#fff">SFM-002</text>
+<rect x="402.4" y="519.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="429.3" y="531.0" class="chip" fill="#fff">SFM-003</text>
+<rect x="296.0" y="541.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="322.9" y="553.0" class="chip" fill="#fff">PFM-009</text>
+<rect x="354.9" y="541.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="381.8" y="553.0" class="chip" fill="#fff">PFM-012</text>
+<circle cx="392.0" cy="589.5" r="16" fill="#efe8fb" stroke="#6a3fb5" stroke-width="1.7"/>
+<rect x="525.5" y="460.0" width="220" height="122.0" rx="9" class="shadow"/>
+<rect x="524" y="457.5" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M533,457.5 H735 A9,9 0 0 1 744,466.5 V462.5 H524 V466.5 A9,9 0 0 1 533,457.5 Z" fill="#64748b"/>
+<text x="538" y="482.5" class="id">BE-1.04</text>
+<text x="730" y="482.5" class="kind">BASIC</text>
+<text x="538" y="497.0" class="d">Debug/maneuver process replaces</text>
+<text x="538" y="511.5" class="d">controller</text>
+<text x="538" y="526.0" class="d">(process_config.py:34-47,</text>
+<text x="538" y="540.5" class="d">GAP-20)</text>
+<rect x="538.0" y="548.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="565.0" y="560.0" class="chip" fill="#fff">SWF-049</text>
+<circle cx="634.0" cy="596.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="767.5" y="460.0" width="220" height="93.0" rx="9" class="shadow"/>
+<rect x="766" y="457.5" width="220" height="93.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M775,457.5 H977 A9,9 0 0 1 986,466.5 V462.5 H766 V466.5 A9,9 0 0 1 775,457.5 Z" fill="#64748b"/>
+<text x="780" y="482.5" class="id">BE-1.05</text>
+<text x="972" y="482.5" class="kind">BASIC</text>
+<text x="780" y="497.0" class="d">Wrong CarParams / fingerprint</text>
+<text x="780" y="511.5" class="d">(CCF → DFI-09)</text>
+<rect x="780.0" y="519.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="807.0" y="531.0" class="chip" fill="#fff">SFM-032</text>
+<rect x="838.9" y="519.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="865.9" y="531.0" class="chip" fill="#fff">PFM-013</text>
+<rect x="897.8" y="519.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="924.8" y="531.0" class="chip" fill="#fff">SWF-058</text>
+<circle cx="876.0" cy="567.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="1009.5" y="460.0" width="220" height="151.0" rx="9" class="shadow"/>
+<rect x="1008" y="457.5" width="220" height="151.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1017,457.5 H1219 A9,9 0 0 1 1228,466.5 V462.5 H1008 V466.5 A9,9 0 0 1 1017,457.5 Z" fill="#64748b"/>
+<text x="1022" y="482.5" class="id">BE-1.24</text>
+<text x="1214" y="482.5" class="kind">BASIC</text>
+<text x="1022" y="497.0" class="d">Command corrupted on the</text>
+<text x="1022" y="511.5" class="d">SoC-to-MCU SPI link and</text>
+<text x="1022" y="526.0" class="d">accepted: both checks are 8-bit</text>
+<text x="1022" y="540.5" class="d">XOR over the same bytes, no</text>
+<text x="1022" y="555.0" class="d">counter (spi.cc:189-202,</text>
+<text x="1022" y="569.5" class="d">panda.cc:284-290) (random HW)</text>
+<rect x="1022.0" y="577.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1049.0" y="589.0" class="chip" fill="#fff">DFM-015</text>
+<rect x="1080.9" y="577.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1107.9" y="589.0" class="chip" fill="#fff">SWF-026</text>
+<circle cx="1118.0" cy="625.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="1614.5" y="295.5" width="220" height="78.5" rx="9" class="shadow"/>
+<rect x="1613.0" y="293.0" width="220" height="78.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1622.0,293.0 H1824.0 A9,9 0 0 1 1833.0,302.0 V298.0 H1613.0 V302.0 A9,9 0 0 1 1622.0,293.0 Z" fill="#1d2433"/>
+<text x="1627.0" y="318.0" class="id">G-ENV</text>
+<text x="1819.0" y="318.0" class="kind">INTERMEDIATE</text>
+<text x="1627.0" y="332.5" class="d">Envelope does not clamp</text>
+<rect x="1627.0" y="340.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1654.0" y="352.0" class="chip" fill="#fff">SFM-029</text>
+<path d="M1703.0,409.5 Q1723.0,400.5 1743.0,409.5 Q1741.0,382.5 1723.0,371.5 Q1705.0,382.5 1703.0,409.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="1723.0" y="401.5" class="gl" fill="#1d2433">OR</text>
+<line x1="1360.0" y1="432.5" x2="2086.0" y2="432.5" class="w"/>
+<line x1="1723.0" y1="409.5" x2="1723.0" y2="432.5" class="w"/>
+<line x1="1360.0" y1="432.5" x2="1360.0" y2="457.5" class="w"/>
+<line x1="1602.0" y1="432.5" x2="1602.0" y2="457.5" class="w"/>
+<line x1="1844.0" y1="432.5" x2="1844.0" y2="457.5" class="w"/>
+<line x1="2086.0" y1="432.5" x2="2086.0" y2="457.5" class="w"/>
+<rect x="1251.5" y="460.0" width="220" height="107.5" rx="9" class="shadow"/>
+<rect x="1250" y="457.5" width="220" height="107.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1259,457.5 H1461 A9,9 0 0 1 1470,466.5 V462.5 H1250 V466.5 A9,9 0 0 1 1259,457.5 Z" fill="#64748b"/>
+<text x="1264" y="482.5" class="id">BE-1.06</text>
+<text x="1456" y="482.5" class="kind">BASIC</text>
+<text x="1264" y="497.0" class="d">Envelope software defect in</text>
+<text x="1264" y="511.5" class="d">lateral checks</text>
+<text x="1264" y="526.0" class="d">(lateral.h:60-151)</text>
+<rect x="1264.0" y="534.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1291.0" y="545.5" class="chip" fill="#fff">SWF-001</text>
+<rect x="1322.9" y="534.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1349.9" y="545.5" class="chip" fill="#fff">SWF-016</text>
+<circle cx="1360.0" cy="582.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="1493.5" y="460.0" width="220" height="202.5" rx="9" class="shadow"/>
+<rect x="1492" y="457.5" width="220" height="202.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1501,457.5 H1703 A9,9 0 0 1 1712,466.5 V462.5 H1492 V466.5 A9,9 0 0 1 1501,457.5 Z" fill="#64748b"/>
+<text x="1506" y="482.5" class="id">BE-1.07</text>
+<text x="1698" y="482.5" class="kind">BASIC</text>
+<text x="1506" y="497.0" class="d">MCU execution fault</text>
+<text x="1506" y="511.5" class="d">(RAM/register/CPU) corrupts</text>
+<text x="1506" y="526.0" class="d">limit or check, not detected (no</text>
+<text x="1506" y="540.5" class="d">MPU, no ECC handling, faults</text>
+<text x="1506" y="555.0" class="d">report-only; GAP-08)</text>
+<rect x="1506.0" y="563.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1533.0" y="574.5" class="chip" fill="#fff">DFM-001</text>
+<rect x="1564.9" y="563.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1591.9" y="574.5" class="chip" fill="#fff">DFM-002</text>
+<rect x="1623.8" y="563.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1650.8" y="574.5" class="chip" fill="#fff">DFM-003</text>
+<rect x="1506.0" y="585.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1533.0" y="596.5" class="chip" fill="#fff">DFM-005</text>
+<rect x="1564.9" y="585.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1591.9" y="596.5" class="chip" fill="#fff">DFM-007</text>
+<rect x="1623.8" y="585.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1650.8" y="596.5" class="chip" fill="#fff">DFM-018</text>
+<rect x="1506.0" y="607.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1533.0" y="618.5" class="chip" fill="#fff">FMD-001</text>
+<rect x="1564.9" y="607.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1591.9" y="618.5" class="chip" fill="#fff">FMD-006</text>
+<rect x="1623.8" y="607.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1650.8" y="618.5" class="chip" fill="#fff">FMD-009</text>
+<rect x="1506.0" y="629.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1533.0" y="640.5" class="chip" fill="#fff">FMD-013</text>
+<rect x="1564.9" y="629.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1591.9" y="640.5" class="chip" fill="#fff">FMD-015</text>
+<circle cx="1602.0" cy="677.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="1735.5" y="460.0" width="220" height="122.0" rx="9" class="shadow"/>
+<rect x="1734" y="457.5" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1743,457.5 H1945 A9,9 0 0 1 1954,466.5 V462.5 H1734 V466.5 A9,9 0 0 1 1743,457.5 Z" fill="#64748b"/>
+<text x="1748" y="482.5" class="id">BE-1.08</text>
+<text x="1940" y="482.5" class="kind">BASIC</text>
+<text x="1748" y="497.0" class="d">Safety mode/param changed by SoC</text>
+<text x="1748" y="511.5" class="d">(0xdc, GAP-09) [FFI → FFI-CM-06;</text>
+<text x="1748" y="526.0" class="d">CCF → DFI-13: same SoC fault can</text>
+<text x="1748" y="540.5" class="d">cause G-SoC and BE-1.08]</text>
+<rect x="1748.0" y="548.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1775.0" y="560.0" class="chip" fill="#fff">SWF-013</text>
+<rect x="1806.9" y="548.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1833.9" y="560.0" class="chip" fill="#fff">SWF-022</text>
+<circle cx="1844.0" cy="596.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="1977.5" y="460.0" width="220" height="144.0" rx="9" class="shadow"/>
+<rect x="1976" y="457.5" width="220" height="144.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1985,457.5 H2187 A9,9 0 0 1 2196,466.5 V462.5 H1976 V466.5 A9,9 0 0 1 1985,457.5 Z" fill="#64748b"/>
+<text x="1990" y="482.5" class="id">BE-1.09</text>
+<text x="2182" y="482.5" class="kind">BASIC</text>
+<text x="1990" y="497.0" class="d">Envelope firmware replaced via</text>
+<text x="1990" y="511.5" class="d">boot pins / softloader (GAP-38,</text>
+<text x="1990" y="526.0" class="d">GAP-24) [FFI → FFI-CM-12; CCF →</text>
+<text x="1990" y="540.5" class="d">DFI-13]</text>
+<rect x="1990.0" y="548.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="2017.0" y="560.0" class="chip" fill="#fff">SWF-028</text>
+<rect x="2048.9" y="548.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="2075.8" y="560.0" class="chip" fill="#fff">PFM-001</text>
+<rect x="2107.8" y="548.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="2134.8" y="560.0" class="chip" fill="#fff">DFM-016</text>
+<rect x="1990.0" y="570.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="2017.0" y="582.0" class="chip" fill="#fff">PFM-002</text>
+<rect x="2048.9" y="570.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="2075.8" y="582.0" class="chip" fill="#fff">SWF-084</text>
+<circle cx="2086.0" cy="618.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="40" y="758.0" class="lh">Symbols · IEC 61025</text>
+<rect x="46" y="778.0" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>
+<rect x="46" y="778.0" width="44" height="4" rx="2" fill="#1d2433"/>
+<text x="68" y="832.0" class="s" text-anchor="middle">Event</text>
+<path d="M128,812.0 Q148,803.0 168,812.0 Q166,785.0 148,774.0 Q130,785.0 128,812.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="148" y="804.0" class="gl" fill="#1d2433">OR</text>
+<text x="148" y="832.0" class="s" text-anchor="middle">OR gate</text>
+<path d="M208,812.0 L208,792.0 A20,18 0 0 1 248,792.0 L248,812.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="228" y="804.0" class="gl" fill="#1d2433">AND</text>
+<text x="228" y="832.0" class="s" text-anchor="middle">AND gate</text>
+<circle cx="308" cy="792.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="308" y="832.0" class="s" text-anchor="middle">Basic event</text>
+<path d="M388,775.0 L410,792.0 L388,809.0 L366,792.0 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
+<text x="388" y="832.0" class="s" text-anchor="middle">Undeveloped</text>
+<path d="M468,774.0 L488,807.0 L448,807.0 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><line x1="478" y1="790.0" x2="502" y2="790.0" stroke="#1d2433" stroke-width="1.7" stroke-linecap="round"/>
+<text x="468" y="832.0" class="s" text-anchor="middle">Transfer out</text>
+<path d="M548,775.0 L568,808.0 L528,808.0 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<text x="548" y="832.0" class="s" text-anchor="middle">Transfer in</text>
+<rect x="40.0" y="850.0" width="31.1" height="16" rx="8" fill="#c62828"/>
+<text x="55.5" y="861.5" class="chip" fill="#fff">SPF</text>
+<rect x="77.1" y="850.0" width="48.2" height="16" rx="8" fill="#5f6368"/>
+<text x="101.2" y="861.5" class="chip" fill="#fff">latent</text>
+<rect x="131.3" y="850.0" width="42.5" height="16" rx="8" fill="#6a3fb5"/>
+<text x="152.6" y="861.5" class="chip" fill="#fff">SOTIF</text>
+<rect x="179.8" y="850.0" width="71.0" height="16" rx="8" fill="#b45309"/>
+<text x="215.3" y="861.5" class="chip" fill="#fff">CCF DFI-nn</text>
+<rect x="256.8" y="850.0" width="31.1" height="16" rx="8" fill="#1a5fb4"/>
+<text x="272.4" y="861.5" class="chip" fill="#fff">FFI</text>
+<rect x="293.9" y="850.0" width="82.4" height="16" rx="8" fill="#3d6b3d"/>
+<text x="335.1" y="861.5" class="chip" fill="#fff">outside item</text>
+<rect x="382.3" y="850.0" width="122.3" height="16" rx="8" fill="#e6e9ef"/>
+<text x="443.5" y="861.5" class="chip" fill="#334155">repeated / transfer</text>
+<rect x="510.6" y="850.0" width="105.2" height="16" rx="8" fill="#111827"/>
+<text x="563.2" y="861.5" class="chip" fill="#fff">FMEA / FMEDA row</text>
+<rect x="621.8" y="850.0" width="53.9" height="16" rx="8" fill="#fff1f1"/>
+<text x="648.8" y="861.5" class="chip" fill="#c62828">no FMEA</text>
+<line x1="40" y1="884.0" x2="74" y2="884.0" class="wh"/>
+<text x="86" y="888.0" class="lb">Single-point path</text>
+<text x="86" y="904.0" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
+<text x="86" y="919.0" class="s">Computed from the gate logic (see cut-sets.md); the SPF tags are WP-A-04's own claims.</text>
+<rect x="1696" y="744.0" width="500" height="196" rx="10" fill="#fff" stroke="#d9dee6"/>
+<line x1="1696" y1="790.0" x2="2196" y2="790.0" stroke="#d9dee6"/>
+<line x1="2014" y1="790.0" x2="2014" y2="940.0" stroke="#d9dee6"/>
+<text x="1714" y="773.0" class="tbh">LionDriver · FTA SG-01</text>
+<rect x="2046" y="758.0" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
+<text x="2112" y="772.0" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
+<text x="1714" y="816.0" class="k">TOP OF SHEET</text>
+<text x="1812" y="816.0" class="v">G1.1.1.a</text>
+<text x="1714" y="842.0" class="k">SINGLE-POINT</text>
+<text x="1812" y="842.0" class="v">0 basic events on this sheet</text>
+<text x="1714" y="868.0" class="k">SOURCE</text>
+<text x="1812" y="868.0" class="v">WP-A-04 §2 (analysis of record)</text>
+<text x="1714" y="894.0" class="k">GENERATED BY</text>
+<text x="1812" y="894.0" class="v">fta_diagrams.py</text>
+<text x="1714" y="920.0" class="k">EDIT</text>
+<text x="1812" y="920.0" class="v">WP-A-04, not this file</text>
+<text x="2030" y="814.0" class="k">SHEETS</text>
+<line x1="2105.0" y1="849.0" x2="2064.5" y2="853.7" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="2105.0" y1="849.0" x2="2145.5" y2="853.7" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="2064.5" y1="873.7" x2="2064.5" y2="878.3" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="2145.5" y1="873.7" x2="2145.5" y2="878.3" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="2064.5" y1="898.3" x2="2105.0" y2="903.0" stroke="#9aa3b2" stroke-width="1.3"/>
+<rect x="2091.0" y="829.0" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2105.0" y="843.0" class="mm" fill="#0f2a44">1</text>
+<rect x="2050.5" y="853.7" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2064.5" y="867.7" class="mm" fill="#0f2a44">2</text>
+<rect x="2131.5" y="853.7" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2145.5" y="867.7" class="mm" fill="#0f2a44">3</text>
+<rect x="2050.5" y="878.3" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2064.5" y="892.3" class="mm" fill="#0f2a44">4</text>
+<rect x="2131.5" y="878.3" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2145.5" y="892.3" class="mm" fill="#0f2a44">5</text>
+<rect x="2091.0" y="903.0" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="2105.0" y="917.0" class="mm" fill="#fff">6</text>
+</svg>

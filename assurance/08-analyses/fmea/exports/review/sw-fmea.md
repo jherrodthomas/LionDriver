@@ -1798,6 +1798,7 @@ Safety mechanisms: (1) processNotRunning soft disable with alert
 Effects:
 
 - **End:** Unassured host and panda software drives the car (HZ-002, S 10)
+- **End:** Contributes to HZ-006 (deceleration checked by an unassured envelope) (HZ-006, S 10)
 - **Next higher:** It is swapped in at the next boot; pandad flashes the panda build of that checkout
 - **Local:** The finalized overlay holds another commit of the tracked branch, or of another remote
 
