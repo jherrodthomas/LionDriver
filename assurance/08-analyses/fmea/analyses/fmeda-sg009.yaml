@@ -4,12 +4,16 @@
 # Rev 0.3 (2026-10-15, RR-2026-010): the relay replaced by the harness box design. FMD-C-007 is now the analog switches U1/U2;
 # FMD-C-010 (device SBU1 driver), FMD-C-011 (pull-down R2/R3), FMD-C-012 (box supply D1/D4) and FMD-C-013 (bus clamps D2/D3) added.
 # Rates are generic for the part class.
+# Rev 0.4 (2026-10-16): FMD-C-007 (U1/U2) takes the SN 29500-2 reference value for CMOS analog ICs, 2 × 25 FIT, quoted from TI
+# functional-safety reports (standard not read, no stress conversion); was 2 × 5 FIT generic. The box discretes and resistors keep generic rates
+# with their SN 29500 class named; no reference value was reachable. Mission profile: the harness box sits behind the camera in the same
+# sun-loaded windscreen zone and takes the same profile.
 schema_version: 1
 analysis:
   id: FMD
   type: fmeda
   title: FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates
-  revision: '0.3'
+  revision: '0.4'
   status: draft
   baseline: BL-002
   rating_tables: RT-1
@@ -30,7 +34,7 @@ analysis:
   - assurance/08-analyses/fmea/analyses/dfmea.yaml
   - assurance/08-analyses/fmea/rating-tables.md
   - ISO 26262-5:2018 §8-9 and Annex D; ISO 26262-11:2018 §4.6 (semiconductors)
-  updated: '2026-10-15'
+  updated: '2026-10-16'
 safety_mechanisms:
 - id: FMD-SM-001
   description: Flash ECC (single-error correction in silicon; corrected reads are transparent)
@@ -52,7 +56,9 @@ safety_mechanisms:
   requirement: TSR-504
 - id: FMD-SM-007
   description: Independent window watchdog (IWDG from LSI), 90 ms, fed only after safety-task and main-loop progress; reset releases the relay
-  dc_basis: 'Annex D, Table D.10 (processing units): watchdog with separate time base and time window, medium; HIL not run'
+  dc_basis: 'Annex D, Table D.10 (processing units): watchdog with separate time base and time window, medium; HIL not run. Credit
+    provisional: the lead accepts it in place of the interim residuals once an independent reviewer checks it and the LSI tolerance
+    (DQ-114); HIL fault injection deferred with the bench (DQ-049)'
   implementation: panda/board/drivers/hw_watchdog.h
   requirement: TSR-501
 components:
@@ -239,9 +245,8 @@ components:
   ref_des: U1, U2 (harness box)
   part: 'Intercept switch: 2 × DG419LE CMOS analog SPDT (harness box)'
   dfmea_element: DFM-SE-006
-  failure_rate_fit: 10
-  failure_rate_source: Generic estimate for the part class (CMOS analog switch IC, 2 × about 5 FIT) at the mission profile below. The part numbers are known from
-    the harness box v3 drawing (RR-2026-010 HB-01..HB-06), but the rates were not looked up in IEC 61709 / SN 29500-2, and the shipped parts are unconfirmed (VS-HW-02)
+  failure_rate_fit: 50
+  failure_rate_source: 'SN 29500-2 reference value for CMOS/BiCMOS analog and mixed-signal ICs (Table 5, supply up to 50 V): 25 FIT per IC at a virtual junction temperature of 55 °C, as quoted in TI functional-safety FIT reports (TPS1663 SFFS110, LM73605 SFFS410, LMR36015-Q1 SNVA922); other TI reports (OPA991-Q1, TPS22965-Q1) quote 20 FIT, and the higher value is used. 2 × 25 FIT. Secondary source: the standard itself was not read (not reachable from the analysis environment), and no temperature or stress conversion to the mission profile is applied. Part number DG419LE from the harness box v3 drawing (RR-2026-010 HB-01); shipped parts unconfirmed (VS-HW-02)'
   safety_related: true
   failure_modes:
   - id: FMD-019
@@ -292,8 +297,7 @@ components:
   part: 'SBU1 pull-down: 2 × 120 Ω thick-film resistor in series'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 0.4
-  failure_rate_source: Generic estimate for the part class (SMD thick-film resistor, 2 × about 0.2 FIT) at the mission profile below. The part numbers are known from
-    the harness box v3 drawing (RR-2026-010 HB-01..HB-06), but the rates were not looked up in IEC 61709 / SN 29500-2, and the shipped parts are unconfirmed (VS-HW-02)
+  failure_rate_source: 'Generic estimate (SMD thick-film chip resistor, 2 × about 0.2 FIT). Part class known from the harness box v3 drawing (RR-2026-010 HB-02); maps to the SN 29500 passive-component class, but no reference value could be obtained (standard not reachable, 2026-10-16). Stays generic until the source is confirmed (WP-H-03 OI-2); shipped parts unconfirmed (VS-HW-02)'
   safety_related: true
   failure_modes:
   - id: FMD-028
@@ -315,9 +319,7 @@ components:
   part: 'Box supply: D1 Schottky STPS2H100ZFY from ignition, D4 TVS SMF16A'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 3
-  failure_rate_source: Generic estimate for the part class (power Schottky about 2 FIT, TVS about 1 FIT) at the mission profile below. The part numbers are known
-    from the harness box v3 drawing (RR-2026-010 HB-01..HB-06), but the rates were not looked up in IEC 61709 / SN 29500-2, and the shipped parts are unconfirmed
-    (VS-HW-02)
+  failure_rate_source: 'Generic estimate (power Schottky rectifier STPS2H100ZFY about 2 FIT; TVS diode SMF16A about 1 FIT). The part is known from the harness box v3 drawing (RR-2026-010 HB-01..HB-06) and maps to the SN 29500 discrete-semiconductor class, but no reference value could be obtained: the standard and the vendor FIT reports were not reachable from the analysis environment (2026-10-16). Stays generic until the safety manager confirms the source (WP-H-03 OI-2) and the value is looked up; shipped parts unconfirmed (VS-HW-02)'
   safety_related: true
   failure_modes:
   - id: FMD-030
@@ -346,9 +348,7 @@ components:
   part: 'Bus clamps: 2 × BAS40SDW Schottky pairs on CAN0 and CAN2'
   dfmea_element: DFM-SE-006
   failure_rate_fit: 2
-  failure_rate_source: Generic estimate for the part class (small-signal Schottky array, 2 × about 1 FIT) at the mission profile below. The part numbers are known
-    from the harness box v3 drawing (RR-2026-010 HB-01..HB-06), but the rates were not looked up in IEC 61709 / SN 29500-2, and the shipped parts are unconfirmed
-    (VS-HW-02)
+  failure_rate_source: 'Generic estimate (small-signal Schottky diode array BAS40SDW, 2 × about 1 FIT). The part is known from the harness box v3 drawing (RR-2026-010 HB-01..HB-06) and maps to the SN 29500 discrete-semiconductor class, but no reference value could be obtained: the standard and the vendor FIT reports were not reachable from the analysis environment (2026-10-16). Stays generic until the safety manager confirms the source (WP-H-03 OI-2) and the value is looked up; shipped parts unconfirmed (VS-HW-02)'
   safety_related: true
   failure_modes:
   - id: FMD-033

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-05 Evaluation of safety goal violations due to random HW failures (PMHF) |
 | Standard reference | ISO 26262-5:2018 §9 (evaluation of safety goal violations due to random hardware failures: probabilistic metric and evaluation of each cause), Annex C; ISO 26262-10:2018 (PMHF explanations, informative); ISO 26262-11:2018 (informative) |
-| Version | 0.3 (§6 status and §8 template drawn as Figure 6-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
+| Version | 0.4 (§3 working mission-profile values shown as used by the generic FMEDA; §6 status and λSPF + λRF note from FMEDA rev 0.4; plan step 2 per DQ-065; 2026-10-16). 0.3 (§6 status and §8 template drawn as Figure 6-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12 in §6: DC-01 implemented, not verified, not credited). 0.1: initial draft |
 | Status | Draft (method and plan; no value computed) |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -57,10 +57,10 @@ dual-point faults are normally evaluated; higher-order combinations are argued n
 | Parameter | Proposed value / source | Status |
 |---|---|---|
 | Vehicle service life T_life | 15 years (common automotive assumption) | Proposal |
-| Operating hours | To be derived from user data and the ODD ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md)); LD-SDA is energised only with ignition on | TBD |
+| Operating hours | To be derived from user data and the ODD ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md)); LD-SDA is energised only with ignition on. Working value used by the generic FMEDA: about 500 h/year, so 7,500 h over 15 years | TBD (working value in use) |
 | Item fitted life | An aftermarket item may be fitted for less than the vehicle life; LionDriver will still use the vehicle life (conservative) unless an end-of-life rule is defined in [WP-O-02](../09-production-operation/WP-O-02-operation-service-decommissioning.md) | Proposal |
-| Temperature profile | Windscreen-mounted device in the cabin, sun load: define a profile (e.g. distribution of junction temperatures) for SN 29500 stress factors | TBD |
-| On/off cycles | One per drive cycle; relay switching cycles per drive (engagement/disengagement and mode changes) | TBD |
+| Temperature profile | Windscreen-mounted device in the cabin, sun load: define a profile (e.g. distribution of junction temperatures) for SN 29500 stress factors. Working value used by the generic FMEDA: ambient up to +85 °C in the sun-loaded enclosure, Tj up to about +105 °C. The harness box sits behind the camera in the same windscreen zone and takes the same profile. No stress conversion has been applied to any rate yet | TBD (working value in use) |
+| On/off cycles | One per drive cycle; intercept switch changeovers per drive (mode changes). The harness box switch is an analog IC, so changeovers cause no wear ([RR-2026-010](reviews/RR-2026-010.md) F-04) | TBD |
 | Multiple-point fault detection interval | One drive cycle, if start-up tests are implemented ([WP-H-04](WP-H-04-hardware-metrics.md) OI-4) | Proposal |
 
 ## 4. Targets
@@ -116,8 +116,8 @@ Rules for using them:
 |---|---|
 | Method decision | Proposed (§2), not approved |
 | Mission profile | Proposed in part (§3) |
-| Failure rates | **None — requires BOM** |
-| FMEDA | Qualitative block level only ([WP-H-03](WP-H-03-hardware-safety-analysis-fmeda.md)) |
+| Failure rates | **No part-level rates (no BOM).** Generic block rates in the FMEDA; the harness box switches U1/U2 at the SN 29500-2 reference value from a secondary source ([WP-H-03](WP-H-03-hardware-safety-analysis-fmeda.md) §6.3) |
+| FMEDA | Qualitative block level, plus a generic-rate block FMEDA ([WP-H-03](WP-H-03-hardware-safety-analysis-fmeda.md) §6.3) |
 | PMHF per SG | **Cannot be computed** |
 | AoU verification (external measures) | Not started (AOU-01R, -04R, -05R unverified) |
 
@@ -129,6 +129,8 @@ reported as "met" or "not met" until computed.
 
 *Status note 2026-10-12:* since 2026-10-12 DC-01 (IWDG1, window mode, fed from the 100 Hz safety task; panda `9f60e17`) is implemented, **not verified**. It is not credited in the PMHF or as DC until HIL fault-injection evidence exists and the LSI tolerance is confirmed ([watchdog impact record](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) OI-3 and OI-2). The judgement above is unchanged.
 
+*Status note 2026-10-16:* the generic-rate FMEDA (rev 0.4) gives the single-point and residual term λSPF + λRF as 8.1 FIT for SG-01 and 62.9 FIT for SG-07. The dual-point term is not computed. These are not PMHF values and must not be read as "met". They show only that at these rates SG-07's single-point term is already about two thirds of the 100 FIT target, driven by the harness box switches (35 FIT). That term would fall to 15.6 FIT with switch readback and a stock-path continuity check (WP-H-03 §6.3).
+
 ![Figure 6-1: PMHF status: inputs (method, mission profile, failure rates, FMEDA, PMHF per SG, AoU verification) not complete, and for SG-01, SG-02/SG-06, SG-03/SG-04, SG-05 and SG-07 every PMHF term TBD against the 100 FIT target](figures/fig-h05-6-1-pmhf-status.svg)
 
 *Figure 6-1.* Top: the inputs of the evaluation with their status from the table above. Bottom: each row of the §8 results template, with the terms of §2.1 (single-point plus residual, dual-point, PMHF) all TBD against the §4 target, the variants with and without external measures where §8 has them, and the expected dominant terms of §5.1 and the external measures of §5. Drawn from §4, §5, §5.1, §6 and §8. Source: [`figures/fig-h05-6-1-pmhf-status.svg`](figures/fig-h05-6-1-pmhf-status.svg); change it together with §4, §6 and §8.
@@ -138,7 +140,7 @@ reported as "met" or "not met" until computed.
 | # | Activity | Depends on | Gate |
 |---|---|---|---|
 | 1 | Approve method (§2) and mission profile (§3) | Safety manager | G2 |
-| 2 | Obtain BOM, schematic, harness relay data (WP-H-02 OI-1) and ST failure-rate data (WP-H-07 QE-02) | Supplier / teardown | G2 |
+| 2 | Obtain BOM, schematic, harness relay data (WP-H-02 OI-1) and ST failure-rate data (WP-H-07 QE-02) | Supplier (ask and wait, no teardown, DQ-065) | G2 |
 | 3 | Fill FMEDA (WP-H-03 §6) and classify faults, marking those that rely on external measures | 2 | G3 |
 | 4 | Compute PMHF per SG in two variants: with external measures (AoUs verified) and without | 3 | G3 |
 | 5 | EEC-style check of the dominant contributors (MCU core, SRAM, relay) | 3 | G3 |
