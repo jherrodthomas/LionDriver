@@ -21,10 +21,11 @@
 #     event (computed from the tree) whose FMEA causes all claim a detection rating <= 4
 #
 # Status: SG-04 pilot, 2026-10-13; findings F-1..F-10 resolved the same day (WP-A-04 v0.9, SW FMEA rev 0.7, DFMEA rev 0.3,
-# System FMEA rev 0.6, PFMEA rev 0.3). Draft, AI-assisted; each link needs review.
+# System FMEA rev 0.6, PFMEA rev 0.3). SG-01 added 2026-10-16 (WP-A-04 v1.0; findings F-11..F-16, F-14 and F-15 open for
+# the FMEA owners). Draft, AI-assisted; each link needs review.
 schema_version: 1
 source: assurance/08-analyses/WP-A-04-system-fta-fmea.md
-scope: [SG-04]
+scope: [SG-01, SG-04]
 
 events:
   # ---- SG-04 tree (§5)
@@ -72,8 +73,8 @@ events:
     fmea: [SWF-053]
   - id: BE-4.16
     class: systematic_sw
-    fmea: [SWF-003]
-    note: SWF-003.C2 (implementation defect in longitudinal_accel_checks)
+    fmea: [SWF-003, SWF-016]
+    note: SWF-003.C2 (implementation defect in longitudinal_accel_checks); SWF-016 (host TX that skips safety_tx_hook, F-14)
   - id: BE-4.17
     class: systematic_sw
     fmea: [SWF-046, SWF-066]
@@ -84,6 +85,8 @@ events:
   - id: BE-4.19
     class: random_hw
     fmea: [DFM-011, SFM-034]
+    fmeda: [fmeda-sg001:FMD-020, fmeda-sg001:FMD-023]
+    note: Also in SG-01 G1.4 (stock LKA, F-12). FMEDA rows from SG-001, where the stuck pass-through is rated
   - id: BE-4.20
     class: systematic_sw
     fmea: [SWF-010]
@@ -109,17 +112,23 @@ events:
   - id: UE-4.15
     class: external
     ref: AOU-05R
-  # ---- events borrowed from other trees (G-LENV from SG-01, G4.4.1 from SG-02, G4.6.1 from SG-01 and SG-03)
+  # ---- SG-01 events (§2), also borrowed by SG-04 (G-LENV, G4.6.1); SG-04 events borrowed by SG-01 G1.4 are above
   - id: BE-1.07
     class: random_hw
-    fmea: [DFM-001, DFM-003]
-    fmeda: [fmeda-sg001:FMD-001, fmeda-sg001:FMD-009]
+    fmea: [DFM-001, DFM-002, DFM-003, DFM-005, DFM-007, DFM-018]
+    fmeda: [fmeda-sg001:FMD-001, fmeda-sg001:FMD-006, fmeda-sg001:FMD-009, fmeda-sg001:FMD-013, fmeda-sg001:FMD-015]
+    note: >-
+      DFM-001 (CPU), DFM-002 (flash constants), DFM-003 (SRAM state); DFM-005 (time base: every rate window and timeout
+      scales), DFM-007 (brown-out) and DFM-018 (over-temperature) are causes of the same erroneous execution (SG-01 map, F-14).
   - id: BE-1.08
     class: systematic_sw
     fmea: [SWF-013, SWF-022]
   - id: BE-1.09
     class: systematic_sw
-    fmea: [SWF-028, PFM-001]
+    fmea: [SWF-028, PFM-001, DFM-016, PFM-002]
+    note: >-
+      DFM-016 (SoC drives BOOT0/reset, no RDP/WRP) is the hardware path and PFM-002 (debug signing key) the key that lets
+      any image load (SG-01 map, F-14).
   - id: BE-1.12
     class: systematic_sw
     fmea: [SWF-007]
@@ -130,6 +139,98 @@ events:
     class: random_hw
     fmea: [DFM-003]
     fmeda: [fmeda-sg001:FMD-009]
+  - id: BE-1.01
+    class: systematic_sw
+    fmea: [SWF-001, SFM-002]
+    note: SWF-001.C1 (torque limits are the controller's constants, not derived); SFM-002.C3 (limits wrong for the vehicle)
+  - id: BE-1.02
+    class: systematic_sw
+    fmea: [SFM-002, SFM-003, SWF-042, SWF-059]
+    note: SFM-002.C1 (lateral controller output too high), SFM-003.C2 (sign convention), SWF-042 (torque biased or overshooting within the limits), SWF-059 (frame packed with another value than commanded, SW FMEA rev 0.9)
+  - id: BE-1.03
+    class: sotif
+    fmea: [SFM-002, SFM-003, PFM-009, PFM-012]
+    note: >-
+      SFM-002.C2 and SFM-003.C3 (model curvature excessive or wrong sign), SFM-003.C1/C4 (calibration, mount moved);
+      PFM-009 (mount outside tolerance) and PFM-012 (model weights not the release) raise the rate
+  - id: BE-1.04
+    class: systematic_sw
+    fmea: [SWF-049]
+    note: SWF-049 (curvature taken from the developer lateral-maneuver plan); the process_config path of GAP-20 has no SW FMEA cause of its own
+  - id: BE-1.05
+    class: systematic_sw
+    fmea: [SFM-032, PFM-013, SWF-058]
+    note: SWF-058 (fuzzy fingerprint or overridden identification, SW FMEA rev 0.9) is the SW unit view of SFM-032
+  - id: BE-1.06
+    class: systematic_sw
+    fmea: [SWF-001, SWF-016]
+    note: SWF-001.C2/C3 (defect in steer_torque_cmd_checks, wrong EPS factor widens the measured-torque check); SWF-016 (host TX that skips safety_tx_hook)
+  - id: BE-1.10
+    class: random_hw
+    fmea: [DFM-019]
+    fmeda: [fmeda-sg001:FMD-002, fmeda-sg001:FMD-010, fmeda-sg001:FMD-019]
+    note: As BE-4.03 (same TX path)
+  - id: UE-1.11
+    class: external
+    ref: AOU-01R
+  - id: BE-1.15
+    class: systematic_sw
+    fmea: [SFM-001, SWF-041, SFM-013, SWF-030, SWF-057]
+    note: >-
+      SFM-001.C1/C3 and SWF-041 (torque or request bit while lateral control is not active); SFM-013 and SWF-030 (host
+      engaged without a driver request): the host then commands torque, and the envelope's authority is the barrier.
+      SWF-057 (carState field decoded wrong, e.g. a spurious cruise enable, SW FMEA rev 0.9) feeds the host's engagement
+      state from the same frames (CCF, DFI-10)
+  - id: BE-1.16
+    class: systematic_sw
+    fmea: [SWF-006, SWF-005]
+    note: >-
+      SWF-006 (brake frame lost, detected after about 0.14 s); SWF-005 (corrupted brake-pressed value accepted). A
+      stuck "not pressed" value with valid frames has no counter to catch it (GAP-01). SWF-005 cites HZ-008 only (F-14)
+  - id: BE-1.17
+    class: systematic_sw
+    fmea: [SWF-006]
+    note: >-
+      SWF-006 covers loss of 0x1D2; no FMEA mode covers 0x1D2 stuck at "cruise active" while frames keep arriving with a
+      valid checksum (no counter, GAP-01). F-15
+  - id: BE-1.18
+    class: installation
+    fmea: [PFM-001]
+    note: PFM-001 (released as a DEBUG build); SWF-013.C2 is the SW FMEA view of the same release fault (BE-1.08)
+  - id: BE-1.19
+    class: systematic_sw
+    fmea: [SFM-006, SWF-040, SWF-043, SWF-033]
+    note: >-
+      SFM-006 (lateral command frozen), SWF-040 (stale engagement state), SWF-043.C1 (stale model and plan),
+      SWF-033 (stale inputs handled as soft disable, so actuation continues up to 3 s)
+  - id: BE-1.20
+    class: systematic_sw
+    fmea: [SWF-043]
+    note: SWF-043.C2 (commIssue suppressed while the big model loads)
+  - id: BE-1.21
+    class: systematic_sw
+    fmea: [SWF-023]
+  - id: BE-1.22
+    class: systematic_sw
+    fmea: [SWF-014, SWF-020, SWF-018, DFM-014]
+    note: >-
+      SWF-014.C2 and SWF-020 (heartbeat shows pandad liveness, not command freshness); SWF-018 (the supervision itself
+      stops while the relay is driven); DFM-014 (ignition sense stuck on: heartbeat timeout uses the 5 s value)
+  - id: BE-1.23
+    class: by_design
+    reason: The rate and real-time checks bound change, not age; a constant in-limit value passes them (G1.3.2).
+  - id: BE-1.24
+    class: random_hw
+    fmea: [DFM-015, SWF-026]
+    note: DFM-015 (bit errors on the SPI link pass the 8-bit XOR); SWF-026 (both checks XOR the same bytes). F-13
+  - id: BE-1.25
+    class: systematic_sw
+    fmea: [SWF-002, SWF-055]
+    note: SWF-002.C1 (defect in the not-allowed torque check, lateral.h:111-114, or controls_allowed bookkeeping). F-11. SWF-055 (SW FMEA rev 0.8, DQ-080) is a bookkeeping property of the pinned code, not a defect; the edge state reset on a mode change grants authority again without a new driver engagement
+  - id: BE-1.26
+    class: systematic_sw
+    fmea: [SWF-010]
+    note: SWF-010.C1 (check_relay flag missing for 0x2E4, or forwarding hook defect). F-12
   - id: BE-2.12
     class: systematic_sw
     fmea: [SFM-026]
@@ -153,6 +254,12 @@ gates:
     fmea: [SFM-034]
   - id: G4.9
     fmea: [SFM-020]
+  - id: G-ENV
+    fmea: [SFM-029]
+  - id: G1.3
+    fmea: [SFM-006]
+  - id: G1.4
+    fmea: [SFM-034]
 
 not_in_fta:
   - fm: SFM-014
@@ -175,3 +282,52 @@ not_in_fta:
     goal: SG-04
     kind: justified
     reason: With the reference lock the panda enforces the reference model whatever the fingerprint (DFA DM-21); a wrong host configuration acts as a QM planner fault (BE-4.02).
+  # ---- SG-01
+  - fm: SFM-014
+    goal: SG-01
+    kind: justified
+    reason: As for SG-04. The SG-01 tree credits only the envelope's authority; host disengagement on faults is QM and not credited.
+  - fm: SFM-016
+    goal: SG-01
+    kind: justified
+    reason: As SFM-014 (late host disengagement, same QM measure).
+  - fm: SFM-030
+    goal: SG-01
+    kind: justified
+    reason: As for SG-04. The excessive-actuation monitor is a QM host measure the tree does not credit.
+  - fm: SWF-037
+    goal: SG-01
+    kind: justified
+    reason: As SFM-030 (same monitor, SW unit level).
+  - fm: SWF-054
+    goal: SG-01
+    kind: justified
+    reason: Re-grant after a TX-rate revocation needs a driver cruise edge and the heartbeat engaged flag, so the item is engaged by the driver; the host's frames stay under the envelope's TX rate and torque checks (G1.1), so no new path past the envelope arises (SW FMEA rev 0.8, DQ-079).
+  - fm: SWF-034
+    goal: SG-01
+    kind: justified
+    reason: The host's panda-mismatch check is a QM monitor the tree does not credit; the envelope's own authority state is what G1.2 analyses.
+  - fm: PFM-003
+    goal: SG-01
+    kind: justified
+    reason: A component at another version than verified makes any software event of the tree present in the release; it is a release-process cause, not an event of its own. Controlled by WP-P-10 (pinned submodules, release checks).
+  - fm: PFM-004
+    goal: SG-01
+    kind: justified
+    reason: "As PFM-003: a release without the required verification leaves the tree's systematic events unverified, it adds none. Controlled by WP-P-10."
+  - fm: PFM-005
+    goal: SG-01
+    kind: justified
+    reason: Software installed from the upstream installer or a development branch is not the analysed item. The trees analyse the released reference configuration; installation is controlled by WP-O-02 and the installation record. The envelope part is BE-1.09/SWF-028.
+  - fm: PFM-007
+    goal: SG-01
+    kind: justified
+    reason: A vehicle outside the reference configuration is outside the item definition (WP-C-01) and the AoUs the trees rest on (UE-1.11). Controlled by the installation check (WP-O-02).
+  - fm: PFM-016
+    goal: SG-01
+    kind: justified
+    reason: "As PFM-005: an update to an unapproved release replaces the analysed item. Controlled by WP-P-10 and the update policy (DQ-075); the envelope part is BE-1.09."
+  - fm: PFM-017
+    goal: SG-01
+    kind: justified
+    reason: "As PFM-005: a rollback outside the evidence replaces the analysed item. Controlled by WP-O-02."
