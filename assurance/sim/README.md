@@ -162,8 +162,9 @@ phase S7: system identification of EPS lag, steer ratio and tyre stiffness, and 
 Until then the results only rank risks and guide which tests to run on the bench and the car.
 
 - **No evidence credit.** Simulation earns credit only once the WP-V-02 §5.3 fidelity case is approved for the scenario
-  family; whether any family may get credit is queued for the lead as DQ-139 (DQ-107 is its duplicate). Every output is labelled synthetic data
-  under DSR-12 and is kept apart from real-world data.
+  family: the lead decided so on 2026-10-16 (DQ-139, option A; DQ-107 is its duplicate), and no family has an approved
+  fidelity case yet. CARLA and GPU rendering are not pursued before G3 (DQ-261, option A). Every output is labelled
+  synthetic data under DSR-12 and is kept apart from real-world data.
 - **Not self-credited.** Timing results go to the safety-concept session, which decides what enters WP-S-04. Scenario
   results go to the SOTIF session for WP-V-03/04. The simulation track does not edit those documents.
 - **Rating tables.** The FMEA-MSR rating tables (RT-2 §7) allow `measured | code_derived | unknown` timing only. A
