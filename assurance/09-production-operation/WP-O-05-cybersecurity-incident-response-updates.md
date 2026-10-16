@@ -6,7 +6,7 @@
 | Standard reference | ISO/SAE 21434:2021 §8 (continual cybersecurity activities: monitoring, event evaluation, vulnerability analysis, vulnerability management), §13 (operations and maintenance: incident response, updates), §14 (end of cybersecurity support and decommissioning); UN R156 (informative, software update management); ASPICE 4.0 SEC.* |
 | Version | 0.1 |
 | Status | Draft — process defined; **not running**. No monitoring, intake or incident record exists yet (GAP-28) |
-| ASIL / scope | CS; safety coordination for SG-01…SG-07 |
+| ASIL / scope | CS; safety coordination for SG-01…SG-08 |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Project maintainer (acting cybersecurity manager); safety manager for §5.4 |

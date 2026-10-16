@@ -15,6 +15,8 @@ NOMINAL = [
   Case("N-2", "No fault, curve inside the ODD (1.5 m/s²)", "none", "curve", "—", "—", t_fault=None, duration=6.0),
   Case("N-3", "No fault, curve at the ODD bound R_ODD (2.5 m/s²)", "none", "curve-odd-bound", "SG-02", "SFM-004",
        t_fault=None, duration=6.0, note="observation for WP-C-02 OI-2: the curve needs more than LAT_ACCEL_FACTOR"),
+  Case("N-4", "No fault, KS-01 road (R = 300 m) at 2.0 m/s² (88.2 km/h)", "none", "KS-01", "—", "—",
+       t_fault=None, duration=8.0, speed_kph=88.18),
 ]
 
 
@@ -26,7 +28,7 @@ def from_entry(f: dict) -> Case:
   return Case(f["id"], f["title"], f["kind"], f["road"], ", ".join(f["sg"]), ", ".join(f["causes"]),
               wpv05=f.get("wp_v_05", ""), t_fault=f.get("t_fault"), engaged=f.get("engaged", True),
               figure=f.get("figure", False), longitudinal=f.get("longitudinal", False), note=f.get("note", ""),
-              tsr=", ".join(f.get("tsr", [])), pcs=f.get("pcs", False))
+              tsr=", ".join(f.get("tsr", [])), pcs=f.get("pcs", False), speed_kph=f.get("speed_kph", 120.0))
 
 
 def all_cases() -> list[Case]:
