@@ -358,8 +358,8 @@
 <rect x="1010" y="593.0" width="230" height="60.0" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
 <text x="1020" y="609" font-size="11.5" fill="#0F172A" font-weight="700">SH-13</text>
 <text x="1230" y="609" font-size="10" fill="#475569" font-weight="600" text-anchor="end">S/C as linked SH</text>
-<text x="1020" y="624" font-size="10" fill="#475569">System stays engaged outside the ODD:</text>
-<text x="1020" y="636.5" font-size="10" fill="#475569">above 120 km/h (up to and above 149 km/ …</text>
+<text x="1020" y="624" font-size="10" fill="#475569">System stays engaged outside the ODD: on</text>
+<text x="1020" y="636.5" font-size="10" fill="#475569">arterial or rural roads (outside the highwa …</text>
 <rect x="1010" y="659.0" width="230" height="60.0" rx="8" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
 <text x="1020" y="675" font-size="11.5" fill="#0F172A" font-weight="700">SH-12</text>
 <text x="1230" y="675" font-size="10" fill="#475569" font-weight="600" text-anchor="end">no direct S/C</text>
