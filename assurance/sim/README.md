@@ -22,6 +22,8 @@ the figure tools of the other work products do. The MetaDrive bridge stays where
 | [`scenarios/`](scenarios/README.md) | Layer 2: WP-V-03 known scenarios as OpenSCENARIO/OpenDRIVE files, their generator and the esmini replay |
 | [`results/scenario-replay.md`](results/scenario-replay.md) | Layer 2 replay checks (generated) |
 | [`results/plant-results.md`](results/plant-results.md) | Layer 1 results table, event log and model inputs (generated) |
+| [`search/`](search/search.py) | Layer 4: failure search (Monte Carlo and cross-entropy) over the plant model |
+| [`results/search-curve-assist-loss.md`](results/search-curve-assist-loss.md) | Layer 4 search results (generated) |
 | [`figures/`](figures/) | Layer 1 figures, one per selected case (generated) |
 | [`requirements.txt`](requirements.txt) | Pinned Python packages of the track |
 
@@ -40,7 +42,7 @@ python3 assurance/sim/plant/test_plant.py       # unit tests (CI)
 | 1. Fault-injection plant model (`plant/`) | Built | What the **real panda safety code** of the reference build does with each injected fault, frame by frame and in time: refusal, revocation, siren, IWDG reset, relay-malfunction detection. How far the car moves meanwhile under stated EPS, PCM and driver assumptions, against the WP-S-04 §3 kinematic estimates. Which assumptions decide the outcome (sensitivity runs) | Anything the assumptions decide: the EPS reaction to lost frames, the torque-to-lateral-acceleration gain, the driver. The SoC: openpilot is replaced by a perfect-perception controller, so no SoC alert, no model or planner fault. Interrupt latency and bus load on the real MCU. Tyre limits beyond the linear single-track model. Results are not measurements and not code-derived times |
 | 2. Known scenarios as data (OpenSCENARIO + OpenDRIVE, esmini) | Built for 9 of the 26 WP-V-03 scenarios; the reasons for the others are listed ([scenarios](scenarios/README.md)) | That each WP-V-03 scenario that simulation can represent is written down unambiguously, parses and replays headless; the same road and traffic used by layers 1 and 3 | Any behaviour of the item: esmini plays the scenario with its own simple controllers |
 | 3. MetaDrive closed loop (`openpilot/tools/sim`) | Planned (backlog item 3) | The full openpilot stack driving on rendered images, with the Corolla CarParams and the panda safety code in the loop, in WP-V-03 scenarios with traffic: lateral and longitudinal behaviour, alert timing, outcome class | Camera realism, sensor faults, the real EPS and PCM; credit only per scenario family after the WP-V-02 §5.3 fidelity case (DQ-139) |
-| 4. Unknown-scenario search (Scenic with VerifAI) | Planned (backlog item 4) | Parameter regions of layer 2/3 scenarios where the item fails, to direct closed-course tests (WP-V-04 U-4) | That no other failure exists; a rate of failure in the real ODD |
+| 4. Unknown-scenario search | Prototype over the plant model: seeded Monte Carlo and cross-entropy falsification in plain numpy (§3.4). Scenic with VerifAI was the plan; it is not used, because Scenic requires a package published without a licence (§5) | Parameter regions of layer 2/3 scenarios where the item fails, to direct closed-course tests (WP-V-04 U-4) | That no other failure exists; a rate of failure in the real ODD |
 
 ## 3. Layer 1: fault-injection plant model
 
@@ -111,6 +113,15 @@ Figures follow the layout the lead approved: a top-down lane view with the ego p
 time with the 0.5 s FTTI band and the lane-line thresholds, and an event timeline. They use colour tokens with a dark
 variant, so they read in either theme.
 
+### 3.4 Failure search (layer 4)
+
+[`search/search.py`](search/search.py) searches one family, loss of lateral assistance in a highway curve (the EPS
+fault of case F-07), over speed, curve lateral acceleration, lane width, driver reaction time and drift cue. It maps
+where departures happen with seeded uniform Monte Carlo samples, then runs a cross-entropy falsification search for
+the worst cases. Robustness is the margin from the body edge to the lane line. The share of departing samples
+describes the sampled box, not a probability on the road. The results rank where bench and closed-course tests should
+look first (WP-V-04 U-4); the search over MetaDrive and the scenario files comes after layer 3 runs end to end.
+
 ## 4. Credit and hand-back
 
 **Evidence rule.** No result of this track is evidence until the model is validated against Corolla logs (roadmap
@@ -139,6 +150,13 @@ Until then the results only rank risks and guide which tests to run on the bench
 | pythonfmu | 0.7.0 | MIT | packaging the plant as an FMU |
 | fmpy | 0.3.32 | BSD-2-Clause; its dependencies MIT, BSD-3-Clause, Apache-2.0 | running the FMU in the test |
 
+**Not used: Scenic and VerifAI.** Scenic 3.0.0–3.1.1 (BSD-3) requires `rv-ltl ~= 0.1`, imported by its core
+(`scenic/core/requirements.py`), and VerifAI 2.2 (BSD-3) requires and imports Scenic. rv-ltl 0.1.1 is published on PyPI
+without a licence: no licence field, no licence file in the wheel, no project URL, and no public source repository was
+found (checked 2026-10-16). Without a licence it is not open source, so it is not added. Their other dependencies were
+also checked: all MIT, BSD or Apache except lenses (GPL-3.0+), easydict (LGPL-3.0) and pygame-ce (LGPL-2.1). The
+search uses numpy instead (§3.4). Scenic can be reconsidered if rv-ltl is given a licence.
+
 Licences read from the package metadata on 2026-10-16. All were reachable through the network proxy. MPL-2.0 is a file-level copyleft: it covers changes to the
 scenariogeneration and esmini files themselves, which this track does not make, and not the scenario files they
 produce. The panda and
@@ -151,5 +169,6 @@ opendbc code is the project's own (MIT).
 | SIM-OI-1 | The EPS reaction to lost STEERING_LKA frames decides most layer-1 results (release vs hold). Replace both cases with M-02 once measured |
 | SIM-OI-2 | Replace the driver assumptions with WP-C-08 §8 values; add the SoC take-over alert once openpilot runs in the loop (layer 3) |
 | SIM-OI-3 | Model the LSI tolerance and the other hang types of WP-V-05 VS-FI-17 (main loop only, tick, safety task) |
-| SIM-OI-4 | Layers 3–4 (backlog items 3–4) |
+| SIM-OI-4 | Layer 3 end to end (PR #124, CI) and the search over MetaDrive and the scenario files |
+| SIM-OI-6 | Scenic and VerifAI if rv-ltl is published with a licence (§5) |
 | SIM-OI-5 | KS-04 (lane split and merge) as an OpenDRIVE junction or lane-width polynomial |

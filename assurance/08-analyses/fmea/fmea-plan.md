@@ -138,6 +138,8 @@ Prioritised by safety relevance (path from perception to actuator):
   - a single non-finite input latches LatControlTorque and silently zeroes lateral output for the drive (SWF-045);
   - cruiseMismatch has no reaction, and lateral torque continues while the driver overrides (SWF-039, SWF-038/044).
 
+**Re-baseline at BL-005 (SW FMEA rev 0.8, liondriver-dev `1033d98`, panda `a55bdfc`, opendbc `9a13f60`):** the reference build is the default since #36/#41, so its firmware features are credited. SWF-013.C2 (build without the lock) and SWF-014.C2 (control-loop stall behind a live heartbeat, now caught by TX arrival supervision, TSR-408) drop from AP H to L. Host supervision (#51: TSR-615, TSR-621, TSR-602, TSR-308, TSR-604 in part) lowers occurrence on SWF-032, -034, -039, -040, -043, -045; those rows stay AP H because the new code has targeted but unproven tests. New SWF-054 and SWF-055 record decisions DQ-079 and DQ-080, whose code (opendbc#15) is not pinned (SWF-ACT-054). 55 failure modes, 84 causes: 77 AP H, 1 M, 6 L.
+
 **System FMEA (rev 0.5, BL-004):** all 80 causes rated: 79 AP H, 1 AP M (SFM-024.C1). Causes on the panda, host, harness and hardware elements inherit the linked SW FMEA or DFMEA rows; actions SFM-ACT-001..011.
 
 **System FMEA (rev 0.9, BL-005):** baseline moved to BL-005. S, O and AP unchanged; D of SFM-015.C2 10 → 8 (host unit test). The MSR rows credit the host supervision and the reference-build checks that BL-004 lacked (TSR-408, TSR-615, TSR-621, TSR-308, reference lock): monitoring M 5–6 on 15 causes, M 7–8 on 16, M 9–10 on 29 ([msr-plan.md §4.7](msr-plan.md#47-pilot-result-m1)). The SW FMEA (BL-004) and DFMEA (BL-002) rows it inherits are not re-rated here.

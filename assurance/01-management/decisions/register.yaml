@@ -3998,6 +3998,7 @@
   blocks: "HWSR-702, HWSR-506a, DFMEA harness element rework, FMEDA SG-009, DFA IC-05 (DFI-27, DFI-28)"
   gate: G2
   decider: lead
+  asked: 2026-10-16
   options:
     - key: A
       recommended: true
@@ -4010,7 +4011,10 @@
       title: "Require comma power on every install so the box is always powered"
       detail: "Removes the broken-ignition-wire cause only; switch, pull-down and clamp faults remain. Cost: one extra part per install."
   sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03", "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md OI-9"]
-  status: queued
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-16}
+  applied: {ref: 2c9c67f2e, record: "WP-H-01 HWSR-702, -506a, -506e, OI-6; WP-H-02 OI-4 (DC-03 not pursued); WP-H-06 §3.1; RR-2026-010 §5; DFMEA DFM-ACT-007 not_implemented, DFM-ACT-014", at: 2026-10-16}
+  note: "Hardware part applied. Left for other sessions: AOU-13 wording in WP-C-01 and WP-C-04 (concept), TSR-702 status (system), DFA IC-05 / DFI-27, DFI-28 (DFA). Follow-up question for the SG-07 metric shortfall: DQ-320."
 
 - id: DQ-340
   question: "If the driver stays unresponsive at the last driver-monitoring alert, what should the car do?"
@@ -4281,3 +4285,29 @@
       detail: "Simplest. Cost: an incapacitated driver gets an uncontrolled vehicle at highway speed; not recommended."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-38", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §13", "assurance/02-concept/WP-C-03-hara.md OI-10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-025"]
   status: queued
+
+- id: DQ-320
+  question: "With comma's harness box kept, the stock-emergency-braking hardware metric is about 78 % against a 90 % target. Accept that as a recorded deviation once the bench tests pass?"
+  context: "You chose to keep comma's box and bench-test it (DQ-209). Without switch readback, the FMEDA for the stock emergency-braking goal (SG-07) gives **SPFM 78.1 % against 90 %** on current rates, mostly from the two analog switches sticking or opening. Readback plus a stock-path check would bring it to about 95 %. The rates are still partly generic, so the number can move either way."
+  reversibility: revisit
+  blocks: "SG-07 hardware metric claim (WP-H-04 §7), G2 hardware argument"
+  gate: G2
+  decider: lead
+  asked: 2026-10-16
+  options:
+    - key: A
+      recommended: true
+      title: "Accept it as a recorded deviation, argued with the bench results"
+      detail: "Keeps your DQ-209 choice. The safety case states the shortfall and the tested failure behaviour. Cost: an assessor may not accept a metric miss on an ASIL B goal."
+    - key: B
+      title: "Add switch readback and a stock-path continuity check"
+      detail: "Meets the target on current rates (about 95 %). Cost: a small LionDriver adapter per car and firmware; partly reverses DQ-209."
+    - key: C
+      title: "Decide after the switch failure rate is confirmed"
+      detail: "The 78 % rests on a secondary-source rate. Cost: the G2 hardware argument waits for the datasheet and the SN 29500 values."
+  sources: ["assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §6.3", "assurance/04-hardware/WP-H-04-hardware-metrics.md §5.2", "assurance/04-hardware/reviews/RR-2026-010.md §5", "assurance/08-analyses/fmea/analyses/fmeda-sg009.yaml"]
+  after: [DQ-209]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-16}
+  applied: {ref: 5782d0d39, record: "WP-H-04 §5.3 (deviation record); WP-H-03 §6.3; RR-2026-010 §5", at: 2026-10-16}
+  note: "Conditional on the harness box bench tests (VS-HW-02, VS-HW-22…24). Left for the safety-case session: state the deviation in the SG-07 argument."
