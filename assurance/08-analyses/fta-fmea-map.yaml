@@ -401,7 +401,7 @@ events:
     class: systematic_sw
     fmea: [SFM-038]
     note: >-
-      SFM-038.C1 (silent steerTempUnavailable after an override in the last 1.5 s, car_events.py; GAP-03) and SFM-038.C2 (the
+      SFM-038.C1 (EPS-fault prompt latched at low priority after an override in the last 1.5 s, never escalated; car_events.py; GAP-03) and SFM-038.C2 (the
       panda's epsFault published but read by no SoC process, SWF-025 notes); System FMEA rev 0.23. SFMEA-15 of WP-A-04 §10. F-28
   - id: BE-2.09
     class: systematic_sw

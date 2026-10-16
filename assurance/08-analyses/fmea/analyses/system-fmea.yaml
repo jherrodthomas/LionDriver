@@ -90,8 +90,8 @@
 # Rev 0.22 (2026-10-16): new SFM-037 (longitudinal command frozen at last value), the counterpart of SFM-006 that the SG-03 tree
 # lacked (fta-fmea-map BE-1.19 note). C1 controlsd hang (SWF-047, M 7: PCM reaction to missing ACC_CONTROL unknown), C2 plannerd stops
 # (SWF-068, M 8: soft disable exceeds the 1 s FTTI), C3 stale data with fresh timestamps (M 9). All AP H; existing actions.
-# Rev 0.23 (2026-10-16): new SFM-038 (warning of a lateral-control fault or limit late, silent or missing), backing FTA SG-02 BE-2.08
-# and BE-2.24, which had no FMEA mode: C1 silent EPS-fault warning after a recent override (car_events.py, GAP-03), C2 panda epsFault
+# Rev 0.23 (2026-10-16): new SFM-038 (warning of a lateral-control fault or limit late, not escalated or missing), backing FTA SG-02 BE-2.08
+# and BE-2.24, which had no FMEA mode: C1 EPS-fault warning stuck at the low-priority prompt after a recent override (car_events.py, GAP-03), C2 panda epsFault
 # read by no SoC process, C3 steerSaturated conditions (WP-S-04 §3.8.1). O 8 (design gaps), AP H. New SFM-ACT-023; C3 uses SFM-ACT-021.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
@@ -3770,10 +3770,10 @@ failure_modes:
   - id: SFM-038
     element: SFM-SE-001
     function: SFM-FN-006
-    failure_mode: Warning of a lateral-control fault or limit late, silent or missing
+    failure_mode: Warning of a lateral-control fault or limit late, not escalated or missing
     guideword: late
     effects:
-      - {level: local, description: "steerTempUnavailable shown silently, steerSaturated raised late or not at all, or the panda's EPS-fault flag not acted on"}
+      - {level: local, description: "steerTempUnavailable not escalated to a take-over request, steerSaturated raised late or not at all, or the panda's EPS-fault flag not acted on"}
       - {level: next_higher, description: "Driver not prompted to take over while lateral control is lost or limited"}
       - {level: end, description: "Driver unaware of the loss or limit; lane departure", hazard: HZ-004, severity: 10}
     severity: 10
@@ -3785,8 +3785,9 @@ failure_modes:
     causes:
       - id: SFM-038.C1
         element: SFM-SE-016
-        description: 'After any driver steering input in the last 1.5 s, a temporary EPS fault raises only steerTempUnavailableSilent (a
-          small WARNING with no soft disable), and the warning stays silent for as long as the fault lasts (car_events.py:162-177;
+        description: 'After any driver steering input in the last 1.5 s, or at standstill, a temporary EPS fault raises only
+          steerTempUnavailableSilent (a LOW-priority WARNING with a prompt chime and no soft disable, events.py:516-521), and it stays
+          latched while the fault lasts, so a long fault never escalates to the take-over request (car_events.py:162-177;
           T-25, GAP-03)'
         prevention_controls:
         - description: Upstream openpilot design choice (a softer alert after an override); no LionDriver requirement on it
@@ -3979,6 +3980,7 @@ actions:
   - id: SFM-ACT-023
     kind: design_change
     status: open
-    description: 'Warn audibly and with a take-over request on every EPS fault while engaged, with no silent variant after a recent
-      override (car_events.py steerTempUnavailableSilent), and act on the panda fields epsFault and requestsRejected on the host
+    description: 'Escalate every EPS fault that lasts while engaged to the take-over request (steerTempUnavailable, SOFT_DISABLE),
+      instead of keeping the low-priority steerTempUnavailableSilent prompt latched after a recent override or at standstill
+      (car_events.py:162-177; behaviour change queued for the lead by the FSC session as DQ-342), and act on the panda fields epsFault and requestsRejected on the host
       (TSR-626(d), TSR-516(b)). SFM-038.C1, C2; FTA BE-2.08'
