@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-11 AI system definition and AI safety requirements |
 | Standard reference | ISO/PAS 8800:2024 (AI system definition, input space, AI safety requirements, data requirements); ISO 21448:2022 §5, §7; ASPICE 4.0 MLE.1, SUP.11 (data requirements) |
-| Version | 0.4 (DSR-12 status: labelling rule in WP-V-02 §5.3.5; 2026-10-16). 0.3 (input space follows the highway-only ODD, decision register DQ-023; DSR-05 upload policy decided, DQ-084; AIR-24 rests on D-05 as adopted, DQ-038; 2026-10-16). 0.2 (§2.2 AI system boundary diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.1 |
+| Version | 0.5 (speed bound 110 km/h, decision register DQ-260; 2026-10-16). 0.4 (DSR-12 status: labelling rule in WP-V-02 §5.3.5; 2026-10-16). 0.3 (input space follows the highway-only ODD, decision register DQ-023; DSR-05 upload policy decided, DQ-084; AIR-24 rests on D-05 as adopted, DQ-038; 2026-10-16). 0.2 (§2.2 AI system boundary diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM (FuSa) / SOTIF for AI-1 and AI-2; AI-3 / DM chain QM per the [WP-C-04 §7](WP-C-04-functional-safety-concept.md) proposal (SOTIF misuse measure) |
 | Author | Assurance team (initial draft) |
@@ -111,7 +111,7 @@ The input space is the set of input conditions under which the AIRs in §6 are c
 | Road type | ODD-H: limited-access divided highway. Arterials, rural roads and intersections are outside the input space since DQ-023 | WP-C-02 §3.1 road type, intersections; HARA OS-01…OS-07 | Partially (map/GNSS not used for gating today) | `docs/LIMITATIONS.md:14-19` |
 | Lane marking quality | Visible longitudinal markings on at least one side (US MUTCD); no long faded sections, no conflicting old/new markings, no work-zone markings (TC-05, TC-06) | WP-C-02 §3.1 lane markings | Partially (`laneLineProbs`) | `LIMITATIONS.md:15` |
 | Curvature | R ≥ v²/2.5 m/s² (R_ODD, 0.5 m/s² margin below the 3.0 m/s² controller limit, `drive_helpers.py:9-14`); grade and banking ≤ 6 % (TC-14…TC-16) | WP-C-02 §3.1, §3.2 | Yes (vehicle state) | `LIMITATIONS.md:14` |
-| Speed | ODD-H 0–120 km/h, not above the posted limit (controllability tested only to 110 km/h, DQ-091; the bound may be lowered, DQ-260); upstream allows engagement up to ≈ 149 km/h and only warns (GAP-19, TC-20, FM-07) | WP-C-02 §3.1 speed | Yes | `events.py:989-996` |
+| Speed | ODD-H 0–110 km/h, not above the posted limit (bound lowered from 120 km/h to the tested speed, DQ-260); upstream allows engagement up to ≈ 149 km/h and only warns (GAP-19, TC-20, FM-07) | WP-C-02 §3.1 speed | Yes | `events.py:989-996` |
 | Illumination | Day, dusk/dawn, night with headlights; excludes low sun directly in the camera field of view, oncoming high-beam glare and tunnels until validated (TC-01, TC-02, TC-18) | WP-C-02 §3.1 lighting | Partially (camera exposure stats) | `LIMITATIONS.md:18` |
 | Weather / visibility | None or light rain; visibility ≥ 200 m; no snow, fog, moderate/heavy rain (TC-03, TC-04) | WP-C-02 §3.1 weather | No direct detector | `LIMITATIONS.md:10` |
 | Optical path | Clean windscreen; no obstruction in the camera area | AOU-08, OPS-03 ([WP-O-02](../09-production-operation/WP-O-02-operation-service-decommissioning.md)) | No dedicated detector | `LIMITATIONS.md:11-12` |
