@@ -185,6 +185,15 @@ What did not move, and why:
 
 WP-S-04 §4 still gives the BL-004 values for T-17 (`controlsMismatch`, 2 s) and T-19 (`cruiseMismatch`, 6 s) and has no row for TX arrival (TSR-408). The MSR rows cite the code for these times; the WP-S-04 update is listed for its owner.
 
+**DFMEA at BL-005 (rev 0.7, 2026-10-16).** The hardware is unchanged. The panda changes from `9f60e17` to `a55bdfc` that touch DFMEA rows were read at the pins.
+
+| Monitoring | DFMEA, BL-002 (21) | DFMEA, BL-005 (23) | What moved |
+|---|---:|---:|---|
+| M 1–4 (measured) | 0 | 0 | Nothing measured (no HIL bench, DQ-049) |
+| M 5–6 | 0 | 1 | DFM-009.C1: car-side RX loss now warns within about 0.66 s (RX timeout 0.16 s, then controlsMismatch within 0.5 s, TSR-621) |
+| M 7–8 | 6 | 5 | Out: DFM-009.C1 |
+| M 9–10 | 15 | 17 | In: DFM-017.C1/C2. The panda now sounds the siren itself on heartbeat loss and on a persistent EPS fault (panda#14, #15), so the siren is a listed mechanism, but nothing checks that its speaker path works without the SoC |
+
 ### 4.8 Risks
 
 1. **Double counting** with FMEDA DC: handled by the cross-check (§4.4) and by keeping FMEDA as the source for hardware λ and DC.

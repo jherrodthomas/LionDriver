@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-03 Evaluation of known hazardous scenarios (specification and results) |
 | Standard reference | ISO 21448:2022 §10 (verification of the SOTIF, known hazardous scenarios); ISO/PAS 8800:2024 (AI V&V); ASPICE 4.0 SYS.5, VAL.1 |
-| Version | 0.2 (the lead's decisions applied: highways only, decision register DQ-023, KS-22 re-scoped to the highway shoulder and OI-2 closed; public-road limits, DQ-046; closed-course speeds to 110 km/h, DQ-091; logs kept by LionDriver, DQ-084; model-change re-runs, DQ-038; 2026-10-16). 0.1 |
+| Version | 0.3 (simulation rule: synthetic-data labelling and scenario families per WP-V-02 §5.3; 2026-10-16). 0.2 (the lead's decisions applied: highways only, decision register DQ-023, KS-22 re-scoped to the highway shoulder and OI-2 closed; public-road limits, DQ-046; closed-course speeds to 110 km/h, DQ-091; logs kept by LionDriver, DQ-084; model-change re-runs, DQ-038; 2026-10-16). 0.1 |
 | Status | Draft (specification). Results section is a template: **Not yet executed** |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -40,7 +40,7 @@ Scope: reference configuration, Chill longitudinal mode. Experimental Mode scena
 | B2 comparison | Where marked "B2", the same trial is repeated with LD-SDA disengaged and the stock TSS2 functions active (Lane Tracing Assist / DRCC) — this needs the harness removed or the item in a mode where the stock functions are restored, recorded per trial |
 | Trial count | Per VT-nn: zero-failure demonstration of p ≤ 5 % needs 59 trials, p ≤ 1 % needs 299 (95 % confidence). Closed-course trials start with an exploratory set of 10 per parameter point and are extended where the WP-V-02 target requires it |
 | Abort | Any trial is aborted by the safety driver per WP-V-07 §8; an aborted trial counts as a **failure** unless the abort cause is unrelated to the item (recorded) |
-| Simulation | MetaDrive (M4) results are recorded but get no credit until the WP-V-02 §5.3 fidelity case is approved for that scenario family |
+| Simulation | MetaDrive (M4) results are recorded but get no credit until the WP-V-02 §5.3 fidelity case is approved for that scenario family (lead decision, DQ-139). Each result is labelled as synthetic (WP-V-02 §5.3.5, DSR-12), reported on its own line and never pooled with real-world trials. Families and the scenarios MetaDrive cannot represent: WP-V-02 §5.3.2 |
 
 Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaDrive simulation, M5 longitudinal planner maneuver tests (`openpilot/selfdrive/test/longitudinal_maneuvers/`), M8 closed course, M9 public road with safety driver. "Fail" means the pass criterion is not met in a trial.
 

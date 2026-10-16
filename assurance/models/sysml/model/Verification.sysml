@@ -1904,7 +1904,7 @@ package LionDriverVerification {
         doc /* Worst-case lateral disturbance inside the envelope */
         :>> spec = "WP-V-01 §5.2";
         :>> level = "VS-VAL";
-        :>> names = "HE-01.1, HE-01.2, HE-01.3, HE-01.4";
+        :>> names = "HE-01.1, HE-01.2, HE-01.3, HE-01.4, HE-01.5";
         objective {
             verify LionDriverRequirements::sg_01;
         }
