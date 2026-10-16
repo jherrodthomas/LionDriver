@@ -253,33 +253,34 @@ Note on SG-02 in curves: [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) �
 
 ## 9. FSR → SG trace
 
-| FSR | SG-01 | SG-02 | SG-03 | SG-04 | SG-05 | SG-06 | SG-07 |
-|---|---|---|---|---|---|---|---|
-| FSR-01.01–01.04 | ● | | | | | | |
-| FSR-01.05 | ● | | ● | ● | ● | | |
-| FSR-01.06 | ● | | ● | ● | ● | | |
-| FSR-01.07 | ● | ● | ● | ● | | ● | |
-| FSR-01.08 | ● | | ● | ● | | | |
-| FSR-01.09 | ● | ● | ● | ● | ● | ● | ● |
-| FSR-01.10 | ● | | ● | ● | ● | | ● |
-| FSR-01.11 | ● | | ● | | | | ● |
-| FSR-01.12 | ● | | | | | | |
-| FSR-01.13 | ● | | | | ● | | |
-| FSR-01.14 | ● | | | | | | |
-| FSR-02.01–02.05 | | ● | | | | | |
-| FSR-02.06–02.08 | | ● | | | | ● | |
-| FSR-02.09 | | ● | | ● | | ● | |
-| FSR-02.10–02.11 | | ● | | | | ● | |
-| FSR-03.01, 03.03–03.06 | | | ● | | | | |
-| FSR-03.02 | | | ● | ● | | | |
-| FSR-04.01–04.06 | | | | ● | | | |
-| FSR-05.01–05.04, 05.07 | | | | | ● | | |
-| FSR-05.05–05.06 | | ● | | | ● | ● | |
-| FSR-06.01–06.05 | | | | | | ● | |
-| FSR-07.01–07.05 | | | | | | | ● |
+| FSR | SG-01 | SG-02 | SG-03 | SG-04 | SG-05 | SG-06 | SG-07 | SG-08 |
+|---|---|---|---|---|---|---|---|---|
+| FSR-01.01–01.04 | ● | | | | | | | |
+| FSR-01.05 | ● | | ● | ● | ● | | | |
+| FSR-01.06 | ● | | ● | ● | ● | | | |
+| FSR-01.07 | ● | ● | ● | ● | | ● | | |
+| FSR-01.08 | ● | | ● | ● | | | | |
+| FSR-01.09 | ● | ● | ● | ● | ● | ● | ● | |
+| FSR-01.10 | ● | | ● | ● | ● | | ● | |
+| FSR-01.11 | ● | | ● | | | | ● | |
+| FSR-01.12 | ● | | | | | | | |
+| FSR-01.13 | ● | | | | ● | | | |
+| FSR-01.14 | ● | | | | | | | |
+| FSR-02.01–02.05 | | ● | | | | | | |
+| FSR-02.06–02.08 | | ● | | | | ● | | ● |
+| FSR-02.09 | | ● | | ● | | ● | | ● |
+| FSR-02.10–02.11 | | ● | | | | ● | | |
+| FSR-03.01, 03.03–03.06 | | | ● | | | | | |
+| FSR-03.02 | | | ● | ● | | | | |
+| FSR-04.01–04.06 | | | | ● | | | | |
+| FSR-05.01–05.04, 05.07 | | | | | ● | | | |
+| FSR-05.05–05.06 | | ● | | | ● | ● | | |
+| FSR-06.01–06.05 | | | | | | ● | | |
+| FSR-07.01–07.05 | | | | | | | ● | |
+
+SG-08 (HARA v0.4, unresponsive driver, ASIL A) is traced to the existing DM requirements FSR-02.06…02.09 so that the goal has requirements; their ASIL attribute (QM in §7) is not yet revised for it (WP-C-03 §6.1 observation 3; FSC update pending).
 
 Every SG has at least one FSR allocated to E-03 (or to an external measure plus E-03), except the warning part of SG-02/SG-06, which relies on FSR-01.07 + FSR-02.05 on E-03 as described in §5.2.
-
 ## 10. Allocation summary
 
 | Element | FSRs | Highest ASIL |

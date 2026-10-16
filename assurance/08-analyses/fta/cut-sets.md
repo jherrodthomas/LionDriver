@@ -16,7 +16,7 @@ Row results: *match* = a computed cut set; *effective* = omits only latent event
 | SG-04 | 21 | 6 | 12 | 12 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-05 | 7 | 6 | 8 | 7 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
 | SG-06 | 32 | 3 | 8 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| SG-07 | 11 | 10 | 11 | 10 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SG-07 | 17 | 15 | 16 | 15 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## SG-01: uncontrollable lateral motion, or steering actuation while not engaged
 
@@ -307,7 +307,7 @@ Top event TE-06. 32 minimal cut sets.
 
 ## SG-07: suppression, delay or alteration of the stock PCS/AEB
 
-Top event TE-07. 11 minimal cut sets.
+Top event TE-07. 17 minimal cut sets.
 
 ### Computed cut sets
 
@@ -321,9 +321,15 @@ Top event TE-07. 11 minimal cut sets.
 | 6 | 1 BE + 0 UE | 1 | {BE-7.06} |  | MCS-07.6 |
 | 7 | 1 BE + 0 UE | 1 | {BE-7.11} |  | MCS-07.9 |
 | 8 | 1 BE + 0 UE | 1 | {BE-7.12} |  | MCS-07.11 |
-| 9 | 2 BE + 0 UE | 1 | {BE-7.07, BE-7.08} | L | MCS-07.7 |
-| 10 | 2 BE + 0 UE | 2 | {BE-7.09, BE-7.10} |  | MCS-07.8 |
-| 11 | 1 BE + 1 UE | 1 | {BE-7.13, UE-7.14} |  | MCS-07.10 |
+| 9 | 1 BE + 0 UE | 1 | {BE-7.17} |  | MCS-07.12 |
+| 10 | 1 BE + 0 UE | 1 | {BE-7.18} |  | MCS-07.13 |
+| 11 | 1 BE + 0 UE | 1 | {BE-7.19} |  | MCS-07.14 |
+| 12 | 2 BE + 0 UE | 1 | {BE-7.07, BE-7.08} | L | MCS-07.7 |
+| 13 | 2 BE + 0 UE | 2 | {BE-7.09, BE-7.10} |  | MCS-07.8 |
+| 14 | 2 BE + 0 UE | 2 | {BE-7.10, BE-7.15} |  | MCS-07.15 |
+| 15 | 2 BE + 0 UE | 1 | {BE-7.10, BE-7.16} | L | MCS-07.15 |
+| 16 | 1 BE + 1 UE | 1 | {BE-7.13, UE-7.14} |  | MCS-07.10 |
+| 17 | 2 BE + 0 UE | 1 | {BE-7.20, BE-7.21} | L | MCS-07.16 |
 
 ### Table rows of WP-A-04
 
@@ -340,3 +346,8 @@ Top event TE-07. 11 minimal cut sets.
 | MCS-07.9 | 1 | {BE-7.11} | match | — |
 | MCS-07.10 | 1 + ext. | {BE-7.13, UE-7.14} | match | — |
 | MCS-07.11 | 1 | {BE-7.12} | match | — |
+| MCS-07.12 | 1 | {BE-7.17} | match | — |
+| MCS-07.13 | 1 | {BE-7.18} | match | — |
+| MCS-07.14 | 1 | {BE-7.19} | match | — |
+| MCS-07.15 | 2 (BE-7.16 effective 1 + latent) | {BE-7.15 or BE-7.16, BE-7.10} | match | — |
+| MCS-07.16 | 2 (effective 1 + latent) | {BE-7.20, BE-7.21} | match | — |

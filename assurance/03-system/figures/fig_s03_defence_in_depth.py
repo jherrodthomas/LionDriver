@@ -143,6 +143,7 @@ SG_LABEL = {
   "SG-05": ("Release on driver action", "release control immediately when the driver brakes, cancels"),
   "SG-06": ("Decel. loss without warning", "lose longitudinal deceleration capability while engaged without"),
   "SG-07": ("Stock PCS/AEB untouched", "suppress, delay or alter the vehicle's stock pre-collision"),
+  "SG-08": ("Unsupervised driving stopped", "continue automated control while the driver is not supervising"),
 }
 
 # ---------------------------------------------------------------- data
