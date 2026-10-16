@@ -32,10 +32,11 @@ from simulate import DT_US, EPS_SCALE, LIMITS, SoC, _decode_steer  # noqa: E402
 sys.path.insert(0, str(ROOT / "opendbc_repo"))
 from opendbc.car.lateral import apply_meas_steer_torque_limits  # noqa: E402
 from opendbc.car.toyota import toyotacan  # noqa: E402
-from opendbc.car.toyota.carcontroller import MAX_USER_TORQUE  # noqa: E402
 from opendbc.car.toyota.values import STEER_THRESHOLD  # noqa: E402
 
 TABLE = HERE.parent / "results" / "override-l2.md"
+# read from the car controller source: importing it would pull in its SecOC dependency (pycryptodome)
+MAX_USER_TORQUE = int(corolla._read("car/toyota/carcontroller.py", r"\nMAX_USER_TORQUE = (\d+)"))
 STEER_MAX = 1500
 SPEED_KPH = 110.0          # ODD-H bound (DQ-260)
 T_DRIVER = 2.0             # s: driver input starts (the LKA command ramps up from 0.3 s and is held from about 1.3 s)
