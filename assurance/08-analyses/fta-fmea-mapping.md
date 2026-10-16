@@ -4,7 +4,7 @@
 |---|---|
 | Purpose | Link the deductive fault trees of [WP-A-04](WP-A-04-system-fta-fmea.md) with the inductive FMEAs of [fmea/analyses/](fmea/analyses/) and check each against the other (ISO 26262-9:2018 §8, combination of FTA and FMEA) |
 | Data | [fta-fmea-map.yaml](fta-fmea-map.yaml), checked by `tools/safety/fmea_lint.py` in CI; drawn on the [fault tree sheets](fta/README.md) as dark tags under each event |
-| Status | **SG-04 and SG-01 mapped.** SG-04 pilot 2026-10-13, findings F-1…F-10 resolved the same day (WP-A-04 v0.9; SW FMEA rev 0.7, DFMEA rev 0.3, System FMEA rev 0.6, PFMEA rev 0.3, HARA rev 0.4). SG-01 2026-10-16, findings F-11…F-16: tree findings resolved in WP-A-04 v1.0, FMEA findings F-14 and F-15 open for the FMEA owners. Draft, AI-assisted; every link needs review. SG-02, SG-03, SG-05, SG-06 and SG-07 are not mapped yet |
+| Status | **SG-04, SG-01 and SG-07 mapped.** SG-04 pilot 2026-10-13, findings F-1…F-10 resolved the same day (WP-A-04 v0.9; SW FMEA rev 0.7, DFMEA rev 0.3, System FMEA rev 0.6, PFMEA rev 0.3, HARA rev 0.4). SG-01 2026-10-16, findings F-11…F-16: tree findings resolved in WP-A-04 v1.0, FMEA findings F-14 and F-15 open for the FMEA owners. SG-07 2026-10-16, with its tree re-based on the harness box switches (WP-A-04 v1.1, RR-2026-010); findings F-17…F-19 open for the FMEA owners. Draft, AI-assisted; every link needs review. SG-02, SG-03, SG-05 and SG-06 are not mapped yet |
 
 ## 1. Method
 
@@ -68,9 +68,25 @@ The justified modes are of two kinds. Five are QM host monitors that the tree do
 
 The eight warnings `fmea_lint.py` now reports for the map are F-14 and F-15 below. They stay until the FMEA owners decide them; the map shows the tree's view.
 
+## 2b. SG-07 result
+
+The SG-07 tree was re-based first on [RR-2026-010](../04-hardware/reviews/RR-2026-010.md). The intercept "relay" is two DG419LE analog switches in comma's harness box. They are powered from the box supply, driven by SBU1, pulled to pass-through by R2/R3, and clamped by D2/D3, and they give no position feedback. The DFMEA rev 0.5 modes DFM-010.C1…C3, DFM-020 and DFM-021 each became an event (WP-A-04 v1.1).
+
+`fmea_lint.py --report`: *FTA-FMEA map SG-07: 21 events (backed 13, by design 1, external 1, unbacked 6); 17 FMEA modes reach SG-07 (in the tree 15, justified 2, tree gaps 0)*. The tree has 17 minimal cut sets (was 11), each covered by a row of WP-A-04 §8.1. Fifteen are of effective order ≤ 1: SG-07 is still mostly single points.
+
+| | Count |
+|---|---|
+| Events on the v1.0 tree | 14 (13 basic, 1 undeveloped), none mapped |
+| FMEA modes whose effects cite HZ-011 (SG-07) | 17 |
+| … that matched an event or gate of the v1.0 tree | 10 (SFM-033 and SFM-034 on gates G7.1 and G7.3) |
+| … that needed a new or re-cut event (harness box, F-18) | 5 (DFM-008; DFM-010, split into three events; DFM-020; DFM-021; SWF-015) |
+| … justified outside the tree | 2 (PFM-004, PFM-007; as for SG-01) |
+| Events with no FMEA mode | 6 (F-17) |
+| Single points whose FMEA claims a detection | 1 (BE-7.05, F-19) |
+
 ## 3. Findings
 
-These were review input for WP-A-04 and the FMEAs. F-1…F-10 (SG-04) are resolved in draft; of F-11…F-16 (SG-01), the tree findings are resolved in WP-A-04 v1.0 and the FMEA findings are open (last column). Every resolution needs the same review as the links.
+These were review input for WP-A-04 and the FMEAs. F-1…F-10 (SG-04) are resolved in draft; of F-11…F-16 (SG-01), the tree findings are resolved in WP-A-04 v1.0 and the FMEA findings are open; F-17…F-19 (SG-07) are open for the FMEA owners (last column). Every resolution needs the same review as the links.
 
 | ID | Finding | Affects | Resolution (2026-10-13) |
 |---|---|---|---|
@@ -92,9 +108,14 @@ These were review input for WP-A-04 and the FMEAs. F-1…F-10 (SG-04) are resolv
 | F-15 | BE-1.17 (`0x1D2` stuck at "cruise active" with a valid checksum) is backed only by SWF-006, which covers loss of the frame and its detection time. No FMEA mode covers a stuck value while valid frames keep arriving (no counter on `0x1D2`, GAP-01). The brake case BE-1.16 has SWF-005 | SW FMEA | **Open, for the SW FMEA owner:** a cause under SWF-007 or SWF-006 for a stuck `PCM_CRUISE` value, with TSR-401…TSR-406 as the measure |
 | F-16 | Eleven modes reach SG-01 but are no tree event: five QM host monitors the tree does not credit (SFM-014, SFM-016, SFM-030, SWF-034, SWF-037) and six release, installation and configuration modes (PFM-003, -004, -005, -007, -016, -017) | — | **Justified** in `not_in_fta` with the reasons of §2a. A reviewer should confirm that the trees may assume the released reference configuration and leave these to WP-P-10 and WP-O-02 |
 
+| F-17 | Six SG-07 events have no FMEA failure mode: BE-7.02 power-save `0xe7` and BE-7.03 bus configuration commands accepted in a car mode (FFI-CM-08, -09); BE-7.04 forwarding queue overflow or latency; BE-7.07 PCS IDs in the TX whitelist without a content check; BE-7.08 SoC sends PCS-relevant frames; BE-7.13 ACC request during a PCS event. They exist only as WP-A-02 FFI rows or WP-A-04 §10 SFMEA rows. BE-7.06 (camera-side FDCAN or transceiver) has FMEDA SG-009 rows but no DFMEA mode | SW FMEA, System FMEA, DFMEA | **Open, for the FMEA owners** (as F-10): one SW FMEA mode per event (the first five with TSR-513, TSR-707, TSR-705 as measures), a System FMEA mode for BE-7.13, and a DFMEA mode for the camera-side transceiver. `fmea_lint.py` reports each as unbacked until then |
+| F-18 | The SG-07 tree drew the intercept as a relay (welded contacts, a passive stock path). RR-2026-010 shows powered switches: a stuck switch, a stuck drive and an open pull-down are three different causes; a lost box supply and a shorted clamp break or load the stock path whatever the switch state; the car-side transceiver can block bus 0. Diagnostic frames from the item (SWF-015) had no branch. DFM-016 (SoC drives the MCU into the bootloader) now backs BE-7.10 but cites HZ-002/HZ-005 only | WP-A-04 §8, DFMEA | **Tree resolved 2026-10-16 (v1.1):** G7.3 split into BE-7.09, BE-7.15, BE-7.16; G7.4 adds BE-7.17 (SPF-15), BE-7.18, BE-7.19; new G7.6 (BE-7.20, BE-7.21). **Open, for the DFMEA owner:** an HZ-011 effect on DFM-016. The DFM-020 effects are derived from the drawing; the bench test (DFM-ACT-014) decides MCS-07.12 |
+| F-19 | BE-7.05 (block list wrongly includes a PCS message) is a single point in the tree, but its only FMEA cause, SWF-011.C1, claims detection D=3. The rating credits the opendbc safety tests of the TX table at design time; nothing detects the fault in the field | SW FMEA | **Open, for the SW FMEA owner:** confirm that D=3 rests on design-time tests that cover every forwarded PCS ID (TSR-704), or raise it. The tree stays a single point either way (MCS-07.5) |
+
 ## 4. Next
 
 1. Review the SG-04 links, the F-1…F-10 resolutions and the new FMEA rows (SWF-050…053, SWF-003.C3, DFM-019); F-3 decided 2026-10-14 (DQ-002).
 2. Review the SG-01 links and F-11…F-13 (WP-A-04 v1.0). The FMEA owners decide F-14 and F-15.
-3. Map SG-07 with the harness-box re-base of its tree (RR-2026-010: two powered analog switches, DFM-020, DFM-021, DFM-010.C3), then SG-02, SG-03, SG-05 and SG-06, and add each to `scope`. SG-03 still borrows the lateral G-ENV for acceleration (F-1); fix that when SG-03 is mapped.
-4. Retire the SFMEA-01…SFMEA-39 table of WP-A-04 §10 in favour of [system-fmea.yaml](fmea/analyses/system-fmea.yaml), so the map has one System FMEA to point at.
+3. Review the SG-07 links and the re-based tree (WP-A-04 v1.1). The FMEA owners decide F-17…F-19. When the lead decides DQ-209 (accept comma's box, or build a LionDriver adapter), re-draw G7.3 and G7.4 for the chosen design.
+4. Map SG-02, SG-03, SG-05 and SG-06 the same way, and add each to `scope`. SG-03 still borrows the lateral G-ENV for acceleration (F-1); fix that when SG-03 is mapped.
+5. Retire the SFMEA-01…SFMEA-39 table of WP-A-04 §10 in favour of [system-fmea.yaml](fmea/analyses/system-fmea.yaml), so the map has one System FMEA to point at.

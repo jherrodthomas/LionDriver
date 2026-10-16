@@ -22,10 +22,11 @@
 #
 # Status: SG-04 pilot, 2026-10-13; findings F-1..F-10 resolved the same day (WP-A-04 v0.9, SW FMEA rev 0.7, DFMEA rev 0.3,
 # System FMEA rev 0.6, PFMEA rev 0.3). SG-01 added 2026-10-16 (WP-A-04 v1.0; findings F-11..F-16, F-14 and F-15 open for
-# the FMEA owners). Draft, AI-assisted; each link needs review.
+# the FMEA owners). SG-07 added 2026-10-16 with its tree re-based on the harness box switches (WP-A-04 v1.1, RR-2026-010;
+# findings F-17..F-19 open for the FMEA owners). Draft, AI-assisted; each link needs review.
 schema_version: 1
 source: assurance/08-analyses/WP-A-04-system-fta-fmea.md
-scope: [SG-01, SG-04]
+scope: [SG-01, SG-04, SG-07]
 
 events:
   # ---- SG-04 tree (§5)
@@ -240,6 +241,103 @@ events:
     class: systematic_sw
     fmea: [SWF-013]
 
+  # ---- SG-07 tree (§8), re-based on the harness box switches (RR-2026-010)
+  - id: BE-7.01
+    class: random_hw
+    fmea: [DFM-004, DFM-006, SWF-018]
+    fmeda: [fmeda-sg009:FMD-001, fmeda-sg009:FMD-005, fmeda-sg009:FMD-008, fmeda-sg009:FMD-025]
+    note: DFM-004 (execution stops with the switches driven), DFM-006 (IWDG does not reset), SWF-018 (safety task hangs or is starved)
+  - id: BE-7.02
+    class: systematic_sw
+    gap: >-
+      No SW FMEA mode for the power-save command 0xe7 accepted in a car mode (FFI-CM-08, TSR-513). F-17
+  - id: BE-7.03
+    class: systematic_sw
+    gap: >-
+      No SW FMEA mode for the bus configuration commands 0xe5, 0xde, 0xf1 accepted in a car mode (FFI-CM-09, TSR-513).
+      F-17
+  - id: BE-7.04
+    class: systematic_sw
+    gap: >-
+      No SW FMEA mode for forwarding queue overflow or latency under worst-case load (TSR-707; can_common.h:165). F-17
+  - id: BE-7.05
+    class: systematic_sw
+    fmea: [SWF-011]
+    fmeda: [fmeda-sg009:FMD-002, fmeda-sg009:FMD-006]
+    note: SWF-011.C1 (0x283/0x344 marked check_relay, or a forwarding defect); the FMEDA rows are the random-HW form of a wrong forwarding decision
+  - id: BE-7.06
+    class: random_hw
+    fmeda: [fmeda-sg009:FMD-017, fmeda-sg009:FMD-011]
+    note: >-
+      No DFMEA failure mode for the camera-side FDCAN or transceiver (SFMEA-39); only FMEDA SG-009 rows. F-17
+  - id: BE-7.07
+    class: systematic_sw
+    gap: >-
+      No SW FMEA mode for 0x344, 0x411 or DSU IDs in the TX whitelist without a content check (GAP-42, TSR-705;
+      removed in the reference build). SFMEA-05 of WP-A-04 §10 is the only row. F-17
+  - id: BE-7.08
+    class: systematic_sw
+    gap: >-
+      No System or SW FMEA mode for the SoC sending PCS-relevant frames (QM fault or compromise; SFMEA-05). F-17
+  - id: BE-7.09
+    class: random_hw
+    fmea: [DFM-010, SFM-034]
+    fmeda: [fmeda-sg009:FMD-019]
+    note: DFM-010.C1 (U1 or U2 stuck in intercept, IN damaged high)
+  - id: BE-7.10
+    class: random_hw
+    fmea: [DFM-004, DFM-016]
+    fmeda: [fmeda-sg009:FMD-013, fmeda-sg009:FMD-024, fmeda-sg009:FMD-026]
+    note: >-
+      Device off, MCU in reset (DFM-004 hang to reset, FMD-026 spurious reset) or in the ROM bootloader (DFM-016, which
+      cites HZ-002/HZ-005 only, F-18)
+  - id: BE-7.11
+    class: installation
+    fmea: [PFM-008, PFM-006, PFM-014]
+    fmeda: [fmeda-sg009:FMD-024]
+    note: PFM-008 (connector not latched), PFM-006 (wrong or damaged harness); PFM-014 (stock path not verified after installation) leaves it undetected
+  - id: BE-7.12
+    class: random_hw
+    fmea: [DFM-013]
+    fmeda: [fmeda-sg009:FMD-022, fmeda-sg009:FMD-023]
+  - id: BE-7.13
+    class: systematic_sw
+    gap: >-
+      No SW FMEA mode for an ACC request sent during a stock PCS event (AOU-04R covers the PCM side). F-17
+  - id: UE-7.14
+    class: external
+    ref: AOU-04R
+  - id: BE-7.15
+    class: random_hw
+    fmea: [DFM-010]
+    fmeda: [fmeda-sg009:FMD-020]
+    note: DFM-010.C2 (SBU1 drive stuck high)
+  - id: BE-7.16
+    class: random_hw
+    fmea: [DFM-010]
+    fmeda: [fmeda-sg009:FMD-028]
+    note: DFM-010.C3 (pull-down R2 or R3 open, RR-2026-010 F-03)
+  - id: BE-7.17
+    class: random_hw
+    fmea: [DFM-020]
+    fmeda: [fmeda-sg009:FMD-030, fmeda-sg009:FMD-031]
+    note: DFM-020.C1 (ignition branch or D1 open without comma power), DFM-020.C2 (VIN shorted, D4)
+  - id: BE-7.18
+    class: random_hw
+    fmea: [DFM-021]
+    fmeda: [fmeda-sg009:FMD-033]
+  - id: BE-7.19
+    class: random_hw
+    fmea: [DFM-008]
+    fmeda: [fmeda-sg009:FMD-016]
+  - id: BE-7.20
+    class: by_design
+    reason: The ELM327 TX hook passes any ISO 15765 frame by design (SWF-015.C1); it is the standing condition under which BE-7.21 acts.
+  - id: BE-7.21
+    class: systematic_sw
+    fmea: [SWF-015]
+    note: SWF-015 (diagnostic frames reach vehicle ECUs while driving or before engagement)
+
 gates:
   - id: G4.1
     fmea: [SFM-009]
@@ -256,6 +354,10 @@ gates:
   - id: G1.3
     fmea: [SFM-006]
   - id: G1.4
+    fmea: [SFM-034]
+  - id: G7.1
+    fmea: [SFM-033]
+  - id: G7.3
     fmea: [SFM-034]
 
 not_in_fta:
@@ -320,3 +422,12 @@ not_in_fta:
     goal: SG-01
     kind: justified
     reason: "As PFM-005: a rollback outside the evidence replaces the analysed item. Controlled by WP-O-02."
+  # ---- SG-07
+  - fm: PFM-004
+    goal: SG-07
+    kind: justified
+    reason: "As for SG-01: a release without the required verification adds no event; it leaves the tree's events unverified. Controlled by WP-P-10."
+  - fm: PFM-007
+    goal: SG-07
+    kind: justified
+    reason: "As for SG-01: a vehicle outside the reference configuration is outside the item definition and AOU-04R. Controlled by the installation check (WP-O-02)."

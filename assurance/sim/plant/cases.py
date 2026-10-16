@@ -1,0 +1,39 @@
+"""Cases of the plant model: the faults of ../faults.yaml, the EPS-hold reruns, and three nominal runs."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import yaml
+
+from simulate import Case
+
+CATALOG = Path(__file__).resolve().parents[1] / "faults.yaml"
+
+NOMINAL = [
+  Case("N-1", "No fault, straight", "none", "straight", "—", "—", t_fault=6.0, duration=4.0),
+  Case("N-2", "No fault, curve inside the ODD (1.5 m/s²)", "none", "curve", "—", "—", t_fault=None, duration=6.0),
+  Case("N-3", "No fault, curve at the ODD bound R_ODD (2.5 m/s²)", "none", "curve-odd-bound", "SG-02", "SFM-004",
+       t_fault=None, duration=6.0, note="observation for WP-C-02 OI-2: the curve needs more than LAT_ACCEL_FACTOR"),
+]
+
+
+def catalog() -> list[dict]:
+  return yaml.safe_load(CATALOG.read_text(encoding="utf-8"))["faults"]
+
+
+def from_entry(f: dict) -> Case:
+  return Case(f["id"], f["title"], f["kind"], f["road"], ", ".join(f["sg"]), ", ".join(f["causes"]),
+              wpv05=f.get("wp_v_05", ""), t_fault=f.get("t_fault"), engaged=f.get("engaged", True),
+              figure=f.get("figure", False), longitudinal=f.get("longitudinal", False), note=f.get("note", ""),
+              tsr=", ".join(f.get("tsr", [])), pcs=f.get("pcs", False))
+
+
+def all_cases() -> list[Case]:
+  out = list(NOMINAL)
+  for f in catalog():
+    c = from_entry(f)
+    out.append(c)
+    if f.get("eps_hold"):
+      out.append(Case(**{**c.__dict__, "id": c.id + "-H", "eps": "hold", "figure": False}))
+  return out
