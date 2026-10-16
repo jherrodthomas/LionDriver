@@ -82,6 +82,20 @@
 # Rev 0.19 (2026-10-16): simulation evidence (no rating credit, msr-plan §4.2) from WP-S-04 v0.11 §3.9 (#145): the steering-override
 # run on SFM-018.C1/C2 (host drops LKA within 0.2 s in 18 of 36 runs, never in 8) and N-3 on SFM-004.C1-C3 (saturation at the ODD
 # curve bound). No rating changes.
+# Rev 0.20 (2026-10-16): SFM-026 (alert not presented) and SFM-027 (alert late) also end in HZ-013: the driver-monitoring escalation
+# goes through the same HMI path (FTA F-37; SW FMEA SWF-035, SWF-082, #146). Severity stays 10; no rating changes.
+# Rev 0.21 (2026-10-16): end effects the fault trees already rely on (fta-fmea-map warnings): HZ-005 on SFM-013 (unintended
+# engagement), SFM-017 (brake does not disengage) and SFM-034 (intercept in pass-through: stock ACC and item requests combine);
+# HZ-008 on SFM-021 (stock cruise survives the cancel) and SFM-028 (displayed state says released). Severity stays 10; no rating changes.
+# Rev 0.22 (2026-10-16): new SFM-037 (longitudinal command frozen at last value), the counterpart of SFM-006 that the SG-03 tree
+# lacked (fta-fmea-map BE-1.19 note). C1 controlsd hang (SWF-047, M 7: PCM reaction to missing ACC_CONTROL unknown), C2 plannerd stops
+# (SWF-068, M 8: soft disable exceeds the 1 s FTTI), C3 stale data with fresh timestamps (M 9). All AP H; existing actions.
+# Rev 0.23 (2026-10-16): new SFM-038 (warning of a lateral-control fault or limit late, not escalated or missing), backing FTA SG-02 BE-2.08
+# and BE-2.24, which had no FMEA mode: C1 EPS-fault warning stuck at the low-priority prompt after a recent override (car_events.py, GAP-03), C2 panda epsFault
+# read by no SoC process, C3 steerSaturated conditions (WP-S-04 §3.8.1). O 8 (design gaps), AP H. New SFM-ACT-023; C3 uses SFM-ACT-021.
+# Rev 0.24 (2026-10-16): the zero-awareness reaction is decided (DQ-365 A, which absorbs DQ-340): SFM-ACT-005 moves from
+# decision_pending to open, names TSR-633 (stop in lane, hold, lock out) and the preliminary WP-S-04 §3.8.4 time. Not implemented at
+# BL-005, so SFM-025.C1 keeps its ratings (O 8, D 9, M 10).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -90,7 +104,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.19"
+  revision: "0.24"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
@@ -1835,6 +1849,7 @@ failure_modes:
       - {level: local, description: "State machine enters enabled without ENABLE or despite NO_ENTRY"}
       - {level: next_higher, description: "Item starts actuating"}
       - {level: end, description: "Unexpected steering/acceleration; driver surprised", hazard: HZ-010, severity: 10}
+      - {level: end, description: "Contributes to HZ-005: positive acceleration requested after an engagement the driver did not ask for", hazard: HZ-005, severity: 10}
     severity: 10
     safety_mechanisms:
       - description: NO_ENTRY events block engagement (state.py)
@@ -2209,6 +2224,7 @@ failure_modes:
       - {level: local, description: "pedalPressed not raised or not acted on"}
       - {level: next_higher, description: "Item keeps requesting acceleration/steering during driver braking"}
       - {level: end, description: "Driver cannot retake control as expected (SAFETY.md requirement 1 violated)", hazard: HZ-008, severity: 10}
+      - {level: end, description: "Contributes to HZ-005: the item keeps requesting acceleration while the driver brakes", hazard: HZ-005, severity: 10}
     severity: 10
     safety_mechanisms:
       - description: selfdrived raises pedalPressed (USER_DISABLE) on brake press
@@ -2524,6 +2540,7 @@ failure_modes:
       - {level: local, description: "Cancel request not effective; PCM cruise enabled while item is disabled"}
       - {level: next_higher, description: "Vehicle continues under stock cruise"}
       - {level: end, description: "Driver believes automation is off (mode confusion)", hazard: HZ-012, severity: 10}
+      - {level: end, description: "Contributes to HZ-008: the driver cancels but stock cruise keeps longitudinal control", hazard: HZ-008, severity: 10}
     severity: 10
     safety_mechanisms:
       - description: controlsd sends cruiseControl.cancel when cruise enabled and item not enabled
@@ -2852,7 +2869,8 @@ failure_modes:
       Observation: in BL-001, events.py maps driverDistracted3 and driverUnresponsive3 only to an
       ET.PERMANENT alert; no SOFT_DISABLE/IMMEDIATE_DISABLE is attached, so reaching awareness 0 does not
       by itself disengage. This may be a deliberate design choice (avoid dropping control on an
-      incapacitated driver). It needs an explicit safety-concept decision (SFM-ACT-005); unchanged at BL-004 and BL-005.
+      incapacitated driver). Unchanged at BL-004 and BL-005. Decided since (DQ-365 A, 2026-10-16): stop in the lane, hold,
+      and lock out re-engagement until the driver responds (TSR-633); implementation is SFM-ACT-005.
       HARA input: driver incapacitated while engaged. Lead decision DQ-205 (2026-10-14, option A): the unresponsive
       driver is its own hazard with an ASIL A goal (here HZ-013, SG-010; H-09 and SG-08, ASIL A, in WP-C-03 v0.4), and its
       safe state is defined together with the zero-awareness reaction.
@@ -2868,6 +2886,7 @@ failure_modes:
       - {level: next_higher, description: "Driver not informed of state change"}
       - {level: end, description: "Driver unaware of handback; delayed response", hazard: HZ-012, severity: 10}
       - {level: end, description: "Contributes to HZ-006: item-initiated deceleration not announced (HE-04.3)", hazard: HZ-006, severity: 10}
+      - {level: end, description: "Contributes to HZ-013: driver-monitoring escalation alerts not shown or played, so an inattentive driver is not told; the forced deceleration does not depend on them (as SWF-082)", hazard: HZ-013, severity: 10}
     severity: 10
     safety_mechanisms:
       - description: Visual alert on device screen and audible alert through soundd (two channels)
@@ -2972,6 +2991,7 @@ failure_modes:
       - {level: local, description: "Alert rendered/played after a delay"}
       - {level: next_higher, description: "Less time for driver response"}
       - {level: end, description: "Reduced takeover margin", hazard: HZ-012, severity: 10}
+      - {level: end, description: "Contributes to HZ-013: a driver-monitoring escalation presented late, or hidden behind a higher-priority alert, so the inattentive driver is told late (as SWF-035)", hazard: HZ-013, severity: 10}
     severity: 10
     safety_mechanisms: []
     causes:
@@ -3014,6 +3034,7 @@ failure_modes:
       - {level: local, description: "UI shows engaged when disabled, or disabled when engaged"}
       - {level: next_higher, description: "Mode confusion"}
       - {level: end, description: "Driver stops steering/braking believing automation is active, or is surprised by actuation", hazard: HZ-012, severity: 10}
+      - {level: end, description: "Contributes to HZ-008: the driver believes control was released by the brake or cancel while the item still acts", hazard: HZ-008, severity: 10}
     severity: 10
     safety_mechanisms: []
     causes:
@@ -3407,6 +3428,7 @@ failure_modes:
       - {level: end, description: "Erratic stock or item behavior; stock functions lost", hazard: HZ-011, severity: 10}
       - {level: end, description: "Contributes to HZ-002: stock LKA and item steering requests combine on the bus", hazard: HZ-002, severity: 10}
       - {level: end, description: "Contributes to HZ-006: stock and item braking requests combine on the bus", hazard: HZ-006, severity: 10}
+      - {level: end, description: "Contributes to HZ-005: stock ACC and item acceleration requests combine on the bus", hazard: HZ-005, severity: 10}
     severity: 10
     safety_mechanisms:
       - description: relayMalfunction fault from panda -> IMMEDIATE_DISABLE
@@ -3627,6 +3649,199 @@ failure_modes:
       baseline BE-7.13 is always true (C1), so the PCM assumption carries the goal alone. Whether the item should stand down on a stock
       PCS event is a vehicle behaviour question for the lead (decision register DQ-300).
 
+  # ----- F2 Longitudinal command frozen (FTA SG-03 BE-1.19, map note "no System FMEA mode for a frozen longitudinal request") -----
+  - id: SFM-037
+    element: SFM-SE-001
+    function: SFM-FN-002
+    failure_mode: Longitudinal command frozen at last value
+    guideword: stuck
+    effects:
+      - {level: local, description: "Same acceleration request repeated regardless of lead, set speed or road"}
+      - {level: next_higher, description: "Vehicle holds a constant acceleration or deceleration request"}
+      - {level: end, description: "Unintended acceleration when the frozen request is positive", hazard: HZ-005, severity: 10}
+      - {level: end, description: "Insufficient deceleration when the lead brakes and the frozen request is not braking", hazard: HZ-007, severity: 10}
+    severity: 10
+    safety_mechanisms:
+      - description: Message liveness and frequency checks on inputs, longitudinalPlan included (sm.all_checks -> commIssue, SOFT_DISABLE)
+        ref: openpilot/selfdrive/selfdrived/selfdrived.py
+      - description: Panda acceleration envelope bounds the frozen value (a_max, a_min); it does not detect that the value is frozen
+        ref: opendbc_repo/opendbc/safety/modes/toyota.h
+      - description: 'BL-005, reference build (default): the panda revokes authority when ACC_CONTROL (0x343) has not arrived for 100 ms
+          while authority is granted (TSR-408, T-34); selfdrived raises controlsMismatch within 0.5 s (TSR-621)'
+        ref: opendbc_repo/opendbc/safety/safety.h
+        test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+    causes:
+      - id: SFM-037.C1
+        element: SFM-SE-013
+        linked_failure_mode: SWF-047
+        description: controlsd hangs while card keeps sending the last carControl
+        prevention_controls:
+        - description: Upstream review, ruff, ty; rated in the SW FMEA
+          ref: assurance/08-analyses/fmea/analyses/sw-fmea.yaml
+        detection_controls:
+        - description: 'As rated in the SW FMEA (SWF-047.C1, D 10 at BL-005): no test injects the exception that stops controlsd'
+        occurrence: 6
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-002
+        rationale: Rated in the SW FMEA (SWF-047.C1, O 6 D 10 at BL-005); this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          - 3
+          diagnostic: 'card stops sending once carControl is 0.1 s old (T-13); the panda then revokes authority within 0.11 s of the
+            last ACC_CONTROL frame (TSR-408, T-34) and selfdrived raises controlsMismatch within 0.5 s (TSR-621)'
+          system_response: controlsMismatch IMMEDIATE_DISABLE with alert; no ACC_CONTROL frame follows the stall and there is no active
+            zero request (TSR-109), so what the PCM does with the last request after the frames stop is not known (AOU, not measured)
+          effect_after_response: Last request held about 0.2 s, then frames stop; the PCM reaction to missing ACC_CONTROL is not established
+          severity_after: 10
+          frequency: 6
+          monitoring: 7
+          ap: H
+          timing:
+            ftti_ref: SG-03/04
+            ftti_ms: 1000
+            basis: unknown
+          rationale: 'M 7: the diagnostic targets the cause and the detection time is known (about 0.21 s), but the response ends in an
+            unmeasured PCM behaviour, so the reaction cannot be compared with the 1 s FTTI'
+          actions:
+          - SFM-ACT-015
+      - id: SFM-037.C2
+        element: SFM-SE-012
+        linked_failure_mode: SWF-068
+        description: plannerd stops or runs late while engaged, so controlsd keeps using the last longitudinalPlan
+        prevention_controls:
+        - description: Upstream openpilot code with upstream review; rated in the SW FMEA
+          ref: assurance/08-analyses/fmea/analyses/sw-fmea.yaml
+        detection_controls:
+        - description: 'As rated in the SW FMEA (SWF-068.C1, D 9 at BL-005): no test targets an exception in the planner loop'
+        occurrence: 4
+        detection: 9
+        ap: H
+        actions:
+        - SFM-ACT-002
+        rationale: Rated in the SW FMEA (SWF-068.C1, O 4 D 9 at BL-005); this row inherits that rating
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: selfdrived liveness check on longitudinalPlan (10 missed periods at 20 Hz, 0.5 s, T-14)
+          system_response: commIssue SOFT_DISABLE; actuation continues for the 3 s countdown (T-16) on the last plan
+          effect_after_response: Frozen request held up to about 3.5 s before the item disengages
+          severity_after: 10
+          frequency: 4
+          monitoring: 8
+          ap: H
+          timing:
+            ftti_ref: SG-03/04
+            ftti_ms: 1000
+            fdti_ms: 500
+            frti_ms: 3000
+            basis: code_derived
+          rationale: 'M 8: the diagnostic targets the cause, but 0.5 s detection plus the 3 s soft disable exceeds the 1 s FTTI'
+          actions:
+          - SFM-ACT-015
+      - id: SFM-037.C3
+        element: SFM-SE-019
+        description: Messaging delivers a stale longitudinal plan or command with fresh timestamps
+        prevention_controls:
+        - description: msgq/cereal stamp logMonoTime at publication; SubMaster tracks arrival time and frequency
+          ref: openpilot/cereal/messaging/__init__.py
+        detection_controls:
+        - description: No pre-release test targets this cause
+        occurrence: 5
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-002
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: Liveness checks use arrival and timestamps, so stale data with fresh timestamps passes them
+          system_response: None until another check trips
+          effect_after_response: 'Unchanged: longitudinal control acts on stale data'
+          severity_after: 10
+          frequency: 5
+          monitoring: 9
+          ap: H
+          timing:
+            basis: unknown
+          actions:
+          - SFM-ACT-015
+    notes: "HARA input: constant longitudinal request not following the lead or set speed. Counterpart of SFM-006 (lateral). Not cited by the fault trees yet (not_in_fta, tree_gap for SG-03 and SG-06)."
+
+  # ----- F6 Alerting: warnings for a lateral-control loss or limit (FTA SG-02 BE-2.08, BE-2.24) -----
+  - id: SFM-038
+    element: SFM-SE-001
+    function: SFM-FN-006
+    failure_mode: Warning of a lateral-control fault or limit late, not escalated or missing
+    guideword: late
+    effects:
+      - {level: local, description: "steerTempUnavailable not escalated to a take-over request, steerSaturated raised late or not at all, or the panda's EPS-fault flag not acted on"}
+      - {level: next_higher, description: "Driver not prompted to take over while lateral control is lost or limited"}
+      - {level: end, description: "Driver unaware of the loss or limit; lane departure", hazard: HZ-004, severity: 10}
+    severity: 10
+    safety_mechanisms:
+      - description: EPS-fault siren from the panda when LKA_STATE reports a fault for 1 s while authority is granted (TSR-516(b), T-28), independent of the host alerts
+        ref: panda/board/drivers/eps_fault_siren.h
+      - description: Lane departure warning as the car nears the line
+        ref: openpilot/selfdrive/controls/lib/ldw.py
+    causes:
+      - id: SFM-038.C1
+        element: SFM-SE-016
+        description: 'After any driver steering input in the last 1.5 s, or at standstill, a temporary EPS fault raises only
+          steerTempUnavailableSilent (a LOW-priority WARNING with a prompt chime and no soft disable, events.py:516-521), and it stays
+          latched while the fault lasts, so a long fault never escalates to the take-over request (car_events.py:162-177;
+          T-25, GAP-03)'
+        prevention_controls:
+        - description: Upstream openpilot design choice (a softer alert after an override); no LionDriver requirement on it
+          ref: openpilot/selfdrive/car/car_events.py
+        detection_controls:
+        - description: No LionDriver test targets this cause
+        occurrence: 8
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-023
+        msr_exempt: 'The cause is a defect of the warning path itself; its effect on detecting the lateral loss is rated in the MSR rows
+          of SFM-004.C2 and SFM-005 (msr-plan §3)'
+      - id: SFM-038.C2
+        element: SFM-SE-017
+        description: 'pandad publishes the panda fields epsFault and requestsRejected (pandad.cc:137-138), but no SoC process reads
+          them (txRateExceeded is read, TSR-615), so a panda-side EPS-fault refusal reaches the driver only through the panda siren and the stock EPS
+          path (SW FMEA SWF-025 notes)'
+        prevention_controls:
+        - description: None; the fields were added for the panda siren and logging
+          ref: openpilot/selfdrive/pandad/pandad.cc
+        detection_controls:
+        - description: No test targets this cause
+        occurrence: 8
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-023
+        msr_exempt: 'The cause is a defect of the warning path itself; the panda siren that remains is rated on SFM-005 and in the DFMEA
+          (msr-plan §3)'
+      - id: SFM-038.C3
+        element: SFM-SE-014
+        description: 'steerSaturated needs the controller saturated, a desired lateral acceleration above 1.0 m/s², an undershoot above
+          1.2x and no steering input for 2 s (selfdrived.py:465-479), and the controller reports saturation only after 0.4 s
+          (latcontrol.py, T-30); a gradual deficit therefore warns late or not at all (WP-S-04 §3.8.1)'
+        prevention_controls:
+        - description: Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job)
+          ref: scripts/lint/lint.sh
+        detection_controls:
+        - description: Lateral controller unit tests (saturation detection); targeted at nominal behaviour, not proven
+          test: openpilot/selfdrive/controls/tests/test_latcontrol.py
+        occurrence: 8
+        detection: 8
+        ap: H
+        actions:
+        - SFM-ACT-021
+        msr_exempt: 'The cause is the timing of the warning itself; it is rated as M 8 in the MSR rows of SFM-004.C1-C3 (rev 0.15,
+          WP-S-04 §3.8.1)'
+    notes: "HARA input: missing or late warning of a lateral loss or limit. Backs FTA SG-02 BE-2.08 (C1, C2) and BE-2.24 (C3)."
+
 actions:
   - id: SFM-ACT-001
     kind: design_change
@@ -3649,12 +3864,14 @@ actions:
     status: open
   - id: SFM-ACT-005
     kind: design_change
-    description: Decide in the FSC how the item reacts when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction
-      at BL-004 or BL-005) and implement the decision. DQ-205 (answered) makes this the safe state of SG-010 (WP-C-03 SG-08, ASIL A); the
-      reaction itself is still to be decided. The requirement is TSR-633 (terminal reaction, ASIL A proposed) with TSR-611 (WP-S-02 §12.3a);
-      the reaction is lead decision DQ-340. The H-09 FTTI is not yet set, so the timing rows of WP-S-04 §3.8.4 cannot be compared
+    description: Implement the reaction when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction
+      at BL-004 or BL-005), the safe state of SG-010 (WP-C-03 SG-08, ASIL A; DQ-205). Decided by the lead (DQ-365, option A, 2026-10-16) and
+      specified in TSR-633 (WP-S-02 v0.26) with TSR-611; keep the lane and decelerate in lane to a standstill with the terminal alert
+      sounding, hold the vehicle stopped, and lock out re-engagement and resumption until the driver responds. WP-S-04 v0.12 §3.8.4 gives a
+      preliminary time to the reaction (18 s vision, 30 s wheel-touch from loss of attention; OI-11); SFM-025.C1 is re-rated once TSR-633
+      is implemented and that time is confirmed
     owner: Jherrod Thomas
-    status: decision_pending
+    status: open
   - id: SFM-ACT-006
     kind: detection
     description: Establish on the reference car which stock TSS2 functions (PCS/AEB, FCW) remain available with LionDriver installed and longitudinal control
@@ -3766,3 +3983,10 @@ actions:
     description: 'Measure the FCW onset after a lead brakes hard (WP-S-04 T-31, M-12) and compare it with the §3.8.2 budget
       (about 0.6 s at a 1.0 s gap). For pipeline lag (SFM-012.C1), detect it within that budget or show that the FCW path
       does not depend on the lagging process'
+  - id: SFM-ACT-023
+    kind: design_change
+    status: open
+    description: 'Escalate every EPS fault that lasts while engaged to the take-over request (steerTempUnavailable, SOFT_DISABLE),
+      instead of keeping the low-priority steerTempUnavailableSilent prompt latched after a recent override or at standstill
+      (car_events.py:162-177; behaviour change queued for the lead by the FSC session as DQ-342), and act on the panda fields epsFault and requestsRejected on the host
+      (TSR-626(d), TSR-516(b)). SFM-038.C1, C2; FTA BE-2.08'
