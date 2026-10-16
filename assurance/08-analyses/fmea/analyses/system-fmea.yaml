@@ -55,6 +55,16 @@
 # Rev 0.14 (2026-10-16): taken in from WP-C-03 v0.4 (HARA session, #96): scope is the highway-only ODD (DQ-023); H-09 and SG-08
 # cited on SFM-025 and SFM-ACT-005 (the hara-mapping already maps HZ-013 -> H-09, SG-010 -> SG-08); SFM-013 notes that
 # engagement outside the ODD is misuse, not a fault cause. No rating changes.
+# Rev 0.15 (2026-10-16): taken in from WP-S-02 v0.22 §12.3a and WP-S-04 v0.7 §3.7/§3.8 (safety-concept session, #105). Actions
+# SFM-ACT-005/013/015/016/018 cite their TSRs (630-633 new); SFM-ACT-017 is completed. S, O, D and AP unchanged. MSR compared
+# with the new warning-path rows:
+# - SFM-004.C1-C3: M 7 -> 8. steerSaturated (0.4 s) is late for a credible 0.5-1.0 m/s² deficit (§3.8.1). SFM-ACT-021.
+# - SFM-012.C1: M 7 -> 8. Lag detection (1 s) plus soft disable (3 s) exceeds the 1.6 s FCW budget (§3.8.2). SFM-ACT-022.
+# - SFM-010.C2/C3: M 7 kept, FTTI row cited; the FCW onset is not derived (T-31). SFM-ACT-022.
+# - SFM-013.C1/C2: M 7 -> 5. The panda's per-frame engage-edge gate is within the 0.5 s budget (§3.8.3), mutation-tested;
+#   its latent fault is SFM-001.C2 (SFM-ACT-013, TSR-630).
+# - SFM-022.C3: M 7 kept; no FTTI until the H-09 goal has one (§3.8.4). Follow-up moves to SFM-ACT-005.
+# The TSRs are not implemented at BL-005 and are not credited.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -63,7 +73,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.14"
+  revision: "0.15"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
@@ -746,15 +756,24 @@ failure_modes:
           diagnostic: steerSaturated warns when the controller is saturated and undershoots the curve by more than 1.2x; the lane
             departure warning fires as the car nears the line
           system_response: Audible and visual warning; lateral control stays active, the driver steers
-          effect_after_response: Driver warned and takes over; no FTTI defined for the warning path
+          effect_after_response: Driver warned and takes over; in time only for a deficit of about 0.5 m/s² or less (WP-S-04 §3.8.1)
           severity_after: 10
           frequency: 6
-          monitoring: 7
+          monitoring: 8
           ap: H
           timing:
-            basis: unknown
+            ftti_ref: SG-02 insufficient lateral control (warning path, §3.8.1)
+            ftti_ms: 1100
+            fdti_ms: 400
+            frti_ms: 100
+            basis: code_derived
+          rationale: 'M 8: steerSaturated needs 0.4 s of saturation (T-30), which leaves the driver 0.6 s at a 1 m/s² deficit
+            and 1.05 s at 0.5 m/s², against a reaction time of 0.75-1.5 s (WP-S-04 §3.8.1). At the ODD curve bound the envelope
+            gives about 1.99 m/s² against 2.5-3.0 m/s² needed, so a deficit of 0.5-1.0 m/s² is credible and the warning is
+            late. FDTI and FRTI end at the alert; the driver reaction is not in them'
           actions:
           - SFM-ACT-017
+          - SFM-ACT-021
       - id: SFM-004.C2
         element: SFM-SE-030
         description: EPS limits or rejects torque request (EPS fault, torque limit, lockout)
@@ -776,15 +795,24 @@ failure_modes:
           diagnostic: steerSaturated warns when the controller is saturated and undershoots the curve by more than 1.2x; the lane
             departure warning fires as the car nears the line; an EPS fault signal also raises steerUnavailable
           system_response: Audible and visual warning; lateral control stays active, the driver steers
-          effect_after_response: Driver warned and takes over; no FTTI defined for the warning path
+          effect_after_response: Driver warned and takes over; in time only for a deficit of about 0.5 m/s² or less (WP-S-04 §3.8.1)
           severity_after: 10
           frequency: 5
-          monitoring: 7
+          monitoring: 8
           ap: H
           timing:
-            basis: unknown
+            ftti_ref: SG-02 insufficient lateral control (warning path, §3.8.1)
+            ftti_ms: 1100
+            fdti_ms: 400
+            frti_ms: 100
+            basis: code_derived
+          rationale: 'M 8: steerSaturated needs 0.4 s of saturation (T-30), which leaves the driver 0.6 s at a 1 m/s² deficit
+            and 1.05 s at 0.5 m/s², against a reaction time of 0.75-1.5 s (WP-S-04 §3.8.1). At the ODD curve bound the envelope
+            gives about 1.99 m/s² against 2.5-3.0 m/s² needed, so a deficit of 0.5-1.0 m/s² is credible and the warning is
+            late. FDTI and FRTI end at the alert; the driver reaction is not in them'
           actions:
           - SFM-ACT-017
+          - SFM-ACT-021
       - id: SFM-004.C3
         element: SFM-SE-013
         description: Controller tuning or torque model too weak for vehicle state
@@ -809,15 +837,24 @@ failure_modes:
           diagnostic: steerSaturated warns when the controller is saturated and undershoots the curve by more than 1.2x; the lane
             departure warning fires as the car nears the line
           system_response: Audible and visual warning; lateral control stays active, the driver steers
-          effect_after_response: Driver warned and takes over; no FTTI defined for the warning path
+          effect_after_response: Driver warned and takes over; in time only for a deficit of about 0.5 m/s² or less (WP-S-04 §3.8.1)
           severity_after: 10
           frequency: 6
-          monitoring: 7
+          monitoring: 8
           ap: H
           timing:
-            basis: unknown
+            ftti_ref: SG-02 insufficient lateral control (warning path, §3.8.1)
+            ftti_ms: 1100
+            fdti_ms: 400
+            frti_ms: 100
+            basis: code_derived
+          rationale: 'M 8: steerSaturated needs 0.4 s of saturation (T-30), which leaves the driver 0.6 s at a 1 m/s² deficit
+            and 1.05 s at 0.5 m/s², against a reaction time of 0.75-1.5 s (WP-S-04 §3.8.1). At the ODD curve bound the envelope
+            gives about 1.99 m/s² against 2.5-3.0 m/s² needed, so a deficit of 0.5-1.0 m/s² is credible and the warning is
+            late. FDTI and FRTI end at the alert; the driver reaction is not in them'
           actions:
           - SFM-ACT-017
+          - SFM-ACT-021
     notes: "Mostly a designed limitation: overlaps SOTIF. Kept here for the failure path (EPS/controller fault)."
 
   - id: SFM-005
@@ -1509,16 +1546,18 @@ failure_modes:
           - 1
           diagnostic: FCW warns when the planner sees that the lead needs more deceleration than the limit allows
           system_response: Audible forward-collision warning; the driver brakes
-          effect_after_response: Driver warned; no FTTI compared
+          effect_after_response: Driver warned; FCW must sound within about 0.6 s of the lead braking at a 1.0 s gap (WP-S-04 §3.8.2), its onset is not derived (T-31, to be measured as M-12)
           severity_after: 10
           frequency: 6
           monitoring: 7
           ap: H
           timing:
+            ftti_ref: SG-06 late or insufficient braking warning (FCW, §3.8.2)
+            ftti_ms: 1600
             basis: unknown
           actions:
           - SFM-ACT-006
-          - SFM-ACT-017
+          - SFM-ACT-022
       - id: SFM-010.C3
         element: SFM-SE-031
         description: Brake system does not achieve requested deceleration
@@ -1538,16 +1577,18 @@ failure_modes:
           - 1
           diagnostic: FCW warns as the gap closes faster than planned
           system_response: Audible forward-collision warning; the driver brakes
-          effect_after_response: Driver warned; no FTTI compared
+          effect_after_response: Driver warned; FCW must sound within about 0.6 s of the lead braking at a 1.0 s gap (WP-S-04 §3.8.2), its onset is not derived (T-31, to be measured as M-12)
           severity_after: 10
           frequency: 3
           monitoring: 7
           ap: H
           timing:
+            ftti_ref: SG-06 late or insufficient braking warning (FCW, §3.8.2)
+            ftti_ms: 1600
             basis: unknown
           actions:
           - SFM-ACT-003
-          - SFM-ACT-017
+          - SFM-ACT-022
     notes: "HARA input: insufficient braking for lead while engaged."
 
   - id: SFM-011
@@ -1679,17 +1720,21 @@ failure_modes:
           - 1
           diagnostic: selfdrivedLagging and modeldLagging after about 1 s of averaging (T-20), commIssueAvgFreq over 1-10 s (T-15)
           system_response: SOFT_DISABLE (3 s)
-          effect_after_response: Driver warned; no FTTI compared for late reaction
+          effect_after_response: Driver warned only after the lag is averaged (about 1 s) and the 3 s soft disable; FCW is the remaining warning
           severity_after: 10
           frequency: 6
-          monitoring: 7
+          monitoring: 8
           ap: H
           timing:
+            ftti_ref: SG-06 late or insufficient braking warning (FCW, §3.8.2)
+            ftti_ms: 1600
             fdti_ms: 1000
             frti_ms: 3000
             basis: code_derived
+          rationale: 'M 8: the lag monitors target this cause, but 1 s detection plus the 3 s soft disable exceeds the 1.6 s
+            budget at a 1.0 s gap (3.2 s at 1.5 s; WP-S-04 §3.8.2)'
           actions:
-          - SFM-ACT-017
+          - SFM-ACT-022
       - id: SFM-012.C2
         element: SFM-SE-012
         description: Lead state filtered too slowly (radard)
@@ -1756,19 +1801,27 @@ failure_modes:
           mechanisms:
           - 2
           diagnostic: Panda grants control only on the PCM cruise engage edge read from the car bus, so a wrong host state alone does
-            not grant actuation; frames are refused on every cycle. WP-S-04 has no FTTI row for SG-008, so the timing is not compared
+            not grant actuation; frames are refused on every cycle; within the 0.5 s unintended-engagement budget (WP-S-04 §3.8.3)
           system_response: Frames refused; no actuation
           effect_after_response: No actuation without PCM cruise
           severity_after: 4
           frequency: 6
-          monitoring: 7
+          monitoring: 5
           ap: H
           timing:
+            ftti_ref: SG-01 / SG-03 unintended engagement (System FMEA SG-008, §3.8.3)
+            ftti_ms: 500
             fdti_ms: 0
             frti_ms: 10
             basis: code_derived
+          evidence:
+          - description: Toyota controls_allowed only on the PCM cruise engage edge (test_enable_control_allowed_from_cruise,
+              test_cruise_engaged_prev in the common car safety tests) and no steering or acceleration frame without it, tested
+              on every PR and mutation-tested in CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
           actions:
-          - SFM-ACT-017
+          - SFM-ACT-013
       - id: SFM-013.C2
         element: SFM-SE-016
         description: Cruise state or button parsed incorrectly (spurious enable)
@@ -1790,19 +1843,27 @@ failure_modes:
           mechanisms:
           - 2
           diagnostic: Panda parses the PCM cruise state itself and grants control only on its engage edge; a host parsing error does
-            not grant actuation. No SG-008 FTTI row in WP-S-04
+            not grant actuation; within the 0.5 s unintended-engagement budget (WP-S-04 §3.8.3)
           system_response: Frames refused; no actuation
           effect_after_response: No actuation without PCM cruise
           severity_after: 4
           frequency: 6
-          monitoring: 7
+          monitoring: 5
           ap: H
           timing:
+            ftti_ref: SG-01 / SG-03 unintended engagement (System FMEA SG-008, §3.8.3)
+            ftti_ms: 500
             fdti_ms: 0
             frti_ms: 10
             basis: code_derived
+          evidence:
+          - description: Toyota controls_allowed only on the PCM cruise engage edge (test_enable_control_allowed_from_cruise,
+              test_cruise_engaged_prev in the common car safety tests) and no steering or acceleration frame without it, tested
+              on every PR and mutation-tested in CI (safety.yaml mutation job)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
           actions:
-          - SFM-ACT-017
+          - SFM-ACT-013
     notes: >-
       HARA input: unintended engagement. Engagement outside the ODD (off the highway, WP-C-03 v0.4 OS-03/04/15/16) is not
       prevented by the item; it is foreseeable misuse rated in the HARA and WP-C-08, not a fault cause of this failure mode.
@@ -2561,7 +2622,7 @@ failure_modes:
           diagnostic: A dead camera raises cameraMalfunction; a degraded image makes the model uncertain and falls back to the wheel-touch
             policy after 10 s
           system_response: SOFT_DISABLE, or wheel-touch escalation
-          effect_after_response: Driver monitored by wheel touch; no FTTI defined for DM
+          effect_after_response: Driver monitored by wheel touch; no FTTI until the H-09 goal has one (WP-S-04 §3.8.4)
           severity_after: 10
           frequency: 5
           monitoring: 7
@@ -2569,7 +2630,7 @@ failure_modes:
           timing:
             basis: unknown
           actions:
-          - SFM-ACT-017
+          - SFM-ACT-005
     notes: "HARA input: loss of the driver as the fallback (L2 safety argument depends on it). DM model performance is also SOTIF/PAS 8800."
 
   - id: SFM-023
@@ -3484,7 +3545,8 @@ actions:
     kind: design_change
     description: Decide in the FSC how the item reacts when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction
       at BL-004 or BL-005) and implement the decision. DQ-205 (answered) makes this the safe state of SG-010 (WP-C-03 SG-08, ASIL A); the
-      reaction itself is still to be decided
+      reaction itself is still to be decided. The requirement is TSR-633 (terminal reaction, ASIL A proposed) with TSR-611 (WP-S-02 §12.3a);
+      the reaction is lead decision DQ-340. The H-09 FTTI is not yet set, so the timing rows of WP-S-04 §3.8.4 cannot be compared
     owner: Jherrod Thomas
     status: decision_pending
   - id: SFM-ACT-006
@@ -3536,7 +3598,7 @@ actions:
     status: open
     description: Check on the host, within the SG-01 FTTI, that the panda reports controls_allowed false while the item is disengaged
       (the reverse of the controlsMismatch check, which at BL-005 still covers only engaged with authority withdrawn), with a disable
-      and an alert
+      and an alert. The requirement is TSR-630, within 0.3 s (WP-S-02 §12.3a; WP-S-04 T-32, not implemented)
   - id: SFM-ACT-014
     kind: monitoring
     status: open
@@ -3546,29 +3608,34 @@ actions:
     kind: monitoring
     status: in_progress
     description: 'Detect stale commands and inputs within the SG-01 FTTI: command-frame freshness in the MCU with an active
-      zero frame (TSR-408, TSR-109) and frozen-content and age checks on model outputs in controlsd (TSR-602, AIR-17)'
+      zero frame (TSR-408, TSR-109) and frozen-content and age checks on model outputs in controlsd (TSR-602, TSR-631, AIR-17)'
     evidence: 'BL-005: command-frame arrival in the MCU (TSR-408, 50 ms STEERING_LKA, reference build by default) and input age
       checks in controlsd (TSR-602) are in. Open: the active zero frame (TSR-109), a frozen-content check on model outputs, and
-      stale data with fresh timestamps (SFM-006.C1 to C3)'
+      stale data with fresh timestamps (SFM-006.C1 to C3). The frozen-content check is TSR-631, with the age taken from the
+      source timestamp (WP-S-02 §12.3a)'
   - id: SFM-ACT-016
     kind: monitoring
     status: open
     description: 'Supervise driver override in the panda: driver steering torque above the override threshold limits or revokes
       lateral authority within the SG-05 0.2 s budget (TSR-304). Behaviour decided by the lead (DQ-053, option A): back off on
-      override and show a cue'
+      override and show a cue. Requirements: TSR-304 (timing tied to the SG-05 budget) and TSR-628 (WP-S-02 §12.3a)'
   - id: SFM-ACT-017
     kind: monitoring
-    status: open
+    status: completed
     description: Add WP-S-04 FTTI rows for the warning paths without one (insufficient lateral control, late or insufficient
       braking warnings, SG-008 unintended engagement, driver monitoring), so these mechanisms can be compared with a time budget
+    evidence: 'WP-S-04 v0.7 §3.7 (four rows) and §3.8, with T-30 to T-33. Rev 0.15 compares SFM-004, SFM-010.C2/C3, SFM-012.C1
+      and SFM-013.C1/C2 with them. Driver monitoring (SFM-022.C3, SFM-025.C1) waits for the H-09 FTTI (§3.8.4); follow-up is
+      SFM-ACT-005. Late warnings found: SFM-ACT-021 (lateral) and SFM-ACT-022 (braking)'
   - id: SFM-ACT-018
     kind: monitoring
     status: in_progress
     description: 'Detect silent loss of the actuation path: report forwarded and refused TX frames from the panda, and compare
       EPS and PCM acceptance (LKA_STATE, ACC status) with the commands, warning within the SG-02/06 1 s budget'
     evidence: 'BL-005: frames that stop reaching the panda are detected (TSR-408) and alerted within 0.5 s (TSR-621), credited on
-      SFM-005.C2 and SFM-011.C2. Open: frames that reach the panda but are not accepted by the EPS or PCM (SFM-005.C1, SFM-011.C1;
-      TSR-626)'
+      SFM-005.C2 and SFM-011.C2. Open: frames that reach the panda but are not accepted by the EPS or PCM (SFM-005.C1, SFM-011.C1).
+      Requirements: TSR-632 (per-ID transmitted and refused counts), TSR-626(d)/(e) (EPS and PCM acceptance status) and TSR-615,
+      warning within 1 s (WP-S-02 §12.3a)'
   - id: SFM-ACT-019
     kind: design_change
     status: open
@@ -3581,3 +3648,15 @@ actions:
     description: 'React to a stock PCS event on the longitudinal command (for example a neutral or zero acceleration request, or a
       longitudinal disable, while stockAeb is set), so stock AEB does not depend on PCM arbitration alone (AOU-04R); or keep today''s
       behaviour and rely on the AOU-04R vehicle test. Lead decision DQ-300'
+  - id: SFM-ACT-021
+    kind: monitoring
+    status: open
+    description: 'Make the insufficient-lateral-control warning timely (WP-S-04 §3.8.1): warn before the deficit has lasted 0.4 s,
+      for example from the planned curvature against the envelope, or keep the deficit at or below about 0.5 m/s² through
+      the steering limits and the ODD curve bound (WP-S-04 OI-2). A change to the ODD bound is a lead decision'
+  - id: SFM-ACT-022
+    kind: monitoring
+    status: open
+    description: 'Measure the FCW onset after a lead brakes hard (WP-S-04 T-31, M-12) and compare it with the §3.8.2 budget
+      (about 0.6 s at a 1.0 s gap). For pipeline lag (SFM-012.C1), detect it within that budget or show that the FCW path
+      does not depend on the lagging process'

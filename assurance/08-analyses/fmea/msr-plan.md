@@ -1,6 +1,6 @@
 # LionDriver — FMEA-MSR: audit and plan
 
-**Status:** Draft v0.7, 2026-10-16. Simulation results (plant model) are citable as MSR `evidence` but are no timing basis of their own and never a measurement (§4.2, §5); the linter enforces the second. v0.6, 2026-10-16. M3: Figure 4-2 (FMEA-MSR overview) drawn by `fmea_diagrams.py`; the MSR columns in the review workbooks are still open. v0.5, 2026-10-16. System FMEA MSR rows re-rated at baseline BL-005, crediting the host supervision (TSR-615, TSR-621), TX arrival (TSR-408), the cruise-mismatch alert (TSR-308) and the reference lock, now built by default; results in §4.7. v0.4, 2026-10-14. Step M2 done: every in-scope cause is rated or pointed at the DFMEA (75 rated, 4 exempt; both files `msr: complete`); results in §4.7. v0.3: step M1 pilot done: 32 causes rated (DFMEA complete, System FMEA SG-01 lateral chain), MSR line and §7 in the review pages. v0.2: step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
+**Status:** Draft v0.8, 2026-10-16. System FMEA rev 0.15 compares the warning-path rows with the new WP-S-04 §3.8 budgets (§4.7). v0.7, 2026-10-16. Simulation results (plant model) are citable as MSR `evidence` but are no timing basis of their own and never a measurement (§4.2, §5); the linter enforces the second. v0.6, 2026-10-16. M3: Figure 4-2 (FMEA-MSR overview) drawn by `fmea_diagrams.py`; the MSR columns in the review workbooks are still open. v0.5, 2026-10-16. System FMEA MSR rows re-rated at baseline BL-005, crediting the host supervision (TSR-615, TSR-621), TX arrival (TSR-408), the cruise-mismatch alert (TSR-308) and the reference lock, now built by default; results in §4.7. v0.4, 2026-10-14. Step M2 done: every in-scope cause is rated or pointed at the DFMEA (75 rated, 4 exempt; both files `msr: complete`); results in §4.7. v0.3: step M1 pilot done: 32 causes rated (DFMEA complete, System FMEA SG-01 lateral chain), MSR line and §7 in the review pages. v0.2: step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
 **Basis:** AIAG & VDA FMEA Handbook (2019), Supplemental FMEA for Monitoring and System Response (FMEA-MSR), ISO 26262-4 §6 (FTTI) and ISO 26262-5 §8 (diagnostic coverage), by reference.
 **Related:** [fmea-plan.md](fmea-plan.md), [rating-tables.md](rating-tables.md) (RT-1), [WP-S-04 timing and FTTI budget](../../03-system/WP-S-04-timing-ftti-budget.md), [WP-V-05 fault injection](../../06-validation/WP-V-05-fault-injection.md).
 
@@ -190,6 +190,19 @@ What did not move, and why:
 - **SFM-006.C1** (controlsd hangs): the driver is now warned within about 0.66 s, but no frame follows the stall, so the torque ends only when the EPS drops LKA, about 2 s later; with no active zero frame (TSR-109) it stays M 8.
 - **`pandaHeartbeatLost`, `pandaTxRateExceeded`** (TSR-615) are not the main monitor of any System FMEA cause. They name the cause when the panda revokes authority (SFM-015.C2). Heartbeat loss from a hung `pandad` can't reach the host anyway: the panda's own siren covers that case (WP-S-04 T-07a).
 - **SFM-001.C2** (panda grants authority while disengaged): TSR-621 still checks only the other direction (SFM-ACT-013).
+
+**Warning paths (System FMEA rev 0.15, 2026-10-16).** WP-S-04 v0.7 gives the warning paths a budget (§3.7 rows, §3.8, T-30 to T-33; SFM-ACT-017, now completed). The rows were compared with it; the TSRs of WP-S-02 §12.3a are not implemented at BL-005 and are not credited. Counts include SFM-033.C3 and SFM-035/036 (revs 0.12, 0.13).
+
+| Monitoring | Rev 0.14 | Rev 0.15 | What moved |
+|---|---:|---:|---|
+| M 5–6 | 16 | 18 | In: SFM-013.C1/C2 (M 5): the panda grants control only on the PCM cruise engage edge, per frame, mutation-tested, within the 0.5 s budget (§3.8.3) |
+| M 7–8 | 17 | 15 | Out: SFM-013.C1/C2. SFM-004.C1–C3 and SFM-012.C1 go from M 7 to M 8: compared with the budget, the warning is late (below) |
+| M 9–10 | 31 | 31 | — |
+
+- **Insufficient lateral control** (SFM-004): `steerSaturated` needs 0.4 s of saturation, which leaves the driver 0.6 s at a 1 m/s² deficit. A 0.5–1.0 m/s² deficit is credible at the ODD curve bound (§3.8.1). New action SFM-ACT-021.
+- **Pipeline lag** (SFM-012.C1): about 1 s to detect plus the 3 s soft disable, against 1.6 s at a 1.0 s time gap (§3.8.2). New action SFM-ACT-022, which also measures the FCW onset.
+- **FCW** (SFM-010.C2/C3) stays M 7: the onset is not derived from the code (T-31, measurement M-12).
+- **Driver monitoring** (SFM-022.C3, SFM-025.C1): no FTTI until the H-09 goal has one (§3.8.4).
 
 WP-S-04 §4 still gives the BL-004 values for T-17 (`controlsMismatch`, 2 s) and T-19 (`cruiseMismatch`, 6 s) and has no row for TX arrival (TSR-408). The MSR rows cite the code for these times; the WP-S-04 update is listed for its owner.
 
