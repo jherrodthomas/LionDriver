@@ -44,7 +44,7 @@
   <rect x="172" y="116" width="720" height="78" rx="10" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.6"/>
   <rect x="184" y="126" width="40" height="18" rx="9" fill="#C2410C"/><text x="204" y="139" fill="#fff" text-anchor="middle" class="tag">E-03</text>
   <text x="232" y="139" class="m xs">in WP-C-01 Figure 3-1</text>
-  <text x="880" y="139" class="xs b" fill="#C2410C" text-anchor="end">B‡ (ASIL C until SG-01 re-rating)</text>
+  <text x="880" y="139" class="xs b" fill="#C2410C" text-anchor="end">C (DQ-341)</text>
   <text x="184" y="164" class="t b" font-size="13">Safety MCU firmware</text>
   <text x="334" y="164" class="m s">panda firmware with the opendbc safety layer (E-03a/E-03b), §3</text>
   <text x="184" y="183" font-size="10" font-weight="600" fill="#C2410C">runs on the panda MCU</text>
@@ -75,7 +75,7 @@
 <rect x="186" y="276" width="250" height="132" rx="8" class="box"/>
 <rect x="194" y="283" width="71" height="15" rx="7.5" fill="#C2410C"/>
 <text x="229.5" y="294" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-SAF-CORE</text>
-<text x="428" y="294" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡</text>
+<text x="428" y="294" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
 <text x="194" y="311" class="code" font-size="9.5">panda.safety.core</text>
 <text x="194" y="324" class="code m" font-size="8.5" xml:space="preserve">+ .rx_engagement, .tx_rate_check</text>
 <line x1="172" y1="292" x2="186" y2="292" class="agg"/>
@@ -123,7 +123,7 @@
 <rect x="186" y="416" width="250" height="132" rx="8" class="box"/>
 <rect x="194" y="423" width="65" height="15" rx="7.5" fill="#C2410C"/>
 <text x="226.6" y="434" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-SAF-TOY</text>
-<text x="428" y="434" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡</text>
+<text x="428" y="434" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
 <text x="194" y="451" class="code" font-size="9.5">panda.safety.toyota</text>
 <text x="194" y="464" class="code m" font-size="8.5" xml:space="preserve">+ .eps_fault, .ref_rx_set,</text>
 <text x="194" y="476" class="code m" font-size="8.5" xml:space="preserve">  .cruise_main, .tx_budgets</text>
@@ -158,7 +158,7 @@
 <rect x="186" y="556" width="250" height="44" rx="8" class="box"/>
 <rect x="194" y="563" width="65" height="15" rx="7.5" fill="#C2410C"/>
 <text x="226.6" y="574" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-SAF-LAT</text>
-<text x="428" y="574" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡</text>
+<text x="428" y="574" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
 <text x="194" y="591" class="code" font-size="9.5">panda.safety.lateral</text>
 <line x1="172" y1="572" x2="186" y2="572" class="agg"/>
 <polygon points="436,572 445,566 454,572 445,578" class="dia"/>
@@ -187,7 +187,7 @@
 <rect x="186" y="660" width="250" height="44" rx="8" class="box"/>
 <rect x="194" y="667" width="71" height="15" rx="7.5" fill="#C2410C"/>
 <text x="229.5" y="678" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-SAF-HELP</text>
-<text x="428" y="678" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡</text>
+<text x="428" y="678" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
 <text x="194" y="695" class="code" font-size="9.5">panda.safety.helpers</text>
 <line x1="172" y1="676" x2="186" y2="676" class="agg"/>
 <polygon points="436,676 445,670 454,676 445,682" class="dia"/>
@@ -200,7 +200,7 @@
 <rect x="186" y="712" width="250" height="44" rx="8" class="box"/>
 <rect x="194" y="719" width="65" height="15" rx="7.5" fill="#C2410C"/>
 <text x="226.6" y="730" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-SAF-DEF</text>
-<text x="428" y="730" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡ (safe-state modes)</text>
+<text x="428" y="730" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C (safe-state modes)</text>
 <text x="194" y="747" class="code" font-size="9.5">panda.safety.defaults</text>
 <line x1="172" y1="728" x2="186" y2="728" class="agg"/>
 <text x="490" y="732" class="m" font-size="9.5" font-style="italic">no unit in WP-W-05 §2</text>
@@ -223,7 +223,7 @@
 <rect x="186" y="896" width="250" height="68" rx="8" class="box"/>
 <rect x="194" y="903" width="71" height="15" rx="7.5" fill="#C2410C"/>
 <text x="229.5" y="914" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-PND-MAIN</text>
-<text x="428" y="914" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡</text>
+<text x="428" y="914" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
 <text x="194" y="931" class="code" font-size="9.5">panda.main</text>
 <text x="194" y="944" class="code m" font-size="8.5" xml:space="preserve">+ .safety_task,</text>
 <text x="194" y="956" class="code m" font-size="8.5" xml:space="preserve">  drivers.heartbeat_monitor</text>
@@ -250,7 +250,7 @@
 <rect x="186" y="972" width="250" height="57" rx="8" class="box"/>
 <rect x="194" y="979" width="77" height="15" rx="7.5" fill="#C2410C"/>
 <text x="232.4" y="990" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-PND-COMMS</text>
-<text x="428" y="990" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡</text>
+<text x="428" y="990" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
 <text x="194" y="1007" class="code" font-size="9.5">panda.comms</text>
 <text x="194" y="1020" class="code m" font-size="8.5" xml:space="preserve">+ panda.reference_lock</text>
 <line x1="172" y1="988" x2="186" y2="988" class="agg"/>
@@ -271,7 +271,7 @@
 <rect x="186" y="1037" width="250" height="57" rx="8" class="box"/>
 <rect x="194" y="1044" width="65" height="15" rx="7.5" fill="#C2410C"/>
 <text x="226.6" y="1055" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-PND-SPI</text>
-<text x="428" y="1055" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡</text>
+<text x="428" y="1055" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
 <text x="194" y="1072" class="code" font-size="9.5">panda.drivers.spi</text>
 <line x1="172" y1="1053" x2="186" y2="1053" class="agg"/>
 <polygon points="436,1053 445,1047 454,1053 445,1059" class="dia"/>
@@ -290,7 +290,7 @@
 <rect x="186" y="1102" width="250" height="44" rx="8" class="box"/>
 <rect x="194" y="1109" width="77" height="15" rx="7.5" fill="#C2410C"/>
 <text x="232.4" y="1120" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-PND-FDCAN</text>
-<text x="428" y="1120" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡</text>
+<text x="428" y="1120" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
 <text x="194" y="1137" class="code" font-size="9.5">panda.drivers.fdcan</text>
 <line x1="172" y1="1118" x2="186" y2="1118" class="agg"/>
 <polygon points="436,1118 445,1112 454,1118 445,1124" class="dia"/>
@@ -309,7 +309,7 @@
 <rect x="186" y="1154" width="250" height="44" rx="8" class="box"/>
 <rect x="194" y="1161" width="71" height="15" rx="7.5" fill="#C2410C"/>
 <text x="229.5" y="1172" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-PND-HARN</text>
-<text x="428" y="1172" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡ / B</text>
+<text x="428" y="1172" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C / B</text>
 <text x="194" y="1189" class="code" font-size="9.5">panda.drivers.harness</text>
 <line x1="172" y1="1170" x2="186" y2="1170" class="agg"/>
 <polygon points="436,1170 445,1164 454,1170 445,1176" class="dia"/>
@@ -322,7 +322,7 @@
 <rect x="186" y="1206" width="250" height="107" rx="8" class="box"/>
 <rect x="194" y="1213" width="65" height="15" rx="7.5" fill="#C2410C"/>
 <text x="226.6" y="1224" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-PND-FLT</text>
-<text x="428" y="1224" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡ (report-only)</text>
+<text x="428" y="1224" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C (report-only)</text>
 <text x="194" y="1241" class="code" font-size="9.5">panda.sys.faults</text>
 <text x="194" y="1254" class="code m" font-size="8.5" xml:space="preserve">+ drivers.hw_watchdog</text>
 <line x1="172" y1="1222" x2="186" y2="1222" class="agg"/>
@@ -355,7 +355,7 @@
 <rect x="186" y="1321" width="250" height="44" rx="8" class="box"/>
 <rect x="194" y="1328" width="65" height="15" rx="7.5" fill="#C2410C"/>
 <text x="226.6" y="1339" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-PND-PWR</text>
-<text x="428" y="1339" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡</text>
+<text x="428" y="1339" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
 <text x="194" y="1356" class="code" font-size="9.5">panda.sys.power_saving</text>
 <line x1="172" y1="1337" x2="186" y2="1337" class="agg"/>
 <polygon points="436,1337 445,1331 454,1337 445,1343" class="dia"/>
@@ -385,7 +385,7 @@
 <rect x="186" y="1437" width="250" height="57" rx="8" class="box"/>
 <rect x="194" y="1444" width="71" height="15" rx="7.5" fill="#C2410C"/>
 <text x="229.5" y="1455" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-PND-PLAT</text>
-<text x="428" y="1455" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡</text>
+<text x="428" y="1455" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C</text>
 <text x="194" y="1472" class="code" font-size="9.5">panda.platform</text>
 <text x="194" y="1485" class="code m" font-size="8.5" xml:space="preserve">+ drivers.irq_priorities</text>
 <line x1="172" y1="1453" x2="186" y2="1453" class="agg"/>
@@ -405,7 +405,7 @@
 <rect x="186" y="1502" width="250" height="44" rx="8" class="box"/>
 <rect x="194" y="1509" width="71" height="15" rx="7.5" fill="#C2410C"/>
 <text x="229.5" y="1520" fill="#FFFFFF" font-size="8.5" font-weight="700" text-anchor="middle" letter-spacing=".03em">U-PND-BOOT</text>
-<text x="428" y="1520" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">B‡ + CS</text>
+<text x="428" y="1520" font-size="9" font-weight="700" fill="#C2410C" text-anchor="end">C + CS</text>
 <text x="194" y="1537" class="code" font-size="9.5">panda.bootstub</text>
 <line x1="172" y1="1518" x2="186" y2="1518" class="agg"/>
 <polygon points="436,1518 445,1512 454,1518 445,1524" class="dia"/>
@@ -489,5 +489,5 @@
     <rect x="790" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#D2553F" stroke-dasharray="4 3"/><text x="826" y="4" class="t">planned, not implemented</text>
     <rect x="986" y="-8" width="28" height="16" rx="4" fill="#F8FAFC" stroke="#94A3B8" stroke-dasharray="5 3"/><text x="1022" y="4" class="t">no ASIL attribution</text>
   </g>
-  <text x="40" y="1688" class="m" font-size="10">ASIL attribution as in §3.1 and §4.1 (B‡ = target ASIL B; ASIL C applies until the SG-01 re-rating, WP-S-02 §2.1). 47 units implemented at the pins, 5 planned; none verified on hardware. Shared units (UN-09 CORE/HELP, UN-N4, UN-N6) are drawn once.</text>
+  <text x="40" y="1688" class="m" font-size="10">ASIL attribution as in §3.1 and §4.1 (envelope ASIL C, DQ-341; notation of WP-S-02 §2.1). 47 units implemented at the pins, 5 planned; none verified on hardware. Shared units (UN-09 CORE/HELP, UN-N4, UN-N6) are drawn once.</text>
 </svg>
