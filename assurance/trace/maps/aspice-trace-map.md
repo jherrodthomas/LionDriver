@@ -36,7 +36,7 @@ block-beta
   space
   VAL1["<b>VAL.1</b><br/>Validation<br/>VS-VAL: 31 cases"]
   space
-  SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39* · FSR 56 · TSR 125<br/>TC 33* · FI 22* · FM 11*<br/>CSG 8*<br/><i>from SG: 8/8</i>"]
+  SYS2["<b>SYS.2</b><br/>System requirements<br/>SYS 39* · FSR 57 · TSR 125<br/>TC 33* · FI 22* · FM 11*<br/>CSG 8*<br/><i>from SG: 8/8</i>"]
   space
   space
   space
@@ -124,7 +124,7 @@ block-beta
   L3 --> L4
   L4 --> SWE3
   VAL1 -. "SG 7/8 · SH 1/13" .-> SYS1
-  SYS5 -. "SYS 25/39 · FSR 56/56 · TSR 61/107" .-> SYS2
+  SYS5 -. "SYS 25/39 · FSR 56/57 · TSR 61/107" .-> SYS2
   SYS4 -. "TSR 79/107" .-> SYS3
   SWE6 -. "SWSR 84/134" .-> SWE1
   HWE4 -. "HWSR 21/46" .-> HWE1
@@ -156,14 +156,14 @@ block-beta
 
 One colour rule for every V: blue when every item of the level is in the trace data, or every item of the paired level is named by a case (done in the design, not verified); amber when some are; red when none is; dashed grey when the level holds nothing yet. Green is kept for approved work products and passed verification; nothing here is either. The gate band shows the gate records of WP-M-00 §2 (none held yet).
 
-A named item is a **specified** link, not a passed test. 0 of 430 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
+A named item is a **specified** link, not a passed test. 0 of 431 traced items carry status `verified`, and the code and tests carry no `@req` tags yet (WP-P-06 §6; checks K6–K10 in the [README](../README.md) §6 are not implemented).
 
 ## 2. Process to work product and items
 
 | Process | Name | Work products | Items or test cases |
 |---|---|---|---|
 | **SYS.1** | Requirements elicitation | WP-C-01, WP-C-02, WP-C-03, WP-C-05, WP-C-09 | AOU (15, trace data), H (9, trace data), HE (37, trace data), SG (8, trace data), SH (13, document), TS (14, document) |
-| **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, document), FSR (56, trace data), TSR (125, trace data), TC (33, document), FI (22, document), FM (11, document), CSG (8, document) |
+| **SYS.2** | System requirements analysis | WP-S-01, WP-C-04, WP-S-02, WP-C-07, WP-C-10 | SYS (39, document), FSR (57, trace data), TSR (125, trace data), TC (33, document), FI (22, document), FM (11, document), CSG (8, document) |
 | **SYS.3** | System architectural design | WP-S-03, WP-S-05, WP-S-07 | CSR (64, document) |
 | **SWE.1** | SW requirements analysis | WP-W-02 | SWSR (134, trace data) |
 | **HWE.1** | HW requirements analysis | WP-H-01 | HWSR (46, trace data) |
@@ -192,7 +192,7 @@ flowchart LR
     kH["<b>H</b> 9<br/>hazards"]:::traced
     kHE["<b>HE</b> 37<br/>hazardous events"]:::traced
     kSG["<b>SG</b> 8<br/>safety goals"]:::traced
-    kFSR["<b>FSR</b> 56<br/>functional safety req."]:::traced
+    kFSR["<b>FSR</b> 57<br/>functional safety req."]:::traced
     kTSR["<b>TSR</b> 125<br/>technical safety req."]:::traced
     kSWSR["<b>SWSR</b> 134<br/>SW safety req."]:::traced
     kHWSR["<b>HWSR</b> 46<br/>HW safety req."]:::traced
@@ -228,7 +228,7 @@ flowchart LR
   kH -->|"9/9"| kHE
   kHE -->|"36/36"| kSG
   kSG -->|"8/8"| kFSR
-  kFSR -->|"56/56"| kTSR
+  kFSR -->|"57/57"| kTSR
   kTSR -->|"94/101"| kSWSR
   kTSR -->|"19/19"| kHWSR
   kAOU --> kSG
@@ -249,7 +249,7 @@ flowchart LR
 
 | Standard | Kinds | In trace data | Defined in documents only |
 |---|---|---|---|
-| ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 37, SG 8, AOU 15, FSR 56, TSR 125, SWSR 134, HWSR 46 | — |
+| ISO 26262 | H, HE, SG, AOU, FSR, TSR, SWSR, HWSR | H 9, HE 37, SG 8, AOU 15, FSR 57, TSR 125, SWSR 134, HWSR 46 | — |
 | ISO 21448 | SH, TC, FI, FM | — | SH 13, TC 33, FI 22, FM 11 |
 | ISO/PAS 8800 | AIR, DSR | — | AIR 30, DSR 13 |
 | ISO/SAE 21434 | TS, CSG, CSR | — | TS 14, CSG 8, CSR 64 |
@@ -264,7 +264,7 @@ Parents with at least one child in the trace data (WP-T-01 checks K4, K12).
 | hazard -> hazardous event | 9/9 | complete | — |
 | hazardous event -> safety goal | 36/36 | complete | — |
 | safety goal -> FSR | 8/8 | complete | — |
-| FSR -> TSR | 56/56 | complete | — |
+| FSR -> TSR | 57/57 | complete | — |
 | TSR -> SWSR (SW-allocated TSRs) | 94/101 | partial | TSR-628, TSR-629, TSR-630, TSR-631, TSR-632, TSR-633, TSR-712 |
 | TSR -> HWSR (HW-allocated TSRs) | 19/19 | complete | — |
 
@@ -277,7 +277,7 @@ Items named by at least one case of the paired test specification. A case names 
 | SYS.1 ↔ VAL.1 | VS-VAL | SG | 7/8 | partial | SG-08 |
 | SYS.1 ↔ VAL.1 | VS-VAL | SH | 1/13 | partial | SH-01, SH-02, SH-03, SH-04, SH-05, SH-06, SH-07, SH-08, SH-09, SH-10, SH-11, SH-13 |
 | SYS.2 ↔ SYS.5 | VS-SQ | SYS | 25/39 | partial | SYS-005, SYS-006, SYS-027, SYS-043, SYS-061, SYS-083, SYS-100, SYS-101, SYS-102, SYS-121, SYS-142, SYS-143, SYS-144, SYS-145 |
-| SYS.2 ↔ SYS.5 | VS-SQ | FSR | 56/56 | complete | — |
+| SYS.2 ↔ SYS.5 | VS-SQ | FSR | 56/57 | partial | FSR-08.01 |
 | SYS.2 ↔ SYS.5 | VS-SQ | TSR | 61/107 | partial | TSR-409, TSR-410, TSR-411, TSR-412, TSR-413, TSR-501, TSR-502, TSR-503, TSR-504, TSR-505, TSR-506, TSR-507, TSR-508, TSR-509, TSR-511, TSR-512, TSR-513, TSR-514, TSR-515, TSR-517, TSR-518, TSR-519, TSR-619, TSR-620, TSR-621, TSR-622, TSR-623, TSR-624, TSR-625, TSR-626, TSR-627, TSR-628, TSR-629, TSR-630, TSR-631, TSR-632, TSR-633, TSR-701, TSR-702, TSR-703 … (+6) |
 | SYS.3 ↔ SYS.4 | VS-SI, VS-FI | TSR | 79/107 | partial | TSR-515, TSR-517, TSR-519, TSR-605, TSR-607, TSR-608, TSR-611, TSR-612, TSR-614, TSR-618, TSR-621, TSR-622, TSR-623, TSR-624, TSR-625, TSR-626, TSR-627, TSR-628, TSR-629, TSR-630, TSR-631, TSR-632, TSR-633, TSR-703, TSR-708, TSR-709, TSR-711, TSR-712 |
 | SWE.1 ↔ SWE.6 | VS-SWQ | SWSR | 84/134 | partial | SWSR-102a, SWSR-201a, SWSR-303h, SWSR-307h, SWSR-308h, SWSR-409h, SWSR-410h, SWSR-414h, SWSR-503c, SWSR-504a, SWSR-505a, SWSR-507, SWSR-507a, SWSR-508a, SWSR-514h, SWSR-516a, SWSR-516b, SWSR-601, SWSR-601a, SWSR-602, SWSR-603, SWSR-604, SWSR-605, SWSR-605a, SWSR-606, SWSR-607, SWSR-608, SWSR-609, SWSR-610, SWSR-611, SWSR-612, SWSR-613, SWSR-614, SWSR-615, SWSR-616, SWSR-617, SWSR-618, SWSR-619, SWSR-620, SWSR-621 … (+10) |

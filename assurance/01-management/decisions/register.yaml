@@ -4038,6 +4038,28 @@
   sources: ["assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-ACT-005, SFM-025.C1", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7"]
   status: queued
 
+- id: DQ-341
+  question: "Three goals are now ASIL C, so the panda safety envelope needs ASIL C even if steering drops to B. Harden it to C, or plan a second independent checker?"
+  context: "You chose reduced steering authority (DQ-007) so the whole envelope could be **ASIL B**. The HARA update you answered (DQ-036, DQ-059) makes three other goals **ASIL C**: lateral loss without warning (SG-02), unintended acceleration (SG-03) and longitudinal loss without warning (SG-06). Most envelope checks serve them too, so the envelope is **ASIL C whatever the steering tests show**. The decomposition analysis judges ASIL C on the single panda MCU, which shares its board and supply with the QM SoC, unlikely to reach the hardware metrics (WP-A-01 §3). Hardware is already designed to C (DQ-063)."
+  reversibility: revisit
+  blocks: "Envelope ASIL in WP-S-02/WP-S-03 and the SysML model; SWSR and HWSR ASILs; hardware metric targets; DEC-01 scope"
+  gate: G2
+  decider: lead
+  after: [DQ-007, DQ-063]
+  options:
+    - key: A
+      recommended: true
+      title: "Harden the envelope to ASIL C now; start the second checker only if the C metrics fail"
+      detail: "Keeps one MCU and the current design; the steering tests still go ahead to keep SG-01 from needing more. Cost: ASIL C software process for all envelope code (MC/DC, stricter reviews) and ASIL C hardware metrics (97 % / 80 %) become final targets, not interim ones; a late re-plan if the metrics fail."
+    - key: B
+      title: "Plan the second independent checker (DEC-01) now for steering, acceleration and the warning path"
+      detail: "Envelope ASIL B(C) plus an ASIL A(C) checker on its own supply and clock that can open the relay. Avoids betting on C metrics for one shared MCU. Cost: new hardware element, new requirements and a dependent-failure analysis; months of work before G2."
+    - key: C
+      title: "Decide after the first hardware metric results (WP-H-04)"
+      detail: "No commitment now; requirements are written to C meanwhile. Cost: the software process level stays uncertain, and work done to B-level rigour may need redoing."
+  sources: ["assurance/02-concept/WP-C-04-functional-safety-concept.md §3, §4", "assurance/02-concept/WP-C-03-hara.md §5 (v0.4)", "assurance/08-analyses/WP-A-01-asil-decomposition.md §3, DEC-01", "assurance/03-system/WP-S-02-technical-safety-requirements.md §2.1", "assurance/04-hardware/WP-H-04-hardware-metrics.md"]
+  status: queued
+
 - id: DQ-210
   question: "Closing on slower traffic is now rated E4, as you chose. That also raises the goal against silently lost braking (SG-06) to ASIL C. Accept it?"
   context: "You chose the frequency reading for closing on a slower car at highway speed, which makes the acceleration goal SG-03 ASIL C. An exposure class belongs to the situation, not to one hazard, so the same E4 applies when braking is silently lost in that situation (HE-06.1) or the display wrongly shows ACC active (HE-07.3). **Both become ASIL C, and SG-06 with them.** Your question only named SG-03."

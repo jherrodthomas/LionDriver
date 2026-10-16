@@ -22,7 +22,7 @@ python3 fsc_model.py --postprocess WP-C-04-fsc-completeness.xlsx
 python3 <fsc-builder>/scripts/recalc.py WP-C-04-fsc-completeness.xlsx
 ```
 
-`build/hara_consolidated_sgs.xlsx` is a copy of the HARA workbook in which tab 13 holds the consolidated safety goals SG-01…SG-07 (from `trace/items/goals.yaml`) instead of the generator's per-function candidates.
+`build/hara_consolidated_sgs.xlsx` is a copy of the HARA workbook in which tab 13 holds the consolidated safety goals SG-01…SG-08 (from `trace/items/goals.yaml`) instead of the generator's per-function candidates.
 
 Redraw Figure 5-1 after any change to WP-C-04 §3, §5 or §9:
 
