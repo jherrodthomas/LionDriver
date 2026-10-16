@@ -126,7 +126,7 @@
 - id: TSR-109
   kind: tsr
   text: "Whenever the envelope rejects a `0x2E4` frame or revokes lateral authority, the EPS shall receive torque 0 with STEER_REQUEST 0 within ≤ 0.1 s. This shall be achieved by (a) the envelope transmitting, in place of each rejected frame, a `0x2E4` frame with zero torque, STEER_REQUEST 0, a counter continuing the host sequence and a valid checksum; or (b) only if vehicle characterisation shows that the EPS ramps LKA torque to zero within ≤ 0.1 s of a missing `0x2E4` frame, by withholding the frame. Option (a) is the recommended design."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.12, FSR-01.13, FSR-05.01, FSR-02.04]
   parent_text: "FSR-01.12, FSR-01.13, FSR-05.01, FSR-02.04"
   other_parents: false
@@ -141,7 +141,7 @@
 - id: TSR-110
   kind: tsr
   text: "The envelope shall receive EPS_STATUS (`0x262`) and, while lateral authority is granted, shall revoke lateral authority and report the cause when LKA_STATE indicates an EPS fault or LKA unavailability, or when EPS_STATUS is missing beyond its timeout (TSR-401). The LKA_STATE fault code set shall be confirmed for the reference EPS firmware."
-  asil: "B (SG-02); B‡ where it gates SG-01"
+  asil: "C"
   parents: [FSR-02.01]
   parent_text: "FSR-02.01"
   other_parents: false
@@ -171,7 +171,7 @@
 - id: TSR-201
   kind: tsr
   text: "The envelope shall reject every ACC_CONTROL (`0x343`) frame whose ACCEL_CMD exceeds a_max, where a_max is derived from the controllability of HE-03.1…03.3 on the reference vehicle. Baseline a_max = +2.0 m/s² (raw 2000)."
-  asil: "B"
+  asil: "C"
   parents: [FSR-03.01]
   parent_text: "FSR-03.01"
   other_parents: false
@@ -201,7 +201,7 @@
 - id: TSR-203
   kind: tsr
   text: "While longitudinal authority is not granted (not engaged, or accelerator pressed per TSR-305), the envelope shall accept `0x343` only with the inactive acceleration value."
-  asil: "B"
+  asil: "C"
   parents: [FSR-03.02, FSR-04.04, FSR-05.04]
   parent_text: "FSR-03.02, FSR-04.04, FSR-05.04"
   other_parents: false
@@ -216,7 +216,7 @@
 - id: TSR-204
   kind: tsr
   text: "The envelope shall reject `0x343` frames whose ACCEL_CMD increases, relative to the last accepted value (the inactive value counting as 0 m/s² at engagement), faster than j_up, derived from controllability."
-  asil: "B"
+  asil: "C"
   parents: [FSR-03.03]
   parent_text: "FSR-03.03"
   other_parents: false
@@ -246,7 +246,7 @@
 - id: TSR-206
   kind: tsr
   text: "On revocation of longitudinal authority the transition to SS-G shall not cause a vehicle deceleration or acceleration step beyond the jerk bounds of TSR-204/205. If the PCM response to a step from the last commanded value to the inactive value is not shown to be bounded (AOU-05R), the envelope shall accept a commanded value that winds down to the inactive value at no more than j_down/j_up for at most 1 s after revocation."
-  asil: "B"
+  asil: "C"
   parents: [FSR-03.05, FSR-04.03]
   parent_text: "FSR-03.05, FSR-04.03"
   other_parents: false
@@ -261,7 +261,7 @@
 - id: TSR-207
   kind: tsr
   text: "For `0x343`, the envelope shall also check the actuation-relevant fields PERMIT_BRAKING, CANCEL_REQ, RELEASE_STANDSTILL and ACCEL_CMD_ALT against the values allowed in the current authority state, and while authority is not granted shall accept only frames that do not request acceleration, braking or standstill release."
-  asil: "B"
+  asil: "C"
   parents: [FSR-03.02, FSR-03.05]
   parent_text: "FSR-03.02, FSR-03.05"
   other_parents: false
@@ -291,7 +291,7 @@
 - id: TSR-301
   kind: tsr
   text: "The envelope shall grant actuation authority only on the rising edge of PCM_CRUISE (`0x1D2`) CRUISE_ACTIVE, and only once the SoC heartbeat reports the item engaged within 1 s of that edge (otherwise not until the next rising edge), and shall revoke it in the same frame in which CRUISE_ACTIVE is received false (cancel, main switch off, PCM-internal drop)."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.05, FSR-05.02]
   parent_text: "FSR-01.05, FSR-05.02"
   other_parents: false
@@ -321,7 +321,7 @@
 - id: TSR-303
   kind: tsr
   text: "On every fault-induced disengagement, with or without openpilot longitudinal, the SoC shall set CANCEL_REQ so that the PCM drops ACC. The PCM cruise state then changes, which changes the cluster cruise indication (TSR-309, AOU-12) and makes the envelope revoke (TSR-301); a cancel without effect is caught by TSR-516(c)."
-  asil: "QM (B-sup: TSR-203, TSR-301, TSR-516)"
+  asil: "QM (C-sup: TSR-203, TSR-301, TSR-516)"
   parents: [FSR-03.05, FSR-02.03, FSR-06.02]
   parent_text: "FSR-03.05, FSR-02.03, FSR-06.02"
   other_parents: false
@@ -366,7 +366,7 @@
 - id: TSR-306
   kind: tsr
   text: "The envelope shall not grant actuation authority while any RX check of TSR-401…405 is failed, including timeouts not yet evaluated by the periodic check."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.05, FSR-01.06]
   parent_text: "FSR-01.05, FSR-01.06"
   other_parents: false
@@ -381,7 +381,7 @@
 - id: TSR-307
   kind: tsr
   text: "(a) The envelope shall revoke authority when the SoC heartbeat reports \"not engaged\" while authority is granted, within ≤ 0.3 s. (b) The SoC shall immediately disable when the envelope's reported authority differs from its own engaged state for > 0.3 s."
-  asil: "(a) B‡; (b) QM (B-sup)"
+  asil: "(a) C; (b) QM (C-sup)"
   parents: [FSR-05.06, FSR-01.07]
   parent_text: "FSR-05.06, FSR-01.07"
   other_parents: false
@@ -396,7 +396,7 @@
 - id: TSR-308
   kind: tsr
   text: "If PCM cruise is active while the item is not engaged, or the item is engaged while PCM cruise is inactive, for longer than 1 s, the SoC shall warn the driver and request ACC cancel."
-  asil: "QM (B-sup: TSR-301)"
+  asil: "QM (C-sup: TSR-301)"
   parents: [FSR-05.06]
   parent_text: "FSR-05.06"
   other_parents: false
@@ -411,7 +411,7 @@
 - id: TSR-309
   kind: tsr
   text: "The engagement state enforced by the envelope shall be the PCM cruise state, so that the vehicle's cluster cruise indicator is an indication of engagement independent of the item's HMI."
-  asil: "B"
+  asil: "C"
   parents: [FSR-05.05]
   parent_text: "FSR-05.05"
   other_parents: false
@@ -441,7 +441,7 @@
 - id: TSR-311
   kind: tsr
   text: "Actuation authority shall be false at MCU start-up and after every safety-mode change, and all limiter state (last torque, rate windows, samples) shall be reset."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.05]
   parent_text: "FSR-01.05"
   other_parents: false
@@ -456,7 +456,7 @@
 - id: TSR-401
   kind: tsr
   text: "For each RX message used for gating or limiting (`0xAA`, `0x260`, `0x1D2`, `0x226`, and `0x262`, `0x1D3`, `0xB4` once added), the envelope shall detect absence longer than 5 nominal periods and shall evaluate this at ≥ 50 Hz, so that worst-case detection is ≤ 0.2 s."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.06]
   parent_text: "FSR-01.06"
   other_parents: false
@@ -471,7 +471,7 @@
 - id: TSR-402
   kind: tsr
   text: "The envelope shall verify the Toyota checksum and the message length of every RX message that carries a checksum (`0x260`, `0x1D2`, and `0x262`, `0x1D3`, `0xB4` once added) and treat one failed frame as an RX fault."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.06]
   parent_text: "FSR-01.06"
   other_parents: false
@@ -486,7 +486,7 @@
 - id: TSR-403
   kind: tsr
   text: "The envelope shall detect when an RX message arrives at more than 1.5× its nominal rate over a 100 ms window (indicating duplicated or inserted frames) and treat it as an RX fault."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.06]
   parent_text: "FSR-01.06"
   other_parents: false
@@ -501,7 +501,7 @@
 - id: TSR-404
   kind: tsr
   text: "For RX signals that vary in normal operation, the envelope shall detect a frozen payload: an identical data field (excluding checksum) for longer than t_frz while the vehicle is moving (`0x260` torque/angle bytes; `0xAA` wheel speeds above a minimum speed; `0xB4` ENCODER). t_frz shall be set from fork-owned drive logs so that no false detection occurs in the reference log set."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.06]
   parent_text: "FSR-01.06"
   other_parents: false
@@ -516,7 +516,7 @@
 - id: TSR-405
   kind: tsr
   text: "The envelope shall apply these cross-checks and treat a disagreement lasting longer than its tolerance time as an RX fault: (a) wheel-speed mean (`0xAA`) vs SPEED (`0xB4`) within 2 m/s; (b) BRAKE_PRESSED in `0x226` vs PCM_CRUISE_2 (`0x1D3`) BRAKE_PRESSED — on disagreement the envelope shall assume \"brake pressed\" (revoke); (c) CRUISE_ACTIVE = 1 shall imply PCM_CRUISE_2 MAIN_ON = 1; (d) while authority is granted, measured EPS torque shall follow the accepted command within an EPS-response tolerance (detects frozen or replaced `0x260`). Signal availability and tolerances shall be confirmed on reference-vehicle logs."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.06, FSR-05.01]
   parent_text: "FSR-01.06, FSR-05.01"
   other_parents: false
@@ -531,7 +531,7 @@
 - id: TSR-406
   kind: tsr
   text: "On any RX fault of TSR-401…405, the envelope shall revoke all actuation authority within ≤ 0.1 s (SS-L via TSR-109, SS-G), report a fault-specific reason code to the SoC, and not grant authority again until all checks pass and a new PCM rising edge occurs."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.06, FSR-01.12]
   parent_text: "FSR-01.06, FSR-01.12"
   other_parents: false
@@ -546,7 +546,7 @@
 - id: TSR-407
   kind: tsr
   text: "In a car safety mode, the envelope shall detect absence of the SoC heartbeat (`0xf3`) for > 0.3 s and then revoke all actuation authority at once (SS-L, SS-G). It shall enter SS-S (SILENT, relay released) after the longer timeout of TSR-510."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.07]
   parent_text: "FSR-01.07"
   other_parents: false
@@ -561,7 +561,7 @@
 - id: TSR-408
   kind: tsr
   text: "While lateral authority is granted, the envelope shall monitor the arrival of `0x2E4` frames from the SoC and, if no frame arrives for > 50 ms (5 frames), revoke authority and command SS-L (TSR-109). While longitudinal authority is granted, the same shall apply to `0x343` with a gap > 100 ms."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.07]
   parent_text: "FSR-01.07"
   other_parents: false
@@ -576,7 +576,7 @@
 - id: TSR-409
   kind: tsr
   text: "The heartbeat shall carry evidence that the control loop is alive (e.g. the latest `carControl` frame counter), and the envelope shall treat a heartbeat whose evidence has not advanced for > 0.3 s as a missing heartbeat."
-  asil: "B‡ (panda check); QM (SoC content)"
+  asil: "C (panda check); QM (SoC content)"
   parents: [FSR-01.07]
   parent_text: "FSR-01.07"
   other_parents: false
@@ -591,7 +591,7 @@
 - id: TSR-410
   kind: tsr
   text: "Every SPI transfer (header and data) shall be protected by a CRC whose residual error probability over the maximum transfer length meets the target set in WP-S-05 §4 (assurance/03-system/WP-S-05-hsi-specification.md), and every CAN-TX transfer shall carry a sequence counter; the envelope shall discard transfers with a failed CRC or a repeated or out-of-order counter. The per-packet XOR may remain as an additional check."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.08]
   parent_text: "FSR-01.08"
   other_parents: false
@@ -606,7 +606,7 @@
 - id: TSR-411
   kind: tsr
   text: "The envelope shall reject actuation frames whose transfer counter shows they are older than 2 control periods relative to the newest accepted transfer (freshness)."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.08]
   parent_text: "FSR-01.08"
   other_parents: false
@@ -621,7 +621,7 @@
 - id: TSR-412
   kind: tsr
   text: "The envelope shall validate every length field received over SPI against its buffer size before starting a DMA transfer or copy, and every control-request parameter used as an array index against the array bounds; a violation shall be NACKed and counted as an SPI error."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.08, FSR-01.10]
   parent_text: "FSR-01.08, FSR-01.10"
   other_parents: false
@@ -636,7 +636,7 @@
 - id: TSR-413
   kind: tsr
   text: "If SPI errors (header/data checksum failures, NACKs) exceed a rate threshold while authority is granted, the envelope shall revoke authority and report."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.08]
   parent_text: "FSR-01.08"
   other_parents: false
@@ -651,7 +651,7 @@
 - id: TSR-501
   kind: tsr
   text: "The safety MCU shall be supervised by an independent hardware watchdog (IWDG1, LSI-clocked) that is started no later than the first time the harness relay is energised after a reset, by any path (safety-mode change or configuration/debug command), and then stays active until the next reset; that cannot be stopped by the SoC; that is serviced only after the periodic safety processing has completed; and that resets the MCU within ≤ 0.1 s of a stall (SG-07 FDTI, WP-S-04 (assurance/03-system/WP-S-04-timing-ftti-budget.md) §3.6; ≤ 0.2 s would meet SG-01 only). Rationale for the start condition (amended in v0.4): until the relay is first energised after a reset, the stock camera-to-vehicle path is intact and no actuation frame reaches the vehicle, so a stall cannot violate SG-01 or SG-07; an idle device keeps its power-save and stop modes."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.09]
   parent_text: "FSR-01.09"
   other_parents: false
@@ -666,7 +666,7 @@
 - id: TSR-502
   kind: tsr
   text: "Every detected MCU fault (watchdog, interrupt-rate, register divergence, memory ECC, clock, supply, temperature, SPI/DMA, siren, relay) shall lead to SS-S within ≤ 0.1 s of detection. Faults shall be classified as latching until power cycle or as recoverable, by documented rationale. During and after any reset the outputs shall be in SS-S until a valid safety mode is set."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.09, FSR-07.03]
   parent_text: "FSR-01.09, FSR-07.03"
   other_parents: false
@@ -681,7 +681,7 @@
 - id: TSR-503
   kind: tsr
   text: "Memory faults that can corrupt actuation decisions shall be detected: RAM ECC with double-error reaction, flash image CRC at start-up and periodically, and periodic check of safety-critical configuration registers, each leading to TSR-502."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.09]
   parent_text: "FSR-01.09"
   other_parents: false
@@ -696,7 +696,7 @@
 - id: TSR-504
   kind: tsr
   text: "Loss or drift of the MCU clock that would invalidate timing checks or CAN bit timing shall be detected and lead to TSR-502."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.09]
   parent_text: "FSR-01.09"
   other_parents: false
@@ -711,7 +711,7 @@
 - id: TSR-505
   kind: tsr
   text: "Supply voltage of the MCU outside its operating range shall lead to reset or SS-S (brown-out reset, programmable voltage detector), and vehicle input voltage out of range while the relay is driven shall lead to SS-S."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.09]
   parent_text: "FSR-01.09"
   other_parents: false
@@ -726,7 +726,7 @@
 - id: TSR-506
   kind: tsr
   text: "The intercept relay shall be de-energise-to-safe, its actual state shall be read back and compared with the commanded state in both directions within ≤ 0.3 s, and a detected relay malfunction shall inhibit all actuation TX and be latched until power cycle (not cleared by a safety-mode change)."
-  asil: "B‡ (blocking), B (PCS restore)"
+  asil: "C (blocking), B (PCS restore)"
   parents: [FSR-01.11, FSR-07.03]
   parent_text: "FSR-01.11, FSR-07.03"
   other_parents: false
@@ -741,7 +741,7 @@
 - id: TSR-507
   kind: tsr
   text: "Safety-critical data (safety mode and parameter, limits, authority state, relay state) and the stacks shall be protected against writes from communication handlers by the MPU, with a stack guard, and a MemManage fault shall lead to TSR-502."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.09, FSR-01.10]
   parent_text: "FSR-01.09, FSR-01.10"
   other_parents: false
@@ -756,7 +756,7 @@
 - id: TSR-508
   kind: tsr
   text: "The car-side CAN transceiver shall be non-transmitting from reset until enabled by firmware; bus-off or persistent TX failure on the car-side bus while authority is granted shall revoke authority and be reported."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.09, FSR-01.12]
   parent_text: "FSR-01.09, FSR-01.12"
   other_parents: false
@@ -771,7 +771,7 @@
 - id: TSR-509
   kind: tsr
   text: "MCU die temperature outside its specified range shall lead to SS-S."
-  asil: "B"
+  asil: "C"
   parents: [FSR-01.09]
   parent_text: "FSR-01.09"
   other_parents: false
@@ -801,7 +801,7 @@
 - id: TSR-511
   kind: tsr
   text: "Only release-signed LionDriver firmware shall execute on the safety MCU: the signature scheme shall use a current algorithm and key length, flash read-out and write protection shall be set, the SoC's control of `STM_BOOT0`/`STM_RST_N` shall not allow non-release code to drive the relay, release builds of `pandad` shall not flash a development bootstub, and softloader entry (`0xd1` param 1) shall be refused in a car safety mode and while the ignition is on (CSR-024)."
-  asil: "B‡ (+ CS)"
+  asil: "C (+ CS)"
   parents: [FSR-01.10]
   parent_text: "FSR-01.10"
   other_parents: false
@@ -816,7 +816,7 @@
 - id: TSR-512
   kind: tsr
   text: "In release builds for the reference configuration the safety MCU shall accept only the modes SILENT, NOOUTPUT, ELM327 (fingerprinting, relay released) and TOYOTA with the reference safety parameter compiled into the firmware (EPS factor 73, no flags). Once TOYOTA mode is active, it shall accept only a change to NOOUTPUT or SILENT; any other request shall be rejected and reported. The alternative-experience word shall likewise be fixed to the reference value in release builds, so that it cannot be changed in a non-car mode and carried into a later TOYOTA session."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.10]
   parent_text: "FSR-01.10"
   other_parents: false
@@ -831,7 +831,7 @@
 - id: TSR-513
   kind: tsr
   text: "In release builds, control requests that can change actuation, relay, CAN configuration or comms state shall be rejected while a car safety mode is active: at least `0xc5` (relay drive), `0xe5` (CAN loopback), `0xde`/`0xf9`/`0xfc`/`0xe8` (bit rate and CAN-FD configuration), `0xdb` (OBD multiplexing), `0xe6` (clock source), `0xe7` (power save; in car mode it stops camera-side forwarding with the relay energised, SG-07, WP-A-04 SPF-08), `0xf1` (queue clear), `0xd1` param 1 (softloader entry, see also TSR-511), `0xd8` (MCU reset without fault reporting), `0xdf` (alternative experience, see TSR-512). Also `0xc0` (comms reset), `0xb0`/`0xb1` and `0xf6` (to be confirmed per WP-W-02 OI-5)."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.10]
   parent_text: "FSR-01.10"
   other_parents: false
@@ -846,7 +846,7 @@
 - id: TSR-514
   kind: tsr
   text: "Release firmware shall be built without `ALLOW_DEBUG`, with the LionDriver release key, and shall not contain the ALLOUTPUT mode, debug-only safety modes or debug-key acceptance; the build type shall be readable through the version request and recorded in the release record."
-  asil: "B‡ (+ CS)"
+  asil: "C (+ CS)"
   parents: [FSR-01.10]
   parent_text: "FSR-01.10"
   other_parents: false
@@ -861,7 +861,7 @@
 - id: TSR-515
   kind: tsr
   text: "At every power-up, before the relay is first driven, the safety MCU shall run start-up tests of its safety mechanisms (flash CRC, RAM test of safety data regions, watchdog reset path at a defined interval, relay drive and readback, siren path) and stay in SS-S and report if any test fails."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.09, FSR-01.11, FSR-02.05]
   parent_text: "FSR-01.09, FSR-01.11, FSR-02.05"
   other_parents: false
@@ -876,7 +876,7 @@
 - id: TSR-516
   kind: tsr
   text: "The safety MCU shall sound its own acoustic warning within ≤ 0.5 s of detection, without depending on SoC software, when (a) the SoC heartbeat is lost (TSR-407) while authority was granted within the last 5 s; (b) the envelope revokes authority while it is granted for any reason other than a driver action that the envelope itself observes (brake press, TSR-302; PCM cruise inactive, TSR-301), that is on an RX fault (TSR-406), an EPS fault state (TSR-110), a rejected command (TSR-108), a car-side TX failure or bus-off (TSR-508), a platform fault (TSR-502) or a heartbeat \"not engaged\" (TSR-307(a)); or (c) PCM cruise is still active more than 0.5 s after the SoC heartbeat first reported \"not engaged\" (a fault-induced disengagement whose ACC cancel, TSR-303, had no effect); or (d) the safety MCU restarts after a watchdog or fault reset (TSR-501, TSR-502) that interrupted granted authority. For (b) on an EPS fault, detection is the first fault frame, and any persistence filter before the warning shall be ≤ 0.7 s so that the siren sounds within the SG-02 1 s warning budget from fault onset (decided 2026-10-14, DQ-048). For (d), the item's engaged state shall be kept across the reset in memory that the reset does not clear, and the siren shall sound ≤ 0.5 s after the restart (decided 2026-10-14, DQ-054)."
-  asil: "B"
+  asil: "C"
   parents: [FSR-02.05, FSR-06.05]
   parent_text: "FSR-02.05, FSR-06.05"
   other_parents: false
@@ -891,7 +891,7 @@
 - id: TSR-517
   kind: tsr
   text: "Corruption of an approved actuation frame after the TX hook (copy into FDCAN message RAM, message RAM, FDCAN core, transceiver) shall be detected, e.g. by reading back the safety MCU's own transmitted frames on the car-side bus and comparing them with the approved frame, and a mismatch shall lead to TSR-502."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.09]
   parent_text: "FSR-01.09"
   other_parents: false
@@ -906,7 +906,7 @@
 - id: TSR-518
   kind: tsr
   text: "The envelope shall supervise the transmit rate of each actuation message ID (`0x2E4`, `0x343`, `0x412`, and any other TX-whitelisted ID) against its nominal period and reject frames sent faster than the nominal rate plus a defined tolerance; persistent excess while authority is granted shall revoke authority and be reported."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.08, FSR-01.12]
   parent_text: "FSR-01.08, FSR-01.12"
   other_parents: false
@@ -921,7 +921,7 @@
 - id: TSR-519
   kind: tsr
   text: "The safety MCU shall have a documented interrupt-priority and execution-timing scheme: priorities assigned explicitly for every enabled interrupt; safety hooks, CAN TX and SoC command dispatch either moved out of interrupt context or bounded by measured WCET; and the worst-case latency of the periodic safety processing (timeouts, heartbeat, watchdog service) shown to meet the TSR-401/407/501 budgets under worst-case interrupt load."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.09, FSR-01.07]
   parent_text: "FSR-01.09, FSR-01.07"
   other_parents: false
@@ -936,7 +936,7 @@
 - id: TSR-601
   kind: tsr
   text: "`selfdrived` shall classify faults as (i) untrusted command or input (loss or staleness of an input to the control law, model failure, CAN error, controls mismatch) → immediate disable, and (ii) trustworthy but degrading (thermal, storage, memory) → soft disable. Actuation on an input that has failed its alive or validity check shall end within ≤ 0.2 s."
-  asil: "QM (B-sup: TSR-407, TSR-408)"
+  asil: "QM (C-sup: TSR-407, TSR-408)"
   parents: [FSR-02.02, FSR-02.04, FSR-06.02]
   parent_text: "FSR-02.02, FSR-02.04, FSR-06.02"
   other_parents: false
@@ -951,7 +951,7 @@
 - id: TSR-602
   kind: tsr
   text: "`controlsd` shall check the age of `modelV2`, `longitudinalPlan` and `carState` before use (≤ 2 nominal periods) and shall set `latActive`/`longActive` false and raise an event when an input is stale."
-  asil: "QM (B-sup: TSR-408)"
+  asil: "QM (C-sup: TSR-408)"
   parents: [FSR-02.02, FSR-06.01]
   parent_text: "FSR-02.02, FSR-06.01"
   other_parents: false
@@ -966,7 +966,7 @@
 - id: TSR-603
   kind: tsr
   text: "No diagnostic (`commIssue`, posenet, locationd, `modeldLagging`) shall be masked while the item is engaged, and the driving model shall not be switched while engaged. In the reference configuration the external big model (E-06) shall be absent and not loadable."
-  asil: "QM (B-sup)"
+  asil: "QM (C-sup)"
   parents: [FSR-02.02, FSR-06.01]
   parent_text: "FSR-02.02, FSR-06.01"
   other_parents: false
@@ -981,7 +981,7 @@
 - id: TSR-604
   kind: tsr
   text: "Non-finite actuator commands shall be treated as a fault with immediate disable, not replaced silently."
-  asil: "QM (B-sup)"
+  asil: "QM (C-sup)"
   parents: [FSR-06.04]
   parent_text: "FSR-06.04"
   other_parents: false
@@ -1011,7 +1011,7 @@
 - id: TSR-606
   kind: tsr
   text: "On every fault-induced transition to L2/L3 (FSC §12) the SoC shall give a visual and acoustic take-over request within ≤ 1 s of detection, with text that names the actual fault class."
-  asil: "QM (B-sup: TSR-516)"
+  asil: "QM (C-sup: TSR-516)"
   parents: [FSR-02.03, FSR-06.02]
   parent_text: "FSR-02.03, FSR-06.02"
   other_parents: false
@@ -1026,7 +1026,7 @@
 - id: TSR-607
   kind: tsr
   text: "The SoC shall warn the driver when the EPS reports LKA unavailable or faulted (complements TSR-110)."
-  asil: "QM (B-sup: TSR-110)"
+  asil: "QM (C-sup: TSR-110)"
   parents: [FSR-02.01]
   parent_text: "FSR-02.01"
   other_parents: false
@@ -1041,7 +1041,7 @@
 - id: TSR-608
   kind: tsr
   text: "Driver monitoring shall escalate warnings for an inattentive driver with the timing set in WP-C-08 §5 (baseline vision 5/8/13 s, wheel-touch 5/15/25 s)."
-  asil: "QM"
+  asil: "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)"
   parents: [FSR-02.06]
   parent_text: "FSR-02.06"
   other_parents: false
@@ -1056,7 +1056,7 @@
 - id: TSR-609
   kind: tsr
   text: "The DM chain shall mark its output invalid when the cabin image or model output is missing or not credible, and an invalid DM output for > 2 s while engaged shall escalate to a take-over request."
-  asil: "QM"
+  asil: "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)"
   parents: [FSR-02.07]
   parent_text: "FSR-02.07"
   other_parents: false
@@ -1071,7 +1071,7 @@
 - id: TSR-610
   kind: tsr
   text: "DM demo mode (`IsDriverViewEnabled`) shall not be active while the item can engage."
-  asil: "QM"
+  asil: "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)"
   parents: [FSR-02.08]
   parent_text: "FSR-02.08"
   other_parents: false
@@ -1086,7 +1086,7 @@
 - id: TSR-611
   kind: tsr
   text: "If the driver does not respond to the highest DM warning, the SoC shall decelerate, disengage and lock out re-engagement for 1/5/15/30 min."
-  asil: "QM"
+  asil: "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)"
   parents: [FSR-02.09]
   parent_text: "FSR-02.09"
   other_parents: false
@@ -1101,7 +1101,7 @@
 - id: TSR-612
   kind: tsr
   text: "The wheel-touch fallback shall reset awareness only on a deliberate driver input above a defined threshold, not on any steering or gas input."
-  asil: "QM"
+  asil: "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)"
   parents: [FSR-02.07]
   parent_text: "FSR-02.07"
   other_parents: false
@@ -1116,7 +1116,7 @@
 - id: TSR-613
   kind: tsr
   text: "Debug, joystick and maneuver modes, and the `lateralManeuverPlan` path to the actuator, shall be absent from reference-configuration builds."
-  asil: "QM (B-sup)"
+  asil: "QM (C-sup); A where it keeps DM active (FSR-02.08, WP-C-04 OI-11)"
   parents: [FSR-02.08, FSR-01.14]
   parent_text: "FSR-02.08, FSR-01.14"
   other_parents: false
@@ -1131,7 +1131,7 @@
 - id: TSR-614
   kind: tsr
   text: "`pandad` shall not forward `sendcan` messages older than 2 control periods (20 ms)."
-  asil: "QM (B-sup: TSR-411)"
+  asil: "QM (C-sup: TSR-411)"
   parents: [FSR-01.08]
   parent_text: "FSR-01.08"
   other_parents: false
@@ -1146,7 +1146,7 @@
 - id: TSR-615
   kind: tsr
   text: "The SoC shall immediately disable on any panda fault flag, heartbeat-lost flag, rising `safetyTxBlocked` count while engaged, or SPI error burst reported in `pandaStates`."
-  asil: "QM (B-sup: TSR-502, TSR-108)"
+  asil: "QM (C-sup: TSR-502, TSR-108)"
   parents: [FSR-01.12, FSR-02.03]
   parent_text: "FSR-01.12, FSR-02.03"
   other_parents: false
@@ -1191,7 +1191,7 @@
 - id: TSR-618
   kind: tsr
   text: "A PCM-reported ACC fault shall cause immediate disable with a take-over request."
-  asil: "QM (B-sup)"
+  asil: "QM (C-sup)"
   parents: [FSR-06.03]
   parent_text: "FSR-06.03"
   other_parents: false
@@ -1206,7 +1206,7 @@
 - id: TSR-619
   kind: tsr
   text: "`pandad` shall compare the panda-reported safety model, safety parameter and alternative experience with the release-record values and shall prevent engagement and raise an alert on mismatch (refines CSR-016 of WP-S-07 (assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md))."
-  asil: "QM (B-sup: TSR-512)"
+  asil: "QM (C-sup: TSR-512)"
   parents: [FSR-01.10]
   parent_text: "FSR-01.10"
   other_parents: false
@@ -1221,7 +1221,7 @@
 - id: TSR-620
   kind: tsr
   text: "The item shall not request the TOYOTA safety mode or allow engagement unless the ECU firmware versions read at start-up (EPS, engine, ABS, radar, camera) match the release record of the reference configuration; an unverified or mismatching firmware set shall keep the safety MCU in NOOUTPUT and inform the driver. The envelope cannot read ECU firmware itself, so the refusal rests on the SoC query plus the mode lock of TSR-512."
-  asil: "QM (B-sup: TSR-512, TSR-803)"
+  asil: "QM (C-sup: TSR-512, TSR-803)"
   parents: [FSR-01.10]
   parent_text: "FSR-01.10"
   other_parents: false
@@ -1236,7 +1236,7 @@
 - id: TSR-621
   kind: tsr
   text: "While engaged, `selfdrived` shall raise an immediate disable with a take-over request when any panda in a car safety mode reports `controlsAllowed` false, after at most 2 consecutive mismatched samples to absorb transport skew between the CAN and `pandaStates` sockets, and in any case within ≤ 0.5 s of the first mismatched sample."
-  asil: "QM (B-sup: TSR-108, TSR-516)"
+  asil: "QM (C-sup: TSR-108, TSR-516)"
   parents: [FSR-02.10]
   parent_text: "FSR-02.10"
   other_parents: false
@@ -1251,7 +1251,7 @@
 - id: TSR-622
   kind: tsr
   text: "While the item can engage, the SoC shall supervise the liveness of the HMI path (UI render loop and sound output stream, each with a heartbeat) and treat a missing heartbeat for > 1 s as a fault: immediate disable, with the take-over request carried by the panda siren (TSR-516) and the cluster cruise state (TSR-309, FSR-05.05)."
-  asil: "QM (B-sup: TSR-516)"
+  asil: "QM (C-sup: TSR-516)"
   parents: [FSR-02.11]
   parent_text: "FSR-02.11"
   other_parents: false
@@ -1266,7 +1266,7 @@
 - id: TSR-623
   kind: tsr
   text: "Alert sound output shall not be muted or set below a defined audible minimum while the item can engage; if the minimum cannot be guaranteed, engagement shall be prevented with a no-entry alert."
-  asil: "QM (B-sup: TSR-516)"
+  asil: "QM (C-sup: TSR-516)"
   parents: [FSR-02.11]
   parent_text: "FSR-02.11"
   other_parents: false
@@ -1311,7 +1311,7 @@
 - id: TSR-626
   kind: tsr
   text: "While engaged, the SoC shall detect that the envelope does not actuate from evidence other than the envelope's own status report: (a) `pandaStates` older than 2 nominal periods (0.2 s) is treated as a controls mismatch (TSR-621); (b) with lateral control active, the EPS-applied torque (STEER_TORQUE_EPS in `0x260`) not following a commanded torque above a threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration not following the requested acceleration beyond a tolerance for longer than t_blk. (d) with lateral control active, EPS_STATUS (`0x262`) LKA_STATE not reporting LKA active, or with longitudinal control active, the PCM not reporting ACC in control, for longer than t_blk; (e) the transmitted-frame count of TSR-632 not advancing for a commanded actuation ID. Each leads to immediate disable with a take-over request, so that the warning falls within the SG-02/SG-06 1 s budget (SFM-ACT-018). Threshold, tolerance and t_blk (≤ 0.5 s) shall be set from fork-owned drive logs so that no false detection occurs in the reference log set."
-  asil: "QM (B-sup: TSR-516)"
+  asil: "QM (C-sup: TSR-516)"
   parents: [FSR-02.10]
   parent_text: "FSR-02.10"
   other_parents: false
@@ -1326,7 +1326,7 @@
 - id: TSR-627
   kind: tsr
   text: "The alert sound path (`soundd`) shall run with a real-time scheduling priority not lower than that of `ui`, or a worst-case load test (maximum logging, encoding and upload) shall show that alert sound output starts within the TSR-606 budget."
-  asil: "QM (B-sup: TSR-516)"
+  asil: "QM (C-sup: TSR-516)"
   parents: [FSR-02.11, FSR-02.03]
   parent_text: "FSR-02.11, FSR-02.03"
   other_parents: false
@@ -1371,7 +1371,7 @@
 - id: TSR-630
   kind: tsr
   text: "While a car safety mode is active and the item is not engaged, the SoC shall check that every panda reports `controlsAllowed` false. A report of true for more than 2 consecutive `pandaStates` samples, and in any case within ≤ 0.3 s, shall prevent engagement with a no-entry alert, be logged as an envelope fault, and request ACC cancel. (The reverse of TSR-621: it makes a latent panda authority fault visible before the host also commands torque.)"
-  asil: "QM (B-sup: TSR-105, TSR-301)"
+  asil: "QM (C-sup: TSR-105, TSR-301)"
   parents: [FSR-01.05, FSR-02.10]
   parent_text: "FSR-01.05, FSR-02.10"
   other_parents: false
@@ -1386,7 +1386,7 @@
 - id: TSR-631
   kind: tsr
   text: "`controlsd` shall treat the driving-model output as stale, with the TSR-602 reaction, when (a) its frame ID does not advance for more than 2 nominal periods while messages keep arriving (frozen output), or (b) its age measured from the source camera frame timestamp, not the publish time, exceeds 2 nominal periods (stale content with fresh timestamps)."
-  asil: "QM (B-sup: TSR-101, TSR-103 bound the effect; TSR-408 covers a stopped command stream)"
+  asil: "QM (C-sup: TSR-101, TSR-103 bound the effect; TSR-408 covers a stopped command stream)"
   parents: [FSR-02.02, FSR-06.01]
   parent_text: "FSR-02.02, FSR-06.01"
   other_parents: false
@@ -1401,7 +1401,7 @@
 - id: TSR-632
   kind: tsr
   text: "The safety MCU shall report to the SoC, for each supervised actuation ID (`0x2E4`, `0x343`), the count of frames accepted by the envelope and transmitted on the car-side bus (transmit complete) and the count refused, in every health report."
-  asil: "B‡ (report content); QM for its use (TSR-626(e))"
+  asil: "C (report content); QM for its use (TSR-626(e))"
   parents: [FSR-02.10]
   parent_text: "FSR-02.10"
   other_parents: false
@@ -1416,7 +1416,7 @@
 - id: TSR-633
   kind: tsr
   text: "When driver awareness has reached zero (terminal DM alert) and the driver has not responded for 5 s, the item shall bring the vehicle to the reaction decided for the unresponsive-driver goal (register DQ-340, queued; recommended: keep the lane, decelerate in lane to a standstill within a_min and j_down (TSR-202, TSR-205) with the terminal alert sounding, then hold, disengage and lock out re-engagement). It shall not leave lateral and longitudinal control active at the set speed."
-  asil: "A (proposed: H-09 goal per DQ-205, to be added by the HARA owner; allocated to the QM SoC, open as for TSR-625)"
+  asil: "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)"
   parents: [FSR-02.09]
   parent_text: "FSR-02.09"
   other_parents: false
@@ -1566,7 +1566,7 @@
 - id: TSR-710
   kind: tsr
   text: "The envelope shall detect a relay malfunction (any `check_relay` control message seen on the car side after the relay transition window) and inhibit all actuation TX and forwarding."
-  asil: "B‡"
+  asil: "C"
   parents: [FSR-01.11]
   parent_text: "FSR-01.11"
   other_parents: false
