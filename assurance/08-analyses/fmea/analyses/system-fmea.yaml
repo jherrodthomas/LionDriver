@@ -42,6 +42,11 @@
 # evidence on 13 MSR rows (SFM-001/002/005/006/008/009), per msr-plan §4.2: a cross-check of the code-derived times, no rating
 # change, no credit for EPS, PCM or driver behaviour (model assumptions). It confirms the TSR-408 revoke at 43 ms (F-04b) and
 # that frozen in-envelope commands get no panda reaction (F-03, L-01, L-03).
+# Rev 0.12 (2026-10-16): taken in from the DFMEA at BL-005 (hardware session, RR-2026-010): the harness-box "relay" is two
+# DG419LE analog intercept switches with a pull-down default to pass-through, no state feedback, powered from the box supply.
+# SFM-033, SFM-034 and SFM-SE-003/004 reworded. SFM-034.C1 O 3 -> 4 (DFM-010.C4, supply transients); SFM-034.C2 D 10 -> 9
+# (DFM-011 D 9); AP unchanged (H). New SFM-033.C3: the harness box loses its supply or a switch channel opens, so the stock
+# camera is cut off from the car (DFM-020, DFM-013).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -50,7 +55,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.11"
+  revision: "0.12"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
@@ -96,13 +101,16 @@ structure:
     parent: SFM-SE-002
     description: >-
       MCU between the device and vehicle CAN. Forwards CAN, enforces the vehicle safety model on
-      transmitted messages, controls the harness relay. Firmware and safety model are in submodules.
+      transmitted messages, drives the harness-box intercept switch (SBU1). Firmware and safety model are in submodules.
     paths: [openpilot/selfdrive/pandad, panda, opendbc_repo]
   - id: SFM-SE-004
     name: Harness (Toyota A connector, harness box, comma power v3)
     kind: component
     parent: SFM-SE-001
-    description: Intercepts the stock ADAS camera CAN at the windshield camera connector; supplies 12 V to the device
+    description: >-
+      Intercepts the stock ADAS camera CAN at the windshield camera connector; supplies 12 V to the device. The intercept is two
+      DG419LE analog switches in the harness box, driven by the device on SBU1, pulled down to pass-through, with no state
+      feedback and powered from the box supply (RR-2026-010)
   # Software subsystems running on the device (black boxes at this level; decomposed in the SW FMEA)
   - id: SFM-SE-010
     name: Perception (camerad, modeld)
@@ -2007,7 +2015,8 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-003
-        rationale: Hardware fault rated in the DFMEA (DFM-012; no SoC-independent warning exists, DFM-017); this row inherits that rating
+        rationale: Hardware fault rated in the DFMEA (DFM-012; no SoC-independent warning exists, DFM-017); this row inherits that rating. A
+          harness-box supply loss also unpowers the device (DFM-020, see SFM-033.C3)
         msr_exempt: Hardware cause; rated once in the DFMEA (DFM-012.C1)
 
   - id: SFM-016
@@ -3149,7 +3158,7 @@ failure_modes:
     failure_mode: Stock safety functions unavailable or degraded while the item is installed
     guideword: loss
     effects:
-      - {level: local, description: "Stock ADAS camera messages blocked or replaced by the harness relay"}
+      - {level: local, description: "Stock ADAS camera messages blocked or replaced by the harness-box intercept"}
       - {level: next_higher, description: "Stock AEB / FCW / lane assist not available as expected"}
       - {level: end, description: "Driver relies on stock protections that are not present", hazard: HZ-011, severity: 10}
     severity: 10
@@ -3157,9 +3166,9 @@ failure_modes:
     causes:
       - id: SFM-033.C1
         element: SFM-SE-004
-        description: Relay intercepts stock camera messages the vehicle needs for AEB
+        description: The intercept routes the stock camera messages the vehicle needs for AEB through the panda
         prevention_controls:
-        - description: Forwarding keeps stock pre-collision messages (0x283, 0x344) passing the relay (SWF-011); which TSS2 functions remain with openpilot longitudinal
+        - description: Forwarding keeps stock pre-collision messages (0x283, 0x344) passing the intercept (SWF-011); which TSS2 functions remain with openpilot longitudinal
             is not established
           ref: opendbc_repo/opendbc/safety/modes/toyota.h
         detection_controls:
@@ -3186,6 +3195,25 @@ failure_modes:
         actions:
         - SFM-ACT-006
         rationale: Rated, and actioned where needed, in the SW FMEA (SWF-011.C1); this row inherits that rating
+      - id: SFM-033.C3
+        element: SFM-SE-004
+        linked_failure_mode: DFM-020
+        description: >-
+          The harness box loses its supply (ignition branch or D1 open without comma power, VIN shorted), or a switch channel
+          opens, so the stock camera path through the unpowered or open DG419LE switches is cut (RR-2026-010)
+        prevention_controls:
+        - description: Consumer-grade harness box without automotive qualification data available to LionDriver; rated in the DFMEA
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        detection_controls:
+        - description: 'As rated in the DFMEA: no pre-release test of this hardware fault'
+          ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
+        occurrence: 5
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-003
+        rationale: Hardware fault rated in the DFMEA (DFM-020.C1 O5 D10, DFM-020.C2 O3 D10; open channel DFM-013.C1 O3 D10); this row
+          inherits the worst of them. The DFMEA rates its monitoring (DFM-020); this failure mode has no System FMEA mechanism
     notes: >-
       Open question: which stock TSS2 functions remain on the reference configuration with openpilot longitudinal
       enabled. Must be established from the opendbc Toyota port and in-vehicle test before the HARA.
@@ -3194,10 +3222,10 @@ failure_modes:
   - id: SFM-034
     element: SFM-SE-001
     function: SFM-FN-008
-    failure_mode: Harness relay fault
+    failure_mode: Harness-box intercept switch stuck or in the wrong position
     guideword: intermittent
     effects:
-      - {level: local, description: "Relay stuck or intermittent; stock camera and item both on bus, or neither"}
+      - {level: local, description: "Intercept switch stuck or intermittent: in intercept when released (camera cut off from the car), or in pass-through when driven (stock camera and item both on the bus)"}
       - {level: next_higher, description: "Conflicting steering/ACC messages, or no camera messages"}
       - {level: end, description: "Erratic stock or item behavior; stock functions lost", hazard: HZ-011, severity: 10}
       - {level: end, description: "Contributes to HZ-002: stock LKA and item steering requests combine on the bus", hazard: HZ-002, severity: 10}
@@ -3210,7 +3238,9 @@ failure_modes:
       - id: SFM-034.C1
         element: SFM-SE-004
         linked_failure_mode: DFM-010
-        description: Relay contact wear or connector fault
+        description: >-
+          Switch U1 or U2 stuck in intercept, its IN input damaged high or driven high, its pull-down R2/R3 open, or the switches
+          damaged by box supply transients (DG419LE, RR-2026-010)
         prevention_controls:
         - description: Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM
             row exists
@@ -3218,16 +3248,16 @@ failure_modes:
         detection_controls:
         - description: 'As rated in the DFMEA: no pre-release test of this hardware fault'
           ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
-        occurrence: 3
+        occurrence: 4
         detection: 10
         ap: H
-        rationale: Hardware fault rated in the DFMEA (DFM-010 O3 D10, DFM-011 O3 D9); this row inherits that rating; relayMalfunction (SWF-012) is the in-field
-          mechanism
+        rationale: Hardware fault rated in the DFMEA (DFM-010.C1-C3 O3 D10, DFM-010.C4 O4 D10); this row inherits the worst. relayMalfunction
+          (SWF-012) is the in-field mechanism; there is no switch-state feedback (RR-2026-010)
         msr_exempt: Hardware cause; rated once in the DFMEA (DFM-010.C1)
       - id: SFM-034.C2
         element: SFM-SE-003
         linked_failure_mode: DFM-011
-        description: Relay drive output fault on panda
+        description: Switch stuck in pass-through, or the SBU1 drive lost, held low or too low to change the switch over (5 V drive against VL = VIN)
         prevention_controls:
         - description: Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM
             row exists
@@ -3236,9 +3266,9 @@ failure_modes:
         - description: 'As rated in the DFMEA: no pre-release test of this hardware fault'
           ref: assurance/08-analyses/fmea/analyses/dfmea.yaml
         occurrence: 3
-        detection: 10
+        detection: 9
         ap: H
-        rationale: Hardware fault rated in the DFMEA (DFM-011, DFM-010); this row inherits that rating
+        rationale: Hardware fault rated in the DFMEA (DFM-011.C1 O3 D9, DFM-011.C2 O2 D9); this row inherits the worst
         msr_exempt: Hardware cause; rated once in the DFMEA (DFM-011.C1)
 
 actions:
@@ -3257,7 +3287,7 @@ actions:
   - id: SFM-ACT-003
     kind: detection
     description: 'Execute system integration and vehicle verification on the reference car (WP-S-08, WP-S-09) and the HIL bench (D-04): steering sign and
-      torque response, EPS and powertrain interface behaviour (lockouts, ignored requests), brake, accelerator and cancel paths, relay and harness faults,
+      torque response, EPS and powertrain interface behaviour (lockouts, ignored requests), brake, accelerator and cancel paths, intercept-switch and harness faults,
       12 V interruptions, alert latency and audibility, CPU-load soak'
     owner: Jherrod Thomas
     status: open
