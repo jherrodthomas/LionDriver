@@ -21,6 +21,8 @@ class Road:
   clothoid: float = 100.0         # m of linear curvature change into the arc
   length: float = 2000.0
   ds: float = 0.5
+  segments: list | None = None    # [(length, k_start, k_end)]: when given, replaces straight/clothoid/radius
+  source: str = ""
   s: list[float] = field(default_factory=list, repr=False)
   x: list[float] = field(default_factory=list, repr=False)
   y: list[float] = field(default_factory=list, repr=False)
@@ -44,9 +46,23 @@ class Road:
 
   @property
   def curve_start(self) -> float:
+    if self.segments:
+      s0 = 0.0
+      for length, k0, k1 in self.segments:
+        if k0 or k1:
+          return s0
+        s0 += length
+      return s0
     return self.straight
 
   def curvature(self, s: float) -> float:
+    if self.segments:
+      s0 = 0.0
+      for length, k0, k1 in self.segments:
+        if s <= s0 + length:
+          return k0 + (k1 - k0) * max(s - s0, 0.0) / length
+        s0 += length
+      return self.segments[-1][2]
     if self.radius is None or s <= self.straight:
       return 0.0
     k = 1.0 / self.radius
@@ -83,3 +99,33 @@ class Road:
 def lane_line_threshold(lane_width: float, car_width: float) -> float:
   """Lateral offset at which the body edge reaches the lane line: (lane width - vehicle width) / 2 (WP-S-04 §3.1)."""
   return (lane_width - car_width) / 2.0
+
+
+def from_xodr(path, lane: int = -2, name: str | None = None) -> Road:
+  """The centre line of one lane of road 0 of an OpenDRIVE file written by ../scenarios/generate.py: line, spiral
+  and arc geometries, constant lane widths. The lane centre is offset from the reference line, so its curvature is
+  k / (1 + d k) and its length grows by d k per metre (d: offset to the right; exact for arcs, to first order for
+  spirals)."""
+  import xml.etree.ElementTree as ET
+  root = ET.parse(path).getroot()
+  rd = root.find("road")
+  widths = {int(ln.get("id")): float(ln.find("width").get("a")) for ln in rd.iter("lane") if ln.find("width") is not None}
+  w = widths[lane]
+  d = sum(widths[i] for i in range(-1, lane, -1)) + w / 2.0     # reference line to the lane centre, to the right
+  segs = []
+  for g in rd.find("planView").findall("geometry"):
+    length = float(g.get("length"))
+    kind = g[0]
+    if kind.tag == "line":
+      k0 = k1 = 0.0
+    elif kind.tag == "arc":
+      k0 = k1 = float(kind.get("curvature"))
+    elif kind.tag == "spiral":
+      k0, k1 = float(kind.get("curvStart")), float(kind.get("curvEnd"))
+    else:
+      raise ValueError(f"{path}: geometry {kind.tag} not supported")
+    km = 0.5 * (k0 + k1)
+    segs.append((length * (1 + d * km), k0 / (1 + d * k0), k1 / (1 + d * k1)))
+  total = sum(sg[0] for sg in segs)
+  return Road(name or root.find("header").get("name"), w, straight=0.0, length=min(total, 1500.0), segments=segs,
+              source=str(path))
