@@ -191,10 +191,10 @@ Status 2026-10-12 (`bf6ce8c`, not verified on hardware): the MCU's 100 Hz safety
 | Element | TSRs | Highest ASIL |
 |---|---|---|
 | E-03a safety layer | 101–110, 201–207, 301, 302, 304–307(a), 309, 311, 401–406, 408, 704, 705, 710 | B‡ |
-| E-03b panda firmware | 407, 409 (check), 410–413, 501–503, 506 (logic), 507, 508, 510–516, 701, 706, 707, 712 (detection, latch) | B‡ |
+| E-03b panda firmware | 407, 409 (check), 410–413, 501–503, 506 (logic), 507, 508, 510–516, 701, 706, 707, 712 (detection, latch), 632 | B‡ |
 | E-04a MCU hardware (configured by E-03b) | 501, 503–505, 507–509, 511 (option bytes), 515 | B‡ |
 | E-05 harness | 506 (relay), 701–703, 706, 712 (readback) | B‡/B |
-| E-01 SoC (QM) | 303, 307(b), 308, 409 (content), 410/411 (sender side), 601–629, 709, 712 (warning) | QM (B-sup) |
+| E-01 SoC (QM) | 303, 307(b), 308, 409 (content), 410/411 (sender side), 601–631, 633, 709, 712 (warning) | QM (B-sup) |
 | EXT | 111, 208, 310, 708 | AoU |
 | OPS | 801–818 | — |
 

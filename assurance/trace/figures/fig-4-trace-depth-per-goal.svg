@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="632" viewBox="0 0 1280 632" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 4 · Trace depth per safety goal</title>
-<desc>For each safety goal: the derived and refined requirement counts, the share allocated to model elements and the share named by a test-specification case. Over all goals 294 of 348 requirements are allocated and 266 named; none is tagged in code or verified by a passed test.</desc>
+<desc>For each safety goal: the derived and refined requirement counts, the share allocated to model elements and the share named by a test-specification case. Over all goals 298 of 352 requirements are allocated and 266 named; none is tagged in code or verified by a passed test.</desc>
 <defs><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F766E"/></marker><marker id="hw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker><marker id="aou" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D97706"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker></defs>
 <rect x="0" y="0" width="1280" height="632" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4 · Trace depth per safety goal</text>
@@ -23,15 +23,15 @@
 <text x="48" y="164" font-size="12.5" fill="#0F172A" font-weight="700">SG-01</text>
 <text x="98" y="164" font-size="10.5" fill="#475569">ASIL C</text>
 <rect x="210" y="144" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-<text x="279" y="165" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">14 · 58</text>
+<text x="279" y="165" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">14 · 59</text>
 <rect x="380" y="144" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
 <text x="449" y="165" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">83 · 35</text>
 <rect x="550" y="144" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
 <text x="629" y="160" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">79 %</text>
-<text x="629" y="172" font-size="9.5" fill="#475569" text-anchor="middle">150 of 190</text>
+<text x="629" y="172" font-size="9.5" fill="#475569" text-anchor="middle">151 of 191</text>
 <rect x="740" y="144" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="819" y="160" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">82 %</text>
-<text x="819" y="172" font-size="9.5" fill="#475569" text-anchor="middle">155 of 190</text>
+<text x="819" y="160" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">81 %</text>
+<text x="819" y="172" font-size="9.5" fill="#475569" text-anchor="middle">155 of 191</text>
 <rect x="930" y="144" width="128" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="994" y="165" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <rect x="1090" y="144" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -39,15 +39,15 @@
 <text x="48" y="210" font-size="12.5" fill="#0F172A" font-weight="700">SG-02</text>
 <text x="98" y="210" font-size="10.5" fill="#475569">ASIL C</text>
 <rect x="210" y="190" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-<text x="279" y="211" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">16 · 43</text>
+<text x="279" y="211" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">16 · 47</text>
 <rect x="380" y="190" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
 <text x="449" y="211" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">58 · 30</text>
 <rect x="550" y="190" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="629" y="206" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">76 %</text>
-<text x="629" y="218" font-size="9.5" fill="#475569" text-anchor="middle">112 of 147</text>
+<text x="629" y="206" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">77 %</text>
+<text x="629" y="218" font-size="9.5" fill="#475569" text-anchor="middle">116 of 151</text>
 <rect x="740" y="190" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="819" y="206" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">65 %</text>
-<text x="819" y="218" font-size="9.5" fill="#475569" text-anchor="middle">96 of 147</text>
+<text x="819" y="206" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">64 %</text>
+<text x="819" y="218" font-size="9.5" fill="#475569" text-anchor="middle">96 of 151</text>
 <rect x="930" y="190" width="128" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="994" y="211" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <rect x="1090" y="190" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -55,15 +55,15 @@
 <text x="48" y="256" font-size="12.5" fill="#0F172A" font-weight="700">SG-03</text>
 <text x="98" y="256" font-size="10.5" fill="#475569">ASIL C</text>
 <rect x="210" y="236" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-<text x="279" y="257" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">13 · 50</text>
+<text x="279" y="257" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">13 · 51</text>
 <rect x="380" y="236" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
 <text x="449" y="257" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">73 · 35</text>
 <rect x="550" y="236" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
 <text x="629" y="252" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">77 %</text>
-<text x="629" y="264" font-size="9.5" fill="#475569" text-anchor="middle">132 of 171</text>
+<text x="629" y="264" font-size="9.5" fill="#475569" text-anchor="middle">133 of 172</text>
 <rect x="740" y="236" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
 <text x="819" y="252" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">81 %</text>
-<text x="819" y="264" font-size="9.5" fill="#475569" text-anchor="middle">139 of 171</text>
+<text x="819" y="264" font-size="9.5" fill="#475569" text-anchor="middle">139 of 172</text>
 <rect x="930" y="236" width="128" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="994" y="257" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <rect x="1090" y="236" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -71,15 +71,15 @@
 <text x="48" y="302" font-size="12.5" fill="#0F172A" font-weight="700">SG-04</text>
 <text x="98" y="302" font-size="10.5" fill="#475569">ASIL B</text>
 <rect x="210" y="282" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-<text x="279" y="303" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">14 · 51</text>
+<text x="279" y="303" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">14 · 53</text>
 <rect x="380" y="282" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
 <text x="449" y="303" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">72 · 30</text>
 <rect x="550" y="282" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
 <text x="629" y="298" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">80 %</text>
-<text x="629" y="310" font-size="9.5" fill="#475569" text-anchor="middle">134 of 167</text>
+<text x="629" y="310" font-size="9.5" fill="#475569" text-anchor="middle">136 of 169</text>
 <rect x="740" y="282" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="819" y="298" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">80 %</text>
-<text x="819" y="310" font-size="9.5" fill="#475569" text-anchor="middle">133 of 167</text>
+<text x="819" y="298" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">79 %</text>
+<text x="819" y="310" font-size="9.5" fill="#475569" text-anchor="middle">133 of 169</text>
 <rect x="930" y="282" width="128" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="994" y="303" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <rect x="1090" y="282" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -87,15 +87,15 @@
 <text x="48" y="348" font-size="12.5" fill="#0F172A" font-weight="700">SG-05</text>
 <text x="98" y="348" font-size="10.5" fill="#475569">ASIL B</text>
 <rect x="210" y="328" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-<text x="279" y="349" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">12 · 43</text>
+<text x="279" y="349" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">12 · 44</text>
 <rect x="380" y="328" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
 <text x="449" y="349" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">57 · 29</text>
 <rect x="550" y="328" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
 <text x="629" y="344" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">77 %</text>
-<text x="629" y="356" font-size="9.5" fill="#475569" text-anchor="middle">108 of 141</text>
+<text x="629" y="356" font-size="9.5" fill="#475569" text-anchor="middle">109 of 142</text>
 <rect x="740" y="328" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="819" y="344" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">79 %</text>
-<text x="819" y="356" font-size="9.5" fill="#475569" text-anchor="middle">111 of 141</text>
+<text x="819" y="344" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">78 %</text>
+<text x="819" y="356" font-size="9.5" fill="#475569" text-anchor="middle">111 of 142</text>
 <rect x="930" y="328" width="128" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="994" y="349" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <rect x="1090" y="328" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -103,15 +103,15 @@
 <text x="48" y="394" font-size="12.5" fill="#0F172A" font-weight="700">SG-06</text>
 <text x="98" y="394" font-size="10.5" fill="#475569">ASIL C</text>
 <rect x="210" y="374" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-<text x="279" y="395" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">16 · 42</text>
+<text x="279" y="395" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">16 · 46</text>
 <rect x="380" y="374" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
 <text x="449" y="395" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">57 · 30</text>
 <rect x="550" y="374" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="629" y="390" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">75 %</text>
-<text x="629" y="402" font-size="9.5" fill="#475569" text-anchor="middle">109 of 145</text>
+<text x="629" y="390" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">76 %</text>
+<text x="629" y="402" font-size="9.5" fill="#475569" text-anchor="middle">113 of 149</text>
 <rect x="740" y="374" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="819" y="390" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">63 %</text>
-<text x="819" y="402" font-size="9.5" fill="#475569" text-anchor="middle">92 of 145</text>
+<text x="819" y="390" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">62 %</text>
+<text x="819" y="402" font-size="9.5" fill="#475569" text-anchor="middle">92 of 149</text>
 <rect x="930" y="374" width="128" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="994" y="395" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <rect x="1090" y="374" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -135,15 +135,15 @@
 <text x="48" y="486" font-size="12.5" fill="#0F172A" font-weight="700">SG-08</text>
 <text x="98" y="486" font-size="10.5" fill="#475569">ASIL A</text>
 <rect x="210" y="466" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-<text x="279" y="487" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">4 · 7</text>
+<text x="279" y="487" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">4 · 8</text>
 <rect x="380" y="466" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
 <text x="449" y="487" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">6 · 0</text>
 <rect x="550" y="466" width="158" height="32" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
 <text x="629" y="482" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">100 %</text>
-<text x="629" y="494" font-size="9.5" fill="#475569" text-anchor="middle">17 of 17</text>
+<text x="629" y="494" font-size="9.5" fill="#475569" text-anchor="middle">18 of 18</text>
 <rect x="740" y="466" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="819" y="482" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">65 %</text>
-<text x="819" y="494" font-size="9.5" fill="#475569" text-anchor="middle">11 of 17</text>
+<text x="819" y="482" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">61 %</text>
+<text x="819" y="494" font-size="9.5" fill="#475569" text-anchor="middle">11 of 18</text>
 <rect x="930" y="466" width="128" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="994" y="487" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <rect x="1090" y="466" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -151,15 +151,15 @@
 <line x1="40" y1="504" x2="1240" y2="504" stroke="#CBD5E1" stroke-width="1"/>
 <text x="48" y="538" font-size="12.5" fill="#0F172A" font-weight="700">All goals</text>
 <rect x="210" y="518" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-<text x="279" y="539" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">56 · 112</text>
+<text x="279" y="539" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">56 · 116</text>
 <rect x="380" y="518" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
 <text x="449" y="539" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">134 · 46</text>
 <rect x="550" y="518" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="629" y="534" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">84 %</text>
-<text x="629" y="546" font-size="9.5" fill="#475569" text-anchor="middle">294 of 348</text>
+<text x="629" y="534" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">85 %</text>
+<text x="629" y="546" font-size="9.5" fill="#475569" text-anchor="middle">298 of 352</text>
 <rect x="740" y="518" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
 <text x="819" y="534" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">76 %</text>
-<text x="819" y="546" font-size="9.5" fill="#475569" text-anchor="middle">266 of 348</text>
+<text x="819" y="546" font-size="9.5" fill="#475569" text-anchor="middle">266 of 352</text>
 <rect x="930" y="518" width="128" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="994" y="539" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <rect x="1090" y="518" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
