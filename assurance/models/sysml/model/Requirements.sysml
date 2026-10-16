@@ -263,7 +263,7 @@ package LionDriverRequirements {
         :>> verifMethod = "R, T-SIL";
     }
     requirement <'FSR-02.09'> fsr_02_09 : FunctionalSafetyRequirement {
-        doc /* If the driver does not respond to the highest DM warning, the item shall decelerate the vehicle in a controlled way, end automated control and prevent re-engagement for a lockout period. This is the SG-08 safe state (WP-C-03 v0.4: controlled deceleration in lane to a stop and lockout); whether steering stays on until standstill is queued for the lead (DQ-340). */
+        doc /* If the driver does not respond to the highest DM warning, the item shall decelerate the vehicle in a controlled way in its lane to a standstill, keep it stopped and held, and prevent the item from driving off again or being re-engaged until the driver responds; after the driver responds, the lockout period applies. This is the SG-08 safe state (WP-C-03 v0.4), decided 2026-10-16, DQ-365 A: steering stays on while the vehicle decelerates in lane to a standstill within the envelope limits with the alert sounding; the vehicle then stays stopped and held, and the item cannot drive off again: re-engagement and resumption are locked out until the driver responds. Lateral and longitudinal control shall not stay active at the set speed. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01/DM";
         :>> asil = "A";
@@ -1354,7 +1354,7 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, T-HIL";
     }
     requirement <'TSR-633'> tsr_633 : TechnicalSafetyRequirement {
-        doc /* When driver awareness has reached zero (terminal DM alert) and the driver has not responded for 5 s, the item shall bring the vehicle to the reaction decided for the unresponsive-driver goal (register DQ-340, queued; recommended: keep the lane, decelerate in lane to a standstill within a_min and j_down (TSR-202, TSR-205) with the terminal alert sounding, then hold, disengage and lock out re-engagement). It shall not leave lateral and longitudinal control active at the set speed. */
+        doc /* When driver awareness has reached zero (terminal DM alert) and the driver has not responded for 5 s, the item shall keep the lane and decelerate in lane to a standstill within a_min and j_down (TSR-202, TSR-205) with the terminal alert sounding, then keep the vehicle stopped and held, and lock out re-engagement and resumption until the driver responds, so that the item cannot drive off again (register DQ-365, A, decided 2026-10-16). It shall not leave lateral and longitudinal control active at the set speed. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
         :>> asil = "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)";
