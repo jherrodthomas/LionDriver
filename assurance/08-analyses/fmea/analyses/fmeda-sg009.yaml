@@ -52,7 +52,9 @@ safety_mechanisms:
   requirement: TSR-504
 - id: FMD-SM-007
   description: Independent window watchdog (IWDG from LSI), 90 ms, fed only after safety-task and main-loop progress; reset releases the relay
-  dc_basis: 'Annex D, Table D.10 (processing units): watchdog with separate time base and time window, medium; HIL not run'
+  dc_basis: 'Annex D, Table D.10 (processing units): watchdog with separate time base and time window, medium; HIL not run. Credit
+    provisional: the lead accepts it in place of the interim residuals once an independent reviewer checks it and the LSI tolerance
+    (DQ-114); HIL fault injection deferred with the bench (DQ-049)'
   implementation: panda/board/drivers/hw_watchdog.h
   requirement: TSR-501
 components:

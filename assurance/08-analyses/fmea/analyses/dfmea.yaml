@@ -1343,7 +1343,8 @@ actions:
   status: open
 - id: DFM-ACT-003
   kind: detection
-  description: Run the watchdog HIL test (test_10_hw_watchdog) on the bench and confirm the relay releases on reset (HWSR-502, UK-06) (D-04)
+  description: Run the watchdog HIL test (test_10_hw_watchdog) on the bench and confirm the relay releases on reset (HWSR-502, UK-06) (D-04).
+    The lead deferred the HIL bench (DQ-049, 2026-10-14), so this waits for the bench
   owner: Jherrod Thomas
   status: open
 - id: DFM-ACT-004

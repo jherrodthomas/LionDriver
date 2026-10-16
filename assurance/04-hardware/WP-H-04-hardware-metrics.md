@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-04 Hardware architectural metrics (SPFM, LFM) |
 | Standard reference | ISO 26262-5:2018 §8 (evaluation of the hardware architectural metrics), Annex C (metric definitions, informative), Annex D (diagnostic coverage, informative); ISO 26262-11:2018 (semiconductors, informative) |
-| Version | 0.3 (§5 status and §4 targets drawn as Figure 5-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
+| Version | 0.4 (decisions applied: SG-01 target C with B alongside, DQ-063; route to the BOM, DQ-065; added hardware allowed in principle, DQ-051; HIL bench deferred, DQ-049; IWDG credit conditional, DQ-114; 2026-10-16). 0.3 (§5 status and §4 targets drawn as Figure 5-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
 | Status | Draft (method and plan; no metric computed) |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -86,11 +86,11 @@ documented rationale in the FMEDA.
 | SPFM | ≥ 90 % | ≥ 97 % | ≥ 99 % | ISO 26262-5 §8 (commonly used values — **verify against licensed text**) |
 | LFM | ≥ 60 % | ≥ 80 % | ≥ 90 % | as above |
 
-Applicable targets ([WP-H-01](WP-H-01-hardware-safety-requirements.md) §3):
+Applicable targets ([WP-H-01](WP-H-01-hardware-safety-requirements.md) §3). For SG-01 the lead decided to keep ASIL C as the target until the HARA re-rates SG-01, and to show the ASIL B result alongside ([DQ-063](../01-management/decisions/register.yaml), option A, 2026-10-14). The SG-01 rows of §7 therefore carry both targets. Lowering steering authority (WP-M-07 D-13) is expected to bring SG-01 to B, but that is not yet applied to the HARA:
 
 | SG | Current ASIL | Target set | Expected after FSC option (c) |
 |---|---|---|---|
-| SG-01 | C (provisional) | SPFM ≥ 97 %, LFM ≥ 80 % | B: SPFM ≥ 90 %, LFM ≥ 60 % |
+| SG-01 | C (provisional) | SPFM ≥ 97 %, LFM ≥ 80 %; the ASIL B result is reported alongside (DQ-063) | B: SPFM ≥ 90 %, LFM ≥ 60 % |
 | SG-02…SG-06 | B | SPFM ≥ 90 %, LFM ≥ 60 % | unchanged |
 | SG-07 | B | SPFM ≥ 90 %, LFM ≥ 60 % | unchanged |
 
@@ -128,6 +128,8 @@ SG-01 or SG-07, and the ASIL C targets are not met.** Reasons:
 
 *Status note 2026-10-12:* since 2026-10-12 DC-01 (IWDG1, window mode, fed from the 100 Hz safety task; panda `9f60e17`) is implemented, **not verified**. No DC credit is taken for it until HIL fault-injection evidence exists and the LSI tolerance is confirmed ([watchdog impact record](../07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md) OI-3 and OI-2). Its own latent fault (LSI failure, WP-H-03 FM-CLK-04) needs the start-up test of OI-4 below. The assessment above is otherwise unchanged.
 
+*Status note 2026-10-16:* the lead accepts the improved watchdog (90 ms, window mode) in place of the interim SG-07 residuals once an independent reviewer has checked it and its clock tolerance ([DQ-114](../01-management/decisions/register.yaml), option A, 2026-10-14). On the hardware side this sets the condition for DC credit: the generic FMEDA SG-009 already carries the IWDG at medium coverage (FMD-SM on `hw_watchdog.h`), and that credit stays provisional until the review and the LSI tolerance check are recorded. The HIL fault injection that would measure it is deferred with the bench ([DQ-049](../01-management/decisions/register.yaml)), so the review and analysis are the only route for now.
+
 **With the firmware-only changes of WP-H-02 §6 (DC-01, DC-04…DC-10):** SPFM ≥ 90 % for SG-01 looks
 *plausible but not certain*. The CPU core remains at "medium" coverage at best on a single
 non-lockstep core with a software test library; whether that is enough depends on the CPU's share
@@ -145,13 +147,13 @@ channel. This supports the FSC recommendation of option (c).
 
 | # | Activity | Depends on | Output | Gate |
 |---|---|---|---|---|
-| 1 | Fix the reference device revision and harness part number | WP-C-01 | Configuration record | G1 |
-| 2 | Obtain BOM/schematic from comma.ai or perform a teardown (WP-H-02 OI-1) | Supplier | BOM, schematic extract | G2 |
+| 1 | Fix the reference device revision and harness part number. Both boards stay in scope until one is fixed (DQ-011) | WP-C-01 | Configuration record | G1 |
+| 2 | Obtain BOM/schematic from comma.ai (WP-H-02 OI-1; ask and wait, no teardown, DQ-065) | Supplier | BOM, schematic extract | G2 |
 | 3 | Agree failure-rate sources (WP-H-03 OI-2) and the mission profile (WP-H-05 §3) | Safety manager | Decision record | G2 |
 | 4 | Implement firmware mechanisms DC-01, DC-04…DC-10 in the panda fork | D-01 forks, D-04 HIL | Code + tests | G3 (2026-10-12: DC-01 implemented, not verified; DC-09 partial in the reference build) |
-| 5 | Fault-injection campaign to justify DC claims (WP-H-06 VS-HW-xx) | HIL bench | Test records | G3 |
+| 5 | Fault-injection campaign to justify DC claims (WP-H-06 VS-HW-xx) | HIL bench (deferred by the lead, DQ-049) | Test records | G3 (blocked while the bench is deferred) |
 | 6 | Fill FMEDA, compute SPFM/LFM per SG, sensitivity analysis | 2–5 | Calculation + this document v1.0 | G3 |
-| 7 | If targets are missed: decide DC-02/DC-03 harness adapter, or record the deviation and its rationale for the assessor | 6 | Decision record (WP-M-01 §8) | G3 |
+| 7 | If targets are missed: decide DC-02/DC-03 harness adapter, or record the deviation and its rationale for the assessor. Added hardware is allowed in principle within an agreed budget (DQ-051); the harness route is DQ-209 | 6 | Decision record (WP-M-01 §8) | G3 |
 | 8 | Independent review of the FMEDA and calculation | 6 | Review record ([WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md)) | G3 |
 
 ## 7. Results (template)
@@ -169,7 +171,7 @@ channel. This supports the FSC recommendation of option (c).
 | ID | Item | Needed by |
 |---|---|---|
 | OI-1 | BOM and schematic (plan step 2) | G2 |
-| OI-2 | Decide whether SG-01 metrics are computed against B or C at G3 (depends on HARA re-rating, FSC OI-2) | G2 |
+| OI-2 | ~~Decide whether SG-01 metrics are computed against B or C at G3~~ **Decided** (DQ-063, 2026-10-14): against C until the HARA re-rates SG-01, with B shown alongside (§4) | G2 |
 | OI-3 | Confirm that QM-SoC mechanisms are excluded from DC (§3.3) with the external assessor | G2 |
 | OI-4 | Define the start-up test set needed for LFM (IWDG test reset, ECC test, relay check by a controlled toggle with readback, siren self-test) and its effect on availability | G3 |
 | OI-5 | Verify target values and metric definitions against the licensed ISO 26262-5 | G2 |

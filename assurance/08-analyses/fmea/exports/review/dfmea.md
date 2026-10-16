@@ -547,7 +547,7 @@ Effects:
 |---|---|---|---|---|---|---|
 | DFM-ACT-001 | prevention | Add a CPU self-test (vendor STL if available for STM32H7) at start-up and periodically, or argue the ASIL B target without CPU coverage (WP-H-03 finding 4) | Jherrod Thomas | open | DFM-001.C1 | — |
 | DFM-ACT-002 | design_change | Integrate the G1 layer 1 MCU measures (RAMECC handling, redundant storage, code CRC, start-up RAM test, fault escalation) from panda branch liondriver/g1-layer1 after review and HIL evidence | Jherrod Thomas | open | DFM-002.C1, DFM-003.C1, DFM-003.C2 | — |
-| DFM-ACT-003 | detection | Run the watchdog HIL test (test_10_hw_watchdog) on the bench and confirm the relay releases on reset (HWSR-502, UK-06) (D-04) | Jherrod Thomas | open | DFM-004.C1, DFM-006.C1 | — |
+| DFM-ACT-003 | detection | Run the watchdog HIL test (test_10_hw_watchdog) on the bench and confirm the relay releases on reset (HWSR-502, UK-06) (D-04). The lead deferred the HIL bench (DQ-049, 2026-10-14), so this waits for the bench | Jherrod Thomas | open | DFM-004.C1, DFM-006.C1 | — |
 | DFM-ACT-004 | design_change | Cross-check the HSE-derived time base against LSI or HSI and react on deviation (HWSR-504a) | Jherrod Thomas | open | DFM-005.C1 | — |
 | DFM-ACT-005 | design_change | Set the BOR level in the option bytes and enable PVD with a safe-state reaction (WP-H-02 DC-07); read the option bytes of a reference device (UK-04) | Jherrod Thomas | open | DFM-007.C1 | — |
 | DFM-ACT-006 | design_change | Disable a transceiver and enter the safe state on persistent error or bus-off (HWSR-508, WP-H-02 DC-04) | Jherrod Thomas | open | DFM-008.C1, DFM-009.C1 | — |
