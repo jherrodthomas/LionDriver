@@ -8,7 +8,7 @@
 <text x="40" y="32" class="eyebrow">FTA · SG-03 · WP-A-04 §3</text>
 <text x="40" y="59" class="title">Unintended acceleration</text>
 <rect x="904" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
-<text x="1022" y="44" class="hc">Sheet 6 of 6  ·  ASIL B</text>
+<text x="1022" y="44" class="hc">Sheet 6 of 6  ·  ASIL C</text>
 <rect x="344.0" y="116.5" width="220" height="93.0" rx="9" class="shadow"/>
 <rect x="342.5" y="114" width="220" height="93.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M351.5,114 H553.5 A9,9 0 0 1 562.5,123 V119 H342.5 V123 A9,9 0 0 1 351.5,114 Z" fill="#1d2433"/>

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-02 SOTIF verification and validation strategy, validation targets |
 | Standard reference | ISO 21448:2022 §9 (V&V strategy, validation targets), Annex C (informative, validation target derivation); ISO/PAS 8800:2024 (AI V&V); ASPICE 4.0 VAL.1 |
-| Version | 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
+| Version | 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -402,7 +402,7 @@ Result: eight values are confirmed or replaced (C). AIR-11 and AIR-14 are confir
 | M1 Process replay (open loop, recorded inputs) | `openpilot/selfdrive/test/process_replay/test_processes.py`, `process_replay.py`, `compare_logs.py` | Determinism and regression of controlsd, plannerd, radard, selfdrived, dmonitoringd on recorded inputs | Open loop: vehicle response not re-simulated. References come from `commaai/ci-artifacts` (`test_processes.py:70`); one Corolla TSS2 route in the source list (`:26`) | Regression only, once fork-owned references exist (D-03) | Supports all |
 | M2 Model replay | `process_replay/model_replay.py` | Model output changes between versions | One 3 s segment (`model_replay.py:23-26`); forced pass in CI (`:294-296`); comma device pool | Regression only; extended per [WP-W-10](../05-software/WP-W-10-ml-engineering.md) VS-ML-12 | Supports VT-01…06 |
 | M3 Requirements-based model evaluation | To be built (WP-W-10 VS-ML-03…08) | AIR metrics per ODD stratum on LionDriver data | Open loop | Primary for perception-level AIRs | VT-01, 04, 06, 08 |
-| M4 Closed-loop simulation | `openpilot/tools/sim` (MetaDrive bridge) | Closed-loop lateral behaviour of the full stack with rendered images | Fixed loop track, 2 lanes 4.5 m wide, 90° curves, **no traffic** (`metadrive_bridge.py:30-46, 84`); rendering not photorealistic; vehicle dynamics not Corolla; CI job disabled (`.github/workflows/tests.yaml:185`) and bridge test skipped (`tools/sim/tests/test_sim_bridge.py:24`); success criterion is only "stay in lane" (`metadrive_process.py:130-138`) | **No credit until fidelity is argued per scenario family** ([WP-M-08](../01-management/WP-M-08-sotif-plan.md) OI-3). Use for exploration and trend data first | VT-01, 02, 10 (after fidelity case) |
+| M4 Closed-loop simulation | `openpilot/tools/sim` (MetaDrive bridge) | Closed-loop lateral behaviour of the full stack with rendered images | Fixed loop track, 2 lanes 4.5 m wide, 90° curves, **no traffic** (`metadrive_bridge.py:30-46, 84`); rendering not photorealistic; vehicle dynamics not Corolla; CI job disabled (`.github/workflows/tests.yaml:185`) and bridge test skipped (`tools/sim/tests/test_sim_bridge.py:24`); success criterion is only "stay in lane" (`metadrive_process.py:130-138`) | **No credit until the fidelity case of §5.3 is approved for the scenario family** (lead decision at G2, [WP-M-08](../01-management/WP-M-08-sotif-plan.md) OI-3, DQ-139). Use for exploration and trend data first; results labelled as synthetic (§5.3.5). Adaptation to the reference Corolla with the panda safety code in the loop in progress (§5.3.1) | VT-01, 02, 10 (after fidelity case) |
 | M5 Planner maneuver tests (plant model) | `openpilot/selfdrive/test/longitudinal_maneuvers/` | Longitudinal planner response to lead/stop scenarios; crash check `d_rel < 0.4 m` (`maneuver.py:66-68`) | Point-mass plant, not Corolla; lead from synthetic radar/vision probability; no perception | Planner-level verification for VT-03/06 sub-cases | VT-03, VT-06 |
 | M6 Safety replay | `opendbc_repo/opendbc/safety/safety_replay/` | Envelope limit hits in recorded drives | Needs LionDriver Corolla logs | Surrogate indicator | VT-01, 04 (surrogate) |
 | M7 HIL bench | To be built (D-04) | Envelope and fault reactions with real panda firmware | Bench CAN only | FuSa (WP-V-05); SOTIF for VT-05 | VT-05 |
@@ -419,7 +419,84 @@ Result: eight values are confirmed or replaced (C). AIR-11 and AIR-14 are confir
 
 ### 5.3 Simulation fidelity case (required before M4 gets credit)
 
-For each scenario family, the fidelity case shall compare MetaDrive results with M8 results for at least 5 matched parameter points: lateral offset trace, alert timing and outcome class. Credit is given only to families where outcomes match. Required extensions before any family qualifies: Corolla-like vehicle dynamics and actuator delay; traffic agents for lead/cut-in scenarios; map variety beyond the fixed loop; scenario scripting with recorded pass/fail; a re-enabled, fork-owned CI job.
+**Rule.** A simulation result gets no credit toward any target until the fidelity case for its scenario family is approved. Whether MetaDrive counts as evidence at all, and for which families, is a lead decision at G2 (WP-M-08 OI-3, decision register DQ-139). Until then, M4 is used for exploration and to choose closed-course parameter points. Every M4 result is labelled as synthetic data (§5.3.5).
+
+This section is the plan for building that case. Nothing in it has been executed.
+
+#### 5.3.1 Status of the simulator (2026-10-16)
+
+| Item | State |
+|---|---|
+| Bridge `openpilot/tools/sim` (MetaDrive) | Upstream state: Honda Civic CAN, panda bypassed (`can`/`pandaStates` published directly), one loop track, no traffic. CI job disabled (`.github/workflows/tests.yaml`, `simulator_driving`, `if: false`) |
+| Adaptation to the item | In progress by the simulation session. The work-in-progress branch `claude/sotif-metadrive` (commit `7598c2b`, not merged) holds: Corolla TSS2 CAN on the powertrain, radar and camera buses from opendbc; the LionDriver reference build of the panda safety code (`libsafety`) on every received and sent frame; an EPS/PCM response model; headless rendering; traffic and pedestrian models. None of it has run closed loop with the driving model yet |
+| Headless rendering on CPU | Works through panda3d's EGL pipe on Mesa llvmpipe with multisampling off. Measured on a 4-core cloud container: 160–230 ms per rendered frame (about 4–5 frames per second), almost all in the camera's scene pass. The device runs the road camera at 20 frames per second |
+| Scenario scripting | Not built. Scripted vehicles and pedestrians were spawned and moved in a standalone MetaDrive test, not yet through the bridge |
+
+#### 5.3.2 Scenario families
+
+A family is a set of known scenarios ([WP-V-03](WP-V-03-sotif-known-scenarios.md)) that share what the simulator must get right. The case is made per family; one family's approval says nothing about another.
+
+| Family | Known scenarios | What must be faithful | MetaDrive can represent it? |
+|---|---|---|---|
+| SF-1 Lane keeping on straights and curves | KS-01 (curve at or beyond the lateral limit), steady segments for AIR-01 and VT-14 | Lane-line rendering, lateral dynamics and EPS response, `steerSaturated` timing | Yes, once the EPS model is fitted (F-2) |
+| SF-2 Lead following and lead braking | KS-08 | Lead detection by vision and radar, PCM response | Yes |
+| SF-3 Stationary or slow target ahead, cut-out | KS-05, KS-09 | Detection range of a stopped vehicle, FCW timing | Yes. The radar model is the weak point (F-3) |
+| SF-4 Close cut-in | KS-07 | Lateral motion of the target, lead association | Yes |
+| SF-5 Driver override and authority | KS-19 | Panda safety code (the same code), driver torque, brake and gas signals | Yes; the strongest family, because the safety code is the item's own |
+| SF-6 ODD speed bound | KS-25 | Speed signals; FM-07 once built | Yes |
+| SF-7 Pedestrian on the highway shoulder | KS-22 | Pedestrian rendering, lateral behaviour near it | Partly: one pedestrian model, no cyclist |
+| — Not representable now | KS-02 (banking, crosswind), KS-03 (faded or ghost markings), KS-10/KS-11 (radar clutter, overpasses), KS-12/KS-15 (low sun, glare, rain), KS-16 (camera obstruction), KS-17/KS-18 (driver monitoring), KS-20 (stock PCS), KS-24, KS-26 | Rendering is not photorealistic; no radar physics, weather, driver camera or stock PCS model | No credit can be sought. §5.4 assesses CARLA for the lighting and weather families |
+
+#### 5.3.3 Fidelity elements
+
+Each element names what is compared and the evidence. A family needs every element it depends on.
+
+| Element | Compared | Evidence | Families |
+|---|---|---|---|
+| F-1 Perception input | Model outputs on rendered frames against the same quantities on real frames of matched closed-course trials: lane-line position and probability, lead distance and probability | M8 trials of [WP-V-07](WP-V-07-vehicle-test-operations.md) at the matched points, replayed through M3 | All |
+| F-2 Vehicle and actuator response | Step responses of the EPS (torque to lateral acceleration, delay) and of the PCM (ACCEL_CMD to acceleration, dead time) in the plant model against the reference vehicle | VS-VAL-08 (PCM onset) and lateral step tests in [WP-V-01](WP-V-01-safety-validation.md); the plant constants are replaced by the measured values | All |
+| F-3 Radar | Track range, field of view, dropouts and latency of the simulated radar against `radarState` recorded on the reference vehicle | Recorded public-road and closed-course drives | SF-2, SF-3, SF-4 |
+| F-4 Timing | Camera frame rate, model latency and control-loop timing in the simulator against the device | The run log of every simulation. **Validity floor:** a run counts only if the camera frame rate stayed at or above the floor agreed with the case (proposed 18 per second, against 20 on the device). The CPU-only CI runner (about 4–5 per second) is below it | All |
+| F-5 Safety code | That the simulated panda runs the released safety code, as built for the reference vehicle | Build of `libsafety` from the pinned opendbc commit with `LIONDRIVER_REFERENCE`; the MCU's timing is not simulated | SF-5, and the authority of all families |
+| F-6 Actors | Scripted target trajectories against the test specification | Exact by construction; recorded per run | SF-2…SF-4, SF-7 |
+
+#### 5.3.4 Comparison and acceptance (proposed, approved with the targets, OI-3)
+
+1. **Matched points.** At least 5 parameter points per family, run on the closed course (M8) and in the simulator with the same scenario parameters. The points span the family's range, and include the worst case found by M4 exploration.
+2. **Quantities and acceptance.** All three must hold at every point:
+   - **Outcome class:** the same (pass, alert-then-pass, fail).
+   - **Alert timing:** within ±0.3 s.
+   - **Lateral offset:** the RMS difference of the traces stays within 0.15 m over the scenario (SF-1, SF-4, SF-7).
+   - **Minimum gap and deceleration:** within 15 % (SF-2, SF-3).
+   These values are proposals, approved with the targets (OI-3).
+3. **Direction of error.** Where outcomes match but the simulator is less severe than the vehicle (for example, later braking on the vehicle), the family gets no credit, or is credited only with a margin that covers the difference.
+4. **Recorded.** Each point's sim and M8 log IDs, the simulator commit, the asset hash, the plant constants used and the frame rate go into the fidelity-case record, reviewed under [WP-P-05](../07-supporting/WP-P-05-verification-review-procedure.md).
+5. **Validity.** An approval holds for the simulator version, plant constants and software release it was made with. A change to any of them is an impact-analysis item ([WP-P-02](../07-supporting/WP-P-02-change-management.md)); model changes re-run the matched points (D-05).
+6. **Tool classification.** The bridge, plant model and scenario scripts are classified under [WP-P-07](../07-supporting/WP-P-07-tool-classification-qualification.md) before the first approval.
+
+#### 5.3.5 Labelling synthetic data (DSR-12)
+
+Every simulation result (log, result file, figure) carries:
+- `data_kind: synthetic`;
+- the simulator and its commit;
+- the asset archive hash;
+- the scenario ID and family;
+- the fidelity-case status of the family (`none`, `planned`, `approved <ref>`);
+- the credit (`none` until approved);
+- the measured camera frame rate.
+
+Synthetic results are stored apart from real drive logs, under their own dataset IDs. They are never pooled into exposure rates ε_s, P(E-situation), surrogate rates or any other real-world rate estimate. A target may count them only as scenario-level evidence for an approved family (step 5 of §3), shown as a separate line in WP-V-03 and WP-K-02. This implements [WP-C-11](../02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md) DSR-12.
+
+### 5.4 CARLA with ScenarioRunner (assessed, not built)
+
+CARLA, with ScenarioRunner executing OpenSCENARIO scenarios, could cover what MetaDrive cannot: weather, low sun and night lighting (KS-12, KS-15), more realistic rendering for F-1, and a radar sensor model (F-3). Its scenario files are a standard format that an assessor can read and rerun.
+
+Costs:
+- **It needs a GPU** to render at the device's frame rate. LionDriver's CI runners have none, so it needs a GPU runner or cloud machine, which costs money; no quote has been obtained.
+- **A new bridge:** upstream openpilot dropped its CARLA bridge in favour of MetaDrive, so LionDriver would build and maintain one, reusing the simulated car and panda of §5.3.1.
+- **Its own fidelity case** under the rules above.
+
+Recommendation: **do not build it now.** First finish MetaDrive and its fidelity case. Revisit at G3, when the fidelity case shows which families MetaDrive cannot carry and the lighting and weather scenarios are scheduled. The decision is the lead's, because it spends money (decision register DQ-261).
 
 ## 6. Coverage of triggering conditions
 
@@ -481,7 +558,7 @@ Each functional modification decided in [WP-C-07](../02-concept/WP-C-07-sotif-fu
 | OI-1 | Keep the §6 TC table in step with WP-C-06 revisions (new TCs need a KS entry) |
 | OI-2 | Select B1 data set and filter to the ODD; replace the illustrative rates of §3.1 (shared with WP-M-08 OI-1) |
 | OI-3 | Approve numeric targets VT-01…VT-15 with the assessor before collecting evidence, together with the derivations of §4.2 and §4.3 |
-| OI-4 | Build the simulation fidelity case (§5.3) and decide which families get credit (WP-M-08 OI-3) |
+| OI-4 | Execute the fidelity-case plan of §5.3 (matched M8 points per family, plant constants from VS-VAL-08 and lateral step tests, radar comparison); which families get credit is the lead's decision at G2 (WP-M-08 OI-3, DQ-139). CARLA is assessed in §5.4 and waits on DQ-261 |
 | OI-5 | Define the surrogate-to-harm argument for VT-04 and the takeover-based surrogates (WP-M-08 OI-8) |
 | OI-7 | Fit the rear-facing camera now listed in the [WP-V-01](WP-V-01-safety-validation.md) §2 equipment (procurement: WP-V-01 OI-6), and annotate following vehicles from its recordings, so that P(E-situation) for SH-04 (following vehicle, OS-08) is measured (§3.4). Blocks driven before it is fitted give no SH-04 data |
 | OI-8 | Extract P(severity class) per SH from FARS/CRSS (and injury-risk curves where §3.5 item 3 requires them) for the selected B1 data set (OI-2); record the values and bounds per §3.5 item 4. The extraction tool is [`tools/severity/`](../../tools/severity/README.md); its variable codes must be checked against the NHTSA manual of the release year first. The same download gives the weighted mean age of pedestrians aged 15 and older struck in 2007–2009 (GES person file), which fixes the reference age of the SH-11 age shift (§3.5). Not run yet: the NHTSA download hosts are not reachable from the project's cloud environment |

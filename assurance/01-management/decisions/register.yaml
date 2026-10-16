@@ -90,9 +90,10 @@
       title: "Ask the assessor first"
       detail: "Bundle it with OI-3 into the I3 confirmation review and decide after. Cost: the HARA baseline waits for that review."
   sources: ["WP-A-05 §2 H-STPA-1, OI-1", "WP-C-04 §7 (driver monitoring not given an ASIL; OI-3)", "WP-C-08 MC-01…MC-03"]
-  status: answered
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §1, §3 (OS-17, OS-18), §5 (HE-01.5, HE-02.6, HE-03.6, HE-06.4, HE-07.4); WP-C-08 v0.3 §6.1", at: 2026-10-16}
   answer: {choice: other, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g, note: "Both SOTIF and HARA Foreseeable Misuse"}
-  note: "Supersedes the first answer (B, SOTIF only), which was applied in 38d3320; the record there needs updating to cover the HARA side too. SOTIF side applied in aae16af (WP-C-05 §4); HARA side left for the HARA session (WP-C-08 OI-4)."
+  note: "Supersedes the first answer (B, SOTIF only), applied in 38d3320. SOTIF side applied in aae16af (WP-C-05 §4; WP-C-08 MC-01…MC-03); HARA side is WP-C-03 v0.4, as foreseeable-misuse situations OS-17 and OS-18."
 
 - id: DQ-004
   ref: SNAP-1
@@ -215,7 +216,9 @@
       title: "Rate it after the authority reduction is tested"
       detail: "Fold into the steering-strategy decision; the C1 evidence replaces this rating. Cost: the HARA stays unconfirmed until then."
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md OI-1"]
-  status: answered
+  note: "HARA record applied: C2 kept, measurement a G1 entry condition, no controllability credit in the safety case. Left: the G1 entry condition in the gate plan (management session) and the panda path designed to the ASIL D measures (hardware and FMEDA sessions)."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 HE-01.2, SG-01 notes, OI-1", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-009
@@ -281,6 +284,7 @@
       title: "The comma four (cuatro board)"
       detail: "Longer support horizon. Cost: re-check the UI-dependent rows of the HMI analysis."
   sources: ["assurance/01-management/WP-M-11-upstream-and-supplier-management.md OI-5", "assurance/03-system/WP-S-05-hsi-specification.md OI-6", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md OI-7"]
+  note: "Hardware part applied in df2c0ed: both boards stay in scope (WP-H-01 OI-7, WP-H-02 OI-3, WP-H-04, DFMEA diagram data). Item definitions applied in #96 (WP-C-01 v0.10, LD-ITEM-001 rev 0.3). Left: WP-M-11 OI-5 and WP-S-05 OI-6 (other sessions). The answer leaves the reference device open; the purchase follow-up is queued as DQ-212."
   status: answered
   answer: {choice: other, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g, note: "not sure, we might have to review both 3x and four"}
   note: "Hardware part applied in df2c0ed: both boards stay in scope (WP-H-01 OI-7, WP-H-02 OI-3, WP-H-04, DFMEA diagram data). Left: WP-M-11 OI-5 and WP-S-05 OI-6 (other sessions). The answer leaves the reference device open; a follow-up question may be needed before purchases."
@@ -478,7 +482,9 @@
       title: "Include it once its AI requirements are met"
       detail: "Access to the larger model. Cost: a large validation and provenance effort for a model without source."
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-4", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-2"]
-  status: answered
+  note: "Left: WP-M-10 OI-2 (AI safety plan scope) for its owner."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-01 v0.10 §3.1 E-06, Figures 3-1 and 3-2, OI-4 closed", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-022
@@ -518,7 +524,9 @@
       title: "Highways only"
       detail: "Less validation; OS-03/OS-04 drop out of the HARA. Cost: the system must refuse or warn off-highway, which makes it less useful."
   sources: ["assurance/02-concept/WP-C-02-odd-and-intended-functionality.md OI-4", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md OI-2"]
-  status: answered
+  note: "SOTIF part applied in aae16af (WP-C-05/06/07/11, WP-V-02/03/04, WP-M-08). ODD and HARA parts applied in #96: WP-C-02 v0.4 §3 (ODD-H only, OI-4 closed) and WP-C-03 v0.4 §3 (OS-03, OS-04, OS-15, OS-16 foreseeable misuse at E2). Left: the off-highway refusal or warning the decision assumes (FM-08, WP-C-02 OI-9)."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-02 v0.4 §3 (ODD-H only), OI-4 closed; WP-C-03 v0.4 §3 (OS-03, OS-04, OS-15, OS-16 foreseeable misuse at E2)", at: 2026-10-16}
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
   note: "SOTIF part applied in aae16af (WP-C-05/06/07/11, WP-V-02/03/04, WP-M-08). Left: WP-C-02 ODD (ODD owner) and the HARA exposure rows OS-03/OS-04 (HARA session)."
 
@@ -675,7 +683,9 @@
       title: "Leave them unstated"
       detail: "No work. Cost: a near-certain reviewer finding."
   sources: ["assurance/trace/README.md “4 | WP-C-03 marks HE-01.3 and HE-01.4 ⚠ but states no altern”"]
-  status: answered
+  note: "The fallback ASILs are stated for every ⚠ event; the lead confirms them in the HARA review (WP-C-03 OI-9)."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §5.12; trace hazards.yaml asil_if_aou_fails", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-032
@@ -716,7 +726,8 @@
       title: "Yes: add hazardous events to the HARA"
       detail: "Thorough. Cost: new rows, possibly new goals, and FSC work."
   sources: ["assurance/02-concept/WP-C-05-sotif-hazard-identification.md OI-2"]
-  status: answered
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §7.1", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-034
@@ -773,7 +784,9 @@
       title: "Rate by frequency: E4, SG-03 becomes ASIL C"
       detail: "The more conservative reading. Cost: more envelope work on the longitudinal path."
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md RD-2"]
-  status: answered
+  note: "Applied to the situation OS-07, so it also raises HE-06.1 and HE-07.3 and SG-06 to ASIL C; that consequence is queued for the lead's confirmation (DQ-210). Left for the safety-concept session: the longitudinal checks of the FSC move up to C (RD-2)."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §2 (frequency reading for OS-07), §3, HE-03.3, SG-03 ASIL C", at: 2026-10-16}
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-037
@@ -1243,7 +1256,9 @@
       title: "Measure the real drift first"
       detail: "May show it's slower. Cost: needs the car on a closed course."
   sources: ["assurance/02-concept/WP-C-03-hara.md OI-7"]
-  status: answered
+  note: "Left for the timing session: the SG-02 FTTI (≤ 1 s to warning) against the 0.7 s drift at the curve bound (WP-S-04 OI-2)."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 HE-02.1, HE-07.1, SG-02 ASIL C, OI-7 closed; WP-C-02 v0.4 §3.2", at: 2026-10-16}
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-060
@@ -1857,6 +1872,7 @@
       title: "Cap the ODD at 90 km/h"
       detail: "No high-speed testing. Cost: the system must refuse or warn above 90 km/h, which limits it on most highways."
   sources: ["assurance/process/README.md “4. **The SOTIF release argument waits on evidence from other”"]
+  note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-260 queued for the ODD bound). ODD side applied in #96: WP-C-02 v0.4 speed row and OI-8, which waits on DQ-260. Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
   note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-260 queued for the ODD bound). Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
@@ -2002,7 +2018,9 @@
       title: "Split the Corolla into its own platform"
       detail: "Clean scope. Cost: diverges from upstream and needs ongoing maintenance."
   sources: ["assurance/08-analyses/fmea/item-definition.md IOI-003"]
-  status: answered
+  note: "Left: the user information (WP-O-03) must say that LionDriver changes reach these cars unassessed."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "item-definition.md (LD-ITEM-001) rev 0.3 §B.3, IOI-003 closed", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-100
@@ -2136,7 +2154,9 @@
       title: "Grant credit to selected families once their fidelity case passes"
       detail: "Less physical testing; needs fidelity evidence and assessor acceptance."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-4"]
+  gate: G2
   status: queued
+  note: "Duplicate of DQ-139, which asks the same question for the lead at G2 (WP-M-08 OI-3). Do not open it; withdraw it when DQ-139 is answered."
 
 - id: DQ-108
   question: "What discovery-trend criterion and target (R3) must unknown-scenario exploration meet before release?"
@@ -2703,21 +2723,24 @@
   status: queued
 
 - id: DQ-139
-  question: "Does MetaDrive simulation have enough fidelity to count as SOTIF evidence, and for which scenarios?"
-  context: "The simulator job is disabled upstream and runs a Honda Civic with the envelope bypassed (GAP-51); fidelity of camera rendering and dynamics vs the Corolla must be argued."
-  reversibility: easy
-  blocks: "WP-V-03/V-04, WP-P-07"
+  question: "May simulation results count as validation evidence, and for which kinds of scenario?"
+  context: "LionDriver is adapting the MetaDrive simulator to drive the reference Corolla with the real panda safety code in the loop. Simulation can run thousands of trials where the closed course runs tens, but its images, radar and vehicle response are models. **Credit would cut physical testing; wrong credit would hide a real weakness.** The plan (WP-V-02 §5.3) groups scenarios into seven families and gives credit only per family, after at least 5 matched closed-course trials agree."
+  reversibility: revisit
+  blocks: "WP-V-03 M4 results; WP-V-04 decomposition; tool classification (WP-P-07)"
   gate: G2
-  decider: claude
+  decider: lead
   options:
     - key: A
       recommended: true
-      title: "Planner-level evidence only; re-enable CI job"
-      detail: "Limited, honest scope."
+      title: "Credit per family, only after its fidelity case passes"
+      detail: "Families like driver override (the panda code is the item's own) can earn credit; weather and lighting cannot. Cost: matched closed-course trials for each family, and the assessor must accept the case."
     - key: B
-      title: "Not evidence; exploration only"
-      detail: "No credit; keeps it as a discovery tool."
-  sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-3"]
+      title: "Never credit simulation; use it to explore only"
+      detail: "Simplest argument. Cost: every scenario-level target is shown on the closed course or road, which takes far more trials."
+    - key: C
+      title: "Credit planner-level results only (no camera in the loop)"
+      detail: "Avoids the rendering question. Cost: perception, the main source of SOTIF risk, gets no simulated evidence."
+  sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-3", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §5.3, OI-4", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md §2"]
   status: queued
 
 - id: DQ-140
@@ -3893,7 +3916,9 @@
       title: "Cover it inside the foreseeable-misuse entry you chose"
       detail: "No new goal. Cost: the HARA must argue why three analyses don't create a separate hazard."
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md RD-3", "assurance/02-concept/WP-C-04-functional-safety-concept.md OI-3", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-3", "assurance/00-assessment/docs-safety-reconciliation.md OI-2"]
-  status: answered
+  note: "HARA part applied. Left for the safety-concept session: the SG-08 safe state (the reaction at zero awareness, with System FMEA SFM-ACT-005) and the ASIL A attribute of the DM requirements FSR-02.06…02.09 (WP-C-04 §7). Left for the System FMEA session: cite H-09 / SG-08 in SFM-025."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §4, §5.9 (H-09, HE-09.1, HE-09.2), §6 SG-08; trace items hazards.yaml, goals.yaml; WP-C-04 §9 SG-08 column", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 - id: DQ-206
   question: "When a diagnostic catches a hazardous fault and the car reaches a safe state in time, may that count as accepting the remaining risk?"
@@ -3979,6 +4004,64 @@
   sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03", "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md OI-9"]
   status: queued
 
+- id: DQ-210
+  question: "Closing on slower traffic is now rated E4, as you chose. That also raises the goal against silently lost braking (SG-06) to ASIL C. Accept it?"
+  context: "You chose the frequency reading for closing on a slower car at highway speed, which makes the acceleration goal SG-03 ASIL C. An exposure class belongs to the situation, not to one hazard, so the same E4 applies when braking is silently lost in that situation (HE-06.1) or the display wrongly shows ACC active (HE-07.3). **Both become ASIL C, and SG-06 with them.** Your question only named SG-03."
+  reversibility: revisit
+  blocks: "SG-06 ASIL; FSC longitudinal checks (WP-C-04)"
+  gate: G1
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Accept: SG-06 is ASIL C"
+      detail: "One exposure per situation, as the method requires. Cost: the deceleration-loss checks move up from B to C with the acceleration checks."
+    - key: B
+      title: "Rate OS-07 by frequency for acceleration only"
+      detail: "SG-06 stays B. Cost: two exposures for one situation; an assessor is likely to reject it."
+  sources: ["assurance/02-concept/WP-C-03-hara.md §6.1 observation 7, OI-9", "assurance/01-management/decisions/register.yaml DQ-036"]
+  status: queued
+
+- id: DQ-211
+  question: "What harness letter and harness-box revision are printed on the reference car's harness, and which device units (comma 3X, comma four) will be used?"
+  context: "comma's documentation lists the Toyota A harness for the 2020-22 Corolla, and the hardware analyses use the published box v3 drawing. The Toyota A and B harnesses differ in connectors (RR-2026-010 F-13). **Only the physical unit can confirm it.** These are facts to read off the parts, not a choice."
+  reversibility: easy
+  blocks: "WP-C-01 OI-2; WP-H-06 harness unit; RR-2026-010 F-10, F-13"
+  gate: G1
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Read the labels and reply with letter, box revision and device serials"
+      detail: "Photos of the harness box label and the device's about screen are enough. Cost: a few minutes at the car."
+    - key: B
+      title: "Assume Toyota A and box v3 until a harness is bought"
+      detail: "The analyses stay on comma's drawing. Cost: if the unit differs, the hardware analyses are re-checked."
+  sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-2", "assurance/04-hardware/reviews/RR-2026-010.md F-13"]
+  status: queued
+
+- id: DQ-212
+  question: "With both the comma 3X and the comma four in scope, how many devices should be bought for the bench and the car?"
+  context: "You asked for both devices to be reviewed (DQ-011). The bench and fault-injection plan assumed two units of one device. **Covering both boards doubles the hardware.**"
+  reversibility: revisit
+  blocks: "HIL purchases (WP-M-11, WP-H-06)"
+  gate: G1
+  decider: lead
+  after: [DQ-011]
+  options:
+    - key: A
+      recommended: true
+      title: "Two of the device on the car, one of the other"
+      detail: "Full testing on the reference device; the second board gets bench checks of the rows that differ. Cost: three devices."
+    - key: B
+      title: "Two of each"
+      detail: "Both boards tested to the same depth. Cost: four devices and twice the bench time."
+    - key: C
+      title: "Settle on one device after all"
+      detail: "Drop the other board's rows. Cost: none extra; the answer to DQ-011 changes."
+  sources: ["assurance/01-management/decisions/register.yaml DQ-011", "assurance/02-concept/WP-C-01-item-definition.md §1"]
+  status: queued
+
 - id: DQ-260
   question: "Should the highway ODD stop at 110 km/h, the highest speed at which the driver's control of a steering fault will be tested?"
   context: "You decided to test controllability up to 110 km/h (DQ-091), but the ODD still runs to 120 km/h. Between 110 and 120 km/h nothing shows the driver can catch a steering fault, so **the SOTIF argument gives no controllability credit there**: the targets for that band must be met without it, or the band leaves the ODD. Posted limits above 110 km/h (68 mph) exist on some US interstates."
@@ -3999,6 +4082,28 @@
       title: "Keep 120 km/h and test controllability to 120 km/h too"
       detail: "Evidence for the whole range. Cost: a second, higher-risk test review and a site that allows 120 km/h."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3 item 3", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-07", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md §3 speed"]
+  status: queued
+
+- id: DQ-261
+  question: "Should LionDriver pay for a GPU machine to run the CARLA simulator for lighting and weather scenarios?"
+  context: "MetaDrive runs on ordinary CPUs but cannot show low sun, glare, night or rain, and has no radar model (WP-V-02 §5.3.2). CARLA with ScenarioRunner can, using a standard scenario format an assessor can rerun, but **it needs a GPU, which costs money every month** (not yet quoted), plus a new bridge and its own fidelity case. Those scenarios otherwise need real drives in those conditions."
+  reversibility: easy
+  blocks: "Simulated evidence for KS-12, KS-15 and radar-clutter scenarios (WP-V-02 §5.4)"
+  gate: G3
+  decider: lead
+  after: [DQ-139]
+  options:
+    - key: A
+      recommended: true
+      title: "Not now; revisit at G3"
+      detail: "Finish MetaDrive and its fidelity case first, then decide with the list of families it cannot carry. Cost: lighting and weather scenarios stay on real drives until then."
+    - key: B
+      title: "Budget a GPU runner and start CARLA now"
+      detail: "Two simulators in parallel. Cost: a monthly GPU bill and a second bridge to maintain."
+    - key: C
+      title: "Never; real drives cover lighting and weather"
+      detail: "No simulator cost. Cost: those scenarios are seen only as often as the weather allows."
+  sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §5.4", "assurance/01-management/WP-M-08-sotif-plan.md OI-3"]
   status: queued
 
 - id: DQ-360
@@ -4041,9 +4146,9 @@
   status: queued
 
 - id: DQ-362
-  question: "Can the steering-warning, acceleration, driver-release and braking-warning goals (SG-02, SG-03, SG-05, SG-06) reuse the existing hardware failure-rate analysis, as you allowed for SG-04, or does each need its own?"
-  context: "Their random hardware faults run through the same parts already rated for SG-001 and SG-009 (safety chip, CAN transceivers, harness box). For SG-04 you accepted reuse (DQ-002). SG-03 is ASIL B but becomes ASIL C if the PCM assumption fails, and the shared path **misses the ASIL C target by 0.1 points**."
-  reversibility: easy
+  question: "SG-02, SG-03 and SG-06 are now ASIL C, and the hardware analysis they share misses the ASIL C single-point target by 0.16 points. Do we reuse it and close the gap at the hardware gate, or build a separate analysis for each goal?"
+  context: "Their random hardware faults run through the parts already rated for SG-001 (safety chip, CAN transceivers, harness box). For SG-04 (ASIL B) you allowed reuse (DQ-002). Since HARA v0.4 these three goals are ASIL C, and the shared path gives **SPFM 96.84 % against the 97 % ASIL C target** (LFM 88.94 % meets 80 %). The figures use generic failure rates; supplier rates, or the transmit read-back of TSR-517, could close the gap."
+  reversibility: revisit
   blocks: "FMEDA coverage of SG-02, SG-03, SG-05, SG-06 (WP-H-03, WP-H-04); BE-3.04, BE-5.02, BE-2.06, BE-2.07, BE-6.02"
   gate: G2
   decider: lead
@@ -4051,12 +4156,15 @@
   options:
     - key: A
       recommended: true
-      title: "Reuse the SG-001 and SG-009 rows with a note per goal"
-      detail: "As DQ-002 did for SG-04; metrics meet ASIL B. Revisit at the hardware gate with supplier failure rates. Cost: none now."
+      title: "Reuse the SG-001 and SG-009 rows, and carry the ASIL C miss as an open hardware item for G2"
+      detail: "One analysis, a note per goal. The 0.16-point SPFM gap is closed at G2 with supplier rates or TSR-517, or comes back to you. Cost: the gap stays open until then."
     - key: B
       title: "A separate FMEDA classification per goal"
-      detail: "Each goal gets its own single-point and latent-fault metrics. Cost: four more analyses, all on the same generic failure rates."
-  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-22"]
+      detail: "Each goal gets its own single-point and latent-fault metrics; some faults may count differently per goal. Cost: four more analyses on the same generic rates, and the ASIL C gap likely remains."
+    - key: C
+      title: "Accept 96.84 % now with a written rationale"
+      detail: "Close the item without a design change. Cost: an assessor may not accept a missed ASIL C target."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-22", "assurance/08-analyses/fmea/analyses/fmeda-sg001.yaml", "assurance/02-concept/WP-C-03-hara.md SG-02, SG-03, SG-06"]
   status: queued
 
 - id: DQ-363

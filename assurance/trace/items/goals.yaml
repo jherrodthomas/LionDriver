@@ -9,7 +9,7 @@
   asil: C
   asil_if_aou_fails: D
   aou_dependency: [AOU-01, AOU-02]
-  parents: [HE-01.1, HE-01.2, HE-01.3, HE-01.4, HE-02.3]
+  parents: [HE-01.1, HE-01.2, HE-01.3, HE-01.4, HE-01.5, HE-02.3]
   safe_state: "LKA torque request zero, steer request bit cleared; driver informed"
   ftti_ms: 500
   ftti_text: "≤ 0.5 s (preliminary)"
@@ -20,10 +20,10 @@
   kind: safety-goal
   text: "The item shall not lose or degrade lateral control while engaged without giving the driver an adequate take-over warning"
   type: constraint
-  asil: B
+  asil: C
   asil_if_aou_fails: null
   aou_dependency: []
-  parents: [HE-02.1, HE-02.2, HE-02.4, HE-02.5, HE-07.1, HE-07.2]
+  parents: [HE-02.1, HE-02.2, HE-02.4, HE-02.5, HE-02.6, HE-07.1, HE-07.2, HE-07.4]
   safe_state: "Driver warned (visual + acoustic) and lateral control handed back with a smooth torque ramp-down"
   ftti_ms: 1000
   ftti_text: "≤ 1 s from fault to warning (preliminary)"
@@ -34,10 +34,10 @@
   kind: safety-goal
   text: "The item shall not cause unintended vehicle acceleration"
   type: constraint
-  asil: B
-  asil_if_aou_fails: C
-  aou_dependency: [AOU-05]
-  parents: [HE-03.1, HE-03.2, HE-03.3, HE-03.4, HE-03.5]
+  asil: C
+  asil_if_aou_fails: D
+  aou_dependency: [AOU-03, AOU-05]
+  parents: [HE-03.1, HE-03.2, HE-03.3, HE-03.4, HE-03.5, HE-03.6]
   safe_state: "Acceleration request ≤ 0 (no positive acceleration); ACC cancelled to the PCM"
   ftti_ms: 1000
   ftti_text: "≤ 1 s (preliminary)"
@@ -76,10 +76,10 @@
   kind: safety-goal
   text: "The item shall not lose longitudinal deceleration capability while engaged without giving the driver an adequate take-over warning"
   type: constraint
-  asil: B
+  asil: C
   asil_if_aou_fails: null
   aou_dependency: []
-  parents: [HE-06.1, HE-06.3, HE-07.3]
+  parents: [HE-06.1, HE-06.3, HE-06.4, HE-07.3]
   safe_state: "Driver warned; ACC cancelled so that the driver brakes"
   ftti_ms: 1000
   ftti_text: "≤ 1 s (preliminary)"
@@ -97,5 +97,20 @@
   safe_state: "Camera PCS messages forwarded unchanged; if forwarding cannot be guaranteed (e.g. harness fault), relay released to restore the stock camera link"
   ftti_ms: 200
   ftti_text: "≤ 0.2 s for loss or delay of forwarding (preliminary, WP-S-04 §3.6); content: per frame"
+  status: proposed
+  source: WP-C-03
+
+- id: SG-08
+  kind: safety-goal
+  text: "The item shall not continue automated control while the driver is not supervising or not responding without escalating to a minimal-risk reaction"
+  type: constraint
+  asil: A
+  asil_if_aou_fails: null
+  aou_dependency: []
+  parents: [HE-09.1, HE-09.2]
+  safe_state: "Escalating take-over alerts; on no response, the no-response reaction: controlled deceleration in lane to a stop and lockout. The reaction at zero awareness is still to be defined, with System FMEA SFM-ACT-005, in the FSC"
+  ftti_ms: 6000
+  ftti_text: "≤ 6 s from loss of attention to the first alert (preliminary)"
+  notes: "Added in WP-C-03 v0.4 (decision register DQ-205, A; reconciliation RD-3)"
   status: proposed
   source: WP-C-03
