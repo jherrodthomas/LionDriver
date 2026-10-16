@@ -254,3 +254,5 @@ jobs:
       run: |
         python3 assurance/sim/plant/report.py --check
         python3 assurance/sim/plant/test_plant.py
+    - name: Plant FMU (FMI 2.0, pythonfmu) built and run by FMPy, same trajectory as the plant in-process
+      run: python3 assurance/sim/plant/fmu/test_fmu.py
