@@ -740,6 +740,7 @@ AOU_MAP = {
   "AOU-05": ("veh", "PCM", "The PCM bounds ACC acceleration"),
   "AOU-10": ("veh", "VSC/ABS", "VSC/ABS are enabled and functional"),
   "AOU-12": ("veh", "cluster", "The cluster cruise indicator is driven by PCM state"),
+  "AOU-16": ("veh", "PCM", "the PCM keeps it stopped and held"),
   "AOU-08": ("inst", "device mount", "The device is mounted and calibrated"),
   "AOU-09": ("inst", "vehicle", "The vehicle is maintained, unmodified"),
   "AOU-13": ("inst", "harness", "The de-energised harness relay connects the forward camera"),
