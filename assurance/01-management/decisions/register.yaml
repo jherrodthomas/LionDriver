@@ -4352,6 +4352,7 @@
   reversibility: revisit
   blocks: "SG-08 safe state and FTTI (WP-C-03 OI-10, WP-S-04); TSR-611, TSR-633; FSR-040 / FSR-02.09; System FMEA SFM-ACT-005; SW FMEA SWF-062 / SWF-ACT-059; WP-A-04 §13 (F-38)"
   gate: G1
+  asked: 2026-10-16
   decider: lead
   after: [DQ-205]
   options:
@@ -4367,7 +4368,9 @@
       detail: "Simplest. Cost: an incapacitated driver gets an uncontrolled vehicle at highway speed; not recommended."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-38", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §13", "assurance/02-concept/WP-C-03-hara.md OI-10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-025, SFM-ACT-005", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7", "assurance/08-analyses/WP-A-05-stpa.md LS-35", "openpilot/selfdrive/monitoring/policy.py:379-400"]
   note: "Also asked as DQ-220 (SW FMEA), DQ-281 (STPA) and DQ-340 (safety concept); merged here so the lead answers once."
-  status: queued
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-16, note: "Stay stopped, held. The lead first answered the merged DQ-340 with its option A (keep the lane and stop); asked again in chat, chose DQ-365 A."}
+  applied: {ref: 07d70a667, record: "WP-C-04 v0.10 FSR-02.09, §3, §6, §7, §8; WP-S-02 v0.26 TSR-633; WP-S-04 v0.12 §3.7, §3.8.4, OI-11. Open for their owners: System FMEA SFM-ACT-005, SW FMEA SWF-062 / SWF-ACT-059, WP-C-03 OI-10, WP-A-04 §13 (F-38), TSR-611", at: 2026-10-16}
 
 - id: DQ-320
   question: "With comma's harness box kept, the stock-emergency-braking hardware metric is about 78 % against a 90 % target. Accept that as a recorded deviation once the bench tests pass?"
