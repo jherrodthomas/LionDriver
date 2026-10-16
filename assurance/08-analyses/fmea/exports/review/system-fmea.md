@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.19 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.21 | draft | BL-005 | RT-2 | 2026-10-16 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -376,6 +376,7 @@ Safety mechanisms: (1) modeldLagging / selfdrivedLagging (SOFT_DISABLE), commIss
 Effects:
 
 - **End:** Unexpected steering/acceleration; driver surprised (HZ-010, S 10)
+- **End:** Contributes to HZ-005: positive acceleration requested after an engagement the driver did not ask for (HZ-005, S 10)
 - **Next higher:** Item starts actuating
 - **Local:** State machine enters enabled without ENABLE or despite NO_ENTRY
 
@@ -459,6 +460,7 @@ Effects:
 Effects:
 
 - **End:** Driver cannot retake control as expected (SAFETY.md requirement 1 violated) (HZ-008, S 10)
+- **End:** Contributes to HZ-005: the item keeps requesting acceleration while the driver brakes (HZ-005, S 10)
 - **Next higher:** Item keeps requesting acceleration/steering during driver braking
 - **Local:** pedalPressed not raised or not acted on
 
@@ -539,6 +541,7 @@ Safety mechanisms: (1) gasPressedOverride -> OVERRIDE_LONGITUDINAL; longActive f
 Effects:
 
 - **End:** Driver believes automation is off (mode confusion) (HZ-012, S 10)
+- **End:** Contributes to HZ-008: the driver cancels but stock cruise keeps longitudinal control (HZ-008, S 10)
 - **Next higher:** Vehicle continues under stock cruise
 - **Local:** Cancel request not effective; PCM cruise enabled while item is disabled
 
@@ -632,6 +635,7 @@ Effects:
 
 - **End:** Driver unaware of handback; delayed response (HZ-012, S 10)
 - **End:** Contributes to HZ-006: item-initiated deceleration not announced (HE-04.3) (HZ-006, S 10)
+- **End:** Contributes to HZ-013: driver-monitoring escalation alerts not shown or played, so an inattentive driver is not told; the forced deceleration does not depend on them (as SWF-082) (HZ-013, S 10)
 - **Next higher:** Driver not informed of state change
 - **Local:** Alert selected by alertmanager but not shown or not played
 
@@ -654,6 +658,7 @@ Safety mechanisms: (1) Visual alert on device screen and audible alert through s
 Effects:
 
 - **End:** Reduced takeover margin (HZ-012, S 10)
+- **End:** Contributes to HZ-013: a driver-monitoring escalation presented late, or hidden behind a higher-priority alert, so the inattentive driver is told late (as SWF-035) (HZ-013, S 10)
 - **Next higher:** Less time for driver response
 - **Local:** Alert rendered/played after a delay
 
@@ -669,6 +674,7 @@ Effects:
 Effects:
 
 - **End:** Driver stops steering/braking believing automation is active, or is surprised by actuation (HZ-012, S 10)
+- **End:** Contributes to HZ-008: the driver believes control was released by the brake or cancel while the item still acts (HZ-008, S 10)
 - **Next higher:** Mode confusion
 - **Local:** UI shows engaged when disabled, or disabled when engaged
 
@@ -786,6 +792,7 @@ Effects:
 - **End:** Erratic stock or item behavior; stock functions lost (HZ-011, S 10)
 - **End:** Contributes to HZ-002: stock LKA and item steering requests combine on the bus (HZ-002, S 10)
 - **End:** Contributes to HZ-006: stock and item braking requests combine on the bus (HZ-006, S 10)
+- **End:** Contributes to HZ-005: stock ACC and item acceleration requests combine on the bus (HZ-005, S 10)
 - **Next higher:** Conflicting steering/ACC messages, or no camera messages
 - **Local:** Intercept switch stuck or intermittent: in intercept when released (camera cut off from the car), or in pass-through when driven (stock camera and item both on the bus)
 
