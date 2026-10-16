@@ -24,7 +24,7 @@
 # System FMEA rev 0.6, PFMEA rev 0.3). SG-01 added 2026-10-16 (WP-A-04 v1.0; findings F-11..F-16, F-14 and F-15 open for
 # the FMEA owners). SG-07 added 2026-10-16 with its tree re-based on the harness box switches (WP-A-04 v1.1, RR-2026-010;
 # findings F-17..F-19 open for the FMEA owners). SG-02, SG-03, SG-05, SG-06 added 2026-10-16 (WP-A-04 v1.2; findings F-20..F-36),
-# so every goal with a fault tree is in scope. SG-08 added 2026-10-16 (WP-A-04 v1.3, §13; F-37, F-38). Draft, AI-assisted; each link needs review.
+# so every goal with a fault tree is in scope. SG-08 added 2026-10-16 (WP-A-04 v1.3, §13; F-37, F-38); its safe state applied 2026-10-16 (DQ-365 A, WP-A-04 v1.6). Draft, AI-assisted; each link needs review.
 schema_version: 1
 source: assurance/08-analyses/WP-A-04-system-fta-fmea.md
 scope: [SG-01, SG-02, SG-03, SG-04, SG-05, SG-06, SG-07, SG-08]
@@ -737,10 +737,23 @@ events:
     fmea: [SWF-086]
     note: >-
       SWF-086.C1 (no freshness check on the flag across policy, controlsd and plannerd), SWF-086.C2 (stop only at -1.2 m/s²,
-      no stop-time requirement; TSR-633, DQ-340). SW FMEA rev 1.1 closes the SW part of F-37
+      no stop-time requirement; TSR-633, DQ-365). SW FMEA rev 1.1 closes the SW part of F-37
   - id: UE-8.09
     class: external
     ref: AOU-05R
+  - id: BE-8.10
+    class: systematic_sw
+    fmea: [SWF-062, SFM-025]
+    note: >-
+      SWF-062.C1 (terminal state reached without the safe state: the DM events are PERMANENT alerts only, the item stays
+      engaged after the forced stop) and SFM-025.C1 (no disable reaction at level 3). The safe state is decided (DQ-365 A,
+      FSR-02.09, TSR-633): stopped, held, re-engagement locked out until the driver responds. Neither the hold nor the
+      lockout while stopped is implemented, so the event is present by design (F-38)
+  - id: UE-8.11
+    class: external
+    ref: >-
+      None yet: no assumption of use states that the PCM holds the vehicle at standstill under ACC until the driver acts,
+      and it is not characterised on the reference Corolla (DQ-365 A, vehicle test). F-38
 
 gates:
   - id: G4.1
@@ -783,9 +796,9 @@ gates:
   - id: G8.3
     fmea: [SFM-025]
     note: >-
-      SFM-025 (terminal driver-unresponsive state does not bring the item to a safe state). Its cause SFM-025.C1 says the
-      level-3 alerts have no disable reaction, which is true; it does not credit the forced stop (noResponseForceDecel), which
-      the tree takes as the no-response reaction. F-38
+      SFM-025 (terminal driver-unresponsive state does not bring the item to a safe state). The safe state is decided (DQ-365 A):
+      its cause SFM-025.C1 (no disable reaction at level 3) is now BE-8.10; SFM-025 does not yet credit the forced stop, which
+      reaches the standstill part of the safe state (BE-8.08 when it fails). F-38
 
 not_in_fta:
   - fm: SFM-014
@@ -981,10 +994,3 @@ not_in_fta:
       The SG-06 tree analyses the assured configuration. The driver can change the following distance or Experimental
       Mode while driving (SWF-067.C1), and the item only logs it. Whether to refuse engagement outside the assured settings
       is queued for the lead (DQ-221); until it is decided, the tree has no event for planning in another configuration.
-  - fm: SWF-062
-    goal: SG-08
-    kind: tree_gap
-    reason: >-
-      The SG-08 tree takes the forced deceleration with lateral control kept as the terminal reaction. Whether that reaches
-      the SG-010 safe state is queued for the lead (DQ-220); if it does not, the tree needs an event for the terminal state
-      reached without the safe state (SWF-062.C1).
