@@ -1,6 +1,6 @@
 # LionDriver — FMEA Program Plan
 
-**Status:** Draft v0.9 (SG-04 FTA↔FMEA findings F-1…F-10 resolved: SW FMEA rev 0.7 adds SWF-003.C3 and SWF-050…053, DFMEA rev 0.3 adds DFM-019, System FMEA rev 0.6 and PFMEA rev 0.3 add HZ-006 effects, HARA rev 0.4 back-links SFM-026, FSC rev 0.3 re-based; [fta-fmea-mapping.md](../fta-fmea-mapping.md); 2026-10-13). v0.8 (DFA rev 0.5: the seven insufficient initiators re-checked against the reference build; 2026-10-13). v0.7 (generated FMEA, FMEDA and DFA figures, Figures 2-1, 3-1…3-11, 4-1; 2026-10-13). v0.6 (§1 flow diagram redrawn as Figure 1-1; text version kept; 2026-10-13) — Phase 0 complete; System FMEA rated (rev 0.5, BL-004); SW FMEA P1 elements rated (rev 0.6, BL-004); HARA draft rev 0.3
+**Status:** Draft v0.10 (baseline BL-005 proposed: liondriver-dev `1033d98`, the reference build the default; System FMEA rev 0.9 re-rates its MSR rows at BL-005, the other analyses stay on their baselines; 2026-10-16). v0.9 (SG-04 FTA↔FMEA findings F-1…F-10 resolved: SW FMEA rev 0.7 adds SWF-003.C3 and SWF-050…053, DFMEA rev 0.3 adds DFM-019, System FMEA rev 0.6 and PFMEA rev 0.3 add HZ-006 effects, HARA rev 0.4 back-links SFM-026, FSC rev 0.3 re-based; [fta-fmea-mapping.md](../fta-fmea-mapping.md); 2026-10-13). v0.8 (DFA rev 0.5: the seven insufficient initiators re-checked against the reference build; 2026-10-13). v0.7 (generated FMEA, FMEDA and DFA figures, Figures 2-1, 3-1…3-11, 4-1; 2026-10-13). v0.6 (§1 flow diagram redrawn as Figure 1-1; text version kept; 2026-10-13) — Phase 0 complete; System FMEA rated (rev 0.5, BL-004); SW FMEA P1 elements rated (rev 0.6, BL-004); HARA draft rev 0.3
 **Scope:** reference configuration CFG-001 (AC-001), Corolla E210 · ZRE212 · US: US sedan, model years 2020–2022, 1.8 L CVT ([vehicle register](../../../docs/liondriver/vehicles/README.md)); comma 3X (`system/hardware/tici`) with integrated panda, current LionDriver software baseline
 **Covers:** System FMEA, DFMEA, PFMEA, SW FMEA, FMEDA
 
@@ -140,11 +140,13 @@ Prioritised by safety relevance (path from perception to actuator):
 
 **System FMEA (rev 0.5, BL-004):** all 80 causes rated: 79 AP H, 1 AP M (SFM-024.C1). Causes on the panda, host, harness and hardware elements inherit the linked SW FMEA or DFMEA rows; actions SFM-ACT-001..011.
 
-**DFMEA (rev 0.2, `analyses/dfmea.yaml`):** 18 failure modes and 21 causes across 10 hardware elements of the comma 3X panda section, harness and relay box, based on WP-H-02/WP-H-03. Every row is S10, AP H, and most have no LionDriver hardware verification (D9–D10). The watchdog (DFM-004) is the only cause whose occurrence the BL-002 firmware lowers.
+**System FMEA (rev 0.9, BL-005):** baseline moved to BL-005. S, O and AP unchanged; D of SFM-015.C2 10 → 8 (host unit test). The MSR rows credit the host supervision and the reference-build checks that BL-004 lacked (TSR-408, TSR-615, TSR-621, TSR-308, reference lock): monitoring M 5–6 on 15 causes, M 7–8 on 16, M 9–10 on 29 ([msr-plan.md §4.7](msr-plan.md#47-pilot-result-m1)). The SW FMEA (BL-004) and DFMEA (BL-002) rows it inherits are not re-rated here.
 
-**FMEDA (rev 0.2, `analyses/fmeda-sg001.yaml`, `fmeda-sg009.yaml`):** block-level, **generic failure rates**. Results:
-- SG-001: 220 FIT, SPFM 96.9 %, LFM 87.7 %, λSPF + λRF 6.9 FIT.
-- SG-009: 242 FIT, SPFM 86.8 %, LFM 98.9 %, λSPF + λRF 32 FIT.
+**DFMEA (rev 0.6, `analyses/dfmea.yaml`):** 21 failure modes and 30 causes across 10 hardware elements of the comma 3X panda section, harness and relay box, based on WP-H-02/WP-H-03. Every row is S10, AP H, and most have no LionDriver hardware verification (D9–D10). The watchdog (DFM-004) is the only cause whose occurrence the BL-002 firmware lowers.
+
+**FMEDA (rev 0.4, `analyses/fmeda-sg001.yaml`, `fmeda-sg009.yaml`):** block-level, **generic failure rates**, except the harness box switches U1/U2 at the SN 29500-2 reference value from a secondary source (WP-H-03 §6.3). Results:
+- SG-001: 255 FIT, SPFM 96.8 %, LFM 88.9 %, λSPF + λRF 8.1 FIT.
+- SG-009: 287 FIT, SPFM 78.1 %, LFM 97.7 %, λSPF + λRF 62.9 FIT.
 
 Neither meets its target yet. The effect of the planned DFMEA measures and the soft-error sensitivity are in WP-H-03 §6.3. Workbooks: `tools/safety/export_fmeda_xlsx.py <name>`.
 

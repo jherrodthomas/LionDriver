@@ -134,7 +134,7 @@ BANDS = [
   {"panel": "count", "lo": 1e3, "hi": 1e5, "colour": HW, "bg": HW_BG,
    "title": "Simulation (no credit yet, §5.3)", "sub": "10³–10⁵ runs / scenario family",
    "src": ["| 10³ – 10⁵ runs per scenario family (compute-bound) |",
-           "**No credit until fidelity is argued per scenario family**"]},
+           "**No credit until the fidelity case of §5.3 is approved for the scenario family**"]},
 ]
 NOT_DRAWN_SRC = ["Cases A–C are out of reach of LionDriver driving by roughly three to five orders of magnitude",
                  "| All recorded data, repeatedly, per software change |",

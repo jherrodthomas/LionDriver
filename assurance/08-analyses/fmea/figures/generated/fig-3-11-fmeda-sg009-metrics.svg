@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1550" viewBox="0 0 1280 1550" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-11. FMEDA SG-009 metrics against ASIL B (estimate)</title>
-  <desc id="d">FMEDA for SG-009 (ASIL B target, FMD rev 0.3, BL-002, draft) with generic estimated failure rates: SPFM 85.89 % against ≥ 90 % (missed), LFM 97.58 % against ≥ 60 % (met on the estimate, not verified), λSPF+λRF 34.9 FIT against PMHF &lt; 100 FIT (below, partial PMHF only, not verified); failure-rate split per component and failure mode, and the safety mechanisms with the failure modes they are credited on.</desc>
+  <desc id="d">FMEDA for SG-009 (ASIL B target, FMD rev 0.4, BL-002, draft) with generic estimated failure rates: SPFM 78.11 % against ≥ 90 % (missed), LFM 97.71 % against ≥ 60 % (met on the estimate, not verified), λSPF+λRF 62.9 FIT against PMHF &lt; 100 FIT (below, partial PMHF only, not verified); failure-rate split per component and failure mode, and the safety mechanisms with the failure modes they are credited on.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,17 +9,17 @@
   </defs>
   <rect width="1280" height="1550" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-11 · FMEDA SG-009 — metrics against the ASIL B target</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">FMD rev 0.3 · BL-002 · draft · FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">FMD rev 0.4 · BL-002 · draft · FMEDA — SG-009 stock AEB availability (relay and forwarding path), generic failure rates</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.5</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/fmeda-sg009.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
   <rect x="40" y="98" width="1200" height="29" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="6 4"/>
-  <text x="56" y="117" font-size="11" fill="#92400E" font-weight="600">ESTIMATE · DRAFT — 13 of 13 failure rates are generic estimates (failure_rate_source: no BOM or supplier data). The metrics below are not verified and are not evidence that the target is met.</text>
+  <text x="56" y="117" font-size="11" fill="#92400E" font-weight="600">ESTIMATE · DRAFT — 12 of 13 failure rates are generic estimates (failure_rate_source: no BOM or supplier data). The metrics below are not verified and are not evidence that the target is met.</text>
   <text x="40" y="153" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">HARDWARE ARCHITECTURAL METRICS AGAINST THE ASIL B TARGET (rating-tables §6.3)</text>
   <text x="40" y="185" font-size="15" fill="#0F172A" font-weight="700">SPFM</text>
   <text x="40" y="200" font-size="10" fill="#475569">single-point fault metric = 1 − (λSPF + λRF) / λ</text>
   <rect x="290" y="173" width="600" height="24" fill="#F1F5F9" rx="4"/>
-  <rect x="290" y="173" width="430.7" height="24" fill="#D2553F" rx="4"/>
+  <rect x="290" y="173" width="337.4" height="24" fill="#D2553F" rx="4"/>
   <line x1="770" y1="167" x2="770" y2="203" stroke="#0F172A" stroke-width="1.6" stroke-dasharray="4 3"/>
   <text x="770" y="164" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B ≥ 90 %</text>
   <line x1="290" y1="197" x2="290" y2="201" stroke="#94A3B8" stroke-width="1"/>
@@ -34,13 +34,13 @@
   <text x="770" y="212" font-size="9" fill="#475569" text-anchor="middle">90 %</text>
   <line x1="890" y1="197" x2="890" y2="201" stroke="#94A3B8" stroke-width="1"/>
   <text x="890" y="212" font-size="9" fill="#475569" text-anchor="middle">100 %</text>
-  <text x="910" y="184" font-size="15" fill="#D2553F" font-weight="700">85.89 %</text>
+  <text x="910" y="184" font-size="15" fill="#D2553F" font-weight="700">78.11 %</text>
   <rect x="910" y="190" width="92.5" height="15" rx="7.5" fill="#D2553F"/><text x="956.3" y="200.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">TARGET MISSED</text>
   <text x="40" y="251" font-size="15" fill="#0F172A" font-weight="700">LFM</text>
   <text x="40" y="266" font-size="10" fill="#475569">latent fault metric = 1 − λMPF,latent / (λ −</text>
   <text x="40" y="278" font-size="10" fill="#475569">λSPF − λRF)</text>
   <rect x="290" y="239" width="600" height="24" fill="#F1F5F9" rx="4"/>
-  <rect x="290" y="239" width="570.9" height="24" fill="#D97706" rx="4"/>
+  <rect x="290" y="239" width="572.5" height="24" fill="#D97706" rx="4"/>
   <line x1="410" y1="233" x2="410" y2="269" stroke="#0F172A" stroke-width="1.6" stroke-dasharray="4 3"/>
   <text x="410" y="230" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL B ≥ 60 %</text>
   <line x1="290" y1="263" x2="290" y2="267" stroke="#94A3B8" stroke-width="1"/>
@@ -55,14 +55,14 @@
   <text x="770" y="278" font-size="9" fill="#475569" text-anchor="middle">90 %</text>
   <line x1="890" y1="263" x2="890" y2="267" stroke="#94A3B8" stroke-width="1"/>
   <text x="890" y="278" font-size="9" fill="#475569" text-anchor="middle">100 %</text>
-  <text x="910" y="250" font-size="15" fill="#D97706" font-weight="700">97.58 %</text>
+  <text x="910" y="250" font-size="15" fill="#D97706" font-weight="700">97.71 %</text>
   <rect x="910" y="256" width="230.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="1025.4" y="266.7" font-size="9" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">meets the target on this estimate · not verified</text>
   <text x="40" y="317" font-size="15" fill="#0F172A" font-weight="700">λSPF + λRF</text>
   <text x="40" y="332" font-size="10" fill="#475569">single-point + residual part of PMHF only; the</text>
   <text x="40" y="344" font-size="10" fill="#475569">dual-point term is not computed (rating-tables</text>
   <text x="40" y="356" font-size="10" fill="#475569">§6.3), so this is not a full PMHF</text>
   <rect x="290" y="305" width="600" height="24" fill="#F1F5F9" rx="4"/>
-  <rect x="290" y="305" width="139.6" height="24" fill="#D97706" rx="4"/>
+  <rect x="290" y="305" width="251.6" height="24" fill="#D97706" rx="4"/>
   <line x1="690" y1="299" x2="690" y2="335" stroke="#0F172A" stroke-width="1.6" stroke-dasharray="4 3"/>
   <text x="690" y="296" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">PMHF &lt; 100 FIT</text>
   <line x1="290" y1="329" x2="290" y2="333" stroke="#94A3B8" stroke-width="1"/>
@@ -81,7 +81,7 @@
   <text x="770" y="344" font-size="9" fill="#475569" text-anchor="middle">120</text>
   <line x1="850" y1="329" x2="850" y2="333" stroke="#94A3B8" stroke-width="1"/>
   <text x="850" y="344" font-size="9" fill="#475569" text-anchor="middle">140</text>
-  <text x="910" y="316" font-size="15" fill="#D97706" font-weight="700">34.9 FIT</text>
+  <text x="910" y="316" font-size="15" fill="#D97706" font-weight="700">62.9 FIT</text>
   <rect x="910" y="322" width="230.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="1025.4" y="332.7" font-size="9" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">meets the target on this estimate · not verified</text>
   <line x1="40" y1="379" x2="1240" y2="379" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="401" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE-RATE SPLIT PER COMPONENT (FIT) — CLASSIFICATION PER rating-tables §6.1</text>
@@ -170,17 +170,17 @@
   <rect x="544.3" y="801" width="78.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="583.7" y="811.7" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">FMD-018 safe</text>
   <line x1="40" y1="839" x2="1240" y2="839" stroke="#F1F5F9" stroke-width="1"/>
   <text x="40" y="857" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-007</text>
-  <text x="116.4" y="857" font-size="11" fill="#475569" font-weight="600">λ = 10 FIT</text>
+  <text x="116.4" y="857" font-size="11" fill="#475569" font-weight="600">λ = 50 FIT</text>
   <text x="40" y="871" font-size="10" fill="#475569">Intercept switch: 2 × DG419LE CMOS analog SPDT (harness</text>
   <text x="40" y="883" font-size="10" fill="#475569">box)</text>
   <text x="40" y="895" font-size="9.5" fill="#475569" font-weight="600">DFMEA DFM-SE-006 · U1, U2 (harness box)</text>
-  <rect x="360" y="847" width="64" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
-  <rect x="360" y="847" width="44.8" height="14" fill="#D2553F"/>
-  <rect x="404.8" y="847" width="19.2" height="14" fill="#E2E8F0"/>
-  <text x="432" y="858" font-size="10" fill="#0F172A" font-weight="600">SPF 7</text>
-  <rect x="360" y="867" width="88.2" height="15" rx="7.5" fill="#D2553F"/><text x="404.1" y="877.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-019 SPF 3</text>
-  <rect x="452.2" y="867" width="78.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="491.5" y="877.7" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">FMD-021 safe</text>
-  <rect x="534.9" y="867" width="88.2" height="15" rx="7.5" fill="#D2553F"/><text x="579" y="877.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-022 SPF 4</text>
+  <rect x="360" y="847" width="320" height="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <rect x="360" y="847" width="224" height="14" fill="#D2553F"/>
+  <rect x="584" y="847" width="96" height="14" fill="#E2E8F0"/>
+  <text x="688" y="858" font-size="10" fill="#0F172A" font-weight="600">SPF 35</text>
+  <rect x="360" y="867" width="94.1" height="15" rx="7.5" fill="#D2553F"/><text x="407.1" y="877.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-019 SPF 15</text>
+  <rect x="458.1" y="867" width="78.7" height="15" rx="7.5" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/><text x="497.5" y="877.7" font-size="9" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">FMD-021 safe</text>
+  <rect x="540.9" y="867" width="94.1" height="15" rx="7.5" fill="#D2553F"/><text x="588" y="877.7" font-size="9" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">FMD-022 SPF 20</text>
   <line x1="40" y1="917" x2="1240" y2="917" stroke="#F1F5F9" stroke-width="1"/>
   <text x="40" y="935" font-size="11.5" fill="#0F172A" font-weight="700">FMD-C-010</text>
   <text x="116.4" y="935" font-size="11" fill="#475569" font-weight="600">λ = 5 FIT</text>
@@ -263,7 +263,7 @@
   <text x="565.8" y="1355" font-size="10" fill="#0F172A">λMPF detected/perceived</text>
   <rect x="706.2" y="1345" width="14" height="12" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="1"/>
   <text x="725.2" y="1355" font-size="10" fill="#0F172A">λS safe</text>
-  <text x="40" y="1371" font-size="10" fill="#475569">Totals: λ 247.4 FIT · λSPF 30.4 · λRF 4.5 · λMPF,latent 5.15 FIT. Chip = failure mode with its class, FIT and the credited safety mechanism with its DC.</text>
+  <text x="40" y="1371" font-size="10" fill="#475569">Totals: λ 287.4 FIT · λSPF 58.4 · λRF 4.5 · λMPF,latent 5.15 FIT. Chip = failure mode with its class, FIT and the credited safety mechanism with its DC.</text>
   <line x1="40" y1="1397" x2="1240" y2="1397" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="1419" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">SAFETY MECHANISMS (DC CLAIMED PER FAILURE MODE)</text>
   <text x="40" y="1436" font-size="10.5" fill="#0F172A" font-weight="700">FMD-SM-001</text>

@@ -10,7 +10,7 @@ Row results: *match* = a computed cut set; *effective* = omits only latent event
 
 | Goal | Cut sets | Effective order ≤ 1 | Table rows | match | effective | argued | outside tree | reduced | not minimal | unrelated | in words | Cut sets not in the table |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| SG-01 | 27 | 6 | 9 | 7 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SG-01 | 36 | 6 | 11 | 9 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-02 | 33 | 3 | 8 | 1 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-03 | 16 | 7 | 11 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-04 | 21 | 6 | 12 | 12 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -20,7 +20,7 @@ Row results: *match* = a computed cut set; *effective* = omits only latent event
 
 ## SG-01: uncontrollable lateral motion, or steering actuation while not engaged
 
-Top event TE-01. 27 minimal cut sets.
+Top event TE-01. 36 minimal cut sets.
 
 ### Computed cut sets
 
@@ -28,31 +28,40 @@ Top event TE-01. 27 minimal cut sets.
 |---|---|---|---|---|---|
 | 1 | 1 BE + 0 UE | 1 | {BE-1.18} |  | MCS-01.5 |
 | 2 | 1 BE + 1 UE | 1 | {BE-1.01, UE-1.11} | C | MCS-01.1 |
-| 3 | 1 BE + 1 UE | 1 | {BE-1.10, UE-1.11} |  | MCS-01.2 |
-| 4 | 2 BE + 0 UE | 2 | {BE-1.12, BE-1.15} | C | MCS-01.7 |
-| 5 | 2 BE + 0 UE | 2 | {BE-1.13, BE-1.15} | C | MCS-01.4 |
-| 6 | 2 BE + 0 UE | 2 | {BE-1.14, BE-1.15} | C | MCS-01.7 |
-| 7 | 2 BE + 0 UE | 2 | {BE-1.15, BE-1.16} | C | MCS-01.9 |
-| 8 | 2 BE + 0 UE | 2 | {BE-1.15, BE-1.17} | C | MCS-01.9 |
-| 9 | 2 BE + 1 UE | 2 | {BE-1.02, BE-1.06, UE-1.11} |  | MCS-01.6 |
-| 10 | 2 BE + 1 UE | 2 | {BE-1.02, BE-1.07, UE-1.11} |  | MCS-01.6 |
-| 11 | 2 BE + 1 UE | 2 | {BE-1.02, BE-1.08, UE-1.11} | C | MCS-01.3, MCS-01.6 |
-| 12 | 2 BE + 1 UE | 2 | {BE-1.02, BE-1.09, UE-1.11} | C | MCS-01.3, MCS-01.6 |
-| 13 | 2 BE + 1 UE | 2 | {BE-1.03, BE-1.06, UE-1.11} | S | MCS-01.6 |
-| 14 | 2 BE + 1 UE | 2 | {BE-1.03, BE-1.07, UE-1.11} | S | MCS-01.6 |
-| 15 | 2 BE + 1 UE | 2 | {BE-1.03, BE-1.08, UE-1.11} | C S | MCS-01.6 |
-| 16 | 2 BE + 1 UE | 2 | {BE-1.03, BE-1.09, UE-1.11} | C S | MCS-01.6 |
-| 17 | 2 BE + 1 UE | 2 | {BE-1.04, BE-1.06, UE-1.11} |  | MCS-01.6 |
-| 18 | 2 BE + 1 UE | 2 | {BE-1.04, BE-1.07, UE-1.11} |  | MCS-01.6 |
-| 19 | 2 BE + 1 UE | 2 | {BE-1.04, BE-1.08, UE-1.11} | C | MCS-01.3, MCS-01.6 |
-| 20 | 2 BE + 1 UE | 2 | {BE-1.04, BE-1.09, UE-1.11} | C | MCS-01.3, MCS-01.6 |
-| 21 | 2 BE + 1 UE | 2 | {BE-1.05, BE-1.06, UE-1.11} | C | MCS-01.6 |
-| 22 | 2 BE + 1 UE | 2 | {BE-1.05, BE-1.07, UE-1.11} | C | MCS-01.6 |
-| 23 | 2 BE + 1 UE | 2 | {BE-1.05, BE-1.08, UE-1.11} | C | MCS-01.6 |
-| 24 | 2 BE + 1 UE | 2 | {BE-1.05, BE-1.09, UE-1.11} | C | MCS-01.6 |
-| 25 | 3 BE + 0 UE | 1 | {BE-1.19, BE-1.22, BE-1.23} | L | MCS-01.8 |
-| 26 | 3 BE + 0 UE | 1 | {BE-1.20, BE-1.22, BE-1.23} | L | MCS-01.8 |
-| 27 | 3 BE + 0 UE | 1 | {BE-1.21, BE-1.22, BE-1.23} | L | MCS-01.8 |
+| 3 | 2 BE + 0 UE | 2 | {BE-1.08, BE-1.15} | C | MCS-01.10 |
+| 4 | 2 BE + 0 UE | 2 | {BE-1.09, BE-1.15} | C | MCS-01.10 |
+| 5 | 1 BE + 1 UE | 1 | {BE-1.10, UE-1.11} |  | MCS-01.2 |
+| 6 | 2 BE + 0 UE | 2 | {BE-1.12, BE-1.15} | C | MCS-01.7 |
+| 7 | 2 BE + 0 UE | 2 | {BE-1.13, BE-1.15} | C | MCS-01.4 |
+| 8 | 2 BE + 0 UE | 2 | {BE-1.14, BE-1.15} | C | MCS-01.7 |
+| 9 | 2 BE + 0 UE | 2 | {BE-1.15, BE-1.16} | C | MCS-01.9 |
+| 10 | 2 BE + 0 UE | 2 | {BE-1.15, BE-1.17} | C | MCS-01.9 |
+| 11 | 2 BE + 0 UE | 2 | {BE-1.15, BE-1.25} | C | MCS-01.7 |
+| 12 | 2 BE + 0 UE | 2 | {BE-1.26, BE-4.21} |  | MCS-01.11 |
+| 13 | 2 BE + 0 UE | 2 | {BE-4.19, BE-4.21} |  | MCS-01.11 |
+| 14 | 2 BE + 1 UE | 2 | {BE-1.02, BE-1.06, UE-1.11} |  | MCS-01.6 |
+| 15 | 2 BE + 1 UE | 2 | {BE-1.02, BE-1.07, UE-1.11} |  | MCS-01.6 |
+| 16 | 2 BE + 1 UE | 2 | {BE-1.02, BE-1.08, UE-1.11} | C | MCS-01.3, MCS-01.6 |
+| 17 | 2 BE + 1 UE | 2 | {BE-1.02, BE-1.09, UE-1.11} | C | MCS-01.3, MCS-01.6 |
+| 18 | 2 BE + 1 UE | 2 | {BE-1.03, BE-1.06, UE-1.11} | S | MCS-01.6 |
+| 19 | 2 BE + 1 UE | 2 | {BE-1.03, BE-1.07, UE-1.11} | S | MCS-01.6 |
+| 20 | 2 BE + 1 UE | 2 | {BE-1.03, BE-1.08, UE-1.11} | C S | MCS-01.6 |
+| 21 | 2 BE + 1 UE | 2 | {BE-1.03, BE-1.09, UE-1.11} | C S | MCS-01.6 |
+| 22 | 2 BE + 1 UE | 2 | {BE-1.04, BE-1.06, UE-1.11} |  | MCS-01.6 |
+| 23 | 2 BE + 1 UE | 2 | {BE-1.04, BE-1.07, UE-1.11} |  | MCS-01.6 |
+| 24 | 2 BE + 1 UE | 2 | {BE-1.04, BE-1.08, UE-1.11} | C | MCS-01.3, MCS-01.6 |
+| 25 | 2 BE + 1 UE | 2 | {BE-1.04, BE-1.09, UE-1.11} | C | MCS-01.3, MCS-01.6 |
+| 26 | 2 BE + 1 UE | 2 | {BE-1.05, BE-1.06, UE-1.11} | C | MCS-01.6 |
+| 27 | 2 BE + 1 UE | 2 | {BE-1.05, BE-1.07, UE-1.11} | C | MCS-01.6 |
+| 28 | 2 BE + 1 UE | 2 | {BE-1.05, BE-1.08, UE-1.11} | C | MCS-01.6 |
+| 29 | 2 BE + 1 UE | 2 | {BE-1.05, BE-1.09, UE-1.11} | C | MCS-01.6 |
+| 30 | 2 BE + 1 UE | 2 | {BE-1.06, BE-1.24, UE-1.11} |  | MCS-01.6 |
+| 31 | 2 BE + 1 UE | 2 | {BE-1.07, BE-1.24, UE-1.11} |  | MCS-01.6 |
+| 32 | 2 BE + 1 UE | 2 | {BE-1.08, BE-1.24, UE-1.11} | C | MCS-01.6 |
+| 33 | 2 BE + 1 UE | 2 | {BE-1.09, BE-1.24, UE-1.11} | C | MCS-01.6 |
+| 34 | 3 BE + 0 UE | 1 | {BE-1.19, BE-1.22, BE-1.23} | L | MCS-01.8 |
+| 35 | 3 BE + 0 UE | 1 | {BE-1.20, BE-1.22, BE-1.23} | L | MCS-01.8 |
+| 36 | 3 BE + 0 UE | 1 | {BE-1.21, BE-1.22, BE-1.23} | L | MCS-01.8 |
 
 ### Table rows of WP-A-04
 
@@ -63,10 +72,12 @@ Top event TE-01. 27 minimal cut sets.
 | MCS-01.3 | 1 (effective, DFI-13) | {BE-1.02 or BE-1.04, BE-1.08 or BE-1.09, UE-1.11} (one SoC fault that both commands torque and changes mode/param or reflashes the MCU) | match | — |
 | MCS-01.4 | 1 (effective) | {BE-1.13} | argued | {BE-1.13}: tree needs also one of the sets containing BE-1.15 (e.g. {BE-1.13, BE-1.15}); the row argues a lower order |
 | MCS-01.5 | 1 | {BE-1.18} | match | — |
-| MCS-01.6 | 2 + ext. | {BE-1.02 or BE-1.03 or BE-1.04 or BE-1.05, BE-1.06 or BE-1.07 or BE-1.08 or BE-1.09, UE-1.11} | match | — |
-| MCS-01.7 | 2 | {BE-1.12 or BE-1.14, BE-1.15} | match | — |
+| MCS-01.6 | 2 + ext. | {BE-1.02 or BE-1.03 or BE-1.04 or BE-1.05 or BE-1.24, BE-1.06 or BE-1.07 or BE-1.08 or BE-1.09, UE-1.11} | match | — |
+| MCS-01.7 | 2 | {BE-1.12 or BE-1.14 or BE-1.25, BE-1.15} | match | — |
 | MCS-01.8 | 2 (effective 1 + latent at the baseline) | {BE-1.19 or BE-1.20 or BE-1.21, BE-1.22} | effective | {BE-1.19, BE-1.22}: omits latent BE-1.23 (computed {BE-1.19, BE-1.22, BE-1.23})<br>{BE-1.20, BE-1.22}: omits latent BE-1.23 (computed {BE-1.20, BE-1.22, BE-1.23})<br>{BE-1.21, BE-1.22}: omits latent BE-1.23 (computed {BE-1.21, BE-1.22, BE-1.23}) |
 | MCS-01.9 | 2 (effective 1 through DFI-10) | {BE-1.16 or BE-1.17, BE-1.15} | match | — |
+| MCS-01.10 | 2 (effective 1 through DFI-13) | {BE-1.08 or BE-1.09, BE-1.15} | match | — |
+| MCS-01.11 | 2 | {BE-4.19 or BE-1.26, BE-4.21} | match | — |
 
 ## SG-02: loss or degradation of lateral control without adequate take-over warning
 

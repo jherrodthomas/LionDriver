@@ -138,8 +138,8 @@ scenarios:
     status: known_gap
     fta: [BE-1.03]
     fmea: [SFM-013]
-    decisions: [DQ-023, DQ-210]
-    open_because: "No ODD entry gate; refuse or warn off-highway is the lead's call (DQ-210)"
+    decisions: [DQ-023, DQ-280]
+    open_because: "No ODD entry gate; refuse or warn off-highway is the lead's call (DQ-280)"
   - id: LS-14
     ucas: [UCA-02]
     hazards: [H-01, H-03, H-05]
@@ -329,8 +329,8 @@ scenarios:
     status: known_gap
     fmea: [SFM-025]
     actions: [SFM-ACT-005]
-    decisions: [DQ-205, DQ-211]
-    open_because: "Zero-awareness reaction undecided (DQ-211) and not implemented; H-09 not yet in the HARA"
+    decisions: [DQ-205, DQ-281]
+    open_because: "Zero-awareness reaction undecided (DQ-281) and not implemented; H-09 not yet in the HARA"
   - id: LS-36
     ucas: [UCA-07]
     hazards: [H-07, H-03, H-04]
