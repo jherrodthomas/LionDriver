@@ -190,8 +190,9 @@
       title: "Split the ASIL with the Toyota EPS"
       detail: "Credit the EPS torque limit as a second channel. Cost: needs EPS safety evidence Toyota doesn't publish; unlikely to pass an independent review."
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md D-13", "assurance/02-concept/WP-C-04-functional-safety-concept.md OI-1", "assurance/08-analyses/WP-A-01-asil-decomposition.md OI-1"]
-  status: answered
+  status: applied
   answer: {choice: C, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-C-04 §4 and OI-1; WP-S-02 §2.1; WP-A-01 §2 (strategic record in WP-M-01 D-13 / WP-M-07 left to the management session)", at: 2026-10-16}
 
 - id: DQ-008
   question: "Until the car is measured, should steering controllability be rated C2 (SG-01 ASIL C) or C3 (ASIL D)?"
@@ -1011,8 +1012,9 @@
       title: "Keep 1 s and justify it in TSR-516"
       detail: "No change. Cost: the argument needs a reviewer to accept it."
   sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md OI-8", "assurance/01-management/WP-M-02-safety-plan.md OI-9"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-S-02 TSR-516(b); WP-S-04 OI-8, §3.7, §5, Figure 5-2 (panda firmware change open)", at: 2026-10-16}
 
 - id: DQ-049
   question: "Should you buy parts for a small hardware-in-the-loop test bench?"
@@ -1051,8 +1053,9 @@
       title: "Start the second limiter now"
       detail: "Ready if needed. Cost: hardware work that may be wasted."
   sources: ["assurance/08-analyses/WP-A-01-asil-decomposition.md OI-2", "assurance/03-system/WP-S-03-technical-safety-concept-architecture.md OI-3"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-C-04 §4.3; WP-A-01 §2 and OI-2; WP-S-03 OI-3", at: 2026-10-16}
 
 - id: DQ-051
   question: "If the hardware analysis shows the single safety chip can't meet its ASIL, may the project add an external monitor?"
@@ -1119,8 +1122,9 @@
       title: "Leave it as a known gap"
       detail: "No change. Cost: the safety case carries it."
   sources: ["assurance/08-analyses/WP-A-05-stpa.md OI-2"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-C-04 FSR-05.03, §12.1; WP-S-02 TSR-304(b), TSR-628; WP-S-03 SM-05 (firmware, SWSR-304a and HMI open)", at: 2026-10-16}
 
 - id: DQ-054
   question: "If the panda's watchdog resets it while engaged, its own siren stays silent. Keep an \"engaged\" flag across the reset, or accept the main computer's alert?"
@@ -1139,8 +1143,9 @@
       title: "Accept the main computer's alert as the only warning"
       detail: "No firmware change. Cost: a risk acceptance, since that warning runs on non-safety hardware."
   sources: ["assurance/08-analyses/WP-A-05-stpa.md OI-3"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-C-04 FSR-02.05; WP-S-02 TSR-516(d) (bench test M-06, retained memory and firmware open)", at: 2026-10-16}
 
 - id: DQ-055
   question: "Should the safety limits be set independently of the controller's tuning values?"
@@ -1178,8 +1183,9 @@
       title: "Keep the driver's lamp check"
       detail: "No work. Cost: relies on the driver."
   sources: ["assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md OI-2"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-C-04 FSR-02.12; WP-S-02 TSR-629 (WP-O-02 OPS-01 and implementation open)", at: 2026-10-16}
 
 - id: DQ-057
   question: "What confidence level and statistical method define 'meets the validation targets with stated confidence' for unknown-scenario evaluation (R-08)?"
@@ -1255,8 +1261,9 @@
       title: "Drop the command and carry on"
       detail: "No availability loss. Cost: TSR-108 must be relaxed and justified."
   sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md OI-4"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-S-02 TSR-108 and OI-4; WP-C-04 FSR-01.12 (firmware change open)", at: 2026-10-16}
 
 - id: DQ-061
   question: "If the main computer dies within 5 s of a disengagement, should the safety chip sound the fast siren?"
@@ -1294,8 +1301,9 @@
       title: "Require a tighter bound"
       detail: "More protection. Cost: faster supervision in firmware."
   sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md OI-4"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-S-04 §3.6 and OI-4; WP-C-04 §3, §8", at: 2026-10-16}
 
 - id: DQ-063
   question: "Should the steering hardware be designed to ASIL C now, or to the ASIL B that lowering authority should bring?"
@@ -1337,8 +1345,9 @@
       title: "Not acceptable: require a relay design that can't weld"
       detail: "Stronger safety. Cost: different hardware and evidence that welding is implausible."
   sources: ["assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md OI-9"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-C-04 FSR-07.06; WP-S-02 TSR-712; WP-S-03 SM-20 (needs harness readback, DQ-209)", at: 2026-10-16}
 
 - id: DQ-065
   question: "How should we get the device's schematic and parts list: ask comma, tear one down, or both?"
