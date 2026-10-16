@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-02 Coexistence of elements and freedom from interference |
 | Standard reference | ISO 26262-9:2018 §6 (criteria for coexistence of elements); ISO 26262-6:2018 §7 and Annex D (freedom from interference between software elements: timing and execution, memory, exchange of information); ISO 26262-5:2018 Annex D (communication bus diagnostic measures, informative); ASPICE 4.0 SYS.3, SWE.2 |
-| Version | 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3 Figure 3-1 interference map with the §8 verdicts added; no change to the analysis; 2026-10-13). 0.4 (status update 2026-10-12: dated status notes for the reference build at `bf6ce8c` in §4–§6, §8 verdicts, OI-5 partly closed; nothing verified on hardware or reviewed independently). History: 0.3 (TSR-626, TSR-627 for FFI-CM-17/19; 2026-10-12) |
+| Version | 0.7 (the harness "relay" is two solid-state switches in comma's harness box, [RR-2026-010](../04-hardware/reviews/RR-2026-010.md); its supply and release default are common causes in WP-A-03 DFI-27, DFI-28; no interference rating changed; 2026-10-16). 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3 Figure 3-1 interference map with the §8 verdicts added; no change to the analysis; 2026-10-13). 0.4 (status update 2026-10-12: dated status notes for the reference build at `bf6ce8c` in §4–§6, §8 verdicts, OI-5 partly closed; nothing verified on hardware or reviewed independently). History: 0.3 (TSR-626, TSR-627 for FFI-CM-17/19; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | ASIL C (SG-01, until re-rated) / ASIL B (SG-02…SG-07) elements coexisting with QM elements, on the panda MCU and on the comma device |
 | Author | Assurance team (initial draft) |
@@ -21,7 +21,7 @@ Two coexistence levels are analysed:
 | Level | Container | ASIL-allocated part | QM (or lower-ASIL) parts |
 |---|---|---|---|
 | L-MCU | Panda STM32H7 firmware image (one binary, one CPU, one address space) | opendbc safety hooks (Toyota mode), safety tick, heartbeat supervision, relay drive, CAN TX/RX path, fault handling | Host command dispatcher (USB/SPI), CAN forwarding plumbing, fan, sound, LEDs, IR, ADC housekeeping, debug UART, power save, bootstub/softloader paths |
-| L-DEV | comma device (SoC + MCU + shared PCB, power, enclosure) and harness | E-03 envelope, E-05 harness relay | E-01 SoC software (pandad, card, controlsd, selfdrived, ...), E-02 ML models, AGNOS Linux, network services |
+| L-DEV | comma device (SoC + MCU + shared PCB, power, enclosure) and harness | E-03 envelope, E-05 harness relay (*2026-10-16:* two DG419LE analog switches in the harness box, released to the stock path by a pull-down while the box is powered, [RR-2026-010](../04-hardware/reviews/RR-2026-010.md); "relay" below means these switches) | E-01 SoC software (pandad, card, controlsd, selfdrived, ...), E-02 ML models, AGNOS Linux, network services |
 
 Dependent failures that do not originate in a QM element (shared power, clock, thermal, toolchain, identical constants) are analysed in [WP-A-03](WP-A-03-dependent-failure-analysis.md). This document cross-references them where interference and dependent failure overlap.
 
@@ -189,6 +189,7 @@ Paths named by the FSC completeness check ([WP-C-04](../02-concept/WP-C-04-funct
 | N09 SoC-to-panda command stream (SPI) | §6.1 FFI-CM-01…-05; §6.2 FFI-CM-06…-14; FFI-SP-02, -03 | [WP-A-03](WP-A-03-dependent-failure-analysis.md) DFI-13 |
 | N13 → N14 SoC reset and boot lines (GAP-38) | FFI-CM-10, FFI-CM-12 | WP-A-03 DFI-13 |
 | N08, N13, N14 shared supply and PCB | Not interference; common cause | WP-A-03 DFI-01, DFI-03, DFI-04 (§4.6) |
+| Harness box supply and release default (RR-2026-010 F-02, F-03) | Not interference; common cause. "Relay released" in FFI-TM-02, FFI-CM-10 and FFI-CM-12 holds only while the box is powered and its pull-down is intact | WP-A-03 DFI-27, DFI-28 (§4.7) |
 | N12 → N19 HMI path (FSR-02.11) | FFI-CM-17, FFI-CM-18 | WP-A-03 DFI-14, DFI-25 |
 
 ## 10. Open items
