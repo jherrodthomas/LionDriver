@@ -146,6 +146,8 @@ Prioritised by safety relevance (path from perception to actuator):
 
 **FTA finding F-37 (SW FMEA rev 1.1, BL-005):** SWF-085 (driver monitoring evaluates the driver in demo mode while the item is engaged, BE-8.06) and SWF-086 (forced deceleration not requested, not passed on, or too weak after the terminal alert, BE-8.08): 4 causes, all AP H, actions SWF-ACT-072 and SWF-ACT-073. By code reading demo mode does not switch the alerts off; it decouples the policy from the real vehicle state and unlocks the monitored seat. The forced stop crosses three processes with no freshness check on the flag and slows at only −1.2 m/s². Totals: 86 failure modes, 135 causes: 128 AP H, 1 M, 6 L.
 
+**FTA finding F-28 (SW FMEA rev 1.2, BL-005):** SWF-087, the envelope passes LKA torque that opposes the driver while the driver overrides: `toyota.h` has no driver-override check on the LKA path (GAP-02; TSR-304 not implemented), O 8 D 10 AP H, action SWF-ACT-074. Totals: 87 failure modes, 136 causes: 129 AP H, 1 M, 6 L.
+
 **System FMEA (rev 0.5, BL-004):** all 80 causes rated: 79 AP H, 1 AP M (SFM-024.C1). Causes on the panda, host, harness and hardware elements inherit the linked SW FMEA or DFMEA rows; actions SFM-ACT-001..011.
 
 **System FMEA (rev 0.9, BL-005):** baseline moved to BL-005. S, O and AP unchanged; D of SFM-015.C2 10 → 8 (host unit test). The MSR rows credit the host supervision and the reference-build checks that BL-004 lacked (TSR-408, TSR-615, TSR-621, TSR-308, reference lock): monitoring M 5–6 on 15 causes, M 7–8 on 16, M 9–10 on 29 ([msr-plan.md §4.7](msr-plan.md#47-pilot-result-m1)). The SW FMEA (BL-004) and DFMEA (BL-002) rows it inherits are not re-rated here.

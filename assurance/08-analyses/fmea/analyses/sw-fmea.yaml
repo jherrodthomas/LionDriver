@@ -53,6 +53,8 @@
 #   real vehicle state and unlocks the monitored seat; the forced stop is v_cruise 0 at -1.2 m/s² with no stop-time requirement.
 # - SWF-035 and SWF-082 gain HZ-013 end effects (F-37): the alert selection masks driver-monitoring escalations as it masks the takeover
 #   alert, and soundd and ui carry the driver-monitoring alerts. Ratings unchanged.
+# rev 1.2 at BL-005 (FTA finding F-28, BE-5.05): SWF-087, the envelope passes LKA torque opposing the driver (no driver-override check in
+#   toyota.h, GAP-02, TSR-304 not implemented); new function SWF-FN-014; O8 D10 AP H; action SWF-ACT-074.
 #
 # SW FMEA element pandad (FSC EL-06, System FMEA SFM-SE-017). Ratings per RT-1, against BL-004 (liondriver-dev 682f184,
 # panda 8aa8671, opendbc 7993399). The LIONDRIVER_REFERENCE firmware build is not enabled by any build path at BL-004, so the
@@ -100,11 +102,11 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.1"
+  revision: "1.2"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
-  scope: "P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37."
+  scope: "P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37. Rev 1.2: no driver-override check on the LKA path in the envelope (SWF-087), for F-28."
   team:
     - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
     - {name: Claude (AI assistant), role: "Drafting assistance; ratings require human review"}
@@ -695,6 +697,13 @@ functions:
   requirements:
   - FSR-002
   - FSR-038
+- id: SWF-FN-014
+  element: SWF-SE-006
+  description: Back steering torque off toward zero while the driver overrides, and reject frames that increase torque opposing the driver beyond a driver allowance
+    (TSR-304; not implemented on the LKA path)
+  requirements:
+  - FSR-031
+  - FSR-032
 - id: SWF-FN-020
   element: SWF-SE-021
   description: Send the heartbeat at 10 Hz. It reports engaged only while the SoC is engaged and actively commanding, so that the panda can withdraw authority when the
@@ -5097,6 +5106,46 @@ failure_modes:
   - description: selfdrived soft disable when dmonitoringd or controlsd stops (commIssue, processNotRunning; SWF-064)
     ref: openpilot/selfdrive/selfdrived/events.py
   notes: Realises BE-8.08 (SW FMEA rev 1.1). Late escalation before the flag (frame-counted timers) is SWF-061.C1; whether the forced stop is the SG-010 safe state is SWF-062.
+- id: SWF-087
+  element: SWF-SE-006
+  function: SWF-FN-014
+  failure_mode: Envelope passes LKA torque that opposes the driver while the driver overrides the steering
+  guideword: omission
+  effects:
+  - level: local
+    description: 'STEERING_LKA (0x2E4) frames that oppose the driver pass: the Toyota LKA check is magnitude, rate and measured-torque error only (TorqueMotorLimited);
+      STEER_TORQUE_DRIVER is decoded (toyota.h:221-223) but used only on the LTA path (toyota.h:421-424)'
+  - level: next_higher
+    description: The only override check is the host's MAX_USER_TORQUE of 500 units (carcontroller.py:33, 83); with a host fault, or below 500 units by design (SWF-038),
+      torque up to the 1500 limit keeps opposing the driver
+  - level: end
+    description: Item resists the driver's steering within the panda torque bound
+    hazard: HZ-009
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-087.C1
+    description: 'By design the envelope has no driver-override check on the LKA path (GAP-02): TSR-304 (driver allowance, and back-off while the driver torque exceeds
+      T_ovr; decided as DQ-053, 2026-10-14) is not implemented in toyota.h, in either build'
+    element: SWF-SE-006
+    prevention_controls:
+    - description: Upstream design (a bounded torque the driver can overpower); requirement TSR-304 not implemented, so O 8 (RT-2 §2), as the other by-design gaps
+      ref: opendbc_repo/opendbc/safety/modes/toyota.h
+    detection_controls:
+    - description: test_toyota.py tests the measured-torque limit (MotorTorqueSteeringSafetyTest, MAX_TORQUE_ERROR 350); no test of torque opposing the driver on the
+        LKA path
+    occurrence: 8
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-074
+  safety_mechanisms:
+  - description: Panda torque magnitude (1500), rate (up 15, down 25) and measured-torque-error (350) limits bound what can oppose the driver (SWF-001, FSR-032)
+    ref: opendbc_repo/opendbc/safety/modes/toyota.h:298-310
+  - description: Host lateral cut-off at 500 units of driver torque (carcontroller.py:83; QM)
+    ref: opendbc_repo/opendbc/car/toyota/carcontroller.py
+  notes: Realises BE-5.05 (WP-A-04 G5.3, SPF-12) on the envelope side; the host side is SWF-038 and SWF-044. Whether the bounded torque is hazardous depends on the
+    measured override force (FSR-031 vehicle test, not done).
 actions:
 - id: SWF-ACT-001
   kind: detection
@@ -5551,5 +5600,12 @@ actions:
   description: 'End-to-end test of the terminal reaction: drive policy, controlsd and plannerd from a recorded or synthetic unresponsive-driver input and check that
     forceDecel is set 5 s after the terminal alert and the vehicle reaches standstill within the time set for TSR-633; add a freshness check on driverMonitoringState
     in controlsd'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-074
+  kind: design_change
+  description: 'Envelope override check (TSR-304, DQ-053): in toyota.h reject 0x2E4 frames that increase torque opposing STEER_TORQUE_DRIVER beyond the driver allowance,
+    and back off toward zero at no less than the down rate while the override lasts; report the state to the SoC (TSR-628). Add opendbc safety tests and mutation
+    for both branches; host counterpart SWF-ACT-046'
   owner: Jherrod Thomas
   status: open
