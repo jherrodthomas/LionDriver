@@ -2144,7 +2144,9 @@
       title: "Grant credit to selected families once their fidelity case passes"
       detail: "Less physical testing; needs fidelity evidence and assessor acceptance."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-4"]
+  gate: G2
   status: queued
+  note: "Duplicate of DQ-139, which asks the same question for the lead at G2 (WP-M-08 OI-3). Do not open it; withdraw it when DQ-139 is answered."
 
 - id: DQ-108
   question: "What discovery-trend criterion and target (R3) must unknown-scenario exploration meet before release?"
@@ -2711,21 +2713,24 @@
   status: queued
 
 - id: DQ-139
-  question: "Does MetaDrive simulation have enough fidelity to count as SOTIF evidence, and for which scenarios?"
-  context: "The simulator job is disabled upstream and runs a Honda Civic with the envelope bypassed (GAP-51); fidelity of camera rendering and dynamics vs the Corolla must be argued."
-  reversibility: easy
-  blocks: "WP-V-03/V-04, WP-P-07"
+  question: "May simulation results count as validation evidence, and for which kinds of scenario?"
+  context: "LionDriver is adapting the MetaDrive simulator to drive the reference Corolla with the real panda safety code in the loop. Simulation can run thousands of trials where the closed course runs tens, but its images, radar and vehicle response are models. **Credit would cut physical testing; wrong credit would hide a real weakness.** The plan (WP-V-02 §5.3) groups scenarios into seven families and gives credit only per family, after at least 5 matched closed-course trials agree."
+  reversibility: revisit
+  blocks: "WP-V-03 M4 results; WP-V-04 decomposition; tool classification (WP-P-07)"
   gate: G2
-  decider: claude
+  decider: lead
   options:
     - key: A
       recommended: true
-      title: "Planner-level evidence only; re-enable CI job"
-      detail: "Limited, honest scope."
+      title: "Credit per family, only after its fidelity case passes"
+      detail: "Families like driver override (the panda code is the item's own) can earn credit; weather and lighting cannot. Cost: matched closed-course trials for each family, and the assessor must accept the case."
     - key: B
-      title: "Not evidence; exploration only"
-      detail: "No credit; keeps it as a discovery tool."
-  sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-3"]
+      title: "Never credit simulation; use it to explore only"
+      detail: "Simplest argument. Cost: every scenario-level target is shown on the closed course or road, which takes far more trials."
+    - key: C
+      title: "Credit planner-level results only (no camera in the loop)"
+      detail: "Avoids the rendering question. Cost: perception, the main source of SOTIF risk, gets no simulated evidence."
+  sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-3", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §5.3, OI-4", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md §2"]
   status: queued
 
 - id: DQ-140
@@ -4029,4 +4034,26 @@
       title: "Keep 120 km/h and test controllability to 120 km/h too"
       detail: "Evidence for the whole range. Cost: a second, higher-risk test review and a site that allows 120 km/h."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3 item 3", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-07", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md §3 speed"]
+  status: queued
+
+- id: DQ-261
+  question: "Should LionDriver pay for a GPU machine to run the CARLA simulator for lighting and weather scenarios?"
+  context: "MetaDrive runs on ordinary CPUs but cannot show low sun, glare, night or rain, and has no radar model (WP-V-02 §5.3.2). CARLA with ScenarioRunner can, using a standard scenario format an assessor can rerun, but **it needs a GPU, which costs money every month** (not yet quoted), plus a new bridge and its own fidelity case. Those scenarios otherwise need real drives in those conditions."
+  reversibility: easy
+  blocks: "Simulated evidence for KS-12, KS-15 and radar-clutter scenarios (WP-V-02 §5.4)"
+  gate: G3
+  decider: lead
+  after: [DQ-139]
+  options:
+    - key: A
+      recommended: true
+      title: "Not now; revisit at G3"
+      detail: "Finish MetaDrive and its fidelity case first, then decide with the list of families it cannot carry. Cost: lighting and weather scenarios stay on real drives until then."
+    - key: B
+      title: "Budget a GPU runner and start CARLA now"
+      detail: "Two simulators in parallel. Cost: a monthly GPU bill and a second bridge to maintain."
+    - key: C
+      title: "Never; real drives cover lighting and weather"
+      detail: "No simulator cost. Cost: those scenarios are seen only as often as the weather allows."
+  sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §5.4", "assurance/01-management/WP-M-08-sotif-plan.md OI-3"]
   status: queued
