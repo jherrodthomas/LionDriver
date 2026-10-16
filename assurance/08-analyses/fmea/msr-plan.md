@@ -1,6 +1,6 @@
 # LionDriver — FMEA-MSR: audit and plan
 
-**Status:** Draft v0.6, 2026-10-16. M3: Figure 4-2 (FMEA-MSR overview) drawn by `fmea_diagrams.py`; the MSR columns in the review workbooks are still open. v0.5, 2026-10-16. System FMEA MSR rows re-rated at baseline BL-005, crediting the host supervision (TSR-615, TSR-621), TX arrival (TSR-408), the cruise-mismatch alert (TSR-308) and the reference lock, now built by default; results in §4.7. v0.4, 2026-10-14. Step M2 done: every in-scope cause is rated or pointed at the DFMEA (75 rated, 4 exempt; both files `msr: complete`); results in §4.7. v0.3: step M1 pilot done: 32 causes rated (DFMEA complete, System FMEA SG-01 lateral chain), MSR line and §7 in the review pages. v0.2: step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
+**Status:** Draft v0.7, 2026-10-16. Simulation results (plant model) are citable as MSR `evidence` but are no timing basis of their own and never a measurement (§4.2, §5); the linter enforces the second. v0.6, 2026-10-16. M3: Figure 4-2 (FMEA-MSR overview) drawn by `fmea_diagrams.py`; the MSR columns in the review workbooks are still open. v0.5, 2026-10-16. System FMEA MSR rows re-rated at baseline BL-005, crediting the host supervision (TSR-615, TSR-621), TX arrival (TSR-408), the cruise-mismatch alert (TSR-308) and the reference lock, now built by default; results in §4.7. v0.4, 2026-10-14. Step M2 done: every in-scope cause is rated or pointed at the DFMEA (75 rated, 4 exempt; both files `msr: complete`); results in §4.7. v0.3: step M1 pilot done: 32 causes rated (DFMEA complete, System FMEA SG-01 lateral chain), MSR line and §7 in the review pages. v0.2: step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
 **Basis:** AIAG & VDA FMEA Handbook (2019), Supplemental FMEA for Monitoring and System Response (FMEA-MSR), ISO 26262-4 §6 (FTTI) and ISO 26262-5 §8 (diagnostic coverage), by reference.
 **Related:** [fmea-plan.md](fmea-plan.md), [rating-tables.md](rating-tables.md) (RT-1), [WP-S-04 timing and FTTI budget](../../03-system/WP-S-04-timing-ftti-budget.md), [WP-V-05 fault injection](../../06-validation/WP-V-05-fault-injection.md).
 
@@ -95,6 +95,14 @@ msr:
 ```
 
 A cause carries `msr` or `msr_exempt` (a reason), never both. The header gets `msr: none|partial|complete`; with `complete`, an in-scope cause without either is an error. Actions stay in the shared `actions` list with the new `kind: monitoring`.
+
+**Simulation results** (the closed-loop plant model, `assurance/sim/`) are evidence, not a timing basis. Decided 2026-10-16 on the simulation session's proposal (§5):
+
+- **How to cite one:** a run that reproduces a cause's timing with the real panda code in the loop goes in `evidence`, with `ref` to the result file and case ID plus the plant commit. `basis` stays what the timing rests on: `code_derived`, or `unknown`.
+- **M is unchanged:** a simulation cross-checks the code-derived times. It moves no row up or down.
+- **Never a measurement:** M ≤ 4 still needs a HIL or vehicle measurement (WP-V-05). An M ≤ 4 row whose only evidence refs point under `assurance/sim/` is a linter error.
+- **Scope:** it covers only the parts the model runs as real code (libsafety and the panda board drivers). EPS, PCM and driver timing are assumptions in the model, and a simulation is no evidence for them.
+- **Revisit:** whether a validated simulation could ever earn more depends on the WP-V-02 §5.3 fidelity case for that scenario family (DQ-139).
 
 ### 4.3 Where each piece comes from
 
@@ -206,4 +214,5 @@ WP-S-04 §4 still gives the BL-004 values for T-17 (`controlsMismatch`, 2 s) and
 |---|---|---|
 | Add FMEA-MSR as a supplement to System FMEA and DFMEA (not a separate file), scoped per §3? | Claude (reversible method choice) | Yes, per this plan |
 | Rate SW-origin causes in the System FMEA rather than the SW FMEA? | Claude | Yes, once, at vehicle level |
+| Add a timing basis `simulated` for plant-model results (proposed by the simulation session, 2026-10-16)? | Claude (reversible method choice) | No: cite the run as `evidence`, keep `basis`; a simulation never counts as a measurement (§4.2). A `simulated` basis capped at M ≥ 7 would only lower rows that already rate M 5–6 on code-derived timing |
 | May an MSR AP of M or L count as an accepted residual risk for a hazard-linked cause, or does it stay information for prioritising actions only? | **Lead** (risk acceptance) | Queued in the decision register |
