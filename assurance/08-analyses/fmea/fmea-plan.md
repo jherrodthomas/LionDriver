@@ -1,6 +1,6 @@
 # LionDriver — FMEA Program Plan
 
-**Status:** Draft v0.10 (baseline BL-005 proposed: liondriver-dev `1033d98`, the reference build the default; System FMEA rev 0.9 re-rates its MSR rows at BL-005, the other analyses stay on their baselines; 2026-10-16). v0.9 (SG-04 FTA↔FMEA findings F-1…F-10 resolved: SW FMEA rev 0.7 adds SWF-003.C3 and SWF-050…053, DFMEA rev 0.3 adds DFM-019, System FMEA rev 0.6 and PFMEA rev 0.3 add HZ-006 effects, HARA rev 0.4 back-links SFM-026, FSC rev 0.3 re-based; [fta-fmea-mapping.md](../fta-fmea-mapping.md); 2026-10-13). v0.8 (DFA rev 0.5: the seven insufficient initiators re-checked against the reference build; 2026-10-13). v0.7 (generated FMEA, FMEDA and DFA figures, Figures 2-1, 3-1…3-11, 4-1; 2026-10-13). v0.6 (§1 flow diagram redrawn as Figure 1-1; text version kept; 2026-10-13) — Phase 0 complete; System FMEA rated (rev 0.5, BL-004); SW FMEA P1 elements rated (rev 0.6, BL-004); HARA draft rev 0.3
+**Status:** Draft v0.11 (Figure 4-2, the FMEA-MSR overview, msr-plan M3; 2026-10-16). v0.10 (baseline BL-005 proposed: liondriver-dev `1033d98`, the reference build the default; System FMEA rev 0.9 re-rates its MSR rows at BL-005, the other analyses stay on their baselines; 2026-10-16). v0.9 (SG-04 FTA↔FMEA findings F-1…F-10 resolved: SW FMEA rev 0.7 adds SWF-003.C3 and SWF-050…053, DFMEA rev 0.3 adds DFM-019, System FMEA rev 0.6 and PFMEA rev 0.3 add HZ-006 effects, HARA rev 0.4 back-links SFM-026, FSC rev 0.3 re-based; [fta-fmea-mapping.md](../fta-fmea-mapping.md); 2026-10-13). v0.8 (DFA rev 0.5: the seven insufficient initiators re-checked against the reference build; 2026-10-13). v0.7 (generated FMEA, FMEDA and DFA figures, Figures 2-1, 3-1…3-11, 4-1; 2026-10-13). v0.6 (§1 flow diagram redrawn as Figure 1-1; text version kept; 2026-10-13) — Phase 0 complete; System FMEA rated (rev 0.5, BL-004); SW FMEA P1 elements rated (rev 0.6, BL-004); HARA draft rev 0.3
 **Scope:** reference configuration CFG-001 (AC-001), Corolla E210 · ZRE212 · US: US sedan, model years 2020–2022, 1.8 L CVT ([vehicle register](../../../docs/liondriver/vehicles/README.md)); comma 3X (`system/hardware/tici`) with integrated panda, current LionDriver software baseline
 **Covers:** System FMEA, DFMEA, PFMEA, SW FMEA, FMEDA
 
@@ -220,6 +220,10 @@ Output: a **release & install control plan** (checklist) — this is the practic
 ![Figure 4-1: Action Priority overview of the System FMEA, DFMEA, SW FMEA and PFMEA](figures/generated/fig-4-1-action-priority-overview.svg)
 
 *Figure 4-1.* AP counts as rated, where the causes sit in the AIAG-VDA AP table, and how AP H is treated (action status or rationale). Drawn from the four FMEA YAML files.
+
+![Figure 4-2: FMEA-MSR overview of the System FMEA and DFMEA](figures/generated/fig-4-2-msr-overview.svg)
+
+*Figure 4-2.* FMEA-MSR ([msr-plan.md](msr-plan.md)): where the System FMEA and DFMEA causes sit by frequency F and monitoring M over the provisional MSR AP table, how many fall in each monitoring band, the timing basis, how many responses lower the severity, and the status of the actions the MSR rows name. While every MSR AP is H, M is what ranks the work.
 
 ## 5. Repository format & traceability
 

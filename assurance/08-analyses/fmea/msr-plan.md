@@ -1,6 +1,6 @@
 # LionDriver — FMEA-MSR: audit and plan
 
-**Status:** Draft v0.5, 2026-10-16. System FMEA MSR rows re-rated at baseline BL-005, crediting the host supervision (TSR-615, TSR-621), TX arrival (TSR-408), the cruise-mismatch alert (TSR-308) and the reference lock, now built by default; results in §4.7. v0.4, 2026-10-14. Step M2 done: every in-scope cause is rated or pointed at the DFMEA (75 rated, 4 exempt; both files `msr: complete`); results in §4.7. v0.3: step M1 pilot done: 32 causes rated (DFMEA complete, System FMEA SG-01 lateral chain), MSR line and §7 in the review pages. v0.2: step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
+**Status:** Draft v0.6, 2026-10-16. M3: Figure 4-2 (FMEA-MSR overview) drawn by `fmea_diagrams.py`; the MSR columns in the review workbooks are still open. v0.5, 2026-10-16. System FMEA MSR rows re-rated at baseline BL-005, crediting the host supervision (TSR-615, TSR-621), TX arrival (TSR-408), the cruise-mismatch alert (TSR-308) and the reference lock, now built by default; results in §4.7. v0.4, 2026-10-14. Step M2 done: every in-scope cause is rated or pointed at the DFMEA (75 rated, 4 exempt; both files `msr: complete`); results in §4.7. v0.3: step M1 pilot done: 32 causes rated (DFMEA complete, System FMEA SG-01 lateral chain), MSR line and §7 in the review pages. v0.2: step M0 done: RT-2 §7 tables, schema `msr` block and linter rules with tests. No cause rated yet (linter report: 0 of 79 in-scope causes). The MSR action priority table is provisional until the handbook table is transcribed (§4.1). v0.1: audit and plan.
 **Basis:** AIAG & VDA FMEA Handbook (2019), Supplemental FMEA for Monitoring and System Response (FMEA-MSR), ISO 26262-4 §6 (FTTI) and ISO 26262-5 §8 (diagnostic coverage), by reference.
 **Related:** [fmea-plan.md](fmea-plan.md), [rating-tables.md](rating-tables.md) (RT-1), [WP-S-04 timing and FTTI budget](../../03-system/WP-S-04-timing-ftti-budget.md), [WP-V-05 fault injection](../../06-validation/WP-V-05-fault-injection.md).
 
@@ -133,7 +133,7 @@ A cause carries `msr` or `msr_exempt` (a reason), never both. The header gets `m
 | M0 | RT-2 (§7 tables), schema `msr` block, linter rules and tests; no rows — **done 2026-10-14** | This plan |
 | M1 | Pilot: SG-01 lateral chain in the System FMEA (17 rated, 3 rated in the DFMEA) and all 15 DFMEA causes — **done 2026-10-14** | M0, WP-S-04 rev 0.5 |
 | M2 | Remaining System FMEA and DFMEA in-scope causes — **done 2026-10-14** (System FMEA rev 0.8: 60 rated, 4 in the DFMEA) | M1 review |
-| M3 | Review pages (MSR line per failure mode, §7 table and frequency × monitoring map — **done with M1**), Figure 4-2, MSR columns in the review workbooks | M1 |
+| M3 | Review pages (MSR line per failure mode, §7 table and frequency × monitoring map — **done with M1**), Figure 4-2 (**done 2026-10-16**, [fmea-plan.md §4](fmea-plan.md)), MSR columns in the review workbooks | M1 |
 | M4 | Re-rate M as WP-V-05 measurements land (code-derived → measured) | WP-V-05 |
 | M5 | Independent review of the MSR rows with the FMEA set | M2 |
 

@@ -6,7 +6,7 @@
 | Standard reference | ISO 26262-2:2018 §7 (safety management after release: field monitoring, anomaly handling); ISO 21448:2022 §13 (operation phase activities, field monitoring); ISO/SAE 21434:2021 §8 (cybersecurity monitoring, by reference to WP-O-05); ISO/PAS 8800:2024 (AI system operation and continuous assurance); NHTSA Standing General Order 2021-01 as amended (model, see §8); UL 4600 (informative: field feedback) |
 | Version | 0.1 |
 | Status | Draft |
-| ASIL / scope | All safety goals (SG-01…SG-07); SOTIF; AI; CS interface |
+| ASIL / scope | All safety goals (SG-01…SG-08); SOTIF; AI; CS interface |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Safety manager |
