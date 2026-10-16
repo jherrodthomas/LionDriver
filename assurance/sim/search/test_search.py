@@ -22,7 +22,7 @@ class TestSearch(unittest.TestCase):
     self.assertIsNotNone(curve["t_edge"])
 
   def test_space_inside_the_odd(self):
-    self.assertLessEqual(search.SPACE["speed_kph"][1], 120.0)
+    self.assertLessEqual(search.SPACE["speed_kph"][1], 110.0)
     self.assertGreaterEqual(search.SPACE["lane_width"][0], 3.0)
     self.assertLessEqual(search.SPACE["a_y"][1], 2.5)
 

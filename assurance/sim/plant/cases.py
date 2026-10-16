@@ -6,7 +6,9 @@ from pathlib import Path
 
 import yaml
 
-from simulate import Case
+import re
+
+from simulate import ODD_KPH, OVERSPEED_KPH, Case
 
 CATALOG = Path(__file__).resolve().parents[1] / "faults.yaml"
 
@@ -28,14 +30,20 @@ def from_entry(f: dict) -> Case:
   return Case(f["id"], f["title"], f["kind"], f["road"], ", ".join(f["sg"]), ", ".join(f["causes"]),
               wpv05=f.get("wp_v_05", ""), t_fault=f.get("t_fault"), engaged=f.get("engaged", True),
               figure=f.get("figure", False), longitudinal=f.get("longitudinal", False), note=f.get("note", ""),
-              tsr=", ".join(f.get("tsr", [])), pcs=f.get("pcs", False), speed_kph=f.get("speed_kph", 120.0))
+              tsr=", ".join(f.get("tsr", [])), pcs=f.get("pcs", False), speed_kph=f.get("speed_kph", ODD_KPH))
 
 
 def all_cases() -> list[Case]:
-  out = list(NOMINAL)
+  out, over, families = list(NOMINAL), [], set()
   for f in catalog():
     c = from_entry(f)
     out.append(c)
     if f.get("eps_hold"):
       out.append(Case(**{**c.__dict__, "id": c.id + "-H", "eps": "hold", "figure": False}))
-  return out
+    family = re.sub(r"[a-z]$", "", c.id)
+    if "speed_kph" not in f and family not in families:   # one over-speed margin case per fault family
+      families.add(family)
+      note = f"outside the ODD ({OVERSPEED_KPH:g} > {ODD_KPH:g} km/h, DQ-260): margin case"
+      over.append(Case(**{**c.__dict__, "id": c.id + "-OS", "speed_kph": OVERSPEED_KPH, "figure": False,
+                          "note": "; ".join(x for x in (c.note, note) if x)}))
+  return out + over
