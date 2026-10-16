@@ -136,6 +136,8 @@
 <text x="1291.0" y="593.0" class="chip" fill="#fff">SWF-017</text>
 <rect x="1322.9" y="581.5" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="1349.9" y="593.0" class="chip" fill="#fff">SFM-020</text>
+<rect x="1381.8" y="581.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1408.8" y="593.0" class="chip" fill="#fff">SWF-057</text>
 <circle cx="1360.0" cy="629.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
 <rect x="1493.5" y="478.5" width="220" height="71.0" rx="9" class="shadow"/>
 <rect x="1492" y="476.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>

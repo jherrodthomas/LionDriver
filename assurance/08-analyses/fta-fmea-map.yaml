@@ -79,8 +79,8 @@ events:
     note: SWF-003.C2 (implementation defect in longitudinal_accel_checks); SWF-016 (host TX that skips safety_tx_hook, F-14)
   - id: BE-4.17
     class: systematic_sw
-    fmea: [SWF-046]
-    note: SWF-046.C1 (jerk limit applied before pitch compensation and the PID)
+    fmea: [SWF-046, SWF-066]
+    note: SWF-046.C1 (jerk limit applied before pitch compensation and the PID); SWF-066 (no rate limit on the planner's final aTarget, SW FMEA rev 0.9)
   - id: BE-4.18
     class: systematic_sw
     fmea: [SWF-023, SWF-043]
@@ -147,8 +147,8 @@ events:
     note: SWF-001.C1 (torque limits are the controller's constants, not derived); SFM-002.C3 (limits wrong for the vehicle)
   - id: BE-1.02
     class: systematic_sw
-    fmea: [SFM-002, SFM-003, SWF-042]
-    note: SFM-002.C1 (lateral controller output too high), SFM-003.C2 (sign convention), SWF-042 (torque biased or overshooting within the limits)
+    fmea: [SFM-002, SFM-003, SWF-042, SWF-059]
+    note: SFM-002.C1 (lateral controller output too high), SFM-003.C2 (sign convention), SWF-042 (torque biased or overshooting within the limits), SWF-059 (frame packed with another value than commanded, SW FMEA rev 0.9)
   - id: BE-1.03
     class: sotif
     fmea: [SFM-002, SFM-003, PFM-009, PFM-012]
@@ -161,7 +161,8 @@ events:
     note: SWF-049 (curvature taken from the developer lateral-maneuver plan); the process_config path of GAP-20 has no SW FMEA cause of its own
   - id: BE-1.05
     class: systematic_sw
-    fmea: [SFM-032, PFM-013]
+    fmea: [SFM-032, PFM-013, SWF-058]
+    note: SWF-058 (fuzzy fingerprint or overridden identification, SW FMEA rev 0.9) is the SW unit view of SFM-032
   - id: BE-1.06
     class: systematic_sw
     fmea: [SWF-001, SWF-016]
@@ -176,10 +177,12 @@ events:
     ref: AOU-01R
   - id: BE-1.15
     class: systematic_sw
-    fmea: [SFM-001, SWF-041, SFM-013, SWF-030]
+    fmea: [SFM-001, SWF-041, SFM-013, SWF-030, SWF-057]
     note: >-
       SFM-001.C1/C3 and SWF-041 (torque or request bit while lateral control is not active); SFM-013 and SWF-030 (host
-      engaged without a driver request): the host then commands torque, and the envelope's authority is the barrier
+      engaged without a driver request): the host then commands torque, and the envelope's authority is the barrier.
+      SWF-057 (carState field decoded wrong, e.g. a spurious cruise enable, SW FMEA rev 0.9) feeds the host's engagement
+      state from the same frames (CCF, DFI-10)
   - id: BE-1.16
     class: systematic_sw
     fmea: [SWF-006, SWF-005]
@@ -428,10 +431,10 @@ events:
       hudControl inconsistent with the item; AOU-12 allows 0x412 to influence the cluster)
   - id: BE-2.17
     class: systematic_sw
-    fmea: [SWF-020, SWF-024]
+    fmea: [SWF-020, SWF-024, SWF-060]
     note: >-
       SWF-020.C1 (heartbeat shows engaged while no fresh command reaches the panda); SWF-024.C1 (sendcan dropped with only a
-      LOGE). BL-005 TSR-408/TSR-621 (SFM-005.C2) is not credited at BL-004
+      LOGE); SWF-060 (card stops while engaged, so no new sendcan; SW FMEA rev 0.9). BL-005 TSR-408/TSR-621 (SFM-005.C2) is not credited at BL-004
   - id: UE-2.18
     class: external
     ref: AOU-01R, AOU-12
@@ -468,9 +471,10 @@ events:
   # ---- SG-06 tree (§7); BE-2.xx events are mapped with SG-02, BE-1.20 and BE-1.22 with SG-01
   - id: BE-6.01
     class: systematic_sw
-    fmea: [SWF-043, SFM-012]
+    fmea: [SWF-043, SFM-012, SWF-068]
     note: >-
-      SWF-043.C1 (longitudinalPlan and modelV2 used with no alive, valid or age check, so aTarget is held); SFM-012.C1
+      SWF-043.C1 (longitudinalPlan and modelV2 used with no alive, valid or age check, so aTarget is held), and its source
+      SWF-068 (plannerd stops or runs late while engaged; SW FMEA rev 0.9); SFM-012.C1
       (pipeline latency: CPU overload, thermal throttling, messaging delay; seen only as modeldLagging or selfdrivedLagging,
       SOFT_DISABLE). The radarFault named in the event has no FMEA cause of its own (F-28)
   - id: BE-6.02
@@ -634,10 +638,10 @@ events:
     ref: AOU-02R
   - id: BE-5.08
     class: systematic_sw
-    fmea: [SWF-017, SFM-020]
+    fmea: [SWF-017, SFM-020, SWF-057]
     note: >-
       As BE-3.11. SWF-017.C1 (GAS_RELEASED decoding defect gives the envelope the same "released" view); SFM-020.C1 (host
-      gasPressed parsed wrong). No FMEA mode covers GAS_RELEASED stuck "released" with a valid 0x1D2 checksum (GAP-01),
+      gasPressed parsed wrong), at SW unit level SWF-057.C1 (GAS_RELEASED inversion in the DBC or carstate.py; SW FMEA rev 0.9). No FMEA mode covers GAS_RELEASED stuck "released" with a valid 0x1D2 checksum (GAP-01),
       as F-15. Both modes cite HZ-006 only (F-29)
   - id: UE-5.09
     class: external
@@ -695,14 +699,16 @@ events:
       dmonitoringmodeld stopping. F-37
   - id: BE-8.04
     class: systematic_sw
-    gap: >-
-      No SW FMEA mode for driverStateV2 published with valid=True at the source whatever the input (dmonitoringmodeld.py:99;
-      GAP-21, TSR-609). F-37
+    fmea: [SWF-063]
+    note: >-
+      SWF-063.C1 (driverStateV2 always published valid, no finiteness check; dmonitoringmodeld.py:99; GAP-21, TSR-609) and
+      SWF-063.C2 (empty face arrays keep the last pose). Added in SW FMEA rev 0.9, which closes this part of F-37
   - id: BE-8.05
     class: systematic_sw
-    gap: >-
-      No SW FMEA mode for the wheel-touch fallback resetting awareness on any steering or gas input (policy.py:334-335;
-      GAP-21, TSR-612). F-37
+    fmea: [SWF-061]
+    note: >-
+      SWF-061.C3 (under the wheel-touch policy any steering or gas input resets awareness; policy.py:335, 345; GAP-21,
+      TSR-612). Added in SW FMEA rev 0.9, which closes this part of F-37
   - id: BE-8.06
     class: systematic_sw
     gap: >-
@@ -710,8 +716,10 @@ events:
       GAP-20, TSR-610). F-37
   - id: BE-8.07
     class: systematic_sw
-    fmea: [SFM-023]
-    note: SFM-023.C1 (policy timers or recovery factor misconfigured), SFM-023.C2 (low-speed or always-on exemption applied wrongly)
+    fmea: [SFM-023, SWF-061]
+    note: >-
+      SFM-023.C1 (policy timers or recovery factor misconfigured), SFM-023.C2 (low-speed or always-on exemption applied wrongly);
+      at SW unit level SWF-061.C1 (timers count frames, not time) and SWF-061.C2 (awareness arithmetic or thresholds)
   - id: BE-8.08
     class: systematic_sw
     gap: >-
@@ -779,6 +787,10 @@ not_in_fta:
     goal: SG-04
     kind: justified
     reason: As SFM-030 (same monitor, SW unit level).
+  - fm: SWF-071
+    goal: SG-04
+    kind: justified
+    reason: Realises BE-4.06 (phantom braking or false lead) through the radard lead-selection logic (SW FMEA rev 0.9). BE-4.06 is class sotif, which admits only System FMEA backing (SFM-009), so the SW row is listed here; the tree and its cut sets do not change.
   - fm: SFM-032
     goal: SG-04
     kind: justified
@@ -902,3 +914,56 @@ not_in_fta:
       Host release on brake or cancel (selfdrived pedalPressed, pcmDisable, buttonCancel) is QM and not credited. G5.1
       and G5.2 analyse the envelope's revocation, which acts on the CAN frames independently of carState (the mode's
       own end effect says so). As SFM-014 for SG-01 and SG-04.
+  - fm: SWF-056
+    goal: SG-05
+    kind: justified
+    reason: >-
+      As SWF-031: a carState input frozen or stale on the host delays only the host release, which is QM and not
+      credited. G5.1 and G5.2 analyse the envelope's revocation from the CAN frames; frozen or lost 0x226 on the envelope
+      side is SWF-005 and SWF-006 (BE-5.01).
+  - fm: SWF-059
+    goal: SG-03
+    kind: justified
+    reason: >-
+      A packed acceleration other than the one commanded is a request like any other: outside the envelope bound it is
+      refused (BE-3.01, SWF-003), inside it is the request hazard the tree takes by design (BE-3.07, G3.2) and realises
+      through BE-3.02, class sotif, which admits only System FMEA backing. The cut sets do not change (SW FMEA rev 0.9).
+  - fm: SWF-065
+    goal: SG-03
+    kind: justified
+    reason: >-
+      A plan too aggressive for the lead realises the planner-output event BE-3.02 (SFM-008.C1/C2), class sotif, which
+      admits only System FMEA backing; listed here as SWF-071 is for SG-04. The cut sets do not change (SW FMEA rev 0.9).
+  - fm: SWF-065
+    goal: SG-06
+    kind: justified
+    reason: >-
+      As for SG-03: a deceleration too low for the lead realises BE-6.09 (SFM-010, SFM-012), class sotif, which admits only
+      System FMEA backing. The cut sets do not change (SW FMEA rev 0.9).
+  - fm: SWF-070
+    goal: SG-06
+    kind: justified
+    reason: >-
+      Realises BE-6.09 (lead missed or late) through the radard lead logic. BE-6.09 is class sotif, which admits only
+      System FMEA backing (SFM-010, SFM-012); listed here as SWF-071 is for SG-04 (SW FMEA rev 0.9).
+  - fm: SWF-069
+    goal: SG-06
+    kind: justified
+    reason: >-
+      BE-6.10 is by design: the FCW comes from the same planner and lead as the deceleration. An FCW missing on its own
+      (SWF-069.C1, radar-only lead) leaves the deceleration acting; the cases where both fail come from the lead or the MPC
+      (BE-6.09, SWF-065.C2), which the tree already has.
+  - fm: SWF-067
+    goal: SG-06
+    kind: tree_gap
+    reason: >-
+      The SG-06 tree analyses the assured configuration. The driver can change the following distance or Experimental
+      Mode while driving (SWF-067.C1), and the item only logs it. Whether to refuse engagement outside the assured settings
+      is queued for the lead (DQ-221); until it is decided, the tree has no event for planning in another configuration.
+  - fm: SWF-062
+    goal: SG-08
+    kind: tree_gap
+    reason: >-
+      The SG-08 tree takes the forced deceleration with lateral control kept as the terminal reaction. Whether that reaches
+      the SG-010 safe state is queued for the lead (DQ-220); if it does not, the tree needs an event for the terminal state
+      reached without the safe state (SWF-062.C1).

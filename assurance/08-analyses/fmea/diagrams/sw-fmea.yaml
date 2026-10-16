@@ -1,11 +1,11 @@
-# Diagram data for the SW FMEA (assurance/08-analyses/fmea/analyses/sw-fmea.yaml, rev 0.8, BL-005).
+# Diagram data for the SW FMEA (assurance/08-analyses/fmea/analyses/sw-fmea.yaml, rev 0.9, BL-005).
 # Facts from WP-W-03 §3.3/§4.2/§5.3, WP-S-05 §2/§4.2/§11.2 and the code at the BL-005 pins (reference build is the default).
 schema_version: 1
 analysis: SWF
 
 block_diagram:
   title: "Software architecture: engagement and actuation path"
-  boundary: "Analysed SW elements (SW FMEA scope, BL-005)"
+  boundary: "Analysed SW elements, P1 and P2 (SW FMEA scope, BL-005)"
   blocks:
     - id: B01
       name: "modeld"
@@ -16,13 +16,15 @@ block_diagram:
     - id: B02
       name: "plannerd"
       detail: "selfdrive/controls/plannerd.py, long plan"
-      inside: false
+      inside: true
+      element: SWF-SE-070
       column: 0
       row: 1
     - id: B03
       name: "dmonitoringd"
       detail: "selfdrive/monitoring/dmonitoringd.py"
-      inside: false
+      inside: true
+      element: SWF-SE-060
       column: 0
       row: 3
     - id: B04
@@ -42,7 +44,8 @@ block_diagram:
     - id: B06
       name: "card (CAN parse)"
       detail: "card.py + toyota carstate: carState"
-      inside: false
+      inside: true
+      element: SWF-SE-050
       column: 2
       row: 3
     - id: B07

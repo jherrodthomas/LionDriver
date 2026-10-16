@@ -4038,6 +4038,28 @@
   sources: ["assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-ACT-005, SFM-025.C1", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7"]
   status: queued
 
+- id: DQ-341
+  question: "Three goals are now ASIL C, so the panda safety envelope needs ASIL C even if steering drops to B. Harden it to C, or plan a second independent checker?"
+  context: "You chose reduced steering authority (DQ-007) so the whole envelope could be **ASIL B**. The HARA update you answered (DQ-036, DQ-059) makes three other goals **ASIL C**: lateral loss without warning (SG-02), unintended acceleration (SG-03) and longitudinal loss without warning (SG-06). Most envelope checks serve them too, so the envelope is **ASIL C whatever the steering tests show**. The decomposition analysis judges ASIL C on the single panda MCU, which shares its board and supply with the QM SoC, unlikely to reach the hardware metrics (WP-A-01 §3). Hardware is already designed to C (DQ-063)."
+  reversibility: revisit
+  blocks: "Envelope ASIL in WP-S-02/WP-S-03 and the SysML model; SWSR and HWSR ASILs; hardware metric targets; DEC-01 scope"
+  gate: G2
+  decider: lead
+  after: [DQ-007, DQ-063]
+  options:
+    - key: A
+      recommended: true
+      title: "Harden the envelope to ASIL C now; start the second checker only if the C metrics fail"
+      detail: "Keeps one MCU and the current design; the steering tests still go ahead to keep SG-01 from needing more. Cost: ASIL C software process for all envelope code (MC/DC, stricter reviews) and ASIL C hardware metrics (97 % / 80 %) become final targets, not interim ones; a late re-plan if the metrics fail."
+    - key: B
+      title: "Plan the second independent checker (DEC-01) now for steering, acceleration and the warning path"
+      detail: "Envelope ASIL B(C) plus an ASIL A(C) checker on its own supply and clock that can open the relay. Avoids betting on C metrics for one shared MCU. Cost: new hardware element, new requirements and a dependent-failure analysis; months of work before G2."
+    - key: C
+      title: "Decide after the first hardware metric results (WP-H-04)"
+      detail: "No commitment now; requirements are written to C meanwhile. Cost: the software process level stays uncertain, and work done to B-level rigour may need redoing."
+  sources: ["assurance/02-concept/WP-C-04-functional-safety-concept.md §3, §4", "assurance/02-concept/WP-C-03-hara.md §5 (v0.4)", "assurance/08-analyses/WP-A-01-asil-decomposition.md §3, DEC-01", "assurance/03-system/WP-S-02-technical-safety-requirements.md §2.1", "assurance/04-hardware/WP-H-04-hardware-metrics.md"]
+  status: queued
+
 - id: DQ-210
   question: "Closing on slower traffic is now rated E4, as you chose. That also raises the goal against silently lost braking (SG-06) to ASIL C. Accept it?"
   context: "You chose the frequency reading for closing on a slower car at highway speed, which makes the acceleration goal SG-03 ASIL C. An exposure class belongs to the situation, not to one hazard, so the same E4 applies when braking is silently lost in that situation (HE-06.1) or the display wrongly shows ACC active (HE-07.3). **Both become ASIL C, and SG-06 with them.** Your question only named SG-03."
@@ -4094,6 +4116,52 @@
       title: "Settle on one device after all"
       detail: "Drop the other board's rows. Cost: none extra; the answer to DQ-011 changes."
   sources: ["assurance/01-management/decisions/register.yaml DQ-011", "assurance/02-concept/WP-C-01-item-definition.md §1"]
+  status: queued
+- id: DQ-220
+  question: "When the driver stays unresponsive at the final driver-monitoring alert, should the car keep steering while it slows to a stop, or hand steering back?"
+  context: "Today the final alert (\"DISENGAGE IMMEDIATELY\") is a warning only. After 5 s at that level the item slows the car to a stop **while it keeps steering**, and it never disengages by itself. FSR-040 asks for the SG-010 safe state, but nothing records which behaviour that is. This decides what the item does with a driver who may be asleep."
+  reversibility: hard
+  blocks: FSR-040 safe state, SW FMEA SWF-062 / SWF-ACT-059, SG-010 (ASIL A)
+  gate: G3
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Keep steering and slow to a stop in the lane (today's behaviour), and record it as the SG-010 safe state"
+      detail: "No code change; the car stays in its lane while it stops. Cost: the safe state relies on lateral control staying correct for the whole stop, which needs a stop-time and lane-keeping argument and a vehicle test."
+    - key: B
+      title: "Slow to a stop, then disengage with hazard lights at standstill"
+      detail: "Ends automation once the car is stopped. Cost: a code change (hazard lights, disengage at standstill) and a vehicle test; behaviour at standstill on a road needs its own hazard check."
+    - key: C
+      title: "Disengage at the final alert and hand steering back"
+      detail: "Simplest to argue for the automation. Cost: an unresponsive driver then has no lateral control at speed; likely worse for the hazard SG-010 covers."
+  sources:
+    - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062
+    - assurance/08-analyses/fmea/analyses/fsc.yaml FSR-040
+    - openpilot/selfdrive/monitoring/policy.py:379-400
+  status: queued
+- id: DQ-221
+  question: "If the driver switches to a setting the safety analyses don't cover (shorter following distance, Experimental mode), should the item refuse to engage, or only log it?"
+  context: "The defaults are the assured values: Chill mode (DQ-001) and the relaxed following distance (CA-011). While driving, the distance button still cycles the following distance and Experimental mode can be switched on, and **both are only logged**. The analyses of record assume the assured values, so a drive in another setting is unassured but allowed."
+  reversibility: easy
+  blocks: SW FMEA SWF-067 / SWF-ACT-063, CA-008 scope
+  gate: G3
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Refuse engagement (no-entry alert) outside the assured settings in the reference configuration"
+      detail: "The item only runs in what was analysed. Cost: a small selfdrived change and a test; drivers lose the distance button and Experimental mode."
+    - key: B
+      title: "Allow it, show a 'not assured' banner, and keep logging"
+      detail: "Driver keeps the choice and knows it. Cost: a UI change; the unassured drives still happen."
+    - key: C
+      title: "Keep today's behaviour (log only)"
+      detail: "No change. Cost: unassured drives are not visible to the driver."
+  sources:
+    - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-067
+    - openpilot/selfdrive/selfdrived/assured_config.py
+    - openpilot/selfdrive/selfdrived/selfdrived.py:502-506, 607-626
   status: queued
 
 - id: DQ-260
