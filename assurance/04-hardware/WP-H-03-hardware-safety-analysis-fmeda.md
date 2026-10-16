@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-03 Hardware safety analysis (FMEA/FMEDA) |
 | Standard reference | ISO 26262-5:2018 §7 (safety analyses on HW design), §8 (metrics input), Annex D (diagnostic coverage of safety mechanisms, informative); ISO 26262-9:2018 §8 (safety analyses); ISO 26262-11:2018 (semiconductor failure modes, informative); ASPICE 4.0 HWE.2 |
-| Version | 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
+| Version | 0.3 (OI-9 closed by DQ-064; 2026-10-16). 0.2 (status update 2026-10-12: IWDG (DC-01), 0.3 s heartbeat revocation and the reference-build `0xc5` refusal recorded in the existing-diagnostic cells of FM-CPU-03/05/06, FM-CLK-04, FM-SPI-02, FM-REL-05; no DC credit taken until HIL evidence). 0.1: initial draft |
 | Status | Draft (qualitative FMEA); quantitative FMEDA: generic-rate estimate in §6.3, part-level template TBD |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -314,5 +314,5 @@ A real SER figure for the STM32H725 (OI-3) therefore matters as much as the part
 | OI-6 | Define fault-injection methods for each "planned" DC claim (WP-H-06) | G3 |
 | OI-7 | Analyse the harness relay design to confirm or refute FM-REL-02/04 plausibility (relay type, coil drive) | G2 |
 | OI-8 | Re-run the FMEA after each WP-H-02 §6 change is implemented | G3 |
-| OI-9 | SG-07: decide the safe state when relay readback finds the relay welded in the intercept position (it cannot be released): driver warning that stock AEB is unavailable, and whether that is acceptable under SG-07 | G2 |
+| OI-9 | ~~SG-07: decide the safe state when relay readback finds the relay welded in the intercept position~~ **Decided** ([DQ-064](../01-management/decisions/register.yaml), option A, 2026-10-14): warn the driver that stock AEB is unavailable and refuse to engage; accepted as the degraded state. It applies only once readback exists (DC-03, HWSR-506a, DQ-209); with the v3 box the same case is a switch stuck in intercept (FM-REL-02/04). The HMI warning requirement belongs to the FSC and TSR owners | G2 |
 | OI-10 | Replace the generic rates of §6.3 with part-specific values (BOM, ST data, SER) and add the dual-point PMHF term | G3 |
