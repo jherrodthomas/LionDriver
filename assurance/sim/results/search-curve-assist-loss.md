@@ -18,7 +18,7 @@ Fault: EPS fault with loss of assist (LKA_STATE 9) in the steady part of a left 
 
 | Parameter | Range | Meaning |
 |---|---|---|
-| `speed_kph` | 80–120 km/h | ego speed (ODD-H up to 120 km/h) |
+| `speed_kph` | 80–110 km/h | ego speed (ODD-H up to 110 km/h, DQ-260) |
 | `a_y` | 0–1.8 m/s² | steady lateral acceleration of the curve, from straight to 1.8 m/s²: above LAT_ACCEL_FACTOR (1.99 m/s²) the item cannot hold the curve even without a fault (plant case N-3), so the band to the ODD bound 2.5 m/s² is left out |
 | `lane_width` | 3–3.9 m | lane width (ODD-H 3.0–3.9 m) |
 | `t_r` | 0.75–1.5 s | driver reaction time from the first cue (WP-S-04 §3.2 range) |
@@ -33,17 +33,17 @@ Monte Carlo: 120 uniform samples. Cross-entropy: 4 rounds of 30, elite fifth. Se
 | Curve a_y (m/s²) | Samples | Departures | Share | Smallest margin rho (m) |
 |---|---|---|---|---|
 | 0–0.3 | 20 | 1 | 5% | -0.03 |
-| 0.3–0.6 | 14 | 10 | 71% | -0.91 |
+| 0.3–0.6 | 14 | 10 | 71% | -0.90 |
 | 0.6–0.9 | 18 | 18 | 100% | -2.10 |
-| 0.9–1.2 | 31 | 31 | 100% | -3.39 |
-| 1.2–1.5 | 18 | 18 | 100% | -4.33 |
-| 1.5–1.8 | 19 | 19 | 100% | -6.95 |
+| 0.9–1.2 | 31 | 31 | 100% | -3.34 |
+| 1.2–1.5 | 18 | 18 | 100% | -4.27 |
+| 1.5–1.8 | 19 | 19 | 100% | -6.83 |
 
 | Driver t_r (s) | Samples | Departures | Share | Smallest margin rho (m) |
 |---|---|---|---|---|
-| 0.75–1 | 37 | 28 | 76% | -3.71 |
-| 1–1.25 | 43 | 37 | 86% | -4.87 |
-| 1.25–1.5 | 40 | 32 | 80% | -6.95 |
+| 0.75–1 | 37 | 28 | 76% | -3.64 |
+| 1–1.25 | 43 | 37 | 86% | -4.82 |
+| 1.25–1.5 | 40 | 32 | 80% | -6.83 |
 
 Mildest departing curve among the samples: a_y = 0.28 m/s². Sharpest curve held in lane: a_y = 0.41 m/s².
 
@@ -51,10 +51,10 @@ Mildest departing curve among the samples: a_y = 0.28 m/s². Sharpest curve held
 
 | Round | Speed (km/h) | a_y (m/s²) | Lane (m) | t_r (s) | Cue (m) | rho (m) | Body edge on the line (s) |
 |---|---|---|---|---|---|---|---|
-| 4 | 114.3 | 1.79 | 3.17 | 1.50 | 0.30 | -8.52 | 1.24 |
-| 4 | 112.4 | 1.80 | 3.25 | 1.49 | 0.30 | -8.47 | 1.26 |
-| 4 | 102.1 | 1.79 | 3.00 | 1.50 | 0.30 | -8.42 | 1.14 |
-| 4 | 109.8 | 1.79 | 3.32 | 1.50 | 0.30 | -8.40 | 1.28 |
-| 4 | 105.9 | 1.80 | 3.00 | 1.50 | 0.27 | -8.39 | 1.16 |
+| 4 | 105.7 | 1.79 | 3.17 | 1.50 | 0.30 | -8.37 | 1.22 |
+| 4 | 104.3 | 1.80 | 3.25 | 1.49 | 0.30 | -8.32 | 1.23 |
+| 4 | 102.3 | 1.79 | 3.32 | 1.50 | 0.30 | -8.27 | 1.25 |
+| 4 | 101.0 | 1.80 | 3.41 | 1.50 | 0.30 | -8.27 | 1.27 |
+| 4 | 96.5 | 1.79 | 3.00 | 1.50 | 0.30 | -8.26 | 1.12 |
 
 Use: these points rank where a closed-course or bench test should look first (WP-V-04 U-4, WP-V-05 VS-FI-31). They do not show that the item departs on the road: the EPS response to the fault, the driver and the steering authority are assumptions until measured (M-01, M-02, WP-C-08).

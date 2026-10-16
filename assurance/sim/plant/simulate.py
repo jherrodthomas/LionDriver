@@ -58,6 +58,10 @@ def A(key: str) -> float:
   return _OVERRIDES.get(key, ASSUMPTIONS[key][0])
 
 
+ODD_KPH = 110.0        # ODD-H speed bound (decision register DQ-260)
+OVERSPEED_KPH = 120.0  # margin cases outside the ODD (rows ending -OS)
+
+
 @dataclass
 class Case:
   id: str
@@ -68,7 +72,7 @@ class Case:
   fmea: str
   wpv05: str = ""
   eps: str = "release"        # 'release' or 'hold' (ASSUMPTIONS)
-  speed_kph: float = 120.0
+  speed_kph: float = ODD_KPH
   lane_width: float = 3.7     # m; generic roads only (a KS road has its own)
   t_fault: float | None = 6.0  # s; None: when the vehicle reaches the curve
   duration: float = 6.0       # s after the fault
