@@ -285,8 +285,10 @@ events:
       removed in the reference build). SFMEA-05 of WP-A-04 §10 is the only row. F-17
   - id: BE-7.08
     class: systematic_sw
-    gap: >-
-      No System or SW FMEA mode for the SoC sending PCS-relevant frames (QM fault or compromise; SFMEA-05). F-17
+    fmea: [SFM-035]
+    note: >-
+      SFM-035.C1 (host QM fault sends a PCS-relevant frame; the panda gate refuses it, M 5); SFM-035.C3 is the gate failing
+      (BE-7.07). Compromise of the SoC is a TARA topic. F-17 closed for the System FMEA, 2026-10-16
   - id: BE-7.09
     class: random_hw
     fmea: [DFM-010, SFM-034]
@@ -310,8 +312,10 @@ events:
     fmeda: [fmeda-sg009:FMD-022, fmeda-sg009:FMD-023]
   - id: BE-7.13
     class: systematic_sw
-    gap: >-
-      No SW FMEA mode for an ACC request sent during a stock PCS event (AOU-04R covers the PCM side). F-17
+    fmea: [SFM-036]
+    note: >-
+      SFM-036.C1: no item reaction to a stock PCS event on the longitudinal command (always true at the baseline; SFM-ACT-020,
+      DQ-300). The PCM side is UE-7.14 and SFM-036.C2 (AOU-04R). F-17 closed for the System FMEA, 2026-10-16
   - id: UE-7.14
     class: external
     ref: AOU-04R
@@ -797,6 +801,10 @@ not_in_fta:
     goal: SG-04
     kind: justified
     reason: With the reference lock the panda enforces the reference model whatever the fingerprint (DFA DM-21); a wrong host configuration acts as a QM planner fault (BE-4.02).
+  - fm: SFM-035
+    goal: SG-04
+    kind: tree_gap
+    reason: PCS braking triggered by a frame from the item (0x344, or 0x283 with a non-zero payload) is not an event of the SG-04 tree. The SG-07 tree carries the same path as BE-7.08 with BE-7.07; for the FTA owner to add it under SG-04 or justify leaving it out.
   # ---- SG-01
   - fm: SFM-014
     goal: SG-01
