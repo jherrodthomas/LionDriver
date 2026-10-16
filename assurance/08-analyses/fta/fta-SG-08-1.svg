@@ -142,8 +142,8 @@
 <text x="1264" y="591.0" class="d">monitored seat while engaged, so</text>
 <text x="1264" y="605.5" class="d">a distracted driver can be</text>
 <text x="1264" y="620.0" class="d">judged against the wrong pose…</text>
-<rect x="1264.0" y="628.0" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="1291.0" y="639.5" class="chip" fill="#c62828">no FMEA</text>
+<rect x="1264.0" y="628.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1291.0" y="639.5" class="chip" fill="#fff">SWF-085</text>
 <circle cx="1360.0" cy="676.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
 <rect x="1614.5" y="288.0" width="220" height="71.0" rx="9" class="shadow"/>
 <rect x="1613.0" y="285.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
@@ -211,8 +211,8 @@
 <text x="1990" y="547.5" class="d">planner (policy.py:398,</text>
 <text x="1990" y="562.0" class="d">controlsd.py:235,</text>
 <text x="1990" y="576.5" class="d">longitudinal_planner.py:84)</text>
-<rect x="1990.0" y="584.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="2017.0" y="596.0" class="chip" fill="#c62828">no FMEA</text>
+<rect x="1990.0" y="584.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="2017.0" y="596.0" class="chip" fill="#fff">SWF-086</text>
 <circle cx="2086.0" cy="632.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
 <rect x="2219.5" y="467.0" width="220" height="71.0" rx="9" class="shadow"/>
 <rect x="2218" y="464.5" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>

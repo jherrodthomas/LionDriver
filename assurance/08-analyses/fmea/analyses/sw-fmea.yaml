@@ -47,6 +47,12 @@
 #   D 8 only for locationd, calibrationd and SubMaster unit tests targeted at the cause. All new causes are AP H.
 # Post rev 1.0: SWF-062.C1 occurrence corrected from 6 to 8 (no documented requirement, no field-exposure evidence: RT-2 §2), as the
 #   other by-design gaps (SWF-083.C1) and the System FMEA's SFM-025.C1; AP stays H. Raised by the System FMEA session, 2026-10-16.
+# rev 1.1 at BL-005 (FTA finding F-37, WP-A-04 §13): SWF-085 driver monitoring in demo mode while engaged (BE-8.06) and SWF-086 forced
+#   deceleration not requested, not passed on or too weak after the terminal alert (BE-8.08); 4 causes, all AP H; actions SWF-ACT-072, 073.
+#   By code reading demo mode does not switch the alerts off (strict thresholds, no wheel-touch reset) but decouples the policy from the
+#   real vehicle state and unlocks the monitored seat; the forced stop is v_cruise 0 at -1.2 m/s² with no stop-time requirement.
+# - SWF-035 and SWF-082 gain HZ-013 end effects (F-37): the alert selection masks driver-monitoring escalations as it masks the takeover
+#   alert, and soundd and ui carry the driver-monitoring alerts. Ratings unchanged.
 #
 # SW FMEA element pandad (FSC EL-06, System FMEA SFM-SE-017). Ratings per RT-1, against BL-004 (liondriver-dev 682f184,
 # panda 8aa8671, opendbc 7993399). The LIONDRIVER_REFERENCE firmware build is not enabled by any build path at BL-004, so the
@@ -94,11 +100,11 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.0"
+  revision: "1.1"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
-  scope: "P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084)."
+  scope: "P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37."
   team:
     - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
     - {name: Claude (AI assistant), role: "Drafting assistance; ratings require human review"}
@@ -2653,12 +2659,18 @@ failure_modes:
     description: Contributes to HZ-004
     hazard: HZ-004
     severity: 10
+  - level: end
+    description: Contributes to HZ-013 (a driver-monitoring escalation masked, so an inattentive driver is not told; the forced stop still follows)
+    hazard: HZ-013
+    severity: 10
   severity: 10
   causes:
   - id: SWF-035.C1
     description: 'Selection is by priority, then start frame (alertmanager.py:63). SoftDisableAlert is Priority.MID (events.py:161-166), below speedTooHigh (WARNING,
       HIGH, promptRepeat, events.py:995-1000), aeb/stockAeb (PERMANENT, HIGHEST, no sound, events.py:471-485) and driverDistracted3/driverUnresponsive3 (HIGH);
-      the takeover text and warningSoft can be hidden for the first 2.5 s and only the last 0.5 s becomes ImmediateDisableAlert (events.py:224-228)'
+      the takeover text and warningSoft can be hidden for the first 2.5 s and only the last 0.5 s becomes ImmediateDisableAlert (events.py:224-228). The same rule masks
+      the driver-monitoring escalation: driverDistracted2 / driverUnresponsive2 (MID, events.py:532-563) under speedTooHigh, and the level 3 alerts (HIGH) under aeb
+      or fcw (HIGHEST) or a later-starting HIGH alert'
     element: SWF-SE-034
     prevention_controls: *pc_state
     detection_controls:
@@ -4880,6 +4892,10 @@ failure_modes:
     description: Take-over alerts not presented while the item runs
     hazard: HZ-012
     severity: 10
+  - level: end
+    description: Contributes to HZ-013 (driver-monitoring alerts not presented when soundd or ui is not running; the forced stop does not depend on them)
+    hazard: HZ-013
+    severity: 10
   severity: 10
   safety_mechanisms:
   - description: selfdrived commIssue for services it subscribes to that were never received (NO_ENTRY); processNotRunning for a crashed process
@@ -4974,6 +4990,113 @@ failure_modes:
     actions:
     - SWF-ACT-071
   notes: Also PFMEA (OTA update and rollback) and cybersecurity.
+- id: SWF-085
+  element: SWF-SE-062
+  function: SWF-FN-061
+  failure_mode: Driver monitoring evaluates the driver in demo mode while the item is engaged
+  guideword: wrong_mode
+  effects:
+  - level: local
+    description: 'run_step uses a synthetic vehicle state (speed 30 m/s, enabled, no driver input, brake-disengage probability 1.0, zero calibration) instead of carState,
+      selfdriveState and extrinsicsCalibration, and skips the input validity gate except for driverStateV2 (dmonitoringd.py:26-29; policy.py:431-440)'
+  - level: next_higher
+    description: 'Alerts still escalate on the camera input, with strict pose thresholds and no wheel-touch reset; but the wheel-side lock is off while engaged (policy.py:261),
+      so the monitored seat can switch, and the policy ignores the real speed, gear and engagement'
+  - level: end
+    description: Monitoring of the actual driver can be lost (the passenger's face monitored) while automated control continues
+    hazard: HZ-013
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-085.C1
+    description: 'The cabin camera dialog sets IsDriverViewEnabled and clears it only when the dialog closes (ui/onroad/cabin_camera_dialog.py:18-22; ui/mici/onroad/cabin_camera_dialog.py:44,
+      52). The dialog opens only offroad, but stays open across the onroad transition: the comma four UI pops it 2.5 s after going onroad (mici/layouts/main.py:112-124,
+      not while onboarding), the comma 3X UI on its interactive timeout or a touch (cabin_camera_dialog.py:16). dmonitoringd re-reads the parameter every 40 frames, 2 s
+      (dmonitoringd.py:36-38). While open, the comma four dialog also publishes its own selfdriveState with only alertSound set (mici cabin_camera_dialog.py:48, 102-116),
+      a second publisher beside selfdrived'
+    element: SWF-SE-062
+    prevention_controls:
+    - description: The dialog buttons are disabled onroad (layouts/settings/device.py:61; mici device_layout.py:185); the comma four UI closes dialogs after going onroad.
+        Upstream code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirement implemented (TSR-610 not met)
+      ref: openpilot/selfdrive/ui/mici/layouts/main.py
+    detection_controls:
+    - description: No test covers demo mode with the item started; test_widget_leaks only constructs the dialogs
+    occurrence: 5
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-072
+  - id: SWF-085.C2
+    description: 'No engagement interlock: nothing in selfdrived or controlsd reads IsDriverViewEnabled, so a parameter left set (written by tooling, or a UI crash before
+      hide_event; it is cleared only at manager start, params_keys.h:61) keeps demo mode for the drive (GAP-20, TSR-610 not met)'
+    element: SWF-SE-062
+    prevention_controls:
+    - description: Upstream design with no interlock; requirement TSR-610 not implemented, so O 8 (RT-2 §2), as the other by-design gaps
+      ref: openpilot/selfdrive/monitoring/dmonitoringd.py
+    detection_controls:
+    - description: No test; fault-injection scenario VS-FI-23 (params tampering) is specified in WP-V-05 but not run
+    occurrence: 8
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-072
+  notes: 'By code reading, demo mode does not switch the alerts off: it decouples the policy from the real vehicle state, makes the pose thresholds strict and ignores
+    wheel touches, and removes the lock on the monitored seat. WP-A-04 MCS-08.4 describes it as disabling monitoring; the SW FMEA rates the narrower effect. Realises BE-8.06.'
+- id: SWF-086
+  element: SWF-SE-060
+  function: SWF-FN-061
+  failure_mode: Forced deceleration not requested, not passed on, or not carried to a stop after the terminal alert
+  guideword: omission
+  effects:
+  - level: local
+    description: noResponseForceDecel false, stale, or not turned into controlsState.forceDecel; or the planner decelerates too weakly to stop in a useful time
+  - level: next_higher
+    description: plannerd keeps v_cruise at the set speed, or slows at -1.2 m/s² only; lateral control continues
+  - level: end
+    description: Automated control continues with an unresponsive driver, or the stop takes too long
+    hazard: HZ-013
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-086.C1
+    description: 'The request crosses three processes with no freshness check on the flag: controlsd reads driverMonitoringState.noResponseForceDecel without an alive or
+      valid check (controlsd.py:49-51, 235), and plannerd reads controlsState.forceDecel the same way (longitudinal_planner.py:84); its own valid flag is not read by
+      controlsd (SWF-065.C1). A stopped dmonitoringd leaves the last value in place until selfdrived soft-disables (SWF-064)'
+    element: SWF-SE-041
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: test_longitudinal sets controlsState.forceDecel directly in the plant (CI) and so tests the planner end only; nothing tests the policy-to-controlsd link
+        or a stale flag
+      test: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py
+    occurrence: 5
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-073
+  - id: SWF-086.C2
+    description: 'By design the forced stop is only v_cruise = 0 on the cruise candidate: the planner slows at A_CRUISE_MIN, -1.2 m/s², jerk-limited (longitudinal_planner.py:22,
+      50-52, 84-85), about 25 s and 390 m from 110 km/h, with no stop-time requirement (TSR-633 not met; reaction queued for the lead as DQ-340). The Toyota port does
+      not use CC.driverMonitoringEscalation (read only by the Volkswagen port, carcontroller.py:131)'
+    element: SWF-SE-071
+    prevention_controls:
+    - description: Upstream design; no LionDriver requirement for the stop time or deceleration (TSR-633 open), so O 8 (RT-2 §2)
+      ref: openpilot/selfdrive/controls/lib/longitudinal_planner.py
+    detection_controls:
+    - description: test_longitudinal force_decel maneuvers (CI) fail only if the plant does not decelerate at all (acceleration above -0.04 m/s² while moving, maneuver.py:84-86);
+        no check of the stop time
+      test: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py
+    occurrence: 8
+    detection: 8
+    ap: H
+    actions:
+    - SWF-ACT-059
+    - SWF-ACT-073
+  safety_mechanisms:
+  - description: selfdrived soft disable when dmonitoringd or controlsd stops (commIssue, processNotRunning; SWF-064)
+    ref: openpilot/selfdrive/selfdrived/events.py
+  notes: Realises BE-8.08 (SW FMEA rev 1.1). Late escalation before the flag (frame-counted timers) is SWF-061.C1; whether the forced stop is the SG-010 safe state is SWF-062.
 actions:
 - id: SWF-ACT-001
   kind: detection
@@ -5415,5 +5538,18 @@ actions:
   kind: design_change
   description: 'Update integrity: pin the update to signed release tags of the LionDriver repository and verify the signature before finalizing; define rollback (with the PFMEA
     OTA steps)'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-072
+  kind: design_change
+  description: 'Demo-mode interlock (TSR-610): selfdrived refuses engagement while IsDriverViewEnabled is set and raises a fault if it is set while engaged; the UI clears
+    the parameter on the onroad transition; dmonitoringd ignores demo mode while started. Add a test with the item started'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-073
+  kind: detection
+  description: 'End-to-end test of the terminal reaction: drive policy, controlsd and plannerd from a recorded or synthetic unresponsive-driver input and check that
+    forceDecel is set 5 s after the terminal alert and the vehicle reaches standstill within the time set for TSR-633; add a freshness check on driverMonitoringState
+    in controlsd'
   owner: Jherrod Thomas
   status: open
