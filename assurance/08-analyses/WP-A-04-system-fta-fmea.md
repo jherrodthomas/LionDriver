@@ -4,9 +4,9 @@
 |---|---|
 | Work product | WP-A-04 System-level safety analyses (FTA, FMEA) |
 | Standard reference | ISO 26262-9:2018 §8 (safety analyses); ISO 26262-4:2018 §6 (safety analysis of the system architectural design, to support the TSC); ISO 21448:2022 §7 (input on insufficiencies, informative here); ASPICE 4.0 SYS.3 |
-| Version | 1.0 (§2 SG-01 tree and §2.1 cut sets corrected from the SG-01 FTA↔FMEA mapping, findings F-11…F-13 of [fta-fmea-mapping.md](fta-fmea-mapping.md): G1.2.1.a adds the envelope's own not-allowed check defect BE-1.25 and the mode, param or firmware bypass BE-1.08/BE-1.09; G-SoC adds BE-1.24 (command corrupted on the SPI link); new G1.4 (stock LKA and item `0x2E4` together) with BE-1.26 and the SG-04 events BE-4.19, BE-4.21; MCS-01.6, -01.7 extended, MCS-01.10 and -01.11 added; 36 computed cut sets, 11 rows, all covered; 2026-10-16). 0.9 (§5 SG-04 tree and §5.1 cut sets corrected from the FTA↔FMEA pilot findings F-1, F-5…F-8: own longitudinal envelope gate G-LENV with BE-4.16; G4.2 needs the host step BE-4.17; G4.3.1 adds stale or replayed braking BE-4.18; new G4.8 (stock ACC and item 0x343 together) and G4.9 (braking during accelerator override); MCS-04.3, -04.4, -04.9 revised, MCS-04.11 and -04.12 added; SPF-14 extended to SG-04; 21 computed cut sets, 12 rows, all match; 2026-10-13). 0.8 (§11: basic events linked to the FMEAs, SG-04 pilot, [fta-fmea-mapping.md](fta-fmea-mapping.md); 2026-10-13). 0.7 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.6 (2026-10-12 reference-build status notes, drafted on a parallel branch as 0.4, re-applied to the 0.5 trees: G5.2.1 with UE-5.13 and MCS-05.8 for BE-5.12 (found by `fta_cutsets.py`: BE-5.12 under the G5.2 OR was a single-event cut set), BE-1.16, BE-1.22 (incl. TSR-408), BE-2.08, BE-2.14, MCS-01.8, MCS-02.1, Obs-01; BE-5.12, cut sets and SFMEA notes kept; 2026-10-13). 0.5 (trees restructured to resolve CS-01…CS-07: SG-01 G1.2.2/G1.3.2, SG-03 G3.3, SG-02 and SG-06 per cause; tables completed; SPF-14; OI-9 closed, OI-10; 2026-10-12). 0.4 (§9.1 computed minimal cut sets and findings CS-01…CS-07; BE-2.14 tagged latent at the baseline, as §4 states; fault tree diagrams in [fta/](fta/README.md); OI-9; 2026-10-12). 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
+| Version | 1.3 (§13 new fault tree for SG-08, the unresponsive-driver goal of WP-C-03 v0.4 (ASIL A): DM model miss [SOTIF], wrong thresholds, degraded camera never flagged invalid or reset by any input, demo mode, slow or undelivered escalation, forced stop not set or not executed; 11 cut sets, all single points, all covered; SPF-18; mapped (F-37, F-38; DQ-365 queued); 2026-10-16). 1.2 (FTA↔FMEA mapping of SG-02, SG-03, SG-05 and SG-06, findings F-20…F-36 of [fta-fmea-mapping.md](fta-fmea-mapping.md); 2026-10-16. §3 SG-03: G-LENV now defined here (the longitudinal check replaces the lateral G-ENV, F-1 carried over), BE-1.05 in new G3.1.1.b, step within the bound moved to new G3.6 with the host step BE-4.17, new G3.7 stock ACC and item `0x343` together; MCS-03.3, -03.8 revised, MCS-03.12 added; 22 cut sets. §4 SG-02: diagnostics reset the EPS (G2.1.2, BE-2.20 with BE-7.20), silent EPS drop UE-2.19, masked take-over alert BE-2.25, latent siren path BE-2.22, BE-1.20 in G2.3.1, selfdrived crash with the heartbeat kept (G2.5.1, BE-2.21), new G2.8 insufficient lateral control (BE-2.23 [SOTIF], BE-2.24); MCS-02.1, -02.3, -02.6 extended, MCS-02.9…02.12 added; 100 cut sets. §6 SG-05: envelope brake-edge defect BE-5.14, cruise-revocation defect BE-5.15, mode/firmware/debug-build bypass BE-1.08, BE-1.09, BE-1.18; BE-5.06 latent below 500 units of driver torque; BL-005 note on BE-5.10; MCS-05.5 restated, MCS-05.9…05.11 added; 12 cut sets. §7 SG-06: BE-1.20 in G6.1.1, silent PCM non-execution UE-6.08 (G6.3.1), G6.6.1 with BE-2.21, new G6.8 supply loss, new G6.9 lead missed or late (BE-6.09 [SOTIF], BE-6.10); MCS-06.1, -06.3, -06.5, -06.8 extended, MCS-06.9…06.11 added; 85 cut sets. SPF-15 unchanged; SPF-16 and SPF-17 added; every computed cut set of every goal covered). 1.1 (§8 SG-07 tree re-based on the harness box as built, [RR-2026-010](../04-hardware/reviews/RR-2026-010.md): the intercept element is two powered DG419LE analog switches, not a relay. G7.3 split by cause: switch stuck in intercept BE-7.09, SBU1 stuck high BE-7.15, pull-down open BE-7.16 (latent; DFM-010.C1…C3); G7.4 adds box supply lost BE-7.17 (DFM-020, new SPF-15), clamp diode short BE-7.18 (DFM-021) and car-side bus held dominant BE-7.19 (DFM-008); new G7.6 diagnostics to the stock ADAS ECU (BE-7.20, BE-7.21; SWF-015), found by the SG-07 FTA↔FMEA mapping; MCS-07.8, -07.11 and SPF-07 revised for DQ-064 and DQ-209, MCS-07.12…07.16 added; 17 computed cut sets, 16 rows, all covered; 2026-10-16). 1.0 (§2 SG-01 tree and §2.1 cut sets corrected from the SG-01 FTA↔FMEA mapping, findings F-11…F-13 of [fta-fmea-mapping.md](fta-fmea-mapping.md): G1.2.1.a adds the envelope's own not-allowed check defect BE-1.25 and the mode, param or firmware bypass BE-1.08/BE-1.09; G-SoC adds BE-1.24 (command corrupted on the SPI link); new G1.4 (stock LKA and item `0x2E4` together) with BE-1.26 and the SG-04 events BE-4.19, BE-4.21; MCS-01.6, -01.7 extended, MCS-01.10 and -01.11 added; 36 computed cut sets, 11 rows, all covered; 2026-10-16). 0.9 (§5 SG-04 tree and §5.1 cut sets corrected from the FTA↔FMEA pilot findings F-1, F-5…F-8: own longitudinal envelope gate G-LENV with BE-4.16; G4.2 needs the host step BE-4.17; G4.3.1 adds stale or replayed braking BE-4.18; new G4.8 (stock ACC and item 0x343 together) and G4.9 (braking during accelerator override); MCS-04.3, -04.4, -04.9 revised, MCS-04.11 and -04.12 added; SPF-14 extended to SG-04; 21 computed cut sets, 12 rows, all match; 2026-10-13). 0.8 (§11: basic events linked to the FMEAs, SG-04 pilot, [fta-fmea-mapping.md](fta-fmea-mapping.md); 2026-10-13). 0.7 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.6 (2026-10-12 reference-build status notes, drafted on a parallel branch as 0.4, re-applied to the 0.5 trees: G5.2.1 with UE-5.13 and MCS-05.8 for BE-5.12 (found by `fta_cutsets.py`: BE-5.12 under the G5.2 OR was a single-event cut set), BE-1.16, BE-1.22 (incl. TSR-408), BE-2.08, BE-2.14, MCS-01.8, MCS-02.1, Obs-01; BE-5.12, cut sets and SFMEA notes kept; 2026-10-13). 0.5 (trees restructured to resolve CS-01…CS-07: SG-01 G1.2.2/G1.3.2, SG-03 G3.3, SG-02 and SG-06 per cause; tables completed; SPF-14; OI-9 closed, OI-10; 2026-10-12). 0.4 (§9.1 computed minimal cut sets and findings CS-01…CS-07; BE-2.14 tagged latent at the baseline, as §4 states; fault tree diagrams in [fta/](fta/README.md); OI-9; 2026-10-12). 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
 | Status | Draft |
-| ASIL / scope | Fault trees for all seven safety goals: SG-01 (ASIL C ⚠), SG-02…SG-07 (ASIL B); system FMEA covering SG-01…SG-07. Qualitative only |
+| ASIL / scope | Fault trees for SG-01…SG-08: SG-01 (ASIL C ⚠), SG-02 and SG-06 (ASIL C), SG-03 (ASIL C ⚠, D if AOU-03/05 fail), SG-04, SG-05, SG-07 (ASIL B), as of WP-C-03 v0.4. SG-08 (ASIL A, unresponsive driver, WP-C-03 v0.4) in §13 since v1.3. System FMEA covering SG-01…SG-07. Qualitative only |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Safety manager |
@@ -138,12 +138,22 @@ TE-03 Unintended acceleration                                                   
 │   │   │          controllable value; RAISED_ACCEL_LIMIT not validated for Corolla
 │   │   │          (toyota/interface.py:117-118; GAP-04; CCF → DFI-08)             (SPF, systematic)
 │   │   ├── G3.1.1.a SoC excessive accel AND envelope fails to clamp                  [AND]
-│   │   │   ├── BE-3.02 Planner/controller fault, wrong lead, e2e accel [SOTIF]/QM
-│   │   │   └── G-ENV (as SG-01: BE-1.06…1.09)
-│   │   ├── BE-3.03 No jerk limit in envelope: step to +2.0 m/s² allowed (GAP-04,
-│   │   │          FSR-03.03 not implemented)
+│   │   │   ├── G3.1.1.b SoC commands excessive acceleration                            [OR]
+│   │   │   │   ├── BE-3.02 Planner/controller fault, wrong lead, e2e accel [SOTIF]/QM
+│   │   │   │   └── BE-1.05 (wrong CarParams / fingerprint; as SG-01)       [CCF → DFI-09]
+│   │   │   └── G-LENV Longitudinal envelope does not clamp                             [OR]
+│   │   │       ├── BE-4.16 Envelope software defect in the longitudinal checks
+│   │   │       │          (longitudinal_accel_checks, longitudinal.h:8-12)
+│   │   │       └── BE-1.07, BE-1.08, BE-1.09 (MCU fault, mode/param change, envelope
+│   │   │                  replaced; as SG-01)
 │   │   └── BE-3.04 Frame corrupted after TX hook (as BE-1.10)                          (SPF, random HW)
 │   └── UE-3.05 PCM executes request without its own bound (AOU-05R fails)
+├── G3.6 Acceleration step within the bound                                            [AND]
+│   ├── BE-4.17 Host sends a step: the CarController jerk limit is applied before
+│   │          pitch compensation and the PID (carcontroller.py:197-238)
+│   ├── BE-3.03 No jerk limit in envelope: step to +2.0 m/s² allowed (GAP-04,
+│   │          FSR-03.03 not implemented)
+│   └── UE-3.05
 ├── G3.2 In-bound but unintended positive acceleration (e.g. toward a stationary lead)  [AND]
 │   ├── BE-3.06 SoC requests positive accel in a closing situation [SOTIF]/QM
 │   ├── BE-3.07 Envelope passes any in-bound value while authority is granted (by design)
@@ -163,9 +173,14 @@ TE-03 Unintended acceleration                                                   
 │   │          then allows only inactive accel (safe direction) — or stuck "released"
 │   │          while the driver presses: envelope allows accel (longitudinal.h:3-5)
 │   └── UE-3.12 PCM adds item accel on top of driver pedal (to verify, AOU-05R)
-└── G3.5 Stale positive acceleration held beyond FTTI                                   [AND]
-    ├── BE-1.19 / BE-1.21 (stale SoC command)
-    └── BE-1.22 (slow envelope detection)
+├── G3.5 Stale positive acceleration held beyond FTTI                                   [AND]
+│   ├── BE-1.19 / BE-1.21 (stale SoC command)
+│   └── BE-1.22 (slow envelope detection)
+└── G3.7 Stock ACC and item 0x343 on the car bus together while engaged                 [AND]
+    ├── G3.7.1 Stock camera ACC_CONTROL reaches the car side                            [OR]
+    │   ├── BE-4.19 (relay stays released; as SG-04)
+    │   └── BE-4.20 (stock 0x343 forwarded while the item transmits; as SG-04)
+    └── BE-4.21 (relay malfunction detected after 1–2 s or not at all; as SG-04)
 ```
 
 ### 3.1 SG-03 minimal cut sets (qualitative)
@@ -174,15 +189,16 @@ TE-03 Unintended acceleration                                                   
 |---|---|---|---|
 | MCS-03.1 | 1 + ext. | {BE-3.01, UE-3.05} | Systematic single point; bound selection |
 | MCS-03.2 | 1 + ext. | {BE-3.04, UE-3.05} | Random single point after TX hook |
-| MCS-03.3 | 1 + ext. | {BE-3.03, UE-3.05} | Step acceleration within bound; jerk not limited in the envelope |
+| MCS-03.3 | 2 + ext. | {BE-4.17, BE-3.03, UE-3.05} | Step acceleration within the bound: the host sends a step (jerk limit applied before pitch compensation and the PID, SWF-046.C1) and the envelope has no jerk limit (SWF-004.C1). As MCS-04.3: the host step is a design property, so the envelope limit is the barrier that is missing. TSR-205 (GAP-04), TSR-605 |
 | MCS-03.4 | 2 + driver | {BE-3.06, BE-3.07, UE-3.08} | By design; managed by SOTIF and controllability of the bound |
 | MCS-03.5 | 1 (effective, DFI-13) | {BE-3.02, BE-1.08 or BE-1.09, UE-3.05} (one SoC fault → command + mode/param change) | DFI-13 |
 | MCS-03.6 | 2 (BE-3.09 is two conditions; BE-3.13 effective through DFI-10) | {BE-3.09, BE-3.13} (BE-3.09 = {`0x226` undetected, PCM no cancel}) | Item side has no independent brake signal |
 | MCS-03.7 | 2 (effective 1 + latent at the baseline) | {BE-1.19/1.21, BE-1.22} | Freshness timing; SPF-14 |
-| MCS-03.8 | 2 + ext. | {BE-3.02, BE-1.06 or BE-1.07 or BE-1.08 or BE-1.09, UE-3.05} | Intended envelope pattern, as MCS-01.6; the pairs with BE-1.08/BE-1.09 are MCS-03.5 (DFI-13) |
+| MCS-03.8 | 2 + ext. | {BE-3.02 or BE-1.05, BE-4.16 or BE-1.07 or BE-1.08 or BE-1.09, UE-3.05} | Intended envelope pattern, as MCS-04.9, with the longitudinal check defect BE-4.16 in place of the lateral BE-1.06 (F-1). BE-1.05 (wrong CarParams, SFM-032, PFM-013) may also set the envelope parameter (DFI-09), as MCS-01.6; the pairs of BE-3.02 with BE-1.08/BE-1.09 are MCS-03.5 (DFI-13) |
 | MCS-03.9 | 2 (effective 1 through DFI-10 for BE-1.13) | {BE-1.12 or BE-1.13 or BE-1.14, BE-3.13} | False authority, as MCS-01.4/01.7 and MCS-04.7 |
 | MCS-03.10 | 2 | {BE-3.10, BE-3.13} | Mode or param change bypasses the inactive-value check, as MCS-04.10. TSR-513 |
 | MCS-03.11 | 1 + ext. | {BE-3.11, UE-3.12} | Single gas signal, no plausibility (as MCS-05.6); AOU-05R |
+| MCS-03.12 | 2 | {BE-4.19 or BE-4.20, BE-4.21} | Stock ACC_CONTROL and the item's `0x343` combine on the car bus: the acceleration case of MCS-04.11 and MCS-01.11 (v1.2). The stock ACC may request acceleration (resume towards its set speed) while the item does not. TSR-506 (readback), GAP-12 |
 
 ## 4. FTA — SG-02: loss or degradation of lateral control without adequate take-over warning
 
@@ -195,16 +211,26 @@ The tree has one branch per cause of the loss (v0.5, §9.1 CS-05). Each branch n
 ```
 TE-02 Loss of lateral control without take-over request within ≤ 1 s                  [OR]
 ├── G2.1 EPS drops LKA assistance and no adequate take-over request                     [AND]
-│   ├── BE-2.01 EPS drops LKA assistance (LKA fault state in 0x262)                  (UE: EPS internal)
+│   ├── G2.1.0 EPS drops LKA assistance                                                 [OR]
+│   │   ├── BE-2.01 EPS drops LKA assistance (LKA fault state in 0x262)              (UE: EPS internal)
+│   │   └── G2.1.2 Item diagnostics reset the EPS or open a session on it               [AND]
+│   │       ├── BE-7.20 (diagnostic TX hook passes any ISO 15765 frame; as SG-07)
+│   │       └── BE-2.20 SoC sends a diagnostic request that resets the EPS or opens a
+│   │                  session on it while engaged (QM fault)          [FFI → FFI-CM-09]
 │   ├── G2.1.1 SoC warning missing or late                                              [OR]
 │   │   ├── BE-2.08 EPS fault seen only by the host, with 1.5 s hysteresis
 │   │   │          (car_events.py; not in the envelope, GAP-03). 2026-10-12, reference
 │   │   │          build: envelope refuses LKA torque on a fault code and reports
 │   │   │          epsFault (TSR-110); the SoC warning keeps the host hysteresis
+│   │   ├── UE-2.19 EPS stops accepting LKA requests without a fault state in 0x262:
+│   │   │          neither the host nor the envelope sees it; no check of EPS
+│   │   │          acceptance against the command (SFM-005.C1; TSR-626, WP-A-03 OI-8)
 │   │   └── G-HMI HMI does not deliver the warning                                      [OR]
 │   │       ├── BE-2.12 HMI hang: render loop or audio stream stalled while processes
 │   │       │          stay alive (processNotRunning covers crashes only)  [CCF → DFI-25]
-│   │       └── BE-2.13 Alert volume not audible (no defined minimum; FFI-CM-18)
+│   │       ├── BE-2.13 Alert volume not audible (no defined minimum; FFI-CM-18)
+│   │       └── BE-2.25 Take-over alert masked by an alert of higher priority but lower
+│   │                  urgency (SoftDisableAlert is Priority.MID; alertmanager.py:63)
 │   └── G-LATCUE SoC-independent cue missing or late (lateral loss)                     [AND]
 │       ├── G-SIREN Siren missing or late                                               [OR]
 │       │   ├── BE-2.14 Siren not triggered: at the baseline only on heartbeat loss (after
@@ -217,8 +243,10 @@ TE-02 Loss of lateral control without take-over request within ≤ 1 s          
 │       │   │          heartbeat loss revokes granted authority, ≈ 0.56 s after the last
 │       │   │          heartbeat, all builds (panda c33343b; WP-S-04 T-07a); other
 │       │   │          triggers not implemented
-│       │   └── BE-2.15 Siren silenced with the SoC audio (shared codec or amplifier,
-│       │              unknown topology)                                   [CCF → DFI-23]
+│       │   ├── BE-2.15 Siren silenced with the SoC audio (shared codec or amplifier,
+│       │   │          unknown topology)                                   [CCF → DFI-23]
+│       │   └── BE-2.22 Siren path fault (driver, amplifier or speaker) latent: no siren
+│       │              self-test (DFM-017.C2; DFM-ACT-011)                     (random HW)
 │       └── BE-2.16 Cluster cruise indicator unchanged (no ACC cancel on the fault,
 │                  TSR-303) or not independent (AOU-12)  (latent, baseline) [CCF → DFI-15]
 ├── G2.2 Envelope blocks or revokes authority and no adequate take-over request         [AND]
@@ -236,6 +264,7 @@ TE-02 Loss of lateral control without take-over request within ≤ 1 s          
 │   ├── G2.3.1 SoC warning missing or late                                              [OR]
 │   │   ├── BE-2.10 Input loss handled as soft disable: actuation continues ≈3 s
 │   │   │          (events.py:853-856, state.py:7-8; GAP-16)
+│   │   ├── BE-1.20 (diagnostics masked during big-model fallback; as SG-01)
 │   │   └── G-HMI
 │   └── G-LATCUE
 ├── G2.4 Non-finite command and no adequate take-over request                           [AND]
@@ -246,7 +275,11 @@ TE-02 Loss of lateral control without take-over request within ≤ 1 s          
 │   │   └── G-HMI
 │   └── G-LATCUE
 ├── G2.5 SoC crash or hang: control and the SoC warning are lost together               [AND]
-│   ├── BE-2.05 SoC crash or hang (whole SoC)                         [CCF → DFI-14]
+│   ├── G2.5.1 Control and the SoC warning lost by one SoC fault                        [OR]
+│   │   ├── BE-2.05 SoC crash or hang (whole SoC)                         [CCF → DFI-14]
+│   │   └── BE-2.21 selfdrived crash or hang: controlsd and card stop within ≈ 0.1 s,
+│   │              ui/soundd show "System Unresponsive" only after 5 s; pandad keeps
+│   │              the heartbeat (engaged = 0), so no heartbeat-loss siren (SFMEA-07)
 │   └── G-LATCUE
 ├── G2.6 Actuation frames stop and no adequate take-over request                        [AND]
 │   ├── BE-2.06 Actuation frames stop reaching the bus: SoC configuration command
@@ -258,24 +291,37 @@ TE-02 Loss of lateral control without take-over request within ≤ 1 s          
 │   │   │          canError) with timing not analysed (to confirm, OI-10)
 │   │   └── G-HMI
 │   └── G-LATCUE
-└── G2.7 Loss of the 12 V supply: the SoC warning and the siren are lost with control  [AND]
-    ├── BE-2.07 Loss of the 12 V supply to the device (FSC node N08)
-    └── UE-2.18 Driver does not notice the end of LKA torque or the cluster cruise
-               indicator (AOU-01R, AOU-12)
+├── G2.7 Loss of the 12 V supply: the SoC warning and the siren are lost with control  [AND]
+│   ├── BE-2.07 Loss of the 12 V supply to the device (FSC node N08)
+│   └── UE-2.18 Driver does not notice the end of LKA torque or the cluster cruise
+│              indicator (AOU-01R, AOU-12)
+└── G2.8 Lateral control insufficient for the road and no adequate take-over request   [AND]
+    ├── BE-2.23 Achieved curvature below the desired: envelope torque limit below what
+    │          the curve needs, or controller or torque model too weak (SFM-004.C1,
+    │          C3; ODD curve bound, WP-C-03 OI-7)                              [SOTIF]
+    ├── G2.8.1 SoC warning missing or late                                              [OR]
+    │   ├── BE-2.24 steerSaturated needs a saturated controller and > 1.2x undershoot;
+    │   │          its timing is not analysed against the 1 s budget (SFM-ACT-017)
+    │   └── G-HMI
+    └── G-LATCUE
 ```
 
 ### 4.1 SG-02 minimal cut sets (qualitative)
 
 | Cut set | Order | Events | Comment |
 |---|---|---|---|
-| MCS-02.1 | 2 (effective 1 + latent at the baseline) | {BE-2.01, BE-2.08, BE-2.14 or BE-2.15} | At the baseline BE-2.14 is permanently true for EPS faults, so an EPS fault plus the host hysteresis violates the ≤ 1 s budget. With TSR-110 and TSR-516(b) the envelope revokes and sounds the siren, so the cut set becomes {BE-2.01, BE-2.08, siren failure}: dual. 2026-10-12: TSR-110 implemented and the EPS-fault siren in the reference build (panda `b790fca`), but the siren comes ≤ 1.26 s worst case after onset (WP-S-04 OI-8; corrected 2026-10-13 from ≈ 1.14 s: the speaker sounds only on every other 8 Hz tick), so the 1 s budget is not yet met; not verified on hardware |
+| MCS-02.1 | 2 (effective 1 + latent at the baseline) | {BE-2.01, BE-2.08, BE-2.14 or BE-2.15 or BE-2.22} | At the baseline BE-2.14 is permanently true for EPS faults, so an EPS fault plus the host hysteresis violates the ≤ 1 s budget. With TSR-110 and TSR-516(b) the envelope revokes and sounds the siren, so the cut set becomes {BE-2.01, BE-2.08, siren failure}: dual. 2026-10-12: TSR-110 implemented and the EPS-fault siren in the reference build (panda `b790fca`), but the siren comes ≤ 1.26 s worst case after onset (WP-S-04 OI-8; corrected 2026-10-13 from ≈ 1.14 s: the speaker sounds only on every other 8 Hz tick), so the 1 s budget is not yet met; not verified on hardware. v1.2: a latent siren path fault (BE-2.22, DFM-017.C2) also removes the siren; a start-up self-test (DFM-ACT-011) makes it detectable |
 | MCS-02.2 | 2 | {BE-2.02, BE-2.09} | Envelope blocking with slow or self-reported detection. TSR-621; vehicle-response check has no TSR (WP-A-03 OI-8) |
-| MCS-02.3 | 2 (effective 1 + latent at the baseline) | {BE-2.03, BE-2.10, BE-2.14 or BE-2.15} | Stale input with soft disable. TSR-601, TSR-602. With TSR-303 the disengagement cancels ACC, so the cluster changes (BE-2.16 must also occur); a cancel without effect triggers the siren (TSR-516(c)) |
+| MCS-02.3 | 2 (effective 1 + latent at the baseline) | {BE-2.03, BE-2.10 or BE-1.20, BE-2.14 or BE-2.15 or BE-2.22} | Stale input with soft disable. TSR-601, TSR-602. With TSR-303 the disengagement cancels ACC, so the cluster changes (BE-2.16 must also occur); a cancel without effect triggers the siren (TSR-516(c)). v1.2: with diagnostics masked during the big-model fallback (BE-1.20, GAP-17) the stale input gets no SoC reaction at all. E-06 is excluded from the reference configuration, but nothing enforces it (SWF-032.C2) |
 | MCS-02.4 | 1 (effective) | {BE-2.04} | BE-2.11 is always true at the baseline: the loss is silent. TSR-604 (GAP-19) |
 | MCS-02.5 | 1 (effective) | {BE-2.05} | One cause removes control and the SoC warning; the siren comes after 5 s. TSR-407, TSR-516 timing. 2026-10-13: a crash or hang that stops the heartbeat now sounds the siren ≈ 0.56 s after the last heartbeat when authority was granted, in all builds (panda `c33343b`; WP-S-04 T-07a), within the 1 s budget; by design the cut set becomes {BE-2.05, BE-2.15 or another siren failure} (dual). Not verified on hardware, so the order is not reduced here. A hang that keeps `pandad` sending the heartbeat is not covered (SFMEA-07) |
-| MCS-02.6 | 2 | {BE-2.01 or BE-2.02 or BE-2.03 or BE-2.06, BE-2.12 or BE-2.13} | HMI hang or mute. TSR-622, TSR-623 |
+| MCS-02.6 | 2 | {BE-2.01 or BE-2.02 or BE-2.03 or BE-2.06 or BE-2.23, BE-2.12 or BE-2.13 or BE-2.25} | HMI hang or mute. TSR-622, TSR-623. v1.2: a take-over alert masked by a higher-priority, lower-urgency alert (BE-2.25, SWF-035) is a third way for the HMI to fail (SWF-ACT-036, alert ordering); insufficient lateral control (BE-2.23) is a further cause |
 | MCS-02.7 | 1 + ext. | {BE-2.07, UE-2.18} | The item cannot warn without power. The driver relies on the EPS ending LKA torque (AOU-01R) and the cluster cruise indicator (AOU-12) |
 | MCS-02.8 | 2 | {BE-2.06, BE-2.17} | Actuation frames stop and the SoC does not report it in time; the envelope sees no fault. FFI-CM-09, TSR-711 for the forwarding side; host-side check to confirm (OI-10) |
+| MCS-02.9 | 1 (effective) | {BE-2.21} | selfdrived crash or hang (SWF-036): controlsd and card stop within ≈ 0.1 s, and ui/soundd show "System Unresponsive" only after 5 s. pandad keeps sending the heartbeat with engaged = 0, so the heartbeat-loss siren (panda `c33343b`) does not sound; the panda revokes authority after ≈ 3 s on the engaged mismatch. The siren and the cluster cue are latent (BE-2.14, BE-2.16). TSR-622 (critical alert within 0.5 s of a missing selfdriveState); TSR-516 trigger on any revocation that is not a driver action |
+| MCS-02.10 | 1 + ext. (effective) | {BE-2.01, UE-2.19} | An EPS drop that the EPS does not signal in `0x262` (SFM-005.C1) cannot be seen by the host or the envelope; only the driver notices (BE-2.14 and BE-2.16 latent). Needs either an assumption of use that the EPS signals every LKA drop, or a check of EPS acceptance against the command (SFM-ACT-018, TSR-626; WP-A-03 OI-8). Lead decision DQ-360 |
+| MCS-02.11 | 2 (effective 1 + latent) | {BE-2.20, BE-7.20, BE-2.08 or BE-2.12 or BE-2.13 or BE-2.25 or UE-2.19} | Item diagnostics reset the EPS or open a session on it (SWF-015). BE-7.20 is the standing condition from SG-07. In the reference build ELM327 cannot be selected while TOYOTA is active, so the residual is the pre-engagement phase and the pandad restart window (SWF-027.C2 sets ELM327 briefly while driving). TSR-513 |
+| MCS-02.12 | 2 | {BE-2.23, BE-2.24} | Insufficient lateral control: the torque limit or the controller cannot hold the curve (SOTIF, SFM-004.C1/C3), and the steerSaturated warning is late or missing. Effective with BE-2.14 and BE-2.16 latent: no siren trigger exists for saturation. WP-C-03 OI-7 (ODD curve bound); SFM-ACT-017 (FTTI row for the warning path). Whether SG-02 covers by-design degradation: lead decision DQ-361 |
 
 ## 5. FTA — SG-04: deceleration beyond what following traffic and the driver can control
 
@@ -291,11 +337,7 @@ TE-04 Uncontrollable deceleration                                               
 │   │   │          CCF → DFI-08)                                    (SPF, systematic)
 │   │   ├── G4.1.1.a SoC excessive deceleration AND envelope fails to clamp           [AND]
 │   │   │   ├── BE-4.02 Planner or controller fault (QM), false lead [SOTIF]
-│   │   │   └── G-LENV Longitudinal envelope does not clamp                             [OR]
-│   │   │       ├── BE-4.16 Envelope software defect in the longitudinal checks
-│   │   │       │          (longitudinal_accel_checks, longitudinal.h:8-12)
-│   │   │       └── BE-1.07, BE-1.08, BE-1.09 (MCU fault, mode/param change, envelope
-│   │   │                  replaced; as SG-01)
+│   │   │   └── G-LENV (as SG-03: BE-4.16, BE-1.07…1.09)
 │   │   └── BE-4.03 Frame corrupted after the TX hook (as BE-1.10; TSR-517)  (SPF, random HW)
 │   └── UE-4.04 PCM executes the request without its own bound (AOU-05R fails)
 ├── G4.2 Deceleration step within the bound                                            [AND]
@@ -376,15 +418,25 @@ TE-05 Item does not release on driver action                                    
 │   │   ├── BE-5.01 0x226 lost or stuck "not pressed" (no checksum or counter, timeout
 │   │   │          ≈2 s; GAP-01, GAP-06) (= BE-1.16). 2026-10-12: loss detected
 │   │   │          ≤ 0.16 s; stuck still undetected
-│   │   └── BE-5.02 MCU fault keeps controls_allowed (BE-1.07, BE-1.14 class)
+│   │   ├── BE-5.02 MCU fault keeps controls_allowed (BE-1.07, BE-1.14 class)
+│   │   ├── BE-5.14 Envelope software defect in the brake edge logic (generic_rx_checks,
+│   │   │          safety.h:354-357), or the safety parameter selects the wrong brake
+│   │   │          message (ALT_BRAKE)
+│   │   └── BE-1.08, BE-1.09, BE-1.18 (mode or param change, envelope replaced, or a
+│   │              DEBUG/ALLOUTPUT build removes the release checks; as G1.2.1.a)
 │   └── G5.1.2 Cruise-inactive path does not revoke (safety.h:520-521)                  [OR]
 │       ├── BE-5.03 0x1D2 stuck "cruise active" with valid checksum (= BE-1.17)
 │       ├── BE-5.02
+│       ├── BE-5.15 Envelope software defect in the cruise-inactive revocation
+│       │          (pcm_cruise_check, safety.h:518-527)
+│       ├── BE-1.08, BE-1.09, BE-1.18 (as G5.1.1)
 │       └── UE-5.04 PCM does not drop cruise on brake (AOU-03R)
 │   (CCF → DFI-10: one stuck RX path, BE-1.13, causes BE-5.01 and BE-5.03 together)
 ├── G5.2 No release on cancel or main switch off                                        [OR]
 │   ├── BE-5.03
 │   ├── BE-5.02
+│   ├── BE-5.15
+│   ├── BE-1.08, BE-1.09, BE-1.18 (as G5.1.1)
 │   └── G5.2.1 Main switch off with CRUISE_ACTIVE still set, not seen                 [AND]
 │       ├── UE-5.13 PCM keeps CRUISE_ACTIVE set after the main switch is turned off
 │       │          (AOU-05R)
@@ -394,7 +446,9 @@ TE-05 Item does not release on driver action                                    
 ├── G5.3 LKA torque opposes the driver's steering                                       [AND]
 │   ├── BE-5.05 No driver-override check on the LKA path in the envelope (GAP-02;
 │   │          host-only MAX_USER_TORQUE 500, carcontroller.py:33, 83)  (latent, design)
-│   ├── BE-5.06 Host override check fails or SoC fault (QM)
+│   ├── BE-5.06 Host override check fails or SoC fault (QM); below 500 units of driver
+│   │          torque the host keeps torque by design: overriding counts as active
+│   │          (SWF-038.C1, SWF-044.C1)                                (latent, design)
 │   └── UE-5.07 EPS does not let the driver overpower LKA torque (AOU-02R)
 ├── G5.4 Accelerator does not override commanded deceleration                         [AND]
 │   ├── BE-5.08 GAS_RELEASED stuck "released" while the driver presses (= BE-3.11);
@@ -402,7 +456,9 @@ TE-05 Item does not release on driver action                                    
 │   └── UE-5.09 PCM does not give the driver's pedal priority (AOU-05R)
 └── G5.5 Mode confusion: driver believes the item is disengaged while it actuates      [AND]
     ├── BE-5.10 Item HMI shows the wrong state, or cruiseMismatch raised after 6 s
-    │          with no reaction (selfdrived.py:420-422, events.py:458-460; GAP-19)
+    │          with no reaction (selfdrived.py:420-422, events.py:458-460; GAP-19).
+    │          BL-005: cruiseMismatch alerts after 1 s (TSR-308); not re-rated in the
+    │          SW FMEA (SWF-039)
     └── BE-5.11 Cluster cruise indicator not an independent cue (AOU-12 fails;
                item TX 0x412 affects the cluster)                     [CCF → DFI-15]
 ```
@@ -415,10 +471,13 @@ TE-05 Item does not release on driver action                                    
 | MCS-05.2 | 1 | {BE-5.03} | A stuck cruise frame alone defeats release on cancel or main switch off (G5.2), and together with BE-5.01 also release on brake. E2E or plausibility on `0x1D2` (TSR-401…TSR-406); SPF-04 |
 | MCS-05.3 | 2 | {BE-5.01, UE-5.04} | Brake undetected and PCM keeps cruise; AOU-03R |
 | MCS-05.4 | 1 (effective) | {BE-5.02} | MCU execution fault. TSR-501, TSR-503 |
-| MCS-05.5 | 1 + ext. | {BE-5.05 (latent), BE-5.06, UE-5.07} | The envelope adds nothing for steering override today (SPF-12). TSR-304 |
+| MCS-05.5 | 0 + ext. (effective: both item events latent) | {BE-5.05 (latent), BE-5.06, UE-5.07} | The envelope adds nothing for steering override today (SPF-12). TSR-304. v1.2: below 500 units of driver torque the host also keeps torque by design (overriding counts as active, SWF-038.C1, SWF-044.C1), so release against a driver who steers lightly rests on the EPS alone (AOU-02R, verified by VS-VAL-03). Measures: DQ-053 / SFM-ACT-016 (host backs off) and TSR-304 (envelope) |
 | MCS-05.6 | 1 + ext. | {BE-5.08, UE-5.09} | Single gas signal, no plausibility |
 | MCS-05.7 | 2 | {BE-5.10, BE-5.11} | Mode confusion. TSR-308, TSR-309 and AOU-12 verification |
 | MCS-05.8 | 1 + ext. (latent at the baseline) | {UE-5.13, BE-5.12} | Main switch off while the PCM keeps CRUISE_ACTIVE set: at the baseline the envelope does not read MAIN_ON. Removed in the reference build by TSR-405(c) (opendbc `875e325`; not verified on hardware). A stuck `0x1D2` with main off is already MCS-05.2 |
+| MCS-05.9 | 1 | {BE-5.15} | An envelope defect in the cruise-inactive revocation alone defeats release on cancel or main switch off (G5.2), and through G5.1.2 every brake case with it. Systematic single point; SWF-009.C1 claims D=3 from the opendbc safety tests (F-27) |
+| MCS-05.10 | 1 (effective) | {BE-1.08 or BE-1.09 or BE-1.18} | A mode or param change, a replaced envelope or a DEBUG/ALLOUTPUT build removes every release check; the host's own release is QM and not credited, as for MCS-05.4. SPF-03, SPF-05; TSR-511…TSR-514, TSR-802 |
+| MCS-05.11 | 1 + ext. | {BE-5.14, UE-5.04} | The envelope ignores the brake (edge logic defect, or ALT_BRAKE selects the wrong message) and the PCM keeps cruise. AOU-03R; as MCS-05.3 |
 
 ## 7. FTA — SG-06: loss of longitudinal deceleration without take-over warning
 
@@ -433,6 +492,7 @@ TE-06 Loss of longitudinal deceleration without take-over request               
 │   │          GAP-16)
 │   ├── G6.1.1 SoC warning missing or late                                              [OR]
 │   │   ├── BE-2.10 (input loss handled as soft disable, as SG-02)
+│   │   ├── BE-1.20 (diagnostics masked during big-model fallback; as SG-01)
 │   │   └── G-HMI
 │   └── G-LONCUE SoC-independent cue missing or late (longitudinal loss)                [AND]
 │       ├── G-SIREN
@@ -447,7 +507,11 @@ TE-06 Loss of longitudinal deceleration without take-over request               
 ├── G6.3 PCM does not execute ACC and the warning is not delivered                     [AND]
 │   ├── BE-6.03 PCM does not execute ACC (ACC or cruise fault); accFaulted is an
 │   │          immediate disable (events.py:908)
-│   ├── G-HMI
+│   ├── G6.3.1 SoC warning missing or late                                              [OR]
+│   │   ├── UE-6.08 PCM does not signal the ACC non-execution: no accFaulted, and no
+│   │   │          check of the vehicle response against the request (SFM-011.C1;
+│   │   │          WP-A-03 OI-8)
+│   │   └── G-HMI
 │   └── G-LONCUE
 ├── G6.4 Non-finite accel and no adequate take-over request                            [AND]
 │   ├── BE-6.04 Non-finite accel clamped to 0 without a fault (GAP-19)
@@ -460,12 +524,26 @@ TE-06 Loss of longitudinal deceleration without take-over request               
 │   ├── BE-1.22 (no command-freshness supervision, as SG-01)
 │   └── G-LONCUE
 ├── G6.6 SoC crash or hang: control and the SoC warning are lost together               [AND]
-│   ├── BE-2.05 (as SG-02)                                            [CCF → DFI-14]
+│   ├── G6.6.1 Control and the SoC warning lost by one SoC fault                        [OR]
+│   │   ├── BE-2.05 (as SG-02)                                        [CCF → DFI-14]
+│   │   └── BE-2.21 (selfdrived crash or hang, heartbeat kept; as SG-02)
 │   └── G-LONCUE
-└── G6.7 Actuation frames stop and no adequate take-over request                       [AND]
-    ├── BE-2.06 (configuration command, MCU hang, bus-off; as SG-02)
-    ├── G6.7.1 SoC warning missing or late                                              [OR]
-    │   ├── BE-2.17 (as SG-02)
+├── G6.7 Actuation frames stop and no adequate take-over request                       [AND]
+│   ├── BE-2.06 (configuration command, MCU hang, bus-off; as SG-02)
+│   ├── G6.7.1 SoC warning missing or late                                              [OR]
+│   │   ├── BE-2.17 (as SG-02)
+│   │   └── G-HMI
+│   └── G-LONCUE
+├── G6.8 Loss of the 12 V supply: the SoC warning and the siren are lost with control  [AND]
+│   ├── BE-2.07 (as SG-02)
+│   └── UE-6.07 Driver does not notice the end of ACC deceleration or the cluster
+│              cruise change (AOU-12; PCM response to missing ACC_CONTROL, XM-02)
+└── G6.9 Lead missed or late and no adequate take-over request                         [AND]
+    ├── BE-6.09 Lead missed, detected late or tracked too slowly: the plan asks for
+    │          too little or late deceleration (SFM-010.C1, SFM-012.C2; SH-06)  [SOTIF]
+    ├── G6.9.1 Forward collision warning missing or late                                [OR]
+    │   ├── BE-6.10 FCW comes from the same model and lead as the plan: no independent
+    │   │          source for a missed lead                          (latent, by design)
     │   └── G-HMI
     └── G-LONCUE
 ```
@@ -474,20 +552,23 @@ TE-06 Loss of longitudinal deceleration without take-over request               
 
 | Cut set | Order | Events | Comment |
 |---|---|---|---|
-| MCS-06.1 | 2 (effective 1 + latent) | {BE-6.01, BE-2.10, BE-2.14 or BE-2.15} | Soft disable keeps the stale command ≈3 s. TSR-601, TSR-602 |
+| MCS-06.1 | 2 (effective 1 + latent) | {BE-6.01, BE-2.10 or BE-1.20, BE-2.14 or BE-2.15 or BE-2.22} | Soft disable keeps the stale command ≈3 s. TSR-601, TSR-602. With diagnostics masked during the big-model fallback (BE-1.20, GAP-17; SWF-032.C2, SWF-043.C2) the stale input gets no SoC reaction at all. A latent siren path fault (BE-2.22, DFM-017.C2) also removes the siren |
 | MCS-06.2 | 2 | {BE-6.02, BE-2.09} | As MCS-02.2 |
-| MCS-06.3 | 2 | {BE-6.03, BE-2.12 or BE-2.13} | `accFaulted` is an immediate disable (`events.py:908`); fails only with the HMI |
+| MCS-06.3 | 2 | {BE-6.03, BE-2.12 or BE-2.13 or BE-2.25} | `accFaulted` is an immediate disable (`events.py:908`); fails only with the HMI, including a take-over alert masked by a higher-priority alert (BE-2.25, SWF-035) |
 | MCS-06.4 | 1 (effective) | {BE-6.04} | Silent loss. TSR-604 (GAP-19) |
-| MCS-06.5 | 1 (effective) | {BE-2.05} | As MCS-02.5 |
+| MCS-06.5 | 1 (effective) | {BE-2.05 or BE-2.21} | As MCS-02.5. A selfdrived crash or hang (BE-2.21, SWF-036) stops control within ≈ 0.1 s while pandad keeps the heartbeat, so the heartbeat-loss siren (panda `c33343b`) does not sound; as MCS-02.9 |
 | MCS-06.6 | 2 (effective 1 + latent at the baseline) | {BE-6.05, BE-1.22} | As MCS-01.8 for the longitudinal path; SPF-14 |
 | MCS-06.7 | 2 | {BE-2.06, BE-2.17} | As MCS-02.8 |
-| MCS-06.8 | 2 | {BE-6.01 or BE-6.02 or BE-2.06, BE-2.12 or BE-2.13} | HMI hang or mute, as MCS-02.6. TSR-622, TSR-623 |
+| MCS-06.8 | 2 | {BE-6.01 or BE-6.02 or BE-2.06 or BE-6.09, BE-2.12 or BE-2.13 or BE-2.25} | HMI hang, mute or masked alert, as MCS-02.6. TSR-622, TSR-623. For BE-6.09 the cut set is not minimal in effect: MCS-06.10 already holds with the FCW latent |
+| MCS-06.9 | 1 + ext. | {BE-2.07, UE-6.07} | As MCS-02.7. The item cannot warn without power; ACC_CONTROL stops and the driver relies on the PCM's reaction to the missing frames (not characterised, XM-02) and the cluster cruise indicator (AOU-12) |
+| MCS-06.10 | 1 (effective) | {BE-6.09} | SOTIF: a missed or late lead is missed or late for the FCW too (BE-6.10 by design), and no SoC-independent cue exists for it (BE-2.14, BE-6.06 latent). Evaluated in WP-C-06 (SH-06); the stock PCS may mitigate but is not credited (WP-C-03 HE-06.1) |
+| MCS-06.11 | 1 + ext. (effective) | {BE-6.03, UE-6.08} | As MCS-02.10 for the PCM: a PCM that stops executing ACC without signalling it (SFM-011.C1) is seen by neither the host nor the envelope. Needs an assumption of use that the PCM signals every ACC non-execution, or a check of the vehicle response against the request (WP-A-03 OI-8) |
 
 ## 8. FTA — SG-07: suppression, delay or alteration of the stock PCS/AEB
 
 Diagram: [SG-07 sheet 1](fta/fta-SG-07-1.svg) (all sheets: [fta/](fta/README.md)).
 
-Top event **TE-07**: a stock PCS or AEB intervention of the Toyota system is prevented, delayed or altered because of the item. The preliminary FTTI for loss of forwarding is 0.2 s ([WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) §3.6), and content alteration is a per-frame property. The tree treats any loss of the camera-to-car path while the relay intercepts, for longer than the FTTI, as the top event.
+Top event **TE-07**: a stock PCS or AEB intervention of the Toyota system is prevented, delayed or altered because of the item. The preliminary FTTI for loss of forwarding is 0.2 s ([WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) §3.6), and content alteration is a per-frame property. The tree treats any loss of the camera-to-car path while the relay intercepts, for longer than the FTTI, as the top event. Since v1.1 the intercept element is drawn as built: two DG419LE analog switches (U1 CAN_H, U2 CAN_L) in comma's harness box, powered from the box supply, driven by SBU1 and pulled to pass-through by R2/R3, with clamp diodes D2/D3 and no position feedback ([RR-2026-010](../04-hardware/reviews/RR-2026-010.md)). "Relay" in event text means these switches.
 
 ```
 TE-07 Stock PCS/AEB suppressed, delayed or altered                                     [OR]
@@ -510,12 +591,30 @@ TE-07 Stock PCS/AEB suppressed, delayed or altered                              
 │   │          2026-10-12: removed in the reference build (TSR-705; 0x411
 │   │          kept in other builds)
 │   └── BE-7.08 SoC sends such a frame (QM fault or compromise)       [FFI → FFI-CM-05]
-├── G7.3 Relay held in intercept while forwarding is not running                        [AND]
-│   ├── BE-7.09 Relay welded or driven without forwarding (no readback; GAP-12) (SPF-07)
+├── G7.3 Intercept switches held in intercept while forwarding is not running            [AND]
+│   ├── G7.3.1 U1/U2 stay in intercept when the device stops driving SBU1             [OR]
+│   │   ├── BE-7.09 Analog switch U1 or U2 stuck in intercept, or its IN input damaged
+│   │   │          high; no switch-position feedback (GAP-12; RR-2026-010 F-06) (SPF-07)
+│   │   ├── BE-7.15 SBU1 drive stuck high (device-side driver or MCU pin, UK-06)
+│   │   └── BE-7.16 Pull-down R2 or R3 open: IN floats when SBU1 is undriven, so the
+│   │              switches may stay in intercept (RR-2026-010 F-03)  (latent, design)
 │   └── BE-7.10 Forwarding not running (device off, MCU in reset or bootloader)
-├── G7.4 Harness cuts the stock path                                                    [OR]
+├── G7.4 Stock path cut or a vehicle bus blocked in the harness or at the car side      [OR]
 │   ├── BE-7.11 Connector intermittent or partly seated (SFMEA-30; DFI-05, DFI-20)
-│   └── BE-7.12 Passive camera-to-car path broken in the harness (TSR-702)
+│   ├── BE-7.12 Stock camera path open inside the harness box (U1/U2 channel open,
+│   │          solder joint, contact; TSR-702 cannot be met with this box,
+│   │          RR-2026-010 F-01)
+│   ├── BE-7.17 Harness box loses its supply while the car is on: U1/U2 unpowered,
+│   │          pass-through not guaranteed, D2/D3 clamp CAN0/CAN2 to the dead rail
+│   │          (derived from the v3 drawing, bench test open; RR-2026-010 F-02) (SPF-15)
+│   ├── BE-7.18 Clamp diode D2 or D3 short or leaky: loads or grounds a vehicle bus in
+│   │          either switch state (RR-2026-010 F-07)
+│   └── BE-7.19 Car-side transceiver holds bus 0 dominant (TXD stuck low)
+├── G7.6 Item disturbs the stock ADAS ECU by diagnostics                               [AND]
+│   ├── BE-7.20 Diagnostic (ELM327 or pre-engagement) TX hook passes any ISO 15765
+│   │          frame, with no service, ignition or motion condition    (latent, design)
+│   └── BE-7.21 SoC sends a diagnostic request that resets or opens a session on the
+│              stock camera or radar while driving (QM fault)          [FFI → FFI-CM-09]
 └── G7.5 PCM gives the item's ACC request priority over PCS braking                     [AND]
     ├── BE-7.13 Item sends an ACC request during a PCS event
     └── UE-7.14 PCM arbitration does not prioritise PCS (AOU-04R fails)
@@ -532,10 +631,15 @@ TE-07 Stock PCS/AEB suppressed, delayed or altered                              
 | MCS-07.5 | 1 | {BE-7.05} | Systematic; verified by T-HIL of the forwarding set (TSR-704) |
 | MCS-07.6 | 1 | {BE-7.06} | Random single point at the baseline; forwarding supervision with relay release (TSR-711) makes it dual with the supervision |
 | MCS-07.7 | 1 (effective) | {BE-7.08} | BE-7.07 is a permanent latent condition at the baseline. TSR-705. 2026-10-12: not applicable for the reference build (BE-7.07 removed); remains for other builds through `0x411` |
-| MCS-07.8 | 2 | {BE-7.09, BE-7.10} | TSR-506 readback |
+| MCS-07.8 | 2 | {BE-7.09, BE-7.10} | Switch stuck in intercept when forwarding stops. TSR-506 readback; comma's box has no position feedback (RR-2026-010 F-06), so the readback needs a LionDriver hardware change (DQ-209, queued). The decided reaction once detected is a driver warning and refusal to engage (DQ-064); until readback exists nothing detects it |
 | MCS-07.9 | 1 | {BE-7.11} | Installation and harness design (TSR-701, TSR-703, TSR-805) |
 | MCS-07.10 | 1 + ext. | {BE-7.13, UE-7.14} | AOU-04R vehicle test |
-| MCS-07.11 | 1 | {BE-7.12} | Passive camera-to-car path broken in the harness; harness design and end-of-line check (TSR-702) |
+| MCS-07.11 | 1 | {BE-7.12} | Stock path open inside the harness box. v1.1: the path runs through the U1/U2 channels, so it is not passive and TSR-702 cannot be met with comma's box (RR-2026-010 F-01, DQ-209). End-of-line check of the stock path (PFM-014) |
+| MCS-07.12 | 1 | {BE-7.17} | Harness box loses its supply while the car runs: the switches are unpowered, pass-through is not guaranteed, and the clamps load both buses. Random single point (SPF-15), derived from the drawing; bench test DFM-ACT-014. HWSR-502a not met |
+| MCS-07.13 | 1 | {BE-7.18} | Clamp diode short loads or grounds a bus in either switch state. Random single point; FMEDA SG-009 FMD-033 |
+| MCS-07.14 | 1 | {BE-7.19} | Car-side transceiver holds bus 0 dominant; nothing reaches the car. Random single point, independent of the switch position; FMEDA SG-009 FMD-016 |
+| MCS-07.15 | 2 (BE-7.16 effective 1 + latent) | {BE-7.15 or BE-7.16, BE-7.10} | The release default fails: SBU1 driven high, or a pull-down open so IN floats, when forwarding stops. An open R2/R3 is latent until the device stops driving SBU1 (RR-2026-010 F-03); no monitor (HWSR-506e) |
+| MCS-07.16 | 2 (effective 1 + latent) | {BE-7.20, BE-7.21} | Diagnostic frames reset or take over the stock camera or radar (SWF-015). The permissive diagnostic TX hook is a standing condition; in the reference build ELM327 cannot be selected while TOYOTA is active, so it remains before engagement. TSR-513 |
 
 ## 9. Single points of failure and cut-set observations
 
@@ -547,14 +651,18 @@ TE-07 Stock PCS/AEB suppressed, delayed or altered                              
 | SPF-04 | **Single RX path for both monitor and controller.** The SoC receives vehicle CAN through the panda; a stuck RX path or stuck vehicle frame misleads both | SG-01, SG-03, SG-05 | Common cause | E2E/plausibility on gating signals in the envelope | TSR-401…TSR-406; GAP-01 |
 | SPF-05 | **Debug build has no envelope** (ALLOUTPUT, debug key) | All | Configuration | Release-only firmware, build-type check at start-up reported to SoC and enforced | TSR-514, TSR-802; GAP-25 |
 | SPF-06 | **MCU hang leaves the relay energised** (GAP-43) with no hardware watchdog. Torque stops (EPS timeout, AOU-01R), but the stock PCS path stays cut if forwarding stops | SG-07 (and SG-02 without warning) | Random HW | IWDG (TSR-501); fault reaction (TSR-502); relay to stock path on fault/reset (TSR-706). 2026-10-12: IWDG implemented (≈ 90 ms nominal, window, started at the first relay drive; panda `b790fca`), not verified on hardware; TSR-502 and TSR-706 open | GAP-07, GAP-43 |
-| SPF-07 | **Relay welded in intercept position** is not detected (no readback) | SG-07 | Random HW | Relay readback (TSR-506) | GAP-12 |
+| SPF-07 | **Intercept switch stuck in intercept** (v1.1: U1/U2 analog switches, not a relay) is not detected: no position feedback in comma's box (RR-2026-010 F-06). An open pull-down (BE-7.16) makes the release default fail the same way, latently | SG-07 | Random HW | Readback (TSR-506; needs a LionDriver hardware change, DQ-209); on detection warn and refuse to engage (DQ-064) | GAP-12 |
 | SPF-08 | **QM command `0xe7` (power save) in car mode** stops camera-side forwarding with the relay energised (by code reading, WP-A-02 FFI-CM-08) | SG-07 | FFI | Reject in car modes | TSR-513; WP-S-02 NF-05 |
 | SPF-09 | **SG-02/SG-06 warnings for SoC-detected faults rested on the QM SoC alone.** At v0.2 TSR-516 named only heartbeat loss and envelope-detected RX or platform faults. **Addressed at requirement level in WP-S-02 v0.3:** TSR-516(b) sounds the siren on every envelope revocation that is not a driver action, including an EPS fault (TSR-110); TSR-303 makes every fault-induced disengagement cancel ACC, so the cluster cruise state changes; TSR-516(c) sounds the siren when that cancel has no effect. Not implemented; the cluster cue rests on AOU-12. 2026-10-12, reference build: the EPS-fault part is implemented (LKA refused on the fault frame, TSR-110; siren after 1 s persistence, panda `b790fca`), warning ≤ 1.26 s worst case after onset, above the 1 s budget (WP-S-04 OI-8). 2026-10-13: the heartbeat-loss trigger is implemented in all builds: siren when heartbeat loss revokes granted authority, ≈ 0.56 s after the last heartbeat (panda `c33343b`; WP-S-04 T-07a); the other (b) triggers, (c) and TSR-303 not implemented | SG-02, SG-06 | Common cause / design | As stated; vehicle check of the cluster and PCM cues on a forced cancel (AOU-12) | TSR-516, TSR-303 (OI-7 closed) |
 | SPF-10 | **Non-finite actuator command is replaced by 0 silently** | SG-02, SG-06 | Systematic (design) | Treat as a fault with take-over request | TSR-604; GAP-19 |
 | SPF-11 | **SoC crash removes control and the SoC warning together**; the independent siren comes after 5 s. 2026-10-13: when the crash stops the heartbeat and authority was granted, the siren now sounds ≈ 0.56 s after the last heartbeat, in all builds (panda `c33343b`; WP-S-04 T-07a); not verified on hardware | SG-02, SG-06 | Common cause (DFI-14) | Heartbeat timeout and siren within the warning budget (implemented 2026-10-13, not verified) | TSR-407, TSR-516; GAP-06 |
-| SPF-12 | **No driver steering override check in the envelope** on the LKA path; release rests on the QM host check and the EPS (AOU-02R) | SG-05 | Design | Driver-override check and torque reduction in the envelope | TSR-304; GAP-02 |
+| SPF-12 | **No driver steering override check in the envelope** on the LKA path; release rests on the QM host check and the EPS (AOU-02R). v1.2: below 500 units of driver torque the host keeps torque by design too (BE-5.06 latent), so MCS-05.5 rests on the EPS alone | SG-05 | Design | Driver-override check and torque reduction in the envelope | TSR-304; GAP-02 |
 | SPF-13 | **Camera-to-car forwarding is single-channel with no supervision that releases the relay.** An MCU hang, a camera-side bus fault, a QM configuration command or queue overflow stops PCS forwarding while the relay intercepts | SG-07 | Random HW / FFI | IWDG (≤ 0.1 s) and relay release on fault; reject configuration commands in car modes; forwarding supervision with relay release within the SG-07 budget | TSR-501, TSR-502, TSR-513, TSR-706, TSR-707, TSR-711 (added in WP-S-02 v0.3) |
 | SPF-14 | **A stale SoC command is held.** Nothing in the envelope supervises command freshness at the baseline (BE-1.22: the heartbeat shows only pandad liveness), and the value checks cannot see a stale in-limit value (BE-1.23). A SoC that stops updating while its link stays alive (BE-1.19…BE-1.21, BE-6.05) holds torque or acceleration beyond the FTTI; a stale or replayed braking command (BE-4.18, v0.9) holds deceleration | SG-01, SG-03, SG-04, SG-06 | Systematic (design) | Command freshness supervised in the envelope within the FTTI (sequence counter or age) | TSR-407…TSR-409, TSR-411; GAP-06, GAP-10, GAP-16 |
+| SPF-15 | **Harness box supply is a single point for the stock path** (v1.1, RR-2026-010 F-02). U1/U2 are powered from the box VIN; when it is lost while the car runs, pass-through is not guaranteed and D2/D3 clamp both buses towards the dead rail. Derived from the drawing, not yet tested | SG-07 (and SG-02 without warning) | Random HW | Bench test DFM-ACT-014; a passive fail-safe path or a box designed to pass through unpowered (DQ-209) | HWSR-502a, HWSR-702 |
+| SPF-16 | **The envelope's cruise-inactive revocation is a systematic single point for release** (v1.2). A defect in `pcm_cruise_check` (BE-5.15, SWF-009) alone defeats release on cancel or main switch off, and every brake case through G5.1.2 | SG-05 | Systematic | Envelope revocation verified by the safety tests of the reference build; a second, independent revocation path (brake edge) already exists only for the brake | TSR-401…TSR-406; SWF-009 (F-27) |
+| SPF-17 | **A selfdrived crash or hang removes control and the SoC warning while the heartbeat continues** (v1.2). pandad keeps the heartbeat with engaged = 0, so the heartbeat-loss siren does not sound; the panda revokes after ≈ 3 s on the engaged mismatch, and the UI shows "System Unresponsive" after 5 s (BE-2.21, SWF-036) | SG-02, SG-06 | Systematic / common cause | Critical alert within 0.5 s of a missing selfdriveState; siren on any revocation that is not a driver action | TSR-622, TSR-516; SFMEA-07 |
+| SPF-18 | **Driver monitoring is one QM channel with no independent check** (v1.3). A model miss, wrong thresholds, a degraded camera that is never flagged invalid, the demo mode, wrong escalation timing or a missing forced stop each defeats SG-08 alone (MCS-08.1…08.7) | SG-08 | Systematic / random HW / SOTIF | ASIL A measures on the DM chain or an independent monitor (FSC); DM output validity (TSR-609), deliberate-input wheel-touch reset (TSR-612), demo mode removed (TSR-610); the no-response reaction defined (DQ-365) | TSR-608…TSR-612; GAP-20, GAP-21 |
 | Obs-01 | MCS-01.6 is the only truly dual-point cut set that the envelope pattern intends. It stays dual only if MCU faults (BE-1.07) are detected; today there is no IWDG, MPU or ECC reaction, so latent MCU faults can accumulate. 2026-10-12: IWDG implemented (TSR-501, hangs only); MPU and ECC reactions still open | SG-01 | Latent | Latent-fault diagnostics at start-up and run time | TSR-501, TSR-503, TSR-507 |
 | Obs-02 | Every SG-01, SG-03 and SG-04 path ends in an EPS or PCM AND-input (UE-1.11, UE-3.05, UE-4.04). These are unverified AoUs. The trees must not be read as "dual" until AOU-01R/AOU-05R are verified | SG-01, SG-03, SG-04 | AoU | Vehicle characterisation (WP-S-09) | GAP-05 |
 | Obs-03 | SG-07 had no numeric FTTI. [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) v0.2 §3.6 sets a preliminary 0.2 s for loss of forwarding (FDTI ≤ 0.1 s, FRTI ≤ 0.1 s, zero margin), which tightened the watchdog timeout (TSR-501) to ≤ 0.1 s and added forwarding supervision (TSR-711) | SG-07 | Timing | Measure the PCS timing and confirm the FTTI (WP-S-04 OI-4, OI-7) | RR-2026-004 F-04; RR-2026-005 F-02 |
@@ -602,6 +710,12 @@ v0.9 changes only SG-04: 21 computed cut sets (was 17), 6 of effective order ≤
 
 v1.0 changes only SG-01: 36 computed cut sets (was 27), still 6 of effective order ≤ 1, 11 table rows, every cut set covered. The new cut sets are order 2: MCS-01.10 (effective 1 through DFI-13, like MCS-01.3) and MCS-01.11; MCS-01.6 and MCS-01.7 gain BE-1.24 and BE-1.25 ([`fta/cut-sets.md`](fta/cut-sets.md)).
 
+v1.1 changes only SG-07: 17 computed cut sets (was 11), 15 of effective order ≤ 1, 16 table rows, every cut set covered. The new single points are random hardware in comma's harness box and at the car-side transceiver (MCS-07.12…07.14; SPF-15); MCS-07.15 and MCS-07.16 are order 2 with a latent condition ([`fta/cut-sets.md`](fta/cut-sets.md)).
+
+
+v1.2 maps the last four goals and changes their trees (fta-fmea-mapping.md §2c). Computed cut sets: SG-02 33 → 100, SG-03 16 → 22, SG-05 6 → 12, SG-06 32 → 85; every one is covered by a table row. Most of the growth is SG-02 and SG-06 pairing each cause with more ways the warning can fail (masked alert, latent siren path, big-model masking). New cut sets of effective order ≤ 1: MCS-02.9 (selfdrived crash with the heartbeat kept), MCS-02.10 and MCS-06.11 (silent EPS or PCM, + ext.; DQ-360), MCS-05.9 (cruise-revocation defect, SPF-16), MCS-05.10 (mode, firmware or debug build), MCS-06.9 (supply loss, + ext.), MCS-06.10 (lead missed or late, SOTIF; DQ-361). MCS-05.5 drops to effective 0 + ext. (SPF-12).
+
+v1.3 adds SG-08 (§13): 11 computed cut sets, all of effective order ≤ 1 (MCS-08.1…08.8), because the DM chain is a single QM channel (SPF-18).
 ## 10. System FMEA
 
 Severity of the vehicle effect is expressed by the affected SG. Detection = mechanism that detects the failure mode in the item today. Columns: **Mech.** = safety mechanism that reaches the safe state; **Gap** = what is missing.
@@ -658,7 +772,7 @@ Severity of the vehicle effect is expressed by the affected SG. Detection = mech
 | [WP-H-03](../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) | SFMEA-17, -22…-26, -39 as FMEDA inputs |
 | [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md) | SFMEA-12, -13, -16, -18, -19, -38, -40 as software safety analysis inputs |
 | [WP-V-05](../06-validation/WP-V-05-fault-injection.md) | Every BE marked SPF and every SFMEA row with a mechanism gets a fault-injection case |
-| [FMEAs](fmea/analyses/) | Basic events are linked to FMEA failure modes in [fta-fmea-map.yaml](fta-fmea-map.yaml) and checked both ways; SG-04 pilot findings F-1…F-10 in [fta-fmea-mapping.md](fta-fmea-mapping.md) §3 (2026-10-13), resolved in v0.9 (tree) and SW FMEA rev 0.7, DFMEA rev 0.3, System FMEA rev 0.6, PFMEA rev 0.3. SG-01 mapped 2026-10-16 (F-11…F-16): F-11…F-13 resolved in v1.0 (tree); F-14 (eight FMEA modes that reach SG-01 or SG-04 through shared events but do not cite the hazard) and F-15 (no FMEA mode for `0x1D2` stuck at cruise active) are open for the FMEA owners |
+| [FMEAs](fmea/analyses/) | Basic events are linked to FMEA failure modes in [fta-fmea-map.yaml](fta-fmea-map.yaml) and checked both ways; SG-04 pilot findings F-1…F-10 in [fta-fmea-mapping.md](fta-fmea-mapping.md) §3 (2026-10-13), resolved in v0.9 (tree) and SW FMEA rev 0.7, DFMEA rev 0.3, System FMEA rev 0.6, PFMEA rev 0.3. SG-01 mapped 2026-10-16 (F-11…F-16): F-11…F-13 resolved in v1.0 (tree); F-14 (eight FMEA modes that reach SG-01 or SG-04 through shared events but do not cite the hazard) and F-15 (no FMEA mode for `0x1D2` stuck at cruise active) are open for the FMEA owners. SG-07 mapped 2026-10-16 with the harness-box re-base (v1.1): F-17…F-19 open for the FMEA owners. SG-02, SG-03, SG-05 and SG-06 mapped 2026-10-16 (v1.2), so every goal is now in the map: tree findings resolved; F-25…F-28, F-31 open for the FMEA owners; F-22, F-29, F-32…F-34 queued for the lead (DQ-360…DQ-364). SG-08 tree and mapping 2026-10-16 (v1.3): F-37 open for the FMEA owners, F-38 queued for the lead (DQ-365) |
 
 ## 12. Open items
 
@@ -674,3 +788,56 @@ Severity of the vehicle effect is expressed by the affected SG. Detection = mech
 | OI-8 | Confirm by HIL test that a camera-side bus fault stops forwarding with the relay energised (SFMEA-39) | Test lead | G4 |
 | OI-9 | ~~Resolve CS-01…CS-07 (§9.1)~~ **Closed** in v0.5: trees restructured and tables completed; every computed cut set is in a table | Safety engineer | G2 |
 | OI-10 | Confirm the events added in v0.5: how and when the SoC reports lost actuation frames (BE-2.17), the driver cue on supply loss (UE-2.18), and whether the cluster cruise indicator counts as a take-over request (BE-2.16, BE-6.06; AOU-12) | Safety engineer, test lead | G3 |
+
+## 13. FTA — SG-08: automated control continues with a driver who is not supervising or not responding
+
+Diagram: [SG-08 sheet 1](fta/fta-SG-08-1.svg) (all sheets: [fta/](fta/README.md)).
+
+New in v1.3 for SG-08 (ASIL A), which [WP-C-03](../02-concept/WP-C-03-hara.md) v0.4 adds for hazard H-09 (HE-09.1 driver not supervising, HE-09.2 driver asleep or incapacitated; decision register DQ-205). Numbered §13 rather than §9 so that the references to §9…§12 elsewhere stay valid.
+
+Top event **TE-08**: the item keeps driving while the driver is not supervising or not responding, and neither escalates the take-over alerts in time nor brings the vehicle to its no-response reaction.
+
+The driver-monitoring (DM) chain runs on the QM SoC: `dmonitoringmodeld` (driver camera and model) → `dmonitoringd` (policy: vision 5/8/13 s, wheel-touch 5/15/25 s; TSR-608) → `selfdrived` alerts and `controlsd`. At alert level 3, `noResponseForceDecel` is set after a further 5 s (`selfdrive/monitoring/policy.py:39, 398`). `controlsd` turns it into `forceDecel` (`controlsd.py:235`), and the planner then targets 0 km/h (`longitudinal_planner.py:84`), so the vehicle decelerates to a stop in lane. **The item does not disengage**: the level-3 alerts are `ET.PERMANENT` only (`events.py:540-567`), and the lockout of TSR-611 acts only after a disengagement. Whether a stop in lane while still engaged is the SG-08 safe state is open (WP-C-03 OI-10, System FMEA SFM-ACT-005). This tree takes the forced stop as the no-response reaction, and the fact that the item stays engaged is recorded as finding F-38, not as an event.
+
+```
+TE-08 Automated control continues with an inattentive or unresponsive driver           [OR]
+├── G8.1 Inattentive or unresponsive driver not detected while engaged                  [OR]
+│   ├── BE-8.01 DM model false negative: eyes off the road or eyes closed classified
+│   │          attentive                                                      [SOTIF]
+│   ├── BE-8.02 Pose thresholds or the pose calibration wrong for the driver or the
+│   │          mount (policy.py:55-83)
+│   ├── G8.1.1 DM input degraded and not escalated                                      [AND]
+│   │   ├── BE-8.03 Driver camera or IR illumination degraded, covered or failed, or
+│   │   │          dmonitoringmodeld stopped                              (random HW)
+│   │   └── G8.1.2 Degraded input does not lead to an alert                             [OR]
+│   │       ├── BE-8.04 driverStateV2 always valid=True at the source
+│   │       │          (dmonitoringmodeld.py:99; GAP-21, TSR-609 not met) (latent, design)
+│   │       └── BE-8.05 Wheel-touch fallback resets awareness on any steering or gas
+│   │                  input (policy.py:334-335; GAP-21, TSR-612 not met) (latent, design)
+│   └── BE-8.06 DM demo mode (IsDriverViewEnabled) active while the item can engage
+│              (dmonitoringd.py:26-38; GAP-20, TSR-610 not met)
+├── G8.2 Take-over escalation too slow or not delivered                                 [OR]
+│   ├── BE-8.07 Policy timers, recovery factor or exemptions misconfigured (alerts
+│   │          later than 5/8/13 s; no monitoring below 10 km/h)
+│   └── G-HMI (HMI hang, mute or masked alert; as SG-02)                  [CCF → DFI-25]
+└── G8.3 No-response reaction does not stop the vehicle                                 [OR]
+    ├── BE-8.08 noResponseForceDecel not set, or not turned into a stop: defect in the
+    │          policy, controlsd or the planner (policy.py:398, controlsd.py:235,
+    │          longitudinal_planner.py:84)
+    └── UE-8.09 PCM does not execute the stop request (AOU-05R)
+```
+
+### 13.1 SG-08 minimal cut sets (qualitative)
+
+| Cut set | Order | Events | Comment |
+|---|---|---|---|
+| MCS-08.1 | 1 | {BE-8.01} | SOTIF: a confident false negative of the DM model is not caught; the wheel-touch fallback acts only when the model is uncertain. Evaluated in WP-C-06 (SH-12), DM performance targets DMP-01…DMP-04 (WP-C-08 §5.3) |
+| MCS-08.2 | 1 | {BE-8.02} | Thresholds or calibration wrong for the driver or the mount; policy unit tests use synthetic inputs only (SFM-022.C2). SFM-ACT-009 |
+| MCS-08.3 | 1 (effective, both inputs of G8.1.2 latent) | {BE-8.03, BE-8.04 or BE-8.05} | A degraded or failed driver camera is never flagged invalid (GAP-21), and when the policy falls back to wheel-touch, any steering or gas input resets awareness. TSR-609, TSR-612; fault injection VS-FI-25 |
+| MCS-08.4 | 1 | {BE-8.06} | Configuration single point: the demo mode disables monitoring. TSR-610 (GAP-20) |
+| MCS-08.5 | 1 | {BE-8.07} | Escalation timing is configuration; nothing checks it at run time. TSR-608; SFM-ACT-002 |
+| MCS-08.6 | 1 | {BE-2.12 or BE-2.13 or BE-2.25} | The escalation alerts are not delivered. The forced stop of G8.3 still follows, about 5 s after alert level 3, because it does not depend on the HMI. TSR-622, TSR-623 |
+| MCS-08.7 | 1 | {BE-8.08} | The forced stop is software on the QM SoC with no SW FMEA mode and no test of the full path (F-37) |
+| MCS-08.8 | 0 + ext. | {UE-8.09} | The PCM must execute the stop request; AOU-05R |
+
+Every SG-08 cut set is a single point: the DM chain is one QM channel with no independent check. That is what ASIL A on a QM element (WP-C-03 §6.1 observation 3) has to address in the FSC: either ASIL A measures on the DM chain itself or an independent monitor. The FTTI of SG-08 (time from loss of attention to the no-response reaction) is not set yet (WP-C-03 OI-10); at the baseline the forced stop starts about 18 s after the driver looks away (13 s to alert 3, then 5 s).

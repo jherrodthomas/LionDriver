@@ -902,6 +902,7 @@ package LionDriverVerification {
             verify LionDriverRequirements::fsr_02_09;
             verify LionDriverRequirements::fsr_02_10;
             verify LionDriverRequirements::fsr_02_11;
+            verify LionDriverRequirements::fsr_02_12;
             verify LionDriverRequirements::fsr_03_01;
             verify LionDriverRequirements::fsr_03_02;
             verify LionDriverRequirements::fsr_03_03;
@@ -931,6 +932,7 @@ package LionDriverVerification {
             verify LionDriverRequirements::fsr_07_03;
             verify LionDriverRequirements::fsr_07_04;
             verify LionDriverRequirements::fsr_07_05;
+            verify LionDriverRequirements::fsr_07_06;
             verify LionDriverRequirements::tsr_101;
             verify LionDriverRequirements::tsr_102;
             verify LionDriverRequirements::tsr_103;
@@ -1257,6 +1259,7 @@ package LionDriverVerification {
             verify LionDriverRequirements::fsr_02_09;
             verify LionDriverRequirements::fsr_02_10;
             verify LionDriverRequirements::fsr_02_11;
+            verify LionDriverRequirements::fsr_02_12;
             verify LionDriverRequirements::fsr_03_01;
             verify LionDriverRequirements::fsr_03_02;
             verify LionDriverRequirements::fsr_03_03;
@@ -1286,6 +1289,7 @@ package LionDriverVerification {
             verify LionDriverRequirements::fsr_07_03;
             verify LionDriverRequirements::fsr_07_04;
             verify LionDriverRequirements::fsr_07_05;
+            verify LionDriverRequirements::fsr_07_06;
             verify LionDriverRequirements::tsr_101;
             verify LionDriverRequirements::tsr_102;
             verify LionDriverRequirements::tsr_103;
@@ -1900,7 +1904,7 @@ package LionDriverVerification {
         doc /* Worst-case lateral disturbance inside the envelope */
         :>> spec = "WP-V-01 §5.2";
         :>> level = "VS-VAL";
-        :>> names = "HE-01.1, HE-01.2, HE-01.3, HE-01.4";
+        :>> names = "HE-01.1, HE-01.2, HE-01.3, HE-01.4, HE-01.5";
         objective {
             verify LionDriverRequirements::sg_01;
         }

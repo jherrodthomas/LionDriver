@@ -178,6 +178,34 @@ class TestFigures(unittest.TestCase):
         self.assertIn(a["id"], svg)
     self.assertIn("not achieved", svg)
 
+  def test_msr_overview_counts_and_ids(self):
+    # Figure 4-2: per FMEA with msr rows, the counts in the description match the YAML, every action named in an MSR
+    # row is drawn, and every cause at M <= 6 is listed by id
+    svg = self.svgs["fig-4-2-msr-overview.svg"]
+    desc = ET.fromstring(svg).find(f"{SVG_NS}desc").text
+    for key in ("system-fmea", "dfmea"):
+      doc = self.docs[key]
+      rated = [c for fm in doc["failure_modes"] for c in fm["causes"] if c.get("msr")]
+      exempt = [c for fm in doc["failure_modes"] for c in fm["causes"] if c.get("msr_exempt")]
+      self.assertIn(f"{doc['analysis']['id']} rev {doc['analysis']['revision']} at {doc['analysis']['baseline']}: "
+                    f"{len(rated)} causes rated, {len(exempt)} exempt", desc)
+      bands = [sum(1 for c in rated if lo <= c["msr"]["monitoring"] <= hi) for lo, hi, _, _ in fd.M_BANDS_MSR]
+      self.assertIn(f"monitoring M 1-4 {bands[0]}, M 5-6 {bands[1]}, M 7-8 {bands[2]}, M 9-10 {bands[3]}", desc)
+      for c in rated:
+        for a in c["msr"].get("actions") or []:
+          self.assertIn(a, svg)
+        if c["msr"]["monitoring"] <= 6:
+          self.assertIn(c["id"], svg)
+    self.assertIn("provisional", svg)
+
+  def test_msr_ap_table_matches_lint(self):
+    if fmea_lint is None:
+      self.skipTest("fmea_lint not importable")
+    # the grid background uses compute_ap(10, F, M); the linter's MSR table must be the same table
+    for f in range(1, 11):
+      for m in range(2, 11):
+        self.assertEqual(fd.compute_ap(10, f, m), fmea_lint.compute_ap_msr(10, 10, f, m))
+
   def test_never_owns_hand_drawn_figures(self):
     for name in self.out:
       self.assertTrue(name == "README.md" or fd.OWNED_RE.match(name), name)

@@ -90,9 +90,10 @@
       title: "Ask the assessor first"
       detail: "Bundle it with OI-3 into the I3 confirmation review and decide after. Cost: the HARA baseline waits for that review."
   sources: ["WP-A-05 §2 H-STPA-1, OI-1", "WP-C-04 §7 (driver monitoring not given an ASIL; OI-3)", "WP-C-08 MC-01…MC-03"]
-  status: answered
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §1, §3 (OS-17, OS-18), §5 (HE-01.5, HE-02.6, HE-03.6, HE-06.4, HE-07.4); WP-C-08 v0.3 §6.1", at: 2026-10-16}
   answer: {choice: other, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g, note: "Both SOTIF and HARA Foreseeable Misuse"}
-  note: "Supersedes the first answer (B, SOTIF only), which was applied in 38d3320; the record there needs updating to cover the HARA side too. SOTIF side applied in aae16af (WP-C-05 §4); HARA side left for the HARA session (WP-C-08 OI-4)."
+  note: "Supersedes the first answer (B, SOTIF only), applied in 38d3320. SOTIF side applied in aae16af (WP-C-05 §4; WP-C-08 MC-01…MC-03); HARA side is WP-C-03 v0.4, as foreseeable-misuse situations OS-17 and OS-18."
 
 - id: DQ-004
   ref: SNAP-1
@@ -190,8 +191,9 @@
       title: "Split the ASIL with the Toyota EPS"
       detail: "Credit the EPS torque limit as a second channel. Cost: needs EPS safety evidence Toyota doesn't publish; unlikely to pass an independent review."
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md D-13", "assurance/02-concept/WP-C-04-functional-safety-concept.md OI-1", "assurance/08-analyses/WP-A-01-asil-decomposition.md OI-1"]
-  status: answered
+  status: applied
   answer: {choice: C, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-C-04 §4 and OI-1; WP-S-02 §2.1; WP-A-01 §2 (strategic record in WP-M-01 D-13 / WP-M-07 left to the management session)", at: 2026-10-16}
 
 - id: DQ-008
   question: "Until the car is measured, should steering controllability be rated C2 (SG-01 ASIL C) or C3 (ASIL D)?"
@@ -215,7 +217,9 @@
       title: "Rate it after the authority reduction is tested"
       detail: "Fold into the steering-strategy decision; the C1 evidence replaces this rating. Cost: the HARA stays unconfirmed until then."
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md OI-1"]
-  status: answered
+  note: "HARA record applied: C2 kept, measurement a G1 entry condition, no controllability credit in the safety case. Left: the G1 entry condition in the gate plan (management session) and the panda path designed to the ASIL D measures (hardware and FMEDA sessions)."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 HE-01.2, SG-01 notes, OI-1", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-009
@@ -281,6 +285,7 @@
       title: "The comma four (cuatro board)"
       detail: "Longer support horizon. Cost: re-check the UI-dependent rows of the HMI analysis."
   sources: ["assurance/01-management/WP-M-11-upstream-and-supplier-management.md OI-5", "assurance/03-system/WP-S-05-hsi-specification.md OI-6", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md OI-7"]
+  note: "Hardware part applied in df2c0ed: both boards stay in scope (WP-H-01 OI-7, WP-H-02 OI-3, WP-H-04, DFMEA diagram data). Item definitions applied in #96 (WP-C-01 v0.10, LD-ITEM-001 rev 0.3). Left: WP-M-11 OI-5 and WP-S-05 OI-6 (other sessions). The answer leaves the reference device open; the purchase follow-up is queued as DQ-212."
   status: answered
   answer: {choice: other, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g, note: "not sure, we might have to review both 3x and four"}
   note: "Hardware part applied in df2c0ed: both boards stay in scope (WP-H-01 OI-7, WP-H-02 OI-3, WP-H-04, DFMEA diagram data). Left: WP-M-11 OI-5 and WP-S-05 OI-6 (other sessions). The answer leaves the reference device open; a follow-up question may be needed before purchases."
@@ -478,7 +483,9 @@
       title: "Include it once its AI requirements are met"
       detail: "Access to the larger model. Cost: a large validation and provenance effort for a model without source."
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-4", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-2"]
-  status: answered
+  note: "Left: WP-M-10 OI-2 (AI safety plan scope) for its owner."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-01 v0.10 §3.1 E-06, Figures 3-1 and 3-2, OI-4 closed", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-022
@@ -518,7 +525,9 @@
       title: "Highways only"
       detail: "Less validation; OS-03/OS-04 drop out of the HARA. Cost: the system must refuse or warn off-highway, which makes it less useful."
   sources: ["assurance/02-concept/WP-C-02-odd-and-intended-functionality.md OI-4", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md OI-2"]
-  status: answered
+  note: "SOTIF part applied in aae16af (WP-C-05/06/07/11, WP-V-02/03/04, WP-M-08). ODD and HARA parts applied in #96: WP-C-02 v0.4 §3 (ODD-H only, OI-4 closed) and WP-C-03 v0.4 §3 (OS-03, OS-04, OS-15, OS-16 foreseeable misuse at E2). Left: the off-highway refusal or warning the decision assumes (FM-08, WP-C-02 OI-9)."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-02 v0.4 §3 (ODD-H only), OI-4 closed; WP-C-03 v0.4 §3 (OS-03, OS-04, OS-15, OS-16 foreseeable misuse at E2)", at: 2026-10-16}
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
   note: "SOTIF part applied in aae16af (WP-C-05/06/07/11, WP-V-02/03/04, WP-M-08). Left: WP-C-02 ODD (ODD owner) and the HARA exposure rows OS-03/OS-04 (HARA session)."
 
@@ -675,7 +684,9 @@
       title: "Leave them unstated"
       detail: "No work. Cost: a near-certain reviewer finding."
   sources: ["assurance/trace/README.md “4 | WP-C-03 marks HE-01.3 and HE-01.4 ⚠ but states no altern”"]
-  status: answered
+  note: "The fallback ASILs are stated for every ⚠ event; the lead confirms them in the HARA review (WP-C-03 OI-9)."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §5.12; trace hazards.yaml asil_if_aou_fails", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-032
@@ -716,7 +727,8 @@
       title: "Yes: add hazardous events to the HARA"
       detail: "Thorough. Cost: new rows, possibly new goals, and FSC work."
   sources: ["assurance/02-concept/WP-C-05-sotif-hazard-identification.md OI-2"]
-  status: answered
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §7.1", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-034
@@ -773,7 +785,9 @@
       title: "Rate by frequency: E4, SG-03 becomes ASIL C"
       detail: "The more conservative reading. Cost: more envelope work on the longitudinal path."
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md RD-2"]
-  status: answered
+  note: "Applied to the situation OS-07, so it also raises HE-06.1 and HE-07.3 and SG-06 to ASIL C; that consequence is queued for the lead's confirmation (DQ-210). Left for the safety-concept session: the longitudinal checks of the FSC move up to C (RD-2)."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §2 (frequency reading for OS-07), §3, HE-03.3, SG-03 ASIL C", at: 2026-10-16}
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-037
@@ -1017,8 +1031,9 @@
       title: "Keep 1 s and justify it in TSR-516"
       detail: "No change. Cost: the argument needs a reviewer to accept it."
   sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md OI-8", "assurance/01-management/WP-M-02-safety-plan.md OI-9"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-S-02 TSR-516(b); WP-S-04 OI-8, §3.7, §5, Figure 5-2 (panda firmware change open)", at: 2026-10-16}
 
 - id: DQ-049
   question: "Should you buy parts for a small hardware-in-the-loop test bench?"
@@ -1058,8 +1073,9 @@
       title: "Start the second limiter now"
       detail: "Ready if needed. Cost: hardware work that may be wasted."
   sources: ["assurance/08-analyses/WP-A-01-asil-decomposition.md OI-2", "assurance/03-system/WP-S-03-technical-safety-concept-architecture.md OI-3"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-C-04 §4.3; WP-A-01 §2 and OI-2; WP-S-03 OI-3", at: 2026-10-16}
 
 - id: DQ-051
   question: "If the hardware analysis shows the single safety chip can't meet its ASIL, may the project add an external monitor?"
@@ -1127,8 +1143,9 @@
       title: "Leave it as a known gap"
       detail: "No change. Cost: the safety case carries it."
   sources: ["assurance/08-analyses/WP-A-05-stpa.md OI-2"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-C-04 FSR-05.03, §12.1; WP-S-02 TSR-304(b), TSR-628; WP-S-03 SM-05 (firmware, SWSR-304a and HMI open)", at: 2026-10-16}
 
 - id: DQ-054
   question: "If the panda's watchdog resets it while engaged, its own siren stays silent. Keep an \"engaged\" flag across the reset, or accept the main computer's alert?"
@@ -1147,8 +1164,9 @@
       title: "Accept the main computer's alert as the only warning"
       detail: "No firmware change. Cost: a risk acceptance, since that warning runs on non-safety hardware."
   sources: ["assurance/08-analyses/WP-A-05-stpa.md OI-3"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-C-04 FSR-02.05; WP-S-02 TSR-516(d) (bench test M-06, retained memory and firmware open)", at: 2026-10-16}
 
 - id: DQ-055
   question: "Should the safety limits be set independently of the controller's tuning values?"
@@ -1186,8 +1204,9 @@
       title: "Keep the driver's lamp check"
       detail: "No work. Cost: relies on the driver."
   sources: ["assurance/09-production-operation/WP-O-02-operation-service-decommissioning.md OI-2"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-C-04 FSR-02.12; WP-S-02 TSR-629 (WP-O-02 OPS-01 and implementation open)", at: 2026-10-16}
 
 - id: DQ-057
   question: "What confidence level and statistical method define 'meets the validation targets with stated confidence' for unknown-scenario evaluation (R-08)?"
@@ -1243,7 +1262,9 @@
       title: "Measure the real drift first"
       detail: "May show it's slower. Cost: needs the car on a closed course."
   sources: ["assurance/02-concept/WP-C-03-hara.md OI-7"]
-  status: answered
+  note: "Left for the timing session: the SG-02 FTTI (≤ 1 s to warning) against the 0.7 s drift at the curve bound (WP-S-04 OI-2)."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 HE-02.1, HE-07.1, SG-02 ASIL C, OI-7 closed; WP-C-02 v0.4 §3.2", at: 2026-10-16}
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-060
@@ -1263,8 +1284,9 @@
       title: "Drop the command and carry on"
       detail: "No availability loss. Cost: TSR-108 must be relaxed and justified."
   sources: ["assurance/03-system/WP-S-02-technical-safety-requirements.md OI-4"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-S-02 TSR-108 and OI-4; WP-C-04 FSR-01.12 (firmware change open)", at: 2026-10-16}
 
 - id: DQ-061
   question: "If the main computer dies within 5 s of a disengagement, should the safety chip sound the fast siren?"
@@ -1302,8 +1324,9 @@
       title: "Require a tighter bound"
       detail: "More protection. Cost: faster supervision in firmware."
   sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md OI-4"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: ebc9fea, record: "WP-S-04 §3.6 and OI-4; WP-C-04 §3, §8", at: 2026-10-16}
 
 - id: DQ-063
   question: "Should the steering hardware be designed to ASIL C now, or to the ASIL B that lowering authority should bring?"
@@ -1348,7 +1371,7 @@
   sources: ["assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md OI-9"]
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
-  applied: {ref: df2c0ed, record: "WP-H-03 v0.3 OI-9", at: 2026-10-16}
+  applied: {ref: "df2c0ed, ebc9fea", record: "WP-H-03 v0.3 OI-9; WP-C-04 FSR-07.06; WP-S-02 TSR-712; WP-S-03 SM-20 (needs harness readback, DQ-209)", at: 2026-10-16}
 
 - id: DQ-065
   question: "How should we get the device's schematic and parts list: ask comma, tear one down, or both?"
@@ -1857,6 +1880,7 @@
       title: "Cap the ODD at 90 km/h"
       detail: "No high-speed testing. Cost: the system must refuse or warn above 90 km/h, which limits it on most highways."
   sources: ["assurance/process/README.md “4. **The SOTIF release argument waits on evidence from other”"]
+  note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-260 queued for the ODD bound). ODD side applied in #96: WP-C-02 v0.4 speed row and OI-8, which waits on DQ-260. Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
   note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-260 queued for the ODD bound). Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
@@ -2002,7 +2026,9 @@
       title: "Split the Corolla into its own platform"
       detail: "Clean scope. Cost: diverges from upstream and needs ongoing maintenance."
   sources: ["assurance/08-analyses/fmea/item-definition.md IOI-003"]
-  status: answered
+  note: "Left: the user information (WP-O-03) must say that LionDriver changes reach these cars unassessed."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "item-definition.md (LD-ITEM-001) rev 0.3 §B.3, IOI-003 closed", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-100
@@ -3898,7 +3924,9 @@
       title: "Cover it inside the foreseeable-misuse entry you chose"
       detail: "No new goal. Cost: the HARA must argue why three analyses don't create a separate hazard."
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md RD-3", "assurance/02-concept/WP-C-04-functional-safety-concept.md OI-3", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-3", "assurance/00-assessment/docs-safety-reconciliation.md OI-2"]
-  status: answered
+  note: "HARA part applied. Left for the safety-concept session: the SG-08 safe state (the reaction at zero awareness, with System FMEA SFM-ACT-005) and the ASIL A attribute of the DM requirements FSR-02.06…02.09 (WP-C-04 §7). Left for the System FMEA session: cite H-09 / SG-08 in SFM-025."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §4, §5.9 (H-09, HE-09.1, HE-09.2), §6 SG-08; trace items hazards.yaml, goals.yaml; WP-C-04 §9 SG-08 column", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 - id: DQ-206
   question: "When a diagnostic catches a hazardous fault and the car reaches a safe state in time, may that count as accepting the remaining risk?"
@@ -3970,6 +3998,7 @@
   blocks: "HWSR-702, HWSR-506a, DFMEA harness element rework, FMEDA SG-009, DFA IC-05 (DFI-27, DFI-28)"
   gate: G2
   decider: lead
+  asked: 2026-10-16
   options:
     - key: A
       recommended: true
@@ -3982,6 +4011,111 @@
       title: "Require comma power on every install so the box is always powered"
       detail: "Removes the broken-ignition-wire cause only; switch, pull-down and clamp faults remain. Cost: one extra part per install."
   sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03", "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md OI-9"]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-16}
+  applied: {ref: 2c9c67f2e, record: "WP-H-01 HWSR-702, -506a, -506e, OI-6; WP-H-02 OI-4 (DC-03 not pursued); WP-H-06 §3.1; RR-2026-010 §5; DFMEA DFM-ACT-007 not_implemented, DFM-ACT-014", at: 2026-10-16}
+  note: "Hardware part applied. Left for other sessions: AOU-13 wording in WP-C-01 and WP-C-04 (concept), TSR-702 status (system), DFA IC-05 / DFI-27, DFI-28 (DFA). Follow-up question for the SG-07 metric shortfall: DQ-320."
+
+- id: DQ-340
+  question: "If the driver stays unresponsive at the last driver-monitoring alert, what should the car do?"
+  context: "Today, 5 s after the last alert the car starts slowing down but **stays engaged and keeps steering**, and the lockout only applies after a later disengagement (System FMEA SFM-025.C1). You chose to make the unresponsive driver its own hazard with an ASIL A goal (DQ-205); its safe state is this reaction. Requirement TSR-633 waits on the answer."
+  reversibility: revisit
+  blocks: "TSR-633 and the H-09 safe state; System FMEA SFM-ACT-005"
+  gate: G2
+  decider: lead
+  after: [DQ-205]
+  options:
+    - key: A
+      recommended: true
+      title: "Keep the lane and slow to a stop, then hold and lock out"
+      detail: "Steering stays on while the car decelerates in lane within the envelope limits, the alert keeps sounding, and the car holds at standstill before disengaging. Similar to the minimum-risk manoeuvre of automated lane keeping (UN R157). Cost: steering continues without a supervisor for the stop (about 10 s from 30 m/s at 3 m/s²), and standstill hold and hazard lights need work and vehicle tests."
+    - key: B
+      title: "Slow down for a fixed time, then disengage with the siren"
+      detail: "Simpler: no standstill hold. Cost: the car is handed back to a driver who is not responding, while still moving."
+    - key: C
+      title: "Disengage at once with the siren"
+      detail: "No extra development. Cost: an unsupervised car with no steering and no braking from the item; the worst outcome for an unresponsive driver."
+  sources: ["assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-ACT-005, SFM-025.C1", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7"]
+  status: queued
+
+- id: DQ-341
+  question: "Three goals are now ASIL C, so the panda safety envelope needs ASIL C even if steering drops to B. Harden it to C, or plan a second independent checker?"
+  context: "You chose reduced steering authority (DQ-007) so the whole envelope could be **ASIL B**. The HARA update you answered (DQ-036, DQ-059) makes three other goals **ASIL C**: lateral loss without warning (SG-02), unintended acceleration (SG-03) and longitudinal loss without warning (SG-06). Most envelope checks serve them too, so the envelope is **ASIL C whatever the steering tests show**. The decomposition analysis judges ASIL C on the single panda MCU, which shares its board and supply with the QM SoC, unlikely to reach the hardware metrics (WP-A-01 §3). Hardware is already designed to C (DQ-063)."
+  reversibility: revisit
+  blocks: "Envelope ASIL in WP-S-02/WP-S-03 and the SysML model; SWSR and HWSR ASILs; hardware metric targets; DEC-01 scope"
+  gate: G2
+  decider: lead
+  after: [DQ-007, DQ-063]
+  options:
+    - key: A
+      recommended: true
+      title: "Harden the envelope to ASIL C now; start the second checker only if the C metrics fail"
+      detail: "Keeps one MCU and the current design; the steering tests still go ahead to keep SG-01 from needing more. Cost: ASIL C software process for all envelope code (MC/DC, stricter reviews) and ASIL C hardware metrics (97 % / 80 %) become final targets, not interim ones; a late re-plan if the metrics fail."
+    - key: B
+      title: "Plan the second independent checker (DEC-01) now for steering, acceleration and the warning path"
+      detail: "Envelope ASIL B(C) plus an ASIL A(C) checker on its own supply and clock that can open the relay. Avoids betting on C metrics for one shared MCU. Cost: new hardware element, new requirements and a dependent-failure analysis; months of work before G2."
+    - key: C
+      title: "Decide after the first hardware metric results (WP-H-04)"
+      detail: "No commitment now; requirements are written to C meanwhile. Cost: the software process level stays uncertain, and work done to B-level rigour may need redoing."
+  sources: ["assurance/02-concept/WP-C-04-functional-safety-concept.md §3, §4", "assurance/02-concept/WP-C-03-hara.md §5 (v0.4)", "assurance/08-analyses/WP-A-01-asil-decomposition.md §3, DEC-01", "assurance/03-system/WP-S-02-technical-safety-requirements.md §2.1", "assurance/04-hardware/WP-H-04-hardware-metrics.md"]
+  status: queued
+
+- id: DQ-210
+  question: "Closing on slower traffic is now rated E4, as you chose. That also raises the goal against silently lost braking (SG-06) to ASIL C. Accept it?"
+  context: "You chose the frequency reading for closing on a slower car at highway speed, which makes the acceleration goal SG-03 ASIL C. An exposure class belongs to the situation, not to one hazard, so the same E4 applies when braking is silently lost in that situation (HE-06.1) or the display wrongly shows ACC active (HE-07.3). **Both become ASIL C, and SG-06 with them.** Your question only named SG-03."
+  reversibility: revisit
+  blocks: "SG-06 ASIL; FSC longitudinal checks (WP-C-04)"
+  gate: G1
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Accept: SG-06 is ASIL C"
+      detail: "One exposure per situation, as the method requires. Cost: the deceleration-loss checks move up from B to C with the acceleration checks."
+    - key: B
+      title: "Rate OS-07 by frequency for acceleration only"
+      detail: "SG-06 stays B. Cost: two exposures for one situation; an assessor is likely to reject it."
+  sources: ["assurance/02-concept/WP-C-03-hara.md §6.1 observation 7, OI-9", "assurance/01-management/decisions/register.yaml DQ-036"]
+  status: queued
+
+- id: DQ-211
+  question: "What harness letter and harness-box revision are printed on the reference car's harness, and which device units (comma 3X, comma four) will be used?"
+  context: "comma's documentation lists the Toyota A harness for the 2020-22 Corolla, and the hardware analyses use the published box v3 drawing. The Toyota A and B harnesses differ in connectors (RR-2026-010 F-13). **Only the physical unit can confirm it.** These are facts to read off the parts, not a choice."
+  reversibility: easy
+  blocks: "WP-C-01 OI-2; WP-H-06 harness unit; RR-2026-010 F-10, F-13"
+  gate: G1
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Read the labels and reply with letter, box revision and device serials"
+      detail: "Photos of the harness box label and the device's about screen are enough. Cost: a few minutes at the car."
+    - key: B
+      title: "Assume Toyota A and box v3 until a harness is bought"
+      detail: "The analyses stay on comma's drawing. Cost: if the unit differs, the hardware analyses are re-checked."
+  sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-2", "assurance/04-hardware/reviews/RR-2026-010.md F-13"]
+  status: queued
+
+- id: DQ-212
+  question: "With both the comma 3X and the comma four in scope, how many devices should be bought for the bench and the car?"
+  context: "You asked for both devices to be reviewed (DQ-011). The bench and fault-injection plan assumed two units of one device. **Covering both boards doubles the hardware.**"
+  reversibility: revisit
+  blocks: "HIL purchases (WP-M-11, WP-H-06)"
+  gate: G1
+  decider: lead
+  after: [DQ-011]
+  options:
+    - key: A
+      recommended: true
+      title: "Two of the device on the car, one of the other"
+      detail: "Full testing on the reference device; the second board gets bench checks of the rows that differ. Cost: three devices."
+    - key: B
+      title: "Two of each"
+      detail: "Both boards tested to the same depth. Cost: four devices and twice the bench time."
+    - key: C
+      title: "Settle on one device after all"
+      detail: "Drop the other board's rows. Cost: none extra; the answer to DQ-011 changes."
+  sources: ["assurance/01-management/decisions/register.yaml DQ-011", "assurance/02-concept/WP-C-01-item-definition.md §1"]
   status: queued
 - id: DQ-220
   question: "When the driver stays unresponsive at the final driver-monitoring alert, should the car keep steering while it slows to a stop, or hand steering back?"
@@ -4050,7 +4184,10 @@
       title: "Keep 120 km/h and test controllability to 120 km/h too"
       detail: "Evidence for the whole range. Cost: a second, higher-risk test review and a site that allows 120 km/h."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3 item 3", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-07", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md §3 speed"]
-  status: queued
+  asked: 2026-10-16
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-16}
+  note: "SOTIF part applied (WP-C-05 SH-13, WP-C-06 TC-20, WP-C-07 FM-07, WP-C-11 §3, WP-V-02 §3.3/§3.4/§4, WP-V-03 KS-25). Left: the speed row of WP-C-02 §3.1 and its figures (ODD session), FM-07 implementation (software), VS-VAL-10 at 110 km/h (validation session)."
 
 - id: DQ-261
   question: "Should LionDriver pay for a GPU machine to run the CARLA simulator for lighting and weather scenarios?"
@@ -4073,3 +4210,149 @@
       detail: "No simulator cost. Cost: those scenarios are seen only as often as the weather allows."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §5.4", "assurance/01-management/WP-M-08-sotif-plan.md OI-3"]
   status: queued
+
+- id: DQ-360
+  question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"
+  context: "The fault trees for loss of steering (SG-02) and loss of braking (SG-06) assume the EPS and PCM report when they stop acting on our requests. If either just ignores them without a fault code, **neither the main computer nor the safety chip notices**, and only the driver can catch it. No assumption of use states that the car always reports this."
+  reversibility: revisit
+  blocks: "MCS-02.10, MCS-06.11 (WP-A-04 v1.2); AOU set of WP-C-01; TSR-626; WP-A-03 OI-8"
+  gate: G2
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Add an assumption of use and test it on the car"
+      detail: "State that the EPS signals every LKA drop and the PCM every ACC non-execution, and check it with forced faults in the vehicle tests. If a test finds a silent drop, come back to option B. Cost: a few fault-injection runs."
+    - key: B
+      title: "Add a response check in the item"
+      detail: "Compare measured steering and acceleration with the command and warn on a mismatch (TSR-626, WP-A-03 OI-8). Cost: a new safety requirement, tuning against false alarms, and its own verification."
+    - key: C
+      title: "Do both"
+      detail: "Tested assumption now, response check before release. Cost: the sum of A and B."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-32", "assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-02.10, MCS-06.11"]
+  status: queued
+
+- id: DQ-361
+  question: "Do the two \"take-over warning\" goals (SG-02 steering, SG-06 braking) also cover the system being too weak by design, such as a curve too tight for the torque limit or a lead car seen too late, or only faults?"
+  context: "SG-02 says \"lose or degrade\" lateral control. The fault trees now include **insufficient performance** branches: a curve the steering limit cannot hold, and a lead missed or seen late. In both, the only warning comes from the same main computer that fell short. Keeping them in the goals makes the fault trees and SOTIF analysis carry them together; leaving them out moves them to SOTIF alone."
+  reversibility: revisit
+  blocks: "G2.8 and MCS-02.12, G6.9 and MCS-06.10 (WP-A-04 v1.2); WP-C-06 SH-06; WP-C-03 OI-7"
+  gate: G1
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Keep performance limits inside SG-02 and SG-06"
+      detail: "The trees keep the branches, as SG-04 already keeps false braking; SOTIF evaluates the rates. Cost: two more single points to argue in the safety case."
+    - key: B
+      title: "Faults only; performance limits go to SOTIF alone"
+      detail: "Remove G2.8 and G6.9 and justify the three FMEA modes as SOTIF. Cost: the goals' wording should be narrowed to match, and the SOTIF case carries these hazards without the fault-tree view."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-33", "assurance/08-analyses/WP-A-04-system-fta-fmea.md G2.8, G6.9"]
+  status: queued
+
+- id: DQ-362
+  question: "SG-02, SG-03 and SG-06 are now ASIL C, and the hardware analysis they share misses the ASIL C single-point target by 0.16 points. Do we reuse it and close the gap at the hardware gate, or build a separate analysis for each goal?"
+  context: "Their random hardware faults run through the parts already rated for SG-001 (safety chip, CAN transceivers, harness box). For SG-04 (ASIL B) you allowed reuse (DQ-002). Since HARA v0.4 these three goals are ASIL C, and the shared path gives **SPFM 96.84 % against the 97 % ASIL C target** (LFM 88.94 % meets 80 %). The figures use generic failure rates; supplier rates, or the transmit read-back of TSR-517, could close the gap."
+  reversibility: revisit
+  blocks: "FMEDA coverage of SG-02, SG-03, SG-05, SG-06 (WP-H-03, WP-H-04); BE-3.04, BE-5.02, BE-2.06, BE-2.07, BE-6.02"
+  gate: G2
+  decider: lead
+  after: [DQ-002]
+  options:
+    - key: A
+      recommended: true
+      title: "Reuse the SG-001 and SG-009 rows, and carry the ASIL C miss as an open hardware item for G2"
+      detail: "One analysis, a note per goal. The 0.16-point SPFM gap is closed at G2 with supplier rates or TSR-517, or comes back to you. Cost: the gap stays open until then."
+    - key: B
+      title: "A separate FMEDA classification per goal"
+      detail: "Each goal gets its own single-point and latent-fault metrics; some faults may count differently per goal. Cost: four more analyses on the same generic rates, and the ASIL C gap likely remains."
+    - key: C
+      title: "Accept 96.84 % now with a written rationale"
+      detail: "Close the item without a design change. Cost: an assessor may not accept a missed ASIL C target."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-22", "assurance/08-analyses/fmea/analyses/fmeda-sg001.yaml", "assurance/02-concept/WP-C-03-hara.md SG-02, SG-03, SG-06"]
+  status: queued
+
+- id: DQ-363
+  question: "When the driver presses the accelerator and LionDriver keeps braking, which goal owns that: braking (SG-04) or release on driver action (SG-05)?"
+  context: "The SG-05 tree has a branch for the accelerator not overriding LionDriver's braking, but the hazards rated for SG-05 cover brake, cancel and steering only. Since your answer to DQ-022, the accelerator pauses speed control rather than disengaging. The FMEAs already put this under braking (HZ-006), and **SG-04 misses the one stuck signal that defeats both of its checks**."
+  reversibility: easy
+  blocks: "G5.4, MCS-05.6, G4.9 (WP-A-04 v1.2); WP-C-03 HE-05.x"
+  gate: G1
+  decider: lead
+  after: [DQ-022]
+  options:
+    - key: A
+      recommended: true
+      title: "Move it to SG-04"
+      detail: "Add the stuck gas signal to G4.9 and drop G5.4 from SG-05. Cost: a tree edit; no HARA change."
+    - key: B
+      title: "Keep it in SG-05 and add a hazardous event for it"
+      detail: "A new HE-05 event for accelerator override in the HARA, rated and traced. Cost: a HARA revision and FMEA effect updates."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-29", "assurance/08-analyses/WP-A-04-system-fta-fmea.md G5.4"]
+  status: queued
+
+- id: DQ-364
+  question: "Should acceleration while LionDriver is not engaged, or just after the driver brakes, be a rated hazardous event of the acceleration goal (SG-03)?"
+  context: "The SG-03 fault tree covers acceleration while not engaged and after a brake press, but the HARA rates no SG-03 event for it: **unintended engagement is only rated as a steering hazard**. So the FMEA modes for spurious engagement are not checked against SG-03."
+  reversibility: revisit
+  blocks: "WP-C-03 H-03 events; hara-mapping.yaml HZ-010; G3.3 (WP-A-04)"
+  gate: G1
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Add a hazardous event for it under H-03"
+      detail: "Rate it, and route the engagement modes to SG-03. Cost: a HARA revision; three FMEA warnings clear."
+    - key: B
+      title: "Narrow the SG-03 top event to while engaged"
+      detail: "The not-engaged branch then rests on SG-01's authority checks only. Cost: the acceleration case of a false engagement has no rated hazard."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-34", "assurance/08-analyses/fmea/hara-mapping.yaml HZ-010"]
+  status: queued
+
+- id: DQ-365
+  question: "When the driver does not respond to the last driver-monitoring alert, what should LionDriver do: stop in the lane and stay stopped, or stop and then hand back control?"
+  context: "Today, about 5 s after the last alert (≈ 18 s after the driver looks away), LionDriver slows the car to a stop in its lane. But it **stays engaged**: it never disengages, and the lockout that blocks re-engagement only starts after a disengagement. The new goal SG-08 (unresponsive driver, ASIL A) needs this reaction written down as its safe state, and the FTTI follows from it. What the car does when held at standstill under ACC has not been checked on the reference Corolla."
+  reversibility: revisit
+  blocks: "SG-08 safe state and FTTI (WP-C-03 OI-10, WP-S-04); System FMEA SFM-ACT-005; TSR-611; WP-A-04 §13 (F-38)"
+  gate: G1
+  decider: lead
+  after: [DQ-205]
+  options:
+    - key: A
+      recommended: true
+      title: "Stop in lane and stay stopped, with re-engagement locked out"
+      detail: "Keep today's stop. Hold the car at standstill and lock out re-engagement until the driver responds, so the item cannot drive off again. Cost: a lockout change, and a vehicle test that the standstill hold lasts."
+    - key: B
+      title: "Stop in lane, then disengage and hand back control"
+      detail: "Once stopped, cancel ACC and lock out. Cost: what the car does after the cancel at standstill (hold or roll) must be tested, and an incapacitated driver may not hold the brake."
+    - key: C
+      title: "Disengage at the last alert without stopping"
+      detail: "Simplest. Cost: an incapacitated driver gets an uncontrolled vehicle at highway speed; not recommended."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-38", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §13", "assurance/02-concept/WP-C-03-hara.md OI-10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-025"]
+  status: queued
+
+- id: DQ-320
+  question: "With comma's harness box kept, the stock-emergency-braking hardware metric is about 78 % against a 90 % target. Accept that as a recorded deviation once the bench tests pass?"
+  context: "You chose to keep comma's box and bench-test it (DQ-209). Without switch readback, the FMEDA for the stock emergency-braking goal (SG-07) gives **SPFM 78.1 % against 90 %** on current rates, mostly from the two analog switches sticking or opening. Readback plus a stock-path check would bring it to about 95 %. The rates are still partly generic, so the number can move either way."
+  reversibility: revisit
+  blocks: "SG-07 hardware metric claim (WP-H-04 §7), G2 hardware argument"
+  gate: G2
+  decider: lead
+  asked: 2026-10-16
+  options:
+    - key: A
+      recommended: true
+      title: "Accept it as a recorded deviation, argued with the bench results"
+      detail: "Keeps your DQ-209 choice. The safety case states the shortfall and the tested failure behaviour. Cost: an assessor may not accept a metric miss on an ASIL B goal."
+    - key: B
+      title: "Add switch readback and a stock-path continuity check"
+      detail: "Meets the target on current rates (about 95 %). Cost: a small LionDriver adapter per car and firmware; partly reverses DQ-209."
+    - key: C
+      title: "Decide after the switch failure rate is confirmed"
+      detail: "The 78 % rests on a secondary-source rate. Cost: the G2 hardware argument waits for the datasheet and the SN 29500 values."
+  sources: ["assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §6.3", "assurance/04-hardware/WP-H-04-hardware-metrics.md §5.2", "assurance/04-hardware/reviews/RR-2026-010.md §5", "assurance/08-analyses/fmea/analyses/fmeda-sg009.yaml"]
+  after: [DQ-209]
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-16}
+  applied: {ref: 5782d0d39, record: "WP-H-04 §5.3 (deviation record); WP-H-03 §6.3; RR-2026-010 §5", at: 2026-10-16}
+  note: "Conditional on the harness box bench tests (VS-HW-02, VS-HW-22…24). Left for the safety-case session: state the deviation in the SG-07 argument."

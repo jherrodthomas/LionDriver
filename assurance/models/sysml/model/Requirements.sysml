@@ -56,7 +56,7 @@ package LionDriverRequirements {
         doc /* The item shall not lose or degrade lateral control while engaged without giving the driver an adequate take-over warning */
         :>> workProduct = "WP-C-03";
         :>> allocText = "";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> safeState = "Driver warned (visual + acoustic) and lateral control handed back with a smooth torque ramp-down";
         :>> ftti = "≤ 1 s from fault to warning (preliminary)";
     }
@@ -64,7 +64,7 @@ package LionDriverRequirements {
         doc /* The item shall not cause unintended vehicle acceleration */
         :>> workProduct = "WP-C-03";
         :>> allocText = "";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> safeState = "Acceleration request ≤ 0 (no positive acceleration); ACC cancelled to the PCM";
         :>> ftti = "≤ 1 s (preliminary)";
     }
@@ -88,7 +88,7 @@ package LionDriverRequirements {
         doc /* The item shall not lose longitudinal deceleration capability while engaged without giving the driver an adequate take-over warning */
         :>> workProduct = "WP-C-03";
         :>> allocText = "";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> safeState = "Driver warned; ACC cancelled so that the driver brakes";
         :>> ftti = "≤ 1 s (preliminary)";
     }
@@ -99,6 +99,14 @@ package LionDriverRequirements {
         :>> asil = "B";
         :>> safeState = "Camera PCS messages forwarded unchanged; if forwarding cannot be guaranteed (e.g. harness fault), relay released to restore the stock camera link";
         :>> ftti = "≤ 0.2 s for loss or delay of forwarding (preliminary, WP-S-04 §3.6); content: per frame";
+    }
+    requirement <'SG-08'> sg_08 : SafetyGoal {
+        doc /* The item shall not continue automated control while the driver is not supervising or not responding without escalating to a minimal-risk reaction */
+        :>> workProduct = "WP-C-03";
+        :>> allocText = "";
+        :>> asil = "A";
+        :>> safeState = "Escalating take-over alerts; on no response, the no-response reaction: controlled deceleration in lane to a stop and lockout. The reaction at zero awareness is still to be defined, with System FMEA SFM-ACT-005, in the FSC";
+        :>> ftti = "≤ 6 s from loss of attention to the first alert (preliminary)";
     }
     requirement <'FSR-01.01'> fsr_01_01 : FunctionalSafetyRequirement {
         doc /* The envelope shall limit the commanded LKA torque magnitude to a speed-dependent bound derived from driver controllability (lateral acceleration and lateral deviation reached within the FTTI). */
@@ -202,112 +210,119 @@ package LionDriverRequirements {
         doc /* The item shall detect EPS conditions that remove or reduce LKA assistance (EPS LKA fault states) while engaged. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-03 (detection), E-01 (diagnosis text)";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'FSR-02.02'> fsr_02_02 : FunctionalSafetyRequirement {
         doc /* The item shall detect loss of the inputs that the lateral command depends on (driving model output, calibration, localization, vehicle state) and shall not continue to actuate on inputs that are no longer valid. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01 (QM, see note), E-03 (FSR-01.07 as backstop)";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-SIL, FI";
     }
     requirement <'FSR-02.03'> fsr_02_03 : FunctionalSafetyRequirement {
         doc /* On a detected loss or degradation of lateral control, the item shall give a visual and acoustic take-over request within 1 s of fault detection and before or at the start of torque reduction. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01/HMI, E-03 siren for SoC loss";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-HIL, T-VEH";
     }
     requirement <'FSR-02.04'> fsr_02_04 : FunctionalSafetyRequirement {
         doc /* When torque is withdrawn because of a fault (not a driver action), the reduction shall follow a bounded ramp unless the fault makes the command itself untrusted, in which case torque shall go to zero at once. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01, E-03";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "A, T-SIL";
     }
     requirement <'FSR-02.05'> fsr_02_05 : FunctionalSafetyRequirement {
-        doc /* On loss of communication with the SoC while engaged, the safety MCU shall give an acoustic warning that does not depend on the SoC. */
+        doc /* On loss of communication with the SoC while engaged, and on a reset of the safety MCU (watchdog or fault reset) that interrupts granted actuation authority, the safety MCU shall give an acoustic warning that does not depend on the SoC. The reset case was added 2026-10-14 (DQ-054: the engaged state is kept across the reset; TSR-516(d)). */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-03 (panda buzzer)";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-HIL";
     }
     requirement <'FSR-02.06'> fsr_02_06 : FunctionalSafetyRequirement {
         doc /* Driver monitoring shall detect an inattentive or unresponsive driver while engaged and escalate warnings within the timing set in WP-C-08 (assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §5. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01/DM, E-02";
-        :>> asil = "QM (see §7)";
+        :>> asil = "A";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'FSR-02.07'> fsr_02_07 : FunctionalSafetyRequirement {
         doc /* Driver monitoring shall detect its own invalidity (no driver image, camera blocked, model output missing or not credible) and fall back to a policy that is no less strict than the active policy. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01/DM";
-        :>> asil = "QM (see §7)";
+        :>> asil = "A";
         :>> verifMethod = "T-SIL, FI";
     }
     requirement <'FSR-02.08'> fsr_02_08 : FunctionalSafetyRequirement {
         doc /* Driver monitoring shall not be disabled, put into demo mode or replaced by synthetic inputs while the item can engage. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01/DM";
-        :>> asil = "QM (see §7)";
+        :>> asil = "A";
         :>> verifMethod = "R, T-SIL";
     }
     requirement <'FSR-02.09'> fsr_02_09 : FunctionalSafetyRequirement {
-        doc /* If the driver does not respond to the highest DM warning, the item shall decelerate the vehicle, disengage and prevent re-engagement for a lockout period. */
+        doc /* If the driver does not respond to the highest DM warning, the item shall decelerate the vehicle in a controlled way, end automated control and prevent re-engagement for a lockout period. This is the SG-08 safe state (WP-C-03 v0.4: controlled deceleration in lane to a stop and lockout); whether steering stays on until standstill is queued for the lead (DQ-340). */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01/DM";
-        :>> asil = "QM (see §7)";
+        :>> asil = "A";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'FSR-02.10'> fsr_02_10 : FunctionalSafetyRequirement {
         doc /* The item shall detect that the envelope does not grant actuation authority while the SoC is engaged (envelope blocking, stuck authority, safety-mode mismatch) and give a take-over request within the SG-02/SG-06 warning budget (§8). */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01 (detection, alert), E-03 (reports authority state)";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-SIL, FI";
     }
     requirement <'FSR-02.11'> fsr_02_11 : FunctionalSafetyRequirement {
         doc /* The item shall detect failure of the HMI path that shows the engagement state and gives take-over requests (display, sound) and treat it as a fault leading to disengagement with the SoC-independent indications (FSR-02.05 buzzer, FSR-05.05 cluster cruise state). */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01/HMI, E-03";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-SIL, FI";
+    }
+    requirement <'FSR-02.12'> fsr_02_12 : FunctionalSafetyRequirement {
+        doc /* Before granting engagement, and while the item can engage, the item shall read the stored diagnostic trouble codes of the EPS and of the brake and stability control, and shall not allow engagement while a code that affects lateral or longitudinal control is set; the driver shall be told why. (Decided 2026-10-14, DQ-056: replaces reliance on the driver's dashboard lamp check, WP-O-02 OPS-01.) */
+        :>> workProduct = "WP-C-04";
+        :>> allocText = "E-01";
+        :>> asil = "QM (supports FSR-02.01, FSR-06.03)";
+        :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'FSR-03.01'> fsr_03_01 : FunctionalSafetyRequirement {
         doc /* The envelope shall limit the commanded acceleration to an upper bound derived from controllability for the reference vehicle. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-03";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "A, T-SIL, T-VEH";
     }
     requirement <'FSR-03.02'> fsr_03_02 : FunctionalSafetyRequirement {
         doc /* The envelope shall allow only the inactive acceleration value while longitudinal authority is not granted or while the driver presses the accelerator. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-03";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-SIL";
     }
     requirement <'FSR-03.03'> fsr_03_03 : FunctionalSafetyRequirement {
         doc /* The envelope shall limit the rate of increase of commanded acceleration (jerk). */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-03";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-SIL";
     }
     requirement <'FSR-03.04'> fsr_03_04 : FunctionalSafetyRequirement {
         doc /* FSR-01.05…01.12 apply to the longitudinal path (shared mechanisms; see trace §9). */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-03";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "as referenced";
     }
     requirement <'FSR-03.05'> fsr_03_05 : FunctionalSafetyRequirement {
         doc /* On a detected fault affecting longitudinal control, the item shall stop requesting positive acceleration and request ACC cancel from the PCM. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-03 (inactive value), E-01 (cancel)";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'FSR-03.06'> fsr_03_06 : FunctionalSafetyRequirement {
@@ -374,9 +389,9 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'FSR-05.03'> fsr_05_03 : FunctionalSafetyRequirement {
-        doc /* The envelope shall detect driver steering override (driver torque above a threshold) and reduce the LKA torque so it does not oppose the driver. */
+        doc /* The envelope shall detect driver steering override (driver torque above a threshold) and reduce the LKA torque toward zero at a bounded rate so it does not oppose the driver, for as long as the override lasts; the item shall show the driver that the override was noticed. (Decided 2026-10-14, DQ-053: back off on override and show a cue.) */
         :>> workProduct = "WP-C-04";
-        :>> allocText = "E-03";
+        :>> allocText = "E-03, E-01/HMI (cue)";
         :>> asil = "B";
         :>> verifMethod = "T-SIL, T-VEH";
     }
@@ -391,14 +406,14 @@ package LionDriverRequirements {
         doc /* The engagement state that the envelope enforces shall equal the PCM cruise state, so that the vehicle's own cruise indicator gives the driver an indication of engagement independent of the item's HMI. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-03, EXT-CLU";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "A, T-VEH";
     }
     requirement <'FSR-05.06'> fsr_05_06 : FunctionalSafetyRequirement {
         doc /* If PCM cruise is active while the item is not engaged (or the reverse) for longer than a bounded time, the item shall warn the driver and request cancel. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01, E-03";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-SIL";
     }
     requirement <'FSR-05.07'> fsr_05_07 : FunctionalSafetyRequirement {
@@ -412,28 +427,28 @@ package LionDriverRequirements {
         doc /* The item shall detect loss or staleness of the longitudinal plan, lead information (radar/vision) and model output while engaged. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01 (QM), E-03 backstop via FSR-01.07";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-SIL, FI";
     }
     requirement <'FSR-06.02'> fsr_06_02 : FunctionalSafetyRequirement {
         doc /* On detected loss, the item shall give a take-over request within 1 s and cancel ACC so that control returns to the driver; it shall not hold a stale acceleration command. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01, E-03";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'FSR-06.03'> fsr_06_03 : FunctionalSafetyRequirement {
         doc /* The item shall detect that the PCM does not execute ACC (ACC fault, cruise fault) and warn the driver. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-SIL";
     }
     requirement <'FSR-06.04'> fsr_06_04 : FunctionalSafetyRequirement {
         doc /* Non-finite or out-of-range actuator commands shall be treated as faults with a fault reaction, not silently replaced. */
         :>> workProduct = "WP-C-04";
         :>> allocText = "E-01, E-03";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> verifMethod = "T-SIL";
     }
     requirement <'FSR-06.05'> fsr_06_05 : FunctionalSafetyRequirement {
@@ -477,6 +492,20 @@ package LionDriverRequirements {
         :>> allocText = "E-01";
         :>> asil = "QM";
         :>> verifMethod = "T-SIL";
+    }
+    requirement <'FSR-07.06'> fsr_07_06 : FunctionalSafetyRequirement {
+        doc /* If the harness cannot return to the stock camera-to-vehicle connection (switch or relay stuck in intercept, detected by state readback), the item shall inhibit all actuation, warn the driver that stock PCS/AEB is unavailable, and refuse engagement until the harness is repaired. (Accepted 2026-10-14 as the degraded state, DQ-064; applies once readback exists.) */
+        :>> workProduct = "WP-C-04";
+        :>> allocText = "E-03 (detection), E-05 (readback), E-01/HMI (warning)";
+        :>> asil = "B";
+        :>> verifMethod = "T-HIL, FI";
+    }
+    requirement <'FSR-08.01'> fsr_08_01 : FunctionalSafetyRequirement {
+        doc /* While engaged, the item shall give the first driver alert within 6 s of the loss of attention, measured end to end from the driver's change of state to the alert (including camera frame time, DM model latency and policy timers), and shall reach the no-response reaction of FSR-02.09 within the time set in WP-S-04 (assurance/03-system/WP-S-04-timing-ftti-budget.md). */
+        :>> workProduct = "WP-C-04";
+        :>> allocText = "E-01/DM, E-01/HMI";
+        :>> asil = "A";
+        :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-101'> tsr_101 : TechnicalSafetyRequirement {
         doc /* The envelope shall reject every STEERING_LKA (0x2E4) frame whose STEER_TORQUE_CMD magnitude exceeds the torque bound τ_max(v) of TSR-102. Until TSR-102 is implemented, τ_max is the baseline 1500 raw. */
@@ -554,7 +583,7 @@ package LionDriverRequirements {
         doc /* Whenever the envelope rejects a 0x2E4 frame or revokes lateral authority, the EPS shall receive torque 0 with STEER_REQUEST 0 within ≤ 0.1 s. This shall be achieved by (a) the envelope transmitting, in place of each rejected frame, a 0x2E4 frame with zero torque, STEER_REQUEST 0, a counter continuing the host sequence and a valid checksum; or (b) only if vehicle characterisation shows that the EPS ramps LKA torque to zero within ≤ 0.1 s of a missing 0x2E4 frame, by withholding the frame. Option (a) is the recommended design. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW (a); EXT (b)";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "FR";
         :>> timing = "react ≤ 0.1 s";
         :>> verifMethod = "T-HIL, T-VEH, FI";
@@ -563,7 +592,7 @@ package LionDriverRequirements {
         doc /* The envelope shall receive EPS_STATUS (0x262) and, while lateral authority is granted, shall revoke lateral authority and report the cause when LKA_STATE indicates an EPS fault or LKA unavailability, or when EPS_STATUS is missing beyond its timeout (TSR-401). The LKA_STATE fault code set shall be confirmed for the reference EPS firmware. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW (detect); SoC (warn, TSR-606)";
-        :>> asil = "B (SG-02); B‡ where it gates SG-01";
+        :>> asil = "C";
         :>> mechanism = "PLB, TMO";
         :>> timing = "detect ≤ 0.3 s / react ≤ 0.1 s";
         :>> verifMethod = "T-SIL, T-VEH";
@@ -581,7 +610,7 @@ package LionDriverRequirements {
         doc /* The envelope shall reject every ACC_CONTROL (0x343) frame whose ACCEL_CMD exceeds a_max, where a_max is derived from the controllability of HE-03.1…03.3 on the reference vehicle. Baseline a_max = +2.0 m/s² (raw 2000). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> mechanism = "LIM";
         :>> timing = "per frame";
         :>> verifMethod = "A, T-SIL, T-VEH";
@@ -599,7 +628,7 @@ package LionDriverRequirements {
         doc /* While longitudinal authority is not granted (not engaged, or accelerator pressed per TSR-305), the envelope shall accept 0x343 only with the inactive acceleration value. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> mechanism = "GATE";
         :>> timing = "per frame";
         :>> verifMethod = "T-SIL";
@@ -608,7 +637,7 @@ package LionDriverRequirements {
         doc /* The envelope shall reject 0x343 frames whose ACCEL_CMD increases, relative to the last accepted value (the inactive value counting as 0 m/s² at engagement), faster than j_up, derived from controllability. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> mechanism = "LIM";
         :>> timing = "per frame";
         :>> verifMethod = "T-SIL, T-VEH";
@@ -626,7 +655,7 @@ package LionDriverRequirements {
         doc /* On revocation of longitudinal authority the transition to SS-G shall not cause a vehicle deceleration or acceleration step beyond the jerk bounds of TSR-204/205. If the PCM response to a step from the last commanded value to the inactive value is not shown to be bounded (AOU-05R), the envelope shall accept a commanded value that winds down to the inactive value at no more than j_down/j_up for at most 1 s after revocation. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, EXT";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> mechanism = "FR";
         :>> timing = "react ≤ 0.3 s to SS-G start";
         :>> verifMethod = "A, T-VEH";
@@ -635,7 +664,7 @@ package LionDriverRequirements {
         doc /* For 0x343, the envelope shall also check the actuation-relevant fields PERMIT_BRAKING, CANCEL_REQ, RELEASE_STANDSTILL and ACCEL_CMD_ALT against the values allowed in the current authority state, and while authority is not granted shall accept only frames that do not request acceleration, braking or standstill release. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> mechanism = "GATE";
         :>> timing = "per frame";
         :>> verifMethod = "T-SIL";
@@ -653,7 +682,7 @@ package LionDriverRequirements {
         doc /* The envelope shall grant actuation authority only on the rising edge of PCM_CRUISE (0x1D2) CRUISE_ACTIVE, and only once the SoC heartbeat reports the item engaged within 1 s of that edge (otherwise not until the next rising edge), and shall revoke it in the same frame in which CRUISE_ACTIVE is received false (cancel, main switch off, PCM-internal drop). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "GATE";
         :>> timing = "detect ≤ 1 period (30 ms at 33 Hz) / same frame";
         :>> verifMethod = "T-SIL, T-VEH";
@@ -671,18 +700,18 @@ package LionDriverRequirements {
         doc /* On every fault-induced disengagement, with or without openpilot longitudinal, the SoC shall set CANCEL_REQ so that the PCM drops ACC. The PCM cruise state then changes, which changes the cluster cruise indication (TSR-309, AOU-12) and makes the envelope revoke (TSR-301); a cancel without effect is caught by TSR-516(c). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup: TSR-203, TSR-301, TSR-516)";
+        :>> asil = "QM (C-sup: TSR-203, TSR-301, TSR-516)";
         :>> mechanism = "FR";
         :>> timing = "≤ 0.1 s after disengagement";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-304'> tsr_304 : TechnicalSafetyRequirement {
-        doc /* The envelope shall monitor STEER_TORQUE_DRIVER (0x260) on the LKA path and (a) reject 0x2E4 frames that increase torque opposing the driver beyond a driver allowance (driver-limited check in addition to the measured-torque check of TSR-104), and (b) when the driver torque exceeds T_ovr for longer than t_ovr, revoke lateral authority or force the commanded torque to zero at the Δ_down rate. T_ovr, t_ovr and the allowance shall be derived from the override behaviour accepted in WP-C-08 (assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md) and from the EPS override threshold (AOU-02R). */
+        doc /* The envelope shall monitor STEER_TORQUE_DRIVER (0x260) on the LKA path and (a) reject 0x2E4 frames that increase torque opposing the driver beyond a driver allowance (driver-limited check in addition to the measured-torque check of TSR-104), and (b) when the driver torque exceeds T_ovr for longer than t_ovr, back off: accept only frames whose torque does not oppose the driver more than the previous frame, so that the commanded torque falls toward zero at no less than the Δ_down rate and stays there while the override lasts, and report the override state to the SoC (TSR-628). Lateral authority is kept, so assistance resumes when the driver releases (decided 2026-10-14, DQ-053: back off on override and show a cue; WP-A-05 LS-01, LS-02). T_ovr, t_ovr and the allowance shall be derived from the override behaviour accepted in WP-C-08 (assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md) and from the EPS override threshold (AOU-02R). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
         :>> asil = "B (SG-05); B‡ (SG-01, HE-05.2)";
         :>> mechanism = "PLB, GATE";
-        :>> timing = "detect ≤ 2 frames of 0x260 (40 ms) / torque decreasing next frame, zero ≤ 0.2 s";
+        :>> timing = "detect ≤ 2 frames of 0x260 (40 ms) + t_ovr, with t_ovr ≤ 0.1 s / torque decreasing the next frame, so the back-off starts ≤ 0.2 s after the driver's input (SG-05, WP-S-04 §3.7; SFM-ACT-016)";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-305'> tsr_305 : TechnicalSafetyRequirement {
@@ -698,7 +727,7 @@ package LionDriverRequirements {
         doc /* The envelope shall not grant actuation authority while any RX check of TSR-401…405 is failed, including timeouts not yet evaluated by the periodic check. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "GATE";
         :>> timing = "per frame";
         :>> verifMethod = "T-SIL";
@@ -707,7 +736,7 @@ package LionDriverRequirements {
         doc /* (a) The envelope shall revoke authority when the SoC heartbeat reports "not engaged" while authority is granted, within ≤ 0.3 s. (b) The SoC shall immediately disable when the envelope's reported authority differs from its own engaged state for > 0.3 s. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW (a); SoC (b)";
-        :>> asil = "(a) B‡; (b) QM (B-sup)";
+        :>> asil = "(a) C; (b) QM (C-sup)";
         :>> mechanism = "PLB";
         :>> timing = "(a) ≤ 0.3 s / same tick; (b) ≤ 0.3 s";
         :>> verifMethod = "T-HIL, FI";
@@ -716,7 +745,7 @@ package LionDriverRequirements {
         doc /* If PCM cruise is active while the item is not engaged, or the item is engaged while PCM cruise is inactive, for longer than 1 s, the SoC shall warn the driver and request ACC cancel. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup: TSR-301)";
+        :>> asil = "QM (C-sup: TSR-301)";
         :>> mechanism = "PLB, WRN";
         :>> timing = "≤ 1 s";
         :>> verifMethod = "T-SIL";
@@ -725,7 +754,7 @@ package LionDriverRequirements {
         doc /* The engagement state enforced by the envelope shall be the PCM cruise state, so that the vehicle's cluster cruise indicator is an indication of engagement independent of the item's HMI. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, EXT";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> mechanism = "DES";
         :>> timing = "—";
         :>> verifMethod = "A, T-VEH";
@@ -743,7 +772,7 @@ package LionDriverRequirements {
         doc /* Actuation authority shall be false at MCU start-up and after every safety-mode change, and all limiter state (last torque, rate windows, samples) shall be reset. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "GATE";
         :>> timing = "—";
         :>> verifMethod = "T-SIL";
@@ -752,7 +781,7 @@ package LionDriverRequirements {
         doc /* For each RX message used for gating or limiting (0xAA, 0x260, 0x1D2, 0x226, and 0x262, 0x1D3, 0xB4 once added), the envelope shall detect absence longer than 5 nominal periods and shall evaluate this at ≥ 50 Hz, so that worst-case detection is ≤ 0.2 s. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "TMO";
         :>> timing = "detect ≤ 0.2 s / react ≤ 0.1 s";
         :>> verifMethod = "T-SIL, T-HIL, FI";
@@ -761,7 +790,7 @@ package LionDriverRequirements {
         doc /* The envelope shall verify the Toyota checksum and the message length of every RX message that carries a checksum (0x260, 0x1D2, and 0x262, 0x1D3, 0xB4 once added) and treat one failed frame as an RX fault. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "E2E";
         :>> timing = "per frame";
         :>> verifMethod = "T-SIL";
@@ -770,7 +799,7 @@ package LionDriverRequirements {
         doc /* The envelope shall detect when an RX message arrives at more than 1.5× its nominal rate over a 100 ms window (indicating duplicated or inserted frames) and treat it as an RX fault. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "PLB";
         :>> timing = "detect ≤ 0.1 s";
         :>> verifMethod = "T-SIL, FI";
@@ -779,7 +808,7 @@ package LionDriverRequirements {
         doc /* For RX signals that vary in normal operation, the envelope shall detect a frozen payload: an identical data field (excluding checksum) for longer than t_frz while the vehicle is moving (0x260 torque/angle bytes; 0xAA wheel speeds above a minimum speed; 0xB4 ENCODER). t_frz shall be set from fork-owned drive logs so that no false detection occurs in the reference log set. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "PLB";
         :>> timing = "detect ≤ t_frz (target ≤ 0.2 s)";
         :>> verifMethod = "LOG, T-SIL, FI";
@@ -788,7 +817,7 @@ package LionDriverRequirements {
         doc /* The envelope shall apply these cross-checks and treat a disagreement lasting longer than its tolerance time as an RX fault: (a) wheel-speed mean (0xAA) vs SPEED (0xB4) within 2 m/s; (b) BRAKE_PRESSED in 0x226 vs PCM_CRUISE_2 (0x1D3) BRAKE_PRESSED — on disagreement the envelope shall assume "brake pressed" (revoke); (c) CRUISE_ACTIVE = 1 shall imply PCM_CRUISE_2 MAIN_ON = 1; (d) while authority is granted, measured EPS torque shall follow the accepted command within an EPS-response tolerance (detects frozen or replaced 0x260). Signal availability and tolerances shall be confirmed on reference-vehicle logs. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "PLB (cross-channel)";
         :>> timing = "detect ≤ 0.2 s";
         :>> verifMethod = "LOG, T-SIL, FI";
@@ -797,7 +826,7 @@ package LionDriverRequirements {
         doc /* On any RX fault of TSR-401…405, the envelope shall revoke all actuation authority within ≤ 0.1 s (SS-L via TSR-109, SS-G), report a fault-specific reason code to the SoC, and not grant authority again until all checks pass and a new PCM rising edge occurs. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "FR";
         :>> timing = "react ≤ 0.1 s";
         :>> verifMethod = "T-SIL, FI";
@@ -806,7 +835,7 @@ package LionDriverRequirements {
         doc /* In a car safety mode, the envelope shall detect absence of the SoC heartbeat (0xf3) for > 0.3 s and then revoke all actuation authority at once (SS-L, SS-G). It shall enter SS-S (SILENT, relay released) after the longer timeout of TSR-510. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "TMO";
         :>> timing = "detect ≤ 0.3 s / react ≤ 0.1 s";
         :>> verifMethod = "T-HIL, FI";
@@ -815,7 +844,7 @@ package LionDriverRequirements {
         doc /* While lateral authority is granted, the envelope shall monitor the arrival of 0x2E4 frames from the SoC and, if no frame arrives for > 50 ms (5 frames), revoke authority and command SS-L (TSR-109). While longitudinal authority is granted, the same shall apply to 0x343 with a gap > 100 ms. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "TMO";
         :>> timing = "detect ≤ 50 / 100 ms / react ≤ 0.1 s";
         :>> verifMethod = "T-HIL, FI";
@@ -824,7 +853,7 @@ package LionDriverRequirements {
         doc /* The heartbeat shall carry evidence that the control loop is alive (e.g. the latest carControl frame counter), and the envelope shall treat a heartbeat whose evidence has not advanced for > 0.3 s as a missing heartbeat. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, SoC";
-        :>> asil = "B‡ (panda check); QM (SoC content)";
+        :>> asil = "C (panda check); QM (SoC content)";
         :>> mechanism = "TMO";
         :>> timing = "≤ 0.3 s";
         :>> verifMethod = "T-HIL, FI";
@@ -833,7 +862,7 @@ package LionDriverRequirements {
         doc /* Every SPI transfer (header and data) shall be protected by a CRC whose residual error probability over the maximum transfer length meets the target set in WP-S-05 §4 (assurance/03-system/WP-S-05-hsi-specification.md), and every CAN-TX transfer shall carry a sequence counter; the envelope shall discard transfers with a failed CRC or a repeated or out-of-order counter. The per-packet XOR may remain as an additional check. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, SoC";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "E2E";
         :>> timing = "per transfer";
         :>> verifMethod = "A, T-HIL, FI";
@@ -842,7 +871,7 @@ package LionDriverRequirements {
         doc /* The envelope shall reject actuation frames whose transfer counter shows they are older than 2 control periods relative to the newest accepted transfer (freshness). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "E2E";
         :>> timing = "per transfer";
         :>> verifMethod = "T-HIL, FI";
@@ -851,7 +880,7 @@ package LionDriverRequirements {
         doc /* The envelope shall validate every length field received over SPI against its buffer size before starting a DMA transfer or copy, and every control-request parameter used as an array index against the array bounds; a violation shall be NACKed and counted as an SPI error. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "ISO, PLB";
         :>> timing = "per transfer";
         :>> verifMethod = "R, T-HIL, FI";
@@ -860,7 +889,7 @@ package LionDriverRequirements {
         doc /* If SPI errors (header/data checksum failures, NACKs) exceed a rate threshold while authority is granted, the envelope shall revoke authority and report. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "FR";
         :>> timing = "≤ 0.3 s";
         :>> verifMethod = "T-HIL, FI";
@@ -869,7 +898,7 @@ package LionDriverRequirements {
         doc /* The safety MCU shall be supervised by an independent hardware watchdog (IWDG1, LSI-clocked) that is started no later than the first time the harness relay is energised after a reset, by any path (safety-mode change or configuration/debug command), and then stays active until the next reset; that cannot be stopped by the SoC; that is serviced only after the periodic safety processing has completed; and that resets the MCU within ≤ 0.1 s of a stall (SG-07 FDTI, WP-S-04 (assurance/03-system/WP-S-04-timing-ftti-budget.md) §3.6; ≤ 0.2 s would meet SG-01 only). Rationale for the start condition (amended in v0.4): until the relay is first energised after a reset, the stock camera-to-vehicle path is intact and no actuation frame reaches the vehicle, so a stall cannot violate SG-01 or SG-07; an idle device keeps its power-save and stop modes. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-HW (cfg), P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "WDG";
         :>> timing = "detect ≤ 0.1 s / reset → SS-S";
         :>> verifMethod = "R, T-HIL, FI";
@@ -878,7 +907,7 @@ package LionDriverRequirements {
         doc /* Every detected MCU fault (watchdog, interrupt-rate, register divergence, memory ECC, clock, supply, temperature, SPI/DMA, siren, relay) shall lead to SS-S within ≤ 0.1 s of detection. Faults shall be classified as latching until power cycle or as recoverable, by documented rationale. During and after any reset the outputs shall be in SS-S until a valid safety mode is set. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, P-HW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "FR";
         :>> timing = "react ≤ 0.1 s";
         :>> verifMethod = "R, FI";
@@ -887,7 +916,7 @@ package LionDriverRequirements {
         doc /* Memory faults that can corrupt actuation decisions shall be detected: RAM ECC with double-error reaction, flash image CRC at start-up and periodically, and periodic check of safety-critical configuration registers, each leading to TSR-502. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-HW (cfg), P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "ST, PLB";
         :>> timing = "≤ 0.2 s for RAM/register faults; flash: start-up + background";
         :>> verifMethod = "R, FI";
@@ -896,7 +925,7 @@ package LionDriverRequirements {
         doc /* Loss or drift of the MCU clock that would invalidate timing checks or CAN bit timing shall be detected and lead to TSR-502. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-HW (cfg), P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "PLB";
         :>> timing = "≤ 0.2 s";
         :>> verifMethod = "FI";
@@ -905,7 +934,7 @@ package LionDriverRequirements {
         doc /* Supply voltage of the MCU outside its operating range shall lead to reset or SS-S (brown-out reset, programmable voltage detector), and vehicle input voltage out of range while the relay is driven shall lead to SS-S. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-HW, P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "PLB";
         :>> timing = "≤ 0.2 s";
         :>> verifMethod = "T-HIL";
@@ -914,7 +943,7 @@ package LionDriverRequirements {
         doc /* The intercept relay shall be de-energise-to-safe, its actual state shall be read back and compared with the commanded state in both directions within ≤ 0.3 s, and a detected relay malfunction shall inhibit all actuation TX and be latched until power cycle (not cleared by a safety-mode change). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-HW, HAR, P-SW";
-        :>> asil = "B‡ (blocking), B (PCS restore)";
+        :>> asil = "C (blocking), B (PCS restore)";
         :>> mechanism = "PLB, FR";
         :>> timing = "detect ≤ 0.3 s";
         :>> verifMethod = "A, T-HIL, FI";
@@ -923,7 +952,7 @@ package LionDriverRequirements {
         doc /* Safety-critical data (safety mode and parameter, limits, authority state, relay state) and the stacks shall be protected against writes from communication handlers by the MPU, with a stack guard, and a MemManage fault shall lead to TSR-502. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-HW (cfg), P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "ISO";
         :>> timing = "—";
         :>> verifMethod = "R, FI";
@@ -932,7 +961,7 @@ package LionDriverRequirements {
         doc /* The car-side CAN transceiver shall be non-transmitting from reset until enabled by firmware; bus-off or persistent TX failure on the car-side bus while authority is granted shall revoke authority and be reported. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-HW, P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "FR";
         :>> timing = "≤ 0.3 s";
         :>> verifMethod = "T-HIL, FI";
@@ -941,7 +970,7 @@ package LionDriverRequirements {
         doc /* MCU die temperature outside its specified range shall lead to SS-S. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-HW, P-SW";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> mechanism = "PLB";
         :>> timing = "≤ 1 s";
         :>> verifMethod = "T-HIL";
@@ -959,7 +988,7 @@ package LionDriverRequirements {
         doc /* Only release-signed LionDriver firmware shall execute on the safety MCU: the signature scheme shall use a current algorithm and key length, flash read-out and write protection shall be set, the SoC's control of STM_BOOT0/STM_RST_N shall not allow non-release code to drive the relay, release builds of pandad shall not flash a development bootstub, and softloader entry (0xd1 param 1) shall be refused in a car safety mode and while the ignition is on (CSR-024). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, P-HW (option bytes), SoC";
-        :>> asil = "B‡ (+ CS)";
+        :>> asil = "C (+ CS)";
         :>> mechanism = "CFG";
         :>> timing = "—";
         :>> verifMethod = "R, T-HIL";
@@ -968,7 +997,7 @@ package LionDriverRequirements {
         doc /* In release builds for the reference configuration the safety MCU shall accept only the modes SILENT, NOOUTPUT, ELM327 (fingerprinting, relay released) and TOYOTA with the reference safety parameter compiled into the firmware (EPS factor 73, no flags). Once TOYOTA mode is active, it shall accept only a change to NOOUTPUT or SILENT; any other request shall be rejected and reported. The alternative-experience word shall likewise be fixed to the reference value in release builds, so that it cannot be changed in a non-car mode and carried into a later TOYOTA session. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "CFG";
         :>> timing = "per request";
         :>> verifMethod = "R, T-HIL";
@@ -977,7 +1006,7 @@ package LionDriverRequirements {
         doc /* In release builds, control requests that can change actuation, relay, CAN configuration or comms state shall be rejected while a car safety mode is active: at least 0xc5 (relay drive), 0xe5 (CAN loopback), 0xde/0xf9/0xfc/0xe8 (bit rate and CAN-FD configuration), 0xdb (OBD multiplexing), 0xe6 (clock source), 0xe7 (power save; in car mode it stops camera-side forwarding with the relay energised, SG-07, WP-A-04 SPF-08), 0xf1 (queue clear), 0xd1 param 1 (softloader entry, see also TSR-511), 0xd8 (MCU reset without fault reporting), 0xdf (alternative experience, see TSR-512). Also 0xc0 (comms reset), 0xb0/0xb1 and 0xf6 (to be confirmed per WP-W-02 OI-5). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "CFG";
         :>> timing = "per request";
         :>> verifMethod = "R, T-HIL";
@@ -986,7 +1015,7 @@ package LionDriverRequirements {
         doc /* Release firmware shall be built without ALLOW_DEBUG, with the LionDriver release key, and shall not contain the ALLOUTPUT mode, debug-only safety modes or debug-key acceptance; the build type shall be readable through the version request and recorded in the release record. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW (build)";
-        :>> asil = "B‡ (+ CS)";
+        :>> asil = "C (+ CS)";
         :>> mechanism = "CFG";
         :>> timing = "—";
         :>> verifMethod = "R";
@@ -995,16 +1024,16 @@ package LionDriverRequirements {
         doc /* At every power-up, before the relay is first driven, the safety MCU shall run start-up tests of its safety mechanisms (flash CRC, RAM test of safety data regions, watchdog reset path at a defined interval, relay drive and readback, siren path) and stay in SS-S and report if any test fails. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, P-HW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "ST";
         :>> timing = "once per drive cycle";
         :>> verifMethod = "T-HIL, FI";
     }
     requirement <'TSR-516'> tsr_516 : TechnicalSafetyRequirement {
-        doc /* The safety MCU shall sound its own acoustic warning within ≤ 0.5 s of detection, without depending on SoC software, when (a) the SoC heartbeat is lost (TSR-407) while authority was granted within the last 5 s; (b) the envelope revokes authority while it is granted for any reason other than a driver action that the envelope itself observes (brake press, TSR-302; PCM cruise inactive, TSR-301), that is on an RX fault (TSR-406), an EPS fault state (TSR-110), a rejected command (TSR-108), a car-side TX failure or bus-off (TSR-508), a platform fault (TSR-502) or a heartbeat "not engaged" (TSR-307(a)); or (c) PCM cruise is still active more than 0.5 s after the SoC heartbeat first reported "not engaged" (a fault-induced disengagement whose ACC cancel, TSR-303, had no effect). */
+        doc /* The safety MCU shall sound its own acoustic warning within ≤ 0.5 s of detection, without depending on SoC software, when (a) the SoC heartbeat is lost (TSR-407) while authority was granted within the last 5 s; (b) the envelope revokes authority while it is granted for any reason other than a driver action that the envelope itself observes (brake press, TSR-302; PCM cruise inactive, TSR-301), that is on an RX fault (TSR-406), an EPS fault state (TSR-110), a rejected command (TSR-108), a car-side TX failure or bus-off (TSR-508), a platform fault (TSR-502) or a heartbeat "not engaged" (TSR-307(a)); or (c) PCM cruise is still active more than 0.5 s after the SoC heartbeat first reported "not engaged" (a fault-induced disengagement whose ACC cancel, TSR-303, had no effect); or (d) the safety MCU restarts after a watchdog or fault reset (TSR-501, TSR-502) that interrupted granted authority. For (b) on an EPS fault, detection is the first fault frame, and any persistence filter before the warning shall be ≤ 0.7 s so that the siren sounds within the SG-02 1 s warning budget from fault onset (decided 2026-10-14, DQ-048). For (d), the item's engaged state shall be kept across the reset in memory that the reset does not clear, and the siren shall sound ≤ 0.5 s after the restart (decided 2026-10-14, DQ-054). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, P-HW";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> mechanism = "WRN";
         :>> timing = "≤ 0.5 s after detection";
         :>> verifMethod = "T-HIL";
@@ -1013,7 +1042,7 @@ package LionDriverRequirements {
         doc /* Corruption of an approved actuation frame after the TX hook (copy into FDCAN message RAM, message RAM, FDCAN core, transceiver) shall be detected, e.g. by reading back the safety MCU's own transmitted frames on the car-side bus and comparing them with the approved frame, and a mismatch shall lead to TSR-502. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, P-HW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "PLB";
         :>> timing = "≤ 2 frames / react per TSR-502";
         :>> verifMethod = "A, FI";
@@ -1022,7 +1051,7 @@ package LionDriverRequirements {
         doc /* The envelope shall supervise the transmit rate of each actuation message ID (0x2E4, 0x343, 0x412, and any other TX-whitelisted ID) against its nominal period and reject frames sent faster than the nominal rate plus a defined tolerance; persistent excess while authority is granted shall revoke authority and be reported. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "TMO";
         :>> timing = "per frame; revoke ≤ 0.1 s after the first rejected frame (DN-01 (assurance/05-software/design-notes/DN-01-tx-rate-supervision.md) D-6; ≤ 0.2 s from the onset of a flood at 2× the nominal rate)";
         :>> verifMethod = "T-SIL, T-HIL";
@@ -1031,7 +1060,7 @@ package LionDriverRequirements {
         doc /* The safety MCU shall have a documented interrupt-priority and execution-timing scheme: priorities assigned explicitly for every enabled interrupt; safety hooks, CAN TX and SoC command dispatch either moved out of interrupt context or bounded by measured WCET; and the worst-case latency of the periodic safety processing (timeouts, heartbeat, watchdog service) shown to meet the TSR-401/407/501 budgets under worst-case interrupt load. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW, P-HW (cfg)";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "ISO";
         :>> timing = "analysis; WCET measured on target";
         :>> verifMethod = "A, T-HIL";
@@ -1040,7 +1069,7 @@ package LionDriverRequirements {
         doc /* selfdrived shall classify faults as (i) untrusted command or input (loss or staleness of an input to the control law, model failure, CAN error, controls mismatch) → immediate disable, and (ii) trustworthy but degrading (thermal, storage, memory) → soft disable. Actuation on an input that has failed its alive or validity check shall end within ≤ 0.2 s. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup: TSR-407, TSR-408)";
+        :>> asil = "QM (C-sup: TSR-407, TSR-408)";
         :>> mechanism = "FR";
         :>> timing = "≤ 0.2 s";
         :>> verifMethod = "T-SIL, FI";
@@ -1049,7 +1078,7 @@ package LionDriverRequirements {
         doc /* controlsd shall check the age of modelV2, longitudinalPlan and carState before use (≤ 2 nominal periods) and shall set latActive/longActive false and raise an event when an input is stale. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup: TSR-408)";
+        :>> asil = "QM (C-sup: TSR-408)";
         :>> mechanism = "TMO";
         :>> timing = "≤ 0.1 s";
         :>> verifMethod = "T-SIL";
@@ -1058,7 +1087,7 @@ package LionDriverRequirements {
         doc /* No diagnostic (commIssue, posenet, locationd, modeldLagging) shall be masked while the item is engaged, and the driving model shall not be switched while engaged. In the reference configuration the external big model (E-06) shall be absent and not loadable. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup)";
+        :>> asil = "QM (C-sup)";
         :>> mechanism = "DES";
         :>> timing = "—";
         :>> verifMethod = "R, T-SIL";
@@ -1067,7 +1096,7 @@ package LionDriverRequirements {
         doc /* Non-finite actuator commands shall be treated as a fault with immediate disable, not replaced silently. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup)";
+        :>> asil = "QM (C-sup)";
         :>> mechanism = "FR";
         :>> timing = "≤ 1 frame";
         :>> verifMethod = "T-SIL";
@@ -1085,7 +1114,7 @@ package LionDriverRequirements {
         doc /* On every fault-induced transition to L2/L3 (FSC §12) the SoC shall give a visual and acoustic take-over request within ≤ 1 s of detection, with text that names the actual fault class. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC (HMI)";
-        :>> asil = "QM (B-sup: TSR-516)";
+        :>> asil = "QM (C-sup: TSR-516)";
         :>> mechanism = "WRN";
         :>> timing = "≤ 1 s";
         :>> verifMethod = "T-HIL, T-VEH";
@@ -1094,7 +1123,7 @@ package LionDriverRequirements {
         doc /* The SoC shall warn the driver when the EPS reports LKA unavailable or faulted (complements TSR-110). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup: TSR-110)";
+        :>> asil = "QM (C-sup: TSR-110)";
         :>> mechanism = "WRN";
         :>> timing = "≤ 1 s";
         :>> verifMethod = "T-SIL, T-VEH";
@@ -1103,7 +1132,7 @@ package LionDriverRequirements {
         doc /* Driver monitoring shall escalate warnings for an inattentive driver with the timing set in WP-C-08 §5 (baseline vision 5/8/13 s, wheel-touch 5/15/25 s). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM";
+        :>> asil = "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)";
         :>> mechanism = "WRN";
         :>> timing = "per policy";
         :>> verifMethod = "T-SIL, T-VEH";
@@ -1112,7 +1141,7 @@ package LionDriverRequirements {
         doc /* The DM chain shall mark its output invalid when the cabin image or model output is missing or not credible, and an invalid DM output for > 2 s while engaged shall escalate to a take-over request. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM";
+        :>> asil = "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)";
         :>> mechanism = "PLB";
         :>> timing = "≤ 2 s";
         :>> verifMethod = "T-SIL, FI";
@@ -1121,7 +1150,7 @@ package LionDriverRequirements {
         doc /* DM demo mode (IsDriverViewEnabled) shall not be active while the item can engage. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM";
+        :>> asil = "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)";
         :>> mechanism = "CFG";
         :>> timing = "—";
         :>> verifMethod = "R, T-SIL";
@@ -1130,7 +1159,7 @@ package LionDriverRequirements {
         doc /* If the driver does not respond to the highest DM warning, the SoC shall decelerate, disengage and lock out re-engagement for 1/5/15/30 min. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM";
+        :>> asil = "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)";
         :>> mechanism = "FR";
         :>> timing = "per policy";
         :>> verifMethod = "T-SIL, T-VEH";
@@ -1139,7 +1168,7 @@ package LionDriverRequirements {
         doc /* The wheel-touch fallback shall reset awareness only on a deliberate driver input above a defined threshold, not on any steering or gas input. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM";
+        :>> asil = "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)";
         :>> mechanism = "PLB";
         :>> timing = "—";
         :>> verifMethod = "T-SIL";
@@ -1148,7 +1177,7 @@ package LionDriverRequirements {
         doc /* Debug, joystick and maneuver modes, and the lateralManeuverPlan path to the actuator, shall be absent from reference-configuration builds. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup)";
+        :>> asil = "QM (C-sup); A where it keeps DM active (FSR-02.08, WP-C-04 OI-11)";
         :>> mechanism = "CFG";
         :>> timing = "—";
         :>> verifMethod = "R";
@@ -1157,7 +1186,7 @@ package LionDriverRequirements {
         doc /* pandad shall not forward sendcan messages older than 2 control periods (20 ms). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup: TSR-411)";
+        :>> asil = "QM (C-sup: TSR-411)";
         :>> mechanism = "TMO";
         :>> timing = "20 ms";
         :>> verifMethod = "T-SIL";
@@ -1166,7 +1195,7 @@ package LionDriverRequirements {
         doc /* The SoC shall immediately disable on any panda fault flag, heartbeat-lost flag, rising safetyTxBlocked count while engaged, or SPI error burst reported in pandaStates. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup: TSR-502, TSR-108)";
+        :>> asil = "QM (C-sup: TSR-502, TSR-108)";
         :>> mechanism = "FR";
         :>> timing = "≤ 0.2 s";
         :>> verifMethod = "T-SIL, FI";
@@ -1193,7 +1222,7 @@ package LionDriverRequirements {
         doc /* A PCM-reported ACC fault shall cause immediate disable with a take-over request. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup)";
+        :>> asil = "QM (C-sup)";
         :>> mechanism = "FR";
         :>> timing = "≤ 0.2 s";
         :>> verifMethod = "T-SIL";
@@ -1202,7 +1231,7 @@ package LionDriverRequirements {
         doc /* pandad shall compare the panda-reported safety model, safety parameter and alternative experience with the release-record values and shall prevent engagement and raise an alert on mismatch (refines CSR-016 of WP-S-07 (assurance/03-system/WP-S-07-cybersecurity-requirements-architecture.md)). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup: TSR-512)";
+        :>> asil = "QM (C-sup: TSR-512)";
         :>> mechanism = "PLB";
         :>> timing = "before engagement; ≤ 1 s";
         :>> verifMethod = "T-SIL, T-HIL";
@@ -1211,7 +1240,7 @@ package LionDriverRequirements {
         doc /* The item shall not request the TOYOTA safety mode or allow engagement unless the ECU firmware versions read at start-up (EPS, engine, ABS, radar, camera) match the release record of the reference configuration; an unverified or mismatching firmware set shall keep the safety MCU in NOOUTPUT and inform the driver. The envelope cannot read ECU firmware itself, so the refusal rests on the SoC query plus the mode lock of TSR-512. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup: TSR-512, TSR-803)";
+        :>> asil = "QM (C-sup: TSR-512, TSR-803)";
         :>> mechanism = "CFG";
         :>> timing = "at start-up";
         :>> verifMethod = "T-SIL, T-VEH";
@@ -1220,7 +1249,7 @@ package LionDriverRequirements {
         doc /* While engaged, selfdrived shall raise an immediate disable with a take-over request when any panda in a car safety mode reports controlsAllowed false, after at most 2 consecutive mismatched samples to absorb transport skew between the CAN and pandaStates sockets, and in any case within ≤ 0.5 s of the first mismatched sample. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup: TSR-108, TSR-516)";
+        :>> asil = "QM (C-sup: TSR-108, TSR-516)";
         :>> mechanism = "PLB";
         :>> timing = "≤ 0.5 s / ≤ 0.5 s to warning";
         :>> verifMethod = "T-SIL, FI";
@@ -1229,7 +1258,7 @@ package LionDriverRequirements {
         doc /* While the item can engage, the SoC shall supervise the liveness of the HMI path (UI render loop and sound output stream, each with a heartbeat) and treat a missing heartbeat for > 1 s as a fault: immediate disable, with the take-over request carried by the panda siren (TSR-516) and the cluster cruise state (TSR-309, FSR-05.05). */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC (HMI)";
-        :>> asil = "QM (B-sup: TSR-516)";
+        :>> asil = "QM (C-sup: TSR-516)";
         :>> mechanism = "TMO";
         :>> timing = "≤ 1 s / ≤ 0.2 s";
         :>> verifMethod = "T-SIL, FI";
@@ -1238,7 +1267,7 @@ package LionDriverRequirements {
         doc /* Alert sound output shall not be muted or set below a defined audible minimum while the item can engage; if the minimum cannot be guaranteed, engagement shall be prevented with a no-entry alert. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC (HMI)";
-        :>> asil = "QM (B-sup: TSR-516)";
+        :>> asil = "QM (C-sup: TSR-516)";
         :>> mechanism = "CFG";
         :>> timing = "—";
         :>> verifMethod = "R, T-SIL";
@@ -1262,10 +1291,10 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, LOG";
     }
     requirement <'TSR-626'> tsr_626 : TechnicalSafetyRequirement {
-        doc /* While engaged, the SoC shall detect that the envelope does not actuate from evidence other than the envelope's own status report: (a) pandaStates older than 2 nominal periods (0.2 s) is treated as a controls mismatch (TSR-621); (b) with lateral control active, the EPS-applied torque (STEER_TORQUE_EPS in 0x260) not following a commanded torque above a threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration not following the requested acceleration beyond a tolerance for longer than t_blk. Each leads to immediate disable with a take-over request. Threshold, tolerance and t_blk (≤ 0.5 s) shall be set from fork-owned drive logs so that no false detection occurs in the reference log set. */
+        doc /* While engaged, the SoC shall detect that the envelope does not actuate from evidence other than the envelope's own status report: (a) pandaStates older than 2 nominal periods (0.2 s) is treated as a controls mismatch (TSR-621); (b) with lateral control active, the EPS-applied torque (STEER_TORQUE_EPS in 0x260) not following a commanded torque above a threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration not following the requested acceleration beyond a tolerance for longer than t_blk. (d) with lateral control active, EPS_STATUS (0x262) LKA_STATE not reporting LKA active, or with longitudinal control active, the PCM not reporting ACC in control, for longer than t_blk; (e) the transmitted-frame count of TSR-632 not advancing for a commanded actuation ID. Each leads to immediate disable with a take-over request, so that the warning falls within the SG-02/SG-06 1 s budget (SFM-ACT-018). Threshold, tolerance and t_blk (≤ 0.5 s) shall be set from fork-owned drive logs so that no false detection occurs in the reference log set. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
-        :>> asil = "QM (B-sup: TSR-516)";
+        :>> asil = "QM (C-sup: TSR-516)";
         :>> mechanism = "PLB";
         :>> timing = "(a) 0.2 s; (b), (c) ≤ t_blk ≤ 0.5 s";
         :>> verifMethod = "LOG, T-SIL, FI";
@@ -1274,10 +1303,64 @@ package LionDriverRequirements {
         doc /* The alert sound path (soundd) shall run with a real-time scheduling priority not lower than that of ui, or a worst-case load test (maximum logging, encoding and upload) shall show that alert sound output starts within the TSR-606 budget. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC (HMI)";
-        :>> asil = "QM (B-sup: TSR-516)";
+        :>> asil = "QM (C-sup: TSR-516)";
         :>> mechanism = "TMO";
         :>> timing = "within TSR-606";
         :>> verifMethod = "T-SIL (load), T-HIL";
+    }
+    requirement <'TSR-628'> tsr_628 : TechnicalSafetyRequirement {
+        doc /* While the envelope reports a driver override on the LKA path (TSR-304(b)), the SoC shall show an override cue on the device display within ≤ 0.2 s, so the driver sees that the steering backed off and why. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "QM";
+        :>> mechanism = "WRN";
+        :>> timing = "≤ 0.2 s";
+        :>> verifMethod = "T-SIL, T-VEH";
+    }
+    requirement <'TSR-629'> tsr_629 : TechnicalSafetyRequirement {
+        doc /* At start-up before the first engagement, and again at least every drive cycle, the SoC shall read the stored diagnostic trouble codes of the EPS and of the brake / stability control ECU, and shall prevent engagement with a no-entry alert naming the system while a code from the release-record list of codes affecting lateral or longitudinal control is set. A failed or incomplete read shall also prevent engagement. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "QM (supports TSR-110, TSR-618)";
+        :>> mechanism = "PLB, ST";
+        :>> timing = "before engagement";
+        :>> verifMethod = "T-SIL, T-VEH";
+    }
+    requirement <'TSR-630'> tsr_630 : TechnicalSafetyRequirement {
+        doc /* While a car safety mode is active and the item is not engaged, the SoC shall check that every panda reports controlsAllowed false. A report of true for more than 2 consecutive pandaStates samples, and in any case within ≤ 0.3 s, shall prevent engagement with a no-entry alert, be logged as an envelope fault, and request ACC cancel. (The reverse of TSR-621: it makes a latent panda authority fault visible before the host also commands torque.) */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "QM (C-sup: TSR-105, TSR-301)";
+        :>> mechanism = "PLB";
+        :>> timing = "≤ 0.3 s (within the SG-01 0.5 s FTTI)";
+        :>> verifMethod = "T-SIL, FI";
+    }
+    requirement <'TSR-631'> tsr_631 : TechnicalSafetyRequirement {
+        doc /* controlsd shall treat the driving-model output as stale, with the TSR-602 reaction, when (a) its frame ID does not advance for more than 2 nominal periods while messages keep arriving (frozen output), or (b) its age measured from the source camera frame timestamp, not the publish time, exceeds 2 nominal periods (stale content with fresh timestamps). */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "QM (C-sup: TSR-101, TSR-103 bound the effect; TSR-408 covers a stopped command stream)";
+        :>> mechanism = "TMO, PLB";
+        :>> timing = "≤ 0.1 s";
+        :>> verifMethod = "T-SIL, FI";
+    }
+    requirement <'TSR-632'> tsr_632 : TechnicalSafetyRequirement {
+        doc /* The safety MCU shall report to the SoC, for each supervised actuation ID (0x2E4, 0x343), the count of frames accepted by the envelope and transmitted on the car-side bus (transmit complete) and the count refused, in every health report. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "P-SW";
+        :>> asil = "C (report content); QM for its use (TSR-626(e))";
+        :>> mechanism = "PLB";
+        :>> timing = "per health report (≤ 0.1 s)";
+        :>> verifMethod = "T-SIL, T-HIL";
+    }
+    requirement <'TSR-633'> tsr_633 : TechnicalSafetyRequirement {
+        doc /* When driver awareness has reached zero (terminal DM alert) and the driver has not responded for 5 s, the item shall bring the vehicle to the reaction decided for the unresponsive-driver goal (register DQ-340, queued; recommended: keep the lane, decelerate in lane to a standstill within a_min and j_down (TSR-202, TSR-205) with the terminal alert sounding, then hold, disengage and lock out re-engagement). It shall not leave lateral and longitudinal control active at the set speed. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)";
+        :>> mechanism = "FR, WRN";
+        :>> timing = "reaction starts ≤ 5 s after the terminal alert (WP-S-04 §3.8)";
+        :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-701'> tsr_701 : TechnicalSafetyRequirement {
         doc /* The harness orientation (normal, flipped, not connected) shall be detected before the relay is driven, and CAN routing and relay/ignition pin assignment shall follow it; loss or change of orientation while the relay is driven shall lead to SS-S. */
@@ -1364,7 +1447,7 @@ package LionDriverRequirements {
         doc /* The envelope shall detect a relay malfunction (any check_relay control message seen on the car side after the relay transition window) and inhibit all actuation TX and forwarding. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "P-SW";
-        :>> asil = "B‡";
+        :>> asil = "C";
         :>> mechanism = "PLB, FR";
         :>> timing = "detect: first offending frame after ≤ 1–2 s window / same frame";
         :>> verifMethod = "T-SIL, T-HIL";
@@ -1376,6 +1459,15 @@ package LionDriverRequirements {
         :>> asil = "B";
         :>> mechanism = "TMO, FR";
         :>> timing = "detect ≤ 0.1 s / release ≤ 0.1 s (SG-07, WP-S-04 §3.6)";
+        :>> verifMethod = "T-HIL, FI";
+    }
+    requirement <'TSR-712'> tsr_712 : TechnicalSafetyRequirement {
+        doc /* If the harness state readback (TSR-506) shows that the camera path stays intercepted when the release is commanded, the envelope shall inhibit all actuation TX, keep the fault latched until power cycle and report it; the SoC shall then give a warning that stock PCS/AEB is unavailable and prevent engagement until the harness is repaired. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "P-SW, SoC";
+        :>> asil = "B (envelope detection and inhibit); QM (B-sup: TSR-506) for the SoC warning";
+        :>> mechanism = "PLB, FR, WRN";
+        :>> timing = "detect ≤ 0.3 s (TSR-506) / warn ≤ 1 s";
         :>> verifMethod = "T-HIL, FI";
     }
     requirement <'TSR-801'> tsr_801 : TechnicalSafetyRequirement {
@@ -2590,11 +2682,19 @@ package LionDriverRequirements {
         end #derive ::> fsr_02_06;
     }
     #derivation connection {
+        end #original ::> sg_08;
+        end #derive ::> fsr_02_06;
+    }
+    #derivation connection {
         end #original ::> sg_02;
         end #derive ::> fsr_02_07;
     }
     #derivation connection {
         end #original ::> sg_06;
+        end #derive ::> fsr_02_07;
+    }
+    #derivation connection {
+        end #original ::> sg_08;
         end #derive ::> fsr_02_07;
     }
     #derivation connection {
@@ -2603,6 +2703,10 @@ package LionDriverRequirements {
     }
     #derivation connection {
         end #original ::> sg_06;
+        end #derive ::> fsr_02_08;
+    }
+    #derivation connection {
+        end #original ::> sg_08;
         end #derive ::> fsr_02_08;
     }
     #derivation connection {
@@ -2618,6 +2722,10 @@ package LionDriverRequirements {
         end #derive ::> fsr_02_09;
     }
     #derivation connection {
+        end #original ::> sg_08;
+        end #derive ::> fsr_02_09;
+    }
+    #derivation connection {
         end #original ::> sg_02;
         end #derive ::> fsr_02_10;
     }
@@ -2632,6 +2740,14 @@ package LionDriverRequirements {
     #derivation connection {
         end #original ::> sg_06;
         end #derive ::> fsr_02_11;
+    }
+    #derivation connection {
+        end #original ::> sg_02;
+        end #derive ::> fsr_02_12;
+    }
+    #derivation connection {
+        end #original ::> sg_06;
+        end #derive ::> fsr_02_12;
     }
     #derivation connection {
         end #original ::> sg_03;
@@ -2768,6 +2884,14 @@ package LionDriverRequirements {
     #derivation connection {
         end #original ::> sg_07;
         end #derive ::> fsr_07_05;
+    }
+    #derivation connection {
+        end #original ::> sg_07;
+        end #derive ::> fsr_07_06;
+    }
+    #derivation connection {
+        end #original ::> sg_08;
+        end #derive ::> fsr_08_01;
     }
     #derivation connection {
         end #original ::> fsr_01_01;
@@ -3270,6 +3394,38 @@ package LionDriverRequirements {
         end #derive ::> tsr_627;
     }
     #derivation connection {
+        end #original ::> fsr_05_03;
+        end #derive ::> tsr_628;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_12;
+        end #derive ::> tsr_629;
+    }
+    #derivation connection {
+        end #original ::> fsr_01_05;
+        end #derive ::> tsr_630;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_10;
+        end #derive ::> tsr_630;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_02;
+        end #derive ::> tsr_631;
+    }
+    #derivation connection {
+        end #original ::> fsr_06_01;
+        end #derive ::> tsr_631;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_10;
+        end #derive ::> tsr_632;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_09;
+        end #derive ::> tsr_633;
+    }
+    #derivation connection {
         end #original ::> fsr_07_03;
         end #derive ::> tsr_701;
     }
@@ -3316,6 +3472,10 @@ package LionDriverRequirements {
     #derivation connection {
         end #original ::> fsr_07_03;
         end #derive ::> tsr_711;
+    }
+    #derivation connection {
+        end #original ::> fsr_07_06;
+        end #derive ::> tsr_712;
     }
     #derivation connection {
         end #original ::> sg_01;

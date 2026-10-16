@@ -19,6 +19,7 @@ Generated from the YAML analyses in [`analyses/`](../../analyses/) by `tools/saf
 | 3-12 | SW FMEA: occurrence × detection per element, with the moves predicted by planned actions | `analyses/sw-fmea.yaml` | [fig-3-12-swf-od-elements.svg](fig-3-12-swf-od-elements.svg) |
 | 3-13 | SW FMEA: what each detection rating rests on (test run in CI, hardware only, not run, none) | `analyses/sw-fmea.yaml, .github/workflows/, tools/test_runner.py` | [fig-3-13-swf-detection-evidence.svg](fig-3-13-swf-detection-evidence.svg) |
 | 4-1 | Action Priority overview of the four FMEAs | `analyses/*fmea.yaml` | [fig-4-1-action-priority-overview.svg](fig-4-1-action-priority-overview.svg) |
+| 4-2 | FMEA-MSR overview of the System FMEA and DFMEA (provisional MSR AP table) | `analyses/system-fmea.yaml, dfmea.yaml` | [fig-4-2-msr-overview.svg](fig-4-2-msr-overview.svg) |
 
 Conventions: Action Priority H / M / L in red / amber / teal as rated in the YAML; predicted ratings of open actions are hatched and dashed and never shown as achieved. FMEDA metrics are drawn from generic failure-rate estimates and are marked as not verified; a target met on the estimate is amber, never green. In the DFA, green marks only measures recorded as `existing` (verified); `existing_unverified` is amber.
 

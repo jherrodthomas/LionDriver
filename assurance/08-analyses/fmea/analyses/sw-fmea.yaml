@@ -3890,6 +3890,10 @@ failure_modes:
     description: Loss of lateral and longitudinal control with an alert
     hazard: HZ-004
     severity: 10
+  - level: end
+    description: Contributes to HZ-007 (ACC requests stop while engaged, as SWF-021)
+    hazard: HZ-007
+    severity: 10
   severity: 10
   safety_mechanisms:
   - description: Panda TX arrival supervision (TSR-408, reference build) and selfdrived controlsMismatch within 0.5 s (TSR-621)
