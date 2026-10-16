@@ -224,8 +224,8 @@ events:
     note: DFM-015 (bit errors on the SPI link pass the 8-bit XOR); SWF-026 (both checks XOR the same bytes). F-13
   - id: BE-1.25
     class: systematic_sw
-    fmea: [SWF-002]
-    note: SWF-002.C1 (defect in the not-allowed torque check, lateral.h:111-114, or controls_allowed bookkeeping). F-11
+    fmea: [SWF-002, SWF-055]
+    note: SWF-002.C1 (defect in the not-allowed torque check, lateral.h:111-114, or controls_allowed bookkeeping). F-11. SWF-055 (SW FMEA rev 0.8, DQ-080) is a bookkeeping property of the pinned code, not a defect; the edge state reset on a mode change grants authority again without a new driver engagement
   - id: BE-1.26
     class: systematic_sw
     fmea: [SWF-010]
@@ -796,6 +796,10 @@ not_in_fta:
     goal: SG-01
     kind: justified
     reason: As SFM-030 (same monitor, SW unit level).
+  - fm: SWF-054
+    goal: SG-01
+    kind: justified
+    reason: Re-grant after a TX-rate revocation needs a driver cruise edge and the heartbeat engaged flag, so the item is engaged by the driver; the host's frames stay under the envelope's TX rate and torque checks (G1.1), so no new path past the envelope arises (SW FMEA rev 0.8, DQ-079).
   - fm: SWF-034
     goal: SG-01
     kind: justified

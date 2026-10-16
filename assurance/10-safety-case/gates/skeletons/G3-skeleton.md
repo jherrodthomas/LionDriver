@@ -23,14 +23,14 @@
 | Open risks (WP-M-07) | | [WP-M-07](../../../01-management/WP-M-07-risk-management.md) |
 | Confirmation measures assigned to this gate (WP-M-06) and their results | 0 of 6 performed: CR-06@G3, CR-07, CR-08, CR-09, CR-10, SR-04@G3 | [WP-M-06](../../../01-management/WP-M-06-confirmation-measures-plan.md) |
 | QA findings (WP-M-05) | | [WP-M-05](../../../01-management/WP-M-05-quality-assurance-plan.md) |
-| Open items of the phase's work products | 136 open-item rows not marked closed, any due gate (table below) | |
+| Open items of the phase's work products | 135 open-item rows not marked closed, any due gate (table below) | |
 
 ### Work products of this gate
 
 | Work product | Activity | Status in WP-M-00 | Open items | Verification review (WP-P-05) |
 |---|---|---|---|---|
 | [WP-W-01](../../../05-software/WP-W-01-software-development-environment-guidelines.md) SW development environment, languages and coding guidelines | DEV-01 | Draft | 12 | |
-| [WP-P-07](../../../07-supporting/WP-P-07-tool-classification-qualification.md) Software tool classification and qualification | DEV-02 | Draft | 10 | |
+| [WP-P-07](../../../07-supporting/WP-P-07-tool-classification-qualification.md) Software tool classification and qualification | DEV-02 | Draft | 9 | |
 | [WP-H-02](../../../04-hardware/WP-H-02-hardware-design.md) Hardware architectural and detailed design (device, panda MCU, harness, relay) | DEV-03 | Draft | 6 | |
 | [WP-H-01](../../../04-hardware/WP-H-01-hardware-safety-requirements.md) Hardware safety requirements specification | DEV-04 | Draft | 6 | |
 | [WP-H-03](../../../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) Hardware safety analysis (FMEA/FMEDA) | DEV-05 | Draft | 10 | |
