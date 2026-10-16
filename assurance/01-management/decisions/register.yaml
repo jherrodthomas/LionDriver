@@ -4083,7 +4083,7 @@
   asked: 2026-10-16
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-16}
-  applied: {ref: "PENDING-PR", record: "WP-C-03 v0.4.1 §6.1 observation 7, OI-9 (SG-06 ASIL C, set in v0.4)", at: 2026-10-16}
+  applied: {ref: "jherrodthomas/LionDriver#154", record: "WP-C-03 v0.4.1 §6.1 observation 7, OI-9 (SG-06 ASIL C, set in v0.4)", at: 2026-10-16}
 
 - id: DQ-211
   question: "What harness letter and harness-box revision are printed on the reference car's harness, and which device units (comma 3X, comma four) will be used?"
