@@ -47,6 +47,9 @@
 # SFM-033, SFM-034 and SFM-SE-003/004 reworded. SFM-034.C1 O 3 -> 4 (DFM-010.C4, supply transients); SFM-034.C2 D 10 -> 9
 # (DFM-011 D 9); AP unchanged (H). New SFM-033.C3: the harness box loses its supply or a switch channel opens, so the stock
 # camera is cut off from the car (DFM-020, DFM-013).
+# Rev 0.13 (2026-10-16): new SFM-035 (item sends a frame that alters the stock pre-collision function), the System FMEA backing
+# for FTA BE-7.08 (WP-A-04 SG-07, F-17). C1: host QM fault, M 5 on the panda per-frame gate. C3: the gate itself lets the frame
+# through, M 10 (dual point with C1).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -55,7 +58,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.12"
+  revision: "0.13"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
@@ -3270,6 +3273,103 @@ failure_modes:
         ap: H
         rationale: Hardware fault rated in the DFMEA (DFM-011.C1 O3 D9, DFM-011.C2 O2 D9); this row inherits the worst
         msr_exempt: Hardware cause; rated once in the DFMEA (DFM-011.C1)
+
+  - id: SFM-035
+    element: SFM-SE-001
+    function: SFM-FN-008
+    failure_mode: Item sends a frame that alters the stock pre-collision function
+    guideword: unintended
+    effects:
+      - {level: local, description: "A PCS-relevant frame from the SoC (0x344 PRE_COLLISION_2, 0x411 PCS_HUD, a DSU-only ID, or 0x283 PRE_COLLISION with a non-zero payload) reaches the car bus"}
+      - {level: next_higher, description: "Stock PCS warning or braking suppressed, altered or triggered by the item"}
+      - {level: end, description: "Stock AEB/FCW degraded while the driver relies on it", hazard: HZ-011, severity: 10}
+      - {level: end, description: "Contributes to HZ-006: PCS braking triggered by a frame from the item", hazard: HZ-006, severity: 10}
+    severity: 10
+    safety_mechanisms:
+      - description: >-
+          Panda TX whitelist and content check: 0x344 and the DSU IDs are refused in every build, 0x411 in the reference build
+          (the default since BL-005), and 0x283 passes only with a zero payload (TSR-705)
+        ref: opendbc_repo/opendbc/safety/modes/toyota.h
+        test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+      - description: 'BL-005: a refused frame while engaged raises pandaTxBlocked (IMMEDIATE_DISABLE) at the next pandaStates sample (TSR-615)'
+        ref: openpilot/selfdrive/selfdrived/supervision.py
+        test: openpilot/selfdrive/selfdrived/tests/test_supervision.py
+    causes:
+      - id: SFM-035.C1
+        element: SFM-SE-016
+        description: Host code (car interface, pandad) emits a PCS-relevant ID or a non-zero PRE_COLLISION payload (QM fault)
+        prevention_controls:
+        - description: Upstream opendbc Toyota port; no carcontroller path builds 0x344, 0x411 or the DSU IDs for the reference car, and 0x283 is sent
+            with a zero payload only; no LionDriver requirements, no field-exposure credit
+          ref: opendbc_repo/opendbc/car/toyota
+        detection_controls:
+        - description: process_replay over the CI route corpus compares sendcan with the reference commit; a regression check, not designed or proven
+            for this cause
+          test: openpilot/selfdrive/test/process_replay/test_processes.py
+        occurrence: 6
+        detection: 9
+        ap: H
+        rationale: The panda refuses these frames on every frame (SFM-035.C3 is the case where that check fails); no separate action. A compromised
+          SoC sending them on purpose is a TARA topic, out of scope here
+        msr:
+          mechanisms:
+          - 1
+          - 2
+          diagnostic: The panda checks every frame from the SoC against the TX whitelist and the 0x283 zero-payload rule before it is sent
+          system_response: Frame refused, the stock PCS path is untouched; while engaged the refusal also gives pandaTxBlocked, an immediate
+            disable with a take-over alert
+          effect_after_response: Stock PCS unaffected. While engaged the item disengages with an alert (controlled handback, S 8), the worst
+            effect left after the response
+          severity_after: 8
+          frequency: 6
+          monitoring: 5
+          ap: H
+          timing:
+            ftti_ref: SG-07 content (TX gate, block list)
+            fdti_ms: 0
+            frti_ms: 10
+            basis: code_derived
+          evidence:
+          - description: test_pcs_and_dsu_messages_blocked, test_pcs_hud and the PRE_COLLISION payload test, run on every PR and mutation-tested
+              in both the standard and the reference variant (safety.yaml mutation and mutation_reference jobs)
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+            ref: .github/workflows/safety.yaml
+          rationale: M 5 on the per-frame gate, mutation-tested, code-derived. Not measured on the reference car (SFM-ACT-012 covers the
+            HIL and vehicle check of refused frames)
+      - id: SFM-035.C3
+        element: SFM-SE-003
+        description: The TX whitelist or the PRE_COLLISION content check lets a PCS-relevant frame through (table change, or a build that
+          is not the reference build, where 0x411 is allowed by design)
+        prevention_controls:
+        - description: 'Panda safety code: MISRA C:2012, 100% line coverage, review; reduced whitelist (TSR-705); reference build the default
+            since BL-005 (pandad requires it, TSR-514/619)'
+          ref: opendbc_repo/opendbc/safety/modes/toyota.h
+        detection_controls:
+        - description: opendbc safety suite with 100% line coverage and mutation tests in both variants, run by CI on every change (proven, early,
+            test-to-fail)
+          test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+          ref: .github/workflows/safety.yaml
+        occurrence: 5
+        detection: 3
+        ap: H
+        rationale: The whitelist is a static table pinned by mutation-proven tests in both variants; the non-reference variant keeps 0x411 by
+          design and cannot configure a car mode with pandad at BL-005. No SW FMEA mode covers the table yet (FTA BE-7.07, for the SW FMEA)
+        msr:
+          mechanisms:
+          - 1
+          diagnostic: 'None: the gate is itself the monitor that has failed; pandaTxBlocked counts only refused frames'
+          system_response: None
+          effect_after_response: 'Unchanged: the frame reaches the car while the SoC sends it'
+          severity_after: 10
+          frequency: 5
+          monitoring: 10
+          ap: H
+          timing:
+            basis: unknown
+          rationale: No in-field monitor can see a defect in the gate itself; the CI mutation tests are the barrier. Kept as a known gap with
+            the dual-point condition of FTA MCS-07.7 (the SoC must also send the frame, SFM-035.C1)
+    notes: >-
+      Backs FTA BE-7.08 (WP-A-04 SG-07, F-17): the SoC sends a PCS-relevant frame. WP-A-04 §10 SFMEA-05 is the same mode.
 
 actions:
   - id: SFM-ACT-001

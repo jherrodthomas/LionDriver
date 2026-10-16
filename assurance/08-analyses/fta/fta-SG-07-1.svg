@@ -76,8 +76,8 @@
 <text x="538" y="518.5" class="d">or compromise)</text>
 <rect x="538.0" y="526.5" width="65.3" height="16" rx="8" fill="#1a5fb4"/>
 <text x="570.6" y="538.0" class="chip" fill="#fff">FFI-CM-05</text>
-<rect x="608.3" y="526.5" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="635.2" y="538.0" class="chip" fill="#c62828">no FMEA</text>
+<rect x="608.3" y="526.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="635.2" y="538.0" class="chip" fill="#fff">SFM-035</text>
 <circle cx="634.0" cy="574.5" r="16" fill="#e6effb" stroke="#1a5fb4" stroke-width="1.7"/>
 <rect x="767.5" y="273.5" width="220" height="107.5" rx="9" class="shadow"/>
 <rect x="766" y="271.0" width="220" height="107.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
