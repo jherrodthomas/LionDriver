@@ -3,7 +3,7 @@
 # - Implementation defects in the opendbc safety core: O=5 (MISRA, 100% line coverage, review, no documented requirements),
 #   D=3 (the suite, coverage gate and mutation tests run in fork CI on every change: proven, early, test-to-fail).
 # - LionDriver reference-build lock (panda#4): O=3, D=4 (host unit tests in panda CI, not on target). The lock is compiled
-#   only with LIONDRIVER_REFERENCE=1, which no build path sets yet (SWF-013.C2, O=8 D=9).
+#   only with LIONDRIVER_REFERENCE=1, which no build path set at BL-003 (SWF-013.C2, then O=8 D=9; the default since BL-005, rev 0.8).
 # - Design gaps with no targeted test: O=6-8, D=9. New watchdog failure modes SWF-018/019: HIL test not run (D=7-8).
 # Severity is 10 for every row (hazard-linked effects, RT-1 §1.1). Four causes are AP L (S10 O3 D4): wrong mode, wrong
 # parameter and wrong brake flag, which the reference lock prevents only in a reference build (the build itself is
