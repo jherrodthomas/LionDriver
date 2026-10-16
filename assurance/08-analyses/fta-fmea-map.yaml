@@ -399,10 +399,10 @@ events:
       (connector not latched). SFM-015.C3 is the System FMEA view (gate G2.2 cites SFM-015)
   - id: BE-2.08
     class: systematic_sw
-    gap: >-
-      No SW or System FMEA mode for the host EPS-fault warning arriving late (steerTempUnavailable / steerUnavailable after the
-      1.5 s hysteresis, car_events.py; GAP-03), nor for the panda's epsFault being published but read by no SoC process
-      (SWF-025 notes). SFMEA-15 of WP-A-04 §10 is the only row. F-28
+    fmea: [SFM-038]
+    note: >-
+      SFM-038.C1 (EPS-fault prompt latched at low priority after an override in the last 1.5 s, never escalated; car_events.py; GAP-03) and SFM-038.C2 (the
+      panda's epsFault published but read by no SoC process, SWF-025 notes); System FMEA rev 0.23. SFMEA-15 of WP-A-04 §10. F-28
   - id: BE-2.09
     class: systematic_sw
     fmea: [SWF-034, SWF-032]
@@ -465,9 +465,8 @@ events:
     note: SFM-004.C1 (envelope torque limit below what the curve needs, by design), SFM-004.C3 (tuning or torque model too weak)
   - id: BE-2.24
     class: systematic_sw
-    gap: >-
-      No FMEA mode for the steerSaturated warning being late or missing (needs saturation and > 1.2x undershoot; no FTTI row
-      for the warning path, SFM-ACT-017). F-28
+    fmea: [SFM-038]
+    note: SFM-038.C3 (steerSaturated conditions; late for a gradual deficit, WP-S-04 §3.8.1); System FMEA rev 0.23. F-28
   - id: BE-2.25
     class: systematic_sw
     fmea: [SWF-035, SFM-027]
@@ -809,6 +808,14 @@ not_in_fta:
     goal: SG-04
     kind: tree_gap
     reason: PCS braking triggered by a frame from the item (0x344, or 0x283 with a non-zero payload) is not an event of the SG-04 tree. The SG-07 tree carries the same path as BE-7.08 with BE-7.07; for the FTA owner to add it under SG-04 or justify leaving it out.
+  - fm: SFM-037
+    goal: SG-03
+    kind: tree_gap
+    reason: A frozen longitudinal request (System FMEA rev 0.22) is not an event of the SG-03 tree; BE-1.19 is shared from SG-01 and cites the lateral SFM-006. For the FTA owner to add a longitudinal event or cite SFM-037 on BE-1.19 in SG-03.
+  - fm: SFM-037
+    goal: SG-06
+    kind: tree_gap
+    reason: A frozen non-braking request while the lead brakes is not an event of the SG-06 tree; for the FTA owner to add it or justify leaving it out.
   # ---- SG-01
   - fm: SFM-014
     goal: SG-01
