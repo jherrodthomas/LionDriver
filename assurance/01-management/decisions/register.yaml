@@ -1853,7 +1853,7 @@
   sources: ["assurance/process/README.md “4. **The SOTIF release argument waits on evidence from other”"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
-  note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-210 queued for the ODD bound). Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
+  note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-260 queued for the ODD bound). Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
 
 - id: DQ-092
   question: "Should LionDriver commission a formal ASPICE assessment by a certified assessor, and when?"
@@ -3972,7 +3972,7 @@
   sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03", "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md OI-9"]
   status: queued
 
-- id: DQ-210
+- id: DQ-260
   question: "Should the highway ODD stop at 110 km/h, the highest speed at which the driver's control of a steering fault will be tested?"
   context: "You decided to test controllability up to 110 km/h (DQ-091), but the ODD still runs to 120 km/h. Between 110 and 120 km/h nothing shows the driver can catch a steering fault, so **the SOTIF argument gives no controllability credit there**: the targets for that band must be met without it, or the band leaves the ODD. Posted limits above 110 km/h (68 mph) exist on some US interstates."
   reversibility: revisit

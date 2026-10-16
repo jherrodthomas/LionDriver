@@ -108,7 +108,7 @@ Priority: **P1** = needed before any LionDriver on-road operation beyond WP-V-07
 
 | Attribute | Content |
 |---|---|
-| Change | (a) Above the ODD bound (120 km/h, WP-C-02 §3.1; controllability is tested only up to 110 km/h, decision register DQ-091, so the bound may be lowered to 110 km/h, DQ-210): warning, then soft disable if the speed is not reduced within a set time. (b) Above `MAX_CTRL_SPEED` (≈149 km/h): soft disable instead of warning only. (c) Limit the maximum set speed to the ODD bound |
+| Change | (a) Above the ODD bound (120 km/h, WP-C-02 §3.1; controllability is tested only up to 110 km/h, decision register DQ-091, so the bound may be lowered to 110 km/h, DQ-260): warning, then soft disable if the speed is not reduced within a set time. (b) Above `MAX_CTRL_SPEED` (≈149 km/h): soft disable instead of warning only. (c) Limit the maximum set speed to the ODD bound |
 | Rationale | FI-16; TC-20 (model outputs unpredictable above training distribution, per code comment `events.py:988`) |
 | Affected code | `openpilot/selfdrive/car/car_events.py:126`; `events.py:989-996`; `openpilot/selfdrive/car/cruise.py:12`; `opendbc_repo/opendbc/car/interfaces.py:23-24` |
 | Expected risk reduction | Removes the high-speed part of SH-13 |
