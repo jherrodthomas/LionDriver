@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-06 Hardware integration and verification specification and report |
 | Standard reference | ISO 26262-5:2018 §10 (hardware integration and verification); ISO 26262-8:2018 §9 (verification), §13 (qualification tests of HW components); ASPICE 4.0 HWE.3, HWE.4 |
-| Version | 0.5 (§3.1 bench procedures for VS-HW-22…24; VS-HW-24 adds the logic-threshold check and waits for the DG419LE ratings, DFM-ACT-015; RR-2026-010 F-05; 2026-10-16). 0.4 (harness box v3 drawing: VS-HW-02 re-scoped, VS-HW-22…24 added for the analog-switch failure behaviour; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.6 (HIL bench deferred by the lead, DQ-049: T-HIL and FI cases blocked; 2026-10-16). 0.5 (§3.1 bench procedures for VS-HW-22…24; VS-HW-24 adds the logic-threshold check and waits for the DG419LE ratings, DFM-ACT-015; RR-2026-010 F-05; 2026-10-16). 0.4 (harness box v3 drawing: VS-HW-02 re-scoped, VS-HW-22…24 added for the analog-switch failure behaviour; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section is a template — **Not yet executed** |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -31,6 +31,8 @@ No test in this document has been executed. The upstream panda HITL tests
 they are reused as a starting point where noted, but their past results are not evidence. The
 LionDriver HIL script for the watchdog (`panda/tests/hitl/test_10_hw_watchdog.py`, panda `b790fca`)
 is implemented and has not been run (bench not built, GAP-30; [HIL bench plan](../05-software/hil-bench/README.md)).
+
+**HIL bench deferred (2026-10-14).** The lead chose not to buy the HIL bench parts for now ([DQ-049](../01-management/decisions/register.yaml), option B). Every case with method T-HIL or FI is therefore blocked, no change earns on-device test credit, and G4 cannot pass until the bench is built. The harness box cases VS-HW-02 and VS-HW-22…24 (§3.1) do not need the HIL bench: they need a spare box, a CAN interface, a lab supply and a scope, and their spare-box cost is part of DQ-209.
 
 ## 2. Test environment: HIL bench (decision D-04)
 
@@ -281,7 +283,7 @@ blocked; deviations and their problem reports ([WP-P-03](../07-supporting/WP-P-0
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Build and characterize the HIL bench (D-04; [WP-M-03](../01-management/WP-M-03-project-plan.md) task 5.1) | G3 |
+| OI-1 | Build and characterize the HIL bench (D-04; [WP-M-03](../01-management/WP-M-03-project-plan.md) task 5.1). **Deferred by the lead** (DQ-049, option B, 2026-10-14): no parts bought; reopen with the lead before G4 | G3 |
 | OI-2 | Obtain spare devices and harnesses for destructive tests | G3 |
 | OI-3 | Check STM32H7 ECC error-injection and IWDG test options (RM0468) for VS-HW-16/-17 | G3 |
 | OI-4 | Device input voltage rating (WP-H-02 UK-08) before VS-HW-09/-10 | G3 |

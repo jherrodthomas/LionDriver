@@ -24,6 +24,8 @@
 # Rev 0.6 (2026-10-16, RR-2026-010 F-05): new causes DFM-010.C4 (switch overstress or latch-up from box supply transients) and
 # DFM-011.C2 (5 V SBU1 drive below the logic-high threshold with VL at VIN), action DFM-ACT-015 (confirm the DG419LE ratings from
 # Vishay document 76432, which could not be downloaded). MSR rows added for both: M 10 and M 8.
+# MSR F re-read from FMEDA rev 0.4 (U1/U2 at the SN 29500-2 reference value): DFM-010.C1 and DFM-011.C1 F 5 -> 6 (17.5 FIT);
+# DFM-010.C2 now points at the SBU1 driver row of FMEDA SG-009 (FMD-020, 2.5 FIT, F 4) instead of the switch row.
 schema_version: 1
 analysis:
   id: DFM
@@ -656,7 +658,7 @@ failure_modes:
       system_response: None
       effect_after_response: 'Unchanged: stock camera stays cut off after release is commanded'
       severity_after: 10
-      frequency: 5
+      frequency: 6
       monitoring: 10
       ap: H
       timing:
@@ -682,12 +684,12 @@ failure_modes:
       system_response: None
       effect_after_response: 'Unchanged: stock camera stays cut off after release is commanded'
       severity_after: 10
-      frequency: 5
+      frequency: 4
       monitoring: 10
       ap: H
       timing:
         basis: unknown
-      fmeda: fmeda-sg001/FMD-021
+      fmeda: fmeda-sg009/FMD-020
       actions:
       - DFM-ACT-007
   - id: DFM-010.C3
@@ -794,7 +796,7 @@ failure_modes:
       system_response: All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE)
       effect_after_response: Up to 2 s of stock LKA and item commands on the bus together, then no item output
       severity_after: 10
-      frequency: 5
+      frequency: 6
       monitoring: 8
       ap: H
       timing:
@@ -1343,7 +1345,8 @@ actions:
   status: open
 - id: DFM-ACT-003
   kind: detection
-  description: Run the watchdog HIL test (test_10_hw_watchdog) on the bench and confirm the relay releases on reset (HWSR-502, UK-06) (D-04)
+  description: Run the watchdog HIL test (test_10_hw_watchdog) on the bench and confirm the relay releases on reset (HWSR-502, UK-06) (D-04).
+    The lead deferred the HIL bench (DQ-049, 2026-10-14), so this waits for the bench
   owner: Jherrod Thomas
   status: open
 - id: DFM-ACT-004
