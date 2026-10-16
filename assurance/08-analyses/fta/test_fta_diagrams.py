@@ -68,7 +68,8 @@ class TestRealDocument(unittest.TestCase):
     self.assertEqual(genv[0].ref_tree, "SG-01")
 
   def test_goal_asils_from_wp_c03(self):
-    self.assertEqual(sorted(fd.goal_asils()), [f"SG-0{i}" for i in range(1, 8)])
+    # SG-08 (HARA v0.4) has no fault tree yet; the ASILs are read for every goal of WP-C-03.
+    self.assertEqual(sorted(fd.goal_asils()), [f"SG-0{i}" for i in range(1, 9)])
 
   def test_committed_outputs_current(self):
     outputs = fd.build()

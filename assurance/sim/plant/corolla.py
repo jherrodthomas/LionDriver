@@ -95,10 +95,10 @@ def as_dict() -> dict[str, float]:
   return {p.name: p.value for p in corolla_params()}
 
 
-def commonroad_parameters():
+def commonroad_parameters(d: dict[str, float] | None = None):
   """CommonRoad vehicle 2 with the Corolla values written over it."""
   from vehiclemodels.parameters_vehicle2 import parameters_vehicle2
-  d = as_dict()
+  d = d or as_dict()
   p = parameters_vehicle2()
   p.m, p.a, p.b, p.I_z, p.h_s = d["m"], d["a"], d["b"], d["I_z"], d["h_s"]
   p.w = d["width"]

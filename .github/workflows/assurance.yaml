@@ -254,3 +254,29 @@ jobs:
       run: |
         python3 assurance/sim/plant/report.py --check
         python3 assurance/sim/plant/test_plant.py
+    - name: Plant FMU (FMI 2.0, pythonfmu) built and run by FMPy, same trajectory as the plant in-process
+      run: python3 assurance/sim/plant/fmu/test_fmu.py
+
+  sim-scenarios:
+    name: simulation known scenarios
+    # WP-V-03 known scenarios as OpenSCENARIO/OpenDRIVE files (assurance/sim/scenarios, layer 2): the committed files
+    # equal a fresh generation, and every file replays headless in the pinned esmini release as specified.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Install the pinned packages of the simulation track
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/requirements.txt
+    - name: Cache the esmini release (checked against its SHA-256 on use)
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/liondriver-sim
+        key: esmini-v3.9.0-linux
+    - name: Scenario files current, replay checks pass and the replay table is current, tests
+      run: |
+        python3 assurance/sim/scenarios/generate.py --check
+        python3 assurance/sim/scenarios/fetch_esmini.py
+        python3 assurance/sim/scenarios/replay.py --check
+        python3 assurance/sim/scenarios/test_scenarios.py
