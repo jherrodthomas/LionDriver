@@ -62,6 +62,17 @@ class TestRejects(unittest.TestCase):
     with self.assertRaises(fs.ParseError):
       S.need("CA-99")
 
+  def test_figure_3_1_must_draw_every_vehicle_level_action(self):
+    S = fs.load()
+    self.assertEqual({e[0] for e in fs.F31_EDGES}, fs.vehicle_level_ids(S))
+    saved = fs.F31_EDGES
+    try:
+      fs.F31_EDGES = [e for e in saved if e[0] != "CA-13"]
+      with self.assertRaises(fs.ParseError):
+        fs.fig_3_1(S)
+    finally:
+      fs.F31_EDGES = saved
+
   def test_missing_tables_fail(self):
     with self.assertRaises(fs.ParseError):
       fs.Sources("# empty", {"scenarios": []}, [])

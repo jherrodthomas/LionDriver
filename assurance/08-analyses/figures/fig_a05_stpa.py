@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Draw the WP-A-05 (STPA) figures other than Figure 3-1.
+"""Draw the WP-A-05 (STPA) figures.
 
 Sources of record: `../WP-A-05-stpa.md`, `../stpa-map.yaml` and the decision register
 (`../../01-management/decisions/register.yaml`). The data-driven figures (2-1, 4-1, 5-1, 5-2) are
-built from those files. The structure and block figures (3-2 … 3-7, 5-3 … 5-6) are laid out here
+built from those files. The structure and block figures (3-1 … 3-7, 5-3 … 5-6) are laid out here
 by hand, because a layout is a drawing decision. Every ID they name (H-, SC-, CA-, FB-, UCA-, LS-,
 DQ-) is checked against the sources, so a renamed or removed item fails the check.
 Nothing here is analysis content: change WP-A-05 and regenerate.
@@ -230,6 +230,153 @@ def fig_2_1(S: Sources):
   return svg("Figure 2-1", W, H, "Figure 2-1. Losses, system-level hazards, constraints and safety goals (WP-A-05 §2)",
              "Each loss links to the hazards that lead to it; each hazard to its system constraint and safety goal. "
              "H-STPA-1 has no goal yet; H-07 is rated within other hazards.", "".join(b))
+
+
+# ============================================================================ Figure 3-1 vehicle-level control structure
+F31_STYLE = """<style>
+.t{fill:#0F172A}.m{fill:#475569}.s{font-size:11px}.xs{font-size:10px}.xxs{font-size:9.5px}.b{font-weight:700}.sb{font-weight:600}
+.item{fill:#FFFFFF;stroke:#64748B;stroke-width:1.4}
+.env{fill:#FFF7ED;stroke:#C2410C;stroke-width:1.8}
+.ext{fill:#F1F5F9;stroke:#94A3B8;stroke-width:1.2}
+.tag{font-size:10px;font-weight:700;letter-spacing:.04em}
+.ca{fill:none;stroke:#C2410C;stroke-width:2}
+.fb{fill:none;stroke:#0F766E;stroke-width:1.8}
+.lr{fill:#C2410C;font-size:9.5px;font-weight:600}
+.lt{fill:#0F766E;font-size:9.5px;font-weight:600}
+</style>"""
+
+# (x, y, w, h, class, [(text, x, y, class, size, anchor)])
+F31_BOXES = [
+  (680, 300, 420, 86, "item", [("C2 openpilot on the SoC", 696, 322, "t b", 13.5, None), ("item · E-01", 1086, 322, "m xxs", None, "end"),
+                               ("modeld, planner, controlsd, selfdrived,", 696, 342, "m xs", None, None),
+                               ("dmonitoringd, pandad, ui / soundd", 696, 356, "m xs", None, None)]),
+  (640, 470, 360, 90, "env", [("C3 panda safety model (MCU)", 656, 492, "t b", 13.5, None), ("item · E-03", 986, 492, "m xxs", None, "end"),
+                              ("block / forward, limits, authority,", 656, 514, "m xs", None, None),
+                              ("intercept drive, heartbeat, watchdog", 656, 528, "m xs", None, None)]),
+  (130, 470, 170, 90, "ext", [("C6 stock ADAS", 146, 492, "t b", 13, None), ("camera (PCS)", 146, 508, "t b", 13, None),
+                              ("external · UCA-42 → AOU-04", 146, 528, "m xxs", None, None)]),
+  (320, 660, 300, 80, "ext", [("C5 PCM / ACC / brake ECU", 336, 682, "t b", 13, None), ("cruise state, powertrain, brake", 336, 700, "m xs", None, None),
+                              ("external · UCA-41 → AOU-03, AOU-05", 336, 728, "m xxs", None, None)]),
+  (700, 660, 260, 80, "ext", [("C4 EPS ECU", 716, 682, "t b", 13, None), ("assist + LKA", 716, 700, "m xs", None, None),
+                              ("external · UCA-40 → AOU-01, AOU-02", 716, 728, "m xxs", None, None)]),
+  (972, 650, 204, 100, "item", [("Harness box (actuator)", 1074, 670, "t b", 12, "middle"), ("2 × DG419LE analog switches", 1074, 686, "m xs", None, "middle"),
+                                ("pull-down → pass-through", 1074, 700, "m xs", None, "middle"),
+                                ("supply: IGN via D1 / comma pwr", 1074, 714, "m xs", None, "middle"),
+                                ("stock camera path runs through · E-05", 1074, 728, "m xxs", None, "middle")]),
+]
+
+# (ID, path, kind, dashed) — every line on the figure, with the CA/FB it draws
+F31_EDGES = [
+  ("CA-03", "M260 130 H70 V836", "ca", False), ("CA-01", "M330 190 V656", "ca", False), ("CA-02", "M450 190 V656", "ca", False),
+  ("CA-04", "M570 190 V656", "ca", False), ("CA-07", "M850 300 V194", "ca", False), ("CA-05", "M710 386 V466", "ca", False),
+  ("CA-08", "M820 386 V466", "ca", False), ("CA-06", "M690 560 V712 H624", "ca", False), ("CA-10", "M660 560 V680 H624", "ca", True),
+  ("CA-10", "M760 560 V656", "ca", True), ("CA-05", "M870 560 V656", "ca", False), ("CA-09", "M980 560 V610 H1105 V646", "ca", False),
+  ("CA-13", "M215 560 V712 H316", "ca", False), ("CA-12", "M470 740 V836", "ca", False), ("CA-11", "M830 740 V836", "ca", False),
+  ("FB-03", "M100 840 V166 H256", "fb", False), ("FB-02", "M280 470 V194", "fb", False), ("FB-01", "M655 470 V194", "fb", False),
+  ("FB-01", "M740 300 V194", "fb", False), ("FB-07", "M960 190 V296", "fb", False), ("FB-04", "M930 470 V390", "fb", False),
+  ("FB-05", "M1190 840 V360 H1104", "fb", False), ("FB-05", "M1190 505 H1004", "fb", False), ("FB-06", "M1225 840 V330 H1104", "fb", False),
+]
+
+# (label, x, y, width, kind) — pills on the lines
+F31_TAGS = [
+  ("CA-01", 308, 214, 44, "ca"), ("CA-02", 428, 214, 44, "ca"), ("CA-04", 548, 214, 44, "ca"), ("CA-03", 96, 114, 44, "ca"),
+  ("FB-01", 718, 214, 44, "fb"), ("CA-07", 828, 214, 44, "ca"), ("FB-07", 938, 232, 44, "fb"), ("FB-01", 633, 300, 44, "fb"),
+  ("FB-02", 258, 300, 44, "fb"), ("CA-05 · CA-06", 666, 400, 88, "ca"), ("CA-08", 798, 400, 44, "ca"), ("FB-04", 908, 400, 44, "fb"),
+  ("FB-06", 1112, 296, 44, "fb"), ("FB-05", 1168, 420, 44, "fb"), ("CA-10", 638, 600, 44, "ca"), ("CA-06", 632, 720, 44, "ca"),
+  ("CA-10", 738, 600, 44, "ca"), ("CA-05", 848, 600, 44, "ca"), ("CA-09", 1010, 584, 44, "ca"), ("CA-13", 193, 600, 44, "ca"),
+  ("CA-12", 448, 780, 44, "ca"), ("CA-11", 808, 780, 44, "ca"), ("FB-03", 78, 760, 44, "fb"),
+]
+
+# (x, y, kind, anchor, lines)
+F31_LABELS = [
+  (146, 127, "ca", None, ["steering input"]), (96, 148, "ca", None, ["mechanical, adds at the rack"]),
+  (336, 248, "ca", None, ["engage / resume", "cruise SET, RES"]), (456, 248, "ca", None, ["disengage: brake", "pedal, CANCEL", "(also to C2, C3)"]),
+  (576, 248, "ca", None, ["accelerator", "override"]), (274, 334, "fb", "end", ["cluster: cruise,", "LKA / LTA, PCS", "warnings (C5 / C6)"]),
+  (649, 334, "fb", "end", ["siren", "from C3"]), (746, 248, "fb", None, ["engagement", "state, alerts", "(UI, sounds)"]),
+  (856, 248, "ca", None, ["alerts, take-over", "requests, DM", "escalation"]), (966, 266, "fb", None, ["driver camera,", "wheel touch"]),
+  (716, 436, "ca", None, ["torque 0x2E4,", "accel 0x343"]), (826, 436, "ca", None, ["safety mode 0xdc,", "heartbeat 0xf3"]),
+  (936, 436, "fb", None, ["panda", "health"]), (1160, 309, "fb", None, ["road", "cameras"]), (1184, 456, "fb", "end", ["vehicle", "CAN state"]),
+  (766, 634, "ca", None, ["block TX /", "controls off"]), (876, 634, "ca", None, ["lateral torque", "0x2E4"]),
+  (1060, 597, "ca", None, ["intercept drive (SBU1)"]), (209, 634, "ca", "end", ["PCS brake,", "warnings;", "via harness box", "or forwarded by C3"]),
+  (476, 816, "ca", None, ["accel / brake"]), (836, 816, "ca", None, ["rack torque"]), (106, 796, "fb", None, ["vehicle motion,", "steering feel"]),
+]
+
+
+def vehicle_level_ids(S):
+  """CA and FB IDs of the vehicle-level structure (§3.3); §3.4 adds CA-14 … CA-22 and FB-08 … FB-11 inside openpilot."""
+  return {i for i in S.ids if re.fullmatch(r"(CA-(0\d|1[0-3])|FB-0[1-7])", i)}
+
+
+def fig_3_1(S):
+  drawn = {e[0] for e in F31_EDGES}
+  tagged = {t for lab, *_ in F31_TAGS for t in lab.split(" · ")}
+  S.need(*sorted(drawn | tagged))
+  missing = vehicle_level_ids(S) - drawn
+  if missing:
+    raise ParseError(f"Figure 3-1 does not draw {', '.join(sorted(missing))} of the §3.3 table")
+  if drawn - tagged:
+    raise ParseError(f"Figure 3-1 draws {', '.join(sorted(drawn - tagged))} without a tag")
+  o = []
+  o.append('<rect width="1280" height="1000" fill="#FFFFFF"/>')
+  o.append('<text x="40" y="44" class="t b" font-size="20">Figure 3-1 · STPA control structure</text>')
+  o.append('<text x="40" y="66" class="m" font-size="12.5">Reference configuration while driving · controllers top to bottom by authority · control actions down, feedback up</text>')
+  o.append('<text x="1240" y="44" class="m s" text-anchor="end">WP-A-05 §3.1</text>')
+  o.append('<text x="1240" y="62" class="m s" text-anchor="end">controllers §3.2 · CA / FB §3.3</text>')
+  o.append('<line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>')
+  # C1 driver with a figure icon
+  o.append('<rect x="260" y="98" width="740" height="92" rx="10" class="item"/>')
+  o.append('<g transform="translate(296,126)" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round">'
+           '<circle cx="0" cy="0" r="8"/><path d="M0 8V32M-13 16H13M0 32L-10 48M0 32L10 48"/></g>')
+  o.append('<text x="330" y="124" class="t b" font-size="14">C1 Driver</text>')
+  o.append('<text x="330" y="142" class="m xs">human controller: supervises at all times, overrides or disengages, responds to alerts</text>')
+  o.append('<text x="330" y="160" class="t xs sb">Process model:</text>')
+  o.append('<text x="408" y="160" class="m xs">item state (engaged / overriding / disengaged), road, own role</text>')
+  for x, y, w, h, cls, texts in F31_BOXES:
+    o.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" class="{cls}"/>')
+    for t, tx, ty, tc, size, anchor in texts:
+      extra = (f' font-size="{size:g}"' if size else "") + (f' text-anchor="{anchor}"' if anchor else "")
+      o.append(f'<text x="{tx}" y="{ty}" class="{tc}"{extra}>{escape(t)}</text>')
+  o.append('<text x="1074" y="742" class="m xxs" text-anchor="middle" style="fill:#B91C1C">no position feedback (§3.5)</text>')
+  o.append('<path d="M1168 650 V575 H1004" fill="none" stroke="#B91C1C" stroke-width="1.4" stroke-dasharray="3 4"/>')
+  o.append('<text x="1012" y="570" class="m xxs" style="fill:#B91C1C">no feedback of the switch position</text>')
+  o.append('<rect x="40" y="840" width="1200" height="56" rx="10" fill="#FFFBEB" stroke="#B45309" stroke-width="1.6"/>')
+  o.append('<text x="640" y="864" class="t b" font-size="14" text-anchor="middle">Controlled process: vehicle lateral and longitudinal motion</text>')
+  o.append('<text x="640" y="882" class="m xs" text-anchor="middle">rack torque from C4 and the driver\'s steering add at the rack; acceleration and braking via C5</text>')
+  for ident, d, kind, dashed in F31_EDGES:
+    dash = ' stroke-dasharray="6 4"' if dashed else ""
+    mk = "aR" if kind == "ca" else "aT"
+    o.append(f'<path d="{d}" class="{kind}"{dash} marker-end="url(#{mk})"><title>{ident}</title></path>')
+  o.append('<circle cx="1190" cy="505" r="3" fill="#0F766E"/>')
+  o.append('<g class="tag">')
+  for lab, x, y, w, kind in F31_TAGS:
+    col = "#C2410C" if kind == "ca" else "#0F766E"
+    o.append(f'<rect x="{x}" y="{y}" width="{w}" height="18" rx="9" fill="{col}"/>'
+             f'<text x="{x + w // 2}" y="{y + 13}" fill="#fff" text-anchor="middle">{escape(lab)}</text>')
+  o.append('</g>')
+  for x, y, kind, anchor, rows in F31_LABELS:
+    a = f' text-anchor="{anchor}"' if anchor else ""
+    for i, r in enumerate(rows):
+      o.append(f'<text x="{x}" y="{y + 13 * i}" class="{"lr" if kind == "ca" else "lt"}"{a}>{escape(r)}</text>')
+  o.append('<line x1="40" y1="926" x2="1240" y2="926" stroke="#E2E8F0"/>')
+  o.append('<g transform="translate(40,952)" font-size="10.5">'
+           '<line x1="0" y1="0" x2="28" y2="0" stroke="#C2410C" stroke-width="2"/><text x="36" y="4" class="t">Control action</text>'
+           '<line x1="136" y1="0" x2="164" y2="0" stroke="#C2410C" stroke-width="2" stroke-dasharray="6 4"/><text x="172" y="4" class="t">Control action by withholding (frames not sent)</text>'
+           '<line x1="430" y1="0" x2="458" y2="0" stroke="#0F766E" stroke-width="1.8"/><text x="466" y="4" class="t">Feedback</text>'
+           '<rect x="546" y="-8" width="28" height="16" rx="4" fill="#FFFFFF" stroke="#64748B"/><text x="582" y="4" class="t">Controller in the item</text>'
+           '<rect x="722" y="-8" width="28" height="16" rx="4" fill="#FFF7ED" stroke="#C2410C"/><text x="758" y="4" class="t">Safety envelope</text>'
+           '<rect x="868" y="-8" width="28" height="16" rx="4" fill="#F1F5F9" stroke="#94A3B8"/><text x="904" y="4" class="t">External controller (UCAs as assumptions, §4.4)</text></g>')
+  o.append('<text x="40" y="984" class="m xs">CA-07 is a control action of C2 on the driver and therefore points up. Every CA and FB of the §3.3 table is drawn; '
+           'generated by fig_a05_stpa.py.</text>')
+  title = "Figure 3-1. STPA control structure of the reference configuration (WP-A-05 §3.1)"
+  desc = ("Controllers from top to bottom by authority: C1 driver; C2 openpilot on the SoC; C3 panda safety model on the MCU and C6 stock "
+          "ADAS camera; C5 PCM/ACC/brake ECU, C4 EPS ECU and the harness box with its two intercept switches; the controlled process is "
+          "the vehicle lateral and longitudinal motion. Control actions CA-01 to CA-13 point down (CA-07, alerts to the driver, points "
+          "up); feedback FB-01 to FB-07 points up. The harness box reports no switch position.")
+  defs = ('<marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>'
+          '<marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>')
+  return (f'<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1000" viewBox="0 0 1280 1000" font-family="{FONT}" '
+          f'role="img" aria-labelledby="t d">\n<title id="t">{escape(title)}</title>\n<desc id="d">{escape(desc)}</desc>\n'
+          f'<defs>{defs}{F31_STYLE}</defs>\n' + "\n".join(o) + "\n</svg>\n")
 
 
 # ============================================================================ Figure 3-2 simple -> detailed
@@ -813,6 +960,7 @@ def fig_5_2(S):
 
 FIGURES = {
   "fig-a05-2-1-losses-hazards-goals.svg": fig_2_1,
+  "fig-a05-3-1-stpa-control-structure.svg": fig_3_1,
   "fig-a05-3-2-control-structure-simple-detailed.svg": fig_3_2,
   "fig-a05-3-3-loop-driver.svg": fig_3_3,
   "fig-a05-3-4-loop-openpilot.svg": fig_3_4,
