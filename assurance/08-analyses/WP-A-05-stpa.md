@@ -468,7 +468,7 @@ The scenarios with the most parts in them, drawn as block diagrams of the real p
 
 *Figure 5-4.* How a take-over request reaches the driver (LS-04, LS-15, LS-20).
 
-![Figure 5-5: driver camera, dmonitoringd, alerts 1 to 3 with their times, forceDecel, planner and the stop in lane, with LS-09 and LS-35 marked and DQ-281](figures/fig-a05-5-5-unresponsive-driver.svg)
+![Figure 5-5: driver camera, dmonitoringd, alerts 1 to 3 with their times, forceDecel, planner and the stop in lane, with LS-09 and LS-35 marked and DQ-365](figures/fig-a05-5-5-unresponsive-driver.svg)
 
 *Figure 5-5.* The driver stops responding (LS-09, LS-35).
 
