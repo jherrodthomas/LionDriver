@@ -328,12 +328,12 @@ events:
     class: random_hw
     fmea: [DFM-010]
     fmeda: [fmeda-sg009:FMD-028]
-    note: DFM-010.C3 (pull-down R2 or R3 open, RR-2026-010 F-03)
+    note: DFM-010.C3 (pull-down R2 or R3 open, RR-2026-010 F-03). Bench test VS-HW-23 (DQ-209 A)
   - id: BE-7.17
     class: random_hw
     fmea: [DFM-020]
     fmeda: [fmeda-sg009:FMD-030, fmeda-sg009:FMD-031]
-    note: DFM-020.C1 (ignition branch or D1 open without comma power), DFM-020.C2 (VIN shorted, D4)
+    note: DFM-020.C1 (ignition branch or D1 open without comma power), DFM-020.C2 (VIN shorted, D4). Kept with comma's box (DQ-209 A); bench test VS-HW-22
   - id: BE-7.18
     class: random_hw
     fmea: [DFM-021]

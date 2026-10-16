@@ -4014,7 +4014,7 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-16}
   applied: {ref: 2c9c67f2e, record: "WP-H-01 HWSR-702, -506a, -506e, OI-6; WP-H-02 OI-4 (DC-03 not pursued); WP-H-06 §3.1; RR-2026-010 §5; DFMEA DFM-ACT-007 not_implemented, DFM-ACT-014", at: 2026-10-16}
-  note: "Hardware part applied. Left for other sessions: AOU-13 wording in WP-C-01 and WP-C-04 (concept), TSR-702 status (system). DFA part applied 2026-10-16 (WP-A-03 v0.11 DFI-27, DFI-28, IC-05, OI-9; dfa.yaml rev 0.10 DFI-20, DFI-21, DOI-008). Follow-up question for the SG-07 metric shortfall: DQ-320."
+  note: "Hardware part applied. Left for other sessions: AOU-13 wording in WP-C-01 and WP-C-04 (concept), TSR-702 status (system). DFA part applied 2026-10-16 (WP-A-03 v0.11 DFI-27, DFI-28, IC-05, OI-9; dfa.yaml rev 0.10 DFI-20, DFI-21, DOI-008). Follow-up question for the SG-07 metric shortfall: DQ-320. FTA part applied 2026-10-16 (WP-A-04 v1.4: SG-07 events, MCS-07.8, -07.11, -07.12, -07.15, SPF-07, SPF-15; tree structure unchanged)."
 
 - id: DQ-340
   question: "If the driver stays unresponsive at the last driver-monitoring alert, what should the car do?"
