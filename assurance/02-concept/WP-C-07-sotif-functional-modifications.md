@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-07 Functional modifications addressing SOTIF risk |
 | Standard reference | ISO 21448:2022 §8 (functional modifications addressing SOTIF-related risks); ASPICE 4.0 SYS.2 |
-| Version | 0.1 |
+| Version | 0.2 (FM-07 and FM-08 follow the highway-only ODD, decision register DQ-023, and the 110 km/h controllability test, DQ-091; 2026-10-16). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF (some modifications also support FSRs in WP-C-04) |
 | Author | Assurance team (initial draft) |
@@ -108,7 +108,7 @@ Priority: **P1** = needed before any LionDriver on-road operation beyond WP-V-07
 
 | Attribute | Content |
 |---|---|
-| Change | (a) Above the ODD bound (120 km/h, WP-C-02 §3.1): warning, then soft disable if the speed is not reduced within a set time. (b) Above `MAX_CTRL_SPEED` (≈149 km/h): soft disable instead of warning only. (c) Limit the maximum set speed to the ODD bound |
+| Change | (a) Above the ODD bound (120 km/h, WP-C-02 §3.1; controllability is tested only up to 110 km/h, decision register DQ-091, so the bound may be lowered to 110 km/h, DQ-210): warning, then soft disable if the speed is not reduced within a set time. (b) Above `MAX_CTRL_SPEED` (≈149 km/h): soft disable instead of warning only. (c) Limit the maximum set speed to the ODD bound |
 | Rationale | FI-16; TC-20 (model outputs unpredictable above training distribution, per code comment `events.py:988`) |
 | Affected code | `openpilot/selfdrive/car/car_events.py:126`; `events.py:989-996`; `openpilot/selfdrive/car/cruise.py:12`; `opendbc_repo/opendbc/car/interfaces.py:23-24` |
 | Expected risk reduction | Removes the high-speed part of SH-13 |
@@ -119,7 +119,7 @@ Priority: **P1** = needed before any LionDriver on-road operation beyond WP-V-07
 
 | Attribute | Content |
 |---|---|
-| Change | Investigate options: (a) offline map with road class to give a no-entry or take-over request outside ODD-H/ODD-A; (b) use model outputs (road edge, lane-line probabilities) to detect missing markings and warn. Decide feasibility at G2 |
+| Change | Investigate options: (a) offline map with road class to give a no-entry or take-over request off the highway (ODD-H is the only ODD part since DQ-023); (b) use model outputs (road edge, lane-line probabilities) to detect missing markings and warn. Decide feasibility at G2 |
 | Rationale | No ODD monitor exists (WP-C-02 §5); construction zones and unmarked roads are TCs (TC-05, TC-06) |
 | Affected code | New component; inputs from `modelV2` (`fill_model_msg.py`) and GNSS (`locationd`) |
 | Expected risk reduction | Reduces exposure to TC-05/TC-06; size unknown until feasibility |

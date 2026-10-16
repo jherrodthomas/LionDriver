@@ -3964,3 +3964,25 @@
       detail: "Removes the broken-ignition-wire cause only; switch, pull-down and clamp faults remain. Cost: one extra part per install."
   sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03"]
   status: queued
+
+- id: DQ-210
+  question: "Should the highway ODD stop at 110 km/h, the highest speed at which the driver's control of a steering fault will be tested?"
+  context: "You decided to test controllability up to 110 km/h (DQ-091), but the ODD still runs to 120 km/h. Between 110 and 120 km/h nothing shows the driver can catch a steering fault, so **the SOTIF argument gives no controllability credit there**: the targets for that band must be met without it, or the band leaves the ODD. Posted limits above 110 km/h (68 mph) exist on some US interstates."
+  reversibility: revisit
+  blocks: "ODD speed range (WP-C-02 §3.1); FM-07 speed bound; WP-V-02 §3.3 range of P(not controlled); KS-25"
+  gate: G1
+  decider: lead
+  after: [DQ-091]
+  options:
+    - key: A
+      recommended: true
+      title: "Cap the ODD at 110 km/h"
+      detail: "Every claimed speed is tested; FM-07 warns and then disengages above 110 km/h. Cost: no assistance on the few roads posted above 68 mph."
+    - key: B
+      title: "Keep 120 km/h and carry the 110-120 km/h band without controllability credit"
+      detail: "Full highway range. Cost: that band's targets assume the driver never catches the fault, which may not be reachable; the release argument states the gap."
+    - key: C
+      title: "Keep 120 km/h and test controllability to 120 km/h too"
+      detail: "Evidence for the whole range. Cost: a second, higher-risk test review and a site that allows 120 km/h."
+  sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3 item 3", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-07", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md §3 speed"]
+  status: queued

@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-11 AI system definition and AI safety requirements |
 | Standard reference | ISO/PAS 8800:2024 (AI system definition, input space, AI safety requirements, data requirements); ISO 21448:2022 §5, §7; ASPICE 4.0 MLE.1, SUP.11 (data requirements) |
-| Version | 0.2 (§2.2 AI system boundary diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.1 |
+| Version | 0.3 (input space follows the highway-only ODD, decision register DQ-023; DSR-05 upload policy decided, DQ-084; AIR-24 rests on D-05 as adopted, DQ-038; 2026-10-16). 0.2 (§2.2 AI system boundary diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | QM (FuSa) / SOTIF for AI-1 and AI-2; AI-3 / DM chain QM per the [WP-C-04 §7](WP-C-04-functional-safety-concept.md) proposal (SOTIF misuse measure) |
 | Author | Assurance team (initial draft) |
@@ -104,16 +104,16 @@ Outside the AI system but consuming its outputs: `controlsd`, `plannerd`, `radar
 
 ## 3. Input space definition linked to the ODD
 
-The input space is the set of input conditions under which the AIRs in §6 are claimed. It is derived from the ODD taxonomy in [WP-C-02 §3.1](WP-C-02-odd-and-intended-functionality.md#31-odd-taxonomy) (ODD-H limited-access highway, ODD-A arterial and rural roads); the ODD column gives the link. Anything outside this space is out-of-distribution (OOD) by definition for LionDriver's argument, whether or not comma's training set covered it.
+The input space is the set of input conditions under which the AIRs in §6 are claimed. It is derived from the ODD taxonomy in [WP-C-02 §3.1](WP-C-02-odd-and-intended-functionality.md#31-odd-taxonomy) (ODD-H limited-access highway; the arterial and rural part ODD-A is no longer claimed since 2026-10-14, decision register DQ-023 option B); the ODD column gives the link. Anything outside this space is out-of-distribution (OOD) by definition for LionDriver's argument, whether or not comma's training set covered it.
 
 | Dimension | Input-space bound (proposed) | ODD link | Observable at runtime? | Basis |
 |---|---|---|---|---|
-| Road type | ODD-H: limited-access divided highway; ODD-A: divided/undivided arterials and two-lane rural highways, intersections traversed with the driver controlling stops and turns | WP-C-02 §3.1 road type, intersections; HARA OS-01…OS-07 | Partially (map/GNSS not used for gating today) | `docs/LIMITATIONS.md:14-19` |
+| Road type | ODD-H: limited-access divided highway. Arterials, rural roads and intersections are outside the input space since DQ-023 | WP-C-02 §3.1 road type, intersections; HARA OS-01…OS-07 | Partially (map/GNSS not used for gating today) | `docs/LIMITATIONS.md:14-19` |
 | Lane marking quality | Visible longitudinal markings on at least one side (US MUTCD); no long faded sections, no conflicting old/new markings, no work-zone markings (TC-05, TC-06) | WP-C-02 §3.1 lane markings | Partially (`laneLineProbs`) | `LIMITATIONS.md:15` |
 | Curvature | R ≥ v²/2.5 m/s² (R_ODD, 0.5 m/s² margin below the 3.0 m/s² controller limit, `drive_helpers.py:9-14`); grade and banking ≤ 6 % (TC-14…TC-16) | WP-C-02 §3.1, §3.2 | Yes (vehicle state) | `LIMITATIONS.md:14` |
-| Speed | ODD-H 0–120 km/h, ODD-A 0–90 km/h, not above the posted limit; upstream allows engagement up to ≈ 149 km/h and only warns (GAP-19, TC-20, FM-07) | WP-C-02 §3.1 speed | Yes | `events.py:989-996` |
+| Speed | ODD-H 0–120 km/h, not above the posted limit (controllability tested only to 110 km/h, DQ-091; the bound may be lowered, DQ-210); upstream allows engagement up to ≈ 149 km/h and only warns (GAP-19, TC-20, FM-07) | WP-C-02 §3.1 speed | Yes | `events.py:989-996` |
 | Illumination | Day, dusk/dawn, night with headlights; excludes low sun directly in the camera field of view, oncoming high-beam glare and tunnels until validated (TC-01, TC-02, TC-18) | WP-C-02 §3.1 lighting | Partially (camera exposure stats) | `LIMITATIONS.md:18` |
-| Weather / visibility | None or light rain; visibility ≥ 200 m (ODD-H) / ≥ 150 m (ODD-A); no snow, fog, moderate/heavy rain (TC-03, TC-04) | WP-C-02 §3.1 weather | No direct detector | `LIMITATIONS.md:10` |
+| Weather / visibility | None or light rain; visibility ≥ 200 m; no snow, fog, moderate/heavy rain (TC-03, TC-04) | WP-C-02 §3.1 weather | No direct detector | `LIMITATIONS.md:10` |
 | Optical path | Clean windscreen; no obstruction in the camera area | AOU-08, OPS-03 ([WP-O-02](../09-production-operation/WP-O-02-operation-service-decommissioning.md)) | No dedicated detector | `LIMITATIONS.md:11-12` |
 | Mounting / calibration | `calStatus == calibrated`, pitch −5.2°…+9.7°, yaw ±4.0° (`calibrationd.py:43-46`), plus the narrower installation tolerance of [WP-O-01](../09-production-operation/WP-O-01-installation-and-provisioning-control.md) INS-25 | AOU-08 | Yes | `calibrationd.py:51` |
 | Camera hardware | The road and cabin sensors of the reference device revision ([WP-C-01](WP-C-01-item-definition.md) OI-2); intrinsics from `DEVICE_CAMERAS` (`common/transformations/camera.py:55-71`) | Reference configuration | Yes (`deviceType`, sensor) | — |
@@ -208,7 +208,7 @@ IDs AIR-01…AIR-30 are allocated in this document.
 | ID | Statement | Comp. | Parent | Verification | Status / evidence |
 |---|---|---|---|---|---|
 | AIR-23 | Every drive log shall identify the exact model artefacts in use (hash or release-manifest ID), so that field data can be attributed to a model version | modeld, dmonitoringmodeld | WP-O-04; G3.6 | INSP, log check | **Not met**: only `modelV2.big` is published (`modeld.py:435`) |
-| AIR-24 | Any change to a model artefact, the tinygrad pin, or the files listed in WP-M-10 §9 shall be released only after the AIR verification set has been re-run on the new configuration (D-05) | Process | D-05 | REV (change records) | Process defined in WP-M-10 §9; no change has occurred under it |
+| AIR-24 | Any change to a model artefact, the tinygrad pin, or the files listed in WP-M-10 §9 shall be released only after the AIR verification set has been re-run on the new configuration (D-05, adopted as written by the project lead on 2026-10-14, decision register DQ-038) | Process | D-05 | REV (change records) | Process defined in WP-M-10 §9; no change has occurred under it |
 
 ### 6.7 Fallback behaviour and architecture
 
@@ -231,7 +231,7 @@ IDs AIR-01…AIR-30 are allocated in this document.
 | DSR-02 | Evaluation data shall be recorded on the reference configuration (vehicle, device revision, release software) by safety drivers under [WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md), with full logs (`rlog`, `fcamera`, `ecamera`, `dcamera` where consented) | AIR-01…AIR-18 | REV of dataset manifest | Not started. No LionDriver data exists |
 | DSR-03 | Every evaluation segment shall carry tags for each input-space dimension in §3 (road type, marking quality, curvature band, speed band, illumination, weather, calibration state, traffic density, driver attributes for DM) | AIR-09 | Sample audit | Not started |
 | DSR-04 | Each stratum for which a claim is made shall hold enough data to support its acceptance criterion at the confidence level set in WP-V-02 (e.g., zero-failure demonstration of a 5 % event rate at 95 % confidence needs ≥ 59 independent scenario instances) | AIR-09, VT-nn | REV | Not started |
-| DSR-05 | Evaluation data shall be independent of the model's training data: recorded after the model's upstream release date, and not uploaded to comma.ai servers, or with an upload log that lets independence be judged for later models | WP-M-10 §6.3 | REV of upload settings and logs | Not started |
+| DSR-05 | Evaluation data shall be independent of the model's training data: recorded after the model's upstream release date, and not uploaded to comma.ai servers, or with an upload log that lets independence be judged for later models. Decided 2026-10-14 (DQ-084 option A): LionDriver drives are not uploaded; LionDriver keeps its own logs | WP-M-10 §6.3 | REV of upload settings and logs | Not started |
 | DSR-06 | A label specification shall define each ground-truth quantity (lane-centre offset, lane-departure events, lead presence/distance with the stock radar track as reference, phantom-braking events, DM gaze/eyes/phone labels) with its measurement method and tolerance | AIR-01…AIR-08 | REV | Not started |
 | DSR-07 | At least 10 % **(TBC)** of human labels shall be double-annotated; agreement (Cohen's κ for classes, RMS difference for continuous values) shall meet thresholds set in the label specification | DSR-06 | Measurement | Not started |
 | DSR-08 | Datasets shall be versioned by content hash, immutable once used for a verification record, and stored under LionDriver control ([WP-P-01](../07-supporting/WP-P-01-configuration-management-plan.md)) | AIR-24 | CM audit | Not started |

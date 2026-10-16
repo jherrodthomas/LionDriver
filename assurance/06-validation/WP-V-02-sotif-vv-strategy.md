@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-02 SOTIF verification and validation strategy, validation targets |
 | Standard reference | ISO 21448:2022 §9 (V&V strategy, validation targets), Annex C (informative, validation target derivation); ISO/PAS 8800:2024 (AI V&V); ASPICE 4.0 VAL.1 |
-| Version | 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
+| Version | 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -20,7 +20,7 @@ Scope: reference configuration of [WP-M-01 §3.1](../01-management/WP-M-01-assur
 
 Sequencing rule ([WP-M-08 §4.1](../01-management/WP-M-08-sotif-plan.md#41-sequencing-rules)): the targets in §4 are fixed and approved **before** evidence for them is collected.
 
-Inputs: SOTIF hazards SH-01…SH-13 and acceptance criteria ([WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md) §3, §5), functional insufficiencies FI-01…FI-22 and triggering conditions TC-01…TC-33 ([WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md)), functional modifications FM-01…FM-11 ([WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md)), ODD parts ODD-H and ODD-A ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md)), controllability assumptions CA-01…CA-07 and DM performance DMP-01…DMP-04 ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md)). [WP-C-05 §5.2](../02-concept/WP-C-05-sotif-hazard-identification.md#52-derivation-method-for-validation-targets-to-be-applied-in-wp-v-02) delegates the numeric targets to this document; §3 applies that method.
+Inputs: SOTIF hazards SH-01…SH-13 and acceptance criteria ([WP-C-05](../02-concept/WP-C-05-sotif-hazard-identification.md) §3, §5), functional insufficiencies FI-01…FI-22 and triggering conditions TC-01…TC-33 ([WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md)), functional modifications FM-01…FM-11 ([WP-C-07](../02-concept/WP-C-07-sotif-functional-modifications.md)), ODD part ODD-H ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md); highways only since 2026-10-14, decision register DQ-023 option B, so the ODD-A values kept below set no target), controllability assumptions CA-01…CA-07 and DM performance DMP-01…DMP-04 ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md)). [WP-C-05 §5.2](../02-concept/WP-C-05-sotif-hazard-identification.md#52-derivation-method-for-validation-targets-to-be-applied-in-wp-v-02) delegates the numeric targets to this document; §3 applies that method.
 
 ## 2. Acceptance criteria (input)
 
@@ -35,7 +35,7 @@ The acceptance criteria are those of [WP-C-05 §5](../02-concept/WP-C-05-sotif-h
 
 For each SOTIF hazardous behaviour SH-nn:
 
-1. **Harm budget.** Allocate to each SH group of WP-C-05 §5.2 step 3 (lateral SH-01/02/10; longitudinal SH-03/04/06/11; mode and override SH-05/09; SH-08) a share `k` of the road-class-specific B1 harm rate `λ_B1` for the relevant harm class (injury crash or fatality), separately for ODD-H and ODD-A:  `λ_harm,SH ≤ k · λ_B1`.
+1. **Harm budget.** Allocate to each SH group of WP-C-05 §5.2 step 3 (lateral SH-01/02/10; longitudinal SH-03/04/06/11; mode and override SH-05/09; SH-08) a share `k` of the road-class-specific B1 harm rate `λ_B1` for the relevant harm class (injury crash or fatality), for ODD-H (ODD-A is no longer claimed, DQ-023):  `λ_harm,SH ≤ k · λ_B1`.
 2. **Hazardous-behaviour rate.** Divide by the probability that the hazardous behaviour, once it occurs, leads to harm: `P(harm | HB) = P(E-situation) · P(not controlled) · P(severity class)`. Each factor needs evidence: P(E-situation) from LionDriver drive logs (§3.4), P(not controlled) from the controllability tests in [WP-V-01](WP-V-01-safety-validation.md) (§3.3), and P(severity class) from crash statistics (§3.5). A factor without evidence is set to 1. Some SHs cause harm in more than one situation s with different severity, such as SH-03 following (OS-05) and approaching (OS-07). For those, the probability is summed over the situations: `P(harm | HB) = Σ_s P(E_s) · P(not controlled)_s · P(severity class)_s`.
    `λ_HB,SH ≤ k · λ_B1 / P(harm | HB)`
 3. **Demonstration size.** For a zero-failure demonstration at confidence C, the exposure needed is
@@ -61,7 +61,7 @@ The figures below are **illustrative orders of magnitude** to show feasibility; 
 
 | Means | Plausible capacity per year (one reference vehicle, one maintainer plus safety drivers) | Reaches |
 |---|---|---|
-| Public-road driving with safety driver (WP-V-07) | 10⁴ – 2 × 10⁴ km engaged (≈ 150–300 h) | Exposure estimates ε_s for common scenarios; surrogate rates (takeovers, envelope hits); **no** rate-level demonstration of cases A–D |
+| Public-road driving with safety driver (WP-V-07; engaged at ≤ 105 km/h, DQ-046) | 10⁴ – 2 × 10⁴ km engaged (≈ 150–300 h) | Exposure estimates ε_s for common scenarios; surrogate rates (takeovers, envelope hits); **no** rate-level demonstration of cases A–D |
 | Closed-course trials | Tens to low hundreds of trials per scenario per campaign | Case F; case E for a few scenarios |
 | Replay of recorded drives (process/model replay, open loop) | All recorded data, repeatedly, per software change | Perception and planner outputs on real inputs; no closed-loop consequence |
 | Simulation (MetaDrive, closed loop) | 10³ – 10⁵ runs per scenario family (compute-bound) | Case E and below for scenario families that the simulator can represent credibly (§5.3) |
@@ -95,10 +95,10 @@ Step 2 takes P(not controlled) only from driver controllability tests with test 
    | SH-05, SH-08, SH-09, SH-11, SH-12, SH-13 | none | P(not controlled) = 1 |
 
 2. **Value.** P(not controlled) is the one-sided 95 % upper confidence bound on the share of valid subjects who did not control the event, taken at the least favourable tested condition (speed, direction, hands-on or hands-off). With n valid subjects and no failure, the bound is `1 − 0.05^(1/n)`. With failures, it is the Clopper–Pearson bound. The point estimate is not used.
-3. **Range.** The value applies only up to the highest speed tested. For the part of the ODD above it, P(not controlled) = 1. VS-VAL-10 runs up to 90 km/h, and 110 km/h only after a separate risk review, while ODD-H extends to 120 km/h ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md)).
+3. **Range.** The value applies only up to the highest speed tested. For the part of the ODD above it, P(not controlled) = 1. VS-VAL-10 runs up to 90 km/h, and to 110 km/h after a separate risk review, which the project lead decided to hold (decision register DQ-091 option A, 2026-10-14). ODD-H extends to 120 km/h ([WP-C-02](../02-concept/WP-C-02-odd-and-intended-functionality.md)), so P(not controlled) = 1 from 110 to 120 km/h unless the ODD bound is lowered to the tested speed (DQ-210, queued for the lead).
 4. **Validity.** The value holds for the release whose envelope limits and alert timing were tested. A change to either needs a re-run, or a recorded argument that the tested behaviour bounds the new one, in the impact analysis ([WP-P-02](../07-supporting/WP-P-02-change-management.md)).
 
-What this gives: 20 valid subjects with no failure bound P(not controlled) at 0.14, not the 0.1 assumed in case D of §3.1. Reaching 0.1 needs at least 29 subjects with no failure, and 0.01 needs 299. The sample size per condition is agreed with the assessor together with the controllability pass criteria ([WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) OI-3).
+What this gives: 20 valid subjects with no failure bound P(not controlled) at 0.14, not the 0.1 assumed in case D of §3.1. Reaching 0.1 needs at least 29 subjects with no failure, and 0.01 needs 299. The controllability pass criteria (override force of about 50 N, lateral margin) are fixed now from the concept drafts, before any subject test, and are not changed after testing starts (decision register DQ-042 option A, 2026-10-14; the values are recorded under [WP-V-01](WP-V-01-safety-validation.md) OI-3 and [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) OI-3). The sample size per condition is agreed with the assessor.
 
 ### 3.4 Evidence for P(E-situation)
 
@@ -117,14 +117,18 @@ P(E-situation) is the probability that, when the hazardous behaviour occurs, a s
 
 2. **Unit and value.** The unit is the 60 s engaged instance of §4.3. An instance counts as exposed if the situation is present at any time in it, which is conservative. P(E-situation) is the one-sided 95 % upper confidence bound (Clopper–Pearson) on the share of exposed instances. It is computed per ODD stratum (DSR-03), and the least favourable stratum of the claimed ODD is used unless the target is set per stratum.
 3. **Matched to the triggering condition.** The hazardous behaviour and the situation can be correlated: phantom braking happens at overpasses, and drift happens in curves. So the share is measured on instances that carry a triggering condition of the SH ([WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) TC tag, or a [WP-V-04](WP-V-04-sotif-unknown-scenarios.md) signature) wherever at least 59 such instances exist. Below that, the ODD-wide share may be used only with a recorded argument that the situation is independent of the triggering condition; otherwise P(E-situation) = 1.
-4. **Data and validity.** The data comes from engaged public-road blocks (WP-V-04 B1–B3, public-road level L5 of [WP-V-07](WP-V-07-vehicle-test-operations.md)). Exposure is recorded as in [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) §2.2. The value is re-measured on field data after release (WP-O-04). A field share above the bound used here re-opens step 2 for that SH.
+4. **Data and validity.** The data comes from engaged public-road blocks (WP-V-04 B1–B3, public-road level L5 of [WP-V-07](WP-V-07-vehicle-test-operations.md)). Engaged public-road driving is capped at 105 km/h (WP-V-07 limits adopted by the project lead, decision register DQ-046 option A), so the 105–120 km/h stratum is not observed: there the least favourable observed stratum is used with a recorded argument that the share does not grow with speed, or P(E-situation) = 1. The logs are kept in the LionDriver log store and are not uploaded to comma's servers (DQ-084 option A), which keeps them independent of comma's training data (DSR-05). Exposure is recorded as in [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md) §2.2. The value is re-measured on field data after release (WP-O-04). A field share above the bound used here re-opens step 2 for that SH.
 5. **HARA.** The same measurements confirm or correct the HARA exposure classes of the situations above (HARA OI-2). A measured time share below 10 % for an E4 situation is reported to the HARA owner.
 
 What this gives: the HARA rates every one of these situations E3 or E4, so P(E-situation) is expected to be between about 0.1 and 1. At best it earns one order of magnitude in step 2, and only with enough matched instances. For SH-04 it earns nothing until the rear camera exists.
 
 ### 3.5 Evidence for P(severity class)
 
-P(severity class) is the probability that a collision caused by the uncontrolled hazardous behaviour reaches the harm class budgeted in step 1 (injury crash or fatality). The rule:
+P(severity class) is the probability that a collision caused by the uncontrolled hazardous behaviour reaches the harm class budgeted in step 1 (injury crash or fatality).
+
+Since DQ-023 the ODD is highways only. The ODD-A values below (head-on on undivided roads, OS-03; VRU impacts, OS-04 and OS-06; the 90 km/h ODD-A bound) are kept as computed, but set no target. They inform the residual-risk statement of WP-K-02 for engaged use outside the ODD (SH-13).
+
+The rule:
 
 1. **Same definition as the budget.** The harm class and its definition are those of λ_B1 in step 1. If the budget is fatalities from FARS, P(severity class) is P(fatality | collision). If the budget is injury crashes from CRSS, it is P(police-reported injury | collision). A ratio from a source with another injury definition (for example MAIS3+) is not combined with that budget.
 2. **Collision type and impact speed per SH.** Each SH group uses the collision of its HARA hazardous events, at the worst credible impact speed in the claimed ODD. Because the factor applies after P(not controlled), no braking or steering by the driver is credited before impact:
@@ -319,7 +323,7 @@ Targets are **proposals**: numeric values are placeholders for the assessor revi
 | VT-14 | SH-01, SH-04 plan stability (AIR-11) | Steady-scene instances in which the model output asks for more than the controller passes: `modelV2.action.desiredCurvature` changes faster than the jerk bound 5 m/s³ / v² (`MAX_LATERAL_JERK`, `selfdrive/controls/lib/drive_helpers.py:13, 29-31`; FSR-01.14), or the lead existence (`prob` crossing 0.5) toggles more than once in any 1 s window for a continuously visible lead | p_s ≤ 1 % per steady-scene instance at 95 % (≥ 299 instances per ODD stratum): straight and constant-curvature segments of KS-01…KS-06 for curvature; KS-07, KS-08, KS-10, KS-11 for lead toggling | §4.2; same p_max as VT-01 | REPLAY (VS-ML-07) on evaluation data; CC for the lead scenarios | Yes |
 | VT-15 | SH-01, SH-04, SH-06, SH-13 runtime monitor (AIR-14) | (a) Recall: share of instances in which the model alone fails (hazardous behaviour or AIR violation) that the monitor flags before the failure; (b) false flags per hour of nominal ODD driving | (a) ≥ 80 % per KS of the known-triggering-condition set (KS-12, KS-13, KS-16) at 95 %: ≥ 14 failing instances with no miss, or the Clopper–Pearson bound. A TC whose model-alone failure rate exceeds the §4.2 limit needs higher recall or an ODD restriction. (b) ≤ 1 false flag per hour at 95 % (χ² bound of §3 step 3), on drives disjoint from tuning data (DSR-11) | §4.2; nuisance budget equal to AIR-08 | REPLAY with KS segments; PR for false flags | Yes, after AIR-14 is implemented (GAP-22) |
 
-SH-09 (traffic-control non-compliance) has no target: Experimental Mode is off and locked (FM-01) and KS-24 verifies the exclusion. SH-11 (no VRU response) has no rate target: [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) resolves TC-12 by ODD restriction and user information; KS-22 and KS-23 only verify that the item does not move toward a VRU it cannot see.
+SH-09 (traffic-control non-compliance) has no target: Experimental Mode is off and locked (FM-01) and KS-24 verifies the exclusion. SH-11 (no VRU response) has no rate target: [WP-C-06](../02-concept/WP-C-06-sotif-insufficiencies-triggering-conditions.md) resolves TC-12 by ODD restriction (highways only, DQ-023) and user information; KS-22 and KS-23 only verify that the item does not move toward a VRU it cannot see.
 
 ![Figure 4-1: validation targets VT-01 to VT-15 on log scales of driving exposure (km, hours at 64 km/h) and of trials, instances or subjects per scenario, against the §3.2 capacity bands for public road, closed course and simulation](figures/fig-v02-4-1-validation-targets.svg)
 
