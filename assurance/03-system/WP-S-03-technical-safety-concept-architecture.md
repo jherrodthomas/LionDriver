@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-03 Technical safety concept and system architectural design |
 | Standard reference | ISO 26262-4:2018 §6 (technical safety concept, system architectural design, safety mechanisms, FFI/independence by reference to ISO 26262-9 §6–§7); ISO 21448:2022 §8 (architecture-level functional modifications, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.8 (Figure 6-1 added, generated from the trace data of §5 and §6; 2026-10-13). 0.7 (§3.1 element hierarchy added as Figure 3-1; 2026-10-13). 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3.2, §4.1 and §4.4 diagrams redrawn as Figures 3-2, 4-1 and 4-4; text versions kept; 2026-10-13). History: 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently); 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
+| Version | 0.9 (lead decisions of 2026-10-14 recorded: override backs off (DQ-053, SM-05), EPS-fault siren persistence ≤ 0.7 s (DQ-048), relay stuck in intercept warns and blocks engagement (DQ-064, SM-20), fallback limiter decided after the tests (DQ-050, OI-3); 2026-10-16). 0.8 (Figure 6-1 added, generated from the trace data of §5 and §6; 2026-10-13). 0.7 (§3.1 element hierarchy added as Figure 3-1; 2026-10-13). 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3.2, §4.1 and §4.4 diagrams redrawn as Figures 3-2, 4-1 and 4-4; text versions kept; 2026-10-13). History: 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently); 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-01, until re-rated); target ASIL B for the envelope (FSC option (c)) |
 | Author | Assurance team (initial draft) |
@@ -160,7 +160,7 @@ After revocation the envelope rejects further actuation frames. Under TSR-109 it
 | Relay stuck released | E-03 `stock_ecu_check` | 1–2 s window | block TX/fwd; host immediate disable | unchanged |
 | Relay stuck intercepting | none → TSR-506 readback | — → ≤ 0.3 s | — → SS-S + warning (GAP-43) | unchanged |
 | SoC input stale (model, plan) | selfdrived `commIssue` | 10 periods (0.5 s for modelV2) | soft disable 3 s → immediate disable (TSR-601) | unchanged |
-| EPS LKA fault | host carstate | 1.5 s hysteresis | lat inactive + warning → also envelope revoke (TSR-110) | LKA torque refused on receipt of the fault frame (TSR-110), `epsFault` reported; siren after 1 s persistence, ≤ 1.26 s worst case after onset (TSR-516(b); WP-S-04 OI-8) |
+| EPS LKA fault | host carstate | 1.5 s hysteresis | lat inactive + warning → also envelope revoke (TSR-110) | LKA torque refused on receipt of the fault frame (TSR-110), `epsFault` reported; siren after 1 s persistence, ≤ 1.26 s worst case after onset (TSR-516(b); WP-S-04 OI-8); persistence to be ≤ 0.7 s (DQ-048), firmware not yet changed |
 
 ### 4.4 Heartbeat and timeout chain
 
@@ -191,10 +191,10 @@ Status 2026-10-12 (`bf6ce8c`, not verified on hardware): the MCU's 100 Hz safety
 | Element | TSRs | Highest ASIL |
 |---|---|---|
 | E-03a safety layer | 101–110, 201–207, 301, 302, 304–307(a), 309, 311, 401–406, 408, 704, 705, 710 | B‡ |
-| E-03b panda firmware | 407, 409 (check), 410–413, 501–503, 506 (logic), 507, 508, 510–516, 701, 706, 707 | B‡ |
+| E-03b panda firmware | 407, 409 (check), 410–413, 501–503, 506 (logic), 507, 508, 510–516, 701, 706, 707, 712 (detection, latch), 632 | B‡ |
 | E-04a MCU hardware (configured by E-03b) | 501, 503–505, 507–509, 511 (option bytes), 515 | B‡ |
-| E-05 harness | 506 (relay), 701–703, 706 | B‡/B |
-| E-01 SoC (QM) | 303, 307(b), 308, 409 (content), 410/411 (sender side), 601–618, 709 | QM (B-sup) |
+| E-05 harness | 506 (relay), 701–703, 706, 712 (readback) | B‡/B |
+| E-01 SoC (QM) | 303, 307(b), 308, 409 (content), 410/411 (sender side), 601–631, 633, 709, 712 (warning) | QM (B-sup) |
 | EXT | 111, 208, 310, 708 | AoU |
 | OPS | 801–818 | — |
 
@@ -210,7 +210,7 @@ Diagnostic coverage (DC) values are **targets** for the FMEDA ([WP-H-03](../04-h
 | SM-02 | Torque rate and RT-window limit | high-rate torque command | E-03a | 103 | Impl | high | as SM-01 |
 | SM-03 | Measured-torque tracking | command diverging from EPS output | E-03a | 104 | Impl | medium (depends on `0x260` integrity) | as SM-01 |
 | SM-04 | Authority gating (PCM edge, brake, gas, steer request) | actuation when not engaged; no release on driver action | E-03a | 105–107, 203, 301–306 | Impl/Partial | high | T-SIL; T-VEH at installation (INS-28) |
-| SM-05 | Driver-torque override monitor | actuation opposing driver | E-03a | 304 | New | medium | T-SIL; periodic T-VEH |
+| SM-05 | Driver-torque override monitor | actuation opposing driver | E-03a | 304, 628 | New | medium | T-SIL; periodic T-VEH |
 | SM-06 | EPS status monitor | EPS LKA fault while engaged | E-03a | 110, 607 | New at baseline; **Partial** 2026-10-12 (reference build: LKA refused on LKA_STATE fault codes, `epsFault` reported; code set unconfirmed; not verified) | medium | log check |
 | SM-07 | Longitudinal bounds and jerk limits | excessive accel/decel or onset | E-03a | 201–207 | Partial | high | T-SIL |
 | SM-08 | Active safe-state frame | torque persisting after rejection | E-03a | 108, 109 | New | high | T-HIL each release |
@@ -225,7 +225,7 @@ Diagnostic coverage (DC) values are **targets** for the FMEDA ([WP-H-03](../04-h
 | SM-17 | RAM ECC, flash CRC, register checks | memory/register corruption | E-04a/E-03b | 503 | Partial | high (ECC), medium (register) | start-up CRC; ECC event counting |
 | SM-18 | Clock monitor (CSS + cross-check) | clock loss/drift | E-04a | 504 | Partial | medium | start-up check |
 | SM-19 | Supply monitor (BOR, PVD, input voltage) | under/over-voltage | E-04a | 505 | Unknown | medium | start-up check |
-| SM-20 | Relay readback and latch | relay stuck either way | E-04a/E-05 | 506, 710 | Partial (one direction, indirect) | high (with readback) | relay test at start-up (TSR-515) |
+| SM-20 | Relay readback and latch | relay stuck either way | E-04a/E-05 | 506, 710, 712 | Partial (one direction, indirect) | high (with readback) | relay test at start-up (TSR-515) |
 | SM-21 | MPU isolation | comms handler corrupting safety data | E-04a | 507 | New | medium | — |
 | SM-22 | Configuration lock and command gating | SoC selects wrong mode/param; debug commands | E-03b | 511–514, 619, 620 | New at baseline; **Partial** 2026-10-12 (TSR-512/513 in the reference build; 511, 514, 619, 620 open) | high | release-build check (TSR-514), INS-17/23 |
 | SM-23 | SoC-independent siren | warning when the SoC is lost, on every envelope revocation that is not a driver action, and when a fault-induced ACC cancel has no effect | E-03b/E-04a | 516 | Partial (2026-10-12: EPS-fault siren after 1 s persistence in the reference build; 2026-10-13: siren when heartbeat loss revokes granted authority, ≈ 0.56 s after the last heartbeat, all builds, panda `c33343b`) | — (warning) | siren test at start-up (TSR-515) |
@@ -331,6 +331,6 @@ The messaging layer has no authentication (GAP-20); any local process can publis
 |---|---|---|---|
 | OI-1 | Confirm the DC targets of §6 in the FMEDA (WP-H-03) and software safety analysis (WP-W-04) | Safety engineer | G3 |
 | OI-2 | Write WP-A-02 and WP-A-03 for FFI-1…6 and DFA-1…4 | Safety engineer | G2 |
-| OI-3 | Decide whether the fallback independent limiter (IND-1) is needed, after the SG-01 re-rating | Maintainer | G2 |
+| OI-3 | Decide whether the fallback independent limiter (IND-1) is needed, after the SG-01 re-rating. 2026-10-14: the project lead decided to make this decision after the controllability tests, with no work before (register DQ-050) | Maintainer | G2 |
 | OI-4 | Update §4 sequences once TSR-512 (mode lock) changes the start-up flow (ELM327 → TOYOTA). 2026-10-12: trigger reached (lock in the reference build). The start-up flow ELM327 → TOYOTA/73 is accepted unchanged; the ignition-off sequence changes (`0xe7` refused in TOYOTA, accepted after NOOUTPUT; mode-lock impact record §3). §4 sequences still to be redrawn | SW lead | G3 |
 | OI-5 | Record the architecture in `docs/contributing/architecture.md` or replace that empty file with a pointer to this WP | Maintainer | G2 |

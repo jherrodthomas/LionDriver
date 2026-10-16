@@ -337,8 +337,10 @@
   <text x="351" y="334" font-size="9.5" fill="#475569" font-weight="600" text-anchor="middle" transform="rotate(-90 351 334)">Occurrence O →</text>
   <text x="345" y="484" font-size="10" fill="#475569">All rated causes have S 9–10.</text>
   <text x="345" y="516" font-size="10" fill="#475569" font-weight="700">AP H causes (30) by treatment</text>
-  <rect x="345" y="530" width="165" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
-  <text x="516" y="542" font-size="10" fill="#0F172A">30  action open</text>
+  <rect x="345" y="530" width="148.5" height="16" fill="#FBE4DF" stroke="#D2553F" stroke-width="1" rx="2"/>
+  <text x="499.5" y="542" font-size="10" fill="#0F172A">27  action open</text>
+  <rect x="345" y="552" width="16.5" height="16" fill="#F1F5F9" stroke="#64748B" stroke-width="1" rx="2"/>
+  <text x="367.5" y="564" font-size="10" fill="#0F172A">3  not implemented</text>
   <text x="650" y="114" font-size="15" fill="#0F172A" font-weight="700">SW FMEA</text>
   <text x="650" y="131" font-size="10.5" fill="#475569">SWF rev 0.8 · BL-005 · draft</text>
   <text x="650" y="146" font-size="10.5" fill="#475569">84 rated causes</text>

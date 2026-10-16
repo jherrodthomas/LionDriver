@@ -131,7 +131,7 @@
   parents: [SG-01]
   allocated_to: "E-03"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: violating frames dropped and `controls_allowed` cleared on RX faults (`lateral.h:141-148`, `safety.h:112-121`); a TX violation alone does not revoke authority"
+  baseline_impl: "Partial: violating frames dropped and `controls_allowed` cleared on RX faults (`lateral.h:141-148`, `safety.h:112-121`); a TX violation alone does not revoke authority. 2026-10-14: a rejected command also ends authority until re-engagement (DQ-060, TSR-108); firmware change open"
   status: proposed
   source: WP-C-04
 
@@ -203,7 +203,7 @@
 
 - id: FSR-02.05
   kind: fsr
-  text: "On loss of communication with the SoC while engaged, the safety MCU shall give an acoustic warning that does not depend on the SoC."
+  text: "On loss of communication with the SoC while engaged, and on a reset of the safety MCU (watchdog or fault reset) that interrupts granted actuation authority, the safety MCU shall give an acoustic warning that does not depend on the SoC. The reset case was added 2026-10-14 (DQ-054: the engaged state is kept across the reset; TSR-516(d))."
   asil: "B"
   parents: [SG-02]
   allocated_to: "E-03 (panda buzzer)"
@@ -252,7 +252,7 @@
   parents: [SG-02, SG-04, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Implemented: no-response force decel and lockout 1/5/15/30 min (`policy.py:39-44, 398`; `selfdrive/controls/controlsd.py:203-204`)"
+  baseline_impl: "Partial: no-response force decel after 5 s at the terminal alert (`policy.py:39-44, 398`; `selfdrive/controls/controlsd.py:235`), but no disengagement, so the lockout of 1/5/15/30 min acts only after a later disengagement (System FMEA SFM-025.C1; corrected 2026-10-16). Refined by TSR-633; the reaction is queued for the lead (DQ-340)"
   status: proposed
   source: WP-C-04
 
@@ -275,6 +275,17 @@
   allocated_to: "E-01/HMI, E-03"
   verification: "T-SIL, FI"
   baseline_impl: "Partial: a crashed `ui`/`soundd` raises `processNotRunning` (`selfdrive/selfdrived/selfdrived.py:351-357`); a hung but running UI, a frozen indication or muted audio is not detected. New in v0.2 (H-07, HE-07.x)"
+  status: proposed
+  source: WP-C-04
+
+- id: FSR-02.12
+  kind: fsr
+  text: "Before granting engagement, and while the item can engage, the item shall read the stored diagnostic trouble codes of the EPS and of the brake and stability control, and shall not allow engagement while a code that affects lateral or longitudinal control is set; the driver shall be told why. (Decided 2026-10-14, DQ-056: replaces reliance on the driver's dashboard lamp check, WP-O-02 OPS-01.)"
+  asil: "QM (supports FSR-02.01, FSR-06.03)"
+  parents: [SG-02, SG-06]
+  allocated_to: "E-01"
+  verification: "T-SIL, T-VEH"
+  baseline_impl: "Not implemented: no diagnostic read for engagement; the lamp check is a driver procedure (WP-O-02). New in v0.6"
   status: proposed
   source: WP-C-04
 
@@ -434,12 +445,12 @@
 
 - id: FSR-05.03
   kind: fsr
-  text: "The envelope shall detect driver steering override (driver torque above a threshold) and reduce the LKA torque so it does not oppose the driver."
+  text: "The envelope shall detect driver steering override (driver torque above a threshold) and reduce the LKA torque toward zero at a bounded rate so it does not oppose the driver, for as long as the override lasts; the item shall show the driver that the override was noticed. (Decided 2026-10-14, DQ-053: back off on override and show a cue.)"
   asil: "B"
   parents: [SG-05]
-  allocated_to: "E-03"
+  allocated_to: "E-03, E-01/HMI (cue)"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Not in envelope: host-only 500 raw check (`opendbc_repo/opendbc/car/toyota/carcontroller.py:33, 83`) (GAP-02)"
+  baseline_impl: "Not in envelope: host-only 500 raw check (`opendbc_repo/opendbc/car/toyota/carcontroller.py:33, 83`) (GAP-02); no override cue on the LKA path"
   status: proposed
   source: WP-C-04
 
@@ -594,5 +605,16 @@
   allocated_to: "E-01"
   verification: "T-SIL"
   baseline_impl: "Implemented: `stockAeb`, `stockFcw` (`selfdrive/car/car_events.py:120-123`, `events.py:480`)"
+  status: proposed
+  source: WP-C-04
+
+- id: FSR-07.06
+  kind: fsr
+  text: "If the harness cannot return to the stock camera-to-vehicle connection (switch or relay stuck in intercept, detected by state readback), the item shall inhibit all actuation, warn the driver that stock PCS/AEB is unavailable, and refuse engagement until the harness is repaired. (Accepted 2026-10-14 as the degraded state, DQ-064; applies once readback exists.)"
+  asil: "B"
+  parents: [SG-07]
+  allocated_to: "E-03 (detection), E-05 (readback), E-01/HMI (warning)"
+  verification: "T-HIL, FI"
+  baseline_impl: "Not implemented: the harness box has no state feedback (RR-2026-010: two analog switches with a pull-down default); readback depends on the harness choice (DQ-209, queued). New in v0.6"
   status: proposed
   source: WP-C-04
