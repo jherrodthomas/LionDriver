@@ -237,3 +237,16 @@ faults:
     t_fault: 6.0
     pcs: true
     note: from the safety-concept session's handover (pcs_stuck_intercept)
+  - id: F-07-KS01
+    title: EPS fault in the KS-01 curve (R = 300 m, 2.0 m/s²)
+    kind: eps_fault
+    sg: [SG-02]
+    causes: [SFM-005]
+    tsr: [TSR-110, TSR-516]
+    injection: {point: EPS (EPS_STATUS LKA_STATE and assist), trigger: 4 s after curve entry, duration: until the end of the run}
+    expected: As F-07, on the road of scenario file KS-01 at its 2.0 m/s² sweep point
+    wp_v_05: VS-FI-31
+    road: KS-01
+    speed_kph: 88.18
+    t_fault: 13.0
+    note: road read from scenarios/xodr/KS-01.xodr (ego lane -2); speed from the KS-01 EgoSpeed sweep, sqrt(2.0 x 300) m/s

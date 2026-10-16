@@ -15,14 +15,16 @@ data under DSR-12 and earn no evidence credit (WP-V-02 §5.3).
 from __future__ import annotations
 
 import math
+import re
 import sys
 from dataclasses import dataclass, field
+from pathlib import Path
 
 import corolla
 from corolla import ROOT
 from panda_loop import Panda
 from plant import STEER_MAX, CorollaPlant
-from roads import Road, lane_line_threshold
+from roads import Road, from_xodr, lane_line_threshold
 
 sys.path.insert(0, str(ROOT / "opendbc_repo"))
 from opendbc.car.lateral import apply_meas_steer_torque_limits  # noqa: E402  (host torque limiting, real code)
@@ -95,8 +97,20 @@ class Result:
     self.events.setdefault(name, t)
 
 
+SCENARIOS = Path(__file__).resolve().parents[1] / "scenarios"
+
+
+def scenario_param(ks: str, name: str) -> float:
+  """Default of a parameter declared in a scenario file (../scenarios/xosc), e.g. the KS-08 time gap."""
+  text = (SCENARIOS / "xosc" / f"{ks}.xosc").read_text(encoding="utf-8")
+  return float(re.search(rf'<ParameterDeclaration name="{name}" parameterType="double" value="([^"]*)"', text).group(1))
+
+
 def make_road(kind: str, v: float) -> Road:
+  # a scenario road (OpenDRIVE of ../scenarios/xodr), ego lane -2;
   # curve inside the ODD: required lateral acceleration 1.5 m/s2; at the ODD bound: 2.5 m/s2 (R_ODD = v^2 / 2.5)
+  if kind.startswith("KS-"):
+    return from_xodr(SCENARIOS / "xodr" / f"{kind}.xodr")
   if kind == "straight":
     return Road("straight highway", 3.7, straight=3000.0, length=1200.0)
   a_y = {"curve": 1.5, "curve-odd-bound": 2.5}[kind]
@@ -156,7 +170,8 @@ def simulate(case: Case) -> Result:
   eps = plant.eps
   res = Result(case)
 
-  lead_s, follow_s = 1.5 * v0, -1.0 * v0      # lead at a 1.5 s gap (KS-08), follower at a 1.0 s gap (§3.4)
+  # lead at the KS-08 time gap (read from the scenario file), follower at a 1.0 s gap (WP-S-04 §3.4)
+  lead_s, follow_s = scenario_param("KS-08", "TimeGap") * v0, -1.0 * v0
   lead_v = follow_v = v0
   follow_brake_t = None
   thr = lane_line_threshold(road.lane_width, d["width"])
