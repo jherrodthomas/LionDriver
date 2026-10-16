@@ -942,12 +942,13 @@ Effects:
 
 - **End:** Missing or late handback warning (HZ-012, S 10)
 - **End:** Contributes to HZ-004 (HZ-004, S 10)
+- **End:** Contributes to HZ-013 (a driver-monitoring escalation masked, so an inattentive driver is not told; the forced stop still follows) (HZ-013, S 10)
 - **Next higher:** Driver not told to take over during the soft-disable period
 - **Local:** Another alert is selected instead of the soft-disable takeover alert; soundd plays that alert's sound
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SWF-035.C1` Selection is by priority, then start frame (alertmanager.py:63). SoftDisableAlert is Priority.MID (events.py:161-166), below speedTooHigh (WARNING, HIGH, promptRepeat, events.py:995-1000), aeb/stockAeb (PERMANENT, HIGHEST, no sound, events.py:471-485) and driverDistracted3/driverUnresponsive3 (HIGH); the takeover text and warningSoft can be hidden for the first 2.5 s and only the last 0.5 s becomes ImmediateDisableAlert (events.py:224-228) | • Upstream code with review; ruff and ty run in fork CI static_analysis; unit tests derived from the implementation; no software requirements <sub>scripts/lint/lint.sh:45,55; .github/workflows/tests.yaml</sub> | • test_alertmanager checks alert duration only; test_alerts checks text/size sanity; neither checks priority between takeover and other alerts <sub>openpilot/selfdrive/selfdrived/tests/test_alertmanager.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-036 |
+| `SWF-035.C1` Selection is by priority, then start frame (alertmanager.py:63). SoftDisableAlert is Priority.MID (events.py:161-166), below speedTooHigh (WARNING, HIGH, promptRepeat, events.py:995-1000), aeb/stockAeb (PERMANENT, HIGHEST, no sound, events.py:471-485) and driverDistracted3/driverUnresponsive3 (HIGH); the takeover text and warningSoft can be hidden for the first 2.5 s and only the last 0.5 s becomes ImmediateDisableAlert (events.py:224-228). The same rule masks the driver-monitoring escalation: driverDistracted2 / driverUnresponsive2 (MID, events.py:532-563) under speedTooHigh, and the level 3 alerts (HIGH) under aeb or fcw (HIGHEST) or a later-starting HIGH alert | • Upstream code with review; ruff and ty run in fork CI static_analysis; unit tests derived from the implementation; no software requirements <sub>scripts/lint/lint.sh:45,55; .github/workflows/tests.yaml</sub> | • test_alertmanager checks alert duration only; test_alerts checks text/size sanity; neither checks priority between takeover and other alerts <sub>openpilot/selfdrive/selfdrived/tests/test_alertmanager.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-036 |
 
 Safety mechanisms: (1) The masking alerts are themselves visual (driverDistracted3 also audible, warningImmediate); ImmediateDisableAlert is HIGHEST · (2) Cluster indication once the item stops (XM-04, unverified)
 
@@ -1799,6 +1800,7 @@ Safety mechanisms: (1) SubMaster alive and frequency checks in the consumers (SW
 Effects:
 
 - **End:** Take-over alerts not presented while the item runs (HZ-012, S 10)
+- **End:** Contributes to HZ-013 (driver-monitoring alerts not presented when soundd or ui is not running; the forced stop does not depend on them) (HZ-013, S 10)
 - **Next higher:** No processNotRunning event; a process that selfdrived does not subscribe to (soundd, ui) is then not supervised at all
 - **Local:** A process blocked or never started has no process entry, so managerState shows shouldBeRunning false
 

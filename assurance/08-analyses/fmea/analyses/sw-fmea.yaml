@@ -51,6 +51,8 @@
 #   deceleration not requested, not passed on or too weak after the terminal alert (BE-8.08); 4 causes, all AP H; actions SWF-ACT-072, 073.
 #   By code reading demo mode does not switch the alerts off (strict thresholds, no wheel-touch reset) but decouples the policy from the
 #   real vehicle state and unlocks the monitored seat; the forced stop is v_cruise 0 at -1.2 m/s² with no stop-time requirement.
+# - SWF-035 and SWF-082 gain HZ-013 end effects (F-37): the alert selection masks driver-monitoring escalations as it masks the takeover
+#   alert, and soundd and ui carry the driver-monitoring alerts. Ratings unchanged.
 #
 # SW FMEA element pandad (FSC EL-06, System FMEA SFM-SE-017). Ratings per RT-1, against BL-004 (liondriver-dev 682f184,
 # panda 8aa8671, opendbc 7993399). The LIONDRIVER_REFERENCE firmware build is not enabled by any build path at BL-004, so the
@@ -2657,12 +2659,18 @@ failure_modes:
     description: Contributes to HZ-004
     hazard: HZ-004
     severity: 10
+  - level: end
+    description: Contributes to HZ-013 (a driver-monitoring escalation masked, so an inattentive driver is not told; the forced stop still follows)
+    hazard: HZ-013
+    severity: 10
   severity: 10
   causes:
   - id: SWF-035.C1
     description: 'Selection is by priority, then start frame (alertmanager.py:63). SoftDisableAlert is Priority.MID (events.py:161-166), below speedTooHigh (WARNING,
       HIGH, promptRepeat, events.py:995-1000), aeb/stockAeb (PERMANENT, HIGHEST, no sound, events.py:471-485) and driverDistracted3/driverUnresponsive3 (HIGH);
-      the takeover text and warningSoft can be hidden for the first 2.5 s and only the last 0.5 s becomes ImmediateDisableAlert (events.py:224-228)'
+      the takeover text and warningSoft can be hidden for the first 2.5 s and only the last 0.5 s becomes ImmediateDisableAlert (events.py:224-228). The same rule masks
+      the driver-monitoring escalation: driverDistracted2 / driverUnresponsive2 (MID, events.py:532-563) under speedTooHigh, and the level 3 alerts (HIGH) under aeb
+      or fcw (HIGHEST) or a later-starting HIGH alert'
     element: SWF-SE-034
     prevention_controls: *pc_state
     detection_controls:
@@ -4883,6 +4891,10 @@ failure_modes:
   - level: end
     description: Take-over alerts not presented while the item runs
     hazard: HZ-012
+    severity: 10
+  - level: end
+    description: Contributes to HZ-013 (driver-monitoring alerts not presented when soundd or ui is not running; the forced stop does not depend on them)
+    hazard: HZ-013
     severity: 10
   severity: 10
   safety_mechanisms:
