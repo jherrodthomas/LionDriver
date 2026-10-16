@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-05 SOTIF hazard identification and risk evaluation, acceptance criteria |
 | Standard reference | ISO 21448:2022 §6 (hazard identification and risk evaluation, acceptance criteria), Annex B (misuse, informative); ISO 26262-3:2018 §6 (shared hazard log) |
-| Version | 0.3 (Figure 2-1 added: four-area view of the analysis; 2026-10-13). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.4 (the lead's decisions applied: SH-09…SH-11 ratings accepted, decision register DQ-032; highways only, DQ-023; H-STPA-1 as foreseeable misuse on the SOTIF side, DQ-003; OI-1 closed; 2026-10-16). 0.3 (Figure 2-1 added: four-area view of the analysis; 2026-10-13). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -16,7 +16,9 @@
 
 This document identifies hazards that the **intended functionality** of LD-SDA can cause without any E/E fault: through insufficiencies of the specification, performance limits of perception, ML and planning, and reasonably foreseeable misuse. It evaluates their risk with the HARA method, links them to the functional-safety hazard log, and defines the acceptance criteria that later validation ([WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md)) must meet.
 
-Scope: reference configuration ([WP-C-01](WP-C-01-item-definition.md)) inside the reference ODD ([WP-C-02](WP-C-02-odd-and-intended-functionality.md)). Experimental Mode is analysed (SH-09) because it is the upstream default, even though WP-C-02 §6.4 recommends excluding it.
+Scope: reference configuration ([WP-C-01](WP-C-01-item-definition.md)) inside the reference ODD ([WP-C-02](WP-C-02-odd-and-intended-functionality.md)). Experimental Mode is analysed (SH-09) because the toggle stays available, although its default is off since 2026-10-14 (D-08, DQ-001) and WP-C-02 §6.4 recommends excluding it.
+
+Since 2026-10-14 the ODD is **highways only** (decision register DQ-023 option B): the arterial and rural part ODD-A is no longer claimed. WP-C-02 is not yet updated (its owner's part of DQ-023). Hazards whose example situations lie on arterial or rural roads (SH-09, SH-11, the head-on part of SH-01/SH-02) are kept, because the item can still be engaged there: they are reached through an ODD exit (SH-13, misuse MC-07) and are no longer used to set validation targets.
 
 Inputs: [WP-C-03 HARA](WP-C-03-hara.md) (H-01…H-06, H-08; OS-01…OS-11), `docs/LIMITATIONS.md`, gap assessment GAP-16…GAP-23, onboard code review.
 
@@ -44,11 +46,13 @@ Inputs: [WP-C-03 HARA](WP-C-03-hara.md) (H-01…H-06, H-08; OS-01…OS-11), `doc
 | SH-06 | Insufficient deceleration: stationary or slow vehicle not treated as lead, late reaction to close cut-in, lead beyond radar/vision range at a crest, deceleration need above −3.5 m/s² | F-02 | H-06 | OS-07 approach to stationary traffic | S3 | C2 | HE-06.1. `LIMITATIONS.md:37-39`. Stock PCS not credited |
 | SH-07 | — not used (H-07 mode confusion is a malfunction hazard in the HARA; its non-malfunction counterpart is in WP-C-08 MC-08/09/12) | — | — | — | — | — | — |
 | SH-08 | Stock PCS performance degraded by the item's intended behaviour (e.g. openpilot longitudinal commands or forwarded/blocked messages that change PCS timing; PCS warnings missed because the device alert covers them) | F-02, F-08 | H-08 | OS-09 | S3 | C3 | HE-08.1. Intended forwarding is unverified (AOU-04) |
-| SH-09 | Traffic-control non-compliance with over-trust: in Experimental Mode the driver expects the vehicle to stop for red lights and stop signs; the model misses one and the vehicle enters the intersection. In Chill mode the same over-trust can arise from confusion between modes | F-02, F-05 | new (effect like H-03/H-06) | Signalised intersection in ODD-A, cross traffic | S3 | C2 | New. S3: side impact or VRU at intersection speed. C2: driver supervising, but trained expectation delays braking. Without Experimental Mode the expectation does not arise from the function itself |
+| SH-09 | Traffic-control non-compliance with over-trust: in Experimental Mode the driver expects the vehicle to stop for red lights and stop signs; the model misses one and the vehicle enters the intersection. In Chill mode the same over-trust can arise from confusion between modes | F-02, F-05 | new (effect like H-03/H-06) | Signalised intersection, cross traffic (off-highway: reached only through an ODD exit, SH-13) | S3 | C2 | New. S3: side impact or VRU at intersection speed. C2: driver supervising, but trained expectation delays braking. Without Experimental Mode the expectation does not arise from the function itself |
 | SH-10 | Assisted lane change into an occupied lane: driver nudges after signalling; the system does not check the blind spot | F-01 | new (effect like H-01) | OS-01 multi-lane highway | S3 | C2 | New. `LIMITATIONS.md:6`. Blind-spot input is not assumed for the reference Corolla, whether or not the trim fitted has blind-spot monitoring (`desire_helper.py:48` would use it if present; which trims provide it is open, WP-C-01 OI-9). Controllable: driver initiated and can abort |
 | SH-11 | No reaction to a VRU in or entering the path (pedestrian crossing, cyclist in lane) | F-01, F-02 | new (effect like H-06) | OS-04, OS-06 | S3 | C2 | New. `LIMITATIONS.md:34`. Lead logic is vehicle-oriented (`radard.py:153-165`). Stock PCS pedestrian AEB exists but is not credited |
 | SH-12 | Prolonged unsupervised operation: DM does not detect inattention (sunglasses, glare, face out of view, wheel-touch fallback reset by small inputs), so warnings and the force-decel stage come late or never | F-04 | Contributes to all; no direct H | Any, esp. long highway drives | — | — | Not a vehicle-level hazard on its own (HARA §4). It removes the controllability basis (C2) of SH-01…SH-11. Handled as a misuse-enabling insufficiency in WP-C-08 |
-| SH-13 | System stays engaged outside the ODD: above 120 km/h (up to and above 149 km/h, where only a warning is given), in construction zones, in heavy rain, on roads without markings | all | Increases probability of SH-01…SH-06 | ODD exit | as linked SH | as linked SH | New. `events.py:989-996` (no disengage). The model's training distribution is unknown (GAP-22) |
+| SH-13 | System stays engaged outside the ODD: on arterial or rural roads (outside the highway-only ODD since DQ-023), above 120 km/h (up to and above 149 km/h, where only a warning is given), in construction zones, in heavy rain, on roads without markings | all | Increases probability of SH-01…SH-06 | ODD exit | as linked SH | as linked SH | New. `events.py:989-996` (no disengage). The model's training distribution is unknown (GAP-22) |
+
+The S and C ratings of the new hazards SH-09, SH-10 and SH-11 were accepted by the project lead on 2026-10-14 (decision register DQ-032 option A). They are revisited if testing contradicts them.
 
 ## 4. Foreseeable misuse considered
 
@@ -61,6 +65,7 @@ Misuse cases are analysed in [WP-C-08](WP-C-08-driver-hmi-misuse-analysis.md) §
 | DM camera covered, demo mode, defeat devices (MC-04, MC-05, MC-06) | Removes the DM safeguard → SH-12 |
 | Use outside ODD (MC-07) | SH-13 |
 | Over-trust after Experimental Mode default (MC-09) | SH-09, SH-11 |
+| The driver stops supervising while the item is engaged (H-STPA-1 of [WP-A-05](../08-analyses/WP-A-05-stpa.md), WP-C-08 §6.1) | Foreseeable misuse in both SOTIF and the HARA (decision register DQ-003, 2026-10-14). SOTIF side, here: it removes the controllability basis (C2) of SH-01…SH-11, as SH-12 does, and is treated by FM-05, FM-06 and AC-05; the SOTIF validation rests on VT-08. HARA side: a rated entry in WP-C-03 (WP-C-08 OI-4, HARA owner) |
 
 ## 5. Acceptance criteria
 
@@ -77,7 +82,7 @@ The top-level claim ([WP-M-01 §3.2](../01-management/WP-M-01-assurance-strategy
 2. **Stock TSS2 baseline.** Where data allow, adjust A_H for vehicles with LKA/ACC/PCS (published insurance or NHTSA studies). If no adequate data exist, use A_H and state the assumption.
 3. **Allocation.** Split the acceptable rate across SH groups (lateral SH-01/02/10, longitudinal SH-03/04/06/11, mode/override SH-05/09, SH-08) in proportion to their share of the baseline crash types. Record the split.
 4. **Controllability credit.** Not every hazardous behaviour leads to harm: the driver controls most. The share of uncontrolled events is estimated from controllability tests ([WP-C-08 §8](WP-C-08-driver-hmi-misuse-analysis.md)). Using it lets the target be expressed as a rate of **hazardous behaviours** (e.g. lane exits, unexpected decelerations > x m/s²) per km, which is measurable.
-5. **Target distance.** For a zero-event demonstration at confidence 1 − α, the required exposure is d = −ln(α) / λ (≈ 3/λ for 95 %). With observed events, use the chi-square bound. The required distance is per ODD part (ODD-H, ODD-A).
+5. **Target distance.** For a zero-event demonstration at confidence 1 − α, the required exposure is d = −ln(α) / λ (≈ 3/λ for 95 %). With observed events, use the chi-square bound. The required distance is per ODD part; since DQ-023 that is ODD-H only.
 6. **Evidence mix.** Distance can be split between fleet/replay data (driving-model replay on fork-owned logs), simulation and on-road validation, with the weighting justified in WP-V-02.
 
 ### 5.3 Qualitative acceptance criteria
@@ -105,7 +110,7 @@ The top-level claim ([WP-M-01 §3.2](../01-management/WP-M-01-assurance-strategy
 | SH-08 | Yes | Harness/forwarding, PCS arbitration | (FSR-07.x), AOU-04 test |
 | SH-09 | Yes (if Experimental Mode kept) | e2e traffic-control | FM-01 |
 | SH-10 | Yes | No blind-spot sensing | User info; WP-C-08 |
-| SH-11 | Yes | No VRU response | ODD restriction (ODD-A), user info |
+| SH-11 | Yes | No VRU response | ODD restriction (highways only, DQ-023), user info |
 | SH-12 | Yes (enabling) | DM model, policy | FM-05, FM-06 |
 | SH-13 | Yes | No ODD monitor | FM-07, FM-08 |
 
@@ -113,7 +118,7 @@ The top-level claim ([WP-M-01 §3.2](../01-management/WP-M-01-assurance-strategy
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Confirm S/C ratings for new hazards SH-09, SH-10, SH-11 in the shared hazard log (WP-C-03 §7) | HARA owner | G1 |
+| OI-1 | Closed 2026-10-16: S/C ratings of SH-09, SH-10, SH-11 accepted by the project lead (DQ-032 option A). Entering them in the shared hazard log stays with OI-5 | HARA owner | G1 |
 | OI-2 | Decide whether SH-09/10/11 also need functional-safety hazardous events (E/E fault causing the same effect) | HARA owner | G1 |
 | OI-3 | Select the human-driver baseline data sources and road-class split for §5.2 | SOTIF lead | G2 |
 | OI-4 | Confirm whether the reference vehicle has a blind-spot monitor input (affects SH-10) | Maintainer | G1 |

@@ -85,7 +85,7 @@
 <text x="538" y="755.5" class="d">Envelope does not clamp</text>
 <text x="538" y="769.0" class="n">as SG-01: BE-1.06…1.09</text>
 <rect x="538.0" y="777.0" width="99.5" height="16" rx="8" fill="#e6e9ef"/>
-<text x="587.8" y="788.5" class="chip" fill="#334155">→ SG-01 sheet 4</text>
+<text x="587.8" y="788.5" class="chip" fill="#334155">→ SG-01 sheet 6</text>
 <path d="M634.0,808.0 L654.0,841.0 L614.0,841.0 Z" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="767.5" y="467.0" width="220" height="85.5" rx="9" class="shadow"/>
 <rect x="766" y="464.5" width="220" height="85.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>

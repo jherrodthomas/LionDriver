@@ -490,7 +490,7 @@ package LionDriverVerification {
         :>> names = "HWSR-506";
     }
     verification <'VS-HW-24'> vs_hw_24 : VerificationCase {
-        doc /* Switch supply stress and pass-through signal integrity */
+        doc /* Switch supply stress, logic threshold and pass-through signal integrity */
         :>> spec = "WP-H-06 §3";
         :>> level = "VS-HW";
         :>> names = "HWSR-506d";
