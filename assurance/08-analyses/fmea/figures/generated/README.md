@@ -17,6 +17,7 @@ Generated from the YAML analyses in [`analyses/`](../../analyses/) by `tools/saf
 | 3-10 | FMEDA SG-001: SPFM, LFM, λSPF+λRF against ASIL D (estimate, not verified) | `analyses/fmeda-sg001.yaml` | [fig-3-10-fmeda-sg001-metrics.svg](fig-3-10-fmeda-sg001-metrics.svg) |
 | 3-11 | FMEDA SG-009: SPFM, LFM, λSPF+λRF against ASIL B (estimate, not verified) | `analyses/fmeda-sg009.yaml` | [fig-3-11-fmeda-sg009-metrics.svg](fig-3-11-fmeda-sg009-metrics.svg) |
 | 4-1 | Action Priority overview of the four FMEAs | `analyses/*fmea.yaml` | [fig-4-1-action-priority-overview.svg](fig-4-1-action-priority-overview.svg) |
+| 4-2 | FMEA-MSR overview of the System FMEA and DFMEA (provisional MSR AP table) | `analyses/system-fmea.yaml, dfmea.yaml` | [fig-4-2-msr-overview.svg](fig-4-2-msr-overview.svg) |
 
 Conventions: Action Priority H / M / L in red / amber / teal as rated in the YAML; predicted ratings of open actions are hatched and dashed and never shown as achieved. FMEDA metrics are drawn from generic failure-rate estimates and are marked as not verified; a target met on the estimate is amber, never green. In the DFA, green marks only measures recorded as `existing` (verified); `existing_unverified` is amber.
 
