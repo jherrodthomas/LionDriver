@@ -47,6 +47,7 @@ package LionDriverSatisfaction {
     satisfy fsr_02_10 by context.ldsda.safetyFirmware;
     satisfy fsr_02_11 by context.ldsda.socSoftware;
     satisfy fsr_02_11 by context.ldsda.safetyFirmware;
+    satisfy fsr_02_12 by context.ldsda.socSoftware;
     satisfy fsr_03_01 by context.ldsda.safetyFirmware;
     satisfy fsr_03_02 by context.ldsda.safetyFirmware;
     satisfy fsr_03_03 by context.ldsda.safetyFirmware;
@@ -64,6 +65,7 @@ package LionDriverSatisfaction {
     satisfy fsr_05_01 by context.ldsda.safetyFirmware;
     satisfy fsr_05_02 by context.ldsda.safetyFirmware;
     satisfy fsr_05_03 by context.ldsda.safetyFirmware;
+    satisfy fsr_05_03 by context.ldsda.socSoftware;
     satisfy fsr_05_04 by context.ldsda.safetyFirmware;
     satisfy fsr_05_05 by context.ldsda.safetyFirmware;
     satisfy fsr_05_06 by context.ldsda.socSoftware;
@@ -80,6 +82,9 @@ package LionDriverSatisfaction {
     satisfy fsr_07_03 by context.ldsda.harness;
     satisfy fsr_07_03 by context.ldsda.safetyFirmware;
     satisfy fsr_07_05 by context.ldsda.socSoftware;
+    satisfy fsr_07_06 by context.ldsda.safetyFirmware;
+    satisfy fsr_07_06 by context.ldsda.harness;
+    satisfy fsr_07_06 by context.ldsda.socSoftware;
     satisfy tsr_101 by context.ldsda.safetyFirmware;
     satisfy tsr_102 by context.ldsda.safetyFirmware;
     satisfy tsr_103 by context.ldsda.safetyFirmware;
@@ -188,6 +193,8 @@ package LionDriverSatisfaction {
     satisfy tsr_625 by context.ldsda.socSoftware;
     satisfy tsr_626 by context.ldsda.socSoftware;
     satisfy tsr_627 by context.ldsda.socSoftware;
+    satisfy tsr_628 by context.ldsda.socSoftware;
+    satisfy tsr_629 by context.ldsda.socSoftware;
     satisfy tsr_701 by context.ldsda.deviceHardware.safetyMcu;
     satisfy tsr_701 by context.ldsda.harness;
     satisfy tsr_701 by context.ldsda.safetyFirmware;
@@ -202,6 +209,8 @@ package LionDriverSatisfaction {
     satisfy tsr_709 by context.ldsda.socSoftware;
     satisfy tsr_710 by context.ldsda.safetyFirmware;
     satisfy tsr_711 by context.ldsda.safetyFirmware;
+    satisfy tsr_712 by context.ldsda.safetyFirmware;
+    satisfy tsr_712 by context.ldsda.socSoftware;
     satisfy sys_001 by context.ldsda.socSoftware.modeld;
     satisfy sys_001 by context.ldsda.socSoftware.controlsd;
     satisfy sys_002 by context.ldsda.socSoftware.controlsd;

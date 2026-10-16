@@ -244,6 +244,7 @@ Host requirements are QM, with one open exception: SWSR-625 carries a provisiona
 | TSR-111, 208, 310, 708 | External measures (EPS, PCM); verified by vehicle test |
 | TSR-702, 703 | Harness hardware only (HWSR-702, 703) |
 | TSR-801…818 | Production/operation ([WP-S-06](../03-system/WP-S-06-requirements-production-operation.md)); software support via SWSR-514, 514h |
+| TSR-628, 629, 712 | Not yet refined: added in WP-S-02 v0.21 (2026-10-16) from the lead decisions DQ-053, DQ-056 and DQ-064. SWSRs to be written by the WP-W-02 owner; this row is removed when they exist |
 
 ## 11. Software-hardware interface requirements
 

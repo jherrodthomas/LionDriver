@@ -5,6 +5,8 @@
 # tools/safety/fmea_lint.py derives and checks each decomposition status from its DFIs.
 # 2026-10-13: fsc_revision 0.2 -> 0.3. FSC rev 0.3 only re-bases on HARA rev 0.4 (an HZ-006 back-link); no FSR or
 # decomposition changed, so no DFI was re-assessed.
+# 2026-10-16: fsc_revision 0.3 -> 0.4. FSC rev 0.4 only adds notes on two lead decisions (DQ-053, DQ-064) to
+# FSR-031 and FSR-038; no statement, ASIL, allocation or decomposition changed, so no DFI changes.
 schema_version: 1
 analysis:
   id: DFA
@@ -14,7 +16,7 @@ analysis:
   revision: "0.5"
   status: draft
   baseline: BL-004
-  fsc_revision: "0.3"
+  fsc_revision: "0.4"
   approver: Jherrod Thomas (pending)
   scope: >-
     The 11 ASIL decompositions of LD-FSC-001 rev 0.3 (assured configuration AC-001), each splitting a requirement between the panda safety
