@@ -177,24 +177,48 @@ jobs:
 
   simulator_driving:
     name: simulator driving
+    # LionDriver: the MetaDrive bridge drives the reference Corolla (TSS2 CAN from opendbc, panda safety code in the
+    # loop, plant-driven kinematics) headless on CPU. Synthetic data (DSR-12), no evidence credit (WP-V-02 §5.3).
     runs-on: ${{
       (github.repository == 'commaai/openpilot') &&
       ((github.event_name != 'pull_request') ||
       (github.event.pull_request.head.repo.full_name == 'commaai/openpilot'))
       && fromJSON('["namespace-profile-amd64-8x16"]')
       || fromJSON('["ubuntu-24.04"]') }}
-    if: false  # FIXME: Started to timeout recently
+    timeout-minutes: 60
     steps:
     - uses: actions/checkout@v7
     - run: ./tools/op.sh setup
+    - name: EGL for headless rendering, and MetaDrive (commaai "minimal" branch, pinned commit, Apache-2.0)
+      run: |
+        sudo apt-get update -q
+        sudo apt-get install -y -q --no-install-recommends libegl1 libegl-mesa0 libportaudio2 pulseaudio libasound2-plugins
+        "$HOME/.local/bin/uv" pip install --python .venv/bin/python \
+          "metadrive-simulator @ git+https://github.com/commaai/metadrive.git@2716f55a9c7b928ce957a497a15c2c19840c08bc"
+    - name: Cache the MetaDrive model archive (checked against its SHA-256 on use)
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/liondriver-sim/metadrive
+        key: metadrive-assets-0.4.2.3
+    - name: Install the CC-BY-4.0 vehicle and pedestrian models
+      run: |
+        mkdir -p ~/.cache/liondriver-sim/metadrive
+        zip=~/.cache/liondriver-sim/metadrive/assets.zip
+        [ -f "$zip" ] || curl -sSL -o "$zip" https://github.com/metadriverse/metadrive/releases/download/MetaDrive-0.4.2.3/assets.zip
+        python openpilot/tools/sim/fetch_metadrive_assets.py --zip "$zip"
     - name: Build openpilot
       run: scons
     - name: Driving test
-      timeout-minutes: 2
+      timeout-minutes: 20
       env:
         # MetaDrive renders offscreen through panda3d's EGL pipe on llvmpipe
         EGL_PLATFORM: surfaceless
-      run: python openpilot/tools/sim/tests/test_metadrive_bridge.py
+      # soundd needs an audio output: a PulseAudio null sink, which keeps real time without a sound card
+      run: |
+        pulseaudio --start --exit-idle-time=-1
+        pactl load-module module-null-sink sink_name=ci
+        pactl set-default-sink ci
+        python -m unittest -v openpilot.tools.sim.tests.test_metadrive_bridge
 
   create_ui_report:
     name: Create UI Report

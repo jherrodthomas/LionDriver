@@ -51,7 +51,12 @@ class SimulatorState:
     self.user_brake: float = 0
     self.user_torque: float = 0
 
-    self.cruise_button = 0
+    self.cruise_button = ""        # one of the CRUISE_* commands of simulated_car, for one step
+    self.cruise_set_speed_kph = 0.0  # set speed for CRUISE_SET; 0 uses the current speed
+
+    self.radar_targets: list = []    # simulated_car.RadarTarget, from the world
+    self.yaw_rate: float = 0.0
+    self.accel: float = 0.0
 
     self.left_blinker = False
     self.right_blinker = False
@@ -72,8 +77,8 @@ class World(ABC):
     self.exit_event = multiprocessing.Event()
 
   @abstractmethod
-  def apply_controls(self, steer_sim, throttle_out, brake_out, /):
-    pass
+  def apply_controls(self, curvature, accel, /):
+    """Move the ego with the car's response: path curvature (1/m) and acceleration (m/s^2)."""
 
   @abstractmethod
   def tick(self):

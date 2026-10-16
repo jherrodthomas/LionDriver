@@ -9,10 +9,12 @@ from multiprocessing.connection import Connection
 from metadrive.engine.core.engine_core import EngineCore
 from metadrive.engine.core.image_buffer import ImageBuffer
 from metadrive.envs.metadrive_env import MetaDriveEnv
+from metadrive.component.vehicle.base_vehicle import BaseVehicle
 from metadrive.obs.image_obs import ImageObservation
 
 from openpilot.common.realtime import Ratekeeper
 
+from openpilot.tools.sim.bridge.metadrive.metadrive_common import configure_headless_rendering
 from openpilot.tools.sim.lib.common import vec3
 from openpilot.tools.sim.lib.camerad import W, H
 
@@ -48,10 +50,24 @@ def apply_metadrive_patches(arrive_dest_done=True):
   if not arrive_dest_done:
     MetaDriveEnv._is_arrive_destination = arrive_destination_patch
 
+  # the commaai/metadrive "minimal" branch reads render_vehicle from the per-vehicle config, which traffic vehicles
+  # do not set; give them the default so that scenarios can spawn traffic
+  vehicle_init = BaseVehicle.__init__
+
+  def vehicle_init_patched(self, vehicle_config=None, *args, **kwargs):
+    if isinstance(vehicle_config, dict) and "render_vehicle" not in vehicle_config:
+      vehicle_config = {**vehicle_config, "render_vehicle": True}
+    vehicle_init(self, vehicle_config, *args, **kwargs)
+
+  if not getattr(BaseVehicle, "_render_vehicle_patched", False):
+    BaseVehicle.__init__ = vehicle_init_patched
+    BaseVehicle._render_vehicle_patched = True
+
 def metadrive_process(dual_camera: bool, config: dict, camera_array, wide_camera_array, image_lock,
                       controls_recv: Connection, simulation_state_send: Connection, vehicle_state_send: Connection,
                       exit_event, op_engaged, test_duration, test_run):
   arrive_dest_done = config.pop("arrive_dest_done", True)
+  configure_headless_rendering()   # EGL pipe and no MSAA when there is no display (CI)
   apply_metadrive_patches(arrive_dest_done)
 
   road_image = np.frombuffer(camera_array.get_obj(), dtype=np.uint8).reshape((H, W, 3))
@@ -95,37 +111,40 @@ def metadrive_process(dual_camera: bool, config: dict, camera_array, wide_camera
 
   rk = Ratekeeper(100, None)
 
-  steer_ratio = 8
-  vc = [0,0]
+  # the ego is moved kinematically from the plant's curvature and acceleration (simulated_car), not by MetaDrive's
+  # vehicle dynamics: speed and heading are integrated here and set on the body before every physics step
+  curvature, accel = 0.0, 0.0
+  step_dt = config["physics_world_step_size"] * config["decision_repeat"]
+  speed = 0.0
 
   while not exit_event.is_set():
     vehicle_state = metadrive_vehicle_state(
       velocity=vec3(x=float(env.vehicle.velocity[0]), y=float(env.vehicle.velocity[1]), z=0),
       position=env.vehicle.position,
       bearing=float(math.degrees(env.vehicle.heading_theta)),
-      steering_angle=env.vehicle.steering * env.vehicle.MAX_STEERING
+      steering_angle=0.0,
     )
     vehicle_state_send.send(vehicle_state)
 
     if controls_recv.poll(0):
       while controls_recv.poll(0):
-        steer_angle, gas, should_reset = controls_recv.recv()
-
-      steer_metadrive = steer_angle * 1 / (env.vehicle.MAX_STEERING * steer_ratio)
-      steer_metadrive = np.clip(steer_metadrive, -1, 1)
-
-      vc = [steer_metadrive, gas]
+        curvature, accel, should_reset = controls_recv.recv()
 
       if should_reset:
         lane_idx_prev = reset()
         start_time = None
+        speed = 0.0
 
     is_engaged = op_engaged.is_set()
     if is_engaged and start_time is None:
       start_time = time.monotonic()
 
     if rk.frame % 5 == 0:
-      _, _, terminated, _, _ = env.step(vc)
+      speed = max(0.0, speed + accel * step_dt)
+      heading = env.vehicle.heading_theta + speed * curvature * step_dt
+      env.vehicle.set_heading_theta(heading)
+      env.vehicle.set_velocity([math.cos(heading), math.sin(heading)], speed)
+      _, _, terminated, _, _ = env.step([0.0, 0.0])
       timeout = True if start_time is not None and time.monotonic() - start_time >= test_duration else False
       lane_idx_curr, on_lane = get_current_lane_info(env.vehicle)
       out_of_lane = lane_idx_curr != lane_idx_prev or not on_lane
