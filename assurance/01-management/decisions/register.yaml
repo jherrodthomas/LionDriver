@@ -91,7 +91,7 @@
       detail: "Bundle it with OI-3 into the I3 confirmation review and decide after. Cost: the HARA baseline waits for that review."
   sources: ["WP-A-05 §2 H-STPA-1, OI-1", "WP-C-04 §7 (driver monitoring not given an ASIL; OI-3)", "WP-C-08 MC-01…MC-03"]
   status: applied
-  applied: {ref: "PENDING-PR", record: "WP-C-03 v0.4 §1, §3 (OS-17, OS-18), §5 (HE-01.5, HE-02.6, HE-03.6, HE-06.4, HE-07.4); WP-C-08 v0.3 §6.1", at: 2026-10-16}
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §1, §3 (OS-17, OS-18), §5 (HE-01.5, HE-02.6, HE-03.6, HE-06.4, HE-07.4); WP-C-08 v0.3 §6.1", at: 2026-10-16}
   answer: {choice: other, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g, note: "Both SOTIF and HARA Foreseeable Misuse"}
   note: "Supersedes the first answer (B, SOTIF only), applied in 38d3320. The SOTIF side was recorded then (WP-C-08 MC-01…MC-03); the HARA side is WP-C-03 v0.4, as foreseeable-misuse situations OS-17 and OS-18."
 
@@ -218,7 +218,7 @@
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md OI-1"]
   note: "HARA record applied: C2 kept, measurement a G1 entry condition, no controllability credit in the safety case. Left: the G1 entry condition in the gate plan (management session) and the panda path designed to the ASIL D measures (hardware and FMEDA sessions)."
   status: applied
-  applied: {ref: "PENDING-PR", record: "WP-C-03 v0.4 HE-01.2, SG-01 notes, OI-1", at: 2026-10-16}
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 HE-01.2, SG-01 notes, OI-1", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-009
@@ -483,7 +483,7 @@
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-4", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-2"]
   note: "Left: WP-M-10 OI-2 (AI safety plan scope) for its owner."
   status: applied
-  applied: {ref: "PENDING-PR", record: "WP-C-01 v0.10 §3.1 E-06, Figures 3-1 and 3-2, OI-4 closed", at: 2026-10-16}
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-01 v0.10 §3.1 E-06, Figures 3-1 and 3-2, OI-4 closed", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-022
@@ -525,7 +525,7 @@
   sources: ["assurance/02-concept/WP-C-02-odd-and-intended-functionality.md OI-4", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md OI-2"]
   note: "ODD and HARA applied. Left: validation distances per ODD part (WP-V-03 OI-2, validation session); the off-highway refusal or warning the decision assumes (FM-08, WP-C-02 OI-9; SOTIF session); ODD-A mentions in WP-C-05 SH-11."
   status: applied
-  applied: {ref: "PENDING-PR", record: "WP-C-02 v0.4 §3 (ODD-H only), OI-4 closed; WP-C-03 v0.4 §3 (OS-03, OS-04, OS-15, OS-16 foreseeable misuse at E2)", at: 2026-10-16}
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-02 v0.4 §3 (ODD-H only), OI-4 closed; WP-C-03 v0.4 §3 (OS-03, OS-04, OS-15, OS-16 foreseeable misuse at E2)", at: 2026-10-16}
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-024
@@ -683,7 +683,7 @@
   sources: ["assurance/trace/README.md “4 | WP-C-03 marks HE-01.3 and HE-01.4 ⚠ but states no altern”"]
   note: "The fallback ASILs are stated for every ⚠ event; the lead confirms them in the HARA review (WP-C-03 OI-9)."
   status: applied
-  applied: {ref: "PENDING-PR", record: "WP-C-03 v0.4 §5.12; trace hazards.yaml asil_if_aou_fails", at: 2026-10-16}
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §5.12; trace hazards.yaml asil_if_aou_fails", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-032
@@ -724,7 +724,7 @@
       detail: "Thorough. Cost: new rows, possibly new goals, and FSC work."
   sources: ["assurance/02-concept/WP-C-05-sotif-hazard-identification.md OI-2"]
   status: applied
-  applied: {ref: "PENDING-PR", record: "WP-C-03 v0.4 §7.1", at: 2026-10-16}
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §7.1", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-034
@@ -783,7 +783,7 @@
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md RD-2"]
   note: "Applied to the situation OS-07, so it also raises HE-06.1 and HE-07.3 and SG-06 to ASIL C; that consequence is queued for the lead's confirmation (DQ-210). Left for the safety-concept session: the longitudinal checks of the FSC move up to C (RD-2)."
   status: applied
-  applied: {ref: "PENDING-PR", record: "WP-C-03 v0.4 §2 (frequency reading for OS-07), §3, HE-03.3, SG-03 ASIL C", at: 2026-10-16}
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §2 (frequency reading for OS-07), §3, HE-03.3, SG-03 ASIL C", at: 2026-10-16}
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-037
@@ -1250,7 +1250,7 @@
   sources: ["assurance/02-concept/WP-C-03-hara.md OI-7"]
   note: "Left for the timing session: the SG-02 FTTI (≤ 1 s to warning) against the 0.7 s drift at the curve bound (WP-S-04 OI-2)."
   status: applied
-  applied: {ref: "PENDING-PR", record: "WP-C-03 v0.4 HE-02.1, HE-07.1, SG-02 ASIL C, OI-7 closed; WP-C-02 v0.4 §3.2", at: 2026-10-16}
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 HE-02.1, HE-07.1, SG-02 ASIL C, OI-7 closed; WP-C-02 v0.4 §3.2", at: 2026-10-16}
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-060
@@ -2007,7 +2007,7 @@
   sources: ["assurance/08-analyses/fmea/item-definition.md IOI-003"]
   note: "Left: the user information (WP-O-03) must say that LionDriver changes reach these cars unassessed."
   status: applied
-  applied: {ref: "PENDING-PR", record: "item-definition.md (LD-ITEM-001) rev 0.3 §B.3, IOI-003 closed", at: 2026-10-16}
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "item-definition.md (LD-ITEM-001) rev 0.3 §B.3, IOI-003 closed", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 
 - id: DQ-100
@@ -3899,7 +3899,7 @@
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md RD-3", "assurance/02-concept/WP-C-04-functional-safety-concept.md OI-3", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-3", "assurance/00-assessment/docs-safety-reconciliation.md OI-2"]
   note: "HARA part applied. Left for the safety-concept session: the SG-08 safe state (the reaction at zero awareness, with System FMEA SFM-ACT-005) and the ASIL A attribute of the DM requirements FSR-02.06…02.09 (WP-C-04 §7). Left for the System FMEA session: cite H-09 / SG-08 in SFM-025."
   status: applied
-  applied: {ref: "PENDING-PR", record: "WP-C-03 v0.4 §4, §5.9 (H-09, HE-09.1, HE-09.2), §6 SG-08; trace items hazards.yaml, goals.yaml; WP-C-04 §9 SG-08 column", at: 2026-10-16}
+  applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §4, §5.9 (H-09, HE-09.1, HE-09.2), §6 SG-08; trace items hazards.yaml, goals.yaml; WP-C-04 §9 SG-08 column", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
 - id: DQ-206
   question: "When a diagnostic catches a hazardous fault and the car reaches a safe state in time, may that count as accepting the remaining risk?"
