@@ -3980,7 +3980,7 @@
   sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03", "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md OI-9"]
   status: queued
 
-- id: DQ-210
+- id: DQ-340
   question: "If the driver stays unresponsive at the last driver-monitoring alert, what should the car do?"
   context: "Today, 5 s after the last alert the car starts slowing down but **stays engaged and keeps steering**, and the lockout only applies after a later disengagement (System FMEA SFM-025.C1). You chose to make the unresponsive driver its own hazard with an ASIL A goal (DQ-205); its safe state is this reaction. Requirement TSR-633 waits on the answer."
   reversibility: revisit
