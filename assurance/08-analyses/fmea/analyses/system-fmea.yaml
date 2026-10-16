@@ -79,6 +79,9 @@
 # (O 6) rate the same design gap differently, raised with the SW FMEA owner.
 # Rev 0.20 (2026-10-16): SFM-026 (alert not presented) and SFM-027 (alert late) also end in HZ-013: the driver-monitoring escalation
 # goes through the same HMI path (FTA F-37; SW FMEA SWF-035, SWF-082, #146). Severity stays 10; no rating changes.
+# Rev 0.21 (2026-10-16): end effects the fault trees already rely on (fta-fmea-map warnings): HZ-005 on SFM-013 (unintended
+# engagement), SFM-017 (brake does not disengage) and SFM-034 (intercept in pass-through: stock ACC and item requests combine);
+# HZ-008 on SFM-021 (stock cruise survives the cancel) and SFM-028 (displayed state says released). Severity stays 10; no rating changes.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -87,7 +90,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.20"
+  revision: "0.21"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
@@ -1823,6 +1826,7 @@ failure_modes:
       - {level: local, description: "State machine enters enabled without ENABLE or despite NO_ENTRY"}
       - {level: next_higher, description: "Item starts actuating"}
       - {level: end, description: "Unexpected steering/acceleration; driver surprised", hazard: HZ-010, severity: 10}
+      - {level: end, description: "Contributes to HZ-005: positive acceleration requested after an engagement the driver did not ask for", hazard: HZ-005, severity: 10}
     severity: 10
     safety_mechanisms:
       - description: NO_ENTRY events block engagement (state.py)
@@ -2197,6 +2201,7 @@ failure_modes:
       - {level: local, description: "pedalPressed not raised or not acted on"}
       - {level: next_higher, description: "Item keeps requesting acceleration/steering during driver braking"}
       - {level: end, description: "Driver cannot retake control as expected (SAFETY.md requirement 1 violated)", hazard: HZ-008, severity: 10}
+      - {level: end, description: "Contributes to HZ-005: the item keeps requesting acceleration while the driver brakes", hazard: HZ-005, severity: 10}
     severity: 10
     safety_mechanisms:
       - description: selfdrived raises pedalPressed (USER_DISABLE) on brake press
@@ -2506,6 +2511,7 @@ failure_modes:
       - {level: local, description: "Cancel request not effective; PCM cruise enabled while item is disabled"}
       - {level: next_higher, description: "Vehicle continues under stock cruise"}
       - {level: end, description: "Driver believes automation is off (mode confusion)", hazard: HZ-012, severity: 10}
+      - {level: end, description: "Contributes to HZ-008: the driver cancels but stock cruise keeps longitudinal control", hazard: HZ-008, severity: 10}
     severity: 10
     safety_mechanisms:
       - description: controlsd sends cruiseControl.cancel when cruise enabled and item not enabled
@@ -2994,6 +3000,7 @@ failure_modes:
       - {level: local, description: "UI shows engaged when disabled, or disabled when engaged"}
       - {level: next_higher, description: "Mode confusion"}
       - {level: end, description: "Driver stops steering/braking believing automation is active, or is surprised by actuation", hazard: HZ-012, severity: 10}
+      - {level: end, description: "Contributes to HZ-008: the driver believes control was released by the brake or cancel while the item still acts", hazard: HZ-008, severity: 10}
     severity: 10
     safety_mechanisms: []
     causes:
@@ -3387,6 +3394,7 @@ failure_modes:
       - {level: end, description: "Erratic stock or item behavior; stock functions lost", hazard: HZ-011, severity: 10}
       - {level: end, description: "Contributes to HZ-002: stock LKA and item steering requests combine on the bus", hazard: HZ-002, severity: 10}
       - {level: end, description: "Contributes to HZ-006: stock and item braking requests combine on the bus", hazard: HZ-006, severity: 10}
+      - {level: end, description: "Contributes to HZ-005: stock ACC and item acceleration requests combine on the bus", hazard: HZ-005, severity: 10}
     severity: 10
     safety_mechanisms:
       - description: relayMalfunction fault from panda -> IMMEDIATE_DISABLE
