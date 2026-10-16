@@ -4,8 +4,8 @@
 |---|---|
 | Work product | WP-S-04 Timing analysis: FTTI, fault detection and reaction budget |
 | Standard reference | ISO 26262-4:2018 §6 (fault tolerant time interval, fault detection and fault reaction time intervals, emergency operation); ISO 26262-3:2018 §7 (FTTI as FSC input); ISO 26262-1:2018 (definitions, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.7 (§3.8 added: FTTI and budgets for the warning paths that had none (insufficient lateral control, late or insufficient braking warning, unintended engagement, driver monitoring), System FMEA SFM-ACT-017; four rows added to §3.7; T-30…T-33 added to §4; kinematic estimates and code-derived times only; 2026-10-16). 0.6 (lead decisions of 2026-10-14 recorded, register DQ-048, DQ-062, DQ-114: EPS-fault warning persistence ≤ 0.7 s, OI-8 decided; SG-07 0.2 s accepted as the working budget; 90 ms watchdog accepted on condition; Figure 5-2 note updated; no code-derived time changed; 2026-10-16). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§5 Figures 5-1 and 5-2 added: timing budgets per safety goal against the code-derived times, and the EPS-fault warning chain of OI-8; generated from §3.7 and §4 by `figures/fig_s04_timing.py`; no number changed; 2026-10-13). 0.3 (status update 2026-10-12: §4 code-derived times for the reference build at `bf6ce8c` (T-01, T-06a/b, T-09a, T-26…T-29), §5 verdicts, OI-8 EPS-fault warning latency; nothing verified on hardware). History: 0.2 (§3.6 preliminary SG-07 FTTI and budget, RR-2026-005 F-02; 2026-10-12) |
-| Status | Draft — kinematic estimates and code-derived times only; no measurement has been performed; not reviewed independently |
+| Version | 0.8 (§3.9 added: closed-loop cross-check of §3 and §4 against the fault-injection plant model of `assurance/sim` (synthetic data, no evidence credit); T-34 (TSR-408 command-arrival check) added to §4; §5 row for the full SoC stall, where the fast heartbeat siren never sounds; OI-2 extended below the ODD bound; OI-10 added; no budget changed; 2026-10-16). 0.7 (§3.8 added: FTTI and budgets for the warning paths that had none (insufficient lateral control, late or insufficient braking warning, unintended engagement, driver monitoring), System FMEA SFM-ACT-017; four rows added to §3.7; T-30…T-33 added to §4; kinematic estimates and code-derived times only; 2026-10-16). 0.6 (lead decisions of 2026-10-14 recorded, register DQ-048, DQ-062, DQ-114: EPS-fault warning persistence ≤ 0.7 s, OI-8 decided; SG-07 0.2 s accepted as the working budget; 90 ms watchdog accepted on condition; Figure 5-2 note updated; no code-derived time changed; 2026-10-16). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§5 Figures 5-1 and 5-2 added: timing budgets per safety goal against the code-derived times, and the EPS-fault warning chain of OI-8; generated from §3.7 and §4 by `figures/fig_s04_timing.py`; no number changed; 2026-10-13). 0.3 (status update 2026-10-12: §4 code-derived times for the reference build at `bf6ce8c` (T-01, T-06a/b, T-09a, T-26…T-29), §5 verdicts, OI-8 EPS-fault warning latency; nothing verified on hardware). History: 0.2 (§3.6 preliminary SG-07 FTTI and budget, RR-2026-005 F-02; 2026-10-12) |
+| Status | Draft — kinematic estimates and code-derived times, cross-checked in simulation (§3.9, synthetic, not evidence); no measurement has been performed; not reviewed independently |
 | ASIL / scope | SG-01 (C until re-rated, B‡), SG-02…SG-07 (B) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
@@ -187,6 +187,33 @@ Actuation without a driver engagement is refused per frame by the envelope gate 
 
 The hazard is an engaged item with nobody supervising it. The lead decided on 2026-10-14 (DQ-205) that this becomes hazard H-09 with an ASIL A goal; its FTTI is set with that goal by the HARA owner and is not estimated here. The timing that exists: DM escalation reaches the terminal alert after 13 s (vision) or 25 s (wheel-touch) of inattention (T-24), DM invalid output must give a take-over request within 2 s (TSR-609), and the terminal reaction (TSR-633) must start within 5 s of the terminal alert (T-33). These three are the rows to compare once the H-09 FTTI exists.
 
+### 3.9 Cross-check in simulation (synthetic data, not evidence)
+
+The fault-injection plant model of [`assurance/sim`](../sim/README.md) runs the real envelope code in a closed loop: opendbc `libsafety` (reference build, Toyota mode, parameter 73), the panda heartbeat monitor, both sirens and the IWDG feed. Around it are a single-track Corolla model, an EPS and PCM lag, a stand-in SoC controller and a driver model. Its results are in [`plant-results.md`](../sim/results/plant-results.md). The conditions are 120 km/h, a 1.5 m/s² curve inside the ODD and a driver t_r = 1.5 s. The EPS has two frame-loss assumptions: *release*, which drops LKA torque 30 ms after the last frame, and *hold*, which keeps it 2 s (T-23).
+
+**These results are synthetic.** The model is not validated against Corolla logs, so they earn no evidence credit (DQ-139, WP-V-02 §5.3). They do not replace a kinematic estimate or a code-derived time in this document. They show where an estimate is optimistic or pessimistic, and which measurement decides the outcome. Both values are kept side by side.
+
+| Item | This document | Simulation (EPS release unless stated) | Reading |
+|---|---|---|---|
+| §3.1 step, assistance lost in a 1.5 m/s² curve: time to the lane line, 3.0 / 3.7 m lane | 0.90 / 1.13 s | 1.27–1.38 / 1.51–1.62 s (F-01a, F-04b, F-05, F-06a, F-07, F-08); with EPS hold 3.14–3.49 s | The kinematic estimate is conservative by about 0.4 s: the EPS lag and the vehicle response delay the drift. The lane line is still reached before a 1.5 s driver correction, so this extends OI-2 below the ODD bound |
+| §3.1 1 s ramp at 1.99 m/s² (hard-over within the envelope), 3.0 / 3.7 m lane | 1.23 / 1.44 s | 1.57 / 1.80 s (F-01b) | Conservative by about 0.35 s. The driver cue is drift only, at 1.17 s |
+| SG-01 FTTI 0.5 s (§3.1, §3.7) | 0.5 s | Deviation at 0.5 s ≤ 0.03 m in every case | For these fault classes the hazard threshold is not reached within 0.5 s. The 0.5 s design value is conservative for envelope-limited torque. It is kept for faults that defeat the envelope (§3.1, a_y,EPS unknown) |
+| T-01 RX timeout, `0x260` | ≤ 0.16 s | Revoked 0.083 s after the last frame (F-08) | Consistent |
+| T-06a heartbeat revocation | ≤ 0.31 s after the last heartbeat | 0.193 s after the fault, which is within 0.3 s of the last heartbeat (F-04a) | Consistent |
+| T-07a heartbeat siren | ≈ 0.56 s after the last heartbeat | 0.25 s after the fault (F-04a) | Consistent, **but only when commands continue**: see T-34 |
+| T-09a IWDG | ≈ 90 ms nominal | Reset 83 ms after the hang, 90 ms after the last feed (F-05) | Consistent |
+| T-28 EPS-fault siren | ≤ 1.26 s worst case | 1.00 s at the simulated speaker phase (F-07) | Consistent (phase-dependent) |
+| T-34 command-arrival revocation (new) | — | Revoked 0.043 s after a full SoC stall (F-04b); no siren | New §4 row. The 0.3 s heartbeat check does not fire because authority is already revoked, so T-07a does not sound (§5) |
+| §3.3 gap loss in 1 s at +2.0 m/s² | 1.00 m | 0.75 m (L-01) | Conservative (PCM lag) |
+| §3.4 follower collision if t_r ≥ h | rule | No collision at h = 1.0 s (L-03) | Not a test of the rule: the ego driver ends the deceleration at 1.55 s |
+| §3.8.1 saturation at the ODD curve bound | 0.5–1.0 m/s² deficit is credible | Saturated at R_ODD; 0.80 m drift; 3.0 m lane line reached 3.71 s after curve entry (N-3) | Supports §3.8.1 and OI-2 |
+
+Faults that the envelope does not report, so no warning comes from the item (§5):
+- **Over-limit torque (F-01a):** refused frame by frame while authority stays granted. TSR-108 latching (DQ-060) and the TSR-516(b) siren on a rejected command are not implemented.
+- **Frozen command (F-03):** not detected. TSR-631 is not implemented.
+
+**EPS frame-loss behaviour decides most outcomes** (release about 1.3–1.5 s to the line, hold about 3.1–3.5 s). Measurement M-02 is therefore the first measurement to make (OI-10).
+
 ## 4. Current detection and reaction times (code-derived)
 
 | # | Mechanism | Code | Derivation | Worst-case time |
@@ -227,6 +254,7 @@ The hazard is an engaged item with nobody supervising it. The lead decided on 20
 | T-31 | Forward collision warning (added 2026-10-16) | `selfdrive/selfdrived/selfdrived.py:440-445` | model `hardBrakePredicted` or planner FCW | not derived; measure (M-12) |
 | T-32 | Host check of panda authority while disengaged (added 2026-10-16) | — | not implemented (TSR-630) | not detected |
 | T-33 | Terminal DM reaction (added 2026-10-16) | `selfdrive/monitoring/policy.py:39, 398`; `selfdrive/controls/controlsd.py:235` | forced deceleration 5 s after the terminal alert; no disengagement | 5 s to deceleration; no safe state (TSR-633) |
+| T-34 | SoC command arrival (TSR-408; reference build, added 2026-10-16) | `opendbc_repo/opendbc/safety/safety.h` `tx_arrival_ok`, `modes/toyota.h` (opendbc `273f44e`) | while authority is granted, the 100 Hz safety task revokes it when `0x2E4` has not reached the TX hook for > 50 ms or, with openpilot longitudinal, `0x343` for > 100 ms | ≤ 0.06 s for `0x2E4`, ≤ 0.11 s for `0x343` (one task period added). Runs in the safety task **before** the heartbeat check (`main.c` `safety_task_handler`), so in a full SoC stall it revokes first and T-07a does not sound. Simulated 0.043 s (§3.9). Not verified on hardware |
 
 ## 5. Comparison and required changes
 
@@ -250,6 +278,7 @@ The hazard is an engaged item with nobody supervising it. The lead decided on 20
 | Cruise active with main off (added 2026-10-12) | ≤ 0.2 s | refuse at once; revoke after 150 ms (T-26) | Met by design (reference build), not verified | — | TSR-405(c) |
 | SoC TX rate above budget (added 2026-10-12) | revoke | ≤ 0.1 s after first rejected frame, ≤ 0.2 s from onset at 2× (T-27) | Met by design (reference build), not verified; budgets to be confirmed on logs | — | TSR-518 |
 | EPS fault (added 2026-10-12) | LKA refused; warning within SG-02 1 s (§3.7) | LKA refused on receipt; siren ≤ 1.26 s worst case after onset (T-28) | Refusal met by design (reference build); **warning latency exceeds the 1 s budget** (OI-8); not verified | persistence ≤ 0.7 s (DQ-048): siren ≤ 0.96 s from onset | TSR-110, 516 |
+| Full SoC stall → warning (added 2026-10-16) | warning within SG-02 1 s (§3.7); TSR-516(b) | revoke ≤ 0.06 s (T-34); fast siren does not sound because authority is already revoked when the heartbeat check fires; 1 Hz siren at 4–5 s (T-07) | **Not met** in all builds since opendbc `273f44e` (code-derived, confirmed in simulation, §3.9); not verified | sound the siren on a T-34 revocation, as TSR-516(b) already requires for any revocation that is not a driver action | TSR-516, 408 |
 
 ![Figure 5-1: timing budgets per safety goal (FDTI, FRTI, margin, FTTI) for SG-01, SG-02/06, SG-03/04, SG-05 and SG-07, with the code-derived times T-01, T-04, T-06, T-06a, T-07, T-07a, T-08, T-09, T-09a, T-13, T-23 and T-28 for the baseline and the reference build](figures/fig-s04-5-1-timing-budgets.svg)
 
@@ -301,7 +330,7 @@ Results (template — **Not yet executed**):
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
 | OI-1 | Confirm vehicle width, lane-margin design value and a_y,EPS (M-01) and recompute §3.1 | Safety engineer | G2 |
-| OI-2 | SG-02 at the ODD curve bound: physical time to departure (≈ 0.7 s) is shorter than driver reaction; HARA owner to review C rating of HE-02.1 or tighten R_ODD (tracked as WP-C-03 OI-7; noted in WP-C-04 §8) | HARA owner | G2 |
+| OI-2 | SG-02 at the ODD curve bound: physical time to departure (≈ 0.7 s) is shorter than driver reaction; HARA owner to review C rating of HE-02.1 or tighten R_ODD (tracked as WP-C-03 OI-7; noted in WP-C-04 §8). *2026-10-16:* the simulation (§3.9, synthetic) shows the same inside the ODD: with assistance lost in a 1.5 m/s² curve the lane line is reached after about 1.3–1.5 s, before a 1.5 s driver correction, even when the siren sounds at 0.25 s. The question therefore covers ordinary curves, not only the ODD bound | HARA owner | G2 |
 | OI-3 | Check SG-03 standstill-launch distance assumptions with WP-C-08 | Safety engineer | G2 |
 | OI-4 | Measure the PCS message period and braking profile on the reference vehicle (A-PCS-1, A-PCS-2) and confirm or replace the preliminary SG-07 FTTI of §3.6. The acceptable loss is agreed for now: 0.2 s, up to about 4 km/h, accepted until measured (DQ-062, 2026-10-14) | Safety engineer | G2 |
 | OI-7 | SG-07 forwarding loss has zero margin (FDTI + FRTI = FTTI). Decide whether to shorten the watchdog and forwarding-supervision times below 0.1 s once the PCS timing is measured | Safety engineer | G2 |
@@ -309,3 +338,4 @@ Results (template — **Not yet executed**):
 | OI-6 | Update FSC §8 budgets after this document is approved (FSC OI-4) | Safety engineer | G2 |
 | OI-8 | EPS-fault siren latency ≤ 1.26 s worst case from fault onset (T-28; corrected 2026-10-13 from ≈ 1.14 s: the speaker sounds only on every other 8 Hz tick) exceeds the SG-02 1 s warning budget (§3.7). TSR-516's ≤ 0.5 s after detection is met (≤ 0.26 s) only because WP-S-02 v0.14 defines detection as the 1 s persistence; measured from the first fault frame it is not. Caused by the maintainer decision of 2026-10-12 (persistent faults only, 1 s; EPS-fault impact record §7). Options were: shorten the persistence (e.g. 0.7 s), or justify that LKA actuation is already refused from the first fault frame. **Decided 2026-10-14 (register DQ-048): shorten the persistence to about 0.7 s.** WP-S-02 v0.21 TSR-516 now measures detection from the first fault frame and caps the persistence at 0.7 s. Open: the panda firmware change and its HIL timing (M-05/M-10); T-28 stays at 1.26 s until the code changes (added 2026-10-12) | Safety manager | G2 |
 | OI-9 | Heartbeat loss when authority ended within the 5 s before it: TSR-516(a) asks for the siren ≤ 0.5 s after detection, but the fast siren (T-07a) sounds only when authority is granted at the revocation; this case keeps the 1 Hz siren at 4–5 s (T-07). Decide whether the case needs a warning within the SG-02 budget (the driver has already seen the disengagement) and align TSR-516(a) or the firmware. No requirement changed here (added 2026-10-13) | Safety manager | G2 |
+| OI-10 | The EPS behaviour after `0x2E4` stops (M-02) decides most simulated outcomes: release gives about 1.3–1.5 s to the lane line, hold about 3.1–3.5 s (§3.9). Make M-02 the first vehicle measurement, then re-run the simulation with the measured behaviour (added 2026-10-16) | Test lead | G2 |
