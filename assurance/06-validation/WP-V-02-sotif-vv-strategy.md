@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-02 SOTIF verification and validation strategy, validation targets |
 | Standard reference | ISO 21448:2022 §9 (V&V strategy, validation targets), Annex C (informative, validation target derivation); ISO/PAS 8800:2024 (AI V&V); ASPICE 4.0 VAL.1 |
-| Version | 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
+| Version | 0.4.1 (§5.3.1 simulator status brought up to date by the simulation session at the SOTIF session's request: bridge PR #124, scenario files, plant model; no plan or target changed; 2026-10-16). 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -428,9 +428,10 @@ This section is the plan for building that case. Nothing in it has been executed
 | Item | State |
 |---|---|
 | Bridge `openpilot/tools/sim` (MetaDrive) | Upstream state: Honda Civic CAN, panda bypassed (`can`/`pandaStates` published directly), one loop track, no traffic. CI job disabled (`.github/workflows/tests.yaml`, `simulator_driving`, `if: false`) |
-| Adaptation to the item | In progress by the simulation session. The work-in-progress branch `claude/sotif-metadrive` (commit `7598c2b`, not merged) holds: Corolla TSS2 CAN on the powertrain, radar and camera buses from opendbc; the LionDriver reference build of the panda safety code (`libsafety`) on every received and sent frame; an EPS/PCM response model; headless rendering; traffic and pedestrian models. None of it has run closed loop with the driving model yet |
+| Adaptation to the item | In progress by the simulation session (update 2026-10-16). PR #124 (draft) takes the SOTIF session's branch `claude/sotif-metadrive` (`7598c2b`) and adds: headless rendering wired into the MetaDrive process, the ego moved kinematically from the plant's curvature and acceleration instead of MetaDrive's vehicle dynamics, the Corolla TSS2 fingerprint, traffic models limited to those licensed CC-BY-4.0, and the `simulator_driving` CI job re-enabled. Checked in the cloud container without the driving model (its LFS host is not reachable there): openpilot fingerprints `TOYOTA_COROLLA_TSS2` with safety parameter 73 from the simulated CAN. Closed loop with the driving model: only in CI, not yet passed |
 | Headless rendering on CPU | Works through panda3d's EGL pipe on Mesa llvmpipe with multisampling off. Measured on a 4-core cloud container: 160–230 ms per rendered frame (about 4–5 frames per second), almost all in the camera's scene pass. The device runs the road camera at 20 frames per second |
-| Scenario scripting | Not built. Scripted vehicles and pedestrians were spawned and moved in a standalone MetaDrive test, not yet through the bridge |
+| Scenario scripting | Scenario files exist: nine WP-V-03 scenarios as OpenSCENARIO/OpenDRIVE (`assurance/sim/scenarios`), replayed headless in esmini in CI; the fault-injection plant model reads their roads. Not yet loaded by the MetaDrive bridge (update 2026-10-16) |
+| Fault-injection plant model | Built (`assurance/sim`, layer 1): the panda safety code in a closed loop with a single-track Corolla, EPS, PCM and driver models; results labelled per §5.3.5; no credit |
 
 #### 5.3.2 Scenario families
 
