@@ -17,6 +17,7 @@ Row results: *match* = a computed cut set; *effective* = omits only latent event
 | SG-05 | 12 | 11 | 11 | 10 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
 | SG-06 | 85 | 7 | 11 | 1 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-07 | 17 | 14 | 16 | 15 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SG-08 | 11 | 11 | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## SG-01: uncontrollable lateral motion, or steering actuation while not engaged
 
@@ -493,3 +494,36 @@ Top event TE-07. 17 minimal cut sets.
 | MCS-07.14 | 1 | {BE-7.19} | match | — |
 | MCS-07.15 | 2 (BE-7.16 effective 1 + latent) | {BE-7.15 or BE-7.16, BE-7.10} | match | — |
 | MCS-07.16 | 2 (effective 1 + latent) | {BE-7.20, BE-7.21} | match | — |
+
+## SG-08: automated control continues with a driver who is not supervising or not responding
+
+Top event TE-08. 11 minimal cut sets.
+
+### Computed cut sets
+
+| # | Order | Effective | Events | Tags | Table row |
+|---|---|---|---|---|---|
+| 1 | 1 BE + 0 UE | 1 | {BE-2.12} | C | MCS-08.6 |
+| 2 | 1 BE + 0 UE | 1 | {BE-2.13} |  | MCS-08.6 |
+| 3 | 1 BE + 0 UE | 1 | {BE-2.25} |  | MCS-08.6 |
+| 4 | 1 BE + 0 UE | 1 | {BE-8.01} | S | MCS-08.1 |
+| 5 | 1 BE + 0 UE | 1 | {BE-8.02} |  | MCS-08.2 |
+| 6 | 1 BE + 0 UE | 1 | {BE-8.06} |  | MCS-08.4 |
+| 7 | 1 BE + 0 UE | 1 | {BE-8.07} |  | MCS-08.5 |
+| 8 | 1 BE + 0 UE | 1 | {BE-8.08} |  | MCS-08.7 |
+| 9 | 0 BE + 1 UE | 0 | {UE-8.09} |  | MCS-08.8 |
+| 10 | 2 BE + 0 UE | 1 | {BE-8.03, BE-8.04} | L | MCS-08.3 |
+| 11 | 2 BE + 0 UE | 1 | {BE-8.03, BE-8.05} | L | MCS-08.3 |
+
+### Table rows of WP-A-04
+
+| Row | Order stated | Events stated | Result | Detail |
+|---|---|---|---|---|
+| MCS-08.1 | 1 | {BE-8.01} | match | — |
+| MCS-08.2 | 1 | {BE-8.02} | match | — |
+| MCS-08.3 | 1 (effective, both inputs of G8.1.2 latent) | {BE-8.03, BE-8.04 or BE-8.05} | match | — |
+| MCS-08.4 | 1 | {BE-8.06} | match | — |
+| MCS-08.5 | 1 | {BE-8.07} | match | — |
+| MCS-08.6 | 1 | {BE-2.12 or BE-2.13 or BE-2.25} | match | — |
+| MCS-08.7 | 1 | {BE-8.08} | match | — |
+| MCS-08.8 | 0 + ext. | {UE-8.09} | match | — |

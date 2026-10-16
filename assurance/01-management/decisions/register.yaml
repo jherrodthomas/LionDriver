@@ -4203,3 +4203,25 @@
       detail: "The not-engaged branch then rests on SG-01's authority checks only. Cost: the acceleration case of a false engagement has no rated hazard."
   sources: ["assurance/08-analyses/fta-fmea-mapping.md F-34", "assurance/08-analyses/fmea/hara-mapping.yaml HZ-010"]
   status: queued
+
+- id: DQ-365
+  question: "When the driver does not respond to the last driver-monitoring alert, what should LionDriver do: stop in the lane and stay stopped, or stop and then hand back control?"
+  context: "Today, about 5 s after the last alert (≈ 18 s after the driver looks away), LionDriver slows the car to a stop in its lane. But it **stays engaged**: it never disengages, and the lockout that blocks re-engagement only starts after a disengagement. The new goal SG-08 (unresponsive driver, ASIL A) needs this reaction written down as its safe state, and the FTTI follows from it. What the car does when held at standstill under ACC has not been checked on the reference Corolla."
+  reversibility: revisit
+  blocks: "SG-08 safe state and FTTI (WP-C-03 OI-10, WP-S-04); System FMEA SFM-ACT-005; TSR-611; WP-A-04 §13 (F-38)"
+  gate: G1
+  decider: lead
+  after: [DQ-205]
+  options:
+    - key: A
+      recommended: true
+      title: "Stop in lane and stay stopped, with re-engagement locked out"
+      detail: "Keep today's stop. Hold the car at standstill and lock out re-engagement until the driver responds, so the item cannot drive off again. Cost: a lockout change, and a vehicle test that the standstill hold lasts."
+    - key: B
+      title: "Stop in lane, then disengage and hand back control"
+      detail: "Once stopped, cancel ACC and lock out. Cost: what the car does after the cancel at standstill (hold or roll) must be tested, and an incapacitated driver may not hold the brake."
+    - key: C
+      title: "Disengage at the last alert without stopping"
+      detail: "Simplest. Cost: an incapacitated driver gets an uncontrolled vehicle at highway speed; not recommended."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-38", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §13", "assurance/02-concept/WP-C-03-hara.md OI-10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-025"]
+  status: queued
