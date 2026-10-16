@@ -92,7 +92,7 @@
   sources: ["WP-A-05 §2 H-STPA-1, OI-1", "WP-C-04 §7 (driver monitoring not given an ASIL; OI-3)", "WP-C-08 MC-01…MC-03"]
   status: answered
   answer: {choice: other, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g, note: "Both SOTIF and HARA Foreseeable Misuse"}
-  note: "Supersedes the first answer (B, SOTIF only), which was applied in 38d3320; the record there needs updating to cover the HARA side too."
+  note: "Supersedes the first answer (B, SOTIF only), which was applied in 38d3320; the record there needs updating to cover the HARA side too. SOTIF side applied in aae16af (WP-C-05 §4); HARA side left for the HARA session (WP-C-08 OI-4)."
 
 - id: DQ-004
   ref: SNAP-1
@@ -521,6 +521,7 @@
   sources: ["assurance/02-concept/WP-C-02-odd-and-intended-functionality.md OI-4", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md OI-2"]
   status: answered
   answer: {choice: B, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "SOTIF part applied in aae16af (WP-C-05/06/07/11, WP-V-02/03/04, WP-M-08). Left: WP-C-02 ODD (ODD owner) and the HARA exposure rows OS-03/OS-04 (HARA session)."
 
 - id: DQ-024
   question: "Should LionDriver engage an independent cybersecurity assessor now to review the TARA and agree the CAL levels and crediting principles?"
@@ -695,8 +696,9 @@
       title: "Ask Claude to re-rate them with you"
       detail: "A closer look. Cost: delays the validation targets."
   sources: ["assurance/02-concept/WP-C-05-sotif-hazard-identification.md OI-1"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: aae16af, record: "WP-C-05 §3 (note after the table) and OI-1", at: 2026-10-16}
 
 - id: DQ-033
   question: "Can a hardware or software fault cause the same effects as the three SOTIF hazards you just rated?"
@@ -811,8 +813,9 @@
       title: "Adopt it with a lighter path for models outside the reference car"
       detail: "Less re-testing. Cost: a second, weaker process to maintain."
   sources: ["assurance/01-management/WP-M-07-risk-management.md D-05"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: aae16af, record: "WP-M-07 D-05; WP-M-08 §9; WP-C-11 AIR-24", at: 2026-10-16}
 
 - id: DQ-039
   question: "Do you have a Corolla of the reference configuration (US 1.8 L sedan, model year 2020–2022) to test with?"
@@ -894,6 +897,7 @@
   sources: ["assurance/06-validation/WP-V-01-safety-validation.md OI-3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "SOTIF part applied in aae16af (WP-V-02 §3.3). Left: write the fixed values into WP-V-01 OI-3 and WP-C-08 OI-3 (validation and HMI sessions)."
 
 - id: DQ-043
   question: "Should you buy the vehicle test equipment, and in what order?"
@@ -975,6 +979,7 @@
   sources: ["assurance/06-validation/WP-V-07-vehicle-test-operations.md OI-6"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "SOTIF part applied in aae16af (WP-V-02 §3.4, WP-V-03 §2, WP-V-04 §4). Left: WP-V-07 OI-6 and the (TBC) marks (validation session)."
 
 - id: DQ-047
   question: "Which checks must a build pass before it goes in a test car?"
@@ -1732,8 +1737,9 @@
       title: "Allow uploads and record which drives went up"
       detail: "Cheaper. Cost: independence judged drive by drive."
   sources: ["assurance/01-management/WP-M-10-ai-safety-plan.md OI-5"]
-  status: answered
+  status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  applied: {ref: aae16af, record: "WP-C-11 DSR-05; WP-M-10 OI-5; WP-M-08 §7", at: 2026-10-16}
 
 - id: DQ-085
   question: "May the SPI-overflow fault test (VS-FI-07) run on the reference device, or only on a spare?"
@@ -1861,6 +1867,7 @@
   sources: ["assurance/process/README.md “4. **The SOTIF release argument waits on evidence from other”"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "SOTIF part applied in aae16af (WP-V-02 §3.3; DQ-260 queued for the ODD bound). Left: the 110 km/h risk review and VS-VAL-10 plan in WP-V-01 (validation session)."
 
 - id: DQ-092
   question: "Should LionDriver commission a formal ASPICE assessment by a certified assessor, and when?"
@@ -2137,7 +2144,9 @@
       title: "Grant credit to selected families once their fidelity case passes"
       detail: "Less physical testing; needs fidelity evidence and assessor acceptance."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md OI-4"]
+  gate: G2
   status: queued
+  note: "Duplicate of DQ-139, which asks the same question for the lead at G2 (WP-M-08 OI-3). Do not open it; withdraw it when DQ-139 is answered."
 
 - id: DQ-108
   question: "What discovery-trend criterion and target (R3) must unknown-scenario exploration meet before release?"
@@ -2704,21 +2713,24 @@
   status: queued
 
 - id: DQ-139
-  question: "Does MetaDrive simulation have enough fidelity to count as SOTIF evidence, and for which scenarios?"
-  context: "The simulator job is disabled upstream and runs a Honda Civic with the envelope bypassed (GAP-51); fidelity of camera rendering and dynamics vs the Corolla must be argued."
-  reversibility: easy
-  blocks: "WP-V-03/V-04, WP-P-07"
+  question: "May simulation results count as validation evidence, and for which kinds of scenario?"
+  context: "LionDriver is adapting the MetaDrive simulator to drive the reference Corolla with the real panda safety code in the loop. Simulation can run thousands of trials where the closed course runs tens, but its images, radar and vehicle response are models. **Credit would cut physical testing; wrong credit would hide a real weakness.** The plan (WP-V-02 §5.3) groups scenarios into seven families and gives credit only per family, after at least 5 matched closed-course trials agree."
+  reversibility: revisit
+  blocks: "WP-V-03 M4 results; WP-V-04 decomposition; tool classification (WP-P-07)"
   gate: G2
-  decider: claude
+  decider: lead
   options:
     - key: A
       recommended: true
-      title: "Planner-level evidence only; re-enable CI job"
-      detail: "Limited, honest scope."
+      title: "Credit per family, only after its fidelity case passes"
+      detail: "Families like driver override (the panda code is the item's own) can earn credit; weather and lighting cannot. Cost: matched closed-course trials for each family, and the assessor must accept the case."
     - key: B
-      title: "Not evidence; exploration only"
-      detail: "No credit; keeps it as a discovery tool."
-  sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-3"]
+      title: "Never credit simulation; use it to explore only"
+      detail: "Simplest argument. Cost: every scenario-level target is shown on the closed course or road, which takes far more trials."
+    - key: C
+      title: "Credit planner-level results only (no camera in the loop)"
+      detail: "Avoids the rendering question. Cost: perception, the main source of SOTIF risk, gets no simulated evidence."
+  sources: ["assurance/01-management/WP-M-08-sotif-plan.md OI-3", "assurance/06-validation/WP-V-02-sotif-vv-strategy.md §5.3, OI-4", "assurance/06-validation/WP-V-03-sotif-known-scenarios.md §2"]
   status: queued
 
 - id: DQ-140
@@ -3980,7 +3992,7 @@
   sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03", "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md OI-9"]
   status: queued
 
-- id: DQ-210
+- id: DQ-340
   question: "If the driver stays unresponsive at the last driver-monitoring alert, what should the car do?"
   context: "Today, 5 s after the last alert the car starts slowing down but **stays engaged and keeps steering**, and the lockout only applies after a later disengagement (System FMEA SFM-025.C1). You chose to make the unresponsive driver its own hazard with an ASIL A goal (DQ-205); its safe state is this reaction. Requirement TSR-633 waits on the answer."
   reversibility: revisit
@@ -4000,4 +4012,48 @@
       title: "Disengage at once with the siren"
       detail: "No extra development. Cost: an unsupervised car with no steering and no braking from the item; the worst outcome for an unresponsive driver."
   sources: ["assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-ACT-005, SFM-025.C1", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7"]
+  status: queued
+
+- id: DQ-260
+  question: "Should the highway ODD stop at 110 km/h, the highest speed at which the driver's control of a steering fault will be tested?"
+  context: "You decided to test controllability up to 110 km/h (DQ-091), but the ODD still runs to 120 km/h. Between 110 and 120 km/h nothing shows the driver can catch a steering fault, so **the SOTIF argument gives no controllability credit there**: the targets for that band must be met without it, or the band leaves the ODD. Posted limits above 110 km/h (68 mph) exist on some US interstates."
+  reversibility: revisit
+  blocks: "ODD speed range (WP-C-02 §3.1); FM-07 speed bound; WP-V-02 §3.3 range of P(not controlled); KS-25"
+  gate: G1
+  decider: lead
+  after: [DQ-091]
+  options:
+    - key: A
+      recommended: true
+      title: "Cap the ODD at 110 km/h"
+      detail: "Every claimed speed is tested; FM-07 warns and then disengages above 110 km/h. Cost: no assistance on the few roads posted above 68 mph."
+    - key: B
+      title: "Keep 120 km/h and carry the 110-120 km/h band without controllability credit"
+      detail: "Full highway range. Cost: that band's targets assume the driver never catches the fault, which may not be reachable; the release argument states the gap."
+    - key: C
+      title: "Keep 120 km/h and test controllability to 120 km/h too"
+      detail: "Evidence for the whole range. Cost: a second, higher-risk test review and a site that allows 120 km/h."
+  sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3 item 3", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-07", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md §3 speed"]
+  status: queued
+
+- id: DQ-261
+  question: "Should LionDriver pay for a GPU machine to run the CARLA simulator for lighting and weather scenarios?"
+  context: "MetaDrive runs on ordinary CPUs but cannot show low sun, glare, night or rain, and has no radar model (WP-V-02 §5.3.2). CARLA with ScenarioRunner can, using a standard scenario format an assessor can rerun, but **it needs a GPU, which costs money every month** (not yet quoted), plus a new bridge and its own fidelity case. Those scenarios otherwise need real drives in those conditions."
+  reversibility: easy
+  blocks: "Simulated evidence for KS-12, KS-15 and radar-clutter scenarios (WP-V-02 §5.4)"
+  gate: G3
+  decider: lead
+  after: [DQ-139]
+  options:
+    - key: A
+      recommended: true
+      title: "Not now; revisit at G3"
+      detail: "Finish MetaDrive and its fidelity case first, then decide with the list of families it cannot carry. Cost: lighting and weather scenarios stay on real drives until then."
+    - key: B
+      title: "Budget a GPU runner and start CARLA now"
+      detail: "Two simulators in parallel. Cost: a monthly GPU bill and a second bridge to maintain."
+    - key: C
+      title: "Never; real drives cover lighting and weather"
+      detail: "No simulator cost. Cost: those scenarios are seen only as often as the weather allows."
+  sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §5.4", "assurance/01-management/WP-M-08-sotif-plan.md OI-3"]
   status: queued

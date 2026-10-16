@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-08 SOTIF plan |
 | Standard reference | ISO 21448:2022 §4 (management of SOTIF activities), §5–§13; ISO/PAS 8800:2024 (interface for AI-related insufficiencies); ASPICE 4.0 MAN.3 |
-| Version | 0.3 (status in §4 from WP-M-00; Experimental Mode default off since 2026-10-14 in §2 and §8; open items with owner and due gate; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.5 (OI-3 and the simulation row of §7 point to the WP-V-02 §5.3 fidelity-case plan and DQ-139; CARLA, DQ-261; 2026-10-16). 0.4 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; D-05 adopted, DQ-038; no log uploads to comma, DQ-084; 2026-10-16). 0.3 (status in §4 from WP-M-00; Experimental Mode default off since 2026-10-14 in §2 and §8; open items with owner and due gate; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -14,7 +14,7 @@
 
 ## 1. Purpose and scope
 
-This plan says how LionDriver carries out the ISO 21448 activities for the reference configuration defined in [WP-M-01 §3.1](WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to): supervised Level 2 lane centring plus openpilot longitudinal control on a Toyota Corolla, 12th generation (E210), TSS 2.0 (US, ICE), comma device and panda safety MCU.
+This plan says how LionDriver carries out the ISO 21448 activities for the reference configuration defined in [WP-M-01 §3.1](WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to): supervised Level 2 lane centring plus openpilot longitudinal control on a Toyota Corolla, 12th generation (E210), TSS 2.0 (US, ICE), comma device and panda safety MCU. Since 2026-10-14 the ODD is highways only (decision register DQ-023 option B), and controllability is to be tested up to 110 km/h after a separate risk review (DQ-091 option A).
 
 It implements sub-claim **G2** of the [assurance strategy](WP-M-01-assurance-strategy.md#32-top-level-claim) and tailoring decision **T-10** (all of ISO 21448 applies; the "unknown unsafe" area dominates for an ML-driven function). It does not repeat the strategy; it assigns activities, owners, gates and work products.
 
@@ -121,10 +121,10 @@ All tools below need classification under [WP-P-07](../07-supporting/WP-P-07-too
 |---|---|---|---|
 | Process replay | `openpilot/selfdrive/test/process_replay/test_processes.py`, `process_replay.py`, `compare_logs.py` | Regression oracle: shows that a change does not alter control outputs on recorded routes | Reference logs come from `commaai/ci-artifacts` (`test_processes.py:70`). LionDriver needs fork-owned references including Corolla routes |
 | Model replay | `openpilot/selfdrive/test/process_replay/model_replay.py` | Compares model outputs before/after a model or runtime change (§9) | Runs upstream only on comma's Jenkins device pool (`Jenkinsfile:297-299`, `tizi-replay`); test route fetched via `openpilot/tools/lib/openpilotci.py` (`model_replay.py:222-239`). Needs a fork-owned route set and runner |
-| Closed-loop simulation | `openpilot/tools/sim/` (MetaDrive bridge, `run_bridge.py`) | Scenario-based testing of known scenarios (§10), randomized exploration for §11 | CI job still disabled in the fork (`.github/workflows/tests.yaml:186`, `if: false  # FIXME`). Scenario fidelity (camera rendering, vehicle dynamics vs Corolla) must be argued before use as evidence |
+| Closed-loop simulation | `openpilot/tools/sim/` (MetaDrive bridge, `run_bridge.py`) | Scenario-based testing of known scenarios (§10), randomized exploration for §11 | CI job still disabled in the fork (`.github/workflows/tests.yaml`, `simulator_driving`, `if: false`). Adaptation to the reference Corolla with the panda safety code in the loop in progress (WP-V-02 §5.3.1). No credit before the fidelity case of WP-V-02 §5.3 is approved per scenario family |
 | Longitudinal maneuver tests | `openpilot/selfdrive/test/longitudinal_maneuvers/` (plant model) | Planner-level checks for lead/stop scenarios | No traceability to hazards; plant is not a Corolla model |
 | Safety replay | `opendbc_repo/opendbc/safety/safety_replay/` | Checks recorded drives against the envelope; detects envelope limit hits in real drives | Needs LionDriver-recorded Corolla logs |
-| Drive-log mining | Logs recorded by `openpilot/system/loggerd`; log tools in `openpilot/tools/` (e.g. jotpluggler) | Search for takeovers, near misses, FCW, envelope hits, DM events to discover unknown scenarios (§11) and monitor the field (§13) | LionDriver has no log store; logs today upload to comma's servers. A LionDriver-controlled log pipeline is required ([WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md)) |
+| Drive-log mining | Logs recorded by `openpilot/system/loggerd`; log tools in `openpilot/tools/` (e.g. jotpluggler) | Search for takeovers, near misses, FCW, envelope hits, DM events to discover unknown scenarios (§11) and monitor the field (§13) | LionDriver has no log store yet. The project lead decided that LionDriver drives are not uploaded to comma's servers (DQ-084 option A, 2026-10-14), so a LionDriver-controlled log pipeline is required ([WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md); OI-4) |
 | Vehicle testing | Reference Corolla, safety drivers under WP-V-07 | Known-scenario tests on closed course; validation drives within ODD | Requires approved WP-V-07 |
 | Analysis methods | Scenario catalogues, STPA-style control-structure analysis, FTA branches for insufficiencies | §6, §7 | Method choice recorded in WP-C-06 |
 
@@ -144,7 +144,7 @@ These are candidates only. WP-C-07 decides each one with rationale and owns the 
 
 ## 9. Change-triggered re-evaluation (including model changes)
 
-Decision D-05 makes every model change SOTIF-relevant. The trigger list below is applied by the impact-analysis procedure in [WP-M-12 §7](WP-M-12-impact-analysis.md) and by [change management (WP-P-02)](../07-supporting/WP-P-02-change-management.md).
+Decision D-05 makes every model change SOTIF-relevant. The project lead adopted it as written on 2026-10-14 (decision register DQ-038 option A): weights are pinned per release, and any change of the driving model or the tinygrad runtime re-runs the replays and scenario evaluations below. The trigger list below is applied by the impact-analysis procedure in [WP-M-12 §7](WP-M-12-impact-analysis.md) and by [change management (WP-P-02)](../07-supporting/WP-P-02-change-management.md).
 
 | Change type | Examples from the baseline history | Required SOTIF re-evaluation |
 |---|---|---|
@@ -173,7 +173,7 @@ Dates are set in [WP-M-03](WP-M-03-project-plan.md). The ordering is: §4 (G0) �
 |---|---|---|---|
 | OI-1 | Select and justify the B1 human-driver baseline data set and filtering to the ODD (WP-V-02) | SL | G2 |
 | OI-2 | Define how the B2 stock-TSS2 comparison is executed on the reference vehicle (scenario list, test site, measurement) | SL | G2 |
-| OI-3 | Decide whether MetaDrive-based simulation (`openpilot/tools/sim`) has sufficient fidelity to count as evidence, and on which scenarios; re-enable the CI job in the fork | SL | G2 |
+| OI-3 | Decide whether MetaDrive-based simulation (`openpilot/tools/sim`) has sufficient fidelity to count as evidence, and on which scenario families: a lead decision at G2 (decision register DQ-139), on the fidelity case planned in WP-V-02 §5.3. Re-enable the CI job in the fork (simulation session). CARLA as a later option: WP-V-02 §5.4, DQ-261 | SL | G2 |
 | OI-4 | Build a LionDriver-controlled log store so that drive logs do not depend on comma servers (shared with WP-O-04, WP-M-09) | PM | G4 |
 | OI-5 | Generate fork-owned process-replay and model-replay reference sets, including Corolla routes (shared with D-03) | PM / ML | G0 (process replay, with D-03); G2 (model replay, Corolla routes) |
 | OI-6 | Appoint an external HMI / human-factors reviewer for WP-C-08 | PM | G1 |

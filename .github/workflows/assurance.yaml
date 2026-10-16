@@ -12,6 +12,7 @@ on:
     paths:
       - 'assurance/**'
       - 'opendbc_repo'
+      - 'panda'
       - 'tools/sync/**'
       - 'tools/ci/**'
       - 'tools/severity/**'
@@ -27,6 +28,7 @@ on:
     paths:
       - 'assurance/**'
       - 'opendbc_repo'
+      - 'panda'
       - 'tools/sync/**'
       - 'tools/ci/**'
       - 'tools/severity/**'
@@ -232,3 +234,23 @@ jobs:
       with:
         name: octave-models
         path: build/octave-models/
+
+  sim-plant:
+    name: simulation plant model
+    # Fault-injection plant model (assurance/sim, layer 1): the real panda safety code in a closed loop with
+    # stated vehicle, EPS, PCM and driver models. Synthetic data (DSR-12), no evidence credit. The job checks that the
+    # committed results and figures equal a fresh run, and runs the model's tests (CPU only, about 20 s).
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout opendbc and panda submodules
+      run: git submodule update --init --depth 1 opendbc_repo panda
+    - name: Install the pinned packages of the simulation track
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/requirements.txt
+    - name: Plant model results and figures current, and its tests
+      run: |
+        python3 assurance/sim/plant/report.py --check
+        python3 assurance/sim/plant/test_plant.py
