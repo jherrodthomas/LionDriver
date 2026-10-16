@@ -28,20 +28,21 @@ class TestHaraFigures(unittest.TestCase):
 
   def test_overview_parses_document(self):
     hazards, hes, goals = hf.parse_hara(hf.SOURCE.read_text(encoding="utf-8"))
-    self.assertEqual(sorted(hazards), [f"H-0{i}" for i in range(1, 9)])
-    self.assertEqual([g.ident for g in goals], [f"SG-0{i}" for i in range(1, 8)])
+    self.assertEqual(sorted(hazards), [f"H-0{i}" for i in range(1, 10)])
+    self.assertEqual([g.ident for g in goals], [f"SG-0{i}" for i in range(1, 9)])
     self.assertEqual(hes["HE-02.3"].goals, ["SG-01"])
     self.assertEqual(hes["HE-07.3"].goals, ["SG-06"])
     self.assertEqual(hes["HE-06.2"].goals, [])
+    self.assertEqual(hes["HE-09.2"].goals, ["SG-08"])
 
   def test_goal_asil_mismatch_rejected(self):
-    md = hf.SOURCE.read_text(encoding="utf-8").replace("| **SG-03** | The item shall not cause unintended vehicle acceleration | **B**",
-                                                        "| **SG-03** | The item shall not cause unintended vehicle acceleration | **C**")
+    md = hf.SOURCE.read_text(encoding="utf-8").replace("| **SG-03** | The item shall not cause unintended vehicle acceleration | **C**",
+                                                        "| **SG-03** | The item shall not cause unintended vehicle acceleration | **B**")
     with self.assertRaises(hf.FigureError):
       hf.parse_hara(md)
 
   def test_unlisted_rated_event_rejected(self):
-    md = hf.SOURCE.read_text(encoding="utf-8").replace("HE-01.1–01.4, HE-02.3", "HE-01.1–01.4")
+    md = hf.SOURCE.read_text(encoding="utf-8").replace("HE-01.1–01.5, HE-02.3", "HE-01.1–01.5")
     with self.assertRaises(hf.FigureError):
       hf.parse_hara(md)
 

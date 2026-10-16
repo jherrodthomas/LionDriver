@@ -10,13 +10,17 @@ This report is informational: it does not fail CI, but CI asks for it to be rege
 
 | Kind | Requirements | Satisfied | Outside the item | No satisfying element | Verified by ≥ 1 case | Derived from a parent |
 |---|---|---|---|---|---|---|
-| Safety goals (WP-C-03) | 7 | 7 | 0 | 0 | 7 | — |
+| Safety goals (WP-C-03) | 8 | 8 | 0 | 0 | 7 | — |
 | Functional safety requirements (WP-C-04) | 56 | 51 | 4 | 1 | 56 | 56 |
 | Technical safety requirements (WP-S-02, WP-S-06) | 125 | 103 | 22 | 0 | 89 | 116 |
 | System requirements (WP-S-01) | 39 | 39 | 0 | 0 | 25 | — |
 | Cybersecurity requirements (WP-S-07) | 64 | 50 | 14 | 0 | 0 | — |
 
 212 verification cases; 117 name at least one modelled requirement.
+
+## SG: not verified by any case (1)
+
+SG-08
 
 ## FSR: no satisfying element (1)
 

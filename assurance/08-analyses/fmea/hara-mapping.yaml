@@ -23,18 +23,20 @@ hazards:
   - {second: HZ-010, wp_c03: [H-01, H-03], events: [HE-01.4], note: "Unintended engagement: WP-C-03 rates it inside H-01 (torque while not engaged) and H-03 (acceleration when not intended)"}
   - {second: HZ-011, wp_c03: [H-08], events: [HE-08.1]}
   - {second: HZ-012, wp_c03: [H-07], events: [HE-07.1, HE-07.2, HE-07.3]}
-  - {second: HZ-013, wp_c03: [], events: [], note: "Inattentive or unresponsive driver: not a vehicle-level hazard in WP-C-03; driver monitoring is a measure that controllability relies on (WP-C-04 §7). See RD-3"}
+  - {second: HZ-013, wp_c03: [H-09], events: [HE-09.1, HE-09.2], note: "Unresponsive driver: H-09 since WP-C-03 v0.4 (RD-3 decided, decision register DQ-205 A)"}
 
 goals:
   - {second: SG-001, second_asil: D, wp_c03: [SG-01], wp_c03_asil: C, agreement: second_higher, decision: RD-1}
   - {second: SG-002, second_asil: C, wp_c03: [SG-01], wp_c03_asil: C, agreement: same}
-  - {second: SG-003, second_asil: B, wp_c03: [SG-02, SG-06], wp_c03_asil: B, agreement: same}
-  - {second: SG-004, second_asil: C, wp_c03: [SG-03], wp_c03_asil: B, agreement: second_higher, decision: RD-2}
+  - {second: SG-003, second_asil: B, wp_c03: [SG-02, SG-06], wp_c03_asil: C, agreement: wp_c03_higher}
+  - {second: SG-004, second_asil: C, wp_c03: [SG-03], wp_c03_asil: C, agreement: same}
   - {second: SG-005, second_asil: B, wp_c03: [SG-04], wp_c03_asil: B, agreement: same}
-  - {second: SG-006, second_asil: B, wp_c03: [SG-06], wp_c03_asil: B, agreement: same}
+  - {second: SG-006, second_asil: B, wp_c03: [SG-06], wp_c03_asil: C, agreement: wp_c03_higher}
   - {second: SG-007, second_asil: B, wp_c03: [SG-05], wp_c03_asil: B, agreement: same}
   - {second: SG-008, second_asil: B, wp_c03: [SG-01, SG-03], wp_c03_asil: C, agreement: wp_c03_higher}
   - {second: SG-009, second_asil: B, wp_c03: [SG-07], wp_c03_asil: B, agreement: same}
-  - {second: SG-010, second_asil: A, wp_c03: [], wp_c03_asil: null, agreement: no_counterpart, decision: RD-3}
+  - {second: SG-010, second_asil: A, wp_c03: [SG-08], wp_c03_asil: A, agreement: same}
 
+# RD-1 decided 2026-10-14: C2 kept until measured (decision register DQ-008 A), so SG-001 stays second_higher.
+# RD-2 decided: E4 (DQ-036 B), SG-03 is C. RD-3 decided: H-09 and SG-08 (DQ-205 A). Applied in WP-C-03 v0.4.
 decisions: [RD-1, RD-2, RD-3]

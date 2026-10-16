@@ -216,7 +216,7 @@
   kind: fsr
   text: "Driver monitoring shall detect an inattentive or unresponsive driver while engaged and escalate warnings within the timing set in WP-C-08 (assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §5."
   asil: "QM (see §7)"
-  parents: [SG-02, SG-06]
+  parents: [SG-02, SG-06, SG-08]
   allocated_to: "E-01/DM, E-02"
   verification: "T-SIL, T-VEH"
   baseline_impl: "Implemented: 5/8/13 s vision, 5/15/25 s wheel-touch (`selfdrive/monitoring/policy.py:31-36`)"
@@ -227,7 +227,7 @@
   kind: fsr
   text: "Driver monitoring shall detect its own invalidity (no driver image, camera blocked, model output missing or not credible) and fall back to a policy that is no less strict than the active policy."
   asil: "QM (see §7)"
-  parents: [SG-02, SG-06]
+  parents: [SG-02, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "T-SIL, FI"
   baseline_impl: "Partial: high-uncertainty → wheel-touch fallback (`policy.py:77-78`); source validity hard-coded `True` (`selfdrive/modeld/dmonitoringmodeld.py:99`); wheel-touch awareness reset by any steer/gas input (`policy.py:334-335`) (GAP-21)"
@@ -238,7 +238,7 @@
   kind: fsr
   text: "Driver monitoring shall not be disabled, put into demo mode or replaced by synthetic inputs while the item can engage."
   asil: "QM (see §7)"
-  parents: [SG-02, SG-06]
+  parents: [SG-02, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "R, T-SIL"
   baseline_impl: "Not met: `IsDriverViewEnabled` demo mode (`selfdrive/monitoring/dmonitoringd.py:26-27`, `policy.py:428-437`) (GAP-20)"
@@ -249,7 +249,7 @@
   kind: fsr
   text: "If the driver does not respond to the highest DM warning, the item shall decelerate the vehicle, disengage and prevent re-engagement for a lockout period."
   asil: "QM (see §7)"
-  parents: [SG-02, SG-04, SG-06]
+  parents: [SG-02, SG-04, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "T-SIL, T-VEH"
   baseline_impl: "Partial: no-response force decel after 5 s at the terminal alert (`policy.py:39-44, 398`; `selfdrive/controls/controlsd.py:235`), but no disengagement, so the lockout of 1/5/15/30 min acts only after a later disengagement (System FMEA SFM-025.C1; corrected 2026-10-16). Refined by TSR-633; the reaction is queued for the lead (DQ-340)"

@@ -46,3 +46,13 @@ inputs"). An assumed value is marked as assumed in every result that uses it (MD
 
 The harness steps at 1 ms; the plant integrates at 5 ms (RK4). A harness running at another rate (the bench at
 100 Hz) samples the outputs at its own rate and holds the inputs between frames.
+
+## 5. FMU variables
+
+The FMU of [`plant/fmu/`](plant/fmu/) (FMI 2.0 co-simulation) exposes the interface as these variables.
+
+| Causality | Variables |
+|---|---|
+| Parameter | `v0` (m/s), `eps_timeout` (s), `pcm_timeout` (s) |
+| Input | `lka_torque` (raw), `lka_request` (bool), `lka_frames` (counter: a change means a STEERING_LKA frame arrived), `accel_cmd` (m/s²), `acc_frames` (counter for ACC_CONTROL), `eps_fault` (bool), `driver_ay`, `driver_ax` (m/s², the driver's added acceleration) |
+| Output | `sx`, `sy` (m), `delta` (rad, front wheel), `v` (m/s), `psi` (rad), `yaw_rate` (rad/s), `beta` (rad), `eps_torque` (raw), `ax`, `ay` (m/s²) |

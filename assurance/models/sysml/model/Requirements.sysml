@@ -56,7 +56,7 @@ package LionDriverRequirements {
         doc /* The item shall not lose or degrade lateral control while engaged without giving the driver an adequate take-over warning */
         :>> workProduct = "WP-C-03";
         :>> allocText = "";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> safeState = "Driver warned (visual + acoustic) and lateral control handed back with a smooth torque ramp-down";
         :>> ftti = "≤ 1 s from fault to warning (preliminary)";
     }
@@ -64,7 +64,7 @@ package LionDriverRequirements {
         doc /* The item shall not cause unintended vehicle acceleration */
         :>> workProduct = "WP-C-03";
         :>> allocText = "";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> safeState = "Acceleration request ≤ 0 (no positive acceleration); ACC cancelled to the PCM";
         :>> ftti = "≤ 1 s (preliminary)";
     }
@@ -88,7 +88,7 @@ package LionDriverRequirements {
         doc /* The item shall not lose longitudinal deceleration capability while engaged without giving the driver an adequate take-over warning */
         :>> workProduct = "WP-C-03";
         :>> allocText = "";
-        :>> asil = "B";
+        :>> asil = "C";
         :>> safeState = "Driver warned; ACC cancelled so that the driver brakes";
         :>> ftti = "≤ 1 s (preliminary)";
     }
@@ -99,6 +99,14 @@ package LionDriverRequirements {
         :>> asil = "B";
         :>> safeState = "Camera PCS messages forwarded unchanged; if forwarding cannot be guaranteed (e.g. harness fault), relay released to restore the stock camera link";
         :>> ftti = "≤ 0.2 s for loss or delay of forwarding (preliminary, WP-S-04 §3.6); content: per frame";
+    }
+    requirement <'SG-08'> sg_08 : SafetyGoal {
+        doc /* The item shall not continue automated control while the driver is not supervising or not responding without escalating to a minimal-risk reaction */
+        :>> workProduct = "WP-C-03";
+        :>> allocText = "";
+        :>> asil = "A";
+        :>> safeState = "Escalating take-over alerts; on no response, the no-response reaction: controlled deceleration in lane to a stop and lockout. The reaction at zero awareness is still to be defined, with System FMEA SFM-ACT-005, in the FSC";
+        :>> ftti = "≤ 6 s from loss of attention to the first alert (preliminary)";
     }
     requirement <'FSR-01.01'> fsr_01_01 : FunctionalSafetyRequirement {
         doc /* The envelope shall limit the commanded LKA torque magnitude to a speed-dependent bound derived from driver controllability (lateral acceleration and lateral deviation reached within the FTTI). */
@@ -2667,11 +2675,19 @@ package LionDriverRequirements {
         end #derive ::> fsr_02_06;
     }
     #derivation connection {
+        end #original ::> sg_08;
+        end #derive ::> fsr_02_06;
+    }
+    #derivation connection {
         end #original ::> sg_02;
         end #derive ::> fsr_02_07;
     }
     #derivation connection {
         end #original ::> sg_06;
+        end #derive ::> fsr_02_07;
+    }
+    #derivation connection {
+        end #original ::> sg_08;
         end #derive ::> fsr_02_07;
     }
     #derivation connection {
@@ -2680,6 +2696,10 @@ package LionDriverRequirements {
     }
     #derivation connection {
         end #original ::> sg_06;
+        end #derive ::> fsr_02_08;
+    }
+    #derivation connection {
+        end #original ::> sg_08;
         end #derive ::> fsr_02_08;
     }
     #derivation connection {
@@ -2692,6 +2712,10 @@ package LionDriverRequirements {
     }
     #derivation connection {
         end #original ::> sg_06;
+        end #derive ::> fsr_02_09;
+    }
+    #derivation connection {
+        end #original ::> sg_08;
         end #derive ::> fsr_02_09;
     }
     #derivation connection {
