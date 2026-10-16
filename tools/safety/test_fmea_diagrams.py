@@ -178,6 +178,34 @@ class TestFigures(unittest.TestCase):
         self.assertIn(a["id"], svg)
     self.assertIn("not achieved", svg)
 
+  def test_msr_overview_counts_and_ids(self):
+    # Figure 4-2: per FMEA with msr rows, the counts in the description match the YAML, every action named in an MSR
+    # row is drawn, and every cause at M <= 6 is listed by id
+    svg = self.svgs["fig-4-2-msr-overview.svg"]
+    desc = ET.fromstring(svg).find(f"{SVG_NS}desc").text
+    for key in ("system-fmea", "dfmea"):
+      doc = self.docs[key]
+      rated = [c for fm in doc["failure_modes"] for c in fm["causes"] if c.get("msr")]
+      exempt = [c for fm in doc["failure_modes"] for c in fm["causes"] if c.get("msr_exempt")]
+      self.assertIn(f"{doc['analysis']['id']} rev {doc['analysis']['revision']} at {doc['analysis']['baseline']}: "
+                    f"{len(rated)} causes rated, {len(exempt)} exempt", desc)
+      bands = [sum(1 for c in rated if lo <= c["msr"]["monitoring"] <= hi) for lo, hi, _, _ in fd.M_BANDS_MSR]
+      self.assertIn(f"monitoring M 1-4 {bands[0]}, M 5-6 {bands[1]}, M 7-8 {bands[2]}, M 9-10 {bands[3]}", desc)
+      for c in rated:
+        for a in c["msr"].get("actions") or []:
+          self.assertIn(a, svg)
+        if c["msr"]["monitoring"] <= 6:
+          self.assertIn(c["id"], svg)
+    self.assertIn("provisional", svg)
+
+  def test_msr_ap_table_matches_lint(self):
+    if fmea_lint is None:
+      self.skipTest("fmea_lint not importable")
+    # the grid background uses compute_ap(10, F, M); the linter's MSR table must be the same table
+    for f in range(1, 11):
+      for m in range(2, 11):
+        self.assertEqual(fd.compute_ap(10, f, m), fmea_lint.compute_ap_msr(10, 10, f, m))
+
   def test_never_owns_hand_drawn_figures(self):
     for name in self.out:
       self.assertTrue(name == "README.md" or fd.OWNED_RE.match(name), name)
@@ -189,6 +217,42 @@ class TestFigures(unittest.TestCase):
     readme = self.out["README.md"]
     for name in self.svgs:
       self.assertIn(f"({name})", readme)
+
+
+class TestDetectionEvidence(unittest.TestCase):
+  """Figure 3-13 classifies cited tests from the repository; check the rules on known files."""
+
+  @classmethod
+  def setUpClass(cls):
+    cls.idx = fd.TestIndex(workflows="run: openpilot/selfdrive/test/process_replay/test_processes.py",
+                           ignored=["openpilot/tools/sim"], native="", panda_suites={"reference_lock"})
+
+  def test_submodule_paths_by_rule(self):
+    c = self.idx.classify
+    self.assertEqual(c("opendbc_repo/opendbc/safety/tests/test_toyota.py")[0], "ci")
+    self.assertEqual(c("panda/tests/reference_lock/test_reference_lock.py")[0], "ci")
+    self.assertEqual(c("panda/tests/heartbeat_monitor/test_heartbeat_monitor.py")[0], "not_run")
+    self.assertEqual(c("panda/tests/hitl/test_6_safety.py")[0], "hardware")
+    self.assertEqual(c("msgq_repo/msgq/tests/test_fake.py")[0], "not_run")
+
+  def test_openpilot_files_read_from_the_repository(self):
+    c = self.idx.classify
+    self.assertEqual(c("openpilot/selfdrive/test/process_replay/test_processes.py")[0], "ci")   # named in a workflow
+    self.assertEqual(c("openpilot/selfdrive/selfdrived/tests/test_state_machine.py")[0], "ci")  # TestCase
+    self.assertEqual(c("openpilot/selfdrive/pandad/tests/test_pandad_spi.py")[0], "hardware")  # COMMA_HARDWARE_TEST
+    self.assertEqual(c("openpilot/selfdrive/no_such_test.py")[0], "missing")
+
+  def test_cause_class_uses_detection_rating(self):
+    ci = {"detection_controls": [{"test": "opendbc_repo/opendbc/safety/tests/test_toyota.py"}]}
+    self.assertEqual(fd.cause_evidence({**ci, "detection": 3}, self.idx), "proven")
+    self.assertEqual(fd.cause_evidence({**ci, "detection": 7}, self.idx), "targeted")
+    self.assertEqual(fd.cause_evidence({**ci, "detection": 9}, self.idx), "generic")
+    self.assertEqual(fd.cause_evidence({"detection_controls": [{"description": "x"}], "detection": 10}, self.idx), "none")
+
+  def test_suites_and_ignores_parsed_from_ci(self):
+    idx = fd.TestIndex.load()
+    self.assertIn("reference_lock", idx.panda_suites)
+    self.assertIn("openpilot/selfdrive/test/process_replay/test_processes.py", idx.ignored)
 
 
 if __name__ == "__main__":

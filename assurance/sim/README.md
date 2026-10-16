@@ -19,9 +19,13 @@ the figure tools of the other work products do. The MetaDrive bridge stays where
 | [`INTERFACE.md`](INTERFACE.md) | Plant interface: signals, units and rates shared by every harness |
 | [`plant/`](plant/) | Layer 1: the fault-injection plant model and its tests; the plant itself is [`plant/plant.py`](plant/plant.py) |
 | [`plant/fmu/`](plant/fmu/) | The same plant as an FMI 2.0 co-simulation FMU (built, not committed), and its test under FMPy |
+| [`plant/modelica/`](plant/modelica/SteeringColumn.mo) | Fidelity L2: the steering column in Modelica, its OpenModelica FMU build (pinned lock) and tests |
+| [`plant/override.py`](plant/override.py), [`results/override-l2.md`](results/override-l2.md) | Driver override against LKA torque on the L2 column (SG-05), and its table (generated) |
 | [`scenarios/`](scenarios/README.md) | Layer 2: WP-V-03 known scenarios as OpenSCENARIO/OpenDRIVE files, their generator and the esmini replay |
 | [`results/scenario-replay.md`](results/scenario-replay.md) | Layer 2 replay checks (generated) |
 | [`results/plant-results.md`](results/plant-results.md) | Layer 1 results table, event log and model inputs (generated) |
+| [`search/`](search/search.py) | Layer 4: failure search (Monte Carlo and cross-entropy) over the plant model |
+| [`results/search-curve-assist-loss.md`](results/search-curve-assist-loss.md) | Layer 4 search results (generated) |
 | [`figures/`](figures/) | Layer 1 figures, one per selected case (generated) |
 | [`requirements.txt`](requirements.txt) | Pinned Python packages of the track |
 
@@ -40,7 +44,7 @@ python3 assurance/sim/plant/test_plant.py       # unit tests (CI)
 | 1. Fault-injection plant model (`plant/`) | Built | What the **real panda safety code** of the reference build does with each injected fault, frame by frame and in time: refusal, revocation, siren, IWDG reset, relay-malfunction detection. How far the car moves meanwhile under stated EPS, PCM and driver assumptions, against the WP-S-04 §3 kinematic estimates. Which assumptions decide the outcome (sensitivity runs) | Anything the assumptions decide: the EPS reaction to lost frames, the torque-to-lateral-acceleration gain, the driver. The SoC: openpilot is replaced by a perfect-perception controller, so no SoC alert, no model or planner fault. Interrupt latency and bus load on the real MCU. Tyre limits beyond the linear single-track model. Results are not measurements and not code-derived times |
 | 2. Known scenarios as data (OpenSCENARIO + OpenDRIVE, esmini) | Built for 9 of the 26 WP-V-03 scenarios; the reasons for the others are listed ([scenarios](scenarios/README.md)) | That each WP-V-03 scenario that simulation can represent is written down unambiguously, parses and replays headless; the same road and traffic used by layers 1 and 3 | Any behaviour of the item: esmini plays the scenario with its own simple controllers |
 | 3. MetaDrive closed loop (`openpilot/tools/sim`) | Planned (backlog item 3) | The full openpilot stack driving on rendered images, with the Corolla CarParams and the panda safety code in the loop, in WP-V-03 scenarios with traffic: lateral and longitudinal behaviour, alert timing, outcome class | Camera realism, sensor faults, the real EPS and PCM; credit only per scenario family after the WP-V-02 §5.3 fidelity case (DQ-139) |
-| 4. Unknown-scenario search (Scenic with VerifAI) | Planned (backlog item 4) | Parameter regions of layer 2/3 scenarios where the item fails, to direct closed-course tests (WP-V-04 U-4) | That no other failure exists; a rate of failure in the real ODD |
+| 4. Unknown-scenario search | Prototype over the plant model: seeded Monte Carlo and cross-entropy falsification in plain numpy (§3.4). Scenic with VerifAI was the plan; it is not used, because Scenic requires a package published without a licence (§5) | Parameter regions of layer 2/3 scenarios where the item fails, to direct closed-course tests (WP-V-04 U-4) | That no other failure exists; a rate of failure in the real ODD |
 
 ## 3. Layer 1: fault-injection plant model
 
@@ -111,6 +115,46 @@ Figures follow the layout the lead approved: a top-down lane view with the ego p
 time with the 0.5 s FTTI band and the lane-line thresholds, and an event timeline. They use colour tokens with a dark
 variant, so they read in either theme.
 
+### 3.4 Failure search (layer 4)
+
+[`search/search.py`](search/search.py) searches one family, loss of lateral assistance in a highway curve (the EPS
+fault of case F-07), over speed, curve lateral acceleration, lane width, driver reaction time and drift cue. It maps
+where departures happen with seeded uniform Monte Carlo samples, then runs a cross-entropy falsification search for
+the worst cases. Robustness is the margin from the body edge to the lane line. The share of departing samples
+describes the sampled box, not a probability on the road. The results rank where bench and closed-course tests should
+look first (WP-V-04 U-4); the search over MetaDrive and the scenario files comes after layer 3 runs end to end.
+
+### 3.5 L2 steering column and the driver-override study (SG-05)
+
+The L1 EPS is a torque command with a first-order lag: it has no steering wheel, no torsion bar and no driver torque,
+so it cannot show what happens when the driver steers against LKA. [`plant/modelica/SteeringColumn.mo`](plant/modelica/SteeringColumn.mo)
+adds that, in plain Modelica without libraries: the steering wheel inertia (driver torque in), the torsion bar (its
+torque is what the EPS reports as STEER_TORQUE_DRIVER), and the lower column, motor and rack as one inertia held by a
+rack stiffness. The motor follows the LKA command through the same lag as L1, up to a torque limit.
+OpenModelica 1.27.1 (tool TL-44, TCL1 while no credit is taken) exports it as an FMI 2.0 FMU with CVODE inside
+([`build_column_fmu.py`](plant/modelica/build_column_fmu.py)); the environment is an explicit conda lock, every
+package pinned by URL and md5 ([`omc-linux-64.lock`](plant/modelica/omc-linux-64.lock)). The FMU is a build product.
+
+**Checks (TL-44 detection).** [`test_column.py`](plant/modelica/test_column.py): the steady states (hands off, driver
+only, motor limit) against the analytic values; the motor step response against 1 − e^(−t/τ) (within 1e-3); and
+back-to-back with the L1 EPS on the same command sequence (within 3 % of full scale, the forward-Euler step of L1).
+The rack stiffness is set so that full LKA torque gives the L1 steady state (LAT_ACCEL_FACTOR at 110 km/h).
+
+**Override study.** [`plant/override.py`](plant/override.py) holds full LKA torque to one side and lets the driver ramp
+torque to the other. Around the FMU run the real panda code (reference build) and the Toyota car controller's own
+rule: LKA is dropped when |STEER_TORQUE_DRIVER| reaches `MAX_USER_TORQUE` (500 units). The panda does not act on
+driver torque on the LKA path (TSR-304 not implemented, GAP-02), so that host rule is the only override path. Two
+scales decide the result and are not known: what 1500 LKA units and 500 driver-torque units are in N·m. Both are
+swept, with the driver's peak torque and rise time. Under these assumptions ([table](results/override-l2.md)):
+
+- the host drops LKA within 0.2 s of the driver's input only where the driver's torque passes the host threshold
+  quickly; with a slow or light driver, or a high threshold, it does not;
+- where the driver's peak stays below the threshold, LKA is never dropped and keeps steering against the driver;
+- after the drop, the motor torque falls below 5 % after a further ≈ 0.36 s (three motor time constants of the
+  assumed lag), so 0.41–0.77 s after the driver's input in the sweep.
+
+Every column parameter is an assumption until M-02 (SIM-OI-7), and both scales are measurement items (SIM-OI-8).
+
 ## 4. Credit and hand-back
 
 **Evidence rule.** No result of this track is evidence until the model is validated against Corolla logs (roadmap
@@ -118,8 +162,9 @@ phase S7: system identification of EPS lag, steer ratio and tyre stiffness, and 
 Until then the results only rank risks and guide which tests to run on the bench and the car.
 
 - **No evidence credit.** Simulation earns credit only once the WP-V-02 §5.3 fidelity case is approved for the scenario
-  family; whether any family may get credit is queued for the lead as DQ-139 (DQ-107 is its duplicate). Every output is labelled synthetic data
-  under DSR-12 and is kept apart from real-world data.
+  family: the lead decided so on 2026-10-16 (DQ-139, option A; DQ-107 is its duplicate), and no family has an approved
+  fidelity case yet. CARLA and GPU rendering are not pursued before G3 (DQ-261, option A). Every output is labelled
+  synthetic data under DSR-12 and is kept apart from real-world data.
 - **Not self-credited.** Timing results go to the safety-concept session, which decides what enters WP-S-04. Scenario
   results go to the SOTIF session for WP-V-03/04. The simulation track does not edit those documents.
 - **Rating tables.** The FMEA-MSR rating tables (RT-2 §7) allow `measured | code_derived | unknown` timing only. A
@@ -138,6 +183,15 @@ Until then the results only rank risks and guide which tests to run on the bench
 | esmini (binary release, not a Python package) | v3.9.0, SHA-256 pinned in `scenarios/fetch_esmini.py` | MPL-2.0 | replaying the scenario files headless |
 | pythonfmu | 0.7.0 | MIT | packaging the plant as an FMU |
 | fmpy | 0.3.32 | BSD-2-Clause; its dependencies MIT, BSD-3-Clause, Apache-2.0 | running the FMU in the test |
+| OpenModelica (`omc`, conda-forge) | 1.27.1, build `hf6fb681_0`; explicit lock `plant/modelica/omc-linux-64.lock` | OSMC-PL 1.8, used under its AGPL-3 option; the simulation runtime compiled into the FMU is BSD-new (or AGPL-3/OSMC-PL), its solver SUNDIALS CVODE BSD-3 | exporting the L2 column FMU (TL-44) |
+| micromamba | 2.3.2-0, SHA-256 pinned in `assurance.yaml` | BSD-3-Clause | creating the OpenModelica environment from the lock in CI |
+
+**Not used: Scenic and VerifAI.** Scenic 3.0.0–3.1.1 (BSD-3) requires `rv-ltl ~= 0.1`, imported by its core
+(`scenic/core/requirements.py`), and VerifAI 2.2 (BSD-3) requires and imports Scenic. rv-ltl 0.1.1 is published on PyPI
+without a licence: no licence field, no licence file in the wheel, no project URL, and no public source repository was
+found (checked 2026-10-16). Without a licence it is not open source, so it is not added. Their other dependencies were
+also checked: all MIT, BSD or Apache except lenses (GPL-3.0+), easydict (LGPL-3.0) and pygame-ce (LGPL-2.1). The
+search uses numpy instead (§3.4). Scenic can be reconsidered if rv-ltl is given a licence.
 
 Licences read from the package metadata on 2026-10-16. All were reachable through the network proxy. MPL-2.0 is a file-level copyleft: it covers changes to the
 scenariogeneration and esmini files themselves, which this track does not make, and not the scenario files they
@@ -151,5 +205,8 @@ opendbc code is the project's own (MIT).
 | SIM-OI-1 | The EPS reaction to lost STEERING_LKA frames decides most layer-1 results (release vs hold). Replace both cases with M-02 once measured |
 | SIM-OI-2 | Replace the driver assumptions with WP-C-08 §8 values; add the SoC take-over alert once openpilot runs in the loop (layer 3) |
 | SIM-OI-3 | Model the LSI tolerance and the other hang types of WP-V-05 VS-FI-17 (main loop only, tick, safety task) |
-| SIM-OI-4 | Layers 3–4 (backlog items 3–4) |
+| SIM-OI-4 | Layer 3 end to end (PR #124, CI) and the search over MetaDrive and the scenario files |
+| SIM-OI-6 | Scenic and VerifAI if rv-ltl is published with a licence (§5) |
 | SIM-OI-5 | KS-04 (lane split and merge) as an OpenDRIVE junction or lane-width polynomial |
+| SIM-OI-7 | L2 column parameters (§3.5) are assumed. Published column-EPS parameter tables were found but could not be read: their hosts are not reachable from the build environment. Check the values against those sources, then replace them with M-02 measurements |
+| SIM-OI-8 | Measure the N·m scale of STEER_TORQUE_DRIVER and of the LKA torque command on the reference Corolla; they decide whether the host's `MAX_USER_TORQUE` rule meets SG-05 (§3.5) |

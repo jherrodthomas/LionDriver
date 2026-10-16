@@ -34,6 +34,8 @@
 # controlsMismatch within 0.5 s, TSR-621, puts the warning inside the 1 s budget). DFM-017 is re-described: the siren is now the
 # panda's own warning on heartbeat loss and on a persistent EPS fault, so a shared SoC audio path (DFM-017.C1) defeats TSR-516(b).
 # With that mechanism listed, DFM-017.C1/C2 enter the MSR scope: both M 10 (nothing checks the speaker path).
+# DQ-209 option A (2026-10-16): comma's box is kept. DFM-ACT-007 (readback adapter) not_implemented; DFM-ACT-014 (bench tests) is the
+# decided route. Ratings unchanged: the readback was an open action, never credited.
 schema_version: 1
 analysis:
   id: DFM
@@ -1421,9 +1423,11 @@ actions:
   status: open
 - id: DFM-ACT-007
   kind: design_change
-  description: Add relay readback in a LionDriver harness adapter (WP-H-02 DC-03) and confirm the de-energised contact state (UK-03)
+  description: "Add relay readback in a LionDriver harness adapter (WP-H-02 DC-03) and confirm the de-energised contact state (UK-03).
+    Not implemented by decision DQ-209 option A (2026-10-16): comma's box is kept and its failure behaviour is bench-tested
+    (DFM-ACT-014) and argued as residual risk; the de-energised state is covered by DFM-ACT-014"
   owner: Jherrod Thomas
-  status: open
+  status: not_implemented
 - id: DFM-ACT-008
   kind: detection
   description: Define the installation check, including a stock PCS/AEB function check and a harness latch check (WP-O-01, TSR-805)
@@ -1459,7 +1463,8 @@ actions:
   kind: detection
   description: 'Bench-test the harness box failure behaviour (RR-2026-010): box unpowered with car and camera powered; R2/R3 forced
     open with the device silent; supply at 14-16 V against the DG419LE ratings; pass-through signal integrity; clamp-diode short
-    on CAN0; confirm the shipped box matches the v3 drawing (VS-HW-02)'
+    on CAN0; confirm the shipped box matches the v3 drawing (VS-HW-02). The decided route for the harness box (DQ-209 option A,
+    2026-10-16); procedures in WP-H-06 §3.1'
   owner: Jherrod Thomas
   status: open
 - id: DFM-ACT-015

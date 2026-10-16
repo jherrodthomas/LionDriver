@@ -30,14 +30,14 @@
 | Work product | Activity | Status in WP-M-00 | Open items | Verification review (WP-P-05) |
 |---|---|---|---|---|
 | [WP-S-01](../../../03-system/WP-S-01-system-requirements.md) System requirements specification (functional, non-safety) | DES-01 | Draft | 4 | |
-| [WP-S-04](../../../03-system/WP-S-04-timing-ftti-budget.md) Timing analysis: FTTI, fault detection and reaction budget | DES-02 | Draft | 9 | |
-| [WP-S-02](../../../03-system/WP-S-02-technical-safety-requirements.md) Technical safety requirements specification | DES-03 | Draft | 7 | |
+| [WP-S-04](../../../03-system/WP-S-04-timing-ftti-budget.md) Timing analysis: FTTI, fault detection and reaction budget | DES-02 | Draft | 11 | |
+| [WP-S-02](../../../03-system/WP-S-02-technical-safety-requirements.md) Technical safety requirements specification | DES-03 | Draft | 6 | |
 | [WP-S-07](../../../03-system/WP-S-07-cybersecurity-requirements-architecture.md) Cybersecurity requirements and architectural design | DES-04 | Draft | 8 | |
-| [WP-S-03](../../../03-system/WP-S-03-technical-safety-concept-architecture.md) Technical safety concept and system architectural design | DES-05 | Draft | 5 | |
+| [WP-S-03](../../../03-system/WP-S-03-technical-safety-concept-architecture.md) Technical safety concept and system architectural design | DES-05 | Draft | 6 | |
 | [WP-S-05](../../../03-system/WP-S-05-hsi-specification.md) Hardware-software interface specification | DES-06 | Draft | 7 | |
 | [WP-A-02](../../../08-analyses/WP-A-02-coexistence-freedom-from-interference.md) Coexistence of elements and freedom from interference | DES-07 | Draft | 5 | |
 | [WP-A-03](../../../08-analyses/WP-A-03-dependent-failure-analysis.md) Dependent failure analysis | DES-08 | Draft | 8 | |
-| [WP-A-01](../../../08-analyses/WP-A-01-asil-decomposition.md) ASIL decomposition rationale | DES-09 | Draft | 5 | |
+| [WP-A-01](../../../08-analyses/WP-A-01-asil-decomposition.md) ASIL decomposition rationale | DES-09 | Draft | 4 | |
 | [WP-A-04](../../../08-analyses/WP-A-04-system-fta-fmea.md) System-level safety analyses (FTA, FMEA) | DES-10 | Draft | 6 | |
 | [WP-V-02](../../../06-validation/WP-V-02-sotif-vv-strategy.md) SOTIF verification and validation strategy, validation targets | DES-11 | Draft | 7 | |
 | [WP-S-06](../../../03-system/WP-S-06-requirements-production-operation.md) Requirements for production, operation, service and decommissioning | DES-12 | Draft | 4 | |

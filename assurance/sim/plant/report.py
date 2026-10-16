@@ -123,6 +123,33 @@ def pcs_rows(results: list[Result]) -> list[str]:
   return rows
 
 
+def submodule_commit(name: str) -> str:
+  """The commit of the panda or opendbc code the run compiled (the checked-out submodule)."""
+  import subprocess
+  out = subprocess.run(["git", "-C", str(corolla.ROOT / name), "rev-parse", "--short=7", "HEAD"], capture_output=True,
+                       text=True, check=True)
+  return out.stdout.strip()
+
+
+def labels() -> list[str]:
+  """WP-V-02 §5.3.5 labels for synthetic data (DSR-12)."""
+  import importlib.metadata as md
+  return [
+    "| Label (WP-V-02 §5.3.5) | Value |",
+    "|---|---|",
+    "| data_kind | synthetic |",
+    f"| simulator | LionDriver fault-injection plant model, fidelity L1 (`assurance/sim/plant`): CommonRoad vehicle models "
+    f"{md.version('commonroad-vehicle-models')}; panda safety code compiled from panda `{submodule_commit('panda')}` and "
+    f"opendbc `{submodule_commit('opendbc_repo')}` (reference build) |",
+    "| asset archive hash | none (nothing is rendered) |",
+    "| scenario ID and family | F-07-KS01 and N-4 run on the road of scenario KS-01 (family SF-1); L-01…L-04 take the "
+    "KS-08 time gap (SF-2). The other cases use generic highway roads, not WP-V-03 scenarios |",
+    "| fidelity-case status | none |",
+    "| credit | none |",
+    "| camera frame rate | not applicable (no camera) |",
+  ]
+
+
 def table(results: list[Result], iwdg: float) -> str:
   d = corolla.as_dict()
   thr, thr_n = lane_line_threshold(3.7, d["width"]), lane_line_threshold(3.0, d["width"])
@@ -139,10 +166,15 @@ def table(results: list[Result], iwdg: float) -> str:
     "Times are seconds from fault onset. Deviation is the lateral offset from the offset at fault onset; negative is "
     "to the right (outside of the left curve). Lane-line thresholds: body edge on the line, (lane width − "
     f"{d['width']:.3f} m) / 2 = **{thr_n:.2f} m** in a 3.0 m lane (narrowest ODD-H lane) and **{thr:.2f} m** in a "
-    "3.7 m lane. Speed 120 km/h (the ODD-H bound) unless the case names another. Curve: a clothoid over 100 m into a left arc with R = v²/1.5 m/s² "
+    "3.7 m lane. Speed 110 km/h (the ODD-H bound, DQ-260) unless the case names another; rows ending -OS repeat the "
+    "first case of each fault family at 120 km/h, outside the ODD, as margin cases. Curve: a clothoid over 100 m into a left arc with R = v²/1.5 m/s² "
     "(inside the ODD); N-3 uses R_ODD = v²/2.5 m/s²; a road named KS-xx is read from that scenario's OpenDRIVE file "
     "(ego lane −2, [`scenarios/xodr`](../scenarios/xodr/)). Panda: reference build (`LIONDRIVER_REFERENCE`, safety "
-    f"parameter 73); IWDG nominal timeout from the values the firmware writes: {iwdg * 1000:.0f} ms.",
+    f"parameter 73); IWDG nominal timeout from the values the firmware writes: {iwdg * 1000:.0f} ms. For safety "
+    "parameter 73 the release build and this build (`ALLOW_DEBUG`) differ only in the SecOC flag, which the reference "
+    "car does not set.",
+    "",
+    *labels(),
     "",
     "## Lateral cases (SG-01, SG-02, SG-07)",
     "",
@@ -150,7 +182,7 @@ def table(results: list[Result], iwdg: float) -> str:
     "",
     "## Longitudinal cases (SG-03, SG-04)",
     "",
-    "Straight road, 120 km/h; lead at a 1.5 s gap (KS-08) at constant speed; follower at a 1.0 s gap that brakes at "
+    "Straight road, 110 km/h (rows ending -OS: 120 km/h); lead at a 1.5 s gap (KS-08) at constant speed; follower at a 1.0 s gap that brakes at "
     "−3.5 m/s² after the follower's reaction time, until it is no faster than the ego (WP-S-04 §3.4).",
     "",
     *longitudinal_rows(results),

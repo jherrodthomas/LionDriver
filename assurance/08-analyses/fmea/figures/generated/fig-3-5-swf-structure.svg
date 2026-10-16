@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="3688" viewBox="0 0 1280 3688" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="5460" viewBox="0 0 1280 5460" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-5. SW FMEA structure tree (SWF)</title>
-  <desc id="d">SW FMEA structure tree (SWF rev 0.7, BL-004): 35 structure elements in 4 root(s), 39 functions with the number of failure modes analyzed for each; functions without failure modes: SWF-FN-001, SWF-FN-006, SWF-FN-009, SWF-FN-043, SWF-FN-044.</desc>
+  <desc id="d">SW FMEA structure tree (SWF rev 1.0, BL-005): 61 structure elements in 15 root(s), 58 functions with the number of failure modes analyzed for each; functions without failure modes: SWF-FN-001, SWF-FN-006, SWF-FN-009, SWF-FN-043, SWF-FN-044.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="3688" fill="#FFFFFF"/>
+  <rect width="1280" height="5460" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-5 · SW FMEA structure and function tree</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 0.7 · BL-004 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.0 · BL-005 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -86,6 +86,40 @@
   <path d="M534 3427.1H551V3374.9H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M534 3427.1H551V3470H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M534 3561.7H551V3557.1H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 3794.2H287V3661.8H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 3794.2H287V3755.9H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 3794.2H287V3838.4H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 3794.2H287V3934.9H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 3661.8H551V3650.2H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 3755.9H551V3751.3H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 3838.4H551V3840.8H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 3934.9H551V3930.3H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 4071.5H287V4028H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 4071.5H287V4122.1H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 4028H551V4023.3H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 4122.1H551V4110.4H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 4265.7H287V4222.2H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 4265.7H287V4309.2H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 4222.2H551V4217.5H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 4309.2H551V4304.6H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 4401.6H287V4402.3H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 4402.3H551V4397.7H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 4502.4H287V4495.4H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 4495.4H551V4490.7H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 4691.3H287V4602.5H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 4691.3H287V4689.6H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 4691.3H287V4772H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 4602.5H551V4597.9H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 4689.6H551V4685H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 4772H551V4774.4H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 4874.5H287V4869.9H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 4967.6H287V4963H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 5110.1H287V5060.7H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 5110.1H287V5147.7H303" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 5060.7H551V5056H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M534 5147.7H551V5143.1H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 5240.8H287V5236.2H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M270 5333.9H287V5329.2H567" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <rect x="40" y="671.9" width="230" height="57.1" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="49" y="691.4" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-001</text>
   <rect x="136.1" y="680.4" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="170" y="691.3" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
@@ -131,10 +165,10 @@
   <text x="313" y="407.3" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-005</text>
   <rect x="400.1" y="396.3" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="407.3" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
   <text x="313" y="421.9" font-size="10.5" fill="#0F172A" font-weight="600">Controls-allowed logic</text>
-  <text x="313" y="434.6" font-size="9.5" fill="#475569">3 failure modes · 3 causes located here</text>
+  <text x="313" y="434.6" font-size="9.5" fill="#475569">5 failure modes · 5 causes located here</text>
   <rect x="568" y="383.2" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="577" y="402.7" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-004</text>
-  <rect x="1192.7" y="391.7" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="402.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">3 FM</text>
+  <rect x="1192.7" y="391.7" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="402.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">5 FM</text>
   <text x="577" y="417.3" font-size="10.5" fill="#0F172A">Allow controls on rising edge of PCM cruise; withdraw on cruise off, brake press, invalid or lagging safety messages</text>
   <text x="577" y="434.3" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
   <rect x="625.3" y="423.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="434.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-005</text>
@@ -356,7 +390,7 @@
   <text x="313" y="2213.9" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-032</text>
   <rect x="400.1" y="2202.9" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="2213.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
   <text x="313" y="2228.4" font-size="10.5" fill="#0F172A" font-weight="600">Input sampling and event generation</text>
-  <text x="313" y="2241.2" font-size="9.5" fill="#475569">4 failure modes · 10 causes located here</text>
+  <text x="313" y="2241.2" font-size="9.5" fill="#475569">4 failure modes · 11 causes located here</text>
   <rect x="568" y="2101.6" width="672" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="577" y="2121.1" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-032</text>
   <rect x="1192.7" y="2110.1" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="2121.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
@@ -550,16 +584,275 @@
   <text x="577" y="3569.2" font-size="10.5" fill="#0F172A">Deliver every 10 ms control step to the vehicle, and stop sending item frames when carControl is no longer received</text>
   <text x="577" y="3586.2" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
   <rect x="625.3" y="3575.2" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="3586.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-016</text>
-  <line x1="40" y1="3626.2" x2="1240" y2="3626.2" stroke="#E2E8F0" stroke-width="1"/>
-  <rect x="40" y="3637.2" width="26" height="14" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="4"/>
-  <text x="72" y="3648.2" font-size="10.5" fill="#0F172A">Structure element (kind)</text>
-  <rect x="215.3" y="3637.2" width="26" height="14" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.3" rx="4" stroke-dasharray="5 3"/>
-  <text x="247.3" y="3648.2" font-size="10.5" fill="#0F172A">External element (outside the item)</text>
-  <rect x="446.1" y="3637.2" width="26" height="14" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="4"/>
-  <text x="478.1" y="3648.2" font-size="10.5" fill="#0F172A">Function</text>
-  <rect x="543.4" y="3637.2" width="37.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="562.2" y="3648.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">n FM</text>
-  <text x="587.1" y="3648.2" font-size="10.5" fill="#0F172A">failure modes analyzed for the function</text>
-  <rect x="805.2" y="3637.2" width="43.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="826.9" y="3648.1" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">no FM</text>
-  <text x="854.6" y="3648.2" font-size="10.5" fill="#0F172A">none yet</text>
-  <text x="40" y="3668.2" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <rect x="40" y="3772.2" width="230" height="57.1" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="3791.7" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-050</text>
+  <rect x="136.1" y="3780.7" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="170" y="3791.6" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
+  <text x="49" y="3806.2" font-size="10.5" fill="#0F172A" font-weight="600">Car interface (card and the opendbc</text>
+  <text x="49" y="3820.3" font-size="10.5" fill="#0F172A" font-weight="600">Toyota port, CAN parse and pack)</text>
+  <rect x="304" y="3639.8" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="3659.3" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-051</text>
+  <rect x="400.1" y="3648.3" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="3659.3" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="3673.9" font-size="10.5" fill="#0F172A" font-weight="600">CAN parser and Toyota carState</text>
+  <text x="313" y="3686.6" font-size="9.5" fill="#475569">2 failure modes · 5 causes located here</text>
+  <rect x="568" y="3628.2" width="672" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="3647.7" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-051</text>
+  <rect x="1192.7" y="3636.7" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="3647.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">2 FM</text>
+  <text x="577" y="3662.2" font-size="10.5" fill="#0F172A">Provide brakePressed, gasPressed, steeringTorque/steeringPressed, cruise state, vEgo and EPS fault from current vehicle CAN,</text>
+  <text x="577" y="3676.3" font-size="10.5" fill="#0F172A">and report invalid or missing data as canValid false within the RX budget</text>
+  <text x="577" y="3693.3" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="3682.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="3693.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-011</text>
+  <rect x="684.7" y="3682.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="3693.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-030</text>
+  <rect x="744.1" y="3682.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="771.8" y="3693.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-033</text>
+  <rect x="304" y="3733.9" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="3753.4" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-052</text>
+  <rect x="400.1" y="3742.4" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="3753.4" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="3768" font-size="10.5" fill="#0F172A" font-weight="600">Fingerprinting and CarParams</text>
+  <text x="313" y="3780.7" font-size="9.5" fill="#475569">1 failure mode · 2 causes located here</text>
+  <rect x="568" y="3729.3" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="3748.8" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-052</text>
+  <rect x="1192.7" y="3737.8" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="3748.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="3763.4" font-size="10.5" fill="#0F172A">Identify the reference vehicle and produce its CarParams (TOYOTA_COROLLA_TSS2, safety parameter 73, openpilot longitudinal)</text>
+  <text x="577" y="3780.4" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="3769.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="3780.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <rect x="684.7" y="3769.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="3780.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-011</text>
+  <rect x="304" y="3816.4" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="3835.9" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-053</text>
+  <rect x="400.1" y="3824.9" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="3835.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="3850.5" font-size="10.5" fill="#0F172A" font-weight="600">CAN packer and Toyota message</text>
+  <text x="313" y="3864.5" font-size="10.5" fill="#0F172A" font-weight="600">construction</text>
+  <text x="313" y="3877.3" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="3818.8" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="3838.3" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-053</text>
+  <rect x="1192.7" y="3827.3" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="3838.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="3852.9" font-size="10.5" fill="#0F172A">Pack actuation and HUD frames with the commanded values, the correct scaling, counter and checksum</text>
+  <text x="577" y="3869.9" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="3858.9" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="3869.8" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-003</text>
+  <rect x="684.7" y="3858.9" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="3869.8" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-018</text>
+  <rect x="304" y="3912.9" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="3932.4" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-054</text>
+  <rect x="400.1" y="3921.4" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="3932.3" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="3947" font-size="10.5" fill="#0F172A" font-weight="600">card main loop and stock AEB interlock</text>
+  <text x="313" y="3959.7" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="3908.3" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="3927.8" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-054</text>
+  <rect x="1192.7" y="3916.8" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="3927.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="3942.3" font-size="10.5" fill="#0F172A">Run the car interface every CAN cycle, publish carState, and actuate only the latest carControl</text>
+  <text x="577" y="3959.3" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="3948.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="3959.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-006</text>
+  <rect x="40" y="4049.5" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="4069" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-060</text>
+  <rect x="136.1" y="4058" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="170" y="4068.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
+  <text x="49" y="4083.6" font-size="10.5" fill="#0F172A" font-weight="600">Driver monitoring (dmonitoringmodeld,</text>
+  <text x="49" y="4097.6" font-size="10.5" fill="#0F172A" font-weight="600">dmonitoringd)</text>
+  <text x="49" y="4110.4" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="304" y="4006" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="4025.5" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-061</text>
+  <rect x="400.1" y="4014.5" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="4025.4" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="4040" font-size="10.5" fill="#0F172A" font-weight="600">Driver-monitoring model process</text>
+  <text x="313" y="4052.8" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="4001.3" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="4020.8" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-060</text>
+  <rect x="1192.7" y="4009.8" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="4020.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="4035.4" font-size="10.5" fill="#0F172A">Estimate face, eye and attention state of the driver for every cabin camera frame</text>
+  <text x="577" y="4052.4" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="4041.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="4052.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-039</text>
+  <rect x="304" y="4100.1" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="4119.6" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-062</text>
+  <rect x="400.1" y="4108.6" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="4119.5" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="4134.1" font-size="10.5" fill="#0F172A" font-weight="600">Monitoring policy and dmonitoringd</text>
+  <text x="313" y="4146.9" font-size="9.5" fill="#475569">2 failure modes · 5 causes located here</text>
+  <rect x="568" y="4088.4" width="672" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="4107.9" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-061</text>
+  <rect x="1192.7" y="4096.9" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="4107.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">3 FM</text>
+  <text x="577" y="4122.5" font-size="10.5" fill="#0F172A">Escalate an inattentive or unresponsive driver within the policy times (vision 5/8/13 s, wheel-touch 5/15/25 s) and request the</text>
+  <text x="577" y="4136.5" font-size="10.5" fill="#0F172A">terminal reaction</text>
+  <text x="577" y="4153.5" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="4142.5" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="4153.5" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-039</text>
+  <rect x="684.7" y="4142.5" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="4153.5" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-040</text>
+  <rect x="40" y="4243.7" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="4263.2" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-070</text>
+  <rect x="136.1" y="4252.2" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="170" y="4263.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
+  <text x="49" y="4277.8" font-size="10.5" fill="#0F172A" font-weight="600">Longitudinal planning (plannerd)</text>
+  <text x="49" y="4290.5" font-size="9.5" fill="#475569">1 failure mode · 2 causes located here</text>
+  <rect x="304" y="4200.2" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="4219.7" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-071</text>
+  <rect x="400.1" y="4208.7" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="4219.6" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="4234.2" font-size="10.5" fill="#0F172A" font-weight="600">Longitudinal planner and MPC</text>
+  <text x="313" y="4247" font-size="9.5" fill="#475569">3 failure modes · 5 causes located here</text>
+  <rect x="568" y="4195.5" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="4215" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-070</text>
+  <rect x="1192.7" y="4204" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="4215" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">4 FM</text>
+  <text x="577" y="4229.6" font-size="10.5" fill="#0F172A">Plan an acceleration within the envelope that keeps the following distance to a lead and stops for a stopped lead</text>
+  <text x="577" y="4246.6" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="4235.6" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="4246.5" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-020</text>
+  <rect x="684.7" y="4235.6" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="4246.5" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-023</text>
+  <rect x="304" y="4287.2" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="4306.7" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-072</text>
+  <rect x="400.1" y="4295.7" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="4306.7" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="4321.3" font-size="10.5" fill="#0F172A" font-weight="600">Forward collision warning decision</text>
+  <text x="313" y="4334" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="4282.6" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="4302.1" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-071</text>
+  <rect x="1192.7" y="4291.1" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="4302" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="4316.7" font-size="10.5" fill="#0F172A">Raise a forward collision warning when a collision with the lead is predicted</text>
+  <text x="577" y="4333.7" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="4322.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="4333.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-026</text>
+  <rect x="40" y="4379.6" width="230" height="57.1" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="4399.1" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-080</text>
+  <rect x="136.1" y="4388.1" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="170" y="4399.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
+  <text x="49" y="4413.7" font-size="10.5" fill="#0F172A" font-weight="600">Lead estimation (radard and the Toyota</text>
+  <text x="49" y="4427.8" font-size="10.5" fill="#0F172A" font-weight="600">radar interface)</text>
+  <rect x="304" y="4380.3" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="4399.8" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-081</text>
+  <rect x="400.1" y="4388.8" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="4399.7" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="4414.4" font-size="10.5" fill="#0F172A" font-weight="600">Lead selection and radar/vision fusion</text>
+  <text x="313" y="4427.1" font-size="9.5" fill="#475569">2 failure modes · 5 causes located here</text>
+  <rect x="568" y="4375.7" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="4395.2" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-080</text>
+  <rect x="1192.7" y="4384.2" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="4395.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">2 FM</text>
+  <text x="577" y="4409.7" font-size="10.5" fill="#0F172A">Provide the lead state (distance, relative speed and acceleration) from radar tracks matched to model leads, and flag radar faults</text>
+  <text x="577" y="4426.7" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="4415.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="4426.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-020</text>
+  <rect x="684.7" y="4415.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="4426.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-026</text>
+  <rect x="40" y="4480.4" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="4499.9" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-090</text>
+  <rect x="136.1" y="4488.9" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="170" y="4499.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
+  <text x="49" y="4514.5" font-size="10.5" fill="#0F172A" font-weight="600">Driving model process (modeld)</text>
+  <text x="49" y="4527.2" font-size="9.5" fill="#475569">2 failure modes · 2 causes located here</text>
+  <rect x="304" y="4473.4" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="4492.9" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-091</text>
+  <rect x="400.1" y="4481.9" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="4492.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="4507.4" font-size="10.5" fill="#0F172A" font-weight="600">Model execution, output parsing and</text>
+  <text x="313" y="4521.5" font-size="10.5" fill="#0F172A" font-weight="600">validity</text>
+  <text x="313" y="4534.2" font-size="9.5" fill="#475569">1 failure mode · 3 causes located here</text>
+  <rect x="568" y="4468.7" width="672" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="4488.2" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-090</text>
+  <rect x="1192.7" y="4477.2" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="4488.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">3 FM</text>
+  <text x="577" y="4502.8" font-size="10.5" fill="#0F172A">Publish model outputs (desired curvature, leads) for every road frame, computed from the current frame and calibration, and mark</text>
+  <text x="577" y="4516.9" font-size="10.5" fill="#0F172A">output that is not fit for use as invalid</text>
+  <text x="577" y="4533.9" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="4522.9" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="4533.8" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="40" y="4669.3" width="230" height="57.1" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="4688.8" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-100</text>
+  <rect x="136.1" y="4677.8" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="170" y="4688.7" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
+  <text x="49" y="4703.4" font-size="10.5" fill="#0F172A" font-weight="600">Localization and calibration (locationd,</text>
+  <text x="49" y="4717.5" font-size="10.5" fill="#0F172A" font-weight="600">calibrationd, paramsd, torqued, lagd)</text>
+  <rect x="304" y="4580.5" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="4600" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-101</text>
+  <rect x="400.1" y="4589" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="4599.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="4614.6" font-size="10.5" fill="#0F172A" font-weight="600">locationd pose filter</text>
+  <text x="313" y="4627.3" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="4575.9" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="4595.4" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-100</text>
+  <rect x="1192.7" y="4584.4" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="4595.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="4610" font-size="10.5" fill="#0F172A">Provide a calibrated pose from valid IMU and camera odometry, and report invalid inputs within the reaction time</text>
+  <text x="577" y="4627" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="4616" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="4626.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="304" y="4667.6" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="4687.1" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-102</text>
+  <rect x="400.1" y="4676.1" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="4687" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="4701.7" font-size="10.5" fill="#0F172A" font-weight="600">Camera calibration (calibrationd)</text>
+  <text x="313" y="4714.4" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="4663" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="4682.5" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-101</text>
+  <rect x="1192.7" y="4671.5" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="4682.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="4697" font-size="10.5" fill="#0F172A">Report camera calibration as valid only when the learned extrinsics match the mount</text>
+  <text x="577" y="4714" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="4703" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="4713.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="304" y="4750" width="230" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="4769.5" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-103</text>
+  <rect x="400.1" y="4758.5" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="4769.4" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="4784.1" font-size="10.5" fill="#0F172A" font-weight="600">Online vehicle parameters (paramsd,</text>
+  <text x="313" y="4798.2" font-size="10.5" fill="#0F172A" font-weight="600">torqued, lagd)</text>
+  <text x="313" y="4810.9" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="4752.4" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="4771.9" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-102</text>
+  <rect x="1192.7" y="4760.9" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="4771.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="4786.5" font-size="10.5" fill="#0F172A">Provide vehicle parameters within plausible bounds and report them invalid otherwise</text>
+  <text x="577" y="4803.5" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="4792.5" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="4803.4" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-003</text>
+  <rect x="684.7" y="4792.5" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="4803.4" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="40" y="4852.5" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="4872" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-110</text>
+  <rect x="136.1" y="4861" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="170" y="4871.9" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
+  <text x="49" y="4886.6" font-size="10.5" fill="#0F172A" font-weight="600">Camera acquisition (camerad)</text>
+  <text x="49" y="4899.3" font-size="9.5" fill="#475569">1 failure mode · 3 causes located here</text>
+  <rect x="568" y="4847.9" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="4867.4" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-110</text>
+  <rect x="1192.7" y="4856.4" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="4867.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="4882" font-size="10.5" fill="#0F172A">Deliver every road, wide and driver camera frame once, in order and synchronised, and make a stopped or failed camera visible</text>
+  <text x="577" y="4899" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="4888" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="4898.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="40" y="4945.6" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="4965.1" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-120</text>
+  <rect x="136.1" y="4954.1" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="170" y="4965" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
+  <text x="49" y="4979.7" font-size="10.5" fill="#0F172A" font-weight="600">IMU acquisition (sensord)</text>
+  <text x="49" y="4992.4" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="4941" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="4960.5" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-120</text>
+  <rect x="1192.7" y="4949.5" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="4960.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="4975" font-size="10.5" fill="#0F172A">Deliver accelerometer and gyro samples with correct timestamps, and mark implausible data invalid</text>
+  <text x="577" y="4992" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="4981" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="4991.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="40" y="5088.6" width="230" height="43.1" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="5108.1" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-130</text>
+  <rect x="136.1" y="5097.1" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="170" y="5108" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
+  <text x="49" y="5122.6" font-size="10.5" fill="#0F172A" font-weight="600">Messaging (cereal and msgq)</text>
+  <rect x="304" y="5038.7" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="5058.2" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-131</text>
+  <rect x="400.1" y="5047.2" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="5058.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="5072.7" font-size="10.5" fill="#0F172A" font-weight="600">SubMaster liveness and validity</text>
+  <text x="313" y="5085.5" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="5034" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="5053.5" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-130</text>
+  <rect x="1192.7" y="5042.5" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="5053.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="5068.1" font-size="10.5" fill="#0F172A">Report an input as alive and valid only while it is received at its rate and flagged valid</text>
+  <text x="577" y="5085.1" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="5074.1" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="5085" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="684.7" y="5074.1" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="712.4" y="5085" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-016</text>
+  <rect x="304" y="5125.7" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="313" y="5145.2" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-132</text>
+  <rect x="400.1" y="5134.2" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="5145.2" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
+  <text x="313" y="5159.8" font-size="10.5" fill="#0F172A" font-weight="600">msgq ring buffer</text>
+  <text x="313" y="5172.5" font-size="9.5" fill="#475569">1 failure mode · 2 causes located here</text>
+  <rect x="568" y="5121.1" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="5140.6" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-131</text>
+  <rect x="1192.7" y="5129.6" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="5140.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="5155.2" font-size="10.5" fill="#0F172A">Deliver every published message intact to each subscriber, or make the loss visible</text>
+  <text x="577" y="5172.2" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="5161.2" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="5172.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="40" y="5218.8" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="5238.3" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-140</text>
+  <rect x="136.1" y="5227.3" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="170" y="5238.2" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
+  <text x="49" y="5252.9" font-size="10.5" fill="#0F172A" font-weight="600">Process manager (manager)</text>
+  <text x="49" y="5265.6" font-size="9.5" fill="#475569">2 failure modes · 2 causes located here</text>
+  <rect x="568" y="5214.2" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="5233.7" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-140</text>
+  <rect x="1192.7" y="5222.7" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="5233.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">2 FM</text>
+  <text x="577" y="5248.2" font-size="10.5" fill="#0F172A">Run every process the configuration needs and report any that is not running</text>
+  <text x="577" y="5265.2" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="5254.2" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="5265.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-016</text>
+  <rect x="40" y="5311.9" width="230" height="55.8" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="5331.4" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-150</text>
+  <rect x="136.1" y="5320.4" width="67.8" height="15" rx="7.5" fill="#E2E8F0"/><text x="170" y="5331.3" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw element</text>
+  <text x="49" y="5345.9" font-size="10.5" fill="#0F172A" font-weight="600">Software update (updated)</text>
+  <text x="49" y="5358.7" font-size="9.5" fill="#475569">1 failure mode · 1 cause located here</text>
+  <rect x="568" y="5307.2" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="577" y="5326.7" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-150</text>
+  <rect x="1192.7" y="5315.7" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="5326.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>
+  <text x="577" y="5341.3" font-size="10.5" fill="#0F172A">Install only the released, assured software version, and never change running software while driving</text>
+  <text x="577" y="5358.3" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
+  <rect x="625.3" y="5347.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="5358.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <line x1="40" y1="5398.3" x2="1240" y2="5398.3" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="40" y="5409.3" width="26" height="14" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="4"/>
+  <text x="72" y="5420.3" font-size="10.5" fill="#0F172A">Structure element (kind)</text>
+  <rect x="215.3" y="5409.3" width="26" height="14" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.3" rx="4" stroke-dasharray="5 3"/>
+  <text x="247.3" y="5420.3" font-size="10.5" fill="#0F172A">External element (outside the item)</text>
+  <rect x="446.1" y="5409.3" width="26" height="14" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="4"/>
+  <text x="478.1" y="5420.3" font-size="10.5" fill="#0F172A">Function</text>
+  <rect x="543.4" y="5409.3" width="37.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="562.2" y="5420.2" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">n FM</text>
+  <text x="587.1" y="5420.3" font-size="10.5" fill="#0F172A">failure modes analyzed for the function</text>
+  <rect x="805.2" y="5409.3" width="43.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="826.9" y="5420.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">no FM</text>
+  <text x="854.6" y="5420.3" font-size="10.5" fill="#0F172A">none yet</text>
+  <text x="40" y="5440.3" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>
