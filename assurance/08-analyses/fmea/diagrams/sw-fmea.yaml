@@ -1,16 +1,17 @@
-# Diagram data for the SW FMEA (assurance/08-analyses/fmea/analyses/sw-fmea.yaml, rev 0.9, BL-005).
+# Diagram data for the SW FMEA (assurance/08-analyses/fmea/analyses/sw-fmea.yaml, rev 1.0, BL-005).
 # Facts from WP-W-03 §3.3/§4.2/§5.3, WP-S-05 §2/§4.2/§11.2 and the code at the BL-005 pins (reference build is the default).
 schema_version: 1
 analysis: SWF
 
 block_diagram:
   title: "Software architecture: engagement and actuation path"
-  boundary: "Analysed SW elements, P1 and P2 (SW FMEA scope, BL-005)"
+  boundary: "Analysed SW elements, P1-P3 (SW FMEA scope, BL-005)"
   blocks:
     - id: B01
       name: "modeld"
       detail: "selfdrive/modeld/modeld.py, driving model"
-      inside: false
+      inside: true
+      element: SWF-SE-090
       column: 0
       row: 0
     - id: B02

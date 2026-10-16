@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="776" viewBox="0 0 1280 776" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
-  <title id="t">Figure 3-6. SW FMEA failure chains — sheet 10 of 10 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 10 of 10 (SWF rev 0.9): failure modes SWF-070 to SWF-071 (2 failure modes, 5 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1656" viewBox="0 0 1280 1656" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Figure 3-6. SW FMEA failure chains — sheet 10 of 11 (SWF)</title>
+  <desc id="d">SW FMEA failure chains, sheet 10 of 11 (SWF rev 1.0): failure modes SWF-070 to SWF-075 (7 failure modes, 12 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="776" fill="#FFFFFF"/>
-  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 10 of 10</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 0.9 · BL-005 · draft · SWF-070 … SWF-071 · 5 causes on this sheet</text>
+  <rect width="1280" height="1656" fill="#FFFFFF"/>
+  <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 10 of 11</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.0 · BL-005 · draft · SWF-070 … SWF-075 · 12 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -25,6 +25,22 @@
   <path d="M846 270.4H861V368.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 550.2H861V487H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 550.2H861V599.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 797H235V772H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 772H505V727.1H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 772H505V845.5H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 727.1H861V719.6H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 845.5H861V838H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 1096.5H235V1084.2H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1084.2H505V1091.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1091.7H861V972.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1091.7H861V1084.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1091.7H861V1197H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 1350.3H235V1337.9H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1337.9H505V1338.9H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1338.9H861V1331.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 1477.6H235V1472.3H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1472.3H505V1472.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1472.7H861V1465.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <rect x="40" y="354.5" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="49" y="374" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-081</text>
   <text x="49" y="388.6" font-size="10.5" fill="#0F172A" font-weight="600">Lead selection and</text>
@@ -95,14 +111,167 @@
   <text x="885" y="625.5" font-size="10.5" fill="#0F172A">match window of max(25 %, 5 m) and 10 m/s (radard.py:113-133)</text>
   <text x="885" y="638.6" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-081</text>
   <rect x="885" y="644.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="655.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-064 open</text>
-  <line x1="40" y1="695.6" x2="1240" y2="695.6" stroke="#E2E8F0" stroke-width="1"/>
-  <text x="40" y="717.6" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
-  <rect x="96" y="706.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="717.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <rect x="136.5" y="706.6" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="717.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
-  <rect x="179.4" y="706.6" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="717.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
-  <text x="223.9" y="717.6" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
-  <rect x="455.4" y="706.6" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="717.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
-  <text x="522.7" y="717.6" font-size="10.5" fill="#0F172A">action status (step 6)</text>
-  <text x="40" y="737.6" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
-  <text x="40" y="755.6" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <rect x="40" y="775" width="180" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="794.5" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-090</text>
+  <text x="49" y="809.1" font-size="10.5" fill="#0F172A" font-weight="600">Driving model process</text>
+  <text x="49" y="823.2" font-size="10.5" fill="#0F172A" font-weight="600">(modeld)</text>
+  <text x="49" y="835.9" font-size="9.5" fill="#475569">sw element</text>
+  <rect x="250" y="750" width="240" height="120" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="769.5" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-090</text>
+  <text x="259" y="784" font-size="10.5" fill="#0F172A">Publish model outputs (desired curvature,</text>
+  <text x="259" y="798.1" font-size="10.5" fill="#0F172A">leads) for every road frame, computed from</text>
+  <text x="259" y="812.2" font-size="10.5" fill="#0F172A">the current frame and calibration, and mark</text>
+  <text x="259" y="826.3" font-size="10.5" fill="#0F172A">output that is not fit for use as invalid</text>
+  <text x="259" y="839" font-size="9.5" fill="#475569" font-weight="600">function of SWF-SE-091</text>
+  <rect x="259" y="845" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="855.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="520" y="705.1" width="326" height="91.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="724.6" font-size="12" fill="#0F172A" font-weight="700">SWF-073</text>
+  <rect x="593.9" y="713.6" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="724.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="713.6" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="724.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">crash</text>
+  <text x="529" y="739.2" font-size="10.5" fill="#0F172A" font-weight="600">modeld stops while engaged</text>
+  <text x="529" y="752.3" font-size="9.8" fill="#475569" font-style="italic">End effect: Loss of lateral control while engaged; the take-over</text>
+  <text x="529" y="765.5" font-size="9.8" fill="#475569" font-style="italic">alert follows within about 0.5 s</text>
+  <text x="529" y="782.5" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="771.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="782.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="876" y="697.6" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="717.1" font-size="12" fill="#0F172A" font-weight="700">SWF-073.C1</text>
+  <rect x="1194.5" y="706.1" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="717.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="731.7" font-size="10.5" fill="#0F172A">Unhandled exception in the small-model path: a run exception</text>
+  <text x="885" y="745.8" font-size="10.5" fill="#0F172A">re-raises (modeld.py:412-413); a short frame buffer or a missing</text>
+  <text x="885" y="759.9" font-size="10.5" fill="#0F172A">output head raises (modeld.py:194; parse_model_outputs.py:24-28)</text>
+  <text x="885" y="773" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in SWF-SE-090</text>
+  <rect x="885" y="779" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="789.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-065 open</text>
+  <rect x="997.9" y="779" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="789.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-066 open</text>
+  <rect x="520" y="823.5" width="326" height="91.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="843" font-size="12" fill="#0F172A" font-weight="700">SWF-074</text>
+  <rect x="593.9" y="832" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="842.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="832" width="70.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="664.8" y="842.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">wrong mode</text>
+  <text x="529" y="857.6" font-size="10.5" fill="#0F172A" font-weight="600">A model file other than the released one is loaded</text>
+  <text x="529" y="870.7" font-size="9.8" fill="#475569" font-style="italic">End effect: Any lateral or longitudinal hazard within the panda</text>
+  <text x="529" y="883.8" font-size="9.8" fill="#475569" font-style="italic">envelope</text>
+  <text x="529" y="900.8" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="889.8" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="900.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-003</text>
+  <rect x="876" y="816" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="835.5" font-size="12" fill="#0F172A" font-weight="700">SWF-074.C1</text>
+  <rect x="1194.5" y="824.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="835.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="850.1" font-size="10.5" fill="#0F172A">Models are loaded with pickle and no hash, version or signature</text>
+  <text x="885" y="864.1" font-size="10.5" fill="#0F172A">check (helpers.py:15-20; modeld.py:158-159;</text>
+  <text x="885" y="878.2" font-size="10.5" fill="#0F172A">dmonitoringmodeld.py:22-48; GAP-22, TSR-616); they are compiled…</text>
+  <text x="885" y="891.3" font-size="9.8" fill="#475569" font-weight="600">O3 · D10 · in SWF-SE-090</text>
+  <rect x="885" y="897.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="908.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-065 open</text>
+  <rect x="40" y="1074.5" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1094" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-091</text>
+  <text x="49" y="1108.6" font-size="10.5" fill="#0F172A" font-weight="600">Model execution, output</text>
+  <text x="49" y="1122.7" font-size="10.5" fill="#0F172A" font-weight="600">parsing and validity</text>
+  <text x="49" y="1135.4" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="1148.1" font-size="9.5" fill="#475569">in SWF-SE-090</text>
+  <rect x="250" y="1062.2" width="240" height="107.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1081.7" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-090</text>
+  <text x="259" y="1096.3" font-size="10.5" fill="#0F172A">Publish model outputs (desired curvature,</text>
+  <text x="259" y="1110.3" font-size="10.5" fill="#0F172A">leads) for every road frame, computed from</text>
+  <text x="259" y="1124.4" font-size="10.5" fill="#0F172A">the current frame and calibration, and mark</text>
+  <text x="259" y="1138.5" font-size="10.5" fill="#0F172A">output that is not fit for use as invalid</text>
+  <rect x="259" y="1144.5" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1155.4" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="520" y="1069.7" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1089.2" font-size="12" fill="#0F172A" font-weight="700">SWF-072</text>
+  <rect x="593.9" y="1078.2" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1089.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1078.2" width="64.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="661.9" y="1089.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">value stale</text>
+  <text x="529" y="1103.8" font-size="10.5" fill="#0F172A" font-weight="600">modelV2 published as valid while its content is non-finite,</text>
+  <text x="529" y="1117.8" font-size="10.5" fill="#0F172A" font-weight="600">from an old frame, or computed with an invalid calibration</text>
+  <text x="529" y="1131" font-size="9.8" fill="#475569" font-style="italic">End effect: Lateral control steers toward the lane boundary</text>
+  <text x="529" y="1148" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1137" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1147.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-003</text>
+  <rect x="618.8" y="1137" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="1147.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
+  <rect x="876" y="950.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="969.8" font-size="12" fill="#0F172A" font-weight="700">SWF-072.C1</text>
+  <rect x="1194.5" y="958.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="969.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="984.4" font-size="10.5" fill="#0F172A">modelV2.valid only says a calibration has been seen</text>
+  <text x="885" y="998.5" font-size="10.5" fill="#0F172A">(fill_model_msg.py:59, 79; modeld.py:434). The small model's</text>
+  <text x="885" y="1012.5" font-size="10.5" fill="#0F172A">outputs get no finiteness check (modeld.py:210-211 checks the big…</text>
+  <text x="885" y="1025.7" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in SWF-SE-091</text>
+  <rect x="885" y="1031.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1042.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-065 open</text>
+  <rect x="997.9" y="1031.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="1042.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-060 open</text>
+  <rect x="876" y="1062.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1082.2" font-size="12" fill="#0F172A" font-weight="700">SWF-072.C2</text>
+  <rect x="1194.5" y="1071.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1082.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1096.7" font-size="10.5" fill="#0F172A">Frame-drop accounting misses repeats: dropped frames are max(0,</text>
+  <text x="885" y="1110.8" font-size="10.5" fill="#0F172A">frame_id gap - 1), so a repeated or regressing frame_id counts as 0</text>
+  <text x="885" y="1124.9" font-size="10.5" fill="#0F172A">(modeld.py:385); drops are forced to 0 for the first 10 runs and…</text>
+  <text x="885" y="1138" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in SWF-SE-091</text>
+  <rect x="885" y="1144" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1154.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-065 open</text>
+  <rect x="876" y="1175" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1194.5" font-size="12" fill="#0F172A" font-weight="700">SWF-072.C3</text>
+  <rect x="1194.5" y="1183.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1194.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1209.1" font-size="10.5" fill="#0F172A">The calibration is used whenever extrinsicsCalibration updates,</text>
+  <text x="885" y="1223.1" font-size="10.5" fill="#0F172A">without checking calStatus or valid (modeld.py:367-375), so a</text>
+  <text x="885" y="1237.2" font-size="10.5" fill="#0F172A">recalibrating or invalid calibration warps the input; selfdrived reacts…</text>
+  <text x="885" y="1250.4" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in SWF-SE-091</text>
+  <rect x="885" y="1256.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1267.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-065 open</text>
+  <rect x="40" y="1328.3" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1347.8" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-101</text>
+  <text x="49" y="1362.3" font-size="10.5" fill="#0F172A" font-weight="600">locationd pose filter</text>
+  <text x="49" y="1375.1" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="1387.8" font-size="9.5" fill="#475569">in SWF-SE-100</text>
+  <rect x="250" y="1315.9" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1335.4" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-100</text>
+  <text x="259" y="1350" font-size="10.5" fill="#0F172A">Provide a calibrated pose from valid IMU</text>
+  <text x="259" y="1364.1" font-size="10.5" fill="#0F172A">and camera odometry, and report invalid</text>
+  <text x="259" y="1378.1" font-size="10.5" fill="#0F172A">inputs within the reaction time</text>
+  <rect x="259" y="1384.1" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1395" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="520" y="1316.9" width="326" height="91.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1336.4" font-size="12" fill="#0F172A" font-weight="700">SWF-077</text>
+  <rect x="593.9" y="1325.4" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1336.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1325.4" width="29.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="644.4" y="1336.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">late</text>
+  <text x="529" y="1350.9" font-size="10.5" fill="#0F172A" font-weight="600">IMU or pose fault reported to the supervision late</text>
+  <text x="529" y="1364.1" font-size="9.8" fill="#475569" font-style="italic">End effect: Contributes to HZ-003 (roll compensation) and to an</text>
+  <text x="529" y="1377.2" font-size="9.8" fill="#475569" font-style="italic">undetected excessive actuation</text>
+  <text x="529" y="1394.2" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1383.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1394.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-003</text>
+  <rect x="876" y="1309.4" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1328.9" font-size="12" fill="#0F172A" font-weight="700">SWF-077.C1</text>
+  <rect x="1194.5" y="1317.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1328.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1343.4" font-size="10.5" fill="#0F172A">selfdrived ignores accelerometer and gyro in its alive/valid checks</text>
+  <text x="885" y="1357.5" font-size="10.5" fill="#0F172A">and raises sensorDataInvalid only after 10 s without data</text>
+  <text x="885" y="1371.6" font-size="10.5" fill="#0F172A">(selfdrived.py:101, 454-456); deviceMotion.sensorsOK is not…</text>
+  <text x="885" y="1384.7" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-101</text>
+  <rect x="885" y="1390.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1401.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-067 open</text>
+  <rect x="40" y="1455.6" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1475.1" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-102</text>
+  <text x="49" y="1489.6" font-size="10.5" fill="#0F172A" font-weight="600">Camera calibration</text>
+  <text x="49" y="1503.7" font-size="10.5" fill="#0F172A" font-weight="600">(calibrationd)</text>
+  <text x="49" y="1516.4" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="1529.2" font-size="9.5" fill="#475569">in SWF-SE-100</text>
+  <rect x="250" y="1450.3" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1469.8" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-101</text>
+  <text x="259" y="1484.3" font-size="10.5" fill="#0F172A">Report camera calibration as valid only</text>
+  <text x="259" y="1498.4" font-size="10.5" fill="#0F172A">when the learned extrinsics match the</text>
+  <text x="259" y="1512.5" font-size="10.5" fill="#0F172A">mount</text>
+  <rect x="259" y="1518.5" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1529.4" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-013</text>
+  <rect x="520" y="1450.7" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1470.2" font-size="12" fill="#0F172A" font-weight="700">SWF-075</text>
+  <rect x="593.9" y="1459.2" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1470.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1459.2" width="57.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="658.1" y="1470.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">corrupted</text>
+  <text x="529" y="1484.8" font-size="10.5" fill="#0F172A" font-weight="600">Camera calibration reported valid while the extrinsics do</text>
+  <text x="529" y="1498.9" font-size="10.5" fill="#0F172A" font-weight="600">not match the mount</text>
+  <text x="529" y="1512" font-size="9.8" fill="#475569" font-style="italic">End effect: Lateral control steers toward the lane boundary</text>
+  <text x="529" y="1529" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1518" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1528.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-003</text>
+  <rect x="876" y="1443.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1463.2" font-size="12" fill="#0F172A" font-weight="700">SWF-075.C1</text>
+  <rect x="1194.5" y="1452.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1463.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1477.8" font-size="10.5" fill="#0F172A">Calibration learns only above 15 mph with a yaw rate below 2 deg/s</text>
+  <text x="885" y="1491.8" font-size="10.5" fill="#0F172A">and recalibrates only beyond the spread thresholds</text>
+  <text x="885" y="1505.9" font-size="10.5" fill="#0F172A">(calibrationd.py:33-46, 138-167, 190-201), so a mount that moved…</text>
+  <text x="885" y="1519" font-size="9.8" fill="#475569" font-weight="600">O5 · D8 · in SWF-SE-102</text>
+  <rect x="885" y="1525" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1536" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-067 open</text>
+  <line x1="40" y1="1576" x2="1240" y2="1576" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="1598" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
+  <rect x="96" y="1587" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="1598" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <rect x="136.5" y="1587" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="1598" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
+  <rect x="179.4" y="1587" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1598" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="223.9" y="1598" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
+  <rect x="455.4" y="1587" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1598" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
+  <text x="522.7" y="1598" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <text x="40" y="1618" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
+  <text x="40" y="1636" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>
