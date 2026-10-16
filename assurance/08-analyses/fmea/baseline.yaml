@@ -113,3 +113,42 @@ baselines:
         teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
         tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
       os: AGNOS 19.9 (launch_env.sh)
+  - id: BL-005
+    status: proposed
+    description: >-
+      BL-004 plus liondriver-dev up to #86 (2026-10-16). The reference build is now the default: the root SConstruct
+      sets LIONDRIVER_REFERENCE=1 unless it is set empty (LionDriver #36), pandad configures a car safety mode only on a
+      panda that reports a reference build (#41, panda#12) and the release script selects the reference variant by
+      default (RELEASE_VARIANT, #80), so the reference-only features of BL-004 are active in a default build. Firmware:
+      siren on a persistent EPS fault (panda#14) and when heartbeat loss revokes granted authority (panda#15, all
+      builds), ELM327 refused after the car mode until ignition off (panda#16); arrival supervision of STEERING_LKA and
+      ACC_CONTROL (opendbc#11), assist-active LKAS_HUD refused without authority (opendbc#13), authority on a PCM edge
+      only with the heartbeat's engaged flag (opendbc#14), reference variant mutation-tested (opendbc#12). Host: selfdrived
+      disables at once on panda TX-rate revocation, heartbeat loss and a rising safetyTxBlocked while engaged (TSR-615),
+      controlsMismatch after 2 consecutive samples and within 0.5 s (TSR-621, 0.3 s engagement grace), cruiseMismatch
+      alerts after 1 s (TSR-308), controlsd does not actuate on stale or non-finite inputs (TSR-602; LionDriver #51, #70);
+      pandad never defaults a fault entry to relayMalfunction (#48); alpha longitudinal refused where it would disable
+      stock AEB (#79); Chill mode default (#74). Proposed, not merged and not in BL-005: wrong-length RX frame as an RX
+      fault, no re-engagement while a TX-rate excess persists, no authority after a safety-mode change without a new
+      engagement (opendbc branch at a0938fa).
+    vehicle:
+      make: Toyota
+      model: Corolla
+      model_year: 2020
+      trim: LE
+      market: US
+      platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
+    hardware:
+      device: comma 3X
+      panda: integrated in device
+      harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
+    software:
+      repo_commit: 1033d98e83ca592d6654eb3b3c9c36877c08e4fe
+      submodules:
+        panda: a55bdfc734ee7900de1cabbad453e72130e14f51
+        opendbc_repo: 9a13f6045388cd522b40b4dd60acbf681ad1c9e2
+        msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
+        rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
+        teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
+        tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
+      os: AGNOS 19.9 (launch_env.sh)
