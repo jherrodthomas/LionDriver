@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1798" viewBox="0 0 1280 1798" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1811" viewBox="0 0 1280 1811" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 5-1. Safety goals, FSRs and allocation (WP-C-04 §3, §5, §9)</title>
 <desc id="d">Matrix of the WP-C-04 functional safety requirements grouped by safety goal. For each goal: ASIL, safe state and preliminary FTTI. For each FSR: its ASIL, the other goals it serves in the §9 trace, and a marker in the column of each element it is allocated to (E-03 envelope, E-05 harness relay, E-01 SoC software, E-01/DM, E-01/HMI, E-02, and the external measures EXT-EPS, EXT-PCM, EXT-CLU). SG-01: 14 FSRs. SG-02: 12 FSRs. SG-03: 6 FSRs. SG-04: 6 FSRs. SG-05: 7 FSRs. SG-06: 5 FSRs. SG-07: 6 FSRs. SG-08: 1 FSRs.</desc>
 <defs></defs>
-<rect width="1280" height="1798" fill="#FFFFFF"/>
+<rect width="1280" height="1811" fill="#FFFFFF"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 5-1 · Safety goals, functional safety requirements and allocation</text>
 <text x="40" y="66" font-size="12.5" fill="#475569">8 safety goals (§3) → 57 FSRs (§5) → allocated elements (§5 Alloc), with the §9 trace</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-C-04 §3, §5, §9</text>
@@ -39,16 +39,16 @@
 <rect x="346" y="748" width="894" height="134" rx="6" fill="#F8FAFC"/>
 <rect x="346" y="1044" width="894" height="155" rx="6" fill="#F8FAFC"/>
 <rect x="346" y="1340" width="894" height="145.5" rx="6" fill="#F8FAFC"/>
-<line x1="696.0" y1="152" x2="696.0" y2="1686.0" stroke="#E2E8F0" stroke-width="1"/>
-<line x1="760.0" y1="152" x2="760.0" y2="1686.0" stroke="#E2E8F0" stroke-width="1"/>
-<line x1="824.0" y1="152" x2="824.0" y2="1686.0" stroke="#E2E8F0" stroke-width="1"/>
-<line x1="888.0" y1="152" x2="888.0" y2="1686.0" stroke="#E2E8F0" stroke-width="1"/>
-<line x1="952.0" y1="152" x2="952.0" y2="1686.0" stroke="#E2E8F0" stroke-width="1"/>
-<line x1="1016.0" y1="152" x2="1016.0" y2="1686.0" stroke="#E2E8F0" stroke-width="1"/>
-<line x1="1080.0" y1="152" x2="1080.0" y2="1686.0" stroke="#E2E8F0" stroke-width="1"/>
-<line x1="1144.0" y1="152" x2="1144.0" y2="1686.0" stroke="#E2E8F0" stroke-width="1"/>
-<line x1="1208.0" y1="152" x2="1208.0" y2="1686.0" stroke="#E2E8F0" stroke-width="1"/>
-<line x1="1048" y1="114" x2="1048" y2="1686.0" stroke="#CBD5E1" stroke-dasharray="4 3"/>
+<line x1="696.0" y1="152" x2="696.0" y2="1699.5" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="760.0" y1="152" x2="760.0" y2="1699.5" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="824.0" y1="152" x2="824.0" y2="1699.5" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="888.0" y1="152" x2="888.0" y2="1699.5" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="952.0" y1="152" x2="952.0" y2="1699.5" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1016.0" y1="152" x2="1016.0" y2="1699.5" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1080.0" y1="152" x2="1080.0" y2="1699.5" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1144.0" y1="152" x2="1144.0" y2="1699.5" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1208.0" y1="152" x2="1208.0" y2="1699.5" stroke="#E2E8F0" stroke-width="1"/>
+<line x1="1048" y1="114" x2="1048" y2="1699.5" stroke="#CBD5E1" stroke-dasharray="4 3"/>
 <rect x="40" y="158" width="300" height="105" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="52" y="179" font-size="13" fill="#0F172A" font-weight="700">SG-01</text>
 <rect x="106" y="166" width="172.5" height="18" rx="9" fill="#C2410C" stroke="#9A3412"/><text x="192.235" y="178.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">ASIL C ⚠ (D if AOU-01/02 fail)</text>
@@ -430,7 +430,7 @@
 <circle cx="696.0" cy="1465.25" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
 <circle cx="760.0" cy="1465.25" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
 <circle cx="952.0" cy="1465.25" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
-<rect x="40" y="1499.5" width="300" height="186.5" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
+<rect x="40" y="1499.5" width="300" height="200" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.5"/>
 <text x="52" y="1520.5" font-size="13" fill="#0F172A" font-weight="700">SG-08</text>
 <rect x="106" y="1507.5" width="54.9" height="18" rx="9" fill="#FED7AA" stroke="#FDBA74"/><text x="133.458" y="1520.1" font-size="10" fill="#0F172A" font-weight="700" text-anchor="middle">ASIL A</text>
 <text x="52" y="1544.5" font-size="11" fill="#0F172A" font-weight="600">No continued automated control while the driver</text>
@@ -438,29 +438,30 @@
 <text x="52" y="1572.5" font-size="11" fill="#0F172A" font-weight="600">escalation to a minimal-risk reaction</text>
 <text x="52" y="1592" font-size="10.5" fill="#475569">Safe state: Escalating alerts; on no response,</text>
 <text x="52" y="1605.5" font-size="10.5" fill="#475569">controlled deceleration in lane to a standstill with</text>
-<text x="52" y="1619" font-size="10.5" fill="#475569">steering on, hold, then disengage and lockout</text>
-<text x="52" y="1632.5" font-size="10.5" fill="#475569">(DQ-340, A)</text>
-<text x="52" y="1646" font-size="10.5" fill="#475569">FTTI: ≤ 6 s from loss of attention to the first alert</text>
-<text x="52" y="1659.5" font-size="10.5" fill="#475569">(WP-C-08 OI-2); time to the no-response reaction set</text>
-<text x="52" y="1673" font-size="10.5" fill="#475569">in WP-S-04</text>
-<text x="356" y="1596.75" font-size="11" fill="#0F172A" font-weight="600">FSR-08.01</text>
-<rect x="450" y="1584.75" width="34" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
-<text x="467" y="1596.25" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
-<circle cx="888.0" cy="1592.75" r="6" fill="#FED7AA" stroke="#FDBA74" stroke-width="1.2"/>
-<circle cx="952.0" cy="1592.75" r="6" fill="#FED7AA" stroke="#FDBA74" stroke-width="1.2"/>
-<text x="40" y="1712" font-size="11" fill="#475569">Also serves: the other safety goals the §9 trace marks for the FSR (number = SG-0n). Roles stated in the Alloc column (detection, alert, backstop, ...) are not drawn; see §5 and the allocation summary in §10.</text>
-<text x="40" y="1728" font-size="11" fill="#475569">All FSRs have status Proposed; a dot shows allocation, not implementation. SG-01 FSRs carry ASIL C until the controllability evidence of §4.2 exists. FTTIs are preliminary (§8, WP-S-04).</text>
-<line x1="40" y1="1750.0" x2="1240" y2="1750.0" stroke="#E2E8F0"/>
-<circle cx="46" cy="1770" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
-<text x="58" y="1774" font-size="10.5" fill="#0F172A">ASIL C</text>
-<circle cx="128.53" cy="1770" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
-<text x="140.53" y="1774" font-size="10.5" fill="#0F172A">ASIL B</text>
-<circle cx="211.06" cy="1770" r="6" fill="#FED7AA" stroke="#FDBA74" stroke-width="1.2"/>
-<text x="223.06" y="1774" font-size="10.5" fill="#0F172A">ASIL A</text>
-<circle cx="293.59000000000003" cy="1770" r="6" fill="#94A3B8" stroke="#64748B" stroke-width="1.2"/>
-<text x="305.59" y="1774" font-size="10.5" fill="#0F172A">QM</text>
-<circle cx="350.29" cy="1770" r="5.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1.8"/>
-<text x="362.29" y="1774" font-size="10.5" fill="#0F172A">External measure (no ASIL, AoU)</text>
-<text x="554.29" y="1774" font-size="10.5" fill="#475569">Marker = FSR allocated to that element; colour = FSR ASIL</text>
-<text x="1240" y="1774" font-size="10" fill="#475569" text-anchor="end">Generated by fsc_figures.py</text>
+<text x="52" y="1619" font-size="10.5" fill="#475569">steering on, then stay stopped and held with</text>
+<text x="52" y="1632.5" font-size="10.5" fill="#475569">re-engagement locked out until the driver responds</text>
+<text x="52" y="1646" font-size="10.5" fill="#475569">(DQ-365, A)</text>
+<text x="52" y="1659.5" font-size="10.5" fill="#475569">FTTI: ≤ 6 s from loss of attention to the first alert</text>
+<text x="52" y="1673" font-size="10.5" fill="#475569">(WP-C-08 OI-2); time to the no-response reaction set</text>
+<text x="52" y="1686.5" font-size="10.5" fill="#475569">in WP-S-04</text>
+<text x="356" y="1603.5" font-size="11" fill="#0F172A" font-weight="600">FSR-08.01</text>
+<rect x="450" y="1591.5" width="34" height="16" rx="8" fill="#FED7AA" stroke="#FDBA74"/>
+<text x="467" y="1603" font-size="9.5" fill="#0F172A" font-weight="700" text-anchor="middle">A</text>
+<circle cx="888.0" cy="1599.5" r="6" fill="#FED7AA" stroke="#FDBA74" stroke-width="1.2"/>
+<circle cx="952.0" cy="1599.5" r="6" fill="#FED7AA" stroke="#FDBA74" stroke-width="1.2"/>
+<text x="40" y="1725.5" font-size="11" fill="#475569">Also serves: the other safety goals the §9 trace marks for the FSR (number = SG-0n). Roles stated in the Alloc column (detection, alert, backstop, ...) are not drawn; see §5 and the allocation summary in §10.</text>
+<text x="40" y="1741.5" font-size="11" fill="#475569">All FSRs have status Proposed; a dot shows allocation, not implementation. SG-01 FSRs carry ASIL C until the controllability evidence of §4.2 exists. FTTIs are preliminary (§8, WP-S-04).</text>
+<line x1="40" y1="1763.5" x2="1240" y2="1763.5" stroke="#E2E8F0"/>
+<circle cx="46" cy="1783.5" r="6" fill="#C2410C" stroke="#9A3412" stroke-width="1.2"/>
+<text x="58" y="1787.5" font-size="10.5" fill="#0F172A">ASIL C</text>
+<circle cx="128.53" cy="1783.5" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.2"/>
+<text x="140.53" y="1787.5" font-size="10.5" fill="#0F172A">ASIL B</text>
+<circle cx="211.06" cy="1783.5" r="6" fill="#FED7AA" stroke="#FDBA74" stroke-width="1.2"/>
+<text x="223.06" y="1787.5" font-size="10.5" fill="#0F172A">ASIL A</text>
+<circle cx="293.59000000000003" cy="1783.5" r="6" fill="#94A3B8" stroke="#64748B" stroke-width="1.2"/>
+<text x="305.59" y="1787.5" font-size="10.5" fill="#0F172A">QM</text>
+<circle cx="350.29" cy="1783.5" r="5.5" fill="#FFFFFF" stroke="#64748B" stroke-width="1.8"/>
+<text x="362.29" y="1787.5" font-size="10.5" fill="#0F172A">External measure (no ASIL, AoU)</text>
+<text x="554.29" y="1787.5" font-size="10.5" fill="#475569">Marker = FSR allocated to that element; colour = FSR ASIL</text>
+<text x="1240" y="1787.5" font-size="10" fill="#475569" text-anchor="end">Generated by fsc_figures.py</text>
 </svg>
