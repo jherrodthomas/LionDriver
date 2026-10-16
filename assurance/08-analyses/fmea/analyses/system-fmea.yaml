@@ -85,6 +85,9 @@
 # Rev 0.22 (2026-10-16): new SFM-037 (longitudinal command frozen at last value), the counterpart of SFM-006 that the SG-03 tree
 # lacked (fta-fmea-map BE-1.19 note). C1 controlsd hang (SWF-047, M 7: PCM reaction to missing ACC_CONTROL unknown), C2 plannerd stops
 # (SWF-068, M 8: soft disable exceeds the 1 s FTTI), C3 stale data with fresh timestamps (M 9). All AP H; existing actions.
+# Rev 0.23 (2026-10-16): new SFM-038 (warning of a lateral-control fault or limit late, silent or missing), backing FTA SG-02 BE-2.08
+# and BE-2.24, which had no FMEA mode: C1 silent EPS-fault warning after a recent override (car_events.py, GAP-03), C2 panda epsFault
+# read by no SoC process, C3 steerSaturated conditions (WP-S-04 §3.8.1). O 8 (design gaps), AP H. New SFM-ACT-023; C3 uses SFM-ACT-021.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -93,7 +96,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.22"
+  revision: "0.23"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
@@ -3739,6 +3742,77 @@ failure_modes:
           - SFM-ACT-015
     notes: "HARA input: constant longitudinal request not following the lead or set speed. Counterpart of SFM-006 (lateral). Not cited by the fault trees yet (not_in_fta, tree_gap for SG-03 and SG-06)."
 
+  # ----- F6 Alerting: warnings for a lateral-control loss or limit (FTA SG-02 BE-2.08, BE-2.24) -----
+  - id: SFM-038
+    element: SFM-SE-001
+    function: SFM-FN-006
+    failure_mode: Warning of a lateral-control fault or limit late, silent or missing
+    guideword: late
+    effects:
+      - {level: local, description: "steerTempUnavailable shown silently, steerSaturated raised late or not at all, or the panda's EPS-fault flag not acted on"}
+      - {level: next_higher, description: "Driver not prompted to take over while lateral control is lost or limited"}
+      - {level: end, description: "Driver unaware of the loss or limit; lane departure", hazard: HZ-004, severity: 10}
+    severity: 10
+    safety_mechanisms:
+      - description: EPS-fault siren from the panda when LKA_STATE reports a fault for 1 s while authority is granted (TSR-516(b), T-28), independent of the host alerts
+        ref: panda/board/drivers/eps_fault_siren.h
+      - description: Lane departure warning as the car nears the line
+        ref: openpilot/selfdrive/controls/lib/ldw.py
+    causes:
+      - id: SFM-038.C1
+        element: SFM-SE-016
+        description: 'After any driver steering input in the last 1.5 s, a temporary EPS fault raises only steerTempUnavailableSilent (a
+          small WARNING with no soft disable), and the warning stays silent for as long as the fault lasts (car_events.py:162-177;
+          T-25, GAP-03)'
+        prevention_controls:
+        - description: Upstream openpilot design choice (a softer alert after an override); no LionDriver requirement on it
+          ref: openpilot/selfdrive/car/car_events.py
+        detection_controls:
+        - description: No LionDriver test targets this cause
+        occurrence: 8
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-023
+        msr_exempt: 'The cause is a defect of the warning path itself; its effect on detecting the lateral loss is rated in the MSR rows
+          of SFM-004.C2 and SFM-005 (msr-plan §3)'
+      - id: SFM-038.C2
+        element: SFM-SE-017
+        description: 'pandad publishes the panda fields epsFault and requestsRejected (pandad.cc:137-138), but no SoC process reads
+          them (txRateExceeded is read, TSR-615), so a panda-side EPS-fault refusal reaches the driver only through the panda siren and the stock EPS
+          path (SW FMEA SWF-025 notes)'
+        prevention_controls:
+        - description: None; the fields were added for the panda siren and logging
+          ref: openpilot/selfdrive/pandad/pandad.cc
+        detection_controls:
+        - description: No test targets this cause
+        occurrence: 8
+        detection: 10
+        ap: H
+        actions:
+        - SFM-ACT-023
+        msr_exempt: 'The cause is a defect of the warning path itself; the panda siren that remains is rated on SFM-005 and in the DFMEA
+          (msr-plan §3)'
+      - id: SFM-038.C3
+        element: SFM-SE-014
+        description: 'steerSaturated needs the controller saturated, a desired lateral acceleration above 1.0 m/s², an undershoot above
+          1.2x and no steering input for 2 s (selfdrived.py:465-479), and the controller reports saturation only after 0.4 s
+          (latcontrol.py, T-30); a gradual deficit therefore warns late or not at all (WP-S-04 §3.8.1)'
+        prevention_controls:
+        - description: Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job)
+          ref: scripts/lint/lint.sh
+        detection_controls:
+        - description: Lateral controller unit tests (saturation detection); targeted at nominal behaviour, not proven
+          test: openpilot/selfdrive/controls/tests/test_latcontrol.py
+        occurrence: 8
+        detection: 8
+        ap: H
+        actions:
+        - SFM-ACT-021
+        msr_exempt: 'The cause is the timing of the warning itself; it is rated as M 8 in the MSR rows of SFM-004.C1-C3 (rev 0.15,
+          WP-S-04 §3.8.1)'
+    notes: "HARA input: missing or late warning of a lateral loss or limit. Backs FTA SG-02 BE-2.08 (C1, C2) and BE-2.24 (C3)."
+
 actions:
   - id: SFM-ACT-001
     kind: design_change
@@ -3878,3 +3952,9 @@ actions:
     description: 'Measure the FCW onset after a lead brakes hard (WP-S-04 T-31, M-12) and compare it with the §3.8.2 budget
       (about 0.6 s at a 1.0 s gap). For pipeline lag (SFM-012.C1), detect it within that budget or show that the FCW path
       does not depend on the lagging process'
+  - id: SFM-ACT-023
+    kind: design_change
+    status: open
+    description: 'Warn audibly and with a take-over request on every EPS fault while engaged, with no silent variant after a recent
+      override (car_events.py steerTempUnavailableSilent), and act on the panda fields epsFault and requestsRejected on the host
+      (TSR-626(d), TSR-516(b)). SFM-038.C1, C2; FTA BE-2.08'

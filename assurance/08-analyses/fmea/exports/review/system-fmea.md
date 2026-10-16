@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.22 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.23 | draft | BL-005 | RT-2 | 2026-10-16 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -871,6 +871,28 @@ Safety mechanisms: (1) Message liveness and frequency checks on inputs, longitud
 
 <sub>Note: HARA input: constant longitudinal request not following the lead or set speed. Counterpart of SFM-006 (lateral). Not cited by the fault trees yet (not_in_fta, tree_gap for SG-03 and SG-06).</sub>
 
+#### SFM-038 · Warning of a lateral-control fault or limit late, silent or missing
+
+🔴 **H** · **S 10** · guideword *late* · function `SFM-FN-006` F6 Alerting: inform the driver of engagement state, takeover requests and faults (visual and audible)
+
+Effects:
+
+- **End:** Driver unaware of the loss or limit; lane departure (HZ-004, S 10)
+- **Next higher:** Driver not prompted to take over while lateral control is lost or limited
+- **Local:** steerTempUnavailable shown silently, steerSaturated raised late or not at all, or the panda's EPS-fault flag not acted on
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SFM-038.C1` After any driver steering input in the last 1.5 s, a temporary EPS fault raises only steerTempUnavailableSilent (a small WARNING with no soft disable), and the warning stays silent for as long as the fault lasts (car_events.py:162-177; T-25, GAP-03) | • Upstream openpilot design choice (a softer alert after an override); no LionDriver requirement on it <sub>openpilot/selfdrive/car/car_events.py</sub> | • No LionDriver test targets this cause | 8 | 10 | 🔴 **H** | SFM-ACT-023 |
+| `SFM-038.C2` pandad publishes the panda fields epsFault and requestsRejected (pandad.cc:137-138), but no SoC process reads them (txRateExceeded is read, TSR-615), so a panda-side EPS-fault refusal reaches the driver only through the panda siren and the stock EPS path (SW FMEA SWF-025 notes) | • None; the fields were added for the panda siren and logging <sub>openpilot/selfdrive/pandad/pandad.cc</sub> | • No test targets this cause | 8 | 10 | 🔴 **H** | SFM-ACT-023 |
+| `SFM-038.C3` steerSaturated needs the controller saturated, a desired lateral acceleration above 1.0 m/s², an undershoot above 1.2x and no steering input for 2 s (selfdrived.py:465-479), and the controller reports saturation only after 0.4 s (latcontrol.py, T-30); a gradual deficit therefore warns late or not at all (WP-S-04 §3.8.1) | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job) <sub>scripts/lint/lint.sh</sub> | • Lateral controller unit tests (saturation detection); targeted at nominal behaviour, not proven <sub>openpilot/selfdrive/controls/tests/test_latcontrol.py</sub> | 8 | 8 | 🔴 **H** | SFM-ACT-021 |
+
+Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a fault for 1 s while authority is granted (TSR-516(b), T-28), independent of the host alerts · (2) Lane departure warning as the car nears the line
+
+[Monitoring and system response](#7-monitoring-and-system-response): `SFM-038.C1` not rated here: The cause is a defect of the warning path itself; its effect on detecting the lateral loss is rated in the MSR rows of SFM-004.C2 and SFM-005 (msr-plan §3)<br>`SFM-038.C2` not rated here: The cause is a defect of the warning path itself; the panda siren that remains is rated on SFM-005 and in the DFMEA (msr-plan §3)<br>`SFM-038.C3` not rated here: The cause is the timing of the warning itself; it is rated as M 8 in the MSR rows of SFM-004.C1-C3 (rev 0.15, WP-S-04 §3.8.1)
+
+<sub>Note: HARA input: missing or late warning of a lateral loss or limit. Backs FTA SG-02 BE-2.08 (C1, C2) and BE-2.24 (C3).</sub>
+
 ## 5. Actions
 
 | ID | Kind | Action | Owner | Status | Causes | Revised S/O/D → AP |
@@ -894,8 +916,9 @@ Safety mechanisms: (1) Message liveness and frequency checks on inputs, longitud
 | SFM-ACT-018 | monitoring | Detect silent loss of the actuation path: report forwarded and refused TX frames from the panda, and compare EPS and PCM acceptance (LKA_STATE, ACC status) with the commands, warning within the SG-02/06 1 s budget |  | in_progress | — | — |
 | SFM-ACT-019 | design_change | Revoke lateral authority in the panda when it rejects a steering frame while authority is granted, and keep it revoked until a new valid engagement (TSR-108; lead decision DQ-060, option A). At BL-005 the frame is dropped and only the host disengages (pandaTxBlocked) |  | open | SFM-002.C1, SFM-002.C2, SFM-002.C4 | — |
 | SFM-ACT-020 | design_change | React to a stock PCS event on the longitudinal command (for example a neutral or zero acceleration request, or a longitudinal disable, while stockAeb is set), so stock AEB does not depend on PCM arbitration alone (AOU-04R); or keep today's behaviour and rely on the AOU-04R vehicle test. Lead decision DQ-300 |  | decision_pending | SFM-036.C1 | — |
-| SFM-ACT-021 | monitoring | Make the insufficient-lateral-control warning timely (WP-S-04 §3.8.1): warn before the deficit has lasted 0.4 s, for example from the planned curvature against the envelope, or keep the deficit at or below about 0.5 m/s² through the steering limits and the ODD curve bound (WP-S-04 OI-2). A change to the ODD bound is a lead decision |  | open | — | — |
+| SFM-ACT-021 | monitoring | Make the insufficient-lateral-control warning timely (WP-S-04 §3.8.1): warn before the deficit has lasted 0.4 s, for example from the planned curvature against the envelope, or keep the deficit at or below about 0.5 m/s² through the steering limits and the ODD curve bound (WP-S-04 OI-2). A change to the ODD bound is a lead decision |  | open | SFM-038.C3 | — |
 | SFM-ACT-022 | monitoring | Measure the FCW onset after a lead brakes hard (WP-S-04 T-31, M-12) and compare it with the §3.8.2 budget (about 0.6 s at a 1.0 s gap). For pipeline lag (SFM-012.C1), detect it within that budget or show that the FCW path does not depend on the lagging process |  | open | — | — |
+| SFM-ACT-023 | design_change | Warn audibly and with a take-over request on every EPS fault while engaged, with no silent variant after a recent override (car_events.py steerTempUnavailableSilent), and act on the panda fields epsFault and requestsRejected on the host (TSR-626(d), TSR-516(b)). SFM-038.C1, C2; FTA BE-2.08 |  | open | SFM-038.C1, SFM-038.C2 | — |
 
 ## 6. Priority H causes without a completed action
 
@@ -985,12 +1008,15 @@ Safety mechanisms: (1) Message liveness and frequency checks on inputs, longitud
 | `SFM-037.C1` | Longitudinal command frozen at last value | 10/6/10 | SFM-ACT-002 |
 | `SFM-037.C2` | Longitudinal command frozen at last value | 10/4/9 | SFM-ACT-002 |
 | `SFM-037.C3` | Longitudinal command frozen at last value | 10/5/10 | SFM-ACT-002 |
+| `SFM-038.C1` | Warning of a lateral-control fault or limit late, silent or missing | 10/8/10 | SFM-ACT-023 |
+| `SFM-038.C2` | Warning of a lateral-control fault or limit late, silent or missing | 10/8/10 | SFM-ACT-023 |
+| `SFM-038.C3` | Warning of a lateral-control fault or limit late, silent or missing | 10/8/8 | SFM-ACT-021 |
 
 ## 7. Monitoring and system response
 
 FMEA-MSR rates what happens in the car when a cause occurs: does a diagnostic catch it, and does the system reach a safe state within the fault-tolerant time interval (FTTI)? It adds frequency (F), monitoring (M) and the severity after the response, with its own action priority; S, O, D and AP above are unchanged. Scales: [rating-tables.md §7](../../rating-tables.md#7-fmea-msr--monitoring-and-system-response-added-in-rt-2); scope and plan: [msr-plan.md](../../msr-plan.md); FTTI rows: [WP-S-04 §3.7](../../../../03-system/WP-S-04-timing-ftti-budget.md#37-summary-of-fttis-and-budgets).
 
-**Coverage:** 67 of 71 in-scope causes rated, 4 rated elsewhere (`msr: complete`).
+**Coverage:** 67 of 74 in-scope causes rated, 7 rated elsewhere (`msr: complete`).
 
 > [!WARNING]
 > The MSR action priority uses a provisional table until the AIAG-VDA handbook table is transcribed (rating-tables §7.4). Read the M and F columns; the AP column will be re-rated.

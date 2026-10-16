@@ -399,10 +399,10 @@ events:
       (connector not latched). SFM-015.C3 is the System FMEA view (gate G2.2 cites SFM-015)
   - id: BE-2.08
     class: systematic_sw
-    gap: >-
-      No SW or System FMEA mode for the host EPS-fault warning arriving late (steerTempUnavailable / steerUnavailable after the
-      1.5 s hysteresis, car_events.py; GAP-03), nor for the panda's epsFault being published but read by no SoC process
-      (SWF-025 notes). SFMEA-15 of WP-A-04 §10 is the only row. F-28
+    fmea: [SFM-038]
+    note: >-
+      SFM-038.C1 (silent steerTempUnavailable after an override in the last 1.5 s, car_events.py; GAP-03) and SFM-038.C2 (the
+      panda's epsFault published but read by no SoC process, SWF-025 notes); System FMEA rev 0.23. SFMEA-15 of WP-A-04 §10. F-28
   - id: BE-2.09
     class: systematic_sw
     fmea: [SWF-034, SWF-032]
@@ -465,9 +465,8 @@ events:
     note: SFM-004.C1 (envelope torque limit below what the curve needs, by design), SFM-004.C3 (tuning or torque model too weak)
   - id: BE-2.24
     class: systematic_sw
-    gap: >-
-      No FMEA mode for the steerSaturated warning being late or missing (needs saturation and > 1.2x undershoot; no FTTI row
-      for the warning path, SFM-ACT-017). F-28
+    fmea: [SFM-038]
+    note: SFM-038.C3 (steerSaturated conditions; late for a gradual deficit, WP-S-04 §3.8.1); System FMEA rev 0.23. F-28
   - id: BE-2.25
     class: systematic_sw
     fmea: [SWF-035, SFM-027]

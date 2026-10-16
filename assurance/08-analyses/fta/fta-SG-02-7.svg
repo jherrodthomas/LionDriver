@@ -62,8 +62,8 @@
 <text x="296" y="613.0" class="d">undershoot; its timing is not</text>
 <text x="296" y="627.5" class="d">analysed against the 1 s budget</text>
 <text x="296" y="642.0" class="d">(SFM-ACT-017)</text>
-<rect x="296.0" y="650.0" width="53.9" height="16" rx="8" fill="#fff1f1"/>
-<text x="322.9" y="661.5" class="chip" fill="#c62828">no FMEA</text>
+<rect x="296.0" y="650.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="322.9" y="661.5" class="chip" fill="#fff">SFM-038</text>
 <circle cx="392.0" cy="698.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="525.5" y="547.0" width="220" height="78.5" rx="9" class="shadow"/>
 <rect x="524" y="544.5" width="220" height="78.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
