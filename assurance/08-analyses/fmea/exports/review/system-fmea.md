@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.17 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.19 | draft | BL-005 | RT-2 | 2026-10-16 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -616,7 +616,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SFM-025.C1` driverDistracted3 / driverUnresponsive3 mapped only to ET.PERMANENT (no disable reaction) | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job); unit tests are not requirements-based; no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2) <sub>scripts/lint/lint.sh</sub> | • Present by design and known; no test, because no requirement says what the reaction should be <sub>openpilot/selfdrive/selfdrived/events.py</sub> | 8 | 10 | 🔴 **H** | SFM-ACT-005 |
+| `SFM-025.C1` driverDistracted3 / driverUnresponsive3 mapped only to ET.PERMANENT (no disable reaction) | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job); unit tests are not requirements-based; no field-exposure evidence for this configuration, so none is credited (RT-1 §2.2) <sub>scripts/lint/lint.sh</sub> | • As rated in the SW FMEA (SWF-062.C1, D 9 at BL-005): test_longitudinal runs the force_decel maneuver in CI and test_monitoring checks the alert levels; neither checks that the reaction meets FSR-040 <sub>openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py</sub><br>• Present by design and known; no test, because no requirement says what the reaction should be <sub>openpilot/selfdrive/selfdrived/events.py</sub> | 8 | 9 | 🔴 **H** | SFM-ACT-005 |
 
 Safety mechanisms: (1) Lockout after repeated non-response prevents re-engagement (1/5/15/30 min)
 
@@ -928,7 +928,7 @@ Safety mechanisms: (1) stockAeb (PRE_COLLISION PRECOLLISION_ACTIVE with negative
 | `SFM-022.C3` | Inattentive driver not detected | 10/5/10 | SFM-ACT-003 |
 | `SFM-023.C1` | Distraction escalation too slow | 10/6/8 | SFM-ACT-002 |
 | `SFM-023.C2` | Distraction escalation too slow | 10/6/9 | SFM-ACT-002 |
-| `SFM-025.C1` | Terminal driver-unresponsive state does not bring the item to a safe state | 10/8/10 | SFM-ACT-005 |
+| `SFM-025.C1` | Terminal driver-unresponsive state does not bring the item to a safe state | 10/8/9 | SFM-ACT-005 |
 | `SFM-026.C1` | Takeover or disengagement alert not presented | 10/6/10 | SFM-ACT-007 |
 | `SFM-026.C2` | Takeover or disengagement alert not presented | 10/6/8 | SFM-ACT-007, SFM-ACT-003 |
 | `SFM-026.C3` | Takeover or disengagement alert not presented | 10/4/10 | SFM-ACT-007 |
