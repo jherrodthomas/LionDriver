@@ -61,11 +61,12 @@ class TestRealDocument(unittest.TestCase):
           seen.add(n.ident)
 
   def test_cross_tree_gate_reference_is_a_transfer(self):
-    sg03 = next(t for t in self.trees if t.goal == "SG-03")
-    genv = [n for n in walk(sg03.root) if n.ident == "G-ENV"]
-    self.assertEqual(len(genv), 1)
-    self.assertEqual(genv[0].kind, "transfer_in")
-    self.assertEqual(genv[0].ref_tree, "SG-01")
+    # G-LENV is developed in SG-03 (WP-A-04 v1.2) and borrowed by SG-04
+    sg04 = next(t for t in self.trees if t.goal == "SG-04")
+    glenv = [n for n in walk(sg04.root) if n.ident == "G-LENV"]
+    self.assertEqual(len(glenv), 1)
+    self.assertEqual(glenv[0].kind, "transfer_in")
+    self.assertEqual(glenv[0].ref_tree, "SG-03")
 
   def test_goal_asils_from_wp_c03(self):
     self.assertEqual(sorted(fd.goal_asils()), [f"SG-0{i}" for i in range(1, 8)])
@@ -191,9 +192,9 @@ class TestCutSets(unittest.TestCase):
     trees = fd.parse_document(fd.SOURCE.read_text(encoding="utf-8"))
     fd.resolve(trees)
     solver = fc.Solver(trees)
-    sg03 = next(t for t in trees if t.goal == "SG-03")
-    sets = solver.cut_sets(sg03.root)
-    self.assertIn(frozenset({"BE-1.06", "BE-3.02", "UE-3.05"}), sets)
+    sg04 = next(t for t in trees if t.goal == "SG-04")
+    sets = solver.cut_sets(sg04.root)
+    self.assertIn(frozenset({"BE-4.02", "BE-4.16", "UE-4.04"}), sets)  # BE-4.16 is reached only through G-LENV
 
 
 if __name__ == "__main__":

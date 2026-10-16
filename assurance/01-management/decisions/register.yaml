@@ -4000,3 +4000,98 @@
       detail: "Evidence for the whole range. Cost: a second, higher-risk test review and a site that allows 120 km/h."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3 item 3", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-07", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md §3 speed"]
   status: queued
+
+- id: DQ-360
+  question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"
+  context: "The fault trees for loss of steering (SG-02) and loss of braking (SG-06) assume the EPS and PCM report when they stop acting on our requests. If either just ignores them without a fault code, **neither the main computer nor the safety chip notices**, and only the driver can catch it. No assumption of use states that the car always reports this."
+  reversibility: revisit
+  blocks: "MCS-02.10, MCS-06.11 (WP-A-04 v1.2); AOU set of WP-C-01; TSR-626; WP-A-03 OI-8"
+  gate: G2
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Add an assumption of use and test it on the car"
+      detail: "State that the EPS signals every LKA drop and the PCM every ACC non-execution, and check it with forced faults in the vehicle tests. If a test finds a silent drop, come back to option B. Cost: a few fault-injection runs."
+    - key: B
+      title: "Add a response check in the item"
+      detail: "Compare measured steering and acceleration with the command and warn on a mismatch (TSR-626, WP-A-03 OI-8). Cost: a new safety requirement, tuning against false alarms, and its own verification."
+    - key: C
+      title: "Do both"
+      detail: "Tested assumption now, response check before release. Cost: the sum of A and B."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-32", "assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-02.10, MCS-06.11"]
+  status: queued
+
+- id: DQ-361
+  question: "Do the two \"take-over warning\" goals (SG-02 steering, SG-06 braking) also cover the system being too weak by design, such as a curve too tight for the torque limit or a lead car seen too late, or only faults?"
+  context: "SG-02 says \"lose or degrade\" lateral control. The fault trees now include **insufficient performance** branches: a curve the steering limit cannot hold, and a lead missed or seen late. In both, the only warning comes from the same main computer that fell short. Keeping them in the goals makes the fault trees and SOTIF analysis carry them together; leaving them out moves them to SOTIF alone."
+  reversibility: revisit
+  blocks: "G2.8 and MCS-02.12, G6.9 and MCS-06.10 (WP-A-04 v1.2); WP-C-06 SH-06; WP-C-03 OI-7"
+  gate: G1
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Keep performance limits inside SG-02 and SG-06"
+      detail: "The trees keep the branches, as SG-04 already keeps false braking; SOTIF evaluates the rates. Cost: two more single points to argue in the safety case."
+    - key: B
+      title: "Faults only; performance limits go to SOTIF alone"
+      detail: "Remove G2.8 and G6.9 and justify the three FMEA modes as SOTIF. Cost: the goals' wording should be narrowed to match, and the SOTIF case carries these hazards without the fault-tree view."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-33", "assurance/08-analyses/WP-A-04-system-fta-fmea.md G2.8, G6.9"]
+  status: queued
+
+- id: DQ-362
+  question: "Can the steering-warning, acceleration, driver-release and braking-warning goals (SG-02, SG-03, SG-05, SG-06) reuse the existing hardware failure-rate analysis, as you allowed for SG-04, or does each need its own?"
+  context: "Their random hardware faults run through the same parts already rated for SG-001 and SG-009 (safety chip, CAN transceivers, harness box). For SG-04 you accepted reuse (DQ-002). SG-03 is ASIL B but becomes ASIL C if the PCM assumption fails, and the shared path **misses the ASIL C target by 0.1 points**."
+  reversibility: easy
+  blocks: "FMEDA coverage of SG-02, SG-03, SG-05, SG-06 (WP-H-03, WP-H-04); BE-3.04, BE-5.02, BE-2.06, BE-2.07, BE-6.02"
+  gate: G2
+  decider: lead
+  after: [DQ-002]
+  options:
+    - key: A
+      recommended: true
+      title: "Reuse the SG-001 and SG-009 rows with a note per goal"
+      detail: "As DQ-002 did for SG-04; metrics meet ASIL B. Revisit at the hardware gate with supplier failure rates. Cost: none now."
+    - key: B
+      title: "A separate FMEDA classification per goal"
+      detail: "Each goal gets its own single-point and latent-fault metrics. Cost: four more analyses, all on the same generic failure rates."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-22"]
+  status: queued
+
+- id: DQ-363
+  question: "When the driver presses the accelerator and LionDriver keeps braking, which goal owns that: braking (SG-04) or release on driver action (SG-05)?"
+  context: "The SG-05 tree has a branch for the accelerator not overriding LionDriver's braking, but the hazards rated for SG-05 cover brake, cancel and steering only. Since your answer to DQ-022, the accelerator pauses speed control rather than disengaging. The FMEAs already put this under braking (HZ-006), and **SG-04 misses the one stuck signal that defeats both of its checks**."
+  reversibility: easy
+  blocks: "G5.4, MCS-05.6, G4.9 (WP-A-04 v1.2); WP-C-03 HE-05.x"
+  gate: G1
+  decider: lead
+  after: [DQ-022]
+  options:
+    - key: A
+      recommended: true
+      title: "Move it to SG-04"
+      detail: "Add the stuck gas signal to G4.9 and drop G5.4 from SG-05. Cost: a tree edit; no HARA change."
+    - key: B
+      title: "Keep it in SG-05 and add a hazardous event for it"
+      detail: "A new HE-05 event for accelerator override in the HARA, rated and traced. Cost: a HARA revision and FMEA effect updates."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-29", "assurance/08-analyses/WP-A-04-system-fta-fmea.md G5.4"]
+  status: queued
+
+- id: DQ-364
+  question: "Should acceleration while LionDriver is not engaged, or just after the driver brakes, be a rated hazardous event of the acceleration goal (SG-03)?"
+  context: "The SG-03 fault tree covers acceleration while not engaged and after a brake press, but the HARA rates no SG-03 event for it: **unintended engagement is only rated as a steering hazard**. So the FMEA modes for spurious engagement are not checked against SG-03."
+  reversibility: revisit
+  blocks: "WP-C-03 H-03 events; hara-mapping.yaml HZ-010; G3.3 (WP-A-04)"
+  gate: G1
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Add a hazardous event for it under H-03"
+      detail: "Rate it, and route the engagement modes to SG-03. Cost: a HARA revision; three FMEA warnings clear."
+    - key: B
+      title: "Narrow the SG-03 top event to while engaged"
+      detail: "The not-engaged branch then rests on SG-01's authority checks only. Cost: the acceleration case of a false engagement has no rated hazard."
+  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-34", "assurance/08-analyses/fmea/hara-mapping.yaml HZ-010"]
+  status: queued
