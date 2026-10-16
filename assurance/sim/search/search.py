@@ -45,7 +45,7 @@ CE_ROUNDS, CE_PER_ROUND, CE_ELITE = 4, 30, 0.2
 
 # name: (low, high, unit, meaning)
 SPACE = {
-  "speed_kph": (80.0, 120.0, "km/h", "ego speed (ODD-H up to 120 km/h)"),
+  "speed_kph": (80.0, 110.0, "km/h", "ego speed (ODD-H up to 110 km/h, DQ-260)"),
   "a_y": (0.0, 1.8, "m/s²", "steady lateral acceleration of the curve, from straight to 1.8 m/s²: above LAT_ACCEL_FACTOR "
           "(1.99 m/s²) the item cannot hold the curve even without a fault (plant case N-3), so the band to the ODD bound "
           "2.5 m/s² is left out"),
