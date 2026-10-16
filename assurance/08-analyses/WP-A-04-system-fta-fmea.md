@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-A-04 System-level safety analyses (FTA, FMEA) |
 | Standard reference | ISO 26262-9:2018 §8 (safety analyses); ISO 26262-4:2018 §6 (safety analysis of the system architectural design, to support the TSC); ISO 21448:2022 §7 (input on insufficiencies, informative here); ASPICE 4.0 SYS.3 |
-| Version | 0.9 (§5 SG-04 tree and §5.1 cut sets corrected from the FTA↔FMEA pilot findings F-1, F-5…F-8: own longitudinal envelope gate G-LENV with BE-4.16; G4.2 needs the host step BE-4.17; G4.3.1 adds stale or replayed braking BE-4.18; new G4.8 (stock ACC and item 0x343 together) and G4.9 (braking during accelerator override); MCS-04.3, -04.4, -04.9 revised, MCS-04.11 and -04.12 added; SPF-14 extended to SG-04; 21 computed cut sets, 12 rows, all match; 2026-10-13). 0.8 (§11: basic events linked to the FMEAs, SG-04 pilot, [fta-fmea-mapping.md](fta-fmea-mapping.md); 2026-10-13). 0.7 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.6 (2026-10-12 reference-build status notes, drafted on a parallel branch as 0.4, re-applied to the 0.5 trees: G5.2.1 with UE-5.13 and MCS-05.8 for BE-5.12 (found by `fta_cutsets.py`: BE-5.12 under the G5.2 OR was a single-event cut set), BE-1.16, BE-1.22 (incl. TSR-408), BE-2.08, BE-2.14, MCS-01.8, MCS-02.1, Obs-01; BE-5.12, cut sets and SFMEA notes kept; 2026-10-13). 0.5 (trees restructured to resolve CS-01…CS-07: SG-01 G1.2.2/G1.3.2, SG-03 G3.3, SG-02 and SG-06 per cause; tables completed; SPF-14; OI-9 closed, OI-10; 2026-10-12). 0.4 (§9.1 computed minimal cut sets and findings CS-01…CS-07; BE-2.14 tagged latent at the baseline, as §4 states; fault tree diagrams in [fta/](fta/README.md); OI-9; 2026-10-12). 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
+| Version | 1.0 (§2 SG-01 tree and §2.1 cut sets corrected from the SG-01 FTA↔FMEA mapping, findings F-11…F-13 of [fta-fmea-mapping.md](fta-fmea-mapping.md): G1.2.1.a adds the envelope's own not-allowed check defect BE-1.25 and the mode, param or firmware bypass BE-1.08/BE-1.09; G-SoC adds BE-1.24 (command corrupted on the SPI link); new G1.4 (stock LKA and item `0x2E4` together) with BE-1.26 and the SG-04 events BE-4.19, BE-4.21; MCS-01.6, -01.7 extended, MCS-01.10 and -01.11 added; 36 computed cut sets, 11 rows, all covered; 2026-10-16). 0.9 (§5 SG-04 tree and §5.1 cut sets corrected from the FTA↔FMEA pilot findings F-1, F-5…F-8: own longitudinal envelope gate G-LENV with BE-4.16; G4.2 needs the host step BE-4.17; G4.3.1 adds stale or replayed braking BE-4.18; new G4.8 (stock ACC and item 0x343 together) and G4.9 (braking during accelerator override); MCS-04.3, -04.4, -04.9 revised, MCS-04.11 and -04.12 added; SPF-14 extended to SG-04; 21 computed cut sets, 12 rows, all match; 2026-10-13). 0.8 (§11: basic events linked to the FMEAs, SG-04 pilot, [fta-fmea-mapping.md](fta-fmea-mapping.md); 2026-10-13). 0.7 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.6 (2026-10-12 reference-build status notes, drafted on a parallel branch as 0.4, re-applied to the 0.5 trees: G5.2.1 with UE-5.13 and MCS-05.8 for BE-5.12 (found by `fta_cutsets.py`: BE-5.12 under the G5.2 OR was a single-event cut set), BE-1.16, BE-1.22 (incl. TSR-408), BE-2.08, BE-2.14, MCS-01.8, MCS-02.1, Obs-01; BE-5.12, cut sets and SFMEA notes kept; 2026-10-13). 0.5 (trees restructured to resolve CS-01…CS-07: SG-01 G1.2.2/G1.3.2, SG-03 G3.3, SG-02 and SG-06 per cause; tables completed; SPF-14; OI-9 closed, OI-10; 2026-10-12). 0.4 (§9.1 computed minimal cut sets and findings CS-01…CS-07; BE-2.14 tagged latent at the baseline, as §4 states; fault tree diagrams in [fta/](fta/README.md); OI-9; 2026-10-12). 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Fault trees for all seven safety goals: SG-01 (ASIL C ⚠), SG-02…SG-07 (ASIL B); system FMEA covering SG-01…SG-07. Qualitative only |
 | Author | Assurance team (initial draft) |
@@ -45,7 +45,10 @@ TE-01 Uncontrollable lateral motion / torque while not engaged                  
 │   │   │   │   ├── BE-1.03 Wrong desired curvature from model                     [SOTIF]
 │   │   │   │   ├── BE-1.04 Debug/maneuver process replaces controller
 │   │   │   │   │          (process_config.py:34-47, GAP-20)
-│   │   │   │   └── BE-1.05 Wrong CarParams / fingerprint (CCF → DFI-09)
+│   │   │   │   ├── BE-1.05 Wrong CarParams / fingerprint (CCF → DFI-09)
+│   │   │   │   └── BE-1.24 Command corrupted on the SoC-to-MCU SPI link and accepted:
+│   │   │   │              both checks are 8-bit XOR over the same bytes, no counter
+│   │   │   │              (spi.cc:189-202, panda.cc:284-290)                  (random HW)
 │   │   │   └── G-ENV Envelope does not clamp                                           [OR]
 │   │   │       ├── BE-1.06 Envelope software defect in lateral checks (lateral.h:60-151)
 │   │   │       ├── BE-1.07 MCU execution fault (RAM/register/CPU) corrupts limit or
@@ -68,7 +71,11 @@ TE-01 Uncontrollable lateral motion / torque while not engaged                  
 │   │   │   │          valid 8-bit checksum (no counter, GAP-01)
 │   │   │   ├── BE-1.13 Panda RX path delivers stale/stuck cruise frame to both
 │   │   │   │          envelope and SoC (single RX path; CCF → DFI-10)
-│   │   │   └── BE-1.14 MCU fault sets controls_allowed (BE-1.07 class)
+│   │   │   ├── BE-1.14 MCU fault sets controls_allowed (BE-1.07 class)
+│   │   │   ├── BE-1.25 Envelope software defect in the not-allowed torque check or the
+│   │   │   │          controls_allowed bookkeeping (lateral.h:111-114)
+│   │   │   └── BE-1.08, BE-1.09 (mode or param change, or envelope replaced, removes the
+│   │   │              not-allowed check; as G-ENV)
 │   │   └── BE-1.15 SoC commands non-zero torque (normally gated by its own engagement
 │   │              state, which is fed by the same CAN data — CCF → DFI-10)
 │   ├── G1.2.2 Authority not revoked after the driver disengages AND SoC keeps commanding [AND]
@@ -80,19 +87,25 @@ TE-01 Uncontrollable lateral motion / torque while not engaged                  
 │   │   └── BE-1.15 (the SoC reads the same frames, so it keeps commanding; CCF → DFI-10)
 │   └── BE-1.18 Envelope bypass: ALLOUTPUT/debug mode in a DEBUG build
 │              (panda/SConscript:12-20, GAP-25)                                         (SPF, config)
-└── G1.3 Stale or frozen torque held beyond FTTI (HE-02.3)                              [AND]
-    ├── G1.3.1 SoC stops updating but link stays alive                                 [OR]
-    │   ├── BE-1.19 controlsd hang / stale modelV2 used up to ≈3.5 s (GAP-16)
-    │   ├── BE-1.20 Diagnostics masked during big-model fallback (GAP-17; E-06 excluded
-    │   │          from reference configuration)
-    │   └── BE-1.21 SoC replays an old command buffer (no sequence counter, GAP-10)
-    └── G1.3.2 Envelope does not remove torque within ≤ 0.5 s                          [AND]
-        ├── BE-1.22 Command freshness not supervised: heartbeat shows pandad liveness
-        │          only; mismatch 3 s, loss 5 s (main.c:182-213; GAP-06, GAP-10)
-        │          (latent, baseline). 2026-10-12, reference build: heartbeat loss
-        │          revokes at 0.3 s (TSR-407); actuation-frame arrival supervised
-        │          (TSR-408, opendbc 273f44e); value freshness (TSR-409) open
-        └── BE-1.23 Rate and RT limits accept a constant in-limit value (by design)
+├── G1.3 Stale or frozen torque held beyond FTTI (HE-02.3)                              [AND]
+│   ├── G1.3.1 SoC stops updating but link stays alive                                 [OR]
+│   │   ├── BE-1.19 controlsd hang / stale modelV2 used up to ≈3.5 s (GAP-16)
+│   │   ├── BE-1.20 Diagnostics masked during big-model fallback (GAP-17; E-06 excluded
+│   │   │          from reference configuration)
+│   │   └── BE-1.21 SoC replays an old command buffer (no sequence counter, GAP-10)
+│   └── G1.3.2 Envelope does not remove torque within ≤ 0.5 s                          [AND]
+│       ├── BE-1.22 Command freshness not supervised: heartbeat shows pandad liveness
+│       │          only; mismatch 3 s, loss 5 s (main.c:182-213; GAP-06, GAP-10)
+│       │          (latent, baseline). 2026-10-12, reference build: heartbeat loss
+│       │          revokes at 0.3 s (TSR-407); actuation-frame arrival supervised
+│       │          (TSR-408, opendbc 273f44e); value freshness (TSR-409) open
+│       └── BE-1.23 Rate and RT limits accept a constant in-limit value (by design)
+└── G1.4 Stock LKA and item 0x2E4 on the car bus together while engaged                 [AND]
+    ├── G1.4.1 Stock camera STEERING_LKA reaches the car side                           [OR]
+    │   ├── BE-4.19 (relay stays released; as SG-04)
+    │   └── BE-1.26 Stock 0x2E4 forwarded from the camera side while the item
+    │              transmits (check_relay entry or forwarding hook defect)
+    └── BE-4.21 (relay malfunction detected after 1–2 s or not at all; as SG-04)
 ```
 
 ### 2.1 SG-01 minimal cut sets (qualitative)
@@ -104,10 +117,12 @@ TE-01 Uncontrollable lateral motion / torque while not engaged                  
 | MCS-01.3 | 1 (effective, DFI-13) | {BE-1.02 or BE-1.04, BE-1.08 or BE-1.09, UE-1.11} (one SoC fault that both commands torque and changes mode/param or reflashes the MCU) | Dual-point in form, single-point in cause (DFI-13) |
 | MCS-01.4 | 1 (effective) | {BE-1.13} | One stuck RX path feeds envelope and SoC; both "agree" the system is engaged (DFI-10) |
 | MCS-01.5 | 1 | {BE-1.18} | Configuration single point: a debug build has no envelope. Controlled only by the release process ([WP-P-10](../07-supporting/WP-P-10-release-management.md)) |
-| MCS-01.6 | 2 + ext. | {BE-1.02 or BE-1.03 or BE-1.04 or BE-1.05, BE-1.06 or BE-1.07 or BE-1.08 or BE-1.09, UE-1.11} | True dual-point: the intended envelope pattern (BE-1.05 may also set the envelope parameter, DFI-09; BE-1.02/BE-1.04 with BE-1.08/BE-1.09 can share one cause, MCS-01.3). Requires BE-1.07 to be detected (latent-fault coverage, IWDG, ECC) to stay dual |
-| MCS-01.7 | 2 | {BE-1.12 or BE-1.14, BE-1.15} | Needs counters on `0x1D2` or a plausibility check (TSR-403…TSR-405) to remove |
+| MCS-01.6 | 2 + ext. | {BE-1.02 or BE-1.03 or BE-1.04 or BE-1.05 or BE-1.24, BE-1.06 or BE-1.07 or BE-1.08 or BE-1.09, UE-1.11} | True dual-point: the intended envelope pattern (BE-1.05 may also set the envelope parameter, DFI-09; BE-1.02/BE-1.04 with BE-1.08/BE-1.09 can share one cause, MCS-01.3). Requires BE-1.07 to be detected (latent-fault coverage, IWDG, ECC) to stay dual. v1.0: BE-1.24 (command corrupted on the SPI link, DFM-015, SWF-026) is a further way for a wrong command to reach the envelope, which still clamps it |
+| MCS-01.7 | 2 | {BE-1.12 or BE-1.14 or BE-1.25, BE-1.15} | Needs counters on `0x1D2` or a plausibility check (TSR-403…TSR-405) to remove. v1.0: BE-1.25, a defect in the not-allowed torque check itself (SWF-002), is the software way to the same pair; verified by the opendbc safety tests |
 | MCS-01.8 | 2 (effective 1 + latent at the baseline) | {BE-1.19 or BE-1.20 or BE-1.21, BE-1.22} | Removed only when the command-freshness timeout fits the FTTI (TSR-407…TSR-409, TSR-411). At the baseline nothing supervises command freshness (BE-1.22) and the value checks cannot see a stale in-limit value (BE-1.23, by design), so a stale SoC command alone holds torque (SPF-14). 2026-10-12, reference build: heartbeat loss revokes at 0.3 s (TSR-407) and actuation-frame arrival is supervised (TSR-408, opendbc `273f44e`); a frozen in-limit value with frames still arriving remains (TSR-409, TSR-411) |
 | MCS-01.9 | 2 (effective 1 through DFI-10) | {BE-1.16 or BE-1.17, BE-1.15} | Brake or cruise-inactive not seen by the envelope; the SoC reads the same frames and keeps commanding. SPF-04; TSR-401…TSR-406 |
+| MCS-01.10 | 2 (effective 1 through DFI-13) | {BE-1.08 or BE-1.09, BE-1.15} | A mode or param change, or replaced firmware, removes the not-allowed check while the SoC commands torque; one SoC fault can do both (DFI-13). Lateral case of MCS-04.10 (v1.0). TSR-511…TSR-514 |
+| MCS-01.11 | 2 | {BE-4.19 or BE-1.26, BE-4.21} | Stock STEERING_LKA and the item's `0x2E4` combine on the car bus: the lateral case of MCS-04.11 (v1.0). The relay-malfunction check acts only after 1–2 s, so the commands combine until then. TSR-506 (relay readback), GAP-12 |
 
 ## 3. FTA — SG-03: unintended acceleration
 
@@ -585,6 +600,8 @@ The rows with no external event are the single points of §9.
 
 v0.9 changes only SG-04: 21 computed cut sets (was 17), 6 of effective order ≤ 1, 12 table rows, all match ([`fta/cut-sets.md`](fta/cut-sets.md)).
 
+v1.0 changes only SG-01: 36 computed cut sets (was 27), still 6 of effective order ≤ 1, 11 table rows, every cut set covered. The new cut sets are order 2: MCS-01.10 (effective 1 through DFI-13, like MCS-01.3) and MCS-01.11; MCS-01.6 and MCS-01.7 gain BE-1.24 and BE-1.25 ([`fta/cut-sets.md`](fta/cut-sets.md)).
+
 ## 10. System FMEA
 
 Severity of the vehicle effect is expressed by the affected SG. Detection = mechanism that detects the failure mode in the item today. Columns: **Mech.** = safety mechanism that reaches the safe state; **Gap** = what is missing.
@@ -641,7 +658,7 @@ Severity of the vehicle effect is expressed by the affected SG. Detection = mech
 | [WP-H-03](../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) | SFMEA-17, -22…-26, -39 as FMEDA inputs |
 | [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md) | SFMEA-12, -13, -16, -18, -19, -38, -40 as software safety analysis inputs |
 | [WP-V-05](../06-validation/WP-V-05-fault-injection.md) | Every BE marked SPF and every SFMEA row with a mechanism gets a fault-injection case |
-| [FMEAs](fmea/analyses/) | Basic events are linked to FMEA failure modes in [fta-fmea-map.yaml](fta-fmea-map.yaml) and checked both ways; SG-04 pilot findings F-1…F-10 in [fta-fmea-mapping.md](fta-fmea-mapping.md) §3 (2026-10-13), resolved in v0.9 (tree) and SW FMEA rev 0.7, DFMEA rev 0.3, System FMEA rev 0.6, PFMEA rev 0.3 |
+| [FMEAs](fmea/analyses/) | Basic events are linked to FMEA failure modes in [fta-fmea-map.yaml](fta-fmea-map.yaml) and checked both ways; SG-04 pilot findings F-1…F-10 in [fta-fmea-mapping.md](fta-fmea-mapping.md) §3 (2026-10-13), resolved in v0.9 (tree) and SW FMEA rev 0.7, DFMEA rev 0.3, System FMEA rev 0.6, PFMEA rev 0.3. SG-01 mapped 2026-10-16 (F-11…F-16): F-11…F-13 resolved in v1.0 (tree); F-14 (eight FMEA modes that reach SG-01 or SG-04 through shared events but do not cite the hazard) and F-15 (no FMEA mode for `0x1D2` stuck at cruise active) are open for the FMEA owners |
 
 ## 12. Open items
 
