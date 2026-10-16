@@ -8,3 +8,4 @@ pycapnp==2.1.0                    # BSD-2-Clause; opendbc.car imports it (same p
 numpy==2.5.4                      # BSD-3-Clause and bundled permissive licences; opendbc host limit functions
 pythonfmu==0.7.0                  # MIT; packages the plant as an FMI 2.0 co-simulation FMU (plant/fmu)
 fmpy==0.3.32                      # BSD-2-Clause; FMI master for the FMU test (its dependencies: MIT, BSD-3, Apache-2.0)
+scenariogeneration==0.16.7         # MPL-2.0; writes the scenario files (scenarios/generate.py); dependencies permissive (README §5)

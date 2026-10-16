@@ -47,7 +47,8 @@ HAZARDS = {
   "H-06": "Unannounced loss of longitudinal deceleration",
   "H-07": "Displayed system state differs from actual state (mode confusion)",
   "H-08": "Suppression of the vehicle's stock pre-collision braking",
-  "H-09": "Vehicle does not stop for a traffic signal or stop sign it is expected to stop for",
+  "H-09": "Automated control continues with a driver who is not supervising or not responding",
+  "H-10": "Vehicle does not stop for a traffic signal or stop sign it is expected to stop for",
 }
 
 # ---------------------------------------------------------------------------------------------
@@ -130,17 +131,17 @@ FM: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "M14": (NA, "", "", "No asymmetric profile for a discrete state."),
   },
   "F-04": {
-    "M01": (NSC, "", "", "Inattention not detected. Not a vehicle-level hazard by itself: latent fault of a measure the controllability of H-02/H-06 relies on. Handled in the FSC (DM integrity) and SOTIF misuse analysis."),
-    "M02": (NSC, "", "M01", "Same as no function: latent."),
+    "M01": (SC, "H-09", "", "Inattention or unresponsiveness not detected, or no escalation to the no-response reaction (forced deceleration, lockout): the item keeps controlling the vehicle with nobody supervising (H-09, DQ-205). While the driver supervises it is latent (S0 rows): it removes a measure the controllability of H-02/H-06 relies on."),
+    "M02": (SC, "H-09", "M01", "Monitoring stops during the drive; same as no function."),
     "M03": (SC, "H-04", "", "DM escalates to forced deceleration although the driver is attentive."),
-    "M04": (NSC, "", "M01", "Attention estimate stuck: either latent (stuck attentive) or rated as M03 (stuck distracted)."),
+    "M04": (SC, "H-09", "M01", "Attention estimate stuck: stuck 'attentive' is the same as no function; stuck 'distracted' is rated as M03."),
     "M05": (SC, "H-04", "M03", "Over-sensitive DM: escalation and forced deceleration too often; same response as unrequested intervention."),
-    "M06": (NSC, "", "M01", "Under-sensitive DM: latent."),
+    "M06": (SC, "H-09", "M01", "Under-sensitive DM: a non-supervising driver is not detected; same as no function."),
     "M07": (SC, "H-04", "M03", "Escalation steps reached too early; ends in unrequested forced deceleration."),
-    "M08": (NSC, "", "M01", "Escalation too late: latent, reduces the controllability basis of H-02/H-06 (FSC)."),
+    "M08": (SC, "H-09", "M01", "Escalation too late: the item keeps driving unsupervised for longer; same as no function."),
     "M09": (NA, "", "", "Alerts have no safety-relevant commanded duration."),
     "M10": (NSC, "", "", "Alert or lockout lasts longer than needed: availability only."),
-    "M11": (NSC, "", "M01", "Delayed detection: latent."),
+    "M11": (SC, "H-09", "M01", "Delayed detection; same as no function."),
     "M12": (NA, "", "", "No direction."),
     "M13": (NSC, "", "", "Intermittent false alerts: nuisance; repeated forced decelerations rated under M03."),
     "M14": (NA, "", "", "No asymmetric profile."),
@@ -212,17 +213,17 @@ FM: dict[str, dict[str, tuple[str, str, str, str]]] = {
   "F-09": {m: (NSC, "", "", "No kinetic authority. Logging, upload, remote access and update malfunctions do not act on vehicle motion directly; cyber-induced effects are in the TARA (WP-C-09) and map to H-01…H-08.")
            for m, _ in MALFUNCTIONS},
   "F-02X": {
-    "M01": (SC, "H-09", "", "Does not stop for a red light or stop sign that Experimental Mode is presented as handling."),
-    "M02": (SC, "H-09", "M01", "Starts stopping, then releases before the stop line; same as not stopping."),
+    "M01": (SC, "H-10", "", "Does not stop for a red light or stop sign that Experimental Mode is presented as handling."),
+    "M02": (SC, "H-10", "M01", "Starts stopping, then releases before the stop line; same as not stopping."),
     "M03": (SC, "H-04", "", "Stops for a signal, sign, shadow or object that is not there (false stop)."),
     "M04": (NSC, "", "", "Stuck model acceleration: the planner takes the minimum of model and MPC, so a stuck model value can only hold or reduce speed; rated as M03 if it brakes."),
     "M05": (SC, "H-04", "M03", "Excessive model deceleration; same as false stop."),
-    "M06": (SC, "H-09", "M01", "Insufficient braking for the stop line; overshoot into the intersection."),
+    "M06": (SC, "H-10", "M01", "Insufficient braking for the stop line; overshoot into the intersection."),
     "M07": (SC, "H-04", "M03", "Stops early (far before the line); same as false stop for following traffic."),
-    "M08": (SC, "H-09", "M01", "Stops late (past the line); same as not stopping."),
-    "M09": (SC, "H-09", "M01", "Releases the stop too early (creeps into a red light)."),
+    "M08": (SC, "H-10", "M01", "Stops late (past the line); same as not stopping."),
+    "M09": (SC, "H-10", "M01", "Releases the stop too early (creeps into a red light)."),
     "M10": (SC, "H-04", "M03", "Stays stopped after green: following traffic; same as false stop."),
-    "M11": (SC, "H-09", "M01", "Delayed reaction to a signal; same as not stopping in time."),
+    "M11": (SC, "H-10", "M01", "Delayed reaction to a signal; same as not stopping in time."),
     "M12": (NA, "", "", "The minimum selection prevents the model from producing more acceleration than the Chill plan, apart from the raised cruise limit, which is intended behaviour."),
     "M13": (SC, "H-04", "M03", "Stop-go oscillation at signals; same as false stop."),
     "M14": (NA, "", "", "Scalar request."),
@@ -233,23 +234,28 @@ FM: dict[str, dict[str, tuple[str, str, str, str]]] = {
 # Operational situations (WP-C-02 ODD; IDs continue the draft OS catalogue, OS-11 wet road is
 # now the weather dimension) and weather / surface.
 # E follows ISO 26262-3:2018 Table B.2 (duration): E2 < 1 %, E3 1-10 %, E4 > 10 % of operating time.
+# OS-07 is the exception: rated by frequency (Table B.3, E4), decision register DQ-036.
+# Highway only (DQ-023 B): OS-03, OS-04, OS-15 and OS-16 are outside the ODD and rated as foreseeable misuse,
+# like OS-14. OS-17 and OS-18 are the driver-state misuse situations of H-STPA-1 (DQ-003, DQ-205).
 # ---------------------------------------------------------------------------------------------
 SITUATIONS = [
   ("OS-01", "Limited-access highway, free flow, adjacent traffic", 90, 120, "E4", "Majority of engaged time (ODD-H)"),
   ("OS-02", "Highway curve near R_ODD with barrier or adjacent traffic", 70, 110, "E3", "Curves of this radius at speed: 1–10 % of time"),
-  ("OS-03", "Undivided rural or arterial road, oncoming traffic", 60, 90, "E4", "Large share of ODD-A driving"),
-  ("OS-04", "Urban arterial, pedestrians and cyclists near the lane edge", 30, 60, "E3", "Secondary ODD (ODD-A)"),
+  ("OS-03", "Engaged on an undivided rural or arterial road, oncoming traffic: outside the ODD, foreseeable misuse", 60, 90, "E2", "Outside the highway-only ODD (DQ-023); engagement is not prevented off-highway, misuse share assumed < 1 % (A-ODD)"),
+  ("OS-04", "Engaged on an urban arterial, pedestrians and cyclists near the lane edge: outside the ODD, foreseeable misuse", 30, 60, "E2", "Outside the highway-only ODD (DQ-023); misuse share assumed < 1 % (A-ODD)"),
   ("OS-05", "Following a lead vehicle at a short gap, dense traffic", 30, 110, "E4", "Most engaged time has a lead vehicle"),
   ("OS-06", "Stop-and-go queue or standstill behind a lead; pedestrians may cross", 0, 30, "E3", "Congestion share of driving"),
-  ("OS-07", "Approaching slower or stationary traffic from highway speed", 70, 120, "E3", "Several times per trip, short duration"),
+  ("OS-07", "Approaching slower or stationary traffic from highway speed", 70, 120, "E4", "Rated by frequency: happens on almost every highway drive (DQ-036; ISO 26262-3 Table B.3)"),
   ("OS-08", "Close following vehicle behind (gap < 1.5 s)", 50, 120, "E4", "Common in dense traffic"),
   ("OS-09", "Imminent collision where the stock PCS/AEB would intervene", 0, 120, "E2", "PCS-relevant situations are rare"),
   ("OS-10", "Driver override while engaged: braking, cancel or evasive steering", 0, 120, "E3", "Overrides are frequent but short; emergency cases rarer"),
   ("OS-12", "Driver-initiated assisted lane change", 70, 120, "E3", "Lane changes: short duration, several per trip"),
   ("OS-13", "Manual driving, item powered but not engaged", 0, 120, "E4", "Large share of onroad time with the device installed"),
   ("OS-14", "Engaged outside the ODD (residential street, ramp, tight curve): foreseeable misuse", 15, 60, "E2", "Engagement is possible anywhere; misuse share assumed < 1 %"),
-  ("OS-15", "Approaching a signalised or stop-controlled intersection (ODD-A)", 30, 90, "E3", "Frequent on arterials, short duration"),
-  ("OS-16", "Rural or arterial curve near R_ODD with oncoming traffic", 60, 90, "E3", "Curves of this radius: 1–10 % of time"),
+  ("OS-15", "Engaged approaching a signalised or stop-controlled intersection: outside the ODD, foreseeable misuse", 30, 90, "E2", "Outside the highway-only ODD (DQ-023); misuse share assumed < 1 % (A-ODD)"),
+  ("OS-16", "Engaged in a rural or arterial curve with oncoming traffic: outside the ODD, foreseeable misuse", 60, 90, "E2", "Outside the highway-only ODD (DQ-023); misuse share assumed < 1 % (A-ODD)"),
+  ("OS-17", "Engaged on the highway while the driver is not supervising (eyes off the road or hands off for long periods; responds when alerted): foreseeable misuse", 70, 120, "E2", "H-STPA-1 (DQ-003): sustained non-supervision assumed < 1 % of engaged time; DM is not credited"),
+  ("OS-18", "Engaged on the highway with an unresponsive driver (asleep, impaired or incapacitated): foreseeable misuse", 70, 120, "E1", "H-STPA-1, DQ-205: very rare; second-set HE-018 rates it E1"),
 ]
 WEATHER = [
   ("W01", "Dry, daylight", "E4", "In ODD"),
@@ -272,6 +278,9 @@ LOSS_C2 = "C2: drift in a curve develops quickly; a supervising driver corrects 
 ACC_C = "C2 ⚠: the driver brakes; credits AOU-03 (brake overrides ACC) and AOU-05 (PCM bounds ACC acceleration)."
 DEC_C1 = "C1 ⚠: deceleration bounded by the PCM ACC envelope (AOU-05); the following driver and the ego driver (gas override) react in ≥ 99 % of cases."
 DEC_C2 = "C2 ⚠: close follower; credits AOU-05 (deceleration bounded by the PCM)."
+LOSS_C3 = "C3: at the curve bound a silent loss drifts about 0.6 m in 0.7 s (WP-S-04 OI-2), faster than a supervising driver reacts; re-rated from C2 by decision register DQ-059 (option B)."
+NOSUP_C3 = "C3: the driver is not watching the road; the correction the C1/C2 ratings assume does not come in time (OS-17, H-STPA-1, DQ-003)."
+UNRESP_C3 = "C3: nobody is able to control the vehicle (OS-18, DQ-205)."
 
 RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
   "H-01": {
@@ -290,12 +299,14 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-14": ("S3", "C2", "S3: residential VRUs or ramp barrier contact at up to 60 km/h.", LAT_C),
     "OS-15": ("S3", "C2", "S3: lateral departure at an intersection into crossing or oncoming traffic or VRUs.", LAT_C),
     "OS-16": ("S3", "C2", "S3: departure into the oncoming lane in a rural curve.", LAT_C),
+    "OS-17": ("S3", "C3", "S3: lateral departure at highway speed.", NOSUP_C3),
+    "OS-18": ("S3", "C3", "S3: lateral departure at highway speed.", UNRESP_C3),
   },
   "H-02": {
     "OS-01": ("S3", "C1", "S3: lane departure at 90–120 km/h.", LOSS_C1),
-    "OS-02": ("S3", "C2", "S3: vehicle goes straight in a highway curve into barrier or adjacent traffic (HE-02.1).", LOSS_C2),
+    "OS-02": ("S3", "C3", "S3: vehicle goes straight in a highway curve into barrier or adjacent traffic (HE-02.1).", LOSS_C3),
     "OS-03": ("S3", "C1", "S3: drift towards the oncoming lane on a mostly straight undivided road.", LOSS_C1),
-    "OS-16": ("S3", "C2", "S3: departure into the oncoming lane in a rural curve (HE-02.2).", LOSS_C2),
+    "OS-16": ("S3", "C3", "S3: departure into the oncoming lane in a rural curve (HE-02.2).", LOSS_C3),
     "OS-04": ("S3", "C1", "S3: drift towards VRUs at the lane edge above 30 km/h.", LOSS_C1),
     "OS-05": ("S3", "C1", "S3: drift into adjacent dense traffic.", LOSS_C1),
     "OS-06": ("S1", "C1", "S1: low-speed drift in a queue.", "C1: queue speed."),
@@ -305,6 +316,8 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-12": ("S3", "C2", "S3: lateral control lost mid-lane-change; vehicle straddles lanes next to traffic.", LOSS_C2),
     "OS-14": ("S3", "C3", "S3: tight curve or ramp outside the ODD at up to 60 km/h.", "C3: drift in a tight curve outpaces driver reaction (WP-C-03 OI-7, WP-S-04)."),
     "OS-15": ("S3", "C1", "S3: drift at an intersection towards crossing traffic or VRUs.", LOSS_C1),
+    "OS-17": ("S3", "C3", "S3: lane departure at highway speed.", NOSUP_C3),
+    "OS-18": ("S3", "C3", "S3: lane departure at highway speed.", UNRESP_C3),
   },
   "H-03": {
     "OS-01": ("S2", "C1", "S2: speed rises above the set speed in free flow; moderate impacts if traffic slows.", "C1 ⚠: the driver brakes (credits AOU-03); acceleration bounded to +2.0 m/s² by the envelope."),
@@ -321,6 +334,8 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-14": ("S3", "C2", "S3: acceleration in a residential street towards VRUs.", ACC_C),
     "OS-15": ("S3", "C2", "S3: acceleration into an intersection with crossing traffic or VRUs.", ACC_C),
     "OS-16": ("S3", "C2", "S3: speed rises in a rural curve beyond the lateral limit; run-off or oncoming lane.", ACC_C),
+    "OS-17": ("S2", "C3", "S2: speed rises above the set speed on the highway; moderate impacts if traffic slows (as OS-01).", NOSUP_C3),
+    "OS-18": ("S2", "C3", "S2: as OS-17.", UNRESP_C3),
   },
   "H-04": {
     "OS-01": ("S2", "C1", "S2: rear impact by following traffic at a normal gap.", DEC_C1),
@@ -337,6 +352,8 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-14": ("S1", "C1", "S1: low speed outside the ODD.", DEC_C1),
     "OS-15": ("S2", "C1", "S2: unexpected stop before an intersection with a follower behind.", DEC_C1),
     "OS-16": ("S2", "C1", "S2: unexpected braking in a rural curve; rear impact or yaw disturbance.", DEC_C1),
+    "OS-17": ("S2", "C1", "S2: rear impact by following traffic at a normal gap (as OS-01).", DEC_C1 + " The following driver controls the rear impact; the ego driver's attention does not change it."),
+    "OS-18": ("S2", "C1", "S2: as OS-17.", DEC_C1 + " As OS-17."),
   },
   "H-05": {
     "OS-09": ("S3", "C2", "S3: the driver acts on an imminent collision and the system does not release.", "C2 ⚠: credits AOU-01/02/03 (driver can overpower EPS torque; brakes override ACC)."),
@@ -349,22 +366,29 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-09": ("S3", "C3", "S3: imminent collision while ACC deceleration is silently lost.", "C3: by definition the driver has not avoided the situation."),
     "OS-14": ("S2", "C2", "S2: lead or obstacle outside the ODD at up to 60 km/h.", "C2: reliance on ACC."),
     "OS-15": ("S2", "C2", "S2: queue at an intersection; rear-end at moderate speed.", "C2: reliance on ACC."),
+    "OS-17": ("S3", "C3", "S3: closing on slower or stationary traffic at highway speed while deceleration is silently lost.", NOSUP_C3),
+    "OS-18": ("S3", "C3", "S3: as OS-17.", UNRESP_C3),
   },
   "H-07": {
     "OS-01": ("S3", "C1", "S3: the driver believes the system steers; lane departure at highway speed.", "C1: on a straight road the drift is slow and an attentive driver notices it."),
-    "OS-02": ("S3", "C2", "S3: unnoticed disengagement in a curve; departure.", "C2: drift in a curve develops quickly; the driver's belief that the system is active delays the reaction."),
+    "OS-02": ("S3", "C3", "S3: unnoticed disengagement in a curve; departure.", "C3: the driver believes the system steers; at the curve bound the drift (about 0.6 m in 0.7 s, WP-S-04 OI-2) is faster than the reaction; re-rated with HE-02.1 (DQ-059)."),
     "OS-03": ("S3", "C1", "S3: drift towards the oncoming lane.", "C1: mostly straight road; the drift is slow and an attentive driver notices it."),
-    "OS-16": ("S3", "C2", "S3: unnoticed disengagement in a rural curve; departure into the oncoming lane.", "C2: as OS-02."),
+    "OS-16": ("S3", "C3", "S3: unnoticed disengagement in a rural curve; departure into the oncoming lane.", "C3: as OS-02."),
     "OS-04": ("S3", "C1", "S3: drift towards VRUs.", "C1: low speed, attentive driver."),
     "OS-05": ("S2", "C2", "S2: the driver expects ACC to brake for the lead; rear-end.", "C2: reliance on a function that is not active."),
     "OS-07": ("S3", "C2", "S3: the driver expects ACC to slow for traffic ahead; high closing speed.", "C2: reliance on a function that is not active."),
     "OS-12": ("S3", "C2", "S3: the driver expects assisted lane change; vehicle straddles lanes.", "C2: as OS-02."),
-    "OS-15": ("S3", "C1", "S3: unexpected behaviour at an intersection.", "C1: the driver controls all stops at intersections (ODD)."),
+    "OS-15": ("S3", "C1", "S3: unexpected behaviour at an intersection.", "C1: the driver controls all stops at intersections."),
+    "OS-17": ("S3", "C3", "S3: the take-over alert is missing or the display shows engaged; with eyes off the road the sound is the only channel left.", NOSUP_C3),
   },
   "H-08": {
     "OS-09": ("S3", "C3", "S3: PCS-relevant impacts are severe (HE-08.1).", "C3: by definition the driver did not avoid the situation; the stock function exists for this case."),
   },
   "H-09": {
+    "OS-17": ("S3", "C2", "S3: the item keeps driving without supervision; any situation it does not handle (stationary vehicle, cut-in, faded lines) ends in a highway-speed collision.", "C2: the DM fails silently, but a distracted driver who can still respond returns attention to the road on their own in most cases (≥ 90 %) before a situation demands it; to be confirmed with the DM clinic (WP-C-08 V-5)."),
+    "OS-18": ("S3", "C3", "S3: as OS-17, with nobody able to take over.", "C3: the driver cannot respond; without the no-response reaction (forced deceleration) nothing brings the vehicle to a minimal-risk state."),
+  },
+  "H-10": {
     "OS-15": ("S3", "C2", "S3: entering an intersection against a red light or stop sign; side impact or VRU.", "C2 ⚠: the driver remains responsible, but Experimental Mode invites over-trust (SH-09, WP-C-05); evidence for C2 needed."),
     "OS-14": ("S3", "C2", "S3: residential stop sign with VRUs.", "C2 ⚠: as OS-15."),
   },
@@ -378,7 +402,8 @@ NOT_HAZARDOUS = {
   "H-06": "Not hazardous here: no lead or obstacle requires deceleration, or the driver is already braking, or the item is not engaged.",
   "H-07": "Not hazardous here: covered by the road situations where the driver's belief about the system state matters.",
   "H-08": "Not hazardous here: the stock PCS is not demanded outside an imminent-collision situation.",
-  "H-09": "Not hazardous here: no traffic signal or stop sign is involved.",
+  "H-09": "Not hazardous here: the driver supervises, so a missed detection is latent; it removes a measure the controllability of H-02 and H-06 relies on. Rated in OS-17 and OS-18.",
+  "H-10": "Not hazardous here: no traffic signal or stop sign is involved.",
 }
 # Function-specific rules: a false FCW does not actuate; any braking is the driver's own reaction.
 FUNCTION_RULES = {
@@ -405,7 +430,8 @@ def weather_adjust(h: str, os_code: str, w: str, S: str, C: str, s_rat: str, c_r
   if S == "S0":
     return S, C, s_rat, c_rat
   if w == "W05":
-    if h in {"H-01", "H-02", "H-03", "H-06", "H-07", "H-09"}:
+    # H-09 is not adjusted: its C rates whether the driver resumes supervision, which the surface does not change.
+    if h in {"H-01", "H-02", "H-03", "H-06", "H-07", "H-10"}:
       C, c_rat = C_UP[C], c_rat + " Snow/ice: low friction; a correction or braking can induce a skid (C+1)."
     if h == "H-04":
       S, C = S_UP[S], C_UP[C]
@@ -415,7 +441,7 @@ def weather_adjust(h: str, os_code: str, w: str, S: str, C: str, s_rat: str, c_r
     S, C = "S3", "C1"
     s_rat += " Wet: unexpected braking in a curve can cause instability (HE-04.2)."
     c_rat = "C1 ⚠: VSC available (AOU-10); moderate ACC deceleration on wet roads is controllable for most drivers."
-  elif w in {"W04", "W06"} and h in {"H-06", "H-09"}:
+  elif w in {"W04", "W06"} and h in {"H-06", "H-10"}:
     C, c_rat = C_UP[C], c_rat + " Reduced visibility outside the ODD delays the driver's detection of the hazard (C+1)."
   return S, C, s_rat, c_rat
 
@@ -483,9 +509,9 @@ def build(experimental: bool) -> tuple[dict, list[dict]]:
   data = {
     "item": {"name": "LionDriver Supervised Driving Assistance", "abbr": "LD-SDA", "project": "LionDriver",
              "doc_id": "WP-C-03" + (" (Experimental Mode variant)" if experimental else ""),
-             "revision": "0.2 (Cartesian)", "date": "2026-10-12", "author": "Assurance team (draft)",
+             "revision": "0.4 (Cartesian)", "date": "2026-10-16", "author": "Assurance team (draft)",
              "approver": "Safety manager", "company": "LionDriver"},
-    "scope_description": "Aftermarket supervised SAE Level 2 feature on the Toyota Corolla, 12th generation (E210), TSS 2.0 (reference configuration, WP-C-01). Lateral (LKA torque) and longitudinal (ACC) control with driver monitoring; the panda safety MCU envelope bounds actuation. Experimental Mode is "
+    "scope_description": "Aftermarket supervised SAE Level 2 feature on the Toyota Corolla, 12th generation (E210), TSS 2.0 (reference configuration, WP-C-01), on limited-access highways only (WP-C-02). Lateral (LKA torque) and longitudinal (ACC) control with driver monitoring; the panda safety MCU envelope bounds actuation. Experimental Mode is "
                          + ("INCLUDED in this variant (D-08 option B)." if experimental else "EXCLUDED (D-08 option A, recommended)."),
     "boundary_diagram_notes": "See WP-C-01 §3.3. Vehicle ECUs (EPS, PCM, ABS/VSC, camera, radar) are outside the item, with AoUs.",
     "assumptions": [
@@ -495,7 +521,8 @@ def build(experimental: bool) -> tuple[dict, list[dict]]:
       {"id": "AOU-05", "category": "Vehicle", "assumption": "The PCM bounds ACC acceleration and deceleration.", "rationale": "WP-C-01 §7; unverified (⚠)."},
       {"id": "AOU-06", "category": "Driver", "assumption": "Licensed, briefed, attentive driver supervising continuously; controllability rated for this typical driver.", "rationale": "WP-C-01 §7; ISO 26262-3 controllability."},
       {"id": "AOU-10", "category": "Vehicle", "assumption": "VSC/ABS enabled and functional.", "rationale": "WP-C-01 §7."},
-      {"id": "A-ENV", "category": "Environment", "assumption": "Situations OS-14 and weather W04–W06 are outside the ODD and included as foreseeable misuse.", "rationale": "ISO 26262-3 §6.4.2 (foreseeable misuse); WP-C-02 §3."},
+      {"id": "A-ENV", "category": "Environment", "assumption": "Situations OS-03, OS-04, OS-14…OS-18 and weather W04–W06 are outside the ODD or the intended driver state and included as foreseeable misuse.", "rationale": "ISO 26262-3 §6.4.2 (foreseeable misuse); WP-C-02 §3 (highway only, DQ-023); H-STPA-1 (DQ-003, DQ-205)."},
+      {"id": "A-ODD", "category": "Environment", "assumption": "Engaged driving off the highway is < 1 % of engaged time (E2), although the item does not yet prevent it.", "rationale": "WP-C-02 §5 (FM-08 proposed); if it is E3, no safety goal ASIL changes (WP-C-03 §6.1)."},
       {"id": "A-CS", "category": "Cybersec", "assumption": "Cyber-induced malfunctions are analysed in the TARA (WP-C-09) and map onto H-01…H-08.", "rationale": "Scope partition."},
     ],
     "interfaces": [
@@ -681,7 +708,7 @@ ISO_E = [("E0", "Incredible", "Not specified (situations so unusual they are not
          ("E3", "Medium probability", "1 % to 10 % of average operating time"),
          ("E4", "High probability", "> 10 % of average operating time")]
 SG_MAP = {"H-01": "SG-01", "H-02": "SG-02", "H-03": "SG-03", "H-04": "SG-04", "H-05": "SG-05",
-          "H-06": "SG-06", "H-07": "SG-02 / SG-06 (see WP-C-03 §6)", "H-08": "SG-07", "H-09": "SG-09 (only if D-08 option B)"}
+          "H-06": "SG-06", "H-07": "SG-02 / SG-06 (see WP-C-03 §6)", "H-08": "SG-07", "H-09": "SG-08", "H-10": "SG-09 (only if D-08 option B)"}
 
 
 def postprocess(path: Path) -> None:
@@ -708,7 +735,7 @@ def postprocess(path: Path) -> None:
       c.alignment = Alignment(wrap_text=True, vertical="top")
   ws.column_dimensions["H"].width = 70
   ws = wb["13_Safety_Goals"]
-  ws.cell(row=2, column=1, value="Candidate goals per (function, hazard) as grouped by the generator. They are consolidated per hazard into SG-01…SG-07 in WP-C-03 §6; see column H.")
+  ws.cell(row=2, column=1, value="Candidate goals per (function, hazard) as grouped by the generator. They are consolidated per hazard into SG-01…SG-08 in WP-C-03 §6; see column H.")
   ws.cell(row=4, column=8, value="Consolidated into").font = Font(bold=True)
   for r in range(5, ws.max_row + 1):
     hz = str(ws.cell(row=r, column=3).value or "")[:4]

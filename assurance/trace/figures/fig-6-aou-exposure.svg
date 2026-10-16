@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="530" viewBox="0 0 1280 530" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 6 · Assumption exposure</title>
-<desc>For each assumption of use, the hazardous events, safety goals, TSRs and HWSRs that credit it: AOU-01 7 HE, 2 SG, 2 TSR; AOU-02 6 HE, 2 SG, 2 TSR; AOU-05 6 HE, 2 SG, 2 TSR; AOU-03 6 HE, 1 SG, 2 TSR; AOU-10 1 HE, 1 TSR; AOU-08 3 TSR; AOU-09 3 TSR; AOU-04 2 TSR; AOU-06 2 TSR; AOU-07 1 TSR; AOU-13 1 HWSR. Not credited: AOU-11, AOU-12, AOU-14, AOU-15.</desc>
+<desc>For each assumption of use, the hazardous events, safety goals, TSRs and HWSRs that credit it: AOU-01 7 HE, 2 SG, 2 TSR; AOU-02 6 HE, 2 SG, 2 TSR; AOU-03 6 HE, 2 SG, 2 TSR; AOU-05 6 HE, 2 SG, 2 TSR; AOU-10 1 HE, 1 TSR; AOU-08 3 TSR; AOU-09 3 TSR; AOU-04 2 TSR; AOU-06 2 TSR; AOU-07 1 TSR; AOU-13 1 HWSR. Not credited: AOU-11, AOU-12, AOU-14, AOU-15.</desc>
 <defs><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F766E"/></marker><marker id="hw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker><marker id="aou" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D97706"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker></defs>
 <rect x="0" y="0" width="1280" height="530" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6 · Assumption exposure: what rests on each assumption of use</text>
@@ -24,20 +24,20 @@
 <rect x="462" y="155" width="41" height="16" rx="3" fill="#C2410C" stroke="none" stroke-width="0"/>
 <rect x="506" y="155" width="41" height="16" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
 <text x="600" y="167" font-size="11.5" fill="#0F172A">6 HE · 2 SG · 2 TSR</text>
-<text x="48" y="195" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-05</text>
+<text x="48" y="195" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-03</text>
 <rect x="130" y="182" width="88" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
 <text x="139" y="195" font-size="10.5" fill="#D2553F" font-weight="700">Unverified</text>
 <rect x="330" y="183" width="129" height="16" rx="3" fill="#475569" stroke="none" stroke-width="0"/>
 <rect x="462" y="183" width="41" height="16" rx="3" fill="#C2410C" stroke="none" stroke-width="0"/>
 <rect x="506" y="183" width="41" height="16" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
 <text x="600" y="195" font-size="11.5" fill="#0F172A">6 HE · 2 SG · 2 TSR</text>
-<text x="48" y="223" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-03</text>
+<text x="48" y="223" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-05</text>
 <rect x="130" y="210" width="88" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
 <text x="139" y="223" font-size="10.5" fill="#D2553F" font-weight="700">Unverified</text>
 <rect x="330" y="211" width="129" height="16" rx="3" fill="#475569" stroke="none" stroke-width="0"/>
-<rect x="462" y="211" width="19" height="16" rx="3" fill="#C2410C" stroke="none" stroke-width="0"/>
-<rect x="484" y="211" width="41" height="16" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
-<text x="600" y="223" font-size="11.5" fill="#0F172A">6 HE · 1 SG · 2 TSR</text>
+<rect x="462" y="211" width="41" height="16" rx="3" fill="#C2410C" stroke="none" stroke-width="0"/>
+<rect x="506" y="211" width="41" height="16" rx="3" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="600" y="223" font-size="11.5" fill="#0F172A">6 HE · 2 SG · 2 TSR</text>
 <text x="48" y="251" font-size="12" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-10</text>
 <rect x="130" y="238" width="95" height="18" rx="9" fill="#FEF2F2" stroke="#D2553F" stroke-width="1"/>
 <text x="139" y="251" font-size="10.5" fill="#D2553F" font-weight="700">Not started</text>

@@ -6,7 +6,7 @@
 | Standard reference | ISO/SAE 21434:2021 §11 (cybersecurity validation of the item at vehicle level), §10 (verification inputs), §15 (TARA as basis); UN R155 (informative); ASPICE 4.0 SEC.4 |
 | Version | 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft — plan and specification written; **no validation or penetration test has been executed and no tester is engaged** ([WP-M-09](../01-management/WP-M-09-cybersecurity-plan.md) OI-6). All result sections are "Not yet executed" |
-| ASIL / scope | CS (CAL 1–3); safety relation to SG-01…SG-07 |
+| ASIL / scope | CS (CAL 1–3); safety relation to SG-01…SG-08 |
 | Author | Assurance team (initial draft); report to be authored by the penetration tester |
 | Reviewer(s) | TBD (I1); results reviewed by the cybersecurity assessor ([WP-K-05](../10-safety-case/WP-K-05-cybersecurity-assessment.md)) |
 | Approver | Project maintainer (acting cybersecurity manager); safety manager for rules of engagement |
