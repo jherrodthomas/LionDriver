@@ -9,6 +9,7 @@ from multiprocessing.connection import Connection
 from metadrive.engine.core.engine_core import EngineCore
 from metadrive.engine.core.image_buffer import ImageBuffer
 from metadrive.envs.metadrive_env import MetaDriveEnv
+from metadrive.component.vehicle.base_vehicle import BaseVehicle
 from metadrive.obs.image_obs import ImageObservation
 
 from openpilot.common.realtime import Ratekeeper
@@ -47,6 +48,19 @@ def apply_metadrive_patches(arrive_dest_done=True):
 
   if not arrive_dest_done:
     MetaDriveEnv._is_arrive_destination = arrive_destination_patch
+
+  # the commaai/metadrive "minimal" branch reads render_vehicle from the per-vehicle config, which traffic vehicles
+  # do not set; give them the default so that scenarios can spawn traffic
+  vehicle_init = BaseVehicle.__init__
+
+  def vehicle_init_patched(self, vehicle_config=None, *args, **kwargs):
+    if isinstance(vehicle_config, dict) and "render_vehicle" not in vehicle_config:
+      vehicle_config = {**vehicle_config, "render_vehicle": True}
+    vehicle_init(self, vehicle_config, *args, **kwargs)
+
+  if not getattr(BaseVehicle, "_render_vehicle_patched", False):
+    BaseVehicle.__init__ = vehicle_init_patched
+    BaseVehicle._render_vehicle_patched = True
 
 def metadrive_process(dual_camera: bool, config: dict, camera_array, wide_camera_array, image_lock,
                       controls_recv: Connection, simulation_state_send: Connection, vehicle_state_send: Connection,
