@@ -106,7 +106,7 @@ scenarios:
     fmea: [SFM-022, SFM-023]
     actions: [SFM-ACT-005, SFM-ACT-009, SFM-ACT-017]
     decisions: [DQ-205, DQ-077]
-    open_because: "SOTIF residual; escalation-time budget not derived (OI-6); H-09 not yet in the HARA"
+    open_because: "SOTIF residual; escalation-time budget not derived (OI-6)"
   - id: LS-10
     ucas: [UCA-11]
     hazards: [H-01]
@@ -331,7 +331,7 @@ scenarios:
     requirements: [TSR-624]
     actions: [SFM-ACT-005]
     decisions: [DQ-205, DQ-281]
-    open_because: "Today the car stops in the lane 5 s after the last alert, but with no requirement, announcement or standstill hold; the reaction the H-09 goal needs is DQ-281; H-09 not yet in the HARA"
+    open_because: "Today the car stops in the lane 5 s after the last alert, but with no requirement, announcement or standstill hold; the reaction the H-09 goal needs is DQ-281; SG-08 has no fault tree in WP-A-04 yet"
   - id: LS-36
     ucas: [UCA-07]
     hazards: [H-07, H-03, H-04]
