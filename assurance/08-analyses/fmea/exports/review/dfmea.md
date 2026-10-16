@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.5 | draft | BL-002 | RT-2 | 2026-10-14 |
+| 0.6 | draft | BL-002 | RT-2 | 2026-10-16 |
 
 **Scope.** Safety-relevant hardware of AC-001 at BL-002: comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
 
@@ -335,10 +335,11 @@ Effects:
 | `DFM-010.C1` Analog switch U1 or U2 stuck in the intercept (NO) position, or its IN input damaged high | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-007 |
 | `DFM-010.C2` SBU1 drive stuck high (device-side driver or MCU pin, UK-06) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-007 |
 | `DFM-010.C3` Pull-down R2 or R3 open, so IN floats when the device stops driving SBU1 (reset, watchdog, hang, unplugged cable) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 3 | 10 | 🔴 **H** | DFM-ACT-007, DFM-ACT-014 |
+| `DFM-010.C4` U1/U2 overstressed or latched up by box supply transients above the DG419LE absolute maximum (V+ = VL = VIN with no regulator; the SMF16A clamp D4 only starts to conduct above its 16 V stand-off). Damage can leave the switch in either position or open a channel (also DFM-011, DFM-013) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub><br>• D4 SMF16A TVS on VIN (harness box v3). Its clamp level against the DG419LE rating is not shown: datasheet limits not confirmed (RR-2026-010 F-05) <sub>assurance/04-hardware/reviews/RR-2026-010.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 4 | 10 | 🔴 **H** | DFM-ACT-014, DFM-ACT-015 |
 
 Safety mechanisms: (1) None: no relay readback (GAP-12)
 
-[Monitoring and system response](#7-monitoring-and-system-response): `DFM-010.C1` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-010.C2` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-010.C3` mechanism 1: M 10 · F 2 · S after response 10 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-010.C1` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-010.C2` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-010.C3` mechanism 1: M 10 · F 2 · S after response 10 → 🔴 **H**<br>`DFM-010.C4` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-REL-02/04: a single-point path for the PCS goal that no firmware change can close. RR-2026-010 F-03: the release default rests on R2+R3 (HWSR-506e).</sub>
 
@@ -356,10 +357,11 @@ Effects:
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
 | `DFM-011.C1` Analog switch U1 or U2 stuck in the pass-through (NC) position, or SBU1 drive lost or held low (driver open, R2/R3 short) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • Relay-malfunction tests in the opendbc suite exercise the software reaction, not the relay <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 3 | 9 | 🔴 **H** | DFM-ACT-007 |
+| `DFM-011.C2` The 5 V SBU1 drive does not reach the DG419LE logic-high threshold with VL tied to VIN (about 14 V), so the switch does not change over or changes over only at some temperatures (RR-2026-010 F-05; thresholds at VL = VIN not confirmed) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub><br>• Field use: openpilot on TSS2 Toyotas with this box would raise relayMalfunction on every drive if the switch never changed over, which suggests it switches at nominal conditions. Margin over temperature and supply is not shown <sub>assurance/04-hardware/reviews/RR-2026-010.md</sub> | • Relay-malfunction tests in the opendbc suite exercise the software reaction, not the switch threshold <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 2 | 9 | 🔴 **H** | DFM-ACT-014, DFM-ACT-015 |
 
 Safety mechanisms: (1) Relay malfunction detection: stock camera message on the car side after a 1 s grace blocks all TX (safety.h stock_ecu_check)
 
-[Monitoring and system response](#7-monitoring-and-system-response): `DFM-011.C1` mechanism 1: M 8 · F 5 · S after response 10 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-011.C1` mechanism 1: M 8 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-011.C2` mechanism 1: M 8 · F 2 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-REL-01.</sub>
 
@@ -556,7 +558,8 @@ Effects:
 | DFM-ACT-011 | detection | Confirm the siren audio topology (UK-07) and add a start-up siren self-test (TSR-515/516) | Jherrod Thomas | open | DFM-017.C1, DFM-017.C2 | — |
 | DFM-ACT-012 | design_change | React to MCU DTS out of range with the safe state (HWSR-509, DC-10); obtain the MCU temperature grade (UK-02) | Jherrod Thomas | open | DFM-018.C1 | — |
 | DFM-ACT-013 | design_change | Implement TSR-517: read back the item's own TX frames from the bus and compare with the approved frame, revoking on a mismatch; enable RAMECC handling for the FDCAN message RAM if the H725 provides it | Jherrod Thomas | open | DFM-019.C1, DFM-019.C2 | — |
-| DFM-ACT-014 | detection | Bench-test the harness box failure behaviour (RR-2026-010): box unpowered with car and camera powered; R2/R3 forced open with the device silent; supply at 14-16 V against the DG419LE ratings; pass-through signal integrity; clamp-diode short on CAN0; confirm the shipped box matches the v3 drawing (VS-HW-02) | Jherrod Thomas | open | DFM-010.C3, DFM-014.C2, DFM-020.C1, DFM-020.C2, DFM-021.C1 | — |
+| DFM-ACT-014 | detection | Bench-test the harness box failure behaviour (RR-2026-010): box unpowered with car and camera powered; R2/R3 forced open with the device silent; supply at 14-16 V against the DG419LE ratings; pass-through signal integrity; clamp-diode short on CAN0; confirm the shipped box matches the v3 drawing (VS-HW-02) | Jherrod Thomas | open | DFM-010.C3, DFM-010.C4, DFM-011.C2, DFM-014.C2, DFM-020.C1, DFM-020.C2, DFM-021.C1 | — |
+| DFM-ACT-015 | detection | Read the Vishay DG417LE/DG418LE/DG419LE datasheet (document 76432) and record the absolute maximum V+ to V-, VL and IN ratings, the single-supply operating range and VINH/VINL at VL = V+ = 14 V; compare with VIN including the D4 clamp level. If a limit is exceeded, raise it with comma.ai and with DQ-209 (RR-2026-010 F-05; blocked at 2026-10-16: vendor and datasheet hosts unreachable from the analysis environment) | Jherrod Thomas | open | DFM-010.C4, DFM-011.C2 | — |
 
 ## 6. Priority H causes without a completed action
 
@@ -575,7 +578,9 @@ Effects:
 | `DFM-010.C1` | Intercept switch stays in intercept when released | 10/3/10 | DFM-ACT-007 |
 | `DFM-010.C2` | Intercept switch stays in intercept when released | 10/3/10 | DFM-ACT-007 |
 | `DFM-010.C3` | Intercept switch stays in intercept when released | 10/3/10 | DFM-ACT-007, DFM-ACT-014 |
+| `DFM-010.C4` | Intercept switch stays in intercept when released | 10/4/10 | DFM-ACT-014, DFM-ACT-015 |
 | `DFM-011.C1` | Intercept switch stays in pass-through when driven | 10/3/9 | DFM-ACT-007 |
+| `DFM-011.C2` | Intercept switch stays in pass-through when driven | 10/2/9 | DFM-ACT-014, DFM-ACT-015 |
 | `DFM-012.C1` | Harness disconnected or intermittent while driving | 10/5/10 | DFM-ACT-008 |
 | `DFM-013.C1` | Stock camera path open inside the harness box | 10/3/10 | DFM-ACT-008 |
 | `DFM-014.C1` | Ignition sense reads on when the ignition is off | 10/3/10 | DFM-ACT-008 |
@@ -595,7 +600,7 @@ Effects:
 
 FMEA-MSR rates what happens in the car when a cause occurs: does a diagnostic catch it, and does the system reach a safe state within the fault-tolerant time interval (FTTI)? It adds frequency (F), monitoring (M) and the severity after the response, with its own action priority; S, O, D and AP above are unchanged. Scales: [rating-tables.md §7](../../rating-tables.md#7-fmea-msr--monitoring-and-system-response-added-in-rt-2); scope and plan: [msr-plan.md](../../msr-plan.md); FTTI rows: [WP-S-04 §3.7](../../../../03-system/WP-S-04-timing-ftti-budget.md#37-summary-of-fttis-and-budgets).
 
-**Coverage:** 19 of 19 in-scope causes rated, 0 rated elsewhere (`msr: complete`).
+**Coverage:** 21 of 21 in-scope causes rated, 0 rated elsewhere (`msr: complete`).
 
 > [!WARNING]
 > The MSR action priority uses a provisional table until the AIAG-VDA handbook table is transcribed (rating-tables §7.4). Read the M and F columns; the AP column will be re-rated.
@@ -611,6 +616,7 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `DFM-010.C1` Analog switch U1 or U2 stuck in the intercept (NO) position, or its IN input damaged high | None: no relay readback (GAP-12) → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-007 |
 | `DFM-010.C2` SBU1 drive stuck high (device-side driver or MCU pin, UK-06) | None: no relay readback (GAP-12) → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-007 |
 | `DFM-020.C1` Ignition branch to the box open (crimp, connector) or D1 open, without comma power installed | None: the box supply is not supervised, and the device loses power with it → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-014 |
+| `DFM-010.C4` U1/U2 overstressed or latched up by box supply transients above the DG419LE absolute maximum (V+ = VL = VIN with no regulator; the SMF16A clamp D4 only starts to conduct above its 16 V stand-off). Damage can leave the switch in either position or open a channel (also DFM-011, DFM-013) | None: no relay readback (GAP-12) and no supervision of the box supply → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-014, DFM-ACT-015 |
 | `DFM-019.C1` Soft error or permanent fault in the copy into FDCAN message RAM, the message RAM or the FDCAN core. The packet XOR is checked at the FDCAN load (fdcan.h:100) and covers only the software queue; the CAN CRC is computed after the fault | None after the FDCAN load: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-013 |
 | `DFM-003.C2` Wrong-address write by the SPI DMA (no MPU) | None at BL-002: no MPU and no redundant storage of the safety state → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-002 |
 | `DFM-020.C2` Box VIN shorted to ground (TVS D4 short, connector or wiring) | None: the box supply is not supervised, and the device loses power with it → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-014 |
@@ -624,4 +630,5 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `DFM-009.C1` XCVR1 RX open or stuck recessive | RX timeout after 5 periods (about 0.16 s) withdraws controls_allowed; the host warns through the 2 s controlsMismatch counter (T-17) → Authority withdrawn at once; warning about 2.2 s after onset, beyond the 1 s budget to warning | 160 + 2000 ms vs FTTI 1000 ms ❌ (code-derived) | 10 | 5 | **8** | 🔴 **H** | DFM-ACT-006 |
 | `DFM-011.C1` Analog switch U1 or U2 stuck in the pass-through (NC) position, or SBU1 drive lost or held low (driver open, R2/R3 short) | Relay malfunction: a stock camera frame on the car side after the 1 s grace blocks all TX (T-08, 1-2 s) → All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE) | 2000 + 10 ms vs FTTI 500 ms ❌ (code-derived) | 10 | 5 | **8** | 🔴 **H** | DFM-ACT-007 |
 | `DFM-021.C1` Schottky clamp D2 or D3 (BAS40SDW) short or leaky | RX timeouts withdraw control and the host raises CAN errors; nothing restores the bus → Authority withdrawn and the driver warned; the stock camera path stays broken | unknown | 10 | 3 | **8** | 🔴 **H** | DFM-ACT-014 |
+| `DFM-011.C2` The 5 V SBU1 drive does not reach the DG419LE logic-high threshold with VL tied to VIN (about 14 V), so the switch does not change over or changes over only at some temperatures (RR-2026-010 F-05; thresholds at VL = VIN not confirmed) | Relay malfunction: a stock camera frame on the car side after the 1 s grace blocks all TX (T-08, 1-2 s) → All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE) | 2000 + 10 ms vs FTTI 500 ms ❌ (code-derived) | 10 | 2 | **8** | 🔴 **H** | DFM-ACT-014, DFM-ACT-015 |
 | `DFM-004.C1` Hang in an ISR or main loop, unused vector to Default_Handler, or assert_fatal loop | IWDG expires about 90 ms after the last feed (T-09a). Timing fits on paper, but whether the reset releases the relay is unconfirmed (HWSR-502, UK-06) and the LSI tolerance leaves no shown margin (OI-7), so the response is not credited → MCU reset; relay de-energised if the drive circuit is de-energise-to-safe; stock camera CAN restored | 90 + 100 ms vs FTTI 200 ms ✅ (code-derived) | 10 | 6 | **7** | 🔴 **H** | DFM-ACT-003 |
