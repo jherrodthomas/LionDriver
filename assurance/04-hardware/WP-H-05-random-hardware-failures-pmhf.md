@@ -138,7 +138,7 @@ reported as "met" or "not met" until computed.
 | # | Activity | Depends on | Gate |
 |---|---|---|---|
 | 1 | Approve method (§2) and mission profile (§3) | Safety manager | G2 |
-| 2 | Obtain BOM, schematic, harness relay data (WP-H-02 OI-1) and ST failure-rate data (WP-H-07 QE-02) | Supplier / teardown | G2 |
+| 2 | Obtain BOM, schematic, harness relay data (WP-H-02 OI-1) and ST failure-rate data (WP-H-07 QE-02) | Supplier (ask and wait, no teardown, DQ-065) | G2 |
 | 3 | Fill FMEDA (WP-H-03 §6) and classify faults, marking those that rely on external measures | 2 | G3 |
 | 4 | Compute PMHF per SG in two variants: with external measures (AoUs verified) and without | 3 | G3 |
 | 5 | EEC-style check of the dominant contributors (MCU core, SRAM, relay) | 3 | G3 |
