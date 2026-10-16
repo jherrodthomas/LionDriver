@@ -3964,3 +3964,49 @@
       detail: "Removes the broken-ignition-wire cause only; switch, pull-down and clamp faults remain. Cost: one extra part per install."
   sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03", "assurance/08-analyses/WP-A-03-dependent-failure-analysis.md OI-9"]
   status: queued
+- id: DQ-220
+  question: "When the driver stays unresponsive at the final driver-monitoring alert, should the car keep steering while it slows to a stop, or hand steering back?"
+  context: "Today the final alert (\"DISENGAGE IMMEDIATELY\") is a warning only. After 5 s at that level the item slows the car to a stop **while it keeps steering**, and it never disengages by itself. FSR-040 asks for the SG-010 safe state, but nothing records which behaviour that is. This decides what the item does with a driver who may be asleep."
+  reversibility: hard
+  blocks: FSR-040 safe state, SW FMEA SWF-062 / SWF-ACT-059, SG-010 (ASIL A)
+  gate: G3
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Keep steering and slow to a stop in the lane (today's behaviour), and record it as the SG-010 safe state"
+      detail: "No code change; the car stays in its lane while it stops. Cost: the safe state relies on lateral control staying correct for the whole stop, which needs a stop-time and lane-keeping argument and a vehicle test."
+    - key: B
+      title: "Slow to a stop, then disengage with hazard lights at standstill"
+      detail: "Ends automation once the car is stopped. Cost: a code change (hazard lights, disengage at standstill) and a vehicle test; behaviour at standstill on a road needs its own hazard check."
+    - key: C
+      title: "Disengage at the final alert and hand steering back"
+      detail: "Simplest to argue for the automation. Cost: an unresponsive driver then has no lateral control at speed; likely worse for the hazard SG-010 covers."
+  sources:
+    - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062
+    - assurance/08-analyses/fmea/analyses/fsc.yaml FSR-040
+    - openpilot/selfdrive/monitoring/policy.py:379-400
+  status: queued
+- id: DQ-221
+  question: "If the driver switches to a setting the safety analyses don't cover (shorter following distance, Experimental mode), should the item refuse to engage, or only log it?"
+  context: "The defaults are the assured values: Chill mode (DQ-001) and the relaxed following distance (CA-011). While driving, the distance button still cycles the following distance and Experimental mode can be switched on, and **both are only logged**. The analyses of record assume the assured values, so a drive in another setting is unassured but allowed."
+  reversibility: easy
+  blocks: SW FMEA SWF-067 / SWF-ACT-063, CA-008 scope
+  gate: G3
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Refuse engagement (no-entry alert) outside the assured settings in the reference configuration"
+      detail: "The item only runs in what was analysed. Cost: a small selfdrived change and a test; drivers lose the distance button and Experimental mode."
+    - key: B
+      title: "Allow it, show a 'not assured' banner, and keep logging"
+      detail: "Driver keeps the choice and knows it. Cost: a UI change; the unassured drives still happen."
+    - key: C
+      title: "Keep today's behaviour (log only)"
+      detail: "No change. Cost: unassured drives are not visible to the driver."
+  sources:
+    - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-067
+    - openpilot/selfdrive/selfdrived/assured_config.py
+    - openpilot/selfdrive/selfdrived/selfdrived.py:502-506, 607-626
+  status: queued

@@ -76,8 +76,8 @@ events:
     note: SWF-003.C2 (implementation defect in longitudinal_accel_checks)
   - id: BE-4.17
     class: systematic_sw
-    fmea: [SWF-046]
-    note: SWF-046.C1 (jerk limit applied before pitch compensation and the PID)
+    fmea: [SWF-046, SWF-066]
+    note: SWF-046.C1 (jerk limit applied before pitch compensation and the PID); SWF-066 (no rate limit on the planner's final aTarget, SW FMEA rev 0.9)
   - id: BE-4.18
     class: systematic_sw
     fmea: [SWF-023, SWF-043]
@@ -167,6 +167,10 @@ not_in_fta:
     goal: SG-04
     kind: justified
     reason: As SFM-030 (same monitor, SW unit level).
+  - fm: SWF-071
+    goal: SG-04
+    kind: justified
+    reason: Realises BE-4.06 (phantom braking or false lead) through the radard lead-selection logic (SW FMEA rev 0.9). BE-4.06 is class sotif, which admits only System FMEA backing (SFM-009), so the SW row is listed here; the tree and its cut sets do not change.
   - fm: SFM-032
     goal: SG-04
     kind: justified
