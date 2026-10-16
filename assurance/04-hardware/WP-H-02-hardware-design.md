@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-02 Hardware architectural and detailed design (device, panda MCU, harness, relay) |
 | Standard reference | ISO 26262-5:2018 §7 (hardware design: architectural and detailed design, safety-related HW elements); ISO 26262-8:2018 §13; ASPICE 4.0 HWE.2 |
-| Version | 0.7 (harness box from the published v3 drawing: the intercept "relay" is two DG419LE analog switches powered from the box supply; HE-08, §3.1, §3.4, UK-03 updated; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.6 (§3.2 element hierarchy added as Figure 3-2; power-path diagram renumbered Figure 3-3; 2026-10-13). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
+| Version | 0.8 (OI-1 route set by DQ-065, ask comma and wait; OI-3 both boards kept, DQ-011; 2026-10-16). 0.7 (harness box from the published v3 drawing: the intercept "relay" is two DG419LE analog switches powered from the box supply; HE-08, §3.1, §3.4, UK-03 updated; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.6 (§3.2 element hierarchy added as Figure 3-2; power-path diagram renumbered Figure 3-3; 2026-10-13). 0.5 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.4 (§3.1 and §3.4 diagrams redrawn as Figures 3-1 and 3-2; text versions kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update 2026-10-12: IWDG1 now used, started at the first relay drive and fed from the 100 Hz safety task, panda `9f60e17`; 0.3 s heartbeat revocation, panda `c2e5d93`; `0xc5` refused in a car mode in the reference build; DC-01, DC-09 status. Not verified on hardware). 0.1: initial draft |
 | Status | Draft |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-07) |
 | Author | Assurance team (initial draft) |
@@ -244,9 +244,9 @@ silicon (low cost) or add-ons in the harness path (LionDriver-controlled hardwar
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Request schematic, BOM and harness data from comma.ai (UK-01…UK-03); if refused, plan a teardown of one reference device and harness | G2 |
+| OI-1 | Request schematic, BOM and harness data from comma.ai (UK-01…UK-03). Route set by the lead ([DQ-065](../01-management/decisions/register.yaml), option B, 2026-10-14): ask and wait; no teardown. Part-level analysis (WP-H-03 §6.1, WP-H-04, WP-H-05) stays blocked until comma replies; the harness box parts are known from the published v3 drawing (UK-03) | G2 |
 | OI-2 | Read option bytes of a reference device (UK-04), read-only | G2 |
-| OI-3 | Confirm tres/cuatro ↔ comma 3X/comma four mapping and fix the reference device in WP-C-01 | G1 |
+| OI-3 | Confirm tres/cuatro ↔ comma 3X/comma four mapping and fix the reference device in WP-C-01. Lead answer ([DQ-011](../01-management/decisions/register.yaml), 2026-10-14): not fixed yet, both may need review, so both boards stay in this document | G1 |
 | OI-4 | Decide DC-02/DC-03 (harness adapter) together with the FSC strategy decision (WP-C-04 OI-1) | G2 |
 | OI-5 | Verify STM32H7 silicon safety features listed as *(verify)* against the reference manual (RM0468) and datasheet | G2 |
 | OI-6 | Confirm the relay/bus topology in §3.3 (joined bus when released) | G2 |

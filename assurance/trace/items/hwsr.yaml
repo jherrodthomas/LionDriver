@@ -363,7 +363,7 @@
   allocated_to: "Intercept switch U1/U2 (DG419LE), D1, D4"
   hw_kind: "HW"
   verification: "A (datasheet), T (bench at 14–16 V)"
-  baseline_impl: "**Not shown.** The DG419L family is specified for 2.7–12 V single supply; here V+ = VL = VIN ≈ vehicle voltage minus one Schottky drop, with transients up to the SMF16A clamp (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-05, datasheet to read)"
+  baseline_impl: "**Not shown.** The LE part is Vishay document 76432, which could not be downloaded. Search results, not confirmed, give +3…+16 V single-supply operation and 18 V absolute maximum for V+, VL and IN to V−; VINH/VINL at VL ≈ 14 V not found. Here V+ = VL = VIN ≈ vehicle voltage minus one Schottky drop: steady state inside 16 V with little margin, transients not bounded below 18 V by D4 (SMF16A, 16 V stand-off). DFMEA DFM-010.C4, DFM-011.C2; DFM-ACT-015; VS-HW-24 (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) §6.1)"
   status: proposed
   source: WP-H-01
 
