@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-04 Evaluation of unknown hazardous scenarios (method, residual risk estimation, results) |
 | Standard reference | ISO 21448:2022 §11 (evaluation of unknown hazardous scenarios), §13 (interface to operation); ISO/PAS 8800:2024 (AI V&V, operation-phase monitoring); ASPICE 4.0 VAL.1 |
-| Version | 0.1 |
+| Version | 0.3 (U-4 status and synthetic-data labelling per WP-V-02 §5.3; 2026-10-16). 0.2 (exploration blocks follow the highway-only ODD, decision register DQ-023, and the 105 km/h public-road cap, DQ-046; block Bn after every model change, DQ-038; log store without uploads to comma, DQ-084; 2026-10-16). 0.1 |
 | Status | Draft (method). Results section is a template: **Not yet executed** |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -24,8 +24,8 @@ For an end-to-end ML driving model trained on data LionDriver cannot see, area 3
 |---|---|---|---|---|---|
 | U-1 | Randomised long-tail driving | Public-road drives on routes chosen at random from a stratified pool covering the ODD (road types, times of day, seasons, weather inside ODD), instead of a fixed commute route. At least 30 % **(TBC)** of mileage on roads not driven before | Route pool + random selection log; [WP-V-07](WP-V-07-vehicle-test-operations.md) operations | G1 passed; WP-V-07 approved | Real inputs; slow; exposure limited to ≈ 10⁴ km/yr ([WP-V-02 §3.2](WP-V-02-sotif-vv-strategy.md#32-what-liondriver-can-achieve)) |
 | U-2 | Disengagement and takeover analysis | Every disengagement, driver override, alert and bookmark is classified (§3). Unexplained ones are reviewed on video | Drive logs; `selfdriveState`, `carState`, `onroadEvents`; bookmark flag (`userBookmark`) | U-1 running | Cheap and systematic; depends on the safety driver intervening (conservative) |
-| U-3 | Fleet-log mining | Automated queries over all LionDriver logs (test fleet now, field fleet later per [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md)) for anomaly signatures (§2.1) | Log store under LionDriver control ([WP-M-08](../01-management/WP-M-08-sotif-plan.md) OI-4); log tools in `openpilot/tools/` | LionDriver log store exists | Scales with data; finds near-misses the driver did not notice |
-| U-4 | Adversarial and randomised simulation | Search over scenario parameters in MetaDrive (`openpilot/tools/sim`) for failures: random maps, curvature/bank combinations, lighting presets, injected traffic and cut-ins once supported; failure = out-of-lane (`metadrive_process.py:130-138`) or collision | MetaDrive bridge with LionDriver extensions; search scripts (random + guided, e.g., boundary refinement around first failure) | Bridge extended per WP-V-02 §5.3; failures are hypotheses until reproduced (U-6) | High volume; simulator gap — results not credited without real-world confirmation |
+| U-3 | Fleet-log mining | Automated queries over all LionDriver logs (test fleet now, field fleet later per [WP-O-04](../09-production-operation/WP-O-04-field-monitoring.md)) for anomaly signatures (§2.1) | Log store under LionDriver control ([WP-M-08](../01-management/WP-M-08-sotif-plan.md) OI-4; no uploads to comma's servers, DQ-084 option A); log tools in `openpilot/tools/` | LionDriver log store exists | Scales with data; finds near-misses the driver did not notice |
+| U-4 | Adversarial and randomised simulation | Search over scenario parameters in MetaDrive (`openpilot/tools/sim`) for failures: random maps, curvature/bank combinations, lighting presets, injected traffic and cut-ins once supported; failure = out-of-lane (`metadrive_process.py:130-138`) or collision | MetaDrive bridge with LionDriver extensions; search scripts (random + guided, e.g., boundary refinement around first failure) | Bridge extended per WP-V-02 §5.3.1 (adaptation to the reference Corolla in progress); results labelled as synthetic (WP-V-02 §5.3.5); failures are hypotheses until reproduced (U-6) | High volume; simulator gap — results not credited without real-world confirmation |
 | U-5 | Replay perturbation search | Perturb recorded real inputs (WP-W-10 VS-ML-04 operators, at larger magnitudes) and search for minimal perturbations that flip outputs (lane choice, lead existence) | Replay harness, perturbation tools | Fork-owned replay set | Real-image base; open loop only |
 | U-6 | Reproduction on closed course | Hypotheses from U-3/U-4/U-5 that look credible are rebuilt as closed-course trials | [WP-V-07](WP-V-07-vehicle-test-operations.md) closed-course level | Site available | Converts hypotheses into known scenarios |
 | U-7 | External information | Upstream issues and release notes, NHTSA L2 investigations and recalls, public openpilot community reports for Toyota TSS2 | Periodic review (monthly) | None | Breadth; not specific to the LionDriver configuration |
@@ -82,10 +82,10 @@ A class U event with S3 potential triggers an immediate review of whether testin
 | Block | Content | Size (proposed) | Entry |
 |---|---|---|---|
 | B0 | Simulation and replay search (U-4, U-5) on the current baseline | 10⁴ simulated km; full replay set | Fidelity extensions in progress; results are hypotheses |
-| B1 | First public-road block, primary ODD only (limited-access highway, daylight, dry) | 2 000 km engaged | G1; WP-V-07 public-road level 1 |
-| B2 | Extended ODD strata (arterial roads, night with lighting, light rain) | 3 000 km engaged | B1 closed: no open class U event with S3 |
+| B1 | First public-road block, primary ODD only (limited-access highway, daylight, dry; engaged at ≤ 105 km/h, DQ-046) | 2 000 km engaged | G1; WP-V-07 public-road level 1 |
+| B2 | Extended ODD strata (night with lighting, light rain; arterial roads left the ODD with DQ-023) | 3 000 km engaged | B1 closed: no open class U event with S3 |
 | B3 | Randomised routes and seasons | 5 000 km engaged per season | B2 closed |
-| Bn | Repeated after each release or model change | ≥ 1 000 km engaged | Change control ([WP-W-10 §8](../05-software/WP-W-10-ml-engineering.md)) |
+| Bn | Repeated after each release and after every model or tinygrad change (D-05, adopted by the project lead, DQ-038) | ≥ 1 000 km engaged | Change control ([WP-W-10 §8](../05-software/WP-W-10-ml-engineering.md)) |
 
 Block sizes are planning values; they are set against WP-V-02 targets and achievable capacity.
 
@@ -156,5 +156,5 @@ The SOTIF release argument (WP-K-02) may claim acceptable residual risk from unk
 |---|---|
 | OI-1 | Build the LionDriver log store and query tooling for U-3 (shared with WP-M-08 OI-4, WP-O-04) |
 | OI-2 | Agree the R3 discovery-trend criterion and target with the assessor |
-| OI-3 | Extend the MetaDrive bridge for U-4 (traffic, scenario scripting, randomised maps) |
+| OI-3 | Extend the MetaDrive bridge for U-4 (traffic, scenario scripting, randomised maps). In progress by the simulation session (WP-V-02 §5.3.1): traffic and pedestrian models and headless rendering work; scenario scripting and randomised maps are not built |
 | OI-4 | Define the stratified route pool for U-1 once the ODD (WP-C-02) is fixed |

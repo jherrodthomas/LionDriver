@@ -3,7 +3,8 @@
 # assurance/03-system/WP-S-05-hsi-specification.md; assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md;
 # assurance/08-analyses/WP-A-03-dependent-failure-analysis.md; assurance/08-analyses/fmea/analyses/fmeda-sg001.yaml;
 # assurance/02-concept/WP-C-01-item-definition.md.
-# Pins are given for the tres board (comma 3X); cuatro differs (WP-S-05 §6). Reference board still open (WP-S-05 OI-6).
+# Pins are given for the tres board (comma 3X); cuatro differs (WP-S-05 §6). Reference board not fixed: the lead keeps both in
+# review (DQ-011), so both boards stay in scope.
 schema_version: 1
 analysis: DFM
 

@@ -35,6 +35,9 @@
 # - Reference lock and the reference-build check in pandad: a platform whose Toyota safety parameter is not 73 cannot
 #   engage; SFM-032.C1 goes from M 9 to M 8 (a similar platform with parameter 73 is still not detected).
 # Result: monitoring M 5-6 on 15 causes (was 12), M 7-8 on 16 (16), M 9-10 on 29 (32). Every MSR AP is still H (provisional table).
+# Rev 0.10 (2026-10-16): the lead's answers that set System FMEA effects or actions recorded; no rating changes (the decided
+# behaviour is not implemented at BL-005). DQ-060 -> new action SFM-ACT-019 on SFM-002; DQ-053 -> SFM-ACT-016 behaviour
+# fixed; DQ-022 -> SFM-020 note; DQ-205 -> SFM-025 note and SFM-ACT-005.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -43,7 +46,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.9"
+  revision: "0.10"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
@@ -368,6 +371,7 @@ failure_modes:
         ap: H
         actions:
         - SFM-ACT-001
+        - SFM-ACT-019
         rationale: Rated, and actioned, in the SW FMEA (SWF-042.C1, SWF-ACT-042, SWF-ACT-043); this row inherits that rating
         msr:
           mechanisms:
@@ -410,6 +414,7 @@ failure_modes:
         actions:
         - SFM-ACT-001
         - SFM-ACT-009
+        - SFM-ACT-019
         msr:
           mechanisms:
           - 1
@@ -492,6 +497,7 @@ failure_modes:
         actions:
         - SFM-ACT-001
         - SFM-ACT-002
+        - SFM-ACT-019
         msr:
           mechanisms:
           - 1
@@ -517,7 +523,11 @@ failure_modes:
             ref: .github/workflows/safety.yaml
           actions:
           - SFM-ACT-012
-    notes: "HARA input: excessive steering intervention while engaged."
+    notes: >-
+      HARA input: excessive steering intervention while engaged. Lead decision DQ-060 (2026-10-14, option A): when the
+      envelope rejects a steering command, steering switches off until the driver re-engages (TSR-108). At BL-005 the
+      host already disengages on the first refused frame while engaged (pandaTxBlocked, TSR-615); the panda itself only
+      drops the frame. The firmware half is SFM-ACT-019.
 
   - id: SFM-003
     element: SFM-SE-001
@@ -2184,7 +2194,9 @@ failure_modes:
             basis: unknown
           actions:
           - SFM-ACT-016
-    notes: "HARA input: automation resists evasive steering."
+    notes: >-
+      HARA input: automation resists evasive steering. Lead decision DQ-053 (2026-10-14, option A): when the driver
+      steers against LionDriver it backs off and shows a cue; SFM-ACT-016 carries the design.
 
   - id: SFM-019
     element: SFM-SE-001
@@ -2297,6 +2309,10 @@ failure_modes:
             ref: .github/workflows/safety.yaml
           actions:
           - SFM-ACT-012
+    notes: >-
+      Lead decision DQ-022 (2026-10-14, option A): pressing the accelerator pauses longitudinal control only and does
+      not disengage (today's behaviour, gasPressedOverride). The effects above assume this default; the on-screen
+      override cue is to be checked in the HMI clinic (WP-C-08).
 
   - id: SFM-021
     element: SFM-SE-001
@@ -2619,8 +2635,10 @@ failure_modes:
       Observation: in BL-001, events.py maps driverDistracted3 and driverUnresponsive3 only to an
       ET.PERMANENT alert; no SOFT_DISABLE/IMMEDIATE_DISABLE is attached, so reaching awareness 0 does not
       by itself disengage. This may be a deliberate design choice (avoid dropping control on an
-      incapacitated driver). It needs an explicit safety-concept decision (SFM-ACT-005); unchanged at BL-004.
-      HARA input: driver incapacitated while engaged.
+      incapacitated driver). It needs an explicit safety-concept decision (SFM-ACT-005); unchanged at BL-004 and BL-005.
+      HARA input: driver incapacitated while engaged. Lead decision DQ-205 (2026-10-14, option A): the unresponsive
+      driver is its own hazard with an ASIL A goal (here HZ-013, SG-010; H-09 in WP-C-03 once the HARA adds it), and its
+      safe state is defined together with the zero-awareness reaction.
 
   # ----- F6 Alerting -----
   - id: SFM-026
@@ -3210,7 +3228,8 @@ actions:
   - id: SFM-ACT-005
     kind: design_change
     description: Decide in the FSC how the item reacts when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction
-      at BL-004) and implement the decision
+      at BL-004 or BL-005) and implement the decision. DQ-205 (answered) makes this the safe state of SG-010 (ASIL A); the
+      reaction itself is still to be decided
     owner: Jherrod Thomas
     status: decision_pending
   - id: SFM-ACT-006
@@ -3280,7 +3299,8 @@ actions:
     kind: monitoring
     status: open
     description: 'Supervise driver override in the panda: driver steering torque above the override threshold limits or revokes
-      lateral authority within the SG-05 0.2 s budget (TSR-304)'
+      lateral authority within the SG-05 0.2 s budget (TSR-304). Behaviour decided by the lead (DQ-053, option A): back off on
+      override and show a cue'
   - id: SFM-ACT-017
     kind: monitoring
     status: open
@@ -3294,3 +3314,9 @@ actions:
     evidence: 'BL-005: frames that stop reaching the panda are detected (TSR-408) and alerted within 0.5 s (TSR-621), credited on
       SFM-005.C2 and SFM-011.C2. Open: frames that reach the panda but are not accepted by the EPS or PCM (SFM-005.C1, SFM-011.C1;
       TSR-626)'
+  - id: SFM-ACT-019
+    kind: design_change
+    status: open
+    description: 'Revoke lateral authority in the panda when it rejects a steering frame while authority is granted, and keep
+      it revoked until a new valid engagement (TSR-108; lead decision DQ-060, option A). At BL-005 the frame is dropped and
+      only the host disengages (pandaTxBlocked)'
