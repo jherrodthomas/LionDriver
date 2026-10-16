@@ -37,7 +37,7 @@ package LionDriverMechanisms {
         doc /* Driver-torque override monitor */
         :>> covers = "actuation opposing driver";
         :>> dcTarget = "medium";
-        :>> tsr = "TSR-304";
+        :>> tsr = ("TSR-304", "TSR-628");
     }
     action <'SM-06'> epsStatusMonitor : SafetyMechanism {
         doc /* EPS status monitor */
@@ -127,7 +127,7 @@ package LionDriverMechanisms {
         doc /* Relay readback and latch */
         :>> covers = "relay stuck either way";
         :>> dcTarget = "high (with readback)";
-        :>> tsr = ("TSR-506", "TSR-710");
+        :>> tsr = ("TSR-506", "TSR-710", "TSR-712");
     }
     action <'SM-21'> mpuIsolation : SafetyMechanism {
         doc /* MPU isolation */

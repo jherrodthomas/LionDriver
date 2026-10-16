@@ -1102,6 +1102,19 @@ class TestMsrRules(LintFixture):
     ev = [{"description": "HIL run", "ref": "WP-V-05 run 1", "test": "openpilot/selfdrive/controls/tests/test_latcontrol.py"}]
     self.assertEqual(self.errors(msr_sfm(monitoring=4, ap="H", timing=t, evidence=ev)), [])
 
+  def test_simulation_is_not_a_measurement(self):
+    # msr-plan 4.2: a plant-model run may be cited as evidence, but it never earns M <= 4 on its own
+    t = {"ftti_ref": "SG-01 MCU execution fault", "ftti_ms": 500, "fdti_ms": 90, "frti_ms": 100, "basis": "measured"}
+    sim = {"description": "plant model F-05", "ref": "assurance/sim/results/plant-results.md F-05",
+           "test": "openpilot/selfdrive/controls/tests/test_latcontrol.py"}
+    self.assertError(self.lint(sfm=msr_sfm(monitoring=4, ap="H", timing=t, evidence=[sim])), "cites only simulation results")
+    hil = {"description": "HIL run", "ref": "WP-V-05 run 1"}
+    self.assertEqual(self.errors(msr_sfm(monitoring=4, ap="H", timing=t, evidence=[sim, hil])), [])
+    # as a cross-check of code-derived timing it is accepted and changes nothing
+    m6 = msr_sfm()
+    m6["failure_modes"][0]["causes"][0]["msr"]["evidence"].append({"description": "plant model F-05", "ref": sim["ref"]})
+    self.assertEqual(self.errors(m6), [])
+
   def test_severity_after_bounded(self):
     doc = msr_sfm()
     doc["failure_modes"][0]["causes"][0]["msr"]["severity_after"] = 10

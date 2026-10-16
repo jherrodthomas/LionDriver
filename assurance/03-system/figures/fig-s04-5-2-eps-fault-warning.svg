@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="580" viewBox="0 0 1280 580" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Figure 5-2. EPS-fault warning chain of the reference build against the SG-02 1 s warning budget (WP-S-04 T-28, OI-8)</title>
-<desc id="d">Time axis from the first EPS fault frame. The envelope refuses STEERING_LKA with torque on receipt of the fault frame (TSR-110). The panda 100 Hz safety task counts 1 s of persistence while controls are allowed, adds up to 10 ms of task period, and the 8 Hz tick drives the speaker only on every other tick, adding up to 250 ms, so the siren starts at most 1.26 s after fault onset. Measured from fault onset this exceeds the SG-02 1 s warning budget by up to 0.26 s. Measured from detection as defined in WP-S-02 v0.14 (the end of the 1 s persistence) it is at most 0.26 s, inside TSR-516 0.5 s. OI-8 needs a decision. Not verified on hardware.</desc>
+<desc id="d">Time axis from the first EPS fault frame. The envelope refuses STEERING_LKA with torque on receipt of the fault frame (TSR-110). The panda 100 Hz safety task counts 1 s of persistence while controls are allowed, adds up to 10 ms of task period, and the 8 Hz tick drives the speaker only on every other tick, adding up to 250 ms, so the siren starts at most 1.26 s after fault onset. Measured from fault onset this exceeds the SG-02 1 s warning budget by up to 0.26 s. Measured from detection as defined in WP-S-02 v0.14 (the end of the 1 s persistence) it is at most 0.26 s, inside TSR-516 0.5 s. OI-8 was decided on 2026-10-14 (DQ-048): the persistence is to be shortened to about 0.7 s, which gives at most 0.96 s from onset; the firmware has not yet been changed. Not verified on hardware.</desc>
 <defs>
   <pattern id="tbd" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F8FAFC"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern>
   <marker id="aI" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F172A"/></marker>
@@ -104,9 +104,9 @@
 <text x="839.2" y="528" font-size="11" fill="#D97706" font-weight="700" text-anchor="middle">From detection (WP-S-02 v0.14): ≤ 0.26 s, within TSR-516(b) ≤ 0.5 s</text>
 <text x="839.2" y="542" font-size="10" fill="#475569" text-anchor="middle">detection defined as the end of the 1 s persistence</text>
 <rect x="40" y="440" width="236" height="96" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2" rx="8"/>
-<text x="54" y="460" font-size="12" fill="#D2553F" font-weight="700">OI-8 · decision needed</text>
-<text x="54" y="478" font-size="10" fill="#0F172A">Options in WP-S-04 §7:</text>
-<text x="54" y="492" font-size="10" fill="#0F172A">• shorten the persistence (e.g. 0.7 s)</text>
-<text x="54" y="506" font-size="10" fill="#0F172A">• or justify: lateral authority is</text>
-<text x="54" y="520" font-size="10" fill="#0F172A">  removed at the first fault frame</text>
+<text x="54" y="460" font-size="12" fill="#D2553F" font-weight="700">OI-8 · decided (DQ-048)</text>
+<text x="54" y="478" font-size="10" fill="#0F172A">Lead decision 2026-10-14:</text>
+<text x="54" y="492" font-size="10" fill="#0F172A">• shorten the persistence to ≈ 0.7 s</text>
+<text x="54" y="506" font-size="10" fill="#0F172A">  → siren ≤ 0.96 s from onset</text>
+<text x="54" y="520" font-size="10" fill="#0F172A">• firmware not yet changed</text>
 </svg>

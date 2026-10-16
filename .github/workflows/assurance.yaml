@@ -254,8 +254,53 @@ jobs:
       run: |
         python3 assurance/sim/plant/report.py --check
         python3 assurance/sim/plant/test_plant.py
+    - name: Failure search (Monte Carlo and cross-entropy over the plant model) current, and its tests
+      run: |
+        python3 assurance/sim/search/search.py --check
+        python3 assurance/sim/search/test_search.py
     - name: Plant FMU (FMI 2.0, pythonfmu) built and run by FMPy, same trajectory as the plant in-process
       run: python3 assurance/sim/plant/fmu/test_fmu.py
+
+  sim-column:
+    name: simulation L2 column
+    # L2 steering column (assurance/sim README §3.5): OpenModelica 1.27.1 (tool TL-44) exports the column as an FMU;
+    # FMPy runs it in the driver-override study with the real panda safety code. The OpenModelica environment comes
+    # from an explicit conda lock (every package pinned by URL and md5) and is cached on the lock's hash.
+    # Synthetic data (DSR-12), no evidence credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      MICROMAMBA_URL: https://github.com/mamba-org/micromamba-releases/releases/download/2.3.2-0/micromamba-linux-64
+      MICROMAMBA_SHA256: ffc3cb8d52d4d6b354bdbb979c407719c485392b74e462cbd50811aa88e58f85
+      OMC_ENV: ${{ github.workspace }}/../omc-env
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout opendbc and panda submodules
+      run: git submodule update --init --depth 1 opendbc_repo panda
+    - name: Install the pinned packages of the simulation track
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/requirements.txt
+    - name: Cache the OpenModelica environment (keyed on the lock)
+      id: omc-cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.OMC_ENV }}
+        key: omc-env-${{ hashFiles('assurance/sim/plant/modelica/omc-linux-64.lock') }}
+    - name: Create the OpenModelica environment from the explicit lock
+      if: steps.omc-cache.outputs.cache-hit != 'true'
+      run: |
+        curl -sSL -o "$RUNNER_TEMP/micromamba" "$MICROMAMBA_URL"
+        echo "$MICROMAMBA_SHA256  $RUNNER_TEMP/micromamba" | sha256sum -c -
+        chmod +x "$RUNNER_TEMP/micromamba"
+        MAMBA_ROOT_PREFIX="$RUNNER_TEMP/mamba" "$RUNNER_TEMP/micromamba" create -y -q -p "$OMC_ENV" \
+          --file assurance/sim/plant/modelica/omc-linux-64.lock
+    - name: Column FMU checks (analytic steady states and step response, back-to-back with the L1 EPS)
+      env:
+        REQUIRE_OMC: "1"
+      run: OMC="$OMC_ENV/bin/omc" python3 assurance/sim/plant/modelica/test_column.py
+    - name: Driver-override study current
+      run: python3 assurance/sim/plant/override.py --fmu build/sim-column/SteeringColumn.fmu --check
 
   sim-scenarios:
     name: simulation known scenarios
