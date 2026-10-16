@@ -299,8 +299,10 @@ jobs:
       env:
         REQUIRE_OMC: "1"
       run: OMC="$OMC_ENV/bin/omc" python3 assurance/sim/plant/modelica/test_column.py
-    - name: Driver-override study current
-      run: python3 assurance/sim/plant/override.py --fmu build/sim-column/SteeringColumn.fmu --check
+    - name: Driver-override study current, and its --scales option (M-08) tested
+      run: |
+        python3 assurance/sim/plant/override.py --fmu build/sim-column/SteeringColumn.fmu --check
+        python3 assurance/sim/plant/test_override.py
 
   sim-reach:
     name: simulation reachability (Julia pilot)

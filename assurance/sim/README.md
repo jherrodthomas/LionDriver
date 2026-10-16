@@ -156,6 +156,20 @@ swept, with the driver's peak torque and rise time. Under these assumptions ([ta
 
 Every column parameter is an assumption until M-02 (SIM-OI-7), and both scales are measurement items (SIM-OI-8).
 
+**When M-08 has measured the scales**, one run puts them in:
+
+```sh
+python3 assurance/sim/plant/modelica/build_column_fmu.py      # prints the FMU path (build/sim-column/...)
+python3 assurance/sim/plant/override.py --fmu build/sim-column/SteeringColumn.fmu \
+    --scales driver=<N·m per STEER_TORQUE_DRIVER unit>,lka=<N·m at the column per LKA command unit> \
+    --source "<M-08 record>"
+```
+
+It runs the driver sweep at those two scales and writes [`results/override-l2-m08.md`](results/) beside the
+swept table, which stays. `--source` is required, so every measured table names its record. The column parameters
+remain assumed, so the result stays synthetic. When that table is committed, add the same command with `--check` to
+the 'simulation L2 column' CI job.
+
 ### 3.6 Reachability pilot: the drift under any LKA command the panda passes
 
 The fault-injection runs sample command sequences; a reachable set covers all of them. The pilot asks whether that
@@ -252,4 +266,4 @@ opendbc code is the project's own (MIT).
 | SIM-OI-5 | KS-04 (lane split and merge) as an OpenDRIVE junction or lane-width polynomial |
 | SIM-OI-7 | L2 column parameters (§3.5) are assumed. Published column-EPS parameter tables were found but could not be read: their hosts are not reachable from the build environment. Check the values against those sources, then replace them with M-02 measurements |
 | SIM-OI-9 | Reachability pilot (§3.6): pin Julia's SHA-256 and the package Manifest from the first CI run, check the dependency licences in the Manifest, commit the bounds and results, and give the verdict |
-| SIM-OI-8 | Measure the N·m scale of STEER_TORQUE_DRIVER and of the LKA torque command on the reference Corolla; they decide whether the host's `MAX_USER_TORQUE` rule meets SG-05 (§3.5) |
+| SIM-OI-8 | Measure the N·m scale of STEER_TORQUE_DRIVER and of the LKA torque command on the reference Corolla (now in WP-S-04 M-08); they decide whether the host's `MAX_USER_TORQUE` rule meets SG-05. `override.py --scales` is ready to take them (§3.5) |
