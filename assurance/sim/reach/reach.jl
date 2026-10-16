@@ -96,7 +96,9 @@ end
 pack(l, h) = Dict("y_lo" => l[:, 1], "y_hi" => h[:, 1], "psi_lo" => l[:, 2], "psi_hi" => h[:, 2])
 at(h, s) = round(h[round(Int, s / grid)+1, 1], sigdigits=4)
 
-t_dt = @elapsed (lo_d, hi_d, gens = reach_dt())
+t_start = time()
+lo_d, hi_d, gens = reach_dt()                 # (@elapsed would scope the assignment locally)
+t_dt = time() - t_start
 println("reach dt: ", gens, " generators, ", round(t_dt, digits=2), " s; y bound at 0.2 / 1.0 / ", H, " s: ",
         at(hi_d, 0.2), " / ", at(hi_d, 1.0), " / ", at(hi_d, H), " m")
 
@@ -104,7 +106,9 @@ CT_MODELS = [("forward", () -> Forward()), ("correction-hull", () -> CorrectionH
 ct = Dict{String,Any}()
 for (name, make) in CT_MODELS
     try
-        t_ct = @elapsed (lo, hi = reach_ct(make()))
+        t1 = time()
+        lo, hi = reach_ct(make())
+        t_ct = time() - t1
         ct[name] = merge(pack(lo, hi), Dict("seconds" => t_ct))
         println("reach ct ", name, ": ", round(t_ct, digits=2), " s; y bound at 0.2 / 1.0 / ", H, " s: ",
                 at(hi, 0.2), " / ", at(hi, 1.0), " / ", at(hi, H), " m")
