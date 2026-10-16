@@ -4,7 +4,7 @@
 - id: G1
   kind: claim
   title: "Functional safety (ISO 26262)"
-  description: "Hazards from E/E malfunctions of the item are reduced to a tolerable level: every safety goal SG-01…SG-07 is met with the integrity of its ASIL."
+  description: "Hazards from E/E malfunctions of the item are reduced to a tolerable level: every safety goal SG-01…SG-08 is met with the integrity of its ASIL."
   parent: G0
   argument: S0
   lifecycle_status: draft
