@@ -192,7 +192,8 @@ def build() -> tuple[dict, dict]:
   model = {
     "about": "L1 plant linearised at straight driving; z = [y, psi, beta, r, delta, a_eps, u]; z' = A z + B w",
     "speed_kph": SPEED_KPH, "horizon_s": HORIZON_S, "grid_s": GRID_S,
-    "u_max": STEER_MAX, "u_step": RATE_UP, "frame_s": FRAME_S, "A": A_, "B": B_,
+    "u_max": STEER_MAX, "u_step": RATE_UP, "frame_s": FRAME_S, "plant_step_s": DYN_EVERY * DT_US / 1e6,
+    "A": A_, "B": B_,
   }
   rng = random.Random(SEED)
   cases = [("hard-over left", lambda t: STEER_MAX), ("hard-over right", lambda t: -STEER_MAX)]

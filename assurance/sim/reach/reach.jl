@@ -4,14 +4,17 @@
 #     julia --project=assurance/sim/reach assurance/sim/reach/reach.jl OUT.json
 #
 # Model: model.json, written by reach_inputs.py (the L1 plant linearised at 110 km/h): z' = A z + B u with z(0) = 0.
-# The panda lets |u| grow by at most u_step per frame from 0 and drop at once, so |u(t)| <= min(u_max, u_step +
-# u_step/frame_s * t). Two sound over-approximations of that input set, both computed with ReachabilityAnalysis.jl
-# (GLGM06, zonotopes):
-#   amp  |u| <= u_max over the whole horizon (ignores the panda's ramp)
-#   env  the envelope above, as consecutive segments with a constant input box (the envelope's value at the segment's
-#        end); each segment starts from the last reach set of the one before
-# The reachable set lies inside both, so inside their intersection ("both"); its bounds are written per grid step.
-# Synthetic data (DSR-12), no evidence credit (WP-V-02 §5.3).
+# The panda lets |u| grow by at most u_step per frame from 0 and drop at once, so in frame k (from t = 0)
+# |u| <= e_k = min(u_max, u_step (k + 1)).
+#
+#   dt  The plant holds the command over each dynamics step (plant_step_s; commands change only at those steps).
+#       For inputs held per step the reachable set at the step times is exactly the zonotope recursion
+#           X_{j+1} = exp(A h) X_j  (+)  Phi1(A, h) B [-e, e],   X_0 = {0}
+#       computed with LazySets without order reduction, so with no over-approximation.
+#   ct  Continuous time, any measurable u within the envelope (covers commands that change between plant steps):
+#       ReachabilityAnalysis.jl GLGM06 over consecutive segments with a constant input box (the envelope's value at the
+#       segment end). Each discretisation model in CT_MODELS is tried; a failure is recorded, not fatal.
+# Bounds of y and psi are written per output grid step. Synthetic data (DSR-12), no evidence credit (WP-V-02 §5.3).
 
 using ReachabilityAnalysis, LazySets, JSON
 
@@ -24,16 +27,40 @@ grid = Float64(model["grid_s"])
 umax = Float64(model["u_max"])
 ustep = Float64(model["u_step"])
 frame = Float64(model["frame_s"])
+hstep = Float64(model["plant_step_s"])
 n = size(A, 1)
 nsteps = round(Int, H / grid)
-δ = 1e-3                  # GLGM06 time step
-SEG = 0.02                # envelope segment length (s)
-ORDER = 30                # zonotope order kept between segments (reduction over-approximates)
 DIMS = (1, 2)             # y, psi
+δ = 1e-3                  # GLGM06 time step (ct)
+SEG = 0.02                # ct envelope segment length (s)
+ORDER = 30                # ct zonotope order kept between segments (reduction over-approximates)
 
-envelope(t) = min(umax, ustep + ustep / frame * t)
+envelope_ct(t) = min(umax, ustep + ustep / frame * t)                    # continuous, >= the per-frame envelope
+envelope_frame(t) = min(umax, ustep * (floor(Int, t / frame + 1e-9) + 1))
+empty_bounds() = (fill(Inf, nsteps + 1, length(DIMS)), fill(-Inf, nsteps + 1, length(DIMS)))
+unitvec(d) = (e = zeros(n); e[d] = 1.0; e)
 
-# lower and upper bound of each of DIMS at each grid time, over the reach sets whose time span contains it
+# ---- dt: exact recursion for inputs held per plant step
+function reach_dt()
+    E = exp([A B; zeros(1, n + 1)] * hstep)
+    Φ, Φ1B = E[1:n, 1:n], E[1:n, n+1]
+    per = round(Int, grid / hstep)
+    lo, hi = empty_bounds()
+    X = Zonotope(zeros(n), zeros(n, 0))
+    for j in 0:nsteps*per
+        if j % per == 0
+            k = j ÷ per
+            for (i, d) in enumerate(DIMS)
+                hi[k+1, i] = ρ(unitvec(d), X); lo[k+1, i] = -ρ(-unitvec(d), X)
+            end
+        end
+        e = envelope_frame(j * hstep)
+        X = Zonotope(Φ * center(X), hcat(Φ * genmat(X), Φ1B * e))
+    end
+    lo, hi, ngens(X)
+end
+
+# ---- ct: GLGM06 with a given discretisation model
 function bounds!(lo, hi, sol, offset)
     for R in sol
         Z = set(R)
@@ -41,8 +68,7 @@ function bounds!(lo, hi, sol, offset)
         k0 = max(0, ceil(Int, ts / grid - 1e-9)); k1 = min(nsteps, floor(Int, te / grid + 1e-9))
         k0 > k1 && continue
         for (j, d) in enumerate(DIMS)
-            e = zeros(n); e[d] = 1.0
-            h = ρ(e, Z); l = -ρ(-e, Z)
+            h = ρ(unitvec(d), Z); l = -ρ(-unitvec(d), Z)
             for k in k0:k1
                 lo[k+1, j] = min(lo[k+1, j], l); hi[k+1, j] = max(hi[k+1, j], h)
             end
@@ -50,45 +76,54 @@ function bounds!(lo, hi, sol, offset)
     end
 end
 
-reach(X0, ub, T) = solve(IVP(ConstrainedLinearControlContinuousSystem(A, B, Universe(n), Hyperrectangle(zeros(1), [ub])),
-                             X0); T=T, alg=GLGM06(δ=δ))
-
-empty_bounds() = (fill(Inf, nsteps + 1, length(DIMS)), fill(-Inf, nsteps + 1, length(DIMS)))
-
-# amp: one solve with the full amplitude
-lo_a, hi_a = empty_bounds()
-bounds!(lo_a, hi_a, reach(Singleton(zeros(n)), umax, H), 0.0)
-
-# env: segments up to the end of the ramp, then one solve to the horizon
-lo_e, hi_e = empty_bounds()
-X0 = Singleton(zeros(n))
-t0 = 0.0
-while t0 < H - 1e-9
-    global X0, t0
-    ub = envelope(t0 + SEG)
-    T = ub >= umax ? H - t0 : SEG
-    sol = reach(X0, ub, T)
-    bounds!(lo_e, hi_e, sol, t0)
-    X0 = reduce_order(set(sol[end]), ORDER)    # contains the state at t0 + T
-    t0 += T
+function reach_ct(approx)
+    sys(ub) = ConstrainedLinearControlContinuousSystem(A, B, Universe(n), Hyperrectangle(zeros(1), [ub]))
+    lo, hi = empty_bounds()
+    X0 = Singleton(zeros(n))
+    t0 = 0.0
+    while t0 < H - 1e-9
+        ub = envelope_ct(t0 + SEG)
+        T = ub >= umax ? H - t0 : SEG
+        sol = solve(IVP(sys(ub), X0); T=T, alg=GLGM06(δ=δ, approx_model=approx))
+        bounds!(lo, hi, sol, t0)
+        X0 = reduce_order(set(sol[end]), ORDER)    # contains the state at t0 + T
+        t0 += T
+    end
+    all(isfinite, lo) && all(isfinite, hi) || error("a grid time is not covered by any reach set")
+    lo, hi
 end
-
-for b in (lo_a, hi_a, lo_e, hi_e)
-    all(isfinite, b) || error("a grid time is not covered by any reach set")
-end
-lo = max.(lo_a, lo_e); hi = min.(hi_a, hi_e)
 
 pack(l, h) = Dict("y_lo" => l[:, 1], "y_hi" => h[:, 1], "psi_lo" => l[:, 2], "psi_hi" => h[:, 2])
+at(h, s) = round(h[round(Int, s / grid)+1, 1], sigdigits=4)
+
+t_dt = @elapsed (lo_d, hi_d, gens = reach_dt())
+println("reach dt: ", gens, " generators, ", round(t_dt, digits=2), " s; y bound at 0.2 / 1.0 / ", H, " s: ",
+        at(hi_d, 0.2), " / ", at(hi_d, 1.0), " / ", at(hi_d, H), " m")
+
+CT_MODELS = [("forward", () -> Forward()), ("correction-hull", () -> CorrectionHull(order=10))]
+ct = Dict{String,Any}()
+for (name, make) in CT_MODELS
+    try
+        t_ct = @elapsed (lo, hi = reach_ct(make()))
+        ct[name] = merge(pack(lo, hi), Dict("seconds" => t_ct))
+        println("reach ct ", name, ": ", round(t_ct, digits=2), " s; y bound at 0.2 / 1.0 / ", H, " s: ",
+                at(hi, 0.2), " / ", at(hi, 1.0), " / ", at(hi, H), " m")
+    catch err
+        msg = first(sprint(showerror, err), 400)
+        ct[name] = Dict("error" => msg)
+        println("reach ct ", name, ": failed: ", msg)
+    end
+end
+
 out = Dict(
-    "about" => "bounds of y (m) and psi (rad) from fault onset; amp: |u| <= u_max, env: the panda envelope, both: intersection",
-    "julia" => string(VERSION), "delta" => δ, "segment_s" => SEG, "order" => ORDER,
+    "about" => "bounds of y (m) and psi (rad) from fault onset; dt: inputs held per plant step (exact), ct: any input " *
+               "within the envelope (GLGM06, per discretisation model)",
+    "julia" => string(VERSION), "plant_step_s" => hstep, "delta_ct" => δ, "segment_s" => SEG, "order_ct" => ORDER,
     "t" => [round(k * grid, digits=6) for k in 0:nsteps],
-    "amp" => pack(lo_a, hi_a), "env" => pack(lo_e, hi_e), "both" => pack(lo, hi),
+    "dt" => pack(lo_d, hi_d), "ct" => ct,
 )
 outpath = length(ARGS) >= 1 ? ARGS[1] : joinpath(HERE, "bounds.json")
 open(outpath, "w") do io
     JSON.print(io, out)
 end
-at(s) = round(hi[round(Int, s / grid)+1, 1], sigdigits=4)
-println("reach: wrote ", outpath, "; Julia ", VERSION, "; y bound at 0.2 / 1.0 / ", H, " s: ", at(0.2), " / ", at(1.0),
-        " / ", at(H), " m")
+println("reach: wrote ", outpath, "; Julia ", VERSION)

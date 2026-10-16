@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
-"""Reachability pilot: compare the Julia reach-set bounds with the sampled fault runs.
+"""Reachability pilot: compare the Julia reach-set bounds with the sampled fault runs and exact references.
 
     python3 assurance/sim/reach/reach_compare.py --bounds FRESH.json           # commit FRESH as bounds.json, write results
     python3 assurance/sim/reach/reach_compare.py --bounds FRESH.json --check   # fail if anything committed is stale
 
-FRESH.json is what reach.jl writes. Two containment checks, both reported in results/reach.md:
-  linear      every sampled run of the linear model (the model Julia bounds, driven by the commands the EPS applied)
-              lies inside the set. This checks the reachability computation; it must hold, up to TOL for the
-              9-digit rounding of the JSON files.
-  nonlinear   every sampled run of the nonlinear L1 plant lies inside the set widened by the largest linearisation
-              error measured on the same runs. The set bounds the linear model only; this widening is measured on
-              these samples, not proven, so this check says the linearisation is adequate here, nothing more.
-Conservativeness, at the listed times: the bound against the exact reachable bound of the linear model and against
-the largest sampled value. With one bounded input and a linear model the exact bound is the support function
-    h(t) = integral over s in [0, t] of |c exp(A s) B| env(t - s) ds,
-computed here by quadrature on a 0.1 ms grid (an independent reference, not a proof: no quadrature error bound).
+FRESH.json is what reach.jl writes: the set "dt" (inputs held per plant step, the plant's own input structure) and one
+set "ct" per GLGM06 discretisation model (any input within the envelope). Checks, reported in results/reach.md:
+  linear      every sampled run of the linear model (the model Julia bounds, driven by the commands the EPS applied,
+              held per 10 ms grid step) lies inside dt. This checks the reachability computation; it must hold, up to
+              TOL for the 9-digit rounding of the JSON files.
+  nonlinear   every sampled run of the nonlinear L1 plant lies inside dt widened by the largest linearisation error
+              measured on the same runs. The set bounds the linear model only; this widening is measured on these
+              samples, not proven, so this check says the linearisation is adequate here, nothing more.
+Exact references, computed here independently of Julia (one bounded input, so the reachable set's support function
+in the direction of y or psi is a closed sum or integral of |impulse response| x envelope):
+  exact dt    the sum over plant steps of |c exp(A h)^m Phi1 B| e_j: exact for inputs held per step;
+  exact ct    the integral of |c exp(A s) B| env(t - s) over [0, t], by trapezoid quadrature on a 0.1 ms grid (no
+              quadrature error bound); also with |u| <= u_max throughout (no panda ramp), for comparison.
 Synthetic data (DSR-12), no evidence credit (WP-V-02 §5.3).
 """
 
@@ -38,73 +40,89 @@ FIGURE = RESULTS / "reach-y.svg"
 TOL = 1e-7                      # absolute, m or rad: JSON rounding to 9 significant digits
 REL = 1e-6                      # fresh bounds against the committed ones
 TIMES = (0.1, 0.2, 0.5, 1.0, 1.5, 2.0, 2.5)
-
-
-QUAD_S = 1e-4                  # quadrature step of the exact reference
-
-
-def exact(m: dict, n_grid: int) -> dict:
-  """Exact bounds of |y| and |psi| of the linear model at each grid time: the support function of the reachable set
-  for the panda's per-frame envelope (env) and for |u| <= u_max (amp)."""
-  sys.path.insert(0, str(HERE))
-  from reach_inputs import expm  # noqa: PLC0415
-
-  A, B = np.array(m["A"]), np.array(m["B"])[:, 0]
-  per = round(m["grid_s"] / QUAD_S)
-  K = per * (n_grid - 1)
-  E = expm(A * QUAD_S)
-  g = np.empty((K + 1, 2))                 # impulse response of y and psi at s = k * QUAD_S
-  z = B.copy()
-  for k in range(K + 1):
-    g[k] = z[:2]
-    z = E @ z
-  s = np.arange(K + 1) * QUAD_S
-  out = {"amp": {"y": [0.0], "psi": [0.0]}, "env": {"y": [0.0], "psi": [0.0]}}
-  for i in range(1, n_grid):
-    kk = i * per
-    tau = i * m["grid_s"] - s[:kk + 1]                                # input time for each s
-    env = np.minimum(m["u_max"], m["u_step"] * (np.floor(tau / m["frame_s"] + 1e-9) + 1))
-    w = np.full(kk + 1, QUAD_S)
-    w[0] = w[-1] = QUAD_S / 2                                         # trapezoid
-    for j, v in enumerate(("y", "psi")):
-      a = np.abs(g[:kk + 1, j]) * w
-      out["amp"][v].append(float(a.sum() * m["u_max"]))
-      out["env"][v].append(float((a * env).sum()))
-  return out
+QUAD_S = 1e-4                   # quadrature step of the exact ct reference
+OUT = ("y", "psi")
 
 
 def load(path: Path) -> dict:
   return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _env(m: dict, tau: np.ndarray) -> np.ndarray:
+  return np.minimum(m["u_max"], m["u_step"] * (np.floor(tau / m["frame_s"] + 1e-9) + 1))
+
+
+def exact(m: dict, n_grid: int) -> dict:
+  """Exact bounds of |y| and |psi| of the linear model at each grid time: 'dt' for inputs held per plant step,
+  'ct' for any input within the per-frame envelope, 'amp' for any input with |u| <= u_max."""
+  sys.path.insert(0, str(HERE))
+  from reach_inputs import expm  # noqa: PLC0415
+
+  A, B = np.array(m["A"]), np.array(m["B"])[:, 0]
+  n = len(A)
+  out = {k: {v: [0.0] for v in OUT} for k in ("dt", "ct", "amp")}
+
+  # dt: X_N = sum_j Phi^(N-1-j) Phi1 B [-e_j, e_j]
+  h = m["plant_step_s"]
+  M = np.zeros((n + 1, n + 1))
+  M[:n, :n], M[:n, n] = A, B
+  E = expm(M * h)
+  Phi, Phi1B = E[:n, :n], E[:n, n]
+  per = round(m["grid_s"] / h)
+  N = per * (n_grid - 1)
+  G = np.empty((N, 2))
+  z = Phi1B.copy()
+  for k in range(N):
+    G[k] = z[:2]
+    z = Phi @ z
+  e = _env(m, np.arange(N) * h)
+  for i in range(1, n_grid):
+    k = i * per
+    for j, v in enumerate(OUT):
+      out["dt"][v].append(float((np.abs(G[:k, j])[::-1] * e[:k]).sum()))
+
+  # ct and amp: integral over s of |c exp(A s) B| env(t - s)
+  per = round(m["grid_s"] / QUAD_S)
+  K = per * (n_grid - 1)
+  Eq = expm(A * QUAD_S)
+  g = np.empty((K + 1, 2))
+  z = B.copy()
+  for k in range(K + 1):
+    g[k] = z[:2]
+    z = Eq @ z
+  s = np.arange(K + 1) * QUAD_S
+  for i in range(1, n_grid):
+    kk = i * per
+    w = np.full(kk + 1, QUAD_S)
+    w[0] = w[-1] = QUAD_S / 2
+    env = _env(m, i * m["grid_s"] - s[:kk + 1])
+    for j, v in enumerate(OUT):
+      a = np.abs(g[:kk + 1, j]) * w
+      out["ct"][v].append(float((a * env).sum()))
+      out["amp"][v].append(float(a.sum() * m["u_max"]))
+  return out
+
+
+def mag(d: dict, v: str, i: int) -> float:
+  return max(d[f"{v}_hi"][i], -d[f"{v}_lo"][i])
+
+
 def containment(b: dict, s: dict) -> dict:
-  """Worst excess of the sampled envelopes over the 'both' bounds (<= 0 means inside), per check and output."""
-  both = b["both"]
+  """Worst excess of the sampled envelopes over the dt bounds (<= 0 means inside), per check and output."""
+  dt = b["dt"]
   wide = {"y": s["max_linearisation_error_y_m"], "psi": s["max_linearisation_error_psi_rad"]}
   out = {}
   for name, pre, widen in (("linear", "lin_", False), ("nonlinear", "", True)):
-    for v in ("y", "psi"):
+    for v in OUT:
       w = wide[v] if widen else 0.0
-      hi = max(x - h - w for x, h in zip(s[f"{pre}{v}_max"], both[f"{v}_hi"], strict=True))
-      lo = max(lb - w - x for x, lb in zip(s[f"{pre}{v}_min"], both[f"{v}_lo"], strict=True))
+      hi = max(x - h - w for x, h in zip(s[f"{pre}{v}_max"], dt[f"{v}_hi"], strict=True))
+      lo = max(lb - w - x for x, lb in zip(s[f"{pre}{v}_min"], dt[f"{v}_lo"], strict=True))
       out[(name, v)] = max(hi, lo)
   return out
 
 
 def idx(s: dict, t: float) -> int:
   return round(t / (s["t"][1] - s["t"][0]))
-
-
-def rows(b: dict, s: dict, ex: dict, v: str, times) -> list[tuple]:
-  out = []
-  for t in times:
-    i = idx(s, t)
-    nl = max(s[f"{v}_max"][i], -s[f"{v}_min"][i])
-    li = max(s[f"lin_{v}_max"][i], -s[f"lin_{v}_min"][i])
-    bd = max(b["both"][f"{v}_hi"][i], -b["both"][f"{v}_lo"][i])
-    e = ex["env"][v][i]
-    out.append((t, nl, li, e, bd, bd / e if e > 0 else math.inf, li / e if e > 0 else math.nan))
-  return out
 
 
 def g(x: float) -> str:
@@ -116,17 +134,18 @@ def table(b: dict, s: dict, m: dict, ex: dict) -> str:
   tk = s["takeover_s"]
   times = sorted(set(TIMES) | {tk, m["horizon_s"]})
   verdict = {k: ("inside" if x <= TOL else f"OUTSIDE by {x:.3g}") for k, x in c.items()}
+  models = sorted(b["ct"])
   lines = [
     "# Reachability pilot: reach-set bounds against sampled fault runs",
     "",
     "Synthetic data (DSR-12), no evidence credit (WP-V-02 §5.3). Generated by "
     "[`reach_compare.py`](../reach_compare.py) from [`bounds.json`](../bounds.json) (Julia "
-    f"{b['julia']}, ReachabilityAnalysis.jl GLGM06, δ = {b['delta']:g} s) and [`samples.json`](../samples.json) "
+    f"{b['julia']}, [`reach.jl`](../reach.jl)) and [`samples.json`](../samples.json) "
     f"({s['runs']} runs, seed {s['seed']}). Case: straight road, {m['speed_kph']:g} km/h, any LKA command the panda "
     f"passes from t = 0; the driver's correction in the hard-over run (drift cue plus reaction time, plant model) is "
     f"at {tk:g} s.",
     "",
-    "## Containment",
+    "## Containment (Julia dt set)",
     "",
     "| Check | y | ψ |",
     "|---|---|---|",
@@ -137,25 +156,45 @@ def table(b: dict, s: dict, m: dict, ex: dict) -> str:
     "",
     "The set bounds the linear model. The widening is measured on these runs, not proven.",
     "",
+    "## Continuous-time sets (ReachabilityAnalysis.jl GLGM06)",
+    "",
+    f"δ = {b['delta_ct']:g} s, envelope segments of {b['segment_s']:g} s, zonotope order {b['order_ct']} between "
+    "segments.",
+    "",
+    "| Discretisation model | Result |",
+    "|---|---|",
   ]
+  i_tk = idx(s, tk)
+  for k in models:
+    r = b["ct"][k]
+    if "error" in r:
+      lines.append(f"| `{k}` | failed: {r['error'].splitlines()[0].replace('|', '/')} |")
+    else:
+      y = mag(r, "y", i_tk)
+      lines.append(f"| `{k}` | y bound at the takeover {g(y)} m, {g(y / ex['ct']['y'][i_tk])}× the exact value |")
+  lines.append("")
+  ok = [k for k in models if "error" not in b["ct"][k]]
   for v, unit, name in (("y", "m", "Lateral offset |y|"), ("psi", "rad", "Heading |ψ|")):
-    lines += [
-      f"## {name} ({unit}), from fault onset",
-      "",
-      "| t (s) | Sampled, plant | Sampled, linear model | Exact, linear model | Julia bound | Julia / exact | "
-      "Sampled / exact |",
-      "|---|---|---|---|---|---|---|",
-    ]
-    for t, nl, li, e, bd, r_j, r_s in rows(b, s, ex, v, times):
+    head = ["t (s)", "Sampled, plant", "Sampled, linear", "Exact dt", "Julia dt", "Julia dt / exact", "Exact ct",
+            *[f"Julia ct `{k}` / exact" for k in ok], "Exact, no panda ramp"]
+    lines += [f"## {name} ({unit}), from fault onset", "", "| " + " | ".join(head) + " |",
+              "|" + "---|" * len(head)]
+    for t in times:
+      i = idx(s, t)
+      nl = max(s[f"{v}_max"][i], -s[f"{v}_min"][i])
+      li = max(s[f"lin_{v}_max"][i], -s[f"lin_{v}_min"][i])
+      ed, ec, ea = ex["dt"][v][i], ex["ct"][v][i], ex["amp"][v][i]
+      jd = mag(b["dt"], v, i)
+      cts = [g(mag(b["ct"][k], v, i) / ec) for k in ok]
       tag = " (takeover)" if t == tk else ""
-      lines.append(f"| {t:g}{tag} | {g(nl)} | {g(li)} | {g(e)} | {g(bd)} | {g(r_j)} | {g(r_s)} |")
+      row = [f"{t:g}{tag}", g(nl), g(li), g(ed), g(jd), g(jd / ed), g(ec), *cts, g(ea)]
+      lines.append("| " + " | ".join(row) + " |")
     lines.append("")
   lines += [
-    "Julia bound: the intersection of *amp* (|u| ≤ STEER_MAX throughout) and *env* (|u| within the panda's ramp "
-    "from 0, 15 units per frame, taken continuous and held per 20 ms segment). Exact: the support function of the "
-    "linear model's reachable set for the per-frame envelope (quadrature, 0.1 ms). Julia / exact is the "
-    "over-approximation of the reachability computation; sampled / exact is how close the random runs came to the "
-    "worst case. Sampled columns are the largest value over all runs.",
+    "Julia dt: the zonotope recursion for commands held per plant step (5 ms), exact up to rounding. Exact dt and "
+    "exact ct: computed in Python, independently of Julia (support function: sum per plant step, or integral by "
+    "quadrature). Exact, no panda ramp: |u| ≤ STEER_MAX from t = 0. Sampled columns: the largest value over all "
+    "runs.",
     "",
   ]
   return "\n".join(lines)
@@ -195,13 +234,14 @@ def figure(b: dict, s: dict, m: dict, ex: dict) -> str:
          'aria-labelledby="t d">',
          '<title id="t">Reachability pilot: lateral offset and heading bounds against sampled fault runs</title>',
          '<desc id="d">Synthetic data (DSR-12), no evidence credit. Upper bound of the reachable lateral offset and '
-         'heading under any LKA command the panda passes, from fault onset, with the largest value over the sampled '
-         'runs of the nonlinear plant, the exact bound of the linear model, and the driver correction time of the '
-         'hard-over run.</desc>', STYLE,
+         'heading under any LKA command the panda passes, from fault onset: the Julia set for commands held per plant '
+         'step, the exact bound for any command within the panda envelope and without the panda ramp, the largest '
+         'value over the sampled runs of the nonlinear plant, and the driver correction time of the hard-over '
+         'run.</desc>', STYLE,
          f'<rect class="bg" width="{W}" height="{H}"/>',
          _t(40, 36, f"Reach-set bound vs sampled LKA torque faults · {m['speed_kph']:g} km/h, straight road", "th"),
-         _t(40, 56, f"Julia {b['julia']}, ReachabilityAnalysis.jl GLGM06; {s['runs']} sampled runs, real panda code, "
-                    "nonlinear L1 plant", "t2"),
+         _t(40, 56, f"Julia {b['julia']} with LazySets; {s['runs']} sampled runs, real panda code, nonlinear L1 plant",
+            "t2"),
          _t(W - 40, 36, "Synthetic data (DSR-12) · no evidence credit", "t2", "end"),
          _t(W - 40, 56, "generated by assurance/sim/reach/reach_compare.py", "t2", "end")]
   panels = (("y", "A · Lateral offset |y| (m)", 1.0, 90, 330), ("psi", "B · Heading |ψ| (deg)", 180 / math.pi, 390, 600))
@@ -211,16 +251,20 @@ def figure(b: dict, s: dict, m: dict, ex: dict) -> str:
     return x0 + tt / T * (x1 - x0)
 
   for v, title, k, y0, y1 in panels:
-    hi = [max(h, -lo) * k for h, lo in zip(b["both"][f"{v}_hi"], b["both"][f"{v}_lo"], strict=True)]
-    amp = [max(h, -lo) * k for h, lo in zip(b["amp"][f"{v}_hi"], b["amp"][f"{v}_lo"], strict=True)]
+    hi = [mag(b["dt"], v, i) * k for i in range(len(t))]
+    amp = [a * k for a in ex["amp"][v]]
+    exa = [a * k for a in ex["ct"][v]]
     smp = [max(a, -c) * k for a, c in zip(s[f"{v}_max"], s[f"{v}_min"], strict=True)]
-    exa = [e * k for e in ex["env"][v]]
     top = max(max(hi), max(smp), max(amp)) * 1.08
     step = 10 ** math.floor(math.log10(top / 4))
     step *= 5 if top / step > 20 else 2 if top / step > 8 else 1
 
     def Y(val, y0=y0, y1=y1, top=top):
       return y1 - min(val, top) / top * (y1 - y0)
+
+    def line(vals, cls, Y=Y):
+      pts = " ".join(f"{X(tt):.1f},{Y(a):.1f}" for tt, a in zip(t, vals, strict=True))
+      return f'<polyline class="{cls}" points="{pts}"/>'
 
     out.append(_t(x0, y0 - 12, title, "tb"))
     gv = 0.0
@@ -231,17 +275,17 @@ def figure(b: dict, s: dict, m: dict, ex: dict) -> str:
     for tt in [i * 0.5 for i in range(int(T / 0.5) + 1)]:
       out.append(_t(X(tt), y1 + 16, f"{tt:g} s", "t2", "middle"))
     out.append(f'<line x1="{x0}" y1="{y1}" x2="{x1}" y2="{y1}" class="axis"/>')
-    band = [f"{X(tt):.1f},{Y(h):.1f}" for tt, h in zip(t, hi, strict=True)]
-    out.append(f'<polygon class="band" points="{X(0):.1f},{Y(0):.1f} {" ".join(band)} {X(T):.1f},{Y(0):.1f}"/>')
-    out.append(f'<polyline class="amp" points="{" ".join(f"{X(tt):.1f},{Y(a):.1f}" for tt, a in zip(t, amp, strict=True))}"/>')
-    out.append(f'<polyline class="bound" points="{" ".join(band)}"/>')
-    out.append(f'<polyline class="exact" points="{" ".join(f"{X(tt):.1f},{Y(a):.1f}" for tt, a in zip(t, exa, strict=True))}"/>')
-    out.append(f'<polyline class="samp" points="{" ".join(f"{X(tt):.1f},{Y(a):.1f}" for tt, a in zip(t, smp, strict=True))}"/>')
+    band = " ".join(f"{X(tt):.1f},{Y(h):.1f}" for tt, h in zip(t, hi, strict=True))
+    out.append(f'<polygon class="band" points="{X(0):.1f},{Y(0):.1f} {band} {X(T):.1f},{Y(0):.1f}"/>')
+    out.append(line(amp, "amp"))
+    out.append(f'<polyline class="bound" points="{band}"/>')
+    out.append(line(exa, "exact"))
+    out.append(line(smp, "samp"))
     out.append(f'<line x1="{X(tk):.1f}" y1="{y0}" x2="{X(tk):.1f}" y2="{y1}" class="take"/>')
     out.append(_t(X(tk) - 4, y0 + 12, f"driver correction, hard-over ({tk:g} s)", "t2", "end"))
   ly = H - 14
-  for i, (cls, label) in enumerate((("bound", "Julia reach-set bound"), ("amp", "Julia, without the panda ramp"),
-                                    ("exact", "exact bound, linear model"), ("samp", "largest sampled run, plant"))):
+  for i, (cls, label) in enumerate((("bound", "Julia set (held per 5 ms step)"), ("exact", "exact, any input in envelope"),
+                                    ("amp", "exact, without the panda ramp"), ("samp", "largest sampled run, plant"))):
     lx = x0 + i * 225
     out.append(f'<line x1="{lx}" y1="{ly - 4}" x2="{lx + 28}" y2="{ly - 4}" class="{cls}"/>')
     out.append(_t(lx + 34, ly, label, "t2"))
@@ -259,6 +303,14 @@ def same(a, b) -> bool:
   return a == b
 
 
+def comparable(b: dict) -> dict:
+  """The bounds without run times (they differ run to run)."""
+  c = json.loads(json.dumps(b))
+  for r in c.get("ct", {}).values():
+    r.pop("seconds", None)
+  return c
+
+
 def main(argv) -> int:
   if "--bounds" not in argv:
     print(__doc__, file=sys.stderr)
@@ -271,7 +323,7 @@ def main(argv) -> int:
     print(f"reach compare: {name:9s} {v:3s} worst excess {x:.3g} ({'inside' if x <= TOL else 'OUTSIDE'})")
   if "--check" in argv:
     stale = []
-    if not BOUNDS.exists() or not same(fresh, load(BOUNDS)):
+    if not BOUNDS.exists() or not same(comparable(fresh), comparable(load(BOUNDS))):
       stale.append(BOUNDS.name)
     else:
       b = load(BOUNDS)

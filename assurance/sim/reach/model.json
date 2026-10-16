@@ -73,6 +73,7 @@
  "frame_s": 0.01,
  "grid_s": 0.01,
  "horizon_s": 3.0,
+ "plant_step_s": 0.005,
  "speed_kph": 110.0,
  "u_max": 1500,
  "u_step": 15
