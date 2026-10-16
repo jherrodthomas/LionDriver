@@ -4,9 +4,9 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.13 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.14 | draft | BL-005 | RT-2 | 2026-10-16 |
 
-**Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven on public roads by a licensed driver. Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
+**Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
 **Team.** Jherrod Thomas (Project maintainer, safety lead (reviewer/approver)); Claude (AI assistant) (Drafting assistance; content requires human review)
 
@@ -388,7 +388,7 @@ Safety mechanisms: (1) NO_ENTRY events block engagement (state.py) · (2) Toyota
 
 [Monitoring and system response](#7-monitoring-and-system-response): `SFM-013.C1` mechanism 2: M 7 · F 6 · S after response 4 → 🔴 **H**<br>`SFM-013.C2` mechanism 2: M 7 · F 6 · S after response 4 → 🔴 **H**
 
-<sub>Note: HARA input: unintended engagement.</sub>
+<sub>Note: HARA input: unintended engagement. Engagement outside the ODD (off the highway, WP-C-03 v0.4 OS-03/04/15/16) is not prevented by the item; it is foreseeable misuse rated in the HARA and WP-C-08, not a fault cause of this failure mode.</sub>
 
 #### SFM-014 · Fails to disengage when a fault requires it
 
@@ -622,7 +622,7 @@ Safety mechanisms: (1) Lockout after repeated non-response prevents re-engagemen
 
 [Monitoring and system response](#7-monitoring-and-system-response): `SFM-025.C1` mechanism 1: M 10 · F 8 · S after response 10 → 🔴 **H**
 
-<sub>Note: Observation: in BL-001, events.py maps driverDistracted3 and driverUnresponsive3 only to an ET.PERMANENT alert; no SOFT_DISABLE/IMMEDIATE_DISABLE is attached, so reaching awareness 0 does not by itself disengage. This may be a deliberate design choice (avoid dropping control on an incapacitated driver). It needs an explicit safety-concept decision (SFM-ACT-005); unchanged at BL-004 and BL-005. HARA input: driver incapacitated while engaged. Lead decision DQ-205 (2026-10-14, option A): the unresponsive driver is its own hazard with an ASIL A goal (here HZ-013, SG-010; H-09 in WP-C-03 once the HARA adds it), and its safe state is defined together with the zero-awareness reaction.</sub>
+<sub>Note: Observation: in BL-001, events.py maps driverDistracted3 and driverUnresponsive3 only to an ET.PERMANENT alert; no SOFT_DISABLE/IMMEDIATE_DISABLE is attached, so reaching awareness 0 does not by itself disengage. This may be a deliberate design choice (avoid dropping control on an incapacitated driver). It needs an explicit safety-concept decision (SFM-ACT-005); unchanged at BL-004 and BL-005. HARA input: driver incapacitated while engaged. Lead decision DQ-205 (2026-10-14, option A): the unresponsive driver is its own hazard with an ASIL A goal (here HZ-013, SG-010; H-09 and SG-08, ASIL A, in WP-C-03 v0.4), and its safe state is defined together with the zero-awareness reaction.</sub>
 
 #### SFM-026 · Takeover or disengagement alert not presented
 
@@ -848,7 +848,7 @@ Safety mechanisms: (1) stockAeb (PRE_COLLISION PRECOLLISION_ACTIVE with negative
 | SFM-ACT-001 | design_change | Derive steering and acceleration envelopes from measurements on the reference vehicle and set the panda limits from them, independently of the SoC limits (same as SWF-ACT-003, FSC FOI-001) | Jherrod Thomas | open | SFM-002.C1, SFM-002.C2, SFM-002.C3, SFM-002.C4, SFM-004.C1, SFM-008.C1, SFM-008.C2, SFM-009.C2, SFM-029.C2 | — |
 | SFM-ACT-002 | detection | Requirements-based tests for the host safety-relevant functions (selfdrived, controlsd, pandad, car interface, locationd bounds, monitoring policy), proven by mutation or fault injection and run as a CI gate (see SWF host actions) | Jherrod Thomas | open | SFM-002.C4, SFM-004.C3, SFM-005.C3, SFM-006.C2, SFM-006.C3, SFM-008.C1, SFM-023.C1, SFM-023.C2, SFM-030.C1 | — |
 | SFM-ACT-003 | detection | Execute system integration and vehicle verification on the reference car (WP-S-08, WP-S-09) and the HIL bench (D-04): steering sign and torque response, EPS and powertrain interface behaviour (lockouts, ignored requests), brake, accelerator and cancel paths, intercept-switch and harness faults, 12 V interruptions, alert latency and audibility, CPU-load soak | Jherrod Thomas | open | SFM-003.C1, SFM-003.C2, SFM-003.C4, SFM-004.C2, SFM-004.C3, SFM-005.C1, SFM-007.C2, SFM-008.C3, SFM-008.C4, SFM-009.C3, SFM-010.C3, SFM-011.C1, SFM-012.C1, SFM-013.C2, SFM-015.C3, SFM-017.C1, SFM-018.C1, SFM-019.C1, SFM-020.C1, SFM-022.C3, SFM-026.C2, SFM-027.C1, SFM-028.C2, SFM-031.C1, SFM-033.C3 | — |
-| SFM-ACT-005 | design_change | Decide in the FSC how the item reacts when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction at BL-004 or BL-005) and implement the decision. DQ-205 (answered) makes this the safe state of SG-010 (ASIL A); the reaction itself is still to be decided | Jherrod Thomas | decision_pending | SFM-025.C1 | — |
+| SFM-ACT-005 | design_change | Decide in the FSC how the item reacts when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction at BL-004 or BL-005) and implement the decision. DQ-205 (answered) makes this the safe state of SG-010 (WP-C-03 SG-08, ASIL A); the reaction itself is still to be decided | Jherrod Thomas | decision_pending | SFM-025.C1 | — |
 | SFM-ACT-006 | detection | Establish on the reference car which stock TSS2 functions (PCS/AEB, FCW) remain available with LionDriver installed and longitudinal control enabled, and verify the stock pre-collision path after installation (PFMEA PFM-014) | Jherrod Thomas | open | SFM-010.C2, SFM-033.C1, SFM-033.C2, SFM-036.C2 | — |
 | SFM-ACT-007 | design_change | Supervise the alert channels: treat loss of ui or soundd liveness, or a stale displayed state, as a fault that escalates (audible fallback, disengagement) instead of continuing silently | Jherrod Thomas | open | SFM-015.C1, SFM-026.C1, SFM-026.C2, SFM-026.C3, SFM-028.C1 | — |
 | SFM-ACT-008 | design_change | Allow engagement only when the fingerprint, CarParams and panda safety parameter match the reference configuration AC-001 (refuse fuzzy matches in the reference build); see PFMEA PFM-013 | Jherrod Thomas | in_progress | SFM-032.C1 | — |

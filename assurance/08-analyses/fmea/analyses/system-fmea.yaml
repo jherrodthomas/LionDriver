@@ -52,6 +52,9 @@
 # through, M 10 (dual point with C1).
 # Also rev 0.13: new SFM-036 (item keeps requesting acceleration while stock PCS brakes), backing FTA BE-7.13; action SFM-ACT-020
 # waits on the lead (DQ-300, queued).
+# Rev 0.14 (2026-10-16): taken in from WP-C-03 v0.4 (HARA session, #96): scope is the highway-only ODD (DQ-023); H-09 and SG-08
+# cited on SFM-025 and SFM-ACT-005 (the hara-mapping already maps HZ-013 -> H-09, SG-010 -> SG-08); SFM-013 notes that
+# engagement outside the ODD is misuse, not a fault cause. No rating changes.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -60,14 +63,14 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.13"
+  revision: "0.14"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
   msr: complete
   scope: >-
     LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda,
-    software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven on public roads by a licensed driver.
+    software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023).
     Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are
     preserved), added because the harness intercepts the stock ADAS camera.
   out_of_scope:
@@ -1800,7 +1803,9 @@ failure_modes:
             basis: code_derived
           actions:
           - SFM-ACT-017
-    notes: "HARA input: unintended engagement."
+    notes: >-
+      HARA input: unintended engagement. Engagement outside the ODD (off the highway, WP-C-03 v0.4 OS-03/04/15/16) is not
+      prevented by the item; it is foreseeable misuse rated in the HARA and WP-C-08, not a fault cause of this failure mode.
 
   - id: SFM-014
     element: SFM-SE-001
@@ -2687,7 +2692,7 @@ failure_modes:
       by itself disengage. This may be a deliberate design choice (avoid dropping control on an
       incapacitated driver). It needs an explicit safety-concept decision (SFM-ACT-005); unchanged at BL-004 and BL-005.
       HARA input: driver incapacitated while engaged. Lead decision DQ-205 (2026-10-14, option A): the unresponsive
-      driver is its own hazard with an ASIL A goal (here HZ-013, SG-010; H-09 in WP-C-03 once the HARA adds it), and its
+      driver is its own hazard with an ASIL A goal (here HZ-013, SG-010; H-09 and SG-08, ASIL A, in WP-C-03 v0.4), and its
       safe state is defined together with the zero-awareness reaction.
 
   # ----- F6 Alerting -----
@@ -3478,7 +3483,7 @@ actions:
   - id: SFM-ACT-005
     kind: design_change
     description: Decide in the FSC how the item reacts when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction
-      at BL-004 or BL-005) and implement the decision. DQ-205 (answered) makes this the safe state of SG-010 (ASIL A); the
+      at BL-004 or BL-005) and implement the decision. DQ-205 (answered) makes this the safe state of SG-010 (WP-C-03 SG-08, ASIL A); the
       reaction itself is still to be decided
     owner: Jherrod Thomas
     status: decision_pending
