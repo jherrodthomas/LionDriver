@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-06 Functional insufficiencies and triggering conditions analysis |
 | Standard reference | ISO 21448:2022 §7 (identification and evaluation of functional insufficiencies and triggering conditions); ISO/PAS 8800:2024 (AI error causes, informative) |
-| Version | 0.3 (TC-12 resolution follows the highway-only ODD, decision register DQ-023; 2026-10-16). 0.2 (Figure 5-1 added: TC → FI → SH chain; 2026-10-13). 0.1 |
+| Version | 0.4 (TC-20 at the 110 km/h ODD bound, decision register DQ-260; 2026-10-16). 0.3 (TC-12 resolution follows the highway-only ODD, decision register DQ-023; 2026-10-16). 0.2 (Figure 5-1 added: TC → FI → SH chain; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -85,7 +85,7 @@ The driving model is a black box from LionDriver's point of view: training data 
 | TC-17 | Crest with limited sight distance (lead or stationary object hidden) | Geometry | domain |
 | TC-18 | Tunnel entry/exit (lighting change; GNSS loss) | Infrastructure (not validated) | `LIMITATIONS.md:53`; domain |
 | TC-19 | Device mount disturbed, windscreen dirty, sticker or wrap over camera area | Vehicle / installation | `LIMITATIONS.md:11-13` |
-| TC-20 | Speed above training distribution (> 120 km/h, and > 149 km/h) | Operation | `events.py:988-996` |
+| TC-20 | Speed above the ODD bound (> 110 km/h since DQ-260) and above training distribution (> 149 km/h) | Operation | `events.py:988-996` |
 | TC-21 | Extreme ambient temperature (device throttling, sensor effects) | Environment | `LIMITATIONS.md:17, 41` |
 | TC-22 | Big model load/fail event (eGPU disconnected, timeout) | System (Chestnut) | `modeld.py:234-235, 266-283, 411-419` |
 | TC-23 | Inter-process message delays or drops within the 10× "alive" window; process restart | System | `cereal/messaging/__init__.py:152-153`; GAP-16 |
