@@ -116,18 +116,22 @@ baselines:
   - id: BL-005
     status: proposed
     description: >-
-      BL-004 plus liondriver-dev #36-#86. The reference build is now the default: openpilot's SConstruct builds the panda
-      firmware and pandad with LIONDRIVER_REFERENCE=1 unless it is set empty (#36, #41), pandad refuses a car safety mode on
-      a panda without HEALTH_FLAG_REFERENCE_BUILD (TSR-619, panda#12) and the release script selects the reference variant
-      (#80, CI job panda_reference_release_build). Firmware: siren on a persistent EPS fault and on heartbeat-loss
-      revocation (panda#14, #15), ELM327 refused after the car mode until ignition off (panda#16), assist-active LKAS_HUD
-      refused without authority (opendbc#13), TX arrival supervision (opendbc#11, TSR-408), PCM-edge grant gated on the
-      heartbeat's engaged flag (opendbc#14). Host: selfdrived reacts to the panda's TX-rate, heartbeat-loss and TX-blocked
-      flags and to a controlsAllowed mismatch within 0.5 s, cruiseMismatch alert after 1 s, controlsd input freshness and
-      non-finite guards (#51, TSR-615, TSR-621, TSR-602, TSR-308), pandaStates fault mapping (#48), Chill mode by default
-      (#74), assured-configuration logging (CA-008) and the stock AEB interlock (CA-001). Not included: opendbc#15 (no
-      re-grant while a TX-rate excess persists, DQ-079; no authority after a mode change without a new engagement, DQ-080)
-      and opendbc#16, merged in the fork but not pinned.
+      BL-004 plus liondriver-dev up to #86 (2026-10-16). The reference build is now the default: the root SConstruct
+      sets LIONDRIVER_REFERENCE=1 unless it is set empty (LionDriver #36), pandad configures a car safety mode only on a
+      panda that reports a reference build (#41, panda#12) and the release script selects the reference variant by
+      default (RELEASE_VARIANT, #80), so the reference-only features of BL-004 are active in a default build. Firmware:
+      siren on a persistent EPS fault (panda#14) and when heartbeat loss revokes granted authority (panda#15, all
+      builds), ELM327 refused after the car mode until ignition off (panda#16); arrival supervision of STEERING_LKA and
+      ACC_CONTROL (opendbc#11), assist-active LKAS_HUD refused without authority (opendbc#13), authority on a PCM edge
+      only with the heartbeat's engaged flag (opendbc#14), reference variant mutation-tested (opendbc#12). Host: selfdrived
+      disables at once on panda TX-rate revocation, heartbeat loss and a rising safetyTxBlocked while engaged (TSR-615),
+      controlsMismatch after 2 consecutive samples and within 0.5 s (TSR-621, 0.3 s engagement grace), cruiseMismatch
+      alerts after 1 s (TSR-308), controlsd does not actuate on stale or non-finite inputs (TSR-602; LionDriver #51, #70);
+      pandad never defaults a fault entry to relayMalfunction (#48); alpha longitudinal refused where it would disable
+      stock AEB (#79); Chill mode default (#74). Proposed, not merged and not in BL-005: wrong-length RX frame as an RX
+      fault, no re-engagement while a TX-rate excess persists, no authority after a safety-mode change without a new
+      engagement (opendbc branch at a0938fa; the last two merged in the opendbc fork as #15, 9859cb0, but not pinned:
+      DQ-079, DQ-080, SW FMEA SWF-ACT-054).
     vehicle:
       make: Toyota
       model: Corolla
