@@ -4046,7 +4046,9 @@
       title: "Disengage at once with the siren"
       detail: "No extra development. Cost: an unsupervised car with no steering and no braking from the item; the worst outcome for an unresponsive driver."
   sources: ["assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-ACT-005, SFM-025.C1", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7"]
-  status: queued
+  asked: 2026-10-16
+  status: withdrawn
+  note: "Same question as DQ-365 (reaction to an unresponsive driver at the last alert); merged into DQ-365, which now lists TSR-633 and SFM-ACT-005 in its blocks."
 
 - id: DQ-341
   question: "Three goals are now ASIL C, so the panda safety envelope needs ASIL C even if steering drops to B. Harden it to C, or plan a second independent checker?"
@@ -4156,7 +4158,9 @@
     - assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062
     - assurance/08-analyses/fmea/analyses/fsc.yaml FSR-040
     - openpilot/selfdrive/monitoring/policy.py:379-400
-  status: queued
+  asked: 2026-10-16
+  status: withdrawn
+  note: "Same question as DQ-365 (reaction to an unresponsive driver at the last alert); merged into DQ-365, which now lists FSR-040, SWF-062 and SWF-ACT-059 in its blocks."
 - id: DQ-221
   question: "If the driver switches to a setting the safety analyses don't cover (shorter following distance, Experimental mode), should the item refuse to engage, or only log it?"
   context: "The defaults are the assured values: Chill mode (DQ-001) and the relaxed following distance (CA-011). While driving, the distance button still cycles the following distance and Experimental mode can be switched on, and **both are only logged**. The analyses of record assume the assured values, so a drive in another setting is unassured but allowed."
@@ -4356,7 +4360,7 @@
   question: "When the driver does not respond to the last driver-monitoring alert, what should LionDriver do: stop in the lane and stay stopped, or stop and then hand back control?"
   context: "Today, about 5 s after the last alert (≈ 18 s after the driver looks away), LionDriver slows the car to a stop in its lane. But it **stays engaged**: it never disengages, and the lockout that blocks re-engagement only starts after a disengagement. The new goal SG-08 (unresponsive driver, ASIL A) needs this reaction written down as its safe state, and the FTTI follows from it. What the car does when held at standstill under ACC has not been checked on the reference Corolla."
   reversibility: revisit
-  blocks: "SG-08 safe state and FTTI (WP-C-03 OI-10, WP-S-04); System FMEA SFM-ACT-005; TSR-611; WP-A-04 §13 (F-38)"
+  blocks: "SG-08 safe state and FTTI (WP-C-03 OI-10, WP-S-04); TSR-611, TSR-633; FSR-040 / FSR-02.09; System FMEA SFM-ACT-005; SW FMEA SWF-062 / SWF-ACT-059; WP-A-04 §13 (F-38)"
   gate: G1
   decider: lead
   after: [DQ-205]
@@ -4364,14 +4368,15 @@
     - key: A
       recommended: true
       title: "Stop in lane and stay stopped, with re-engagement locked out"
-      detail: "Keep today's stop. Hold the car at standstill and lock out re-engagement until the driver responds, so the item cannot drive off again. Cost: a lockout change, and a vehicle test that the standstill hold lasts."
+      detail: "Keep today's stop: steering stays on while the car slows in its lane (about 10 s from 30 m/s at 3 m/s²) and the alert keeps sounding. Hold the car at standstill and lock out re-engagement until the driver responds, so the item cannot drive off again. Close to the minimum-risk manoeuvre of automated lane keeping (UN R157). Cost: a lockout change, possibly hazard lights, and a vehicle test that the standstill hold lasts."
     - key: B
       title: "Stop in lane, then disengage and hand back control"
       detail: "Once stopped, cancel ACC and lock out. Cost: what the car does after the cancel at standstill (hold or roll) must be tested, and an incapacitated driver may not hold the brake."
     - key: C
       title: "Disengage at the last alert without stopping"
       detail: "Simplest. Cost: an incapacitated driver gets an uncontrolled vehicle at highway speed; not recommended."
-  sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-35, UCA-21, CC-17", "assurance/08-analyses/fta-fmea-mapping.md F-38", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §13", "assurance/02-concept/WP-C-03-hara.md OI-10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-025"]
+  sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-35, UCA-21, CC-17", "assurance/08-analyses/fta-fmea-mapping.md F-38", "assurance/08-analyses/WP-A-04-system-fta-fmea.md §13", "assurance/02-concept/WP-C-03-hara.md OI-10", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-025, SFM-ACT-005", "assurance/08-analyses/fmea/analyses/sw-fmea.yaml SWF-062", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7", "openpilot/selfdrive/monitoring/policy.py:379-400"]
+  note: "Also asked as DQ-220 (SW FMEA), DQ-281 (STPA) and DQ-340 (safety concept); merged here so the lead answers once."
   status: queued
 
 - id: DQ-320
