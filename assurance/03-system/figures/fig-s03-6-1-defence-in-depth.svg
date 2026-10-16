@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="952" viewBox="0 0 1280 952" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 6-1 · Defence in depth per safety goal</title>
-<desc>Matrix of safety goals by protection layer (host SoC, safety envelope, vehicle ECUs, driver, plus operation) with TSR counts, status at the baseline and SM types. SG-01 ASIL C: host 11 TSRs partly, envelope 44 TSRs partly, vehicle 2 EXT TSRs and 1 AoUs assumed, driver 6 hazardous events rated by controllability, operation 6 TSRs; SG-02 ASIL C: host 23 TSRs partly, envelope 19 TSRs partly, vehicle 2 EXT TSRs and 1 AoUs assumed, driver 8 hazardous events rated by controllability, operation 3 TSRs; SG-03 ASIL C: host 8 TSRs partly, envelope 40 TSRs partly, vehicle 2 EXT TSRs and 3 AoUs assumed, driver 6 hazardous events rated by controllability, operation 5 TSRs; SG-04 ASIL B: host 10 TSRs partly, envelope 39 TSRs partly, vehicle 2 EXT TSRs and 2 AoUs assumed, driver 5 hazardous events rated by controllability, operation 5 TSRs; SG-05 ASIL B: host 5 TSRs partly, envelope 32 TSRs partly, vehicle 4 EXT TSRs and 3 AoUs assumed, driver 4 hazardous events rated by controllability, operation 5 TSRs; SG-06 ASIL C: host 23 TSRs partly, envelope 17 TSRs partly, vehicle 1 EXT TSRs and 1 AoUs assumed, driver 4 hazardous events rated by controllability, operation 3 TSRs; SG-07 ASIL B: host 4 TSRs partly, envelope 27 TSRs partly, vehicle 1 EXT TSRs and 1 AoUs assumed, driver 1 hazardous events rated by controllability, operation 8 TSRs; SG-08 ASIL A: host 6 TSRs partly, envelope 0 TSRs none, vehicle 0 EXT TSRs and 0 AoUs assumed, driver 2 hazardous events rated by controllability, operation 1 TSRs.</desc>
+<desc>Matrix of safety goals by protection layer (host SoC, safety envelope, vehicle ECUs, driver, plus operation) with TSR counts, status at the baseline and SM types. SG-01 ASIL C: host 11 TSRs partly, envelope 44 TSRs partly, vehicle 2 EXT TSRs and 1 AoUs assumed, driver 6 hazardous events rated by controllability, operation 6 TSRs; SG-02 ASIL C: host 24 TSRs partly, envelope 19 TSRs partly, vehicle 2 EXT TSRs and 1 AoUs assumed, driver 8 hazardous events rated by controllability, operation 3 TSRs; SG-03 ASIL C: host 8 TSRs partly, envelope 40 TSRs partly, vehicle 2 EXT TSRs and 3 AoUs assumed, driver 6 hazardous events rated by controllability, operation 5 TSRs; SG-04 ASIL B: host 10 TSRs partly, envelope 39 TSRs partly, vehicle 2 EXT TSRs and 2 AoUs assumed, driver 5 hazardous events rated by controllability, operation 5 TSRs; SG-05 ASIL B: host 6 TSRs partly, envelope 32 TSRs partly, vehicle 4 EXT TSRs and 3 AoUs assumed, driver 4 hazardous events rated by controllability, operation 5 TSRs; SG-06 ASIL C: host 24 TSRs partly, envelope 17 TSRs partly, vehicle 1 EXT TSRs and 1 AoUs assumed, driver 4 hazardous events rated by controllability, operation 3 TSRs; SG-07 ASIL B: host 5 TSRs partly, envelope 28 TSRs partly, vehicle 1 EXT TSRs and 1 AoUs assumed, driver 1 hazardous events rated by controllability, operation 8 TSRs; SG-08 ASIL A: host 6 TSRs partly, envelope 0 TSRs none, vehicle 0 EXT TSRs and 0 AoUs assumed, driver 2 hazardous events rated by controllability, operation 1 TSRs.</desc>
 <defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
 <rect x="0" y="0" width="1280" height="952" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6-1 · Defence in depth per safety goal</text>
@@ -64,12 +64,12 @@
 <text x="137" y="274" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">ASIL C</text>
 <text x="48" y="296" font-size="10.5" fill="#475569">Lateral loss without warning</text>
 <rect x="212" y="248" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
-<text x="222" y="266" font-size="12.5" fill="#0F172A" font-weight="700">23 TSRs</text>
-<rect x="222" y="274" width="45.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="269" y="274" width="53.3" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="323.7" y="274" width="76.8" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="297" font-size="10.5" fill="#475569">6 impl. · 7 partly · 10 not</text>
-<text x="222" y="311" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 8 · TMO 5 · FR 4</text>
+<text x="222" y="266" font-size="12.5" fill="#0F172A" font-weight="700">24 TSRs</text>
+<rect x="222" y="274" width="43.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<rect x="267" y="274" width="51" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="319.5" y="274" width="81" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="222" y="297" font-size="10.5" fill="#475569">6 impl. · 7 partly · 11 not</text>
+<text x="222" y="311" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 9 · TMO 5 · FR 4</text>
 <rect x="422" y="248" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="266" font-size="12.5" fill="#0F172A" font-weight="700">19 TSRs</text>
 <rect x="432" y="274" width="9.9" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
@@ -162,12 +162,12 @@
 <text x="137" y="514" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">ASIL B</text>
 <text x="48" y="536" font-size="10.5" fill="#475569">Release on driver action</text>
 <rect x="212" y="488" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
-<text x="222" y="506" font-size="12.5" fill="#0F172A" font-weight="700">5 TSRs</text>
-<rect x="222" y="514" width="34.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="258" y="514" width="34.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="294" y="514" width="106.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="537" font-size="10.5" fill="#475569">1 impl. · 1 partly · 3 not</text>
-<text x="222" y="551" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 3 · CFG 2 · WRN 1</text>
+<text x="222" y="506" font-size="12.5" fill="#0F172A" font-weight="700">6 TSRs</text>
+<rect x="222" y="514" width="28.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<rect x="252" y="514" width="28.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="282" y="514" width="118.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="222" y="537" font-size="10.5" fill="#475569">1 impl. · 1 partly · 4 not</text>
+<text x="222" y="551" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 3 · CFG 2 · WRN 2</text>
 <rect x="422" y="488" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="506" font-size="12.5" fill="#0F172A" font-weight="700">32 TSRs</text>
 <rect x="432" y="514" width="39" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
@@ -196,12 +196,12 @@
 <text x="137" y="594" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">ASIL C</text>
 <text x="48" y="616" font-size="10.5" fill="#475569">Decel. loss without warning</text>
 <rect x="212" y="568" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
-<text x="222" y="586" font-size="12.5" fill="#0F172A" font-weight="700">23 TSRs</text>
-<rect x="222" y="594" width="53.3" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="276.8" y="594" width="37.6" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="315.9" y="594" width="84.6" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="617" font-size="10.5" fill="#475569">7 impl. · 5 partly · 11 not</text>
-<text x="222" y="631" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 8 · FR 5 · TMO 4</text>
+<text x="222" y="586" font-size="12.5" fill="#0F172A" font-weight="700">24 TSRs</text>
+<rect x="222" y="594" width="51" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<rect x="274.5" y="594" width="36" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="312" y="594" width="88.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="222" y="617" font-size="10.5" fill="#475569">7 impl. · 5 partly · 12 not</text>
+<text x="222" y="631" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 9 · FR 5 · TMO 4</text>
 <rect x="422" y="568" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="586" font-size="12.5" fill="#0F172A" font-weight="700">17 TSRs</text>
 <rect x="432" y="594" width="11.2" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
@@ -228,19 +228,19 @@
 <text x="137" y="674" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">ASIL B</text>
 <text x="48" y="696" font-size="10.5" fill="#475569">Stock PCS/AEB untouched</text>
 <rect x="212" y="648" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
-<text x="222" y="666" font-size="12.5" fill="#0F172A" font-weight="700">4 TSRs</text>
-<rect x="222" y="674" width="43.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="267" y="674" width="133.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="697" font-size="10.5" fill="#475569">1 impl. · 3 not</text>
-<text x="222" y="711" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">CFG 2 · PLB 1 · WRN 1</text>
+<text x="222" y="666" font-size="12.5" fill="#0F172A" font-weight="700">5 TSRs</text>
+<rect x="222" y="674" width="34.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<rect x="258" y="674" width="142.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="222" y="697" font-size="10.5" fill="#475569">1 impl. · 4 not</text>
+<text x="222" y="711" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">CFG 2 · PLB 2 · WRN 2</text>
 <rect x="422" y="648" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
-<text x="432" y="666" font-size="12.5" fill="#0F172A" font-weight="700">27 TSRs + AOU-13</text>
-<rect x="432" y="674" width="22.5" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="456" y="674" width="94.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
-<rect x="552" y="674" width="86.5" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<rect x="640" y="674" width="6.5" height="8" rx="2" fill="#94A3B8" stroke="none" stroke-width="0"/>
-<text x="432" y="697" font-size="10.5" fill="#475569">3 impl. · 12 partly · 11 not · 1 assumed</text>
-<text x="432" y="711" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 10 · FR 6 · CFG 4</text>
+<text x="432" y="666" font-size="12.5" fill="#0F172A" font-weight="700">28 TSRs + AOU-13</text>
+<rect x="432" y="674" width="21.6" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<rect x="455.1" y="674" width="91.1" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="547.7" y="674" width="91.1" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<rect x="640.3" y="674" width="6.2" height="8" rx="2" fill="#94A3B8" stroke="none" stroke-width="0"/>
+<text x="432" y="697" font-size="10.5" fill="#475569">3 impl. · 12 partly · 12 not · 1 assumed</text>
+<text x="432" y="711" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 11 · FR 7 · CFG 4</text>
 <rect x="1076" y="648" width="164" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="1086" y="666" font-size="12.5" fill="#0F172A" font-weight="700">8 TSRs + AOU-14</text>
 <rect x="1086" y="674" width="124.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
