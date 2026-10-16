@@ -38,6 +38,10 @@
 # Rev 0.10 (2026-10-16): the lead's answers that set System FMEA effects or actions recorded; no rating changes (the decided
 # behaviour is not implemented at BL-005). DQ-060 -> new action SFM-ACT-019 on SFM-002; DQ-053 -> SFM-ACT-016 behaviour
 # fixed; DQ-022 -> SFM-020 note; DQ-205 -> SFM-025 note and SFM-ACT-005.
+# Rev 0.11 (2026-10-16): the closed-loop plant model (assurance/sim, plant 776239d, real panda safety code in the loop) cited as
+# evidence on 13 MSR rows (SFM-001/002/005/006/008/009), per msr-plan §4.2: a cross-check of the code-derived times, no rating
+# change, no credit for EPS, PCM or driver behaviour (model assumptions). It confirms the TSR-408 revoke at 43 ms (F-04b) and
+# that frozen in-envelope commands get no panda reaction (F-03, L-01, L-03).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -46,7 +50,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.10"
+  revision: "0.11"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
@@ -261,6 +265,8 @@ failure_modes:
               mutation-tested in CI (safety.yaml mutation job)
             test: opendbc_repo/opendbc/safety/tests/test_toyota.py
             ref: .github/workflows/safety.yaml
+          - description: 'Plant model F-02: torque request while not engaged refused by the real panda code from the first frame (0.000 s). Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md F-02 (plant 776239d)
           actions:
           - SFM-ACT-012
       - id: SFM-001.C2
@@ -331,6 +337,8 @@ failure_modes:
               mutation-tested in CI (safety.yaml mutation job)
             test: opendbc_repo/opendbc/safety/tests/test_toyota.py
             ref: .github/workflows/safety.yaml
+          - description: 'Plant model F-02: torque request while not engaged refused by the real panda code from the first frame (0.000 s). Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md F-02 (plant 776239d)
           actions:
           - SFM-ACT-012
     notes: "HARA input: unintended steering intervention during manual driving."
@@ -397,6 +405,10 @@ failure_modes:
               mutation-tested in CI (safety.yaml mutation job)
             test: opendbc_repo/opendbc/safety/tests/test_toyota.py
             ref: .github/workflows/safety.yaml
+          - description: 'Plant model F-01a, F-01a-H: over-limit torque refused at 0.000 s; whether assist then stops in 0.33 s or is held 2.3 s depends on the assumed EPS behaviour (M-02). Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md F-01a, F-01a-H (plant 776239d)
+          - description: 'Plant model F-01b: a hard-over ramp inside the envelope gets no panda reaction; the driver corrects only after the drift cue. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md F-01b (plant 776239d)
           actions:
           - SFM-ACT-012
       - id: SFM-002.C2
@@ -438,6 +450,8 @@ failure_modes:
               mutation-tested in CI (safety.yaml mutation job)
             test: opendbc_repo/opendbc/safety/tests/test_toyota.py
             ref: .github/workflows/safety.yaml
+          - description: 'Plant model F-01a, F-01b: over-limit torque refused at 0.000 s; an in-envelope hard-over gets no panda reaction. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md F-01a, F-01b (plant 776239d)
           actions:
           - SFM-ACT-012
       - id: SFM-002.C3
@@ -521,6 +535,8 @@ failure_modes:
               mutation-tested in CI (safety.yaml mutation job)
             test: opendbc_repo/opendbc/safety/tests/test_toyota.py
             ref: .github/workflows/safety.yaml
+          - description: 'Plant model F-01a, F-01a-H: over-limit torque refused at 0.000 s; torque decay after the refusal depends on the assumed EPS behaviour (M-02). Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md F-01a, F-01a-H (plant 776239d)
           actions:
           - SFM-ACT-012
     notes: >-
@@ -879,6 +895,8 @@ failure_modes:
             ref: .github/workflows/safety.yaml
           - description: controlsMismatch sample and time bounds unit-tested (tests.yaml unit_tests); not mutation-tested
             test: openpilot/selfdrive/selfdrived/tests/test_supervision.py
+          - description: 'Plant model F-04b: SoC stall: the real panda code revokes authority 0.043 s after the last frame (TSR-408); the host alert path is not in the model. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md F-04b (plant 776239d)
           rationale: M 6, not 5. The panda half is mutation-tested; the host half that raises the alert is only unit-tested, and
             nothing is measured (SFM-ACT-012). The 0.5 s FRTI is the TSR-621 bound; two 10 Hz samples give about 0.2 s nominally
           actions:
@@ -969,6 +987,9 @@ failure_modes:
             fdti_ms: 160
             frti_ms: 2000
             basis: code_derived
+          evidence:
+          - description: 'Plant model F-04b, F-04b-H: SoC stall: authority revoked at 0.043 s (TSR-408); EPS torque below 5 % at 0.33 s if the EPS releases, 2.3 s if it holds (assumption, M-02), which is why this row stays M 8. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md F-04b, F-04b-H (plant 776239d)
           actions:
           - SFM-ACT-015
       - id: SFM-006.C2
@@ -1001,6 +1022,9 @@ failure_modes:
           ap: H
           timing:
             basis: unknown
+          evidence:
+          - description: 'Plant model F-03: command frozen at curve entry with the heartbeat alive: no panda reaction; only the drift cue to the driver at 1.4 s, which supports M 9. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md F-03 (plant 776239d)
           actions:
           - SFM-ACT-015
       - id: SFM-006.C3
@@ -1134,6 +1158,9 @@ failure_modes:
           ap: H
           timing:
             basis: unknown
+          evidence:
+          - description: 'Plant model L-01: acceleration at the envelope maximum: no panda reaction until the driver brakes (revoked at 1.61 s), which supports M 9. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md L-01 (plant 776239d)
           actions:
           - SFM-ACT-001
           - SFM-ACT-002
@@ -1177,6 +1204,8 @@ failure_modes:
               CI (safety.yaml mutation job)
             test: opendbc_repo/opendbc/safety/tests/test_toyota.py
             ref: .github/workflows/safety.yaml
+          - description: 'Plant model L-02: acceleration request above the envelope refused at 0.000 s. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md L-02 (plant 776239d)
           actions:
           - SFM-ACT-012
       - id: SFM-008.C3
@@ -1221,6 +1250,8 @@ failure_modes:
               CI (safety.yaml mutation job)
             test: opendbc_repo/opendbc/safety/tests/test_toyota.py
             ref: .github/workflows/safety.yaml
+          - description: 'Plant model L-02: acceleration request above the envelope refused at 0.000 s. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md L-02 (plant 776239d)
           actions:
           - SFM-ACT-012
       - id: SFM-008.C4
@@ -1312,6 +1343,9 @@ failure_modes:
           ap: H
           timing:
             basis: unknown
+          evidence:
+          - description: 'Plant model L-03: deceleration step at the envelope minimum: no panda reaction until the driver acts (1.56 s), which supports M 9. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md L-03 (plant 776239d)
           actions:
           - SFM-ACT-009
       - id: SFM-009.C2
@@ -1353,6 +1387,8 @@ failure_modes:
               CI (safety.yaml mutation job)
             test: opendbc_repo/opendbc/safety/tests/test_toyota.py
             ref: .github/workflows/safety.yaml
+          - description: 'Plant model L-04: deceleration request above the envelope refused at 0.000 s. Simulation cross-check, no rating credit (msr-plan §4.2); EPS and PCM behaviour are model assumptions'
+            ref: assurance/sim/results/plant-results.md L-04 (plant 776239d)
           actions:
           - SFM-ACT-012
       - id: SFM-009.C3
