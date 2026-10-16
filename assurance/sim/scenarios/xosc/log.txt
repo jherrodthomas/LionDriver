@@ -1,0 +1,23 @@
+esmini GIT REV: v3.9.0-0-efbf7ee1
+esmini GIT TAG: v3.9.0
+esmini GIT BRANCH: tags/v3.9.0^0
+esmini BUILD VERSION: 6434
+[] [info] Loaded KS-01.xosc
+[2026-10-16 17:36:50]
+[] [info] Player options: --osc KS-01.xosc --camera_mode orbit --fixed_timestep 0.05 --ground_plane auto --headless --info_text 1 --logfile_path log.txt --log_level info --text_scale 1.0 --traj_filter 0.1 --light_mode auto 
+[] [info] Run simulation decoupled from realtime, with fixed timestep: 0.05
+[] [info] Generated seed 3031303372
+[] [info] Loading KS-01.xosc (v1.3)
+[] [info] 0 variables
+[] [info] Loaded OpenDRIVE: ../xodr/KS-01.xodr
+[] [info] 3D model search paths attempted for file car_white.osgb:
+[] [info]   car_white.osgb
+[] [info]   .//./car_white.osgb
+[] [info]   /root/.cache/liondriver-sim/esmini-v3.9.0/esmini/bin/../resources/models//./car_white.osgb
+[] [info]   .//../models/./car_white.osgb
+[] [warn] 3D model car_white.osgb not located, using specified file path
+[] [info] Assigned 3D model car_white.osgb to vehicle corolla_e210
+[] [info] Add and deactivate new object "ego" (id 0)
+[] [info] 1 parameters:
+[] [info]    EgoSpeed = 27.386
+[0.000] [info] Closing

@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="586" viewBox="0 0 1280 586" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="632" viewBox="0 0 1280 632" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 4 · Trace depth per safety goal</title>
 <desc>For each safety goal: the derived and refined requirement counts, the share allocated to model elements and the share named by a test-specification case. Over all goals 289 of 343 requirements are allocated and 264 named; none is tagged in code or verified by a passed test.</desc>
 <defs><marker id="ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F172A"/></marker><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><marker id="sw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F766E"/></marker><marker id="hw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4F46E5"/></marker><marker id="aou" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D97706"/></marker><marker id="red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D2553F"/></marker></defs>
-<rect x="0" y="0" width="1280" height="586" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="0" y="0" width="1280" height="632" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 4 · Trace depth per safety goal</text>
 <text x="40" y="66" font-size="12.5" fill="#475569">How far each goal's chain reaches today, over the requirements it derives (FSR, TSR, SWSR, HWSR). Every chain stops before code.</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-T-01 §6</text>
@@ -37,7 +37,7 @@
 <rect x="1090" y="144" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1159" y="165" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <text x="48" y="210" font-size="12.5" fill="#0F172A" font-weight="700">SG-02</text>
-<text x="98" y="210" font-size="10.5" fill="#475569">ASIL B</text>
+<text x="98" y="210" font-size="10.5" fill="#475569">ASIL C</text>
 <rect x="210" y="190" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
 <text x="279" y="211" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">15 · 42</text>
 <rect x="380" y="190" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
@@ -53,7 +53,7 @@
 <rect x="1090" y="190" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1159" y="211" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <text x="48" y="256" font-size="12.5" fill="#0F172A" font-weight="700">SG-03</text>
-<text x="98" y="256" font-size="10.5" fill="#475569">ASIL B</text>
+<text x="98" y="256" font-size="10.5" fill="#475569">ASIL C</text>
 <rect x="210" y="236" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
 <text x="279" y="257" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">13 · 50</text>
 <rect x="380" y="236" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
@@ -101,7 +101,7 @@
 <rect x="1090" y="328" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1159" y="349" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <text x="48" y="394" font-size="12.5" fill="#0F172A" font-weight="700">SG-06</text>
-<text x="98" y="394" font-size="10.5" fill="#475569">ASIL B</text>
+<text x="98" y="394" font-size="10.5" fill="#475569">ASIL C</text>
 <rect x="210" y="374" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
 <text x="279" y="395" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">15 · 41</text>
 <rect x="380" y="374" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
@@ -132,30 +132,46 @@
 <text x="994" y="441" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
 <rect x="1090" y="420" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
 <text x="1159" y="441" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
-<line x1="40" y1="458" x2="1240" y2="458" stroke="#CBD5E1" stroke-width="1"/>
-<text x="48" y="492" font-size="12.5" fill="#0F172A" font-weight="700">All goals</text>
-<rect x="210" y="472" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-<text x="279" y="493" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">54 · 109</text>
-<rect x="380" y="472" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-<text x="449" y="493" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">134 · 46</text>
-<rect x="550" y="472" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="629" y="488" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">84 %</text>
-<text x="629" y="500" font-size="9.5" fill="#475569" text-anchor="middle">289 of 343</text>
-<rect x="740" y="472" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="819" y="488" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">77 %</text>
-<text x="819" y="500" font-size="9.5" fill="#475569" text-anchor="middle">264 of 343</text>
-<rect x="930" y="472" width="128" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
-<text x="994" y="493" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
-<rect x="1090" y="472" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
-<text x="1159" y="493" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
-<rect x="40" y="518" width="14" height="12" rx="3" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-<text x="60" y="528" font-size="11" fill="#475569">count of derived items (proposed, not approved)</text>
-<rect x="365.4" y="518" width="14" height="12" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="385.4" y="528" font-size="11" fill="#475569">partial</text>
-<rect x="442.8" y="518" width="14" height="12" rx="3" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
-<text x="462.8" y="528" font-size="11" fill="#475569">complete</text>
-<rect x="526.4" y="518" width="14" height="12" rx="3" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
-<text x="546.4" y="528" font-size="11" fill="#475569">no data source yet</text>
-<text x="40" y="552" font-size="11" fill="#475569">“Named” means a test-specification case cites the ID: a specified link, not a passed test. Tagged and passed need @req tags and links/verification.yaml (checks K6–K10).</text>
-<text x="40" y="568" font-size="11" fill="#475569">Allocated: the requirement's allocated_to names elements of the SysML model (check M8). A requirement under several goals counts in each row.</text>
+<text x="48" y="486" font-size="12.5" fill="#0F172A" font-weight="700">SG-08</text>
+<text x="98" y="486" font-size="10.5" fill="#475569">ASIL A</text>
+<rect x="210" y="466" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
+<text x="279" y="487" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">4 · 7</text>
+<rect x="380" y="466" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
+<text x="449" y="487" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">6 · 0</text>
+<rect x="550" y="466" width="158" height="32" rx="6" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="629" y="482" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">100 %</text>
+<text x="629" y="494" font-size="9.5" fill="#475569" text-anchor="middle">17 of 17</text>
+<rect x="740" y="466" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="819" y="482" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">65 %</text>
+<text x="819" y="494" font-size="9.5" fill="#475569" text-anchor="middle">11 of 17</text>
+<rect x="930" y="466" width="128" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="994" y="487" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
+<rect x="1090" y="466" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="1159" y="487" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
+<line x1="40" y1="504" x2="1240" y2="504" stroke="#CBD5E1" stroke-width="1"/>
+<text x="48" y="538" font-size="12.5" fill="#0F172A" font-weight="700">All goals</text>
+<rect x="210" y="518" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
+<text x="279" y="539" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">54 · 109</text>
+<rect x="380" y="518" width="138" height="32" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
+<text x="449" y="539" font-size="12.5" fill="#1D4ED8" font-weight="700" text-anchor="middle">134 · 46</text>
+<rect x="550" y="518" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="629" y="534" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">84 %</text>
+<text x="629" y="546" font-size="9.5" fill="#475569" text-anchor="middle">289 of 343</text>
+<rect x="740" y="518" width="158" height="32" rx="6" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="819" y="534" font-size="12.5" fill="#0F172A" font-weight="700" text-anchor="middle">77 %</text>
+<text x="819" y="546" font-size="9.5" fill="#475569" text-anchor="middle">264 of 343</text>
+<rect x="930" y="518" width="128" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="994" y="539" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
+<rect x="1090" y="518" width="138" height="32" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="1159" y="539" font-size="11" fill="#94A3B8" text-anchor="middle">no data yet</text>
+<rect x="40" y="564" width="14" height="12" rx="3" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
+<text x="60" y="574" font-size="11" fill="#475569">count of derived items (proposed, not approved)</text>
+<rect x="365.4" y="564" width="14" height="12" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="385.4" y="574" font-size="11" fill="#475569">partial</text>
+<rect x="442.8" y="564" width="14" height="12" rx="3" fill="#ECFDF5" stroke="#2E9E6A" stroke-width="1.2"/>
+<text x="462.8" y="574" font-size="11" fill="#475569">complete</text>
+<rect x="526.4" y="564" width="14" height="12" rx="3" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="546.4" y="574" font-size="11" fill="#475569">no data source yet</text>
+<text x="40" y="598" font-size="11" fill="#475569">“Named” means a test-specification case cites the ID: a specified link, not a passed test. Tagged and passed need @req tags and links/verification.yaml (checks K6–K10).</text>
+<text x="40" y="614" font-size="11" fill="#475569">Allocated: the requirement's allocated_to names elements of the SysML model (check M8). A requirement under several goals counts in each row.</text>
 </svg>

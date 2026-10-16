@@ -1,6 +1,7 @@
 # Hazards (H-) and hazardous events (HE-) from WP-C-03 §4–§5 (HARA). Ratings are WP-C-03 proposals, not approved.
 # Source of truth is WP-C-03; tools/check_trace.py compares S/E/C/ASIL and the ⚠ flag with the WP-C-03 tables (check X1).
-# H-07 (mode confusion) was reserved in WP-C-03 v0.1 and is rated from v0.2 (Cartesian method).
+# H-07 (mode confusion) was reserved in WP-C-03 v0.1 and is rated from v0.2 (Cartesian method). H-09 (driver not
+# supervising or not responding) is new in v0.4.
 # Schema: ../README.md §4.2.
 
 - id: H-01
@@ -59,18 +60,25 @@
   status: proposed
   source: WP-C-03
 
+- id: H-09
+  kind: hazard
+  title: "Automated control continues with a driver who is not supervising or not responding"
+  functions: [F-04]
+  status: proposed
+  source: WP-C-03
+
 - id: HE-01.1
   kind: hazardous-event
   parents: [H-01]
-  situation: "OS-03 undivided road, oncoming traffic, 60–90 km/h"
+  situation: "OS-03 undivided road, oncoming traffic, 60–90 km/h: engaged outside the highway-only ODD (foreseeable misuse)"
   effect: "Departure into the oncoming lane; head-on collision"
   s: 3
-  e: 4
+  e: 2
   c: 2
-  asil: C
+  asil: A
   aou_flag: true
   aou_dependency: [AOU-01, AOU-02]
-  asil_if_aou_fails: D
+  asil_if_aou_fails: B
   status: proposed
   source: WP-C-03
 
@@ -92,23 +100,22 @@
 - id: HE-01.3
   kind: hazardous-event
   parents: [H-01]
-  situation: "OS-04 urban, pedestrians and cyclists near the lane edge, 30–60 km/h"
+  situation: "OS-04 urban, pedestrians and cyclists near the lane edge, 30–60 km/h: engaged outside the ODD (foreseeable misuse)"
   effect: "Vehicle drifts into a vulnerable road user"
   s: 3
-  e: 3
+  e: 2
   c: 2
-  asil: B
+  asil: A
   aou_flag: true
   aou_dependency: [AOU-01, AOU-02]
-  asil_if_aou_fails: C
-  notes: "WP-C-03 flags ⚠ but does not state the rating if the AoUs fail; AoUs taken from the H-01 group rationale (HE-01.1)"
+  asil_if_aou_fails: B
   status: proposed
   source: WP-C-03
 
 - id: HE-01.4
   kind: hazardous-event
   parents: [H-01]
-  situation: "Torque while not engaged, OS-01/OS-03, driver steering manually"
+  situation: "Torque while not engaged, OS-13 manual driving on any road, driver steering manually"
   effect: "Unexpected steering disturbance during manual driving"
   s: 3
   e: 4
@@ -117,19 +124,34 @@
   aou_flag: true
   aou_dependency: [AOU-01, AOU-02]
   asil_if_aou_fails: D
-  notes: "WP-C-03 flags ⚠ but does not state the rating if the AoUs fail; AoUs taken from the H-01 group rationale (HE-01.1)"
+  status: proposed
+  source: WP-C-03
+
+- id: HE-01.5
+  kind: hazardous-event
+  parents: [H-01]
+  situation: "OS-17 highway, engaged, the driver not supervising (eyes off the road or hands off): foreseeable misuse"
+  effect: "Lateral departure at highway speed that nobody corrects in time"
+  s: 3
+  e: 2
+  c: 3
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.4: foreseeable misuse, the driver not supervising (H-STPA-1, decision register DQ-003)"
   status: proposed
   source: WP-C-03
 
 - id: HE-02.1
   kind: hazardous-event
   parents: [H-02]
-  situation: "OS-02 highway curve, driver supervising, possibly hands off (foreseeable: openpilot does not require hands on the wheel)"
+  situation: "OS-02 highway curve near R_ODD, driver supervising, possibly hands off (foreseeable: openpilot does not require hands on the wheel)"
   effect: "Vehicle goes straight in the curve and departs the lane"
   s: 3
   e: 3
-  c: 2
-  asil: B
+  c: 3
+  asil: C
   aou_flag: false
   aou_dependency: []
   asil_if_aou_fails: null
@@ -139,11 +161,11 @@
 - id: HE-02.2
   kind: hazardous-event
   parents: [H-02]
-  situation: "OS-16 rural curve with oncoming traffic"
+  situation: "OS-16 rural curve with oncoming traffic: engaged outside the ODD (foreseeable misuse)"
   effect: "Departure into the oncoming lane"
   s: 3
-  e: 3
-  c: 2
+  e: 2
+  c: 3
   asil: B
   aou_flag: false
   aou_dependency: []
@@ -162,7 +184,7 @@
   asil: B
   aou_flag: true
   aou_dependency: [AOU-01]
-  asil_if_aou_fails: null
+  asil_if_aou_fails: C
   status: proposed
   source: WP-C-03
 
@@ -196,6 +218,22 @@
   aou_dependency: []
   asil_if_aou_fails: null
   notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
+  status: proposed
+  source: WP-C-03
+
+- id: HE-02.6
+  kind: hazardous-event
+  parents: [H-02]
+  situation: "OS-17 highway, engaged, the driver not supervising: foreseeable misuse"
+  effect: "Silent loss of lateral control; drift out of the lane that nobody notices"
+  s: 3
+  e: 2
+  c: 3
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.4: foreseeable misuse, the driver not supervising (H-STPA-1, decision register DQ-003)"
   status: proposed
   source: WP-C-03
 
@@ -235,20 +273,20 @@
   situation: "OS-07 approaching a slower lead"
   effect: "Acceleration toward the lead instead of deceleration"
   s: 3
-  e: 3
+  e: 4
   c: 2
-  asil: B
+  asil: C
   aou_flag: true
   aou_dependency: [AOU-03, AOU-05]
-  asil_if_aou_fails: C
+  asil_if_aou_fails: D
   status: proposed
   source: WP-C-03
 
 - id: HE-03.4
   kind: hazardous-event
   parents: [H-03]
-  situation: "OS-02 highway curve or OS-16 rural curve (F-02 M04 stuck positive, M05 excessive, M12 inverse)"
-  effect: "Speed rises in the curve beyond the lateral limit; run-off or into the oncoming lane"
+  situation: "OS-02 highway curve (F-02 M04 stuck positive, M05 excessive, M12 inverse)"
+  effect: "Speed rises in the curve beyond the lateral limit; run-off"
   s: 3
   e: 3
   c: 2
@@ -277,6 +315,22 @@
   status: proposed
   source: WP-C-03
 
+- id: HE-03.6
+  kind: hazardous-event
+  parents: [H-03]
+  situation: "OS-17 highway, engaged, the driver not supervising: foreseeable misuse (F-02 M04/M05/M12)"
+  effect: "Speed rises above the set speed and nobody brakes"
+  s: 2
+  e: 2
+  c: 3
+  asil: A
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.4: foreseeable misuse, the driver not supervising (H-STPA-1, decision register DQ-003)"
+  status: proposed
+  source: WP-C-03
+
 - id: HE-04.1
   kind: hazardous-event
   parents: [H-04]
@@ -295,7 +349,7 @@
 - id: HE-04.2
   kind: hazardous-event
   parents: [H-04]
-  situation: "OS-02/OS-16 curve on a wet road (W02)"
+  situation: "OS-02 highway curve on a wet road (W02); the same applies in a rural curve outside the ODD (OS-16, E2)"
   effect: "Instability under unexpected braking"
   s: 3
   e: 3
@@ -425,9 +479,9 @@
   situation: "OS-07 approaching stationary or slow traffic at highway speed; the system silently stops decelerating (for example, a stale plan holds zero acceleration)"
   effect: "High-speed rear-end collision"
   s: 3
-  e: 3
+  e: 4
   c: 2
-  asil: B
+  asil: C
   aou_flag: false
   aou_dependency: []
   asil_if_aou_fails: null
@@ -466,15 +520,31 @@
   status: proposed
   source: WP-C-03
 
+- id: HE-06.4
+  kind: hazardous-event
+  parents: [H-06]
+  situation: "OS-17 highway, engaged, the driver not supervising: foreseeable misuse; deceleration silently lost while closing on slower traffic"
+  effect: "High-speed rear-end collision that nobody prevents"
+  s: 3
+  e: 2
+  c: 3
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.4: foreseeable misuse, the driver not supervising (H-STPA-1, decision register DQ-003)"
+  status: proposed
+  source: WP-C-03
+
 - id: HE-07.1
   kind: hazardous-event
   parents: [H-07]
-  situation: "OS-02 highway curve or OS-16 rural curve; the system has disengaged but still shows engaged, or the take-over alert is missing (F-05 M01/M04)"
+  situation: "OS-02 highway curve near R_ODD; the system has disengaged but still shows engaged, or the take-over alert is missing (F-05 M01/M04)"
   effect: "The driver believes the system steers; departure in the curve"
   s: 3
   e: 3
-  c: 2
-  asil: B
+  c: 3
+  asil: C
   aou_flag: false
   aou_dependency: []
   asil_if_aou_fails: null
@@ -506,13 +576,29 @@
   situation: "OS-07 approaching slower or stationary traffic; the driver believes ACC is active"
   effect: "The driver expects the vehicle to slow; high closing speed"
   s: 3
-  e: 3
+  e: 4
   c: 2
-  asil: B
+  asil: C
   aou_flag: false
   aou_dependency: []
   asil_if_aou_fails: null
   notes: "Added in WP-C-03 v0.2 as the representative worst case of the Cartesian rows listed in the WP-C-03 §5 situation column"
+  status: proposed
+  source: WP-C-03
+
+- id: HE-07.4
+  kind: hazardous-event
+  parents: [H-07]
+  situation: "OS-17 highway, engaged, the driver not supervising: foreseeable misuse; the take-over alert is missing or the display shows engaged (F-05 M01/M04)"
+  effect: "The driver, looking away, is not called back when the system drops out"
+  s: 3
+  e: 2
+  c: 3
+  asil: B
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.4: foreseeable misuse, the driver not supervising (H-STPA-1, decision register DQ-003)"
   status: proposed
   source: WP-C-03
 
@@ -528,5 +614,37 @@
   aou_flag: false
   aou_dependency: []
   asil_if_aou_fails: null
+  status: proposed
+  source: WP-C-03
+
+- id: HE-09.1
+  kind: hazardous-event
+  parents: [H-09]
+  situation: "OS-17 highway, engaged, the driver not supervising but able to respond; DM does not detect it or does not escalate"
+  effect: "The item keeps driving unsupervised; the next situation it does not handle (stationary vehicle, cut-in, faded lines) ends in a highway-speed collision"
+  s: 3
+  e: 2
+  c: 2
+  asil: A
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.4 (decision register DQ-205, A; RD-3). ASIL B if OS-17 is E3 (WP-C-03 §6.1)"
+  status: proposed
+  source: WP-C-03
+
+- id: HE-09.2
+  kind: hazardous-event
+  parents: [H-09]
+  situation: "OS-18 highway, engaged, the driver asleep, impaired or incapacitated; DM does not detect it, or detects it and no no-response reaction follows"
+  effect: "The vehicle drives on with nobody able to take over until a collision or departure"
+  s: 3
+  e: 1
+  c: 3
+  asil: A
+  aou_flag: false
+  aou_dependency: []
+  asil_if_aou_fails: null
+  notes: "Added in WP-C-03 v0.4 (decision register DQ-205, A; RD-3); second-set HE-018 rates the same case S3 E1 C3"
   status: proposed
   source: WP-C-03
