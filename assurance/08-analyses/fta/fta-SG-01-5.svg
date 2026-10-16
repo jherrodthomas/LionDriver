@@ -85,6 +85,8 @@
 <text x="780" y="620.5" class="d">(lateral.h:111-114)</text>
 <rect x="780.0" y="628.5" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="807.0" y="640.0" class="chip" fill="#fff">SWF-002</text>
+<rect x="838.9" y="628.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="865.9" y="640.0" class="chip" fill="#fff">SWF-055</text>
 <circle cx="876.0" cy="676.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="1009.5" y="540.0" width="220" height="122.0" rx="9" class="shadow"/>
 <rect x="1008" y="537.5" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>

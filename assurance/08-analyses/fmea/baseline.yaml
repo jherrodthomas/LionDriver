@@ -130,7 +130,8 @@ baselines:
       pandad never defaults a fault entry to relayMalfunction (#48); alpha longitudinal refused where it would disable
       stock AEB (#79); Chill mode default (#74). Proposed, not merged and not in BL-005: wrong-length RX frame as an RX
       fault, no re-engagement while a TX-rate excess persists, no authority after a safety-mode change without a new
-      engagement (opendbc branch at a0938fa).
+      engagement (opendbc branch at a0938fa; the last two merged in the opendbc fork as #15, 9859cb0, but not pinned:
+      DQ-079, DQ-080, SW FMEA SWF-ACT-054).
     vehicle:
       make: Toyota
       model: Corolla

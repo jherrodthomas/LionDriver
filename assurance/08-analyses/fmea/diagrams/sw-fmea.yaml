@@ -1,11 +1,11 @@
-# Diagram data for the SW FMEA (assurance/08-analyses/fmea/analyses/sw-fmea.yaml, rev 0.7, BL-004).
-# Facts from WP-W-03 §3.3/§4.2/§5.3, WP-S-05 §2/§4.2/§11.2 and the code at the BL-004 pins.
+# Diagram data for the SW FMEA (assurance/08-analyses/fmea/analyses/sw-fmea.yaml, rev 0.8, BL-005).
+# Facts from WP-W-03 §3.3/§4.2/§5.3, WP-S-05 §2/§4.2/§11.2 and the code at the BL-005 pins (reference build is the default).
 schema_version: 1
 analysis: SWF
 
 block_diagram:
   title: "Software architecture: engagement and actuation path"
-  boundary: "Analysed SW elements (SW FMEA scope, BL-004)"
+  boundary: "Analysed SW elements (SW FMEA scope, BL-005)"
   blocks:
     - id: B01
       name: "modeld"
@@ -232,7 +232,7 @@ p_diagram:
     - text: "Authority kept after engagement should end"
       failure_modes: [SWF-014, SWF-020, SWF-021, SWF-031, SWF-033, SWF-036, SWF-040]
     - text: "Engaged without driver intent"
-      failure_modes: [SWF-007, SWF-030, SWF-039, SWF-048]
+      failure_modes: [SWF-007, SWF-030, SWF-039, SWF-048, SWF-054, SWF-055]
     - text: "Wrong or permissive safety mode in panda"
       failure_modes: [SWF-013, SWF-015, SWF-022, SWF-028, SWF-034]
     - text: "Stale or corrupt command reaches the vehicle"
@@ -243,7 +243,7 @@ p_diagram:
       failure_modes: [SWF-032, SWF-035, SWF-037, SWF-050]
   noise_factors:
     piece_to_piece:
-      - "LIONDRIVER_REFERENCE build flag on/off"
+      - "Reference build opted out (flag empty)"
       - "Safety param and CarParams per fingerprint"
       - "Learned torque params and lateral delay"
     change_over_time:
@@ -271,8 +271,10 @@ p_diagram:
     - text: "controls_allowed gated on PCM rising edge"
       ref: "opendbc_repo/opendbc/safety/safety.h:683-711 (pcm_cruise_check), 500-520 (generic_rx_checks)"
     - text: "ControlsMismatch 2 samples, 0.5 s, grace"
-      ref: "openpilot/selfdrive/selfdrived/selfdrived.py:50-52, 127, 537-539; openpilot/selfdrive/selfdrived/supervision.py:4 (TSR-621)"
+      ref: "openpilot/selfdrive/selfdrived/selfdrived.py:53-56, 136, 540-549; openpilot/selfdrive/selfdrived/supervision.py:4 (TSR-621)"
     - text: "Stale-input checks (inputs_fresh, age < 1 s)"
       ref: "openpilot/selfdrive/controls/controlsd.py:34-36, 119-120; openpilot/selfdrive/pandad/pandad.cc:79; openpilot/selfdrive/car/card.py:234"
+    - text: "TX arrival 50/100 ms, TX rate budget"
+      ref: "opendbc_repo/opendbc/safety/modes/toyota.h:586-606 (TSR-408, TSR-518; reference build)"
     - text: "Firmware torque and accel limit checks"
       ref: "opendbc_repo/opendbc/safety/lateral.h:10-150; opendbc_repo/opendbc/safety/longitudinal.h:3-12 (SWF-FN-002/003)"
