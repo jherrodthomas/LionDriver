@@ -192,7 +192,7 @@ jobs:
     - name: EGL for headless rendering, and MetaDrive (commaai "minimal" branch, pinned commit, Apache-2.0)
       run: |
         sudo apt-get update -q
-        sudo apt-get install -y -q --no-install-recommends libegl1 libegl-mesa0
+        sudo apt-get install -y -q --no-install-recommends libegl1 libegl-mesa0 libportaudio2 pulseaudio libasound2-plugins
         "$HOME/.local/bin/uv" pip install --python .venv/bin/python \
           "metadrive-simulator @ git+https://github.com/commaai/metadrive.git@2716f55a9c7b928ce957a497a15c2c19840c08bc"
     - name: Cache the MetaDrive model archive (checked against its SHA-256 on use)
@@ -213,7 +213,12 @@ jobs:
       env:
         # MetaDrive renders offscreen through panda3d's EGL pipe on llvmpipe
         EGL_PLATFORM: surfaceless
-      run: python -m unittest -v openpilot.tools.sim.tests.test_metadrive_bridge
+      # soundd needs an audio output: a PulseAudio null sink, which keeps real time without a sound card
+      run: |
+        pulseaudio --start --exit-idle-time=-1
+        pactl load-module module-null-sink sink_name=ci
+        pactl set-default-sink ci
+        python -m unittest -v openpilot.tools.sim.tests.test_metadrive_bridge
 
   create_ui_report:
     name: Create UI Report
