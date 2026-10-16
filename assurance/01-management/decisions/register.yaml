@@ -499,6 +499,7 @@
   sources: ["assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md OI-4", "assurance/09-production-operation/WP-O-03-user-information-safety-warnings.md OI-3", "assurance/07-supporting/impact/change-2026-10-12-panda-safety-mode-lock.md OI-3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "STPA part applied in WP-A-05 v0.5: new UCA-07 and LS-36 (release after a gas override), CC-2 (on-screen override alert). Left: the override alert and the HMI clinic (WP-C-08 MC-08, WP-O-03 user information)."
 
 - id: DQ-023
   question: "Should LionDriver cover arterial and rural roads, or highways only?"
@@ -1121,6 +1122,7 @@
   sources: ["assurance/08-analyses/WP-A-05-stpa.md OI-2"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "STPA part applied in WP-A-05 v0.5: OI-2 decided, CC-1 and CC-2 reworded, LS-01/LS-02/LS-14 updated. Left: the SoC-side and HMI requirements in WP-S-02 (safety concept), SWF-ACT-046 and TSR-304 in code, thresholds (DQ-081)."
 
 - id: DQ-054
   question: "If the panda's watchdog resets it while engaged, its own siren stays silent. Keep an \"engaged\" flag across the reset, or accept the main computer's alert?"
@@ -1141,6 +1143,7 @@
   sources: ["assurance/08-analyses/WP-A-05-stpa.md OI-3"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "STPA part applied in WP-A-05 v0.5: OI-3 decided, LS-04 updated. Left: bench confirmation, the panda firmware change and the TSR-516 amendment (safety concept)."
 
 - id: DQ-055
   question: "Should the safety limits be set independently of the controller's tuning values?"
@@ -3881,6 +3884,7 @@
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md RD-3", "assurance/02-concept/WP-C-04-functional-safety-concept.md OI-3", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-3", "assurance/00-assessment/docs-safety-reconciliation.md OI-2"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
+  note: "STPA part applied in WP-A-05 v0.5: H-STPA-1 and SC-8 note H-09, new UCA-21, LS-35 and CC-17; the reaction itself is queued as DQ-211. Left: H-09 and its ASIL A goal in WP-C-03, its fault tree in WP-A-04, driver monitoring allocation in WP-C-04."
 - id: DQ-206
   question: "When a diagnostic catches a hazardous fault and the car reaches a safe state in time, may that count as accepting the remaining risk?"
   context: "The new monitoring-and-response rating (FMEA-MSR) scores how well each in-car diagnostic catches a fault and how fast the system reacts. 194 of 201 failure causes are rated high priority today because diagnostics get no credit. The question is whether a good monitoring score can **close** a hazard-linked cause, or only rank which ones to work on first."
@@ -3963,4 +3967,48 @@
       title: "Require comma power on every install so the box is always powered"
       detail: "Removes the broken-ignition-wire cause only; switch, pull-down and clamp faults remain. Cost: one extra part per install."
   sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03"]
+  status: queued
+
+- id: DQ-210
+  question: "Off a highway, should LionDriver refuse to engage, or only warn the driver?"
+  context: "You chose highways only (DQ-023), which means the system \"must refuse or warn off-highway\". Today nothing checks the road: it engages wherever cruise does, on any street (STPA LS-13). **Which of the two you want sets the requirement and how much the system is used.**"
+  reversibility: revisit
+  blocks: "ODD entry requirement; STPA LS-13; user information on where to use it (WP-O-03)"
+  gate: G1
+  decider: lead
+  after: [DQ-023]
+  options:
+    - key: A
+      recommended: true
+      title: "Refuse to engage below a highway speed floor now; add road-type data later"
+      detail: "A speed floor (for example 60 km/h) is a check the system can make today, and it keeps it off most city streets. Cost: no use in highway stop-and-go traffic, and a fast arterial road still passes until road-type data exists (WP-C-07 FM-08)."
+    - key: B
+      title: "Refuse to engage unless map or road-type data confirms a highway"
+      detail: "The strongest match to the ODD. Cost: needs a road-type source that LionDriver does not have yet; until then the system cannot be used at all."
+    - key: C
+      title: "Allow engagement anywhere, show a warning off-highway, and rely on the driver and user information"
+      detail: "Most useful in daily driving. Cost: the ODD limit rests on the driver; LS-13 stays a known gap, and an assessor may ask why an ODD boundary has no technical check."
+  sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-13, OI-15", "assurance/01-management/decisions/register.yaml DQ-023", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-08"]
+  status: queued
+
+- id: DQ-211
+  question: "When the driver stays unresponsive after the last warning, what should the car do?"
+  context: "Today the last driver-monitoring step only shows \"DISENGAGE IMMEDIATELY\" with a sound. The system keeps steering and following at the set speed, with no slowing down and no stop (STPA LS-35). You decided this becomes its own hazard with an ASIL A goal (DQ-205). **The goal needs a safe state, and that is this choice.**"
+  reversibility: hard
+  blocks: "Safe state of the H-09 goal (DQ-205); SFM-ACT-005; STPA LS-35; driver monitoring requirements"
+  gate: G1
+  decider: lead
+  after: [DQ-205]
+  options:
+    - key: A
+      recommended: true
+      title: "Slow down in the lane to a stop, with hazard lights, after a warning"
+      detail: "Keeps steering and brings the car to a stop, as UNECE R79 and R171 do. Cost: a new minimal-risk function that must itself be analysed and validated, and the Toyota interface for hazard lights and standstill hold must be confirmed."
+    - key: B
+      title: "Disengage with a continuous alarm and cancel cruise"
+      detail: "Simple and close to today's code. Cost: an unresponsive driver is left in a car that coasts with no steering support, which may be worse than keeping it in the lane."
+    - key: C
+      title: "Slow to a low speed in the lane and hold it, alarming until the driver responds"
+      detail: "Lowers the energy of a crash without needing a stop function. Cost: a slow car on a highway is itself a hazard for following traffic, and the car never reaches a stop."
+  sources: ["assurance/08-analyses/WP-A-05-stpa.md LS-35, UCA-21, CC-17, OI-14", "assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-ACT-005, SFM-025", "assurance/01-management/decisions/register.yaml DQ-205"]
   status: queued
