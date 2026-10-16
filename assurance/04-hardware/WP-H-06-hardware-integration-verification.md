@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-06 Hardware integration and verification specification and report |
 | Standard reference | ISO 26262-5:2018 §10 (hardware integration and verification); ISO 26262-8:2018 §9 (verification), §13 (qualification tests of HW components); ASPICE 4.0 HWE.3, HWE.4 |
-| Version | 0.6 (HIL bench deferred by the lead, DQ-049: T-HIL and FI cases blocked; 2026-10-16). 0.5 (§3.1 bench procedures for VS-HW-22…24; VS-HW-24 adds the logic-threshold check and waits for the DG419LE ratings, DFM-ACT-015; RR-2026-010 F-05; 2026-10-16). 0.4 (harness box v3 drawing: VS-HW-02 re-scoped, VS-HW-22…24 added for the analog-switch failure behaviour; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.7 (DQ-209 option A: VS-HW-02 and VS-HW-22…24 are the decided route for the harness box; 2026-10-16). 0.6 (HIL bench deferred by the lead, DQ-049: T-HIL and FI cases blocked; 2026-10-16). 0.5 (§3.1 bench procedures for VS-HW-22…24; VS-HW-24 adds the logic-threshold check and waits for the DG419LE ratings, DFM-ACT-015; RR-2026-010 F-05; 2026-10-16). 0.4 (harness box v3 drawing: VS-HW-02 re-scoped, VS-HW-22…24 added for the analog-switch failure behaviour; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section is a template — **Not yet executed** |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -128,7 +128,7 @@ safe state on the scope/CAN log.
 
 ### 3.1 Bench procedures for the harness box (VS-HW-22…24)
 
-These three cases test comma's harness box on its own, outside the vehicle, against the failure behaviour derived from the
+The lead chose to keep comma's harness box and bench-test it ([DQ-209](../01-management/decisions/register.yaml), option A, 2026-10-16), so VS-HW-02 and these three cases are now the evidence for that route: their results become the assumption of use for the stock path. Option A includes one spare box. These three cases test comma's harness box on its own, outside the vehicle, against the failure behaviour derived from the
 v3 drawing in [RR-2026-010](reviews/RR-2026-010.md). They need a CAN interface, a lab supply and a scope, not the HIL bench of
 §2 (DQ-049). Run them on a box that VS-HW-02 has matched to the drawing; record any difference first, because the steps name
 v3 reference designators.

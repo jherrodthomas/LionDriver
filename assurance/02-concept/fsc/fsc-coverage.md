@@ -37,7 +37,7 @@ Block diagram: 20 ASIL-relevant nodes, 5 external context nodes. Basic events (s
 | N02 Driver-facing IR camera | sensor | FSR-02.07 | DM detects its own invalid input |
 | N03 IMU and GNSS | sensor | FSR-02.02 | Localization/calibration loss detected |
 | N04 Vehicle CAN RX: wheel speeds, steering torque sensor, brake, gas, PCM cruise | comm_in | FSR-01.06 | Wrong gating input may revoke authority silently; detected as RX fault |
-| N05 EPS status 0x262 | comm_in | FSR-02.01 | EPS LKA fault states |
+| N05 EPS status 0x262 | comm_in | FSR-02.01, FSR-02.12 | EPS LKA fault states; EPS fault codes block engagement |
 | N06 Radar tracks 0x180-0x19F | comm_in | — | Not relevant: Node failure cannot remove lateral control without the driver being informed |
 | N07 Camera-side CAN (incl. stock PCS messages) | comm_in | — | Not relevant: Node failure cannot remove lateral control without the driver being informed |
 | N08 Vehicle 12 V supply and ignition via harness | power_in | FSR-05.05, FSR-01.13 | On power loss the cluster cruise indicator and the EPS timeout inform the driver; no item warning possible |
@@ -136,7 +136,7 @@ Block diagram: 20 ASIL-relevant nodes, 5 external context nodes. Basic events (s
 | N01 Road-facing cameras | sensor | FSR-06.01, FSR-06.02 | Vision lead loss detected and announced |
 | N02 Driver-facing IR camera | sensor | FSR-02.07 | As SG-02 |
 | N03 IMU and GNSS | sensor | FSR-06.01 | Input staleness detected |
-| N04 Vehicle CAN RX: wheel speeds, steering torque sensor, brake, gas, PCM cruise | comm_in | FSR-06.03 | PCM ACC fault reported |
+| N04 Vehicle CAN RX: wheel speeds, steering torque sensor, brake, gas, PCM cruise | comm_in | FSR-06.03, FSR-02.12 | PCM ACC fault reported; brake/stability fault codes block engagement |
 | N05 EPS status 0x262 | comm_in | — | Not relevant: Node failure cannot remove longitudinal deceleration silently |
 | N06 Radar tracks 0x180-0x19F | comm_in | FSR-06.01, FSR-06.02 | Radar fault or staleness detected and announced |
 | N07 Camera-side CAN (incl. stock PCS messages) | comm_in | — | Not relevant: Node failure cannot remove longitudinal deceleration silently |
@@ -174,11 +174,11 @@ Block diagram: 20 ASIL-relevant nodes, 5 external context nodes. Basic events (s
 | N14 Safety MCU STM32H7 (panda) | processor | FSR-01.09, FSR-07.03 | Execution fault -> relay to stock path |
 | N15 Envelope software (opendbc Toyota safety mode + panda firmware) | software | FSR-07.01, FSR-07.02 | Forwarding and PCS TX block |
 | N16 Safety MCU memory (flash, RAM) | memory | FSR-01.09, FSR-01.10 | Memory corruption detected; safety parameters fixed |
-| N17 Harness intercept relay | actuator | FSR-07.03 | Released relay = stock path |
+| N17 Harness intercept relay | actuator | FSR-07.03, FSR-07.06 | Released relay = stock path; stuck in intercept -> warn and refuse engagement |
 | N18 Car-side CAN TX: 0x2E4/0x191 LKA, 0x343 ACC, 0x412 HUD, 0x1D2 | comm_out | FSR-07.02, FSR-07.04 | No PCS message originated; PCS priority in the PCM (AOU-04R) |
 | N19 Device display and speaker | actuator | — | Not relevant: Node has no path to the camera-to-vehicle PCS messages |
 | N20 Panda buzzer (siren) | actuator | — | Not relevant: Node has no path to the camera-to-vehicle PCS messages |
 
 ## FSR usage
 
-54 of 54 FSRs in WP-C-04 are cited above. Every WP-C-04 FSR is cited at least once (checked).
+56 of 56 FSRs in WP-C-04 are cited above. Every WP-C-04 FSR is cited at least once (checked).
