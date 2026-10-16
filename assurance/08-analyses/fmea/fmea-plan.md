@@ -138,6 +138,8 @@ Prioritised by safety relevance (path from perception to actuator):
   - a single non-finite input latches LatControlTorque and silently zeroes lateral output for the drive (SWF-045);
   - cruiseMismatch has no reaction, and lateral torque continues while the driver overrides (SWF-039, SWF-038/044).
 
+**Re-baseline at BL-005 (SW FMEA rev 0.8, liondriver-dev `1033d98`, panda `a55bdfc`, opendbc `9a13f60`):** the reference build is the default since #36/#41, so its firmware features are credited. SWF-013.C2 (build without the lock) and SWF-014.C2 (control-loop stall behind a live heartbeat, now caught by TX arrival supervision, TSR-408) drop from AP H to L. Host supervision (#51: TSR-615, TSR-621, TSR-602, TSR-308, TSR-604 in part) lowers occurrence on SWF-032, -034, -039, -040, -043, -045; those rows stay AP H because the new code has targeted but unproven tests. New SWF-054 and SWF-055 record decisions DQ-079 and DQ-080, whose code (opendbc#15) is not pinned (SWF-ACT-054). 55 failure modes, 84 causes: 77 AP H, 1 M, 6 L.
+
 **System FMEA (rev 0.5, BL-004):** all 80 causes rated: 79 AP H, 1 AP M (SFM-024.C1). Causes on the panda, host, harness and hardware elements inherit the linked SW FMEA or DFMEA rows; actions SFM-ACT-001..011.
 
 **DFMEA (rev 0.2, `analyses/dfmea.yaml`):** 18 failure modes and 21 causes across 10 hardware elements of the comma 3X panda section, harness and relay box, based on WP-H-02/WP-H-03. Every row is S10, AP H, and most have no LionDriver hardware verification (D9–D10). The watchdog (DFM-004) is the only cause whose occurrence the BL-002 firmware lowers.

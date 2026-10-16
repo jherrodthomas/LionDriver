@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="3688" viewBox="0 0 1280 3688" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-5. SW FMEA structure tree (SWF)</title>
-  <desc id="d">SW FMEA structure tree (SWF rev 0.7, BL-004): 35 structure elements in 4 root(s), 39 functions with the number of failure modes analyzed for each; functions without failure modes: SWF-FN-001, SWF-FN-006, SWF-FN-009, SWF-FN-043, SWF-FN-044.</desc>
+  <desc id="d">SW FMEA structure tree (SWF rev 0.8, BL-005): 35 structure elements in 4 root(s), 39 functions with the number of failure modes analyzed for each; functions without failure modes: SWF-FN-001, SWF-FN-006, SWF-FN-009, SWF-FN-043, SWF-FN-044.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="3688" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-5 · SW FMEA structure and function tree</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 0.7 · BL-004 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 0.8 · BL-005 · draft · AIAG-VDA steps 2–3: structure elements by level, functions of each element</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -131,10 +131,10 @@
   <text x="313" y="407.3" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-005</text>
   <rect x="400.1" y="396.3" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="407.3" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
   <text x="313" y="421.9" font-size="10.5" fill="#0F172A" font-weight="600">Controls-allowed logic</text>
-  <text x="313" y="434.6" font-size="9.5" fill="#475569">3 failure modes · 3 causes located here</text>
+  <text x="313" y="434.6" font-size="9.5" fill="#475569">5 failure modes · 5 causes located here</text>
   <rect x="568" y="383.2" width="672" height="65.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="577" y="402.7" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-004</text>
-  <rect x="1192.7" y="391.7" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="402.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">3 FM</text>
+  <rect x="1192.7" y="391.7" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="402.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">5 FM</text>
   <text x="577" y="417.3" font-size="10.5" fill="#0F172A">Allow controls on rising edge of PCM cruise; withdraw on cruise off, brake press, invalid or lagging safety messages</text>
   <text x="577" y="434.3" font-size="9.5" fill="#475569" font-weight="600">traces to</text>
   <rect x="625.3" y="423.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="653" y="434.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-005</text>
@@ -356,7 +356,7 @@
   <text x="313" y="2213.9" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-032</text>
   <rect x="400.1" y="2202.9" width="47.9" height="15" rx="7.5" fill="#E2E8F0"/><text x="424.1" y="2213.8" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">sw unit</text>
   <text x="313" y="2228.4" font-size="10.5" fill="#0F172A" font-weight="600">Input sampling and event generation</text>
-  <text x="313" y="2241.2" font-size="9.5" fill="#475569">4 failure modes · 10 causes located here</text>
+  <text x="313" y="2241.2" font-size="9.5" fill="#475569">4 failure modes · 11 causes located here</text>
   <rect x="568" y="2101.6" width="672" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
   <text x="577" y="2121.1" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-032</text>
   <rect x="1192.7" y="2110.1" width="38.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="1211.8" y="2121.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">1 FM</text>

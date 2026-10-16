@@ -113,3 +113,39 @@ baselines:
         teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
         tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
       os: AGNOS 19.9 (launch_env.sh)
+  - id: BL-005
+    status: proposed
+    description: >-
+      BL-004 plus liondriver-dev #36-#86. The reference build is now the default: openpilot's SConstruct builds the panda
+      firmware and pandad with LIONDRIVER_REFERENCE=1 unless it is set empty (#36, #41), pandad refuses a car safety mode on
+      a panda without HEALTH_FLAG_REFERENCE_BUILD (TSR-619, panda#12) and the release script selects the reference variant
+      (#80, CI job panda_reference_release_build). Firmware: siren on a persistent EPS fault and on heartbeat-loss
+      revocation (panda#14, #15), ELM327 refused after the car mode until ignition off (panda#16), assist-active LKAS_HUD
+      refused without authority (opendbc#13), TX arrival supervision (opendbc#11, TSR-408), PCM-edge grant gated on the
+      heartbeat's engaged flag (opendbc#14). Host: selfdrived reacts to the panda's TX-rate, heartbeat-loss and TX-blocked
+      flags and to a controlsAllowed mismatch within 0.5 s, cruiseMismatch alert after 1 s, controlsd input freshness and
+      non-finite guards (#51, TSR-615, TSR-621, TSR-602, TSR-308), pandaStates fault mapping (#48), Chill mode by default
+      (#74), assured-configuration logging (CA-008) and the stock AEB interlock (CA-001). Not included: opendbc#15 (no
+      re-grant while a TX-rate excess persists, DQ-079; no authority after a mode change without a new engagement, DQ-080)
+      and opendbc#16, merged in the fork but not pinned.
+    vehicle:
+      make: Toyota
+      model: Corolla
+      model_year: 2020
+      trim: LE
+      market: US
+      platform_notes: TSS2; openpilot longitudinal per docs/CARS.md (Corolla 2020-22)
+    hardware:
+      device: comma 3X
+      panda: integrated in device
+      harness: Toyota A connector + harness box + comma power v3 (per docs/CARS.md)
+    software:
+      repo_commit: 1033d98e83ca592d6654eb3b3c9c36877c08e4fe
+      submodules:
+        panda: a55bdfc734ee7900de1cabbad453e72130e14f51
+        opendbc_repo: 9a13f6045388cd522b40b4dd60acbf681ad1c9e2
+        msgq_repo: 0e266c1dbcf7328beee3e57b4a8688555387c877
+        rednose_repo: 8671c17c3a4cdc4be5df07a068039e2da5b94eaa
+        teleoprtc_repo: 1aa8fc433bef1519a95c0700c96258c3be6dfb34
+        tinygrad_repo: d3f09c9bbd542fbfbe68c8569a1173550c408969
+      os: AGNOS 19.9 (launch_env.sh)

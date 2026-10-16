@@ -21,7 +21,7 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helveti
 <rect class="bg" x="0" y="0" width="1092" height="654" rx="8"/>
 <text x="30.0" y="30.0" class="ink" font-size="15" font-weight="600" text-anchor="start">Software architecture: engagement and actuation path</text>
 <rect x="232" y="152" width="628" height="302" rx="10" class="bd"/>
-<text x="242.0" y="166.0" class="acc" font-size="11" font-weight="600" text-anchor="start">Analysed SW elements (SW FMEA scope, BL-004)</text>
+<text x="242.0" y="166.0" class="acc" font-size="11" font-weight="600" text-anchor="start">Analysed SW elements (SW FMEA scope, BL-005)</text>
 <path d="M198.0 99.0 L330.0 99.0 L330.0 203.0 L462.0 203.0" class="data"/>
 <path d="M462.0 203.0 L455.6 205.7 L455.6 200.3 Z" class="ah"/>
 <path d="M198.0 99.0 L222.0 99.0 L222.0 307.0 L246.0 307.0" class="data"/>
