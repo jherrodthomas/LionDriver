@@ -206,6 +206,7 @@ The fault-injection plant model of [`assurance/sim`](../sim/README.md) runs the 
 | T-34 command-arrival revocation (new) | — | Revoked 0.043 s after a full SoC stall (F-04b); no siren | New §4 row. The 0.3 s heartbeat check does not fire because authority is already revoked, so T-07a does not sound (§5) |
 | §3.3 gap loss in 1 s at +2.0 m/s² | 1.00 m | 0.75 m (L-01) | Conservative (PCM lag) |
 | §3.4 follower collision if t_r ≥ h | rule | No collision at h = 1.0 s (L-03) | Not a test of the rule: the ego driver ends the deceleration at 1.55 s |
+| §3.6 SG-07 forwarding loss: PCS request during an MCU hang | ≤ 0.2 s (≤ 0.1 s to the IWDG reset + ≤ 0.1 s release) | Reaches the car 0.084 s after the request, 1.8 km/h of speed reduction lost (P-02). With the switch stuck in intercept it never arrives (P-03) | Within the 0.2 s working budget (DQ-062), consistent with T-09a. The switch release time is not modelled (A-PCS-2). P-03 is the degraded case of DQ-064 / TSR-712 |
 | §3.8.1 saturation at the ODD curve bound | 0.5–1.0 m/s² deficit is credible | Saturated at R_ODD; 0.80 m drift; 3.0 m lane line reached 3.71 s after curve entry (N-3) | Supports §3.8.1 and OI-2 |
 
 Faults that the envelope does not report, so no warning comes from the item (§5):
