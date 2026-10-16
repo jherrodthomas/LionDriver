@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | Simulation for LionDriver; modelling-plan work item 4, the HIL plant ([models README](../models/README.md), MD-01, MD-04): fault-injection plant model (layer 1), known scenarios as OpenSCENARIO (layer 2), MetaDrive closed loop (layer 3), unknown-scenario search (layer 4) |
-| Version | 0.1 (layer 1, 2026-10-16) |
+| Version | 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. **No result here is evidence until the model is validated against Corolla logs; until then results rank risks and guide tests only** (§4) |
 | Feeds | [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) timing (owned by the safety-concept session); [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) M4, [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) (owned by the SOTIF session); previews [WP-V-05](../06-validation/WP-V-05-fault-injection.md) cases |
 
@@ -17,7 +17,10 @@ the figure tools of the other work products do. The MetaDrive bridge stays where
 |---|---|
 | [`faults.yaml`](faults.yaml) | Fault catalog: each fault with its FMEA causes, TSRs, injection point, trigger, duration and expected mechanism |
 | [`INTERFACE.md`](INTERFACE.md) | Plant interface: signals, units and rates shared by every harness |
-| [`plant/`](plant/) | Layer 1: the fault-injection plant model and its tests |
+| [`plant/`](plant/) | Layer 1: the fault-injection plant model and its tests; the plant itself is [`plant/plant.py`](plant/plant.py) |
+| [`plant/fmu/`](plant/fmu/) | The same plant as an FMI 2.0 co-simulation FMU (built, not committed), and its test under FMPy |
+| [`scenarios/`](scenarios/README.md) | Layer 2: WP-V-03 known scenarios as OpenSCENARIO/OpenDRIVE files, their generator and the esmini replay |
+| [`results/scenario-replay.md`](results/scenario-replay.md) | Layer 2 replay checks (generated) |
 | [`results/plant-results.md`](results/plant-results.md) | Layer 1 results table, event log and model inputs (generated) |
 | [`figures/`](figures/) | Layer 1 figures, one per selected case (generated) |
 | [`requirements.txt`](requirements.txt) | Pinned Python packages of the track |
@@ -35,7 +38,7 @@ python3 assurance/sim/plant/test_plant.py       # unit tests (CI)
 | Layer | Status | Can show | Cannot show |
 |---|---|---|---|
 | 1. Fault-injection plant model (`plant/`) | Built | What the **real panda safety code** of the reference build does with each injected fault, frame by frame and in time: refusal, revocation, siren, IWDG reset, relay-malfunction detection. How far the car moves meanwhile under stated EPS, PCM and driver assumptions, against the WP-S-04 §3 kinematic estimates. Which assumptions decide the outcome (sensitivity runs) | Anything the assumptions decide: the EPS reaction to lost frames, the torque-to-lateral-acceleration gain, the driver. The SoC: openpilot is replaced by a perfect-perception controller, so no SoC alert, no model or planner fault. Interrupt latency and bus load on the real MCU. Tyre limits beyond the linear single-track model. Results are not measurements and not code-derived times |
-| 2. Known scenarios as data (OpenSCENARIO + OpenDRIVE, esmini) | Planned (backlog item 2) | That each WP-V-03 scenario that simulation can represent is written down unambiguously, parses and replays headless; the same road and traffic used by layers 1 and 3 | Any behaviour of the item: esmini plays the scenario with its own simple controllers |
+| 2. Known scenarios as data (OpenSCENARIO + OpenDRIVE, esmini) | Built for 9 of the 26 WP-V-03 scenarios; the reasons for the others are listed ([scenarios](scenarios/README.md)) | That each WP-V-03 scenario that simulation can represent is written down unambiguously, parses and replays headless; the same road and traffic used by layers 1 and 3 | Any behaviour of the item: esmini plays the scenario with its own simple controllers |
 | 3. MetaDrive closed loop (`openpilot/tools/sim`) | Planned (backlog item 3) | The full openpilot stack driving on rendered images, with the Corolla CarParams and the panda safety code in the loop, in WP-V-03 scenarios with traffic: lateral and longitudinal behaviour, alert timing, outcome class | Camera realism, sensor faults, the real EPS and PCM; credit only per scenario family after the WP-V-02 §5.3 fidelity case (DQ-139) |
 | 4. Unknown-scenario search (Scenic with VerifAI) | Planned (backlog item 4) | Parameter regions of layer 2/3 scenarios where the item fails, to direct closed-course tests (WP-V-04 U-4) | That no other failure exists; a rate of failure in the real ODD |
 
@@ -68,6 +71,15 @@ car bus RX at the nominal rates (0xAA, 0x260, 0x262, 0x1D2, 0x1D3, 0x226) ──
 | Roads | Model | Highway only (ODD-H; DQ-023 answered B): straight, and a clothoid over 100 m into a left arc at 1.5 m/s² (inside the ODD) or at the ODD bound R_ODD = v²/2.5 m/s²; 3.7 m lane, thresholds also for the 3.0 m ODD minimum |
 
 The full list of inputs, with source and status of each, is printed under the results table.
+
+**One plant, many harnesses.** The vehicle, EPS and PCM are one class, `CorollaPlant` in
+[`plant/plant.py`](plant/plant.py), behind the signals of [`INTERFACE.md`](INTERFACE.md). The fault-injection loop calls
+it directly. [`plant/fmu/build_fmu.py`](plant/fmu/build_fmu.py) packages the same class as an FMI 2.0 co-simulation
+FMU with pythonfmu, freezing the parameters into the FMU's resources, so that any FMI master can drive it: FMPy in the
+test, later MetaDrive and the HIL bench. The test runs the FMU through FMPy and requires the same trajectory as the
+in-process plant (to 1e-9). A plant of higher fidelity (L2, OpenModelica EPS physics) is meant to replace it behind
+the same interface. The FMU runs Python from the host: it needs the packages of `requirements.txt`, and is a build
+product, not a committed file.
 
 ### 3.2 Corolla parameters
 
@@ -122,8 +134,14 @@ Until then the results only rank risks and guide which tests to run on the bench
 | cffi, pycparser | 2.1.1, 3.11 | MIT-0, BSD-3-Clause | loading the compiled panda code |
 | pycapnp | 2.1.0 | BSD-2-Clause | imported by opendbc (same pin as the root `pyproject.toml`) |
 | numpy | 2.5.4 | BSD-3-Clause with permissive bundled licences | opendbc host limit functions |
+| scenariogeneration | 0.16.7 | MPL-2.0; its dependencies scipy (BSD-3), pyclothoids (MIT), xmlschema and elementpath (MIT), lxml (BSD-3) | writing the scenario files |
+| esmini (binary release, not a Python package) | v3.9.0, SHA-256 pinned in `scenarios/fetch_esmini.py` | MPL-2.0 | replaying the scenario files headless |
+| pythonfmu | 0.7.0 | MIT | packaging the plant as an FMU |
+| fmpy | 0.3.32 | BSD-2-Clause; its dependencies MIT, BSD-3-Clause, Apache-2.0 | running the FMU in the test |
 
-Licences read from the package metadata on 2026-10-16. All were reachable through the network proxy. The panda and
+Licences read from the package metadata on 2026-10-16. All were reachable through the network proxy. MPL-2.0 is a file-level copyleft: it covers changes to the
+scenariogeneration and esmini files themselves, which this track does not make, and not the scenario files they
+produce. The panda and
 opendbc code is the project's own (MIT).
 
 ## 6. Open items
@@ -133,4 +151,5 @@ opendbc code is the project's own (MIT).
 | SIM-OI-1 | The EPS reaction to lost STEERING_LKA frames decides most layer-1 results (release vs hold). Replace both cases with M-02 once measured |
 | SIM-OI-2 | Replace the driver assumptions with WP-C-08 §8 values; add the SoC take-over alert once openpilot runs in the loop (layer 3) |
 | SIM-OI-3 | Model the LSI tolerance and the other hang types of WP-V-05 VS-FI-17 (main loop only, tick, safety task) |
-| SIM-OI-4 | Layers 2–4 (backlog items 2–4) |
+| SIM-OI-4 | Layers 3–4 (backlog items 3–4) |
+| SIM-OI-5 | KS-04 (lane split and merge) as an OpenDRIVE junction or lane-width polynomial |

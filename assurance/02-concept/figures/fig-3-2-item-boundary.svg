@@ -129,7 +129,7 @@
   <rect x="1060" y="310" width="170" height="58" rx="6" fill="#FFFFFF" fill-opacity=".92"/>
   <text x="1145" y="330" class="t sb" font-size="12" text-anchor="middle">E-06 external compute</text>
   <text x="1145" y="345" class="m xs" text-anchor="middle">"Chestnut" eGPU over USB</text>
-  <text x="1145" y="360" font-size="10" font-weight="700" fill="#64748B" text-anchor="middle">EXCLUDED · pending OI-4</text>
+  <text x="1145" y="360" font-size="10" font-weight="700" fill="#64748B" text-anchor="middle">EXCLUDED · DQ-021</text>
 
   <!-- ===== outside: forward camera ===== -->
   <rect x="1050" y="556" width="190" height="80" rx="8" class="ext"/>

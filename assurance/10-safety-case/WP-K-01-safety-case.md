@@ -76,7 +76,7 @@ G0  The LionDriver reference configuration, operated by an attentive driver with
  ⊙ C3   Reference configuration: E210 Corolla ICE TSS2 (TOYOTA_COROLLA_TSS2), one
         recorded device revision + Toyota harness, tagged LionDriver release
         [WP-M-01 §3.1; WP-O-01 SPC-04…SPC-07]
- ⊙ C4   Hazard log: H-01…H-06, H-08; HE-01.1…HE-08.1; SG-01…SG-07 [WP-C-03];
+ ⊙ C4   Hazard log: H-01…H-09; HE-01.1…HE-09.2; SG-01…SG-08 [WP-C-03];
         SH-01…SH-13 [WP-C-05]; TARA damage scenarios [WP-C-09]
  ⊙ C5   Safety envelope architecture pattern: QM SoC stack bounded by the opendbc safety
         mode on the panda MCU [WP-M-01 §4.1]
@@ -95,7 +95,7 @@ G0  The LionDriver reference configuration, operated by an attentive driver with
 
 ```text
 G1  Hazards from E/E malfunctions of the item are reduced to a tolerable level: every
-    safety goal SG-01…SG-07 is met with the integrity of its ASIL.
+    safety goal SG-01…SG-08 is met with the integrity of its ASIL.
  ⊙ C4 (safety goals and ASILs, WP-C-03 §6)
  ⊙ C7   Envelope strategy: reduced authority (option c) + ASIL B hardening, recommended
         and pending maintainer decision [WP-C-04 §4]

@@ -151,7 +151,7 @@ The FMEA files keep their `HZ-0nn` links, so no rating changes. If the second se
 | HZ-010 unintended engagement | H-01, H-03 | HE-01.4 | Rated inside H-01 and H-03 |
 | HZ-011 stock AEB/FCW degraded | H-08 | HE-08.1 | |
 | HZ-012 driver misinformed about the automation state | H-07 | HE-07.1, HE-07.2, HE-07.3 | |
-| HZ-013 automated control continues with an unresponsive driver | none | none | RD-3 |
+| HZ-013 automated control continues with an unresponsive driver | H-09 | HE-09.1, HE-09.2 | RD-3, decided: added in WP-C-03 v0.4 |
 
 ### 8.2 Safety goals
 
@@ -159,14 +159,16 @@ The FMEA files keep their `HZ-0nn` links, so no rating changes. If the second se
 |---|---|---|---|---|---|
 | SG-001 steering the driver cannot counteract | **D** | SG-01 | C ⚠ | Second set higher | Controllability at motorway speed: C3 against C2 (RD-1) |
 | SG-002 steering out of the lane | C | SG-01 | C | Same | |
-| SG-003 loss of lateral control or wrong state without warning | B | SG-02, SG-06 | B | Same | |
-| SG-004 unintended acceleration | **C** | SG-03 | B ⚠ | Second set higher | Exposure of closing on a slower lead at highway speed: E4 against E3 (RD-2) |
+| SG-003 loss of lateral control or wrong state without warning | B | SG-02, SG-06 | C | WP-C-03 higher | WP-C-03 v0.4: curve case re-rated C3 (DQ-059) and OS-07 at E4 (DQ-036) |
+| SG-004 unintended acceleration | C | SG-03 | C ⚠ | Same | RD-2 decided for E4 (DQ-036 B); WP-C-03 v0.4 |
 | SG-005 unintended or excessive deceleration | B | SG-04 | B | Same | |
-| SG-006 insufficient deceleration for a lead | B | SG-06 | B | Same | |
+| SG-006 insufficient deceleration for a lead | B | SG-06 | C | WP-C-03 higher | OS-07 at E4 (DQ-036) applies to HE-06.1 too; WP-C-03 v0.4 |
 | SG-007 release on brake or cancel; do not resist steering | B | SG-05 | B | Same | |
 | SG-008 unintended engagement | B | SG-01, SG-03 | C | WP-C-03 higher | Covered inside SG-01 |
 | SG-009 stock AEB/FCW availability | B | SG-07 | B | Same | |
-| SG-010 continued automated control with an unresponsive driver | A | none | none | No counterpart | RD-3 |
+| SG-010 continued automated control with an unresponsive driver | A | SG-08 | A | Same | RD-3 decided (DQ-205 A); WP-C-03 v0.4 |
+
+Status 2026-10-16 (WP-C-03 v0.4, the lead's answers applied): six of ten goals agree, WP-C-03 is higher on three, and the second set is higher only on SG-001 (RD-1: C2 kept until measured, DQ-008). The text below is the state before the decisions.
 
 Six of ten goals agree. The two HARAs disagree on two ratings and one hazard. Each difference is a decision for the safety engineer (OI-1, OI-5); none can be settled by analysis alone.
 

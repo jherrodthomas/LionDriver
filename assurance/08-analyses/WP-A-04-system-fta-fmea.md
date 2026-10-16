@@ -4,9 +4,9 @@
 |---|---|
 | Work product | WP-A-04 System-level safety analyses (FTA, FMEA) |
 | Standard reference | ISO 26262-9:2018 §8 (safety analyses); ISO 26262-4:2018 §6 (safety analysis of the system architectural design, to support the TSC); ISO 21448:2022 §7 (input on insufficiencies, informative here); ASPICE 4.0 SYS.3 |
-| Version | 1.0 (§2 SG-01 tree and §2.1 cut sets corrected from the SG-01 FTA↔FMEA mapping, findings F-11…F-13 of [fta-fmea-mapping.md](fta-fmea-mapping.md): G1.2.1.a adds the envelope's own not-allowed check defect BE-1.25 and the mode, param or firmware bypass BE-1.08/BE-1.09; G-SoC adds BE-1.24 (command corrupted on the SPI link); new G1.4 (stock LKA and item `0x2E4` together) with BE-1.26 and the SG-04 events BE-4.19, BE-4.21; MCS-01.6, -01.7 extended, MCS-01.10 and -01.11 added; 36 computed cut sets, 11 rows, all covered; 2026-10-16). 0.9 (§5 SG-04 tree and §5.1 cut sets corrected from the FTA↔FMEA pilot findings F-1, F-5…F-8: own longitudinal envelope gate G-LENV with BE-4.16; G4.2 needs the host step BE-4.17; G4.3.1 adds stale or replayed braking BE-4.18; new G4.8 (stock ACC and item 0x343 together) and G4.9 (braking during accelerator override); MCS-04.3, -04.4, -04.9 revised, MCS-04.11 and -04.12 added; SPF-14 extended to SG-04; 21 computed cut sets, 12 rows, all match; 2026-10-13). 0.8 (§11: basic events linked to the FMEAs, SG-04 pilot, [fta-fmea-mapping.md](fta-fmea-mapping.md); 2026-10-13). 0.7 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.6 (2026-10-12 reference-build status notes, drafted on a parallel branch as 0.4, re-applied to the 0.5 trees: G5.2.1 with UE-5.13 and MCS-05.8 for BE-5.12 (found by `fta_cutsets.py`: BE-5.12 under the G5.2 OR was a single-event cut set), BE-1.16, BE-1.22 (incl. TSR-408), BE-2.08, BE-2.14, MCS-01.8, MCS-02.1, Obs-01; BE-5.12, cut sets and SFMEA notes kept; 2026-10-13). 0.5 (trees restructured to resolve CS-01…CS-07: SG-01 G1.2.2/G1.3.2, SG-03 G3.3, SG-02 and SG-06 per cause; tables completed; SPF-14; OI-9 closed, OI-10; 2026-10-12). 0.4 (§9.1 computed minimal cut sets and findings CS-01…CS-07; BE-2.14 tagged latent at the baseline, as §4 states; fault tree diagrams in [fta/](fta/README.md); OI-9; 2026-10-12). 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
+| Version | 1.1 (§8 SG-07 tree re-based on the harness box as built, [RR-2026-010](../04-hardware/reviews/RR-2026-010.md): the intercept element is two powered DG419LE analog switches, not a relay. G7.3 split by cause: switch stuck in intercept BE-7.09, SBU1 stuck high BE-7.15, pull-down open BE-7.16 (latent; DFM-010.C1…C3); G7.4 adds box supply lost BE-7.17 (DFM-020, new SPF-15), clamp diode short BE-7.18 (DFM-021) and car-side bus held dominant BE-7.19 (DFM-008); new G7.6 diagnostics to the stock ADAS ECU (BE-7.20, BE-7.21; SWF-015), found by the SG-07 FTA↔FMEA mapping; MCS-07.8, -07.11 and SPF-07 revised for DQ-064 and DQ-209, MCS-07.12…07.16 added; 17 computed cut sets, 16 rows, all covered; 2026-10-16). 1.0 (§2 SG-01 tree and §2.1 cut sets corrected from the SG-01 FTA↔FMEA mapping, findings F-11…F-13 of [fta-fmea-mapping.md](fta-fmea-mapping.md): G1.2.1.a adds the envelope's own not-allowed check defect BE-1.25 and the mode, param or firmware bypass BE-1.08/BE-1.09; G-SoC adds BE-1.24 (command corrupted on the SPI link); new G1.4 (stock LKA and item `0x2E4` together) with BE-1.26 and the SG-04 events BE-4.19, BE-4.21; MCS-01.6, -01.7 extended, MCS-01.10 and -01.11 added; 36 computed cut sets, 11 rows, all covered; 2026-10-16). 0.9 (§5 SG-04 tree and §5.1 cut sets corrected from the FTA↔FMEA pilot findings F-1, F-5…F-8: own longitudinal envelope gate G-LENV with BE-4.16; G4.2 needs the host step BE-4.17; G4.3.1 adds stale or replayed braking BE-4.18; new G4.8 (stock ACC and item 0x343 together) and G4.9 (braking during accelerator override); MCS-04.3, -04.4, -04.9 revised, MCS-04.11 and -04.12 added; SPF-14 extended to SG-04; 21 computed cut sets, 12 rows, all match; 2026-10-13). 0.8 (§11: basic events linked to the FMEAs, SG-04 pilot, [fta-fmea-mapping.md](fta-fmea-mapping.md); 2026-10-13). 0.7 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.6 (2026-10-12 reference-build status notes, drafted on a parallel branch as 0.4, re-applied to the 0.5 trees: G5.2.1 with UE-5.13 and MCS-05.8 for BE-5.12 (found by `fta_cutsets.py`: BE-5.12 under the G5.2 OR was a single-event cut set), BE-1.16, BE-1.22 (incl. TSR-408), BE-2.08, BE-2.14, MCS-01.8, MCS-02.1, Obs-01; BE-5.12, cut sets and SFMEA notes kept; 2026-10-13). 0.5 (trees restructured to resolve CS-01…CS-07: SG-01 G1.2.2/G1.3.2, SG-03 G3.3, SG-02 and SG-06 per cause; tables completed; SPF-14; OI-9 closed, OI-10; 2026-10-12). 0.4 (§9.1 computed minimal cut sets and findings CS-01…CS-07; BE-2.14 tagged latent at the baseline, as §4 states; fault tree diagrams in [fta/](fta/README.md); OI-9; 2026-10-12). 0.3 (SPF-09 and SPF-13 addressed at requirement level: TSR-516 trigger set, TSR-303, TSR-711; SG-07 FTTI; 2026-10-12) |
 | Status | Draft |
-| ASIL / scope | Fault trees for all seven safety goals: SG-01 (ASIL C ⚠), SG-02…SG-07 (ASIL B); system FMEA covering SG-01…SG-07. Qualitative only |
+| ASIL / scope | Fault trees for SG-01…SG-07. Since WP-C-03 v0.4: SG-01, SG-02, SG-03, SG-06 ASIL C (SG-01, SG-03 ⚠), SG-04, SG-05, SG-07 ASIL B; SG-08 (ASIL A) has no fault tree yet. System FMEA covering SG-01…SG-07. Qualitative only |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1) |
 | Approver | Safety manager |
@@ -487,7 +487,7 @@ TE-06 Loss of longitudinal deceleration without take-over request               
 
 Diagram: [SG-07 sheet 1](fta/fta-SG-07-1.svg) (all sheets: [fta/](fta/README.md)).
 
-Top event **TE-07**: a stock PCS or AEB intervention of the Toyota system is prevented, delayed or altered because of the item. The preliminary FTTI for loss of forwarding is 0.2 s ([WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) §3.6), and content alteration is a per-frame property. The tree treats any loss of the camera-to-car path while the relay intercepts, for longer than the FTTI, as the top event.
+Top event **TE-07**: a stock PCS or AEB intervention of the Toyota system is prevented, delayed or altered because of the item. The preliminary FTTI for loss of forwarding is 0.2 s ([WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) §3.6), and content alteration is a per-frame property. The tree treats any loss of the camera-to-car path while the relay intercepts, for longer than the FTTI, as the top event. Since v1.1 the intercept element is drawn as built: two DG419LE analog switches (U1 CAN_H, U2 CAN_L) in comma's harness box, powered from the box supply, driven by SBU1 and pulled to pass-through by R2/R3, with clamp diodes D2/D3 and no position feedback ([RR-2026-010](../04-hardware/reviews/RR-2026-010.md)). "Relay" in event text means these switches.
 
 ```
 TE-07 Stock PCS/AEB suppressed, delayed or altered                                     [OR]
@@ -510,12 +510,30 @@ TE-07 Stock PCS/AEB suppressed, delayed or altered                              
 │   │          2026-10-12: removed in the reference build (TSR-705; 0x411
 │   │          kept in other builds)
 │   └── BE-7.08 SoC sends such a frame (QM fault or compromise)       [FFI → FFI-CM-05]
-├── G7.3 Relay held in intercept while forwarding is not running                        [AND]
-│   ├── BE-7.09 Relay welded or driven without forwarding (no readback; GAP-12) (SPF-07)
+├── G7.3 Intercept switches held in intercept while forwarding is not running            [AND]
+│   ├── G7.3.1 U1/U2 stay in intercept when the device stops driving SBU1             [OR]
+│   │   ├── BE-7.09 Analog switch U1 or U2 stuck in intercept, or its IN input damaged
+│   │   │          high; no switch-position feedback (GAP-12; RR-2026-010 F-06) (SPF-07)
+│   │   ├── BE-7.15 SBU1 drive stuck high (device-side driver or MCU pin, UK-06)
+│   │   └── BE-7.16 Pull-down R2 or R3 open: IN floats when SBU1 is undriven, so the
+│   │              switches may stay in intercept (RR-2026-010 F-03)  (latent, design)
 │   └── BE-7.10 Forwarding not running (device off, MCU in reset or bootloader)
-├── G7.4 Harness cuts the stock path                                                    [OR]
+├── G7.4 Stock path cut or a vehicle bus blocked in the harness or at the car side      [OR]
 │   ├── BE-7.11 Connector intermittent or partly seated (SFMEA-30; DFI-05, DFI-20)
-│   └── BE-7.12 Passive camera-to-car path broken in the harness (TSR-702)
+│   ├── BE-7.12 Stock camera path open inside the harness box (U1/U2 channel open,
+│   │          solder joint, contact; TSR-702 cannot be met with this box,
+│   │          RR-2026-010 F-01)
+│   ├── BE-7.17 Harness box loses its supply while the car is on: U1/U2 unpowered,
+│   │          pass-through not guaranteed, D2/D3 clamp CAN0/CAN2 to the dead rail
+│   │          (derived from the v3 drawing, bench test open; RR-2026-010 F-02) (SPF-15)
+│   ├── BE-7.18 Clamp diode D2 or D3 short or leaky: loads or grounds a vehicle bus in
+│   │          either switch state (RR-2026-010 F-07)
+│   └── BE-7.19 Car-side transceiver holds bus 0 dominant (TXD stuck low)
+├── G7.6 Item disturbs the stock ADAS ECU by diagnostics                               [AND]
+│   ├── BE-7.20 Diagnostic (ELM327 or pre-engagement) TX hook passes any ISO 15765
+│   │          frame, with no service, ignition or motion condition    (latent, design)
+│   └── BE-7.21 SoC sends a diagnostic request that resets or opens a session on the
+│              stock camera or radar while driving (QM fault)          [FFI → FFI-CM-09]
 └── G7.5 PCM gives the item's ACC request priority over PCS braking                     [AND]
     ├── BE-7.13 Item sends an ACC request during a PCS event
     └── UE-7.14 PCM arbitration does not prioritise PCS (AOU-04R fails)
@@ -532,10 +550,15 @@ TE-07 Stock PCS/AEB suppressed, delayed or altered                              
 | MCS-07.5 | 1 | {BE-7.05} | Systematic; verified by T-HIL of the forwarding set (TSR-704) |
 | MCS-07.6 | 1 | {BE-7.06} | Random single point at the baseline; forwarding supervision with relay release (TSR-711) makes it dual with the supervision |
 | MCS-07.7 | 1 (effective) | {BE-7.08} | BE-7.07 is a permanent latent condition at the baseline. TSR-705. 2026-10-12: not applicable for the reference build (BE-7.07 removed); remains for other builds through `0x411` |
-| MCS-07.8 | 2 | {BE-7.09, BE-7.10} | TSR-506 readback |
+| MCS-07.8 | 2 | {BE-7.09, BE-7.10} | Switch stuck in intercept when forwarding stops. TSR-506 readback; comma's box has no position feedback (RR-2026-010 F-06), so the readback needs a LionDriver hardware change (DQ-209, queued). The decided reaction once detected is a driver warning and refusal to engage (DQ-064); until readback exists nothing detects it |
 | MCS-07.9 | 1 | {BE-7.11} | Installation and harness design (TSR-701, TSR-703, TSR-805) |
 | MCS-07.10 | 1 + ext. | {BE-7.13, UE-7.14} | AOU-04R vehicle test |
-| MCS-07.11 | 1 | {BE-7.12} | Passive camera-to-car path broken in the harness; harness design and end-of-line check (TSR-702) |
+| MCS-07.11 | 1 | {BE-7.12} | Stock path open inside the harness box. v1.1: the path runs through the U1/U2 channels, so it is not passive and TSR-702 cannot be met with comma's box (RR-2026-010 F-01, DQ-209). End-of-line check of the stock path (PFM-014) |
+| MCS-07.12 | 1 | {BE-7.17} | Harness box loses its supply while the car runs: the switches are unpowered, pass-through is not guaranteed, and the clamps load both buses. Random single point (SPF-15), derived from the drawing; bench test DFM-ACT-014. HWSR-502a not met |
+| MCS-07.13 | 1 | {BE-7.18} | Clamp diode short loads or grounds a bus in either switch state. Random single point; FMEDA SG-009 FMD-033 |
+| MCS-07.14 | 1 | {BE-7.19} | Car-side transceiver holds bus 0 dominant; nothing reaches the car. Random single point, independent of the switch position; FMEDA SG-009 FMD-016 |
+| MCS-07.15 | 2 (BE-7.16 effective 1 + latent) | {BE-7.15 or BE-7.16, BE-7.10} | The release default fails: SBU1 driven high, or a pull-down open so IN floats, when forwarding stops. An open R2/R3 is latent until the device stops driving SBU1 (RR-2026-010 F-03); no monitor (HWSR-506e) |
+| MCS-07.16 | 2 (effective 1 + latent) | {BE-7.20, BE-7.21} | Diagnostic frames reset or take over the stock camera or radar (SWF-015). The permissive diagnostic TX hook is a standing condition; in the reference build ELM327 cannot be selected while TOYOTA is active, so it remains before engagement. TSR-513 |
 
 ## 9. Single points of failure and cut-set observations
 
@@ -547,7 +570,7 @@ TE-07 Stock PCS/AEB suppressed, delayed or altered                              
 | SPF-04 | **Single RX path for both monitor and controller.** The SoC receives vehicle CAN through the panda; a stuck RX path or stuck vehicle frame misleads both | SG-01, SG-03, SG-05 | Common cause | E2E/plausibility on gating signals in the envelope | TSR-401…TSR-406; GAP-01 |
 | SPF-05 | **Debug build has no envelope** (ALLOUTPUT, debug key) | All | Configuration | Release-only firmware, build-type check at start-up reported to SoC and enforced | TSR-514, TSR-802; GAP-25 |
 | SPF-06 | **MCU hang leaves the relay energised** (GAP-43) with no hardware watchdog. Torque stops (EPS timeout, AOU-01R), but the stock PCS path stays cut if forwarding stops | SG-07 (and SG-02 without warning) | Random HW | IWDG (TSR-501); fault reaction (TSR-502); relay to stock path on fault/reset (TSR-706). 2026-10-12: IWDG implemented (≈ 90 ms nominal, window, started at the first relay drive; panda `b790fca`), not verified on hardware; TSR-502 and TSR-706 open | GAP-07, GAP-43 |
-| SPF-07 | **Relay welded in intercept position** is not detected (no readback) | SG-07 | Random HW | Relay readback (TSR-506) | GAP-12 |
+| SPF-07 | **Intercept switch stuck in intercept** (v1.1: U1/U2 analog switches, not a relay) is not detected: no position feedback in comma's box (RR-2026-010 F-06). An open pull-down (BE-7.16) makes the release default fail the same way, latently | SG-07 | Random HW | Readback (TSR-506; needs a LionDriver hardware change, DQ-209); on detection warn and refuse to engage (DQ-064) | GAP-12 |
 | SPF-08 | **QM command `0xe7` (power save) in car mode** stops camera-side forwarding with the relay energised (by code reading, WP-A-02 FFI-CM-08) | SG-07 | FFI | Reject in car modes | TSR-513; WP-S-02 NF-05 |
 | SPF-09 | **SG-02/SG-06 warnings for SoC-detected faults rested on the QM SoC alone.** At v0.2 TSR-516 named only heartbeat loss and envelope-detected RX or platform faults. **Addressed at requirement level in WP-S-02 v0.3:** TSR-516(b) sounds the siren on every envelope revocation that is not a driver action, including an EPS fault (TSR-110); TSR-303 makes every fault-induced disengagement cancel ACC, so the cluster cruise state changes; TSR-516(c) sounds the siren when that cancel has no effect. Not implemented; the cluster cue rests on AOU-12. 2026-10-12, reference build: the EPS-fault part is implemented (LKA refused on the fault frame, TSR-110; siren after 1 s persistence, panda `b790fca`), warning ≤ 1.26 s worst case after onset, above the 1 s budget (WP-S-04 OI-8). 2026-10-13: the heartbeat-loss trigger is implemented in all builds: siren when heartbeat loss revokes granted authority, ≈ 0.56 s after the last heartbeat (panda `c33343b`; WP-S-04 T-07a); the other (b) triggers, (c) and TSR-303 not implemented | SG-02, SG-06 | Common cause / design | As stated; vehicle check of the cluster and PCM cues on a forced cancel (AOU-12) | TSR-516, TSR-303 (OI-7 closed) |
 | SPF-10 | **Non-finite actuator command is replaced by 0 silently** | SG-02, SG-06 | Systematic (design) | Treat as a fault with take-over request | TSR-604; GAP-19 |
@@ -555,6 +578,7 @@ TE-07 Stock PCS/AEB suppressed, delayed or altered                              
 | SPF-12 | **No driver steering override check in the envelope** on the LKA path; release rests on the QM host check and the EPS (AOU-02R) | SG-05 | Design | Driver-override check and torque reduction in the envelope | TSR-304; GAP-02 |
 | SPF-13 | **Camera-to-car forwarding is single-channel with no supervision that releases the relay.** An MCU hang, a camera-side bus fault, a QM configuration command or queue overflow stops PCS forwarding while the relay intercepts | SG-07 | Random HW / FFI | IWDG (≤ 0.1 s) and relay release on fault; reject configuration commands in car modes; forwarding supervision with relay release within the SG-07 budget | TSR-501, TSR-502, TSR-513, TSR-706, TSR-707, TSR-711 (added in WP-S-02 v0.3) |
 | SPF-14 | **A stale SoC command is held.** Nothing in the envelope supervises command freshness at the baseline (BE-1.22: the heartbeat shows only pandad liveness), and the value checks cannot see a stale in-limit value (BE-1.23). A SoC that stops updating while its link stays alive (BE-1.19…BE-1.21, BE-6.05) holds torque or acceleration beyond the FTTI; a stale or replayed braking command (BE-4.18, v0.9) holds deceleration | SG-01, SG-03, SG-04, SG-06 | Systematic (design) | Command freshness supervised in the envelope within the FTTI (sequence counter or age) | TSR-407…TSR-409, TSR-411; GAP-06, GAP-10, GAP-16 |
+| SPF-15 | **Harness box supply is a single point for the stock path** (v1.1, RR-2026-010 F-02). U1/U2 are powered from the box VIN; when it is lost while the car runs, pass-through is not guaranteed and D2/D3 clamp both buses towards the dead rail. Derived from the drawing, not yet tested | SG-07 (and SG-02 without warning) | Random HW | Bench test DFM-ACT-014; a passive fail-safe path or a box designed to pass through unpowered (DQ-209) | HWSR-502a, HWSR-702 |
 | Obs-01 | MCS-01.6 is the only truly dual-point cut set that the envelope pattern intends. It stays dual only if MCU faults (BE-1.07) are detected; today there is no IWDG, MPU or ECC reaction, so latent MCU faults can accumulate. 2026-10-12: IWDG implemented (TSR-501, hangs only); MPU and ECC reactions still open | SG-01 | Latent | Latent-fault diagnostics at start-up and run time | TSR-501, TSR-503, TSR-507 |
 | Obs-02 | Every SG-01, SG-03 and SG-04 path ends in an EPS or PCM AND-input (UE-1.11, UE-3.05, UE-4.04). These are unverified AoUs. The trees must not be read as "dual" until AOU-01R/AOU-05R are verified | SG-01, SG-03, SG-04 | AoU | Vehicle characterisation (WP-S-09) | GAP-05 |
 | Obs-03 | SG-07 had no numeric FTTI. [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) v0.2 §3.6 sets a preliminary 0.2 s for loss of forwarding (FDTI ≤ 0.1 s, FRTI ≤ 0.1 s, zero margin), which tightened the watchdog timeout (TSR-501) to ≤ 0.1 s and added forwarding supervision (TSR-711) | SG-07 | Timing | Measure the PCS timing and confirm the FTTI (WP-S-04 OI-4, OI-7) | RR-2026-004 F-04; RR-2026-005 F-02 |
@@ -601,6 +625,8 @@ The rows with no external event are the single points of §9.
 v0.9 changes only SG-04: 21 computed cut sets (was 17), 6 of effective order ≤ 1, 12 table rows, all match ([`fta/cut-sets.md`](fta/cut-sets.md)).
 
 v1.0 changes only SG-01: 36 computed cut sets (was 27), still 6 of effective order ≤ 1, 11 table rows, every cut set covered. The new cut sets are order 2: MCS-01.10 (effective 1 through DFI-13, like MCS-01.3) and MCS-01.11; MCS-01.6 and MCS-01.7 gain BE-1.24 and BE-1.25 ([`fta/cut-sets.md`](fta/cut-sets.md)).
+
+v1.1 changes only SG-07: 17 computed cut sets (was 11), 15 of effective order ≤ 1, 16 table rows, every cut set covered. The new single points are random hardware in comma's harness box and at the car-side transceiver (MCS-07.12…07.14; SPF-15); MCS-07.15 and MCS-07.16 are order 2 with a latent condition ([`fta/cut-sets.md`](fta/cut-sets.md)).
 
 ## 10. System FMEA
 
@@ -658,7 +684,7 @@ Severity of the vehicle effect is expressed by the affected SG. Detection = mech
 | [WP-H-03](../04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md) | SFMEA-17, -22…-26, -39 as FMEDA inputs |
 | [WP-W-04](../05-software/WP-W-04-software-safety-analysis.md) | SFMEA-12, -13, -16, -18, -19, -38, -40 as software safety analysis inputs |
 | [WP-V-05](../06-validation/WP-V-05-fault-injection.md) | Every BE marked SPF and every SFMEA row with a mechanism gets a fault-injection case |
-| [FMEAs](fmea/analyses/) | Basic events are linked to FMEA failure modes in [fta-fmea-map.yaml](fta-fmea-map.yaml) and checked both ways; SG-04 pilot findings F-1…F-10 in [fta-fmea-mapping.md](fta-fmea-mapping.md) §3 (2026-10-13), resolved in v0.9 (tree) and SW FMEA rev 0.7, DFMEA rev 0.3, System FMEA rev 0.6, PFMEA rev 0.3. SG-01 mapped 2026-10-16 (F-11…F-16): F-11…F-13 resolved in v1.0 (tree); F-14 (eight FMEA modes that reach SG-01 or SG-04 through shared events but do not cite the hazard) and F-15 (no FMEA mode for `0x1D2` stuck at cruise active) are open for the FMEA owners |
+| [FMEAs](fmea/analyses/) | Basic events are linked to FMEA failure modes in [fta-fmea-map.yaml](fta-fmea-map.yaml) and checked both ways; SG-04 pilot findings F-1…F-10 in [fta-fmea-mapping.md](fta-fmea-mapping.md) §3 (2026-10-13), resolved in v0.9 (tree) and SW FMEA rev 0.7, DFMEA rev 0.3, System FMEA rev 0.6, PFMEA rev 0.3. SG-01 mapped 2026-10-16 (F-11…F-16): F-11…F-13 resolved in v1.0 (tree); F-14 (eight FMEA modes that reach SG-01 or SG-04 through shared events but do not cite the hazard) and F-15 (no FMEA mode for `0x1D2` stuck at cruise active) are open for the FMEA owners. SG-07 mapped 2026-10-16 with the harness-box re-base (v1.1): F-17…F-19 open for the FMEA owners |
 
 ## 12. Open items
 

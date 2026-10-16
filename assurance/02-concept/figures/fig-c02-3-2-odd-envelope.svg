@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="762" viewBox="0 0 1280 762" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 3-2 · ODD speed–curvature envelope</title>
-<desc>Plot of minimum curve radius R in metres against ego speed 0 to 130 km/h. The solid curve R_ctrl = v²/3.0 m/s² is the controller lateral-acceleration limit; the dashed curve R_ODD = v²/2.5 m/s² is the proposed ODD bound. Above R_ODD is inside the proposed ODD; between the curves is the 0.5 m/s² margin; below R_ctrl is beyond controller authority. Both are driver tasks. Table points: 40 km/h R_ctrl 41 m, R_ODD 49 m; 60 km/h R_ctrl 93 m, R_ODD 111 m; 80 km/h R_ctrl 165 m, R_ODD 198 m; 100 km/h R_ctrl 257 m, R_ODD 309 m; 120 km/h R_ctrl 370 m, R_ODD 444 m. Speed bounds 90 and 120 km/h are marked. Both curves assume AOU-01, EPS torque authority, which is unverified (GAP-04).</desc>
+<desc>Plot of minimum curve radius R in metres against ego speed 0 to 130 km/h. The solid curve R_ctrl = v²/3.0 m/s² is the controller lateral-acceleration limit; the dashed curve R_ODD = v²/2.5 m/s² is the proposed ODD bound. Above R_ODD is inside the proposed ODD; between the curves is the 0.5 m/s² margin; below R_ctrl is beyond controller authority. Both are driver tasks. Table points: 40 km/h R_ctrl 41 m, R_ODD 49 m; 60 km/h R_ctrl 93 m, R_ODD 111 m; 80 km/h R_ctrl 165 m, R_ODD 198 m; 100 km/h R_ctrl 257 m, R_ODD 309 m; 120 km/h R_ctrl 370 m, R_ODD 444 m. The ODD-H speed bound 120 km/h is marked. Both curves assume AOU-01, EPS torque authority, which is unverified (GAP-04).</desc>
 <defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="faint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker><marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D97706"/></marker><pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#94A3B8" stroke-width="1.2"/></pattern><pattern id="hatch-amber" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#FFFBEB"/><line x1="0" y1="0" x2="0" y2="8" stroke="#FCD34D" stroke-width="1.4"/></pattern></defs>
 <rect x="0" y="0" width="1280" height="762" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-2 · ODD speed–curvature envelope</text>
@@ -56,8 +56,6 @@
 <rect x="110" y="124" width="890" height="480" rx="0" fill="none" stroke="#94A3B8" stroke-width="1"/>
 <text x="555" y="646" font-size="12" fill="#0F172A" font-weight="600" text-anchor="middle">Ego speed v (km/h)</text>
 <text x="56" y="364" font-size="12" font-weight="600" fill="#0F172A" text-anchor="middle" transform="rotate(-90 56 364)">Minimum curve radius R (m)</text>
-<line x1="726.2" y1="124" x2="726.2" y2="604" stroke="#475569" stroke-width="1.2" stroke-dasharray="6 4"/>
-<text x="726.2" y="116" font-size="11" fill="#475569" font-weight="600" text-anchor="middle">ODD-A ≤ 90 km/h</text>
 <line x1="931.5" y1="124" x2="931.5" y2="604" stroke="#475569" stroke-width="1.2" stroke-dasharray="6 4"/>
 <text x="931.5" y="116" font-size="11" fill="#475569" font-weight="600" text-anchor="middle">ODD-H ≤ 120 km/h</text>
 <text x="965.8" y="142" font-size="10" fill="#475569" font-weight="600" text-anchor="middle">above</text>
@@ -98,7 +96,7 @@
 <text x="1024" y="380.3" font-size="10.5" fill="#0F172A">yet characterised (GAP-04, OI-2).</text>
 <text x="151.1" y="172" font-size="14" fill="#0F766E" font-weight="700">Inside the proposed ODD</text>
 <text x="151.1" y="190" font-size="11.5" fill="#0F172A">R ≥ R_ODD, lateral acceleration ≤ 2.5 m/s²</text>
-<text x="151.1" y="206" font-size="11" fill="#475569">(and speed within the ODD-H / ODD-A bound)</text>
+<text x="151.1" y="206" font-size="11" fill="#475569">(and speed within the ODD-H bound)</text>
 <text x="411.2" y="284" font-size="13" fill="#D97706" font-weight="700">Margin 0.5 m/s²: R_ctrl ≤ R &lt; R_ODD</text>
 <text x="411.2" y="301" font-size="11.5" fill="#0F172A">for controller error, road crown and wind</text>
 <text x="411.2" y="317" font-size="11" fill="#475569">outside the proposed ODD: driver task</text>

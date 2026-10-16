@@ -2,8 +2,8 @@
 """Draw the WP-C-02 ODD figures (Figure 3-1 ODD taxonomy, Figure 3-2 speed-curvature envelope).
 
 The source of record is `../WP-C-02-odd-and-intended-functionality.md`:
-  - Figure 3-1 is generated from the §3.1 ODD taxonomy table (category, attribute, included in ODD-H and
-    ODD-A). The status tags (proposed, to be validated, TBD) are listed in FLAGS below; each carries the
+  - Figure 3-1 is generated from the §3.1 ODD taxonomy table (category, attribute, included in ODD-H;
+    the ODD is highways only since WP-C-02 v0.4). The status tags (proposed, to be validated, TBD) are listed in FLAGS below; each carries the
     exact text it was read from (`src`).
   - Figure 3-2 plots the §3.2 table points (speed, R_ctrl, R_ODD) and the two curves R = v²/a that the §3.2
     text states. The two lateral accelerations and every prose value are listed in PROSE with their `src`.
@@ -52,7 +52,6 @@ PROSE = {
                     "Entering a curve tighter than R_ODD at the current speed is therefore a driver task."]},
   "saturated": {"src": ["| Curve tighter than R_ODD | Partly: `steerSaturated` warning when the controller saturates (`events.py:619`) | Warning only |"]},
   "v_odd_h": {"value": 120, "src": ["| Ego speed | 0 – 120 km/h (75 mph), not above the posted limit |"]},
-  "v_odd_a": {"value": 90, "src": ["| 0 – 90 km/h (55 mph), not above the posted limit |"]},
   "oi2": {"src": ["| OI-2 | Characterise EPS torque authority and confirm R_ODD (§3.2)"]},
 }
 # The controller limit is also read from the code it cites (drive_helpers.py:14).
@@ -73,7 +72,6 @@ FLAGS = {
   ("Weather", "Ambient temperature"): (
     "tbd", "TBD · OI-3", ["(to be specified from device data, OI-3)", "| OI-3 | Obtain the device operating temperature range"]),
 }
-ODD_A_SRC = ["| OI-4 | Confirm ODD-A inclusion with the HARA owner"]
 PROPOSED_SRC = ["## 3. Reference ODD (proposed)"]
 PLACEHOLDER = re.compile(r"\b(TBD|TBC|to be specified|placeholder)\b", re.I)
 DRIVER_ACTS = re.compile(r"driver must act", re.I)
@@ -199,23 +197,13 @@ def plain(s: str) -> str:
 
 
 def taxonomy(md: str) -> list[dict]:
-  """§3.1 rows: category, attribute, ODD-H value, ODD-A value (None when 'same' or equal), basis."""
+  """§3.1 rows: category, attribute, ODD-H value, basis."""
   body = section(md, "### 3.1 ODD taxonomy")
   head = split_row(next(r for r in body.splitlines() if r.startswith("|")))
-  want = ["Category", "Attribute", "Included (ODD-H)", "Included (ODD-A)", "Excluded", "Basis"]
+  want = ["Category", "Attribute", "Included (ODD-H)", "Excluded", "Basis"]
   if head != want:
     raise SystemExit(f"WP-C-02 §3.1 header changed: {head}; update fig_c02_odd.py")
-  out = []
-  for cat, attr, h, a, _excl, basis in table(body):
-    h, a = plain(h), plain(a)
-    if a.lower() == "same" or a == h:
-      a_val = None
-    elif a.lower().startswith("same "):
-      a_val = "Same as ODD-H " + a[5:]
-    else:
-      a_val = a
-    out.append({"cat": cat, "attr": attr, "h": h, "a": a_val, "basis": basis})
-  return out
+  return [{"cat": cat, "attr": attr, "h": plain(h), "basis": basis} for cat, attr, h, _excl, basis in table(body)]
 
 
 def curve_table(md: str) -> list[tuple[int, float, int, int]]:
@@ -233,7 +221,7 @@ def radius(kmh: float, a: float) -> float:
 
 
 def sources() -> list[str]:
-  out = list(PROPOSED_SRC) + list(ODD_A_SRC)
+  out = list(PROPOSED_SRC)
   for p in PROSE.values():
     out += p["src"]
   for _k, _t, src in FLAGS.values():
@@ -258,9 +246,8 @@ def problems(md: str) -> list[str]:
     if k not in keys:
       out.append(f"FLAGS names {k}, which is no longer a §3.1 row")
   for r in rows:
-    for cell in (r["h"], r["a"] or ""):
-      if PLACEHOLDER.search(cell) and FLAGS.get((r["cat"], r["attr"]), ("",))[0] != "tbd":
-        out.append(f"§3.1 {r['cat']} / {r['attr']} has a placeholder but no 'tbd' flag in FLAGS")
+    if PLACEHOLDER.search(r["h"]) and FLAGS.get((r["cat"], r["attr"]), ("",))[0] != "tbd":
+      out.append(f"§3.1 {r['cat']} / {r['attr']} has a placeholder but no 'tbd' flag in FLAGS")
   return out
 
 
@@ -271,8 +258,7 @@ X_ROOT, W_ROOT = 40, 128
 X_CAT, W_CAT = 196, 150
 X_ATTR, W_ATTR = 376, 196
 X_H = 600
-X_A = 924
-W_VAL = 316
+W_VAL = 640
 LINE_H = 14
 
 
@@ -280,15 +266,12 @@ def figure_3_1(md: str) -> str:
   rows = taxonomy(md)
   b: list[str] = []
   b += header(W, "3-1", "ODD taxonomy",
-              "Reference ODD of §3.1 by category and attribute, with the value included in ODD-H and ODD-A. " +
+              "Reference ODD of §3.1 by category and attribute, with the value included in ODD-H (highways only). " +
               "The whole ODD is proposed.", "WP-C-02 §3.1")
   top = 122
   b.append(text(X_CAT, top - 16, "Category", size=11, fill=MUTED, weight=700))
   b.append(text(X_ATTR, top - 16, "Attribute", size=11, fill=MUTED, weight=700))
   b.append(text(X_H, top - 16, "ODD-H · limited-access highway", size=11, fill=MUTED, weight=700))
-  b.append(text(X_A, top - 16, "ODD-A · arterial and rural", size=11, fill=MUTED, weight=700))
-  oi4 = "to be confirmed · OI-4"
-  b += pill(X_A + W_VAL - pill_width(oi4, 9), top - 20, oi4, AMBER, size=9)
 
   y = top
   cats: list[tuple[str, float, float, list[float]]] = []
@@ -301,14 +284,10 @@ def figure_3_1(md: str) -> str:
       cats.append((r["cat"], y, y, []))
       prev = r["cat"]
     flag = FLAGS.get((r["cat"], r["attr"]))
-    merged = r["a"] is None
-    vw = (X_A + W_VAL - X_H) if merged else W_VAL
-    tag_w = 96 if merged else 0
-    h_lines = wrap(r["h"], vw - 20 - tag_w)
-    a_lines = [] if merged else wrap(r["a"], W_VAL - 20)
+    h_lines = wrap(r["h"], W_VAL - 20)
     attr_lines = wrap(r["attr"], W_ATTR - 20, size=11.5)
     n_attr = len(attr_lines) + (1.4 if flag else 0)
-    n = max(len(h_lines), len(a_lines), n_attr, 1)
+    n = max(len(h_lines), n_attr, 1)
     h = LINE_H * n + 14
     cy = y + h / 2
     # attribute box
@@ -322,11 +301,9 @@ def figure_3_1(md: str) -> str:
     if flag:
       body += pill(X_ATTR + 10, ty + LINE_H * len(attr_lines) + 5, flag[1], AMBER if flag[0] == "proposed" else RED, size=9)
     body.append(line(X_ATTR + W_ATTR, cy, X_H, cy, stroke=FAINT, sw=1.2))
-    # value boxes
-    for x, lines_, width, is_merged in ((X_H, h_lines, vw, merged), (X_A, a_lines, W_VAL, False)):
-      if x == X_A and merged:
-        continue
-      cell = r["h"] if x == X_H else (r["a"] or "")
+    # value box
+    for x, lines_, width in ((X_H, h_lines, W_VAL),):
+      cell = r["h"]
       tbd = flag is not None and flag[0] == "tbd"
       driver = bool(DRIVER_ACTS.search(cell))
       nothing = cell.strip() in ("—", "-", "")
@@ -344,9 +321,6 @@ def figure_3_1(md: str) -> str:
       for i, s in enumerate(lines_):
         body.append(text(x + 12, ty + LINE_H * i, s, size=10.5, fill=MUTED if nothing else INK,
                          style="italic" if nothing else ""))
-      if is_merged:
-        body.append(text(x + width - 12, y + 7 + 10.5 + (h - 14 - LINE_H) / 2, "ODD-H = ODD-A", size=10, fill=FAINT,
-                         anchor="end", weight=600))
     c = cats[-1]
     cats[-1] = (c[0], c[1], y + h, [*c[3], cy])
     y += h + 6
@@ -380,7 +354,7 @@ def figure_3_1(md: str) -> str:
     b.append(line(root_trunk, cy, X_CAT, cy, stroke=MUTED, sw=1.3))
   b.append(rect(X_ROOT, ry, W_ROOT, rh, fill="#FFFBEB", stroke=SCOPE, dash="10 5", rx=10, sw=1.5))
   b.append(text(X_ROOT + W_ROOT / 2, ry + 30, "Reference ODD", size=13, weight=700, anchor="middle"))
-  b.append(text(X_ROOT + W_ROOT / 2, ry + 48, "ODD-H + ODD-A", size=10.5, fill=MUTED, anchor="middle"))
+  b.append(text(X_ROOT + W_ROOT / 2, ry + 48, "ODD-H, highways", size=10.5, fill=MUTED, anchor="middle"))
   b += pill(X_ROOT + (W_ROOT - pill_width("proposed", 10)) / 2, ry + 70, "proposed", SCOPE)
 
   # legend
@@ -394,15 +368,13 @@ def figure_3_1(md: str) -> str:
   ])
   b.append(rect(40, ly + 14, 5, 12, fill=SAFETY, stroke="none", rx=2))
   b.append(text(60, ly + 24, "value says the system does not handle it reliably; the driver must act", size=11, fill=MUTED))
-  b.append(text(560, ly + 24, "ODD-H = ODD-A: the table says “same” (or gives the same value); one box spans both columns", size=11,
-                fill=MUTED))
   b.append(text(40, ly + 48, "Drawn with the table’s own categories; the excluded conditions and the basis of each row are in §3.1. " +
                 "Status tags: §3.2, §3.1 Basis and the open items of §7.", size=11, fill=MUTED))
   height = int(ly + 72)
   desc = ("Tree of the reference ODD of WP-C-02 §3.1: " + ", ".join(c[0] for c in cats) + ". " +
-          "Each attribute shows the value included in ODD-H and in ODD-A. The horizontal curve radius bound is proposed " +
-          "(GAP-04, OI-2), grade and banking bounds are to be confirmed (OI-5), the ambient temperature bound is TBD (OI-3), " +
-          "and the ODD-A inclusion is to be confirmed (OI-4).")
+          "Each attribute shows the value included in ODD-H; the ODD is limited-access highways only. The horizontal curve " +
+          "radius bound is proposed (GAP-04, OI-2), grade and banking bounds are to be confirmed (OI-5), and the ambient " +
+          "temperature bound is TBD (OI-3).")
   return svg(W, height, "Figure 3-1 · ODD taxonomy", desc, b)
 
 
@@ -437,7 +409,8 @@ def figure_3_2(md: str) -> str:
   a_ctrl, a_odd = PROSE["a_ctrl"]["value"], PROSE["a_odd"]["value"]
   margin = PROSE["margin"]["value"]
   pts = curve_table(md)
-  vh, va = PROSE["v_odd_h"]["value"], PROSE["v_odd_a"]["value"]
+  vh = PROSE["v_odd_h"]["value"]
+  va = 90  # position of the "beyond controller authority" label only
   b: list[str] = []
   b += header(W, "3-2", "ODD speed–curvature envelope",
               "Minimum curve radius against ego speed: the controller limit, the proposed ODD bound and the margin between them.",
@@ -461,7 +434,7 @@ def figure_3_2(md: str) -> str:
   b.append(el("text", "Minimum curve radius R (m)", x=56, y=fmt((PY0 + PY1) / 2), font_size=12, font_weight=600, fill=INK,
               text_anchor="middle", transform=f"rotate(-90 56 {fmt((PY0 + PY1) / 2)})"))
   # speed bounds of §3.1
-  for v, label in ((va, f"ODD-A ≤ {va} km/h"), (vh, f"ODD-H ≤ {vh} km/h")):
+  for v, label in ((vh, f"ODD-H ≤ {vh} km/h"),):
     b.append(line(sx(v), PY0, sx(v), PY1, stroke=MUTED, sw=1.2, dash="6 4"))
     b.append(text(sx(v), PY0 - 8, label, size=11, fill=MUTED, anchor="middle", weight=600))
   b.append(text((sx(vh) + sx(V_MAX)) / 2, PY0 + 18, "above", size=10, fill=MUTED, anchor="middle", weight=600))
@@ -492,7 +465,7 @@ def figure_3_2(md: str) -> str:
   # region labels
   b.append(text(sx(6), sy(540), "Inside the proposed ODD", size=14, fill=SW, weight=700))
   b.append(text(sx(6), sy(540) + 18, f"R ≥ R_ODD, lateral acceleration ≤ {a_odd} m/s²", size=11.5, fill=INK))
-  b.append(text(sx(6), sy(540) + 34, "(and speed within the ODD-H / ODD-A bound)", size=11, fill=MUTED))
+  b.append(text(sx(6), sy(540) + 34, "(and speed within the ODD-H bound)", size=11, fill=MUTED))
   # margin callout
   mx, my = sx(44), sy(400)
   vk = 64
@@ -501,7 +474,7 @@ def figure_3_2(md: str) -> str:
   b.append(text(mx, my + 17, "for controller error, road crown and wind", size=11.5, fill=INK))
   b.append(text(mx, my + 33, "outside the proposed ODD: driver task", size=11, fill=MUTED))
   b.append(line(mx + 40, my + 42, tx - 3, tyy - 5, stroke=AMBER, sw=1.4, marker="amber"))
-  # beyond controller authority: between the two speed bounds, where the region below R_ctrl is tallest
+  # beyond controller authority: left of the speed bound, where the region below R_ctrl is tall
   dx, dy = sx(va) + 9, sy(radius(va, a_ctrl)) + 50
   b.append(text(dx, dy, "Beyond controller", size=12.5, fill=RED, weight=700))
   b.append(text(dx, dy + 16, "authority: R < R_ctrl", size=12.5, fill=RED, weight=700))
@@ -533,7 +506,7 @@ def figure_3_2(md: str) -> str:
           "Above R_ODD is inside the proposed ODD; between the curves is the 0.5 m/s² margin; below R_ctrl is beyond controller " +
           "authority. Both are driver tasks. Table points: " +
           "; ".join(f"{k} km/h R_ctrl {c} m, R_ODD {o} m" for k, _m, c, o in pts) +
-          f". Speed bounds {va} and {vh} km/h are marked. Both curves assume AOU-01, EPS torque authority, which is unverified (GAP-04).")
+          f". The ODD-H speed bound {vh} km/h is marked. Both curves assume AOU-01, EPS torque authority, which is unverified (GAP-04).")
   return svg(W, height, "Figure 3-2 · ODD speed–curvature envelope", desc, b)
 
 

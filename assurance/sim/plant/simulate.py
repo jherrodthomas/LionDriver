@@ -15,23 +15,24 @@ data under DSR-12 and earn no evidence credit (WP-V-02 §5.3).
 from __future__ import annotations
 
 import math
+import re
 import sys
 from dataclasses import dataclass, field
+from pathlib import Path
 
 import corolla
 from corolla import ROOT
 from panda_loop import Panda
-from roads import Road, lane_line_threshold
+from plant import STEER_MAX, CorollaPlant
+from roads import Road, from_xodr, lane_line_threshold
 
 sys.path.insert(0, str(ROOT / "opendbc_repo"))
 from opendbc.car.lateral import apply_meas_steer_torque_limits  # noqa: E402  (host torque limiting, real code)
 from opendbc.car.toyota import toyotacan  # noqa: E402  (host frame packing, real code)
-from vehiclemodels.vehicle_dynamics_st import vehicle_dynamics_st  # noqa: E402
 
 DT_US = 1000
 DRIVER_KE, DRIVER_KV = 1.5 ** 2, 2 * 1.5   # driver return-to-centre loop (ASSUMPTIONS driver_ay_max)
 DYN_EVERY = 5            # dynamics step = 5 ms
-STEER_MAX = 1500         # opendbc toyota CarControllerParams.STEER_MAX
 EPS_SCALE = 73           # reference safety parameter: EPS torque factor
 
 # Assumptions of the models around the panda code. None is measured; each names what would replace it.
@@ -96,45 +97,24 @@ class Result:
     self.events.setdefault(name, t)
 
 
+SCENARIOS = Path(__file__).resolve().parents[1] / "scenarios"
+
+
+def scenario_param(ks: str, name: str) -> float:
+  """Default of a parameter declared in a scenario file (../scenarios/xosc), e.g. the KS-08 time gap."""
+  text = (SCENARIOS / "xosc" / f"{ks}.xosc").read_text(encoding="utf-8")
+  return float(re.search(rf'<ParameterDeclaration name="{name}" parameterType="double" value="([^"]*)"', text).group(1))
+
+
 def make_road(kind: str, v: float) -> Road:
+  # a scenario road (OpenDRIVE of ../scenarios/xodr), ego lane -2;
   # curve inside the ODD: required lateral acceleration 1.5 m/s2; at the ODD bound: 2.5 m/s2 (R_ODD = v^2 / 2.5)
+  if kind.startswith("KS-"):
+    return from_xodr(SCENARIOS / "xodr" / f"{kind}.xodr")
   if kind == "straight":
     return Road("straight highway", 3.7, straight=3000.0, length=1200.0)
   a_y = {"curve": 1.5, "curve-odd-bound": 2.5}[kind]
   return Road(f"left curve, R = v²/{a_y:g} m/s²", 3.7, straight=60.0, radius=v * v / a_y, length=1200.0)
-
-
-class EPS:
-  def __init__(self, d, hold: bool):
-    self.d = d
-    self.timeout = A("eps_hold_s") if hold else A("eps_release_s")
-    self.last_cmd, self.last_req, self.last_t = 0, 0, -1e9
-    self.torque = 0.0
-    self.fault = False
-
-  def frame(self, t, torque, req):
-    self.last_cmd, self.last_req, self.last_t = torque, req, t
-
-  def step(self, t, dt):
-    cmd = self.last_cmd if (self.last_req and t - self.last_t <= self.timeout and not self.fault) else 0.0
-    self.torque += (cmd - self.torque) * min(dt / self.d["tau_eps"], 1.0)
-
-  def lat_accel(self):
-    return self.d["lat_accel_factor"] * self.torque / STEER_MAX
-
-
-class PCM:
-  def __init__(self, d):
-    self.d = d
-    self.cmd, self.last_t = 0.0, -1e9
-    self.accel = 0.0
-
-  def frame(self, t, accel):
-    self.cmd, self.last_t = accel, t
-
-  def step(self, t, dt):
-    cmd = self.cmd if t - self.last_t <= A("pcm_timeout_s") else 0.0
-    self.accel += (cmd - self.accel) * min(dt / self.d["tau_pcm"], 1.0)
 
 
 class SoC:
@@ -186,13 +166,12 @@ def simulate(case: Case) -> Result:
   road = make_road(case.road, v0)
   panda = Panda(reference=True)
   soc = SoC(d, panda.packer)
-  eps = EPS(d, hold=(case.eps == "hold"))
-  pcm = PCM(d)
+  plant = CorollaPlant(v0, A("eps_hold_s") if case.eps == "hold" else A("eps_release_s"), A("pcm_timeout_s"), d, p)
+  eps = plant.eps
   res = Result(case)
 
-  # vehicle state x = [sx, sy, delta, v, psi, psi_dot, beta] (CommonRoad ST, reference point CoG)
-  x = [0.0, 0.0, 0.0, v0, 0.0, 0.0, 0.0]
-  lead_s, follow_s = 1.5 * v0, -1.0 * v0      # lead at a 1.5 s gap (KS-08), follower at a 1.0 s gap (§3.4)
+  # lead at the KS-08 time gap (read from the scenario file), follower at a 1.0 s gap (WP-S-04 §3.4)
+  lead_s, follow_s = scenario_param("KS-08", "TimeGap") * v0, -1.0 * v0
   lead_v = follow_v = v0
   follow_brake_t = None
   thr = lane_line_threshold(road.lane_width, d["width"])
@@ -222,6 +201,7 @@ def simulate(case: Case) -> Result:
   torque0 = None
 
   def state_on_road():
+    x = plant.x
     s, lat, hr = road.project(x[0], x[1])
     return s, lat, (x[4] + x[6]) - hr
 
@@ -231,7 +211,7 @@ def simulate(case: Case) -> Result:
     panda.set_time(t_us)
     if k % DYN_EVERY == 0:
       s, e_y, e_psi = state_on_road()
-    v = x[3]
+    v = plant.speed
     kappa = road.curvature(s + v * d["tau_eps"])
 
     # ------------------------------------------------ fault onset
@@ -262,7 +242,7 @@ def simulate(case: Case) -> Result:
       elif f == "switch_pass":
         stuck_pass = True
       elif f == "eps_fault":
-        eps.fault = True
+        plant.set_eps_fault(True)
         lka_state = 9
       elif f == "rx_loss":
         rx_stop.add("STEER_TORQUE_SENSOR")
@@ -296,7 +276,7 @@ def simulate(case: Case) -> Result:
         vals = {
           "WHEEL_SPEEDS": {f"WHEEL_SPEED_{w}": v * 3.6 for w in ("FR", "FL", "RR", "RL")},
           "STEER_TORQUE_SENSOR": {"STEER_TORQUE_EPS": eps.torque / EPS_SCALE * 100.0, "STEER_TORQUE_DRIVER": 0,
-                                  "STEER_ANGLE": math.degrees(x[2]) * d["steer_ratio"]},
+                                  "STEER_ANGLE": math.degrees(plant.x[2]) * d["steer_ratio"]},
           "PCM_CRUISE": {"CRUISE_ACTIVE": int(cruise_active), "GAS_RELEASED": int(not driver_gas)},
           "PCM_CRUISE_2": {"MAIN_ON": 1},
           "BRAKE_MODULE": {"BRAKE_PRESSED": int(driver_brake)},
@@ -316,13 +296,13 @@ def simulate(case: Case) -> Result:
           res.event("MCU hung: no frame reaches the car", t)
       elif panda.relay_driven:
         if panda.tx(addr, dat, bus):
-          eps.frame(t, torque, req)
+          plant.lka_frame(t, torque, req)
         elif fault_on and (req or torque):
           res.event("panda refuses STEERING_LKA", t)
       if frame % 3 == 0:
         addr, dat, bus = soc.accel_frame(engaged_soc)
         if panda.relay_driven and panda.tx(addr, dat, bus):
-          pcm.frame(t, _decode_accel(panda, dat))
+          plant.acc_frame(t, _decode_accel(panda, dat))
         elif fault_on and engaged_soc and panda.relay_driven and not panda.hung and case.longitudinal:
           res.event("panda refuses ACC_CONTROL", t)
       if frame % 10 == 0 and soc.heartbeat_ok:
@@ -330,7 +310,7 @@ def simulate(case: Case) -> Result:
     # stock camera STEERING_LKA (100 Hz, offset 5 ms): reaches the car only through a pass-through switch
     if k % 10 == 5 and not intercept:
       addr, dat, bus = toyotacan.create_steer_command(panda.packer, 0, 0)
-      eps.frame(t, 0, 0)
+      plant.lka_frame(t, 0, 0)
       if panda.relay_driven:
         panda.rx_raw(addr, bytes(dat), 0)   # the panda sees the camera's frame on the car side
 
@@ -386,33 +366,27 @@ def simulate(case: Case) -> Result:
     # ------------------------------------------------ dynamics
     if k % DYN_EVERY == 0:
       dt = DYN_EVERY * DT_US / 1e6
-      eps.step(t, dt)
-      pcm.step(t, dt)
+      plant.step(t, dt, d_steer, d_acc)
       if fault_on and torque0 is None:
         torque0 = eps.torque
       if fault_on and "EPS LKA torque below 5 %" not in res.events and abs(eps.torque) < 0.05 * STEER_MAX \
          and abs(torque0) >= 0.05 * STEER_MAX and not case.longitudinal:
         res.event("EPS LKA torque below 5 %", t)
-      a_y_target = eps.lat_accel() + d_steer
-      delta_t = corolla.steer_for_lat_accel(a_y_target, v, d)
-      ax_cmd = pcm.accel + d_acc
-      u = [(delta_t - x[2]) / 0.02, ax_cmd]
-      x = _rk4(x, u, p, dt)
-      ay_meas = v * x[5]
-      ax_meas = ax_cmd
+      ay_meas = v * plant.x[5]
+      ax_meas = plant.ax
       # lead and follower vehicles (longitudinal cases)
       lead_s += lead_v * dt
       if case.longitudinal:
         if follow_brake_t is None and ax_meas < -1.0:
           follow_brake_t = t + A("driver_t_r_s")
         # the follower brakes at -3.5 m/s2 (equal to the envelope minimum, WP-S-04 §3.4) until it is no faster
-        if follow_brake_t is not None and t >= follow_brake_t and follow_v > x[3]:
-          follow_v = max(x[3], follow_v - 3.5 * dt)
+        if follow_brake_t is not None and t >= follow_brake_t and follow_v > plant.speed:
+          follow_v = max(plant.speed, follow_v - 3.5 * dt)
         follow_s += follow_v * dt
       if k % 10 == 0:
         res.t.append(t)
-        res.x.append(x[0])
-        res.y.append(x[1])
+        res.x.append(plant.x[0])
+        res.y.append(plant.x[1])
         res.e_y.append(e_y)
         res.s.append(s)
         res.ay.append(ay_meas)
@@ -440,16 +414,6 @@ def _sig(dat, sig):
   if sig.is_signed:
     raw -= ((raw >> (sig.size - 1)) & 0x1) * (1 << sig.size)
   return raw * sig.factor + sig.offset
-
-
-def _rk4(x, u, p, dt):
-  def f(xx):
-    return vehicle_dynamics_st(xx, u, p)
-  k1 = f(x)
-  k2 = f([a + 0.5 * dt * b for a, b in zip(x, k1)])
-  k3 = f([a + 0.5 * dt * b for a, b in zip(x, k2)])
-  k4 = f([a + dt * b for a, b in zip(x, k3)])
-  return [a + dt / 6.0 * (b1 + 2 * b2 + 2 * b3 + b4) for a, b1, b2, b3, b4 in zip(x, k1, k2, k3, k4)]
 
 
 def metrics(res: Result, thr: float, thr_narrow: float) -> dict:

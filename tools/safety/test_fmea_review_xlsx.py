@@ -57,6 +57,30 @@ class TestReviewWorkbook(unittest.TestCase):
       with self.subTest(name=name):
         self.assertIn("Worksheet", rx.build(name).sheetnames)
 
+  def test_no_msr_sheet_without_msr_rows(self):
+    self.assertNotIn("MSR", self.wb.sheetnames)
+
+  def test_msr_sheet_rows_and_ap(self):
+    for name in ("system-fmea", "dfmea"):
+      with self.subTest(name=name):
+        doc = rx.load(name)
+        ws = rx.build(name)["MSR"]
+        col = {h: i for i, (h, _) in enumerate(rx.MSR_COLUMNS, 1)}
+        in_scope = [(fm, c) for fm in doc["failure_modes"] for c in fm["causes"] if c.get("msr") or c.get("msr_exempt")]
+        self.assertEqual(ws.max_row - rx.HEADER_ROWS, len(in_scope))
+        for row, (fm, c) in enumerate(in_scope, rx.HEADER_ROWS + 1):
+          self.assertEqual(ws.cell(row, col["Cause"]).value, c["id"])
+          m = c.get("msr")
+          if m:
+            expected = fmea_lint.compute_ap_msr(fm["severity"], m["severity_after"], m["frequency"], m["monitoring"])
+            self.assertEqual(ws.cell(row, col["MSR AP"]).value, expected, c["id"])
+            self.assertEqual(ws.cell(row, col["MSR AP"]).fill.fgColor.rgb[-6:], rx.AP_STYLE[expected][0], c["id"])
+            self.assertEqual(ws.cell(row, col["M"]).value, m["monitoring"], c["id"])
+          else:
+            self.assertTrue(ws.cell(row, col["Diagnostic"]).value.startswith("Exempt: "), c["id"])
+        if fmea_lint.AP_MSR_PROVISIONAL:
+          self.assertIn("provisional", ws.cell(1, 1).value)
+
   def test_committed_workbooks_current(self):
     self.assertEqual(rx.main(["--check"]), 0)
 

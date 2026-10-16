@@ -129,7 +129,7 @@ This is an inventory of what exists. It is **not** the Phase A gap assessment, a
 
 | Prerequisite | Present | Current status | Observation |
 |---|---|---|---|
-| Item definition, HARA, safety goals | Yes | Draft | 7 safety goals (SG-01 ASIL C, SG-02…SG-07 ASIL B) are proposals. CR-02 not held |
+| Item definition, HARA, safety goals | Yes | Draft | 8 safety goals (SG-01, SG-02, SG-03, SG-06 ASIL C; SG-04, SG-05, SG-07 ASIL B; SG-08 ASIL A; WP-C-03 v0.4) are proposals. CR-02 not held |
 | FSC / FSRs | Yes | Draft | 54 FSRs in `trace/`, all `proposed` |
 | TSRs, TSC, system architecture | Yes | Draft | 118 TSRs in `trace/`, all `proposed`. CR-05 not held |
 | Timing / FTTI | Yes | Draft | Kinematic estimates only; nothing measured |
