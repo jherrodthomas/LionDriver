@@ -4,9 +4,9 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.11 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.15 | draft | BL-005 | RT-2 | 2026-10-16 |
 
-**Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven on public roads by a licensed driver. Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
+**Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
 **Team.** Jherrod Thomas (Project maintainer, safety lead (reviewer/approver)); Claude (AI assistant) (Drafting assistance; content requires human review)
 
@@ -199,7 +199,7 @@ Effects:
 
 Safety mechanisms: (1) steerSaturated warning when undershooting > 1.2x in a turn with saturated controller · (2) ldw (lane departure warning) alert
 
-[Monitoring and system response](#7-monitoring-and-system-response): `SFM-004.C1` mechanism 1, 2: M 7 · F 6 · S after response 10 → 🔴 **H**<br>`SFM-004.C2` mechanism 1, 2: M 7 · F 5 · S after response 10 → 🔴 **H**<br>`SFM-004.C3` mechanism 1, 2: M 7 · F 6 · S after response 10 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `SFM-004.C1` mechanism 1, 2: M 8 · F 6 · S after response 10 → 🔴 **H**<br>`SFM-004.C2` mechanism 1, 2: M 8 · F 5 · S after response 10 → 🔴 **H**<br>`SFM-004.C3` mechanism 1, 2: M 8 · F 6 · S after response 10 → 🔴 **H**
 
 <sub>Note: Mostly a designed limitation: overlaps SOTIF. Kept here for the failure path (EPS/controller fault).</sub>
 
@@ -367,7 +367,7 @@ Effects:
 
 Safety mechanisms: (1) modeldLagging / selfdrivedLagging (SOFT_DISABLE), commIssueAvgFreq
 
-[Monitoring and system response](#7-monitoring-and-system-response): `SFM-012.C1` mechanism 1: M 7 · F 6 · S after response 10 → 🔴 **H**<br>`SFM-012.C2` mechanism 1: M 10 · F 6 · S after response 10 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `SFM-012.C1` mechanism 1: M 8 · F 6 · S after response 10 → 🔴 **H**<br>`SFM-012.C2` mechanism 1: M 10 · F 6 · S after response 10 → 🔴 **H**
 
 #### SFM-013 · Engagement without driver request or with entry conditions not met
 
@@ -386,9 +386,9 @@ Effects:
 
 Safety mechanisms: (1) NO_ENTRY events block engagement (state.py) · (2) Toyota uses PCM cruise; engagement follows stock cruise main/set (cruise state in carState)
 
-[Monitoring and system response](#7-monitoring-and-system-response): `SFM-013.C1` mechanism 2: M 7 · F 6 · S after response 4 → 🔴 **H**<br>`SFM-013.C2` mechanism 2: M 7 · F 6 · S after response 4 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `SFM-013.C1` mechanism 2: M 5 · F 6 · S after response 4 → 🔴 **H**<br>`SFM-013.C2` mechanism 2: M 5 · F 6 · S after response 4 → 🔴 **H**
 
-<sub>Note: HARA input: unintended engagement.</sub>
+<sub>Note: HARA input: unintended engagement. Engagement outside the ODD (off the highway, WP-C-03 v0.4 OS-03/04/15/16) is not prevented by the item; it is foreseeable misuse rated in the HARA and WP-C-08, not a fault cause of this failure mode.</sub>
 
 #### SFM-014 · Fails to disengage when a fault requires it
 
@@ -622,7 +622,7 @@ Safety mechanisms: (1) Lockout after repeated non-response prevents re-engagemen
 
 [Monitoring and system response](#7-monitoring-and-system-response): `SFM-025.C1` mechanism 1: M 10 · F 8 · S after response 10 → 🔴 **H**
 
-<sub>Note: Observation: in BL-001, events.py maps driverDistracted3 and driverUnresponsive3 only to an ET.PERMANENT alert; no SOFT_DISABLE/IMMEDIATE_DISABLE is attached, so reaching awareness 0 does not by itself disengage. This may be a deliberate design choice (avoid dropping control on an incapacitated driver). It needs an explicit safety-concept decision (SFM-ACT-005); unchanged at BL-004 and BL-005. HARA input: driver incapacitated while engaged. Lead decision DQ-205 (2026-10-14, option A): the unresponsive driver is its own hazard with an ASIL A goal (here HZ-013, SG-010; H-09 in WP-C-03 once the HARA adds it), and its safe state is defined together with the zero-awareness reaction.</sub>
+<sub>Note: Observation: in BL-001, events.py maps driverDistracted3 and driverUnresponsive3 only to an ET.PERMANENT alert; no SOFT_DISABLE/IMMEDIATE_DISABLE is attached, so reaching awareness 0 does not by itself disengage. This may be a deliberate design choice (avoid dropping control on an incapacitated driver). It needs an explicit safety-concept decision (SFM-ACT-005); unchanged at BL-004 and BL-005. HARA input: driver incapacitated while engaged. Lead decision DQ-205 (2026-10-14, option A): the unresponsive driver is its own hazard with an ASIL A goal (here HZ-013, SG-010; H-09 and SG-08, ASIL A, in WP-C-03 v0.4), and its safe state is defined together with the zero-awareness reaction.</sub>
 
 #### SFM-026 · Takeover or disengagement alert not presented
 
@@ -767,16 +767,17 @@ Effects:
 
 - **End:** Driver relies on stock protections that are not present (HZ-011, S 10)
 - **Next higher:** Stock AEB / FCW / lane assist not available as expected
-- **Local:** Stock ADAS camera messages blocked or replaced by the harness relay
+- **Local:** Stock ADAS camera messages blocked or replaced by the harness-box intercept
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SFM-033.C1` Relay intercepts stock camera messages the vehicle needs for AEB | • Forwarding keeps stock pre-collision messages (0x283, 0x344) passing the relay (SWF-011); which TSS2 functions remain with openpilot longitudinal is not established <sub>opendbc_repo/opendbc/safety/modes/toyota.h</sub> | • No pre-release test targets this cause | 6 | 10 | 🔴 **H** | SFM-ACT-006 |
+| `SFM-033.C1` The intercept routes the stock camera messages the vehicle needs for AEB through the panda | • Forwarding keeps stock pre-collision messages (0x283, 0x344) passing the intercept (SWF-011); which TSS2 functions remain with openpilot longitudinal is not established <sub>opendbc_repo/opendbc/safety/modes/toyota.h</sub> | • No pre-release test targets this cause | 6 | 10 | 🔴 **H** | SFM-ACT-006 |
 | `SFM-033.C2` Item does not forward or reproduce stock safety messages | • Panda safety code: MISRA C:2012, 100% line coverage, review; rated in the SW FMEA <sub>assurance/08-analyses/fmea/analyses/sw-fmea.yaml</sub> | • opendbc safety suite with 100% line coverage and mutation tests, run by CI on every change (proven, early, test-to-fail) <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 5 | 3 | 🔴 **H** | SFM-ACT-006 |
+| `SFM-033.C3` The harness box loses its supply (ignition branch or D1 open without comma power, VIN shorted), or a switch channel opens, so the stock camera path through the unpowered or open DG419LE switches is cut (RR-2026-010) | • Consumer-grade harness box without automotive qualification data available to LionDriver; rated in the DFMEA <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | • As rated in the DFMEA: no pre-release test of this hardware fault <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | 5 | 10 | 🔴 **H** | SFM-ACT-003 |
 
 <sub>Note: Open question: which stock TSS2 functions remain on the reference configuration with openpilot longitudinal enabled. Must be established from the opendbc Toyota port and in-vehicle test before the HARA. HARA input: loss of stock AEB/FCW.</sub>
 
-#### SFM-034 · Harness relay fault
+#### SFM-034 · Harness-box intercept switch stuck or in the wrong position
 
 🔴 **H** · **S 10** · guideword *intermittent* · function `SFM-FN-008` F8 Stock function preservation: keep stock vehicle safety functions not replaced by the item available
 
@@ -786,16 +787,59 @@ Effects:
 - **End:** Contributes to HZ-002: stock LKA and item steering requests combine on the bus (HZ-002, S 10)
 - **End:** Contributes to HZ-006: stock and item braking requests combine on the bus (HZ-006, S 10)
 - **Next higher:** Conflicting steering/ACC messages, or no camera messages
-- **Local:** Relay stuck or intermittent; stock camera and item both on bus, or neither
+- **Local:** Intercept switch stuck or intermittent: in intercept when released (camera cut off from the car), or in pass-through when driven (stock camera and item both on the bus)
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SFM-034.C1` Relay contact wear or connector fault | • Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM row exists <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | • As rated in the DFMEA: no pre-release test of this hardware fault <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | 3 | 10 | 🔴 **H** | — |
-| `SFM-034.C2` Relay drive output fault on panda | • Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM row exists <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | • As rated in the DFMEA: no pre-release test of this hardware fault <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | 3 | 10 | 🔴 **H** | — |
+| `SFM-034.C1` Switch U1 or U2 stuck in intercept, its IN input damaged high or driven high, its pull-down R2/R3 open, or the switches damaged by box supply transients (DG419LE, RR-2026-010) | • Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM row exists <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | • As rated in the DFMEA: no pre-release test of this hardware fault <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | 4 | 10 | 🔴 **H** | — |
+| `SFM-034.C2` Switch stuck in pass-through, or the SBU1 drive lost, held low or too low to change the switch over (5 V drive against VL = VIN) | • Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM row exists <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | • As rated in the DFMEA: no pre-release test of this hardware fault <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | 3 | 9 | 🔴 **H** | — |
 
 Safety mechanisms: (1) relayMalfunction fault from panda -> IMMEDIATE_DISABLE
 
 [Monitoring and system response](#7-monitoring-and-system-response): `SFM-034.C1` not rated here: Hardware cause; rated once in the DFMEA (DFM-010.C1)<br>`SFM-034.C2` not rated here: Hardware cause; rated once in the DFMEA (DFM-011.C1)
+
+#### SFM-035 · Item sends a frame that alters the stock pre-collision function
+
+🔴 **H** · **S 10** · guideword *unintended* · function `SFM-FN-008` F8 Stock function preservation: keep stock vehicle safety functions not replaced by the item available
+
+Effects:
+
+- **End:** Stock AEB/FCW degraded while the driver relies on it (HZ-011, S 10)
+- **End:** Contributes to HZ-006: PCS braking triggered by a frame from the item (HZ-006, S 10)
+- **Next higher:** Stock PCS warning or braking suppressed, altered or triggered by the item
+- **Local:** A PCS-relevant frame from the SoC (0x344 PRE_COLLISION_2, 0x411 PCS_HUD, a DSU-only ID, or 0x283 PRE_COLLISION with a non-zero payload) reaches the car bus
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SFM-035.C1` Host code (car interface, pandad) emits a PCS-relevant ID or a non-zero PRE_COLLISION payload (QM fault) | • Upstream opendbc Toyota port; no carcontroller path builds 0x344, 0x411 or the DSU IDs for the reference car, and 0x283 is sent with a zero payload only; no LionDriver requirements, no field-exposure credit <sub>opendbc_repo/opendbc/car/toyota</sub> | • process_replay over the CI route corpus compares sendcan with the reference commit; a regression check, not designed or proven for this cause <sub>openpilot/selfdrive/test/process_replay/test_processes.py</sub> | 6 | 9 | 🔴 **H** | — |
+| `SFM-035.C3` The TX whitelist or the PRE_COLLISION content check lets a PCS-relevant frame through (table change, or a build that is not the reference build, where 0x411 is allowed by design) | • Panda safety code: MISRA C:2012, 100% line coverage, review; reduced whitelist (TSR-705); reference build the default since BL-005 (pandad requires it, TSR-514/619) <sub>opendbc_repo/opendbc/safety/modes/toyota.h</sub> | • opendbc safety suite with 100% line coverage and mutation tests in both variants, run by CI on every change (proven, early, test-to-fail) <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 5 | 3 | 🔴 **H** | — |
+
+Safety mechanisms: (1) Panda TX whitelist and content check: 0x344 and the DSU IDs are refused in every build, 0x411 in the reference build (the default since BL-005), and 0x283 passes only with a zero payload (TSR-705) · (2) BL-005: a refused frame while engaged raises pandaTxBlocked (IMMEDIATE_DISABLE) at the next pandaStates sample (TSR-615)
+
+[Monitoring and system response](#7-monitoring-and-system-response): `SFM-035.C1` mechanism 1, 2: M 5 · F 6 · S after response 8 → 🔴 **H**<br>`SFM-035.C3` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**
+
+<sub>Note: Backs FTA BE-7.08 (WP-A-04 SG-07, F-17): the SoC sends a PCS-relevant frame. WP-A-04 §10 SFMEA-05 is the same mode.</sub>
+
+#### SFM-036 · Item keeps requesting acceleration while stock PCS brakes
+
+🔴 **H** · **S 10** · guideword *unintended* · function `SFM-FN-008` F8 Stock function preservation: keep stock vehicle safety functions not replaced by the item available
+
+Effects:
+
+- **End:** Stock AEB deceleration reduced or delayed if the PCM arbitrates otherwise (HZ-011, S 10)
+- **Next higher:** PCS braking depends on the PCM giving it priority over the item's request (AOU-04R, unverified)
+- **Local:** ACC_CONTROL keeps carrying the planner's acceleration request while the stock camera reports a PCS braking event
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SFM-036.C1` The item has no reaction to a stock PCS event on its longitudinal command; controlsd keeps requesting the planner's acceleration (design gap, FTA BE-7.13) | • None in the item: FSR-07.04 places PCS priority in the PCM as an external measure (AOU-04R) <sub>assurance/02-concept/WP-C-04-functional-safety-concept.md</sub> | • No pre-release test targets this cause | 8 | 10 | 🔴 **H** | SFM-ACT-020 |
+| `SFM-036.C2` The PCM does not give stock PCS braking priority over the item's ACC_CONTROL request (AOU-04R not met) | • Series-production Toyota ECU; PCS priority over 0x343 assumed (AOU-04R), not verified by LionDriver | • No pre-release test targets this cause; AOU-04R needs a message review and a PCS target test (WP-C-04) | 3 | 10 | 🔴 **H** | SFM-ACT-006 |
+
+Safety mechanisms: (1) stockAeb (PRE_COLLISION PRECOLLISION_ACTIVE with negative FORCE) raises a PERMANENT "BRAKE!" alert and blocks engagement (NO_ENTRY); it has no disable reaction and does not change the longitudinal request · (2) Driver brake press revokes longitudinal authority in the panda (T-04)
+
+[Monitoring and system response](#7-monitoring-and-system-response): `SFM-036.C1` mechanism 1, 2: M 8 · F 8 · S after response 10 → 🔴 **H**<br>`SFM-036.C2` mechanism 1: M 10 · F 3 · S after response 10 → 🔴 **H**
+
+<sub>Note: Backs FTA BE-7.13 (WP-A-04 SG-07, F-17); the PCM side is UE-7.14 (AOU-04R). Cut set MCS-07.10 = {BE-7.13, UE-7.14}: at the baseline BE-7.13 is always true (C1), so the PCM assumption carries the goal alone. Whether the item should stand down on a stock PCS event is a vehicle behaviour question for the lead (decision register DQ-300).</sub>
 
 ## 5. Actions
 
@@ -803,22 +847,25 @@ Safety mechanisms: (1) relayMalfunction fault from panda -> IMMEDIATE_DISABLE
 |---|---|---|---|---|---|---|
 | SFM-ACT-001 | design_change | Derive steering and acceleration envelopes from measurements on the reference vehicle and set the panda limits from them, independently of the SoC limits (same as SWF-ACT-003, FSC FOI-001) | Jherrod Thomas | open | SFM-002.C1, SFM-002.C2, SFM-002.C3, SFM-002.C4, SFM-004.C1, SFM-008.C1, SFM-008.C2, SFM-009.C2, SFM-029.C2 | — |
 | SFM-ACT-002 | detection | Requirements-based tests for the host safety-relevant functions (selfdrived, controlsd, pandad, car interface, locationd bounds, monitoring policy), proven by mutation or fault injection and run as a CI gate (see SWF host actions) | Jherrod Thomas | open | SFM-002.C4, SFM-004.C3, SFM-005.C3, SFM-006.C2, SFM-006.C3, SFM-008.C1, SFM-023.C1, SFM-023.C2, SFM-030.C1 | — |
-| SFM-ACT-003 | detection | Execute system integration and vehicle verification on the reference car (WP-S-08, WP-S-09) and the HIL bench (D-04): steering sign and torque response, EPS and powertrain interface behaviour (lockouts, ignored requests), brake, accelerator and cancel paths, relay and harness faults, 12 V interruptions, alert latency and audibility, CPU-load soak | Jherrod Thomas | open | SFM-003.C1, SFM-003.C2, SFM-003.C4, SFM-004.C2, SFM-004.C3, SFM-005.C1, SFM-007.C2, SFM-008.C3, SFM-008.C4, SFM-009.C3, SFM-010.C3, SFM-011.C1, SFM-012.C1, SFM-013.C2, SFM-015.C3, SFM-017.C1, SFM-018.C1, SFM-019.C1, SFM-020.C1, SFM-022.C3, SFM-026.C2, SFM-027.C1, SFM-028.C2, SFM-031.C1 | — |
-| SFM-ACT-005 | design_change | Decide in the FSC how the item reacts when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction at BL-004 or BL-005) and implement the decision. DQ-205 (answered) makes this the safe state of SG-010 (ASIL A); the reaction itself is still to be decided | Jherrod Thomas | decision_pending | SFM-025.C1 | — |
-| SFM-ACT-006 | detection | Establish on the reference car which stock TSS2 functions (PCS/AEB, FCW) remain available with LionDriver installed and longitudinal control enabled, and verify the stock pre-collision path after installation (PFMEA PFM-014) | Jherrod Thomas | open | SFM-010.C2, SFM-033.C1, SFM-033.C2 | — |
+| SFM-ACT-003 | detection | Execute system integration and vehicle verification on the reference car (WP-S-08, WP-S-09) and the HIL bench (D-04): steering sign and torque response, EPS and powertrain interface behaviour (lockouts, ignored requests), brake, accelerator and cancel paths, intercept-switch and harness faults, 12 V interruptions, alert latency and audibility, CPU-load soak | Jherrod Thomas | open | SFM-003.C1, SFM-003.C2, SFM-003.C4, SFM-004.C2, SFM-004.C3, SFM-005.C1, SFM-007.C2, SFM-008.C3, SFM-008.C4, SFM-009.C3, SFM-010.C3, SFM-011.C1, SFM-012.C1, SFM-013.C2, SFM-015.C3, SFM-017.C1, SFM-018.C1, SFM-019.C1, SFM-020.C1, SFM-022.C3, SFM-026.C2, SFM-027.C1, SFM-028.C2, SFM-031.C1, SFM-033.C3 | — |
+| SFM-ACT-005 | design_change | Decide in the FSC how the item reacts when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction at BL-004 or BL-005) and implement the decision. DQ-205 (answered) makes this the safe state of SG-010 (WP-C-03 SG-08, ASIL A); the reaction itself is still to be decided. The requirement is TSR-633 (terminal reaction, ASIL A proposed) with TSR-611 (WP-S-02 §12.3a); the reaction is lead decision DQ-340. The H-09 FTTI is not yet set, so the timing rows of WP-S-04 §3.8.4 cannot be compared | Jherrod Thomas | decision_pending | SFM-025.C1 | — |
+| SFM-ACT-006 | detection | Establish on the reference car which stock TSS2 functions (PCS/AEB, FCW) remain available with LionDriver installed and longitudinal control enabled, and verify the stock pre-collision path after installation (PFMEA PFM-014) | Jherrod Thomas | open | SFM-010.C2, SFM-033.C1, SFM-033.C2, SFM-036.C2 | — |
 | SFM-ACT-007 | design_change | Supervise the alert channels: treat loss of ui or soundd liveness, or a stale displayed state, as a fault that escalates (audible fallback, disengagement) instead of continuing silently | Jherrod Thomas | open | SFM-015.C1, SFM-026.C1, SFM-026.C2, SFM-026.C3, SFM-028.C1 | — |
 | SFM-ACT-008 | design_change | Allow engagement only when the fingerprint, CarParams and panda safety parameter match the reference configuration AC-001 (refuse fuzzy matches in the reference build); see PFMEA PFM-013 | Jherrod Thomas | in_progress | SFM-032.C1 | — |
 | SFM-ACT-009 | prevention | Produce SOTIF / ISO PAS 8800 evidence for the neural-network elements (driving model, lead detection, driver monitoring model) per WP-V-02..04, including fault-induced inputs (corrupted or stale frames) | Jherrod Thomas | open | SFM-002.C2, SFM-003.C3, SFM-009.C1, SFM-010.C1, SFM-012.C2, SFM-022.C1, SFM-022.C2 | — |
 | SFM-ACT-010 | design_change | Justify every SOFT_DISABLE reaction and debounce against the FTTI (WP-S-04) and alert at once when the panda withdraws authority while engaged (controlsMismatch debounce) | Jherrod Thomas | in_progress | SFM-014.C2, SFM-015.C2, SFM-016.C1, SFM-016.C2 | — |
 | SFM-ACT-011 | design_change | Alert the driver when stock cruise stays engaged while the item is disengaged (cruiseMismatch has no alert at BL-004) | Jherrod Thomas | completed | SFM-021.C1, SFM-021.C2 | — |
 | SFM-ACT-012 | monitoring | Measure on the HIL bench and the reference car (WP-V-05) how the panda reacts to over-limit and not-engaged steering and acceleration frames and to driver brake, gas and cancel inputs, and what the EPS and PCM do when frames are refused; re-rate the MSR rows from code-derived to measured timing |  | open | — | — |
-| SFM-ACT-013 | monitoring | Check on the host, within the SG-01 FTTI, that the panda reports controls_allowed false while the item is disengaged (the reverse of the controlsMismatch check, which at BL-005 still covers only engaged with authority withdrawn), with a disable and an alert |  | open | — | — |
+| SFM-ACT-013 | monitoring | Check on the host, within the SG-01 FTTI, that the panda reports controls_allowed false while the item is disengaged (the reverse of the controlsMismatch check, which at BL-005 still covers only engaged with authority withdrawn), with a disable and an alert. The requirement is TSR-630, within 0.3 s (WP-S-02 §12.3a; WP-S-04 T-32, not implemented) |  | open | — | — |
 | SFM-ACT-014 | monitoring | Specify in the TSC a steering-direction plausibility monitor (commanded torque sign against measured yaw rate and lane-relative lateral motion), or justify its absence against HZ-003 |  | open | — | — |
-| SFM-ACT-015 | monitoring | Detect stale commands and inputs within the SG-01 FTTI: command-frame freshness in the MCU with an active zero frame (TSR-408, TSR-109) and frozen-content and age checks on model outputs in controlsd (TSR-602, AIR-17) |  | in_progress | — | — |
-| SFM-ACT-016 | monitoring | Supervise driver override in the panda: driver steering torque above the override threshold limits or revokes lateral authority within the SG-05 0.2 s budget (TSR-304). Behaviour decided by the lead (DQ-053, option A): back off on override and show a cue |  | open | — | — |
-| SFM-ACT-017 | monitoring | Add WP-S-04 FTTI rows for the warning paths without one (insufficient lateral control, late or insufficient braking warnings, SG-008 unintended engagement, driver monitoring), so these mechanisms can be compared with a time budget |  | open | — | — |
+| SFM-ACT-015 | monitoring | Detect stale commands and inputs within the SG-01 FTTI: command-frame freshness in the MCU with an active zero frame (TSR-408, TSR-109) and frozen-content and age checks on model outputs in controlsd (TSR-602, TSR-631, AIR-17) |  | in_progress | — | — |
+| SFM-ACT-016 | monitoring | Supervise driver override in the panda: driver steering torque above the override threshold limits or revokes lateral authority within the SG-05 0.2 s budget (TSR-304). Behaviour decided by the lead (DQ-053, option A): back off on override and show a cue. Requirements: TSR-304 (timing tied to the SG-05 budget) and TSR-628 (WP-S-02 §12.3a) |  | open | — | — |
+| SFM-ACT-017 | monitoring | Add WP-S-04 FTTI rows for the warning paths without one (insufficient lateral control, late or insufficient braking warnings, SG-008 unintended engagement, driver monitoring), so these mechanisms can be compared with a time budget |  | completed | — | — |
 | SFM-ACT-018 | monitoring | Detect silent loss of the actuation path: report forwarded and refused TX frames from the panda, and compare EPS and PCM acceptance (LKA_STATE, ACC status) with the commands, warning within the SG-02/06 1 s budget |  | in_progress | — | — |
 | SFM-ACT-019 | design_change | Revoke lateral authority in the panda when it rejects a steering frame while authority is granted, and keep it revoked until a new valid engagement (TSR-108; lead decision DQ-060, option A). At BL-005 the frame is dropped and only the host disengages (pandaTxBlocked) |  | open | SFM-002.C1, SFM-002.C2, SFM-002.C4 | — |
+| SFM-ACT-020 | design_change | React to a stock PCS event on the longitudinal command (for example a neutral or zero acceleration request, or a longitudinal disable, while stockAeb is set), so stock AEB does not depend on PCM arbitration alone (AOU-04R); or keep today's behaviour and rely on the AOU-04R vehicle test. Lead decision DQ-300 |  | decision_pending | SFM-036.C1 | — |
+| SFM-ACT-021 | monitoring | Make the insufficient-lateral-control warning timely (WP-S-04 §3.8.1): warn before the deficit has lasted 0.4 s, for example from the planned curvature against the envelope, or keep the deficit at or below about 0.5 m/s² through the steering limits and the ODD curve bound (WP-S-04 OI-2). A change to the ODD bound is a lead decision |  | open | — | — |
+| SFM-ACT-022 | monitoring | Measure the FCW onset after a lead brakes hard (WP-S-04 T-31, M-12) and compare it with the §3.8.2 budget (about 0.6 s at a 1.0 s gap). For pipeline lag (SFM-012.C1), detect it within that budget or show that the FCW path does not depend on the lagging process |  | open | — | — |
 
 ## 6. Priority H causes without a completed action
 
@@ -899,14 +946,19 @@ Safety mechanisms: (1) relayMalfunction fault from panda -> IMMEDIATE_DISABLE
 | `SFM-032.C1` | Wrong vehicle configuration active (fingerprint or car port) | 10/5/8 | SFM-ACT-008 |
 | `SFM-033.C1` | Stock safety functions unavailable or degraded while the item is installed | 10/6/10 | SFM-ACT-006 |
 | `SFM-033.C2` | Stock safety functions unavailable or degraded while the item is installed | 10/5/3 | SFM-ACT-006 |
-| `SFM-034.C1` | Harness relay fault | 10/3/10 | **none** |
-| `SFM-034.C2` | Harness relay fault | 10/3/10 | **none** |
+| `SFM-033.C3` | Stock safety functions unavailable or degraded while the item is installed | 10/5/10 | SFM-ACT-003 |
+| `SFM-034.C1` | Harness-box intercept switch stuck or in the wrong position | 10/4/10 | **none** |
+| `SFM-034.C2` | Harness-box intercept switch stuck or in the wrong position | 10/3/9 | **none** |
+| `SFM-035.C1` | Item sends a frame that alters the stock pre-collision function | 10/6/9 | **none** |
+| `SFM-035.C3` | Item sends a frame that alters the stock pre-collision function | 10/5/3 | **none** |
+| `SFM-036.C1` | Item keeps requesting acceleration while stock PCS brakes | 10/8/10 | SFM-ACT-020 |
+| `SFM-036.C2` | Item keeps requesting acceleration while stock PCS brakes | 10/3/10 | SFM-ACT-006 |
 
 ## 7. Monitoring and system response
 
 FMEA-MSR rates what happens in the car when a cause occurs: does a diagnostic catch it, and does the system reach a safe state within the fault-tolerant time interval (FTTI)? It adds frequency (F), monitoring (M) and the severity after the response, with its own action priority; S, O, D and AP above are unchanged. Scales: [rating-tables.md §7](../../rating-tables.md#7-fmea-msr--monitoring-and-system-response-added-in-rt-2); scope and plan: [msr-plan.md](../../msr-plan.md); FTTI rows: [WP-S-04 §3.7](../../../../03-system/WP-S-04-timing-ftti-budget.md#37-summary-of-fttis-and-budgets).
 
-**Coverage:** 60 of 64 in-scope causes rated, 4 rated elsewhere (`msr: complete`).
+**Coverage:** 64 of 68 in-scope causes rated, 4 rated elsewhere (`msr: complete`).
 
 > [!WARNING]
 > The MSR action priority uses a provisional table until the AIAG-VDA handbook table is transcribed (rating-tables §7.4). Read the M and F columns; the AP column will be re-rated.
@@ -933,9 +985,11 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `SFM-029.C2` Safety model limit defect in firmware | None: controlsMismatch checks which safety model is active, not its limit values; the limit code is itself the monitor that has failed → None | unknown | 10 | 6 | **10** | 🔴 **H** | SFM-ACT-001 |
 | `SFM-001.C2` Panda allows steering TX without valid engagement (controls_allowed set incorrectly) | None for this cause. controlsd sends torque only while latActive, so the host channel masks the panda fault but nothing detects it; the TSR-621 mismatch check (BL-005) still covers only the opposite direction (enabled, panda not allowed) → None; the fault stays latent until the host also commands torque | unknown | 10 | 5 | **10** | 🔴 **H** | SFM-ACT-013 |
 | `SFM-003.C4` Device mount moved after calibration | None detects the direction: the panda rate limit bounds how fast the deviation grows, and only the driver notices it → None automatic; steerOverride hands lateral control to the driver once the driver steers | unknown | 10 | 5 | **10** | 🔴 **H** | SFM-ACT-014 |
+| `SFM-035.C3` The TX whitelist or the PRE_COLLISION content check lets a PCS-relevant frame through (table change, or a build that is not the reference build, where 0x411 is allowed by design) | None: the gate is itself the monitor that has failed; pandaTxBlocked counts only refused frames → None | unknown | 10 | 5 | **10** | 🔴 **H** | <sub>No in-field monitor can see a defect in the gate itself; the CI mutation tests are the barrier. Kept as a known gap with the dual-point condition of FTA MCS-07.7 (the SoC must also send the frame, SFM-035.C1)</sub> |
 | `SFM-026.C3` Speaker or display hardware failure | None: no self-test of speaker or display → None | unknown | 10 | 4 | **10** | 🔴 **H** | SFM-ACT-007 |
 | `SFM-005.C1` EPS stops accepting requests without a fault signal on CAN | None: steerUnavailable needs an EPS fault signal, which this cause does not produce → None | unknown | 10 | 3 | **10** | 🔴 **H** | SFM-ACT-018 |
 | `SFM-011.C1` Powertrain ignores requests without fault signal | None: accFaulted needs a PCM fault signal, which this cause does not produce → None | unknown | 10 | 3 | **10** | 🔴 **H** | SFM-ACT-018 |
+| `SFM-036.C2` The PCM does not give stock PCS braking priority over the item's ACC_CONTROL request (AOU-04R not met) | None: the item cannot see how the PCM arbitrates → None | unknown | 10 | 3 | **10** | 🔴 **H** | SFM-ACT-020 |
 | `SFM-014.C3` Catch-all commIssue suppressed by the no_system_errors logic while another event is active | None: the catch-all is itself suppressed → None | unknown | 10 | 2 | **10** | 🔴 **H** | <sub>Masking of the catch-all is a design property rated in the SW FMEA; no in-field monitor can see it. F 2</sub> |
 | `SFM-029.C4` Harness allows the device to reach a bus without passing the panda filter | None: controlsMismatch cannot see a path that bypasses the panda → None | unknown | 10 | 2 | **10** | 🔴 **H** | <sub>Only the harness design keeps the device behind the panda; no in-field monitor can see a bypass. The barrier is checked at installation (PFMEA, WP-O-01). Kept as a known gap with F 2</sub> |
 | `SFM-009.C1` False lead (radar ghost, model false positive) or FCW false trigger | The panda bounds deceleration to the Toyota minimum but cannot tell a false lead; the panda blocks acceleration requests while the driver presses the gas → Driver overrides with the gas | unknown | 10 | 7 | **9** | 🔴 **H** | SFM-ACT-009 |
@@ -946,21 +1000,20 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `SFM-009.C3` Wrong vEgo/aEgo from CAN parse | Limits bound the request but cannot tell wrong vehicle speed or acceleration inputs → Driver overrides with the gas | unknown | 10 | 6 | **9** | 🔴 **H** | SFM-ACT-003 |
 | `SFM-022.C2` Pose thresholds/calibration wrong for driver or mount | Fallback to the wheel-touch policy only when the model is uncertain; wrong thresholds give confident outputs → None | unknown | 10 | 6 | **9** | 🔴 **H** | SFM-ACT-009 |
 | `SFM-006.C3` Messaging delivers stale data with fresh timestamps | Liveness checks use arrival and timestamps, so stale data with fresh timestamps passes them → None until another check trips | unknown | 10 | 5 | **9** | 🔴 **H** | SFM-ACT-015 |
+| `SFM-036.C1` The item has no reaction to a stock PCS event on its longitudinal command; controlsd keeps requesting the planner's acceleration (design gap, FTA BE-7.13) | stockAeb detects the PCS event from the stock camera's PRE_COLLISION frame and raises an alert → Alert only; the longitudinal request continues until the driver brakes (panda revokes on the brake press) | unknown | 10 | 8 | **8** | 🔴 **H** | SFM-ACT-020 |
 | `SFM-002.C3` Safety model torque/rate limits wrong for this vehicle or not enforced | With the panda limits themselves wrong, only the host excessive-actuation check remains: lateral acceleration above 2x the ISO 11270 limit for 0.25 s (WP-S-04 T-21) → SOFT_DISABLE: actuation continues for up to 3 s while the alert counts down (T-16); 3.25 s exceeds the 0.5 s SG-01 FTTI | 250 + 3000 ms (code-derived) | 10 | 6 | **8** | 🔴 **H** | SFM-ACT-010 |
+| `SFM-004.C1` Safety model torque limit below what the curve requires (by design) | steerSaturated warns when the controller is saturated and undershoots the curve by more than 1.2x; the lane departure warning fires as the car nears the line → Audible and visual warning; lateral control stays active, the driver steers | 400 + 100 ms vs FTTI 1100 ms ✅ (code-derived) | 10 | 6 | **8** | 🔴 **H** | SFM-ACT-017, SFM-ACT-021 |
+| `SFM-004.C3` Controller tuning or torque model too weak for vehicle state | steerSaturated warns when the controller is saturated and undershoots the curve by more than 1.2x; the lane departure warning fires as the car nears the line → Audible and visual warning; lateral control stays active, the driver steers | 400 + 100 ms vs FTTI 1100 ms ✅ (code-derived) | 10 | 6 | **8** | 🔴 **H** | SFM-ACT-017, SFM-ACT-021 |
 | `SFM-006.C1` controlsd hangs while card keeps sending the last carControl | selfdrived liveness check on controlsState (10 missed periods at 100 Hz, T-14); card stops sending once carControl is 0.1 s old (T-13). BL-005: 50 ms after the last STEERING_LKA frame the panda clears controls_allowed (TSR-408), and selfdrived raises controlsMismatch within 0.5 s (TSR-621) → controlsMismatch IMMEDIATE_DISABLE with alert (and commIssue SOFT_DISABLE); no frame is sent after the stall, so the torque ends only when the EPS drops LKA, about 2 s later (T-23); there is no active zero frame (TSR-109) | 160 + 2000 ms vs FTTI 500 ms ❌ (code-derived) | 10 | 6 | **8** | 🔴 **H** | SFM-ACT-015 |
+| `SFM-012.C1` Pipeline latency (CPU overload, thermal throttle, messaging delay) | selfdrivedLagging and modeldLagging after about 1 s of averaging (T-20), commIssueAvgFreq over 1-10 s (T-15) → SOFT_DISABLE (3 s) | 1000 + 3000 ms vs FTTI 1600 ms ❌ (code-derived) | 10 | 6 | **8** | 🔴 **H** | SFM-ACT-022 |
+| `SFM-004.C2` EPS limits or rejects torque request (EPS fault, torque limit, lockout) | steerSaturated warns when the controller is saturated and undershoots the curve by more than 1.2x; the lane departure warning fires as the car nears the line; an EPS fault signal also raises steerUnavailable → Audible and visual warning; lateral control stays active, the driver steers | 400 + 100 ms vs FTTI 1100 ms ✅ (code-derived) | 10 | 5 | **8** | 🔴 **H** | SFM-ACT-017, SFM-ACT-021 |
 | `SFM-032.C1` Fuzzy fingerprint matches a similar platform | BL-005: if the matched platform needs a Toyota safety parameter other than 73, the panda refuses the car mode, so controlsMismatch (from 10 s after start) blocks engagement. A similar platform with parameter 73 is not detected: controlsMismatch compares the panda with CarParams, which share the same wrong platform, and carUnrecognized does not fire on a fuzzy match → For a platform with another safety parameter, no engagement (NO_ENTRY) and an alert; otherwise none | 10000 + 10 ms (code-derived) | 10 | 5 | **8** | 🔴 **H** | SFM-ACT-008 |
 | `SFM-008.C4` Powertrain applies more acceleration than requested | Excessive longitudinal acceleration check on measured acceleration (> 2x ACCEL_MAX for 0.25 s, T-21) → SOFT_DISABLE: actuation continues for up to 3 s (T-16); 3.25 s exceeds the 1 s FTTI | 250 + 3000 ms vs FTTI 1000 ms ❌ (code-derived) | 10 | 3 | **8** | 🔴 **H** | SFM-ACT-003 |
 | `SFM-029.C1` Wrong safety model or parameter set for this car | controlsMismatch compares the panda safety model and parameter with CarParams, only from 10 s after start (T-18). BL-005: the panda refuses any car mode other than TOYOTA parameter 73, so a wrong request leaves it out of the car mode and the mismatch blocks engagement; a non-reference panda is named (pandaNotReferenceBuild). Not compared with an FTTI: the fault is present from power-up → IMMEDIATE_DISABLE with alert; engagement refused while the mismatch persists | 10000 + 10 ms (code-derived) | 8 | 8 | **7** | 🔴 **H** | SFM-ACT-008 |
-| `SFM-004.C1` Safety model torque limit below what the curve requires (by design) | steerSaturated warns when the controller is saturated and undershoots the curve by more than 1.2x; the lane departure warning fires as the car nears the line → Audible and visual warning; lateral control stays active, the driver steers | unknown | 10 | 6 | **7** | 🔴 **H** | SFM-ACT-017 |
-| `SFM-004.C3` Controller tuning or torque model too weak for vehicle state | steerSaturated warns when the controller is saturated and undershoots the curve by more than 1.2x; the lane departure warning fires as the car nears the line → Audible and visual warning; lateral control stays active, the driver steers | unknown | 10 | 6 | **7** | 🔴 **H** | SFM-ACT-017 |
-| `SFM-010.C2` Safety model minimum accel limit prevents required braking (by design) | FCW warns when the planner sees that the lead needs more deceleration than the limit allows → Audible forward-collision warning; the driver brakes | unknown | 10 | 6 | **7** | 🔴 **H** | SFM-ACT-006, SFM-ACT-017 |
-| `SFM-012.C1` Pipeline latency (CPU overload, thermal throttle, messaging delay) | selfdrivedLagging and modeldLagging after about 1 s of averaging (T-20), commIssueAvgFreq over 1-10 s (T-15) → SOFT_DISABLE (3 s) | 1000 + 3000 ms (code-derived) | 10 | 6 | **7** | 🔴 **H** | SFM-ACT-017 |
-| `SFM-013.C1` State machine transition error | Panda grants control only on the PCM cruise engage edge read from the car bus, so a wrong host state alone does not grant actuation; frames are refused on every cycle. WP-S-04 has no FTTI row for SG-008, so the timing is not compared → Frames refused; no actuation | 0 + 10 ms (code-derived) | 4 | 6 | **7** | 🔴 **H** | SFM-ACT-017 |
-| `SFM-013.C2` Cruise state or button parsed incorrectly (spurious enable) | Panda parses the PCM cruise state itself and grants control only on its engage edge; a host parsing error does not grant actuation. No SG-008 FTTI row in WP-S-04 → Frames refused; no actuation | 0 + 10 ms (code-derived) | 4 | 6 | **7** | 🔴 **H** | SFM-ACT-017 |
+| `SFM-010.C2` Safety model minimum accel limit prevents required braking (by design) | FCW warns when the planner sees that the lead needs more deceleration than the limit allows → Audible forward-collision warning; the driver brakes | unknown | 10 | 6 | **7** | 🔴 **H** | SFM-ACT-006, SFM-ACT-022 |
 | `SFM-021.C1` Cancel message not packed/sent for this car | BL-005: selfdrived raises cruiseMismatch after 1 s of PCM cruise engaged while the item is not (CRUISE_MISMATCH_TIME, selfdrived.py; TSR-308). At BL-004 it was raised after 6 s with no reaction (T-19) → Repeating audible prompt to press Cancel or brake; controlsd keeps requesting the cancel | 1000 + 10 ms (code-derived) | 10 | 6 | **7** | 🔴 **H** | SFM-ACT-011 |
-| `SFM-004.C2` EPS limits or rejects torque request (EPS fault, torque limit, lockout) | steerSaturated warns when the controller is saturated and undershoots the curve by more than 1.2x; the lane departure warning fires as the car nears the line; an EPS fault signal also raises steerUnavailable → Audible and visual warning; lateral control stays active, the driver steers | unknown | 10 | 5 | **7** | 🔴 **H** | SFM-ACT-017 |
-| `SFM-022.C3` Driver camera or IR illumination degraded | A dead camera raises cameraMalfunction; a degraded image makes the model uncertain and falls back to the wheel-touch policy after 10 s → SOFT_DISABLE, or wheel-touch escalation | unknown | 10 | 5 | **7** | 🔴 **H** | SFM-ACT-017 |
-| `SFM-010.C3` Brake system does not achieve requested deceleration | FCW warns as the gap closes faster than planned → Audible forward-collision warning; the driver brakes | unknown | 10 | 3 | **7** | 🔴 **H** | SFM-ACT-003, SFM-ACT-017 |
+| `SFM-022.C3` Driver camera or IR illumination degraded | A dead camera raises cameraMalfunction; a degraded image makes the model uncertain and falls back to the wheel-touch policy after 10 s → SOFT_DISABLE, or wheel-touch escalation | unknown | 10 | 5 | **7** | 🔴 **H** | SFM-ACT-005 |
+| `SFM-010.C3` Brake system does not achieve requested deceleration | FCW warns as the gap closes faster than planned → Audible forward-collision warning; the driver brakes | unknown | 10 | 3 | **7** | 🔴 **H** | SFM-ACT-003, SFM-ACT-022 |
 | `SFM-021.C2` PCM ignores cancel request | BL-005: selfdrived raises cruiseMismatch after 1 s of PCM cruise engaged while the item is not (CRUISE_MISMATCH_TIME, selfdrived.py; TSR-308). At BL-004 it was raised after 6 s with no reaction (T-19) → Repeating audible prompt to press Cancel or brake; controlsd keeps requesting the cancel | 1000 + 10 ms (code-derived) | 10 | 3 | **7** | 🔴 **H** | SFM-ACT-011 |
 | `SFM-015.C2` Panda drops controls_allowed on its own (e.g. safety violation) and selfdrived reacts late | BL-005: selfdrived counts consecutive pandaStates samples with controlsAllowed false while engaged and raises controlsMismatch at the second, or 0.5 s after the first mismatched frame if the samples are stale (ControlsMismatch, supervision.py; TSR-621). A TX-rate or heartbeat revocation is named at once (pandaTxRateExceeded, pandaHeartbeatLost; TSR-615). At BL-004: 200 cumulative cycles, about 2 s (T-17) → controlsMismatch (or the named panda event) IMMEDIATE_DISABLE with a take-over alert, within 0.5 s of the first mismatched frame | 500 + 10 ms vs FTTI 1000 ms ✅ (code-derived) | 8 | 6 | **6** | 🔴 **H** | SFM-ACT-010, SFM-ACT-012 |
 | `SFM-005.C2` pandad stops forwarding TX without the state being reported | BL-005: when no STEERING_LKA frame reaches the panda for 50 ms while authority is granted, the 100 Hz safety task clears controls_allowed (tx_arrival_ok, safety.h; TSR-408). pandad keeps publishing pandaStates, so selfdrived sees controlsAllowed false on the next sample and raises controlsMismatch after 2 consecutive samples, at most 0.5 s after the first mismatched frame (TSR-621). At BL-004 only the EPS drop-out path existed (about 3.5 s) → controlsMismatch IMMEDIATE_DISABLE with a take-over alert; the EPS drops LKA once frames stop | 60 + 500 ms vs FTTI 1000 ms ✅ (code-derived) | 8 | 5 | **6** | 🔴 **H** | SFM-ACT-012, SFM-ACT-018 |
@@ -974,6 +1027,9 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `SFM-001.C3` Steering message packed with non-zero torque/request bit while latActive is false | Panda refuses a STEERING_LKA frame carrying torque or the request bit while controls_allowed is false (checked on every frame) → Frame not sent; no torque request reaches the EPS | per frame; reaction 10 ms (code-derived) | 4 | 6 | **5** | 🔴 **H** | SFM-ACT-012 |
 | `SFM-002.C4` Wrong vehicle parameters (steer ratio, lateral accel factor, torque offsets) from online learners | Panda torque magnitude and rate limits are opendbc constants, independent of the learned vehicle parameters, and are checked on every frame → Over-limit frame refused; torque stays inside the envelope. BL-005, while engaged, the refusal also gives pandaTxBlocked, an immediate disable with a take-over alert at the next pandaStates sample (TSR-615) | per frame; reaction 10 ms (code-derived) | 10 | 6 | **5** | 🔴 **H** | SFM-ACT-012 |
 | `SFM-008.C3` Wrong scaling of acceleration request for this car | Panda decodes the packed acceleration request with its own scaling and checks it against the limits on every frame, independently of the host packing → Over-limit frame refused. BL-005, while engaged, the refusal also gives pandaTxBlocked, an immediate disable with a take-over alert at the next pandaStates sample (TSR-615) | 0 + 10 ms vs FTTI 1000 ms ✅ (code-derived) | 10 | 6 | **5** | 🔴 **H** | SFM-ACT-012 |
+| `SFM-013.C1` State machine transition error | Panda grants control only on the PCM cruise engage edge read from the car bus, so a wrong host state alone does not grant actuation; frames are refused on every cycle; within the 0.5 s unintended-engagement budget (WP-S-04 §3.8.3) → Frames refused; no actuation | 0 + 10 ms vs FTTI 500 ms ✅ (code-derived) | 4 | 6 | **5** | 🔴 **H** | SFM-ACT-013 |
+| `SFM-013.C2` Cruise state or button parsed incorrectly (spurious enable) | Panda parses the PCM cruise state itself and grants control only on its engage edge; a host parsing error does not grant actuation; within the 0.5 s unintended-engagement budget (WP-S-04 §3.8.3) → Frames refused; no actuation | 0 + 10 ms vs FTTI 500 ms ✅ (code-derived) | 4 | 6 | **5** | 🔴 **H** | SFM-ACT-013 |
 | `SFM-017.C1` brakePressed parsed wrong or CAN signal missing | Panda parses the brake signal itself and revokes control on the brake press (T-04, 25 ms), independently of the host parse → Steering and acceleration frames refused from the next cycle | 25 + 10 ms vs FTTI 200 ms ✅ (code-derived) | 3 | 6 | **5** | 🔴 **H** | SFM-ACT-012 |
 | `SFM-019.C1` Button message parsed wrong or missing | Cancel turns PCM cruise off; the panda reads PCM cruise from the car bus and revokes control (T-04, 30 ms), independently of the host button parse → Frames refused from the next cycle | 30 + 10 ms vs FTTI 200 ms ✅ (code-derived) | 3 | 6 | **5** | 🔴 **H** | SFM-ACT-012 |
 | `SFM-020.C1` gasPressed parsed wrong or missing | Panda parses the gas pedal itself and refuses acceleration requests while it is pressed (longitudinal allowed only without gas) → ACC_CONTROL frames with a request refused | 33 + 10 ms vs FTTI 1000 ms ✅ (code-derived) | 3 | 6 | **5** | 🔴 **H** | SFM-ACT-012 |
+| `SFM-035.C1` Host code (car interface, pandad) emits a PCS-relevant ID or a non-zero PRE_COLLISION payload (QM fault) | The panda checks every frame from the SoC against the TX whitelist and the 0x283 zero-payload rule before it is sent → Frame refused, the stock PCS path is untouched; while engaged the refusal also gives pandaTxBlocked, an immediate disable with a take-over alert | per frame; reaction 10 ms (code-derived) | 8 | 6 | **5** | 🔴 **H** | <sub>M 5 on the per-frame gate, mutation-tested, code-derived. Not measured on the reference car (SFM-ACT-012 covers the HIL and vehicle check of refused frames)</sub> |
