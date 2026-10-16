@@ -3973,3 +3973,25 @@
       detail: "Removes the broken-ignition-wire cause only; switch, pull-down and clamp faults remain. Cost: one extra part per install."
   sources: ["assurance/04-hardware/reviews/RR-2026-010.md F-01, F-02, F-03, F-06", "assurance/04-hardware/WP-H-01-hardware-safety-requirements.md HWSR-702, OI-6", "assurance/04-hardware/WP-H-02-hardware-design.md DC-03"]
   status: queued
+
+- id: DQ-210
+  question: "If the driver stays unresponsive at the last driver-monitoring alert, what should the car do?"
+  context: "Today, 5 s after the last alert the car starts slowing down but **stays engaged and keeps steering**, and the lockout only applies after a later disengagement (System FMEA SFM-025.C1). You chose to make the unresponsive driver its own hazard with an ASIL A goal (DQ-205); its safe state is this reaction. Requirement TSR-633 waits on the answer."
+  reversibility: revisit
+  blocks: "TSR-633 and the H-09 safe state; System FMEA SFM-ACT-005"
+  gate: G2
+  decider: lead
+  after: [DQ-205]
+  options:
+    - key: A
+      recommended: true
+      title: "Keep the lane and slow to a stop, then hold and lock out"
+      detail: "Steering stays on while the car decelerates in lane within the envelope limits, the alert keeps sounding, and the car holds at standstill before disengaging. Similar to the minimum-risk manoeuvre of automated lane keeping (UN R157). Cost: steering continues without a supervisor for the stop (about 10 s from 30 m/s at 3 m/s²), and standstill hold and hazard lights need work and vehicle tests."
+    - key: B
+      title: "Slow down for a fixed time, then disengage with the siren"
+      detail: "Simpler: no standstill hold. Cost: the car is handed back to a driver who is not responding, while still moving."
+    - key: C
+      title: "Disengage at once with the siren"
+      detail: "No extra development. Cost: an unsupervised car with no steering and no braking from the item; the worst outcome for an unresponsive driver."
+  sources: ["assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-ACT-005, SFM-025.C1", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-633", "assurance/02-concept/WP-C-04-functional-safety-concept.md FSR-02.09, §7"]
+  status: queued

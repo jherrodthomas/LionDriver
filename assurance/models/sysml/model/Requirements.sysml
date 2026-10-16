@@ -696,7 +696,7 @@ package LionDriverRequirements {
         :>> allocText = "P-SW";
         :>> asil = "B (SG-05); B‡ (SG-01, HE-05.2)";
         :>> mechanism = "PLB, GATE";
-        :>> timing = "detect ≤ 2 frames of 0x260 (40 ms) / torque decreasing next frame, zero ≤ 0.2 s";
+        :>> timing = "detect ≤ 2 frames of 0x260 (40 ms) + t_ovr, with t_ovr ≤ 0.1 s / torque decreasing the next frame, so the back-off starts ≤ 0.2 s after the driver's input (SG-05, WP-S-04 §3.7; SFM-ACT-016)";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-305'> tsr_305 : TechnicalSafetyRequirement {
@@ -1276,7 +1276,7 @@ package LionDriverRequirements {
         :>> verifMethod = "T-SIL, LOG";
     }
     requirement <'TSR-626'> tsr_626 : TechnicalSafetyRequirement {
-        doc /* While engaged, the SoC shall detect that the envelope does not actuate from evidence other than the envelope's own status report: (a) pandaStates older than 2 nominal periods (0.2 s) is treated as a controls mismatch (TSR-621); (b) with lateral control active, the EPS-applied torque (STEER_TORQUE_EPS in 0x260) not following a commanded torque above a threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration not following the requested acceleration beyond a tolerance for longer than t_blk. Each leads to immediate disable with a take-over request. Threshold, tolerance and t_blk (≤ 0.5 s) shall be set from fork-owned drive logs so that no false detection occurs in the reference log set. */
+        doc /* While engaged, the SoC shall detect that the envelope does not actuate from evidence other than the envelope's own status report: (a) pandaStates older than 2 nominal periods (0.2 s) is treated as a controls mismatch (TSR-621); (b) with lateral control active, the EPS-applied torque (STEER_TORQUE_EPS in 0x260) not following a commanded torque above a threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration not following the requested acceleration beyond a tolerance for longer than t_blk. (d) with lateral control active, EPS_STATUS (0x262) LKA_STATE not reporting LKA active, or with longitudinal control active, the PCM not reporting ACC in control, for longer than t_blk; (e) the transmitted-frame count of TSR-632 not advancing for a commanded actuation ID. Each leads to immediate disable with a take-over request, so that the warning falls within the SG-02/SG-06 1 s budget (SFM-ACT-018). Threshold, tolerance and t_blk (≤ 0.5 s) shall be set from fork-owned drive logs so that no false detection occurs in the reference log set. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
         :>> asil = "QM (B-sup: TSR-516)";
@@ -1309,6 +1309,42 @@ package LionDriverRequirements {
         :>> asil = "QM (supports TSR-110, TSR-618)";
         :>> mechanism = "PLB, ST";
         :>> timing = "before engagement";
+        :>> verifMethod = "T-SIL, T-VEH";
+    }
+    requirement <'TSR-630'> tsr_630 : TechnicalSafetyRequirement {
+        doc /* While a car safety mode is active and the item is not engaged, the SoC shall check that every panda reports controlsAllowed false. A report of true for more than 2 consecutive pandaStates samples, and in any case within ≤ 0.3 s, shall prevent engagement with a no-entry alert, be logged as an envelope fault, and request ACC cancel. (The reverse of TSR-621: it makes a latent panda authority fault visible before the host also commands torque.) */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "QM (B-sup: TSR-105, TSR-301)";
+        :>> mechanism = "PLB";
+        :>> timing = "≤ 0.3 s (within the SG-01 0.5 s FTTI)";
+        :>> verifMethod = "T-SIL, FI";
+    }
+    requirement <'TSR-631'> tsr_631 : TechnicalSafetyRequirement {
+        doc /* controlsd shall treat the driving-model output as stale, with the TSR-602 reaction, when (a) its frame ID does not advance for more than 2 nominal periods while messages keep arriving (frozen output), or (b) its age measured from the source camera frame timestamp, not the publish time, exceeds 2 nominal periods (stale content with fresh timestamps). */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "QM (B-sup: TSR-101, TSR-103 bound the effect; TSR-408 covers a stopped command stream)";
+        :>> mechanism = "TMO, PLB";
+        :>> timing = "≤ 0.1 s";
+        :>> verifMethod = "T-SIL, FI";
+    }
+    requirement <'TSR-632'> tsr_632 : TechnicalSafetyRequirement {
+        doc /* The safety MCU shall report to the SoC, for each supervised actuation ID (0x2E4, 0x343), the count of frames accepted by the envelope and transmitted on the car-side bus (transmit complete) and the count refused, in every health report. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "P-SW";
+        :>> asil = "B‡ (report content); QM for its use (TSR-626(e))";
+        :>> mechanism = "PLB";
+        :>> timing = "per health report (≤ 0.1 s)";
+        :>> verifMethod = "T-SIL, T-HIL";
+    }
+    requirement <'TSR-633'> tsr_633 : TechnicalSafetyRequirement {
+        doc /* When driver awareness has reached zero (terminal DM alert) and the driver has not responded for 5 s, the item shall bring the vehicle to the reaction decided for the unresponsive-driver goal (register DQ-210, queued; recommended: keep the lane, decelerate in lane to a standstill within a_min and j_down (TSR-202, TSR-205) with the terminal alert sounding, then hold, disengage and lock out re-engagement). It shall not leave lateral and longitudinal control active at the set speed. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "A (proposed: H-09 goal per DQ-205, to be added by the HARA owner; allocated to the QM SoC, open as for TSR-625)";
+        :>> mechanism = "FR, WRN";
+        :>> timing = "reaction starts ≤ 5 s after the terminal alert (WP-S-04 §3.8)";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-701'> tsr_701 : TechnicalSafetyRequirement {
@@ -3329,6 +3365,30 @@ package LionDriverRequirements {
     #derivation connection {
         end #original ::> fsr_02_12;
         end #derive ::> tsr_629;
+    }
+    #derivation connection {
+        end #original ::> fsr_01_05;
+        end #derive ::> tsr_630;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_10;
+        end #derive ::> tsr_630;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_02;
+        end #derive ::> tsr_631;
+    }
+    #derivation connection {
+        end #original ::> fsr_06_01;
+        end #derive ::> tsr_631;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_10;
+        end #derive ::> tsr_632;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_09;
+        end #derive ::> tsr_633;
     }
     #derivation connection {
         end #original ::> fsr_07_03;
