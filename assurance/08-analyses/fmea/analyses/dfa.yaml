@@ -5,6 +5,8 @@
 # tools/safety/fmea_lint.py derives and checks each decomposition status from its DFIs.
 # 2026-10-13: fsc_revision 0.2 -> 0.3. FSC rev 0.3 only re-bases on HARA rev 0.4 (an HZ-006 back-link); no FSR or
 # decomposition changed, so no DFI was re-assessed.
+# 2026-10-16: rev 0.6 adds the harness-box supply (RR-2026-010 F-02, F-03): DFI-20, DFI-21; DM-02 re-based on the
+# DG419LE switches; DM-23, DM-24; DOI-008. No decomposition status changes.
 # 2026-10-16: fsc_revision 0.3 -> 0.4. FSC rev 0.4 only adds notes on two lead decisions (DQ-053, DQ-064) to
 # FSR-031 and FSR-038; no statement, ASIL, allocation or decomposition changed, so no DFI changes.
 schema_version: 1
@@ -13,7 +15,7 @@ analysis:
   type: dfa
   doc_id: LD-DFA-001
   title: "Dependent Failure Analysis — panda/SoC decompositions (LD-FSC-001)"
-  revision: "0.5"
+  revision: "0.6"
   status: draft
   baseline: BL-004
   fsc_revision: "0.4"
@@ -33,16 +35,18 @@ analysis:
     - assurance/08-analyses/fmea/analyses/fsc.yaml
     - ISO 26262-9:2018 clause 7; ISO 26262-11:2018 clause 4.7
     - assurance/08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md (LD-DES-001)
-  updated: 2026-10-13
+    - assurance/04-hardware/reviews/RR-2026-010.md (harness box v3 drawing)
+  updated: 2026-10-16
   history:
     - {revision: "0.1", date: 2026-10-10, author: Claude (AI-assisted draft), change: Initial draft against FSC rev 0.1}
     - {revision: "0.2", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Evidence from panda 92eb565 / opendbc 229dc70 for DFI-07/08/09; DFI-08 open -> insufficient; DOI-002 closed by design LD-DES-001; DOI-007 added"}
     - {revision: "0.3", date: 2026-10-10, author: Claude (AI-assisted draft), change: "Re-based on FSC rev 0.2; no DFI changes"}
     - {revision: "0.4", date: 2026-10-10, author: Claude (AI-assisted draft), change: "SW FMEA rev 0.2 code review: DM-05 corrected (checksum on 0x1D2/0x260 only, no counters, BRAKE_MODULE timing only); DM-06 and DM-20 evidence recorded in DOI-001; statuses unchanged pending independent verification"}
     - {revision: "0.5", date: 2026-10-13, author: Claude (AI-assisted draft), change: "The seven insufficient DFIs re-checked against liondriver-dev 102224c (panda c33343b, opendbc 273f44e, after BL-004). DM-21 panda reference lock and DM-22 host reference-build check added (existing, unverified on hardware); DFI-07 insufficient -> open; DFI-05/08/09/14/18/19 stay insufficient, each rationale now names what is in the code and what is still needed; DM-20 runs in CI (DOI-001); DOI-007 progress; decomposition statuses unchanged. Then DM-12 (panda 4ac8e1c, ELM327 refused after the car mode until ignition off) and DM-11 (opendbc c393a04, assist-active LKAS_HUD refused without authority) implemented and unit-tested: DFI-08 and DFI-19 insufficient -> open"}
+    - {revision: "0.6", date: 2026-10-16, author: Claude (AI-assisted draft), change: "Harness-box supply from RR-2026-010 (F-02, F-03, F-09). DM-02 re-based on the two DG419LE switches and the R2/R3 pull-down; it holds only while the box is powered. DFI-01 and DFI-03 no longer rely on DM-02 for the decompositions (fail-silence rests on DM-01 and DM-03). New DFI-20 (box supply loss, actuation decompositions, safe by design) and DFI-21 (box supply loss, warning decompositions FSR-015/025, open). DFI-08: DM-12 rests on one ignition wire (no CAN ignition on Toyota); DM-24 required. DM-23 (bench tests VS-HW-22/23) and DOI-008 added. Decomposition statuses unchanged"}
 
 categories:
-  - {id: CAT-01, name: Shared power supply, applicable: true, rationale: "Panda and SoC are on the same comma 3X board, powered from the same 12 V input."}
+  - {id: CAT-01, name: Shared power supply, applicable: true, rationale: "Panda and SoC are on the same comma 3X board, powered from the same 12 V input. On the Toyota harness that input is the harness-box supply VIN (ignition through D1, or comma power), which also powers both intercept switches; the ignition sense hangs on the same ignition line (RR-2026-010 HB-03, HB-06)."}
   - {id: CAT-02, name: Shared clock and reset, applicable: true, rationale: "The SoC drives the panda reset (STM_RST_N) and boot-mode (STM_BOOT0) lines."}
   - {id: CAT-03, name: Shared processing or memory, applicable: false, rationale: "The panda is a separate MCU with its own RAM and flash; the SoC reaches it only through the SPI link (CAT-05) and GPIO (CAT-02)."}
   - {id: CAT-04, name: Shared information inputs, applicable: true, rationale: "Both channels read brake, cruise, speed and steering-torque signals from the same vehicle CAN messages."}
@@ -116,7 +120,12 @@ dfis:
     evidence: openpilot/selfdrive/pandad (all CAN TX via panda)
     measures: [DM-01, DM-02, DM-03]
     assessment: safe_by_design
-    rationale: Fail-silent for actuation. Relies on the relay defaulting to stock (DM-02) and Toyota ECUs ending LKA/ACC on message loss (DM-03); both unverified, tracked in DOI-001.
+    rationale: >-
+      Fail-silent for actuation. Relies on Toyota ECUs ending LKA/ACC on message loss (DM-03, unverified, DOI-001).
+      Rev 0.6: whether the stock camera path comes back (DM-02) does not decide the outcome for these decompositions,
+      because an intercept that stays closed carries no item messages either; it decides SG-009 (FSR-037/038, not
+      decomposed; FMEDA SG-009). This DFI covers loss downstream of the harness box (OBD-C cable, device input stage,
+      regulators); loss of the box supply itself is DFI-20 and DFI-21.
   - id: DFI-02
     category: CAT-01
     kind: common_cause
@@ -136,7 +145,10 @@ dfis:
     evidence: openpilot/common/hardware/comma/hardware.py (reset_internal_panda, recover_internal_panda)
     measures: [DM-01, DM-02, DM-03]
     assessment: safe_by_design
-    rationale: Silent output only. Same dependencies on DM-02 and DM-03 as DFI-01. Reflashing through BOOT0 is DFI-09.
+    rationale: >-
+      Silent output only. Same dependency on DM-03 as DFI-01. Reflashing through BOOT0 is DFI-09. Rev 0.6: the stock
+      path returns only if the R2/R3 pull-down is intact (DM-02, RR-2026-010 F-03), which matters for SG-009, not
+      for these decompositions.
   - id: DFI-04
     category: CAT-02
     kind: common_cause
@@ -213,7 +225,7 @@ dfis:
     decompositions: [FSR-009]
     effect: Diagnostic traffic to EPS or ADAS ECUs while driving could reset them or drop assist (loss of function, HZ-004 type), not unintended actuation.
     evidence: openpilot/selfdrive/pandad/panda_safety.cc:23-36; opendbc modes/elm327.h:6-33 (LD-DES-001 F5)
-    measures: [DM-12, DM-21]
+    measures: [DM-12, DM-21, DM-24]
     assessment: open
     rationale: >-
       Verified at BL-001 that the ELM327 TX hook has no ignition or motion condition. Rev 0.5: the reference lock
@@ -224,7 +236,10 @@ dfis:
       unaffected. The "stationary" alternative of DR-05 is not used (no vehicle speed outside a car mode). Residual:
       before the first car mode of an ignition cycle ELM327 is still accepted while moving (fingerprinting runs
       seconds after ignition on). Open, not sufficient: unit-tested (panda/tests/reference_lock), not verified on
-      the bench (HIL).
+      the bench (HIL). Rev 0.6 (panda a55bdfc): the lock is released by the panda's ignition state, which on Toyota
+      is the harness line alone (main.c:213, harness_check_ignition(); opendbc ignition.h has no Toyota CAN
+      ignition). With comma power keeping the box powered, an open ignition branch or an open Q6 (RR-2026-010 HB-06,
+      F-09) reads ignition off while driving and releases DM-12; a faulty SoC can then reach ELM327. DM-24 required.
   - id: DFI-09
     category: CAT-06
     kind: cascading
@@ -372,10 +387,55 @@ dfis:
       is withdrawn. Open, not sufficient: unit-tested (test_toyota.py, both variants), not verified on the vehicle;
       that BARRIERS is the indication the driver reads as "assist active" is from the DBC and openpilot's
       carcontroller, to be confirmed on the reference cluster (DOI-005).
+  # --- CAT-01 harness-box supply (RR-2026-010, rev 0.6)
+  - id: DFI-20
+    category: CAT-01
+    kind: common_cause
+    description: >-
+      Loss of the harness-box supply VIN while the car is on: ignition branch to the box or D1 open without comma
+      power, or VIN shorted (TVS D4, wiring). VIN powers both intercept switches (U1, U2) and, through OBD-C VBUS,
+      the whole device.
+    decompositions: [FSR-001, FSR-004, FSR-009, FSR-018, FSR-021, FSR-028, FSR-031, FSR-034]
+    effect: >-
+      SoC and panda lose power together, so no item message reaches the vehicle. U1/U2 are unpowered, so neither
+      the intercept nor the pass-through position is guaranteed, and D2/D3 clamp CAN0 and CAN2 towards the dead
+      rail (derived from the drawing). EPS and PCM then receive neither item nor stock-camera LKA/ACC messages.
+    evidence: >-
+      RR-2026-010 HB-02, HB-03, HB-04, F-02 (commaai/hardware harness/v3/Harness_Box.pdf); DFMEA DFM-020.C1/C2;
+      openpilot/selfdrive/pandad (all CAN TX via panda)
+    measures: [DM-01, DM-03, DM-23]
+    assessment: safe_by_design
+    rationale: >-
+      For these decompositions the result is fail-silent, as DFI-01: whatever position the unpowered switches
+      take, nothing generates item messages, and the EPS and PCM end LKA/ACC on message loss (DM-03, unverified,
+      DOI-001). A disturbed car-side bus gives more missing messages, not wrong ones, unless the bench test shows
+      otherwise (DM-23). The same loss removes the stock camera path (SG-009, FSR-037/038, not decomposed): that is
+      DFMEA DFM-020, FMEDA SG-009 and WP-A-03 DFI-27, and the lead decision DQ-209.
+  - id: DFI-21
+    category: CAT-01
+    kind: common_cause
+    description: >-
+      The same loss of the harness-box supply removes both channels of the driver-indication decompositions: the
+      device HMI (FSR-016/026) is unpowered, and the panda channel (FSR-017/027) relies on the cluster showing the
+      true assist state from the bus that the unpowered box may disturb.
+    decompositions: [FSR-015, FSR-025]
+    effect: >-
+      No device alert. The cluster gets no item LKAS_HUD or ACC messages and, depending on the unpowered switch
+      position, either no stock-camera messages or the camera's own. What it then shows (LKA or ACC unavailable,
+      a camera fault, or the stock state) is not known; it is the only remaining cue that assist has ended.
+    evidence: RR-2026-010 F-02; DFMEA DFM-020 (end effect "lateral assist lost without a LionDriver warning", HZ-004)
+    measures: [DM-11, DM-23]
+    assessment: open
+    rationale: >-
+      Unlike DFI-01, where the pull-down returns the stock camera and the cluster sees a clean bus, here the second
+      channel depends on cluster behaviour on a possibly disturbed bus, which nobody has observed. XM-04 is not
+      credited (FSC FOI-005). Needed to close: the box-unpowered bench test (DM-23, VS-HW-22) and the cluster
+      reaction to it on the reference vehicle (DOI-005, DOI-008); or the lead's DQ-209 option B or C, which removes
+      the cause.
 
 measures:
   - {id: DM-01, description: "All item CAN transmission passes through the panda; an unpowered or reset panda transmits nothing.", status: existing, ref: openpilot/selfdrive/pandad, allocated_to: [EL-07]}
-  - {id: DM-02, description: "Harness relay defaults to the stock camera path when the panda is unpowered or in reset.", status: existing_unverified, allocated_to: [EL-08]}
+  - {id: DM-02, description: "Harness intercept switches (2 x DG419LE, U1 on CAN_H, U2 on CAN_L, one control line SBU1) select pass-through, the stock camera path, when the device does not drive SBU1: the R2+R3 pull-down (2 x 120 ohm in series) holds IN low. Holds for device power loss or panda reset only while the box supply VIN is present (RR-2026-010 HB-02, F-02), and only while R2 and R3 are intact, with no position feedback (F-03, F-06). From the published v3 drawing; shipped box not checked (VS-HW-02).", status: existing_unverified, ref: assurance/04-hardware/reviews/RR-2026-010.md, allocated_to: [EL-08]}
   - {id: DM-03, description: "Toyota EPS and powertrain end LKA/ACC when item messages stop (message timeout).", status: existing_unverified, allocated_to: [XM-02, XM-05]}
   - {id: DM-04, description: "SoC compares the panda's reported safety model, parameter and alternative experience with CarParams (controlsMismatch).", status: existing, ref: openpilot/selfdrive/selfdrived/selfdrived.py, allocated_to: [EL-04]}
   - {id: DM-05, description: "Panda RX checks on safety-relevant vehicle messages. At BL-001 (Toyota): checksum on PCM_CRUISE 0x1D2 and STEER_TORQUE_SENSOR 0x260 only; no counter checks; BRAKE_MODULE 0x226 timing only (SW FMEA SWF-005, SWF-006).", status: existing_unverified, ref: opendbc_repo, allocated_to: [EL-07]}
@@ -396,6 +456,8 @@ measures:
   - {id: DM-20, description: "opendbc safety test suite with coverage over the panda safety model.", status: existing_unverified, ref: opendbc_repo/opendbc/safety/tests, allocated_to: [EL-07]}
   - {id: DM-21, description: "Panda reference-build configuration lock (TSR-512/513): only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73 are accepted; in TOYOTA only a downgrade to NOOUTPUT or SILENT; 0xdf refused; relay, CAN and comms commands refused in a car mode; refused requests counted in the health packet. Unit-tested in CI; HIL test not run.", status: existing_unverified, ref: panda/board/reference_lock.h, allocated_to: [EL-07]}
   - {id: DM-22, description: "The SoC does not configure a car safety mode, and raises pandaNotReferenceBuild, when the panda does not report HEALTH_FLAG_REFERENCE_BUILD (TSR-514, TSR-619).", status: existing_unverified, ref: openpilot/selfdrive/selfdrived/selfdrived.py, allocated_to: [EL-04]}
+  - {id: DM-23, description: "Bench tests of the harness box failure behaviour: box unpowered with camera and car powered (pass-through continuity, CAN0/CAN2 levels), pull-down open, supply stress (WP-H-06 VS-HW-22, VS-HW-23, VS-HW-24; DFMEA DFM-ACT-014).", status: required, ref: assurance/04-hardware/WP-H-06-hardware-integration-verification.md, allocated_to: [process]}
+  - {id: DM-24, description: "The panda releases the ELM327 lock (DM-12) only on an ignition-off confirmed by a second source, for example no vehicle CAN traffic or zero vehicle speed for a set time, not on the harness ignition line alone.", status: required, ref: panda/board/reference_lock.h, allocated_to: [EL-07]}
 
 open_items:
   - id: DOI-001
@@ -445,4 +507,13 @@ open_items:
       without a VLR, and refuses softloader entry in a car mode (part of DR-14); DR-05 implemented in the same gate
       (panda 4ac8e1c, see DFI-08). Not implemented: DR-10..DR-13, DR-15, DR-16.
     affects: [DM-07, DM-08, DM-12, DFI-07, DFI-08, DFI-09]
+    status: open
+  - id: DOI-008
+    text: >-
+      Harness box (RR-2026-010): run the bench tests DM-23 and record what the unpowered switches do to the stock
+      path and to CAN0, and what the reference cluster shows when the box loses power while driving (DFI-21). The
+      lead decides in DQ-209 whether to keep comma's box, build a LionDriver adapter, or require comma power; re-assess
+      DFI-20 and DFI-21 after the answer. Implement DM-24 in the panda reference build (handed to the panda software
+      work).
+    affects: [DFI-08, DFI-20, DFI-21, DM-02, DM-23, DM-24]
     status: open
