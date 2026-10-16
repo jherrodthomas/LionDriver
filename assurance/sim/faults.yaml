@@ -1,0 +1,239 @@
+# Fault catalog of the simulation track (roadmap phase S0). One entry per injected fault; plant/cases.py builds the
+# runs from it and plant/test_plant.py checks every entry against the FMEA analyses and WP-S-02.
+#
+#   id          case ID used in the results and figures
+#   kind        injection implemented in plant/simulate.py
+#   causes      FMEA causes (System FMEA SFM-, DFMEA DFM-, SW FMEA SWF-) the fault exercises: each must exist
+#   tsr         TSRs whose mechanism is expected to act (or whose absence the case shows): each must exist in WP-S-02
+#   injection   point (where), trigger (when), duration
+#   expected    the mechanism expected to act, as the reference build implements it today
+#   wp_v_05     the WP-V-05 case this run previews (simulation only; WP-V-05 is not executed by it)
+#   eps_hold    also run with the EPS-hold assumption (faults whose reaction is a loss of STEERING_LKA frames)
+#
+# Synthetic data (DSR-12). Results rank risks and guide tests only, until the model is validated against Corolla logs.
+schema_version: 1
+faults:
+  - id: F-01a
+    title: Torque above the envelope limit (3000 > 1500)
+    kind: overlimit
+    sg: [SG-01]
+    causes: [SFM-002, SFM-029, SWF-001]
+    tsr: [TSR-101, TSR-108, TSR-109]
+    injection: {point: SoC STEERING_LKA torque, trigger: steady curve, duration: until the end of the run}
+    expected: Every frame refused (TSR-101). Authority is not revoked (TSR-108 not implemented) and no zero frame is sent (TSR-109 not implemented), so the EPS loses its frames
+    wp_v_05: VS-FI-14
+    road: curve
+    t_fault: 7.0
+    eps_hold: true
+    note: a host build that skips the host limits
+  - id: F-01b
+    title: Hard-over within the envelope (torque ramped at 15/frame to 1500)
+    kind: hardover
+    sg: [SG-01]
+    causes: [SFM-002, SWF-042]
+    tsr: [TSR-101, TSR-103]
+    injection: {point: SoC actuator output, trigger: straight road, duration: until the end of the run}
+    expected: The envelope passes it (within magnitude and rate limits); only the driver can stop it
+    wp_v_05: VS-FI-14, VS-FI-27
+    road: straight
+    t_fault: 6.0
+    figure: true
+    note: wrong but limited command
+  - id: F-02
+    title: Torque request while not engaged
+    kind: not_engaged
+    sg: [SG-01]
+    causes: [SFM-001, SWF-002, SWF-041]
+    tsr: [TSR-105]
+    injection: {point: SoC STEERING_LKA torque and request bit, trigger: manual driving, duration: until the end of the run}
+    expected: Every frame refused while authority is not granted
+    wp_v_05: VS-FI-14
+    road: straight
+    t_fault: 6.0
+    engaged: false
+  - id: F-03
+    title: Command frozen at curve entry (heartbeat alive)
+    kind: frozen
+    sg: [SG-01, SG-02]
+    causes: [SFM-006, SWF-043, SWF-020]
+    tsr: [TSR-409]
+    injection: {point: SoC STEERING_LKA frame content, trigger: curve entry, duration: until the end of the run}
+    expected: Not detected; TSR-409 (control-loop evidence in the heartbeat) is not implemented
+    wp_v_05: VS-FI-08
+    road: curve
+    t_fault: null
+    figure: true
+    note: the frozen frame keeps its counter and checksum
+  - id: F-04a
+    title: SoC heartbeat loss, commands continue
+    kind: heartbeat
+    sg: [SG-01, SG-02]
+    causes: [SWF-014, SWF-021]
+    tsr: [TSR-407, TSR-516]
+    injection: {point: SoC heartbeat (0xf3), trigger: steady curve, duration: until the end of the run}
+    expected: Authority revoked 0.3 s after the last heartbeat; siren at once from the panda (T-06a, T-07a)
+    wp_v_05: VS-FI-10(a)
+    road: curve
+    t_fault: 7.0
+    eps_hold: true
+    figure: true
+  - id: F-04b
+    title: "SoC stall: heartbeat and commands stop"
+    kind: soc_stall
+    sg: [SG-01, SG-02]
+    causes: [SWF-014, SWF-024, SWF-027]
+    tsr: [TSR-408, TSR-407, TSR-516]
+    injection: {point: SoC heartbeat and all frames, trigger: steady curve, duration: until the end of the run}
+    expected: TX-arrival supervision revokes within 50 ms (TSR-408), before the heartbeat check, so the fast siren does not sound
+    wp_v_05: VS-FI-09
+    road: curve
+    t_fault: 7.0
+    eps_hold: true
+  - id: F-05
+    title: MCU hang (all execution stops) until the IWDG reset
+    kind: mcu_hang
+    sg: [SG-01, SG-07]
+    causes: [DFM-004, DFM-006, SWF-018]
+    tsr: [TSR-501, TSR-706]
+    injection: {point: safety MCU, trigger: steady curve, duration: until the IWDG reset}
+    expected: IWDG reset 90 ms after the last feed; switches return to pass-through (T-09a)
+    wp_v_05: VS-FI-17
+    road: curve
+    t_fault: 7.0
+    eps_hold: true
+    figure: true
+  - id: F-06a
+    title: Harness switch drops to pass-through while driven
+    kind: switch_pass
+    sg: [SG-01, SG-07]
+    causes: [DFM-011, SFM-034]
+    tsr: [TSR-710, TSR-506]
+    injection: {point: harness-box DG419LE switches, trigger: steady curve, duration: until the end of the run}
+    expected: Relay malfunction on the first camera STEERING_LKA frame seen on the car side; item frames refused
+    wp_v_05: VS-FI-21
+    road: curve
+    t_fault: 7.0
+    note: two DG419LE switches with pull-down to pass-through and no state feedback (RR-2026-010)
+  - id: F-06b
+    title: Harness switch stuck in intercept, revealed by an MCU hang and reset
+    kind: mcu_hang_stuck_intercept
+    sg: [SG-01, SG-07]
+    causes: [DFM-010, SFM-034, DFM-004]
+    tsr: [TSR-506, TSR-706]
+    injection: {point: harness-box switches and safety MCU, trigger: steady curve, duration: until the end of the run}
+    expected: Not detected (no readback, TSR-506 not implemented); the stock camera path stays cut after the reset
+    wp_v_05: VS-FI-21, VS-FI-17
+    road: curve
+    t_fault: 7.0
+    eps_hold: true
+  - id: F-07
+    title: EPS fault (LKA_STATE 9) with loss of EPS assist
+    kind: eps_fault
+    sg: [SG-02]
+    causes: [SFM-005]
+    tsr: [TSR-110, TSR-516]
+    injection: {point: EPS (EPS_STATUS LKA_STATE and assist), trigger: steady curve, duration: until the end of the run}
+    expected: LKA frames refused from the first fault frame; siren after 1 s persistence (T-28)
+    wp_v_05: VS-FI-31
+    road: curve
+    t_fault: 7.0
+    figure: true
+  - id: F-08
+    title: "RX loss: STEER_TORQUE_SENSOR (0x260) stops"
+    kind: rx_loss
+    sg: [SG-01]
+    causes: [SWF-006]
+    tsr: [TSR-401, TSR-406]
+    injection: {point: car bus 0x260, trigger: steady curve, duration: until the end of the run}
+    expected: Authority revoked after 5 nominal periods, evaluated by the 100 Hz safety task (T-01)
+    wp_v_05: VS-FI-04
+    road: curve
+    t_fault: 7.0
+    eps_hold: true
+  - id: L-01
+    title: Acceleration request at the envelope maximum (+2.0 m/s²)
+    kind: accel_max
+    sg: [SG-03]
+    causes: [SFM-008, SWF-046]
+    tsr: [TSR-201]
+    injection: {point: SoC ACC_CONTROL, trigger: following a lead, duration: until the driver brakes}
+    expected: The envelope passes it; the driver's brake press revokes authority (TSR-302)
+    wp_v_05: VS-FI-14
+    road: straight
+    t_fault: 6.0
+    longitudinal: true
+  - id: L-02
+    title: Acceleration request above the envelope (+4.0 m/s²)
+    kind: accel_overlimit
+    sg: [SG-03]
+    causes: [SFM-008, SFM-029, SWF-003]
+    tsr: [TSR-201]
+    injection: {point: SoC ACC_CONTROL, trigger: following a lead, duration: until the end of the run}
+    expected: Every frame refused
+    wp_v_05: VS-FI-14
+    road: straight
+    t_fault: 6.0
+    longitudinal: true
+  - id: L-03
+    title: Deceleration request at the envelope minimum (-3.5 m/s², step)
+    kind: decel_min
+    sg: [SG-04]
+    causes: [SFM-009, SWF-004]
+    tsr: [TSR-202, TSR-205]
+    injection: {point: SoC ACC_CONTROL, trigger: followed at a 1.0 s gap, duration: until the driver presses the accelerator}
+    expected: The envelope passes the step (TSR-205 onset limit not implemented); frames refused while the accelerator is pressed (TSR-305)
+    wp_v_05: VS-FI-14
+    road: straight
+    t_fault: 6.0
+    longitudinal: true
+  - id: L-04
+    title: Deceleration request above the envelope (-6.0 m/s²)
+    kind: decel_overlimit
+    sg: [SG-04]
+    causes: [SFM-009, SFM-029, SWF-003]
+    tsr: [TSR-202]
+    injection: {point: SoC ACC_CONTROL, trigger: followed at a 1.0 s gap, duration: until the end of the run}
+    expected: Every frame refused
+    wp_v_05: VS-FI-14
+    road: straight
+    t_fault: 6.0
+    longitudinal: true
+  - id: P-01
+    title: Stock PCS braking request, no fault (reference)
+    kind: pcs_stock
+    sg: [SG-07]
+    causes: [SFM-033]
+    tsr: [TSR-704, TSR-707]
+    injection: {point: stock camera PRE_COLLISION_2 (0x344), trigger: straight road, duration: one request}
+    expected: Forwarded from the camera side at once (TSR-707 latency neglected)
+    wp_v_05: VS-FI-24
+    road: straight
+    t_fault: 6.0
+    pcs: true
+    note: from the safety-concept session's handover (branch claude/fault-sim-plant, 3b6936b, pcs_stock)
+  - id: P-02
+    title: Stock PCS braking request during an MCU hang
+    kind: pcs_mcu_hang
+    sg: [SG-07]
+    causes: [DFM-004, SFM-033]
+    tsr: [TSR-501, TSR-706, TSR-711]
+    injection: {point: safety MCU hangs as the camera sends the request, trigger: straight road, duration: until the IWDG reset}
+    expected: Forwarding stops; the request reaches the car through the pass-through switch after the IWDG reset (SG-07 FTTI 0.2 s)
+    wp_v_05: VS-FI-17, VS-FI-24
+    road: straight
+    t_fault: 6.0
+    pcs: true
+    note: from the safety-concept session's handover (pcs_mcu_hang)
+  - id: P-03
+    title: Stock PCS braking request during an MCU hang, switch stuck in intercept
+    kind: pcs_stuck_intercept
+    sg: [SG-07]
+    causes: [DFM-004, DFM-010, SFM-033]
+    tsr: [TSR-506, TSR-706]
+    injection: {point: safety MCU and harness-box switches, trigger: straight road, duration: until the end of the run}
+    expected: Not detected; the request never reaches the car (no switch readback, TSR-506 not implemented)
+    wp_v_05: VS-FI-21, VS-FI-17
+    road: straight
+    t_fault: 6.0
+    pcs: true
+    note: from the safety-concept session's handover (pcs_stuck_intercept)

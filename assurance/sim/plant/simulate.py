@@ -45,6 +45,7 @@ ASSUMPTIONS = {
   "driver_ay_max": (4.0, "the driver's correction is limited to 4 m/s2 of lateral acceleration and builds up over 0.2 s; it steers back to the lane centre as a critically damped second-order loop at 1.5 rad/s. No source"),
   "driver_brake": (3.0, "a braking driver adds -3 m/s2, built up over 0.3 s. No source"),
   "camera_lka": (0.0, "stock camera LKA is off: its STEERING_LKA frames carry STEER_REQUEST 0 and torque 0"),
+  "a_pcs": (6.0, "stock PCS braking deceleration, assumption A-PCS-1 of WP-S-04 §3.6, to be measured (OI-4)"),
   "speaker_phase": (0.0, "the 8 Hz tick starts at t = 3 ms; the siren can come up to 125 ms later at another phase"),
 }
 
@@ -70,6 +71,8 @@ class Case:
   figure: bool = False
   longitudinal: bool = False
   note: str = ""
+  tsr: str = ""
+  pcs: bool = False           # SG-07 case: the stock camera requests PCS braking at the fault onset
 
 
 @dataclass
@@ -251,9 +254,11 @@ def simulate(case: Case) -> Result:
       elif f == "soc_stall":
         soc.stalled = True
         soc.heartbeat_ok = False
-      elif f in ("mcu_hang", "mcu_hang_stuck_intercept"):
+      elif f in ("mcu_hang", "mcu_hang_stuck_intercept", "pcs_mcu_hang", "pcs_stuck_intercept"):
         panda.hung = True
-        stuck_intercept = f == "mcu_hang_stuck_intercept"
+        stuck_intercept = f in ("mcu_hang_stuck_intercept", "pcs_stuck_intercept")
+      elif f == "pcs_stock":
+        pass
       elif f == "switch_pass":
         stuck_pass = True
       elif f == "eps_fault":
@@ -328,6 +333,12 @@ def simulate(case: Case) -> Result:
       eps.frame(t, 0, 0)
       if panda.relay_driven:
         panda.rx_raw(addr, bytes(dat), 0)   # the panda sees the camera's frame on the car side
+
+    # stock PCS braking request (0x344, camera side): reaches the car directly through a pass-through switch, or is
+    # forwarded by a running panda when its forwarding hook allows it (real code: safety_fwd_hook)
+    if case.pcs and fault_on and "PCS request reaches the car" not in res.events:
+      if not intercept or (not panda.hung and panda.relay_driven and panda.forward(2, 0x344) == 0):
+        res.event("PCS request reaches the car", t)
 
     # ------------------------------------------------ panda clocks
     panda.main_loop()

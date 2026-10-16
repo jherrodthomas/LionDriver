@@ -130,6 +130,50 @@ class TestSafetyInTheLoop(unittest.TestCase):
     self.assertLessEqual(t, 0.091)
 
 
+class TestFaultCatalog(unittest.TestCase):
+  """faults.yaml: every FMEA cause and TSR it names exists, and every kind is implemented by simulate.py."""
+
+  @classmethod
+  def setUpClass(cls):
+    import yaml
+    from cases import catalog
+    cls.faults = catalog()
+    ids = set()
+    for name in ("system-fmea.yaml", "sw-fmea.yaml", "dfmea.yaml"):
+      data = yaml.safe_load((ROOT / "assurance/08-analyses/fmea/analyses" / name).read_text(encoding="utf-8"))
+      ids |= {fm["id"] for fm in data.get("failure_modes", [])}
+    cls.fmea_ids = ids
+    wp_s_02 = (ROOT / "assurance/03-system/WP-S-02-technical-safety-requirements.md").read_text(encoding="utf-8")
+    cls.tsr_ids = set(re.findall(r"^\| (TSR-\d+) \|", wp_s_02, re.M))
+    cls.simulate_src = (HERE / "simulate.py").read_text(encoding="utf-8")
+
+  def test_required_fields(self):
+    for f in self.faults:
+      for key in ("id", "title", "kind", "sg", "causes", "tsr", "injection", "expected", "road", "t_fault"):
+        self.assertIn(key, f, f.get("id"))
+      self.assertEqual(set(f["injection"]), {"point", "trigger", "duration"}, f["id"])
+
+  def test_causes_exist_in_fmea(self):
+    for f in self.faults:
+      for c in f["causes"]:
+        self.assertIn(c, self.fmea_ids, f"{f['id']}: {c}")
+
+  def test_tsrs_exist_in_wp_s_02(self):
+    for f in self.faults:
+      for t in f["tsr"]:
+        self.assertIn(t, self.tsr_ids, f"{f['id']}: {t}")
+
+  def test_kinds_implemented(self):
+    for f in self.faults:
+      self.assertIn(f'"{f["kind"]}"', self.simulate_src, f["id"])
+
+  def test_backlog_faults_covered(self):
+    kinds = {f["kind"] for f in self.faults}
+    for k in ("overlimit", "not_engaged", "frozen", "heartbeat", "mcu_hang", "switch_pass", "mcu_hang_stuck_intercept",
+              "eps_fault", "rx_loss", "accel_max", "decel_min"):
+      self.assertIn(k, kinds)
+
+
 class TestOutputs(unittest.TestCase):
   @classmethod
   def setUpClass(cls):

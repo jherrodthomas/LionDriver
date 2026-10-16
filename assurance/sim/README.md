@@ -15,6 +15,8 @@ the figure tools of the other work products do. The MetaDrive bridge stays where
 
 | Path | Content |
 |---|---|
+| [`faults.yaml`](faults.yaml) | Fault catalog: each fault with its FMEA causes, TSRs, injection point, trigger, duration and expected mechanism |
+| [`INTERFACE.md`](INTERFACE.md) | Plant interface: signals, units and rates shared by every harness |
 | [`plant/`](plant/) | Layer 1: the fault-injection plant model and its tests |
 | [`results/plant-results.md`](results/plant-results.md) | Layer 1 results table, event log and model inputs (generated) |
 | [`figures/`](figures/) | Layer 1 figures, one per selected case (generated) |
@@ -82,7 +84,9 @@ the test suite checks it. Nothing is measured on the reference car (WP-S-04 M-01
 The faults are those of the backlog, each traced to its FMEA rows and to the WP-V-05 case it previews:
 over-limit torque and rate (F-01a, F-01b), torque while not engaged (F-02), frozen command (F-03), SoC heartbeat loss
 and SoC stall (F-04a, F-04b), MCU hang until the IWDG reset (F-05), harness switch stuck in pass-through or intercept
-(F-06a, F-06b), EPS fault (F-07), RX loss (F-08), and the longitudinal equivalents for SG-03/SG-04 (L-01…L-04).
+(F-06a, F-06b), EPS fault (F-07), RX loss (F-08), the longitudinal equivalents for SG-03/SG-04 (L-01…L-04), and
+the stock PCS path for SG-07 (P-01…P-03, from the safety-concept session's handover). The catalog
+[`faults.yaml`](faults.yaml) holds each fault with its FMEA causes and TSRs; the tests check that every one exists.
 Faults whose reaction is a loss of frames at the EPS are run again with the EPS-hold assumption (suffix `-H`).
 
 Measured per case: the panda's reaction times, EPS torque below 5 %, siren, driver cue and correction, lateral

@@ -77,7 +77,7 @@ def lateral_rows(results: list[Result]) -> list[str]:
           "|---|---|---|---|---|---|---|---|---|---|---|---|"]
   for r in results:
     c, m = r.case, r.metrics
-    if c.longitudinal:
+    if c.longitudinal or c.pcs:
       continue
     cue = next((k for k in m["events"] if k.startswith("driver cue")), None)
     drv = "none" if cue is None else f"{cue[12:-1]} {m['events'][cue]:.2f} → {ev(m, 'driver correction'):.2f}"
@@ -101,6 +101,22 @@ def longitudinal_rows(results: list[Result]) -> list[str]:
     rows.append(f"| {c.id} | {c.title} ({c.fmea}; {c.wpv05}) | {panda_reaction(m)} | {drv} | "
                 f"{m['gap0_lead']:.1f} / {m['min_gap_lead']:.1f} / {f2(m['gap_loss_1s'])} | "
                 f"{m['gap0_follow']:.1f} / {m['min_gap_follow']:.1f} | {estimate(c)} |")
+  return rows
+
+
+def pcs_rows(results: list[Result]) -> list[str]:
+  a_pcs = ASSUMPTIONS["a_pcs"][0]
+  rows = ["| Case | Fault (FMEA; WP-V-05) | TSR | Panda reaction (s) | PCS request reaches the car (s) | "
+          f"Speed reduction lost at {a_pcs:g} m/s² (km/h) | Against SG-07 FTTI 0.2 s (WP-S-04 §3.6) |",
+          "|---|---|---|---|---|---|---|"]
+  for r in results:
+    c, m = r.case, r.metrics
+    if not c.pcs:
+      continue
+    d = ev(m, "PCS request reaches")
+    lost = "never reaches" if d is None else f"{a_pcs * d * 3.6:.1f}"
+    verdict = "not reached in the run" if d is None else ("within" if d <= 0.2 else "exceeds")
+    rows.append(f"| {c.id} | {c.title} ({c.fmea}; {c.wpv05}) | {c.tsr} | {panda_reaction(m)} | {f2(d)} | {lost} | {verdict} |")
   return rows
 
 
@@ -134,6 +150,15 @@ def table(results: list[Result], iwdg: float) -> str:
     "−3.5 m/s² after the follower's reaction time, until it is no faster than the ego (WP-S-04 §3.4).",
     "",
     *longitudinal_rows(results),
+    "",
+    "## Stock PCS path (SG-07)",
+    "",
+    "The stock camera sends a PCS braking request at the fault onset. It reaches the car directly when the harness "
+    "switches pass it through, or through the panda when the panda's forwarding hook allows it (real code, "
+    "`safety_fwd_hook`). Cases P-01…P-03 come from the safety-concept session's handover (branch "
+    "`claude/fault-sim-plant`, 3b6936b). The lost speed reduction is a_PCS × delay, as in WP-S-04 §3.6.",
+    "",
+    *pcs_rows(results),
     "",
     "## Event log per case",
     "",
