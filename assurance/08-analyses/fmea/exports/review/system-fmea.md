@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.10 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.11 | draft | BL-005 | RT-2 | 2026-10-16 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven on public roads by a licensed driver. Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
