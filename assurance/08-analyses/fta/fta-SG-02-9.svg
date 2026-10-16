@@ -29,14 +29,14 @@
 <text x="54" y="303.5" class="id">BE-2.08</text>
 <text x="246" y="303.5" class="kind">BASIC</text>
 <text x="54" y="318.0" class="d">EPS fault warned only by the</text>
-<text x="54" y="332.5" class="d">host, and silently after a</text>
-<text x="54" y="347.0" class="d">steering override in the last</text>
-<text x="54" y="361.5" class="d">1.5 s or at standstill, latched</text>
-<text x="54" y="376.0" class="d">for the fault</text>
-<text x="54" y="390.5" class="d">(car_events.py:171; not in the</text>
-<text x="54" y="405.0" class="d">envelope, GAP-03). 2026-10-12,</text>
-<text x="54" y="419.5" class="d">reference build: envelope</text>
-<text x="54" y="434.0" class="d">refuses LKA torque on a fault…</text>
+<text x="54" y="332.5" class="d">host; after a steering override</text>
+<text x="54" y="347.0" class="d">in the last 1.5 s or at</text>
+<text x="54" y="361.5" class="d">standstill only a low-priority</text>
+<text x="54" y="376.0" class="d">prompt, no soft disable or</text>
+<text x="54" y="390.5" class="d">take-over alert, latched for the</text>
+<text x="54" y="405.0" class="d">fault (car_events.py:171,</text>
+<text x="54" y="419.5" class="d">events.py:516; not in the</text>
+<text x="54" y="434.0" class="d">envelope, GAP-03). 2026-10-12,…</text>
 <rect x="54.0" y="442.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="81.0" y="453.5" class="chip" fill="#fff">SFM-038</text>
 <circle cx="150.0" cy="490.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
