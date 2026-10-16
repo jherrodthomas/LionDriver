@@ -41,7 +41,7 @@ class TestRealDocument(unittest.TestCase):
     cls.trees = parse(fd.SOURCE.read_text(encoding="utf-8"))
 
   def test_all_goals_present(self):
-    self.assertEqual(sorted(t.goal for t in self.trees), [f"SG-0{i}" for i in range(1, 8)])
+    self.assertEqual(sorted(t.goal for t in self.trees), [f"SG-0{i}" for i in range(1, 9)])  # SG-08 since WP-A-04 v1.3
 
   def test_gates_have_two_inputs_and_leaves_are_events(self):
     for t in self.trees:
@@ -69,7 +69,7 @@ class TestRealDocument(unittest.TestCase):
     self.assertEqual(glenv[0].ref_tree, "SG-03")
 
   def test_goal_asils_from_wp_c03(self):
-    # SG-08 (HARA v0.4) has no fault tree yet; the ASILs are read for every goal of WP-C-03.
+    # The ASILs are read for every goal of WP-C-03 (SG-08 since HARA v0.4).
     self.assertEqual(sorted(fd.goal_asils()), [f"SG-0{i}" for i in range(1, 9)])
 
   def test_committed_outputs_current(self):
@@ -187,7 +187,12 @@ class TestCutSets(unittest.TestCase):
       drawn = {n.ident for n in walk(t.root) if id(n) in hot and n.ident.startswith("BE-") and not n.children}
       order_one = {e for c in solver.cut_sets(t.root) if sum(e.startswith("BE-") for e in c) == 1
                    for e in c if e.startswith("BE-")}
-      self.assertEqual(drawn, order_one, t.goal)
+      # A single point inside a gate borrowed from another tree is drawn up to the red transfer node only
+      # (SG-08 borrows G-HMI from SG-02): count the events under a hot transfer as drawn.
+      via_transfer = {n.ident for x in walk(t.root) if x.kind == "transfer_in" and id(x) in hot
+                      for n in walk(x.ref_of) if n.ident.startswith("BE-") and not n.children}
+      self.assertTrue(drawn <= order_one, t.goal)
+      self.assertEqual(order_one - drawn, order_one & via_transfer - drawn, t.goal)
 
   def test_transfer_expanded(self):
     trees = fd.parse_document(fd.SOURCE.read_text(encoding="utf-8"))

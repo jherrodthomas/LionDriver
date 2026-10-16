@@ -24,10 +24,10 @@
 # System FMEA rev 0.6, PFMEA rev 0.3). SG-01 added 2026-10-16 (WP-A-04 v1.0; findings F-11..F-16, F-14 and F-15 open for
 # the FMEA owners). SG-07 added 2026-10-16 with its tree re-based on the harness box switches (WP-A-04 v1.1, RR-2026-010;
 # findings F-17..F-19 open for the FMEA owners). SG-02, SG-03, SG-05, SG-06 added 2026-10-16 (WP-A-04 v1.2; findings F-20..F-36),
-# so every goal with a fault tree is in scope. Draft, AI-assisted; each link needs review.
+# so every goal with a fault tree is in scope. SG-08 added 2026-10-16 (WP-A-04 v1.3, §13; F-37, F-38). Draft, AI-assisted; each link needs review.
 schema_version: 1
 source: assurance/08-analyses/WP-A-04-system-fta-fmea.md
-scope: [SG-01, SG-02, SG-03, SG-04, SG-05, SG-06, SG-07]
+scope: [SG-01, SG-02, SG-03, SG-04, SG-05, SG-06, SG-07, SG-08]
 
 events:
   # ---- SG-04 tree (§5)
@@ -674,6 +674,49 @@ events:
     note: >-
       SWF-009.C1 (defect in pcm_cruise_check, safety.h:518-527). Single point through G5.2; SWF-009.C1 claims D=3 (F-27)
 
+  # ---- SG-08 tree (§13), new with WP-C-03 v0.4 (H-09, DQ-205); G-HMI events are mapped with SG-02
+  - id: BE-8.01
+    class: sotif
+    fmea: [SFM-022]
+    note: SFM-022.C1 (DM model false negative); a confident false negative is not caught by the wheel-touch fallback
+  - id: BE-8.02
+    class: systematic_sw
+    fmea: [SFM-022]
+    note: SFM-022.C2 (pose thresholds or calibration wrong for the driver or mount); policy tests use synthetic inputs only
+  - id: BE-8.03
+    class: random_hw
+    gap: >-
+      No DFMEA mode or FMEDA row: the DFMEA scope excludes the SoC side and the driver camera. The System FMEA has the cause
+      (SFM-022.C3, driver camera or IR illumination degraded, cited on BE-8.01/8.02's mode), and no SW FMEA mode covers
+      dmonitoringmodeld stopping. F-37
+  - id: BE-8.04
+    class: systematic_sw
+    gap: >-
+      No SW FMEA mode for driverStateV2 published with valid=True at the source whatever the input (dmonitoringmodeld.py:99;
+      GAP-21, TSR-609). F-37
+  - id: BE-8.05
+    class: systematic_sw
+    gap: >-
+      No SW FMEA mode for the wheel-touch fallback resetting awareness on any steering or gas input (policy.py:334-335;
+      GAP-21, TSR-612). F-37
+  - id: BE-8.06
+    class: systematic_sw
+    gap: >-
+      No SW FMEA mode for the DM demo mode (IsDriverViewEnabled) active while the item can engage (dmonitoringd.py:26-38;
+      GAP-20, TSR-610). F-37
+  - id: BE-8.07
+    class: systematic_sw
+    fmea: [SFM-023]
+    note: SFM-023.C1 (policy timers or recovery factor misconfigured), SFM-023.C2 (low-speed or always-on exemption applied wrongly)
+  - id: BE-8.08
+    class: systematic_sw
+    gap: >-
+      No SW FMEA mode for the forced stop not being set or not acted on (policy.py:398 noResponseForceDecel, controlsd.py:235
+      forceDecel, longitudinal_planner.py:84). F-37
+  - id: UE-8.09
+    class: external
+    ref: AOU-05R
+
 gates:
   - id: G4.1
     fmea: [SFM-009]
@@ -711,6 +754,13 @@ gates:
     fmea: [SFM-019]
   - id: G5.3
     fmea: [SFM-018]
+
+  - id: G8.3
+    fmea: [SFM-025]
+    note: >-
+      SFM-025 (terminal driver-unresponsive state does not bring the item to a safe state). Its cause SFM-025.C1 says the
+      level-3 alerts have no disable reaction, which is true; it does not credit the forced stop (noResponseForceDecel), which
+      the tree takes as the no-response reaction. F-38
 
 not_in_fta:
   - fm: SFM-014
