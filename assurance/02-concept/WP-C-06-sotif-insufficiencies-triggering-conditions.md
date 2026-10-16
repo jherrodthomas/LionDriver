@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-06 Functional insufficiencies and triggering conditions analysis |
 | Standard reference | ISO 21448:2022 §7 (identification and evaluation of functional insufficiencies and triggering conditions); ISO/PAS 8800:2024 (AI error causes, informative) |
-| Version | 0.2 (Figure 5-1 added: TC → FI → SH chain; 2026-10-13). 0.1 |
+| Version | 0.3 (TC-12 resolution follows the highway-only ODD, decision register DQ-023; 2026-10-16). 0.2 (Figure 5-1 added: TC → FI → SH chain; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -113,7 +113,7 @@ The driving model is a black box from LionDriver's point of view: training data 
 | TC-08 | FI-04, FI-06, FI-10 | SH-06 | Often no lead; FCW may trigger from model hard-brake prob | Needs validation (driver responsibility; user info) | User info (WP-O-03); FM-09 |
 | TC-09 | FI-04, FI-07 | SH-06 | as TC-08 | Needs validation | WP-V-03 |
 | TC-10, TC-11 | FI-06 | SH-04 | Radar track may become lead | Needs validation | WP-V-03 (phantom braking rate) |
-| TC-12 | FI-04 | SH-11 | No VRU response | Needs modification (ODD restriction to ODD-A with driver responsibility; user info) | WP-C-02; WP-O-03 |
+| TC-12 | FI-04 | SH-11 | No VRU response | Needs modification (ODD restricted to highways, DQ-023: a VRU in or near the lane is rare there and stays a driver responsibility; user info) | WP-C-02; WP-O-03 |
 | TC-13 | FI-05 | SH-09, SH-04 | e2e stops when detected | Needs modification | FM-01 |
 | TC-14 | FI-09, FI-11 | SH-02 | `steerSaturated` warning (`events.py:619`) | Needs modification (ODD bound + authority characterisation) | WP-C-02 §3.2; FM-10 |
 | TC-15 | FI-08, FI-11 | SH-01, SH-02 | Roll compensation in limits | Needs validation | WP-V-03 |
