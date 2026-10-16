@@ -44,6 +44,8 @@ AP_MSR_TABLE = AP_TABLE
 AP_MSR_PROVISIONAL = True
 MSR_TYPES = ("system_fmea", "dfmea")  # msr-plan.md section 3
 WP_S04 = Path("assurance/03-system/WP-S-04-timing-ftti-budget.md")
+# Closed-loop simulation results (plant model): citable as MSR evidence, never as a timing measurement (msr-plan 4.2)
+SIM_RESULTS = "assurance/sim/"
 
 # ISO 26262-3 Table 4: for S1-S3, E1-E4, C1-C3 the ASIL depends only on S+E+C.
 ASIL_BY_SUM = {10: "D", 9: "C", 8: "B", 7: "A"}
@@ -324,8 +326,12 @@ def check_msr_cause(doc, fm, c, cwhere, actions, referenced_actions, ctx, res: R
     if m <= 4:
       if t["basis"] != "measured":
         res.error(cwhere, f"monitoring {m} needs measured timing; basis is {t['basis']} (rating-tables 7.3)")
-      if not any(e.get("ref") for e in msr.get("evidence", [])):
+      refs = [e["ref"] for e in msr.get("evidence", []) if e.get("ref")]
+      if not refs:
         res.error(cwhere, f"monitoring {m} needs an evidence `ref` to the timing measurement (rating-tables 7.3)")
+      elif all(r.startswith(SIM_RESULTS) for r in refs):
+        res.error(cwhere, f"monitoring {m} cites only simulation results ({SIM_RESULTS}); a simulation is a cross-check of "
+                          "code-derived timing, not a measurement (msr-plan 4.2)")
       if kind == "dfmea":
         dc = ctx.fmeda_dc.get(msr["fmeda"]) if msr.get("fmeda") else None
         if dc is None or dc < 0.9:

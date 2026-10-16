@@ -4,9 +4,9 @@
 |---|---|
 | Work product | WP-A-01 ASIL decomposition rationale |
 | Standard reference | ISO 26262-9:2018 §5 (requirements decomposition with respect to ASIL tailoring); ISO 26262-9 §7 (DFA, as the independence evidence §5 relies on); ISO 26262-3 §7 (FSC, where decomposition would be applied) |
-| Version | 0.3 (Figure 2-1 decision and candidate schemes, Figure 4-1 DEC-01 independence requirements added; no change to the rationale; 2026-10-13). 0.2 (status update 2026-10-12: GAP-06/-07 partly closed, envelope configuration locked in the reference build; no change to the decomposition rationale). History: 0.1 |
+| Version | 0.5 (HARA v0.4: SG-02, SG-03 and SG-06 ASIL C, SG-08 ASIL A; §3 updated. The envelope now needs ASIL C for those goals whatever SG-01 becomes, so the §3 judgment that ASIL C on the single-channel MCU is unlikely applies to them too; whether to harden to C or plan DEC-01 for them is queued for the lead as DQ-341; 2026-10-16). 0.4 (lead decisions of 2026-10-14 recorded, register DQ-007, DQ-050, DQ-063: option (c) chosen, so no decomposition is applied; the DEC-01 fallback is decided after the controllability tests; OI-1 closed; no change to the rationale; 2026-10-16). 0.3 (Figure 2-1 decision and candidate schemes, Figure 4-1 DEC-01 independence requirements added; no change to the rationale; 2026-10-13). 0.2 (status update 2026-10-12: GAP-06/-07 partly closed, envelope configuration locked in the reference build; no change to the decomposition rationale). History: 0.1 |
 | Status | Draft |
-| ASIL / scope | SG-01 (ASIL C ⚠, D if AOU-01/02 fail); SG-02…SG-07 (ASIL B) checked for decomposition need |
+| ASIL / scope | SG-01 (ASIL C ⚠, D if AOU-01/02 fail); SG-02, SG-03, SG-06 (ASIL C); SG-04, SG-05, SG-07 (ASIL B); SG-08 (ASIL A) checked for decomposition need (WP-C-03 v0.4) |
 | Author | Assurance team (initial draft) |
 | Reviewer(s) | TBD (I1); confirmation review of any applied decomposition by an independent assessor (I3) per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
 | Approver | Safety manager |
@@ -18,7 +18,7 @@ This document records whether LionDriver uses ASIL decomposition (ISO 26262-9 §
 
 Inputs:
 
-- [WP-C-03 HARA](../02-concept/WP-C-03-hara.md): SG-01…SG-07, ASILs, safe states, preliminary FTTIs, §6.1 options (a)/(b)/(c).
+- [WP-C-03 HARA](../02-concept/WP-C-03-hara.md): SG-01…SG-08 (v0.4), ASILs, safe states, preliminary FTTIs, §6.1 options (a)/(b)/(c).
 - [WP-C-04 FSC](../02-concept/WP-C-04-functional-safety-concept.md): §4 envelope strategy (recommended option (c): reduced authority + envelope hardened to ASIL B); §4.3 fallback decomposition; FSR-01.01…FSR-07.05.
 - [WP-A-03 DFA](WP-A-03-dependent-failure-analysis.md): dependent failure initiators and coupling factors between the envelope, the SoC, the EPS and the driver.
 - [WP-A-02 coexistence / FFI](WP-A-02-coexistence-freedom-from-interference.md): interference from QM elements into the envelope.
@@ -33,7 +33,8 @@ Inputs:
 | Is any requirement allocated to the QM SoC credited as a decomposition partner? | **No.** SoC (E-01) measures are QM and are never credited as the "redundant" half of a decomposition. They are first-line, better-explained reactions only (WP-C-04 §5.2 note) |
 | Is the Toyota EPS credited as a decomposition partner? | **No, and not recommended** (§5) |
 | When would decomposition become necessary? | Only if vehicle controllability tests (WP-C-04 OI-2, [WP-C-08](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) §8) show that C1 cannot be reached at a torque level that keeps the function useful, **and** the envelope cannot be argued at ASIL C (option (a)) |
-| Status of the fallback | Documented option set (§4) with independence requirements (§4.3). No hardware for it exists. Activation needs a maintainer decision and a WP-C-04 update |
+| Status of the fallback | Documented option set (§4) with independence requirements (§4.3). No hardware for it exists. Activation needs a maintainer decision and a WP-C-04 update. The project lead decided on 2026-10-14 to make that decision after the controllability tests, with no work started before (register DQ-050) |
+| Strategy decision | Option (c) chosen by the project lead on 2026-10-14 (register DQ-007). Until SG-01 is re-rated, hardware is designed to the ASIL C targets with the ASIL B figures shown alongside (DQ-063) |
 
 ![Figure 2-1: decomposition decision for SG-01 (controllability C1 shown, option (c), no decomposition; otherwise option (a) or the fallback DEC-01) and the candidate schemes DEC-01 to DEC-04 with their record status](figures/fig-a01-2-1-decomposition-decision.svg)
 
@@ -46,14 +47,15 @@ ISO 26262-9 §5 allows decomposition only between sufficiently independent eleme
 | SG | ASIL | Primary implementation | Can a single element carry the ASIL? | Decomposition needed? |
 |---|---|---|---|---|
 | SG-01 | C ⚠ (D if AOU-01/02 fail) | E-03 envelope: torque magnitude, rate, measured tracking, engagement gating (FSR-01.01…01.12) | Not today (GAP-01, -06, -07, -08, -11; GAP-06/-07 partly closed 2026-10-12, not verified on hardware). After hardening, ASIL B is plausible; ASIL C on a COTS single-channel MCU with shared PCB/power is unlikely (WP-M-01 §9) | **Not if** C1 is shown (SG-01 → B). **Yes (fallback)** if C1 fails and option (a) is not reachable |
-| SG-02 | B | E-03 backstop (FSR-01.07 stale-command removal, FSR-02.05 SoC-independent buzzer) + QM SoC warning | Yes, after hardening | No |
-| SG-03 | B ⚠ (C if AOU-05 fails) | E-03 accel bound, inactive value, gas block (FSR-03.01…03.05) | Yes, after hardening and jerk limit (GAP-04) | No, unless AOU-05 fails. Then the same fallback reasoning as SG-01 applies (see OI-3) |
+| SG-02 | C (v0.4; curve case C3, DQ-059) | E-03 backstop (FSR-01.07 stale-command removal, FSR-02.05 SoC-independent buzzer) + QM SoC warning | Only if the envelope reaches ASIL C (as SG-01 under option (a)) | **Open (DQ-341):** harden the envelope to C, or extend DEC-01 to the warning path |
+| SG-03 | C ⚠ (D if AOU-03/05 fail; v0.4, OS-07 E4, DQ-036) | E-03 accel bound, inactive value, gas block (FSR-03.01…03.05) | Only if the envelope reaches ASIL C, after the jerk limit (GAP-04) | **Open (DQ-341):** harden to C, or extend DEC-01 to the longitudinal checks (its check (4) already covers `0x343`) |
 | SG-04 | B ⚠ (C if AOU-05 fails) | E-03 decel bound and onset-rate limit (FSR-04.01…04.04) | Yes, after hardening | As SG-03 |
 | SG-05 | B ⚠ (C if AOU-01/02/03 fail) | E-03 brake/cancel revocation, driver-torque override (FSR-05.01…05.06) | Yes, after GAP-02 is closed | As SG-03 |
-| SG-06 | B | E-03 backstop + QM detection | Yes | No |
+| SG-06 | C (v0.4, OS-07 E4, DQ-036; confirmation queued as DQ-210) | E-03 backstop + QM detection | Only if the envelope reaches ASIL C | **Open (DQ-341)**, as SG-02 |
 | SG-07 | B | E-03 static forwarding + E-05 relay de-energise-to-stock (FSR-07.01…07.03) | Yes, if relay de-energised state is confirmed (AOU-13) | No |
+| SG-08 | A (v0.4, DQ-205) | DM chain on the QM SoC (FSR-02.06…02.09, FSR-08.01) | Not today: the SoC is QM (WP-C-04 OI-11) | No decomposition proposed; an ASIL A DM chain or an ASIL A monitor on the MCU is the route (WP-C-04 OI-11) |
 
-Observation: the ⚠ ratings mean that a failed AoU verification can raise SG-03/04/05 to ASIL C as well. The fallback in §4 is therefore written so that the same independent second element can carry the A(C) half for the longitudinal and override goals, not only for SG-01.
+Observation (v0.5): HARA v0.4 raises SG-02, SG-03 and SG-06 to ASIL C outright, not only on a failed AoU. The envelope therefore needs ASIL C for them even if SG-01 drops to B, and the SG-01 judgment above (ASIL C on a COTS single-channel MCU with shared PCB and power is unlikely) applies to them as well. The lead's choice between hardening to C and extending DEC-01 now is queued as DQ-341. Earlier observation: the ⚠ ratings mean that a failed AoU verification can raise SG-03/04/05 to ASIL C as well. The fallback in §4 is therefore written so that the same independent second element can carry the A(C) half for the longitudinal and override goals, not only for SG-01.
 
 ## 4. Fallback decomposition options (WP-C-04 §4.3)
 
@@ -155,8 +157,8 @@ One record per applied decomposition. Records live in this document, §7, and ar
 
 | ID | Item | Owner | Needed by |
 |---|---|---|---|
-| OI-1 | Maintainer decision on the envelope strategy (WP-C-04 OI-1). If option (c) is confirmed, this document stays "no decomposition applied" | Maintainer | G1 |
-| OI-2 | After controllability tests (WP-C-04 OI-2), decide whether DEC-01 is activated; if yes, add E-07 to WP-C-01, WP-S-03, and request new TSRs in WP-S-02 | Safety engineer | G2 |
-| OI-3 | If AOU-05 or AOU-03 verification fails (SG-03/04/05 → ASIL C), extend DEC-01 scope to the longitudinal and override requirements or re-plan | Safety engineer | G2 |
+| OI-1 | Closed 2026-10-14: option (c) confirmed (DQ-007, WP-C-04 §4). This document stays "no decomposition applied" | Maintainer | G1 |
+| OI-2 | After controllability tests (WP-C-04 OI-2), decide whether DEC-01 is activated (timing of the decision set by the lead on 2026-10-14, DQ-050: after the tests, not before); if yes, add E-07 to WP-C-01, WP-S-03, and request new TSRs in WP-S-02 | Safety engineer | G2 |
+| OI-3 | If AOU-05 or AOU-03 verification fails (SG-03/04/05 → ASIL C), extend DEC-01 scope to the longitudinal and override requirements or re-plan. *v0.5:* SG-02, SG-03 and SG-06 are ASIL C since HARA v0.4 whatever the AoUs show; the extension of DEC-01 to them is part of DQ-341 | Safety engineer | G2 |
 | OI-4 | Check §4.4 statement on hardware metrics after decomposition against the licensed ISO 26262-9 §5 text | Safety engineer | G2 |
 | OI-5 | Confirm AOU-13 (relay de-energised state = stock path); DEC-01 and SG-07 both depend on it | HW lead | G2 |

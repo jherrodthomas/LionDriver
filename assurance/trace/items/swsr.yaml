@@ -1974,7 +1974,7 @@
 - id: SWSR-501b
   kind: swsr
   text: "The firmware shall configure and start IWDG1 in window mode (timeout ≤ 0.1 s including reset; SG-07 FDTI) no later than the first time the harness relay is energised after a reset, on every path that energises it, and no software path shall be able to stop it afterwards. (Amended in v0.14 to the TSR-501 v0.4 / HWSR-501c start condition; it previously required a start in the bootstub.) Start in the bootstub before the application runs remains a target (OI-10)."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-501]
   parent_text: "TSR-501 (WP-W-02 §11; ASIL taken from TSR-501)"
   other_parents: false
@@ -1990,7 +1990,7 @@
 - id: SWSR-502c
   kind: swsr
   text: "The first actions after reset shall put both relay drive outputs in the released level and leave the car-side transceivers disabled until a car mode is set."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-502]
   parent_text: "TSR-502 (WP-W-02 §11; ASIL taken from TSR-502)"
   other_parents: false
@@ -2006,7 +2006,7 @@
 - id: SWSR-503c
   kind: swsr
   text: "The firmware shall enable RAMECC monitoring of all SRAM regions holding safety data and route uncorrectable-error events to SWSR-502."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-503]
   parent_text: "TSR-503 (WP-W-02 §11; ASIL taken from TSR-503)"
   other_parents: false
@@ -2022,7 +2022,7 @@
 - id: SWSR-504a
   kind: swsr
   text: "The clock cross-check of SWSR-504 shall use an oscillator independent of HSE."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-504]
   parent_text: "TSR-504 (WP-W-02 §11; ASIL taken from TSR-504)"
   other_parents: false
@@ -2038,7 +2038,7 @@
 - id: SWSR-505a
   kind: swsr
   text: "The firmware shall configure the PVD threshold and handle its interrupt; it shall sample the input voltage ADC in the safety task."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-505]
   parent_text: "TSR-505 (WP-W-02 §11; ASIL taken from TSR-505)"
   other_parents: false
@@ -2054,7 +2054,7 @@
 - id: SWSR-506b
   kind: swsr
   text: "The firmware shall read the relay feedback input defined in WP-S-05 in the safety task (SWSR-506)."
-  asil: "B‡ (blocking), B (PCS restore)"
+  asil: "C (blocking), B (PCS restore)"
   parents: [TSR-506]
   parent_text: "TSR-506 (WP-W-02 §11; ASIL taken from TSR-506)"
   other_parents: false
@@ -2070,7 +2070,7 @@
 - id: SWSR-507a
   kind: swsr
   text: "MPU regions shall follow the memory map of WP-S-05 §8 (`stm32h7/stm32h7x5_flash.ld:70-79`)."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-507]
   parent_text: "TSR-507 (WP-W-02 §11; ASIL taken from TSR-507)"
   other_parents: false
@@ -2086,7 +2086,7 @@
 - id: SWSR-508a
   kind: swsr
   text: "The firmware shall disable the car-side transceivers as part of SS-S."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-508]
   parent_text: "TSR-508 (WP-W-02 §11; ASIL taken from TSR-508)"
   other_parents: false
@@ -2102,7 +2102,7 @@
 - id: SWSR-410b
   kind: swsr
   text: "The SPI driver shall treat DMA transfer-error, SPI overrun and mode-fault flags as SPI errors (SWSR-413)."
-  asil: "B‡"
+  asil: "C"
   parents: [TSR-410]
   parent_text: "TSR-410 (WP-W-02 §11; ASIL taken from TSR-410)"
   other_parents: false
@@ -2118,7 +2118,7 @@
 - id: SWSR-516a
   kind: swsr
   text: "The siren shall be driven through a path that does not depend on the SoC audio stack."
-  asil: "B"
+  asil: "C"
   parents: [TSR-516]
   parent_text: "TSR-516 (WP-W-02 §11; ASIL taken from TSR-516)"
   other_parents: false

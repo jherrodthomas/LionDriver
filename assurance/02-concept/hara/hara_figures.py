@@ -4,8 +4,8 @@
 - Figure 2-1 (`fig-c03-2-1-asil-heatmap.svg`): every hazardous-event row of the reference-scope
   Cartesian HARA counted per S x E x C cell of the ISO 26262-3 Table 4 ASIL matrix, as rated and
   with C+1 on every row that credits an unverified AoU (⚠). Data: `hara_model.build(False)`.
-- Figure 6-1 (`fig-c03-6-1-hazard-sg-overview.svg`): hazards H-01...H-08 -> the representative
-  hazardous events of WP-C-03 §5 -> safety goals SG-01...SG-07 of §6 (by their "Source HEs" column),
+- Figure 6-1 (`fig-c03-6-1-hazard-sg-overview.svg`): hazards H-01...H-09 -> the representative
+  hazardous events of WP-C-03 §5 -> safety goals SG-01...SG-08 of §6 (by their "Source HEs" column),
   with the Cartesian row statistics per hazard from the model.
 
 The sources of record are `hara_model.py` and WP-C-03 §4-§6. Edit those and regenerate:
@@ -427,10 +427,12 @@ def fig_overview() -> str:
   body.append(t(lx + 2, y, "ASIL", 10.5))
   body.append(t(w - 40, y, GENERATED.split(" — ")[0], 10, MUTED, None, "end"))
   h = y + 24
-  desc = ("Left: the eight hazards H-01 to H-08 of WP-C-03 §4 with the number of Cartesian HARA rows rated ASIL A or higher and the "
-          "worst case. Middle: the representative hazardous events of §5 with S, E, C and ASIL. Right: safety goals SG-01 to SG-07 of §6 "
+  hz = sorted(hazards)
+  desc = (f"Left: the {len(hz)} hazards {hz[0]} to {hz[-1]} of WP-C-03 §4 with the number of Cartesian HARA rows rated ASIL A or higher and the "
+          f"worst case. Middle: the representative hazardous events of §5 with S, E, C and ASIL. Right: safety goals {goals[0].ident} to {goals[-1].ident} of §6 "
           "with ASIL; each event is connected to the goals whose Source HEs column lists it. " +
-          "; ".join(f"{g.ident} ASIL {g.asil_text} from {', '.join(g.sources)}" for g in goals) + ". HE-06.2 is QM and has no goal.")
+          "; ".join(f"{g.ident} ASIL {g.asil_text} from {', '.join(g.sources)}" for g in goals) + ". " +
+          (f"{', '.join(nogoal)} {'is' if len(nogoal) == 1 else 'are'} QM and {'has' if len(nogoal) == 1 else 'have'} no goal." if nogoal else ""))
   defs = ('<marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>'
           '<marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#64748B"/></marker>')
   return svg_doc(w, int(h), "Figure 6-1. Hazards, hazardous events and safety goals (WP-C-03 §4-§6)", desc, body, defs)

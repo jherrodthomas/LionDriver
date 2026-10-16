@@ -1,0 +1,11 @@
+# Simulation track, item 1 (fault-injection plant model). Exact pins; licences checked 2026-10-16 (README §5).
+commonroad-vehicle-models==3.0.2  # BSD-3-Clause, TUM; CommonRoad vehicle models
+omegaconf==2.4.0                  # BSD-3-Clause; needed by commonroad-vehicle-models
+PyYAML==6.0.3                     # MIT; needed by omegaconf
+cffi==2.1.1                       # MIT-0; loads the compiled panda safety code
+pycparser==3.11                   # BSD-3-Clause; needed by cffi
+pycapnp==2.1.0                    # BSD-2-Clause; opendbc.car imports it (same pin as the root pyproject.toml)
+numpy==2.5.4                      # BSD-3-Clause and bundled permissive licences; opendbc host limit functions
+pythonfmu==0.7.0                  # MIT; packages the plant as an FMI 2.0 co-simulation FMU (plant/fmu)
+fmpy==0.3.32                      # BSD-2-Clause; FMI master for the FMU test (its dependencies: MIT, BSD-3, Apache-2.0)
+scenariogeneration==0.16.7         # MPL-2.0; writes the scenario files (scenarios/generate.py); dependencies permissive (README §5)
