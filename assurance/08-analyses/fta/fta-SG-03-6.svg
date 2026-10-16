@@ -44,19 +44,21 @@
 <rect x="158.5" y="693.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="185.4" y="704.5" class="chip" fill="#fff">SFM-006</text>
 <rect x="54.0" y="715.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="81.0" y="726.5" class="chip" fill="#fff">SWF-040</text>
+<text x="81.0" y="726.5" class="chip" fill="#fff">SFM-037</text>
 <rect x="112.9" y="715.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="139.8" y="726.5" class="chip" fill="#fff">SWF-043</text>
+<text x="139.8" y="726.5" class="chip" fill="#fff">SWF-040</text>
 <rect x="171.8" y="715.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="198.8" y="726.5" class="chip" fill="#fff">SWF-033</text>
+<text x="198.8" y="726.5" class="chip" fill="#fff">SWF-043</text>
 <rect x="54.0" y="737.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="81.0" y="748.5" class="chip" fill="#fff">SWF-072</text>
+<text x="81.0" y="748.5" class="chip" fill="#fff">SWF-033</text>
 <rect x="112.9" y="737.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="139.8" y="748.5" class="chip" fill="#fff">SWF-078</text>
+<text x="139.8" y="748.5" class="chip" fill="#fff">SWF-072</text>
 <rect x="171.8" y="737.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="198.8" y="748.5" class="chip" fill="#fff">SWF-080</text>
+<text x="198.8" y="748.5" class="chip" fill="#fff">SWF-078</text>
 <rect x="54.0" y="759.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="81.0" y="770.5" class="chip" fill="#fff">SWF-081</text>
+<text x="81.0" y="770.5" class="chip" fill="#fff">SWF-080</text>
+<rect x="112.9" y="759.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="139.8" y="770.5" class="chip" fill="#fff">SWF-081</text>
 <circle cx="150.0" cy="807.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="283.5" y="633.5" width="220" height="107.5" rx="9" class="shadow"/>
 <rect x="282" y="631.0" width="220" height="107.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
