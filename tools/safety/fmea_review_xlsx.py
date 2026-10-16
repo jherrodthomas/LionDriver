@@ -9,6 +9,10 @@ Each workbook has four sheets:
              test targets (D >= 9) in amber, and two reviewer columns (decision from a list, comment) to fill in
   Actions    every action with its causes, owner, status and revised rating
   Structure  the structure tree and the functions
+  MSR        only where the analysis has FMEA-MSR rows (System FMEA, DFMEA; msr-plan.md): one row per in-scope cause with
+             the MSR columns (diagnostic, system response, effect after the response, S after, F, M, MSR AP, timing against
+             the FTTI, monitoring actions) or the reason it is exempt, and the two reviewer columns. The MSR AP table is
+             provisional until the handbook table is transcribed (fmea_lint.AP_MSR_PROVISIONAL), and the sheet says so
 
 The YAML stays the source of truth: regenerate, never edit the generated sheets. Action priority is recomputed with the
 AIAG-VDA table of rating-tables.md (fmea_lint.compute_ap) and must equal the YAML value; fmea_lint enforces that.
@@ -175,7 +179,106 @@ def build(name: str) -> Workbook:
   worksheet(wb.create_sheet("Worksheet"), doc, elements, functions, actions)
   actions_sheet(wb.create_sheet("Actions"), doc)
   structure_sheet(wb.create_sheet("Structure"), doc, elements)
+  if msr_causes(doc):
+    msr_sheet(wb.create_sheet("MSR"), doc, actions)
   return wb
+
+
+def msr_causes(doc) -> list[tuple[dict, dict]]:
+  """(failure mode, cause) for every cause that carries an msr block or an msr_exempt reason."""
+  return [(fm, c) for fm in doc["failure_modes"] for c in fm["causes"] if c.get("msr") or c.get("msr_exempt")]
+
+
+MSR_COLUMNS = [  # (header, width)
+  ("Failure mode", 26), ("S", 5), ("Cause", 9), ("Failure cause", 32), ("Diagnostic", 42), ("System response", 30),
+  ("Effect after the response", 30), ("S after", 7), ("F", 5), ("M", 5), ("MSR AP", 8), ("Timing (FTTI · FDTI + FRTI)", 22),
+  ("Basis", 11), ("Monitoring actions", 28), ("Reviewer decision", 14), ("Reviewer comment", 30),
+]
+
+
+def msr_timing(t: dict) -> str:
+  if not t:
+    return ""
+  parts = []
+  if t.get("ftti_ref"):
+    parts.append(t["ftti_ref"] + (f" · {t['ftti_ms']:g} ms" if t.get("ftti_ms") is not None else " · per frame"))
+  if t.get("fdti_ms") is not None or t.get("frti_ms") is not None:
+    parts.append(f"{t.get('fdti_ms', 0):g} + {t.get('frti_ms', 0):g} ms")
+  return "\n".join(parts)
+
+
+def msr_sheet(ws, doc, actions):
+  ws.sheet_view.showGridLines = False
+  ws.sheet_view.zoomScale = 90
+  note = ("FMEA-MSR (monitoring and system response, msr-plan.md): S, F, M and MSR AP per rating-tables.md §7 (RT-2). "
+          + ("The MSR AP table is provisional until the handbook table is transcribed (decision register DQ-207). "
+             if fmea_lint.AP_MSR_PROVISIONAL else "")
+          + "Exempt causes are rated in the FMEA named in the reason.")
+  ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=len(MSR_COLUMNS))
+  c = ws.cell(1, 1, note)
+  c.font = font(9, True, BAND["risk"][1])
+  c.fill = fill(BAND["risk"][0])
+  c.alignment = Alignment(vertical="center", wrap_text=True, indent=1)
+  ws.row_dimensions[1].height = 30
+  for i, (title, width) in enumerate(MSR_COLUMNS, 1):
+    c = ws.cell(2, i, title)
+    c.font = font(9, True, "4A5565")
+    c.fill = fill("F7F9FB")
+    c.alignment = Alignment(horizontal="center" if width <= 11 else "left", vertical="center", wrap_text=True)
+    c.border = Border(bottom=Side(style="medium", color=RULE_STRONG))
+    ws.column_dimensions[get_column_letter(i)].width = width
+  ws.row_dimensions[2].height = 30
+  decision = DataValidation(type="list", formula1='"Agree,Re-rate,Reject,Question"', allow_blank=True)
+  decision.prompt = "Reviewer decision for this MSR row"
+  decision.promptTitle = "Review"
+  ws.add_data_validation(decision)
+  col = {h: i for i, (h, _) in enumerate(MSR_COLUMNS, 1)}
+  row = HEADER_ROWS + 1
+  for fm, cause in msr_causes(doc):
+    m = cause.get("msr")
+    acts = [actions[a] for a in (m or {}).get("actions") or [] if a in actions]
+    act_text = "\n".join(f"{a['id']} · {a.get('status', '').replace('_', ' ')}" for a in acts)
+    if m:
+      values = [f"{fm['id']} · {fm['failure_mode']}", fm["severity"], cause["id"], " ".join(cause["description"].split()),
+                " ".join(m["diagnostic"].split()), " ".join(m["system_response"].split()),
+                " ".join(m["effect_after_response"].split()), m["severity_after"], m["frequency"], m["monitoring"], m["ap"],
+                msr_timing(m.get("timing") or {}), (m.get("timing") or {}).get("basis", "").replace("_", " "), act_text, "", ""]
+    else:
+      values = [f"{fm['id']} · {fm['failure_mode']}", fm["severity"], cause["id"], " ".join(cause["description"].split()),
+                "Exempt: " + " ".join(str(cause["msr_exempt"]).split()), "", "", "", "", "", "", "", "", "", "", ""]
+    for i, v in enumerate(values, 1):
+      c = ws.cell(row, i, v)
+      width = MSR_COLUMNS[i - 1][1]
+      c.alignment = CENTER_TOP if width <= 11 else WRAP_TOP
+      c.font = font(10, color=MUTED, italic=True) if not m and i == col["Diagnostic"] else font(10)
+      c.border = Border(left=thin(), right=thin(), bottom=thin())
+    for h in ("S", "S after", "F", "M"):
+      ws.cell(row, col[h]).font = font(10, True)
+    if m:
+      ap = m["ap"]
+      if ap in AP_STYLE:
+        bg, fg = AP_STYLE[ap]
+        ws.cell(row, col["MSR AP"]).fill = fill(bg)
+        ws.cell(row, col["MSR AP"]).font = font(10, True, fg)
+      if m["monitoring"] >= 9:
+        ws.cell(row, col["M"]).font = font(10, True, AMBER)
+    for h in ("Reviewer decision", "Reviewer comment"):
+      ws.cell(row, col[h]).fill = fill(INPUT_FILL)
+    decision.add(ws.cell(row, col["Reviewer decision"]))
+    height = max(rows_estimate(str(v or ""), MSR_COLUMNS[i][1]) for i, v in enumerate(values))
+    ws.row_dimensions[row].height = min(409, 13.5 * height + 6)
+    row += 1
+  ws.freeze_panes = ws.cell(HEADER_ROWS + 1, col["Diagnostic"])
+  ws.auto_filter.ref = f"A2:{get_column_letter(len(MSR_COLUMNS))}{max(row - 1, 2)}"
+  ws.print_title_rows = "1:2"
+  ws.page_setup.orientation = "landscape"
+  ws.page_setup.paperSize = ws.PAPERSIZE_A3
+  ws.page_setup.fitToWidth = 1
+  ws.page_setup.fitToHeight = 0
+  ws.sheet_properties.pageSetUpPr.fitToPage = True
+  hdr = doc["analysis"]
+  ws.oddFooter.left.text = f"{hdr['title']} · FMEA-MSR · rev {hdr['revision']} · {hdr['baseline']}"
+  ws.oddFooter.right.text = "Page &P of &N"
 
 
 def cover(ws, doc, name):
@@ -216,6 +319,15 @@ def cover(ws, doc, name):
   r += 1
   summary = [("Failure modes", n["fm"]), ("Rated causes", n["causes"]), ("AP High", n["ap"]["H"]),
              ("AP Medium", n["ap"]["M"]), ("AP Low", n["ap"]["L"]), ("Actions (open)", f"{n['actions']} ({n['open']})")]
+  msr = [c.get("msr") for _, c in msr_causes(doc)]
+  if msr:
+    rated = [m for m in msr if m]
+    aps = {ap: sum(1 for m in rated if m["ap"] == ap) for ap in "HML"}
+    bands = [sum(1 for m in rated if lo <= m["monitoring"] <= hi) for lo, hi in ((1, 4), (5, 6), (7, 8), (9, 10))]
+    summary += [("FMEA-MSR (msr: " + str(hdr.get("msr", "")) + ")", f"{len(rated)} rated, {len(msr) - len(rated)} exempt; "
+                 f"MSR AP H {aps['H']}, M {aps['M']}, L {aps['L']}"
+                 + (" (provisional table)" if fmea_lint.AP_MSR_PROVISIONAL else "")),
+                ("Monitoring M", f"1–4: {bands[0]} · 5–6: {bands[1]} · 7–8: {bands[2]} · 9–10: {bands[3]} (see sheet MSR)")]
   for k, v in summary:
     ws.cell(r, 2, k).font = font(10, True, MUTED)
     c = ws.cell(r, 3, v)

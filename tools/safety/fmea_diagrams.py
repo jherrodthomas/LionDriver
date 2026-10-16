@@ -12,6 +12,7 @@ Figures (numbered for fmea-plan.md):
   3-7   SW FMEA: effect of the actions that carry a predicted ("revised") rating
   3-10/3-11  FMEDA SG-001 / SG-009: SPFM, LFM, lambda SPF+RF against the ASIL target
   4-1   Action Priority overview of the four FMEAs (O x D grid, AP counts, treatment of AP=H)
+  4-2   FMEA-MSR overview of the System FMEA and DFMEA (F x M grid, monitoring bands, timing basis, monitoring actions)
 
     python3 tools/safety/fmea_diagrams.py            # regenerate the SVGs and README.md
     python3 tools/safety/fmea_diagrams.py --check    # exit 1 and list stale files
@@ -33,7 +34,7 @@ FMEA_DIR = ROOT / "assurance" / "08-analyses" / "fmea"
 ANALYSES = FMEA_DIR / "analyses"
 OUT_DIR = FMEA_DIR / "figures" / "generated"   # owned by this script; hand-drawn figures live one level up
 # Only files whose names match this pattern are ever pruned or reported as no longer generated.
-OWNED_RE = re.compile(r"^fig-[2-4]-\d+-(?:dfa|sfm|dfm|swf|pfm|fmeda|action-priority)-[a-z0-9-]+\.svg$")
+OWNED_RE = re.compile(r"^fig-[2-4]-\d+-(?:dfa|sfm|dfm|swf|pfm|fmeda|action-priority|msr)-[a-z0-9-]+\.svg$")
 GENERATOR = "tools/safety/fmea_diagrams.py"
 
 
@@ -1480,6 +1481,189 @@ def render_ap_overview(fmeas: list[Fmea], fig: str) -> str:
                  "fmea-plan.md §4", "analyses/*fmea.yaml", body)
 
 
+# ================================================================ FMEA-MSR overview (msr-plan.md M3)
+
+# Monitoring bands of rating-tables.md section 7 (RT-2), with the evidence each band needs (msr-plan.md section 4.1).
+M_BANDS_MSR = ((1, 4, "M 1–4", "measured FDTI + FRTI within the FTTI"),
+               (5, 6, "M 5–6", "code-derived timing within the FTTI, test exists"),
+               (7, 8, "M 7–8", "reacts, but incomplete, too slow or no FTTI row"),
+               (9, 10, "M 9–10", "no in-field monitor, or the driver must notice"))
+M_BAND_COL = ("#2E9E6A", TEAL, AMBER, RED)
+BASIS_LABEL = {"measured": "measured", "code_derived": "code-derived", "unknown": "unknown"}
+MSR_AP_NOTE = ("MSR AP from the provisional table (rating-tables §7, msr-plan §4.1): the AP table with F for O and M for D; "
+               "the handbook table is awaited (decision register DQ-207).")
+
+
+def msr_rows(f: "Fmea") -> tuple[list[tuple[dict, dict, dict]], list[str]]:
+  """(failure mode, cause, msr block) for every cause with an msr block, and the ids of the msr_exempt causes."""
+  rated, exempt = [], []
+  for fm, c in f.causes():
+    if c.get("msr"):
+      rated.append((fm, c, c["msr"]))
+    elif c.get("msr_exempt"):
+      exempt.append(c["id"])
+  return rated, exempt
+
+
+def msr_band(m: int) -> int:
+  return next(i for i, (lo, hi, _, _) in enumerate(M_BANDS_MSR) if lo <= m <= hi)
+
+
+def render_msr_overview(fmeas: list["Fmea"], fig: str) -> str:
+  body: list[str] = []
+  panels = [f for f in fmeas if f.a.get("msr") and f.a["msr"] != "none"]
+  if not panels:
+    raise FigError("Figure 4-2: no FMEA has msr rows")
+  pw, gap, cell, top = 580, 40, 24, 100
+  max_y = 0.0
+  totals = []
+  for i, f in enumerate(panels):
+    x0 = 40 + i * (pw + gap)
+    rated, exempt = msr_rows(f)
+    acts = f.actions()
+    counts = {ap: sum(1 for _, _, m in rated if m["ap"] == ap) for ap in "HML"}
+    bands = [0, 0, 0, 0]
+    for _, _, m in rated:
+      bands[msr_band(m["monitoring"])] += 1
+    totals.append((f, len(rated), len(exempt), counts, bands))
+    y = top
+    body.append(txt(x0, y + 14, f.name, 15, INK, 700))
+    body.append(txt(x0, y + 31, f"{f.tag} · msr: {f.a['msr']}", 10.5, MUTED))
+    body.append(txt(x0, y + 46, f"{len(rated)} causes rated for monitoring and system response"
+                    + (f" · {len(exempt)} rated in another FMEA" if exempt else ""), 10.5, MUTED))
+    y += 58
+    # MSR AP bar
+    x = x0
+    tot = max(len(rated), 1)
+    for ap in "HML":
+      if counts[ap]:
+        w = pw * counts[ap] / tot
+        body.append(rect(x, y, w, 22, AP_COL[ap]))
+        lab = f"MSR AP {ap} {counts[ap]}"
+        if tw(lab, 10.5, 700) + 6 < w:
+          body.append(txt(x + w / 2, y + 15, lab, 10.5, "#FFFFFF", 700, anchor="middle"))
+        x += w
+    y += 22
+    body.append(txt(x0, y + 14, "MSR AP (provisional): " + "  ".join(f"{ap} {counts[ap]}" for ap in "HML"), 10.5, INK, 600))
+    y += 34
+
+    # F x M grid (left) and monitoring bands (right)
+    body.append(txt(x0, y, "Causes by frequency × monitoring", 10, MUTED, 700))
+    y += 10
+    gx = x0 + 30
+    grid: dict[tuple[int, int], list[str]] = {}
+    for fm, c, m in rated:
+      grid.setdefault((m["frequency"], m["monitoring"]), []).append(m["ap"])
+    for fi, fq in enumerate(range(10, 0, -1)):
+      cy = y + fi * cell
+      body.append(txt(gx - 6, cy + cell / 2 + 3.5, str(fq), 9.5, MUTED, anchor="end"))
+      for mm in range(1, 11):
+        cx = gx + (mm - 1) * cell
+        bg = compute_ap(10, fq, mm)
+        body.append(rect(cx, cy, cell, cell, AP_TINT[bg], "#FFFFFF", 1))
+        aps = grid.get((fq, mm))
+        if aps:
+          ap = min(aps, key="HML".index)
+          k = len(aps)
+          body.append(f'<circle cx="{n(cx + cell / 2)}" cy="{n(cy + cell / 2)}" r="10" fill="{AP_COL[ap]}"/>')
+          body.append(txt(cx + cell / 2, cy + cell / 2 + 3.6, str(k), 10 if k < 10 else 9, "#FFFFFF", 700, anchor="middle"))
+    gy = y + 10 * cell
+    for mm in range(1, 11):
+      body.append(txt(gx + (mm - 0.5) * cell, gy + 12, str(mm), 9.5, MUTED, anchor="middle"))
+    body.append(txt(gx + 5 * cell, gy + 26, "Monitoring M →", 9.5, MUTED, 600, anchor="middle"))
+    body.append(f'<text x="{n(x0 + 6)}" y="{n(y + 5 * cell)}" font-size="9.5" fill="{MUTED}" font-weight="600" '
+                f'text-anchor="middle" transform="rotate(-90 {n(x0 + 6)} {n(y + 5 * cell)})">Frequency F →</text>')
+    # bands to the right of the grid
+    bx = gx + 10 * cell + 28
+    bw = x0 + pw - bx
+    by = y
+    body.append(txt(bx, by + 4, "Monitoring band", 10, MUTED, 700))
+    by += 12
+    for bi, (lo, hi, lab, meaning) in enumerate(M_BANDS_MSR):
+      k = bands[bi]
+      w = max(3.0, (bw - 40) * k / tot) if k else 0
+      if w:
+        body.append(rect(bx, by, w, 16, M_BAND_COL[bi], None, 1, 2))
+      body.append(txt(bx + w + 6, by + 12, f"{k}", 10.5, INK, 700))
+      body.append(txt(bx, by + 30, lab, 10, INK, 700))
+      for li, ln in enumerate(wrap(meaning, bw - tw(lab, 10, 700) - 8, 9.5, max_lines=2)):
+        body.append(txt(bx + tw(lab, 10, 700) + 6, by + 30 + li * 12, ln, 9.5, MUTED))
+      by += 48
+    # timing basis
+    basis: dict[str, int] = {}
+    for _, _, m in rated:
+      b = (m.get("timing") or {}).get("basis", "unknown")
+      basis[b] = basis.get(b, 0) + 1
+    body.append(txt(bx, by + 4, "Timing basis", 10, MUTED, 700))
+    body.append(txt(bx, by + 20, "  ".join(f"{BASIS_LABEL.get(k, k)} {basis.get(k, 0)}"
+                                          for k in ("measured", "code_derived", "unknown")), 10.5, INK))
+    lowered = sum(1 for fm, _, m in rated if m["severity_after"] < fm["severity"])
+    body.append(txt(bx, by + 44, "Severity after the response", 10, MUTED, 700))
+    body.append(txt(bx, by + 60, f"lowered {lowered}  unchanged {len(rated) - lowered}", 10.5, INK))
+    y = max(gy + 40, by + 76)
+
+    # best-monitored causes by id
+    best = [c["id"] for _, c, m in sorted(rated, key=lambda r: (r[2]["monitoring"], r[1]["id"])) if m["monitoring"] <= 6]
+    if best:
+      lines_ = wrap("M ≤ 6: " + ", ".join(best), pw, 10)
+      for k, ln in enumerate(lines_):
+        body.append(txt(x0, y + k * 13, ln, 10, TEAL, 600))
+      y += 13 * len(lines_) + 10
+    # monitoring actions by status
+    ids: dict[str, int] = {}
+    for _, _, m in rated:
+      for a in m.get("actions") or []:
+        ids[a] = ids.get(a, 0) + 1
+    body.append(txt(x0, y + 4, f"Actions named in the MSR rows ({len(ids)})", 10, MUTED, 700))
+    y += 12
+    scol = {"completed": (GREEN, "#FFFFFF", None), "in_progress": (AMBER, "#FFFFFF", None),
+            "decision_pending": ("#FDEFD8", AMBER, AMBER), "open": ("#FBE4DF", RED, RED),
+            "not_implemented": ("#F1F5F9", SLATE, SLATE)}
+    x = x0
+    for a in sorted(ids):
+      act = acts.get(a)
+      st = act["status"] if act else "open"
+      fill, fg, stroke = scol.get(st, scol["open"])
+      lab = f"{a} · {st.replace('_', ' ')} · {ids[a]}"
+      if x + pill_w(lab, 9.5) > x0 + pw:
+        x, y = x0, y + 22
+      p, w = pill(x, y, lab, fill, fg, stroke, size=9.5)
+      body.append(p)
+      x += w + 6
+    y += 30
+    max_y = max(max_y, y)
+  width = 40 + len(panels) * pw + (len(panels) - 1) * gap + 40
+  y = max_y + 10
+  body.append(line(40, y, width - 40, y))
+  y += 22
+  lx = 40
+  for ap in "HML":
+    body.append(rect(lx, y - 11, 14, 14, AP_TINT[ap]))
+    body.append(f'<circle cx="{n(lx + 28)}" cy="{n(y - 4)}" r="7" fill="{AP_COL[ap]}"/>')
+    lab = f"MSR AP {ap} region / causes rated {ap}"
+    body.append(txt(lx + 42, y, lab, 10.5, INK))
+    lx += 42 + tw(lab, 10.5) + 22
+  y += 18
+  body.append(txt(40, y, "Grid background = MSR AP for S 9–10 (at M 1 the severity after the response is rated instead); circle = "
+                  "number of causes at that F and M, coloured by their stored MSR AP. M ranks the work while every MSR AP is H.",
+                  10, MUTED))
+  y += 16
+  body.append(txt(40, y, MSR_AP_NOTE, 10, MUTED))
+  y += 18
+  body += footer(y, width, ", ".join(f"analyses/{f.key}.yaml" for f in panels))
+  height = y + 20
+  desc = "FMEA-MSR overview: " + "; ".join(
+    f"{f.name} {f.a['id']} rev {f.a['revision']} at {f.a['baseline']}: {k} causes rated, {ex} exempt, MSR AP H {c['H']}, "
+    f"M {c['M']}, L {c['L']}, monitoring M 1-4 {b[0]}, M 5-6 {b[1]}, M 7-8 {b[2]}, M 9-10 {b[3]}"
+    for f, k, ex, c, b in totals) + \
+    ". For each FMEA a frequency by monitoring grid over the provisional MSR AP table, the count per monitoring band, the timing " \
+    "basis, how many responses lower the severity, and the actions the MSR rows name."
+  return svg_doc(width, height, f"Figure {fig}. FMEA-MSR overview of the System FMEA and DFMEA", desc, fig,
+                 "FMEA-MSR overview: monitoring and system response",
+                 "Frequency × monitoring as rated (RT-2 §7) · monitoring band · timing basis · actions named in the MSR rows",
+                 "msr-plan.md §4.5", "analyses/system-fmea.yaml, dfmea.yaml", body)
+
+
 # ================================================================ FMEDA
 
 CLS_COL = {"spf": RED, "rf": ORANGE, "det": "#FDBA74", "latent": AMBER, "mpf_det": "#FCE7C2", "safe": "#E2E8F0"}
@@ -1930,6 +2114,10 @@ def build(docs: dict[str, dict] | None = None) -> dict[str, str]:
   name = "fig-4-1-action-priority-overview.svg"
   outputs[name] = render_ap_overview(fmeas, "4-1")
   index.append(("4-1", "Action Priority overview of the four FMEAs", "analyses/*fmea.yaml", [name]))
+  name = "fig-4-2-msr-overview.svg"
+  outputs[name] = render_msr_overview(fmeas, "4-2")
+  index.append(("4-2", "FMEA-MSR overview of the System FMEA and DFMEA (provisional MSR AP table)",
+                "analyses/system-fmea.yaml, dfmea.yaml", [name]))
 
   def fig_key(row):
     return tuple(int(p) for p in row[0].split("-"))

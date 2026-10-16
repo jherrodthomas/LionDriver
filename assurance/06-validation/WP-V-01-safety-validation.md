@@ -16,7 +16,7 @@
 
 Safety validation provides evidence, at vehicle level on the reference configuration, that:
 
-1. the safety goals SG-01…SG-07 are achieved by the integrated item;
+1. the safety goals SG-01…SG-08 are achieved by the integrated item (SG-08, the unresponsive driver, since WP-C-03 v0.4);
 2. the controllability assumptions used in the HARA hold, in particular the assumptions of use on the vehicle (AOU-01, AOU-02, AOU-03, AOU-04, AOU-05) and the driver's ability to control the vehicle within the safety envelope;
 3. the safety mechanisms are effective in the vehicle;
 4. the external measures credited in the HARA and FSC (Toyota EPS LKA limiting, PCM ACC envelope, stock PCS) behave as assumed.
