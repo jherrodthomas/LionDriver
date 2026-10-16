@@ -127,7 +127,7 @@ events:
     fmea: [SWF-013, SWF-022]
   - id: BE-1.09
     class: systematic_sw
-    fmea: [SWF-028, PFM-001, DFM-016, PFM-002]
+    fmea: [SWF-028, PFM-001, DFM-016, PFM-002, SWF-084]
     note: >-
       DFM-016 (SoC drives BOOT0/reset, no RDP/WRP) is the hardware path and PFM-002 (debug signing key) the key that lets
       any image load (SG-01 map, F-14).
@@ -147,8 +147,8 @@ events:
     note: SWF-001.C1 (torque limits are the controller's constants, not derived); SFM-002.C3 (limits wrong for the vehicle)
   - id: BE-1.02
     class: systematic_sw
-    fmea: [SFM-002, SFM-003, SWF-042, SWF-059]
-    note: SFM-002.C1 (lateral controller output too high), SFM-003.C2 (sign convention), SWF-042 (torque biased or overshooting within the limits), SWF-059 (frame packed with another value than commanded, SW FMEA rev 0.9)
+    fmea: [SFM-002, SFM-003, SWF-042, SWF-059, SWF-076, SWF-077, SWF-079]
+    note: SFM-002.C1 (lateral controller output too high), SFM-003.C2 (sign convention), SWF-042 (torque biased or overshooting within the limits), SWF-059 (frame packed with another value than commanded, SW FMEA rev 0.9); SWF-076 (implausible learned vehicle parameters), SWF-077 and SWF-079 (wrong pose for roll compensation; IMU), SW FMEA rev 1.0
   - id: BE-1.03
     class: sotif
     fmea: [SFM-002, SFM-003, PFM-009, PFM-012]
@@ -201,10 +201,12 @@ events:
     note: PFM-001 (released as a DEBUG build); SWF-013.C2 is the SW FMEA view of the same release fault (BE-1.08)
   - id: BE-1.19
     class: systematic_sw
-    fmea: [SFM-006, SWF-040, SWF-043, SWF-033]
+    fmea: [SFM-006, SWF-040, SWF-043, SWF-033, SWF-072, SWF-078, SWF-080, SWF-081]
     note: >-
       SFM-006 (lateral command frozen), SWF-040 (stale engagement state), SWF-043.C1 (stale model and plan),
-      SWF-033 (stale inputs handled as soft disable, so actuation continues up to 3 s)
+      SWF-033 (stale inputs handled as soft disable, so actuation continues up to 3 s). SW FMEA rev 1.0: SWF-072
+      (modelV2 valid while stale or non-finite), SWF-078 (camera frames dropped or unsynchronised), SWF-080 (messages
+      lost silently) and SWF-081 (SubMaster alive for 10 periods) are the sources of the stale input
   - id: BE-1.20
     class: systematic_sw
     fmea: [SWF-043]
@@ -235,8 +237,10 @@ events:
     note: SWF-010.C1 (check_relay flag missing for 0x2E4, or forwarding hook defect). F-12
   - id: BE-2.12
     class: systematic_sw
-    fmea: [SFM-026]
-    note: SFM-026.C1 (UI process hung)
+    fmea: [SFM-026, SWF-082]
+    note: >-
+      SFM-026.C1 (UI process hung); SWF-082 (soundd or ui never started or blocked: no process entry, so no processNotRunning,
+      and selfdrived does not subscribe to either; SW FMEA rev 1.0)
   - id: BE-2.13
     class: systematic_sw
     fmea: [SFM-026]
@@ -363,10 +367,11 @@ events:
       RX timeout, random HW)
   - id: BE-2.03
     class: systematic_sw
-    fmea: [SWF-043]
+    fmea: [SWF-043, SWF-073]
     note: >-
-      SWF-043.C1 (modelV2 and plan used with no alive, valid or age check). Stale calibration or carState in controlsd has no
-      cause of its own. SWF-043 cites no HZ-004 (F-26)
+      SWF-043.C1 (modelV2 and plan used with no alive, valid or age check), and its source SWF-073 (modeld stops while
+      engaged; SW FMEA rev 1.0). Stale calibration or carState in controlsd has no cause of its own. SWF-043 cites no HZ-004
+      (F-26)
   - id: BE-2.04
     class: systematic_sw
     fmea: [SWF-045]
@@ -495,9 +500,10 @@ events:
     note: SWF-045.C2 (NaN aTarget makes the LongControl PID integrator NaN; accel sanitised to 0 and only logged)
   - id: BE-6.05
     class: systematic_sw
-    fmea: [SWF-043, SWF-023, SWF-040]
+    fmea: [SWF-043, SWF-023, SWF-040, SWF-072]
     note: >-
-      The longitudinal form of BE-1.19 and BE-1.21: SWF-043.C1 (aTarget held from a frozen plan), SWF-040.C1 (controlsd keeps
+      The longitudinal form of BE-1.19 and BE-1.21: SWF-072 (modelV2 published as valid with wrong leads or content, SW FMEA
+      rev 1.0, as under BE-1.19), SWF-043.C1 (aTarget held from a frozen plan), SWF-040.C1 (controlsd keeps
       longActive on a stale selfdriveState for about 3 s), SWF-023.C1 (1 s sendcan age gate, FIFO replays stale ACC_CONTROL).
       No System FMEA mode for a frozen longitudinal request (SFM-FN-002 M04; SFM-006 is lateral only). SWF-023 and SWF-040
       cite no HZ-007 (F-26, F-28)
@@ -816,6 +822,14 @@ not_in_fta:
     goal: SG-01
     kind: justified
     reason: As SFM-030 (same monitor, SW unit level).
+  - fm: SWF-074
+    goal: SG-01
+    kind: justified
+    reason: Realises BE-1.03 (wrong desired curvature from the model) through a model file that is not the release (as PFM-012, SW FMEA rev 1.0). BE-1.03 is class sotif, which admits only System FMEA backing, so the SW row is listed here; the tree does not change.
+  - fm: SWF-075
+    goal: SG-01
+    kind: justified
+    reason: Realises BE-1.03 through a calibration that does not match the mount (as SFM-003.C1, SW FMEA rev 1.0). BE-1.03 is class sotif, so the SW row is listed here; the tree does not change.
   - fm: SWF-054
     goal: SG-01
     kind: justified

@@ -71,8 +71,8 @@
 <line x1="634.0" y1="596.5" x2="634.0" y2="658.0" class="w"/>
 <line x1="876.0" y1="596.5" x2="876.0" y2="658.0" class="w"/>
 <line x1="1118.0" y1="596.5" x2="1118.0" y2="658.0" class="w"/>
-<rect x="525.5" y="660.5" width="220" height="115.0" rx="9" class="shadow"/>
-<rect x="524" y="658.0" width="220" height="115.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<rect x="525.5" y="660.5" width="220" height="137.0" rx="9" class="shadow"/>
+<rect x="524" y="658.0" width="220" height="137.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M533,658.0 H735 A9,9 0 0 1 744,667.0 V663.0 H524 V667.0 A9,9 0 0 1 533,658.0 Z" fill="#64748b"/>
 <text x="538" y="683.0" class="id">BE-1.19</text>
 <text x="730" y="683.0" class="kind">BASIC</text>
@@ -86,7 +86,15 @@
 <text x="682.8" y="731.5" class="chip" fill="#fff">SWF-043</text>
 <rect x="538.0" y="742.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="565.0" y="753.5" class="chip" fill="#fff">SWF-033</text>
-<circle cx="634.0" cy="790.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="596.9" y="742.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="623.9" y="753.5" class="chip" fill="#fff">SWF-072</text>
+<rect x="655.8" y="742.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="682.8" y="753.5" class="chip" fill="#fff">SWF-078</text>
+<rect x="538.0" y="764.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="565.0" y="775.5" class="chip" fill="#fff">SWF-080</text>
+<rect x="596.9" y="764.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="623.9" y="775.5" class="chip" fill="#fff">SWF-081</text>
+<circle cx="634.0" cy="812.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="767.5" y="660.5" width="220" height="122.0" rx="9" class="shadow"/>
 <rect x="766" y="658.0" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M775,658.0 H977 A9,9 0 0 1 986,667.0 V663.0 H766 V667.0 A9,9 0 0 1 775,658.0 Z" fill="#64748b"/>
