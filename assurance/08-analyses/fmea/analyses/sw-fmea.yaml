@@ -45,6 +45,8 @@
 #   input, crash, model file). Whether the curvature or leads are right for correct inputs is not rated here.
 # - modeld has no unit tests and is not replayed or fuzzed in CI; camerad and sensord tests are hardware-only; msgq tests are not run: D 10 there.
 #   D 8 only for locationd, calibrationd and SubMaster unit tests targeted at the cause. All new causes are AP H.
+# Post rev 1.0: SWF-062.C1 occurrence corrected from 6 to 8 (no documented requirement, no field-exposure evidence: RT-2 §2), as the
+#   other by-design gaps (SWF-083.C1) and the System FMEA's SFM-025.C1; AP stays H. Raised by the System FMEA session, 2026-10-16.
 #
 # SW FMEA element pandad (FSC EL-06, System FMEA SFM-SE-017). Ratings per RT-1, against BL-004 (liondriver-dev 682f184,
 # panda 8aa8671, opendbc 7993399). The LIONDRIVER_REFERENCE firmware build is not enabled by any build path at BL-004, so the
@@ -4005,12 +4007,13 @@ failure_modes:
       is the forced deceleration with lateral control kept. Whether that is the SG-010 safe state of FSR-040 is not recorded; it is queued for the lead (DQ-220)
     element: SWF-SE-062
     prevention_controls:
-    - description: Upstream design; FSR-040 names a safe state that the FSC does not define for this path
+    - description: Upstream design; FSR-040 names a safe state that the FSC does not define for this path. Requirements not documented and no field-exposure
+        evidence cited, so O 8 (RT-2 §2), as SWF-083.C1 and SFM-025.C1
       ref: assurance/08-analyses/fmea/analyses/fsc.yaml
     detection_controls:
     - description: test_longitudinal runs the force_decel maneuver in CI and test_monitoring checks the alert levels; neither checks that the reaction meets FSR-040
       test: openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py
-    occurrence: 6
+    occurrence: 8
     detection: 9
     ap: H
     actions:

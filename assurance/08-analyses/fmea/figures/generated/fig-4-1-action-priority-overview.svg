@@ -385,7 +385,7 @@
   <rect x="834" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="856" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="867" cy="279" r="9.5" fill="#D2553F"/>
-  <text x="867" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">6</text>
+  <text x="867" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">7</text>
   <rect x="878" y="268" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="889" cy="279" r="9.5" fill="#D2553F"/>
   <text x="889" y="282.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>
@@ -419,7 +419,7 @@
   <text x="845" y="326.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
   <rect x="856" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="867" cy="323" r="9.5" fill="#D2553F"/>
-  <text x="867" y="326.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">21</text>
+  <text x="867" y="326.6" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">20</text>
   <rect x="878" y="312" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="889" cy="323" r="9.5" fill="#D2553F"/>
   <text x="889" y="326.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">5</text>

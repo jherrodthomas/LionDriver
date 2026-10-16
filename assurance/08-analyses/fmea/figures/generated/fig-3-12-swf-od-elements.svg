@@ -509,8 +509,8 @@
   <circle cx="466.5" cy="967.5" r="4.6" fill="#D2553F"><title>SWF-063.C2 O4 D10 AP H</title></circle>
   <circle cx="455.5" cy="956.5" r="4.6" fill="#D2553F"><title>SWF-061.C1 O5 D9 AP H</title></circle>
   <circle cx="444.5" cy="945.5" r="4.6" fill="#D2553F"><title>SWF-061.C2 O6 D8 AP H</title></circle>
-  <circle cx="455.5" cy="945.5" r="5.4" fill="#D2553F"><title>SWF-061.C3 O6 D9 AP H; SWF-062.C1 O6 D9 AP H</title></circle>
-  <text x="455.5" y="948.4" font-size="7.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+  <circle cx="455.5" cy="945.5" r="4.6" fill="#D2553F"><title>SWF-061.C3 O6 D9 AP H</title></circle>
+  <circle cx="455.5" cy="923.5" r="4.6" fill="#D2553F"><title>SWF-062.C1 O8 D9 AP H</title></circle>
   <text x="490" y="873" font-size="10.5" fill="#0F172A" font-weight="700">SE-070</text>
   <text x="622" y="873" font-size="9.5" fill="#D2553F" font-weight="700" text-anchor="end">2 · H 2</text>
   <text x="490" y="887" font-size="9" fill="#475569">Longitudinal planning…</text>
