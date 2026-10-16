@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.17 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.20 | draft | BL-005 | RT-2 | 2026-10-16 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -632,6 +632,7 @@ Effects:
 
 - **End:** Driver unaware of handback; delayed response (HZ-012, S 10)
 - **End:** Contributes to HZ-006: item-initiated deceleration not announced (HE-04.3) (HZ-006, S 10)
+- **End:** Contributes to HZ-013: driver-monitoring escalation alerts not shown or played, so an inattentive driver is not told; the forced deceleration does not depend on them (as SWF-082) (HZ-013, S 10)
 - **Next higher:** Driver not informed of state change
 - **Local:** Alert selected by alertmanager but not shown or not played
 
@@ -654,6 +655,7 @@ Safety mechanisms: (1) Visual alert on device screen and audible alert through s
 Effects:
 
 - **End:** Reduced takeover margin (HZ-012, S 10)
+- **End:** Contributes to HZ-013: a driver-monitoring escalation presented late, or hidden behind a higher-priority alert, so the inattentive driver is told late (as SWF-035) (HZ-013, S 10)
 - **Next higher:** Less time for driver response
 - **Local:** Alert rendered/played after a delay
 

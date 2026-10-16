@@ -77,6 +77,8 @@
 # O falls on 6 causes (SW FMEA has the narrower cause), rises on SFM-008.C1 (6 -> 7); D 8 -> 9 on 11 causes (the SW FMEA credits
 # their tests less, e.g. the opendbc car tests are not run by LionDriver CI). MSR F follows O. Every AP stays H. Partial matches are not linked; SFM-025.C1 (O 8) and SWF-062.C1
 # (O 6) rate the same design gap differently, raised with the SW FMEA owner.
+# Rev 0.20 (2026-10-16): SFM-026 (alert not presented) and SFM-027 (alert late) also end in HZ-013: the driver-monitoring escalation
+# goes through the same HMI path (FTA F-37; SW FMEA SWF-035, SWF-082, #146). Severity stays 10; no rating changes.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -85,7 +87,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.17"
+  revision: "0.20"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
@@ -2844,6 +2846,7 @@ failure_modes:
       - {level: next_higher, description: "Driver not informed of state change"}
       - {level: end, description: "Driver unaware of handback; delayed response", hazard: HZ-012, severity: 10}
       - {level: end, description: "Contributes to HZ-006: item-initiated deceleration not announced (HE-04.3)", hazard: HZ-006, severity: 10}
+      - {level: end, description: "Contributes to HZ-013: driver-monitoring escalation alerts not shown or played, so an inattentive driver is not told; the forced deceleration does not depend on them (as SWF-082)", hazard: HZ-013, severity: 10}
     severity: 10
     safety_mechanisms:
       - description: Visual alert on device screen and audible alert through soundd (two channels)
@@ -2948,6 +2951,7 @@ failure_modes:
       - {level: local, description: "Alert rendered/played after a delay"}
       - {level: next_higher, description: "Less time for driver response"}
       - {level: end, description: "Reduced takeover margin", hazard: HZ-012, severity: 10}
+      - {level: end, description: "Contributes to HZ-013: a driver-monitoring escalation presented late, or hidden behind a higher-priority alert, so the inattentive driver is told late (as SWF-035)", hazard: HZ-013, severity: 10}
     severity: 10
     safety_mechanisms: []
     causes:
