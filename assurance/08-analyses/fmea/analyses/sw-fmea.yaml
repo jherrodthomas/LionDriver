@@ -2139,8 +2139,8 @@ failure_modes:
     - description: New LionDriver code (#51), AI-drafted, reviewed by its author only; ruff and ty in CI
       ref: openpilot/selfdrive/selfdrived/supervision.py
     detection_controls:
-    - description: 'test_supervision.py: TxBlockedMonitor baseline, rise while engaged and panda-reset tests, in CI unit tests on every PR. Targeted, not proven by
-        mutation; the txRateExceeded and heartbeatLost branches in selfdrived.py have no test'
+    - description: 'test_supervision.py: TxBlockedMonitor baseline, rise while engaged and panda-reset tests. NOT run in CI: plain pytest-style classes, which tools/test_runner.py (unittest) collects as 0 tests; pass when run by hand at BL-005 (2026-10-16) (SWF-ACT-055). Targeted, not
+        proven by mutation; the txRateExceeded and heartbeatLost branches in selfdrived.py have no test'
       test: openpilot/selfdrive/selfdrived/tests/test_supervision.py
     occurrence: 5
     detection: 8
@@ -2257,8 +2257,8 @@ failure_modes:
     - description: New LionDriver code (#51, #70), pure logic, AI-drafted, reviewed by its author only; ruff and ty in CI
       ref: openpilot/selfdrive/selfdrived/supervision.py
     detection_controls:
-    - description: 'test_supervision.py (consecutive samples, single-sample absorption, 0.5 s bound with stale samples, engagement grace), in CI unit tests on every
-        PR. Targeted at the cause, not proven by mutation'
+    - description: 'test_supervision.py (13 tests: consecutive samples, single-sample absorption, 0.5 s bound with stale samples, engagement grace). NOT run in CI: plain pytest-style classes, which tools/test_runner.py (unittest) collects as 0 tests; pass when run by hand at BL-005 (2026-10-16)
+        (SWF-ACT-055). Targeted at the cause, not proven by mutation'
       test: openpilot/selfdrive/selfdrived/tests/test_supervision.py
     occurrence: 5
     detection: 8
@@ -2266,6 +2266,7 @@ failure_modes:
     actions:
     - SWF-ACT-030
     - SWF-ACT-033
+    - SWF-ACT-055
   - id: SWF-034.C2
     description: 'Safety model, parameter and alternative-experience mismatch is ignored for the first 10 s after selfdrived starts (sm.frame*DT_CTRL > 10,
       selfdrived.py:338), so an engagement in that window with a wrong mode or parameter that still grants controls is not refused'
@@ -2561,8 +2562,8 @@ failure_modes:
     - description: TSR-602 gate in controlsd (inputs_fresh), new LionDriver code reviewed by its author only; ruff and ty in CI
       ref: openpilot/selfdrive/controls/lib/input_freshness.py
     detection_controls:
-    - description: 'test_input_freshness.py (6 tests: bound per service, wall clock for selfdriveState, inputs not yet seen), in CI unit tests on every PR. Targeted at
-        the gate logic, not proven by mutation; no test stops selfdrived while engaged'
+    - description: 'test_input_freshness.py (6 tests: bound per service, wall clock for selfdriveState, inputs not yet seen). NOT run in CI: plain pytest-style classes, which tools/test_runner.py (unittest) collects as 0 tests; pass when run by hand at BL-005 (2026-10-16) (SWF-ACT-055).
+        Targeted at the gate logic, not proven by mutation; no test stops selfdrived while engaged'
       test: openpilot/selfdrive/controls/tests/test_input_freshness.py
     occurrence: 5
     detection: 8
@@ -2742,8 +2743,8 @@ failure_modes:
     - description: TSR-602 gate (inputs_fresh) on the log clock, new LionDriver code reviewed by its author only; ruff and ty in CI
       ref: openpilot/selfdrive/controls/lib/input_freshness.py
     detection_controls:
-    - description: test_input_freshness.py (bound per service on the log clock), in CI unit tests on every PR; targeted at the gate, not proven by mutation. No test
-        stops modeld or plannerd while engaged
+    - description: 'test_input_freshness.py (bound per service on the log clock). NOT run in CI: plain pytest-style classes, which tools/test_runner.py (unittest) collects as 0 tests; pass when run by hand at BL-005 (2026-10-16) (SWF-ACT-055). Targeted at the gate, not proven by mutation.
+        No test stops modeld or plannerd while engaged'
       test: openpilot/selfdrive/controls/tests/test_input_freshness.py
     occurrence: 5
     detection: 8
@@ -3636,6 +3637,13 @@ actions:
   kind: detection
   description: Vehicle test of the PCM response when the inactive value replaces an active deceleration (TSR-208, AOU-05R); if the PCM
     steps, specify an item-side ramp after revocation (FSR-04.03)
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-055
+  kind: detection
+  description: 'Make the host supervision tests run in CI: test_supervision.py and test_input_freshness.py define plain classes, which tools/test_runner.py
+    (unittest loader) collects as 0 tests. Derive them from unittest.TestCase (or the repo''s test base class), check that the unit_tests job reports them, and
+    prove them by a mutation of supervision.py and input_freshness.py so D can drop below 8'
   owner: Jherrod Thomas
   status: open
 - id: SWF-ACT-054
