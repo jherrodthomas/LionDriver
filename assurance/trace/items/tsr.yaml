@@ -119,7 +119,7 @@
   mechanism: "FR"
   timing: "detect: same frame / react: same frame"
   verification: "T-SIL, FI"
-  baseline_impl: "Not implemented: the violating frame is dropped and the rate state reset (`lateral.h:140-148`), `safety_tx_blocked` is counted and reported (`drivers/can_common.h:168-171`, `main_comms.h:27`), but `controls_allowed` is not cleared. Upstream design lets the host recover; the FSC requires latching (OI-4)"
+  baseline_impl: "Not implemented: the violating frame is dropped and the rate state reset (`lateral.h:140-148`), `safety_tx_blocked` is counted and reported (`drivers/can_common.h:168-171`, `main_comms.h:27`), but `controls_allowed` is not cleared. Upstream design lets the host recover; the FSC requires latching. Decided 2026-10-14 (DQ-060): latching as written, switch off until the driver re-engages; firmware change open"
   status: proposed
   source: WP-S-02
 
@@ -335,14 +335,14 @@
 
 - id: TSR-304
   kind: tsr
-  text: "The envelope shall monitor STEER_TORQUE_DRIVER (`0x260`) on the LKA path and (a) reject `0x2E4` frames that increase torque opposing the driver beyond a driver allowance (driver-limited check in addition to the measured-torque check of TSR-104), and (b) when the driver torque exceeds T_ovr for longer than t_ovr, revoke lateral authority or force the commanded torque to zero at the Δ_down rate. T_ovr, t_ovr and the allowance shall be derived from the override behaviour accepted in WP-C-08 (assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md) and from the EPS override threshold (AOU-02R)."
+  text: "The envelope shall monitor STEER_TORQUE_DRIVER (`0x260`) on the LKA path and (a) reject `0x2E4` frames that increase torque opposing the driver beyond a driver allowance (driver-limited check in addition to the measured-torque check of TSR-104), and (b) when the driver torque exceeds T_ovr for longer than t_ovr, back off: accept only frames whose torque does not oppose the driver more than the previous frame, so that the commanded torque falls toward zero at no less than the Δ_down rate and stays there while the override lasts, and report the override state to the SoC (TSR-628). Lateral authority is kept, so assistance resumes when the driver releases (decided 2026-10-14, DQ-053: back off on override and show a cue; WP-A-05 LS-01, LS-02). T_ovr, t_ovr and the allowance shall be derived from the override behaviour accepted in WP-C-08 (assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md) and from the EPS override threshold (AOU-02R)."
   asil: "B (SG-05); B‡ (SG-01, HE-05.2)"
   parents: [FSR-05.03]
   parent_text: "FSR-05.03"
   other_parents: false
   allocated_to: "P-SW"
   mechanism: "PLB, GATE"
-  timing: "detect ≤ 2 frames of `0x260` (40 ms) / torque decreasing next frame, zero ≤ 0.2 s"
+  timing: "detect ≤ 2 frames of `0x260` (40 ms) + t_ovr, with t_ovr ≤ 0.1 s / torque decreasing the next frame, so the back-off starts ≤ 0.2 s after the driver's input (SG-05, WP-S-04 §3.7; SFM-ACT-016)"
   verification: "T-SIL, T-VEH"
   baseline_impl: "**Not implemented on the LKA path** (GAP-02). Driver torque is sampled (`modes/toyota.h:113-116`) but used only for LTA (`modes/toyota.h:294-298`). A driver-limited check exists (`lateral.h:26-46`, `TorqueDriverLimited`) but the Toyota mode is motor-limited (`modes/toyota.h:178`). Host-only: `MAX_USER_TORQUE` 500 (`carcontroller.py:33, 83`)"
   status: proposed
@@ -659,7 +659,7 @@
   mechanism: "WDG"
   timing: "detect ≤ 0.1 s / reset → SS-S"
   verification: "R, T-HIL, FI"
-  baseline_impl: "**Implemented, not yet verified on hardware** (panda `3859fa8`): IWDG1 started the first time the relay is energised, on any path (`drivers/harness.h`); fed from the 100 Hz safety task only after main-loop progress (`drivers/hw_watchdog.h`, `main.c`); 90 ms nominal; window mode, about 5 ms minimum feed interval (HWSR-501b). a watchdog reset is reported to the host (`pandaState.watchdogReset`). Open: LSI range at both ends, HIL evidence (IA watchdog (assurance/07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md))"
+  baseline_impl: "**Implemented, not yet verified on hardware** (panda `3859fa8`): IWDG1 started the first time the relay is energised, on any path (`drivers/harness.h`); fed from the 100 Hz safety task only after main-loop progress (`drivers/hw_watchdog.h`, `main.c`); 90 ms nominal; window mode, about 5 ms minimum feed interval (HWSR-501b). a watchdog reset is reported to the host (`pandaState.watchdogReset`). Decided 2026-10-14 (DQ-114): accepted as closing the SG-07 interim residuals once the independent reviewer has checked it and the LSI tolerance keeps it ≤ 0.1 s. Open: LSI range at both ends, HIL evidence (IA watchdog (assurance/07-supporting/impact/change-2026-10-12-panda-hw-watchdog.md))"
   status: proposed
   source: WP-S-02
 
@@ -875,7 +875,7 @@
 
 - id: TSR-516
   kind: tsr
-  text: "The safety MCU shall sound its own acoustic warning within ≤ 0.5 s of detection, without depending on SoC software, when (a) the SoC heartbeat is lost (TSR-407) while authority was granted within the last 5 s; (b) the envelope revokes authority while it is granted for any reason other than a driver action that the envelope itself observes (brake press, TSR-302; PCM cruise inactive, TSR-301), that is on an RX fault (TSR-406), an EPS fault state (TSR-110), a rejected command (TSR-108), a car-side TX failure or bus-off (TSR-508), a platform fault (TSR-502) or a heartbeat \"not engaged\" (TSR-307(a)); or (c) PCM cruise is still active more than 0.5 s after the SoC heartbeat first reported \"not engaged\" (a fault-induced disengagement whose ACC cancel, TSR-303, had no effect)."
+  text: "The safety MCU shall sound its own acoustic warning within ≤ 0.5 s of detection, without depending on SoC software, when (a) the SoC heartbeat is lost (TSR-407) while authority was granted within the last 5 s; (b) the envelope revokes authority while it is granted for any reason other than a driver action that the envelope itself observes (brake press, TSR-302; PCM cruise inactive, TSR-301), that is on an RX fault (TSR-406), an EPS fault state (TSR-110), a rejected command (TSR-108), a car-side TX failure or bus-off (TSR-508), a platform fault (TSR-502) or a heartbeat \"not engaged\" (TSR-307(a)); or (c) PCM cruise is still active more than 0.5 s after the SoC heartbeat first reported \"not engaged\" (a fault-induced disengagement whose ACC cancel, TSR-303, had no effect); or (d) the safety MCU restarts after a watchdog or fault reset (TSR-501, TSR-502) that interrupted granted authority. For (b) on an EPS fault, detection is the first fault frame, and any persistence filter before the warning shall be ≤ 0.7 s so that the siren sounds within the SG-02 1 s warning budget from fault onset (decided 2026-10-14, DQ-048). For (d), the item's engaged state shall be kept across the reset in memory that the reset does not clear, and the siren shall sound ≤ 0.5 s after the restart (decided 2026-10-14, DQ-054)."
   asil: "B"
   parents: [FSR-02.05, FSR-06.05]
   parent_text: "FSR-02.05, FSR-06.05"
@@ -884,7 +884,7 @@
   mechanism: "WRN"
   timing: "≤ 0.5 s after detection"
   verification: "T-HIL"
-  baseline_impl: "Partial: (a) heartbeat loss: siren for 3 s at once when the 0.3 s heartbeat monitor (TSR-407) revokes authority that was granted, ≤ 0.3 s + 10 ms + 250 ms ≈ 0.56 s after the last heartbeat, in all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, IA fast heartbeat (assurance/07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md) §5; not verified on hardware); the 1 Hz path (siren for 3 s after 4–5 s heartbeat loss if authority within the last 5 s, `main.c:169-171, 198-201`) unchanged, and alone covers authority that ended within the 5 s before the loss; (b) for the EPS fault (TSR-110): siren once the fault has persisted 1 s while authority is granted, ≥ 3 s, ≤ 0.26 s after that detection (worst case: the speaker sounds only on every other 8 Hz tick) (panda `b790fca`, `drivers/eps_fault_siren.h`, IA EPS fault (assurance/07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md) §7; detection defined as 1 s persistence by maintainer decision 2026-10-12, to be confirmed against fault durations in reference logs); other (b) triggers and (c) not implemented; siren path via codec over I2C on some boards, malfunction reported only (`drivers/fake_siren.h:38-52`); shared speaker with SoC audio to be analysed in DFA (WP-A-03 (assurance/08-analyses/WP-A-03-dependent-failure-analysis.md))"
+  baseline_impl: "Partial: (a) heartbeat loss: siren for 3 s at once when the 0.3 s heartbeat monitor (TSR-407) revokes authority that was granted, ≤ 0.3 s + 10 ms + 250 ms ≈ 0.56 s after the last heartbeat, in all builds (panda `c33343b`, `drivers/heartbeat_siren.h`, IA fast heartbeat (assurance/07-supporting/impact/change-2026-10-12-panda-fast-heartbeat.md) §5; not verified on hardware); the 1 Hz path (siren for 3 s after 4–5 s heartbeat loss if authority within the last 5 s, `main.c:169-171, 198-201`) unchanged, and alone covers authority that ended within the 5 s before the loss; (b) for the EPS fault (TSR-110): siren once the fault has persisted 1 s while authority is granted, ≥ 3 s, ≤ 0.26 s after that detection (worst case: the speaker sounds only on every other 8 Hz tick) (panda `b790fca`, `drivers/eps_fault_siren.h`, IA EPS fault (assurance/07-supporting/impact/change-2026-10-12-opendbc-toyota-eps-fault.md) §7; detection defined as 1 s persistence by maintainer decision 2026-10-12, to be confirmed against fault durations in reference logs); **the 1 s persistence exceeds the ≤ 0.7 s now required (DQ-048); firmware change open**; other (b) triggers, (c) and (d) not implemented ((d): a bench test of the reset behaviour comes first, WP-S-04 M-06; retained memory is a hardware choice, WP-H-01); siren path via codec over I2C on some boards, malfunction reported only (`drivers/fake_siren.h:38-52`); shared speaker with SoC audio to be analysed in DFA (WP-A-03 (assurance/08-analyses/WP-A-03-dependent-failure-analysis.md))"
   status: proposed
   source: WP-S-02
 
@@ -1094,7 +1094,7 @@
   mechanism: "FR"
   timing: "per policy"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Implemented: `selfdrive/monitoring/policy.py:39-44`; `selfdrive/controls/controlsd.py:203-204`"
+  baseline_impl: "Partial: after 5 s at the terminal alert the policy requests a forced deceleration (`noResponseForceDecel`, `selfdrive/monitoring/policy.py:39-44, 398`; `selfdrive/controls/controlsd.py:235`), but nothing disengages the item, so the lockout (`policy.py:318-331`) acts only after a later disengagement (System FMEA SFM-025.C1, corrected 2026-10-16). The terminal reaction is refined in TSR-633"
   status: proposed
   source: WP-S-02
 
@@ -1310,7 +1310,7 @@
 
 - id: TSR-626
   kind: tsr
-  text: "While engaged, the SoC shall detect that the envelope does not actuate from evidence other than the envelope's own status report: (a) `pandaStates` older than 2 nominal periods (0.2 s) is treated as a controls mismatch (TSR-621); (b) with lateral control active, the EPS-applied torque (STEER_TORQUE_EPS in `0x260`) not following a commanded torque above a threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration not following the requested acceleration beyond a tolerance for longer than t_blk. Each leads to immediate disable with a take-over request. Threshold, tolerance and t_blk (≤ 0.5 s) shall be set from fork-owned drive logs so that no false detection occurs in the reference log set."
+  text: "While engaged, the SoC shall detect that the envelope does not actuate from evidence other than the envelope's own status report: (a) `pandaStates` older than 2 nominal periods (0.2 s) is treated as a controls mismatch (TSR-621); (b) with lateral control active, the EPS-applied torque (STEER_TORQUE_EPS in `0x260`) not following a commanded torque above a threshold for longer than t_blk; (c) with longitudinal control active, the measured acceleration not following the requested acceleration beyond a tolerance for longer than t_blk. (d) with lateral control active, EPS_STATUS (`0x262`) LKA_STATE not reporting LKA active, or with longitudinal control active, the PCM not reporting ACC in control, for longer than t_blk; (e) the transmitted-frame count of TSR-632 not advancing for a commanded actuation ID. Each leads to immediate disable with a take-over request, so that the warning falls within the SG-02/SG-06 1 s budget (SFM-ACT-018). Threshold, tolerance and t_blk (≤ 0.5 s) shall be set from fork-owned drive logs so that no false detection occurs in the reference log set."
   asil: "QM (B-sup: TSR-516)"
   parents: [FSR-02.10]
   parent_text: "FSR-02.10"
@@ -1335,6 +1335,96 @@
   timing: "within TSR-606"
   verification: "T-SIL (load), T-HIL"
   baseline_impl: "Not met: `soundd` sets no real-time priority (`openpilot/selfdrive/ui/soundd.py`); `ui` runs at `Priority.CTRL_HIGH` (`openpilot/selfdrive/ui/ui.py:19`). WP-A-02 (assurance/08-analyses/WP-A-02-coexistence-freedom-from-interference.md) FFI-CM-17"
+  status: proposed
+  source: WP-S-02
+
+- id: TSR-628
+  kind: tsr
+  text: "While the envelope reports a driver override on the LKA path (TSR-304(b)), the SoC shall show an override cue on the device display within ≤ 0.2 s, so the driver sees that the steering backed off and why."
+  asil: "QM"
+  parents: [FSR-05.03]
+  parent_text: "FSR-05.03"
+  other_parents: false
+  allocated_to: "SoC"
+  mechanism: "WRN"
+  timing: "≤ 0.2 s"
+  verification: "T-SIL, T-VEH"
+  baseline_impl: "Not implemented: the host's own override state (`steerOverride`, `MAX_USER_TORQUE` 500, `carcontroller.py:33, 83`) drives the existing override display; no envelope override report exists. Added v0.21 (DQ-053)"
+  status: proposed
+  source: WP-S-02
+
+- id: TSR-629
+  kind: tsr
+  text: "At start-up before the first engagement, and again at least every drive cycle, the SoC shall read the stored diagnostic trouble codes of the EPS and of the brake / stability control ECU, and shall prevent engagement with a no-entry alert naming the system while a code from the release-record list of codes affecting lateral or longitudinal control is set. A failed or incomplete read shall also prevent engagement."
+  asil: "QM (supports TSR-110, TSR-618)"
+  parents: [FSR-02.12]
+  parent_text: "FSR-02.12"
+  other_parents: false
+  allocated_to: "SoC"
+  mechanism: "PLB, ST"
+  timing: "before engagement"
+  verification: "T-SIL, T-VEH"
+  baseline_impl: "Not implemented: fingerprinting queries ECU versions, not codes; the dashboard lamp check is a driver procedure (WP-O-02 OPS-01). Code list and diagnostic addresses to be confirmed on the reference vehicle. Added v0.21 (DQ-056)"
+  status: proposed
+  source: WP-S-02
+
+- id: TSR-630
+  kind: tsr
+  text: "While a car safety mode is active and the item is not engaged, the SoC shall check that every panda reports `controlsAllowed` false. A report of true for more than 2 consecutive `pandaStates` samples, and in any case within ≤ 0.3 s, shall prevent engagement with a no-entry alert, be logged as an envelope fault, and request ACC cancel. (The reverse of TSR-621: it makes a latent panda authority fault visible before the host also commands torque.)"
+  asil: "QM (B-sup: TSR-105, TSR-301)"
+  parents: [FSR-01.05, FSR-02.10]
+  parent_text: "FSR-01.05, FSR-02.10"
+  other_parents: false
+  allocated_to: "SoC"
+  mechanism: "PLB"
+  timing: "≤ 0.3 s (within the SG-01 0.5 s FTTI)"
+  verification: "T-SIL, FI"
+  baseline_impl: "Not implemented: `controlsMismatch` checks only the engaged direction (`selfdrive/selfdrived/selfdrived.py`, TSR-621). System FMEA SFM-001.C2, SFM-ACT-013. Added v0.22"
+  status: proposed
+  source: WP-S-02
+
+- id: TSR-631
+  kind: tsr
+  text: "`controlsd` shall treat the driving-model output as stale, with the TSR-602 reaction, when (a) its frame ID does not advance for more than 2 nominal periods while messages keep arriving (frozen output), or (b) its age measured from the source camera frame timestamp, not the publish time, exceeds 2 nominal periods (stale content with fresh timestamps)."
+  asil: "QM (B-sup: TSR-101, TSR-103 bound the effect; TSR-408 covers a stopped command stream)"
+  parents: [FSR-02.02, FSR-06.01]
+  parent_text: "FSR-02.02, FSR-06.01"
+  other_parents: false
+  allocated_to: "SoC"
+  mechanism: "TMO, PLB"
+  timing: "≤ 0.1 s"
+  verification: "T-SIL, FI"
+  baseline_impl: "Not implemented: `input_freshness.py` (TSR-602) checks message age at arrival, not frame ID or source timestamp. System FMEA SFM-006.C2, SFM-006.C3, SFM-ACT-015. Added v0.22"
+  status: proposed
+  source: WP-S-02
+
+- id: TSR-632
+  kind: tsr
+  text: "The safety MCU shall report to the SoC, for each supervised actuation ID (`0x2E4`, `0x343`), the count of frames accepted by the envelope and transmitted on the car-side bus (transmit complete) and the count refused, in every health report."
+  asil: "B‡ (report content); QM for its use (TSR-626(e))"
+  parents: [FSR-02.10]
+  parent_text: "FSR-02.10"
+  other_parents: false
+  allocated_to: "P-SW"
+  mechanism: "PLB"
+  timing: "per health report (≤ 0.1 s)"
+  verification: "T-SIL, T-HIL"
+  baseline_impl: "Partial: a total `safety_tx_blocked` count is reported (`drivers/can_common.h:168-171`, `main_comms.h:27`); no per-ID transmitted count. System FMEA SFM-005.C2, SFM-011.C2, SFM-ACT-018. Added v0.22"
+  status: proposed
+  source: WP-S-02
+
+- id: TSR-633
+  kind: tsr
+  text: "When driver awareness has reached zero (terminal DM alert) and the driver has not responded for 5 s, the item shall bring the vehicle to the reaction decided for the unresponsive-driver goal (register DQ-340, queued; recommended: keep the lane, decelerate in lane to a standstill within a_min and j_down (TSR-202, TSR-205) with the terminal alert sounding, then hold, disengage and lock out re-engagement). It shall not leave lateral and longitudinal control active at the set speed."
+  asil: "A (proposed: H-09 goal per DQ-205, to be added by the HARA owner; allocated to the QM SoC, open as for TSR-625)"
+  parents: [FSR-02.09]
+  parent_text: "FSR-02.09"
+  other_parents: false
+  allocated_to: "SoC"
+  mechanism: "FR, WRN"
+  timing: "reaction starts ≤ 5 s after the terminal alert (WP-S-04 §3.8)"
+  verification: "T-SIL, T-VEH"
+  baseline_impl: "Not met: forced deceleration without disengagement or standstill (TSR-611). System FMEA SFM-025.C1, SFM-ACT-005. Added v0.22"
   status: proposed
   source: WP-S-02
 
@@ -1500,6 +1590,21 @@
   timing: "detect ≤ 0.1 s / release ≤ 0.1 s (SG-07, WP-S-04 §3.6)"
   verification: "T-HIL, FI"
   baseline_impl: "Not implemented: queue overflow is counted only (`drivers/can_common.h:165`); no supervision of camera-side reception releases the relay (WP-A-04 SPF-13, SFMEA-39)"
+  status: proposed
+  source: WP-S-02
+
+- id: TSR-712
+  kind: tsr
+  text: "If the harness state readback (TSR-506) shows that the camera path stays intercepted when the release is commanded, the envelope shall inhibit all actuation TX, keep the fault latched until power cycle and report it; the SoC shall then give a warning that stock PCS/AEB is unavailable and prevent engagement until the harness is repaired."
+  asil: "B (envelope detection and inhibit); QM (B-sup: TSR-506) for the SoC warning"
+  parents: [FSR-07.06]
+  parent_text: "FSR-07.06"
+  other_parents: false
+  allocated_to: "P-SW, SoC"
+  mechanism: "PLB, FR, WRN"
+  timing: "detect ≤ 0.3 s (TSR-506) / warn ≤ 1 s"
+  verification: "T-HIL, FI"
+  baseline_impl: "Not implemented: no state readback exists; the harness box is two analog switches with a pull-down default and no feedback (RR-2026-010). Applies once readback exists (harness choice DQ-209, queued); the readback hardware itself is TSR-506 / HWSR-506a. Added v0.21 (DQ-064)"
   status: proposed
   source: WP-S-02
 
