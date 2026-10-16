@@ -105,7 +105,19 @@
         ]},
         "parent": {"type": ["string", "null"], "pattern": "^(SFM|DFM|SWF|PFM)-SE-[0-9]{3,}$"},
         "paths": {"type": "array", "items": {"$ref": "#/$defs/repo_path"}},
-        "description": {"type": "string"}
+        "description": {"type": "string"},
+        "sotif": {
+          "description": "Where the element sits against the SOTIF / ISO PAS 8800 boundary (fmea-plan.md section 7.3).",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["boundary"],
+          "properties": {
+            "boundary": {"enum": ["functional_safety", "split", "sotif"],
+                         "description": "functional_safety: every failure of the element is rated here; split: software behaviour rated here, performance belongs to SOTIF / ISO PAS 8800; sotif: not rated here."},
+            "sotif_part": {"type": "string", "minLength": 1, "description": "What belongs to SOTIF / ISO PAS 8800 (required for split and sotif)."},
+            "ref": {"type": "string", "description": "SOTIF work product or hazard (e.g. WP-C-05 SH-xx, WP-C-11 AIR-xx)."}
+          }
+        }
       }
     },
     "function": {
@@ -141,6 +153,23 @@
         "test": {"$ref": "#/$defs/repo_path"}
       }
     },
+    "safety_mechanism": {
+      "description": "An in-field detection or reaction designed into the item: a control plus, optionally, the defence layer it acts in and its reaction time.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["description"],
+      "properties": {
+        "description": {"type": "string", "minLength": 1},
+        "ref": {"type": "string", "description": "Evidence: doc, PR, report, or code path."},
+        "test": {"$ref": "#/$defs/repo_path"},
+        "layer": {"enum": ["host", "envelope", "alert", "siren", "vehicle"],
+                  "description": "host: the SoC software stops acting on the fault; envelope: the panda revokes or blocks authority; alert: the device warns the driver; siren: the panda's own audible warning; vehicle: a stock ECU reacts."},
+        "reaction_s": {"type": "number", "minimum": 0, "description": "Time from the fault to this layer's reaction, in seconds."},
+        "timing_basis": {"enum": ["requirement", "code_derived", "measured", "estimate"],
+                         "description": "requirement: the budget a TSR sets, not shown met; code_derived: read from the code (constants, rates); measured: from a test or log; estimate: engineering judgement."},
+        "timing_ref": {"type": "string", "minLength": 1, "description": "Where the time comes from: code path and line, WP-S-04 row, test or log."}
+      }
+    },
     "cause": {
       "description": "AIAG-VDA steps 4-5. One row of the risk analysis.",
       "type": "object",
@@ -158,6 +187,20 @@
         "ap": {"$ref": "#/$defs/ap"},
         "actions": {"type": "array", "items": {"type": "string", "pattern": "^(SFM|DFM|SWF|PFM)-ACT-[0-9]{3,}$"}},
         "rationale": {"type": "string", "description": "Why no action is taken (required for AP=H without actions)."},
+        "previous": {
+          "description": "The rating at an earlier baseline, kept for the baseline-to-baseline delta. Severity defaults to the failure mode's.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["baseline", "occurrence", "detection", "ap"],
+          "properties": {
+            "baseline": {"type": "string", "pattern": "^BL-[0-9]{3}$"},
+            "severity": {"$ref": "#/$defs/rating"},
+            "occurrence": {"$ref": "#/$defs/rating"},
+            "detection": {"$ref": "#/$defs/rating"},
+            "ap": {"$ref": "#/$defs/ap"},
+            "change": {"type": "string", "minLength": 1, "description": "What moved the rating (PR, mechanism, TSR)."}
+          }
+        },
         "msr": {"$ref": "#/$defs/msr"},
         "msr_exempt": {"type": "string", "minLength": 1, "description": "Why an in-scope cause has no FMEA-MSR row (msr-plan.md section 3)."}
       },
@@ -210,7 +253,7 @@
         "safety_mechanisms": {
           "description": "In-field detection/reaction designed into the item (not FMEA detection controls).",
           "type": "array",
-          "items": {"$ref": "#/$defs/control"}
+          "items": {"$ref": "#/$defs/safety_mechanism"}
         },
         "causes": {"type": "array", "items": {"$ref": "#/$defs/cause"}},
         "notes": {"type": "string"}
