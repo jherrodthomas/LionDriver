@@ -321,7 +321,7 @@
   allocated_to: "Relay auxiliary contact or bus-sense circuit"
   hw_kind: "ADD"
   verification: "A, T-HIL, FI"
-  baseline_impl: "**Not implemented (GAP-12).** Current detection is indirect and one-directional: camera control messages seen on the car side after a 1 s transition timeout (`safety.h:372-380`), checked at 1 Hz in `safety_tick` (so 1–2 s). \"Stuck intercepting while commanded released\" is not detected at all. The harness box v3 has no state feedback line, so readback needs a hardware change (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-06)"
+  baseline_impl: "**Not implemented (GAP-12).** Current detection is indirect and one-directional: camera control messages seen on the car side after a 1 s transition timeout (`safety.h:372-380`), checked at 1 Hz in `safety_tick` (so 1–2 s). \"Stuck intercepting while commanded released\" is not detected at all. The harness box v3 has no state feedback line, so readback needs a hardware change (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-06). The lead chose to keep comma's box (DQ-209 option A, 2026-10-16), so no readback hardware is planned: this requirement stays not met and its residual is part of the SG-07 deviation argument (DQ-261, queued)"
   status: proposed
   source: WP-H-01
 
@@ -377,7 +377,7 @@
   allocated_to: "Harness box (R2/R3), or a LionDriver adapter (DC-03)"
   hw_kind: "HW"
   verification: "A (schematic), T-HIL (pull-down forced open)"
-  baseline_impl: "**Not met:** the default rests on R2+R3 in series (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-03); decision DQ-209"
+  baseline_impl: "**Not met:** the default rests on R2+R3 in series (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-03). Route set by DQ-209 option A (2026-10-16): keep comma's box and bench-test the open pull-down (VS-HW-23); the result goes into the assumption of use"
   status: proposed
   source: WP-H-01
 
@@ -559,7 +559,7 @@
   allocated_to: "Harness relay"
   hw_kind: "HW"
   verification: "A (inspection), T-HIL"
-  baseline_impl: "**Not met by design with the comma harness box v3:** the stock path runs through two powered CMOS analog switches (DG419LE) and Schottky clamps (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-01). Decision DQ-209 (accept and test, or a LionDriver adapter with a passive fail-safe relay)"
+  baseline_impl: "**Not met by design with the comma harness box v3:** the stock path runs through two powered CMOS analog switches (DG419LE) and Schottky clamps (RR-2026-010 (assurance/04-hardware/reviews/RR-2026-010.md) F-01). **Decided** (DQ-209 (assurance/01-management/decisions/register.yaml), option A, 2026-10-16): keep comma's box, bench-test how it fails (VS-HW-02, VS-HW-22…24) and argue the residual risk; record the tested behaviour as an assumption of use (AOU-13 to be reworded by the concept owner). This requirement stays not met by design and is carried as a deviation; an assessor may still challenge an active part in an ASIL B path"
   status: proposed
   source: WP-H-01
 
