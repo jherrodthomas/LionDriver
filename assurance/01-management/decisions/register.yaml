@@ -3903,7 +3903,7 @@
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md RD-3", "assurance/02-concept/WP-C-04-functional-safety-concept.md OI-3", "assurance/01-management/WP-M-10-ai-safety-plan.md OI-3", "assurance/00-assessment/docs-safety-reconciliation.md OI-2"]
   status: answered
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
-  note: "STPA part applied in WP-A-05 v0.5: H-STPA-1 and SC-8 note H-09, new UCA-21, LS-35 and CC-17; the reaction itself is queued as DQ-281. Left: H-09 and its ASIL A goal in WP-C-03, its fault tree in WP-A-04, driver monitoring allocation in WP-C-04."
+  note: "STPA part applied in WP-A-05 v0.5: H-STPA-1 and SC-8 note H-09, new UCA-21, LS-35 and CC-17; the safe state the goal requires is queued as DQ-281 (today the car stops in the lane 5 s after the last alert). Left: H-09 and its ASIL A goal in WP-C-03, its fault tree in WP-A-04, driver monitoring allocation in WP-C-04."
 - id: DQ-206
   question: "When a diagnostic catches a hazardous fault and the car reaches a safe state in time, may that count as accepting the remaining risk?"
   context: "The new monitoring-and-response rating (FMEA-MSR) scores how well each in-car diagnostic catches a fault and how fast the system reacts. 194 of 201 failure causes are rated high priority today because diagnostics get no credit. The question is whether a good monitoring score can **close** a hazard-linked cause, or only rank which ones to work on first."
@@ -4056,7 +4056,7 @@
 
 - id: DQ-281
   question: "When the driver stays unresponsive after the last warning, what should the car do?"
-  context: "Today the last driver-monitoring step only shows \"DISENGAGE IMMEDIATELY\" with a sound. The system keeps steering and following at the set speed, with no slowing down and no stop (STPA LS-35). You decided this becomes its own hazard with an ASIL A goal (DQ-205). **The goal needs a safe state, and that is this choice.**"
+  context: "Today, 5 s after the last driver-monitoring warning (\"DISENGAGE IMMEDIATELY\"), the car brakes to a stop in its lane while still steering. That reaction has no requirement, no warning that it is slowing, no hazard lights and no hold once stopped (STPA LS-35). You decided the unresponsive driver gets its own hazard with an ASIL A goal (DQ-205). **The goal needs a defined safe state, and that is this choice.**"
   reversibility: hard
   blocks: "Safe state of the H-09 goal (DQ-205); SFM-ACT-005; STPA LS-35; driver monitoring requirements"
   gate: G1
@@ -4065,11 +4065,11 @@
   options:
     - key: A
       recommended: true
-      title: "Slow down in the lane to a stop, with hazard lights, after a warning"
-      detail: "Keeps steering and brings the car to a stop, as UNECE R79 and R171 do. Cost: a new minimal-risk function that must itself be analysed and validated, and the Toyota interface for hazard lights and standstill hold must be confirmed."
+      title: "Keep today's stop in the lane, and make it a specified function with a warning, hazard lights and a hold at standstill"
+      detail: "Builds on what the car already does, and matches UNECE R79 and R171. Cost: the stop becomes an ASIL A function to analyse and validate, and the Toyota interface for hazard lights and standstill hold must be confirmed."
     - key: B
       title: "Disengage with a continuous alarm and cancel cruise"
-      detail: "Simple and close to today's code. Cost: an unresponsive driver is left in a car that coasts with no steering support, which may be worse than keeping it in the lane."
+      detail: "Simpler to assure than a stop function. Cost: an unresponsive driver is left in a car that coasts with no steering support, which may be worse than keeping it in the lane."
     - key: C
       title: "Slow to a low speed in the lane and hold it, alarming until the driver responds"
       detail: "Lowers the energy of a crash without needing a stop function. Cost: a slow car on a highway is itself a hazard for following traffic, and the car never reaches a stop."

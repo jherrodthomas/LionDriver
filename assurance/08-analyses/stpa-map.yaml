@@ -328,9 +328,10 @@ scenarios:
     hazards: [H-STPA-1]
     status: known_gap
     fmea: [SFM-025]
+    requirements: [TSR-624]
     actions: [SFM-ACT-005]
     decisions: [DQ-205, DQ-281]
-    open_because: "Zero-awareness reaction undecided (DQ-281) and not implemented; H-09 not yet in the HARA"
+    open_because: "Today the car stops in the lane 5 s after the last alert, but with no requirement, announcement or standstill hold; the reaction the H-09 goal needs is DQ-281; H-09 not yet in the HARA"
   - id: LS-36
     ucas: [UCA-07]
     hazards: [H-07, H-03, H-04]
