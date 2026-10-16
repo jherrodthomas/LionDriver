@@ -191,5 +191,41 @@ class TestFigures(unittest.TestCase):
       self.assertIn(f"({name})", readme)
 
 
+class TestDetectionEvidence(unittest.TestCase):
+  """Figure 3-13 classifies cited tests from the repository; check the rules on known files."""
+
+  @classmethod
+  def setUpClass(cls):
+    cls.idx = fd.TestIndex(workflows="run: openpilot/selfdrive/test/process_replay/test_processes.py",
+                           ignored=["openpilot/tools/sim"], native="", panda_suites={"reference_lock"})
+
+  def test_submodule_paths_by_rule(self):
+    c = self.idx.classify
+    self.assertEqual(c("opendbc_repo/opendbc/safety/tests/test_toyota.py")[0], "ci")
+    self.assertEqual(c("panda/tests/reference_lock/test_reference_lock.py")[0], "ci")
+    self.assertEqual(c("panda/tests/heartbeat_monitor/test_heartbeat_monitor.py")[0], "not_run")
+    self.assertEqual(c("panda/tests/hitl/test_6_safety.py")[0], "hardware")
+    self.assertEqual(c("msgq_repo/msgq/tests/test_fake.py")[0], "not_run")
+
+  def test_openpilot_files_read_from_the_repository(self):
+    c = self.idx.classify
+    self.assertEqual(c("openpilot/selfdrive/test/process_replay/test_processes.py")[0], "ci")   # named in a workflow
+    self.assertEqual(c("openpilot/selfdrive/selfdrived/tests/test_state_machine.py")[0], "ci")  # TestCase
+    self.assertEqual(c("openpilot/selfdrive/pandad/tests/test_pandad_spi.py")[0], "hardware")  # COMMA_HARDWARE_TEST
+    self.assertEqual(c("openpilot/selfdrive/no_such_test.py")[0], "missing")
+
+  def test_cause_class_uses_detection_rating(self):
+    ci = {"detection_controls": [{"test": "opendbc_repo/opendbc/safety/tests/test_toyota.py"}]}
+    self.assertEqual(fd.cause_evidence({**ci, "detection": 3}, self.idx), "proven")
+    self.assertEqual(fd.cause_evidence({**ci, "detection": 7}, self.idx), "targeted")
+    self.assertEqual(fd.cause_evidence({**ci, "detection": 9}, self.idx), "generic")
+    self.assertEqual(fd.cause_evidence({"detection_controls": [{"description": "x"}], "detection": 10}, self.idx), "none")
+
+  def test_suites_and_ignores_parsed_from_ci(self):
+    idx = fd.TestIndex.load()
+    self.assertIn("reference_lock", idx.panda_suites)
+    self.assertIn("openpilot/selfdrive/test/process_replay/test_processes.py", idx.ignored)
+
+
 if __name__ == "__main__":
   unittest.main()

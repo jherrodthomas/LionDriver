@@ -16,6 +16,8 @@ Generated from the YAML analyses in [`analyses/`](../../analyses/) by `tools/saf
 | 3-9 | PFMEA failure chains: element → function → failure mode → causes (steps 4–6) | `analyses/pfmea.yaml` | [1](fig-3-9-pfm-failure-chains-1.svg), [2](fig-3-9-pfm-failure-chains-2.svg) |
 | 3-10 | FMEDA SG-001: SPFM, LFM, λSPF+λRF against ASIL D (estimate, not verified) | `analyses/fmeda-sg001.yaml` | [fig-3-10-fmeda-sg001-metrics.svg](fig-3-10-fmeda-sg001-metrics.svg) |
 | 3-11 | FMEDA SG-009: SPFM, LFM, λSPF+λRF against ASIL B (estimate, not verified) | `analyses/fmeda-sg009.yaml` | [fig-3-11-fmeda-sg009-metrics.svg](fig-3-11-fmeda-sg009-metrics.svg) |
+| 3-12 | SW FMEA: occurrence × detection per element, with the moves predicted by planned actions | `analyses/sw-fmea.yaml` | [fig-3-12-swf-od-elements.svg](fig-3-12-swf-od-elements.svg) |
+| 3-13 | SW FMEA: what each detection rating rests on (test run in CI, hardware only, not run, none) | `analyses/sw-fmea.yaml, .github/workflows/, tools/test_runner.py` | [fig-3-13-swf-detection-evidence.svg](fig-3-13-swf-detection-evidence.svg) |
 | 4-1 | Action Priority overview of the four FMEAs | `analyses/*fmea.yaml` | [fig-4-1-action-priority-overview.svg](fig-4-1-action-priority-overview.svg) |
 
 Conventions: Action Priority H / M / L in red / amber / teal as rated in the YAML; predicted ratings of open actions are hatched and dashed and never shown as achieved. FMEDA metrics are drawn from generic failure-rate estimates and are marked as not verified; a target met on the estimate is amber, never green. In the DFA, green marks only measures recorded as `existing` (verified); `existing_unverified` is amber.
