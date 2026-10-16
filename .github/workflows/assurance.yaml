@@ -254,6 +254,10 @@ jobs:
       run: |
         python3 assurance/sim/plant/report.py --check
         python3 assurance/sim/plant/test_plant.py
+    - name: Failure search (Monte Carlo and cross-entropy over the plant model) current, and its tests
+      run: |
+        python3 assurance/sim/search/search.py --check
+        python3 assurance/sim/search/test_search.py
     - name: Plant FMU (FMI 2.0, pythonfmu) built and run by FMPy, same trajectory as the plant in-process
       run: python3 assurance/sim/plant/fmu/test_fmu.py
 
