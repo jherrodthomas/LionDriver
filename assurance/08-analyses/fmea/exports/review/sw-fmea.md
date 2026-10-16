@@ -4,9 +4,9 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.9 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 1.0 | draft | BL-005 | RT-2 | 2026-10-16 |
 
-**Scope.** P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071).
+**Scope.** P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084).
 
 **Team.** Jherrod Thomas (Project maintainer, safety lead (reviewer/approver)); Claude (AI assistant) (Drafting assistance; ratings require human review)
 
@@ -138,6 +138,19 @@ The failure chains (element → function → failure mode → causes) are drawn 
 | &nbsp;&nbsp;&nbsp;`SWF-SE-072` Forward collision warning decision | sw_unit | `SWF-FN-071` Raise a forward collision warning when a collision with the lead is predicted |
 | `SWF-SE-080` Lead estimation (radard and the Toyota radar interface) | sw_element | — |
 | &nbsp;&nbsp;&nbsp;`SWF-SE-081` Lead selection and radar/vision fusion | sw_unit | `SWF-FN-080` Provide the lead state (distance, relative speed and acceleration) from radar tracks matched to model leads, and flag radar faults |
+| `SWF-SE-090` Driving model process (modeld) | sw_element | — |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-091` Model execution, output parsing and validity | sw_unit | `SWF-FN-090` Publish model outputs (desired curvature, leads) for every road frame, computed from the current frame and calibration, and mark output that is not fit for use as invalid |
+| `SWF-SE-100` Localization and calibration (locationd, calibrationd, paramsd, torqued, lagd) | sw_element | — |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-101` locationd pose filter | sw_unit | `SWF-FN-100` Provide a calibrated pose from valid IMU and camera odometry, and report invalid inputs within the reaction time |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-102` Camera calibration (calibrationd) | sw_unit | `SWF-FN-101` Report camera calibration as valid only when the learned extrinsics match the mount |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-103` Online vehicle parameters (paramsd, torqued, lagd) | sw_unit | `SWF-FN-102` Provide vehicle parameters within plausible bounds and report them invalid otherwise |
+| `SWF-SE-110` Camera acquisition (camerad) | sw_element | `SWF-FN-110` Deliver every road, wide and driver camera frame once, in order and synchronised, and make a stopped or failed camera visible |
+| `SWF-SE-120` IMU acquisition (sensord) | sw_element | `SWF-FN-120` Deliver accelerometer and gyro samples with correct timestamps, and mark implausible data invalid |
+| `SWF-SE-130` Messaging (cereal and msgq) | sw_element | — |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-131` SubMaster liveness and validity | sw_unit | `SWF-FN-130` Report an input as alive and valid only while it is received at its rate and flagged valid |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-132` msgq ring buffer | sw_unit | `SWF-FN-131` Deliver every published message intact to each subscriber, or make the loss visible |
+| `SWF-SE-140` Process manager (manager) | sw_element | `SWF-FN-140` Run every process the configuration needs and report any that is not running |
+| `SWF-SE-150` Software update (updated) | sw_element | `SWF-FN-150` Install only the released, assured software version, and never change running software while driving |
 
 ## 4. Worksheet
 
@@ -1539,6 +1552,265 @@ Safety mechanisms: (1) Panda deceleration bound -3.5 m/s² (SWF-003); driver can
 
 <sub>Note: Host side of System FMEA SFM-009.C1. Radar ghosts and model false positives are SOTIF.</sub>
 
+### `SWF-SE-090` Driving model process (modeld)
+
+#### SWF-073 · modeld stops while engaged
+
+🔴 **H** · **S 10** · guideword *crash* · function `SWF-FN-090` Publish model outputs (desired curvature, leads) for every road frame, computed from the current frame and calibration, and mark output that is not fit for use as invalid
+
+Effects:
+
+- **End:** Loss of lateral control while engaged; the take-over alert follows within about 0.5 s (HZ-004, S 10)
+- **Next higher:** controlsd ends lateral control 0.5 s after the last modelV2 (TSR-602); selfdrived commIssue / processNotRunning soft disable; manager does not restart modeld
+- **Local:** No modelV2
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-073.C1` Unhandled exception in the small-model path: a run exception re-raises (modeld.py:412-413); a short frame buffer or a missing output head raises (modeld.py:194; parse_model_outputs.py:24-28) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • modeld has no unit tests, is excluded from process replay (EXCLUDED_PROCS) and from test_fuzzy, and model_replay is not run in LionDriver CI; test_onroad timing checks are device-only | 4 | 10 | 🔴 **H** | SWF-ACT-065, SWF-ACT-066 |
+
+Safety mechanisms: (1) controlsd freshness gate and selfdrived soft disable with alert
+
+#### SWF-074 · A model file other than the released one is loaded
+
+🔴 **H** · **S 10** · guideword *wrong_mode* · function `SWF-FN-090` Publish model outputs (desired curvature, leads) for every road frame, computed from the current frame and calibration, and mark output that is not fit for use as invalid
+
+Effects:
+
+- **End:** Any lateral or longitudinal hazard within the panda envelope (HZ-003, S 10)
+- **Next higher:** Outputs of an unvalidated model reach the controllers
+- **Local:** Driving or DM model weights or warp other than the analysed ones
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-074.C1` Models are loaded with pickle and no hash, version or signature check (helpers.py:15-20; modeld.py:158-159; dmonitoringmodeld.py:22-48; GAP-22, TSR-616); they are compiled at build time from git-LFS sources (modeld/SConscript:41-52) | • Build from pinned LFS objects; release procedure (WP-P-10) draft <sub>openpilot/selfdrive/modeld/SConscript</sub> | • No test targets this cause | 3 | 10 | 🔴 **H** | SWF-ACT-065 |
+
+Safety mechanisms: (1) Panda envelope (SWF-001, SWF-003); driver supervision
+
+<sub>Note: Also a PFMEA (release) and cybersecurity topic.</sub>
+
+### `SWF-SE-091` Model execution, output parsing and validity
+
+#### SWF-072 · modelV2 published as valid while its content is non-finite, from an old frame, or computed with an invalid calibration
+
+🔴 **H** · **S 10** · guideword *value_stale* · function `SWF-FN-090` Publish model outputs (desired curvature, leads) for every road frame, computed from the current frame and calibration, and mark output that is not fit for use as invalid
+
+Effects:
+
+- **End:** Lateral control steers toward the lane boundary (HZ-003, S 10)
+- **End:** Contributes to HZ-007 (wrong or missing lead) (HZ-007, S 10)
+- **Next higher:** controlsd steers on it unless the curvature is non-finite (SWF-045); radard and plannerd use the leads
+- **Local:** desiredCurvature or leads wrong while modelV2.valid is true
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-072.C1` modelV2.valid only says a calibration has been seen (fill_model_msg.py:59, 79; modeld.py:434). The small model's outputs get no finiteness check (modeld.py:210-211 checks the big model only; TSR-616, GAP-22): non-finite leads reach radard and plannerd | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • modeld has no unit tests, is excluded from process replay (EXCLUDED_PROCS) and from test_fuzzy, and model_replay is not run in LionDriver CI; test_onroad timing checks are device-only | 4 | 10 | 🔴 **H** | SWF-ACT-065, SWF-ACT-060 |
+| `SWF-072.C2` Frame-drop accounting misses repeats: dropped frames are max(0, frame_id gap - 1), so a repeated or regressing frame_id counts as 0 (modeld.py:385); drops are forced to 0 for the first 10 runs and filtered with a 10 s time constant (386-389), so modeldLagging comes late | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • modeld has no unit tests, is excluded from process replay (EXCLUDED_PROCS) and from test_fuzzy, and model_replay is not run in LionDriver CI; test_onroad timing checks are device-only | 4 | 10 | 🔴 **H** | SWF-ACT-065 |
+| `SWF-072.C3` The calibration is used whenever extrinsicsCalibration updates, without checking calStatus or valid (modeld.py:367-375), so a recalibrating or invalid calibration warps the input; selfdrived reacts to the calibration status separately | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • modeld has no unit tests, is excluded from process replay (EXCLUDED_PROCS) and from test_fuzzy, and model_replay is not run in LionDriver CI; test_onroad timing checks are device-only | 5 | 10 | 🔴 **H** | SWF-ACT-065 |
+
+Safety mechanisms: (1) controlsd turns lateral control off for a non-finite curvature and on a modelV2 older than 0.5 s (TSR-602, SWF-045) · (2) selfdrived calibrationInvalid / calibrationRecalibrating (SOFT_DISABLE) and modeldLagging when frameDropPerc > 1 (SOFT_DISABLE) · (3) Panda torque and acceleration bounds (SWF-001, SWF-003)
+
+<sub>Note: Software side of System FMEA SFM-006.C2 and SFM-003.C3. Wrong curvature or leads from correct inputs is SOTIF / ISO PAS 8800 (fmea-plan §7.3).</sub>
+
+### `SWF-SE-101` locationd pose filter
+
+#### SWF-077 · IMU or pose fault reported to the supervision late
+
+🔴 **H** · **S 10** · guideword *late* · function `SWF-FN-100` Provide a calibrated pose from valid IMU and camera odometry, and report invalid inputs within the reaction time
+
+Effects:
+
+- **End:** Contributes to HZ-003 (roll compensation) and to an undetected excessive actuation (HZ-003, S 10)
+- **Next higher:** Roll compensation, the excessive-actuation monitor and torqued work on a wrong pose
+- **Local:** deviceMotion from an IMU that stopped or is implausible
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-077.C1` selfdrived ignores accelerometer and gyro in its alive/valid checks and raises sensorDataInvalid only after 10 s without data (selfdrived.py:101, 454-456); deviceMotion.sensorsOK is not consumed by selfdrived (only paramsd and torqued) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_locationd_scenarios.py (CI; downloads a route) covers sensor faults in locationd; not designed for the selfdrived reaction time <sub>openpilot/selfdrive/locationd/test/test_locationd_scenarios.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-067 |
+
+Safety mechanisms: (1) locationd sensor checks (norms, gyro vs camera yaw rate, timestamps) and locationdTemporaryError / posenetInvalid (SOFT_DISABLE)
+
+<sub>Note: Software side of System FMEA SFM-030.C1 and SFM-031.C1.</sub>
+
+### `SWF-SE-102` Camera calibration (calibrationd)
+
+#### SWF-075 · Camera calibration reported valid while the extrinsics do not match the mount
+
+🔴 **H** · **S 10** · guideword *corrupted* · function `SWF-FN-101` Report camera calibration as valid only when the learned extrinsics match the mount
+
+Effects:
+
+- **End:** Lateral control steers toward the lane boundary (HZ-003, S 10)
+- **Next higher:** modeld warps the frames with a wrong pose; desired curvature biased
+- **Local:** rpyCalib off by less than the recalibration thresholds
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-075.C1` Calibration learns only above 15 mph with a yaw rate below 2 deg/s and recalibrates only beyond the spread thresholds (calibrationd.py:33-46, 138-167, 190-201), so a mount that moved by less than the thresholds stays calibrated | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_calibrationd.py (CI) checks status transitions on synthetic data; targeted at the thresholds, not proven <sub>openpilot/selfdrive/locationd/test/test_calibrationd.py</sub> | 5 | 8 | 🔴 **H** | SWF-ACT-067 |
+
+Safety mechanisms: (1) Recalibration when the spread exceeds 2 deg yaw / 4 deg pitch; pitch/yaw limits; calibrationInvalid SOFT_DISABLE
+
+<sub>Note: Software side of System FMEA SFM-003.C1, SFM-003.C4 and SFM-030.C1; the install check of the mount is PFMEA.</sub>
+
+### `SWF-SE-103` Online vehicle parameters (paramsd, torqued, lagd)
+
+#### SWF-076 · Learned vehicle parameters implausible while used by controlsd
+
+🔴 **H** · **S 10** · guideword *value_high* · function `SWF-FN-102` Provide vehicle parameters within plausible bounds and report them invalid otherwise
+
+Effects:
+
+- **End:** Lateral control steers toward the lane boundary or overshoots (HZ-003, S 10)
+- **Next higher:** Lateral controller gain or feed-forward wrong; vehicleParameters valid false raises paramsdTemporaryError only while calibrated
+- **Local:** steerRatio, stiffness, roll, angle offset, torque factor or lateral delay outside a plausible range
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-076.C1` paramsd publishes values that are not clipped to its own validity bounds (paramsd.py:155-182), and controlsd uses steerRatio and stiffness with only a 0.1 floor and no validity gate (controlsd.py:88-91; SWF-042.C3) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_paramsd.py (CI) checks the saved-parameter handling; not designed for out-of-bound use <sub>openpilot/selfdrive/locationd/test/test_paramsd.py</sub> | 5 | 9 | 🔴 **H** | SWF-ACT-045 |
+
+Safety mechanisms: (1) Panda torque bounds; torqued clips the factor to ±30 % and friction to ±50 %; lagd clamps the delay to 0.15..0.65 s when estimated
+
+<sub>Note: Software side of System FMEA SFM-002.C4.</sub>
+
+### `SWF-SE-110` Camera acquisition (camerad)
+
+#### SWF-078 · Road camera frames stop, are dropped or lose sync without an error flag
+
+🔴 **H** · **S 10** · guideword *omission* · function `SWF-FN-110` Deliver every road, wide and driver camera frame once, in order and synchronised, and make a stopped or failed camera visible
+
+Effects:
+
+- **End:** Lateral control from degraded model output (HZ-003, S 10)
+- **Next higher:** modeld runs on fewer or skewed frames (SWF-072); selfdrived cameraMalfunction / cameraFrameRate only when the rate or liveness fails
+- **Local:** Gaps in the frame stream, or main and wide frames out of sync
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-078.C1` camerad never marks a frame invalid (messages default to valid, cereal/messaging/messaging.h:47); frames that fail sync or arrive out of order are dropped silently (spectra.cc:1407-1481), and a sensor that fails bring-up or an I2C write is only disabled with a log (spectra.cc:320-351) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_camerad.py (frame skips, sync, stress) is a hardware test, not run in LionDriver CI | 5 | 10 | 🔴 **H** | SWF-ACT-068 |
+| `SWF-078.C2` If the narrow or wide road stream is absent when selfdrived initialises, it is put on the ignore_alive and ignore_valid lists for the whole drive (selfdrived.py:518-524), so a camera that is not up at start is never supervised | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No test targets this cause | 3 | 10 | 🔴 **H** | SWF-ACT-068 |
+| `SWF-078.C3` First-frame sync across cameras gives up after 40 frames and runs unsynchronised with only a log (spectra.cc:1550-1576); modeld only logs a main/wide skew over 10 ms (modeld.py:352-354) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No test targets this cause | 3 | 10 | 🔴 **H** | SWF-ACT-068 |
+
+Safety mechanisms: (1) selfdrived cameraMalfunction and cameraFrameRate (SOFT_DISABLE, selfdrived.py:401-405); modeldLagging
+
+<sub>Note: Software side of System FMEA SFM-006.C2.</sub>
+
+### `SWF-SE-120` IMU acquisition (sensord)
+
+#### SWF-079 · IMU samples implausible or stuck while published as valid
+
+🔴 **H** · **S 10** · guideword *value_frozen* · function `SWF-FN-120` Deliver accelerometer and gyro samples with correct timestamps, and mark implausible data invalid
+
+Effects:
+
+- **End:** Contributes to HZ-003 through a wrong pose (SWF-077) (HZ-003, S 10)
+- **Next higher:** locationd rejects them only if they fail its norm and cross-checks
+- **Local:** Accelerometer or gyro values out of range or repeated with valid true
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-079.C1` No range, stuck-value or plausibility check at the source: every sample after the 0.5 s warm-up is valid (sensord.py:68-70; i2c_sensor.py:58-63); init and read errors are logged and sensord keeps running without the sensor (sensord.py:73-76, 104-126); self-test only with LSM_SELF_TEST=1 | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_sensord.py is a hardware test, not run in LionDriver CI | 4 | 10 | 🔴 **H** | SWF-ACT-067 |
+
+Safety mechanisms: (1) locationd range and cross-checks (locationd.py:111-140)
+
+<sub>Note: Software side of System FMEA SFM-031.C1.</sub>
+
+### `SWF-SE-131` SubMaster liveness and validity
+
+#### SWF-081 · An input is reported alive and valid while it is stale
+
+🔴 **H** · **S 10** · guideword *value_stale* · function `SWF-FN-130` Report an input as alive and valid only while it is received at its rate and flagged valid
+
+Effects:
+
+- **End:** Contributes to HZ-003 and HZ-007 (control on held inputs) (HZ-003, S 10)
+- **Next higher:** Consumers act on held values for 0.1 s (100 Hz) to 1 s (10 Hz pandaStates) before any reaction
+- **Local:** SubMaster.alive true for up to 10 periods after the last message; freq_ok true on a 10 s or 1 s average
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-081.C1` By design alive means received within 10 nominal periods and freq_ok passes if the 10 s or the 1 s average is within 0.8..1.2 of the rate (__init__.py:138-178, 265-278); TSR-602 asks 2 periods. SIMULATION=1 relaxes both checks (__init__.py:213, 265-266) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_pub_sub_master.py (CI) tests the alive and valid semantics; targeted at the mechanism, not at the bound <sub>openpilot/cereal/messaging/tests/test_pub_sub_master.py</sub> | 7 | 8 | 🔴 **H** | SWF-ACT-040 |
+
+Safety mechanisms: (1) controlsd freshness gate on its inputs (TSR-602); panda TX arrival and heartbeat supervision
+
+<sub>Note: Software side of System FMEA SFM-006.C3 and SFM-005.C3. The bound is the one controlsd's TSR-602 gate reuses (IA host-supervision OI-1).</sub>
+
+### `SWF-SE-132` msgq ring buffer
+
+#### SWF-080 · Messages lost or altered between publisher and subscriber without the subscriber knowing
+
+🔴 **H** · **S 10** · guideword *omission* · function `SWF-FN-131` Deliver every published message intact to each subscriber, or make the loss visible
+
+Effects:
+
+- **End:** Contributes to HZ-003 and HZ-007 through stale or wrong inputs (HZ-003, S 10)
+- **Next higher:** Consumers see only gaps beyond 10 periods (SubMaster) or parse errors
+- **Local:** A reader skips messages or receives a corrupted payload
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-080.C1` A lapped reader is reset to the write pointer and silently skips the lost messages (msgq.cc:72-76, 262-293, 331-333, 385-426); a 16th subscriber evicts every reader, which reconnect silently (msgq.h:9; msgq.cc:196-207, 324-327) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • msgq tests (msgq_repo/msgq/tests) are outside openpilot/ and not run by LionDriver CI | 3 | 10 | 🔴 **H** | SWF-ACT-069 |
+| `SWF-080.C2` No checksum on payloads in shared memory: a writer defect or a memory fault reaches the consumer; only corrupt sizes are caught, by assert (abort, msgq.cc:399-400) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No test targets this cause | 3 | 10 | 🔴 **H** | SWF-ACT-069 |
+
+Safety mechanisms: (1) SubMaster alive and frequency checks in the consumers (SWF-081); capnp parse errors raise
+
+<sub>Note: Software side of System FMEA SFM-006.C3. A draft upstream sync of msgq (sync-2026-10-10-msgq-326a9f5) is not applied.</sub>
+
+### `SWF-SE-140` Process manager (manager)
+
+#### SWF-082 · A process the drive needs is not running and is not reported
+
+🔴 **H** · **S 10** · guideword *omission* · function `SWF-FN-140` Run every process the configuration needs and report any that is not running
+
+Effects:
+
+- **End:** Take-over alerts not presented while the item runs (HZ-012, S 10)
+- **Next higher:** No processNotRunning event; a process that selfdrived does not subscribe to (soundd, ui) is then not supervised at all
+- **Local:** A process blocked or never started has no process entry, so managerState shows shouldBeRunning false
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-082.C1` The BLOCK environment variable or a process that never starts leaves proc None, so shouldBeRunning is false and no event fires (manager.py:110-112; process.py:121-129) | • No launch path sets BLOCK; setting it needs a shell on the device <sub>openpilot/system/manager/manager.py</sub> | • test_manager.py (CI) checks blacklisted processes do not start; not designed for the missing report <sub>openpilot/system/manager/test/test_manager.py</sub> | 2 | 9 | 🔴 **H** | SWF-ACT-070 |
+
+Safety mechanisms: (1) selfdrived commIssue for services it subscribes to that were never received (NO_ENTRY); processNotRunning for a crashed process
+
+#### SWF-083 · A crashed process stays down for the rest of the drive
+
+🔴 **H** · **S 8** · guideword *omission* · function `SWF-FN-140` Run every process the configuration needs and report any that is not running
+
+Effects:
+
+- **End:** Item unavailable after one crash, with an alert
+- **Next higher:** processNotRunning (SOFT_DISABLE, NO_ENTRY) for the rest of the drive
+- **Local:** No restart and no watchdog: start() returns while proc is set, so the process is restarted only after an offroad transition
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-083.C1` By design manager has no restart policy or process watchdog (process.py:142-154, 223-238) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • test_manager.py (CI); test_clean_exit is skipped; nothing tests restart behaviour <sub>openpilot/system/manager/test/test_manager.py</sub> | 8 | 9 | 🔴 **H** | SWF-ACT-070 |
+
+Safety mechanisms: (1) processNotRunning soft disable with alert
+
+<sub>Note: Severity 8 (availability, with alert). Not restarting is the safe direction for authority; the question is availability, so no lead decision is raised here.</sub>
+
+### `SWF-SE-150` Software update (updated)
+
+#### SWF-084 · An update installs software other than the released, assured version
+
+🔴 **H** · **S 10** · guideword *wrong_mode* · function `SWF-FN-150` Install only the released, assured software version, and never change running software while driving
+
+Effects:
+
+- **End:** Unassured host and panda software drives the car (HZ-002, S 10)
+- **End:** Contributes to HZ-006 (deceleration checked by an unassured envelope) (HZ-006, S 10)
+- **Next higher:** It is swapped in at the next boot; pandad flashes the panda build of that checkout
+- **Local:** The finalized overlay holds another commit of the tracked branch, or of another remote
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-084.C1` No signature or commit-pin check: updated fetches the UpdaterTargetBranch (or the current branch) from the install's origin and trusts the git transport (updated.py:237-248, 343-410); there is no automatic rollback (launch_chffrplus.sh:52-65) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No updated tests exist | 4 | 10 | 🔴 **H** | SWF-ACT-071 |
+
+Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (launch_chffrplus.sh:46-62), so running software never changes while driving; the consistency flag is cleared at the start of a fetch · (2) pandad refuses a car mode on a non-reference panda (TSR-619); assured_config logs the commit and origin (CA-008)
+
+<sub>Note: Also PFMEA (OTA update and rollback) and cybersecurity.</sub>
+
 ## 5. Actions
 
 | ID | Kind | Action | Owner | Status | Causes | Revised S/O/D → AP |
@@ -1574,12 +1846,12 @@ Safety mechanisms: (1) Panda deceleration bound -3.5 m/s² (SWF-003); driver can
 | SWF-ACT-037 | design_change | selfdrived liveness: ui and soundd raise the critical takeover alert within 0.5 s of missing selfdriveState while engaged (EL-05 change, TSR-622); add a process watchdog for selfdrived; remove selfdrived from the fuzz NOT_TESTED list | Jherrod Thomas | open | SWF-036.C1, SWF-036.C2 | — |
 | SWF-ACT-038 | design_change | Revisit TSR-617: set excessive-actuation thresholds from the vehicle envelope and fork drive logs, bound the device_motion_valid reset, check longitudinal response during override, and add unit tests for helpers.py | Jherrod Thomas | open | SWF-037.C1, SWF-037.C2 | — |
 | SWF-ACT-039 | design_change | Resolve FSR-033 against the implementation: either revise FSR-033 to the actual yield strategy (integrator freeze, panda bound, override force verified by the FSR-031 vehicle test) or ramp the torque request down while steeringPressed | Jherrod Thomas | open | SWF-038.C1 | — |
-| SWF-ACT-040 | design_change | Implement TSR-602 in controlsd: check age and valid of selfdriveState, carState, modelV2, longitudinalPlan, vehicleParameters and deviceMotion before use (≤ 2 periods); set latActive/longActive false and raise an immediate-disable event when stale; derive carControl.valid from these checks and have card stop actuating on carControl.valid false; give cruiseMismatch a disable type | Jherrod Thomas | in_progress | SWF-040.C1, SWF-042.C3, SWF-043.C1, SWF-043.C2, SWF-048.C1, SWF-065.C1 | 10/3/4 → 🟢 L |
+| SWF-ACT-040 | design_change | Implement TSR-602 in controlsd: check age and valid of selfdriveState, carState, modelV2, longitudinalPlan, vehicleParameters and deviceMotion before use (≤ 2 periods); set latActive/longActive false and raise an immediate-disable event when stale; derive carControl.valid from these checks and have card stop actuating on carControl.valid false; give cruiseMismatch a disable type | Jherrod Thomas | in_progress | SWF-040.C1, SWF-042.C3, SWF-043.C1, SWF-043.C2, SWF-048.C1, SWF-065.C1, SWF-081.C1 | 10/3/4 → 🟢 L |
 | SWF-ACT-041 | design_change | Implement TSR-604: treat any non-finite input or actuator value as a fault (immediate disable with alert), reset desired_curvature and both controllers' state, and guard lateralDelay before the int() conversion | Jherrod Thomas | in_progress | SWF-045.C1, SWF-045.C2, SWF-047.C1 | 10/3/4 → 🟢 L |
 | SWF-ACT-042 | design_change | Reset the LatControlTorque PID (and LatControlPID) in reset(), or record why upstream carries the integrator over engagements; check against current upstream openpilot | Jherrod Thomas | open | SWF-042.C1 | — |
 | SWF-ACT-043 | detection | Requirements-based unit tests for controlsd and the Toyota CarController (latActive/longActive gating table per FSR-006, zero torque and request bit off when not active, controller reset across disengagement, cancel on every disengagement path, active-torque frames accepted by the panda model at the limits), run in LionDriver CI and proven by mutation | Jherrod Thomas | open | SWF-041.C1, SWF-042.C1, SWF-047.C3 | — |
 | SWF-ACT-044 | detection | Add NaN/inf and stale-input injection for controlsd and card (enable them in test_fuzzy.py with the Corolla fingerprint, or a dedicated test), and run the opendbc car tests (test_models, test_car_interfaces, test_lateral_limits) for Toyota in LionDriver CI | Jherrod Thomas | open | SWF-045.C1, SWF-045.C2, SWF-047.C1, SWF-047.C3, SWF-056.C2, SWF-056.C3, SWF-057.C1, SWF-059.C1, SWF-060.C1 | — |
-| SWF-ACT-045 | design_change | Implement TSR-605 margins on the host: bound latAccelOffset and torque parameters in controlsd, apply the acceleration rate limit after pitch compensation and the CarController PID, gate pitch compensation on a valid calibrated pose, and keep host torque/accel limits below the panda limits | Jherrod Thomas | open | SWF-042.C2, SWF-042.C3, SWF-046.C1, SWF-046.C2 | — |
+| SWF-ACT-045 | design_change | Implement TSR-605 margins on the host: bound latAccelOffset and torque parameters in controlsd, apply the acceleration rate limit after pitch compensation and the CarController PID, gate pitch compensation on a valid calibrated pose, and keep host torque/accel limits below the panda limits | Jherrod Thomas | open | SWF-042.C2, SWF-042.C3, SWF-046.C1, SWF-046.C2, SWF-076.C1 | — |
 | SWF-ACT-046 | design_change | SoC counterpart of TSR-304 (STPA OI-2, FSR-033) - ramp commanded torque toward zero while steeringPressed, or leave latActive during a lateral override, with the override threshold taken from WP-C-08 | Jherrod Thomas | open | SWF-044.C1 | — |
 | SWF-ACT-047 | design_change | Implement TSR-613: remove the lateralManeuverPlan subscription and the maneuver/joystick processes from the reference build | Jherrod Thomas | open | SWF-040.C1, SWF-049.C1 | — |
 | SWF-ACT-048 | detection | Bench or HIL fault injection (WP-V-05) - stop or stall selfdrived, modeld, plannerd and controlsd while engaged and measure time to zero torque/acceleration and to the alert; run test_onroad timing tests on a comma 3X for each release | Jherrod Thomas | open | SWF-043.C1, SWF-047.C2, SWF-068.C2 | — |
@@ -1594,11 +1866,18 @@ Safety mechanisms: (1) Panda deceleration bound -3.5 m/s² (SWF-003); driver can
 | SWF-ACT-057 | design_change | Pin the reference identification: accept only an exact FW match to TOYOTA_COROLLA_TSS2 with the expected CarParams for the assured configuration (report a fuzzy match through assured_config), ignore FINGERPRINT in release builds, and re-query FW after a VIN-cache hit when an ECU version changed | Jherrod Thomas | open | SWF-058.C1, SWF-058.C2 | — |
 | SWF-ACT-058 | design_change | Driver monitoring robustness: time-based policy timers (monotonic clock), a finiteness and length check of driverStateV2 (non-finite or empty treated as uncertain, not attentive), a length check on brakeDisengageProbs, and unit tests for each in CI (NaN pose, 16 Hz model, empty arrays) | Jherrod Thomas | open | SWF-061.C1, SWF-061.C2, SWF-061.C3, SWF-063.C1, SWF-063.C2, SWF-064.C1 | — |
 | SWF-ACT-059 | design_change | Define the SG-010 safe state for FSR-040 (lead decision DQ-220) and, if it differs from the current forced deceleration with lateral kept, implement it with a terminal-alert test | Jherrod Thomas | decision_pending | SWF-062.C1 | — |
-| SWF-ACT-060 | detection | Run model_replay for dmonitoringmodeld and modeld in LionDriver CI, and add a non-finite / stale output injection test for dmonitoringd and modeld consumers | Jherrod Thomas | open | SWF-063.C1 | — |
+| SWF-ACT-060 | detection | Run model_replay for dmonitoringmodeld and modeld in LionDriver CI, and add a non-finite / stale output injection test for dmonitoringd and modeld consumers | Jherrod Thomas | open | SWF-063.C1, SWF-072.C1 | — |
 | SWF-ACT-061 | design_change | Longitudinal input validity: plannerd treats an invalid radarState as no lead plus a fault, and controlsd sets longActive false (with an event) when longitudinalPlan.valid is false; keep the coast limit when orientationNED is missing | Jherrod Thomas | open | SWF-065.C1, SWF-065.C2, SWF-065.C3, SWF-070.C2 | — |
 | SWF-ACT-062 | design_change | plannerd robustness: on an MPC failure keep the last valid solution for a bounded time and raise an event if it persists; rate-limit the final aTarget (TSR-624); handle an unknown personality as relaxed; add MPC-failure injection and plannerd fuzzing in CI | Jherrod Thomas | open | SWF-065.C2, SWF-066.C1, SWF-068.C1 | — |
 | SWF-ACT-063 | design_change | Apply the lead's decision on engagement outside the assured configuration (DQ-221): refuse engagement or keep logging, with a test | Jherrod Thomas | decision_pending | SWF-067.C1 | — |
 | SWF-ACT-064 | design_change | radard and FCW review against SG-005/SG-006 with the SOTIF analysis: catch the Kalman dt assertion (reset the filter), allow FCW from a confirmed radar-only lead, and decide the radar-only stationary target treatment (FI-2026-001 CA-002); tests for each | Jherrod Thomas | open | SWF-069.C1, SWF-070.C1, SWF-070.C2, SWF-070.C3, SWF-071.C1, SWF-071.C2 | — |
+| SWF-ACT-065 | design_change | modeld output validity: check finiteness of every output used downstream (small model too, TSR-616), set modelV2.valid false on a non-finite output, a repeated or regressing frame_id, or an invalid calibration status; verify the model file hash at load (GAP-22) | Jherrod Thomas | open | SWF-072.C1, SWF-072.C2, SWF-072.C3, SWF-073.C1, SWF-074.C1 | — |
+| SWF-ACT-066 | detection | Unit tests for modeld output handling (parse, finiteness, frame-drop accounting) and include modeld in model_replay in LionDriver CI (with SWF-ACT-060) | Jherrod Thomas | open | SWF-073.C1 | — |
+| SWF-ACT-067 | design_change | Sensor and pose supervision: make selfdrived react to deviceMotion.sensorsOK and to IMU data older than a few periods (not 10 s); add range and stuck-value checks in sensord; review the calibration recalibration thresholds against the lateral error budget | Jherrod Thomas | open | SWF-075.C1, SWF-077.C1, SWF-079.C1 | — |
+| SWF-ACT-068 | design_change | Camera stream supervision: never ignore a road stream for the reference device (refuse engagement if it is absent at start), mark frames invalid on sync failure, and raise an event when a sensor is disabled; run the camerad hardware tests per release | Jherrod Thomas | open | SWF-078.C1, SWF-078.C2, SWF-078.C3 | — |
+| SWF-ACT-069 | detection | Run the msgq tests in LionDriver CI and assess whether a payload checksum or a lost-message counter is needed for the safety-relevant services (selfdriveState, carControl, sendcan, pandaStates) | Jherrod Thomas | open | SWF-080.C1, SWF-080.C2 | — |
+| SWF-ACT-070 | design_change | Manager supervision: report every process the configuration needs (including blocked or never started ones) in managerState, ignore BLOCK in release builds, and decide whether a crashed safety process may be restarted offroad only | Jherrod Thomas | open | SWF-082.C1, SWF-083.C1 | — |
+| SWF-ACT-071 | design_change | Update integrity: pin the update to signed release tags of the LionDriver repository and verify the signature before finalizing; define rollback (with the PFMEA OTA steps) | Jherrod Thomas | open | SWF-084.C1 | — |
 
 ## 6. Priority H causes without a completed action
 
@@ -1709,3 +1988,21 @@ Safety mechanisms: (1) Panda deceleration bound -3.5 m/s² (SWF-003); driver can
 | `SWF-070.C3` | Lead missed or reported late while a lead is present | 10/4/9 | SWF-ACT-064 |
 | `SWF-071.C1` | False or wrong lead reported | 10/6/9 | SWF-ACT-064 |
 | `SWF-071.C2` | False or wrong lead reported | 10/6/9 | SWF-ACT-064 |
+| `SWF-072.C1` | modelV2 published as valid while its content is non-finite, from an old frame, or computed with an invalid calibration | 10/4/10 | SWF-ACT-065, SWF-ACT-060 |
+| `SWF-072.C2` | modelV2 published as valid while its content is non-finite, from an old frame, or computed with an invalid calibration | 10/4/10 | SWF-ACT-065 |
+| `SWF-072.C3` | modelV2 published as valid while its content is non-finite, from an old frame, or computed with an invalid calibration | 10/5/10 | SWF-ACT-065 |
+| `SWF-073.C1` | modeld stops while engaged | 10/4/10 | SWF-ACT-065, SWF-ACT-066 |
+| `SWF-074.C1` | A model file other than the released one is loaded | 10/3/10 | SWF-ACT-065 |
+| `SWF-075.C1` | Camera calibration reported valid while the extrinsics do not match the mount | 10/5/8 | SWF-ACT-067 |
+| `SWF-076.C1` | Learned vehicle parameters implausible while used by controlsd | 10/5/9 | SWF-ACT-045 |
+| `SWF-077.C1` | IMU or pose fault reported to the supervision late | 10/6/9 | SWF-ACT-067 |
+| `SWF-078.C1` | Road camera frames stop, are dropped or lose sync without an error flag | 10/5/10 | SWF-ACT-068 |
+| `SWF-078.C2` | Road camera frames stop, are dropped or lose sync without an error flag | 10/3/10 | SWF-ACT-068 |
+| `SWF-078.C3` | Road camera frames stop, are dropped or lose sync without an error flag | 10/3/10 | SWF-ACT-068 |
+| `SWF-079.C1` | IMU samples implausible or stuck while published as valid | 10/4/10 | SWF-ACT-067 |
+| `SWF-080.C1` | Messages lost or altered between publisher and subscriber without the subscriber knowing | 10/3/10 | SWF-ACT-069 |
+| `SWF-080.C2` | Messages lost or altered between publisher and subscriber without the subscriber knowing | 10/3/10 | SWF-ACT-069 |
+| `SWF-081.C1` | An input is reported alive and valid while it is stale | 10/7/8 | SWF-ACT-040 |
+| `SWF-082.C1` | A process the drive needs is not running and is not reported | 10/2/9 | SWF-ACT-070 |
+| `SWF-083.C1` | A crashed process stays down for the rest of the drive | 8/8/9 | SWF-ACT-070 |
+| `SWF-084.C1` | An update installs software other than the released, assured version | 10/4/10 | SWF-ACT-071 |

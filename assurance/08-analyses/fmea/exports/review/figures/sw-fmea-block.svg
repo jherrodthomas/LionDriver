@@ -20,8 +20,8 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helveti
 </style>
 <rect class="bg" x="0" y="0" width="1092" height="654" rx="8"/>
 <text x="30.0" y="30.0" class="ink" font-size="15" font-weight="600" text-anchor="start">Software architecture: engagement and actuation path</text>
-<rect x="16" y="152" width="844" height="302" rx="10" class="bd"/>
-<text x="26.0" y="166.0" class="acc" font-size="11" font-weight="600" text-anchor="start">Analysed SW elements, P1 and P2 (SW FMEA scope, BL-005)</text>
+<rect x="16" y="48" width="844" height="406" rx="10" class="bd"/>
+<text x="26.0" y="62.0" class="acc" font-size="11" font-weight="600" text-anchor="start">Analysed SW elements, P1-P3 (SW FMEA scope, BL-005)</text>
 <path d="M198.0 99.0 L330.0 99.0 L330.0 203.0 L462.0 203.0" class="data"/>
 <path d="M462.0 203.0 L455.6 205.7 L455.6 200.3 Z" class="ah"/>
 <path d="M198.0 99.0 L222.0 99.0 L222.0 307.0 L246.0 307.0" class="data"/>
@@ -63,7 +63,7 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helveti
 <path d="M978.0 336.0 L980.7 342.4 L975.3 342.4 Z" class="ah"/>
 <path d="M330.0 336.0 L330.0 486.0" class="data"/>
 <path d="M330.0 486.0 L327.3 479.6 L332.7 479.6 Z" class="ah"/>
-<rect x="30.0" y="70.0" width="168.0" height="58.0" rx="6" class="out"/>
+<rect x="30.0" y="70.0" width="168.0" height="58.0" rx="6" class="in"/>
 <text x="40.0" y="91.0" class="ink" font-size="12" font-weight="600" text-anchor="start">modeld</text>
 <text x="40.0" y="105.0" class="mut" font-size="10.5" text-anchor="start">selfdrive/modeld/modeld.py,</text>
 <text x="40.0" y="117.5" class="mut" font-size="10.5" text-anchor="start">driving model</text>

@@ -1,35 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1409" viewBox="0 0 1280 1409" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1451" viewBox="0 0 1280 1451" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-7. SW FMEA action effect (predicted, not achieved)</title>
-  <desc id="d">SW FMEA (SWF rev 0.9): 113 rated causes, as rated H 106, M 1, L 6; predicted if every action with a revised rating were completed H 85, M 1, L 27. One row per action with a revised rating (SWF-ACT-001, SWF-ACT-002, SWF-ACT-009, SWF-ACT-025, SWF-ACT-030, SWF-ACT-040, SWF-ACT-041, SWF-ACT-054) showing the causes it addresses and the predicted rating, which is not achieved or verified.</desc>
+  <desc id="d">SW FMEA (SWF rev 1.0): 131 rated causes, as rated H 124, M 1, L 6; predicted if every action with a revised rating were completed H 102, M 1, L 28. One row per action with a revised rating (SWF-ACT-001, SWF-ACT-002, SWF-ACT-009, SWF-ACT-025, SWF-ACT-030, SWF-ACT-040, SWF-ACT-041, SWF-ACT-054) showing the causes it addresses and the predicted rating, which is not achieved or verified.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="1409" fill="#FFFFFF"/>
+  <rect width="1280" height="1451" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-7 · SW FMEA — Action Priority before and after planned actions</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 0.9 · BL-005 · draft · actions that record a predicted (`revised`) rating, and the causes they address</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.0 · BL-005 · draft · actions that record a predicted (`revised`) rating, and the causes they address</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="104" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">RATED CAUSES BY ACTION PRIORITY</text>
   <text x="40" y="147" font-size="11" fill="#0F172A" font-weight="600">As rated today</text>
-  <rect x="330" y="134" width="712.9" height="22" fill="#D2553F"/>
-  <text x="686.5" y="149" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 106</text>
-  <rect x="1042.9" y="134" width="6.7" height="22" fill="#D97706"/>
-  <rect x="1049.6" y="134" width="40.4" height="22" fill="#0F766E"/>
-  <text x="1069.8" y="149" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">L 6</text>
-  <text x="1104" y="149" font-size="10.5" fill="#0F172A" font-weight="700">H 106 · M 1 · L 6</text>
+  <rect x="330" y="134" width="719.4" height="22" fill="#D2553F"/>
+  <text x="689.7" y="149" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 124</text>
+  <rect x="1049.4" y="134" width="5.8" height="22" fill="#D97706"/>
+  <rect x="1055.2" y="134" width="34.8" height="22" fill="#0F766E"/>
+  <text x="1072.6" y="149" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">L 6</text>
+  <text x="1104" y="149" font-size="10.5" fill="#0F172A" font-weight="700">H 124 · M 1 · L 6</text>
   <text x="40" y="171" font-size="11" fill="#0F172A" font-weight="600">If every action with a predicted rating were</text>
   <text x="40" y="184" font-size="11" fill="#0F172A" font-weight="600">completed</text>
-  <rect x="330" y="164" width="571.7" height="22" fill="#FBE4DF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="5 3"/>
-  <text x="615.8" y="179" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">H 85</text>
-  <rect x="901.7" y="164" width="6.7" height="22" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" stroke-dasharray="5 3"/>
-  <rect x="908.4" y="164" width="181.6" height="22" fill="url(#hatchA)" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="5 3"/>
-  <text x="999.2" y="179" font-size="10.5" fill="#0F766E" font-weight="700" text-anchor="middle">L 27</text>
-  <text x="1104" y="179" font-size="10.5" fill="#D97706" font-weight="700">H 85 · M 1 · L 27</text>
-  <text x="330" y="206" font-size="10" fill="#D97706" font-weight="600">113 rated causes. Prediction only: the hatched bar uses the `revised` S/O/D of open actions; none of these ratings has been achieved or verified.</text>
+  <rect x="330" y="164" width="591.8" height="22" fill="#FBE4DF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="625.9" y="179" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">H 102</text>
+  <rect x="921.8" y="164" width="5.8" height="22" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <rect x="927.6" y="164" width="162.4" height="22" fill="url(#hatchA)" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="1008.8" y="179" font-size="10.5" fill="#0F766E" font-weight="700" text-anchor="middle">L 28</text>
+  <text x="1104" y="179" font-size="10.5" fill="#D97706" font-weight="700">H 102 · M 1 · L 28</text>
+  <text x="330" y="206" font-size="10" fill="#D97706" font-weight="600">131 rated causes. Prediction only: the hatched bar uses the `revised` S/O/D of open actions; none of these ratings has been achieved or verified.</text>
   <line x1="40" y1="228" x2="1240" y2="228" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="250" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">ACTION (STEP 6)</text>
   <text x="420" y="250" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">CAUSES IT ADDRESSES · AS RATED</text>
@@ -168,65 +168,68 @@
   <rect x="420" y="981.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="992.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-042.C3</text>
   <rect x="497.8" y="981.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="992.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-048.C1</text>
   <rect x="420" y="1004.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="1015.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="462.5" y="1015.2" font-size="10.5" fill="#0F172A" font-weight="600">S10 O7 D9 · 1 cause</text>
-  <rect x="420" y="1023.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1034.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-065.C1</text>
-  <path d="M820 960.2H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
-  <rect x="860" y="931.2" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
-  <rect x="874" y="941.2" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="952.1" font-size="9.5" font-weight="700" fill="#0F766E" text-anchor="middle" letter-spacing=".02em">AP L</text>
-  <text x="918.5" y="953.2" font-size="12" fill="#0F172A" font-weight="700">S10 O3 D4</text>
-  <rect x="872" y="963.2" width="136.8" height="16" fill="#FFFFFF" rx="3"/>
-  <text x="876" y="975.2" font-size="10" fill="#D97706" font-weight="700">in progress · not verified</text>
-  <line x1="40" y1="1053.2" x2="1240" y2="1053.2" stroke="#F1F5F9" stroke-width="1"/>
-  <rect x="40" y="1060.2" width="360" height="123.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="49" y="1079.7" font-size="12" fill="#0F172A" font-weight="700">SWF-ACT-041</text>
-  <rect x="144.9" y="1068.7" width="81.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="185.4" y="1079.6" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">design change</text>
-  <rect x="325.1" y="1068.7" width="65.9" height="15" rx="7.5" fill="#D97706"/><text x="358.1" y="1079.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">in progress</text>
-  <text x="49" y="1094.3" font-size="10.5" fill="#0F172A">Implement TSR-604: treat any non-finite input or actuator value as</text>
-  <text x="49" y="1108.3" font-size="10.5" fill="#0F172A">a fault (immediate disable with alert), reset desired_curvature and</text>
-  <text x="49" y="1122.4" font-size="10.5" fill="#0F172A">both controllers' state, and guard lateralDelay before the int()</text>
-  <text x="49" y="1136.5" font-size="10.5" fill="#0F172A">conversion</text>
-  <text x="49" y="1149.2" font-size="9.5" fill="#475569" font-style="italic">Evidence: Non-finite desired curvature, roll, aTarget and lateralDelay no</text>
-  <text x="49" y="1161.9" font-size="9.5" fill="#475569" font-style="italic">longer reach the controllers (one step skipped, desired_curvature reset);</text>
-  <text x="49" y="1174.7" font-size="9.5" fill="#475569" font-style="italic">no fault event or alert yet (change-2026-10-13-host-supervision.md)</text>
-  <rect x="420" y="1064.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="1075.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="462.5" y="1075.2" font-size="10.5" fill="#0F172A" font-weight="600">S10 O5 D10 · 2 causes</text>
-  <rect x="420" y="1083.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1094.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-045.C1</text>
-  <rect x="497.8" y="1083.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="1094.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-045.C2</text>
+  <text x="462.5" y="1015.2" font-size="10.5" fill="#0F172A" font-weight="600">S10 O7 D8 · 1 cause</text>
+  <rect x="420" y="1023.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1034.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-081.C1</text>
+  <rect x="420" y="1046.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="1057.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="462.5" y="1057.2" font-size="10.5" fill="#0F172A" font-weight="600">S10 O7 D9 · 1 cause</text>
+  <rect x="420" y="1065.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1076.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-065.C1</text>
+  <path d="M820 981.2H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
+  <rect x="860" y="952.2" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
+  <rect x="874" y="962.2" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="973.1" font-size="9.5" font-weight="700" fill="#0F766E" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="918.5" y="974.2" font-size="12" fill="#0F172A" font-weight="700">S10 O3 D4</text>
+  <rect x="872" y="984.2" width="136.8" height="16" fill="#FFFFFF" rx="3"/>
+  <text x="876" y="996.2" font-size="10" fill="#D97706" font-weight="700">in progress · not verified</text>
+  <line x1="40" y1="1095.2" x2="1240" y2="1095.2" stroke="#F1F5F9" stroke-width="1"/>
+  <rect x="40" y="1102.2" width="360" height="123.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1121.7" font-size="12" fill="#0F172A" font-weight="700">SWF-ACT-041</text>
+  <rect x="144.9" y="1110.7" width="81.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="185.4" y="1121.6" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">design change</text>
+  <rect x="325.1" y="1110.7" width="65.9" height="15" rx="7.5" fill="#D97706"/><text x="358.1" y="1121.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">in progress</text>
+  <text x="49" y="1136.3" font-size="10.5" fill="#0F172A">Implement TSR-604: treat any non-finite input or actuator value as</text>
+  <text x="49" y="1150.3" font-size="10.5" fill="#0F172A">a fault (immediate disable with alert), reset desired_curvature and</text>
+  <text x="49" y="1164.4" font-size="10.5" fill="#0F172A">both controllers' state, and guard lateralDelay before the int()</text>
+  <text x="49" y="1178.5" font-size="10.5" fill="#0F172A">conversion</text>
+  <text x="49" y="1191.2" font-size="9.5" fill="#475569" font-style="italic">Evidence: Non-finite desired curvature, roll, aTarget and lateralDelay no</text>
+  <text x="49" y="1203.9" font-size="9.5" fill="#475569" font-style="italic">longer reach the controllers (one step skipped, desired_curvature reset);</text>
+  <text x="49" y="1216.7" font-size="9.5" fill="#475569" font-style="italic">no fault event or alert yet (change-2026-10-13-host-supervision.md)</text>
   <rect x="420" y="1106.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="1117.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="462.5" y="1117.2" font-size="10.5" fill="#0F172A" font-weight="600">S10 O6 D10 · 1 cause</text>
-  <rect x="420" y="1125.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1136.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-047.C1</text>
-  <path d="M820 1121.9H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
-  <rect x="860" y="1092.9" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
-  <rect x="874" y="1102.9" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="1113.9" font-size="9.5" font-weight="700" fill="#0F766E" text-anchor="middle" letter-spacing=".02em">AP L</text>
-  <text x="918.5" y="1114.9" font-size="12" fill="#0F172A" font-weight="700">S10 O3 D4</text>
-  <rect x="872" y="1124.9" width="136.8" height="16" fill="#FFFFFF" rx="3"/>
-  <text x="876" y="1136.9" font-size="10" fill="#D97706" font-weight="700">in progress · not verified</text>
-  <line x1="40" y1="1190.7" x2="1240" y2="1190.7" stroke="#F1F5F9" stroke-width="1"/>
-  <rect x="40" y="1197.7" width="360" height="85.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="49" y="1217.2" font-size="12" fill="#0F172A" font-weight="700">SWF-ACT-054</text>
-  <rect x="144.9" y="1206.2" width="81.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="185.4" y="1217.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">design change</text>
-  <rect x="356.2" y="1206.2" width="34.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="373.6" y="1217.1" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">open</text>
-  <text x="49" y="1231.7" font-size="10.5" fill="#0F172A">Pin an opendbc commit that contains jherrodthomas/opendbc#15</text>
-  <text x="49" y="1245.8" font-size="10.5" fill="#0F172A">(ATC-20, SWSR-518 amended per DQ-079; ATC-26, SWSR-311</text>
-  <text x="49" y="1259.9" font-size="10.5" fill="#0F172A">amended per DQ-080), with its impact records moved to Integrated,</text>
-  <text x="49" y="1273.9" font-size="10.5" fill="#0F172A">and re-rate SWF-054 and SWF-055 at the new baseline. The fork…</text>
-  <rect x="420" y="1201.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="1212.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="462.5" y="1212.7" font-size="10.5" fill="#0F172A" font-weight="600">S10 O8 D9 · 2 causes</text>
-  <rect x="420" y="1220.7" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1231.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-054.C1</text>
-  <rect x="497.8" y="1220.7" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="1231.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-055.C1</text>
-  <path d="M820 1240.3H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
-  <rect x="860" y="1211.3" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
-  <rect x="874" y="1221.3" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="1232.2" font-size="9.5" font-weight="700" fill="#0F766E" text-anchor="middle" letter-spacing=".02em">AP L</text>
-  <text x="918.5" y="1233.3" font-size="12" fill="#0F172A" font-weight="700">S10 O3 D4</text>
-  <rect x="872" y="1243.3" width="126.1" height="16" fill="#FFFFFF" rx="3"/>
-  <text x="876" y="1255.3" font-size="10" fill="#D97706" font-weight="700">planned · not achieved</text>
-  <line x1="40" y1="1290" x2="1240" y2="1290" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="1305" font-size="10.5" fill="#475569">Actions in progress or completed without a predicted rating: SWF-ACT-004 (in progress), SWF-ACT-007 (in progress), SWF-ACT-010 (in progress), SWF-ACT-021 (in progress), SWF-ACT-028 (in progress), SWF-ACT-033 (in progress), SWF-ACT-034 (completed).</text>
-  <line x1="40" y1="1331" x2="1240" y2="1331" stroke="#E2E8F0" stroke-width="1"/>
-  <rect x="40" y="1342" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="58.2" y="1352.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="82.5" y="1353" font-size="10.5" fill="#0F172A">as rated (solid)</text>
-  <rect x="178.5" y="1342" width="34" height="14" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="4" stroke-dasharray="5 3"/>
-  <text x="218.5" y="1353" font-size="10.5" fill="#0F172A">predicted by the action's `revised` rating — not achieved, not verified (hatched, dashed)</text>
-  <text x="40" y="1371" font-size="10" fill="#475569">AP recomputed from the revised S/O/D with the AIAG-VDA table (rating-tables §5) and checked against the stored value. Actions not referenced by any cause: SWF-ACT-001.</text>
-  <text x="40" y="1389" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <text x="462.5" y="1117.2" font-size="10.5" fill="#0F172A" font-weight="600">S10 O5 D10 · 2 causes</text>
+  <rect x="420" y="1125.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1136.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-045.C1</text>
+  <rect x="497.8" y="1125.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="1136.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-045.C2</text>
+  <rect x="420" y="1148.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="1159.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="462.5" y="1159.2" font-size="10.5" fill="#0F172A" font-weight="600">S10 O6 D10 · 1 cause</text>
+  <rect x="420" y="1167.2" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1178.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-047.C1</text>
+  <path d="M820 1163.9H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
+  <rect x="860" y="1134.9" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
+  <rect x="874" y="1144.9" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="1155.9" font-size="9.5" font-weight="700" fill="#0F766E" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="918.5" y="1156.9" font-size="12" fill="#0F172A" font-weight="700">S10 O3 D4</text>
+  <rect x="872" y="1166.9" width="136.8" height="16" fill="#FFFFFF" rx="3"/>
+  <text x="876" y="1178.9" font-size="10" fill="#D97706" font-weight="700">in progress · not verified</text>
+  <line x1="40" y1="1232.7" x2="1240" y2="1232.7" stroke="#F1F5F9" stroke-width="1"/>
+  <rect x="40" y="1239.7" width="360" height="85.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1259.2" font-size="12" fill="#0F172A" font-weight="700">SWF-ACT-054</text>
+  <rect x="144.9" y="1248.2" width="81.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="185.4" y="1259.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">design change</text>
+  <rect x="356.2" y="1248.2" width="34.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="373.6" y="1259.1" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">open</text>
+  <text x="49" y="1273.7" font-size="10.5" fill="#0F172A">Pin an opendbc commit that contains jherrodthomas/opendbc#15</text>
+  <text x="49" y="1287.8" font-size="10.5" fill="#0F172A">(ATC-20, SWSR-518 amended per DQ-079; ATC-26, SWSR-311</text>
+  <text x="49" y="1301.9" font-size="10.5" fill="#0F172A">amended per DQ-080), with its impact records moved to Integrated,</text>
+  <text x="49" y="1315.9" font-size="10.5" fill="#0F172A">and re-rate SWF-054 and SWF-055 at the new baseline. The fork…</text>
+  <rect x="420" y="1243.7" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="1254.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="462.5" y="1254.7" font-size="10.5" fill="#0F172A" font-weight="600">S10 O8 D9 · 2 causes</text>
+  <rect x="420" y="1262.7" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1273.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-054.C1</text>
+  <rect x="497.8" y="1262.7" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="1273.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-055.C1</text>
+  <path d="M820 1282.3H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
+  <rect x="860" y="1253.3" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
+  <rect x="874" y="1263.3" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#0F766E" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="1274.2" font-size="9.5" font-weight="700" fill="#0F766E" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="918.5" y="1275.3" font-size="12" fill="#0F172A" font-weight="700">S10 O3 D4</text>
+  <rect x="872" y="1285.3" width="126.1" height="16" fill="#FFFFFF" rx="3"/>
+  <text x="876" y="1297.3" font-size="10" fill="#D97706" font-weight="700">planned · not achieved</text>
+  <line x1="40" y1="1332" x2="1240" y2="1332" stroke="#F1F5F9" stroke-width="1"/>
+  <text x="40" y="1347" font-size="10.5" fill="#475569">Actions in progress or completed without a predicted rating: SWF-ACT-004 (in progress), SWF-ACT-007 (in progress), SWF-ACT-010 (in progress), SWF-ACT-021 (in progress), SWF-ACT-028 (in progress), SWF-ACT-033 (in progress), SWF-ACT-034 (completed).</text>
+  <line x1="40" y1="1373" x2="1240" y2="1373" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="40" y="1384" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="58.2" y="1394.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="82.5" y="1395" font-size="10.5" fill="#0F172A">as rated (solid)</text>
+  <rect x="178.5" y="1384" width="34" height="14" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="4" stroke-dasharray="5 3"/>
+  <text x="218.5" y="1395" font-size="10.5" fill="#0F172A">predicted by the action's `revised` rating — not achieved, not verified (hatched, dashed)</text>
+  <text x="40" y="1413" font-size="10" fill="#475569">AP recomputed from the revised S/O/D with the AIAG-VDA table (rating-tables §5) and checked against the stored value. Actions not referenced by any cause: SWF-ACT-001.</text>
+  <text x="40" y="1431" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>

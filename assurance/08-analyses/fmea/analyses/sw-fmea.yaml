@@ -38,6 +38,13 @@
 #   rated; only the software behaviour around them (validity, timing, gating, crash) is.
 # - Two questions for the lead are queued in the decision register: DQ-220 (SG-010 safe state at the terminal DM alert, SWF-062) and DQ-221
 #   (engagement outside the assured configuration, SWF-067).
+# rev 1.0 at BL-005: P3 elements added (fmea-plan §3.3): modeld as a software element (SWF-SE-090/091, SWF-072..074), localization and
+# calibration (SWF-SE-100..103, SWF-075..077), camerad (SWF-SE-110, SWF-078), sensord (SWF-SE-120, SWF-079), messaging cereal/msgq
+# (SWF-SE-130..132, SWF-080, SWF-081), manager (SWF-SE-140, SWF-082, SWF-083) and updated (SWF-SE-150, SWF-084).
+# - SOTIF / ISO PAS 8800 boundary (fmea-plan §7.3): modeld is rated only for software behaviour (output validity, frame accounting, calibration
+#   input, crash, model file). Whether the curvature or leads are right for correct inputs is not rated here.
+# - modeld has no unit tests and is not replayed or fuzzed in CI; camerad and sensord tests are hardware-only; msgq tests are not run: D 10 there.
+#   D 8 only for locationd, calibrationd and SubMaster unit tests targeted at the cause. All new causes are AP H.
 #
 # SW FMEA element pandad (FSC EL-06, System FMEA SFM-SE-017). Ratings per RT-1, against BL-004 (liondriver-dev 682f184,
 # panda 8aa8671, opendbc 7993399). The LIONDRIVER_REFERENCE firmware build is not enabled by any build path at BL-004, so the
@@ -85,11 +92,11 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "0.9"
+  revision: "1.0"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
-  scope: "P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071)."
+  scope: "P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084)."
   team:
     - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
     - {name: Claude (AI assistant), role: "Drafting assistance; ratings require human review"}
@@ -503,6 +510,105 @@ structure:
   paths:
   - openpilot/selfdrive/controls/radard.py
   description: Track matching and sanity checks (radard.py:113-157), vision-only lead (136-150), low-speed override (98-101, 167-174), Kalman filter (33), radarState validity (222-248)
+- id: SWF-SE-090
+  name: Driving model process (modeld)
+  kind: sw_element
+  parent: null
+  paths:
+  - openpilot/selfdrive/modeld
+  description: FSC element EL-03 (perception); System FMEA SFM-SE-010. P3, rated at BL-005 as a software element only (crash, stale or non-finite output, frame
+    handling, model file). Model performance limitations are SOTIF / ISO PAS 8800 and are not rated here (fmea-plan §7.3). Upstream code, no LionDriver change
+- id: SWF-SE-091
+  name: Model execution, output parsing and validity
+  kind: sw_unit
+  parent: SWF-SE-090
+  paths:
+  - openpilot/selfdrive/modeld/modeld.py
+  - openpilot/selfdrive/modeld/fill_model_msg.py
+  - openpilot/selfdrive/modeld/parse_model_outputs.py
+  description: Model load (modeld.py:158-159, helpers.py:15-20); run and big-model fallback (modeld.py:210-211, 411-421); frame drops (385-392); calibration input
+    (367-375); modelV2.valid (fill_model_msg.py:59, 79; modeld.py:434)
+- id: SWF-SE-100
+  name: Localization and calibration (locationd, calibrationd, paramsd, torqued, lagd)
+  kind: sw_element
+  parent: null
+  paths:
+  - openpilot/selfdrive/locationd
+  description: FSC element EL-03 (localization); System FMEA SFM-SE-011. P3, rated at BL-005. Upstream code, no LionDriver change in the element
+- id: SWF-SE-101
+  name: locationd pose filter
+  kind: sw_unit
+  parent: SWF-SE-100
+  paths:
+  - openpilot/selfdrive/locationd/locationd.py
+  description: Sensor and camera-odometry checks (19-26, 72-179), filter reset on non-finite state (94-98, 205-206), inputsOK / sensorsOK / posenetOK (237-332)
+- id: SWF-SE-102
+  name: Camera calibration (calibrationd)
+  kind: sw_unit
+  parent: SWF-SE-100
+  paths:
+  - openpilot/selfdrive/locationd/calibrationd.py
+  description: Status and recalibration thresholds (33-59, 138-167), learning gates (190-201), output validity (292)
+- id: SWF-SE-103
+  name: Online vehicle parameters (paramsd, torqued, lagd)
+  kind: sw_unit
+  parent: SWF-SE-100
+  paths:
+  - openpilot/selfdrive/locationd/paramsd.py
+  - openpilot/selfdrive/locationd/torqued.py
+  - openpilot/selfdrive/locationd/lagd.py
+  description: vehicleParameters validity bounds (paramsd.py:16-25, 155-182), torque factor clips (torqued.py:24-27, 54-57, 230-231), lateral delay clamp (lagd.py:28-30, 229-240)
+- id: SWF-SE-110
+  name: Camera acquisition (camerad)
+  kind: sw_element
+  parent: null
+  paths:
+  - openpilot/system/camerad
+  description: FSC element EL-02 (device sensors, software side); System FMEA SFM-SE-010 / SFM-SE-002. P3, rated at BL-005. Built only for comma_arm64 (SConstruct:294-295)
+- id: SWF-SE-120
+  name: IMU acquisition (sensord)
+  kind: sw_element
+  parent: null
+  paths:
+  - openpilot/system/sensord
+  description: FSC element EL-02 (device sensors, software side); System FMEA SFM-SE-019 / SFM-SE-002. P3, rated at BL-005. LSM6DS3 accelerometer and gyro at 104 Hz
+- id: SWF-SE-130
+  name: Messaging (cereal and msgq)
+  kind: sw_element
+  parent: null
+  paths:
+  - openpilot/cereal
+  - msgq_repo/msgq
+  description: Platform; System FMEA SFM-SE-019. P3, rated at BL-005. Shared-memory publish/subscribe used by every host element
+- id: SWF-SE-131
+  name: SubMaster liveness and validity
+  kind: sw_unit
+  parent: SWF-SE-130
+  paths:
+  - openpilot/cereal/messaging/__init__.py
+  description: alive (10 periods), freq_ok (0.8..1.2 of the rate over 10 s or 1 s), valid, all_checks (__init__.py:138-178, 196-280)
+- id: SWF-SE-132
+  name: msgq ring buffer
+  kind: sw_unit
+  parent: SWF-SE-130
+  paths:
+  - msgq_repo/msgq/msgq.cc
+  description: Reader slots and eviction (msgq.h:9, msgq.cc:196-207), lapped readers (262-293, 331-333, 385-426), size asserts (246, 399-400)
+- id: SWF-SE-140
+  name: Process manager (manager)
+  kind: sw_element
+  parent: null
+  paths:
+  - openpilot/system/manager
+  description: Platform; System FMEA SFM-SE-019. P3, rated at BL-005. Starts and stops processes by state (process_config.py); reports managerState
+- id: SWF-SE-150
+  name: Software update (updated)
+  kind: sw_element
+  parent: null
+  paths:
+  - openpilot/system/updated
+  - launch_chffrplus.sh
+  description: Platform; System FMEA SFM-SE-019, PFMEA OTA steps. P3, rated at BL-005. Runs offroad only; the update is applied at boot
 functions:
 - id: SWF-FN-001
   element: SWF-SE-003
@@ -797,6 +903,59 @@ functions:
   requirements:
   - FSR-020
   - FSR-026
+- id: SWF-FN-090
+  element: SWF-SE-091
+  description: Publish model outputs (desired curvature, leads) for every road frame, computed from the current frame and calibration, and mark output that is not
+    fit for use as invalid
+  requirements:
+  - FSR-013
+- id: SWF-FN-100
+  element: SWF-SE-101
+  description: Provide a calibrated pose from valid IMU and camera odometry, and report invalid inputs within the reaction time
+  requirements:
+  - FSR-013
+- id: SWF-FN-101
+  element: SWF-SE-102
+  description: Report camera calibration as valid only when the learned extrinsics match the mount
+  requirements:
+  - FSR-013
+- id: SWF-FN-102
+  element: SWF-SE-103
+  description: Provide vehicle parameters within plausible bounds and report them invalid otherwise
+  requirements:
+  - FSR-003
+  - FSR-013
+- id: SWF-FN-110
+  element: SWF-SE-110
+  description: Deliver every road, wide and driver camera frame once, in order and synchronised, and make a stopped or failed camera visible
+  requirements:
+  - FSR-013
+- id: SWF-FN-120
+  element: SWF-SE-120
+  description: Deliver accelerometer and gyro samples with correct timestamps, and mark implausible data invalid
+  requirements:
+  - FSR-013
+- id: SWF-FN-130
+  element: SWF-SE-131
+  description: Report an input as alive and valid only while it is received at its rate and flagged valid
+  requirements:
+  - FSR-013
+  - FSR-016
+- id: SWF-FN-131
+  element: SWF-SE-132
+  description: Deliver every published message intact to each subscriber, or make the loss visible
+  requirements:
+  - FSR-013
+- id: SWF-FN-140
+  element: SWF-SE-140
+  description: Run every process the configuration needs and report any that is not running
+  requirements:
+  - FSR-016
+- id: SWF-FN-150
+  element: SWF-SE-150
+  description: Install only the released, assured software version, and never change running software while driving
+  requirements:
+  - FSR-009
 failure_modes:
 - id: SWF-001
   element: SWF-SE-006
@@ -4281,6 +4440,537 @@ failure_modes:
     actions:
     - SWF-ACT-064
   notes: Host side of System FMEA SFM-009.C1. Radar ghosts and model false positives are SOTIF.
+- id: SWF-072
+  element: SWF-SE-091
+  function: SWF-FN-090
+  failure_mode: modelV2 published as valid while its content is non-finite, from an old frame, or computed with an invalid calibration
+  guideword: value_stale
+  effects:
+  - level: local
+    description: desiredCurvature or leads wrong while modelV2.valid is true
+  - level: next_higher
+    description: controlsd steers on it unless the curvature is non-finite (SWF-045); radard and plannerd use the leads
+  - level: end
+    description: Lateral control steers toward the lane boundary
+    hazard: HZ-003
+    severity: 10
+  - level: end
+    description: Contributes to HZ-007 (wrong or missing lead)
+    hazard: HZ-007
+    severity: 10
+  severity: 10
+  safety_mechanisms:
+  - description: controlsd turns lateral control off for a non-finite curvature and on a modelV2 older than 0.5 s (TSR-602, SWF-045)
+    ref: openpilot/selfdrive/controls/controlsd.py:118-129
+  - description: selfdrived calibrationInvalid / calibrationRecalibrating (SOFT_DISABLE) and modeldLagging when frameDropPerc > 1 (SOFT_DISABLE)
+    ref: openpilot/selfdrive/selfdrived/selfdrived.py
+  - description: Panda torque and acceleration bounds (SWF-001, SWF-003)
+  causes:
+  - id: SWF-072.C1
+    description: 'modelV2.valid only says a calibration has been seen (fill_model_msg.py:59, 79; modeld.py:434). The small model''s outputs get no finiteness check (modeld.py:210-211
+      checks the big model only; TSR-616, GAP-22): non-finite leads reach radard and plannerd'
+    element: SWF-SE-091
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: modeld has no unit tests, is excluded from process replay (EXCLUDED_PROCS) and from test_fuzzy, and model_replay is not run in LionDriver CI; test_onroad
+        timing checks are device-only
+    occurrence: 4
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-065
+    - SWF-ACT-060
+  - id: SWF-072.C2
+    description: 'Frame-drop accounting misses repeats: dropped frames are max(0, frame_id gap - 1), so a repeated or regressing frame_id counts as 0 (modeld.py:385); drops
+      are forced to 0 for the first 10 runs and filtered with a 10 s time constant (386-389), so modeldLagging comes late'
+    element: SWF-SE-091
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: modeld has no unit tests, is excluded from process replay (EXCLUDED_PROCS) and from test_fuzzy, and model_replay is not run in LionDriver CI; test_onroad
+        timing checks are device-only
+    occurrence: 4
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-065
+  - id: SWF-072.C3
+    description: The calibration is used whenever extrinsicsCalibration updates, without checking calStatus or valid (modeld.py:367-375), so a recalibrating or invalid calibration
+      warps the input; selfdrived reacts to the calibration status separately
+    element: SWF-SE-091
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: modeld has no unit tests, is excluded from process replay (EXCLUDED_PROCS) and from test_fuzzy, and model_replay is not run in LionDriver CI; test_onroad
+        timing checks are device-only
+    occurrence: 5
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-065
+  notes: Software side of System FMEA SFM-006.C2 and SFM-003.C3. Wrong curvature or leads from correct inputs is SOTIF / ISO PAS 8800 (fmea-plan §7.3).
+- id: SWF-073
+  element: SWF-SE-090
+  function: SWF-FN-090
+  failure_mode: modeld stops while engaged
+  guideword: crash
+  effects:
+  - level: local
+    description: No modelV2
+  - level: next_higher
+    description: controlsd ends lateral control 0.5 s after the last modelV2 (TSR-602); selfdrived commIssue / processNotRunning soft disable; manager does not restart modeld
+  - level: end
+    description: Loss of lateral control while engaged; the take-over alert follows within about 0.5 s
+    hazard: HZ-004
+    severity: 10
+  severity: 10
+  safety_mechanisms:
+  - description: controlsd freshness gate and selfdrived soft disable with alert
+    ref: openpilot/selfdrive/controls/controlsd.py:118-120
+  causes:
+  - id: SWF-073.C1
+    description: 'Unhandled exception in the small-model path: a run exception re-raises (modeld.py:412-413); a short frame buffer or a missing output head raises (modeld.py:194;
+      parse_model_outputs.py:24-28)'
+    element: SWF-SE-090
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: modeld has no unit tests, is excluded from process replay (EXCLUDED_PROCS) and from test_fuzzy, and model_replay is not run in LionDriver CI; test_onroad
+        timing checks are device-only
+    occurrence: 4
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-065
+    - SWF-ACT-066
+- id: SWF-074
+  element: SWF-SE-090
+  function: SWF-FN-090
+  failure_mode: A model file other than the released one is loaded
+  guideword: wrong_mode
+  effects:
+  - level: local
+    description: Driving or DM model weights or warp other than the analysed ones
+  - level: next_higher
+    description: Outputs of an unvalidated model reach the controllers
+  - level: end
+    description: Any lateral or longitudinal hazard within the panda envelope
+    hazard: HZ-003
+    severity: 10
+  severity: 10
+  safety_mechanisms:
+  - description: Panda envelope (SWF-001, SWF-003); driver supervision
+  causes:
+  - id: SWF-074.C1
+    description: Models are loaded with pickle and no hash, version or signature check (helpers.py:15-20; modeld.py:158-159; dmonitoringmodeld.py:22-48; GAP-22, TSR-616); they
+      are compiled at build time from git-LFS sources (modeld/SConscript:41-52)
+    element: SWF-SE-090
+    prevention_controls:
+    - description: Build from pinned LFS objects; release procedure (WP-P-10) draft
+      ref: openpilot/selfdrive/modeld/SConscript
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-065
+  notes: Also a PFMEA (release) and cybersecurity topic.
+- id: SWF-075
+  element: SWF-SE-102
+  function: SWF-FN-101
+  failure_mode: Camera calibration reported valid while the extrinsics do not match the mount
+  guideword: corrupted
+  effects:
+  - level: local
+    description: rpyCalib off by less than the recalibration thresholds
+  - level: next_higher
+    description: modeld warps the frames with a wrong pose; desired curvature biased
+  - level: end
+    description: Lateral control steers toward the lane boundary
+    hazard: HZ-003
+    severity: 10
+  severity: 10
+  safety_mechanisms:
+  - description: Recalibration when the spread exceeds 2 deg yaw / 4 deg pitch; pitch/yaw limits; calibrationInvalid SOFT_DISABLE
+    ref: openpilot/selfdrive/locationd/calibrationd.py
+  causes:
+  - id: SWF-075.C1
+    description: Calibration learns only above 15 mph with a yaw rate below 2 deg/s and recalibrates only beyond the spread thresholds (calibrationd.py:33-46, 138-167, 190-201),
+      so a mount that moved by less than the thresholds stays calibrated
+    element: SWF-SE-102
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: test_calibrationd.py (CI) checks status transitions on synthetic data; targeted at the thresholds, not proven
+      test: openpilot/selfdrive/locationd/test/test_calibrationd.py
+    occurrence: 5
+    detection: 8
+    ap: H
+    actions:
+    - SWF-ACT-067
+  notes: Software side of System FMEA SFM-003.C1, SFM-003.C4 and SFM-030.C1; the install check of the mount is PFMEA.
+- id: SWF-076
+  element: SWF-SE-103
+  function: SWF-FN-102
+  failure_mode: Learned vehicle parameters implausible while used by controlsd
+  guideword: value_high
+  effects:
+  - level: local
+    description: steerRatio, stiffness, roll, angle offset, torque factor or lateral delay outside a plausible range
+  - level: next_higher
+    description: Lateral controller gain or feed-forward wrong; vehicleParameters valid false raises paramsdTemporaryError only while calibrated
+  - level: end
+    description: Lateral control steers toward the lane boundary or overshoots
+    hazard: HZ-003
+    severity: 10
+  severity: 10
+  safety_mechanisms:
+  - description: Panda torque bounds; torqued clips the factor to ±30 % and friction to ±50 %; lagd clamps the delay to 0.15..0.65 s when estimated
+  causes:
+  - id: SWF-076.C1
+    description: paramsd publishes values that are not clipped to its own validity bounds (paramsd.py:155-182), and controlsd uses steerRatio and stiffness with only a 0.1
+      floor and no validity gate (controlsd.py:88-91; SWF-042.C3)
+    element: SWF-SE-103
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: test_paramsd.py (CI) checks the saved-parameter handling; not designed for out-of-bound use
+      test: openpilot/selfdrive/locationd/test/test_paramsd.py
+    occurrence: 5
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-045
+  notes: Software side of System FMEA SFM-002.C4.
+- id: SWF-077
+  element: SWF-SE-101
+  function: SWF-FN-100
+  failure_mode: IMU or pose fault reported to the supervision late
+  guideword: late
+  effects:
+  - level: local
+    description: deviceMotion from an IMU that stopped or is implausible
+  - level: next_higher
+    description: Roll compensation, the excessive-actuation monitor and torqued work on a wrong pose
+  - level: end
+    description: Contributes to HZ-003 (roll compensation) and to an undetected excessive actuation
+    hazard: HZ-003
+    severity: 10
+  severity: 10
+  safety_mechanisms:
+  - description: locationd sensor checks (norms, gyro vs camera yaw rate, timestamps) and locationdTemporaryError / posenetInvalid (SOFT_DISABLE)
+    ref: openpilot/selfdrive/locationd/locationd.py
+  causes:
+  - id: SWF-077.C1
+    description: selfdrived ignores accelerometer and gyro in its alive/valid checks and raises sensorDataInvalid only after 10 s without data (selfdrived.py:101, 454-456);
+      deviceMotion.sensorsOK is not consumed by selfdrived (only paramsd and torqued)
+    element: SWF-SE-101
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: test_locationd_scenarios.py (CI; downloads a route) covers sensor faults in locationd; not designed for the selfdrived reaction time
+      test: openpilot/selfdrive/locationd/test/test_locationd_scenarios.py
+    occurrence: 6
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-067
+  notes: Software side of System FMEA SFM-030.C1 and SFM-031.C1.
+- id: SWF-078
+  element: SWF-SE-110
+  function: SWF-FN-110
+  failure_mode: Road camera frames stop, are dropped or lose sync without an error flag
+  guideword: omission
+  effects:
+  - level: local
+    description: Gaps in the frame stream, or main and wide frames out of sync
+  - level: next_higher
+    description: modeld runs on fewer or skewed frames (SWF-072); selfdrived cameraMalfunction / cameraFrameRate only when the rate or liveness fails
+  - level: end
+    description: Lateral control from degraded model output
+    hazard: HZ-003
+    severity: 10
+  severity: 10
+  safety_mechanisms:
+  - description: selfdrived cameraMalfunction and cameraFrameRate (SOFT_DISABLE, selfdrived.py:401-405); modeldLagging
+    ref: openpilot/selfdrive/selfdrived/selfdrived.py
+  causes:
+  - id: SWF-078.C1
+    description: camerad never marks a frame invalid (messages default to valid, cereal/messaging/messaging.h:47); frames that fail sync or arrive out of order are dropped
+      silently (spectra.cc:1407-1481), and a sensor that fails bring-up or an I2C write is only disabled with a log (spectra.cc:320-351)
+    element: SWF-SE-110
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: test_camerad.py (frame skips, sync, stress) is a hardware test, not run in LionDriver CI
+    occurrence: 5
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-068
+  - id: SWF-078.C2
+    description: If the narrow or wide road stream is absent when selfdrived initialises, it is put on the ignore_alive and ignore_valid lists for the whole drive (selfdrived.py:518-524),
+      so a camera that is not up at start is never supervised
+    element: SWF-SE-110
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-068
+  - id: SWF-078.C3
+    description: First-frame sync across cameras gives up after 40 frames and runs unsynchronised with only a log (spectra.cc:1550-1576); modeld only logs a main/wide skew
+      over 10 ms (modeld.py:352-354)
+    element: SWF-SE-110
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-068
+  notes: Software side of System FMEA SFM-006.C2.
+- id: SWF-079
+  element: SWF-SE-120
+  function: SWF-FN-120
+  failure_mode: IMU samples implausible or stuck while published as valid
+  guideword: value_frozen
+  effects:
+  - level: local
+    description: Accelerometer or gyro values out of range or repeated with valid true
+  - level: next_higher
+    description: locationd rejects them only if they fail its norm and cross-checks
+  - level: end
+    description: Contributes to HZ-003 through a wrong pose (SWF-077)
+    hazard: HZ-003
+    severity: 10
+  severity: 10
+  safety_mechanisms:
+  - description: locationd range and cross-checks (locationd.py:111-140)
+    ref: openpilot/selfdrive/locationd/locationd.py
+  causes:
+  - id: SWF-079.C1
+    description: 'No range, stuck-value or plausibility check at the source: every sample after the 0.5 s warm-up is valid (sensord.py:68-70; i2c_sensor.py:58-63); init and
+      read errors are logged and sensord keeps running without the sensor (sensord.py:73-76, 104-126); self-test only with LSM_SELF_TEST=1'
+    element: SWF-SE-120
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: test_sensord.py is a hardware test, not run in LionDriver CI
+    occurrence: 4
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-067
+  notes: Software side of System FMEA SFM-031.C1.
+- id: SWF-080
+  element: SWF-SE-132
+  function: SWF-FN-131
+  failure_mode: Messages lost or altered between publisher and subscriber without the subscriber knowing
+  guideword: omission
+  effects:
+  - level: local
+    description: A reader skips messages or receives a corrupted payload
+  - level: next_higher
+    description: Consumers see only gaps beyond 10 periods (SubMaster) or parse errors
+  - level: end
+    description: Contributes to HZ-003 and HZ-007 through stale or wrong inputs
+    hazard: HZ-003
+    severity: 10
+  severity: 10
+  safety_mechanisms:
+  - description: SubMaster alive and frequency checks in the consumers (SWF-081); capnp parse errors raise
+    ref: openpilot/cereal/messaging/__init__.py
+  causes:
+  - id: SWF-080.C1
+    description: A lapped reader is reset to the write pointer and silently skips the lost messages (msgq.cc:72-76, 262-293, 331-333, 385-426); a 16th subscriber evicts every
+      reader, which reconnect silently (msgq.h:9; msgq.cc:196-207, 324-327)
+    element: SWF-SE-132
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: msgq tests (msgq_repo/msgq/tests) are outside openpilot/ and not run by LionDriver CI
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-069
+  - id: SWF-080.C2
+    description: 'No checksum on payloads in shared memory: a writer defect or a memory fault reaches the consumer; only corrupt sizes are caught, by assert (abort, msgq.cc:399-400)'
+    element: SWF-SE-132
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: No test targets this cause
+    occurrence: 3
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-069
+  notes: Software side of System FMEA SFM-006.C3. A draft upstream sync of msgq (sync-2026-10-10-msgq-326a9f5) is not applied.
+- id: SWF-081
+  element: SWF-SE-131
+  function: SWF-FN-130
+  failure_mode: An input is reported alive and valid while it is stale
+  guideword: value_stale
+  effects:
+  - level: local
+    description: SubMaster.alive true for up to 10 periods after the last message; freq_ok true on a 10 s or 1 s average
+  - level: next_higher
+    description: Consumers act on held values for 0.1 s (100 Hz) to 1 s (10 Hz pandaStates) before any reaction
+  - level: end
+    description: Contributes to HZ-003 and HZ-007 (control on held inputs)
+    hazard: HZ-003
+    severity: 10
+  severity: 10
+  safety_mechanisms:
+  - description: controlsd freshness gate on its inputs (TSR-602); panda TX arrival and heartbeat supervision
+    ref: openpilot/selfdrive/controls/lib/input_freshness.py
+  causes:
+  - id: SWF-081.C1
+    description: By design alive means received within 10 nominal periods and freq_ok passes if the 10 s or the 1 s average is within 0.8..1.2 of the rate (__init__.py:138-178,
+      265-278); TSR-602 asks 2 periods. SIMULATION=1 relaxes both checks (__init__.py:213, 265-266)
+    element: SWF-SE-131
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: test_pub_sub_master.py (CI) tests the alive and valid semantics; targeted at the mechanism, not at the bound
+      test: openpilot/cereal/messaging/tests/test_pub_sub_master.py
+    occurrence: 7
+    detection: 8
+    ap: H
+    actions:
+    - SWF-ACT-040
+  notes: Software side of System FMEA SFM-006.C3 and SFM-005.C3. The bound is the one controlsd's TSR-602 gate reuses (IA host-supervision OI-1).
+- id: SWF-082
+  element: SWF-SE-140
+  function: SWF-FN-140
+  failure_mode: A process the drive needs is not running and is not reported
+  guideword: omission
+  effects:
+  - level: local
+    description: A process blocked or never started has no process entry, so managerState shows shouldBeRunning false
+  - level: next_higher
+    description: No processNotRunning event; a process that selfdrived does not subscribe to (soundd, ui) is then not supervised at all
+  - level: end
+    description: Take-over alerts not presented while the item runs
+    hazard: HZ-012
+    severity: 10
+  severity: 10
+  safety_mechanisms:
+  - description: selfdrived commIssue for services it subscribes to that were never received (NO_ENTRY); processNotRunning for a crashed process
+    ref: openpilot/selfdrive/selfdrived/selfdrived.py:393-399
+  causes:
+  - id: SWF-082.C1
+    description: The BLOCK environment variable or a process that never starts leaves proc None, so shouldBeRunning is false and no event fires (manager.py:110-112; process.py:121-129)
+    element: SWF-SE-140
+    prevention_controls:
+    - description: No launch path sets BLOCK; setting it needs a shell on the device
+      ref: openpilot/system/manager/manager.py
+    detection_controls:
+    - description: test_manager.py (CI) checks blacklisted processes do not start; not designed for the missing report
+      test: openpilot/system/manager/test/test_manager.py
+    occurrence: 2
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-070
+    rationale: Occurrence is credited to process (no launch path sets BLOCK). The residual is carried by the PFMEA and the TARA, as SWF-028.C2.
+- id: SWF-083
+  element: SWF-SE-140
+  function: SWF-FN-140
+  failure_mode: A crashed process stays down for the rest of the drive
+  guideword: omission
+  effects:
+  - level: local
+    description: 'No restart and no watchdog: start() returns while proc is set, so the process is restarted only after an offroad transition'
+  - level: next_higher
+    description: processNotRunning (SOFT_DISABLE, NO_ENTRY) for the rest of the drive
+  - level: end
+    description: Item unavailable after one crash, with an alert
+    severity: 8
+  severity: 8
+  causes:
+  - id: SWF-083.C1
+    description: By design manager has no restart policy or process watchdog (process.py:142-154, 223-238)
+    element: SWF-SE-140
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: test_manager.py (CI); test_clean_exit is skipped; nothing tests restart behaviour
+      test: openpilot/system/manager/test/test_manager.py
+    occurrence: 8
+    detection: 9
+    ap: H
+    actions:
+    - SWF-ACT-070
+  safety_mechanisms:
+  - description: processNotRunning soft disable with alert
+    ref: openpilot/selfdrive/selfdrived/events.py
+  notes: Severity 8 (availability, with alert). Not restarting is the safe direction for authority; the question is availability, so no lead decision is raised here.
+- id: SWF-084
+  element: SWF-SE-150
+  function: SWF-FN-150
+  failure_mode: An update installs software other than the released, assured version
+  guideword: wrong_mode
+  effects:
+  - level: local
+    description: The finalized overlay holds another commit of the tracked branch, or of another remote
+  - level: next_higher
+    description: It is swapped in at the next boot; pandad flashes the panda build of that checkout
+  - level: end
+    description: Unassured host and panda software drives the car
+    hazard: HZ-002
+    severity: 10
+  - level: end
+    description: Contributes to HZ-006 (deceleration checked by an unassured envelope)
+    hazard: HZ-006
+    severity: 10
+  severity: 10
+  safety_mechanisms:
+  - description: updated runs offroad only and the swap happens at boot (launch_chffrplus.sh:46-62), so running software never changes while driving; the consistency flag is
+      cleared at the start of a fetch
+    ref: openpilot/system/updated/updated.py
+  - description: pandad refuses a car mode on a non-reference panda (TSR-619); assured_config logs the commit and origin (CA-008)
+    ref: openpilot/selfdrive/selfdrived/assured_config.py
+  causes:
+  - id: SWF-084.C1
+    description: 'No signature or commit-pin check: updated fetches the UpdaterTargetBranch (or the current branch) from the install''s origin and trusts the git transport
+      (updated.py:237-248, 343-410); there is no automatic rollback (launch_chffrplus.sh:52-65)'
+    element: SWF-SE-150
+    prevention_controls:
+    - description: Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1
+        §2.2)
+    detection_controls:
+    - description: No updated tests exist
+    occurrence: 4
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-071
+  notes: Also PFMEA (OTA update and rollback) and cybersecurity.
 actions:
 - id: SWF-ACT-001
   kind: detection
@@ -4681,5 +5371,46 @@ actions:
   kind: design_change
   description: 'radard and FCW review against SG-005/SG-006 with the SOTIF analysis: catch the Kalman dt assertion (reset the filter), allow FCW from a confirmed radar-only
     lead, and decide the radar-only stationary target treatment (FI-2026-001 CA-002); tests for each'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-065
+  kind: design_change
+  description: 'modeld output validity: check finiteness of every output used downstream (small model too, TSR-616), set modelV2.valid false on a non-finite output, a repeated
+    or regressing frame_id, or an invalid calibration status; verify the model file hash at load (GAP-22)'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-066
+  kind: detection
+  description: Unit tests for modeld output handling (parse, finiteness, frame-drop accounting) and include modeld in model_replay in LionDriver CI (with SWF-ACT-060)
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-067
+  kind: design_change
+  description: 'Sensor and pose supervision: make selfdrived react to deviceMotion.sensorsOK and to IMU data older than a few periods (not 10 s); add range and stuck-value
+    checks in sensord; review the calibration recalibration thresholds against the lateral error budget'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-068
+  kind: design_change
+  description: 'Camera stream supervision: never ignore a road stream for the reference device (refuse engagement if it is absent at start), mark frames invalid on sync failure,
+    and raise an event when a sensor is disabled; run the camerad hardware tests per release'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-069
+  kind: detection
+  description: Run the msgq tests in LionDriver CI and assess whether a payload checksum or a lost-message counter is needed for the safety-relevant services (selfdriveState,
+    carControl, sendcan, pandaStates)
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-070
+  kind: design_change
+  description: 'Manager supervision: report every process the configuration needs (including blocked or never started ones) in managerState, ignore BLOCK in release builds,
+    and decide whether a crashed safety process may be restarted offroad only'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-071
+  kind: design_change
+  description: 'Update integrity: pin the update to signed release tags of the LionDriver repository and verify the signature before finalizing; define rollback (with the PFMEA
+    OTA steps)'
   owner: Jherrod Thomas
   status: open

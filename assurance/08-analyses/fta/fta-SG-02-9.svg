@@ -84,6 +84,8 @@
 <text x="573.5" y="661.5" class="chip" fill="#fff">CCF DFI-25</text>
 <rect x="614.0" y="650.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="641.0" y="661.5" class="chip" fill="#fff">SFM-026</text>
+<rect x="672.9" y="650.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="699.9" y="661.5" class="chip" fill="#fff">SWF-082</text>
 <circle cx="634.0" cy="698.0" r="16" fill="#fdf0e1" stroke="#b45309" stroke-width="1.7"/>
 <rect x="767.5" y="561.5" width="220" height="93.0" rx="9" class="shadow"/>
 <rect x="766" y="559.0" width="220" height="93.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
