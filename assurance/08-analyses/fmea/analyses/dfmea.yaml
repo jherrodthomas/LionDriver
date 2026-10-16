@@ -21,12 +21,15 @@
 # causes re-written for switch modes; new causes DFM-010.C3 (pull-down open) and DFM-014.C2 (Q6 short); new failure modes
 # DFM-020 (box supply lost while driving) and DFM-021 (clamp diode short). Effects of DFM-020 are derived from the drawing
 # and wait for the bench test (DFM-ACT-014).
+# Rev 0.6 (2026-10-16, RR-2026-010 F-05): new causes DFM-010.C4 (switch overstress or latch-up from box supply transients) and
+# DFM-011.C2 (5 V SBU1 drive below the logic-high threshold with VL at VIN), action DFM-ACT-015 (confirm the DG419LE ratings from
+# Vishay document 76432, which could not be downloaded). MSR rows added for both: M 10 and M 8.
 schema_version: 1
 analysis:
   id: DFM
   type: dfmea
   title: "DFMEA — device, integrated panda, harness, vehicle interfaces"
-  revision: "0.5"
+  revision: "0.6"
   status: draft
   baseline: BL-002
   rating_tables: RT-2
@@ -41,7 +44,7 @@ analysis:
     - assurance/04-hardware/WP-H-02-hardware-design.md
     - assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
     - assurance/08-analyses/WP-A-03-dependent-failure-analysis.md
-  updated: 2026-10-14
+  updated: 2026-10-16
 structure:
 - id: DFM-SE-001
   name: 'Item hardware: comma 3X with integrated panda, Toyota harness and relay box, installed in a Corolla E210 · ZRE212 · US (CFG-001)'
@@ -714,6 +717,38 @@ failure_modes:
       actions:
       - DFM-ACT-007
       - DFM-ACT-014
+  - id: DFM-010.C4
+    description: U1/U2 overstressed or latched up by box supply transients above the DG419LE absolute maximum (V+ = VL = VIN with no
+      regulator; the SMF16A clamp D4 only starts to conduct above its 16 V stand-off). Damage can leave the switch in either position
+      or open a channel (also DFM-011, DFM-013)
+    element: DFM-SE-006
+    prevention_controls:
+    - *id001
+    - description: 'D4 SMF16A TVS on VIN (harness box v3). Its clamp level against the DG419LE rating is not shown: datasheet limits
+        not confirmed (RR-2026-010 F-05)'
+      ref: assurance/04-hardware/reviews/RR-2026-010.md
+    detection_controls: *id002
+    occurrence: 4
+    detection: 10
+    ap: H
+    actions:
+    - DFM-ACT-014
+    - DFM-ACT-015
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'None: no relay readback (GAP-12) and no supervision of the box supply'
+      system_response: None
+      effect_after_response: 'Unchanged: the stock camera may stay cut off after release is commanded'
+      severity_after: 10
+      frequency: 4
+      monitoring: 10
+      ap: H
+      timing:
+        basis: unknown
+      actions:
+      - DFM-ACT-014
+      - DFM-ACT-015
   safety_mechanisms:
   - description: 'None: no relay readback (GAP-12)'
     ref: assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md
@@ -771,6 +806,43 @@ failure_modes:
       fmeda: fmeda-sg001/FMD-020
       actions:
       - DFM-ACT-007
+  - id: DFM-011.C2
+    description: The 5 V SBU1 drive does not reach the DG419LE logic-high threshold with VL tied to VIN (about 14 V), so the switch
+      does not change over or changes over only at some temperatures (RR-2026-010 F-05; thresholds at VL = VIN not confirmed)
+    element: DFM-SE-006
+    prevention_controls:
+    - *id001
+    - description: 'Field use: openpilot on TSS2 Toyotas with this box would raise relayMalfunction on every drive if the switch never
+        changed over, which suggests it switches at nominal conditions. Margin over temperature and supply is not shown'
+      ref: assurance/04-hardware/reviews/RR-2026-010.md
+    detection_controls:
+    - description: Relay-malfunction tests in the opendbc suite exercise the software reaction, not the switch threshold
+      test: opendbc_repo/opendbc/safety/tests/test_toyota.py
+    occurrence: 2
+    detection: 9
+    ap: H
+    actions:
+    - DFM-ACT-014
+    - DFM-ACT-015
+    msr:
+      mechanisms:
+      - 1
+      diagnostic: 'Relay malfunction: a stock camera frame on the car side after the 1 s grace blocks all TX (T-08, 1-2 s)'
+      system_response: All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE)
+      effect_after_response: Up to 2 s of stock LKA and item commands on the bus together, then no item output
+      severity_after: 10
+      frequency: 2
+      monitoring: 8
+      ap: H
+      timing:
+        ftti_ref: SG-01 relay stuck
+        ftti_ms: 500
+        fdti_ms: 2000
+        frti_ms: 10
+        basis: code_derived
+      actions:
+      - DFM-ACT-014
+      - DFM-ACT-015
   safety_mechanisms:
   - description: 'Relay malfunction detection: stock camera message on the car side after a 1 s grace blocks all TX (safety.h stock_ecu_check)'
     ref: opendbc_repo/opendbc/safety/safety.h
@@ -1330,5 +1402,13 @@ actions:
   description: 'Bench-test the harness box failure behaviour (RR-2026-010): box unpowered with car and camera powered; R2/R3 forced
     open with the device silent; supply at 14-16 V against the DG419LE ratings; pass-through signal integrity; clamp-diode short
     on CAN0; confirm the shipped box matches the v3 drawing (VS-HW-02)'
+  owner: Jherrod Thomas
+  status: open
+- id: DFM-ACT-015
+  kind: detection
+  description: 'Read the Vishay DG417LE/DG418LE/DG419LE datasheet (document 76432) and record the absolute maximum V+ to V-, VL and
+    IN ratings, the single-supply operating range and VINH/VINL at VL = V+ = 14 V; compare with VIN including the D4 clamp level. If
+    a limit is exceeded, raise it with comma.ai and with DQ-209 (RR-2026-010 F-05; blocked at 2026-10-16: vendor and datasheet hosts
+    unreachable from the analysis environment)'
   owner: Jherrod Thomas
   status: open
