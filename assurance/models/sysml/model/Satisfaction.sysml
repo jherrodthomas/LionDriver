@@ -15,6 +15,7 @@ package LionDriverSatisfaction {
     satisfy sg_05 by context.ldsda;
     satisfy sg_06 by context.ldsda;
     satisfy sg_07 by context.ldsda;
+    satisfy sg_08 by context.ldsda;
     satisfy fsr_01_01 by context.ldsda.safetyFirmware;
     satisfy fsr_01_02 by context.ldsda.safetyFirmware;
     satisfy fsr_01_03 by context.ldsda.safetyFirmware;

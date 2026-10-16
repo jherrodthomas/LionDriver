@@ -4,9 +4,9 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.6 | draft | BL-002 | RT-2 | 2026-10-16 |
+| 0.7 | draft | BL-005 | RT-2 | 2026-10-16 |
 
-**Scope.** Safety-relevant hardware of AC-001 at BL-002: comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
+**Scope.** Safety-relevant hardware of AC-001 at BL-005 (hardware as at BL-002): comma 3X panda section (STM32H725, clock and watchdog, MCU supply, CAN transceivers), Toyota harness and relay box, SoC-MCU interface, siren path, enclosure and cooling. SoC, cameras and other QM hardware only where they couple into these (WP-A-03).
 
 **Team.** Jherrod Thomas (Project maintainer, safety lead (reviewer/approver)); Claude (AI assistant) (Drafting assistance; ratings require human review)
 
@@ -314,7 +314,7 @@ Effects:
 
 Safety mechanisms: (1) RX timeout after 5 periods (BL-002, about 0.16 s) withdraws controls; SoC alerts on panda state
 
-[Monitoring and system response](#7-monitoring-and-system-response): `DFM-009.C1` mechanism 1: M 8 · F 5 · S after response 10 → 🔴 **H**
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-009.C1` mechanism 1: M 6 · F 5 · S after response 10 → 🔴 **H**
 
 <sub>Note: WP-H-03 FM-CAN-02. Detected and safe-direction; severity stays 10 because the end effect is loss of lateral control while engaged.</sub>
 
@@ -477,7 +477,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `DFM-015.C1` Bit errors on the SPI link (EMC, signal integrity); 8-bit XOR only, no sequence counter | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub><br>• 8-bit XOR on header and data, NACK on mismatch (drivers/spi.h:97-138); reference lock limits what a corrupted 0xdc can select (reference build only) <sub>panda/board/drivers/spi.h</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 4 | 10 | 🔴 **H** | DFM-ACT-009 |
+| `DFM-015.C1` Bit errors on the SPI link (EMC, signal integrity); 8-bit XOR only, no sequence counter | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub><br>• 8-bit XOR on header and data, NACK on mismatch (drivers/spi.h:97-138); reference lock limits what a corrupted 0xdc can select (default build from BL-005, LionDriver <sub>panda/board/drivers/spi.h</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 4 | 10 | 🔴 **H** | DFM-ACT-009 |
 
 <sub>Note: WP-H-03 FM-SPI-01; GAP-10.</sub>
 
@@ -500,7 +500,7 @@ Safety mechanisms: (1) Bootstub signature check, but the debug key is accepted i
 
 [Monitoring and system response](#7-monitoring-and-system-response): `DFM-016.C1` mechanism 1: M 9 · F 4 · S after response 10 → 🔴 **H**
 
-<sub>Note: WP-H-03 FM-BT0-01; LD-DES-001.</sub>
+<sub>Note: WP-H-03 FM-BT0-01; LD-DES-001. BL-005: the panda reports a reference build in health (panda#12) and pandad configures a car mode only on such a panda (LionDriver #41). That check runs on the SoC, the element that causes this failure, so it is not credited here.</sub>
 
 ### `DFM-SE-009` SoC-independent acoustic warning path (siren)
 
@@ -520,7 +520,11 @@ Effects:
 | `DFM-017.C1` Siren shares the codec, amplifier or speaker with the SoC audio, which the faulty SoC powers down | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 5 | 10 | 🔴 **H** | DFM-ACT-011 |
 | `DFM-017.C2` Siren path fault stays latent (no self-test) | • COTS comma 3X design in volume field use; no supplier reliability data, schematic or BOM available to LionDriver (WP-H-02 UK-01, UK-02) <sub>assurance/04-hardware/WP-H-02-hardware-design.md</sub> | • No LionDriver hardware verification or qualification test exists for this cause (WP-H-06/WP-H-07 not started; no HIL bench, D-04) | 4 | 10 | 🔴 **H** | DFM-ACT-011 |
 
-<sub>Note: WP-H-03 FM-SIR-01; WP-A-03 DFI-23.</sub>
+Safety mechanisms: (1) BL-005: the panda commands the siren itself when the 0.3 s heartbeat monitor revokes granted authority (panda#15, heartbeat_siren.h) and when an EPS fault persists 1 s while engaged (panda#14, eps_fault_siren.h). Both rely on the speaker path that DFM-017.C1 questions
+
+[Monitoring and system response](#7-monitoring-and-system-response): `DFM-017.C1` mechanism 1: M 10 · F 5 · S after response 10 → 🔴 **H**<br>`DFM-017.C2` mechanism 1: M 10 · F 4 · S after response 10 → 🔴 **H**
+
+<sub>Note: WP-H-03 FM-SIR-01; WP-A-03 DFI-23. BL-005 makes this path the SoC-independent cue of TSR-516(b), so a shared or SoC-powered audio stage now defeats a specified warning, not only a convenience. Ratings unchanged: no hardware evidence either way (WP-H-02 UK-07)</sub>
 
 ### `DFM-SE-010` Enclosure, windscreen mount and cooling (fan, DTS)
 
@@ -600,7 +604,7 @@ Effects:
 
 FMEA-MSR rates what happens in the car when a cause occurs: does a diagnostic catch it, and does the system reach a safe state within the fault-tolerant time interval (FTTI)? It adds frequency (F), monitoring (M) and the severity after the response, with its own action priority; S, O, D and AP above are unchanged. Scales: [rating-tables.md §7](../../rating-tables.md#7-fmea-msr--monitoring-and-system-response-added-in-rt-2); scope and plan: [msr-plan.md](../../msr-plan.md); FTTI rows: [WP-S-04 §3.7](../../../../03-system/WP-S-04-timing-ftti-budget.md#37-summary-of-fttis-and-budgets).
 
-**Coverage:** 21 of 21 in-scope causes rated, 0 rated elsewhere (`msr: complete`).
+**Coverage:** 23 of 23 in-scope causes rated, 0 rated elsewhere (`msr: complete`).
 
 > [!WARNING]
 > The MSR action priority uses a provisional table until the AIAG-VDA handbook table is transcribed (rating-tables §7.4). Read the M and F columns; the AP column will be re-rated.
@@ -614,9 +618,11 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `DFM-010.C1` Analog switch U1 or U2 stuck in the intercept (NO) position, or its IN input damaged high | None: no relay readback (GAP-12) → None | unknown | 10 | 6 | **10** | 🔴 **H** | DFM-ACT-007 |
 | `DFM-003.C1` Double-bit soft error or permanent SRAM fault; RAMECC monitors not configured, ECC interrupt not registered | None at BL-002: RAMECC monitors not configured, no redundant storage → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-002 |
 | `DFM-007.C1` Vehicle supply dip (cranking, alternator fault) with BOR level not set and PVD not enabled | None at BL-002: PVD handler is a stub and the BOR level is unknown (UK-04) → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-005 |
+| `DFM-017.C1` Siren shares the codec, amplifier or speaker with the SoC audio, which the faulty SoC powers down | None: nothing checks that the speaker path works without the SoC; the panda siren commands assume it does → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-011 |
 | `DFM-020.C1` Ignition branch to the box open (crimp, connector) or D1 open, without comma power installed | None: the box supply is not supervised, and the device loses power with it → None | unknown | 10 | 5 | **10** | 🔴 **H** | DFM-ACT-014 |
 | `DFM-010.C2` SBU1 drive stuck high (device-side driver or MCU pin, UK-06) | None: no relay readback (GAP-12) → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-007 |
 | `DFM-010.C4` U1/U2 overstressed or latched up by box supply transients above the DG419LE absolute maximum (V+ = VL = VIN with no regulator; the SMF16A clamp D4 only starts to conduct above its 16 V stand-off). Damage can leave the switch in either position or open a channel (also DFM-011, DFM-013) | None: no relay readback (GAP-12) and no supervision of the box supply → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-014, DFM-ACT-015 |
+| `DFM-017.C2` Siren path fault stays latent (no self-test) | None: no siren self-test at start-up or in operation (WP-H-04 OI-4) → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-011 |
 | `DFM-019.C1` Soft error or permanent fault in the copy into FDCAN message RAM, the message RAM or the FDCAN core. The packet XOR is checked at the FDCAN load (fdcan.h:100) and covers only the software queue; the CAN CRC is computed after the fault | None after the FDCAN load: no TX read-back (TSR-517 not implemented) → None | unknown | 10 | 4 | **10** | 🔴 **H** | DFM-ACT-013 |
 | `DFM-003.C2` Wrong-address write by the SPI DMA (no MPU) | None at BL-002: no MPU and no redundant storage of the safety state → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-002 |
 | `DFM-020.C2` Box VIN shorted to ground (TVS D4 short, connector or wiring) | None: the box supply is not supervised, and the device loses power with it → None | unknown | 10 | 3 | **10** | 🔴 **H** | DFM-ACT-014 |
@@ -628,7 +634,7 @@ Sorted by monitoring, weakest first. Timing is detection + reaction time against
 | `DFM-016.C1` SoC drives STM_BOOT0/STM_RST_N (fault or compromise); no RDP/WRP; pandad recovery flashes a development bootstub | Bootstub signature check exists but accepts the debug key in debug builds; RDP and WRP not set (GAP-24) → None for a signed debug image | unknown | 10 | 4 | **9** | 🔴 **H** | DFM-ACT-010 |
 | `DFM-011.C1` Analog switch U1 or U2 stuck in the pass-through (NC) position, or SBU1 drive lost or held low (driver open, R2/R3 short) | Relay malfunction: a stock camera frame on the car side after the 1 s grace blocks all TX (T-08, 1-2 s) → All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE) | 2000 + 10 ms vs FTTI 500 ms ❌ (code-derived) | 10 | 6 | **8** | 🔴 **H** | DFM-ACT-007 |
 | `DFM-008.C1` XCVR1 TX driver fault or TXD stuck low | FDCAN error counters; core reset on bus-off. The transceiver dominant timeout is part dependent and unknown → A core reset does not release a transceiver that holds the bus dominant; no safe-state reaction | unknown | 10 | 5 | **8** | 🔴 **H** | DFM-ACT-006 |
-| `DFM-009.C1` XCVR1 RX open or stuck recessive | RX timeout after 5 periods (about 0.16 s) withdraws controls_allowed; the host warns through the 2 s controlsMismatch counter (T-17) → Authority withdrawn at once; warning about 2.2 s after onset, beyond the 1 s budget to warning | 160 + 2000 ms vs FTTI 1000 ms ❌ (code-derived) | 10 | 5 | **8** | 🔴 **H** | DFM-ACT-006 |
 | `DFM-021.C1` Schottky clamp D2 or D3 (BAS40SDW) short or leaky | RX timeouts withdraw control and the host raises CAN errors; nothing restores the bus → Authority withdrawn and the driver warned; the stock camera path stays broken | unknown | 10 | 3 | **8** | 🔴 **H** | DFM-ACT-014 |
 | `DFM-011.C2` The 5 V SBU1 drive does not reach the DG419LE logic-high threshold with VL tied to VIN (about 14 V), so the switch does not change over or changes over only at some temperatures (RR-2026-010 F-05; thresholds at VL = VIN not confirmed) | Relay malfunction: a stock camera frame on the car side after the 1 s grace blocks all TX (T-08, 1-2 s) → All TX blocked; host raises relayMalfunction (IMMEDIATE_DISABLE) | 2000 + 10 ms vs FTTI 500 ms ❌ (code-derived) | 10 | 2 | **8** | 🔴 **H** | DFM-ACT-014, DFM-ACT-015 |
-| `DFM-004.C1` Hang in an ISR or main loop, unused vector to Default_Handler, or assert_fatal loop | IWDG expires about 90 ms after the last feed (T-09a). Timing fits on paper, but whether the reset releases the relay is unconfirmed (HWSR-502, UK-06) and the LSI tolerance leaves no shown margin (OI-7), so the response is not credited → MCU reset; relay de-energised if the drive circuit is de-energise-to-safe; stock camera CAN restored | 90 + 100 ms vs FTTI 200 ms ✅ (code-derived) | 10 | 6 | **7** | 🔴 **H** | DFM-ACT-003 |
+| `DFM-004.C1` Hang in an ISR or main loop, unused vector to Default_Handler, or assert_fatal loop | IWDG expires about 90 ms after the last feed (T-09a); BL-005 reports a watchdog reset in health (panda#6). Timing fits on paper. On the box side, an undriven SBU1 is pulled to pass-through by R2+R3 (RR-2026-010 HB-02); the device-side driver state in reset is still unconfirmed (UK-06) and the LSI tolerance leaves no shown margin (OI-7), so the response is not credited → MCU reset; relay de-energised if the drive circuit is de-energise-to-safe; stock camera CAN restored | 90 + 100 ms vs FTTI 200 ms ✅ (code-derived) | 10 | 6 | **7** | 🔴 **H** | DFM-ACT-003 |
+| `DFM-009.C1` XCVR1 RX open or stuck recessive | RX timeout after 5 periods (rx_timeout_periods, safety.h rx_check_lagging; about 0.16 s) withdraws controls_allowed. BL-005: selfdrived raises controlsMismatch after 2 consecutive pandaStates samples, at most 0.5 s after the first mismatched frame (TSR-621, supervision.py). At BL-002 the host counter took about 2 s → Authority withdrawn at once; controlsMismatch IMMEDIATE_DISABLE with a take-over alert | 160 + 500 ms vs FTTI 1000 ms ✅ (code-derived) | 10 | 5 | **6** | 🔴 **H** | DFM-ACT-006 |

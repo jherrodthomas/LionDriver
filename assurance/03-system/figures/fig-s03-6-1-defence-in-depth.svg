@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="872" viewBox="0 0 1280 872" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="952" viewBox="0 0 1280 952" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img">
 <title>Figure 6-1 · Defence in depth per safety goal</title>
-<desc>Matrix of safety goals by protection layer (host SoC, safety envelope, vehicle ECUs, driver, plus operation) with TSR counts, status at the baseline and SM types. SG-01 ASIL C: host 12 TSRs partly, envelope 44 TSRs partly, vehicle 2 EXT TSRs and 1 AoUs assumed, driver 5 hazardous events rated by controllability, operation 6 TSRs; SG-02 ASIL B: host 27 TSRs partly, envelope 20 TSRs partly, vehicle 2 EXT TSRs and 1 AoUs assumed, driver 6 hazardous events rated by controllability, operation 3 TSRs; SG-03 ASIL B: host 9 TSRs partly, envelope 40 TSRs partly, vehicle 2 EXT TSRs and 3 AoUs assumed, driver 5 hazardous events rated by controllability, operation 5 TSRs; SG-04 ASIL B: host 12 TSRs partly, envelope 39 TSRs partly, vehicle 2 EXT TSRs and 2 AoUs assumed, driver 5 hazardous events rated by controllability, operation 5 TSRs; SG-05 ASIL B: host 7 TSRs partly, envelope 32 TSRs partly, vehicle 4 EXT TSRs and 3 AoUs assumed, driver 4 hazardous events rated by controllability, operation 5 TSRs; SG-06 ASIL B: host 27 TSRs partly, envelope 18 TSRs partly, vehicle 1 EXT TSRs and 1 AoUs assumed, driver 3 hazardous events rated by controllability, operation 3 TSRs; SG-07 ASIL B: host 5 TSRs partly, envelope 28 TSRs partly, vehicle 1 EXT TSRs and 1 AoUs assumed, driver 1 hazardous events rated by controllability, operation 8 TSRs.</desc>
+<desc>Matrix of safety goals by protection layer (host SoC, safety envelope, vehicle ECUs, driver, plus operation) with TSR counts, status at the baseline and SM types. SG-01 ASIL C: host 12 TSRs partly, envelope 44 TSRs partly, vehicle 2 EXT TSRs and 1 AoUs assumed, driver 6 hazardous events rated by controllability, operation 6 TSRs; SG-02 ASIL C: host 27 TSRs partly, envelope 20 TSRs partly, vehicle 2 EXT TSRs and 1 AoUs assumed, driver 8 hazardous events rated by controllability, operation 3 TSRs; SG-03 ASIL C: host 9 TSRs partly, envelope 40 TSRs partly, vehicle 2 EXT TSRs and 3 AoUs assumed, driver 6 hazardous events rated by controllability, operation 5 TSRs; SG-04 ASIL B: host 12 TSRs partly, envelope 39 TSRs partly, vehicle 2 EXT TSRs and 2 AoUs assumed, driver 5 hazardous events rated by controllability, operation 5 TSRs; SG-05 ASIL B: host 7 TSRs partly, envelope 32 TSRs partly, vehicle 4 EXT TSRs and 3 AoUs assumed, driver 4 hazardous events rated by controllability, operation 5 TSRs; SG-06 ASIL C: host 27 TSRs partly, envelope 18 TSRs partly, vehicle 1 EXT TSRs and 1 AoUs assumed, driver 4 hazardous events rated by controllability, operation 3 TSRs; SG-07 ASIL B: host 5 TSRs partly, envelope 28 TSRs partly, vehicle 1 EXT TSRs and 1 AoUs assumed, driver 1 hazardous events rated by controllability, operation 8 TSRs; SG-08 ASIL A: host 7 TSRs partly, envelope 0 TSRs none, vehicle 0 EXT TSRs and 0 AoUs assumed, driver 2 hazardous events rated by controllability, operation 1 TSRs.</desc>
 <defs><marker id="muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="safety" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#F1F5F9"/><line x1="0" y1="0" x2="0" y2="6" stroke="#CBD5E1" stroke-width="2"/></pattern></defs>
-<rect x="0" y="0" width="1280" height="872" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="0" y="0" width="1280" height="952" rx="0" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 6-1 · Defence in depth per safety goal</text>
 <text x="40" y="66" font-size="12.5" fill="#475569">Protection layers between a fault and the hazard, inside to outside, with the TSRs and assumptions that make up each layer and their status at the baseline.</text>
 <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">WP-S-03 §6 · trace data</text>
@@ -24,7 +24,7 @@
 <text x="1086" y="157" font-size="10" fill="#475569">alloc. OPS · across layers</text>
 <text x="48" y="142" font-size="11" fill="#0F172A" font-weight="700">SAFETY GOAL</text>
 <text x="48" y="157" font-size="10" fill="#475569">ASIL (WP-C-03, proposed)</text>
-<line x1="1068" y1="132" x2="1068" y2="728" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="1068" y1="132" x2="1068" y2="808" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="3 4"/>
 <text x="48" y="194" font-size="14" fill="#0F172A" font-weight="700">SG-01</text>
 <rect x="108" y="181" width="58" height="18" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/>
 <text x="137" y="194" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">ASIL C</text>
@@ -55,13 +55,13 @@
 <text x="678" y="217" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-01</text>
 <text x="678" y="231" font-size="10.5" fill="#475569">AoU unverified</text>
 <rect x="892" y="168" width="160" height="70" rx="8" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
-<text x="902" y="186" font-size="12.5" fill="#0F172A" font-weight="700">C2 ×5</text>
-<text x="902" y="202" font-size="10.5" fill="#475569">of 5 hazardous events</text>
+<text x="902" y="186" font-size="12.5" fill="#0F172A" font-weight="700">C2 ×5 · C3 ×1</text>
+<text x="902" y="202" font-size="10.5" fill="#475569">of 6 hazardous events</text>
 <text x="902" y="217" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-02</text>
 <text x="902" y="231" font-size="10.5" fill="#475569">AoU unverified</text>
 <text x="48" y="274" font-size="14" fill="#0F172A" font-weight="700">SG-02</text>
 <rect x="108" y="261" width="58" height="18" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/>
-<text x="137" y="274" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">ASIL B</text>
+<text x="137" y="274" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">ASIL C</text>
 <text x="48" y="296" font-size="10.5" fill="#475569">Lateral loss without warning</text>
 <rect x="212" y="248" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="222" y="266" font-size="12.5" fill="#0F172A" font-weight="700">27 TSRs</text>
@@ -88,12 +88,12 @@
 <text x="678" y="297" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-12</text>
 <text x="678" y="311" font-size="10.5" fill="#475569">AoU unverified</text>
 <rect x="892" y="248" width="160" height="70" rx="8" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
-<text x="902" y="266" font-size="12.5" fill="#0F172A" font-weight="700">C1 ×2 · C2 ×4</text>
-<text x="902" y="282" font-size="10.5" fill="#475569">of 6 hazardous events</text>
+<text x="902" y="266" font-size="12.5" fill="#0F172A" font-weight="700">C1 ×2 · C2 ×1 · C3 ×5</text>
+<text x="902" y="282" font-size="10.5" fill="#475569">of 8 hazardous events</text>
 <text x="902" y="297" font-size="10.5" fill="#475569">no driver AoU credited</text>
 <text x="48" y="354" font-size="14" fill="#0F172A" font-weight="700">SG-03</text>
 <rect x="108" y="341" width="58" height="18" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/>
-<text x="137" y="354" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">ASIL B</text>
+<text x="137" y="354" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">ASIL C</text>
 <text x="48" y="376" font-size="10.5" fill="#475569">Unintended acceleration</text>
 <rect x="212" y="328" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="222" y="346" font-size="12.5" fill="#0F172A" font-weight="700">9 TSRs</text>
@@ -121,8 +121,8 @@
 <text x="678" y="377" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-03, AOU-05, AOU-12</text>
 <text x="678" y="391" font-size="10.5" fill="#475569">AoU unverified</text>
 <rect x="892" y="328" width="160" height="70" rx="8" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
-<text x="902" y="346" font-size="12.5" fill="#0F172A" font-weight="700">C1 ×1 · C2 ×4</text>
-<text x="902" y="362" font-size="10.5" fill="#475569">of 5 hazardous events</text>
+<text x="902" y="346" font-size="12.5" fill="#0F172A" font-weight="700">C1 ×1 · C2 ×4 · C3 ×1</text>
+<text x="902" y="362" font-size="10.5" fill="#475569">of 6 hazardous events</text>
 <text x="902" y="377" font-size="10.5" fill="#475569">no driver AoU credited</text>
 <text x="48" y="434" font-size="14" fill="#0F172A" font-weight="700">SG-04</text>
 <rect x="108" y="421" width="58" height="18" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/>
@@ -192,7 +192,7 @@
 <text x="902" y="551" font-size="10.5" fill="#475569">AoU unverified</text>
 <text x="48" y="594" font-size="14" fill="#0F172A" font-weight="700">SG-06</text>
 <rect x="108" y="581" width="58" height="18" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/>
-<text x="137" y="594" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">ASIL B</text>
+<text x="137" y="594" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">ASIL C</text>
 <text x="48" y="616" font-size="10.5" fill="#475569">Decel. loss without warning</text>
 <rect x="212" y="568" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="222" y="586" font-size="12.5" fill="#0F172A" font-weight="700">27 TSRs</text>
@@ -219,8 +219,8 @@
 <text x="678" y="617" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">AOU-12</text>
 <text x="678" y="631" font-size="10.5" fill="#475569">AoU unverified</text>
 <rect x="892" y="568" width="160" height="70" rx="8" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
-<text x="902" y="586" font-size="12.5" fill="#0F172A" font-weight="700">C2 ×3</text>
-<text x="902" y="602" font-size="10.5" fill="#475569">of 3 hazardous events</text>
+<text x="902" y="586" font-size="12.5" fill="#0F172A" font-weight="700">C2 ×3 · C3 ×1</text>
+<text x="902" y="602" font-size="10.5" fill="#475569">of 4 hazardous events</text>
 <text x="902" y="617" font-size="10.5" fill="#475569">no driver AoU credited</text>
 <text x="48" y="674" font-size="14" fill="#0F172A" font-weight="700">SG-07</text>
 <rect x="108" y="661" width="58" height="18" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/>
@@ -255,18 +255,42 @@
 <text x="902" y="666" font-size="12.5" fill="#0F172A" font-weight="700">C3 ×1</text>
 <text x="902" y="682" font-size="10.5" fill="#475569">of 1 hazardous events</text>
 <text x="902" y="697" font-size="10.5" fill="#475569">no driver AoU credited</text>
-<line x1="40" y1="736" x2="1240" y2="736" stroke="#E2E8F0" stroke-width="1"/>
-<rect x="40" y="749" width="22" height="14" rx="3" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
-<text x="68" y="760" font-size="11" fill="#475569">implemented at baseline, not verified</text>
-<rect x="296.9" y="749" width="22" height="14" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
-<text x="324.9" y="760" font-size="11" fill="#475569">partly implemented</text>
-<rect x="445.5" y="749" width="22" height="14" rx="3" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
-<text x="473.5" y="760" font-size="11" fill="#475569">not implemented</text>
-<rect x="577" y="749" width="22" height="14" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4"/>
-<text x="605" y="760" font-size="11" fill="#475569">assumed (AoU or HARA rating, unverified)</text>
-<text x="40" y="782" font-size="10.5" fill="#475569">Bar: the TSRs of the cell by status. Monospace: the most frequent SM types of those TSRs (WP-S-02 §2.2: LIM limiter, GATE gating, PLB plausibility, TMO timeout, FR fault reaction, CFG configuration lock, WRN warning …).</text>
-<text x="40" y="799" font-size="10.5" fill="#475569">Status rule, per TSR from baseline_impl: “Implemented …”/“Met …” without a qualifier = implemented; “Partial”, “Partly” or a qualified one (no rationale, reference build only, subset, via another TSR) = partly;</text>
-<text x="40" y="816" font-size="10.5" fill="#475569">“Not …”, “Unknown”, “Not verified” = not implemented; EXT or “Unverified (AOU-…)” = assumed; OPS procedures = partly (“Blocked”: not implemented).</text>
-<text x="40" y="833" font-size="10.5" fill="#475569">A cell is implemented only if all its TSRs are, not implemented only if all are not, otherwise partly. A TSR allocated to two layers counts in both.</text>
-<text x="40" y="850" font-size="10.5" fill="#475569">Nothing here is verified: implemented means the baseline code does it. HARA C ratings, ASILs and AoUs are proposals.</text>
+<text x="48" y="754" font-size="14" fill="#0F172A" font-weight="700">SG-08</text>
+<rect x="108" y="741" width="58" height="18" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1"/>
+<text x="137" y="754" font-size="10" fill="#C2410C" font-weight="700" text-anchor="middle">ASIL A</text>
+<text x="48" y="776" font-size="10.5" fill="#475569">Unsupervised driving stopped</text>
+<rect x="212" y="728" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="222" y="746" font-size="12.5" fill="#0F172A" font-weight="700">7 TSRs</text>
+<rect x="222" y="754" width="24.2" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<rect x="247.7" y="754" width="24.2" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="273.4" y="754" width="127.1" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
+<text x="222" y="777" font-size="10.5" fill="#475569">1 impl. · 1 partly · 5 not</text>
+<text x="222" y="791" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">CFG 2 · FR 2 · PLB 2</text>
+<rect x="422" y="728" width="236" height="70" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.4" stroke-dasharray="3 4"/>
+<text x="540" y="767" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
+<rect x="1076" y="728" width="164" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
+<text x="1086" y="746" font-size="12.5" fill="#0F172A" font-weight="700">1 TSR</text>
+<rect x="1086" y="754" width="142.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<text x="1086" y="777" font-size="10.5" fill="#475569">1 partly</text>
+<text x="1086" y="791" font-size="10.5" fill="#475569">procedures (no SM type)</text>
+<rect x="668" y="728" width="214" height="70" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.4" stroke-dasharray="3 4"/>
+<text x="775" y="767" font-size="12" fill="#94A3B8" text-anchor="middle">—</text>
+<rect x="892" y="728" width="160" height="70" rx="8" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="902" y="746" font-size="12.5" fill="#0F172A" font-weight="700">C2 ×1 · C3 ×1</text>
+<text x="902" y="762" font-size="10.5" fill="#475569">of 2 hazardous events</text>
+<text x="902" y="777" font-size="10.5" fill="#475569">no driver AoU credited</text>
+<line x1="40" y1="816" x2="1240" y2="816" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="40" y="829" width="22" height="14" rx="3" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
+<text x="68" y="840" font-size="11" fill="#475569">implemented at baseline, not verified</text>
+<rect x="296.9" y="829" width="22" height="14" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="1.2"/>
+<text x="324.9" y="840" font-size="11" fill="#475569">partly implemented</text>
+<rect x="445.5" y="829" width="22" height="14" rx="3" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2"/>
+<text x="473.5" y="840" font-size="11" fill="#475569">not implemented</text>
+<rect x="577" y="829" width="22" height="14" rx="3" fill="url(#hatch)" stroke="#94A3B8" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="605" y="840" font-size="11" fill="#475569">assumed (AoU or HARA rating, unverified)</text>
+<text x="40" y="862" font-size="10.5" fill="#475569">Bar: the TSRs of the cell by status. Monospace: the most frequent SM types of those TSRs (WP-S-02 §2.2: LIM limiter, GATE gating, PLB plausibility, TMO timeout, FR fault reaction, CFG configuration lock, WRN warning …).</text>
+<text x="40" y="879" font-size="10.5" fill="#475569">Status rule, per TSR from baseline_impl: “Implemented …”/“Met …” without a qualifier = implemented; “Partial”, “Partly” or a qualified one (no rationale, reference build only, subset, via another TSR) = partly;</text>
+<text x="40" y="896" font-size="10.5" fill="#475569">“Not …”, “Unknown”, “Not verified” = not implemented; EXT or “Unverified (AOU-…)” = assumed; OPS procedures = partly (“Blocked”: not implemented).</text>
+<text x="40" y="913" font-size="10.5" fill="#475569">A cell is implemented only if all its TSRs are, not implemented only if all are not, otherwise partly. A TSR allocated to two layers counts in both.</text>
+<text x="40" y="930" font-size="10.5" fill="#475569">Nothing here is verified: implemented means the baseline code does it. HARA C ratings, ASILs and AoUs are proposals.</text>
 </svg>

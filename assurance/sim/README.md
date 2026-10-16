@@ -17,7 +17,8 @@ the figure tools of the other work products do. The MetaDrive bridge stays where
 |---|---|
 | [`faults.yaml`](faults.yaml) | Fault catalog: each fault with its FMEA causes, TSRs, injection point, trigger, duration and expected mechanism |
 | [`INTERFACE.md`](INTERFACE.md) | Plant interface: signals, units and rates shared by every harness |
-| [`plant/`](plant/) | Layer 1: the fault-injection plant model and its tests |
+| [`plant/`](plant/) | Layer 1: the fault-injection plant model and its tests; the plant itself is [`plant/plant.py`](plant/plant.py) |
+| [`plant/fmu/`](plant/fmu/) | The same plant as an FMI 2.0 co-simulation FMU (built, not committed), and its test under FMPy |
 | [`results/plant-results.md`](results/plant-results.md) | Layer 1 results table, event log and model inputs (generated) |
 | [`figures/`](figures/) | Layer 1 figures, one per selected case (generated) |
 | [`requirements.txt`](requirements.txt) | Pinned Python packages of the track |
@@ -68,6 +69,15 @@ car bus RX at the nominal rates (0xAA, 0x260, 0x262, 0x1D2, 0x1D3, 0x226) ──
 | Roads | Model | Highway only (ODD-H; DQ-023 answered B): straight, and a clothoid over 100 m into a left arc at 1.5 m/s² (inside the ODD) or at the ODD bound R_ODD = v²/2.5 m/s²; 3.7 m lane, thresholds also for the 3.0 m ODD minimum |
 
 The full list of inputs, with source and status of each, is printed under the results table.
+
+**One plant, many harnesses.** The vehicle, EPS and PCM are one class, `CorollaPlant` in
+[`plant/plant.py`](plant/plant.py), behind the signals of [`INTERFACE.md`](INTERFACE.md). The fault-injection loop calls
+it directly. [`plant/fmu/build_fmu.py`](plant/fmu/build_fmu.py) packages the same class as an FMI 2.0 co-simulation
+FMU with pythonfmu, freezing the parameters into the FMU's resources, so that any FMI master can drive it: FMPy in the
+test, later MetaDrive and the HIL bench. The test runs the FMU through FMPy and requires the same trajectory as the
+in-process plant (to 1e-9). A plant of higher fidelity (L2, OpenModelica EPS physics) is meant to replace it behind
+the same interface. The FMU runs Python from the host: it needs the packages of `requirements.txt`, and is a build
+product, not a committed file.
 
 ### 3.2 Corolla parameters
 
@@ -122,6 +132,8 @@ Until then the results only rank risks and guide which tests to run on the bench
 | cffi, pycparser | 2.1.1, 3.11 | MIT-0, BSD-3-Clause | loading the compiled panda code |
 | pycapnp | 2.1.0 | BSD-2-Clause | imported by opendbc (same pin as the root `pyproject.toml`) |
 | numpy | 2.5.4 | BSD-3-Clause with permissive bundled licences | opendbc host limit functions |
+| pythonfmu | 0.7.0 | MIT | packaging the plant as an FMU |
+| fmpy | 0.3.32 | BSD-2-Clause; its dependencies MIT, BSD-3-Clause, Apache-2.0 | running the FMU in the test |
 
 Licences read from the package metadata on 2026-10-16. All were reachable through the network proxy. The panda and
 opendbc code is the project's own (MIT).
