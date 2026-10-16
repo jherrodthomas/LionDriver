@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-04 Hardware architectural metrics (SPFM, LFM) |
 | Standard reference | ISO 26262-5:2018 §8 (evaluation of the hardware architectural metrics), Annex C (metric definitions, informative), Annex D (diagnostic coverage, informative); ISO 26262-11:2018 (semiconductors, informative) |
-| Version | 0.5 (§5.2 generic-rate estimate from FMEDA rev 0.4 with SG-01 shown against C and B; Figure 5-1 marks the estimates; 2026-10-16). 0.4 (decisions applied: SG-01 target C with B alongside, DQ-063; route to the BOM, DQ-065; added hardware allowed in principle, DQ-051; HIL bench deferred, DQ-049; IWDG credit conditional, DQ-114; 2026-10-16). 0.3 (§5 status and §4 targets drawn as Figure 5-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
+| Version | 0.6 (§5.3 SG-07 SPFM deviation accepted by the lead, DQ-261 option A, conditional on the harness box bench tests; 2026-10-16). 0.5 (§5.2 generic-rate estimate from FMEDA rev 0.4 with SG-01 shown against C and B; Figure 5-1 marks the estimates; 2026-10-16). 0.4 (decisions applied: SG-01 target C with B alongside, DQ-063; route to the BOM, DQ-065; added hardware allowed in principle, DQ-051; HIL bench deferred, DQ-049; IWDG credit conditional, DQ-114; 2026-10-16). 0.3 (§5 status and §4 targets drawn as Figure 5-1; no value changed; 2026-10-13). 0.2 (status note 2026-10-12: DC-01 implemented, not verified, no DC credit; §5.1, §6 step 4). 0.1: initial draft |
 | Status | Draft (method and plan; no metric computed) |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -150,11 +150,25 @@ channel. This supports the FSC recommendation of option (c).
 | SG | λ (FIT) | SPFM | LFM | Against the current ASIL | Against ASIL B (DQ-063) |
 |---|---|---|---|---|---|
 | SG-01 | 255 | 96.8 % | 88.9 % | C: misses SPFM (97 %) by 0.2 points; LFM met | B: both met |
-| SG-07 | 287 | 78.1 % | 97.7 % | B: misses SPFM (90 %) | — |
+| SG-07 | 287 | 78.1 % | 97.7 % | B: misses SPFM (90 %); accepted as a recorded deviation (§5.3, DQ-261) | — |
 
 With the planned measures and the DC assumptions stated in WP-H-03 §6.3, the estimates are:
 - SG-01: 99.1 % / 95.4 %.
 - SG-07: 94.6 %. This needs switch readback, the transceiver release and a stock-path continuity check; position readback alone gives 83.6 %.
+
+### 5.3 Deviation: SG-07 SPFM with comma's harness box
+
+The lead decided to keep comma's harness box and bench-test it, with no switch readback ([DQ-209](../01-management/decisions/register.yaml), option A). The lead then accepted the resulting SG-07 SPFM shortfall as a recorded deviation ([DQ-261](../01-management/decisions/register.yaml), option A, 2026-10-16).
+
+| Field | Content |
+|---|---|
+| Deviation | SG-07 (LD-HARA-001 SG-009, ASIL B): SPFM below the 90 % target. 78.1 % on the generic-rate estimate of §5.2 |
+| Cause | The stock camera-to-car path runs through two powered analog switches (U1/U2) with no position readback and no stock-path continuity check. Switch stuck in intercept or channel open is single-point for SG-07 (WP-H-03 §6.3) |
+| Condition | The acceptance holds only once the harness box bench tests pass: VS-HW-02 and VS-HW-22…24 ([WP-H-06](WP-H-06-hardware-integration-verification.md) §3.1). The tested failure behaviour then becomes the assumption of use for the stock path. If a bench test fails, the deviation goes back to the lead |
+| Argument to build | Bench-tested failure behaviour of the box, field use of the same box, the stock AEB fallback the driver keeps, and the remaining stock-path faults (VIN loss, clamp short) that are perceivable or detected |
+| Not covered | The number rests on a secondary-source switch rate and generic discrete rates (WP-H-03 §2.3). A confirmed rate can move it either way; re-state it here when the rates are confirmed |
+| Assessor | An assessor may not accept a metric miss on an ASIL B goal. The deviation is stated in the safety case, not hidden |
+| Reopen | When the switch rate is confirmed, when a bench test fails, or at the G2 review |
 
 ## 6. Plan
 

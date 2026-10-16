@@ -4012,6 +4012,7 @@
   blocks: "SG-07 hardware metric claim (WP-H-04 §7), G2 hardware argument"
   gate: G2
   decider: lead
+  asked: 2026-10-16
   options:
     - key: A
       recommended: true
@@ -4025,4 +4026,7 @@
       detail: "The 78 % rests on a secondary-source rate. Cost: the G2 hardware argument waits for the datasheet and the SN 29500 values."
   sources: ["assurance/04-hardware/WP-H-03-hardware-safety-analysis-fmeda.md §6.3", "assurance/04-hardware/WP-H-04-hardware-metrics.md §5.2", "assurance/04-hardware/reviews/RR-2026-010.md §5", "assurance/08-analyses/fmea/analyses/fmeda-sg009.yaml"]
   after: [DQ-209]
-  status: queued
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-16}
+  applied: {ref: PENDING, record: "WP-H-04 §5.3 (deviation record); WP-H-03 §6.3; RR-2026-010 §5", at: 2026-10-16}
+  note: "Conditional on the harness box bench tests (VS-HW-02, VS-HW-22…24). Left for the safety-case session: state the deviation in the SG-07 argument."
