@@ -384,13 +384,15 @@ events:
       kernel hang or SoC hardware fault; the DFMEA does not cover the SoC compute section (F-28)
   - id: BE-2.06
     class: random_hw
-    fmea: [DFM-008, DFM-021, DFM-004, DFM-016, DFM-018, DFM-012, PFM-008, PFM-006, SWF-024, SWF-047, SFM-005]
+    fmea: [DFM-008, DFM-021, DFM-004, DFM-016, DFM-018, DFM-012, PFM-008, PFM-006, SWF-024, SWF-047, SFM-005, SFM-011]
     note: >-
       Car-side bus-off: DFM-008 (transceiver holds bus 0 dominant), DFM-021 (clamp diode short); MCU hang or not running:
       DFM-004, DFM-016 (bootloader, SFMEA-27), DFM-018 (over-temperature); CAN path lost at the harness: DFM-012.C1, PFM-008,
       PFM-006; host side: SWF-024.C1/C2 and SFM-005.C2 (sendcan dropped in pandad), SWF-047.C1/C2 (controlsd exits or overruns,
       card stops). The configuration commands 0xe5/0xde/0xf1 (FFI-CM-09) have no SW FMEA mode (as BE-7.03, F-17). DFM-004 and
-      DFM-016 cite no HZ-004 (F-26)
+      DFM-016 cite no HZ-004 (F-26).
+      SFM-011.C2 (TX path to the vehicle lost silently) is the longitudinal form of SFM-005.C2 for SG-06. The event is shared, so
+      each goal warns on the other's mode (SFM-005 under SG-06, SFM-011 under SG-02); not_in_fta cannot take a cited mode
   - id: BE-2.07
     class: random_hw
     fmea: [DFM-012, DFM-020, PFM-008]
