@@ -4082,7 +4082,10 @@
       title: "Keep 120 km/h and test controllability to 120 km/h too"
       detail: "Evidence for the whole range. Cost: a second, higher-risk test review and a site that allows 120 km/h."
   sources: ["assurance/06-validation/WP-V-02-sotif-vv-strategy.md §3.3 item 3", "assurance/02-concept/WP-C-07-sotif-functional-modifications.md FM-07", "assurance/02-concept/WP-C-11-ai-system-definition-and-safety-requirements.md §3 speed"]
-  status: queued
+  asked: 2026-10-16
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-16}
+  note: "SOTIF part applied (WP-C-05 SH-13, WP-C-06 TC-20, WP-C-07 FM-07, WP-C-11 §3, WP-V-02 §3.3/§3.4/§4, WP-V-03 KS-25). Left: the speed row of WP-C-02 §3.1 and its figures (ODD session), FM-07 implementation (software), VS-VAL-10 at 110 km/h (validation session)."
 
 - id: DQ-261
   question: "Should LionDriver pay for a GPU machine to run the CARLA simulator for lighting and weather scenarios?"
