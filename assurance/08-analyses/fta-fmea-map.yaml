@@ -983,5 +983,5 @@ not_in_fta:
     kind: tree_gap
     reason: >-
       The SG-08 tree takes the forced deceleration with lateral control kept as the terminal reaction. Whether that reaches
-      the SG-010 safe state is queued for the lead (DQ-220); if it does not, the tree needs an event for the terminal state
+      the SG-010 safe state is queued for the lead (DQ-365, which absorbed DQ-220); if it does not, the tree needs an event for the terminal state
       reached without the safe state (SWF-062.C1).
