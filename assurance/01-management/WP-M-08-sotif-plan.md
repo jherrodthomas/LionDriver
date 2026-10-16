@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-08 SOTIF plan |
 | Standard reference | ISO 21448:2022 §4 (management of SOTIF activities), §5–§13; ISO/PAS 8800:2024 (interface for AI-related insufficiencies); ASPICE 4.0 MAN.3 |
-| Version | 0.5 (OI-3 and the simulation row of §7 point to the WP-V-02 §5.3 fidelity-case plan and DQ-139; CARLA, DQ-261; 2026-10-16). 0.4 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; D-05 adopted, DQ-038; no log uploads to comma, DQ-084; 2026-10-16). 0.3 (status in §4 from WP-M-00; Experimental Mode default off since 2026-10-14 in §2 and §8; open items with owner and due gate; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
+| Version | 0.6 (OI-3: simulation credit rule decided, DQ-139; CARLA deferred to G3, DQ-261; 2026-10-16). 0.5 (OI-3 and the simulation row of §7 point to the WP-V-02 §5.3 fidelity-case plan and DQ-139; CARLA, DQ-261; 2026-10-16). 0.4 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; D-05 adopted, DQ-038; no log uploads to comma, DQ-084; 2026-10-16). 0.3 (status in §4 from WP-M-00; Experimental Mode default off since 2026-10-14 in §2 and §8; open items with owner and due gate; 2026-10-14). 0.2 (reference configuration named by generation, E210; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -173,7 +173,7 @@ Dates are set in [WP-M-03](WP-M-03-project-plan.md). The ordering is: §4 (G0) �
 |---|---|---|---|
 | OI-1 | Select and justify the B1 human-driver baseline data set and filtering to the ODD (WP-V-02) | SL | G2 |
 | OI-2 | Define how the B2 stock-TSS2 comparison is executed on the reference vehicle (scenario list, test site, measurement) | SL | G2 |
-| OI-3 | Decide whether MetaDrive-based simulation (`openpilot/tools/sim`) has sufficient fidelity to count as evidence, and on which scenario families: a lead decision at G2 (decision register DQ-139), on the fidelity case planned in WP-V-02 §5.3. Re-enable the CI job in the fork (simulation session). CARLA as a later option: WP-V-02 §5.4, DQ-261 | SL | G2 |
+| OI-3 | Decided 2026-10-16 by the project lead (DQ-139 option A): simulation earns credit per scenario family, only once that family's fidelity case (WP-V-02 §5.3) passes and is approved. Open: build and approve the fidelity cases; re-enable the CI job (simulation session). CARLA: not now, revisit at G3 (WP-V-02 §5.4, DQ-261 option A) | SL | G2 |
 | OI-4 | Build a LionDriver-controlled log store so that drive logs do not depend on comma servers (shared with WP-O-04, WP-M-09) | PM | G4 |
 | OI-5 | Generate fork-owned process-replay and model-replay reference sets, including Corolla routes (shared with D-03) | PM / ML | G0 (process replay, with D-03); G2 (model replay, Corolla routes) |
 | OI-6 | Appoint an external HMI / human-factors reviewer for WP-C-08 | PM | G1 |
