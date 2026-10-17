@@ -127,7 +127,7 @@ Three uses, in the order they pay off. None of them touches the plant, the panda
 
 | Use | What the mesh provides | Tool | State |
 |---|---|---|---|
-| **Silhouettes for the flat figures** (layers 1 and 4, HARA and SOTIF scenario drawings) | A top-down outline (body, and body with mirrors) and a side outline, sampled from the mesh at 2 cm along the car and stored as [`figures/corolla-e210-silhouette.json`](figures/corolla-e210-silhouette.json). Figure generators draw the outline where they draw the ego rectangle today | [`assets/tools/vehicle_figures.py`](assets/tools/vehicle_figures.py) extracts it when the GLB is present and reads the JSON otherwise, so CI never needs the model | Built; the mock-ups in §7 use it. `plant/report.py` still draws a rectangle (next: swap it) |
+| **Silhouettes for the flat figures** (layers 1 and 4, HARA and SOTIF scenario drawings) | A top-down outline (body, and body with mirrors) and a side outline, sampled from the mesh at 2 cm along the car and stored as [`figures/corolla-e210-silhouette.json`](figures/corolla-e210-silhouette.json). Figure generators draw the outline where they draw the ego rectangle today | [`assets/tools/vehicle_figures.py`](assets/tools/vehicle_figures.py) extracts it when the GLB is present and reads the JSON otherwise, so CI never needs the model | Built; the mock-ups in §7 use it, and `plant/report.py` draws it in every layer-1 figure (0.3, 2026-10-17), falling back to the rectangle with a warning if the JSON is absent |
 | **Camera and blind-zone geometry** (WP-C-01 item boundary, WP-C-06 triggering conditions, WP-S-05 HSI) | The side outline with the windshield line, for the device's field of view, hood occlusion and following-vehicle sight lines | the same generator, mock-up 3 | Mock-up only; the device position and angles are measurement items |
 | **Layer-3 renders** (MetaDrive clips and frames for WP-V-03 scenarios) | A decimated glTF with the four wheels as separate pivoted nodes, loaded by a `CorollaE210Vehicle` class and drawn in third-person and top-down views. The camera path keeps `render_vehicle: False`, so openpilot's input is unchanged | Blender pass (needs Blender, not installed on 2026-10-17), then the MetaDrive class in `openpilot/tools/sim/bridge/metadrive/` | Planned; task card raised |
 
@@ -187,7 +187,7 @@ Until the plant is validated against Corolla logs, every number above ranks risk
 
 - **Where things stand.** Bought (option A); receipt check above; files held locally in `assurance/sim/assets/` (ignored) and mirrored, with SHA-256 sums, to the private repository `jherrodthomas/LionDriver-assets` (Git LFS, folder `corolla-e210-3dmolier-1450755/`). Access to that repository is limited to people working on LionDriver, as the licence requires. Purchased files are licensed
   content: keep them out of the repository (add the asset folder to `.gitignore` when one exists) and never push them.
-- **Next:** swap the ego rectangle in `plant/report.py` for the silhouette outline (mock-up 1); Blender pass (split
+- **Next:** Blender pass (split
   front wheels, hub pivots, decimation, export `corolla_e210/vehicle.gltf`; Blender was not installed on 2026-10-17), then a
   `CorollaE210Vehicle` class with the §2 dimensions passed through the bridge's `vehicle_config` (mock-up 2); measure the
   device position and fill mock-up 3. Record the exported file and its checksum in `assets/README.md`. Add
