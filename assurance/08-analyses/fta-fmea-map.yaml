@@ -723,7 +723,7 @@ events:
     class: systematic_sw
     fmea: [SWF-061]
     note: >-
-      SWF-061.C3 (under the wheel-touch policy any steering or gas input resets awareness; policy.py:335, 345; GAP-21,
+      SWF-061.C3 (under the wheel-touch policy any steering or gas input resets awareness; policy.py:361, 374; GAP-21,
       TSR-612). Added in SW FMEA rev 0.9, which closes this part of F-37
   - id: BE-8.06
     class: systematic_sw

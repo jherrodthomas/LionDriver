@@ -89,7 +89,7 @@ ISO/PAS 8800 assumes that the developer of the AI system controls its data and t
 |---|---|---|
 | Performance in ODD | Lane-centre and lead-related error bounds; stop-and-go behaviour; FCW timeliness | Detection of distraction, eyes-closed and phone use within the policy time budget (`policy.py:34-36`) |
 | Known limitations | `docs/LIMITATIONS.md:8-43` conditions | `docs/LIMITATIONS.md:53-56` (low light, glare, face out of view, obstruction) |
-| Uncertainty | Use of output standard deviations to detect low-confidence states (not used for the action today, GAP-22) | Model standard deviation already drives wheel-touch fallback after 10 s (`policy.py:78`); validity flag is always `True` at source (`dmonitoringmodeld.py:99`) |
+| Uncertainty | Use of output standard deviations to detect low-confidence states (not used for the action today, GAP-22) | Model standard deviation already drives wheel-touch fallback after 10 s (`policy.py:83`); validity flag is always `True` at source (`dmonitoringmodeld.py:99`) |
 | Numerical robustness | Non-finite output detection on AI-1 (today only on AI-2, `modeld.py:210`) | Same |
 | Timing | Inference deadline per frame; behaviour on frame drop | Same |
 | Integrity of the artefact | Hash check before load; no unsafe deserialization (GAP-22) | Same |

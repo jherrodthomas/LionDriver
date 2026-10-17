@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-08 Driver interaction, HMI and reasonably foreseeable misuse analysis |
 | Standard reference | ISO 26262-3:2018 §6 (controllability basis); ISO 21448:2022 §6 and Annex B (misuse, informative); UNECE R79 and R171 (informative benchmarks, WP-M-01 T-13); RESPONSE 3 Code of Practice for ADAS (informative) |
-| Version | 0.5 (§5.4 added: supervision bound and speed table for the wheel-touch fallback, required by TSR-634 (DQ-077 A); DMP-05; OI-8; 2026-10-17). 0.4 (OI-7, the duplicate OI-4: gas override behaviour kept, DQ-022 A; MC-08 updated; 2026-10-16). 0.3 (§6.1 HARA side recorded: WP-C-03 v0.4 rates H-STPA-1 as OS-17/OS-18 and adds H-09 with SG-08, ASIL A, decision register DQ-003, DQ-205; OI-4 narrowed to the FSC follow-up; 2026-10-16). 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
+| Version | 0.6 (§5.4 and OI-8: the rule is implemented in `policy.py`, SWSR-634; validation still open; 2026-10-17). 0.5 (§5.4 added: supervision bound and speed table for the wheel-touch fallback, required by TSR-634 (DQ-077 A); DMP-05; OI-8; 2026-10-17). 0.4 (OI-7, the duplicate OI-4: gas override behaviour kept, DQ-022 A; MC-08 updated; 2026-10-16). 0.3 (§6.1 HARA side recorded: WP-C-03 v0.4 rates H-STPA-1 as OS-17/OS-18 and adds H-09 with SG-08, ASIL A, decision register DQ-003, DQ-205; OI-4 narrowed to the FSC follow-up; 2026-10-16). 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF; backs the HARA C2 ratings (SG-01…SG-08) |
 | Author | Assurance team (initial draft) |
@@ -141,7 +141,7 @@ Limits of this derivation:
 
 - It caps exposure; it does not show that drivers respond. Whether drivers in the fallback respond to the faster alerts, and whether the extra alerts become a nuisance that drivers defeat (FM-05, DMP-04), is validated under [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) §4.4.
 - Anchoring on the vision-policy times is a technical choice. A different anchor, such as a fixed time to the strongest alert at highway speed, would change only D*k*. The anchor is revisited if the §4.4 nuisance or response results fail.
-- Not implemented: `policy.py:31-33` still uses the fixed times (TSR-634 Impl). The SWSR is written by the WP-W-02 owner from this table.
+- Implemented 2026-10-17 in `selfdrive/monitoring/policy.py:37-41, 402-408` ([WP-W-02](../05-software/WP-W-02-software-safety-requirements.md) SWSR-634). Unit tests reproduce the speed table within one 50 ms DM step; the vehicle validation of WP-V-02 §4.4 is still open.
 
 ## 6. Reasonably foreseeable misuse
 
@@ -150,7 +150,7 @@ Limits of this derivation:
 | MC-01 | Hands-off driving for long periods | High: system does not require hands on wheel | Longer reaction to lateral errors (SH-01, SH-02); C2 basis weakened | Vision DM | User info; controllability tests with hands-off posture (§8); consider a hands-on requirement (the ODD-A case is gone with the highway-only ODD, DQ-023) | SH-01, SH-02 |
 | MC-02 | Phone use, eyes off road | High | Late reaction to all SH | DM phone threshold 0.5; alerts > 10 km/h | DMP-02 validation; review below-10 km/h behaviour | SH-03, SH-06, SH-11 |
 | MC-03 | Sleeping / drowsy / impaired driver | Medium (long highway drives) | No reaction until force decel | DM sleep detection; no-response force decel; lockout | Validate force-decel scenario on highway; consider hazard lights | SH-02, SH-06 |
-| MC-04 | DM camera covered or driver out of view | Medium | DM falls back to wheel touch | Wheel-touch fallback (`policy.py:77-78`) | FM-05 (strict fallback, camera-blocked detection, no-entry if persistent) | SH-12 |
+| MC-04 | DM camera covered or driver out of view | Medium | DM falls back to wheel touch | Wheel-touch fallback (`policy.py:82-83`) | FM-05 (strict fallback, camera-blocked detection, no-entry if persistent) | SH-12 |
 | MC-05 | `IsDriverViewEnabled` set to force DM demo mode | Low–medium (known to the community) | DM neutralised with synthetic inputs | None | FM-06 | SH-12 |
 | MC-06 | Defeat devices: steering-wheel weights, periodic nudgers, fake faces/photos | Medium | Wheel-touch fallback defeated; vision possibly fooled | Partial (vision primary) | FM-05; liveness checks in DM model (WP-C-11) | SH-12 |
 | MC-07 | Use outside the ODD (snow, construction, city streets, > 110 km/h) | High | SH-13; higher rates of SH-01…SH-06 | `speedTooHigh` warning; some diagnostics | FM-07, FM-08; user info | SH-13 |
@@ -210,4 +210,4 @@ Method notes (RESPONSE 3 Code of Practice, informative): use naive subjects repr
 | OI-7 | Closed 2026-10-14 (listed as a second OI-4 until v0.3): the lead kept today's behaviour, gas pauses speed control only and `DisengageOnAccelerator` stays `0` (decision register DQ-022, A). The confusion of MC-08 is covered by the override alert, which the HMI clinic (§8 V-2) must show is understood | Maintainer | — |
 | OI-5 | Check whether alert volume can be reduced below an audible floor (MC-12) | SW lead | G2 |
 | OI-6 | Confirm whether the `mici` device-specific DM alerts (`events.py:1018+`) apply to the reference device | SW lead | G1 |
-| OI-8 | Implement the §5.4 rule in `policy.py` (TSR-634, SWSR by the WP-W-02 owner) and validate it per WP-V-02 §4.4; revisit the anchor of D*k* if the response or nuisance results fail | SW lead (implementation); SOTIF lead (validation) | G3 |
+| OI-8 | ~~Implement the §5.4 rule in `policy.py`~~ (done 2026-10-17, SWSR-634; unit tests only). Validate it per WP-V-02 §4.4; revisit the anchor of D*k* if the response or nuisance results fail | SW lead (implementation); SOTIF lead (validation) | G3 |
