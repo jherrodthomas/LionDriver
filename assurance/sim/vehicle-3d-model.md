@@ -109,7 +109,7 @@ Max, and RAR archives for 3DS, Blender, Cinema 4D, FBX and OBJ.
 
 ## 5. Handover
 
-- **Where things stand.** Bought (option A); receipt check above; files held locally in `assurance/sim/assets/` (ignored) and to be mirrored to a private asset repository. Purchased files are licensed
+- **Where things stand.** Bought (option A); receipt check above; files held locally in `assurance/sim/assets/` (ignored) and mirrored, with SHA-256 sums, to the private repository `jherrodthomas/LionDriver-assets` (Git LFS, folder `corolla-e210-3dmolier-1450755/`). Access to that repository is limited to people working on LionDriver, as the licence requires. Purchased files are licensed
   content: keep them out of the repository (add the asset folder to `.gitignore` when one exists) and never push them.
 - **Next:** Blender pass (split front wheels, hub pivots, decimation, export `corolla_e210/vehicle.gltf`), then a
   `CorollaE210Vehicle` class with the §2 dimensions passed through the bridge's `vehicle_config`, then the first
