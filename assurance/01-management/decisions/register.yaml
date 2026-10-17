@@ -1882,7 +1882,9 @@
       title: "Assess it yourselves and record why"
       detail: "No cost. Cost: risk of a wrong conclusion."
   sources: ["assurance/08-analyses/fmea/item-definition.md IOI-005", "assurance/09-production-operation/WP-O-04-field-monitoring.md OI-6"]
-  status: answered
+  note: "Applied: the project's own assessment is in item-definition.md IOI-005 (closed). The SGO binds only the entities NHTSA served with it, so no duty unless the project is served. Part 573 is treated as not applicable while the item runs only on the reference vehicle. Recheck both before release to other users (G5). WP-O-04 OI-6 and WP-C-01 §5 point to it."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#206", record: "assurance/08-analyses/fmea/item-definition.md", at: 2026-10-17}
   answer:
     choice: B
     via: inbox
@@ -2191,7 +2193,9 @@
       title: "Closed courses only until confirmed"
       detail: "No legal risk. Cost: no public-road drive data for now."
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-6"]
-  status: answered
+  note: "Applied: vehicle testing on closed courses only until public-road legality is confirmed for the test state, passive data collection included. Recorded in WP-C-01 OI-6 (still open for the confirmation) and §5, and as WP-V-07 basic rule 2."
+  status: applied
+  applied: {ref: "jherrodthomas/LionDriver#206", record: "assurance/02-concept/WP-C-01-item-definition.md", at: 2026-10-17}
   answer:
     choice: B
     via: inbox
