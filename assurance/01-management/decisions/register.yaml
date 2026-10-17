@@ -845,6 +845,7 @@
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  note: "Before applying, two follow-on questions for the lead: the hazard rating approach (DQ-369) and the G1 claim (DQ-370)."
 
 - id: DQ-038
   question: "Should the model update policy be made official: pin model weights per release and re-test on any model change?"
@@ -4700,3 +4701,43 @@
   gate: G1
   status: answered
   answer: {choice: A, via: chat, at: 2026-10-17, note: "Bought 2026-10-17 with the Standard licence (editorial-use restriction applies); files held outside the public repository"}
+
+- id: DQ-369
+  question: "With the move to a platform (DQ-037 B), how should hazards be rated across vehicles?"
+  context: "Steering (SG-01) and unintended acceleration (SG-03) are ASIL C only because the Corolla's own EPS and PCM limits are credited (AOU-01, AOU-02, AOU-03, AOU-05); without that credit both are ASIL D. Many of the 334 vehicles in the catalog steer by angle or have other EPS limits, so the Corolla's credit does not carry over. The platform HARA approach (item definition IOI-004) has to be set before WP-C-03 and WP-C-01 are rewritten for the platform."
+  reversibility: revisit
+  blocks: "WP-C-03 platform approach (LD-ITEM-001 IOI-004); WP-C-01 platform rewrite; DQ-037 apply"
+  gate: G1
+  decider: lead
+  asked: 2026-10-17
+  batch: 9
+  options:
+    - key: A
+      recommended: true
+      title: "Rate per family; the vehicle assumptions become entry criteria"
+      detail: "A vehicle whose EPS or PCM does not meet AOU-01…05 is not admitted. The Corolla stays at ASIL C. Cost: each new family needs its own HARA delta and vehicle tests."
+    - key: B
+      title: "One worst case for the whole platform"
+      detail: "Rate every vehicle as if no EPS or PCM limit helps: SG-01 and SG-03 become ASIL D for all, the Corolla included. Cost: ASIL D methods for the panda and the analyses, much more work before G1."
+  sources: ["assurance/02-concept/WP-C-03-hara.md §6 SG-01, SG-03", "assurance/02-concept/WP-C-01-item-definition.md AOU-01…AOU-05", "assurance/08-analyses/fmea/item-definition.md §A.10 P1–P11, IOI-004", "assurance/08-analyses/fmea/item/vehicle-catalog.md"]
+  status: open
+
+- id: DQ-370
+  question: "With the move to a platform (DQ-037 B), what should the G1 gate claim?"
+  context: "The platform model (platform PL-001, families VF-nnn, configurations CFG-nnn) and a per-vehicle entry check can be in place without a second vehicle being finished. The other Corolla family members (hatchback, US hybrid, South America hybrid) need their own checks first (item definition IOI-002); the hybrids also need powertrain checks."
+  reversibility: easy
+  blocks: "G1 scope statement; WP-M-01 §3.1, G0 wording"
+  gate: G1
+  decider: lead
+  asked: 2026-10-17
+  batch: 9
+  options:
+    - key: A
+      recommended: true
+      title: "Only the reference Corolla (CFG-001), with the platform method in place"
+      detail: "G1 shows the platform model and the entry check applied to CFG-001; more vehicles come after G1. Cost: none beyond the rewrite of WP-M-01 and WP-M-12."
+    - key: B
+      title: "The whole Corolla E210 family (VF-001)"
+      detail: "G1 also covers the hatchback and the hybrids. Cost: their checks (IOI-002) must be done first, which delays G1."
+  sources: ["assurance/01-management/WP-M-01-assurance-strategy.md §3.1", "assurance/01-management/WP-M-12-impact-analysis.md M-1", "assurance/08-analyses/fmea/item-definition.md §1, IOI-002", "docs/liondriver/vehicles/vehicles.yaml VF-001"]
+  status: open
