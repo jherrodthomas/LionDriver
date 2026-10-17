@@ -249,7 +249,7 @@ Faults that the envelope does not report, so no warning comes from the item (§5
 | T-21 | Excessive actuation | `selfdrive/selfdrived/helpers.py:12` | 0.25 s persistence | 0.25 s |
 | T-22 | Big-model diagnostic masking | `selfdrived.py:382-384` | masked during load + 5 s | up to 5 s blind (GAP-17) |
 | T-23 | EPS drop-out handling (vehicle) | comment `opendbc_repo/opendbc/car/toyota/carstate.py:15-16` | LKA_STATE 9 → 11 over ≈ 2 s, then 3 | ≈ 2 s (unverified, AOU-01R) |
-| T-24 | DM escalation | `selfdrive/monitoring/policy.py:31-36, 39` | vision 5/8/13 s; wheel-touch 5/15/25 s; +5 s at alert 3 → force decel | per policy |
+| T-24 | DM escalation | `selfdrive/monitoring/policy.py:31-36, 44` | vision 5/8/13 s; wheel-touch 5/15/25 s; +5 s at alert 3 → force decel | per policy |
 | T-25 | Host steering fault hysteresis | `selfdrive/car/car_events.py` (onboard review) | 1.5 s | 1.5 s |
 | T-26 | Cruise active with main off (reference build, added 2026-10-12) | `opendbc_repo/opendbc/safety/modes/toyota.h` (`TOYOTA_CRUISE_MAIN_TOLERANCE_US`, opendbc `8836b65`) | CRUISE_ACTIVE (`0x1D2`) becoming active while MAIN_ON (`0x1D3`) is 0: refused on receipt; main going off while engaged: revoked once the disagreement lasts > 150 ms | refuse at once; revoke after 150 ms (+ one 30 ms frame) (TSR-405(c)). Not verified on hardware |
 | T-27 | TX rate supervision (reference build, added 2026-10-12) | `opendbc_repo/opendbc/safety/safety.h` `tx_rate_check` (opendbc `951b459`) | per-ID sliding 250 ms window; 3 rejections while controls are allowed revoke | revoke ≤ 0.1 s after the first rejected frame (≤ 0.2 s from onset at 2× the rate; unit tests) (TSR-518). Not verified on hardware |
@@ -257,7 +257,7 @@ Faults that the envelope does not report, so no warning comes from the item (§5
 | T-30 | Controller saturation warning `steerSaturated` (added 2026-10-16) | `openpilot/selfdrive/controls/lib/latcontrol.py:8, 22-29`; `opendbc_repo/opendbc/car/toyota/interface.py:50` | saturation time accumulates to `steerLimitTimer` = 0.4 s (LKA torque cars) | 0.4 s + 1 frame |
 | T-31 | Forward collision warning (added 2026-10-16) | `selfdrive/selfdrived/selfdrived.py:440-445` | model `hardBrakePredicted` or planner FCW | not derived; measure (M-12) |
 | T-32 | Host check of panda authority while disengaged (added 2026-10-16) | — | not implemented (TSR-630) | not detected |
-| T-33 | Terminal DM reaction (added 2026-10-16) | `selfdrive/monitoring/policy.py:39, 398`; `selfdrive/controls/controlsd.py:235` | forced deceleration 5 s after the terminal alert; no disengagement | 5 s to deceleration; no safe state (TSR-633) |
+| T-33 | Terminal DM reaction (added 2026-10-16) | `selfdrive/monitoring/policy.py:44, 437`; `selfdrive/controls/controlsd.py:235` | forced deceleration 5 s after the terminal alert; no disengagement | 5 s to deceleration; no safe state (TSR-633) |
 | T-34 | SoC command arrival (TSR-408; reference build, added 2026-10-16) | `opendbc_repo/opendbc/safety/safety.h` `tx_arrival_ok`, `modes/toyota.h` (opendbc `273f44e`) | while authority is granted, the 100 Hz safety task revokes it when `0x2E4` has not reached the TX hook for > 50 ms or, with openpilot longitudinal, `0x343` for > 100 ms | ≤ 0.06 s for `0x2E4`, ≤ 0.11 s for `0x343` (one task period added). Runs in the safety task **before** the heartbeat check (`main.c` `safety_task_handler`), so in a full SoC stall it revokes first and T-07a does not sound. Simulated 0.043 s (§3.9). Not verified on hardware |
 
 ## 5. Comparison and required changes

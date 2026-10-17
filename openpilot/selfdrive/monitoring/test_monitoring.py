@@ -227,3 +227,100 @@ class TestMonitoring(OpenpilotTestCase):
     assert alert_lvls[int((INVISIBLE_SECONDS_TO_ORANGE-1+DT_DMON*s._HI_STD_FALLBACK_TIME-0.1)/DT_DMON)] == 1
     assert alert_lvls[int((INVISIBLE_SECONDS_TO_ORANGE-1+DT_DMON*s._HI_STD_FALLBACK_TIME+0.1)/DT_DMON)] == 2
     assert alert_lvls[int((INVISIBLE_SECONDS_TO_RED-1+DT_DMON*s._HI_STD_FALLBACK_TIME+0.1)/DT_DMON)] == 3
+
+  # LionDriver TSR-634 (WP-C-08 §5.4): wheel-touch alert k at T_k seconds or D_k m since the last interaction,
+  # whichever comes first
+  def _run_speed_seq(self, msgs, interaction, speed):
+    # speed: m/s, constant or a function of time
+    DM = DriverMonitoring()
+    alert_lvls = []
+    for idx in range(len(msgs)):
+      v = speed(idx * DT_DMON) if callable(speed) else speed
+      DM._update_states(msgs[idx], [0, 0, 0], v, True, False)
+      DM._update_events(interaction[idx], True, False, 0, car_speed=v)
+      alert_lvls.append(DM.alert_level)
+    return alert_lvls, DM
+
+  @staticmethod
+  def _first_time(alert_lvls, level, start=0.):
+    return next((i + 1) * DT_DMON for i, a in enumerate(alert_lvls) if a >= level and (i + 1) * DT_DMON > start)
+
+  WHEELTOUCH_TIMES = (dm_settings._WHEELTOUCH_POLICY_ALERT_1_TIMEOUT, dm_settings._WHEELTOUCH_POLICY_ALERT_2_TIMEOUT,
+                      dm_settings._WHEELTOUCH_POLICY_ALERT_3_TIMEOUT)
+  WHEELTOUCH_DISTANCES = (dm_settings._WHEELTOUCH_POLICY_ALERT_1_DISTANCE, dm_settings._WHEELTOUCH_POLICY_ALERT_2_DISTANCE,
+                          dm_settings._WHEELTOUCH_POLICY_ALERT_3_DISTANCE)
+
+  def test_wheeltouch_alert_times_by_speed(self):
+    times, distances = self.WHEELTOUCH_TIMES, self.WHEELTOUCH_DISTANCES
+    # WP-C-08 §5.4 speed table: 110 km/h gives 4.9 / 7.9 / 12.9 s, 80 km/h 5.0 / 10.8 / 17.8 s, 50 km/h unchanged;
+    # WP-V-02 §4.4 check (a): constant speeds 30…120 km/h in 10 km/h steps
+    for kph in (0, 50, 57, *range(30, 130, 10)):
+      speed = kph / 3.6
+      alert_lvls, d_status = self._run_speed_seq(always_no_face, always_false, speed)
+      assert d_status.active_policy == log.DriverMonitoringState.MonitoringPolicy.wheeltouch
+      for level, (t, d) in enumerate(zip(times, distances, strict=True), start=1):
+        expected = min(t, d / speed) if speed > 0 else t
+        assert abs(self._first_time(alert_lvls, level) - expected) <= DT_DMON + 1e-6, (kph, level)
+        # the distance driven up to the alert never exceeds D_k (one step of margin)
+        assert self._first_time(alert_lvls, level) * speed <= d + speed * DT_DMON + 1e-6, (kph, level)
+
+  def test_wheeltouch_alert_times_on_speed_ramps(self):
+    # WP-V-02 §4.4 check (a): ±1.5 m/s² ramps across 57 km/h, where distance starts to govern
+    for v0, v1 in ((40, 100), (100, 40)):
+      v0, v1 = v0 / 3.6, v1 / 3.6
+      accel = 1.5 if v1 > v0 else -1.5
+      def speed(t, v0=v0, v1=v1, accel=accel):
+        return min(max(v0 + accel * t, min(v0, v1)), max(v0, v1))
+      alert_lvls, _ = self._run_speed_seq(always_no_face, always_false, speed)
+      for level, (t, d) in enumerate(zip(self.WHEELTOUCH_TIMES, self.WHEELTOUCH_DISTANCES, strict=True), start=1):
+        # expected: first time the integrated distance reaches D_k, or T_k, whichever comes first
+        dt, travelled, expected = 1e-3, 0., t
+        for i in range(int(t / dt)):
+          travelled += speed(i * dt) * dt
+          if travelled >= d:
+            expected = (i + 1) * dt
+            break
+        assert abs(self._first_time(alert_lvls, level) - expected) <= DT_DMON + 2e-3, (v0, v1, level)
+
+  def test_wheeltouch_distance_reset_on_interaction(self):
+    speed = 110 / 3.6
+    touch = 4.  # s, before alert 1 at 4.9 s
+    interaction_vector = always_false[:]
+    interaction_vector[int(touch / DT_DMON) - 1] = True
+    alert_lvls, _ = self._run_speed_seq(always_no_face, interaction_vector, speed)
+    expected = touch + dm_settings._WHEELTOUCH_POLICY_ALERT_1_DISTANCE / speed
+    assert all(a == 0 for a in alert_lvls[:int(touch / DT_DMON)])
+    assert abs(self._first_time(alert_lvls, 1) - expected) <= DT_DMON + 1e-6
+
+  def test_wheeltouch_distance_recovers_with_vision(self):
+    # face lost past alert 1 at 110 km/h, then seen attentive long enough to restore wheel-touch awareness:
+    # the distance bound restarts too, so losing the face again does not alert at once
+    speed = 110 / 3.6
+    lost, seen = 6., 60.
+    ds_vector = [msg_NO_FACE_DETECTED] * int(lost / DT_DMON) + [msg_ATTENTIVE] * int(seen / DT_DMON) + \
+                [msg_NO_FACE_DETECTED] * int(20 / DT_DMON)
+    alert_lvls, _ = self._run_speed_seq(ds_vector, [False] * len(ds_vector), speed)
+    assert alert_lvls[int(lost / DT_DMON) - 1] == 1
+    assert all(a == 0 for a in alert_lvls[int((lost + seen - 1) / DT_DMON):int((lost + seen + 4.5) / DT_DMON)])
+    expected = lost + seen + dm_settings._WHEELTOUCH_POLICY_ALERT_1_DISTANCE / speed
+    assert abs(self._first_time(alert_lvls, 1, start=lost + seen) - expected) <= DT_DMON + 1e-6
+
+  def test_wheeltouch_distance_not_counted_when_disengaged(self):
+    speed = 110 / 3.6
+    DM = DriverMonitoring()
+    for _ in range(int(20 / DT_DMON)):
+      DM._update_states(msg_NO_FACE_DETECTED, [0, 0, 0], speed, False, False)
+      DM._update_events(False, False, False, 0, car_speed=speed)
+    assert DM.wheeltouch_distance == 0.
+
+  def test_wheeltouch_distance_no_alert_at_low_speed(self):
+    # slowing below the alert speed just before the alert 1 distance (147 m at 4.8 s): no alert there, as for the timers
+    DM = DriverMonitoring()
+    alert_lvls = []
+    for idx in range(int(60 / DT_DMON)):
+      t = idx * DT_DMON
+      speed, lowspeed = (110 / 3.6, False) if t < 4.8 else (2.5, True)
+      DM._update_states(msg_NO_FACE_DETECTED, [0, 0, 0], speed, True, lowspeed)
+      DM._update_events(False, True, lowspeed, 0, car_speed=speed)
+      alert_lvls.append(DM.alert_level)
+    assert all(a == 0 for a in alert_lvls)

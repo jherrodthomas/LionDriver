@@ -47,7 +47,7 @@
 <text x="488" y="332.5" class="kind">BASIC</text>
 <text x="296" y="347.0" class="d">Pose thresholds or the pose</text>
 <text x="296" y="361.5" class="d">calibration wrong for the driver</text>
-<text x="296" y="376.0" class="d">or the mount (policy.py:55-83)</text>
+<text x="296" y="376.0" class="d">or the mount (policy.py:60-88)</text>
 <rect x="296.0" y="384.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="322.9" y="395.5" class="chip" fill="#fff">SFM-022</text>
 <circle cx="392.0" cy="432.0" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
@@ -108,7 +108,7 @@
 <text x="1214" y="821.0" class="kind">BASIC</text>
 <text x="1022" y="835.5" class="d">Wheel-touch fallback resets</text>
 <text x="1022" y="850.0" class="d">awareness on any steering or gas</text>
-<text x="1022" y="864.5" class="d">input (policy.py:334-335;</text>
+<text x="1022" y="864.5" class="d">input (policy.py:360-361;</text>
 <text x="1022" y="879.0" class="d">GAP-21, TSR-612 not met)</text>
 <rect x="1022.0" y="887.0" width="93.8" height="16" rx="8" fill="#5f6368"/>
 <text x="1068.9" y="898.5" class="chip" fill="#fff">latent, design</text>

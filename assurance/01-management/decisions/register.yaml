@@ -1710,6 +1710,7 @@
     ref: 6f24efd48
     record: "WP-S-02 v0.31 TSR-634; WP-A-05 v0.8 LS-09, OI-6 closed. Open for their owners: the speed table and supervision bound in WP-C-08 §5, the policy.py change, and its validation (WP-V-02)"
     at: 2026-10-17
+  note: "Speed table and bound set in WP-C-08 v0.5 §5.4 (jherrodthomas/LionDriver#214). policy.py change done 2026-10-17: alert k at 5/15/25 s or 150/240/395 m, whichever comes first; SWSR-634 (WP-W-02 v0.32), unit tests only. Open: vehicle validation, WP-V-02 §4.4 (b)-(d)."
 
 - id: DQ-078
   question: "Does the safety authority accept the residual risks listed for missing supplier evidence (no EMC/environment tests, teardown instead of schematic, handbook failure rates)?"

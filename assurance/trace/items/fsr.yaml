@@ -230,7 +230,7 @@
   parents: [SG-02, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "T-SIL, FI"
-  baseline_impl: "Partial: high-uncertainty → wheel-touch fallback (`policy.py:77-78`); source validity hard-coded `True` (`selfdrive/modeld/dmonitoringmodeld.py:99`); wheel-touch awareness reset by any steer/gas input (`policy.py:334-335`) (GAP-21)"
+  baseline_impl: "Partial: high-uncertainty → wheel-touch fallback (`policy.py:82-83`); source validity hard-coded `True` (`selfdrive/modeld/dmonitoringmodeld.py:99`); wheel-touch awareness reset by any steer/gas input (`policy.py:360-361`) (GAP-21)"
   status: proposed
   source: WP-C-04
 
@@ -241,7 +241,7 @@
   parents: [SG-02, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "R, T-SIL"
-  baseline_impl: "Not met: `IsDriverViewEnabled` demo mode (`selfdrive/monitoring/dmonitoringd.py:26-27`, `policy.py:428-437`) (GAP-20)"
+  baseline_impl: "Not met: `IsDriverViewEnabled` demo mode (`selfdrive/monitoring/dmonitoringd.py:26-27`, `policy.py:467-476`) (GAP-20)"
   status: proposed
   source: WP-C-04
 
@@ -252,7 +252,7 @@
   parents: [SG-02, SG-04, SG-06, SG-08]
   allocated_to: "E-01/DM"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: no-response force decel after 5 s at the terminal alert (`policy.py:39-44, 398`; `selfdrive/controls/controlsd.py:235`), but no disengagement, so the lockout of 1/5/15/30 min acts only after a later disengagement (System FMEA SFM-025.C1; corrected 2026-10-16). Refined by TSR-633; reaction decided (DQ-365, A); standstill hold and the lockout while stopped not implemented"
+  baseline_impl: "Partial: no-response force decel after 5 s at the terminal alert (`policy.py:44-49, 437`; `selfdrive/controls/controlsd.py:235`), but no disengagement, so the lockout of 1/5/15/30 min acts only after a later disengagement (System FMEA SFM-025.C1; corrected 2026-10-16). Refined by TSR-633; reaction decided (DQ-365, A); standstill hold and the lockout while stopped not implemented"
   status: proposed
   source: WP-C-04
 

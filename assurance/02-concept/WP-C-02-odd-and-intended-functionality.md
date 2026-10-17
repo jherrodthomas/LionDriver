@@ -118,7 +118,7 @@ The training-data ODD of the driving model is unknown. comma.ai has not publishe
 | F-01 Lateral control | Keeps the vehicle near the centre of the lane by commanding steering torque from the driving model's desired curvature; lateral acceleration ≤ 3.0 m/s², jerk ≤ 5 m/s³. Assisted lane change when the driver signals and nudges the wheel, above 20 mph, within 10 s (`desire_helper.py:8-9`) | Blind-spot checking (blind-spot monitoring input is not used by LionDriver, whether or not the trim fitted has it; the driver checks), turning at intersections, evasive steering, steering at standstill |
 | F-02 Longitudinal control (Chill mode) | Holds the set speed; follows the lead vehicle (radar track fused with vision, `radard.py:153-165`) at the selected personality gap; stops behind a stopping lead and resumes when it moves; acceleration −3.5…+2.0 m/s², cruise acceleration 1.6→0.6 m/s² by speed | Stopping for traffic lights, stop signs, pedestrians, stationary vehicles not previously tracked as lead; detecting speed limits (`LIMITATIONS.md:35-37`); emergency braking (stock PCS remains responsible) |
 | F-03 Engagement and modes | Engages only through the stock cruise controls; the envelope grants authority on the PCM cruise rising edge. Driver brake or cancel disengages; gas overrides longitudinal (does not disengage, `DisengageOnAccelerator` default `0`, `common/params_keys.h:35`); steering input overrides lateral | Engagement without driver action; staying engaged after brake |
-| F-04 Driver monitoring | Above 2.8 m/s, monitors driver attention by camera; escalating alerts 5/8/13 s (vision) or 5/15/25 s (wheel-touch fallback); force deceleration and lockout on no response (`policy.py:29-44`) | Exact alertness measurement (`LIMITATIONS.md:49`); monitoring below 10 km/h |
+| F-04 Driver monitoring | Above 2.8 m/s, monitors driver attention by camera; escalating alerts 5/8/13 s (vision) or 5/15/25 s (wheel-touch fallback); force deceleration and lockout on no response (`policy.py:29-49`) | Exact alertness measurement (`LIMITATIONS.md:49`); monitoring below 10 km/h |
 | F-05 Driver information | Shows engagement state, alerts (warning, soft disable, immediate disable, no entry) on the device with sounds; cluster LKAS HUD | Explaining every limitation in real time |
 | F-06 FCW | Visual + acoustic "BRAKE!" alert when the model predicts hard braking or the planner predicts a collision (`selfdrived.py:441-445`, `events.py:493`) | Braking; the stock PCS remains responsible for AEB |
 | F-07 LDW | When not laterally engaged, above 31 mph and no turn signal in the last 5 s, warns when the vehicle drifts towards a visible lane line (`ldw.py:7-35`) | Steering correction |
@@ -165,7 +165,7 @@ LD-SDA has **no ODD monitor**. The driver detects ODD exit and disengages. The s
 | Snow / ice | No | None | Driver task |
 | Device mis-calibration | Yes, `calibrationInvalid` (`events.py:816`) | Soft disable | Implemented |
 | Device overheat | Yes, `overheat` (`events.py:800`) | Soft disable | Implemented |
-| Driver not visible to DM | Yes (no face / high uncertainty) | Wheel-touch fallback (`policy.py:77-78`) | GAP-21 |
+| Driver not visible to DM | Yes (no face / high uncertainty) | Wheel-touch fallback (`policy.py:82-83`) | GAP-21 |
 | Vehicle state (VSC off, door, seatbelt, gear) | Yes (`espDisabled`, `doorOpen`, `seatbeltNotLatched`, `wrongGear`) | Soft disable / no entry | Implemented |
 
 ### 5.3 Required behaviour at ODD exit

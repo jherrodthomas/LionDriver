@@ -83,7 +83,7 @@ Abbreviations: M1 process replay, M3 model evaluation on recorded data, M4 MetaD
 
 | ID | Scenario | SH | TC (WP-C-06) | Parameters | Methods | Pass criteria | VT |
 |---|---|---|---|---|---|---|---|
-| KS-17 | DM under night, glare, sunglasses, glasses | SH-12 | TC-24 | Day/night; IR-opaque and IR-transparent sunglasses; low sun on face | WP-W-10 VS-ML-06 (M3), M8 parked + CC | Scripted look-away detected per AIR-07 timing; if the model is uncertain, the wheel-touch fallback activates (`policy.py:77-78`); no stratum where distraction is missed **and** no fallback is active | VT-08 |
+| KS-17 | DM under night, glare, sunglasses, glasses | SH-12 | TC-24 | Day/night; IR-opaque and IR-transparent sunglasses; low sun on face | WP-W-10 VS-ML-06 (M3), M8 parked + CC | Scripted look-away detected per AIR-07 timing; if the model is uncertain, the wheel-touch fallback activates (`policy.py:82-83`); no stratum where distraction is missed **and** no fallback is active | VT-08 |
 | KS-18 | Distraction behaviours and face out of view | SH-12 | TC-24, TC-25 | Phone in lap / at ear, looking at passenger, eyes closed, leaning out of camera view | VS-ML-06, M8 | Alerts follow 5/8/13 s vision timers (`policy.py:34-36`); no-response → forced deceleration (`policy.py`, `noResponseForceDecel`); lockout counts as specified | VT-08 |
 | KS-19 | Driver override interactions | SH-05 | TC-29 | Steering override in a curve; gas override while following; brake tap; cancel button; at 30/60/90 km/h | M8 (≥ 299 trials per input type for VT-05, accumulated over campaigns) | Release within the SG-05 budget (≤ 0.2 s preliminary) for brake and cancel; steering override possible with ≤ AOU-02 force; no residual torque after disengagement | VT-05 |
 

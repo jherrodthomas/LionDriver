@@ -226,7 +226,7 @@ Misuse-case IDs MC-01…MC-12 are those of [WP-C-08](../02-concept/WP-C-08-drive
 | UI-24 | — | — | Repeated attempts to engage under no-entry | `events.py:149-158` |
 | UI-25 | — (QM) | — | — | F-07; `selfdrive/controls/lib/ldw.py` |
 | UI-28 | H-01…H-06 | AOU-06 | Expecting an alert before every error | SOTIF residual insufficiency |
-| UI-29…UI-31 | H-02, H-06 (controllability) | AOU-06 | MC-02, MC-03: Inattention | `policy.py:28-44`; `events.py:519-565` |
+| UI-29…UI-31 | H-02, H-06 (controllability) | AOU-06 | MC-02, MC-03: Inattention | `policy.py:28-49`; `events.py:519-565` |
 | UI-32, UI-33 | H-02, H-06 | AOU-06 | MC-04, MC-05, MC-06: Over-trust in DM; DM defeat; DM demo mode (`IsDriverViewEnabled`) | `docs/LIMITATIONS.md:47-58`; GAP-20, GAP-21 |
 | UI-34 | H-01, H-02 | AOU-06, AOU-08 | — (functional insufficiency awareness) | `docs/LIMITATIONS.md:8-21` |
 | UI-35, UI-36 | H-03, H-04, H-06 | AOU-06 | Reliance on ACC for stationary vehicles; surprise at phantom braking | `docs/LIMITATIONS.md:27-43` |
