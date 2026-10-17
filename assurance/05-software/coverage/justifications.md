@@ -6,9 +6,9 @@ MC/DC condition inside a function that ran, is listed here ([WP-W-06 §4.2.1](..
 decision's source line (whitespace-normalized; `*` names the whole function). It fails when a gap has no row, and when a
 row no longer matches a gap, so a test that closes a gap forces its row to be removed.
 
-Measured at opendbc `9a13f60`, reference build (`LIONDRIVER_REFERENCE=1`), tests `test_toyota`, `test_defaults`,
+Measured at opendbc `515b9a2`, reference build (`LIONDRIVER_REFERENCE=1`), tests `test_toyota`, `test_defaults`,
 `test_elm327`. Status: drafted by the author (AI-assisted), not reviewed; an I1 review of every row is needed before the
-justifications count toward G3 (WP-P-05).
+justifications count toward G3 (WP-P-05). CJ-16 and CJ-28 (reachable, test needed) were removed at the pin bump to `515b9a2`, which contains their tests (opendbc#16: `test_angle_meas_ignores_initializing_frames`, `test_tx_rate_rejected_count_saturates`); the IDs are not reused.
 
 Class: **N** not called in the reference configuration (no caller in the Toyota, ELM327 or no-output modes);
 **C** a condition fixed by the reference configuration's constant data, so one outcome cannot occur;
@@ -32,7 +32,6 @@ Class: **N** not called in the reference configuration (no caller in the Toyota,
 | CJ-13 | U-SAF-LONG | longitudinal_speed_checks | * | N | Called by other brands' TX hooks; `modes/toyota.h` has no call |
 | CJ-14 | U-SAF-LONG | longitudinal_gas_checks | * | N | As CJ-13; Toyota checks acceleration through `longitudinal_accel_checks` |
 | CJ-15 | U-SAF-LONG | longitudinal_brake_checks | * | N | As CJ-13 |
-| CJ-16 | U-SAF-TOY | toyota_rx_hook | if (!steer_angle_initializing) { | T | Reachable: STEER_TORQUE_SENSOR with the angle-initializing bit set must not update `angle_meas`. Test written: `test_angle_meas_ignores_initializing_frames` in [jherrodthomas/opendbc#16](https://github.com/jherrodthomas/opendbc/pull/16); the row is removed when LionDriver pins a commit that contains it |
 | CJ-17 | U-SAF-CORE | GET_BYTES_LE | * | N | Used by other brands' RX hooks; the Toyota mode reads bytes directly |
 | CJ-18 | U-SAF-CORE | update_counter | * | N | Called only for RX checks without `ignore_counter`; every Toyota RX check sets `.ignore_counter = true` |
 | CJ-19 | U-SAF-CORE | gen_crc_lookup_table_8 | * | N | CRC tables of other brands' `init`; Toyota computes its checksum without a table |
@@ -44,7 +43,6 @@ Class: **N** not called in the reference configuration (no caller in the Toyota,
 | CJ-25 | U-SAF-CORE | rx_msg_safety_check | if ((safety_hooks->get_counter != NULL) && (cfg->rx_checks[index].msg[cfg->rx_checks[index].status.index].max_counter > 0U)) { | C | The Toyota hooks define no `get_counter` |
 | CJ-26 | U-SAF-CORE | rx_msg_safety_check | cfg->rx_checks[index].status.wrong_counters = cfg->rx_checks[index].msg[cfg->rx_checks[index].status.index].ignore_counter ? 0 : MAX_WRONG_COUNTERS; | C | Every Toyota RX check sets `.ignore_counter = true`, so the expression always yields 0 and the `MAX_WRONG_COUNTERS` outcome cannot occur |
 | CJ-27 | U-SAF-CORE | rx_msg_safety_check | if ((safety_hooks->get_quality_flag_valid != NULL) && !cfg->rx_checks[index].msg[cfg->rx_checks[index].status.index].ignore_quality_flag) { | C | The Toyota hooks define `get_quality_flag_valid`, so the first condition is always true |
-| CJ-28 | U-SAF-CORE | tx_rate_check | if (check->status.rejected < 0xFFFFU) { | T | Reachable: saturation of the per-ID rejection counter (LionDriver TSR-518, DN-01) after 65 535 rejected frames in one window. Test written: `test_tx_rate_rejected_count_saturates` in [jherrodthomas/opendbc#16](https://github.com/jherrodthomas/opendbc/pull/16); the row is removed when LionDriver pins a commit that contains it |
 | CJ-29 | U-SAF-CORE | safety_fwd_hook | if (m->check_relay && !m->disable_static_blocking && (m->addr == addr) && (m->bus == (unsigned int)destination_bus)) { | C | No Toyota TX message sets `.disable_static_blocking`, so `!m->disable_static_blocking` is always true |
 | CJ-30 | U-SAF-CORE | safety_fwd_hook | if (!blocked && (current_hooks->fwd != NULL)) { | C | The Toyota, ELM327 and no-output hooks define no `fwd` |
 | CJ-31 | U-SAF-CORE | rx_check_lagging | if (current_safety_config.rx_timeout_periods > 0U) { | C | The reference build sets `rx_timeout_periods` for Toyota (TSR-401); the false branch is the upstream build's path |

@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import importlib.util
 import math
+import re
 import sys
 from pathlib import Path
 
@@ -33,21 +34,61 @@ csm = importlib.util.module_from_spec(_spec)
 sys.modules["check_state_machines"] = csm
 _spec.loader.exec_module(csm)
 
-# State positions (centre x, y) per record; a state without a position is an error, so a new state forces a layout
+# State positions (centre x, y) per record; a state without a position is an error, so a new state forces a layout.
+# Optional per record:
+#   super     a Stateflow superstate {name, label, members, box (x, y, w, h)}: a transition whose sources are exactly
+#             the members is drawn once from the superstate border, and the members are drawn inside it
+#   any       "note": transitions from "any" are listed under the chart instead of drawn from every state
+#   builds    one chart per build; transitions tagged with the other build are left out. Per build:
+#   sources   transition ID -> drawn sources, for an "any" transition that is still drawn (named in the note)
+#   targets   transition ID -> drawn targets of a transition to the requested mode "m" (from its guard)
+#   bend      (source, target) -> extra curvature;  via  (source, target) -> the curve's control point
+#   loops     state -> "below" to put its self loops under the box
 LAYOUT = {
-  "SM-TOY-AUTH": {"size": (900, 330), "states": {"NOT_ALLOWED": (220, 175), "ALLOWED": (680, 175)},
-                  "roles": [(None, "no authority"), (1, "authority on the car (controls_allowed = 1)", "ALLOWED")]},
-  "SM-SAFETY-MODE": {"size": (900, 520), "junction": (450, 285), "bend": {("ELM327", "SILENT"): -24},
-                     "states": {"SILENT": (150, 150), "NOOUTPUT": (450, 130), "ELM327": (750, 150),
-                                "TOYOTA": (270, 430), "OTHER_CAR": (630, 430)},
-                     "roles": [(None, "no actuation output"), (3, "diagnostic", "ELM327"),
-                               (1, "car mode: actuation possible with authority", "TOYOTA", "OTHER_CAR")]},
-  "SM-SELFDRIVED": {"size": (900, 530),
-                    "states": {"disabled": (140, 300), "preEnabled": (310, 110), "enabled": (520, 300),
-                               "overriding": (770, 130), "softDisabling": (770, 450)},
-                    "roles": [(None, "not engaged"), (4, "engagement pending", "preEnabled"),
-                              (1, "engaged", "enabled"), (7, "engaged, driver overriding", "overriding"),
-                              (8, "disengaging (3 s timer)", "softDisabling")]},
+  "SM-TOY-AUTH": {
+    "size": (900, 720),
+    "states": {"NOT_ALLOWED": (150, 230), "ENGAGE_PENDING": (450, 120), "ALLOWED": (750, 230)},
+    "bend": {("ALLOWED", "NOT_ALLOWED"): -10},
+    "loops": {"NOT_ALLOWED": "below"},
+    "roles": [(None, "no authority"), (4, "engagement window (reference build)", "ENGAGE_PENDING"),
+              (1, "authority on the car (controls_allowed = 1)", "ALLOWED")],
+    # the revocations ALLOWED -> NOT_ALLOWED as a panel by cause instead of one label; every ID of that edge must be
+    # in exactly one group, so a new revocation forces a layout. Names are short view labels; the table is normative
+    "panel": {"edge": ("ALLOWED", "NOT_ALLOWED"), "y": 330,
+              "groups": [("Driver", ["T2", "T3", "T10e", "T12"]), ("Car bus", ["T4", "T5", "T10c", "T14"]),
+                         ("Host", ["T6", "T10a", "T10b", "T11", "T9", "T13"]), ("Platform", ["T7", "T10d", "T15"])],
+              "names": {"T2": "cruise off", "T3": "brake", "T10e": "steering override", "T12": "driver torque",
+                        "T4": "checksum, quality, counter", "T5": "RX check lagging", "T10c": "cruise, main off",
+                        "T14": "bus-off", "T6": "heartbeat not engaged", "T10a": "heartbeat lost",
+                        "T10b": "command not fresh", "T11": "TX rate exceeded", "T9": "TX content rejected",
+                        "T13": "SPI errors", "T7": "safety mode set", "T10d": "platform fault", "T15": "forwarding"}}},
+  "SM-SAFETY-MODE": {
+    "size": (900, 470), "any": "note",
+    "states": {"SILENT": (170, 140), "NOOUTPUT": (450, 140), "ELM327": (730, 140),
+               "TOYOTA": (330, 360), "OTHER_CAR": (640, 360)},
+    "super": {"name": "NONCAR", "label": "non-car modes: no actuation output", "members": ["SILENT", "NOOUTPUT", "ELM327"],
+              "box": (50, 78, 800, 110)},
+    "loops": {"NONCAR": "below"},
+    "roles": [(None, "no actuation output"), (3, "diagnostic", "ELM327"),
+              (1, "car mode: actuation possible with authority", "TOYOTA", "OTHER_CAR")],
+    "builds": {
+      "reference": {"targets": {"M4": ["NONCAR", "TOYOTA"], "M5": ["NONCAR"]}, "bend": {("TOYOTA", "SILENT"): 60}},
+      "upstream": {"targets": {"M2": ["NONCAR", "TOYOTA", "OTHER_CAR"]}, "sources": {"M2": ["NONCAR"]},
+                   "bend": {("TOYOTA", "SILENT"): 60, ("OTHER_CAR", "SILENT"): -40}},
+    }},
+  "SM-SELFDRIVED": {
+    "size": (900, 600),
+    "states": {"disabled": (100, 300), "preEnabled": (360, 150), "enabled": (560, 300),
+               "softDisabling": (790, 300), "overriding": (360, 440)},
+    "super": {"name": "active", "label": "active (superstate)",
+              "members": ["preEnabled", "enabled", "softDisabling", "overriding"], "box": (230, 72, 650, 438)},
+    "via": {("active", "disabled"): (130, 120)},
+    "bend": {("softDisabling", "disabled"): 230, ("disabled", "preEnabled"): -20,
+             ("disabled", "overriding"): 20, ("overriding", "softDisabling"): 60},
+    "loops": {"disabled": "below"},
+    "roles": [(None, "not engaged"), (4, "engagement pending", "preEnabled"),
+              (1, "engaged", "enabled"), (7, "engaged, driver overriding", "overriding"),
+              (8, "disengaging (3 s timer)", "softDisabling")]},
 }
 BOX_H = 52
 LEGEND_W = 860
@@ -84,26 +125,171 @@ def label(x, y, lines, cls="tm"):
   return out
 
 
+# Requirement status of a transition that exists in the code, shown as a badge next to its label
+BADGE = {"gap": (8, "no SWSR"), "s5": (4, "SWSR not met")}
+
+
+def issue(t: dict, sw: dict) -> str | None:
+  if t.get("code", "").startswith("not implemented"):
+    return None  # drawn dashed already
+  st = csm.transition_state(t, sw)
+  return "gap" if st == "unknown" else "s5" if st == "not" else None
+
+
+def badges(x, y, ids, by_id, sw):
+  """Badges under an edge label: one per issue kind, naming the IDs when not every ID on the edge has it."""
+  out = []
+  for kind, (slot, text) in BADGE.items():
+    hit = [i for i in ids if issue(by_id[i], sw) == kind]
+    if not hit:
+      continue
+    s = text if len(hit) == len(ids) else f"{text}: {', '.join(hit)}"
+    w = len(s) * 5.9 + 12
+    out.append(f'<rect class="k{slot}" x="{x - w / 2:.1f}" y="{y - 9:.1f}" width="{w:.1f}" height="15" rx="7"/>')
+    out.append(K.text(x, y + 2.5, s, "ts", "middle"))
+    y += 18
+  return out
+
+
+B2B = HERE.parent / "reference-models" / "b2b_toy_auth.py"
+
+
+def b2b_scenarios() -> dict[str, list[str]]:
+  """Transition ID -> directed back-to-back scenarios that exercise it, read from the scenario names in the harness
+  ("D04 T2 cruise off"), so a chip appears only where a directed scenario names the transition."""
+  out: dict[str, set[str]] = {}
+  for d, t in re.findall(r"[\"'](D\d+[a-z]?) (T\d+[a-z]?)\b", B2B.read_text(encoding="utf-8")):
+    out.setdefault(t, set()).add(d)
+  return {t: sorted(v) for t, v in out.items()}
+
+
+def panel(spec: dict, ids: list[str], by_id: dict, sw: dict, y0: float) -> tuple[list[str], float]:
+  """Revocation panel: one row per transition, grouped by cause in a grid of two columns, with its line style, a
+  requirement badge and the B2B scenario chip."""
+  grouped = [i for _, g in spec["groups"] for i in g]
+  if sorted(grouped) != sorted(ids):
+    raise SystemExit(f"panel groups {sorted(grouped)} do not match the transitions of the edge {sorted(ids)}")
+  scen = b2b_scenarios()
+  a, b = spec["edge"]
+  out = [K.text(20, y0, f"Revocations {a} → {b}, by cause ({len(ids)} transitions, one row each)", "tb")]
+  cols = 2
+  col_w = LEGEND_W / cols
+  y = y0 + 12
+  for r in range(0, len(spec["groups"]), cols):
+    row = spec["groups"][r:r + cols]
+    h = 30 + 22 * max(len(g) for _, g in row)
+    for ci, (gname, items) in enumerate(row):
+      x = 20 + ci * col_w
+      out.append(f'<rect class="hi" x="{x:.1f}" y="{y}" width="{col_w - 10:.1f}" height="{h}" rx="8"/>')
+      out.append(K.text(x + 10, y + 18, gname, "t2"))
+      for i, tid in enumerate(items):
+        ty = y + 40 + 22 * i
+        t = by_id[tid]
+        cls = "" if not t.get("code", "").startswith("not implemented") else "todo"
+        out.append(f'<path class="edge {cls}" d="M{x + 10:.1f},{ty - 4} L{x + 30:.1f},{ty - 4}"/>')
+        out.append(K.arrowhead(x + 32, ty - 4, 1, 0, f"arrow {cls}", size=6))
+        out.append(K.text(x + 42, ty, tid, "tb"))
+        out.append(K.text(x + 84, ty, spec["names"][tid], "t"))
+        bx = x + 84 + len(spec["names"][tid]) * K.CHAR_W + 12
+        kind = issue(t, sw)
+        if kind:
+          slot, txt = BADGE[kind]
+          w = len(txt) * 5.9 + 12
+          out.append(f'<rect class="k{slot}" x="{bx:.1f}" y="{ty - 11}" width="{w:.1f}" height="15" rx="7"/>')
+          out.append(K.text(bx + w / 2, ty, txt, "ts", "middle"))
+        if tid in scen:
+          chip = " ".join(scen[tid])
+          w = len(chip) * 5.9 + 12
+          out.append(f'<rect class="k3" x="{x + col_w - 20 - w:.1f}" y="{ty - 11}" width="{w:.1f}" height="15" rx="7"/>')
+          out.append(K.text(x + col_w - 20 - w / 2, ty, chip, "ts", "middle"))
+    y += h + 10
+  out.append(f'<rect class="k3" x="20" y="{y}" width="26" height="14" rx="7"/>')
+  out.append(K.text(52, y + 11, "directed back-to-back scenarios that name the transition "
+                    "(reference-models/b2b_toy_auth.py); no chip: none does", "t2"))
+  return out, y + 24 - y0
+
+
 # ------------------------------------------------------------------ Stateflow-style charts
 
-def stateflow(sm: dict, sw: dict, record: str) -> str:
+def stateflow(sm: dict, sw: dict, record: str, build: str | None = None) -> str:
   name = sm["machine"]
-  lay = LAYOUT[name]
+  lay = dict(LAYOUT[name])
+  if build:
+    lay.update(lay["builds"][build])
   W, H0 = lay["size"]
-  pos = lay["states"]
-  missing = [s for s in sm["states"] if s not in pos]
+  pos = dict(lay["states"])
+  states = sm["states"]
+  missing = [s for s in states if s not in pos]
   if missing:
     raise SystemExit(f"{name}: no layout position for {missing}")
-  size = {s: (box_w(s), BOX_H) for s in sm["states"]}
+  T = [t for t in sm["transitions"] if build is None or t.get("build", "all") in ("all", build)]
+  by_id = {t["id"]: t for t in T}
+  size = {s: (box_w(s), BOX_H) for s in states}
+  sup = lay.get("super")
+  if sup:
+    bx, by, bw, bh = sup["box"]
+    pos[sup["name"]] = (bx + bw / 2, by + bh / 2)
+    size[sup["name"]] = (bw, bh)
+    members = set(sup["members"])
   body = []
+
+  def targets(t, s):
+    if t["to"] == "same":
+      return [s]
+    if t["to"] != "m":
+      return [t["to"]]
+    if t["id"] not in lay.get("targets", {}):
+      raise SystemExit(f"{name}: {t['id']} goes to the requested mode m; give its drawn targets in LAYOUT")
+    return lay["targets"][t["id"]]
+
+  def drawn_sources(t):
+    if t["id"] in lay.get("sources", {}):
+      return lay["sources"][t["id"]]
+    if t["from"] == "any" and lay.get("any") == "note":
+      return []
+    src = csm._sources(t, states)
+    return [sup["name"]] if sup and set(src) == members else src
+
+  # reachability in this build, from the initial state over every transition (superstate = its members)
+  expand = lambda n: sup["members"] if sup and n == sup["name"] else [n]
+  reached, todo = set(), [sm["initial"]]
+  while todo:
+    s = todo.pop()
+    if s in reached:
+      continue
+    reached.add(s)
+    for t in T:
+      if s in csm._sources(t, states):
+        for d in targets(t, s):
+          todo += [x for x in expand(d) if x not in reached]
+  dead = [s for s in states if s not in reached]
 
   # group transitions per (source, target, implemented?)
   groups: dict[tuple, list[str]] = {}
-  for t in sm["transitions"]:
+  undrawn = []  # transitions out of a state that is unreachable in this build: named under the chart
+  for t in T:
     impl = not t.get("code", "").startswith("not implemented")  # drawn solid if the code exists
-    for s in csm._sources(t, sm["states"]):
-      dst = s if t["to"] == "same" else t["to"]
-      groups.setdefault((s, dst, impl), []).append(t["id"])
+    for s in drawn_sources(t):
+      if s in dead:
+        undrawn.append(f"{t['id']} from {s}")
+        continue
+      for d in targets(t, s):
+        groups.setdefault((s, d, impl), []).append(t["id"])
+
+  pan = lay.get("panel")
+  pan_ids = []
+  if pan:
+    for key in [k for k in groups if (k[0], k[1]) == pan["edge"]]:
+      pan_ids += groups.pop(key)
+    groups[(*pan["edge"], True)] = pan_ids
+
+  def edge_cls(s, impl):
+    return "" if impl else "todo"
+
+  # superstate frame first, so edges and states draw over it
+  if sup:
+    body.append(f'<rect class="sup" x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="16"/>')
+    body.append(K.text(bx + 12, by + 17, sup["label"], "t2"))
 
   # edges between distinct nodes, spread by pair
   pairs: dict[frozenset, list[tuple]] = {}
@@ -115,28 +301,31 @@ def stateflow(sm: dict, sw: dict, record: str) -> str:
     keys.sort(key=lambda k: (k[0], k[2] is False))
     n = len(keys)
     u, v = sorted(pair)  # fixed frame per pair, so both directions bend in one consistent sense
-    pu = pos[u] if u != "m" else lay["junction"]
-    pv = pos[v] if v != "m" else lay["junction"]
+    pu, pv = pos[u], pos[v]
     fx, fy = pv[0] - pu[0], pv[1] - pu[1]
     fl = math.hypot(fx, fy) or 1
     px, py = -fy / fl, fx / fl
     for i, (s, d, impl) in enumerate(keys):
-      a = pos[s]
-      b = lay["junction"] if d == "m" else pos[d]
-      wb, hb = (14, 14) if d == "m" else size[d]
+      a, b = pos[s], pos[d]
       off = (i - (n - 1) / 2) * 58 + lay.get("bend", {}).get((s, d), 0)
       mx, my = (a[0] + b[0]) / 2, (a[1] + b[1]) / 2
-      ctrl = (mx + px * off * 2, my + py * off * 2)
+      ctrl = lay.get("via", {}).get((s, d)) or (mx + px * off * 2, my + py * off * 2)
       p0 = border_point(a, *size[s], ctrl)
-      p1 = border_point(b, wb, hb, ctrl)
-      cls = "edge" if impl else "edge todo"
-      body.append(f'<path class="{cls}" d="M{p0[0]:.1f},{p0[1]:.1f} Q{ctrl[0]:.1f},{ctrl[1]:.1f} {p1[0]:.1f},{p1[1]:.1f}"/>')
+      p1 = border_point(b, *size[d], ctrl)
+      cls = edge_cls(s, impl)
+      body.append(f'<path class="edge {cls}" d="M{p0[0]:.1f},{p0[1]:.1f} Q{ctrl[0]:.1f},{ctrl[1]:.1f} {p1[0]:.1f},{p1[1]:.1f}"/>')
       e = quad(p0, ctrl, p1, 0.97)
-      body.append(K.arrowhead(p1[0], p1[1], p1[0] - e[0], p1[1] - e[1], "arrow" if impl else "arrow todo"))
+      body.append(K.arrowhead(p1[0], p1[1], p1[0] - e[0], p1[1] - e[1], f"arrow {cls}"))
       lx, ly = quad(p0, ctrl, p1, 0.5)
-      body += label(lx, ly, K.wrap(", ".join(groups[(s, d, impl)]), 150))
+      ids = groups[(s, d, impl)]
+      if pan and (s, d) == pan["edge"]:
+        body += label(lx, ly, [f"{len(ids)} revocations", "(by cause below)"])
+        continue
+      lines = K.wrap(", ".join(ids), 150)
+      body += label(lx, ly, lines)
+      body += badges(lx, ly + 7 * len(lines) + 12, ids, by_id, sw)
 
-  # self loops, stacked above each state
+  # self loops, stacked above each state (below if the layout says so); a superstate's loops sit at its right end
   loops: dict[str, list[tuple]] = {}
   for key in groups:
     if key[0] == key[1]:
@@ -144,58 +333,93 @@ def stateflow(sm: dict, sw: dict, record: str) -> str:
   for s, keys in loops.items():
     cx, cy = pos[s]
     w, h = size[s]
+    below = lay.get("loops", {}).get(s) == "below"
+    if sup and s == sup["name"]:
+      cx, w = bx + bw - 90, 140
     for i, key in enumerate(sorted(keys, key=lambda k: k[2] is False)):
       impl = key[2]
       r = 18 + 16 * i
       x0, x1 = cx - w / 4 - 6 * i, cx + w / 4 + 6 * i
-      top = cy - h / 2
-      cls = "edge" if impl else "edge todo"
-      body.append(f'<path class="{cls}" d="M{x0:.1f},{top:.1f} C{x0:.1f},{top - 2.2 * r:.1f} {x1:.1f},{top - 2.2 * r:.1f} {x1:.1f},{top:.1f}"/>')
-      body.append(K.arrowhead(x1, top, 0, 1, "arrow" if impl else "arrow todo"))
-      body += label(cx, top - 1.65 * r, [", ".join(groups[key])])
+      sgn = 1 if below else -1
+      edge = cy + sgn * h / 2
+      cls = edge_cls(s, impl)
+      body.append(f'<path class="edge {cls}" d="M{x0:.1f},{edge:.1f} C{x0:.1f},{edge + sgn * 2.2 * r:.1f} '
+                  f'{x1:.1f},{edge + sgn * 2.2 * r:.1f} {x1:.1f},{edge:.1f}"/>')
+      body.append(K.arrowhead(x1, edge, 0, -sgn, f"arrow {cls}"))
+      ly = edge + sgn * 1.65 * r
+      body += label(cx, ly, [", ".join(groups[key])])
+      body += badges(cx + (80 if not below else 0), ly + (0 if not below else 22), groups[key], by_id, sw)
 
-  # junction for "requested mode m"
-  if "junction" in lay:
-    jx, jy = lay["junction"]
-    for st in sm["states"]:
-      p1 = border_point(pos[st], *size[st], (jx, jy))
-      body.append(f'<path class="edge thin" d="M{jx:.1f},{jy:.1f} L{p1[0]:.1f},{p1[1]:.1f}"/>')
-      body.append(K.arrowhead(p1[0], p1[1], p1[0] - jx, p1[1] - jy, "arrow", size=5))
-    body.append(f'<circle class="box" cx="{jx}" cy="{jy}" r="7"/>')
-    body += label(jx + 52, jy + 2, ["[mode = m]"])
-
-  # states (filled by role) and default transition
+  # states (filled by role; unreachable in this build: dashed, no fill) and default transition
   role = {st: f"k{r[0]}" for r in lay["roles"] if r[0] for st in r[2:]}
-  unknown = set(role) - set(sm["states"])
+  unknown = set(role) - set(states)
   if unknown:
     raise SystemExit(f"{name}: roles name unknown states {sorted(unknown)}")
-  for st in sm["states"]:
+  for st in states:
     cx, cy = pos[st]
     w, h = size[st]
+    if st in dead:
+      body.append(f'<rect class="box dead" x="{cx - w / 2:.1f}" y="{cy - h / 2:.1f}" width="{w:.1f}" height="{h:.1f}" rx="12"/>')
+      body.append(K.text(cx - w / 2 + 10, cy - h / 2 + 18, st, "tb"))
+      body.append(K.text(cx - w / 2 + 10, cy - h / 2 + 34, "unreachable", "ts"))
+      continue
     body.append(f'<rect class="shadow" x="{cx - w / 2 + 3:.1f}" y="{cy - h / 2 + 3:.1f}" width="{w:.1f}" height="{h:.1f}" rx="12"/>')
     body.append(f'<rect class="{role.get(st, 'box')}" x="{cx - w / 2:.1f}" y="{cy - h / 2:.1f}" width="{w:.1f}" height="{h:.1f}" rx="12"/>')
     body.append(K.text(cx - w / 2 + 10, cy - h / 2 + 18, st, "tb"))
   ix, iy = pos[sm["initial"]]
   w, h = size[sm["initial"]]
-  sx = ix - w / 2 - 46
+  sx = ix - w / 2 - (24 if sup and sm["initial"] in members else 46)
   body.append(f'<circle class="dot" cx="{sx:.1f}" cy="{iy:.1f}" r="4"/>')
   body.append(f'<path class="edge" d="M{sx:.1f},{iy:.1f} L{ix - w / 2:.1f},{iy:.1f}"/>')
   body.append(K.arrowhead(ix - w / 2, iy, 1, 0))
 
-  # legend: state roles, then the two edge styles
-  lx, ly = 20, H0 - 18
+  if pan:
+    rows_p, _ = panel(pan, pan_ids, by_id, sw, pan["y"])
+    body += rows_p
+
+  # transitions from "any" that are not drawn per state
+  notes, anys = [], []
+  if lay.get("any") == "note":
+    for t in T:
+      if t["from"] == "any":
+        drawn = lay.get("sources", {}).get(t["id"])
+        anys.append(f"{t['id']} ({t['event']} → {t['to']})" + (f", drawn from {', '.join(drawn)} only" if drawn else ""))
+  if anys:
+    notes.append("In every state, not drawn per state: " + "; ".join(anys) + ".")
+  if undrawn:
+    notes.append("Not drawn, the source is unreachable in this build: " + ", ".join(undrawn) + ".")
+  notes = [ln for n in notes for ln in K.wrap(n, LEGEND_W)]
+  for i, n in enumerate(notes):
+    body.append(K.text(20, H0 - 44 + 16 * i, n, "t2"))
+  H0 += 16 * len(notes)
+  ly = H0 - 18
+
+  # legend: state roles, then the edge styles and badges in use
+  lx = 20
   for r in lay["roles"]:
     body.append(f'<rect class="{f"k{r[0]}" if r[0] else "box"}" x="{lx}" y="{ly - 10}" width="22" height="14" rx="4"/>')
     body.append(K.text(lx + 28, ly + 1, r[1], "t2"))
     lx += 28 + len(r[1]) * K.CHAR_W + 22
   ly += 20
-  body += [f'<path class="edge" d="M20,{ly - 4} L46,{ly - 4}"/>', K.text(52, ly, "in the code", "t2"),
-           f'<path class="edge todo" d="M150,{ly - 4} L176,{ly - 4}"/>',
-           K.text(182, ly, "not in the code (target state)", "t2")]
+  leg = [("edge", "in the code"), ("edge todo", "not in the code (target state)")]
+  lx = 20
+  for cls, txt in leg:
+    body += [f'<path class="{cls}" d="M{lx},{ly - 4} L{lx + 26},{ly - 4}"/>', K.text(lx + 32, ly, txt, "t2")]
+    lx += 32 + len(txt) * K.CHAR_W + 22
+  ly, lx = ly + 20, 20
+  for kind, (slot, txt) in BADGE.items():
+    if any(issue(t, sw) == kind for t in T):
+      H0 += 20 if lx == 20 else 0
+      body += [f'<rect class="k{slot}" x="{lx}" y="{ly - 11}" width="26" height="14" rx="7"/>',
+               K.text(lx + 32, ly, {"gap": "no SWSR cited (checker S7)", "s5": "in the code, SWSR not met (checker S5)"}[kind], "t2")]
+      lx += 32 + 40 * K.CHAR_W
 
   # header
-  head = [K.text(20, 26, f"{name}: {sm['title']}", "th"),
-          K.text(20, 44, f"Stateflow-style chart generated from state-machines/{record} by diagrams/make_diagrams.py.", "ts"),
+  scope = f" ({build} build)" if build else ""
+  others = [t["id"] for t in sm["transitions"] if t not in T]
+  head = [K.text(20, 26, f"{name}: {sm['title']}{scope}", "th"),
+          K.text(20, 44, f"Stateflow-style chart generated from state-machines/{record} by diagrams/make_diagrams.py."
+                 + (f" Only the other build: {', '.join(others)} (not drawn)." if others else ""), "ts"),
           K.text(20, 58, "Solid grey: in the code. Dashed orange: not in the code. Fill: state role (legend). "
                  "Status: WP-W-02 Baseline of the cited SWSRs.", "ts")]
 
@@ -209,12 +433,10 @@ def stateflow(sm: dict, sw: dict, record: str) -> str:
   for c, hdr in zip(col, ("ID", "Transition", "Build", "WP-W-02 status")):
     rows.append(K.text(c, y, hdr, "t2"))
   y += 6
-  for t in sm["transitions"]:
+  for t in T:
     guard = f" [{t['guard']}]" if t.get("guard") else ""
     act = t.get("action") or "none"
-    src = t["from"]
-    dst = t["to"]
-    lab = f"{src} → {dst}: {t['event']}{guard} / {{{act}}}"
+    lab = f"{t['from']} → {t['to']}: {t['event']}{guard} / {{{act}}}"
     lines = K.wrap(lab, col[2] - col[1] - 14)
     st = csm.LABEL[csm.transition_state(t, sw)]
     if t.get("code", "").startswith("not implemented"):
@@ -231,9 +453,10 @@ def stateflow(sm: dict, sw: dict, record: str) -> str:
     rows.append(K.text(col[3], y, st, "t2"))
     y += 14 * (len(lines) - 1) + 3
   H = int(y + 24)
-  desc = (f"Stateflow-style chart of {name} with {len(sm['states'])} states and {len(sm['transitions'])} transitions, "
-          f"generated from {record}; the table below the chart lists every transition.")
-  return K.doc(W, H, f"{name} state chart", desc, head + body + rows)
+  desc = (f"Stateflow-style chart of {name}{scope} with {len(states)} states and {len(T)} transitions, "
+          f"generated from {record}; the table below the chart lists every transition."
+          + (f" Unreachable in this build: {', '.join(dead)}." if dead else ""))
+  return K.doc(W, H, f"{name} state chart{scope}", desc, head + body + rows)
 
 
 # ------------------------------------------------------------------ Simulink-style block diagram
@@ -469,14 +692,165 @@ HOST = {
 }
 
 
+# ------------------------------------------------------------------ system view: how the three machines couple
+
+# lanes: (machine or None, title, subtitle); boxes: (lane, machine state or None, label, sub, x, w, role slot)
+SYSTEM = {
+  "lanes": [("SM-SELFDRIVED", "SM-SELFDRIVED", "host, QM"), (None, "heartbeat", "pandad → panda, 10 Hz"),
+            ("SM-SAFETY-MODE", "SM-SAFETY-MODE", "panda"), ("SM-TOY-AUTH", "SM-TOY-AUTH", "envelope, B‡")],
+  "boxes": {"dis": (0, "disabled", "disabled", "", 210, 140, None), "en": (0, "enabled", "enabled", "", 420, 140, 1),
+            "hb": (1, None, "engaged flag = 1", "0xf3 heartbeat", 420, 170, None),
+            "toy": (2, "TOYOTA", "TOYOTA, p = 73", "reference build: the only car mode", 210, 210, 1),
+            "na": (3, "NOT_ALLOWED", "NOT_ALLOWED", "", 210, 140, None),
+            "ep": (3, "ENGAGE_PENDING", "ENGAGE_PENDING", "window ≤ 1 s", 470, 170, 4),
+            "al": (3, "ALLOWED", "ALLOWED", "controls_allowed = 1", 760, 170, 1)},
+  # (from, to, label, kind): transition = a transition of one machine; flow = information passed between them
+  "links": [("dis", "en", "D3", "transition"), ("na", "ep", "T1a cruise 0→1", "transition"),
+            ("ep", "al", "T1b", "transition"), ("en", "hb", "sends engaged", "flow"),
+            ("hb", "ep", "engaged flag", "flow"), ("toy", "na", "car mode required", "flow"),
+            ("al", "en", "controlsAllowed in pandaState", "flow")],
+}
+LANE_H, LANE_GAP, LANE_TOP = 78, 12, 70
+
+
+def system_view(sms: dict) -> str:
+  W = 1000
+  body = [K.text(20, 26, "State machines at engagement: how they couple (reference build)", "th"),
+          K.text(20, 44, "Generated by diagrams/make_diagrams.py; every state named here is checked against the "
+                 "state-machine records. Only the states and signals that link the machines are drawn.", "ts"),
+          K.text(20, 58, "Solid: a transition of one machine (its chart and table are normative). Dashed: information "
+                 "passed between machines, not a transition.", "ts")]
+  lane_y = [LANE_TOP + i * (LANE_H + LANE_GAP) for i in range(len(SYSTEM["lanes"]))]
+  for (m, title, sub), y in zip(SYSTEM["lanes"], lane_y):
+    body.append(f'<rect class="hi" x="20" y="{y}" width="{W - 40}" height="{LANE_H}" rx="10"/>')
+    body += [K.text(34, y + 34, title, "tb"), K.text(34, y + 50, sub, "t2")]
+  geo = {}
+  for k, (lane, st, lab, sub, x, w, slot) in SYSTEM["boxes"].items():
+    m = SYSTEM["lanes"][lane][0]
+    if st and st not in sms[m]["states"]:
+      raise SystemExit(f"system view: {m} has no state {st}")
+    y = lane_y[lane] + 14
+    geo[k] = (x, y, w, LANE_H - 28)
+  for a, b, lab, kind in SYSTEM["links"]:
+    ax, ay, aw, ah = geo[a]
+    bx, by, bw, bh = geo[b]
+    cls = "edge" if kind == "transition" else "edge target"
+    if ay == by:  # same lane: left to right
+      p0, p1 = (ax + aw, ay + ah / 2), (bx, by + bh / 2)
+      pts = [p0, p1]
+      lx, ly, anchor = (p0[0] + p1[0]) / 2, p0[1] - 6, "middle"
+    elif a == "al":  # back up to the host: right side, then left into the target
+      pts = [(ax + aw / 2, ay), (ax + aw / 2, by + bh / 2), (bx + bw, by + bh / 2)]
+      lx, ly, anchor = ax + aw / 2 - 8, lane_y[1] + 30, "end"
+    else:
+      sx = min(max(bx + bw / 2, ax + 10), ax + aw - 10)
+      pts = [(sx, ay + ah), (sx, by)] if abs(sx - (bx + bw / 2)) < 1 else [(ax + aw / 2, ay + ah), (bx + bw / 2, by)]
+      lx, ly, anchor = pts[0][0] + 8, (pts[0][1] + pts[-1][1]) / 2 + 4, "start"
+    body.append(f'<path class="{cls}" d="M' + " L".join(f"{p[0]:.1f},{p[1]:.1f}" for p in pts) + '"/>')
+    (x0, y0), (x1, y1) = pts[-2], pts[-1]
+    body.append(K.arrowhead(x1, y1, x1 - x0, y1 - y0, "arrow" if kind == "transition" else "arrow target"))
+    body += label(lx, ly, [lab]) if anchor == "middle" else [K.text(lx, ly, lab, "tm", anchor)]
+  for k, (x, y, w, h) in geo.items():
+    slot = SYSTEM["boxes"][k][6]
+    body.append(f'<rect class="{f"k{slot}" if slot else "box"}" x="{x}" y="{y}" width="{w}" height="{h}" rx="10"/>')
+    body.append(K.text(x + 10, y + 20, SYSTEM["boxes"][k][2], "tb"))
+    if SYSTEM["boxes"][k][3]:
+      body.append(K.text(x + 10, y + 36, SYSTEM["boxes"][k][3], "t2"))
+
+  # timeline: order of events at a normal engagement; illustrative spacing, except the window length
+  y0 = lane_y[-1] + LANE_H + 46
+  body += [K.text(20, y0, "Engagement over time (illustrative spacing; the order follows the code)", "tb"),
+           K.text(20, y0 + 16, "Real recorded traces are the back-to-back scope plots (reference-models/results/scope/).", "ts")]
+  rows = [("cruise (car PCM)", [(0, 0), (1, 1)]), ("selfdrived enabled", [(0, 0), (2, 1)]),
+          ("heartbeat engaged", [(0, 0), (3, 1)]), ("window open", [(0, 0), (1, 1), (3, 0)]),
+          ("controls_allowed", [(0, 0), (3, 1)])]
+  xs = {0: 200, 1: 330, 2: 400, 3: 520}
+  x_end, top = W - 40, y0 + 40
+  for i, (name, steps) in enumerate(rows):
+    hi, lo = top + i * 38, top + i * 38 + 22
+    body.append(K.text(34, lo - 4, name, "t"))
+    d, v = f"M{xs[0]},{lo}", 0
+    for k, nv in steps[1:]:
+      d += f" L{xs[k]},{hi if v else lo} L{xs[k]},{hi if nv else lo}"
+      v = nv
+    d += f" L{x_end},{hi if v else lo}"
+    body.append(f'<path class="s{1 if i != 3 else 2}" d="{d}"/>')
+  ev = [(1, "cruise rising edge: guards pass, window opens (T1a)"), (2, "selfdrived enables (D3)"),
+        (3, "heartbeat engaged: grant in the safety task (T1b), window closes")]
+  bottom = top + len(rows) * 38
+  for n, (k, lab) in enumerate(ev, 1):
+    body.append(f'<path class="grid" d="M{xs[k]},{top - 12} L{xs[k]},{bottom}" stroke-dasharray="3 3"/>')
+    body.append(f'<circle class="dot" cx="{xs[k]}" cy="{top - 18}" r="8"/>')
+    body.append(K.text(xs[k], top - 14, str(n), "ts", "middle").replace('class="ts"', 'class="ts" style="fill:var(--surface)"'))
+    body.append(K.text(34, bottom + 8 + 16 * n, f"{n}  {lab}", "t2"))
+  body.append(K.text(34, bottom + 8 + 16 * (len(ev) + 1), "The window lasts at most 1 s (PCM_ENGAGE_WINDOW_US); "
+                     "about 0.21 s from edge to grant in the worst case of change-2026-10-14-pcm-engage-heartbeat-gate §2.", "t2"))
+  H = int(bottom + 8 + 16 * (len(ev) + 1) + 24)
+  desc = ("Coupling of the engagement state machines: selfdrived enabling sends the heartbeat engaged flag, which the "
+          "panda's engagement window waits for before it grants controls_allowed in the Toyota car mode; the panda "
+          "reports controlsAllowed back to selfdrived. A timeline below shows the order of events at engagement.")
+  return K.doc(W, H, "State machine coupling at engagement", desc, body)
+
+
+# ------------------------------------------------------------------ landing page of the state-machines folder
+
+SECTION = {"SM-SAFETY-MODE": "5.1", "SM-TOY-AUTH": "5.2", "SM-SELFDRIVED": "5.3"}
+
+
+def sm_readme(records: list[tuple[str, dict]], sw: dict) -> str:
+  """state-machines/README.md: one row per record with counts computed from it, and its charts."""
+  out = ["# State machines", "",
+         "<!-- Generated by assurance/05-software/diagrams/make_diagrams.py; do not edit by hand. -->", "",
+         "| Field | Value |", "|---|---|",
+         "| Status | Draft — AI-assisted (Claude), not reviewed. The records are normative; the tables in "
+         "[WP-W-05 §5](../WP-W-05-software-unit-design.md#5-normative-state-tables) and the charts are generated from them |",
+         "| Checker | [`check_state_machines.py`](../../trace/tools/check_state_machines.py) (consistency, tables; "
+         "findings S1–S7) |",
+         "| Charts | [`diagrams/make_diagrams.py`](../diagrams/make_diagrams.py) ([notation](../diagrams/README.md)) |", "",
+         "Each YAML file here is one state machine: its states, and every transition with its event, guard, action, "
+         "build, the SWSRs it realises and the code that implements it. The implementation status is not stored "
+         "here; it comes from the WP-W-02 Baseline column of the cited SWSRs.", "",
+         "| Machine | Runs in | States | Transitions | Not in the code | No SWSR (S7) | In the code, SWSR not met (S5) "
+         "| Builds | Table | Chart |",
+         "|---|---|---|---|---|---|---|---|---|---|"]
+  charts = []
+  for stem, sm in records:
+    T = sm["transitions"]
+    builds = {t.get("build", "all") for t in T}
+    names = LAYOUT[sm["machine"]].get("builds")
+    files = [f"stateflow-{stem}-{b}.svg" for b in names] if names else [f"stateflow-{stem}.svg"]
+    ids = lambda kind: [t["id"] for t in T if issue(t, sw) == kind]
+    cell = lambda xs: f"{len(xs)}: {', '.join(xs)}" if xs else "0"
+    todo = [t["id"] for t in T if t.get("code", "").startswith("not implemented")]
+    out.append(f"| [{sm['machine']}]({stem}.yaml): {sm['title']} | {', '.join(sm['units'])} | {len(sm['states'])} "
+               f"| {len(T)} | {cell(todo)} | {cell(ids('gap'))} | {cell(ids('s5'))} | {', '.join(sorted(builds))} "
+               f"| [WP-W-05 §{SECTION[sm['machine']]}](../WP-W-05-software-unit-design.md) | "
+               + ", ".join(f"[{f.removeprefix('stateflow-').removesuffix('.svg')}](../diagrams/{f})" for f in files) + " |")
+    charts += [f"### {sm['machine']}: {sm['title']}", ""] + [f"![{sm['machine']}](../diagrams/{f})" for f in files] + [""]
+  out += ["", "How the three machines couple at engagement (WP-W-05 §5.4):", "",
+          "![State machine coupling at engagement](../diagrams/stateflow-system-engagement.svg)", "", "## Charts", ""]
+  out += charts
+  out += ["## Changing a record", "",
+          "Edit the YAML, then run `python3 assurance/trace/tools/check_state_machines.py --write` (WP-W-05 tables) and "
+          "`python3 assurance/05-software/diagrams/make_diagrams.py` (charts and this page). A new state needs a "
+          "position in `LAYOUT` in `make_diagrams.py`, a new revocation of SM-TOY-AUTH a group in its panel; the "
+          "generator stops until it has one. CI runs both with `--check`.", ""]
+  return "\n".join(out)
+
+
 # ------------------------------------------------------------------ main
 
 def outputs() -> dict[str, str]:
   sw = csm.swsr_records()
   out = {}
+  out["../state-machines/README.md"] = sm_readme([(p.stem, csm.load(p)) for p in sorted(csm.SM_DIR.glob("*.yaml"))], sw)
   for p in sorted(csm.SM_DIR.glob("*.yaml")):
     sm = csm.load(p)
-    out[f"stateflow-{p.stem}.svg"] = stateflow(sm, sw, p.name)
+    builds = LAYOUT[sm["machine"]].get("builds")
+    for b in builds or [None]:
+      out[f"stateflow-{p.stem}{'-' + b if b else ''}.svg"] = stateflow(sm, sw, p.name, b)
+  out["stateflow-system-engagement.svg"] = system_view({sm["machine"]: sm for sm in
+                                                       (csm.load(p) for p in sorted(csm.SM_DIR.glob("*.yaml")))})
   out["simulink-envelope.svg"] = render_blocks(ENVELOPE)
   out["simulink-panda-firmware.svg"] = render_blocks(PANDA)
   out["simulink-host.svg"] = render_blocks(HOST)
@@ -486,7 +860,7 @@ def outputs() -> dict[str, str]:
 def main(argv: list[str]) -> int:
   stale = []
   for name, content in outputs().items():
-    path = HERE / name
+    path = (HERE / name).resolve()
     if "--check" in argv:
       if not path.exists() or path.read_text(encoding="utf-8") != content:
         stale.append(name)

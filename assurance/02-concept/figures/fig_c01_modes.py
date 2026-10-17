@@ -312,7 +312,7 @@ def envelope_fault_ids(recs: dict) -> tuple[list[str], list[str], list[str]]:
   own = {"T2", "T3", "T6", "T7"}
   allb, ref, notimpl = [], [], []
   for t in recs[TA]["transitions"]:
-    if t["to"] != "NOT_ALLOWED" or t["from"] == "NOT_ALLOWED" or t["id"] in own:
+    if t["to"] != "NOT_ALLOWED" or t["from"] not in ("ALLOWED", "any") or t["id"] in own:  # only a granted authority is cleared
       continue
     if t.get("code", "").startswith("not implemented"):
       notimpl.append(t["id"])

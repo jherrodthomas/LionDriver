@@ -237,25 +237,26 @@ FM: dict[str, dict[str, tuple[str, str, str, str]]] = {
 # OS-07 is the exception: rated by frequency (Table B.3, E4), decision register DQ-036.
 # Highway only (DQ-023 B): OS-03, OS-04, OS-15 and OS-16 are outside the ODD and rated as foreseeable misuse,
 # like OS-14. OS-17 and OS-18 are the driver-state misuse situations of H-STPA-1 (DQ-003, DQ-205).
+# Engaged situations end at 110 km/h, the ODD bound (DQ-260); manual driving (OS-13) and the stock PCS (OS-09) keep 120.
 # ---------------------------------------------------------------------------------------------
 SITUATIONS = [
-  ("OS-01", "Limited-access highway, free flow, adjacent traffic", 90, 120, "E4", "Majority of engaged time (ODD-H)"),
+  ("OS-01", "Limited-access highway, free flow, adjacent traffic", 90, 110, "E4", "Majority of engaged time (ODD-H)"),
   ("OS-02", "Highway curve near R_ODD with barrier or adjacent traffic", 70, 110, "E3", "Curves of this radius at speed: 1–10 % of time"),
   ("OS-03", "Engaged on an undivided rural or arterial road, oncoming traffic: outside the ODD, foreseeable misuse", 60, 90, "E2", "Outside the highway-only ODD (DQ-023); engagement is not prevented off-highway, misuse share assumed < 1 % (A-ODD)"),
   ("OS-04", "Engaged on an urban arterial, pedestrians and cyclists near the lane edge: outside the ODD, foreseeable misuse", 30, 60, "E2", "Outside the highway-only ODD (DQ-023); misuse share assumed < 1 % (A-ODD)"),
   ("OS-05", "Following a lead vehicle at a short gap, dense traffic", 30, 110, "E4", "Most engaged time has a lead vehicle"),
   ("OS-06", "Stop-and-go queue or standstill behind a lead; pedestrians may cross", 0, 30, "E3", "Congestion share of driving"),
-  ("OS-07", "Approaching slower or stationary traffic from highway speed", 70, 120, "E4", "Rated by frequency: happens on almost every highway drive (DQ-036; ISO 26262-3 Table B.3)"),
-  ("OS-08", "Close following vehicle behind (gap < 1.5 s)", 50, 120, "E4", "Common in dense traffic"),
+  ("OS-07", "Approaching slower or stationary traffic from highway speed", 70, 110, "E4", "Rated by frequency: happens on almost every highway drive (DQ-036; ISO 26262-3 Table B.3)"),
+  ("OS-08", "Close following vehicle behind (gap < 1.5 s)", 50, 110, "E4", "Common in dense traffic"),
   ("OS-09", "Imminent collision where the stock PCS/AEB would intervene", 0, 120, "E2", "PCS-relevant situations are rare"),
-  ("OS-10", "Driver override while engaged: braking, cancel or evasive steering", 0, 120, "E3", "Overrides are frequent but short; emergency cases rarer"),
-  ("OS-12", "Driver-initiated assisted lane change", 70, 120, "E3", "Lane changes: short duration, several per trip"),
+  ("OS-10", "Driver override while engaged: braking, cancel or evasive steering", 0, 110, "E3", "Overrides are frequent but short; emergency cases rarer"),
+  ("OS-12", "Driver-initiated assisted lane change", 70, 110, "E3", "Lane changes: short duration, several per trip"),
   ("OS-13", "Manual driving, item powered but not engaged", 0, 120, "E4", "Large share of onroad time with the device installed"),
   ("OS-14", "Engaged outside the ODD (residential street, ramp, tight curve): foreseeable misuse", 15, 60, "E2", "Engagement is possible anywhere; misuse share assumed < 1 %"),
   ("OS-15", "Engaged approaching a signalised or stop-controlled intersection: outside the ODD, foreseeable misuse", 30, 90, "E2", "Outside the highway-only ODD (DQ-023); misuse share assumed < 1 % (A-ODD)"),
   ("OS-16", "Engaged in a rural or arterial curve with oncoming traffic: outside the ODD, foreseeable misuse", 60, 90, "E2", "Outside the highway-only ODD (DQ-023); misuse share assumed < 1 % (A-ODD)"),
-  ("OS-17", "Engaged on the highway while the driver is not supervising (eyes off the road or hands off for long periods; responds when alerted): foreseeable misuse", 70, 120, "E2", "H-STPA-1 (DQ-003): sustained non-supervision assumed < 1 % of engaged time; DM is not credited"),
-  ("OS-18", "Engaged on the highway with an unresponsive driver (asleep, impaired or incapacitated): foreseeable misuse", 70, 120, "E1", "H-STPA-1, DQ-205: very rare; second-set HE-018 rates it E1"),
+  ("OS-17", "Engaged on the highway while the driver is not supervising (eyes off the road or hands off for long periods; responds when alerted): foreseeable misuse", 70, 110, "E2", "H-STPA-1 (DQ-003): sustained non-supervision assumed < 1 % of engaged time; DM is not credited"),
+  ("OS-18", "Engaged on the highway with an unresponsive driver (asleep, impaired or incapacitated): foreseeable misuse", 70, 110, "E1", "H-STPA-1, DQ-205: very rare; second-set HE-018 rates it E1"),
 ]
 WEATHER = [
   ("W01", "Dry, daylight", "E4", "In ODD"),
@@ -284,7 +285,7 @@ UNRESP_C3 = "C3: nobody is able to control the vehicle (OS-18, DQ-205)."
 
 RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
   "H-01": {
-    "OS-01": ("S3", "C2", "S3: lateral departure at 90–120 km/h into adjacent traffic or barrier; loss of control (HE-01.2).", LAT_C),
+    "OS-01": ("S3", "C2", "S3: lateral departure at 90–110 km/h into adjacent traffic or barrier; loss of control (HE-01.2).", LAT_C),
     "OS-02": ("S3", "C2", "S3: departure in a highway curve into barrier or adjacent traffic.", LAT_C),
     "OS-03": ("S3", "C2", "S3: departure into the oncoming lane; head-on at combined speed > 100 km/h (HE-01.1).", LAT_C),
     "OS-04": ("S3", "C2", "S3: vehicle drifts into a pedestrian or cyclist above 30 km/h (HE-01.3).", LAT_C),
@@ -303,7 +304,7 @@ RULES: dict[str, dict[str, tuple[str, str, str, str]]] = {
     "OS-18": ("S3", "C3", "S3: lateral departure at highway speed.", UNRESP_C3),
   },
   "H-02": {
-    "OS-01": ("S3", "C1", "S3: lane departure at 90–120 km/h.", LOSS_C1),
+    "OS-01": ("S3", "C1", "S3: lane departure at 90–110 km/h.", LOSS_C1),
     "OS-02": ("S3", "C3", "S3: vehicle goes straight in a highway curve into barrier or adjacent traffic (HE-02.1).", LOSS_C3),
     "OS-03": ("S3", "C1", "S3: drift towards the oncoming lane on a mostly straight undivided road.", LOSS_C1),
     "OS-16": ("S3", "C3", "S3: departure into the oncoming lane in a rural curve (HE-02.2).", LOSS_C3),
