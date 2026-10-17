@@ -165,7 +165,8 @@
 <text x="44" y="517" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">VT-08</text>
 <text x="92" y="517" font-size="10" fill="#475569">SH-12 prolonged unsupervised operation</text>
 <text x="92" y="530" font-size="10" fill="#475569">(DM)</text>
-<text x="1080" y="525" font-size="10" fill="#0F172A">Yes</text>
+<text x="1080" y="519" font-size="10" fill="#0F172A">Yes, once TSR-634 is</text>
+<text x="1080" y="531" font-size="10" fill="#0F172A">implemented</text>
 <text x="340" y="524.5" font-size="10" fill="#475569" font-style="italic" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round" paint-order="stroke">no exposure figure: AIR-07/AIR-08 thresholds per DM stratum</text>
 <line x1="40" y1="584" x2="1240" y2="584" stroke="#E2E8F0" stroke-width="1"/>
 <text x="44" y="559" font-size="11.5" fill="#0F172A" font-weight="700" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">VT-09</text>
