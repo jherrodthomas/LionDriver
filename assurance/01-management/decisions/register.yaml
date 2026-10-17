@@ -4422,7 +4422,7 @@
   question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"
   context: "The fault trees for loss of steering (SG-02) and loss of braking (SG-06) assume the EPS and PCM report when they stop acting on our requests. If either just ignores them without a fault code, **neither the main computer nor the safety chip notices**, and only the driver can catch it. No assumption of use states that the car always reports this."
   reversibility: revisit
-  blocks: "MCS-02.10, MCS-06.11 (WP-A-04 v1.2); AOU set of WP-C-01; TSR-626; WP-A-03 OI-8"
+  blocks: "MCS-02.10, MCS-06.11 (WP-A-04); AOU set of WP-C-01; TSR-626; WP-A-03 OI-8"
   gate: G2
   asked: 2026-10-17
   batch: 8
@@ -4445,7 +4445,7 @@
   question: "Do the two \"take-over warning\" goals (SG-02 steering, SG-06 braking) also cover the system being too weak by design, such as a curve too tight for the torque limit or a lead car seen too late, or only faults?"
   context: "SG-02 says \"lose or degrade\" lateral control. The fault trees now include **insufficient performance** branches: a curve the steering limit cannot hold, and a lead missed or seen late. In both, the only warning comes from the same main computer that fell short. Keeping them in the goals makes the fault trees and SOTIF analysis carry them together; leaving them out moves them to SOTIF alone."
   reversibility: revisit
-  blocks: "G2.8 and MCS-02.12, G6.9 and MCS-06.10 (WP-A-04 v1.2); WP-C-06 SH-06; WP-C-03 OI-7"
+  blocks: "G2.8 and MCS-02.12, G6.9 and MCS-06.10 (WP-A-04); WP-C-06 SH-06; WP-C-03 OI-7"
   gate: G1
   asked: 2026-10-17
   batch: 8
@@ -4463,7 +4463,7 @@
 
 - id: DQ-362
   question: "SG-02, SG-03 and SG-06 are now ASIL C, and the hardware analysis they share misses the ASIL C single-point target by 0.16 points. Do we reuse it and close the gap at the hardware gate, or build a separate analysis for each goal?"
-  context: "Their random hardware faults run through the parts already rated for SG-001 (safety chip, CAN transceivers, harness box). For SG-04 (ASIL B) you allowed reuse (DQ-002). Since HARA v0.4 these three goals are ASIL C, and the shared path gives **SPFM 96.84 % against the 97 % ASIL C target** (LFM 88.94 % meets 80 %). The figures use generic failure rates; supplier rates, or the transmit read-back of TSR-517, could close the gap."
+  context: "Their random hardware faults run through the parts already rated for SG-001 (safety chip, CAN transceivers, harness box). For SG-04 (ASIL B) you allowed reuse (DQ-002). Since HARA v0.4 these three goals are ASIL C, and the shared path gives **SPFM 96.84 % against the 97 % ASIL C target** (LFM 88.94 % meets 80 %). The figures use generic failure rates; supplier rates, or the transmit read-back of TSR-517, could close the gap. Since DQ-341 the panda envelope is hardened to ASIL C anyway, so the same 97 % target applies to it."
   reversibility: revisit
   blocks: "FMEDA coverage of SG-02, SG-03, SG-05, SG-06 (WP-H-03, WP-H-04); BE-3.04, BE-5.02, BE-2.06, BE-2.07, BE-6.02"
   gate: G2
@@ -4513,7 +4513,7 @@
   applied: {ref: 2c0ea31a1, record: "WP-A-04 v1.8 §5 G4.9 (G4.9.2: BE-4.24, UE-4.25; MCS-04.13; SPF-04 now lists SG-04) and §6 (G5.4 and MCS-05.6 removed); fta-fmea-map.yaml BE-4.24, UE-4.25, BE-5.06; fta-fmea-mapping.md F-29 resolved. No HARA change", at: 2026-10-17}
 - id: DQ-364
   question: "Should acceleration while LionDriver is not engaged, or just after the driver brakes, be a rated hazardous event of the acceleration goal (SG-03)?"
-  context: "The SG-03 fault tree covers acceleration while not engaged and after a brake press, but the HARA rates no SG-03 event for it: **unintended engagement is only rated as a steering hazard**. So the FMEA modes for spurious engagement are not checked against SG-03."
+  context: "The SG-03 fault tree covers acceleration while not engaged and after a brake press, but the HARA rates no SG-03 event for it: **unintended engagement is only rated as a steering hazard**. So the FMEA modes for spurious engagement (SFM-013, SWF-030, SWF-007) are not checked against SG-03. This is separate from DQ-363, which moved braking during an accelerator press to SG-04."
   reversibility: revisit
   blocks: "WP-C-03 H-03 events; hara-mapping.yaml HZ-010; G3.3 (WP-A-04)"
   gate: G1
