@@ -60,7 +60,8 @@ TX_REVOKE_REJECTED = 3          # DN-01 D-3
 # All False = the literal reading. The harness switches them on one at a time to attribute divergences.
 DEVIATIONS = {
   # SWSR-402 says a length failure of an RX-set message is an RX fault. Option: a frame with the wrong DLC is
-  # treated as a message outside the RX set (ignored apart from the brake-edge check).
+  # treated as a message outside the RX set (ignored apart from the brake-edge check). Upstream build only: the
+  # reference build makes it an RX fault since opendbc ATC-25 (B2B-01), so the option has no effect there.
   "length_not_checked": False,
   # SWSR-302 says "any wheel speed is non-zero". Option: moving = sum of the four wheel speeds non-zero.
   "moving_from_sum": False,
@@ -289,7 +290,7 @@ class SmToyAuth:
     grant = False
 
     c = self.rx.get(ev.addr) if ev.bus == RX_BUS else None
-    if c is not None and ev.dlc != RX_DLC and self.dev["length_not_checked"]:
+    if c is not None and ev.dlc != RX_DLC and self.dev["length_not_checked"] and not self.reference:
       c = None  # deviation: treated as a message outside the RX set
     valid = False
     if c is not None:

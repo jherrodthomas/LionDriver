@@ -623,7 +623,7 @@
   acceptance: "Single bit flip in data or checksum → fault"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `safety.h:164-197`; `modes/toyota.h:40-46, 65-77`; 8-bit additive (GAP-01)"
+  baseline_impl: "Impl: `safety.h:164-197`; `modes/toyota.h:40-46, 65-77`; 8-bit additive (GAP-01). Length: reference build since opendbc `62b89a3` (ATC-25, `safety.h:178-197`; back-to-back finding B2B-01 closed): a frame of another length is an RX fault, the entry invalid until a frame of the right length; upstream build: such a frame is ignored and only the RX timeout (SWSR-401) catches it"
   status: proposed
   source: WP-W-02
 

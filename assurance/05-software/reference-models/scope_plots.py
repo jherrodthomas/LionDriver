@@ -56,7 +56,7 @@ PLOTS = [
    "SM-F1 fixed: an edge while MAIN_ON = 0 opens no window; the later engaged flag grants nothing",
    ["MAIN_ON", "CRUISE_ACTIVE", "HEARTBEAT", "AUTH"]),
   ("scope-d14-wrong-dlc-brake", "D14 OI-1 brake pressed in a 0x226 frame that fails validation",
-   "B2B-01: brake pressed in a wrong-length 0x226 frame (C ignores it; the specification clears)",
+   "B2B-01 closed (ATC-25): brake pressed in a wrong-length 0x226 frame; C and specification clear on that frame",
    ["BRAKE_PRESSED", "BAD_FRAME", "AUTH"]),
 ]
 STRIP = {  # name: (label, kind, unit)
