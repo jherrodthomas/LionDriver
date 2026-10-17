@@ -18,6 +18,9 @@ Generated from the YAML analyses in [`analyses/`](../../analyses/) by `tools/saf
 | 3-11 | FMEDA SG-009: SPFM, LFM, λSPF+λRF against ASIL B (estimate, not verified) | `analyses/fmeda-sg009.yaml` | [fig-3-11-fmeda-sg009-metrics.svg](fig-3-11-fmeda-sg009-metrics.svg) |
 | 3-12 | SW FMEA: occurrence × detection per element, with the moves predicted by planned actions | `analyses/sw-fmea.yaml` | [fig-3-12-swf-od-elements.svg](fig-3-12-swf-od-elements.svg) |
 | 3-13 | SW FMEA: what each detection rating rests on (test run in CI, hardware only, not run, none) | `analyses/sw-fmea.yaml, .github/workflows/, tools/test_runner.py` | [fig-3-13-swf-detection-evidence.svg](fig-3-13-swf-detection-evidence.svg) |
+| 3-14 | SW FMEA: occurrence, detection and AP of the re-rated causes, previous baseline against this one | `analyses/sw-fmea.yaml` | [fig-3-14-swf-baseline-delta.svg](fig-3-14-swf-baseline-delta.svg) |
+| 3-15 | SW FMEA: reaction time of the timed safety mechanisms by defence layer (code-derived, not measured) | `analyses/sw-fmea.yaml` | [fig-3-15-swf-reaction-layers.svg](fig-3-15-swf-reaction-layers.svg) |
+| 3-16 | SW FMEA: per element, the causes rated here and the performance part left to SOTIF | `analyses/sw-fmea.yaml` | [fig-3-16-swf-sotif-boundary.svg](fig-3-16-swf-sotif-boundary.svg) |
 | 4-1 | Action Priority overview of the four FMEAs | `analyses/*fmea.yaml` | [fig-4-1-action-priority-overview.svg](fig-4-1-action-priority-overview.svg) |
 | 4-2 | FMEA-MSR overview of the System FMEA and DFMEA (provisional MSR AP table) | `analyses/system-fmea.yaml, dfmea.yaml` | [fig-4-2-msr-overview.svg](fig-4-2-msr-overview.svg) |
 
