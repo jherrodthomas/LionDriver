@@ -1,0 +1,46 @@
+# Welcome to the LionDriver wiki
+
+Orientation for newcomers, contributors and reviewers. This wiki explains and links. It never states a safety
+claim: those live in the [assurance record](../assurance/README.md), where they are reviewed.
+
+> [!IMPORTANT]
+> **LionDriver is research and development software.** It is a driver-assistance system: the driver must stay
+> attentive and in control at all times. It is not certified, makes no claim of ISO 26262 compliance or ASIL
+> capability, and is not approved for unsupervised operation.
+
+## What LionDriver is
+
+An open-source driving platform derived from [openpilot](https://github.com/commaai/openpilot). It keeps
+openpilot's driving stack, its panda safety layer and every upstream car port, and adds the engineering record
+around them: functional safety, SOTIF, cybersecurity, AI safety and a safety case that is published as it is
+built, with the evidence for each claim and the known counter-evidence against it. The
+[README](../README.md) is the long version.
+
+## Start here
+
+| If you want to | Read |
+|---|---|
+| Understand how the code and the record fit together | [How the repository is organized](How-the-repository-is-organized.md) |
+| See what is done, active and planned | [Roadmap and status](Roadmap-and-status.md) |
+| Contribute, or follow a Claude session's work | [How decisions are made](How-decisions-are-made.md) |
+| Decode `WP-C-03`, `BL-002`, `DQ-052`, `SWF-090` | [Glossary](Glossary.md) |
+| Review the safety argument | [Reading the Living Safety Case](Reading-the-Living-Safety-Case.md) |
+| Get a short answer | [FAQ](FAQ.md) |
+
+## Assurance status
+
+[![Safety case snapshot](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fjherrodthomas%2FLionDriver%2Fliondriver-dev%2Fassurance%2Fcase%2Fbadge.json)](https://github.com/jherrodthomas/LionDriver/releases/download/snapshot-latest/LionDriver-safety-case.pdf)
+
+The badge and the headline in the [README](../README.md#living-safety-case) are generated from the records in
+[`assurance/case/`](../assurance/case/README.md) on every pull request. No figure on this wiki is typed by hand.
+[Reading the Living Safety Case](Reading-the-Living-Safety-Case.md) explains what the numbers mean.
+
+> Assurance status represents recorded engineering evidence and review state. It does not constitute
+> certification or approval for unsupervised operation.
+
+## What this wiki is not
+
+- **Not a work product.** Nothing here carries a document-control header or counts as evidence.
+- **Not the place for hazard, requirement or vehicle-support text.** Each page links to the record that owns it.
+- **Not edited in place.** Pages are kept in the repository under [`wiki/`](../wiki/README.md), reviewed by pull
+  request, and mirrored here on merge. An edit made on the wiki itself is overwritten by the next sync.
