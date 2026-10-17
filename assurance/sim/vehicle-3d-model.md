@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | A 3D mesh of the reference car (Corolla E210, CFG-001) for simulation layer 3 (MetaDrive) renders and for figures. Procurement comparison, what the mesh does and does not change, and the handover for whoever picks this up next |
-| Version | 0.4 (Blender export script, MetaDrive vehicle class and bridge hook, 2026-10-17). 0.3 (renders, use, mock-ups, target results, 2026-10-17). 0.2 (receipt check, 2026-10-17). 0.1 (2026-10-17) |
+| Version | 0.5 (pure-Python glTF export, load-tested in Panda3D, 2026-10-17). 0.4 (Blender export script, MetaDrive vehicle class and bridge hook, 2026-10-17). 0.3 (renders, use, mock-ups, target results, 2026-10-17). 0.2 (receipt check, 2026-10-17). 0.1 (2026-10-17) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. DQ-368 answered A (bought 2026-10-17, Standard licence) |
 | Feeds | [README](README.md) §2 layer 3; the WP-V-02/WP-V-03 figures that show the reference car; nothing in the safety case |
 
@@ -115,7 +115,7 @@ Max, and RAR archives for 3DS, Blender, Cinema 4D, FBX and OBJ.
 | Scale and units | Centimetres, real scale. Length 465.6, body width 176.8, height 146.2 cm (register: width 178.1 *to confirm*; listings 463.0 / 143.5). Wheelbase from the tyre centres 270.9 cm (opendbc 270.0) |
 | Track | 150.4 cm front and rear from the wheel centres (sedan 153.5 / 156.0): a 2–4 % artist error, irrelevant for renders |
 | Separate parts | 61 meshes, named: body, chassis, four doors, windows, mirrors, steering wheel, wipers, lights, brake discs, wheels and tyres |
-| Wheels | **Rear wheels and tyres are separate meshes (`wheel_1`, `wheel_2`, `tire_1`, `tire_2`); the two front wheels share one mesh (`wheels_forward`, `tires_forward`, `brake_discs_3`).** No node carries a transform, so no wheel has a pivot at its hub. Blender work before MetaDrive: split the front meshes by loose parts, parent each tyre, rim and disc to one empty at the hub centre (±75.2, +130.5 / −140.4, 31.3 cm), set origins there |
+| Wheels | **The mesh names are the wrong way round: the separate meshes (`wheel_1`, `wheel_2`, `tire_1`, `tire_2`, `brake_discs_1/2`, at y = −140.4 cm) are the front wheels, at the headlight end with the shorter overhang; the fused pair named `wheels_forward` / `tires_forward` / `brake_discs_3` (y = +130.5 cm) is the rear, at the tail-lamp end.** Found on 2026-10-17 when the export put the hubs on the wrong side; tools now tell front from rear by the tail lamps, never by name. No node carries a transform, so no wheel has a pivot at its hub. Before MetaDrive: split the fused pair by connectivity, parent each tyre, rim and disc to one node at the hub centre (±75.2, −140.4 front / +130.5 rear, 31.3 cm) |
 | Trim | **Rim outer diameter 48.5 cm, tyre 64.9 cm: an 18-inch wheel, so the mesh depicts the 2.0 L SE/XSE sport trim, not the 16-inch L/LE/XLE of CFG-001.** Cosmetic; the body is the same. A 16-inch wheel can replace it in Blender if a figure needs it; the caption of any figure that shows the wheels says "sport-trim wheels" until then |
 | Polygons | 426,796 triangles (full GLB), 199,999 (Draco GLB). Decimate the full GLB to about 50–80k for MetaDrive; glass and interior carry most of the excess |
 | Materials | 16 PBR materials, 18 textures (base, normal, ORM, transmission, clearcoat); the body coat uses `KHR_materials_clearcoat`, glass uses `KHR_materials_transmission` and `_volume`. Panda3D will approximate or ignore these three extensions; the Draco/KTX2 GLB also needs `KHR_draco_mesh_compression` and `KHR_texture_basisu`, which panda3d-gltf is not confirmed to support, so use the full GLB |
@@ -141,15 +141,16 @@ Three uses, in the order they pay off. None of them touches the plant, the panda
 
 | Use | What the mesh provides | Tool | State |
 |---|---|---|---|
-| **Silhouettes for the flat figures** (layers 1 and 4, HARA and SOTIF scenario drawings) | A top-down outline (body, and body with mirrors) and a side outline, sampled from the mesh at 2 cm along the car and stored as [`figures/corolla-e210-silhouette.json`](figures/corolla-e210-silhouette.json). Figure generators draw the outline where they draw the ego rectangle today | [`assets/tools/vehicle_figures.py`](assets/tools/vehicle_figures.py) extracts it when the GLB is present and reads the JSON otherwise, so CI never needs the model | Built; the mock-ups in §7 use it. `plant/report.py` still draws a rectangle (next: swap it) |
+| **Silhouettes for the flat figures** (layers 1 and 4, HARA and SOTIF scenario drawings) | A top-down outline (body, and body with mirrors) and a side outline, sampled from the mesh at 2 cm along the car and stored as [`figures/corolla-e210-silhouette.json`](figures/corolla-e210-silhouette.json). Figure generators draw the outline where they draw the ego rectangle today | [`assets/tools/vehicle_figures.py`](assets/tools/vehicle_figures.py) extracts it when the GLB is present and reads the JSON otherwise, so CI never needs the model | Built; the mock-ups in §7 use it, and `plant/report.py` draws it in every layer-1 figure (0.3, 2026-10-17), falling back to the rectangle with a warning if the JSON is absent |
 | **Camera and blind-zone geometry** (WP-C-01 item boundary, WP-C-06 triggering conditions, WP-S-05 HSI) | The side outline with the windshield line, for the device's field of view, hood occlusion and following-vehicle sight lines | the same generator, mock-up 3 | Mock-up only; the device position and angles are measurement items |
-| **Layer-3 renders** (MetaDrive clips and frames for WP-V-03 scenarios) | A decimated body glTF plus one glTF per right wheel with the origin at the hub (§2), loaded by `CorollaE210Vehicle` and drawn in third-person and top-down views. The camera path keeps `render_vehicle: False`, so openpilot's input is unchanged | [`assets/tools/corolla_e210_metadrive_export.py`](assets/tools/corolla_e210_metadrive_export.py) (headless Blender 4.x) writes `assets/corolla_e210/` (ignored); [`corolla_vehicle.py`](../../openpilot/tools/sim/bridge/metadrive/corolla_vehicle.py) builds the class when `LIONDRIVER_VEHICLE_ASSETS` names that folder, and the bridge passes it as `vehicle_model`; [`test_corolla_vehicle.py`](../../openpilot/tools/sim/tests/test_corolla_vehicle.py) checks the class without MetaDrive | Script, class, bridge hook and test written (2026-10-17, unreviewed). **Script not yet run** (no Blender on the authoring machine) and **class not yet loaded in MetaDrive**; see §9 |
+| **Layer-3 renders** (MetaDrive clips and frames for WP-V-03 scenarios) | A decimated body glTF plus one glTF per right wheel with the origin at the hub (§2), loaded by `CorollaE210Vehicle` and drawn in third-person and top-down views. The camera path keeps `render_vehicle: False`, so openpilot's input is unchanged | [`assets/tools/corolla_e210_gltf_export.py`](assets/tools/corolla_e210_gltf_export.py) (pure Python, no decimation) or [`corolla_e210_metadrive_export.py`](assets/tools/corolla_e210_metadrive_export.py) (headless Blender 4.x, decimating) writes `assets/corolla_e210/` (ignored); [`corolla_vehicle.py`](../../openpilot/tools/sim/bridge/metadrive/corolla_vehicle.py) builds the class when `LIONDRIVER_VEHICLE_ASSETS` names that folder, and the bridge passes it as `vehicle_model`; [`test_corolla_vehicle.py`](../../openpilot/tools/sim/tests/test_corolla_vehicle.py) checks the class without MetaDrive | Exported by the pure-Python tool and load-tested in Panda3D (2026-10-17, unreviewed; not decimated); the Blender script is unrun; **class not yet loaded in MetaDrive**; see §9 |
 
 How the layer-3 pieces fit, and what each changes:
 
 | Piece | What it does | What it changes |
 |---|---|---|
-| Export script | Imports the full GLB, bakes the root transform (the file is cm, Z up, with a 0.01 root scale: in Blender it is metres already), turns the car to face +Y, splits `wheels_forward`, `tires_forward`, `brake_discs_3` by loose parts into left and right, measures the four hub centres from the tyres, puts the ground at Z = 0 and the body centre at X = Y = 0, drops `interier`, `interier_glass`, `felt`, `steering_wheel`, decimates to about 70 k triangles (parts under 400 triangles untouched), resizes textures to 2048², and writes `vehicle.gltf`, `right_tire_front.gltf`, `right_tire_back.gltf`, `vehicle_full.gltf` (all four wheels on hub empties, for figures), `geometry.json` (hubs, tyre radius, body box, counts, source checksum) and `SHA256SUMS` | Nothing outside `assets/corolla_e210/` |
+| Python exporter | Reads the GLB as data, finds the rear by the tail lamps, splits the fused rear pair by connectivity, measures the hubs from the tyres, puts the ground at Z = 0 and the body centre at X = Y = 0, drops the interior and the underbody detail (`chassis*`), writes the same files as the Blender script plus the untouched textures. No decimation: 199,914 body triangles | Nothing outside `assets/corolla_e210/` |
+| Blender export script (unrun) | Imports the full GLB, bakes the root transform (the file is cm, Z up, with a 0.01 root scale: in Blender it is metres already), turns the car to face +Y, splits `wheels_forward`, `tires_forward`, `brake_discs_3` by loose parts into left and right (**as the front pair, which §4 shows is wrong: fix before running**), measures the four hub centres from the tyres, puts the ground at Z = 0 and the body centre at X = Y = 0, drops `interier`, `interier_glass`, `felt`, `steering_wheel`, decimates to about 70 k triangles (parts under 400 triangles untouched), resizes textures to 2048², and writes `vehicle.gltf`, `right_tire_front.gltf`, `right_tire_back.gltf`, `vehicle_full.gltf` (all four wheels on hub empties, for figures), `geometry.json` (hubs, tyre radius, body box, counts, source checksum) and `SHA256SUMS` | Nothing outside `assets/corolla_e210/` |
 | `CorollaE210Vehicle` | Subclass of MetaDrive's `DefaultVehicle` (itself a `BaseVehicle`): length 4.63, width 1.781, height 1.435 m (§2 table), body file from the asset folder, wheel positions and tyre radius from `geometry.json` (fallback: the §4 receipt-check hubs, ±0.752 / +1.305 / −1.404 m, tyre radius 0.3245 m) | In MetaDrive only: the chassis collision box takes the E210 dimensions, and the Bullet wheels move to the mesh's hubs (wheelbase 2.709 m against opendbc's 2.700). Mass, suspension, steering and tyre friction stay `DefaultVehicle`'s. Nothing in layer 1, the plant parameters or any result |
 | Bridge hook | `metadrive_bridge.py` sets `vehicle_config["vehicle_model"] = "corolla_e210"` only when `LIONDRIVER_VEHICLE_ASSETS` is set, after checking the folder and failing with a message that says where the files come from; `metadrive_process.py` registers the class in the MetaDrive process before the environment is built. `render_vehicle` stays `False` | Nothing when the variable is unset: the bridge is byte-for-byte the old behaviour |
 
@@ -221,25 +222,24 @@ Until the plant is validated against Corolla logs, every number above ranks risk
 
 - **Where things stand.** Bought (option A); receipt check above; files held locally in `assurance/sim/assets/` (ignored) and mirrored, with SHA-256 sums, to the private repository `jherrodthomas/LionDriver-assets` (Git LFS, folder `corolla-e210-3dmolier-1450755/`). Access to that repository is limited to people working on LionDriver, as the licence requires. Purchased files are licensed
   content: keep them out of the repository (add the asset folder to `.gitignore` when one exists) and never push them.
-- **Layer 3, written but not run (0.4):** the Blender export script, the `CorollaE210Vehicle` class, the bridge hook
-  and the MetaDrive-free test (§6 table) exist. Blender is not on the authoring machine (checked 2026-10-17: not on
-  PATH, not under Program Files, no Store, Steam or winget install), so the script has never run, and MetaDrive is
-  not installed, so the class has never been loaded. Run the script once on a machine with Blender 4.x:
-
-  ```sh
-  blender --background --python assurance/sim/assets/tools/corolla_e210_metadrive_export.py -- \
-      --input assurance/sim/assets/1450755-gltf-extended.glb --output-dir assurance/sim/assets/corolla_e210
-  ```
-
-  then copy `assets/corolla_e210/` into the private repository as `blender-decimated-corolla_e210/` (its `SHA256SUMS`
-  is written by the script), commit and push there, and paste the `vehicle.gltf` checksum into `assets/README.md`.
-  Then run the bridge with `LIONDRIVER_VEHICLE_ASSETS` pointing at the folder and `use_render` on, look at the
-  third-person view, and work through the §6 caveats. If a script step fails, the log names the step; the first run
-  is the script's test.
-- **Next, after that:** swap the ego rectangle in `plant/report.py` for the silhouette outline (mock-up 1); the first
-  regenerated layer-3 figure (mock-up 2); measure the device position and fill mock-up 3. Add
-  `vehicle_figures.py --check` and `openpilot/tools/sim/tests/test_corolla_vehicle.py` to the simulation CI job once
-  reviewed. Any figure that uses the mesh says so in its caption, as the figures already do for assumed values (MD-04).
+- **Layer 3, exported and load-tested (0.5, 2026-10-17):** [`assets/tools/corolla_e210_gltf_export.py`](assets/tools/corolla_e210_gltf_export.py)
+  (pure Python, numpy only) wrote the MetaDrive layout from the delivered GLB in under a second: `vehicle.gltf` (body,
+  199,914 triangles, sha256 `4cee6578f03b50a1…`), `right_tire_front.gltf` and `right_tire_back.gltf` (one wheel each, origin at
+  the hub), `vehicle_full.gltf` (body plus four wheels on hub nodes), `geometry.json` (front 1.3956 m, rear 1.3135 m,
+  lateral 0.7518 m, tyre radius 0.3234 m, width 0.2436 m) and `textures/`. It tells front from rear by the tail lamps,
+  splits the fused pair by connectivity, drops the interior and the underbody detail meshes, and does **not** decimate.
+  `corolla_vehicle.asset_dir` and `load_geometry` accept the folder; Panda3D 1.10 with panda3d-gltf loaded and rendered
+  `vehicle_full.gltf` with the wheels in the arches. The folder is in the private repository as
+  `gltf-export-corolla_e210/` with `SHA256SUMS`. **MetaDrive has still not loaded the class** (not installed here).
+- **Blender script, not run:** [`corolla_e210_metadrive_export.py`](assets/tools/corolla_e210_metadrive_export.py) is
+  the decimating (about 70 k triangles) version for when Blender 4.x is available. Before running it, change its
+  front/rear assignment: it treats the fused pair as the front, but the receipt check (§4) shows the fused pair is the
+  rear. Its output goes to the private repository as `blender-decimated-corolla_e210/`.
+- **Next:** run the bridge with `LIONDRIVER_VEHICLE_ASSETS` pointing at the export folder and `use_render` on, look at
+  the third-person view, and work through the §6 caveats (wheel side, body height); the first regenerated layer-3
+  figure (mock-up 2); measure the device position and fill mock-up 3. Add `vehicle_figures.py --check` and
+  `openpilot/tools/sim/tests/test_corolla_vehicle.py` to the simulation CI job once reviewed. Any figure that uses the
+  mesh says so in its caption, as the figures already do for assumed values (MD-04).
 - **Do not** re-open the game-engine route (Unreal, Unity) or re-run the marketplace comparison without a new reason;
   cite this note and DQ-368 instead.
 
