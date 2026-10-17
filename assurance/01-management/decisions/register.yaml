@@ -387,7 +387,12 @@
       title: "A full competence record per contributor"
       detail: "Strong evidence. Cost: puts contributors off."
   sources: ["assurance/01-management/WP-M-04-organization-competence-safety-culture.md OI-3"]
-  status: open
+  status: answered
+  answer:
+    choice: B
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-017
   question: "Does LionDriver's name and branding stay clear of the openpilot trademark?"
@@ -567,7 +572,12 @@
       title: "You sign, with an external SOTIF review"
       detail: "Uses the external review for independence. Cost: needs that reviewer, parked with the assessor."
   sources: ["assurance/10-safety-case/WP-K-02-sotif-release-argument.md OI-3", "assurance/10-safety-case/WP-K-06-release-record.md OI-3"]
-  status: open
+  status: answered
+  answer:
+    choice: B
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-026
   question: "Should an external human-factors reviewer oversee the tests on human subjects?"
@@ -586,7 +596,12 @@
       title: "You supervise with a written protocol and consent"
       detail: "No cost. Cost: weaker independence and a single point of failure."
   sources: ["assurance/06-validation/WP-V-01-safety-validation.md OI-5", "assurance/01-management/WP-M-08-sotif-plan.md OI-6"]
-  status: open
+  status: answered
+  answer:
+    choice: B
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-027
   question: "Who reviews and confirms the item definition?"
@@ -626,7 +641,7 @@
       title: "Leave them as notes"
       detail: "No effort now. Cost: they stay unconfirmed until a reviewer looks."
   sources: ["assurance/08-analyses/fmea/reviews/hara-r0.1-precheck.md Pending"]
-  note: "HARA and item-definition pre-checks refreshed; the eleven items for the lead to rate are in precheck-refresh-2026-10-16.md §3. Left: the FSC and DFMEA pre-checks (safety-concept and DFMEA sessions), and the lead's ratings."
+  note: "HARA and item-definition pre-checks refreshed; the eleven items for the lead to rate are in precheck-refresh-2026-10-16.md §3. The lead rated all eleven as proposed (chat, 2026-10-17); recorded in §3. Left: the FSC and DFMEA pre-checks (safety-concept and DFMEA sessions)."
   status: applied
   applied: {ref: "jherrodthomas/LionDriver#162", record: "assurance/08-analyses/fmea/reviews/precheck-refresh-2026-10-16.md", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
@@ -770,7 +785,12 @@
       title: "Quantify them with Claude"
       detail: "More precise. Cost: effort for no change in risk."
   sources: ["assurance/02-concept/WP-C-09-tara.md OI-2"]
-  status: open
+  status: answered
+  answer:
+    choice: B
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-036
   question: "How often does the car close on a slower car at highway speed: rated as \"often\" (E4) or \"for a share of driving time\" (E3)?"
@@ -811,7 +831,12 @@
       title: "Move to a platform with per-vehicle checks"
       detail: "Scales. Cost: rewrite the scope and a larger worst-case HARA."
   sources: ["assurance/00-assessment/docs-safety-reconciliation.md OI-4"]
-  status: open
+  status: answered
+  answer:
+    choice: B
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-038
   question: "Should the model update policy be made official: pin model weights per release and re-test on any model change?"
@@ -1125,7 +1150,12 @@
       title: "Move the warning to the safety chip"
       detail: "Architecturally clean. Cost: a firmware design change."
   sources: ["assurance/02-concept/WP-C-04-functional-safety-concept.md OI-9", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-625"]
-  status: open
+  status: answered
+  answer:
+    choice: A
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-053
   question: "When the driver steers against LionDriver, should it back off, or just show it noticed?"
@@ -1191,7 +1221,12 @@
       title: "Keep the shared values"
       detail: "Stays upstream-identical. Cost: the independence claim stays weak."
   sources: ["assurance/08-analyses/WP-A-03-dependent-failure-analysis.md OI-3"]
-  status: open
+  status: answered
+  answer:
+    choice: A
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-056
   question: "Should LionDriver read the car's fault codes (EPS, stability control) and refuse to engage when one is set?"
@@ -1311,7 +1346,12 @@
       title: "Yes: add the fast siren here"
       detail: "Meets the requirement as written. Cost: a firmware change."
   sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md OI-9"]
-  status: open
+  status: answered
+  answer:
+    choice: A
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-062
   question: "How much delay to the car's own emergency braking caused by LionDriver is acceptable?"
@@ -1533,7 +1573,12 @@
       title: "Turn learning off in the reference release"
       detail: "Reproducible and representative. Cost: changes the product and may worsen control."
   sources: ["assurance/05-software/WP-W-09-configuration-calibration-data.md OI-4"]
-  status: open
+  status: answered
+  answer:
+    choice: A
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-073
   question: "After the safety chip drops to silent mode during a drive, may it return to Toyota mode, or must it wait for ignition off?"
@@ -1552,7 +1597,12 @@
       title: "Forbid it until ignition off"
       detail: "Stricter. Cost: no assistance for the rest of the drive after any drop to silent."
   sources: ["assurance/05-software/WP-W-09-configuration-calibration-data.md OI-8"]
-  status: open
+  status: answered
+  answer:
+    choice: A
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-074
   question: "When should the formal software lifecycle (ISO 26262 Part 6) start?"
@@ -1571,7 +1621,12 @@
       title: "Start now with documented exceptions"
       detail: "Earlier gap assessment. Cost: rework as the HARA and concept change."
   sources: ["assurance/01-management/WP-M-01-assurance-strategy.md D-14"]
-  status: open
+  status: answered
+  answer:
+    choice: B
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-075
   question: "How should LionDriver deliver software updates: signed releases, or manual installs only?"
@@ -1627,7 +1682,12 @@
       title: "Keep the fixed times and justify them"
       detail: "No change. Cost: a recorded SOTIF known gap."
   sources: ["assurance/08-analyses/WP-A-05-stpa.md OI-6"]
-  status: open
+  status: answered
+  answer:
+    choice: A
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-078
   question: "Does the safety authority accept the residual risks listed for missing supplier evidence (no EMC/environment tests, teardown instead of schematic, handbook failure rates)?"
@@ -1798,7 +1858,12 @@
       title: "Encrypted offline file with written access rules"
       detail: "No hardware cost. Cost: weaker protection."
   sources: ["assurance/07-supporting/WP-P-10-release-management.md OI-3", "assurance/08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md D1"]
-  status: open
+  status: answered
+  answer:
+    choice: A
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-087
   question: "Does crash reporting (NHTSA's Standing General Order) apply to LionDriver, and should a lawyer check?"
@@ -1817,7 +1882,12 @@
       title: "Assess it yourselves and record why"
       detail: "No cost. Cost: risk of a wrong conclusion."
   sources: ["assurance/08-analyses/fmea/item-definition.md IOI-005", "assurance/09-production-operation/WP-O-04-field-monitoring.md OI-6"]
-  status: open
+  status: answered
+  answer:
+    choice: B
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-088
   question: "What delivery format do user information and acceptance take: printed booklet plus on-device acceptance replacing comma.ai's terms and training flow?"
@@ -2121,7 +2191,12 @@
       title: "Closed courses only until confirmed"
       detail: "No legal risk. Cost: no public-road drive data for now."
   sources: ["assurance/02-concept/WP-C-01-item-definition.md OI-6"]
-  status: open
+  status: answered
+  answer:
+    choice: B
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-105
   question: "How are closed-course test builds (with widened limits or fault triggers) controlled so they never reach public-road use?"
@@ -2240,7 +2315,12 @@
       title: "Stay on your personal account"
       detail: "No migration. Cost: no teams, and everything depends on one account."
   sources: ["assurance/07-supporting/WP-P-01-configuration-management-plan.md OI-1"]
-  status: open
+  status: answered
+  answer:
+    choice: B
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-112
   question: "Where are drive logs referenced by problem reports stored (LionDriver-controlled, privacy reviewed)?"
@@ -2275,7 +2355,12 @@
       title: "A shorter period after legal advice"
       detail: "Lower cost. Cost: records may be missing in a liability case."
   sources: ["assurance/07-supporting/WP-P-04-documentation-management.md OI-6"]
-  status: open
+  status: answered
+  answer:
+    choice: A
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-114
   question: "Should the improved panda watchdog (90 ms, window mode) replace the interim residuals you accepted?"
@@ -2318,7 +2403,12 @@
       title: "Change the requirement to 10"
       detail: "Code and requirement match. Cost: permanently weaker."
   sources: ["assurance/07-supporting/impact/change-2026-10-13-host-supervision.md OI-1"]
-  status: open
+  status: answered
+  answer:
+    choice: A
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-116
   question: "Should the upstream change that softens cruise deceleration (minimum −0.5 m/s²) come in with the next sync?"
@@ -2340,7 +2430,12 @@
       title: "Reject it"
       detail: "Keeps current behaviour. Cost: drift from upstream grows."
   sources: ["assurance/07-supporting/impact/sync-2026-10-10-openpilot-b9c815d.md “`263e8d1966` | longitudinal planner: set A_CRUISE_MIN to -0.”"]
-  status: open
+  status: answered
+  answer:
+    choice: C
+    via: inbox
+    at: 2026-10-14
+    by: u_DgEswP8TFzpISXlzh3BD1g
 
 - id: DQ-117
   question: "Take the 9-commit upstream msgq update (max readers 25, packaging, VisionIpc copy) in the next sync?"
