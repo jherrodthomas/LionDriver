@@ -96,6 +96,10 @@
 # Rev 0.24 (2026-10-16): the zero-awareness reaction is decided (DQ-365 A, which absorbs DQ-340): SFM-ACT-005 moves from
 # decision_pending to open, names TSR-633 (stop in lane, hold, lock out) and the preliminary WP-S-04 §3.8.4 time. Not implemented at
 # BL-005, so SFM-025.C1 keeps its ratings (O 8, D 9, M 10).
+# Rev 0.25 (2026-10-17): SFM-ACT-023 completed for the code (#174, DQ-342 A, TSR-607 (b)): the lighter EPS-fault prompt after an
+# override or at standstill now lasts at most 1.5 s, then the take-over request; 6 unit tests in CI, not verified on the vehicle. The
+# action now covers SFM-038.C1 only and carries the predicted ratings (O 5, D 4); C1 keeps its BL-005 ratings until the next baseline.
+# The host part (act on the panda epsFault and requestsRejected fields, SFM-038.C2) moves to the new open SFM-ACT-024.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -104,7 +108,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.24"
+  revision: "0.25"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
@@ -3819,7 +3823,7 @@ failure_modes:
         detection: 10
         ap: H
         actions:
-        - SFM-ACT-023
+        - SFM-ACT-024
         msr_exempt: 'The cause is a defect of the warning path itself; the panda siren that remains is rated on SFM-005 and in the DFMEA
           (msr-plan §3)'
       - id: SFM-038.C3
@@ -3985,8 +3989,24 @@ actions:
       does not depend on the lagging process'
   - id: SFM-ACT-023
     kind: design_change
-    status: open
-    description: 'Escalate every EPS fault that lasts while engaged to the take-over request (steerTempUnavailable, SOFT_DISABLE),
+    status: completed
+    description: 'Escalate a temporary EPS fault that lasts while engaged to the take-over request (steerTempUnavailable, SOFT_DISABLE)
       instead of keeping the low-priority steerTempUnavailableSilent prompt latched after a recent override or at standstill
-      (car_events.py:162-177; behaviour change queued for the lead by the FSC session as DQ-342), and act on the panda fields epsFault and requestsRejected on the host
-      (TSR-626(d), TSR-516(b)). SFM-038.C1, C2; FTA BE-2.08'
+      (car_events.py; lead decision DQ-342, option A: the lighter prompt for at most 1.5 s, then the take-over request; TSR-607 (b)).
+      SFM-038.C1; FTA BE-2.08'
+    evidence: 'Merged in jherrodthomas/LionDriver#174 (7158a9a): STEER_FAULT_SILENT_FRAMES in car_events.py limits the lighter prompt to
+      the first 1.5 s of the fault; selfdrive/car/tests/test_steer_fault_warning.py, 6 tests run in CI, 4 of them fail on the old code.
+      Impact record assurance/07-supporting/impact/change-2026-10-17-eps-fault-escalation.md. Unit-tested only: not verified on the
+      vehicle (impact OI-1) and not reviewed independently. Not in BL-005, so SFM-038.C1 keeps O 8, D 10 until the next baseline;
+      revised ratings below are a prediction (as SWF-ACT-025)'
+    revised:
+      severity: 10
+      occurrence: 5
+      detection: 4
+      ap: H
+  - id: SFM-ACT-024
+    kind: monitoring
+    status: open
+    description: 'Act on the panda fields epsFault and requestsRejected on the host (TSR-626(d), TSR-516(b)): raise the take-over request
+      when the panda reports an EPS fault or refused steering frames while lateral control is engaged, within the SG-02 1 s budget,
+      instead of relying on the panda siren alone. Split from SFM-ACT-023 (rev 0.25). SFM-038.C2; FTA BE-2.08'

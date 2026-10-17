@@ -12,6 +12,9 @@ Figures (numbered for fmea-plan.md):
   3-7   SW FMEA: effect of the actions that carry a predicted ("revised") rating
   3-12  SW FMEA: occurrence x detection grid per element, with predicted moves
   3-13  SW FMEA: detection evidence per cause (cited test run in CI, hardware only, not run) and the cited test files
+  3-14  SW FMEA: rating changes of the re-rated causes since the previous baseline
+  3-15  SW FMEA: reaction time of the timed safety mechanisms by defence layer
+  3-16  SW FMEA: functional safety / SOTIF boundary per element
   3-10/3-11  FMEDA SG-001 / SG-009: SPFM, LFM, lambda SPF+RF against the ASIL target
   4-1   Action Priority overview of the four FMEAs (O x D grid, AP counts, treatment of AP=H)
   4-2   FMEA-MSR overview of the System FMEA and DFMEA (F x M grid, monitoring bands, timing basis, monitoring actions)
@@ -25,6 +28,7 @@ analyses use). test_fmea_diagrams.py checks it against PyYAML when that is insta
 
 from __future__ import annotations
 
+import math
 import re
 import sys
 from dataclasses import dataclass, field
@@ -1635,6 +1639,340 @@ def render_detection_evidence(f: Fmea, fig: str, idx: TestIndex | None = None) -
                  "fmea-plan.md §3.3", f.source, body)
 
 
+# ---------------------------------------------------------------- SW FMEA: what the last baseline changed
+
+def _track(x0: float, y: float, slot: float, before: int, after: int, ap_before: str, ap_after: str, tip: str) -> list[str]:
+  """One 1-10 rating track, 1 on the left: the earlier rating hollow, the current one filled, an arrow between."""
+  out = [line(x0 + slot / 2, y, x0 + 9.5 * slot, y, "#E2E8F0", 2)]
+  for v in range(1, 11):
+    out.append(line(x0 + (v - 0.5) * slot, y - 3, x0 + (v - 0.5) * slot, y + 3, "#CBD5E1", 1))
+  bx, ax = x0 + (before - 0.5) * slot, x0 + (after - 0.5) * slot
+  if before != after:
+    sgn = 1 if ax > bx else -1
+    out.append(f'<path d="M{n(bx + sgn * 8)} {n(y)}H{n(ax - sgn * 9)}" stroke="#475569" stroke-width="1.3" '
+               'marker-end="url(#aG)"/>')
+    out.append(f'<circle cx="{n(bx)}" cy="{n(y)}" r="7" fill="#FFFFFF" stroke="{AP_COL[ap_before]}" stroke-width="1.5"/>')
+    out.append(txt(bx, y + 3, str(before), 8, AP_COL[ap_before], 700, anchor="middle"))
+  out.append(f'<circle cx="{n(ax)}" cy="{n(y)}" r="7" fill="{AP_COL[ap_after]}"><title>{e(tip)}</title></circle>')
+  out.append(txt(ax, y + 3, str(after), 8, "#FFFFFF", 700, anchor="middle"))
+  return out
+
+
+def render_baseline_delta(f: Fmea, fig: str) -> str:
+  rows = [(fm, c) for fm, c in f.causes() if c.get("previous")]
+  if not rows:
+    raise FigError(f"{f.key}: no cause records a previous rating")
+  order = {k: i for i, k in enumerate(_ordered_elements(f))}
+
+  def gain(fm, c):
+    return "HML".index(c["ap"]) - "HML".index(c["previous"]["ap"])
+
+  rows.sort(key=lambda p: (-gain(*p), order[_cause_element(*p)], p[1]["id"]))
+  prev_bl = sorted({c["previous"]["baseline"] for _, c in rows})
+  out_h = sum(1 for _, c in rows if c["previous"]["ap"] == "H" and c["ap"] != "H")
+  o_dn = sum(1 for _, c in rows if c["occurrence"] < c["previous"]["occurrence"])
+  d_dn = sum(1 for _, c in rows if c["detection"] < c["previous"]["detection"])
+  worse = sum(1 for fm, c in rows if c["occurrence"] > c["previous"]["occurrence"]
+              or c["detection"] > c["previous"]["detection"]
+              or fm["severity"] > c["previous"].get("severity", fm["severity"]))
+  body: list[str] = []
+  y = 100
+  body.append(txt(40, y + 4, f"{len(rows)} causes re-rated from {', '.join(prev_bl)} to {f.a['baseline']}: {out_h} left AP H, "
+                  f"{sum(1 for _, c in rows if c['ap'] == 'H')} are still H. Occurrence fell on {o_dn}, detection on {d_dn}"
+                  + (f"; {worse} rated worse." if worse else "; none rated worse."), 11, INK, 600))
+  y += 30
+  ox, dx, slot = 290, 530, 20
+  apx, chx = 760, 880
+  body.append(txt(40, y, "CAUSE · ELEMENT", 9.5, MUTED, 700, extra=' letter-spacing=".06em"'))
+  body.append(txt(ox, y, "OCCURRENCE", 9.5, MUTED, 700, extra=' letter-spacing=".06em"'))
+  body.append(txt(dx, y, "DETECTION", 9.5, MUTED, 700, extra=' letter-spacing=".06em"'))
+  body.append(txt(apx, y, "AP", 9.5, MUTED, 700, extra=' letter-spacing=".06em"'))
+  body.append(txt(chx, y, "WHAT CHANGED IN THE CODE OR BUILD", 9.5, MUTED, 700, extra=' letter-spacing=".06em"'))
+  y += 14
+  for x0 in (ox, dx):
+    for v in (1, 5, 10):
+      body.append(txt(x0 + (v - 0.5) * slot, y, str(v), 8.5, MUTED, anchor="middle"))
+  y += 8
+  for fm, c in rows:
+    p = c["previous"]
+    el = _cause_element(fm, c)
+    body.append(line(40, y, 1240, y, "#F1F5F9"))
+    cy = y + 19
+    s_prev = p.get("severity", fm["severity"])
+    head = c["id"] + (f" · S{s_prev}→{fm['severity']}" if s_prev != fm["severity"] else "")
+    body.append(txt(40, cy - 3, head, 10.5, INK, 700))
+    body.append(txt(40, cy + 11, fit(el.replace("SWF-SE-", "SE-") + " · " + fm["failure_mode"], 230, 9), 9, MUTED))
+    tip = (f"{c['id']}: {p['baseline']} O{p['occurrence']} D{p['detection']} AP {p['ap']} -> "
+           f"{f.a['baseline']} O{c['occurrence']} D{c['detection']} AP {c['ap']}")
+    body += _track(ox, cy, slot, p["occurrence"], c["occurrence"], p["ap"], c["ap"], tip)
+    body += _track(dx, cy, slot, p["detection"], c["detection"], p["ap"], c["ap"], tip)
+    pb, wb = pill(apx, cy - 7.5, p["ap"], "#FFFFFF", AP_COL[p["ap"]], AP_COL[p["ap"]])
+    body.append(pb)
+    body.append(f'<path d="M{n(apx + wb + 5)} {n(cy)}H{n(apx + wb + 21)}" stroke="#475569" stroke-width="1.3" '
+                'marker-end="url(#aG)"/>')
+    pa, _ = pill(apx + wb + 26, cy - 7.5, c["ap"], AP_COL[c["ap"]])
+    body.append(pa)
+    for i, ln in enumerate(wrap(p["change"], 1240 - chx, 9.5, max_lines=2)):
+      body.append(txt(chx, cy - 3 + i * 12.5, ln, 9.5, INK))
+    y += 40
+  body.append(line(40, y, 1240, y))
+  y += 22
+  lx = 40
+  body.append(f'<circle cx="{n(lx + 7)}" cy="{n(y - 4)}" r="7" fill="#FFFFFF" stroke="{RED}" stroke-width="1.5"/>')
+  lab = f"rating at {', '.join(prev_bl)} (ring in its AP colour)"
+  body.append(txt(lx + 20, y, lab, 10.5, INK))
+  lx += 20 + tw(lab, 10.5) + 24
+  for ap in "HML":
+    body.append(f'<circle cx="{n(lx + 7)}" cy="{n(y - 4)}" r="7" fill="{AP_COL[ap]}"/>')
+    lab = f"rating at {f.a['baseline']}, AP {ap}"
+    body.append(txt(lx + 20, y, lab, 10.5, INK))
+    lx += 20 + tw(lab, 10.5) + 24
+  y += 18
+  for ln in ("Each row is a cause that records its rating at an earlier baseline (`previous` in the YAML). Tracks run from 1 (left, "
+             "better) to 10; a single filled marker means that rating did not change. Sorted by AP gained, then by element.",
+             "Causes without a `previous` record are not drawn: they are new at this baseline or were not re-rated. A lower "
+             "rating here is credited in the analysis; it is not a claim that the fault was tested in the field."):
+    body.append(txt(40, y, ln, 10, MUTED))
+    y += 15
+  y += 3
+  body += footer(y, 1280, f.source)
+  desc = (f"SW FMEA ({f.a['id']} rev {f.a['revision']}): {len(rows)} causes re-rated from {', '.join(prev_bl)} to "
+          f"{f.a['baseline']}; {out_h} left AP H; occurrence lowered on {o_dn} and detection on {d_dn}. One row per cause "
+          "with its occurrence and detection before and after, the AP change and the code or build change credited.")
+  return svg_doc(1280, y + 20, f"Figure {fig}. SW FMEA rating changes since the previous baseline", desc, fig,
+                 "SW FMEA — what the last baseline changed",
+                 f"{f.tag} · which code changes moved which causes, and how far",
+                 "fmea-plan.md §3.3", f.source, body)
+
+
+# ---------------------------------------------------------------- SW FMEA: reaction time by defence layer
+
+LAYERS = (  # key, label, colour, shape
+  ("host", "host stops acting (SoC software)", "#334155", "circle"),
+  ("envelope", "panda revokes or blocks authority", TEAL, "square"),
+  ("alert", "device alert to the driver", AMBER, "triangle"),
+  ("siren", "panda siren", "#6D5BD0", "diamond"),
+  ("vehicle", "stock ECU reacts", GREEN, "ring"),
+)
+LAYER_COL = {k: c for k, _, c, _ in LAYERS}
+LAYER_SHAPE = {k: s for k, _, _, s in LAYERS}
+WARN_LAYERS = ("alert", "siren")
+T_MIN, T_MAX = 0.01, 10.0
+
+
+def layer_mark(shape: str, x: float, y: float, col: str, hollow: bool = False, tip: str = "") -> str:
+  fill, extra = ("#FFFFFF", f' stroke="{col}" stroke-width="1.6"') if hollow else (col, "")
+  title = f"<title>{e(tip)}</title>" if tip else ""
+  if shape == "square":
+    return f'<rect x="{n(x - 5)}" y="{n(y - 5)}" width="10" height="10" fill="{fill}"{extra}>{title}</rect>'
+  if shape == "triangle":
+    return f'<path d="M{n(x)} {n(y - 6)}L{n(x + 6)} {n(y + 5)}L{n(x - 6)} {n(y + 5)}z" fill="{fill}"{extra}>{title}</path>'
+  if shape == "diamond":
+    return f'<path d="M{n(x)} {n(y - 6.5)}L{n(x + 6.5)} {n(y)}L{n(x)} {n(y + 6.5)}L{n(x - 6.5)} {n(y)}z" fill="{fill}"{extra}>{title}</path>'
+  if shape == "ring":
+    return f'<circle cx="{n(x)}" cy="{n(y)}" r="5" fill="#FFFFFF" stroke="{col}" stroke-width="2.4">{title}</circle>'
+  return f'<circle cx="{n(x)}" cy="{n(y)}" r="5.5" fill="{fill}"{extra}>{title}</circle>'
+
+
+def fmt_s(t: float) -> str:
+  return f"{t * 1000:g} ms" if t < 1 else f"{t:g} s"
+
+
+def render_reaction_layers(f: Fmea, fig: str) -> str:
+  allm = [(fm, m) for fm in f.doc["failure_modes"] for m in fm.get("safety_mechanisms", [])]
+  rows = [(fm, [m for m in fm.get("safety_mechanisms", []) if "reaction_s" in m]) for fm in f.doc["failure_modes"]]
+  rows = [(fm, ms) for fm, ms in rows if ms]
+  if not rows:
+    raise FigError(f"{f.key}: no safety mechanism records reaction_s")
+  timed = [m for _, ms in rows for m in ms]
+  basis: dict[str, int] = {}
+  for m in timed:
+    basis[m["timing_basis"]] = basis.get(m["timing_basis"], 0) + 1
+  no_warn = [fm["id"] for fm, ms in rows if not any(m["layer"] in WARN_LAYERS for m in ms)]
+  ax0, ax1 = 330, 900
+
+  def tx(t):
+    t = min(max(t, T_MIN), T_MAX)
+    return ax0 + (math.log10(t) - math.log10(T_MIN)) / (math.log10(T_MAX) - math.log10(T_MIN)) * (ax1 - ax0)
+
+  body: list[str] = []
+  y = 100
+  body.append(txt(40, y + 4, f"{len(timed)} of {len(allm)} safety mechanisms carry a reaction time, on {len(rows)} failure modes; "
+                  + ", ".join(f"{v} {k.replace('_', '-')}" for k, v in sorted(basis.items()))
+                  + f". {len(no_warn)} of those {len(rows)} have no timed warning to the driver.", 11, INK, 600))
+  y += 30
+  body.append(txt(40, y, "FAILURE MODE", 9.5, MUTED, 700, extra=' letter-spacing=".06em"'))
+  body.append(txt(ax0, y, "TIME FROM THE FAULT TO EACH LAYER'S REACTION (LOG SCALE)", 9.5, MUTED, 700,
+                  extra=' letter-spacing=".06em"'))
+  body.append(txt(930, y, "FIRST TIMED WARNING TO THE DRIVER", 9.5, MUTED, 700, extra=' letter-spacing=".06em"'))
+  y += 16
+  ticks = [k * 10 ** p for p in range(-2, 1) for k in (1, 2, 5)] + [10.0]
+  majors = (0.01, 0.1, 1.0, 10.0)
+  for t in majors:
+    body.append(txt(tx(t), y, fmt_s(t), 9, MUTED, 600, anchor="middle"))
+  y += 8
+  for t in ticks:   # grid under the rows
+    body.append(line(tx(t), y, tx(t), y + len(rows) * 42 - 6, "#E2E8F0" if t in majors else "#F1F5F9", 1))
+  for fm, ms in rows:
+    cy = y + 18
+    body.append(txt(40, cy - 3, fm["id"], 10.5, INK, 700))
+    body.append(txt(40, cy + 11, fit(fm["failure_mode"], ax0 - 60, 9), 9, MUTED))
+    body.append(line(ax0, cy, ax1, cy, "#E2E8F0", 1.5))
+    for i, m in enumerate(sorted(ms, key=lambda m: m["reaction_s"])):
+      x = tx(m["reaction_s"])
+      hollow = m["timing_basis"] in ("requirement", "estimate")
+      tip = (f"{fm['id']} · {m['layer']} {fmt_s(m['reaction_s'])} ({m['timing_basis'].replace('_', '-')}): "
+             f"{m['description']} [{m.get('timing_ref', '')}]")
+      body.append(layer_mark(LAYER_SHAPE[m["layer"]], x, cy, LAYER_COL[m["layer"]], hollow, tip))
+      body.append(txt(x, cy - 10 if i % 2 == 0 else cy + 18, fmt_s(m["reaction_s"]), 8.5, LAYER_COL[m["layer"]], 700,
+                      anchor="middle"))
+    warn = sorted((m for m in ms if m["layer"] in WARN_LAYERS), key=lambda m: m["reaction_s"])
+    if warn:
+      body.append(txt(930, cy + 3, f"{warn[0]['layer']} after {fmt_s(warn[0]['reaction_s'])}", 10, INK, 600))
+    else:
+      body.append(txt(930, cy + 3, "none timed", 10, ORANGE, 700))
+    y += 42
+  body.append(line(40, y, 1240, y))
+  y += 22
+  lx, ly = 40, y
+  for _, lab, col, shape in LAYERS:
+    if lx + 24 + tw(lab, 10.5) > 1240:
+      lx, ly = 40, ly + 18
+    body.append(layer_mark(shape, lx + 6, ly - 4, col))
+    body.append(txt(lx + 18, ly, lab, 10.5, INK))
+    lx += 18 + tw(lab, 10.5) + 22
+  y = ly + 18
+  for ln in ("Each row is a failure mode with at least one safety mechanism that records `reaction_s`; each mark is one mechanism "
+             "at the time from the fault to its layer's reaction. Hover a mark for the mechanism and where its time comes from.",
+             "Filled marks are read from the code (code-derived) or measured; hollow marks are a requirement budget or an estimate. "
+             "No time here is measured, and the figure does not check any time against an FTTI.",
+             "\"None timed\" means no alert or siren mechanism on that row records a time; the driver may still be warned by an "
+             "untimed mechanism listed in the YAML."):
+    body.append(txt(40, y, ln, 10, MUTED))
+    y += 15
+  y += 3
+  body += footer(y, 1280, f.source)
+  desc = (f"SW FMEA ({f.a['id']} rev {f.a['revision']}): reaction times of {len(timed)} of {len(allm)} safety mechanisms "
+          f"on {len(rows)} failure modes, by defence layer (host, envelope, alert, siren, vehicle), on a log time axis; "
+          + ", ".join(f"{v} {k.replace('_', '-')}" for k, v in sorted(basis.items()))
+          + f". {len(no_warn)} rows have no timed warning to the driver.")
+  return svg_doc(1280, y + 20, f"Figure {fig}. SW FMEA reaction time by defence layer", desc, fig,
+                 "SW FMEA — who catches it, and when",
+                 f"{f.tag} · after a fault starts, how long until each layer reacts, and whether the driver is told",
+                 "fmea-plan.md §3.3", f.source, body)
+
+
+# ---------------------------------------------------------------- SW FMEA: where it stops (SOTIF boundary)
+
+BOUNDARY = {  # key: label, fill, fg, stroke
+  "functional_safety": ("functional safety", "#FFFFFF", SLATE, SLATE),
+  "split": ("split", "#EDE9FE", "#5B21B6", "#7C3AED"),
+  "sotif": ("SOTIF", "#7C3AED", "#FFFFFF", None),
+}
+
+
+def _top_element(els: dict, k: str) -> str:
+  while els[k].get("parent"):
+    k = els[k]["parent"]
+  return k
+
+
+def render_sotif_boundary(f: Fmea, fig: str) -> str:
+  els = f.elements()
+  tops = [k for k in _ordered_elements(f) if not els[k].get("parent")]
+  per: dict[str, dict[str, int]] = {k: {"H": 0, "M": 0, "L": 0} for k in tops}
+  fms: dict[str, set] = {k: set() for k in tops}
+  for fm, c in f.causes():
+    t = _top_element(els, _cause_element(fm, c))
+    if c.get("ap"):
+      per[t][c["ap"]] += 1
+    fms[t].add(fm["id"])
+  kinds = {k: (els[k].get("sotif") or {}).get("boundary") for k in tops}
+  cnt = {b: sum(1 for v in kinds.values() if v == b) for b in BOUNDARY}
+  missing = [k for k, v in kinds.items() if not v]
+  body: list[str] = []
+  y = 100
+  body.append(txt(40, y + 4, f"{len(tops)} top-level elements: {cnt['functional_safety']} functional safety only, {cnt['split']} "
+                  f"split between this FMEA and SOTIF, {cnt['sotif']} SOTIF only"
+                  + (f", {len(missing)} with no boundary recorded." if missing else ".")
+                  + " Left of the line: software faults rated here. Right: performance limits with correct software.",
+                  11, INK, 600))
+  y += 30
+  div, bmax = 640, 200
+  tx0 = div + 14 + max(pill_w(v[0]) for v in BOUNDARY.values()) + 12
+  scale = bmax / max(1, max(sum(v.values()) for v in per.values()))
+  body.append(txt(40, y, "ELEMENT", 9.5, MUTED, 700, extra=' letter-spacing=".06em"'))
+  body.append(txt(div - 12, y, "RATED IN THIS SW FMEA · CAUSES BY AP", 9.5, MUTED, 700, anchor="end",
+                  extra=' letter-spacing=".06em"'))
+  body.append(txt(div + 14, y, "LEFT TO SOTIF (ISO 21448, WP-C-05)", 9.5, "#5B21B6", 700, extra=' letter-spacing=".06em"'))
+  y += 10
+  top = y
+  rows: list[str] = []
+  for k in tops:
+    el = els[k]
+    so = el.get("sotif") or {}
+    b = so.get("boundary")
+    part = wrap(so.get("sotif_part", ""), 1240 - tx0, 9.5, max_lines=3) if so.get("sotif_part") else []
+    h = max(36, 32 + 13 * (len(part) + (1 if so.get("ref") else 0) - 1))
+    cy = y + 18
+    rows.append(line(40, y, 1240, y, "#F1F5F9"))
+    rows.append(txt(40, cy - 3, k.replace("SWF-SE-", "SE-"), 10.5, INK, 700))
+    rows.append(txt(40, cy + 11, fit(el["name"], 290, 9), 9, MUTED))
+    tot = sum(per[k].values())
+    x = div - 12 - tot * scale
+    for ap in "LMH":
+      w = per[k][ap] * scale
+      if w:
+        tip = f"{k}: {per[k][ap]} cause(s) AP {ap}"
+        rows.append(rect(x, cy - 7, w, 14, AP_COL[ap])[:-2] + f"><title>{e(tip)}</title></rect>")
+        x += w
+    lab = f"{len(fms[k])} FM · {tot} causes" if tot else "no causes rated"
+    rows.append(txt(div - 16 - tot * scale, cy + 4, lab, 9.5, MUTED if tot else ORANGE, 600, anchor="end"))
+    lab_b, fill, fg, stroke = BOUNDARY[b] if b else ("not recorded", "#FFFFFF", ORANGE, ORANGE)
+    p, _ = pill(div + 14, cy - 7.5, lab_b, fill, fg, stroke)
+    rows.append(p)
+    if part:
+      for i, ln in enumerate(part):
+        rows.append(txt(tx0, cy + 3.5 + i * 13, ln, 9.5, INK))
+      if so.get("ref"):
+        rows.append(txt(tx0, cy + 3.5 + len(part) * 13, so["ref"], 9, "#5B21B6", 600))
+    elif b == "functional_safety":
+      rows.append(txt(tx0, cy + 3.5, "no SOTIF part: failures here come from faults, rated on the left", 9.5, MUTED, italic=True))
+    y += h
+  body.append(rect(div, top, 1240 - div, y - top, "#FAF5FF"))
+  body.append(line(div, top - 4, div, y + 4, "#7C3AED", 2))
+  body += rows
+  body.append(line(40, y, 1240, y))
+  y += 22
+  lx = 40
+  for ap in "HML":
+    body.append(rect(lx, y - 11, 14, 14, AP_COL[ap]))
+    lab = f"causes rated AP {ap}"
+    body.append(txt(lx + 20, y, lab, 10.5, INK))
+    lx += 20 + tw(lab, 10.5) + 22
+  for lab, fill, fg, stroke in BOUNDARY.values():
+    p, w = pill(lx, y - 11, lab, fill, fg, stroke)
+    body.append(p)
+    lx += w + 10
+  body.append(txt(lx + 4, y, "boundary recorded on the element (`sotif.boundary`)", 10.5, INK))
+  y += 18
+  for ln in ("Rows are the top-level elements in structure order; causes of child elements count toward their parent. A split "
+             "element has software faults rated here and a performance part owned by SOTIF, quoted from `sotif.sotif_part` with "
+             "its WP-C-05 reference.",
+             "The right lane says what this FMEA does not rate; it is not a claim that the SOTIF analysis covers it."):
+    body.append(txt(40, y, ln, 10, MUTED))
+    y += 15
+  y += 3
+  body += footer(y, 1280, f.source)
+  desc = (f"SW FMEA ({f.a['id']} rev {f.a['revision']}): the functional safety / SOTIF boundary for {len(tops)} top-level "
+          f"elements: {cnt['functional_safety']} functional safety only, {cnt['split']} split, {cnt['sotif']} SOTIF only. Per "
+          "element, the causes rated here by AP, and the performance part left to SOTIF with its WP-C-05 reference.")
+  return svg_doc(1280, y + 20, f"Figure {fig}. SW FMEA and SOTIF boundary", desc, fig,
+                 "SW FMEA — where it stops and SOTIF starts",
+                 f"{f.tag} · per element, which failures this FMEA rates and which are performance limits for SOTIF",
+                 "fmea-plan.md §3.3", f.source, body)
+
+
 # ---------------------------------------------------------------- AP overview (all four FMEAs)
 
 def render_ap_overview(fmeas: list[Fmea], fig: str) -> str:
@@ -2414,6 +2752,16 @@ def build(docs: dict[str, dict] | None = None) -> dict[str, str]:
       outputs[name] = render_detection_evidence(f, "3-13")
       index.append(("3-13", "SW FMEA: what each detection rating rests on (test run in CI, hardware only, not run, none)",
                     f"{f.source}, .github/workflows/, tools/test_runner.py", [name]))
+      for fig, slug, render, title in (
+          ("3-14", "baseline-delta", render_baseline_delta,
+           "SW FMEA: occurrence, detection and AP of the re-rated causes, previous baseline against this one"),
+          ("3-15", "reaction-layers", render_reaction_layers,
+           "SW FMEA: reaction time of the timed safety mechanisms by defence layer (code-derived, not measured)"),
+          ("3-16", "sotif-boundary", render_sotif_boundary,
+           "SW FMEA: per element, the causes rated here and the performance part left to SOTIF")):
+        name = f"fig-{fig}-swf-{slug}.svg"
+        outputs[name] = render(f, fig)
+        index.append((fig, title, f.source, [name]))
 
   for key, fig in (("fmeda-sg001", "3-10"), ("fmeda-sg009", "3-11")):
     name = f"fig-{fig}-{key}-metrics.svg"
