@@ -970,7 +970,7 @@ Effects:
 
 Safety mechanisms: (1) The masking alerts are themselves visual (driverDistracted3 also audible, warningImmediate); ImmediateDisableAlert is HIGHEST · (2) Cluster indication once the item stops (XM-04, unverified)
 
-<sub>Note: speedTooHigh needs vEgo above MAX_CTRL_SPEED (149 km/h, opendbc interfaces.py:23-24); aeb/stockAeb coincide with an emergency, where the AEB alert may be the right one but its lack of sound also removes the takeover sound. driverDistracted3 masking is benign (also a takeover-type alert).</sub>
+<sub>Note: speedTooHigh needs vEgo above MAX_CTRL_SPEED (149 km/h, opendbc interfaces.py:23-24); aeb/stockAeb coincide with an emergency, where the AEB alert may be the right one but its lack of sound also removes the takeover sound. driverDistracted3 masking is benign (also a takeover-type alert). DFA WP-A-03 DFI-25 (one HMI path for take-over and DM alerts; masking is a failure without a hang).</sub>
 
 ### `SWF-SE-035` Excessive actuation check
 
@@ -1055,6 +1055,8 @@ Effects:
 | `SWF-043.C2` selfdrived suppresses commIssue while the big model is loading or settling (selfdrived.py:386-388), so held modelV2 got no reaction for that window at BL-004. Since #51 the controlsd freshness gate stops lateral actuation on a modelV2 more than 0.5 s old whatever selfdrived suppresses; the alert is still masked (TSR-603) | • TSR-603 (no masking while engaged) not met (WP-W-04 SWF-44, GAP-17); controlsd freshness gate independent of the masking (BL-005) <sub>openpilot/selfdrive/controls/lib/input_freshness.py</sub> | • test_onroad TestChestnutOnroad needs device hardware; not run | 5 | 10 | 🔴 **H** | SWF-ACT-040 |
 
 Safety mechanisms: (1) selfdrived commIssue (alive window 10 periods) and modeldLagging soft-disable with a 3 s audible take-over warning · (2) Panda bounds torque and acceleration range only; clip_curvature bounds rate of change of a frozen value to zero, not its level · (3) BL-005: controlsd freshness gate (TSR-602), latActive/longActive false on an input older than 10 periods
+
+<sub>Note: DFA WP-A-03 DFI-33 (the forced stop and normal deceleration share one unchecked chain).</sub>
 
 #### SWF-045 · A non-finite input latches the controller state and silently zeroes lateral (or longitudinal) output while engaged
 
@@ -1388,7 +1390,7 @@ Effects:
 
 Safety mechanisms: (1) selfdrived soft disable when dmonitoringd or controlsd stops (commIssue, processNotRunning; SWF-064)
 
-<sub>Note: Realises BE-8.08 (SW FMEA rev 1.1). Late escalation before the flag (frame-counted timers) is SWF-061.C1; whether the forced stop is the SG-010 safe state is SWF-062.</sub>
+<sub>Note: Realises BE-8.08 (SW FMEA rev 1.1). Late escalation before the flag (frame-counted timers) is SWF-061.C1; whether the forced stop is the SG-010 safe state is SWF-062. DFA WP-A-03 DFI-33 (the forced stop and normal deceleration share one unchecked chain).</sub>
 
 ### `SWF-SE-061` Driver-monitoring model process
 
@@ -1431,7 +1433,7 @@ Effects:
 
 Safety mechanisms: (1) selfdrived commIssueAvgFreq when driverMonitoringState runs below 0.8 of its 20 Hz rate (SubMaster freq_ok)
 
-<sub>Note: Host side of System FMEA SFM-023.C1 and SFM-023.C2. Detection performance of the model is SOTIF (SFM-022.C1, SFM-024.C1).</sub>
+<sub>Note: Host side of System FMEA SFM-023.C1 and SFM-023.C2. Detection performance of the model is SOTIF (SFM-022.C1, SFM-024.C1). DFA WP-A-03 DFI-32 (one CPU load slows lateral control and stretches the frame-counted DM escalation).</sub>
 
 #### SWF-062 · Terminal unresponsive-driver state reached without the item reaching the SG-010 safe state
 
@@ -1445,7 +1447,7 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SWF-062.C1` By design the six driver-monitoring events are PERMANENT alerts only, with no SOFT_DISABLE or IMMEDIATE_DISABLE (events.py:524-570); the terminal reaction is the forced deceleration with lateral control kept. Whether that is the SG-010 safe state of FSR-040 is not recorded; it is queued for the lead (DQ-220) | • Upstream design; FSR-040 names a safe state that the FSC does not define for this path. Requirements not documented and no field-exposure evidence cited, so O 8 (RT-2 §2), as SWF-083.C1 and SFM-025.C1 <sub>assurance/08-analyses/fmea/analyses/fsc.yaml</sub> | • test_longitudinal runs the force_decel maneuver in CI and test_monitoring checks the alert levels; neither checks that the reaction meets FSR-040 <sub>openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py</sub> | 8 | 9 | 🔴 **H** | SWF-ACT-059 |
+| `SWF-062.C1` By design the six driver-monitoring events are PERMANENT alerts only, with no SOFT_DISABLE or IMMEDIATE_DISABLE (events.py:524-570); the terminal reaction is the forced deceleration with lateral control kept. Whether that is the SG-010 safe state of FSR-040 is not recorded; it is queued for the lead (DQ-365, which absorbed DQ-220) | • Upstream design; FSR-040 names a safe state that the FSC does not define for this path. Requirements not documented and no field-exposure evidence cited, so O 8 (RT-2 §2), as SWF-083.C1 and SFM-025.C1 <sub>assurance/08-analyses/fmea/analyses/fsc.yaml</sub> | • test_longitudinal runs the force_decel maneuver in CI and test_monitoring checks the alert levels; neither checks that the reaction meets FSR-040 <sub>openpilot/selfdrive/test/longitudinal_maneuvers/test_longitudinal.py</sub> | 8 | 9 | 🔴 **H** | SWF-ACT-059 |
 
 Safety mechanisms: (1) Forced deceleration to standstill after 5 s at the terminal level (policy.py:379-380, 398; controlsd.py:235; longitudinal_planner.py:84-85); lockout (NO_ENTRY) after 2 terminal events or 1 no-response
 
@@ -1463,10 +1465,10 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SWF-085.C1` The cabin camera dialog sets IsDriverViewEnabled and clears it only when the dialog closes (ui/onroad/cabin_camera_dialog.py:18-22; ui/mici/onroad/cabin_camera_dialog.py:44, 52). The dialog opens only offroad, but stays open across the onroad transition: the comma four UI pops it 2.5 s after going onroad (mici/layouts/main.py:112-124, not while onboarding), the comma 3X UI on its interactive timeout or a touch (cabin_camera_dialog.py:16). dmonitoringd re-reads the parameter every 40 frames, 2 s (dmonitoringd.py:36-38). While open, the comma four dialog also publishes its own selfdriveState with only alertSound set (mici cabin_camera_dialog.py:48, 102-116), a second publisher beside selfdrived | • The dialog buttons are disabled onroad (layouts/settings/device.py:61; mici device_layout.py:185); the comma four UI closes dialogs after going onroad. Upstream code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirement implemented (TSR-610 not met) <sub>openpilot/selfdrive/ui/mici/layouts/main.py</sub> | • No test covers demo mode with the item started; test_widget_leaks only constructs the dialogs | 5 | 10 | 🔴 **H** | SWF-ACT-072 |
+| `SWF-085.C1` The cabin camera dialog sets IsDriverViewEnabled and clears it only when the dialog closes (ui/onroad/cabin_camera_dialog.py:18-22; ui/mici/onroad/cabin_camera_dialog.py:44, 52). The dialog opens only offroad, but stays open across the onroad transition: the comma four UI pops it 2.5 s after going onroad (mici/layouts/main.py:112-124, not while onboarding), the comma 3X UI on its interactive timeout or a touch (cabin_camera_dialog.py:16). dmonitoringd re-reads the parameter every 40 frames, 2 s (dmonitoringd.py:36-38). While open, the comma four dialog also publishes its own selfdriveState with only alertSound set (mici cabin_camera_dialog.py:48, 102-116), a second publisher beside selfdrived | • The dialog buttons are disabled onroad (layouts/settings/device.py:61; mici device_layout.py:185); the comma four UI closes dialogs after going onroad. Upstream code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirement implemented (TSR-610 not met) <sub>openpilot/selfdrive/ui/mici/layouts/main.py</sub> | • No test covers demo mode with the item started; test_widget_leaks only constructs the dialogs | 5 | 10 | 🔴 **H** | SWF-ACT-072, SWF-ACT-076 |
 | `SWF-085.C2` No engagement interlock: nothing in selfdrived or controlsd reads IsDriverViewEnabled, so a parameter left set (written by tooling, or a UI crash before hide_event; it is cleared only at manager start, params_keys.h:61) keeps demo mode for the drive (GAP-20, TSR-610 not met) | • Upstream design with no interlock; requirement TSR-610 not implemented, so O 8 (RT-2 §2), as the other by-design gaps <sub>openpilot/selfdrive/monitoring/dmonitoringd.py</sub> | • No test; fault-injection scenario VS-FI-23 (params tampering) is specified in WP-V-05 but not run | 8 | 10 | 🔴 **H** | SWF-ACT-072 |
 
-<sub>Note: By code reading, demo mode does not switch the alerts off: it decouples the policy from the real vehicle state, makes the pose thresholds strict and ignores wheel touches, and removes the lock on the monitored seat. WP-A-04 MCS-08.4 describes it as disabling monitoring; the SW FMEA rates the narrower effect. Realises BE-8.06.</sub>
+<sub>Note: By code reading, demo mode does not switch the alerts off: it decouples the policy from the real vehicle state, makes the pose thresholds strict and ignores wheel touches, and removes the lock on the monitored seat. WP-A-04 MCS-08.4 describes it as disabling monitoring; the SW FMEA rates the narrower effect. Realises BE-8.06. DFA WP-A-03 DFI-31 (the comma four cabin-camera dialog is a second selfdriveState publisher).</sub>
 
 ### `SWF-SE-070` Longitudinal planning (plannerd)
 
@@ -1508,7 +1510,7 @@ Effects:
 
 Safety mechanisms: (1) Panda acceleration range (SWF-003); stock PCS/AEB forwarded (SWF-011, SG-009); FCW (SWF-066); driver brake · (2) controlsd stops longitudinal control on a longitudinalPlan older than 0.5 s or a non-finite aTarget (TSR-602, SWF-045)
 
-<sub>Note: Host side of System FMEA SFM-008.C1 and SFM-012.C2. Following distances and MPC tuning (relaxed 1.75 s, CA-011) are SOTIF and FI-2026-001 topics, not rated here.</sub>
+<sub>Note: Host side of System FMEA SFM-008.C1 and SFM-012.C2. Following distances and MPC tuning (relaxed 1.75 s, CA-011) are SOTIF and FI-2026-001 topics, not rated here. DFA WP-A-03 DFI-33 (the forced stop and normal deceleration share one unchecked chain).</sub>
 
 #### SWF-066 · Planned acceleration changes in a step
 
@@ -1664,7 +1666,7 @@ Effects:
 
 Safety mechanisms: (1) controlsd turns lateral control off for a non-finite curvature and on a modelV2 older than 0.5 s (TSR-602, SWF-045) · (2) selfdrived calibrationInvalid / calibrationRecalibrating (SOFT_DISABLE) and modeldLagging when frameDropPerc > 1 (SOFT_DISABLE) · (3) Panda torque and acceleration bounds (SWF-001, SWF-003)
 
-<sub>Note: Software side of System FMEA SFM-006.C2 and SFM-003.C3. Wrong curvature or leads from correct inputs is SOTIF / ISO PAS 8800 (fmea-plan §7.3).</sub>
+<sub>Note: Software side of System FMEA SFM-006.C2 and SFM-003.C3. Wrong curvature or leads from correct inputs is SOTIF / ISO PAS 8800 (fmea-plan §7.3). DFA WP-A-03 DFI-30 (one model output feeds lateral, longitudinal and FCW).</sub>
 
 ### `SWF-SE-101` locationd pose filter
 
@@ -1786,7 +1788,7 @@ Effects:
 
 Safety mechanisms: (1) controlsd freshness gate on its inputs (TSR-602); panda TX arrival and heartbeat supervision
 
-<sub>Note: Software side of System FMEA SFM-006.C3 and SFM-005.C3. The bound is the one controlsd's TSR-602 gate reuses (IA host-supervision OI-1).</sub>
+<sub>Note: Software side of System FMEA SFM-006.C3 and SFM-005.C3. The bound is the one controlsd's TSR-602 gate reuses (IA host-supervision OI-1). DFA WP-A-03 DFI-29 (one msgq for host control and host supervision).</sub>
 
 ### `SWF-SE-132` msgq ring buffer
 
@@ -1802,12 +1804,12 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SWF-080.C1` A lapped reader is reset to the write pointer and silently skips the lost messages (msgq.cc:72-76, 262-293, 331-333, 385-426); a 16th subscriber evicts every reader, which reconnect silently (msgq.h:9; msgq.cc:196-207, 324-327) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • msgq tests (msgq_repo/msgq/tests) are outside openpilot/ and not run by LionDriver CI | 3 | 10 | 🔴 **H** | SWF-ACT-069 |
-| `SWF-080.C2` No checksum on payloads in shared memory: a writer defect or a memory fault reaches the consumer; only corrupt sizes are caught, by assert (abort, msgq.cc:399-400) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No test targets this cause | 3 | 10 | 🔴 **H** | SWF-ACT-069 |
+| `SWF-080.C1` A lapped reader is reset to the write pointer and silently skips the lost messages (msgq.cc:72-76, 262-293, 331-333, 385-426); a 16th subscriber evicts every reader, which reconnect silently (msgq.h:9; msgq.cc:196-207, 324-327) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • msgq tests (msgq_repo/msgq/tests) are outside openpilot/ and not run by LionDriver CI | 3 | 10 | 🔴 **H** | SWF-ACT-069, SWF-ACT-075 |
+| `SWF-080.C2` No checksum on payloads in shared memory: a writer defect or a memory fault reaches the consumer; only corrupt sizes are caught, by assert (abort, msgq.cc:399-400) | • Upstream openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No test targets this cause | 3 | 10 | 🔴 **H** | SWF-ACT-069, SWF-ACT-075 |
 
 Safety mechanisms: (1) SubMaster alive and frequency checks in the consumers (SWF-081); capnp parse errors raise
 
-<sub>Note: Software side of System FMEA SFM-006.C3. A draft upstream sync of msgq (sync-2026-10-10-msgq-326a9f5) is not applied.</sub>
+<sub>Note: Software side of System FMEA SFM-006.C3. A draft upstream sync of msgq (sync-2026-10-10-msgq-326a9f5) is not applied. DFA WP-A-03 DFI-29 (one msgq for host control and host supervision).</sub>
 
 ### `SWF-SE-140` Process manager (manager)
 
@@ -1827,6 +1829,8 @@ Effects:
 | `SWF-082.C1` The BLOCK environment variable or a process that never starts leaves proc None, so shouldBeRunning is false and no event fires (manager.py:110-112; process.py:121-129) | • No launch path sets BLOCK; setting it needs a shell on the device <sub>openpilot/system/manager/manager.py</sub> | • test_manager.py (CI) checks blacklisted processes do not start; not designed for the missing report <sub>openpilot/system/manager/test/test_manager.py</sub> | 2 | 9 | 🔴 **H** | SWF-ACT-070 |
 
 Safety mechanisms: (1) selfdrived commIssue for services it subscribes to that were never received (NO_ENTRY); processNotRunning for a crashed process
+
+<sub>Note: DFA WP-A-03 DFI-25 (one HMI path for take-over and DM alerts; a ui or soundd that never started is not reported).</sub>
 
 #### SWF-083 · A crashed process stays down for the rest of the drive
 
@@ -1898,7 +1902,7 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | SWF-ACT-033 | design_change | Panda status supervision per TSR-615, TSR-621 and TSR-626a: controlsMismatch within 2 samples and 0.5 s (time-based); safety model/parameter mismatch as NO_ENTRY from start instead of a 10 s grace; pandaStates older than 0.2 s treated as mismatch; immediate disable on heartbeatLost, rising safetyTxBlocked, txRateExceeded and any panda fault flag | Jherrod Thomas | in_progress | SWF-032.C1, SWF-034.C1, SWF-034.C2, SWF-034.C3 | — |
 | SWF-ACT-034 | design_change | Give cruiseMismatch a warning and an ACC cancel retry within 1 s (TSR-308, GAP-19) | Jherrod Thomas | completed | SWF-039.C1 | — |
 | SWF-ACT-035 | design_change | Classify reactions per TSR-601 (immediate disable for loss or staleness of a control-law input) and justify each remaining SOFT_DISABLE against the FTTI (SFM-016, GAP-16); make soft-disable and mismatch timers time-based (monotonic clock); move blocking Params writes out of the 100 Hz loop | Jherrod Thomas | open | SWF-033.C1, SWF-033.C2 | — |
-| SWF-ACT-036 | design_change | Rank soft and immediate disable takeover alerts above every WARNING and PERMANENT alert except FCW, keep the takeover sound when an AEB alert is shown, name the fault class in the text (canError, TSR-606), and add a test of the ordering | Jherrod Thomas | open | SWF-035.C1 | — |
+| SWF-ACT-036 | design_change | Rank soft and immediate disable takeover alerts above every WARNING and PERMANENT alert except FCW, keep the takeover sound when an AEB alert is shown, name the fault class in the text (canError, TSR-606), and add a test of the ordering. Rank the driver-monitoring level 2 and 3 alerts so that speedTooHigh or a later-starting HIGH alert cannot mask them (WP-A-03 DFI-25, SWF-035) | Jherrod Thomas | open | SWF-035.C1 | — |
 | SWF-ACT-037 | design_change | selfdrived liveness: ui and soundd raise the critical takeover alert within 0.5 s of missing selfdriveState while engaged (EL-05 change, TSR-622); add a process watchdog for selfdrived; remove selfdrived from the fuzz NOT_TESTED list | Jherrod Thomas | open | SWF-036.C1, SWF-036.C2 | — |
 | SWF-ACT-038 | design_change | Revisit TSR-617: set excessive-actuation thresholds from the vehicle envelope and fork drive logs, bound the device_motion_valid reset, check longitudinal response during override, and add unit tests for helpers.py | Jherrod Thomas | open | SWF-037.C1, SWF-037.C2 | — |
 | SWF-ACT-039 | design_change | Resolve FSR-033 against the implementation: either revise FSR-033 to the actual yield strategy (integrator freeze, panda bound, override force verified by the FSR-031 vehicle test) or ramp the torque request down while steeringPressed | Jherrod Thomas | open | SWF-038.C1 | — |
@@ -1920,22 +1924,24 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | SWF-ACT-054 | design_change | Pin an opendbc commit that contains jherrodthomas/opendbc#15 (ATC-20, SWSR-518 amended per DQ-079; ATC-26, SWSR-311 amended per DQ-080), with its impact records moved to Integrated, and re-rate SWF-054 and SWF-055 at the new baseline. The fork merged it as 9859cb0 (master 515b9a2 also carries opendbc#16); the LionDriver pin is still 9a13f60 | Jherrod Thomas | open | SWF-054.C1, SWF-055.C1 | 10/3/4 → 🟢 L |
 | SWF-ACT-056 | design_change | carState input supervision for the reference car: fixed RX timeouts from the DBC rates instead of the learned 1 Hz default, reject frames shorter than the DBC length for every signal carState uses, and a plausibility cross-check for the messages without checksum or counter (BRAKE_MODULE against PCM_CRUISE, WHEEL_SPEEDS against the IMU); with unit tests in LionDriver CI | Jherrod Thomas | open | SWF-056.C1, SWF-056.C2, SWF-056.C3, SWF-057.C2 | — |
 | SWF-ACT-057 | design_change | Pin the reference identification: accept only an exact FW match to TOYOTA_COROLLA_TSS2 with the expected CarParams for the assured configuration (report a fuzzy match through assured_config), ignore FINGERPRINT in release builds, and re-query FW after a VIN-cache hit when an ECU version changed | Jherrod Thomas | open | SWF-058.C1, SWF-058.C2 | — |
-| SWF-ACT-058 | design_change | Driver monitoring robustness: time-based policy timers (monotonic clock), a finiteness and length check of driverStateV2 (non-finite or empty treated as uncertain, not attentive), a length check on brakeDisengageProbs, and unit tests for each in CI (NaN pose, 16 Hz model, empty arrays) | Jherrod Thomas | open | SWF-061.C1, SWF-061.C2, SWF-061.C3, SWF-063.C1, SWF-063.C2, SWF-064.C1 | — |
-| SWF-ACT-059 | design_change | Define the SG-010 safe state for FSR-040 (lead decision DQ-220) and, if it differs from the current forced deceleration with lateral kept, implement it with a terminal-alert test | Jherrod Thomas | decision_pending | SWF-062.C1, SWF-086.C2 | — |
+| SWF-ACT-058 | design_change | Driver monitoring robustness: time-based policy timers (monotonic clock), a finiteness and length check of driverStateV2 (non-finite or empty treated as uncertain, not attentive), a length check on brakeDisengageProbs, and unit tests for each in CI (NaN pose, 16 Hz model, empty arrays); a DM frequency check tight enough to catch a slowed model (WP-A-03 DFI-32) | Jherrod Thomas | open | SWF-061.C1, SWF-061.C2, SWF-061.C3, SWF-063.C1, SWF-063.C2, SWF-064.C1 | — |
+| SWF-ACT-059 | design_change | Define the SG-010 safe state for FSR-040 (lead decision DQ-365, which absorbed DQ-220) and, if it differs from the current forced deceleration with lateral kept, implement it with a terminal-alert test | Jherrod Thomas | decision_pending | SWF-062.C1, SWF-086.C2 | — |
 | SWF-ACT-060 | detection | Run model_replay for dmonitoringmodeld and modeld in LionDriver CI, and add a non-finite / stale output injection test for dmonitoringd and modeld consumers | Jherrod Thomas | open | SWF-063.C1, SWF-072.C1 | — |
 | SWF-ACT-061 | design_change | Longitudinal input validity: plannerd treats an invalid radarState as no lead plus a fault, and controlsd sets longActive false (with an event) when longitudinalPlan.valid is false; keep the coast limit when orientationNED is missing | Jherrod Thomas | open | SWF-065.C1, SWF-065.C2, SWF-065.C3, SWF-070.C2 | — |
 | SWF-ACT-062 | design_change | plannerd robustness: on an MPC failure keep the last valid solution for a bounded time and raise an event if it persists; rate-limit the final aTarget (TSR-624); handle an unknown personality as relaxed; add MPC-failure injection and plannerd fuzzing in CI | Jherrod Thomas | open | SWF-065.C2, SWF-066.C1, SWF-068.C1 | — |
 | SWF-ACT-063 | design_change | Apply the lead's decision on engagement outside the assured configuration (DQ-221): refuse engagement or keep logging, with a test | Jherrod Thomas | decision_pending | SWF-067.C1 | — |
 | SWF-ACT-064 | design_change | radard and FCW review against SG-005/SG-006 with the SOTIF analysis: catch the Kalman dt assertion (reset the filter), allow FCW from a confirmed radar-only lead, and decide the radar-only stationary target treatment (FI-2026-001 CA-002); tests for each | Jherrod Thomas | open | SWF-069.C1, SWF-070.C1, SWF-070.C2, SWF-070.C3, SWF-071.C1, SWF-071.C2 | — |
-| SWF-ACT-065 | design_change | modeld output validity: check finiteness of every output used downstream (small model too, TSR-616), set modelV2.valid false on a non-finite output, a repeated or regressing frame_id, or an invalid calibration status; verify the model file hash at load (GAP-22) | Jherrod Thomas | open | SWF-072.C1, SWF-072.C2, SWF-072.C3, SWF-073.C1, SWF-074.C1 | — |
+| SWF-ACT-065 | design_change | modeld output validity: check finiteness of every output used downstream (small model too, TSR-616), set modelV2.valid false on a non-finite output, a repeated or regressing frame_id, or an invalid calibration status; verify the model file hash at load (GAP-22). WP-A-03 DFI-30 | Jherrod Thomas | open | SWF-072.C1, SWF-072.C2, SWF-072.C3, SWF-073.C1, SWF-074.C1 | — |
 | SWF-ACT-066 | detection | Unit tests for modeld output handling (parse, finiteness, frame-drop accounting) and include modeld in model_replay in LionDriver CI (with SWF-ACT-060) | Jherrod Thomas | open | SWF-073.C1 | — |
 | SWF-ACT-067 | design_change | Sensor and pose supervision: make selfdrived react to deviceMotion.sensorsOK and to IMU data older than a few periods (not 10 s); add range and stuck-value checks in sensord; review the calibration recalibration thresholds against the lateral error budget | Jherrod Thomas | open | SWF-075.C1, SWF-077.C1, SWF-079.C1 | — |
 | SWF-ACT-068 | design_change | Camera stream supervision: never ignore a road stream for the reference device (refuse engagement if it is absent at start), mark frames invalid on sync failure, and raise an event when a sensor is disabled; run the camerad hardware tests per release | Jherrod Thomas | open | SWF-078.C1, SWF-078.C2, SWF-078.C3 | — |
 | SWF-ACT-069 | detection | Run the msgq tests in LionDriver CI and assess whether a payload checksum or a lost-message counter is needed for the safety-relevant services (selfdriveState, carControl, sendcan, pandaStates) | Jherrod Thomas | open | SWF-080.C1, SWF-080.C2 | — |
-| SWF-ACT-070 | design_change | Manager supervision: report every process the configuration needs (including blocked or never started ones) in managerState, ignore BLOCK in release builds, and decide whether a crashed safety process may be restarted offroad only | Jherrod Thomas | open | SWF-082.C1, SWF-083.C1 | — |
+| SWF-ACT-070 | design_change | Manager supervision: report every process the configuration needs (including blocked or never started ones) in managerState, ignore BLOCK in release builds, and decide whether a crashed safety process may be restarted offroad only. WP-A-03 DFI-25 | Jherrod Thomas | open | SWF-082.C1, SWF-083.C1 | — |
 | SWF-ACT-071 | design_change | Update integrity: pin the update to signed release tags of the LionDriver repository and verify the signature before finalizing; define rollback (with the PFMEA OTA steps) | Jherrod Thomas | open | SWF-084.C1 | — |
 | SWF-ACT-072 | design_change | Demo-mode interlock (TSR-610): selfdrived refuses engagement while IsDriverViewEnabled is set and raises a fault if it is set while engaged; the UI clears the parameter on the onroad transition; dmonitoringd ignores demo mode while started. Add a test with the item started | Jherrod Thomas | open | SWF-085.C1, SWF-085.C2 | — |
-| SWF-ACT-073 | detection | End-to-end test of the terminal reaction: drive policy, controlsd and plannerd from a recorded or synthetic unresponsive-driver input and check that forceDecel is set 5 s after the terminal alert and the vehicle reaches standstill within the time set for TSR-633; add a freshness check on driverMonitoringState in controlsd | Jherrod Thomas | open | SWF-086.C1, SWF-086.C2 | — |
+| SWF-ACT-073 | detection | End-to-end test of the terminal reaction: drive policy, controlsd and plannerd from a recorded or synthetic unresponsive-driver input and check that forceDecel is set 5 s after the terminal alert and the vehicle reaches standstill within the time set for TSR-633; add a freshness check on driverMonitoringState in controlsd, and do not route the terminal reaction through plannerd alone (WP-A-03 DFI-33) | Jherrod Thomas | open | SWF-086.C1, SWF-086.C2 | — |
+| SWF-ACT-075 | design_change | msgq protection for the control and supervision topics (WP-A-03 DFI-29): sequence or E2E protection so a skipped or altered message is detected, a subscriber-count guard so a 16th reader cannot evict the others, and host supervision of control credited only where it is independent of msgq | Jherrod Thomas | open | SWF-080.C1, SWF-080.C2 | — |
+| SWF-ACT-076 | design_change | One publisher per control topic, enforced at subscribe time (WP-A-03 DFI-31): the comma four cabin-camera dialog must not publish selfdriveState, and the dialog is closed before the item goes onroad | Jherrod Thomas | open | SWF-085.C1 | — |
 | SWF-ACT-074 | design_change | Envelope override check (TSR-304, DQ-053): in toyota.h reject 0x2E4 frames that increase torque opposing STEER_TORQUE_DRIVER beyond the driver allowance, and back off toward zero at no less than the down rate while the override lasts; report the state to the SoC (TSR-628). Add opendbc safety tests and mutation for both branches; host counterpart SWF-ACT-046 | Jherrod Thomas | open | SWF-087.C1 | — |
 
 ## 6. Priority H causes without a completed action
@@ -2059,13 +2065,13 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | `SWF-078.C2` | Road camera frames stop, are dropped or lose sync without an error flag | 10/3/10 | SWF-ACT-068 |
 | `SWF-078.C3` | Road camera frames stop, are dropped or lose sync without an error flag | 10/3/10 | SWF-ACT-068 |
 | `SWF-079.C1` | IMU samples implausible or stuck while published as valid | 10/4/10 | SWF-ACT-067 |
-| `SWF-080.C1` | Messages lost or altered between publisher and subscriber without the subscriber knowing | 10/3/10 | SWF-ACT-069 |
-| `SWF-080.C2` | Messages lost or altered between publisher and subscriber without the subscriber knowing | 10/3/10 | SWF-ACT-069 |
+| `SWF-080.C1` | Messages lost or altered between publisher and subscriber without the subscriber knowing | 10/3/10 | SWF-ACT-069, SWF-ACT-075 |
+| `SWF-080.C2` | Messages lost or altered between publisher and subscriber without the subscriber knowing | 10/3/10 | SWF-ACT-069, SWF-ACT-075 |
 | `SWF-081.C1` | An input is reported alive and valid while it is stale | 10/7/8 | SWF-ACT-040 |
 | `SWF-082.C1` | A process the drive needs is not running and is not reported | 10/2/9 | SWF-ACT-070 |
 | `SWF-083.C1` | A crashed process stays down for the rest of the drive | 8/8/9 | SWF-ACT-070 |
 | `SWF-084.C1` | An update installs software other than the released, assured version | 10/4/10 | SWF-ACT-071 |
-| `SWF-085.C1` | Driver monitoring evaluates the driver in demo mode while the item is engaged | 10/5/10 | SWF-ACT-072 |
+| `SWF-085.C1` | Driver monitoring evaluates the driver in demo mode while the item is engaged | 10/5/10 | SWF-ACT-072, SWF-ACT-076 |
 | `SWF-085.C2` | Driver monitoring evaluates the driver in demo mode while the item is engaged | 10/8/10 | SWF-ACT-072 |
 | `SWF-086.C1` | Forced deceleration not requested, not passed on, or not carried to a stop after the terminal alert | 10/5/9 | SWF-ACT-073 |
 | `SWF-086.C2` | Forced deceleration not requested, not passed on, or not carried to a stop after the terminal alert | 10/8/8 | SWF-ACT-059, SWF-ACT-073 |

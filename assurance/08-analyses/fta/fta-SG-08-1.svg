@@ -139,8 +139,8 @@
 <text x="1506" y="504.0" class="id">UE-8.11</text>
 <text x="1698" y="504.0" class="kind">UNDEVELOPED</text>
 <text x="1506" y="518.5" class="d">PCM does not hold the vehicle at</text>
-<text x="1506" y="533.0" class="d">standstill under ACC (no AOU</text>
-<text x="1506" y="547.5" class="d">yet; vehicle test, DQ-365)</text>
+<text x="1506" y="533.0" class="d">standstill under ACC (AOU-16;</text>
+<text x="1506" y="547.5" class="d">vehicle test, DQ-365)</text>
 <path d="M1602.0,564.5 L1624.0,581.5 L1602.0,598.5 L1580.0,581.5 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
 <text x="40" y="764.5" class="lh">Symbols · IEC 61025</text>
 <rect x="46" y="784.5" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>

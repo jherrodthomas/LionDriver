@@ -36,7 +36,7 @@
 #   exist but are not run by LionDriver CI; D 10 where nothing exercises the cause. All 29 new causes are AP H.
 # - SOTIF / ISO PAS 8800 boundary: detection performance of the DM model, perception (missed or ghost leads) and planning adequacy are not
 #   rated; only the software behaviour around them (validity, timing, gating, crash) is.
-# - Two questions for the lead are queued in the decision register: DQ-220 (SG-010 safe state at the terminal DM alert, SWF-062) and DQ-221
+# - Two questions for the lead are queued in the decision register: DQ-220 (SG-010 safe state at the terminal DM alert, SWF-062; merged into DQ-365) and DQ-221
 #   (engagement outside the assured configuration, SWF-067).
 # rev 1.0 at BL-005: P3 elements added (fmea-plan §3.3): modeld as a software element (SWF-SE-090/091, SWF-072..074), localization and
 # calibration (SWF-SE-100..103, SWF-075..077), camerad (SWF-SE-110, SWF-078), sensord (SWF-SE-120, SWF-079), messaging cereal/msgq
@@ -56,6 +56,8 @@
 # Post rev 1.1, data for the planned figures (fmea-plan §3.3), ratings unchanged: `previous` (BL-004) on the 11 causes re-rated at BL-005,
 #   taken from this file at BL-004; `sotif` boundary on the 15 top-level elements (units inherit); layer and reaction time on the 11
 #   safety mechanisms that state one time for one layer, code_derived from the line cited. The other mechanisms carry no time yet.
+# Post rev 1.1, DFA cross-references (WP-A-03 v0.13, OI-11): DFI-25 and DFI-29..33 cited in the notes of SWF-035, -043, -061, -065, -072,
+#   -080, -081, -082, -085, -086; their measures added to the actions (new SWF-ACT-075, -076). DQ-220 references point at DQ-365.
 # rev 1.2 at BL-005 (FTA finding F-28, BE-5.05): SWF-087, the envelope passes LKA torque opposing the driver (no driver-override check in
 #   toyota.h, GAP-02, TSR-304 not implemented); new function SWF-FN-014; O8 D10 AP H; action SWF-ACT-074.
 #
@@ -2798,7 +2800,7 @@ failure_modes:
     ref: openpilot/selfdrive/selfdrived/events.py
   - description: Cluster indication once the item stops (XM-04, unverified)
   notes: speedTooHigh needs vEgo above MAX_CTRL_SPEED (149 km/h, opendbc interfaces.py:23-24); aeb/stockAeb coincide with an emergency, where the AEB alert may be the
-    right one but its lack of sound also removes the takeover sound. driverDistracted3 masking is benign (also a takeover-type alert).
+    right one but its lack of sound also removes the takeover sound. driverDistracted3 masking is benign (also a takeover-type alert). DFA WP-A-03 DFI-25 (one HMI path for take-over and DM alerts; masking is a failure without a hang).
 - id: SWF-036
   element: SWF-SE-036
   function: SWF-FN-036
@@ -3259,6 +3261,7 @@ failure_modes:
   - description: Panda bounds torque and acceleration range only; clip_curvature bounds rate of change of a frozen value to zero, not its level
   - description: 'BL-005: controlsd freshness gate (TSR-602), latActive/longActive false on an input older than 10 periods'
     ref: openpilot/selfdrive/controls/controlsd.py:118-120
+  notes: 'DFA WP-A-03 DFI-33 (the forced stop and normal deceleration share one unchecked chain).'
 - id: SWF-044
   element: SWF-SE-042
   function: SWF-FN-042
@@ -4148,7 +4151,7 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-058
-  notes: Host side of System FMEA SFM-023.C1 and SFM-023.C2. Detection performance of the model is SOTIF (SFM-022.C1, SFM-024.C1).
+  notes: Host side of System FMEA SFM-023.C1 and SFM-023.C2. Detection performance of the model is SOTIF (SFM-022.C1, SFM-024.C1). DFA WP-A-03 DFI-32 (one CPU load slows lateral control and stretches the frame-counted DM escalation).
 - id: SWF-062
   element: SWF-SE-062
   function: SWF-FN-061
@@ -4175,7 +4178,7 @@ failure_modes:
   causes:
   - id: SWF-062.C1
     description: By design the six driver-monitoring events are PERMANENT alerts only, with no SOFT_DISABLE or IMMEDIATE_DISABLE (events.py:524-570); the terminal reaction
-      is the forced deceleration with lateral control kept. Whether that is the SG-010 safe state of FSR-040 is not recorded; it is queued for the lead (DQ-220)
+      is the forced deceleration with lateral control kept. Whether that is the SG-010 safe state of FSR-040 is not recorded; it is queued for the lead (DQ-365, which absorbed DQ-220)
     element: SWF-SE-062
     prevention_controls:
     - description: Upstream design; FSR-040 names a safe state that the FSC does not define for this path. Requirements not documented and no field-exposure
@@ -4350,7 +4353,7 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-061
-  notes: Host side of System FMEA SFM-008.C1 and SFM-012.C2. Following distances and MPC tuning (relaxed 1.75 s, CA-011) are SOTIF and FI-2026-001 topics, not rated here.
+  notes: Host side of System FMEA SFM-008.C1 and SFM-012.C2. Following distances and MPC tuning (relaxed 1.75 s, CA-011) are SOTIF and FI-2026-001 topics, not rated here. DFA WP-A-03 DFI-33 (the forced stop and normal deceleration share one unchecked chain).
 - id: SWF-066
   element: SWF-SE-071
   function: SWF-FN-070
@@ -4694,7 +4697,7 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-065
-  notes: Software side of System FMEA SFM-006.C2 and SFM-003.C3. Wrong curvature or leads from correct inputs is SOTIF / ISO PAS 8800 (fmea-plan §7.3).
+  notes: Software side of System FMEA SFM-006.C2 and SFM-003.C3. Wrong curvature or leads from correct inputs is SOTIF / ISO PAS 8800 (fmea-plan §7.3). DFA WP-A-03 DFI-30 (one model output feeds lateral, longitudinal and FCW).
 - id: SWF-073
   element: SWF-SE-090
   function: SWF-FN-090
@@ -4996,6 +4999,7 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-069
+    - SWF-ACT-075
   - id: SWF-080.C2
     description: 'No checksum on payloads in shared memory: a writer defect or a memory fault reaches the consumer; only corrupt sizes are caught, by assert (abort, msgq.cc:399-400)'
     element: SWF-SE-132
@@ -5009,7 +5013,8 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-069
-  notes: Software side of System FMEA SFM-006.C3. A draft upstream sync of msgq (sync-2026-10-10-msgq-326a9f5) is not applied.
+    - SWF-ACT-075
+  notes: Software side of System FMEA SFM-006.C3. A draft upstream sync of msgq (sync-2026-10-10-msgq-326a9f5) is not applied. DFA WP-A-03 DFI-29 (one msgq for host control and host supervision).
 - id: SWF-081
   element: SWF-SE-131
   function: SWF-FN-130
@@ -5044,7 +5049,7 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-040
-  notes: Software side of System FMEA SFM-006.C3 and SFM-005.C3. The bound is the one controlsd's TSR-602 gate reuses (IA host-supervision OI-1).
+  notes: Software side of System FMEA SFM-006.C3 and SFM-005.C3. The bound is the one controlsd's TSR-602 gate reuses (IA host-supervision OI-1). DFA WP-A-03 DFI-29 (one msgq for host control and host supervision).
 - id: SWF-082
   element: SWF-SE-140
   function: SWF-FN-140
@@ -5083,6 +5088,7 @@ failure_modes:
     actions:
     - SWF-ACT-070
     rationale: Occurrence is credited to process (no launch path sets BLOCK). The residual is carried by the PFMEA and the TARA, as SWF-028.C2.
+  notes: 'DFA WP-A-03 DFI-25 (one HMI path for take-over and DM alerts; a ui or soundd that never started is not reported).'
 - id: SWF-083
   element: SWF-SE-140
   function: SWF-FN-140
@@ -5193,6 +5199,7 @@ failure_modes:
     ap: H
     actions:
     - SWF-ACT-072
+    - SWF-ACT-076
   - id: SWF-085.C2
     description: 'No engagement interlock: nothing in selfdrived or controlsd reads IsDriverViewEnabled, so a parameter left set (written by tooling, or a UI crash before
       hide_event; it is cleared only at manager start, params_keys.h:61) keeps demo mode for the drive (GAP-20, TSR-610 not met)'
@@ -5208,7 +5215,7 @@ failure_modes:
     actions:
     - SWF-ACT-072
   notes: 'By code reading, demo mode does not switch the alerts off: it decouples the policy from the real vehicle state, makes the pose thresholds strict and ignores
-    wheel touches, and removes the lock on the monitored seat. WP-A-04 MCS-08.4 describes it as disabling monitoring; the SW FMEA rates the narrower effect. Realises BE-8.06.'
+    wheel touches, and removes the lock on the monitored seat. WP-A-04 MCS-08.4 describes it as disabling monitoring; the SW FMEA rates the narrower effect. Realises BE-8.06. DFA WP-A-03 DFI-31 (the comma four cabin-camera dialog is a second selfdriveState publisher).'
 - id: SWF-086
   element: SWF-SE-060
   function: SWF-FN-061
@@ -5263,7 +5270,7 @@ failure_modes:
   safety_mechanisms:
   - description: selfdrived soft disable when dmonitoringd or controlsd stops (commIssue, processNotRunning; SWF-064)
     ref: openpilot/selfdrive/selfdrived/events.py
-  notes: Realises BE-8.08 (SW FMEA rev 1.1). Late escalation before the flag (frame-counted timers) is SWF-061.C1; whether the forced stop is the SG-010 safe state is SWF-062.
+  notes: Realises BE-8.08 (SW FMEA rev 1.1). Late escalation before the flag (frame-counted timers) is SWF-061.C1; whether the forced stop is the SG-010 safe state is SWF-062. DFA WP-A-03 DFI-33 (the forced stop and normal deceleration share one unchecked chain).
 - id: SWF-087
   element: SWF-SE-006
   function: SWF-FN-014
@@ -5517,7 +5524,8 @@ actions:
 - id: SWF-ACT-036
   kind: design_change
   description: Rank soft and immediate disable takeover alerts above every WARNING and PERMANENT alert except FCW, keep the takeover sound when an AEB alert is shown,
-    name the fault class in the text (canError, TSR-606), and add a test of the ordering
+    name the fault class in the text (canError, TSR-606), and add a test of the ordering. Rank the driver-monitoring level 2 and 3 alerts so that speedTooHigh
+    or a later-starting HIGH alert cannot mask them (WP-A-03 DFI-25, SWF-035)
   owner: Jherrod Thomas
   status: open
 - id: SWF-ACT-037
@@ -5669,12 +5677,13 @@ actions:
 - id: SWF-ACT-058
   kind: design_change
   description: 'Driver monitoring robustness: time-based policy timers (monotonic clock), a finiteness and length check of driverStateV2 (non-finite or empty treated as uncertain,
-    not attentive), a length check on brakeDisengageProbs, and unit tests for each in CI (NaN pose, 16 Hz model, empty arrays)'
+    not attentive), a length check on brakeDisengageProbs, and unit tests for each in CI (NaN pose, 16 Hz model, empty arrays); a DM frequency check tight
+    enough to catch a slowed model (WP-A-03 DFI-32)'
   owner: Jherrod Thomas
   status: open
 - id: SWF-ACT-059
   kind: design_change
-  description: Define the SG-010 safe state for FSR-040 (lead decision DQ-220) and, if it differs from the current forced deceleration with lateral kept, implement it with
+  description: Define the SG-010 safe state for FSR-040 (lead decision DQ-365, which absorbed DQ-220) and, if it differs from the current forced deceleration with lateral kept, implement it with
     a terminal-alert test
   owner: Jherrod Thomas
   status: decision_pending
@@ -5709,7 +5718,7 @@ actions:
 - id: SWF-ACT-065
   kind: design_change
   description: 'modeld output validity: check finiteness of every output used downstream (small model too, TSR-616), set modelV2.valid false on a non-finite output, a repeated
-    or regressing frame_id, or an invalid calibration status; verify the model file hash at load (GAP-22)'
+    or regressing frame_id, or an invalid calibration status; verify the model file hash at load (GAP-22). WP-A-03 DFI-30'
   owner: Jherrod Thomas
   status: open
 - id: SWF-ACT-066
@@ -5738,7 +5747,7 @@ actions:
 - id: SWF-ACT-070
   kind: design_change
   description: 'Manager supervision: report every process the configuration needs (including blocked or never started ones) in managerState, ignore BLOCK in release builds,
-    and decide whether a crashed safety process may be restarted offroad only'
+    and decide whether a crashed safety process may be restarted offroad only. WP-A-03 DFI-25'
   owner: Jherrod Thomas
   status: open
 - id: SWF-ACT-071
@@ -5757,7 +5766,19 @@ actions:
   kind: detection
   description: 'End-to-end test of the terminal reaction: drive policy, controlsd and plannerd from a recorded or synthetic unresponsive-driver input and check that
     forceDecel is set 5 s after the terminal alert and the vehicle reaches standstill within the time set for TSR-633; add a freshness check on driverMonitoringState
-    in controlsd'
+    in controlsd, and do not route the terminal reaction through plannerd alone (WP-A-03 DFI-33)'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-075
+  kind: design_change
+  description: 'msgq protection for the control and supervision topics (WP-A-03 DFI-29): sequence or E2E protection so a skipped or altered message is detected, a
+    subscriber-count guard so a 16th reader cannot evict the others, and host supervision of control credited only where it is independent of msgq'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-076
+  kind: design_change
+  description: 'One publisher per control topic, enforced at subscribe time (WP-A-03 DFI-31): the comma four cabin-camera dialog must not publish selfdriveState, and the
+    dialog is closed before the item goes onroad'
   owner: Jherrod Thomas
   status: open
 - id: SWF-ACT-074
