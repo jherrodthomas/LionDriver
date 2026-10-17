@@ -4405,7 +4405,10 @@
   context: "Today the car's AEB event only shows a \"BRAKE!\" alert on the comma screen; LionDriver keeps sending its speed-control request. Whether the car's braking wins then depends on the engine computer giving AEB priority, which nobody has checked on the reference car (AOU-04R). The fault tree marks this as a path where that assumption alone protects the driver (SFM-036, FTA BE-7.13)."
   reversibility: easy
   blocks: "SFM-ACT-020; FTA cut set MCS-07.10 (SG-07)"
+  gate: G2
   decider: lead
+  asked: 2026-10-17
+  batch: 9
   options:
   - key: A
     recommended: true
@@ -4421,7 +4424,7 @@
   - assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-036, SFM-ACT-020
   - assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-07.10
   - assurance/02-concept/WP-C-04-functional-safety-concept.md AOU-04R
-  status: queued
+  status: open
 
 - id: DQ-360
   question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"
