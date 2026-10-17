@@ -107,6 +107,7 @@
 # only, no rating change: SFM-013.C1/C2 (opendbc#15, #17), SFM-017.C1 (opendbc#18 wrong-length RX fault); mechanism text on SFM-029
 # (opendbc#18) and SFM-034 (panda#17 relay-malfunction latch, ratings with the DFMEA). SFM-004.C2 and SFM-005 cite the EPS-fault events;
 # their text still holds (steerTempUnavailable now also follows the lighter prompt after 1.5 s). No other row cites a changed file.
+# SFM-038.C1 links SW FMEA SWF-088 (#187), still rated at BL-005 there.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -3841,6 +3842,7 @@ failure_modes:
     causes:
       - id: SFM-038.C1
         element: SFM-SE-016
+        linked_failure_mode: SWF-088
         description: 'The lighter EPS-fault prompt (steerTempUnavailableSilent, a LOW-priority WARNING with a chime and no soft
           disable, events.py:516-521) after a recent override, at standstill or while the driver steers is not limited to 1.5 s, so a
           long fault does not escalate to the take-over request (car_events.py:167-185, STEER_FAULT_SILENT_FRAMES; T-25, GAP-03).
@@ -3865,6 +3867,8 @@ failure_modes:
           detection: 10
           ap: H
           change: 'TSR-607 (b)/(c) implemented and unit-tested (#174, f350f5b; SFM-ACT-023)'
+        rationale: 'Linked to SW FMEA SWF-088 (C1 TSR-607 (b), C2 TSR-607 (c); #187). The SW FMEA still rates SWF-088 at BL-005 (O 8, D 10);
+          this row is rated at BL-006 from the same code and tests and is re-inherited when the SW FMEA moves to BL-006'
         actions:
         - SFM-ACT-023
         msr_exempt: 'The cause is a defect of the warning path itself; its effect on detecting the lateral loss is rated in the MSR rows
