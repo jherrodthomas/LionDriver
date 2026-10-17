@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Doc ID** | LD-DES-001 |
-| **Revision** | 0.1 (draft, not implemented) |
+| **Revision** | 0.2 (D1 decided by the lead: key on a hardware token with an escrowed backup, DQ-086; 2026-10-17). 0.1 (draft, not implemented) |
 | **Date** | 2026-10-10 |
 | **Author** | Claude (AI-assisted draft); requires review by Jherrod Thomas |
 | **Implements** | DFA measures DM-07 (configuration lock), DM-08 (firmware authenticity), DM-12 (diagnostic mode offroad only); DFA open item DOI-002 |
@@ -143,7 +143,7 @@ LionDriver would maintain forks of `panda` and `opendbc` (both are submodules po
 
 | # | Decision | Recommendation |
 |---|---|---|
-| D1 | Who holds the LionDriver release signing key, and where | Offline key held by the project maintainer; signing only after the panda release gate passes |
+| D1 | Who holds the LionDriver release signing key, and where | **Decided** ([DQ-086](../../../01-management/decisions/register.yaml), option A, 2026-10-14): the private key lives on a hardware token held by the project lead, with an escrowed backup; signing only after the panda release gate passes. Consequence for DR-10…DR-16: `panda/board/crypto/sign.py` reads the private key from a PEM file (`CERT`) and computes the signature in Python, which a non-exportable token key does not allow. The release build therefore needs a signing step that asks the token for the RSA signature (WP-P-10 OI-1). Whether the chosen token supports the bootstub's RSA-1024 / SHA-1 scheme is to confirm before buying it; if not, the algorithm upgrade tracked under WP-S-07 comes first |
 | D2 | Protect the bootstub with WRP + RDP1 (DR-13), or leave ROM DFU open and accept the residual | Adopt DR-13 after the bootloader behavior is verified on a sacrificial unit |
 | D3 | Whether the VLR enforces the VIN (panda reads the VIN at start-up and refuses on mismatch) | Report only in rev 0.1; enforcing needs a UDS VIN read by the panda before controls are allowed |
 | D4 | Accept that devices become LionDriver-only | Yes, for assured configurations; development units keep the debug bootstub and are marked outside scope |

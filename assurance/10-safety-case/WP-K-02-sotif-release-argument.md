@@ -4,12 +4,12 @@
 |---|---|
 | Work product | WP-K-02 SOTIF achievement evaluation and release recommendation |
 | Standard reference | ISO 21448:2022 §12 (evaluation of the achievement of the SOTIF, release); inputs from §6–§11, §13 |
-| Version | 0.1 |
+| Version | 0.2 (signatory for the SOTIF recommendation decided: the project lead signs after an external SOTIF review, DQ-025; 2026-10-17). 0.1 |
 | Status | Skeleton — structure, criteria and evidence checklist only. **The evaluation has not been performed.** Results sections are templates marked "Not yet executed" |
 | ASIL / scope | SOTIF (G2 of [WP-K-01](WP-K-01-safety-case.md)); AI contribution (G3) |
 | Author | Assurance team (initial draft) |
-| Reviewer(s) | TBD (I1); SOTIF lead; external assessor per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
-| Approver | SOTIF lead and safety manager (joint recommendation); release decision in [WP-K-06](WP-K-06-release-record.md) |
+| Reviewer(s) | TBD (I1); SOTIF lead; external SOTIF reviewer before the recommendation is signed (§5.3, DQ-025); external assessor per [WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md) |
+| Approver | The project lead (acting SOTIF lead and safety manager) signs the recommendation, after the external SOTIF review of §5.3 (DQ-025 option B); release decision in [WP-K-06](WP-K-06-release-record.md) |
 | Baseline | `8b8c6ae` |
 
 ## 1. Purpose
@@ -109,8 +109,11 @@ The statement also gives, for SH-11, the P(severity class) of an older struck pe
 |---|---|
 | Recommendation | Accept / Accept with conditions / Reject |
 | Release baseline | `ld-vX.Y.Z` |
+| External SOTIF review | reviewer, report reference, date, findings closed or accepted |
 | SOTIF lead | name, date |
 | Safety manager | name, date |
+
+Signing rule (decided 2026-10-14 by the project lead, DQ-025 option B): the project lead signs the recommendation. Because the lead holds the SOTIF lead and safety manager roles on an acting basis and would be signing their own work, the recommendation is valid only with the external SOTIF review row filled. The reviewer is engaged together with the assessor ([WP-M-06](../01-management/WP-M-06-confirmation-measures-plan.md)).
 
 ## 6. Known obstacles at this baseline
 
@@ -122,4 +125,4 @@ These are expected to block R-criteria unless closed (see defeaters in [WP-K-01 
 |---|---|---|
 | OI-1 | Confirm the evaluation aspects against the licensed text of ISO 21448 §12 and adjust R-01…R-12 | G2 |
 | OI-2 | Define the confidence level and statistical method for R-08 in WP-V-02 | G2 |
-| OI-3 | Define who may sign the SOTIF recommendation (SOTIF lead role is TBD in WP-M-02) | G1 |
+| OI-3 | Decided 2026-10-14 by the project lead (DQ-025 option B): the lead signs the SOTIF recommendation, with an external SOTIF review (§5.3). Open: engage the external SOTIF reviewer with the assessor (WP-M-06) | G5 |
