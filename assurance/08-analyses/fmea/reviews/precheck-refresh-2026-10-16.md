@@ -5,6 +5,7 @@
 | **Covers** | [hara-r0.1-precheck.md](hara-r0.1-precheck.md), [hara-r0.2-precheck.md](hara-r0.2-precheck.md), [item-definition-r0.1-precheck.md](item-definition-r0.1-precheck.md) |
 | **Why** | Decision register DQ-028, option A: Claude refreshes the stale pre-check items and lists what needs the lead's rating |
 | **Performed by** | Claude (AI assistant). Not re-run with the checklist tool: the items below were re-read against the current work products |
+| **Lead ratings** | §3, all eleven as proposed, 2026-10-17 |
 | **Nature** | Input to the human reviews. **Not** a review, and not the ISO 26262-2 confirmation review (HARA OI-007, item definition IOI-006) |
 | **Not covered** | The FSC and DFMEA pre-checks ([fsc-r0.1-precheck.md](fsc-r0.1-precheck.md), [dfmea-r0.2-precheck.md](dfmea-r0.2-precheck.md)), which belong to the safety-concept and DFMEA sessions |
 
@@ -35,7 +36,7 @@ The item-definition pre-check ran on LD-ITEM-001 rev 0.1. That document is now a
 
 ## 3. For the lead to rate
 
-Eleven items. Each has a proposed rating; reply with the rating per item, or "as proposed".
+Eleven items, each with a proposed rating. **Rated by the lead on 2026-10-17: all eleven as proposed** (DQ-028). The "Proposed" column is therefore the lead's rating. These ratings are input to the human reviews (IOI-006, WP-C-03 OI-8); they are not those reviews.
 
 | # | Pre-check | Item | Proposed | Why |
 |---|---|---|---|---|
