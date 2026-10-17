@@ -32,13 +32,15 @@
 <text x="54" y="332.5" class="d">Stale zero or positive accel</text>
 <text x="54" y="347.0" class="d">held (BE-1.19, BE-1.21)</text>
 <rect x="54.0" y="355.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="81.0" y="366.5" class="chip" fill="#fff">SWF-043</text>
+<text x="81.0" y="366.5" class="chip" fill="#fff">SFM-037</text>
 <rect x="112.9" y="355.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="139.8" y="366.5" class="chip" fill="#fff">SWF-023</text>
+<text x="139.8" y="366.5" class="chip" fill="#fff">SWF-043</text>
 <rect x="171.8" y="355.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="198.8" y="366.5" class="chip" fill="#fff">SWF-040</text>
+<text x="198.8" y="366.5" class="chip" fill="#fff">SWF-023</text>
 <rect x="54.0" y="377.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="81.0" y="388.5" class="chip" fill="#fff">SWF-072</text>
+<text x="81.0" y="388.5" class="chip" fill="#fff">SWF-040</text>
+<rect x="112.9" y="377.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="139.8" y="388.5" class="chip" fill="#fff">SWF-072</text>
 <circle cx="150.0" cy="425.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="283.5" y="295.5" width="220" height="265.5" rx="9" class="shadow"/>
 <rect x="282" y="293.0" width="220" height="265.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
