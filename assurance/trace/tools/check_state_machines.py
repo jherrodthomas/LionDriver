@@ -245,15 +245,8 @@ def render(sm: dict, sw: dict) -> str:
       lines.append("| " + " | ".join(_cell(x) for x in (
         n["event"], n["reaction"], n.get("build", "all"), ", ".join(s.replace("SWSR-", "") for s in n["swsr"]),
         n.get("code", ""))) + " |")
-  lines += ["", "```mermaid", "stateDiagram-v2", f"  [*] --> {sm['initial']}"]
-  for t in T:
-    if t["to"] in ("same", "m"):
-      continue
-    for s in _sources(t, sm["states"]):
-      if s == t["to"] and t.get("action") == "none":
-        continue
-      lines.append(f"  {s} --> {t['to']}: {t['id']}")
-  lines.append("```")
+  # the chart is the Stateflow-style figure generated from the same record (diagrams/make_diagrams.py), shown under
+  # this block; a second, Mermaid copy of it is no longer generated
   return "\n".join(lines)
 
 
