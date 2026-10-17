@@ -57,7 +57,7 @@ Modelling assumptions, where the sources are silent:
 
 | ID | Assumption |
 |---|---|
-| MA-01 | A "rising edge" of CRUISE_ACTIVE is relative to the last *valid* `0x1D2` frame on bus 0. The edge state is reset on a mode set (SWSR-311) and consumed even when the grant is refused (record T8). Reference build, SWSR-311 v0.24: after a mode set an edge counts only once CRUISE_ACTIVE = 0 has been received (deviation `mode_set_regrant` until the pin includes ATC-26) |
+| MA-01 | A "rising edge" of CRUISE_ACTIVE is relative to the last *valid* `0x1D2` frame on bus 0. The edge state is reset on a mode set (SWSR-311) and consumed even when the grant is refused (record T8). Reference build, SWSR-311 v0.24: after a mode set an edge counts only once CRUISE_ACTIVE = 0 has been received (ATC-26, in the C since opendbc `515b9a2`) |
 | MA-02 | Signals from a frame that fails validation are not used. A message never received since the last mode set counts as a failed RX check (SWSR-306 "not yet evaluated") |
 | MA-03 | Within one call, a clearing condition wins over a grant |
 | MA-04 | T3 is evaluated on every received frame, on any bus and any ID, with the brake and wheel speeds of the last valid `0x226` / `0xAA` (record T3 "any RX"). The brake edge reference is updated on every frame |
@@ -69,7 +69,9 @@ Modelling assumptions, where the sources are silent:
 
 Deviations: the places where the literal specification and the C are found to differ and are not yet resolved (see the results). Each is a named option in `DEVIATIONS`, off by default. Switching one on makes the model follow the C's reading at that point. This attributes every divergence to a named cause: with all of them on, the remaining divergence count must be zero. A difference that is resolved by changing the specification is removed from the list, and the model follows the new text (B2B-03, SWSR-405(c) v0.16).
 
-Two deviations exist only until the opendbc pin includes [jherrodthomas/opendbc#15](https://github.com/jherrodthomas/opendbc/pull/15): `mode_set_regrant` (SWSR-311 v0.24, ATC-26) and `tx_rate_regrant` (SWSR-518 v0.24, ATC-20). They reproduce the C before that change; the run at the PR head with both removed agrees everywhere ([results](results/B2B-TOY-AUTH-2026-10-13.md) §10).
+The two temporary deviations `mode_set_regrant` and `tx_rate_regrant` reproduced the C before ATC-26 and ATC-20. They were deleted at the pin bump to opendbc `515b9a2`, which contains both changes ([results](results/B2B-TOY-AUTH-2026-10-13.md) §11).
+
+The harness keeps the heartbeat's engaged flag set, so the LS-06 engagement window (record state ENGAGE_PENDING) grants at the edge and is not exercised; the model has no window. Finding SM-F1 (an edge while MAIN_ON = 0 opens the window) was found by reading the code and a unit-level probe, not by this harness ([change record](../../07-supporting/impact/change-2026-10-16-pin-515b9a2.md)). It is fixed since opendbc `98d3be1` and covered by an opendbc unit test, still not by this harness ([change record](../../07-supporting/impact/change-2026-10-17-pin-98d3be1.md) OI-1).
 
 Seeded model faults (`MUTANTS` in the harness) check the comparison itself. Each one changes a constant or a guard in the model. Each is run with all deviations on and must cause at least one divergence; one that does not is reported as `detected=False`.
 

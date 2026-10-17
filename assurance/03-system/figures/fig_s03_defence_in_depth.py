@@ -132,6 +132,7 @@ AOU_LAYER = {
   "AOU-13": ("envelope", "The de-energised harness relay connects the forward camera"),
   "AOU-14": ("ops", "is used with openpilot's default alternative experience"),
   "AOU-15": ("ops", "is used only on camera-ACC configurations"),
+  "AOU-16": ("vehicle", "the PCM keeps it stopped and held"),
 }
 
 # Short goal labels; src must appear in the goal's text in goals.yaml.

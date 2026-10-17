@@ -85,7 +85,7 @@
 - id: HE-01.2
   kind: hazardous-event
   parents: [H-01]
-  situation: "OS-01/OS-02 highway, adjacent traffic or barrier, 90–120 km/h"
+  situation: "OS-01/OS-02 highway, adjacent traffic or barrier, 90–110 km/h"
   effect: "Lateral departure into an adjacent vehicle or barrier"
   s: 3
   e: 4
@@ -191,7 +191,7 @@
 - id: HE-02.4
   kind: hazardous-event
   parents: [H-02]
-  situation: "OS-01 highway, straight or gentle curve, 90–120 km/h; lateral control silently lost (F-01 M01/M02/M04/M06/M11, F-03 M02 unannounced disengagement, F-08 M04 envelope stuck blocking)"
+  situation: "OS-01 highway, straight or gentle curve, 90–110 km/h; lateral control silently lost (F-01 M01/M02/M04/M06/M11, F-03 M02 unannounced disengagement, F-08 M04 envelope stuck blocking)"
   effect: "Slow drift out of the lane at highway speed"
   s: 3
   e: 4
@@ -334,7 +334,7 @@
 - id: HE-04.1
   kind: hazardous-event
   parents: [H-04]
-  situation: "OS-08 close following vehicle, 50–120 km/h"
+  situation: "OS-08 close following vehicle, 50–110 km/h"
   effect: "Rear-end impact by the following vehicle"
   s: 2
   e: 4

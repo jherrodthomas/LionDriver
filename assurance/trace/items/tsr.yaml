@@ -1025,7 +1025,7 @@
 
 - id: TSR-607
   kind: tsr
-  text: "The SoC shall warn the driver when the EPS reports LKA unavailable or faulted (complements TSR-110). (a) Outside the cases of (b) the warning is the take-over request (soft disable, visual and acoustic). (b) When the fault starts within 1.5 s of a driver steering override, or at standstill, the SoC may first give the lighter prompt (small alert with chime); if the fault is still present 1.5 s after it started, the SoC shall escalate to the take-over request of (a). The lighter prompt shall not be held for the duration of the fault. (Decided 2026-10-16, register DQ-342, A; System FMEA SFM-ACT-023.)"
+  text: "The SoC shall warn the driver when the EPS reports LKA unavailable or faulted (complements TSR-110). (a) Outside the cases of (b) the warning is the take-over request (soft disable, visual and acoustic). (b) When the fault starts within 1.5 s of a driver steering override, or at standstill, the SoC may first give the lighter prompt (small alert with chime); if the fault is still present 1.5 s after it started, the SoC shall escalate to the take-over request of (a). The lighter prompt shall not be held for the duration of the fault. (Decided 2026-10-16, register DQ-342, A; System FMEA SFM-ACT-023.) (c) When the fault starts while the driver is steering and lasts more than 1.5 s while they keep steering, the SoC shall give at least the lighter prompt, so that the driver learns of the lost assistance before releasing the wheel; on release the take-over request of (a) follows at once. (Added 2026-10-17 by the TSR owner for impact record OI-2; consistent with DQ-342.)"
   asil: "QM (C-sup: TSR-110)"
   parents: [FSR-02.01]
   parent_text: "FSR-02.01"
@@ -1034,7 +1034,7 @@
   mechanism: "WRN"
   timing: "(a) ≤ 1 s; (b) prompt ≤ 1 s, take-over request ≤ 1.5 s after fault onset (the driver has hands on the wheel within the window)"
   verification: "T-SIL, T-VEH"
-  baseline_impl: "Partial: `steerFaultTemporary/Permanent` → events with 1.5 s hysteresis (`selfdrive/car/car_events.py`, onboard review). (b) not met: once the lighter `steerTempUnavailableSilent` starts after an override or at standstill it is latched for the whole fault and never escalates (`openpilot/selfdrive/car/car_events.py:170-175`, `selfdrive/selfdrived/events.py:516-521`)"
+  baseline_impl: "(a), (b) implemented in `7158a9a` (#174): the lighter `steerTempUnavailableSilent` is allowed only for the first 1.5 s of the fault (`STEER_FAULT_SILENT_FRAMES`, `openpilot/selfdrive/car/car_events.py:17, 169-183`), then `steerTempUnavailable` (soft disable); unit-tested (`openpilot/selfdrive/car/tests/test_steer_fault_warning.py`, 6 tests); not verified on the vehicle (impact record (assurance/07-supporting/impact/change-2026-10-17-eps-fault-escalation.md)). (c) not met: no alert while the driver keeps steering through the fault onset (`no_steer_warning`, upstream behaviour; impact record OI-2)"
   status: proposed
   source: WP-S-02
 

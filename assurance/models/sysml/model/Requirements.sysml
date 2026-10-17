@@ -105,7 +105,7 @@ package LionDriverRequirements {
         :>> workProduct = "WP-C-03";
         :>> allocText = "";
         :>> asil = "A";
-        :>> safeState = "Escalating take-over alerts; on no response, the no-response reaction: controlled deceleration in lane to a stop and lockout. The reaction at zero awareness is still to be defined, with System FMEA SFM-ACT-005, in the FSC";
+        :>> safeState = "Escalating take-over alerts; on no response, the no-response reaction (DQ-365 A, WP-C-04 FSR-02.09): steering stays on while the vehicle decelerates in lane to a standstill, stays stopped and held, and cannot drive off or be re-engaged until the driver responds. The hold rests on the PCM (AOU-16, not yet tested)";
         :>> ftti = "≤ 6 s from loss of attention to the first alert (preliminary)";
     }
     requirement <'FSR-01.01'> fsr_01_01 : FunctionalSafetyRequirement {
@@ -1120,7 +1120,7 @@ package LionDriverRequirements {
         :>> verifMethod = "T-HIL, T-VEH";
     }
     requirement <'TSR-607'> tsr_607 : TechnicalSafetyRequirement {
-        doc /* The SoC shall warn the driver when the EPS reports LKA unavailable or faulted (complements TSR-110). (a) Outside the cases of (b) the warning is the take-over request (soft disable, visual and acoustic). (b) When the fault starts within 1.5 s of a driver steering override, or at standstill, the SoC may first give the lighter prompt (small alert with chime); if the fault is still present 1.5 s after it started, the SoC shall escalate to the take-over request of (a). The lighter prompt shall not be held for the duration of the fault. (Decided 2026-10-16, register DQ-342, A; System FMEA SFM-ACT-023.) */
+        doc /* The SoC shall warn the driver when the EPS reports LKA unavailable or faulted (complements TSR-110). (a) Outside the cases of (b) the warning is the take-over request (soft disable, visual and acoustic). (b) When the fault starts within 1.5 s of a driver steering override, or at standstill, the SoC may first give the lighter prompt (small alert with chime); if the fault is still present 1.5 s after it started, the SoC shall escalate to the take-over request of (a). The lighter prompt shall not be held for the duration of the fault. (Decided 2026-10-16, register DQ-342, A; System FMEA SFM-ACT-023.) (c) When the fault starts while the driver is steering and lasts more than 1.5 s while they keep steering, the SoC shall give at least the lighter prompt, so that the driver learns of the lost assistance before releasing the wheel; on release the take-over request of (a) follows at once. (Added 2026-10-17 by the TSR owner for impact record OI-2; consistent with DQ-342.) */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
         :>> asil = "QM (C-sup: TSR-110)";
