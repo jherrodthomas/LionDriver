@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-M-01 Assurance strategy and lifecycle tailoring |
 | Standard reference | ISO 26262-2:2018 §6 (tailoring, safety plan inputs); ISO 21448:2022 §4; ISO/SAE 21434:2021 §6; ISO/PAS 8800:2024 (AI safety management, assurance argument); ASPICE 4.0 MAN.3; UL 4600 (informative, safety case structure) |
-| Version | 0.6 (Figure 4-1 pinned to §4.1 and §4.2 so CI detects when it may be stale; §8 statuses brought level with the WP-M-07 §5 decision log: D-04…D-07 given a status, the lead's answers of 2026-10-14 to D-04, D-05, D-06 and D-13 recorded as answered and not yet applied; 2026-10-14). 0.5 (merge of PR #47 software alignment with the base: D-14 added (authorize the ISO 26262-6 software lifecycle, numbered D-09 in PR #47 drafts); 2026-10-13). 0.4 (§4.1 safety envelope diagram redrawn as Figure 4-1; text version kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: P0 sync policy per D-02, D-13 added (envelope strategy); 2026-10-12). 0.1 |
+| Version | 0.7 (§3.1 records why the Corolla E210 was chosen as the reference configuration; 2026-10-17). 0.6 (Figure 4-1 pinned to §4.1 and §4.2 so CI detects when it may be stale; §8 statuses brought level with the WP-M-07 §5 decision log: D-04…D-07 given a status, the lead's answers of 2026-10-14 to D-04, D-05, D-06 and D-13 recorded as answered and not yet applied; 2026-10-14). 0.5 (merge of PR #47 software alignment with the base: D-14 added (authorize the ISO 26262-6 software lifecycle, numbered D-09 in PR #47 drafts); 2026-10-13). 0.4 (§4.1 safety envelope diagram redrawn as Figure 4-1; text version kept; 2026-10-13). 0.3 (reference configuration named by generation, E210; 2026-10-12). 0.2 (status update for the integrated envelope changes: P0 sync policy per D-02, D-13 added (envelope strategy); 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All (FuSa, SOTIF, CS, AI, process) |
 | Author | Assurance team (initial draft) |
@@ -48,6 +48,8 @@ From the [baseline gap assessment](../00-assessment/gap-assessment.md):
 | User | A licensed, attentive driver who has been briefed according to [WP-O-03](../09-production-operation/WP-O-03-user-information-safety-warnings.md). During the development phase: trained safety drivers only ([WP-V-07](../06-validation/WP-V-07-vehicle-test-operations.md)) |
 
 The vehicle scope is the E210 generation, with the market and powertrain qualifiers above, not one model year or trim (decision 2026-10-12). Whether ECU firmware and equipment differences across the model years and trims covered change the envelope assumptions is open ([WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-9).
+
+**Why this configuration.** The Corolla E210 with TSS 2.0 was chosen because it exercises the whole function under analysis: on this car openpilot provides both lane centring and longitudinal control by default, while the vehicle's own EPS torque limits and pre-collision braking stay active as independent barriers the safety argument relies on (§4.1).
 
 Any other vehicle, device, software baseline or ODD extension needs an impact analysis ([WP-M-12](WP-M-12-impact-analysis.md)) and supporting evidence before it joins the claimed scope.
 
