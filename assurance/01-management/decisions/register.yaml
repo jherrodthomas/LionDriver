@@ -4350,24 +4350,29 @@
   status: queued
 
 - id: DQ-363
-  question: "When the driver presses the accelerator and LionDriver keeps braking, which goal owns that: braking (SG-04) or release on driver action (SG-05)?"
-  context: "The SG-05 tree has a branch for the accelerator not overriding LionDriver's braking, but the hazards rated for SG-05 cover brake, cancel and steering only. Since your answer to DQ-022, the accelerator pauses speed control rather than disengaging. The FMEAs already put this under braking (HZ-006), and **SG-04 misses the one stuck signal that defeats both of its checks**."
+  question: "When the driver presses the accelerator while LionDriver is braking, and the accelerator signal is stuck at \"not pressed\", which goal owns it: braking (SG-04) or release on driver action (SG-05)?"
+  context: "The fault trees analyse this case twice and neither fits it. SG-05 has it as G5.4, but SG-05's rated hazards cover brake, cancel and steering only, and the FMEA mode behind it (SFM-020) names the braking hazard HZ-006. SG-04 has it as G4.9, but G4.9 lacks the one fault that defeats both of its checks: the stuck accelerator signal (GAS_RELEASED stuck \"released\"), which fools the host and the panda envelope at once. Since DQ-022 the accelerator pauses speed control rather than disengaging, which is why the braking goal fits better."
   reversibility: easy
-  blocks: "G5.4, MCS-05.6, G4.9 (WP-A-04 v1.2); WP-C-03 HE-05.x"
+  blocks: "WP-A-04 G4.9, G5.4, MCS-05.6 and BE-5.08's FMEA link (fta-fmea-mapping F-29); WP-C-03 HE-05.x"
   gate: G1
+  asked: 2026-10-17
+  batch: 8
   decider: lead
   after: [DQ-022]
   options:
     - key: A
       recommended: true
-      title: "Move it to SG-04"
-      detail: "Add the stuck gas signal to G4.9 and drop G5.4 from SG-05. Cost: a tree edit; no HARA change."
+      title: "Move it to SG-04 (braking)"
+      detail: "Add the stuck accelerator signal to G4.9 as a single cause that defeats both checks, and drop G5.4 from SG-05. Matches the FMEAs (HZ-006). Cost: one tree edit and a new SG-04 single point; no HARA change."
     - key: B
       title: "Keep it in SG-05 and add a hazardous event for it"
-      detail: "A new HE-05 event for accelerator override in the HARA, rated and traced. Cost: a HARA revision and FMEA effect updates."
-  sources: ["assurance/08-analyses/fta-fmea-mapping.md F-29", "assurance/08-analyses/WP-A-04-system-fta-fmea.md G5.4"]
-  status: queued
-
+      detail: "A new HE-05 event for accelerator override, rated and traced in the HARA, and the FMEA effects updated to cite SG-05's hazards. Cost: a HARA revision and FMEA updates; SG-04 still misses the stuck signal unless it is also added there."
+  sources:
+    - assurance/08-analyses/fta-fmea-mapping.md F-29
+    - assurance/08-analyses/WP-A-04-system-fta-fmea.md G4.9, G5.4, MCS-05.6
+    - assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-020
+    - assurance/08-analyses/fta-fmea-map.yaml BE-5.08
+  status: open
 - id: DQ-364
   question: "Should acceleration while LionDriver is not engaged, or just after the driver brakes, be a rated hazardous event of the acceleration goal (SG-03)?"
   context: "The SG-03 fault tree covers acceleration while not engaged and after a brake press, but the HARA rates no SG-03 event for it: **unintended engagement is only rated as a steering hazard**. So the FMEA modes for spurious engagement are not checked against SG-03."
