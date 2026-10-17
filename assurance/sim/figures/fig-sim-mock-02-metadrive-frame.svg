@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="800" viewBox="0 0 1100 800" role="img" aria-labelledby="t d">
+<title id="t">Mock-up 2: a layer-3 MetaDrive clip frame (third-person view, instrumented)</title>
+<desc id="d">MOCK-UP: layout and quantities only, illustrative numbers, not a result. What one frame of a MetaDrive closed-loop clip would show: the scenario in plan view with the Corolla and a lead vehicle, and an instrument strip with scenario ID, time, speed, engaged state, lateral error, alert state and the outcome class the WP-V-03 pass criteria use. openpilot never sees the mesh; it is drawn for the viewer.</desc>
+<style>
+svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2de; --lane:#3d3c39; --band:#fbe3d6;
+      --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#c98500; --s5:#6250d6; --s8:#e34948; --car:#d9d7d1; --mock:#fff3c4; }
+@media (prefers-color-scheme: dark) {
+  svg { --bg:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --ink3:#8d8c85; --grid:#33322f; --lane:#c3c2b7; --band:#4a2a1c;
+        --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#eda100; --s5:#9085e9; --s8:#e66767; --car:#3a3936; --mock:#4a4020; }
+}
+.bg { fill:var(--bg); } .t { font:12px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.t2 { font:11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink2); }
+.th { font:600 15px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tb { font:600 12.5px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--ink); }
+.tm { font:600 11px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif; fill:var(--s4); letter-spacing:.06em; }
+.grid { stroke:var(--grid); stroke-width:1; } .axis { stroke:var(--ink3); stroke-width:1; }
+.lane { stroke:var(--lane); stroke-width:1.5; } .laned { stroke:var(--lane); stroke-width:1.2; stroke-dasharray:8 6; }
+.thr { stroke:var(--s8); stroke-width:1.3; stroke-dasharray:6 4; } .thrn { stroke:var(--s4); stroke-width:1.3; stroke-dasharray:2 3; }
+.band { fill:var(--band); } .path { fill:none; stroke:var(--s1); stroke-width:2.2; }
+.car { fill:var(--car); stroke:var(--ink2); stroke-width:1.2; } .carl { fill:none; stroke:var(--ink2); stroke-width:1.2; }
+.ghost { fill:none; stroke:var(--ink3); stroke-width:1; stroke-dasharray:3 3; }
+.fault { stroke:var(--s2); stroke-width:1.5; } .fov { fill:var(--s1); fill-opacity:.12; stroke:var(--s1); stroke-width:1.2; }
+.mock { fill:var(--mock); stroke:var(--s4); stroke-width:1; }
+.m1 { fill:var(--s2); } .m2 { fill:var(--s5); } .m3 { fill:var(--s3); } .m4 { fill:var(--s4); } .m5 { fill:var(--s1); } .m6 { fill:var(--s8); }
+</style>
+<rect class="bg" width="1100" height="800"/>
+<rect class="mock" x="20" y="14" width="1060" height="26" rx="4"/>
+<text x="550.0" y="32.0" class="tm" text-anchor="middle">MOCK-UP: layout and quantities only, illustrative numbers, not a result</text>
+<text x="30.0" y="66.0" class="th">Mock-up 2: a layer-3 MetaDrive clip frame (third-person view, instrumented)</text>
+<rect class="bg" x="60" y="95" width="620" height="420" stroke="var(--grid)"/>
+<line class="lane" x1="60" y1="227.3" x2="680" y2="227.3"/>
+<line class="laned" x1="60" y1="279.1" x2="680" y2="279.1"/>
+<line class="laned" x1="60" y1="330.9" x2="680" y2="330.9"/>
+<line class="lane" x1="60" y1="382.7" x2="680" y2="382.7"/>
+<polygon class="car" points="262.6,300.7 262.3,298.8 262.1,298.0 261.8,297.6 261.5,296.9 261.2,296.4 260.9,296.0 260.7,295.5 260.4,295.1 260.1,294.5 259.8,293.9 259.5,293.7 259.3,293.6 259.0,293.5 258.7,293.5 258.4,293.4 258.1,293.4 257.9,293.3 257.6,293.3 257.3,293.2 257.0,293.1 256.7,293.1 256.5,293.0 256.2,292.9 255.9,292.9 255.6,292.8 255.3,292.7 255.1,292.7 254.8,292.7 254.5,292.7 254.2,292.7 253.9,292.7 253.7,292.7 253.4,292.7 253.1,292.7 252.8,292.7 252.5,292.7 252.3,292.7 252.0,292.7 251.7,292.7 251.4,292.7 251.1,292.7 250.9,292.7 250.6,292.7 250.3,292.7 250.0,292.7 249.7,292.7 249.5,292.7 249.2,292.7 248.9,292.7 248.6,292.7 248.3,292.7 248.1,292.7 247.8,292.7 247.5,292.7 247.2,292.7 246.9,292.7 246.7,292.7 246.4,292.7 246.1,292.7 245.8,292.7 245.5,292.7 245.3,292.7 245.0,292.7 244.7,292.7 244.4,292.7 244.1,292.7 243.9,292.7 243.6,292.7 243.3,292.7 243.0,292.7 242.7,292.7 242.5,292.7 242.2,292.7 241.9,292.7 241.6,292.7 241.3,292.7 241.1,292.7 240.8,292.2 240.5,291.5 240.2,291.3 239.9,290.9 239.7,290.8 239.4,290.7 239.1,290.6 238.8,290.6 238.5,292.8 238.3,292.8 238.0,292.8 237.7,292.8 237.4,292.8 237.1,292.8 236.9,292.8 236.6,292.8 236.3,292.8 236.0,292.8 235.7,292.8 235.5,292.8 235.2,292.8 234.9,292.8 234.6,292.8 234.3,292.8 234.1,292.8 233.8,292.8 233.5,292.8 233.2,292.8 232.9,292.8 232.7,292.8 232.4,292.8 232.1,292.8 231.8,292.8 231.5,292.8 231.3,292.8 231.0,292.8 230.7,292.8 230.4,292.8 230.1,292.8 229.9,292.8 229.6,292.8 229.3,292.8 229.0,292.8 228.7,292.8 228.5,292.8 228.2,292.8 227.9,292.8 227.6,292.8 227.3,292.8 227.1,292.8 226.8,292.8 226.5,292.8 226.2,292.8 225.9,292.8 225.7,292.8 225.4,292.8 225.1,292.8 224.8,292.8 224.5,292.8 224.3,292.8 224.0,292.8 223.7,292.8 223.4,292.8 223.1,292.8 222.9,292.8 222.6,292.8 222.3,292.8 222.0,292.8 221.7,292.8 221.5,292.8 221.2,292.8 220.9,292.8 220.6,292.8 220.3,292.7 220.1,292.7 219.8,292.7 219.5,292.7 219.2,292.7 218.9,292.7 218.7,292.7 218.4,292.7 218.1,292.7 217.8,292.7 217.5,292.7 217.3,292.7 217.0,292.7 216.7,292.7 216.4,292.7 216.1,292.7 215.9,292.7 215.6,292.7 215.3,292.7 215.0,292.7 214.7,292.7 214.5,292.7 214.2,292.7 213.9,292.6 213.6,292.6 213.3,292.6 213.1,292.6 212.8,292.6 212.5,292.6 212.2,292.6 211.9,292.6 211.7,292.6 211.4,292.6 211.1,292.6 210.8,292.6 210.5,292.6 210.3,292.6 210.0,292.6 209.7,292.7 209.4,292.7 209.1,292.7 208.9,292.7 208.6,292.7 208.3,292.7 208.0,292.7 207.7,292.7 207.5,292.7 207.2,292.8 206.9,292.8 206.6,292.8 206.3,292.8 206.1,292.8 205.8,292.9 205.5,293.0 205.2,293.1 204.9,293.2 204.7,293.3 204.4,293.4 204.1,293.4 203.8,293.4 203.5,293.5 203.3,293.5 203.0,293.6 202.7,293.6 202.4,293.7 202.1,293.7 201.9,293.8 201.6,293.8 201.3,293.9 201.0,294.1 200.7,294.5 200.5,294.8 200.2,295.0 199.9,295.3 199.6,295.5 199.3,295.6 199.1,295.9 198.8,296.2 198.5,296.5 198.2,296.9 197.9,298.3 197.7,299.9 197.4,302.4 197.4,307.6 197.7,310.1 197.9,311.7 198.2,313.1 198.5,313.5 198.8,313.8 199.1,314.1 199.3,314.3 199.6,314.5 199.9,314.7 200.2,315.0 200.5,315.2 200.7,315.5 201.0,315.9 201.3,316.1 201.6,316.2 201.9,316.2 202.1,316.3 202.4,316.3 202.7,316.4 203.0,316.4 203.3,316.5 203.5,316.5 203.8,316.6 204.1,316.6 204.4,316.6 204.7,316.7 204.9,316.8 205.2,316.9 205.5,317.0 205.8,317.1 206.1,317.2 206.3,317.2 206.6,317.2 206.9,317.2 207.2,317.2 207.5,317.3 207.7,317.3 208.0,317.3 208.3,317.3 208.6,317.3 208.9,317.3 209.1,317.3 209.4,317.3 209.7,317.3 210.0,317.4 210.3,317.4 210.5,317.4 210.8,317.4 211.1,317.4 211.4,317.4 211.7,317.4 211.9,317.4 212.2,317.4 212.5,317.4 212.8,317.4 213.1,317.4 213.3,317.4 213.6,317.4 213.9,317.4 214.2,317.3 214.5,317.3 214.7,317.3 215.0,317.3 215.3,317.3 215.6,317.3 215.9,317.3 216.1,317.3 216.4,317.3 216.7,317.3 217.0,317.3 217.3,317.3 217.5,317.3 217.8,317.3 218.1,317.3 218.4,317.3 218.7,317.3 218.9,317.3 219.2,317.3 219.5,317.3 219.8,317.3 220.1,317.3 220.3,317.3 220.6,317.2 220.9,317.2 221.2,317.2 221.5,317.2 221.7,317.2 222.0,317.2 222.3,317.2 222.6,317.2 222.9,317.2 223.1,317.2 223.4,317.2 223.7,317.2 224.0,317.2 224.3,317.2 224.5,317.2 224.8,317.2 225.1,317.2 225.4,317.2 225.7,317.2 225.9,317.2 226.2,317.2 226.5,317.2 226.8,317.2 227.1,317.2 227.3,317.2 227.6,317.2 227.9,317.2 228.2,317.2 228.5,317.2 228.7,317.2 229.0,317.2 229.3,317.2 229.6,317.2 229.9,317.2 230.1,317.2 230.4,317.2 230.7,317.2 231.0,317.2 231.3,317.2 231.5,317.2 231.8,317.2 232.1,317.2 232.4,317.2 232.7,317.2 232.9,317.2 233.2,317.2 233.5,317.2 233.8,317.2 234.1,317.2 234.3,317.2 234.6,317.2 234.9,317.2 235.2,317.2 235.5,317.2 235.7,317.2 236.0,317.2 236.3,317.2 236.6,317.2 236.9,317.2 237.1,317.2 237.4,317.2 237.7,317.2 238.0,317.2 238.3,317.2 238.5,317.2 238.8,319.4 239.1,319.4 239.4,319.3 239.7,319.2 239.9,319.1 240.2,318.7 240.5,318.5 240.8,317.8 241.1,317.3 241.3,317.3 241.6,317.3 241.9,317.3 242.2,317.3 242.5,317.3 242.7,317.3 243.0,317.3 243.3,317.3 243.6,317.3 243.9,317.3 244.1,317.3 244.4,317.3 244.7,317.3 245.0,317.3 245.3,317.3 245.5,317.3 245.8,317.3 246.1,317.3 246.4,317.3 246.7,317.3 246.9,317.3 247.2,317.3 247.5,317.3 247.8,317.3 248.1,317.3 248.3,317.3 248.6,317.3 248.9,317.3 249.2,317.3 249.5,317.3 249.7,317.3 250.0,317.3 250.3,317.3 250.6,317.3 250.9,317.3 251.1,317.3 251.4,317.3 251.7,317.3 252.0,317.3 252.3,317.3 252.5,317.3 252.8,317.3 253.1,317.3 253.4,317.3 253.7,317.3 253.9,317.3 254.2,317.3 254.5,317.3 254.8,317.3 255.1,317.3 255.3,317.3 255.6,317.2 255.9,317.1 256.2,317.1 256.5,317.0 256.7,316.9 257.0,316.9 257.3,316.8 257.6,316.7 257.9,316.7 258.1,316.6 258.4,316.6 258.7,316.5 259.0,316.5 259.3,316.4 259.5,316.3 259.8,316.1 260.1,315.5 260.4,314.9 260.7,314.5 260.9,314.0 261.2,313.6 261.5,313.1 261.8,312.4 262.1,312.0 262.3,311.2 262.6,309.3"/>
+<text x="230.0" y="343.9" class="t2" text-anchor="middle">ego: Corolla E210 mesh</text>
+<rect class="carl" x="530.0" y="292.4" width="63.0" height="25.2" rx="6"/>
+<text x="561.5" y="343.9" class="t2" text-anchor="middle">lead vehicle (KS-05 cut-in / braking)</text>
+<line class="thr" x1="262.6" y1="242.8" x2="530.0" y2="242.8"/>
+<text x="396.3" y="236.8" class="t2" text-anchor="middle">gap 23.4 m (time gap 0.77 s)</text>
+<text x="60.0" y="85.0" class="tb">Plan view of KS-05 at t = 12.4 s from MetaDrive's state (camera path unchanged)</text>
+<rect class="bg" x="700" y="95" width="340" height="420" stroke="var(--grid)"/>
+<text x="712.0" y="123.0" class="t2">Scenario</text>
+<text x="1028.0" y="123.0" class="tb" text-anchor="end">KS-05 lead brakes 4 m/s²</text>
+<text x="712.0" y="157.0" class="t2">Configuration</text>
+<text x="1028.0" y="157.0" class="tb" text-anchor="end">CFG-001, Chill mode</text>
+<text x="712.0" y="191.0" class="t2">t</text>
+<text x="1028.0" y="191.0" class="tb" text-anchor="end">12.40 s</text>
+<text x="712.0" y="225.0" class="t2">v</text>
+<text x="1028.0" y="225.0" class="tb" text-anchor="end">27.8 m/s (100 km/h)</text>
+<text x="712.0" y="259.0" class="t2">Engaged</text>
+<text x="1028.0" y="259.0" class="tb" text-anchor="end">yes, lateral + long.</text>
+<text x="712.0" y="293.0" class="t2">Lateral error</text>
+<text x="1028.0" y="293.0" class="tb" text-anchor="end">0.12 m</text>
+<text x="712.0" y="327.0" class="t2">Accel request</text>
+<text x="1028.0" y="327.0" class="tb" text-anchor="end">−2.9 m/s²</text>
+<text x="712.0" y="361.0" class="t2">Lead gap</text>
+<text x="1028.0" y="361.0" class="tb" text-anchor="end">23.4 m, 0.77 s</text>
+<text x="712.0" y="395.0" class="t2">Alert</text>
+<text x="1028.0" y="395.0" class="tb" text-anchor="end">none</text>
+<text x="712.0" y="429.0" class="t2">Panda</text>
+<text x="1028.0" y="429.0" class="tb" text-anchor="end">all frames allowed</text>
+<text x="712.0" y="463.0" class="t2">Outcome class</text>
+<text x="1028.0" y="463.0" class="tb" text-anchor="end">pending</text>
+<text x="700.0" y="85.0" class="tb">Instrument strip</text>
+<text x="60.0" y="560.0" class="tb">Outcome classes a clip is scored against at its end (WP-V-03 §4 pass criteria, per scenario family)</text>
+<circle class="m3" cx="70" cy="584" r="6"/>
+<text x="86.0" y="588.0" class="tb">A pass</text>
+<text x="190.0" y="588.0" class="t2">stays in lane, min gap ≥ 1.0 s, no driver intervention</text>
+<circle class="m4" cx="70" cy="610" r="6"/>
+<text x="86.0" y="614.0" class="tb">B degraded</text>
+<text x="190.0" y="614.0" class="t2">alert raised and driver takes over inside the FTTI</text>
+<circle class="m1" cx="70" cy="636" r="6"/>
+<text x="86.0" y="640.0" class="tb">C fail</text>
+<text x="190.0" y="640.0" class="t2">lane departure, gap &lt; 0.5 s, or late/no alert</text>
+<circle class="m5" cx="70" cy="662" r="6"/>
+<text x="86.0" y="666.0" class="tb">D excluded</text>
+<text x="190.0" y="666.0" class="t2">sim artefact or outside ODD; listed, not scored</text>
+<text x="60.0" y="710.0" class="t2">Credit only per scenario family after the WP-V-02 §5.3 fidelity case (DQ-139); until then clips rank risks and guide tests.</text>
+<text x="30.0" y="782.0" class="t2">Generated by assurance/sim/assets/tools/vehicle_figures.py. Layer 3 is planned (backlog item 3); numbers are illustrative. The lead vehicle is a box on purpose: only the ego uses the licensed mesh. Synthetic data, no evidence credit.</text>
+</svg>

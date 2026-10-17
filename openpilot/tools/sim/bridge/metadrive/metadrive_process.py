@@ -13,6 +13,7 @@ from metadrive.obs.image_obs import ImageObservation
 
 from openpilot.common.realtime import Ratekeeper
 
+from openpilot.tools.sim.bridge.metadrive import corolla_vehicle
 from openpilot.tools.sim.lib.common import vec3
 from openpilot.tools.sim.lib.camerad import W, H
 
@@ -58,6 +59,10 @@ def metadrive_process(dual_camera: bool, config: dict, camera_array, wide_camera
   if dual_camera:
     assert wide_camera_array is not None
     wide_road_image = np.frombuffer(wide_camera_array.get_obj(), dtype=np.uint8).reshape((H, W, 3))
+
+  if config.get("vehicle_config", {}).get("vehicle_model") == corolla_vehicle.MODEL_KEY:
+    # the vehicle_type registry lives in this process, so the Corolla class is added here, right before use
+    corolla_vehicle.register()
 
   env = MetaDriveEnv(config)
 

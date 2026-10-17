@@ -103,3 +103,8 @@ TASK.md
 assurance/08-analyses/fmea/exports/*
 # reviewer workbooks (tools/safety/fmea_review_xlsx.py) are committed; CI checks them against the YAML
 !assurance/08-analyses/fmea/exports/review/
+
+# Licensed 3D vehicle assets (TurboSquid editorial-use licence): never commit; see assurance/sim/assets/README.md
+assurance/sim/assets/*
+!assurance/sim/assets/README.md
+!assurance/sim/assets/tools/

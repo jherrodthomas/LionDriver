@@ -5,6 +5,7 @@ from metadrive.component.sensors.base_camera import _cuda_enable
 from metadrive.component.map.pg_map import MapGenerateMethod
 
 from openpilot.tools.sim.bridge.common import SimulatorBridge
+from openpilot.tools.sim.bridge.metadrive import corolla_vehicle
 from openpilot.tools.sim.bridge.metadrive.metadrive_common import RGBCameraRoad, RGBCameraWide
 from openpilot.tools.sim.bridge.metadrive.metadrive_world import MetaDriveWorld
 from openpilot.tools.sim.lib.camerad import W, H
@@ -65,13 +66,20 @@ class MetaDriveBridge(SimulatorBridge):
     if self.dual_camera:
       sensors["rgb_wide"] = (RGBCameraWide, W, H)
 
+    vehicle_config = {
+      "enable_reverse": False,
+      "render_vehicle": False,  # the ego body stays out of the camera images openpilot consumes
+      "image_source": "rgb_road",
+    }
+    if corolla_vehicle.enabled():
+      # LionDriver: draw the ego as the Corolla E210 mesh (third-person views only; render_vehicle stays False).
+      # Fails here, before the MetaDrive process starts, if the licensed asset folder is not where the variable says.
+      corolla_vehicle.asset_dir()
+      vehicle_config["vehicle_model"] = corolla_vehicle.MODEL_KEY
+
     config = {
       "use_render": self.should_render,
-      "vehicle_config": {
-        "enable_reverse": False,
-        "render_vehicle": False,
-        "image_source": "rgb_road",
-      },
+      "vehicle_config": vehicle_config,
       "sensors": sensors,
       "image_on_cuda": _cuda_enable,
       "image_observation": True,
