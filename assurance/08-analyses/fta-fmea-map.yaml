@@ -24,7 +24,7 @@
 # System FMEA rev 0.6, PFMEA rev 0.3). SG-01 added 2026-10-16 (WP-A-04 v1.0; findings F-11..F-16, F-14 and F-15 open for
 # the FMEA owners). SG-07 added 2026-10-16 with its tree re-based on the harness box switches (WP-A-04 v1.1, RR-2026-010;
 # findings F-17..F-19 open for the FMEA owners). SG-02, SG-03, SG-05, SG-06 added 2026-10-16 (WP-A-04 v1.2; findings F-20..F-36),
-# so every goal with a fault tree is in scope. SG-08 added 2026-10-16 (WP-A-04 v1.3, §13; F-37, F-38). Draft, AI-assisted; each link needs review.
+# so every goal with a fault tree is in scope. SG-08 added 2026-10-16 (WP-A-04 v1.3, §13; F-37, F-38); its safe state applied 2026-10-16 (DQ-365 A, WP-A-04 v1.6). Draft, AI-assisted; each link needs review.
 schema_version: 1
 source: assurance/08-analyses/WP-A-04-system-fta-fmea.md
 scope: [SG-01, SG-02, SG-03, SG-04, SG-05, SG-06, SG-07, SG-08]
@@ -201,12 +201,14 @@ events:
     note: PFM-001 (released as a DEBUG build); SWF-013.C2 is the SW FMEA view of the same release fault (BE-1.08)
   - id: BE-1.19
     class: systematic_sw
-    fmea: [SFM-006, SWF-040, SWF-043, SWF-033, SWF-072, SWF-078, SWF-080, SWF-081]
+    fmea: [SFM-006, SFM-037, SWF-040, SWF-043, SWF-033, SWF-072, SWF-078, SWF-080, SWF-081]
     note: >-
       SFM-006 (lateral command frozen), SWF-040 (stale engagement state), SWF-043.C1 (stale model and plan),
       SWF-033 (stale inputs handled as soft disable, so actuation continues up to 3 s). SW FMEA rev 1.0: SWF-072
       (modelV2 valid while stale or non-finite), SWF-078 (camera frames dropped or unsynchronised), SWF-080 (messages
-      lost silently) and SWF-081 (SubMaster alive for 10 periods) are the sources of the stale input
+      lost silently) and SWF-081 (SubMaster alive for 10 periods) are the sources of the stale input. SFM-037 (longitudinal command frozen,
+      System FMEA rev 0.22) is the longitudinal form of SFM-006 that SG-03 needs; as the event is shared, SG-01 warns on
+      SFM-037 and SG-03 on SFM-006
   - id: BE-1.20
     class: systematic_sw
     fmea: [SWF-043]
@@ -384,13 +386,15 @@ events:
       kernel hang or SoC hardware fault; the DFMEA does not cover the SoC compute section (F-28)
   - id: BE-2.06
     class: random_hw
-    fmea: [DFM-008, DFM-021, DFM-004, DFM-016, DFM-018, DFM-012, PFM-008, PFM-006, SWF-024, SWF-047, SFM-005]
+    fmea: [DFM-008, DFM-021, DFM-004, DFM-016, DFM-018, DFM-012, PFM-008, PFM-006, SWF-024, SWF-047, SFM-005, SFM-011]
     note: >-
       Car-side bus-off: DFM-008 (transceiver holds bus 0 dominant), DFM-021 (clamp diode short); MCU hang or not running:
       DFM-004, DFM-016 (bootloader, SFMEA-27), DFM-018 (over-temperature); CAN path lost at the harness: DFM-012.C1, PFM-008,
       PFM-006; host side: SWF-024.C1/C2 and SFM-005.C2 (sendcan dropped in pandad), SWF-047.C1/C2 (controlsd exits or overruns,
       card stops). The configuration commands 0xe5/0xde/0xf1 (FFI-CM-09) have no SW FMEA mode (as BE-7.03, F-17). DFM-004 and
-      DFM-016 cite no HZ-004 (F-26)
+      DFM-016 cite no HZ-004 (F-26).
+      SFM-011.C2 (TX path to the vehicle lost silently) is the longitudinal form of SFM-005.C2 for SG-06. The event is shared, so
+      each goal warns on the other's mode (SFM-005 under SG-06, SFM-011 under SG-02); not_in_fta cannot take a cited mode
   - id: BE-2.07
     class: random_hw
     fmea: [DFM-012, DFM-020, PFM-008]
@@ -499,13 +503,13 @@ events:
     note: SWF-045.C2 (NaN aTarget makes the LongControl PID integrator NaN; accel sanitised to 0 and only logged)
   - id: BE-6.05
     class: systematic_sw
-    fmea: [SWF-043, SWF-023, SWF-040, SWF-072]
+    fmea: [SFM-037, SWF-043, SWF-023, SWF-040, SWF-072]
     note: >-
       The longitudinal form of BE-1.19 and BE-1.21: SWF-072 (modelV2 published as valid with wrong leads or content, SW FMEA
       rev 1.0, as under BE-1.19), SWF-043.C1 (aTarget held from a frozen plan), SWF-040.C1 (controlsd keeps
       longActive on a stale selfdriveState for about 3 s), SWF-023.C1 (1 s sendcan age gate, FIFO replays stale ACC_CONTROL).
-      No System FMEA mode for a frozen longitudinal request (SFM-FN-002 M04; SFM-006 is lateral only). SWF-023 and SWF-040
-      cite no HZ-007 (F-26, F-28)
+      SFM-037 (longitudinal command frozen at last value, System FMEA rev 0.22) is the System FMEA mode; its causes are
+      SWF-047.C1, SWF-068.C1 and stale data with fresh timestamps. SWF-023 and SWF-040 cite no HZ-007 (F-26, F-28)
   - id: BE-6.06
     class: systematic_sw
     fmea: [SWF-048, SFM-021, SWF-039, SFM-028]
@@ -733,10 +737,23 @@ events:
     fmea: [SWF-086]
     note: >-
       SWF-086.C1 (no freshness check on the flag across policy, controlsd and plannerd), SWF-086.C2 (stop only at -1.2 m/s²,
-      no stop-time requirement; TSR-633, DQ-340). SW FMEA rev 1.1 closes the SW part of F-37
+      no stop-time requirement; TSR-633, DQ-365). SW FMEA rev 1.1 closes the SW part of F-37
   - id: UE-8.09
     class: external
     ref: AOU-05R
+  - id: BE-8.10
+    class: systematic_sw
+    fmea: [SWF-062, SFM-025]
+    note: >-
+      SWF-062.C1 (terminal state reached without the safe state: the DM events are PERMANENT alerts only, the item stays
+      engaged after the forced stop) and SFM-025.C1 (no disable reaction at level 3). The safe state is decided (DQ-365 A,
+      FSR-02.09, TSR-633): stopped, held, re-engagement locked out until the driver responds. Neither the hold nor the
+      lockout while stopped is implemented, so the event is present by design (F-38)
+  - id: UE-8.11
+    class: external
+    ref: >-
+      None yet: no assumption of use states that the PCM holds the vehicle at standstill under ACC until the driver acts,
+      and it is not characterised on the reference Corolla (DQ-365 A, vehicle test). F-38
 
 gates:
   - id: G4.1
@@ -779,9 +796,9 @@ gates:
   - id: G8.3
     fmea: [SFM-025]
     note: >-
-      SFM-025 (terminal driver-unresponsive state does not bring the item to a safe state). Its cause SFM-025.C1 says the
-      level-3 alerts have no disable reaction, which is true; it does not credit the forced stop (noResponseForceDecel), which
-      the tree takes as the no-response reaction. F-38
+      SFM-025 (terminal driver-unresponsive state does not bring the item to a safe state). The safe state is decided (DQ-365 A):
+      its cause SFM-025.C1 (no disable reaction at level 3) is now BE-8.10; SFM-025 does not yet credit the forced stop, which
+      reaches the standstill part of the safe state (BE-8.08 when it fails). F-38
 
 not_in_fta:
   - fm: SFM-014
@@ -808,14 +825,6 @@ not_in_fta:
     goal: SG-04
     kind: tree_gap
     reason: PCS braking triggered by a frame from the item (0x344, or 0x283 with a non-zero payload) is not an event of the SG-04 tree. The SG-07 tree carries the same path as BE-7.08 with BE-7.07; for the FTA owner to add it under SG-04 or justify leaving it out.
-  - fm: SFM-037
-    goal: SG-03
-    kind: tree_gap
-    reason: A frozen longitudinal request (System FMEA rev 0.22) is not an event of the SG-03 tree; BE-1.19 is shared from SG-01 and cites the lateral SFM-006. For the FTA owner to add a longitudinal event or cite SFM-037 on BE-1.19 in SG-03.
-  - fm: SFM-037
-    goal: SG-06
-    kind: tree_gap
-    reason: A frozen non-braking request while the lead brakes is not an event of the SG-06 tree; for the FTA owner to add it or justify leaving it out.
   # ---- SG-01
   - fm: SFM-014
     goal: SG-01
@@ -985,10 +994,3 @@ not_in_fta:
       The SG-06 tree analyses the assured configuration. The driver can change the following distance or Experimental
       Mode while driving (SWF-067.C1), and the item only logs it. Whether to refuse engagement outside the assured settings
       is queued for the lead (DQ-221); until it is decided, the tree has no event for planning in another configuration.
-  - fm: SWF-062
-    goal: SG-08
-    kind: tree_gap
-    reason: >-
-      The SG-08 tree takes the forced deceleration with lateral control kept as the terminal reaction. Whether that reaches
-      the SG-010 safe state is queued for the lead (DQ-220); if it does not, the tree needs an event for the terminal state
-      reached without the safe state (SWF-062.C1).

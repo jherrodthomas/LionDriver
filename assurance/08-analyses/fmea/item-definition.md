@@ -3,9 +3,9 @@
 | | |
 |---|---|
 | **Doc ID** | LD-ITEM-001 |
-| **Revision** | 0.3 (draft; the lead's answers applied: Corolla Cross and Lexus UX Hybrid carried along as not assessed, DQ-099 A, IOI-003 closed; comma 3X and comma four both in scope, DQ-011). 0.2 (draft; §A.3 boundary diagram redrawn as Figure A-1, text version kept). 0.1 (draft) |
+| **Revision** | 0.4 (draft; reviewer named, DQ-027 A). 0.3 (draft; the lead's answers applied: Corolla Cross and Lexus UX Hybrid carried along as not assessed, DQ-099 A, IOI-003 closed; comma 3X and comma four both in scope, DQ-011). 0.2 (draft; §A.3 boundary diagram redrawn as Figure A-1, text version kept). 0.1 (draft) |
 | **Date** | 2026-10-16 |
-| **Status** | Draft — requires review by Jherrod Thomas; item-definition confirmation per ISO 26262-2 not yet performed |
+| **Status** | Draft — requires review by the volunteer reviewer once recruited (DQ-027); item-definition confirmation per ISO 26262-2 not yet performed |
 | **Standard** | ISO 26262-3:2018 clause 5 |
 | **Baseline** | BL-001 (LionDriver `8b8c6ae`, panda `92eb565`, opendbc `229dc70`, AGNOS 19.9) |
 | **Annexes** | [Vehicle catalog](item/vehicle-catalog.md) (generated), [variants.yaml](item/variants.yaml) |
@@ -291,4 +291,4 @@ The identical panda and SoC steering limits under P2 are concrete evidence for D
 | IOI-003 | Closed 2026-10-14: the Corolla Cross and Lexus UX Hybrid stay on the shared `TOYOTA_COROLLA_TSS2` platform and are carried along as not assessed (decision register DQ-099, A). Changes to the platform, including LD-DES-001 vehicle lock records, reach them unassessed; WP-O-03 states it. | VF-001, LD-DES-001 |
 | IOI-004 | Platform-level HARA approach: confirm that the 13 hazards hold for all vehicles, and define how variant ratings are derived (P2, P3, P5, P7, P8 drive S/E/C). | PL-001 |
 | IOI-005 | Assess NHTSA Standing General Order 2021-01 and other reporting obligations for an owner-installed open-source L2 system. | §A.8 |
-| IOI-006 | Item-definition review and confirmation (ISO 26262-2). | LD-ITEM-001 |
+| IOI-006 | Item-definition review and confirmation (ISO 26262-2): by the volunteer reviewer once recruited (decision register DQ-027, A). Until then only the AI pre-check exists, and the HARA cannot be confirmed. | LD-ITEM-001 |

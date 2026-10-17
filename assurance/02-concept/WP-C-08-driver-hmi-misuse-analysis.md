@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-08 Driver interaction, HMI and reasonably foreseeable misuse analysis |
 | Standard reference | ISO 26262-3:2018 §6 (controllability basis); ISO 21448:2022 §6 and Annex B (misuse, informative); UNECE R79 and R171 (informative benchmarks, WP-M-01 T-13); RESPONSE 3 Code of Practice for ADAS (informative) |
-| Version | 0.3 (§6.1 HARA side recorded: WP-C-03 v0.4 rates H-STPA-1 as OS-17/OS-18 and adds H-09 with SG-08, ASIL A, decision register DQ-003, DQ-205; OI-4 narrowed to the FSC follow-up; 2026-10-16). 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
+| Version | 0.4 (OI-7, the duplicate OI-4: gas override behaviour kept, DQ-022 A; MC-08 updated; 2026-10-16). 0.3 (§6.1 HARA side recorded: WP-C-03 v0.4 rates H-STPA-1 as OS-17/OS-18 and adds H-09 with SG-08, ASIL A, decision register DQ-003, DQ-205; OI-4 narrowed to the FSC follow-up; 2026-10-16). 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF; backs the HARA C2 ratings (SG-01…SG-08) |
 | Author | Assurance team (initial draft) |
@@ -114,8 +114,8 @@ These regulations are not binding in the US (WP-M-01 T-13). Values must be check
 | MC-04 | DM camera covered or driver out of view | Medium | DM falls back to wheel touch | Wheel-touch fallback (`policy.py:77-78`) | FM-05 (strict fallback, camera-blocked detection, no-entry if persistent) | SH-12 |
 | MC-05 | `IsDriverViewEnabled` set to force DM demo mode | Low–medium (known to the community) | DM neutralised with synthetic inputs | None | FM-06 | SH-12 |
 | MC-06 | Defeat devices: steering-wheel weights, periodic nudgers, fake faces/photos | Medium | Wheel-touch fallback defeated; vision possibly fooled | Partial (vision primary) | FM-05; liveness checks in DM model (WP-C-11) | SH-12 |
-| MC-07 | Use outside the ODD (snow, construction, city streets, > 120 km/h) | High | SH-13; higher rates of SH-01…SH-06 | `speedTooHigh` warning; some diagnostics | FM-07, FM-08; user info | SH-13 |
-| MC-08 | Gas override mistaken for disengagement | Medium | Driver releases gas expecting manual control; system resumes ACC (or the reverse expectation) | Override alert | HMI clinic (§8); review default of `DisengageOnAccelerator` for reference build | SH-05 |
+| MC-07 | Use outside the ODD (snow, construction, city streets, > 110 km/h) | High | SH-13; higher rates of SH-01…SH-06 | `speedTooHigh` warning; some diagnostics | FM-07, FM-08; user info | SH-13 |
+| MC-08 | Gas override mistaken for disengagement | Medium | Driver releases gas expecting manual control; system resumes ACC (or the reverse expectation) | Override alert | HMI clinic (§8 V-2) shows the override alert is understood; `DisengageOnAccelerator` stays `0` (DQ-022, A) | SH-05 |
 | MC-09 | Over-trust after Experimental Mode default (expects stops at lights/signs; transfers this expectation to Chill mode) | Lower since the default is Chill mode (B-06, 2026-10-14); still high for drivers who used Experimental mode before | Red-light running, missed stop signs | UI text "Mistakes should be expected" | FM-01; user info | SH-09 |
 | MC-10 | Lane change without blind-spot check, relying on the system | Medium | Side collision | `LIMITATIONS.md:6` | User info; validation of abort controllability | SH-10 |
 | MC-11 | Installing on a different vehicle or with modified software (unsupported configuration) | Medium | Outside claimed scope | Fingerprinting; dashcam mode for unknown cars | Configuration control (WP-O-01) | — |
@@ -168,6 +168,6 @@ Method notes (RESPONSE 3 Code of Practice, informative): use naive subjects repr
 | OI-2 | Closed (2026-10-12): the numeric DM performance targets for DMP-01/02 were confirmed by the SOTIF lead and AI/ML safety lead (acting, one person) as proposed in WP-C-11 AIR-07/AIR-08, with the end-to-end alert time set at ≤ 6 s. Validation is VT-08 in WP-V-02. Assessor approval of the numeric validation targets is still WP-V-02 OI-3 | SOTIF lead | G2 |
 | OI-3 | Agree controllability pass criteria and sample size (CA-01…CA-07) with the external assessor | Safety manager | G1 |
 | OI-4 | HARA side done 2026-10-16: H-STPA-1 is rated in WP-C-03 v0.4 (OS-17, OS-18, H-09, SG-08 ASIL A; DQ-003, DQ-205). Left: revise WP-C-04 §7 (driver monitoring QM) for SG-08, and confirm the C2 of HE-09.1 with the DM clinic (§8 V-5) | Safety engineer | G1 |
-| OI-4 | Decide `DisengageOnAccelerator` default for the reference build (MC-08) | Maintainer | G1 |
+| OI-7 | Closed 2026-10-14 (listed as a second OI-4 until v0.3): the lead kept today's behaviour, gas pauses speed control only and `DisengageOnAccelerator` stays `0` (decision register DQ-022, A). The confusion of MC-08 is covered by the override alert, which the HMI clinic (§8 V-2) must show is understood | Maintainer | — |
 | OI-5 | Check whether alert volume can be reduced below an audible floor (MC-12) | SW lead | G2 |
 | OI-6 | Confirm whether the `mici` device-specific DM alerts (`events.py:1018+`) apply to the reference device | SW lead | G1 |
