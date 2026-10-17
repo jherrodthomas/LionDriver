@@ -219,7 +219,7 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 .samp { fill:none; stroke:var(--s2); stroke-width:2.2; } .take { stroke:var(--s3); stroke-width:1.5; stroke-dasharray:3 3; }
 </style>"""
 
-W, H = 1000, 640
+W, H = 1000, 660
 
 
 def _t(x, y, s, cls="t", anchor=None):
