@@ -36,7 +36,11 @@ for the configuration. That set is still being recorded.
 ## What the reference configuration fixes
 
 The [assurance strategy](../assurance/01-management/WP-M-01-assurance-strategy.md#3-what-liondriver-will-claim)
-makes the reference configuration the only scope the claims apply to. It pins more than the car:
+makes the reference configuration the only scope the claims apply to. The Corolla was chosen because it exercises
+the whole function under analysis: on this car openpilot provides both lane centring and longitudinal control by
+default, while the vehicle's own EPS torque limits and pre-collision braking stay active as independent barriers
+the safety argument relies on ([WP-M-01 §3.1](../assurance/01-management/WP-M-01-assurance-strategy.md#31-reference-configuration-the-only-scope-claims-apply-to)).
+The configuration pins more than the car:
 
 | Element | Reference configuration |
 |---|---|
