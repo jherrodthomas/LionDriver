@@ -10,6 +10,7 @@ WP-V-02 §5.3 fidelity case is approved for the scenario family (DQ-139). Determ
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 from xml.sax.saxutils import escape
@@ -27,6 +28,21 @@ from simulate import ASSUMPTIONS, Result, make_road, simulate  # noqa: E402
 SIM = HERE.parent
 TABLE = SIM / "results" / "plant-results.md"
 FIGDIR = SIM / "figures"
+SILHOUETTE = FIGDIR / "corolla-e210-silhouette.json"   # top-down outline of the reference car (vehicle-3d-model.md §6)
+
+
+def ego_outline() -> list[tuple[float, float]] | None:
+  """The reference car's top-down outline with mirrors as (along, across) in metres, front at along = 0, rear
+  negative, left positive. From the silhouette the vehicle-3d-model.md tools extract from the purchased mesh
+  (rendered output; the mesh itself stays out of the repository). None when the file is absent."""
+  if not SILHOUETTE.is_file():
+    print(f"warning: {SILHOUETTE.relative_to(SIM)} missing; drawing the ego as a rectangle", file=sys.stderr)
+    return None
+  o = json.loads(SILHOUETTE.read_text(encoding="utf-8"))["top_outline_with_mirrors"]
+  front = -min(y for y, _ in o["left"])            # the file's -y is the front
+  left = [(-y - front, x) for y, x in o["left"]]
+  right = [(-y - front, x) for y, x in o["right"]]
+  return left + list(reversed(right))
 
 
 # ------------------------------------------------------------------------------------------------ formatting
@@ -295,9 +311,16 @@ def figure(r: Result, iwdg: float) -> str:
   sf = next(s for t, s in zip(r.t, r.s) if t >= t0)
   out.append(f'<line x1="{PX(sf):.1f}" y1="{ay0}" x2="{PX(sf):.1f}" y2="{ay1}" class="fault"/>')
   out.append(_t(PX(sf) + 4, ay1 - 4, "fault onset", "t2"))
-  carw = 1.781 / lim * (ay1 - ay0) / 2
-  carl = 4.6 / (s_hi - s_lo) * (ax1 - ax0)
-  out.append(f'<rect class="car" x="{PX(sf) - carl:.1f}" y="{PY(r.e0) - carw / 2:.1f}" width="{carl:.1f}" height="{carw:.1f}" rx="2"/>')
+  outline = ego_outline()
+  if outline:
+    # the car at fault onset, front at the onset station; the same anisotropic scales as the lane view
+    pts = " ".join(f"{PX(sf + along):.1f},{PY(r.e0 + across):.1f}" for along, across in outline)
+    out.append(f'<polygon class="car" points="{pts}"/>')
+    out.append(_t(ax1 - 4, ay0 - 10, "ego outline from the purchased mesh (18-inch wheels: sport trim)", "t2", "end"))
+  else:
+    carw = 1.781 / lim * (ay1 - ay0) / 2
+    carl = 4.6 / (s_hi - s_lo) * (ax1 - ax0)
+    out.append(f'<rect class="car" x="{PX(sf) - carl:.1f}" y="{PY(r.e0) - carw / 2:.1f}" width="{carl:.1f}" height="{carw:.1f}" rx="2"/>')
 
   # ---------------- panel B: deviation against time
   bx0, bx1, by0, by1 = 70, W - 40, 300, 520

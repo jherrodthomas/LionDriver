@@ -18,3 +18,5 @@ openpilot/common/hardware/comma/updater filter=lfs diff=lfs merge=lfs -text
 # and GitHub must be able to render these images in the README.
 docs/assets/liondriver/**/*.svg -filter -diff -merge text
 assurance/**/*.svg -filter -diff -merge text
+# LionDriver's own documentation renders stay plain binary blobs; the LFS endpoint above is upstream's
+assurance/sim/figures/*.png -filter -diff -merge binary
