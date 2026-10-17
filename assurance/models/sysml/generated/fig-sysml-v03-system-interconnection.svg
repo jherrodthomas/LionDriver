@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-03 · Technical safety architecture</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">LD-SDA in its vehicle context · QM partition and B‡ safety envelope · interfaces IF-01 to IF-10 · SM from WP-S-03 §6</text>
 <text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::systemInterconnection</text>
-<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">InterconnectionView · render asInterconnectionDiagram · model d727e33be27f</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">InterconnectionView · render asInterconnectionDiagram · model afe26de04309</text>
 <line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
 <g data-el="context.ldsda.deviceHardware">
 <rect x="250" y="104" width="990" height="668" rx="12" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.4"/>
@@ -250,7 +250,7 @@
 <g data-el="context.ldsda.safetyFirmware.safetyLayer">
 <rect x="890" y="222" width="320" height="166" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
 <rect x="901" y="229.5" width="42.3" height="17" rx="8.5" fill="#C2410C"/><text x="922.2" y="241.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-03a</text>
-<rect x="1173.8" y="229.5" width="25.2" height="16" rx="8" fill="#C2410C"/><text x="1186.4" y="240.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="1178.3" y="229.5" width="20.7" height="16" rx="8" fill="#C2410C"/><text x="1188.7" y="240.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
 <text x="950.3" y="242" font-size="12" fill="#0F172A" font-weight="700">Safety layer</text>
 <text x="901" y="258" font-size="10.5" fill="#64748B">opendbc safety core and Toyota mode: TX limits and</text>
 <text x="901" y="271.5" font-size="10.5" fill="#64748B">gating, RX checks, authority</text>
@@ -274,7 +274,7 @@
 <g data-el="context.ldsda.safetyFirmware.platformFirmware">
 <rect x="890" y="404" width="320" height="170" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
 <rect x="901" y="411.5" width="42.8" height="17" rx="8.5" fill="#C2410C"/><text x="922.4" y="423.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-03b</text>
-<rect x="1173.8" y="411.5" width="25.2" height="16" rx="8" fill="#C2410C"/><text x="1186.4" y="422.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="1178.3" y="411.5" width="20.7" height="16" rx="8" fill="#C2410C"/><text x="1188.7" y="422.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
 <text x="950.8" y="424" font-size="12" fill="#0F172A" font-weight="700">Platform firmware</text>
 <text x="901" y="440" font-size="10.5" fill="#64748B">main loop and safety task, comms and reference lock, SPI</text>
 <text x="901" y="453.5" font-size="10.5" fill="#64748B">and FDCAN drivers, faults, bootstub</text>
@@ -305,7 +305,7 @@
 <g data-el="context.ldsda.deviceHardware.safetyMcu">
 <rect x="876" y="598" width="348" height="158" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
 <rect x="887" y="605.5" width="42.6" height="17" rx="8.5" fill="#C2410C"/><text x="908.3" y="617.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-04a</text>
-<rect x="1187.8" y="605.5" width="25.2" height="16" rx="8" fill="#C2410C"/><text x="1200.4" y="616.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="1192.3" y="605.5" width="20.7" height="16" rx="8" fill="#C2410C"/><text x="1202.7" y="616.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
 <text x="936.6" y="618" font-size="12" fill="#0F172A" font-weight="700">STM32H7 safety MCU</text>
 <text x="887" y="634" font-size="10.5" fill="#64748B">clock, supply, ECC memories, SPI4, FDCAN1–3, ADC, GPIO, DAC</text>
 <text x="887" y="647.5" font-size="10.5" fill="#64748B">siren path, IWDG1</text>
@@ -314,7 +314,7 @@
 <g data-el="context.ldsda.harness">
 <rect x="990" y="806" width="250" height="104" rx="9" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2" filter="url(#lift)"/>
 <rect x="1001" y="813.5" width="36.7" height="17" rx="8.5" fill="#C2410C"/><text x="1019.4" y="825.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-05</text>
-<rect x="1203.8" y="813.5" width="25.2" height="16" rx="8" fill="#C2410C"/><text x="1216.4" y="824.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="1208.3" y="813.5" width="20.7" height="16" rx="8" fill="#C2410C"/><text x="1218.7" y="824.7" font-size="9" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
 <text x="1044.7" y="826" font-size="12" fill="#0F172A" font-weight="700">Harness</text>
 <text x="1001" y="842" font-size="10.5" fill="#64748B">Toyota TSS2 with intercept relay; released,</text>
 <text x="1001" y="855.5" font-size="10.5" fill="#64748B">camera and car CAN link directly (AOU-13)</text>
@@ -489,20 +489,20 @@
 <line x1="1150.12" y1="1126" x2="1176.12" y2="1126" stroke="#334155" stroke-width="2.0"/>
 <text x="1184.1" y="1130" font-size="10.5" fill="#334155">CAN bus attachment</text>
 <rect x="40" y="1140" width="22" height="14" rx="4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.2"/>
-<text x="70" y="1151" font-size="10.5" fill="#334155">B‡ safety envelope</text>
-<rect x="186.2" y="1140" width="22" height="14" rx="4" fill="#FFFBF5" stroke="#EA580C" stroke-width="1.2"/>
-<text x="216.2" y="1151" font-size="10.5" fill="#334155">ASIL B element</text>
-<rect x="313.4" y="1140" width="22" height="14" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
-<text x="343.4" y="1151" font-size="10.5" fill="#334155">QM element</text>
-<rect x="425.4" y="1140" width="22" height="14" rx="4" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.2"/>
-<text x="455.4" y="1151" font-size="10.5" fill="#334155">ML element (E-02)</text>
-<rect x="570.1" y="1140" width="22" height="14" rx="4" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
-<text x="600.1" y="1151" font-size="10.5" fill="#334155">Outside the item</text>
-<rect x="703.3" y="1140" width="22" height="14" rx="4" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.2"/>
-<text x="733.3" y="1151" font-size="10.5" fill="#334155">Untrusted</text>
-<rect x="804.4" y="1142.5" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
-<text x="818.4" y="1151" font-size="10.5" fill="#334155">port (SysML)</text>
-<text x="904.7" y="1151" font-size="10.5" fill="#C2410C" font-weight="700">SM-nn</text>
-<text x="945.2" y="1151" font-size="10.5" fill="#334155">safety mechanisms performed (WP-S-03 §6)</text>
+<text x="70" y="1151" font-size="10.5" fill="#334155">ASIL C safety envelope</text>
+<rect x="207.6" y="1140" width="22" height="14" rx="4" fill="#FFFBF5" stroke="#EA580C" stroke-width="1.2"/>
+<text x="237.6" y="1151" font-size="10.5" fill="#334155">ASIL B element</text>
+<rect x="334.8" y="1140" width="22" height="14" rx="4" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="364.8" y="1151" font-size="10.5" fill="#334155">QM element</text>
+<rect x="446.8" y="1140" width="22" height="14" rx="4" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.2"/>
+<text x="476.8" y="1151" font-size="10.5" fill="#334155">ML element (E-02)</text>
+<rect x="591.6" y="1140" width="22" height="14" rx="4" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="621.6" y="1151" font-size="10.5" fill="#334155">Outside the item</text>
+<rect x="724.7" y="1140" width="22" height="14" rx="4" fill="#FAF5FF" stroke="#A855F7" stroke-width="1.2"/>
+<text x="754.7" y="1151" font-size="10.5" fill="#334155">Untrusted</text>
+<rect x="825.9" y="1142.5" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#334155" stroke-width="1.3"/>
+<text x="839.9" y="1151" font-size="10.5" fill="#334155">port (SysML)</text>
+<text x="926.1" y="1151" font-size="10.5" fill="#C2410C" font-weight="700">SM-nn</text>
+<text x="966.7" y="1151" font-size="10.5" fill="#334155">safety mechanisms performed (WP-S-03 §6)</text>
 <text x="40" y="1176" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
 </svg>

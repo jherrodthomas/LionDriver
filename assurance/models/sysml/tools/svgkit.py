@@ -39,7 +39,7 @@ EDGE = {
   "bus": {"color": "#334155", "width": 2.0, "dash": None, "label": "CAN bus attachment"},
 }
 
-INTEGRITY_LABEL = {"BDagger": "B‡", "B": "B", "QMBsup": "QM · B-sup", "QM": "QM", "AoU": "AoU",
+INTEGRITY_LABEL = {"C": "C", "BDagger": "B‡", "B": "B", "QMBsup": "QM · B-sup", "QM": "QM", "AoU": "AoU",
                    "Untrusted": "untrusted"}
 
 METRIC_CHARS = "0123456789 !\"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~‡·–—…→←↔≥≤µ°×§±²"

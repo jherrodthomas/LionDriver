@@ -49,8 +49,8 @@ KIND_NAMES = {"SG": "Safety goals (WP-C-03)", "FSR": "Functional safety requirem
 OUTSIDE = {"EXT": "outside the item (AoU)", "OPS": "operations (WP-S-06)", "ENV": "release environment",
            "USR": "owner or service"}
 
-INTEGRITY_RANK = {"AoU": 0, "Untrusted": 0, "QM": 1, "QMBsup": 2, "B": 3, "BDagger": 4}
-ASIL = {"B", "BDagger"}
+INTEGRITY_RANK = {"AoU": 0, "Untrusted": 0, "QM": 1, "QMBsup": 2, "B": 3, "BDagger": 4, "C": 5}
+ASIL = {"B", "BDagger", "C"}
 
 
 class Report:
@@ -90,9 +90,11 @@ def strip_md(s: str) -> str:
 
 
 def integrity_of_text(cell: str) -> str:
-  """Highest integrity a work-product cell names (B‡ > B > QM (B-sup) > QM)."""
-  s = cell
+  """Highest integrity a work-product cell names (C > B‡ > B > QM (C-sup or B-sup) > QM)."""
+  s = cell.replace("C-sup", "B-sup")
   found = []
+  if re.search(r"(?<![A-Za-z(-])C(?![A-Za-z0-9‡-])", s):
+    found.append("C")
   if "B‡" in s:
     found.append("BDagger")
   if re.search(r"(?<![A-Za-z(-])B(?![‡A-Za-z-])", s.replace("B-sup", "")):

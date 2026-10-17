@@ -68,7 +68,7 @@ The architecture is already written down, in tables in five work products and in
 | R3 | Every verification case that names a requirement verifies it in the model, and the requirement lists the case |
 | R4 | [`generated/requirements-coverage.md`](generated/requirements-coverage.md) is up to date: per kind, how many requirements are satisfied, allocated outside the item, verified by at least one case and derived from a parent, with the lists of those that are not (informational) |
 
-Integrity in a table cell is read as the highest level it names (`B (PCS restore), B‡ (blocking)` is B‡). Run from this folder:
+Integrity in a table cell is read as the highest level it names (`B (PCS restore), C (blocking)` is C; the order is C > B‡ > B > QM (C-sup or B-sup) > QM). Since DQ-341 the envelope elements are ASIL C. Run from this folder:
 
 ```sh
 python3 tools/gen_requirements.py      # regenerate the requirement files (--check to compare)
