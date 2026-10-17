@@ -711,7 +711,7 @@
       title: "Leave them unstated"
       detail: "No work. Cost: a near-certain reviewer finding."
   sources: ["assurance/trace/README.md “4 | WP-C-03 marks HE-01.3 and HE-01.4 ⚠ but states no altern”"]
-  note: "The fallback ASILs are stated for every ⚠ event; the lead confirms them in the HARA review (WP-C-03 OI-9)."
+  note: "The fallback ASILs are stated for every ⚠ event (WP-C-03 §5.12). The lead confirmed them as proposed in chat on 2026-10-17; WP-C-03 v0.4.4 records it and closes OI-9."
   status: applied
   applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §5.12; trace hazards.yaml asil_if_aou_fails", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
@@ -1071,6 +1071,7 @@
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
   applied: {ref: ebc9fea, record: "WP-S-02 TSR-516(b); WP-S-04 OI-8, §3.7, §5, Figure 5-2 (panda firmware change open)", at: 2026-10-16}
+  note: "Panda firmware change done 2026-10-17: persistence 0.7 s at panda bf8102a (jherrodthomas/panda#19, jherrodthomas/LionDriver#212), siren ≤ 0.96 s from onset; change-2026-10-17-panda-eps-siren-0-7s."
 
 - id: DQ-049
   question: "Should you buy parts for a small hardware-in-the-loop test bench?"
@@ -4404,7 +4405,10 @@
   context: "Today the car's AEB event only shows a \"BRAKE!\" alert on the comma screen; LionDriver keeps sending its speed-control request. Whether the car's braking wins then depends on the engine computer giving AEB priority, which nobody has checked on the reference car (AOU-04R). The fault tree marks this as a path where that assumption alone protects the driver (SFM-036, FTA BE-7.13)."
   reversibility: easy
   blocks: "SFM-ACT-020; FTA cut set MCS-07.10 (SG-07)"
+  gate: G2
   decider: lead
+  asked: 2026-10-17
+  batch: 9
   options:
   - key: A
     recommended: true
@@ -4420,7 +4424,7 @@
   - assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-036, SFM-ACT-020
   - assurance/08-analyses/WP-A-04-system-fta-fmea.md MCS-07.10
   - assurance/02-concept/WP-C-04-functional-safety-concept.md AOU-04R
-  status: queued
+  status: open
 
 - id: DQ-360
   question: "If the steering (EPS) or the engine controller (PCM) silently stops obeying LionDriver, without sending a fault, do we rely on a tested assumption about the car, or add a check that compares the car's response with the command?"
