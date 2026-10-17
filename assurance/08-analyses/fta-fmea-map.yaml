@@ -439,8 +439,8 @@ events:
   - id: BE-2.14
     class: systematic_sw
     gap: >-
-      No FMEA mode for the panda siren not being triggered (TSR-516(b)/(c) triggers not implemented; EPS-fault siren ≤ 1.26 s,
-      above the 1 s budget). DFM-017 covers the siren path, not its trigger logic. F-28
+      No FMEA mode for the panda siren not being triggered (TSR-516(b)/(c) triggers not implemented; EPS-fault siren ≤ 0.96 s since
+      panda bf8102a, within the 1 s budget). DFM-017 covers the siren path, not its trigger logic. F-28
   - id: BE-2.15
     class: random_hw
     fmea: [DFM-017]
