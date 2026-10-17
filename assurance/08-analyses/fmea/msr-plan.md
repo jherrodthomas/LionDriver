@@ -21,7 +21,7 @@ FMEA-MSR asks a question none of the current analyses rates: *when this cause oc
 | The mechanisms are listed but never rated. | `safety_mechanisms` on 90 of 123 failure modes (System FMEA 25/34, SW FMEA 53/53, DFMEA 12/19, PFMEA 0/17). The System FMEA header: "design facts … not credited as detection". |
 | AP cannot tell a well-monitored cause from an unmonitored one. | 194 of 201 causes are AP H. A panda MCU hang (IWDG reset and relay release in about 90 ms, inside a 0.5 s FTTI) ranks the same as a cause with no runtime monitor at all. |
 | Timing evidence exists but is not tied to failure causes. | WP-S-04 §3.7 gives FTTI, detection and reaction budgets per safety goal and §4 the code-derived times. No FMEA row points at a WP-S-04 row. |
-| One known budget overrun is not visible in the FMEA. | WP-S-04 §3.7: EPS-fault siren worst case 1.26 s against a 1 s budget to warning (OI-8). MSR would rate this as poor monitoring on a hazard-linked cause. Today it shows up only in WP-S-04. |
+| One known budget overrun was not visible in the FMEA. | WP-S-04 §3.7: EPS-fault siren worst case 1.26 s against a 1 s budget to warning with the 1 s persistence (OI-8). MSR would have rated this as poor monitoring on a hazard-linked cause. Since panda `bf8102a` (DQ-048 A, persistence 0.7 s) the worst case is 0.96 s, inside the budget by 0.04 s, and OI-8 is closed; the example still shows why MSR rates timing. |
 | FMEDA covers part of this, but only for random hardware faults on two goals. | `fmeda-sg001.yaml` and `fmeda-sg009.yaml` claim diagnostic coverage per mechanism. They say nothing about systematic causes, about whether the response is fast enough, or about goals SG-02…SG-07. |
 
 ### 2.2 Is MSR required?
@@ -67,7 +67,7 @@ Adding MSR tables increments the version to **RT-2**. S/O/D and AP do not change
   | 1–2 | Diagnostic and response always effective. FDTI + FRTI ≤ FTTI **measured** (WP-V-05 fault injection or HIL), with a mutation-proven test of the diagnostic. |
   | 3–4 | As above, measured, but the test does not cover every instance of the cause. |
   | 5–6 | FDTI + FRTI ≤ FTTI from **code-derived** times only (WP-S-04 §4), test exists. |
-  | 7–8 | Diagnostic exists but the response is incomplete, or its timing is unknown or exceeds the FTTI (e.g. EPS-fault siren, OI-8). |
+  | 7–8 | Diagnostic exists but the response is incomplete, or its timing is unknown or exceeds the FTTI (e.g. the EPS-fault siren with the 1 s persistence, 1.26 s, OI-8; within budget at 0.96 s since panda `bf8102a`). |
   | 9–10 | No in-field diagnostic, or it depends on the driver noticing. |
 
   The exact wording is transcribed from the handbook at implementation time; the table above sets how evidence maps onto it.
