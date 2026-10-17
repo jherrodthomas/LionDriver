@@ -4431,8 +4431,9 @@
       title: "Keep it as it is"
       detail: "No work. Cost: the driver learns that assist is gone only when they let go."
   sources: ["assurance/07-supporting/impact/change-2026-10-17-eps-fault-escalation.md OI-2", "assurance/03-system/WP-S-02-technical-safety-requirements.md TSR-607", "openpilot/selfdrive/car/car_events.py:170-174"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-17}
+  applied: {ref: 487d4ef3e, record: "openpilot selfdrive/car/car_events.py (LionDriver #179); WP-S-02 TSR-607 (c) and WP-W-02 SWSR-607 (LionDriver #181); impact record change-2026-10-17-eps-fault-escalation OI-2", at: 2026-10-17}
 
 - id: DQ-320
   question: "With comma's harness box kept, the stock-emergency-braking hardware metric is about 78 % against a 90 % target. Accept that as a recorded deviation once the bench tests pass?"
