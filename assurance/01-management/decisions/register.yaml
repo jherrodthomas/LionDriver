@@ -4372,7 +4372,9 @@
     - assurance/08-analyses/WP-A-04-system-fta-fmea.md G4.9, G5.4, MCS-05.6
     - assurance/08-analyses/fmea/analyses/system-fmea.yaml SFM-020
     - assurance/08-analyses/fta-fmea-map.yaml BE-5.08
-  status: open
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-17}
+  applied: {ref: 2c0ea31a1, record: "WP-A-04 v1.8 §5 G4.9 (G4.9.2: BE-4.24, UE-4.25; MCS-04.13; SPF-04 now lists SG-04) and §6 (G5.4 and MCS-05.6 removed); fta-fmea-map.yaml BE-4.24, UE-4.25, BE-5.06; fta-fmea-mapping.md F-29 resolved. No HARA change", at: 2026-10-17}
 - id: DQ-364
   question: "Should acceleration while LionDriver is not engaged, or just after the driver brakes, be a rated hazardous event of the acceleration goal (SG-03)?"
   context: "The SG-03 fault tree covers acceleration while not engaged and after a brake press, but the HARA rates no SG-03 event for it: **unintended engagement is only rated as a steering hazard**. So the FMEA modes for spurious engagement are not checked against SG-03."

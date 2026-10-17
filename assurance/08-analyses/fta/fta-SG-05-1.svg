@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2236" height="1012" viewBox="0 0 2236 1012">
+<svg xmlns="http://www.w3.org/2000/svg" width="1752" height="1012" viewBox="0 0 1752 1012">
 <title>FTA SG-05 sheet 1 of 4: no release on driver brake, cancel or steering override</title>
 <style>.id{font:700 13px 'JetBrains Mono', Menlo, Consolas, monospace;fill:#1d2433}.kind{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.1em;fill:#8a93a3;text-anchor:end}.d{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#2b3343}.n{font:italic 400 10.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#6b7385}.chip{font:600 9.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;text-anchor:middle}.gl{font:700 7.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.06em;text-anchor:middle}.eyebrow{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.14em;fill:#9fb7d1}.title{font:600 21px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.title2{font:600 17px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#fff}.hc{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.04em;fill:#fff;text-anchor:middle}.lh{font:600 13px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.lb{font:600 12px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.s{font:400 11px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#5b6475}.tbh{font:700 14px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#0f2a44}.k{font:600 9px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;letter-spacing:.12em;fill:#8a93a3}.v{font:400 11.5px Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;fill:#1d2433}.mm{font:700 11px 'JetBrains Mono', Menlo, Consolas, monospace;text-anchor:middle}.w{stroke:#9aa3b2;stroke-width:1.4;stroke-linecap:round}.wh{stroke:#c62828;stroke-width:3.2;stroke-linecap:round}.shadow{fill:#0f172a;opacity:.06}</style>
 <defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e3e7ee"/></pattern></defs>
@@ -7,24 +7,23 @@
 <rect width="100%" height="78" fill="#0f2a44"/>
 <text x="40" y="32" class="eyebrow">FTA · SG-05 · WP-A-04 §6</text>
 <text x="40" y="59" class="title">No release on driver brake, cancel or steering override</text>
-<rect x="1960" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
-<text x="2078" y="44" class="hc">Sheet 1 of 4  ·  ASIL B</text>
-<rect x="949.0" y="116.5" width="220" height="71.0" rx="9" class="shadow"/>
-<rect x="947.5" y="114" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
-<path d="M956.5,114 H1158.5 A9,9 0 0 1 1167.5,123 V119 H947.5 V123 A9,9 0 0 1 956.5,114 Z" fill="#0f2a44"/>
-<text x="961.5" y="139" class="id">TE-05</text>
-<text x="1153.5" y="139" class="kind">TOP EVENT</text>
-<text x="961.5" y="153.5" class="d">Item does not release on driver</text>
-<text x="961.5" y="168.0" class="d">action</text>
-<path d="M1037.5,223.0 Q1057.5,214.0 1077.5,223.0 Q1075.5,196.0 1057.5,185.0 Q1039.5,196.0 1037.5,223.0 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="1057.5" y="215.0" class="gl" fill="#c62828">OR</text>
-<line x1="150.0" y1="246.0" x2="1965.0" y2="246.0" class="w"/>
-<line x1="150.0" y1="246.0" x2="1481.0" y2="246.0" class="wh"/>
-<line x1="1057.5" y1="223.0" x2="1057.5" y2="246.0" class="wh"/>
+<rect x="1476" y="21" width="236" height="36" rx="18" fill="#ffffff14" stroke="#ffffff40"/>
+<text x="1594" y="44" class="hc">Sheet 1 of 4  ·  ASIL B</text>
+<rect x="707.0" y="116.5" width="220" height="71.0" rx="9" class="shadow"/>
+<rect x="705.5" y="114" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<path d="M714.5,114 H916.5 A9,9 0 0 1 925.5,123 V119 H705.5 V123 A9,9 0 0 1 714.5,114 Z" fill="#0f2a44"/>
+<text x="719.5" y="139" class="id">TE-05</text>
+<text x="911.5" y="139" class="kind">TOP EVENT</text>
+<text x="719.5" y="153.5" class="d">Item does not release on driver</text>
+<text x="719.5" y="168.0" class="d">action</text>
+<path d="M795.5,223.0 Q815.5,214.0 835.5,223.0 Q833.5,196.0 815.5,185.0 Q797.5,196.0 795.5,223.0 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="815.5" y="215.0" class="gl" fill="#c62828">OR</text>
+<line x1="150.0" y1="246.0" x2="1481.0" y2="246.0" class="w"/>
+<line x1="150.0" y1="246.0" x2="815.5" y2="246.0" class="wh"/>
+<line x1="815.5" y1="223.0" x2="815.5" y2="246.0" class="wh"/>
 <line x1="150.0" y1="246.0" x2="150.0" y2="271.0" class="wh"/>
 <line x1="392.0" y1="246.0" x2="392.0" y2="271.0" class="wh"/>
 <line x1="876.0" y1="246.0" x2="876.0" y2="271.0" class="w"/>
-<line x1="1481.0" y1="246.0" x2="1481.0" y2="271.0" class="wh"/>
-<line x1="1965.0" y1="246.0" x2="1965.0" y2="271.0" class="w"/>
+<line x1="1481.0" y1="246.0" x2="1481.0" y2="271.0" class="w"/>
 <rect x="41.5" y="273.5" width="220" height="119.0" rx="9" class="shadow"/>
 <rect x="40" y="271.0" width="220" height="119.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
 <path d="M49,271.0 H251 A9,9 0 0 1 260,280.0 V276.0 H40 V280.0 A9,9 0 0 1 49,271.0 Z" fill="#1d2433"/>
@@ -102,6 +101,8 @@
 <text x="807.0" y="629.5" class="chip" fill="#fff">SWF-044</text>
 <rect x="838.9" y="618.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="865.9" y="629.5" class="chip" fill="#fff">SFM-018</text>
+<rect x="897.8" y="618.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="924.8" y="629.5" class="chip" fill="#fff">SWF-057</text>
 <circle cx="876.0" cy="666.0" r="16" fill="#eceef1" stroke="#5f6368" stroke-width="1.7"/>
 <rect x="1009.5" y="478.5" width="220" height="71.0" rx="9" class="shadow"/>
 <rect x="1008" y="476.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
@@ -111,94 +112,56 @@
 <text x="1022" y="515.5" class="d">EPS does not let the driver</text>
 <text x="1022" y="530.0" class="d">overpower LKA torque (AOU-02R)</text>
 <path d="M1118.0,547.0 L1140.0,564.0 L1118.0,581.0 L1096.0,564.0 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
-<rect x="1372.5" y="273.5" width="220" height="71.0" rx="9" class="shadow"/>
-<rect x="1371.0" y="271.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<rect x="1372.5" y="273.5" width="220" height="85.5" rx="9" class="shadow"/>
+<rect x="1371.0" y="271.0" width="220" height="85.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M1380.0,271.0 H1582.0 A9,9 0 0 1 1591.0,280.0 V276.0 H1371.0 V280.0 A9,9 0 0 1 1380.0,271.0 Z" fill="#1d2433"/>
-<text x="1385.0" y="296.0" class="id">G5.4</text>
+<text x="1385.0" y="296.0" class="id">G5.5</text>
 <text x="1577.0" y="296.0" class="kind">INTERMEDIATE</text>
-<text x="1385.0" y="310.5" class="d">Accelerator does not override</text>
-<text x="1385.0" y="325.0" class="d">commanded deceleration</text>
-<path d="M1461.0,380.0 L1461.0,360.0 A20,18 0 0 1 1501.0,360.0 L1501.0,380.0 Z" fill="#fff" stroke="#c62828" stroke-width="2.4"/><text x="1481.0" y="372.0" class="gl" fill="#c62828">AND</text>
-<line x1="1360.0" y1="403.0" x2="1602.0" y2="403.0" class="w"/>
-<line x1="1360.0" y1="403.0" x2="1481.0" y2="403.0" class="wh"/>
-<line x1="1481.0" y1="380.0" x2="1481.0" y2="403.0" class="wh"/>
-<line x1="1360.0" y1="403.0" x2="1360.0" y2="476.0" class="wh"/>
-<line x1="1602.0" y1="403.0" x2="1602.0" y2="476.0" class="w"/>
-<rect x="1251.5" y="478.5" width="220" height="136.5" rx="9" class="shadow"/>
-<rect x="1250" y="476.0" width="220" height="136.5" rx="9" fill="#fff" stroke="#c62828" stroke-width="2"/>
+<text x="1385.0" y="310.5" class="d">Mode confusion: driver believes</text>
+<text x="1385.0" y="325.0" class="d">the item is disengaged while it</text>
+<text x="1385.0" y="339.5" class="d">actuates</text>
+<path d="M1461.0,394.5 L1461.0,374.5 A20,18 0 0 1 1501.0,374.5 L1501.0,394.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="1481.0" y="386.5" class="gl" fill="#1d2433">AND</text>
+<line x1="1360.0" y1="417.5" x2="1602.0" y2="417.5" class="w"/>
+<line x1="1481.0" y1="394.5" x2="1481.0" y2="417.5" class="w"/>
+<line x1="1360.0" y1="417.5" x2="1360.0" y2="476.0" class="w"/>
+<line x1="1602.0" y1="417.5" x2="1602.0" y2="476.0" class="w"/>
+<rect x="1251.5" y="478.5" width="220" height="216.5" rx="9" class="shadow"/>
+<rect x="1250" y="476.0" width="220" height="216.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M1259,476.0 H1461 A9,9 0 0 1 1470,485.0 V481.0 H1250 V485.0 A9,9 0 0 1 1259,476.0 Z" fill="#64748b"/>
-<text x="1264" y="501.0" class="id">BE-5.08</text>
+<text x="1264" y="501.0" class="id">BE-5.10</text>
 <text x="1456" y="501.0" class="kind">BASIC</text>
-<text x="1264" y="515.5" class="d">GAS_RELEASED stuck "released"</text>
-<text x="1264" y="530.0" class="d">while the driver presses (=</text>
-<text x="1264" y="544.5" class="d">BE-3.11); the envelope then</text>
-<text x="1264" y="559.0" class="d">allows non-inactive values</text>
-<text x="1264" y="573.5" class="d">(longitudinal.h:3-5)</text>
-<rect x="1264.0" y="581.5" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="1291.0" y="593.0" class="chip" fill="#fff">SWF-017</text>
-<rect x="1322.9" y="581.5" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="1349.9" y="593.0" class="chip" fill="#fff">SFM-020</text>
-<rect x="1381.8" y="581.5" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="1408.8" y="593.0" class="chip" fill="#fff">SWF-057</text>
-<circle cx="1360.0" cy="629.5" r="16" fill="#eef1f5" stroke="#c62828" stroke-width="2.4"/>
-<rect x="1493.5" y="478.5" width="220" height="71.0" rx="9" class="shadow"/>
-<rect x="1492" y="476.0" width="220" height="71.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M1501,476.0 H1703 A9,9 0 0 1 1712,485.0 V481.0 H1492 V485.0 A9,9 0 0 1 1501,476.0 Z" fill="#3d6b3d"/>
-<text x="1506" y="501.0" class="id">UE-5.09</text>
-<text x="1698" y="501.0" class="kind">UNDEVELOPED</text>
-<text x="1506" y="515.5" class="d">PCM does not give the driver's</text>
-<text x="1506" y="530.0" class="d">pedal priority (AOU-05R)</text>
-<path d="M1602.0,547.0 L1624.0,564.0 L1602.0,581.0 L1580.0,564.0 Z" fill="#e7f1e7" stroke="#3d6b3d" stroke-width="1.7"/>
-<rect x="1856.5" y="273.5" width="220" height="85.5" rx="9" class="shadow"/>
-<rect x="1855.0" y="271.0" width="220" height="85.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M1864.0,271.0 H2066.0 A9,9 0 0 1 2075.0,280.0 V276.0 H1855.0 V280.0 A9,9 0 0 1 1864.0,271.0 Z" fill="#1d2433"/>
-<text x="1869.0" y="296.0" class="id">G5.5</text>
-<text x="2061.0" y="296.0" class="kind">INTERMEDIATE</text>
-<text x="1869.0" y="310.5" class="d">Mode confusion: driver believes</text>
-<text x="1869.0" y="325.0" class="d">the item is disengaged while it</text>
-<text x="1869.0" y="339.5" class="d">actuates</text>
-<path d="M1945.0,394.5 L1945.0,374.5 A20,18 0 0 1 1985.0,374.5 L1985.0,394.5 Z" fill="#fff" stroke="#1d2433" stroke-width="1.7"/><text x="1965.0" y="386.5" class="gl" fill="#1d2433">AND</text>
-<line x1="1844.0" y1="417.5" x2="2086.0" y2="417.5" class="w"/>
-<line x1="1965.0" y1="394.5" x2="1965.0" y2="417.5" class="w"/>
-<line x1="1844.0" y1="417.5" x2="1844.0" y2="476.0" class="w"/>
-<line x1="2086.0" y1="417.5" x2="2086.0" y2="476.0" class="w"/>
-<rect x="1735.5" y="478.5" width="220" height="216.5" rx="9" class="shadow"/>
-<rect x="1734" y="476.0" width="220" height="216.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M1743,476.0 H1945 A9,9 0 0 1 1954,485.0 V481.0 H1734 V485.0 A9,9 0 0 1 1743,476.0 Z" fill="#64748b"/>
-<text x="1748" y="501.0" class="id">BE-5.10</text>
-<text x="1940" y="501.0" class="kind">BASIC</text>
-<text x="1748" y="515.5" class="d">Item HMI shows the wrong state,</text>
-<text x="1748" y="530.0" class="d">or cruiseMismatch raised after 6</text>
-<text x="1748" y="544.5" class="d">s with no reaction</text>
-<text x="1748" y="559.0" class="d">(selfdrived.py:420-422,</text>
-<text x="1748" y="573.5" class="d">events.py:458-460; GAP-19).</text>
-<text x="1748" y="588.0" class="d">BL-005: cruiseMismatch alerts</text>
-<text x="1748" y="602.5" class="d">after 1 s (TSR-308); not</text>
-<text x="1748" y="617.0" class="d">re-rated in the SW FMEA</text>
-<text x="1748" y="631.5" class="d">(SWF-039)</text>
-<rect x="1748.0" y="639.5" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="1775.0" y="651.0" class="chip" fill="#fff">SFM-028</text>
-<rect x="1806.9" y="639.5" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="1833.9" y="651.0" class="chip" fill="#fff">SWF-039</text>
-<rect x="1865.8" y="639.5" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="1892.8" y="651.0" class="chip" fill="#fff">SFM-021</text>
-<rect x="1748.0" y="661.5" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="1775.0" y="673.0" class="chip" fill="#fff">SWF-048</text>
-<circle cx="1844.0" cy="709.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<rect x="1977.5" y="478.5" width="220" height="122.0" rx="9" class="shadow"/>
-<rect x="1976" y="476.0" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
-<path d="M1985,476.0 H2187 A9,9 0 0 1 2196,485.0 V481.0 H1976 V485.0 A9,9 0 0 1 1985,476.0 Z" fill="#b45309"/>
-<text x="1990" y="501.0" class="id">BE-5.11</text>
-<text x="2182" y="501.0" class="kind">BASIC</text>
-<text x="1990" y="515.5" class="d">Cluster cruise indicator not an</text>
-<text x="1990" y="530.0" class="d">independent cue (AOU-12 fails;</text>
-<text x="1990" y="544.5" class="d">item TX 0x412 affects the</text>
-<text x="1990" y="559.0" class="d">cluster)</text>
-<rect x="1990.0" y="567.0" width="71.0" height="16" rx="8" fill="#b45309"/>
-<text x="2025.5" y="578.5" class="chip" fill="#fff">CCF DFI-15</text>
-<rect x="2066.0" y="567.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="2092.9" y="578.5" class="chip" fill="#fff">SFM-028</text>
-<circle cx="2086.0" cy="615.0" r="16" fill="#fdf0e1" stroke="#b45309" stroke-width="1.7"/>
+<text x="1264" y="515.5" class="d">Item HMI shows the wrong state,</text>
+<text x="1264" y="530.0" class="d">or cruiseMismatch raised after 6</text>
+<text x="1264" y="544.5" class="d">s with no reaction</text>
+<text x="1264" y="559.0" class="d">(selfdrived.py:420-422,</text>
+<text x="1264" y="573.5" class="d">events.py:458-460; GAP-19).</text>
+<text x="1264" y="588.0" class="d">BL-005: cruiseMismatch alerts</text>
+<text x="1264" y="602.5" class="d">after 1 s (TSR-308); not</text>
+<text x="1264" y="617.0" class="d">re-rated in the SW FMEA</text>
+<text x="1264" y="631.5" class="d">(SWF-039)</text>
+<rect x="1264.0" y="639.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1291.0" y="651.0" class="chip" fill="#fff">SFM-028</text>
+<rect x="1322.9" y="639.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1349.9" y="651.0" class="chip" fill="#fff">SWF-039</text>
+<rect x="1381.8" y="639.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1408.8" y="651.0" class="chip" fill="#fff">SFM-021</text>
+<rect x="1264.0" y="661.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1291.0" y="673.0" class="chip" fill="#fff">SWF-048</text>
+<circle cx="1360.0" cy="709.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="1493.5" y="478.5" width="220" height="122.0" rx="9" class="shadow"/>
+<rect x="1492" y="476.0" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<path d="M1501,476.0 H1703 A9,9 0 0 1 1712,485.0 V481.0 H1492 V485.0 A9,9 0 0 1 1501,476.0 Z" fill="#b45309"/>
+<text x="1506" y="501.0" class="id">BE-5.11</text>
+<text x="1698" y="501.0" class="kind">BASIC</text>
+<text x="1506" y="515.5" class="d">Cluster cruise indicator not an</text>
+<text x="1506" y="530.0" class="d">independent cue (AOU-12 fails;</text>
+<text x="1506" y="544.5" class="d">item TX 0x412 affects the</text>
+<text x="1506" y="559.0" class="d">cluster)</text>
+<rect x="1506.0" y="567.0" width="71.0" height="16" rx="8" fill="#b45309"/>
+<text x="1541.5" y="578.5" class="chip" fill="#fff">CCF DFI-15</text>
+<rect x="1582.0" y="567.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="1609.0" y="578.5" class="chip" fill="#fff">SFM-028</text>
+<circle cx="1602.0" cy="615.0" r="16" fill="#fdf0e1" stroke="#b45309" stroke-width="1.7"/>
 <text x="40" y="790.5" class="lh">Symbols · IEC 61025</text>
 <rect x="46" y="810.5" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>
 <rect x="46" y="810.5" width="44" height="4" rx="2" fill="#1d2433"/>
@@ -237,32 +200,32 @@
 <text x="86" y="920.5" class="lb">Single-point path</text>
 <text x="86" y="936.5" class="s">One basic event in the item reaches the top event; undeveloped events outside the item assumed.</text>
 <text x="86" y="951.5" class="s">Computed from the gate logic (see cut-sets.md); the SPF tags are WP-A-04's own claims.</text>
-<rect x="1696" y="776.5" width="500" height="196" rx="10" fill="#fff" stroke="#d9dee6"/>
-<line x1="1696" y1="822.5" x2="2196" y2="822.5" stroke="#d9dee6"/>
-<line x1="2014" y1="822.5" x2="2014" y2="972.5" stroke="#d9dee6"/>
-<text x="1714" y="805.5" class="tbh">LionDriver · FTA SG-05</text>
-<rect x="2046" y="790.5" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
-<text x="2112" y="804.5" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
-<text x="1714" y="848.5" class="k">TOP OF SHEET</text>
-<text x="1812" y="848.5" class="v">TE-05</text>
-<text x="1714" y="874.5" class="k">SINGLE-POINT</text>
-<text x="1812" y="874.5" class="v">1 basic event on this sheet</text>
-<text x="1714" y="900.5" class="k">SOURCE</text>
-<text x="1812" y="900.5" class="v">WP-A-04 §6 (analysis of record)</text>
-<text x="1714" y="926.5" class="k">GENERATED BY</text>
-<text x="1812" y="926.5" class="v">fta_diagrams.py</text>
-<text x="1714" y="952.5" class="k">EDIT</text>
-<text x="1812" y="952.5" class="v">WP-A-04, not this file</text>
-<text x="2030" y="846.5" class="k">SHEETS</text>
-<line x1="2105.0" y1="881.5" x2="2064.5" y2="895.5" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="2105.0" y1="881.5" x2="2145.5" y2="895.5" stroke="#9aa3b2" stroke-width="1.3"/>
-<line x1="2064.5" y1="915.5" x2="2105.0" y2="929.5" stroke="#9aa3b2" stroke-width="1.3"/>
-<rect x="2091.0" y="861.5" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="2105.0" y="875.5" class="mm" fill="#fff">1</text>
-<rect x="2050.5" y="895.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="2064.5" y="909.5" class="mm" fill="#0f2a44">2</text>
-<rect x="2131.5" y="895.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="2145.5" y="909.5" class="mm" fill="#0f2a44">3</text>
-<rect x="2091.0" y="929.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
-<text x="2105.0" y="943.5" class="mm" fill="#0f2a44">4</text>
+<rect x="1212" y="776.5" width="500" height="196" rx="10" fill="#fff" stroke="#d9dee6"/>
+<line x1="1212" y1="822.5" x2="1712" y2="822.5" stroke="#d9dee6"/>
+<line x1="1530" y1="822.5" x2="1530" y2="972.5" stroke="#d9dee6"/>
+<text x="1230" y="805.5" class="tbh">LionDriver · FTA SG-05</text>
+<rect x="1562" y="790.5" width="132" height="20" rx="10" fill="#fff4e0" stroke="#f0c36d"/>
+<text x="1628" y="804.5" class="chip" fill="#8a5a00">DRAFT · NOT VERIFIED</text>
+<text x="1230" y="848.5" class="k">TOP OF SHEET</text>
+<text x="1328" y="848.5" class="v">TE-05</text>
+<text x="1230" y="874.5" class="k">SINGLE-POINT</text>
+<text x="1328" y="874.5" class="v">0 basic events on this sheet</text>
+<text x="1230" y="900.5" class="k">SOURCE</text>
+<text x="1328" y="900.5" class="v">WP-A-04 §6 (analysis of record)</text>
+<text x="1230" y="926.5" class="k">GENERATED BY</text>
+<text x="1328" y="926.5" class="v">fta_diagrams.py</text>
+<text x="1230" y="952.5" class="k">EDIT</text>
+<text x="1328" y="952.5" class="v">WP-A-04, not this file</text>
+<text x="1546" y="846.5" class="k">SHEETS</text>
+<line x1="1621.0" y1="881.5" x2="1580.5" y2="895.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1621.0" y1="881.5" x2="1661.5" y2="895.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<line x1="1580.5" y1="915.5" x2="1621.0" y2="929.5" stroke="#9aa3b2" stroke-width="1.3"/>
+<rect x="1607.0" y="861.5" width="28" height="20" rx="5" fill="#0f2a44" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1621.0" y="875.5" class="mm" fill="#fff">1</text>
+<rect x="1566.5" y="895.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1580.5" y="909.5" class="mm" fill="#0f2a44">2</text>
+<rect x="1647.5" y="895.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1661.5" y="909.5" class="mm" fill="#0f2a44">3</text>
+<rect x="1607.0" y="929.5" width="28" height="20" rx="5" fill="#fff" stroke="#0f2a44" stroke-width="1.3"/>
+<text x="1621.0" y="943.5" class="mm" fill="#0f2a44">4</text>
 </svg>
