@@ -17,7 +17,7 @@ Row results: *match* = a computed cut set; *effective* = omits only latent event
 | SG-05 | 12 | 11 | 11 | 10 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
 | SG-06 | 85 | 7 | 11 | 1 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-07 | 17 | 14 | 16 | 15 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| SG-08 | 11 | 11 | 8 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SG-08 | 13 | 13 | 10 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## SG-01: uncontrollable lateral motion, or steering actuation while not engaged
 
@@ -497,7 +497,7 @@ Top event TE-07. 17 minimal cut sets.
 
 ## SG-08: automated control continues with a driver who is not supervising or not responding
 
-Top event TE-08. 11 minimal cut sets.
+Top event TE-08. 13 minimal cut sets.
 
 ### Computed cut sets
 
@@ -511,9 +511,11 @@ Top event TE-08. 11 minimal cut sets.
 | 6 | 1 BE + 0 UE | 1 | {BE-8.06} |  | MCS-08.4 |
 | 7 | 1 BE + 0 UE | 1 | {BE-8.07} |  | MCS-08.5 |
 | 8 | 1 BE + 0 UE | 1 | {BE-8.08} |  | MCS-08.7 |
-| 9 | 0 BE + 1 UE | 0 | {UE-8.09} |  | MCS-08.8 |
-| 10 | 2 BE + 0 UE | 1 | {BE-8.03, BE-8.04} | L | MCS-08.3 |
-| 11 | 2 BE + 0 UE | 1 | {BE-8.03, BE-8.05} | L | MCS-08.3 |
+| 9 | 1 BE + 0 UE | 0 | {BE-8.10} | L | MCS-08.9 |
+| 10 | 0 BE + 1 UE | 0 | {UE-8.09} |  | MCS-08.8 |
+| 11 | 0 BE + 1 UE | 0 | {UE-8.11} |  | MCS-08.10 |
+| 12 | 2 BE + 0 UE | 1 | {BE-8.03, BE-8.04} | L | MCS-08.3 |
+| 13 | 2 BE + 0 UE | 1 | {BE-8.03, BE-8.05} | L | MCS-08.3 |
 
 ### Table rows of WP-A-04
 
@@ -527,3 +529,5 @@ Top event TE-08. 11 minimal cut sets.
 | MCS-08.6 | 1 | {BE-2.12 or BE-2.13 or BE-2.25} | match | — |
 | MCS-08.7 | 1 | {BE-8.08} | match | — |
 | MCS-08.8 | 0 + ext. | {UE-8.09} | match | — |
+| MCS-08.9 | 1 (latent, by design) | {BE-8.10} | match | — |
+| MCS-08.10 | 0 + ext. | {UE-8.11} | match | — |

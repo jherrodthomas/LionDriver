@@ -5,7 +5,7 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 | Field | Value |
 |---|---|
 | Analysis | IA-2026-<nn> (assign on review) |
-| Status | **Proposed 2026-10-14**: opendbc commit `3ed789a` on branch `claude/atc-20-tx-rate-reengagement`, [jherrodthomas/opendbc#15](https://github.com/jherrodthomas/opendbc/pull/15); LionDriver pin unchanged until it is merged; not verified on hardware; not reviewed independently |
+| Status | **Integrated 2026-10-16**: merged into the opendbc fork as [jherrodthomas/opendbc#15](https://github.com/jherrodthomas/opendbc/pull/15) (merge commit `9859cb0`, 2026-10-14); LionDriver pins opendbc `515b9a2` ([change-2026-10-16-pin-515b9a2](change-2026-10-16-pin-515b9a2.md)); not verified on hardware; not reviewed independently. History: proposed 2026-10-14: opendbc commit `3ed789a` on branch `claude/atc-20-tx-rate-reengagement`, [jherrodthomas/opendbc#15](https://github.com/jherrodthomas/opendbc/pull/15); LionDriver pin unchanged until it is merged; not verified on hardware; not reviewed independently |
 | Change requests | WP-W-03 ATC-26; back-to-back finding B2B-06 ([B2B-TOY-AUTH-2026-10-13](../../05-software/reference-models/results/B2B-TOY-AUTH-2026-10-13.md), scenario D19b; first found as candidate BB-C-01); WP-W-02 OI-14 (closed by the amendment) |
 | Decision | Delegated decision of the project maintainer, 2026-10-14 ("go with your recommendation"): resolve the SWSR-301/SWSR-311 conflict by amending SWSR-311 so the cruise edge state resets to "not yet seen disengaged"; the alternative (accept and document) was not taken |
 | Requirement | SWSR-311 as amended in WP-W-02 v0.21; SWSR-301 unchanged |
@@ -46,6 +46,6 @@ Applies to every mode that uses the shared `pcm_cruise_check` in the reference b
 
 | ID | Item | Needed by |
 |---|---|---|
-| OI-1 | Merge the opendbc PR, bump the pin; update the reference model's MA-01 to the amended SWSR-311 and re-run the B2B (D19b: no re-grant on both sides); state the T7/T1 behaviour in `sm-toy-auth.yaml` | Pin bump |
+| OI-1 | **Done 2026-10-16** ([change-2026-10-16-pin-515b9a2](change-2026-10-16-pin-515b9a2.md): pin `515b9a2`, deviation removed, B2B gate OK, record and WP-W-05 §5.2 updated). ~~Merge the opendbc PR, bump the pin; update the reference model's MA-01 to the amended SWSR-311 and re-run the B2B (D19b: no re-grant on both sides); state the T7/T1 behaviour in `sm-toy-auth.yaml`~~ | Pin bump |
 | OI-2 | HIL: set the safety mode with cruise held on the bench; no authority until cruise off and on | HIL bench (D-04) |
 | OI-3 | HMI: after a mode change during a drive, the driver must re-engage cruise. Check that the host shows why engagement is refused | Host alert review |

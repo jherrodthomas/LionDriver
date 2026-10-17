@@ -61,6 +61,8 @@ svg {{ --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3
 .s3 {{ fill:none; stroke:var(--s3); stroke-width:2; }}
 .band {{ fill:var(--f1); }}
 .edge.todo {{ stroke:var(--s2); stroke-dasharray:5 4; }}
+.box.dead {{ fill:none; stroke:var(--ink3); stroke-dasharray:5 4; }}
+.sup {{ fill:var(--hi); stroke:var(--edge); stroke-width:1.2; }}
 .arrow.todo {{ fill:var(--s2); }}
 {"".join(f".k{n} {{ fill:var(--f{n}); stroke:var(--c{n}); stroke-width:1.4; }}{chr(10)}" for n in SLOTS)}.m1 {{ fill:var(--s1); }}
 .m2 {{ fill:var(--s2); }}

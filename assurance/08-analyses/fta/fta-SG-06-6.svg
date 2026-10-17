@@ -64,6 +64,8 @@
 <text x="81.0" y="525.0" class="chip" fill="#fff">SWF-047</text>
 <rect x="112.9" y="513.5" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="139.8" y="525.0" class="chip" fill="#fff">SFM-005</text>
+<rect x="171.8" y="513.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="198.8" y="525.0" class="chip" fill="#fff">SFM-011</text>
 <circle cx="150.0" cy="561.5" r="16" fill="#e6effb" stroke="#1a5fb4" stroke-width="1.7"/>
 <rect x="404.5" y="295.5" width="220" height="56.5" rx="9" class="shadow"/>
 <rect x="403.0" y="293.0" width="220" height="56.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>

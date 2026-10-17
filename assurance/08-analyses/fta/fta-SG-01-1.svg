@@ -81,19 +81,21 @@
 <rect x="538.0" y="720.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="565.0" y="731.5" class="chip" fill="#fff">SFM-006</text>
 <rect x="596.9" y="720.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="623.9" y="731.5" class="chip" fill="#fff">SWF-040</text>
+<text x="623.9" y="731.5" class="chip" fill="#fff">SFM-037</text>
 <rect x="655.8" y="720.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="682.8" y="731.5" class="chip" fill="#fff">SWF-043</text>
+<text x="682.8" y="731.5" class="chip" fill="#fff">SWF-040</text>
 <rect x="538.0" y="742.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="565.0" y="753.5" class="chip" fill="#fff">SWF-033</text>
+<text x="565.0" y="753.5" class="chip" fill="#fff">SWF-043</text>
 <rect x="596.9" y="742.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="623.9" y="753.5" class="chip" fill="#fff">SWF-072</text>
+<text x="623.9" y="753.5" class="chip" fill="#fff">SWF-033</text>
 <rect x="655.8" y="742.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="682.8" y="753.5" class="chip" fill="#fff">SWF-078</text>
+<text x="682.8" y="753.5" class="chip" fill="#fff">SWF-072</text>
 <rect x="538.0" y="764.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="565.0" y="775.5" class="chip" fill="#fff">SWF-080</text>
+<text x="565.0" y="775.5" class="chip" fill="#fff">SWF-078</text>
 <rect x="596.9" y="764.0" width="53.9" height="16" rx="8" fill="#111827"/>
-<text x="623.9" y="775.5" class="chip" fill="#fff">SWF-081</text>
+<text x="623.9" y="775.5" class="chip" fill="#fff">SWF-080</text>
+<rect x="655.8" y="764.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="682.8" y="775.5" class="chip" fill="#fff">SWF-081</text>
 <circle cx="634.0" cy="812.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <rect x="767.5" y="660.5" width="220" height="122.0" rx="9" class="shadow"/>
 <rect x="766" y="658.0" width="220" height="122.0" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
