@@ -105,9 +105,10 @@ scenarios:
     status: known_gap
     fta: [BE-8.01, BE-8.03, BE-8.05, BE-8.07]
     fmea: [SFM-022, SFM-023]
+    requirements: [TSR-634]
     actions: [SFM-ACT-005, SFM-ACT-009, SFM-ACT-017]
     decisions: [DQ-205, DQ-077]
-    open_because: "SOTIF residual; escalation-time budget not derived (OI-6)"
+    open_because: "Speed-dependent wheel-touch escalation decided (DQ-077 A) and required by TSR-634, not implemented; the speed table is derived in WP-C-08 §5"
   - id: LS-10
     ucas: [UCA-11]
     hazards: [H-01]

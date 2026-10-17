@@ -1699,12 +1699,16 @@
       title: "Keep the fixed times and justify them"
       detail: "No change. Cost: a recorded SOTIF known gap."
   sources: ["assurance/08-analyses/WP-A-05-stpa.md OI-6"]
-  status: answered
+  status: applied
   answer:
     choice: A
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied:
+    ref: 6f24efd48
+    record: "WP-S-02 v0.31 TSR-634; WP-A-05 v0.8 LS-09, OI-6 closed. Open for their owners: the speed table and supervision bound in WP-C-08 §5, the policy.py change, and its validation (WP-V-02)"
+    at: 2026-10-17
 
 - id: DQ-078
   question: "Does the safety authority accept the residual risks listed for missing supplier evidence (no EMC/environment tests, teardown instead of schematic, handbook failure rates)?"
