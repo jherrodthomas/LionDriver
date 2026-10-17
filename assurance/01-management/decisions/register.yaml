@@ -1665,9 +1665,10 @@
       title: "Keep current behaviour"
       detail: "No change; a misbehaving host can be re-granted on the next driver engagement."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-11"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-12, note: "Delegated to the recommendation (RR-2026-009 §7 F-34: amend SWSR-518, then change the code); confirmed in chat on 2026-10-13 when the work started."}
-  note: "SWSR-518 amended in WP-W-02 v0.24 (jherrodthomas/LionDriver#80); code in jherrodthomas/opendbc#15 (ATC-20). Set to applied when both are merged."
+  applied: {ref: "jherrodthomas/opendbc#15 (9859cb0); LionDriver pin opendbc 515b9a2", record: "WP-W-02 v0.24 SWSR-518; WP-W-03 ATC-20; change-2026-10-13-tx-rate-reengagement.md; change-2026-10-16-pin-515b9a2.md", at: 2026-10-16}
+  note: "SWSR-518 amended in WP-W-02 v0.24 (jherrodthomas/LionDriver#80); code in jherrodthomas/opendbc#15 (ATC-20), at the LionDriver pin since opendbc 515b9a2."
 
 - id: DQ-080
   question: "After a safety reset while cruise stays on, should steering come back by itself, or only after you switch cruise off and on?"
@@ -1686,9 +1687,10 @@
       title: "Keep the automatic return"
       detail: "No change. Cost: steering comes back after a fault without the driver acting."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-14"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-14, note: "Agreed in chat to the recommended option (require cruise off and on again)."}
-  note: "SWSR-311 amended in WP-W-02 v0.24, OI-14 closed (jherrodthomas/LionDriver#80); code in jherrodthomas/opendbc#15 (ATC-26). Set to applied when both are merged."
+  applied: {ref: "jherrodthomas/opendbc#15 (9859cb0); LionDriver pin opendbc 515b9a2", record: "WP-W-02 v0.24 SWSR-311; WP-W-03 ATC-26; change-2026-10-14-mode-set-regrant.md; change-2026-10-16-pin-515b9a2.md", at: 2026-10-16}
+  note: "SWSR-311 amended in WP-W-02 v0.24, OI-14 closed (jherrodthomas/LionDriver#80); code in jherrodthomas/opendbc#15 (ATC-26), at the LionDriver pin since opendbc 515b9a2."
 
 - id: DQ-081
   question: "What numeric values should the envelope use for jerk limits, driver-override torque/time, frozen-signal time, SPI error count and the SWSR-405 plausibility tolerances?"

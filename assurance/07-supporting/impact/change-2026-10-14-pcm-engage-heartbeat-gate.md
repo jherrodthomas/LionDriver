@@ -36,4 +36,4 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 |---|---|
 | OI-1 | Vehicle or HIL: measure the edge-to-grant time and confirm that no `controlsMismatch` occurs at engagement over repeated engagements |
 | OI-2 | ~~Re-pin LionDriver to the fork's merge commit once opendbc#14 is merged~~ **Closed:** opendbc `9a13f60` |
-| OI-3 | ~~WP-A-05 LS-06 status to covered~~ **Done** (WP-A-05 v0.3.1). Open: SW FMEA SWF-039 safety mechanism line; SM-TOY-AUTH model and state-machine record to include the heartbeat condition (the B2B harness sets the heartbeat engaged, so the gate is not exercised there) |
+| OI-3 | ~~WP-A-05 LS-06 status to covered~~ **Done** (WP-A-05 v0.3.1). Open: SW FMEA SWF-039 safety mechanism line; SM-TOY-AUTH model to include the heartbeat condition (the B2B harness sets the heartbeat engaged, so the gate is not exercised there; [change-2026-10-16-pin-515b9a2](change-2026-10-16-pin-515b9a2.md) OI-3). The state-machine record has it since 2026-10-16 (state ENGAGE_PENDING, T1a–T1c), and writing it found SM-F1: an edge while MAIN_ON = 0 opens the window (same change record §2) |
