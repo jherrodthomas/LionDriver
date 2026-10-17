@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.27 | draft | BL-006 | RT-2 | 2026-10-16 |
+| 0.28 | draft | BL-006 | RT-2 | 2026-10-16 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -802,7 +802,7 @@ Effects:
 | `SFM-034.C1` Switch U1 or U2 stuck in intercept, its IN input damaged high or driven high, its pull-down R2/R3 open, or the switches damaged by box supply transients (DG419LE, RR-2026-010) | • Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM row exists <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | • As rated in the DFMEA: no pre-release test of this hardware fault <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | 4 | 10 | 🔴 **H** | — |
 | `SFM-034.C2` Switch stuck in pass-through, or the SBU1 drive lost, held low or too low to change the switch over (5 V drive against VL = VIN) | • Consumer-grade device hardware (comma 3X) without automotive qualification data available to LionDriver; rated in the DFMEA where a DFM row exists <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | • As rated in the DFMEA: no pre-release test of this hardware fault <sub>assurance/08-analyses/fmea/analyses/dfmea.yaml</sub> | 3 | 9 | 🔴 **H** | — |
 
-Safety mechanisms: (1) relayMalfunction fault from panda -> IMMEDIATE_DISABLE · (2) BL-006 (reference build): a relay malfunction is latched for the ignition cycle; TOYOTA is refused until ignition off, so a safety-mode change cannot clear the malfunction before a quick re-engagement (panda#17, DFA DM-25). Ratings stay with the DFMEA (DFM-010, DFM-011)
+Safety mechanisms: (1) relayMalfunction fault from panda -> IMMEDIATE_DISABLE · (2) BL-006 (reference build): a relay malfunction is latched for the ignition cycle; TOYOTA is refused until ignition off, so a safety-mode change cannot clear the malfunction before a quick re-engagement (panda#17, DFA DM-25; the software failure mode of this reaction is SW FMEA SWF-090, O 3 D 4 at BL-006). Ratings of the switch causes stay with the DFMEA (DFM-010, DFM-011)
 
 [Monitoring and system response](#7-monitoring-and-system-response): `SFM-034.C1` not rated here: Hardware cause; rated once in the DFMEA (DFM-010.C1)<br>`SFM-034.C2` not rated here: Hardware cause; rated once in the DFMEA (DFM-011.C1)
 

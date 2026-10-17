@@ -1782,7 +1782,7 @@
 - id: SWSR-625
   kind: swsr
   text: "`selfdrived` shall raise FCW only when `modelV2` and `longitudinalPlan` are each within 2 nominal periods and valid; it shall log every FCW with its trigger source so that the false-FCW rate per driving hour can be measured against the WP-V-02 target."
-  asil: "A (open: WP-C-04 OI-9)"
+  asil: "A (until re-rated: DQ-052 A, WP-C-04 OI-9)"
   parents: [TSR-625]
   parent_text: "TSR-625"
   other_parents: false

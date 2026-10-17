@@ -641,7 +641,7 @@
       title: "Leave them as notes"
       detail: "No effort now. Cost: they stay unconfirmed until a reviewer looks."
   sources: ["assurance/08-analyses/fmea/reviews/hara-r0.1-precheck.md Pending"]
-  note: "HARA and item-definition pre-checks refreshed; the eleven items for the lead to rate are in precheck-refresh-2026-10-16.md §3. Left: the FSC and DFMEA pre-checks (safety-concept and DFMEA sessions), and the lead's ratings."
+  note: "HARA and item-definition pre-checks refreshed; the eleven items for the lead to rate are in precheck-refresh-2026-10-16.md §3. The lead rated all eleven as proposed (chat, 2026-10-17); recorded in §3. Left: the FSC and DFMEA pre-checks (safety-concept and DFMEA sessions)."
   status: applied
   applied: {ref: "jherrodthomas/LionDriver#162", record: "assurance/08-analyses/fmea/reviews/precheck-refresh-2026-10-16.md", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
@@ -1150,12 +1150,13 @@
       title: "Move the warning to the safety chip"
       detail: "Architecturally clean. Cost: a firmware design change."
   sources: ["assurance/02-concept/WP-C-04-functional-safety-concept.md OI-9", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-625"]
-  status: answered
+  status: applied
   answer:
     choice: A
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: 664d30e, record: "WP-C-04 v0.11 FSR-04.06, §10 E-01 row, OI-9 (route recorded; re-rating waits for the WP-V-02 evidence); WP-S-02 v0.29 TSR-625; WP-W-02 v0.28 SWSR-625", at: 2026-10-17}
 
 - id: DQ-053
   question: "When the driver steers against LionDriver, should it back off, or just show it noticed?"
@@ -1347,12 +1348,13 @@
       title: "Yes: add the fast siren here"
       detail: "Meets the requirement as written. Cost: a firmware change."
   sources: ["assurance/03-system/WP-S-04-timing-ftti-budget.md OI-9"]
-  status: answered
+  status: applied
   answer:
     choice: A
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: 664d30e, record: "WP-S-02 v0.29 TSR-516(a) reworded; WP-S-04 v0.13 §5 heartbeat-loss row, OI-9 closed", at: 2026-10-17}
 
 - id: DQ-062
   question: "How much delay to the car's own emergency braking caused by LionDriver is acceptable?"
