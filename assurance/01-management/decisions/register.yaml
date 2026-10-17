@@ -4677,7 +4677,7 @@
     reference car instead of MetaDrive's stock car, and it gives a body shape for camera-height and blind-zone
     drawings. **It changes no physics:
     mass, wheelbase and centre of gravity stay the opendbc CarParams the plant already uses, so no result or
-    evidence depends on it.** No free game-ready 2020 Corolla exists; every real one is a paid render model under
+    evidence depends on it.** No free, game-ready mesh of the Corolla E210 (CFG-001) exists; every real one is a paid render model under
     an editorial-use licence (Toyota design), fine for this project and not for a commercial product. The
     comparison is in `assurance/sim/vehicle-3d-model.md`. Note the trim: CFG-001 is the 1.8 L L/LE/XLE with
     16-inch wheels; the "XSE" models carry 18-inch wheels and are visually the wrong trim.
