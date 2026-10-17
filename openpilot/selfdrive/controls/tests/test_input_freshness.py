@@ -1,3 +1,5 @@
+import unittest
+
 from openpilot.selfdrive.controls.lib.input_freshness import inputs_fresh
 
 FREQ = {'selfdriveState': 100., 'carState': 100., 'modelV2': 20., 'longitudinalPlan': 20.}
@@ -12,7 +14,7 @@ def check(times, seen=None, alive_sd=True):
   return inputs_fresh(SERVICES, seen, alive, times, FREQ)
 
 
-class TestInputsFresh:
+class TestInputsFresh(unittest.TestCase):
   def test_all_current(self):
     assert check({'selfdriveState': 10 * NS, 'carState': 10 * NS - 0.01 * NS, 'modelV2': 10 * NS - 0.05 * NS})
 

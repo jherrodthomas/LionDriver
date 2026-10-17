@@ -170,6 +170,10 @@ class CarEvents:
     if CS.steerFaultTemporary:
       if CS.steeringPressed and (not CS_prev.steerFaultTemporary or self.no_steer_warning):
         self.no_steer_warning = True
+        # LionDriver (TSR-607 (c), DQ-366): a fault that outlasts 1.5 s while the driver keeps steering gets the
+        # lighter prompt, so they know assist is gone before they let go
+        if self.steer_fault_frames > STEER_FAULT_SILENT_FRAMES:
+          events.add(EventName.steerTempUnavailableSilent)
       else:
         self.no_steer_warning = False
 
