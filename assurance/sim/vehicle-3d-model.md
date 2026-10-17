@@ -3,8 +3,8 @@
 | Field | Value |
 |---|---|
 | Scope | A 3D mesh of the reference car (Corolla E210, CFG-001) for simulation layer 3 (MetaDrive) renders and for figures. Procurement comparison, what the mesh does and does not change, and the handover for whoever picks this up next |
-| Version | 0.1 (2026-10-17) |
-| Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. Purchase waits on decision DQ-368 |
+| Version | 0.2 (receipt check, 2026-10-17). 0.1 (2026-10-17) |
+| Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. DQ-368 answered A (bought 2026-10-17, Standard licence) |
 | Feeds | [README](README.md) §2 layer 3; the WP-V-02/WP-V-03 figures that show the reference car; nothing in the safety case |
 
 ## 1. What a mesh is for here, and what it is not for
@@ -90,19 +90,35 @@ Checklist before buying any model: wheels as separate objects with pivots at the
 materials present in the glTF or FBX, not only in the native file; sedan, 1.8 L trim with 16-inch wheels; a polygon
 count you can afford to decimate.
 
-## 4. Handover
+## 4. Receipt check (2026-10-17)
 
-- **Where things stand.** Research done; nothing bought; DQ-368 queued for the lead. Purchased files are licensed
+The 3d_molier model was bought on 2026-10-17 (DQ-368 option A, Standard licence) and the delivered GLB was read with a
+header parser (no asset code executed). Files delivered: GLB and glTF+bin (full), a Draco/KTX2-compressed GLB, USDZ, 3ds
+Max, and RAR archives for 3DS, Blender, Cinema 4D, FBX and OBJ.
+
+| Check | Result |
+|---|---|
+| Scale and units | Centimetres, real scale. Length 465.6, body width 176.8, height 146.2 cm (register: width 178.1 *to confirm*; listings 463.0 / 143.5). Wheelbase from the tyre centres 270.9 cm (opendbc 270.0) |
+| Track | 150.4 cm front and rear from the wheel centres (sedan 153.5 / 156.0): a 2–4 % artist error, irrelevant for renders |
+| Separate parts | 61 meshes, named: body, chassis, four doors, windows, mirrors, steering wheel, wipers, lights, brake discs, wheels and tyres |
+| Wheels | **Rear wheels and tyres are separate meshes (`wheel_1`, `wheel_2`, `tire_1`, `tire_2`); the two front wheels share one mesh (`wheels_forward`, `tires_forward`, `brake_discs_3`).** No node carries a transform, so no wheel has a pivot at its hub. Blender work before MetaDrive: split the front meshes by loose parts, parent each tyre, rim and disc to one empty at the hub centre (±75.2, +130.5 / −140.4, 31.3 cm), set origins there |
+| Trim | **Rim outer diameter 48.5 cm, tyre 64.9 cm: an 18-inch wheel, so the mesh depicts the 2.0 L SE/XSE sport trim, not the 16-inch L/LE/XLE of CFG-001.** Cosmetic; the body is the same. A 16-inch wheel can replace it in Blender if a figure needs it; the caption of any figure that shows the wheels says "sport-trim wheels" until then |
+| Polygons | 426,796 triangles (full GLB), 199,999 (Draco GLB). Decimate the full GLB to about 50–80k for MetaDrive; glass and interior carry most of the excess |
+| Materials | 16 PBR materials, 18 textures (base, normal, ORM, transmission, clearcoat); the body coat uses `KHR_materials_clearcoat`, glass uses `KHR_materials_transmission` and `_volume`. Panda3D will approximate or ignore these three extensions; the Draco/KTX2 GLB also needs `KHR_draco_mesh_compression` and `KHR_texture_basisu`, which panda3d-gltf is not confirmed to support, so use the full GLB |
+| Licence | Standard (royalty-free), editorial uses only. Files stay out of this repository (`assets/` is ignored, see [`assets/README.md`](assets/README.md)) |
+
+## 5. Handover
+
+- **Where things stand.** Bought (option A); receipt check above; files held locally in `assurance/sim/assets/` (ignored) and to be mirrored to a private asset repository. Purchased files are licensed
   content: keep them out of the repository (add the asset folder to `.gitignore` when one exists) and never push them.
-- **If A or B is chosen:** put the glTF under a MetaDrive-visible asset path, write a `CorollaE210Vehicle` class with
-  the §2 dimensions, decimate the hero mesh, confirm the wheels are separate nodes, and pass the class through the
-  bridge's `vehicle_config`. Record the file, its licence and its source in this note. Any figure that uses it says so
+- **Next:** Blender pass (split front wheels, hub pivots, decimation, export `corolla_e210/vehicle.gltf`), then a
+  `CorollaE210Vehicle` class with the §2 dimensions passed through the bridge's `vehicle_config`, then the first
+  regenerated figure. Record the exported file and its checksum in `assets/README.md`. Any figure that uses it says so
   in its caption, as the figures already do for assumed values (MD-04).
-- **If C is chosen:** mark this note withdrawn in the status field and leave it as the record of the comparison.
 - **Do not** re-open the game-engine route (Unreal, Unity) or re-run the marketplace comparison without a new reason;
   cite this note and DQ-368 instead.
 
-## 5. Origin
+## 6. Origin
 
 Written from a Claude Code session on 2026-10-17 that began as "can we use UE4 to create rigging for a car" and ended
 at the comparison above once the project's actual simulation stack was read. The repo path for the next session is

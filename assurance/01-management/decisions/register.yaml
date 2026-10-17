@@ -4696,4 +4696,7 @@
       title: "Buy nothing; keep MetaDrive's stock vehicle mesh"
       detail: "No cost. Layer-3 videos and figures keep showing a generic car; the plant and every result are unaffected."
   sources: ["assurance/sim/vehicle-3d-model.md", "assurance/sim/README.md §2 layer 3", "docs/liondriver/vehicles/vehicles.yaml CFG-001 trims"]
-  status: queued
+  asked: 2026-10-17
+  gate: G1
+  status: answered
+  answer: {choice: A, via: chat, at: 2026-10-17, note: "Bought 2026-10-17 with the Standard licence (editorial-use restriction applies); files held outside the public repository"}
