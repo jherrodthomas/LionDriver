@@ -11,6 +11,8 @@ everything else. This tool turns that folder into what the GitHub wiki repositor
   * `{{REPO}}`, `{{BRANCH}}`, `{{SYNC_COMMIT}}` and `{{SYNC_DATE}}` are filled in;
   * `{{MERGE_LOG}}` becomes the list of pull requests merged into the synced branch, newest first,
     read from the merge commits in the checkout (the Session log page);
+  * the infographics of infographics.py are rendered from the records and written next to the pages, so a
+    page embeds one as `![alt](decision-register.svg)`;
   * wiki/README.md, which describes the folder, is not published.
 
 It also checks the pages: every page is reachable from _Sidebar.md, every page link names a page that
@@ -30,6 +32,9 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+import infographics
+
 ROOT = HERE.parents[1]
 SRC = ROOT / "wiki"
 
@@ -116,7 +121,9 @@ def rewrite(text: str, page: Path, src: Path, root: Path, values: dict[str, str]
       if path not in names:
         problems.append(f"{page.name}: page link target does not exist: {path}")
       return f"{before}{path[:-3]}{anchor}{after}"
-    problems.append(f"{page.name}: link is neither a page (Name.md), a repository path (../path) nor a URL: {target}")
+    if path in infographics.NAMES:
+      return m.group(0)  # a generated figure, written next to the pages by build()
+    problems.append(f"{page.name}: link is neither a page (Name.md), a repository path (../path), a generated figure nor a URL: {target}")
     return m.group(0)
 
   text = LINK.sub(link, text)
@@ -152,6 +159,8 @@ def build(src: Path = SRC, out: Path | None = None, root: Path = ROOT, *, repo: 
     out.mkdir(parents=True, exist_ok=True)
     for name, text in built.items():
       (out / name).write_text(text, encoding="utf-8")
+    if (root / "assurance" / "01-management" / "decisions" / "register.yaml").exists():
+      infographics.write_all(out, root)
   return problems
 
 

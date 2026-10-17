@@ -5,6 +5,10 @@ documentation and vehicle integration. This page is the short version of
 [contributing to LionDriver](../docs/liondriver/contributing.md), which is the rule book, and of the inherited
 [openpilot contributing guide](../docs/CONTRIBUTING.md), which covers the development setup and code conventions.
 
+![What a change goes through before it is merged: a pull request against liondriver-dev is classified by the paths it touches, must carry rationale, impact analysis, verification and record updates when safety-relevant, is checked by the workflows, and is reviewed and merged by a person.](change-path.svg)
+
+*Rendered from the [safety-relevant file list](../assurance/07-supporting/safety-relevant-paths.txt) and the [workflow files](../.github/workflows) by [`infographics.py`](../tools/wiki/infographics.py) at every wiki sync.*
+
 ## Setting up
 
 LionDriver inherits openpilot's setup. Ubuntu 24.04 is the primary target; macOS works for most of it and
