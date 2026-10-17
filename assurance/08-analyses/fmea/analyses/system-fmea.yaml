@@ -93,6 +93,9 @@
 # Rev 0.23 (2026-10-16): new SFM-038 (warning of a lateral-control fault or limit late, not escalated or missing), backing FTA SG-02 BE-2.08
 # and BE-2.24, which had no FMEA mode: C1 EPS-fault warning stuck at the low-priority prompt after a recent override (car_events.py, GAP-03), C2 panda epsFault
 # read by no SoC process, C3 steerSaturated conditions (WP-S-04 §3.8.1). O 8 (design gaps), AP H. New SFM-ACT-023; C3 uses SFM-ACT-021.
+# Rev 0.24 (2026-10-16): the zero-awareness reaction is decided (DQ-365 A, which absorbs DQ-340): SFM-ACT-005 moves from
+# decision_pending to open, names TSR-633 (stop in lane, hold, lock out) and the preliminary WP-S-04 §3.8.4 time. Not implemented at
+# BL-005, so SFM-025.C1 keeps its ratings (O 8, D 9, M 10).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -101,7 +104,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.23"
+  revision: "0.24"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
@@ -2866,7 +2869,8 @@ failure_modes:
       Observation: in BL-001, events.py maps driverDistracted3 and driverUnresponsive3 only to an
       ET.PERMANENT alert; no SOFT_DISABLE/IMMEDIATE_DISABLE is attached, so reaching awareness 0 does not
       by itself disengage. This may be a deliberate design choice (avoid dropping control on an
-      incapacitated driver). It needs an explicit safety-concept decision (SFM-ACT-005); unchanged at BL-004 and BL-005.
+      incapacitated driver). Unchanged at BL-004 and BL-005. Decided since (DQ-365 A, 2026-10-16): stop in the lane, hold,
+      and lock out re-engagement until the driver responds (TSR-633); implementation is SFM-ACT-005.
       HARA input: driver incapacitated while engaged. Lead decision DQ-205 (2026-10-14, option A): the unresponsive
       driver is its own hazard with an ASIL A goal (here HZ-013, SG-010; H-09 and SG-08, ASIL A, in WP-C-03 v0.4), and its
       safe state is defined together with the zero-awareness reaction.
@@ -3860,12 +3864,14 @@ actions:
     status: open
   - id: SFM-ACT-005
     kind: design_change
-    description: Decide in the FSC how the item reacts when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction
-      at BL-004 or BL-005) and implement the decision. DQ-205 (answered) makes this the safe state of SG-010 (WP-C-03 SG-08, ASIL A); the
-      reaction itself is still to be decided. The requirement is TSR-633 (terminal reaction, ASIL A proposed) with TSR-611 (WP-S-02 §12.3a);
-      the reaction is lead decision DQ-340. The H-09 FTTI is not yet set, so the timing rows of WP-S-04 §3.8.4 cannot be compared
+    description: Implement the reaction when driver awareness reaches zero (driverUnresponsive3 / driverDistracted3 have no disable reaction
+      at BL-004 or BL-005), the safe state of SG-010 (WP-C-03 SG-08, ASIL A; DQ-205). Decided by the lead (DQ-365, option A, 2026-10-16) and
+      specified in TSR-633 (WP-S-02 v0.26) with TSR-611; keep the lane and decelerate in lane to a standstill with the terminal alert
+      sounding, hold the vehicle stopped, and lock out re-engagement and resumption until the driver responds. WP-S-04 v0.12 §3.8.4 gives a
+      preliminary time to the reaction (18 s vision, 30 s wheel-touch from loss of attention; OI-11); SFM-025.C1 is re-rated once TSR-633
+      is implemented and that time is confirmed
     owner: Jherrod Thomas
-    status: decision_pending
+    status: open
   - id: SFM-ACT-006
     kind: detection
     description: Establish on the reference car which stock TSS2 functions (PCS/AEB, FCW) remain available with LionDriver installed and longitudinal control
