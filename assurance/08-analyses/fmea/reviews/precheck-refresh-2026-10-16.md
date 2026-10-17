@@ -57,6 +57,6 @@ Not on the list, because no judgement is needed:
 - **FC, mechanical:** CR-4a, CR-5 and IDA-7.
 - **Already checked by `fmea_lint.py`:** VA-33e and FSA-21.
 
-## 4. Offered, not done
+## 4. Pre-check of WP-C-03
 
-The same checklist tool (`hara-checklist-reviewer`) can be run on the WP-C-03 workbook ([`WP-C-03-hara-cartesian.xlsx`](../../../02-concept/hara/WP-C-03-hara-cartesian.xlsx)). That is a reversible technical step. The HARA session can do it when the lead wants the reviews to start from the HARA of record rather than the second set.
+Done on 2026-10-17: [wp-c03-v0.4-precheck.md](wp-c03-v0.4-precheck.md) runs the same checklist tool on the WP-C-03 workbook, the HARA of record. It found no NO rating. Its two PC findings are tool limitations already recorded here, and it lists the items pending for the I1 reviewer.
