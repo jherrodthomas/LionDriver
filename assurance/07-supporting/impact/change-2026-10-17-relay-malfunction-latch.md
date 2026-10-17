@@ -30,4 +30,4 @@ Impact analysis per [WP-M-12](../../01-management/WP-M-12-impact-analysis.md) §
 |---|---|
 | OI-1 | HIL / bench: inject a relay malfunction, cycle the safety mode, and confirm TOYOTA is refused until ignition off (with DFA DM-22 and HIL `test_11_reference_lock`) |
 | OI-2 | ~~Re-pin LionDriver to the fork's merge commit~~ Not needed: `0a7da85` is on the fork's `master` once jherrodthomas/panda#17 merges, as `tools/release/check-submodules.sh` requires, and its tree equals the merge commit's |
-| OI-3 | DFA: DFI-07 / DM-25 records, WP-A-03 and WP-A-02 notes (DFA owner) |
+| OI-3 | ~~DFA: DFI-07 / DM-25 records, WP-A-03 and WP-A-02 notes (DFA owner)~~ Done: `dfa.yaml` rev 0.13 (DM-25 existing_unverified, DFI-07 stays open), WP-A-03 v0.16, WP-A-02 v0.10 |

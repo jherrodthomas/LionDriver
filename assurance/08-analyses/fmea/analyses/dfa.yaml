@@ -14,6 +14,8 @@
 # Rev 0.11: SW FMEA references point at the merged rows SWF-054..057 (sw-fmea.yaml rev 1.0).
 # Rev 0.12: opendbc pinned at 515b9a2 (jherrodthomas/opendbc#15, LionDriver 3ba8ca10): DFI-07 insufficient -> open, DM-25
 # partly in the pinned code. Decomposition statuses unchanged.
+# Rev 0.13: panda pinned at 0a7da85 (jherrodthomas/panda#17, LionDriver e5109376): the relay-malfunction part of DM-25 is coded;
+# DM-25 required -> existing_unverified; DFI-07 stays open pending the bench checks.
 # Rev 0.10 applies lead decision DQ-209 option A (keep comma's harness box, bench-test it) to DFI-20, DFI-21 and DOI-008.
 # 2026-10-16: fsc_revision 0.3 -> 0.4. FSC rev 0.4 only adds notes on two lead decisions (DQ-053, DQ-064) to
 # FSR-031 and FSR-038; no statement, ASIL, allocation or decomposition changed, so no DFI changes.
@@ -23,7 +25,7 @@ analysis:
   type: dfa
   doc_id: LD-DFA-001
   title: "Dependent Failure Analysis — panda/SoC decompositions (LD-FSC-001)"
-  revision: "0.12"
+  revision: "0.13"
   status: draft
   baseline: BL-004
   fsc_revision: "0.4"
@@ -58,6 +60,7 @@ analysis:
     - {revision: "0.10", date: 2026-10-16, author: Claude (AI-assisted draft), change: "Lead decision DQ-209 option A applied: comma's harness box is kept and bench-tested, no adapter, no readback, comma power not required. DFI-20 stays safe by design; DFI-21 stays open, now closed only by the bench test and the cluster observation (options B and C are no longer routes). DOI-008 reworded. No assessment or decomposition status changed"}
     - {revision: "0.11", date: 2026-10-16, author: Claude (AI-assisted draft), change: "References to the SW FMEA pull requests (#95, #111) replaced by the merged rows SWF-054, SWF-055 (DFI-07) and SWF-056, SWF-057 (DFI-05) of sw-fmea.yaml rev 1.0. Each row checked to describe the coupling cited. No content change"}
     - {revision: "0.12", date: 2026-10-17, author: Claude (AI-assisted draft), change: "opendbc pin 9a13f60 -> 515b9a2 (jherrodthomas/opendbc#15, liondriver-dev 3ba8ca10) checked in the code. DFI-07 insufficient -> open: after a mode change authority needs CRUISE_ACTIVE = 0 then a new rising edge (ATC-26, SWSR-311), a TX-rate revocation keeps blocking engagement for one full window after the last rejected frame (ATC-20, SWSR-518), and the RX checks, EPS_STATUS (0x262) among them, must be valid again before a grant. Still open: relay-malfunction detection is suspended for 1-2 s after each mode set, and nothing is verified on hardware. DM-25 reworded, stays required. Decomposition statuses unchanged"}
+    - {revision: "0.13", date: 2026-10-17, author: Claude (AI-assisted draft), change: "panda pin a55bdfc -> 0a7da85 (jherrodthomas/panda#17, liondriver-dev e5109376) checked in the code: the reference lock latches a relay malfunction for the ignition cycle and refuses TOYOTA until the ignition goes off, fed from the 8 Hz tick and from set_safety_mode() before set_safety_hooks() clears the flag. All parts of DM-25 now coded and unit-tested: required -> existing_unverified. DFI-07 stays open: HIL test_11_reference_lock, DM-22 and the latch bench test (impact record change-2026-10-17-relay-malfunction-latch OI-1) not run. Decomposition statuses unchanged"}
 
 categories:
   - {id: CAT-01, name: Shared power supply, applicable: true, rationale: "Panda and SoC are on the same comma 3X board, powered from the same 12 V input. On the Toyota harness that input is the harness-box supply VIN (ignition through D1, or comma power), which also powers both intercept switches; the ignition sense hangs on the same ignition line (RR-2026-010 HB-03, HB-06)."}
@@ -268,6 +271,17 @@ dfis:
       after a mode cycle can be granted while a stuck harness switch is not yet re-detected; (2) none of this is
       verified on the bench (HIL test_11_reference_lock, DM-22). Needed: keep the relay-malfunction state across a mode
       set (or refuse re-entry to TOYOTA in the same ignition cycle), and the HIL and DM-22 checks.
+      Rev 0.13 (panda 0a7da85, pinned by liondriver-dev e5109376; opendbc 98d3be1): the relay-malfunction gap is closed
+      by the second route. The reference lock keeps reference_relay_fault_this_ignition, set from relay_malfunction in
+      the 8 Hz tick and in set_safety_mode() just before set_safety_hooks() clears the flag (board/main.c:46, 188), and
+      refuses TOYOTA while it is set; only the ignition-off branch of reference_lock_ignition_update() clears it
+      (board/reference_lock.h:40-65, 80-81). A mode cycle therefore cannot hide a stuck harness switch, internal mode
+      changes included. Unit tests: tests/reference_lock/test_reference_lock.py
+      test_toyota_refused_after_a_relay_malfunction_while_ignition_on, test_toyota_allowed_again_after_ignition_off,
+      test_no_relay_malfunction_keeps_toyota, test_refused_toyota_after_relay_malfunction_counted. Every part of DM-25
+      is now in the pinned code. Still open, not sufficient: nothing is verified on the board (HIL test_11_reference_lock,
+      DM-22, and the latch bench test of change-2026-10-17-relay-malfunction-latch OI-1). A false relay malfunction now
+      costs the car mode for the rest of the ignition cycle, an availability loss in the safe direction.
   - id: DFI-08
     category: CAT-06
     kind: cascading
@@ -524,7 +538,7 @@ measures:
   - {id: DM-21, description: "Panda reference-build configuration lock (TSR-512/513): only SILENT, NOOUTPUT, ELM327 and TOYOTA with parameter 73 are accepted; in TOYOTA only a downgrade to NOOUTPUT or SILENT; 0xdf refused; relay, CAN and comms commands refused in a car mode; refused requests counted in the health packet. Unit-tested in CI; HIL test not run.", status: existing_unverified, ref: panda/board/reference_lock.h, allocated_to: [EL-07]}
   - {id: DM-22, description: "The SoC does not configure a car safety mode, and raises pandaNotReferenceBuild, when the panda does not report HEALTH_FLAG_REFERENCE_BUILD (TSR-514, TSR-619).", status: existing_unverified, ref: openpilot/selfdrive/selfdrived/selfdrived.py, allocated_to: [EL-04]}
   - {id: DM-23, description: "Bench tests of the harness box failure behaviour: box unpowered with camera and car powered (pass-through continuity, CAN0/CAN2 levels), pull-down open, supply stress (WP-H-06 VS-HW-22, VS-HW-23, VS-HW-24; DFMEA DFM-ACT-014).", status: required, ref: assurance/04-hardware/WP-H-06-hardware-integration-verification.md, allocated_to: [process]}
-  - {id: DM-25, description: "A safety-mode change does not undo the panda's fault reactions: after a mode change authority needs cruise off and on again (DQ-080, SWSR-311), a TX-rate revocation persists (DQ-079, SWSR-518), and the EPS-fault, RX-check and relay-malfunction states are re-established before a grant; or the reference lock refuses re-entry to TOYOTA in the same ignition cycle while cruise is on. In the pinned code at opendbc 515b9a2 (jherrodthomas/opendbc#15) and unit-tested: the new engagement, the TX-rate block and the RX-check and EPS-fault re-establishment. Missing: the relay-malfunction state (re-detected only 1-2 s after a mode set) and any hardware verification.", status: required, ref: opendbc_repo/opendbc/safety/safety.h, allocated_to: [EL-07]}
+  - {id: DM-25, description: "A safety-mode change does not undo the panda's fault reactions: after a mode change authority needs cruise off and on again (DQ-080, SWSR-311), a TX-rate revocation persists (DQ-079, SWSR-518), and the EPS-fault, RX-check and relay-malfunction states are re-established before a grant; or the reference lock refuses re-entry to TOYOTA in the same ignition cycle while cruise is on. In the pinned code and unit-tested: the new engagement, the TX-rate block and the RX-check and EPS-fault re-establishment (opendbc 515b9a2, jherrodthomas/opendbc#15); the relay malfunction latched for the ignition cycle, TOYOTA refused until ignition off (panda 0a7da85, jherrodthomas/panda#17). Not verified on hardware.", status: existing_unverified, ref: opendbc_repo/opendbc/safety/safety.h, allocated_to: [EL-07]}
   - {id: DM-24, description: "The panda releases the ELM327 lock (DM-12) only on an ignition-off confirmed by a second source, for example no vehicle CAN traffic or zero vehicle speed for a set time, not on the harness ignition line alone.", status: required, ref: panda/board/reference_lock.h, allocated_to: [EL-07]}
 
 open_items:
