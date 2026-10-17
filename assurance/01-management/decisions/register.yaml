@@ -572,12 +572,13 @@
       title: "You sign, with an external SOTIF review"
       detail: "Uses the external review for independence. Cost: needs that reviewer, parked with the assessor."
   sources: ["assurance/10-safety-case/WP-K-02-sotif-release-argument.md OI-3", "assurance/10-safety-case/WP-K-06-release-record.md OI-3"]
-  status: answered
+  status: applied
   answer:
     choice: B
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: be498d1, record: "WP-K-02 §5.3 and OI-3; WP-K-06 §8 and OI-3; WP-M-08 §3 roles", at: 2026-10-17}
 
 - id: DQ-026
   question: "Should an external human-factors reviewer oversee the tests on human subjects?"
@@ -596,12 +597,13 @@
       title: "You supervise with a written protocol and consent"
       detail: "No cost. Cost: weaker independence and a single point of failure."
   sources: ["assurance/06-validation/WP-V-01-safety-validation.md OI-5", "assurance/01-management/WP-M-08-sotif-plan.md OI-6"]
-  status: answered
+  status: applied
   answer:
     choice: B
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: be498d1, record: "WP-V-01 §5.2 and OI-5; WP-M-08 §3 roles and OI-6", at: 2026-10-17}
 
 - id: DQ-027
   question: "Who reviews and confirms the item definition?"
