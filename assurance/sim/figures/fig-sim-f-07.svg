@@ -69,7 +69,8 @@ svg { --bg:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:#8a8984; --grid:#e3e2d
 <line x1="70.0" y1="589" x2="1060.0" y2="589" class="grid"/>
 <text x="72.0" y="583.0" class="t2">Panda refusal / revocation</text>
 <circle cx="182.2" cy="589" r="5" class="m1"><title>panda refuses STEERING_LKA at 0.010 s</title></circle>
-<text x="191.2" y="593.0" class="t">panda refuses STEERING_LKA 0.01 s</text>
+<circle cx="191.7" cy="589" r="5" class="m1"><title>authority revoked at 0.053 s</title></circle>
+<text x="200.7" y="593.0" class="t">panda refuses STEERING_LKA 0.01 s · authority revoked 0.05 s</text>
 <line x1="70.0" y1="615" x2="1060.0" y2="615" class="grid"/>
 <text x="72.0" y="609.0" class="t2">MCU hang, IWDG reset</text>
 <line x1="70.0" y1="641" x2="1060.0" y2="641" class="grid"/>

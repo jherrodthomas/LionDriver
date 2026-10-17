@@ -49,6 +49,7 @@ MUTANTS = {
   "engage_window_2s": lambda: setattr(M, "ENGAGE_WINDOW_US", 2_000_000),
   "heartbeat_gate_ignored": lambda: setattr(M, "HEARTBEAT_GATE", False),
   "main_off_keeps_window": lambda: setattr(M, "MAIN_OFF_CLOSES_WINDOW", False),
+  "arrival_counts_refused": lambda: setattr(M, "ARRIVAL_NEEDS_ACCEPTED", False),
 }
 
 IN_SCOPE = ["T1", "T1a", "T1b", "T1c", "T2", "T3", "T4", "T5", "T7", "T8", "T10b", "T10c", "T11"]
@@ -82,6 +83,7 @@ class Feeder:
     self.actuate = True                        # emit nominal SoC actuation traffic
     self.next_tx = {a: 0 for a in ACTUATION}
     self.tx_muted: set[int] = set()
+    self.tx_refused: set[int] = set()     # IDs whose nominal frames are sent with content the mode refuses (MA-09)
     self.sig = {"CRUISE_ACTIVE": 0, "GAS_RELEASED": 1, "MAIN_ON": 1, "BRAKE_PRESSED": 0, "LKA_STATE": 5,
                 **{f"WHEEL_SPEED_{w}_RAW": STANDING for w in WHEELS}, **{f"WHEEL_SPEED_{w}_FAULT": 0 for w in WHEELS}}
     self.events: list[tuple[int, object]] = []
@@ -115,7 +117,7 @@ class Feeder:
         for a, hz in ACTUATION.items():
           if self.next_tx[a] == due:
             if a not in self.tx_muted:
-              self.emit(Tx(a, dlc=TX_DLC[a]))
+              self.emit(Tx(a, dlc=TX_DLC[a], content_ok=a not in self.tx_refused))
             self.next_tx[a] = due + 1_000_000 // hz
     self.now = end
 
@@ -243,6 +245,11 @@ def directed(reference: bool) -> dict[str, list]:
       f = new(); f.engage(); f.run(100_000); f.tx_muted = {a}; f.run(limit + 100_000)
       S[f"D18 T10b {a:#x} stops while allowed (limit {limit // 1000} ms)"] = f.events
 
+    # D22: SWSR-408 (B2B-05): 0x343 keeps arriving at its rate, but only with content the mode refuses (ACCEL_CMD above
+    # the limit); a refused frame is not an accepted one, so authority is cleared as if the frames had stopped
+    f = new(); f.engage(); f.run(100_000); f.tx_refused = {0x343}; f.run(250_000)
+    S["D22 T10b 0x343 keeps arriving with refused content (SWSR-408 accepted, B2B-05)"] = f.events
+
   # D21: the LS-06 engagement window (record T1a, T1b, T1c; TSR-301 v0.20). The heartbeat's engaged flag is 0 at the
   # cruise edge, so the edge opens the window; what happens next decides the grant. Upstream: the edge grants at once.
   def window(hb_after_us: int | None = 200_000, before=None) -> Feeder:
@@ -320,6 +327,7 @@ def random_sequence(reference: bool, seed: int, n_events: int) -> list:
   f.actuate = False                            # TX traffic is generated below, with floods and dropouts
   next_tx = {0x2E4: 0, 0x343: 0, 0x412: 0}
   tx_gap: dict[int, int] = {}                  # actuation dropouts (T10b): addr -> until
+  refused_until = 0                            # 0x343 sent with refused content until then (B2B-05)
   while len(f.events) < n_events:
     # one 10 ms slice at a time, frames at nominal rates with jitter and occasional long gaps
     f.muted = {a for a, until in dropout.items() if until > f.now}
@@ -371,10 +379,12 @@ def random_sequence(reference: bool, seed: int, n_events: int) -> list:
     if rng.random() < 0.004:
       a = rng.choice(sorted(ACTUATION))
       tx_gap[a] = f.now + rng.choice([20_000, 40_000, 50_000, 60_000, 90_000, 100_000, 110_000, 200_000])
+    if rng.random() < 0.003:   # 0x343 with content the mode refuses for a while (B2B-05)
+      refused_until = f.now + rng.choice([30_000, 90_000, 100_000, 110_000, 150_000, 300_000])
     for a, hz in ((0x2E4, 100), (0x343, 33), (0x412, 5)):
       while next_tx[a] <= f.now:
         if tx_gap.get(a, 0) <= next_tx[a]:
-          f.emit(Tx(a, dlc=TX_DLC[a]), at=next_tx[a])
+          f.emit(Tx(a, dlc=TX_DLC[a], content_ok=not (a == 0x343 and next_tx[a] < refused_until)), at=next_tx[a])
         next_tx[a] += int(1_000_000 / hz)
     if flood is not None:
       a, mult, until = flood
@@ -414,7 +424,11 @@ class CSide:
     elif isinstance(ev, Heartbeat):
       self.s.set_heartbeat_engaged(ev.engaged)
     elif isinstance(ev, Tx):
-      self.s.safety_tx_hook(self.lp.make_CANPacket(ev.addr, ev.bus, b"\x00" * ev.dlc))
+      dat = b"\x00" * ev.dlc
+      if not ev.content_ok:
+        assert ev.addr == 0x343, "content refusal is modelled for 0x343 only (MA-09)"
+        dat = (10_000).to_bytes(2, "big") + b"\x00" * (ev.dlc - 2)   # ACCEL_CMD 10 m/s^2 (0.001 m/s^2 per bit)
+      self.s.safety_tx_hook(self.lp.make_CANPacket(ev.addr, ev.bus, dat))
     else:
       self.s.safety_rx_hook(self.lp.make_CANPacket(ev.addr, ev.bus, self.encode(ev)))
 
@@ -460,7 +474,7 @@ def describe(ev) -> str:
            for k, v in ev.signals.items() if k in keys.get(ev.addr, []) and (v or k.endswith("_RAW"))}
     return f"RX {ev.addr:#x}" + (f" ({', '.join(extra)})" if extra else "") + (f" {sig}" if sig else "")
   if isinstance(ev, Tx):
-    return f"TX {ev.addr:#x}"
+    return f"TX {ev.addr:#x}" + ("" if ev.content_ok else " (refused content)")
   if isinstance(ev, Heartbeat):
     return f"heartbeat engaged={int(ev.engaged)}"
   return type(ev).__name__
