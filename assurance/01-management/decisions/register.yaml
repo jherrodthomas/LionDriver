@@ -1221,12 +1221,13 @@
       title: "Keep the shared values"
       detail: "Stays upstream-identical. Cost: the independence claim stays weak."
   sources: ["assurance/08-analyses/WP-A-03-dependent-failure-analysis.md OI-3"]
-  status: answered
+  status: applied
   answer:
     choice: A
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied: {ref: 9d4f384ed, record: "WP-A-03 v0.18 DFI-08 measure and OI-3; dfa.yaml rev 0.15 DFI-14 and DM-10. Confirms DQ-007 C; the derivation record itself is DM-10, still required", at: 2026-10-17}
 
 - id: DQ-056
   question: "Should LionDriver read the car's fault codes (EPS, stability control) and refuse to engage when one is set?"
