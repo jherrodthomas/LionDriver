@@ -671,7 +671,7 @@
   acceptance: "Each disagreement detected ≤ 0.2 s; no false detection on reference logs"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial (reference build, opendbc `875e325`): (c) implemented (`toyota_cruise_main_check`, `modes/toyota.h`; test `test_cruise_active_with_main_off`; tolerance 150 ms), except finding SM-F1 at opendbc `515b9a2`: a CRUISE_ACTIVE edge while MAIN_ON = 0 opens the LS-06 engagement window, and a grant on a later heartbeat-engaged flag holds until the 150 ms tolerance, not \"at once\" (change-2026-10-16-pin-515b9a2 (assurance/07-supporting/impact/change-2026-10-16-pin-515b9a2.md) §2). Not impl: (a) (`speed_mismatch_check` exists, unused, `safety.h:529-537`); (b) pending the `0x1D3` BRAKE_PRESSED semantics on reference logs; (d) (GAP-01)"
+  baseline_impl: "Partial (reference build, opendbc `875e325`): (c) implemented (`toyota_cruise_main_check`, `modes/toyota.h`; test `test_cruise_active_with_main_off`; tolerance 150 ms); since opendbc `98d3be1` the refusal also closes the LS-06 engagement window (`pcm_engage_cancel`; test `test_main_off_closes_engagement_window`), which fixes finding SM-F1 (change-2026-10-17-pin-98d3be1 (assurance/07-supporting/impact/change-2026-10-17-pin-98d3be1.md)). Not impl: (a) (`speed_mismatch_check` exists, unused, `safety.h:529-537`); (b) pending the `0x1D3` BRAKE_PRESSED semantics on reference logs; (d) (GAP-01)"
   status: proposed
   source: WP-W-02
 
@@ -1487,7 +1487,7 @@
   acceptance: "Warning ≤ 1 s"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `steerFaultTemporary/Permanent`"
+  baseline_impl: "Impl: `steerFaultTemporary/Permanent`; TSR-607 (b) escalation after 1.5 s in `7158a9a` (`car_events.py`, `tests/test_steer_fault_warning.py`)"
   status: proposed
   source: WP-W-02
 

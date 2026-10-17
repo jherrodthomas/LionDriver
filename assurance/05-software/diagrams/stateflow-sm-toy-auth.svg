@@ -174,8 +174,8 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <path class="arrow " d="M482.0,506.0 L476.0,508.7 L476.0,503.3 Z"/>
 <text x="492.0" y="510.0" class="tb" text-anchor="start">T7</text>
 <text x="534.0" y="510.0" class="t" text-anchor="start">safety mode set</text>
-<rect class="k3" x="771.3" y="499" width="88.7" height="15" rx="7"/>
-<text x="815.6" y="510.0" class="ts" text-anchor="middle">D10 D19a D19b</text>
+<rect class="k3" x="741.8" y="499" width="118.2" height="15" rx="7"/>
+<text x="800.9" y="510.0" class="ts" text-anchor="middle">D10 D19a D19b D21f</text>
 <path class="edge todo" d="M460.0,528 L480.0,528"/>
 <path class="arrow todo" d="M482.0,528.0 L476.0,530.7 L476.0,525.3 Z"/>
 <text x="492.0" y="532.0" class="tb" text-anchor="start">T10d</text>
@@ -217,32 +217,32 @@ svg { --surface:#fcfcfb; --panel:#ffffff; --ink:#0b0b0b; --ink2:#52514e; --ink3:
 <text x="20.0" y="899.0" class="tb" text-anchor="start">T1a</text>
 <text x="70.0" y="899.0" class="t" text-anchor="start">NOT_ALLOWED → ENGAGE_PENDING: 0x1D2 valid [CRUISE_ACTIVE 0→1,</text>
 <text x="70.0" y="913.0" class="t" text-anchor="start">rx_checks_allow_engagement(), CRUISE_ACTIVE = 0 received since the safety mode was</text>
-<text x="70.0" y="927.0" class="t" text-anchor="start">set, heartbeat engaged = 0 at the edge. MAIN_ON is not checked (finding SM-F1)] /</text>
-<text x="70.0" y="941.0" class="t" text-anchor="start">{open the 1 s window (pcm_engage_pending, pcm_engage_ts)}</text>
+<text x="70.0" y="927.0" class="t" text-anchor="start">set, heartbeat engaged = 0 at the edge, MAIN_ON = 1 (an edge while MAIN_ON = 0</text>
+<text x="70.0" y="941.0" class="t" text-anchor="start">opens the window and closes it in the same call, T8)] / {open the 1 s window</text>
+<text x="70.0" y="955.0" class="t" text-anchor="start">(pcm_engage_pending, pcm_engage_ts)}</text>
 <text x="620.0" y="899.0" class="t2" text-anchor="start">reference</text>
 <text x="690.0" y="899.0" class="t2" text-anchor="start">Partial</text>
-<line class="grid" x1="20" y1="948" x2="880" y2="948"/>
-<text x="20.0" y="961.0" class="tb" text-anchor="start">T1b</text>
-<text x="70.0" y="961.0" class="t" text-anchor="start">ENGAGE_PENDING → ALLOWED: safety task (100 Hz) [heartbeat engaged = 1 within 1 s of</text>
-<text x="70.0" y="975.0" class="t" text-anchor="start">the edge, and rx_checks_allow_engagement(). MAIN_ON is not checked (finding SM-F1)]</text>
-<text x="70.0" y="989.0" class="t" text-anchor="start">/ {set, close the window}</text>
-<text x="620.0" y="961.0" class="t2" text-anchor="start">reference</text>
-<text x="690.0" y="961.0" class="t2" text-anchor="start">Partial</text>
+<line class="grid" x1="20" y1="962" x2="880" y2="962"/>
+<text x="20.0" y="975.0" class="tb" text-anchor="start">T1b</text>
+<text x="70.0" y="975.0" class="t" text-anchor="start">ENGAGE_PENDING → ALLOWED: safety task (100 Hz) [heartbeat engaged = 1 within 1 s of</text>
+<text x="70.0" y="989.0" class="t" text-anchor="start">the edge, and rx_checks_allow_engagement()] / {set, close the window}</text>
+<text x="620.0" y="975.0" class="t2" text-anchor="start">reference</text>
+<text x="690.0" y="975.0" class="t2" text-anchor="start">Partial</text>
 <line class="grid" x1="20" y1="996" x2="880" y2="996"/>
 <text x="20.0" y="1009.0" class="tb" text-anchor="start">T1c</text>
 <text x="70.0" y="1009.0" class="t" text-anchor="start">ENGAGE_PENDING → NOT_ALLOWED: safety task, 0x1D2 or any RX [1 s passed without</text>
 <text x="70.0" y="1023.0" class="t" text-anchor="start">heartbeat engaged = 1; or CRUISE_ACTIVE = 0; or brake rising, or pressed while</text>
 <text x="70.0" y="1037.0" class="t" text-anchor="start">moving; or an RX check lagging, below 10 Hz or invalid in the safety task; or</text>
-<text x="70.0" y="1051.0" class="t" text-anchor="start">heartbeat engaged = 1 while rx_checks_allow_engagement() is false] / {close the</text>
-<text x="70.0" y="1065.0" class="t" text-anchor="start">window}</text>
+<text x="70.0" y="1051.0" class="t" text-anchor="start">heartbeat engaged = 1 while rx_checks_allow_engagement() is false; or (0x1D3 /</text>
+<text x="70.0" y="1065.0" class="t" text-anchor="start">0x1D2) MAIN_ON = 0 with cruise active for more than 150 ms] / {close the window}</text>
 <text x="620.0" y="1009.0" class="t2" text-anchor="start">reference</text>
 <text x="690.0" y="1009.0" class="t2" text-anchor="start">Partial</text>
 <line class="grid" x1="20" y1="1072" x2="880" y2="1072"/>
 <text x="20.0" y="1085.0" class="tb" text-anchor="start">T8</text>
 <text x="70.0" y="1085.0" class="t" text-anchor="start">NOT_ALLOWED → NOT_ALLOWED: 0x1D2 valid [CRUISE_ACTIVE held 1; or 0→1 with</text>
 <text x="70.0" y="1099.0" class="t" text-anchor="start">rx_checks_allow_engagement() false; or (reference build) 0→1 before CRUISE_ACTIVE =</text>
-<text x="70.0" y="1113.0" class="t" text-anchor="start">0 has been received in this safety mode, or 0→1 while MAIN_ON = 0 with heartbeat</text>
-<text x="70.0" y="1127.0" class="t" text-anchor="start">engaged = 1 (granted and cleared in the same call)] / {none}</text>
+<text x="70.0" y="1113.0" class="t" text-anchor="start">0 has been received in this safety mode, or 0→1 while MAIN_ON = 0 (refused at once;</text>
+<text x="70.0" y="1127.0" class="t" text-anchor="start">a window it opened is closed in the same call, SM-F1 fixed)] / {none}</text>
 <text x="620.0" y="1085.0" class="t2" text-anchor="start">all</text>
 <text x="690.0" y="1085.0" class="t2" text-anchor="start">Partial</text>
 <line class="grid" x1="20" y1="1134" x2="880" y2="1134"/>

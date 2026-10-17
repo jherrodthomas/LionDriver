@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1658" viewBox="0 0 1280 1658" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1670" viewBox="0 0 1280 1670" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-6. SW FMEA failure chains — sheet 4 of 12 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 4 of 12 (SWF rev 1.1): failure modes SWF-025 to SWF-033 (7 failure modes, 12 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">SW FMEA failure chains, sheet 4 of 12 (SWF rev 1.2): failure modes SWF-024 to SWF-030 (7 failure modes, 12 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="1658" fill="#FFFFFF"/>
+  <rect width="1280" height="1670" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 4 of 12</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.1 · BL-005 · draft · SWF-025 … SWF-033 · 12 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.2 · BL-005 · draft · SWF-024 … SWF-030 · 12 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -17,261 +17,268 @@
   <text x="250" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FUNCTION (STEP 3)</text>
   <text x="520" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE MODE · S · END EFFECT (STEP 4)</text>
   <text x="876" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE CAUSE · O · D · AP · ACTIONS (STEPS 4–6)</text>
-  <path d="M220 271.2H235V258.9H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 258.9H505V155.5H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 258.9H505V330H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 155.5H861V144H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 330H861V262.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 330H861V374.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 643.3H235V634.9H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 634.9H505V509.5H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 634.9H505V691H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 509.5H861V509H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 691H861V627.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 691H861V739.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 949.1H235V936.8H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 936.8H505V937.3H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 937.3H861V874.1H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 937.3H861V986.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 1313.2H235V1190.5H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 1313.2H235V1402.1H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1190.5H505V1177.4H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1177.4H861V1120.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1177.4H861V1233.1H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1402.1H505V1425.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1425.7H861V1355.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1425.7H861V1467.8H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <rect x="40" y="249.2" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="268.7" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-024</text>
-  <text x="49" y="283.3" font-size="10.5" fill="#0F172A" font-weight="600">CAN RX and panda state</text>
-  <text x="49" y="297.4" font-size="10.5" fill="#0F172A" font-weight="600">publishing</text>
-  <text x="49" y="310.1" font-size="9.5" fill="#475569">sw unit</text>
-  <text x="49" y="322.8" font-size="9.5" fill="#475569">in SWF-SE-020</text>
-  <rect x="250" y="236.9" width="240" height="107.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="256.4" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-023</text>
-  <text x="259" y="270.9" font-size="10.5" fill="#0F172A">Publish received CAN and the panda state</text>
-  <text x="259" y="285" font-size="10.5" fill="#0F172A">(mode, parameter, controlsAllowed,</text>
-  <text x="259" y="299.1" font-size="10.5" fill="#0F172A">RX-check validity, faults) correctly and on</text>
-  <text x="259" y="313.2" font-size="10.5" fill="#0F172A">time, so the SoC can detect a mismatch or…</text>
-  <rect x="259" y="319.2" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="330.1" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-011</text>
-  <rect x="520" y="133.5" width="326" height="83.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="153" font-size="12" fill="#0F172A" font-weight="700">SWF-025</text>
-  <rect x="593.9" y="142" width="25.2" height="15" rx="7.5" fill="#C2410C"/><text x="606.5" y="152.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S8</text>
-  <rect x="623.1" y="142" width="57.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="651.8" y="152.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">corrupted</text>
-  <text x="529" y="167.5" font-size="10.5" fill="#0F172A" font-weight="600">pandaStates.faults reports a relay malfunction that did not</text>
-  <text x="529" y="181.6" font-size="10.5" fill="#0F172A" font-weight="600">occur</text>
-  <text x="529" y="194.7" font-size="9.8" fill="#475569" font-style="italic">End effect: Immediate disengagement while engaged, with a</text>
-  <text x="529" y="207.9" font-size="9.8" fill="#475569" font-style="italic">take-control alert; item unavailable for the drive</text>
+  <path d="M220 219.1H235V210.7H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 210.7H505V207.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 207.7H861V144H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 207.7H861V256.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 517.9H235V505.6H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 505.6H505V402.2H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 505.6H505V576.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 402.2H861V390.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 576.7H861V509H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 576.7H861V621.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 890H235V881.6H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 881.6H505V756.2H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 881.6H505V937.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 756.2H861V755.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 937.7H861V874.1H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 937.7H861V986.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 1195.8H235V1183.5H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1183.5H505V1183.9H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1183.9H861V1120.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1183.9H861V1233.1H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 1442.5H235V1437.2H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1437.2H505V1424.1H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1424.1H861V1367.4H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1424.1H861V1479.8H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <rect x="40" y="197.1" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="216.6" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-023</text>
+  <rect x="136.1" y="205.6" width="35.6" height="15" rx="7.5" fill="#E2E8F0"/><text x="153.9" y="216.5" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">cont.</text>
+  <text x="49" y="231.1" font-size="10.5" fill="#0F172A" font-weight="600">sendcan forwarding thread</text>
+  <text x="49" y="243.9" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="256.6" font-size="9.5" fill="#475569">in SWF-SE-020</text>
+  <rect x="250" y="188.7" width="240" height="85.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="208.2" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-022</text>
+  <rect x="346.1" y="197.2" width="58.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="375.3" y="208.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">continued</text>
+  <text x="259" y="222.8" font-size="10.5" fill="#0F172A">Forward each sendcan batch to the panda</text>
+  <text x="259" y="236.8" font-size="10.5" fill="#0F172A">once, in order, only while it is fresh, and</text>
+  <text x="259" y="250.9" font-size="10.5" fill="#0F172A">make any failure to forward visible to the</text>
+  <text x="259" y="265" font-size="10.5" fill="#0F172A">SoC</text>
+  <rect x="520" y="185.7" width="326" height="91.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="205.2" font-size="12" fill="#0F172A" font-weight="700">SWF-024</text>
+  <rect x="593.9" y="194.2" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="205.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="194.2" width="54.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="656.7" y="205.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">omission</text>
+  <text x="529" y="219.7" font-size="10.5" fill="#0F172A" font-weight="600">sendcan frames silently not forwarded while engaged</text>
+  <text x="529" y="232.9" font-size="9.8" fill="#475569" font-style="italic">End effect: Loss of lateral control without a timely item alert</text>
+  <text x="529" y="246" font-size="9.8" fill="#475569" font-style="italic">(System FMEA SFM-005.C2)</text>
+  <text x="529" y="263" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="252" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="262.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="618.8" y="252" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="262.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
   <rect x="876" y="122" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="141.5" font-size="12" fill="#0F172A" font-weight="700">SWF-025.C1</text>
-  <rect x="1192.1" y="130.5" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="1211.5" y="141.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
-  <text x="885" y="156.1" font-size="10.5" fill="#0F172A">initFaults(fault_bits.count()) counts every set bit of faults_pkt, but</text>
-  <text x="885" y="170.1" font-size="10.5" fill="#0F172A">the fill loop maps only bits 0..26</text>
-  <text x="885" y="184.2" font-size="10.5" fill="#0F172A">(relayMalfunction..heartbeatLoopWatchdog, pandad.cc:257-268). Th…</text>
-  <text x="885" y="197.3" font-size="9.8" fill="#475569" font-weight="600">O5 · D4 · in SWF-SE-024</text>
-  <rect x="885" y="203.3" width="135.3" height="15" rx="7.5" fill="#2E9E6A"/><text x="952.7" y="214.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-025 completed</text>
-  <rect x="1024.3" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1078.7" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-024 open</text>
-  <rect x="520" y="308" width="326" height="83.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="327.5" font-size="12" fill="#0F172A" font-weight="700">SWF-029</text>
-  <rect x="593.9" y="316.5" width="25.2" height="15" rx="7.5" fill="#C2410C"/><text x="606.5" y="327.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S8</text>
-  <rect x="623.1" y="316.5" width="54.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="650.4" y="327.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">omission</text>
-  <text x="529" y="342.1" font-size="10.5" fill="#0F172A" font-weight="600">Item unavailable for the rest of the drive after a transient</text>
-  <text x="529" y="356.1" font-size="10.5" fill="#0F172A" font-weight="600">link error or a panda reset</text>
-  <text x="529" y="369.3" font-size="9.8" fill="#475569" font-style="italic">End effect: Immediate disengagement with a take-control alert,</text>
-  <text x="529" y="382.4" font-size="9.8" fill="#475569" font-style="italic">then no re-engagement until the next drive</text>
-  <rect x="876" y="240.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="259.8" font-size="12" fill="#0F172A" font-weight="700">SWF-029.C1</text>
-  <rect x="1194.5" y="248.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="259.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="274.4" font-size="10.5" fill="#0F172A">One failed bulk transfer latches comms_healthy false (spi.cc:166),</text>
-  <text x="885" y="288.5" font-size="10.5" fill="#0F172A">and nothing resets it. can_receive then discards every read</text>
-  <text x="885" y="302.6" font-size="10.5" fill="#0F172A">(panda.cc:221-223), and pandad reconnects only when ignition is o…</text>
-  <text x="885" y="315.7" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SWF-SE-025</text>
-  <rect x="885" y="321.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="332.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-029 open</text>
-  <rect x="876" y="352.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="372.2" font-size="12" fill="#0F172A" font-weight="700">SWF-029.C2</text>
-  <rect x="1194.5" y="361.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="372.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="386.8" font-size="10.5" fill="#0F172A">After a panda reset while onroad (watchdog, SWF-019), the panda</text>
-  <text x="885" y="400.8" font-size="10.5" fill="#0F172A">boots in SILENT (panda main.c:339). pandad switches it to</text>
-  <text x="885" y="414.9" font-size="10.5" fill="#0F172A">NO_OUTPUT (pandad.cc:229-232), and because safety_configured…</text>
-  <text x="885" y="428" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SWF-SE-022</text>
-  <rect x="885" y="434" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="444.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-029 open</text>
-  <rect x="40" y="621.3" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="640.8" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-025</text>
-  <text x="49" y="655.3" font-size="10.5" fill="#0F172A" font-weight="600">SPI transport</text>
-  <text x="49" y="668.1" font-size="9.5" fill="#475569">sw unit</text>
-  <text x="49" y="680.8" font-size="9.5" fill="#475569">in SWF-SE-020</text>
-  <rect x="250" y="612.9" width="240" height="85.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="632.4" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-024</text>
-  <text x="259" y="647" font-size="10.5" fill="#0F172A">Transfer commands and data between SoC</text>
-  <text x="259" y="661" font-size="10.5" fill="#0F172A">and panda without undetected corruption.</text>
-  <text x="259" y="675.1" font-size="10.5" fill="#0F172A">Detect link failure in bounded time and</text>
-  <text x="259" y="689.2" font-size="10.5" fill="#0F172A">report it</text>
-  <rect x="520" y="487.5" width="326" height="105.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="507" font-size="12" fill="#0F172A" font-weight="700">SWF-026</text>
-  <rect x="593.9" y="496" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="506.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="496" width="57.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="658.1" y="506.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">corrupted</text>
-  <text x="529" y="521.6" font-size="10.5" fill="#0F172A" font-weight="600">Corrupted command or vehicle data accepted across the</text>
-  <text x="529" y="535.6" font-size="10.5" fill="#0F172A" font-weight="600">SPI link</text>
-  <text x="529" y="548.8" font-size="9.8" fill="#475569" font-style="italic">End effect: Wrong in-limit steering or acceleration command</text>
-  <text x="529" y="561.9" font-size="9.8" fill="#475569" font-style="italic">reaches the vehicle if its Toyota checksum also passes</text>
-  <text x="529" y="578.9" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="567.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="578.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-003</text>
+  <text x="885" y="141.5" font-size="12" fill="#0F172A" font-weight="700">SWF-024.C1</text>
+  <rect x="1194.5" y="130.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="141.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="156.1" font-size="10.5" fill="#0F172A">Clock-domain mismatch. card stamps sendcan logMonoTime with</text>
+  <text x="885" y="170.1" font-size="10.5" fill="#0F172A">Python time.monotonic(), which is CLOCK_MONOTONIC</text>
+  <text x="885" y="184.2" font-size="10.5" fill="#0F172A">(pandad_api_impl.py:42, card.py:236-238). pandad compares it wit…</text>
+  <text x="885" y="197.3" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in SWF-SE-023</text>
+  <rect x="885" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-023 open</text>
+  <rect x="997.9" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-026 open</text>
+  <rect x="1110.7" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1165.2" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-024 open</text>
+  <rect x="876" y="234.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="253.8" font-size="12" fill="#0F172A" font-weight="700">SWF-024.C2</text>
+  <rect x="1194.5" y="242.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="253.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="268.4" font-size="10.5" fill="#0F172A">A bulk write that fails after its retries (5 ms timeout, clamped to 20</text>
+  <text x="885" y="282.5" font-size="10.5" fill="#0F172A">ms per ACK wait) drops the rest of the batch. can_send ignores the</text>
+  <text x="885" y="296.6" font-size="10.5" fill="#0F172A">result (spi.cc:149-177, panda.cc:210-214)</text>
+  <text x="885" y="309.7" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-025</text>
+  <rect x="885" y="315.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="326.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-026 open</text>
+  <rect x="997.9" y="315.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="326.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-029 open</text>
+  <rect x="40" y="495.9" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="515.4" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-024</text>
+  <text x="49" y="530" font-size="10.5" fill="#0F172A" font-weight="600">CAN RX and panda state</text>
+  <text x="49" y="544" font-size="10.5" fill="#0F172A" font-weight="600">publishing</text>
+  <text x="49" y="556.8" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="569.5" font-size="9.5" fill="#475569">in SWF-SE-020</text>
+  <rect x="250" y="483.6" width="240" height="107.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="503.1" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-023</text>
+  <text x="259" y="517.6" font-size="10.5" fill="#0F172A">Publish received CAN and the panda state</text>
+  <text x="259" y="531.7" font-size="10.5" fill="#0F172A">(mode, parameter, controlsAllowed,</text>
+  <text x="259" y="545.8" font-size="10.5" fill="#0F172A">RX-check validity, faults) correctly and on</text>
+  <text x="259" y="559.8" font-size="10.5" fill="#0F172A">time, so the SoC can detect a mismatch or…</text>
+  <rect x="259" y="565.8" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="576.8" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-011</text>
+  <rect x="520" y="380.2" width="326" height="83.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="399.7" font-size="12" fill="#0F172A" font-weight="700">SWF-025</text>
+  <rect x="593.9" y="388.7" width="25.2" height="15" rx="7.5" fill="#C2410C"/><text x="606.5" y="399.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S8</text>
+  <rect x="623.1" y="388.7" width="57.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="651.8" y="399.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">corrupted</text>
+  <text x="529" y="414.2" font-size="10.5" fill="#0F172A" font-weight="600">pandaStates.faults reports a relay malfunction that did not</text>
+  <text x="529" y="428.3" font-size="10.5" fill="#0F172A" font-weight="600">occur</text>
+  <text x="529" y="441.4" font-size="9.8" fill="#475569" font-style="italic">End effect: Immediate disengagement while engaged, with a</text>
+  <text x="529" y="454.6" font-size="9.8" fill="#475569" font-style="italic">take-control alert; item unavailable for the drive</text>
+  <rect x="876" y="368.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="388.2" font-size="12" fill="#0F172A" font-weight="700">SWF-025.C1</text>
+  <rect x="1192.1" y="377.2" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="1211.5" y="388.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
+  <text x="885" y="402.8" font-size="10.5" fill="#0F172A">initFaults(fault_bits.count()) counts every set bit of faults_pkt, but</text>
+  <text x="885" y="416.8" font-size="10.5" fill="#0F172A">the fill loop maps only bits 0..26</text>
+  <text x="885" y="430.9" font-size="10.5" fill="#0F172A">(relayMalfunction..heartbeatLoopWatchdog, pandad.cc:257-268). Th…</text>
+  <text x="885" y="444" font-size="9.8" fill="#475569" font-weight="600">O5 · D4 · in SWF-SE-024</text>
+  <rect x="885" y="450" width="135.3" height="15" rx="7.5" fill="#2E9E6A"/><text x="952.7" y="460.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-025 completed</text>
+  <rect x="1024.3" y="450" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1078.7" y="460.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-024 open</text>
+  <rect x="520" y="554.7" width="326" height="83.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="574.2" font-size="12" fill="#0F172A" font-weight="700">SWF-029</text>
+  <rect x="593.9" y="563.2" width="25.2" height="15" rx="7.5" fill="#C2410C"/><text x="606.5" y="574.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S8</text>
+  <rect x="623.1" y="563.2" width="54.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="650.4" y="574.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">omission</text>
+  <text x="529" y="588.7" font-size="10.5" fill="#0F172A" font-weight="600">Item unavailable for the rest of the drive after a transient</text>
+  <text x="529" y="602.8" font-size="10.5" fill="#0F172A" font-weight="600">link error or a panda reset</text>
+  <text x="529" y="615.9" font-size="9.8" fill="#475569" font-style="italic">End effect: Immediate disengagement with a take-control alert,</text>
+  <text x="529" y="629.1" font-size="9.8" fill="#475569" font-style="italic">then no re-engagement until the next drive</text>
   <rect x="876" y="487" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="506.5" font-size="12" fill="#0F172A" font-weight="700">SWF-026.C1</text>
+  <text x="885" y="506.5" font-size="12" fill="#0F172A" font-weight="700">SWF-029.C1</text>
   <rect x="1194.5" y="495.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="506.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="521.1" font-size="10.5" fill="#0F172A">Both integrity checks are 8-bit XOR over the same bytes: the SPI</text>
-  <text x="885" y="535.2" font-size="10.5" fill="#0F172A">frame checksum (spi.cc:189-202) and the CAN header checksum</text>
-  <text x="885" y="549.2" font-size="10.5" fill="#0F172A">(panda.cc:284-290). Any even number of bit errors in the same bit…</text>
-  <text x="885" y="562.4" font-size="9.8" fill="#475569" font-weight="600">O4 · D9 · in SWF-SE-025</text>
-  <rect x="885" y="568.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="579.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-027 open</text>
-  <rect x="520" y="669" width="326" height="91.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="688.5" font-size="12" fill="#0F172A" font-weight="700">SWF-027</text>
-  <rect x="593.9" y="677.5" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="688.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="677.5" width="34.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="646.8" y="688.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">hang</text>
-  <text x="529" y="703.1" font-size="10.5" fill="#0F172A" font-weight="600">pandad hangs or restarts while engaged</text>
-  <text x="529" y="716.2" font-size="9.8" fill="#475569" font-style="italic">End effect: Loss of lateral and longitudinal control. The SoC alert</text>
-  <text x="529" y="729.4" font-size="9.8" fill="#475569" font-style="italic">depends on selfdrived noticing missing pandaStates or CAN</text>
-  <text x="529" y="746.4" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="735.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="746.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
-  <rect x="618.8" y="735.4" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="746.3" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-012</text>
-  <rect x="876" y="605.4" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="624.9" font-size="12" fill="#0F172A" font-weight="700">SWF-027.C1</text>
-  <rect x="1194.5" y="613.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="624.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="639.4" font-size="10.5" fill="#0F172A">Unbounded SPI blocking. Control transfers use TIMEOUT 0, so</text>
-  <text x="885" y="653.5" font-size="10.5" fill="#0F172A">spi_transfer_retry never times out (spi.cc:205-232). The loop also</text>
-  <text x="885" y="667.6" font-size="10.5" fill="#0F172A">ends when connected becomes false, but no code ever clears…</text>
-  <text x="885" y="680.7" font-size="9.8" fill="#475569" font-weight="600">O7 · D9 · in SWF-SE-025</text>
-  <rect x="885" y="686.7" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="697.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-021 in progress</text>
-  <rect x="1029" y="686.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1083.4" y="697.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-029 open</text>
-  <rect x="876" y="717.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="737.2" font-size="12" fill="#0F172A" font-weight="700">SWF-027.C2</text>
-  <rect x="1194.5" y="726.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="737.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="751.8" font-size="10.5" fill="#0F172A">pandad crashes: asserts on a sendcan frame longer than 64 bytes</text>
-  <text x="885" y="765.9" font-size="10.5" fill="#0F172A">or with a non-DLC length (panda.cc:181-182), asserts in</text>
-  <text x="885" y="779.9" font-size="10.5" fill="#0F172A">spi_transfer (spi.cc:319-320), or the uncaught runtime_error from…</text>
-  <text x="885" y="793.1" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-026</text>
-  <rect x="885" y="799.1" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="810" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-021 in progress</text>
-  <rect x="1029" y="799.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1083.4" y="810" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-029 open</text>
-  <rect x="40" y="927.1" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="946.6" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-026</text>
-  <text x="49" y="961.2" font-size="10.5" fill="#0F172A" font-weight="600">Launcher and firmware check</text>
-  <text x="49" y="973.9" font-size="9.5" fill="#475569">sw unit</text>
-  <text x="49" y="986.7" font-size="9.5" fill="#475569">in SWF-SE-020</text>
-  <rect x="250" y="914.8" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="934.3" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-025</text>
-  <text x="259" y="948.9" font-size="10.5" fill="#0F172A">Run pandad only against the intended panda</text>
-  <text x="259" y="962.9" font-size="10.5" fill="#0F172A">firmware. Recover a panda in DFU or</text>
-  <text x="259" y="977" font-size="10.5" fill="#0F172A">bootstub without disturbing an active drive</text>
-  <rect x="259" y="983" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="993.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
-  <rect x="520" y="915.3" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="934.8" font-size="12" fill="#0F172A" font-weight="700">SWF-028</text>
-  <rect x="593.9" y="923.8" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="934.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="923.8" width="68.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="663.8" y="934.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">commission</text>
-  <text x="529" y="949.3" font-size="10.5" fill="#0F172A" font-weight="600">pandad runs against panda firmware that is not the</text>
-  <text x="529" y="963.4" font-size="10.5" fill="#0F172A" font-weight="600">assured reference build</text>
-  <text x="529" y="976.5" font-size="9.8" fill="#475569" font-style="italic">End effect: Any actuation hazard within an unlocked envelope</text>
-  <text x="529" y="993.5" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="982.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="993.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
-  <rect x="618.8" y="982.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="993.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
-  <rect x="671.3" y="982.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="695.6" y="993.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
+  <text x="885" y="521.1" font-size="10.5" fill="#0F172A">One failed bulk transfer latches comms_healthy false (spi.cc:166),</text>
+  <text x="885" y="535.2" font-size="10.5" fill="#0F172A">and nothing resets it. can_receive then discards every read</text>
+  <text x="885" y="549.2" font-size="10.5" fill="#0F172A">(panda.cc:221-223), and pandad reconnects only when ignition is o…</text>
+  <text x="885" y="562.4" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SWF-SE-025</text>
+  <rect x="885" y="568.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="579.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-029 open</text>
+  <rect x="876" y="599.4" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="618.9" font-size="12" fill="#0F172A" font-weight="700">SWF-029.C2</text>
+  <rect x="1194.5" y="607.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="618.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="633.4" font-size="10.5" fill="#0F172A">After a panda reset while onroad (watchdog, SWF-019), the panda</text>
+  <text x="885" y="647.5" font-size="10.5" fill="#0F172A">boots in SILENT (panda main.c:339). pandad switches it to</text>
+  <text x="885" y="661.6" font-size="10.5" fill="#0F172A">NO_OUTPUT (pandad.cc:229-232), and because safety_configured…</text>
+  <text x="885" y="674.7" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SWF-SE-022</text>
+  <rect x="885" y="680.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="691.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-029 open</text>
+  <rect x="40" y="868" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="887.5" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-025</text>
+  <text x="49" y="902" font-size="10.5" fill="#0F172A" font-weight="600">SPI transport</text>
+  <text x="49" y="914.8" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="927.5" font-size="9.5" fill="#475569">in SWF-SE-020</text>
+  <rect x="250" y="859.6" width="240" height="85.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="879.1" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-024</text>
+  <text x="259" y="893.7" font-size="10.5" fill="#0F172A">Transfer commands and data between SoC</text>
+  <text x="259" y="907.7" font-size="10.5" fill="#0F172A">and panda without undetected corruption.</text>
+  <text x="259" y="921.8" font-size="10.5" fill="#0F172A">Detect link failure in bounded time and</text>
+  <text x="259" y="935.9" font-size="10.5" fill="#0F172A">report it</text>
+  <rect x="520" y="734.2" width="326" height="105.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="753.7" font-size="12" fill="#0F172A" font-weight="700">SWF-026</text>
+  <rect x="593.9" y="742.7" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="753.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="742.7" width="57.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="658.1" y="753.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">corrupted</text>
+  <text x="529" y="768.2" font-size="10.5" fill="#0F172A" font-weight="600">Corrupted command or vehicle data accepted across the</text>
+  <text x="529" y="782.3" font-size="10.5" fill="#0F172A" font-weight="600">SPI link</text>
+  <text x="529" y="795.5" font-size="9.8" fill="#475569" font-style="italic">End effect: Wrong in-limit steering or acceleration command</text>
+  <text x="529" y="808.6" font-size="9.8" fill="#475569" font-style="italic">reaches the vehicle if its Toyota checksum also passes</text>
+  <text x="529" y="825.6" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="814.6" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="825.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-003</text>
+  <rect x="876" y="733.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="753.2" font-size="12" fill="#0F172A" font-weight="700">SWF-026.C1</text>
+  <rect x="1194.5" y="742.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="753.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="767.8" font-size="10.5" fill="#0F172A">Both integrity checks are 8-bit XOR over the same bytes: the SPI</text>
+  <text x="885" y="781.9" font-size="10.5" fill="#0F172A">frame checksum (spi.cc:189-202) and the CAN header checksum</text>
+  <text x="885" y="795.9" font-size="10.5" fill="#0F172A">(panda.cc:284-290). Any even number of bit errors in the same bit…</text>
+  <text x="885" y="809.1" font-size="9.8" fill="#475569" font-weight="600">O4 · D9 · in SWF-SE-025</text>
+  <rect x="885" y="815.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="826" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-027 open</text>
+  <rect x="520" y="915.7" width="326" height="91.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="935.2" font-size="12" fill="#0F172A" font-weight="700">SWF-027</text>
+  <rect x="593.9" y="924.2" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="935.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="924.2" width="34.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="646.8" y="935.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">hang</text>
+  <text x="529" y="949.8" font-size="10.5" fill="#0F172A" font-weight="600">pandad hangs or restarts while engaged</text>
+  <text x="529" y="962.9" font-size="9.8" fill="#475569" font-style="italic">End effect: Loss of lateral and longitudinal control. The SoC alert</text>
+  <text x="529" y="976.1" font-size="9.8" fill="#475569" font-style="italic">depends on selfdrived noticing missing pandaStates or CAN</text>
+  <text x="529" y="993.1" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="982.1" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="993" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-004</text>
+  <rect x="618.8" y="982.1" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="993" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-012</text>
   <rect x="876" y="852.1" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="871.6" font-size="12" fill="#0F172A" font-weight="700">SWF-028.C1</text>
+  <text x="885" y="871.6" font-size="12" fill="#0F172A" font-weight="700">SWF-027.C1</text>
   <rect x="1194.5" y="860.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="871.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="886.1" font-size="10.5" fill="#0F172A">pandad.py and up_to_date() compare the panda signature with the</text>
-  <text x="885" y="900.2" font-size="10.5" fill="#0F172A">panda_h7.bin.signed built from the checkout (pandad.py:16-18,</text>
-  <text x="885" y="914.3" font-size="10.5" fill="#0F172A">29-49; panda.cc:116-127). At BL-004 that build was not…</text>
-  <text x="885" y="927.4" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in SWF-SE-026 · → SWF-013</text>
-  <rect x="885" y="933.4" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="944.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-028 in progress</text>
+  <text x="885" y="886.1" font-size="10.5" fill="#0F172A">Unbounded SPI blocking. Control transfers use TIMEOUT 0, so</text>
+  <text x="885" y="900.2" font-size="10.5" fill="#0F172A">spi_transfer_retry never times out (spi.cc:205-232). The loop also</text>
+  <text x="885" y="914.3" font-size="10.5" fill="#0F172A">ends when connected becomes false, but no code ever clears…</text>
+  <text x="885" y="927.4" font-size="9.8" fill="#475569" font-weight="600">O7 · D9 · in SWF-SE-025</text>
+  <rect x="885" y="933.4" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="944.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-021 in progress</text>
+  <rect x="1029" y="933.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1083.4" y="944.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-029 open</text>
   <rect x="876" y="964.4" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="983.9" font-size="12" fill="#0F172A" font-weight="700">SWF-028.C2</text>
+  <text x="885" y="983.9" font-size="12" fill="#0F172A" font-weight="700">SWF-027.C2</text>
   <rect x="1194.5" y="972.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="983.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="998.5" font-size="10.5" fill="#0F172A">Test hooks are read from the environment in the production binary.</text>
-  <text x="885" y="1012.5" font-size="10.5" fill="#0F172A">BOARDD_SKIP_FW_CHECK skips the firmware check</text>
-  <text x="885" y="1026.6" font-size="10.5" fill="#0F172A">(pandad.cc:52), STARTED spoofs ignition so the car mode is kept…</text>
-  <text x="885" y="1039.7" font-size="9.8" fill="#475569" font-weight="600">O2 · D10 · in SWF-SE-026</text>
-  <rect x="885" y="1045.7" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="1056.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-028 in progress</text>
-  <rect x="40" y="1291.2" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="1310.7" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-031</text>
-  <text x="49" y="1325.2" font-size="10.5" fill="#0F172A" font-weight="600">Engagement state machine</text>
-  <text x="49" y="1338" font-size="9.5" fill="#475569">sw unit</text>
-  <text x="49" y="1350.7" font-size="9.5" fill="#475569">in SWF-SE-030</text>
-  <rect x="250" y="1168.5" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="1188" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-030</text>
-  <text x="259" y="1202.6" font-size="10.5" fill="#0F172A">Engage only on an ENABLE event with no</text>
-  <text x="259" y="1216.6" font-size="10.5" fill="#0F172A">NO_ENTRY event active</text>
-  <rect x="259" y="1222.6" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1233.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-034</text>
-  <rect x="318.4" y="1222.6" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1233.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-036</text>
-  <rect x="520" y="1155.4" width="326" height="105.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1174.9" font-size="12" fill="#0F172A" font-weight="700">SWF-030</text>
-  <rect x="593.9" y="1163.9" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1174.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="1163.9" width="68.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="663.8" y="1174.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">commission</text>
-  <text x="529" y="1189.4" font-size="10.5" fill="#0F172A" font-weight="600">selfdrived enters an engaged state with a NO_ENTRY</text>
-  <text x="529" y="1203.5" font-size="10.5" fill="#0F172A" font-weight="600">condition active or without an ENABLE event</text>
-  <text x="529" y="1216.6" font-size="9.8" fill="#475569" font-style="italic">End effect: Unintended engagement (bounded by the panda grant</text>
-  <text x="529" y="1229.8" font-size="9.8" fill="#475569" font-style="italic">on a PCM cruise rising edge)</text>
-  <text x="529" y="1246.8" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1235.8" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1246.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-010</text>
+  <text x="885" y="998.5" font-size="10.5" fill="#0F172A">pandad crashes: asserts on a sendcan frame longer than 64 bytes</text>
+  <text x="885" y="1012.5" font-size="10.5" fill="#0F172A">or with a non-DLC length (panda.cc:181-182), asserts in</text>
+  <text x="885" y="1026.6" font-size="10.5" fill="#0F172A">spi_transfer (spi.cc:319-320), or the uncaught runtime_error from…</text>
+  <text x="885" y="1039.7" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-026</text>
+  <rect x="885" y="1045.7" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="1056.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-021 in progress</text>
+  <rect x="1029" y="1045.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1083.4" y="1056.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-029 open</text>
+  <rect x="40" y="1173.8" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1193.3" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-026</text>
+  <text x="49" y="1207.9" font-size="10.5" fill="#0F172A" font-weight="600">Launcher and firmware check</text>
+  <text x="49" y="1220.6" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="1233.3" font-size="9.5" fill="#475569">in SWF-SE-020</text>
+  <rect x="250" y="1161.5" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1181" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-025</text>
+  <text x="259" y="1195.5" font-size="10.5" fill="#0F172A">Run pandad only against the intended panda</text>
+  <text x="259" y="1209.6" font-size="10.5" fill="#0F172A">firmware. Recover a panda in DFU or</text>
+  <text x="259" y="1223.7" font-size="10.5" fill="#0F172A">bootstub without disturbing an active drive</text>
+  <rect x="259" y="1229.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1240.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-009</text>
+  <rect x="520" y="1161.9" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1181.4" font-size="12" fill="#0F172A" font-weight="700">SWF-028</text>
+  <rect x="593.9" y="1170.4" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1181.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1170.4" width="68.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="663.8" y="1181.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">commission</text>
+  <text x="529" y="1196" font-size="10.5" fill="#0F172A" font-weight="600">pandad runs against panda firmware that is not the</text>
+  <text x="529" y="1210.1" font-size="10.5" fill="#0F172A" font-weight="600">assured reference build</text>
+  <text x="529" y="1223.2" font-size="9.8" fill="#475569" font-style="italic">End effect: Any actuation hazard within an unlocked envelope</text>
+  <text x="529" y="1240.2" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1229.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1240.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-002</text>
+  <rect x="618.8" y="1229.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="1240.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="671.3" y="1229.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="695.6" y="1240.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
   <rect x="876" y="1098.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1118.2" font-size="12" fill="#0F172A" font-weight="700">SWF-030.C1</text>
+  <text x="885" y="1118.2" font-size="12" fill="#0F172A" font-weight="700">SWF-028.C1</text>
   <rect x="1194.5" y="1107.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1118.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1132.8" font-size="10.5" fill="#0F172A">Defect in the DISABLED branch of the state machine (ENABLE</text>
-  <text x="885" y="1146.9" font-size="10.5" fill="#0F172A">checked before NO_ENTRY, state.py:78-90) or in Events.contains</text>
-  <text x="885" y="1160.9" font-size="10.5" fill="#0F172A">(events.py:74-75)</text>
-  <text x="885" y="1174.1" font-size="9.8" fill="#475569" font-weight="600">O6 · D8 · in SWF-SE-031</text>
-  <rect x="885" y="1180.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1191" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-030 open</text>
+  <text x="885" y="1132.8" font-size="10.5" fill="#0F172A">pandad.py and up_to_date() compare the panda signature with the</text>
+  <text x="885" y="1146.9" font-size="10.5" fill="#0F172A">panda_h7.bin.signed built from the checkout (pandad.py:16-18,</text>
+  <text x="885" y="1160.9" font-size="10.5" fill="#0F172A">29-49; panda.cc:116-127). At BL-004 that build was not…</text>
+  <text x="885" y="1174.1" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in SWF-SE-026 · → SWF-013</text>
+  <rect x="885" y="1180.1" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="1191" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-028 in progress</text>
   <rect x="876" y="1211.1" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1230.6" font-size="12" fill="#0F172A" font-weight="700">SWF-030.C2</text>
+  <text x="885" y="1230.6" font-size="12" fill="#0F172A" font-weight="700">SWF-028.C2</text>
   <rect x="1194.5" y="1219.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1230.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1245.1" font-size="10.5" fill="#0F172A">Test-only environment flags reach the vehicle: REPLAY sets the</text>
-  <text x="885" y="1259.2" font-size="10.5" fill="#0F172A">state to enabled when a panda reports controlsAllowed, bypassing</text>
-  <text x="885" y="1273.3" font-size="10.5" fill="#0F172A">ENABLE/NO_ENTRY (selfdrived.py:489-490); SIMULATION ignores…</text>
-  <text x="885" y="1286.4" font-size="9.8" fill="#475569" font-weight="600">O2 · D10 · in SWF-SE-032</text>
-  <rect x="885" y="1292.4" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1303.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-031 open</text>
-  <rect x="250" y="1380.1" width="240" height="125.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="1399.6" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-031</text>
-  <text x="259" y="1414.2" font-size="10.5" fill="#0F172A">Go to disabled in the same cycle on</text>
-  <text x="259" y="1428.3" font-size="10.5" fill="#0F172A">USER_DISABLE or IMMEDIATE_DISABLE,</text>
-  <text x="259" y="1442.3" font-size="10.5" fill="#0F172A">and within SOFT_DISABLE_TIME on a</text>
-  <text x="259" y="1456.4" font-size="10.5" fill="#0F172A">persisting SOFT_DISABLE</text>
-  <rect x="259" y="1462.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1473.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-016</text>
-  <rect x="318.4" y="1462.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1473.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-026</text>
-  <rect x="377.8" y="1462.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="405.5" y="1473.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-028</text>
-  <rect x="259" y="1480.4" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1491.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-030</text>
-  <rect x="520" y="1403.7" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1423.2" font-size="12" fill="#0F172A" font-weight="700">SWF-033</text>
-  <rect x="593.9" y="1412.2" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1423.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="1412.2" width="29.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="644.4" y="1423.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">late</text>
-  <text x="529" y="1437.7" font-size="10.5" fill="#0F172A" font-weight="600">Disengagement later than the fault tolerance time</text>
-  <text x="529" y="1450.9" font-size="9.8" fill="#475569" font-style="italic">End effect: Lateral control continues on stale input</text>
-  <text x="529" y="1467.9" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1456.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1467.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-003</text>
-  <rect x="618.8" y="1456.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="1467.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
-  <rect x="876" y="1333.4" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1352.9" font-size="12" fill="#0F172A" font-weight="700">SWF-033.C1</text>
-  <rect x="1194.5" y="1341.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1352.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1367.5" font-size="10.5" fill="#0F172A">Loss or staleness of an input to the control law is handled as</text>
-  <text x="885" y="1381.6" font-size="10.5" fill="#0F172A">SOFT_DISABLE (commIssue, commIssueAvgFreq,</text>
-  <text x="885" y="1395.6" font-size="10.5" fill="#0F172A">processNotRunning, modeldLagging, selfdrivedLagging…</text>
-  <text x="885" y="1408.8" font-size="9.8" fill="#475569" font-weight="600">O8 · D9 · in SWF-SE-033</text>
-  <rect x="885" y="1414.8" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1425.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-035 open</text>
-  <rect x="876" y="1445.8" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1465.3" font-size="12" fill="#0F172A" font-weight="700">SWF-033.C2</text>
-  <rect x="1194.5" y="1454.3" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1465.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1479.8" font-size="10.5" fill="#0F172A">Every timer counts loop iterations, not time: soft_disable_timer</text>
-  <text x="885" y="1493.9" font-size="10.5" fill="#0F172A">(state.py:20, 40), mismatch_counter, cruise_mismatch_counter and</text>
-  <text x="885" y="1508" font-size="10.5" fill="#0F172A">the sm.frame gates (selfdrived.py:338, 418, 425). The loop is pace…</text>
-  <text x="885" y="1521.1" font-size="9.8" fill="#475569" font-weight="600">O6 · D10 · in SWF-SE-032</text>
-  <rect x="885" y="1527.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1538" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-035 open</text>
-  <line x1="40" y1="1578.1" x2="1240" y2="1578.1" stroke="#E2E8F0" stroke-width="1"/>
-  <text x="40" y="1600.1" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
-  <rect x="96" y="1589.1" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="1600" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <rect x="136.5" y="1589.1" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="1600" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
-  <rect x="179.4" y="1589.1" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1600" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
-  <text x="223.9" y="1600.1" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
-  <rect x="455.4" y="1589.1" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1600" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
-  <rect x="518.7" y="1589.1" width="90.4" height="15" rx="7.5" fill="#D97706"/><text x="563.9" y="1600" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT in progress</text>
-  <rect x="613.1" y="1589.1" width="85.7" height="15" rx="7.5" fill="#2E9E6A"/><text x="655.9" y="1600" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT completed</text>
-  <text x="706.7" y="1600.1" font-size="10.5" fill="#0F172A">action status (step 6)</text>
-  <text x="40" y="1620.1" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
-  <text x="40" y="1638.1" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <text x="885" y="1245.1" font-size="10.5" fill="#0F172A">Test hooks are read from the environment in the production binary.</text>
+  <text x="885" y="1259.2" font-size="10.5" fill="#0F172A">BOARDD_SKIP_FW_CHECK skips the firmware check</text>
+  <text x="885" y="1273.3" font-size="10.5" fill="#0F172A">(pandad.cc:52), STARTED spoofs ignition so the car mode is kept…</text>
+  <text x="885" y="1286.4" font-size="9.8" fill="#475569" font-weight="600">O2 · D10 · in SWF-SE-026</text>
+  <rect x="885" y="1292.4" width="140" height="15" rx="7.5" fill="#D97706"/><text x="955" y="1303.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-028 in progress</text>
+  <rect x="40" y="1420.5" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1440" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-031</text>
+  <text x="49" y="1454.6" font-size="10.5" fill="#0F172A" font-weight="600">Engagement state machine</text>
+  <text x="49" y="1467.3" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="1480" font-size="9.5" fill="#475569">in SWF-SE-030</text>
+  <rect x="250" y="1415.2" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1434.7" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-030</text>
+  <text x="259" y="1449.3" font-size="10.5" fill="#0F172A">Engage only on an ENABLE event with no</text>
+  <text x="259" y="1463.3" font-size="10.5" fill="#0F172A">NO_ENTRY event active</text>
+  <rect x="259" y="1469.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1480.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-034</text>
+  <rect x="318.4" y="1469.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1480.3" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-036</text>
+  <rect x="520" y="1402.1" width="326" height="105.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1421.6" font-size="12" fill="#0F172A" font-weight="700">SWF-030</text>
+  <rect x="593.9" y="1410.6" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1421.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1410.6" width="68.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="663.8" y="1421.5" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">commission</text>
+  <text x="529" y="1436.1" font-size="10.5" fill="#0F172A" font-weight="600">selfdrived enters an engaged state with a NO_ENTRY</text>
+  <text x="529" y="1450.2" font-size="10.5" fill="#0F172A" font-weight="600">condition active or without an ENABLE event</text>
+  <text x="529" y="1463.3" font-size="9.8" fill="#475569" font-style="italic">End effect: Unintended engagement (bounded by the panda grant</text>
+  <text x="529" y="1476.5" font-size="9.8" fill="#475569" font-style="italic">on a PCM cruise rising edge)</text>
+  <text x="529" y="1493.5" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1482.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1493.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-010</text>
+  <rect x="876" y="1345.4" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1364.9" font-size="12" fill="#0F172A" font-weight="700">SWF-030.C1</text>
+  <rect x="1194.5" y="1353.9" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1364.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1379.5" font-size="10.5" fill="#0F172A">Defect in the DISABLED branch of the state machine (ENABLE</text>
+  <text x="885" y="1393.6" font-size="10.5" fill="#0F172A">checked before NO_ENTRY, state.py:78-90) or in Events.contains</text>
+  <text x="885" y="1407.6" font-size="10.5" fill="#0F172A">(events.py:74-75)</text>
+  <text x="885" y="1420.8" font-size="9.8" fill="#475569" font-weight="600">O6 · D8 · in SWF-SE-031</text>
+  <rect x="885" y="1426.8" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1437.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-030 open</text>
+  <rect x="876" y="1457.8" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1477.3" font-size="12" fill="#0F172A" font-weight="700">SWF-030.C2</text>
+  <rect x="1194.5" y="1466.3" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1477.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1491.8" font-size="10.5" fill="#0F172A">Test-only environment flags reach the vehicle: REPLAY sets the</text>
+  <text x="885" y="1505.9" font-size="10.5" fill="#0F172A">state to enabled when a panda reports controlsAllowed, bypassing</text>
+  <text x="885" y="1520" font-size="10.5" fill="#0F172A">ENABLE/NO_ENTRY (selfdrived.py:489-490); SIMULATION ignores…</text>
+  <text x="885" y="1533.1" font-size="9.8" fill="#475569" font-weight="600">O2 · D10 · in SWF-SE-032</text>
+  <rect x="885" y="1539.1" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1550" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-031 open</text>
+  <line x1="40" y1="1590.1" x2="1240" y2="1590.1" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="1612.1" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
+  <rect x="96" y="1601.1" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="1612" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <rect x="136.5" y="1601.1" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="1612" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
+  <rect x="179.4" y="1601.1" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1612" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="223.9" y="1612.1" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
+  <rect x="455.4" y="1601.1" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1612" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
+  <rect x="518.7" y="1601.1" width="90.4" height="15" rx="7.5" fill="#D97706"/><text x="563.9" y="1612" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT in progress</text>
+  <rect x="613.1" y="1601.1" width="85.7" height="15" rx="7.5" fill="#2E9E6A"/><text x="655.9" y="1612" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT completed</text>
+  <text x="706.7" y="1612.1" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <text x="40" y="1632.1" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
+  <text x="40" y="1650.1" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>
