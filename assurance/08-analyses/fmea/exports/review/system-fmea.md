@@ -4,7 +4,7 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 0.24 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 0.25 | draft | BL-005 | RT-2 | 2026-10-16 |
 
 **Scope.** LionDriver as installed on the reference configuration CFG-001 (Corolla E210 · ZRE212 · US, US sedan MY2020-2022) with comma 3X and integrated panda, software BL-005 (structure and failure analysis written at BL-001, risk analysis at BL-004, MSR re-rated at BL-005), while the vehicle is driven by a licensed driver inside the ODD: limited-access highways only since WP-C-02 / WP-C-03 v0.4 (DQ-023), up to 110 km/h (DQ-260). Functions F1-F7 per fmea-plan.md section 3.1, plus F8 (stock vehicle safety functions are preserved), added because the harness intercepts the stock ADAS camera.
 
@@ -884,7 +884,7 @@ Effects:
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
 | `SFM-038.C1` After any driver steering input in the last 1.5 s, or at standstill, a temporary EPS fault raises only steerTempUnavailableSilent (a LOW-priority WARNING with a prompt chime and no soft disable, events.py:516-521), and it stays latched while the fault lasts, so a long fault never escalates to the take-over request (car_events.py:162-177; T-25, GAP-03) | • Upstream openpilot design choice (a softer alert after an override); no LionDriver requirement on it <sub>openpilot/selfdrive/car/car_events.py</sub> | • No LionDriver test targets this cause | 8 | 10 | 🔴 **H** | SFM-ACT-023 |
-| `SFM-038.C2` pandad publishes the panda fields epsFault and requestsRejected (pandad.cc:137-138), but no SoC process reads them (txRateExceeded is read, TSR-615), so a panda-side EPS-fault refusal reaches the driver only through the panda siren and the stock EPS path (SW FMEA SWF-025 notes) | • None; the fields were added for the panda siren and logging <sub>openpilot/selfdrive/pandad/pandad.cc</sub> | • No test targets this cause | 8 | 10 | 🔴 **H** | SFM-ACT-023 |
+| `SFM-038.C2` pandad publishes the panda fields epsFault and requestsRejected (pandad.cc:137-138), but no SoC process reads them (txRateExceeded is read, TSR-615), so a panda-side EPS-fault refusal reaches the driver only through the panda siren and the stock EPS path (SW FMEA SWF-025 notes) | • None; the fields were added for the panda siren and logging <sub>openpilot/selfdrive/pandad/pandad.cc</sub> | • No test targets this cause | 8 | 10 | 🔴 **H** | SFM-ACT-024 |
 | `SFM-038.C3` steerSaturated needs the controller saturated, a desired lateral acceleration above 1.0 m/s², an undershoot above 1.2x and no steering input for 2 s (selfdrived.py:465-479), and the controller reports saturation only after 0.4 s (latcontrol.py, T-30); a gradual deficit therefore warns late or not at all (WP-S-04 §3.8.1) | • Upstream openpilot code with upstream review; ruff and type checks in CI (static analysis job) <sub>scripts/lint/lint.sh</sub> | • Lateral controller unit tests (saturation detection); targeted at nominal behaviour, not proven <sub>openpilot/selfdrive/controls/tests/test_latcontrol.py</sub> | 8 | 8 | 🔴 **H** | SFM-ACT-021 |
 
 Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a fault for 1 s while authority is granted (TSR-516(b), T-28), independent of the host alerts · (2) Lane departure warning as the car nears the line
@@ -918,7 +918,8 @@ Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a f
 | SFM-ACT-020 | design_change | React to a stock PCS event on the longitudinal command (for example a neutral or zero acceleration request, or a longitudinal disable, while stockAeb is set), so stock AEB does not depend on PCM arbitration alone (AOU-04R); or keep today's behaviour and rely on the AOU-04R vehicle test. Lead decision DQ-300 |  | decision_pending | SFM-036.C1 | — |
 | SFM-ACT-021 | monitoring | Make the insufficient-lateral-control warning timely (WP-S-04 §3.8.1): warn before the deficit has lasted 0.4 s, for example from the planned curvature against the envelope, or keep the deficit at or below about 0.5 m/s² through the steering limits and the ODD curve bound (WP-S-04 OI-2). A change to the ODD bound is a lead decision |  | open | SFM-038.C3 | — |
 | SFM-ACT-022 | monitoring | Measure the FCW onset after a lead brakes hard (WP-S-04 T-31, M-12) and compare it with the §3.8.2 budget (about 0.6 s at a 1.0 s gap). For pipeline lag (SFM-012.C1), detect it within that budget or show that the FCW path does not depend on the lagging process |  | open | — | — |
-| SFM-ACT-023 | design_change | Escalate every EPS fault that lasts while engaged to the take-over request (steerTempUnavailable, SOFT_DISABLE), instead of keeping the low-priority steerTempUnavailableSilent prompt latched after a recent override or at standstill (car_events.py:162-177; behaviour change queued for the lead by the FSC session as DQ-342), and act on the panda fields epsFault and requestsRejected on the host (TSR-626(d), TSR-516(b)). SFM-038.C1, C2; FTA BE-2.08 |  | open | SFM-038.C1, SFM-038.C2 | — |
+| SFM-ACT-023 | design_change | Escalate a temporary EPS fault that lasts while engaged to the take-over request (steerTempUnavailable, SOFT_DISABLE) instead of keeping the low-priority steerTempUnavailableSilent prompt latched after a recent override or at standstill (car_events.py; lead decision DQ-342, option A: the lighter prompt for at most 1.5 s, then the take-over request; TSR-607 (b)). SFM-038.C1; FTA BE-2.08 |  | completed | SFM-038.C1 | 10/5/4 → 🔴 **H** |
+| SFM-ACT-024 | monitoring | Act on the panda fields epsFault and requestsRejected on the host (TSR-626(d), TSR-516(b)): raise the take-over request when the panda reports an EPS fault or refused steering frames while lateral control is engaged, within the SG-02 1 s budget, instead of relying on the panda siren alone. Split from SFM-ACT-023 (rev 0.25). SFM-038.C2; FTA BE-2.08 |  | open | SFM-038.C2 | — |
 
 ## 6. Priority H causes without a completed action
 
@@ -1008,8 +1009,7 @@ Safety mechanisms: (1) EPS-fault siren from the panda when LKA_STATE reports a f
 | `SFM-037.C1` | Longitudinal command frozen at last value | 10/6/10 | SFM-ACT-002 |
 | `SFM-037.C2` | Longitudinal command frozen at last value | 10/4/9 | SFM-ACT-002 |
 | `SFM-037.C3` | Longitudinal command frozen at last value | 10/5/10 | SFM-ACT-002 |
-| `SFM-038.C1` | Warning of a lateral-control fault or limit late, not escalated or missing | 10/8/10 | SFM-ACT-023 |
-| `SFM-038.C2` | Warning of a lateral-control fault or limit late, not escalated or missing | 10/8/10 | SFM-ACT-023 |
+| `SFM-038.C2` | Warning of a lateral-control fault or limit late, not escalated or missing | 10/8/10 | SFM-ACT-024 |
 | `SFM-038.C3` | Warning of a lateral-control fault or limit late, not escalated or missing | 10/8/8 | SFM-ACT-021 |
 
 ## 7. Monitoring and system response

@@ -58,6 +58,17 @@
 #   safety mechanisms that state one time for one layer, code_derived from the line cited. The other mechanisms carry no time yet.
 # Post rev 1.1, DFA cross-references (WP-A-03 v0.13, OI-11): DFI-25 and DFI-29..33 cited in the notes of SWF-035, -043, -061, -065, -072,
 #   -080, -081, -082, -085, -086; their measures added to the actions (new SWF-ACT-075, -076). DQ-220 references point at DQ-365.
+# rev 1.2 at BL-005 (FTA finding F-28, BE-5.05): SWF-087, the envelope passes LKA torque opposing the driver (no driver-override check in
+#   toyota.h, GAP-02, TSR-304 not implemented); new function SWF-FN-014; O8 D10 AP H; action SWF-ACT-074.
+# rev 1.3 at BL-005, lead answers applied (register DQ-342 A, DQ-366 A, DQ-365 A), ratings at BL-005 unchanged:
+#   - SWF-088 (new function SWF-FN-055 on SWF-SE-054): the EPS-fault warning is latched at the low-priority prompt after an override or at
+#     standstill (C1, TSR-607 (b)) and absent while the driver keeps steering (C2, TSR-607 (c)); counterpart of SFM-038.C1; O8 D10 AP H at BL-005.
+#     SWF-ACT-077 completed after BL-005 (#174 7158a9a, #179 487d4ef; unit-tested in CI, not verified on the vehicle); revised O3 D8 is a
+#     prediction and stays AP H.
+#   - SWF-062.C1 / SWF-ACT-059: the SG-010 safe state is decided (DQ-365 A, TSR-633: stop in lane, stay stopped and held, re-engagement locked
+#     out until the driver responds); not implemented, so the cause and its rating stay and SWF-ACT-059 is open.
+#   - SWF-ACT-055 in progress: test_supervision.py and test_input_freshness.py run in CI since #179 (unit_tests 1555 passed at 487d4ef);
+#     mutation proof still open, so D stays 8 on the causes that cite them.
 #
 # SW FMEA element pandad (FSC EL-06, System FMEA SFM-SE-017). Ratings per RT-1, against BL-004 (liondriver-dev 682f184,
 # panda 8aa8671, opendbc 7993399). The LIONDRIVER_REFERENCE firmware build is not enabled by any build path at BL-004, so the
@@ -105,11 +116,11 @@ analysis:
   id: SWF
   type: sw_fmea
   title: "SW FMEA — safety-relevant software elements"
-  revision: "1.1"
+  revision: "1.3"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
-  scope: "P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37."
+  scope: "P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37. Rev 1.2: no driver-override check on the LKA path in the envelope (SWF-087), for F-28."
   team:
     - {name: Jherrod Thomas, role: "Project maintainer, safety lead (reviewer/approver)"}
     - {name: Claude (AI assistant), role: "Drafting assistance; ratings require human review"}
@@ -130,7 +141,8 @@ analysis:
     - assurance/07-supporting/impact/change-2026-10-13-tx-rate-reengagement.md
     - assurance/07-supporting/impact/change-2026-10-14-pcm-engage-heartbeat-gate.md
     - assurance/07-supporting/impact/change-2026-10-14-mode-set-regrant.md
-  updated: 2026-10-16
+    - assurance/07-supporting/impact/change-2026-10-17-eps-fault-escalation.md
+  updated: 2026-10-17
 structure:
 - id: SWF-SE-001
   name: Panda safety model (opendbc safety + panda firmware integration)
@@ -468,7 +480,9 @@ structure:
   paths:
   - openpilot/selfdrive/car/card.py
   - openpilot/selfdrive/car/stock_aeb_interlock.py
-  description: CAN-paced 100 Hz loop (card.py:169-189, 274-288); carState publication (205-233); interlock (stock_aeb_interlock.py:23-53, card.py:86-124)
+  - openpilot/selfdrive/car/car_events.py
+  description: CAN-paced 100 Hz loop (card.py:169-189, 274-288); carState publication (205-233); interlock (stock_aeb_interlock.py:23-53, card.py:86-124); car events
+    from carState, including the EPS-fault warnings (car_events.py:162-177 at BL-005)
 - id: SWF-SE-060
   name: Driver monitoring (dmonitoringmodeld, dmonitoringd)
   kind: sw_element
@@ -744,6 +758,13 @@ functions:
   requirements:
   - FSR-002
   - FSR-038
+- id: SWF-FN-014
+  element: SWF-SE-006
+  description: Back steering torque off toward zero while the driver overrides, and reject frames that increase torque opposing the driver beyond a driver allowance
+    (TSR-304; not implemented on the LKA path)
+  requirements:
+  - FSR-031
+  - FSR-032
 - id: SWF-FN-020
   element: SWF-SE-021
   description: Send the heartbeat at 10 Hz. It reports engaged only while the SoC is engaged and actively commanding, so that the panda can withdraw authority when the
@@ -932,6 +953,13 @@ functions:
   description: Run the car interface every CAN cycle, publish carState, and actuate only the latest carControl
   requirements:
   - FSR-006
+- id: SWF-FN-055
+  element: SWF-SE-054
+  description: Raise the EPS-fault warning while engaged (TSR-607); the take-over request, with the lighter prompt only for the first 1.5 s after an override or
+    at standstill, and at least the lighter prompt when the fault lasts over 1.5 s while the driver keeps steering
+  requirements:
+  - FSR-015
+  - FSR-016
 - id: SWF-FN-060
   element: SWF-SE-061
   description: Estimate face, eye and attention state of the driver for every cabin camera frame
@@ -2578,7 +2606,7 @@ failure_modes:
     - description: New LionDriver code (#51), AI-drafted, reviewed by its author only; ruff and ty in CI
       ref: openpilot/selfdrive/selfdrived/supervision.py
     detection_controls:
-    - description: 'test_supervision.py: TxBlockedMonitor baseline, rise while engaged and panda-reset tests. NOT run in CI: plain pytest-style classes, which tools/test_runner.py (unittest) collects as 0 tests; pass when run by hand at BL-005 (2026-10-16) (SWF-ACT-055). Targeted, not
+    - description: 'test_supervision.py: TxBlockedMonitor baseline, rise while engaged and panda-reset tests. Not run in CI at BL-005 (plain classes, collected as 0 tests; passed by hand 2026-10-16); run in CI since #179 (487d4ef, SWF-ACT-055). Targeted, not
         proven by mutation; the txRateExceeded and heartbeatLost branches in selfdrived.py have no test'
       test: openpilot/selfdrive/selfdrived/tests/test_supervision.py
     occurrence: 5
@@ -2696,8 +2724,8 @@ failure_modes:
     - description: New LionDriver code (#51, #70), pure logic, AI-drafted, reviewed by its author only; ruff and ty in CI
       ref: openpilot/selfdrive/selfdrived/supervision.py
     detection_controls:
-    - description: 'test_supervision.py (13 tests: consecutive samples, single-sample absorption, 0.5 s bound with stale samples, engagement grace). NOT run in CI: plain pytest-style classes, which tools/test_runner.py (unittest) collects as 0 tests; pass when run by hand at BL-005 (2026-10-16)
-        (SWF-ACT-055). Targeted at the cause, not proven by mutation'
+    - description: 'test_supervision.py (13 tests: consecutive samples, single-sample absorption, 0.5 s bound with stale samples, engagement grace). Not run in CI at BL-005 (plain classes, collected as 0 tests; passed by hand 2026-10-16);
+        run in CI since #179 (487d4ef, SWF-ACT-055). Targeted at the cause, not proven by mutation'
       test: openpilot/selfdrive/selfdrived/tests/test_supervision.py
     occurrence: 5
     detection: 8
@@ -3023,7 +3051,7 @@ failure_modes:
     - description: TSR-602 gate in controlsd (inputs_fresh), new LionDriver code reviewed by its author only; ruff and ty in CI
       ref: openpilot/selfdrive/controls/lib/input_freshness.py
     detection_controls:
-    - description: 'test_input_freshness.py (6 tests: bound per service, wall clock for selfdriveState, inputs not yet seen). NOT run in CI: plain pytest-style classes, which tools/test_runner.py (unittest) collects as 0 tests; pass when run by hand at BL-005 (2026-10-16) (SWF-ACT-055).
+    - description: 'test_input_freshness.py (6 tests: bound per service, wall clock for selfdriveState, inputs not yet seen). Not run in CI at BL-005 (plain classes, collected as 0 tests; passed by hand 2026-10-16); run in CI since #179 (487d4ef, SWF-ACT-055).
         Targeted at the gate logic, not proven by mutation; no test stops selfdrived while engaged'
       test: openpilot/selfdrive/controls/tests/test_input_freshness.py
     occurrence: 5
@@ -3210,7 +3238,7 @@ failure_modes:
     - description: TSR-602 gate (inputs_fresh) on the log clock, new LionDriver code reviewed by its author only; ruff and ty in CI
       ref: openpilot/selfdrive/controls/lib/input_freshness.py
     detection_controls:
-    - description: 'test_input_freshness.py (bound per service on the log clock). NOT run in CI: plain pytest-style classes, which tools/test_runner.py (unittest) collects as 0 tests; pass when run by hand at BL-005 (2026-10-16) (SWF-ACT-055). Targeted at the gate, not proven by mutation.
+    - description: 'test_input_freshness.py (bound per service on the log clock). Not run in CI at BL-005 (plain classes, collected as 0 tests; passed by hand 2026-10-16); run in CI since #179 (487d4ef, SWF-ACT-055). Targeted at the gate, not proven by mutation.
         No test stops modeld or plannerd while engaged'
       test: openpilot/selfdrive/controls/tests/test_input_freshness.py
     occurrence: 5
@@ -4169,11 +4197,12 @@ failure_modes:
   causes:
   - id: SWF-062.C1
     description: By design the six driver-monitoring events are PERMANENT alerts only, with no SOFT_DISABLE or IMMEDIATE_DISABLE (events.py:524-570); the terminal reaction
-      is the forced deceleration with lateral control kept. Whether that is the SG-010 safe state of FSR-040 is not recorded; it is queued for the lead (DQ-365, which absorbed DQ-220)
+      is the forced deceleration with lateral control kept. The SG-010 safe state is decided (DQ-365 A, which absorbed DQ-220; TSR-633) as stop in lane, stay stopped
+      and held, re-engagement locked out until the driver responds. The code does not hold at standstill or lock out until a later disengagement (TSR-633 not met)
     element: SWF-SE-062
     prevention_controls:
-    - description: Upstream design; FSR-040 names a safe state that the FSC does not define for this path. Requirements not documented and no field-exposure
-        evidence cited, so O 8 (RT-2 §2), as SWF-083.C1 and SFM-025.C1
+    - description: Upstream design; the safe state is now defined (TSR-633, DQ-365 A) but not implemented. No field-exposure evidence cited, so O 8 (RT-2 §2), as
+        SWF-083.C1 and SFM-025.C1
       ref: assurance/08-analyses/fmea/analyses/fsc.yaml
     detection_controls:
     - description: test_longitudinal runs the force_decel maneuver in CI and test_monitoring checks the alert levels; neither checks that the reaction meets FSR-040
@@ -5262,6 +5291,100 @@ failure_modes:
   - description: selfdrived soft disable when dmonitoringd or controlsd stops (commIssue, processNotRunning; SWF-064)
     ref: openpilot/selfdrive/selfdrived/events.py
   notes: Realises BE-8.08 (SW FMEA rev 1.1). Late escalation before the flag (frame-counted timers) is SWF-061.C1; whether the forced stop is the SG-010 safe state is SWF-062. DFA WP-A-03 DFI-33 (the forced stop and normal deceleration share one unchecked chain).
+- id: SWF-087
+  element: SWF-SE-006
+  function: SWF-FN-014
+  failure_mode: Envelope passes LKA torque that opposes the driver while the driver overrides the steering
+  guideword: omission
+  effects:
+  - level: local
+    description: 'STEERING_LKA (0x2E4) frames that oppose the driver pass: the Toyota LKA check is magnitude, rate and measured-torque error only (TorqueMotorLimited);
+      STEER_TORQUE_DRIVER is decoded (toyota.h:221-223) but used only on the LTA path (toyota.h:421-424)'
+  - level: next_higher
+    description: The only override check is the host's MAX_USER_TORQUE of 500 units (carcontroller.py:33, 83); with a host fault, or below 500 units by design (SWF-038),
+      torque up to the 1500 limit keeps opposing the driver
+  - level: end
+    description: Item resists the driver's steering within the panda torque bound
+    hazard: HZ-009
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-087.C1
+    description: 'By design the envelope has no driver-override check on the LKA path (GAP-02): TSR-304 (driver allowance, and back-off while the driver torque exceeds
+      T_ovr; decided as DQ-053, 2026-10-14) is not implemented in toyota.h, in either build'
+    element: SWF-SE-006
+    prevention_controls:
+    - description: Upstream design (a bounded torque the driver can overpower); requirement TSR-304 not implemented, so O 8 (RT-2 §2), as the other by-design gaps
+      ref: opendbc_repo/opendbc/safety/modes/toyota.h
+    detection_controls:
+    - description: test_toyota.py tests the measured-torque limit (MotorTorqueSteeringSafetyTest, MAX_TORQUE_ERROR 350); no test of torque opposing the driver on the
+        LKA path
+    occurrence: 8
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-074
+  safety_mechanisms:
+  - description: Panda torque magnitude (1500), rate (up 15, down 25) and measured-torque-error (350) limits bound what can oppose the driver (SWF-001, FSR-032)
+    ref: opendbc_repo/opendbc/safety/modes/toyota.h:298-310
+  - description: Host lateral cut-off at 500 units of driver torque (carcontroller.py:83; QM)
+    ref: opendbc_repo/opendbc/car/toyota/carcontroller.py
+  notes: Realises BE-5.05 (WP-A-04 G5.3, SPF-12) on the envelope side; the host side is SWF-038 and SWF-044. Whether the bounded torque is hazardous depends on the
+    measured override force (FSR-031 vehicle test, not done).
+- id: SWF-088
+  element: SWF-SE-054
+  function: SWF-FN-055
+  failure_mode: EPS-fault warning held at the low-priority prompt, or not given, for the whole of a temporary EPS fault while engaged
+  guideword: late
+  effects:
+  - level: local
+    description: steerTempUnavailableSilent (LOW priority, small alert with prompt chime, no soft disable; events.py:516-521) instead of steerTempUnavailable
+      (soft disable), or no EPS event at all while the driver keeps steering
+  - level: next_higher
+    description: The item stays engaged with lateral assist lost; the envelope refuses lateral frames (EPS-fault refusal, reference build) and the panda siren sounds
+      after about 1 s of a persistent fault while authority is granted
+  - level: end
+    description: Driver not prompted to take over while lateral control is lost; lane departure (counterpart of SFM-038.C1)
+    hazard: HZ-004
+    severity: 10
+  severity: 10
+  causes:
+  - id: SWF-088.C1
+    description: 'By design at BL-005, after a steering override in the last 1.5 s or at standstill, a temporary EPS fault raises only steerTempUnavailableSilent and
+      silent_steer_warning stays latched while the fault lasts, so a long fault never escalates to the take-over request (car_events.py:162-177; TSR-607 (b), DQ-342 A;
+      GAP-03)'
+    element: SWF-SE-054
+    prevention_controls:
+    - description: Upstream openpilot design (a softer alert after an override); TSR-607 (b) not implemented at BL-005, so O 8 (RT-2 §2), as the other by-design gaps
+      ref: openpilot/selfdrive/car/car_events.py
+    detection_controls:
+    - description: No test of the EPS-fault events at BL-005
+    occurrence: 8
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-077
+  - id: SWF-088.C2
+    description: 'By design at BL-005, a temporary EPS fault that starts while the driver is steering raises no EPS event while they keep steering (no_steer_warning,
+      car_events.py:164-166); the take-over request follows only on release (TSR-607 (c), DQ-366 A)'
+    element: SWF-SE-054
+    prevention_controls:
+    - description: Upstream openpilot design; TSR-607 (c) not implemented at BL-005, so O 8 (RT-2 §2)
+      ref: openpilot/selfdrive/car/car_events.py
+    detection_controls:
+    - description: No test of the EPS-fault events at BL-005
+    occurrence: 8
+    detection: 10
+    ap: H
+    actions:
+    - SWF-ACT-077
+  safety_mechanisms:
+  - description: Panda EPS-fault siren after the EPS reports a fault for 1 s while authority is granted (TSR-516(b)); independent of the SoC alerts
+    ref: panda/board/drivers/eps_fault_siren.h
+  - description: Envelope refuses lateral actuation from the first EPS-fault frame (TSR-110, reference build), so the item does not steer on a faulted EPS
+    ref: opendbc_repo/opendbc/safety/modes/toyota.h
+  notes: Realises BE-2.08 with SFM-038 (F-28). The panda's epsFault field is not read by any SoC process (SWF-025 notes). Fixed after BL-005 by SWF-ACT-077; the rating
+    stays at BL-005 until the next baseline.
 actions:
 - id: SWF-ACT-001
   kind: detection
@@ -5599,7 +5722,9 @@ actions:
     (unittest loader) collects as 0 tests. Derive them from unittest.TestCase (or the repo''s test base class), check that the unit_tests job reports them, and
     prove them by a mutation of supervision.py and input_freshness.py so D can drop below 8'
   owner: Jherrod Thomas
-  status: open
+  status: in_progress
+  evidence: 'Run in CI: #179 (487d4ef, 2026-10-17) derives both from unittest.TestCase; the unit_tests job of tests run 38991473673 reports 1555 passed (1535 before:
+    19 newly collected and 1 new EPS test). Mutation proof not done, so D stays 8'
 - id: SWF-ACT-054
   kind: design_change
   description: 'Pin an opendbc commit that contains jherrodthomas/opendbc#15 (ATC-20, SWSR-518 amended per DQ-079; ATC-26, SWSR-311 amended per DQ-080), with its
@@ -5634,10 +5759,10 @@ actions:
   status: open
 - id: SWF-ACT-059
   kind: design_change
-  description: Define the SG-010 safe state for FSR-040 (lead decision DQ-365, which absorbed DQ-220) and, if it differs from the current forced deceleration with lateral kept, implement it with
-    a terminal-alert test
+  description: 'Implement the SG-010 safe state decided in DQ-365 (A, which absorbed DQ-220; TSR-633): after the forced deceleration keep the vehicle stopped and
+    held and lock out re-engagement and resumption until the driver responds; add a terminal-alert test that checks standstill, hold and lockout'
   owner: Jherrod Thomas
-  status: decision_pending
+  status: open
 - id: SWF-ACT-060
   kind: detection
   description: Run model_replay for dmonitoringmodeld and modeld in LionDriver CI, and add a non-finite / stale output injection test for dmonitoringd and modeld consumers
@@ -5732,3 +5857,25 @@ actions:
     dialog is closed before the item goes onroad'
   owner: Jherrod Thomas
   status: open
+- id: SWF-ACT-074
+  kind: design_change
+  description: 'Envelope override check (TSR-304, DQ-053): in toyota.h reject 0x2E4 frames that increase torque opposing STEER_TORQUE_DRIVER beyond the driver allowance,
+    and back off toward zero at no less than the down rate while the override lasts; report the state to the SoC (TSR-628). Add opendbc safety tests and mutation
+    for both branches; host counterpart SWF-ACT-046'
+  owner: Jherrod Thomas
+  status: open
+- id: SWF-ACT-077
+  kind: design_change
+  description: 'Escalate the EPS-fault warning per TSR-607 (DQ-342 A, DQ-366 A): allow steerTempUnavailableSilent only for the first 1.5 s of the fault
+    (steer_fault_frames, STEER_FAULT_SILENT_FRAMES), then the take-over request; give at least the lighter prompt when the fault lasts over 1.5 s while the driver
+    keeps steering; unit tests'
+  owner: Jherrod Thomas
+  status: completed
+  evidence: '#174 (7158a9a) and #179 (487d4ef): openpilot/selfdrive/car/car_events.py:17, 169-187; openpilot/selfdrive/car/tests/test_steer_fault_warning.py (7 tests,
+    unittest, collected by the unit_tests job); impact record assurance/07-supporting/impact/change-2026-10-17-eps-fault-escalation.md. Implemented and unit-tested
+    after BL-005, not verified on the vehicle and not proven by mutation'
+  revised:
+    severity: 10
+    occurrence: 3
+    detection: 8
+    ap: H

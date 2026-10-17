@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1330" viewBox="0 0 1280 1330" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-13. SW FMEA detection evidence</title>
-  <desc id="d">SW FMEA (SWF rev 1.1): 135 causes by the evidence behind their detection rating: proven 18, targeted 16, generic 25, not run 0, hardware 8, none 68. One row per element, and the 28 cited test files with how CI treats each (0 not run in CI).</desc>
+  <desc id="d">SW FMEA (SWF rev 1.3): 138 causes by the evidence behind their detection rating: proven 18, targeted 16, generic 25, not run 0, hardware 8, none 71. One row per element, and the 28 cited test files with how CI treats each (0 not run in CI).</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,21 +9,21 @@
   </defs>
   <rect width="1280" height="1330" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-13 · SW FMEA — what each detection rating rests on</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.1 · BL-005 · draft · is the cited test run in CI, only on hardware, or not run at all</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.3 · BL-005 · draft · is the cited test run in CI, only on hardware, or not run at all</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="104" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">ALL CAUSES BY WHAT THEIR DETECTION RATING RESTS ON</text>
-  <rect x="40" y="114" width="160" height="22" fill="#2E9E6A"/>
-  <text x="120" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">18</text>
-  <rect x="200" y="114" width="142.2" height="22" fill="#0F766E"/>
-  <text x="271.1" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">16</text>
-  <rect x="342.2" y="114" width="222.2" height="22" fill="#94A3B8"/>
-  <text x="453.3" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">25</text>
-  <rect x="564.4" y="114" width="71.1" height="22" fill="#6D5BD0"/>
-  <text x="600" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">8</text>
-  <rect x="635.6" y="114" width="604.4" height="22" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
-  <text x="937.8" y="129" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">68</text>
+  <rect x="40" y="114" width="156.5" height="22" fill="#2E9E6A"/>
+  <text x="118.3" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">18</text>
+  <rect x="196.5" y="114" width="139.1" height="22" fill="#0F766E"/>
+  <text x="266.1" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">16</text>
+  <rect x="335.7" y="114" width="217.4" height="22" fill="#94A3B8"/>
+  <text x="444.3" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">25</text>
+  <rect x="553" y="114" width="69.6" height="22" fill="#6D5BD0"/>
+  <text x="587.8" y="129" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">8</text>
+  <rect x="622.6" y="114" width="617.4" height="22" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2"/>
+  <text x="931.3" y="129" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">71</text>
   <rect x="40" y="145" width="13" height="13" fill="#2E9E6A" rx="2"/>
   <text x="59" y="156" font-size="10.5" fill="#0F172A">Test run in CI, D 1–4 (rated as proven: mutation or fault injection) · 18</text>
   <rect x="440.5" y="145" width="13" height="13" fill="#0F766E" rx="2"/>
@@ -35,7 +35,7 @@
   <rect x="40" y="163" width="13" height="13" fill="#6D5BD0" rx="2"/>
   <text x="59" y="174" font-size="10.5" fill="#0F172A">Test runs only on a device or HITL rig · 8</text>
   <rect x="294.2" y="163" width="13" height="13" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" rx="2"/>
-  <text x="313.2" y="174" font-size="10.5" fill="#0F172A">No test cited · 68</text>
+  <text x="313.2" y="174" font-size="10.5" fill="#0F172A">No test cited · 71</text>
   <line x1="40" y1="196" x2="1240" y2="196" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="218" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">CAUSES PER ELEMENT</text>
   <text x="640" y="218" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">CITED TEST FILES · HOW CI TREATS THEM · CAUSES CITING</text>
@@ -60,7 +60,8 @@
   <text x="86" y="302" font-size="10" fill="#475569">Steering torque checks</text>
   <rect x="340" y="292" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-001.C2 D3 AP H: opendbc_repo/opendbc/safety/tests/test_toyota.py (opendbc safety suite, run by safety.yaml)</title></rect>
   <rect x="355" y="292" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-002.C1 D3 AP H: opendbc_repo/opendbc/safety/tests/test_toyota.py (opendbc safety suite, run by safety.yaml)</title></rect>
-  <text x="374" y="303" font-size="9.5" fill="#475569">2</text>
+  <rect x="370" y="292" width="12" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" rx="2"><title>SWF-087.C1 D10 AP H: no test cited</title></rect>
+  <text x="389" y="303" font-size="9.5" fill="#475569">3</text>
   <text x="40" y="322" font-size="10" fill="#0F172A" font-weight="700">SE-007</text>
   <text x="86" y="322" font-size="10" fill="#475569">Longitudinal checks</text>
   <rect x="340" y="312" width="12" height="14" fill="#2E9E6A" rx="2"><title>SWF-003.C2 D3 AP H: opendbc_repo/opendbc/safety/tests/test_toyota.py (opendbc safety suite, run by safety.yaml)</title></rect>
@@ -228,7 +229,9 @@
   <text x="40" y="862" font-size="10" fill="#0F172A" font-weight="700">SE-054</text>
   <text x="86" y="862" font-size="10" fill="#475569">card main loop and stock AEB interlock</text>
   <rect x="340" y="852" width="12" height="14" fill="#94A3B8" rx="2"><title>SWF-060.C1 D9 AP H: openpilot/selfdrive/car/tests/test_car_interfaces.py (unit test, collected by tools/test_runner.py)</title></rect>
-  <text x="359" y="863" font-size="9.5" fill="#475569">1</text>
+  <rect x="355" y="852" width="12" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" rx="2"><title>SWF-088.C1 D10 AP H: no test cited</title></rect>
+  <rect x="370" y="852" width="12" height="14" fill="#FFFFFF" stroke="#D2553F" stroke-width="1.2" rx="2"><title>SWF-088.C2 D10 AP H: no test cited</title></rect>
+  <text x="389" y="863" font-size="9.5" fill="#475569">3</text>
   <text x="40" y="882" font-size="10" fill="#0F172A" font-weight="700">SE-060</text>
   <text x="86" y="882" font-size="10" fill="#475569">Driver monitoring (dmonitoringmodeld…</text>
   <rect x="340" y="872" width="12" height="14" fill="#94A3B8" rx="2"><title>SWF-064.C1 D9 AP H: openpilot/selfdrive/test/process_replay/test_processes.py (named in a CI workflow)</title></rect>

@@ -1,35 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1451" viewBox="0 0 1280 1451" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1588" viewBox="0 0 1280 1588" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-7. SW FMEA action effect (predicted, not achieved)</title>
-  <desc id="d">SW FMEA (SWF rev 1.1): 135 rated causes, as rated H 128, M 1, L 6; predicted if every action with a revised rating were completed H 106, M 1, L 28. One row per action with a revised rating (SWF-ACT-001, SWF-ACT-002, SWF-ACT-009, SWF-ACT-025, SWF-ACT-030, SWF-ACT-040, SWF-ACT-041, SWF-ACT-054) showing the causes it addresses and the predicted rating, which is not achieved or verified.</desc>
+  <desc id="d">SW FMEA (SWF rev 1.3): 138 rated causes, as rated H 131, M 1, L 6; predicted if every action with a revised rating were completed H 109, M 1, L 28. One row per action with a revised rating (SWF-ACT-001, SWF-ACT-002, SWF-ACT-009, SWF-ACT-025, SWF-ACT-030, SWF-ACT-040, SWF-ACT-041, SWF-ACT-054, SWF-ACT-077) showing the causes it addresses and the predicted rating, which is not achieved or verified.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="1451" fill="#FFFFFF"/>
+  <rect width="1280" height="1588" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-7 · SW FMEA — Action Priority before and after planned actions</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.1 · BL-005 · draft · actions that record a predicted (`revised`) rating, and the causes they address</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.3 · BL-005 · draft · actions that record a predicted (`revised`) rating, and the causes they address</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="104" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">RATED CAUSES BY ACTION PRIORITY</text>
   <text x="40" y="147" font-size="11" fill="#0F172A" font-weight="600">As rated today</text>
-  <rect x="330" y="134" width="720.6" height="22" fill="#D2553F"/>
-  <text x="690.3" y="149" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 128</text>
-  <rect x="1050.6" y="134" width="5.6" height="22" fill="#D97706"/>
-  <rect x="1056.2" y="134" width="33.8" height="22" fill="#0F766E"/>
-  <text x="1073.1" y="149" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">L 6</text>
-  <text x="1104" y="149" font-size="10.5" fill="#0F172A" font-weight="700">H 128 · M 1 · L 6</text>
+  <rect x="330" y="134" width="721.4" height="22" fill="#D2553F"/>
+  <text x="690.7" y="149" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">H 131</text>
+  <rect x="1051.4" y="134" width="5.5" height="22" fill="#D97706"/>
+  <rect x="1057" y="134" width="33" height="22" fill="#0F766E"/>
+  <text x="1073.5" y="149" font-size="10.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">L 6</text>
+  <text x="1104" y="149" font-size="10.5" fill="#0F172A" font-weight="700">H 131 · M 1 · L 6</text>
   <text x="40" y="171" font-size="11" fill="#0F172A" font-weight="600">If every action with a predicted rating were</text>
   <text x="40" y="184" font-size="11" fill="#0F172A" font-weight="600">completed</text>
-  <rect x="330" y="164" width="596.7" height="22" fill="#FBE4DF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="5 3"/>
-  <text x="628.4" y="179" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">H 106</text>
-  <rect x="926.7" y="164" width="5.6" height="22" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" stroke-dasharray="5 3"/>
-  <rect x="932.4" y="164" width="157.6" height="22" fill="url(#hatchA)" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="5 3"/>
-  <text x="1011.2" y="179" font-size="10.5" fill="#0F766E" font-weight="700" text-anchor="middle">L 28</text>
-  <text x="1104" y="179" font-size="10.5" fill="#D97706" font-weight="700">H 106 · M 1 · L 28</text>
-  <text x="330" y="206" font-size="10" fill="#D97706" font-weight="600">135 rated causes. Prediction only: the hatched bar uses the `revised` S/O/D of open actions; none of these ratings has been achieved or verified.</text>
+  <rect x="330" y="164" width="600.3" height="22" fill="#FBE4DF" stroke="#D2553F" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="630.1" y="179" font-size="10.5" fill="#D2553F" font-weight="700" text-anchor="middle">H 109</text>
+  <rect x="930.3" y="164" width="5.5" height="22" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <rect x="935.8" y="164" width="154.2" height="22" fill="url(#hatchA)" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="1012.9" y="179" font-size="10.5" fill="#0F766E" font-weight="700" text-anchor="middle">L 28</text>
+  <text x="1104" y="179" font-size="10.5" fill="#D97706" font-weight="700">H 109 · M 1 · L 28</text>
+  <text x="330" y="206" font-size="10" fill="#D97706" font-weight="600">138 rated causes. Prediction only: the hatched bar uses the `revised` S/O/D of open actions; none of these ratings has been achieved or verified.</text>
   <line x1="40" y1="228" x2="1240" y2="228" stroke="#E2E8F0" stroke-width="1"/>
   <text x="40" y="250" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">ACTION (STEP 6)</text>
   <text x="420" y="250" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">CAUSES IT ADDRESSES · AS RATED</text>
@@ -224,12 +224,34 @@
   <rect x="872" y="1285.3" width="126.1" height="16" fill="#FFFFFF" rx="3"/>
   <text x="876" y="1297.3" font-size="10" fill="#D97706" font-weight="700">planned · not achieved</text>
   <line x1="40" y1="1332" x2="1240" y2="1332" stroke="#F1F5F9" stroke-width="1"/>
-  <text x="40" y="1347" font-size="10.5" fill="#475569">Actions in progress or completed without a predicted rating: SWF-ACT-004 (in progress), SWF-ACT-007 (in progress), SWF-ACT-010 (in progress), SWF-ACT-021 (in progress), SWF-ACT-028 (in progress), SWF-ACT-033 (in progress), SWF-ACT-034 (completed).</text>
-  <line x1="40" y1="1373" x2="1240" y2="1373" stroke="#E2E8F0" stroke-width="1"/>
-  <rect x="40" y="1384" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="58.2" y="1394.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="82.5" y="1395" font-size="10.5" fill="#0F172A">as rated (solid)</text>
-  <rect x="178.5" y="1384" width="34" height="14" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="4" stroke-dasharray="5 3"/>
-  <text x="218.5" y="1395" font-size="10.5" fill="#0F172A">predicted by the action's `revised` rating — not achieved, not verified (hatched, dashed)</text>
-  <text x="40" y="1413" font-size="10" fill="#475569">AP recomputed from the revised S/O/D with the AIAG-VDA table (rating-tables §5) and checked against the stored value. Actions not referenced by any cause: SWF-ACT-001.</text>
-  <text x="40" y="1431" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <rect x="40" y="1339" width="360" height="123.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="49" y="1358.5" font-size="12" fill="#0F172A" font-weight="700">SWF-ACT-077</text>
+  <rect x="144.9" y="1347.5" width="81.1" height="15" rx="7.5" fill="#E2E8F0"/><text x="185.4" y="1358.4" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">design change</text>
+  <rect x="329.8" y="1347.5" width="61.2" height="15" rx="7.5" fill="#2E9E6A"/><text x="360.4" y="1358.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">completed</text>
+  <text x="49" y="1373" font-size="10.5" fill="#0F172A">Escalate the EPS-fault warning per TSR-607 (DQ-342 A, DQ-366</text>
+  <text x="49" y="1387.1" font-size="10.5" fill="#0F172A">A): allow steerTempUnavailableSilent only for the first 1.5 s of the</text>
+  <text x="49" y="1401.2" font-size="10.5" fill="#0F172A">fault (steer_fault_frames, STEER_FAULT_SILENT_FRAMES), then</text>
+  <text x="49" y="1415.2" font-size="10.5" fill="#0F172A">the take-over request; give at least the lighter prompt when the…</text>
+  <text x="49" y="1428" font-size="9.5" fill="#475569" font-style="italic">Evidence: #174 (7158a9a) and #179 (487d4ef):</text>
+  <text x="49" y="1440.7" font-size="9.5" fill="#475569" font-style="italic">openpilot/selfdrive/car/car_events.py:17, 169-187;</text>
+  <text x="49" y="1453.4" font-size="9.5" fill="#475569" font-style="italic">openpilot/selfdrive/car/tests/test_steer_fault_warning.py (7 tests, unittes…</text>
+  <rect x="420" y="1343" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="438.2" y="1353.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="462.5" y="1354" font-size="10.5" fill="#0F172A" font-weight="600">S10 O8 D10 · 2 causes</text>
+  <rect x="420" y="1362" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="456.9" y="1372.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-088.C1</text>
+  <rect x="497.8" y="1362" width="73.8" height="15" rx="7.5" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/><text x="534.7" y="1372.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">SWF-088.C2</text>
+  <path d="M820 1400.7H852" fill="none" stroke="#475569" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#aG)"/>
+  <rect x="860" y="1371.7" width="380" height="58" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="8" stroke-dasharray="5 3"/>
+  <rect x="874" y="1381.7" width="36.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1" stroke-dasharray="3 2"/><text x="892.2" y="1392.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="918.5" y="1393.7" font-size="12" fill="#0F172A" font-weight="700">S10 O3 D8</text>
+  <rect x="872" y="1403.7" width="199.4" height="16" fill="#FFFFFF" rx="3"/>
+  <text x="876" y="1415.7" font-size="10" fill="#D97706" font-weight="700">action completed · rating not verified</text>
+  <line x1="40" y1="1469.4" x2="1240" y2="1469.4" stroke="#F1F5F9" stroke-width="1"/>
+  <text x="40" y="1484.4" font-size="10.5" fill="#475569">Actions in progress or completed without a predicted rating: SWF-ACT-004 (in progress), SWF-ACT-007 (in progress), SWF-ACT-010 (in progress), SWF-ACT-021 (in progress), SWF-ACT-028 (in progress), SWF-ACT-033 (in progress), SWF-ACT-034 (completed), SWF-ACT-055 (in progress).</text>
+  <line x1="40" y1="1510.4" x2="1240" y2="1510.4" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="40" y="1521.4" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="58.2" y="1532.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="82.5" y="1532.4" font-size="10.5" fill="#0F172A">as rated (solid)</text>
+  <rect x="178.5" y="1521.4" width="34" height="14" fill="url(#hatchA)" stroke="#D97706" stroke-width="1.4" rx="4" stroke-dasharray="5 3"/>
+  <text x="218.5" y="1532.4" font-size="10.5" fill="#0F172A">predicted by the action's `revised` rating — not achieved, not verified (hatched, dashed)</text>
+  <text x="40" y="1550.4" font-size="10" fill="#475569">AP recomputed from the revised S/O/D with the AIAG-VDA table (rating-tables §5) and checked against the stored value. Actions not referenced by any cause: SWF-ACT-001.</text>
+  <text x="40" y="1568.4" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>
