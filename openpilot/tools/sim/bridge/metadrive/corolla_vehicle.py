@@ -60,17 +60,17 @@ def asset_dir(env=None) -> Path:
   raw = env.get(ENV_VAR, "").strip()
   if not raw:
     raise VehicleAssetError(
-      f"{ENV_VAR} is not set. Point it at the folder that holds {VEHICLE_FILE} "
-      "(the output of assurance/sim/assets/tools/corolla_e210_metadrive_export.py, kept in the private "
-      "LionDriver-assets repository), or unset it to use MetaDrive's stock vehicle.")
+      f"{ENV_VAR} is not set. Point it at the folder that holds {VEHICLE_FILE} (the output of " +
+      "assurance/sim/assets/tools/corolla_e210_gltf_export.py or corolla_e210_metadrive_export.py, kept in the " +
+      "private LionDriver-assets repository), or unset it to use MetaDrive's stock vehicle.")
   d = Path(raw).expanduser()
   if not d.is_dir():
     raise VehicleAssetError(f"{ENV_VAR}={raw!r} is not a directory.")
   missing = [f for f in (VEHICLE_FILE, *WHEEL_FILES) if not (d / f).is_file()]
   if missing:
     raise VehicleAssetError(
-      f"{ENV_VAR}={raw!r} lacks {', '.join(missing)}. Run the Blender export script on "
-      "assurance/sim/assets/1450755-gltf-extended.glb, or copy blender-decimated-corolla_e210/ from the private "
+      f"{ENV_VAR}={raw!r} lacks {', '.join(missing)}. Run an export script on " +
+      "assurance/sim/assets/1450755-gltf-extended.glb, or copy gltf-export-corolla_e210/ from the private " +
       "LionDriver-assets repository into that folder.")
   return d
 
@@ -96,7 +96,7 @@ def load_geometry(d: Path) -> dict:
 
 def make_vehicle_class(d: Path | None = None):
   """Build the MetaDrive vehicle class for the Corolla mesh. Imports MetaDrive; call it in the MetaDrive process."""
-  from metadrive.component.vehicle.vehicle_type import DefaultVehicle  # noqa: PLC0415 (lazy on purpose)
+  from metadrive.component.vehicle.vehicle_type import DefaultVehicle
 
   d = asset_dir() if d is None else Path(d)
   geom = load_geometry(d)
@@ -135,7 +135,7 @@ def make_vehicle_class(d: Path | None = None):
 
 def register(d: Path | None = None) -> str:
   """Add the Corolla class to MetaDrive's vehicle_type dict under MODEL_KEY and return the key."""
-  from metadrive.component.vehicle import vehicle_type as vt  # noqa: PLC0415
+  from metadrive.component.vehicle import vehicle_type as vt
 
   vt.vehicle_type[MODEL_KEY] = make_vehicle_class(d)
   if hasattr(vt, "vehicle_class_to_type"):
