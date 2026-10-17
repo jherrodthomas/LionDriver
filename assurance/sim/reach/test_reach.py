@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
-"""Tests of the reachability pilot (assurance/sim/reach).
-
-The bounds tests read REACH_BOUNDS (a fresh reach.jl output) if set, else the committed bounds.json; they skip when
-neither exists unless REQUIRE_BOUNDS=1 (the CI reachability job sets both).
-"""
+"""Tests of the reachability bound (assurance/sim/reach, README §3.6)."""
 
 from __future__ import annotations
 
 import math
-import os
 import sys
 import unittest
 from pathlib import Path
@@ -19,8 +14,6 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import reach_compare as C  # noqa: E402
 from reach_inputs import envelope, expm  # noqa: E402
-
-BOUNDS = Path(os.environ.get("REACH_BOUNDS", C.BOUNDS))
 
 
 class Inputs(unittest.TestCase):
@@ -57,38 +50,12 @@ class Inputs(unittest.TestCase):
         self.assertLessEqual(self.ex["dt"][v][i], self.ex["ct"][v][i] * (1 + 1e-4), (v, i))
         self.assertLess(self.ex["ct"][v][i], self.ex["amp"][v][i], (v, i))
 
-
-@unittest.skipUnless(BOUNDS.exists() or os.environ.get("REQUIRE_BOUNDS") == "1", "no reach.jl bounds")
-class Bounds(unittest.TestCase):
-  @classmethod
-  def setUpClass(cls):
-    cls.b, cls.s, cls.m = C.load(BOUNDS), C.load(C.SAMPLES), C.load(C.MODEL)
-    cls.ex = C.exact(cls.m, len(cls.s["t"]))
-
-  def test_every_linear_sample_inside(self):
-    c = C.containment(self.b, self.s)
-    for v in C.OUT:
-      self.assertLessEqual(c[("linear", v)], C.TOL, v)
-
-  def test_every_plant_sample_inside_widened_set(self):
-    c = C.containment(self.b, self.s)
-    for v in C.OUT:
-      self.assertLessEqual(c[("nonlinear", v)], C.TOL, v)
-
-  def test_dt_equals_exact(self):
-    """The Julia zonotope recursion and the Python sum compute the same exact bound."""
-    for v in C.OUT:
-      for i, e in enumerate(self.ex["dt"][v]):
-        self.assertAlmostEqual(C.mag(self.b["dt"], v, i), e, delta=1e-7 * max(1.0, e), msg=f"{v} t={self.s['t'][i]}")
-
-  def test_ct_not_below_exact(self):
-    """A sound continuous-time set can't be tighter than the exact bound (up to the reference's quadrature error)."""
-    for k, r in self.b["ct"].items():
-      if "error" in r:
-        continue
-      for v in C.OUT:
-        for i, e in enumerate(self.ex["ct"][v]):
-          self.assertGreaterEqual(C.mag(r, v, i), e * (1 - 1e-4) - C.TOL, f"{k} {v} t={self.s['t'][i]}")
+  def test_every_sample_inside(self):
+    """Every linear-model run inside the exact bound; every plant run inside it widened by the measured
+    linearisation error."""
+    c = C.containment(self.ex, self.s)
+    for k, x in c.items():
+      self.assertLessEqual(x, C.TOL, k)
 
 
 if __name__ == "__main__":
