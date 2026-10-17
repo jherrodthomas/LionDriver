@@ -4410,7 +4410,7 @@
   note: "Also asked as DQ-220 (SW FMEA), DQ-281 (STPA) and DQ-340 (safety concept); merged here so the lead answers once."
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-16, note: "Stay stopped, held. The lead first answered the merged DQ-340 with its option A (keep the lane and stop); asked again in chat, chose DQ-365 A."}
-  applied: {ref: 07d70a667, record: "WP-C-04 v0.10 FSR-02.09, §3, §6, §7, §8; WP-S-02 v0.26 TSR-633; WP-S-04 v0.12 §3.7, §3.8.4, OI-11; WP-A-04 v1.6 §13 (G8.3 ends at the safe state: BE-8.10, UE-8.11; F-38 narrowed). Open for their owners: System FMEA SFM-ACT-005, SW FMEA SWF-062 / SWF-ACT-059, WP-C-03 OI-10, an AOU for the PCM standstill hold (UE-8.11), TSR-611", at: 2026-10-16}
+  applied: {ref: 07d70a667, record: "WP-C-04 v0.10 FSR-02.09, §3, §6, §7, §8; WP-S-02 v0.26 TSR-633; WP-S-04 v0.12 §3.7, §3.8.4, OI-11; WP-A-04 v1.6 §13 (G8.3 ends at the safe state: BE-8.10, UE-8.11; F-38 narrowed). Open for their owners: System FMEA SFM-ACT-005, SW FMEA SWF-062 / SWF-ACT-059, WP-C-03 OI-10, the AOU-16 vehicle test for the PCM standstill hold (UE-8.11; AOU-16 stated in WP-C-01), TSR-611", at: 2026-10-16}
 
 - id: DQ-366
   question: "If the steering assist faults while the driver is already steering and the fault lasts over 1.5 s, what alert should they get?"
