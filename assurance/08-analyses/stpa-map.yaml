@@ -108,7 +108,7 @@ scenarios:
     requirements: [TSR-634]
     actions: [SFM-ACT-005, SFM-ACT-009, SFM-ACT-017]
     decisions: [DQ-205, DQ-077]
-    open_because: "Speed-dependent wheel-touch escalation decided (DQ-077 A) and required by TSR-634, not implemented; the speed table is derived in WP-C-08 §5"
+    open_because: "Speed-dependent wheel-touch escalation decided (DQ-077 A) and required by TSR-634; implemented (SWSR-634, unit tests only), not yet validated in the vehicle (WP-V-02 §4.4); the speed table is in WP-C-08 §5.4"
   - id: LS-10
     ucas: [UCA-11]
     hazards: [H-01]

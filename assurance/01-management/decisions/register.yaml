@@ -711,7 +711,7 @@
       title: "Leave them unstated"
       detail: "No work. Cost: a near-certain reviewer finding."
   sources: ["assurance/trace/README.md “4 | WP-C-03 marks HE-01.3 and HE-01.4 ⚠ but states no altern”"]
-  note: "The fallback ASILs are stated for every ⚠ event; the lead confirms them in the HARA review (WP-C-03 OI-9)."
+  note: "The fallback ASILs are stated for every ⚠ event (WP-C-03 §5.12). The lead confirmed them as proposed in chat on 2026-10-17; WP-C-03 v0.4.4 records it and closes OI-9."
   status: applied
   applied: {ref: "jherrodthomas/LionDriver#96", record: "WP-C-03 v0.4 §5.12; trace hazards.yaml asil_if_aou_fails", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
@@ -1710,6 +1710,7 @@
     ref: 6f24efd48
     record: "WP-S-02 v0.31 TSR-634; WP-A-05 v0.8 LS-09, OI-6 closed. Open for their owners: the speed table and supervision bound in WP-C-08 §5, the policy.py change, and its validation (WP-V-02)"
     at: 2026-10-17
+  note: "Speed table and bound set in WP-C-08 v0.5 §5.4 (jherrodthomas/LionDriver#214). policy.py change done 2026-10-17: alert k at 5/15/25 s or 150/240/395 m, whichever comes first; SWSR-634 (WP-W-02 v0.32), unit tests only. Open: vehicle validation, WP-V-02 §4.4 (b)-(d)."
 
 - id: DQ-078
   question: "Does the safety authority accept the residual risks listed for missing supplier evidence (no EMC/environment tests, teardown instead of schematic, handbook failure rates)?"

@@ -81,6 +81,8 @@
 #     reaction cleared by a safety-mode change; DFA DM-25, panda#17): both found after BL-005 and fixed in the reference build at BL-006, O3 D4 L.
 #   - opendbc#18 (ATC-25): a wrong-length frame of an RX-checked message is an RX fault in the reference build; added as a safety mechanism to
 #     SWF-005 and SWF-057 (the host parser still reads short frames, so SWF-057.C2 keeps its rating).
+# Post rev 1.4, ratings unchanged: SWF-088 mechanism text updated for panda bf8102a (after BL-006): EPS-fault siren persistence 0.7 s (DQ-048 A,
+#   worst case 0.96 s from onset, WP-S-04 OI-8 closed) and the siren still sounding after a revocation (DQ-367, panda#18).
 #
 # SW FMEA element pandad (FSC EL-06, System FMEA SFM-SE-017). Ratings per RT-1, against BL-004 (liondriver-dev 682f184,
 # panda 8aa8671, opendbc 7993399). The LIONDRIVER_REFERENCE firmware build is not enabled by any build path at BL-004, so the
@@ -527,7 +529,7 @@ structure:
   paths:
   - openpilot/selfdrive/monitoring/policy.py
   - openpilot/selfdrive/monitoring/dmonitoringd.py
-  description: Awareness timers, distraction decision, wheel-touch fallback, terminal and lockout (policy.py:29-47, 196-400); loop gated on driverStateV2 (dmonitoringd.py:13-44)
+  description: Awareness timers, distraction decision, wheel-touch fallback, terminal and lockout (policy.py:29-52, 222-439); loop gated on driverStateV2 (dmonitoringd.py:13-44)
 - id: SWF-SE-070
   name: Longitudinal planning (plannerd)
   kind: sw_element
@@ -4095,7 +4097,7 @@ failure_modes:
     ref: openpilot/cereal/messaging/__init__.py
   causes:
   - id: SWF-061.C1
-    description: 'Timers count frames, not time: one awareness step of DT_DMON = 0.05 s per driverStateV2 message (policy.py:198, 207; dmonitoringd.py:21-23). A model running
+    description: 'Timers count frames, not time: one awareness step of DT_DMON = 0.05 s per driverStateV2 message (policy.py:224, 233; dmonitoringd.py:21-23). A model running
       at 16 Hz still passes the frequency check and stretches the 13 s terminal to about 16 s'
     element: SWF-SE-062
     prevention_controls:
@@ -4110,7 +4112,7 @@ failure_modes:
     actions:
     - SWF-ACT-058
   - id: SWF-061.C2
-    description: Defect in the awareness arithmetic, thresholds or recovery factor (1 - T1/T3, 1 - T2/T3, recovery 1.25-5; policy.py:31-47, 196-207, 354-369)
+    description: Defect in the awareness arithmetic, thresholds or recovery factor (1 - T1/T3, 1 - T2/T3, recovery 1.25-5; policy.py:31-52, 222-233, 383-401)
     element: SWF-SE-062
     prevention_controls:
     - description: Upstream code with policy unit tests that are not requirements-based; ruff and ty in CI
@@ -4125,7 +4127,7 @@ failure_modes:
     - SWF-ACT-058
   - id: SWF-061.C3
     description: 'Exemptions reset or hold awareness: below 2.8 m/s awareness is held at the pre-alert level, and under the wheel-touch policy any steering or gas input resets
-      it (policy.py:29, 335, 345, 446). A light accelerator touch satisfies the wheel-touch policy'
+      it (policy.py:29, 361, 374, 485). A light accelerator touch satisfies the wheel-touch policy'
     element: SWF-SE-062
     prevention_controls:
     - description: Upstream design, as FSR-039 states the wheel-touch times; whether a gas touch is acceptable evidence of attention is not recorded
@@ -4155,13 +4157,13 @@ failure_modes:
     severity: 10
   severity: 10
   safety_mechanisms:
-  - description: Forced deceleration to standstill after 5 s at the terminal level (policy.py:379-380, 398; controlsd.py:235; longitudinal_planner.py:84-85); lockout (NO_ENTRY)
+  - description: Forced deceleration to standstill after 5 s at the terminal level (policy.py:418-419, 437; controlsd.py:235; longitudinal_planner.py:84-85); lockout (NO_ENTRY)
       after 2 terminal events or 1 no-response
     ref: openpilot/selfdrive/monitoring/policy.py
     layer: host
     reaction_s: 5.0
     timing_basis: code_derived
-    timing_ref: 'openpilot/selfdrive/monitoring/policy.py:39, 398; WP-S-04 T-33'
+    timing_ref: 'openpilot/selfdrive/monitoring/policy.py:44, 437; WP-S-04 T-33'
   causes:
   - id: SWF-062.C1
     description: By design the six driver-monitoring events are PERMANENT alerts only, with no SOFT_DISABLE or IMMEDIATE_DISABLE (events.py:524-570); the terminal reaction
@@ -4197,12 +4199,12 @@ failure_modes:
     severity: 10
   severity: 10
   safety_mechanisms:
-  - description: High model std (> 0.3) blocks the distracted decision and, after 10 s, falls back to the wheel-touch policy (policy.py:77-78, 277-308)
+  - description: High model std (> 0.3) blocks the distracted decision and, after 10 s, falls back to the wheel-touch policy (policy.py:82-83, 303-334)
     ref: openpilot/selfdrive/monitoring/policy.py
   causes:
   - id: SWF-063.C1
     description: 'No finiteness or validity check: driverStateV2 is always published valid (dmonitoringmodeld.py:99) and neither process checks for NaN. By code reading a NaN
-      pose with a finite std compares false against the pose thresholds, so the driver counts as attentive (policy.py:228-246); a NaN face probability counts as no face (the
+      pose with a finite std compares false against the pose thresholds, so the driver counts as attentive (policy.py:254-272); a NaN face probability counts as no face (the
       conservative direction). Not tested'
     element: SWF-SE-061
     prevention_controls:
@@ -4217,7 +4219,7 @@ failure_modes:
     - SWF-ACT-058
     - SWF-ACT-060
   - id: SWF-063.C2
-    description: Empty face arrays make _update_states return early, so face_detected and the last pose stay as they were while the event logic runs (policy.py:264-266)
+    description: Empty face arrays make _update_states return early, so face_detected and the last pose stay as they were while the event logic runs (policy.py:290-292)
     element: SWF-SE-062
     prevention_controls:
     - description: Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure
@@ -4247,7 +4249,7 @@ failure_modes:
   severity: 8
   causes:
   - id: SWF-064.C1
-    description: 'Unhandled exception: brakeDisengageProbs[0] is read without a length check (policy.py:447); model and warp loading have no error handling (dmonitoringmodeld.py:22-48);
+    description: 'Unhandled exception: brakeDisengageProbs[0] is read without a length check (policy.py:486); model and warp loading have no error handling (dmonitoringmodeld.py:22-48);
       no try/except in either loop'
     element: SWF-SE-060
     prevention_controls:
@@ -5159,9 +5161,9 @@ failure_modes:
   effects:
   - level: local
     description: 'run_step uses a synthetic vehicle state (speed 30 m/s, enabled, no driver input, brake-disengage probability 1.0, zero calibration) instead of carState,
-      selfdriveState and extrinsicsCalibration, and skips the input validity gate except for driverStateV2 (dmonitoringd.py:26-29; policy.py:431-440)'
+      selfdriveState and extrinsicsCalibration, and skips the input validity gate except for driverStateV2 (dmonitoringd.py:26-29; policy.py:470-479)'
   - level: next_higher
-    description: 'Alerts still escalate on the camera input, with strict pose thresholds and no wheel-touch reset; but the wheel-side lock is off while engaged (policy.py:261),
+    description: 'Alerts still escalate on the camera input, with strict pose thresholds and no wheel-touch reset; but the wheel-side lock is off while engaged (policy.py:287),
       so the monitored seat can switch, and the policy ignores the real speed, gear and engagement'
   - level: end
     description: Monitoring of the actual driver can be lost (the passenger's face monitored) while automated control continues
@@ -5310,7 +5312,7 @@ failure_modes:
       (soft disable), or no EPS event at all while the driver keeps steering
   - level: next_higher
     description: The item stays engaged with lateral assist lost; the envelope refuses lateral frames (EPS-fault refusal, reference build) and the panda siren sounds
-      after about 1 s of a persistent fault while authority is granted
+      after about 1 s of a persistent fault while authority is granted (0.7 s since panda bf8102a, DQ-048)
   - level: end
     description: Driver not prompted to take over while lateral control is lost; lane departure (counterpart of SFM-038.C1)
     hazard: HZ-004
@@ -5365,7 +5367,9 @@ failure_modes:
     - SWF-ACT-077
     - SWF-ACT-078
   safety_mechanisms:
-  - description: Panda EPS-fault siren after the EPS reports a fault for 1 s while authority is granted (TSR-516(b)); independent of the SoC alerts
+  - description: Panda EPS-fault siren after the EPS reports a fault for 1 s while authority is granted (TSR-516(b), at BL-006 up to 1.26 s from onset); independent
+      of the SoC alerts. Since panda bf8102a (after BL-006) the persistence is 0.7 s, at most 0.96 s from onset within the SG-02 1 s budget (DQ-048 A, WP-S-04 OI-8
+      closed), and a fault seen while engaged still sounds after authority is revoked (DQ-367, panda#18)
     ref: panda/board/drivers/eps_fault_siren.h
   - description: Envelope refuses lateral actuation from the first EPS-fault frame (TSR-110, reference build), so the item does not steer on a faulted EPS
     ref: opendbc_repo/opendbc/safety/modes/toyota.h

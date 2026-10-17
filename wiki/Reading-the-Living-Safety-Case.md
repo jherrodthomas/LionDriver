@@ -6,6 +6,8 @@ what they do and do not promise. The dashboard itself, with every value also giv
 
 ## The headline, figure by figure
 
+![Living Safety Case dashboard generated from the assurance records.](../docs/assets/liondriver/assurance/dashboard.svg)
+
 The README carries a one-line headline generated from the records. Read left to right:
 
 | Figure | What it means |
@@ -34,6 +36,10 @@ one to distrust.
 - The records digest in the headline identifies the exact state the figures describe.
 
 ## How the records fit together
+
+![How the Living Safety Case works: hazards and safety goals lead to claims; claims are supported by evidence items with review states and challenged by defeaters; baselines freeze the whole.](../assurance/case/figures/fig-case-1-how-it-works.svg)
+
+*Figure 1 of the [case records README](../assurance/case/README.md).*
 
 1. **Hazards and safety goals**, from the [HARA](../assurance/02-concept/WP-C-03-hara.md). Each goal carries an
    ASIL.

@@ -50,7 +50,7 @@ The driver performs these. The ones the item can check itself are noted; the oth
 | OPS-02 | VSC is on (not switched off with the VSC OFF button) | Yes: `espDisabled` event (`openpilot/selfdrive/car/car_events.py:116-117`) | Turn VSC on |
 | OPS-03 | Windscreen area in front of both cameras is clean and clear of ice, stickers or objects | Partial: camera health and model checks; no specific obstruction detector | Clean before driving |
 | OPS-04 | Device is firmly in its mount, not tilted; display shows no calibration alert | Yes: `calibrationInvalid` / `calibrationRecalibrating` events (`events.py:816-832`), engagement blocked until `calibrated` (`selfdrived.py:275-286`) | Re-seat; if remounted, follow §4.2 |
-| OPS-05 | Driver-facing camera can see the driver's face; no hat brim, mask or object in the way | Partial: DM falls back to wheel-touch timers on model uncertainty (`selfdrive/monitoring/policy.py:77-78, 307-308`) | Remove obstruction |
+| OPS-05 | Driver-facing camera can see the driver's face; no hat brim, mask or object in the way | Partial: DM falls back to wheel-touch timers on model uncertainty (`selfdrive/monitoring/policy.py:82-83, 333-334`) | Remove obstruction |
 | OPS-06 | No offroad alerts on the device home screen (for example `Offroad_ExcessiveActuation`, `Offroad_Recalibration`, update failure) | Yes: offroad alerts | Follow §3.3 |
 | OPS-07 | The driver is briefed and fit to drive (licensed, not impaired, not fatigued) | No | Do not use the item |
 
@@ -75,7 +75,7 @@ The driver supervises at all times. Operating rules for the driver (ODD, when to
 | `canBusMissing`, `canError` | CAN not received or wrong rates; often wiring | Check harness connectors (§5). Note the text "Unknown Vehicle Variant" for `canError` is misleading (GAP-19) |
 | `controlsMismatch` | Panda safety state differs from the host's expectation | Stop use; report (S-1 or S-2) |
 | `Offroad_ConnectivityNeeded` | The updater could not check for updates for > 27 h onroad and > 84 routes (`system/updated/updated.py:34-37, 336-341`); engagement is then blocked | Connect to the network so the update check completes against the LionDriver update origin (§6) |
-| DM lockout (`tooDistracted`) | Repeated non-compliance; engagement blocked 1–30 min (`policy.py:42-44`) | Drive manually. Repeated lockouts are recorded in field monitoring |
+| DM lockout (`tooDistracted`) | Repeated non-compliance; engagement blocked 1–30 min (`policy.py:47-49`) | Drive manually. Repeated lockouts are recorded in field monitoring |
 
 ## 4. Vehicle maintenance and repair that affect the item
 

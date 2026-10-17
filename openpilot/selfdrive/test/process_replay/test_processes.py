@@ -82,6 +82,12 @@ EXPLAINED_DIFFS: dict[tuple[str, str], dict[str, list]] = {
     "fields": ["carParams.openpilotLongitudinalControl", "carParams.safetyConfigs.0.safetyParam"],
     "sendcan_addresses": [0x2B9],
   },
+  # TSR-634 (SWSR-634): in the wheel-touch fallback, awareness also falls with the distance driven, so it drops faster
+  # at speed on this Toyota route; alert levels and every other field are still compared.
+  # assurance/07-supporting/impact/change-2026-10-17-dm-wheeltouch-distance.md
+  ("regen218A4DCFAA1|2025-04-08--22-57-51--0", "dmonitoringd"): {
+    "fields": ["driverMonitoringState.wheeltouchPolicyState.awarenessPercent"],
+  },
 }
 
 

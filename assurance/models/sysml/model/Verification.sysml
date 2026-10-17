@@ -1973,6 +1973,7 @@ package LionDriverVerification {
         :>> names = "SH-12";
         objective {
             verify LionDriverRequirements::fsr_02_06;
+            verify LionDriverRequirements::tsr_634;
         }
     }
     verification <'VS-VAL-18'> vs_val_18 : VerificationCase {

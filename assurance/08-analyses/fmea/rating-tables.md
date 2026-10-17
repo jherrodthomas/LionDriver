@@ -272,7 +272,7 @@ How well the diagnostic detects the cause in operation **and** the system respon
 |---|---|---|
 | 10 | No in-field diagnostic for this cause, or only the driver noticing it unaided | — |
 | 9 | A diagnostic exists but is not designed for this cause | — |
-| 8 | Diagnostic targets this cause; the response does not reach the safe state, or its time exceeds the FTTI | e.g. EPS-fault siren at 1.26 s against 1 s (WP-S-04 OI-8) |
+| 8 | Diagnostic targets this cause; the response does not reach the safe state, or its time exceeds the FTTI | e.g. EPS-fault siren at 1.26 s against 1 s with the 1 s persistence (WP-S-04 OI-8; 0.96 s since panda `bf8102a`, DQ-048) |
 | 7 | Diagnostic and response target this cause; timing unknown or not compared with the FTTI | ✓ timing basis `unknown` forces M ≥ 7 |
 | 6 | Within the FTTI on code-derived timing; test exists, not proven | ✓ WP-S-04 row, FTTI, FDTI + FRTI ≤ FTTI; ✓ evidence `test` path |
 | 5 | As M 6, and the diagnostic's test is proven (mutation or fault injection) | as M 6 |

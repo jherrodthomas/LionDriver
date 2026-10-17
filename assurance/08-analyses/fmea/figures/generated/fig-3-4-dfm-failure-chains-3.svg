@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="660" viewBox="0 0 1280 660" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-4. DFMEA failure chains — sheet 3 of 3 (DFM)</title>
-  <desc id="d">DFMEA failure chains, sheet 3 of 3 (DFM rev 0.7): failure modes DFM-016 to DFM-018 (3 failure modes, 4 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">DFMEA failure chains, sheet 3 of 3 (DFM rev 0.8): failure modes DFM-016 to DFM-018 (3 failure modes, 4 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
@@ -9,7 +9,7 @@
   </defs>
   <rect width="1280" height="660" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-4 · DFMEA failure chains — sheet 3 of 3</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">DFM rev 0.7 · BL-005 · draft · DFM-016 … DFM-018 · 4 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">DFM rev 0.8 · BL-005 · draft · DFM-016 … DFM-018 · 4 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.2</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/dfmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -89,12 +89,14 @@
   <text x="885" y="305.4" font-size="10.5" fill="#0F172A">which the faulty SoC powers down</text>
   <text x="885" y="318.6" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in DFM-SE-009</text>
   <rect x="885" y="324.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="335.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-011 open</text>
+  <rect x="997.9" y="324.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="335.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-016 open</text>
   <rect x="876" y="355.6" width="364" height="78.2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
   <text x="885" y="375.1" font-size="12" fill="#0F172A" font-weight="700">DFM-017.C2</text>
   <rect x="1194.5" y="364.1" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="375" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
   <text x="885" y="389.6" font-size="10.5" fill="#0F172A">Siren path fault stays latent (no self-test)</text>
   <text x="885" y="402.8" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in DFM-SE-009</text>
   <rect x="885" y="408.8" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="419.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-011 open</text>
+  <rect x="997.9" y="408.8" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="419.7" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">DFM-ACT-016 open</text>
   <rect x="40" y="466.6" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
   <text x="49" y="486.1" font-size="12" fill="#0F172A" font-weight="700">DFM-SE-010</text>
   <text x="49" y="500.7" font-size="10.5" fill="#0F172A" font-weight="600">Enclosure, windscreen mount</text>

@@ -1551,7 +1551,7 @@
   acceptance: "As specified"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `policy.py:39-44`; `controlsd.py:203-204`"
+  baseline_impl: "Impl: `policy.py:44-49`; `controlsd.py:203-204`"
   status: proposed
   source: WP-W-02
 
@@ -1567,7 +1567,7 @@
   acceptance: "Small inputs do not reset"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Not met (`policy.py:334-335`) (GAP-21)"
+  baseline_impl: "Not met (`policy.py:360-361`) (GAP-21)"
   status: proposed
   source: WP-W-02
 
@@ -1824,6 +1824,22 @@
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
   baseline_impl: "Not met: no real-time priority for `soundd`; `ui` at `Priority.CTRL_HIGH` (`selfdrive/ui/ui.py:19`)"
+  status: proposed
+  source: WP-W-02
+
+- id: SWSR-634
+  kind: swsr
+  text: "While the wheel-touch policy is active, `dmonitoringd` shall raise alert *k* (1, 2, 3) no later than T*k* = 5 / 15 / 25 s or D*k* = 150 / 240 / 395 m driven while engaged since the last driver interaction, whichever comes first (WP-C-08 §5.4 (assurance/02-concept/WP-C-08-driver-hmi-misuse-analysis.md)); below the DM alert speed (10 km/h) the distance shall raise no alert, as for the timers. Distance is the integral of `carState.vEgo`. An interaction that resets wheel-touch awareness resets the distance; when wheel-touch awareness recovers (low-speed exemption, or a driver the vision policy sees as attentive), the distance recovers in the same proportion. The time caps, the vision-policy timers, the no-response stage and the lockout are unchanged."
+  asil: "A (TSR-634; allocated to the QM SoC, open: WP-C-04 OI-11)"
+  parents: [TSR-634]
+  parent_text: "TSR-634"
+  other_parents: false
+  allocated_to: "`host.dm`"
+  verification: "UT, IT, VT"
+  acceptance: "Constant 30…120 km/h in 10 km/h steps (and 0, 50, 57 km/h) and ±1.5 m/s² ramps between 40 and 100 km/h: each alert within one DM step (50 ms) of the first time T*k* or D*k* is reached, and the distance at each alert ≤ D*k* plus one step; an interaction resets the distance; vision recovery restarts it; no alert below 10 km/h"
+  applies_to: "CFG-001"
+  proposed_by: "ai-assisted (Claude), not reviewed"
+  baseline_impl: "Impl: `selfdrive/monitoring/policy.py:37-41, 176-184, 193-204, 368-369, 385-389, 402-408`; 6 tests in `selfdrive/monitoring/test_monitoring.py`. Not verified in the vehicle (WP-V-02 §4.4)"
   status: proposed
   source: WP-W-02
 
