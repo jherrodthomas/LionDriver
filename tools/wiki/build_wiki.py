@@ -42,10 +42,13 @@ NO_MERGE_LOG = "_No merge history is available in this checkout._"
 
 
 def git_merges(root: Path, limit: int = MERGE_LOG_LIMIT) -> list[tuple[str, int, str, str]]:
-  """(date, pull request number, title, short sha) for each merge commit on the checked-out branch, newest first.
+  """(date, pull request number, title, short sha) for each pull request merged on the checked-out branch's
+  first-parent line, newest first.
 
-  GitHub writes the pull request's title as the body of its merge commit; a merge without one is listed by its
-  subject. Returns [] when the root is not a git checkout or has no merge history."""
+  GitHub writes "Merge pull request #N from ..." as the subject of a pull request's merge commit and the pull
+  request's title as its body. Other merge commits (a branch merge, or the synthetic "Merge X into Y" commit a
+  pull request is checked out at in CI) are not pull requests and are left out. Returns [] when the root is not
+  a git checkout or has no merge history."""
   try:
     out = subprocess.run(
       ["git", "-C", str(root), "log", "--merges", "--first-parent", "--date=short", f"-n{limit}",
@@ -62,9 +65,10 @@ def git_merges(root: Path, limit: int = MERGE_LOG_LIMIT) -> list[tuple[str, int,
       parts.append("")
     date, sha, subject, body = (p.strip() for p in parts)
     m = MERGE_SUBJECT.match(subject)
-    number = int(m.group(1)) if m else 0
+    if not m:
+      continue
     title = next((line.strip() for line in body.splitlines() if line.strip()), subject)
-    entries.append((date, number, title, sha))
+    entries.append((date, int(m.group(1)), title, sha))
   return entries
 
 
@@ -73,12 +77,11 @@ def render_merge_log(entries: list[tuple[str, int, str, str]], repo: str) -> str
     return NO_MERGE_LOG
   lines: list[str] = []
   current = None
-  for date, number, title, sha in entries:
+  for date, number, title, _sha in entries:
     if date != current:
       lines.append(f"\n### {date}\n")
       current = date
-    ref = f"[#{number}](https://github.com/{repo}/pull/{number})" if number else f"`{sha}`"
-    lines.append(f"- {ref} {title}")
+    lines.append(f"- [#{number}](https://github.com/{repo}/pull/{number}) {title}")
   return "\n".join(lines).strip()
 
 

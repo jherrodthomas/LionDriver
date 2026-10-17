@@ -98,15 +98,47 @@ class MergeLogTests(unittest.TestCase):
 
   def test_entries_render_grouped_by_date_newest_first(self):
     entries = [("2026-10-17", 213, "HARA fallback ASILs", "7c00aa4"), ("2026-10-17", 211, "Add the wiki", "4d3fdac"),
-               ("2026-10-16", 0, "Merge branch 'x'", "abc1234")]
+               ("2026-10-16", 190, "Baseline BL-006 proposed", "abc1234")]
     out = build_wiki.render_merge_log(entries, "o/r")
     self.assertEqual(out.splitlines(), [
       "### 2026-10-17", "",
       "- [#213](https://github.com/o/r/pull/213) HARA fallback ASILs",
       "- [#211](https://github.com/o/r/pull/211) Add the wiki", "",
       "### 2026-10-16", "",
-      "- `abc1234` Merge branch 'x'",
+      "- [#190](https://github.com/o/r/pull/190) Baseline BL-006 proposed",
     ])
+
+  def test_only_pull_request_merges_are_listed(self):
+    """A temporary repository with a PR merge, a plain branch merge and the synthetic merge CI checks a PR out at."""
+    import subprocess
+    with tempfile.TemporaryDirectory() as d:
+      root = Path(d)
+      env = {"GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@x", "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@x",
+             "GIT_AUTHOR_DATE": "2026-10-17T00:00:00Z", "GIT_COMMITTER_DATE": "2026-10-17T00:00:00Z", "PATH": "/usr/bin:/bin"}
+
+      def git(*args):
+        subprocess.run(["git", "-C", str(root), *args], check=True, capture_output=True, env=env)
+
+      def commit(msg):
+        (root / "f").write_text(msg)
+        git("add", "f")
+        git("commit", "-q", "-m", msg)
+
+      git("init", "-q", "-b", "main")
+      commit("base")
+      git("checkout", "-q", "-b", "feature")
+      commit("work")
+      git("checkout", "-q", "main")
+      git("merge", "--no-ff", "-q", "-m", "Merge pull request #7 from o/feature\n\nThe PR title", "feature")
+      git("checkout", "-q", "-b", "other")
+      commit("other work")
+      git("checkout", "-q", "main")
+      git("merge", "--no-ff", "-q", "-m", "Merge branch 'other' into main", "other")
+      git("checkout", "-q", "-b", "pr-head")
+      commit("pr work")
+      git("checkout", "-q", "main")
+      git("merge", "--no-ff", "-q", "-m", "Merge abc123 into def456", "pr-head")   # what CI checks a PR out at
+      self.assertEqual(build_wiki.git_merges(root), [("2026-10-17", 7, "The PR title", build_wiki.git_merges(root)[0][3])])
 
   def test_merge_log_placeholder_is_filled_from_the_checkout(self):
     with tempfile.TemporaryDirectory() as d:
