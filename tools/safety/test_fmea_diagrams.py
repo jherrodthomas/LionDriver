@@ -219,6 +219,49 @@ class TestFigures(unittest.TestCase):
       self.assertIn(f"({name})", readme)
 
 
+class TestStudyFigures(unittest.TestCase):
+  """Figures 3-14..3-16 draw the `previous`, timed safety-mechanism and `sotif` fields of the SW FMEA."""
+
+  @classmethod
+  def setUpClass(cls):
+    cls.doc = fd.load_analyses()["sw-fmea"]
+    cls.f = fd.Fmea("sw-fmea", cls.doc, "3-5", "3-6", "swf")
+
+  def test_baseline_delta_draws_each_rerated_cause_once(self):
+    svg = fd.render_baseline_delta(self.f, "3-14")
+    ids = [c["id"] for fm in self.doc["failure_modes"] for c in fm["causes"] if c.get("previous")]
+    self.assertTrue(ids)
+    for i in ids:
+      self.assertEqual(len(re.findall(rf">{re.escape(i)}(?: · S\d+→\d+)?</text>", svg)), 1, i)
+    out_h = sum(1 for fm in self.doc["failure_modes"] for c in fm["causes"]
+                if c.get("previous", {}).get("ap") == "H" and c["ap"] != "H")
+    self.assertIn(f"{out_h} left AP H", svg)
+
+  def test_reaction_layers_rows_and_untimed_warning(self):
+    svg = fd.render_reaction_layers(self.f, "3-15")
+    rows = [fm for fm in self.doc["failure_modes"] if any("reaction_s" in m for m in fm.get("safety_mechanisms", []))]
+    for fm in rows:
+      self.assertIn(f">{fm['id']}</text>", svg)
+    no_warn = [fm for fm in rows if not any(m.get("layer") in fd.WARN_LAYERS and "reaction_s" in m
+                                            for m in fm["safety_mechanisms"])]
+    self.assertEqual(svg.count(">none timed</text>"), len(no_warn))
+
+  def test_time_labels(self):
+    self.assertEqual(fd.fmt_s(0.05), "50 ms")
+    self.assertEqual(fd.fmt_s(5.0), "5 s")
+
+  def test_sotif_boundary_counts_every_cause_once(self):
+    svg = fd.render_sotif_boundary(self.f, "3-16")
+    tops = [x for x in self.doc["structure"] if not x.get("parent")]
+    for x in tops:
+      self.assertIn(f">{x['id'].replace('SWF-SE-', 'SE-')}</text>", svg)
+    drawn = sum(int(m) for m in re.findall(r"FM · (\d+) causes", svg))
+    self.assertEqual(drawn, sum(1 for fm in self.doc["failure_modes"] for c in fm["causes"] if c.get("ap")))
+    for x in tops:
+      if x.get("sotif", {}).get("ref"):
+        self.assertIn(fd.e(x["sotif"]["ref"]), svg)
+
+
 class TestDetectionEvidence(unittest.TestCase):
   """Figure 3-13 classifies cited tests from the repository; check the rules on known files."""
 
