@@ -39,7 +39,7 @@ Dimensions to use for the class (sedan, not hatchback; the register is authorita
 
 | Quantity | Value | Source |
 |---|---|---|
-| Length | 4,630 mm | 2020 Corolla sedan listings; to confirm |
+| Length | 4,630 mm | listings for the E210 sedan (CFG-001); to confirm |
 | Width | 1,781 mm | vehicle register CFG-001 (*to confirm*) |
 | Height | 1,435 mm | listings; to confirm |
 | Wheelbase | opendbc CarSpecs | `plant/corolla.py` reads it; do not retype |
@@ -47,7 +47,7 @@ Dimensions to use for the class (sedan, not hatchback; the register is authorita
 
 ## 3. Procurement comparison (checked 2026-10-17)
 
-No free, game-ready 2020 Corolla exists. Every real 2020 model is a paid render asset under an editorial-use licence
+No free, game-ready mesh of the Corolla E210 (CFG-001) exists. Every real E210 model is a paid render asset under an editorial-use licence
 (Toyota owns the design), which is fine for this project and would not cover a commercial product. Prices and details
 were read from the listing pages on the date above; confirm before buying.
 
