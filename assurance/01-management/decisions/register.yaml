@@ -626,7 +626,7 @@
       title: "Leave them as notes"
       detail: "No effort now. Cost: they stay unconfirmed until a reviewer looks."
   sources: ["assurance/08-analyses/fmea/reviews/hara-r0.1-precheck.md Pending"]
-  note: "HARA and item-definition pre-checks refreshed; the eleven items for the lead to rate are in precheck-refresh-2026-10-16.md §3. Left: the FSC and DFMEA pre-checks (safety-concept and DFMEA sessions), and the lead's ratings."
+  note: "HARA and item-definition pre-checks refreshed; the eleven items for the lead to rate are in precheck-refresh-2026-10-16.md §3. The lead rated all eleven as proposed (chat, 2026-10-17); recorded in §3. Left: the FSC and DFMEA pre-checks (safety-concept and DFMEA sessions)."
   status: applied
   applied: {ref: "jherrodthomas/LionDriver#162", record: "assurance/08-analyses/fmea/reviews/precheck-refresh-2026-10-16.md", at: 2026-10-16}
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
