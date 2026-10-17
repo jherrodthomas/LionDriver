@@ -78,7 +78,7 @@ def test_complete_folder_is_accepted(assets):
 
 def test_geometry_falls_back_to_receipt_check(assets):
   geom = cv.load_geometry(assets)
-  assert geom["front_wheelbase"] == pytest.approx(1.305)
+  assert geom["front_wheelbase"] == pytest.approx(1.396)   # tail-lamp end is the rear; the separate wheels are the front
   assert "receipt check" in geom["source"]
 
 
@@ -87,7 +87,7 @@ def test_geometry_json_is_read(assets):
   geom = cv.load_geometry(assets)
   assert geom["front_wheelbase"] == 1.31
   assert geom["tire_radius"] == 0.32
-  assert geom["rear_wheelbase"] == pytest.approx(1.404)  # not in the file: fallback
+  assert geom["rear_wheelbase"] == pytest.approx(1.314)  # not in the file: fallback
   assert geom["source"].endswith(cv.GEOMETRY_FILE)
 
 

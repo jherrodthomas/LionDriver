@@ -35,9 +35,9 @@ DEFAULT_HEIGHT = 1.435
 
 # Fallback when geometry.json is absent: hub centres from the receipt check (vehicle-3d-model.md section 4), metres,
 # relative to the body centre, and the mesh's 18-inch tyre. The export script writes the measured values.
-RECEIPT_GEOMETRY = {
-  "front_wheelbase": 1.305,
-  "rear_wheelbase": 1.404,
+RECEIPT_GEOMETRY = {   # the delivered mesh names its wheel pairs the wrong way round; these follow the tail lamps
+  "front_wheelbase": 1.396,
+  "rear_wheelbase": 1.314,
   "lateral_tire_to_center": 0.752,
   "tire_radius": 0.3245,
   "tire_width": 0.225,

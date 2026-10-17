@@ -35,3 +35,5 @@ To use the mesh in layer 3, set `LIONDRIVER_VEHICLE_ASSETS` to the folder that h
 `corolla_e210/`, or the private repository's `blender-decimated-corolla_e210/`) before starting the bridge;
 `openpilot/tools/sim/bridge/metadrive/corolla_vehicle.py` fails with a message naming the missing file otherwise.
 Unset, the bridge uses MetaDrive's stock vehicle. Nothing in CI depends on these files.
+
+`tools/corolla_e210_gltf_export.py` (pure Python, no Blender, no decimation) wrote `corolla_e210/` on 2026-10-17; `vehicle.gltf` sha256 starts `4cee6578f03b50a1`; the full set with `SHA256SUMS` is `gltf-export-corolla_e210/` in the private repository.
