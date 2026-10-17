@@ -11,9 +11,11 @@ MATLAB-style figures drawn from the project data, with no MATLAB, Simulink or St
 
 | File | What it shows | Source |
 |---|---|---|
-| [`stateflow-sm-toy-auth.svg`](stateflow-sm-toy-auth.svg) | Stateflow-style chart of the Toyota authority (`controls_allowed`) | [`sm-toy-auth.yaml`](../state-machines/sm-toy-auth.yaml) |
-| [`stateflow-sm-safety-mode.svg`](stateflow-sm-safety-mode.svg) | Stateflow-style chart of the panda safety mode | [`sm-safety-mode.yaml`](../state-machines/sm-safety-mode.yaml) |
-| [`stateflow-sm-selfdrived.svg`](stateflow-sm-selfdrived.svg) | Stateflow-style chart of the `selfdrived` engagement state (host, QM) | [`sm-selfdrived.yaml`](../state-machines/sm-selfdrived.yaml) |
+| [`stateflow-sm-toy-auth.svg`](stateflow-sm-toy-auth.svg) | Stateflow-style chart of the Toyota authority (`controls_allowed`), with the engagement window and the revocations by cause | [`sm-toy-auth.yaml`](../state-machines/sm-toy-auth.yaml) |
+| [`stateflow-sm-safety-mode-reference.svg`](stateflow-sm-safety-mode-reference.svg), [`stateflow-sm-safety-mode-upstream.svg`](stateflow-sm-safety-mode-upstream.svg) | Stateflow-style charts of the panda safety mode, one per build; the non-car modes as a superstate | [`sm-safety-mode.yaml`](../state-machines/sm-safety-mode.yaml) |
+| [`stateflow-sm-selfdrived.svg`](stateflow-sm-selfdrived.svg) | Stateflow-style chart of the `selfdrived` engagement state (host, QM), with the `active` superstate | [`sm-selfdrived.yaml`](../state-machines/sm-selfdrived.yaml) |
+| [`stateflow-system-engagement.svg`](stateflow-system-engagement.svg) | How SM-SELFDRIVED, the heartbeat, SM-SAFETY-MODE and SM-TOY-AUTH couple at engagement, with a timeline (explanatory view) | `SYSTEM` in `make_diagrams.py`; state names checked against the records |
+| [`../state-machines/README.md`](../state-machines/README.md) | Landing page of the state-machines folder: counts per record and the charts | the records |
 | [`simulink-envelope.svg`](simulink-envelope.svg) | Simulink-style block diagram of the envelope signal flow (reference build), blocks citing WP-W-05 units | `BLOCKS` and `LINES` in `make_diagrams.py` (a design description) |
 | [`simulink-panda-firmware.svg`](simulink-panda-firmware.svg) | Simulink-style block diagram of the panda firmware grouped by interrupt context, with the shared `controls_allowed` flag as a data store (WP-W-03 §3.2) | `PANDA` in `make_diagrams.py`, from WP-W-03 §3.1, §3.2, §5.1 |
 | [`simulink-host.svg`](simulink-host.svg) | Simulink-style block diagram of the host engagement and control path, modeld → controlsd / selfdrived → card → pandad → panda, with service rates (WP-W-03 §4.2) | `HOST` in `make_diagrams.py`, from WP-W-03 §4.1, §4.2 |
@@ -26,6 +28,11 @@ MATLAB-style figures drawn from the project data, with no MATLAB, Simulink or St
 - A **solid grey** arrow means the transition exists in the code. A **dashed orange** arrow means a target transition, which the record marks `not implemented`; its table row is shaded in the same orange.
 - State fills give the state's role (for example authority granted, engaged, diagnostic), set per record in `LAYOUT`; the legend under each chart names them.
 - The status column is the WP-W-02 Baseline status of the cited SWSRs. A transition can exist in the code and still not meet its SWSR, for example T6 and the `selfdrived` engagement transitions.
+- A **superstate** (`super` in `LAYOUT`) is a frame around states: a transition from every member is drawn once from its border (X1/X2 of `selfdrived`), and an arrow ending on the border goes to one of the members, chosen by the request (the safety mode's `m`).
+- **Badges** on a label give the requirement status of a transition that is in the code: red "no SWSR" (checker finding S7), yellow "SWSR not met" (S5). The line style says whether the code exists; the badge says whether the requirement is met.
+- **Per build** (`builds` in `LAYOUT`): one chart per build, without the other build's transitions. A state that cannot be reached from the initial state in that build is drawn dashed as "unreachable", and the transitions out of it are named under the chart.
+- Transitions **from "any"** state (`any: note`) are listed under the chart instead of being drawn from every state; the table has them in full.
+- The SM-TOY-AUTH revocations are a **panel by cause** instead of one label. Each row has its line style, a badge and a green chip with the directed back-to-back scenarios that name the transition, read from the scenario names in `reference-models/b2b_toy_auth.py`.
 
 **Block colours.** Simulink-style diagrams colour blocks by kind: input port aqua, output port orange, function blue, Stateflow chart violet, Data Store Memory yellow, subsystem green; reference-build-only blocks stay white with a dashed border. Each diagram has a legend, and the kind is also shown by shape and glyph, so colour is never the only cue.
 

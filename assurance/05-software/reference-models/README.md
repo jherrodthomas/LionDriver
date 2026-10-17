@@ -41,7 +41,7 @@ The WP-W-05 §3 unit descriptions describe the code. They were not used for beha
 
 | Compared | Not compared |
 |---|---|
-| T1, T2, T3, T4, T5, T7, T8 (both builds); T10b (since opendbc `273f44e`), T10c, T11 (reference build) | T6 and T10a: panda `main.c`, not part of libsafety (HIL / panda tests). T9, T10d, T10e, T12…T15: target state, not implemented. The `non_revoking` entries are compared as "no change" (gas, EPS fault, D17) |
+| T1, T2, T3, T4, T5, T7, T8 (both builds); T10b (since opendbc `273f44e`), T10c, T11, and the engagement window T1a, T1b, T1c (since the harness drives the heartbeat, 2026-10-17) (reference build) | T6 and T10a: panda `main.c`, not part of libsafety (HIL / panda tests). T9, T10d, T10e, T12…T15: target state, not implemented. The `non_revoking` entries are compared as "no change" (gas, EPS fault, D17) |
 
 Only the reference configuration is driven: Toyota, parameter 73 (non-SecOC, LKA, `0x226` brake, openpilot longitudinal). Frame content checks in the TX hook (torque and acceleration limits) are not modelled. Only authority is compared, not whether a TX frame was accepted.
 
@@ -57,7 +57,7 @@ Modelling assumptions, where the sources are silent:
 
 | ID | Assumption |
 |---|---|
-| MA-01 | A "rising edge" of CRUISE_ACTIVE is relative to the last *valid* `0x1D2` frame on bus 0. The edge state is reset on a mode set (SWSR-311) and consumed even when the grant is refused (record T8). Reference build, SWSR-311 v0.24: after a mode set an edge counts only once CRUISE_ACTIVE = 0 has been received (deviation `mode_set_regrant` until the pin includes ATC-26) |
+| MA-01 | A "rising edge" of CRUISE_ACTIVE is relative to the last *valid* `0x1D2` frame on bus 0. The edge state is reset on a mode set (SWSR-311) and consumed even when the grant is refused (record T8). Reference build, SWSR-311 v0.24: after a mode set an edge counts only once CRUISE_ACTIVE = 0 has been received (ATC-26, in the C since opendbc `515b9a2`) |
 | MA-02 | Signals from a frame that fails validation are not used. A message never received since the last mode set counts as a failed RX check (SWSR-306 "not yet evaluated") |
 | MA-03 | Within one call, a clearing condition wins over a grant |
 | MA-04 | T3 is evaluated on every received frame, on any bus and any ID, with the brake and wheel speeds of the last valid `0x226` / `0xAA` (record T3 "any RX"). The brake edge reference is updated on every frame |
@@ -66,10 +66,13 @@ Modelling assumptions, where the sources are silent:
 | MA-07 | T10b is evaluated in the safety task (SWSR-408 acceptance "50/100 ms + task period"), with the limit strictly exceeded ("> 50 ms") |
 | MA-08 | SWSR-408 supervision starts when authority is granted: the time since the later of the grant and the last accepted frame counts. Read literally, "no frame accepted for > 50 ms" would also count the time before the grant |
 | MA-09 | "Accepted" (SWSR-408) means passed by the TX rate check. Frame content is not modelled, so content refusals cannot occur in the harness ([B2B-05](results/B2B-TOY-AUTH-2026-10-13.md)) |
+| MA-10 | The engagement window (record T1b "within 1 s of the edge", TSR-301 v0.20) includes 1 s itself: a grant at exactly 1 s after the edge is within it. The grant and the expiry are evaluated in the safety task, and at the edge itself when the heartbeat already reports engaged. The heartbeat flag is host state: a safety-mode set does not change it |
 
 Deviations: the places where the literal specification and the C are found to differ and are not yet resolved (see the results). Each is a named option in `DEVIATIONS`, off by default. Switching one on makes the model follow the C's reading at that point. This attributes every divergence to a named cause: with all of them on, the remaining divergence count must be zero. A difference that is resolved by changing the specification is removed from the list, and the model follows the new text (B2B-03, SWSR-405(c) v0.16).
 
-Two deviations exist only until the opendbc pin includes [jherrodthomas/opendbc#15](https://github.com/jherrodthomas/opendbc/pull/15): `mode_set_regrant` (SWSR-311 v0.24, ATC-26) and `tx_rate_regrant` (SWSR-518 v0.24, ATC-20). They reproduce the C before that change; the run at the PR head with both removed agrees everywhere ([results](results/B2B-TOY-AUTH-2026-10-13.md) §10).
+The two temporary deviations `mode_set_regrant` and `tx_rate_regrant` reproduced the C before ATC-26 and ATC-20. They were deleted at the pin bump to opendbc `515b9a2`, which contains both changes ([results](results/B2B-TOY-AUTH-2026-10-13.md) §11).
+
+The harness drives the heartbeat's engaged flag (event `Heartbeat`, set in the C with `set_heartbeat_engaged`): directed scenarios D21a–D21h open the LS-06 engagement window (record state ENGAGE_PENDING) and close or grant it in every way the record names, including the SM-F1 case (an edge while MAIN_ON = 0, fixed at opendbc `98d3be1`), and the random sequences change the flag about once a second. Three seeded faults check that the comparison sees the window: a 2 s window, a model that ignores the heartbeat, and a model that keeps the window open after a refusal for MAIN_ON = 0 (SM-F1 back). Heartbeat loss (T10a) and the 1 Hz engaged-mismatch check (T6) are panda `main.c` and stay out of scope. Results: [B2B-TOY-AUTH-2026-10-13](results/B2B-TOY-AUTH-2026-10-13.md) §13.
 
 Seeded model faults (`MUTANTS` in the harness) check the comparison itself. Each one changes a constant or a guard in the model. Each is run with all deviations on and must cause at least one divergence; one that does not is reported as `detected=False`.
 

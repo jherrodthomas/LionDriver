@@ -7,6 +7,7 @@
 | **Date** | 2026-10-10 |
 | **Performed by** | Claude (AI assistant) |
 | **Nature** | Automated pre-check. **Not** the ISO 26262-2 confirmation review (IOI-006). |
+| **Refreshed** | 2026-10-16 in [precheck-refresh-2026-10-16.md](precheck-refresh-2026-10-16.md): stale items updated and the items for the lead to rate listed (DQ-028) |
 
 ## How to reproduce
 

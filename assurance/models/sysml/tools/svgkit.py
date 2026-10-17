@@ -1,7 +1,7 @@
 """Drawing kit for the SysML views: palette, Inter text metrics, SVG primitives, orthogonal routing.
 
 The palette and type follow the existing LionDriver work-product figures (for example
-WP-S-03 Figure 3-2): slate for QM elements, the envelope orange for B‡ and B, teal for sensing,
+WP-S-03 Figure 3-2): slate for QM elements, the envelope orange for C (B‡) and B, teal for sensing,
 violet for SoC control of the MCU (FFI), amber for power, purple for untrusted networks.
 """
 from __future__ import annotations
@@ -39,7 +39,7 @@ EDGE = {
   "bus": {"color": "#334155", "width": 2.0, "dash": None, "label": "CAN bus attachment"},
 }
 
-INTEGRITY_LABEL = {"BDagger": "B‡", "B": "B", "QMBsup": "QM · B-sup", "QM": "QM", "AoU": "AoU",
+INTEGRITY_LABEL = {"C": "C", "BDagger": "B‡", "B": "B", "QMBsup": "QM · B-sup", "QM": "QM", "AoU": "AoU",
                    "Untrusted": "untrusted"}
 
 METRIC_CHARS = "0123456789 !\"#$%&'()*+,-./:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~‡·–—…→←↔≥≤µ°×§±²"

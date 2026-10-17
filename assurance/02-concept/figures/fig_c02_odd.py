@@ -51,7 +51,7 @@ PROSE = {
   "chill": {"src": ["The planner in Chill mode does not reduce speed ahead of curves",
                     "Entering a curve tighter than R_ODD at the current speed is therefore a driver task."]},
   "saturated": {"src": ["| Curve tighter than R_ODD | Partly: `steerSaturated` warning when the controller saturates (`events.py:619`) | Warning only |"]},
-  "v_odd_h": {"value": 120, "src": ["| Ego speed | 0 – 120 km/h (75 mph), not above the posted limit |"]},
+  "v_odd_h": {"value": 110, "src": ["| Ego speed | 0 – 110 km/h (68 mph), not above the posted limit |"]},
   "oi2": {"src": ["| OI-2 | Characterise EPS torque authority and confirm R_ODD (§3.2)"]},
 }
 # The controller limit is also read from the code it cites (drive_helpers.py:14).

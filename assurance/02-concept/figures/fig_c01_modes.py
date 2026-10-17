@@ -312,7 +312,7 @@ def envelope_fault_ids(recs: dict) -> tuple[list[str], list[str], list[str]]:
   own = {"T2", "T3", "T6", "T7"}
   allb, ref, notimpl = [], [], []
   for t in recs[TA]["transitions"]:
-    if t["to"] != "NOT_ALLOWED" or t["from"] == "NOT_ALLOWED" or t["id"] in own:
+    if t["to"] != "NOT_ALLOWED" or t["from"] not in ("ALLOWED", "any") or t["id"] in own:  # only a granted authority is cleared
       continue
     if t.get("code", "").startswith("not implemented"):
       notimpl.append(t["id"])
@@ -740,6 +740,7 @@ AOU_MAP = {
   "AOU-05": ("veh", "PCM", "The PCM bounds ACC acceleration"),
   "AOU-10": ("veh", "VSC/ABS", "VSC/ABS are enabled and functional"),
   "AOU-12": ("veh", "cluster", "The cluster cruise indicator is driven by PCM state"),
+  "AOU-16": ("veh", "PCM", "the PCM keeps it stopped and held"),
   "AOU-08": ("inst", "device mount", "The device is mounted and calibrated"),
   "AOU-09": ("inst", "vehicle", "The vehicle is maintained, unmodified"),
   "AOU-13": ("inst", "harness", "The de-energised harness relay connects the forward camera"),

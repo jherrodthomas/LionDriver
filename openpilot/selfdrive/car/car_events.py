@@ -12,12 +12,17 @@ GearShifter = structs.CarState.GearShifter
 EventName = log.OnroadEvent.EventName
 NetworkLocation = structs.CarParams.NetworkLocation
 
+# LionDriver (TSR-607 (b)): frames of a temporary steering fault that may get the lighter prompt; the first fault
+# frame is frame 1, so the take-over request starts 1.5 s after fault onset
+STEER_FAULT_SILENT_FRAMES = round(1.5 / DT_CTRL)
+
 
 class CarEvents:
   def __init__(self, CP: structs.CarParams):
     self.CP = CP
 
     self.steering_unpressed = 0
+    self.steer_fault_frames = 0
     self.low_speed_alert = False
     self.no_steer_warning = False
     self.silent_steer_warning = True
@@ -161,14 +166,21 @@ class CarEvents:
 
     # Handle permanent and temporary steering faults
     self.steering_unpressed = 0 if CS.steeringPressed else self.steering_unpressed + 1
+    self.steer_fault_frames = self.steer_fault_frames + 1 if CS.steerFaultTemporary else 0
     if CS.steerFaultTemporary:
       if CS.steeringPressed and (not CS_prev.steerFaultTemporary or self.no_steer_warning):
         self.no_steer_warning = True
+        # LionDriver (TSR-607 (c), DQ-366): a fault that outlasts 1.5 s while the driver keeps steering gets the
+        # lighter prompt, so they know assist is gone before they let go
+        if self.steer_fault_frames > STEER_FAULT_SILENT_FRAMES:
+          events.add(EventName.steerTempUnavailableSilent)
       else:
         self.no_steer_warning = False
 
         # if the user overrode recently, show a less harsh alert
-        if self.silent_steer_warning or CS.standstill or self.steering_unpressed < int(1.5 / DT_CTRL):
+        # LionDriver (TSR-607 (b), DQ-342): only for the first 1.5 s of the fault, then the take-over request
+        silent_allowed = self.steer_fault_frames <= STEER_FAULT_SILENT_FRAMES
+        if silent_allowed and (self.silent_steer_warning or CS.standstill or self.steering_unpressed < int(1.5 / DT_CTRL)):
           self.silent_steer_warning = True
           events.add(EventName.steerTempUnavailableSilent)
         else:

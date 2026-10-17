@@ -6,11 +6,13 @@ Written from the specification layer only, not from the C:
   - the SWSR texts              WP-W-02 / trace/items/swsr.yaml (SWSR-301, 302, 306, 311, 401, 402, 405(c) v0.20, 406, 408, 518)
   - the TX rate design          05-software/design-notes/DN-01-tx-rate-supervision.md §4 and §10
   - configuration data          WP-W-09 CD-03 (timeout), CD-04 (RX set), DN-01 §4.1 (budgets); DLC from the DBC
+  - the engagement window        WP-S-02 TSR-301 v0.20 (LS-06: the grant waits for the heartbeat's engaged flag) and
+                                 the record's T1a, T1b, T1c (reference build; no SWSR text yet, change record OI-2)
 Where these sources are silent the model makes a modelling assumption (MA-xx in README.md). Each place where the
 model may differ from the C on purpose is a named option in DEVIATIONS, off by default, so that a divergence found by
 the back-to-back run can be attributed: switching the option on must make that class of divergence disappear.
 
-Scope: the transitions observable through libsafety (T1, T2, T3, T4, T5, T7, T8, T10b, T10c, T11). T6 and T10a are
+Scope: the transitions observable through libsafety (T1, T1a, T1b, T1c, T2, T3, T4, T5, T7, T8, T10b, T10c, T11). T6 and T10a are
 panda main.c and are not in libsafety; T9, T10d, T10e, T12-T15 are target state ("not implemented") and are not
 compared. T10b (SWSR-408) is in the reference build since opendbc 273f44e. Drafting origin: ai-assisted (Claude), not reviewed. The author had read the C before writing this model, so
 it is an independent implementation, not an independent reading of the requirements (README.md §4).
@@ -41,6 +43,9 @@ RX_DLC = 8
 TIMEOUT_PERIODS = 5             # WP-W-09 CD-03, SWSR-401: "more than 5 nominal periods"
 MIN_RX_FREQUENCY_HZ = 10        # SM record T5 guard "below 10 Hz"
 CRUISE_MAIN_TOLERANCE_US = 150_000  # SM record T10c "> 150 ms"
+ENGAGE_WINDOW_US = 1_000_000    # SM record T1b "within 1 s of the edge" (TSR-301 v0.20, LS-06); MA-10: 1 s itself is within
+HEARTBEAT_GATE = True           # TSR-301 v0.20: the grant waits for the heartbeat's engaged flag (reference build)
+MAIN_OFF_CLOSES_WINDOW = True   # SWSR-405(c) "at once": a refusal for MAIN_ON = 0 leaves no window open (SM-F1)
 
 # DN-01 §4.1 (reference build): addr -> (f Hz, burst). TX whitelist DLC from WP-W-09 CD-04 TX column.
 TX_RATE_ROWS = {0x2E4: (100, 5), 0x191: (50, 3), 0x343: (33, 3), 0x412: (5, 4), 0x283: (1, 2), 0x1D2: (1, 2),
@@ -62,13 +67,6 @@ DEVIATIONS = {
   # SWSR-408 / MA-08: supervision starts when authority is granted (B2B-04). Option: it starts at the first safety task that
   # finds authority granted, and "granted before" is what the previous safety task saw.
   "arrival_from_first_tick": False,
-  # SWSR-311 v0.24 (B2B-06, DQ-080): after a mode set, authority needs CRUISE_ACTIVE = 0 to be received before a rising
-  # edge counts. Option: the edge memory is simply cleared, so a CRUISE_ACTIVE held through the mode set is a new edge
-  # (the C before ATC-26, jherrodthomas/opendbc#15). Remove at the pin bump that brings ATC-26.
-  "mode_set_regrant": False,
-  # SWSR-518 v0.24 (F-34, DQ-079): after a TX-rate revocation, no grant until one full window has passed without a
-  # rejected frame. Option: no such block (the C before ATC-20, jherrodthomas/opendbc#15). Remove at the same pin bump.
-  "tx_rate_regrant": False,
 }
 
 
@@ -108,6 +106,13 @@ class Tx:
 
 
 @dataclass
+class Heartbeat:
+  """The SoC heartbeat's engaged flag changes (0xf3, TSR-301 v0.20). Only the flag is modelled: heartbeat loss (T10a)
+  and the 1 Hz engaged-mismatch check (T6) are panda main.c and not in libsafety."""
+  engaged: bool
+
+
+@dataclass
 class SetMode:
   """Safety mode set (0xdc, heartbeat loss, harness change): Toyota with the same parameter again."""
 
@@ -133,11 +138,12 @@ class _TxRate:
 
 
 class SmToyAuth:
-  def __init__(self, reference: bool, deviations: dict | None = None):
+  def __init__(self, reference: bool, deviations: dict | None = None, heartbeat_engaged: bool = True):
     self.reference = reference
     self.dev = dict(DEVIATIONS)
     self.dev.update(deviations or {})
     self.now = 0
+    self.heartbeat_engaged = heartbeat_engaged   # host state: a safety mode set does not change it
     self.reset()
 
   # T7, SWSR-311: authority false, all edge, sample and limiter state reset; the cruise edge state is "not yet seen
@@ -162,6 +168,8 @@ class SmToyAuth:
     self.arrival_last = {a: None for a in TX_ARRIVAL_US}   # last accepted (or, deviation, offered) frame per ID
     self.grant_ts: int | None = None                        # time authority was last granted
     self.allowed_prev_tick = False                          # authority as the previous safety task left it
+    self.pending = False            # ENGAGE_PENDING (reference build): a cruise edge waits for the heartbeat flag
+    self.pending_ts = 0
 
   # ---------------------------------------------------------------- helpers
 
@@ -176,7 +184,7 @@ class SmToyAuth:
     """SWSR-518 v0.24: after a revocation, no grant until a full window without a rejected frame (the block ends then)."""
     if self.tx_block and self.last_reject_ts is not None and self.now - self.last_reject_ts >= TX_WINDOW_US:
       self.tx_block = False
-    return self.tx_block and not self.dev["tx_rate_regrant"]
+    return self.tx_block
 
   def _moving(self) -> bool:
     if self.dev["moving_from_sum"]:
@@ -188,19 +196,22 @@ class SmToyAuth:
   def step(self, ev) -> list[str]:
     """Apply one event at self.now; return the ids of the SM-record transitions taken (for coverage).
 
-    A transition counts only from its source state: T2, T3, T4, T5, T10c and T11 leave ALLOWED, T1 and T8 leave
-    NOT_ALLOWED, T7 leaves any state."""
+    A transition counts only from its source state: T2, T3, T4, T5, T10c and T11 leave ALLOWED; T1, T1a and T8 leave
+    NOT_ALLOWED; T1b and T1c leave ENGAGE_PENDING (authority not granted); T7 leaves any state."""
     was_allowed = self.allowed
     if isinstance(ev, SetMode):
       self.reset()
       return ["T7"]
+    if isinstance(ev, Heartbeat):
+      self.heartbeat_engaged = ev.engaged
+      return []
     if isinstance(ev, Tick):
       fired = self._tick()
     elif isinstance(ev, Tx):
       fired = self._tx(ev)
     else:
       fired = self._rx(ev)
-    from_not_allowed = {"T1", "T8"}
+    from_not_allowed = {"T1", "T1a", "T1b", "T1c", "T8"}
     return [t for t in fired if (t in from_not_allowed) != was_allowed]
 
   def _tick(self) -> list[str]:
@@ -209,6 +220,24 @@ class SmToyAuth:
     if not self._all_checks_ok():
       self.allowed = False
       fired.append("T5")
+      if self.pending:              # T1c: an RX check lagging, below 10 Hz or invalid in the safety task
+        self.pending = False
+        fired.append("T1c")
+    # T1b / T1c (reference build): the window grants once the heartbeat reports engaged, within 1 s of the edge, if
+    # rx_checks_allow_engagement() holds then; otherwise it closes without a grant
+    if self.pending:
+      if self.now - self.pending_ts > ENGAGE_WINDOW_US:
+        self.pending = False
+        fired.append("T1c")
+      elif self.heartbeat_engaged:
+        self.pending = False
+        if self._all_checks_ok() and not self._tx_block_holds():
+          if not self.allowed:
+            self.grant_ts = self.now
+          self.allowed = True
+          fired.append("T1b")
+        else:
+          fired.append("T1c")
     # T10b (reference build), SWSR-408: an actuation message not accepted for longer than its limit -> clear.
     # MA-07: evaluated in the safety task (acceptance: "50/100 ms + task period")
     if self.reference:
@@ -286,14 +315,26 @@ class SmToyAuth:
           clear = True
           fired.append("T2")
           self.seen_disengaged = True
+          if self.pending:          # T1c: CRUISE_ACTIVE = 0 closes the window
+            self.pending = False
+            fired.append("T1c")
         elif not self.cruise_active:
           # rising edge: T1 if every RX check passes now (SWSR-306) and, in the reference build, MAIN_ON = 1
           # (SWSR-405(c) v0.20: cruise becoming active while main is off is an RX fault at once); else T8.
           # Reference build, v0.24: also CRUISE_ACTIVE = 0 seen since the mode set (SWSR-311) and no TX-rate block
           # (SWSR-518). Both are LIONDRIVER_REFERENCE changes; the upstream build keeps the old behaviour
           tx_blocked = self.reference and self._tx_block_holds()
-          edge_counts = (not self.reference) or self.seen_disengaged or self.dev["mode_set_regrant"]
-          if self._all_checks_ok() and not (self.reference and not self.main_on) and edge_counts and not tx_blocked:
+          edge_counts = (not self.reference) or self.seen_disengaged
+          # Reference build, TSR-301 v0.20 (LS-06): with the heartbeat not engaged the edge opens the window (T1a)
+          # instead of granting. An edge refused for MAIN_ON = 0 opens no window (T8; SM-F1 fixed at opendbc 98d3be1)
+          guards = self._all_checks_ok() and edge_counts and not tx_blocked
+          main_refused = self.reference and not self.main_on
+          if (guards and self.reference and HEARTBEAT_GATE and not self.heartbeat_engaged
+              and not (main_refused and MAIN_OFF_CLOSES_WINDOW)):
+            self.pending = True
+            self.pending_ts = self.now
+            fired.append("T1a")
+          elif guards and not main_refused:
             grant = True
             fired.append("T1")
           else:
@@ -319,11 +360,17 @@ class SmToyAuth:
         elif self.now - self.mismatch_start > CRUISE_MAIN_TOLERANCE_US:
           clear = True
           fired.append("T10c")
+          if self.pending and MAIN_OFF_CLOSES_WINDOW:  # T1c: MAIN_ON = 0 with cruise active > 150 ms closes it
+            self.pending = False
+            fired.append("T1c")
 
     # T3, SWSR-302: on any RX call, brake rising, or pressed while moving (brake from the last valid 0x226)
     if self.brake and (not self.brake_prev or self._moving()):
       clear = True
       fired.append("T3")
+      if self.pending:              # T1c: brake rising, or pressed while moving, closes the window
+        self.pending = False
+        fired.append("T1c")
     self.brake_prev = self.brake
 
     # MA-03: within one call a clearing condition wins over a grant

@@ -146,6 +146,10 @@ jobs:
         python3 -m unittest discover -s tools/safety -p 'test_fmea_lint.py'
         python3 tools/safety/fmea_review_xlsx.py --check
         python3 tools/safety/test_fmea_review_xlsx.py
+    - name: STPA figures match WP-A-05, stpa-map.yaml and the decision register (and their tests)
+      run: |
+        python3 assurance/08-analyses/figures/fig_a05_stpa.py --check
+        python3 assurance/08-analyses/figures/test_fig_a05_stpa.py
     - name: Vehicle register page current, citing documents agree with it (and its tests)
       run: |
         python3 tools/vehicles/vehicle_register.py --check
@@ -299,8 +303,78 @@ jobs:
       env:
         REQUIRE_OMC: "1"
       run: OMC="$OMC_ENV/bin/omc" python3 assurance/sim/plant/modelica/test_column.py
-    - name: Driver-override study current
-      run: python3 assurance/sim/plant/override.py --fmu build/sim-column/SteeringColumn.fmu --check
+    - name: Driver-override study current, and its --scales option (M-08) tested
+      run: |
+        python3 assurance/sim/plant/override.py --fmu build/sim-column/SteeringColumn.fmu --check
+        python3 assurance/sim/plant/test_override.py
+
+  sim-reach:
+    name: simulation reachability (Julia pilot)
+    # Reachability pilot (assurance/sim README §3.6): Julia with ReachabilityAnalysis.jl (tool TL-46) bounds the lateral
+    # offset and heading the L1 plant can reach under any LKA command the panda passes; the bound is checked against
+    # the sampled fault runs and an exact reference. Optional while it is a pilot: a failure here does not fail the
+    # workflow, and the job runs beside the others. Julia comes from the official release tarball (SHA-256 checked),
+    # the packages from the committed Manifest; both are cached. Synthetic data (DSR-12), no evidence credit.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    continue-on-error: true
+    env:
+      JULIA_VERSION: 1.11.7
+      JULIA_SHA256: aa5924114ecb89fd341e59aa898cd1882b3cb622ca4972582c1518eff5f68c05
+      JULIA_DIR: ${{ github.workspace }}/../julia
+      JULIA_DEPOT_PATH: ${{ github.workspace }}/../julia-depot
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        persist-credentials: false
+    - name: Checkout opendbc and panda submodules
+      run: git submodule update --init --depth 1 opendbc_repo panda
+    - name: Install the pinned packages of the simulation track
+      run: python3 -m pip install --quiet --user --break-system-packages -r assurance/sim/requirements.txt
+    - name: Reachability inputs current (linearised plant, sampled fault runs)
+      run: python3 assurance/sim/reach/reach_inputs.py --check
+    - name: Cache Julia and its packages (keyed on the version and the Manifest)
+      id: julia-cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          ${{ env.JULIA_DIR }}
+          ${{ env.JULIA_DEPOT_PATH }}
+        key: julia-${{ env.JULIA_VERSION }}-${{ hashFiles('assurance/sim/reach/Project.toml', 'assurance/sim/reach/Manifest.toml') }}
+    - name: Install Julia from the release tarball
+      if: steps.julia-cache.outputs.cache-hit != 'true'
+      run: |
+        url="https://julialang-s3.julialang.org/bin/linux/x64/${JULIA_VERSION%.*}/julia-$JULIA_VERSION-linux-x86_64.tar.gz"
+        curl -sSfL -o "$RUNNER_TEMP/julia.tar.gz" "$url"
+        echo "$JULIA_SHA256  $RUNNER_TEMP/julia.tar.gz" | sha256sum -c -
+        mkdir -p "$JULIA_DIR"
+        tar -xzf "$RUNNER_TEMP/julia.tar.gz" -C "$JULIA_DIR" --strip-components=1
+    - name: Julia packages from the committed Manifest
+      run: |
+        "$JULIA_DIR/bin/julia" --version
+        "$JULIA_DIR/bin/julia" --project=assurance/sim/reach -e 'using Pkg; Pkg.instantiate(); Pkg.precompile(); Pkg.status()'
+    - name: Licence of every installed package and binary artifact (first lines, for the licence check)
+      run: |
+        for f in "$JULIA_DEPOT_PATH"/packages/*/*/LICENSE* "$JULIA_DEPOT_PATH"/artifacts/*/share/licenses/*/*; do
+          [ -f "$f" ] || continue
+          echo "== ${f#"$JULIA_DEPOT_PATH"/}"
+          grep -m 3 -v '^[[:space:]]*$' "$f" | cut -c1-120 || true
+        done
+    - name: Reach-set bounds (Julia)
+      run: |
+        "$JULIA_DIR/bin/julia" --project=assurance/sim/reach assurance/sim/reach/reach.jl "$RUNNER_TEMP/bounds.json"
+    - name: Fresh bounds in the log (gzip, base64), to commit as bounds.json
+      run: |
+        echo "----- bounds.json.gz.b64"
+        gzip -9c "$RUNNER_TEMP/bounds.json" | base64 -w 100
+        echo "----- end"
+    - name: Bounds against the sampled runs and the exact reference, and committed results current
+      env:
+        REACH_BOUNDS: ${{ runner.temp }}/bounds.json
+        REQUIRE_BOUNDS: "1"
+      run: |
+        python3 assurance/sim/reach/test_reach.py
+        python3 assurance/sim/reach/reach_compare.py --bounds "$REACH_BOUNDS" --check
 
   sim-scenarios:
     name: simulation known scenarios

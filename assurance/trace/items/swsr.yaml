@@ -575,7 +575,7 @@
   acceptance: "All state variables of WP-W-05 §5.1 at reset values after `set_safety_hooks`"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `safety.h:57, 425-460`. Edge state \"not yet seen disengaged\" (amendment, ATC-26): not at the pinned opendbc; proposed change change-2026-10-14-mode-set-regrant (assurance/07-supporting/impact/change-2026-10-14-mode-set-regrant.md)"
+  baseline_impl: "Impl: `safety.h:57, 425-460`. Edge state \"not yet seen disengaged\" (amendment, ATC-26): at the pin since opendbc `515b9a2` (`pcm_cruise_seen_disengaged`, `safety.h:414, 640, 716, 725`; test `test_no_grant_after_mode_set_without_new_engagement`; change-2026-10-14-mode-set-regrant (assurance/07-supporting/impact/change-2026-10-14-mode-set-regrant.md))"
   status: proposed
   source: WP-W-02
 
@@ -671,7 +671,7 @@
   acceptance: "Each disagreement detected ≤ 0.2 s; no false detection on reference logs"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Partial (reference build, opendbc `875e325`): (c) implemented (`toyota_cruise_main_check`, `modes/toyota.h`; test `test_cruise_active_with_main_off`; tolerance 150 ms). Not impl: (a) (`speed_mismatch_check` exists, unused, `safety.h:529-537`); (b) pending the `0x1D3` BRAKE_PRESSED semantics on reference logs; (d) (GAP-01)"
+  baseline_impl: "Partial (reference build, opendbc `875e325`): (c) implemented (`toyota_cruise_main_check`, `modes/toyota.h`; test `test_cruise_active_with_main_off`; tolerance 150 ms); since opendbc `98d3be1` the refusal also closes the LS-06 engagement window (`pcm_engage_cancel`; test `test_main_off_closes_engagement_window`), which fixes finding SM-F1 (change-2026-10-17-pin-98d3be1 (assurance/07-supporting/impact/change-2026-10-17-pin-98d3be1.md)). Not impl: (a) (`speed_mismatch_check` exists, unused, `safety.h:529-537`); (b) pending the `0x1D3` BRAKE_PRESSED semantics on reference logs; (d) (GAP-01)"
   status: proposed
   source: WP-W-02
 
@@ -1295,7 +1295,7 @@
   acceptance: "`0x2E4` at 2× rate: excess frames rejected; revocation ≤ 0.1 s after the first rejected frame (≤ 0.2 s from flood onset at 2×), as TSR-518 v0.13"
   applies_to: "CFG-001, reference build only (`LIONDRIVER_REFERENCE=1`); other builds keep the upstream behaviour"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl (reference build, opendbc `7993399`, panda `8aa8671`): `tx_rate_check` (`opendbc/safety/safety.h`), Toyota budgets (`modes/toyota.h`), health flag bit 11 → `pandaState.txRateExceeded`; unit tests `test_tx_rate_*` (flood, sliding window, host cadence, revocation timing, catch-up bursts, no limit-state update); HIL `tests/hitl/test_14_tx_rate.py` (not run). Design DN-01 (assurance/05-software/design-notes/DN-01-tx-rate-supervision.md). Re-engagement block (amendment, ATC-20): not at the pinned opendbc; proposed change change-2026-10-13-tx-rate-reengagement (assurance/07-supporting/impact/change-2026-10-13-tx-rate-reengagement.md)"
+  baseline_impl: "Impl (reference build, opendbc `7993399`, panda `8aa8671`): `tx_rate_check` (`opendbc/safety/safety.h`), Toyota budgets (`modes/toyota.h`), health flag bit 11 → `pandaState.txRateExceeded`; unit tests `test_tx_rate_*` (flood, sliding window, host cadence, revocation timing, catch-up bursts, no limit-state update); HIL `tests/hitl/test_14_tx_rate.py` (not run). Design DN-01 (assurance/05-software/design-notes/DN-01-tx-rate-supervision.md). Re-engagement block (amendment, ATC-20): at the pin since opendbc `515b9a2` (`tx_rate_engagement_blocked`, `safety.h:261, 288, 431-437`; test `test_tx_rate_no_reengagement_while_excess_persists`; change-2026-10-13-tx-rate-reengagement (assurance/07-supporting/impact/change-2026-10-13-tx-rate-reengagement.md))"
   status: proposed
   source: WP-W-02
 
@@ -1487,7 +1487,7 @@
   acceptance: "Warning ≤ 1 s"
   applies_to: "CFG-001"
   proposed_by: "ai-assisted (Claude), not reviewed"
-  baseline_impl: "Impl: `steerFaultTemporary/Permanent`"
+  baseline_impl: "Impl: `steerFaultTemporary/Permanent`; TSR-607 (b) escalation after 1.5 s in `7158a9a` (`car_events.py`, `tests/test_steer_fault_warning.py`)"
   status: proposed
   source: WP-W-02
 

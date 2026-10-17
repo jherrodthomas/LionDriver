@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-H-06 Hardware integration and verification specification and report |
 | Standard reference | ISO 26262-5:2018 §10 (hardware integration and verification); ISO 26262-8:2018 §9 (verification), §13 (qualification tests of HW components); ASPICE 4.0 HWE.3, HWE.4 |
-| Version | 0.7 (DQ-209 option A: VS-HW-02 and VS-HW-22…24 are the decided route for the harness box; 2026-10-16). 0.6 (HIL bench deferred by the lead, DQ-049: T-HIL and FI cases blocked; 2026-10-16). 0.5 (§3.1 bench procedures for VS-HW-22…24; VS-HW-24 adds the logic-threshold check and waits for the DG419LE ratings, DFM-ACT-015; RR-2026-010 F-05; 2026-10-16). 0.4 (harness box v3 drawing: VS-HW-02 re-scoped, VS-HW-22…24 added for the analog-switch failure behaviour; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
+| Version | 0.8 (bench checklist and result sheet for VS-HW-02, VS-HW-22…24 linked; one reversibly modified box suffices; 2026-10-16). 0.7 (DQ-209 option A: VS-HW-02 and VS-HW-22…24 are the decided route for the harness box; 2026-10-16). 0.6 (HIL bench deferred by the lead, DQ-049: T-HIL and FI cases blocked; 2026-10-16). 0.5 (§3.1 bench procedures for VS-HW-22…24; VS-HW-24 adds the logic-threshold check and waits for the DG419LE ratings, DFM-ACT-015; RR-2026-010 F-05; 2026-10-16). 0.4 (harness box v3 drawing: VS-HW-02 re-scoped, VS-HW-22…24 added for the analog-switch failure behaviour; [RR-2026-010](reviews/RR-2026-010.md); 2026-10-15). 0.3 (§2.1 diagram redrawn as Figure 2-1; text version kept; 2026-10-13). 0.2 (verification status for the integrated envelope changes; 2026-10-12). 0.1 |
 | Status | Draft (specification); results section is a template — **Not yet executed** |
 | ASIL / scope | ASIL C (provisional, SG-01) / ASIL B (SG-02…SG-07) |
 | Author | Assurance team (initial draft) |
@@ -133,11 +133,13 @@ v3 drawing in [RR-2026-010](reviews/RR-2026-010.md). They need a CAN interface, 
 §2 (DQ-049). Run them on a box that VS-HW-02 has matched to the drawing; record any difference first, because the steps name
 v3 reference designators.
 
+The steps below are run from the [bench checklist and result sheet](bench/VS-HW-22-24-checklist.md), which orders them so one spare box is enough and records every value.
+
 **Common set-up (all three cases).**
 
 | Item | Set-up |
 |---|---|
-| Unit under test | Spare Toyota harness box, inspected in VS-HW-02. VS-HW-23 and VS-HW-24 (d) modify it; use a second box for those |
+| Unit under test | Spare Toyota harness box, inspected in VS-HW-02. VS-HW-23 and VS-HW-24 (d) modify it reversibly (R2 lifted and resoldered, D2/D3 bridged externally), so one box is enough when run in the order of the [bench checklist](bench/VS-HW-22-24-checklist.md); use a second box if one is available |
 | Camera side | CAN interface channel A on the camera connector (CAN2), as the camera node, 120 Ω termination as on the car. Optional: the real camera instead |
 | Car side | CAN interface channel B on the car connector (CAN0), as the car ADAS node, 120 Ω termination |
 | Box supply | Lab supply on the IGN_12 pin (through D1 as on the car), current-limited to 0.5 A; comma power (J2) not connected unless the step says so |
