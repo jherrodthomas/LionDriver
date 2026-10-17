@@ -8,7 +8,7 @@
 | **Performed by** | Claude (AI assistant) |
 | **Previous** | [hara-r0.1-precheck.md](hara-r0.1-precheck.md) |
 | **Nature** | Automated pre-check. **Not** the ISO 26262-2 confirmation review (OI-007 remains open). |
-| **Refreshed** | 2026-10-16 in [precheck-refresh-2026-10-16.md](precheck-refresh-2026-10-16.md): stale items updated and the items for the lead to rate listed (DQ-028) |
+| **Refreshed** | 2026-10-16 in [precheck-refresh-2026-10-16.md](precheck-refresh-2026-10-16.md): stale items updated and the items for the lead to rate listed (DQ-028). The lead rated all eleven as proposed on 2026-10-17 |
 
 ## What changed since rev 0.1
 
