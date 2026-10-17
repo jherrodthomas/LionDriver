@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1508" viewBox="0 0 1280 1508" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1395" viewBox="0 0 1280 1395" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-6. SW FMEA failure chains — sheet 10 of 12 (SWF)</title>
-  <desc id="d">SW FMEA failure chains, sheet 10 of 12 (SWF rev 1.2): failure modes SWF-068 to SWF-070 (6 failure modes, 11 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
+  <desc id="d">SW FMEA failure chains, sheet 10 of 12 (SWF rev 1.3): failure modes SWF-085 to SWF-069 (6 failure modes, 10 causes), each drawn as structure element, function, failure mode with severity, guideword and end effect, and its causes with occurrence, detection, Action Priority and actions.</desc>
   <defs>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker>
     <marker id="aS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
     <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#CBD5E1" stroke-width="2"/></pattern>
     <pattern id="hatchA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="6" stroke="#F3C38A" stroke-width="2.4"/></pattern>
   </defs>
-  <rect width="1280" height="1508" fill="#FFFFFF"/>
+  <rect width="1280" height="1395" fill="#FFFFFF"/>
   <text x="40" y="44" font-size="20" fill="#0F172A" font-weight="700">Figure 3-6 · SW FMEA failure chains — sheet 10 of 12</text>
-  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.2 · BL-005 · draft · SWF-068 … SWF-070 · 11 causes on this sheet</text>
+  <text x="40" y="66" font-size="12.5" fill="#475569">SWF rev 1.3 · BL-005 · draft · SWF-085 … SWF-069 · 10 causes on this sheet</text>
   <text x="1240" y="44" font-size="11" fill="#475569" text-anchor="end">fmea-plan.md §3.3</text>
   <text x="1240" y="62" font-size="11" fill="#475569" text-anchor="end">analyses/sw-fmea.yaml</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0" stroke-width="1"/>
@@ -17,231 +17,226 @@
   <text x="250" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FUNCTION (STEP 3)</text>
   <text x="520" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE MODE · S · END EFFECT (STEP 4)</text>
   <text x="876" y="108" font-size="9.5" fill="#475569" font-weight="700" letter-spacing=".06em">FAILURE CAUSE · O · D · AP · ACTIONS (STEPS 4–6)</text>
-  <path d="M220 211.4H235V193.3H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 193.3H505V200.6H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 212H235V199.7H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 199.7H505V200.6H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 200.6H861V144H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
   <path d="M846 200.6H861V256.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 619.2H235V606.8H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 606.8H505V489H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 606.8H505V719.6H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 606.8H505V830.9H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 489H861V376.6H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 489H861V489H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 489H861V601.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 719.6H861V705.6H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 830.9H861V823.9H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 970.1H235V971.9H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 971.9H505V958.7H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 958.7H861V958.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M220 1216.8H235V1204.5H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M490 1204.5H505V1219H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1219H861V1092.6H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1219H861V1204.9H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <path d="M846 1219H861V1317.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
-  <rect x="40" y="189.4" width="180" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="208.9" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-070</text>
-  <text x="49" y="223.4" font-size="10.5" fill="#0F172A" font-weight="600">Longitudinal planning</text>
-  <text x="49" y="237.5" font-size="10.5" fill="#0F172A" font-weight="600">(plannerd)</text>
-  <text x="49" y="250.2" font-size="9.5" fill="#475569">sw element</text>
-  <rect x="250" y="171.3" width="240" height="105.9" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="190.8" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-070</text>
-  <text x="259" y="205.4" font-size="10.5" fill="#0F172A">Plan an acceleration within the envelope</text>
-  <text x="259" y="219.5" font-size="10.5" fill="#0F172A">that keeps the following distance to a lead</text>
-  <text x="259" y="233.5" font-size="10.5" fill="#0F172A">and stops for a stopped lead</text>
-  <text x="259" y="246.3" font-size="9.5" fill="#475569" font-weight="600">function of SWF-SE-071</text>
-  <rect x="259" y="252.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="263.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-020</text>
-  <rect x="318.4" y="252.3" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="263.2" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-023</text>
-  <rect x="520" y="178.6" width="326" height="91.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="198.1" font-size="12" fill="#0F172A" font-weight="700">SWF-068</text>
+  <path d="M220 458.1H235V440H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 440H505V447.3H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 447.3H861V390.7H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 447.3H861V503H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 865.9H235V853.5H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 853.5H505V735.6H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 853.5H505V966.3H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 853.5H505V1077.6H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 735.6H861V623.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 735.6H861V735.6H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 735.6H861V848H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 966.3H861V952.3H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1077.6H861V1070.6H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M220 1216.8H235V1218.5H249" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M490 1218.5H505V1205.4H519" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <path d="M846 1205.4H861V1204.9H875" fill="none" stroke="#94A3B8" stroke-width="1.2" marker-end="url(#aS)"/>
+  <rect x="40" y="190" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="209.5" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-062</text>
+  <rect x="136.1" y="198.5" width="35.6" height="15" rx="7.5" fill="#E2E8F0"/><text x="153.9" y="209.5" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">cont.</text>
+  <text x="49" y="224.1" font-size="10.5" fill="#0F172A" font-weight="600">Monitoring policy and</text>
+  <text x="49" y="238.2" font-size="10.5" fill="#0F172A" font-weight="600">dmonitoringd</text>
+  <text x="49" y="250.9" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="263.6" font-size="9.5" fill="#475569">in SWF-SE-060</text>
+  <rect x="250" y="177.7" width="240" height="107.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="197.2" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-061</text>
+  <rect x="346.1" y="186.2" width="58.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="375.3" y="197.1" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle" letter-spacing=".02em">continued</text>
+  <text x="259" y="211.8" font-size="10.5" fill="#0F172A">Escalate an inattentive or unresponsive</text>
+  <text x="259" y="225.8" font-size="10.5" fill="#0F172A">driver within the policy times (vision 5/8/13</text>
+  <text x="259" y="239.9" font-size="10.5" fill="#0F172A">s, wheel-touch 5/15/25 s) and request the</text>
+  <text x="259" y="254" font-size="10.5" fill="#0F172A">terminal reaction</text>
+  <rect x="259" y="260" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="270.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-039</text>
+  <rect x="318.4" y="260" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="270.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-040</text>
+  <rect x="520" y="178.6" width="326" height="105.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="198.1" font-size="12" fill="#0F172A" font-weight="700">SWF-085</text>
   <rect x="593.9" y="187.1" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="198.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="187.1" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="198.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">crash</text>
-  <text x="529" y="212.7" font-size="10.5" fill="#0F172A" font-weight="600">plannerd stops or runs late while engaged</text>
-  <text x="529" y="225.8" font-size="9.8" fill="#475569" font-style="italic">End effect: No deceleration for a lead for up to 0.5 s, then</text>
-  <text x="529" y="239" font-size="9.8" fill="#475569" font-style="italic">coasting while the item is still shown engaged during the soft…</text>
-  <text x="529" y="256" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="245" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="255.9" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
+  <rect x="629.4" y="187.1" width="70.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="664.8" y="198.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">wrong mode</text>
+  <text x="529" y="212.7" font-size="10.5" fill="#0F172A" font-weight="600">Driver monitoring evaluates the driver in demo mode while</text>
+  <text x="529" y="226.8" font-size="10.5" fill="#0F172A" font-weight="600">the item is engaged</text>
+  <text x="529" y="239.9" font-size="9.8" fill="#475569" font-style="italic">End effect: Monitoring of the actual driver can be lost (the</text>
+  <text x="529" y="253" font-size="9.8" fill="#475569" font-style="italic">passenger's face monitored) while automated control continues</text>
+  <text x="529" y="270" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="259" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="270" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-013</text>
   <rect x="876" y="122" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="141.5" font-size="12" fill="#0F172A" font-weight="700">SWF-068.C1</text>
+  <text x="885" y="141.5" font-size="12" fill="#0F172A" font-weight="700">SWF-085.C1</text>
   <rect x="1194.5" y="130.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="141.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="156.1" font-size="10.5" fill="#0F172A">Unhandled exception: no try/except; an unknown personality value</text>
-  <text x="885" y="170.1" font-size="10.5" fill="#0F172A">raises NotImplementedError in the MPC cost setup</text>
-  <text x="885" y="184.2" font-size="10.5" fill="#0F172A">(long_mpc.py:60-79)</text>
-  <text x="885" y="197.3" font-size="9.8" fill="#475569" font-weight="600">O4 · D9 · in SWF-SE-070</text>
-  <rect x="885" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-062 open</text>
-  <rect x="876" y="234.3" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="253.8" font-size="12" fill="#0F172A" font-weight="700">SWF-068.C2</text>
+  <text x="885" y="156.1" font-size="10.5" fill="#0F172A">The cabin camera dialog sets IsDriverViewEnabled and clears it only</text>
+  <text x="885" y="170.1" font-size="10.5" fill="#0F172A">when the dialog closes (ui/onroad/cabin_camera_dialog.py:18-22;</text>
+  <text x="885" y="184.2" font-size="10.5" fill="#0F172A">ui/mici/onroad/cabin_camera_dialog.py:44, 52). The dialog opens…</text>
+  <text x="885" y="197.3" font-size="9.8" fill="#475569" font-weight="600">O5 · D10 · in SWF-SE-062</text>
+  <rect x="885" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-072 open</text>
+  <rect x="997.9" y="203.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="214.3" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-076 open</text>
+  <rect x="876" y="234.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="253.8" font-size="12" fill="#0F172A" font-weight="700">SWF-085.C2</text>
   <rect x="1194.5" y="242.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="253.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="268.4" font-size="10.5" fill="#0F172A">Slow MPC: the loop is paced by modelV2 (20 Hz) and solve_time is</text>
-  <text x="885" y="282.5" font-size="10.5" fill="#0F172A">published but nothing acts on it (longitudinal_planner.py:161)</text>
-  <text x="885" y="295.6" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in SWF-SE-070</text>
-  <rect x="885" y="301.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="312.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-048 open</text>
-  <rect x="40" y="597.2" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="616.7" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-071</text>
-  <text x="49" y="631.2" font-size="10.5" fill="#0F172A" font-weight="600">Longitudinal planner and MPC</text>
-  <text x="49" y="644" font-size="9.5" fill="#475569">sw unit</text>
-  <text x="49" y="656.7" font-size="9.5" fill="#475569">in SWF-SE-070</text>
-  <rect x="250" y="584.8" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="604.3" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-070</text>
-  <text x="259" y="618.9" font-size="10.5" fill="#0F172A">Plan an acceleration within the envelope</text>
-  <text x="259" y="633" font-size="10.5" fill="#0F172A">that keeps the following distance to a lead</text>
-  <text x="259" y="647" font-size="10.5" fill="#0F172A">and stops for a stopped lead</text>
-  <rect x="259" y="653" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="664" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-020</text>
-  <rect x="318.4" y="653" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="664" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-023</text>
-  <rect x="520" y="467" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="486.5" font-size="12" fill="#0F172A" font-weight="700">SWF-065</text>
-  <rect x="593.9" y="475.5" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="486.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="475.5" width="61.1" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="660" y="486.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">value high</text>
-  <text x="529" y="501" font-size="10.5" fill="#0F172A" font-weight="600">Planned acceleration too high, or deceleration too low, for</text>
-  <text x="529" y="515.1" font-size="10.5" fill="#0F172A" font-weight="600">the lead</text>
-  <text x="529" y="528.2" font-size="9.8" fill="#475569" font-style="italic">End effect: Insufficient or late deceleration for a lead</text>
-  <text x="529" y="545.2" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="534.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="545.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
-  <rect x="618.8" y="534.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="545.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
-  <rect x="876" y="354.6" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="374.1" font-size="12" fill="#0F172A" font-weight="700">SWF-065.C1</text>
-  <rect x="1194.5" y="363.1" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="374" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="388.7" font-size="10.5" fill="#0F172A">Plans from invalid or stale inputs: plannerd has no validity gate of</text>
-  <text x="885" y="402.8" font-size="10.5" fill="#0F172A">its own and uses the leads whatever radarState.valid says</text>
-  <text x="885" y="416.8" font-size="10.5" fill="#0F172A">(long_mpc.py:313-314); longitudinalPlan.valid = sm.all_checks() is…</text>
-  <text x="885" y="430" font-size="9.8" fill="#475569" font-weight="600">O7 · D9 · in SWF-SE-071</text>
-  <rect x="885" y="436" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="446.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-061 open</text>
-  <rect x="997.9" y="436" width="140" height="15" rx="7.5" fill="#D97706"/><text x="1067.9" y="446.9" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 in progress</text>
-  <rect x="876" y="467" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="486.5" font-size="12" fill="#0F172A" font-weight="700">SWF-065.C2</text>
-  <rect x="1194.5" y="475.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="486.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="501" font-size="10.5" fill="#0F172A">MPC failure: solution_status != 0 resets the solver and zeroes the</text>
-  <text x="885" y="515.1" font-size="10.5" fill="#0F172A">trajectories, so the MPC candidate is 0 m/s² for that cycle and</text>
-  <text x="885" y="529.2" font-size="10.5" fill="#0F172A">crash_cnt is cleared (long_mpc.py:221-242, 365-369); repeated…</text>
-  <text x="885" y="542.3" font-size="9.8" fill="#475569" font-weight="600">O5 · D9 · in SWF-SE-071</text>
-  <rect x="885" y="548.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="559.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-061 open</text>
-  <rect x="997.9" y="548.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="559.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-062 open</text>
-  <rect x="876" y="579.3" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="598.8" font-size="12" fill="#0F172A" font-weight="700">SWF-065.C3</text>
-  <rect x="1194.5" y="587.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="598.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="613.4" font-size="10.5" fill="#0F172A">If orientationNED is missing, the coast limit becomes ACCEL_MAX,</text>
-  <text x="885" y="627.4" font-size="10.5" fill="#0F172A">which removes it (longitudinal_planner.py:76-79)</text>
-  <text x="885" y="640.6" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in SWF-SE-071</text>
-  <rect x="885" y="646.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="657.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-061 open</text>
-  <rect x="520" y="697.6" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="717.1" font-size="12" fill="#0F172A" font-weight="700">SWF-066</text>
-  <rect x="593.9" y="706.1" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="717.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="706.1" width="68.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="663.8" y="717.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">commission</text>
-  <text x="529" y="731.7" font-size="10.5" fill="#0F172A" font-weight="600">Planned acceleration changes in a step</text>
-  <text x="529" y="744.8" font-size="9.8" fill="#475569" font-style="italic">End effect: Abrupt deceleration not required by traffic</text>
-  <text x="529" y="761.8" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="750.8" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="761.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
-  <rect x="876" y="683.6" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="703.1" font-size="12" fill="#0F172A" font-weight="700">SWF-066.C1</text>
-  <rect x="1194.5" y="692.1" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="703" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="717.6" font-size="10.5" fill="#0F172A">By design the final aTarget = clip(min(candidates)) has no rate limit</text>
-  <text x="885" y="731.7" font-size="10.5" fill="#0F172A">(longitudinal_planner.py:142-149); J_CRUISE limits the cruise</text>
-  <text x="885" y="745.8" font-size="10.5" fill="#0F172A">candidate only and the MPC jerk is a cost, not a constraint…</text>
-  <text x="885" y="758.9" font-size="9.8" fill="#475569" font-weight="600">O7 · D9 · in SWF-SE-071</text>
-  <rect x="885" y="764.9" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="775.8" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-050 open</text>
-  <rect x="997.9" y="764.9" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="775.8" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-062 open</text>
-  <rect x="520" y="808.9" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="828.4" font-size="12" fill="#0F172A" font-weight="700">SWF-067</text>
-  <rect x="593.9" y="817.4" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="828.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="817.4" width="70.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="664.8" y="828.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">wrong mode</text>
-  <text x="529" y="843" font-size="10.5" fill="#0F172A" font-weight="600">Planning in a mode or following distance outside the</text>
-  <text x="529" y="857.1" font-size="10.5" fill="#0F172A" font-weight="600">assured configuration</text>
-  <text x="529" y="870.2" font-size="9.8" fill="#475569" font-style="italic">End effect: Insufficient deceleration margin for a braking lead</text>
-  <text x="529" y="887.2" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="876.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="887.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
-  <rect x="876" y="801.9" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="821.4" font-size="12" fill="#0F172A" font-weight="700">SWF-067.C1</text>
-  <rect x="1194.5" y="810.4" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="821.3" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="836" font-size="10.5" fill="#0F172A">The driver can leave the assured configuration while driving: the</text>
-  <text x="885" y="850.1" font-size="10.5" fill="#0F172A">distance button cycles the personality and saves it, and</text>
-  <text x="885" y="864.1" font-size="10.5" fill="#0F172A">ExperimentalMode can be toggled; both are only logged…</text>
-  <text x="885" y="877.3" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-071</text>
-  <rect x="885" y="883.3" width="166.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="968.2" y="894.2" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">SWF-ACT-063 decision pending</text>
-  <rect x="40" y="948.1" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="967.6" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-072</text>
-  <text x="49" y="982.2" font-size="10.5" fill="#0F172A" font-weight="600">Forward collision warning</text>
-  <text x="49" y="996.3" font-size="10.5" fill="#0F172A" font-weight="600">decision</text>
-  <text x="49" y="1009" font-size="9.5" fill="#475569">sw unit</text>
-  <text x="49" y="1021.7" font-size="9.5" fill="#475569">in SWF-SE-070</text>
-  <rect x="250" y="949.9" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="969.4" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-071</text>
-  <text x="259" y="983.9" font-size="10.5" fill="#0F172A">Raise a forward collision warning when a</text>
-  <text x="259" y="998" font-size="10.5" fill="#0F172A">collision with the lead is predicted</text>
-  <rect x="259" y="1004" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1014.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-026</text>
-  <rect x="520" y="936.7" width="326" height="105.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="956.2" font-size="12" fill="#0F172A" font-weight="700">SWF-069</text>
-  <rect x="593.9" y="945.2" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="956.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="945.2" width="54.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="656.7" y="956.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">omission</text>
-  <text x="529" y="970.8" font-size="10.5" fill="#0F172A" font-weight="600">Forward collision warning not raised for a predicted</text>
-  <text x="529" y="984.9" font-size="10.5" fill="#0F172A" font-weight="600">collision</text>
-  <text x="529" y="998" font-size="9.8" fill="#475569" font-style="italic">End effect: Driver not warned of an imminent collision with a</text>
-  <text x="529" y="1011.1" font-size="9.8" fill="#475569" font-style="italic">lead while engaged</text>
-  <text x="529" y="1028.1" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1017.1" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1028" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
-  <rect x="876" y="936.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="955.8" font-size="12" fill="#0F172A" font-weight="700">SWF-069.C1</text>
-  <rect x="1194.5" y="944.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="955.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="970.3" font-size="10.5" fill="#0F172A">FCW needs crash_cnt &gt; 2 with leadOne.modelProb &gt; 0.9</text>
-  <text x="885" y="984.4" font-size="10.5" fill="#0F172A">(long_mpc.py:338-342; longitudinal_planner.py:121): a radar-only</text>
-  <text x="885" y="998.5" font-size="10.5" fill="#0F172A">lead (low-speed override, modelProb 0, radard.py:83, 174) never…</text>
-  <text x="885" y="1011.6" font-size="9.8" fill="#475569" font-weight="600">O6 · D8 · in SWF-SE-072</text>
-  <rect x="885" y="1017.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1028.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-064 open</text>
+  <text x="885" y="268.4" font-size="10.5" fill="#0F172A">No engagement interlock: nothing in selfdrived or controlsd reads</text>
+  <text x="885" y="282.5" font-size="10.5" fill="#0F172A">IsDriverViewEnabled, so a parameter left set (written by tooling, or a</text>
+  <text x="885" y="296.6" font-size="10.5" fill="#0F172A">UI crash before hide_event; it is cleared only at manager start…</text>
+  <text x="885" y="309.7" font-size="9.8" fill="#475569" font-weight="600">O8 · D10 · in SWF-SE-062</text>
+  <rect x="885" y="315.7" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="326.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-072 open</text>
+  <rect x="40" y="436.1" width="180" height="69.9" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="455.6" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-070</text>
+  <text x="49" y="470.1" font-size="10.5" fill="#0F172A" font-weight="600">Longitudinal planning</text>
+  <text x="49" y="484.2" font-size="10.5" fill="#0F172A" font-weight="600">(plannerd)</text>
+  <text x="49" y="496.9" font-size="9.5" fill="#475569">sw element</text>
+  <rect x="250" y="418" width="240" height="105.9" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="437.5" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-070</text>
+  <text x="259" y="452.1" font-size="10.5" fill="#0F172A">Plan an acceleration within the envelope</text>
+  <text x="259" y="466.2" font-size="10.5" fill="#0F172A">that keeps the following distance to a lead</text>
+  <text x="259" y="480.2" font-size="10.5" fill="#0F172A">and stops for a stopped lead</text>
+  <text x="259" y="493" font-size="9.5" fill="#475569" font-weight="600">function of SWF-SE-071</text>
+  <rect x="259" y="499" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="509.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-020</text>
+  <rect x="318.4" y="499" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="509.9" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-023</text>
+  <rect x="520" y="425.3" width="326" height="91.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="444.8" font-size="12" fill="#0F172A" font-weight="700">SWF-068</text>
+  <rect x="593.9" y="433.8" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="444.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="433.8" width="38.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="648.7" y="444.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">crash</text>
+  <text x="529" y="459.4" font-size="10.5" fill="#0F172A" font-weight="600">plannerd stops or runs late while engaged</text>
+  <text x="529" y="472.5" font-size="9.8" fill="#475569" font-style="italic">End effect: No deceleration for a lead for up to 0.5 s, then</text>
+  <text x="529" y="485.7" font-size="9.8" fill="#475569" font-style="italic">coasting while the item is still shown engaged during the soft…</text>
+  <text x="529" y="502.7" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="491.7" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="502.6" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
+  <rect x="876" y="368.7" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="388.2" font-size="12" fill="#0F172A" font-weight="700">SWF-068.C1</text>
+  <rect x="1194.5" y="377.2" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="388.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="402.8" font-size="10.5" fill="#0F172A">Unhandled exception: no try/except; an unknown personality value</text>
+  <text x="885" y="416.8" font-size="10.5" fill="#0F172A">raises NotImplementedError in the MPC cost setup</text>
+  <text x="885" y="430.9" font-size="10.5" fill="#0F172A">(long_mpc.py:60-79)</text>
+  <text x="885" y="444" font-size="9.8" fill="#475569" font-weight="600">O4 · D9 · in SWF-SE-070</text>
+  <rect x="885" y="450" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="460.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-062 open</text>
+  <rect x="876" y="481" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="500.5" font-size="12" fill="#0F172A" font-weight="700">SWF-068.C2</text>
+  <rect x="1194.5" y="489.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="500.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="515.1" font-size="10.5" fill="#0F172A">Slow MPC: the loop is paced by modelV2 (20 Hz) and solve_time is</text>
+  <text x="885" y="529.2" font-size="10.5" fill="#0F172A">published but nothing acts on it (longitudinal_planner.py:161)</text>
+  <text x="885" y="542.3" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in SWF-SE-070</text>
+  <rect x="885" y="548.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="559.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-048 open</text>
+  <rect x="40" y="843.9" width="180" height="68.5" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
+  <text x="49" y="863.4" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-071</text>
+  <text x="49" y="877.9" font-size="10.5" fill="#0F172A" font-weight="600">Longitudinal planner and MPC</text>
+  <text x="49" y="890.7" font-size="9.5" fill="#475569">sw unit</text>
+  <text x="49" y="903.4" font-size="9.5" fill="#475569">in SWF-SE-070</text>
+  <rect x="250" y="831.5" width="240" height="93.2" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="851" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-070</text>
+  <text x="259" y="865.6" font-size="10.5" fill="#0F172A">Plan an acceleration within the envelope</text>
+  <text x="259" y="879.7" font-size="10.5" fill="#0F172A">that keeps the following distance to a lead</text>
+  <text x="259" y="893.7" font-size="10.5" fill="#0F172A">and stops for a stopped lead</text>
+  <rect x="259" y="899.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="910.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-020</text>
+  <rect x="318.4" y="899.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="910.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-023</text>
+  <rect x="520" y="713.6" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="733.1" font-size="12" fill="#0F172A" font-weight="700">SWF-065</text>
+  <rect x="593.9" y="722.1" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="733.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="722.1" width="61.1" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="660" y="733.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">value high</text>
+  <text x="529" y="747.7" font-size="10.5" fill="#0F172A" font-weight="600">Planned acceleration too high, or deceleration too low, for</text>
+  <text x="529" y="761.8" font-size="10.5" fill="#0F172A" font-weight="600">the lead</text>
+  <text x="529" y="774.9" font-size="9.8" fill="#475569" font-style="italic">End effect: Insufficient or late deceleration for a lead</text>
+  <text x="529" y="791.9" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="780.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="791.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
+  <rect x="618.8" y="780.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="643.1" y="791.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-005</text>
+  <rect x="876" y="601.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="620.8" font-size="12" fill="#0F172A" font-weight="700">SWF-065.C1</text>
+  <rect x="1194.5" y="609.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="620.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="635.4" font-size="10.5" fill="#0F172A">Plans from invalid or stale inputs: plannerd has no validity gate of</text>
+  <text x="885" y="649.4" font-size="10.5" fill="#0F172A">its own and uses the leads whatever radarState.valid says</text>
+  <text x="885" y="663.5" font-size="10.5" fill="#0F172A">(long_mpc.py:313-314); longitudinalPlan.valid = sm.all_checks() is…</text>
+  <text x="885" y="676.6" font-size="9.8" fill="#475569" font-weight="600">O7 · D9 · in SWF-SE-071</text>
+  <rect x="885" y="682.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="693.6" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-061 open</text>
+  <rect x="997.9" y="682.6" width="140" height="15" rx="7.5" fill="#D97706"/><text x="1067.9" y="693.6" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">SWF-ACT-040 in progress</text>
+  <rect x="876" y="713.6" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="733.1" font-size="12" fill="#0F172A" font-weight="700">SWF-065.C2</text>
+  <rect x="1194.5" y="722.1" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="733.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="747.7" font-size="10.5" fill="#0F172A">MPC failure: solution_status != 0 resets the solver and zeroes the</text>
+  <text x="885" y="761.8" font-size="10.5" fill="#0F172A">trajectories, so the MPC candidate is 0 m/s² for that cycle and</text>
+  <text x="885" y="775.9" font-size="10.5" fill="#0F172A">crash_cnt is cleared (long_mpc.py:221-242, 365-369); repeated…</text>
+  <text x="885" y="789" font-size="9.8" fill="#475569" font-weight="600">O5 · D9 · in SWF-SE-071</text>
+  <rect x="885" y="795" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="805.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-061 open</text>
+  <rect x="997.9" y="795" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="805.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-062 open</text>
+  <rect x="876" y="826" width="364" height="92.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="845.5" font-size="12" fill="#0F172A" font-weight="700">SWF-065.C3</text>
+  <rect x="1194.5" y="834.5" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="845.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="860.1" font-size="10.5" fill="#0F172A">If orientationNED is missing, the coast limit becomes ACCEL_MAX,</text>
+  <text x="885" y="874.1" font-size="10.5" fill="#0F172A">which removes it (longitudinal_planner.py:76-79)</text>
+  <text x="885" y="887.3" font-size="9.8" fill="#475569" font-weight="600">O4 · D10 · in SWF-SE-071</text>
+  <rect x="885" y="893.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="904.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-061 open</text>
+  <rect x="520" y="944.3" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="963.8" font-size="12" fill="#0F172A" font-weight="700">SWF-066</text>
+  <rect x="593.9" y="952.8" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="963.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="952.8" width="68.7" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="663.8" y="963.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">commission</text>
+  <text x="529" y="978.4" font-size="10.5" fill="#0F172A" font-weight="600">Planned acceleration changes in a step</text>
+  <text x="529" y="991.5" font-size="9.8" fill="#475569" font-style="italic">End effect: Abrupt deceleration not required by traffic</text>
+  <text x="529" y="1008.5" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="997.5" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1008.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-006</text>
+  <rect x="876" y="930.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="949.8" font-size="12" fill="#0F172A" font-weight="700">SWF-066.C1</text>
+  <rect x="1194.5" y="938.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="949.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="964.3" font-size="10.5" fill="#0F172A">By design the final aTarget = clip(min(candidates)) has no rate limit</text>
+  <text x="885" y="978.4" font-size="10.5" fill="#0F172A">(longitudinal_planner.py:142-149); J_CRUISE limits the cruise</text>
+  <text x="885" y="992.5" font-size="10.5" fill="#0F172A">candidate only and the MPC jerk is a cost, not a constraint…</text>
+  <text x="885" y="1005.6" font-size="9.8" fill="#475569" font-weight="600">O7 · D9 · in SWF-SE-071</text>
+  <rect x="885" y="1011.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1022.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-050 open</text>
+  <rect x="997.9" y="1011.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="1022.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-062 open</text>
+  <rect x="520" y="1055.6" width="326" height="92.3" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1075.1" font-size="12" fill="#0F172A" font-weight="700">SWF-067</text>
+  <rect x="593.9" y="1064.1" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1075.1" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1064.1" width="70.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="664.8" y="1075.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">wrong mode</text>
+  <text x="529" y="1089.7" font-size="10.5" fill="#0F172A" font-weight="600">Planning in a mode or following distance outside the</text>
+  <text x="529" y="1103.8" font-size="10.5" fill="#0F172A" font-weight="600">assured configuration</text>
+  <text x="529" y="1116.9" font-size="9.8" fill="#475569" font-style="italic">End effect: Insufficient deceleration margin for a braking lead</text>
+  <text x="529" y="1133.9" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1122.9" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1133.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
+  <rect x="876" y="1048.6" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
+  <text x="885" y="1068.1" font-size="12" fill="#0F172A" font-weight="700">SWF-067.C1</text>
+  <rect x="1194.5" y="1057.1" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1068" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <text x="885" y="1082.7" font-size="10.5" fill="#0F172A">The driver can leave the assured configuration while driving: the</text>
+  <text x="885" y="1096.7" font-size="10.5" fill="#0F172A">distance button cycles the personality and saves it, and</text>
+  <text x="885" y="1110.8" font-size="10.5" fill="#0F172A">ExperimentalMode can be toggled; both are only logged…</text>
+  <text x="885" y="1123.9" font-size="9.8" fill="#475569" font-weight="600">O6 · D9 · in SWF-SE-071</text>
+  <rect x="885" y="1129.9" width="166.4" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="968.2" y="1140.9" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">SWF-ACT-063 decision pending</text>
   <rect x="40" y="1194.8" width="180" height="82.6" fill="#F8FAFC" stroke="#64748B" stroke-width="1.3" rx="8"/>
-  <text x="49" y="1214.3" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-081</text>
-  <text x="49" y="1228.9" font-size="10.5" fill="#0F172A" font-weight="600">Lead selection and</text>
-  <text x="49" y="1242.9" font-size="10.5" fill="#0F172A" font-weight="600">radar/vision fusion</text>
+  <text x="49" y="1214.3" font-size="12" fill="#0F172A" font-weight="700">SWF-SE-072</text>
+  <text x="49" y="1228.9" font-size="10.5" fill="#0F172A" font-weight="600">Forward collision warning</text>
+  <text x="49" y="1242.9" font-size="10.5" fill="#0F172A" font-weight="600">decision</text>
   <text x="49" y="1255.7" font-size="9.5" fill="#475569">sw unit</text>
-  <text x="49" y="1268.4" font-size="9.5" fill="#475569">in SWF-SE-080</text>
-  <rect x="250" y="1182.5" width="240" height="107.3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
-  <text x="259" y="1202" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-080</text>
-  <text x="259" y="1216.5" font-size="10.5" fill="#0F172A">Provide the lead state (distance, relative</text>
-  <text x="259" y="1230.6" font-size="10.5" fill="#0F172A">speed and acceleration) from radar tracks</text>
-  <text x="259" y="1244.7" font-size="10.5" fill="#0F172A">matched to model leads, and flag radar</text>
-  <text x="259" y="1258.7" font-size="10.5" fill="#0F172A">faults</text>
-  <rect x="259" y="1264.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1275.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-020</text>
-  <rect x="318.4" y="1264.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="346.1" y="1275.7" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-026</text>
-  <rect x="520" y="1197" width="326" height="78.2" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
-  <text x="529" y="1216.5" font-size="12" fill="#0F172A" font-weight="700">SWF-070</text>
-  <rect x="593.9" y="1205.5" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1216.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
-  <rect x="629.4" y="1205.5" width="54.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="656.7" y="1216.4" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">omission</text>
-  <text x="529" y="1231.1" font-size="10.5" fill="#0F172A" font-weight="600">Lead missed or reported late while a lead is present</text>
-  <text x="529" y="1244.2" font-size="9.8" fill="#475569" font-style="italic">End effect: Insufficient or late deceleration for a lead</text>
-  <text x="529" y="1261.2" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
-  <rect x="566.3" y="1250.2" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1261.1" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
-  <rect x="876" y="1070.6" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1090.1" font-size="12" fill="#0F172A" font-weight="700">SWF-070.C1</text>
-  <rect x="1194.5" y="1079.1" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1090" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1104.7" font-size="10.5" fill="#0F172A">By design a radar track is used above 4 m/s only when matched to</text>
-  <text x="885" y="1118.7" font-size="10.5" fill="#0F172A">a model lead with probability &gt; 0.5 and inside the match window</text>
-  <text x="885" y="1132.8" font-size="10.5" fill="#0F172A">(radard.py:113-133, 156-157); a stationary target seen only by rad…</text>
-  <text x="885" y="1145.9" font-size="9.8" fill="#475569" font-weight="600">O7 · D8 · in SWF-SE-081</text>
-  <rect x="885" y="1151.9" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1162.9" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-064 open</text>
+  <text x="49" y="1268.4" font-size="9.5" fill="#475569">in SWF-SE-070</text>
+  <rect x="250" y="1196.5" width="240" height="79.1" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.3" rx="8"/>
+  <text x="259" y="1216" font-size="12" fill="#0F172A" font-weight="700">SWF-FN-071</text>
+  <text x="259" y="1230.6" font-size="10.5" fill="#0F172A">Raise a forward collision warning when a</text>
+  <text x="259" y="1244.7" font-size="10.5" fill="#0F172A">collision with the lead is predicted</text>
+  <rect x="259" y="1250.7" width="55.4" height="15" rx="7.5" fill="#E2E8F0"/><text x="286.7" y="1261.6" font-size="9.5" font-weight="700" fill="#0F172A" text-anchor="middle" letter-spacing=".02em">FSR-026</text>
+  <rect x="520" y="1183.4" width="326" height="105.4" fill="#FFF7ED" stroke="#C2410C" stroke-width="1.3" rx="8"/>
+  <text x="529" y="1202.9" font-size="12" fill="#0F172A" font-weight="700">SWF-069</text>
+  <rect x="593.9" y="1191.9" width="31.5" height="15" rx="7.5" fill="#C2410C"/><text x="609.7" y="1202.8" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">S10</text>
+  <rect x="629.4" y="1191.9" width="54.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#FDBA74" stroke-width="1"/><text x="656.7" y="1202.8" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">omission</text>
+  <text x="529" y="1217.5" font-size="10.5" fill="#0F172A" font-weight="600">Forward collision warning not raised for a predicted</text>
+  <text x="529" y="1231.5" font-size="10.5" fill="#0F172A" font-weight="600">collision</text>
+  <text x="529" y="1244.7" font-size="9.8" fill="#475569" font-style="italic">End effect: Driver not warned of an imminent collision with a</text>
+  <text x="529" y="1257.8" font-size="9.8" fill="#475569" font-style="italic">lead while engaged</text>
+  <text x="529" y="1274.8" font-size="9.5" fill="#475569" font-weight="600">hazard</text>
+  <rect x="566.3" y="1263.8" width="48.5" height="15" rx="7.5" fill="#FFFFFF" stroke="#C2410C" stroke-width="1"/><text x="590.6" y="1274.7" font-size="9.5" font-weight="700" fill="#C2410C" text-anchor="middle" letter-spacing=".02em">HZ-007</text>
   <rect x="876" y="1182.9" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1202.4" font-size="12" fill="#0F172A" font-weight="700">SWF-070.C2</text>
+  <text x="885" y="1202.4" font-size="12" fill="#0F172A" font-weight="700">SWF-069.C1</text>
   <rect x="1194.5" y="1191.4" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1202.4" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1217" font-size="10.5" fill="#0F172A">Radar faults reach the planner as data: plannerd uses the leads</text>
-  <text x="885" y="1231.1" font-size="10.5" fill="#0F172A">whatever radarState.valid says, and radarFault /</text>
-  <text x="885" y="1245.1" font-size="10.5" fill="#0F172A">radarTempUnavailable are SOFT_DISABLE (selfdrived.py:408-414…</text>
-  <text x="885" y="1258.3" font-size="9.8" fill="#475569" font-weight="600">O5 · D8 · in SWF-SE-081</text>
-  <rect x="885" y="1264.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1275.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-061 open</text>
-  <rect x="997.9" y="1264.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="1052.3" y="1275.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-064 open</text>
-  <rect x="876" y="1295.3" width="364" height="106.3" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.3" rx="8"/>
-  <text x="885" y="1314.8" font-size="12" fill="#0F172A" font-weight="700">SWF-070.C3</text>
-  <rect x="1194.5" y="1303.8" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="1212.8" y="1314.7" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <text x="885" y="1329.4" font-size="10.5" fill="#0F172A">radard stops: the Kalman filter asserts 0.01 &lt; dt &lt; 0.2</text>
-  <text x="885" y="1343.4" font-size="10.5" fill="#0F172A">(radard.py:33), there is no try/except and manager does not restart</text>
-  <text x="885" y="1357.5" font-size="10.5" fill="#0F172A">it; radarState then goes stale and the plan invalid (commIssue soft…</text>
-  <text x="885" y="1370.6" font-size="9.8" fill="#475569" font-weight="600">O4 · D9 · in SWF-SE-081</text>
-  <rect x="885" y="1376.6" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1387.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-064 open</text>
-  <line x1="40" y1="1427.6" x2="1240" y2="1427.6" stroke="#E2E8F0" stroke-width="1"/>
-  <text x="40" y="1449.6" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
-  <rect x="96" y="1438.6" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="1449.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
-  <rect x="136.5" y="1438.6" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="1449.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
-  <rect x="179.4" y="1438.6" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1449.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
-  <text x="223.9" y="1449.6" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
-  <rect x="455.4" y="1438.6" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1449.5" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
-  <rect x="518.7" y="1438.6" width="116.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="577.1" y="1449.5" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">ACT decision pending</text>
-  <rect x="639.5" y="1438.6" width="90.4" height="15" rx="7.5" fill="#D97706"/><text x="684.7" y="1449.5" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT in progress</text>
-  <text x="737.9" y="1449.6" font-size="10.5" fill="#0F172A">action status (step 6)</text>
-  <text x="40" y="1469.6" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
-  <text x="40" y="1487.6" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
+  <text x="885" y="1217" font-size="10.5" fill="#0F172A">FCW needs crash_cnt &gt; 2 with leadOne.modelProb &gt; 0.9</text>
+  <text x="885" y="1231.1" font-size="10.5" fill="#0F172A">(long_mpc.py:338-342; longitudinal_planner.py:121): a radar-only</text>
+  <text x="885" y="1245.1" font-size="10.5" fill="#0F172A">lead (low-speed override, modelProb 0, radard.py:83, 174) never…</text>
+  <text x="885" y="1258.3" font-size="9.8" fill="#475569" font-weight="600">O6 · D8 · in SWF-SE-072</text>
+  <rect x="885" y="1264.3" width="108.9" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="939.4" y="1275.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">SWF-ACT-064 open</text>
+  <line x1="40" y1="1315.3" x2="1240" y2="1315.3" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="40" y="1337.3" font-size="10.5" fill="#0F172A" font-weight="700">Legend</text>
+  <rect x="96" y="1326.3" width="36.5" height="15" rx="7.5" fill="#D2553F"/><text x="114.2" y="1337.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP H</text>
+  <rect x="136.5" y="1326.3" width="38.9" height="15" rx="7.5" fill="#D97706"/><text x="156" y="1337.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP M</text>
+  <rect x="179.4" y="1326.3" width="36.5" height="15" rx="7.5" fill="#0F766E"/><text x="197.7" y="1337.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">AP L</text>
+  <text x="223.9" y="1337.3" font-size="10.5" fill="#0F172A">Action Priority as rated (rating-tables §5)</text>
+  <rect x="455.4" y="1326.3" width="59.3" height="15" rx="7.5" fill="#FFFFFF" stroke="#D2553F" stroke-width="1"/><text x="485" y="1337.2" font-size="9.5" font-weight="700" fill="#D2553F" text-anchor="middle" letter-spacing=".02em">ACT open</text>
+  <rect x="518.7" y="1326.3" width="116.8" height="15" rx="7.5" fill="#FFFFFF" stroke="#D97706" stroke-width="1"/><text x="577.1" y="1337.2" font-size="9.5" font-weight="700" fill="#D97706" text-anchor="middle" letter-spacing=".02em">ACT decision pending</text>
+  <rect x="639.5" y="1326.3" width="90.4" height="15" rx="7.5" fill="#D97706"/><text x="684.7" y="1337.2" font-size="9.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing=".02em">ACT in progress</text>
+  <text x="737.9" y="1337.3" font-size="10.5" fill="#0F172A">action status (step 6)</text>
+  <text x="40" y="1357.3" font-size="10" fill="#475569">S = severity of the failure mode (max of its effects); O / D = occurrence / detection of the cause; “in &lt;element&gt;” = structure element where the cause lies; “→” = linked failure mode in another FMEA; hazard = HARA hazard of an end effect.</text>
+  <text x="40" y="1375.3" font-size="9.5" fill="#94A3B8">Generated by tools/safety/fmea_diagrams.py from analyses/sw-fmea.yaml. Edit the YAML and regenerate; do not edit this file.</text>
 </svg>
