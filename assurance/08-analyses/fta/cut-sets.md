@@ -13,8 +13,8 @@ Row results: *match* = a computed cut set; *effective* = omits only latent event
 | SG-01 | 36 | 6 | 11 | 9 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-02 | 100 | 5 | 12 | 1 | 11 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-03 | 22 | 6 | 12 | 12 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| SG-04 | 21 | 6 | 12 | 12 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| SG-05 | 12 | 11 | 11 | 10 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| SG-04 | 22 | 7 | 13 | 13 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| SG-05 | 11 | 10 | 10 | 9 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
 | SG-06 | 85 | 7 | 11 | 1 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-07 | 17 | 14 | 16 | 15 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | SG-08 | 13 | 13 | 10 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -256,7 +256,7 @@ Top event TE-03. 22 minimal cut sets.
 
 ## SG-04: deceleration beyond what following traffic and the driver can control
 
-Top event TE-04. 21 minimal cut sets.
+Top event TE-04. 22 minimal cut sets.
 
 ### Computed cut sets
 
@@ -276,13 +276,14 @@ Top event TE-04. 21 minimal cut sets.
 | 12 | 2 BE + 0 UE | 2 | {BE-4.19, BE-4.21} |  | MCS-04.11 |
 | 13 | 2 BE + 0 UE | 2 | {BE-4.20, BE-4.21} |  | MCS-04.11 |
 | 14 | 2 BE + 0 UE | 2 | {BE-4.22, BE-4.23} |  | MCS-04.12 |
-| 15 | 2 BE + 1 UE | 2 | {BE-1.07, BE-4.02, UE-4.04} | S | MCS-04.9 |
-| 16 | 2 BE + 1 UE | 2 | {BE-1.08, BE-4.02, UE-4.04} | C S | MCS-04.9 |
-| 17 | 2 BE + 1 UE | 2 | {BE-1.09, BE-4.02, UE-4.04} | C S | MCS-04.9 |
-| 18 | 2 BE + 1 UE | 2 | {BE-4.02, BE-4.16, UE-4.04} | S | MCS-04.9 |
-| 19 | 2 BE + 1 UE | 2 | {BE-4.05, BE-4.17, UE-4.04} |  | MCS-04.3 |
-| 20 | 2 BE + 1 UE | 1 | {BE-4.06, BE-4.07, UE-4.08} | L S | MCS-04.4 |
-| 21 | 2 BE + 1 UE | 1 | {BE-4.07, BE-4.18, UE-4.08} | L | MCS-04.4 |
+| 15 | 1 BE + 1 UE | 1 | {BE-4.24, UE-4.25} |  | MCS-04.13 |
+| 16 | 2 BE + 1 UE | 2 | {BE-1.07, BE-4.02, UE-4.04} | S | MCS-04.9 |
+| 17 | 2 BE + 1 UE | 2 | {BE-1.08, BE-4.02, UE-4.04} | C S | MCS-04.9 |
+| 18 | 2 BE + 1 UE | 2 | {BE-1.09, BE-4.02, UE-4.04} | C S | MCS-04.9 |
+| 19 | 2 BE + 1 UE | 2 | {BE-4.02, BE-4.16, UE-4.04} | S | MCS-04.9 |
+| 20 | 2 BE + 1 UE | 2 | {BE-4.05, BE-4.17, UE-4.04} |  | MCS-04.3 |
+| 21 | 2 BE + 1 UE | 1 | {BE-4.06, BE-4.07, UE-4.08} | L S | MCS-04.4 |
+| 22 | 2 BE + 1 UE | 1 | {BE-4.07, BE-4.18, UE-4.08} | L | MCS-04.4 |
 
 ### Table rows of WP-A-04
 
@@ -300,10 +301,11 @@ Top event TE-04. 21 minimal cut sets.
 | MCS-04.10 | 2 | {BE-3.10, BE-4.13} | match | — |
 | MCS-04.11 | 2 | {BE-4.19 or BE-4.20, BE-4.21} | match | — |
 | MCS-04.12 | 2 | {BE-4.22, BE-4.23} | match | — |
+| MCS-04.13 | 1 + ext. | {BE-4.24, UE-4.25} | match | — |
 
 ## SG-05: no release on driver brake, cancel or steering override
 
-Top event TE-05. 12 minimal cut sets.
+Top event TE-05. 11 minimal cut sets.
 
 ### Computed cut sets
 
@@ -316,11 +318,10 @@ Top event TE-05. 12 minimal cut sets.
 | 5 | 1 BE + 0 UE | 1 | {BE-5.03} |  | MCS-05.2 |
 | 6 | 1 BE + 0 UE | 1 | {BE-5.15} |  | MCS-05.9 |
 | 7 | 1 BE + 1 UE | 1 | {BE-5.01, UE-5.04} |  | MCS-05.3 |
-| 8 | 1 BE + 1 UE | 1 | {BE-5.08, UE-5.09} |  | MCS-05.6 |
-| 9 | 2 BE + 0 UE | 2 | {BE-5.10, BE-5.11} | C | MCS-05.7 |
-| 10 | 1 BE + 1 UE | 0 | {BE-5.12, UE-5.13} | L | MCS-05.8 |
-| 11 | 1 BE + 1 UE | 1 | {BE-5.14, UE-5.04} |  | MCS-05.11 |
-| 12 | 2 BE + 1 UE | 0 | {BE-5.05, BE-5.06, UE-5.07} | L | MCS-05.5 |
+| 8 | 2 BE + 0 UE | 2 | {BE-5.10, BE-5.11} | C | MCS-05.7 |
+| 9 | 1 BE + 1 UE | 0 | {BE-5.12, UE-5.13} | L | MCS-05.8 |
+| 10 | 1 BE + 1 UE | 1 | {BE-5.14, UE-5.04} |  | MCS-05.11 |
+| 11 | 2 BE + 1 UE | 0 | {BE-5.05, BE-5.06, UE-5.07} | L | MCS-05.5 |
 
 ### Table rows of WP-A-04
 
@@ -331,7 +332,6 @@ Top event TE-05. 12 minimal cut sets.
 | MCS-05.3 | 2 | {BE-5.01, UE-5.04} | match | — |
 | MCS-05.4 | 1 (effective) | {BE-5.02} | match | — |
 | MCS-05.5 | 0 + ext. (effective: both item events latent) | {BE-5.05 (latent), BE-5.06, UE-5.07} | match | — |
-| MCS-05.6 | 1 + ext. | {BE-5.08, UE-5.09} | match | — |
 | MCS-05.7 | 2 | {BE-5.10, BE-5.11} | match | — |
 | MCS-05.8 | 1 + ext. (latent at the baseline) | {UE-5.13, BE-5.12} | match | — |
 | MCS-05.9 | 1 | {BE-5.15} | match | — |

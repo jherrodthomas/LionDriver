@@ -103,6 +103,17 @@ events:
   - id: BE-4.23
     class: systematic_sw
     fmea: [SWF-017]
+  - id: BE-4.24
+    class: systematic_sw
+    fmea: [SWF-017, SFM-020, SWF-057]
+    note: >-
+      Formerly SG-05 BE-5.08, moved by DQ-363 A (WP-A-04 v1.8). SWF-017.C1 (GAS_RELEASED decoding defect gives the envelope
+      the "released" view), SFM-020.C1 (host gasPressed parsed wrong), at SW unit level SWF-057.C1 (GAS_RELEASED inversion in
+      the DBC or carstate.py). All cite HZ-006, which SG-04 owns, so F-29 is closed. No FMEA mode covers GAS_RELEASED stuck
+      "released" with a valid 0x1D2 checksum (GAP-01, F-15, F-25)
+  - id: UE-4.25
+    class: external
+    ref: AOU-05R (formerly SG-05 UE-5.09)
   - id: UE-4.04
     class: external
     ref: AOU-05R
@@ -642,24 +653,15 @@ events:
       is the system-level view, linked to SWF-087
   - id: BE-5.06
     class: systematic_sw
-    fmea: [SWF-038, SWF-044, SFM-018]
+    fmea: [SWF-038, SWF-044, SFM-018, SWF-057]
     note: >-
       SWF-038.C1 (overriding counts as active, so latActive stays true; by design), SWF-044.C1 (CarController cuts torque
       only above 500 units of driver torque), SFM-018.C1/C2 (threshold too high, controller keeps torque during override).
-      Present by design below 500 units (F-30)
+      Present by design below 500 units (F-30). SWF-057.C1 (steeringTorque sign or scale decoded wrong in carstate.py, so the host
+      misjudges the driver's torque; cited here since DQ-363 A moved its gas-bit cause to SG-04 BE-4.24)
   - id: UE-5.07
     class: external
     ref: AOU-02R
-  - id: BE-5.08
-    class: systematic_sw
-    fmea: [SWF-017, SFM-020, SWF-057]
-    note: >-
-      As BE-3.11. SWF-017.C1 (GAS_RELEASED decoding defect gives the envelope the same "released" view); SFM-020.C1 (host
-      gasPressed parsed wrong), at SW unit level SWF-057.C1 (GAS_RELEASED inversion in the DBC or carstate.py; SW FMEA rev 0.9). No FMEA mode covers GAS_RELEASED stuck "released" with a valid 0x1D2 checksum (GAP-01),
-      as F-15. Both modes cite HZ-006 only (F-29)
-  - id: UE-5.09
-    class: external
-    ref: AOU-05R
   - id: BE-5.10
     class: systematic_sw
     fmea: [SFM-028, SWF-039, SFM-021, SWF-048]
