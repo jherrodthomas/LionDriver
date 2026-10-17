@@ -25,7 +25,8 @@ in [`assurance/`](../assurance/README.md) that owns it.
 - Link to a repository file or folder as `[`assurance/`](../assurance/README.md)`: the build turns it into an
   absolute link on the synced branch and fails if the target does not exist.
 - Every page must be linked from [`_Sidebar.md`](_Sidebar.md). [`_Footer.md`](_Footer.md) carries the sync stamp;
-  `{{REPO}}`, `{{BRANCH}}`, `{{SYNC_COMMIT}}` and `{{SYNC_DATE}}` are filled in at build time.
+  `{{REPO}}`, `{{BRANCH}}`, `{{SYNC_COMMIT}}` and `{{SYNC_DATE}}` are filled in at build time, and
+  `{{MERGE_LOG}}` becomes the list of merged pull requests read from the checkout's merge commits.
 - Do not type figures that the repository generates (claim counts, evidence counts, vehicle counts). Link to the
   generated source instead, or embed the badge from `assurance/case/badge.json`.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.

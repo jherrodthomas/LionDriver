@@ -90,6 +90,70 @@ class BuildTests(unittest.TestCase):
       self.assertFalse(out.exists(), "nothing is written when a check fails")
 
 
+class MergeLogTests(unittest.TestCase):
+  def test_no_git_checkout_gives_the_fallback_text(self):
+    with tempfile.TemporaryDirectory() as d:
+      self.assertEqual(build_wiki.git_merges(Path(d)), [])
+      self.assertEqual(build_wiki.render_merge_log([], "o/r"), build_wiki.NO_MERGE_LOG)
+
+  def test_entries_render_grouped_by_date_newest_first(self):
+    entries = [("2026-10-17", 213, "HARA fallback ASILs", "7c00aa4"), ("2026-10-17", 211, "Add the wiki", "4d3fdac"),
+               ("2026-10-16", 190, "Baseline BL-006 proposed", "abc1234")]
+    out = build_wiki.render_merge_log(entries, "o/r")
+    self.assertEqual(out.splitlines(), [
+      "### 2026-10-17", "",
+      "- [#213](https://github.com/o/r/pull/213) HARA fallback ASILs",
+      "- [#211](https://github.com/o/r/pull/211) Add the wiki", "",
+      "### 2026-10-16", "",
+      "- [#190](https://github.com/o/r/pull/190) Baseline BL-006 proposed",
+    ])
+
+  def test_only_pull_request_merges_are_listed(self):
+    """A temporary repository with a PR merge, a plain branch merge and the synthetic merge CI checks a PR out at."""
+    import subprocess
+    with tempfile.TemporaryDirectory() as d:
+      root = Path(d)
+      env = {"GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@x", "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@x",
+             "GIT_AUTHOR_DATE": "2026-10-17T00:00:00Z", "GIT_COMMITTER_DATE": "2026-10-17T00:00:00Z", "PATH": "/usr/bin:/bin"}
+
+      def git(*args):
+        subprocess.run(["git", "-C", str(root), *args], check=True, capture_output=True, env=env)
+
+      def commit(msg):
+        (root / "f").write_text(msg)
+        git("add", "f")
+        git("commit", "-q", "-m", msg)
+
+      git("init", "-q", "-b", "main")
+      commit("base")
+      git("checkout", "-q", "-b", "feature")
+      commit("work")
+      git("checkout", "-q", "main")
+      git("merge", "--no-ff", "-q", "-m", "Merge pull request #7 from o/feature\n\nThe PR title", "feature")
+      git("checkout", "-q", "-b", "other")
+      commit("other work")
+      git("checkout", "-q", "main")
+      git("merge", "--no-ff", "-q", "-m", "Merge branch 'other' into main", "other")
+      git("checkout", "-q", "-b", "pr-head")
+      commit("pr work")
+      git("checkout", "-q", "main")
+      git("merge", "--no-ff", "-q", "-m", "Merge abc123 into def456", "pr-head")   # what CI checks a PR out at
+      self.assertEqual(build_wiki.git_merges(root), [("2026-10-17", 7, "The PR title", build_wiki.git_merges(root)[0][3])])
+
+  def test_merge_log_placeholder_is_filled_from_the_checkout(self):
+    with tempfile.TemporaryDirectory() as d:
+      root, src = make_wiki(Path(d), {"Home.md": "{{MERGE_LOG}}", "_Sidebar.md": "[Home](Home.md)"})
+      out = Path(d) / "out"
+      self.assertEqual(build_wiki.build(src, out, root, repo="o/r"), [])
+      self.assertEqual((out / "Home.md").read_text(), build_wiki.NO_MERGE_LOG)
+
+  def test_the_real_checkout_has_merge_history(self):
+    entries = build_wiki.git_merges(build_wiki.ROOT)
+    if not entries:
+      self.skipTest("no merge history in this checkout (shallow clone)")
+    self.assertTrue(all(n > 0 for _, n, _, _ in entries[:5]), "recent merges are pull request merges")
+
+
 class RealWikiTests(unittest.TestCase):
   def test_the_wiki_folder_checks_clean(self):
     self.assertEqual(build_wiki.build(), [])
