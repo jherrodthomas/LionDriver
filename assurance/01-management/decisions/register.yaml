@@ -3057,6 +3057,7 @@
       title: "Change the code for both"
       detail: "Literal text kept; code change and re-test in reference build."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-13"]
+  asked: 2026-10-17
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-17, note: "Maintainer: \"go ahead with SWSR-408\". (a) worded to the code; (b) code change kept the word accepted."}
   applied: {ref: "jherrodthomas/LionDriver#204, jherrodthomas/opendbc#19", record: "WP-W-02 v0.28 SWSR-408 and OI-13; WP-W-03 ATC-27; change-2026-10-17-pin-27f20db", at: 2026-10-17}
