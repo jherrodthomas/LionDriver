@@ -801,7 +801,7 @@ def fig_5_5(S):
   d.block("fd", 760, 50, "forceDecel", "+5 s at alert 3", "item", w=150)
   d.block("pl", 950, 50, "Planner", "cruise target → 0", "item", w=160)
   d.block("stop", 950, 200, "Stops in lane", "still steering", "env", w=160)
-  d.block("miss", 570, 200, "Not there today", "warning of the stop,\nstandstill hold, lockout", "bad", w=200, h=70)
+  d.block("miss", 570, 200, "Not there today", "warning of the stop, lockout;\nhold rests on PCM (AOU-16)", "bad", w=200, h=70)
   d.block("q", 330, 200, "Decided (DQ-365)", "stop, stay held, no\nre-engage until driver", "fix", w=200, h=70)
   d.need_text("DQ-365 DQ-205")
   d.arrow(d.port("cam", "r"), d.port("dm", "l"), "", "fb")
