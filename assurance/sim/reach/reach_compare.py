@@ -1,22 +1,24 @@
 #!/usr/bin/env python3
-"""Reachability pilot: compare the Julia reach-set bounds with the sampled fault runs and exact references.
+"""Reachability bound: the drift the linearised L1 plant can reach under any LKA command the panda passes, computed
+exactly, and checked against the sampled fault runs.
 
-    python3 assurance/sim/reach/reach_compare.py --bounds FRESH.json           # commit FRESH as bounds.json, write results
-    python3 assurance/sim/reach/reach_compare.py --bounds FRESH.json --check   # fail if anything committed is stale
+    python3 assurance/sim/reach/reach_compare.py            # write results/reach.md and results/reach-y.svg
+    python3 assurance/sim/reach/reach_compare.py --check    # fail if a sample lies outside, or the results are stale
 
-FRESH.json is what reach.jl writes: the set "dt" (inputs held per plant step, the plant's own input structure) and one
-set "ct" per GLGM06 discretisation model (any input within the envelope). Checks, reported in results/reach.md:
-  linear      every sampled run of the linear model (the model Julia bounds, driven by the commands the EPS applied,
-              held per 10 ms grid step) lies inside dt. This checks the reachability computation; it must hold, up to
-              TOL for the 9-digit rounding of the JSON files.
+With one bounded input and a linear model the reachable set's support function in the direction of y or psi is a
+closed sum or integral of |impulse response| x input envelope (README §3.6):
+  dt   the sum over plant steps of |c exp(A h)^m Phi1 B| e_j: exact for commands held per plant step, the plant's own
+       input structure. This is the bound.
+  ct   the integral of |c exp(A s) B| env(t - s) over [0, t], by trapezoid quadrature on a 0.1 ms grid (no quadrature
+       error bound): any command within the envelope, also between plant steps.
+  amp  the same with |u| <= u_max from t = 0 (no panda ramp), for comparison.
+Checks, reported in results/reach.md:
+  linear      every sampled run of the linear model (driven by the commands the EPS applied, held per 10 ms grid step)
+              lies inside dt, up to TOL for the 9-digit rounding of samples.json;
   nonlinear   every sampled run of the nonlinear L1 plant lies inside dt widened by the largest linearisation error
-              measured on the same runs. The set bounds the linear model only; this widening is measured on these
+              measured on the same runs. The bound covers the linear model only; this widening is measured on these
               samples, not proven, so this check says the linearisation is adequate here, nothing more.
-Exact references, computed here independently of Julia (one bounded input, so the reachable set's support function
-in the direction of y or psi is a closed sum or integral of |impulse response| x envelope):
-  exact dt    the sum over plant steps of |c exp(A h)^m Phi1 B| e_j: exact for inputs held per step;
-  exact ct    the integral of |c exp(A s) B| env(t - s) over [0, t], by trapezoid quadrature on a 0.1 ms grid (no
-              quadrature error bound); also with |u| <= u_max throughout (no panda ramp), for comparison.
+The Julia pilot that first computed dt (JuliaReach, #155) gave the same values to rounding and was retired (§3.6).
 Synthetic data (DSR-12), no evidence credit (WP-V-02 §5.3).
 """
 
@@ -31,16 +33,14 @@ from pathlib import Path
 import numpy as np
 
 HERE = Path(__file__).resolve().parent
-BOUNDS = HERE / "bounds.json"
 SAMPLES = HERE / "samples.json"
 MODEL = HERE / "model.json"
 RESULTS = HERE / "results"
 TABLE = RESULTS / "reach.md"
 FIGURE = RESULTS / "reach-y.svg"
-TOL = 1e-7                      # absolute, m or rad: JSON rounding to 9 significant digits
-REL = 1e-6                      # fresh bounds against the committed ones
+TOL = 1e-7                      # absolute, m or rad: rounding of samples.json to 9 significant digits
 TIMES = (0.1, 0.2, 0.5, 1.0, 1.5, 2.0, 2.5)
-QUAD_S = 1e-4                   # quadrature step of the exact ct reference
+QUAD_S = 1e-4                   # quadrature step of the ct reference
 OUT = ("y", "psi")
 
 
@@ -103,20 +103,16 @@ def exact(m: dict, n_grid: int) -> dict:
   return out
 
 
-def mag(d: dict, v: str, i: int) -> float:
-  return max(d[f"{v}_hi"][i], -d[f"{v}_lo"][i])
-
-
-def containment(b: dict, s: dict) -> dict:
-  """Worst excess of the sampled envelopes over the dt bounds (<= 0 means inside), per check and output."""
-  dt = b["dt"]
+def containment(ex: dict, s: dict) -> dict:
+  """Worst excess of the sampled envelopes over the dt bound (<= 0 means inside), per check and output."""
   wide = {"y": s["max_linearisation_error_y_m"], "psi": s["max_linearisation_error_psi_rad"]}
   out = {}
   for name, pre, widen in (("linear", "lin_", False), ("nonlinear", "", True)):
     for v in OUT:
       w = wide[v] if widen else 0.0
-      hi = max(x - h - w for x, h in zip(s[f"{pre}{v}_max"], dt[f"{v}_hi"], strict=True))
-      lo = max(lb - w - x for x, lb in zip(s[f"{pre}{v}_min"], dt[f"{v}_lo"], strict=True))
+      b = ex["dt"][v]
+      hi = max(x - h - w for x, h in zip(s[f"{pre}{v}_max"], b, strict=True))
+      lo = max(-h - w - x for x, h in zip(s[f"{pre}{v}_min"], b, strict=True))
       out[(name, v)] = max(hi, lo)
   return out
 
@@ -129,55 +125,35 @@ def g(x: float) -> str:
   return "∞" if math.isinf(x) else f"{x:.4g}"
 
 
-def table(b: dict, s: dict, m: dict, ex: dict) -> str:
-  c = containment(b, s)
+def table(s: dict, m: dict, ex: dict) -> str:
+  c = containment(ex, s)
   tk = s["takeover_s"]
   times = sorted(set(TIMES) | {tk, m["horizon_s"]})
   verdict = {k: ("inside" if x <= TOL else f"OUTSIDE by {x:.3g}") for k, x in c.items()}
-  models = sorted(b["ct"])
   lines = [
-    "# Reachability pilot: reach-set bounds against sampled fault runs",
+    "# Reachability bound against sampled fault runs",
     "",
     "Synthetic data (DSR-12), no evidence credit (WP-V-02 §5.3). Generated by "
-    "[`reach_compare.py`](../reach_compare.py) from [`bounds.json`](../bounds.json) (Julia "
-    f"{b['julia']}, [`reach.jl`](../reach.jl)) and [`samples.json`](../samples.json) "
-    f"({s['runs']} runs, seed {s['seed']}). Case: straight road, {m['speed_kph']:g} km/h, any LKA command the panda "
-    f"passes from t = 0; the driver's correction in the hard-over run (drift cue plus reaction time, plant model) is "
-    f"at {tk:g} s.",
+    "[`reach_compare.py`](../reach_compare.py) from [`model.json`](../model.json) and "
+    f"[`samples.json`](../samples.json) ({s['runs']} runs, seed {s['seed']}). Case: straight road, "
+    f"{m['speed_kph']:g} km/h, any LKA command the panda passes from t = 0; the driver's correction in the hard-over "
+    f"run (drift cue plus reaction time, plant model) is at {tk:g} s.",
     "",
-    "## Containment (Julia dt set)",
+    "## Containment (exact bound for commands held per plant step)",
     "",
     "| Check | y | ψ |",
     "|---|---|---|",
-    f"| Linear model runs inside the set (tolerance {TOL:g}) | {verdict[('linear', 'y')]} | {verdict[('linear', 'psi')]} |",
-    f"| Nonlinear plant runs inside the set widened by the measured linearisation error "
+    f"| Linear model runs inside the bound (tolerance {TOL:g}) | {verdict[('linear', 'y')]} | {verdict[('linear', 'psi')]} |",
+    f"| Nonlinear plant runs inside the bound widened by the measured linearisation error "
     f"({s['max_linearisation_error_y_m']:.3g} m, {s['max_linearisation_error_psi_rad']:.3g} rad) "
     f"| {verdict[('nonlinear', 'y')]} | {verdict[('nonlinear', 'psi')]} |",
     "",
-    "The set bounds the linear model. The widening is measured on these runs, not proven.",
+    "The bound covers the linear model. The widening is measured on these runs, not proven.",
     "",
-    "## Continuous-time sets (ReachabilityAnalysis.jl GLGM06)",
-    "",
-    f"δ = {b['delta_ct']:g} s, envelope segments of {b['segment_s']:g} s, zonotope order {b['order_ct']} between "
-    "segments.",
-    "",
-    "| Discretisation model | Result |",
-    "|---|---|",
   ]
-  i_tk = idx(s, tk)
-  for k in models:
-    r = b["ct"][k]
-    if "error" in r:
-      msg = " ".join(r["error"].split())[:200].replace("|", "/")
-      lines.append(f"| `{k}` | failed: {msg} … |")
-    else:
-      y = mag(r, "y", i_tk)
-      lines.append(f"| `{k}` | y bound at the takeover {g(y)} m, {g(y / ex['ct']['y'][i_tk])}× the exact value |")
-  lines.append("")
-  ok = [k for k in models if "error" not in b["ct"][k]]
   for v, unit, name in (("y", "m", "Lateral offset |y|"), ("psi", "rad", "Heading |ψ|")):
-    head = ["t (s)", "Sampled, plant", "Sampled, linear", "Exact dt", "Julia dt", "Julia dt / exact", "Exact ct",
-            *[f"Julia ct `{k}` / exact" for k in ok], "Exact, no panda ramp"]
+    head = ["t (s)", "Sampled, plant", "Sampled, linear", "Bound (held per step)", "Sampled linear / bound",
+            "Any input in envelope", "No panda ramp"]
     lines += [f"## {name} ({unit}), from fault onset", "", "| " + " | ".join(head) + " |",
               "|" + "---|" * len(head)]
     for t in times:
@@ -185,17 +161,14 @@ def table(b: dict, s: dict, m: dict, ex: dict) -> str:
       nl = max(s[f"{v}_max"][i], -s[f"{v}_min"][i])
       li = max(s[f"lin_{v}_max"][i], -s[f"lin_{v}_min"][i])
       ed, ec, ea = ex["dt"][v][i], ex["ct"][v][i], ex["amp"][v][i]
-      jd = mag(b["dt"], v, i)
-      cts = [g(mag(b["ct"][k], v, i) / ec) for k in ok]
       tag = " (takeover)" if t == tk else ""
-      row = [f"{t:g}{tag}", g(nl), g(li), g(ed), g(jd), g(jd / ed), g(ec), *cts, g(ea)]
+      row = [f"{t:g}{tag}", g(nl), g(li), g(ed), g(li / ed) if ed > 0 else "—", g(ec), g(ea)]
       lines.append("| " + " | ".join(row) + " |")
     lines.append("")
   lines += [
-    "Julia dt: the zonotope recursion for commands held per plant step (5 ms), exact up to rounding. Exact dt and "
-    "exact ct: computed in Python, independently of Julia (support function: sum per plant step, or integral by "
-    "quadrature). Exact, no panda ramp: |u| ≤ STEER_MAX from t = 0. Sampled columns: the largest value over all "
-    "runs.",
+    "Bound: commands held per plant step (5 ms), exact (support function summed per step). Any input in envelope: "
+    "commands may also change between plant steps (integral by quadrature). No panda ramp: |u| ≤ STEER_MAX from "
+    "t = 0. Sampled columns: the largest value over all runs.",
     "",
   ]
   return "\n".join(lines)
@@ -227,22 +200,21 @@ def _t(x, y, s, cls="t", anchor=None):
   return f'<text x="{x:.1f}" y="{y:.1f}" class="{cls}"{a}>{escape(s)}</text>'
 
 
-def figure(b: dict, s: dict, m: dict, ex: dict) -> str:
+def figure(s: dict, m: dict, ex: dict) -> str:
   t = s["t"]
   T = m["horizon_s"]
   tk = s["takeover_s"]
   out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" '
          'aria-labelledby="t d">',
-         '<title id="t">Reachability pilot: lateral offset and heading bounds against sampled fault runs</title>',
+         '<title id="t">Reachability bound: lateral offset and heading against sampled fault runs</title>',
          '<desc id="d">Synthetic data (DSR-12), no evidence credit. Upper bound of the reachable lateral offset and '
-         'heading under any LKA command the panda passes, from fault onset: the Julia set for commands held per plant '
-         'step, the exact bound for any command within the panda envelope and without the panda ramp, the largest '
-         'value over the sampled runs of the nonlinear plant, and the driver correction time of the hard-over '
-         'run.</desc>', STYLE,
+         'heading under any LKA command the panda passes, from fault onset: the exact bound for commands held per '
+         'plant step, for any command within the panda envelope and without the panda ramp, the largest value over '
+         'the sampled runs of the nonlinear plant, and the driver correction time of the hard-over run.</desc>', STYLE,
          f'<rect class="bg" width="{W}" height="{H}"/>',
-         _t(40, 36, f"Reach-set bound vs sampled LKA torque faults · {m['speed_kph']:g} km/h, straight road", "th"),
-         _t(40, 56, f"Julia {b['julia']} with LazySets; {s['runs']} sampled runs, real panda code, nonlinear L1 plant",
-            "t2"),
+         _t(40, 36, f"Reachability bound vs sampled LKA torque faults · {m['speed_kph']:g} km/h, straight road", "th"),
+         _t(40, 56, f"exact support function of the linearised L1 plant; {s['runs']} sampled runs, real panda code, "
+                    "nonlinear L1 plant", "t2"),
          _t(W - 40, 36, "Synthetic data (DSR-12) · no evidence credit", "t2", "end"),
          _t(W - 40, 56, "generated by assurance/sim/reach/reach_compare.py", "t2", "end")]
   panels = (("y", "A · Lateral offset |y| (m)", 1.0, 90, 330), ("psi", "B · Heading |ψ| (deg)", 180 / math.pi, 390, 600))
@@ -252,7 +224,7 @@ def figure(b: dict, s: dict, m: dict, ex: dict) -> str:
     return x0 + tt / T * (x1 - x0)
 
   for v, title, k, y0, y1 in panels:
-    hi = [mag(b["dt"], v, i) * k for i in range(len(t))]
+    hi = [a * k for a in ex["dt"][v]]
     amp = [a * k for a in ex["amp"][v]]
     exa = [a * k for a in ex["ct"][v]]
     smp = [max(a, -c) * k for a, c in zip(s[f"{v}_max"], s[f"{v}_min"], strict=True)]
@@ -285,8 +257,8 @@ def figure(b: dict, s: dict, m: dict, ex: dict) -> str:
     out.append(f'<line x1="{X(tk):.1f}" y1="{y0}" x2="{X(tk):.1f}" y2="{y1}" class="take"/>')
     out.append(_t(X(tk) - 4, y0 + 12, f"driver correction, hard-over ({tk:g} s)", "t2", "end"))
   ly = H - 14
-  for i, (cls, label) in enumerate((("bound", "Julia set (held per 5 ms step)"), ("exact", "exact, any input in envelope"),
-                                    ("amp", "exact, without the panda ramp"), ("samp", "largest sampled run, plant"))):
+  for i, (cls, label) in enumerate((("bound", "bound (held per 5 ms step)"), ("exact", "any input in envelope"),
+                                    ("amp", "without the panda ramp"), ("samp", "largest sampled run, plant"))):
     lx = x0 + i * 225
     out.append(f'<line x1="{lx}" y1="{ly - 4}" x2="{lx + 28}" y2="{ly - 4}" class="{cls}"/>')
     out.append(_t(lx + 34, ly, label, "t2"))
@@ -294,55 +266,29 @@ def figure(b: dict, s: dict, m: dict, ex: dict) -> str:
   return "\n".join(out) + "\n"
 
 
-def same(a, b) -> bool:
-  if isinstance(a, dict):
-    return isinstance(b, dict) and a.keys() == b.keys() and all(same(a[k], b[k]) for k in a)
-  if isinstance(a, list):
-    return isinstance(b, list) and len(a) == len(b) and all(same(x, y) for x, y in zip(a, b, strict=True))
-  if isinstance(a, float) or isinstance(b, float):
-    return abs(a - b) <= REL * max(abs(a), abs(b)) + 1e-12
-  return a == b
-
-
-def comparable(b: dict) -> dict:
-  """The bounds without run times (they differ run to run)."""
-  c = json.loads(json.dumps(b))
-  for r in c.get("ct", {}).values():
-    r.pop("seconds", None)
-  return c
-
-
 def main(argv) -> int:
-  if "--bounds" not in argv:
-    print(__doc__, file=sys.stderr)
-    return 2
-  fresh_path = Path(argv[argv.index("--bounds") + 1])
-  fresh, s, m = load(fresh_path), load(SAMPLES), load(MODEL)
+  s, m = load(SAMPLES), load(MODEL)
   ex = exact(m, len(s["t"]))
-  c = containment(fresh, s)
+  c = containment(ex, s)
   for (name, v), x in sorted(c.items()):
-    print(f"reach compare: {name:9s} {v:3s} worst excess {x:.3g} ({'inside' if x <= TOL else 'OUTSIDE'})")
+    print(f"reach: {name:9s} {v:3s} worst excess {x:.3g} ({'inside' if x <= TOL else 'OUTSIDE'})")
+  outside = [k for k, x in c.items() if x > TOL]
+  files = {TABLE: table(s, m, ex), FIGURE: figure(s, m, ex)}
   if "--check" in argv:
-    stale = []
-    if not BOUNDS.exists() or not same(comparable(fresh), comparable(load(BOUNDS))):
-      stale.append(BOUNDS.name)
-    else:
-      b = load(BOUNDS)
-      for p, text in ((TABLE, table(b, s, m, ex)), (FIGURE, figure(b, s, m, ex))):
-        if not p.exists() or p.read_text(encoding="utf-8") != text:
-          stale.append(p.name)
+    stale = [p.name for p, text in files.items() if not p.exists() or p.read_text(encoding="utf-8") != text]
     if stale:
-      print(f"stale: {', '.join(stale)}; run: python3 assurance/sim/reach/reach_compare.py --bounds <reach.jl output>",
-            file=sys.stderr)
+      print(f"stale: {', '.join(stale)}; run: python3 assurance/sim/reach/reach_compare.py", file=sys.stderr)
+    if outside:
+      print(f"outside the bound: {outside}", file=sys.stderr)
+    if stale or outside:
       return 1
-    print("reach compare: current")
+    print("reach: current, every sample inside")
     return 0
-  BOUNDS.write_text(json.dumps(fresh, indent=1, sort_keys=True) + "\n", encoding="utf-8")
   RESULTS.mkdir(exist_ok=True)
-  TABLE.write_text(table(fresh, s, m, ex), encoding="utf-8")
-  FIGURE.write_text(figure(fresh, s, m, ex), encoding="utf-8")
-  print(f"reach compare: wrote {BOUNDS.name}, {TABLE.relative_to(HERE)}, {FIGURE.relative_to(HERE)}")
-  return 0
+  for p, text in files.items():
+    p.write_text(text, encoding="utf-8")
+  print(f"reach: wrote {TABLE.relative_to(HERE)}, {FIGURE.relative_to(HERE)}")
+  return 1 if outside else 0
 
 
 if __name__ == "__main__":
