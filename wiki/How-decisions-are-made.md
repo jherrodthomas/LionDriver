@@ -36,6 +36,21 @@ IDs. A question carries:
 
 ## Lifecycle of a question
 
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> queued : recorded
+    queued --> open : batch of ten opens
+    open --> answered : the lead picks an option
+    open --> assumed : no answer by the proceed-after date (easy to undo only)
+    answered --> applied : change made, commit named
+    assumed --> applied : change made, the lead can still change it
+    queued --> withdrawn : no longer applies
+    open --> withdrawn : no longer applies
+    applied --> [*]
+    withdrawn --> [*]
+```
+
 | Status | Meaning |
 |---|---|
 | `queued` | Recorded but not asked yet. May name questions to settle first. |

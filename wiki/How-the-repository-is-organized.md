@@ -3,6 +3,10 @@
 Two kinds of content live side by side: the driving software inherited from openpilot, and the engineering record
 LionDriver adds around it.
 
+![Platform architecture. Layer 1, core driving platform inherited from openpilot. Layer 2, safety envelope in the panda firmware. Layer 3, vehicle integration in the opendbc car ports. Layer 4, supported vehicle ecosystem. A cross-cutting safety and assurance column applies to every layer. Implemented, drafted and proposed elements are marked differently.](../docs/assets/liondriver/architecture.svg)
+
+*The README architecture figure. Layers 1 to 4 are the inherited code below; the cross-cutting column is what LionDriver adds.*
+
 ## Inherited from openpilot
 
 | Path | What it is |

@@ -6,7 +6,8 @@ everything else. This tool turns that folder into what the GitHub wiki repositor
 
   * page links written as `Name.md` (so they work when the folder is read on GitHub) become `Name`,
     which is how the wiki resolves a link to another page;
-  * repository links written as `../path` become absolute links to that path on the synced branch;
+  * repository links written as `../path` become absolute links to that path on the synced branch, and an
+    image written as `![alt](../path)` becomes the raw file address, which is what the wiki renders;
   * `{{REPO}}`, `{{BRANCH}}`, `{{SYNC_COMMIT}}` and `{{SYNC_DATE}}` are filled in;
   * `{{MERGE_LOG}}` becomes the list of pull requests merged into the synced branch, newest first,
     read from the merge commits in the checkout (the Session log page);
@@ -106,6 +107,9 @@ def rewrite(text: str, page: Path, src: Path, root: Path, values: dict[str, str]
       rel = path[3:]
       if not (root / rel).exists():
         problems.append(f"{page.name}: repository link target does not exist: {rel}")
+      if before.startswith("!"):
+        # An image: the wiki renders it only from the raw file address, never from the blob page.
+        return f"{before}https://raw.githubusercontent.com/{values['REPO']}/{values['BRANCH']}/{rel}{after}"
       kind = "tree" if (root / rel).is_dir() else "blob"
       return f"{before}https://github.com/{values['REPO']}/{kind}/{values['BRANCH']}/{rel}{anchor}{after}"
     if path.endswith(".md"):

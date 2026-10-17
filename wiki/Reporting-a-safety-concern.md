@@ -24,8 +24,22 @@ happened this time.
 The signal follows one path whether it comes from a regulator, upstream openpilot, a fork, the community or the
 project's own test drives:
 
-**intake → triage → applicability → containment → root cause analysis → hazard log and HARA, SOTIF, TARA
-update → corrective action → verification → closure**
+```mermaid
+flowchart LR
+    A[1 Intake] --> B[2 Triage and classify]
+    B --> C{Safety anomaly?}
+    C -- no --> N[Close with rationale]
+    C -- yes --> D[3 Applicability]
+    D --> E[4 Containment]
+    E --> F[5 Root cause analysis]
+    F --> G[6 Hazard log, HARA, SOTIF, TARA update]
+    G --> H[7 Corrective and preventive actions]
+    H --> I[8 Verification and effectiveness]
+    I --> J[9 Closure and safety case update]
+    J -. SPI trend .-> A
+```
+
+*The flowchart of [LD-SAF-PRC-001 §5](../docs/safety/field-monitoring/PROCESS.md), written here as Mermaid so it is reviewed as text.*
 
 Triage happens within two business days. The severity class is based on the worst credible outcome, not the
 outcome observed:

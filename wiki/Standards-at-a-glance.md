@@ -5,6 +5,8 @@ cite their clauses. **No compliance is claimed**, because no assessment has been
 [assurance strategy, WP-M-01](../assurance/01-management/WP-M-01-assurance-strategy.md) explains how each
 standard is tailored to an open-source, supervised Level 2 system.
 
+![Standards-informed engineering framework. ISO 26262, functional safety: what if something breaks? ISO 21448, SOTIF: what if nothing breaks but the system still gets it wrong? ISO/SAE 21434, cybersecurity: what if someone attacks it? ISO/PAS 8800, AI safety: how far can a learned component be trusted? UL 4600, safety case: is the whole argument convincing?](../docs/assets/liondriver/standards.svg)
+
 ## The five, and the question each answers
 
 | Standard | The question | Main work products |
@@ -39,6 +41,15 @@ in [`assurance/trace/`](../assurance/trace/README.md), hold the five standards t
 | ML models | ISO/PAS 8800, ASPICE MLE | Model errors feed in as SOTIF functional insufficiencies; data and model lifecycle in WP-W-10 |
 | Cyber attacks that cause safety hazards | ISO/SAE 21434 TARA | Damage scenarios link to HARA hazards; cybersecurity goals that protect safety goals are traced both ways |
 | Process capability | Automotive SPICE | The ISO 26262 work products double as ASPICE information items; each register entry carries its process ID |
+
+## The central argument: the safety envelope
+
+The learned driving stack proposes; a small deterministic layer on the panda microcontroller checks before
+anything reaches the car. Most of the tailoring follows from concentrating ASIL effort there.
+
+![Safety envelope pattern: the QM driving stack on the SoC, the ASIL safety envelope on the panda microcontroller, and the vehicle's existing elements with assumptions of use.](../assurance/01-management/figures/fig-m01-4-1-safety-envelope.svg)
+
+*Figure 4-1 of [WP-M-01 assurance strategy](../assurance/01-management/WP-M-01-assurance-strategy.md), pinned to §4.1 and §4.2 so CI detects when it may be stale.*
 
 ## Tailoring decisions worth knowing
 
