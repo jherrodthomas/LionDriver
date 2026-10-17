@@ -27,7 +27,7 @@ It is the procedure referred to by:
 ### 1.1 Basic rules (summary card for the vehicle)
 
 1. No vehicle operation of LD-SDA until this document is approved.
-2. No engaged operation on public roads until gate **G1** is passed and the software baseline has passed its closed-course checkout (§4).
+2. No engaged operation on public roads until gate **G1** is passed and the software baseline has passed its closed-course checkout (§4). Also, until the legal status of public-road testing is confirmed for the test state ([WP-C-01](../02-concept/WP-C-01-item-definition.md) OI-6), **closed course only**: no public-road use at L4–L6 (DQ-104 B).
 3. Fault injection, characterization builds and controllability tests with test subjects: **closed course only**.
 4. Engaged testing at levels L3 and L5 always has **two people**: safety driver and test operator.
 5. Only identified software is driven (§7). The pre-drive checks (§6) are done every time.
