@@ -217,16 +217,6 @@ GOLDEN_TABLE = """\
 | T3 | ALLOWED | e3 | — | clear | NOT_ALLOWED | all | 3 | Not implemented | not implemented |
 | T7 | any | reset | — | clear | NOT_ALLOWED | all | 1 | Implemented | a.h:3 |"""
 
-GOLDEN_MERMAID = """\
-```mermaid
-stateDiagram-v2
-  [*] --> NOT_ALLOWED
-  NOT_ALLOWED --> ALLOWED: T1
-  ALLOWED --> NOT_ALLOWED: T2
-  ALLOWED --> NOT_ALLOWED: T3
-  NOT_ALLOWED --> NOT_ALLOWED: T7
-  ALLOWED --> NOT_ALLOWED: T7
-```"""
 
 
 class TestGeneration(unittest.TestCase):
@@ -241,7 +231,8 @@ class TestGeneration(unittest.TestCase):
   def test_render_golden(self):
     out = csm.render(GOOD, SW)
     self.assertIn(GOLDEN_TABLE, out)
-    self.assertTrue(out.endswith(GOLDEN_MERMAID), out[-400:])
+    self.assertTrue(out.endswith(GOLDEN_TABLE), out[-400:])
+    self.assertNotIn("```mermaid", out)
 
   def test_render_gap_table(self):
     sm = copy.deepcopy(GOOD)

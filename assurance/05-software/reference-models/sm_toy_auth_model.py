@@ -62,13 +62,6 @@ DEVIATIONS = {
   # SWSR-408 / MA-08: supervision starts when authority is granted (B2B-04). Option: it starts at the first safety task that
   # finds authority granted, and "granted before" is what the previous safety task saw.
   "arrival_from_first_tick": False,
-  # SWSR-311 v0.24 (B2B-06, DQ-080): after a mode set, authority needs CRUISE_ACTIVE = 0 to be received before a rising
-  # edge counts. Option: the edge memory is simply cleared, so a CRUISE_ACTIVE held through the mode set is a new edge
-  # (the C before ATC-26, jherrodthomas/opendbc#15). Remove at the pin bump that brings ATC-26.
-  "mode_set_regrant": False,
-  # SWSR-518 v0.24 (F-34, DQ-079): after a TX-rate revocation, no grant until one full window has passed without a
-  # rejected frame. Option: no such block (the C before ATC-20, jherrodthomas/opendbc#15). Remove at the same pin bump.
-  "tx_rate_regrant": False,
 }
 
 
@@ -176,7 +169,7 @@ class SmToyAuth:
     """SWSR-518 v0.24: after a revocation, no grant until a full window without a rejected frame (the block ends then)."""
     if self.tx_block and self.last_reject_ts is not None and self.now - self.last_reject_ts >= TX_WINDOW_US:
       self.tx_block = False
-    return self.tx_block and not self.dev["tx_rate_regrant"]
+    return self.tx_block
 
   def _moving(self) -> bool:
     if self.dev["moving_from_sum"]:
@@ -292,7 +285,7 @@ class SmToyAuth:
           # Reference build, v0.24: also CRUISE_ACTIVE = 0 seen since the mode set (SWSR-311) and no TX-rate block
           # (SWSR-518). Both are LIONDRIVER_REFERENCE changes; the upstream build keeps the old behaviour
           tx_blocked = self.reference and self._tx_block_holds()
-          edge_counts = (not self.reference) or self.seen_disengaged or self.dev["mode_set_regrant"]
+          edge_counts = (not self.reference) or self.seen_disengaged
           if self._all_checks_ok() and not (self.reference and not self.main_on) and edge_counts and not tx_blocked:
             grant = True
             fired.append("T1")
