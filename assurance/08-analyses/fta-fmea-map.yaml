@@ -754,8 +754,8 @@ events:
   - id: UE-8.11
     class: external
     ref: >-
-      None yet: no assumption of use states that the PCM holds the vehicle at standstill under ACC until the driver acts,
-      and it is not characterised on the reference Corolla (DQ-365 A, vehicle test). F-38
+      AOU-16 (WP-C-01): the PCM keeps the vehicle stopped and held under ACC after the no-response stop. Not yet
+      characterised on the reference Corolla; verified by the DQ-365 A vehicle test (level ground and a 6 % grade)
 
 gates:
   - id: G4.1
