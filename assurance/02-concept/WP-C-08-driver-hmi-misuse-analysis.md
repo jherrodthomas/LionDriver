@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-C-08 Driver interaction, HMI and reasonably foreseeable misuse analysis |
 | Standard reference | ISO 26262-3:2018 §6 (controllability basis); ISO 21448:2022 §6 and Annex B (misuse, informative); UNECE R79 and R171 (informative benchmarks, WP-M-01 T-13); RESPONSE 3 Code of Practice for ADAS (informative) |
-| Version | 0.4 (OI-7, the duplicate OI-4: gas override behaviour kept, DQ-022 A; MC-08 updated; 2026-10-16). 0.3 (§6.1 HARA side recorded: WP-C-03 v0.4 rates H-STPA-1 as OS-17/OS-18 and adds H-09 with SG-08, ASIL A, decision register DQ-003, DQ-205; OI-4 narrowed to the FSC follow-up; 2026-10-16). 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
+| Version | 0.5 (§5.4 added: supervision bound and speed table for the wheel-touch fallback, required by TSR-634 (DQ-077 A); DMP-05; OI-8; 2026-10-17). 0.4 (OI-7, the duplicate OI-4: gas override behaviour kept, DQ-022 A; MC-08 updated; 2026-10-16). 0.3 (§6.1 HARA side recorded: WP-C-03 v0.4 rates H-STPA-1 as OS-17/OS-18 and adds H-09 with SG-08, ASIL A, decision register DQ-003, DQ-205; OI-4 narrowed to the FSC follow-up; 2026-10-16). 0.2 (§6.1: H-STPA-1 treated as reasonably foreseeable misuse in both SOTIF and the HARA, decision register DQ-003; HARA side open; MC-09 updated for the Chill mode default; 2026-10-14). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF; backs the HARA C2 ratings (SG-01…SG-08) |
 | Author | Assurance team (initial draft) |
@@ -103,6 +103,45 @@ These regulations are not binding in the US (WP-M-01 T-13). Values must be check
 | DMP-02 | Detect phone use and sleep states with rates per WP-C-11 AIR-08, validated under WP-V-02 VT-08. Target confirmed 2026-10-12 (OI-2) | DM clinic |
 | DMP-03 | Detect a covered or blocked driver camera within 10 s and fall back to the stricter policy | Test; FM-05 |
 | DMP-04 | Wheel-touch fallback cannot be satisfied by periodic small inputs (FM-05) | Test |
+| DMP-05 | In the wheel-touch fallback, alert *k* fires at no more than D*k* = 150 / 240 / 395 m driven since the last interaction, or T*k* = 5 / 15 / 25 s if that comes first (§5.4; TSR-634) | Test (T-SIL at constant and varying speed); DM clinic, §8 V-5; WP-V-02 §4.4 |
+
+### 5.4 Wheel-touch escalation by speed (TSR-634)
+
+The lead decided on 2026-10-14 that, in the wheel-touch fallback, the reminders come faster at highway speed (decision register DQ-077, option A). [WP-S-02](../03-system/WP-S-02-technical-safety-requirements.md) TSR-634 requires this, with the speed table and the supervision bound set here. The problem it treats is [WP-A-05](../08-analyses/WP-A-05-stpa.md) LS-09. With sunglasses or in low light the camera confidence drops, and the policy falls back to wheel touch with fixed 5 / 15 / 25 s timers (§5.1). At 110 km/h, 25 s is 764 m driven before the strongest alert. Over the same 764 m, a driver seen by the vision policy gets that alert after 13 s.
+
+**Supervision bound.** In the wheel-touch fallback, the distance driven since the last driver interaction before alert *k* shall not exceed D*k*:
+
+| Alert | Vision policy time (`policy.py:34-36`) | Bound D*k* = vision time × 110 km/h, rounded down to 5 m | Wheel-touch time cap, unchanged (`policy.py:31-33`) |
+|---|---|---|---|
+| 1 | 5 s | 150 m | 5 s |
+| 2 | 8 s | 240 m | 15 s |
+| 3 | 13 s | 395 m | 25 s |
+
+Rule: alert *k* fires at whichever comes first, T*k* seconds or D*k* metres since the last interaction. Distance is the integral of vehicle speed, so the rule also holds while speed changes. The no-response stage (5 s after alert 3, §5.1) and the lockout are unchanged.
+
+Why this bound:
+
+1. **The bound is the distance the vision policy allows at the ODD speed bound.** At 110 km/h (WP-C-02, DQ-260), each wheel-touch alert comes no later than the vision-policy alert of the same level. A driver whose face the camera cannot read gets no more unsupervised distance than the vision policy gives a driver it sees looking away at 110 km/h. At lower speeds the vision policy gives less distance than D*k*, because its timers are fixed. The fallback stays weaker there, but never by more distance than is already accepted at 110 km/h.
+2. **No change below about 57 km/h.** The time caps still govern there, so the bound does not add nuisance alerts in slow traffic. Alert 1 is set by time at every speed up to 108 km/h, so the first reminder is as frequent as today across almost the whole ODD.
+3. **Above the ODD bound the rule only tightens.** Distance keeps governing, so at 120 km/h the alerts come at 4.5 / 7.2 / 11.8 s.
+
+**Speed table (derived from the rule; for TSR-634 and the SWSR).**
+
+| Speed (km/h) | Alert 1 / 2 / 3 (s) | Distance to alert 1 / 2 / 3 (m) | Today, distance (m) |
+|---|---|---|---|
+| ≤ 50 | 5.0 / 15.0 / 25.0 | ≤ 69 / 208 / 347 | same |
+| 60 | 5.0 / 14.4 / 23.7 | 83 / 240 / 395 | 83 / 250 / 417 |
+| 70 | 5.0 / 12.3 / 20.3 | 97 / 240 / 395 | 97 / 292 / 486 |
+| 80 | 5.0 / 10.8 / 17.8 | 111 / 240 / 395 | 111 / 333 / 556 |
+| 90 | 5.0 / 9.6 / 15.8 | 125 / 240 / 395 | 125 / 375 / 625 |
+| 100 | 5.0 / 8.6 / 14.2 | 139 / 240 / 395 | 139 / 417 / 694 |
+| 110 | 4.9 / 7.9 / 12.9 | 150 / 240 / 395 | 153 / 458 / 764 |
+
+Limits of this derivation:
+
+- It caps exposure; it does not show that drivers respond. Whether drivers in the fallback respond to the faster alerts, and whether the extra alerts become a nuisance that drivers defeat (FM-05, DMP-04), is validated under [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) §4.4.
+- Anchoring on the vision-policy times is a technical choice. A different anchor, such as a fixed time to the strongest alert at highway speed, would change only D*k*. The anchor is revisited if the §4.4 nuisance or response results fail.
+- Not implemented: `policy.py:31-33` still uses the fixed times (TSR-634 Impl). The SWSR is written by the WP-W-02 owner from this table.
 
 ## 6. Reasonably foreseeable misuse
 
@@ -155,7 +194,7 @@ These assumptions underlie the C2 (and target C1) ratings in the HARA and the FS
 | V-2 | HMI clinic (static/parked and low-speed): alert perception, comprehension of override/disengage states, Experimental vs Chill | Parked vehicle / test track | CA-07, MC-08 evidence | — |
 | V-3 | Controllability test: injected worst-case lateral events (step, ramp, frozen torque) at representative speeds, naive subjects, hands-on and hands-off postures | Closed course, dual controls or safety driver, fault injection via a test build only | CA-01, CA-02, CA-06 | V-1; ethics/consent; injection build locked to test vehicle |
 | V-4 | Longitudinal controllability: unexpected acceleration/deceleration events at envelope bounds | Closed course, soft targets | CA-03, CA-04 | V-1 |
-| V-5 | DM clinic: distraction tasks (phone, look-away), sunglasses, night, camera covered, defeat attempts | Test track and controlled public-road drives with safety driver | DMP-01…04 | FM-05, FM-06 implemented |
+| V-5 | DM clinic: distraction tasks (phone, look-away), sunglasses, night, camera covered, defeat attempts; wheel-touch fallback driven at 90–110 km/h (§5.4) | Test track and controlled public-road drives with safety driver | DMP-01…05 | FM-05, FM-06 implemented |
 | V-6 | Evaluation against pass criteria; report into WP-V-01 and HARA re-rating | — | Confirmed or revised C ratings | V-1…V-5 |
 
 Method notes (RESPONSE 3 Code of Practice, informative): use naive subjects representative of the user population, define the controllability criterion before testing, keep the scenario unknown to the subject, and record objective measures (lateral deviation, time-to-collision, reaction time) plus subjective ratings. Results: **not yet executed**.
@@ -171,3 +210,4 @@ Method notes (RESPONSE 3 Code of Practice, informative): use naive subjects repr
 | OI-7 | Closed 2026-10-14 (listed as a second OI-4 until v0.3): the lead kept today's behaviour, gas pauses speed control only and `DisengageOnAccelerator` stays `0` (decision register DQ-022, A). The confusion of MC-08 is covered by the override alert, which the HMI clinic (§8 V-2) must show is understood | Maintainer | — |
 | OI-5 | Check whether alert volume can be reduced below an audible floor (MC-12) | SW lead | G2 |
 | OI-6 | Confirm whether the `mici` device-specific DM alerts (`events.py:1018+`) apply to the reference device | SW lead | G1 |
+| OI-8 | Implement the §5.4 rule in `policy.py` (TSR-634, SWSR by the WP-W-02 owner) and validate it per WP-V-02 §4.4; revisit the anchor of D*k* if the response or nuisance results fail | SW lead (implementation); SOTIF lead (validation) | G3 |

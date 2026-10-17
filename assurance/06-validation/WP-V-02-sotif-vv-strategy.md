@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-V-02 SOTIF verification and validation strategy, validation targets |
 | Standard reference | ISO 21448:2022 §9 (V&V strategy, validation targets), Annex C (informative, validation target derivation); ISO/PAS 8800:2024 (AI V&V); ASPICE 4.0 VAL.1 |
-| Version | 0.6 (the lead's decisions: simulation credit per scenario family once its fidelity case is approved, DQ-139; CARLA not now, revisit at G3, DQ-261; §5.3, §5.4, OI-4; 2026-10-16). 0.5.1 (§5.3.1 simulator status brought up to date by the simulation session at the SOTIF session's request: bridge PR #124, scenario files, plant model; no plan or target changed; 2026-10-16). 0.5 (ODD speed bound 110 km/h, decision register DQ-260: §3.3, §3.4, §4; 2026-10-16). 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
+| Version | 0.7 (§4.4 added: validation of the speed-dependent wheel-touch reminder timing, TSR-634 (DQ-077 A); VT-08 covers DMP-05; 2026-10-17). 0.6 (the lead's decisions: simulation credit per scenario family once its fidelity case is approved, DQ-139; CARLA not now, revisit at G3, DQ-261; §5.3, §5.4, OI-4; 2026-10-16). 0.5.1 (§5.3.1 simulator status brought up to date by the simulation session at the SOTIF session's request: bridge PR #124, scenario files, plant model; no plan or target changed; 2026-10-16). 0.5 (ODD speed bound 110 km/h, decision register DQ-260: §3.3, §3.4, §4; 2026-10-16). 0.4 (§5.3 fidelity-case plan written: scenario families, fidelity elements, comparison, synthetic-data labelling for DSR-12; §5.4 CARLA assessed, decision queued as DQ-261; 2026-10-16). 0.3 (the lead's decisions applied: highways only, decision register DQ-023; controllability tested to 110 km/h, DQ-091; controllability pass limits fixed before testing, DQ-042; public-road limits, DQ-046; no uploads to comma, DQ-084; 2026-10-16). 0.2 (Figure 4-1 added, generated from §3.1, §3.2 and §4; 2026-10-13). 0.1 |
 | Status | Draft |
 | ASIL / scope | SOTIF |
 | Author | Assurance team (initial draft) |
@@ -316,7 +316,7 @@ Targets are **proposals**: numeric values are placeholders for the assessor revi
 | VT-05 | SH-05 override not effective | Release on brake / cancel / steering override | 100 % release within SG-05 budget in ≥ 299 trials per input type and speed band (p ≤ 1 % at 95 %) | Deterministic function, tested as a sample | CC, HIL (WP-V-05) | Yes |
 | VT-06 | SH-06 missed or late stationary/slow lead | Collision or required driver braking > 5 m/s² | p_s ≤ 1 % per approach-speed band in the ODD (KS-05, KS-08); FCW at TTC ≥ 2 s (AIR-06) | §3 step 5, case E; B2 comparison | CC with soft target, SIM | Yes for the bands tested |
 | VT-07 | SH-08 PCS suppression | Stock PCS activation with LD-SDA installed vs stock | Equivalent activation (same TTC ± 0.2 s) in every PCS soft-target test | B2 | CC (KS-20; VS-VAL in WP-V-01) | Yes |
-| VT-08 | SH-12 prolonged unsupervised operation (DM) | Distraction, phone, sleep detection; fallback on camera blockage | AIR-07/AIR-08 thresholds per DM stratum; DMP-01…DMP-04; AC-05 | WP-C-08 §5.3 | EVAL (VS-ML-06), CC (WP-C-08 §8 V-5) | Yes |
+| VT-08 | SH-12 prolonged unsupervised operation (DM) | Distraction, phone, sleep detection; fallback on camera blockage; reminder timing in the wheel-touch fallback | AIR-07/AIR-08 thresholds per DM stratum; DMP-01…DMP-05; AC-05; fallback timing per §4.4 | WP-C-08 §5.3, §5.4; §4.4 | EVAL (VS-ML-06), CC (WP-C-08 §8 V-5), T-SIL and PR for §4.4 | Yes, once TSR-634 is implemented |
 | VT-09 | All | Comparative performance vs stock TSS2 (B2) | LD-SDA not worse than stock in any KS scenario run with both (metric per scenario in WP-V-03) | B2 | CC, PR (paired routes) | Yes for scenarios run |
 | VT-10 | All | Unknown-scenario discovery rate | Discovery rate of new hazardous scenario classes (WP-V-04 §5) decreasing over the last 3 exploration blocks, with no class of severity S3 found in the last block | 21448 §11 | PR, SIM exploration, log mining | Yes as a trend; not as a proof |
 | VT-11 | All | Field: harm-level events attributable to LD-SDA | Zero injury crashes; trigger thresholds for restriction defined in WP-O-04 | B1 (long-term) | Field monitoring | Long-term only |
@@ -394,6 +394,19 @@ At the ODD speed bound, the required report distance is 33.3 + 33.3² / 6 ≈ 21
 | DSR-07 | ≥ 10 % double annotation | — | N | Label specification (WP-W-10) |
 
 Result: eight values are confirmed or replaced (C). AIR-11 and AIR-14 are confirmed through VT-14 and VT-15, and AIR-01, AIR-03 and AIR-04 through the derivation of §4.3. No value is left at D or G. The remaining six take their value from timing, ML engineering or data documents, not from this one (N). Until then, every (TBC) in WP-C-11 stays (TBC).
+
+### 4.4 Validation of the wheel-touch reminder timing (TSR-634)
+
+[WP-C-08 §5.4](../02-concept/WP-C-08-driver-hmi-misuse-analysis.md) sets the speed-dependent reminder timing for the wheel-touch fallback: alert *k* fires at 150 / 240 / 395 m driven, or 5 / 15 / 25 s if that comes first (DMP-05, TSR-634, DQ-077 A). VT-08 covers it with the four checks below. The values are proposals for the assessor review (OI-3). Nothing has been executed, and `policy.py` still has the fixed times.
+
+| Check | Question | Proposed criterion | Method | Where |
+|---|---|---|---|---|
+| (a) Conformance | Does the code implement the rule, including while speed changes? | Every alert at min(T*k*, D*k*) within one DM cycle, for constant speeds 30…120 km/h in 10 km/h steps and for acceleration and deceleration ramps of ±1.5 m/s² across 57 km/h, the speed where distance starts to govern | T-SIL replay of synthetic speed profiles | Verification entry in [WP-S-09](../03-system/WP-S-09-system-verification.md) (§7) |
+| (b) Response | Do drivers in the fallback respond to the faster alerts before the no-response stage? | 20/20 valid subjects give a wheel input before the no-response stage, at 90 and 110 km/h, with the fallback forced (sunglasses) during a scripted secondary task (CA-07 sample logic) | CC: DM clinic, WP-C-08 §8 V-5; subjects per [WP-V-01](WP-V-01-safety-validation.md) §5.2 | WP-V-01 VS-VAL-17 |
+| (c) Nuisance | Do the extra alerts annoy attentive drivers enough that they defeat the system? | Alert 2 or 3 in the fallback with an attentive, hands-on driver: ≤ 1 per hour at 95 %, on highway drives at 90–110 km/h. This is the χ² bound of §3 step 3 with the AIR-08 nuisance budget | PR with safety driver, fallback forced; alerts reviewed against cabin video | VT-08 result row |
+| (d) Exposure | How often is the fallback active? | No criterion. The share of engaged time in the fallback is reported per DM stratum (sunglasses, night, glare) and sizes the residual of LS-09 | PR, log mining | [WP-V-04](WP-V-04-sotif-unknown-scenarios.md) residual estimate |
+
+If (b) or (c) fails, the anchor of D*k* is revisited (WP-C-08 OI-8). A change of D*k* goes back through WP-C-08 §5.4 and TSR-634, not into the code alone.
 
 ## 5. Test methods
 

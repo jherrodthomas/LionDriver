@@ -91,7 +91,7 @@
 <text x="58" y="614" font-size="11" fill="#475569">See Figure 8 and the allocation resolution report.</text>
 <rect x="650" y="552" width="590" height="74" rx="10" fill="#FEF2F2" stroke="#D2553F" stroke-width="1.2" stroke-dasharray="5 4"/>
 <text x="668" y="576" font-size="12" fill="#D2553F" font-weight="700">Code and tests · @req tags, links/verification.yaml</text>
-<text x="668" y="596" font-size="11" fill="#475569">0 tags in code or tests. 295 of 433 items are named by a test-specification case:</text>
+<text x="668" y="596" font-size="11" fill="#475569">0 tags in code or tests. 296 of 433 items are named by a test-specification case:</text>
 <text x="668" y="614" font-size="11" fill="#475569">a specified link, not a passed test.</text>
 <rect x="40" y="650" width="14" height="12" rx="3" fill="#F0FDFA" stroke="#0F766E" stroke-width="1.2"/>
 <text x="60" y="660" font-size="11" fill="#475569">in items/, checked</text>
