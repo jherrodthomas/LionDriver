@@ -302,12 +302,12 @@ the technical safety requirements it implements."""
 [views.V-03]
 file = "fig-sysml-v03-system-interconnection.svg"
 title = "Technical safety architecture"
-subtitle = "LD-SDA in its vehicle context · QM partition and B‡ safety envelope · interfaces IF-01 to IF-10 · SM from WP-S-03 §6"
+subtitle = "LD-SDA in its vehicle context · QM partition and ASIL C safety envelope · interfaces IF-01 to IF-10 · SM from WP-S-03 §6"
 width = 1520
 height = 1200
 ignore_route = ["ifDevicePower"]
 desc = """Interconnection view generated from the SysML v2 model. The comma device E-04 holds the QM partition \
-(E-04b hardware, E-01 SoC processes, E-02 ML models) and the B‡ safety envelope (E-03a safety layer, E-03b \
+(E-04b hardware, E-01 SoC processes, E-02 ML models) and the ASIL C safety envelope (E-03a safety layer, E-03b \
 platform firmware, E-04a STM32H7). pandad talks to the platform firmware over SPI (IF-04) and drives the MCU \
 boot pins (IF-04b). Bus 0 and bus 2 run through the E-05 harness relay to the vehicle CAN (IF-01, IF-02) and the \
 Toyota forward camera (IF-03); the radar CAN is bus 1. The MCU drives the relay (IF-10). Display, speaker and \
@@ -368,7 +368,7 @@ style = "slate"
 key = "band-env"
 kind = "band"
 box = [876, 146, 348, 22]
-text = "SAFETY ENVELOPE · B‡ · E-03a, E-03b, E-04a"
+text = "SAFETY ENVELOPE · ASIL C · E-03a, E-03b, E-04a"
 style = "envelope"
 
 [[views.V-03.node]]

@@ -17,7 +17,7 @@ import sysml_lite
 MINI = """
 package L {
     private import ScalarValues::*;
-    enum def Integrity { enum QM; enum BDagger; }
+    enum def Integrity { enum QM; enum BDagger; enum C; }
     metadata def Safety { attribute integrity : Integrity; attribute label : String; }
     port def P;
     interface def Link { end port source : P; end port target : P; }
@@ -25,7 +25,7 @@ package L {
     part def Item {
         doc /* The item. */
         part <'E-01'> a : A { @Safety { integrity = Integrity::QM; label = "QM"; } }
-        part <'E-03'> b : A { @Safety { integrity = Integrity::BDagger; label = "B‡"; } }
+        part <'E-03'> b : A { @Safety { integrity = Integrity::C; label = "C"; } }
         interface ab : Link connect source ::> a.p to target ::> b.p;
     }
     part ctx : Item;
@@ -57,7 +57,7 @@ class Reader(unittest.TestCase):
     self.assertEqual(len(m.mechanisms), 43)
     self.assertEqual(m.find("P-SW").short, "E-03")
     e = m.find("panda.safety.toyota.eps_fault")
-    self.assertEqual(e.integrity(), "BDagger")
+    self.assertEqual(e.integrity(), "C")
     self.assertEqual(e.meta["Unit"]["id"], "U-SAF-TOY")
     self.assertEqual(m.elements["context.driver"].scope(), "outside")
     self.assertIn("context.ldsda.deviceHardware.safetyMcu", m.mechanisms["SM-15"].performers)
@@ -68,11 +68,36 @@ class Checks(unittest.TestCase):
     f = check_model.integrity_of_text
     self.assertEqual(f("B‡"), "BDagger")
     self.assertEqual(f("B (PCS restore), B‡ (blocking)"), "BDagger")
+    self.assertEqual(f("C"), "C")
+    self.assertEqual(f("ASIL C"), "C")
+    self.assertEqual(f("B (PCS restore), C (blocking)"), "C")
+    self.assertEqual(f("C (blocking) / B (PCS restore)"), "C")
+    self.assertEqual(f("C/B"), "C")
+    self.assertEqual(f("C + CS"), "C")
+    self.assertEqual(f("C (B‡ before DQ-341)"), "C")
+    self.assertEqual(f("B‡ (FFI, CS)"), "BDagger")
+    self.assertEqual(f("B(C)"), "B")
+    self.assertEqual(f("QM (C-sup)"), "QM")
     self.assertEqual(f("B (feeds heartbeat timeout choice, TSR-510)"), "B")
     self.assertEqual(f("QM (B-sup); FFI interface"), "QMBsup")
     self.assertEqual(f("Mixed: siren B, rest QM"), "B")
     self.assertEqual(f("QM (SOTIF/PAS 8800)"), "QM")
     self.assertEqual(f("Interference source"), "QM")
+
+  def test_integrity_rank_and_asil(self):
+    rank = check_model.INTEGRITY_RANK
+    self.assertGreater(rank["C"], rank["BDagger"])
+    self.assertGreater(rank["BDagger"], rank["B"])
+    self.assertIn("C", check_model.ASIL)
+
+  def test_envelope_is_asil_c(self):
+    m = sysml_lite.load()
+    for ident in ("E-03", "E-03a", "E-03b", "E-04a", "E-05"):
+      self.assertEqual(m.find(ident).integrity(), "C", ident)
+    self.assertEqual(m.find("E-04b").integrity(), "QM")
+    self.assertEqual(m.find("panda.drivers.harness").integrity(), "C")
+    self.assertEqual(m.find("panda.safety.longitudinal").integrity(), "B")
+    self.assertFalse([e.path for e in m.elements.values() if e.meta.get("Safety", {}).get("integrity") == "Integrity::BDagger"])
 
   def test_expand_tsr(self):
     self.assertEqual(check_model.expand_tsr("105–107, 203"), ["TSR-105", "TSR-106", "TSR-107", "TSR-203"])
@@ -124,6 +149,17 @@ class Rendering(unittest.TestCase):
     v03 = files["fig-sysml-v03-system-interconnection.svg"]
     for iid in ("IF-01", "IF-03", "IF-04", "IF-04b", "IF-07", "IF-08", "IF-09", "IF-10"):
       self.assertIn(iid, v03)
+
+  def test_envelope_drawn_as_asil_c(self):
+    m = sysml_lite.load()
+    self.assertIs(render_views.style_of(m.find("E-03a")), svgkit.ENVELOPE)
+    self.assertIs(render_views.style_of(m.find("panda.safety.longitudinal")), svgkit.ASIL_B)
+    files = render_views.render_all(m)
+    self.assertIn("ASIL C safety envelope", files["fig-sysml-v03-system-interconnection.svg"])
+    self.assertIn("ASIL C", files["fig-sysml-v02-element-hierarchy.svg"])
+    self.assertIn("by an ASIL C element", files["fig-sysml-v04-mechanism-allocation.svg"])
+    for name, svg in files.items():
+      self.assertNotIn("B‡ safety envelope", svg, name)
 
   def test_layout_must_name_model_elements(self):
     m = sysml_lite.load()

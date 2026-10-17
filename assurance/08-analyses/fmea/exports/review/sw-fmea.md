@@ -4,9 +4,9 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 1.1 | draft | BL-005 | RT-2 | 2026-10-16 |
+| 1.2 | draft | BL-005 | RT-2 | 2026-10-16 |
 
-**Scope.** P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37.
+**Scope.** P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37. Rev 1.2: no driver-override check on the LKA path in the envelope (SWF-087), for F-28.
 
 **Team.** Jherrod Thomas (Project maintainer, safety lead (reviewer/approver)); Claude (AI assistant) (Drafting assistance; ratings require human review)
 
@@ -95,7 +95,7 @@ The failure chains (element → function → failure mode → causes) are drawn 
 | &nbsp;&nbsp;&nbsp;`SWF-SE-003` TX whitelist and dispatch | sw_unit | `SWF-FN-001` Transmit only whitelisted messages, each passed through the mode-specific check |
 | &nbsp;&nbsp;&nbsp;`SWF-SE-004` Forwarding hook | sw_unit | `SWF-FN-007` Block stock-camera messages the item replaces; forward all others, including stock pre-collision messages |
 | &nbsp;&nbsp;&nbsp;`SWF-SE-005` Controls-allowed logic | sw_unit | `SWF-FN-004` Allow controls on rising edge of PCM cruise; withdraw on cruise off, brake press, invalid or lagging safety messages |
-| &nbsp;&nbsp;&nbsp;`SWF-SE-006` Steering torque checks | sw_unit | `SWF-FN-002` Block steering requests outside torque magnitude, rate and measured-torque-error limits, and any torque while controls are not allowed |
+| &nbsp;&nbsp;&nbsp;`SWF-SE-006` Steering torque checks | sw_unit | `SWF-FN-002` Block steering requests outside torque magnitude, rate and measured-torque-error limits, and any torque while controls are not allowed<br>`SWF-FN-014` Back steering torque off toward zero while the driver overrides, and reject frames that increase torque opposing the driver beyond a driver allowance (TSR-304; not implemented on the LKA path) |
 | &nbsp;&nbsp;&nbsp;`SWF-SE-007` Longitudinal checks | sw_unit | `SWF-FN-003` Block acceleration outside the range, and any non-inactive acceleration while controls are not allowed or the accelerator is pressed |
 | &nbsp;&nbsp;&nbsp;`SWF-SE-008` Toyota safety mode | sw_unit | `SWF-FN-006` Decode Toyota vehicle state: EPS torque, cruise state, brake, accelerator, wheel speeds |
 | &nbsp;&nbsp;&nbsp;`SWF-SE-009` Relay malfunction detection | sw_unit | `SWF-FN-008` Detect a relay malfunction and block all item transmission |
@@ -360,6 +360,24 @@ Effects:
 Safety mechanisms: (1) Panda blocks non-zero torque and the steer-request bit while controls are not allowed
 
 <sub>Note: Depends on controls_allowed being correct; see SWF-007..SWF-009.</sub>
+
+#### SWF-087 · Envelope passes LKA torque that opposes the driver while the driver overrides the steering
+
+🔴 **H** · **S 10** · guideword *omission* · function `SWF-FN-014` Back steering torque off toward zero while the driver overrides, and reject frames that increase torque opposing the driver beyond a driver allowance (TSR-304; not implemented on the LKA path)
+
+Effects:
+
+- **End:** Item resists the driver's steering within the panda torque bound (HZ-009, S 10)
+- **Next higher:** The only override check is the host's MAX_USER_TORQUE of 500 units (carcontroller.py:33, 83); with a host fault, or below 500 units by design (SWF-038), torque up to the 1500 limit keeps opposing the driver
+- **Local:** STEERING_LKA (0x2E4) frames that oppose the driver pass: the Toyota LKA check is magnitude, rate and measured-torque error only (TorqueMotorLimited); STEER_TORQUE_DRIVER is decoded (toyota.h:221-223) but used only on the LTA path (toyota.h:421-424)
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-087.C1` By design the envelope has no driver-override check on the LKA path (GAP-02): TSR-304 (driver allowance, and back-off while the driver torque exceeds T_ovr; decided as DQ-053, 2026-10-14) is not implemented in toyota.h, in either build | • Upstream design (a bounded torque the driver can overpower); requirement TSR-304 not implemented, so O 8 (RT-2 §2), as the other by-design gaps <sub>opendbc_repo/opendbc/safety/modes/toyota.h</sub> | • test_toyota.py tests the measured-torque limit (MotorTorqueSteeringSafetyTest, MAX_TORQUE_ERROR 350); no test of torque opposing the driver on the LKA path | 8 | 10 | 🔴 **H** | SWF-ACT-074 |
+
+Safety mechanisms: (1) Panda torque magnitude (1500), rate (up 15, down 25) and measured-torque-error (350) limits bound what can oppose the driver (SWF-001, FSR-032) · (2) Host lateral cut-off at 500 units of driver torque (carcontroller.py:83; QM)
+
+<sub>Note: Realises BE-5.05 (WP-A-04 G5.3, SPF-12) on the envelope side; the host side is SWF-038 and SWF-044. Whether the bounded torque is hazardous depends on the measured override force (FSR-031 vehicle test, not done).</sub>
 
 ### `SWF-SE-007` Longitudinal checks
 
@@ -1924,6 +1942,7 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | SWF-ACT-073 | detection | End-to-end test of the terminal reaction: drive policy, controlsd and plannerd from a recorded or synthetic unresponsive-driver input and check that forceDecel is set 5 s after the terminal alert and the vehicle reaches standstill within the time set for TSR-633; add a freshness check on driverMonitoringState in controlsd, and do not route the terminal reaction through plannerd alone (WP-A-03 DFI-33) | Jherrod Thomas | open | SWF-086.C1, SWF-086.C2 | — |
 | SWF-ACT-075 | design_change | msgq protection for the control and supervision topics (WP-A-03 DFI-29): sequence or E2E protection so a skipped or altered message is detected, a subscriber-count guard so a 16th reader cannot evict the others, and host supervision of control credited only where it is independent of msgq | Jherrod Thomas | open | SWF-080.C1, SWF-080.C2 | — |
 | SWF-ACT-076 | design_change | One publisher per control topic, enforced at subscribe time (WP-A-03 DFI-31): the comma four cabin-camera dialog must not publish selfdriveState, and the dialog is closed before the item goes onroad | Jherrod Thomas | open | SWF-085.C1 | — |
+| SWF-ACT-074 | design_change | Envelope override check (TSR-304, DQ-053): in toyota.h reject 0x2E4 frames that increase torque opposing STEER_TORQUE_DRIVER beyond the driver allowance, and back off toward zero at no less than the down rate while the override lasts; report the state to the SoC (TSR-628). Add opendbc safety tests and mutation for both branches; host counterpart SWF-ACT-046 | Jherrod Thomas | open | SWF-087.C1 | — |
 
 ## 6. Priority H causes without a completed action
 
@@ -2056,3 +2075,4 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | `SWF-085.C2` | Driver monitoring evaluates the driver in demo mode while the item is engaged | 10/8/10 | SWF-ACT-072 |
 | `SWF-086.C1` | Forced deceleration not requested, not passed on, or not carried to a stop after the terminal alert | 10/5/9 | SWF-ACT-073 |
 | `SWF-086.C2` | Forced deceleration not requested, not passed on, or not carried to a stop after the terminal alert | 10/8/8 | SWF-ACT-059, SWF-ACT-073 |
+| `SWF-087.C1` | Envelope passes LKA torque that opposes the driver while the driver overrides the steering | 10/8/10 | SWF-ACT-074 |

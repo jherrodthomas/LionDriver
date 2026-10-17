@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-S-03 Technical safety concept and system architectural design |
 | Standard reference | ISO 26262-4:2018 §6 (technical safety concept, system architectural design, safety mechanisms, FFI/independence by reference to ISO 26262-9 §6–§7); ISO 21448:2022 §8 (architecture-level functional modifications, by reference); ASPICE 4.0 SYS.3 |
-| Version | 0.11 (DQ-341 applied: envelope elements ASIL C; OI-6 now to be done; 2026-10-16). 0.10 (scope line: SG-02, SG-03 and SG-06 ASIL C, SG-08 ASIL A, per WP-C-03 v0.4 and WP-S-02 v0.24; 2026-10-16). 0.9 (lead decisions of 2026-10-14 recorded: override backs off (DQ-053, SM-05), EPS-fault siren persistence ≤ 0.7 s (DQ-048), relay stuck in intercept warns and blocks engagement (DQ-064, SM-20), fallback limiter decided after the tests (DQ-050, OI-3); 2026-10-16). 0.8 (Figure 6-1 added, generated from the trace data of §5 and §6; 2026-10-13). 0.7 (§3.1 element hierarchy added as Figure 3-1; 2026-10-13). 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3.2, §4.1 and §4.4 diagrams redrawn as Figures 3-2, 4-1 and 4-4; text versions kept; 2026-10-13). History: 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently); 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
+| Version | 0.12 (OI-6 done: envelope elements E-03a, E-03b, E-04a and the interfaces they serve changed from B‡ to ASIL C in §3.1, §3.3, §5, Figures 3-1 and 3-2 and the SysML model; E-05 C (blocking) / B (PCS restore); OI-6 closed; 2026-10-16). 0.11 (DQ-341 applied: envelope elements ASIL C; OI-6 now to be done; 2026-10-16). 0.10 (scope line: SG-02, SG-03 and SG-06 ASIL C, SG-08 ASIL A, per WP-C-03 v0.4 and WP-S-02 v0.24; 2026-10-16). 0.9 (lead decisions of 2026-10-14 recorded: override backs off (DQ-053, SM-05), EPS-fault siren persistence ≤ 0.7 s (DQ-048), relay stuck in intercept warns and blocks engagement (DQ-064, SM-20), fallback limiter decided after the tests (DQ-050, OI-3); 2026-10-16). 0.8 (Figure 6-1 added, generated from the trace data of §5 and §6; 2026-10-13). 0.7 (§3.1 element hierarchy added as Figure 3-1; 2026-10-13). 0.6 (heartbeat-loss siren, panda `c33343b`; EPS-siren worst case 1.26 s; 2026-10-13). 0.5 (§3.2, §4.1 and §4.4 diagrams redrawn as Figures 3-2, 4-1 and 4-4; text versions kept; 2026-10-13). History: 0.4 (status update 2026-10-12: reference-build column in §4.3, status of SM-06, -09, -11, -12, -15, -22, -23, -36, -39 and of FFI-2, -5, -6 at `bf6ce8c`; OI-4 trigger reached; nothing verified on hardware or reviewed independently); 0.3 (SM-43; SM-23, -30, -31, -35 extended for WP-S-02 v0.3; watchdog ≤ 0.1 s; 2026-10-12) |
 | Status | Draft |
 | ASIL / scope | Up to ASIL C (SG-02, SG-03, SG-06 since WP-C-03 v0.4; SG-01 until re-rated); ASIL A for SG-08. The envelope is hardened to ASIL C (WP-C-04 §4, decided DQ-341) |
 | Author | Assurance team (initial draft) |
@@ -23,7 +23,7 @@ This document describes the LD-SDA system architecture for the reference configu
 - the freedom-from-interference and independence claims and where they are analysed (§7);
 - the mapping of openpilot processes and cereal services to architecture elements (§8, §9).
 
-It describes the architecture **as inherited at the baseline** and marks where the TSRs require it to change. The ASIL notation (C, B, B‡, A, QM (C-sup), QM (B-sup)) is defined in [WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md). **HARA v0.4:** the envelope elements E-03a, E-03b and E-04a, and the interfaces they serve, carry ASIL C, because most of their TSRs also serve SG-02, SG-03 or SG-06 (WP-S-02 v0.24). The element tables, the SysML model and Figures 3-1 and 3-2 still show B‡; the lead chose hardening to C on 2026-10-16 (DQ-341, A), so they change to C together with the SysML model (OI-6).
+It describes the architecture **as inherited at the baseline** and marks where the TSRs require it to change. The ASIL notation (C, B, B‡, A, QM (C-sup), QM (B-sup)) is defined in [WP-S-02 §2.1](WP-S-02-technical-safety-requirements.md). **HARA v0.4:** the envelope elements E-03a, E-03b and E-04a, and the interfaces they serve, carry ASIL C, because most of their TSRs also serve SG-02, SG-03 or SG-06 (WP-S-02 v0.24). On 2026-10-16 the project lead chose to harden the envelope to ASIL C rather than decompose it (DQ-341, option A); §3, §5, the SysML model and Figures 3-1 and 3-2 show C (OI-6, closed).
 
 ## 2. Architectural principles
 
@@ -45,28 +45,28 @@ It describes the architecture **as inherited at the baseline** and marks where t
 |---|---|---|---|
 | E-01 SoC software | openpilot processes on AGNOS Linux (Qualcomm SoC); §8 | QM | `openpilot/system/manager/process_config.py:70-121` |
 | E-02 ML models | Driving model, DM model | QM (SOTIF/PAS 8800) | `openpilot/selfdrive/modeld/` |
-| E-03a Safety layer | opendbc safety core + Toyota mode, compiled into the panda firmware | B‡ | `opendbc_repo/opendbc/safety/{safety.h,lateral.h,longitudinal.h,helpers.h,modes/toyota.h}` |
-| E-03b Panda platform firmware | main loop, tick handler, CAN/SPI drivers, comms handlers, harness/relay driver, fault handling, bootstub | B‡ | `panda/board/{main.c,main_comms.h,can_comms.h,drivers/*,sys/*,stm32h7/*,bootstub.c}` |
-| E-04a Safety MCU hardware | STM32H7 with clock, supply, memories, SPI4, FDCAN1–3, ADC, GPIO, DAC/codec siren path | B‡ | [WP-H-02](../04-hardware/WP-H-02-hardware-design.md) |
+| E-03a Safety layer | opendbc safety core + Toyota mode, compiled into the panda firmware | C | `opendbc_repo/opendbc/safety/{safety.h,lateral.h,longitudinal.h,helpers.h,modes/toyota.h}` |
+| E-03b Panda platform firmware | main loop, tick handler, CAN/SPI drivers, comms handlers, harness/relay driver, fault handling, bootstub | C | `panda/board/{main.c,main_comms.h,can_comms.h,drivers/*,sys/*,stm32h7/*,bootstub.c}` |
+| E-04a Safety MCU hardware | STM32H7 with clock, supply, memories, SPI4, FDCAN1–3, ADC, GPIO, DAC/codec siren path | C | [WP-H-02](../04-hardware/WP-H-02-hardware-design.md) |
 | E-04b Device hardware (rest) | SoC, cameras, IMU, display, speaker, power supply, enclosure | QM | WP-H-02 |
-| E-05 Harness | Toyota TSS2 harness with intercept relay, ignition line, orientation sense | B (PCS restore), B‡ (blocking) | WP-H-02 |
+| E-05 Harness | Toyota TSS2 harness with intercept relay, ignition line, orientation sense | B (PCS restore), C (blocking) | WP-H-02 |
 | EXT-EPS, EXT-PCM, EXT-CLU | Toyota EPS, PCM/brake, cluster | AoU only | [WP-C-04 §11](../02-concept/WP-C-04-functional-safety-concept.md) |
 
-![Figure 3-1: system element hierarchy: the LD-SDA system (the system node of WP-C-01 Figure 3-1) consists of E-01, E-02 and E-04b in the QM partition, E-03a, E-03b and E-04a in the B‡ safety envelope, and E-05; each element carries its §5 TSRs and §6 safety mechanisms and consists of the parts and units of §3.1 and the openpilot processes of §8; EXT-EPS, EXT-PCM and EXT-CLU are outside the item](figures/fig-s03-3-1-system-element-hierarchy.svg)
+![Figure 3-1: system element hierarchy: the LD-SDA system (the system node of WP-C-01 Figure 3-1) consists of E-01, E-02 and E-04b in the QM partition, E-03a, E-03b and E-04a in the ASIL C safety envelope, and E-05; each element carries its §5 TSRs and §6 safety mechanisms and consists of the parts and units of §3.1 and the openpilot processes of §8; EXT-EPS, EXT-PCM and EXT-CLU are outside the item](figures/fig-s03-3-1-system-element-hierarchy.svg)
 
 *Figure 3-1.* The elements of this table on the ISO 26262-1 hierarchy (3.39 element), below the system node of [WP-C-01](../02-concept/WP-C-01-item-definition.md) Figure 3-1: E-03a/E-03b refine E-03 and E-04a/E-04b refine E-04 of WP-C-01. Integrity tags are those of this table; TSR tags are the §5 allocation as written there (TSR-xxx, ranges as given; E-02 and E-04b have none, OPS 801–818 no element); SM tags are the §6 mechanisms whose Element column names that element alone, the twelve that name two elements are listed separately. E-01 is decomposed into the processes of §8 with their §8 role and TSRs. No implementation or verification status is shown. Source: [`figures/fig-s03-3-1-system-element-hierarchy.svg`](figures/fig-s03-3-1-system-element-hierarchy.svg); change it together with §3.1, §5, §6 and §8.
 
 ### 3.2 Block diagram
 
-![Figure 3-2: technical safety architecture with the QM partition (E-01 processes, E-02 models, E-04b) and the B‡ safety envelope (E-03a, E-03b, E-04a safety MCU), the E-05 harness relay, interfaces IF-01 to IF-10 and the SM and TSR tags of each block](figures/fig-3-2-tsc-block-diagram.svg)
+![Figure 3-2: technical safety architecture with the QM partition (E-01 processes, E-02 models, E-04b) and the ASIL C safety envelope (E-03a, E-03b, E-04a safety MCU), the E-05 harness relay, interfaces IF-01 to IF-10 and the SM and TSR tags of each block](figures/fig-3-2-tsc-block-diagram.svg)
 
-*Figure 3-2.* The device E-04 is split into the QM partition and the B‡ safety envelope; inside the MCU, E-03a blocks are shaded, E-03b blocks outlined and E-04a is the hardware strip. Each block carries the safety mechanisms of §6 and the TSRs of §3.3 and §5 that are assigned to it; host mechanisms of E-01/E-02 are listed together because §6 assigns them to E-01 as a whole. It shows the architecture as inherited at `8b8c6ae`. Source: [`figures/fig-3-2-tsc-block-diagram.svg`](figures/fig-3-2-tsc-block-diagram.svg); change it together with §3.1, §3.3, §5 and §6.
+*Figure 3-2.* The device E-04 is split into the QM partition and the ASIL C safety envelope (DQ-341); inside the MCU, E-03a blocks are shaded, E-03b blocks outlined and E-04a is the hardware strip. Each block carries the safety mechanisms of §6 and the TSRs of §3.3 and §5 that are assigned to it; host mechanisms of E-01/E-02 are listed together because §6 assigns them to E-01 as a whole. It shows the architecture as inherited at `8b8c6ae`. Source: [`figures/fig-3-2-tsc-block-diagram.svg`](figures/fig-3-2-tsc-block-diagram.svg); change it together with §3.1, §3.3, §5 and §6.
 
 <details><summary>Text version of Figure 3-2</summary>
 
 ```
                                    ┌──────────────── comma device (E-04) ───────────────────────────────────────┐
- road cam ─┐                       │  E-01 SoC (QM)                                  E-03/E-04a safety MCU (B‡)  │
+ road cam ─┐                       │  E-01 SoC (QM)                                  E-03/E-04a safety MCU (C)   │
  cabin cam ┼─VisionIPC─▶ modeld,   │  ┌───────────────────────────────────────┐     ┌────────────────────────┐  │
            │  dmonitoringmodeld ──▶│  │ plannerd ─▶ controlsd ─▶ card ─sendcan─┼─┐   │ comms_control_handler  │  │
  IMU/GNSS ─┘  locationd, calib…    │  │   ▲           ▲          │  ▲          │ │SPI│  (0xdc,0xf3,0xc5,…)    │  │
@@ -92,16 +92,16 @@ It describes the architecture **as inherited at the baseline** and marks where t
 
 | ID | Interface | Between | Content | Safety relevance | TSRs | Detail |
 |---|---|---|---|---|---|---|
-| IF-01 | Car-side CAN TX | E-03 → EPS, PCM | `0x2E4`, `0x343`, `0x412`, `0x1D2` cancel, (`0x750` tester present) | B‡ actuation | 1xx, 2xx, 705 | WP-S-05 §5 |
-| IF-02 | Car-side CAN RX | EPS, PCM, ABS → E-03 | `0xAA`, `0x260`, `0x1D2`, `0x226` (+ `0x262`, `0x1D3`, `0xB4` proposed) | B‡ gating/limiting | 3xx, 401–406 | WP-S-05 §5 |
+| IF-01 | Car-side CAN TX | E-03 → EPS, PCM | `0x2E4`, `0x343`, `0x412`, `0x1D2` cancel, (`0x750` tester present) | C actuation | 1xx, 2xx, 705 | WP-S-05 §5 |
+| IF-02 | Car-side CAN RX | EPS, PCM, ABS → E-03 | `0xAA`, `0x260`, `0x1D2`, `0x226` (+ `0x262`, `0x1D3`, `0xB4` proposed) | C gating/limiting | 3xx, 401–406 | WP-S-05 §5 |
 | IF-03 | Camera-side CAN | camera ↔ E-03 | forwarding | B (SG-07) | 704, 707 | WP-S-05 §5 |
-| IF-04 | SoC ↔ MCU SPI | E-01 ↔ E-03 | control requests, CAN streams, health | B‡ (FFI) | 407–413, 511–514 | WP-S-05 §4 |
-| IF-04b | SoC → MCU boot/reset GPIO | E-01 → E-04a | `STM_BOOT0`, `STM_RST_N` | B‡ (FFI, CS) | 511 | WP-S-05 §7 |
+| IF-04 | SoC ↔ MCU SPI | E-01 ↔ E-03 | control requests, CAN streams, health | C (FFI) | 407–413, 511–514 | WP-S-05 §4 |
+| IF-04b | SoC → MCU boot/reset GPIO | E-01 → E-04a | `STM_BOOT0`, `STM_RST_N` | C (FFI, CS) | 511 | WP-S-05 §7 |
 | IF-05/06 | Cameras | → E-01/E-02 | images | SOTIF | — | — |
 | IF-07 | HMI | E-01 ↔ driver; E-03 siren | alerts | QM; B for siren | 516, 606 | — |
 | IF-08 | Power, ignition | vehicle → E-04, E-05 | 12 V, ignition line | B | 505, 510 | WP-S-05 §6 |
 | IF-09 | Network | E-01 ↔ back end | athena, updates | CS only (AOU-11) | — | [WP-S-07](WP-S-07-cybersecurity-requirements-architecture.md) |
-| IF-10 | Relay drive / harness sense | E-04a ↔ E-05 | relay GPIO, SBU sense | B‡/B | 506, 701 | WP-S-05 §6 |
+| IF-10 | Relay drive / harness sense | E-04a ↔ E-05 | relay GPIO, SBU sense | C/B | 506, 701 | WP-S-05 §6 |
 
 ## 4. Dynamic views
 
@@ -190,10 +190,10 @@ Status 2026-10-12 (`bf6ce8c`, not verified on hardware): the MCU's 100 Hz safety
 
 | Element | TSRs | Highest ASIL |
 |---|---|---|
-| E-03a safety layer | 101–110, 201–207, 301, 302, 304–307(a), 309, 311, 401–406, 408, 704, 705, 710 | B‡ |
-| E-03b panda firmware | 407, 409 (check), 410–413, 501–503, 506 (logic), 507, 508, 510–516, 701, 706, 707, 712 (detection, latch), 632 | B‡ |
-| E-04a MCU hardware (configured by E-03b) | 501, 503–505, 507–509, 511 (option bytes), 515 | B‡ |
-| E-05 harness | 506 (relay), 701–703, 706, 712 (readback) | B‡/B |
+| E-03a safety layer | 101–110, 201–207, 301, 302, 304–307(a), 309, 311, 401–406, 408, 704, 705, 710 | C |
+| E-03b panda firmware | 407, 409 (check), 410–413, 501–503, 506 (logic), 507, 508, 510–516, 701, 706, 707, 712 (detection, latch), 632 | C |
+| E-04a MCU hardware (configured by E-03b) | 501, 503–505, 507–509, 511 (option bytes), 515 | C |
+| E-05 harness | 506 (relay), 701–703, 706, 712 (readback) | C/B |
 | E-01 SoC (QM) | 303, 307(b), 308, 409 (content), 410/411 (sender side), 601–631, 633, 709, 712 (warning) | QM (B-sup) |
 | EXT | 111, 208, 310, 708 | AoU |
 | OPS | 801–818 | — |
@@ -334,4 +334,4 @@ The messaging layer has no authentication (GAP-20); any local process can publis
 | OI-3 | Decide whether the fallback independent limiter (IND-1) is needed, after the SG-01 re-rating. 2026-10-14: the project lead decided to make this decision after the controllability tests, with no work before (register DQ-050) | Maintainer | G2 |
 | OI-4 | Update §4 sequences once TSR-512 (mode lock) changes the start-up flow (ELM327 → TOYOTA). 2026-10-12: trigger reached (lock in the reference build). The start-up flow ELM327 → TOYOTA/73 is accepted unchanged; the ignition-off sequence changes (`0xe7` refused in TOYOTA, accepted after NOOUTPUT; mode-lock impact record §3). §4 sequences still to be redrawn | SW lead | G3 |
 | OI-5 | Record the architecture in `docs/contributing/architecture.md` or replace that empty file with a pointer to this WP | Maintainer | G2 |
-| OI-6 | Change the element and interface ASILs of §3 and §5 from B‡ to ASIL C (DQ-341, A, decided 2026-10-16), with the `Integrity` values of the SysML model (`Architecture.sysml`) and the legends of Figures 3-1 and 3-2 | Safety engineer | G2 |
+| OI-6 | **Closed 2026-10-16** (DQ-341, option A: envelope hardened to ASIL C): element and interface ASILs of §3 and §5 changed from B‡ to C, with the `Integrity` values of the SysML model (`Architecture.sysml`, new level `C`), its generated views, WP-W-03 §3.1 and §3.3, and the labels of Figures 3-1 and 3-2 | Safety engineer | G2 |
