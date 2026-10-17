@@ -102,6 +102,11 @@
 # The host part (act on the panda epsFault and requestsRejected fields, SFM-038.C2) moves to the new open SFM-ACT-024.
 # Rev 0.26 (2026-10-17): new SFM-018.C3, the panda-side cause of the item resisting driver steering: the envelope has no
 # driver-override check on the LKA path (SW FMEA SWF-087, #164; FTA BE-5.05). Inherits O 8, D 10 (AP H); action SFM-ACT-016 (TSR-304).
+# Rev 0.27 (2026-10-17): baseline BL-005 -> BL-006 (liondriver-dev c61e31b, panda 0a7da85, opendbc 62b89a3). SFM-038.C1 re-rated
+# O 8 -> 5, D 10 -> 4 (AP H): TSR-607 (b)/(c) implemented and unit-tested (#174, f350f5b); `previous` keeps the BL-005 rating. Evidence
+# only, no rating change: SFM-013.C1/C2 (opendbc#15, #17), SFM-017.C1 (opendbc#18 wrong-length RX fault); mechanism text on SFM-029
+# (opendbc#18) and SFM-034 (panda#17 relay-malfunction latch, ratings with the DFMEA). SFM-004.C2 and SFM-005 cite the EPS-fault events;
+# their text still holds (steerTempUnavailable now also follows the lighter prompt after 1.5 s). No other row cites a changed file.
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -110,9 +115,9 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.26"
+  revision: "0.27"
   status: draft
-  baseline: BL-005
+  baseline: BL-006
   rating_tables: RT-2
   msr: complete
   scope: >-
@@ -1901,6 +1906,11 @@ failure_modes:
               on every PR and mutation-tested in CI (safety.yaml mutation job)
             test: opendbc_repo/opendbc/safety/tests/test_toyota.py
             ref: .github/workflows/safety.yaml
+          - description: 'BL-006: the engagement edge is narrowed further. A cruise edge refused for MAIN_ON = 0 closes the engagement
+              window (opendbc#17, SM-F1; test_main_off_closes_engagement_window), no authority after a safety-mode change without a
+              new engagement (DQ-080; test_no_grant_after_mode_set_without_new_engagement) and no re-engagement while a TX-rate excess
+              persists (DQ-079; test_tx_rate_no_reengagement_while_excess_persists), opendbc#15. Evidence only: no rating change'
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
           actions:
           - SFM-ACT-013
       - id: SFM-013.C2
@@ -1943,6 +1953,11 @@ failure_modes:
               on every PR and mutation-tested in CI (safety.yaml mutation job)
             test: opendbc_repo/opendbc/safety/tests/test_toyota.py
             ref: .github/workflows/safety.yaml
+          - description: 'BL-006: the engagement edge is narrowed further. A cruise edge refused for MAIN_ON = 0 closes the engagement
+              window (opendbc#17, SM-F1; test_main_off_closes_engagement_window), no authority after a safety-mode change without a
+              new engagement (DQ-080; test_no_grant_after_mode_set_without_new_engagement) and no re-engagement while a TX-rate excess
+              persists (DQ-079; test_tx_rate_no_reengagement_while_excess_persists), opendbc#15. Evidence only: no rating change'
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
           actions:
           - SFM-ACT-013
     notes: >-
@@ -2281,6 +2296,10 @@ failure_modes:
               CI (safety.yaml mutation job)
             test: opendbc_repo/opendbc/safety/tests/test_toyota.py
             ref: .github/workflows/safety.yaml
+          - description: 'BL-006 (reference build): a wrong-length frame of an RX-checked message, the brake frame included, clears
+              controls_allowed in the same call instead of being ignored until the RX timeout (opendbc#18, ATC-25, B2B-01;
+              test_wrong_length_is_rx_fault). Evidence only: M stays 5 while the timing basis is code_derived'
+            test: opendbc_repo/opendbc/safety/tests/test_toyota.py
           actions:
           - SFM-ACT-012
       - id: SFM-017.C2
@@ -3112,7 +3131,8 @@ failure_modes:
       - {level: end, description: "Contributes to HZ-006: Unintended or excessive deceleration", hazard: HZ-006, severity: 10}
     severity: 10
     safety_mechanisms:
-      - description: controlsMismatch (IMMEDIATE_DISABLE) if panda safety model/param differ from CarParams, or safety RX checks invalid
+      - description: controlsMismatch (IMMEDIATE_DISABLE) if panda safety model/param differ from CarParams, or safety RX checks invalid;
+          from BL-006 a wrong-length frame of an RX-checked message is an RX fault in the reference build (opendbc#18, ATC-25, SWSR-402)
         ref: openpilot/selfdrive/selfdrived/selfdrived.py
       - description: 'BL-005 (reference build by default): the panda accepts only TOYOTA with parameter 73, SILENT, NOOUTPUT and ELM327, and
           once TOYOTA is active only NOOUTPUT or SILENT (reference_lock.h, TSR-512/513); pandad configures a car mode only on a panda
@@ -3461,6 +3481,10 @@ failure_modes:
     safety_mechanisms:
       - description: relayMalfunction fault from panda -> IMMEDIATE_DISABLE
         ref: openpilot/selfdrive/selfdrived/selfdrived.py
+      - description: 'BL-006 (reference build): a relay malfunction is latched for the ignition cycle; TOYOTA is refused until ignition
+          off, so a safety-mode change cannot clear the malfunction before a quick re-engagement (panda#17, DFA DM-25). Ratings stay
+          with the DFMEA (DFM-010, DFM-011)'
+        ref: panda/board/reference_lock.h
     causes:
       - id: SFM-034.C1
         element: SFM-SE-004
@@ -3817,18 +3841,30 @@ failure_modes:
     causes:
       - id: SFM-038.C1
         element: SFM-SE-016
-        description: 'After any driver steering input in the last 1.5 s, or at standstill, a temporary EPS fault raises only
-          steerTempUnavailableSilent (a LOW-priority WARNING with a prompt chime and no soft disable, events.py:516-521), and it stays
-          latched while the fault lasts, so a long fault never escalates to the take-over request (car_events.py:162-177;
-          T-25, GAP-03)'
+        description: 'The lighter EPS-fault prompt (steerTempUnavailableSilent, a LOW-priority WARNING with a chime and no soft
+          disable, events.py:516-521) after a recent override, at standstill or while the driver steers is not limited to 1.5 s, so a
+          long fault does not escalate to the take-over request (car_events.py:167-185, STEER_FAULT_SILENT_FRAMES; T-25, GAP-03).
+          Until BL-005 the prompt was latched for the whole fault by design; from BL-006 the cause is a defect of the TSR-607 (b)/(c)
+          frame counter'
         prevention_controls:
-        - description: Upstream openpilot design choice (a softer alert after an override); no LionDriver requirement on it
+        - description: 'TSR-607 (b)/(c) implemented in car_events.py (#174, f350f5b; DQ-342 A, DQ-366 A): the lighter prompt is
+            allowed for the first 150 frames of the fault only; ruff and ty in fork CI; impact record change-2026-10-17-eps-fault-escalation.md.
+            Not reviewed independently'
           ref: openpilot/selfdrive/car/car_events.py
         detection_controls:
-        - description: No LionDriver test targets this cause
-        occurrence: 8
-        detection: 10
+        - description: 'test_steer_fault_warning.py (7 tests: silent window, no recent override, escalation after an override, at
+            standstill, after releasing the wheel, a returning fault, a short fault while holding), run by the CI test runner; 4 of
+            the #174 tests fail on the BL-005 code. Not proven by mutation; not verified on the vehicle (impact record OI-1)'
+          test: openpilot/selfdrive/car/tests/test_steer_fault_warning.py
+        occurrence: 5
+        detection: 4
         ap: H
+        previous:
+          baseline: BL-005
+          occurrence: 8
+          detection: 10
+          ap: H
+          change: 'TSR-607 (b)/(c) implemented and unit-tested (#174, f350f5b; SFM-ACT-023)'
         actions:
         - SFM-ACT-023
         msr_exempt: 'The cause is a defect of the warning path itself; its effect on detecting the lateral loss is rated in the MSR rows
@@ -4021,8 +4057,8 @@ actions:
     evidence: 'Merged in jherrodthomas/LionDriver#174 (7158a9a): STEER_FAULT_SILENT_FRAMES in car_events.py limits the lighter prompt to
       the first 1.5 s of the fault; selfdrive/car/tests/test_steer_fault_warning.py, 6 tests run in CI, 4 of them fail on the old code.
       Impact record assurance/07-supporting/impact/change-2026-10-17-eps-fault-escalation.md. Unit-tested only: not verified on the
-      vehicle (impact OI-1) and not reviewed independently. Not in BL-005, so SFM-038.C1 keeps O 8, D 10 until the next baseline;
-      revised ratings below are a prediction (as SWF-ACT-025)'
+      vehicle (impact OI-1) and not reviewed independently. Credited at BL-006 (System FMEA rev 0.27): SFM-038.C1 O 8 -> 5,
+      D 10 -> 4, AP stays H (S 10); f350f5b adds TSR-607 (c) for a fault while the driver steers'
     revised:
       severity: 10
       occurrence: 5
