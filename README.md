@@ -8,6 +8,7 @@
 
 <p align="center">
   <a href="docs/liondriver/README.md">Documentation</a> &nbsp;·&nbsp;
+  <a href="https://github.com/jherrodthomas/LionDriver/wiki">Wiki</a> &nbsp;·&nbsp;
   <a href="#platform-architecture">Architecture</a> &nbsp;·&nbsp;
   <a href="#living-safety-case">Living Safety Case</a> &nbsp;·&nbsp;
   <a href="#300-vehicle-ecosystem">Vehicle Compatibility</a> &nbsp;·&nbsp;
@@ -145,6 +146,7 @@ Contributions are welcome in software, functional safety, SOTIF, cybersecurity, 
 | [Contributing to LionDriver](docs/liondriver/contributing.md) | Rules for safety-relevant changes and assurance records |
 | [Issues](https://github.com/jherrodthomas/LionDriver/issues) · [Pull requests](https://github.com/jherrodthomas/LionDriver/pulls) | Questions, bugs, reviews of the analyses; pull requests target `liondriver-dev` |
 | [Documentation](docs/liondriver/README.md) | Architecture, compatibility, assurance and the inherited openpilot docs |
+| [Wiki](https://github.com/jherrodthomas/LionDriver/wiki) | Orientation: roadmap, glossary, how decisions are made, reading the safety case. Kept in [`wiki/`](wiki/README.md) and mirrored on merge |
 | [Upstream openpilot](https://github.com/commaai/openpilot) | The driving platform LionDriver is derived from |
 
 ## Maintainer and Upstream Attribution
