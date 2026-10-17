@@ -1120,12 +1120,12 @@ package LionDriverRequirements {
         :>> verifMethod = "T-HIL, T-VEH";
     }
     requirement <'TSR-607'> tsr_607 : TechnicalSafetyRequirement {
-        doc /* The SoC shall warn the driver when the EPS reports LKA unavailable or faulted (complements TSR-110). */
+        doc /* The SoC shall warn the driver when the EPS reports LKA unavailable or faulted (complements TSR-110). (a) Outside the cases of (b) the warning is the take-over request (soft disable, visual and acoustic). (b) When the fault starts within 1.5 s of a driver steering override, or at standstill, the SoC may first give the lighter prompt (small alert with chime); if the fault is still present 1.5 s after it started, the SoC shall escalate to the take-over request of (a). The lighter prompt shall not be held for the duration of the fault. (Decided 2026-10-16, register DQ-342, A; System FMEA SFM-ACT-023.) *Proposed (c), pending the lead's decision (impact record OI-2; not a requirement until decided):* when the fault starts while the driver is steering and lasts more than 1.5 s while they keep steering, the SoC gives at least the lighter prompt, so that the driver learns of the lost assistance before releasing the wheel; on release the take-over request of (a) follows at once. */
         :>> workProduct = "WP-S-02";
         :>> allocText = "SoC";
         :>> asil = "QM (C-sup: TSR-110)";
         :>> mechanism = "WRN";
-        :>> timing = "≤ 1 s";
+        :>> timing = "(a) ≤ 1 s; (b) prompt ≤ 1 s, take-over request ≤ 1.5 s after fault onset (the driver has hands on the wheel within the window)";
         :>> verifMethod = "T-SIL, T-VEH";
     }
     requirement <'TSR-608'> tsr_608 : TechnicalSafetyRequirement {

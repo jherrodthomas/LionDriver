@@ -65,10 +65,10 @@
 <text x="48" y="296" font-size="10.5" fill="#475569">Lateral loss without warning</text>
 <rect x="212" y="248" width="200" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="222" y="266" font-size="12.5" fill="#0F172A" font-weight="700">27 TSRs</text>
-<rect x="222" y="274" width="31.8" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
-<rect x="255.3" y="274" width="51.8" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
+<rect x="222" y="274" width="25.2" height="8" rx="2" fill="#1D4ED8" stroke="none" stroke-width="0"/>
+<rect x="248.7" y="274" width="58.5" height="8" rx="2" fill="#D97706" stroke="none" stroke-width="0"/>
 <rect x="308.7" y="274" width="91.8" height="8" rx="2" fill="#D2553F" stroke="none" stroke-width="0"/>
-<text x="222" y="297" font-size="10.5" fill="#475569">5 impl. · 8 partly · 14 not</text>
+<text x="222" y="297" font-size="10.5" fill="#475569">4 impl. · 9 partly · 14 not</text>
 <text x="222" y="311" font-size="10.5" fill="#0F172A" font-family="'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace">PLB 11 · TMO 6 · FR 5</text>
 <rect x="422" y="248" width="236" height="70" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="1.4"/>
 <text x="432" y="266" font-size="12.5" fill="#0F172A" font-weight="700">20 TSRs</text>
