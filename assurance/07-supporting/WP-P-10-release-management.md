@@ -4,7 +4,7 @@
 |---|---|
 | Work product | WP-P-10 Release management and baseline procedure |
 | Standard reference | ISO 26262-2:2018 §6 (release for production); ISO 26262-8:2018 §7; ISO 21448:2022 §12; ISO/SAE 21434:2021 §6 (release for post-development); ASPICE 4.0 SUP.8 |
-| Version | 0.3 (§4 Figure 4-1, release swimlane generated from the §4 table; 2026-10-14). 0.2 (status update for the integrated envelope changes: panda release build is the reference build, `LIONDRIVER_REFERENCE=1`; 2026-10-12). 0.1 |
+| Version | 0.4 (release key custody decided, DQ-086: hardware token with escrowed backup; §6 key row and OI-3; 2026-10-17). 0.3 (§4 Figure 4-1, release swimlane generated from the §4 table; 2026-10-14). 0.2 (status update for the integrated envelope changes: panda release build is the reference build, `LIONDRIVER_REFERENCE=1`; 2026-10-12). 0.1 |
 | Status | Draft |
 | ASIL / scope | All |
 | Author | Assurance team (initial draft) |
@@ -92,7 +92,7 @@ Layout: `evidence/ld-vX.Y.Z/{manifest,artifacts,ci,unit,integration,validation,t
 | Rule | Detail |
 |---|---|
 | Build type | `RELEASE=1` with `CERT=<LionDriver release key>`. The reference lock and the other envelope changes of the LionDriver change records ([`impact/`](impact/README.md)) are compiled only with `LIONDRIVER_REFERENCE=1` ([WP-M-12](../01-management/WP-M-12-impact-analysis.md) M-11). The top-level `SConstruct` sets it by default; a release build must not override it, and a non-reference build is never released for the reference configuration. `panda/SConscript` otherwise defaults to `DEBUG` with `-DALLOW_DEBUG` and the committed debug key (`panda/board/crypto/certs/debug`). A DEBUG build is never released or used for vehicle testing beyond the bench |
-| Key | LionDriver release key pair generated offline; private key never in Git or CI logs; public key committed in the panda fork replacing `release.pub`. Algorithm upgrade (from RSA-1024/SHA-1 in `panda/board/crypto/rsa.h`, `sha.h`) is a bootstub change tracked under [WP-S-07](../03-system/WP-S-07-cybersecurity-requirements-architecture.md); until then the existing scheme is used with a LionDriver key and the weakness stays a recorded CS risk |
+| Key | LionDriver release key pair generated offline; private key never in Git or CI logs. Custody decided by the lead ([DQ-086](../01-management/decisions/register.yaml), option A, 2026-10-14): the private key is kept on a hardware token the lead holds, with an escrowed backup, so it is generated off-token on an offline machine, imported into the token, and the backup goes to escrow before the offline copy is destroyed. `panda/board/crypto/sign.py` reads a key file today, so release signing goes through the token instead (OI-1); public key committed in the panda fork replacing `release.pub`. Algorithm upgrade (from RSA-1024/SHA-1 in `panda/board/crypto/rsa.h`, `sha.h`) is a bootstub change tracked under [WP-S-07](../03-system/WP-S-07-cybersecurity-requirements-architecture.md); until then the existing scheme is used with a LionDriver key and the weakness stays a recorded CS risk |
 | Builder identity | `BUILDER` changed from `DEV` to `LD` so the version string reads `LD-<git8>-RELEASE` ([WP-P-01 §7](WP-P-01-configuration-management-plan.md#7-version-scheme-closes-gap-35-when-implemented)) |
 | Verification | Release check: version string contains `RELEASE`; binary hash recorded; rebuild from tag reproduces the hash (or differences explained); `ALLOW_DEBUG` symbol absent; `opendbc/safety/tests/test_release_build.py` passes; reference-build flag present (`LIONDRIVER_REFERENCE=1` recorded for the build); safety suite evidence taken from the reference variant (`.github/workflows/safety.yaml`) |
 | Device check | Bench flash: bootstub accepts the LionDriver-signed image and rejects a debug-signed and a tampered image |
@@ -120,7 +120,7 @@ Note: upstream updates are git fetches from a configurable branch with no signat
 |---|---|
 | OI-1 | Write a LionDriver release script replacing `build_release.sh` (key path, identity, no force-push of shared branches, evidence capture) |
 | OI-2 | Choose evidence storage outside GitHub Actions and its backup |
-| OI-3 | Generate the LionDriver panda release key and define key custody |
+| OI-3 | Generate the LionDriver panda release key and put it on the token. Custody is decided (DQ-086: hardware token held by the lead, escrowed backup); still to do: choose a token that supports the bootstub's signature scheme, name the escrow holder, generate and import the key |
 | OI-4 | Define the update channel for the reference device (which branch `updated` follows) |
 | OI-5 | Define the reduced criteria for vehicle-test baselines with the WP-V-07 author |
 | OI-6 | Device-side rollback procedure in WP-O-02 |

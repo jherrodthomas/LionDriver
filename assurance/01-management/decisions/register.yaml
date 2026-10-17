@@ -1860,12 +1860,16 @@
       title: "Encrypted offline file with written access rules"
       detail: "No hardware cost. Cost: weaker protection."
   sources: ["assurance/07-supporting/WP-P-10-release-management.md OI-3", "assurance/08-analyses/fmea/design/panda-config-lock-and-fw-authenticity.md D1"]
-  status: answered
+  status: applied
   answer:
     choice: A
     via: inbox
     at: 2026-10-14
     by: u_DgEswP8TFzpISXlzh3BD1g
+  applied:
+    ref: 9b1c06ed2
+    record: "LD-DES-001 §7 D1 (rev 0.2); WP-P-10 §6 key row and OI-3 (v0.4)"
+    at: 2026-10-17
 
 - id: DQ-087
   question: "Does crash reporting (NHTSA's Standing General Order) apply to LionDriver, and should a lawyer check?"
