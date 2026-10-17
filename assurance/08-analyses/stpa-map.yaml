@@ -328,12 +328,12 @@ scenarios:
     ucas: [UCA-21]
     hazards: [H-STPA-1]
     status: known_gap
-    fta: [BE-8.08, UE-8.09]
+    fta: [BE-8.08, UE-8.09, UE-8.11]
     fmea: [SFM-025]
-    requirements: [TSR-624]
+    requirements: [TSR-624, TSR-633]
     actions: [SFM-ACT-005]
     decisions: [DQ-205, DQ-365]
-    open_because: "Today the car stops in the lane 5 s after the last alert, but with no requirement, announcement or standstill hold; the reaction the H-09 goal needs is DQ-365; the forced stop is a single point in the SG-08 tree (MCS-08.7)"
+    open_because: "Reaction decided (DQ-365, TSR-633): stop in the lane, stay stopped and held, re-engagement locked out until the driver responds; today the car stops 5 s after the last alert with no announcement or lockout, and the hold rests on the untested AOU-16 (UE-8.11); the forced stop is a single point in the SG-08 tree (MCS-08.7)"
   - id: LS-36
     ucas: [UCA-07]
     hazards: [H-07, H-03, H-04]

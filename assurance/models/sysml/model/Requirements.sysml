@@ -105,7 +105,7 @@ package LionDriverRequirements {
         :>> workProduct = "WP-C-03";
         :>> allocText = "";
         :>> asil = "A";
-        :>> safeState = "Escalating take-over alerts; on no response, the no-response reaction: controlled deceleration in lane to a stop and lockout. The reaction at zero awareness is still to be defined, with System FMEA SFM-ACT-005, in the FSC";
+        :>> safeState = "Escalating take-over alerts; on no response, the no-response reaction (DQ-365 A, WP-C-04 FSR-02.09): steering stays on while the vehicle decelerates in lane to a standstill, stays stopped and held, and cannot drive off or be re-engaged until the driver responds. The hold rests on the PCM (AOU-16, not yet tested)";
         :>> ftti = "≤ 6 s from loss of attention to the first alert (preliminary)";
     }
     requirement <'FSR-01.01'> fsr_01_01 : FunctionalSafetyRequirement {
