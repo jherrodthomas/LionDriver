@@ -33,6 +33,9 @@ in [`assurance/`](../assurance/README.md) that owns it.
   turns that into the raw file address on the synced branch. Never draw a figure for the wiki that touches safety
   content; a flow that needs a drawing is written as a Mermaid block, which GitHub renders and reviewers read as
   text. Caption each image with where it comes from and, for a generated figure, what generates it.
+- Two infographics are rendered from the records at every sync by [`tools/wiki/infographics.py`](../tools/wiki/infographics.py)
+  and published next to the pages, so nothing is committed and nothing goes stale: `decision-register.svg` and
+  `change-path.svg`. A page embeds one as `![alt](decision-register.svg)`. Add an infographic there, never by hand.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:

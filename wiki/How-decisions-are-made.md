@@ -4,6 +4,10 @@ The project lead is the safety authority and often reviews from a phone. The pro
 them few, and each one quick to answer. The rules are in the
 [decision register README](../assurance/01-management/decisions/README.md); this page is the short version.
 
+![The decision register at a glance: questions recorded by status, the batches of ten, how hard each is to undo, which gate it belongs to, who decides, and how the answers arrived.](decision-register.svg)
+
+*Rendered from [`register.yaml`](../assurance/01-management/decisions/register.yaml) by [`infographics.py`](../tools/wiki/infographics.py) at every wiki sync; no number on it is typed by hand.*
+
 ## Only the lead decides
 
 - Risk acceptance
