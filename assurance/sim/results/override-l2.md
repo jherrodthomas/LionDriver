@@ -7,7 +7,7 @@ LKA holds full torque (1500 units) to the right from 0.3 s; from t = 2 s the dri
 | Label (WP-V-02 §5.3.5) | Value |
 |---|---|
 | data_kind | synthetic |
-| simulator | LionDriver steering column, fidelity L2: OpenModelica 1.27.1 FMU of `SteeringColumn.mo` run by FMPy; panda safety code compiled from panda `3ee2796` and opendbc `27f20db` (reference build) |
+| simulator | LionDriver steering column, fidelity L2: OpenModelica 1.27.1 FMU of `SteeringColumn.mo` run by FMPy; panda safety code compiled from panda `bf8102a` and opendbc `27f20db` (reference build) |
 | asset archive hash | none (nothing is rendered) |
 | scenario ID and family | none: a held LKA command against a driver torque ramp, not a WP-V-03 scenario |
 | fidelity-case status | none |

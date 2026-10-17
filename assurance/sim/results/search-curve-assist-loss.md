@@ -12,7 +12,7 @@
 | credit | none |
 | camera frame rate | not applicable (no camera) |
 
-Fault: EPS fault with loss of assist (LKA_STATE 9) in the steady part of a left curve; the panda refuses LKA from the first fault frame and sounds its siren after 1 s (T-28). The driver reacts t_r after the first cue (the siren or a drift of `cue` metres) and corrects with up to 4 m/s². Robustness rho = (lane width − 1.781 m) / 2 − max |lateral offset| from the fault to the end of the run (6 s); rho < 0 means the body edge crossed the lane line. Beyond about −2 m the car is in the next lane and the magnitude means little; the sign and the time to the line are what count.
+Fault: EPS fault with loss of assist (LKA_STATE 9) in the steady part of a left curve; the panda refuses LKA from the first fault frame and sounds its siren after 0.7 s (T-28, DQ-048). The driver reacts t_r after the first cue (the siren or a drift of `cue` metres) and corrects with up to 4 m/s². Robustness rho = (lane width − 1.781 m) / 2 − max |lateral offset| from the fault to the end of the run (6 s); rho < 0 means the body edge crossed the lane line. Beyond about −2 m the car is in the next lane and the magnitude means little; the sign and the time to the line are what count.
 
 ## Search space
 
@@ -28,33 +28,33 @@ Monte Carlo: 120 uniform samples. Cross-entropy: 4 rounds of 30, elite fifth. Se
 
 ## Monte Carlo: where departures happen
 
-97 of 120 samples depart from the lane (81%). By curve lateral acceleration and by driver reaction time:
+92 of 120 samples depart from the lane (77%). By curve lateral acceleration and by driver reaction time:
 
 | Curve a_y (m/s²) | Samples | Departures | Share | Smallest margin rho (m) |
 |---|---|---|---|---|
-| 0–0.3 | 20 | 1 | 5% | -0.03 |
-| 0.3–0.6 | 14 | 10 | 71% | -0.90 |
-| 0.6–0.9 | 18 | 18 | 100% | -2.10 |
-| 0.9–1.2 | 31 | 31 | 100% | -3.34 |
-| 1.2–1.5 | 18 | 18 | 100% | -4.27 |
-| 1.5–1.8 | 19 | 19 | 100% | -6.83 |
+| 0–0.3 | 20 | 0 | 0% | 0.12 |
+| 0.3–0.6 | 14 | 6 | 43% | -0.71 |
+| 0.6–0.9 | 18 | 18 | 100% | -1.50 |
+| 0.9–1.2 | 31 | 31 | 100% | -3.02 |
+| 1.2–1.5 | 18 | 18 | 100% | -3.41 |
+| 1.5–1.8 | 19 | 19 | 100% | -6.04 |
 
 | Driver t_r (s) | Samples | Departures | Share | Smallest margin rho (m) |
 |---|---|---|---|---|
-| 0.75–1 | 37 | 28 | 76% | -3.64 |
-| 1–1.25 | 43 | 37 | 86% | -4.82 |
-| 1.25–1.5 | 40 | 32 | 80% | -6.83 |
+| 0.75–1 | 37 | 28 | 76% | -3.25 |
+| 1–1.25 | 43 | 35 | 81% | -4.40 |
+| 1.25–1.5 | 40 | 29 | 72% | -6.04 |
 
-Mildest departing curve among the samples: a_y = 0.28 m/s². Sharpest curve held in lane: a_y = 0.41 m/s².
+Mildest departing curve among the samples: a_y = 0.44 m/s². Sharpest curve held in lane: a_y = 0.42 m/s².
 
 ## Cross-entropy falsification: worst cases found
 
 | Round | Speed (km/h) | a_y (m/s²) | Lane (m) | t_r (s) | Cue (m) | rho (m) | Body edge on the line (s) |
 |---|---|---|---|---|---|---|---|
-| 4 | 105.7 | 1.79 | 3.17 | 1.50 | 0.30 | -8.37 | 1.22 |
-| 4 | 104.3 | 1.80 | 3.25 | 1.49 | 0.30 | -8.32 | 1.23 |
-| 4 | 102.3 | 1.79 | 3.32 | 1.50 | 0.30 | -8.27 | 1.25 |
-| 4 | 101.0 | 1.80 | 3.41 | 1.50 | 0.30 | -8.27 | 1.27 |
-| 4 | 96.5 | 1.79 | 3.00 | 1.50 | 0.30 | -8.26 | 1.12 |
+| 1 | 80.0 | 1.80 | 3.01 | 1.48 | 0.30 | -7.33 | 1.03 |
+| 2 | 89.5 | 1.80 | 3.09 | 1.50 | 0.22 | -7.25 | 1.11 |
+| 3 | 95.6 | 1.80 | 3.00 | 1.50 | 0.23 | -7.23 | 1.11 |
+| 4 | 96.1 | 1.80 | 3.00 | 1.50 | 0.24 | -7.23 | 1.11 |
+| 4 | 93.5 | 1.80 | 3.03 | 1.50 | 0.25 | -7.23 | 1.11 |
 
 Use: these points rank where a closed-course or bench test should look first (WP-V-04 U-4, WP-V-05 VS-FI-31). They do not show that the item departs on the road: the EPS response to the fault, the driver and the steering authority are assumptions until measured (M-01, M-02, WP-C-08).
