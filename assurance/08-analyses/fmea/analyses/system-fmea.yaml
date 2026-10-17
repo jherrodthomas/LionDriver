@@ -103,7 +103,8 @@
 # Rev 0.26 (2026-10-17): new SFM-018.C3, the panda-side cause of the item resisting driver steering: the envelope has no
 # driver-override check on the LKA path (SW FMEA SWF-087, #164; FTA BE-5.05). Inherits O 8, D 10 (AP H); action SFM-ACT-016 (TSR-304).
 # Rev 0.27 (2026-10-17): baseline BL-005 -> BL-006 (liondriver-dev c61e31b, panda 0a7da85, opendbc 62b89a3). SFM-038.C1 re-rated
-# O 8 -> 5, D 10 -> 4 (AP H): TSR-607 (b)/(c) implemented and unit-tested (#174, f350f5b); `previous` keeps the BL-005 rating. Evidence
+# O 8 -> 5, D 10 -> 8 (AP H): TSR-607 (b)/(c) implemented and unit-tested (#174, f350f5b); D 8, not the D 4 predicted in rev 0.25,
+# because the tests are targeted but not yet proven by mutation (RT-2 D 8, as the SW FMEA rates host rows); `previous` keeps the BL-005 rating. Evidence
 # only, no rating change: SFM-013.C1/C2 (opendbc#15, #17), SFM-017.C1 (opendbc#18 wrong-length RX fault); mechanism text on SFM-029
 # (opendbc#18) and SFM-034 (panda#17 relay-malfunction latch, ratings with the DFMEA). SFM-004.C2 and SFM-005 cite the EPS-fault events;
 # their text still holds (steerTempUnavailable now also follows the lighter prompt after 1.5 s). No other row cites a changed file.
@@ -3856,10 +3857,11 @@ failure_modes:
         detection_controls:
         - description: 'test_steer_fault_warning.py (7 tests: silent window, no recent override, escalation after an override, at
             standstill, after releasing the wheel, a returning fault, a short fault while holding), run by the CI test runner; 4 of
-            the #174 tests fail on the BL-005 code. Not proven by mutation; not verified on the vehicle (impact record OI-1)'
+            the #174 tests fail on the BL-005 code. Targeted but not proven by mutation, so D 8 (RT-2); not verified on the vehicle
+            (impact record OI-1)'
           test: openpilot/selfdrive/car/tests/test_steer_fault_warning.py
         occurrence: 5
-        detection: 4
+        detection: 8
         ap: H
         previous:
           baseline: BL-005
@@ -3868,7 +3870,8 @@ failure_modes:
           ap: H
           change: 'TSR-607 (b)/(c) implemented and unit-tested (#174, f350f5b; SFM-ACT-023)'
         rationale: 'Linked to SW FMEA SWF-088 (C1 TSR-607 (b), C2 TSR-607 (c); #187). The SW FMEA still rates SWF-088 at BL-005 (O 8, D 10);
-          this row is rated at BL-006 from the same code and tests and is re-inherited when the SW FMEA moves to BL-006'
+          this row is rated at BL-006 from the same code and tests (O 5, D 8; the SW FMEA expects about O 3-4, D 8 there) and is
+          re-inherited when the SW FMEA moves to BL-006'
         actions:
         - SFM-ACT-023
         msr_exempt: 'The cause is a defect of the warning path itself; its effect on detecting the lateral loss is rated in the MSR rows
@@ -4062,11 +4065,13 @@ actions:
       the first 1.5 s of the fault; selfdrive/car/tests/test_steer_fault_warning.py, 6 tests run in CI, 4 of them fail on the old code.
       Impact record assurance/07-supporting/impact/change-2026-10-17-eps-fault-escalation.md. Unit-tested only: not verified on the
       vehicle (impact OI-1) and not reviewed independently. Credited at BL-006 (System FMEA rev 0.27): SFM-038.C1 O 8 -> 5,
-      D 10 -> 4, AP stays H (S 10); f350f5b adds TSR-607 (c) for a fault while the driver steers'
+      D 10 -> 8, AP stays H (S 10): the tests are targeted but not proven by mutation, so D 8 rather than the D 4 predicted below
+      (rating tables D 8; a car_events.py mutation run, planned with SWF-ACT-077, would support D 4); f350f5b adds TSR-607 (c) for a
+      fault while the driver steers'
     revised:
       severity: 10
       occurrence: 5
-      detection: 4
+      detection: 8
       ap: H
   - id: SFM-ACT-024
     kind: monitoring

@@ -102,14 +102,12 @@
   <circle cx="125" cy="345" r="9.5" fill="#D2553F"/>
   <text x="125" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
   <rect x="136" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
-  <circle cx="147" cy="345" r="9.5" fill="#D2553F"/>
-  <text x="147" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
   <rect x="158" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="180" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="202" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <rect x="224" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="235" cy="345" r="9.5" fill="#D2553F"/>
-  <text x="235" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+  <text x="235" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
   <rect x="246" y="334" width="22" height="22" fill="#FBE4DF" stroke="#FFFFFF" stroke-width="1"/>
   <circle cx="257" cy="345" r="9.5" fill="#D2553F"/>
   <text x="257" y="348.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
