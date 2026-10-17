@@ -3057,7 +3057,9 @@
       title: "Change the code for both"
       detail: "Literal text kept; code change and re-test in reference build."
   sources: ["assurance/05-software/WP-W-02-software-safety-requirements.md OI-13"]
-  status: queued
+  status: applied
+  answer: {choice: A, via: chat, at: 2026-10-17, note: "Maintainer: \"go ahead with SWSR-408\". (a) worded to the code; (b) code change kept the word accepted."}
+  applied: {ref: "jherrodthomas/LionDriver#204, jherrodthomas/opendbc#19", record: "WP-W-02 v0.28 SWSR-408 and OI-13; WP-W-03 ATC-27; change-2026-10-17-pin-27f20db", at: 2026-10-17}
 
 - id: DQ-151
   question: "Should host requirements be written for the four selfdrived state transitions that have none (driver disengage, override while engaged, pre-enable phase)?"
@@ -4610,5 +4612,6 @@
       title: "Go back to the old rule: refused frames count as arrivals"
       detail: "Siren as before. Cost: revert opendbc#19; SWSR-408 says received instead of accepted, and a host sending only refused frames keeps authority (B2B-05)."
   sources: ["assurance/sim/results/plant-results.md F-07, F-07-KS01, F-07-OS (regenerated at opendbc 27f20db)", "panda board/drivers/eps_fault_siren.h", "opendbc safety.h safety_tx_hook at 27f20db", "assurance/05-software/WP-W-02-software-safety-requirements.md SWSR-408, SWSR-516"]
-  status: answered
+  status: applied
   answer: {choice: A, via: chat, at: 2026-10-17}
+  applied: {ref: "jherrodthomas/LionDriver#204, jherrodthomas/panda#18", record: "WP-W-02 SWSR-516 Baseline; WP-S-02 v0.29 TSR-516 status; change-2026-10-17-pin-27f20db", at: 2026-10-17}
