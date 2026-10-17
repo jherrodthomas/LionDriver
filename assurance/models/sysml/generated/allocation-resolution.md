@@ -13,8 +13,8 @@ This report is informational: it does not fail CI. It changes, and CI asks for i
 | fsr | 57 | 56 | 0 | 1 |
 | hwsr | 46 | 3 | 0 | 43 |
 | swsr | 134 | 124 | 0 | 10 |
-| tsr | 125 | 125 | 0 | 0 |
-| **all** | **362** | **308** | **0** | **54** |
+| tsr | 126 | 126 | 0 | 0 |
+| **all** | **363** | **309** | **0** | **54** |
 
 166 distinct `allocated_to` values.
 

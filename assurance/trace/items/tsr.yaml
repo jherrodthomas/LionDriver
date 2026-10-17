@@ -1428,6 +1428,21 @@
   status: proposed
   source: WP-S-02
 
+- id: TSR-634
+  kind: tsr
+  text: "When driver monitoring has fallen back to the wheel-touch policy (camera confidence too low), the escalation times of TSR-608 shall shorten as vehicle speed rises, so that the distance driven without driver supervision up to each alert stays within a bound set in WP-C-08 §5; at highway speed the time to the strongest alert shall be shorter than the fixed 25 s (register DQ-077, A, decided 2026-10-14). The speed table and the bound are derived in WP-C-08 §5 and validated under WP-V-02."
+  asil: "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)"
+  parents: [FSR-02.06]
+  parent_text: "FSR-02.06"
+  other_parents: false
+  allocated_to: "SoC"
+  mechanism: "WRN"
+  timing: "speed table in WP-C-08 §5 (to be derived)"
+  verification: "T-SIL, T-VEH"
+  baseline_impl: "Not met: fixed 5/15/25 s at every speed (`selfdrive/monitoring/policy.py:31-33`). WP-A-05 LS-09, OI-6. Added v0.31"
+  status: proposed
+  source: WP-S-02
+
 - id: TSR-701
   kind: tsr
   text: "The harness orientation (normal, flipped, not connected) shall be detected before the relay is driven, and CAN routing and relay/ignition pin assignment shall follow it; loss or change of orientation while the relay is driven shall lead to SS-S."
