@@ -294,7 +294,7 @@ tools/safety/fmea_lint.py --report            # validate all analyses
 python3 -m unittest discover -s tools/safety  # linter tests
 ```
 
-The linter checks: schema; unique and resolvable ids; failure-mode severity = max effect severity; hazard-linked effects rated 10; stored AP = AP table; AP=H has an action or rationale; detection ≤ 8 names a `test` path that exists (warning only inside an uninitialized submodule); released analyses fully rated; HARA ASIL = Table 4, safety-goal ASIL = highest hazardous event, every ASIL hazard covered by a goal, FMEA↔HARA links consistent both ways; FMEDA distributions sum to 1, mechanisms have DC, SPFM/LFM/λSPF+λRF against the ASIL target. Wiring it into CI is a follow-up.
+The linter checks: schema; unique and resolvable ids; failure-mode severity = max effect severity; hazard-linked effects rated 10; stored AP = AP table; AP=H has an action or rationale; detection ≤ 8 names a `test` path that exists (warning only inside an uninitialized submodule); released analyses fully rated; HARA ASIL = Table 4, safety-goal ASIL = highest hazardous event, every ASIL hazard covered by a goal, FMEA↔HARA links consistent both ways; a System FMEA cause with `linked_failure_mode` rated within the O and D range of the linked mode's causes (warning; stale after the lower-level analysis is re-rated); FMEDA distributions sum to 1, mechanisms have DC, SPFM/LFM/λSPF+λRF against the ASIL target. Wiring it into CI is a follow-up.
 
 ---
 

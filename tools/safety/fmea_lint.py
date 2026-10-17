@@ -223,6 +223,8 @@ def check_fmea(name, doc, ctx, res: Result):
         res.error(cwhere, f"element {c['element']} not found")
       if c.get("linked_failure_mode") and c["linked_failure_mode"] not in ctx.failure_modes:
         res.error(cwhere, f"linked_failure_mode {c['linked_failure_mode']} not found in any analysis")
+      if doc["analysis"]["type"] == "system_fmea":
+        check_inherited_rating(c, cwhere, ctx, res)
       for ctl in c["prevention_controls"] + c["detection_controls"]:
         if ctl.get("test"):
           ctx.check_path(ctl["test"], cwhere, res)
@@ -260,6 +262,21 @@ def check_fmea(name, doc, ctx, res: Result):
   for a in actions:
     if a not in referenced_actions:
       res.warn(f"{name} {a}", "action not referenced by any cause")
+
+
+def check_inherited_rating(c, cwhere, ctx, res: Result):
+  # a System FMEA cause linked to a lower-level mode inherits that mode's O and D (the worst where several are cited, fmea-plan
+  # §3.3); outside the range of the linked mode's causes it is stale, typically after the lower-level analysis was re-rated
+  linked = ctx.fm_index.get(c.get("linked_failure_mode") or "")
+  if not linked or c["occurrence"] is None or c["detection"] is None:
+    return
+  rated = [x for x in linked["causes"] if x.get("occurrence") is not None and x.get("detection") is not None]
+  if not rated:
+    return
+  for key, label in (("occurrence", "O"), ("detection", "D")):
+    lo, hi = min(x[key] for x in rated), max(x[key] for x in rated)
+    if not lo <= c[key] <= hi:
+      res.warn(cwhere, f"{label} {c[key]} is outside {linked['id']}'s causes ({label} {lo}-{hi}); re-inherit the linked rating")
 
 
 def check_previous(prev, s, o, d, baseline, where, ctx, res: Result):

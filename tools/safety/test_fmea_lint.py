@@ -295,6 +295,17 @@ class TestFmeaRules(LintFixture):
     self.assertEqual(self.lint(swf=SWF, sfm=sfm).errors, [])
     self.assertError(self.lint(swf=SWF, swf2=SWF), "duplicate id SWF-001")
 
+  def test_inherited_rating_out_of_range(self):
+    sfm = yaml.safe_load(yaml.safe_dump(SWF).replace("SWF-", "SFM-").replace("value_high", "excessive"))
+    sfm["analysis"].update(id="SFM", type="system_fmea")
+    sfm["failure_modes"][0]["causes"][0]["linked_failure_mode"] = "SWF-001"
+    swf = copy.deepcopy(SWF)
+    self.assertFalse(any("re-inherit" in w for w in self.lint(swf=swf, sfm=sfm).warnings))
+    swf["failure_modes"][0]["causes"][0]["occurrence"] = 6  # source re-rated worse; S10 O6 D4 stays AP H
+    res = self.lint(swf=swf, sfm=sfm)
+    self.assertEqual(res.errors, [])
+    self.assertTrue(any("SFM-001.C1" in w and "O 5 is outside SWF-001" in w for w in res.warnings))
+
   def test_unquoted_date_is_accepted(self):
     text = yaml.safe_dump(SWF, sort_keys=False).replace("analysis:\n", "analysis:\n  updated: 2026-10-09\n", 1)
     (self.tmp / "assurance/08-analyses/fmea/analyses/swf.yaml").write_text(text)
