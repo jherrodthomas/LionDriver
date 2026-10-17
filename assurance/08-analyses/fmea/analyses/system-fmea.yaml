@@ -100,6 +100,8 @@
 # override or at standstill now lasts at most 1.5 s, then the take-over request; 6 unit tests in CI, not verified on the vehicle. The
 # action now covers SFM-038.C1 only and carries the predicted ratings (O 5, D 4); C1 keeps its BL-005 ratings until the next baseline.
 # The host part (act on the panda epsFault and requestsRejected fields, SFM-038.C2) moves to the new open SFM-ACT-024.
+# Rev 0.26 (2026-10-17): new SFM-018.C3, the panda-side cause of the item resisting driver steering: the envelope has no
+# driver-override check on the LKA path (SW FMEA SWF-087, #164; FTA BE-5.05). Inherits O 8, D 10 (AP H); action SFM-ACT-016 (TSR-304).
 #
 # `notes` starting with "HARA input:" are candidate hazards for the HARA.
 # `notes` starting with "Observation:" are code findings to confirm in the SW FMEA.
@@ -108,7 +110,7 @@ analysis:
   id: SFM
   type: system_fmea
   title: "System FMEA — LionDriver L2 ACC/ALC item"
-  revision: "0.25"
+  revision: "0.26"
   status: draft
   baseline: BL-005
   rating_tables: RT-2
@@ -2407,6 +2409,28 @@ failure_modes:
             ref: assurance/sim/results/override-l2.md (plant cb03970)
           actions:
           - SFM-ACT-016
+      - id: SFM-018.C3
+        element: SFM-SE-003
+        linked_failure_mode: SWF-087
+        description: 'The panda envelope passes STEERING_LKA torque that opposes the driver while the driver overrides: the Toyota
+          LKA check covers magnitude, rate and measured-torque error only, and STEER_TORQUE_DRIVER is used only on the LTA path
+          (toyota.h:298-310, 421-424; GAP-02). TSR-304 is not implemented in either build, so only the host 500-unit cut-off
+          (C1, C2) stops the torque'
+        prevention_controls:
+        - description: Upstream design (a bounded torque the driver can overpower); TSR-304 decided (DQ-053) but not implemented
+          ref: opendbc_repo/opendbc/safety/modes/toyota.h
+        detection_controls:
+        - description: 'As rated in the SW FMEA (SWF-087.C1, D 10): test_toyota.py tests the measured-torque limit, not torque
+            opposing the driver on the LKA path'
+        occurrence: 8
+        detection: 10
+        ap: H
+        rationale: Rated, and actioned, in the SW FMEA (SWF-087.C1 O 8 D 10, SWF-ACT-074); this row inherits that rating. Backs FTA
+          SG-05 BE-5.05 at system level
+        actions:
+        - SFM-ACT-016
+        msr_exempt: 'The cause is the missing panda override supervision itself, which is the MSR mechanism of C1 and C2; its absence
+          is rated there as M 10 (msr-plan §3)'
     notes: >-
       HARA input: automation resists evasive steering. Lead decision DQ-053 (2026-10-14, option A): when the driver
       steers against LionDriver it backs off and shows a cue; SFM-ACT-016 carries the design.
