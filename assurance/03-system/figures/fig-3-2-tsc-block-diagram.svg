@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1000" viewBox="0 0 1280 1000" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">Figure 3-2. Technical safety architecture of LD-SDA (WP-S-03 §3.2)</title>
-  <desc id="d">The comma device E-04 is split into a QM partition and the ASIL B‡ safety envelope. The QM partition holds the E-04b cameras, IMU, display and speaker and the E-01 SoC processes: modeld and the DM model (E-02), locationd and calibration, radard, plannerd, controlsd, card, dmonitoringd, selfdrived, ui and soundd, and pandad. pandad talks to the safety MCU over SPI (IF-04) and the SoC drives the MCU boot and reset pins (IF-04b). In the MCU, comms_control_handler and comms_can_write (E-03b) feed the tick and heartbeat and the E-03a safety layer: safety_tx_hook with limits and gating, safety_rx_hook and the forwarding hook, which use FDCAN TX and RX. Bus 0 (IF-01, IF-02) goes through the E-05 harness relay to the vehicle CAN with EPS, PCM, ABS and cluster; bus 2 (IF-03) goes to the Toyota forward camera; the relay is driven by a GPIO (IF-10) and, when released, links camera and vehicle directly. The MCU siren and the SoC HMI warn the driver (IF-07). Each block carries the safety mechanisms (SM) and TSRs that §3.3, §5 and §6 assign to it.</desc>
+  <desc id="d">The comma device E-04 is split into a QM partition and the ASIL C safety envelope. The QM partition holds the E-04b cameras, IMU, display and speaker and the E-01 SoC processes: modeld and the DM model (E-02), locationd and calibration, radard, plannerd, controlsd, card, dmonitoringd, selfdrived, ui and soundd, and pandad. pandad talks to the safety MCU over SPI (IF-04) and the SoC drives the MCU boot and reset pins (IF-04b). In the MCU, comms_control_handler and comms_can_write (E-03b) feed the tick and heartbeat and the E-03a safety layer: safety_tx_hook with limits and gating, safety_rx_hook and the forwarding hook, which use FDCAN TX and RX. Bus 0 (IF-01, IF-02) goes through the E-05 harness relay to the vehicle CAN with EPS, PCM, ABS and cluster; bus 2 (IF-03) goes to the Toyota forward camera; the relay is driven by a GPIO (IF-10) and, when released, links camera and vehicle directly. The MCU siren and the SoC HMI warn the driver (IF-07). Each block carries the safety mechanisms (SM) and TSRs that §3.3, §5 and §6 assign to it.</desc>
   <defs>
     <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
     <marker id="aT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0F766E"/></marker>
@@ -26,7 +26,7 @@
 
   <!-- header -->
   <text x="40" y="44" class="t b" font-size="20">Figure 3-2 · Technical safety architecture</text>
-  <text x="40" y="66" class="m" font-size="12.5">Static view as inherited at 8b8c6ae · QM partition and B‡ safety envelope · SM-xx from §6 and TSRs from §3.3 / §5 on the blocks they are assigned to</text>
+  <text x="40" y="66" class="m" font-size="12.5">Static view as inherited at 8b8c6ae · QM partition and ASIL C safety envelope · SM-xx from §6 and TSRs from §3.3 / §5 on the blocks they are assigned to</text>
   <text x="1240" y="44" class="m s" text-anchor="end">WP-S-03 §3.2</text>
   <text x="1240" y="62" class="m s" text-anchor="end">elements §3.1 · interfaces §3.3 · SM §6</text>
   <line x1="40" y1="82" x2="1240" y2="82" stroke="#E2E8F0"/>
@@ -34,13 +34,13 @@
   <!-- ===== E-04 comma device ===== -->
   <rect x="40" y="100" width="1200" height="556" rx="14" fill="#FFFFFF" stroke="#64748B" stroke-width="1.4"/>
   <text x="58" y="124" class="t b" font-size="13">E-04 comma device</text>
-  <text x="196" y="124" class="m s">E-04a safety MCU hardware: B‡ · E-04b rest of the device: QM</text>
+  <text x="196" y="124" class="m s">E-04a safety MCU hardware: C · E-04b rest of the device: QM</text>
 
   <!-- partition bars -->
   <rect x="52" y="140" width="670" height="22" rx="11" fill="#64748B"/>
   <text x="387" y="155" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".06em">QM PARTITION · E-01, E-02 (SOTIF / PAS 8800), E-04b</text>
   <rect x="790" y="140" width="434" height="22" rx="11" fill="#C2410C"/>
-  <text x="1007" y="155" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".06em">SAFETY ENVELOPE · B‡ · E-03a, E-03b, E-04a</text>
+  <text x="1007" y="155" fill="#FFFFFF" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing=".06em">SAFETY ENVELOPE · ASIL C · E-03a, E-03b, E-04a</text>
 
   <!-- E-04b column -->
   <rect x="52" y="176" width="116" height="456" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
@@ -145,7 +145,7 @@
   <text x="806" y="198" class="t b" font-size="13">E-03 / E-04a safety MCU</text>
   <text x="806" y="214" class="m xs">E-03b also: SM-16 fault → safe state (TSR-406, 502, 706)</text>
   <rect x="1172" y="186" width="36" height="18" rx="9" fill="#C2410C"/>
-  <text x="1190" y="199" fill="#FFFFFF" class="tag" text-anchor="middle">B‡</text>
+  <text x="1190" y="199" fill="#FFFFFF" class="tag" text-anchor="middle">C</text>
 
   <!-- row A: E-04a hardware -->
   <rect x="806" y="236" width="402" height="64" rx="7" class="e4a"/>
@@ -272,7 +272,7 @@
   <text x="1022" y="728" class="m" font-size="9.5">released: cam ↔ car direct</text>
   <text x="1012" y="762" class="t b" font-size="12.5">E-05 harness</text>
   <text x="1012" y="777" class="m xs">B (PCS restore)</text>
-  <text x="1012" y="790" class="m xs">B‡ (blocking)</text>
+  <text x="1012" y="790" class="m xs">C (blocking)</text>
 
   <!-- relay drive IF-10 -->
   <path d="M1031 620 V690" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#aR)"/>
@@ -309,7 +309,7 @@
     <line x1="196" y1="0" x2="224" y2="0" stroke="#0F766E" stroke-width="2"/><text x="232" y="4" class="t">Sensing, HMI, forwarded CAN</text>
     <line x1="410" y1="0" x2="438" y2="0" stroke="#475569" stroke-width="1.4"/><text x="446" y="4" class="t">Internal data flow</text>
     <line x1="566" y1="0" x2="594" y2="0" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6 4"/><text x="602" y="4" class="t">SoC control of MCU boot (FFI / CS)</text>
-    <text x="1200" y="4" class="m" text-anchor="end">B‡ / B-sup: WP-S-02 §2.1</text>
+    <text x="1200" y="4" class="m" text-anchor="end">C / B-sup: WP-S-02 §2.1</text>
   </g>
   <g transform="translate(40,980)" font-size="10.5">
     <rect x="0" y="-8" width="28" height="16" rx="4" class="e3a"/><text x="36" y="4" class="t">E-03a safety layer</text>

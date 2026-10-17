@@ -4076,6 +4076,7 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-16, note: "Harden to ASIL C."}
   applied: {ref: 27cf8ca6d, record: "WP-C-04 v0.9 §4 and §10, WP-S-02 v0.25 §2.1, WP-S-03 v0.11 (scope, OI-6), WP-A-01 v0.6 §3 and OI-3", at: 2026-10-16}
+  note: "Architecture applied with OI-6: WP-S-03 v0.12 §3, §5 and Figures 3-1/3-2, WP-W-03 v0.14 §3.1 and §3.3, and the SysML model (Integrity::C) show the envelope as ASIL C."
 
 - id: DQ-342
   question: "When the steering assist faults just after the driver has overridden the wheel, should the car keep its gentler alert, or escalate to the full take-over request?"
