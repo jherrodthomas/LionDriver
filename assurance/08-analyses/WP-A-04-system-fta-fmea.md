@@ -836,7 +836,7 @@ TE-08 Automated control continues with an inattentive or unresponsive driver    
     ├── BE-8.10 Vehicle not kept stopped, or the item not locked out, after the stop:
     │          no standstill hold and no re-engagement or resume lockout until the
     │          driver responds (TSR-633 not met, TSR-611 partial)      (latent, design)
-    └── UE-8.11 PCM does not hold the vehicle at standstill under ACC (no AOU yet;
+    └── UE-8.11 PCM does not hold the vehicle at standstill under ACC (AOU-16;
                vehicle test, DQ-365)
 ```
 
@@ -853,6 +853,6 @@ TE-08 Automated control continues with an inattentive or unresponsive driver    
 | MCS-08.7 | 1 | {BE-8.08} | The forced stop is software on the QM SoC with no SW FMEA mode and no test of the full path (F-37) |
 | MCS-08.8 | 0 + ext. | {UE-8.09} | The PCM must execute the stop request; AOU-05R |
 | MCS-08.9 | 1 (latent, by design) | {BE-8.10} | Added in v1.6 (DQ-365 A). Present today: after the stop the item stays engaged with no standstill hold and no lockout, so it can drive off again without a driver response (SWF-062.C1, SFM-025.C1). Closed by implementing TSR-633 |
-| MCS-08.10 | 0 + ext. | {UE-8.11} | Added in v1.6. The safe state relies on the PCM holding the car at standstill under ACC; not characterised on the reference Corolla and not stated as an AOU (DQ-365 option A cost) |
+| MCS-08.10 | 0 + ext. | {UE-8.11} | Added in v1.6. The safe state relies on the PCM holding the car at standstill under ACC; not characterised on the reference Corolla; stated as AOU-16 in WP-C-01, not yet tested (DQ-365 option A cost) |
 
 Every SG-08 cut set is a single point: the DM chain is one QM channel with no independent check. That is what ASIL A on a QM element (WP-C-03 §6.1 observation 3) has to address in the FSC: either ASIL A measures on the DM chain itself or an independent monitor. The FTTI of SG-08 is preliminary (WP-S-04 v0.12 §3.8.4, OI-11): ≤ 6 s from loss of attention to the first alert, and the no-response reaction starting ≤ 18 s (vision) or ≤ 30 s (wheel-touch) after it; at the baseline the forced stop starts about 18 s after the driver looks away (13 s to alert 3, then 5 s).
