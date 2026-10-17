@@ -1,5 +1,7 @@
 # Vehicle assets (not in this repository)
 
+![Three-quarter render of the Corolla E210 mesh, neutral grey, made with assets/tools/render_views.py](../figures/corolla-e210-render-three-quarter.png)
+
 The Corolla E210 3D model used for layer-3 renders and figures is a purchased, licensed asset and is **not committed
 here**: TurboSquid's licence forbids redistributing the model files, and the listing carries an editorial-use-only
 restriction (Toyota design rights). This folder is git-ignored except for this file.
@@ -11,6 +13,9 @@ restriction (Toyota design rights). This folder is git-ignored except for this f
 | Files | glTF/GLB (full and Draco-compressed), USDZ, 3ds Max, plus 3DS, Blender, Cinema 4D, FBX and OBJ archives |
 | Where they live | Private repository `jherrodthomas/LionDriver-assets` (Git LFS), folder `corolla-e210-3dmolier-1450755/` with SHA-256 sums; a local copy goes in this folder (see [`../vehicle-3d-model.md`](../vehicle-3d-model.md) §4–5) |
 | What is allowed in public | Code that loads the mesh from a path, and rendered images and figures made from it |
+
+`tools/` is the one committed subfolder: `vehicle_figures.py` (silhouette extraction and the mock-up figures) and
+`render_views.py` (the documentation renders). Both read the GLB from this folder when it is present.
 
 To use the mesh locally, place the files here and point the loader at this folder (`LIONDRIVER_VEHICLE_ASSETS`, to
 be defined with the MetaDrive vehicle class). Nothing in CI depends on these files.

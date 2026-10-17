@@ -107,3 +107,4 @@ assurance/08-analyses/fmea/exports/*
 # Licensed 3D vehicle assets (TurboSquid editorial-use licence): never commit; see assurance/sim/assets/README.md
 assurance/sim/assets/*
 !assurance/sim/assets/README.md
+!assurance/sim/assets/tools/
