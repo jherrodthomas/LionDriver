@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Scope | Simulation for LionDriver; modelling-plan work item 4, the HIL plant ([models README](../models/README.md), MD-01, MD-04): fault-injection plant model (layer 1), known scenarios as OpenSCENARIO (layer 2), MetaDrive closed loop (layer 3), unknown-scenario search (layer 4) |
-| Version | 0.3 (reachability pilot, §3.6, 2026-10-16). 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
+| Version | 0.4 (vehicle 3D-model note, 2026-10-17). 0.3 (reachability pilot, §3.6, 2026-10-16). 0.2 (layer 2, 2026-10-16). 0.1 (layer 1, 2026-10-16) |
 | Status | Draft. AI-drafted (Claude, AI assistant; I0 under WP-M-02 §3.3); not reviewed. **No result here is evidence until the model is validated against Corolla logs; until then results rank risks and guide tests only** (§4) |
 | Feeds | [WP-S-04](../03-system/WP-S-04-timing-ftti-budget.md) timing (owned by the safety-concept session); [WP-V-02](../06-validation/WP-V-02-sotif-vv-strategy.md) M4, [WP-V-03](../06-validation/WP-V-03-sotif-known-scenarios.md), [WP-V-04](../06-validation/WP-V-04-sotif-unknown-scenarios.md) (owned by the SOTIF session); previews [WP-V-05](../06-validation/WP-V-05-fault-injection.md) cases |
 
@@ -29,6 +29,7 @@ the figure tools of the other work products do. The MetaDrive bridge stays where
 | [`figures/`](figures/) | Layer 1 figures, one per selected case (generated) |
 | [`reach/`](reach/reach.jl) | Reachability pilot (Julia, JuliaReach): bound of the drift under any LKA command the panda passes, and its check against sampled runs (§3.6) |
 | [`requirements.txt`](requirements.txt) | Pinned Python packages of the track |
+| [`vehicle-3d-model.md`](vehicle-3d-model.md) | Layer 3 asset note: which Corolla E210 mesh to buy for the MetaDrive ego car and the figures, what it does and does not change, and the handover for the next session (DQ-368) |
 
 ```sh
 git submodule update --init opendbc_repo panda

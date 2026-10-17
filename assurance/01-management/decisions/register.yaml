@@ -4667,3 +4667,33 @@
   status: applied
   answer: {choice: A, via: chat, at: 2026-10-17}
   applied: {ref: "jherrodthomas/LionDriver#204, jherrodthomas/panda#18", record: "WP-W-02 SWSR-516 Baseline; WP-S-02 v0.29 TSR-516 status; change-2026-10-17-pin-27f20db", at: 2026-10-17}
+
+- id: DQ-368
+  question: "Should you buy a 3D model of the Corolla E210 for the MetaDrive closed loop and the simulation figures, and which one?"
+  context: >-
+    Simulation layer 3 (MetaDrive, `openpilot/tools/sim`) draws vehicles from glTF meshes, and the bridge runs
+    with `render_vehicle: False`: the ego body never appears in the camera images openpilot consumes. A Corolla
+    mesh therefore shows only in third-person and top-down renders, so layer-3 videos and WP-V figures show the
+    reference car instead of MetaDrive's stock car, and it gives a body shape for camera-height and blind-zone
+    drawings. **It changes no physics:
+    mass, wheelbase and centre of gravity stay the opendbc CarParams the plant already uses, so no result or
+    evidence depends on it.** No free game-ready 2020 Corolla exists; every real one is a paid render model under
+    an editorial-use licence (Toyota design), fine for this project and not for a commercial product. The
+    comparison is in `assurance/sim/vehicle-3d-model.md`. Note the trim: CFG-001 is the 1.8 L L/LE/XLE with
+    16-inch wheels; the "XSE" models carry 18-inch wheels and are visually the wrong trim.
+  reversibility: easy
+  blocks: "Layer-3 renders and figures showing the reference car (cosmetic); nothing in the safety case"
+  decider: lead
+  options:
+    - key: A
+      recommended: true
+      title: "Buy the 3d_molier 'Toyota Corolla 2020 Simple Interior' (TurboSquid 1450755, $99)"
+      detail: "Ships glTF, FBX, Blender and USD with textures mapped in every format; 214k polygons, doors separate, real scale. Needs a decimation pass to about 50-80k before MetaDrive. Trim not stated; wheel size to check on receipt (returnable)."
+    - key: B
+      title: "Buy only the $2.50 low-poly Corolla (TurboSquid 1664213) and stop there"
+      detail: "5.5k polygons, Blender/FBX, real dimensions, no textures. Enough to replace the stock MetaDrive car with a recognisable Corolla silhouette. Cost: flat-shaded renders."
+    - key: C
+      title: "Buy nothing; keep MetaDrive's stock vehicle mesh"
+      detail: "No cost. Layer-3 videos and figures keep showing a generic car; the plant and every result are unaffected."
+  sources: ["assurance/sim/vehicle-3d-model.md", "assurance/sim/README.md §2 layer 3", "docs/liondriver/vehicles/vehicles.yaml CFG-001 trims"]
+  status: queued
