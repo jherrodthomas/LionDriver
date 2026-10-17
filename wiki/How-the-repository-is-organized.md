@@ -48,7 +48,7 @@ answers to, is in [`assurance/README.md`](../assurance/README.md#layout).
 | `06-validation/` | `WP-V` | Safety validation, SOTIF known and unknown scenarios, fault injection, cybersecurity validation, vehicle test operations |
 | `07-supporting/` | `WP-P` | Configuration, change and problem management, documentation, reviews, tool and component qualification, release |
 | `08-analyses/` | `WP-A` | ASIL decomposition, freedom from interference, dependent failure analysis, FTA and FMEA, STPA |
-| `09-production-operation/` | | Installation, operation, field monitoring, incident response |
+| `09-production-operation/` | `WP-O` | Installation and provisioning, operation and service, user information, field monitoring, cybersecurity incident response |
 | `10-safety-case/` | `WP-K` | The safety case, the cybersecurity case, assessment and release records |
 | `case/`, `trace/`, `process/`, `models/`, `sim/` | | Machine-readable records, traceability, the integrated process model, reference models and simulation |
 

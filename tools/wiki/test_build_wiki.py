@@ -90,6 +90,38 @@ class BuildTests(unittest.TestCase):
       self.assertFalse(out.exists(), "nothing is written when a check fails")
 
 
+class MergeLogTests(unittest.TestCase):
+  def test_no_git_checkout_gives_the_fallback_text(self):
+    with tempfile.TemporaryDirectory() as d:
+      self.assertEqual(build_wiki.git_merges(Path(d)), [])
+      self.assertEqual(build_wiki.render_merge_log([], "o/r"), build_wiki.NO_MERGE_LOG)
+
+  def test_entries_render_grouped_by_date_newest_first(self):
+    entries = [("2026-10-17", 213, "HARA fallback ASILs", "7c00aa4"), ("2026-10-17", 211, "Add the wiki", "4d3fdac"),
+               ("2026-10-16", 0, "Merge branch 'x'", "abc1234")]
+    out = build_wiki.render_merge_log(entries, "o/r")
+    self.assertEqual(out.splitlines(), [
+      "### 2026-10-17", "",
+      "- [#213](https://github.com/o/r/pull/213) HARA fallback ASILs",
+      "- [#211](https://github.com/o/r/pull/211) Add the wiki", "",
+      "### 2026-10-16", "",
+      "- `abc1234` Merge branch 'x'",
+    ])
+
+  def test_merge_log_placeholder_is_filled_from_the_checkout(self):
+    with tempfile.TemporaryDirectory() as d:
+      root, src = make_wiki(Path(d), {"Home.md": "{{MERGE_LOG}}", "_Sidebar.md": "[Home](Home.md)"})
+      out = Path(d) / "out"
+      self.assertEqual(build_wiki.build(src, out, root, repo="o/r"), [])
+      self.assertEqual((out / "Home.md").read_text(), build_wiki.NO_MERGE_LOG)
+
+  def test_the_real_checkout_has_merge_history(self):
+    entries = build_wiki.git_merges(build_wiki.ROOT)
+    if not entries:
+      self.skipTest("no merge history in this checkout (shallow clone)")
+    self.assertTrue(all(n > 0 for _, n, _, _ in entries[:5]), "recent merges are pull request merges")
+
+
 class RealWikiTests(unittest.TestCase):
   def test_the_wiki_folder_checks_clean(self):
     self.assertEqual(build_wiki.build(), [])

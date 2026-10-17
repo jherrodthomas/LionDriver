@@ -18,6 +18,7 @@ revision and status.
 | `WP-V` | Validation: safety validation, SOTIF scenarios, fault injection | `06-validation/` |
 | `WP-P` | Supporting processes: configuration, change, tools, release | `07-supporting/` |
 | `WP-A` | Analyses: decomposition, DFA, FTA and FMEA, STPA | `08-analyses/` |
+| `WP-O` | Operation: installation, user information, field monitoring, incident response | `09-production-operation/` |
 | `WP-K` | Safety case and cybersecurity case | `10-safety-case/` |
 
 ## Record identifiers

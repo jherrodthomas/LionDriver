@@ -8,6 +8,8 @@ everything else. This tool turns that folder into what the GitHub wiki repositor
     which is how the wiki resolves a link to another page;
   * repository links written as `../path` become absolute links to that path on the synced branch;
   * `{{REPO}}`, `{{BRANCH}}`, `{{SYNC_COMMIT}}` and `{{SYNC_DATE}}` are filled in;
+  * `{{MERGE_LOG}}` becomes the list of pull requests merged into the synced branch, newest first,
+    read from the merge commits in the checkout (the Session log page);
   * wiki/README.md, which describes the folder, is not published.
 
 It also checks the pages: every page is reachable from _Sidebar.md, every page link names a page that
@@ -22,6 +24,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -32,7 +35,51 @@ SRC = ROOT / "wiki"
 EXCLUDED = {"README.md"}
 SPECIAL = {"_Sidebar.md", "_Footer.md"}
 LINK = re.compile(r"(!?\[[^\]]*\]\()([^)\s]+)(\))")
-PLACEHOLDER = re.compile(r"\{\{(REPO|BRANCH|SYNC_COMMIT|SYNC_DATE)\}\}")
+PLACEHOLDER = re.compile(r"\{\{(REPO|BRANCH|SYNC_COMMIT|SYNC_DATE|MERGE_LOG)\}\}")
+MERGE_SUBJECT = re.compile(r"^Merge pull request #(\d+) from ")
+MERGE_LOG_LIMIT = 120
+NO_MERGE_LOG = "_No merge history is available in this checkout._"
+
+
+def git_merges(root: Path, limit: int = MERGE_LOG_LIMIT) -> list[tuple[str, int, str, str]]:
+  """(date, pull request number, title, short sha) for each merge commit on the checked-out branch, newest first.
+
+  GitHub writes the pull request's title as the body of its merge commit; a merge without one is listed by its
+  subject. Returns [] when the root is not a git checkout or has no merge history."""
+  try:
+    out = subprocess.run(
+      ["git", "-C", str(root), "log", "--merges", "--first-parent", "--date=short", f"-n{limit}",
+       "--format=%x1e%ad%x1f%h%x1f%s%x1f%b"],
+      capture_output=True, text=True, check=True, timeout=30).stdout
+  except (OSError, subprocess.SubprocessError):
+    return []
+  entries = []
+  for record in out.split("\x1e"):
+    if not record.strip():
+      continue
+    parts = record.split("\x1f", 3)
+    while len(parts) < 4:
+      parts.append("")
+    date, sha, subject, body = (p.strip() for p in parts)
+    m = MERGE_SUBJECT.match(subject)
+    number = int(m.group(1)) if m else 0
+    title = next((line.strip() for line in body.splitlines() if line.strip()), subject)
+    entries.append((date, number, title, sha))
+  return entries
+
+
+def render_merge_log(entries: list[tuple[str, int, str, str]], repo: str) -> str:
+  if not entries:
+    return NO_MERGE_LOG
+  lines: list[str] = []
+  current = None
+  for date, number, title, sha in entries:
+    if date != current:
+      lines.append(f"\n### {date}\n")
+      current = date
+    ref = f"[#{number}](https://github.com/{repo}/pull/{number})" if number else f"`{sha}`"
+    lines.append(f"- {ref} {title}")
+  return "\n".join(lines).strip()
 
 
 def pages(src: Path) -> list[Path]:
@@ -86,7 +133,8 @@ def build(src: Path = SRC, out: Path | None = None, root: Path = ROOT, *, repo: 
           branch: str = "liondriver-dev", commit: str = "unsynced", date: str | None = None) -> list[str]:
   problems: list[str] = []
   values = {"REPO": repo, "BRANCH": branch, "SYNC_COMMIT": commit[:7] if commit != "unsynced" else commit,
-            "SYNC_DATE": date or dt.date.today().isoformat()}
+            "SYNC_DATE": date or dt.date.today().isoformat(),
+            "MERGE_LOG": render_merge_log(git_merges(root), repo)}
   if not (src / "Home.md").exists():
     problems.append("Home.md is missing")
   check_sidebar(src, problems)
