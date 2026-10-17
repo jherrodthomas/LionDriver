@@ -6,7 +6,7 @@
 <text x="40" y="46" font-size="21" fill="#0F172A" font-weight="700">V-02 · Element hierarchy</text>
 <text x="40" y="69" font-size="12.5" fill="#64748B">Item, components, parts and software units of LD-SDA (ISO 26262-1 3.39) with integrity attribution, unit and build scope</text>
 <text x="1480" y="44" font-size="11" fill="#64748B" text-anchor="end">SysML v2 view LionDriverViews::elementHierarchy</text>
-<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">DecompositionView · render asTreeDiagram · model d727e33be27f</text>
+<text x="1480" y="62" font-size="11" fill="#64748B" text-anchor="end">DecompositionView · render asTreeDiagram · model bf339838189d</text>
 <line x1="40" y1="86" x2="1480" y2="86" stroke="#E2E8F0"/>
 <rect x="580" y="112" width="360" height="74" rx="12" fill="#FFFDF8" stroke="#C2410C" stroke-width="1.6" stroke-dasharray="6 4"/>
 <rect x="596" y="126" width="37.7" height="18" rx="9" fill="#C2410C"/><text x="614.8" y="138.4" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">ITEM</text>
@@ -97,7 +97,7 @@
 <path d="M568 262a12 12 0 0 1 12 -12h368a12 12 0 0 1 12 12v54h-392z" fill="#FFEDD5" />
 <line x1="568" y1="316" x2="960" y2="316" stroke="#C2410C" stroke-width="1"/>
 <rect x="582" y="263" width="38" height="18" rx="9" fill="#C2410C"/><text x="601" y="275.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-03</text>
-<rect x="920.2" y="263" width="25.8" height="17" rx="8.5" fill="#C2410C"/><text x="933.1" y="274.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="925" y="263" width="21" height="17" rx="8.5" fill="#C2410C"/><text x="935.5" y="274.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
 <text x="582" y="296" font-size="13.5" fill="#0F172A" font-weight="700">Safety MCU firmware</text>
 <text x="582" y="310" font-size="10" fill="#64748B">34 parts · 27 SM</text>
 <g data-el="context.ldsda.safetyFirmware"><rect x="568" y="250" width="392" height="66" fill="transparent"/></g>
@@ -305,7 +305,7 @@
 <path d="M978 262a12 12 0 0 1 12 -12h276a12 12 0 0 1 12 12v54h-300z" fill="#FFEDD5" />
 <line x1="978" y1="316" x2="1278" y2="316" stroke="#C2410C" stroke-width="1"/>
 <rect x="992" y="263" width="38.3" height="18" rx="9" fill="#C2410C"/><text x="1011.1" y="275.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-04</text>
-<rect x="1238.2" y="263" width="25.8" height="17" rx="8.5" fill="#C2410C"/><text x="1251.1" y="274.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="1243" y="263" width="21" height="17" rx="8.5" fill="#C2410C"/><text x="1253.5" y="274.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
 <text x="992" y="296" font-size="13.5" fill="#0F172A" font-weight="700">Device hardware</text>
 <text x="992" y="310" font-size="10" fill="#64748B">20 parts · 11 SM</text>
 <g data-el="context.ldsda.deviceHardware"><rect x="978" y="250" width="300" height="66" fill="transparent"/></g>
@@ -412,7 +412,7 @@
 <path d="M1296 262a12 12 0 0 1 12 -12h172a12 12 0 0 1 12 12v54h-196z" fill="#FFEDD5" />
 <line x1="1296" y1="316" x2="1492" y2="316" stroke="#C2410C" stroke-width="1"/>
 <rect x="1310" y="263" width="37.9" height="18" rx="9" fill="#C2410C"/><text x="1329" y="275.6" font-size="10" fill="#FFFFFF" font-weight="700" text-anchor="middle">E-05</text>
-<rect x="1452.2" y="263" width="25.8" height="17" rx="8.5" fill="#C2410C"/><text x="1465.1" y="274.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">B‡</text>
+<rect x="1457" y="263" width="21" height="17" rx="8.5" fill="#C2410C"/><text x="1467.5" y="274.9" font-size="9.5" fill="#FFFFFF" font-weight="700" text-anchor="middle">C</text>
 <text x="1310" y="296" font-size="13.5" fill="#0F172A" font-weight="700">Harness</text>
 <text x="1310" y="310" font-size="10" fill="#64748B">2 parts · 2 SM</text>
 <g data-el="context.ldsda.harness"><rect x="1296" y="250" width="196" height="66" fill="transparent"/></g>
@@ -435,20 +435,20 @@
 <text x="772" y="216" font-size="10" fill="#64748B">5 components</text>
 <line x1="40" y1="1008" x2="1480" y2="1008" stroke="#E2E8F0"/>
 <circle cx="44" cy="1034" r="4" fill="#C2410C"/>
-<text x="54" y="1038" font-size="10.5" fill="#334155">B‡</text>
-<circle cx="93.97" cy="1034" r="4" fill="#FB923C"/>
-<text x="104" y="1038" font-size="10.5" fill="#334155">ASIL B</text>
-<circle cx="164.52" cy="1034" r="4" fill="#475569"/>
-<text x="174.5" y="1038" font-size="10.5" fill="#334155">QM (B-sup)</text>
-<circle cx="260.27" cy="1034" r="4" fill="#CBD5E1"/>
-<text x="270.3" y="1038" font-size="10.5" fill="#334155">QM</text>
-<path d="M311.7 1034l6 -5l6 5l-6 5z" fill="#334155"/>
-<text x="329.7" y="1038" font-size="10.5" fill="#334155">composite part (SysML)</text>
-<text x="472.4" y="1038" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-XXX</text>
-<text x="508.4" y="1038" font-size="10.5" fill="#334155">software unit (WP-W-06 §2)</text>
-<text x="673.4" y="1038" font-size="10" fill="#7C3AED" font-weight="700">[ref]</text>
-<text x="701.1" y="1038" font-size="10.5" fill="#334155">reference build only</text>
-<text x="824.3" y="1038" font-size="10" fill="#C2410C" font-weight="700">n SM</text>
-<text x="854.7" y="1038" font-size="10.5" fill="#334155">safety mechanisms performed</text>
+<text x="54" y="1038" font-size="10.5" fill="#334155">ASIL C</text>
+<circle cx="115.39" cy="1034" r="4" fill="#FB923C"/>
+<text x="125.4" y="1038" font-size="10.5" fill="#334155">ASIL B</text>
+<circle cx="185.94" cy="1034" r="4" fill="#475569"/>
+<text x="195.9" y="1038" font-size="10.5" fill="#334155">QM (B-sup)</text>
+<circle cx="281.69" cy="1034" r="4" fill="#CBD5E1"/>
+<text x="291.7" y="1038" font-size="10.5" fill="#334155">QM</text>
+<path d="M333.12 1034l6 -5l6 5l-6 5z" fill="#334155"/>
+<text x="351.1" y="1038" font-size="10.5" fill="#334155">composite part (SysML)</text>
+<text x="493.8" y="1038" font-size="10" fill="#64748B" font-family="'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace">U-XXX</text>
+<text x="529.8" y="1038" font-size="10.5" fill="#334155">software unit (WP-W-06 §2)</text>
+<text x="694.8" y="1038" font-size="10" fill="#7C3AED" font-weight="700">[ref]</text>
+<text x="722.5" y="1038" font-size="10.5" fill="#334155">reference build only</text>
+<text x="845.7" y="1038" font-size="10" fill="#C2410C" font-weight="700">n SM</text>
+<text x="876.1" y="1038" font-size="10.5" fill="#334155">safety mechanisms performed</text>
 <text x="40" y="1084" font-size="9.5" fill="#94A3B8">Generated from assurance/models/sysml by tools/render_views.py — do not edit by hand</text>
 </svg>

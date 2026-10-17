@@ -124,22 +124,22 @@ package LionDriverArchitecture {
         part <'panda.safety.core'> core : SoftwareElement {
             doc /* Hook dispatch, RX checks and timeout, authority controls_allowed with grant on the PCM rising edge. */
             @Unit { id = "U-SAF-CORE"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
             part <'panda.safety.core.rx_engagement'> rxEngagement : SoftwareElement {
                 doc /* rx_timeout_periods and rx_checks_allow_engagement: no grant while an RX check lags or is invalid. */
                 @Unit { id = "U-SAF-CORE"; build = Build::both; }
-                @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+                @Safety { integrity = Integrity::C; label = "C"; }
             }
             part <'panda.safety.core.tx_rate_check'> txRateCheck : SoftwareElement {
                 doc /* Per-ID TX rate budget over a sliding 250 ms window. */
                 @Unit { id = "U-SAF-CORE"; build = Build::reference; }
-                @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+                @Safety { integrity = Integrity::C; label = "C"; }
             }
         }
         part <'panda.safety.lateral'> lateral : SoftwareElement {
             doc /* Torque limit, rate, measured-torque, RT window and steer-request tolerance. */
             @Unit { id = "U-SAF-LAT"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
         }
         part <'panda.safety.longitudinal'> longitudinal : SoftwareElement {
             doc /* Longitudinal allowed, acceleration bounds, inactive value. */
@@ -149,37 +149,37 @@ package LionDriverArchitecture {
         part <'panda.safety.helpers'> helpers : SoftwareElement {
             doc /* Macros, CRC8, message matching, timestamps, interpolation, safety_config. */
             @Unit { id = "U-SAF-HELP"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
         }
         part <'panda.safety.toyota'> toyota : SoftwareElement {
             doc /* Toyota RX parsing, TX checks, limits, init and parameter decoding; hook table toyota_hooks. */
             @Unit { id = "U-SAF-TOY"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
             part <'panda.safety.toyota.eps_fault'> epsFault : SoftwareElement {
                 doc /* Decodes EPS_STATUS.LKA_STATE into safety_eps_fault; refuses torque while it is set. */
                 @Unit { id = "U-SAF-TOY"; build = Build::reference; }
-                @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+                @Safety { integrity = Integrity::C; label = "C"; }
             }
             part <'panda.safety.toyota.ref_rx_set'> refRxSet : SoftwareElement {
                 doc /* Adds 0x262 and 0x1D3 to the RX checks. */
                 @Unit { id = "U-SAF-TOY"; build = Build::reference; }
-                @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+                @Safety { integrity = Integrity::C; label = "C"; }
             }
             part <'panda.safety.toyota.cruise_main'> cruiseMain : SoftwareElement {
                 doc /* CRUISE_ACTIVE with MAIN_ON = 0 revokes authority. */
                 @Unit { id = "U-SAF-TOY"; build = Build::reference; }
-                @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+                @Safety { integrity = Integrity::C; label = "C"; }
             }
             part <'panda.safety.toyota.tx_budgets'> txBudgets : SoftwareElement {
                 doc /* TX rate rows for the non-SecOC configurations. */
                 @Unit { id = "U-SAF-TOY"; build = Build::reference; }
-                @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+                @Safety { integrity = Integrity::C; label = "C"; }
             }
         }
         part <'panda.safety.defaults'> defaults : SoftwareElement {
             doc /* SILENT, NOOUTPUT and ELM327 hooks. */
             @Unit { id = "U-SAF-DEF"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡ (safe-state modes)"; }
+            @Safety { integrity = Integrity::C; label = "C (safe-state modes)"; }
         }
         part <'panda.safety.ignition'> ignition : SoftwareElement {
             doc /* CAN ignition detection. */
@@ -199,17 +199,17 @@ package LionDriverArchitecture {
         part <'panda.main'> main : SoftwareElement {
             doc /* Start-up, set_safety_mode, 8 Hz tick. */
             @Unit { id = "U-PND-MAIN"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
             part <'panda.main.safety_task'> safetyTask : SoftwareElement {
                 doc /* TIM4 safety task at 100 Hz: safety_tick, heartbeat monitor, IWDG feed. */
                 @Unit { id = "U-PND-MAIN"; build = Build::both; }
-                @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+                @Safety { integrity = Integrity::C; label = "C"; }
             }
         }
         part <'panda.drivers.heartbeat_monitor'> heartbeatMonitor : SoftwareElement {
             doc /* Revokes authority after 0.3 s without a heartbeat (SWSR-407). */
             @Unit { id = "U-PND-MAIN"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
         }
         part <'panda.drivers.heartbeat_siren'> heartbeatSiren : SoftwareElement {
             doc /* Siren for 3 s when the heartbeat monitor revokes authority. */
@@ -224,27 +224,27 @@ package LionDriverArchitecture {
         part <'panda.drivers.hw_watchdog'> hwWatchdog : SoftwareElement {
             doc /* IWDG1 window watchdog, started on the first relay drive. */
             @Unit { id = "U-PND-FLT"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
         }
         part <'panda.drivers.irq_priorities'> irqPriorities : SoftwareElement {
             doc /* Explicit priority for every enabled IRQ (SWSR-519 partial). */
             @Unit { id = "U-PND-PLAT"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
         }
         part <'panda.reference_lock'> referenceLock : SoftwareElement {
             doc /* Limits 0xdc to the reference modes; refuses 0xdf and the softloader in car modes. */
             @Unit { id = "U-PND-COMMS"; build = Build::reference; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
         }
         part <'panda.comms'> comms : SoftwareElement {
             doc /* Control-request dispatcher, health packet, CAN stream packing and unpacking. */
             @Unit { id = "U-PND-COMMS"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡ (it calls envelope APIs and can change configuration)"; }
+            @Safety { integrity = Integrity::C; label = "C (it calls envelope APIs and can change configuration)"; }
         }
         part <'panda.drivers.spi'> spi : SoftwareElement {
             doc /* SPI framing, XOR checksum, DMA control. */
             @Unit { id = "U-PND-SPI"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
             port host : SpiPort;
         }
         part <'panda.drivers.usb'> usb : SoftwareElement {
@@ -255,7 +255,7 @@ package LionDriverArchitecture {
         part <'panda.drivers.fdcan'> fdcan : SoftwareElement {
             doc /* CAN RX ISR with the forward and RX hooks; TX path through the TX hook. */
             @Unit { id = "U-PND-FDCAN"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
             port bus0 : CanPort;
             port bus1 : CanPort;
             port bus2 : CanPort;
@@ -263,17 +263,17 @@ package LionDriverArchitecture {
         part <'panda.drivers.harness'> harnessDriver : SoftwareElement {
             doc /* Relay drive, orientation and ignition sense. */
             @Unit { id = "U-PND-HARN"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡ (blocking) / B (PCS restore)"; }
+            @Safety { integrity = Integrity::C; label = "C (blocking) / B (PCS restore)"; }
         }
         part <'panda.sys.faults'> faults : SoftwareElement {
             doc /* Fault recording and the software watchdog. */
             @Unit { id = "U-PND-FLT"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡ (report-only)"; }
+            @Safety { integrity = Integrity::C; label = "C (report-only)"; }
         }
         part <'panda.sys.power_saving'> powerSaving : SoftwareElement {
             doc /* Power-save: CAN IRQ and transceiver disable. */
             @Unit { id = "U-PND-PWR"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
         }
         part <'panda.drivers.siren'> siren : SoftwareElement {
             doc /* Siren and housekeeping drivers (fan, LED, bootkick, clock source, PWM, ADC). */
@@ -284,12 +284,12 @@ package LionDriverArchitecture {
         part <'panda.platform'> platform : SoftwareElement {
             doc /* Reset, exception handlers, clocks, vectors, timers, critical sections. */
             @Unit { id = "U-PND-PLAT"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
         }
         part <'panda.bootstub'> bootstub : SoftwareElement {
             doc /* Signature check and soft flasher. */
             @Unit { id = "U-PND-BOOT"; build = Build::both; }
-            @Safety { integrity = Integrity::BDagger; label = "B‡ + CS"; }
+            @Safety { integrity = Integrity::C; label = "C + CS"; }
         }
     }
 
@@ -297,7 +297,7 @@ package LionDriverArchitecture {
         doc /* panda firmware with the opendbc safety Toyota mode (WP-C-01 §3.1). */
         @Source { workProduct = "WP-S-03"; clause = "§3.1"; }
         part <'E-03a'> safetyLayer : SafetyLayer {
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
             perform LionDriverMechanisms::torqueMagnitudeLimit;
             perform LionDriverMechanisms::torqueRateLimit;
             perform LionDriverMechanisms::measuredTorqueTracking;
@@ -317,7 +317,7 @@ package LionDriverArchitecture {
             perform LionDriverMechanisms::txRateSupervision;
         }
         part <'E-03b'> platformFirmware : PlatformFirmware {
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
             perform LionDriverMechanisms::heartbeatLiveness;
             perform LionDriverMechanisms::commandFreshness;
             perform LionDriverMechanisms::spiIntegrity;
@@ -386,7 +386,7 @@ package LionDriverArchitecture {
         doc /* The comma device (WP-C-01 §3.1). */
         @Source { workProduct = "WP-S-03"; clause = "§3.1"; }
         part <'E-04a'> safetyMcu : SafetyMcuHardware {
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
             perform LionDriverMechanisms::independentWatchdog;
             perform LionDriverMechanisms::memoryIntegrity;
             perform LionDriverMechanisms::clockMonitor;
@@ -446,13 +446,13 @@ package LionDriverArchitecture {
             perform LionDriverMechanisms::driverMonitoring;
         }
         part <'E-03'> safetyFirmware : SafetyMcuFirmware {
-            @Safety { integrity = Integrity::BDagger; label = "B‡"; }
+            @Safety { integrity = Integrity::C; label = "C"; }
         }
         part <'E-04'> deviceHardware : DeviceHardware {
-            @Safety { integrity = Integrity::BDagger; label = "E-04a B‡, E-04b QM"; }
+            @Safety { integrity = Integrity::C; label = "E-04a C, E-04b QM"; }
         }
         part <'E-05'> harness : Harness {
-            @Safety { integrity = Integrity::BDagger; label = "B (PCS restore), B‡ (blocking)"; }
+            @Safety { integrity = Integrity::C; label = "B (PCS restore), C (blocking)"; }
             perform LionDriverMechanisms::relayReadback;
             perform LionDriverMechanisms::harnessDetection;
         }

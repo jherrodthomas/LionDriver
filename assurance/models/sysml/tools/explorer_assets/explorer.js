@@ -2,7 +2,7 @@ const D = JSON.parse(document.getElementById('model-data').textContent);
 const E = D.elements, C = D.connections, M = D.mechanisms;
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
-const LABEL = {BDagger: 'B‡', B: 'ASIL B', QMBsup: 'QM (B-sup)', QM: 'QM', AoU: 'AoU', Untrusted: 'untrusted'};
+const LABEL = {C: 'ASIL C', BDagger: 'B‡', B: 'ASIL B', QMBsup: 'QM (B-sup)', QM: 'QM', AoU: 'AoU', Untrusted: 'untrusted'};
 const store = { get(k) { try { return localStorage.getItem(k) } catch { return null } }, set(k, v) { try { localStorage.setItem(k, v) } catch {} } };
 let current = null, sel = null;
 
@@ -129,7 +129,7 @@ function asilBar(reqs) {
 }
 function chipFor(e) {
   const i = e.integrity; if (!i) return '';
-  const cls = i === 'BDagger' ? 'env' : i === 'B' ? 'b' : '';
+  const cls = i === 'C' || i === 'BDagger' ? 'env' : i === 'B' ? 'b' : '';
   return `<span class="chip ${cls}" title="${esc(e.label)}">${LABEL[i] || i}</span>`;
 }
 let reqLimit = 12;
