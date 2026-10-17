@@ -229,6 +229,8 @@
 <text x="2232" y="533.0" class="d">SG-04)</text>
 <rect x="2232.0" y="541.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="2258.9" y="552.5" class="chip" fill="#fff">SWF-012</text>
+<rect x="2290.9" y="541.0" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="2317.8" y="552.5" class="chip" fill="#fff">SWF-090</text>
 <circle cx="2328.0" cy="589.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <text x="40" y="972.5" class="lh">Symbols · IEC 61025</text>
 <rect x="46" y="992.5" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>

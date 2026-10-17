@@ -94,8 +94,9 @@ events:
     fmea: [SWF-010]
   - id: BE-4.21
     class: systematic_sw
-    fmea: [SWF-012]
-    note: SWF-012 (relay malfunction not detected); the 1-2 s detection time is the design property that lets the commands combine
+    fmea: [SWF-012, SWF-090]
+    note: SWF-012 (relay malfunction not detected); the 1-2 s detection time is the design property that lets the commands combine. SWF-090 (SW FMEA rev 1.4, DFA
+      DM-25), where a mode change cleared the reaction until re-detection; latched for the ignition cycle in the reference build since BL-006 (panda#17)
   - id: BE-4.22
     class: systematic_sw
     fmea: [SFM-020]
@@ -231,8 +232,9 @@ events:
     note: DFM-015 (bit errors on the SPI link pass the 8-bit XOR); SWF-026 (both checks XOR the same bytes). F-13
   - id: BE-1.25
     class: systematic_sw
-    fmea: [SWF-002, SWF-055]
-    note: SWF-002.C1 (defect in the not-allowed torque check, lateral.h:111-114, or controls_allowed bookkeeping). F-11. SWF-055 (SW FMEA rev 0.8, DQ-080) is a bookkeeping property of the pinned code, not a defect; the edge state reset on a mode change grants authority again without a new driver engagement
+    fmea: [SWF-002, SWF-055, SWF-089]
+    note: SWF-089 (SW FMEA rev 1.4, SM-F1, opendbc#17) grants through an engagement window a MAIN_ON = 0 refusal left open; fixed in the reference build at
+      BL-006. SWF-002.C1 (defect in the not-allowed torque check, lateral.h:111-114, or controls_allowed bookkeeping). F-11. SWF-055 (SW FMEA rev 0.8, DQ-080) is a bookkeeping property of the pinned code, not a defect; the edge state reset on a mode change grants authority again without a new driver engagement
   - id: BE-1.26
     class: systematic_sw
     fmea: [SWF-010]

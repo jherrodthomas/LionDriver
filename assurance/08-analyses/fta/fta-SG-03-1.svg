@@ -169,8 +169,8 @@
 <rect x="1990.0" y="778.0" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="2017.0" y="789.5" class="chip" fill="#fff">SWF-010</text>
 <circle cx="2086.0" cy="826.0" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
-<rect x="2219.5" y="452.5" width="220" height="134.5" rx="9" class="shadow"/>
-<rect x="2218" y="450.0" width="220" height="134.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
+<rect x="2219.5" y="452.5" width="220" height="156.5" rx="9" class="shadow"/>
+<rect x="2218" y="450.0" width="220" height="156.5" rx="9" fill="#fff" stroke="#d9dee6" stroke-width="1"/>
 <path d="M2227,450.0 H2429 A9,9 0 0 1 2438,459.0 V455.0 H2218 V459.0 A9,9 0 0 1 2227,450.0 Z" fill="#64748b"/>
 <text x="2232" y="475.0" class="id">BE-4.21</text>
 <text x="2424" y="475.0" class="kind">BASIC</text>
@@ -183,7 +183,9 @@
 <text x="2281.8" y="565.0" class="chip" fill="#334155">repeated, SG-01</text>
 <rect x="2336.5" y="553.5" width="53.9" height="16" rx="8" fill="#111827"/>
 <text x="2363.4" y="565.0" class="chip" fill="#fff">SWF-012</text>
-<circle cx="2328.0" cy="601.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
+<rect x="2232.0" y="575.5" width="53.9" height="16" rx="8" fill="#111827"/>
+<text x="2258.9" y="587.0" class="chip" fill="#fff">SWF-090</text>
+<circle cx="2328.0" cy="623.5" r="16" fill="#eef1f5" stroke="#64748b" stroke-width="1.7"/>
 <text x="40" y="928.0" class="lh">Symbols · IEC 61025</text>
 <rect x="46" y="948.0" width="44" height="28" rx="6" fill="#fff" stroke="#d9dee6"/>
 <rect x="46" y="948.0" width="44" height="4" rx="2" fill="#1d2433"/>

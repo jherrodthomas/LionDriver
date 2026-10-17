@@ -4,9 +4,9 @@
 
 | Revision | Status | Baseline | Rating tables | Updated |
 |---|---|---|---|---|
-| 1.3 | draft | BL-005 | RT-2 | 2026-10-17 |
+| 1.4 | draft | BL-006 | RT-2 | 2026-10-17 |
 
-**Scope.** P1 elements for AC-001 at BL-005 (liondriver-dev 1033d98, panda a55bdfc, opendbc 9a13f60; the LIONDRIVER_REFERENCE build is the default): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37. Rev 1.2: no driver-override check on the LKA path in the envelope (SWF-087), for F-28.
+**Scope.** P1 elements for AC-001 at BL-006 (proposed; liondriver-dev c61e31b, panda 0a7da85, opendbc 62b89a3; the LIONDRIVER_REFERENCE build is the default; rows of code unchanged since BL-005 keep their BL-005 ratings): panda safety model (opendbc safety core, Toyota mode, panda firmware integration incl. hardware watchdog, SWF-001..019, SWF-054, SWF-055), pandad (SWF-020..029), selfdrived (SWF-030..039), controlsd with the Toyota CarController hand-off (SWF-040..053). P2 elements: card and the Toyota port (SWF-056..060), driver monitoring (SWF-061..064), plannerd (SWF-065..069), radard (SWF-070, SWF-071). P3 elements: modeld as a software element (SWF-072..074; model performance is SOTIF), localization and calibration (SWF-075..077), camerad (SWF-078), sensord (SWF-079), messaging (SWF-080, SWF-081), manager (SWF-082, SWF-083), updated (SWF-084). Rev 1.1: driver-monitoring demo mode (SWF-085) and the forced stop after the terminal alert (SWF-086), for FTA finding F-37. Rev 1.2: no driver-override check on the LKA path in the envelope (SWF-087), for F-28.
 
 **Team.** Jherrod Thomas (Project maintainer, safety lead (reviewer/approver)); Claude (AI assistant) (Drafting assistance; ratings require human review)
 
@@ -172,7 +172,7 @@ Effects:
 |---|---|---|:-:|:-:|:-:|---|
 | `SWF-005.C1` BRAKE_MODULE (0x226) has no checksum or counter in the vehicle DBC; the RX check ignores checksum, counter and quality and checks timing only | • CAN CRC protects the transport; the vehicle message itself has no end-to-end protection (toyota_nodsu_pt.dbc:18-21; toyota.h:46) <sub>opendbc_repo/opendbc/dbc/generator/toyota/toyota_nodsu_pt.dbc</sub> | • No test targets this cause | 3 | 9 | 🔴 **H** | SWF-ACT-006 |
 
-Safety mechanisms: (1) PCM cancels cruise on its own brake input and the panda follows PCM_CRUISE (checksum-checked); credit needs FSC FOI-006
+Safety mechanisms: (1) PCM cancels cruise on its own brake input and the panda follows PCM_CRUISE (checksum-checked); credit needs FSC FOI-006 · (2) Reference build, BL-006 (ATC-25, opendbc#18) catches a truncated or over-long BRAKE_MODULE frame as an RX fault; a value corrupted at the right length still passes
 
 <sub>Note: Diverse path: the PCM cancels cruise on its own brake input and the panda follows PCM_CRUISE (checksum-checked). That credit needs FSC FOI-006.</sub>
 
@@ -287,7 +287,7 @@ Safety mechanisms: (1) Cruise off withdraws controls in pcm_cruise_check
 
 #### SWF-054 · Authority granted again after a TX-rate revocation while the host still exceeds the rate budget
 
-🔴 **H** · **S 10** · guideword *commission* · function `SWF-FN-004` Allow controls on rising edge of PCM cruise; withdraw on cruise off, brake press, invalid or lagging safety messages
+🟢 L · **S 10** · guideword *commission* · function `SWF-FN-004` Allow controls on rising edge of PCM cruise; withdraw on cruise off, brake press, invalid or lagging safety messages
 
 Effects:
 
@@ -298,15 +298,15 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SWF-054.C1` By design at BL-005: rx_checks_allow_engagement looks only at the RX checks (safety.h:405-416); a TX-rate revocation (safety.h:279-282) sets the report flag but no engagement block. Decision DQ-079 (answered, option A) amended SWSR-518: no re-grant until one full 250 ms window without a rejected frame. The code is jherrodthomas/opendbc#15 (ATC-20), merged in the fork, not in the BL-005 pin | • Requirement amended (WP-W-02 SWSR-518, DQ-079); implementation not pinned <sub>assurance/07-supporting/impact/change-2026-10-13-tx-rate-reengagement.md</sub> | • The reference model (SM-TOY-AUTH) follows the amended requirement and records the pinned C as deviation tx_rate_regrant; the back-to-back gate tolerates the deviation until the pin moves, so it does not fail on this cause. test_tx_rate_no_reengagement_while_excess_persists exists only in opendbc#15 <sub>assurance/05-software/reference-models</sub> | 8 | 9 | 🔴 **H** | SWF-ACT-054 |
+| `SWF-054.C1` Defect in the TX-rate engagement block: rx_checks_allow_engagement must refuse a grant until one full 250 ms window passes without a rejected frame after a TX-rate revocation (SWSR-518 amended per DQ-079). Implemented in the reference build by opendbc#15 (ATC-20, a0938fa), in the pin since BL-006 | • Requirement amended (WP-W-02 SWSR-518, DQ-079) and implemented in the reference build; MISRA C:2012 in CI in both variants <sub>assurance/07-supporting/impact/change-2026-10-13-tx-rate-reengagement.md</sub> | • test_tx_rate_no_reengagement_while_excess_persists (test_toyota.py), run with 100 % line coverage and mutation in the reference variant in CI (safety.yaml mutation_reference); the back-to-back model checks the requirement with the tx_rate_regrant deviation removed (B2B-TOY-AUTH §11). Not on target <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 3 | 4 | 🟢 L | SWF-ACT-054 |
 
 Safety mechanisms: (1) Per-ID TX rate supervision still rejects the excess frames and revokes again after 3 rejections (TSR-518); selfdrived raises pandaTxRateExceeded (immediate disable) while the latched report flag is set
 
-<sub>Note: The driver must act (cruise rising edge) for the re-grant, and the heartbeat must report engaged (TSR-301). After the pin moves, expected O3 D4 (AP L), as for the other reference-variant envelope rows.</sub>
+<sub>Note: The driver must act (cruise rising edge) for the re-grant, and the heartbeat must report engaged (TSR-301). Re-rated at BL-006 to O3 D4 (AP L), as the other reference-variant envelope rows; the upstream build keeps the BL-005 behaviour.</sub>
 
 #### SWF-055 · Authority returns after a safety-mode change without a new driver engagement
 
-🔴 **H** · **S 10** · guideword *commission* · function `SWF-FN-004` Allow controls on rising edge of PCM cruise; withdraw on cruise off, brake press, invalid or lagging safety messages
+🟢 L · **S 10** · guideword *commission* · function `SWF-FN-004` Allow controls on rising edge of PCM cruise; withdraw on cruise off, brake press, invalid or lagging safety messages
 
 Effects:
 
@@ -317,11 +317,29 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SWF-055.C1` By design at BL-005: SWSR-311 resets all edge state on a mode change (safety.h:589) and SWSR-301 grants on a rising edge (safety.h:683-701); the back-to-back test found that the reset makes a held CRUISE_ACTIVE count as a new edge (B2B-06, scenario D19b). Decision DQ-080 (answered, option A): require cruise off and on again; SWSR-311 amended. The code is jherrodthomas/opendbc#15 (ATC-26, pcm_cruise_seen_disengaged), merged in the fork, not in the BL-005 pin | • Requirement amended (WP-W-02 SWSR-311, DQ-080); implementation not pinned. In the reference build only TOYOTA can be active (safety-mode lock), so the path is a mode re-set to the same mode <sub>assurance/07-supporting/impact/change-2026-10-14-mode-set-regrant.md</sub> | • Back-to-back reference model: scenario D19b reproduces the finding; the deviation mode_set_regrant is tolerated until the pin moves, so the gate does not fail on it. test_no_grant_after_mode_set_without_new_engagement exists only in opendbc#15 <sub>assurance/05-software/reference-models</sub> | 8 | 9 | 🔴 **H** | SWF-ACT-054 |
+| `SWF-055.C1` Defect in the mode-set edge rule: after a safety-mode change a rising edge must count only after CRUISE_ACTIVE = 0 has been received (SWSR-311 amended per DQ-080, pcm_cruise_seen_disengaged). Implemented in the reference build by opendbc#15 (ATC-26, 3ed789a), in the pin since BL-006 | • Requirement amended (WP-W-02 SWSR-311, DQ-080) and implemented in the reference build; in the reference build only TOYOTA can be active (safety-mode lock), so the path is a mode re-set to the same mode <sub>assurance/07-supporting/impact/change-2026-10-14-mode-set-regrant.md</sub> | • test_no_grant_after_mode_set_without_new_engagement (test_toyota.py), run with 100 % line coverage and mutation in the reference variant in CI; back-to-back scenario D19b with the mode_set_regrant deviation removed (B2B-TOY-AUTH §11). Not on target <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 3 | 4 | 🟢 L | SWF-ACT-054 |
 
 Safety mechanisms: (1) The grant still needs every RX check valid and the heartbeat engaged flag (TSR-306, TSR-301): a host that is not engaged gets nothing back. selfdrived disengages on a safety-mode change it did not expect only after 10 s (SWF-034.C2)
 
-<sub>Note: Found by the back-to-back test (B2B-06), recorded in the SW FMEA at rev 0.8 to apply DQ-080. After the pin moves, expected O3 D4 (AP L).</sub>
+<sub>Note: Found by the back-to-back test (B2B-06), recorded in the SW FMEA at rev 0.8 to apply DQ-080. Re-rated at BL-006 to O3 D4 (AP L).</sub>
+
+#### SWF-089 · Authority granted while PCM cruise main is off, through an engagement window left open by a refused cruise edge
+
+🟢 L · **S 10** · guideword *commission* · function `SWF-FN-004` Allow controls on rising edge of PCM cruise; withdraw on cruise off, brake press, invalid or lagging safety messages
+
+Effects:
+
+- **End:** Brief actuation without the driver's cruise engagement, from an implausible PCM state (HZ-010, S 10)
+- **Next higher:** The item holds authority while main is off until the 150 ms main-off tolerance revokes it
+- **Local:** pcm_engage_pending stays set after toyota_cruise_main_check refuses a CRUISE_ACTIVE edge for MAIN_ON = 0, so a heartbeat-engaged flag within 1 s grants controls_allowed
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-089.C1` Defect in the reference-build engagement window (LS-06, TSR-301): the window was opened before the MAIN_ON = 0 refusal and not closed by it, against SWSR-405(c). Found by the state-machine charts (SM-F1, #158) after BL-005; fixed by opendbc#17 (032bbef, pcm_engage_cancel), in the pin since BL-006 | • Requirement SWSR-405(c); reference-build code with MISRA C:2012 in CI in both variants <sub>assurance/07-supporting/impact/change-2026-10-17-pin-98d3be1.md</sub> | • test_main_off_closes_engagement_window (test_toyota.py, both paths and a control case; removing either call fails it), run with 100 % line coverage and mutation in the reference variant in CI. Not on target <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 3 | 4 | 🟢 L | — |
+
+Safety mechanisms: (1) The 150 ms main-off tolerance revokes authority (TSR-405); the grant also needs the heartbeat engaged flag (TSR-301)
+
+<sub>Note: Present in the reference build at BL-005 (window from opendbc#14); not rated at BL-005. Upstream build unaffected (no engagement window).</sub>
 
 ### `SWF-SE-006` Steering torque checks
 
@@ -470,6 +488,25 @@ Effects:
 | `SWF-012.C1` Defect in stock_ecu_check, or a replaced message without check_relay; detection starts 1 s after a mode change (safety.h:372-380) | • MISRA C:2012 checks on the safety code <sub>opendbc_repo/opendbc/safety/tests/misra</sub><br>• 100% line coverage enforced by the safety test runner <sub>opendbc_repo/opendbc/safety/tests/test.sh</sub><br>• Upstream code review; no documented safety requirements for the safety model (tests derived from implementation) | • opendbc safety suite with 100% line coverage and mutation tests, run by fork CI on every change (.github/workflows/safety.yaml, CR-CI-05). At BL-002 the Toyota tests pass locally (287, 34 skipped); mutation was last run locally at BL-001 (2705/2705 killed). Tests are derived from the implementation, not from requirements <sub>opendbc_repo/opendbc/safety/tests/test_toyota.py</sub> | 5 | 3 | 🔴 **H** | SWF-ACT-002 |
 
 Safety mechanisms: (1) Relay malfunction detection blocks all TX after a stock message appears on the car side
+
+#### SWF-090 · Relay-malfunction reaction cleared by a safety-mode change before the malfunction is detected again
+
+🟢 L · **S 10** · guideword *omission* · function `SWF-FN-008` Detect a relay malfunction and block all item transmission
+
+Effects:
+
+- **End:** Item and stock camera commands combine on the bus until the malfunction is detected again (HZ-002, S 10)
+- **End:** Contributes to HZ-006 (stock ACC and item 0x343 combine on the bus, as SWF-012) (HZ-006, S 10)
+- **Next higher:** A mode cycle (host request or heartbeat-loss recovery) followed by a quick re-engagement grants authority with the harness relay still faulty
+- **Local:** set_safety_hooks clears relay_malfunction, and stock_ecu_check looks again only after the new mode has run for more than 1 s
+
+| Cause | Prevention | Detection | O | D | AP | Actions |
+|---|---|---|:-:|:-:|:-:|---|
+| `SWF-090.C1` Defect at BL-005 (DFA DM-25): the relay-malfunction reaction lived in opendbc state that a mode change resets. Fixed in the reference build by panda#17 (0a7da85): the reference lock latches a relay malfunction for the ignition cycle and refuses TOYOTA until ignition off, in the pin since BL-006 | • Reference lock (TSR-619 family) extended by DFA DM-25; MISRA C:2012 clean in both variants; firmware built with -Werror <sub>assurance/07-supporting/impact/change-2026-10-17-relay-malfunction-latch.md</sub> | • Host unit tests compiled against the real firmware headers, run by panda CI (reference_lock suite, 18 tests, 4 new; 3 fail without the gate). Not on target hardware <sub>panda/tests/reference_lock/test_reference_lock.py</sub> | 3 | 4 | 🟢 L | — |
+
+Safety mechanisms: (1) Reference lock: a latched relay malfunction refuses TOYOTA until ignition off; SILENT and NOOUTPUT stay available (panda#17) · (2) Relay malfunction detection blocks all TX after a stock message appears on the car side (SWF-012)
+
+<sub>Note: Found by the DFA (WP-A-03 DM-25) after BL-005; not rated at BL-005. Upstream build unaffected by the fix.</sub>
 
 ### `SWF-SE-011` Panda main loop: safety mode and heartbeat
 
@@ -1283,9 +1320,9 @@ Effects:
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
 | `SWF-057.C1` Defect in the Toyota DBC or in carstate.py signal use (steeringTorque sign, GAS_RELEASED inversion, LKA_STATE fault codes, PCM_CRUISE decoding; carstate.py:19-22, 59-167) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • process_replay (CI) replays the TOYOTA3 Corolla TSS2 segment and compares with reference logs made from the same code, so it cannot find a defect already present at the baseline; not designed for this cause <sub>openpilot/selfdrive/test/process_replay/test_processes.py</sub> | 6 | 9 | 🔴 **H** | SWF-ACT-044 |
-| `SWF-057.C2` Short frames are not rejected: the parser skips only frames over 64 bytes and reads missing bytes as 0 (parser.py:219, dbc.py:66), so a truncated BRAKE_MODULE reads BRAKE_PRESSED = 0 with no checksum to catch it. The panda-side length fault is proposed, not implemented (change-2026-10-13-opendbc-rx-length-fault) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No test targets this cause | 3 | 10 | 🔴 **H** | SWF-ACT-056 |
+| `SWF-057.C2` Short frames are not rejected: the parser skips only frames over 64 bytes and reads missing bytes as 0 (parser.py:219, dbc.py:66), so a truncated BRAKE_MODULE reads BRAKE_PRESSED = 0 with no checksum to catch it. Host code unchanged at BL-006; the panda-side length fault is implemented in the reference build since BL-006 (opendbc#18, a safety mechanism of SWF-057) | • Upstream opendbc/openpilot code, reviewed upstream; ruff and ty in LionDriver CI; no LionDriver software requirements for the element; no field-exposure credit (RT-1 §2.2) | • No test targets this cause | 3 | 10 | 🔴 **H** | SWF-ACT-056 |
 
-Safety mechanisms: (1) Panda decodes brake, gas, cruise and EPS torque itself from the same frames (toyota.h rx hook), so a host-only decoding defect is bounded by the envelope; a DBC error shared by both is not (DFA)
+Safety mechanisms: (1) Panda decodes brake, gas, cruise and EPS torque itself from the same frames (toyota.h rx hook), so a host-only decoding defect is bounded by the envelope; a DBC error shared by both is not (DFA) · (2) Reference build, BL-006: a wrong-length frame of an RX-checked message (BRAKE_MODULE 0x226 among them) is an RX fault that clears controls_allowed in the same call and blocks a grant until a frame of the right length arrives (ATC-25, SWSR-402, opendbc#18); test_wrong_length_is_rx_fault in CI
 
 <sub>Note: Host side of System FMEA SFM-003.C2, SFM-009.C3, SFM-013.C2, SFM-017.C1, SFM-018.C1, SFM-019.C1, SFM-020.C1.</sub>
 
@@ -1365,12 +1402,12 @@ Effects:
 
 | Cause | Prevention | Detection | O | D | AP | Actions |
 |---|---|---|:-:|:-:|:-:|---|
-| `SWF-088.C1` By design at BL-005, after a steering override in the last 1.5 s or at standstill, a temporary EPS fault raises only steerTempUnavailableSilent and silent_steer_warning stays latched while the fault lasts, so a long fault never escalates to the take-over request (car_events.py:162-177; TSR-607 (b), DQ-342 A; GAP-03) | • Upstream openpilot design (a softer alert after an override); TSR-607 (b) not implemented at BL-005, so O 8 (RT-2 §2), as the other by-design gaps <sub>openpilot/selfdrive/car/car_events.py</sub> | • No test of the EPS-fault events at BL-005 | 8 | 10 | 🔴 **H** | SWF-ACT-077 |
-| `SWF-088.C2` By design at BL-005, a temporary EPS fault that starts while the driver is steering raises no EPS event while they keep steering (no_steer_warning, car_events.py:164-166); the take-over request follows only on release (TSR-607 (c), DQ-366 A) | • Upstream openpilot design; TSR-607 (c) not implemented at BL-005, so O 8 (RT-2 §2) <sub>openpilot/selfdrive/car/car_events.py</sub> | • No test of the EPS-fault events at BL-005 | 8 | 10 | 🔴 **H** | SWF-ACT-077 |
+| `SWF-088.C1` Defect in the EPS-fault escalation: after a steering override in the last 1.5 s or at standstill, steerTempUnavailableSilent is allowed only while steer_fault_frames <= STEER_FAULT_SILENT_FRAMES (1.5 s), then steerTempUnavailable (car_events.py:17, 169-187; TSR-607 (b), DQ-342 A, #174). At BL-005 the silent warning stayed latched for the whole fault (GAP-03) | • LionDriver change to upstream code with a requirement (TSR-607 (b)) and targeted unit tests; reviewed in the PR, not independently; O 5 as the other new host code with targeted tests (SWF-034.C1) <sub>assurance/07-supporting/impact/change-2026-10-17-eps-fault-escalation.md</sub> | • test_steer_fault_warning.py (7 unittest tests, collected by the unit_tests job); targeted at the escalation, not proven by mutation (D 8 at best, RT-2), not on the vehicle <sub>openpilot/selfdrive/car/tests/test_steer_fault_warning.py</sub> | 5 | 8 | 🔴 **H** | SWF-ACT-077, SWF-ACT-078 |
+| `SWF-088.C2` Defect in the EPS-fault prompt while the driver keeps steering: after 1.5 s of a fault that started while steering, steerTempUnavailableSilent is raised until release, then the take-over request (car_events.py:169-176; TSR-607 (c), DQ-366 A, f350f5b). At BL-005 no event was raised while steering | • LionDriver change to upstream code with a requirement (TSR-607 (c)) and a targeted unit test; reviewed in the PR, not independently; O 5 <sub>openpilot/selfdrive/car/car_events.py</sub> | • test_steer_fault_warning.py (the steering-held case), collected by the unit_tests job; not proven by mutation, not on the vehicle <sub>openpilot/selfdrive/car/tests/test_steer_fault_warning.py</sub> | 5 | 8 | 🔴 **H** | SWF-ACT-077, SWF-ACT-078 |
 
 Safety mechanisms: (1) Panda EPS-fault siren after the EPS reports a fault for 1 s while authority is granted (TSR-516(b)); independent of the SoC alerts · (2) Envelope refuses lateral actuation from the first EPS-fault frame (TSR-110, reference build), so the item does not steer on a faulted EPS
 
-<sub>Note: Realises BE-2.08 with SFM-038 (F-28). The panda's epsFault field is not read by any SoC process (SWF-025 notes). Fixed after BL-005 by SWF-ACT-077; the rating stays at BL-005 until the next baseline.</sub>
+<sub>Note: Realises BE-2.08 with SFM-038 (F-28); System FMEA SFM-038.C1 inherits this occurrence. The panda's epsFault field is still not read by any SoC process (SWF-025 notes, SFM-ACT-024). Re-rated at BL-006; D can drop to 4 once SWF-ACT-078 proves the tests.</sub>
 
 ### `SWF-SE-060` Driver monitoring (dmonitoringmodeld, dmonitoringd)
 
@@ -1940,7 +1977,7 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | SWF-ACT-052 | design_change | Send the inactive acceleration from the Toyota CarController whenever CC.longActive is false, with a unit test | Jherrod Thomas | open | SWF-052.C1 | — |
 | SWF-ACT-053 | detection | Vehicle test of the PCM response when the inactive value replaces an active deceleration (TSR-208, AOU-05R); if the PCM steps, specify an item-side ramp after revocation (FSR-04.03) | Jherrod Thomas | open | SWF-053.C1 | — |
 | SWF-ACT-055 | detection | Make the host supervision tests run in CI: test_supervision.py and test_input_freshness.py define plain classes, which tools/test_runner.py (unittest loader) collects as 0 tests. Derive them from unittest.TestCase (or the repo's test base class), check that the unit_tests job reports them, and prove them by a mutation of supervision.py and input_freshness.py so D can drop below 8 | Jherrod Thomas | in_progress | SWF-034.C1 | — |
-| SWF-ACT-054 | design_change | Pin an opendbc commit that contains jherrodthomas/opendbc#15 (ATC-20, SWSR-518 amended per DQ-079; ATC-26, SWSR-311 amended per DQ-080), with its impact records moved to Integrated, and re-rate SWF-054 and SWF-055 at the new baseline. The fork merged it as 9859cb0 (master 515b9a2 also carries opendbc#16); the LionDriver pin is still 9a13f60 | Jherrod Thomas | open | SWF-054.C1, SWF-055.C1 | 10/3/4 → 🟢 L |
+| SWF-ACT-054 | design_change | Pin an opendbc commit that contains jherrodthomas/opendbc#15 (ATC-20, SWSR-518 amended per DQ-079; ATC-26, SWSR-311 amended per DQ-080), with its impact records moved to Integrated, and re-rate SWF-054 and SWF-055 at the new baseline. The fork merged it as 9859cb0 (master 515b9a2 also carries opendbc#16); the LionDriver pin is still 9a13f60 | Jherrod Thomas | completed | SWF-054.C1, SWF-055.C1 | 10/3/4 → 🟢 L |
 | SWF-ACT-056 | design_change | carState input supervision for the reference car: fixed RX timeouts from the DBC rates instead of the learned 1 Hz default, reject frames shorter than the DBC length for every signal carState uses, and a plausibility cross-check for the messages without checksum or counter (BRAKE_MODULE against PCM_CRUISE, WHEEL_SPEEDS against the IMU); with unit tests in LionDriver CI | Jherrod Thomas | open | SWF-056.C1, SWF-056.C2, SWF-056.C3, SWF-057.C2 | — |
 | SWF-ACT-057 | design_change | Pin the reference identification: accept only an exact FW match to TOYOTA_COROLLA_TSS2 with the expected CarParams for the assured configuration (report a fuzzy match through assured_config), ignore FINGERPRINT in release builds, and re-query FW after a VIN-cache hit when an ECU version changed | Jherrod Thomas | open | SWF-058.C1, SWF-058.C2 | — |
 | SWF-ACT-058 | design_change | Driver monitoring robustness: time-based policy timers (monotonic clock), a finiteness and length check of driverStateV2 (non-finite or empty treated as uncertain, not attentive), a length check on brakeDisengageProbs, and unit tests for each in CI (NaN pose, 16 Hz model, empty arrays); a DM frequency check tight enough to catch a slowed model (WP-A-03 DFI-32) | Jherrod Thomas | open | SWF-061.C1, SWF-061.C2, SWF-061.C3, SWF-063.C1, SWF-063.C2, SWF-064.C1 | — |
@@ -1962,7 +1999,8 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | SWF-ACT-075 | design_change | msgq protection for the control and supervision topics (WP-A-03 DFI-29): sequence or E2E protection so a skipped or altered message is detected, a subscriber-count guard so a 16th reader cannot evict the others, and host supervision of control credited only where it is independent of msgq | Jherrod Thomas | open | SWF-080.C1, SWF-080.C2 | — |
 | SWF-ACT-076 | design_change | One publisher per control topic, enforced at subscribe time (WP-A-03 DFI-31): the comma four cabin-camera dialog must not publish selfdriveState, and the dialog is closed before the item goes onroad | Jherrod Thomas | open | SWF-085.C1 | — |
 | SWF-ACT-074 | design_change | Envelope override check (TSR-304, DQ-053): in toyota.h reject 0x2E4 frames that increase torque opposing STEER_TORQUE_DRIVER beyond the driver allowance, and back off toward zero at no less than the down rate while the override lasts; report the state to the SoC (TSR-628). Add opendbc safety tests and mutation for both branches; host counterpart SWF-ACT-046 | Jherrod Thomas | open | SWF-087.C1 | — |
-| SWF-ACT-077 | design_change | Escalate the EPS-fault warning per TSR-607 (DQ-342 A, DQ-366 A): allow steerTempUnavailableSilent only for the first 1.5 s of the fault (steer_fault_frames, STEER_FAULT_SILENT_FRAMES), then the take-over request; give at least the lighter prompt when the fault lasts over 1.5 s while the driver keeps steering; unit tests | Jherrod Thomas | completed | SWF-088.C1, SWF-088.C2 | 10/3/8 → 🔴 **H** |
+| SWF-ACT-077 | design_change | Escalate the EPS-fault warning per TSR-607 (DQ-342 A, DQ-366 A): allow steerTempUnavailableSilent only for the first 1.5 s of the fault (steer_fault_frames, STEER_FAULT_SILENT_FRAMES), then the take-over request; give at least the lighter prompt when the fault lasts over 1.5 s while the driver keeps steering; unit tests | Jherrod Thomas | completed | SWF-088.C1, SWF-088.C2 | 10/5/8 → 🔴 **H** |
+| SWF-ACT-078 | detection | Prove the EPS-fault warning tests: mutate the escalation in car_events.py (the STEER_FAULT_SILENT_FRAMES comparisons, the silent_steer_warning latch and the steering-held branch) and show test_steer_fault_warning.py fails on each mutant, in CI, so D can drop to 4 (System FMEA SFM-ACT-023 points to the same run) | Jherrod Thomas | open | SWF-088.C1, SWF-088.C2 | 10/5/4 → 🔴 **H** |
 
 ## 6. Priority H causes without a completed action
 
@@ -2042,8 +2080,6 @@ Safety mechanisms: (1) updated runs offroad only and the swap happens at boot (l
 | `SWF-051.C1` | Forward collision warning raised from stale or invalid model or planner input | 10/7/10 | SWF-ACT-051 |
 | `SWF-052.C1` | Negative acceleration sent in ACC_CONTROL while longitudinal control is not active | 10/6/9 | SWF-ACT-052 |
 | `SWF-053.C1` | Active deceleration request ends in one step when authority is revoked | 10/8/9 | SWF-ACT-053 |
-| `SWF-054.C1` | Authority granted again after a TX-rate revocation while the host still exceeds the rate budget | 10/8/9 | SWF-ACT-054 |
-| `SWF-055.C1` | Authority returns after a safety-mode change without a new driver engagement | 10/8/9 | SWF-ACT-054 |
 | `SWF-056.C1` | Vehicle input lost, delayed or frozen while carState still reports it as current and valid | 10/3/10 | SWF-ACT-056 |
 | `SWF-056.C2` | Vehicle input lost, delayed or frozen while carState still reports it as current and valid | 10/3/9 | SWF-ACT-056, SWF-ACT-044 |
 | `SWF-056.C3` | Vehicle input lost, delayed or frozen while carState still reports it as current and valid | 10/6/9 | SWF-ACT-056, SWF-ACT-044 |
