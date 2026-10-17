@@ -1362,6 +1362,15 @@ package LionDriverRequirements {
         :>> timing = "reaction starts ≤ 5 s after the terminal alert (WP-S-04 §3.8)";
         :>> verifMethod = "T-SIL, T-VEH";
     }
+    requirement <'TSR-634'> tsr_634 : TechnicalSafetyRequirement {
+        doc /* When driver monitoring has fallen back to the wheel-touch policy (camera confidence too low), the escalation times of TSR-608 shall shorten as vehicle speed rises, so that the distance driven without driver supervision up to each alert stays within a bound set in WP-C-08 §5; at highway speed the time to the strongest alert shall be shorter than the fixed 25 s (register DQ-077, A, decided 2026-10-14). The speed table and the bound are derived in WP-C-08 §5 and validated under WP-V-02. */
+        :>> workProduct = "WP-S-02";
+        :>> allocText = "SoC";
+        :>> asil = "A (SG-08; allocated to the QM SoC, open: WP-C-04 OI-11)";
+        :>> mechanism = "WRN";
+        :>> timing = "speed table in WP-C-08 §5 (to be derived)";
+        :>> verifMethod = "T-SIL, T-VEH";
+    }
     requirement <'TSR-701'> tsr_701 : TechnicalSafetyRequirement {
         doc /* The harness orientation (normal, flipped, not connected) shall be detected before the relay is driven, and CAN routing and relay/ignition pin assignment shall follow it; loss or change of orientation while the relay is driven shall lead to SS-S. */
         :>> workProduct = "WP-S-02";
@@ -3424,6 +3433,10 @@ package LionDriverRequirements {
     #derivation connection {
         end #original ::> fsr_02_09;
         end #derive ::> tsr_633;
+    }
+    #derivation connection {
+        end #original ::> fsr_02_06;
+        end #derive ::> tsr_634;
     }
     #derivation connection {
         end #original ::> fsr_07_03;
