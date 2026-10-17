@@ -57,7 +57,17 @@ faults safely and that stock pre-collision braking stays available, is written d
 (`AOU-`), linked from the configuration record, and has to be verified on the vehicle. The
 [item definition, WP-C-01](../assurance/02-concept/WP-C-01-item-definition.md) draws the boundary.
 
+![Item boundary: the comma device, harness and LionDriver software inside the boundary; the Toyota EPS, engine controller, brake actuator, stock radar and camera outside it as existing elements with assumptions of use.](../assurance/02-concept/figures/fig-3-2-item-boundary.svg)
+
+*Figure 3-2 of WP-C-01, generated from the item model and checked by CI.*
+
+![Assumptions-of-use map: each AOU placed against the vehicle element it concerns and the safety goals that depend on it.](../assurance/02-concept/figures/fig-c01-7-1-aou-map.svg)
+
+*Figure 7-1 of WP-C-01. Dense by design: the [full-size figure](../assurance/02-concept/figures/fig-c01-7-1-aou-map.svg) is easier to read than the embed.*
+
 ## The three classifications
+
+![Vehicle ecosystem card generated from the records: upstream-compatible car models, LionDriver-evaluated configurations, and assurance-supported configurations.](../docs/assets/liondriver/assurance/ecosystem.svg)
 
 | Classification | Meaning | How a configuration gets there |
 |---|---|---|

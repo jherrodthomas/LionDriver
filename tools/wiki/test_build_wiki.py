@@ -42,6 +42,16 @@ class RewriteTests(unittest.TestCase):
       self.assertEqual(out, "[a](https://github.com/o/r/blob/b/assurance/README.md#x) [d](https://github.com/o/r/tree/b/assurance)")
       self.assertEqual(problems, [])
 
+  def test_repository_images_use_the_raw_address(self):
+    with tempfile.TemporaryDirectory() as d:
+      root, src = make_wiki(Path(d), {"Home.md": "", "_Sidebar.md": ""})
+      (root / "docs").mkdir()
+      (root / "docs" / "fig.svg").write_text("<svg/>", encoding="utf-8")
+      problems: list[str] = []
+      out = build_wiki.rewrite("![A figure](../docs/fig.svg) and [the file](../docs/fig.svg)", src / "Home.md", src, root, VALUES, problems)
+      self.assertEqual(out, "![A figure](https://raw.githubusercontent.com/o/r/b/docs/fig.svg) and [the file](https://github.com/o/r/blob/b/docs/fig.svg)")
+      self.assertEqual(problems, [])
+
   def test_missing_targets_are_reported(self):
     with tempfile.TemporaryDirectory() as d:
       root, src = make_wiki(Path(d), {"Home.md": "", "_Sidebar.md": ""})

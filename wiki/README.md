@@ -29,6 +29,10 @@ in [`assurance/`](../assurance/README.md) that owns it.
   `{{MERGE_LOG}}` becomes the list of merged pull requests read from the checkout's merge commits.
 - Do not type figures that the repository generates (claim counts, evidence counts, vehicle counts). Link to the
   generated source instead, or embed the badge from `assurance/case/badge.json`.
+- Images: only figures that already exist in the repository, embedded as `![alt](../path/to/figure.svg)`; the build
+  turns that into the raw file address on the synced branch. Never draw a figure for the wiki that touches safety
+  content; a flow that needs a drawing is written as a Mermaid block, which GitHub renders and reviewers read as
+  text. Caption each image with where it comes from and, for a generated figure, what generates it.
 - Standard GitHub Markdown, including alerts (`> [!IMPORTANT]`) and tables.
 
 Check locally before opening a pull request:
