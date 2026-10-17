@@ -168,11 +168,8 @@
 <text x="966" y="542.5" font-size="10.5" fill="#475569">detect ≤ 0.5 s + warn ≤ 0.5 s</text>
 <line x1="350" y1="557" x2="364" y2="557" stroke="#CBD5E1" stroke-width="1.2"/>
 <text x="966" y="560.5" font-size="10.5" fill="#475569" font-style="italic">no time at 8b8c6ae (T-28 added 2026-10-12)</text>
-<rect x="350" y="570" width="600" height="10" fill="#D97706"/>
-<rect x="850" y="570" width="100" height="10" fill="#D2553F" fill-opacity="0.9"/>
-<path d="M937 582L941 568M942 582L946 568" stroke="#FFFFFF" stroke-width="2.4"/>
-<path d="M950 569L957 575L950 581z" fill="#D2553F"/>
-<text x="966" y="578.5" font-size="10.5" fill="#D2553F" font-weight="600">siren ≤ 1.26 s worst case, exceeds 1 s (T-28, OI-8)</text>
+<rect x="350" y="570" width="480" height="10" fill="#D97706"/>
+<text x="966" y="578.5" font-size="10.5" fill="#0F172A">siren ≤ 0.96 s worst case (T-28, DQ-048)</text>
 <text x="40" y="609" font-size="12" fill="#0F172A" font-weight="600">SoC heartbeat loss → siren</text>
 <text x="40" y="624" font-size="10" fill="#475569">FSR-02.05, TSR-516</text>
 <text x="338" y="608.5" font-size="9.5" fill="#475569" font-weight="600" text-anchor="end">budget</text>

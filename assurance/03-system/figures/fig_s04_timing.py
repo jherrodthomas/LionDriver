@@ -71,8 +71,8 @@ GROUPS = [
        "budget_text": "detect ≤ 0.5 s + warn ≤ 0.5 s",
        "src": [],
        "base": {"kind": ("blank",), "text": "no time at 8b8c6ae (T-28 added 2026-10-12)", "src": []},
-       "ref": {"kind": ("value", 1.26), "text": "siren ≤ 1.26 s worst case, exceeds 1 s (T-28, OI-8)",
-               "src": ["siren ≤ 1 s + 10 ms + 2 × 125 ms ≈ **1.26 s** after fault onset worst case"], "warn": True}},
+       "ref": {"kind": ("value", 0.96), "text": "siren ≤ 0.96 s worst case (T-28, DQ-048)",
+               "src": ["siren ≤ 0.7 s + 10 ms + 2 × 125 ms ≈ **0.96 s** after fault onset worst case"]}},
       {"title": "SoC heartbeat loss → siren", "sub": "FSR-02.05, TSR-516", "fdti": 0.5, "frti": 0.5, "limit": 1.0,
        "budget_text": "detect ≤ 0.5 s + warn ≤ 0.5 s",
        "src": [],
@@ -125,10 +125,10 @@ GROUPS = [
 
 # Figure 5-2: EPS-fault warning chain (T-28)
 T28 = {
-  "persist": 1.0, "task": 0.010, "tick": 0.250,  # tick: two 125 ms periods, the speaker sounds only on odd 8 Hz ticks
-  "src": ["siren once the fault has persisted 1 s (100 ticks) while `controls_allowed`, driven by the 8 Hz speaker tick on every other tick",
-          "siren ≤ 1 s + 10 ms + 2 × 125 ms ≈ **1.26 s** after fault onset worst case (TSR-516(b))",
-          "TSR-516's ≤ 0.5 s after detection is met (≤ 0.26 s) only because WP-S-02 v0.14 defines detection as the 1 s persistence",
+  "persist": 0.7, "task": 0.010, "tick": 0.250,  # tick: two 125 ms periods, the speaker sounds only on odd 8 Hz ticks
+  "src": ["siren once the fault has persisted 0.7 s (70 ticks) after it was seen while `controls_allowed`",
+          "siren ≤ 0.7 s + 10 ms + 2 × 125 ms ≈ **0.96 s** after fault onset worst case (TSR-516(b))",
+          "With the 1 s persistence before panda",
           "LKA refused on receipt of the fault frame (TSR-110)"],
 }
 
@@ -359,10 +359,10 @@ def figure_5_2() -> str:
   siren = p + k + s
   out.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W2}" height="{H}" viewBox="0 0 {W2} {H}" font-family="{FONT}" role="img" aria-labelledby="t d">')
   out.append('<title id="t">Figure 5-2. EPS-fault warning chain of the reference build against the SG-02 1 s warning budget (WP-S-04 T-28, OI-8)</title>')
-  out.append('<desc id="d">Time axis from the first EPS fault frame. The envelope refuses STEERING_LKA with torque on receipt of the fault frame (TSR-110). The panda 100 Hz safety task counts 1 s of persistence while controls are allowed, adds up to 10 ms of task period, and the 8 Hz tick drives the speaker only on every other tick, adding up to 250 ms, so the siren starts at most 1.26 s after fault onset. Measured from fault onset this exceeds the SG-02 1 s warning budget by up to 0.26 s. Measured from detection as defined in WP-S-02 v0.14 (the end of the 1 s persistence) it is at most 0.26 s, inside TSR-516 0.5 s. OI-8 was decided on 2026-10-14 (DQ-048): the persistence is to be shortened to about 0.7 s, which gives at most 0.96 s from onset; the firmware has not yet been changed. Not verified on hardware.</desc>')
+  out.append('<desc id="d">Time axis from the first EPS fault frame. The envelope refuses STEERING_LKA with torque on receipt of the fault frame (TSR-110). The panda 100 Hz safety task counts 0.7 s of persistence once the fault has been seen while controls are allowed (DQ-048), adds up to 10 ms of task period, and the 8 Hz tick drives the speaker only on every other tick, adding up to 250 ms, so the siren starts at most 0.96 s after fault onset, within the SG-02 1 s warning budget. From the end of the persistence it is at most 0.26 s, inside TSR-516 0.5 s. With the earlier 1 s persistence the chain reached 1.26 s (OI-8). Not verified on hardware.</desc>')
   out.append(DEFS)
   header(out, W2, "Figure 5-2 · EPS-fault warning chain (T-28) vs the SG-02 warning budget",
-         "Reference build bf6ce8c (opendbc 338f5fc, panda 6a7f2fb) · upper bounds from §4 T-28 · drawn to scale · not verified on hardware",
+         "Reference build at panda bf8102a (persistence 0.7 s, DQ-048) · upper bounds from §4 T-28 · drawn to scale · not verified on hardware",
          "WP-S-04 §5, OI-8", "T-28 · §3.7 SG-02/06 row")
   # axis
   ay = 118
@@ -403,7 +403,7 @@ def figure_5_2() -> str:
   # safety task lane: persistence 0..1 s, then +10 ms
   sy = 316
   out.append(rect(P0, sy, P(p) - P0, 14, REF_LIGHT, AMBER, 1))
-  out.append(t((P0 + P(p)) / 2, sy + 11, "fault persists 1 s (100 ticks) while controls_allowed", 10.5, INK, anchor="middle"))
+  out.append(t((P0 + P(p)) / 2, sy + 11, "fault persists 0.7 s (70 ticks) once seen with controls_allowed", 10.5, INK, anchor="middle"))
   out.append(rect(P(p), sy, P(p + k) - P(p), 14, AMBER))
   # speaker tick lane: up to two 125 ms tick periods (the speaker sounds only on odd ticks)
   ky = 372
@@ -428,14 +428,14 @@ def figure_5_2() -> str:
   out.append(t(P(siren) + 50, sy + 11, "+ ≤ 10 ms task period", 10, MUTED))
   out.append(line(P(p + k) + 2, sy + 7, P(siren) + 46, sy + 7, BASE_LIGHT, 1))
   out.append(t(P(p + k) - 8, ky + 11, "+ ≤ 2 × 125 ms: the speaker sounds only on every other 8 Hz tick", 10, MUTED, anchor="end"))
-  bracket(P0, P(siren), 456, RED, f"From fault onset: ≤ {siren:.2f} s worst case, exceeds the 1 s warning budget by ≤ {siren - 1.0:.2f} s",
+  bracket(P0, P(siren), 456, TEAL, f"From fault onset: ≤ {siren:.2f} s worst case, within the 1 s warning budget (margin {1.0 - siren:.2f} s)",
           "how §3.7 measures the SG-02 row (FDTI + FRTI from fault onset)")
-  bracket(P(p), P(siren), 512, AMBER, f"From detection (WP-S-02 v0.14): ≤ {siren - p:.2f} s, within TSR-516(b) ≤ 0.5 s",
-          "detection defined as the end of the 1 s persistence", anchor_x=P(siren) - 200)
+  bracket(P(p), P(siren), 512, AMBER, f"From the end of the persistence: ≤ {siren - p:.2f} s, within TSR-516(b) ≤ 0.5 s",
+          "persistence 0.7 s (DQ-048)", anchor_x=P(siren) - 200)
   # OI-8 note box on the left under lanes
-  out.append(rect(40, 440, 236, 96, "#FEF2F2", RED, 1.2, rx=8))
-  out.append(t(54, 460, "OI-8 · decided (DQ-048)", 12, RED, 700))
-  for i, s_ in enumerate(["Lead decision 2026-10-14:", "• shorten the persistence to ≈ 0.7 s", "  → siren ≤ 0.96 s from onset", "• firmware not yet changed"]):
+  out.append(rect(40, 440, 236, 96, "#F0FDFA", TEAL, 1.2, rx=8))
+  out.append(t(54, 460, "OI-8 · implemented (DQ-048)", 12, TEAL, 700))
+  for i, s_ in enumerate(["Lead decision 2026-10-14:", "• persistence 0.7 s (was 1 s)", "  → siren ≤ 0.96 s from onset", "• panda bf8102a, HIL timing open"]):
     out.append(t(54, 478 + i * 14, s_, 10, INK))
   out.append("</svg>")
   return "\n".join(out) + "\n"

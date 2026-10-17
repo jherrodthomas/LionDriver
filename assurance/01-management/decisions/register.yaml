@@ -1065,6 +1065,7 @@
   status: applied
   answer: {choice: A, via: inbox, at: 2026-10-14, by: u_DgEswP8TFzpISXlzh3BD1g}
   applied: {ref: ebc9fea, record: "WP-S-02 TSR-516(b); WP-S-04 OI-8, §3.7, §5, Figure 5-2 (panda firmware change open)", at: 2026-10-16}
+  note: "Panda firmware change done 2026-10-17: persistence 0.7 s at panda bf8102a (jherrodthomas/panda#19), siren ≤ 0.96 s from onset; change-2026-10-17-panda-eps-siren-0-7s."
 
 - id: DQ-049
   question: "Should you buy parts for a small hardware-in-the-loop test bench?"
